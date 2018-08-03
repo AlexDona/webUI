@@ -1,0 +1,106 @@
+/**
+  HeaderCommon修改iview通用样式（不分主题）
+ */
+
+.nav-box.common .ivu-modal-content {
+  /*background-color: transparent;*/
+  overflow: hidden;
+}
+
+.nav-box.common .ivu-modal-close {
+  top: -10px;
+}
+
+.nav-box.common .ivu-modal-header,
+.nav-box.common .ivu-modal-body {
+  padding: 10px 40px;
+}
+
+.nav-box.common .ivu-modal-footer {
+  border: none;
+  padding: 12px 40px;
+}
+
+.nav-box.common .ivu-select-large .ivu-select-item {
+  padding: 14px 16px;
+}
+
+.nav-box.common .ivu-icon-ios-checkmark {
+  position: absolute;
+  background-color: #338ff5;
+  color: #fff;
+  right: 0;
+  width: 20px;
+  height: 20px;
+  font-size: 20px;
+  text-align: right;
+  line-height: 16px;
+  text-indent: 4px;
+  border-bottom-left-radius: 2em;
+}
+
+.nav-box.common .ivu-radio-group-button .ivu-radio-wrapper {
+  border-radius: 4px;
+  margin-right: 40px;
+  width: 110px;
+  height: 40px;
+  text-align: center;
+  line-height: 40px;
+}
+
+.nav-box.common .ivu-radio-group-button .ivu-radio-wrapper-checked {
+  border: 1px solid #338ff5 !important;
+}
+
+.nav-box.common .ivu-radio-group-button .ivu-radio-wrapper:first-child {
+  /*border:1px solid;*/
+}
+
+.ivu-radio-group-button .ivu-radio-wrapper:before, .ivu-radio-group-button .ivu-radio-wrapper:after {
+  width: 0;
+}
+
+.nav-box.common .ivu-radio-group-button .ivu-radio-wrapper-checked,
+.ivu-select-visible .ivu-select-selection,
+.ivu-btn-primary:focus {
+  box-shadow: none;
+}
+
+.ivu-select-large.ivu-select-single .ivu-select-selection,
+.ivu-select-large.ivu-select-single .ivu-select-selection .ivu-select-placeholder,
+.ivu-select-large.ivu-select-single .ivu-select-selection .ivu-select-selected-value{
+  height: 44px;
+  line-height: 44px;
+}
+
+.ivu-btn-large {
+  padding: 10px 15px;
+}
+
+.ivu-modal-header-inner {
+  font-size: 16px;
+  /*color:#333;*/
+}
+
+.nav-box.common .ivu-btn-primary {
+  background: linear-gradient(to left,#2a5082,#2b396e);
+  border:none;
+}
+.nav-box.common .ivu-select-large.ivu-select-single .ivu-select-selection .ivu-select-placeholder{
+  border-radius: 4px;
+}
+
+.nav-box.common .ivu-select-selection{
+  border:none;
+}
+.ivu-select-selection>div{
+  border-radius: 2px;
+  height:46px;
+}
+.nav-box.common .ivu-modal-header{
+  border:none;
+  /*box-shadow:0px 0px  5px 1px #ddd;*/
+}
+.ivu-select-item-focus{
+  background-color: transparent;
+}

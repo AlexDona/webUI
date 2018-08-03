@@ -1,0 +1,29 @@
+/* HeaderCommon 白色主题*/
+.nav-box.day.common .ivu-radio-wrapper {
+  border: 1px solid #b1b1b1;
+  color: #333;
+}
+
+.nav-box.day.common .ivu-modal-header-inner {
+  color: #333;
+}
+
+.nav-box.day.common .ivu-select-selection {
+  border-color: #c3c8cd;
+}
+
+/*.nav-box.day.common*/
+.nav-box.day.common .ivu-select-selection>div{
+  border:1px solid #c3c8cd;
+  background-color: #fff;
+}
+.nav-box.common.day .ivu-select-item{
+  color:#595e72;
+}
+.nav-box.common.day .ivu-select-item:hover {
+  background-color:rgba(51,143,245,.05);
+  color:#333;
+}
+.nav-box.common.day .ivu-modal-header{
+  box-shadow:0px 0px  5px 1px #ddd;
+}
