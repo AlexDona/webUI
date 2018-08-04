@@ -350,7 +350,7 @@ export default{
             display:inline-block;
             height:66px;
             width:100px;
-            background: url(../../assets/logo.png) no-repeat center center;
+            background: url(../../assets/develop/logo.png) no-repeat center center;
             -webkit-background-size: 100px 30px;
             background-size: 100px 30px;
           }

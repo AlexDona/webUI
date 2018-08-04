@@ -1,7 +1,9 @@
 import {
   CHANGE_THEME,
   CHANGE_LANGUAGE,
-  CHANGE_CONVERT_CURRENCY
+  CHANGE_CONVERT_CURRENCY,
+  CHANGE_BANNER_ACTIVE,
+  CHANGE_BANNER_BACKGROUND
 } from './mutations-types.js'
 
 // import {setStore, getStore} from '../utils'
@@ -20,5 +22,11 @@ export default {
   // 设置折算货币
   [CHANGE_CONVERT_CURRENCY] (state, data) {
     state.activeConvertCurrency = data
+  },
+  [CHANGE_BANNER_ACTIVE] (state, data) {
+    state.bannerActive = data
+  },
+  [CHANGE_BANNER_BACKGROUND] (state, data = '') {
+    state.bannerBackgroundImage = data
   }
 }

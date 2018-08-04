@@ -1,0 +1,11 @@
+/*首页轮播图（不分主题）*/
+.slider-pagination-bullet{
+  background-color: rgba(255,255,255,.8);
+  transition: all 1s;
+  width:10px;
+  height:10px;
+}
+.slider-pagination-bullet-active{
+  width:27px;
+  border-radius: 6px;
+}

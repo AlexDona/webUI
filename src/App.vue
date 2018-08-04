@@ -15,7 +15,7 @@ export default {
     return {}
   },
   created () {
-    require('../static/css/Common/HomeCommon/HeaderCommon.css')
+    require('../static/css/Common/HeaderCommon/HeaderCommon.css')
     require('../static/css/night/Common/HeaderCommonNight.css')
     require('../static/css/day/Common/HeaderCommonDay.css')
     // 取主题
