@@ -7,6 +7,7 @@
 <script>
 import {mapState, mapMutations} from 'vuex'
 import {getStore} from './utils'
+// import {getCnyRate} from './utils/api/apiDoc'
 
 export default {
   name: 'App',
@@ -14,10 +15,10 @@ export default {
   data () {
     return {}
   },
-  created () {
-    require('../static/css/Common/HeaderCommon/HeaderCommon.css')
-    require('../static/css/night/Common/HeaderCommonNight.css')
-    require('../static/css/day/Common/HeaderCommonDay.css')
+  async created () {
+    require('../static/css/list/Common/HeaderCommon/HeaderCommon.css')
+    require('../static/css/theme/night/Common/HeaderCommonNight.css')
+    require('../static/css/theme/day/Common/HeaderCommonDay.css')
     // 取主题
     const theme = getStore('theme') || 'night'
     this.CHANGE_THEME(theme)

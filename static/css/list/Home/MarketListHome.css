@@ -1,0 +1,53 @@
+/*首页交易区（不分主题）*/
+/*tab栏背景*/
+.market-list-box.home .ivu-tabs-nav-scroll{
+  height:46px;
+  -webkit-background-size: 1090px 46px;
+  background-size: 1090px 46px;
+  background-position: center center;
+  background-image:url(../../../../src/assets/develop/tab-bg.png.png);
+}
+/*查询币种input框*/
+.market-list-box.home .search-box .ivu-input{
+  background-color: transparent;
+  outline:none;
+  border:none;
+  border-radius: 0;
+  width:250px;
+  height:30px;
+}
+/*search-box 图标*/
+.market-list-box.home .ivu-input-icon{
+  color:#fff;
+  font-size: 22px;
+  right:70px;
+}
+/*tab栏底部边框*/
+.market-list-box.home .ivu-tabs-ink-bar{
+  height:0;
+}
+/*tab栏每一项*/
+.market-list-box.home .ivu-tabs-nav .ivu-tabs-tab{
+  height:35px;
+  line-height:35px;
+  padding:0 30px;
+  margin:6px auto;
+  transition: color 0s;
+  font-size: 16px;
+}
+/*当前选中tab栏*/
+.market-list-box.home .ivu-tabs-nav .ivu-tabs-tab-active{
+  border:none;
+  color:#fff;
+  background: url(../../../../src/assets/develop/tab-active-bg.png) no-repeat center center;
+  -webkit-background-size: 100% 100%;
+  background-size: 100% 100%;
+}
+/*tab栏内容区域*/
+.market-list-box.home .ivu-tabs .ivu-tabs-tabpane{
+  margin-top:60px;
+}
+/*按钮*/
+.market-list-box.home .ivu-btn-primary{
+  background-color: transparent;
+}

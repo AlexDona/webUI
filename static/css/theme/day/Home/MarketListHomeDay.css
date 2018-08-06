@@ -1,0 +1,17 @@
+/*首页交易区（白色主题）*/
+
+/*tab栏背景*/
+.market-list-box.home.day .ivu-tabs-nav-scroll{
+  background-color: #fff;
+}
+/*input search 文字*/
+.market-list-box.home.day .search-box .ivu-input{
+  color:#333;
+}
+/*tab栏每一项*/
+.market-list-box.home.day .ivu-tabs-nav .ivu-tabs-tab{
+  color:#333;
+}
+.market-list-box.home.day .ivu-tabs-nav .ivu-tabs-tab-active{
+  color:#fff;
+}

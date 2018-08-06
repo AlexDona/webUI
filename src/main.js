@@ -12,7 +12,7 @@ import store from './vuex'
 import iview from 'iview'
 import 'iview/dist/styles/iview.css'
 
-import '../static/theme/index.less'
+import '../static/css/less/index.less'
 
 // 多语言
 const i18n = new VueI18n({

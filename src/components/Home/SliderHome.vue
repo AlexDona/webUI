@@ -41,7 +41,7 @@ export default {
     }
   },
   created () {
-    require('../../../static/css/Home/SliderHome.css')
+    require('../../../static/css/list/Home/SliderHome.css')
 
     // 请求轮播图数据
 

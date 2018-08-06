@@ -8,7 +8,10 @@
       <div class="left nav">
         <ul class="nav-list">
           <li class="nav-item">
-            <a href="#" class="logo">
+            <a
+              href="#"
+              class="logo"
+            >
             </a>
           </li>
           <li class="nav-item">
@@ -221,7 +224,7 @@ import {mapState, mapMutations, mapActions} from 'vuex'
 import {setStore} from '../../utils'
 export default{
   /*
-  * components: {},
+  * list: {},
     props,
     data () {
       return {}
@@ -322,7 +325,7 @@ export default{
 }
 </script>
 <style scoped lang="less">
-  @import url(../../../static/theme/Common/HeaderCommon);
+  @import url(../../../static/css/less/Common/HeaderCommon);
 .nav-box{
   height:66px;
   width:100%;
