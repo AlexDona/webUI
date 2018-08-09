@@ -366,7 +366,6 @@ export default{
           height:30px;
           line-height:30px;
         width:100%;
-        background-color: green;
         >.sub-nav-item{
           display: inline-block;
           height:100%;

@@ -15,3 +15,16 @@
 .market-list-box.home.day .ivu-tabs-nav .ivu-tabs-tab-active{
   color:#fff;
 }
+.market-list-box.home.day .ivu-table th,
+.market-list-box.home.day .ivu-table td {
+  border-bottom: 1px solid #d7d7d7;
+}
+.market-list-box.home.day .ivu-table-cell{
+  color:#333;
+}
+.market-list-box.home.day .ivu-table-cell .sellname,
+.market-list-box.home.day .ivu-table-cell .area
+{
+  /*color:#fff;*/
+  color:#646464;
+}

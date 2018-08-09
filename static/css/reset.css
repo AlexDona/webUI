@@ -106,6 +106,9 @@ button,input{
   position: absolute;
 }
 
+.font-size12{
+  font-size: 12px;
+}
 .font-size14{
   font-size: 14px;
 }

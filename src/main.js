@@ -9,8 +9,8 @@ import {getStore} from './utils'
 import 'babel-polyfill'
 import store from './vuex'
 
-import iview from 'iview'
-import 'iview/dist/styles/iview.css'
+// import iview from 'iview'
+// import 'iview/dist/styles/iview.css'
 
 import '../static/css/less/index.less'
 
@@ -35,6 +35,5 @@ let vm = new Vue({
   render: h => h(App)
 })
 Vue.use({
-  vm,
-  iview
+  vm
 })

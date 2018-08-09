@@ -14,3 +14,13 @@
 .market-list-box.home.night .ivu-tabs-nav .ivu-tabs-tab-active{
   color:#fff;
 }
+.market-list-box.home.night .ivu-table th,
+.market-list-box.home.night .ivu-table td {
+  border-bottom: 1px solid #222C35;
+}
+.market-list-box.home.night .ivu-table-cell{
+  color:#a0a0a0;
+}
+.market-list-box.home.night .ivu-table-cell .symbol{
+  color:#fff;
+}

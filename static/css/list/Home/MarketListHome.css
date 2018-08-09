@@ -2,8 +2,8 @@
 /*tab栏背景*/
 .market-list-box.home .ivu-tabs-nav-scroll{
   height:46px;
-  -webkit-background-size: 1090px 46px;
-  background-size: 1090px 46px;
+  -webkit-background-size: 1150px 46px;
+  background-size: 1150px 46px;
   background-position: center center;
   background-image:url(../../../../src/assets/develop/tab-bg.png.png);
 }
@@ -45,9 +45,89 @@
 }
 /*tab栏内容区域*/
 .market-list-box.home .ivu-tabs .ivu-tabs-tabpane{
-  margin-top:60px;
+  margin-top:30px;
 }
 /*按钮*/
 .market-list-box.home .ivu-btn-primary{
   background-color: transparent;
+}
+
+/*表格*/
+.market-list-box.home .ivu-table-cell{
+  padding:0;
+}
+
+.market-list-box.home .ivu-table th{
+  padding:0 14px;
+  box-sizing: border-box;
+  height:38px;
+}
+.market-list-box.home .tab-content {
+  visibility: inherit !important;
+}
+
+.market-list-box.home .ivu-table-large td{
+  height: 50px;
+  box-sizing: border-box;
+}
+
+.market-list-box .ivu-table-body{
+  width:956px;
+  height:530px !important;
+}
+/*.market-list-box.home .ivu-table-row{*/
+  /*height:50px;*/
+/*}*/
+/*.market-list-box.home .ivu-table-row>td{*/
+  /*padding:0 ;*/
+/*}*/
+.market-list-box .ivu-table-body>table{
+  width:938px !important;
+  overflow: hidden;
+  /*height:500px;*/
+}
+.ivu-table-header>table{
+  width:950px !important;
+}
+.ivu-table table{
+  table-layout: inherit;
+}
+.market-list-box.home .ivu-table th:first-of-type>.ivu-table-cell{
+  width:98px;
+}
+.market-list-box.home .ivu-table th:nth-of-type(2)>.ivu-table-cell{
+  width:132px;
+}
+.market-list-box.home .ivu-table th:nth-of-type(3)>.ivu-table-cell{
+  width:112px;
+}
+
+.market-list-box.home .ivu-table th:nth-of-type(4)>.ivu-table-cell{
+  width:112px;
+}
+.market-list-box.home .ivu-table th:nth-of-type(5)>.ivu-table-cell{
+  width:88px;
+}
+.market-list-box.home .ivu-table th:nth-of-type(6)>.ivu-table-cell{
+  width:52px;
+}
+.market-list-box.home .ivu-table th:nth-of-type(7)>.ivu-table-cell{
+  width:92px;
+}
+.market-list-box.home .ivu-table th:nth-of-type(8)>.ivu-table-cell{
+  width:36px;
+}
+
+.market-list-box.home .ivu-table,
+.market-list-box.home .ivu-table th,
+.market-list-box.home .ivu-table td{
+  background-color: transparent;
+}
+
+.market-list-box.home .ivu-table-wrapper{
+  border:none;
+  right:-4px;
+  bottom:-2px;
+  border-top:1px solid #566AD4;
+  box-sizing: border-box;
 }

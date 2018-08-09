@@ -41,6 +41,6 @@ export default {
 </script>
 <style scoped lang="less">
   .home-box{
-    min-width: 1100px;
+    min-width: 1150px;
   }
 </style>
