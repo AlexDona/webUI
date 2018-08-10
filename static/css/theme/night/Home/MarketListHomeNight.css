@@ -24,3 +24,7 @@
 .market-list-box.home.night .ivu-table-cell .symbol{
   color:#fff;
 }
+
+.market-list-box.home.night .ivu-table{
+  background-color: #19222B;
+}

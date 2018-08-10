@@ -34,7 +34,7 @@ export default {
   watch: {}
 }
 </script>
-<style scoped lang="less">
+<style scoped lang="scss">
   .banner-box{
     height:500px;
     width:100%;

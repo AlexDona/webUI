@@ -6,37 +6,31 @@
     <div class="inner-box">
       <!--表头-->
       <template>
-        <!--<EchartsLineCommon :options = "options"/>-->
-        <Tabs value="name">
-          <TabPane
-            label="全部"
-            name="name1"
-          >
-            <!--列表主要内容-->
+        <el-tabs v-model="activeName">
+          <el-tab-pane label="全部" name="first">
             <div class="tab-content">
-              <!--单个交易区-->
               <div
-                class="tab-item"
-                v-for="(item,index) in marketList"
-                v-dragging="{ item: item, list: marketList}"
-                :key="index"
+              class="tab-item"
+              v-for="(item,index) in marketList"
+              v-dragging="{ item: item, list: marketList}"
+              :key="index">
+              <!--侧边栏-->
+              <div
+                class="left"
+                @mouseenter="toggleSide(index,0)"
+                @mouseleave="toggleSide(index,1)"
               >
-                <div
-                  class="left"
-                  @mouseenter="toggleSide(index,0)"
-                  @mouseleave="toggleSide(index,1)"
+                <!--正面-->
+                <!--<transition enter-active-class="animated fadeIn">-->
+                <transition
+                  @before-enter="beforeEnter"
+                  @enter="enter"
+                  @leave="leave"
                 >
-                  <!--正面-->
-                  <!--<transition enter-active-class="animated fadeIn">-->
-                  <transition
-                    @before-enter="beforeEnter"
-                    @enter="enter"
-                    @leave="leave"
+                  <div
+                    class="right-side animate"
+                    v-show="toggleSideList[index]"
                   >
-                    <div
-                      class="right-side animate"
-                      v-show="toggleSideList[index]"
-                    >
                     <div class="top">
                       <span>{{item.area}}</span>
                       <span>交易区</span>
@@ -45,95 +39,229 @@
                       <Button type="primary"><span class="font-size16">查看更多</span> <Icon type="ios-arrow-down" /></Button>
                     </div>
                   </div>
-                    </transition>
-                  <!--反面-->
-                  <!--<transition enter-active-class="animated fadeIn">-->
-                  <transition
-                    @before-enter="beforeEnterReverse"
-                    @enter="enterDownReverse"
-                    @leave="leaveReverse"
+                </transition>
+                <!--反面-->
+                <!--<transition enter-active-class="animated fadeIn">-->
+                <transition
+                  @before-enter="beforeEnterReverse"
+                  @enter="enterDownReverse"
+                  @leave="leaveReverse"
+                >
+                  <div
+                    class="reverse-side animate"
+                    v-show="!toggleSideList[index]"
                   >
-                    <div
-                      class="reverse-side animate"
-                      v-show="!toggleSideList[index]"
-                    >
-                      <div class="top">
-                        <span>最热交易对</span>
-                      </div>
-                      <div class="bottom">
-                        <ul class="hot-list">
-                          <li
-                            class="hot-item"
-                            v-for="(innerItem,innerIndex) in item.content"
-                            :key="innerIndex"
-                          >
-                            <router-link to="/" v-if="innerItem.hot">
+                    <div class="top">
+                      <span>最热交易对</span>
+                    </div>
+                    <div class="bottom">
+                      <ul class="hot-list">
+                        <li
+                          class="hot-item"
+                          v-for="(innerItem,innerIndex) in item.content"
+                          :key="innerIndex"
+                        >
+                          <router-link to="/" v-if="innerItem.hot">
                               <span class="left font-size16">
                                 <span>
                                   {{innerItem.sellsymbol}} / {{item.area}}
                                 </span>
                               </span>
-                              <span class="right">
+                            <span class="right">
                                 <span
                                   class="top font-size14"
                                   :class="{up:innerItem.rose>0,down:innerItem.rose<0}"
                                 >{{innerItem.price}}</span>
                                 <span class="bottom font-size12">≈ 0.25</span>
                               </span>
-                            </router-link>
-                          </li>
-                        </ul>
-                        <Button type="primary"><span class="font-size16">查看更多</span> <Icon type="ios-arrow-down" /></Button>
+                          </router-link>
+                        </li>
+                      </ul>
+                      <Button type="primary"><span class="font-size16">查看更多</span> <Icon type="ios-arrow-down" /></Button>
+                    </div>
+                  </div>
+                </transition>
+              </div>
+              <!--表格内容-->
+              <div class="right">
+                <el-table
+                  :data="item.content"
+                >
+                <el-table-column
+                  label="交易对"
+                  width="126px"
+                >
+                  <template slot-scope="scope">
+                    <div style="padding-left:14px;display:flex;width:126px !important;box-sizing: border-box;">
+                      <div class="left" style="border-radius: 50%;">
+                        <img
+                          style="width:22px;vertical-align: middle;
+                          display:inline-block;
+                          margin:14px 0;"
+                          :src="scope.row.image">
+                      </div>
+                      <div class="right"
+                           style="height:30px;margin:10px 4px;"
+                      >
+                        <div class="top"
+                             style="height:15px;line-height: 15px"
+                        >
+                          <span class="symbol">
+                            {{scope.row.sellsymbol}}
+                          </span>
+                          /
+                          <span class="area">
+                            {{scope.row.area}}
+                          </span>
+                        </div>
+                        <div class="bottom sellname" style="height:20px;line-height: 20px">
+                          {{scope.row.sellname}}
+                        </div>
                       </div>
                     </div>
-                  </transition>
-                </div>
-                <!--表格内容-->
-                <div class="right">
-                  <Table
-                    :columns="columns"
-                    :data="item.content"
-                    height="547"
-                    width="940"
-                    size="large"
-                  >
-                  </Table>
-                </div>
+                  </template>
+                </el-table-column>
+                <el-table-column
+                  label="最新价格(BTCC)"
+                  width="160px"
+                >
+                  <template slot-scope="scope">
+                    <div
+                      style="
+                        padding-left:10px;
+                        width:160px;
+                        height:30px;
+                        margin:10px auto;
+                      ">
+                      <div class="top"
+                           style="height:15px;line-height: 15px"
+                      >
+                        <span
+                          v-show="scope.row.rose>0"
+                          style="color:#D45858;"
+                        >
+                          {{scope.row.price}}
+                        </span>
+                        <span
+                          v-show="scope.row.rose<0"
+                          style="color:#008069;"
+                        >
+                          {{scope.row.price}}
+                        </span>
+                      </div>
+                      <div class="bottom"
+                           style="height:15px;line-height: 15px">≈ 0.25</div>
+                    </div>
+                  </template>
+                </el-table-column>
+                <el-table-column
+                  prop="high"
+                  label="最高价(BTCC)"
+                  width="140px"
+                >
+                  <template slot-scope="scope">
+                    <div
+                      style="
+                        padding-left:10px;
+                        height:30px;
+                        width:140px;
+                        line-height: 30px;
+                        margin:10px auto;
+                      ">
+                      {{scope.row.high}}
+                    </div>
+                  </template>
+                </el-table-column>
+                <el-table-column
+                  prop="low"
+                  label="最低价(BTCC)"
+                  width="140px"
+                >
+                  <template slot-scope="scope">
+                    <div
+                      style="
+                        width:140px;
+                        height:30px;
+                        padding-left:12px;
+                        line-height: 30px;
+                        margin:10px auto;
+                      ">
+                      {{scope.row.low}}
+                    </div>
+                  </template>
+                </el-table-column>
+                <el-table-column
+                  prop="volume"
+                  label="24H交易量"
+                  width="120px"
+                >
+                  <template slot-scope="scope">
+                    <div
+                      style="
+                        width: 120px;
+                        padding-left:10px;
+                        height:30px;
+                        line-height: 30px;
+                        margin:10px auto;
+                      ">
+                      {{scope.row.volume}}
+                    </div>
+                  </template>
+                </el-table-column>
+                <el-table-column
+                  prop="rose"
+                  label="涨跌"
+                  width="80px"
+                >
+                  <template slot-scope="scope">
+                    <div
+                      style="
+                        width:74px;
+                        padding-left:8px;
+                        height:30px;
+                        line-height: 30px;
+                        margin:10px auto;
+                      ">
+                      <span v-show="scope.row.rose>0" style="color:#D45858;">{{scope.row.rose}}</span>
+                      <span v-show="scope.row.rose<0" style="color:#008069;">{{scope.row.rose}}</span>
+                    </div>
+                  </template>
+                </el-table-column>
+                <el-table-column
+                  prop="tendency"
+                  label="价格趋势(3日)"
+                  width="120px"
+                >
+                  <template slot-scope="scope">
+                    <EchartsLineCommon :id="scope.row.id" :data="scope.row.tendency"/>
+                  </template>
+                </el-table-column>
+                <el-table-column
+                  prop="collect"
+                  label=" "
+                  width="36px"
+                >
+                  <template slot-scope="scope">
+                    <el-button icon="el-icon-star-on"></el-button>
+                  </template>
+                </el-table-column>
+                </el-table>
+
               </div>
             </div>
-          </TabPane>
-          <TabPane
-            label="主交易区"
-            name="name2"
-          >
-            标签二的内容
-          </TabPane>
-          <TabPane
-            label="创新区"
-            name="name3"
-          >
-            标签三的内容
-          </TabPane>
-        </Tabs>
+            </div>
+          </el-tab-pane>
+          <el-tab-pane label="主交易区" name="second">配置管理</el-tab-pane>
+          <el-tab-pane label="创新区" name="third">角色管理</el-tab-pane>
+        </el-tabs>
       </template>
       <!--搜索框-->
       <div class="search-box">
-        <Input
-          v-model="value"
-          placeholder="Enter something..."
-          style="width: 300px"
-          icon="ios-search-outline"
-        />
+        <el-input v-model="value" placeholder="请输入内容">
+          <i slot="suffix" class="el-input__icon el-icon-search"></i>
+        </el-input>
       </div>
     </div>
-    <!--文件拖拽-->
-    <!--<div class="color-list">-->
-      <!--<div-->
-        <!--class="color-item"-->
-        <!--v-for="color in colors" v-dragging="{ item: color, list: colors, group: 'color' ,otherData: otherData }"-->
-        <!--:key="color.text"-->
-      <!--&gt;{{color.text}}</div>-->
-    <!--</div>-->
   </div>
 </template>
 <script>
@@ -150,43 +278,16 @@ export default{
   },
   data () {
     return {
+      // 当前选中tab
+      activeName: 'first',
       // 侧边栏节流阀
       flag: true,
       // 行情数据
       marketList: [],
       // 切换正反面显示列表
       toggleSideList: [],
-      // 价格趋势折线图 设置信息
-      options: {
-        xAxis: {
-          // show: false,
-          // data: ['1', '1', '1', '1', '1', '1', '1', '1'],
-          // symbolSize: 0,
-          // axisLine: {
-          //   show: false
-          // },
-          // splitLine: {
-          //   show: false
-          // }
-        },
-        yAxis: {
-          // show: false,
-          // symbolSize: 0,
-          // axisLine: {
-          //   show: false
-          // },
-          // splitLine: {
-          //   show: true
-          // }
-        },
-        series: [
-          {
-            type: 'line',
-            data: [1.23, 1.24, 2.35, 2.1, 1.59, 6.89],
-            symbolSize: 0
-          }
-        ]
-      },
+      // 收藏列表
+      collectList: [],
       // 表格表头
       columns: [
         {
@@ -363,7 +464,7 @@ export default{
         },
         {
           title: '价格趋势(3日)',
-          key: 'tendency',
+          key: '',
           // width: '120px',
           render: (h, params) => {
             // console.log(params)
@@ -410,22 +511,61 @@ export default{
         {
           title: ' ',
           key: 'collect',
-          // width: '36px',
-          render: (h, params) => {
-            // console.log(params)
-            return h('Icon', {
-              style: {
-                fontSize: '20px'
-              },
-              class: {
-                active: true
-              },
-              props: {
-                // type: 'md-star-outline',
-                type: 'md-star'
+          methods: {
+            toggleClick () {
+              console.log(1)
+            }
+          },
+          render: function (h, params) {
+            let func = function () {
+              return {
+                template:
+                  `<div
+                      style="
+                        width:74px;
+                        padding-left:8px;
+                        height:30px;
+                        line-height: 30px;
+                        margin:10px auto;
+                      ">
+                      <Icon type="md-star" v-on="listeners"/>
+                   </div>`
               }
-            })
+            }
+            return h(func())
           }
+          // width: '36px',
+          // render: (h, params) => {
+          //   if (this.collectList[params.row.id]) {
+          //     return h('Icon', {
+          //       style: {
+          //         fontSize: '20px',
+          //         paddingLeft: '14px',
+          //         cursor: 'pointer',
+          //         color: '#f5c34a'
+          //       },
+          //       class: {
+          //         active: true
+          //       },
+          //       props: {
+          //         type: 'md-star-outline'
+          //         // type: 'md-star'
+          //       },
+          //       on: {
+          //         click: () => {
+          //           // console.log(self)
+          //           console.log(params.row.id)
+          //           if (this.collectList[params.row.id]) {
+          //             this.collectList[params.row.id] = false
+          //           } else {
+          //             this.collectList[params.row.id] = true
+          //           }
+          //           console.log(this.collectList[params.row.id])
+          //         }
+          //       }
+          //     })
+          //   }
+          // }
         }
       ]
     }
@@ -439,6 +579,7 @@ export default{
     this.marketList = [
       {
         area: 'BTC', // 交易区名称
+        id: 0,
         content: [
           {
             id: 0, // 交易对id
@@ -539,7 +680,7 @@ export default{
             hot: false // 是否为最热交易对
           },
           {
-            id: 6, // 交易对id
+            id: 7, // 交易对id
             image: 'https://www.fubt.top//fubt/upload/coin/a7e56fc38ea44e1f8ed4c395193ec2e0组.png', // 币种图标
             sellsymbol: 'FUC', // 币种简称
             sellname: '富比特', // 币种全程
@@ -553,7 +694,7 @@ export default{
             hot: false // 是否为最热交易对
           },
           {
-            id: 7, // 交易对id
+            id: 8, // 交易对id
             image: 'https://www.fubt.top//fubt/upload/coin/a7e56fc38ea44e1f8ed4c395193ec2e0组.png', // 币种图标
             sellsymbol: 'FUC', // 币种简称
             sellname: '富比特', // 币种全程
@@ -567,7 +708,7 @@ export default{
             hot: false // 是否为最热交易对
           },
           {
-            id: 8, // 交易对id
+            id: 9, // 交易对id
             image: 'https://www.fubt.top//fubt/upload/coin/a7e56fc38ea44e1f8ed4c395193ec2e0组.png', // 币种图标
             sellsymbol: 'FUC', // 币种简称
             sellname: '富比特', // 币种全程
@@ -584,9 +725,10 @@ export default{
       },
       {
         area: 'ETH', // 交易区名称
+        id: 1,
         content: [
           {
-            id: 9, // 交易对id
+            id: 10, // 交易对id
             image: 'https://www.fubt.top//fubt/upload/coin/a7e56fc38ea44e1f8ed4c395193ec2e0组.png', // 币种图标
             sellsymbol: 'FUC', // 币种简称
             sellname: '富比特', // 币种全程
@@ -600,7 +742,7 @@ export default{
             hot: true // 是否为最热交易对
           },
           {
-            id: 10, // 交易对id
+            id: 11, // 交易对id
             image: 'https://www.fubt.top//fubt/upload/coin/a7e56fc38ea44e1f8ed4c395193ec2e0组.png', // 币种图标
             sellsymbol: 'FUC', // 币种简称
             sellname: '富比特', // 币种全程
@@ -614,7 +756,7 @@ export default{
             hot: false // 是否为最热交易对
           },
           {
-            id: 11, // 交易对id
+            id: 12, // 交易对id
             image: 'https://www.fubt.top//fubt/upload/coin/a7e56fc38ea44e1f8ed4c395193ec2e0组.png', // 币种图标
             sellsymbol: 'FUC', // 币种简称
             sellname: '富比特', // 币种全程
@@ -755,8 +897,8 @@ export default{
   watch: {}
 }
 </script>
-<style scoped lang="less">
-  @import url(../../../static/css/less/Home/MarketListHome);
+<style scoped lang="scss">
+  @import "../../../static/css/scss/Home/MarketListHome.scss";
   .market-list-box{
     min-height:1440px;
     width:100%;
@@ -773,17 +915,17 @@ export default{
         width:250px;
         height:30px;
         overflow: hidden;
-        border:1px solid @mainColor;
+        border:1px solid $mainColor;
       }
       &:before{
         content:'';
         width:70px;
         height:30px;
-        background-color: @mainColor;
+        background-color: $mainColor;
         position: absolute;
         right:0;
-        top:8px;
-        z-index: 1;
+        top:9px;
+        /*z-index: 1;*/
       }
       &:after{
         content:'';
@@ -791,10 +933,10 @@ export default{
         height:0px;
         position: absolute;
         right:69px;
-        top:13px;
+        top:14px;
         z-index: 1;
         border:10px solid transparent;
-        border-right:10px solid @mainColor;
+        border-right:10px solid $mainColor;
       }
       /*列表主要内容*/
       .tab-content{
@@ -892,7 +1034,7 @@ export default{
           /*主要内容*/
           >.right{
             margin:13px 0 0 0;
-            height:547px;
+            /*height:547px;*/
             width:940px;
             background-color: transparent;
             overflow: hidden;
@@ -901,15 +1043,15 @@ export default{
       }
     }
     &.night{
-      background-color: @nightBgColor;
-      color:@nightFontColor;
+      background-color: $nightBgColor;
+      color:$nightFontColor;
       >.search-box{
 
       }
     }
     &.day{
-      background-color: @dayBgColor;
-      color:@dayFontColor;
+      background-color: $dayBgColor;
+      color:$dayFontColor;
     }
   }
 </style>

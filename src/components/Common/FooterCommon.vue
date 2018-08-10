@@ -8,7 +8,7 @@ export default{
 
 }
 </script>
-<style scoped lang="less">
+<style scoped lang="scss">
   .footer-box{
     width:100%;
     height:410px;

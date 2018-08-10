@@ -158,7 +158,7 @@ export default {
   }
 }
 </script>
-<style scoped lang="less">
+<style scoped lang="scss">
   .slider-box{
     height:300px;
     margin:200px auto;

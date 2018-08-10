@@ -9,10 +9,7 @@ import {getStore} from './utils'
 import 'babel-polyfill'
 import store from './vuex'
 
-// import iview from 'iview'
-// import 'iview/dist/styles/iview.css'
-
-import '../static/css/less/index.less'
+// import '../static/css/scss/index.scss'
 
 // 多语言
 const i18n = new VueI18n({

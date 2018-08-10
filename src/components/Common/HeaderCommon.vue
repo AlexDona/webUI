@@ -60,7 +60,8 @@
               class="setting"
               @click="toggleShowSettingBox(1)"
             >
-              <Icon type="ios-settings-outline" />
+              <!--<Icon type="ios-settings-outline" />-->
+              <i class="el-icon-setting"></i>
             </button>
           </li>
           <li class="li-item">
@@ -89,7 +90,7 @@
                   <use xlink:href="#icon-zhongguo"></use>
                 </svg>
                 <span class="language-text">简体中文</span>
-                <Icon type="md-arrow-dropdown" />
+                <!--<Icon type="md-arrow-dropdown" />-->
               </dt>
               <dt
                 class="lang-selected"
@@ -99,7 +100,7 @@
                   <use xlink:href="#icon-yingguo"></use>
                 </svg>
                 <span class="language-text">English</span>
-                <Icon type="md-arrow-dropdown" />
+                <!--<Icon type="md-arrow-dropdown" />-->
               </dt>
               <dt
                 class="lang-selected"
@@ -109,7 +110,7 @@
                   <use xlink:href="#icon-fantizhongwen"></use>
                 </svg>
                 <span class="language-text">繁体中文</span>
-                <Icon type="md-arrow-dropdown" />
+                <!--<Icon type="md-arrow-dropdown" />-->
               </dt>
               <dt
                 class="lang-selected"
@@ -119,7 +120,7 @@
                   <use xlink:href="#icon-hanguo"></use>
                 </svg>
                 <span class="language-text">韩语</span>
-                <Icon type="md-arrow-dropdown" />
+                <!--<Icon type="md-arrow-dropdown" />-->
               </dt>
               <dd
                 class="lang-list"
@@ -171,51 +172,51 @@
         </ul>
       </div>
       <!--设置弹窗-->
-      <Modal
-        width="470"
-        class="nav-box common"
-        v-model="showSetting"
+      <!--<Modal-->
+        <!--width="470"-->
+        <!--class="nav-box common"-->
+        <!--v-model="showSetting"-->
+        <!---->
+
+      <!--&gt;-->
+      <el-dialog
         :title="settingBoxTitle"
+        :visible.sync="showSetting"
+        width="470px"
+        :before-close="handleClose"
         :class="{day:theme=='day',night:theme=='night' }"
       >
         <p class="title line-height50 font-size14">折算货币</p>
         <!-- 折算货币选择 -->
-        <Select
-          size="large"
-          v-model="activeConvertCurrency"
-        >
-          <Option
+        <el-select v-model="activeConvertCurrency" placeholder="请选择">
+          <el-option
             v-for="item in convertCurrencyList"
             :value="item.value"
-            :key="item.value"
-          >
-            {{ item.label }}
-          </Option>
-        </Select>
+            :key="item.value">
+          </el-option>
+
+        </el-select>
+
         <p class="title line-height50 font-size14">主题</p>
         <!-- 主题选择框 -->
-        <RadioGroup
+        <el-radio-group
           @on-change="changeTheme"
-          v-model="activeTheme"
-          type="button"
-        >
-          <Radio
-            v-for="(item,index) in themeList"
-            :key="index"
-            :label="item.value"
-          >
-            <span class="font-size16">{{item.label}}</span>
-            <Icon v-show="item.value==activeTheme" type="ios-checkmark"/>
-          </Radio>
-        </RadioGroup>
-        <div slot="footer">
-          <Button
-            type="primary"
+          v-model="activeTheme">
+        <el-radio
+          v-for="(item,index) in themeList"
+          :key="index"
+          :label="item.value"
+          border
+        >{{item.label}}</el-radio>
+        </el-radio-group>
+        <div slot="footer" class="dialog-footer">
+          <el-button
             size="large"
-            long
-            @click="changeSetting">确定</Button>
+            type="primary"
+            @click="changeSetting"
+          >确 定</el-button>
         </div>
-      </Modal>
+      </el-dialog>
     </div>
   </div>
 </template>
@@ -324,14 +325,15 @@ export default{
   }
 }
 </script>
-<style scoped lang="less">
-  @import url(../../../static/css/less/Common/HeaderCommon);
+<style scoped lang="scss">
+  @import "../../../static/css/scss/Common/HeaderCommon.scss";
 .nav-box{
   height:66px;
   width:100%;
-  background-color:@dayNavBgColor;
+  background-color:$dayNavBgColor;
   padding:0 30px;
   line-height: 66px;
+  box-sizing: border-box;
   >.inner-box{
     display:flex;
     height:100%;
@@ -347,7 +349,7 @@ export default{
           height:100%;
           vertical-align: top;
           >a{
-            .font-color;
+            color:$fontColor;
           }
           >.logo{
             display:inline-block;
@@ -395,7 +397,7 @@ export default{
             color:#fff;
             padding:5px 10px;
             &:hover{
-              background-color: @mainColor;
+              background-color: $mainColor;
             }
           }
           /*设置*/
@@ -439,7 +441,7 @@ export default{
                 width:100%;
                 padding:0 20px 0 10px;
                 &:hover{
-                  background-color: @mainColor;
+                  background-color: $mainColor;
                 }
                 >.icon{
                   margin-right:5px;

@@ -1,5 +1,5 @@
 /**
-  HeaderCommon修改iview通用样式（不分主题）
+  HeaderCommon修改element通用样式（不分主题）
  */
 
 .nav-box.common .ivu-modal-content {
@@ -7,20 +7,34 @@
   overflow: hidden;
 }
 
-.nav-box.common .ivu-modal-close {
-  top: -10px;
+/*.nav-box.common .ivu-modal-close {*/
+  /*top: -10px;*/
+/*}*/
+
+.nav-box.common .el-dialog__header,
+.nav-box.common .el-dialog__body {
+  padding: 0 40px;
+}
+.nav-box.common .el-dialog__header{
+  height:44px;
+  line-height:44px;
 }
 
-.nav-box.common .ivu-modal-header,
-.nav-box.common .ivu-modal-body {
-  padding: 10px 40px;
-}
-
-.nav-box.common .ivu-modal-footer {
+.nav-box.common .el-dialog__footer {
   border: none;
   padding: 12px 40px;
 }
-
+.nav-box.common .el-dialog__footer .el-button{
+  width:100%;
+  background: linear-gradient(to left,#2a5082,#2b396e);
+  border:none;
+}
+.nav-box.common .el-dialog__title{
+  font-size:20px;
+}
+.nav-box.common .el-select{
+  width:100%;
+}
 .nav-box.common .ivu-select-large .ivu-select-item {
   padding: 14px 16px;
 }
@@ -66,11 +80,14 @@
   box-shadow: none;
 }
 
-.ivu-select-large.ivu-select-single .ivu-select-selection,
-.ivu-select-large.ivu-select-single .ivu-select-selection .ivu-select-placeholder,
-.ivu-select-large.ivu-select-single .ivu-select-selection .ivu-select-selected-value{
+.el-input--suffix .el-input__inner,
+.el-select-dropdown__item selected hover,
+.el-select-dropdown__item{
   height: 44px;
   line-height: 44px;
+}
+.el-radio.is-bordered{
+  width:110px;
 }
 
 .ivu-btn-large {
@@ -83,8 +100,7 @@
 }
 
 .nav-box.common .ivu-btn-primary {
-  background: linear-gradient(to left,#2a5082,#2b396e);
-  border:none;
+
 }
 .nav-box.common .ivu-select-large.ivu-select-single .ivu-select-selection .ivu-select-placeholder{
   border-radius: 4px;

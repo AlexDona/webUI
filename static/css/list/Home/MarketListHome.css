@@ -1,6 +1,6 @@
 /*首页交易区（不分主题）*/
 /*tab栏背景*/
-.market-list-box.home .ivu-tabs-nav-scroll{
+.market-list-box.home .el-tabs__nav-scroll{
   height:46px;
   -webkit-background-size: 1150px 46px;
   background-size: 1150px 46px;
@@ -8,7 +8,7 @@
   background-image:url(../../../../src/assets/develop/tab-bg.png.png);
 }
 /*查询币种input框*/
-.market-list-box.home .search-box .ivu-input{
+.market-list-box.home .search-box .el-input__inner{
   background-color: transparent;
   outline:none;
   border:none;
@@ -17,26 +17,29 @@
   height:30px;
 }
 /*search-box 图标*/
-.market-list-box.home .ivu-input-icon{
+.market-list-box.home .el-input__icon{
+  position: absolute;
   color:#fff;
   font-size: 22px;
-  right:70px;
+  right:14px;
+  top:-4px;
 }
 /*tab栏底部边框*/
-.market-list-box.home .ivu-tabs-ink-bar{
+.market-list-box.home .el-tabs__nav-wrap::after,
+.el-tabs__active-bar{
   height:0;
 }
 /*tab栏每一项*/
-.market-list-box.home .ivu-tabs-nav .ivu-tabs-tab{
+.market-list-box.home .el-tabs__item{
   height:35px;
   line-height:35px;
-  padding:0 30px;
+  padding:0 30px !important;
   margin:6px auto;
   transition: color 0s;
   font-size: 16px;
 }
 /*当前选中tab栏*/
-.market-list-box.home .ivu-tabs-nav .ivu-tabs-tab-active{
+.market-list-box.home .el-tabs__item.is-active{
   border:none;
   color:#fff;
   background: url(../../../../src/assets/develop/tab-active-bg.png) no-repeat center center;
@@ -53,11 +56,13 @@
 }
 
 /*表格*/
-.market-list-box.home .ivu-table-cell{
+.market-list-box.home .el-table--enable-row-transition .el-table__body td{
   padding:0;
+  box-sizing: border-box;
+  height:49px;
 }
 
-.market-list-box.home .ivu-table th{
+.market-list-box.home .el-table  th{
   padding:0 14px;
   box-sizing: border-box;
   height:38px;
@@ -65,7 +70,10 @@
 .market-list-box.home .tab-content {
   visibility: inherit !important;
 }
-
+.market-list-box.home .el-table .cell,
+.market-list-box.home .el-table th div{
+  padding:0;
+}
 .market-list-box.home .ivu-table-large td{
   height: 50px;
   box-sizing: border-box;
