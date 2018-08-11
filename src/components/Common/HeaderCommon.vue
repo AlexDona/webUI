@@ -21,7 +21,7 @@
             </router-link>
           </li>
           <li class="nav-item">
-            <router-link to="/">
+            <router-link to="/OTCCenter">
               <span>OTC交易</span>
             </router-link>
           </li>

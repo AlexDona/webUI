@@ -1,0 +1,39 @@
+/* 交易中的订单样式重写 */
+/* 1.0付款方式下拉框 */
+.el-input--suffix .el-input__inner{
+    height: 26px;
+    width: 170px;
+}
+.el-input__inner{
+    background-color: #303B45;
+    border:none;
+    color: #9DA5B3;
+    padding: 0 30px;
+}
+.el-select-dropdown{
+    background-color: #29343F;
+    border:none;
+}
+.el-select-dropdown__item.selected{
+    color: #338FF5;
+}
+.el-select-dropdown__item {
+    height: 30px;
+    line-height: 30px;
+}
+.el-select-dropdown__item:hover {
+    background-color: #29343F;
+}
+.el-select-dropdown__item.hover{
+    background-color: #29343F;
+    color: #338FF5;
+}
+.el-popper[x-placement^=bottom] .popper__arrow::after {
+    border-bottom-color: #29343F;
+}
+.el-popper[x-placement^=bottom] .popper__arrow {
+    border-bottom-color: #29343F;
+}
+.el-button--mini{
+    padding: 3px 10px;
+}
