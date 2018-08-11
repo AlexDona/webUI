@@ -2,8 +2,8 @@
 /*tab栏背景*/
 .market-list-box.home .el-tabs__nav-scroll{
   height:46px;
-  -webkit-background-size: 1150px 46px;
-  background-size: 1150px 46px;
+  -webkit-background-size: 1130px 46px;
+  background-size: 1130px 46px;
   background-position: center center;
   background-image:url(../../../../src/assets/develop/tab-bg.png.png);
 }
@@ -125,7 +125,15 @@
 .market-list-box.home .ivu-table th:nth-of-type(8)>.ivu-table-cell{
   width:36px;
 }
-
+.market-list-box.home .el-button.more-btn{
+  color:#fff;
+  width:115px;
+  height:35px;
+  line-height:35px;
+  padding:0;
+  border-radius: 10px;
+}
+.market-list-box.home .el-button,
 .market-list-box.home .ivu-table,
 .market-list-box.home .ivu-table th,
 .market-list-box.home .ivu-table td{
@@ -138,4 +146,31 @@
   bottom:-2px;
   border-top:1px solid #566AD4;
   box-sizing: border-box;
+}
+.market-list-box.home .collected{
+  color:#f5c34a;
+}
+
+.market-list-box.home .el-table::before{
+  height:0;
+}
+.market-list-box.home .el-table th{
+  border-top:1px solid #2f3a8c;
+}
+/*排序箭头*/
+.market-list-box.home .el-table .sort-caret{
+  border-width: 4px;
+}
+.market-list-box.home .el-table .sort-caret.ascending{
+  top:8px;
+}
+.market-list-box.home .el-table .sort-caret.descending{
+  bottom:8px;
+}
+/*交易对颜色*/
+.market-list-box.home .el-table .sellname,
+.market-list-box.home .el-table .area
+{
+  /*color:#fff;*/
+  color:#646464;
 }

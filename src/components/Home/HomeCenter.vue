@@ -41,6 +41,6 @@ export default {
 </script>
 <style scoped lang="scss">
   .home-box{
-    min-width: 1150px;
+    min-width: 1130px;
   }
 </style>

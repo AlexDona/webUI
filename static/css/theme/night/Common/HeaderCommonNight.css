@@ -14,7 +14,6 @@
 }
 
 .nav-box.night.common .ivu-modal-header {
-  background-color: #282e43;
 }
 
 .nav-box.night.common .ivu-modal-body,
@@ -33,28 +32,69 @@
   background-color: #1c2237;
 }
 
-.nav-box.night.common .ivu-select-dropdown-list,
-.nav-box.night.common .ivu-select-dropdown{
+.night .el-select-dropdown__list {
   background-color: #181d2e;
 }
+.night .el-select-dropdown{
+  border-color:#282E43;
+}
 
-.nav-box.common .ivu-select-item{
+.nav-box.common .ivu-select-item {
   /*color:;*/
 }
 .nav-box.common.night .ivu-select-item:hover {
-  background-color:rgba(51,143,245,.05);
+  background-color: rgba(51, 143, 245, .05);
+  color: #fff;
+}
+.night .el-select-dropdown__item.hover,
+.night .el-select-dropdown__item:hover{
+  background-color: #282E43;
   color:#fff;
 }
-
+.night .el-input__inner{
+  color:#DEE1EA;
+}
 .nav-box.common.night .ivu-modal-content {
   background-color: transparent;
 }
-.nav-box.common.night .ivu-modal-close .ivu-icon-ios-close:hover{
-  color:#fff;
+.nav-box.common.night .el-radio-button__inner{
+  background-color: #181d2e;
+  border-color:#282e43;
+  color:#B8BDD0;
 }
-.nav-box.common.night .ivu-select-item-focus{
-  color:#595e72;
+
+.nav-box.common.night .ivu-modal-close .ivu-icon-ios-close:hover {
+  color: #fff;
 }
-.nav-box.common.night .ivu-modal-header{
-  box-shadow:0px 0px  5px 1px #000;
+
+.nav-box.common.night .ivu-select-item-focus {
+  color: #595e72;
+}
+
+.nav-box.common.night .ivu-modal-header {
+  box-shadow: 0px 0px 5px 1px #000;
+}
+
+/*弹出框*/
+.nav-box.common.night .el-dialog {
+  background-color: #1C2237;
+}
+
+.nav-box.common.night .el-dialog__title {
+  color: #B8BDD0;
+}
+
+/*弹出框头*/
+.nav-box.common.night .el-dialog__header {
+  box-shadow: 0px 0px 5px 1px #000;
+  background-color: #1D2131;
+}
+
+.nav-box.common.night .el-dialog__body > p {
+  color: #B8BDD0;
+}
+
+.nav-box.common.night .el-input__inner {
+  border-color: #282E43;
+  background-color: #181d2e;
 }

@@ -22,9 +22,20 @@
 .market-list-box.home.day .ivu-table-cell{
   color:#333;
 }
-.market-list-box.home.day .ivu-table-cell .sellname,
-.market-list-box.home.day .ivu-table-cell .area
-{
-  /*color:#fff;*/
-  color:#646464;
+
+/*选中行颜色*/
+.market-list-box.day .el-table--enable-row-hover .el-table__body tr:hover>td{
+  background-color:#eaf2fa;
+}
+/*表格颜色*/
+.market-list-box.day .el-table{
+  color:#333;
+}
+/*表头颜色*/
+.market-list-box.home.day .el-table th div{
+  color:#333;
+}
+/*主币种名称颜色*/
+.market-list-box.home.day .symbol {
+  color:#333;
 }

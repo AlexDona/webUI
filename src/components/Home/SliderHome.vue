@@ -167,7 +167,7 @@ export default {
     &.active{
       opacity:.2;
     }
-    opacity:.8;
+    /*opacity:.8;*/
     .inner-box{
       width:1040px;
       height:270px;

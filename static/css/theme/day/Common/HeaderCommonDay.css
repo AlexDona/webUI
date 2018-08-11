@@ -27,3 +27,24 @@
 .nav-box.common.day .ivu-modal-header{
   box-shadow:0px 0px  5px 1px #ddd;
 }
+
+
+/*弹出框*/
+.nav-box.common.day .el-dialog__title{
+  color:#333;
+}
+/*弹出框头*/
+.nav-box.common.day .el-dialog__header{
+  background-color:#fff;
+  box-shadow:0px 0px  5px 1px #ddd;
+}
+.nav-box.common.day .el-dialog__body>p{
+  color:#646464;
+}
+.nav-box.common.day .el-input__inner{
+  border-color:#C3C8CD;
+}
+.nav-box.common.day .el-radio-button__inner{
+  background-color:#fff;
+  color:#333;
+}

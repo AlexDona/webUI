@@ -2,10 +2,10 @@
   HeaderCommon修改element通用样式（不分主题）
  */
 
-.nav-box.common .ivu-modal-content {
-  /*background-color: transparent;*/
-  overflow: hidden;
-}
+/*.nav-box.common .ivu-modal-content {*/
+  /*!*background-color: transparent;*!*/
+  /*overflow: hidden;*/
+/*}*/
 
 /*.nav-box.common .ivu-modal-close {*/
   /*top: -10px;*/
@@ -19,7 +19,10 @@
   height:44px;
   line-height:44px;
 }
-
+.nav-box.common .el-dialog{
+  border-radius: 10px;
+  overflow: hidden;
+}
 .nav-box.common .el-dialog__footer {
   border: none;
   padding: 12px 40px;
@@ -35,88 +38,96 @@
 .nav-box.common .el-select{
   width:100%;
 }
-.nav-box.common .ivu-select-large .ivu-select-item {
-  padding: 14px 16px;
-}
+/*.nav-box.common .ivu-select-large .ivu-select-item {*/
+  /*padding: 14px 16px;*/
+/*}*/
 
-.nav-box.common .ivu-icon-ios-checkmark {
-  position: absolute;
-  background-color: #338ff5;
-  color: #fff;
-  right: 0;
-  width: 20px;
-  height: 20px;
-  font-size: 20px;
-  text-align: right;
-  line-height: 16px;
-  text-indent: 4px;
-  border-bottom-left-radius: 2em;
-}
 
-.nav-box.common .ivu-radio-group-button .ivu-radio-wrapper {
-  border-radius: 4px;
-  margin-right: 40px;
-  width: 110px;
-  height: 40px;
-  text-align: center;
-  line-height: 40px;
-}
+/*.nav-box.common .ivu-radio-group-button .ivu-radio-wrapper {*/
+  /*border-radius: 4px;*/
+  /*margin-right: 40px;*/
+  /*width: 110px;*/
+  /*height: 40px;*/
+  /*text-align: center;*/
+  /*line-height: 40px;*/
+/*}*/
 
-.nav-box.common .ivu-radio-group-button .ivu-radio-wrapper-checked {
-  border: 1px solid #338ff5 !important;
-}
 
-.nav-box.common .ivu-radio-group-button .ivu-radio-wrapper:first-child {
-  /*border:1px solid;*/
-}
+/*.nav-box.common .ivu-radio-group-button .ivu-radio-wrapper:first-child {*/
+  /*!*border:1px solid;*!*/
+/*}*/
 
-.ivu-radio-group-button .ivu-radio-wrapper:before, .ivu-radio-group-button .ivu-radio-wrapper:after {
-  width: 0;
-}
+/*.ivu-radio-group-button .ivu-radio-wrapper:before, .ivu-radio-group-button .ivu-radio-wrapper:after {*/
+  /*width: 0;*/
+/*}*/
 
-.nav-box.common .ivu-radio-group-button .ivu-radio-wrapper-checked,
-.ivu-select-visible .ivu-select-selection,
-.ivu-btn-primary:focus {
-  box-shadow: none;
-}
+/*.nav-box.common .ivu-radio-group-button .ivu-radio-wrapper-checked,*/
+/*.ivu-select-visible .ivu-select-selection,*/
+/*.ivu-btn-primary:focus {*/
+  /*box-shadow: none;*/
+/*}*/
 
 .el-input--suffix .el-input__inner,
 .el-select-dropdown__item selected hover,
+.nav-box.common .el-radio-button__inner,
 .el-select-dropdown__item{
   height: 44px;
   line-height: 44px;
 }
-.el-radio.is-bordered{
+.nav-box.common .el-radio-button__inner{
   width:110px;
-}
-
-.ivu-btn-large {
-  padding: 10px 15px;
-}
-
-.ivu-modal-header-inner {
-  font-size: 16px;
-  /*color:#333;*/
-}
-
-.nav-box.common .ivu-btn-primary {
-
-}
-.nav-box.common .ivu-select-large.ivu-select-single .ivu-select-selection .ivu-select-placeholder{
+  padding:0;
+  margin-right:44px;
   border-radius: 4px;
+  border:1px solid #c3c8cd;
+}
+/*单选框选中*/
+.nav-box.common .el-radio-button__orig-radio:checked+.el-radio-button__inner{
+  box-shadow:none;
+  border:1px solid #338ff5;
+}
+/*单选框选中背景*/
+.nav-box.common .el-icon-check{
+  position: absolute;
+  right: 0;
+  top:0;
+  background-color: #338ff5;
+  padding:2px 2px 5px 5px;
+  border-bottom-left-radius: 2em;
+  color:#fff;
+}
+/*下拉箭头*/
+.el-popper[x-placement^=bottom] .popper__arrow{
+  border-bottom-color:transparent;
+}
+.el-popper[x-placement^=bottom] .popper__arrow::after{
+  border:none;
 }
 
-.nav-box.common .ivu-select-selection{
-  border:none;
-}
-.ivu-select-selection>div{
-  border-radius: 2px;
-  height:46px;
-}
-.nav-box.common .ivu-modal-header{
-  border:none;
-  /*box-shadow:0px 0px  5px 1px #ddd;*/
-}
-.ivu-select-item-focus{
-  background-color: transparent;
-}
+/*.ivu-btn-large {*/
+  /*padding: 10px 15px;*/
+/*}*/
+
+/*.ivu-modal-header-inner {*/
+  /*font-size: 16px;*/
+  /*!*color:#333;*!*/
+/*}*/
+
+/*.nav-box.common .ivu-select-large.ivu-select-single .ivu-select-selection .ivu-select-placeholder{*/
+  /*border-radius: 4px;*/
+/*}*/
+
+/*.nav-box.common .ivu-select-selection{*/
+  /*border:none;*/
+/*}*/
+/*.ivu-select-selection>div{*/
+  /*border-radius: 2px;*/
+  /*height:46px;*/
+/*}*/
+/*.nav-box.common .ivu-modal-header{*/
+  /*border:none;*/
+  /*!*box-shadow:0px 0px  5px 1px #ddd;*!*/
+/*}*/
+/*.ivu-select-item-focus{*/
+  /*background-color: transparent;*/
+/*}*/

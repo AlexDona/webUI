@@ -7,24 +7,44 @@
 .market-list-box.home.night .search-box .ivu-input{
   color:#8494a6;
 }
-/*tab栏每一项*/
-.market-list-box.home.night .ivu-tabs-nav .ivu-tabs-tab{
-  color:#8494a6;
-}
-.market-list-box.home.night .ivu-tabs-nav .ivu-tabs-tab-active{
-  color:#fff;
-}
-.market-list-box.home.night .ivu-table th,
-.market-list-box.home.night .ivu-table td {
+
+.market-list-box.home.night .el-table th,
+.market-list-box.home.night .el-table td {
   border-bottom: 1px solid #222C35;
 }
+.market-list-box.home.night .el-table th,
+.market-list-box.home.night .el-table tr{
+  background-color: transparent;
+}
+
 .market-list-box.home.night .ivu-table-cell{
   color:#a0a0a0;
 }
-.market-list-box.home.night .ivu-table-cell .symbol{
+.market-list-box.home.night .symbol{
   color:#fff;
 }
 
-.market-list-box.home.night .ivu-table{
+.market-list-box.home.night .el-table{
   background-color: #19222B;
+}
+/*选中行颜色*/
+.market-list-box.night .el-table--enable-row-hover .el-table__body tr:hover>td{
+  background-color:#202a34;
+}
+/*tab栏每一项*/
+.market-list-box.home.night .el-tabs__item {
+  color:#8494a6;
+  transition: all 1s;
+}
+/*表格颜色*/
+.market-list-box.night .el-table{
+  color:#A0A0A0;
+}
+
+.market-list-box.home .el-tabs__item.is-active{
+  color:#fff;
+}
+/*表头颜色*/
+.market-list-box.home.night .el-table th div{
+  color:#fff;
 }

@@ -54,14 +54,15 @@
       <!--注册登录-->
       <div class="right login">
         <ul class="ul-list">
-          <li class="li-item">
+          <li class="li-item setting-li">
             <!--设置（语言，换肤）-->
             <button
               class="setting"
               @click="toggleShowSettingBox(1)"
             >
-              <!--<Icon type="ios-settings-outline" />-->
-              <i class="el-icon-setting"></i>
+              <svg class="icon font-size26" aria-hidden="true">
+                <use xlink:href="#icon-setting"></use>
+              </svg>
             </button>
           </li>
           <li class="li-item">
@@ -90,7 +91,8 @@
                   <use xlink:href="#icon-zhongguo"></use>
                 </svg>
                 <span class="language-text">简体中文</span>
-                <!--<Icon type="md-arrow-dropdown" />-->
+                <i class="el-icon-caret-bottom
+"></i>
               </dt>
               <dt
                 class="lang-selected"
@@ -100,7 +102,8 @@
                   <use xlink:href="#icon-yingguo"></use>
                 </svg>
                 <span class="language-text">English</span>
-                <!--<Icon type="md-arrow-dropdown" />-->
+                <i class="el-icon-caret-bottom
+"></i>
               </dt>
               <dt
                 class="lang-selected"
@@ -110,7 +113,8 @@
                   <use xlink:href="#icon-fantizhongwen"></use>
                 </svg>
                 <span class="language-text">繁体中文</span>
-                <!--<Icon type="md-arrow-dropdown" />-->
+                <i class="el-icon-caret-bottom
+"></i>
               </dt>
               <dt
                 class="lang-selected"
@@ -120,7 +124,8 @@
                   <use xlink:href="#icon-hanguo"></use>
                 </svg>
                 <span class="language-text">韩语</span>
-                <!--<Icon type="md-arrow-dropdown" />-->
+                <i class="el-icon-caret-bottom
+"></i>
               </dt>
               <dd
                 class="lang-list"
@@ -185,6 +190,7 @@
         width="470px"
         :before-close="handleClose"
         :class="{day:theme=='day',night:theme=='night' }"
+        class="nav-box-dialog"
       >
         <p class="title line-height50 font-size14">折算货币</p>
         <!-- 折算货币选择 -->
@@ -202,13 +208,20 @@
         <el-radio-group
           @on-change="changeTheme"
           v-model="activeTheme">
-        <el-radio
+        <el-radio-button
           v-for="(item,index) in themeList"
           :key="index"
           :label="item.value"
           border
-        >{{item.label}}</el-radio>
+        >
+          {{item.label}}
+          <i
+            class="el-icon-check"
+           v-show="activeTheme==item.value"
+          ></i>
+        </el-radio-button>
         </el-radio-group>
+        <!--底部-->
         <div slot="footer" class="dialog-footer">
           <el-button
             size="large"
@@ -312,6 +325,9 @@ export default{
     changeSetting () {
       this.CHANGE_THEME(this.activeTheme)
       setStore('theme', this.activeTheme)
+      document.body.classList.remove('day')
+      document.body.classList.remove('night')
+      document.body.classList.add(this.activeTheme)
       this.CHANGE_CONVERT_CURRENCY(this.activeConvertCurrency)
       setStore('convertCurrency', this.activeConvertCurrency || 'CNY')
       this.toggleShowSettingBox(0)
@@ -400,11 +416,15 @@ export default{
               background-color: $mainColor;
             }
           }
+          &.setting-li{
+            padding:0;
+          }
           /*设置*/
           .setting{
             color:#fff;
             cursor:pointer;
             font-size: 20px;
+            padding:0;
           }
           /*语言选择 dl*/
           >.lang-box{

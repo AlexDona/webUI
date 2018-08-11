@@ -6,258 +6,364 @@
     <div class="inner-box">
       <!--表头-->
       <template>
-        <el-tabs v-model="activeName">
-          <el-tab-pane label="全部" name="first">
-            <div class="tab-content">
+        <el-tabs
+          v-model="activeName">
+          <el-tab-pane
+            :label="outItem.label"
+            :name="outItem.name"
+            v-for="(outItem,outIndex) in tabList"
+            :key="outIndex"
+          >
+            <div
+             class="tab-content"
+            >
               <div
               class="tab-item"
-              v-for="(item,index) in marketList"
-              v-dragging="{ item: item, list: marketList}"
-              :key="index">
-              <!--侧边栏-->
+              v-for="(item) in filterMarketList"
+              v-dragging="{ item: item, list: filterMarketList}"
+              :id="'tab-item.'+item.id"
+              :key="item.id">
               <div
-                class="left"
-                @mouseenter="toggleSide(index,0)"
-                @mouseleave="toggleSide(index,1)"
+                class="inner-item-box"
+                v-if="(item.content.length&&item.id!==searchAreaId)||(item.id==searchAreaId&&searchKeyWord!=='')"
+                :style="'height:'+(50*(item.content.length||1)+102)+'px'"
+                :class="{
+                  'force-height':!(item.id==searchAreaId||item.id==collectAreaId)&&!itemAreaMoreStatus,
+                  'max-height':!itemAreaMoreStatus
+                  }"
               >
-                <!--正面-->
-                <!--<transition enter-active-class="animated fadeIn">-->
-                <transition
-                  @before-enter="beforeEnter"
-                  @enter="enter"
-                  @leave="leave"
+                <!--侧边栏-->
+                <div
+                  class="left"
+                  @mouseenter="toggleSide(item.id,0)"
+                  @mouseleave="toggleSide(item.id,1)"
                 >
-                  <div
-                    class="right-side animate"
-                    v-show="toggleSideList[index]"
+                  <!--正面-->
+                  <!--<transition enter-active-class="animated fadeIn">-->
+                  <transition
+                    @before-enter="beforeEnter"
+                    @enter="enter"
+                    @leave="leave"
                   >
-                    <div class="top">
-                      <span>{{item.area}}</span>
-                      <span>交易区</span>
-                    </div>
-                    <div class="bottom">
-                      <Button type="primary"><span class="font-size16">查看更多</span> <Icon type="ios-arrow-down" /></Button>
-                    </div>
-                  </div>
-                </transition>
-                <!--反面-->
-                <!--<transition enter-active-class="animated fadeIn">-->
-                <transition
-                  @before-enter="beforeEnterReverse"
-                  @enter="enterDownReverse"
-                  @leave="leaveReverse"
-                >
-                  <div
-                    class="reverse-side animate"
-                    v-show="!toggleSideList[index]"
-                  >
-                    <div class="top">
-                      <span>最热交易对</span>
-                    </div>
-                    <div class="bottom">
-                      <ul class="hot-list">
-                        <li
-                          class="hot-item"
-                          v-for="(innerItem,innerIndex) in item.content"
-                          :key="innerIndex"
+                    <div
+                      class="right-side animate"
+                      v-show="toggleSideList[item.id]"
+                    >
+                      <div class="top">
+                        <span>{{item.area}}</span>
+                        <span v-show="item.id!==collectAreaId&&item.id!==searchAreaId">交易区</span>
+                      </div>
+                      <div class="bottom">
+                        <el-button
+                          type="default"
+                          class="more-btn"
+                          @click="itemViewMore(item.id,item.content)"
                         >
-                          <router-link to="/" v-if="innerItem.hot">
+                          {{itemViewMoreBtnText}}
+                          <i class="el-icon-arrow-down el-icon--right"></i>
+                        </el-button>
+                      </div>
+                    </div>
+                  </transition>
+                  <!--反面-->
+                  <!--<transition enter-active-class="animated fadeIn">-->
+                  <transition
+                    @before-enter="beforeEnterReverse"
+                    @enter="enterDownReverse"
+                    @leave="leaveReverse"
+                  >
+                    <div
+                      class="reverse-side animate"
+                      v-show="!toggleSideList[item.id]"
+                    >
+                      <div class="top">
+                        <span>最热交易对</span>
+                      </div>
+                      <div class="bottom">
+                        <ul class="hot-list">
+                          <li
+                            class="hot-item"
+                            v-for="(innerItem,innerIndex) in item.content"
+                            :key="innerIndex"
+                          >
+                            <router-link
+                              to="/"
+                              v-if="innerItem.hot"
+                            >
                               <span class="left font-size16">
                                 <span>
                                   {{innerItem.sellsymbol}} / {{item.area}}
                                 </span>
                               </span>
-                            <span class="right">
+                              <span class="right">
                                 <span
                                   class="top font-size14"
                                   :class="{up:innerItem.rose>0,down:innerItem.rose<0}"
-                                >{{innerItem.price}}</span>
-                                <span class="bottom font-size12">≈ 0.25</span>
+                                >
+                                  {{innerItem.price}}
+                                </span>
+                                <!--货币兑换-->
+                                <span class="bottom font-size12">
+                                  ≈
+                                  <span></span>
+                                  0.25
+                                </span>
                               </span>
-                          </router-link>
-                        </li>
-                      </ul>
-                      <Button type="primary"><span class="font-size16">查看更多</span> <Icon type="ios-arrow-down" /></Button>
+                            </router-link>
+                          </li>
+                        </ul>
+                        <!--查看更多交易区-->
+                        <!--<el-button-->
+                          <!--round-->
+                          <!--@click="toggleTabContentHeightStatus"-->
+                        <!--&gt;{{moreBtnText}}</el-button>-->
+                      </div>
+                      <div class="more-btn">
+                        <el-button
+                          type="default"
+                          class="more-btn"
+                          @click="toggleTabContentHeightStatus"
+                        >
+                          {{itemViewMoreBtnText}}
+                          <i class="el-icon-arrow-down el-icon--right"></i>
+                        </el-button>
+                      </div>
                     </div>
-                  </div>
-                </transition>
-              </div>
-              <!--表格内容-->
-              <div class="right">
-                <el-table
-                  :data="item.content"
+                  </transition>
+                </div>
+                <!--表格内容-->
+                <div
+                  class="right"
+                  :style="'height:'+(50*(item.content.length||1)+108)+'px'"
                 >
-                <el-table-column
-                  label="交易对"
-                  width="126px"
-                >
-                  <template slot-scope="scope">
-                    <div style="padding-left:14px;display:flex;width:126px !important;box-sizing: border-box;">
-                      <div class="left" style="border-radius: 50%;">
-                        <img
-                          style="width:22px;vertical-align: middle;
+                  <el-table
+                    :data="item.content"
+                  >
+                    <el-table-column
+                      label="交易对"
+                      width="126px"
+                    >
+                      <template slot-scope="scope">
+                        <div style="padding-left:14px;display:flex;width:126px !important;box-sizing: border-box;">
+                          <div class="left" style="border-radius: 50%;">
+                            <img
+                              style="width:22px;vertical-align: middle;
                           display:inline-block;
                           margin:14px 0;"
-                          :src="scope.row.image">
-                      </div>
-                      <div class="right"
-                           style="height:30px;margin:10px 4px;"
-                      >
-                        <div class="top"
-                             style="height:15px;line-height: 15px"
-                        >
-                          <span class="symbol">
-                            {{scope.row.sellsymbol}}
-                          </span>
-                          /
-                          <span class="area">
-                            {{scope.row.area}}
-                          </span>
+                              :src="scope.row.image">
+                          </div>
+                          <div class="right"
+                               style="height:30px;margin:10px 4px;"
+                          >
+                            <div class="top"
+                                 style="height:15px;line-height: 15px"
+                            >
+                          <span class="symbol">{{scope.row.sellsymbol}}</span>/<span class="area">{{scope.row.area}}</span>
+                            </div>
+                            <div class="bottom sellname" style="height:20px;line-height: 20px">
+                              {{scope.row.sellname}}
+                            </div>
+                          </div>
                         </div>
-                        <div class="bottom sellname" style="height:20px;line-height: 20px">
-                          {{scope.row.sellname}}
-                        </div>
-                      </div>
-                    </div>
-                  </template>
-                </el-table-column>
-                <el-table-column
-                  label="最新价格(BTCC)"
-                  width="160px"
-                >
-                  <template slot-scope="scope">
-                    <div
-                      style="
+                      </template>
+                    </el-table-column>
+                    <el-table-column
+                      label="最新价格(BTCC)"
+                      width="160px"
+                      sortable
+                    >
+                      <template slot-scope="scope">
+                        <div
+                          style="
                         padding-left:10px;
                         width:160px;
                         height:30px;
                         margin:10px auto;
                       ">
-                      <div class="top"
-                           style="height:15px;line-height: 15px"
-                      >
+                          <div class="top"
+                               style="height:15px;line-height: 15px"
+                          >
                         <span
                           v-show="scope.row.rose>0"
                           style="color:#D45858;"
                         >
                           {{scope.row.price}}
                         </span>
-                        <span
-                          v-show="scope.row.rose<0"
-                          style="color:#008069;"
-                        >
+                            <span
+                              v-show="scope.row.rose<0"
+                              style="color:#008069;"
+                            >
                           {{scope.row.price}}
                         </span>
-                      </div>
-                      <div class="bottom"
-                           style="height:15px;line-height: 15px">≈ 0.25</div>
-                    </div>
-                  </template>
-                </el-table-column>
-                <el-table-column
-                  prop="high"
-                  label="最高价(BTCC)"
-                  width="140px"
-                >
-                  <template slot-scope="scope">
-                    <div
-                      style="
+                          </div>
+                          <!--货币转换-->
+                          <div class="bottom"
+                               style="height:15px;line-height: 15px">
+                            ≈ 0.25
+                          </div>
+                        </div>
+                      </template>
+                    </el-table-column>
+                    <el-table-column
+                      prop="high"
+                      label="最高价(BTCC)"
+                      width="145px"
+                      sortable
+                    >
+                      <template slot-scope="scope">
+                        <div
+                          style="
                         padding-left:10px;
                         height:30px;
                         width:140px;
                         line-height: 30px;
                         margin:10px auto;
                       ">
-                      {{scope.row.high}}
-                    </div>
-                  </template>
-                </el-table-column>
-                <el-table-column
-                  prop="low"
-                  label="最低价(BTCC)"
-                  width="140px"
-                >
-                  <template slot-scope="scope">
-                    <div
-                      style="
+                          {{scope.row.high}}
+                        </div>
+                      </template>
+                    </el-table-column>
+                    <el-table-column
+                      prop="low"
+                      label="最低价(BTCC)"
+                      width="145px"
+                      sortable
+                    >
+                      <template slot-scope="scope">
+                        <div
+                          style="
                         width:140px;
                         height:30px;
                         padding-left:12px;
                         line-height: 30px;
                         margin:10px auto;
                       ">
-                      {{scope.row.low}}
-                    </div>
-                  </template>
-                </el-table-column>
-                <el-table-column
-                  prop="volume"
-                  label="24H交易量"
-                  width="120px"
-                >
-                  <template slot-scope="scope">
-                    <div
-                      style="
+                          {{scope.row.low}}
+                        </div>
+                      </template>
+                    </el-table-column>
+                    <el-table-column
+                      prop="volume"
+                      label="24H交易量"
+                      width="120px"
+                      sortable
+                    >
+                      <template slot-scope="scope">
+                        <div
+                          style="
                         width: 120px;
                         padding-left:10px;
                         height:30px;
                         line-height: 30px;
                         margin:10px auto;
                       ">
-                      {{scope.row.volume}}
-                    </div>
-                  </template>
-                </el-table-column>
-                <el-table-column
-                  prop="rose"
-                  label="涨跌"
-                  width="80px"
-                >
-                  <template slot-scope="scope">
-                    <div
-                      style="
+                          {{scope.row.volume}}
+                        </div>
+                      </template>
+                    </el-table-column>
+                    <el-table-column
+                      prop="rose"
+                      label="涨跌"
+                      width="80px"
+                      sortable
+                    >
+                      <template slot-scope="scope">
+                        <div
+                          style="
                         width:74px;
                         padding-left:8px;
                         height:30px;
                         line-height: 30px;
                         margin:10px auto;
                       ">
-                      <span v-show="scope.row.rose>0" style="color:#D45858;">{{scope.row.rose}}</span>
-                      <span v-show="scope.row.rose<0" style="color:#008069;">{{scope.row.rose}}</span>
-                    </div>
-                  </template>
-                </el-table-column>
-                <el-table-column
-                  prop="tendency"
-                  label="价格趋势(3日)"
-                  width="120px"
-                >
-                  <template slot-scope="scope">
-                    <EchartsLineCommon :id="scope.row.id" :data="scope.row.tendency"/>
-                  </template>
-                </el-table-column>
-                <el-table-column
-                  prop="collect"
-                  label=" "
-                  width="36px"
-                >
-                  <template slot-scope="scope">
-                    <el-button icon="el-icon-star-on"></el-button>
-                  </template>
-                </el-table-column>
-                </el-table>
-
+                          <span v-show="scope.row.rose>0" style="color:#D45858;">{{scope.row.rose}}</span>
+                          <span v-show="scope.row.rose<0" style="color:#008069;">{{scope.row.rose}}</span>
+                        </div>
+                      </template>
+                    </el-table-column>
+                    <el-table-column
+                      prop="tendency"
+                      label="价格趋势(3日)"
+                      width="120px"
+                    >
+                      <template slot-scope="scope">
+                        <EchartsLineCommon
+                          :id="scope.row.id + Math.random()"
+                          :data="scope.row.tendency"/>
+                      </template>
+                    </el-table-column>
+                    <!--收藏-->
+                    <el-table-column
+                      prop="collect"
+                      label=" "
+                      width="36px"
+                    >
+                      <template slot-scope="scope">
+                        <!--非自选区-->
+                        <div
+                          class="collect-box"
+                          v-show="item.id!==collectAreaId"
+                        >
+                          <i
+                            class="el-icon-star-on collected collect font-size16 cursor-pointer"
+                            @click="toggleCollect(scope.row.id,0,scope.row)"
+                            v-show="collectStatusList[scope.row.id]"
+                          ></i>
+                          <i
+                            class="el-icon-star-off collect font-size16 cursor-pointer"
+                            @click="toggleCollect(scope.row.id,1,scope.row)"
+                            v-show="!collectStatusList[scope.row.id]"
+                          ></i>
+                        </div>
+                        <!--自选区-->
+                        <div
+                          class="collect-box"
+                          v-show="item.id==collectAreaId"
+                        >
+                          <i
+                            class="el-icon-star-on collected collect font-size16 cursor-pointer"
+                            @click="toggleCollect(scope.row.id,0,scope.row)"
+                          ></i>
+                        </div>
+                      </template>
+                    </el-table-column>
+                  </el-table>
+                </div>
               </div>
             </div>
+              <div class="more-box">
+                <svg
+                  class="icon"
+                  aria-hidden="true"
+                  v-show="!tabContentMoreStatus"
+                >
+                  <use xlink:href="#icon-iconmore"></use>
+                </svg>
+                <svg
+                  class="icon"
+                  aria-hidden="true"
+                  v-show="tabContentMoreStatus"
+                >
+                  <use xlink:href="#icon-iconfewer"></use>
+                </svg>
+                <br>
+                <!--查看更多交易区-->
+                <el-button
+                  round
+                  @click="toggleTabContentHeightStatus"
+                >{{moreBtnText}}</el-button>
+              </div>
             </div>
           </el-tab-pane>
-          <el-tab-pane label="主交易区" name="second">配置管理</el-tab-pane>
-          <el-tab-pane label="创新区" name="third">角色管理</el-tab-pane>
         </el-tabs>
       </template>
       <!--搜索框-->
       <div class="search-box">
-        <el-input v-model="value" placeholder="请输入内容">
+        <el-input
+          v-model="searchKeyWord"
+          placeholder="请输入内容"
+          @keyup.native="searchFromMarketList"
+        >
           <i slot="suffix" class="el-input__icon el-icon-search"></i>
         </el-input>
       </div>
@@ -268,6 +374,7 @@
 // 文件拖动
 import VueDND from 'awe-dnd'
 import {mapState, mapMutations} from 'vuex'
+import {getStore, setStore} from '../../utils'
 import Footer from './NoticeHome'
 import EchartsLineCommon from '../Common/EchartsLineCommon'
 Vue.use(VueDND)
@@ -278,305 +385,80 @@ export default{
   },
   data () {
     return {
+      // tab 栏列表
+      tabList: [],
+      // 单个交易区查看全部状态
+      itemAreaMoreStatus: false,
+      // 当前选中查看更多的交易区id
+      activeAreaId: '',
+      // 搜索关键字
+      searchKeyWord: '',
+      // 搜索列表
+      searchList: [],
+      // 搜索区 id
+      searchAreaId: 100,
+      // 查看更多按钮文字
+      moreBtnText: '查看更多交易区',
+      itemViewMoreBtnText: '查看更多',
+      // tab-content查看更多状态, 默认为false
+      tabContentMoreStatus: false,
+      // 自选区 id
+      collectAreaId: 99,
+      // 自选区状态列表
+      collectStatusList: [],
+      // 自选区列表
+      collectList: [],
       // 当前选中tab
       activeName: 'first',
       // 侧边栏节流阀
       flag: true,
-      // 行情数据
+      // 全部行情数据
       marketList: [],
+      // 前两项行情数据
+      filterMarketList: [],
       // 切换正反面显示列表
-      toggleSideList: [],
-      // 收藏列表
-      collectList: [],
-      // 表格表头
-      columns: [
-        {
-          title: '交易对',
-          key: 'symbol',
-          // width: '126',
-          render: function (h, params) {
-            let func = function () {
-              return {
-                template:
-                  `<div
-                      style="
-                        padding-left:14px;
-                        display:flex;
-                        width:126px !important;
-                        box-sizing: border-box;
-                      ">
-                    <div class="left"
-                      style="
-                        /*margin-right:4px;*/
-                        border-radius: 50%;
-                      "
-                    >
-                      <img
-                       style="
-                        width:22px;
-                        vertical-align: middle;
-                        display:inline-block;
-                        margin:14px 0;
-                        "
-                       src="${params.row.image}">
-                    </div>
-                    <div class="right"
-                      style="height:30px;margin:10px 4px;"
-                    >
-                      <div class="top"
-                        style="height:15px;line-height: 15px"
-                      ><span class="symbol">${params.row.sellsymbol}</span> / <span class="area">${params.row.area}</span></div>
-                      <div class="bottom sellname"
-                       style="height:20px;line-height: 20px">${params.row.sellname}</div>
-                    </div>
-                   </div>`
-              }
-            }
-            return h(func())
-          }
-        },
-        {
-          title: '最新价格(BTCC)',
-          key: 'price',
-          // width: '160px',
-          sortable: true,
-          render: function (h, params) {
-            let func = function () {
-              return {
-                template:
-                  `<div
-                      style="
-                        padding-left:10px;
-                        width:160px;
-                        height:30px;
-                        margin:10px auto;
-                      ">
-                      <div class="top"
-                        style="height:15px;line-height: 15px"
-                      >
-                      <span v-show="${params.row.rose}>0" style="color:#D45858;">${params.row.price}</span>
-                      <span v-show="${params.row.rose}<0" style="color:#008069;">${params.row.price}</span>
-</div>
-                      <div class="bottom"
-                       style="height:15px;line-height: 15px">≈ 0.25</div>
-                   </div>`
-              }
-            }
-            return h(func())
-          }
-        },
-        {
-          title: '最高价(BTCC)',
-          key: 'high',
-          // width: '140px',
-          sortable: true,
-          render: function (h, params) {
-            let func = function () {
-              return {
-                template:
-                  `<div
-                      style="
-                        padding-left:10px;
-                        height:30px;
-                        width:140px;
-                        line-height: 30px;
-                        margin:10px auto;
-                      ">
-                      ${params.row.high}
-                   </div>`
-              }
-            }
-            return h(func())
-          }
-        },
-        {
-          title: '最低价(BTCC)',
-          key: 'low',
-          // width: '140px',
-          sortable: true,
-          render: function (h, params) {
-            let func = function () {
-              return {
-                template:
-                  `<div
-                      style="
-                        width:140px;
-                        height:30px;
-                        padding-left:12px;
-                        line-height: 30px;
-                        margin:10px auto;
-                      ">
-                      ${params.row.low}
-                   </div>`
-              }
-            }
-            return h(func())
-          }
-        },
-        {
-          title: '24H交易量',
-          key: 'volume',
-          // width: '120px',
-          sortable: true,
-          render: function (h, params) {
-            let func = function () {
-              return {
-                template:
-                  `<div
-                      style="
-                        width: 120px;
-                        padding-left:10px;
-                        height:30px;
-                        line-height: 30px;
-                        margin:10px auto;
-                      ">
-                      ${params.row.volume}
-                   </div>`
-              }
-            }
-            return h(func())
-          }
-        },
-        {
-          title: '涨跌',
-          key: 'rose',
-          // width: '74px',
-          sortable: true,
-          render: function (h, params) {
-            let func = function () {
-              return {
-                template:
-                  `<div
-                      style="
-                        width:74px;
-                        padding-left:8px;
-                        height:30px;
-                        line-height: 30px;
-                        margin:10px auto;
-                      ">
-                      <span v-show="${params.row.rose}>0" style="color:#D45858;">${params.row.rose}</span>
-                      <span v-show="${params.row.rose}<0" style="color:#008069;">${params.row.rose}</span>
-                   </div>`
-              }
-            }
-            return h(func())
-          }
-        },
-        {
-          title: '价格趋势(3日)',
-          key: '',
-          // width: '120px',
-          render: (h, params) => {
-            // console.log(params)
-            return h(EchartsLineCommon, {
-              style: {
-                boxSizing: 'border-box',
-                width: '120px'
-              },
-              props: {
-                'id': params.row.sellsymbol + params.index + params.row.area,
-                'options': {
-                  // backgroundColor: 'transparent',
-                  xAxis: {
-                    type: 'category',
-                    boundaryGap: ['1%'],
-                    show: false,
-                    data: [2.35, 1.23, 1.89, 1.24, 2.1, 1.59, 0.1, 2.35, 1.23]
-                  },
-                  yAxis: {
-                    type: 'value',
-                    boundaryGap: ['30%', '70%'],
-                    show: false
-                  },
-                  series: [
-                    {
-                      type: 'line',
-                      smooth: 0.3,
-                      color: ['#338ff5'],
-                      data: params.row.tendency,
-                      symbolSize: 0
-                    }
-                  ]
-                },
-                'style': {
-                  // width: '106px'
-                }
-              }
-            //   domProps: {
-            //     options: this.options
-            //   }
-            })
-          }
-        },
-        {
-          title: ' ',
-          key: 'collect',
-          methods: {
-            toggleClick () {
-              console.log(1)
-            }
-          },
-          render: function (h, params) {
-            let func = function () {
-              return {
-                template:
-                  `<div
-                      style="
-                        width:74px;
-                        padding-left:8px;
-                        height:30px;
-                        line-height: 30px;
-                        margin:10px auto;
-                      ">
-                      <Icon type="md-star" v-on="listeners"/>
-                   </div>`
-              }
-            }
-            return h(func())
-          }
-          // width: '36px',
-          // render: (h, params) => {
-          //   if (this.collectList[params.row.id]) {
-          //     return h('Icon', {
-          //       style: {
-          //         fontSize: '20px',
-          //         paddingLeft: '14px',
-          //         cursor: 'pointer',
-          //         color: '#f5c34a'
-          //       },
-          //       class: {
-          //         active: true
-          //       },
-          //       props: {
-          //         type: 'md-star-outline'
-          //         // type: 'md-star'
-          //       },
-          //       on: {
-          //         click: () => {
-          //           // console.log(self)
-          //           console.log(params.row.id)
-          //           if (this.collectList[params.row.id]) {
-          //             this.collectList[params.row.id] = false
-          //           } else {
-          //             this.collectList[params.row.id] = true
-          //           }
-          //           console.log(this.collectList[params.row.id])
-          //         }
-          //       }
-          //     })
-          //   }
-          // }
-        }
-      ]
+      toggleSideList: []
     }
   },
   created () {
     require('../../../static/css/list/Home/MarketListHome.css')
     require('../../../static/css/theme/day/Home/MarketListHomeDay.css')
     require('../../../static/css/theme/night/Home/MarketListHomeNight.css')
-
+    // 获取tab个数
+    this.tabList = [
+      {
+        id: 0,
+        name: 'first',
+        label: '全部'
+      },
+      {
+        id: 1,
+        name: 'second',
+        label: '主交易区'
+      },
+      {
+        id: 2,
+        name: 'third',
+        label: '创新区'
+      }
+    ]
+    // 获取本地搜藏列表
+    this.collectList = JSON.parse(getStore('collectList')) || []
+    this.collectList.forEach((item) => {
+      this.collectStatusList[item.id] = true
+    })
     // 请求行情数据
     this.marketList = [
+      {
+        area: '搜索区',
+        id: this.searchAreaId,
+        content: []
+      },
+      {
+        area: '自选区', // 交易区名称
+        id: this.collectAreaId,
+        content: []
+      },
       {
         area: 'BTC', // 交易区名称
         id: 0,
@@ -585,26 +467,26 @@ export default{
             id: 0, // 交易对id
             image: 'https://www.fubt.top//fubt/upload/coin/a7e56fc38ea44e1f8ed4c395193ec2e0组.png', // 币种图标
             sellsymbol: 'FUC', // 币种简称
-            sellname: '富比特', // 币种全程
+            sellname: '富链', // 币种全程
             area: 'BTC', // 交易区
-            price: 0.21761232, // 最新价格
+            price: 0.21761239, // 最新价格
             high: 0.21761232, // 最高价
             low: 0.21761232, // 最低价
             volume: 21761232, // 24小时成交量
-            rose: 0.16123, // 涨跌
+            rose: -0.16123, // 涨跌
             tendency: [2.35, 1.23, 1.89, 1.24, 2.1, 1.59, 0.1, 2.35],
             hot: false // 是否为最热交易对
           },
           {
             id: 1, // 交易对id
             image: 'https://www.fubt.top//fubt/upload/coin/a7e56fc38ea44e1f8ed4c395193ec2e0组.png', // 币种图标
-            sellsymbol: 'FBT', // 币种简称
-            sellname: '富比特', // 币种全程
+            sellsymbol: 'AiFC', // 币种简称
+            sellname: 'Aifc', // 币种全程
             area: 'BTC', // 交易区
-            price: 0.21761232, // 最新价格
-            high: 0.21761232, // 最高价
+            price: 0.20761232, // 最新价格
+            high: 0.21721232, // 最高价
             low: 0.21761232, // 最低价
-            volume: 21761232, // 24小时成交量
+            volume: 21461232, // 24小时成交量
             rose: 0.16123, // 涨跌
             tendency: [2.35, 1.23, 1.89, 1.24, 2.1, 1.59],
             hot: false // 是否为最热交易对
@@ -626,11 +508,11 @@ export default{
           {
             id: 3, // 交易对id
             image: 'https://www.fubt.top//fubt/upload/coin/a7e56fc38ea44e1f8ed4c395193ec2e0组.png', // 币种图标
-            sellsymbol: 'FUC', // 币种简称
-            sellname: '富比特', // 币种全程
+            sellsymbol: 'LTC', // 币种简称
+            sellname: '莱特币', // 币种全程
             area: 'BTC', // 交易区
-            price: 0.21761232, // 最新价格
-            high: 0.21761232, // 最高价
+            price: 0.21711292, // 最新价格
+            high: 0.21761239, // 最高价
             low: 0.21761232, // 最低价
             volume: 21761232, // 24小时成交量
             rose: 0.16123, // 涨跌
@@ -640,22 +522,22 @@ export default{
           {
             id: 4, // 交易对id
             image: 'https://www.fubt.top//fubt/upload/coin/a7e56fc38ea44e1f8ed4c395193ec2e0组.png', // 币种图标
-            sellsymbol: 'FUC', // 币种简称
-            sellname: '富比特', // 币种全程
+            sellsymbol: 'ETH', // 币种简称
+            sellname: '以太坊', // 币种全程
             area: 'BTC', // 交易区
             price: 0.21761232, // 最新价格
             high: 0.21761232, // 最高价
             low: 0.21761232, // 最低价
             volume: 21761232, // 24小时成交量
-            rose: 0.16123, // 涨跌
+            rose: -0.16123, // 涨跌
             tendency: [1.23, 1.24, 2.35, 2.1, 1.59, 1.89],
             hot: true // 是否为最热交易对
           },
           {
             id: 5, // 交易对id
             image: 'https://www.fubt.top//fubt/upload/coin/a7e56fc38ea44e1f8ed4c395193ec2e0组.png', // 币种图标
-            sellsymbol: 'FUC', // 币种简称
-            sellname: '富比特', // 币种全程
+            sellsymbol: 'EOS', // 币种简称
+            sellname: 'EOS', // 币种全程
             area: 'BTC', // 交易区
             price: 0.21761232, // 最新价格
             high: 0.21761232, // 最高价
@@ -668,8 +550,8 @@ export default{
           {
             id: 6, // 交易对id
             image: 'https://www.fubt.top//fubt/upload/coin/a7e56fc38ea44e1f8ed4c395193ec2e0组.png', // 币种图标
-            sellsymbol: 'FUC', // 币种简称
-            sellname: '富比特', // 币种全程
+            sellsymbol: 'SWFTC', // 币种简称
+            sellname: 'SWFTC', // 币种全程
             area: 'BTC', // 交易区
             price: 0.21761232, // 最新价格
             high: 0.21761232, // 最高价
@@ -682,8 +564,8 @@ export default{
           {
             id: 7, // 交易对id
             image: 'https://www.fubt.top//fubt/upload/coin/a7e56fc38ea44e1f8ed4c395193ec2e0组.png', // 币种图标
-            sellsymbol: 'FUC', // 币种简称
-            sellname: '富比特', // 币种全程
+            sellsymbol: 'TOPC', // 币种简称
+            sellname: 'TOPC', // 币种全程
             area: 'BTC', // 交易区
             price: 0.21761232, // 最新价格
             high: 0.21761232, // 最高价
@@ -696,8 +578,22 @@ export default{
           {
             id: 8, // 交易对id
             image: 'https://www.fubt.top//fubt/upload/coin/a7e56fc38ea44e1f8ed4c395193ec2e0组.png', // 币种图标
-            sellsymbol: 'FUC', // 币种简称
-            sellname: '富比特', // 币种全程
+            sellsymbol: 'OMG', // 币种简称
+            sellname: 'OMG', // 币种全程
+            area: 'BTC', // 交易区
+            price: 0.21761232, // 最新价格
+            high: 0.21761232, // 最高价
+            low: 0.21761232, // 最低价
+            volume: 21761232, // 24小时成交量
+            rose: -0.16123, // 涨跌
+            tendency: [1.23, 1.24, 2.35, 2.1, 1.59, 6.89],
+            hot: false // 是否为最热交易对
+          },
+          {
+            id: 9, // 交易对id
+            image: 'https://www.fubt.top//fubt/upload/coin/a7e56fc38ea44e1f8ed4c395193ec2e0组.png', // 币种图标
+            sellsymbol: 'IOST', // 币种简称
+            sellname: 'IOST', // 币种全程
             area: 'BTC', // 交易区
             price: 0.21761232, // 最新价格
             high: 0.21761232, // 最高价
@@ -708,10 +604,24 @@ export default{
             hot: false // 是否为最热交易对
           },
           {
-            id: 9, // 交易对id
+            id: 10, // 交易对id
             image: 'https://www.fubt.top//fubt/upload/coin/a7e56fc38ea44e1f8ed4c395193ec2e0组.png', // 币种图标
-            sellsymbol: 'FUC', // 币种简称
-            sellname: '富比特', // 币种全程
+            sellsymbol: 'BTM', // 币种简称
+            sellname: 'BTM', // 币种全程
+            area: 'BTC', // 交易区
+            price: 0.21761232, // 最新价格
+            high: 0.21761232, // 最高价
+            low: 0.21761232, // 最低价
+            volume: 21761232, // 24小时成交量
+            rose: 0.16123, // 涨跌
+            tendency: [1.23, 1.24, 2.35, 2.1, 1.59, 6.89],
+            hot: false // 是否为最热交易对
+          },
+          {
+            id: 11, // 交易对id
+            image: 'https://www.fubt.top//fubt/upload/coin/a7e56fc38ea44e1f8ed4c395193ec2e0组.png', // 币种图标
+            sellsymbol: 'BTM', // 币种简称
+            sellname: 'BTM', // 币种全程
             area: 'BTC', // 交易区
             price: 0.21761232, // 最新价格
             high: 0.21761232, // 最高价
@@ -728,7 +638,7 @@ export default{
         id: 1,
         content: [
           {
-            id: 10, // 交易对id
+            id: 22, // 交易对id
             image: 'https://www.fubt.top//fubt/upload/coin/a7e56fc38ea44e1f8ed4c395193ec2e0组.png', // 币种图标
             sellsymbol: 'FUC', // 币种简称
             sellname: '富比特', // 币种全程
@@ -742,7 +652,7 @@ export default{
             hot: true // 是否为最热交易对
           },
           {
-            id: 11, // 交易对id
+            id: 23, // 交易对id
             image: 'https://www.fubt.top//fubt/upload/coin/a7e56fc38ea44e1f8ed4c395193ec2e0组.png', // 币种图标
             sellsymbol: 'FUC', // 币种简称
             sellname: '富比特', // 币种全程
@@ -756,7 +666,7 @@ export default{
             hot: false // 是否为最热交易对
           },
           {
-            id: 12, // 交易对id
+            id: 24, // 交易对id
             image: 'https://www.fubt.top//fubt/upload/coin/a7e56fc38ea44e1f8ed4c395193ec2e0组.png', // 币种图标
             sellsymbol: 'FUC', // 币种简称
             sellname: '富比特', // 币种全程
@@ -770,7 +680,7 @@ export default{
             hot: false // 是否为最热交易对
           },
           {
-            id: 13, // 交易对id
+            id: 25, // 交易对id
             image: 'https://www.fubt.top//fubt/upload/coin/a7e56fc38ea44e1f8ed4c395193ec2e0组.png', // 币种图标
             sellsymbol: 'FUC', // 币种简称
             sellname: '富比特', // 币种全程
@@ -784,7 +694,7 @@ export default{
             hot: false // 是否为最热交易对
           },
           {
-            id: 14, // 交易对id
+            id: 26, // 交易对id
             image: 'https://www.fubt.top//fubt/upload/coin/a7e56fc38ea44e1f8ed4c395193ec2e0组.png', // 币种图标
             sellsymbol: 'FUC', // 币种简称
             sellname: '富比特', // 币种全程
@@ -798,7 +708,7 @@ export default{
             hot: false // 是否为最热交易对
           },
           {
-            id: 15, // 交易对id
+            id: 27, // 交易对id
             image: 'https://www.fubt.top//fubt/upload/coin/a7e56fc38ea44e1f8ed4c395193ec2e0组.png', // 币种图标
             sellsymbol: 'FUC', // 币种简称
             sellname: '富比特', // 币种全程
@@ -812,7 +722,7 @@ export default{
             hot: false // 是否为最热交易对
           },
           {
-            id: 16, // 交易对id
+            id: 28, // 交易对id
             image: 'https://www.fubt.top//fubt/upload/coin/a7e56fc38ea44e1f8ed4c395193ec2e0组.png', // 币种图标
             sellsymbol: 'FUC', // 币种简称
             sellname: '富比特', // 币种全程
@@ -826,28 +736,245 @@ export default{
             hot: false // 是否为最热交易对
           }
         ]
+      },
+      {
+        area: 'USDT', // 交易区名称
+        id: 2,
+        content: [
+          {
+            id: 38, // 交易对id
+            image: 'https://www.fubt.top//fubt/upload/coin/a7e56fc38ea44e1f8ed4c395193ec2e0组.png', // 币种图标
+            sellsymbol: 'FUC', // 币种简称
+            sellname: '富比特', // 币种全程
+            area: 'USDT', // 交易区
+            price: 0.21761232, // 最新价格
+            high: 0.21761232, // 最高价
+            low: 0.21761232, // 最低价
+            volume: 21761232, // 24小时成交量
+            rose: 0.16123, // 涨跌
+            tendency: [1.23, 1.24, 2.35, 2.1, 1.59, 6.89],
+            hot: true // 是否为最热交易对
+          },
+          {
+            id: 39, // 交易对id
+            image: 'https://www.fubt.top//fubt/upload/coin/a7e56fc38ea44e1f8ed4c395193ec2e0组.png', // 币种图标
+            sellsymbol: 'FUC', // 币种简称
+            sellname: '富比特', // 币种全程
+            area: 'USDT', // 交易区
+            price: 0.21761232, // 最新价格
+            high: 0.21761232, // 最高价
+            low: 0.21761232, // 最低价
+            volume: 21761232, // 24小时成交量
+            rose: 0.16123, // 涨跌
+            tendency: [1.23, 1.24, 2.35, 2.1, 1.59, 6.89],
+            hot: false // 是否为最热交易对
+          },
+          {
+            id: 40, // 交易对id
+            image: 'https://www.fubt.top//fubt/upload/coin/a7e56fc38ea44e1f8ed4c395193ec2e0组.png', // 币种图标
+            sellsymbol: 'FUC', // 币种简称
+            sellname: '富比特', // 币种全程
+            area: 'USDT', // 交易区
+            price: 0.21761232, // 最新价格
+            high: 0.21761232, // 最高价
+            low: 0.21761232, // 最低价
+            volume: 21761232, // 24小时成交量
+            rose: 0.16123, // 涨跌
+            tendency: [1.23, 1.24, 2.35, 2.1, 1.59, 6.89],
+            hot: false // 是否为最热交易对
+          },
+          {
+            id: 41, // 交易对id
+            image: 'https://www.fubt.top//fubt/upload/coin/a7e56fc38ea44e1f8ed4c395193ec2e0组.png', // 币种图标
+            sellsymbol: 'FUC', // 币种简称
+            sellname: '富比特', // 币种全程
+            area: 'USDT', // 交易区
+            price: 0.21761232, // 最新价格
+            high: 0.21761232, // 最高价
+            low: 0.21761232, // 最低价
+            volume: 21761232, // 24小时成交量
+            rose: 0.16123, // 涨跌
+            tendency: [1.23, 1.24, 2.35, 2.1, 1.59, 6.89],
+            hot: false // 是否为最热交易对
+          },
+          {
+            id: 42, // 交易对id
+            image: 'https://www.fubt.top//fubt/upload/coin/a7e56fc38ea44e1f8ed4c395193ec2e0组.png', // 币种图标
+            sellsymbol: 'FUC', // 币种简称
+            sellname: '富比特', // 币种全程
+            area: 'USDT', // 交易区
+            price: 0.21761232, // 最新价格
+            high: 0.21761232, // 最高价
+            low: 0.21761232, // 最低价
+            volume: 21761232, // 24小时成交量
+            rose: 0.16123, // 涨跌
+            tendency: [1.23, 1.24, 2.35, 2.1, 1.59, 6.89],
+            hot: false // 是否为最热交易对
+          },
+          {
+            id: 43, // 交易对id
+            image: 'https://www.fubt.top//fubt/upload/coin/a7e56fc38ea44e1f8ed4c395193ec2e0组.png', // 币种图标
+            sellsymbol: 'FUC', // 币种简称
+            sellname: '富比特', // 币种全程
+            area: 'USDT', // 交易区
+            price: 0.21761232, // 最新价格
+            high: 0.21761232, // 最高价
+            low: 0.21761232, // 最低价
+            volume: 21761232, // 24小时成交量
+            rose: 0.16123, // 涨跌
+            tendency: [1.23, 1.24, 2.35, 2.1, 1.59, 6.89],
+            hot: false // 是否为最热交易对
+          },
+          {
+            id: 44, // 交易对id
+            image: 'https://www.fubt.top//fubt/upload/coin/a7e56fc38ea44e1f8ed4c395193ec2e0组.png', // 币种图标
+            sellsymbol: 'FUC', // 币种简称
+            sellname: '富比特', // 币种全程
+            area: 'USDT', // 交易区
+            price: 0.21761232, // 最新价格
+            high: 0.21761232, // 最高价
+            low: 0.21761232, // 最低价
+            volume: 21761232, // 24小时成交量
+            rose: 0.16123, // 涨跌
+            tendency: [1.23, 1.24, 2.35, 2.1, 1.59, 6.89],
+            hot: false // 是否为最热交易对
+          }
+        ]
       }
     ]
-    this.marketList.forEach(() => {
-      this.toggleSideList.push(true)
-      // this.toggleSideList.push(false)
-    })
+    this.getFilterMarketList(this.marketList)
+    if (this.collectList.length) {
+      this.setMarketList(this.collectAreaId, this.collectList)
+    }
+    this.initSideBar(true)
     console.log(this.toggleSideList)
   },
-  mounted () {},
+  mounted () {
+    // 搜索区、自选区禁止拖拽
+    window.ondragstart = (e) => {
+      const id = e.target.id.split('.')[1]
+      if (id == this.collectAreaId || id == this.searchAreaId) {
+        return false
+      }
+    }
+  },
   activited () {},
   update () {},
   beforeRouteUpdate () {},
   methods: {
     ...mapMutations([]),
+    // 初始化 侧边栏正反面
+    initSideBar (status) {
+      this.marketList.forEach((item) => {
+        this.toggleSideList[item.id] = status
+      })
+    },
+    // market过滤
+    getFilterMarketList (list) {
+      // 单个查看更多
+      if (this.itemAreaMoreStatus) {
+        list.forEach((item, index) => {
+          if (item.id == this.activeAreaId) {
+            this.filterMarketList = list.slice(index, index + 1)
+            return false
+          }
+        })
+      } else {
+        if (!this.tabContentMoreStatus) {
+          this.filterMarketList = list.slice(0, 4)
+        } else if (this.tabContentMoreStatus) {
+          this.filterMarketList = list
+        }
+      }
+    },
+    // 单个交易区查看更多
+    itemViewMore (id, content) {
+      const length = content.length
+      if (length < 10) {
+        return false
+      }
+      this.activeAreaId = id
+      this.itemAreaMoreStatus = !this.itemAreaMoreStatus
+      this.tabContentMoreStatus = false
+      this.toggleViewMoreBtnText()
+      this.getFilterMarketList(this.marketList)
+    },
+    // marketList 赋值
+    setMarketList (id, content) {
+      this.marketList.forEach((item) => {
+        if (item.id == id) {
+          item.content = content
+          return false
+        }
+      })
+      this.getFilterMarketList(this.marketList)
+    },
+    // 搜索关键字
+    searchFromMarketList () {
+      this.searchList = []
+      this.setMarketList(this.searchAreaId, [])
+      if (this.searchKeyWord.trim() !== '') {
+        this.marketList.forEach((item) => {
+          let status = item.id !== this.searchAreaId && item.id !== this.collectAreaId
+          if (status) {
+            item.content.forEach((innerItem) => {
+              let result1 = innerItem.sellsymbol.search(this.searchKeyWord.toUpperCase())
+              let result2 = innerItem.sellname.search(this.searchKeyWord)
+              if (result1 !== -1 || result2 !== -1) {
+                console.log(this.searchList)
+                this.searchList.push(innerItem)
+              }
+            })
+          }
+        })
+        this.setMarketList(this.searchAreaId, this.searchList)
+      } else {
+        this.setMarketList(this.searchAreaId, [])
+      }
+    },
+    // 切换查看更多
+    toggleTabContentHeightStatus () {
+      this.itemAreaMoreStatus = false
+      this.tabContentMoreStatus = !this.tabContentMoreStatus
+      this.toggleViewMoreBtnText()
+      this.getFilterMarketList(this.marketList)
+    },
+    // 切换 查看更多按钮文字
+    toggleViewMoreBtnText () {
+      this.itemViewMoreBtnText = this.itemAreaMoreStatus ? '收起' : '查看更多'
+      this.moreBtnText = this.tabContentMoreStatus ? '收起' : '查看更多交易区'
+    },
+    // 切换收藏
+    toggleCollect (id, status, row) {
+      console.log(row)
+      status = Boolean(status)
+      // this.collectStatusList[id] = Boolean(status)
+      this.$set(this.collectStatusList, id, status)
+      if (status) {
+      //  添加收藏
+        this.collectList.push(row)
+      } else {
+      // 取消收藏
+        this.collectList.forEach((item, index) => {
+          if (item.id == row.id) {
+            this.collectList.splice(index, 1)
+          }
+        })
+      }
+      setStore('collectList', this.collectList)
+      this.setMarketList(this.collectAreaId, this.collectList)
+      console.log(this.marketList)
+    },
     // 切换正反面
     async toggleSide (index, status) {
+      if (index == this.searchAreaId || index == this.collectAreaId) {
+        return
+      }
       if (this.flag) {
         this.flag = false
         this.$set(this.toggleSideList, index, Boolean(status))
         await setTimeout(() => {
           this.flag = true
-          console.log(this.flag)
         }, 500)
       }
     },
@@ -893,19 +1020,41 @@ export default{
     ...mapState([
       'theme'
     ])
+    // // 筛选列表
+    // filterMarketList () {
+    //   // 单个查看更多
+    //   if (this.itemAreaMoreStatus) {
+    //     this.marketList.forEach((item, index) => {
+    //       console.log(item)
+    //       if (item.id == this.activeAreaId) {
+    //         return this.marketList.slice(index, index + 1)
+    //       }
+    //     })
+    //   } else {
+    //     if (!this.tabContentMoreStatus) {
+    //       return this.marketList.slice(0, 4)
+    //     } else if (this.tabContentMoreStatus) {
+    //       return this.marketList
+    //     }
+    //   }
+    // }
   },
-  watch: {}
+  watch: {
+    filterMarketList (newest, old) {
+      console.log(newest)
+      console.log(old)
+    }
+  }
 }
 </script>
 <style scoped lang="scss">
   @import "../../../static/css/scss/Home/MarketListHome.scss";
   .market-list-box{
-    min-height:1440px;
     width:100%;
     overflow: hidden;
     /*表头*/
     .inner-box{
-      width:1150px;
+      width:1130px;
       margin: 78px auto;
       position: relative;
       >.search-box{
@@ -940,104 +1089,157 @@ export default{
       }
       /*列表主要内容*/
       .tab-content{
-        min-height:1255px;
+        &.tab-height{
+          /*height:1320px;*/
+        }
+        /*min-height:1255px;*/
         /*background-color: darkolivegreen;*/
+        position: relative;
         /*单个交易区*/
         >.tab-item{
-          display:flex;
-          margin-bottom:50px;
-          /*侧边栏*/
-         >.left{
-           width:210px;
-           min-height:560px;
-           /*background-color: #f40;*/
-           position: relative;
-           text-align: center;
-           >div{
-             position: absolute;
-             top:0;
-             left:0;
-             height:100%;
-             width:100%;
-           }
-           >.right-side,>.reverse-side{
-             &.animate {
-               transition-property: all;
-               transition-duration: 2s;
-               /*transition-timing-function: linear;*/
-               transition-timing-function: ease-in-out;
+          >.inner-item-box{
+           margin-bottom:20px;
+           display:flex;
+            /*transition: all 1s;*/
+            &.max-height {
+              max-height:560px;
+            }
+            &.force-height{
+              height:560px !important;
+            }
+            overflow: hidden;
+           /*侧边栏*/
+           >.left{
+             width:210px;
+             /*min-height:560px;*/
+             /*background-color: #f40;*/
+             position: relative;
+             text-align: center;
+             &:before{
+               content:'';
+               position: absolute;
+               top:1px;
+               right:-26px;
+               width:0px;
+               border: 13px solid transparent;
+               border-left-color: #526e90;
+               height:0px;
              }
-             >.top{
-               margin-top:30px;
-               font-size: 30px;
-               color:#fff;
-               padding:20px 0;
-               background: url(../../assets/develop/market-list-border.png) no-repeat center bottom;
+             >div{
+               position: absolute;
+               top:0;
+               left:0;
+               height:100%;
+               width:100%;
              }
-           }
-           /*正面*/
-           >.right-side{
-             background:linear-gradient(#1D3862,#305FA7);
-             >.bottom{
-               margin-top:360px;
+             >.right-side,>.reverse-side{
+               &.animate {
+                 transition-property: all;
+                 transition-duration: 2s;
+                 /*transition-timing-function: linear;*/
+                 transition-timing-function: ease-in-out;
+               }
+               >.top{
+                 margin-top:30px;
+                 font-size: 30px;
+                 color:#fff;
+                 padding:20px 0;
+                 background: url(../../assets/develop/market-list-border.png) no-repeat center bottom;
+               }
              }
-           }
-
-           /*反面*/
-           >.reverse-side{
-             background:linear-gradient(#2F398C,#3D4E8D);
-             >.bottom{
-               margin-top:30px;
-               >.hot-list{
-                 min-height:330px;
-                 box-sizing: border-box;
-                 >.hot-item{
+             /*正面*/
+             >.right-side{
+               background:linear-gradient(#1D3862,#305FA7);
+               position: relative;
+               top:-30px;
+               >.bottom{
+                 position: absolute;
+                 left:50%;
+                 transform: translateX(-50%);
+                 bottom:20px;
+               }
+             }
+             /*反面*/
+             >.reverse-side{
+               background:linear-gradient(#2F398C,#3D4E8D);
+               position: relative;
+               top:-30px;
+               >.bottom{
+                 margin-top:30px;
+                 >.hot-list{
+                   min-height:330px;
                    box-sizing: border-box;
-                   >a{
-                     color:#fff;
-                     height:60px;
-                     display: inline-block;
-                     width:100%;
-                     >.left,>.right{
-                       width:48%;
+                   >.hot-item{
+                     box-sizing: border-box;
+                     >a{
+                       color:#fff;
                        height:60px;
                        display: inline-block;
-                       vertical-align: middle;
-                     }
-                     >.left{
-                       line-height: 60px;
-                     }
-                     >.right{
-                       >.top{
-                         &.up{
-                           color:#D45858;
-                         }
-                         &.down{
-                           color:#008069;
-                         }
-                       }
-                       text-align: left;
-                       padding-top:10px;
-                       >.top,>.bottom{
-                         line-height: 20px;
+                       width:100%;
+                       >.left,>.right{
+                         width:48%;
+                         height:60px;
                          display: inline-block;
-                         height:20px;
-                         width:100%;
+                         vertical-align: middle;
+                       }
+                       >.left{
+                         line-height: 60px;
+                       }
+                       >.right{
+                         >.top{
+                           &.up{
+                             color:#D45858;
+                           }
+                           &.down{
+                             color:#008069;
+                           }
+                         }
+                         text-align: left;
+                         padding-top:10px;
+                         .collect-box{
+                           text-align: center;
+                         }
+                         >.top,>.bottom{
+                           line-height: 20px;
+                           display: inline-block;
+                           height:20px;
+                           width:100%;
+                         }
                        }
                      }
                    }
                  }
                }
+               >.more-btn{
+                 position: absolute;
+                 left:50%;
+                 transform: translateX(-50%);
+                 bottom:20px;
+               }
              }
            }
+           /*主要内容*/
+           >.right{
+             margin:13px 0 0 0;
+             /*height:547px;*/
+             width:986px;
+             background-color: transparent;
+             overflow: hidden;
+
+           }
          }
-          /*主要内容*/
-          >.right{
-            margin:13px 0 0 0;
-            /*height:547px;*/
-            width:940px;
-            background-color: transparent;
-            overflow: hidden;
+        }
+        >.more-box{
+          text-align: center;
+          >.icon{
+            color:#273C69;
+            margin-bottom:20px;
+          }
+          >.el-button{
+            background-color: #305794;
+            border:none;
+            color:#fff;
+            font-size: 16px;
           }
         }
       }
