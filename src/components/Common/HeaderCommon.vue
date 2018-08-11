@@ -81,6 +81,11 @@
                 </li>
               </ul>
             </li>
+          <li class="nav-item">
+            <router-link to="/PersonalCenter">
+              <span>个人中心</span>
+            </router-link>
+          </li>
           </ul>
         </div>
         <!--注册登录-->
@@ -408,7 +413,7 @@ export default{
   }
 }
 </script>
-<style scoped lang="scss">
+<style scoped lang="scss" type="text/scss">
   @import "../../../static/css/scss/Common/HeaderCommon.scss";
 .nav-box{
   width:100%;

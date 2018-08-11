@@ -1,0 +1,28 @@
+/*个人中心（白色主题）*/
+.security-center.personal.day .el-table th, .el-table tr{
+  background-color: #CCCCCC;
+}
+.security-center.personal.day .el-table thead {
+  color: #CCCCCC;
+}
+.security-center.personal.day .el-table th.is-leaf {
+  border-bottom: 1px solid #FFFFFF;
+}
+.security-center.personal.day .el-table td{
+  border-bottom: 1px solid #FFFFFF;
+  padding: 7px 0;
+  background-color: #ccc;
+  color: #333;
+}
+.security-center.personal.day .el-table::before{
+  height: 0;
+}
+.security-center.personal.day .el-table--enable-row-hover .el-table__body tr:hover>td{
+  background-color: #eeeeee;
+}
+.security-center.personal.day .el-table{
+  color: #fff;
+}
+.security-center.personal.day .el-table th>.cell.highlight{
+  color: #b1b1b1;
+}
