@@ -117,3 +117,24 @@ button,input{
 .font-size16{
   font-size: 16px;
 }
+/*杨孝喜添加*/
+/*个人中心标题高度*/
+.personal-height {
+  height: 70px;
+}
+/*个人中心内容最小高度*/
+.min-height500{
+  min-height: 500px;
+}
+/*个人中心右侧 标题行高*/
+.line-height70{
+  line-height: 70px;
+}
+/*个人中心右侧嫩容区 标题和主题内容之间的间距*/
+.margin-top5 {
+  margin-top: 5px;
+}
+/*个人中心右侧 标题和主内容左边距*/
+.padding-left20 {
+  padding-left: 20px;
+}

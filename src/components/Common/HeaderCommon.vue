@@ -35,6 +35,11 @@
               <span>活动中心</span>
             </router-link>
           </li>
+          <li class="nav-item">
+            <router-link to="/PersonalCenter">
+              <span>个人中心</span>
+            </router-link>
+          </li>
         </ul>
         <ul class="sub-nav-list">
           <li class="sub-nav-item">
