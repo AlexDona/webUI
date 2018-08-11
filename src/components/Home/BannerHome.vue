@@ -1,9 +1,8 @@
 <template>
   <div
     class="banner-box home"
-    :style="{
-      background:`url(${bannerBackgroundImage}) no-repeat center center`
-    }"
+    :style="{background:`url(${bannerBackgroundImage}) no-repeat center center`}"
+    :class="{'margin-top':true}"
   >
     <SliderHome/>
   </div>
@@ -36,6 +35,9 @@ export default {
 </script>
 <style scoped lang="scss">
   .banner-box{
+    &.margin-top{
+      margin-top:96px;
+    }
     height:500px;
     width:100%;
     background:linear-gradient(#1d3863,#251f3d);

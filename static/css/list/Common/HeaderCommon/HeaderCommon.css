@@ -22,10 +22,21 @@
 .nav-box.common .el-dialog{
   border-radius: 10px;
   overflow: hidden;
+  height:380px;
+}
+.v-modal{
+  /*position: relative;*/
+  z-index: 2007 !important;
+}
+.el-select-dropdown{
+  /*z-index: 2008 !important;*/
+}
+.nav-box.common .el-dialog__body>p{
+  line-height:70px;
 }
 .nav-box.common .el-dialog__footer {
   border: none;
-  padding: 12px 40px;
+  padding: 35px 40px;
 }
 .nav-box.common .el-dialog__footer .el-button{
   width:100%;
@@ -38,34 +49,6 @@
 .nav-box.common .el-select{
   width:100%;
 }
-/*.nav-box.common .ivu-select-large .ivu-select-item {*/
-  /*padding: 14px 16px;*/
-/*}*/
-
-
-/*.nav-box.common .ivu-radio-group-button .ivu-radio-wrapper {*/
-  /*border-radius: 4px;*/
-  /*margin-right: 40px;*/
-  /*width: 110px;*/
-  /*height: 40px;*/
-  /*text-align: center;*/
-  /*line-height: 40px;*/
-/*}*/
-
-
-/*.nav-box.common .ivu-radio-group-button .ivu-radio-wrapper:first-child {*/
-  /*!*border:1px solid;*!*/
-/*}*/
-
-/*.ivu-radio-group-button .ivu-radio-wrapper:before, .ivu-radio-group-button .ivu-radio-wrapper:after {*/
-  /*width: 0;*/
-/*}*/
-
-/*.nav-box.common .ivu-radio-group-button .ivu-radio-wrapper-checked,*/
-/*.ivu-select-visible .ivu-select-selection,*/
-/*.ivu-btn-primary:focus {*/
-  /*box-shadow: none;*/
-/*}*/
 
 .el-input--suffix .el-input__inner,
 .el-select-dropdown__item selected hover,

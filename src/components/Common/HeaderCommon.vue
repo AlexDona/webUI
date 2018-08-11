@@ -4,232 +4,297 @@
     :class="{'day':theme == 'day','night':theme == 'night' }"
   >
     <div class="inner-box">
-      <!--导航-->
-      <div class="left nav">
-        <ul class="nav-list">
-          <li class="nav-item">
-            <a
-              href="#"
-              class="logo"
+      <div class="top">
+        <!--导航-->
+        <div class="left nav">
+          <ul class="nav-list">
+            <li class="nav-item">
+              <a
+                href="#"
+                class="logo"
+              >
+                <img class="img" :src="logoSrc" alt="">
+              </a>
+            </li>
+            <li class="nav-item">
+              <router-link to="/">
+                <!--<span>币币交易</span>-->
+                <span>{{$t('M.home')}}</span>
+              </router-link>
+            </li>
+            <li
+              class="nav-item"
+              @mouseenter="toggleShowSubNavBox('otc',1)"
+              @mouseleave="toggleShowSubNavBox('otc',0)"
             >
-            </a>
-          </li>
-          <li class="nav-item">
-            <router-link to="/">
-              <!--<span>币币交易</span>-->
-              <span>{{$t('M.home')}}</span>
-            </router-link>
-          </li>
-          <li class="nav-item">
-            <router-link to="/">
-              <span>OTC交易</span>
-            </router-link>
-          </li>
-          <li class="nav-item">
-            <router-link to="/">
-              <span>投资理财</span>
-            </router-link>
-          </li>
-          <li class="nav-item">
-            <router-link to="/">
-              <span>活动中心</span>
-            </router-link>
-          </li>
-        </ul>
-        <ul class="sub-nav-list">
-          <li class="sub-nav-item">
-            <router-link to="/">子导航</router-link>
-          </li>
-          <li class="sub-nav-item">
-            <router-link to="/">子导航</router-link>
-          </li>
-          <li class="sub-nav-item">
-            <router-link to="/">子导航</router-link>
-          </li>
-          <li class="sub-nav-item">
-            <router-link to="/">子导航</router-link>
-          </li>
-        </ul>
-      </div>
-      <!--注册登录-->
-      <div class="right login">
-        <ul class="ul-list">
-          <li class="li-item setting-li">
-            <!--设置（语言，换肤）-->
-            <button
-              class="setting"
-              @click="toggleShowSettingBox(1)"
+              <router-link to="/">
+                <span>OTC交易</span>
+              </router-link>
+              <!--otc子导航-->
+              <ul
+                class="sub-nav-list otc"
+                v-show="otcSubNavStatus"
+              >
+                <li class="sub-nav-item">
+                  <router-link to="/">商家申请</router-link>
+                </li>
+                <li class="sub-nav-item">
+                  <router-link to="/">发布广告</router-link>
+                </li>
+                <li class="sub-nav-item">
+                  <router-link to="/">广告管理</router-link>
+                </li>
+                <li class="sub-nav-item">
+                  <router-link to="/">商家统计</router-link>
+                </li>
+                <li class="sub-nav-item">
+                  <router-link to="/">报表统计</router-link>
+                </li>
+              </ul>
+            </li>
+            <li class="nav-item">
+              <router-link to="/">
+                <span>投资理财</span>
+              </router-link>
+            </li>
+            <li
+              class="nav-item"
+              @mouseenter="toggleShowSubNavBox('activity',1)"
+              @mouseleave="toggleShowSubNavBox('activity',0)"
             >
-              <svg class="icon font-size26" aria-hidden="true">
-                <use xlink:href="#icon-setting"></use>
-              </svg>
-            </button>
-          </li>
-          <li class="li-item">
-            <router-link to="/">
-              <span>登录</span>
-            </router-link>
-          </li>
-          <li class="li-split"></li>
-          <li class="li-item">
-            <router-link to="/">
-              <span>注册</span>
-            </router-link>
-          </li>
-          <!--切换语言-->
-          <li class="li-item">
-            <dl
-              class="lang-box"
-              @mouseenter="toggleShowLanguageBox(1)"
-              @mouseleave="toggleShowLanguageBox(0)"
-            >
-              <dt
-                class="lang-selected"
-                v-show="language=='zh_CN'"
+              <router-link to="/">
+                <span>活动中心</span>
+              </router-link>
+              <!--活动中心子导航-->
+              <ul
+                class="sub-nav-list activity-center"
+                v-show="activityCenterSubNavStatus"
               >
-                <svg class="icon" aria-hidden="true">
-                  <use xlink:href="#icon-zhongguo"></use>
-                </svg>
-                <span class="language-text">简体中文</span>
-                <i class="el-icon-caret-bottom
-"></i>
-              </dt>
-              <dt
-                class="lang-selected"
-                v-show="language=='en_US'"
+                <li class="sub-nav-item">
+                  <router-link to="/">新币投票</router-link>
+                </li>
+                <li class="sub-nav-item">
+                  <router-link to="/">上币申请</router-link>
+                </li>
+                <li class="sub-nav-item">
+                  <router-link to="/">邀请排行</router-link>
+                </li>
+              </ul>
+            </li>
+          </ul>
+        </div>
+        <!--注册登录-->
+        <div class="right login">
+          <ul class="ul-list">
+            <li class="li-item setting-li">
+              <!--设置（语言，换肤）-->
+              <button
+                class="setting"
+                @click="toggleShowSettingBox(1)"
               >
-                <svg class="icon" aria-hidden="true">
-                  <use xlink:href="#icon-yingguo"></use>
-                </svg>
-                <span class="language-text">English</span>
-                <i class="el-icon-caret-bottom
-"></i>
-              </dt>
-              <dt
-                class="lang-selected"
-                v-show="language=='zh_TW'"
-              >
-                <svg class="icon" aria-hidden="true">
-                  <use xlink:href="#icon-fantizhongwen"></use>
-                </svg>
-                <span class="language-text">繁体中文</span>
-                <i class="el-icon-caret-bottom
-"></i>
-              </dt>
-              <dt
-                class="lang-selected"
-                v-show="language=='ko_KR'"
-              >
-                <svg class="icon" aria-hidden="true">
-                  <use xlink:href="#icon-hanguo"></use>
-                </svg>
-                <span class="language-text">韩语</span>
-                <i class="el-icon-caret-bottom
-"></i>
-              </dt>
-              <dd
-                class="lang-list"
-                v-show="langSelecting"
-              >
-                <a
-                  class="lang-item"
-                  href="#"
-                  @click="changeLanguage('zh_CN')"
+                <svg
+                  class="icon font-size26"
+                 aria-hidden="true"
                 >
-                  <svg class="icon" aria-hidden="true">
+                  <use xlink:href="#icon-setting"></use>
+                </svg>
+              </button>
+            </li>
+            <li class="li-item">
+              <router-link to="/">
+                <span>登录</span>
+              </router-link>
+            </li>
+            <li class="li-split"></li>
+            <li class="li-item">
+              <router-link to="/">
+                <span>注册</span>
+              </router-link>
+            </li>
+            <!--切换语言-->
+            <li class="li-item">
+              <dl
+                class="lang-box"
+                @mouseenter="toggleShowLanguageBox(1)"
+                @mouseleave="toggleShowLanguageBox(0)"
+              >
+                <dt
+                  class="lang-selected"
+                  v-show="language=='zh_CN'"
+                >
+                  <svg
+                    class="icon"
+                    aria-hidden="true"
+                  >
                     <use xlink:href="#icon-zhongguo"></use>
                   </svg>
-                  简体中文
-                </a>
-                <a
-                  class="lang-item"
-                  href="#"
-                  @click="changeLanguage('en_US')"
+                  <span class="language-text">简体中文</span>
+                  <i class="el-icon-caret-bottom
+"></i>
+                </dt>
+                <dt
+                  class="lang-selected"
+                  v-show="language=='en_US'"
                 >
-                  <svg class="icon" aria-hidden="true">
+                  <svg
+                    class="icon"
+                    aria-hidden="true"
+                  >
                     <use xlink:href="#icon-yingguo"></use>
                   </svg>
-                  English
-                </a>
-                <a
-                  class="lang-item"
-                  href="#"
-                  @click="changeLanguage('zh_TW')"
+                  <span class="language-text">English</span>
+                  <i class="el-icon-caret-bottom
+"></i>
+                </dt>
+                <dt
+                  class="lang-selected"
+                  v-show="language=='zh_TW'"
                 >
-                  <svg class="icon" aria-hidden="true">
+                  <svg
+                    class="icon"
+                    aria-hidden="true"
+                  >
                     <use xlink:href="#icon-fantizhongwen"></use>
                   </svg>
-                  繁体中文
-                </a>
-                <a
-                  class="lang-item"
-                  href="#"
-                  @click="changeLanguage('ko_KR')"
+                  <span class="language-text">繁体中文</span>
+                  <i class="el-icon-caret-bottom
+"></i>
+                </dt>
+                <dt
+                  class="lang-selected"
+                  v-show="language=='ko_KR'"
                 >
-                  <svg class="icon" aria-hidden="true">
+                  <svg
+                    class="icon"
+                    aria-hidden="true"
+                  >
                     <use xlink:href="#icon-hanguo"></use>
                   </svg>
-                  韩语
-                </a>
-              </dd>
-            </dl>
-          </li>
-        </ul>
-      </div>
-      <!--设置弹窗-->
-      <!--<Modal-->
-        <!--width="470"-->
-        <!--class="nav-box common"-->
-        <!--v-model="showSetting"-->
-        <!---->
-
-      <!--&gt;-->
-      <el-dialog
-        :title="settingBoxTitle"
-        :visible.sync="showSetting"
-        width="470px"
-        :before-close="handleClose"
-        :class="{day:theme=='day',night:theme=='night' }"
-        class="nav-box-dialog"
-      >
-        <p class="title line-height50 font-size14">折算货币</p>
-        <!-- 折算货币选择 -->
-        <el-select v-model="activeConvertCurrency" placeholder="请选择">
-          <el-option
-            v-for="item in convertCurrencyList"
-            :value="item.value"
-            :key="item.value">
-          </el-option>
-
-        </el-select>
-
-        <p class="title line-height50 font-size14">主题</p>
-        <!-- 主题选择框 -->
-        <el-radio-group
-          @on-change="changeTheme"
-          v-model="activeTheme">
-        <el-radio-button
-          v-for="(item,index) in themeList"
-          :key="index"
-          :label="item.value"
-          border
-        >
-          {{item.label}}
-          <i
-            class="el-icon-check"
-           v-show="activeTheme==item.value"
-          ></i>
-        </el-radio-button>
-        </el-radio-group>
-        <!--底部-->
-        <div slot="footer" class="dialog-footer">
-          <el-button
-            size="large"
-            type="primary"
-            @click="changeSetting"
-          >确 定</el-button>
+                  <span class="language-text">韩语</span>
+                  <i class="el-icon-caret-bottom
+"></i>
+                </dt>
+                <dd
+                  class="lang-list"
+                  v-show="langSelecting"
+                >
+                  <a
+                    class="lang-item"
+                    href="#"
+                    @click="changeLanguage('zh_CN')"
+                  >
+                    <svg
+                      class="icon"
+                      aria-hidden="true"
+                    >
+                      <use xlink:href="#icon-zhongguo"></use>
+                    </svg>
+                    简体中文
+                  </a>
+                  <a
+                    class="lang-item"
+                    href="#"
+                    @click="changeLanguage('en_US')"
+                  >
+                    <svg
+                      class="icon"
+                      aria-hidden="true"
+                    >
+                      <use xlink:href="#icon-yingguo"></use>
+                    </svg>
+                    English
+                  </a>
+                  <a
+                    class="lang-item"
+                    href="#"
+                    @click="changeLanguage('zh_TW')"
+                  >
+                    <svg
+                      class="icon"
+                      aria-hidden="true"
+                    >
+                      <use xlink:href="#icon-fantizhongwen"></use>
+                    </svg>
+                    繁体中文
+                  </a>
+                  <a
+                    class="lang-item"
+                    href="#"
+                    @click="changeLanguage('ko_KR')"
+                  >
+                    <svg
+                      class="icon"
+                      aria-hidden="true"
+                    >
+                      <use xlink:href="#icon-hanguo"></use>
+                    </svg>
+                    韩语
+                  </a>
+                </dd>
+              </dl>
+            </li>
+          </ul>
         </div>
-      </el-dialog>
+      </div>
+      <div
+        class="bottom"
+        v-show="otcSubNavStatus||activityCenterSubNavStatus"
+      >
+      </div>
+      <div class="box">
+        <!--设置弹窗-->
+        <el-dialog
+          :title="settingBoxTitle"
+          :visible.sync="showSetting"
+          width="470px"
+          :before-close="handleClose"
+          :class="{day:theme=='day',night:theme=='night' }"
+          class="nav-box-dialog"
+        >
+          <p class="title line-height50 font-size14">折算货币</p>
+          <!-- 折算货币选择 -->
+          <el-select
+            v-model="activeConvertCurrency"
+            placeholder="请选择">
+            <el-option
+              v-for="item in convertCurrencyList"
+              :value="item.value"
+              :key="item.value">
+            </el-option>
+
+          </el-select>
+
+          <p class="title line-height50 font-size14">主题</p>
+          <!-- 主题选择框 -->
+          <el-radio-group
+            @on-change="changeTheme"
+            v-model="activeTheme">
+            <el-radio-button
+              v-for="(item,index) in themeList"
+              :key="index"
+              :label="item.value"
+              border
+            >
+              {{item.label}}
+              <i
+                class="el-icon-check"
+                v-show="activeTheme==item.value"
+              ></i>
+            </el-radio-button>
+          </el-radio-group>
+          <!--底部-->
+          <div
+            slot="footer"
+            class="dialog-footer"
+          >
+            <el-button
+              size="large"
+              type="primary"
+              @click="changeSetting"
+            >确 定</el-button>
+          </div>
+        </el-dialog>
+      </div>
     </div>
   </div>
 </template>
@@ -237,22 +302,7 @@
 import {mapState, mapMutations, mapActions} from 'vuex'
 import {setStore} from '../../utils'
 export default{
-  /*
-  * list: {},
-    props,
-    data () {
-      return {}
-    },
-    created () {},
-    mounted () {},
-    activited () {},
-    update () {},
-    beforeRouteUpdate () {},
-    methods: {},
-    filter: {},
-    computed: {},
-    watch: {}
-  */
+  components: {},
   data () {
     return {
       // 语言选择中
@@ -284,7 +334,13 @@ export default{
           value: 'day'
         }
       ],
-      activeTheme: ''
+      activeTheme: '',
+      // logo图片地址
+      logoSrc: require('../../assets/develop/logo.png'),
+      // otc 子导航显示状态
+      otcSubNavStatus: false,
+      // 活动中心子导航显示状态
+      activityCenterSubNavStatus: false
     }
   },
   created () {
@@ -303,6 +359,17 @@ export default{
       // 修改主题
       'CHANGE_THEME'
     ]),
+    // 显示状态切换（子导航）
+    toggleShowSubNavBox (item, status) {
+      switch (item) {
+        case 'otc':
+          this.otcSubNavStatus = status
+          break
+        case 'activity':
+          this.activityCenterSubNavStatus = status
+          break
+      }
+    },
     // 显示状态切换 （设置）
     toggleShowSettingBox (status) {
       console.log(Boolean(status))
@@ -344,133 +411,172 @@ export default{
 <style scoped lang="scss">
   @import "../../../static/css/scss/Common/HeaderCommon.scss";
 .nav-box{
-  height:66px;
   width:100%;
-  background-color:$dayNavBgColor;
-  padding:0 30px;
-  line-height: 66px;
+  /*height:102px;*/
   box-sizing: border-box;
+  top:30px;
   >.inner-box{
-    display:flex;
     height:100%;
-    >.left{
-      flex:1;
-      position: relative;
-      >.nav-list{
-        height:100%;
-        >.nav-item{
-          text-align: center;
-          display: inline-block;
-          padding:0 25px;
+    >.top{
+      height:66px;
+      line-height: 66px;
+      display:flex;
+      padding:0 30px;
+      background-color: $dayNavBgColor;
+      >.left{
+        flex:2;
+        position: relative;
+        >.nav-list{
           height:100%;
-          vertical-align: top;
-          >a{
-            color:$fontColor;
-          }
-          >.logo{
-            display:inline-block;
-            height:66px;
-            width:100px;
-            background: url(../../assets/develop/logo.png) no-repeat center center;
-            -webkit-background-size: 100px 30px;
-            background-size: 100px 30px;
-          }
-        }
-      }
-      /*子导航list*/
-      >.sub-nav-list{
-        position: absolute;
-          left:20%;
-          height:30px;
-          line-height:30px;
-        width:100%;
-        >.sub-nav-item{
-          display: inline-block;
-          height:100%;
-          background-color: pink;
-          padding:0 20px;
-        }
-      }
-    }
-    >.right{
-      color:#fff;
-      flex:1;
-      >.ul-list{
-        height:100%;
-        text-align: right;
-        >.li-split{
-          width:1px;
-          height:20px;
-          background-color: #4a5260;
-          display:inline-block;
-          vertical-align: middle;
-        }
-        >.li-item{
-          display:inline-block;
-          padding:0 10px;
-          >a{
-            transition: all 1s;
-            color:#fff;
-            padding:5px 10px;
-            &:hover{
-              background-color: $mainColor;
+          >.nav-item{
+            text-align: center;
+            display: inline-block;
+            padding:0 25px;
+            height:100%;
+            vertical-align: top;
+            &:first-of-type{
+              padding-left:0;
             }
-          }
-          &.setting-li{
-            padding:0;
-          }
-          /*设置*/
-          .setting{
-            color:#fff;
-            cursor:pointer;
-            font-size: 20px;
-            padding:0;
-          }
-          /*语言选择 dl*/
-          >.lang-box{
-            transition: all 1s;
-            position: relative;
-            text-align: left;
-            /*当前语言 dt*/
-            >.lang-selected{
+            /*子导航list*/
+            >.sub-nav-list{
+              height:36px;
+              line-height:36px;
+              background-color: #292E42;
               box-sizing: border-box;
-              height: 30px;
-              line-height: 0px;
-              padding: 10px 12px;
-              display: inline-block;
-              width:100%;
-              >.icon{
-                margin-right:5px;
+              position: absolute;
+              text-align: left;
+              &:before{
+                position: absolute;
+                content:'';
+                width:0;
+                height:0;
+                border:8px solid transparent;
+                border-bottom-color:#292E42;
+                top:-16px;
+                left:46px;
               }
-              >.language-text{
-                display:inline-block;
-                width:60px;
+              /*otc子导航*/
+              &.otc{
+                left:236px;
+              }
+              /*活动中心子导航*/
+              &.activity-center{
+                left:458px;
+              }
+              >.sub-nav-item{
+                display: inline-block;
+                height:100%;
+                padding:0 25px;
+                &:hover{
+                  background-color: #1B2136;
+                }
+                >a{
+                  color:#8494A6;
+                }
               }
             }
-            >.lang-list{
-              position: absolute;
-              left:0;
-              top:64px;
-              >.lang-item{
-                transition: all 1s;
-                color:#fff;
-                display:block;
-                height:30px;
-                line-height:30px;
-                text-align: left;
+            &:hover{
+              background-color: #1B2136;
+            }
+            >a{
+              color:$fontColor;
+            }
+            >.logo{
+              display:inline-block;
+              height:66px;
+              width:100px;
+              >.img{
                 width:100%;
-                padding:0 20px 0 10px;
-                &:hover{
-                  background-color: $mainColor;
-                }
+                vertical-align: middle;
+              }
+            }
+          }
+        }
+      }
+      >.right{
+        color:#fff;
+        flex:1;
+        >.ul-list{
+          height:100%;
+          text-align: right;
+          >.li-split{
+            width:1px;
+            height:20px;
+            background-color: #4a5260;
+            display:inline-block;
+            vertical-align: middle;
+          }
+          >.li-item{
+            display:inline-block;
+            padding:0 10px;
+            >a{
+              transition: all 1s;
+              color:#fff;
+              padding:5px 10px;
+              &:hover{
+                background-color: $mainColor;
+              }
+            }
+            &.setting-li{
+              padding:0;
+            }
+            /*设置*/
+            .setting{
+              color:#fff;
+              cursor:pointer;
+              font-size: 20px;
+              padding:0;
+            }
+            /*语言选择 dl*/
+            >.lang-box{
+              transition: all 1s;
+              position: relative;
+              text-align: left;
+              /*当前语言 dt*/
+              >.lang-selected{
+                box-sizing: border-box;
+                height: 30px;
+                line-height: 0px;
+                padding: 10px 12px;
+                display: inline-block;
+                width:100%;
                 >.icon{
                   margin-right:5px;
                 }
+                >.language-text{
+                  display:inline-block;
+                  width:60px;
+                }
+              }
+              >.lang-list{
+                position: absolute;
+                left:0;
+                top:64px;
+                >.lang-item{
+                  transition: all 1s;
+                  color:#fff;
+                  display:block;
+                  height:30px;
+                  line-height:30px;
+                  text-align: left;
+                  width:100%;
+                  padding:0 20px 0 10px;
+                  &:hover{
+                    background-color: $mainColor;
+                  }
+                  >.icon{
+                    margin-right:5px;
+                  }
+                }
               }
             }
           }
         }
       }
+    }
+    >.bottom{
+      background-color: #292e42;
+      height:36px;
     }
   }
   &.day{

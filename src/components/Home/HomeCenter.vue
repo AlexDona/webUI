@@ -3,10 +3,10 @@
   <div class="home-box home">
 
     <!--公告-->
-    <NoticeHome />
+    <NoticeHome class="fixed" />
 
     <!--导航-->
-    <NavCommon/>
+    <NavCommon class="fixed"/>
 
     <!--banner-->
     <BannerHome/>
@@ -42,5 +42,9 @@ export default {
 <style scoped lang="scss">
   .home-box{
     min-width: 1130px;
+    >.fixed{
+      position: fixed;
+      z-index: 2009;
+    }
   }
 </style>

@@ -1,7 +1,9 @@
 <template>
   <!--首页公告-->
   <div class="notice-box home">
-公告区
+    <div class="inner-box">
+123
+    </div>
   </div>
 </template>
 <script>
@@ -16,5 +18,10 @@ export default{
   background-color: #0a1b2f;
   color:#8b8e92;
   line-height: 30px;
+  /*position: fixed;*/
+  top:0;
+  .inner-box{
+    padding:0 30px
+  }
 }
 </style>

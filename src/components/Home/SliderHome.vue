@@ -163,7 +163,7 @@ export default {
     height:300px;
     margin:200px auto;
     width:100%;
-    transition: all 1s;
+    transition: all 4s;
     &.active{
       opacity:.2;
     }

@@ -112,17 +112,12 @@
                             </router-link>
                           </li>
                         </ul>
-                        <!--查看更多交易区-->
-                        <!--<el-button-->
-                          <!--round-->
-                          <!--@click="toggleTabContentHeightStatus"-->
-                        <!--&gt;{{moreBtnText}}</el-button>-->
                       </div>
                       <div class="more-btn">
                         <el-button
                           type="default"
                           class="more-btn"
-                          @click="toggleTabContentHeightStatus"
+                          @click="itemViewMore(item.id,item.content)"
                         >
                           {{itemViewMoreBtnText}}
                           <i class="el-icon-arrow-down el-icon--right"></i>
