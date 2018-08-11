@@ -21,7 +21,7 @@
             </router-link>
           </li>
           <li class="nav-item">
-            <router-link to="/">
+            <router-link to="/OTCCenter">
               <span>OTC交易</span>
             </router-link>
           </li>
@@ -346,7 +346,7 @@ export default{
   }
 }
 </script>
-<style scoped lang="scss">
+<style scoped lang="scss" type="text/scss">
   @import "../../../static/css/scss/Common/HeaderCommon.scss";
 .nav-box{
   height:66px;

@@ -2,7 +2,6 @@ import Vue from 'vue'
 import Router from 'vue-router'
 
 Vue.use(Router)
-
 const HomeCenter = r => require.ensure([], () => r(require('@/components/Home/HomeCenter')), 'home-center')
 // 个人中心
 const PersonalCenter = r => require.ensure([], () => r(require('@/components/Personal/PersonalCenter')), 'user-center')
@@ -23,6 +22,7 @@ const APIManagement = r => require.ensure([], () => r(require('@/components/Pers
 const CoinOrders = r => require.ensure([], () => r(require('@/components/Personal/CoinOrders')), 'api-box')
 // 我的交易-法币订单
 const FiatOrders = r => require.ensure([], () => r(require('@/components/Personal/FiatOrders')), 'api-box')
+const OTCCenter = r => require.ensure([], () => r(require('@/components/OTC/OTCCenter')), 'otc-center')
 export default new Router({
   routes: [
     {
@@ -84,6 +84,11 @@ export default new Router({
       path: '/FiatOrders',
       // name: 'FiatOrders',
       component: FiatOrders
+    },
+    {
+      path: '/OTCCenter',
+      // name: 'OTCCenter',
+      component: OTCCenter
     }
   ]
 })
