@@ -1,0 +1,4 @@
+/* tabs组件出现蓝色边框问题 */
+.account-assets.personal .el-tabs__active-bar{
+  height: 0 !important;
+}

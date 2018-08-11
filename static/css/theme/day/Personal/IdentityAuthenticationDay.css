@@ -1,0 +1,9 @@
+/*个人中心（白色主题）*/
+.identity-authentication.personal.day .el-collapse-item__header{
+  background-color: #CCCCCC;
+  color: #333;
+}
+.identity-authentication.personal.day .el-collapse-item__content{
+  background-color: #CCCCCC;
+  color: #333;
+}
