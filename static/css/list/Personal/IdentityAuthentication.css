@@ -7,3 +7,7 @@
   background-color: transparent;
   border: 0;
 }
+/*身份认证 折叠框label*/
+.identity-authentication.personal.night .el-collapse-item__header {
+  padding-left: 15px;
+}

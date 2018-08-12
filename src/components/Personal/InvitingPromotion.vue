@@ -3,18 +3,24 @@
     class="invitation-promotion personal"
     :class="{'day':theme == 'day','night':theme == 'night' }"
   >
-    <header class="invitation-promotion-header personal-height padding-left20 font-size16 line-height70 padding-left20">邀请推广</header>
+    <header class="invitation-promotion-header personal-height padding-left20 font-size16 line-height70">
+      <span class="padding-left15">邀请推广</span>
+    </header>
     <div class="invitation-promotion-main min-height500 padding-left20 margin-top5">
       <!--推广信息-->
       <div class="extension-info">
-        <header class="extension-info-header line-height50">推广信息</header>
+        <header class="extension-info-header line-height50">
+          <span class="padding-left15">推广信息</span>
+        </header>
         <div class="extension-info-content">
-          推广信息内容
+          <span class="padding-left15">推广信息内容</span>
         </div>
       </div>
       <!--推广统计-->
       <div class="extension-statistics">
-        <header class="extension-statistics-header line-height50">推广统计</header>
+        <header class="extension-statistics-header line-height50">
+          <span class="padding-left15">推广统计</span>
+        </header>
         <div class="extension-statistics-content">
           <el-table
             :data="extensionList"
@@ -55,7 +61,9 @@
       </div>
       <!--奖励记录-->
       <div class="award-record">
-        <header class="award-record-header line-height50">奖励记录</header>
+        <header class="award-record-header line-height50">
+          <span class="padding-left15">奖励记录</span>
+        </header>
         <div class="award-record-content">
           <el-table
             :data="awardList"

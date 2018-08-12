@@ -26,3 +26,9 @@
 .security-center.personal.day .el-table th>.cell.highlight{
   color: #b1b1b1;
 }
+/*tabs切换*/
+.security-center.personal.night .el-tabs__item.is-active{
+  background-color: transparent;
+  color: #333;
+  border-bottom: 1px solid #333;
+}
