@@ -3,7 +3,7 @@
     class="fiat-orders personal"
     :class="{'day':theme == 'day','night':theme == 'night' }"
   >
-    <header class="personal-height background-color padding-left15 line-height70 font-size16">
+    <header class="personal-height background-color line-height70 font-size16">
       <span class="padding-left15">法币订单</span>
     </header>
     <div class="fiat-main background-color min-height500 margin-top5">

@@ -4,7 +4,7 @@
     :class="{'day':theme == 'day','night':theme == 'night' }"
   >
     <header class="background-color personal-height line-height70 padding-left15 font-size16 ">
-      API管理
+      <span class="padding-left15">API管理</span>
     </header>
     <div class="api-establish-height background-color margin-top5">
       <header class="padding-left15">创建API KEY</header>

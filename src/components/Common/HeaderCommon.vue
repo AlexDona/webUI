@@ -107,7 +107,25 @@
             </li>
             <li class="li-item">
               <router-link to="/">
-                <span>登录</span>
+                <span class="login">
+                  登录
+                  <div class="login-info">
+                    <div class="sub-nav-user">
+                      <p class="nav-vip">VIP享手续费、提现优惠</p>
+                      <button class="nav-button">立即开通</button>
+                    </div>
+                    <ul class="personal-user">
+                      <li>账户资产</li>
+                      <li>订单管理</li>
+                      <li>身份认证</li>
+                      <li>安全中心</li>
+                      <li>收款设置</li>
+                      <li>邀请推广</li>
+                      <li>API管理</li>
+                      <li>退出</li>
+                    </ul>
+                  </div>
+                </span>
               </router-link>
             </li>
             <li class="li-split"></li>
@@ -514,6 +532,53 @@ export default{
           >.li-item{
             display:inline-block;
             padding:0 10px;
+            /*用户登陆后鼠标悬浮出现个人中心效果*/
+            .login{
+              display: inline-block;
+              position: relative;
+              >.login-info{
+                width: 210px;
+                height: 0;
+                background-color: rgba(10, 27, 47, 1);
+                position: absolute;
+                top: 66px;
+                right: -100px;
+                overflow: hidden;
+                z-index: 2;
+                text-align: center;
+                padding: 0px 25px;
+                box-sizing: border-box;
+                >.sub-nav-user{
+                  >.nav-vip{
+                    height: 50px;
+                    line-height: 50px;
+                  }
+                  >.nav-button{
+                    width: 100%;
+                    height: 30px;
+                    border-radius: 5px;
+                    color: #ccc;
+                    border: 1px solid rgba(0, 121, 254, 1);
+                    cursor: pointer;
+                  }
+                }
+                >.personal-user {
+                  height: 40px;
+                  line-height: 40px;
+                  text-align: left;
+                    >li{
+                    &:hover {
+                      color: rgba(0, 121, 254, 1);
+                      cursor: pointer;
+                    }
+                  }
+                }
+              }
+              &:hover .login-info{
+                height: 450px;
+                transition: 0.5s;
+              }
+            }
             >a{
               transition: all 1s;
               color:#fff;

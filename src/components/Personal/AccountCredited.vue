@@ -3,11 +3,11 @@
     class="credited-credited personal"
     :class="{'day':theme == 'day','night':theme == 'night' }"
   >
-    <header class="credited-credited-header personal-height padding-left15 font-size16 line-height70">
-      收款账户
+    <header class="credited-credited-header personal-height font-size16 line-height70">
+      <span class="padding-left15">收款账户</span>
     </header>
     <div class="credited-credited-main min-height500 margin-top5">
-      <span class="padding-left15"></span>收款账户
+      <span class="padding-left15">收款账户</span>
     </div>
   </div>
 </template>

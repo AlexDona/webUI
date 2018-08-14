@@ -7,3 +7,41 @@
   background-color: #CCCCCC;
   color: #333;
 }
+.identity-authentication.personal.day .common-input{
+  border: 1px solid #333;
+  color: #eee;
+}
+.identity-authentication.personal.day .common-input:focus{
+  border: 1px solid #555;
+}
+.identity-authentication.personal.day .submit{
+  background-color: #ccc;
+  color: #333;
+}
+/*select*/
+.identity-authentication.personal.day .el-input__inner{
+  border: 1px solid #333;
+  background-color: #333;
+}
+.identity-authentication.personal.day .el-input__inner:focus{
+  border: 1px solid #333;
+}
+.identity-authentication.personal.day .el-form-item__label{
+  color: #333;
+}
+/*高级认证弹框*/
+.identity-authentication.personal.day .el-dialog{
+  background-color: #ccc;
+}
+.identity-authentication.personal.day .el-dialog__header{
+  background-color: #282E43;
+  box-shadow: 0px 2px 5px #1D2131;
+}
+.identity-authentication.personal.day .el-dialog__title{
+  color: #555;
+}
+.icon-down,
+.main-header-title{
+  color: #ccc;
+}
+

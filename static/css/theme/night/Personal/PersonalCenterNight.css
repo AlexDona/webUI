@@ -1,19 +1,23 @@
 /*个人中心（黑色主题）*/
 .personal-center.personal.night .el-tabs__nav{
-  background-color: rgba(34, 34, 34, 1);
+  background-color: #202A33;
 }
 .personal-center.personal.night .el-tabs__item{
   color: #CCCCCC;
+  border-left: 4px solid transparent;
 }
 .personal-center.personal.night .is-disabled{
-  background-color: rgba(29, 35, 49, 1);
+  color: rgba(0, 121, 254, 1);
 }
 /*手表移上去*/
 .personal-center.personal.night .el-tabs__item:hover{
-  color: #FFFFFF;
+  color: rgba(0, 121, 254, 1);
+  background-color: rgba(0, 121, 254, .1);
+  border-left: 4px solid rgba(0, 121, 254, 1);
 }
 /*鼠标点击*/
 .personal-center.personal.night .el-tabs__item.is-active{
-  color: #FFFFFF;
-  background-color: rgba(0, 121, 254, 1);
+  color: rgba(0, 121, 254, 1);
+  background-color: rgba(0, 121, 254, .1);
+  border-left: 4px solid rgba(0, 121, 254, 1);
 }

@@ -1,0 +1,7 @@
+/*个人中心（白色主题）*/
+/*tabs切换*/
+.coin-orders.personal.day .el-tabs__item.is-active{
+  background-color: transparent;
+  color: #333;
+  border-bottom: 1px solid #000;
+}

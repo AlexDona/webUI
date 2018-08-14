@@ -125,22 +125,22 @@ button,input{
 }
 /*杨孝喜添加*/
 /*个人中心标题高度*/
-.personal-height {
-  height: 70px;
+.personal-height40 {
+  height: 40px;
 }
 /*个人中心内容最小高度*/
 .min-height500{
   min-height: 500px;
 }
 /*个人中心右侧 标题行高*/
-.line-height70{
-  line-height: 70px;
+.line-height40{
+  line-height: 40px;
 }
 /*个人中心右侧嫩容区 标题和主题内容之间的间距*/
-.margin-top5 {
-  margin-top: 5px;
+.margin-top9 {
+  margin-top: 9px;
 }
 /*个人中心右侧 标题和主内容左边距*/
-.padding-left15 {
-  padding-left: 15px;
+.padding-left23 {
+  padding-left: 23px;
 }

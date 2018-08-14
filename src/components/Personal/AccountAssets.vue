@@ -4,7 +4,12 @@
     :class="{'day':theme == 'day','night':theme == 'night' }"
   >
     <div class="account-assets-main">
-      <div class="padding-left15">账户资产主题</div>
+      <div class="account-assets-content padding-left15">
+        账户资产主题
+      </div>
+      <div class="account-assets-content padding-left15">
+        账户资产主题
+      </div>
     </div>
   </div>
 </template>
@@ -54,5 +59,4 @@ export default {
       color:$dayFontColor;
     }
   }
-
 </style>
