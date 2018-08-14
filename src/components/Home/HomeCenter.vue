@@ -3,10 +3,10 @@
   <div class="home-box home">
 
     <!--公告-->
-    <NoticeHome class="fixed" />
+    <NoticeHome/>
 
     <!--导航-->
-    <NavCommon class="fixed"/>
+    <NavCommon/>
 
     <!--banner-->
     <BannerHome/>

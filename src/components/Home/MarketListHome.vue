@@ -327,20 +327,14 @@
               </div>
             </div>
               <div class="more-box">
-                <svg
-                  class="icon"
-                  aria-hidden="true"
+                <IconFontCommon
                   v-show="!tabContentMoreStatus"
-                >
-                  <use xlink:href="#icon-iconmore"></use>
-                </svg>
-                <svg
-                  class="icon"
-                  aria-hidden="true"
+                  iconName="icon-iconmore"
+                />
+                <IconFontCommon
                   v-show="tabContentMoreStatus"
-                >
-                  <use xlink:href="#icon-iconfewer"></use>
-                </svg>
+                  iconName="icon-iconfewer"
+                />
                 <br>
                 <!--查看更多交易区-->
                 <el-button
@@ -366,15 +360,17 @@
   </div>
 </template>
 <script>
+import Footer from './NoticeHome'
+import EchartsLineCommon from '../Common/EchartsLineCommon'
+import IconFontCommon from '../Common/IconFontCommon'
 // 文件拖动
 import VueDND from 'awe-dnd'
 import {mapState, mapMutations} from 'vuex'
 import {getStore, setStore} from '../../utils'
-import Footer from './NoticeHome'
-import EchartsLineCommon from '../Common/EchartsLineCommon'
 Vue.use(VueDND)
 export default{
   components: {
+    IconFontCommon,
     Footer,
     EchartsLineCommon
   },
@@ -460,6 +456,7 @@ export default{
         content: [
           {
             id: 0, // 交易对id
+            plateId: 0, // 板块id（主区，交易区。。。）
             image: 'https://www.fubt.top//fubt/upload/coin/a7e56fc38ea44e1f8ed4c395193ec2e0组.png', // 币种图标
             sellsymbol: 'FUC', // 币种简称
             sellname: '富链', // 币种全程
@@ -474,6 +471,7 @@ export default{
           },
           {
             id: 1, // 交易对id
+            plateId: 0, // 板块id（主区，交易区。。。）
             image: 'https://www.fubt.top//fubt/upload/coin/a7e56fc38ea44e1f8ed4c395193ec2e0组.png', // 币种图标
             sellsymbol: 'AiFC', // 币种简称
             sellname: 'Aifc', // 币种全程
@@ -488,6 +486,7 @@ export default{
           },
           {
             id: 2, // 交易对id
+            plateId: 0, // 板块id（主区，交易区。。。）
             image: 'https://www.fubt.top//fubt/upload/coin/a7e56fc38ea44e1f8ed4c395193ec2e0组.png', // 币种图标
             sellsymbol: 'TKC', // 币种简称
             sellname: '富比特', // 币种全程
@@ -502,6 +501,7 @@ export default{
           },
           {
             id: 3, // 交易对id
+            plateId: 0, // 板块id（主区，交易区。。。）
             image: 'https://www.fubt.top//fubt/upload/coin/a7e56fc38ea44e1f8ed4c395193ec2e0组.png', // 币种图标
             sellsymbol: 'LTC', // 币种简称
             sellname: '莱特币', // 币种全程
@@ -516,6 +516,7 @@ export default{
           },
           {
             id: 4, // 交易对id
+            plateId: 0, // 板块id（主区，交易区。。。）
             image: 'https://www.fubt.top//fubt/upload/coin/a7e56fc38ea44e1f8ed4c395193ec2e0组.png', // 币种图标
             sellsymbol: 'ETH', // 币种简称
             sellname: '以太坊', // 币种全程
@@ -530,6 +531,7 @@ export default{
           },
           {
             id: 5, // 交易对id
+            plateId: 0, // 板块id（主区，交易区。。。）
             image: 'https://www.fubt.top//fubt/upload/coin/a7e56fc38ea44e1f8ed4c395193ec2e0组.png', // 币种图标
             sellsymbol: 'EOS', // 币种简称
             sellname: 'EOS', // 币种全程
@@ -544,6 +546,7 @@ export default{
           },
           {
             id: 6, // 交易对id
+            plateId: 0, // 板块id（主区，交易区。。。）
             image: 'https://www.fubt.top//fubt/upload/coin/a7e56fc38ea44e1f8ed4c395193ec2e0组.png', // 币种图标
             sellsymbol: 'SWFTC', // 币种简称
             sellname: 'SWFTC', // 币种全程
@@ -558,6 +561,7 @@ export default{
           },
           {
             id: 7, // 交易对id
+            plateId: 0, // 板块id（主区，交易区。。。）
             image: 'https://www.fubt.top//fubt/upload/coin/a7e56fc38ea44e1f8ed4c395193ec2e0组.png', // 币种图标
             sellsymbol: 'TOPC', // 币种简称
             sellname: 'TOPC', // 币种全程
@@ -572,6 +576,7 @@ export default{
           },
           {
             id: 8, // 交易对id
+            plateId: 0, // 板块id（主区，交易区。。。）
             image: 'https://www.fubt.top//fubt/upload/coin/a7e56fc38ea44e1f8ed4c395193ec2e0组.png', // 币种图标
             sellsymbol: 'OMG', // 币种简称
             sellname: 'OMG', // 币种全程
@@ -586,6 +591,7 @@ export default{
           },
           {
             id: 9, // 交易对id
+            plateId: 0, // 板块id（主区，交易区。。。）
             image: 'https://www.fubt.top//fubt/upload/coin/a7e56fc38ea44e1f8ed4c395193ec2e0组.png', // 币种图标
             sellsymbol: 'IOST', // 币种简称
             sellname: 'IOST', // 币种全程
@@ -600,6 +606,7 @@ export default{
           },
           {
             id: 10, // 交易对id
+            plateId: 0, // 板块id（主区，交易区。。。）
             image: 'https://www.fubt.top//fubt/upload/coin/a7e56fc38ea44e1f8ed4c395193ec2e0组.png', // 币种图标
             sellsymbol: 'BTM', // 币种简称
             sellname: 'BTM', // 币种全程
@@ -614,6 +621,7 @@ export default{
           },
           {
             id: 11, // 交易对id
+            plateId: 0, // 板块id（主区，交易区。。。）
             image: 'https://www.fubt.top//fubt/upload/coin/a7e56fc38ea44e1f8ed4c395193ec2e0组.png', // 币种图标
             sellsymbol: 'BTM', // 币种简称
             sellname: 'BTM', // 币种全程
@@ -634,6 +642,7 @@ export default{
         content: [
           {
             id: 22, // 交易对id
+            plateId: 0, // 板块id（主区，交易区。。。）
             image: 'https://www.fubt.top//fubt/upload/coin/a7e56fc38ea44e1f8ed4c395193ec2e0组.png', // 币种图标
             sellsymbol: 'FUC', // 币种简称
             sellname: '富比特', // 币种全程
@@ -648,6 +657,7 @@ export default{
           },
           {
             id: 23, // 交易对id
+            plateId: 0, // 板块id（主区，交易区。。。）
             image: 'https://www.fubt.top//fubt/upload/coin/a7e56fc38ea44e1f8ed4c395193ec2e0组.png', // 币种图标
             sellsymbol: 'FUC', // 币种简称
             sellname: '富比特', // 币种全程
@@ -662,6 +672,7 @@ export default{
           },
           {
             id: 24, // 交易对id
+            plateId: 0, // 板块id（主区，交易区。。。）
             image: 'https://www.fubt.top//fubt/upload/coin/a7e56fc38ea44e1f8ed4c395193ec2e0组.png', // 币种图标
             sellsymbol: 'FUC', // 币种简称
             sellname: '富比特', // 币种全程
@@ -676,6 +687,7 @@ export default{
           },
           {
             id: 25, // 交易对id
+            plateId: 0, // 板块id（主区，交易区。。。）
             image: 'https://www.fubt.top//fubt/upload/coin/a7e56fc38ea44e1f8ed4c395193ec2e0组.png', // 币种图标
             sellsymbol: 'FUC', // 币种简称
             sellname: '富比特', // 币种全程
@@ -690,6 +702,7 @@ export default{
           },
           {
             id: 26, // 交易对id
+            plateId: 0, // 板块id（主区，交易区。。。）
             image: 'https://www.fubt.top//fubt/upload/coin/a7e56fc38ea44e1f8ed4c395193ec2e0组.png', // 币种图标
             sellsymbol: 'FUC', // 币种简称
             sellname: '富比特', // 币种全程
@@ -704,6 +717,7 @@ export default{
           },
           {
             id: 27, // 交易对id
+            plateId: 0, // 板块id（主区，交易区。。。）
             image: 'https://www.fubt.top//fubt/upload/coin/a7e56fc38ea44e1f8ed4c395193ec2e0组.png', // 币种图标
             sellsymbol: 'FUC', // 币种简称
             sellname: '富比特', // 币种全程
@@ -718,6 +732,7 @@ export default{
           },
           {
             id: 28, // 交易对id
+            plateId: 0, // 板块id（主区，交易区。。。）
             image: 'https://www.fubt.top//fubt/upload/coin/a7e56fc38ea44e1f8ed4c395193ec2e0组.png', // 币种图标
             sellsymbol: 'FUC', // 币种简称
             sellname: '富比特', // 币种全程
@@ -738,6 +753,7 @@ export default{
         content: [
           {
             id: 38, // 交易对id
+            plateId: 0, // 板块id（主区，交易区。。。）
             image: 'https://www.fubt.top//fubt/upload/coin/a7e56fc38ea44e1f8ed4c395193ec2e0组.png', // 币种图标
             sellsymbol: 'FUC', // 币种简称
             sellname: '富比特', // 币种全程
@@ -752,6 +768,7 @@ export default{
           },
           {
             id: 39, // 交易对id
+            plateId: 0, // 板块id（主区，交易区。。。）
             image: 'https://www.fubt.top//fubt/upload/coin/a7e56fc38ea44e1f8ed4c395193ec2e0组.png', // 币种图标
             sellsymbol: 'FUC', // 币种简称
             sellname: '富比特', // 币种全程
@@ -766,6 +783,7 @@ export default{
           },
           {
             id: 40, // 交易对id
+            plateId: 0, // 板块id（主区，交易区。。。）
             image: 'https://www.fubt.top//fubt/upload/coin/a7e56fc38ea44e1f8ed4c395193ec2e0组.png', // 币种图标
             sellsymbol: 'FUC', // 币种简称
             sellname: '富比特', // 币种全程
@@ -780,6 +798,7 @@ export default{
           },
           {
             id: 41, // 交易对id
+            plateId: 0, // 板块id（主区，交易区。。。）
             image: 'https://www.fubt.top//fubt/upload/coin/a7e56fc38ea44e1f8ed4c395193ec2e0组.png', // 币种图标
             sellsymbol: 'FUC', // 币种简称
             sellname: '富比特', // 币种全程
@@ -794,6 +813,7 @@ export default{
           },
           {
             id: 42, // 交易对id
+            plateId: 0, // 板块id（主区，交易区。。。）
             image: 'https://www.fubt.top//fubt/upload/coin/a7e56fc38ea44e1f8ed4c395193ec2e0组.png', // 币种图标
             sellsymbol: 'FUC', // 币种简称
             sellname: '富比特', // 币种全程
@@ -808,6 +828,7 @@ export default{
           },
           {
             id: 43, // 交易对id
+            plateId: 0, // 板块id（主区，交易区。。。）
             image: 'https://www.fubt.top//fubt/upload/coin/a7e56fc38ea44e1f8ed4c395193ec2e0组.png', // 币种图标
             sellsymbol: 'FUC', // 币种简称
             sellname: '富比特', // 币种全程
@@ -822,6 +843,7 @@ export default{
           },
           {
             id: 44, // 交易对id
+            plateId: 0, // 板块id（主区，交易区。。。）
             image: 'https://www.fubt.top//fubt/upload/coin/a7e56fc38ea44e1f8ed4c395193ec2e0组.png', // 币种图标
             sellsymbol: 'FUC', // 币种简称
             sellname: '富比特', // 币种全程
@@ -857,7 +879,9 @@ export default{
   update () {},
   beforeRouteUpdate () {},
   methods: {
-    ...mapMutations([]),
+    ...mapMutations([
+      'CHANGE_COLLECT_LIST'
+    ]),
     // 初始化 侧边栏正反面
     initSideBar (status) {
       this.marketList.forEach((item) => {
@@ -957,6 +981,7 @@ export default{
         })
       }
       setStore('collectList', this.collectList)
+      this.CHANGE_COLLECT_LIST(this.collectList)
       this.setMarketList(this.collectAreaId, this.collectList)
       console.log(this.marketList)
     },
@@ -1043,6 +1068,7 @@ export default{
 }
 </script>
 <style scoped lang="scss">
+  @import "../../../static/css/scss/index.scss";
   @import "../../../static/css/scss/Home/MarketListHome.scss";
   .market-list-box{
     width:100%;
@@ -1183,10 +1209,10 @@ export default{
                        >.right{
                          >.top{
                            &.up{
-                             color:#D45858;
+                             color:$upColor;
                            }
                            &.down{
-                             color:#008069;
+                             color:$downColor;
                            }
                          }
                          text-align: left;

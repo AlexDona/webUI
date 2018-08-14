@@ -1,1 +1,9 @@
+/*全局修改element样式*/
+/*table 底部边框*/
+.el-table--border::after, .el-table--group::after, .el-table::before{
+  height:0;
+}
 
+.collected{
+  color:#f5c34a;
+}

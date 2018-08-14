@@ -1,0 +1,27 @@
+.order-record-box .el-table th,
+.order-record-box .el-table__header-wrapper{
+  height:24px;
+}
+.order-record-box .el-table td{
+  padding:0;
+}
+.order-record-box .el-table th:nth-of-type(2)>.cell{
+  text-align: center;
+}
+.order-record-box .el-table th:nth-of-type(3)>.cell{
+  text-align: right;
+}
+.order-record-box td:nth-of-type(2)>.cell,
+.order-record-box td:nth-of-type(3)>.cell{
+  text-align: right;
+}
+.order-record-box .el-table__row td:nth-of-type(2)>.cell{
+  padding:0 38% 0 0;
+}
+.order-record-box .cell>span.buy{
+  color:rgb(0, 128, 105);
+
+}
+.order-record-box .cell>span.sell{
+  color:rgb(212, 88, 88);
+}

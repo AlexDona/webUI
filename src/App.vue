@@ -16,6 +16,7 @@ export default {
     return {}
   },
   async created () {
+    require('../static/css/common.css')
     require('../static/css/list/Common/HeaderCommon/HeaderCommon.css')
     require('../static/css/theme/night/Common/HeaderCommonNight.css')
     require('../static/css/theme/day/Common/HeaderCommonDay.css')
@@ -51,7 +52,7 @@ export default {
 
 <style>
   #app {
-    font-family: "Avenir", Helvetica, Arial, sans-serif;
+    font-family: "Microsoft YaHei","Avenir", Helvetica, Arial, sans-serif;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
     font-size: 14px;

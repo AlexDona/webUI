@@ -63,7 +63,7 @@
 }
 
 .market-list-box.home .el-table  th{
-  padding:0 14px;
+  padding:0 0 0 14px;
   box-sizing: border-box;
   height:38px;
 }
@@ -147,13 +147,7 @@
   border-top:1px solid #566AD4;
   box-sizing: border-box;
 }
-.market-list-box.home .collected{
-  color:#f5c34a;
-}
 
-.market-list-box.home .el-table::before{
-  height:0;
-}
 .market-list-box.home .el-table th{
   border-top:1px solid #2f3a8c;
 }

@@ -13,9 +13,7 @@
   padding: 7px 0;
   color: #ccc;
 }
-.security-center.personal.night .el-table::before{
-  height: 0;
-}
+
 .security-center.personal.night .el-table--enable-row-hover .el-table__body tr:hover>td{
   background-color: #1D2331;
 }

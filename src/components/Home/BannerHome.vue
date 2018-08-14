@@ -36,7 +36,7 @@ export default {
 <style scoped lang="scss">
   .banner-box{
     &.margin-top{
-      margin-top:96px;
+      /*margin-top:96px;*/
     }
     height:500px;
     width:100%;

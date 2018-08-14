@@ -25,7 +25,7 @@
 }
 
 .market-list-box.home.night .el-table{
-  background-color: #19222B;
+  background-color: #202a33;
 }
 /*选中行颜色*/
 .market-list-box.night .el-table--enable-row-hover .el-table__body tr:hover>td{

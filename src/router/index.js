@@ -23,6 +23,9 @@ const CoinOrders = r => require.ensure([], () => r(require('@/components/Persona
 // 我的交易-法币订单
 const FiatOrders = r => require.ensure([], () => r(require('@/components/Personal/FiatOrders')), 'api-box')
 const OTCCenter = r => require.ensure([], () => r(require('@/components/OTC/OTCCenter')), 'otc-center')
+
+// 币币交易
+const TradeCenter = r => require.ensure([], () => r(require('@/components/Trade/TradeCenter')), 'trade-center')
 export default new Router({
   routes: [
     {
@@ -89,6 +92,11 @@ export default new Router({
       path: '/OTCCenter',
       // name: 'OTCCenter',
       component: OTCCenter
+    },
+    {
+      path: '/TradeCenter',
+      name: 'TradeCenter',
+      component: TradeCenter
     }
   ]
 })
