@@ -6,6 +6,8 @@ const HomeCenter = r => require.ensure([], () => r(require('@/components/Home/Ho
 // 个人中心
 const PersonalCenter = r => require.ensure([], () => r(require('@/components/Personal/PersonalCenter')), 'user-center')
 const OTCCenter = r => require.ensure([], () => r(require('@/components/OTC/OTCCenter')), 'otc-center')
+const OTCPublishBuyAndSell = r => require.ensure([], () => r(require('@/components/OTC/OTCPublishBuyAndSell')), 'otc-publish-buy-and-sell')
+const OTCOnlineTraderBuySell = r => require.ensure([], () => r(require('@/components/OTC/OTCOnlineTraderBuySell')), 'otc-online-trader-buy-sell')
 export default new Router({
   routes: [
     {
@@ -21,9 +23,22 @@ export default new Router({
       component: PersonalCenter
     },
     {
+      // OTC中心
       path: '/OTCCenter',
       // name: 'OTCCenter',
       component: OTCCenter
+    },
+    {
+      // OTC发布购买和出售
+      path: '/OTCPublishBuyAndSell',
+      // name: 'OTCPublishBuyAndSell',
+      component: OTCPublishBuyAndSell
+    },
+    {
+      // OTC在线交易买卖
+      path: '/OTCOnlineTraderBuySell',
+      // name: 'OTCOnlineTraderBuySell',
+      component: OTCOnlineTraderBuySell
     }
   ]
 })

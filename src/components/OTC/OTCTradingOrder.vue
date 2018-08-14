@@ -18,8 +18,11 @@
           <div class="deal-time">
             成交时间：2018-08-12 12:00:00
           </div>
-          <div class="order-list-head-icon">
-            <img src="../../assets/develop/buy.png" alt="">
+          <div class="order-list-head-icon buy-icon">
+            <!-- <img src="../../assets/develop/buy.png" alt=""> -->
+          </div>
+          <div class="buy-sell-icon">
+            买
           </div>
         </div>
         <!-- 表身体 -->
@@ -171,8 +174,11 @@
           <div class="deal-time">
             成交时间：2018-08-10 12:00:00
           </div>
-          <div class="order-list-head-icon">
-            <img src="../../assets/develop/sell.png" alt="">
+          <div class="order-list-head-icon sell-icon">
+            <!-- <img src="../../assets/develop/sell.png" alt=""> -->
+          </div>
+          <div class="buy-sell-icon">
+            卖
           </div>
         </div>
         <!-- 表身体 -->
@@ -279,6 +285,43 @@
           </div>
         </div>
       </div>
+      <!-- 订单申诉 -->
+      <div class="otc-order-appeal order-list">
+        <!-- 申诉表头 -->
+        <div class="appeal-head">
+          订单申诉
+        </div>
+        <!-- 申诉表身体 -->
+        <div class="appeal-body">
+          <div class="appeal-body-content">
+            <!-- 文本域部分 -->
+            <div class="appeal-textarea">
+              <span class="appeal-reason">*申诉原因</span>
+              <el-input
+                type="textarea"
+                v-model="appealTextareaValue">
+              </el-input>
+            </div>
+            <!-- 按钮部分 -->
+            <div class="appeal-button">
+              <el-button
+                type="primary"
+                size="mini"
+                @click="comfirmPayMoney"
+              >
+                提交申诉
+              </el-button>
+              <el-button
+                type="primary"
+                size="mini"
+                @click="comfirmPayMoney"
+              >
+                取消申诉
+              </el-button>
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
   </div>
 </template>
@@ -289,6 +332,7 @@ export default {
   // props,
   data () {
     return {
+      appealTextareaValue: '', // 订单申诉原因文本域内容
       buyerConfirmPayMoney: true, // 买家确认付款按钮状态
       sellerConfirmGatherMoney: true, // 卖家确认收款按钮状态
       // 支付方式
@@ -329,7 +373,7 @@ export default {
   watch: {}
 }
 </script>
-<style scoped lang="scss">
+<style scoped lang="scss" type="text/scss">
 @import url(../../../static/css/scss/OTC/OTCTradingOrder.scss);
 .otc-trading-order-box{
   >.otc-trading-order-content{
@@ -338,7 +382,7 @@ export default {
       height: 170px;
       margin-bottom: 15px;
       box-sizing: border-box;
-      border-radius: 10px;
+      border-radius: 5px;
       background-color: #202A33;
       border: 1px solid #262F38;
       >.order-list-head{
@@ -357,9 +401,28 @@ export default {
         }
         >.deal-time{}
         >.order-list-head-icon{
+          width:0;
+          height:0;
+          border-radius: 5px;
+          border-left:18px solid transparent;
+          border-bottom:18px solid transparent;
           position: absolute;
           right: 0;
           top: 0;
+        }
+        >.buy-icon{
+          border-right:18px solid #D45858;
+          border-top:18px solid #D45858;
+        }
+        >.sell-icon{
+          border-right:18px solid #008069;
+          border-top:18px solid #008069;
+        }
+        >.buy-sell-icon{
+          color: #fff;
+          position: absolute;
+          right: 4px;
+          top: -8px;
         }
       }
       >.order-list-body{
@@ -452,6 +515,39 @@ export default {
             >.count-down-time{
               line-height: 1rem;
             }
+          }
+        }
+      }
+    }
+    >.otc-order-appeal{
+      height: 170px;
+      >.appeal-head{
+        height: 36px;
+        line-height: 36px;
+        box-sizing: border-box;
+        padding: 0 77px 0 25px;
+        color: #FFFFFF;
+        border-bottom: 1px solid #262F38;
+      }
+      >.appeal-body{
+        >.appeal-body-content{
+          display: flex;
+          flex: 3;
+          >.appeal-textarea{
+            margin-top: 15px;
+            margin-left: 20px;
+            flex: 2;
+            display: flex;
+            justify-content: flex-start;
+            >.appeal-reason{
+              margin-right: 10px;
+              color: #338FF5;
+            }
+          }
+          >.appeal-button{
+            flex: 1;
+            // background-color: red;
+            padding-top: 80px;
           }
         }
       }
