@@ -8,9 +8,16 @@
       <div class="otc-online-trading">
         <!-- 2.1.1 在线购买和在线出售按钮-->
         <div class="otc-online-buy-and-sell-button">
-          <el-radio-group v-model="OTCBuySellStyle" @change="toggleBuyOrSellStyle">
-            <el-radio-button label="onlineBuy">在线购买</el-radio-button>
-            <el-radio-button label="onlineSell">在线出售</el-radio-button>
+          <el-radio-group
+            v-model="OTCBuySellStyle"
+            @change="toggleBuyOrSellStyle"
+          >
+            <el-radio-button label="onlineBuy">
+              在线购买
+            </el-radio-button>
+            <el-radio-button label="onlineSell">
+              在线出售
+            </el-radio-button>
           </el-radio-group>
         </div>
         <!-- 2.1.2 我要购买和商户列表内容-->
@@ -18,25 +25,46 @@
           <!--我要购买和发布订单按钮-->
           <div class="otc-filtrate-publish">
             <div class="otc-filtrate-box">
-              <span class="otc-i-wan" v-show="OTCBuySellStyle === 'onlineBuy'">我要购买 ：</span>
-              <span class="otc-i-wan" v-show="OTCBuySellStyle === 'onlineSell'">我要出售 ：</span>
-              <div class="otc-filtrate-style" v-if="OTCBuySellStyle === 'onlineBuy'">
-                <span class="otc-filtrate-currency-name" @click="selectCurrencyName" :class="{ currencyNameActived: selectCurrencyNameStatus }">Buy</span>
-                <span class="otc-filtrate-currency-name" @click="selectCurrencyName" :class="{ currencyNameActived: selectCurrencyNameStatus }">Buy</span>
-                <span class="otc-filtrate-currency-name" @click="selectCurrencyName" :class="{ currencyNameActived: selectCurrencyNameStatus }">Buy</span>
-                <span class="otc-filtrate-currency-name" @click="selectCurrencyName" :class="{ currencyNameActived: selectCurrencyNameStatus }">Buy</span>
-                <span class="otc-filtrate-currency-name" @click="selectCurrencyName" :class="{ currencyNameActived: selectCurrencyNameStatus }">Buy</span>
+              <span
+                class="otc-i-wan"
+                v-show="OTCBuySellStyle === 'onlineBuy'"
+              >
+                我要购买 ：
+              </span>
+              <span
+                class="otc-i-wan"
+                v-show="OTCBuySellStyle === 'onlineSell'"
+              >
+                我要出售 ：
+              </span>
+              <div
+                class="otc-filtrate-style"
+                v-if="OTCBuySellStyle === 'onlineBuy'"
+              >
+                <span
+                  class="otc-filtrate-currency-name"
+                  @click="selectCurrencyName"
+                  :class="{ currencyNameActived: selectCurrencyNameStatus }"
+                >
+                  Buy
+                </span>
               </div>
-              <div class="otc-filtrate-style" v-if="OTCBuySellStyle === 'onlineSell'">
-                <span class="otc-filtrate-currency-name" @click="selectCurrencyName" :class="{ currencyNameActived: selectCurrencyNameStatus }">Sell</span>
-                <span class="otc-filtrate-currency-name" @click="selectCurrencyName" :class="{ currencyNameActived: selectCurrencyNameStatus }">Sell</span>
-                <span class="otc-filtrate-currency-name" @click="selectCurrencyName" :class="{ currencyNameActived: selectCurrencyNameStatus }">Sell</span>
-                <span class="otc-filtrate-currency-name" @click="selectCurrencyName" :class="{ currencyNameActived: selectCurrencyNameStatus }">Sell</span>
-                <span class="otc-filtrate-currency-name" @click="selectCurrencyName" :class="{ currencyNameActived: selectCurrencyNameStatus }">Sell</span>
+              <div
+                class="otc-filtrate-style"
+                v-if="OTCBuySellStyle === 'onlineSell'"
+              >
+                <span
+                class="otc-filtrate-currency-name" @click="selectCurrencyName"
+                :class="{ currencyNameActived: selectCurrencyNameStatus }"
+                >
+                  Sell
+                </span>
               </div>
             </div>
             <div class="otc-publish-box">
-              <el-button type="primary">发布订单</el-button>
+              <router-link to="/OTCPublishBuyAndSell">
+                <el-button type="primary">发布订单</el-button>
+              </router-link>
             </div>
           </div>
           <!--商户列表表格部分-->
@@ -66,11 +94,18 @@
                 prop="payStyle"
                 label="支付方式">
               </el-table-column> -->
-              <el-table-column prop="payStyle" label="支付方式" width="100"
+              <el-table-column
+                prop="payStyle"
+                label="支付方式"
+                width="100"
                 :filters="[{ text: '支付宝', value: '支付宝' }, { text: '银行卡', value: '银行卡' }]"
-                :filter-method="filterTag" filter-placement="bottom-end">
+                :filter-method="filterTag" filter-placement="bottom-end"
+              >
                 <template slot-scope="scope">
-                  <el-tag :type="scope.row.payStyle === '支付宝' ? 'primary' : 'success'" disable-transitions>
+                  <el-tag
+                    :type="scope.row.payStyle === '支付宝' ? 'primary' : 'success'"
+                    disable-transitions
+                  >
                     {{scope.row.payStyle}}
                   </el-tag>
                 </template>
@@ -88,8 +123,22 @@
                 label="操作"
               >
                 <template slot-scope="scope">
-                  <el-button type="danger" size="mini" v-if="OTCBuySellStyle === 'onlineBuy'">购买</el-button>
-                  <el-button type="success" size="mini" v-if="OTCBuySellStyle === 'onlineSell'">出售</el-button>
+                  <router-link to="/OTCOnlineTraderBuySell">
+                    <el-button
+                      type="danger"
+                      size="mini"
+                      v-if="OTCBuySellStyle === 'onlineBuy'"
+                    >
+                      购买
+                    </el-button>
+                    <el-button
+                      type="success"
+                      size="mini"
+                      v-if="OTCBuySellStyle === 'onlineSell'"
+                    >
+                      出售
+                    </el-button>
+                  </router-link>
                 </template>
               </el-table-column>
             </el-table>
@@ -189,6 +238,7 @@ import OTCCompletedOrder from './OTCCompletedOrder'
 import OTCCanceledOrder from './OTCCanceledOrder'
 import OTCFreezingOrder from './OTCFreezingOrder'
 import OTCEntrustOrder from './OTCEntrustOrder'
+// import OTCPublishBuyAndSell from './OTCPublishBuyAndSell'
 export default {
   components: {
     NavCommon, //  头部导航
@@ -198,6 +248,7 @@ export default {
     OTCCanceledOrder, //  已取消订单
     OTCFreezingOrder, //  冻结中订单
     OTCEntrustOrder //  委托订单
+    // OTCPublishBuyAndSell // 发布购买和卖出组件
   },
   // props,
   data () {
@@ -268,7 +319,7 @@ export default {
   watch: {}
 }
 </script>
-<style scoped lang="scss">
+<style scoped lang="scss" type="text/scss">
 @import url(../../../static/css/scss/OTC/OTCCenter.scss);
 .otc-box{
   background-color: #1D2331;

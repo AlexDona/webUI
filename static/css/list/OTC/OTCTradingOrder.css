@@ -1,39 +1,51 @@
 /* 交易中的订单样式重写 */
 /* 1.0付款方式下拉框 */
-.el-input--suffix .el-input__inner{
+.otc-trading-order-box .el-input--suffix .el-input__inner{
     height: 26px;
     width: 170px;
 }
-.el-input__inner{
+.otc-trading-order-box .el-input__inner{
     background-color: #303B45;
     border:none;
     color: #9DA5B3;
     padding: 0 30px;
 }
-.el-select-dropdown{
+.otc-trading-order-box .el-select-dropdown{
     background-color: #29343F;
     border:none;
 }
-.el-select-dropdown__item.selected{
+.otc-trading-order-box .el-select-dropdown__item.selected{
     color: #338FF5;
 }
-.el-select-dropdown__item {
-    height: 30px;
-    line-height: 30px;
+.otc-trading-order-box .el-select-dropdown__item {
+    height: 30px !important;
+    line-height: 30px !important;
 }
-.el-select-dropdown__item:hover {
+.otc-trading-order-box .el-select-dropdown__item:hover {
     background-color: #29343F;
 }
-.el-select-dropdown__item.hover{
+.otc-trading-order-box .el-select-dropdown__item.hover{
     background-color: #29343F;
     color: #338FF5;
 }
-.el-popper[x-placement^=bottom] .popper__arrow::after {
+.otc-trading-order-box .el-popper[x-placement^=bottom] .popper__arrow::after {
     border-bottom-color: #29343F;
 }
-.el-popper[x-placement^=bottom] .popper__arrow {
+.otc-trading-order-box .el-popper[x-placement^=bottom] .popper__arrow {
     border-bottom-color: #29343F;
 }
-.el-button--mini{
+/* 2.0按钮样式 */
+.otc-trading-order-box .el-button--mini{
     padding: 3px 10px;
+}
+/* 3.0 订单申诉 */
+.otc-trading-order-box .el-textarea{
+    width: 540px;
+}
+.otc-trading-order-box .el-textarea__inner{
+    background-color: #202A33;
+    border: 1px solid #7587A5;
+    height: 90px;
+    font-size: 14px;
+    resize: none;
 }
