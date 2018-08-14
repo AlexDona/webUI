@@ -10,7 +10,9 @@
       <!--实名认证-->
       <div class="real-name-authentication identity-background">
         <el-collapse v-model="activeNamesRealName">
-          <el-collapse-item title="实名认证" name="1">
+          <el-collapse-item
+            title="实名认证"
+            name="1">
             <div class="name-authentication-content">
               <el-form
                 ref="form"
@@ -72,12 +74,11 @@
     <div class="advanced-certification-main identity-background margin-top9">
       <div
         class="advanced-main-header"
-        v-if="this.authenticationInfo.data.user.userIdentity == true||this.authenticationInfo.data.user.userIdentity == false"
       >
         <p class="padding-left23" @click="authenticationMethod">
           <span class="font-size16 main-header-title">高级认证</span>
           <span
-            v-if="!this.authenticationInfo.data.user.hasrealvaliDate"
+            v-if="!authenticationInfo.data.user.hasrealvaliDate"
             class="authentication-type font-size12"
           >
             （请先通过实名认证）
@@ -91,12 +92,17 @@
           <i class="el-icon-arrow-down icon-down"></i>
         </p>
       </div>
-      <div v-if="this.authenticationInfo.data.user.userIdentity == true">
-        <el-collapse-transition>
-          <div class="transition-box">
-            asdfasdfel-collapse-transition
-          </div>
-        </el-collapse-transition>
+      <div>
+        <div v-show="authenticationStatusFront">
+          <el-collapse-transition>
+            <div class="transition-box">
+              asdfasdfel-collapse-transition
+            </div>
+          </el-collapse-transition>
+        </div>
+        <div v-if="authenticationInfo.data.user.userIdentity == true">
+          asdfasdfasdfasdfasdfasdfasdfasdfasdfasdfasdfasdf是打发斯蒂芬撒大声地发生的发
+        </div>
       </div>
       <el-dialog
         title="高级认证"
@@ -135,7 +141,8 @@ export default {
       identification: '', // 证件号码
       seniorAuthentication: false, // 高级认证弹窗默认
       authenticationInfo: {}, // 个人信息
-      authenticationCentent: true // 高级认证页面
+      authenticationCentent: false, // 高级认证页面
+      authenticationStatusFront: false // 用户高级认证前
     }
   },
   created () {
@@ -160,15 +167,16 @@ export default {
     // 高级认证弹窗
     authenticationMethod () {
       // 判断是否高级认证&&实名认证
-      if (this.authenticationInfo.data.user.userIdentity == true || this.authenticationInfo.data.user.hasrealvaliDate == false) {
-        this.seniorAuthentication = false
-      } else if (this.authenticationInfo.data.user.hasrealvaliDate == true) {
+      if (this.authenticationInfo.data.user.hasrealvaliDate == true && this.authenticationInfo.data.user.userIdentity == false) {
         this.seniorAuthentication = true
       }
     },
     // 高级认证内容
     authenticationAuthentication () {
       // 点击进入高级认证时隐藏弹窗
+      if (this.authenticationInfo.data.user.userIdentity == false) {
+        this.authenticationStatusFront = true
+      }
       this.seniorAuthentication = false
       this.authenticationCentent = true
     }
