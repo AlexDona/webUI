@@ -1,0 +1,8 @@
+/*覆盖Elenent样式*/
+/*点击切换时背景色和字体颜色*/
+.coin-orders.personal .el-tabs__item{
+  padding: 0;
+  width: 105px;
+  text-align: center;
+}
+

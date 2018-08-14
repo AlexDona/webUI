@@ -5,27 +5,11 @@ Vue.use(Router)
 const HomeCenter = r => require.ensure([], () => r(require('@/components/Home/HomeCenter')), 'home-center')
 // 个人中心
 const PersonalCenter = r => require.ensure([], () => r(require('@/components/Personal/PersonalCenter')), 'user-center')
-// 个人中心-账户资产
-const AccountAssets = r => require.ensure([], () => r(require('@/components/Personal/AccountAssets')), 'account-box')
-// 个人中心-身份认证
-const IdentityAuthentication = r => require.ensure([], () => r(require('@/components/Personal/IdentityAuthentication')), 'identity-box')
-// 个人中心-收款账户
-const AccountCredited = r => require.ensure([], () => r(require('@/components/Personal/AccountCredited')), 'credited-box')
-// 个人中心-邀请推广
-const InvitingPromotion = r => require.ensure([], () => r(require('@/components/Personal/InvitingPromotion')), 'invitation-box')
-// 个人中心-安全中心
-const SecurityCenter = r => require.ensure([], () => r(require('@/components/Personal/SecurityCenter')), 'security-box')
-// 个人中心-API管理
-// 我的交易
-const APIManagement = r => require.ensure([], () => r(require('@/components/Personal/APIManagement')), 'api-box')
-// 我的交易-币币订单
-const CoinOrders = r => require.ensure([], () => r(require('@/components/Personal/CoinOrders')), 'api-box')
-// 我的交易-法币订单
-const FiatOrders = r => require.ensure([], () => r(require('@/components/Personal/FiatOrders')), 'api-box')
 const OTCCenter = r => require.ensure([], () => r(require('@/components/OTC/OTCCenter')), 'otc-center')
-
 // 币币交易
 const TradeCenter = r => require.ensure([], () => r(require('@/components/Trade/TradeCenter')), 'trade-center')
+const OTCPublishBuyAndSell = r => require.ensure([], () => r(require('@/components/OTC/OTCPublishBuyAndSell')), 'otc-publish-buy-and-sell')
+const OTCOnlineTraderBuySell = r => require.ensure([], () => r(require('@/components/OTC/OTCOnlineTraderBuySell')), 'otc-online-trader-buy-sell')
 export default new Router({
   routes: [
     {
@@ -41,62 +25,27 @@ export default new Router({
       component: PersonalCenter
     },
     {
-      // 个人中心-账户资产
-      path: '/AccountAssets',
-      // name: 'AccountAssets',
-      component: AccountAssets
-    },
-    {
-      // 个人中心-身份认证
-      path: '/IdentityAuthentication',
-      // name: 'IdentityAuthentication',
-      component: IdentityAuthentication
-    },
-    {
-      // 个人中心-收款账户
-      path: '/AccountCredited',
-      // name: 'AccountCredited',
-      component: AccountCredited
-    },
-    {
-      // 个人中心-邀请推广
-      path: '/InvitingPromotion',
-      // name: 'InvitingPromotion',
-      component: InvitingPromotion
-    },
-    {
-      // 个人中心-安全中心
-      path: '/SecurityCenter',
-      // name: 'SecurityCenter',
-      component: SecurityCenter
-    },
-    {
-      // 个人中心-API管理
-      path: '/APIManagement',
-      // name: 'APIManagement',
-      component: APIManagement
-    },
-    {
-      // 我的交易-API管理
-      path: '/CoinOrders',
-      // name: 'CoinOrders',
-      component: CoinOrders
-    },
-    {
-      // 我的交易-API管理
-      path: '/FiatOrders',
-      // name: 'FiatOrders',
-      component: FiatOrders
-    },
-    {
+      // OTC中心
       path: '/OTCCenter',
       // name: 'OTCCenter',
       component: OTCCenter
     },
     {
+      // OTC发布购买和出售
+      path: '/OTCPublishBuyAndSell',
+      // name: 'OTCPublishBuyAndSell',
+      component: OTCPublishBuyAndSell
+    },
+    {
       path: '/TradeCenter',
       name: 'TradeCenter',
       component: TradeCenter
+    },
+    {
+      // OTC在线交易买卖
+      path: '/OTCOnlineTraderBuySell',
+      // name: 'OTCOnlineTraderBuySell',
+      component: OTCOnlineTraderBuySell
     }
   ]
 })

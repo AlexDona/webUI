@@ -3,16 +3,16 @@
     class="security-center personal"
     :class="{'day':theme == 'day','night':theme == 'night' }"
   >
-    <header class="security-header background-color personal-height padding-left20 line-height70 font-size16 padding-left20">
-      安全中心
+    <header class="security-header background-color personal-height line-height70 font-size16 padding-left20">
+      <span class="padding-left15">安全中心</span>
     </header>
-    <div class="security-information background-color min-height500 margin-top5 padding-left20">
-      个人信息
+    <div class="security-information background-color min-height500 margin-top5">
+      <span class="padding-left15">个人信息</span>
     </div>
-    <div class="security-setting background-color padding-left20 margin-top5">
-      安全設置
+    <div class="security-setting background-color margin-top5">
+      <span class="padding-left15">安全設置</span>
     </div>
-    <div class="security-record background-color padding-left20 margin-top5">
+    <div class="security-record background-color margin-top5">
       <el-tabs v-model="securityActiveName">
         <el-tab-pane label="最近登录记录" name="first">
           <el-table

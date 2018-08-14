@@ -1,4 +1,5 @@
 /*个人中心（黑色主题）*/
+/*表格样式修改*/
 .security-center.personal.personal.night .el-table th, .el-table tr{
   background-color: #202A33;
 }
@@ -10,10 +11,12 @@
 }
 .security-center.personal.night .el-table td{
   border-bottom: 1px solid rgba(97,116,153,0.05);
-  padding: 7px 0;
   color: #ccc;
 }
+<<<<<<< HEAD
 
+=======
+>>>>>>> de54560090dc4f6d1d679f6e690db703dcb9f7b8
 .security-center.personal.night .el-table--enable-row-hover .el-table__body tr:hover>td{
   background-color: #1D2331;
 }
@@ -22,4 +25,10 @@
 }
 .security-center.personal.night .el-table th>.cell.highlight{
   color: #617499;
+}
+/*tabs切换*/
+.security-center.personal.night .el-tabs__item.is-active{
+  background-color: transparent;
+  color: #ccc;
+  border-bottom: 1px solid #ccc;
 }

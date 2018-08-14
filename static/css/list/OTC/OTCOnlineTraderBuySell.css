@@ -1,0 +1,9 @@
+/* otc在线交易买卖样式重置 */
+/*付款方式字体图标*/
+.otc-online-trader-buy-sell-box .icon{
+  font-size: 14px;
+  margin-right: 2px;
+}
+.otc-online-trader-buy-sell-box .el-form--label-top .el-button--mini{
+  padding: 4px 8px;
+}

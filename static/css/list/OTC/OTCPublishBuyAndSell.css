@@ -1,0 +1,41 @@
+/* otc发布购买和出售样式重置 */
+/* 文本域 */
+.otc-publish-buy-and-sell-box .el-textarea__inner{
+    resize: none;
+    width: 588px;
+    height: 100px;
+    color: #fff;
+    background-color: #333A41;
+    border: 0;
+    margin-bottom: 10px;
+}
+/* 表单 */
+.otc-publish-buy-and-sell-box .el-form--label-top .el-form-item__label{
+    color: #9DA5B3;
+    padding: 0 0;
+}
+.otc-publish-buy-and-sell-box .el-form--label-top .el-form-item{
+  margin-bottom: 0;
+}
+.otc-publish-buy-and-sell-box .el-form--label-top .el-form-item__content{
+  line-height: 30px;
+}
+.otc-publish-buy-and-sell-box .el-form--label-top .el-button--mini{
+  padding: 4px 8px;
+}
+/*select选择框*/
+.otc-publish-buy-and-sell-box .buy-sell-submit-form .el-input--suffix .el-input__inner{
+  height: 36px;
+  line-height: 36px;
+}
+.otc-publish-buy-and-sell-box .buy-sell-submit-form .el-input__inner{
+  background-color: #333A41;
+  border: 0;
+}
+.otc-publish-buy-and-sell-box .buy-sell-submit-form .el-select-dropdown__list{
+  background-color: #29343F !important;
+}
+.otc-publish-buy-and-sell-box .buy-sell-submit-form .el-select-dropdown__item.hover {
+  background-color: #29343F !important;
+  color: #338FF5 !important;
+}

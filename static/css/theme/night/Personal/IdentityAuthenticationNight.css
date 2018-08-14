@@ -1,9 +1,54 @@
 /*个人中心（黑色主题）*/
 .identity-authentication.personal.night .el-collapse-item__header {
-  background-color: #252e3f;
+  background-color: #202A33;
   color: #CCCCCC;
+  border-bottom: 1px solid #39424D;
 }
 .identity-authentication.personal.night .el-collapse-item__content {
-  background-color: #252e3f;
+  background-color: #202A33;
   color: #CCCCCC;
+}
+.identity-authentication.personal.night .common-input{
+  border: 1px solid #364654;
+  color: #fff;
+}
+.identity-authentication.personal.night .common-input:focus{
+  border: 1px solid #338FF5;
+}
+.identity-authentication.personal.night .submit{
+  background:linear-gradient(9deg,rgba(43,57,110,1),rgba(42,80,130,1));
+  color: #FFF;
+}
+.identity-authentication.personal.night .common-option{
+  background-color: #202A33;
+}
+/*select*/
+.identity-authentication.personal.night .el-input__inner{
+  border: 1px solid #364654;
+  background-color: #333A41;
+}
+.identity-authentication.personal.night .el-input__inner:focus{
+  border: 1px solid #338FF5;
+}
+.identity-authentication.personal.night .el-form-item__label{
+  color: #9DA5B3;
+}
+
+.identity-authentication.personal.night .el-select-dropdown__list{
+  background-color: #25303b;
+}
+/*高级认证弹框*/
+.identity-authentication.personal.night .el-dialog{
+  background-color: #1C2237;
+}
+.identity-authentication.personal.night .el-dialog__header{
+  background-color: #282E43;
+  box-shadow: 0px 2px 5px #1D2131;
+}
+.identity-authentication.personal.night .el-dialog__title{
+  color: #B8BDD0;
+}
+.icon-down,
+.main-header-title{
+  color: #FFFFFF;
 }

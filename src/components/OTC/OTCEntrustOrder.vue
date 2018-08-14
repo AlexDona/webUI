@@ -1,81 +1,56 @@
 <template>
   <div class="otc-entrust-order-box otc">
     <!-- 委托订单表格 -->
-    <div class="otc-entrust-order-table">
-      <el-table
-        :data="tableData"
+    <div
+      class="otc-entrust-order-table"
+    >
+      <!-- 表头 -->
+     <div class="entrust-table-head">
+        <span class="item">类型</span>
+        <span class="item">币种</span>
+        <span class="item">价格</span>
+        <span class="item">挂单数量</span>
+        <span class="item">已匹配数量</span>
+        <span class="item">总金额</span>
+        <span class="item">挂单时间</span>
+        <span class="item">操作</span>
+      </div>
+      <!-- 表身体 -->
+      <div
+        class="entrust-table-body"
       >
-        <!-- 类型 -->
-        <el-table-column
-          label="类型"
+        <div
+          class="entrust-list-content"
+          v-for="(item,index) in getOTCEntrustOrderList"
+          :key="index"
         >
-          <template slot-scope = "scope">
-            <div>买入</div>
-          </template>
-        </el-table-column>
-        <!-- 币种 -->
-        <el-table-column
-          label="币种"
-        >
-          <template slot-scope = "scope">
-            <div>FUC</div>
-          </template>
-        </el-table-column>
-        <!-- 价格 -->
-        <el-table-column
-          label="价格"
-        >
-          <template slot-scope = "scope">
-            <div>88888888CNY</div>
-          </template>
-        </el-table-column>
-        <!-- 挂单数量 -->
-        <el-table-column
-          label="挂单数量"
-        >
-          <template slot-scope = "scope">
-            <div>0.235844BTC</div>
-          </template>
-        </el-table-column>
-        <!-- 已匹配数量 -->
-        <el-table-column
-          label="已匹配数量"
-        >
-          <template slot-scope = "scope">
-            <div>0.12525BTC</div>
-          </template>
-        </el-table-column>
-        <!-- 总金额 -->
-        <el-table-column
-          label="总金额"
-        >
-          <template slot-scope = "scope">
-            <div>88888888CNY</div>
-          </template>
-        </el-table-column>
-        <!-- 挂单时间 -->
-        <el-table-column
-          label="挂单时间"
-        >
-          <template slot-scope = "scope">
-            <div>2018-08-10 12:20:58</div>
-          </template>
-        </el-table-column>
-        <!-- 操作 -->
-        <el-table-column
-          label = "操作"
-        >
-          <template slot-scope = "scope">
-            <div>
-              <span
-                class="otc-table-action-cancellations"
-              >
-                撤单
-              </span>
-            </div>
-          </template>
-        </el-table-column>
-      </el-table>
+          <!-- 买入 -->
+          <span
+            class="item"
+            v-if="item.style === '买入'"
+            :class="{ red: item.style === '买入' }"
+          >
+            {{item.style}}
+          </span>
+          <!-- 卖出 -->
+          <span
+            class="item"
+            v-if="item.style === '卖出'"
+            :class="{ green: item.style === '卖出' }"
+          >
+            {{item.style}}
+          </span>
+          <span class="item">{{item.coinName}}</span>
+          <span class="item">{{item.price}}</span>
+          <span class="item">{{item.hangOrderSum}}</span>
+          <span class="item">{{item.matchedSum}}</span>
+          <span class="item">{{item.totalMoney}}</span>
+          <span class="item">{{item.createTime}}</span>
+          <span class="item">
+            <el-button type="text" @click="revocationOrder">撤单</el-button>
+          </span>
+        </div>
+      </div>
     </div>
   </div>
 </template>
@@ -86,7 +61,36 @@ export default {
   // props,
   data () {
     return {
-      tableData: [{}]
+      // OTC委托订单列表
+      getOTCEntrustOrderList: [
+        {
+          style: '买入',
+          coinName: 'BTC',
+          price: '567812.12',
+          hangOrderSum: '0.0012345',
+          matchedSum: '0.0012345',
+          totalMoney: '20180812123456',
+          createTime: '2018-12-12'
+        },
+        {
+          style: '卖出',
+          coinName: 'FBT',
+          price: '567812.12',
+          hangOrderSum: '0.0012345',
+          matchedSum: '0.0012345',
+          totalMoney: '20180812123456',
+          createTime: '2018-12-1'
+        },
+        {
+          style: '买入',
+          coinName: 'ETH',
+          price: '567812.12',
+          hangOrderSum: '0.0012345',
+          matchedSum: '0.0012345',
+          totalMoney: '20180812123456',
+          createTime: '2018-12-12'
+        }
+      ]
     }
   },
   created () {
@@ -98,19 +102,72 @@ export default {
   activited () {},
   update () {},
   beforeRouteUpdate () {},
-  methods: {},
+  methods: {
+    // 撤单按钮
+    revocationOrder () {
+      this.$confirm('您确定要撤销此单吗, 是否继续?', '提示', {
+        confirmButtonText: '确定',
+        cancelButtonText: '取消'
+      }).then(() => {
+        this.$message({
+          type: 'success',
+          message: '撤单成功!'
+        })
+      })
+    }
+  },
   filter: {},
   computed: {},
   watch: {}
 }
 </script>
-<style scoped lang="scss">
+<style scoped lang="scss" type="text/scss">
 @import url(../../../static/css/scss/OTC/OTCEntrustOrder.scss);
 .otc-entrust-order-box{
   .otc-entrust-order-table{
-    .otc-table-action-cancellations{
-      color: #5E95EC;
-      cursor: pointer;
+    >.entrust-table-head{
+      box-sizing: border-box;
+      width: 1043px;
+      height: 35px;
+      line-height: 35px;
+      background-color: #202A33;
+      color: #617499;
+      border: 1px solid #262F38;
+      border-radius: 5px;
+      margin-bottom: 5px;
+      /*box-shadow:底边阴影;*/
+      // box-shadow: 2px 4px 6px #191E28;
+      box-shadow: -2px 3px 5px 1px #191E28;
+      z-index: 200;
+      >.item{
+        display: inline-block;
+        width: 126px;
+        text-align: center;
+      }
+    }
+    >.entrust-table-body{
+      height: 432px;
+      background-color: #202A33;
+      color: #9DA5B3;
+      border: 1px solid #262F38;
+      border-top: none;
+      border-bottom-right-radius: 5px;
+      border-bottom-left-radius: 5px;
+      >.entrust-list-content{
+        height: 34px;
+        line-height: 34px;
+        .red{
+          color: #D45858;
+        }
+        .green{
+          color: #008069;
+        }
+        >.item{
+          display: inline-block;
+          width: 126px;
+          text-align: center;
+        }
+      }
     }
   }
 }

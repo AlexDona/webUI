@@ -7,3 +7,45 @@
   background-color: transparent;
   border: 0;
 }
+/*身份认证 折叠框label*/
+/*高*/
+.identity-authentication.personal.night .el-collapse-item__header {
+  height: 56px;
+  margin:0 23px;
+}
+/*行高*/
+.identity-authentication.personal
+.el-collapse-item__header,
+.el-collapse-item__arrow{
+  line-height: 56px;
+}
+/*字体*/
+.identity-authentication.personal .el-collapse-item__header{
+  font-size: 16px;
+}
+/*select*/
+.identity-authentication.personal
+.el-input__inner,
+.el-select-dropdown__item{
+  width: 270px;
+  height: 38px;
+  line-height: 38px;
+}
+/*高级认证弹框*/
+.identity-authentication.personal .el-dialog{
+  width: 470px;
+  height: 400px;
+  top: 10%;
+}
+.identity-authentication.personal .el-dialog__header{
+  height: 44px;
+  line-height: 44px;
+  padding:0 0 0 29px;
+  text-align: left;
+}
+.identity-authentication.personal .el-dialog__headerbtn{
+  top: 14px;
+}
+.identity-authentication.personal .el-dialog__title{
+  font-size: 20px;
+}

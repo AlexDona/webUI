@@ -4,7 +4,12 @@
     :class="{'day':theme == 'day','night':theme == 'night' }"
   >
     <div class="account-assets-main">
-      账户资产主题
+      <div class="account-assets-content padding-left15">
+        账户资产主题
+      </div>
+      <div class="account-assets-content padding-left15">
+        账户资产主题
+      </div>
     </div>
   </div>
 </template>
@@ -43,7 +48,6 @@ export default {
   @import "../../../static/css/scss/Personal/AccountAssets.scss";
   .account-assets{
     >.account-assets-main{
-      margin-top: 5px;
       min-height: 500px;
     }
     &.night{
@@ -55,5 +59,4 @@ export default {
       color:$dayFontColor;
     }
   }
-
 </style>

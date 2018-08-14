@@ -3,8 +3,10 @@
     class="fiat-orders personal"
     :class="{'day':theme == 'day','night':theme == 'night' }"
   >
-    <header class="personal-height background-color padding-left20 line-height70 font-size16">法币订单</header>
-    <div class="fiat-main background-color min-height500 margin-top5 padding-left20">
+    <header class="personal-height background-color line-height70 font-size16">
+      <span class="padding-left15">法币订单</span>
+    </header>
+    <div class="fiat-main background-color min-height500 margin-top5">
       <el-tabs v-model="activeName">
         <el-tab-pane
           label="交易中的订单"

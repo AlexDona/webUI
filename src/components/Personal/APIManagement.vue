@@ -3,14 +3,14 @@
     class="api-management personal"
     :class="{'day':theme == 'day','night':theme == 'night' }"
   >
-    <header class="background-color personal-height line-height70 padding-left20 font-size16 ">
-      API管理
+    <header class="background-color personal-height line-height70 padding-left15 font-size16 ">
+      <span class="padding-left15">API管理</span>
     </header>
-    <div class="api-establish-height background-color padding-left20 margin-top5">
-      创建API KEY
+    <div class="api-establish-height background-color margin-top5">
+      <header class="padding-left15">创建API KEY</header>
     </div>
-    <div class="api-KEY-height background-color padding-left20 margin-top5">
-      我的 API KEY
+    <div class="api-KEY-height background-color margin-top5">
+      <header class="padding-left15">我的 API KEY</header>
     </div>
   </div>
 </template>
