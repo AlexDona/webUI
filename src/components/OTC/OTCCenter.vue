@@ -54,8 +54,9 @@
                 v-if="OTCBuySellStyle === 'onlineSell'"
               >
                 <span
-                class="otc-filtrate-currency-name" @click="selectCurrencyName"
-                :class="{ currencyNameActived: selectCurrencyNameStatus }"
+                  class="otc-filtrate-currency-name"
+                  @click="selectCurrencyName"
+                  :class="{ currencyNameActived: selectCurrencyNameStatus }"
                 >
                   Sell
                 </span>

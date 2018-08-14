@@ -149,7 +149,10 @@
                 注意！计时结束前未手动转账并点击"确认付款"，您的订单将自动取消，若上述情况累计出现3次，您的账户将被冻结24小时。
               </p>
             </div>
-            <div class="right-content" v-else>
+            <div
+              class="right-content"
+              v-else
+            >
               <p class="action-tips submitted-confirme-payment">已提交确认付款</p>
               <p class="action-tips">
                 注意！请联系卖家确认收款并确认订单，如果卖家12小时内未确认订单，系统自动成交。

@@ -47,7 +47,12 @@
           <span class="item">{{item.totalMoney}}</span>
           <span class="item">{{item.createTime}}</span>
           <span class="item">
-            <el-button type="text" @click="revocationOrder">撤单</el-button>
+            <el-button
+              type="text"
+              @click="revocationOrder"
+            >
+              撤单
+            </el-button>
           </span>
         </div>
       </div>
