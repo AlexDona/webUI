@@ -14,9 +14,7 @@
   background-color: #ccc;
   color: #333;
 }
-.security-center.personal.day .el-table::before{
-  height: 0;
-}
+
 .security-center.personal.day .el-table--enable-row-hover .el-table__body tr:hover>td{
   background-color: #eeeeee;
 }

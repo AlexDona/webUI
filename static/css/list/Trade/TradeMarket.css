@@ -1,0 +1,40 @@
+/*trade-market 通用样式（修改elementui）*/
+.trade-market-box .el-input__inner{
+  width:168px;
+  height:20px;
+  background:transparent;
+  border-radius:2px;
+}
+/*搜索框图标位置*/
+.trade-market-box .el-input__suffix{
+  top:-3px;
+}
+/*激活tab 底边框*/
+.trade-market-box .el-tabs__active-bar{
+  height:0;
+}
+/*底部边框*/
+.trade-market-box .el-tabs__nav-wrap::after{
+  height:0;
+}
+.trade-market-box .el-tabs__item{
+  padding:0 20px;
+  /*width:70px;*/
+  height:20px;
+  line-height:20px;
+  margin:5px 20px;
+  color:#737373;
+}
+.trade-market-box .el-tabs__header{
+  margin:0;
+}
+.trade-market-box .el-tabs--top .el-tabs__item.is-top:nth-child(2){
+  padding-left:20px;
+}
+.trade-market-box .el-tabs--top .el-tabs__item.is-top:last-child{
+  padding-right:20px;
+}
+.trade-market-box .el-tabs__item.is-active{
+  background:rgba(51,143,245,.5) !important;
+  color:#338FF5;
+}

@@ -29,9 +29,7 @@
     border-bottom: 1px solid rgba(97,116,153,0.05);
     padding: 7px 0;
 }
-.el-table::before{
-    height: 0;
-}
+
 .el-table--enable-row-hover .el-table__body tr:hover>td{
     background-color: #1D2331;
 }

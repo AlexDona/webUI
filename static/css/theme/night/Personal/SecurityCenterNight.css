@@ -13,6 +13,10 @@
   border-bottom: 1px solid rgba(97,116,153,0.05);
   color: #ccc;
 }
+<<<<<<< HEAD
+
+=======
+>>>>>>> de54560090dc4f6d1d679f6e690db703dcb9f7b8
 .security-center.personal.night .el-table--enable-row-hover .el-table__body tr:hover>td{
   background-color: #1D2331;
 }

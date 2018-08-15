@@ -1,0 +1,14 @@
+.trade-box .el-table,
+.trade-box .el-table td,
+.trade-box .el-table th,
+.trade-box .el-table tr{
+  background-color:transparent;
+}
+.trade-box .el-table td{
+  border-bottom:none;
+}
+
+.trade-box .el-table th,
+.trade-box .el-table__header-wrapper{
+  padding:0;
+}

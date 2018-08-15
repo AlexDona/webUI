@@ -25,7 +25,8 @@
   color:#333;
 }
 .nav-box.common.day .ivu-modal-header{
-  box-shadow:0px 0px  5px 1px #ddd;
+  /*box-shadow:0px 0px  5px 1px #ddd;*/
+  box-shadow: 0 2px 6px rgba(0,0,0,.1);
 }
 
 
@@ -36,7 +37,8 @@
 /*弹出框头*/
 .nav-box.common.day .el-dialog__header{
   background-color:#fff;
-  box-shadow:0px 0px  5px 1px #ddd;
+  /*box-shadow:0px 0px  5px 1px #ddd;*/
+  box-shadow: 0 2px 6px rgba(0,0,0,.1);
 }
 .nav-box.common.day .el-dialog__body>p{
   color:#646464;

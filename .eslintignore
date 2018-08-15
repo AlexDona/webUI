@@ -4,3 +4,4 @@
 /*.js
 /test/unit/coverage/
 /main.js
+/src/utils/tradingview/chart.js

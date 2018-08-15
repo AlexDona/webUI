@@ -26,10 +26,10 @@
 }
 .v-modal{
   /*position: relative;*/
-  z-index: 2007 !important;
+  z-index: 2000 !important;
 }
 .el-select-dropdown{
-  /*z-index: 2008 !important;*/
+  z-index: 2100 !important;
 }
 .nav-box.common .el-dialog__body>p{
   line-height:70px;
@@ -50,12 +50,13 @@
   width:100%;
 }
 
-.el-input--suffix .el-input__inner,
-.el-select-dropdown__item selected hover,
+.nav-box.common .el-input--suffix .el-input__inner,
+.nav-box.common .el-select-dropdown__item selected hover,
 .nav-box.common .el-radio-button__inner,
-.el-select-dropdown__item{
+.nav-box.common .el-select-dropdown__item{
   height: 44px;
   line-height: 44px;
+  width:100%;
 }
 .nav-box.common .el-radio-button__inner{
   width:110px;

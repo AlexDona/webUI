@@ -3,7 +3,8 @@ import {
   CHANGE_LANGUAGE,
   CHANGE_CONVERT_CURRENCY,
   CHANGE_BANNER_ACTIVE,
-  CHANGE_BANNER_BACKGROUND
+  CHANGE_BANNER_BACKGROUND,
+  CHANGE_COLLECT_LIST
 } from './mutations-types.js'
 
 // import {setStore, getStore} from '../utils'
@@ -28,5 +29,8 @@ export default {
   },
   [CHANGE_BANNER_BACKGROUND] (state, data = '') {
     state.bannerBackgroundImage = data
+  },
+  [CHANGE_COLLECT_LIST] (state, data) {
+    state.globalCollectList = data
   }
 }

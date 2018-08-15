@@ -6,6 +6,8 @@ const HomeCenter = r => require.ensure([], () => r(require('@/components/Home/Ho
 // 个人中心
 const PersonalCenter = r => require.ensure([], () => r(require('@/components/Personal/PersonalCenter')), 'user-center')
 const OTCCenter = r => require.ensure([], () => r(require('@/components/OTC/OTCCenter')), 'otc-center')
+// 币币交易
+const TradeCenter = r => require.ensure([], () => r(require('@/components/Trade/TradeCenter')), 'trade-center')
 const OTCPublishBuyAndSell = r => require.ensure([], () => r(require('@/components/OTC/OTCPublishBuyAndSell')), 'otc-publish-buy-and-sell')
 const OTCOnlineTraderBuySell = r => require.ensure([], () => r(require('@/components/OTC/OTCOnlineTraderBuySell')), 'otc-online-trader-buy-sell')
 export default new Router({
@@ -33,6 +35,11 @@ export default new Router({
       path: '/OTCPublishBuyAndSell',
       // name: 'OTCPublishBuyAndSell',
       component: OTCPublishBuyAndSell
+    },
+    {
+      path: '/TradeCenter',
+      name: 'TradeCenter',
+      component: TradeCenter
     },
     {
       // OTC在线交易买卖

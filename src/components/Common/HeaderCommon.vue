@@ -9,17 +9,17 @@
         <div class="left nav">
           <ul class="nav-list">
             <li class="nav-item">
-              <a
-                href="#"
+              <router-link
+                to="/"
                 class="logo"
               >
                 <img class="img" :src="logoSrc" alt="">
-              </a>
+              </router-link>
             </li>
             <li class="nav-item">
-              <router-link to="/">
-                <!--<span>币币交易</span>-->
-                <span>{{$t('M.home')}}</span>
+              <router-link to="/TradeCenter">
+                <span>币币交易</span>
+                <!--<span>{{$t('M.home')}}</span>-->
               </router-link>
             </li>
             <li
@@ -27,7 +27,7 @@
               @mouseenter="toggleShowSubNavBox('otc',1)"
               @mouseleave="toggleShowSubNavBox('otc',0)"
             >
-              <router-link to="/">
+              <router-link to="/OTCCenter">
                 <span>OTC交易</span>
               </router-link>
               <!--otc子导航-->
@@ -97,12 +97,10 @@
                 class="setting"
                 @click="toggleShowSettingBox(1)"
               >
-                <svg
-                  class="icon font-size26"
-                 aria-hidden="true"
-                >
-                  <use xlink:href="#icon-setting"></use>
-                </svg>
+                <IconFontCommon
+                  class="font-size26"
+                  iconName="icon-setting"
+                />
               </button>
             </li>
             <li class="li-item">
@@ -145,12 +143,9 @@
                   class="lang-selected"
                   v-show="language=='zh_CN'"
                 >
-                  <svg
-                    class="icon"
-                    aria-hidden="true"
-                  >
-                    <use xlink:href="#icon-zhongguo"></use>
-                  </svg>
+                  <IconFontCommon
+                    iconName="icon-zhongguo"
+                  />
                   <span class="language-text">简体中文</span>
                   <i class="el-icon-caret-bottom
 "></i>
@@ -159,12 +154,9 @@
                   class="lang-selected"
                   v-show="language=='en_US'"
                 >
-                  <svg
-                    class="icon"
-                    aria-hidden="true"
-                  >
-                    <use xlink:href="#icon-yingguo"></use>
-                  </svg>
+                  <IconFontCommon
+                    iconName="icon-yingguo"
+                  />
                   <span class="language-text">English</span>
                   <i class="el-icon-caret-bottom
 "></i>
@@ -173,12 +165,9 @@
                   class="lang-selected"
                   v-show="language=='zh_TW'"
                 >
-                  <svg
-                    class="icon"
-                    aria-hidden="true"
-                  >
-                    <use xlink:href="#icon-fantizhongwen"></use>
-                  </svg>
+                  <IconFontCommon
+                    iconName="icon-fantizhongwen"
+                  />
                   <span class="language-text">繁体中文</span>
                   <i class="el-icon-caret-bottom
 "></i>
@@ -187,12 +176,9 @@
                   class="lang-selected"
                   v-show="language=='ko_KR'"
                 >
-                  <svg
-                    class="icon"
-                    aria-hidden="true"
-                  >
-                    <use xlink:href="#icon-hanguo"></use>
-                  </svg>
+                  <IconFontCommon
+                    iconName="icon-hanguo"
+                  />
                   <span class="language-text">韩语</span>
                   <i class="el-icon-caret-bottom
 "></i>
@@ -206,12 +192,9 @@
                     href="#"
                     @click="changeLanguage('zh_CN')"
                   >
-                    <svg
-                      class="icon"
-                      aria-hidden="true"
-                    >
-                      <use xlink:href="#icon-zhongguo"></use>
-                    </svg>
+                    <IconFontCommon
+                      iconName="icon-zhongguo"
+                    />
                     简体中文
                   </a>
                   <a
@@ -219,12 +202,9 @@
                     href="#"
                     @click="changeLanguage('en_US')"
                   >
-                    <svg
-                      class="icon"
-                      aria-hidden="true"
-                    >
-                      <use xlink:href="#icon-yingguo"></use>
-                    </svg>
+                    <IconFontCommon
+                      iconName="icon-yingguo"
+                    />
                     English
                   </a>
                   <a
@@ -232,12 +212,9 @@
                     href="#"
                     @click="changeLanguage('zh_TW')"
                   >
-                    <svg
-                      class="icon"
-                      aria-hidden="true"
-                    >
-                      <use xlink:href="#icon-fantizhongwen"></use>
-                    </svg>
+                    <IconFontCommon
+                      iconName="icon-fantizhongwen"
+                    />
                     繁体中文
                   </a>
                   <a
@@ -245,12 +222,9 @@
                     href="#"
                     @click="changeLanguage('ko_KR')"
                   >
-                    <svg
-                      class="icon"
-                      aria-hidden="true"
-                    >
-                      <use xlink:href="#icon-hanguo"></use>
-                    </svg>
+                    <IconFontCommon
+                      iconName="icon-hanguo"
+                    />
                     韩语
                   </a>
                 </dd>
@@ -322,10 +296,13 @@
   </div>
 </template>
 <script>
+import IconFontCommon from '../Common/IconFontCommon'
 import {mapState, mapMutations, mapActions} from 'vuex'
 import {setStore} from '../../utils'
 export default{
-  components: {},
+  components: {
+    IconFontCommon
+  },
   data () {
     return {
       // 语言选择中
@@ -434,10 +411,13 @@ export default{
 <style scoped lang="scss" type="text/scss">
   @import "../../../static/css/scss/Common/HeaderCommon.scss";
 .nav-box{
+  position: relative;
+  top:0;
+  z-index: 99999;
   width:100%;
   /*height:102px;*/
   box-sizing: border-box;
-  top:30px;
+  /*top:30px;*/
   >.inner-box{
     height:100%;
     >.top{
@@ -449,6 +429,7 @@ export default{
       >.left{
         flex:2;
         position: relative;
+        z-index: 2;
         >.nav-list{
           height:100%;
           >.nav-item{
@@ -646,7 +627,12 @@ export default{
     }
     >.bottom{
       background-color: #292e42;
+      /*background-color: #f40;*/
       height:36px;
+      position: absolute;
+      top:66px;
+      width:100%;
+      z-index: 1;
     }
   }
   &.day{
