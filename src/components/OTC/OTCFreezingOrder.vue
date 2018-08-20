@@ -46,7 +46,7 @@
           <!-- 总金额 -->
           <span class="item">{{item.totalMoney}}</span>
           <!-- 下单时间 -->
-          <span class="item">{{item.createTime}}</span>
+          <span class="item">{{timeFormatting(item.createTime)}}</span>
         </div>
         <!--表格下部分-->
         <div class="freezing-info-bottom">
@@ -65,7 +65,7 @@
           </div>
           <div class="info-right">
             <p class="text-info text-blue">冻结时间</p>
-            <p class="text-info">{{item.freezingTime}}</p>
+            <p class="text-info">{{timeFormatting(item.freezingTime)}}</p>
           </div>
         </div>
       </div>
@@ -74,6 +74,7 @@
 </template>
 <!--请严格按照如下书写书序-->
 <script>
+import {timeFilter} from '../../utils'
 export default {
   components: {},
   // props,
@@ -88,12 +89,12 @@ export default {
           price: '567812.12',
           sum: '0.0012345',
           totalMoney: '20180812123456',
-          createTime: '2018-12-12 12:12:12',
+          createTime: 1523756432000,
           sellerName: '张三封',
           sellerPhone: '15711111111',
           buyerName: '任付伟',
           buyerPhone: '15722222222',
-          freezingTime: '2018-08-08 12:12:00'
+          freezingTime: 1523756432000
         },
         {
           orderId: '20180812222222',
@@ -102,12 +103,12 @@ export default {
           price: '567812.12',
           sum: '0.0012345',
           totalMoney: '20180812123456',
-          createTime: '2018-12-12 12:12:12',
+          createTime: 1523756432000,
           sellerName: '张三封',
           sellerPhone: '15711111111',
           buyerName: '任付伟',
           buyerPhone: '15722222222',
-          freezingTime: '2018-08-08 12:12:00'
+          freezingTime: 1523756432000
         },
         {
           orderId: '20180812222222',
@@ -116,12 +117,12 @@ export default {
           price: '567812.12',
           sum: '0.0012345',
           totalMoney: '20180812123456',
-          createTime: '2018-12-12 12:12:12',
+          createTime: 1523756432000,
           sellerName: '张三封',
           sellerPhone: '15711111111',
           buyerName: '任付伟',
           buyerPhone: '15722222222',
-          freezingTime: '2018-08-08 12:12:00'
+          freezingTime: 1523756432000
         }
       ]
     }
@@ -135,7 +136,12 @@ export default {
   activited () {},
   update () {},
   beforeRouteUpdate () {},
-  methods: {},
+  methods: {
+    // 时间格式化
+    timeFormatting (date) {
+      return timeFilter(date, 'normal')
+    }
+  },
   filter: {},
   computed: {},
   watch: {}

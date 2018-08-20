@@ -66,65 +66,99 @@
           </div>
           <!-- 表中部 -->
           <div class="order-list-body-middle">
+            <!-- 付款前 -->
             <div
               class="middle-content"
               v-if = "buyerConfirmPayMoney"
             >
-              <!-- 选择支付方式 -->
-              <div class="pay-style">
-                <div class="qiandai-icon">
-                  <svg class="icon" aria-hidden="true">
-                    <use xlink:href="#icon-qiandai-tianchong"></use>
-                  </svg>
-                </div>
-                <el-select
-                  v-model="activitedPayStyle"
-                  placeholder="选择支付方式"
-                >
-                  <el-option
-                    v-for="item in options"
-                    :key="item.value"
-                    :label="item.label"
-                    :value="item.value"
+              <div class="trader-info display-inline-block">
+                <!-- 选择支付方式 -->
+                <div class="pay-style">
+                  <div class="qiandai-icon">
+                    <IconFontCommon
+                      iconName="icon-qiandai-tianchong"
+                    />
+                  </div>
+                  <el-select
+                    v-model="activitedPayStyle"
+                    placeholder="选择支付方式"
                   >
-                  </el-option>
-                </el-select>
+                    <el-option
+                      v-for="item in options"
+                      :key="item.value"
+                      :label="item.label"
+                      :value="item.value"
+                    >
+                    </el-option>
+                  </el-select>
+                </div>
+                <!-- 收款人 -->
+                <p class="bank-info">
+                  <span>收款人: 王先生</span>
+                </p>
+                <!-- 开户行 -->
+                <p class="bank-info">
+                  <span>开户行: 上海浦东发展银行</span>
+                </p>
+                <!-- 账户 -->
+                <p class="bank-info">
+                  <span>
+                    账&nbsp;&nbsp;&nbsp;户: 621788888888888888
+                  </span>
+                </p>
               </div>
-              <!-- 收款人 -->
-              <p class="bank-info">
-                <span>收款人：王先生</span>
-              </p>
-              <!-- 开户行 -->
-              <p class="bank-info">
-                <span>开户行：中国建设银行</span>
-              </p>
-              <!-- 账户 -->
-              <p class="bank-info">
-                <span>
-                  账&nbsp;&nbsp;&nbsp;户：621788888888888888
-                </span>
-              </p>
+              <div class="bank-info-picture display-inline-block">
+                <div class="picture-box">
+                  <el-popover
+                    placement="bottom"
+                    trigger="click"
+                  >
+                    <img
+                      width="140"
+                      height="200"
+                      src="../../assets/develop/weixin.png"
+                    >
+                    <el-button slot="reference">扫码支付</el-button>
+                  </el-popover>
+                </div>
+              </div>
             </div>
+            <!-- 付款后 -->
             <div
               class="middle-content"
               v-else
             >
-              <p class="bankMoneyInfo">
-                <span>
-                  <svg class="icon" aria-hidden="true">
-                    <use xlink:href="#icon-yinhangqia"></use>
-                  </svg>
-                </span>
-                <span>银行卡已付款</span>
-              </p>
-              <p class="bankMoneyInfo">
-                <span>转账金额：</span><span>￥688.00</span>
-              </p>
-              <p class="bankMoneyInfo">
-                <span>
-                  账&nbsp;&nbsp;&nbsp;户：</span>
-                  <span>61271111111111111111</span>
-              </p>
+              <div class="trader-info display-inline-block">
+                <p class="bankMoneyInfo">
+                  <IconFontCommon
+                    iconName="icon-yinhangqia"
+                  />
+                  <span>银行卡已付款</span>
+                </p>
+                <p class="bankMoneyInfo">
+                  <span>转账金额: </span><span>￥688.00</span>
+                </p>
+                <p class="bankMoneyInfo">
+                  <span>
+                    账&nbsp;&nbsp;&nbsp;户: </span>
+                    <span>621766666666666666</span>
+                </p>
+              </div>
+              <div class="bank-info-picture display-inline-block">
+                <div class="picture-box">
+                  <el-popover
+                    placement="bottom"
+                    trigger="click"
+                  >
+                    <img
+                      width="140"
+                      height="200"
+                      src="../../assets/develop/weixin.png"
+                    >
+                    <el-button slot="reference">扫码支付</el-button>
+                  </el-popover>
+                </div>
+              </div>
             </div>
           </div>
           <!-- 表右部 -->
@@ -149,8 +183,11 @@
                 注意！计时结束前未手动转账并点击"确认付款"，您的订单将自动取消，若上述情况累计出现3次，您的账户将被冻结24小时。
               </p>
             </div>
-            <div class="right-content" v-else>
-              <p class="action-tips submitted-confirme-payment">已提交确认付款</p>
+            <div
+              class="right-content"
+              v-else
+            >
+              <p class="action-tips submitted-confirm-payment">已提交确认付款</p>
               <p class="action-tips">
                 注意！请联系卖家确认收款并确认订单，如果卖家12小时内未确认订单，系统自动成交。
               </p>
@@ -213,31 +250,67 @@
           </div>
           <!-- 表中部 -->
           <div class="order-list-body-middle">
+            <!-- 付款前 -->
             <div
               class="middle-content"
               v-if = "sellerConfirmGatherMoney"
             >
-              <p class="order-cancle-tips">
-                订单生成后N分钟内对方未确认收款，订单将自动取消
-              </p>
+              <div class="trader-info display-inline-block">
+                <p class="order-cancle-tips">
+                  订单生成后N分钟内对方未确认收款，订单将自动取消
+                </p>
+              </div>
+              <div class="bank-info-picture display-inline-block">
+                <div class="picture-box">
+                  <el-popover
+                    placement="bottom"
+                    trigger="click"
+                  >
+                    <img
+                      width="140"
+                      height="200"
+                      src="../../assets/develop/weixin.png"
+                    >
+                    <el-button slot="reference">扫码支付</el-button>
+                  </el-popover>
+                </div>
+              </div>
             </div>
-            <div class="middle-content" v-else>
-              <p class="bankMoneyInfo">
-                <span>
-                  <svg class="icon" aria-hidden="true">
-                    <use xlink:href="#icon-yinhangqia"></use>
-                  </svg>
-                </span>
-                <span>银行卡已付款</span>
-              </p>
-              <p class="bankMoneyInfo">
-                <span>转账金额：</span><span>￥688.00</span>
-              </p>
-              <p class="bankMoneyInfo">
-                <span>
-                  账&nbsp;&nbsp;&nbsp;户：</span>
-                  <span>61271111111111111111</span>
-              </p>
+            <!-- 付款后 -->
+            <div class="middle-content"
+              v-else
+            >
+              <div class="trader-info display-inline-block">
+                <p class="bankMoneyInfo">
+                  <IconFontCommon
+                    iconName="icon-yinhangqia"
+                  />
+                  <span>银行卡已付款22</span>
+                </p>
+                <p class="bankMoneyInfo">
+                  <span>转账金额:</span><span>￥688.00</span>
+                </p>
+                <p class="bankMoneyInfo">
+                  <span>
+                    账&nbsp;&nbsp;&nbsp;户:</span>
+                    <span>612799999999999999</span>
+                </p>
+              </div>
+              <div class="bank-info-picture display-inline-block">
+                <div class="picture-box">
+                  <el-popover
+                    placement="bottom"
+                    trigger="click"
+                  >
+                    <img
+                      width="140"
+                      height="200"
+                      src="../../assets/develop/weixin.png"
+                    >
+                    <el-button slot="reference">扫码支付</el-button>
+                  </el-popover>
+                </div>
+              </div>
             </div>
           </div>
           <!-- 表右部 -->
@@ -285,7 +358,7 @@
           </div>
         </div>
       </div>
-      <!-- 订单申诉 -->
+      <!-- 3.0 订单申诉 -->
       <div class="otc-order-appeal order-list">
         <!-- 申诉表头 -->
         <div class="appeal-head">
@@ -327,8 +400,12 @@
 </template>
 <!--请严格按照如下书写书序-->
 <script>
+import {timeFilter} from '../../utils'
+import IconFontCommon from '../Common/IconFontCommon'
 export default {
-  components: {},
+  components: {
+    IconFontCommon //  字体图标组件
+  },
   // props,
   data () {
     return {
@@ -359,6 +436,10 @@ export default {
   update () {},
   beforeRouteUpdate () {},
   methods: {
+    // 时间格式化
+    timeFormatting (date) {
+      return timeFilter(date, 'normal')
+    },
     // 买家点击确认付款按钮
     comfirmPayMoney () {
       this.buyerConfirmPayMoney = false
@@ -379,7 +460,8 @@ export default {
   >.otc-trading-order-content{
     >.order-list{
       width: 1045px;
-      height: 170px;
+      height: 200px;
+      font-size: 12px;
       margin-bottom: 15px;
       box-sizing: border-box;
       border-radius: 5px;
@@ -458,35 +540,47 @@ export default {
           flex: 2;
           border-right: 1px solid #262F38;
           >.middle-content{
-            >.pay-style{
-              margin-left: 40px;
-              margin-bottom: 8px;
-              position: relative;
-              >.qiandai-icon{
-                >.icon{
-                  width: 14px;
+            // display: flex;
+            // flex: 2;
+            .trader-info{
+              width: 190px;
+              // flex: 1;
+              >.pay-style{
+                margin-left: 20px;
+                margin-bottom: 8px;
+                position: relative;
+                >.qiandai-icon{
+                  >.icon{
+                    width: 14px;
+                    height: 14px;
+                    position: absolute;
+                    left: 10px;
+                    top: 5px;
+                    z-index: 2;
+                  }
+                }
+              }
+              >.bank-info{
+                margin-left: 20px;
+                line-height: 1.4rem;
+              }
+              >.order-cancle-tips{
+                margin-left: 20px;
+                line-height: 1.5rem;
+              }
+              >.bankMoneyInfo{
+                margin-left: 20px;
+                line-height: 1.5rem;
+                .icon{
+                  width: 16px;
                   height: 14px;
-                  position: absolute;
-                  left: 10px;
-                  top: 5px;
-                  z-index: 2;
                 }
               }
             }
-            >.bank-info{
-              margin-left: 40px;
-              line-height: 1.4rem;
-            }
-            >.order-cancle-tips{
-              margin-left: 40px;
-              line-height: 2rem;
-            }
-            >.bankMoneyInfo{
-              margin-left: 40px;
-              line-height: 1.5rem;
-              .icon{
-                width: 16px;
-                height: 14px;
+            >.bank-info-picture{
+              vertical-align: top;
+              padding-left: 10px;
+              >.picture-box{
               }
             }
           }
@@ -502,7 +596,7 @@ export default {
                 margin-right: 10px;
               }
             }
-            >.submitted-confirme-payment{
+            >.submitted-confirm-payment{
               color: #5E95EC;
             }
             >.action-explain{

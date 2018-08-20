@@ -1,0 +1,14 @@
+/*个人中心白色主题*/
+.add-bank.card.night .el-form-item__label {
+  color: #555;
+}
+.add-bank.card.night .el-input__inner {
+  border: 1px solid #555;
+  background-color: transparent;
+  color: #000;
+}
+.add-bank.card.night .el-input-group__append {
+  background-color: #b1b1b1;
+  border-color: #364654;
+  color: #555;
+}

@@ -36,19 +36,19 @@
                 v-show="otcSubNavStatus"
               >
                 <li class="sub-nav-item">
-                  <router-link to="/">商家申请</router-link>
+                  <router-link to="/OTCBusinessApply">商家申请</router-link>
                 </li>
                 <li class="sub-nav-item">
-                  <router-link to="/">发布广告</router-link>
+                  <router-link to="/OTCPublishAD">发布广告</router-link>
                 </li>
                 <li class="sub-nav-item">
-                  <router-link to="/">广告管理</router-link>
+                  <router-link to="/OTCADManage">广告管理</router-link>
                 </li>
                 <li class="sub-nav-item">
-                  <router-link to="/">商家统计</router-link>
+                  <router-link to="/OTCMerchantsOrders">商家订单</router-link>
                 </li>
                 <li class="sub-nav-item">
-                  <router-link to="/">报表统计</router-link>
+                  <router-link to="/OTCReportFormStatistics">报表统计</router-link>
                 </li>
               </ul>
             </li>
@@ -82,7 +82,7 @@
               </ul>
             </li>
           <li class="nav-item">
-            <router-link to="/PersonalCenter">
+            <router-link to="/PersonalCenter/first">
               <span>个人中心</span>
             </router-link>
           </li>

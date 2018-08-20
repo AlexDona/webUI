@@ -6,7 +6,8 @@ import {
   CHANGE_BANNER_BACKGROUND,
   CHANGE_COLLECT_LIST,
   CHANGE_COLLECT_STATUS_LIST,
-  CHANGE_ACTIVE_SYMBOL
+  CHANGE_ACTIVE_SYMBOL,
+  CHANGE_USER_CENTER_ACTIVE_NAME
 } from './mutations-types.js'
 
 // import {setStore, getStore} from '../utils'
@@ -41,5 +42,8 @@ export default {
   // 设置当前交易对
   [CHANGE_ACTIVE_SYMBOL] (state, data) {
     state.activeSymbol = data
+  },
+  [CHANGE_USER_CENTER_ACTIVE_NAME] (state, data) {
+    state.userCenterActiveName = data
   }
 }

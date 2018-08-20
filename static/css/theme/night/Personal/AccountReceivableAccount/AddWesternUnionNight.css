@@ -1,0 +1,6 @@
+/*个人中心黑色主题*/
+.add-western.western .el-textarea__inner{
+  background-color: #202A33;
+  border: 1px solid #364654;
+  color: #9DA5B3;
+}

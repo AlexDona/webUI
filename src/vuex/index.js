@@ -72,6 +72,7 @@ const state = {
       'token': ''
     }
   },
+  // 首页 板块
   plateList: [
     {
       id: 0,
@@ -83,7 +84,9 @@ const state = {
       name: 'Innovation',
       label: '创新区'
     }
-  ] // 板块列表
+  ], // 板块列表
+  // 个人中心默认显示第一个
+  userCenterActiveName: 'first'
 }
 
 export default new Vuex.Store({

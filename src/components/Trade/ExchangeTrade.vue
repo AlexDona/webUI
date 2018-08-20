@@ -326,7 +326,7 @@ import {formatNumberInput} from '../../utils'
 
 export default {
   components: {
-    IconFont,
+    IconFont
     // Slider
   },
   // props,

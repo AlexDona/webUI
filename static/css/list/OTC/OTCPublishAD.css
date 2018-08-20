@@ -1,0 +1,40 @@
+/*发布广告样式重置*/
+.otc-publish-AD-box .right-style .el-select{
+  width: 140px;
+}
+.otc-publish-AD-box .right-change .el-select{
+  width: 180px;
+}
+.otc-publish-AD-box .choice .el-input__inner{
+  height: 36px;
+}
+.otc-publish-AD-box .trade-way .el-checkbox-group{
+  margin-top: 15px;
+}
+/* 文本域 */
+.otc-publish-AD-box .el-textarea__inner{
+  resize: none;
+  width: 600px;
+  height: 160px;
+  /*color: #fff;*/
+  background-color: #333A41;
+  border: 0;
+  margin-bottom: 10px;
+}
+/* 复选框 */
+.otc-publish-AD-box .trade-way .el-checkbox{
+  color: #9DA5B3;
+}
+.otc-publish-AD-box .trade-way .el-checkbox__inner{
+  background-color: #333A41;
+  border: 1px solid #435372;
+}
+.otc-publish-AD-box .trade-way .el-checkbox__inner::after{
+  border: 1px solid #1F90EA;
+  border-left: 0;
+  border-top: 0;
+}
+.otc-publish-AD-box .trade-way .el-checkbox__input.is-checked+.el-checkbox__label {
+  color: #9DA5B3;
+}
+

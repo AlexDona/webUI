@@ -6,12 +6,14 @@
   color: #CCCCCC;
 }
 .invitation-promotion.personal.day .el-table th.is-leaf {
-  border-bottom: 1px solid #FFFFFF;
+  /*border-bottom: 1px solid #FFFFFF;*/
+  border-bottom: 0;
 }
 .invitation-promotion.personal.day .el-table td{
-  border-bottom: 1px solid #FFFFFF;
-  padding: 7px 0;
-  background-color: #ccc;
+  border-bottom: 0;
+  /*border-bottom: 1px solid #FFFFFF;*/
+  /*padding: 7px 0;*/
+  /*background-color: #ccc;*/
   color: #333;
 }
 
@@ -23,4 +25,12 @@
 }
 .invitation-promotion.personal.day .el-table th>.cell.highlight{
   color: #b1b1b1;
+}
+.invitation-promotion.personal.day .el-input__inner{
+  background-color: #ccc;
+  border: 0;
+  color: #333;
+}
+.invitation-promotion.personal.day .el-input__inner:focus {
+  border: 0;
 }
