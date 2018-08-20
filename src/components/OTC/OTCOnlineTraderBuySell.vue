@@ -68,21 +68,16 @@
                     <span class="details-tip">
                         付款方式：
                     </span>
-                    <span>
-                        <svg class="icon" aria-hidden="true">
-                            <use xlink:href="#icon-zhifubao"></use>
-                        </svg>
-                    </span>
-                    <span>
-                        <svg class="icon" aria-hidden="true">
-                            <use xlink:href="#icon-weixin"></use>
-                        </svg>
-                    </span>
-                    <span>
-                        <svg class="icon" aria-hidden="true">
-                            <use xlink:href="#icon-yinhangqia"></use>
-                        </svg>
-                    </span>
+                    <IconFontCommon
+                      iconName="icon-zhifubao1"
+                    />
+                    <IconFontCommon
+                      class="font-size16"
+                      iconName="icon-weixin1"
+                    />
+                    <IconFontCommon
+                      iconName="icon-yinhangqia"
+                    />
                   </div>
                   <div class="details-row">
                     <span class="details-tip">
@@ -101,10 +96,22 @@
                     >
                       <el-form-item>
                         <div class="want">
-                          <span class="want-text">
-                              您想卖出多少
-                            </span>
-                          <span class="charge-money">
+                          <span
+                            class="want-text"
+                            v-show="onlineTraderStatus === 'onlineSell'"
+                          >
+                              您想出售多少
+                          </span>
+                          <span
+                            class="want-text"
+                            v-show="onlineTraderStatus === 'onlineBuy'"
+                          >
+                              您想购买多少
+                          </span>
+                          <span
+                            class="charge-money"
+                            v-show="onlineTraderStatus === 'onlineSell'"
+                          >
                             <el-button
                               type="primary"
                               size="mini"
@@ -114,31 +121,51 @@
                           </span>
                         </div>
                         <div class="sell-buy-input">
+                          <!--出售-->
                           <input
                             type="text"
-                            placeholder="最大可卖"
+                            placeholder="最大可卖1.58"
                             class="sell-sum"
+                            v-if="onlineTraderStatus === 'onlineSell'"
+                          >
+                          <!--购买-->
+                          <input
+                            type="text"
+                            placeholder="买入量"
+                            class="sell-sum"
+                            v-if="onlineTraderStatus === 'onlineBuy'"
                           >
                           <span class="unit">BTC</span>
+                          <!--出售-->
                           <input
                             type="text"
-                            placeholder="最大可卖"
+                            placeholder="最大可卖32580"
                             class="sell-sum"
+                            v-if="onlineTraderStatus === 'onlineSell'"
+                          >
+                          <!--购买-->
+                          <input
+                            type="text"
+                            placeholder="金额"
+                            class="sell-sum"
+                            v-if="onlineTraderStatus === 'onlineBuy'"
                           >
                           <span class="unit">CNY</span>
                         </div>
                         <div class="trader-submit">
                           <button
                             class="trader-submit-button trader-submit-sell"
+                            v-if="onlineTraderStatus === 'onlineSell'"
                           >
-                            确定卖出
+                            确定出售
                           </button>
                           <!-- 这个注释的按钮不能删除需要来根据状态显示切换的 -->
-                          <!-- <button
+                          <button
                             class="trader-submit-button trader-submit-buy"
+                            v-if="onlineTraderStatus === 'onlineBuy'"
                           >
-                            确定买入
-                          </button> -->
+                            确定购买
+                          </button>
                         </div>
                       </el-form-item>
                     </el-form>
@@ -179,20 +206,25 @@
 <script>
 import NavCommon from '../Common/HeaderCommon'
 import FooterCommon from '../Common/FooterCommon'
+import IconFontCommon from '../Common/IconFontCommon'
 export default {
   components: {
     NavCommon, //  头部导航
-    FooterCommon //  底部
+    FooterCommon, //  底部
+    IconFontCommon //  字体图标组件
   },
   data () {
     return {
-      labelPosition: 'top' //  表单label放置的位置
+      labelPosition: 'top', //  表单label放置的位置
+      onlineTraderStatus: '' //  在线买卖的类型状态 购买（onlineBuy）和 出售（onlineSell)
     }
   },
   created () {
     require('../../../static/css/list/OTC/OTCOnlineTraderBuySell.css')
     require('../../../static/css/theme/day/OTC/OTCOnlineTraderBuySellDay.css')
     require('../../../static/css/theme/night/OTC/OTCOnlineTraderBuySellNight.css')
+    console.log(this.$route.params.styleId) //  从OTCCenter传过来的URL中获取的在线买卖的类型 购买（onlineBuy）和 出售（onlineSell)
+    this.onlineTraderStatus = this.$route.params.styleId
   },
   mounted () {},
   activited () {},

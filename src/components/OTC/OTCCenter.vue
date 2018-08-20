@@ -25,54 +25,85 @@
           <!--我要购买和发布订单按钮-->
           <div class="otc-filtrate-publish">
             <div class="otc-filtrate-box">
+              <!-- 我要购买 -->
               <span
                 class="otc-i-wan"
                 v-show="OTCBuySellStyle === 'onlineBuy'"
               >
                 我要购买 ：
               </span>
+              <!-- 我要出售 -->
               <span
                 class="otc-i-wan"
                 v-show="OTCBuySellStyle === 'onlineSell'"
               >
                 我要出售 ：
               </span>
+              <!-- 我要购买的选项数组 -->
               <div
                 class="otc-filtrate-style"
                 v-if="OTCBuySellStyle === 'onlineBuy'"
               >
                 <span
+                  v-for="(item, index) in IWantToBuyArr"
+                  :key="index"
                   class="otc-filtrate-currency-name"
-                  @click="selectCurrencyName"
                   :class="{ currencyNameActived: selectCurrencyNameStatus }"
+                  @click="selectCurrencyName(index)"
                 >
-                  Buy
+                  {{item}}
                 </span>
               </div>
+              <!-- 我要出售的选项数组 -->
               <div
                 class="otc-filtrate-style"
                 v-if="OTCBuySellStyle === 'onlineSell'"
               >
                 <span
+                  v-for="(item, index) in IWantToSellArr"
+                  :key="index"
                   class="otc-filtrate-currency-name"
-                  @click="selectCurrencyName"
                   :class="{ currencyNameActived: selectCurrencyNameStatus }"
+                  @click="selectCurrencyName(index)"
                 >
-                  Sell
+                  {{item}}
                 </span>
               </div>
             </div>
             <div class="otc-publish-box">
-              <router-link to="/OTCPublishBuyAndSell">
-                <el-button type="primary">发布订单</el-button>
-              </router-link>
+              <el-button
+                type="primary"
+                @click="toPublishOrder"
+              >
+                发布订单
+              </el-button>
             </div>
           </div>
           <!--商户列表表格部分-->
           <div class="otc-merchant-list">
+            <!-- 支付方式 -->
+            <div class="pay-way">
+              <el-select
+                v-model="activedPayWayBankinfoItem"
+                @change="payWayChangeValue"
+              >
+                <el-option
+                  v-for="item in payWayBankinfoList"
+                  :key="item.value"
+                  :label="item.label"
+                  :value="item.value"
+                >
+                </el-option>
+              </el-select>
+            </div>
+            <div class="shade-pay-way">支付方式</div>
+            <!-- 表格信息 -->
             <el-table
-              :data="tableData"
-              style="width: 100%">
+              :data="onlineBuySellTableList"
+              style="width: 100%"
+              empty-text="暂无数据"
+              @filter-change="one"
+            >
               <el-table-column
                 prop="merchant"
                 label="商户"
@@ -91,24 +122,15 @@
                 prop="price"
                 label="价格">
               </el-table-column>
-              <!-- <el-table-column
-                prop="payStyle"
-                label="支付方式">
-              </el-table-column> -->
+              <!-- 支付方式 -->
               <el-table-column
                 prop="payStyle"
                 label="支付方式"
-                width="100"
-                :filters="[{ text: '支付宝', value: '支付宝' }, { text: '银行卡', value: '银行卡' }]"
-                :filter-method="filterTag" filter-placement="bottom-end"
               >
                 <template slot-scope="scope">
-                  <el-tag
-                    :type="scope.row.payStyle === '支付宝' ? 'primary' : 'success'"
-                    disable-transitions
-                  >
+                  <div>
                     {{scope.row.payStyle}}
-                  </el-tag>
+                  </div>
                 </template>
               </el-table-column>
               <el-table-column
@@ -124,22 +146,22 @@
                 label="操作"
               >
                 <template slot-scope="scope">
-                  <router-link to="/OTCOnlineTraderBuySell">
-                    <el-button
-                      type="danger"
-                      size="mini"
-                      v-if="OTCBuySellStyle === 'onlineBuy'"
-                    >
-                      购买
-                    </el-button>
-                    <el-button
-                      type="success"
-                      size="mini"
-                      v-if="OTCBuySellStyle === 'onlineSell'"
-                    >
-                      出售
-                    </el-button>
-                  </router-link>
+                  <el-button
+                    type="danger"
+                    size="mini"
+                    v-if="OTCBuySellStyle === 'onlineBuy'"
+                    @click="toOnlineBuy"
+                  >
+                    购买
+                  </el-button>
+                  <el-button
+                    type="success"
+                    size="mini"
+                    v-if="OTCBuySellStyle === 'onlineSell'"
+                    @click="toOnlineSell"
+                  >
+                    出售
+                  </el-button>
                 </template>
               </el-table-column>
             </el-table>
@@ -160,9 +182,9 @@
                 class="el-icon-caret-right otc-tab-pane-arrow-right"
                 v-if="activeName === 'first'">
               </i>
-              <svg class="icon" aria-hidden="true">
-                <use xlink:href="#icon-shalou"></use>
-              </svg>
+              <IconFontCommon
+                iconName="icon-shalou"
+              />
               交易中订单
             </span>
             <OTCTradingOrder></OTCTradingOrder>
@@ -174,9 +196,9 @@
                 class="el-icon-caret-right otc-tab-pane-arrow-right"
                 v-if="activeName === 'second'">
               </i>
-              <svg class="icon" aria-hidden="true">
-                <use xlink:href="#icon-msnui-task-complete"></use>
-              </svg>
+              <IconFontCommon
+                iconName="icon-msnui-task-complete"
+              />
               已完成订单
             </span>
             <OTCCompletedOrder></OTCCompletedOrder>
@@ -188,9 +210,9 @@
                 class="el-icon-caret-right otc-tab-pane-arrow-right"
                 v-if="activeName === 'third'">
               </i>
-              <svg class="icon" aria-hidden="true">
-                <use xlink:href="#icon-cancel_order"></use>
-              </svg>
+              <IconFontCommon
+                iconName="icon-cancel_order"
+              />
               已取消订单
             </span>
             <OTCCanceledOrder></OTCCanceledOrder>
@@ -202,9 +224,9 @@
                 class="el-icon-caret-right otc-tab-pane-arrow-right"
                 v-if="activeName === 'fourth'">
               </i>
-              <svg class="icon" aria-hidden="true">
-                <use xlink:href="#icon-dongjie"></use>
-              </svg>
+              <IconFontCommon
+                iconName="icon-dongjie"
+              />
               冻结中订单
             </span>
             <OTCFreezingOrder></OTCFreezingOrder>
@@ -216,9 +238,9 @@
                 class="el-icon-caret-right otc-tab-pane-arrow-right"
                 v-if="activeName === 'fifth'">
               </i>
-              <svg class="icon" aria-hidden="true">
-                <use xlink:href="#icon-daohang2"></use>
-              </svg>
+              <IconFontCommon
+                iconName="icon-daohang2"
+              />
               委托订单
             </span>
             <OTCEntrustOrder></OTCEntrustOrder>
@@ -232,6 +254,7 @@
 </template>
 <!--请严格按照如下书写书序-->
 <script>
+import IconFontCommon from '../Common/IconFontCommon'
 import NavCommon from '../Common/HeaderCommon'
 import FooterCommon from '../Common/FooterCommon'
 import OTCTradingOrder from './OTCTradingOrder'
@@ -248,7 +271,8 @@ export default {
     OTCCompletedOrder, //  已完成订单
     OTCCanceledOrder, //  已取消订单
     OTCFreezingOrder, //  冻结中订单
-    OTCEntrustOrder //  委托订单
+    OTCEntrustOrder, //  委托订单
+    IconFontCommon //  字体图标
     // OTCPublishBuyAndSell // 发布购买和卖出组件
   },
   // props,
@@ -259,13 +283,13 @@ export default {
       tabPosition: 'left', //  订单管理面板标签方向状态
       OTCBuySellStyle: 'onlineBuy', //  在线购买和在线出售选中类型
       selectCurrencyNameStatus: false, //  选中我要购买或者出售的币种名称
-      tableData: [
+      // 在线购买和在线出售表格列表
+      onlineBuySellTableList: [
         {
           merchant: '2016-05-02',
           credit: '王小虎',
           total: '上海市普陀区金沙江路 1518 弄',
           price: '12312312',
-          // payStyle: '支付宝',
           payStyle: '支付宝',
           limit: '2000--5000',
           remark: '我是备注'
@@ -275,12 +299,39 @@ export default {
           credit: '王小虎',
           total: '上海市普陀区金沙江路 1517 弄',
           price: '12312312',
-          // payStyle: '支付宝',
           payStyle: '银行卡',
           limit: '2000--5000',
           remark: '我是备注'
         }
-      ]
+      ],
+      // 支付方式下拉框数据
+      payWayBankinfoList: [
+        {
+          value: '支付方式1',
+          label: '全部'
+        },
+        {
+          value: '支付方式2',
+          label: '支付宝'
+        },
+        {
+          value: '支付方式3',
+          label: '银行卡'
+        },
+        {
+          value: '支付方式4',
+          label: '微信'
+        },
+        {
+          value: '支付方式5',
+          label: '其他'
+        }
+      ],
+      activedPayWayBankinfoItem: '支付方式', // 选中的支付方式
+      // 我要购买币种数组
+      IWantToBuyArr: ['HAF', 'JHG', 'JYEK', 'ASDF', 'FUBT'],
+      // 我要出售币种数组
+      IWantToSellArr: ['AHAF', 'DJHG', 'DJYEK', 'DASDF', 'DFUBT']
     }
   },
   created () {
@@ -293,19 +344,20 @@ export default {
   update () {},
   beforeRouteUpdate () {},
   methods: {
-    //  表格中支付方式筛选方法
-    filterTag (value, row) {
-      return row.payStyle === value
+    // 改变支付方式下拉框的选中值
+    payWayChangeValue (e) {
+      console.log(e)
     },
     //  选中我想购买和出售币种名称
-    selectCurrencyName () {
+    selectCurrencyName (index) {
+      console.log(index)
       this.selectCurrencyNameStatus = true
     },
     //  切换在线购买和在线售出状态
     toggleBuyOrSellStyle (e) {
       // console.log(e)
       this.OTCBuySellStyle = e
-      // console.log(this.OTCBuySellStyle)
+      console.log(this.OTCBuySellStyle)
     },
     // 切换tab面板
     toggleTabPane (tab, event) {
@@ -313,6 +365,20 @@ export default {
       // console.log(event)
       // console.log(event.target.getAttribute('id')) // 获取到当前tab栏元素的id
       // this.arrowRightStatus = event.target.getAttribute('id')
+    },
+    // 点击发布订单按钮跳转到发布订单页面
+    toPublishOrder () {
+      this.$router.push({path: '/OTCPublishBuyAndSell'})
+    },
+    // 点击购买按钮跳转到在线购买页面
+    toOnlineBuy () {
+      // console.log("买")
+      this.$router.push({path: '/OTCOnlineTraderBuySell/' + this.OTCBuySellStyle})
+    },
+    // 点击出售按钮跳转到在线出售页面
+    toOnlineSell () {
+      // console.log("卖")
+      this.$router.push({path: '/OTCOnlineTraderBuySell/' + this.OTCBuySellStyle})
     }
   },
   filter: {},
@@ -327,20 +393,19 @@ export default {
   >.otc-center-content{
     width: 1150px;
     margin: 0 auto;
-    margin-top: 50px;
+    margin-top: 80px;
     >.otc-online-trading{
       >.otc-online-buy-and-sell-button{
         height: 45px;
         line-height: 45px;
         text-align: center;
-        padding-top: 40px;
         padding-bottom: 20px;
         background-color: #1D2331;
       }
       >.otc-merchant-content{
         height: 800px;
-        // padding: 25px 20px 0 20px;
         background-color: #202A33;
+        margin-top: 30px;
         >.otc-filtrate-publish{
           display: flex;
           justify-content: space-between;
@@ -370,6 +435,25 @@ export default {
         }
         >.otc-merchant-list{
           margin-top: 30px;
+          // 测试
+          position: relative;
+          >.pay-way{
+            // 测试
+            display: inline-block;
+            top: 10px;
+            left: 616px;
+            position: absolute;
+            z-index: 1;
+          }
+          >.shade-pay-way{
+            // 测试
+            color: #617499;
+            display: inline-block;
+            top: 15px;
+            left: 631px;
+            position: absolute;
+            z-index: 2;
+          }
         }
       }
     }

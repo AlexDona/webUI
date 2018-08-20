@@ -14,7 +14,7 @@
         <span class="item">总金额</span>
         <span class="item">挂单时间</span>
         <span class="item">操作</span>
-      </div>
+     </div>
       <!-- 表身体 -->
       <div
         class="entrust-table-body"
@@ -45,7 +45,7 @@
           <span class="item">{{item.hangOrderSum}}</span>
           <span class="item">{{item.matchedSum}}</span>
           <span class="item">{{item.totalMoney}}</span>
-          <span class="item">{{item.createTime}}</span>
+          <span class="item">{{timeFormatting(item.createTime)}}</span>
           <span class="item">
             <el-button
               type="text"
@@ -61,6 +61,7 @@
 </template>
 <!--请严格按照如下书写书序-->
 <script>
+import {timeFilter} from '../../utils'
 export default {
   components: {},
   // props,
@@ -75,7 +76,7 @@ export default {
           hangOrderSum: '0.0012345',
           matchedSum: '0.0012345',
           totalMoney: '20180812123456',
-          createTime: '2018-12-12'
+          createTime: 1523410832000
         },
         {
           style: '卖出',
@@ -84,7 +85,7 @@ export default {
           hangOrderSum: '0.0012345',
           matchedSum: '0.0012345',
           totalMoney: '20180812123456',
-          createTime: '2018-12-1'
+          createTime: 1523410832000
         },
         {
           style: '买入',
@@ -93,7 +94,7 @@ export default {
           hangOrderSum: '0.0012345',
           matchedSum: '0.0012345',
           totalMoney: '20180812123456',
-          createTime: '2018-12-12'
+          createTime: 16723410832222
         }
       ]
     }
@@ -108,6 +109,10 @@ export default {
   update () {},
   beforeRouteUpdate () {},
   methods: {
+    // 时间格式化
+    timeFormatting (date) {
+      return timeFilter(date, 'date')
+    },
     // 撤单按钮
     revocationOrder () {
       this.$confirm('您确定要撤销此单吗, 是否继续?', '提示', {

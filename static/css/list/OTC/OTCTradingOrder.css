@@ -49,3 +49,26 @@
     font-size: 14px;
     resize: none;
 }
+/* 4.0 扫码付款按钮及弹窗支付宝和微信图片*/
+.otc-trading-order-box .bank-info-picture .el-button{
+    color: #fff;
+    background-color: #409EFF;
+    border-color: #409EFF;
+    padding: 2px 6px;
+}
+.otc-trading-order-box .bank-info-picture .el-button:hover{
+    background: #66b1ff;
+    border-color: #66b1ff;
+    color: #fff;
+}
+/* .otc-trading-order-box .bank-info-picture .el-popper[x-placement^=bottom] .popper__arrow {
+    border-bottom-color: #fff;
+} */
+/* .otc-trading-order-box .bank-info-picture .el-popper[x-placement^=bottom]{
+    margin-top: 6px;
+} */
+/* .otc-trading-order-box .el-popover{
+    padding: 4px !important;
+}  */
+
+

@@ -49,11 +49,11 @@ export const timeFilter = (date, methods) => {
   newDate = year + '-' + month + '-' + day + ' '
   let hour = date.getHours()
   hour = hour < 10 ? '0' + hour : hour
-  let miunte = date.getMinutes()
-  miunte = miunte < 10 ? '0' + miunte : miunte
+  let minute = date.getMinutes()
+  minute = minute < 10 ? '0' + minute : minute
   let second = date.getSeconds()
   second = second < 10 ? '0' + second : second
-  const time = hour + ':' + miunte + ':' + second
+  const time = hour + ':' + minute + ':' + second
   switch (methods) {
     case 'normal':
       filterTime = newDate + time

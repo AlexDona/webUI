@@ -361,9 +361,7 @@ export default {
     background-color: #1D2331;
     >.publish-buy-and-sell-content{
         width: 1150px;
-        margin: 0 auto;
-        margin-top: 70px;
-        margin-bottom: 70px;
+        margin: 70px auto;
         >.publish-content{
             display: flex;
             flex: 3;
