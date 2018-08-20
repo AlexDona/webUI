@@ -1,0 +1,10 @@
+/*个人中心（黑色主题）*/
+/*警告提示框背景色*/
+.credited-credited.personal.night .el-dialog{
+  background-color: #1C2237;
+}
+/*警告提示框按钮*/
+.credited-credited.personal.night .el-button--primary {
+  background:linear-gradient(0deg,rgba(43,57,110,1),rgba(42,80,130,1));
+  color: #fff;
+}

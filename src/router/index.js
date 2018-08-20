@@ -5,6 +5,16 @@ Vue.use(Router)
 const HomeCenter = r => require.ensure([], () => r(require('@/components/Home/HomeCenter')), 'home-center')
 // 个人中心
 const PersonalCenter = r => require.ensure([], () => r(require('@/components/Personal/PersonalCenter')), 'user-center')
+// 银行卡设置
+const AddBankCard = r => require.ensure([], () => r(require('@/components/Personal/AccountReceivableAccount/AddBankCard')), 'add-bank')
+// 微信设置
+const AddWeChat = r => require.ensure([], () => r(require('@/components/Personal/AccountReceivableAccount/AddWeChat')), 'add-chat')
+// 支付宝设置
+const AddSetAlipay = r => require.ensure([], () => r(require('@/components/Personal/AccountReceivableAccount/AddSetAlipay')), 'add-alipay')
+// paypal设置
+const AddSetPaypal = r => require.ensure([], () => r(require('@/components/Personal/AccountReceivableAccount/AddSetPaypal')), 'add-payment')
+// 西联汇款设置
+const AddWesternUnion = r => require.ensure([], () => r(require('@/components/Personal/AccountReceivableAccount/AddWesternUnion')), 'add-western')
 const OTCCenter = r => require.ensure([], () => r(require('@/components/OTC/OTCCenter')), 'otc-center')
 // 币币交易
 const TradeCenter = r => require.ensure([], () => r(require('@/components/Trade/TradeCenter')), 'trade-center')
@@ -25,7 +35,7 @@ export default new Router({
     },
     {
       // 个人中心
-      path: '/PersonalCenter',
+      path: '/PersonalCenter/:id',
       // name: 'PersonalCenter',
       component: PersonalCenter
     },
@@ -33,6 +43,36 @@ export default new Router({
       path: '/TradeCenter',
       name: 'TradeCenter',
       component: TradeCenter
+    },
+    {
+      // 银行卡设置
+      path: '/AddBankCard',
+      // name: 'AddBankCard',
+      component: AddBankCard
+    },
+    {
+      // 支付宝设置
+      path: '/AddSetAlipay',
+      // name: 'AddSetAlipay',
+      component: AddSetAlipay
+    },
+    {
+      // 微信设置
+      path: '/AddWeChat',
+      // name: 'AddWeChat',
+      component: AddWeChat
+    },
+    {
+      // paypal设置
+      path: '/AddSetPaypal',
+      // name: 'AddSetPaypal',
+      component: AddSetPaypal
+    },
+    {
+      // 西联汇款设置
+      path: '/AddWesternUnion',
+      // name: 'AddWesternUnion',
+      component: AddWesternUnion
     },
     {
       // OTC中心

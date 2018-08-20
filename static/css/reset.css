@@ -111,7 +111,9 @@ button,input{
 .relative{
   position: relative;
 }
-
+.display-inline-block {
+  display: inline-block;
+}
 .font-size12{
   font-size: 12px;
 }
@@ -139,14 +141,43 @@ button,input{
 .font-size26{
   font-size: 26px;
 }
-
 .cursor-pointer {
   cursor: pointer;
 }
 .border-radius5{
   border-radius: 5px;
 }
-
+.font-size22{
+  font-size: 22px;
+}
+.font-size30 {
+  font-size: 30px;
+}
+.font-size40 {
+  font-size: 40px;
+}
+.font-size60{
+  font-size: 60px;
+}
+.cursor-pointer {
+  cursor: pointer;
+}
+.border-radius2 {
+  border-radius: 2px;
+}
+.border-radius4 {
+  border-radius: 4px;
+}
+.border-radius5 {
+  border-radius: 5px;
+}
+.right {
+  float: right;
+}
+.left {
+  float: left;
+}
+>>>>>>> yang
 /*杨孝喜添加*/
 /*个人中心标题高度*/
 .personal-height40 {
@@ -160,15 +191,42 @@ button,input{
 .line-height40{
   line-height: 40px;
 }
+.line-height30{
+  line-height: 30px;
+}
+.line-height60{
+  line-height: 60px;
+}
+.line-height56 {
+  line-height: 56px;
+}
 /*个人中心右侧嫩容区 标题和主题内容之间的间距*/
 .margin-top9 {
   margin-top: 9px;
+}
+.margin-top16 {
+  margin-top: 16px;
+}
+/*高级认证button*/
+.margin-top30 {
+  margin-top: 30px;
+}
+.margin-top35 {
+  margin-top: 35px;
 }
 /*个人中心右侧 标题和主内容左边距*/
 .padding-left23 {
   padding-left: 23px;
 }
-
+.padding20 {
+  padding: 20px;
+}
+.padding-top0 {
+  padding:0 20px 20px 20px;
+}
+.margin25 {
+  margin: 0 25px;
+}
 .margin-bottom10{
   margin-bottom:10px;
 }
@@ -192,3 +250,7 @@ button,input{
   display: inline-block;
 }
 
+.el-message {
+  min-width: 0;
+  top: 35%;
+}

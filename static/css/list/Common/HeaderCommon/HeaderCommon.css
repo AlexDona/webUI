@@ -115,3 +115,8 @@
 /*.ivu-select-item-focus{*/
   /*background-color: transparent;*/
 /*}*/
+/*消息弹窗*/
+.el-message {
+  min-width: 0;
+  top: 40%;
+}

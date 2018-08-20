@@ -1,0 +1,13 @@
+/*覆盖element样式*/
+.add-bank.card .el-input-group{
+  width: 62.5%;
+}
+.add-bank.card .el-input__inner {
+  height: 36px;
+  border-radius: 2px;
+}
+.add-bank.card .el-input-group__append {
+  font-size: 12px;
+  padding: 0 16px;
+  border-radius: 0 4px 4px 0;
+}

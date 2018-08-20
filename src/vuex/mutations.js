@@ -4,7 +4,8 @@ import {
   CHANGE_CONVERT_CURRENCY,
   CHANGE_BANNER_ACTIVE,
   CHANGE_BANNER_BACKGROUND,
-  CHANGE_COLLECT_LIST
+  CHANGE_COLLECT_LIST,
+  CHANGE_USER_CENTER_ACTIVE_NAME
 } from './mutations-types.js'
 
 // import {setStore, getStore} from '../utils'
@@ -32,5 +33,8 @@ export default {
   },
   [CHANGE_COLLECT_LIST] (state, data) {
     state.globalCollectList = data
+  },
+  [CHANGE_USER_CENTER_ACTIVE_NAME] (state, data) {
+    state.userCenterActiveName = data
   }
 }

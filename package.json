@@ -15,8 +15,10 @@
     "analyze": "NODE_ENV=production npm_config_report=true npm run build"
   },
   "dependencies": {
+    "@xkeshi/vue-qrcode": "^1.0.0",
     "awe-dnd": "^0.3.1",
     "element-ui": "^2.4.5",
+    "lrz": "^4.9.40",
     "vue": "^2.5.2",
     "vue-concise-slider": "^2.4.8",
     "vue-router": "^3.0.1"
