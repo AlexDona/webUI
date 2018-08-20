@@ -82,7 +82,7 @@
               </ul>
             </li>
           <li class="nav-item">
-            <router-link to="/PersonalCenter">
+            <router-link to="/PersonalCenter/first">
               <span>个人中心</span>
             </router-link>
           </li>

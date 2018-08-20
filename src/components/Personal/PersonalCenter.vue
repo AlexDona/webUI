@@ -8,8 +8,9 @@
     <div class="personal-center-main">
       <div class="personal-center-content clearfix">
         <el-tabs
-          v-model = "activeName"
+          v-model = "userCenterActiveName"
           :tab-position = "tabPosition"
+          @tab-click = "gitPersonal"
         >
           <!--个人中心-->
           <el-tab-pane
@@ -23,7 +24,7 @@
             label = "账户资产"
             name = "first"
           >
-            <AccountAssets/>
+            <AccountAssets ref = "accountAssetsValue"/>
           </el-tab-pane>
 
           <!--身份认证-->
@@ -31,7 +32,7 @@
             label = "身份认证"
             name = "second"
           >
-            <IdentityAuthentication/>
+            <IdentityAuthentication ref = "identityValue"/>
           </el-tab-pane>
 
           <!--收款账户-->
@@ -39,7 +40,7 @@
             label = "收款账户"
             name = "third"
           >
-            <AccountCredited/>
+            <AccountCredited ref = "accountCreditedValue"/>
           </el-tab-pane>
 
           <!--邀请推广-->
@@ -47,7 +48,7 @@
             label = "邀请推广"
             name = "fourth"
           >
-            <InvitingPromotion/>
+            <InvitingPromotion ref = "invitingPromotionValue"/>
           </el-tab-pane>
 
           <!--安全中心-->
@@ -55,14 +56,14 @@
             label = "安全中心"
             name = "fifth"
           >
-            <SecurityCenter/>
+            <SecurityCenter ref = "securityCenterValue"/>
           </el-tab-pane>
           <!--API管理-->
           <el-tab-pane
             label = "API管理"
             name = "six"
           >
-            <APIManagement/>
+            <APIManagement ref = "apiManagementValue"/>
           </el-tab-pane>
           <!--我的交易-->
           <el-tab-pane
@@ -75,13 +76,13 @@
             label = "币币订单"
             name = "seven"
           >
-            <CoinOrders/>
+            <CoinOrders ref = "coinOrdersValue"/>
           </el-tab-pane>
           <el-tab-pane
             label = "法币订单"
             name = "eight"
           >
-            <FiatOrders/>
+            <FiatOrders ref = "fiatOrdersValue"/>
           </el-tab-pane>
         </el-tabs>
       </div>
@@ -132,26 +133,66 @@ export default {
   data () {
     return {
       tabPosition: 'left', // 导航位置方向
-      activeName: 'first' // 默认显示第一个
+      activeName: 'first'
     }
   },
   created () {
+    console.log(this.$route.params.id)
     // 覆盖Element样式
     require('../../../static/css/list/Personal/PersonalCenter.css')
     // 白色主题样式
     require('../../../static/css/theme/day/Personal/PersonalCenterDay.css')
     // 黑色主题样式
     require('../../../static/css/theme/night/Personal/PersonalCenterNight.css')
+    // 个人中心跳转面板id
+    if (this.$route.params.id) {
+      this.activeName = this.$route.params.id
+    }
   },
   mounted () {},
   activited () {},
   update () {},
   beforeRouteUpdate () {},
-  methods: {},
+  methods: {
+    // 面板跳转
+    gitPersonal (tab, event) {
+      let a = event.target.getAttribute('id')
+      console.log(a)
+      switch (a) {
+        case 'tab-first':
+          console.log(this.$refs)
+          break
+        case 'tab-second':
+          console.log(this.$refs)
+          break
+        case 'tab-third':
+          console.log(this.$refs)
+          break
+        case 'tab-fourth':
+          console.log(this.$refs)
+          break
+        case 'tab-fifth':
+          console.log(this.$refs)
+          break
+        case 'tab-six':
+          console.log(this.$refs)
+          break
+        case 'tab-seven':
+          console.log(this.$refs)
+          break
+        case 'tab-eight':
+          console.log(this.$refs)
+          break
+        default:
+          break
+      }
+    }
+  },
   filter: {},
   computed: {
     ...mapState([
-      'theme'
+      'theme',
+      'userCenterActiveName'
     ])
   },
   watch: {}
