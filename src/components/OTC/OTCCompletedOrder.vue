@@ -4,6 +4,7 @@
       <el-table
         :data="tableData5"
         :default-expand-all="true"
+        empty-text="暂无数据"
       >
       <div>
         <el-table-column type="expand">
@@ -116,7 +117,7 @@
           label="下单时间"
         >
           <template slot-scope="scope">
-            {{ scope.row.time }}
+            {{timeFormatting(scope.row.time)}}
           </template>
         </el-table-column>
       </el-table>
@@ -125,30 +126,34 @@
 </template>
 <!--请严格按照如下书写书序-->
 <script>
+import {timeFilter} from '../../utils'
 export default {
   components: {},
   // props,
   data () {
     return {
-      tableData5: [{
-        orderStatus: 1, //  买单
-        id: '12987122',
-        style: '买入',
-        name: 'FBT',
-        price: '88888(CNY)',
-        num: '0.1258(BTC)',
-        total: '10333(CNY)',
-        time: '2018-12-20 12:20:25'
-      }, {
-        orderStatus: 2, //  卖单
-        id: '12987123',
-        style: '卖出',
-        name: 'ETH',
-        price: '88888(CNY)',
-        num: '0.1258(BTC)',
-        total: '10333(CNY)',
-        time: '2018-12-20 12:20:25'
-      }]
+      tableData5: [
+        {
+          orderStatus: 1, //  买单
+          id: '12987122',
+          style: '买入',
+          name: 'FBT',
+          price: '88888(CNY)',
+          num: '0.1258(BTC)',
+          total: '10333(CNY)',
+          time: 1302486032000
+        },
+        {
+          orderStatus: 2, //  卖单
+          id: '12987123',
+          style: '卖出',
+          name: 'ETH',
+          price: '88888(CNY)',
+          num: '0.1258(BTC)',
+          total: '10333(CNY)',
+          time: 1302486032000
+        }
+      ]
     }
   },
   created () {
@@ -160,7 +165,12 @@ export default {
   activited () {},
   update () {},
   beforeRouteUpdate () {},
-  methods: {},
+  methods: {
+    // 时间格式化
+    timeFormatting (date) {
+      return timeFilter(date, 'normal')
+    }
+  },
   filter: {},
   computed: {},
   watch: {}

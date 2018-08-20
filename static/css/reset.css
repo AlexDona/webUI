@@ -101,7 +101,6 @@ button,input{
   font-size: 20px;
 }
 
-
 .line-height50 {
   line-height: 50px;
 }
@@ -109,22 +108,45 @@ button,input{
 .absolute{
   position: absolute;
 }
+.relative{
+  position: relative;
+}
 
 .font-size12{
   font-size: 12px;
 }
+
 .font-size14{
   font-size: 14px;
 }
+
 .font-size16{
   font-size: 16px;
+}
+.font-size18{
+  font-size: 18px;
+}
+
+.font-size20{
+  font-size: 20px;
+}
+.font-size22{
+  font-size: 22px;
+}
+.font-size24{
+  font-size: 24px;
 }
 .font-size26{
   font-size: 26px;
 }
+
 .cursor-pointer {
   cursor: pointer;
 }
+.border-radius5{
+  border-radius: 5px;
+}
+
 /*杨孝喜添加*/
 /*个人中心标题高度*/
 .personal-height40 {
@@ -159,3 +181,14 @@ button,input{
 .text-align-r{
   text-align: right;
 }
+/*任加的*/
+.padding-l15{
+  padding-left: 15px;
+}
+.font-weight700{
+  font-weight: 700;
+}
+.display-inline-block{
+  display: inline-block;
+}
+

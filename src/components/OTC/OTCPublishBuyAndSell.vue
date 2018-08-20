@@ -12,14 +12,14 @@
                 <div class="publish-button">
                     <button
                         class="sell-button common-style"
-                        @click="sell"
+                        @click="toggleSellButton"
                         :class="{ green: publishStyle === 'sell' }"
                     >
                         出售
                     </button>
                     <button
                         class="buy-button common-style"
-                        @click="buy"
+                        @click="toggleBuyButton"
                         :class="{ red: publishStyle === 'buy' }"
                     >
                         购买
@@ -333,11 +333,11 @@ export default {
   beforeRouteUpdate () {},
   methods: {
     // 点击 购买 和 出售 按钮切换
-    sell () {
+    toggleSellButton () {
       this.publishStyle = 'sell'
       console.log(this.publishStyle)
     },
-    buy () {
+    toggleBuyButton () {
       this.publishStyle = 'buy'
       console.log(this.publishStyle)
     },
@@ -361,9 +361,7 @@ export default {
     background-color: #1D2331;
     >.publish-buy-and-sell-content{
         width: 1150px;
-        margin: 0 auto;
-        margin-top: 70px;
-        margin-bottom: 70px;
+        margin: 70px auto;
         >.publish-content{
             display: flex;
             flex: 3;

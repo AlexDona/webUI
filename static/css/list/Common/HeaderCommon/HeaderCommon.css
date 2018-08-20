@@ -81,10 +81,10 @@
   color:#fff;
 }
 /*下拉箭头*/
-.el-popper[x-placement^=bottom] .popper__arrow{
+.nav-box .el-popper[x-placement^=bottom] .popper__arrow{
   border-bottom-color:transparent;
 }
-.el-popper[x-placement^=bottom] .popper__arrow::after{
+.nav-box .el-popper[x-placement^=bottom] .popper__arrow::after{
   border:none;
 }
 
