@@ -104,7 +104,7 @@
               </button>
             </li>
             <li class="li-item">
-              <router-link to="/">
+              <router-link to="/login">
                 <span class="login">
                   登录
                   <div class="login-info">
@@ -299,6 +299,7 @@
 import IconFontCommon from '../Common/IconFontCommon'
 import {mapState, mapMutations, mapActions} from 'vuex'
 import {setStore} from '../../utils'
+// import {Io} from '../../utils/tradingview/socket'
 export default{
   components: {
     IconFontCommon
@@ -415,6 +416,7 @@ export default{
   top:0;
   z-index: 99999;
   width:100%;
+  min-width:1100px;
   /*height:102px;*/
   box-sizing: border-box;
   /*top:30px;*/

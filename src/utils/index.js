@@ -44,16 +44,16 @@ export const timeFilter = (date, methods) => {
   let year = date.getFullYear()
   let month = date.getMonth() + 1
   month = month < 10 ? '0' + month : month
-  let day = date.getDay()
+  let day = date.getDate()
   day = day < 10 ? '0' + day : day
   newDate = year + '-' + month + '-' + day + ' '
   let hour = date.getHours()
   hour = hour < 10 ? '0' + hour : hour
-  let miunte = date.getMinutes()
-  miunte = miunte < 10 ? '0' + miunte : miunte
+  let minute = date.getMinutes()
+  minute = minute < 10 ? '0' + minute : minute
   let second = date.getSeconds()
   second = second < 10 ? '0' + second : second
-  const time = hour + ':' + miunte + ':' + second
+  const time = hour + ':' + minute + ':' + second
   switch (methods) {
     case 'normal':
       filterTime = newDate + time
@@ -66,4 +66,60 @@ export const timeFilter = (date, methods) => {
       break
   }
   return filterTime
+}
+
+/**
+ * input框限制输入（只可以输入数字类型）
+ * @param event : input框dom对象
+ * @param targetPointLength ：限制小数点位数
+ */
+export function formatNumberInput (event, targetPointLength) {
+  let val = event.value
+  let newVal = ''
+  let newVal2 = ''
+  let newVal3 = ''
+  let newVal4 = ''
+  let newVal5 = ''
+  let valArr = []
+  let valArr2 = []
+  let valArr3 = []
+  let valArr4 = []
+  let finalVal = ''
+  let count1 = 0
+  // pointLength为小数点后几位
+  let count = (val.match(/\./g) || []).length// 小数点个数
+  // 只允许输入一个小数点
+  if (count > 0) {
+    valArr = val.split('')
+    newVal = ''
+    valArr.forEach((item) => {
+      if (item == '.') count1++
+      if (count1 < 2) newVal += item
+    })
+    valArr2 = newVal.split('')
+    newVal2 = ''
+    valArr2.forEach((item) => {
+      if (item != '.') {
+        let temp = parseFloat(item)
+        if (!isNaN(temp)) {
+          newVal2 += temp
+        }
+      } else {
+        newVal2 += item
+      }
+    })
+    valArr4 = newVal2.split('.')
+    newVal4 = valArr4[0]
+    newVal5 = newVal2.split('.')[1].substr(0, targetPointLength)
+    finalVal = newVal4 + '.' + newVal5
+  } else {
+    valArr3 = val.split('')
+    newVal3 = ''
+    valArr3.forEach((item) => {
+      let temp = parseFloat(item)
+      if (!isNaN(temp)) newVal3 += temp
+    })
+    finalVal = newVal3
+  }
+  event.value = finalVal
 }

@@ -15,6 +15,14 @@
 .trade-box.day .title-box{
   border-bottom:1px solid #d7d9db;
 }
+
+.trade-box.day>.inner-box>.middle .el-tabs__nav-wrap::after{
+  background-color:#fff;
+}
+
+.trade-box.day>.inner-box>.middle .el-tabs__item{
+  color:#333;
+}
 /*.trade-box.day*/
 /*.trade-box.day*/
 /*.trade-box.day*/

@@ -337,7 +337,7 @@ export default {
         height: 34px;
         line-height: 34px;
         margin-bottom: 4px;
-        box-shadow: 0px 2px 2px -2px #888;
+        box-shadow: 0 2px 6px rgba(0,0,0,.1);
         display: flex;
         > .text {
           flex:1;

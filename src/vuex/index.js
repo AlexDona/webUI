@@ -34,6 +34,8 @@ const state = {
     hot: false // 是否为最热交易对
   },
   globalCollectList: JSON.parse(getStore('collectList')) || [], // 收藏列表
+  globalCollectStatusList: JSON.parse(getStore('collectStatusList')) || [], // 收藏状态列表
+  isLogin: true, // 用户登录状态
   // 个人中心用户信息
   userInfo: {
     'code': 200, // 返回状态
@@ -69,7 +71,19 @@ const state = {
       },
       'token': ''
     }
-  }
+  },
+  plateList: [
+    {
+      id: 0,
+      name: 'main',
+      label: '主区'
+    },
+    {
+      id: 1,
+      name: 'Innovation',
+      label: '创新区'
+    }
+  ] // 板块列表
 }
 
 export default new Vuex.Store({

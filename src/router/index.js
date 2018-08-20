@@ -10,6 +10,8 @@ const OTCCenter = r => require.ensure([], () => r(require('@/components/OTC/OTCC
 const TradeCenter = r => require.ensure([], () => r(require('@/components/Trade/TradeCenter')), 'trade-center')
 const OTCPublishBuyAndSell = r => require.ensure([], () => r(require('@/components/OTC/OTCPublishBuyAndSell')), 'otc-publish-buy-and-sell')
 const OTCOnlineTraderBuySell = r => require.ensure([], () => r(require('@/components/OTC/OTCOnlineTraderBuySell')), 'otc-online-trader-buy-sell')
+const Login = r => require.ensure([], () => r(require('@/components/User/LoginUser')), 'login')
+
 export default new Router({
   routes: [
     {
@@ -46,6 +48,11 @@ export default new Router({
       path: '/OTCOnlineTraderBuySell',
       // name: 'OTCOnlineTraderBuySell',
       component: OTCOnlineTraderBuySell
+    },
+    {
+      path: '/login',
+      name: 'login',
+      component: Login
     }
   ]
 })

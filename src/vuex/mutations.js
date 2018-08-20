@@ -4,7 +4,9 @@ import {
   CHANGE_CONVERT_CURRENCY,
   CHANGE_BANNER_ACTIVE,
   CHANGE_BANNER_BACKGROUND,
-  CHANGE_COLLECT_LIST
+  CHANGE_COLLECT_LIST,
+  CHANGE_COLLECT_STATUS_LIST,
+  CHANGE_ACTIVE_SYMBOL
 } from './mutations-types.js'
 
 // import {setStore, getStore} from '../utils'
@@ -32,5 +34,12 @@ export default {
   },
   [CHANGE_COLLECT_LIST] (state, data) {
     state.globalCollectList = data
+  },
+  [CHANGE_COLLECT_STATUS_LIST] (state, data) {
+    state.globalCollectStatusList = data
+  },
+  // 设置当前交易对
+  [CHANGE_ACTIVE_SYMBOL] (state, data) {
+    state.activeSymbol = data
   }
 }

@@ -1,8 +1,10 @@
 // const moment = require('moment');
 // const WebSocket = require('ws');
+// import { state } from '../../vuex'
 const pako = require('pako')
 
-const WS_URL = 'ws://192.168.1.200:8060/market'
+// const WS_URL = 'ws://192.168.1.200:8060/market'
+const WS_URL = 'ws://192.168.1.52:8087/market'
 
 var orderbook = {}
 
@@ -22,106 +24,135 @@ function handle (data) {
   }
 }
 
+function sendData (ws, params) {
+  ws.send(JSON.stringify(params))
+}
+
 function subscribe (ws, params) {
-  // console.log(params);
+  // 首页行情
+  if (!params.type) {
+    sendData(ws, {
+      'tag': 'REQ',
+      'content': `market.ticker.55.477187759069462528.all`,
+      'id': `tick_fucfbt`
+    })
+  } else {
+  //  币币交易
+    let symbols = [params.symbol]
+    let resolution = '1'
+
+    switch (params.resolution) {
+      case '1':
+        resolution = 'min'
+        break
+      case '5':
+        resolution = 'min5'
+        break
+      case '15':
+        resolution = 'min15'
+        break
+      case '30':
+        resolution = 'min30'
+        break
+      case '60':
+        resolution = 'hour1'
+        break
+      case '240':
+        resolution = 'hour4'
+        break
+      case '1D':
+        resolution = 'day'
+        break
+      case '1w':
+        resolution = 'week'
+        break
+    }
+    // 请求
+    for (let symbol of symbols) {
+      symbol = symbol.toLowerCase()
+
+      // 深度
+      // 谨慎选择合并的深度，ws每次推送全量的深度数据，若未能及时处理容易引起消息堆积并且引发行情延时
+      // sendData(ws, {
+      //   'tag': 'REQ',
+      //   'content': `market.${symbol}.depth.step1`,
+      //   'id': `depth_${symbol}`
+      // })
+
+      // K线
+      sendData(ws, {
+        'tag': 'REQ',
+        'content': `market.${symbol}.kline.${resolution}`,
+        'id': `kline_${symbol}`
+      })
+
+      // 交易记录
+      // sendData(ws, {
+      //   'tag': 'REQ',
+      //   'content': `market.${symbol}.trade`,
+      //   'id': `trade_${symbol}`
+      // })
+
+      // 实时行情
+      // sendData(ws, {
+      //   'tag': 'REQ',
+      //   'content': `market.${symbol}.ticker`,
+      //   'id': `tick_${symbol}`
+      // })
+    }
+    // 订阅
+    for (let symbol of symbols) {
+      symbol = symbol.toLowerCase()
+      // 深度
+      // 谨慎选择合并的深度，ws每次推送全量的深度数据，若未能及时处理容易引起消息堆积并且引发行情延时
+      // sendData(ws, {
+      //   'tag': 'SUB',
+      //   'content': `market.${symbol}.depth.step0`,
+      //   'id': `depth_${symbol}`
+      // })
+      // K线
+      console.log(resolution)
+      console.log(symbol)
+      sendData(ws, {
+        'tag': 'SUB',
+        'content': `market.${symbol}.kline.${resolution}`,
+        'id': `kline_${symbol}14`
+      })
+    // 交易记录
+    // sendData(ws, {
+    //   'tag': 'SUB',
+    //   'content': `market.${symbol}.trade`,
+    //   'id': `trade_${symbol}`
+    // })
+    // // 实时行情(首页数据)
+    // sendData(ws, {
+    //   'tag': 'SUB',
+    //   'content': `market.${symbol}.ticker`,
+    //   'id': `tick_${symbol}`
+    // })
+    }
+  }
   /**
    * from:1532835197
-   resolution:"1"
-   symbol:"AA"
-   to:1532921657
-   type:"kline"
+     resolution:"1"
+     symbol:"AA"
+     to:1532921657
+     type:"kline"
    */
-
-  let symbols = [params.symbol]
-  let resolution = '1'
-
-  switch (params.resolution) {
-    case '1':
-      resolution = 'min'
-      break
-    case '5':
-      resolution = 'min5'
-      break
-    case '15':
-      resolution = 'min15'
-      break
-    case '30':
-      resolution = 'min30'
-      break
-    case '60':
-      resolution = 'hour1'
-      break
-    case '240':
-      resolution = 'hour4'
-      break
-    case '1D':
-      resolution = 'day'
-      break
-    case '1w':
-      resolution = 'week'
-      break
-  }
-  // console.log(resolution);
-  // 请求asdfsdfsdf
-  for (let symbol of symbols) {
-    // 深度
-    // 谨慎选择合并的深度，ws每次推送全量的深度数据，若未能及时处理容易引起消息堆积并且引发行情延时
-    ws.send(JSON.stringify({
-      'tag': 'REQ',
-      'content': `market.${symbol}.depth.step0`,
-      'id': `depth_${symbol}`
+  /**
+   * 数据格式
+   *ws.send(JSON.stringify({
+        "tag": "REQ",
+        "content": `market.ticker.55.477187759069462528.all`,
+        "id": `tick_fucfbt`
     }))
 
-    // K线
-    ws.send(JSON.stringify({
-      'tag': 'REQ',
-      'content': `market.${symbol}.kline.${resolution}`,
-      'id': `kline_${symbol}`
-    }))
-
-    // 交易记录
-    ws.send(JSON.stringify({
-      'tag': 'REQ',
-      'content': `market.${symbol}.trade`,
-      'id': `trade_${symbol}`
-    }))
-
-    // 实时行情
-    ws.send(JSON.stringify({
-      'tag': 'REQ',
-      'content': `market.${symbol}.ticker`,
-      'id': `tick_${symbol}`
-    }))
-  }
-
-  // 订阅
-  for (let symbol of symbols) {
-    // 深度
-    // 谨慎选择合并的深度，ws每次推送全量的深度数据，若未能及时处理容易引起消息堆积并且引发行情延时
-    ws.send(JSON.stringify({
-      'tag': 'SUB',
-      'content': `market.${symbol}.depth.step0`,
-      'id': `depth_${symbol}`
-    }))
-    // K线
-    ws.send(JSON.stringify({
-      'tag': 'SUB',
-      'content': `market.${symbol}.kline.${resolution}`,
-      'id': `kline_${symbol}`
-    }))
-    // 交易记录
-    ws.send(JSON.stringify({
-      'tag': 'SUB',
-      'content': `market.${symbol}.trade`,
-      'id': `trade_${symbol}`
-    }))
-    // 实时行情
-    ws.send(JSON.stringify({
-      'tag': 'SUB',
-      'content': `market.${symbol}.ticker`,
-      'id': `tick_${symbol}`
-    }))
-  }
+   ws.send(JSON.stringify({
+       "tag": "SUB",
+        "content": `market.ticker.55.477187759069462528.all`,
+        "id": `tick_fucfbt`
+    }));
+   */
 }
 
 const Io = {
@@ -136,11 +167,9 @@ const Io = {
     }
 
     if (this.ws.readyState) {
-      // this.ws.send(JSON.stringify(params));
       subscribe(this.ws, params)
     } else {
       this.ws.onopen = evt => {
-        // this.ws.send(JSON.stringify(params));
         subscribe(this.ws, params)
       }
     }
@@ -151,10 +180,11 @@ const Io = {
       reader.onload = (evt) => {
         let text = pako.inflate(evt.target.result, {to: 'string'})
         let msg = JSON.parse(text)
+        console.log(msg)
         if (msg.ping) {
-          this.ws.send(JSON.stringify({
+          sendData(this.ws, {
             pong: msg.ping
-          }))
+          })
         } else if (msg.tick) {
           handle(msg)
         } else {

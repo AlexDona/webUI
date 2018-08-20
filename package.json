@@ -19,7 +19,8 @@
     "element-ui": "^2.4.5",
     "vue": "^2.5.2",
     "vue-concise-slider": "^2.4.8",
-    "vue-router": "^3.0.1"
+    "vue-router": "^3.0.1",
+    "vue-slider-component": "^2.7.6"
   },
   "devDependencies": {
     "autoprefixer": "^7.1.2",

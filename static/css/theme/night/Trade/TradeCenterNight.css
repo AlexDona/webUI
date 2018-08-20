@@ -16,6 +16,13 @@
   border-bottom:1px solid #39424d;
 }
 
+.trade-box.night>.inner-box>.middle .el-tabs__nav-wrap::after{
+  background-color:#25303a;
+}
+.trade-box.night>.inner-box>.middle .el-tabs__item{
+  color:#fff;
+}
+
 /*.trade-box.night*/
 /*.trade-box.night*/
 /*.trade-box.night*/

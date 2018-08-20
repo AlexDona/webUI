@@ -64,8 +64,8 @@ export default {
       toolbar_bg: '#10172d', // 工具栏背景色
       // toolbar_bg: options.toolbar_bg, // 工具栏背景色
       studies_overrides: {
-        // "volume.volume.color.0": "#ae4e54", // 成交量 k柱 背景色
-        // "volume.volume.color.1": "#589065", // 成交量 k柱 背景色
+        // "volume.volume.color.0": "#d45858", // 成交量 k柱 背景色
+        // "volume.volume.color.1": "#008069", // 成交量 k柱 背景色
         'volume.volume.transparency': 100
       },
       overrides: {
@@ -78,13 +78,13 @@ export default {
         // "scalesProperties.backgroundColor": "#ff00ff",
         'scalesProperties.lineColor': '#61688a', // 右侧边框颜色
         'scalesProperties.textColor': '#61688a', // 左上角文字颜色
-        'mainSeriesProperties.candleStyle.upColor': '#589065', // k 柱颜色
-        'mainSeriesProperties.candleStyle.downColor': '#ae4e54', // k 柱颜色
-        'mainSeriesProperties.candleStyle.borderUpColor': '#589065', // k 柱边框颜色
-        'mainSeriesProperties.candleStyle.borderDownColor': '#ae4e54', // k 柱边框颜色
+        'mainSeriesProperties.candleStyle.upColor': '#008069', // k 柱颜色
+        'mainSeriesProperties.candleStyle.downColor': '#d45858', // k 柱颜色
+        'mainSeriesProperties.candleStyle.borderUpColor': '#008069', // k 柱边框颜色
+        'mainSeriesProperties.candleStyle.borderDownColor': '#d45858', // k 柱边框颜色
         // "mainSeriesProperties.candleStyle.wickColor": "#737375",
-        'mainSeriesProperties.candleStyle.wickUpColor': '#589065', // 上涨 蜡烛线颜色
-        'mainSeriesProperties.candleStyle.wickDownColor': '#ae4e54', // 下降 蜡烛线颜色
+        'mainSeriesProperties.candleStyle.wickUpColor': '#008069', // 上涨 蜡烛线颜色
+        'mainSeriesProperties.candleStyle.wickDownColor': '#d45858', // 下降 蜡烛线颜色
         // "mainSeriesProperties.hollowCandleStyle.borderColor": "#000",
         // "mainSeriesProperties.hollowCandleStyle.borderUpColor": "#ff00ff",
         // "mainSeriesProperties.haStyle.borderUpColor": "#00f",
@@ -152,11 +152,6 @@ export default {
           label: '1week',
           resolution: '1W'
         }
-        // {
-        //   class: 'resolution_btn',
-        //   label: '1M',
-        //   resolution: "1M"
-        // }
       ]
       chart.onIntervalChanged().subscribe(null, function (interval, obj) {
         _self.widget.changingInterval = false
@@ -248,10 +243,12 @@ export default {
         from: from,
         to: to
       }
+      console.log(resolution)
       Io.subscribeKline(params, this.onUpdateData.bind(this))
-      this.getBarTimer = setTimeout(() => {
-        this.getBars(symbol, resolution, from, to, callback)
-      }, 7000)
+      // this.getBars(symbol, resolution, from, to, callback)
+      // this.getBarTimer = setTimeout(() => {
+      //   this.getBars(symbol, resolution, from, to, callback)
+      // }, resolution * 6 * 1000)
     }
     data ? fetchCacheData(data) : requestData()
   },
@@ -266,7 +263,7 @@ export default {
 
   resolveTVSymbol: function (symbol) {
     return {
-      'name': 'fucfbt',
+      'name': '',
       'exchange-traded': '',
       'exchange-listed': '',
       'timezone': 'Asia/Shanghai',
@@ -284,6 +281,8 @@ export default {
     }
   },
   onUpdateData: function (data) {
+    console.log(data)
+    console.log('***********************************************************')
     let dataArr = []
     // 数据类型
     let type = ''
@@ -337,32 +336,6 @@ export default {
       }
       // console.log(data.data);
       // console.log(data.data.reverse());
-      let targetData = [{}, {}]
-      // targetData[0].close = 121.61000000000001
-      // targetData[0].high = 140.61
-      // targetData[0].open = 128.61
-      // targetData[0].low = 126.61000000000001
-      // targetData[0].time = 1532944200000
-      // targetData[0].volume = 0
-      targetData[0].close = 1
-      targetData[0].high = 1
-      targetData[0].open = 1
-      targetData[0].low = 1
-      targetData[0].time = 1532944200000
-      targetData[0].volume = 0
-      targetData[0].id = 0
-      targetData[0].val = 0
-      targetData[0].amount = 0
-
-      targetData[1].close = 2
-      targetData[1].high = 2
-      targetData[1].open = 2
-      targetData[1].low = 2
-      targetData[1].time = 1532944200000
-      targetData[1].volume = 0
-      targetData[1].id = 0
-      targetData[1].val = 0
-      targetData[1].amount = 0
       // targetData.forEach((item, index) => {
       // item.time = 1532941620000;
       // item.close = 126.84;
@@ -374,16 +347,19 @@ export default {
       //
       // })
       // console.log('----------------------------------------------------');
-      // this.dataCache[symbol][resolution] = data.data;
-      this.dataCache[symbol][resolution][0] = targetData[1]
-      // console.log(this.dataCache[symbol][resolution]);
+
+      // console.log(data.data)
+      this.dataCache[symbol][resolution] = data.data
+
+      // this.dataCache[symbol][resolution][0] = data.data[0]
+      // console.log(this.dataCache[symbol][resolution])
     } else if (type == 'depth') {
-      console.log
+      // console.log
     }
   }
   // onUpdateData: function (data) {
-  //   console.log(data.id);
-  //   console.log('--------------------------');
+  //   console.log(data.id)
+  //   console.log('--------------------------')
   //   // if (!data.kline) {
   //   //   return false
   //   // }
@@ -400,19 +376,18 @@ export default {
   //   //   })
   //   // }
   //   if (data.type == 'updata') {
-  //     let lastObj = this.dataCache[data.symbol][data.resolution][0];
+  //     let lastObj = this.dataCache[data.symbol][data.resolution][0]
   //     // // console.log(lastObj.time);
   //     // let leadTime = data.kline[0].time - this.dataCache[data.symbol][data.resolution][1].time;
   //     // // console.log(leadTime);
   //     // // if (leadTime < 60000) {
   //     // this.dataCache[data.symbol][data.resolution].unshift(data.kline[0]);
-  //     lastObj.open = data.kline[0].open;
-  //     lastObj.close = data.kline[0].close;
-  //     lastObj.low = data.kline[0].low;
-  //     lastObj.high = data.kline[0].high;
-  //     lastObj.volume = data.kline[0].volume;
+  //     lastObj.open = data.kline[0].open
+  //     lastObj.close = data.kline[0].close
+  //     lastObj.low = data.kline[0].low
+  //     lastObj.high = data.kline[0].high
+  //     lastObj.volume = data.kline[0].volume
   //     // }
-  //
   //   }
   // }
 }

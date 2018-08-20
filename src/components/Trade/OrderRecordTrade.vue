@@ -199,7 +199,7 @@ export default {
         line-height: 34px;
         font-weight: 700;
         margin-bottom:4px;
-        box-shadow:0px 2px 2px -2px #888;
+        box-shadow:0 2px 6px rgba(0,0,0,.1);
         >.text{
           display:inline-block;
           text-indent: 4px;

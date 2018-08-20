@@ -1,0 +1,19 @@
+/*币币交易 交易区通用样式（修改elementui）*/
+/*提交按钮*/
+.exchange-box .submit .el-button{
+  margin-top:20px;
+  width:100%;
+  border:none;
+  color:#fff;
+}
+.exchange-box .submit .el-button:hover{
+  opacity: 0.7;
+}
+/*买按钮*/
+.exchange-box .submit .el-button.buy-btn {
+  background-color: #d45858;
+}
+/*买按钮*/
+.exchange-box .submit .el-button.sell-btn {
+  background-color: #008069;
+}

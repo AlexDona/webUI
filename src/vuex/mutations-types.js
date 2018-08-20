@@ -4,3 +4,5 @@ export const CHANGE_CONVERT_CURRENCY = 'CHANGE_CONVERT_CURRENCY' // 设置折算
 export const CHANGE_BANNER_ACTIVE = 'CHANGE_BANNER_ACTIVE' // 设置首页banner激活状态
 export const CHANGE_BANNER_BACKGROUND = 'CHANGE_BANNER_BACKGROUND' // 设置首页banner背景
 export const CHANGE_COLLECT_LIST = 'CHANGE_COLLECT_LIST' // 设置首页banner背景
+export const CHANGE_COLLECT_STATUS_LIST = 'CHANGE_COLLECT_STATUS_LIST' // 设置首页banner背景
+export const CHANGE_ACTIVE_SYMBOL = 'CHANGE_ACTIVE_SYMBOL' // 设置当前交易对

@@ -1,3 +1,4 @@
+/*币币交易通用修改样式（elementui修改）*/
 .trade-box .el-table,
 .trade-box .el-table td,
 .trade-box .el-table th,
@@ -11,4 +12,23 @@
 .trade-box .el-table th,
 .trade-box .el-table__header-wrapper{
   padding:0;
+}
+.middle .el-tabs__nav-wrap::after{
+  height:34px;
+  top:0;
+}
+.middle .el-tabs__item{
+  height:34px;
+  line-height:34px;
+  font-size: 16px;
+}
+.middle .el-tabs__nav-scroll{
+  padding-left: 20px;
+}
+.middle .el-tabs__item.is-active{
+  color:#338ff5 !important;
+  font-weight: 700;
+}
+.middle .el-tabs__header{
+  box-shadow: 0 2px 6px rgba(0,0,0,.1);
 }

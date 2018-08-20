@@ -15,21 +15,32 @@
         <OrderRecord class="margin-bottom10"/>
       </div>
       <!--中间-->
-      <div class="middle">
+      <div
+        class="middle"
+        :class="{'day':theme == 'day','night':theme == 'night' }"
+      >
         <MiddleHeader />
         <!--k线-->
-        <!--<KLine class=""/>-->
+        <KLine class=""/>
+        <!--市价交易、限价交易-->
+        <ExchangeBox/>
         <!--深度图-->
         <!--<Depth/>-->
+        <!--交易-->
+        <!-- 委单列表 -->
+        <EntrustOrder/>
       </div>
       <!--右侧-->
       <div class="right">
+        <!--市场-->
         <TradeMarketList/>
       </div>
     </div>
   </div>
 </template>
 <script>
+import EntrustOrder from './EntrustOrderList'
+import ExchangeBox from './ExchangeTrade'
 import TradeMarketList from './TradeMarket'
 import HeaderCommon from '../Common/HeaderCommon'
 import GlobalMarket from './GlobalMarketTrade'
@@ -42,6 +53,8 @@ import {mapState} from 'vuex'
 
 export default {
   components: {
+    EntrustOrder, // 委单列表
+    ExchangeBox, // 交易区
     TradeMarketList, // 市场列表
     Depth, // 深度图
     MiddleHeader, // 中间header
@@ -58,7 +71,7 @@ export default {
   created () {
     require('../../../static/css/list/Trade/TradeCenter.css')
     require('../../../static/css/theme/day/Trade/TraderCenterDay.css')
-    require('../../../static/css/theme/Night/Trade/TraderCenterNight.css')
+    require('../../../static/css/theme/night/Trade/TradeCenterNight.css')
   },
   mounted () {},
   activited () {},
