@@ -25,7 +25,7 @@
           <span
             class="item"
             v-if="item.style === '买入'"
-            :class="{ red: item.style === '买入' }"
+            :class="{ red: item.styleStatus === 1 }"
           >
             {{item.style}}
           </span>
@@ -33,7 +33,7 @@
           <span
             class="item"
             v-if="item.style === '卖出'"
-            :class="{ green: item.style === '卖出' }"
+            :class="{ green: item.styleStatus === 2 }"
           >
             {{item.style}}
           </span>
@@ -85,6 +85,7 @@ export default {
         {
           orderId: '20180812111111',
           style: '买入',
+          styleStatus: 1, // 1:买入，2：卖出
           coinName: 'BTC',
           price: '567812.12',
           sum: '0.0012345',
@@ -99,6 +100,7 @@ export default {
         {
           orderId: '20180812222222',
           style: '卖出',
+          styleStatus: 2, // 1:买入，2：卖出
           coinName: 'BTC',
           price: '567812.12',
           sum: '0.0012345',
@@ -113,6 +115,7 @@ export default {
         {
           orderId: '20180812222222',
           style: '卖出',
+          styleStatus: 2, // 1:买入，2：卖出
           coinName: 'BTC',
           price: '567812.12',
           sum: '0.0012345',
