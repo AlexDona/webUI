@@ -53,7 +53,7 @@ const state = {
         'loginPassword': '', // 登录密码
         'tradePassword': null, // 交易密码
         'realName': '杨孝喜', // 真实姓名 null未认证
-        'hasrealvaliDate': true, // 是否实名认证false:未实名，true实名；
+        'hasrealvaliDate': false, // 是否实名认证false:未实名，true实名；
         'userIdentity': true, // 是否高级认证
         'hasrealvaliDateTime': 1512019593000,
         'safetyGrade': '', // 0低 1中 2高
