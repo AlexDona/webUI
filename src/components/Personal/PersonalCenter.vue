@@ -157,7 +157,6 @@ export default {
     // 面板跳转
     gitPersonal (tab, event) {
       let a = event.target.getAttribute('id')
-      console.log(a)
       switch (a) {
         case 'tab-first':
           console.log(this.$refs)

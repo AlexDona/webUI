@@ -48,8 +48,8 @@
                 </span>
                 <span
                   class="code-copy border-radius5 cursor-pointer"
-                  @mouseenter="showErcode"
-                  @mouseleave="hiddenErcode"
+                  @mouseenter="showStatusCode(1)"
+                  @mouseleave="showStatusCode(2)"
                 >
                   <IconFontCommon
                     class="font-size12"
@@ -335,7 +335,7 @@ export default {
         message: msg
       })
     },
-    onError: function (e) {
+    onError (e) {
       // 拷贝失败，请稍后重试
       let msg = '拷贝失败，请稍后重试'
       this.$message({
@@ -343,14 +343,14 @@ export default {
         message: msg
       })
     },
-    // 显示二维码
-    showErcode () {
-      console.log(1)
-      this.ercodeIsShowId = true
-    },
-    // 隐藏二维码
-    hiddenErcode () {
-      this.ercodeIsShowId = false
+    showStatusCode (val) {
+      if (vai == 1) {
+        // 显示二维码
+        this.ercodeIsShowId = true
+      } else {
+        // 隐藏二维码
+        this.ercodeIsShowId = false
+      }
     }
   },
   filter: {},

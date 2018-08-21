@@ -32,25 +32,21 @@
             <p class="payment-right">
               <el-switch
                 v-model="bankState"
-                on-text="ON"
-                off-text="OFF"
               >
               </el-switch>
               <img
                 class="switch-img"
-                v-show="bankState==false"
-                src="../../assets/user/wrong.png"
-                alt=""
+                v-show="!bankState"
+                :src="closePictureSrc"
               >
               <img
                 class="switch-img"
-                v-show="bankState==true "
-                src="../../assets/user/yes.png"
-                alt=""
+                v-show="!!bankState"
+                :src="openPictureSrc"
               >
               <span
                 class="payment-state cursor-pointer"
-                @click="statusShowSet(1)"
+                @click="SetShowstatus(1)"
               >
                 设置
               </span>
@@ -69,25 +65,21 @@
             <p class="payment-right">
               <el-switch
                 v-model="weChat"
-                on-text="ON"
-                off-text="OFF"
               >
               </el-switch>
               <img
                 class="switch-img"
-                v-show="weChat==false"
-                src="../../assets/user/wrong.png"
-                alt=""
+                v-show="!weChat"
+                :src="closePictureSrc"
               >
               <img
                 class="switch-img"
-                v-show="weChat==true "
-                src="../../assets/user/yes.png"
-                alt=""
+                v-show="!!weChat"
+                :src="openPictureSrc"
               >
               <span
                 class="payment-state cursor-pointer"
-                @click="statusShowSet(2)"
+                @click="SetShowstatus(2)"
               >
                 设置
               </span>
@@ -106,25 +98,21 @@
             <p class="payment-right">
               <el-switch
                 v-model="alipay"
-                on-text="ON"
-                off-text="OFF"
               >
               </el-switch>
               <img
                 class="switch-img"
-                v-show="alipay==false"
-                src="../../assets/user/wrong.png"
-                alt=""
+                v-show="!alipay"
+                :src="closePictureSrc"
               >
               <img
                 class="switch-img"
-                v-show="alipay==true "
-                src="../../assets/user/yes.png"
-                alt=""
+                v-show="!!alipay"
+                :src="openPictureSrc"
               >
               <span
                 class="payment-state cursor-pointer"
-                @click="statusShowSet(3)"
+                @click="SetShowstatus(3)"
               >
                 设置
               </span>
@@ -149,19 +137,17 @@
               </el-switch>
               <img
                 class="switch-img"
-                v-show="paypal==false"
-                src="../../assets/user/wrong.png"
-                alt=""
+                v-show="!paypal"
+                :src="closePictureSrc"
               >
               <img
                 class="switch-img"
-                v-show="paypal==true "
-                src="../../assets/user/yes.png"
-                alt=""
+                v-show="!!paypal"
+                :src="openPictureSrc"
               >
               <span
                 class="payment-state cursor-pointer"
-                @click="statusShowSet(4)"
+                @click="SetShowstatus(4)"
               >
                 设置
               </span>
@@ -183,19 +169,17 @@
               </el-switch>
               <img
                 class="switch-img"
-                v-show="westernUnion==false"
-                src="../../assets/user/wrong.png"
-                alt=""
+                v-show="!westernUnion"
+                :src="closePictureSrc"
               >
               <img
                 class="switch-img"
-                v-show="westernUnion==true "
-                src="../../assets/user/yes.png"
-                alt=""
+                v-show="!!westernUnion"
+                :src="openPictureSrc"
               >
               <span
                 class="payment-state cursor-pointer"
-                @click="statusShowSet(5)"
+                @click="SetShowstatus(5)"
               >
                 设置
               </span>
@@ -249,6 +233,8 @@ export default {
       weChat: false, // 银行卡状态的设置
       alipay: false, // 支付宝状态的设置
       paypal: false, // PAYPAL状态的设置
+      closePictureSrc: require('../../assets/user/wrong.png'), // 关闭
+      openPictureSrc: require('../../assets/user/yes.png'), // 开启
       westernUnion: false, // 西联汇款状态的设置
       centerModelWarning: false, // 警告提示框
       authenticationInfo: {} // 个人信息
@@ -273,27 +259,32 @@ export default {
       'CHANGE_USER_CENTER_ACTIVE_NAME'
     ]),
     // 警告提示点击事件
-    statusShowSet (val) {
+    SetShowstatus (val) {
       if (!this.authenticationInfo.hasrealvaliDate) {
         this.centerModelWarning = true
         return false
       } else {
-        if (val == 1) {
-          this.$router.push({path: '/AddBankCard'})
-        } else if (val == 2) {
-          this.$router.push({path: '/AddWeChat'})
-        } else if (val == 3) {
-          this.$router.push({path: '/AddSetAlipay'})
-        } else if (val == 4) {
-          this.$router.push({path: '/AddSetPaypal'})
-        } else if (val == 5) {
-          this.$router.push({path: '/AddWesternUnion'})
+        switch (val) {
+          case '1':
+            this.$router.push({path: '/AddBankCard'})
+            break
+          case '2':
+            this.$router.push({path: '/AddWeChat'})
+            break
+          case '3':
+            this.$router.push({path: '/AddSetAlipay'})
+            break
+          case '4':
+            this.$router.push({path: '/AddSetPaypal'})
+            break
+          case '5':
+            this.$router.push({path: '/AddWesternUnion'})
+            break
         }
       }
     },
     // 点击去认证跳转到身份认证
     authenticationJump () {
-      console.log(1)
       this.centerModelWarning = false
       this.CHANGE_USER_CENTER_ACTIVE_NAME('second')
     }
