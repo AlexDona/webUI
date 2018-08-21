@@ -48,10 +48,10 @@
                   v-for="(item, index) in IWantToBuyArr"
                   :key="index"
                   class="otc-filtrate-currency-name"
-                  :class="{ currencyNameActived: selectCurrencyNameStatus }"
+                  :class="{ currencyNameActived: selectCurrencyNameStatus === index }"
                   @click="selectCurrencyName(index)"
                 >
-                  {{item}}
+                  {{item.name}}
                 </span>
               </div>
               <!-- 我要出售的选项数组 -->
@@ -63,10 +63,10 @@
                   v-for="(item, index) in IWantToSellArr"
                   :key="index"
                   class="otc-filtrate-currency-name"
-                  :class="{ currencyNameActived: selectCurrencyNameStatus }"
+                  :class="{ currencyNameActived: selectCurrencyNameStatus === index }"
                   @click="selectCurrencyName(index)"
                 >
-                  {{item}}
+                  {{item.name}}
                 </span>
               </div>
             </div>
@@ -282,7 +282,7 @@ export default {
       activeName: 'first', // 选中的tab面板的序号
       tabPosition: 'left', //  订单管理面板标签方向状态
       OTCBuySellStyle: 'onlineBuy', //  在线购买和在线出售选中类型
-      selectCurrencyNameStatus: false, //  选中我要购买或者出售的币种名称
+      selectCurrencyNameStatus: 0, //  选中我要购买或者出售的币种名称
       // 在线购买和在线出售表格列表
       onlineBuySellTableList: [
         {
@@ -329,9 +329,23 @@ export default {
       ],
       activedPayWayBankinfoItem: '支付方式', // 选中的支付方式
       // 我要购买币种数组
-      IWantToBuyArr: ['HAF', 'JHG', 'JYEK', 'ASDF', 'FUBT'],
+      IWantToBuyArr: [
+        {id: 1, name: 'AHAF'},
+        {id: 2, name: 'SHAF'},
+        {id: 3, name: 'DDHAF'},
+        {id: 4, name: 'WQHAF'},
+        {id: 5, name: 'AF'},
+        {id: 6, name: 'UUHAF'}
+      ],
       // 我要出售币种数组
-      IWantToSellArr: ['AHAF', 'DJHG', 'DJYEK', 'DASDF', 'DFUBT']
+      IWantToSellArr: [
+        {id: 1, name: 'QWEHAF'},
+        {id: 2, name: 'QEWHAF'},
+        {id: 3, name: 'SDGFHAF'},
+        {id: 4, name: 'DFGHHAF'},
+        {id: 5, name: 'WERHAF'},
+        {id: 6, name: 'ILHAF'}
+      ]
     }
   },
   created () {
@@ -351,7 +365,7 @@ export default {
     //  选中我想购买和出售币种名称
     selectCurrencyName (index) {
       console.log(index)
-      this.selectCurrencyNameStatus = true
+      this.selectCurrencyNameStatus = index
     },
     //  切换在线购买和在线售出状态
     toggleBuyOrSellStyle (e) {
