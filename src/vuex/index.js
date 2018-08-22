@@ -67,7 +67,9 @@ const state = {
         'areaCode': '86',
         'lastLoginTime': 1534150923000, // 最后登录时间
         'registerTime': 1512005133000, // 注册时间
-        'ip': null
+        'ip': null,
+        'status': 1,
+        'showId': 81240
       },
       'token': ''
     }

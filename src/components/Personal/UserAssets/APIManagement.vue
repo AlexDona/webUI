@@ -25,11 +25,11 @@ export default {
   },
   created () {
     // 覆盖Element样式
-    require('../../../static/css/list/Personal/APIManagement.css')
+    require('../../../../static/css/list/Personal/UserAssets/APIManagement.css')
     // 白色主题样式
-    require('../../../static/css/theme/day/Personal/APIManagementDay.css')
+    require('../../../../static/css/theme/day/Personal/UserAssets/APIManagementDay.css')
     // 黑色主题样式
-    require('../../../static/css/theme/night/Personal/APIManagementNight.css')
+    require('../../../../static/css/theme/night/Personal/UserAssets/APIManagementNight.css')
   },
   mounted () {},
   activited () {},
@@ -46,7 +46,7 @@ export default {
 }
 </script>
 <style scoped lang="scss">
-  @import "../../../static/css/scss/Personal/APIManagement.scss";
+  @import "../../../../static/css/scss/Personal/UserAssets/APIManagement";
   .api-management{
     >.api-establish-height{
       min-height: 200px;

@@ -156,7 +156,7 @@
           <div class="payment-box">
             <p class="payment-left">
               <span>
-                <img src="../../assets/user/xilian.png" alt="">
+                <img src="../../../assets/user/xilian.png" alt="">
               </span>
               <span class="payment-card">西联汇款</span>
             </p>
@@ -221,7 +221,7 @@
 <!--请严格按照如下书写书序-->
 <script>
 import {mapState, mapMutations} from 'vuex'
-import IconFontCommon from '../Common/IconFontCommon'
+import IconFontCommon from '../../Common/IconFontCommon'
 export default {
   components: {
     IconFontCommon // 字体图标
@@ -233,8 +233,8 @@ export default {
       weChat: false, // 银行卡状态的设置
       alipay: false, // 支付宝状态的设置
       paypal: false, // PAYPAL状态的设置
-      closePictureSrc: require('../../assets/user/wrong.png'), // 关闭
-      openPictureSrc: require('../../assets/user/yes.png'), // 开启
+      closePictureSrc: require('../../../assets/user/wrong.png'), // 关闭
+      openPictureSrc: require('../../../assets/user/yes.png'), // 开启
       westernUnion: false, // 西联汇款状态的设置
       centerModelWarning: false, // 警告提示框
       authenticationInfo: {} // 个人信息
@@ -242,11 +242,11 @@ export default {
   },
   created () {
     // 覆盖Element样式
-    require('../../../static/css/list/Personal/AccountCredited.css')
+    require('../../../../static/css/list/Personal/UserAssets/AccountCredited.css')
     // 白色主题样式
-    require('../../../static/css/theme/day/Personal/AccountCreditedDay.css')
+    require('../../../../static/css/theme/day/Personal/UserAssets/AccountCreditedDay.css')
     // 黑色主题样式
-    require('../../../static/css/theme/night/Personal/AccountCreditedNight.css')
+    require('../../../../static/css/theme/night/Personal/UserAssets/AccountCreditedNight.css')
     // 获取全局个人信息
     this.authenticationInfo = this.userInfo.data.user
   },
@@ -300,7 +300,7 @@ export default {
 }
 </script>
 <style scoped lang="scss">
-  @import "../../../static/css/scss/Personal/AccountCredited.scss";
+  @import "../../../../static/css/scss/Personal/UserAssets/AccountCredited";
   .credited-credited{
     >.credited-credited-main {
       >.credited-box{
@@ -372,7 +372,7 @@ export default {
           color: #338FF5;
         }
       }
-      .content-title{
+      .content-title {
         >.title-tips {
           color: #D45858;
         }

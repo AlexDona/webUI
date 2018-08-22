@@ -1,0 +1,19 @@
+/*个人中心（白色主题）*/
+.billing-details.personal.night .el-table th, .el-table tr{
+  background-color: #ccc;
+}
+.billing-details.personal.night .el-table thead {
+  color: #617499;
+}
+.billing-details.personal.night .el-table th.is-leaf {
+  border-bottom: 0;
+}
+.billing-details.personal.night .el-table td{
+  background-color: #ccc;
+  color: #ccc;
+  border-bottom: 0;
+}
+.billing-details.personal .el-input__inner {
+  background-color: #19202E;
+  color: #ccc;
+}

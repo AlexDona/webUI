@@ -55,11 +55,11 @@ export default {
   },
   created () {
     // 覆盖Element样式
-    require('../../../static/css/list/Personal/FiatOrders.css')
+    require('../../../../static/css/list/Personal/TransactionType/FiatOrders.css')
     // 白色主题样式
-    require('../../../static/css/theme/day/Personal/FiatOrdersDay.css')
+    require('../../../../static/css/theme/day/Personal/TransactionType/FiatOrdersDay.css')
     // 黑色主题样式
-    require('../../../static/css/theme/night/Personal/FiatOrdersNight.css')
+    require('../../../../static/css/theme/night/Personal/TransactionType/FiatOrdersNight.css')
   },
   mounted () {},
   activited () {},
@@ -76,7 +76,7 @@ export default {
 }
 </script>
 <style scoped lang="scss">
-  @import "../../../static/css/scss/Personal/CoinOrders.scss";
+  @import "../../../../static/css/scss/Personal/TransactionType/CoinOrders";
 .fiat-orders{
   &.night{
     background-color: $nightBgColor;

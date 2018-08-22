@@ -1,0 +1,21 @@
+/*覆盖element样式*/
+
+.push-assets.personal .el-select .el-input__inner,.el-input-group{
+  width: 270px;
+  height: 36px;
+  border-radius: 2px;
+  cursor: pointer;
+}
+.push-assets.personal .el-form-item {
+  margin-bottom: 25px;
+}
+.push-assets.personal .el-form-item__label {
+  color: #a9bed4;
+}
+.push-assets.personal .el-table th>.cell {
+  text-align: center;
+}
+
+.push-assets.personal .el-table .cell {
+  text-align: center;
+}

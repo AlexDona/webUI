@@ -43,11 +43,11 @@ export default {
   },
   created () {
     // 覆盖Element样式
-    require('../../../static/css/list/Personal/CoinOrders.css')
+    require('../../../../static/css/list/Personal/TransactionType/CoinOrders.css')
     // 白色主题样式
-    require('../../../static/css/theme/day/Personal/CoinOrdersDay.css')
+    require('../../../../static/css/theme/day/Personal/TransactionType/CoinOrdersDay.css')
     // 黑色主题样式
-    require('../../../static/css/theme/night/Personal/CoinOrdersNight.css')
+    require('../../../../static/css/theme/night/Personal/TransactionType/CoinOrdersNight.css')
   },
   mounted () {},
   activited () {},
@@ -64,7 +64,7 @@ export default {
 }
 </script>
 <style scoped lang="scss">
-  @import "../../../static/css/scss/Personal/CoinOrders.scss";
+  @import "../../../../static/css/scss/Personal/TransactionType/CoinOrders";
   .coin-orders{
     &.night{
       background-color: $nightBgColor;
