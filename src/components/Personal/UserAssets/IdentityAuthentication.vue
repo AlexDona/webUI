@@ -268,7 +268,7 @@
         name="1"
         center>
         <div class="advanced-certification-content">
-          <img src="../../assets/user/er.png" alt="">
+          <img src="../../../assets/user/er.png" alt="">
         </div>
         <div class="advanced-certification-text">
           <p class="text-tips">
@@ -292,7 +292,7 @@
 <!--请严格按照如下书写书序-->
 <script>
 import {mapState} from 'vuex'
-import IconFontCommon from '../Common/IconFontCommon'
+import IconFontCommon from '../../Common/IconFontCommon'
 import lrz from 'lrz'
 export default {
   components: {
@@ -313,9 +313,9 @@ export default {
       authenticationContentStatus: false, // 高级认证页面
       authenticationStatusFront: false, // 用户高级认证前
       // 身份认证默认图片
-      firstPictureSrc: require('../../assets/user/card_negative.png'), // 正面
-      secondPictureSrc: require('../../assets/user/card_positive.png'), // 反面
-      thirdPictureSrc: require('../../assets/user/card_handheld.png'), // 手持
+      firstPictureSrc: require('../../../assets/user/card_negative.png'), // 正面
+      secondPictureSrc: require('../../../assets/user/card_positive.png'), // 反面
+      thirdPictureSrc: require('../../../assets/user/card_handheld.png'), // 手持
       isFirstPictureUploaded: false, // 上传身份证正面框
       isSecondPictureUploaded: false, // 上传身份证反面框
       isThirdPictureUploaded: false, // 上传手持身份证框
@@ -326,11 +326,11 @@ export default {
   },
   created () {
     // 覆盖Element样式
-    require('../../../static/css/list/Personal/IdentityAuthentication.css')
+    require('../../../../static/css/list/Personal/UserAssets/IdentityAuthentication.css')
     // 白色主题样式
-    require('../../../static/css/theme/day/Personal/IdentityAuthenticationDay.css')
+    require('../../../../static/css/theme/day/Personal/UserAssets/IdentityAuthenticationDay.css')
     // 黑色主题样式
-    require('../../../static/css/theme/night/Personal/IdentityAuthenticationNight.css')
+    require('../../../../static/css/theme/night/Personal/UserAssets/IdentityAuthenticationNight.css')
     // 获取全局个人信息
     this.authenticationInfo = this.userInfo
     // 清空图片和关闭弹窗this.clearUserPicture()
@@ -450,7 +450,7 @@ export default {
 }
 </script>
 <style scoped lang="scss">
-  @import "../../../static/css/scss/Personal/IdentityAuthentication.scss";
+  @import "../../../../static/css/scss/Personal/UserAssets/IdentityAuthentication";
 .identity-authentication{
   >.identity-authentication-main{
     background-color: #202A33;

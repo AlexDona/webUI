@@ -1,0 +1,9 @@
+/*个人中心（白色主题）*/
+.push-assets.personal.day .el-select .el-input__inner {
+  background-color: #ccc;
+  border: 1px solid #999;
+  color: #333;
+}
+.push-assets.personal.day .el-select .el-input__inner:focus {
+  border: 1px solid #eee;
+}

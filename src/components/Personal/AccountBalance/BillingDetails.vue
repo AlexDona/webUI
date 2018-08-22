@@ -1,0 +1,366 @@
+<template>
+  <div
+    class="billing-details personal"
+    :class="{'day':theme == 'day','night':theme == 'night' }"
+  >
+    <header class="billing-details-header personal-height40 line-height40 background-color padding-left23">
+      <span
+        class="header-content display-inline-block font-size16 cursor-pointer"
+        @click="clickTableCut(1)"
+      >
+        充提记录
+      </span>
+      <span
+        class="header-content display-inline-block font-size16 cursor-pointer"
+        @click="clickTableCut(2)"
+      >
+        其他地址
+      </span>
+    </header>
+    <div class="billing-details-main paddinglr20">
+      <div class="billing-details-query">
+        <div class="float-left cursor-pointer">
+          <el-select v-model="currencyListValue">
+            <el-option
+              v-for="item in currencyList"
+              :key="item.value"
+              :label="item.label"
+              :value="item.value">
+            </el-option>
+          </el-select>
+        </div>
+        <div class="float-left margin-left50 cursor-pointer">
+          <el-select v-model="currencyTypeValue">
+            <el-option
+              v-for="item in currencyType"
+              :key="item.value"
+              :label="item.label"
+              :value="item.value">
+            </el-option>
+          </el-select>
+        </div>
+        <div class="float-left margin-left58 cursor-pointer">
+          <div class="block">
+            <span class="demonstration">日期</span>
+            <el-date-picker
+              v-model="value1"
+              type="date"
+              placeholder="选择日期">
+            </el-date-picker>
+            &nbsp;&nbsp;-&nbsp;&nbsp;
+            <el-date-picker
+              v-model="value1"
+              type="date"
+              placeholder="选择日期">
+            </el-date-picker>
+          </div>
+        </div>
+        <div class="search-button float-right border-radius2 text-align-c cursor-pointer">
+          搜索
+        </div>
+      </div>
+      <!--充提记录-->
+      <div
+        v-show="showStatusRecordList"
+        class="billing-details-content"
+      >
+        <el-table
+          :data="chargeRecordList"
+          style="width: 100%"
+          empty-text="暂无数据"
+        >
+          <el-table-column
+            label="币种"
+            width="100"
+          >
+            <template slot-scope = "s">
+              <div>{{ s.row.currency }}</div>
+            </template>
+          </el-table-column>
+          <el-table-column
+            label="类型"
+            width="100"
+          >
+            <template slot-scope = "s">
+              <div>{{ s.row.type }}</div>
+            </template>
+          </el-table-column>
+          <el-table-column
+            label="数量"
+          >
+            <template slot-scope = "s">
+              <div>{{ s.row.quantity }}</div>
+            </template>
+          </el-table-column>
+          <el-table-column
+            label="提交时间"
+          >
+            <template slot-scope = "s">
+              <div>{{ s.row.submitTime }}</div>
+            </template>
+          </el-table-column>
+          <el-table-column
+            prop="address"
+            label="更新时间"
+          >
+            <template slot-scope = "s">
+              <div>{{ s.row.updateTime }}</div>
+            </template>
+          </el-table-column>
+          <el-table-column
+            prop="address"
+            label="状态"
+          >
+            <template slot-scope = "s">
+              <div>{{ s.row.state }}</div>
+            </template>
+          </el-table-column>
+        </el-table>
+      </div>
+      <!--其他记录-->
+      <div
+        v-show="hiddenStatusRecordList"
+        class="billing-details-content"
+      >
+        <el-table
+          :data="otherRecordsList"
+          style="width: 100%"
+          empty-text="暂无数据"
+        >
+          <el-table-column
+            label="币种"
+            width="100"
+          >
+            <template slot-scope = "s">
+              <div>{{ s.row.currency }}</div>
+            </template>
+          </el-table-column>
+          <el-table-column
+            label="类型"
+            width="100"
+          >
+            <template slot-scope = "s">
+              <div>{{ s.row.type }}</div>
+            </template>
+          </el-table-column>
+          <el-table-column
+            label="数量"
+          >
+            <template slot-scope = "s">
+              <div>{{ s.row.quantity }}</div>
+            </template>
+          </el-table-column>
+          <el-table-column
+            label="提交时间"
+          >
+            <template slot-scope = "s">
+              <div>{{ s.row.submitTime }}</div>
+            </template>
+          </el-table-column>
+          <el-table-column
+            prop="address"
+            label="更新时间"
+          >
+            <template slot-scope = "s">
+              <div>{{ s.row.updateTime }}</div>
+            </template>
+          </el-table-column>
+          <el-table-column
+            prop="address"
+            label="状态"
+          >
+            <template slot-scope = "s">
+              <div>{{ s.row.state }}</div>
+            </template>
+          </el-table-column>
+        </el-table>
+      </div>
+    </div>
+  </div>
+</template>
+<!--请严格按照如下书写书序-->
+<script>
+import {mapState} from 'vuex'
+export default {
+  components: {},
+  // props,
+  data () {
+    return {
+      // 充提记录
+      chargeRecordList: [{
+        currency: 'BTC',
+        type: '全部',
+        quantity: '12312',
+        submitTime: '2016-05-02 10:30:30',
+        updateTime: '2016-05-02 11:30:30',
+        state: '已完成'
+      }, {
+        currency: 'BTC',
+        type: '全部',
+        quantity: '12312',
+        submitTime: '2016-05-02 10:30:30',
+        updateTime: '2016-05-02 11:30:30',
+        state: '已完成'
+      }, {
+        currency: 'BTC',
+        type: '全部',
+        quantity: '12312',
+        submitTime: '2016-05-02 10:30:30',
+        updateTime: '2016-05-02 11:30:30',
+        state: '已完成'
+      }, {
+        currency: 'BTC',
+        type: '全部',
+        quantity: '12312',
+        submitTime: '2016-05-02 10:30:30',
+        updateTime: '2016-05-02 11:30:30',
+        state: '已完成'
+      }],
+      otherRecordsList: [{
+        currency: 'BTC',
+        type: '全部',
+        quantity: '12312',
+        submitTime: '2016-05-02 10:30:30',
+        updateTime: '2016-05-02 11:30:30',
+        state: '已完成'
+      }, {
+        currency: 'BTC',
+        type: '全部',
+        quantity: '12312',
+        submitTime: '2016-05-02 10:30:30',
+        updateTime: '2016-05-02 11:30:30',
+        state: '已完成'
+      }, {
+        currency: 'BTC',
+        type: '全部',
+        quantity: '12312',
+        submitTime: '2016-05-02 10:30:30',
+        updateTime: '2016-05-02 11:30:30',
+        state: '已完成'
+      }, {
+        currency: 'BTC',
+        type: '全部',
+        quantity: '12312',
+        submitTime: '2016-05-02 10:30:30',
+        updateTime: '2016-05-02 11:30:30',
+        state: '已完成'
+      }],
+      showStatusRecordList: true, // 充提记录
+      hiddenStatusRecordList: false, // 其他记录
+      currencyListValue: '全部', // 币种名称
+      currencyList: [{
+        value: '1',
+        label: '全部'
+      }, {
+        value: '2',
+        label: 'EHT'
+      }, {
+        value: '3',
+        label: 'EHT'
+      }, {
+        value: '4',
+        label: 'FUC'
+      }, {
+        value: '5',
+        label: 'HT'
+      }],
+      // 币种名称
+      currencyTypeValue: '全部',
+      currencyType: [{
+        value: '1',
+        label: '全部'
+      }, {
+        value: '2',
+        label: '充币'
+      }, {
+        value: '3',
+        label: '提币'
+      }]
+    }
+  },
+  created () {
+    // 覆盖Element样式
+    require('../../../../static/css/list/Personal/AccountBalance/BillingDetails.css')
+    // 白色主题样式
+    require('../../../../static/css/theme/day/Personal/AccountBalance/BillingDetailsDay.css')
+    // 黑色主题样式
+    require('../../../../static/css/theme/night/Personal/AccountBalance/BillingDetailsNight.css')
+  },
+  mounted () {},
+  activited () {},
+  update () {},
+  beforeRouteUpdate () {},
+  methods: {
+    // table切换
+    clickTableCut (val) {
+      if (val == 1) {
+        this.hiddenStatusRecordList = false
+        this.showStatusRecordList = true
+      } else if (val == 2) {
+        this.showStatusRecordList = false
+        this.hiddenStatusRecordList = true
+      }
+    }
+  },
+  filter: {},
+  computed: {
+    ...mapState([
+      'theme'
+    ])
+  },
+  watch: {}
+}
+</script>
+<style scoped lang="scss">
+  @import "../../../../static/css/scss/Personal/AccountBalance/BillingDetails";
+  .billing-details{
+    >.billing-details-main{
+      min-height: 500px;
+      >.billing-details-query {
+        height: 57px;
+        line-height: 57px;
+        >.search-button {
+          width: 50px;
+          height: 30px;
+          margin-top: 15px;
+          line-height: 29px;
+        }
+        /*display: flex;*/
+        /*>.search-condition {*/
+          /*width*/
+        /*}*/
+      }
+    }
+    >.billing-details-header {
+      margin-bottom: 2px;
+      >.header-content {
+        width: 100px;
+      }
+    }
+    &.night{
+      background-color: $nightBgColor;
+      color:$nightFontColor;
+      >.billing-details-main {
+        background-color: #1e2636;
+        >.billing-details-query {
+          border-bottom: 1px solid #39424D;
+          >.search-button {
+            background:linear-gradient(9deg,rgba(43,57,110,1),rgba(42,80,130,1));
+            color: #fff;
+          }
+        }
+      }
+      >.billing-details-header{
+        background-color: #1e2636;
+        box-shadow: 0px 5px 50px #181e2a;
+      }
+    }
+    &.day{
+      background-color: $dayBgColor;
+      color:$dayFontColor;
+      >.billing-details-header{
+        background-color: #ccc;
+      }
+    }
+  }
+</style>

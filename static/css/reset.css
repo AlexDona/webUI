@@ -171,13 +171,12 @@ button,input{
 .border-radius5 {
   border-radius: 5px;
 }
-.right {
+.float-right {
   float: right;
 }
-.left {
+.float-left {
   float: left;
 }
->>>>>>> yang
 /*杨孝喜添加*/
 /*个人中心标题高度*/
 .personal-height40 {
@@ -214,6 +213,9 @@ button,input{
 .margin-top35 {
   margin-top: 35px;
 }
+.margin-top45 {
+  margin-top: 45px;
+}
 /*个人中心右侧 标题和主内容左边距*/
 .padding-left23 {
   padding-left: 23px;
@@ -224,6 +226,15 @@ button,input{
 .padding-top0 {
   padding:0 20px 20px 20px;
 }
+.paddinglr15 {
+  padding: 0 15px;
+}
+.paddinglr20 {
+  padding: 0 20px;
+}
+.padding-left15{
+  padding-left:15px;
+}
 .margin25 {
   margin: 0 25px;
 }
@@ -233,6 +244,12 @@ button,input{
 .margin-left10{
   margin-left:10px;
 }
+.margin-left50 {
+  margin-left:50px;
+}
+.margin-left58{
+  margin-left:58px;
+}
 .text-align-l{
   text-align: left;
 }
@@ -241,6 +258,9 @@ button,input{
 }
 .text-align-r{
   text-align: right;
+}
+.font-weight600{
+  font-weight: 600;
 }
 /*任加的*/
 .padding-l15{
@@ -257,3 +277,4 @@ button,input{
   min-width: 0;
   top: 35%;
 }
+

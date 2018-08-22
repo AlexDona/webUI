@@ -9,7 +9,7 @@
   height: 30px;
 }
 .invitation-promotion.personal .el-select-dropdown__item{
-  width: 120px;
+  width: 120px !important;
   height: 30px;
 }
 .invitation-promotion.personal .el-scrollbar{
