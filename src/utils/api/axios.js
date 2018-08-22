@@ -18,6 +18,10 @@ util.ajax.interceptors.request.use((config) => {
   if (config.method == 'post') {
     config.headers['Content-Type'] = 'application/form-data'
   }
+  // 增加token信息
+  config.headers['authorization'] = '888888'
+  // 请求头增加商户id
+  // config.headers['partnerId'] = '474629374641963008'
   // let userToken = localStorage.getItem('userToken') || store.state.token
   // if (userToken) {
   //   config.headers['authorization'] = store.state.token

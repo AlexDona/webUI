@@ -6,47 +6,59 @@
     >
       <!-- 表头 -->
      <div class="entrust-table-head">
-        <span class="item">类型</span>
-        <span class="item">币种</span>
-        <span class="item">价格</span>
-        <span class="item">挂单数量</span>
-        <span class="item">已匹配数量</span>
-        <span class="item">总金额</span>
-        <span class="item">挂单时间</span>
-        <span class="item">操作</span>
+        <span class="item first-style">类型</span>
+        <span class="item second-coin">币种</span>
+        <span class="item third-price">价格</span>
+        <span class="item fourth-entrust-count">挂单数量</span>
+        <span class="item fifth-match-count">已匹配数量</span>
+        <span class="item sixth-total-amount">总金额</span>
+        <span class="item senventh-create-time">挂单时间</span>
+        <span class="item eighth-action">操作</span>
      </div>
       <!-- 表身体 -->
       <div
         class="entrust-table-body"
       >
+        <div class="no-data" v-if="!OTCEntrustOrderList.length">
+          暂无数据
+        </div>
         <div
           class="entrust-list-content"
-          v-for="(item,index) in getOTCEntrustOrderList"
+          v-for="(item,index) in OTCEntrustOrderList"
           :key="index"
+          v-if="OTCEntrustOrderList.length"
         >
+          <!-- 1 类型 -->
           <!-- 买入 -->
           <span
-            class="item"
-            v-if="item.style === '买入'"
-            :class="{ red: item.styleStatus === 1 }"
+            class="item first-style"
+            v-if="item.entrustType === 'BUY'"
+            :class="{ red: item.entrustType === 'BUY' }"
           >
-            {{item.style}}
+            买入
           </span>
           <!-- 卖出 -->
           <span
-            class="item"
-            v-if="item.style === '卖出'"
-            :class="{ green: item.styleStatus === 2 }"
+            class="item first-style"
+            v-if="item.entrustType === 'SELL'"
+            :class="{ green: item.entrustType === 'SELL' }"
           >
-            {{item.style}}
+            卖出
           </span>
-          <span class="item">{{item.coinName}}</span>
-          <span class="item">{{item.price}}</span>
-          <span class="item">{{item.hangOrderSum}}</span>
-          <span class="item">{{item.matchedSum}}</span>
-          <span class="item">{{item.totalMoney}}</span>
-          <span class="item">{{timeFormatting(item.createTime)}}</span>
-          <span class="item">
+          <!-- 2 币种 -->
+          <span class="item second-coin">{{item.coinName}}</span>
+          <!-- 3 价格 -->
+          <span class="item third-price">{{item.price}}({{item.currencyName}})</span>
+          <!-- 4 挂单数量 -->
+          <span class="item fourth-entrust-count">{{item.entrustCount}}({{item.coinName}})</span>
+          <!-- 5 已匹配数量 -->
+          <span class="item fifth-match-count">{{item.matchCount}}({{item.coinName}})</span>
+          <!-- 6 总金额 -->
+          <span class="item sixth-total-amount">{{item.totalAmount}}({{item.currencyName}})</span>
+          <!-- 7 挂单时间 -->
+          <span class="item senventh-create-time">{{item.createTime}}</span>
+          <!-- 8 操作 -->
+          <span class="item eighth-action">
             <el-button
               type="text"
               @click="revocationOrder"
@@ -62,43 +74,15 @@
 <!--请严格按照如下书写书序-->
 <script>
 import {timeFilter} from '../../utils'
+// import {mapState, mapMutations} from 'vuex'
+import {getOTCEntrustingOrders} from '../../utils/api/apiDoc'
 export default {
   components: {},
   // props,
   data () {
     return {
       // OTC委托订单列表
-      getOTCEntrustOrderList: [
-        {
-          style: '买入',
-          styleStatus: 1, // 1:买入 2：卖出
-          coinName: 'BTC',
-          price: '567812.12',
-          hangOrderSum: '0.0012345',
-          matchedSum: '0.0012345',
-          totalMoney: '20180812123456',
-          createTime: 1523410832000
-        },
-        {
-          style: '卖出',
-          styleStatus: 2, // 1:买入 2：卖出
-          coinName: 'FBT',
-          price: '567812.12',
-          hangOrderSum: '0.0012345',
-          matchedSum: '0.0012345',
-          totalMoney: '20180812123456',
-          createTime: 1523410832000
-        },
-        {
-          style: '买入',
-          styleStatus: 1, // 1:买入 2：卖出
-          coinName: 'ETH',
-          price: '567812.12',
-          hangOrderSum: '0.0012345',
-          matchedSum: '0.0012345',
-          totalMoney: '20180812123456',
-          createTime: 16723410832222
-        }
+      OTCEntrustOrderList: [
       ]
     }
   },
@@ -106,17 +90,37 @@ export default {
     require('../../../static/css/list/OTC/OTCEntrustOrder.css')
     require('../../../static/css/theme/day/OTC/OTCEntrustOrderDay.css')
     require('../../../static/css/theme/night/OTC/OTCEntrustOrderNight.css')
+    // 1.0 刚进页面调取接口获取委托中的订单列表
+    this.getOTCEntrustingOrdersList()
   },
   mounted () {},
   activited () {},
   update () {},
   beforeRouteUpdate () {},
   methods: {
-    // 时间格式化
+    // 1.0 时间格式化
     timeFormatting (date) {
       return timeFilter(date, 'date')
     },
-    // 撤单按钮
+    // 2.0 请求委托中订单列表
+    async getOTCEntrustingOrdersList () {
+      let data
+      data = await getOTCEntrustingOrders({
+        status: 'ENTRUSTED' // 状态（ENTRUSTED 挂单中 HISTORY 历史挂单）
+      })
+      // console.log(data)
+      if (data.data.meta.code !== 200) {
+        this.$message({
+          message: data.data.meta.message,
+          type: 'error',
+          center: true
+        })
+        return false
+      }
+      // 返回数据正确的逻辑
+      this.OTCEntrustOrderList = data.data.data.list
+    },
+    // 3.0 撤单按钮
     revocationOrder () {
       this.$confirm('您确定要撤销此单吗, 是否继续?', '提示', {
         confirmButtonText: '确定',
@@ -140,7 +144,7 @@ export default {
   .otc-entrust-order-table{
     >.entrust-table-head{
       box-sizing: border-box;
-      width: 1043px;
+      width: 1045px;
       height: 35px;
       line-height: 35px;
       background-color: #202A33;
@@ -156,6 +160,31 @@ export default {
         display: inline-block;
         width: 126px;
         text-align: center;
+        // text-align: left;
+      }
+      >.first-style{
+        width: 70px;
+      }
+      >.second-coin{
+        width: 150px;
+      }
+      >.third-price{
+        width: 150px;
+      }
+      >.fourth-entrust-count{
+        width: 150px;
+      }
+      >.fifth-match-count{
+        width: 150px;
+      }
+      >.sixth-total-amount{
+        width: 150px;
+      }
+      >.senventh-create-time{
+        width: 120px;
+      }
+      >.eighth-action{
+        width: 70px;
       }
     }
     >.entrust-table-body{
@@ -166,7 +195,12 @@ export default {
       border-top: none;
       border-bottom-right-radius: 5px;
       border-bottom-left-radius: 5px;
+      >.no-data{
+        line-height: 432px;
+        text-align: center;
+      }
       >.entrust-list-content{
+        display: flex;
         height: 34px;
         line-height: 34px;
         .red{
@@ -179,6 +213,31 @@ export default {
           display: inline-block;
           width: 126px;
           text-align: center;
+          // text-align: left;
+        }
+        >.first-style{
+          width: 80px;
+        }
+        >.second-coin{
+          width: 150px;
+        }
+        >.third-price{
+          width: 150px;
+        }
+        >.fourth-entrust-count{
+          width: 150px;
+        }
+        >.fifth-match-count{
+          width: 150px;
+        }
+        >.sixth-total-amount{
+          width: 150px;
+        }
+        >.senventh-create-time{
+          width: 150px;
+        }
+        >.eighth-action{
+          width: 80px;
         }
       }
     }

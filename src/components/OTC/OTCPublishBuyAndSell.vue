@@ -161,7 +161,7 @@
                                 <span class="unit">CNY</span>
                             </div>
                         </el-form-item>
-                        <el-form-item label="单笔成交额">
+                        <el-form-item label="单笔成交限额">
                             <div class="volume-business">
                                 <input
                                     type="text"
@@ -213,15 +213,47 @@
                             <button
                                 class="publish-submit-button publish-submit-sell"
                                 v-show="publishStyle === 'sell'"
+                                @click="showPasswordDialog"
                             >
                                 发布出售
                             </button>
                             <button
                                 class="publish-submit-button publish-submit-buy"
                                 v-show="publishStyle === 'buy'"
+                                @click="showPasswordDialog"
                             >
                                 发布购买
                             </button>
+                        </div>
+                        <!-- 输入交易密码弹窗 -->
+                        <div class="password-dialog">
+                            <el-dialog
+                                title="交易密码"
+                                :visible.sync="dialogVisible"
+                                top="25vh"
+                                width="470"
+                            >
+                                <div>请输入交易密码</div>
+                                <div class="input">
+                                    <input
+                                      type="password"
+                                      class="password-input">
+                                </div>
+                                <div class="error-info">
+                                    <!-- 错误提示 -->
+                                    <div class="tips">错误提示</div>
+                                </div>
+                                <span
+                                  slot="footer"
+                                  class="dialog-footer">
+                                    <el-button
+                                    type="primary"
+                                    @click="addOTCPutUpOrders"
+                                    >
+                                        提 交
+                                    </el-button>
+                                </span>
+                            </el-dialog>
                         </div>
                     </el-form>
                 </div>
@@ -256,6 +288,7 @@
 <script>
 import NavCommon from '../Common/HeaderCommon'
 import FooterCommon from '../Common/FooterCommon'
+import {addOTCPutUpOrders} from '../../utils/api/apiDoc'
 export default {
   components: {
     NavCommon, //  头部导航
@@ -263,6 +296,7 @@ export default {
   },
   data () {
     return {
+      dialogVisible: false,
       publishStyle: 'sell', //  购买和出售选中类型
       labelPosition: 'top', //  表单label放置的位置
       //   币种类型列表
@@ -348,6 +382,34 @@ export default {
     // 选择你希望付款的货币类型
     changehopePaymentCoinId () {
       console.log(this.hopePaymentCoinId)
+    },
+    // 点击发布出售或者发布购买弹出输入交易密码框
+    showPasswordDialog () {
+      this.dialogVisible = true
+    },
+    // 点击输入密码框中的提交按钮
+    async addOTCPutUpOrders () {
+      let data
+      data = await addOTCPutUpOrders({
+        entrustType: '', // 挂单类型
+        coinId: '', // 挂单币种
+        entrustCount: '', // 挂单数量
+        price: '', // 单价
+        remark: '', // 备注
+        tradePassword: '' // 交易密码
+      })
+      // console.log(data)
+      if (data.data.meta.code !== 200) {
+        this.$message({
+          message: data.data.meta.message,
+          type: 'error',
+          center: true
+        })
+        return false
+      }
+      // 返回数据正确的逻辑
+      // this.onlineBuySellTableList = data.data.data.list
+      // this.dialogVisible = false
     }
   },
   filter: {},
@@ -527,6 +589,14 @@ export default {
                       background-color: #008069;
                     }
                   }
+                //   >.password-dialog{
+                //       .password-input{
+                //           display: inline-block;
+                //           width: 280px;
+                //           height: 40px;
+                //           background-color: red;
+                //       }
+                //   }
                 }
             }
             >.publish-content-right{

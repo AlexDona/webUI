@@ -7,7 +7,12 @@ import {
   CHANGE_COLLECT_LIST,
   CHANGE_COLLECT_STATUS_LIST,
   CHANGE_ACTIVE_SYMBOL,
-  CHANGE_USER_CENTER_ACTIVE_NAME
+  CHANGE_USER_CENTER_ACTIVE_NAME,
+  // OTC模块
+  // OTC改变选中的可用币种名字
+  CHANGE_OTC_AVAILABLE_CURRENCY_NAME,
+  // OTC改变选中的可用币种id
+  CHANGE_OTC_AVAILABLE_CURRENCY_ID
 } from './mutations-types.js'
 
 // import {setStore, getStore} from '../utils'
@@ -45,5 +50,14 @@ export default {
   },
   [CHANGE_USER_CENTER_ACTIVE_NAME] (state, data) {
     state.userCenterActiveName = data
+  },
+  // OTC 模块数据
+  // OTC改变选中的可用币种名字
+  [CHANGE_OTC_AVAILABLE_CURRENCY_NAME] (state, data) {
+    state.selectedOTCAvailableCurrencyName = data
+  },
+  // OTC改变选中的可用币种id
+  [CHANGE_OTC_AVAILABLE_CURRENCY_ID] (state, data) {
+    state.selectedOTCAvailableCurrencyCoinID = data
   }
 }

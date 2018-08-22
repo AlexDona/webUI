@@ -86,7 +86,13 @@ const state = {
     }
   ], // 板块列表
   // 个人中心默认显示第一个
-  userCenterActiveName: 'first'
+  userCenterActiveName: 'first',
+  // OTC模块 需要放到全局的数据
+  // OTC改变选中的可用币种
+  selectedOTCAvailableCurrencyName: '',
+  selectedOTCAvailableCurrencyCoinID: '',
+  // 商户id
+  merchantID: '474629374641963008'
 }
 
 export default new Vuex.Store({

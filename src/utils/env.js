@@ -12,7 +12,8 @@ let routerMode = 'hash'
 
 if (process.env.NODE_ENV == 'development') {
   // baseUrl = 'http://192.168.1.72:8083/'
-  baseUrl = 'https://rest.fubt.top/'
+  // baseUrl = 'https://rest.fubt.top/'
+  baseUrl = 'http://192.168.1.235:8046' // 吕冰洋
 } else if (process.env.NODE_ENV == 'production') {
   baseUrl = 'https://rest.fubt.top/'
 }

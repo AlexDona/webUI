@@ -127,6 +127,8 @@
 <!--请严格按照如下书写书序-->
 <script>
 import {timeFilter} from '../../utils'
+// import {mapState, mapMutations} from 'vuex'
+// import {getOTCCompletedOrders} from '../../utils/api/apiDoc'
 export default {
   components: {},
   // props,
@@ -138,6 +140,16 @@ export default {
           id: '12987122',
           style: '买入',
           name: 'FBT',
+          price: '88888(CNY)',
+          num: '0.1258(BTC)',
+          total: '10333(CNY)',
+          time: 1302486032000
+        },
+        {
+          orderStatus: 2, //  卖单
+          id: '12987123',
+          style: '卖出',
+          name: 'ETH',
           price: '88888(CNY)',
           num: '0.1258(BTC)',
           total: '10333(CNY)',
@@ -204,6 +216,7 @@ export default {
         flex: 2;
         border-right: 1px solid #262F38;
         >.order-info-left{
+          // margin-left: 50px;
           line-height: 1.5rem;
           >.pay-info{
             color: #5E95EC;

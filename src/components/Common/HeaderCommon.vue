@@ -19,7 +19,7 @@
             <li class="nav-item">
               <router-link to="/TradeCenter">
                 <span>币币交易</span>
-                <!--<span>{{$t('M.home')}}</span>-->
+                <!-- <span>{{$t('M.commonSuccess')}}</span> -->
               </router-link>
             </li>
             <li
@@ -252,15 +252,15 @@
           <!-- 折算货币选择 -->
           <el-select
             v-model="activeConvertCurrency"
-            placeholder="请选择">
+            placeholder="请选择"
+          >
             <el-option
               v-for="item in convertCurrencyList"
-              :value="item.value"
-              :key="item.value">
+              :key="item.id"
+              :label="item.shortName"
+              :value="item.id">
             </el-option>
-
           </el-select>
-
           <p class="title line-height50 font-size14">主题</p>
           <!-- 主题选择框 -->
           <el-radio-group
@@ -296,6 +296,7 @@
   </div>
 </template>
 <script>
+import {getMerchantAvailablelegalTender} from '../../utils/api/apiDoc'
 import IconFontCommon from '../Common/IconFontCommon'
 import {mapState, mapMutations, mapActions} from 'vuex'
 import {setStore} from '../../utils'
@@ -313,14 +314,17 @@ export default{
       settingBoxTitle: '设置',
       // 折算货币列表
       convertCurrencyList: [
-        {
-          value: 'CNY',
-          label: '¥ CNY'
-        },
-        {
-          value: 'USDT',
-          label: '$ USDT'
-        }
+        // {
+        //   createTime: '2018-08-06 11:01:13',
+        //   id: '123',
+        //   name: 'CNY',
+        //   partnerId: '474629374641963008',
+        //   shortName: '人民币',
+        //   status: 'ENABLE',
+        //   symbol: '￥',
+        //   updateTime: '2018-08-06 11:01:16',
+        //   version: 1
+        // }
       ],
       // 当前折算货币
       activeConvertCurrency: '',
@@ -347,6 +351,8 @@ export default{
   created () {
     console.log(this.theme)
     this.activeTheme = this.theme
+    // 查询某商户可用法币币种列表
+    this.getMerchantAvailablelegalTenderList()
   },
   methods: {
     ...mapActions([
@@ -399,7 +405,26 @@ export default{
       this.CHANGE_CONVERT_CURRENCY(this.activeConvertCurrency)
       setStore('convertCurrency', this.activeConvertCurrency || 'CNY')
       this.toggleShowSettingBox(0)
+    },
+    // 查询某商户可用法币币种列表
+    async getMerchantAvailablelegalTenderList () {
+      let data
+      data = await getMerchantAvailablelegalTender({
+        partnerId: '474629374641963008'
+      })
+      console.log(data)
+      if (data.data.meta.code !== 200) {
+        this.$message({
+          message: data.data.meta.message,
+          type: 'error',
+          center: true
+        })
+        return false
+      }
+      // 返回数据正确的逻辑
+      this.convertCurrencyList = data.data.data
     }
+
   },
   computed: {
     ...mapState([
@@ -414,7 +439,8 @@ export default{
 .nav-box{
   position: relative;
   top:0;
-  z-index: 99999;
+  z-index: 2009;
+  /*z-index: 99999;*/
   width:100%;
   min-width:1100px;
   /*height:102px;*/
