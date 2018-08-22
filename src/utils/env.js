@@ -11,8 +11,10 @@ let baseUrl = ''
 let routerMode = 'hash'
 
 if (process.env.NODE_ENV == 'development') {
-  // baseUrl = 'http://192.168.1.72:8083/'
-  baseUrl = 'https://rest.fubt.top/'
+  // baseUrl = 'http://192.168.1.72:8083/' // 刘耀
+  // baseUrl = 'http://192.168.1.71:8888/' // 亚男
+  baseUrl = 'http://192.168.1.217:8888/' // 爱军
+  // baseUrl = 'https://rest.fubt.top/'
 } else if (process.env.NODE_ENV == 'production') {
   baseUrl = 'https://rest.fubt.top/'
 }

@@ -12,8 +12,8 @@ function handle (data) {
   // console.log('received', data.ch, 'data.ts', data.ts, 'crawler.ts', moment().format('x'));
   let symbol = data.ch.split('.')[1]
   let channel = data.ch.split('.')[2]
-  console.log(symbol)
-  console.log(channel)
+  // console.log(symbol)
+  // console.log(channel)
   switch (channel) {
     case 'depth':
       orderbook[symbol] = data.tick
@@ -69,8 +69,7 @@ function subscribe (ws, params) {
     }
     // 请求
     for (let symbol of symbols) {
-      symbol = symbol.toLowerCase()
-
+      console.log(symbol)
       // 深度
       // 谨慎选择合并的深度，ws每次推送全量的深度数据，若未能及时处理容易引起消息堆积并且引发行情延时
       // sendData(ws, {
@@ -102,7 +101,7 @@ function subscribe (ws, params) {
     }
     // 订阅
     for (let symbol of symbols) {
-      symbol = symbol.toLowerCase()
+      // symbol = symbol.toLowerCase()
       // 深度
       // 谨慎选择合并的深度，ws每次推送全量的深度数据，若未能及时处理容易引起消息堆积并且引发行情延时
       // sendData(ws, {
@@ -111,8 +110,8 @@ function subscribe (ws, params) {
       //   'id': `depth_${symbol}`
       // })
       // K线
-      console.log(resolution)
-      console.log(symbol)
+      // console.log(resolution)
+      // console.log(symbol)
       sendData(ws, {
         'tag': 'SUB',
         'content': `market.${symbol}.kline.${resolution}`,
@@ -180,7 +179,7 @@ const Io = {
       reader.onload = (evt) => {
         let text = pako.inflate(evt.target.result, {to: 'string'})
         let msg = JSON.parse(text)
-        console.log(msg)
+        // console.log(msg)
         if (msg.ping) {
           sendData(this.ws, {
             pong: msg.ping

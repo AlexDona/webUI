@@ -11,10 +11,10 @@
 .otc-box .el-radio-button__orig-radio:checked+.el-radio-button__inner{
     box-shadow: -1px 0 0 0 #008069;
 }
-.el-radio-button:first-child.is-active .el-radio-button__inner{
+.otc-box .el-radio-button:first-child.is-active .el-radio-button__inner{
     background-color: #D45858;
 }
-.el-radio-button:last-child.is-active .el-radio-button__inner{
+.otc-box .el-radio-button:last-child.is-active .el-radio-button__inner{
     background-color: #008069;
 }
 /* 2.0 商家表格 */

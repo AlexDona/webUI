@@ -128,7 +128,7 @@
             </li>
             <li class="li-split"></li>
             <li class="li-item">
-              <router-link to="/">
+              <router-link to="/Register">
                 <span>注册</span>
               </router-link>
             </li>
@@ -252,13 +252,16 @@
           <!-- 折算货币选择 -->
           <el-select
             v-model="activeConvertCurrency"
-            placeholder="请选择">
+            placeholder="请选择"
+            class="night"
+          >
             <el-option
               v-for="item in convertCurrencyList"
               :value="item.value"
-              :key="item.value">
+              :key="item.value"
+              :label="item.label"
+            >
             </el-option>
-
           </el-select>
 
           <p class="title line-height50 font-size14">主题</p>
@@ -414,7 +417,7 @@ export default{
 .nav-box{
   position: relative;
   top:0;
-  z-index: 99999;
+  z-index: 2009;
   width:100%;
   min-width:1100px;
   /*height:102px;*/

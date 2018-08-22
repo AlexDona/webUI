@@ -19,14 +19,14 @@ export default {
     // require('../../../static/charting_library/static/css/t-night.css')
   },
   mounted () {
-    Tv.init({symbol: 'fbtbtc', interval: '1'})
+    Tv.init({symbol: 'FUCFBT', interval: '1'})
     // Tv.init({symbol: 'AA', interval: '1'})
     // 开启交易面板
     // const eventList = [
-    //   // {name: 'init', price: undefined}
-    //   // {name: 'setBuy', price: 478},
-    //   // {name: 'setSell', price: 358},
-    //   // {name: 'setSpread', price: 120}
+    //   {name: 'init', price: undefined},
+    //   {name: 'setBuy', price: 478},
+    //   {name: 'setSell', price: 358},
+    //   {name: 'setSpread', price: 120}
     // ]
     // setTimeout(() => {
     //   eventList.forEach(elm => {

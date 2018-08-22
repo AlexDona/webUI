@@ -16,8 +16,7 @@ const AddSetPaypal = r => require.ensure([], () => r(require('@/components/Perso
 // 西联汇款设置
 const AddWesternUnion = r => require.ensure([], () => r(require('@/components/Personal/AccountReceivableAccount/AddWesternUnion')), 'add-western')
 const OTCCenter = r => require.ensure([], () => r(require('@/components/OTC/OTCCenter')), 'otc-center')
-// 币币交易
-const TradeCenter = r => require.ensure([], () => r(require('@/components/Trade/TradeCenter')), 'trade-center')
+
 const OTCPublishBuyAndSell = r => require.ensure([], () => r(require('@/components/OTC/OTCPublishBuyAndSell')), 'otc-publish-buy-and-sell')
 const OTCOnlineTraderBuySell = r => require.ensure([], () => r(require('@/components/OTC/OTCOnlineTraderBuySell')), 'otc-online-trader-buy-sell')
 
@@ -28,7 +27,11 @@ const OTCReportFormStatistics = r => require.ensure([], () => r(require('@/compo
 const OTCBusinessApply = r => require.ensure([], () => r(require('@/components/OTC/OTCBusinessApply')), 'otc-business-apply')
 // 登录
 const Login = r => require.ensure([], () => r(require('@/components/User/LoginUser')), 'login')
+// 注册
+const Register = r => require.ensure([], () => r(require('@/components/User/RegisterUser')), 'login')
 
+// 币币交易
+const TradeCenter = r => require.ensure([], () => r(require('@/components/Trade/TradeCenter')), 'trade-center')
 export default new Router({
   routes: [
     {
@@ -130,6 +133,12 @@ export default new Router({
       path: '/OTCReportFormStatistics',
       // name: 'OTCReportFormStatistics',
       component: OTCReportFormStatistics
+    },
+    {
+      // 注册
+      path: '/Register',
+      // name: 'Register',
+      component: Register
     }
   ]
 })

@@ -86,7 +86,10 @@ const state = {
     }
   ], // 板块列表
   // 个人中心默认显示第一个
-  userCenterActiveName: 'first'
+  userCenterActiveName: 'first',
+
+  // 币币交易 K线req刷新标识
+  reqRefreshStatus: true
 }
 
 export default new Vuex.Store({

@@ -7,7 +7,8 @@ import {
   CHANGE_COLLECT_LIST,
   CHANGE_COLLECT_STATUS_LIST,
   CHANGE_ACTIVE_SYMBOL,
-  CHANGE_USER_CENTER_ACTIVE_NAME
+  CHANGE_USER_CENTER_ACTIVE_NAME,
+  CHANGE_SOCKET_REFRESH_STATUS
 } from './mutations-types.js'
 
 // import {setStore, getStore} from '../utils'
@@ -45,5 +46,9 @@ export default {
   },
   [CHANGE_USER_CENTER_ACTIVE_NAME] (state, data) {
     state.userCenterActiveName = data
+  },
+  // 设置币币交易K线req请求刷新标识
+  [CHANGE_SOCKET_REFRESH_STATUS] (state, data) {
+    state.reqRefreshStatus = data
   }
 }

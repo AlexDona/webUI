@@ -1,6 +1,7 @@
 import './chart'
 import {Io} from './socket'
 import Datafeeds from './datafeed'
+import store from '../../vuex'
 // import '../../../../static/charting_library/static/css/custom_color_black.css'
 export default {
   widget: null,
@@ -192,6 +193,8 @@ export default {
   },
 
   getBars: function (symbol, resolution, from, to, callback) {
+    // console.log(from)
+    // console.log(to)
     let data
     const symbolData = this.dataCache[symbol]
     // console.log(this.dataCache[symbol]);
@@ -245,10 +248,14 @@ export default {
       }
       console.log(resolution)
       Io.subscribeKline(params, this.onUpdateData.bind(this))
-      // this.getBars(symbol, resolution, from, to, callback)
-      // this.getBarTimer = setTimeout(() => {
-      //   this.getBars(symbol, resolution, from, to, callback)
-      // }, resolution * 6 * 1000)
+      // if (store.state.reqRefreshStatus) {
+      this.getBarTimer = setTimeout(() => {
+        this.getBars(symbol, resolution, from, to, callback)
+        console.log('reflash')
+        store.commit('CHANGE_SOCKET_REFRESH_STATUS', false)
+        console.log(store.state.reqRefreshStatus)
+      }, 100)
+      // }
     }
     data ? fetchCacheData(data) : requestData()
   },
@@ -282,12 +289,14 @@ export default {
   },
   onUpdateData: function (data) {
     console.log(data)
-    console.log('***********************************************************')
+    // console.log('***********************************************************')
     let dataArr = []
+    let dataType = data.type
     // 数据类型
     let type = ''
+    // 交易对
     let symbol = ''
-    // 分辨率
+    // 分辨率（时间周期）
     let resolution = ''
     if (data.rep) {
       dataArr = data.rep.split('.')
@@ -297,9 +306,9 @@ export default {
     symbol = dataArr[1]
     type = dataArr[2]
     resolution = dataArr[3]
-
+    console.log(symbol)
     //  k线
-    if (type == 'kline') {
+    if (type === 'kline') {
       // 分辨率转换
       switch (resolution) {
         case 'min':
@@ -321,7 +330,7 @@ export default {
           resolution = '240'
           break
         case 'day':
-          resolution = 'D'
+          resolution = '1D'
           break
         case 'week':
           resolution = '1w'
@@ -334,7 +343,62 @@ export default {
       if (!this.dataCache[symbol][resolution]) {
         this.dataCache[symbol][resolution] = []
       }
-      // console.log(data.data);
+      // 请求订阅区分
+      // switch (dataType) {
+      //   // 请求历史数据
+      //   case 0:
+      //     this.dataCache[symbol][resolution] = data.data
+      //     // console.log(new Date(this.dataCache[symbol][resolution][0].time))
+      //     break
+      //   case 1:
+      //     // 订阅当前数据
+      //     // 未超过当前时间周期
+      //     if (data.data) {
+      //       let length = this.dataCache[symbol][resolution].length - 1
+      //       // console.log(this.dataCache[symbol][resolution])
+      //       // console.log(data.data[0].time)
+      //       // console.log(this.dataCache[symbol][resolution][length])
+      //       let arr = this.dataCache[symbol][resolution]
+      //       arr.pop()
+      //       arr.push(data.data[0])
+      //       this.dataCache[symbol][resolution] = arr
+      //       console.log(this.dataCache[symbol][resolution])
+      //       // this.dataCache[symbol][resolution][length].open = data.data[0].open
+      //       // this.dataCache[symbol][resolution][length].close = data.data[0].close
+      //       // this.dataCache[symbol][resolution][length].high = data.data[0].high
+      //       // this.dataCache[symbol][resolution][length].low = data.data[0].low
+      //       // this.dataCache[symbol][resolution][length].volume = data.data[0].volume
+      //       // console.log(this.dataCache[symbol][resolution])
+      //     }
+      //     break
+      // }
+      console.log(dataType)
+      if (!dataType) {
+        // 请求历史数据
+        this.dataCache[symbol][resolution] = data.data
+      } else {
+        // 订阅当前数据
+        if (data.data) {
+          // let length = this.dataCache[symbol][resolution].length - 1
+          // console.log(this.dataCache[symbol][resolution])
+          // console.log(data.data[0].time)
+          // console.log(this.dataCache[symbol][resolution][length])
+          let arr = this.dataCache[symbol][resolution]
+          arr[arr.length - 1].open = data.data[0].open
+          arr[arr.length - 1].close = data.data[0].close
+          arr[arr.length - 1].high = data.data[0].high
+          arr[arr.length - 1].low = data.data[0].low
+          arr[arr.length - 1].volume = data.data[0].volume
+          this.dataCache[symbol][resolution] = arr
+          console.log(this.dataCache[symbol][resolution])
+          // this.dataCache[symbol][resolution][length].open = data.data[0].open
+          // this.dataCache[symbol][resolution][length].close = data.data[0].close
+          // this.dataCache[symbol][resolution][length].high = data.data[0].high
+          // this.dataCache[symbol][resolution][length].low = data.data[0].low
+          // this.dataCache[symbol][resolution][length].volume = data.data[0].volume
+          // console.log(this.dataCache[symbol][resolution])
+        }
+      }
       // console.log(data.data.reverse());
       // targetData.forEach((item, index) => {
       // item.time = 1532941620000;
@@ -349,9 +413,8 @@ export default {
       // console.log('----------------------------------------------------');
 
       // console.log(data.data)
-      this.dataCache[symbol][resolution] = data.data
 
-      // this.dataCache[symbol][resolution][0] = data.data[0]
+      // this.dataCache[symbol][resolution] = data.data
       // console.log(this.dataCache[symbol][resolution])
     } else if (type == 'depth') {
       // console.log

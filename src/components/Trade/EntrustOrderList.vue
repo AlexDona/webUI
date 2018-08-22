@@ -105,6 +105,13 @@
               </div>
             </div>
           </div>
+          <!--分页-->
+          <el-pagination
+            background
+            layout="prev, pager, next"
+            :total="50"
+          >
+          </el-pagination>
         </el-tab-pane>
         <el-tab-pane
           label="历史委托"

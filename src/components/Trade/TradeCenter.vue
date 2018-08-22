@@ -1,3 +1,4 @@
+<!--币币交易-->
 <template>
   <div
     class="trade-box trade"
@@ -21,7 +22,7 @@
       >
         <MiddleHeader />
         <!--k线-->
-        <KLine class=""/>
+        <!--<KLine class=""/>-->
         <!--市价交易、限价交易-->
         <ExchangeBox/>
         <!--深度图-->

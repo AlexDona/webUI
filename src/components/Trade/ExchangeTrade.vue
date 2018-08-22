@@ -1,3 +1,4 @@
+<!--限价交易、市价交易-->
 <template>
   <div
     class="exchange-box trade"
@@ -40,9 +41,9 @@
                   <input
                     type="text"
                     placeholder="买入价"
-                    :ref="buyPriceInputRef"
-                    @keyup="formatInput(buyPriceInputRef,pointLength)"
-                    @input="formatInput(buyPriceInputRef,pointLength)"
+                    :ref="limitBuyPriceInputRef"
+                    @keyup="formatInput(limitBuyPriceInputRef,pointLength)"
+                    @input="formatInput(limitBuyPriceInputRef,pointLength)"
                   >
                   <span class="currency">FBT</span>
                   <div class="rate-changer">
@@ -54,9 +55,9 @@
                   <input
                     type="text"
                     placeholder="买入量"
-                    :ref="buyAcountInputRef"
-                    @keyup="formatInput(buyAcountInputRef,pointLength)"
-                    @input="formatInput(buyAcountInputRef,pointLength)"
+                    :ref="limitBuyAcountInputRef"
+                    @keyup="formatInput(limitBuyAcountInputRef,pointLength)"
+                    @input="formatInput(limitBuyAcountInputRef,pointLength)"
                   >
                   <span class="currency">BTC</span>
                 </div>
@@ -65,6 +66,7 @@
                   <input
                     type="password"
                     placeholder="交易密码"
+                    v-model="payPwd"
                   >
                 </div>
                 <!--滑块-->
@@ -87,7 +89,10 @@
                   </div>
                 </div>
                 <div class="submit">
-                  <el-button class="submit-btn buy-btn">买入</el-button>
+                  <el-button
+                    class="submit-btn buy-btn"
+                    @click="addEntrust(0)"
+                  >买入</el-button>
                 </div>
               </div>
             </div>
@@ -113,9 +118,9 @@
                   <input
                     type="text"
                     placeholder="卖出价"
-                    :ref="sellPriceInputRef"
-                    @keyup="formatInput(sellPriceInputRef,pointLength)"
-                    @input="formatInput(sellPriceInputRef,pointLength)"
+                    :ref="limitSellPriceInputRef"
+                    @keyup="formatInput(limitSellPriceInputRef,pointLength)"
+                    @input="formatInput(limitSellPriceInputRef,pointLength)"
                   >
                   <span class="currency">FBT</span>
                   <div class="rate-changer">
@@ -127,9 +132,9 @@
                   <input
                     type="text"
                     placeholder="卖出量"
-                    :ref="sellAcountInputRef"
-                    @keyup="formatInput(sellAcountInputRef,pointLength)"
-                    @input="formatInput(sellAcountInputRef,pointLength)"
+                    :ref="limitSellAcountInputRef"
+                    @keyup="formatInput(limitSellAcountInputRef,pointLength)"
+                    @input="formatInput(limitSellAcountInputRef,pointLength)"
                   >
                   <span class="currency">BTC</span>
                 </div>
@@ -138,6 +143,7 @@
                   <input
                     type="password"
                     placeholder="交易密码"
+                    v-model="payPwd"
                   >
                 </div>
                 <!--滑块-->
@@ -160,7 +166,10 @@
                   </div>
                 </div>
                 <div class="submit">
-                  <el-button class="submit-btn sell-btn">卖出</el-button>
+                  <el-button
+                    class="submit-btn sell-btn"
+                    @click="addEntrust(1)"
+                  >卖出</el-button>
                 </div>
               </div>
             </div>
@@ -204,9 +213,9 @@
                   <input
                     type="text"
                     placeholder="买入量"
-                    :ref="buyAcountInputRef"
-                    @keyup="formatInput(buyAcountInputRef,pointLength)"
-                    @input="formatInput(buyAcountInputRef,pointLength)"
+                    :ref="marketBuyAcountInputRef"
+                    @keyup="formatInput(marketBuyAcountInputRef,pointLength)"
+                    @input="formatInput(marketBuyAcountInputRef,pointLength)"
                   >
                   <span class="currency">BTC</span>
                 </div>
@@ -275,9 +284,9 @@
                   <input
                     type="text"
                     placeholder="卖出量"
-                    :ref="sellAcountInputRef"
-                    @keyup="formatInput(sellAcountInputRef,pointLength)"
-                    @input="formatInput(sellAcountInputRef,pointLength)"
+                    :ref="marketSellAcountInputRef"
+                    @keyup="formatInput(marketSellAcountInputRef,pointLength)"
+                    @input="formatInput(marketSellAcountInputRef,pointLength)"
                   >
                   <span class="currency">BTC</span>
                 </div>
@@ -323,6 +332,7 @@ import IconFont from '../Common/IconFontCommon'
 // import Slider from './SliderTrader'
 import {mapState} from 'vuex'
 import {formatNumberInput} from '../../utils'
+import {saveEntrustTrade} from '../../utils/api/apiDoc'
 
 export default {
   components: {
@@ -335,12 +345,18 @@ export default {
       activeName: 'limit-price',
       sliderValue: '',
       limitBuySliderDisabled: false,
-      buyPriceInputRef: 'buyPriceInput', // 买入价input ref name
-      buyAcountInputRef: 'buyAcountInput', // 买入量input ref name
+      limitBuyPriceInputRef: 'limitBuyPriceInput', // 限价交易 买入价input ref name
+      limitBuyAcountInputRef: 'limitBuyAcountInput', // 限价交易 买入量input ref name
+      marketBuyAcountInputRef: 'marketBuyAcountInput', // 市价交易 买入量input ref name
+      limitSellPriceInputRef: 'limitSellPriceInput', // 限价交易 卖出价input ref name
+      limitSellAcountInputRef: 'limitSellAcountInput', // 限价交易 卖出量input ref name
+      marketSellAcountInputRef: 'marketSellAcountInput', // 市价交易 卖出量input ref name
       sellPriceInputRef: 'sellPriceInput', // 卖出价input ref name
       sellAcountInputRef: 'sellAcountInput', // 卖出量input ref name
+      payPwd: '', // 交易密码
       buyInputValue: '', // 买入input
       pointLength: 4, // 当前币种小数点限制位数
+      matchType: 'LIMIT', // 撮合类型： LIMIT:限价单 MARKET:市价单
       end: '' // 占位，项目完成后删除
     }
   },
@@ -357,6 +373,38 @@ export default {
   update () {},
   beforeRouteUpdate () {},
   methods: {
+    // 新增委单
+    async addEntrust (type) {
+      let params = {
+        partnerId: '474629374641963008',
+        userId: '476053529258098688',
+        tradeId: '2',
+        payPwd: this.payPwd,
+        type: type ? 'SELL' : 'BUY', // 委单类型
+        matchType: this.matchType, // 撮合类型
+        source: 'Web' // 来源
+      }
+      // console.dir(this.$refs[this.buyAcountInputRef])
+      // 限价单添加价格
+      switch (type) {
+        case 0:
+          if (this.matchType === 'LIMIT') {
+            params.price = this.$refs[this.limitBuyPriceInputRef].value
+          }
+          params.count = this.$refs[this.limitBuyAcountInputRef].value
+          break
+        case 1:
+          if (this.matchType === 'LIMIT') {
+            params.price = this.$refs[this.limitSellPriceInputRef].value
+          }
+          params.count = this.$refs[this.limitSellAcountInputRef].value
+          break
+      }
+
+      console.log(params)
+      const data = await saveEntrustTrade(params)
+      console.log(data)
+    },
     // 输入限制
     formatInput (ref, pointLength) {
       let target = this.$refs[ref]

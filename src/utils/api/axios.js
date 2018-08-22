@@ -5,7 +5,6 @@ import {baseUrl} from '../env'
 import axios from 'axios'
 // import store from '../store/store'
 // import router from '../router/index'
-// import qs from 'qs'
 
 let util = {}
 util.ajax = axios.create({
@@ -14,15 +13,13 @@ util.ajax = axios.create({
 })
 
 util.ajax.interceptors.request.use((config) => {
-  // post请求添加自定义请求头
-  if (config.method == 'post') {
-    config.headers['Content-Type'] = 'application/form-data'
-  }
+  // 商户id
+  config.headers['partnerId'] = '474629374641963008'
+  config.headers['partnerNo'] = '100001'
   // let userToken = localStorage.getItem('userToken') || store.state.token
   // if (userToken) {
   //   config.headers['authorization'] = store.state.token
   // }
-
   return config
 }, (error) => {
   return Promise.reject(error)
@@ -57,10 +54,19 @@ export const post = (url, params) => {
   return util.ajax({
     method: 'post',
     url,
+    data: params,
+    headers: {
+      'Content-Type': 'application/json; charset=UTF-8'
+    }
+  })
+}
+export const postWithURLencoded = (url, params) => {
+  return util.ajax({
+    method: 'post',
+    url,
     params,
     headers: {
-      'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8',
-      'Accept': 'application/json'
+      'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8'
     }
   })
 }
