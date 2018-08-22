@@ -25,8 +25,7 @@
 }
 /*select*/
 .identity-authentication.personal
-.el-input__inner,
-.el-select-dropdown__item{
+.el-input__inner{
   width: 270px;
   height: 38px;
   line-height: 38px;

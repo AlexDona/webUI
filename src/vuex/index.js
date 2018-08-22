@@ -6,6 +6,21 @@ import {getStore} from '../utils'
 // Vue.use(Vuex)
 
 const state = {
+  /**
+   * 公共部分
+   */
+  /**
+   * 首页
+   */
+  /**
+   * 币币交易
+   */
+  // OTC交易
+  // 投资理财
+  // 活动中心
+  // 个人中心
+  // 注册登录
+
   // 网页主题
   theme: getStore('theme') || 'night',
   // 国际化语言
@@ -53,7 +68,7 @@ const state = {
         'loginPassword': '', // 登录密码
         'tradePassword': null, // 交易密码
         'realName': '杨孝喜', // 真实姓名 null未认证
-        'hasrealvaliDate': true, // 是否实名认证false:未实名，true实名；
+        'hasrealvaliDate': false, // 是否实名认证false:未实名，true实名；
         'userIdentity': true, // 是否高级认证
         'hasrealvaliDateTime': 1512019593000,
         'safetyGrade': '', // 0低 1中 2高
@@ -67,7 +82,9 @@ const state = {
         'areaCode': '86',
         'lastLoginTime': 1534150923000, // 最后登录时间
         'registerTime': 1512005133000, // 注册时间
-        'ip': null
+        'ip': null,
+        'status': 1,
+        'showId': 81240
       },
       'token': ''
     }
@@ -87,9 +104,14 @@ const state = {
   ], // 板块列表
   // 个人中心默认显示第一个
   userCenterActiveName: 'first',
-
   // 币币交易 K线req刷新标识
-  reqRefreshStatus: true
+  reqRefreshStatus: true,
+  // OTC模块 需要放到全局的数据
+  // OTC改变选中的可用币种
+  selectedOTCAvailableCurrencyName: '',
+  selectedOTCAvailableCurrencyCoinID: '',
+  // 商户id
+  merchantID: '474629374641963008'
 }
 
 export default new Vuex.Store({

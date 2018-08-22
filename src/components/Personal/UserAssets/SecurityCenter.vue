@@ -128,11 +128,11 @@ export default {
   },
   created () {
     // 覆盖Element样式
-    require('../../../static/css/list/Personal/SecurityCenter.css')
+    require('../../../../static/css/list/Personal/UserAssets/SecurityCenter.css')
     // 白色主题样式
-    require('../../../static/css/theme/day/Personal/SecurityCenterDay.css')
+    require('../../../../static/css/theme/day/Personal/UserAssets/SecurityCenterDay.css')
     // 黑色主题样式
-    require('../../../static/css/theme/night/Personal/SecurityCenterNight.css')
+    require('../../../../static/css/theme/night/Personal/UserAssets/SecurityCenterNight.css')
   },
   mounted () {},
   activited () {},
@@ -149,7 +149,7 @@ export default {
 }
 </script>
 <style scoped lang="scss">
-  @import "../../../static/css/scss/Personal/SecurityCenter.scss";
+  @import "../../../../static/css/scss/Personal/UserAssets/SecurityCenter";
   .security-center{
     >.security-information{
       min-height: 200px;

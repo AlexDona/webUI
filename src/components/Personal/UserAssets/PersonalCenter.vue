@@ -12,6 +12,34 @@
           :tab-position = "tabPosition"
           @tab-click = "gitPersonal"
         >
+          <!--账户资产-->
+          <el-tab-pane
+            label = "账户资产"
+            disabled
+            class="title"
+          >
+          </el-tab-pane>
+          <!--我的资产-->
+          <el-tab-pane
+            label = "我的资产"
+            name = "first"
+          >
+            <AccountAssets ref = "accountAssetsValue"/>
+          </el-tab-pane>
+          <!--账单明细-->
+          <el-tab-pane
+            label = "账单明细"
+            name = "second"
+          >
+            <BillingDetails ref = "billingDetailsValue"/>
+          </el-tab-pane>
+          <!--提币地址-->
+          <el-tab-pane
+            label = "提币地址"
+            name = "third"
+          >
+            <WithdrawalAddress ref = "withdrawalAddressValue"/>
+          </el-tab-pane>
           <!--个人中心-->
           <el-tab-pane
             label = "个人中心"
@@ -19,18 +47,9 @@
             class="title"
           >
           </el-tab-pane>
-          <!--账户资产-->
-          <el-tab-pane
-            label = "账户资产"
-            name = "first"
-          >
-            <AccountAssets ref = "accountAssetsValue"/>
-          </el-tab-pane>
-
-          <!--身份认证-->
           <el-tab-pane
             label = "身份认证"
-            name = "second"
+            name = "fourth"
           >
             <IdentityAuthentication ref = "identityValue"/>
           </el-tab-pane>
@@ -38,7 +57,7 @@
           <!--收款账户-->
           <el-tab-pane
             label = "收款账户"
-            name = "third"
+            name = "fifth"
           >
             <AccountCredited ref = "accountCreditedValue"/>
           </el-tab-pane>
@@ -46,7 +65,7 @@
           <!--邀请推广-->
           <el-tab-pane
             label = "邀请推广"
-            name = "fourth"
+            name = "six"
           >
             <InvitingPromotion ref = "invitingPromotionValue"/>
           </el-tab-pane>
@@ -54,16 +73,23 @@
           <!--安全中心-->
           <el-tab-pane
             label = "安全中心"
-            name = "fifth"
+            name = "seven"
           >
             <SecurityCenter ref = "securityCenterValue"/>
           </el-tab-pane>
           <!--API管理-->
           <el-tab-pane
             label = "API管理"
-            name = "six"
+            name = "eight"
           >
             <APIManagement ref = "apiManagementValue"/>
+          </el-tab-pane>
+          <!--PUSH资产-->
+          <el-tab-pane
+            label = "PUSH资产"
+            name = "nine"
+          >
+            <PushAsset ref = "pushAssetValue"/>
           </el-tab-pane>
           <!--我的交易-->
           <el-tab-pane
@@ -74,13 +100,13 @@
           </el-tab-pane>
           <el-tab-pane
             label = "币币订单"
-            name = "seven"
+            name = "ten"
           >
             <CoinOrders ref = "coinOrdersValue"/>
           </el-tab-pane>
           <el-tab-pane
             label = "法币订单"
-            name = "eight"
+            name = "eleven"
           >
             <FiatOrders ref = "fiatOrdersValue"/>
           </el-tab-pane>
@@ -94,36 +120,45 @@
 <!--请严格按照如下书写书序-->
 <script>
 // 头部
-import HeaderCommon from '../Common/HeaderCommon'
+import HeaderCommon from '../../Common/HeaderCommon'
 // 账户资产
-import AccountAssets from './AccountAssets'
+import AccountAssets from '../AccountBalance/AccountAssets'
+// 账单明细
+import BillingDetails from '../AccountBalance/BillingDetails'
+// 提币地址
+import WithdrawalAddress from '../AccountBalance/WithdrawalAddress'
 // 身份认证
-import IdentityAuthentication from './IdentityAuthentication'
+import IdentityAuthentication from '../UserAssets/IdentityAuthentication'
 // 收款账户
-import AccountCredited from './AccountCredited'
+import AccountCredited from '../UserAssets/AccountCredited'
 // 邀请推广
-import InvitingPromotion from './InvitingPromotion'
+import InvitingPromotion from '../UserAssets/InvitingPromotion'
 // 安全中心
-import SecurityCenter from './SecurityCenter'
+import SecurityCenter from '../UserAssets/SecurityCenter'
 // API管理
-import APIManagement from './APIManagement'
+import APIManagement from '../UserAssets/APIManagement'
+// push资产
+import PushAsset from '../UserAssets/PushAsset'
 // 币币订单
-import CoinOrders from './CoinOrders'
+import CoinOrders from '../TransactionType/CoinOrders'
 // 法币订单
-import FiatOrders from './FiatOrders'
+import FiatOrders from '../TransactionType/FiatOrders'
 // 底部
-import FooterCommon from '../Common/FooterCommon'
+import FooterCommon from '../../Common/FooterCommon'
 import {mapState} from 'vuex'
 export default {
   components: {
     // 个人中心
     HeaderCommon, // 头部
     AccountAssets, // 账户资产
+    BillingDetails, // 账单明细
+    WithdrawalAddress, // 提币地址
     IdentityAuthentication, // 身份认证
     AccountCredited, // 收款账户
     InvitingPromotion, // 邀请推广
     SecurityCenter, // 安全中心
     APIManagement, // API管理
+    PushAsset, // push资产
     // 我的交易
     CoinOrders, // 币币订单
     FiatOrders, // 法币订单
@@ -132,22 +167,16 @@ export default {
   // props,
   data () {
     return {
-      tabPosition: 'left', // 导航位置方向
-      activeName: 'first'
+      tabPosition: 'left' // 导航位置方向
     }
   },
   created () {
-    console.log(this.$route.params.id)
     // 覆盖Element样式
-    require('../../../static/css/list/Personal/PersonalCenter.css')
+    require('../../../../static/css/list/Personal/UserAssets/PersonalCenter.css')
     // 白色主题样式
-    require('../../../static/css/theme/day/Personal/PersonalCenterDay.css')
+    require('../../../../static/css/theme/day/Personal/UserAssets/PersonalCenterDay.css')
     // 黑色主题样式
-    require('../../../static/css/theme/night/Personal/PersonalCenterNight.css')
-    // 个人中心跳转面板id
-    if (this.$route.params.id) {
-      this.activeName = this.$route.params.id
-    }
+    require('../../../../static/css/theme/night/Personal/UserAssets/PersonalCenterNight.css')
   },
   mounted () {},
   activited () {},
@@ -157,31 +186,28 @@ export default {
     // 面板跳转
     gitPersonal (tab, event) {
       let a = event.target.getAttribute('id')
-      console.log(a)
       switch (a) {
         case 'tab-first':
-          console.log(this.$refs)
           break
         case 'tab-second':
-          console.log(this.$refs)
           break
         case 'tab-third':
-          console.log(this.$refs)
           break
         case 'tab-fourth':
-          console.log(this.$refs)
           break
         case 'tab-fifth':
-          console.log(this.$refs)
           break
         case 'tab-six':
-          console.log(this.$refs)
           break
         case 'tab-seven':
-          console.log(this.$refs)
           break
         case 'tab-eight':
-          console.log(this.$refs)
+          break
+        case 'tab-nine':
+          break
+        case 'tab-ten':
+          break
+        case 'tab-eleven':
           break
         default:
           break
@@ -199,7 +225,7 @@ export default {
 }
 </script>
 <style scoped lang="scss">
-  @import "../../../static/css/scss/Personal/PersonalCenter.scss";
+  @import "../../../../static/css/scss/Personal/UserAssets/PersonalCenter";
   .personal-center{
     > .personal-center-main {
       width: 1100px;

@@ -254,6 +254,8 @@ export default {
       switch (regType) {
         case 'phone':
           if (!validatePhoneNum(this.phoneNum)) {
+            alert('错误')
+            return false
           }
           break
       }

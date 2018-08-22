@@ -10,6 +10,7 @@ export const returnAjaxMessage = (data, self) => {
       type: 'error',
       message: self.$t(`M.${meta.i18n_code}`)
     })
+    return false
   } else {
     self.$message({
       type: 'success',

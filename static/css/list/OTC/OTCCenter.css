@@ -18,40 +18,40 @@
     background-color: #008069;
 }
 /* 2.0 商家表格 */
-.otc-box .el-table th, .el-table tr{
+.otc-box .otc-merchant-list .el-table th, .el-table tr{
     background-color: #202A33;
 }
-.otc-box .el-table thead {
+.otc-box .otc-merchant-list .el-table thead {
     color: #617499;
 }
-.otc-box .el-table th.is-leaf {
+.otc-box .otc-merchant-list .el-table th.is-leaf {
     border-bottom: 1px solid rgba(97,116,153,1);
 }
-.otc-box .el-table td{
+.otc-box .otc-merchant-list .el-table td{
     border-bottom: 1px solid rgba(97,116,153,0.05);
     padding: 7px 0;
 }
 
-.otc-box .el-table--enable-row-hover .el-table__body tr:hover>td{
+.otc-box .otc-merchant-list .el-table--enable-row-hover .el-table__body tr:hover>td{
     background-color: #1D2331;
 }
-.otc-box .el-table{
+.otc-box .otc-merchant-list .el-table{
     color: #fff;
     background-color: #202A33;
 }
-.otc-box .el-table th>.cell.highlight{
+.otc-box .otc-merchant-list .el-table th>.cell.highlight{
     color: #617499;
 }
-.otc-box .el-table__column-filter-trigger i{
+.otc-box .otc-merchant-list .el-table__column-filter-trigger i{
     color: #338FF5;
     font-size: 14px;
     font-weight: 700;
 }
-.otc-box .el-button--danger{
+.otc-box .otc-merchant-list .el-button--danger{
     background-color: #D45858;
     border-color: #D45858;
 }
-.otc-box .el-button--success {
+.otc-box .otc-merchant-list .el-button--success {
     background-color: #008069;
     border-color: #008069;
 }

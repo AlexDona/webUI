@@ -48,8 +48,8 @@
                 </span>
                 <span
                   class="code-copy border-radius5 cursor-pointer"
-                  @mouseenter="showErcode"
-                  @mouseleave="hiddenErcode"
+                  @mouseenter="showStatusCode(1)"
+                  @mouseleave="showStatusCode(2)"
                 >
                   <IconFontCommon
                     class="font-size12"
@@ -136,35 +136,47 @@
             empty-text="暂无数据"
           >
             <el-table-column
-              prop="userUID"
               label="用户UID"
             >
+              <template slot-scope = "s">
+                <div>{{ s.row.userUID }}</div>
+              </template>
             </el-table-column>
             <el-table-column
-              prop="loginName"
               label="登录名"
             >
+              <template slot-scope = "s">
+                <div>{{ s.row.loginName }}</div>
+              </template>
             </el-table-column>
             <el-table-column
-              prop="registerTime"
               label="注册时间"
               width="180"
             >
+              <template slot-scope = "s">
+                <div>{{ timeFormatting(s.row.registerTime) }}</div>
+              </template>
             </el-table-column>
             <el-table-column
-              prop="name"
               label="姓名"
             >
+              <template slot-scope = "s">
+                <div>{{ s.row.name }}</div>
+              </template>
             </el-table-column>
             <el-table-column
-              prop="certification"
               label="高级认证"
             >
+              <template slot-scope = "s">
+                <div>{{ s.row.authenticationState }}</div>
+              </template>
             </el-table-column>
             <el-table-column
-              prop="refereeUID"
               label="直接推荐人UID"
             >
+              <template slot-scope = "s">
+                <div>{{ s.row.refereeUID }}</div>
+              </template>
             </el-table-column>
           </el-table>
         </div>
@@ -181,24 +193,32 @@
             empty-text="暂无数据"
           >
             <el-table-column
-              prop="type"
               label="奖励类型"
             >
+              <template slot-scope = "s">
+                <div>{{ s.row.type }}</div>
+              </template>
             </el-table-column>
             <el-table-column
-              prop="currency"
               label="币种"
             >
+              <template slot-scope = "s">
+                <div>{{ s.row.currency }}</div>
+              </template>
             </el-table-column>
             <el-table-column
-              prop="count"
               label="数量"
             >
+              <template slot-scope = "s">
+                <div>{{ s.row.count }}</div>
+              </template>
             </el-table-column>
             <el-table-column
-              prop="time"
               label="时间"
             >
+              <template slot-scope = "s">
+                <div>{{ timeFormatting(s.row.time) }}</div>
+              </template>
             </el-table-column>
           </el-table>
         </div>
@@ -209,8 +229,9 @@
 <!--请严格按照如下书写书序-->
 <script>
 import {mapState} from 'vuex'
-import IconFontCommon from '../Common/IconFontCommon'
+import IconFontCommon from '../../Common/IconFontCommon'
 import VueClipboard from 'vue-clipboard2'
+import {timeFilter} from '../../../utils/index'
 Vue.use(VueClipboard)
 export default {
   components: {
@@ -242,7 +263,7 @@ export default {
           loginName: '18033****',
           registerTime: '2018-08-04 10:30:41',
           name: '二麻子',
-          certification: '未认证',
+          authenticationState: '未认证',
           refereeUID: '5566887'
         },
         {
@@ -250,7 +271,7 @@ export default {
           loginName: '18033****',
           registerTime: '2018-08-04 10:30:41',
           name: '二麻子',
-          certification: '未认证',
+          authenticationState: '未认证',
           refereeUID: '5566887'
         },
         {
@@ -258,7 +279,7 @@ export default {
           loginName: '18033****',
           registerTime: '2018-08-04 10:30:41',
           name: '二麻子',
-          certification: '未认证',
+          authenticationState: '未认证',
           refereeUID: '5566887'
         },
         {
@@ -266,7 +287,7 @@ export default {
           loginName: '18033****',
           registerTime: '2018-08-04 10:30:41',
           name: '二麻子',
-          certification: '未认证',
+          authenticationState: '未认证',
           refereeUID: '5566887'
         },
         {
@@ -274,7 +295,7 @@ export default {
           loginName: '18033****',
           registerTime: '2018-08-04 10:30:41',
           name: '二麻子',
-          certification: '未认证',
+          authenticationState: '未认证',
           refereeUID: '5566887'
         }
       ],
@@ -315,17 +336,21 @@ export default {
   },
   created () {
     // 覆盖Element样式
-    require('../../../static/css/list/Personal/InvitingPromotion.css')
+    require('../../../../static/css/list/Personal/UserAssets/InvitingPromotion.css')
     // 白色主题样式
-    require('../../../static/css/theme/day/Personal/InvitingPromotionDay.css')
+    require('../../../../static/css/theme/day/Personal/UserAssets/InvitingPromotionDay.css')
     // 黑色主题样式
-    require('../../../static/css/theme/night/Personal/InvitingPromotionNight.css')
+    require('../../../../static/css/theme/night/Personal/UserAssets/InvitingPromotionNight.css')
   },
   mounted () {},
   activited () {},
   update () {},
   beforeRouteUpdate () {},
   methods: {
+    // 时间格式化
+    timeFormatting (date) {
+      return timeFilter(date, 'normal')
+    },
     //  点击复制
     onCopy (e) {
       // 已拷贝
@@ -335,7 +360,7 @@ export default {
         message: msg
       })
     },
-    onError: function (e) {
+    onError (e) {
       // 拷贝失败，请稍后重试
       let msg = '拷贝失败，请稍后重试'
       this.$message({
@@ -343,14 +368,14 @@ export default {
         message: msg
       })
     },
-    // 显示二维码
-    showErcode () {
-      console.log(1)
-      this.ercodeIsShowId = true
-    },
-    // 隐藏二维码
-    hiddenErcode () {
-      this.ercodeIsShowId = false
+    showStatusCode (val) {
+      if (val == 1) {
+        // 显示二维码
+        this.ercodeIsShowId = true
+      } else {
+        // 隐藏二维码
+        this.ercodeIsShowId = false
+      }
     }
   },
   filter: {},
@@ -363,7 +388,7 @@ export default {
 }
 </script>
 <style scoped lang="scss">
-  @import "../../../static/css/scss/Personal/InvitingPromotion.scss";
+  @import "../../../../static/css/scss/Personal/UserAssets/InvitingPromotion";
   .invitation-promotion{
     >.invitation-promotion-main{
       /*推广信息*/
@@ -593,7 +618,7 @@ export default {
             }
           }
         }
-        >award-record {
+        >.award-record {
           background-color: #ccc;
           >.award-record-header {
             border-bottom: 1px solid #333;

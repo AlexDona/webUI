@@ -75,6 +75,8 @@
 <!--请严格按照如下书写书序-->
 <script>
 import {timeFilter} from '../../utils'
+// import {mapState, mapMutations} from 'vuex'
+import {getOTCFrezzingOrders} from '../../utils/api/apiDoc'
 export default {
   components: {},
   // props,
@@ -131,6 +133,8 @@ export default {
     require('../../../static/css/list/OTC/OTCFreezingOrder.css')
     require('../../../static/css/theme/day/OTC/OTCFreezingOrderDay.css')
     require('../../../static/css/theme/night/OTC/OTCFreezingOrderNight.css')
+    // 1.0 请求冻结中订单列表
+    this.getOTCFrezzingOrdersList()
   },
   mounted () {},
   activited () {},
@@ -140,6 +144,26 @@ export default {
     // 时间格式化
     timeFormatting (date) {
       return timeFilter(date, 'normal')
+    },
+    // 2.0 请求冻结中订单列表
+    async getOTCFrezzingOrdersList () {
+      let data
+      data = await getOTCFrezzingOrders({
+        status: 'FROZEN' // 状态 (交易中 TRADING 已完成 COMPLETED  已取消  CANCELED 冻结中 FROZEN)
+        // pageNum: '1',
+        // pageSize: '10'
+      })
+      console.log(data)
+      if (data.data.meta.code !== 200) {
+        this.$message({
+          message: data.data.meta.message,
+          type: 'error',
+          center: true
+        })
+        return false
+      }
+      // 返回数据正确的逻辑
+      // this.getOTCFreezingOrderList = data.data.data.list
     }
   },
   filter: {},

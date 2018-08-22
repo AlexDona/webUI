@@ -402,6 +402,8 @@
 <script>
 import {timeFilter} from '../../utils'
 import IconFontCommon from '../Common/IconFontCommon'
+// import {mapState, mapMutations} from 'vuex'
+// import {getOTCTradingOrders} from '../../utils/api/apiDoc'
 export default {
   components: {
     IconFontCommon //  字体图标组件

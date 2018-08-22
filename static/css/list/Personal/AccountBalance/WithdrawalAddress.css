@@ -1,0 +1,13 @@
+/*覆盖element样式*/
+.withdrawal-address.personal .el-input__inner {
+  width: 130px;
+  height: 34px;
+  border: 0;
+}
+.withdrawal-address.personal .el-form-item {
+  margin-bottom: 33px;
+}
+.withdrawal-address.personal .el-table--fit{
+  padding: 0 25px;
+}
+

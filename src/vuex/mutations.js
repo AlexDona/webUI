@@ -8,7 +8,12 @@ import {
   CHANGE_COLLECT_STATUS_LIST,
   CHANGE_ACTIVE_SYMBOL,
   CHANGE_USER_CENTER_ACTIVE_NAME,
-  CHANGE_SOCKET_REFRESH_STATUS
+  CHANGE_SOCKET_REFRESH_STATUS,
+  // OTC模块
+  // OTC改变选中的可用币种名字
+  CHANGE_OTC_AVAILABLE_CURRENCY_NAME,
+  // OTC改变选中的可用币种id
+  CHANGE_OTC_AVAILABLE_CURRENCY_ID
 } from './mutations-types.js'
 
 // import {setStore, getStore} from '../utils'
@@ -16,6 +21,15 @@ import {
 // import {localapi, proapi} from 'src/config/env'
 
 export default {
+  // 公共部分
+  // 首页
+  // 币币交易
+  // OTC交易
+  // 投资理财
+  // 活动中心
+  // 个人中心
+  // 注册登录
+
   // 切换主题
   [CHANGE_THEME] (state, data) {
     state.theme = data
@@ -50,5 +64,14 @@ export default {
   // 设置币币交易K线req请求刷新标识
   [CHANGE_SOCKET_REFRESH_STATUS] (state, data) {
     state.reqRefreshStatus = data
+  },
+  // OTC 模块数据
+  // OTC改变选中的可用币种名字
+  [CHANGE_OTC_AVAILABLE_CURRENCY_NAME] (state, data) {
+    state.selectedOTCAvailableCurrencyName = data
+  },
+  // OTC改变选中的可用币种id
+  [CHANGE_OTC_AVAILABLE_CURRENCY_ID] (state, data) {
+    state.selectedOTCAvailableCurrencyCoinID = data
   }
 }

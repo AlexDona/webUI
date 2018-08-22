@@ -16,6 +16,9 @@ util.ajax.interceptors.request.use((config) => {
   // 商户id
   config.headers['partnerId'] = '474629374641963008'
   config.headers['partnerNo'] = '100001'
+  // 增加token信息
+  config.headers['authorization'] = '888888'
+
   // let userToken = localStorage.getItem('userToken') || store.state.token
   // if (userToken) {
   //   config.headers['authorization'] = store.state.token
