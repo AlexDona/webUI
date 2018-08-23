@@ -352,13 +352,13 @@ export default{
     console.log(this.theme)
     this.activeTheme = this.theme
     // 查询某商户可用法币币种列表
-    this.getMerchantAvailablelegalTenderList()
+    // this.getMerchantAvailablelegalTenderList()
   },
   methods: {
-    ...mapActions([
+    ...mapActions('common', [
       'changeSettingAction'
     ]),
-    ...mapMutations([
+    ...mapMutations('common', [
       // 修改语言
       'CHANGE_LANGUAGE',
       // 修改折算货币
@@ -427,10 +427,10 @@ export default{
 
   },
   computed: {
-    ...mapState([
-      'theme',
-      'language'
-    ])
+    ...mapState({
+      theme: state => state.home.theme,
+      language: state => state.home.language
+    })
   }
 }
 </script>
