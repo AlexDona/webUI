@@ -27,7 +27,7 @@ export const getOTCEntrustingOrders = (params) => get('otcEntrust/selectEntrusts
 // 查询3天内用户otc各状态交易---otc订单中 冻结中 的订单
 export const getOTCFrezzingOrders = (params) => get('selectUserOrdersIn3Day', params)
 // 添加otc挂单
-export const addOTCPutUpOrders = (params) => post('otcEntrust/addOtcEntrustForCommon', params)
+export const addOTCPutUpOrders = (params) => postWithURLencoded('otcEntrust/addOtcEntrustForCommon', params)
 /**
  * 币币交易
  */

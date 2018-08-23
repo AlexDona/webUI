@@ -1,4 +1,5 @@
 import {
+  // OTC改变选中的可用币种名字
   CHANGE_OTC_AVAILABLE_CURRENCY_NAME,
   // OTC改变选中的可用币种id
   CHANGE_OTC_AVAILABLE_CURRENCY_ID

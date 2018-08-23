@@ -27,7 +27,7 @@ const state = {
     hot: false // 是否为最热交易对
   },
   isLogin: false, // 用户登录状态
-  merchantID: '474629374641963008',
+  merchantID: '474629374641963008', // 商户id
   end: ''// 占位
 }
 

@@ -5,9 +5,9 @@ import actions from './action'
 // Vue.use(Vuex)
 
 const state = {
-  // OTC模块 需要放到全局的数据
-  // OTC改变选中的可用币种
+  // OTC改变选中的可用币种名字
   selectedOTCAvailableCurrencyName: '',
+  // OTC改变选中的可用币种id
   selectedOTCAvailableCurrencyCoinID: ''
 }
 
