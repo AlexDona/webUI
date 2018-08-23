@@ -13,7 +13,8 @@
             />
           </p>
           <p class="text-align-c margin-top16">
-            <span>UID:</span><span>{{ showStateUserInfo.uid }}</span>
+            <span>UID:</span>
+            <span>{{ showStateUserInfo.uid }}</span>
           </p>
         </div>
         <div class="info float-left">
@@ -131,7 +132,9 @@
             <span class="info-color font-size16">{{ CNYAssets }}</span>
             <span class="info-color font-size12">CNY</span>
           </p>
-          <p class="asset-color font-size12">（注：资产总估仅提供参考，请以单项资金为准）</p>
+          <p class="asset-color margin-top9 font-size12">
+            （注：资产总估仅提供参考，请以单项资金为准）
+          </p>
         </div>
       </div>
     </div>
@@ -251,11 +254,14 @@ export default {
         >.asset {
           width: 295px;
           >.asset-text {
-            padding: 0 25px;
+            padding: 0 20px;
             margin-top: 23px;
           }
           >.asset-info {
-            padding: 0 25px;
+            padding: 0 20px;
+          }
+          >.asset-color {
+            padding: 0 15px;
           }
         }
       }
