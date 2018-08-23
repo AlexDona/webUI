@@ -107,8 +107,9 @@ const state = {
   // 币币交易 K线req刷新标识
   reqRefreshStatus: true,
   // OTC模块 需要放到全局的数据
-  // OTC改变选中的可用币种
+  // OTC改变选中的可用币种名字
   selectedOTCAvailableCurrencyName: '',
+  // OTC改变选中的可用币种id
   selectedOTCAvailableCurrencyCoinID: '',
   // 商户id
   merchantID: '474629374641963008'
