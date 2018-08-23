@@ -428,8 +428,8 @@ export default{
   },
   computed: {
     ...mapState({
-      theme: state => state.home.theme,
-      language: state => state.home.language
+      theme: state => state.common.theme,
+      language: state => state.common.language
     })
   }
 }

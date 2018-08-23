@@ -879,7 +879,7 @@ export default {
   beforeRouteUpdate () {
   },
   methods: {
-    ...mapMutations([
+    ...mapMutations('home', [
       'CHANGE_COLLECT_LIST'
     ]),
     // 排序
@@ -1062,13 +1062,13 @@ export default {
   },
   filter: {},
   computed: {
-    ...mapState([
-      'theme',
-      'language',
-      'globalCollectList',
-      'globalCollectStatusList',
-      'plateList' // 板块id
-    ]),
+    ...mapState({
+      theme: state => state.common.theme,
+      language: state => state.common.language,
+      globalCollectList: state => state.home.globalCollectList,
+      globalCollectStatusList: state => state.home.globalCollectStatusList,
+      plateList: state => state.home.globalCollectStatusList
+    }),
     // 搜索关键字过滤列表过滤
     searchFilterMarketList () {
       let newArr = []

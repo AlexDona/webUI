@@ -320,9 +320,9 @@ export default {
   },
   filter: {},
   computed: {
-    ...mapState([
-      'theme'
-    ])
+    ...mapState({
+      theme: state => state.common.theme
+    })
   },
   watch: {}
 }

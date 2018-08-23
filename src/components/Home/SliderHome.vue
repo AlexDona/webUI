@@ -12,7 +12,6 @@
       :pages="pages"
       :sliderinit="sliderinit"
       class="inner-box"
-
     >
     </Slider>
   </div>
@@ -99,7 +98,7 @@ export default {
           mounted () {
           },
           methods: {
-            ...mapMutations([
+            ...mapMutations('home', [
               'CHANGE_BANNER_ACTIVE',
               'CHANGE_BANNER_BACKGROUND'
             ]),
@@ -114,10 +113,10 @@ export default {
             }
           },
           computed: {
-            ...mapState([
-              'bannerActive',
-              'bannerDefaultBackground'
-            ])
+            ...mapState({
+              bannerActive: state => state.home.bannerActive,
+              bannerDefaultBackground: state => state.home.bannerDefaultBackground
+            })
           },
           template: `<router-link
                        style="width: 100%;height:100%"

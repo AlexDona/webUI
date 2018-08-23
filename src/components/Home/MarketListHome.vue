@@ -909,7 +909,7 @@ export default{
   update () {},
   beforeRouteUpdate () {},
   methods: {
-    ...mapMutations([
+    ...mapMutations('home', [
       'CHANGE_COLLECT_LIST'
     ]),
     // 发送
@@ -1071,8 +1071,8 @@ export default{
   computed: {
     ...mapState({
       theme: state => state.common.theme,
-      plateList: state => state.home.plateList, // 板块列表
-      language: state => state.common.theme // 语言
+      language: state => state.common.theme, // 语言
+      plateList: state => state.home.plateList // 板块列表
     })
     // // 筛选列表
     // filterMarketList () {

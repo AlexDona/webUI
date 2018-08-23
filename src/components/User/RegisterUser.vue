@@ -289,10 +289,10 @@ export default {
   },
   filter: {},
   computed: {
-    ...mapState([
-      'theme',
-      'language'
-    ])
+    ...mapState({
+      theme: state => state.common.theme,
+      language: state => state.common.language
+    })
   },
   watch: {}
 }

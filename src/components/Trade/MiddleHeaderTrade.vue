@@ -106,10 +106,10 @@ export default {
   methods: {},
   filter: {},
   computed: {
-    ...mapState([
-      'theme',
-      'activeSymbol'
-    ])
+    ...mapState({
+      theme: state => state.common.theme,
+      activeSymbol: state => state.common.activeSymbol
+    })
   },
   watch: {}
 }

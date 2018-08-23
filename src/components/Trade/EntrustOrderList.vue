@@ -296,10 +296,10 @@ export default {
   },
   filter: {},
   computed: {
-    ...mapState([
-      'theme',
-      'isLogin'
-    ])
+    ...mapState({
+      theme: state => state.common.theme,
+      isLogin: state => state.common.isLogin
+    })
   },
   watch: {}
 }
