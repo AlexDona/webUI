@@ -1069,11 +1069,11 @@ export default{
   },
   filter: {},
   computed: {
-    ...mapState([
-      'theme',
-      'plateList', // 板块列表
-      'language' // 语言
-    ])
+    ...mapState({
+      theme: state => state.common.theme,
+      plateList: state => state.home.plateList, // 板块列表
+      language: state => state.common.theme // 语言
+    })
     // // 筛选列表
     // filterMarketList () {
     //   // 单个查看更多

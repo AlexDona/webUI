@@ -26,9 +26,9 @@ export default {
   methods: {},
   filter: {},
   computed: {
-    ...mapState([
-      'bannerBackgroundImage'
-    ])
+    ...mapState({
+      bannerBackgroundImage: state => state.home.bannerBackgroundImage
+    })
   },
   watch: {}
 }

@@ -305,6 +305,7 @@
 <!--请严格按照如下书写书序-->
 <script>
 import {mapState, mapMutations} from 'vuex'
+// import {mapState, mapMutations, mapActions} from 'vuex'
 import {getOTCAvailableCurrency, getOTCPutUpOrders} from '../../utils/api/apiDoc'
 import IconFontCommon from '../Common/IconFontCommon'
 import NavCommon from '../Common/HeaderCommon'
@@ -417,13 +418,23 @@ export default {
     this.getOTCAvailableCurrencyList()
     // console.log(this.selectedOTCAvailableCurrencyName)
     // console.log(this.selectedOTCAvailableCurrencyCoinID)
+    // console.log(this.merchantID)
   },
   mounted () {},
   activited () {},
   update () {},
   beforeRouteUpdate () {},
   methods: {
-    ...mapMutations([
+    // 原来的
+    // ...mapMutations([
+    //   'CHANGE_OTC_AVAILABLE_CURRENCY_NAME',
+    //   'CHANGE_OTC_AVAILABLE_CURRENCY_ID'
+    // ]),
+    // 新的
+    // ...mapActions('OTC', [
+    //   'changeSettingAction'
+    // ]),
+    ...mapMutations('OTC', [
       'CHANGE_OTC_AVAILABLE_CURRENCY_NAME',
       'CHANGE_OTC_AVAILABLE_CURRENCY_ID'
     ]),
@@ -570,11 +581,20 @@ export default {
   },
   filter: {},
   computed: {
-    ...mapState([
-      'selectedOTCAvailableCurrencyName',
-      'selectedOTCAvailableCurrencyCoinID',
-      'merchantID'
-    ])
+    // 原来的
+    // ...mapState([
+    //   'selectedOTCAvailableCurrencyName',
+    //   'selectedOTCAvailableCurrencyCoinID',
+    //   'merchantID'
+    // ])
+    // 新的
+    ...mapState({
+      // theme: state => state.home.theme,
+      // language: state => state.home.language
+      selectedOTCAvailableCurrencyName: state => state.OTC.selectedOTCAvailableCurrencyName,
+      selectedOTCAvailableCurrencyCoinID: state => state.OTC.selectedOTCAvailableCurrencyCoinID,
+      merchantID: state => state.common.merchantID
+    })
   },
   watch: {}
 }

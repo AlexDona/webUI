@@ -48,6 +48,7 @@ export const addOTCPutUpOrders = (params) => postWithURLencoded('otcEntrust/addO
 export const getMerchantAvailablelegalTender = (params) => get('otcCOin/getAvailCurrencyCoins', params)
 
 /**
+/**
  * User
  */
 // 发送短信验证码
