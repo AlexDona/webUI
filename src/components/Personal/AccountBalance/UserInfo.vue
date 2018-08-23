@@ -143,6 +143,7 @@
 <!--请严格按照如下书写书序-->
 <script>
 import {mapState} from 'vuex'
+// 字体图标
 import IconFontCommon from '../../Common/IconFontCommon'
 export default {
   components: {

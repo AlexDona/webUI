@@ -1,4 +1,7 @@
 /*个人中心（黑色主题）*/
-.account-assets.personal.night {
-  background-color: #252e3f;
-}
+/*.account-assets.personal.night {*/
+  /*background-color: #1E2636;*/
+/*}*/
+/*.account-assets.personal.night .el-switch__core::after {*/
+  /*background-color: #fff;*/
+/*}*/

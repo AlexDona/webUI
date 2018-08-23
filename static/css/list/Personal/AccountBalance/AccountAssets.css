@@ -2,3 +2,15 @@
 .account-assets.personal .el-tabs__active-bar{
   height: 0 !important;
 }
+.account-assets.personal .el-switch__core {
+  border: 0;
+  width: 32px !important;
+  height: 15px
+}
+.account-assets.personal .el-switch.is-checked .el-switch__core::after {
+  margin-left: -14px;
+}
+.account-assets.personal .el-switch__core::after {
+  width: 14px;
+  height: 14px;
+}
