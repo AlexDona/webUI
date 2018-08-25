@@ -1,5 +1,6 @@
 <template>
   <div class="otc-publish-AD-box otc">
+    <!-- 商家发布广告挂单 -->
     <!-- 1.0 导航 -->
     <NavCommon/>
     <!-- 2.0 OTC发布广告内容 -->
@@ -53,6 +54,12 @@
                 <el-select
                   v-model="activitedCurrencyUnit"
                 >
+                  <!-- <el-option
+                    v-for="item in currencyUnit"
+                    :key="item.id"
+                    :label="item.shortName"
+                    :value="item.id">
+                  </el-option> -->
                   <el-option
                     v-for="item in currencyUnit"
                     :key="item.value"
@@ -193,7 +200,43 @@
           </div>
           <!-- 提交按钮 -->
           <div class="button">
-            <button class="AD-button font-size14 cursor-pointer">发布广告</button>
+            <button
+              class="AD-button font-size14 cursor-pointer"
+              @click.prevent="showPasswordDialog"
+            >
+              发布广告
+            </button>
+          </div>
+          <!-- 发布广告弹出交易密码框 -->
+          <div class="password-dialog">
+            <el-dialog
+              title="交易密码"
+              :visible.sync="dialogVisible"
+              top="25vh"
+              width="470"
+            >
+              <div>请输入交易密码</div>
+              <div class="input">
+                <input
+                  type="password"
+                  class="password-input"
+                >
+              </div>
+              <div class="error-info">
+                <!-- 错误提示 -->
+                <div class="tips">错误提示</div>
+              </div>
+              <span
+                slot="footer"
+                class="dialog-footer">
+                  <el-button
+                    type="primary"
+                    @click="publishADSubmitButton"
+                  >
+                    提 交
+                  </el-button>
+              </span>
+            </el-dialog>
           </div>
         </div>
       </div>
@@ -228,9 +271,17 @@
 </template>
 <!--请严格按照如下书写书序-->
 <script>
+// 引入组件
 import NavCommon from '../Common/HeaderCommon'
 import FooterCommon from '../Common/FooterCommon'
 import IconFontCommon from '../Common/IconFontCommon'
+// 引入接口
+import {getOTCAvailableCurrency, getMerchantAvailablelegalTender} from '../../utils/api/apiDoc'
+// 引入提示信息
+import {returnAjaxMessage} from '../../utils/commonFunc'
+// 引入全局变量和方法
+import {createNamespacedHelpers, mapState} from 'vuex'
+const {mapMutations} = createNamespacedHelpers('OTC')
 export default {
   components: {
     NavCommon, //  头部导航
@@ -239,6 +290,7 @@ export default {
   },
   data () {
     return {
+      dialogVisible: false,
       // 选择模块下拉列表循环数组
       // 1.0发布广告类型数组
       activitedBuySellStyle: '出售', // 选中的类型
@@ -252,7 +304,7 @@ export default {
           label: '购买'
         }
       ],
-      // 2.0币种名字下拉数组
+      // 2.0币种名字下拉数组：商家可用币种
       activitedCoinName: 'BTC', // 选中的币种名字
       coinName: [
         {
@@ -272,7 +324,7 @@ export default {
           label: 'FUR'
         }
       ],
-      // 3.0各个国家货比单位
+      // 3.0各个国家货比单位:可用法币
       activitedCurrencyUnit: '人民币', // 选中的各个国家货比单位
       currencyUnit: [
         {
@@ -304,14 +356,62 @@ export default {
     require('../../../static/css/list/OTC/OTCPublishAD.css')
     require('../../../static/css/theme/day/OTC/OTCPublishADDay.css')
     require('../../../static/css/theme/night/OTC/OTCPublishADNight.css')
+    // 从全局获得商户id
+    console.log(this.merchantID)
+    // 1.0 otc可用币种查询：
+    // this.getOTCAvailableCurrencyList()
+    // 2.0 otc可用法币查询：
+    // this.getMerchantAvailablelegalTenderList()
   },
   mounted () {},
   activited () {},
   update () {},
   beforeRouteUpdate () {},
-  methods: {},
+  methods: {
+    ...mapMutations([
+    ]),
+    //  1.0 otc可用币种查询：
+    async getOTCAvailableCurrencyList () {
+      const data = await getOTCAvailableCurrency({
+        partnerId: this.merchantID
+      })
+      // console.log(data)
+      if (!(returnAjaxMessage(data, this, 0))) {
+        return false
+      } else {
+        // 返回数据正确的逻辑
+        // this.coinName = data.data.data.list
+      }
+    },
+    // 2.0 otc可用法币查询
+    async getMerchantAvailablelegalTenderList () {
+      const data = await getMerchantAvailablelegalTender({
+        partnerId: this.merchantID
+      })
+      // console.log(data)
+      if (!(returnAjaxMessage(data, this, 0))) {
+        return false
+      } else {
+        // 返回数据正确的逻辑
+        // this.currencyUnit = data.data.data.list
+      }
+    },
+    // 3.0 点击发布广告弹出输入交易密码框
+    showPasswordDialog () {
+      this.dialogVisible = true
+    },
+    // 4.0 点击密码框中的提交按提交钮发布广告
+    publishADSubmitButton () {
+      console.log('成功提交了')
+      alert('成功提交了')
+    }
+  },
   filter: {},
-  computed: {},
+  computed: {
+    ...mapState({
+      merchantID: state => state.common.merchantID
+    })
+  },
   watch: {}
 }
 </script>

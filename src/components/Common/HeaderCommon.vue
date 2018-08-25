@@ -25,8 +25,10 @@
             <li
               class="nav-item"
               @mouseenter="toggleShowSubNavBox('otc',1)"
-              @mouseleave="toggleShowSubNavBox('otc',0)"
+              @mouseleave="toggleShowSubNavBox('otc',1)"
             >
+            <!-- 任付伟改动：这是原来的 -->
+            <!-- @mouseleave="toggleShowSubNavBox('otc',0)" -->
               <router-link to="/OTCCenter">
                 <span>OTC交易</span>
               </router-link>
@@ -343,7 +345,9 @@ export default{
       // logo图片地址
       logoSrc: require('../../assets/develop/logo.png'),
       // otc 子导航显示状态
-      otcSubNavStatus: false,
+      // otcSubNavStatus: false,
+      // 任付伟大改动的：otc 子导航显示状态默认先显示，为了方便点击
+      otcSubNavStatus: true,
       // 活动中心子导航显示状态
       activityCenterSubNavStatus: false
     }

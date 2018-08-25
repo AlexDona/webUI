@@ -4,7 +4,7 @@
     <NavCommon/>
     <!--2.0 在线交易和订单管理-->
     <div class="otc-center-content">
-      <!--2.1 在线交易-->
+      <!-- 2.1 在线交易-->
       <div class="otc-online-trading">
         <!-- 2.1.1 在线购买和在线出售按钮-->
         <div class="otc-online-buy-and-sell-button">
@@ -175,6 +175,16 @@
                       iconName="icon-yinhangqia"
                       v-if="payWay[2] === 1"
                     />
+                    <!-- PAYPAL -->
+                    <IconFontCommon
+                      class="font-size16"
+                      iconName="icon-paypal"
+                      v-if="payWay[3] === 1"
+                    />
+                    <!-- 西联汇款 -->
+                    <span v-if="payWay[4] === 1">
+                      <img src="../../assets/user/xilian.png" alt="" class="xilian">
+                    </span>
                   </div>
                 </template>
               </el-table-column>
@@ -218,8 +228,20 @@
           </div>
         </div>
       </div>
-      <!--2.2 订单管理-->
+      <!-- 2.2 订单管理头部及更多按钮-->
+      <!-- <div class="order-more">
+        <div>
+          订单
+        </div>
+        <div>
+          <router-link to="/" class="more">查询更多订单</router-link>
+        </div>
+      </div> -->
+      <!-- 2.3 订单管理-->
       <div class="otc-order-manage">
+        <!-- <div class="more"> -->
+          <router-link to="/" class="more">查询更多</router-link>
+        <!-- </div> -->
         <el-tabs
           :tab-position = "tabPosition"
           @tab-click = "toggleTabPane"
@@ -304,8 +326,6 @@
 </template>
 <!--请严格按照如下书写书序-->
 <script>
-import {mapState, mapMutations} from 'vuex'
-// import {mapState, mapMutations, mapActions} from 'vuex'
 import {getOTCAvailableCurrency, getOTCPutUpOrders} from '../../utils/api/apiDoc'
 import IconFontCommon from '../Common/IconFontCommon'
 import NavCommon from '../Common/HeaderCommon'
@@ -315,7 +335,10 @@ import OTCCompletedOrder from './OTCCompletedOrder'
 import OTCCanceledOrder from './OTCCanceledOrder'
 import OTCFreezingOrder from './OTCFreezingOrder'
 import OTCEntrustOrder from './OTCEntrustOrder'
-// import OTCPublishBuyAndSell from './OTCPublishBuyAndSell'
+import {returnAjaxMessage} from '../../utils/commonFunc'
+// import {mapState, mapMutations} from 'vuex'
+import {createNamespacedHelpers, mapState} from 'vuex'
+const {mapMutations} = createNamespacedHelpers('OTC')
 export default {
   components: {
     NavCommon, //  头部导航
@@ -403,7 +426,7 @@ export default {
         }
       ],
       // 支付方式
-      payWay: [1, 0, 1, 0, 0],
+      payWay: [1, 1, 1, 1, 1],
       activedPayWayBankinfoItem: '支付方式', // 选中的支付方式
       // 我要购买出售币种数组
       IWantToBuySellArr: [
@@ -419,6 +442,7 @@ export default {
     // console.log(this.selectedOTCAvailableCurrencyName)
     // console.log(this.selectedOTCAvailableCurrencyCoinID)
     // console.log(this.merchantID)
+    console.log(this.userInfo)
   },
   mounted () {},
   activited () {},
@@ -434,7 +458,7 @@ export default {
     // ...mapActions('OTC', [
     //   'changeSettingAction'
     // ]),
-    ...mapMutations('OTC', [
+    ...mapMutations([
       'CHANGE_OTC_AVAILABLE_CURRENCY_NAME',
       'CHANGE_OTC_AVAILABLE_CURRENCY_ID'
     ]),
@@ -462,33 +486,28 @@ export default {
     },
     //  1.0 otc可用币种查询：我要购买/我要出售的币种列表
     async getOTCAvailableCurrencyList () {
-      let data
-      data = await getOTCAvailableCurrency({
+      const data = await getOTCAvailableCurrency({
         partnerId: this.merchantID
       })
       // console.log(data)
-      if (data.data.meta.code !== 200) {
-        this.$message({
-          message: data.data.meta.message,
-          type: 'error',
-          center: true
-        })
+      // 提示信息
+      if (!(returnAjaxMessage(data, this, 0))) {
         return false
+      } else {
+        // 返回数据正确的逻辑
+        this.IWantToBuySellArr = data.data.data
+        this.CHANGE_OTC_AVAILABLE_CURRENCY_NAME(this.IWantToBuySellArr[0].shortName)
+        this.CHANGE_OTC_AVAILABLE_CURRENCY_ID(this.IWantToBuySellArr[0].coinId)
+        // console.log(this.selectedOTCAvailableCurrencyName)
+        // console.log(this.selectedOTCAvailableCurrencyCoinID)
+        // 在得到可用币种之后再调用方法根据币种的第一项的币种id来渲染表格数据
+        // 2.0 otc主页面查询挂单列表:
+        this.getOTCPutUpOrdersList()
       }
-      // 返回数据正确的逻辑
-      this.IWantToBuySellArr = data.data.data
-      this.CHANGE_OTC_AVAILABLE_CURRENCY_NAME(this.IWantToBuySellArr[0].shortName)
-      this.CHANGE_OTC_AVAILABLE_CURRENCY_ID(this.IWantToBuySellArr[0].coinId)
-      // console.log(this.selectedOTCAvailableCurrencyName)
-      // console.log(this.selectedOTCAvailableCurrencyCoinID)
-      // 在得到可用币种之后再调用方法根据币种的第一项的币种id来渲染表格数据
-      // 2.0 otc主页面查询挂单列表:
-      this.getOTCPutUpOrdersList()
     },
     //  2.0 刚进页面时候 otc主页面查询挂单列表
     async getOTCPutUpOrdersList () {
-      let data
-      data = await getOTCPutUpOrders({
+      const data = await getOTCPutUpOrders({
         partnerId: this.merchantID, // 商户id
         // 刚进页面默认显示可用币种的第一个
         coinId: this.selectedOTCAvailableCurrencyCoinID, // 币种id
@@ -497,16 +516,13 @@ export default {
         // entrustType: 'SELL' // 挂单类型（BUY SELL）
       })
       // console.log(data)
-      if (data.data.meta.code !== 200) {
-        this.$message({
-          message: data.data.meta.message,
-          type: 'error',
-          center: true
-        })
+      // 提示信息
+      if (!(returnAjaxMessage(data, this, 0))) {
         return false
+      } else {
+        // 返回数据正确的逻辑
+        this.onlineBuySellTableList = data.data.data.list
       }
-      // 返回数据正确的逻辑
-      this.onlineBuySellTableList = data.data.data.list
     },
     //  3.0 选中我想购买和出售币种名称
     selectCurrencyName (index) {
@@ -514,6 +530,7 @@ export default {
       this.selectCurrencyNameStatus = index
       // this.IWantToBuySellArr[index].coinId
       // this.IWantToBuySellArr[index].shortName
+      // console.log(this.IWantToBuySellArr[index].minCount);
       this.CHANGE_OTC_AVAILABLE_CURRENCY_NAME(this.IWantToBuySellArr[index].shortName)
       this.CHANGE_OTC_AVAILABLE_CURRENCY_ID(this.IWantToBuySellArr[index].coinId)
       // console.log(this.selectedOTCAvailableCurrencyName)
@@ -523,7 +540,6 @@ export default {
     },
     //  3.01 切换我要购买和出售时候调取接口获得数据渲染列表
     async getSelectCurrencyNametOTCPutUpOrdersList () {
-      let data
       let param = {
         partnerId: this.merchantID, // 商户id
         coinId: this.selectedOTCAvailableCurrencyCoinID, // 币种id
@@ -535,25 +551,21 @@ export default {
       if (this.OTCBuySellStyle === 'onlineSell') {
         param.entrustType = 'SELL' // 挂单类型（BUY SELL）
       }
-      data = await getOTCPutUpOrders(param)
+      const data = await getOTCPutUpOrders(param)
       // console.log(data)
-      if (data.data.meta.code !== 200) {
-        this.$message({
-          message: data.data.meta.message,
-          type: 'error',
-          center: true
-        })
+      // 提示信息
+      if (!returnAjaxMessage(data, this, 0)) {
         return false
+      } else {
+        // 返回数据正确的逻辑
+        this.onlineBuySellTableList = data.data.data.list
       }
-      // 返回数据正确的逻辑
-      this.onlineBuySellTableList = data.data.data.list
     },
     //  4.0 切换在线购买和在线售出状态
     async toggleBuyOrSellStyle (e) {
       // console.log(e)
       this.OTCBuySellStyle = e
       // console.log(this.OTCBuySellStyle)
-      let data
       let param = {
         partnerId: this.merchantID, // 商户id
         coinId: this.selectedOTCAvailableCurrencyCoinID, // 币种id
@@ -565,18 +577,15 @@ export default {
       if (this.OTCBuySellStyle === 'onlineSell') {
         param.entrustType = 'SELL' // 挂单类型（BUY SELL）
       }
-      data = await getOTCPutUpOrders(param)
+      const data = await getOTCPutUpOrders(param)
       // console.log(data)
-      if (data.data.meta.code !== 200) {
-        this.$message({
-          message: data.data.meta.message,
-          type: 'error',
-          center: true
-        })
+      // 提示信息
+      if (!returnAjaxMessage(data, this, 0)) {
         return false
+      } else {
+        // 返回数据正确的逻辑
+        this.onlineBuySellTableList = data.data.data.list
       }
-      // 返回数据正确的逻辑
-      this.onlineBuySellTableList = data.data.data.list
     }
   },
   filter: {},
@@ -593,7 +602,9 @@ export default {
       // language: state => state.home.language
       selectedOTCAvailableCurrencyName: state => state.OTC.selectedOTCAvailableCurrencyName,
       selectedOTCAvailableCurrencyCoinID: state => state.OTC.selectedOTCAvailableCurrencyCoinID,
-      merchantID: state => state.common.merchantID
+      merchantID: state => state.common.merchantID,
+      // 测试拿到userinfo
+      userInfo: state => state.personal.userInfo
     })
   },
   watch: {}
@@ -648,6 +659,9 @@ export default {
         }
         >.otc-merchant-list{
           margin-top: 30px;
+          .xilian{
+            vertical-align: middle;
+          }
           .red{
             color: #D45858;
           }
@@ -673,9 +687,38 @@ export default {
         }
       }
     }
+    // >.order-more{
+    //   box-sizing: border-box;
+    //   height: 36px;
+    //   line-height: 36px;
+    //   color: #9DA5B3;
+    //   font-size: 14px;
+    //   background-color: #202A33;
+    //   margin-top: 56px;
+    //   padding: 0 30px;
+    //   border-radius: 5px;
+    //   display: flex;
+    //   justify-content: space-between ;
+    //   .more{
+    //     color: #4F85DA;
+    //     font-size: 14px;
+    //   }
+    // }
     >.otc-order-manage{
       height: 1200px;
-      margin-top: 56px;
+      margin-top: 50px;
+      // ceshi
+      position: relative;
+      // ceshi
+      >.more{
+        position: absolute;
+        top: 440px;
+        left: 15px;
+        font-size: 14px;
+        color: #338FF5;
+        // text-decoration: underline;
+        text-decoration: underline !important;
+      }
       .otc-tab-pane-arrow-right{
         position: absolute;
         right: -12px;

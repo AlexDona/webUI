@@ -207,6 +207,7 @@
 import NavCommon from '../Common/HeaderCommon'
 import FooterCommon from '../Common/FooterCommon'
 import IconFontCommon from '../Common/IconFontCommon'
+// import {returnAjaxMessage} from '../../utils/commonFunc'
 export default {
   components: {
     NavCommon, //  头部导航
