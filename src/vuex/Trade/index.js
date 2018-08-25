@@ -1,14 +1,12 @@
 import mutations from './mutations'
 import actions from './action'
 // import getters from './getters'
-
+// import {getStoreWithJson} from '../../utils'
 // Vue.use(Vuex)
 
 const state = {
-  // OTC改变选中的可用币种名字
-  selectedOTCAvailableCurrencyName: '',
-  // OTC改变选中的可用币种id
-  selectedOTCAvailableCurrencyCoinID: ''
+  refreshEntrustStatus: false, // 刷新委单状态
+  end: '' // 占位
 }
 
 export default {

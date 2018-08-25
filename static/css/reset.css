@@ -25,6 +25,7 @@ body {
   font-size: 14px;
   padding: 0 !important;
   text-align: left;
+  height:100%;
 }
 
 select {
@@ -280,3 +281,11 @@ button,input{
   top: 35%;
 }
 
+/*input:number(去除增加减少箭头) 样式*/
+input::-webkit-outer-spin-button, input::-webkit-inner-spin-button {
+  -webkit-appearance: textfield;
+}
+
+input[type="number"] {
+  -moz-appearance: textfield;
+}

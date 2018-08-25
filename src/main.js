@@ -5,9 +5,9 @@ import {getStore} from './utils'
 // import '../static/js/rem'
 // css
 // import '../static/css/reset.css'
-
 import 'babel-polyfill'
 import store from './vuex'
+import '../static/js/rem'
 
 // import '../static/css/scss/index.scss'
 

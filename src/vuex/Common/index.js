@@ -26,12 +26,13 @@ const state = {
     tendency: [2.35, 1.23, 1.89, 1.24, 2.1, 1.59, 0.1, 2.35],
     hot: false // 是否为最热交易对
   },
-  isLogin: false, // 用户登录状态
+  isLogin: true, // 用户登录状态
   merchantID: '474629374641963008', // 商户id
   end: ''// 占位
 }
 
 export default {
+  namespaced: true,
   state,
   // getters,
   actions,

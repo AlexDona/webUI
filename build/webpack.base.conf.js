@@ -100,7 +100,7 @@ module.exports = {
     'i18n': 'VueI18n',
     // 'iview': 'iview',
     // 'moment': 'moment',
-    'jQuery': 'jquery'
+    'jquery': 'jQuery'
     // 'vue-clipboard2':'VueClipboard'
   },
   node: {

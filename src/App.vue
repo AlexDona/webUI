@@ -1,5 +1,5 @@
 <template>
-  <div id="app">
+  <div id="app" class="body-container">
     <router-view/>
   </div>
 </template>
@@ -51,10 +51,11 @@ export default {
 </script>
 
 <style>
-  #app {
-    font-family: "Microsoft YaHei","Avenir", Helvetica, Arial, sans-serif;
+  .body-container {
+    font-family: MicrosoftYaHei,"Avenir", Helvetica, Arial, sans-serif;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
     font-size: 14px;
+    height:100%;
   }
 </style>

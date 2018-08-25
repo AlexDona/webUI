@@ -244,7 +244,6 @@
           :title="settingBoxTitle"
           :visible.sync="showSetting"
           width="470px"
-          :before-close="handleClose"
           :class="{day:theme=='day',night:theme=='night' }"
           class="nav-box-dialog"
         >
@@ -298,8 +297,9 @@
 <script>
 import {getMerchantAvailablelegalTender} from '../../utils/api/apiDoc'
 import IconFontCommon from '../Common/IconFontCommon'
-import {mapState, mapMutations, mapActions} from 'vuex'
 import {setStore} from '../../utils'
+import { createNamespacedHelpers, mapState } from 'vuex'
+const { mapMutations } = createNamespacedHelpers('common')
 // import {Io} from '../../utils/tradingview/socket'
 export default{
   components: {
@@ -355,10 +355,7 @@ export default{
     // this.getMerchantAvailablelegalTenderList()
   },
   methods: {
-    ...mapActions('common', [
-      'changeSettingAction'
-    ]),
-    ...mapMutations('common', [
+    ...mapMutations([
       // 修改语言
       'CHANGE_LANGUAGE',
       // 修改折算货币
@@ -397,6 +394,7 @@ export default{
     },
     // 更改设置
     changeSetting () {
+      console.log(this)
       this.CHANGE_THEME(this.activeTheme)
       setStore('theme', this.activeTheme)
       document.body.classList.remove('day')
@@ -439,7 +437,7 @@ export default{
 .nav-box{
   position: relative;
   top:0;
-  z-index: 2009;
+  z-index: 2008;
   width:100%;
   min-width:1100px;
   /*height:102px;*/
