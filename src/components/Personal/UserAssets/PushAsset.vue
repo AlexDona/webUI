@@ -105,7 +105,7 @@
                 <!--<div>{{ s.row.type }}</div>-->
                 <!--v-if="s.row.fuid !== $store.state.userInfo.fshowid"-->
                 <!--v-else-->
-                <div>{{ $t(shift) }}</div>
+                <div>{{ shift }}</div>
                 <!--<div>{{ $t(rollOut) }}</div>-->
               </template>
             </el-table-column>
@@ -171,7 +171,7 @@
                   @click="cancelId(s.row.fid)"
                   :id="s.row.fid"
                 >
-                  {{ $t(cancel) }}
+                  {{ cancel }}
                 </div>
                 <!--<div-->
                   <!--class="cursor"-->
