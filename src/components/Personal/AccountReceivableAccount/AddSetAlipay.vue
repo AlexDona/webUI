@@ -6,7 +6,7 @@
     <HeaderCommon />
     <div class="add-account-main margin25">
       <header class="add-account-header personal-height60 line-height60 line-height70 margin25">
-        <span class="header-content-left header-content font-size16">
+        <span class="header-content-left header-content font-size16 font-weight600">
           修改支付宝账号
         </span>
         <span
@@ -30,10 +30,10 @@
             label-width="120px"
           >
             <el-form-item label="名 称：">
-              <span>杨</span>
+              <span class="account-content-type">杨</span>
             </el-form-item>
             <el-form-item label="收  款  类  型：">
-              <span>支付宝</span>
+              <span class="account-content-type">支付宝</span>
             </el-form-item>
             <el-form-item label="支付宝账号：">
               <input class="account-input border-radius2"/>
@@ -63,12 +63,13 @@
 </template>
 <!--请严格按照如下书写书序-->
 <script>
-import {mapState, mapMutations} from 'vuex'
 // 头部
 import HeaderCommon from '../../Common/HeaderCommon'
 import IconFontCommon from '../../Common/IconFontCommon'
 // 底部
 import FooterCommon from '../../Common/FooterCommon'
+import { createNamespacedHelpers, mapState } from 'vuex'
+const { mapMutations } = createNamespacedHelpers('personal')
 export default {
   components: {
     HeaderCommon, // 头部
@@ -96,15 +97,15 @@ export default {
     ]),
     // 点击返回上个页面
     returnSuperior () {
-      this.CHANGE_USER_CENTER_ACTIVE_NAME('third')
+      this.CHANGE_USER_CENTER_ACTIVE_NAME('fifth')
       this.$router.go(-1)
     }
   },
   filter: {},
   computed: {
-    ...mapState([
-      'theme'
-    ])
+    ...mapState({
+      theme: state => state.common.theme
+    })
   },
   watch: {}
 }
@@ -161,9 +162,15 @@ export default {
       background-color: $nightBgColor;
       color:$nightFontColor;
       .add-account-main {
-        background-color: #202A33;
+        background-color: #1E2636;
         >.add-account-header {
           border-bottom: 1px solid #39424D;
+          >.header-content-left {
+            color: #fff;
+          }
+          >.header-content-right {
+            color: #A9BED4;
+          }
         }
         >.add-account-content {
           >.account-content-title {
@@ -171,9 +178,12 @@ export default {
             color: #3E79D6;
           }
           >.account-content-from {
+            .account-content-type {
+              color: #fff;
+            }
             .account-input {
-              border: 1px solid #364654;
-              color: #9DA5B3;
+              border: 1px solid #485776;
+              color: #fff;
             }
             .account-upload {
               background-color: #323E48;

@@ -19,3 +19,6 @@
   width: 105px;
   text-align: center;
 }
+.security-center.personal .el-progress {
+  width: 170px;
+}

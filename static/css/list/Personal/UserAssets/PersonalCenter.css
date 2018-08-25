@@ -24,3 +24,12 @@ personal-center.personal .el-tabs__nav{
 .personal-center.personal .is-disabled{
   font-size: 18px;
 }
+.personal .el-tabs__content {
+  float: right;
+  width: 920px;
+  overflow: unset;
+  position: relative;
+}
+.personal .el-tabs--left {
+  overflow: unset;
+}

@@ -15,8 +15,9 @@ const AddSetAlipay = r => require.ensure([], () => r(require('@/components/Perso
 const AddSetPaypal = r => require.ensure([], () => r(require('@/components/Personal/AccountReceivableAccount/AddSetPaypal')), 'add-payment')
 // 西联汇款设置
 const AddWesternUnion = r => require.ensure([], () => r(require('@/components/Personal/AccountReceivableAccount/AddWesternUnion')), 'add-western')
+// 安全邮箱设置
+const SecureEmail = r => require.ensure([], () => r(require('@/components/Personal/UserSecuritySettings/UserSecureEmail')), 'set-email')
 const OTCCenter = r => require.ensure([], () => r(require('@/components/OTC/OTCCenter')), 'otc-center')
-
 const OTCPublishBuyAndSell = r => require.ensure([], () => r(require('@/components/OTC/OTCPublishBuyAndSell')), 'otc-publish-buy-and-sell')
 const OTCOnlineTraderBuySell = r => require.ensure([], () => r(require('@/components/OTC/OTCOnlineTraderBuySell')), 'otc-online-trader-buy-sell')
 
@@ -54,7 +55,7 @@ export default new Router({
     {
       // 银行卡设置
       path: '/AddBankCard',
-      // name: 'AddBankCard',
+      name: 'AddBankCard',
       component: AddBankCard
     },
     {
@@ -80,6 +81,12 @@ export default new Router({
       path: '/AddWesternUnion',
       // name: 'AddWesternUnion',
       component: AddWesternUnion
+    },
+    {
+      // 安全邮箱设置
+      path: '/SecureEmail',
+      // name: 'SecureEmail',
+      component: SecureEmail
     },
     {
       // OTC中心

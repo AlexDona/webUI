@@ -145,7 +145,8 @@ import CoinOrders from '../TransactionType/CoinOrders'
 import FiatOrders from '../TransactionType/FiatOrders'
 // 底部
 import FooterCommon from '../../Common/FooterCommon'
-import {mapState} from 'vuex'
+import { createNamespacedHelpers, mapState } from 'vuex'
+const { mapMutations } = createNamespacedHelpers('personal')
 export default {
   components: {
     // 个人中心
@@ -183,43 +184,20 @@ export default {
   update () {},
   beforeRouteUpdate () {},
   methods: {
+    ...mapMutations([
+      'CHANGE_USER_CENTER_ACTIVE_NAME'
+    ]),
     // 面板跳转
-    gitPersonal (tab, event) {
-      let a = event.target.getAttribute('id')
-      switch (a) {
-        case 'tab-first':
-          break
-        case 'tab-second':
-          break
-        case 'tab-third':
-          break
-        case 'tab-fourth':
-          break
-        case 'tab-fifth':
-          break
-        case 'tab-six':
-          break
-        case 'tab-seven':
-          break
-        case 'tab-eight':
-          break
-        case 'tab-nine':
-          break
-        case 'tab-ten':
-          break
-        case 'tab-eleven':
-          break
-        default:
-          break
-      }
+    gitPersonal (tab) {
+      this.CHANGE_USER_CENTER_ACTIVE_NAME(tab.name)
     }
   },
   filter: {},
   computed: {
-    ...mapState([
-      'theme',
-      'userCenterActiveName'
-    ])
+    ...mapState({
+      theme: state => state.common.theme,
+      userCenterActiveName: state => state.personal.userCenterActiveName
+    })
   },
   watch: {}
 }

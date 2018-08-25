@@ -17,7 +17,7 @@ export const returnAjaxMessage = (data, self, noTip) => {
     })
     return 0
   } else {
-    if (noTip === 1) {
+    if (noTip) {
       self.$message({
         type: 'success',
         message: self.$t(`M.${meta.i18n_code}`)

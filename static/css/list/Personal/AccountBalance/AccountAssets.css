@@ -14,3 +14,12 @@
   width: 14px;
   height: 14px;
 }
+.account-assets.personal .el-input-group__append {
+  width: 89px;
+  height: 30px;
+  border: 0;
+}
+.account-assets.personal .el-button {
+  padding: 0;
+  border: 0;
+}

@@ -178,10 +178,10 @@ export default {
   methods: {},
   filter: {},
   computed: {
-    ...mapState([
-      'theme',
-      'userInfo'
-    ])
+    ...mapState({
+      theme: state => state.common.theme,
+      userInfo: state => state.personal.userInfo
+    })
   },
   watch: {}
 }

@@ -5,8 +5,8 @@
   >
     <div class="account-assets-main">
       <UserInfo />
-      <div class="account-assets-box margin-top16 min-height500">
-        <div class="account-assets-box">
+      <div class="account-assets-box margin-top16">
+        <div>
           <header class="account-assets-header display-flex personal-height40 line-height40">
             <div class="header-flex header-left flex1 padding-left23 font-size16 font-weight600">
               我的资产
@@ -18,9 +18,10 @@
                 </span>
                 <span>
                   <el-switch
-                  v-model="hideStatusButton"
-                  active-color="#2A7AD3"
-                  inactive-color="#38424C"
+                    v-model="hideStatusButton"
+                    active-color="#2A7AD3"
+                    inactive-color="#38424C"
+                    @click="showStatusCurrency"
                   >
                   </el-switch>
                 </span>
@@ -32,18 +33,20 @@
                 />
                 <input
                   type="text"
-                  class="header-right-search border-radius2 padding-left23 font-size12"
+                  class="header-right-search border-radius2 padding-left25 font-size12"
                 >
               </p>
             </div>
           </header>
         </div>
+        <!--v-for="(item,index) in  (showStatusButton?filteredData1:filteredData2)"-->
+        <!--v-for="(item, index) in withdrawDepositIsShowList"-->
         <div class="account-assets-content">
           <!--账户资产币种列表-->
           <div class="content-list min-height500">
             <div class="table-body text-align-l line-height50">
               <!-- 表头 -->
-              <div class="table-title-th display-flex margin20">
+              <div class="table-title-th display-flex margin20 font-size12">
                 <!--币种  总数量  冻结数量  可用数量  资产估值(BTC)  操作-->
                 <div
                   class="flex1"
@@ -67,9 +70,11 @@
                   可用数量
                 </div>
                 <div
-                  class="flex1"
+                  class="flex1 text-align-c"
                 >
                   资产估值(BTC)
+                  <i class="el-icon-caret-bottom"></i>
+                  <i class="el-icon-caret-top"></i>
                 </div>
                 <div
                   class="flex1 text-align-c"
@@ -78,7 +83,7 @@
                 </div>
               </div>
               <div
-                class="table-tr display-flex margin20"
+                class="table-tr display-flex margin20 font-size12"
                 v-for="(item, index) in withdrawDepositIsShowList"
                 :key="index"
               >
@@ -94,10 +99,161 @@
                 <div class="table-td flex1">
                   {{ item.availableQuantity }}
                 </div>
-                <div class="table-td flex1">
+                <div class="table-td flex1 text-align-c">
                   {{ item.assetValuation }}
                 </div>
-                <div class="table-td flex1"></div>
+                <div class="table-td flex1 display-flex text-align-r font-size12">
+                  <div
+                    class="table-charge-money flex1 cursor-pointer"
+                    @click="showRechargeBox(index, item.id)"
+                    :id="item.fid"
+                  >
+                    充币
+                  </div>
+                  <div
+                    class="table-mention-money flex1 cursor-pointer"
+                  >
+                    提币
+                  </div>
+                  <div
+                    class="table-deal flex1 cursor-pointer"
+                  >
+                    交易
+                    <div
+                      class="type-transaction border-radius4"
+                    >
+                      <span class="triangle-border display-inline-block"></span>
+                      <p
+                        class="transaction-list text-align-c"
+                        v-for="(item, index) in currencyTrading"
+                        :key="index"
+                      >
+                        {{ item.currency }}
+                      </p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <!--充币内容-->
+              <div
+                v-show="dialogVisible"
+                class="recharge-list display-flex"
+              >
+                <p class="triangle"></p>
+                <div class='recharge-content'>
+                  <p class="recharge-content-hint font-size12">
+                    BTC充值地址
+                  </p>
+                  <div
+                    class="input-box"
+                  >
+                    <input
+                      class="hint-input border-radius2 padding-l15 float-left"
+                      disabled
+                      placeholder="请输入内容"
+                      v-model="chargeMoney"
+                      id="chargeMoney"
+                    />
+                    <span
+                      class="code-copy cursor-pointer display-inline-block float-left text-align-c"
+                      v-clipboard:copy="this.chargeMoney"
+                      v-clipboard:success="onCopy"
+                      v-clipboard:error="onError"
+                    >
+                      复制地址
+                    </span>
+                  </div>
+                  <div class="recharge-content-title font-size12 margin-top9 float-left">
+                    <p>* 禁止充值除BTC之外的其他资产，任何非BTC资产充值将不可找回</p>
+                    <p>* 往该地址充值，汇款完成，等待网络自动确认（4个确认）后系统自动到账</p>
+                    <p>* 为了快速到账，充值时可以适当提高网络手续费</p>
+                  </div>
+                </div>
+                <div class='recharge-content-right flex1'>
+                  <p class="recharge-content-code margin-top45 float-left">
+                    <VueQrcode
+                      class="ercode"
+                      :value="String(this.chargeMoney)"
+                      :options="{ size: 100 }"
+                    >
+                    </VueQrcode>
+                  </p>
+                  <p
+                    class="code-list text-align-r float-right cursor-pointer font-size12"
+                    @click="stateRechargeRecord"
+                  >
+                    充值记录
+                  </p>
+                </div>
+              </div>
+              <!--提币内容-->
+              <div class="recharge-list recharge-list-mention display-flex padding20">
+                <p class="triangle"></p>
+                <div class="recharge-list-left display-flex">
+                  <div class="list-left-flex flex1 font-size12">
+                    <div class="flex-box padding-top10">
+                      <p class="left-flex-hint">BTC提币地址</p>
+                      <input
+                        type="text"
+                        class="flex-input border-radius2 padding-l15 box-sizing"
+                      >
+                      <span
+                        class="new-address cursor-pointer"
+                        @click="stateMentionAddress"
+                      >
+                        新增
+                      </span>
+                    </div>
+                    <div class="flex-box padding-top20">
+                      <p class="left-flex-hint">手续费</p>
+                      <input
+                        type="text"
+                        disabled
+                        class="text-input border-radius2 padding-l15 box-sizing"
+                        v-model="serviceCharge"
+                      >
+                    </div>
+                  </div>
+                  <div class="count-box flex1 font-size12">
+                    <div class="count-flex-box padding-top10">
+                      <p class="content-flex-hint">数量</p>
+                      <input
+                        type="text"
+                        class="count-flex-input border-radius2 paddinglr15 box-sizing text-align-r"
+                      >
+                      <p class="count-flex-text text-align-r">
+                        <span>限额：</span>
+                        <span>600000.00CNY</span>
+                      </p>
+                    </div>
+                    <div class="count-flex-box padding-top20">
+                      <p class="content-flex-hint">到账数量</p>
+                      <input
+                        type="text"
+                        disabled
+                        class="count-text-input border-radius2 paddinglr15 box-sizing text-align-r"
+                        v-model="importCountServiceCharge"
+                      >
+                    </div>
+                  </div>
+                </div>
+                <div class="text-info flex1 font-size12">
+                  <p class="currency-rule">BTC提现费率规则：</p>
+                  <p class="prompt-message">* 为了用户资金安全，平台可能会电话确认您的提币操作，请注意接听；</p>
+                  <p class="prompt-message"> * BTC充值经过1个确认后，才允许提现；</p>
+                  <p class="prompt-message">* 可提现金额≤账户可用资产-未确认的数字资产。</p>
+                  <p class="mention-button">
+                    <button class="font-size12 submit-but border-radius4 cursor-pointer">
+                      提币
+                    </button>
+                    <span
+                      class="float-right cursor-pointer"
+                      @click="stateRechargeRecord"
+                    >
+                      提币记录
+                    </span>
+                  </p>
+                </div>
               </div>
             </div>
           </div>
@@ -108,23 +264,32 @@
 </template>
 <!--请严格按照如下书写书序-->
 <script>
-import {mapState} from 'vuex'
 // 我的资产
 import UserInfo from '../AccountBalance/UserInfo'
 // 字体图标
 import IconFontCommon from '../../Common/IconFontCommon'
+import VueClipboard from 'vue-clipboard2'
+import { createNamespacedHelpers, mapState } from 'vuex'
+const { mapMutations } = createNamespacedHelpers('personal')
+Vue.use(VueClipboard)
 export default {
   components: {
     UserInfo, // 我的资产
-    IconFontCommon // 字体图标
+    IconFontCommon, // 字体图标
+    // 二维码组件
+    VueQrcode: resolve => {
+      require([('@xkeshi/vue-qrcode')], resolve)
+    }
   },
   // props,
   data () {
-    return {
+    return {activeNames: ['1'],
       showStatusButton: true, // 显示币种
-      hideStatusButton: true, // 隐藏币种
+      hideStatusButton: true, // 隐藏币种// 显示所有/余额切换，
+      searchName: '', // 搜索关键字
       withdrawDepositIsShowList: [
         {
+          fid: 1,
           currencyName: 'BTC', // 币种名称
           totalQuantity: '3695421', // 总数量
           numberFrozen: '23.021', // 冻结数量
@@ -132,34 +297,35 @@ export default {
           assetValuation: '123.02354' // 资产估值
         },
         {
-          currencyName: 'BTC', // 币种名称
-          totalQuantity: '3695421', // 总数量
-          numberFrozen: '23.021', // 冻结数量
-          availableQuantity: '45610.231', // 可用数量
-          assetValuation: '123.02354' // 资产估值
-        },
-        {
-          currencyName: 'BTC', // 币种名称
-          totalQuantity: '3695421', // 总数量
-          numberFrozen: '23.021', // 冻结数量
-          availableQuantity: '45610.231', // 可用数量
-          assetValuation: '123.02354' // 资产估值
-        },
-        {
-          currencyName: 'BTC', // 币种名称
-          totalQuantity: '3695421', // 总数量
-          numberFrozen: '23.021', // 冻结数量
-          availableQuantity: '45610.231', // 可用数量
-          assetValuation: '123.02354' // 资产估值
-        },
-        {
+          fid: 2,
           currencyName: 'BTC', // 币种名称
           totalQuantity: '3695421', // 总数量
           numberFrozen: '23.021', // 冻结数量
           availableQuantity: '45610.231', // 可用数量
           assetValuation: '123.02354' // 资产估值
         }
-      ]
+      ],
+      activeCoinId: '', // 提现币种id
+      rechargeIsShowList: true, // 充币内容
+      chargeMoney: 'SDAFSADFASDdfgdfgsdfgasdfgsdfgsdfgDFGSDFG', // 生成二维码条件
+      serviceCharge: '0.123%', // 自定义手续费
+      importCountServiceCharge: 'BTC', // 自定义到账数量
+      currencyTrading: [
+        {
+          id: 1,
+          currency: 'OTC'
+        },
+        {
+          id: 2,
+          currency: 'BTC/USDT'
+        },
+        {
+          id: 3,
+          currency: 'BTC/FBT'
+        }
+      ],
+      dialogVisible: false, // 取消弹窗默认隐藏
+      mentionMoneyAddress: '' // 每行数据ID
     }
   },
   created () {
@@ -174,12 +340,74 @@ export default {
   activited () {},
   update () {},
   beforeRouteUpdate () {},
-  methods: {},
+  methods: {
+    ...mapMutations([
+      'CHANGE_USER_CENTER_ACTIVE_NAME'
+    ]),
+    // 隐藏币种为零的
+    showStatusCurrency () {
+      console.log(1)
+      this.hideStatusButton = false
+    },
+
+    // 显示充值框
+    showRechargeBox (id) {
+      console.log(id)
+      this.dialogVisible = true
+      this.mentionMoneyAddress = id
+      this.withdrawDepositIsShowList.forEach((fid, item) => {
+        if (item.fid == fid) {
+          this.withdrawDepositIsShowList = item
+        }
+      })
+    },
+    // 点击跳转账单明细
+    stateRechargeRecord () {
+      console.log('1')
+      this.CHANGE_USER_CENTER_ACTIVE_NAME('second')
+    },
+    // 点击跳转提币地址
+    stateMentionAddress () {
+      this.CHANGE_USER_CENTER_ACTIVE_NAME('third')
+    },
+    //  点击复制
+    onCopy (e) {
+      // 已拷贝
+      let msg = '已拷贝'
+      this.$message({
+        type: 'success',
+        message: msg
+      })
+    },
+    onError (e) {
+      // 拷贝失败，请稍后重试
+      let msg = '拷贝失败，请稍后重试'
+      this.$message({
+        type: 'success',
+        message: msg
+      })
+    }
+  },
   filter: {},
   computed: {
-    ...mapState([
-      'theme'
-    ])
+    ...mapState({
+      theme: state => state.common.theme
+    }),
+    filteredData: function () {
+      return this.currencyList.filter((item, index) => {
+        return item['shortName'].indexOf(this.sName.toLocaleUpperCase()) !== -1
+      })
+    },
+    filteredData1: function () {
+      return this.filteredData.filter(function (item) {
+        return item
+      })
+    },
+    filteredData2: function () {
+      return this.filteredData.filter(function (item) {
+        return item.total !== 0 && item.total > 0.0001
+      })
+    }
   },
   watch: {}
 }
@@ -188,45 +416,169 @@ export default {
   @import "../../../../static/css/scss/Personal/AccountBalance/AccountAssets";
   .account-assets{
     >.account-assets-main {
-      min-height: 500px;
-      > .account-assets-box {
-        > .account-assets-box {
-          > .account-assets-header {
-            > .header-flex {
-              height: 100%;
-              > .header-right-left {
-                > .header-right-text {
-                  width: 180px;
-                }
+      >.account-assets-box {
+        min-height: 600px;
+        .account-assets-header {
+          >.header-flex {
+            height: 100%;
+            >.header-right-left {
+              >.header-right-text {
+                width: 180px;
               }
-              > .header-right-right {
+            }
+            >.header-right-right {
+              position: relative;
+              .header-right-search {
+                width: 140px;
+                height: 26px;
+                box-sizing: border-box;
+              }
+              >.icon-color {
+                position: absolute;
+                left: 85px;
+                top: 12px;
+              }
+            }
+          }
+        }
+        >.account-assets-content {
+          >.content-list {
+            >.table-body {
+              width: 100%;
+              height: 50px;
+              >.recharge-list-mention {
+                height:210px !important;
+              }
+              >.recharge-list {
                 position: relative;
-                > .header-right-search {
-                  width: 140px;
-                  height: 26px;
-                  box-sizing: border-box;
-                }
-                > .icon-color {
+                height:195px;
+                >.triangle {
                   position: absolute;
-                  left: 85px;
-                  top: 12px;
+                  top: -7px;
+                  right: 121px;
+                  width: 12px;
+                  height: 12px;
+                  transform:rotate(135deg);
+                  -ms-transform:rotate(135deg);
+                  -moz-transform:rotate(135deg);
+                  -webkit-transform:rotate(135deg);
+                  -o-transform:rotate(135deg);
+                }
+                >.recharge-content {
+                  padding: 20px 20px;
+                  flex: 2;
+                  >.recharge-content-hint {
+                    line-height: 20px;
+                    height: 20px;
+                    margin-bottom: 5px;
+                  }
+                  >.input-box {
+                    >.hint-input {
+                      width: 430px;
+                      height: 34px;
+                    }
+                    >.code-copy {
+                      width: 89px;
+                      height: 34px;
+                      border-radius: 0 2px 2px 0;
+                      line-height: 34px;
+                    }
+                  }
+
+                  >.recharge-content-title {
+                    width: 450px;
+                    line-height: 25px;
+                  }
+                }
+                >.recharge-content-right {
+                  >.recharge-content-code {
+                    width: 110px;
+                    height: 110px;
+                    padding: 5px;
+                    box-sizing: border-box;
+                  }
+                  >.code-list {
+                    margin-top: 110px;
+                    padding-right: 10px;
+                  }
+                }
+                >.recharge-list-left {
+                  flex: 3;
+                  >.list-left-flex {
+                    >.flex-box {
+                      position: relative;
+                      height: 80px;
+                      >.left-flex-hint {
+                        line-height: 20px ;
+                      }
+                      >.flex-input,
+                      >.text-input {
+                        width: 350px;
+                        height: 34px;
+                      }
+                      >.new-address {
+                        position: absolute;
+                        top: 30px;
+                        right: 15px;
+                      }
+                    }
+                  }
+                  >.count-box {
+                    padding-left: 30px;
+                    >.count-flex-box {
+                      height: 80px;
+                      >.content-flex-hint,
+                      >.count-flex-text {
+                        line-height: 20px ;
+                      }
+                      >.count-flex-text {
+                        padding-right: 25px;
+                      }
+                      >.count-flex-input,
+                      >.count-text-input {
+                        width: 250px;
+                        height: 34px;
+                      }
+                    }
+                  }
+                }
+                >.text-info {
+                  >.currency-rule,
+                  >.prompt-message {
+                    line-height: 20px;
+                  }
+                  >.mention-button {
+                    >.submit-but {
+                      width: 80px;
+                      height: 34px;
+                    }
+                  }
                 }
               }
             }
           }
         }
-      }
-      > .account-assets-content {
-        >.content-list {
-          >.table-body {
-            width: 100%;
-            height: 50px;
-            /*>.table-td {*/
-              /**/
-            /*}*/
-            >.table-tr {
-
+        .table-deal {
+          position: relative;
+          .type-transaction {
+            display: none;
+            width: 135px;
+            position: absolute;
+            top: 10px;
+            left: 56px;
+            z-index: 2;
+            >.triangle-border {
+              position: absolute;
+              top: 6px;
+              left: -8px;
             }
+            >.transaction-list {
+              height: 30px;
+              line-height: 30px;
+            }
+          }
+          &:hover >.type-transaction {
+            display: block;
           }
         }
       }
@@ -236,7 +588,7 @@ export default {
       color:$nightFontColor;
       .account-assets-box {
         background-color: #1E2636;
-        >.account-assets-header {
+        .account-assets-header {
           box-shadow: 0px 2px 13px rgba(24,30,42,1);
           >.header-left {
             color: #338FF5;
@@ -250,11 +602,117 @@ export default {
             }
           }
         }
-      }
-      .table-body {
-        >.table-title-th {
-          border-bottom: 1px solid #39424D;
-          color: #A9BED4;
+        .table-body {
+          >.table-title-th {
+            border-bottom: 1px solid #39424D;
+            color: #A9BED4;
+          }
+          >.table-tr {
+            >.table-td {
+              >.table-charge-money,
+              >.table-mention-money,
+              >.table-deal {
+                color: #3E79D6;
+                >.type-transaction {
+                  background-color: #2a3242;
+                  >.triangle-border {
+                    border-right: 8px solid #2a3242;
+                    border-top: 8px solid transparent;
+                    border-bottom: 8px solid transparent;
+                  }
+                  >.transaction-list {
+                    color:  #7a8093;
+                    &:hover {
+                      color: #3E79D6;
+                    }
+                  }
+                }
+              }
+            }
+          }
+          >.recharge-list {
+            border: 1px solid #338FF5;
+            >.triangle {
+              border-right: 1px solid transparent;
+              border-top: 1px solid transparent;
+              border-left: 1px solid #338FF5;
+              border-bottom: 1px solid #338FF5;
+              background-color: #1E2636;
+            }
+            >.recharge-content {
+              >.recharge-content-hint {
+                color: #338FF5;
+              }
+              >.input-box {
+                >.hint-input {
+                  background-color: #181E24;
+                  color: #fff;
+                }
+                >.code-copy {
+                  background-color: #338FF5;
+                  color: #fff;
+                }
+              }
+              >.recharge-content-title {
+                color: #D45858;
+              }
+            }
+            >.recharge-content-right {
+              >.recharge-content-code {
+                background-color: #fff;
+              }
+            }
+            >.recharge-list-left {
+              >.list-left-flex {
+                >.flex-box {
+                  >.flex-input {
+                    background-color: #181E24;
+                    color: #fff;
+                  }
+                  >.text-input {
+                    background-color: #37424C;
+                    color: #fff;
+                  }
+                  >.left-flex-hint,
+                  >.new-address {
+                    color: #338FF5;
+                  }
+                }
+              }
+              >.count-box {
+                >.count-flex-box {
+                  >.content-flex-hint {
+                    color: #338FF5;
+                  }
+                  >.count-flex-text {
+                    color: #83909B;
+                  }
+                  >.count-flex-input{
+                    background-color: #181E24;
+                    color: #fff;
+                  }
+                  >.count-text-input {
+                    background-color: #37424C;
+                    color: #fff;
+                  }
+                }
+              }
+            }
+            >.text-info {
+              >.currency-rule {
+                color: #D45858;
+              }
+              >.prompt-message {
+                color: #58616A;
+              }
+              >.mention-button {
+                >.submit-but {
+                  background:linear-gradient(0deg,rgba(43,57,110,1),rgba(42,80,130,1));
+                  color: #fff;
+                }
+              }
+            }
+          }
         }
       }
     }
@@ -277,11 +735,11 @@ export default {
             }
           }
         }
-      }
-      .table-body {
-        >.table-title-th {
-          border-bottom: 1px solid #39424D;
-          color: #A9BED4;
+        .table-body {
+          >.table-title-th {
+            border-bottom: 1px solid #39424D;
+            color: #A9BED4;
+          }
         }
       }
     }

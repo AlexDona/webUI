@@ -101,7 +101,9 @@ button,input{
   overflow: hidden;
   font-size: 20px;
 }
-
+.box-sizing {
+  box-sizing: border-box;
+}
 .line-height50 {
   line-height: 50px;
 }
@@ -201,6 +203,9 @@ button,input{
 .margin-top16 {
   margin-top: 16px;
 }
+.margin-top20 {
+  margin-top: 20px;
+}
 /*高级认证button*/
 .margin-top30 {
   margin-top: 30px;
@@ -230,11 +235,20 @@ button,input{
   margin-left:58px;
 }
 /*个人中心右侧 标题和主内容左边距*/
+.padding-top10 {
+  padding-top: 10px;
+}
+.padding-top20 {
+  padding-top: 20px;
+}
 .padding-left23 {
   padding-left: 23px;
 }
 .padding-right23 {
   padding-right: 23px;
+}
+.padding-tb20 {
+  padding: 20px 0;
 }
 .padding20 {
   padding: 20px;
@@ -250,6 +264,9 @@ button,input{
 }
 .padding-left15{
   padding-left:15px;
+}
+.padding-left25 {
+  padding-left: 25px;
 }
 .text-align-l{
   text-align: left;
@@ -268,6 +285,9 @@ button,input{
 }
 .flex1 {
   flex: 1;
+}
+.flex2 {
+  flex: 2;
 }
 /*任加的*/
 .padding-l15{

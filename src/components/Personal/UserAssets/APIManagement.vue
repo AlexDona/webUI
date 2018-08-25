@@ -38,9 +38,9 @@ export default {
   methods: {},
   filter: {},
   computed: {
-    ...mapState([
-      'theme'
-    ])
+    ...mapState({
+      theme: state => state.common.theme
+    })
   },
   watch: {}
 }
@@ -58,7 +58,7 @@ export default {
       background-color: $nightBgColor;
       color:$nightFontColor;
       .background-color {
-        background-color: rgba(37, 46, 63, 1);
+        background-color: #1E2636;
       }
     }
     &.day{

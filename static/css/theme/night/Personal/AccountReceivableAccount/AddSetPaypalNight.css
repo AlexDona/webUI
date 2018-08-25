@@ -1,6 +1,9 @@
 /*个人中心黑色主题*/
-.add-payment.payment .el-textarea__inner{
-  background-color: #202A33;
-  border: 1px solid #364654;
-  color: #9DA5B3;
+.add-payment.payment.night .el-textarea__inner{
+  background-color: #1E2636;
+  border: 1px solid #485776;
+  color: #fff;
+}
+.add-payment.payment.night .el-form-item__label {
+  color: #fff;
 }

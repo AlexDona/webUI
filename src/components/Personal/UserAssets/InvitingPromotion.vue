@@ -380,9 +380,9 @@ export default {
   },
   filter: {},
   computed: {
-    ...mapState([
-      'theme'
-    ])
+    ...mapState({
+      theme: state => state.common.theme
+    })
   },
   watch: {}
 }
@@ -484,11 +484,11 @@ export default {
       background-color: $nightBgColor;
       color:$nightFontColor;
       >.background-color {
-        background-color: #212C36;
+        background-color: #1E2636;
       }
       .invitation-promotion-main{
         >.extension-info{
-          background-color: #202A33;
+          background-color: #1E2636;
           >.extension-info-header{
             border-bottom: 1px solid #39424D;
             >.header-color {
@@ -533,7 +533,7 @@ export default {
           }
         }
         >.extension-statistics {
-          background-color: #202A33;
+          background-color: #1E2636;
           >.extension-statistics-header {
             border-bottom: 1px solid #39424D;
             >.header-color {
@@ -542,7 +542,7 @@ export default {
           }
         }
         >.award-record {
-          background-color: #202A33;
+          background-color: #1E2636;
           >.award-record-header {
             border-bottom: 1px solid #39424D;
             >.header-color {
