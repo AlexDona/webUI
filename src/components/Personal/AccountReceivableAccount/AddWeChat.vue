@@ -6,7 +6,9 @@
     <HeaderCommon />
     <div class="add-chat-main margin25">
       <header class="add-chat-header personal-height60 line-height60 line-height70 margin25">
-        <span class="header-content-left header-content font-size16">修改微信账号</span>
+        <span class="header-content-left header-content font-size16 font-weight600">
+          设置微信账号
+        </span>
         <span
           class="header-content-right font-size12 cursor-pointer"
           @click="returnSuperior"
@@ -28,10 +30,10 @@
             label-width="120px"
           >
             <el-form-item label="名 称：">
-              <span>杨</span>
+              <span class="chat-content-type">杨</span>
             </el-form-item>
             <el-form-item label="收  款  类  型：">
-              <span>微信</span>
+              <span class="chat-content-type">微信</span>
             </el-form-item>
             <el-form-item label="微信账号：">
               <input class="chat-input border-radius2"/>
@@ -61,12 +63,13 @@
 </template>
 <!--请严格按照如下书写书序-->
 <script>
-import {mapState, mapMutations} from 'vuex'
 // 头部
 import HeaderCommon from '../../Common/HeaderCommon'
 import IconFontCommon from '../../Common/IconFontCommon'
 // 底部
 import FooterCommon from '../../Common/FooterCommon'
+import { createNamespacedHelpers, mapState } from 'vuex'
+const { mapMutations } = createNamespacedHelpers('personal')
 export default {
   components: {
     HeaderCommon, // 头部
@@ -94,15 +97,15 @@ export default {
     ]),
     // 点击返回上个页面
     returnSuperior () {
-      this.CHANGE_USER_CENTER_ACTIVE_NAME('third')
+      this.CHANGE_USER_CENTER_ACTIVE_NAME('fifth')
       this.$router.go(-1)
     }
   },
   filter: {},
   computed: {
-    ...mapState([
-      'theme'
-    ])
+    ...mapState({
+      theme: state => state.common.theme
+    })
   },
   watch: {}
 }
@@ -159,9 +162,15 @@ export default {
       background-color: $nightBgColor;
       color:$nightFontColor;
       .add-chat-main {
-        background-color: #202A33;
+        background-color: #1E2636;
         >.add-chat-header {
           border-bottom: 1px solid #39424D;
+          .header-content {
+            color: #fff;
+          }
+          .header-content-right {
+            color: #A9BED4;
+          }
         }
         >.add-chat-content {
           >.chat-content-title {
@@ -169,12 +178,15 @@ export default {
             color: #3E79D6;
           }
           >.chat-content-from {
+            .chat-content-type {
+              color: #fff;
+            }
             .chat-input {
-              border: 1px solid #364654;
-              color: #9DA5B3;
+              border: 1px solid #485776;
+              color: #fff;
             }
             .chat-upload {
-              background-color: #323E48;
+              background-color: #485776;
               .icon-plus {
                 color: #828EA6;
               }

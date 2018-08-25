@@ -298,8 +298,10 @@
 <script>
 import {getMerchantAvailablelegalTender} from '../../utils/api/apiDoc'
 import IconFontCommon from '../Common/IconFontCommon'
-import {mapState, mapMutations, mapActions} from 'vuex'
+// import {mapState, mapMutations, mapActions} from 'vuex'
 import {setStore} from '../../utils'
+import { createNamespacedHelpers, mapState } from 'vuex'
+const { mapMutations } = createNamespacedHelpers('common')
 // import {Io} from '../../utils/tradingview/socket'
 export default{
   components: {
@@ -355,10 +357,7 @@ export default{
     // this.getMerchantAvailablelegalTenderList()
   },
   methods: {
-    ...mapActions('common', [
-      'changeSettingAction'
-    ]),
-    ...mapMutations('common', [
+    ...mapMutations([
       // 修改语言
       'CHANGE_LANGUAGE',
       // 修改折算货币

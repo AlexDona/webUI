@@ -85,10 +85,37 @@
           label="操作"
         >
           <template slot-scope = "s">
-            <div>{{ s.row.operation }}</div>
+            <div
+              @click="deleteWithdrawalAddressId(s.row.fid)"
+              :id="s.row.fid"
+            >
+              {{ operation }}
+            </div>
           </template>
         </el-table-column>
       </el-table>
+      <el-dialog
+        :title="删除提币地址"
+        :visible.sync="dialogVisible"
+        width="300px" center
+      >
+        <span class="info">确定删除提币地址吗？</span>
+        <span slot="footer" class="dialog-footer">
+         <!--确 定 取 消-->
+          <el-button
+            type="primary"
+            @click="confirm"
+            class="mg1"
+            :disabled="statel"
+          >
+            确 定
+          </el-button>
+          <el-button
+            @click="cancel">
+            取 消
+          </el-button>
+        </span>
+      </el-dialog>
     </div>
   </div>
 </template>
@@ -123,26 +150,29 @@ export default {
       prepaidAddress: '', // 提币地址
       // 地址列表
       gainAddressList: [{
+        fid: 1,
         currency: 'BTC',
         remark: '王小虎',
-        mentionAddress: 'HDFJKASDFHKLASHDFASLDFHASDFLAHSDFJ',
-        operation: '删除'
+        mentionAddress: 'HDFJKASDFHKLASHDFASLDFHASDFLAHSDFJ'
       }, {
+        fid: 2,
         currency: 'BTC',
         remark: '王小虎',
-        mentionAddress: 'HDFJKASDFHKLASHDFASLDFHASDFLAHSDFJ',
-        operation: '删除'
+        mentionAddress: 'HDFJKASDFHKLASHDFASLDFHASDFLAHSDFJ'
       }, {
+        fid: 3,
         currency: 'BTC',
         remark: '王小虎',
-        mentionAddress: 'HDFJKASDFHKLASHDFASLDFHASDFLAHSDFJ',
-        operation: '删除'
+        mentionAddress: 'HDFJKASDFHKLASHDFASLDFHASDFLAHSDFJ'
       }, {
+        fid: 4,
         currency: 'BTC',
         remark: '王小虎',
-        mentionAddress: 'HDFJKASDFHKLASHDFASLDFHASDFLAHSDFJ',
-        operation: '删除'
-      }]
+        mentionAddress: 'HDFJKASDFHKLASHDFASLDFHASDFLAHSDFJ'
+      }],
+      operation: '删除',
+      dialogVisible: false, // 取消弹窗默认隐藏
+      deleteWithdrawalAddress: '' // 每行数据ID
     }
   },
   created () {
@@ -167,13 +197,32 @@ export default {
         this.errorMsg = '提币地址不能为空'
       }
       console.log('prepaidAddress')
+    },
+    // 删除地址
+    deleteWithdrawalAddressId (id) {
+      console.log(id)
+      this.dialogVisible = true
+      this.deleteWithdrawalAddress = id
+      this.gainAddressList.forEach((fid, item) => {
+        if (item.fid == fid) {
+          this.gainAddressList = item
+        }
+      })
+    },
+    // 取消
+    cancel () {
+      this.dialogVisible = false
+    },
+    // 确认
+    confirm () {
+      this.dialogVisible = false
     }
   },
   filter: {},
   computed: {
-    ...mapState([
-      'theme'
-    ])
+    ...mapState({
+      theme: state => state.common.theme
+    })
   },
   watch: {}
 }

@@ -441,10 +441,10 @@ export default {
   },
   filter: {},
   computed: {
-    ...mapState([
-      'theme',
-      'userInfo'
-    ])
+    ...mapState({
+      theme: state => state.common.theme,
+      userInfo: state => state.personal.userInfo
+    })
   },
   watch: {}
 }
@@ -609,13 +609,13 @@ export default {
     background-color: $nightBgColor;
     color:$nightFontColor;
     .identity-header-background{
-      background-color: #212C36;
+      background-color: #1E2636;
       .header-content{
         color: #338FF5;
       }
     }
     .identity-background{
-      background-color: #202A33;
+      background-color: #1E2636;
       .certification-success{
         background:rgba(51,143,245,0.2);
         >.icon-success{

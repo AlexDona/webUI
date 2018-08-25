@@ -22,14 +22,14 @@ const state = {
         'loginPassword': '', // 登录密码
         'tradePassword': null, // 交易密码
         'realName': '杨孝喜', // 真实姓名 null未认证
-        'hasrealvaliDate': false, // 是否实名认证false:未实名，true实名；
+        'hasrealvaliDate': true, // 是否实名认证false:未实名，true实名；
         'userIdentity': true, // 是否高级认证
         'hasrealvaliDateTime': 1512019593000,
         'safetyGrade': '', // 0低 1中 2高
         'identification': '412726199509016752', // 证件号码
         'emailBind': false, // 邮箱状态默认false未绑定 true已绑定0关闭 1开启
         'telePhoneBind': false, // 是否绑定手机false true  0关闭 1开启
-        'googleBind': '', // 是否绑定谷歌验证0 未绑定 1已绑定 2开启 3关闭
+        'googleBind': true, // 是否绑定谷歌验证0 未绑定 1已绑定 2开启 3关闭
         'tradePasswordType': null, // 交易密码状态 null空 1有交易密码
         'identificationType': 0, // 证件类型 0身份证 1护照
         'googleUrl': 'otpauth://totp/FUBT:81240?secret=4KXXI6KBIIJ76NVX',
@@ -48,6 +48,7 @@ const state = {
 }
 
 export default {
+  namespaced: true,
   state,
   // getters,
   actions,

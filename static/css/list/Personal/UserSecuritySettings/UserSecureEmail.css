@@ -1,0 +1,15 @@
+.set-email.personal .el-input__inner {
+  height: 36px;
+  border-radius: 2px;
+}
+.set-email.personal .el-input-group {
+  width: 220px;
+  height: 36px;
+  border-radius: 4px;
+}
+.set-email.personal .el-input-group__append {
+  border-left: 0;
+  padding: 0 7px;
+  border-radius: 0 4px 4px 0;
+  cursor: pointer;
+}

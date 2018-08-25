@@ -18,8 +18,9 @@
 .push-assets.personal.night .el-input-group__append {
   background-color: #1E2636;
   color: #338FF5;
-  border: 1px solid #485776;
-  border-left: 0;
+  border-top: 1px solid #485776;
+  border-right: 1px solid #485776;
+  border-bottom: 1px solid #485776;
 }
 .push-assets.personal.night .el-table th, .el-table tr{
   background-color: #1E2636;
@@ -27,12 +28,9 @@
 .push-assets.personal.night .el-table thead {
   color: #617499;
 }
-.push-assets.personal.night .el-table th.is-leaf {
-  border-bottom: 0;
-}
+
 .push-assets.personal.night .el-table td{
   color: #ccc;
-  border-bottom: 0;
 }
 .push-assets.personal.night .el-table--enable-row-hover .el-table__body tr:hover>td{
   background-color: #1E2636;

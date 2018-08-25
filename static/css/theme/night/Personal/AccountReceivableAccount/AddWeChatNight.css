@@ -1,11 +1,11 @@
 /*个人中心黑色主题*/
 .add-chat.chat.night .el-form-item__label {
-  color: #9DA5B3;
+  color: #fff;
 }
 .add-chat.chat.night .el-input__inner {
-  border: 1px solid #364654;
-  color: #9DA5B3;
-  background-color: #202A33;
+  border: 1px solid #485776;
+  color: #fff;
+  background-color: #1E2636;
 }
 .add-chat.chat.night .el-input-group__append {
   background-color: #338FF5;

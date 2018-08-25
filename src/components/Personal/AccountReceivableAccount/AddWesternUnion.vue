@@ -6,7 +6,7 @@
     <HeaderCommon />
     <div class="add-western-main margin25">
       <header class="add-western-header personal-height60 line-height60 line-height70 margin25">
-        <span class="header-content-left header-content font-size16">
+        <span class="header-content-left header-content font-size16 font-weight600">
           修改西联汇款
         </span>
         <span
@@ -21,16 +21,16 @@
         </span>
       </header>
       <div class="add-western-content">
-        <header class="western-content-title">
-          *西联汇款l上传二维码方法：打开西联汇款首页>收钱>保存图片，将存在手机相册的收款码上传即可。
-        </header>
+        <!--<header class="western-content-title">-->
+          <!--*西联汇款l上传二维码方法：打开西联汇款首页>收钱>保存图片，将存在手机相册的收款码上传即可。-->
+        <!--</header>-->
         <div class="western-content-from">
           <el-form
             :label-position="labelPosition"
             label-width="120px"
           >
             <el-form-item label="名 称：">
-              <span>杨</span>
+              <span class="western-content-name">杨</span>
             </el-form-item>
             <el-form-item label="电汇地址：">
               <el-input
@@ -55,12 +55,13 @@
 </template>
 <!--请严格按照如下书写书序-->
 <script>
-import {mapState, mapMutations} from 'vuex'
 // 头部
 import HeaderCommon from '../../Common/HeaderCommon'
 import IconFontCommon from '../../Common/IconFontCommon'
 // 底部
 import FooterCommon from '../../Common/FooterCommon'
+import { createNamespacedHelpers, mapState } from 'vuex'
+const { mapMutations } = createNamespacedHelpers('personal')
 export default {
   components: {
     HeaderCommon, // 头部
@@ -88,15 +89,15 @@ export default {
     ]),
     // 点击返回上个页面
     returnSuperior () {
-      this.CHANGE_USER_CENTER_ACTIVE_NAME('third')
+      this.CHANGE_USER_CENTER_ACTIVE_NAME('fifth')
       this.$router.go(-1)
     }
   },
   filter: {},
   computed: {
-    ...mapState([
-      'theme'
-    ])
+    ...mapState({
+      theme: state => state.common.theme
+    })
   },
   watch: {}
 }
@@ -154,11 +155,14 @@ export default {
       background-color: $nightBgColor;
       color:$nightFontColor;
       .add-western-main {
-        background-color: #202A33;
+        background-color: #1E2636;
         >.add-western-header {
           border-bottom: 1px solid #39424D;
           >.header-content-left {
             color: #fff;
+          }
+          >.header-content-right {
+            color: #A9BED4;
           }
         }
         >.add-western-content {
@@ -168,8 +172,11 @@ export default {
           }
           >.western-content-from {
             .western-input {
-              border: 1px solid #364654;
-              color: #9DA5B3;
+              border: 1px solid #485776;
+              color: #fff;
+            }
+            .western-content-name {
+              color: #fff;
             }
             .western-upload {
               background-color: #323E48;

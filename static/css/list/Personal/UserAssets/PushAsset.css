@@ -6,6 +6,10 @@
   border-radius: 2px;
   cursor: pointer;
 }
+.push-assets.personal .el-input__inner {
+  height: 36px;
+  border-radius: 2px;
+}
 .push-assets.personal .el-form-item {
   margin-bottom: 25px;
 }
@@ -18,4 +22,15 @@
 
 .push-assets.personal .el-table .cell {
   text-align: center;
+}
+.push-assets.personal .el-input-group__append {
+  border-left: 0;
+  padding: 0px 10px;
+  border-radius: 0 2px 2px 0;
+}
+.push-assets.personal.night .el-table th.is-leaf {
+  border-bottom: 0;
+}
+.push-assets.personal.night .el-table td{
+  border-bottom: 0;
 }

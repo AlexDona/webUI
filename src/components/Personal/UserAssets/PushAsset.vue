@@ -303,8 +303,8 @@ export default {
     // 黑色主题样式
     require('../../../../static/css/theme/night/Personal/UserAssets/PushAssetNight.css')
     // 获取全局个人信息
-    this.showStatusUserInfo = this.userInfo
-    console.log(this.showStatusUserInfo)
+    this.showStatusUserInfo = this.userInfo.data.user
+    console.log(this.userInfo)
   },
   mounted () {},
   activited () {},
@@ -322,8 +322,8 @@ export default {
     // 修改input value
     changeInputValue (ref) {
       // console.dir(this.$refs[ref])
-      // console.log(this[ref])
       this[ref] = this.$refs[ref].value
+      // console.log(this[ref])
     },
     // 提交push
     getStatusSubmit () {
@@ -374,10 +374,10 @@ export default {
   },
   filter: {},
   computed: {
-    ...mapState([
-      'theme',
-      'userInfo'
-    ])
+    ...mapState({
+      theme: state => state.common.theme,
+      userInfo: state => state.personal.userInfo
+    })
   },
   watch: {}
 }

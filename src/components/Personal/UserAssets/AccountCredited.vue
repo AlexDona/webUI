@@ -44,12 +44,11 @@
                 v-show="!!bankState"
                 :src="openPictureSrc"
               >
-              <span
-                class="payment-state cursor-pointer"
-                @click="SetShowstatus(1)"
-              >
-                设置
-              </span>
+              <router-link to="/AddBankCard">
+                <span class="payment-state cursor-pointer">
+                  设置
+                </span>
+              </router-link>
             </p>
           </div>
           <div class="payment-box">
@@ -77,12 +76,11 @@
                 v-show="!!weChat"
                 :src="openPictureSrc"
               >
-              <span
-                class="payment-state cursor-pointer"
-                @click="SetShowstatus(2)"
-              >
-                设置
-              </span>
+              <router-link to="/AddWeChat">
+                <span class="payment-state cursor-pointer">
+                  设置
+                </span>
+              </router-link>
             </p>
           </div>
           <div class="payment-box">
@@ -110,12 +108,11 @@
                 v-show="!!alipay"
                 :src="openPictureSrc"
               >
-              <span
-                class="payment-state cursor-pointer"
-                @click="SetShowstatus(3)"
-              >
-                设置
-              </span>
+              <router-link to="/AddSetAlipay">
+                <span class="payment-state cursor-pointer">
+                  设置
+                </span>
+              </router-link>
             </p>
           </div>
           <div class="payment-box">
@@ -145,12 +142,11 @@
                 v-show="!!paypal"
                 :src="openPictureSrc"
               >
-              <span
-                class="payment-state cursor-pointer"
-                @click="SetShowstatus(4)"
-              >
-                设置
-              </span>
+              <router-link to="/AddSetPaypal">
+                <span class="payment-state cursor-pointer">
+                  设置
+                </span>
+              </router-link>
             </p>
           </div>
           <div class="payment-box">
@@ -163,8 +159,6 @@
             <p class="payment-right">
               <el-switch
                 v-model="westernUnion"
-                on-text="ON"
-                off-text="OFF"
               >
               </el-switch>
               <img
@@ -177,12 +171,11 @@
                 v-show="!!westernUnion"
                 :src="openPictureSrc"
               >
-              <span
-                class="payment-state cursor-pointer"
-                @click="SetShowstatus(5)"
-              >
-                设置
-              </span>
+              <router-link to="/AddWesternUnion">
+                <span class="payment-state cursor-pointer">
+                  设置
+                </span>
+              </router-link>
             </p>
           </div>
           <el-dialog
@@ -220,8 +213,9 @@
 </template>
 <!--请严格按照如下书写书序-->
 <script>
-import {mapState, mapMutations} from 'vuex'
 import IconFontCommon from '../../Common/IconFontCommon'
+import { createNamespacedHelpers, mapState } from 'vuex'
+const { mapMutations } = createNamespacedHelpers('personal')
 export default {
   components: {
     IconFontCommon // 字体图标
@@ -258,43 +252,18 @@ export default {
     ...mapMutations([
       'CHANGE_USER_CENTER_ACTIVE_NAME'
     ]),
-    // 警告提示点击事件
-    SetShowstatus (val) {
-      if (!this.authenticationInfo.hasrealvaliDate) {
-        this.centerModelWarning = true
-        return false
-      } else {
-        switch (val) {
-          case '1':
-            this.$router.push({path: '/AddBankCard'})
-            break
-          case '2':
-            this.$router.push({path: '/AddWeChat'})
-            break
-          case '3':
-            this.$router.push({path: '/AddSetAlipay'})
-            break
-          case '4':
-            this.$router.push({path: '/AddSetPaypal'})
-            break
-          case '5':
-            this.$router.push({path: '/AddWesternUnion'})
-            break
-        }
-      }
-    },
     // 点击去认证跳转到身份认证
     authenticationJump () {
       this.centerModelWarning = false
-      this.CHANGE_USER_CENTER_ACTIVE_NAME('second')
+      this.CHANGE_USER_CENTER_ACTIVE_NAME('fourth')
     }
   },
   filter: {},
   computed: {
-    ...mapState([
-      'theme',
-      'userInfo'
-    ])
+    ...mapState({
+      theme: state => state.common.theme,
+      userInfo: state => state.personal.userInfo
+    })
   },
   watch: {}
 }
@@ -362,10 +331,10 @@ export default {
       background-color: $nightBgColor;
       color:$nightFontColor;
       >.background-color {
-        background-color: #212C36;
+        background-color: #1E2636;
       }
       >.credited-credited-main {
-        background-color: #202A33;
+        background-color: #1E2636;
       }
       >.credited-credited-header{
         >.header-content{
