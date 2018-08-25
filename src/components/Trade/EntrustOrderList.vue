@@ -66,16 +66,17 @@
               >
                 <ul
                   class="tr"
-                  v-for="(item,index) in currentEntructList"
+                  v-for="(item,index) in currentEntrustList"
                   :key="index"
                 >
                   <!--委托时间-->
                   <li class="td time">
-                    {{timeFormat(item.time)}}
+                    {{item.createTime}}
                   </li>
                   <!--委托类型-->
                   <li class="td type">
-                    {{item.type}}
+                    <span v-show="language !== 'zh_CN'">{{item.type}}</span>
+                    <span v-show="language === 'zh_CN'">{{item.typeName}}</span>
                   </li>
                   <!--委托量-->
                   <li class="td price">
@@ -91,15 +92,18 @@
                   </li>
                   <!--成交量-->
                   <li class="td price">
-                    {{item.doneVolume}}
+                    {{item.completeCount}}
                   </li>
                   <!--未成交量-->
                   <li class="td price">
-                    {{item.freeVolume}}
+                    {{item.leftCount}}
                   </li>
                   <!--操作-->
                   <li class="td todos">
-                    <button class="cursor-pointer">撤销</button>
+                    <button
+                      class="cursor-pointer"
+                      @click="repealMyEntrust(item.id,item.version)"
+                    >撤销</button>
                   </li>
                 </ul>
               </div>
@@ -108,8 +112,10 @@
           <!--分页-->
           <el-pagination
             background
+            v-show="activeName === 'current-entrust'"
             layout="prev, pager, next"
-            :total="50"
+            :page-count="totalPageForMyEntrust"
+            @current-change="changeCurrentPage(0,$event)"
           >
           </el-pagination>
         </el-tab-pane>
@@ -158,12 +164,12 @@
               >
                 <ul
                   class="tr"
-                  v-for="(item,index) in currentEntructList"
+                  v-for="(item,index) in historyEntrustList"
                   :key="index"
                 >
                   <!--委托时间-->
                   <li class="td time">
-                    {{timeFormat(item.time)}}
+                    {{item.createTime}}
                   </li>
                   <!--委托类型-->
                   <li class="td type">
@@ -183,95 +189,57 @@
                   </li>
                   <!--成交量-->
                   <li class="td price">
-                    {{item.doneVolume}}
+                    {{item.completeCount}}
                   </li>
                 </ul>
               </div>
             </div>
           </div>
         </el-tab-pane>
+        <!--分页-->
+        <el-pagination
+          background
+          v-show="activeName === 'history-entrust'"
+          layout="prev, pager, next"
+          :page-count="totalPageForHistoryEntrust"
+          @current-change="changeCurrentPage(1,$event)"
+        >
+        </el-pagination>
       </el-tabs>
     </div>
   </div>
 </template>
 <script>
 import {timeFilter} from '../../utils'
-import {mapState} from 'vuex'
+import {
+  getMyEntrust,
+  getHistoryEntrust,
+  repealMyEntrust
+} from '../../utils/api/apiDoc'
+import {returnAjaxMessage} from '../../utils/commonFunc'
+import { createNamespacedHelpers, mapState } from 'vuex'
+const { mapMutations } = createNamespacedHelpers('trade')
+
 export default {
   components: {},
   // props,
   data () {
     return {
       activeName: 'current-entrust', // 当前委托，历史委托切换（current、history）
-      currentEntructList: [], // 当前委托列表
-      historyEntructList: [], // 当前委托列表
+      currentEntrustList: [], // 当前委托列表
+      historyEntrustList: [], // 当前委托列表
+      currentPageForMyEntrust: 1, // 当前委托页码
+      totalPageForMyEntrust: 1, // 当前委托总页数
+      currentPageForHistoryEntrust: 1, // 历史委托页码
+      totalPageForHistoryEntrust: 1, // 历史委托总页数
+      pageSize: 10,
       value1: '',
       end: '' // 占位项目上线后删除
     }
   },
   created () {
     require('../../../static/css/list/Trade/TradeCenter.css')
-    this.currentEntructList = [
-      {
-        time: new Date().getTime(),
-        type: '类型',
-        count: 123123,
-        price: 1.11211,
-        amount: 345345.123,
-        doneVolume: 123123,
-        freeVolume: 123123,
-        status: 0 // 状态码
-      },
-      {
-        time: new Date().getTime(),
-        type: '类型',
-        count: 123123,
-        price: 1.11211,
-        amount: 345345.123,
-        doneVolume: 123123,
-        freeVolume: 123123,
-        status: 0 // 状态码
-      },
-      {
-        time: new Date().getTime(),
-        type: '类型',
-        count: 123123,
-        price: 1.11211,
-        amount: 345345.123,
-        doneVolume: 123123,
-        freeVolume: 123123,
-        status: 0 // 状态码
-      },
-      {
-        time: new Date().getTime(),
-        type: '类型',
-        count: 123123,
-        price: 1.11211,
-        amount: 345345.123,
-        doneVolume: 123123,
-        freeVolume: 123123,
-        status: 0 // 状态码
-      },
-      {
-        time: new Date().getTime(),
-        type: '类型',
-        count: 123123,
-        price: 1.11211,
-        amount: 345345.123,
-        doneVolume: 123123,
-        freeVolume: 123123,
-        status: 0 // 状态码
-      },
-      {
-        time: new Date().getTime(),
-        type: '类型',
-        count: 123123,
-        price: 1.11211,
-        amount: 345345.123,
-        doneVolume: 123123,
-        freeVolume: 123123,
-        status: 0 // 状态码
-      },
+    this.currentEntrustList = [
       {
         time: new Date().getTime(),
         type: '类型',
@@ -283,13 +251,74 @@ export default {
         status: 0 // 状态码
       }
     ]
-    this.historyEntructList = []
+    this.historyEntrustList = []
+    // 获取我的当前委托
+    this.getMyCurrentEntrust()
+    // 获取历史委托
+    // this.getHistoryEntrust()
   },
   mounted () {},
   activited () {},
   update () {},
   beforeRouteUpdate () {},
   methods: {
+    ...mapMutations([
+      'TOGGLE_REFRESH_ENTRUST_LIST_STATUS'
+    ]),
+    /**
+     *撤销委单
+     */
+    async repealMyEntrust (id, version) {
+      console.log(id)
+      console.log(version)
+      let params = {
+        id,
+        version
+      }
+      const repealData = await repealMyEntrust(params)
+      returnAjaxMessage(repealData, this, 1)
+      this.getMyCurrentEntrust()
+    },
+    /**
+      * 切换页码
+      * @entrustType: 订单类型： 0：当前委托 1： 历史委托
+      */
+    changeCurrentPage (entrustType, pageNum) {
+      switch (entrustType) {
+        case 0:
+          this.currentPageForMyEntrust = pageNum
+          this.getMyCurrentEntrust()
+          break
+        case 1:
+          this.currentPageForHistoryEntrust = pageNum
+          this.getHistoryEntrust()
+      }
+    },
+    // 获取历史委托
+    async getHistoryEntrust () {
+      let params = {
+        userId: '476053529258098688',
+        currentPage: this.currentPageForHistoryEntrust,
+        pageSize: this.pageSize
+      }
+      const data = await getHistoryEntrust(params)
+      returnAjaxMessage(data, this, 0)
+      this.historyEntrustList = data.data.data.list
+      this.totalPageForHistoryEntrust = data.data.data.pages - 0
+    },
+    // 获取我的当前委单
+    async getMyCurrentEntrust () {
+      let params = {
+        userId: '476053529258098688',
+        currentPage: this.currentPageForMyEntrust,
+        pageSize: this.pageSize
+      }
+      const data = await getMyEntrust(params)
+      returnAjaxMessage(data, this, 0)
+      this.currentEntrustList = data.data.data.list
+      this.totalPageForMyEntrust = data.data.data.pages - 0
+    },
+    // 时间格式化
     timeFormat (date) {
       return timeFilter(date, 'normal')
     }
@@ -298,10 +327,31 @@ export default {
   computed: {
     ...mapState({
       theme: state => state.common.theme,
-      isLogin: state => state.common.isLogin
+      language: state => state.common.language,
+      isLogin: state => state.common.isLogin,
+      refreshEntrustStatus: state => state.trade.refreshEntrustStatus
     })
   },
-  watch: {}
+  watch: {
+    activeName (newVal) {
+      console.log(newVal)
+      switch (newVal) {
+        case 'current-entrust':
+          this.getMyCurrentEntrust()
+          break
+        case 'history-entrust':
+          this.getHistoryEntrust()
+          break
+      }
+    },
+    refreshEntrustStatus (newVal) {
+      if (newVal) {
+        this.getMyCurrentEntrust()
+        this.getHistoryEntrust()
+        this.TOGGLE_REFRESH_ENTRUST_LIST_STATUS(false)
+      }
+    }
+  }
 }
 </script>
 <style scoped lang="scss">
@@ -327,7 +377,7 @@ export default {
       /*主要内容*/
       .content-box{
         padding:0 20px;
-        min-width:964px;
+        min-width:1000px;
         &.history{
           >.thead{
             >.th{
@@ -356,9 +406,10 @@ export default {
             display:inline-block;
             &.time{
               width:15%;
+              min-width:150px;
             }
             &.type{
-              width:10%;
+              width:8%;
             }
             &.price{
               width:13%;
@@ -389,7 +440,7 @@ export default {
                   min-width:150px;
                 }
                 &.type{
-                  width:10%;
+                  width:8%;
                 }
                 &.price{
                   width:13%;

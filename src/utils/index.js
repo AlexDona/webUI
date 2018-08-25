@@ -16,9 +16,15 @@ export const setStore = (name, content) => {
 /**
  * 获取localStorage
  */
+// JSON字符串
 export const getStore = name => {
   if (!name) return
   return window.localStorage.getItem(name)
+}
+// JSON
+export const getStoreWithJson = name => {
+  if (!name) return
+  return JSON.parse(window.localStorage.getItem(name))
 }
 
 /**

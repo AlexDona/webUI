@@ -14,6 +14,7 @@
       </div>
       <el-tabs
         v-model="activeName"
+        @tab-click="toggleMatchType"
       >
         <el-tab-pane
           label="限价交易"
@@ -224,6 +225,7 @@
                   <input
                     type="password"
                     placeholder="交易密码"
+                    v-model="payPwd"
                   >
                 </div>
                 <!--滑块-->
@@ -246,7 +248,10 @@
                   </div>
                 </div>
                 <div class="submit">
-                  <el-button class="submit-btn buy-btn">买入</el-button>
+                  <el-button
+                    class="submit-btn buy-btn"
+                    @click="addEntrust(0)"
+                  >买入</el-button>
                 </div>
               </div>
             </div>
@@ -295,6 +300,7 @@
                   <input
                     type="password"
                     placeholder="交易密码"
+                    v-model="payPwd"
                   >
                 </div>
                 <!--滑块-->
@@ -317,7 +323,10 @@
                   </div>
                 </div>
                 <div class="submit">
-                  <el-button class="submit-btn sell-btn">卖出</el-button>
+                  <el-button
+                    class="submit-btn sell-btn"
+                    @click="addEntrust(1)"
+                  >卖出</el-button>
                 </div>
               </div>
             </div>
@@ -330,10 +339,11 @@
 <script>
 import IconFont from '../Common/IconFontCommon'
 // import Slider from './SliderTrader'
-import {mapState} from 'vuex'
 import {formatNumberInput} from '../../utils'
 import {saveEntrustTrade} from '../../utils/api/apiDoc'
-
+import {returnAjaxMessage} from '../../utils/commonFunc'
+import { createNamespacedHelpers, mapState } from 'vuex'
+const { mapMutations } = createNamespacedHelpers('trade')
 export default {
   components: {
     IconFont
@@ -373,36 +383,69 @@ export default {
   update () {},
   beforeRouteUpdate () {},
   methods: {
+    ...mapMutations([
+      'TOGGLE_REFRESH_ENTRUST_LIST_STATUS'
+    ]),
+    // 切换撮合类型
+    toggleMatchType (e) {
+      switch (e.name) {
+        case 'market-price':
+          this.matchType = 'MARKET'
+          break
+        case 'limit-price':
+          this.matchType = 'LIMIT'
+          break
+      }
+    },
     // 新增委单
     async addEntrust (type) {
       let params = {
         partnerId: '474629374641963008',
         userId: '476053529258098688',
-        tradeId: '2',
+        tradeId: '477495977800892416',
         payPwd: this.payPwd,
         type: type ? 'SELL' : 'BUY', // 委单类型
         matchType: this.matchType, // 撮合类型
         source: 'Web' // 来源
       }
-      // console.dir(this.$refs[this.buyAcountInputRef])
+      console.dir(this.$refs[this.marketBuyAcountInputRef])
       // 限价单添加价格
       switch (type) {
+        // 买单
         case 0:
-          if (this.matchType === 'LIMIT') {
-            params.price = this.$refs[this.limitBuyPriceInputRef].value
+          switch (this.matchType) {
+            case 'LIMIT':
+              params.price = this.$refs[this.limitBuyPriceInputRef].value
+              params.count = this.$refs[this.limitBuyAcountInputRef].value
+              break
+            case 'MARKET':
+              params.count = this.$refs[this.marketBuyAcountInputRef].value
+              console.log(params)
+              break
           }
-          params.count = this.$refs[this.limitBuyAcountInputRef].value
           break
+        // 卖单
         case 1:
-          if (this.matchType === 'LIMIT') {
-            params.price = this.$refs[this.limitSellPriceInputRef].value
+          switch (this.matchType) {
+            case 'LIMIT':
+              params.price = this.$refs[this.limitSellPriceInputRef].value
+              params.count = this.$refs[this.limitSellAcountInputRef].value
+              break
+            case 'MARKET':
+              params.count = this.$refs[this.marketSellAcountInputRef].value
+              break
           }
-          params.count = this.$refs[this.limitSellAcountInputRef].value
           break
       }
 
-      console.log(params)
+      // console.log(params)
       const data = await saveEntrustTrade(params)
+      if (!returnAjaxMessage(data, this, 1)) {
+        return false
+      } else {
+        this.TOGGLE_REFRESH_ENTRUST_LIST_STATUS(true)
+        console.log(this.refreshEntrustStatus)
+      }
       console.log(data)
     },
     // 输入限制
@@ -414,7 +457,8 @@ export default {
   filter: {},
   computed: {
     ...mapState({
-      theme: state => state.common.theme
+      theme: state => state.common.theme,
+      refreshEntrustStatus: state => state.trade.refreshEntrustStatus
     })
   },
   watch: {}
