@@ -77,10 +77,6 @@
 .otc-box .is-disabled{
     background-color: rgba(29, 35, 49, 1);
 }
-  /*鼠标移上去*/
-.otc-box .el-tabs__item:hover{
-    /* color: #FFFFFF; */
-}
   /*鼠标点击*/
 .otc-box .el-tabs__item.is-active{
     color: #FFFFFF;
@@ -92,8 +88,6 @@
     line-height: 110px;
 }
 .otc-box .el-tabs__content{
-    /* background-color: #202A33; */
-    /* background-color: pink; */
     min-height: 1000px;
 }
 .otc-box .el-tabs__nav-wrap,.el-tabs__nav-scroll{

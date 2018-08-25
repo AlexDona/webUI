@@ -402,7 +402,6 @@
 <script>
 import {timeFilter} from '../../utils'
 import IconFontCommon from '../Common/IconFontCommon'
-// import {mapState, mapMutations} from 'vuex'
 // import {getOTCTradingOrders} from '../../utils/api/apiDoc'
 export default {
   components: {
@@ -417,13 +416,16 @@ export default {
       // 支付方式
       options: [{
         value: '选项1',
-        label: '银行卡'
+        label: '银行卡',
+        account: '612788888888888888'
       }, {
         value: '选项2',
-        label: '支付宝'
+        label: '支付宝',
+        account: '15738818082'
       }, {
         value: '选项3',
-        label: '微信'
+        label: '微信',
+        account: '16638128394'
       }],
       activitedPayStyle: '' //  选中的支付方式
     }

@@ -165,7 +165,7 @@ export default {
         color: #617499;
         border: 1px solid #262F38;
         border-radius: 5px;
-        margin-bottom: 20px;
+        margin-bottom: 5px;
         /*box-shadow:底边阴影;*/
         box-shadow: -2px 3px 5px 1px #191E28;
         >.item{
