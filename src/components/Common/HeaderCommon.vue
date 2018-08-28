@@ -27,13 +27,15 @@
               @mouseenter="toggleShowSubNavBox('otc',1)"
               @mouseleave="toggleShowSubNavBox('otc',0)"
             >
+            <!-- 任付伟改动：这是原来的 -->
+            <!-- @mouseleave="toggleShowSubNavBox('otc',0)" -->
               <router-link to="/OTCCenter">
                 <span>OTC交易</span>
               </router-link>
               <!--otc子导航-->
               <ul
                 class="sub-nav-list otc"
-                v-show="otcSubNavStatus"
+                v-show="$route.path ==='/OTCCenter'"
               >
                 <li class="sub-nav-item">
                   <router-link to="/OTCBusinessApply">商家申请</router-link>
@@ -343,13 +345,15 @@ export default{
       // logo图片地址
       logoSrc: require('../../assets/develop/logo.png'),
       // otc 子导航显示状态
-      otcSubNavStatus: false,
+      // otcSubNavStatus: false,
+      // 任付伟大改动的：otc 子导航显示状态默认先显示，为了方便点击
+      otcSubNavStatus: true,
       // 活动中心子导航显示状态
       activityCenterSubNavStatus: false
     }
   },
   created () {
-    console.log(this.theme)
+    // console.log(this.theme)
     this.activeTheme = this.theme
     // 查询某商户可用法币币种列表
     // this.getMerchantAvailablelegalTenderList()

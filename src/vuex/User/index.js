@@ -23,6 +23,8 @@ const state = {
   },
   loginType: 0, // 用户登录方式（0:手机号登录,1：邮箱登录）
   loginImageValidateStatus: false, // 登录页面图片验证码显示隐藏状态
+  disabledOfPhoneBtn: false, // 短信验证码按钮可用状态
+  disabledOfEmailBtn: false, // 邮箱验证码按钮可用状态
   end: '' // 占位
 }
 

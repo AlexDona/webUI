@@ -127,7 +127,6 @@
 <!--请严格按照如下书写书序-->
 <script>
 import {timeFilter} from '../../utils'
-// import {mapState, mapMutations} from 'vuex'
 // import {getOTCCompletedOrders} from '../../utils/api/apiDoc'
 export default {
   components: {},

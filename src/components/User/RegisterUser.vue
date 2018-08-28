@@ -4,7 +4,11 @@
     :class="{'day':theme == 'day','night':theme == 'night' }"
   >
     <HeaderCommon/>
-    <div class="inner-box">
+    <!--注册页面-->
+    <div
+      class="inner-box"
+      v-if="!isRegisterSuccess"
+    >
       <!--注册-->
       <div class="main-box">
         <!--切换注册方式-->
@@ -32,13 +36,13 @@
            <div class="inner-box">
              <!--国籍选择-->
              <el-select
-               v-model="activeCountryCode"
-               placeholder="请选择"
+               v-model="activeCountryCodeWithPhone"
+               class="phone-select"
              >
                <el-option
                  v-for="item in contryAreaList"
                  :key="item.code"
-                 :label="item.chName"
+                 :label="item.code"
                  :value="item.code"
                >
                 <span style="float: left">
@@ -56,6 +60,7 @@
                  >{{ item.code }}</span>
                </el-option>
              </el-select>
+             <span class="middle-line"></span>
              <!--手机号-->
              <input
                type="text"
@@ -84,29 +89,51 @@
         >
             <div class="input">
               <div class="inner-box">
-                <!--国籍选择-->
+                <!--中文国籍选择-->
                 <el-select
-                  v-model="activeCountryCode"
-                  placeholder="请选择"
+                class="email-select"
+                v-model="activeCountryCodeWithEmail"
+                v-show="language=='zh_CN'"
+              >
+                <el-option
+                  v-for="item in contryAreaList"
+                  :key="item.code"
+                  :label="item.chName"
+                  :value="item.code"
+                >
+                    <span style="float: left">
+                      <span>
+                        {{ item.chName }}
+                      </span>
+                    </span>
+                  <span style="
+                      float: right;
+                      color: #8492a6;
+                      font-size: 13px"
+                  >{{ item.code }}</span>
+                </el-option>
+              </el-select>
+                <!--非中文国籍选择-->
+                <el-select
+                  class="email-select"
+                  v-model="activeCountryCodeWithEmail"
+                  v-show="language!=='zh_CN'"
                 >
                   <el-option
                     v-for="item in contryAreaList"
                     :key="item.code"
-                    :label="item.chName"
+                    :label="item.enName"
                     :value="item.code"
                   >
-                <span style="float: left">
-                  <span v-show="language==='zh_CN'">
-                    {{ item.chName }}
-                  </span>
-                  <span v-show="language!=='zh_CN'">
-                    {{item.enName}}
-                  </span>
-                </span>
+                    <span style="float: left">
+                      <span>
+                        {{item.enName}}
+                      </span>
+                    </span>
                     <span style="
-                  float: right;
-                  color: #8492a6;
-                  font-size: 13px"
+                      float: right;
+                      color: #8492a6;
+                      font-size: 13px"
                     >{{ item.code }}</span>
                   </el-option>
                 </el-select>
@@ -238,9 +265,12 @@
            </div>
           </div>
           <div class="input">
-           <div class="inner-box">
+           <div class="inner-box user-agreement">
              <!--用户协议-->
-             <el-checkbox v-model="userAgreementStatus">我已阅读并同意 <router-link to="/">《用户协议》</router-link></el-checkbox>
+             <el-checkbox v-model="userAgreementStatus">
+               <span class="">我已阅读并同意</span>
+               <router-link to="/" class="main-color">《用户协议》</router-link>
+             </el-checkbox>
            </div>
             <ErrorBox
               :text="errorShowStatusList[6]"
@@ -252,6 +282,19 @@
             @click="sendRegister"
           >注册</button>
         </div>
+      </div>
+    </div>
+    <!--注册成功-->
+    <div
+      class="inner-box"
+      v-else
+    >
+      <div class="success-box">
+        <p class="title"><span>{{successCountDown}}</span>秒后跳转登录页面...</p>
+        <button
+          class="cursor-pointer jump-login"
+          @click="loginImmediately"
+        >立即登录</button>
       </div>
     </div>
   </div>
@@ -285,7 +328,8 @@ export default {
     return {
       activeMethod: 0, // 当前注册方式： 0： 手机注册 : 1 邮箱注册
       contryAreaList: contryAreaList, // 国家区域列表
-      // activeCountryCode: '86',
+      activeCountryCodeWithPhone: '86',
+      activeCountryCodeWithEmail: this.language === 'zh_CN' ? '中国' : 'China',
       activeCodePlaceholder: !this.activeMethod ? '短信验证码' : '邮箱验证码',
       identifyCode: '1235', // 图片验证码
       userInputImageCode: '', // 用户输入的图片验证码
@@ -309,6 +353,8 @@ export default {
         '', // 确认密码
         '' // 用户协议
       ],
+      isRegisterSuccess: false, // 注册成功
+      successCountDown: 3, // 成功倒计时
       end: '' // 占位
     }
   },
@@ -324,6 +370,7 @@ export default {
   methods: {
     // 检测输入格式
     checkoutInputFormat (type, targetNum) {
+      console.log(type)
       switch (type) {
         // 手机号
         case 0:
@@ -456,9 +503,11 @@ export default {
           regType: type
         }
         const data = await checkUserExist(params)
-        returnAjaxMessage(data, this, 1)
+        if (!returnAjaxMessage(data, this, 1)) {
+          return false
+        }
       } else {
-        return false
+        console.log('error')
       }
     },
     // 手机
@@ -476,7 +525,7 @@ export default {
     // 发送验证码（短信、邮箱）
     sendPhoneOrEmailCode (type) {
       let params = {
-        country: this.activeCountryCode,
+        country: this.activeCountryCodeWithPhone,
         type: 'REGISTER'
       }
       switch (type) {
@@ -540,9 +589,19 @@ export default {
           // inviter: this.inviter,
           regType: regType
         }
-        const data = await sendRegisterUser(params)
-        returnAjaxMessage(data, this)
-        console.log(data)
+        try {
+          const data = await sendRegisterUser(params)
+          console.log(data)
+          if (!returnAjaxMessage(data, this, 0)) {
+            return false
+          } else {
+            this.isRegisterSuccess = true
+            this.successJump()
+          }
+        } catch (err) {
+          console.log(err)
+        }
+        // returnAjaxMessage(data, this)
       }
       // switch (regType) {
       //   case 'phone':
@@ -556,6 +615,19 @@ export default {
       //     }
       //     break
       // }
+    },
+    // 登录成功自动跳转
+    successJump () {
+      setInterval(() => {
+        if (this.successCountDown === 0) {
+          this.$router.push({'path': '/login'})
+        }
+        this.successCountDown--
+      }, 1000)
+    },
+    // 立即登录
+    loginImmediately () {
+      this.$router.push({'path': '/login'})
     },
     // 切换注册方式
     toggleMethod (method) {
@@ -577,14 +649,15 @@ export default {
   computed: {
     ...mapState({
       theme: state => state.common.theme,
-      language: state => state.common.language,
-      activeCountryCode: state => state.user.countryCode // 国籍码
+      language: state => state.common.language
+      // activeCountryCodeWithPhone: state => state.user.countryCode // 国籍码
     })
   },
   watch: {}
 }
 </script>
 <style scoped lang="scss">
+  @import '../../../static/css/scss/index.scss';
   .register-box{
     width:100%;
     height:100%;
@@ -593,6 +666,9 @@ export default {
     >.inner-box{
       width:100%;
       height:100%;
+      .main-color{
+        color:$mainColor;
+      }
       >.main-box{
         width:370px;
         width:370px;
@@ -610,6 +686,7 @@ export default {
             height:40px;
             line-height:40px;
             text-align: center;
+            color:#c3c3c3;
             &.active{
               color:#fff;
               font-size: 16px;
@@ -629,15 +706,23 @@ export default {
               vertical-align: middle;
               background:rgba(32,55,90,1);
               border-radius:20px;
+              &.user-agreement{
+                background: none;
+                padding:0;
+              }
               >.input{
+                &::-webkit-input-placeholder{
+                  color:#8B9197;
+                }
                 width:100%;
                 height:100%;
+                color:#fff;
                 &.image-validate{
                   width:164px;
                   vertical-align: top;
                 }
                 &.mobile-phone{
-                  width:164px;
+                  width:156px;
                 }
               }
               >.middle-line{
@@ -647,6 +732,13 @@ export default {
                 background:rgb(55,86,131);
                 vertical-align: top;
                 margin:10px 5px 0 0;
+              }
+              >.send-code-btn{
+                color:$mainColor;
+                height:40px;
+                line-height: 40px;
+                text-align: center;
+                width:66px;
               }
             }
             /*>.err-box{
@@ -671,11 +763,6 @@ export default {
                 border-radius: 10px;
               }
             }*/
-            >.send-code-btn{
-              height:40px;
-              line-height: 40px;
-              text-align: center;
-            }
           }
           /*注册，忘记密码*/
           >.link{
@@ -691,15 +778,40 @@ export default {
           }
           /*注册按钮*/
           >.btn{
-            width:130px;
-            height:40px;
             line-height:40px;
-            background-color: yellowgreen;
-            border-radius: 20px;
             margin:0 auto;
             display:block;
             font-size: 14px;
+            width:128px;
+            height:40px;
+            background:linear-gradient(81deg,rgba(61,152,249,1) 0%,rgba(71,135,255,1) 100%);
+            border-radius:20px;
+            box-shadow:2px 2px 8px 0px rgba(26,42,71,1);
+            color:#fff;
           }
+        }
+      }
+      >.success-box{
+        width:240px;
+        height:300px;
+        background-color: pink;
+        text-align: center;
+        margin:300px auto;
+        >.title{
+          width:240px;
+          height:16px;
+          font-size:18px;
+          font-family:MicrosoftYaHei-Bold;
+          font-weight:bold;
+          color:rgba(51,143,245,1);
+        }
+        >.jump-login{
+          width:150px;
+          height:40px;
+          background:rgba(51,143,245,1);
+          opacity:0.5;
+          border-radius:4px;
+          margin:100px auto;
         }
       }
     }

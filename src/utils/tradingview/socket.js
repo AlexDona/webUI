@@ -1,6 +1,6 @@
 // const moment = require('moment');
 // const WebSocket = require('ws');
-// import { state } from '../../vuex'
+import store from '../../vuex'
 const pako = require('pako')
 
 // const WS_URL = 'ws://192.168.1.200:8060/market'
@@ -9,6 +9,7 @@ const WS_URL = 'ws://192.168.1.52:8087/market'
 var orderbook = {}
 
 function handle (data) {
+  console.log(data)
   // console.log('received', data.ch, 'data.ts', data.ts, 'crawler.ts', moment().format('x'));
   let symbol = data.ch.split('.')[1]
   let channel = data.ch.split('.')[2]
@@ -19,7 +20,7 @@ function handle (data) {
       orderbook[symbol] = data.tick
       break
     case 'kline':
-      console.log('kline', data.tick)
+      // console.log('kline', data.tick)
       break
   }
 }
@@ -31,11 +32,11 @@ function sendData (ws, params) {
 function subscribe (ws, params) {
   // 首页行情
   if (!params.type) {
-    sendData(ws, {
-      'tag': 'REQ',
-      'content': `market.ticker.55.477187759069462528.all`,
-      'id': `tick_fucfbt`
-    })
+    // sendData(ws, {
+    //   'tag': 'REQ',
+    //   'content': `market.ticker.55.477187759069462528.all`,
+    //   'id': `tick_fucfbt`
+    // })
   } else {
   //  币币交易
     let symbols = [params.symbol]
@@ -69,21 +70,23 @@ function subscribe (ws, params) {
     }
     // 请求
     for (let symbol of symbols) {
-      console.log(symbol)
+      // console.log(symbol)
       // 深度
       // 谨慎选择合并的深度，ws每次推送全量的深度数据，若未能及时处理容易引起消息堆积并且引发行情延时
+      if (store.state.common.reqRefreshStatus) {
+        sendData(ws, {
+          'tag': 'REQ',
+          'content': `market.${symbol}.depth.step1`,
+          'id': `depth_${symbol}`
+        })
+      }
+      console.log(resolution)
+      // K线
       // sendData(ws, {
       //   'tag': 'REQ',
-      //   'content': `market.${symbol}.depth.step1`,
-      //   'id': `depth_${symbol}`
+      //   'content': `market.${symbol}.kline.${resolution}`,
+      //   'id': `kline_${symbol}`
       // })
-
-      // K线
-      sendData(ws, {
-        'tag': 'REQ',
-        'content': `market.${symbol}.kline.${resolution}`,
-        'id': `kline_${symbol}`
-      })
 
       // 交易记录
       // sendData(ws, {
@@ -101,22 +104,24 @@ function subscribe (ws, params) {
     }
     // 订阅
     for (let symbol of symbols) {
-      // symbol = symbol.toLowerCase()
-      // 深度
-      // 谨慎选择合并的深度，ws每次推送全量的深度数据，若未能及时处理容易引起消息堆积并且引发行情延时
-      // sendData(ws, {
-      //   'tag': 'SUB',
-      //   'content': `market.${symbol}.depth.step0`,
-      //   'id': `depth_${symbol}`
-      // })
-      // K线
-      // console.log(resolution)
-      // console.log(symbol)
-      sendData(ws, {
-        'tag': 'SUB',
-        'content': `market.${symbol}.kline.${resolution}`,
-        'id': `kline_${symbol}14`
-      })
+    // symbol = symbol.toLowerCase()
+    // 深度
+    // 谨慎选择合并的深度，ws每次推送全量的深度数据，若未能及时处理容易引起消息堆积并且引发行情延时
+      if (store.state.common.reqRefreshStatus) {
+        sendData(ws, {
+          'tag': 'SUB',
+          'content': `market.${symbol}.depth.step1`,
+          'id': `depth_${symbol}`
+        })
+      }
+    // K线
+    // console.log(resolution)
+    // console.log(symbol)
+    // sendData(ws, {
+    //   'tag': 'SUB',
+    //   'content': `market.${symbol}.kline.${resolution}`,
+    //   'id': `kline_${symbol}14`
+    // })
     // 交易记录
     // sendData(ws, {
     //   'tag': 'SUB',
@@ -163,9 +168,7 @@ const Io = {
   subscribeKline: function (params, callback) {
     if (this.ws === null) {
       this.init()
-    }
-
-    if (this.ws.readyState) {
+    } else if (this.ws.readyState) {
       subscribe(this.ws, params)
     } else {
       this.ws.onopen = evt => {
@@ -195,6 +198,6 @@ const Io = {
 }
 
 export {
-  Io,
-  orderbook
+  Io
+  // orderbook
 }

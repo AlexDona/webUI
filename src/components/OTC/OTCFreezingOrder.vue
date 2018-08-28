@@ -75,8 +75,8 @@
 <!--请严格按照如下书写书序-->
 <script>
 import {timeFilter} from '../../utils'
-// import {mapState, mapMutations} from 'vuex'
 import {getOTCFrezzingOrders} from '../../utils/api/apiDoc'
+import {returnAjaxMessage} from '../../utils/commonFunc'
 export default {
   components: {},
   // props,
@@ -154,14 +154,16 @@ export default {
         // pageSize: '10'
       })
       console.log(data)
-      if (data.data.meta.code !== 200) {
-        this.$message({
-          message: data.data.meta.message,
-          type: 'error',
-          center: true
-        })
-        return false
-      }
+      // 提示信息
+      returnAjaxMessage(data, this, 0)
+      // if (data.data.meta.code !== 200) {
+      //   this.$message({
+      //     message: data.data.meta.message,
+      //     type: 'error',
+      //     center: true
+      //   })
+      //   return false
+      // }
       // 返回数据正确的逻辑
       // this.getOTCFreezingOrderList = data.data.data.list
     }
@@ -184,7 +186,7 @@ export default {
         color: #617499;
         border: 1px solid #262F38;
         border-radius: 5px;
-        margin-bottom: 20px;
+        margin-bottom: 5px;
         /*box-shadow:底边阴影;*/
         box-shadow: -2px 3px 5px 1px #191E28;
         >.item{

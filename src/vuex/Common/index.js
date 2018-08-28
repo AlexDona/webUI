@@ -28,6 +28,12 @@ const state = {
   },
   isLogin: true, // 用户登录状态
   merchantID: '474629374641963008', // 商户id
+  reqRefreshStatus: true, // socket刷新
+  // socket 数据
+  socketData: {
+    depthData: {},
+    buyAndSellData: {}
+  },
   end: ''// 占位
 }
 

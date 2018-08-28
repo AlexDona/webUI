@@ -73,6 +73,7 @@
         <!--滑块验证 : 验证-->
         <el-dialog
           title="滑块验证"
+          :close-on-click-modal="false"
           :visible.sync="loginSliderStatus"
           class="slider"
         >
@@ -144,98 +145,121 @@
             </div>
           </div>
         </el-dialog>
-        <!--短信验证码、邮箱验证码、谷歌验证码-->
+        <!--短信验证码、邮箱验证码、谷歌验证码 步骤3-->
         <el-dialog
           class="msg-email-google-dialog"
-          title="短信验证码、邮箱验证码、谷歌验证码"
+          title="安全验证"
           :visible.sync="step3DialogShowStatus"
         >
           <div
             class="inner-box"
           >
-            <!-- 请输入验证码 -->
-            <!--<h1 class="fw4 fz36">-->
-              <!--请输入验证码-->
-            <!--</h1>-->
             <!--已绑定手机号-->
             <div v-if="isBindPhone" class="outer-box">
+              <!-- 请输入短信验证码 -->
+              <p class="title phone-msg">
+                请输入
+                {{userInfo.phone}}
+                收到的验证码
+              </p>
               <!--短信验证码-->
               <div class="inner-box">
                 <input
                   type="text"
                   class="input phone-validate"
-                  :placeholder="activeCodePlaceholder"
+                  placeholder="短信验证码"
                   v-model="step3PhoneMsgCode"
                   @keydown="setErrorMsg(3,'')"
                   @blur="checkoutInputFormat(3,checkCode)"
                 >
-                <span class="middle-line"></span>
-                <input
-                  type="button"
-                  :disabled="sendMsgBtnDisabled"
-                  :value="sendMsgBtnText"
+                <!--<button-->
+                  <!--:disabled="disabledOfPhoneBtn"-->
+                  <!--class="send-code-btn cursor-pointer"-->
+                  <!--@click="sendCheckCodeGolbal(1)"-->
+                <!--&gt;-->
+                  <!--{{TextOfSendMsgBtnWithPhone}}-->
+                <!--</button>-->
+                <CountDownButton
                   class="send-code-btn cursor-pointer"
-                  @click="sendPhoneOrEmailCode(activeMethod)"
-                >
+                  :status="disabledOfPhoneBtn"
+                  @run="sendPhoneOrEmailCode(0)"
+                />
               </div>
             </div>
             <!--已绑定邮箱-->
             <div v-if="isBindEmail" class="outer-box">
+              <!-- 请输入邮箱验证码 -->
+              <p class="title email-msg">
+                请输入
+                {{userInfo.email}}
+                收到的验证码
+              </p>
               <!--邮箱验证码-->
               <div class="inner-box">
                 <input
                   type="text"
                   class="input email-validate"
-                  :placeholder="activeCodePlaceholder"
+                  placeholder="邮箱验证码"
                   v-model="step3EmailMsgCode"
                   @keydown="setErrorMsg(3,'')"
                   @blur="checkoutInputFormat(3,checkCode)"
                 >
-                <span class="middle-line"></span>
-                <input
-                  type="button"
-                  :disabled="sendMsgBtnDisabled"
-                  :value="sendMsgBtnText"
+                <!--再次发送-->
+                <!--<button-->
+                  <!--:disabled="disabledOfPhoneBtn"-->
+                  <!--class="send-code-btn cursor-pointer"-->
+                  <!--@click="sendCheckCodeGolbal(2)"-->
+                <!--&gt;-->
+                  <!--{{TextOfSendMsgBtnWithEmail}}-->
+                <!--</button>-->
+                <!--<CountDownButton-->
+                  <!--:disabled="disabledOfEmailBtn"-->
+                  <!--class="send-code-btn"-->
+                  <!--:text="TextOfSendMsgBtnWithEmail"-->
+                  <!--@click="sendCheckCodeGolbal(2)"-->
+                <!--/>-->
+                <CountDownButton
                   class="send-code-btn cursor-pointer"
-                  @click="sendPhoneOrEmailCode(activeMethod)"
-                >
+                  :status="disabledOfEmailBtn"
+                  @run="sendPhoneOrEmailCode(1)"
+                />
               </div>
             </div>
             <!--已绑定google-->
             <div v-if="isBindGoogle" class="outer-box">
               <!--谷歌验证码: 请输入 谷歌验证器 中的验证码-->
-              <p class="mt50 mb50 fz16">
+              <!-- 请输入邮箱验证码 -->
+              <p class="title google-msg">
                 请输入 谷歌验证器 中的验证码
               </p>
-              <!--谷歌验证码 input-->
-              <el-input
-                class="blue fz16"
-                title=" "
-                v-model="step3GoogleMsgCode"
-                type="number"
-                @keyup.native.enter="loginForStep2"
-                @keyup.native="googleAutoLogin"
-                min="0"
-              ></el-input>
+              <div class="inner-box">
+                <!--谷歌验证码 input-->
+                <input
+                  type="text"
+                  class="input"
+                  v-model="step3GoogleMsgCode"
+                  @keyup.enter="loginForStep2"
+                  @keyup="googleAutoLogin"
+                >
+              </div>
             </div>
-
-            <el-button
-              v-if="!isBindGoogle"
-              class="mt20 cp send-again-btn"
-              :disabled="sendMsgBtnDisabled"
-              :class="{'blue':!sendMsgBtnDisabled}"
-              @click="sendPhoneOrEmailCode(loginType)"
-            >{{ sendMsgBtnText }}
-            </el-button>
+            <!--<el-button-->
+              <!--v-if="!isBindGoogle"-->
+              <!--class="mt20 cp send-again-btn"-->
+              <!--:disabled="disabledOfPhoneBtn"-->
+              <!--:class="{'blue':!disabledOfPhoneBtn}"-->
+              <!--@click="sendPhoneOrEmailCode(loginType)"-->
+            <!--&gt;{{ sendMsgBtnText }}-->
+            <!--</el-button>-->
 
             <!-- 确定 -->
-            <el-button
+            <button
               size="midium"
-              class="login-btn blue-bg fz16"
+              class="login-btn blue-bg fz16 cursor-pointer"
               @click="loginForStep2"
             >
-              确定1
-            </el-button>
+              提交
+            </button>
           </div>
         </el-dialog>
 
@@ -336,15 +360,15 @@
               </el-input>
             </div>
 
-            <el-button
-              v-if="!isBindGoogle"
-              class="mt20  cp send-again-btn"
-              :class="{'blue':!sendMsgBtnDisabled}"
-              :disabled="sendMsgBtnDisabled"
-              @click="sendPhoneOrEmailCode(loginType)"
-            >
-              {{ sendMsgBtnText }}
-            </el-button>
+            <!--<el-button-->
+              <!--v-if="!isBindGoogle"-->
+              <!--class="mt20  cp send-again-btn"-->
+              <!--:class="{'blue':!disabledOfPhoneBtn}"-->
+              <!--:disabled="disabledOfPhoneBtn"-->
+              <!--@click="sendPhoneOrEmailCode(loginType)"-->
+            <!--&gt;-->
+              <!--{{ sendMsgBtnText }}-->
+            <!--</el-button>-->
 
             <!-- 确定 -->
             <el-button
@@ -360,6 +384,7 @@
             <!-- 验证 -->
             <el-dialog
               title="验证"
+              :close-on-click-modal="false"
               :visible.sync="loginSliderStatus"
               class="slider"
             >
@@ -440,6 +465,7 @@ import {
   sendPhoneOrEmailCodeAjax
 } from '../../utils/commonFunc'
 // import {getPersonalAssetsList} from '../../kits/globalFunction'
+import CountDownButton from '../Common/CountDownCommon'
 import ErrorBox from './ErrorBox'
 import ImageValidate from '../Common/ImageValidateCommon'
 import HeaderCommon from '../Common/HeaderCommon'
@@ -449,6 +475,7 @@ const { mapMutations } = createNamespacedHelpers('user')
 
 export default {
   components: {
+    CountDownButton, // 倒计时组件
     HeaderCommon,
     ImageValidate,
     ErrorBox,
@@ -467,11 +494,11 @@ export default {
       step3GoogleMsgCode: '', // 步骤3 谷歌验证码
       msgCode: '', // 短信验证码或邮箱验证码
       hiddenUsername: '', // 隐藏的用户名
-      msgCountDown: 0, // 短信验证码或邮箱验证码倒计时
+      countDownOfPhone: 0, // 短信验证码倒计时
+      countDownOfEmail: 0, // 邮箱验证码倒计时
       // msgTxt: 'm.resend', // 按钮文字
-      sendMsgBtnText: '发送验证码', // 按钮文字
-
-      sendMsgBtnDisabled: false, // 重新发送按钮可用状态
+      TextOfSendMsgBtnWithPhone: '发送验证码', // 短信验证码按钮文字
+      TextOfSendMsgBtnWithEmail: '发送验证码', // 邮箱验证码按钮文字
       googleCode: '', // google验证码
       errorShowStatusList: [
         '', // 用户名错误提示
@@ -505,7 +532,8 @@ export default {
       mobileMaxwidth: 800, // 移动端拖动最大宽度
       loginSliderStatus: false, // 登录页面滑块显示隐藏状态
       loginImageValidateStatus: false, // 登录页面图片验证码显示隐藏状态
-      step3DialogShowStatus: false // 步骤3 登录状态
+      step3DialogShowStatus: false, // 步骤3 登录状态
+      cacheOfuserInfo: null // 用户信息缓存
     }
   },
   created () {
@@ -527,7 +555,7 @@ export default {
       }
     })
     $('body').on('mouseup', (e) => { // 鼠标放开
-      console.log('mouseup')
+      // console.log('mouseup')
       this.mouseMoveStata = false
       var width = e.clientX - this.beginClientX
       if (width < this.maxwidth) {
@@ -556,7 +584,8 @@ export default {
       'ENTER_STEP1',
       'ENTER_STEP3',
       'SET_LOGIN_TYPE',
-      'SET_STEP1_INFO'
+      'SET_STEP1_INFO',
+      'SET_USER_BUTTON_STATUS'
     ]),
     // 设置错误信息
     setErrorMsg (index, msg) {
@@ -611,7 +640,7 @@ export default {
       */
     async loginForStep1 () {
       this.checkoutInputFormat(0, this.username)
-      console.log(this.errorShowStatusList)
+      // console.log(this.errorShowStatusList)
 
       this.checkoutInputFormat(1, this.password)
       // 判断登录方式
@@ -635,12 +664,11 @@ export default {
         password: this.password
       }
       const data = await userLoginForStep1(params)
-      if (!returnAjaxMessage(data, this, 1)) {
+      if (!returnAjaxMessage(data, this, 0)) {
         return false
       } else {
         this.SET_STEP1_INFO(data.data.data)
-        if (!this.step2) {
-        }
+        // this.cacheOfuserInfo = data.data.data
         // 发送验证码
         // 显示滑块验证
         this.sliderFlag = true
@@ -667,47 +695,81 @@ export default {
           }
         })
       }
-      console.log(data)
+      // console.log(data)
     },
     /**
       * 发送短信验证码或邮箱验证码
       */
-    msgTimer () {
-      if (this.msgCountDown > 0) {
-        this.msgCountDown--
+    msgCountDown (countDown, text, disabled) {
+      console.log(countDown)
+      console.log(text)
+      console.log(disabled)
+      if (countDown > 0) {
+        countDown--
         // this.msgTxt = this.msgTime + "秒后重试";
-        this.sendMsgBtnText = this.msgCountDown + ' s'
-        setTimeout(this.msgTimer, 1000)
+        text = countDown + ' s 秒后重试'
+        setTimeout(this.msgCountDown, 1000)
       } else {
-        this.msgCountDown = 0
-        this.sendMsgBtnText = '发送验证码'
-        this.sendMsgBtnDisabled = false
-        this.sliderFlag = true
+        countDown = 0
+        text = '发送验证码'
+        disabled = false
       }
+      console.log(countDown)
+      console.log(text)
+      console.log(disabled)
     },
     sendPhoneOrEmailCode (loginType) {
-      console.log(loginType)
+      console.log(this.disabledOfPhoneBtn)
+      console.log(this.disabledOfEmailBtn)
+      if (this.disabledOfPhoneBtn || this.disabledOfEmailBtn) {
+        return false
+      }
+      // this.SET_USER_BUTTON_STATUS({
+      //   loginType: 0,
+      //   status: false
+      // })
+      // this.SET_USER_BUTTON_STATUS({
+      //   loginType: 1,
+      //   status: false
+      // })
       let params = {
         country: this.activeCountryCode,
         type: 'LOGIN_RECORD'
       }
       switch (loginType) {
         case 0:
-          params.phone = this.username
+          params.phone = this.userInfo.phone
           break
         case 1:
-          params.address = this.username
+          params.address = this.userInfo.email
           break
       }
-      console.log(params)
+      // console.log(params)
       sendPhoneOrEmailCodeAjax(loginType, params, (data) => {
+        console.log(this.disabledOfPhoneBtn)
         // 提示信息
         if (!returnAjaxMessage(data, this)) {
+          console.log('error')
           return false
         } else {
-          this.msgCountDown = 60
-          this.sendMsgBtnDisabled = true
-          this.msgTimer()
+          switch (loginType) {
+            case 0:
+              this.SET_USER_BUTTON_STATUS({
+                loginType: 0,
+                status: true
+              })
+              break
+            case 1:
+              this.SET_USER_BUTTON_STATUS({
+                loginType: 1,
+                status: true
+              })
+              break
+          }
+          // this.msgCountDown = 60
+          // this.disabledOfPhoneBtn = true
+          // this.msgCountDown()
+          // console.log(this.disabledOfPhoneBtn)
         }
       })
       // let url = common.apidomain
@@ -732,8 +794,8 @@ export default {
       //   //     return
       //   //   }
       //   //   this.msgTime = 60
-      //   //   this.sendMsgBtnDisabled = true
-      //   //   this.msgTimer()
+      //   //   this.disabledOfPhoneBtn = true
+      //   //   this.msgCountDown()
       //   //   resolve(res)
       //   // }, error => {
       //   //   reject(error)
@@ -767,6 +829,7 @@ export default {
     refreshCode () {
       this.identifyCode = this.getRandomNum()
     },
+    // 检查用户输入图片验证码
     checkoutuserInputImageCode () {
       if (!this.userInputImageCode) {
         this.sliderFlag = true
@@ -793,20 +856,60 @@ export default {
           this.loginImageValidateStatus = false
           this.ENTER_STEP3()
           this.step3DialogShowStatus = true
-          if (!this.isBindGoogle) {
-            // 短信、邮箱验证码
 
-            // this.sendPhoneOrEmailCode(this.loginType).then((res) => {
-            // }).catch(err => {
-            //   this.$message({
-            //     type: 'error',
-            //     message: err.msg
-            //   })
-            // })
-          }
+          // this.sendPhoneAndEmailCodeWithStep3((msgRes) => {
+          //   console.log(msgRes)
+          // }, (emailRes) => {
+          //   console.log(emailRes)
+          // })
+
+          // if (!this.isBindGoogle) {
+          //   // 短信、邮箱验证码
+          //
+          //   // this.sendPhoneOrEmailCode(this.loginType).then((res) => {
+          //   // }).catch(err => {
+          //   //   this.$message({
+          //   //     type: 'error',
+          //   //     message: err.msg
+          //   //   })
+          //   // })
+          // }
         }
       }
     },
+    // 步骤3 发送验证码封装
+    // sendCheckCodeGolbal (type) {
+    //   this.sendPhoneAndEmailCodeWithStep3((phoneRes) => {
+    //     console.log(phoneRes)
+    //     this.disabledOfPhoneBtn = true
+    //     // this.countDownOfPhone = 60
+    //     // this.msgCountDown(this.countDownOfPhone, this.TextOfSendMsgBtnWithPhone, this.disabledOfPhoneBtn)
+    //     // console.log(this.TextOfSendMsgBtnWithPhone)
+    //   }, (res) => {
+    //     this.msgCountDown(this.countDownOfEmail, this.TextOfSendMsgBtnWithEmail, this.disabledOfEmailBtn)
+    //   }, type)
+    // },
+    // 步骤3  发送短信、邮箱验证码
+    // sendPhoneAndEmailCodeWithStep3 (msgCallback, emailCallback, type) {
+    //   if ((!type || type === 1) && this.isBindPhone) {
+    //     let params = {
+    //       country: this.activeCountryCode,
+    //       type: 'LOGIN_RECORD',
+    //       phone: this.userInfo.phone
+    //     }
+    //     // 发送短信验证码
+    //     sendPhoneOrEmailCodeAjax(0, params, msgCallback)
+    //   }
+    //   if ((!type || type === 2) && this.isBindEmail) {
+    //     let params = {
+    //       country: this.activeCountryCode,
+    //       type: 'LOGIN_RECORD',
+    //       address: this.userInfo.email
+    //     }
+    //     // 发送邮箱验证码
+    //     sendPhoneOrEmailCodeAjax(1, params, emailCallback)
+    //   }
+    // },
     /**
       * 需要输入验证码登录
       */
@@ -837,6 +940,14 @@ export default {
         googleCode: this.step3GoogleMsgCode
       }
       const data = await userLoginForStep2(params)
+      if (!returnAjaxMessage(data, this, 0)) {
+        return false
+      } else {
+        console.log(data)
+        this.SET_STEP1_INFO(data.data.data)
+        // 登录成功
+        this.$router.push({'path': '/'})
+      }
       console.log(data)
     },
     loginWithCode (loginType, code) {
@@ -929,14 +1040,14 @@ export default {
       this.dragStatus = false
       this.mouseMoveStata = true
       this.beginClientX = e.clientX
-      console.log('mousedown')
+      // console.log('mousedown')
       // }
     },
     // 按下滑块函数
     successFunction () {
-      console.log('success0')
+      // console.log('success0')
       if (this.sliderFlag) {
-        console.log('success1')
+        // console.log('success1')
         this.sliderFlag = false// 调用函数节流阀
         $('.handler').css({'left': this.maxwidth})
         $('.drag_bg').css({'width': this.maxwidth})
@@ -950,12 +1061,46 @@ export default {
         /*
            * 是否需要图片验证码验证（条件：3次登录失败）
            * */
-        console.log(this.failureNum)
+        // console.log(this.cacheOfuserInfo)
         if (this.failureNum > 3) {
+          // 多次错误登录
           // console.log('需要图片验证码');
           // 显示图片验证码
           this.userInputImageCode = ''
           this.loginImageValidateStatus = true
+        } else {
+          // 登录第三步
+          this.step3DialogShowStatus = true
+          // this.sendPhoneAndEmailCodeWithStep3((msgRes) => {
+          //   console.log(msgRes)
+          // }, (emailRes) => {
+          //   console.log(emailRes)
+          // })
+          // if (this.isBindPhone) {
+          //   let params = {
+          //     country: this.activeCountryCode,
+          //     type: 'LOGIN_RECORD',
+          //     phone: this.userInfo.phone
+          //   }
+          //   // 发送短信验证码
+          //   sendPhoneOrEmailCodeAjax(0, params, function (res) {
+          //     console.log(res)
+          //   })
+          // }
+          // if (this.isBindEmail) {
+          //   let params = {
+          //     country: this.activeCountryCode,
+          //     type: 'LOGIN_RECORD',
+          //     email: this.userInfo.email
+          //   }
+          //   // 发送邮箱验证码
+          //   sendPhoneOrEmailCodeAjax(1, params, function (res) {
+          //     console.log(res)
+          //   })
+          // }
+
+          // 正常登录
+          //   this.SET_STEP1_INFO
         }
         // else if (!this.isLastIp) {
         //   // console.log('异常IP');
@@ -1027,8 +1172,10 @@ export default {
       isBindEmail: state => state.user.loginStep1Info.isEnableMail, // 已绑定邮箱
       isBindPhone: state => state.user.loginStep1Info.isEnablePhone, // 已绑定手机号
       token: state => state.user.loginStep1Info.token, // 用户token
-      userInfo: state => state.user.loginStep1Info.userInfo, // 用户详细信息
-      loginType: state => state.user.loginType // 登录类型
+      userInfo: state => state.user.loginStep1Info, // 用户详细信息
+      loginType: state => state.user.loginType, // 登录类型
+      disabledOfPhoneBtn: state => state.user.disabledOfPhoneBtn,
+      disabledOfEmailBtn: state => state.user.disabledOfEmailBtn
     })
     // step1 () {
     // return this.$store.state.loginStep.step1
@@ -1048,6 +1195,7 @@ export default {
 }
 </script>
 <style scoped lang="scss">
+  @import '../../../static/css/scss/index.scss';
   .login-box.user {
     height:100%;
     background:linear-gradient(150deg,rgba(30,38,54,1),rgba(37,75,117,1));
@@ -1202,27 +1350,43 @@ export default {
         /*短信验证码、邮箱验证码、谷歌验证码*/
         .msg-email-google-dialog{
           .outer-box{
+            padding:0 10px;
             >.inner-box{
-              height: 40px;
-              width: 290px;
-              background-color: yellowgreen;
-              border-radius: 20px;
-              padding: 0 20px;
-              margin-bottom: 15px;
+              height: 44px;
+              line-height: 44px;
+              width: 410px;
+              /*padding: 0 10px;*/
+              margin:30px 0;
               display: inline-block;
               vertical-align: middle;
-              >.middle-line{
-                width: 1px;
-                height: 20px;
-                display: inline-block;
-                background:rgba(55,86,131,1);
-                vertical-align: top;
-                margin: 10px 5px 0 0;
-              }
               >.input{
-
+                width:410px;
+                height:44px;
+                background:rgba(26,34,51,1);
+                border:1px solid rgba(72,87,118,1);
+                border-radius:4px;
+                box-sizing: border-box;
+                padding:0 20px;
+                color:#fff;
+                display:block;
+              }
+              /*发送信息按钮*/
+              >.send-code-btn{
+                display:block;
+                margin:5px 0 0 0;
+                padding:0 20px;
+                color:$upColor;
               }
             }
+          }
+          .login-btn{
+            width:410px;
+            height:40px;
+            background:linear-gradient(81deg,rgba(43,57,110,1) 0%,rgba(42,80,130,1) 100%);
+            border-radius:4px;
+            margin:10px 10px 20px 10px;
+            color:#fff;
+            font-size: 14px;
           }
         }
         /*滑块*/

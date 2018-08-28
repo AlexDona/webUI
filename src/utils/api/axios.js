@@ -3,8 +3,9 @@
  */
 import {baseUrl} from '../env'
 import axios from 'axios'
-// import store from '../store/store'
-// import router from '../router/index'
+import store from '../../vuex'
+import router from '../../router/index'
+import {getStoreWithJson} from '../index'
 
 let util = {}
 util.ajax = axios.create({
@@ -16,14 +17,12 @@ util.ajax.interceptors.request.use((config) => {
   // 商户id
   config.headers['partnerId'] = '474629374641963008'
   config.headers['partnerNo'] = '100001'
-  // 增加token信息
-  config.headers['authorization'] = '888888'
-  config.headers['token'] = '123456'
 
-  // let userToken = localStorage.getItem('userToken') || store.state.token
-  // if (userToken) {
-  //   config.headers['authorization'] = store.state.token
-  // }
+  let userToken = getStoreWithJson('loginStep1Info').token || store.user.loginStep1Info.token
+  console.log(userToken)
+  if (userToken) {
+    config.headers['authorization'] = userToken
+  }
   return config
 }, (error) => {
   return Promise.reject(error)
@@ -31,6 +30,7 @@ util.ajax.interceptors.request.use((config) => {
 
 util.ajax.interceptors.response.use(
   response => {
+    console.log(response)
     return response
   },
   error => {
@@ -42,12 +42,12 @@ util.ajax.interceptors.response.use(
         // 返回 401 清除token信息并跳转到登录页面
         // localStorage.clear()
         // store.commit('userLogOut')
-        // router.replace({
-        //   path: '/login',
-        //   query: {
-        //     redirect: router.currentRoute.fullPath
-        //   }
-        // })
+          router.replace({
+            path: '/login',
+            query: {
+              redirect: router.currentRoute.fullPath
+            }
+          })
         // return Promise.reject("您的账号已在其他终端登录，如非本人操作，则密码可能已泄露，请重置密码！")
       }
     }

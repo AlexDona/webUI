@@ -1,7 +1,9 @@
 import {
   CHANGE_THEME,
   CHANGE_LANGUAGE,
-  CHANGE_CONVERT_CURRENCY
+  CHANGE_CONVERT_CURRENCY,
+  CHANGE_SOCKET_REFRESH_STATUS,
+  CHANGE_SOCKET_DATA
 } from './mutations-types.js'
 
 // import {setStore, getStore} from '../utils'
@@ -29,5 +31,14 @@ export default {
   // 设置折算货币
   [CHANGE_CONVERT_CURRENCY] (state, data) {
     state.activeConvertCurrency = data
+  },
+  // 改变socket刷新状态
+  [CHANGE_SOCKET_REFRESH_STATUS] (state, data) {
+    state.reqRefreshStatus = data
+  },
+  // 改变socket 数据
+  [CHANGE_SOCKET_DATA] (state, data) {
+    state.socketData.depthData = data.depthData
+    state.socketData.buyAndSellData = data.buyAndSellData
   }
 }

@@ -4,7 +4,8 @@ import {
   ENTER_STEP2,
   ENTER_STEP3,
   SET_LOGIN_TYPE,
-  SET_STEP1_INFO
+  SET_STEP1_INFO,
+  SET_USER_BUTTON_STATUS
 } from './mutations-types.js'
 
 import {setStore} from '../../utils'
@@ -48,5 +49,21 @@ export default {
   [SET_STEP1_INFO] (state, data) {
     state.loginStep1Info = data
     setStore('loginStep1Info', data)
+  },
+  // 设置登录步骤3发送验证码按钮状态
+  [SET_USER_BUTTON_STATUS] (state, data) {
+    // console.log(loginType)
+    if (!data.loginType) {
+      state.disabledOfPhoneBtn = data.status
+    } else {
+      state.disabledOfEmailBtn = data.status
+    }
+    // switch (data.loginType) {
+    //   case 0:
+    //     break
+    //   case 1:
+    //     state.disabledOfEmailBtn = data.status
+    //     break
+    // }
   }
 }

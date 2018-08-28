@@ -8,6 +8,11 @@
   width:470px;
   background:rgba(40,51,74,1);
   border-radius:10px;
+  -moz-user-select: none; /*火狐*/
+  -webkit-user-select: none; /*webkit浏览器*/
+  -ms-user-select: none; /*IE10*/
+  -khtml-user-select: none; /*早期浏览器*/
+  user-select: none;
 }
 .login-box .slider .el-dialog{
   height:280px
@@ -16,7 +21,7 @@
   height:320px
 }
 .login-box .msg-email-google-dialog .el-dialog{
-  height:400px
+  /*height:400px*/
 }
 .login-box .el-dialog__header{
   width:470px;

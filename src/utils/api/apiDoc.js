@@ -26,7 +26,7 @@ export const getOTCEntrustingOrders = (params) => get('otcEntrust/selectEntrusts
 // export const getOTCCanceledOrders = (params) => get('selectUserOrdersIn3Day', params)
 // 查询3天内用户otc各状态交易---otc订单中 冻结中 的订单
 export const getOTCFrezzingOrders = (params) => get('selectUserOrdersIn3Day', params)
-// 添加otc挂单
+// 添加otc挂单(商家与普通用户都可用)
 export const addOTCPutUpOrders = (params) => postWithURLencoded('otcEntrust/addOtcEntrustForCommon', params)
 /**
  * 币币交易
@@ -57,7 +57,7 @@ export const getMerchantAvailablelegalTender = (params) => get('otcCOin/getAvail
 /**
  * User
  */
-// export const sendMsgByPhoneUser = (params) => postWithURLencoded('user/sendSms', params)
+export const testAjax = (params) => postWithURLencoded('user/test', params)
 // 发送邮件
 // export const sendMsgByEmailUser = (params) => postWithURLencoded('user/sendMail', params)
 /**

@@ -2,6 +2,7 @@ import './chart'
 import {Io} from './socket'
 import Datafeeds from './datafeed'
 import store from '../../vuex'
+console.log(store)
 // import '../../../../static/charting_library/static/css/custom_color_black.css'
 export default {
   widget: null,
@@ -246,15 +247,15 @@ export default {
         from: from,
         to: to
       }
-      console.log(resolution)
+      // console.log(resolution)
       Io.subscribeKline(params, this.onUpdateData.bind(this))
       // if (store.state.reqRefreshStatus) {
       this.getBarTimer = setTimeout(() => {
         this.getBars(symbol, resolution, from, to, callback)
-        console.log('reflash')
-        store.commit('CHANGE_SOCKET_REFRESH_STATUS', false)
-        console.log(store.state.reqRefreshStatus)
-      }, 100)
+        // console.log('reflash')
+        store.commit('common/CHANGE_SOCKET_REFRESH_STATUS', false)
+        // console.log(store.state.common.reqRefreshStatus)
+      }, 1000)
       // }
     }
     data ? fetchCacheData(data) : requestData()
@@ -288,7 +289,7 @@ export default {
     }
   },
   onUpdateData: function (data) {
-    console.log(data)
+    // console.log(data)
     // console.log('***********************************************************')
     let dataArr = []
     let dataType = data.type
@@ -306,7 +307,7 @@ export default {
     symbol = dataArr[1]
     type = dataArr[2]
     resolution = dataArr[3]
-    console.log(symbol)
+    // console.log(symbol)
     //  k线
     if (type === 'kline') {
       // 分辨率转换
@@ -344,61 +345,63 @@ export default {
         this.dataCache[symbol][resolution] = []
       }
       // 请求订阅区分
-      // switch (dataType) {
-      //   // 请求历史数据
-      //   case 0:
-      //     this.dataCache[symbol][resolution] = data.data
-      //     // console.log(new Date(this.dataCache[symbol][resolution][0].time))
-      //     break
-      //   case 1:
-      //     // 订阅当前数据
-      //     // 未超过当前时间周期
-      //     if (data.data) {
-      //       let length = this.dataCache[symbol][resolution].length - 1
-      //       // console.log(this.dataCache[symbol][resolution])
-      //       // console.log(data.data[0].time)
-      //       // console.log(this.dataCache[symbol][resolution][length])
-      //       let arr = this.dataCache[symbol][resolution]
-      //       arr.pop()
-      //       arr.push(data.data[0])
-      //       this.dataCache[symbol][resolution] = arr
-      //       console.log(this.dataCache[symbol][resolution])
-      //       // this.dataCache[symbol][resolution][length].open = data.data[0].open
-      //       // this.dataCache[symbol][resolution][length].close = data.data[0].close
-      //       // this.dataCache[symbol][resolution][length].high = data.data[0].high
-      //       // this.dataCache[symbol][resolution][length].low = data.data[0].low
-      //       // this.dataCache[symbol][resolution][length].volume = data.data[0].volume
-      //       // console.log(this.dataCache[symbol][resolution])
-      //     }
-      //     break
-      // }
-      console.log(dataType)
-      if (!dataType) {
+      switch (dataType) {
         // 请求历史数据
-        this.dataCache[symbol][resolution] = data.data
-      } else {
-        // 订阅当前数据
-        if (data.data) {
-          // let length = this.dataCache[symbol][resolution].length - 1
-          // console.log(this.dataCache[symbol][resolution])
-          // console.log(data.data[0].time)
-          // console.log(this.dataCache[symbol][resolution][length])
-          let arr = this.dataCache[symbol][resolution]
-          arr[arr.length - 1].open = data.data[0].open
-          arr[arr.length - 1].close = data.data[0].close
-          arr[arr.length - 1].high = data.data[0].high
-          arr[arr.length - 1].low = data.data[0].low
-          arr[arr.length - 1].volume = data.data[0].volume
-          this.dataCache[symbol][resolution] = arr
-          console.log(this.dataCache[symbol][resolution])
-          // this.dataCache[symbol][resolution][length].open = data.data[0].open
-          // this.dataCache[symbol][resolution][length].close = data.data[0].close
-          // this.dataCache[symbol][resolution][length].high = data.data[0].high
-          // this.dataCache[symbol][resolution][length].low = data.data[0].low
-          // this.dataCache[symbol][resolution][length].volume = data.data[0].volume
-          // console.log(this.dataCache[symbol][resolution])
-        }
+        case 0:
+          console.log(data)
+          this.dataCache[symbol][resolution] = data.data
+          // console.log(new Date(this.dataCache[symbol][resolution][0].time))
+          // console.log(this.dataCache)
+          break
+        case 1:
+          // 订阅当前数据
+          // 未超过当前时间周期
+          if (data.data) {
+            // let length = this.dataCache[symbol][resolution].length - 1
+            // console.log(this.dataCache[symbol][resolution])
+            // console.log(data.data[0].time)
+            // console.log(this.dataCache[symbol][resolution][length])
+            // let arr = this.dataCache[symbol][resolution]
+            // arr.pop()
+            // arr.push(data.data[0])
+            // this.dataCache[symbol][resolution] = arr
+            // console.log(this.dataCache[symbol][resolution])
+            // this.dataCache[symbol][resolution][length].open = data.data[0].open
+            // this.dataCache[symbol][resolution][length].close = data.data[0].close
+            // this.dataCache[symbol][resolution][length].high = data.data[0].high
+            // this.dataCache[symbol][resolution][length].low = data.data[0].low
+            // this.dataCache[symbol][resolution][length].volume = data.data[0].volume
+            // console.log(this.dataCache[symbol][resolution])
+          }
+          break
       }
+      // console.log(dataType)
+      // if (!dataType) {
+      //   // 请求历史数据
+      //   this.dataCache[symbol][resolution] = data.data
+      // } else {
+      //   // 订阅当前数据
+      //   if (data.data) {
+      //     // let length = this.dataCache[symbol][resolution].length - 1
+      //     // console.log(this.dataCache[symbol][resolution])
+      //     // console.log(data.data[0].time)
+      //     // console.log(this.dataCache[symbol][resolution][length])
+      //     // let arr = this.dataCache[symbol][resolution]
+      //     // arr[arr.length - 1].open = data.data[0].open
+      //     // arr[arr.length - 1].close = data.data[0].close
+      //     // arr[arr.length - 1].high = data.data[0].high
+      //     // arr[arr.length - 1].low = data.data[0].low
+      //     // arr[arr.length - 1].volume = data.data[0].volume
+      //     // this.dataCache[symbol][resolution] = arr
+      //     // console.log(this.dataCache[symbol][resolution])
+      //     // this.dataCache[symbol][resolution][length].open = data.data[0].open
+      //     // this.dataCache[symbol][resolution][length].close = data.data[0].close
+      //     // this.dataCache[symbol][resolution][length].high = data.data[0].high
+      //     // this.dataCache[symbol][resolution][length].low = data.data[0].low
+      //     // this.dataCache[symbol][resolution][length].volume = data.data[0].volume
+      //     // console.log(this.dataCache[symbol][resolution])
+      //   }
+      // }
       // console.log(data.data.reverse());
       // targetData.forEach((item, index) => {
       // item.time = 1532941620000;
@@ -417,7 +420,16 @@ export default {
       // this.dataCache[symbol][resolution] = data.data
       // console.log(this.dataCache[symbol][resolution])
     } else if (type == 'depth') {
-      // console.log
+      // 深度图、买列表、卖列表
+      // console.log(data.data)
+      if (data.data) {
+        const depthData = {
+          depthData: data.data.depthRender,
+          buyAndSellData: data.data.depthData
+        }
+        store.commit('common/CHANGE_SOCKET_DATA', depthData)
+        console.log(store.state.common.socketData)
+      }
     }
   }
   // onUpdateData: function (data) {
