@@ -62,7 +62,11 @@
           </div>
           <div class="security-status text-align-r">
             <button class="security-verify border-radius2 font-size12 cursor-pointer">
-              <span>开启验证</span>
+              <span
+                @click="showStatusVerificationPopups(1)"
+              >
+                开启验证
+              </span>
               <!--<span>关闭验证</span>-->
             </button>
             <button
@@ -97,7 +101,11 @@
           </div>
           <div class="security-status text-align-r">
             <button class="security-verify border-radius2 font-size12 cursor-pointer">
-              <span>开启验证</span>
+              <span
+                @click="showStatusVerificationPopups(2)"
+              >
+                开启验证
+              </span>
               <!--<span>关闭验证</span>-->
             </button>
             <button
@@ -131,7 +139,11 @@
           </div>
           <div class="security-status text-align-r">
             <button class="security-verify border-radius2 font-size12 cursor-pointer">
-              <span>开启验证</span>
+              <span
+                @click="showStatusVerificationPopups(3)"
+              >
+                开启验证
+              </span>
               <!--<span>关闭验证</span>-->
             </button>
             <button
@@ -194,10 +206,47 @@
               class="security-binding border-radius2 font-size12 cursor-pointer"
               @click="setShowStatusSecurity(5)"
             >
-              <span>重置</span>
+              <span>修改</span>
             </button>
           </div>
         </div>
+        <el-dialog :visible.sync="dialogFormVisible">
+          <div v-if="openSwitch">开启验证</div>
+          <div v-else>关闭验证</div>
+          <div
+            v-show="emailOpenVerify"
+            class="open-box"
+          >
+            <div class="email-open-box">邮箱</div>
+          </div>
+          <div
+            v-show="phoneOpenVerify"
+            class="open-box"
+          >
+            <div class="phone-open-box">手机开启</div>
+          </div>
+          <div
+            v-show="googleOpenVerify"
+            class="open-box"
+          >
+            <div class="google-open-box">谷歌验证</div>
+          </div>
+          <!--<el-form>-->
+            <!--<el-form-item label="活动名称">-->
+              <!--<el-input v-model="name" auto-complete="off"></el-input>-->
+            <!--</el-form-item>-->
+            <!--<el-form-item label="活动区域">-->
+              <!--<el-select v-model="region" placeholder="请选择活动区域">-->
+                <!--<el-option label="区域一" value="shanghai"></el-option>-->
+                <!--<el-option label="区域二" value="beijing"></el-option>-->
+              <!--</el-select>-->
+            <!--</el-form-item>-->
+          <!--</el-form>-->
+          <div slot="footer" class="dialog-footer">
+            <el-button @click="dialogFormVisible = false">取 消</el-button>
+            <el-button type="primary" @click="dialogFormVisible = false">确 定</el-button>
+          </div>
+        </el-dialog>
       </div>
     </div>
     <div class="security-record security-background margin-top9">
@@ -315,7 +364,12 @@ export default {
           placeBelonging: '香港铜锣湾'
         }
       ],
-      getStatusUserInfo: {} // 个人信息
+      getStatusUserInfo: {}, // 个人信息
+      dialogFormVisible: false, // 验证弹窗
+      openSwitch: false, // 弹出层状态 开启 关闭
+      emailOpenVerify: false, // 邮箱开启关闭验证
+      phoneOpenVerify: false, // 手机开启关闭验证
+      googleOpenVerify: false // 谷歌开启关闭验证
     }
   },
   created () {
@@ -341,16 +395,46 @@ export default {
           this.$router.push({path: '/SecureEmail'})
           break
         case 2:
-          this.$router.push({path: '/AddWeChat'})
+          this.$router.push({path: '/SecurePhone'})
           break
         case 3:
-          this.$router.push({path: '/AddSetAlipay'})
+          this.$router.push({path: '/GoogleBinding'})
           break
         case 4:
-          this.$router.push({path: '/AddSetPaypal'})
+          this.$router.push({path: '/TransactionPassword'})
           break
         case 5:
-          this.$router.push({path: '/AddWesternUnion'})
+          this.$router.push({path: '/LoginPassword'})
+          break
+      }
+    },
+    // 开启关闭验证状态事件
+    showStatusVerificationPopups (e) {
+      switch (e) {
+        case 1:
+          if (this.getStatusUserInfo.emailBind) {
+            this.dialogFormVisible = false
+          } else {
+            console.log(e)
+            this.dialogFormVisible = true
+            this.openSwitch = true
+            this.emailOpenVerify = true
+            this.phoneOpenVerify = false
+            this.googleOpenVerify = false
+          }
+          // console.log(e)
+          break
+        case 2:
+          this.emailOpenVerify = false
+          this.phoneOpenVerify = true
+          this.googleOpenVerify = false
+          console.log(e)
+          break
+        case 3:
+          this.emailOpenVerify = false
+          this.phoneOpenVerify = false
+          this.googleOpenVerify = true
+          console.log(e)
           break
       }
     }

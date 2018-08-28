@@ -1,0 +1,270 @@
+<template>
+  <div
+    class="binding-google personal"
+    :class="{'day':theme == 'day','night':theme == 'night' }"
+  >
+    <HeaderCommon />
+    <div class="binding-google-main margin25">
+      <header class="binding-google-header personal-height60 line-height60 line-height70 margin25">
+        <span class="header-content-left header-content font-size16 font-weight600">
+          绑定谷歌验证器
+        </span>
+        <span
+          class="header-content-right font-size12 cursor-pointer"
+          @click="returnSuperior"
+        >
+          <IconFontCommon
+            class="font-size22"
+            iconName="icon-fanhui2"
+          />
+          返回安全中心
+        </span>
+      </header>
+      <div class="binding-google-content">
+        <div class="google-content-from min-height500">
+          <div class="google-images-show display-flex">
+            <div class="google-validator flex1">
+              <p class="google-info paddinglr15">
+                若未安装谷歌验证器请
+                <span class="google-info-download">扫码下载</span>
+              </p>
+            </div>
+            <div class="google-validator validator-margin flex1">
+              <p class="google-info padding-l15">
+                请扫码或手工输入密钥，将手机上生成的
+                <span class="google-info-download">扫码下载</span>
+                填到下边输入框。
+              </p>
+            </div>
+          </div>
+          <div class="google-info-show">
+            <el-form
+              :label-position="labelPosition"
+              label-width="120px"
+            >
+              <el-form-item label="姓      名：">
+              <span class="google-content-name">
+                {{ globalUserInformation.googleUrl }}
+              </span>
+              </el-form-item>
+              <el-form-item label="谷歌验证码：">
+                <input
+                  type="password"
+                  class="google-input border-radius2 padding-l15 box-sizing"
+                  @focus="emptyStatus"
+                  ref="amendDataPhone.transactionPassword"
+                  @keyup="changeInputValue('transactionPassword')"
+                />
+              </el-form-item>
+            </el-form>
+            <div class="prompt-message">
+              <div v-show="errorMsg">{{ errorMsg }}</div>
+            </div>
+            <button
+              class="google-button border-radius4 cursor-pointer"
+              @click="getStatusSubmit"
+            >
+            确认绑定
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+    <FooterCommon />
+  </div>
+</template>
+<!--请严格按照如下书写书序-->
+<script>
+// 头部
+import HeaderCommon from '../../Common/HeaderCommon'
+import IconFontCommon from '../../Common/IconFontCommon'
+// 底部
+import FooterCommon from '../../Common/FooterCommon'
+import { createNamespacedHelpers, mapState } from 'vuex'
+const { mapMutations } = createNamespacedHelpers('personal')
+export default {
+  components: {
+    HeaderCommon, // 头部
+    IconFontCommon, // 字体图标
+    FooterCommon // 底部
+  },
+  data () {
+    return {
+      globalUserInformation: {}, // 个人信息
+      errorMsg: '', // 错误信息提示
+      emailAccounts: '', // 邮箱账号
+      emailCode: '' // 邮箱验证码
+    }
+  },
+  created () {
+    // 覆盖Element样式
+    require('../../../../static/css/list/Personal/UserSecuritySettings/UserGoogleBinding.css')
+    // 白色主题样式
+    require('../../../../static/css/theme/day/Personal/UserSecuritySettings/UserGoogleBindingDay.css')
+    // 黑色主题样式
+    require('../../../../static/css/theme/night/Personal/UserSecuritySettings/UserGoogleBindingNight.css')
+    // 获取全局个人信息
+    this.globalUserInformation = this.userInfo.data.user
+  },
+  mounted () {},
+  activited () {},
+  update () {},
+  beforeRouteUpdate () {},
+  methods: {
+    ...mapMutations([
+      'CHANGE_USER_CENTER_ACTIVE_NAME'
+    ]),
+    // 点击返回上个页面
+    returnSuperior () {
+      this.CHANGE_USER_CENTER_ACTIVE_NAME('seven')
+      this.$router.go(-1)
+    },
+    // 清空内容信息
+    emptyStatus () {
+      this.errorMsg = ''
+    },
+    // 修改input value
+    changeInputValue (ref) {
+      // console.dir(this.$refs[ref])
+      this[ref] = this.$refs[ref].value
+      // console.log(this[ref])
+    },
+    // 确定绑定
+    getStatusSubmit () {
+      if (!this.emailAccounts) {
+        this.errorMsg = '邮箱账号不能为空'
+      } else if (!this.emailCode) {
+        this.errorMsg = '验证码不能为空'
+      } else {
+        this.errorMsg = ''
+      }
+      console.log(1)
+    }
+  },
+  filter: {},
+  computed: {
+    ...mapState({
+      theme: state => state.common.theme,
+      userInfo: state => state.personal.userInfo
+    })
+  },
+  watch: {}
+}
+</script>
+<style scoped lang="scss">
+  @import "../../../../static/css/scss/Personal/UserSecuritySettings/UserGoogleBinding";
+  .binding-google {
+    >.binding-google-main {
+      width: 1100px;
+      margin: 60px auto 100px;
+      >.binding-google-header {
+        display: flex;
+        >.header-content-right,
+        .header-content-left {
+          flex: 1;
+        }
+        >.header-content-right {
+          text-align: right;
+        }
+        >.header-content-left {
+          text-align: left;
+          font-weight: 600;
+        }
+      }
+      >.binding-google-content {
+        min-height: 300px;
+        margin: 16px 25px;
+        >.google-content-from {
+          width: 400px;
+          margin-left: 30px;
+          >.google-images-show {
+            >.google-validator {
+              height: 200px;
+            }
+            >.validator-margin {
+              margin-left: 97px;
+            }
+          }
+          >.google-info-show {
+            .google-input {
+              width: 220px;
+              height: 34px;
+            }
+            .google-button {
+              padding: 10px 33px;
+              margin: 30px 0 50px 25px;
+            }
+            .prompt-message {
+              height: 20px;
+              padding-left: 35px;
+            }
+          }
+        }
+      }
+    }
+    &.night{
+      background-color: $nightBgColor;
+      color:$nightFontColor;
+      .binding-google-main {
+        background-color: #1E2636;
+        >.binding-google-header {
+          border-bottom: 1px solid #39424D;
+          >.header-content-left {
+            color: #fff;
+          }
+          >.header-content-right {
+            color: #A9BED4;
+          }
+        }
+        >.binding-google-content {
+          >.google-content-from {
+            >.google-images-show {
+              .google-info {
+                color: #9DA5B3;
+                .google-info-download {
+                  color: #338FF5;
+                }
+              }
+            }
+            >.google-info-show {
+              color: #fff;
+              .google-content-name {
+                color: #fff;
+              }
+              .google-input {
+                border: 1px solid #485776;
+                color: #fff;
+                &:focus {
+                  border: 1px solid #338FF5;
+                }
+              }
+              .google-button {
+                background:linear-gradient(0deg,rgba(43,57,110,1),rgba(42,80,130,1));
+                color: #fff;
+              }
+            }
+          }
+        }
+      }
+    }
+    &.day{
+      background-color: $dayBgColor;
+      color:$dayFontColor;
+      .binding-google-main {
+        background-color: #ccc;
+        >.binding-google-header {
+          border-bottom: 1px solid #ccc;
+          >.header-content-left {
+            color: #555;
+          }
+        }
+        >.binding-google-content {
+          >.google-content-from {
+            >.google-images-show {}
+            >.google-info-show {}
+          }
+        }
+      }
+    }
+  }
+</style>

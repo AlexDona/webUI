@@ -193,10 +193,17 @@
                   <div class="list-left-flex flex1 font-size12">
                     <div class="flex-box padding-top10">
                       <p class="left-flex-hint">BTC提币地址</p>
-                      <input
-                        type="text"
-                        class="flex-input border-radius2 padding-l15 box-sizing"
+                      <el-select
+                        v-model="mentionAddressValue"
+                        placeholder="请选择"
                       >
+                        <el-option
+                          v-for="item in mentionAddressList"
+                          :key="item.value"
+                          :label="item.label"
+                          :value="item.value">
+                        </el-option>
+                      </el-select>
                       <span
                         class="new-address cursor-pointer"
                         @click="stateMentionAddress"
@@ -205,12 +212,12 @@
                       </span>
                     </div>
                     <div class="flex-box padding-top20">
-                      <p class="left-flex-hint">手续费</p>
+                      <p class="left-flex-hint">手续费 (5~10)</p>
                       <input
                         type="text"
-                        disabled
-                        class="text-input border-radius2 padding-l15 box-sizing"
-                        v-model="serviceCharge"
+                        class="flex-input border-radius2 padding-l15 box-sizing"
+                        ref="serviceCharge"
+                        @keyup="changeInputValue('serviceCharge')"
                       >
                     </div>
                   </div>
@@ -220,6 +227,8 @@
                       <input
                         type="text"
                         class="count-flex-input border-radius2 paddinglr15 box-sizing text-align-r"
+                        ref="rechargeCount"
+                        @keyup="changeInputValue('rechargeCount')"
                       >
                       <p class="count-flex-text text-align-r">
                         <span>限额：</span>
@@ -232,7 +241,7 @@
                         type="text"
                         disabled
                         class="count-text-input border-radius2 paddinglr15 box-sizing text-align-r"
-                        v-model="importCountServiceCharge"
+                        v-model="serviceChargeCount"
                       >
                     </div>
                   </div>
@@ -308,8 +317,9 @@ export default {
       activeCoinId: '', // 提现币种id
       rechargeIsShowList: true, // 充币内容
       chargeMoney: 'SDAFSADFASDdfgdfgsdfgasdfgsdfgsdfgDFGSDFG', // 生成二维码条件
-      serviceCharge: '0.123%', // 自定义手续费
-      importCountServiceCharge: 'BTC', // 自定义到账数量
+      serviceCharge: '', // 自定义手续费
+      rechargeCount: '', // 提币数量
+      serviceChargeCount: '', // 自定义到账数量
       currencyTrading: [
         {
           id: 1,
@@ -325,7 +335,18 @@ export default {
         }
       ],
       dialogVisible: false, // 取消弹窗默认隐藏
-      mentionMoneyAddress: '' // 每行数据ID
+      mentionMoneyAddress: '', // 每行数据ID
+      mentionAddressValue: '', // 提币地址
+      // 提币地址列表
+      mentionAddressList: [
+        {
+          value: '1',
+          label: 'ASDFASDFASDASDFASDFAS'
+        }, {
+          value: '2',
+          label: 'FASDFASDFASDFASDF'
+        }
+      ]
     }
   },
   created () {
@@ -349,7 +370,19 @@ export default {
       console.log(1)
       this.hideStatusButton = false
     },
-
+    // 修改input value
+    changeInputValue (ref) {
+      // console.dir(this.$refs[ref])
+      this[ref] = this.$refs[ref].value
+      // console.log(this[ref])
+      if (!this.serviceCharge) {
+        this.serviceChargeCount = this.$refs.rechargeCount.value
+        console.log(this.serviceChargeCount)
+      } else {
+        this.serviceChargeCount = Math.abs(this.$refs.rechargeCount.value - this.$refs.serviceCharge.value)
+        console.log(this.serviceChargeCount)
+      }
+    },
     // 显示充值框
     showRechargeBox (id) {
       console.log(id)

@@ -13,22 +13,25 @@
       </div>
       <div class="push-assets-content-box padding-left15 margin-top9">
         <div class="push-from-box">
-          <el-form label-width="80px">
+          <el-form label-width="120px">
             <el-form-item label="资产">
-              <el-select v-model="currencyValue">
+              <el-select
+                v-model="currencyValue"
+                @change="changeId"
+              >
                 <el-option
                   v-for="item in currencyList"
-                  :key="item.value"
-                  :label="item.label"
-                  :value="item.value">
+                  :key="item.id"
+                  :label="item.shortName"
+                  :value="item.id">
                 </el-option>
               </el-select>
             </el-form-item>
             <el-form-item label="余额">
               <input
                 disabled
-                class="form-input-common-state border-radius4 padding-l15"
-                ref="balance"
+                class="form-input-common-state border-radius2 padding-l15"
+                v-model="balance"
               />
             </el-form-item>
             <el-form-item label="买方UID">
@@ -64,14 +67,29 @@
                 @keyup="changeInputValue('transactionPassword')"
               />
             </el-form-item>
-            <el-form-item label="验证码">
+            <el-form-item label="手机验证码">
               <el-input
                 @focus="emptyStatus"
-                ref="code"
-                @keyup="changeInputValue('code')"
+                v-model="phoneCode"
               >
-                <template slot="append">发送验证码</template>
+                <template slot="append">验证码</template>
               </el-input>
+            </el-form-item>
+            <el-form-item label="邮箱验证码">
+              <el-input
+                @focus="emptyStatus"
+                v-model="emailCode"
+              >
+                <template slot="append">验证码</template>
+              </el-input>
+            </el-form-item>
+            <el-form-item label="谷歌验证码">
+              <input
+                type="password"
+                class="form-input-common border-radius2 padding-l15"
+                @focus="emptyStatus"
+                v-model="googleCode"
+              />
             </el-form-item>
             <div v-show="errorMsg">{{ errorMsg }}</div>
             <button
@@ -105,7 +123,7 @@
                 <!--<div>{{ s.row.type }}</div>-->
                 <!--v-if="s.row.fuid !== $store.state.userInfo.fshowid"-->
                 <!--v-else-->
-                <div>{{ shift }}</div>
+                <div>{{ rollIn }}</div>
                 <!--<div>{{ $t(rollOut) }}</div>-->
               </template>
             </el-table-column>
@@ -113,14 +131,14 @@
               label="对方UID"
             >
               <template slot-scope = "s">
-                <div>{{ s.row.otherUID }}</div>
+                <div>{{ s.row.pushId }}</div>
               </template>
             </el-table-column>
             <el-table-column
               label="资产"
             >
               <template slot-scope = "s">
-                <div>{{ s.row.asset }}</div>
+                <div>{{ s.row.coinName }}</div>
               </template>
             </el-table-column>
             <el-table-column
@@ -141,7 +159,7 @@
               label="金额(FBT)"
             >
               <template slot-scope = "s">
-                <div>{{ s.row.sum }}</div>
+                <div>{{ s.row.amount }}</div>
               </template>
             </el-table-column>
             <el-table-column
@@ -149,7 +167,7 @@
               width="180px"
             >
               <template slot-scope = "s">
-                <div>{{ timeFormatting(s.row.time) }}</div>
+                <div>{{ timeFormatting(s.row.createTime) }}</div>
               </template>
             </el-table-column>
             <el-table-column
@@ -205,8 +223,11 @@
 </template>
 <!--请严格按照如下书写书序-->
 <script>
-import {mapState} from 'vuex'
+import {getPushAssetList, getPushTotalByCoinId, pushAssetsSubmit} from '../../../utils/api/apiDoc'
 import {timeFilter} from '../../../utils/index'
+import {createNamespacedHelpers, mapState} from 'vuex'
+import {returnAjaxMessage} from '../../../utils/commonFunc'
+const {mapMutations} = createNamespacedHelpers('personal')
 export default {
   components: {},
   // props,
@@ -215,84 +236,25 @@ export default {
       errorMsg: '', // 错误信息提示
       showStatusUserInfo: {}, // 个人信息
       // 币种
-      currencyValue: 'BTC',
-      currencyList: [{
-        value: '1',
-        label: 'BTC'
-      }, {
-        value: '2',
-        label: 'EHT'
-      }, {
-        value: '3',
-        label: 'EHT'
-      }, {
-        value: '4',
-        label: 'FUC'
-      }, {
-        value: '5',
-        label: 'HT'
-      }],
+      currencyValue: '',
+      currencyList: [],
       // push资产form
       balance: '', // 余额
       buyUID: '', // 买方UID
       count: '', // 数量
       price: '', // 价格
       transactionPassword: '', // 交易密码
-      code: '', // 验证码
-      shift: '转入', // 转入
+      phoneCode: '', // 手机验证码
+      emailCode: '', // 邮箱验证码
+      googleCode: '', // 谷歌验证
+      rollIn: '转入', // 转入
       rollOut: '转出', // 转出
       payment: '付款', // 付款
       cancel: '撤销', // 取消
       dialogVisible: false, // 取消弹窗默认隐藏
       pushUID: '', // 每行数据ID
       // push列表记录
-      pushRecordList: [
-        {
-          fid: 1,
-          otherUID: '3355446',
-          asset: '123465',
-          count: '265',
-          price: '0.326',
-          sum: '12346565',
-          time: '2018-08-04 10:30:41',
-          state: '未支付'
-        }, {
-          fid: 2,
-          otherUID: '3355446',
-          asset: '123465',
-          count: '265',
-          price: '0.326',
-          sum: '12346565',
-          time: '2018-08-04 10:30:41',
-          state: '未支付'
-        }, {
-          fid: 3,
-          otherUID: '3355446',
-          asset: '123465',
-          count: '265',
-          price: '0.326',
-          sum: '12346565',
-          time: '2018-08-04 10:30:41',
-          state: '未支付'
-        }, {
-          fid: 4,
-          otherUID: '3355446',
-          asset: '123465',
-          count: '265',
-          price: '0.326',
-          sum: '12346565',
-          time: '2018-08-04 10:30:41',
-          state: '未支付'
-        }, {
-          fid: 5,
-          otherUID: '3355446',
-          asset: '123465',
-          count: '265',
-          price: '0.326',
-          sum: '12346565',
-          time: '2018-08-04 10:30:41',
-          state: '未支付'
-        }]
+      pushRecordList: []
     }
   },
   created () {
@@ -304,44 +266,106 @@ export default {
     require('../../../../static/css/theme/night/Personal/UserAssets/PushAssetNight.css')
     // 获取全局个人信息
     this.showStatusUserInfo = this.userInfo.data.user
-    console.log(this.userInfo)
+    this.getPushRecordList()
+    console.log(this.getPushRecordList())
   },
   mounted () {},
   activited () {},
   update () {},
   beforeRouteUpdate () {},
   methods: {
-    // 时间格式化
+    ...mapMutations([]),
+    // 1.时间格式化
     timeFormatting (date) {
       return timeFilter(date, 'normal')
     },
-    // 清空内容信息
+    // 2.清空内容信息
     emptyStatus () {
       this.errorMsg = ''
     },
-    // 修改input value
+    // 3.修改input value
     changeInputValue (ref) {
-      // console.dir(this.$refs[ref])
       this[ref] = this.$refs[ref].value
-      // console.log(this[ref])
     },
-    // 提交push
-    getStatusSubmit () {
-      console.log(this.buyUID)
-      if (!this.buyUID) {
-        this.errorMsg = '买方UID不能为空'
-      } else if (!this.count) {
-        this.errorMsg = '数量不能为空'
-      } else if (!this.price) {
-        this.errorMsg = '价格不能为空'
-      } else if (!this.transactionPassword) {
-        this.errorMsg = '交易密码不能为空'
-      } else if (!this.code) {
-        this.errorMsg = '验证码不能为空'
-      } else {
-        this.errorMsg = ''
+    // 资产币种下拉
+    changeId (e) {
+      this.currencyList.forEach(item => {
+        if (e === item.id) {
+          this.toggleAssetsCurrencyId(e)
+        }
+      })
+    },
+    // 4.选择push资产币种
+    async toggleAssetsCurrencyId (val) {
+      let data
+      let param = {
+        coinId: val // 币种coinId
       }
-      console.log(1)
+      data = await getPushTotalByCoinId(param)
+      if (!(returnAjaxMessage(data, this, 0))) {
+        return false
+      } else {
+        // 点击资产币种下拉
+        this.balance = data.data.data.total
+      }
+    },
+    // 5.提交push
+    getStatusSubmit () {
+      // if (!this.buyUID) {
+      //   this.errorMsg = '买方UID不能为空'
+      // } else if (!this.count) {
+      //   this.errorMsg = '数量不能为空'
+      // } else if (!this.price) {
+      //   this.errorMsg = '价格不能为空'
+      // } else if (!this.transactionPassword) {
+      //   this.errorMsg = '交易密码不能为空'
+      // } else if (!this.code) {
+      //   this.errorMsg = '验证码不能为空'
+      // } else {
+      //   this.errorMsg = ''
+      // }
+      this.stateSubmitPushAssets()
+      // this.getPushRecordList()
+    },
+    // 提交push资产
+    async stateSubmitPushAssets () {
+      let data
+      let param = {
+        coinId: this.currencyValue, // 币种id
+        uid: this.buyUID, // 买方id
+        count: this.count, // push数量
+        price: this.price, // push价格
+        password: this.transactionPassword, // 交易密码
+        code: this.phoneCode // 短信验证码
+      }
+      data = await pushAssetsSubmit(param)
+      if (!(returnAjaxMessage(data, this, 0))) {
+        return false
+      } else {
+        console.log(data)
+      }
+    },
+    // 7. 刚进页面时候 push列表展示
+    async getPushRecordList () {
+      let data
+      data = await getPushAssetList({
+        partnerId: this.merchantID // 商户id
+      })
+      console.log(data)
+      if (!(returnAjaxMessage(data, this, 0))) {
+        return false
+      } else {
+        // 返回push记录数据
+        this.pushRecordList = data.data.data.userPushVOPageInfo.list
+        // 返回push币种信息列表
+        this.currencyValue = data.data.data.coinList[0].shortName
+        this.currencyValue = data.data.data.coinList[0].id
+        // 刷新列表默认币种
+        this.balance = data.data.data.total
+        this.currencyList = data.data.data.coinList
+        console.log(this.currencyList)
+        console.log(this.balance)
+      }
     },
     // 取消push
     cancelId (id) {
@@ -376,7 +400,8 @@ export default {
   computed: {
     ...mapState({
       theme: state => state.common.theme,
-      userInfo: state => state.personal.userInfo
+      userInfo: state => state.personal.userInfo,
+      merchantID: state => state.common.merchantID
     })
   },
   watch: {}
@@ -401,7 +426,7 @@ export default {
             box-sizing: border-box;
           }
           .form-button-common {
-            margin-left: 80px;
+            margin: 0 0 50px 120px;
           }
         }
       }
@@ -438,6 +463,7 @@ export default {
             }
             .form-input-common-state {
               background-color: #37424C;
+              color: #fff;
             }
             .form-button-common {
               background:linear-gradient(0deg,rgba(43,57,110,1),rgba(42,80,130,1));

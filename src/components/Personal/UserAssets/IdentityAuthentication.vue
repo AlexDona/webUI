@@ -9,87 +9,111 @@
     <div class="identity-authentication-main margin-top9">
       <!--实名认证-->
       <div class="real-name-authentication identity-background">
-        <el-collapse v-model="activeNamesRealName">
-          <el-collapse-item
-            title="实名认证"
-            name="1">
-            <div
-              v-if="!authenticationInfo.data.user.hasrealvaliDate"
-              class="name-authentication-content">
-              <el-form
-                ref="form"
-                label-width="80px"
+        <!--(1.姓名、2.身份证号、3.状态)-->
+          <div
+            class="advanced-main-header"
+          >
+            <div class="header-border margin20 display-flex">
+              <span class="font-size16 main-header-title">实名认证</span>
+              <p
+                v-if="!authenticationInfo.hasrealvaliDate"
+                class="authentication-type font-size12"
               >
-                <el-form-item label="地区国家">
-                  <el-select
-                    v-model="region"
-                    placeholder="请选择地区国家">
-                    <el-option
-                      label="中国"
-                      value="shanghai">
-                    </el-option>
-                    <el-option
-                      label="韩国"
-                      value="beijing">
-                    </el-option>
-                  </el-select>
-                </el-form-item>
-                <el-form-item label="证件类型">
-                  <el-select
-                    v-model="documentType"
-                    placeholder="请选择证件类型">
-                    <el-option
-                      label="身份证"
-                      value="shanghai">
-                    </el-option>
-                    <el-option
-                      label="护照"
-                      value="beijing">
-                    </el-option>
-                  </el-select>
-                </el-form-item>
-                <el-form-item label="真实姓名">
-                  <input
-                    class="common-input"
-                    v-model="realName"
-                    @focus="emptyStatus"
-                  />
-                </el-form-item>
-                <el-form-item label="证件号码">
-                  <input
-                    class="common-input"
-                    v-model="identificationNumber"
-                    @focus="emptyStatus"
-                  />
-                </el-form-item>
-                <div
-                  v-show="errorMsg"
-                >
-                  {{ errorMsg }}
-                </div>
-                <el-form-item>
-                  <button
-                    class="submit"
-                    type="button"
-                    @click="submitRealName"
-                  >
-                    提交认证
-                  </button>
-                </el-form-item>
-              </el-form>
+                （请先通过实名认证）
+              </p>
+              <p
+                v-else
+                class="authentication-type-info font-size12 box-sizing"
+              >
+                <span class="authentication-info">您已通过实名认证</span>
+                （&nbsp;
+                <span class="type-info">
+                  姓名：
+                  {{ authenticationInfo.realName.substring(0,1)}}
+                  *
+                  {{ authenticationInfo.realName.substring(2,3)}}
+                  <!--{{ authenticationInfo.realName }}-->
+                </span>、
+                <span class="type-info">
+                  身份证号：
+                   {{ authenticationInfo.identification.substring(0,6)}}
+                  ****
+                  {{ authenticationInfo.identification.substring(14,18)}}
+                 <!-- {{  authenticationInfo.identification }}-->
+                </span>
+                &nbsp;）
+              </p>
+              <i class="el-icon-arrow-down icon-down float-right"></i>
             </div>
-            <div v-else class="name-authentication-content success-height">
-              <div class="certification-success">
-                <IconFontCommon
-                  class="font-size60 icon-success"
-                  iconName="icon-dui1"
-                />
-              </div>
-              <p class="real-success font-size16">实名认证成功</p>
-            </div>
-          </el-collapse-item>
-        </el-collapse>
+          </div>
       </div>
+      <div
+        v-if="!authenticationInfo.hasrealvaliDate"
+        class="name-authentication-content margin-top9"
+      >
+        <el-form
+          ref="form"
+          label-width="80px"
+        >
+          <el-form-item label="地区国家">
+            <el-select
+              v-model="region"
+              placeholder="请选择地区国家">
+              <el-option
+                label="中国"
+                value="shanghai">
+              </el-option>
+              <el-option
+                label="韩国"
+                value="beijing">
+              </el-option>
+            </el-select>
+          </el-form-item>
+          <el-form-item label="证件类型">
+            <el-select
+              v-model="documentType"
+              placeholder="请选择证件类型">
+              <el-option
+                label="身份证"
+                value="shanghai">
+              </el-option>
+              <el-option
+                label="护照"
+                value="beijing">
+              </el-option>
+            </el-select>
+          </el-form-item>
+          <el-form-item label="真实姓名">
+            <input
+              class="common-input"
+              v-model="realName"
+              @focus="emptyStatus"
+            />
+          </el-form-item>
+          <el-form-item label="证件号码">
+            <input
+              class="common-input"
+              v-model="identificationNumber"
+              @focus="emptyStatus"
+            />
+          </el-form-item>
+          <div
+            v-show="errorMsg"
+          >
+            {{ errorMsg }}
+          </div>
+          <el-form-item>
+            <button
+              class="submit"
+              type="button"
+              @click="submitRealName"
+            >
+              提交认证
+            </button>
+          </el-form-item>
+        </el-form>
+      </div>
+      <div v-else class="name-authentication-content success-height"></div>
     </div>
     <!--高级认证-->
     <div class="advanced-certification-main identity-background margin-top9"
@@ -98,11 +122,11 @@
         class="advanced-main-header"
       >
         <p
-          class="padding-left23 header-border"
+          class="margin20 header-border"
           @click="authenticationMethod">
           <span class="font-size16 main-header-title">高级认证</span>
           <span
-            v-if="!authenticationInfo.data.user.hasrealvaliDate"
+            v-if="!authenticationInfo.hasrealvaliDate"
             class="authentication-type font-size12"
           >
             （请先通过实名认证）
@@ -113,7 +137,7 @@
           >
             （已实名认证）
           </span>
-          <i class="el-icon-arrow-down icon-down"></i>
+          <i class="el-icon-arrow-down icon-down float-right"></i>
         </p>
       </div>
       <div>
@@ -250,17 +274,9 @@
           </el-collapse-transition>
         </div>
         <div
-          class="success-after"
-          v-if="authenticationInfo.data.user.userIdentity == true"
-        >
-          <div class="certification-success">
-            <IconFontCommon
-              class="font-size60 icon-success"
-              iconName="icon-dui1"
-            />
-          </div>
-          <p class="real-success font-size16">高级认证成功</p>
-        </div>
+          class="success-after name-authentication-content"
+          v-if="authenticationInfo.userIdentity == true"
+        ></div>
       </div>
       <el-dialog
         title="高级认证"
@@ -301,8 +317,6 @@ export default {
   // props,
   data () {
     return {
-      activeNamesRealName: '1', // 实名认证默认显示展开
-      activeName: '1',
       region: '', // 国家地区
       documentType: '', // 证件类型
       realName: '', // 真实姓名
@@ -332,7 +346,7 @@ export default {
     // 黑色主题样式
     require('../../../../static/css/theme/night/Personal/UserAssets/IdentityAuthenticationNight.css')
     // 获取全局个人信息
-    this.authenticationInfo = this.userInfo
+    this.authenticationInfo = this.userInfo.data.user
     // 清空图片和关闭弹窗this.clearUserPicture()
   },
   mounted () {},
@@ -366,14 +380,14 @@ export default {
     // 高级认证弹窗
     authenticationMethod () {
       // 判断是否高级认证&&实名认证
-      if (this.authenticationInfo.data.user.hasrealvaliDate == true && this.authenticationInfo.data.user.userIdentity == false) {
+      if (this.authenticationInfo.hasrealvaliDate == true && this.authenticationInfo.userIdentity == false) {
         this.seniorAuthentication = true
       }
     },
     // 高级认证内容
     authenticationAuthentication () {
       // 点击进入高级认证时隐藏弹窗
-      if (this.authenticationInfo.data.user.userIdentity == false) {
+      if (this.authenticationInfo.userIdentity == false) {
         this.authenticationStatusFront = true
       }
       this.seniorAuthentication = false
@@ -453,39 +467,51 @@ export default {
   @import "../../../../static/css/scss/Personal/UserAssets/IdentityAuthentication";
 .identity-authentication{
   >.identity-authentication-main{
-    background-color: #202A33;
-    >.real-name-authentication{
-      min-height: 120px;
-      .name-authentication-content{
-        width: 350px;
-        padding-top: 28px;
-        margin: 0 auto;
-        .common-input,
-        .submit {
-          width: 270px;
-          height: 38px;
-          border-radius: 4px;
-          padding-left: 20px;
-          box-sizing: border-box;
-        }
-        .certification-success{
-          width: 100px;
-          height: 100px;
-          margin: 15px auto;
-          border-radius: 50%;
-          text-align: center;
-          line-height: 90px;
-        }
-        .real-success {
-          text-align: center;
-        }
+    .name-authentication-content {
+      width: 350px;
+      padding-top: 28px;
+      margin: 0 auto;
+      padding-bottom: 25px;
+      .common-input,
+      .submit {
+        width: 270px;
+        height: 38px;
+        border-radius: 4px;
+        padding-left: 20px;
+        box-sizing: border-box;
       }
-      .success-height {
-        min-height: 230px;
+    }
+    .authentication-type {
+      flex: 4;
+      line-height: 56px;
+      cursor: pointer;
+    }
+    .authentication-type-info {
+      width: 785px;
+      flex: 4;
+      line-height: 56px;
+      padding-left: 10px;
+    }
+    .advanced-main-header {
+      width: 100%;
+      height: 56px;
+      .main-header-title{
+        line-height: 56px;
+      }
+      .icon-down{
+        font-size: 16px;
+        line-height: 56px;
+        padding-right: 10px;
       }
     }
   }
   >.advanced-certification-main{
+    .name-authentication-content {
+      width: 350px;
+      padding-top: 28px;
+      margin: 0 auto;
+      padding-bottom: 25px;
+    }
     .header-border {
       margin-right: 23px;
     }
@@ -493,16 +519,13 @@ export default {
       line-height: 56px;
       cursor: pointer;
     }
-    .advanced-main-header{
+    .advanced-main-header {
       width: 100%;
       height: 56px;
-      .padding-left23{
-        .icon-down{
-          font-size: 16px;
-          float: right;
-          line-height: 56px;
-          padding-right: 10px;
-        }
+      .icon-down{
+        font-size: 16px;
+        line-height: 56px;
+        padding-right: 10px;
       }
     }
     .advanced-certification-content{
@@ -587,23 +610,6 @@ export default {
         }
       }
     }
-    .success-after {
-      width: 120px;
-      min-height: 200px;
-      margin: 38px auto;
-      .certification-success{
-        width: 100px;
-        height: 100px;
-        margin: 36px auto;
-        border-radius: 50%;
-        text-align: center;
-        line-height: 90px;
-      }
-      .real-success {
-        text-align: center;
-        margin-top: 38px;
-      }
-    }
   }
   &.night{
     background-color: $nightBgColor;
@@ -614,17 +620,26 @@ export default {
         color: #338FF5;
       }
     }
-    .identity-background{
+    .identity-authentication-main {
       background-color: #1E2636;
-      .certification-success{
-        background:rgba(51,143,245,0.2);
-        >.icon-success{
-          color: rgba(255,255,255,.7);
+      .header-border {
+        border-bottom: 1px solid #39424D;
+      }
+      .authentication-type {
+        color: #0099FF;
+      }
+      .authentication-type-info {
+        >.authentication-info {
+          color: #0099FF;
         }
       }
-      .real-success {
-        color: #338FF5;
-      }
+    }
+    .icon-down,
+    .main-header-title{
+      color: #fff;
+    }
+    .identity-background{
+      background-color: #1E2636;
     }
     >.advanced-certification-main{
       .header-border {
@@ -661,17 +676,6 @@ export default {
           }
         }
       }
-      .success-after {
-        .certification-success{
-          background:rgba(51,143,245,0.2);
-          >.icon-success{
-            color: rgba(255,255,255,.7);
-          }
-        }
-        .real-success {
-          color: #338FF5;
-        }
-      }
     }
   }
   &.day{
@@ -685,15 +689,6 @@ export default {
     }
     .identity-background{
       background-color: #ccc;
-      .certification-success{
-        background:rgba(51,143,245,0.2);
-        >.icon-success{
-          color: #eee;
-        }
-      }
-      .real-success {
-        color: #ccc;
-      }
     }
     >.advanced-certification-main{
       .header-border {

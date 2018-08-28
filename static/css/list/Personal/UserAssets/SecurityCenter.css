@@ -22,3 +22,18 @@
 .security-center.personal .el-progress {
   width: 170px;
 }
+.security-center.personal .el-dialog {
+  width: 470px;
+  border-radius: 7px;
+}
+.security-center.personal .el-dialog__header {
+  height: 44px;
+  padding: 10px 20px 10px;
+  border-radius: 7px 7px 0 0;
+}
+.security-center.personal .el-dialog__title {
+  font-size: 18px;
+}
+.security-center.personal .el-dialog__headerbtn {
+  top: 13px;
+}
