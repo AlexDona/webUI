@@ -302,9 +302,12 @@ export default {
         pageSize: this.pageSize
       }
       const data = await getHistoryEntrust(params)
-      returnAjaxMessage(data, this, 0)
-      this.historyEntrustList = data.data.data.list
-      this.totalPageForHistoryEntrust = data.data.data.pages - 0
+      if (!returnAjaxMessage(data, this, 0)) {
+        return false
+      } else {
+        this.historyEntrustList = data.data.data.list
+        this.totalPageForHistoryEntrust = data.data.data.pages - 0
+      }
     },
     // 获取我的当前委单
     async getMyCurrentEntrust () {
@@ -314,9 +317,12 @@ export default {
         pageSize: this.pageSize
       }
       const data = await getMyEntrust(params)
-      returnAjaxMessage(data, this, 0)
-      this.currentEntrustList = data.data.data.list
-      this.totalPageForMyEntrust = data.data.data.pages - 0
+      if (!returnAjaxMessage(data, this, 0)) {
+        return false
+      } else {
+        this.currentEntrustList = data.data.data.list
+        this.totalPageForMyEntrust = data.data.data.pages - 0
+      }
     },
     // 时间格式化
     timeFormat (date) {

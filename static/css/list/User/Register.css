@@ -4,10 +4,49 @@
   width:80px;
   display:inline-block;
 }
+.email-select .el-input__inner{
+  width:100%;
+}
 
-/*.register-box*/
-/*.register-box*/
-/*.register-box*/
+.register-box .el-checkbox__label{
+  color:#8B9197;
+}
+
+.el-checkbox__input.is-checked+.el-checkbox__label{
+  color:#338ff5;
+}
+.el-checkbox__input.is-checked .el-checkbox__inner{
+  background-color: #338ff5;
+  border-color:#338ff5;
+}
+
+.register-box .el-input__inner{
+  background-color: transparent;
+  border:none;
+}
+.popper__arrow{
+  border-top-color: transparent !important;
+}
+.el-popper[x-placement^=bottom] .popper__arrow::after{
+  border-color:transparent;
+}
+.el-popper[x-placement^=bottom] .popper__arrow{
+  border-color:transparent;
+}
+.el-scrollbar__wrap{
+  margin-right:-20px !important;
+  margin-bottom:-18px !important;
+}
+.register .el-select-dropdown__list{
+  background-color: #1c3151;
+}
+.register .el-select-dropdown__item.hover{
+  background-color: rgba(255,255,255,0.1);
+}
+.register .el-select-dropdown__item.selected{
+  font-weight: 400;
+  color:#fff;
+}
 /*.register-box*/
 /*.register-box*/
 /*.register-box*/

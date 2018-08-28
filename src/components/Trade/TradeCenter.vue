@@ -22,9 +22,9 @@
       >
         <MiddleHeader />
         <!--k线-->
-        <!--<KLine class=""/>-->
+        <KLine class=""/>
         <!--市价交易、限价交易-->
-        <ExchangeBox/>
+        <!--<ExchangeBox/>-->
         <!--深度图-->
         <!--<Depth/>-->
         <!--交易-->

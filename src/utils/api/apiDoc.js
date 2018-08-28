@@ -51,7 +51,7 @@ export const getMerchantAvailablelegalTender = (params) => get('otcCOin/getAvail
 /**
  * User
  */
-// export const sendMsgByPhoneUser = (params) => postWithURLencoded('user/sendSms', params)
+export const testAjax = (params) => postWithURLencoded('user/test', params)
 // 发送邮件
 // export const sendMsgByEmailUser = (params) => postWithURLencoded('user/sendMail', params)
 /**

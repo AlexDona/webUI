@@ -135,8 +135,11 @@
 </template>
 <script>
 import IconFontCommon from '../Common/IconFontCommon'
-import {mapState} from 'vuex'
-
+import {
+  // createNamespacedHelpers,
+  mapState
+} from 'vuex'
+// const { mapMutations } = createNamespacedHelpers('common')
 export default {
   components: {
     IconFontCommon
@@ -152,143 +155,143 @@ export default {
     }
   },
   created () {
-    this.buysAndSellsList = {
-      buys: {
-        highestAmount: 0.1560, // 最高量
-        list: [
-          {
-            id: 0,
-            price: 6303.57,
-            amount: 0.1560,
-            total: 1.2617
-          },
-          {
-            id: 1,
-            price: 6303.57,
-            amount: 0.0560,
-            total: 1.2617
-          },
-          {
-            id: 2,
-            price: 6303.57,
-            amount: 0.0560,
-            total: 1.2617
-          },
-          {
-            id: 3,
-            price: 6303.57,
-            amount: 0.0560,
-            total: 1.2617
-          },
-          {
-            id: 4,
-            price: 6303.57,
-            amount: 0.0560,
-            total: 1.2617
-          },
-          {
-            id: 5,
-            price: 6303.57,
-            amount: 0.0560,
-            total: 1.2617
-          },
-          {
-            id: 6,
-            price: 6303.57,
-            amount: 0.0560,
-            total: 1.2617
-          },
-          {
-            id: 7,
-            price: 6303.57,
-            amount: 0.0560,
-            total: 1.2617
-          },
-          {
-            id: 8,
-            price: 6303.57,
-            amount: 0.0560,
-            total: 1.2617
-          },
-          {
-            id: 9,
-            price: 6303.57,
-            amount: 0.0560,
-            total: 1.2617
-          }
-        ]
-      },
-      sells: {
-        highestAmount: 0.0923,
-        list: [
-          {
-            id: 0,
-            price: 1309.57,
-            amount: 0.0923,
-            total: 4.2123
-          },
-          {
-            id: 1,
-            price: 1309.57,
-            amount: 0.0923,
-            total: 4.2123
-          },
-          {
-            id: 2,
-            price: 1309.57,
-            amount: 0.0923,
-            total: 4.2123
-          },
-          {
-            id: 3,
-            price: 1309.57,
-            amount: 0.0923,
-            total: 4.2123
-          },
-          {
-            id: 4,
-            price: 1309.57,
-            amount: 0.0923,
-            total: 4.2123
-          },
-          {
-            id: 5,
-            price: 1309.57,
-            amount: 0.0923,
-            total: 4.2123
-          },
-          {
-            id: 6,
-            price: 1309.57,
-            amount: 0.0923,
-            total: 4.2123
-          },
-          {
-            id: 7,
-            price: 6303.57,
-            amount: 0.0560,
-            total: 1.2617
-          },
-          {
-            id: 8,
-            price: 6303.57,
-            amount: 0.0560,
-            total: 1.2617
-          },
-          {
-            id: 9,
-            price: 6303.57,
-            amount: 0.0560,
-            total: 1.2617
-          }
-        ]
-      },
-      // 最新成交
-      latestDone: {
-        price: 0.4423415, // 价格
-        rose: 1.5 // 涨跌
-      }
-    }
+    // this.buysAndSellsList = {
+    //   buys: {
+    //     highestAmount: 0.1560, // 最高量
+    //     list: [
+    //       {
+    //         id: 0,
+    //         price: 6303.57,
+    //         amount: 0.1560,
+    //         total: 1.2617
+    //       },
+    //       {
+    //         id: 1,
+    //         price: 6303.57,
+    //         amount: 0.0560,
+    //         total: 1.2617
+    //       },
+    //       {
+    //         id: 2,
+    //         price: 6303.57,
+    //         amount: 0.0560,
+    //         total: 1.2617
+    //       },
+    //       {
+    //         id: 3,
+    //         price: 6303.57,
+    //         amount: 0.0560,
+    //         total: 1.2617
+    //       },
+    //       {
+    //         id: 4,
+    //         price: 6303.57,
+    //         amount: 0.0560,
+    //         total: 1.2617
+    //       },
+    //       {
+    //         id: 5,
+    //         price: 6303.57,
+    //         amount: 0.0560,
+    //         total: 1.2617
+    //       },
+    //       {
+    //         id: 6,
+    //         price: 6303.57,
+    //         amount: 0.0560,
+    //         total: 1.2617
+    //       },
+    //       {
+    //         id: 7,
+    //         price: 6303.57,
+    //         amount: 0.0560,
+    //         total: 1.2617
+    //       },
+    //       {
+    //         id: 8,
+    //         price: 6303.57,
+    //         amount: 0.0560,
+    //         total: 1.2617
+    //       },
+    //       {
+    //         id: 9,
+    //         price: 6303.57,
+    //         amount: 0.0560,
+    //         total: 1.2617
+    //       }
+    //     ]
+    //   },
+    //   sells: {
+    //     highestAmount: 0.0923,
+    //     list: [
+    //       {
+    //         id: 0,
+    //         price: 1309.57,
+    //         amount: 0.0923,
+    //         total: 4.2123
+    //       },
+    //       {
+    //         id: 1,
+    //         price: 1309.57,
+    //         amount: 0.0923,
+    //         total: 4.2123
+    //       },
+    //       {
+    //         id: 2,
+    //         price: 1309.57,
+    //         amount: 0.0923,
+    //         total: 4.2123
+    //       },
+    //       {
+    //         id: 3,
+    //         price: 1309.57,
+    //         amount: 0.0923,
+    //         total: 4.2123
+    //       },
+    //       {
+    //         id: 4,
+    //         price: 1309.57,
+    //         amount: 0.0923,
+    //         total: 4.2123
+    //       },
+    //       {
+    //         id: 5,
+    //         price: 1309.57,
+    //         amount: 0.0923,
+    //         total: 4.2123
+    //       },
+    //       {
+    //         id: 6,
+    //         price: 1309.57,
+    //         amount: 0.0923,
+    //         total: 4.2123
+    //       },
+    //       {
+    //         id: 7,
+    //         price: 6303.57,
+    //         amount: 0.0560,
+    //         total: 1.2617
+    //       },
+    //       {
+    //         id: 8,
+    //         price: 6303.57,
+    //         amount: 0.0560,
+    //         total: 1.2617
+    //       },
+    //       {
+    //         id: 9,
+    //         price: 6303.57,
+    //         amount: 0.0560,
+    //         total: 1.2617
+    //       }
+    //     ]
+    //   },
+    //   // 最新成交
+    //   latestDone: {
+    //     price: 0.4423415, // 价格
+    //     rose: 1.5 // 涨跌
+    //   }
+    // }
   },
   mounted () {
   },
@@ -321,10 +324,25 @@ export default {
   filter: {},
   computed: {
     ...mapState({
-      theme: state => state.common.theme
+      theme: state => state.common.theme,
+      socketData: state => state.common.socketData,
+      depthData: state => state.common.socketData.depthData,
+      buysAndSellsList: state => state.common.socketData.buyAndSellData
     })
+    // buysAndSellsList () {
+    //   return this.buyAndSellData
+    // }
   },
-  watch: {}
+  watch: {
+    depthData (newVal) {
+      // console.log(newVal)
+    },
+    buysAndSellsList (newVal) {
+      console.log(newVal)
+      // this.buysAndSellsList = newVal
+      // console.log(this.buysAndSellsList)
+    }
+  }
 }
 </script>
 <style scoped lang="scss">

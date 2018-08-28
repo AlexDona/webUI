@@ -7,7 +7,7 @@
 <script>
 import {mapState, mapMutations} from 'vuex'
 import {getStore} from './utils'
-// import {getCnyRate} from './utils/api/apiDoc'
+// import {testAjax} from './utils/api/apiDoc'
 
 export default {
   name: 'App',
@@ -46,7 +46,16 @@ export default {
       'theme'
     ])
   },
-  watch: {}
+  watch: {
+    '$route' (to, from) {
+      // console.log(to)
+      switch (to.path) {
+        case '/Register':
+          document.body.classList.add('register')
+          break
+      }
+    }
+  }
 }
 </script>
 
