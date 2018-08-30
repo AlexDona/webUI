@@ -104,10 +104,6 @@ button,input{
 .box-sizing {
   box-sizing: border-box;
 }
-.line-height50 {
-  line-height: 50px;
-}
-
 .absolute{
   position: absolute;
 }
@@ -184,6 +180,9 @@ button,input{
   min-height: 500px;
 }
 /*个人中心右侧 标题行高*/
+.line-height20{
+  line-height: 20px;
+}
 .line-height40{
   line-height: 40px;
 }
@@ -195,6 +194,9 @@ button,input{
 }
 .line-height56 {
   line-height: 56px;
+}
+.line-height50 {
+  line-height: 50px;
 }
 /*个人中心右侧嫩容区 标题和主题内容之间的间距*/
 .margin-top9 {

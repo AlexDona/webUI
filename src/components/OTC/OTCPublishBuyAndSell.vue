@@ -42,10 +42,10 @@
                   <el-option
                     v-for="(item,index) in coinStyleList"
                     :key="index"
-                    :value="item.coinId"
-                    :label="item.shortName"
+                    :value="item.partnerCoinId"
+                    :label="item.name"
                   >
-                    {{ item.shortName }}
+                    {{ item.name }}
                   </el-option>
                 </el-select>
               </el-form-item>
@@ -83,14 +83,14 @@
                     v-show="publishStyle === 'sell'"
                     :class="{ sellGreen: publishStyle === 'sell' }"
                   >
-                    --111111BTC
+                    {{currentlyAvailable}}{{coinName}}
                   </span>
                   <span
                     class="max-sum"
                     v-show="publishStyle === 'buy'"
                     :class="{ buyOrange: publishStyle === 'buy' }"
                   >
-                    --2222222BTC
+                    {{currentlyAvailable}}{{coinName}}
                   </span>
                   <span class="want-text">市价：</span>
                   <span
@@ -98,14 +98,14 @@
                     v-show="publishStyle === 'sell'"
                     :class="{ sellGreen: publishStyle === 'sell' }"
                   >
-                    --111CNY
+                    {{marketPrice}}CNY
                   </span>
                   <span
                     class="market-price"
                     v-show="publishStyle === 'buy'"
                     :class="{ buyOrange: publishStyle === 'buy' }"
                   >
-                    --222CNY
+                    {{marketPrice}}CNY
                   </span>
                   <el-button
                     type="primary"
@@ -133,7 +133,7 @@
                     ref="entrustCountBuy"
                     @keyup="changeInputValue('entrustCountBuy')"
                   >
-                  <span class="unit">BTC</span>
+                  <span class="unit">{{coinName}}</span>
                   <input
                     type="text"
                     placeholder="卖出单价"
@@ -150,14 +150,14 @@
                     ref="priceBuy"
                     @keyup="changeInputValue('priceBuy')"
                   >
-                  <span class="unit">CNY</span>
+                  <span class="unit">{{CurrencyCoinsName}}</span>
                 </div>
                 <!-- 错误提示信息 -->
                 <div class="buySellSumErrorTips">
                   <!-- 卖出量和买入量的提示 -->
-                  <span class="errorSell">卖出量和买入量的提示</span>
+                  <span class="errorSell">{{errorTipsSum}}</span>
                   <!-- 卖出单价和买入单价的提示 -->
-                  <!-- <span class="errorBuy">卖出单价和买入单价的提示</span> -->
+                  <span class="errorBuy">{{errorTipsPrice}}</span>
                 </div>
               </el-form-item>
               <!-- 4.0成交限额 -->
@@ -170,7 +170,7 @@
                     ref="minCount"
                     @keyup="changeInputValue('minCount')"
                   >
-                  <span class="monad">CNY</span>
+                  <span class="monad">{{CurrencyCoinsName}}</span>
                   <span class="range-line">-</span>
                   <input
                     type="text"
@@ -179,14 +179,14 @@
                     ref="maxCount"
                     @keyup="changeInputValue('maxCount')"
                   >
-                  <span class="monad">CNY</span>
+                  <span class="monad">{{CurrencyCoinsName}}</span>
                 </div>
                 <!-- 错误提示信息 -->
                 <div class="limitErrorTips">
                   <!-- 单笔最小的提示 -->
-                  <!-- <span class="errorSell">卖出量和买入量的提示</span> -->
+                  <span class="errorSell">{{errorTipsLimitMin}}</span>
                   <!-- 单笔最大的提示 -->
-                  <!-- <span class="errorBuy">卖出单价和买入单价的提示</span> -->
+                  <span class="errorBuy">{{errorTipsLimitMax}}</span>
                 </div>
               </el-form-item>
               <!-- 5.0备注 -->
@@ -207,18 +207,18 @@
                       预计交易额：
                   </span>
                   <span class="predict-sum">
-                    1.00 CNY
+                    1.00 {{CurrencyCoinsName}}
                   </span>
                   <span class="predict-text">
                     手续费：
                   </span>
                   <span class="predict-sum">
-                    0 BTC
+                    0 {{coinName}}
                   </span>
                   <span class="rate-text">
                     ( 费率
                     <span class="rate">
-                      0.8%
+                      {{rate * 100}}%
                     </span>
                     )
                   </span>
@@ -304,7 +304,7 @@
 </template>
 <!--请严格按照如下书写书序-->
 <script>
-import {getOTCAvailableCurrency, getMerchantAvailablelegalTender, addOTCPutUpOrders} from '../../utils/api/apiDoc'
+import {getOTCAvailableCurrency, getMerchantAvailablelegalTender, addOTCPutUpOrders, queryUserTradeFeeAndCoinInfo} from '../../utils/api/apiDoc'
 import NavCommon from '../Common/HeaderCommon'
 import FooterCommon from '../Common/FooterCommon'
 import {returnAjaxMessage} from '../../utils/commonFunc'
@@ -317,31 +317,58 @@ export default {
   },
   data () {
     return {
+      // 交易密码弹窗状态
       dialogVisible: false,
-      publishStyle: 'sell', //  1购买和出售选中类型：挂单类型
-      labelPosition: 'top', //  表单label放置的位置
-      //   币种类型列表
+      //  1购买和出售选中类型：挂单类型
+      publishStyle: 'sell',
+      //  表单label放置的位置
+      labelPosition: 'top',
+      //   1 可用币种类型列表
       coinStyleList: [],
-      //   2币种类型：挂单币种id
+      //   选中的币种类型：挂单币种id
       coinId: '',
-      //   选择你希望付款的货币类型列表
+      //   选中的币种名称：挂单币种name
+      coinName: '',
+      //   2 选择你希望付款的货币类型列表：可用法币类型
       hopePaymentCoinStyleList: [],
-      //   3希望付款的货币类型:法币id
+      //   选中的希望付款的货币类型:法币id
       hopePaymentCoinId: '',
-      //  4挂单数量
+      //   选中的可用法币币种名称：
+      CurrencyCoinsName: '',
+      //  3挂单数量
       entrustCountSell: '',
       entrustCountBuy: '',
-      //  5单价
+      //  4单价
       priceSell: '',
       priceBuy: '',
-      //  6单笔最小限额（CNY）
+      //  5单笔最小限额（CNY）
       minCount: '',
-      //  7单笔最大限额（CNY）
+      //  6单笔最大限额（CNY）
       maxCount: '',
-      //  8备注
+      //  7备注
       remarkText: '',
-      //  9交易密码
-      tradePassword: ''
+      //  8交易密码
+      tradePassword: '',
+      // 起订量
+      // minOrderCount: 0
+      // 当前可用
+      currentlyAvailable: '456',
+      // 市价
+      marketPrice: '132',
+      // 预计交易额
+      tradingVolumes: '',
+      // 手续费
+      serviceCharge: '',
+      // 费率
+      rate: '0.008',
+      // 卖出量和买入量的提示
+      errorTipsSum: '错误提示1',
+      // 卖出单价和买入单价的提示
+      errorTipsPrice: '错误提示2',
+      // 单笔成交限额最小错误提示
+      errorTipsLimitMin: '错误提示1',
+      // 单笔成交限额最大错误提示
+      errorTipsLimitMax: '错误提示2'
     }
   },
   created () {
@@ -352,7 +379,6 @@ export default {
     this.getOTCAvailableCurrencyList()
     // 2.0 查询可用法币币种列表
     this.getMerchantAvailablelegalTenderList()
-    // console.log(this.IWantToBuySellArr[index].minCount)
   },
   mounted () {
   },
@@ -364,10 +390,10 @@ export default {
   },
   methods: {
     ...mapMutations([
-      'CHANGE_OTC_MERCHANT_AND_COMMON_MINCOUNT'
-      // 'CHANGE_OTC_AVAILABLE_CURRENCY_ID'
+      // otc 商家和普通用户通用挂单页面可用币种起订量:选中不同的币种获得不同币种的起订量
+      // 'CHANGE_OTC_MERCHANT_AND_COMMON_MINCOUNT'
     ]),
-    // 修改input value
+    //  修改input value
     changeInputValue (ref) {
       this[ref] = this.$refs[ref].value
       // console.dir(this.$refs[ref])
@@ -375,7 +401,7 @@ export default {
       // this.entrustCount = this.$refs.entrustCount.value
       // console.log(this.entrustCount)
     },
-    // 点击 购买 和 出售 按钮切换
+    //  点击 购买 和 出售 按钮切换
     toggleSellButton () {
       this.publishStyle = 'sell'
       console.log(this.publishStyle)
@@ -384,21 +410,11 @@ export default {
       this.publishStyle = 'buy'
       console.log(this.publishStyle)
     },
-    // 选择币种类型
-    changeCoinId (e) {
-      console.log(this.coinId)
-      console.log(e)
-      // this.CHANGE_OTC_MERCHANT_AND_COMMON_MINCOUNT(this.coinStyleList[val].minCount)
-    },
-    // 选择你希望付款的货币类型
-    changehopePaymentCoinId () {
-      console.log(this.hopePaymentCoinId)
-    },
-    // 点击发布出售或者发布购买弹出输入交易密码框
+    //  点击发布出售或者发布购买弹出输入交易密码框
     showPasswordDialog () {
       this.dialogVisible = true
     },
-    // 清空input框数据
+    //  清空input框数据
     clearInputData () {
       this.coinId = ''
       this.hopePaymentCoinId = ''
@@ -423,15 +439,15 @@ export default {
       } else {
         // 返回数据正确的逻辑
         this.coinStyleList = data.data.data
-        console.log(this.coinStyleList[0].minCount)
-        this.CHANGE_OTC_MERCHANT_AND_COMMON_MINCOUNT(this.coinStyleList[0].minCount)
+        // this.minOrderCount = this.coinStyleList[0].minCount
+        // console.log(this.coinStyleList[0].minCount)
+        // this.CHANGE_OTC_MERCHANT_AND_COMMON_MINCOUNT(this.coinStyleList[0].minCount)
         // console.log(this.merchantAndCommonPutOnOrderMinCount)
       }
     },
-    // 2.0 查询可用法币币种列表
+    //  2.0 查询可用法币币种列表
     async getMerchantAvailablelegalTenderList () {
-      let data
-      data = await getMerchantAvailablelegalTender({
+      const data = await getMerchantAvailablelegalTender({
         partnerId: this.merchantID
       })
       console.log(data)
@@ -443,10 +459,69 @@ export default {
         this.hopePaymentCoinStyleList = data.data.data
       }
     },
+    //  1.1 选择可用币种类型
+    changeCoinId (e) {
+      console.log(e)
+      this.coinId = e
+      console.log(this.coinId)
+      // 根据可用币种id 查询用户交易币种手续费率以及币种详情
+      this.queryUserTradeFeeAndCoinInfo()
+      // this.coinStyleList.forEach(item => {
+      //   // console.log(item)
+      //   // console.log(item.coinId)
+      //   if (e === item.coinId) {
+      //     console.log(item.minCount)
+      //     this.minOrderCount = item.minCount
+      //   }
+      // })
+    },
+    //  2.1 选择你希望付款的货币类型：可用法币类型
+    changehopePaymentCoinId (e) {
+      console.log(e)
+      this.hopePaymentCoinId = e
+      console.log(this.hopePaymentCoinId)
+      this.hopePaymentCoinStyleList.forEach(item => {
+        // console.log(item)
+        // console.log(item.id)
+        if (e === item.id) {
+          console.log(item.shortName)
+          this.CurrencyCoinsName = item.shortName
+        }
+      })
+      // 可用法币币种名称还未赋值
+      // this.CurrencyCoinsName =
+    },
+    //  1.2 根据可用币种id 查询用户交易币种手续费率以及币种详情
+    async queryUserTradeFeeAndCoinInfo () {
+      const data = await queryUserTradeFeeAndCoinInfo({
+        partnerCoinId: this.coinId // 挂单id
+      })
+      console.log('用户交易币种手续费率以及币种详情')
+      console.log(data)
+      // 提示信息
+      if (!(returnAjaxMessage(data, this, 0))) {
+        return false
+      } else {
+        // 返回数据正确的逻辑:将返回的数据赋值到页面中
+        // 选中币种名称
+        this.coinName = data.data.data.name
+        // 当前可用
+        this.currentlyAvailable = data.data.data.total
+        // 市价
+        this.marketPrice = data.data.data.marketPrice
+        // 费率
+        if (this.publishStyle === 'sell') {
+          this.rate = data.data.data.sellRate
+        }
+        if (this.publishStyle === 'buy') {
+          this.rate = data.data.data.buyRate
+        }
+      }
+    },
     // 3.0 点击输入密码框中的提交按钮
     async addOTCPutUpOrdersSubmitButton () {
       let param = {
-        coinId: this.coinId, // 挂单币种
+        partnerCoinId: this.coinId, // 挂单币种
         currencyId: this.hopePaymentCoinId, // 法币id
         minCount: this.minCount, // 单笔最小限额（CNY）
         maxCount: this.maxCount, // 单笔最大限额（CNY）
@@ -466,8 +541,14 @@ export default {
       console.log('传输的参数共8个')
       console.log(this.coinId)
       console.log(this.hopePaymentCoinId)
-      console.log(this.entrustCount)
-      console.log(this.price)
+      if (this.publishStyle === 'buy') {
+        console.log(this.entrustCountBuy)
+        console.log(this.priceBuy)
+      }
+      if (this.publishStyle === 'sell') {
+        console.log(this.entrustCountSell)
+        console.log(this.priceSell)
+      }
       console.log(this.minCount)
       console.log(this.maxCount)
       console.log(this.remarkText)
@@ -489,9 +570,9 @@ export default {
       // 商户id
       merchantID: state => state.common.merchantID,
       // 测试拿到userinfo
-      userInfo: state => state.personal.userInfo,
+      userInfo: state => state.personal.userInfo
       // otc 商家和普通用户通用挂单页面可用币种起订量:选中不同的币种获得不同币种的起订量
-      merchantAndCommonPutOnOrderMinCount: state => state.OTC.merchantAndCommonPutOnOrderMinCount
+      // merchantAndCommonPutOnOrderMinCount: state => state.OTC.merchantAndCommonPutOnOrderMinCount
     })
   },
   watch: {}
@@ -499,7 +580,6 @@ export default {
 </script>
 <style scoped lang="scss" type="text/scss">
   @import url(../../../static/css/scss/OTC/OTCPublishBuyAndSell.scss);
-
   .otc-publish-buy-and-sell-box {
     background-color: #1D2331;
     > .publish-buy-and-sell-content {
@@ -711,7 +791,8 @@ export default {
               color: #9FA7B2;
             }
             > .release-tips {
-              line-height: 1.5rem;
+              // line-height: 1.5rem;
+              line-height: 20px;
               font-size: 14px;
             }
           }

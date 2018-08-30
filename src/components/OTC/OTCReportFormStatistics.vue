@@ -15,14 +15,16 @@
         </span>
         <span class="currency-input">
           <el-select
-            v-model="activitedADManageTraderStyleList"
+            v-model="activitedTraderCoinId"
+            @change="changeCoinId"
           >
             <el-option
-              v-for="item in ADManageTraderStyleList"
-              :key="item.value"
-              :label="item.label"
-              :value="item.value"
+              v-for="(item,index) in traderCoinList"
+              :key="index"
+              :value="item.coinId"
+              :label="item.name"
             >
+              {{ item.name }}
             </el-option>
           </el-select>
         </span>
@@ -31,14 +33,16 @@
         </span>
         <span class="legal-tender-input">
           <el-select
-            v-model="activitedADManageMarketList"
-            >
+            v-model="activitedtraderCurrencyCoinsId"
+            @change="changeCurrencyCoinsId"
+          >
             <el-option
-              v-for="item in ADManageMarketList"
-              :key="item.value"
-              :label="item.label"
-              :value="item.value"
+              v-for="(item,index) in traderCurrencyCoinsList"
+              :key="index"
+              :value="item.coinId"
+              :label="item.name"
             >
+              {{ item.name }}
             </el-option>
           </el-select>
         </span>
@@ -51,7 +55,7 @@
         <div class="content font-size18">
           <span>总资产≈</span>
           <span>0.00</span>
-          <span>CNY</span>
+          <span>{{activitedtraderCurrencyCoinsName}}</span>
         </div>
       </div>
       <!-- 2.4 购买和销售 -->
@@ -368,10 +372,13 @@
 </template>
 <!--请严格按照如下书写书序-->
 <script>
+import {getOTCAvailableCurrency, getMerchantAvailablelegalTender} from '../../utils/api/apiDoc'
 import NavCommon from '../Common/HeaderCommon'
 import FooterCommon from '../Common/FooterCommon'
 import IconFontCommon from '../Common/IconFontCommon'
 import {timeFilter} from '../../utils'
+import {createNamespacedHelpers, mapState} from 'vuex'
+const {mapMutations} = createNamespacedHelpers('OTC')
 export default {
   components: {
     NavCommon, //  头部导航
@@ -380,30 +387,34 @@ export default {
   },
   data () {
     return {
-      // 1.0 广告管理筛选下拉框数组--交易类型
-      activitedADManageTraderStyleList: '', // 选中的筛选项
-      ADManageTraderStyleList: [
+      // 1.0 广告管理筛选下拉框数组--交易币种
+      traderCoinList: [
         {
-          value: '选项1',
-          label: '购买'
+          coinId: '1',
+          name: 'BTC'
         },
         {
-          value: '选项2',
-          label: '出售'
+          coinId: '2',
+          name: 'fuc'
         }
       ],
-      // 2.0 广告管理筛选下拉框数组--市场
-      activitedADManageMarketList: '', // 选中的筛选项
-      ADManageMarketList: [
+      activitedTraderCoinId: '', // 选中的交易币种id
+      activitedTraderCoinName: '', // 选中的交易币种name
+      // 2.0 广告管理筛选下拉框数组--交易法币
+      traderCurrencyCoinsList: [
         {
-          value: '选项1',
-          label: '市场1'
+          coinId: '123',
+          name: '人民币',
+          shortName: 'CNY'
         },
         {
-          value: '选项2',
-          label: '市场2'
+          coinId: '456',
+          name: '美元',
+          shortName: 'USD'
         }
       ],
+      activitedtraderCurrencyCoinsId: '', // 选中的交易法币id
+      activitedtraderCurrencyCoinsName: '', // 选中的交易法币name
       value1: '', // 默认开始时间
       value2: '', // 默认结束时间
       radio2: 1, // 单选按钮时间
@@ -466,19 +477,91 @@ export default {
     require('../../../static/css/list/OTC/OTCReportFormStatistics.css')
     require('../../../static/css/theme/day/OTC/OTCReportFormStatisticsDay.css')
     require('../../../static/css/theme/night/OTC/OTCReportFormStatisticsNight.css')
+    // 1.0 otc可用币种查询
+    this.getOTCAvailableCurrencyList()
+    // 2.0 查询可用法币币种列表
+    this.getMerchantAvailablelegalTenderList()
   },
   mounted () {},
   activited () {},
   update () {},
   beforeRouteUpdate () {},
   methods: {
-    // 时间格式化
+    ...mapMutations([
+      // 'CHANGE_OTC_MERCHANT_AND_COMMON_MINCOUNT'
+    ]),
+    // 1.0 时间格式化
     timeFormatting (date) {
       return timeFilter(date, 'normal')
+    },
+    //  2.0 otc可用币种查询
+    async getOTCAvailableCurrencyList () {
+      const data = await getOTCAvailableCurrency({
+        partnerId: this.merchantID
+      })
+      console.log(data)
+      // 提示信息
+      if (!(returnAjaxMessage(data, this, 0))) {
+        return false
+      } else {
+        // 返回数据正确的逻辑
+        // this.traderCoinList = data.data.data
+      }
+    },
+    //  2.1 改变可用币种类型
+    changeCoinId (e) {
+      // console.log(e)
+      this.activitedTraderCoinId = e
+      console.log(this.activitedTraderCoinId)
+      this.traderCoinList.forEach(item => {
+        // console.log(item)
+        // console.log(item.coinId)
+        if (e === item.coinId) {
+          // console.log(item.name)
+          this.activitedTraderCoinName = item.name
+          console.log(this.activitedTraderCoinName)
+        }
+      })
+    },
+    //  3.0 查询 可用法币 币种列表
+    async getMerchantAvailablelegalTenderList () {
+      const data = await getMerchantAvailablelegalTender({
+        partnerId: this.merchantID
+      })
+      console.log(data)
+      // 提示信息
+      if (!(returnAjaxMessage(data, this, 0))) {
+        return false
+      } else {
+        // 返回数据正确的逻辑
+        // this.traderCurrencyCoinsList = data.data.data
+      }
+    },
+    //  3.1 改变 可用法币 币种类型
+    changeCurrencyCoinsId (e) {
+      // console.log(e)
+      this.activitedtraderCurrencyCoinsId = e
+      console.log(this.activitedtraderCurrencyCoinsId)
+      this.traderCurrencyCoinsList.forEach(item => {
+        // console.log(item)
+        // console.log(item.coinId)
+        if (e === item.coinId) {
+          // console.log(item.shortName)
+          this.activitedtraderCurrencyCoinsName = item.shortName
+          console.log(this.activitedtraderCurrencyCoinsName)
+        }
+      })
     }
   },
   filter: {},
-  computed: {},
+  computed: {
+    ...mapState({
+      // 商户id
+      merchantID: state => state.common.merchantID,
+      // 测试拿到userinfo
+      userInfo: state => state.personal.userInfo
+    })
+  },
   watch: {}
 }
 </script>
@@ -583,7 +666,8 @@ export default {
             }
             >.right{
               flex: 2;
-              line-height: 2rem;
+              // line-height: 2rem;
+              line-height: 35px;
               color: #9DA5B3;
               .data{
                 color: #D45858;

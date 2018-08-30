@@ -76,7 +76,8 @@
 <script>
 import {timeFilter} from '../../utils'
 // import {mapState, mapMutations} from 'vuex'
-// import {getOTCCanceledOrders} from '../../utils/api/apiDoc'
+import {getOTCCanceledOrders} from '../../utils/api/apiDoc'
+import {returnAjaxMessage} from '../../utils/commonFunc'
 export default {
   components: {},
   // props,
@@ -136,15 +137,32 @@ export default {
     require('../../../static/css/list/OTC/OTCCanceledOrder.css')
     require('../../../static/css/theme/day/OTC/OTCCanceledOrderDay.css')
     require('../../../static/css/theme/night/OTC/OTCCanceledOrderNight.css')
+    // 1.0 请求已取消订单列表
+    this.getOTCCanceledOrdersList()
   },
   mounted () {},
   activited () {},
   update () {},
   beforeRouteUpdate () {},
   methods: {
-    // 时间格式化
+    // 1.0 时间格式化
     timeFormatting (date) {
       return timeFilter(date, 'normal')
+    },
+    // 2.0 请求已取消订单列表
+    async getOTCCanceledOrdersList () {
+      const data = await getOTCCanceledOrders({
+        status: 'CANCELED' // 状态 (交易中 TRADING 已完成 COMPLETED  已取消  CANCELED 冻结中 FROZEN)
+        // pageNum: '1',
+        // pageSize: '10'
+      })
+      console.log(data)
+      // 提示信息
+      if (!(returnAjaxMessage(data, this, 0))) {
+        return false
+      } else {
+        // 返回数据正确的逻辑
+      }
     }
   },
   filter: {},
@@ -213,7 +231,8 @@ export default {
             box-sizing: border-box;
             border-right: 1px solid #262F38;
             >.text-info{
-              line-height: 1.5rem;
+              // line-height: 1.5rem;
+              line-height: 20px;
             }
             >.text-blue{
               color: #5E95EC;
@@ -225,7 +244,8 @@ export default {
             border-right: 1px solid #262F38;
             margin-left: 30px;
             >.text-info{
-              line-height: 1.5rem;
+              // line-height: 1.5rem;
+              line-height: 20px;
             }
             >.text-blue{
               color: #5E95EC;
@@ -236,7 +256,8 @@ export default {
             box-sizing: border-box;
             margin-left: 30px;
             >.text-info{
-              line-height: 1.5rem;
+              // line-height: 1.5rem;
+              line-height: 20px;
             }
             >.text-blue{
               color: #5E95EC;

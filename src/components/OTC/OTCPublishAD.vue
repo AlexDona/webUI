@@ -20,30 +20,34 @@
               <p class="warning font-size12">必填</p>
             </div>
             <div class="right display-inline-block">
+              <!-- 买卖类型 -->
               <div class="right-style display-inline-block">
                 <el-select
                   v-model="activitedBuySellStyle"
+                  @change="changeBuySellStyle"
                 >
                   <el-option
-                    v-for="item in buySellStyle"
-                    :key="item.value"
-                    :label="item.label"
-                    :value="item.value"
+                    v-for="(item,index) in buySellStyle"
+                    :key="index"
+                    :value="item.id"
+                    :label="item.name"
                   >
                   </el-option>
                 </el-select>
               </div>
               <div class="right-change display-inline-block">
+                <!-- 商家可用币种 -->
                 <el-select
-                  v-model="activitedCoinName"
-                  placeholder="BTC"
+                  v-model="activitedCoinId"
+                  @change="changeAvailableCoinId"
                 >
                   <el-option
-                    v-for="item in coinName"
-                    :key="item.value"
-                    :label="item.label"
-                    :value="item.value"
+                    v-for="(item,index) in availableCoinName"
+                    :key="index"
+                    :value="item.partnerCoinId"
+                    :label="item.name"
                   >
+                    {{ item.name }}
                   </el-option>
                 </el-select>
                 <span class="double-sided-arrow display-inline-block">
@@ -51,20 +55,16 @@
                     iconName="icon-zhuanhuannei"
                   />
                 </span>
+                <!-- 可用法币 -->
                 <el-select
-                  v-model="activitedCurrencyUnit"
+                  v-model="activitedCurrencyId"
+                  @change="changeCurrencyId"
                 >
-                  <!-- <el-option
-                    v-for="item in currencyUnit"
-                    :key="item.id"
-                    :label="item.shortName"
-                    :value="item.id">
-                  </el-option> -->
                   <el-option
-                    v-for="item in currencyUnit"
-                    :key="item.value"
-                    :label="item.label"
-                    :value="item.value"
+                    v-for="(item,index) in availableCurrencyId"
+                    :key="index"
+                    :value="item.id"
+                    :label="item.name"
                   >
                   </el-option>
                 </el-select>
@@ -84,9 +84,12 @@
                   type="text"
                   class="price-input"
                   placeholder="卖出单价"
+                  ref="price"
+                  @keyup="changePriceValue('price')"
                 >
                 <span class="unit font-size12">CNY</span>
               </div>
+              <div>{{errorInfoPrice}}</div>
             </div>
           </div>
           <!-- 交易方式 -->
@@ -96,10 +99,15 @@
                 <p class="warning font-size12">必填</p>
             </div>
             <div class="right display-inline-block">
-              <el-checkbox-group v-model="checkList">
-                <el-checkbox label="银行转账"></el-checkbox>
-                <el-checkbox label="微信"></el-checkbox>
-                <el-checkbox label="支付宝"></el-checkbox>
+              <el-checkbox-group
+                v-model="activitedPayTypes"
+                @change='changePayTypes'
+              >
+                <el-checkbox label="alipay">支付宝</el-checkbox>
+                <el-checkbox label="wx">微信</el-checkbox>
+                <el-checkbox label="bank">银行卡</el-checkbox>
+                <el-checkbox label="xilian">西联汇款</el-checkbox>
+                <el-checkbox label="paypal">PAYPAL</el-checkbox>
               </el-checkbox-group>
             </div>
           </div>
@@ -116,26 +124,39 @@
                   type="text"
                   class="input-sum"
                   placeholder="交易数量"
+                  ref="entrustCount"
+                  @keyup="changeEntrustCountValue('entrustCount')"
                 >
                 <span class="unit font-size14">BTC</span>
               </div>
+              <div>{{errorInfoEntrustCount}}</div>
               <p class="text">
                 <span class="money-min">单笔最小限额</span>
                 <span class="money-max">单笔最大限额</span>
               </p>
               <div class="input-bottom">
+                <!-- 单笔最小限额 -->
                 <input
                   type="text"
                   class="input-min"
                   placeholder="单笔最小限额"
+                  ref="minCountValue"
+                  @keyup="changeMinCountInputValue('minCountValue')"
                 >
                 <span class="unit font-size14">CNY</span>
+                <!-- 单笔最大限额 -->
                 <input
                   type="text"
                   class="input-max"
                   placeholder="单笔最大限额"
+                  ref="maxCountValue"
+                  @keyup="changeMaxCountInputValue('maxCountValue')"
                 >
                 <span class="unit font-size14">CNY</span>
+              </div>
+              <div>
+                <span>{{errorInfoMinCount}}</span>
+                <span>{{errorInfoMaxCount}}</span>
               </div>
             </div>
           </div>
@@ -150,6 +171,7 @@
                 type="textarea"
                 auto-complete="off"
                 placeholder="输入留言: 请说明有关于您交易的相关条款或者其它您想让对方获悉得信息，以便对方和您快速交易"
+                v-model="remarkText"
               >
               </el-input>
             </div>
@@ -185,7 +207,11 @@
                 <input
                   type="text"
                   class="input-limit"
+                  ref="limitOrderCount"
+                  @keyup="changeLimitOrderCountValue('limitOrderCount')"
                 >
+                <!-- 错误提示 -->
+                <div>{{errorInfoLimitOrderCount}}</div>
               </div>
               <div>
                 卖家必须成交过几次（0=不限制）
@@ -194,7 +220,11 @@
                 <input
                   type="text"
                   class="input-limit"
+                  ref="successOrderCount"
+                  @keyup="changeSuccessOrderCountValue('successOrderCount')"
                 >
+                <!-- 错误提示 -->
+                <div>{{errorInfoSuccessOrderCount}}</div>
               </div>
             </div>
           </div>
@@ -220,6 +250,7 @@
                 <input
                   type="password"
                   class="password-input"
+                  v-model="tradePassword"
                 >
               </div>
               <div class="error-info">
@@ -271,12 +302,12 @@
 </template>
 <!--请严格按照如下书写书序-->
 <script>
+// 引入接口
+import {getOTCAvailableCurrency, getMerchantAvailablelegalTender, addOTCPutUpOrdersMerchantdedicated, queryUserTradeFeeAndCoinInfo} from '../../utils/api/apiDoc'
 // 引入组件
 import NavCommon from '../Common/HeaderCommon'
 import FooterCommon from '../Common/FooterCommon'
 import IconFontCommon from '../Common/IconFontCommon'
-// 引入接口
-import {getOTCAvailableCurrency, getMerchantAvailablelegalTender} from '../../utils/api/apiDoc'
 // 引入提示信息
 import {returnAjaxMessage} from '../../utils/commonFunc'
 // 引入全局变量和方法
@@ -292,64 +323,65 @@ export default {
     return {
       dialogVisible: false,
       // 选择模块下拉列表循环数组
-      // 1.0发布广告类型数组
-      activitedBuySellStyle: '出售', // 选中的类型
+      // 1.0 发布广告 买卖 类型数组
+      activitedBuySellStyle: '', // 选中的发布广告 买卖 类型
       buySellStyle: [
         {
-          value: '选项1',
-          label: '出售'
+          id: 'SELL',
+          name: '出售'
         },
         {
-          value: '选项2',
-          label: '购买'
+          id: 'BUY',
+          name: '购买'
         }
       ],
-      // 2.0币种名字下拉数组：商家可用币种
-      activitedCoinName: 'BTC', // 选中的币种名字
-      coinName: [
-        {
-          value: '选项1',
-          label: 'BTC'
-        },
-        {
-          value: '选项2',
-          label: 'ETH'
-        },
-        {
-          value: '选项3',
-          label: 'EIKJ'
-        },
-        {
-          value: '选项4',
-          label: 'FUR'
-        }
-      ],
-      // 3.0各个国家货比单位:可用法币
-      activitedCurrencyUnit: '人民币', // 选中的各个国家货比单位
-      currencyUnit: [
-        {
-          value: '选项1',
-          label: '人民币'
-        },
-        {
-          value: '选项2',
-          label: '美元'
-        },
-        {
-          value: '选项3',
-          label: '韩元'
-        },
-        {
-          value: '选项4',
-          label: '港币'
-        },
-        {
-          value: '选项5',
-          label: '欧元'
-        }
-      ],
-      // 交易方式默认选中项
-      checkList: ['银行转账']
+      // 2.0 币种名字下拉数组：商家可用币种
+      activitedCoinId: '', // 选中的商家可用币种id
+      availableCoinName: [],
+      // 3.0 可用法币币种数组
+      activitedCurrencyId: '', // 选中的可用法币id
+      availableCurrencyId: [],
+      // 挂单数量
+      entrustCount: '',
+      // 用户输入的 单笔最小限额
+      minCountValue: '',
+      // 用户输入的 单笔最大限额
+      maxCountValue: '',
+      // 后台返回 的单笔最小限额（单位：选中法币） 0 - 不限制
+      minCount: '',
+      // 后台返回 的单笔最大限额（单位：选中法币） 0 - 不限制
+      maxCount: '',
+      // 定价设置：单价 要求用户输入的价格在返回的最小价格和最高价格之间
+      price: '',
+      // 最低价
+      minPrice: '',
+      // 最高价
+      maxPrice: '',
+      // 同时处理最大订单数(0=不限制)
+      limitOrderCount: '',
+      // 买家必须成交过几次(0=不限制)
+      successOrderCount: '',
+      // 备注
+      remarkText: '',
+      // 交易密码
+      tradePassword: '',
+      // 支付方式（用，隔开的名字）
+      // checkList: ['支付宝']
+      activitedPayTypes: [],
+      // 往后台传参数的支付方式类型
+      parameterPayTypes: '',
+      // 定价设置中的价格错误提示信息
+      errorInfoPrice: '',
+      // 交易数量错误提示
+      errorInfoEntrustCount: '',
+      // 单笔最小限额错误提示
+      errorInfoMinCount: '',
+      // 单笔最大限额错误提示
+      errorInfoMaxCount: '',
+      // 同时处理最大订单数（0=不限制）错误提示
+      errorInfoLimitOrderCount: '',
+      // 卖家必须成交过几次（0=不限制）错误提示
+      errorInfoSuccessOrderCount: ''
     }
   },
   created () {
@@ -357,11 +389,12 @@ export default {
     require('../../../static/css/theme/day/OTC/OTCPublishADDay.css')
     require('../../../static/css/theme/night/OTC/OTCPublishADNight.css')
     // 从全局获得商户id
+    console.log('从全局获得商户id')
     console.log(this.merchantID)
     // 1.0 otc可用币种查询：
-    // this.getOTCAvailableCurrencyList()
+    this.getOTCAvailableCurrencyList()
     // 2.0 otc可用法币查询：
-    // this.getMerchantAvailablelegalTenderList()
+    this.getMerchantAvailablelegalTenderList()
   },
   mounted () {},
   activited () {},
@@ -370,40 +403,244 @@ export default {
   methods: {
     ...mapMutations([
     ]),
-    //  1.0 otc可用币种查询：
+    // 1.0 改变发布广告 买卖 类型
+    changeBuySellStyle (e) {
+      // console.log(e)
+      this.activitedBuySellStyle = e
+      console.log(this.activitedBuySellStyle)
+    },
+    //  2.0 otc可用币种查询：
     async getOTCAvailableCurrencyList () {
       const data = await getOTCAvailableCurrency({
         partnerId: this.merchantID
       })
-      // console.log(data)
+      console.log('可用币种列表')
+      console.log(data)
       if (!(returnAjaxMessage(data, this, 0))) {
         return false
       } else {
         // 返回数据正确的逻辑
-        // this.coinName = data.data.data.list
+        this.availableCoinName = data.data.data
       }
     },
-    // 2.0 otc可用法币查询
+    // 3.0 改变可用币种id
+    changeAvailableCoinId (e) {
+      this.activitedCoinId = e
+      console.log(this.activitedCoinId)
+      // console.log(e)
+      // 根据可用币种id 查询用户交易币种手续费率以及币种详情
+      this.queryUserTradeFeeAndCoinInfo()
+    },
+    // 3.01 根据可用币种id 查询用户交易币种手续费率以及币种详情
+    async queryUserTradeFeeAndCoinInfo () {
+      const data = await queryUserTradeFeeAndCoinInfo({
+        partnerCoinId: this.activitedCoinId // 挂单id
+      })
+      console.log('用户交易币种手续费率以及币种详情')
+      console.log(data)
+      // 提示信息
+      if (!(returnAjaxMessage(data, this, 0))) {
+        return false
+      } else {
+        // 返回数据正确的逻辑:将返回的数据赋值到页面中
+        // 单笔最小限额（单位：选中法币） 0 - 不限制
+        // this.$refs.minCountValue.value = data.data.data.minCount
+        this.minCount = data.data.data.minCount
+        this.$refs.minCountValue.value = this.minCount
+        // 单笔最大限额（单位：选中法币） 0 - 不限制
+        // this.$refs.maxCountValue.value = data.data.data.maxCount
+        this.maxCount = data.data.data.maxCount
+        this.$refs.maxCountValue.value = this.maxCount
+        this.minPrice = data.data.data.minPrice // 最低价
+        this.maxPrice = data.data.data.maxPrice // 最高价
+        console.log(this.minPrice)
+        console.log(this.maxPrice)
+      }
+    },
+    // 4.0 otc可用法币查询
     async getMerchantAvailablelegalTenderList () {
       const data = await getMerchantAvailablelegalTender({
         partnerId: this.merchantID
       })
-      // console.log(data)
+      console.log('可用法币')
+      console.log(data)
       if (!(returnAjaxMessage(data, this, 0))) {
         return false
       } else {
         // 返回数据正确的逻辑
-        // this.currencyUnit = data.data.data.list
+        this.availableCurrencyId = data.data.data
       }
     },
-    // 3.0 点击发布广告弹出输入交易密码框
+    // 5.0 改变可用法币的币种id
+    changeCurrencyId (e) {
+      this.activitedCurrencyId = e
+      // console.log(e)
+      console.log(this.activitedCurrencyId)
+    },
+    // 校验用户输入的 定价设置：键盘弹起事件
+    changePriceValue (ref) {
+      this[ref] = this.$refs[ref].value
+      // console.log(this[ref])
+      // this.$refs.buyPrice.value
+      console.log(this.price)
+      // console.log(this.minPrice)
+      // console.log(this.maxPrice)
+      if (this.price < this.minPrice || this.price > this.maxPrice) {
+        this.errorInfoPrice = '请输入' + this.minPrice + '~' + this.maxPrice + '之间的价格'
+        return false
+      } else {
+        this.errorInfoPrice = ''
+      }
+    },
+    // 校验用户输入的 交易数量：键盘弹起事件
+    changeEntrustCountValue (ref) {
+      this[ref] = this.$refs[ref].value
+      // console.log(this[ref])
+      // this.$refs.entrustCount.value
+      console.log(this.entrustCount)
+      if (this.entrustCount < 0) {
+        this.errorInfoEntrustCount = '数量不能小于0'
+        return false
+      } else {
+        this.errorInfoEntrustCount = ''
+      }
+    },
+    // 校验单笔最小限额和最大限额
+    changeMinCountInputValue (ref) {
+      this[ref] = this.$refs[ref].value
+      // console.log(this[ref])
+      // this.$refs.minCountValue.value
+      // console.log(this.$refs.minCountValue.value)
+      console.log(this.minCountValue)
+      // 开始校验
+      if (!(this.minCountValue >= this.minCount && this.minCountValue < this.maxCountValue)) {
+        this.errorInfoMinCount = '输入有误min'
+        return false
+      } else {
+        this.errorInfoMinCount = ''
+      }
+    },
+    changeMaxCountInputValue (ref) {
+      this[ref] = this.$refs[ref].value
+      // console.log(this[ref])
+      // this.$refs.maxCountValue.value
+      // console.log(this.$refs.maxCountValue.value)
+      console.log(this.maxCountValue)
+      // 开始校验
+      if (!(this.maxCountValue > this.minCountValue && this.maxCountValue <= this.maxCount)) {
+        this.errorInfoMaxCount = '输入有误max'
+        return false
+      } else {
+        this.errorInfoMaxCount = ''
+      }
+    },
+    // 校验 同时处理最大订单数（0=不限制）
+    changeLimitOrderCountValue (ref) {
+      this[ref] = this.$refs[ref].value
+      // console.log(this[ref])
+      console.log(this.limitOrderCount)
+      // 开始处理用户输入数据逻辑
+      if (this.limitOrderCount < 0) {
+        this.errorInfoLimitOrderCount = '输入数字不能小于0'
+        return false
+      } else {
+        this.errorInfoLimitOrderCount = ''
+      }
+    },
+    // 校验 卖家必须成交过几次（0=不限制）
+    changeSuccessOrderCountValue (ref) {
+      this[ref] = this.$refs[ref].value
+      // console.log(this[ref])
+      console.log(this.successOrderCount)
+      // 开始处理用户输入数据逻辑
+      if (this.successOrderCount < 0) {
+        this.errorInfoSuccessOrderCount = '输入数字不能小于0'
+        return false
+      } else {
+        this.errorInfoSuccessOrderCount = ''
+      }
+    },
+    // 6.0 修改input value
+    changeInputValue (ref) {
+      this[ref] = this.$refs[ref].value
+      console.log(this[ref])
+    },
+    // 7.0 点击发布广告弹出输入交易密码框
     showPasswordDialog () {
       this.dialogVisible = true
     },
-    // 4.0 点击密码框中的提交按提交钮发布广告
-    publishADSubmitButton () {
-      console.log('成功提交了')
-      alert('成功提交了')
+    // 8.0 改变支付方式
+    changePayTypes (e) {
+      // console.log(e)
+      this.activitedPayTypes = e
+      // console.log(this.activitedPayTypes)
+      // 处理支付方式数据格式，转成 a,b,c 形势
+      let str = ''
+      this.activitedPayTypes.forEach(item => {
+        // console.log(item)
+        str += item + ','
+      })
+      // 去掉最后一个逗号(如果不需要去掉，就不用写)
+      if (str.length > 0) {
+        str = str.substr(0, str.length - 1)
+      }
+      console.log(str)
+      this.parameterPayTypes = str
+      console.log(this.parameterPayTypes)
+    },
+    // 9.0 清空input框数据
+    clearInputData () {
+      this.activitedBuySellStyle = ''
+      this.activitedCoinId = ''
+      this.activitedCurrencyId = ''
+      this.entrustCount = ''
+      this.price = ''
+      this.minCount = ''
+      this.maxCount = ''
+      this.limitOrderCount = ''
+      this.successOrderCount = ''
+      this.remarkText = ''
+      this.parameterPayTypes = ''
+      this.tradePassword = ''
+    },
+    // 10.0 点击密码框中的提交按提交钮发布广告
+    async publishADSubmitButton () {
+      let param = {
+        entrustType: this.activitedBuySellStyle, // 挂单类型(BUY SELL)
+        partnerCoinId: this.activitedCoinId, // 挂单币种
+        currencyId: this.activitedCurrencyId, // 法币Id
+        entrustCount: this.entrustCount, // 挂单数量
+        price: this.price, // 单价
+        minCount: this.minCount, // 单笔最小限额（单位：选中法币） 0 - 不限制
+        maxCount: this.maxCount, // 单笔最大限额（单位：选中法币） 0 - 不限制
+        limitOrderCount: this.limitOrderCount, // 同时处理最大订单数(0=不限制)
+        successOrderCount: this.successOrderCount, // 买家必须成交过几次(0=不限制)
+        remark: this.remarkText, // 备注
+        payTypes: this.parameterPayTypes, // 支付方式（用，隔开的名字）
+        tradePassword: this.tradePassword // 交易密码
+      }
+      console.log('传输的参数共12个')
+      console.log(this.activitedBuySellStyle)
+      console.log(this.activitedCoinId)
+      console.log(this.activitedCurrencyId)
+      console.log(this.entrustCount)
+      console.log(this.price)
+      console.log(this.minCount)
+      console.log(this.maxCount)
+      console.log(this.limitOrderCount)
+      console.log(this.successOrderCount)
+      console.log(this.remarkText)
+      console.log(this.parameterPayTypes)
+      console.log(this.tradePassword)
+      const data = await addOTCPutUpOrdersMerchantdedicated(param)
+      console.log(data)
+      // 提示信息
+      if (!(returnAjaxMessage(data, this, 1))) {
+        return false
+      } else {
+        // 返回数据正确的逻辑
+        this.dialogVisible = false
+      }
     }
   },
   filter: {},
@@ -600,6 +837,7 @@ export default {
               padding-left: 10px;
               border-radius: 4px;
               margin: 15px 0;
+              color: #9DA5B3;
             }
           }
         }
@@ -626,7 +864,8 @@ export default {
         }
         >.tip{
           color: #9DA5B3;
-          line-height: 1.5rem;
+          // line-height: 1.5rem;
+          line-height: 20px;
         }
       }
     }

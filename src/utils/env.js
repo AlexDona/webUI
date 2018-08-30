@@ -17,8 +17,8 @@ if (process.env.NODE_ENV == 'development') {
   // baseUrl = 'http://192.168.1.72:8060' // 刘耀
   // baseUrl = 'http://192.168.1.200:8888' // 本地测试
   // baseUrl = 'https://rest.fubt.top/'
-  // baseUrl = 'http://192.168.1.235:8046' // 吕冰洋
   baseUrl = 'http://192.168.1.77:8888' // 张新杰
+  // baseUrl = 'http://192.168.1.235:8046' // 吕冰洋
 } else if (process.env.NODE_ENV == 'production') {
   baseUrl = 'https://rest.fubt.top/'
 }
