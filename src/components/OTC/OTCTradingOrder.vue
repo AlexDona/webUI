@@ -402,7 +402,8 @@
 <script>
 import {timeFilter} from '../../utils'
 import IconFontCommon from '../Common/IconFontCommon'
-// import {getOTCTradingOrders} from '../../utils/api/apiDoc'
+import {getOTCTradingOrders} from '../../utils/api/apiDoc'
+import {returnAjaxMessage} from '../../utils/commonFunc'
 export default {
   components: {
     IconFontCommon //  字体图标组件
@@ -434,15 +435,32 @@ export default {
     require('../../../static/css/list/OTC/OTCTradingOrder.css')
     require('../../../static/css/theme/day/OTC/OTCTradingOrderDay.css')
     require('../../../static/css/theme/night/OTC/OTCTradingOrderNight.css')
+    // 1.0 请求交易中订单列表
+    this.getOTCTradingOrdersList()
   },
   mounted () {},
   activited () {},
   update () {},
   beforeRouteUpdate () {},
   methods: {
-    // 时间格式化
+    // 1.0 时间格式化
     timeFormatting (date) {
       return timeFilter(date, 'normal')
+    },
+    // 2.0 请求交易中订单列表
+    async getOTCTradingOrdersList () {
+      const data = await getOTCTradingOrders({
+        status: 'TRADING' // 状态 (交易中 TRADING 已完成 COMPLETED  已取消  CANCELED 冻结中 FROZEN)
+        // pageNum: '1',
+        // pageSize: '10'
+      })
+      console.log(data)
+      // 提示信息
+      if (!(returnAjaxMessage(data, this, 0))) {
+        return false
+      } else {
+        // 返回数据正确的逻辑
+      }
     },
     // 买家点击确认付款按钮
     comfirmPayMoney () {
@@ -464,7 +482,7 @@ export default {
   >.otc-trading-order-content{
     >.order-list{
       width: 1045px;
-      height: 200px;
+      height: 170px;
       font-size: 12px;
       margin-bottom: 15px;
       box-sizing: border-box;
@@ -532,7 +550,8 @@ export default {
           >.left-info{
             display: inline-block;
             >.trade-info{
-              line-height: 1.5rem;
+              // line-height: 1.5rem;
+              line-height: 20px;
               >.money{
                 color: #5E95EC;
               }
@@ -566,15 +585,18 @@ export default {
               }
               >.bank-info{
                 margin-left: 20px;
-                line-height: 1.4rem;
+                // line-height: 1.4rem;
+                line-height: 20px;
               }
               >.order-cancle-tips{
                 margin-left: 20px;
-                line-height: 1.5rem;
+                // line-height: 1.5rem;
+                line-height: 20px;
               }
               >.bankMoneyInfo{
                 margin-left: 20px;
-                line-height: 1.5rem;
+                // line-height: 1.5rem;
+                line-height: 20px;
                 .icon{
                   width: 16px;
                   height: 14px;
@@ -605,13 +627,15 @@ export default {
             }
             >.action-explain{
               margin-left: 20px;
-              line-height: 2rem;
+              // line-height: 2rem;
+              line-height: 20px;
               >.remaining-time{
                 color: #D45858;
               }
             }
             >.count-down-time{
-              line-height: 1rem;
+              // line-height: 1rem;
+              line-height: 20px;
             }
           }
         }
