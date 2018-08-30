@@ -9,6 +9,8 @@ export default {
   dataFeed: null,
   dataCache: {}, // 缓存数据
   getBarTimer: null,
+  // 获取 到的socket 数据
+  socketData: {},
   init: function (options) {
     this.dataFeed = new Datafeeds(this)
 
@@ -282,9 +284,9 @@ export default {
       'session': '24x7',
       'has_intraday': true,
       'has_no_volume': false,
-      'description': 'fucfbt',
+      'description': symbol,
       'pricescale': 1,
-      'ticker': 'fucfbt'
+      'ticker': symbol
       // 'supported_resolutions': ['1', '5', '15', '30', '60', '1D', '5D', '1W', '1M']
     }
   },
@@ -348,7 +350,7 @@ export default {
       switch (dataType) {
         // 请求历史数据
         case 0:
-          console.log(data)
+          // console.log(data)
           this.dataCache[symbol][resolution] = data.data
           // console.log(new Date(this.dataCache[symbol][resolution][0].time))
           // console.log(this.dataCache)
@@ -419,18 +421,32 @@ export default {
 
       // this.dataCache[symbol][resolution] = data.data
       // console.log(this.dataCache[symbol][resolution])
+    //  深度图
     } else if (type == 'depth') {
       // 深度图、买列表、卖列表
-      // console.log(data.data)
+      // console.log(data)
       if (data.data) {
-        const depthData = {
-          depthData: data.data.depthRender,
-          buyAndSellData: data.data.depthData
+        // const depthData = {
+        //   depthData: data.data.depthData,
+        //   buyAndSellData: data.data.depthRender
+        // }
+        this.socketData.depthData = data.data.depthData
+        this.socketData.buyAndSellData = data.data.depthRender
+        // store.commit('common/CHANGE_SOCKET_DATA', depthData)
+        // console.log(store.state.common.socketData)
+      }
+    //  交易记录
+    } else if (type === 'trade') {
+      if (data.data) {
+        if (!dataType) {
+          this.socketData.tardeRecordList = data.data
+        } else {
+          this.socketData.tardeRecordList.pop()
+          this.socketData.tardeRecordList.unshift(data.data)
         }
-        store.commit('common/CHANGE_SOCKET_DATA', depthData)
-        console.log(store.state.common.socketData)
       }
     }
+    store.commit('common/CHANGE_SOCKET_DATA', this.socketData)
   }
   // onUpdateData: function (data) {
   //   console.log(data.id)

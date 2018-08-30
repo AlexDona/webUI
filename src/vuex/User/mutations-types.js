@@ -5,3 +5,5 @@ export const ENTER_STEP3 = 'ENTER_STEP3' // 进入登录第三步
 export const SET_LOGIN_TYPE = 'SET_LOGIN_TYPE' // 修改登录类型
 export const SET_STEP1_INFO = 'SET_STEP1_INFO' // 设置登录第一步信息
 export const SET_USER_BUTTON_STATUS = 'SET_USER_BUTTON_STATUS' // 设置登录发送验证码按钮状态
+export const USER_LOGIN = 'USER_LOGIN' // 用户登录
+export const USER_LOGOUT = 'USER_LOGOUT' // 用户登出

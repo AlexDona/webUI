@@ -19,7 +19,7 @@ export default {
     // require('../../../static/charting_library/static/css/t-night.css')
   },
   mounted () {
-    Tv.init({symbol: 'FUCFBT', interval: '1'})
+    Tv.init({symbol: 'ASASSWEWES', interval: '1'})
     // Tv.init({symbol: 'AA', interval: '1'})
     // 开启交易面板
     // const eventList = [

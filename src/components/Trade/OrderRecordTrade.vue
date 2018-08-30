@@ -18,6 +18,7 @@
             <div v-show="contentShowStatus">
               <el-table
                 :data="orderRecordList"
+                height="500"
               >
                 <el-table-column
                   label="时间"
@@ -35,8 +36,8 @@
                     <span
                       class="text-align-r font-size12"
                       :class="{
-                        buy:s.row.type=='buy',
-                        sell:s.row.type=='sell'}"
+                        buy:s.row.direction==='BUY',
+                        sell:s.row.direction==='SELL'}"
                     >
                       {{s.row.price}}
                     </span>
@@ -47,7 +48,7 @@
                 >
                   <template slot-scope="s">
                       <span class="text-align-r font-size12">
-                        {{s.row.volume}}
+                        {{s.row.amount}}
                       </span>
                   </template>
                 </el-table-column>
@@ -67,105 +68,105 @@ export default {
   // props,
   data () {
     return {
-      contentShowStatus: true,
-      orderRecordList: []
+      contentShowStatus: true
+      // orderRecordList: []
     }
   },
   created () {
     require('../../../static/css/list/Trade/OrderRecord.css')
-    this.orderRecordList = [
-      {
-        id: 0,
-        type: 'buy', // 类型
-        time: new Date().getTime(), // 时间
-        price: 7718.94, // 成交价
-        volume: 561.82 // 成交量
-      },
-      {
-        id: 1,
-        type: 'sell', // 类型
-        time: new Date().getTime(), // 时间
-        price: 7718.94, // 成交价
-        volume: 561.82 // 成交量
-      },
-      {
-        id: 2,
-        type: 'buy', // 类型
-        time: new Date().getTime(), // 时间
-        price: 7718.94, // 成交价
-        volume: 561.82 // 成交量
-      },
-      {
-        id: 3,
-        type: 'sell', // 类型
-        time: new Date().getTime(), // 时间
-        price: 7718.94, // 成交价
-        volume: 561.82 // 成交量
-      },
-      {
-        id: 4,
-        type: 'sell', // 类型
-        time: new Date().getTime(), // 时间
-        price: 7718.94, // 成交价
-        volume: 561.82 // 成交量
-      },
-      {
-        id: 5,
-        type: 'sell', // 类型
-        time: new Date().getTime(), // 时间
-        price: 7718.94, // 成交价
-        volume: 561.82 // 成交量
-      },
-      {
-        id: 6,
-        type: 'sell', // 类型
-        time: new Date().getTime(), // 时间
-        price: 7718.94, // 成交价
-        volume: 561.82 // 成交量
-      },
-      {
-        id: 7,
-        type: 'sell', // 类型
-        time: new Date().getTime(), // 时间
-        price: 7718.94, // 成交价
-        volume: 561.82 // 成交量
-      },
-      {
-        id: 8,
-        type: 'sell', // 类型
-        time: new Date().getTime(), // 时间
-        price: 7718.94, // 成交价
-        volume: 561.82 // 成交量
-      },
-      {
-        id: 9,
-        type: 'sell', // 类型
-        time: new Date().getTime(), // 时间
-        price: 7718.94, // 成交价
-        volume: 561.82 // 成交量
-      },
-      {
-        id: 10,
-        type: 'sell', // 类型
-        time: new Date().getTime(), // 时间
-        price: 7718.94, // 成交价
-        volume: 561.82 // 成交量
-      },
-      {
-        id: 11,
-        type: 'sell', // 类型
-        time: new Date().getTime(), // 时间
-        price: 7718.94, // 成交价
-        volume: 561.82 // 成交量
-      },
-      {
-        id: 12,
-        type: 'sell', // 类型
-        time: new Date().getTime(), // 时间
-        price: 7718.94, // 成交价
-        volume: 561.82 // 成交量
-      }
-    ]
+    // this.orderRecordList = [
+    //   {
+    //     id: 0,
+    //     type: 'buy', // 类型
+    //     time: new Date().getTime(), // 时间
+    //     price: 7718.94, // 成交价
+    //     volume: 561.82 // 成交量
+    //   },
+    //   {
+    //     id: 1,
+    //     type: 'sell', // 类型
+    //     time: new Date().getTime(), // 时间
+    //     price: 7718.94, // 成交价
+    //     volume: 561.82 // 成交量
+    //   },
+    //   {
+    //     id: 2,
+    //     type: 'buy', // 类型
+    //     time: new Date().getTime(), // 时间
+    //     price: 7718.94, // 成交价
+    //     volume: 561.82 // 成交量
+    //   },
+    //   {
+    //     id: 3,
+    //     type: 'sell', // 类型
+    //     time: new Date().getTime(), // 时间
+    //     price: 7718.94, // 成交价
+    //     volume: 561.82 // 成交量
+    //   },
+    //   {
+    //     id: 4,
+    //     type: 'sell', // 类型
+    //     time: new Date().getTime(), // 时间
+    //     price: 7718.94, // 成交价
+    //     volume: 561.82 // 成交量
+    //   },
+    //   {
+    //     id: 5,
+    //     type: 'sell', // 类型
+    //     time: new Date().getTime(), // 时间
+    //     price: 7718.94, // 成交价
+    //     volume: 561.82 // 成交量
+    //   },
+    //   {
+    //     id: 6,
+    //     type: 'sell', // 类型
+    //     time: new Date().getTime(), // 时间
+    //     price: 7718.94, // 成交价
+    //     volume: 561.82 // 成交量
+    //   },
+    //   {
+    //     id: 7,
+    //     type: 'sell', // 类型
+    //     time: new Date().getTime(), // 时间
+    //     price: 7718.94, // 成交价
+    //     volume: 561.82 // 成交量
+    //   },
+    //   {
+    //     id: 8,
+    //     type: 'sell', // 类型
+    //     time: new Date().getTime(), // 时间
+    //     price: 7718.94, // 成交价
+    //     volume: 561.82 // 成交量
+    //   },
+    //   {
+    //     id: 9,
+    //     type: 'sell', // 类型
+    //     time: new Date().getTime(), // 时间
+    //     price: 7718.94, // 成交价
+    //     volume: 561.82 // 成交量
+    //   },
+    //   {
+    //     id: 10,
+    //     type: 'sell', // 类型
+    //     time: new Date().getTime(), // 时间
+    //     price: 7718.94, // 成交价
+    //     volume: 561.82 // 成交量
+    //   },
+    //   {
+    //     id: 11,
+    //     type: 'sell', // 类型
+    //     time: new Date().getTime(), // 时间
+    //     price: 7718.94, // 成交价
+    //     volume: 561.82 // 成交量
+    //   },
+    //   {
+    //     id: 12,
+    //     type: 'sell', // 类型
+    //     time: new Date().getTime(), // 时间
+    //     price: 7718.94, // 成交价
+    //     volume: 561.82 // 成交量
+    //   }
+    // ]
   },
   mounted () {},
   activited () {},
@@ -184,7 +185,8 @@ export default {
   filter: {},
   computed: {
     ...mapState({
-      theme: state => state.common.theme
+      theme: state => state.common.theme,
+      orderRecordList: state => state.common.socketData.tardeRecordList
     })
   },
   watch: {}

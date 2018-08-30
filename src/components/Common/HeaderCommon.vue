@@ -64,13 +64,13 @@
               @mouseenter="toggleShowSubNavBox('activity',1)"
               @mouseleave="toggleShowSubNavBox('activity',0)"
             >
-              <router-link to="/">
+              <router-link to="/ActivityCenter">
                 <span>活动中心</span>
               </router-link>
               <!--活动中心子导航-->
               <ul
                 class="sub-nav-list activity-center"
-                v-show="activityCenterSubNavStatus"
+                v-show="$route.path ==='/ActivityCenter'"
               >
                 <li class="sub-nav-item">
                   <router-link to="/">新币投票</router-link>
@@ -105,10 +105,36 @@
                 />
               </button>
             </li>
-            <li class="li-item">
+            <li
+              class="li-item"
+              v-if="!isLogin"
+            >
               <router-link to="/login">
-                <span class="login">
-                  登录
+                登录
+              </router-link>
+            </li>
+            <li class="li-split"></li>
+            <li
+              class="li-item"
+              v-if="!isLogin"
+            >
+              <router-link to="/Register">
+                <span>注册</span>
+              </router-link>
+            </li>
+            <li
+              class="li-item"
+              v-if="isLogin"
+            >
+              <span>
+                <span
+                  class="login cursor-pointer"
+                  v-if="isLogin"
+                >
+                  <!--用户名-->
+                  <span class="username">
+                    {{userInfo.userName}}
+                  </span>
                   <div class="login-info">
                     <div class="sub-nav-user">
                       <p class="nav-vip">VIP享手续费、提现优惠</p>
@@ -122,17 +148,11 @@
                       <li>收款设置</li>
                       <li>邀请推广</li>
                       <li>API管理</li>
-                      <li>退出</li>
+                      <li @click="userLoginOut">退出</li>
                     </ul>
                   </div>
                 </span>
-              </router-link>
-            </li>
-            <li class="li-split"></li>
-            <li class="li-item">
-              <router-link to="/Register">
-                <span>注册</span>
-              </router-link>
+              </span>
             </li>
             <!--切换语言-->
             <li class="li-item">
@@ -237,7 +257,7 @@
       </div>
       <div
         class="bottom"
-        v-show="otcSubNavStatus||activityCenterSubNavStatus"
+        v-show="$route.path === '/OTCCenter' || $route.path === '/ActivityCenter'"
       >
       </div>
       <div class="box">
@@ -302,6 +322,7 @@ import IconFontCommon from '../Common/IconFontCommon'
 import {setStore} from '../../utils'
 import { createNamespacedHelpers, mapState } from 'vuex'
 const { mapMutations } = createNamespacedHelpers('common')
+// const { mapMutationsForUser } = createNamespacedHelpers('user')
 // import {Io} from '../../utils/tradingview/socket'
 export default{
   components: {
@@ -367,6 +388,14 @@ export default{
       // 修改主题
       'CHANGE_THEME'
     ]),
+    // ...mapMutationsForUser([
+    //   ''
+    // ]),
+    // 用户登出
+    userLoginOut () {
+      console.log('logout')
+      this.$store.commit('user/USER_LOGOUT')
+    },
     // 显示状态切换（子导航）
     toggleShowSubNavBox (item, status) {
       switch (item) {
@@ -398,7 +427,7 @@ export default{
     },
     // 更改设置
     changeSetting () {
-      console.log(this)
+      // console.log(this)
       this.CHANGE_THEME(this.activeTheme)
       setStore('theme', this.activeTheme)
       document.body.classList.remove('day')
@@ -431,7 +460,9 @@ export default{
   computed: {
     ...mapState({
       theme: state => state.common.theme,
-      language: state => state.common.language
+      language: state => state.common.language,
+      isLogin: state => state.user.isLogin,
+      userInfo: state => state.user.loginStep1Info.userInfo
     })
   }
 }
@@ -546,6 +577,9 @@ export default{
             .login{
               display: inline-block;
               position: relative;
+              >.username{
+                color:$mainColor;
+              }
               >.login-info{
                 width: 210px;
                 height: 0;

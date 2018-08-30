@@ -484,19 +484,9 @@ export default {
     },
     // 检测用户名是否存在
     async checkUserExistAjax (type, userName) {
-      switch (type) {
-        case 'phone':
-          if (this.checkoutInputFormat(0, userName)) {
-            return false
-          }
-          break
-        case 'email':
-          if (this.checkoutInputFormat(1, userName)) {
-            return false
-          }
-          break
-      }
-      console.log(type)
+      console.log('blur')
+      // let a = validateNumForUserInput(type, userName)
+      // console.log(a)
       if (!validateNumForUserInput(type, userName)) {
         let params = {
           userName: userName,
@@ -507,7 +497,18 @@ export default {
           return false
         }
       } else {
-        console.log('error')
+        switch (type) {
+          case 'phone':
+            if (this.checkoutInputFormat(0, userName)) {
+              return false
+            }
+            break
+          case 'email':
+            if (this.checkoutInputFormat(1, userName)) {
+              return false
+            }
+            break
+        }
       }
     },
     // 手机
@@ -525,15 +526,16 @@ export default {
     // 发送验证码（短信、邮箱）
     sendPhoneOrEmailCode (type) {
       let params = {
-        country: this.activeCountryCodeWithPhone,
         type: 'REGISTER'
       }
       switch (type) {
         case 0:
           params.phone = this.phoneNum
+          params.country = this.activeCountryCodeWithPhone
           break
         case 1:
           params.address = this.emailNum
+          params.country = this.activeCountryCodeWithEmail
           break
       }
       sendPhoneOrEmailCodeAjax(type, params, (data) => {
@@ -582,12 +584,14 @@ export default {
       console.log(goOnStatus)
       if (goOnStatus) {
         let userName = this.activeMethod ? this.emailNum : this.phoneNum
+        let countryCode = this.activeMethod ? this.activeCountryCodeWithEmail : this.activeCountryCodeWithPhone
         let params = {
           userName: userName,
           password: this.password,
           checkCode: this.checkCode,
           // inviter: this.inviter,
-          regType: regType
+          regType: regType,
+          country: countryCode
         }
         try {
           const data = await sendRegisterUser(params)

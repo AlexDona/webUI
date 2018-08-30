@@ -29,7 +29,6 @@
         </span>
       </div>
       <div class="content">
-        <el-collapse-transition>
           <div
             v-show="contentShowStatus"
             class="inner-box"
@@ -49,86 +48,185 @@
                 </span>
               </dt>
             </dl>
-            <!--买入-->
-            <el-collapse-transition>
-            <dl
-              class="buys-list"
-              v-show="listOrder!=='sells'"
+            <!--buys、sells-->
+            <div
+              class="mibble-box content-box"
+              v-if="listOrder==='middle'"
             >
-              <dd
-                class="buys-item"
-                v-for="(item,index) in buysAndSellsList.buys.list"
-                :key="index"
-                :class="{'odd':index%2!==0}"
+              <!--买入-->
+              <dl
+                class="buys-list"
               >
-                <div class="inner">
+                <dd
+                  class="buys-item"
+                  v-for="(item,index) in buysAndSellsList.buys.list.slice(0,9)"
+                  :key="index"
+                  :class="{'odd':index%2!==0}"
+                >
+                  <div class="inner">
                   <span class="price text-align-l">
                     {{item.price}}
                   </span>
-                  <span class="amount text-align-r">
+                    <span class="amount text-align-r">
                     {{item.amount}}
                   </span>
-                  <span class="total text-align-r">
+                    <span class="total text-align-r">
                     {{item.total}}
                   </span>
-                  <!--宽度条-->
-                  <i
-                    class="color-buy-bg"
-                    :style="'width:'+ item.amount/buysAndSellsList.buys.highestAmount*100+'%'"
-                  >
-                  </i>
-                </div>
-              </dd>
-            </dl>
-            </el-collapse-transition>
-            <!--最新价-->
-            <dl class="new-price">
-              <dt class="text-align-c font-size16">
-                <span>{{buysAndSellsList.latestDone.price}}</span>
-                <IconFontCommon
-                  v-show="buysAndSellsList.latestDone.rose>0"
-                  iconName="icon-down"
-                />
-                <IconFontCommon
-                  v-show="buysAndSellsList.latestDone.rose<0"
-                  iconName="icon-up"
-                />
-              </dt>
-            </dl>
-            <!--卖出-->
-            <el-collapse-transition>
-            <dl
-              class="sells-list"
-              v-show="listOrder!=='buys'"
-            >
-              <dd
-                class="sells-item"
-                v-for="(item,index) in buysAndSellsList.sells.list"
-                :key="index"
-                :class="{'even':index%2==0}"
+                    <!--宽度条-->
+                    <i
+                      class="color-buy-bg"
+                      :style="'width:'+ item.amount/buysAndSellsList.buys.highestAmount*100+'%'"
+                    >
+                    </i>
+                  </div>
+                </dd>
+              </dl>
+              <!--最新价-->
+              <dl class="new-price">
+                <dt class="text-align-c font-size16">
+                  <span>{{buysAndSellsList.latestDone.price}}</span>
+                  <IconFontCommon
+                    v-show="buysAndSellsList.latestDone.rose>0"
+                    iconName="icon-down"
+                  />
+                  <IconFontCommon
+                    v-show="buysAndSellsList.latestDone.rose<0"
+                    iconName="icon-up"
+                  />
+                </dt>
+              </dl>
+              <!--卖出-->
+              <dl
+                class="sells-list"
               >
-                <div class="inner">
+                <dd
+                  class="sells-item"
+                  v-for="(item,index) in buysAndSellsList.sells.list.slice(0,9)"
+                  :key="index"
+                  :class="{'even':index%2==0}"
+                >
+                  <div class="inner">
                   <span class="price text-align-l">
                     {{item.price}}
                   </span>
-                  <span class="amount text-align-r">
+                    <span class="amount text-align-r">
                     {{item.amount}}
                   </span>
-                  <span class="total text-align-r">
+                    <span class="total text-align-r">
                     {{item.total}}
                   </span>
-                  <!--宽度条-->
-                  <i
-                    class="color-sell-bg"
-                    :style="'width:'+ item.amount/buysAndSellsList.buys.highestAmount*100+'%'"
-                  >
-                  </i>
-                </div>
-              </dd>
-            </dl>
-            </el-collapse-transition>
+                    <!--宽度条-->
+                    <i
+                      class="color-sell-bg"
+                      :style="'width:'+ item.amount/buysAndSellsList.buys.highestAmount*100+'%'"
+                    >
+                    </i>
+                  </div>
+                </dd>
+              </dl>
+            </div>
+            <!--buys-->
+            <div
+              class="mibble-box content-box"
+              v-if="listOrder==='buys'"
+            >
+              <!--最新价-->
+              <dl class="new-price">
+                <dt class="text-align-c font-size16">
+                  <span>{{buysAndSellsList.latestDone.price}}</span>
+                  <IconFontCommon
+                    v-show="buysAndSellsList.latestDone.rose>0"
+                    iconName="icon-down"
+                  />
+                  <IconFontCommon
+                    v-show="buysAndSellsList.latestDone.rose<0"
+                    iconName="icon-up"
+                  />
+                </dt>
+              </dl>
+              <!--买入-->
+              <dl
+                class="buys-list"
+              >
+                <dd
+                  class="buys-item"
+                  v-for="(item,index) in buysAndSellsList.buys.list.slice(0,19)"
+                  :key="index"
+                  :class="{'odd':index%2!==0}"
+                >
+                  <div class="inner">
+                  <span class="price text-align-l">
+                    {{item.price}}
+                  </span>
+                    <span class="amount text-align-r">
+                    {{item.amount}}
+                  </span>
+                    <span class="total text-align-r">
+                    {{item.total}}
+                  </span>
+                    <!--宽度条-->
+                    <i
+                      class="color-buy-bg"
+                      :style="'width:'+ item.amount/buysAndSellsList.buys.highestAmount*100+'%'"
+                    >
+                    </i>
+                  </div>
+                </dd>
+              </dl>
+            </div>
+            <!--sells-->
+            <!--<el-collapse-transition>-->
+              <div
+              class="mibble-box content-box"
+              v-if="listOrder==='sells'"
+            >
+              <!--最新价-->
+              <dl class="new-price">
+                <dt class="text-align-c font-size16">
+                  <span>{{buysAndSellsList.latestDone.price}}</span>
+                  <IconFontCommon
+                    v-show="buysAndSellsList.latestDone.rose>0"
+                    iconName="icon-down"
+                  />
+                  <IconFontCommon
+                    v-show="buysAndSellsList.latestDone.rose<0"
+                    iconName="icon-up"
+                  />
+                </dt>
+              </dl>
+              <!--卖出-->
+              <dl
+                class="sells-list"
+              >
+                <dd
+                  class="sells-item"
+                  v-for="(item,index) in buysAndSellsList.sells.list.slice(0,19)"
+                  :key="index"
+                  :class="{'even':index%2==0}"
+                >
+                  <div class="inner">
+                  <span class="price text-align-l">
+                    {{item.price}}
+                  </span>
+                    <span class="amount text-align-r">
+                    {{item.amount}}
+                  </span>
+                    <span class="total text-align-r">
+                    {{item.total}}
+                  </span>
+                    <!--宽度条-->
+                    <i
+                      class="color-sell-bg"
+                      :style="'width:'+ item.amount/buysAndSellsList.buys.highestAmount*100+'%'"
+                    >
+                    </i>
+                  </div>
+                </dd>
+              </dl>
+            </div>
+            <!--</el-collapse-transition>-->
           </div>
-        </el-collapse-transition>
       </div>
     </div>
   </div>
@@ -147,11 +245,12 @@ export default {
   // props,
   data () {
     return {
+      // buysAndSellsList: [], // 过滤过的渲染列表
       contentShowStatus: true,
       // 买卖数据列表
       buysAndsells: {},
       // 显示顺序(buys,middle,sells)
-      listOrder: 'middle'
+      listOrder: 'middle' // 切换显示顺序
     }
   },
   created () {
@@ -329,18 +428,9 @@ export default {
       depthData: state => state.common.socketData.depthData,
       buysAndSellsList: state => state.common.socketData.buyAndSellData
     })
-    // buysAndSellsList () {
-    //   return this.buyAndSellData
-    // }
   },
   watch: {
     depthData (newVal) {
-      // console.log(newVal)
-    },
-    buysAndSellsList (newVal) {
-      console.log(newVal)
-      // this.buysAndSellsList = newVal
-      // console.log(this.buysAndSellsList)
     }
   }
 }
@@ -399,6 +489,8 @@ export default {
             height:36px;
             line-height:36px;
             padding:0 4px;
+            position: relative;
+            z-index: 2;
             .header{
               display:flex;
               >span{
@@ -406,47 +498,53 @@ export default {
               }
             }
           }
-          >.buys-list,.sells-list{
-            font-size: 12px;
-            padding:0 4px;
-            >dd{
-              height: 24px;
-              line-height: 24px;
-              >.inner{
-                display: flex;
-                >span{
-                  flex:1;
-                }
-                >.amount{
-                  padding-right:18%;
-                }
-                position: relative;
-                z-index: 1;
-                >.color-buy-bg,>.color-sell-bg{
-                  position: absolute;
-                  right:0;
-                  top:1px;
-                  height:22px;
-                  z-index: 0;
-                  opacity: .1;
-                }
-                >.color-buy-bg{
-                  background-color:$upColor;
-                }
-                >.color-sell-bg{
-                  background-color:$downColor;
+          >.content-box{
+            >.buys-list,.sells-list{
+              font-size: 12px;
+              padding:0 4px;
+              >dd{
+                height: 24px;
+                line-height: 24px;
+                >.inner{
+                  display: flex;
+                  >span{
+                    flex:1;
+                  }
+                  >.amount{
+                    padding-right:18%;
+                  }
+                  position: relative;
+                  z-index: 1;
+                  >.color-buy-bg,>.color-sell-bg{
+                    max-width:100%;
+                    position: absolute;
+                    right:0;
+                    top:1px;
+                    height:22px;
+                    z-index: 0;
+                    opacity: .1;
+                  }
+                  >.color-buy-bg{
+                    background-color:$upColor;
+                  }
+                  >.color-sell-bg{
+                    background-color:$downColor;
+                  }
                 }
               }
             }
-          }
-          /*最新价*/
-          .new-price{
-            height:38px;
-            line-height:38px;
-          }
-          /*买入表*/
-          >.buys-list{
-            >.buys-item{
+            /*最新价*/
+            .new-price{
+              height:38px;
+              line-height:38px;
+            }
+            /*买入表*/
+            >.buys-list{
+              &.height22{
+                overflow: hidden;
+              }
+              >.buys-item{
+              }
             }
           }
         }

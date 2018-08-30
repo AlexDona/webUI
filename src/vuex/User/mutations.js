@@ -5,10 +5,15 @@ import {
   ENTER_STEP3,
   SET_LOGIN_TYPE,
   SET_STEP1_INFO,
-  SET_USER_BUTTON_STATUS
+  SET_USER_BUTTON_STATUS,
+  USER_LOGIN,
+  USER_LOGOUT
 } from './mutations-types.js'
 
-import {setStore} from '../../utils'
+import {
+  setStore,
+  removeStore
+} from '../../utils'
 
 // import {localapi, proapi} from 'src/config/env'
 
@@ -58,12 +63,16 @@ export default {
     } else {
       state.disabledOfEmailBtn = data.status
     }
-    // switch (data.loginType) {
-    //   case 0:
-    //     break
-    //   case 1:
-    //     state.disabledOfEmailBtn = data.status
-    //     break
-    // }
+  },
+  // 用户登录
+  [USER_LOGIN] (state, data) {
+    state.isLogin = true
+    state.loginStep1Info = data
+    setStore('loginStep1Info', data)
+  },
+  // 用户出
+  [USER_LOGOUT] (state) {
+    state.isLogin = false
+    removeStore('loginStep1Info')
   }
 }

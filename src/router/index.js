@@ -2,8 +2,14 @@ import Vue from 'vue'
 import Router from 'vue-router'
 
 Vue.use(Router)
+/**
+ * Common
+ */
+
 const HomeCenter = r => require.ensure([], () => r(require('@/components/Home/HomeCenter')), 'home-center')
-// 个人中心
+/**
+ * Personal
+ */
 const PersonalCenter = r => require.ensure([], () => r(require('@/components/Personal/UserAssets/PersonalCenter')), 'user-center')
 // 银行卡设置
 const AddBankCard = r => require.ensure([], () => r(require('@/components/Personal/AccountReceivableAccount/AddBankCard')), 'add-bank')
@@ -25,22 +31,35 @@ const GoogleBinding = r => require.ensure([], () => r(require('@/components/Pers
 const TransactionPassword = r => require.ensure([], () => r(require('@/components/Personal/UserSecuritySettings/UserTransactionPassword')), 'transaction-password')
 // 修改登录密码
 const LoginPassword = r => require.ensure([], () => r(require('@/components/Personal/UserSecuritySettings/UserLoginPassword')), 'login-password')
+/**
+ * OTC
+ */
 const OTCCenter = r => require.ensure([], () => r(require('@/components/OTC/OTCCenter')), 'otc-center')
 const OTCPublishBuyAndSell = r => require.ensure([], () => r(require('@/components/OTC/OTCPublishBuyAndSell')), 'otc-publish-buy-and-sell')
 const OTCOnlineTraderBuySell = r => require.ensure([], () => r(require('@/components/OTC/OTCOnlineTraderBuySell')), 'otc-online-trader-buy-sell')
-
 const OTCPublishAD = r => require.ensure([], () => r(require('@/components/OTC/OTCPublishAD')), 'otc-publish-AD')
 const OTCADManage = r => require.ensure([], () => r(require('@/components/OTC/OTCADManage')), 'otc-AD-manage')
 const OTCMerchantsOrders = r => require.ensure([], () => r(require('@/components/OTC/OTCMerchantsOrders')), 'otc-merchants-orders')
 const OTCReportFormStatistics = r => require.ensure([], () => r(require('@/components/OTC/OTCReportFormStatistics')), 'otc-report-form-statistics')
 const OTCBusinessApply = r => require.ensure([], () => r(require('@/components/OTC/OTCBusinessApply')), 'otc-business-apply')
+/**
+ * User
+ */
 // 登录
 const Login = r => require.ensure([], () => r(require('@/components/User/LoginUser')), 'login')
 // 注册
 const Register = r => require.ensure([], () => r(require('@/components/User/RegisterUser')), 'login')
-
+/**
+ * TradeCenter
+ */
 // 币币交易
 const TradeCenter = r => require.ensure([], () => r(require('@/components/Trade/TradeCenter')), 'trade-center')
+
+/**
+ * ActivityCenter
+ */
+const ActivityCenter = r => require.ensure([], () => r(require('@/components/ActivityCenter/ActivityCenter')), 'activity-center')
+
 export default new Router({
   routes: [
     {
@@ -178,6 +197,11 @@ export default new Router({
       path: '/Register',
       // name: 'Register',
       component: Register
+    },
+    {
+      // 活动中心
+      path: '/ActivityCenter',
+      component: ActivityCenter
     }
   ]
 })
