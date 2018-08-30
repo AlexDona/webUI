@@ -43,7 +43,7 @@
                 ref="emailCode"
                 @keyup="changeInputValue('emailCode')"
               >
-                <template slot="append">发送验证码</template>
+                <template slot="append">验证码</template>
               </el-input>
             </el-form-item>
             <div class="prompt-message">
@@ -79,6 +79,7 @@ export default {
   },
   data () {
     return {
+      globalUserInformation: {}, // 个人信息
       errorMsg: '', // 错误信息提示
       emailAccounts: '', // 邮箱账号
       emailCode: '' // 邮箱验证码
@@ -91,6 +92,8 @@ export default {
     require('../../../../static/css/theme/day/Personal/UserSecuritySettings/UserSecureEmailDay.css')
     // 黑色主题样式
     require('../../../../static/css/theme/night/Personal/UserSecuritySettings/UserSecureEmailNight.css')
+    // 获取全局个人信息
+    this.globalUserInformation = this.userInfo
   },
   mounted () {},
   activited () {},
@@ -130,7 +133,8 @@ export default {
   filter: {},
   computed: {
     ...mapState({
-      theme: state => state.common.theme
+      theme: state => state.common.theme,
+      userInfo: state => state.personal.userInfo
     })
   },
   watch: {}
@@ -179,7 +183,7 @@ export default {
           }
           .email-button {
             padding: 10px 33px;
-            margin: 30px 0 50px 25px;
+            margin: 30px 0 50px 40px;
           }
           .prompt-message {
             height: 20px;

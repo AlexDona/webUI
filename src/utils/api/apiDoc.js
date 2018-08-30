@@ -41,6 +41,12 @@ export const addOTCPutUpOrders = (params) => postWithURLencoded('otcEntrust/addO
 /**
  * 个人中心
  */
+// push资产记录列表/push币种列表/默认余额total
+export const getPushAssetList = (params) => get('push/getPushList', params)
+// push根据币种id获取可用余额
+export const getPushTotalByCoinId = (params) => get('push/getTotalByCoinId', params)
+// push资产提交
+export const pushAssetsSubmit = (params) => postWithURLencoded('push/pushSub', params)
 /**
  * 头部
  */

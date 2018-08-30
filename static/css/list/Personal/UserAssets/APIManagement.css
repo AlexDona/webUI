@@ -1,0 +1,6 @@
+.api-management.personal .el-table th.is-leaf {
+  border-bottom: 0;
+}
+.api-management.personal .el-table td{
+  border-bottom: 0;
+}

@@ -23,6 +23,14 @@ const AddSetPaypal = r => require.ensure([], () => r(require('@/components/Perso
 const AddWesternUnion = r => require.ensure([], () => r(require('@/components/Personal/AccountReceivableAccount/AddWesternUnion')), 'add-western')
 // 安全邮箱设置
 const SecureEmail = r => require.ensure([], () => r(require('@/components/Personal/UserSecuritySettings/UserSecureEmail')), 'set-email')
+// 安全手机设置
+const SecurePhone = r => require.ensure([], () => r(require('@/components/Personal/UserSecuritySettings/UserSecurePhone')), 'set-phone')
+// 谷歌验证
+const GoogleBinding = r => require.ensure([], () => r(require('@/components/Personal/UserSecuritySettings/UserGoogleBinding')), 'binding-google')
+// 设置交易密码
+const TransactionPassword = r => require.ensure([], () => r(require('@/components/Personal/UserSecuritySettings/UserTransactionPassword')), 'transaction-password')
+// 修改登录密码
+const LoginPassword = r => require.ensure([], () => r(require('@/components/Personal/UserSecuritySettings/UserLoginPassword')), 'login-password')
 /**
  * OTC
  */
@@ -106,6 +114,30 @@ export default new Router({
       path: '/SecureEmail',
       // name: 'SecureEmail',
       component: SecureEmail
+    },
+    {
+      // 安全手机设置
+      path: '/SecurePhone',
+      // name: 'SecurePhone',
+      component: SecurePhone
+    },
+    {
+      // 绑定谷歌验证
+      path: '/GoogleBinding',
+      // name: 'GoogleBinding',
+      component: GoogleBinding
+    },
+    {
+      // 设置交易密码
+      path: '/TransactionPassword',
+      // name: 'TransactionPassword',
+      component: TransactionPassword
+    },
+    {
+      // 修改登录密码
+      path: '/LoginPassword',
+      // name: 'LoginPassword',
+      component: LoginPassword
     },
     {
       // OTC中心

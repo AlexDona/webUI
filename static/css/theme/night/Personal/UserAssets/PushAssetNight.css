@@ -35,3 +35,7 @@
 .push-assets.personal.night .el-table--enable-row-hover .el-table__body tr:hover>td{
   background-color: #1E2636;
 }
+.push-assets.personal.night .el-table__empty-block {
+  background-color: #1E2636;
+  color: #fff;
+}

@@ -23,3 +23,12 @@
   padding: 0;
   border: 0;
 }
+.account-assets.personal .el-input__inner {
+  border: 0;
+  width: 350px;
+  height: 34px;
+  border-radius: 2px;
+}
+.account-assets.personal .el-input__icon {
+  display: none;
+}

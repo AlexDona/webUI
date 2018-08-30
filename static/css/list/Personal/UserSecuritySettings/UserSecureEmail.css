@@ -9,7 +9,10 @@
 }
 .set-email.personal .el-input-group__append {
   border-left: 0;
-  padding: 0 7px;
+  padding: 0 16px;
   border-radius: 0 4px 4px 0;
   cursor: pointer;
+}
+.set-phone.personal .el-form-item {
+  margin-bottom: 30px;
 }
