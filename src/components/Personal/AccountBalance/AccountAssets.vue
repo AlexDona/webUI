@@ -88,16 +88,16 @@
                 :key="index"
               >
                 <div class="table-td flex1">
-                  {{ item.currencyName }}
+                  {{ item.coinName }}
                 </div>
                 <div class="table-td flex1">
-                  {{ item.totalQuantity }}
+                  {{ item.frozen + item.total }}
                 </div>
                 <div class="table-td flex1">
-                  {{ item.numberFrozen }}
+                  {{ item.frozen }}
                 </div>
                 <div class="table-td flex1">
-                  {{ item.availableQuantity }}
+                  {{ item.total }}
                 </div>
                 <div class="table-td flex1 text-align-c">
                   {{ item.assetValuation }}
@@ -112,6 +112,8 @@
                   </div>
                   <div
                     class="table-mention-money flex1 cursor-pointer"
+                    @click="mentionMoneyButton()"
+                    :id="item.fid"
                   >
                     提币
                   </div>
@@ -150,7 +152,6 @@
                     <input
                       class="hint-input border-radius2 padding-l15 float-left"
                       disabled
-                      placeholder="请输入内容"
                       v-model="chargeMoney"
                       id="chargeMoney"
                     />
@@ -197,13 +198,14 @@
                       <p class="left-flex-hint">BTC提币地址</p>
                       <el-select
                         v-model="mentionAddressValue"
-                        placeholder="请选择"
+                        @change="changeId"
                       >
                         <el-option
-                          v-for="item in mentionAddressList"
-                          :key="item.value"
-                          :label="item.label"
-                          :value="item.value">
+                          v-for="(item, index) in mentionAddressList"
+                          :key="index"
+                          :label="item.address"
+                          :value="item.coinId"
+                        >
                         </el-option>
                       </el-select>
                       <span
@@ -281,7 +283,7 @@ import UserInfo from '../AccountBalance/UserInfo'
 import IconFontCommon from '../../Common/IconFontCommon'
 import VueClipboard from 'vue-clipboard2'
 import { createNamespacedHelpers, mapState } from 'vuex'
-import {assetCurrenciesList} from '../../../utils/api/apiDoc'
+import {assetCurrenciesList, inquireWithdrawalAddressList, inquireRechargeAddressList} from '../../../utils/api/apiDoc'
 import {returnAjaxMessage} from '../../../utils/commonFunc'
 const { mapMutations } = createNamespacedHelpers('personal')
 Vue.use(VueClipboard)
@@ -342,15 +344,7 @@ export default {
       mentionMoneyAddress: '', // 每行数据ID
       mentionAddressValue: '', // 提币地址
       // 提币地址列表
-      mentionAddressList: [
-        {
-          value: '1',
-          label: 'ASDFASDFASDASDFASDFAS'
-        }, {
-          value: '2',
-          label: 'FASDFASDFASDFASDF'
-        }
-      ]
+      mentionAddressList: []
     }
   },
   created () {
@@ -360,6 +354,8 @@ export default {
     require('../../../../static/css/theme/day/Personal/AccountBalance/AccountAssetsDay.css')
     // 黑色主题样式
     require('../../../../static/css/theme/night/Personal/AccountBalance/AccountAssetsNight.css')
+    // 刚进页面时候 个人资产列表展示
+    this.getAssetCurrenciesList()
   },
   mounted () {},
   activited () {},
@@ -397,11 +393,26 @@ export default {
           this.withdrawDepositIsShowList = item
         }
       })
+      // 调用充币地址方法
+      this.fillingCurrencyAddress()
+    },
+    // 显示提现框
+    mentionMoneyButton () {
+      // console.log(id)
+      // this.dialogVisible = true
+      // this.mentionMoneyAddress = id
+      // this.withdrawDepositIsShowList.forEach((fid, item) => {
+      //   if (item.fid == fid) {
+      //     this.withdrawDepositIsShowList = item
+      //   }
+      // })
+      // 调用充币地址方法
+      this.queryWithdrawalAddressList()
     },
     /**
      * 刚进页面时候 个人资产列表展示
      */
-    async getPushRecordList () {
+    async getAssetCurrenciesList () {
       let data = await assetCurrenciesList({
         partnerId: this.merchantID // 商户id
       })
@@ -410,8 +421,49 @@ export default {
         return false
       } else {
         // 返回数据
-        this.withdrawDepositIsShowList = data.data.data
+        this.withdrawDepositIsShowList = data.data.data.userCoinWalletVOPageInfo.list
         console.log(this.withdrawDepositIsShowList)
+      }
+    },
+    /**
+     *  刚进页面时候 提币地址列表查询
+     */
+    // 资产币种提币地址选择
+    changeId (e) {
+      this.mentionAddressList.forEach(item => {
+        if (e === item.id) {
+          this.mentionAddressValue = e
+          console.log(item.currencyValue)
+        }
+      })
+    },
+    // 查询提币地址列表查询
+    async queryWithdrawalAddressList () {
+      let data = await inquireWithdrawalAddressList()
+      // console.log(data)
+      if (!(returnAjaxMessage(data, this, 1))) {
+        return false
+      } else {
+        // 返回列表数据
+        this.mentionAddressList = data.data.data.UserWithdrawAddressPage.list
+        this.mentionAddressValue = data.data.data.UserWithdrawAddressPage.list[0].address
+        this.mentionAddressValue = data.data.data.UserWithdrawAddressPage.list[0].coinId
+        console.log(this.mentionAddressList)
+        console.log(this.mentionAddressValue)
+      }
+    },
+    /**
+     *  刚进页面时候 查询充币地址查询
+     */
+    async fillingCurrencyAddress () {
+      let data = await inquireRechargeAddressList()
+      // console.log(data)
+      if (!(returnAjaxMessage(data, this, 1))) {
+        return false
+      } else {
+        // 返回列表数据
+        this.chargeMoney = data.data.data.userRechargeAddress.address
+        console.log(this.chargeMoney)
       }
     },
     // 点击跳转账单明细

@@ -13,12 +13,16 @@
         <div class="withdrawal-address-box paddinglr20 margin-top30">
           <el-form ref="form" label-width="70px">
             <el-form-item label="币种">
-              <el-select v-model="currencyValue">
+              <el-select
+                v-model="currencyValue"
+                @change="changeId"
+              >
                 <el-option
-                  v-for="item in currencyList"
-                  :key="item.value"
-                  :label="item.label"
-                  :value="item.value">
+                  v-for="(item, index) in currencyList"
+                  :key="index"
+                  :label="item.shortName"
+                  :value="item.coinId"
+                >
                 </el-option>
               </el-select>
             </el-form-item>
@@ -62,7 +66,7 @@
           width="180"
         >
           <template slot-scope = "s">
-            <div>{{ s.row.currency }}</div>
+            <div>{{ s.row.coinName }}</div>
           </template>
         </el-table-column>
         <el-table-column
@@ -78,7 +82,7 @@
           width="350"
         >
           <template slot-scope = "s">
-            <div>{{ s.row.mentionAddress }}</div>
+            <div>{{ s.row.address }}</div>
           </template>
         </el-table-column>
         <el-table-column
@@ -86,8 +90,8 @@
         >
           <template slot-scope = "s">
             <div
-              @click="deleteWithdrawalAddressId(s.row.fid)"
-              :id="s.row.fid"
+              @click="cancelId(s.row.id)"
+              :id="s.row.id"
             >
               {{ operation }}
             </div>
@@ -105,13 +109,11 @@
           <el-button
             type="primary"
             @click="confirm"
-            class="mg1"
             :disabled="statel"
           >
             确 定
           </el-button>
-          <el-button
-            @click="cancel">
+          <el-button @click="dialogVisible = false">
             取 消
           </el-button>
         </span>
@@ -122,6 +124,8 @@
 <!--请严格按照如下书写书序-->
 <script>
 import {mapState} from 'vuex'
+import {inquireWithdrawalAddressList, addNewWithdrawalAddress, deleteUserWithdrawAddress} from '../../../utils/api/apiDoc'
+import {returnAjaxMessage} from '../../../utils/commonFunc'
 export default {
   components: {},
   // props,
@@ -129,50 +133,15 @@ export default {
     return {
       errorMsg: '', // 错误信息提示
       // 币种列表
-      currencyValue: 'BTC',
-      currencyList: [{
-        value: '1',
-        label: 'BTC'
-      }, {
-        value: '2',
-        label: 'EHT'
-      }, {
-        value: '3',
-        label: 'EHT'
-      }, {
-        value: '4',
-        label: 'FUC'
-      }, {
-        value: '5',
-        label: 'HT'
-      }],
+      currencyValue: '',
+      currencyList: [],
       mentionRemark: '', // 提现备注
       prepaidAddress: '', // 提币地址
       // 地址列表
-      gainAddressList: [{
-        fid: 1,
-        currency: 'BTC',
-        remark: '王小虎',
-        mentionAddress: 'HDFJKASDFHKLASHDFASLDFHASDFLAHSDFJ'
-      }, {
-        fid: 2,
-        currency: 'BTC',
-        remark: '王小虎',
-        mentionAddress: 'HDFJKASDFHKLASHDFASLDFHASDFLAHSDFJ'
-      }, {
-        fid: 3,
-        currency: 'BTC',
-        remark: '王小虎',
-        mentionAddress: 'HDFJKASDFHKLASHDFASLDFHASDFLAHSDFJ'
-      }, {
-        fid: 4,
-        currency: 'BTC',
-        remark: '王小虎',
-        mentionAddress: 'HDFJKASDFHKLASHDFASLDFHASDFLAHSDFJ'
-      }],
+      gainAddressList: [],
       operation: '删除',
       dialogVisible: false, // 取消弹窗默认隐藏
-      deleteWithdrawalAddress: '' // 每行数据ID
+      deleteWithdrawalId: '' // 每行数据ID
     }
   },
   created () {
@@ -182,6 +151,7 @@ export default {
     require('../../../../static/css/theme/day/Personal/AccountBalance/WithdrawalAddressDay.css')
     // 黑色主题样式
     require('../../../../static/css/theme/night/Personal/AccountBalance/WithdrawalAddressNight.css')
+    this.WithdrawalAddressList()
   },
   mounted () {},
   activited () {},
@@ -193,29 +163,83 @@ export default {
       this.errorMsg = ''
     },
     addAddress () {
-      if (!this.prepaidAddress) {
-        this.errorMsg = '提币地址不能为空'
-      }
+      // if (!this.prepaidAddress) {
+      //   this.errorMsg = '提币地址不能为空'
+      // }
+      this.stateSubmitAddAddress()
       console.log('prepaidAddress')
     },
-    // 删除地址
-    deleteWithdrawalAddressId (id) {
+    // 资产币种下拉
+    changeId (e) {
+      this.currencyList.forEach(item => {
+        if (e === item.id) {
+          this.currencyValue = e
+          console.log(item.currencyValue)
+          this.stateSubmitAddAddress(e)
+        }
+      })
+    },
+    // 新增用户提币地址按钮
+    async stateSubmitAddAddress () {
+      let data
+      let param = {
+        coinId: this.currencyValue, // 币种coinId
+        remark: this.mentionRemark, // 备注
+        address: this.prepaidAddress // 充值地址
+      }
+      data = await addNewWithdrawalAddress(param)
+      if (!(returnAjaxMessage(data, this, 1))) {
+        return false
+      } else {
+        this.WithdrawalAddressList()
+      }
+    },
+    /**
+     *  刚进页面时候 提币地址列表查询
+     */
+    async WithdrawalAddressList () {
+      let data = await inquireWithdrawalAddressList()
+      // console.log(data)
+      if (!(returnAjaxMessage(data, this, 1))) {
+        return false
+      } else {
+        // 返回列表数据
+        this.currencyList = data.data.data.canWithdrawPartnerCoinList
+        this.currencyValue = data.data.data.canWithdrawPartnerCoinList[0].name
+        this.currencyValue = data.data.data.canWithdrawPartnerCoinList[0].coinId
+        this.gainAddressList = data.data.data.UserWithdrawAddressPage.list
+        console.log(this.currencyList)
+        console.log(this.currencyValue)
+      }
+    },
+    // 删除提币地址
+    cancelId (id) {
       console.log(id)
       this.dialogVisible = true
-      this.deleteWithdrawalAddress = id
+      this.deleteWithdrawalId = id
       this.gainAddressList.forEach((fid, item) => {
-        if (item.fid == fid) {
+        if (item.id == id) {
           this.gainAddressList = item
         }
       })
     },
-    // 取消
-    cancel () {
-      this.dialogVisible = false
-    },
-    // 确认
+    // 确认删除提币地址
     confirm () {
-      this.dialogVisible = false
+      this.deleteWithdrawal()
+    },
+    async deleteWithdrawal () {
+      let data
+      let param = {
+        id: this.deleteWithdrawalId // 列表id
+      }
+      data = await deleteUserWithdrawAddress(param)
+      if (!(returnAjaxMessage(data, this, 0))) {
+        return false
+      } else {
+        this.WithdrawalAddressList()
+        this.dialogVisible = false
+        console.log(data)
+      }
     }
   },
   filter: {},

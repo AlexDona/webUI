@@ -372,7 +372,7 @@ export default {
     // 获取全局个人信息
     // console.log(this.userInfo)
     this.showStatusUserInfo = this.userInfo.data.user
-    this.getPushRecordList()
+    // this.getPushRecordList()
   },
   mounted () {},
   activited () {},

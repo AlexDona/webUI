@@ -26,15 +26,13 @@
                 （&nbsp;
                 <span class="type-info">
                   姓名：
-                  {{ realNameInformationList.realname.substring(0,1) }}
-                  *
-                  {{ realNameInformationList.realName.substring(2,3) }}
+                  {{ statusRealNameInformation.realname }}
                 </span>、
                 <span class="type-info">
                   身份证号：
-                   {{ realNameInformationList.cardNo.substring(0,6)}}
+                   {{ statusRealNameInformation.cardNo.substring(0,6)}}
                   ****
-                   {{ realNameInformationList.cardNo.substring(14,18)}}
+                   {{ statusRealNameInformation.cardNo.substring(14,18)}}
                   <!-- {{  authenticationInfo.identification }}-->
                 </span>
                 &nbsp;）
@@ -50,7 +48,7 @@
           </div>
       </div>
       <div
-        v-if="!realNameInformationObj.realnameAuth"
+        v-if="!this.realNameInformationObj.realnameAuth"
         class="name-authentication-content margin-top9"
       >
         <el-form
@@ -127,16 +125,16 @@
           @click="authenticationMethod">
           <span class="font-size16 main-header-title">高级认证</span>
           <span
-            v-if="!realNameInformationObj.realnameAuth"
+            v-if="this.realNameInformationObj.advancedAuth"
             class="authentication-type font-size12"
           >
-            （请先通过实名认证）
+            （已实名认证）
           </span>
           <span
             v-else
             class="authentication-type font-size12"
           >
-            （已实名认证）
+            （请先通过实名认证）
           </span>
           <i class="el-icon-arrow-down icon-down float-right"></i>
         </p>
@@ -366,11 +364,11 @@ export default {
     // 黑色主题样式
     require('../../../../static/css/theme/night/Personal/UserAssets/IdentityAuthenticationNight.css')
     // 获取全局个人信息
-    this.authenticationInfo = this.userInfo1.data.user
+    // this.authenticationInfo = this.userInfo.data.user
     // 清空图片和关闭弹窗this.clearUserPicture()
-    this.getCountryListings()
-    this.getRealNameInformation()
-    console.log(this.userInfo)
+    // this.getCountryListings()
+    // this.getRealNameInformation()
+    // console.log(this.userInfo)
   },
   mounted () {},
   activited () {},
@@ -408,13 +406,13 @@ export default {
     /**
      * 刚进页面时候 国家列表展示
      */
-    changeId (e) {
-      this.currencyList.forEach(item => {
-        if (e === item.id) {
-          this.getCountryListings(e)
-        }
-      })
-    },
+    // changeId (e) {
+    //   this.currencyList.forEach(item => {
+    //     if (e === item.id) {
+    //       this.getCountryListings(e)
+    //     }
+    //   })
+    // },
     async getCountryListings () {
       let data = await queryCountryList()
       console.log(data)
@@ -475,6 +473,7 @@ export default {
       if (!(returnAjaxMessage(data, this, 1))) {
         return false
       } else {
+        this.getRealNameInformation()
         console.log(data)
       }
     },
@@ -485,14 +484,14 @@ export default {
     // 高级认证弹窗
     authenticationMethod () {
       // 判断是否高级认证&&实名认证
-      if (this.authenticationInfo.hasrealvaliDate == true && this.authenticationInfo.userIdentity == false) {
+      if (this.realNameInformationObj.realnameAuth == true && this.realNameInformationObj.advancedAuth == false) {
         this.seniorAuthentication = true
       }
     },
     // 高级认证内容
     authenticationAuthentication () {
       // 点击进入高级认证时隐藏弹窗
-      if (this.authenticationInfo.userIdentity == false) {
+      if (this.realNameInformationObj.advancedAuth == false) {
         this.authenticationStatusFront = true
       }
       this.seniorAuthentication = false
@@ -516,6 +515,7 @@ export default {
       if (!(returnAjaxMessage(data, this, 1))) {
         return false
       } else {
+        this.getRealNameInformation()
         this.dialogImageFrontUrl = ''
         this.dialogImageReverseSideUrl = ''
         this.dialogImageHandUrl = ''

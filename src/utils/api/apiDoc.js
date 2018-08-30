@@ -43,6 +43,14 @@ export const addOTCPutUpOrders = (params) => postWithURLencoded('otcEntrust/addO
  */
 // 我的资产币种列表
 export const assetCurrenciesList = (params) => get('personal/getUserFinanceList', params)
+// 提币地址列表查询
+export const inquireWithdrawalAddressList = (params) => get('personal/getWithdrawAddress', params)
+// 新增用户提币地址
+export const addNewWithdrawalAddress = (params) => post('personal/addWithdrawAddress', params)
+// 提币地址删除
+export const deleteUserWithdrawAddress = (params) => put('personal/deleteUserWithdrawAddress', params)
+// 查询充币地址
+export const inquireRechargeAddressList = (params) => get('personal/getRechargeAddress', params)
 // 查询国家列表
 export const queryCountryList = (params) => get('country/selectList', params)
 // 提交实名认证
