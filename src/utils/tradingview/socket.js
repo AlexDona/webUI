@@ -36,7 +36,7 @@ function subscribe (ws, params) {
     // console.log('qidong')
     ws.send(JSON.stringify({
       'tag': 'REQ',
-      'content': `market.ticker.474629374641963008.481417408695762944.all`,
+      'content': `market.ticker.474629374641963008.481417408695762944.all.i18nCode`,
       'id': `market_001`
     }))
   } else {

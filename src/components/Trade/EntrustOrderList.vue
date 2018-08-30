@@ -213,10 +213,12 @@
 import {timeFilter} from '../../utils'
 import {
   getMyEntrust,
-  getHistoryEntrust,
-  repealMyEntrust
+  getHistoryEntrust
 } from '../../utils/api/apiDoc'
-import {returnAjaxMessage} from '../../utils/commonFunc'
+import {
+  returnAjaxMessage,
+  repealMyEntrustCommon
+} from '../../utils/commonFunc'
 import { createNamespacedHelpers, mapState } from 'vuex'
 const { mapMutations } = createNamespacedHelpers('trade')
 
@@ -268,16 +270,24 @@ export default {
     /**
      *撤销委单
      */
-    async repealMyEntrust (id, version) {
-      console.log(id)
-      console.log(version)
+    repealMyEntrust (id, version) {
       let params = {
         id,
         version
       }
-      const repealData = await repealMyEntrust(params)
-      returnAjaxMessage(repealData, this, 1)
-      this.getMyCurrentEntrust()
+      repealMyEntrustCommon(params, (res) => {
+        if (!returnAjaxMessage(res, this, 1)) {
+          return false
+        } else {
+          this.getMyCurrentEntrust()
+        }
+      })
+      // console.log(id)
+      // console.log(version)
+
+      // const repealData =  repealMyEntrust(params)
+      // returnAjaxMessage(repealData, this, 1)
+      // this.getMyCurrentEntrust()
     },
     /**
       * 切换页码

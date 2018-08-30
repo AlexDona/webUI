@@ -28,9 +28,6 @@ export const getOTCEntrustingOrders = (params) => get('otcEntrust/selectEntrusts
 export const getOTCFrezzingOrders = (params) => get('selectUserOrdersIn3Day', params)
 // 添加otc挂单(商家与普通用户都可用)
 export const addOTCPutUpOrders = (params) => postWithURLencoded('otcEntrust/addOtcEntrustForCommon', params)
-/**
- * 币币交易
- */
 
 /**
  * 投资理财
@@ -47,6 +44,9 @@ export const getPushAssetList = (params) => get('push/getPushList', params)
 export const getPushTotalByCoinId = (params) => get('push/getTotalByCoinId', params)
 // push资产提交
 export const pushAssetsSubmit = (params) => postWithURLencoded('push/pushSub', params)
+// 交易区列表查询
+export const getEntrustSelectBox = (params) => get('queryEntrustSelectBox', params)
+
 /**
  * 头部
  */
@@ -98,4 +98,4 @@ export const getMyEntrust = (params) => get('queryMyEntrust', params)
 // 历史委单
 export const getHistoryEntrust = (params) => get('queryMyHisEntrust', params)
 // 撤销当前委单
-export const repealMyEntrust = (params) => put('cancelEntrust', params)
+export const repealMyEntrustAjax = (params) => put('cancelEntrust', params)

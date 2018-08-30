@@ -25,9 +25,16 @@
   height:30px;
   line-height:30px;
 }
-/*.coin-orders.personal*/
-/*.coin-orders.personal*/
-/*.coin-orders.personal*/
+.coin-orders.personal .el-table{
+  font-size: 12px;
+}
+.coin-orders.personal .el-table .cell,
+.coin-orders.personal .el-table th div{
+  padding-right:0;
+}
+.coin-orders.personal .el-table td{
+  border-bottom:none;
+}
 /*.coin-orders.personal*/
 /*.coin-orders.personal*/
 /*.coin-orders.personal*/

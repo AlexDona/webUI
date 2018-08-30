@@ -10,7 +10,7 @@
       <el-tabs v-model="activeName">
         <el-tab-pane
           label="当前委托"
-          name="first"
+          name="current-entrust"
         >
           <div class="inner-box">
             <!--查询条件-->
@@ -30,10 +30,10 @@
                   placeholder="请选择"
                 >
                   <el-option
-                    v-for="item in options"
-                    :key="item.value"
-                    :label="item.label"
-                    :value="item.value"
+                    v-for="item in entrustSelectList"
+                    :key="item.id"
+                    :label="item.name"
+                    :value="item.id"
                   >
                   </el-option>
                 </el-select>
@@ -46,10 +46,10 @@
                   placeholder="请选择"
                 >
                   <el-option
-                    v-for="item in options"
-                    :key="item.value"
-                    :label="item.label"
-                    :value="item.value"
+                    v-for="item in typeList"
+                    :key="item.id"
+                    :label="item.name"
+                    :value="item.id"
                   >
                   </el-option>
                 </el-select>
@@ -76,10 +76,11 @@
             <!--查询结果-->
             <div class="result-box">
               <el-table
-                :data="myEntrustList"
+                :data="currentEntrustList"
               >
                 <el-table-column
                   label="时间"
+                  width="125"
                 >
                   <template slot-scope="s">
                     <span>{{ s.row.createTime }}</span>
@@ -89,11 +90,19 @@
                   label="交易对"
                 >
                   <template slot-scope="s">
-                    <span>{{ s.row.name }}</span>
+                    <span>{{ s.row.tradeName }}</span>
                   </template>
                 </el-table-column>
                 <el-table-column
                   label="交易类型"
+                >
+                  <template slot-scope="s">
+
+                  </template>
+                </el-table-column>
+                <el-table-column
+                  label="方向"
+                  width="50"
                 >
                   <template slot-scope="s">
                     <span v-show="language !== 'zh_CN'">{{s.row.type}}</span>
@@ -101,69 +110,78 @@
                   </template>
                 </el-table-column>
                 <el-table-column
-                  label="方向"
-                >
-                  <template slot-scope="s">
-                    <span>{{ s.row.address }}</span>
-                  </template>
-                </el-table-column>
-                <el-table-column
                   label="数量"
+                  width="120"
                 >
                   <template slot-scope="s">
-                    <span>{{ s.row.count }}</span>
+                    <span>{{ s.row.count-0 }}</span>
                   </template>
                 </el-table-column>
                 <el-table-column
                   label="委托总额"
+                  width="120"
                 >
                   <template slot-scope="s">
-                    <span>{{ s.row.amount }}</span>
+                    <span>{{ s.row.amount-0}}</span>
                   </template>
                 </el-table-column>
                 <el-table-column
                   label="已成交"
+                  width="120"
                 >
                   <template slot-scope="s">
-                    <span>{{ s.row.completeCount }}</span>
+                    <span>{{s.row.completeCount-0}}</span>
                   </template>
                 </el-table-column>
                 <el-table-column
                   label="未成交"
+                  width="120"
                 >
                   <template slot-scope="s">
-                    <span>{{ s.row.leftCount }}</span>
+                    <span>{{ s.row.leftCount-0}}</span>
                   </template>
                 </el-table-column>
                 <el-table-column
                   label="状态"
+                  width="60"
                 >
                   <template slot-scope="s">
-                    <span>{{ s.row.address }}</span>
+                    <span>{{ s.row.statusName }}</span>
                   </template>
                 </el-table-column>
                 <el-table-column
                   label="操作"
+                  width="60"
                 >
                   <template slot-scope="s">
                     <button
                       class="cursor-pointer"
+                      @click="repealMyEntrust(s.row.id,s.row.version)"
                     >撤销</button>
                   </template>
                 </el-table-column>
               </el-table>
+              <!--分页-->
+              <el-pagination
+                background
+                v-show="activeName === 'current-entrust' && currentEntrustList.length"
+                layout="prev, pager, next"
+                :page-count="totalPageForMyEntrust"
+                @current-change="changeCurrentPage(0,$event)"
+              >
+              </el-pagination>
             </div>
           </div>
         </el-tab-pane>
         <el-tab-pane
           label="历史委托"
-          name="second"
+          name="history-entrust"
         >
           历史委托
         </el-tab-pane>
         <el-tab-pane
           label="成交明细"
-          name="third"
+          name="exchange-detail"
         >
           成交明细
         </el-tab-pane>
@@ -174,12 +192,21 @@
 <!--请严格按照如下书写书序-->
 <script>
 import {mapState} from 'vuex'
+import {
+  getMyEntrust,
+  getEntrustSelectBox
+} from '../../../utils/api/apiDoc'
+import {
+  returnAjaxMessage,
+  repealMyEntrustCommon
+} from '../../../utils/commonFunc'
+
 export default {
   components: {},
   // props,
   data () {
     return {
-      activeName: 'first',
+      activeName: 'current-entrust',
       options: [
         {
           value: 'BTC',
@@ -197,31 +224,15 @@ export default {
       value: '',
       startTime: '',
       endTime: '',
-      myEntrustList: [
-        {
-          'id': '委单ID',
-          'partnerId': '商户ID',
-          'uid': '用户UID',
-          'userId': '用户ID',
-          'tradeId': '交易对ID',
-          'buyCoinId': '买方币种ID',
-          'sellCoinId': '卖方币种ID',
-          'status': '状态值',
-          'type': '委单类型值',
-          'matchType': '戳和类型值',
-          'price': '委托价格',
-          'count': '委托数量',
-          'amount': '委托总价',
-          'leftCount': '剩余数量',
-          'completeCount': '完成数量',
-          'createTime': '创建时间',
-          'version': '当前版本号',
-          'tradeName': '交易对名称',
-          'typeName': '戳和名称',
-          'statusName': '状态名称',
-          'matchTypeName': '撮合名称'
-        }
-      ] // 我的委托订单
+      currentEntrustList: [], // 我的委托订单
+      currentPageForMyEntrust: 1, // 当前委托页码
+      totalPageForMyEntrust: 1, // 当前委托总页数
+      currentPageForHistoryEntrust: 1, // 历史委托页码
+      totalPageForHistoryEntrust: 1, // 历史委托总页数
+      pageSize: 10,
+      entrustSelectList: [], // 交易区下拉列表
+      typeList: [], // 类型列表
+      end: '' // 占位
     }
   },
   created () {
@@ -231,12 +242,79 @@ export default {
     require('../../../../static/css/theme/day/Personal/TransactionType/CoinOrdersDay.css')
     // 黑色主题样式
     require('../../../../static/css/theme/night/Personal/TransactionType/CoinOrdersNight.css')
+    this.getEntrustSelectBox()
+    this.getMyCurrentEntrust()
   },
   mounted () {},
   activited () {},
   update () {},
   beforeRouteUpdate () {},
-  methods: {},
+  methods: {
+    /**
+     * 交易区列表查询
+     */
+    async getEntrustSelectBox () {
+      let params = {
+        partnerId: '474629374641963008'
+      }
+      const data = await getEntrustSelectBox(params)
+      if (!returnAjaxMessage(data, this, 0)) {
+        return false
+      } else {
+        console.log(data)
+        this.entrustSelectList = data.data.data.coinList
+        this.typeList = data.data.data.statusList
+      }
+    },
+    /**
+     * 切换页码
+     * @entrustType: 订单类型： 0：当前委托 1： 历史委托
+     */
+    changeCurrentPage (entrustType, pageNum) {
+      switch (entrustType) {
+        case 0:
+          this.currentPageForMyEntrust = pageNum
+          this.getMyCurrentEntrust()
+          break
+        case 1:
+          this.currentPageForHistoryEntrust = pageNum
+          this.getHistoryEntrust()
+      }
+    },
+    /**
+     *撤销委单
+     */
+    repealMyEntrust (id, version) {
+      console.log(id)
+      let params = {
+        id,
+        version
+      }
+      repealMyEntrustCommon(params, (res) => {
+        if (!returnAjaxMessage(res, this, 1)) {
+          return false
+        } else {
+          this.getMyCurrentEntrust()
+        }
+      })
+    },
+    // 查询当前委单
+    async getMyCurrentEntrust () {
+      let params = {
+        userId: '476053529258098688',
+        currentPage: this.currentPageForMyEntrust,
+        pageSize: this.pageSize
+      }
+      const data = await getMyEntrust(params)
+      if (!returnAjaxMessage(data, this, 0)) {
+        return false
+      } else {
+        this.currentEntrustList = data.data.data.list
+        console.log(this.currentEntrustList)
+        this.totalPageForMyEntrust = data.data.data.pages - 0
+      }
+    }
+  },
   filter: {},
   computed: {
     ...mapState({

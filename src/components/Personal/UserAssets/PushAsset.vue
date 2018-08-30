@@ -266,8 +266,8 @@ export default {
     require('../../../../static/css/theme/night/Personal/UserAssets/PushAssetNight.css')
     // 获取全局个人信息
     this.showStatusUserInfo = this.userInfo.data.user
-    this.getPushRecordList()
-    console.log(this.getPushRecordList())
+    // this.getPushRecordList()
+    // console.log(this.getPushRecordList())
   },
   mounted () {},
   activited () {},
