@@ -1,13 +1,13 @@
 /* 广告管理样式重置 */
 /* 1.0筛选条件中的下拉框样式 */
 .otc-AD-manage-box .style-input .el-select{
-  width: 120px;
+  width: 110px;
 }
 .otc-AD-manage-box .market-input .el-select{
-  width: 140px;
+  width: 120px;
 }
 .otc-AD-manage-box .status-input .el-select{
-   width: 140px;
+  width: 120px;
 }
 .otc-AD-manage-box .el-input__inner{
   height: 34px;

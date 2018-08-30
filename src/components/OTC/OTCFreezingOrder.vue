@@ -147,25 +147,18 @@ export default {
     },
     // 2.0 请求冻结中订单列表
     async getOTCFrezzingOrdersList () {
-      let data
-      data = await getOTCFrezzingOrders({
+      const data = await getOTCFrezzingOrders({
         status: 'FROZEN' // 状态 (交易中 TRADING 已完成 COMPLETED  已取消  CANCELED 冻结中 FROZEN)
         // pageNum: '1',
         // pageSize: '10'
       })
       console.log(data)
       // 提示信息
-      returnAjaxMessage(data, this, 0)
-      // if (data.data.meta.code !== 200) {
-      //   this.$message({
-      //     message: data.data.meta.message,
-      //     type: 'error',
-      //     center: true
-      //   })
-      //   return false
-      // }
-      // 返回数据正确的逻辑
-      // this.getOTCFreezingOrderList = data.data.data.list
+      if (!(returnAjaxMessage(data, this, 0))) {
+        return false
+      } else {
+        // 返回数据正确的逻辑
+      }
     }
   },
   filter: {},
@@ -233,7 +226,8 @@ export default {
             box-sizing: border-box;
             border-right: 1px solid #262F38;
             >.text-info{
-              line-height: 1.5rem;
+              // line-height: 1.5rem;
+              line-height: 20px;
             }
             >.text-blue{
               color: #5E95EC;
@@ -245,7 +239,8 @@ export default {
             border-right: 1px solid #262F38;
             margin-left: 30px;
             >.text-info{
-              line-height: 1.5rem;
+              // line-height: 1.5rem;
+              line-height: 20px;
             }
             >.text-blue{
               color: #5E95EC;
@@ -256,7 +251,8 @@ export default {
             box-sizing: border-box;
             margin-left: 30px;
             >.text-info{
-              line-height: 1.5rem;
+              // line-height: 1.5rem;
+              line-height: 20px;
             }
             >.text-blue{
               color: #5E95EC;

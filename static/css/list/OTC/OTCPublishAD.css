@@ -93,4 +93,7 @@
 .otc-publish-AD-box .password-dialog .el-button--primary{
   background:linear-gradient(9deg,rgba(43,57,110,1),rgba(42,80,130,1));
 }
-
+/* 问号提示颜色 */
+.otc-publish-AD-box .limit-set .icon{
+  color: #338FF5;
+}
