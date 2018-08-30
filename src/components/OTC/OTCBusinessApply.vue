@@ -2,8 +2,11 @@
   <div class="otc-business-apply-box otc">
     <!-- 1.0 导航 -->
     <NavCommon/>
-    <!-- 2.0 -->
-    <div class="business-apply-content">
+    <!-- 2.1商家 申请 页面 -->
+    <div
+      class="business-apply-content"
+      v-if="applyStatus === 1"
+    >
       <!-- 2.1 商家特权 -->
       <div class="privilege">
         <div class="title font-weight700 font-size24">
@@ -105,10 +108,38 @@
         </div>
         <!-- 2.2.5 申请为商家按钮部分 -->
         <div class="submit">
-          <button class="button font-size16 cursor-pointer">
+          <button
+            class="button font-size16 cursor-pointer"
+            @click="submit"
+          >
             申请成为商家
           </button>
         </div>
+      </div>
+    </div>
+    <!-- 2.2商家 申请中 页面 -->
+    <div
+      class="business-applying-content"
+      v-if="applyStatus === 2"
+    >
+      <div class="picture">
+        <img src="../../assets/develop/business-applying.png" alt="">
+      </div>
+      <div class="text">
+        <p class="tip">您的商家申请已提交，正在审核中</p>
+        <p class="tip">请耐心等候...</p>
+      </div>
+    </div>
+    <!-- 2.3商家 申请成功 页面 -->
+    <div
+      class="business-apply-success-content"
+      v-if="applyStatus === 3"
+    >
+      <div class="picture">
+        <img src="../../assets/develop/business-apply-success.png" alt="">
+      </div>
+      <div class="text">
+        <p class="tip">恭喜您已成为认证商家！</p>
       </div>
     </div>
     <!-- 3.0 底部 -->
@@ -119,7 +150,6 @@
 import NavCommon from '../Common/HeaderCommon'
 import FooterCommon from '../Common/FooterCommon'
 import IconFontCommon from '../Common/IconFontCommon'
-import {timeFilter} from '../../utils'
 export default {
   components: {
     NavCommon, //  头部导航
@@ -128,6 +158,8 @@ export default {
   },
   data () {
     return {
+      // 商家申请状态
+      applyStatus: 1,
       // 同意协议按钮:默认不勾选
       checked: false
     }
@@ -142,9 +174,9 @@ export default {
   update () {},
   beforeRouteUpdate () {},
   methods: {
-    // 时间格式化
-    timeFormatting (date) {
-      return timeFilter(date, 'normal')
+    // 点击申请商家用户按钮发送请求
+    submit () {
+      this.applyStatus = 2
     }
   },
   filter: {},
@@ -207,7 +239,8 @@ export default {
           }
           >.text{
             color: #fff;
-            line-height: 2rem;
+            // line-height: 2rem;
+            line-height: 25px;
             margin-top: 60px;
           }
           >.location-picture{
@@ -259,7 +292,8 @@ export default {
         >.content{
           width: 620px;
           >p{
-            line-height: 2rem;
+            // line-height: 2rem;
+            line-height: 30px;
           }
           >.title{
             color: #fff;
@@ -295,6 +329,32 @@ export default {
           border-radius: 5px;
         }
       }
+    }
+  }
+  >.business-applying-content,.business-apply-success-content{
+    width: 1150px;
+    height: 500px;
+    margin: 70px auto;
+    padding-top: 20px;
+    text-align: center;
+    >.picture{
+
+    }
+    >.text{
+      color: #fff;
+      font-size: 18px;
+      margin-top: 40px;
+      >.tip{
+        line-height: 30px;
+      }
+    }
+  }
+  >.business-apply-success-content{
+    >.picture{
+      margin-top: 20px;
+    }
+    >.text{
+      margin-top: 10px;
     }
   }
 }

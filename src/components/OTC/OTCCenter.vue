@@ -24,6 +24,7 @@
         <div class="otc-merchant-content">
           <!--我要购买和发布订单按钮-->
           <div class="otc-filtrate-publish">
+            <!-- 可用币种列表 -->
             <div class="otc-filtrate-box">
               <!-- 我要购买 -->
               <span
@@ -49,41 +50,54 @@
                   :class="{ currencyNameActived: selectCurrencyNameStatus === index }"
                   @click="selectCurrencyName(index)"
                 >
-                  {{item.shortName}}
+                  {{item.name}}
                 </span>
               </div>
-              <!-- 我要购买的选项数组 -->
-              <!-- <div
-                class="otc-filtrate-style"
-                v-if="OTCBuySellStyle === 'onlineBuy'"
-              >
-                <span
-                  v-for="(item, index) in IWantToBuySellArr"
-                  :key="index"
-                  class="otc-filtrate-currency-name"
-                  :class="{ currencyNameActived: selectCurrencyNameStatus === index }"
-                  @click="selectCurrencyName(index)"
-                >
-                  {{item.shortName}}
-                </span>
-              </div> -->
-              <!-- 我要出售的选项数组 -->
-              <!-- <div
-                class="otc-filtrate-style"
-                v-if="OTCBuySellStyle === 'onlineSell'"
-              >
-                <span
-                  v-for="(item, index) in IWantToBuySellArr"
-                  :key="index"
-                  class="otc-filtrate-currency-name"
-                  :class="{ currencyNameActived: selectCurrencyNameStatus === index }"
-                  @click="selectCurrencyName(index)"
-                >
-                  {{item.shortName}}
-                </span>
-              </div> -->
             </div>
+            <!-- 支付方式、货比类型、发布订单按钮 -->
             <div class="otc-publish-box">
+              <!-- 货币类型 -->
+              <span class="currency-style">
+                <IconFontCommon
+                  class="currency-style-icon"
+                  iconName="icon-jinbi"
+                />
+                <el-select
+                  v-model="activitedCurrencyId"
+                  @change="changeCurrencyId"
+                  placeholder="货币类型"
+                >
+                  <el-option
+                    v-for="(item,index) in availableCurrencyId"
+                    :key="index"
+                    :value="item.id"
+                    :label="item.name"
+                  >
+                  </el-option>
+                </el-select>
+              </span>
+              <!-- 支付方式 -->
+              <span class="pay-style">
+                <IconFontCommon
+                  iconName="icon-qiandai-tianchong"
+                  class="pay-style-icon"
+                />
+                <el-select
+                v-model="value"
+                placeholder="支付方式"
+                @change="payWayChangeValue"
+                >
+                  <el-option
+                    v-for="(item,index) in payWayBankinfoList"
+                    :key="index"
+                    :value="item.id"
+                    :label="item.shortName"
+                  >
+                    {{ item.shortName }}
+                  </el-option>
+                </el-select>
+              </span>
+              <!-- 发布订单按钮 -->
               <el-button
                 type="primary"
                 @click="toPublishOrder"
@@ -95,27 +109,29 @@
           <!--商户列表表格部分-->
           <div class="otc-merchant-list">
             <!-- 支付方式 -->
-            <div class="pay-way">
+            <!-- <div class="pay-way">
               <el-select
                 v-model="activedPayWayBankinfoItem"
                 @change="payWayChangeValue"
               >
                 <el-option
-                  v-for="item in payWayBankinfoList"
-                  :key="item.value"
-                  :label="item.label"
-                  :value="item.value"
+                  v-for="(item,index) in payWayBankinfoList"
+                  :key="index"
+                  :value="item.id"
+                  :label="item.shortName"
                 >
+                  {{ item.shortName }}
                 </el-option>
               </el-select>
             </div>
-            <div class="shade-pay-way">支付方式</div>
+            <div class="shade-pay-way">支付方式</div> -->
             <!-- 表格信息 -->
             <el-table
               :data="onlineBuySellTableList"
               style="width: 100%"
               empty-text="暂无数据"
             >
+              <!-- 商户 -->
               <el-table-column
                 label="商户"
                 width="180"
@@ -124,29 +140,33 @@
                   <div>{{s.row.userName}}</div>
                 </template>
               </el-table-column>
+              <!-- 信用 -->
               <el-table-column
                 label="信用"
                 width="180"
               >
                 <template slot-scope = "s">
-                  <div>成功率{{((s.row.successOrderTimes/(s.row.tradeTimes)) * 100).toFixed(2)}}%</div>
+                  <div v-if="s.row.successOrderTimes === 0 || s.row.tradeTimes === 0">成功率0%</div>
+                  <div v-else>成功率{{((s.row.successOrderTimes/(s.row.tradeTimes)) * 100).toFixed(2)}}%</div>
                 </template>
               </el-table-column>
+              <!-- 数量 -->
               <el-table-column
                 label="数量"
               >
                 <template slot-scope = "s">
                   <div>
-                    {{s.row.entrustCount}}{{selectedOTCAvailableCurrencyName}}
+                    {{s.row.entrustCount - s.row.matchCount}}{{selectedOTCAvailableCurrencyName}}
                   </div>
                 </template>
               </el-table-column>
+              <!-- 价格 -->
               <el-table-column
                 label="价格"
               >
                 <template slot-scope = "s">
                   <!-- 此处的单位根据设置中的法币类型来变化：为人民币时候显示CNY，为美元时候显示$ 此处需要从全局拿到设置中的法币类型来渲染页面-->
-                  <div class="red">{{s.row.price}}CNY</div>
+                  <div class="red">{{s.row.price}}{{activitedCurrencyName}}</div>
                   <!-- <div>{{s.row.price}}$</div> -->
                 </template>
               </el-table-column>
@@ -154,47 +174,49 @@
               <el-table-column
                 label="支付方式"
               >
-                <template slot-scope="scope">
+                <template slot-scope="s">
                   <div>
                     <!-- {{scope.row.payType}} -->
-                    <!-- 支付宝 -->
+                    <!-- 1支付宝 -->
                     <IconFontCommon
                       class="font-size16"
                       iconName="icon-zhifubao1"
-                      v-if="payWay[0] === 1"
+                      v-if="s.row.payTypes[0] === '1'"
                     />
-                    <!-- 微信 -->
+                    <!-- 2微信 -->
                     <IconFontCommon
                       class="font-size16"
                       iconName="icon-weixin1"
-                      v-if="payWay[1] === 1"
+                      v-if="s.row.payTypes[1] === '1'"
                     />
-                    <!-- 银行卡 -->
+                    <!-- 3银行卡 -->
                     <IconFontCommon
                       class="font-size16"
                       iconName="icon-yinhangqia"
-                      v-if="payWay[2] === 1"
+                      v-if="s.row.payTypes[2] === '1'"
                     />
-                    <!-- PAYPAL -->
+                     <!-- 4西联汇款 -->
+                    <span v-if="s.row.payTypes[3] == '1'">
+                      <img src="../../assets/user/xilian.png" alt="" class="xilian">
+                    </span>
+                    <!--  5PAYPAL -->
                     <IconFontCommon
                       class="font-size16"
                       iconName="icon-paypal"
-                      v-if="payWay[3] === 1"
+                      v-if="s.row.payTypes[4] === '1'"
                     />
-                    <!-- 西联汇款 -->
-                    <span v-if="payWay[4] === 1">
-                      <img src="../../assets/user/xilian.png" alt="" class="xilian">
-                    </span>
                   </div>
                 </template>
               </el-table-column>
+              <!-- 限额 -->
               <el-table-column
                 label="限额"
               >
                 <template slot-scope = "s">
-                  <div>{{s.row.minCount}}~{{s.row.maxCount}}CNY</div>
+                  <div>{{s.row.minCount}}~{{s.row.maxCount}}{{activitedCurrencyName}}</div>
                 </template>
               </el-table-column>
+              <!-- 备注 -->
               <el-table-column
                 label="备注"
               >
@@ -202,15 +224,16 @@
                   <div>{{s.row.remark}}</div>
                 </template>
               </el-table-column>
+              <!-- 操作 -->
               <el-table-column
                 label="操作"
               >
-                <template slot-scope="scope">
+                <template slot-scope="s">
                   <el-button
                     type="danger"
                     size="mini"
                     v-if="OTCBuySellStyle === 'onlineBuy'"
-                    @click="toOnlineBuy"
+                    @click="toOnlineBuy(s.row.id,s.row.coinId)"
                   >
                     购买
                   </el-button>
@@ -218,7 +241,7 @@
                     type="success"
                     size="mini"
                     v-if="OTCBuySellStyle === 'onlineSell'"
-                    @click="toOnlineSell"
+                    @click="toOnlineSell(s.row.id,s.row.coinId)"
                   >
                     出售
                   </el-button>
@@ -228,16 +251,7 @@
           </div>
         </div>
       </div>
-      <!-- 2.2 订单管理头部及更多按钮-->
-      <!-- <div class="order-more">
-        <div>
-          订单
-        </div>
-        <div>
-          <router-link to="/" class="more">查询更多订单</router-link>
-        </div>
-      </div> -->
-      <!-- 2.3 订单管理-->
+      <!-- 2.2 订单管理-->
       <div class="otc-order-manage">
         <!-- <div class="more"> -->
           <router-link to="/" class="more">查询更多</router-link>
@@ -326,7 +340,7 @@
 </template>
 <!--请严格按照如下书写书序-->
 <script>
-import {getOTCAvailableCurrency, getOTCPutUpOrders} from '../../utils/api/apiDoc'
+import {getOTCAvailableCurrency, getOTCPutUpOrders, getMerchantAvailablelegalTender} from '../../utils/api/apiDoc'
 import IconFontCommon from '../Common/IconFontCommon'
 import NavCommon from '../Common/HeaderCommon'
 import FooterCommon from '../Common/FooterCommon'
@@ -354,6 +368,10 @@ export default {
   // props,
   data () {
     return {
+      // 3.0 可用法币币种数组
+      activitedCurrencyId: '', // 选中的可用法币id
+      activitedCurrencyName: '', // 选中的可用法币name
+      availableCurrencyId: [],
       activeName: 'first', // 选中的tab面板的序号
       tabPosition: 'left', //  订单管理面板标签方向状态
       OTCBuySellStyle: 'onlineBuy', //  在线购买和在线出售选中类型
@@ -401,33 +419,32 @@ export default {
       // 支付方式下拉框数据
       payWayBankinfoList: [
         {
-          value: '支付方式1',
-          label: '全部'
+          id: '',
+          shortName: '全部'
         },
         {
-          value: '支付方式2',
-          label: '支付宝'
+          id: 'alipay',
+          shortName: '支付宝'
         },
         {
-          value: '支付方式3',
-          label: '银行卡'
+          id: 'wx',
+          shortName: '微信'
         },
         {
-          value: '支付方式4',
-          label: '微信'
+          id: 'bank',
+          shortName: '银行卡'
         },
         {
-          value: '支付方式5',
-          label: '西联汇款'
+          id: 'xilian',
+          shortName: '西联汇款'
         },
         {
-          value: '支付方式6',
-          label: 'PAYPAL'
+          id: 'paypal',
+          shortName: 'PAYPAL'
         }
       ],
-      // 支付方式
-      payWay: [1, 1, 1, 1, 1],
-      activedPayWayBankinfoItem: '支付方式', // 选中的支付方式
+      activedPayWayBankinfoItem: '支付方式', // 下拉框中选中的支付方式
+      checkedPayType: '', // 下拉框支付方式中选中的支付方式查询列表
       // 我要购买出售币种数组
       IWantToBuySellArr: [
       ]
@@ -442,29 +459,102 @@ export default {
     // console.log(this.selectedOTCAvailableCurrencyName)
     // console.log(this.selectedOTCAvailableCurrencyCoinID)
     // console.log(this.merchantID)
-    console.log(this.userInfo)
+    // console.log(this.userInfo)
+    // 2.0 otc可用法币查询：
+    this.getMerchantAvailablelegalTenderList()
   },
   mounted () {},
   activited () {},
   update () {},
   beforeRouteUpdate () {},
   methods: {
-    // 原来的
-    // ...mapMutations([
-    //   'CHANGE_OTC_AVAILABLE_CURRENCY_NAME',
-    //   'CHANGE_OTC_AVAILABLE_CURRENCY_ID'
-    // ]),
-    // 新的
-    // ...mapActions('OTC', [
-    //   'changeSettingAction'
-    // ]),
     ...mapMutations([
       'CHANGE_OTC_AVAILABLE_CURRENCY_NAME',
       'CHANGE_OTC_AVAILABLE_CURRENCY_ID'
     ]),
+    //  otc可用法币查询
+    async getMerchantAvailablelegalTenderList () {
+      const data = await getMerchantAvailablelegalTender({
+        partnerId: this.merchantID
+      })
+      console.log('otc可用法币查')
+      console.log(data)
+      if (!(returnAjaxMessage(data, this, 0))) {
+        return false
+      } else {
+        // 返回数据正确的逻辑
+        this.availableCurrencyId = data.data.data
+      }
+    },
+    //  3.0 改变可用法币的币种id
+    changeCurrencyId (e) {
+      this.activitedCurrencyId = e
+      // console.log(e)
+      console.log(this.activitedCurrencyId)
+      this.availableCurrencyId.forEach(item => {
+        if (e === item.id) {
+          console.log(item.shortName)
+          this.activitedCurrencyName = item.shortName
+        }
+      })
+      // 调主页面查询otc挂单列表接口按照法币方式查询
+      this.getChangeCurrencyIdOTCPutUpOrdersList()
+    },
+    //  3.1 改变可用法币的下拉框的选中值，调主页面查询otc挂单列表接口
+    async getChangeCurrencyIdOTCPutUpOrdersList () {
+      let param = {
+        payType: this.checkedPayType, // 按照选中的支付方式查询列表
+        partnerId: this.merchantID, // 商户id
+        coinId: this.selectedOTCAvailableCurrencyCoinID, // 币种id
+        currencyId: this.activitedCurrencyId // 法币id
+      }
+      if (this.OTCBuySellStyle === 'onlineBuy') {
+        param.entrustType = 'SELL' // 挂单类型（BUY SELL）
+      }
+      if (this.OTCBuySellStyle === 'onlineSell') {
+        param.entrustType = 'BUY' // 挂单类型（BUY SELL）
+      }
+      const data = await getOTCPutUpOrders(param)
+      console.log(data)
+      // 提示信息
+      if (!returnAjaxMessage(data, this, 0)) {
+        return false
+      } else {
+        // 返回数据正确的逻辑
+        this.onlineBuySellTableList = data.data.data.list
+      }
+    },
     // 0.1 改变支付方式下拉框的选中值
     payWayChangeValue (e) {
-      console.log(e)
+      console.log(e) //  选中的支付方式的id
+      this.checkedPayType = e
+      console.log(this.checkedPayType) //  选中的支付方式的id
+      // 调主页面查询otc挂单列表接口按照支付方式查询列表
+      this.getChangePayWayOTCPutUpOrdersList()
+    },
+    // 0.11 改变支付方式下拉框的选中值，调主页面查询otc挂单列表接口
+    async getChangePayWayOTCPutUpOrdersList () {
+      let param = {
+        payType: this.checkedPayType, // 按照选中的支付方式查询列表
+        partnerId: this.merchantID, // 商户id
+        coinId: this.selectedOTCAvailableCurrencyCoinID, // 币种id
+        currencyId: '123' // 法币id
+      }
+      if (this.OTCBuySellStyle === 'onlineBuy') {
+        param.entrustType = 'SELL' // 挂单类型（BUY SELL）
+      }
+      if (this.OTCBuySellStyle === 'onlineSell') {
+        param.entrustType = 'BUY' // 挂单类型（BUY SELL）
+      }
+      const data = await getOTCPutUpOrders(param)
+      console.log(data)
+      // 提示信息
+      if (!returnAjaxMessage(data, this, 0)) {
+        return false
+      } else {
+        // 返回数据正确的逻辑
+        this.onlineBuySellTableList = data.data.data.list
+      }
     },
     // 0.2 切换tab面板
     toggleTabPane (tab, event) {
@@ -475,28 +565,35 @@ export default {
       this.$router.push({path: '/OTCPublishBuyAndSell'})
     },
     // 0.4 点击购买按钮跳转到在线购买页面
-    toOnlineBuy () {
+    toOnlineBuy (id, coinId) {
       // console.log("买")
-      this.$router.push({path: '/OTCOnlineTraderBuySell/' + this.OTCBuySellStyle})
+      // console.log(id) // 挂单id
+      // console.log(coinId) // 币种id
+      // this.$router.push({path: '/OTCOnlineTraderBuySell/' + this.OTCBuySellStyle})
+      this.$router.push({path: '/OTCOnlineTraderBuySell/' + this.OTCBuySellStyle + '/' + id + '/' + coinId})
     },
     // 0.5 点击出售按钮跳转到在线出售页面
-    toOnlineSell () {
+    toOnlineSell (id, coinId) {
       // console.log("卖")
-      this.$router.push({path: '/OTCOnlineTraderBuySell/' + this.OTCBuySellStyle})
+      // console.log(id) // 挂单id
+      // console.log(coinId) // 币种id
+      // this.$router.push({path: '/OTCOnlineTraderBuySell/' + this.OTCBuySellStyle})
+      this.$router.push({path: '/OTCOnlineTraderBuySell/' + this.OTCBuySellStyle + '/' + id + '/' + coinId})
     },
     //  1.0 otc可用币种查询：我要购买/我要出售的币种列表
     async getOTCAvailableCurrencyList () {
       const data = await getOTCAvailableCurrency({
-        partnerId: this.merchantID
+        partnerId: this.merchantID // 商户id
       })
-      // console.log(data)
+      console.log('otc可用币种查询')
+      console.log(data)
       // 提示信息
       if (!(returnAjaxMessage(data, this, 0))) {
         return false
       } else {
         // 返回数据正确的逻辑
         this.IWantToBuySellArr = data.data.data
-        this.CHANGE_OTC_AVAILABLE_CURRENCY_NAME(this.IWantToBuySellArr[0].shortName)
+        this.CHANGE_OTC_AVAILABLE_CURRENCY_NAME(this.IWantToBuySellArr[0].name)
         this.CHANGE_OTC_AVAILABLE_CURRENCY_ID(this.IWantToBuySellArr[0].coinId)
         // console.log(this.selectedOTCAvailableCurrencyName)
         // console.log(this.selectedOTCAvailableCurrencyCoinID)
@@ -507,15 +604,23 @@ export default {
     },
     //  2.0 刚进页面时候 otc主页面查询挂单列表
     async getOTCPutUpOrdersList () {
-      const data = await getOTCPutUpOrders({
+      // console.log(this.selectedOTCAvailableCurrencyCoinID)
+      let param = {
+        payType: this.checkedPayType, // 按照选中的支付方式查询列表
         partnerId: this.merchantID, // 商户id
         // 刚进页面默认显示可用币种的第一个
         coinId: this.selectedOTCAvailableCurrencyCoinID, // 币种id
-        currencyId: '123', // 法币id
-        entrustType: 'BUY' // 挂单类型（BUY SELL）默认第一次进来渲染买单的
-        // entrustType: 'SELL' // 挂单类型（BUY SELL）
-      })
-      // console.log(data)
+        currencyId: '123' // 法币id
+      }
+      if (this.OTCBuySellStyle === 'onlineBuy') {
+        param.entrustType = 'SELL' // 挂单类型（BUY SELL）
+      }
+      if (this.OTCBuySellStyle === 'onlineSell') {
+        param.entrustType = 'BUY' // 挂单类型（BUY SELL）
+      }
+      const data = await getOTCPutUpOrders(param)
+      console.log('otc主页面查询挂单列表')
+      console.log(data)
       // 提示信息
       if (!(returnAjaxMessage(data, this, 0))) {
         return false
@@ -526,30 +631,31 @@ export default {
     },
     //  3.0 选中我想购买和出售币种名称
     selectCurrencyName (index) {
-      // console.log(index)
+      console.log(index)
       this.selectCurrencyNameStatus = index
       // this.IWantToBuySellArr[index].coinId
-      // this.IWantToBuySellArr[index].shortName
+      // this.IWantToBuySellArr[index].name
       // console.log(this.IWantToBuySellArr[index].minCount);
-      this.CHANGE_OTC_AVAILABLE_CURRENCY_NAME(this.IWantToBuySellArr[index].shortName)
+      this.CHANGE_OTC_AVAILABLE_CURRENCY_NAME(this.IWantToBuySellArr[index].name)
       this.CHANGE_OTC_AVAILABLE_CURRENCY_ID(this.IWantToBuySellArr[index].coinId)
-      // console.log(this.selectedOTCAvailableCurrencyName)
-      // console.log(this.selectedOTCAvailableCurrencyCoinID)
+      console.log(this.selectedOTCAvailableCurrencyName)
+      console.log(this.selectedOTCAvailableCurrencyCoinID)
       // 请求接口数据渲染表格
       this.getSelectCurrencyNametOTCPutUpOrdersList()
     },
     //  3.01 切换我要购买和出售时候调取接口获得数据渲染列表
     async getSelectCurrencyNametOTCPutUpOrdersList () {
       let param = {
+        payType: this.checkedPayType, // 按照选中的支付方式查询列表
         partnerId: this.merchantID, // 商户id
         coinId: this.selectedOTCAvailableCurrencyCoinID, // 币种id
         currencyId: '123' // 法币id
       }
       if (this.OTCBuySellStyle === 'onlineBuy') {
-        param.entrustType = 'BUY' // 挂单类型（BUY SELL）
+        param.entrustType = 'SELL' // 挂单类型（BUY SELL）
       }
       if (this.OTCBuySellStyle === 'onlineSell') {
-        param.entrustType = 'SELL' // 挂单类型（BUY SELL）
+        param.entrustType = 'BUY' // 挂单类型（BUY SELL）
       }
       const data = await getOTCPutUpOrders(param)
       // console.log(data)
@@ -567,15 +673,16 @@ export default {
       this.OTCBuySellStyle = e
       // console.log(this.OTCBuySellStyle)
       let param = {
+        payType: this.checkedPayType, // 按照选中的支付方式查询列表
         partnerId: this.merchantID, // 商户id
         coinId: this.selectedOTCAvailableCurrencyCoinID, // 币种id
         currencyId: '123' // 法币id
       }
       if (this.OTCBuySellStyle === 'onlineBuy') {
-        param.entrustType = 'BUY' // 挂单类型（BUY SELL）
+        param.entrustType = 'SELL' // 挂单类型（BUY SELL）
       }
       if (this.OTCBuySellStyle === 'onlineSell') {
-        param.entrustType = 'SELL' // 挂单类型（BUY SELL）
+        param.entrustType = 'BUY' // 挂单类型（BUY SELL）
       }
       const data = await getOTCPutUpOrders(param)
       // console.log(data)
@@ -590,16 +697,7 @@ export default {
   },
   filter: {},
   computed: {
-    // 原来的
-    // ...mapState([
-    //   'selectedOTCAvailableCurrencyName',
-    //   'selectedOTCAvailableCurrencyCoinID',
-    //   'merchantID'
-    // ])
-    // 新的
     ...mapState({
-      // theme: state => state.home.theme,
-      // language: state => state.home.language
       selectedOTCAvailableCurrencyName: state => state.OTC.selectedOTCAvailableCurrencyName,
       selectedOTCAvailableCurrencyCoinID: state => state.OTC.selectedOTCAvailableCurrencyCoinID,
       merchantID: state => state.common.merchantID,
@@ -655,6 +753,29 @@ export default {
           >.otc-publish-box{
             // background-color: pink;
             // asdfasdfasdfasdfasfd
+            >.pay-style{
+              position: relative;
+              >.pay-style-icon{
+                width: 14px;
+                height: 14px;
+                position: absolute;
+                left: 10px;
+                top: 1px;
+                z-index: 2;
+              }
+            }
+            >.currency-style{
+              position: relative;
+              >.currency-style-icon{
+                color: #fff;
+                width: 14px;
+                height: 14px;
+                position: absolute;
+                left: 10px;
+                top: 1px;
+                z-index: 2;
+              }
+            }
           }
         }
         >.otc-merchant-list{
@@ -687,23 +808,6 @@ export default {
         }
       }
     }
-    // >.order-more{
-    //   box-sizing: border-box;
-    //   height: 36px;
-    //   line-height: 36px;
-    //   color: #9DA5B3;
-    //   font-size: 14px;
-    //   background-color: #202A33;
-    //   margin-top: 56px;
-    //   padding: 0 30px;
-    //   border-radius: 5px;
-    //   display: flex;
-    //   justify-content: space-between ;
-    //   .more{
-    //     color: #4F85DA;
-    //     font-size: 14px;
-    //   }
-    // }
     >.otc-order-manage{
       height: 1200px;
       margin-top: 50px;

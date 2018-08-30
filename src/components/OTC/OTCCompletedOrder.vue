@@ -127,7 +127,8 @@
 <!--请严格按照如下书写书序-->
 <script>
 import {timeFilter} from '../../utils'
-// import {getOTCCompletedOrders} from '../../utils/api/apiDoc'
+import {getOTCCompletedOrders} from '../../utils/api/apiDoc'
+import {returnAjaxMessage} from '../../utils/commonFunc'
 export default {
   components: {},
   // props,
@@ -171,15 +172,32 @@ export default {
     require('../../../static/css/list/OTC/OTCCompletedOrder.css')
     require('../../../static/css/theme/day/OTC/OTCCompletedOrderDay.css')
     require('../../../static/css/theme/night/OTC/OTCCompletedOrderNight.css')
+    // 1.0 请求已完成订单列表
+    this.getOTCCompletedOrdersList()
   },
   mounted () {},
   activited () {},
   update () {},
   beforeRouteUpdate () {},
   methods: {
-    // 时间格式化
+    // 1.0 时间格式化
     timeFormatting (date) {
       return timeFilter(date, 'normal')
+    },
+    // 2.0 请求已完成订单列表
+    async getOTCCompletedOrdersList () {
+      const data = await getOTCCompletedOrders({
+        status: 'COMPLETED' // 状态 (交易中 TRADING 已完成 COMPLETED  已取消  CANCELED 冻结中 FROZEN)
+        // pageNum: '1',
+        // pageSize: '10'
+      })
+      console.log(data)
+      // 提示信息
+      if (!(returnAjaxMessage(data, this, 0))) {
+        return false
+      } else {
+        // 返回数据正确的逻辑
+      }
     }
   },
   filter: {},
@@ -216,7 +234,8 @@ export default {
         border-right: 1px solid #262F38;
         >.order-info-left{
           // margin-left: 50px;
-          line-height: 1.5rem;
+          // line-height: 1.5rem;
+          line-height: 20px;
           >.pay-info{
             color: #5E95EC;
           }
@@ -227,7 +246,8 @@ export default {
         border-right: 1px solid #262F38;
         >.order-info-middle{
           margin-left: 50px;
-          line-height: 1.5rem;
+          // line-height: 1.5rem;
+          line-height: 20px;
           >.buyer-seller-info{
             color: #5E95EC;
           }
@@ -237,7 +257,8 @@ export default {
         flex: 3;
         >.order-info-right{
           margin-left: 50px;
-          line-height: 1.5rem;
+          // line-height: 1.5rem;
+          line-height: 20px;
           >.confirm-time{
             color: #5E95EC;
           }

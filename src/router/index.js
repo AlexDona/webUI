@@ -100,9 +100,15 @@ export default new Router({
       // name: 'OTCPublishBuyAndSell',
       component: OTCPublishBuyAndSell
     },
+    // {
+    //   // OTC在线交易买卖
+    //   path: '/OTCOnlineTraderBuySell/:styleId',
+    //   // name: 'OTCOnlineTraderBuySell',
+    //   component: OTCOnlineTraderBuySell
+    // },
     {
       // OTC在线交易买卖
-      path: '/OTCOnlineTraderBuySell/:styleId',
+      path: '/OTCOnlineTraderBuySell/:styleId/:id/:coinId',
       // name: 'OTCOnlineTraderBuySell',
       component: OTCOnlineTraderBuySell
     },

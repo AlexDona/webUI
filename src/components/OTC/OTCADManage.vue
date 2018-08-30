@@ -28,7 +28,21 @@
               </el-option>
             </el-select>
           </span>
-          <span class="filtrate-text font-size14">市场</span>
+          <span class="filtrate-text font-size14">交易币种</span>
+          <span class="market-input">
+              <el-select
+                v-model="activitedADManageMarketList"
+              >
+                <el-option
+                  v-for="item in ADManageMarketList"
+                  :key="item.value"
+                  :label="item.label"
+                  :value="item.value"
+                >
+                </el-option>
+              </el-select>
+          </span>
+          <span class="filtrate-text font-size14">交易法币</span>
           <span class="market-input">
               <el-select
                 v-model="activitedADManageMarketList"
@@ -59,12 +73,19 @@
           <span class="inquire-button">
             <el-button type="primary">查询</el-button>
           </span>
-          <span class="all-unshelve cursor-pointer">
+          <span
+            class="all-unshelve cursor-pointer"
+            @click="cancelAllOnekey"
+          >
             <IconFontCommon
               class="font-size22"
               iconName="icon-xiajia5"
             />
-            <span class="unshelve-text">一键下架所有广告</span>
+            <span
+              class="unshelve-text"
+            >
+              一键下架所有广告
+            </span>
           </span>
         </div>
         <!-- 下部分表格内容 -->
@@ -104,7 +125,14 @@
             </el-table-column>
             <!-- 市场 -->
             <el-table-column
-              label="市场"
+              label="币种"
+            >
+              <template slot-scope="scope">
+                <div>{{scope.row.market}}</div>
+              </template>
+            </el-table-column>
+            <el-table-column
+              label="法币"
             >
               <template slot-scope="scope">
                 <div>{{scope.row.market}}</div>
@@ -183,11 +211,11 @@
 </template>
 <!--请严格按照如下书写书序-->
 <script>
+import {cancelAllOrdersOnekey} from '../../utils/api/apiDoc'
 import NavCommon from '../Common/HeaderCommon'
 import FooterCommon from '../Common/FooterCommon'
 import IconFontCommon from '../Common/IconFontCommon'
 import {timeFilter} from '../../utils'
-
 export default {
   components: {
     NavCommon, //  头部导航
@@ -241,7 +269,7 @@ export default {
         {
           time: 1302486032000,
           id: 1,
-          market: 'FBT/CNY',
+          market: 'FBT',
           price: '67812.21',
           sum: '2.7869',
           residue: '0.00123',
@@ -253,7 +281,7 @@ export default {
         {
           time: 1802486032000,
           id: 2,
-          market: 'FBT/CNY',
+          market: 'CNY',
           price: '67812.21',
           sum: '2.7869',
           residue: '0.00123',
@@ -265,7 +293,7 @@ export default {
         {
           time: 1802486032000,
           id: 3,
-          market: 'FBT/CNY',
+          market: 'FBT',
           price: '67812.21',
           sum: '2.7869',
           residue: '0.00123',
@@ -294,6 +322,18 @@ export default {
     // 时间格式化
     timeFormatting (date) {
       return timeFilter(date, 'normal')
+    },
+    // 一键下架所有广告
+    async cancelAllOnekey () {
+      // console.log('d')
+      const data = await cancelAllOrdersOnekey({})
+      console.log(data)
+      // 提示信息
+      if (!(returnAjaxMessage(data, this, 1))) {
+        return false
+      } else {
+        // 返回数据正确的逻辑
+      }
     },
     // 点击表格中的下架按钮触发的事件
     updateADUnshelve (val) {
@@ -364,19 +404,19 @@ export default {
           margin-bottom: 25px;
           > .filtrate-text {
             color: #9DA5B3;
-            margin-right: 20px;
+            margin-right: 5px;
           }
           > .style-input {
-            margin-right: 70px;
+            margin-right: 15px;
           }
           > .market-input {
-            margin-right: 70px;
+            margin-right: 15px;
           }
           > .status-input {
-            margin-right: 50px;
+            margin-right: 155px;
           }
           > .inquire-button {
-            margin-right: 140px;
+            margin-right: 15px;
           }
           > .all-unshelve {
             color: #338FF5;
