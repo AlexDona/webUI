@@ -207,8 +207,8 @@ export default {
   .personal-center{
     > .personal-center-main {
       width: 1100px;
-      min-height: 800px;
-      margin: 60px auto 100px;
+      min-height: 1350px;
+      margin: 60px auto;
       > .personal-center-content{
         width: 1100px;
       }

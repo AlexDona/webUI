@@ -21,9 +21,9 @@
               >
                 <el-option
                   v-for="item in currencyList"
-                  :key="item.id"
+                  :key="item.coinId"
                   :label="item.shortName"
-                  :value="item.id">
+                  :value="item.coinId">
                 </el-option>
               </el-select>
             </el-form-item>
@@ -72,7 +72,12 @@
                 @focus="emptyStatus"
                 v-model="phoneCode"
               >
-                <template slot="append">验证码</template>
+                <template slot="append">
+                  <CountDownButton
+                    class="send-code-btn cursor-pointer"
+                    :status="disabledOfPhoneBtn"
+                    @run="sendPhoneOrEmailCode(0)"
+                  /></template>
               </el-input>
             </el-form-item>
             <el-form-item label="邮箱验证码">
@@ -81,6 +86,11 @@
                 v-model="emailCode"
               >
                 <template slot="append">验证码</template>
+                <CountDownButton
+                  class="send-code-btn cursor-pointer"
+                  :status="disabledOfEmailBtn"
+                  @run="sendPhoneOrEmailCode(1)"
+                />
               </el-input>
             </el-form-item>
             <el-form-item label="谷歌验证码">
@@ -156,7 +166,7 @@
               </template>
             </el-table-column>
             <el-table-column
-              label="金额(FBT)"
+              label="金额"
             >
               <template slot-scope = "s">
                 <div>{{ s.row.amount }}</div>
@@ -174,7 +184,9 @@
               label="状态"
             >
               <template slot-scope = "s">
-                <div>{{ s.row.state }}</div>
+                <div v-if="s.row.state === 'PUSH_DEAL'">{{ stateOffStocks }}</div>
+                <div v-if="s.row.state === 'PUSH_REGISTER'">{{ stateWaitPayment }}</div>
+                <div v-if="s.row.state === 'PUSH_CANCEL'">{{ stateCancel }}</div>
               </template>
             </el-table-column>
             <el-table-column
@@ -182,21 +194,23 @@
             >
               <template slot-scope = "s">
                 <!--<div>{{ s.row.operate }}</div>-->
-                <!--v-if="scope.row.fstate == 1 && scope.row.fuid == $store.state.userInfo.fshowid"-->
-                <!--v-if="scope.row.fstate == 1 && scope.row.fuid !== $store.state.userInfo.fshowid"-->
-                <div
-                  class="cursor-pointer"
-                  @click="cancelId(s.row.fid)"
-                  :id="s.row.fid"
-                >
-                  {{ cancel }}
-                </div>
+                <!--v-if="s.row.state == 1 && s.row.fuid == s.row.showid"-->
+                <!--v-if="s.row.state == 1 && s.row.fuid !== s.row.showid"-->
                 <!--<div-->
-                  <!--class="cursor"-->
-                  <!--@click="paymentId(s.row.fid)"-->
-                  <!--:id="s.row.fid"-->
+                  <!--v-if="s.row.state == 'PUSH_REGISTER' && showStatusUserInfo.uid == s.row.pushId"-->
+                  <!--class="cursor-pointer state-status"-->
+                  <!--@click="cancelId(s.row.id)"-->
+                  <!--:id="s.row.id"-->
                 <!--&gt;-->
-                  <!--{{ $t(payment) }}-->
+                  <!--{{ cancel }}-->
+                <!--</div>-->
+                <!--<div-->
+                  <!--v-if="s.row.state == 'PUSH_REGISTER' && showStatusUserInfo.uid !== s.row.pushId"-->
+                  <!--class="cursor state-status"-->
+                  <!--@click="paymentId(s.row.id)"-->
+                  <!--:id="s.row.id"-->
+                <!--&gt;-->
+                  <!--{{ payment }}-->
                 <!--</div>-->
               </template>
             </el-table-column>
@@ -216,6 +230,82 @@
                 </el-button>
             </span>
           </el-dialog>
+          <!--PUSH确认-->
+          <el-dialog
+            title="付款"
+            :visible.sync="paymentVisible"
+            center
+          >
+            <el-form
+              :label-position="labelPosition"
+              class="form_padding"
+              label-width="100px"
+            >
+              <!--PUSH资产-->
+              <el-form-item label="资产">
+                <input
+                  class="form-input-common border-radius2 padding-l15 box-sizing"
+                  type="text"
+                  v-model="pushAsset"
+                  disabled
+                >
+              </el-form-item>
+              <!--PUSH价格-->
+              <el-form-item label="价格">
+                <input
+                  class="form-input-common border-radius2 padding-l15 box-sizing"
+                  type="text"
+                  v-model="pushPrice"
+                  disabled
+                >
+              </el-form-item>
+              <!--PUSH数量-->
+              <el-form-item label="数量">
+                <input
+                  class="form-input-common border-radius2 padding-l15 box-sizing"
+                  type="text"
+                  v-model="pushCount"
+                  disabled
+                >
+              </el-form-item>
+              <!--付款金额-->
+              <el-form-item label="付款金额">
+                <input
+                  class="form-input-common border-radius2 padding-l15 box-sizing"
+                  type="text"
+                  v-model="pushPaymentAmount"
+                  disabled
+                >
+              </el-form-item>
+            </el-form>
+            <el-button @click="paymentVisible = false">取 消</el-button>
+            <el-button type="primary" @click="statusUserInfo">确 定</el-button>
+          </el-dialog>
+          <el-dialog
+            title="收货地址"
+            :visible.sync="passwordVisible">
+            <el-form>
+              <el-form-item label="交易密码">
+                <input
+                  class="form-input-common border-radius2 padding-l15 box-sizing"
+                  v-model="pushPassword"
+                  auto-complete="off"
+                >
+              </el-form-item>
+            </el-form>
+            <div
+              slot="footer"
+              class="dialog-footer"
+            >
+              <el-button @click="passwordVisible = false">取 消</el-button>
+              <el-button
+                type="primary"
+                @click="confirmSubmit"
+              >
+                确 定
+              </el-button>
+            </div>
+          </el-dialog>
         </div>
       </div>
     </div>
@@ -223,13 +313,16 @@
 </template>
 <!--请严格按照如下书写书序-->
 <script>
-import {getPushAssetList, getPushTotalByCoinId, pushAssetsSubmit} from '../../../utils/api/apiDoc'
+import {getPushAssetList, getPushTotalByCoinId, pushAssetsSubmit, revocationPushProperty, pushPropertyTransaction} from '../../../utils/api/apiDoc'
+import CountDownButton from '../../Common/CountDownCommon'
 import {timeFilter} from '../../../utils/index'
 import {createNamespacedHelpers, mapState} from 'vuex'
-import {returnAjaxMessage} from '../../../utils/commonFunc'
+import {returnAjaxMessage, pushSendPhoneOrEmailCodeAjax} from '../../../utils/commonFunc'
 const {mapMutations} = createNamespacedHelpers('personal')
 export default {
-  components: {},
+  components: {
+    CountDownButton // 短信倒计时
+  },
   // props,
   data () {
     return {
@@ -244,15 +337,27 @@ export default {
       count: '', // 数量
       price: '', // 价格
       transactionPassword: '', // 交易密码
+      sum: '', // 金额
       phoneCode: '', // 手机验证码
       emailCode: '', // 邮箱验证码
       googleCode: '', // 谷歌验证
       rollIn: '转入', // 转入
       rollOut: '转出', // 转出
+      stateOffStocks: '已完成',
+      stateWaitPayment: '待支付',
+      stateCancel: '已取消',
       payment: '付款', // 付款
       cancel: '撤销', // 取消
+      pushAsset: '', // PUSH资产信息展示
+      pushPrice: '', // PUSH价格信息展示
+      pushCount: '', // PUSH数量信息展示
+      pushPaymentAmount: '', // 付款金额信息展示
       dialogVisible: false, // 取消弹窗默认隐藏
+      // labelPosition: 'top', // form表单
+      paymentVisible: false, // 付款二次确认弹窗默认隐藏
+      passwordVisible: false, // 付款二次确认之后交易密码弹窗默认隐藏
       pushUID: '', // 每行数据ID
+      pushPassword: '',
       // push列表记录
       pushRecordList: []
     }
@@ -265,6 +370,7 @@ export default {
     // 黑色主题样式
     require('../../../../static/css/theme/night/Personal/UserAssets/PushAssetNight.css')
     // 获取全局个人信息
+    // console.log(this.userInfo)
     this.showStatusUserInfo = this.userInfo.data.user
     // this.getPushRecordList()
     // console.log(this.getPushRecordList())
@@ -274,7 +380,9 @@ export default {
   update () {},
   beforeRouteUpdate () {},
   methods: {
-    ...mapMutations([]),
+    ...mapMutations([
+      'SET_PUSH_BUTTON_STATUS'
+    ]),
     // 1.时间格式化
     timeFormatting (date) {
       return timeFilter(date, 'normal')
@@ -286,6 +394,35 @@ export default {
     // 3.修改input value
     changeInputValue (ref) {
       this[ref] = this.$refs[ref].value
+    },
+    /**
+     * push资产
+     */
+    /**
+     * 刚进页面时候 push列表展示
+     */
+    async getPushRecordList () {
+      let data = await getPushAssetList({
+        partnerId: this.merchantID // 商户id
+      })
+      console.log(data)
+      if (!(returnAjaxMessage(data, this, 0))) {
+        return false
+      } else {
+        // 返回push记录数据
+        this.pushRecordList = data.data.data.userPushVOPageInfo.list
+        // 返回push币种信息列表
+        this.currencyValue = data.data.data.coinLists[0].shortName
+        this.currencyValue = data.data.data.coinLists[0].coinId
+        // 刷新列表默认币种
+        this.balance = data.data.data.total
+        this.currencyList = data.data.data.coinLists
+        // console.log(this.currencyList)
+        // console.log(this.balance)
+        // 金额
+        this.sum = data.data.data.pushPayCoinName
+        console.log(this.sum)
+      }
     },
     // 资产币种下拉
     changeId (e) {
@@ -309,23 +446,47 @@ export default {
         this.balance = data.data.data.total
       }
     },
-    // 5.提交push
+    /**
+     * 发送短信验证码或邮箱验证码
+     */
+    sendPhoneOrEmailCode (loginType) {
+      console.log(this.disabledOfPhoneBtn)
+      console.log(this.disabledOfEmailBtn)
+      if (this.disabledOfPhoneBtn || this.disabledOfEmailBtn) {
+        return false
+      }
+      let params = {
+        country: this.activeCountryCode
+      }
+      pushSendPhoneOrEmailCodeAjax(loginType, params, (data) => {
+        console.log(this.disabledOfPhoneBtn)
+        // 提示信息
+        if (!returnAjaxMessage(data, this)) {
+          console.log('error')
+          return false
+        } else {
+          switch (loginType) {
+            case 0:
+              this.$store.commit('push/SET_PUSH_BUTTON_STATUS', {
+                loginType: 0,
+                status: true
+              })
+              break
+            case 1:
+              this.$store.commit('push/SET_PUSH_BUTTON_STATUS', {
+                loginType: 1,
+                status: true
+              })
+              break
+          }
+        }
+      })
+    },
+    /**
+     * 5.提交push
+     */
     getStatusSubmit () {
-      // if (!this.buyUID) {
-      //   this.errorMsg = '买方UID不能为空'
-      // } else if (!this.count) {
-      //   this.errorMsg = '数量不能为空'
-      // } else if (!this.price) {
-      //   this.errorMsg = '价格不能为空'
-      // } else if (!this.transactionPassword) {
-      //   this.errorMsg = '交易密码不能为空'
-      // } else if (!this.code) {
-      //   this.errorMsg = '验证码不能为空'
-      // } else {
-      //   this.errorMsg = ''
-      // }
       this.stateSubmitPushAssets()
-      // this.getPushRecordList()
     },
     // 提交push资产
     async stateSubmitPushAssets () {
@@ -339,69 +500,95 @@ export default {
         code: this.phoneCode // 短信验证码
       }
       data = await pushAssetsSubmit(param)
+      if (!(returnAjaxMessage(data, this, 1))) {
+        return false
+      } else {
+        this.getPushRecordList()
+      }
+    },
+    /**
+     * 取消push
+     */
+    // 点击获取当前取消push id
+    cancelId (id) {
+      console.log(id)
+      this.dialogVisible = true
+      this.pushUID = id
+      this.pushRecordList.forEach((fid, item) => {
+        if (item.id == id) {
+          this.pushRecordList = item
+        }
+      })
+    },
+    // 确定撤销
+    confirm () {
+      this.stateRevocationInformation()
+    },
+    async stateRevocationInformation () {
+      let data
+      let param = {
+        id: this.pushUID // 列表id
+      }
+      data = await revocationPushProperty(param)
       if (!(returnAjaxMessage(data, this, 0))) {
         return false
       } else {
         console.log(data)
       }
     },
-    // 7. 刚进页面时候 push列表展示
-    async getPushRecordList () {
-      let data
-      data = await getPushAssetList({
-        partnerId: this.merchantID // 商户id
-      })
-      console.log(data)
-      if (!(returnAjaxMessage(data, this, 0))) {
-        return false
-      } else {
-        // 返回push记录数据
-        this.pushRecordList = data.data.data.userPushVOPageInfo.list
-        // 返回push币种信息列表
-        this.currencyValue = data.data.data.coinList[0].shortName
-        this.currencyValue = data.data.data.coinList[0].id
-        // 刷新列表默认币种
-        this.balance = data.data.data.total
-        this.currencyList = data.data.data.coinList
-        console.log(this.currencyList)
-        console.log(this.balance)
-      }
-    },
-    // 取消push
-    cancelId (id) {
+    /**
+     * 付款成交
+     */
+    // 点击获取当前付款id
+    paymentId (id) {
       console.log(id)
-      this.dialogVisible = true
+      this.paymentVisible = true
       this.pushUID = id
-      this.pushRecordList.forEach((fid, item) => {
-        if (item.fid == fid) {
-          this.pushRecordList = item
+      console.log(this.pushRecordList)
+      this.pushRecordList.forEach((item) => {
+        if (item.id == id) {
+          // 用户付款时二次确认信息
+          this.pushAsset = item.coinName
+          this.pushPrice = item.price
+          this.pushCount = item.count
+          this.pushPaymentAmount = item.amount
         }
       })
     },
-    confirm () {
-      console.log('确认')
+    // 点击确认用户信息并弹出交易密码框
+    statusUserInfo () {
+      this.paymentVisible = false
+      this.passwordVisible = true
+    },
+    // 确定付款
+    confirmSubmit () {
+      this.statePushPropertyTransaction()
+      this.passwordVisible = false
+    },
+    async statePushPropertyTransaction () {
+      let data
+      let param = {
+        id: this.pushUID, // 列表id
+        password: this.pushPassword // 用户付款时交易密码
+      }
+      data = await pushPropertyTransaction(param)
+      if (!(returnAjaxMessage(data, this, 1))) {
+        return false
+      } else {
+        this.getPushRecordList()
+      }
     }
-    // 付款
-    // paymentId (id) {
-    //   this.pushMsg = ''
-    //   this.paymentVisible = true
-    //   this.pushuid = id
-    //   this.pushList.forEach((item, index) => {
-    //     if (item.fid == id) {
-    //       this.push = item.fcoin_s
-    //       this.pros = item.fprice
-    //       this.number = item.fcount
-    //       this.money = item.famount
-    //     }
-    //   });
-    // },
   },
   filter: {},
   computed: {
     ...mapState({
       theme: state => state.common.theme,
       userInfo: state => state.personal.userInfo,
-      merchantID: state => state.common.merchantID
+      // userInfo: state => state.user.loginStep1Info, // 用户详细信息
+      merchantID: state => state.common.merchantID,
+      loginType: state => state.user.loginType, // 发送类型
+      disabledOfPhoneBtn: state => state.user.disabledOfPhoneBtn,
+      disabledOfEmailBtn: state => state.user.disabledOfEmailBtn
     })
   },
   watch: {}
@@ -437,6 +624,10 @@ export default {
         }
         >.award-record-content{
           min-height: 130px;
+          .form-input-common {
+            width: 270px;
+            height: 36px;
+          }
         }
       }
     }
@@ -477,6 +668,15 @@ export default {
             border-bottom: 1px solid #39424D;
             >.header-color {
               color: #fff;
+            }
+          }
+          .award-record-content{
+            >.state-status {
+              color: #338FF5;
+            }
+            .form-input-common {
+              color: #fff;
+              background-color: #1A2233;
             }
           }
         }

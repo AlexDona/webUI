@@ -8,7 +8,7 @@ export const M = {
   // 活动中心
   // 个人中心
   // 注册登录
-  'user-fail-partnernotfound': '商户不存在',
+  'user-fail-partnernotfound': '商户{}不存在',
   'user-sms-fail-often': '短信发送频繁,请稍后再试',
   'user-sms-success': '短信发送成功',
   'user-sms-fail': '发送失败，服务器错误',

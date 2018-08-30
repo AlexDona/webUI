@@ -16,39 +16,41 @@
             <div class="header-border margin20 display-flex">
               <span class="font-size16 main-header-title">实名认证</span>
               <p
-                v-if="!authenticationInfo.hasrealvaliDate"
-                class="authentication-type font-size12"
-              >
-                （请先通过实名认证）
-              </p>
-              <p
-                v-else
+                v-if="this.realNameInformationObj.realnameAuth"
                 class="authentication-type-info font-size12 box-sizing"
               >
                 <span class="authentication-info">您已通过实名认证</span>
+                <!--{{ realNameInformationList.realname.substring(0,1)}}-->
+                <!--*-->
+                <!--{{ realNameInformationList.realName.substring(2,3)}}-->
                 （&nbsp;
                 <span class="type-info">
                   姓名：
-                  {{ authenticationInfo.realName.substring(0,1)}}
+                  {{ realNameInformationList.realname.substring(0,1) }}
                   *
-                  {{ authenticationInfo.realName.substring(2,3)}}
-                  <!--{{ authenticationInfo.realName }}-->
+                  {{ realNameInformationList.realName.substring(2,3) }}
                 </span>、
                 <span class="type-info">
                   身份证号：
-                   {{ authenticationInfo.identification.substring(0,6)}}
+                   {{ realNameInformationList.cardNo.substring(0,6)}}
                   ****
-                  {{ authenticationInfo.identification.substring(14,18)}}
-                 <!-- {{  authenticationInfo.identification }}-->
+                   {{ realNameInformationList.cardNo.substring(14,18)}}
+                  <!-- {{  authenticationInfo.identification }}-->
                 </span>
                 &nbsp;）
+              </p>
+              <p
+                v-else
+                class="authentication-type font-size12"
+              >
+                （请先通过实名认证）
               </p>
               <i class="el-icon-arrow-down icon-down float-right"></i>
             </div>
           </div>
       </div>
       <div
-        v-if="!authenticationInfo.hasrealvaliDate"
+        v-if="!realNameInformationObj.realnameAuth"
         class="name-authentication-content margin-top9"
       >
         <el-form
@@ -57,29 +59,29 @@
         >
           <el-form-item label="地区国家">
             <el-select
-              v-model="region"
-              placeholder="请选择地区国家">
+              v-model="regionValue"
+              @change="changeId"
+            >
               <el-option
-                label="中国"
-                value="shanghai">
-              </el-option>
-              <el-option
-                label="韩国"
-                value="beijing">
+                v-for="item in regionList"
+                :key="item.regionName"
+                :label="item.regionName"
+                :value="item.regionName"
+              >
               </el-option>
             </el-select>
           </el-form-item>
           <el-form-item label="证件类型">
             <el-select
-              v-model="documentType"
-              placeholder="请选择证件类型">
+              v-model="documentTypeValue"
+              placeholder="请选择证件类型"
+            >
               <el-option
-                label="身份证"
-                value="shanghai">
-              </el-option>
-              <el-option
-                label="护照"
-                value="beijing">
+                v-for="item in documentTypeList"
+                :key="item.certificateName"
+                :label="item.certificateName"
+                :value="item.certificateName"
+              >
               </el-option>
             </el-select>
           </el-form-item>
@@ -94,7 +96,6 @@
             <input
               class="common-input"
               v-model="identificationNumber"
-              @focus="emptyStatus"
             />
           </el-form-item>
           <div
@@ -126,7 +127,7 @@
           @click="authenticationMethod">
           <span class="font-size16 main-header-title">高级认证</span>
           <span
-            v-if="!authenticationInfo.hasrealvaliDate"
+            v-if="!realNameInformationObj.realnameAuth"
             class="authentication-type font-size12"
           >
             （请先通过实名认证）
@@ -178,25 +179,23 @@
               </div>
               <div class="advanced-upload">
                 <div class="upload">
+                  <!-- 上传身份证正面 -->
                   <div class="default-center">
-                    <!-- 上传身份证正面 -->
-                    <input
-                      style="display: none"
-                      type="file"
-                      id="firstFileInput"
-                      accept="image/jpeg,image/jpg,image/png,image/bmp"
-                      ref="firstFileInput"
-                      @change="getPicture"
-                    />
-                    <div class="picture">
-                      <img
-                        class="default-picture cursor-pointer"
-                        :src="firstPictureSrc"
-                        @click="choosePicture(1)"
-                      >
-                    </div>
+                    <el-upload
+                      action="http://192.168.1.217:8888/uploadfile"
+                      :headers="tokenObj"
+                      list-type="picture-card"
+                      :on-success="handleSuccessFront"
+                      :on-remove="handleRemove"
+                    >
+                      <div class="picture">
+                        <img
+                          class="default-picture cursor-pointer"
+                          :src="firstPictureSrc"
+                        >
+                      </div>
+                    </el-upload>
                   </div>
-                  <!---->
                   <button
                     type="primary"
                     class="upload-submit cursor-pointer font-size12 margin-top30"
@@ -206,25 +205,23 @@
                   </button>
                 </div>
                 <div class="upload">
+                  <!-- 上传身份证反面 -->
                   <div class="default-center">
-                    <!-- 上传身份证反面 -->
-                    <input
-                      class="upload-input"
-                      type="file"
-                      id="secondFileInput"
-                      accept="image/jpeg,image/jpg,image/png,image/bmp"
-                      ref="secondFileInput"
-                      @change="getPicture"
-                    />
-                    <div class="picture">
-                      <img
-                        class="default-picture cursor-pointer"
-                        :src="secondPictureSrc"
-                        @click="choosePicture(2)"
-                      >
-                    </div>
+                    <el-upload
+                      action="http://192.168.1.217:8888/uploadfile"
+                      :headers="tokenObj"
+                      list-type="picture-card"
+                      :on-success="handleSuccessReverseSide"
+                      :on-remove="handleRemove"
+                    >
+                      <div class="picture">
+                        <img
+                          class="default-picture cursor-pointer"
+                          :src="secondPictureSrc"
+                        >
+                      </div>
+                    </el-upload>
                   </div>
-                  <!---->
                   <button
                     type="primary"
                     class="upload-submit cursor-pointer font-size12 margin-top30"
@@ -234,23 +231,22 @@
                   </button>
                 </div>
                 <div class="upload">
+                  <!-- 上传手持身份证 -->
                   <div class="default-center">
-                    <!-- 上传手持身份证 -->
-                    <input
-                      class="upload-input"
-                      type="file"
-                      id="thirdFileInput"
-                      accept="image/jpeg,image/jpg,image/png,image/bmp"
-                      ref="thirdFileInput"
-                      @change="getPicture"
-                    />
-                    <div class="picture">
-                      <img
-                        class="default-picture cursor-pointer"
-                        :src="thirdPictureSrc"
-                        @click="choosePicture(3)"
+                    <el-upload
+                      action="http://192.168.1.217:8888/uploadfile"
+                      :headers="tokenObj"
+                      list-type="picture-card"
+                      :on-success="handleSuccessHand"
+                      :on-remove="handleRemove">
+                      <div class="picture"
                       >
-                    </div>
+                        <img
+                          class="default-picture cursor-pointer"
+                          :src="thirdPictureSrc"
+                        >
+                      </div>
+                    </el-upload>
                   </div>
                   <button
                     type="primary"
@@ -263,11 +259,11 @@
               </div>
               <div class="upload-button">
                 <!--提交按钮-->
-                <!--@click="uploadAllPicture"-->
                 <button
                   class="submit-information font-size16 cursor-pointer"
+                  @click="stateSubmitSeniorCertification"
                 >
-                  提交
+                  确认提交
                 </button>
               </div>
             </div>
@@ -309,7 +305,9 @@
 <script>
 import {mapState} from 'vuex'
 import IconFontCommon from '../../Common/IconFontCommon'
-import lrz from 'lrz'
+// import lrz from 'lrz'
+import {queryCountryList, submitRealNameAuthentication, submitSeniorCertification, realNameInformation} from '../../../utils/api/apiDoc'
+import {returnAjaxMessage} from '../../../utils/commonFunc'
 export default {
   components: {
     IconFontCommon // 字体图标
@@ -317,8 +315,27 @@ export default {
   // props,
   data () {
     return {
-      region: '', // 国家地区
-      documentType: '', // 证件类型
+      tokenObj: {
+        'token': 'f1ecf736-a770-4827-89dd-d1c19372f79e'
+      },
+      regionValue: '', // 国家
+      regionList: [
+        {
+          regionId: 1,
+          regionName: '中国'
+        }
+      ], // 国家地区列表
+      documentTypeValue: '身份证', // 证件
+      documentTypeList: [
+        {
+          certificateId: 1,
+          certificateName: '身份证'
+        },
+        {
+          certificateId: 2,
+          certificateName: '护照'
+        }
+      ], // 证件类型列表
       realName: '', // 真实姓名
       identificationNumber: '', // 证件号码
       errorMsg: '', // 错误信息提示
@@ -330,12 +347,15 @@ export default {
       firstPictureSrc: require('../../../assets/user/card_negative.png'), // 正面
       secondPictureSrc: require('../../../assets/user/card_positive.png'), // 反面
       thirdPictureSrc: require('../../../assets/user/card_handheld.png'), // 手持
-      isFirstPictureUploaded: false, // 上传身份证正面框
-      isSecondPictureUploaded: false, // 上传身份证反面框
-      isThirdPictureUploaded: false, // 上传手持身份证框
-      formDataForFirstPicture: '', // 上传身份证正面
-      formDataForSecondPicture: '', // 上传身份证反面
-      formDataForThirdPicture: '' // 上传手持身份证
+      dialogImageFrontUrl: '', // 上传身份证正面url
+      // dialogVisibleFront: false,
+      dialogImageReverseSideUrl: '', // 上传身份证反面url
+      dialogVisibleReverseSide: false,
+      dialogImageHandUrl: '', // 上传手持身份证url
+      dialogVisibleHand: false,
+      seniorCertificationList: {},
+      realNameInformationObj: {}, //  获取用户实名信息
+      statusRealNameInformation: {}
     }
   },
   created () {
@@ -346,32 +366,117 @@ export default {
     // 黑色主题样式
     require('../../../../static/css/theme/night/Personal/UserAssets/IdentityAuthenticationNight.css')
     // 获取全局个人信息
-    this.authenticationInfo = this.userInfo.data.user
+    this.authenticationInfo = this.userInfo1.data.user
     // 清空图片和关闭弹窗this.clearUserPicture()
+    this.getCountryListings()
+    this.getRealNameInformation()
+    console.log(this.userInfo)
   },
   mounted () {},
   activited () {},
   update () {},
   beforeRouteUpdate () {},
   methods: {
-    // 提交认证
-    submitRealName () {
-      if (!this.region) {
-        this.errorMsg = '请选择地区国家'
-        return
-      } else if (!this.documentType) {
-        this.errorMsg = '请选择证件类型'
-        return
-      } else if (!this.realName) {
-        this.errorMsg = '真实姓名不能为空'
-        return
-      } else if (!this.identificationNumber) {
-        this.errorMsg = '证件号码不能为空'
-        return
+    // beforeAvatarUpload (file) {
+    //   const isJPG = file.type === 'image/jpeg/bmp/png'
+    //   const isLt2M = file.size / 1024 / 1024 < 2
+    //
+    //   if (!isJPG) {
+    //     this.$message.error('上传头像图片只能是 JPG 格式!')
+    //   }
+    //   if (!isLt500kb) {
+    //     this.$message.error('上传头像图片大小不能超过 500kb!')
+    //   }
+    //   return isJPG && isLt2M
+    // },
+    handleSuccessFront (response, file, fileList) {
+      this.dialogImageFrontUrl = response.data.fileUrl
+      console.log(response.data.fileUrl)
+      console.log(response, file, fileList)
+    },
+    handleSuccessReverseSide (response, file, fileList) {
+      this.dialogImageReverseSideUrl = response.data.fileUrl
+      console.log(response, file, fileList)
+    },
+    handleSuccessHand (response, file, fileList) {
+      this.dialogImageHandUrl = response.data.fileUrl
+      console.log(response, file, fileList)
+    },
+    handleRemove (file) {
+      console.log(file)
+    },
+    /**
+     * 刚进页面时候 国家列表展示
+     */
+    changeId (e) {
+      this.currencyList.forEach(item => {
+        if (e === item.id) {
+          this.getCountryListings(e)
+        }
+      })
+    },
+    async getCountryListings () {
+      let data = await queryCountryList()
+      console.log(data)
+      if (!(returnAjaxMessage(data, this, 0))) {
+        return false
       } else {
-        this.errorMsg = ''
+        // 返回列表数据
+        this.regionList = data.data.data
+        this.regionValue = data.data.data[0].id
+        this.regionValue = data.data.data[0].chinese
+        console.log(this.regionList)
       }
-      console.log('submitRealName')
+    },
+    /**
+    *  刚进页面时候 获取用户实名信息
+    */
+    async getRealNameInformation () {
+      let data = await realNameInformation()
+      console.log(data)
+      if (!(returnAjaxMessage(data, this, 1))) {
+        return false
+      } else {
+        // 返回列表数据
+        this.realNameInformationObj = data.data.data
+        this.statusRealNameInformation = data.data.data.authInfo
+        console.log(this.realNameInformationObj.realnameAuth)
+        console.log(this.statusRealNameInformation.realname)
+      }
+    },
+    // 提交实名认证认证
+    submitRealName () {
+      // if (!this.region) {
+      //   this.errorMsg = '请选择地区国家'
+      //   return
+      // } else if (!this.documentType) {
+      //   this.errorMsg = '请选择证件类型'
+      //   return
+      // } else if (!this.realName) {
+      //   this.errorMsg = '真实姓名不能为空'
+      //   return
+      // } else if (!this.identificationNumber) {
+      //   this.errorMsg = '证件号码不能为空'
+      //   return
+      // } else {
+      //   this.errorMsg = ''
+      // }
+      this.stateSubmitRealName()
+    },
+    async stateSubmitRealName () {
+      let data
+      let param = {
+        country: this.regionValue, // 国籍
+        cardType: this.documentTypeValue, // 证件类型
+        realname: this.realName, // 真实姓名
+        cardNo: this.identificationNumber // 证件号码
+      }
+      data = await submitRealNameAuthentication(param)
+      if (!(returnAjaxMessage(data, this, 1))) {
+        return false
+      } else {
+        console.log(data)
+      }
     },
     // 清空内容信息
     emptyStatus () {
@@ -394,56 +499,28 @@ export default {
       this.authenticationContentStatus = true
     },
     // 选择图片文件
-    choosePicture (index) {
-      console.dir(this.$refs.firstFileInput)
-      const FIRST_INPUT = this.$refs.firstFileInput
-      const SECOND_INPUT = this.$refs.secondFileInput
-      const THIRD_INPUT = this.$refs.thirdFileInput
-      if (index === 1) {
-        FIRST_INPUT.click()
-      } else if (index == 2) {
-        SECOND_INPUT.click()
-      } else if (index == 3) {
-        THIRD_INPUT.click()
+
+    // 确认提交高级认证
+    stateSubmitSeniorCertification () {
+      this.stateSeniorCertification()
+    },
+    async stateSeniorCertification () {
+      let data
+      let param = {
+        idcardFront: this.dialogImageFrontUrl, // 上传身份证正面
+        idcardBack: this.dialogImageReverseSideUrl, // 上传身份证反面
+        idcardHand: this.dialogImageHandUrl // 上传手持身份证
+      }
+      data = await submitSeniorCertification(param)
+      console.log(data)
+      if (!(returnAjaxMessage(data, this, 1))) {
+        return false
+      } else {
+        this.dialogImageFrontUrl = ''
+        this.dialogImageReverseSideUrl = ''
+        this.dialogImageHandUrl = ''
       }
     },
-    // 上传照片chang事件
-    getPicture (e) {
-      console.dir(e.target.id)
-      const INPUT_ID = e.target.id
-      console.dir(e.target.files[0])
-      lrz(e.target.files[0]).then(res => {
-        console.log(res)
-        const size = this.bytesToSize(res.fileLen)
-        console.log(size)
-        // console.log(res.base64)
-        // console.log(INPUT_ID)
-        if (INPUT_ID === 'firstFileInput') {
-          this.firstPictureSrc = res.base64
-          this.formDataForFirstPicture = res.file
-          console.log(this.firstPictureSrc)
-          // this. = res.file
-          this.isFirstPictureUploaded = true
-        } else if (INPUT_ID === 'secondFileInput') {
-          this.secondPictureSrc = res.base64
-          this.formDataForSecondPicture = res.file
-          this.isSecondPictureUploaded = true
-        } else if (INPUT_ID === 'thirdFileInput') {
-          this.thirdPictureSrc = res.base64
-          this.formDataForThirdPicture = res.file
-          this.isThirdPictureUploaded = true
-        }
-      })
-    },
-    // 清空用户数据
-    // clearUserPicture () {
-    //   this.firstPictureSrc = require('../../assets/user/card_negative.png')
-    //   this.secondPictureSrc = require('../../assets/user/card_positive.png')
-    //   this.thirdPictureSrc = require('../../assets/user/card_handheld.png')
-    //   this.isFirstPictureUploaded = false
-    //   this.isSecondPictureUploaded = false
-    //   this.isThirdPictureUploaded = false
-    // },
     // 检测上传图片大小
     bytesToSize (bytes) {
       if (bytes === 0) return '0 B'
@@ -457,7 +534,7 @@ export default {
   computed: {
     ...mapState({
       theme: state => state.common.theme,
-      userInfo: state => state.personal.userInfo
+      userInfo: state => state.user.loginStep1Info // 用户详细信息
     })
   },
   watch: {}
@@ -578,7 +655,7 @@ export default {
           width:200px;
           height:34px;
           line-height: 34px;
-          margin: 95px auto 83px;
+          margin: 200px auto 83px;
           border-radius:4px;
         }
       }

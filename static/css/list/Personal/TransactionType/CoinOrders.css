@@ -5,6 +5,15 @@
   width: 105px;
   text-align: center;
 }
+.coin-orders.personal .el-table th>.cell {
+  text-align: center;
+}
+.coin-orders.personal .el-table th.is-leaf {
+  border-bottom: 0;
+}
+.coin-orders.personal .el-table td{
+  border-bottom: 0;
+}
 
 .coin-orders.personal .el-input__inner{
   width:100px;

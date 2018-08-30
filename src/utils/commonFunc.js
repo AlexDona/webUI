@@ -3,6 +3,7 @@
  */
 import {
   sendMsgByPhoneOrEmial,
+  sendMsgByPushPhoneOrEmial,
   repealMyEntrustAjax
 } from '../utils/api/apiDoc'
 import {PHONE_REG, EMAIL_REG, ID_REG, PWD_REG, ALIPAY_REG, BANK_REG, GOOGLE_REG} from './regExp'
@@ -78,4 +79,9 @@ export const sendPhoneOrEmailCodeAjax = async (type, params, callback) => {
 export const repealMyEntrustCommon = async (params, callback) => {
   const repealData = await repealMyEntrustAjax(params)
   callback(repealData)
+}
+// 发送验证码（短信、邮箱）
+export const pushSendPhoneOrEmailCodeAjax = async (type, params, callback) => {
+  const data = await sendMsgByPushPhoneOrEmial(type, params)
+  callback(data)
 }

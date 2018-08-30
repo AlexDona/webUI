@@ -18,10 +18,13 @@ util.ajax.interceptors.request.use((config) => {
   config.headers['partnerId'] = '474629374641963008'
   config.headers['partnerNo'] = '100001'
 
-  // let userToken = getStoreWithJson('loginStep1Info').token || store.user.loginStep1Info.token || ''
-  // console.log(userToken)
+  // console.log(getStoreWithJson('loginStep1Info').token)
+  // console.log(store.state.user.loginStep1Info.token)
+  // let userToken = getStoreWithJson('loginStep1Info').token || store.state.user.loginStep1Info.token
+  // // console.log(userToken)
   // if (userToken) {
-  //   config.headers['authorization'] = userToken
+  //   config.headers['token'] = userToken
+  //   // config.headers['token'] = '354535'
   // }
   return config
 }, (error) => {

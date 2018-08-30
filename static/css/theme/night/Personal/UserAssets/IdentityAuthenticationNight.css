@@ -48,3 +48,6 @@
 .identity-authentication.personal.night .el-dialog__title{
   color: #B8BDD0;
 }
+.identity-authentication.personal.night .el-upload--picture-card {
+  background-color: transparent;
+}
