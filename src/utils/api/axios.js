@@ -3,9 +3,9 @@
  */
 import {baseUrl} from '../env'
 import axios from 'axios'
-import store from '../../vuex'
+// import store from '../../vuex'
 import router from '../../router/index'
-import {getStoreWithJson} from '../index'
+// import {getStoreWithJson} from '../index'
 
 let util = {}
 util.ajax = axios.create({
@@ -20,11 +20,11 @@ util.ajax.interceptors.request.use((config) => {
   // 增加token信息
   // config.headers['authorization'] = '888888'
 
-  let userToken = getStoreWithJson('loginStep1Info').token || store.user.loginStep1Info.token
-  console.log(userToken)
-  if (userToken) {
-    config.headers['authorization'] = userToken
-  }
+  // let userToken = getStoreWithJson('loginStep1Info').token || store.user.loginStep1Info.token || ''
+  // console.log(userToken)
+  // if (userToken) {
+  //   config.headers['authorization'] = userToken
+  // }
   return config
 }, (error) => {
   return Promise.reject(error)

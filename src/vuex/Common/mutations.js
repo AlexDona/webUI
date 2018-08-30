@@ -40,5 +40,6 @@ export default {
   [CHANGE_SOCKET_DATA] (state, data) {
     state.socketData.depthData = data.depthData
     state.socketData.buyAndSellData = data.buyAndSellData
+    state.socketData.tardeRecordList = data.tardeRecordList
   }
 }

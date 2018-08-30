@@ -179,8 +179,9 @@
   </div>
 </template>
 <script>
-import {mapState, mapMutations} from 'vuex'
 import {getStore, setStore} from '../../utils'
+import {mapState, createNamespacedHelpers} from 'vuex'
+const { mapMutations } = createNamespacedHelpers('home')
 export default {
   components: {
   },
@@ -879,7 +880,7 @@ export default {
   beforeRouteUpdate () {
   },
   methods: {
-    ...mapMutations('home', [
+    ...mapMutations([
       'CHANGE_COLLECT_LIST'
     ]),
     // 排序
@@ -1067,7 +1068,7 @@ export default {
       language: state => state.common.language,
       globalCollectList: state => state.home.globalCollectList,
       globalCollectStatusList: state => state.home.globalCollectStatusList,
-      plateList: state => state.home.globalCollectStatusList
+      plateList: state => state.home.plateList
     }),
     // 搜索关键字过滤列表过滤
     searchFilterMarketList () {
@@ -1177,10 +1178,10 @@ export default {
                         color:$mainColor;
                       }
                       &.el-icon-caret-top{
-                        top:-1px;
+                        top:-2px;
                       }
                       &.el-icon-caret-bottom{
-                        bottom:-1px;
+                        bottom:-2px;
                       }
                     }
                   }

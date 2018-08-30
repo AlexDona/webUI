@@ -6,3 +6,35 @@
   text-align: center;
 }
 
+.coin-orders.personal .el-input__inner{
+  width:100px;
+  height:30px;
+  background:rgba(25,32,46,1);
+  border-radius:2px;
+}
+.coin-orders.personal .el-date-editor.el-input{
+  width:100px;
+}
+.coin-orders.personal .el-input--suffix .el-input__inner{
+  padding-right:0px;
+  font-size: 12px;
+}
+.coin-orders.personal .el-table td,
+.coin-orders.personal .el-table th{
+  padding:0;
+  height:30px;
+  line-height:30px;
+}
+/*.coin-orders.personal*/
+/*.coin-orders.personal*/
+/*.coin-orders.personal*/
+/*.coin-orders.personal*/
+/*.coin-orders.personal*/
+/*.coin-orders.personal*/
+/*.coin-orders.personal*/
+/*.coin-orders.personal*/
+/*.coin-orders.personal*/
+/*.coin-orders.personal*/
+/*.coin-orders.personal*/
+/*.coin-orders.personal*/
+/*.coin-orders.personal*/

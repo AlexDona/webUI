@@ -30,16 +30,19 @@ function sendData (ws, params) {
 }
 
 function subscribe (ws, params) {
+  // console.log(params)
   // 首页行情
   if (!params.type) {
-    // sendData(ws, {
-    //   'tag': 'REQ',
-    //   'content': `market.ticker.55.477187759069462528.all`,
-    //   'id': `tick_fucfbt`
-    // })
+    // console.log('qidong')
+    ws.send(JSON.stringify({
+      'tag': 'REQ',
+      'content': `market.ticker.474629374641963008.481417408695762944.all`,
+      'id': `market_001`
+    }))
   } else {
   //  币币交易
     let symbols = [params.symbol]
+    // console.log(symbols)
     let resolution = '1'
 
     switch (params.resolution) {
@@ -68,6 +71,7 @@ function subscribe (ws, params) {
         resolution = 'week'
         break
     }
+    console.log(resolution)
     // 请求
     for (let symbol of symbols) {
       // console.log(symbol)
@@ -80,7 +84,7 @@ function subscribe (ws, params) {
           'id': `depth_${symbol}`
         })
       }
-      console.log(resolution)
+      // console.log(resolution)
       // K线
       // sendData(ws, {
       //   'tag': 'REQ',
@@ -89,12 +93,13 @@ function subscribe (ws, params) {
       // })
 
       // 交易记录
-      // sendData(ws, {
-      //   'tag': 'REQ',
-      //   'content': `market.${symbol}.trade`,
-      //   'id': `trade_${symbol}`
-      // })
-
+      if (store.state.common.reqRefreshStatus) {
+        sendData(ws, {
+          'tag': 'REQ',
+          'content': `market.${symbol}.trade`,
+          'id': `trade_${symbol}`
+        })
+      }
       // 实时行情
       // sendData(ws, {
       //   'tag': 'REQ',
@@ -114,20 +119,22 @@ function subscribe (ws, params) {
           'id': `depth_${symbol}`
         })
       }
-    // K线
-    // console.log(resolution)
-    // console.log(symbol)
-    // sendData(ws, {
-    //   'tag': 'SUB',
-    //   'content': `market.${symbol}.kline.${resolution}`,
-    //   'id': `kline_${symbol}14`
-    // })
-    // 交易记录
-    // sendData(ws, {
-    //   'tag': 'SUB',
-    //   'content': `market.${symbol}.trade`,
-    //   'id': `trade_${symbol}`
-    // })
+      // K线
+      // console.log(resolution)
+      // console.log(symbol)
+      // sendData(ws, {
+      //   'tag': 'SUB',
+      //   'content': `market.${symbol}.kline.${resolution}`,
+      //   'id': `kline_${symbol}14`
+      // })
+      // 交易记录
+      if (store.state.common.reqRefreshStatus) {
+        sendData(ws, {
+          'tag': 'SUB',
+          'content': `market.${symbol}.trade`,
+          'id': `trade_${symbol}`
+        })
+      }
     // // 实时行情(首页数据)
     // sendData(ws, {
     //   'tag': 'SUB',
@@ -168,7 +175,8 @@ const Io = {
   subscribeKline: function (params, callback) {
     if (this.ws === null) {
       this.init()
-    } else if (this.ws.readyState) {
+    }
+    if (this.ws.readyState) {
       subscribe(this.ws, params)
     } else {
       this.ws.onopen = evt => {

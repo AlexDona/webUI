@@ -585,7 +585,8 @@ export default {
       'ENTER_STEP3',
       'SET_LOGIN_TYPE',
       'SET_STEP1_INFO',
-      'SET_USER_BUTTON_STATUS'
+      'SET_USER_BUTTON_STATUS',
+      'USER_LOGIN'
     ]),
     // 设置错误信息
     setErrorMsg (index, msg) {
@@ -719,8 +720,8 @@ export default {
       console.log(disabled)
     },
     sendPhoneOrEmailCode (loginType) {
-      console.log(this.disabledOfPhoneBtn)
-      console.log(this.disabledOfEmailBtn)
+      // console.log(this.disabledOfPhoneBtn)
+      // console.log(this.disabledOfEmailBtn)
       if (this.disabledOfPhoneBtn || this.disabledOfEmailBtn) {
         return false
       }
@@ -746,7 +747,7 @@ export default {
       }
       // console.log(params)
       sendPhoneOrEmailCodeAjax(loginType, params, (data) => {
-        console.log(this.disabledOfPhoneBtn)
+        // console.log(this.disabledOfPhoneBtn)
         // 提示信息
         if (!returnAjaxMessage(data, this)) {
           console.log('error')
@@ -944,7 +945,9 @@ export default {
         return false
       } else {
         console.log(data)
-        this.SET_STEP1_INFO(data.data.data)
+        this.step3DialogShowStatus = false
+        // this.SET_STEP1_INFO(data.data.data)
+        this.USER_LOGIN(data.data.data)
         // 登录成功
         this.$router.push({'path': '/'})
       }

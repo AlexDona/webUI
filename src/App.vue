@@ -5,8 +5,9 @@
 </template>
 
 <script>
-import {mapState, mapMutations} from 'vuex'
 import {getStore} from './utils'
+import {mapState, createNamespacedHelpers} from 'vuex'
+const { mapMutations } = createNamespacedHelpers('common')
 // import {testAjax} from './utils/api/apiDoc'
 
 export default {

@@ -112,7 +112,7 @@
           <!--分页-->
           <el-pagination
             background
-            v-show="activeName === 'current-entrust'"
+            v-show="activeName === 'current-entrust' && !currentEntrustList.length"
             layout="prev, pager, next"
             :page-count="totalPageForMyEntrust"
             @current-change="changeCurrentPage(0,$event)"
@@ -199,7 +199,7 @@
         <!--分页-->
         <el-pagination
           background
-          v-show="activeName === 'history-entrust'"
+          v-show="activeName === 'history-entrust' && !historyEntrustList.length && isLogin"
           layout="prev, pager, next"
           :page-count="totalPageForHistoryEntrust"
           @current-change="changeCurrentPage(1,$event)"
@@ -334,7 +334,7 @@ export default {
     ...mapState({
       theme: state => state.common.theme,
       language: state => state.common.language,
-      isLogin: state => state.common.isLogin,
+      isLogin: state => state.user.isLogin,
       refreshEntrustStatus: state => state.trade.refreshEntrustStatus
     })
   },

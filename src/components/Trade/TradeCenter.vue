@@ -24,9 +24,9 @@
         <!--k线-->
         <KLine class=""/>
         <!--市价交易、限价交易-->
-        <!--<ExchangeBox/>-->
+        <ExchangeBox/>
         <!--深度图-->
-        <!--<Depth/>-->
+        <Depth/>
         <!--交易-->
         <!-- 委单列表 -->
         <EntrustOrder/>

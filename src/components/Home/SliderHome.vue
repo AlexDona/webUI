@@ -18,7 +18,8 @@
 </template>
 <script>
 import Slider from 'vue-concise-slider'// 引入slider组件
-import {mapState, mapMutations} from 'vuex'
+import {mapState, createNamespacedHelpers} from 'vuex'
+const { mapMutations } = createNamespacedHelpers('home')
 export default {
   components: {
     Slider
@@ -33,7 +34,7 @@ export default {
         tracking: false,
         thresholdDistance: 100, // 滑动距离阈值判定
         thresholdTime: 300, // 滑动时间阈值判定
-        loop: false, // 无限循环
+        loop: true, // 无限循环
         autoplay: 4000, // 自动播放:时间[ms]
         infinite: 8
       }
@@ -98,7 +99,7 @@ export default {
           mounted () {
           },
           methods: {
-            ...mapMutations('home', [
+            ...mapMutations([
               'CHANGE_BANNER_ACTIVE',
               'CHANGE_BANNER_BACKGROUND'
             ]),
