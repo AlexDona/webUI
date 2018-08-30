@@ -63,11 +63,16 @@
           <div class="security-status text-align-r">
             <button class="security-verify border-radius2 font-size12 cursor-pointer">
               <span
+                v-if="!getStatusUserInfo.emailBind"
                 @click="showStatusVerificationPopups(1)"
               >
                 开启验证
               </span>
-              <!--<span>关闭验证</span>-->
+              <span
+                v-else
+              >
+                关闭验证
+              </span>
             </button>
             <button
               v-if="!getStatusUserInfo.emailBind"
@@ -102,11 +107,16 @@
           <div class="security-status text-align-r">
             <button class="security-verify border-radius2 font-size12 cursor-pointer">
               <span
+                v-if="!getStatusUserInfo.telePhoneBind"
                 @click="showStatusVerificationPopups(2)"
               >
                 开启验证
               </span>
-              <!--<span>关闭验证</span>-->
+              <span
+                v-else
+              >
+                关闭验证
+              </span>
             </button>
             <button
               class="security-binding border-radius2 font-size12 cursor-pointer"
@@ -140,11 +150,16 @@
           <div class="security-status text-align-r">
             <button class="security-verify border-radius2 font-size12 cursor-pointer">
               <span
+                v-if="!getStatusUserInfo.googleBind"
                 @click="showStatusVerificationPopups(3)"
               >
                 开启验证
               </span>
-              <!--<span>关闭验证</span>-->
+              <span
+                v-else
+              >
+                关闭验证
+              </span>
             </button>
             <button
               class="security-binding border-radius2 font-size12 cursor-pointer"
@@ -412,17 +427,11 @@ export default {
     showStatusVerificationPopups (e) {
       switch (e) {
         case 1:
-          if (this.getStatusUserInfo.emailBind) {
-            this.dialogFormVisible = false
-          } else {
-            console.log(e)
-            this.dialogFormVisible = true
-            this.openSwitch = true
-            this.emailOpenVerify = true
-            this.phoneOpenVerify = false
-            this.googleOpenVerify = false
-          }
-          // console.log(e)
+          this.openSwitch = true
+          this.emailOpenVerify = true
+          this.phoneOpenVerify = false
+          this.googleOpenVerify = false
+          console.log(e)
           break
         case 2:
           this.emailOpenVerify = false

@@ -5,4 +5,19 @@
   color: #ccc;
   border-bottom: 1px solid #ccc;
 }
-
+.coin-orders.personal.night .el-table th, .el-table tr{
+  background-color: #1E2636;
+}
+.coin-orders.personal.night .el-table thead {
+  color: #617499;
+}
+.coin-orders.personal.night .el-table td{
+  color: #ccc;
+}
+.coin-orders.personal.night .el-table--enable-row-hover .el-table__body tr:hover>td{
+  background-color: #1E2636;
+}
+.coin-orders.personal.night .el-table__empty-block {
+  background-color: #1E2636;
+  color: #fff;
+}

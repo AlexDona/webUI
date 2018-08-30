@@ -12,19 +12,148 @@
           label="当前委托"
           name="first"
         >
-          当前委托
+          <el-table
+            :data="commissionedByCurrent"
+            style="width: 100%">
+            <el-table-column
+              label="时间"
+            >
+            </el-table-column>
+            <el-table-column
+              label="交易对"
+            >
+            </el-table-column>
+            <el-table-column
+              label="交易类型"
+            >
+            </el-table-column>
+            <el-table-column
+              label="方向"
+            >
+            </el-table-column>
+            <el-table-column
+              label="价格"
+            >
+            </el-table-column>
+            <el-table-column
+              label="数量"
+            >
+            </el-table-column>
+            <el-table-column
+              label="委托总额"
+            >
+            </el-table-column>
+            <el-table-column
+              label="已成交"
+            >
+            </el-table-column>
+            <el-table-column
+              label="未成交"
+            >
+            </el-table-column>
+            <el-table-column
+              label="操作"
+            >
+            </el-table-column>
+          </el-table>
         </el-tab-pane>
         <el-tab-pane
           label="历史委托"
           name="second"
         >
-          历史委托
+          <el-table
+            :data="commissionedByHistory"
+            style="width: 100%">
+            <el-table-column
+              label="时间"
+            >
+            </el-table-column>
+            <el-table-column
+              label="交易对"
+            >
+            </el-table-column>
+            <el-table-column
+              label="交易类型"
+            >
+            </el-table-column>
+            <el-table-column
+              label="方向"
+            >
+            </el-table-column>
+            <el-table-column
+              label="价格"
+            >
+            </el-table-column>
+            <el-table-column
+              label="数量"
+            >
+            </el-table-column>
+            <el-table-column
+              label="委托总额"
+            >
+            </el-table-column>
+            <el-table-column
+              label="已成交"
+            >
+            </el-table-column>
+            <el-table-column
+              label="未成交"
+            >
+            </el-table-column>
+            <el-table-column
+              label="操作"
+            >
+            </el-table-column>
+          </el-table>
         </el-tab-pane>
         <el-tab-pane
           label="成交明细"
           name="third"
         >
-          成交明细
+          <el-table
+            :data="clinchDealDetail"
+            style="width: 100%">
+            <el-table-column
+              label="时间"
+            >
+            </el-table-column>
+            <el-table-column
+              label="交易对"
+            >
+            </el-table-column>
+            <el-table-column
+              label="交易类型"
+            >
+            </el-table-column>
+            <el-table-column
+              label="方向"
+            >
+            </el-table-column>
+            <el-table-column
+              label="价格"
+            >
+            </el-table-column>
+            <el-table-column
+              label="数量"
+            >
+            </el-table-column>
+            <el-table-column
+              label="委托总额"
+            >
+            </el-table-column>
+            <el-table-column
+              label="已成交"
+            >
+            </el-table-column>
+            <el-table-column
+              label="未成交"
+            >
+            </el-table-column>
+            <el-table-column
+              label="操作"
+            >
+            </el-table-column>
+          </el-table>
         </el-tab-pane>
       </el-tabs>
     </div>
@@ -38,7 +167,10 @@ export default {
   // props,
   data () {
     return {
-      activeName: 'first'
+      activeName: 'first',
+      commissionedByCurrent: [],
+      commissionedByHistory: [],
+      clinchDealDetail: []
     }
   },
   created () {

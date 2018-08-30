@@ -1,7 +1,7 @@
 /**
  * 和业务逻辑相关的全局方法
  */
-import {sendMsgByPhoneOrEmial} from '../utils/api/apiDoc'
+import {sendMsgByPhoneOrEmial, sendMsgByPushPhoneOrEmial} from '../utils/api/apiDoc'
 import {PHONE_REG, EMAIL_REG, ID_REG, PWD_REG, ALIPAY_REG, BANK_REG, GOOGLE_REG} from './regExp'
 // 请求接口后正确或者错误的提示提示信息：
 // 如果返回 错误 了就提示错误并不能继续往下进行；
@@ -67,5 +67,10 @@ export const validateNumForUserInput = (type, targetNum) => {
 // 发送验证码（短信、邮箱）
 export const sendPhoneOrEmailCodeAjax = async (type, params, callback) => {
   const data = await sendMsgByPhoneOrEmial(type, params)
+  callback(data)
+}
+// 发送验证码（短信、邮箱）
+export const pushSendPhoneOrEmailCodeAjax = async (type, params, callback) => {
+  const data = await sendMsgByPushPhoneOrEmial(type, params)
   callback(data)
 }

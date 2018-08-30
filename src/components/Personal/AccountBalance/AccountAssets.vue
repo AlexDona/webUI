@@ -187,7 +187,9 @@
                 </div>
               </div>
               <!--提币内容-->
-              <div class="recharge-list recharge-list-mention display-flex padding20">
+              <div
+                class="recharge-list recharge-list-mention display-flex padding20"
+                v-show="dialogVisible">
                 <p class="triangle"></p>
                 <div class="recharge-list-left display-flex">
                   <div class="list-left-flex flex1 font-size12">
@@ -279,6 +281,8 @@ import UserInfo from '../AccountBalance/UserInfo'
 import IconFontCommon from '../../Common/IconFontCommon'
 import VueClipboard from 'vue-clipboard2'
 import { createNamespacedHelpers, mapState } from 'vuex'
+import {assetCurrenciesList} from '../../../utils/api/apiDoc'
+import {returnAjaxMessage} from '../../../utils/commonFunc'
 const { mapMutations } = createNamespacedHelpers('personal')
 Vue.use(VueClipboard)
 export default {
@@ -297,25 +301,25 @@ export default {
       hideStatusButton: true, // 隐藏币种// 显示所有/余额切换，
       searchName: '', // 搜索关键字
       withdrawDepositIsShowList: [
-        {
-          fid: 1,
-          currencyName: 'BTC', // 币种名称
-          totalQuantity: '3695421', // 总数量
-          numberFrozen: '23.021', // 冻结数量
-          availableQuantity: '45610.231', // 可用数量
-          assetValuation: '123.02354' // 资产估值
-        },
-        {
-          fid: 2,
-          currencyName: 'BTC', // 币种名称
-          totalQuantity: '3695421', // 总数量
-          numberFrozen: '23.021', // 冻结数量
-          availableQuantity: '45610.231', // 可用数量
-          assetValuation: '123.02354' // 资产估值
-        }
+        // {
+        //   fid: 1,
+        //   currencyName: 'BTC', // 币种名称
+        //   totalQuantity: '3695421', // 总数量
+        //   numberFrozen: '23.021', // 冻结数量
+        //   availableQuantity: '45610.231', // 可用数量
+        //   assetValuation: '123.02354' // 资产估值
+        // },
+        // {
+        //   fid: 2,
+        //   currencyName: 'BTC', // 币种名称
+        //   totalQuantity: '3695421', // 总数量
+        //   numberFrozen: '23.021', // 冻结数量
+        //   availableQuantity: '45610.231', // 可用数量
+        //   assetValuation: '123.02354' // 资产估值
+        // }
       ],
       activeCoinId: '', // 提现币种id
-      rechargeIsShowList: true, // 充币内容
+      rechargeIsShowList: false, // 充币内容
       chargeMoney: 'SDAFSADFASDdfgdfgsdfgasdfgsdfgsdfgDFGSDFG', // 生成二维码条件
       serviceCharge: '', // 自定义手续费
       rechargeCount: '', // 提币数量
@@ -393,6 +397,22 @@ export default {
           this.withdrawDepositIsShowList = item
         }
       })
+    },
+    /**
+     * 刚进页面时候 个人资产列表展示
+     */
+    async getPushRecordList () {
+      let data = await assetCurrenciesList({
+        partnerId: this.merchantID // 商户id
+      })
+      console.log(data)
+      if (!(returnAjaxMessage(data, this, 0))) {
+        return false
+      } else {
+        // 返回数据
+        this.withdrawDepositIsShowList = data.data.data
+        console.log(this.withdrawDepositIsShowList)
+      }
     },
     // 点击跳转账单明细
     stateRechargeRecord () {

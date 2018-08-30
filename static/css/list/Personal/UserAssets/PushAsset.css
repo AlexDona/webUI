@@ -31,6 +31,19 @@
 .push-assets.personal .el-table th.is-leaf {
   border-bottom: 0;
 }
-.push-assets.personal .el-table td{
+.el-table td{
   border-bottom: 0;
+}
+.push-assets.personal .el-dialog {
+  width: 470px;
+  top: 10%;
+}
+.push-assets.personal .el-form--label-top .el-form-item__label {
+  padding: 0;
+}
+.push-assets.personal .el-dialog__body {
+  padding: 10px 25px 15px;
+}
+.push-assets.personal .el-dialog--center {
+  text-align: left;
 }
