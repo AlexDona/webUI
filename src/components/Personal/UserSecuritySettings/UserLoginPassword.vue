@@ -76,6 +76,8 @@
 // 头部
 import HeaderCommon from '../../Common/HeaderCommon'
 import IconFontCommon from '../../Common/IconFontCommon'
+// import {statusSecurityCenter} from '../../../utils/api/apiDoc'
+// import {returnAjaxMessage} from '../../../utils/commonFunc'
 // 底部
 import FooterCommon from '../../Common/FooterCommon'
 import { createNamespacedHelpers, mapState } from 'vuex'

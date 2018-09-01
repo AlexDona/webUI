@@ -56,8 +56,7 @@
                 type="text"
                 class="phone-input phone-input-left border-radius2 padding-l15 box-sizing"
                 @focus="emptyStatus"
-                ref="amendDataPhone.newPhoneAccounts"
-                @keyup="changeInputValue('defaultAreaCode')"
+                v-model="amendDataPhone.newPhoneAccounts"
               >
             </el-form-item>
             <el-form-item
@@ -87,10 +86,15 @@
               label="短信验证码：">
               <el-input
                 @focus="emptyStatus"
-                ref="amendDataPhone.oldPhoneCode"
-                @keyup="changeInputValue('oldPhoneCode')"
+                v-model="bindingDataPhone.oldPhoneCode"
               >
-                <template slot="append">验证码</template>
+                <template slot="append">
+                  <CountDownButton
+                    class="send-code-btn cursor-pointer"
+                    :status="disabledOfPhoneBtn"
+                    @run="sendPhoneOrEmailCode(0)"
+                  />
+                </template>
               </el-input>
             </el-form-item>
             <div class="prompt-message">
@@ -186,12 +190,16 @@ import IconFontCommon from '../../Common/IconFontCommon'
 import FooterCommon from '../../Common/FooterCommon'
 import { createNamespacedHelpers, mapState } from 'vuex'
 import ImageValidate from '../../Common/ImageValidateCommon' // 图片验证吗
+import CountDownButton from '../../Common/CountDownCommon'
+import {returnAjaxMessage, sendPhoneOrEmailCodeAjax} from '../../../utils/commonFunc'
+import {bindPhoneAddress} from '../../../utils/api/apiDoc'
 const { mapMutations } = createNamespacedHelpers('personal')
 export default {
   components: {
     HeaderCommon, // 头部
     IconFontCommon, // 字体图标
     ImageValidate, // 图片验证吗
+    CountDownButton, // 短信倒计时
     FooterCommon // 底部
   },
   data () {
@@ -270,7 +278,42 @@ export default {
     refreshCode () {
       this.identifyCode = this.getRandomNum()
     },
-    // 确定绑定
+    // 发送邮箱验证码
+    sendPhoneOrEmailCode (loginType) {
+      console.log(this.disabledOfPhoneBtn)
+      console.log(this.disabledOfEmailBtn)
+      if (this.disabledOfPhoneBtn || this.disabledOfEmailBtn) {
+        return false
+      }
+      let params = {
+        email: this.emailAccounts // 邮箱账号
+        // country: this.activeCountryCode
+      }
+      sendPhoneOrEmailCodeAjax(loginType, params, (data) => {
+        console.log(this.disabledOfPhoneBtn)
+        // 提示信息
+        if (!returnAjaxMessage(data, this)) {
+          console.log('error')
+          return false
+        } else {
+          switch (loginType) {
+            case 0:
+              this.$store.commit('user/SET_USER_BUTTON_STATUS', {
+                loginType: 0,
+                status: true
+              })
+              break
+            case 1:
+              this.$store.commit('user/SET_USER_BUTTON_STATUS', {
+                loginType: 1,
+                status: true
+              })
+              break
+          }
+        }
+      })
+    },
+    // 确定提交绑定手机
     getStatusSubmit () {
       if (!this.newPhoneAccounts) {
         this.errorMsg = '邮箱账号不能为空'
@@ -280,13 +323,33 @@ export default {
         this.errorMsg = ''
       }
       console.log(1)
+      this.confirmBindingBailPhone()
+    },
+    // 确定绑定
+    async confirmBindingBailPhone () {
+      let data
+      let param = {
+        phone: this.emailAccounts, // 邮箱账号
+        code: this.emailCode // 邮箱验证码
+      }
+      data = await bindPhoneAddress(param)
+      if (!(returnAjaxMessage(data, this, 1))) {
+        return false
+      } else {
+        console.log(data)
+        console.log(this.emailAccounts)
+        console.log(this.emailCode)
+        // this.statusSecurityCenter()
+      }
     }
   },
   filter: {},
   computed: {
     ...mapState({
       theme: state => state.common.theme,
-      userInfo: state => state.personal.userInfo
+      userInfo: state => state.personal.userInfo,
+      disabledOfPhoneBtn: state => state.user.disabledOfPhoneBtn,
+      disabledOfEmailBtn: state => state.user.disabledOfEmailBtn
     })
   },
   watch: {}

@@ -33,17 +33,21 @@
               <input
                 class="email-input border-radius2 padding-l15 box-sizing"
                 @focus="emptyStatus"
-                ref="emailAccounts"
-                @keyup="changeInputValue('emailAccounts')"
+                v-model="emailAccounts"
               />
             </el-form-item>
             <el-form-item label="验  证  码：">
               <el-input
                 @focus="emptyStatus"
-                ref="emailCode"
-                @keyup="changeInputValue('emailCode')"
+                v-model="emailCode"
               >
-                <template slot="append">验证码</template>
+                <template slot="append">
+                  <CountDownButton
+                    class="send-code-btn cursor-pointer"
+                    :status="disabledOfEmailBtn"
+                    @run="sendPhoneOrEmailCode(1)"
+                  />
+                </template>
               </el-input>
             </el-form-item>
             <div class="prompt-message">
@@ -51,7 +55,7 @@
             </div>
             <button
               class="email-button border-radius4 cursor-pointer"
-              @click="getStatusSubmit"
+              @click="confirmBindingBailSubmit"
             >
               确认绑定
             </button>
@@ -67,6 +71,9 @@
 // 头部
 import HeaderCommon from '../../Common/HeaderCommon'
 import IconFontCommon from '../../Common/IconFontCommon'
+import CountDownButton from '../../Common/CountDownCommon'
+import {returnAjaxMessage, sendPhoneOrEmailCodeAjax} from '../../../utils/commonFunc'
+import {bindEmailAddress} from '../../../utils/api/apiDoc'
 // 底部
 import FooterCommon from '../../Common/FooterCommon'
 import { createNamespacedHelpers, mapState } from 'vuex'
@@ -75,6 +82,7 @@ export default {
   components: {
     HeaderCommon, // 头部
     IconFontCommon, // 字体图标
+    CountDownButton, // 短信倒计时
     FooterCommon // 底部
   },
   data () {
@@ -119,22 +127,80 @@ export default {
       // console.log(this[ref])
     },
     // 确定绑定
-    getStatusSubmit () {
-      if (!this.emailAccounts) {
-        this.errorMsg = '邮箱账号不能为空'
-      } else if (!this.emailCode) {
-        this.errorMsg = '验证码不能为空'
-      } else {
-        this.errorMsg = ''
+    // getStatusSubmit () {
+    //   if (!this.emailAccounts) {
+    //     this.errorMsg = '邮箱账号不能为空'
+    //   } else if (!this.emailCode) {
+    //     this.errorMsg = '验证码不能为空'
+    //   } else {
+    //     this.errorMsg = ''
+    //   }
+    //   console.log(1)
+    // },
+    // 发送邮箱验证码
+    sendPhoneOrEmailCode (loginType) {
+      console.log(this.disabledOfPhoneBtn)
+      console.log(this.disabledOfEmailBtn)
+      if (this.disabledOfPhoneBtn || this.disabledOfEmailBtn) {
+        return false
       }
-      console.log(1)
+      let params = {
+        address: this.emailAccounts, // 邮箱账号
+        country: this.activeCountryCode // 邮箱国籍
+      }
+      sendPhoneOrEmailCodeAjax(loginType, params, (data) => {
+        console.log(this.disabledOfPhoneBtn)
+        // 提示信息
+        if (!returnAjaxMessage(data, this)) {
+          console.log('error')
+          return false
+        } else {
+          switch (loginType) {
+            case 0:
+              this.$store.commit('user/SET_USER_BUTTON_STATUS', {
+                loginType: 0,
+                status: true
+              })
+              break
+            case 1:
+              this.$store.commit('user/SET_USER_BUTTON_STATUS', {
+                loginType: 1,
+                status: true
+              })
+              break
+          }
+        }
+      })
+    },
+    /**
+     * 确认绑定邮箱
+     */
+    confirmBindingBailSubmit () {
+      this.confirmBindingBail()
+    },
+    // 确定绑定
+    async confirmBindingBail () {
+      let data
+      let param = {
+        email: this.emailAccounts, // 邮箱账号
+        code: this.emailCode // 邮箱验证码
+      }
+      data = await bindEmailAddress(param)
+      if (!(returnAjaxMessage(data, this, 1))) {
+        return false
+      } else {
+        console.log(data)
+      }
     }
   },
   filter: {},
   computed: {
     ...mapState({
       theme: state => state.common.theme,
-      userInfo: state => state.personal.userInfo
+      userInfo: state => state.personal.userInfo,
+      activeCountryCode: state => state.user.loginStep1Info.countryCode, // 国籍码
+      disabledOfPhoneBtn: state => state.user.disabledOfPhoneBtn,
+      disabledOfEmailBtn: state => state.user.disabledOfEmailBtn
     })
   },
   watch: {}

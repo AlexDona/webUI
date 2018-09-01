@@ -77,7 +77,8 @@
                     class="send-code-btn cursor-pointer"
                     :status="disabledOfPhoneBtn"
                     @run="sendPhoneOrEmailCode(0)"
-                  /></template>
+                  />
+                </template>
               </el-input>
             </el-form-item>
             <el-form-item label="邮箱验证码">

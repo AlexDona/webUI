@@ -63,7 +63,7 @@
           <div class="security-status text-align-r">
             <button class="security-verify border-radius2 font-size12 cursor-pointer">
               <span
-                v-if="!getStatusUserInfo.emailBind"
+                v-if="!SecurityCenter.isMailBind"
                 @click="showStatusVerificationPopups(1)"
               >
                 开启验证
@@ -75,7 +75,7 @@
               </span>
             </button>
             <button
-              v-if="!getStatusUserInfo.emailBind"
+              v-if="!SecurityCenter.isMailBind"
               class="security-binding border-radius2 font-size12 cursor-pointer"
               @click="setShowStatusSecurity(1)"
             >
@@ -107,7 +107,7 @@
           <div class="security-status text-align-r">
             <button class="security-verify border-radius2 font-size12 cursor-pointer">
               <span
-                v-if="!getStatusUserInfo.telePhoneBind"
+                v-if="!SecurityCenter.isPhoneBind"
                 @click="showStatusVerificationPopups(2)"
               >
                 开启验证
@@ -122,7 +122,7 @@
               class="security-binding border-radius2 font-size12 cursor-pointer"
               @click="setShowStatusSecurity(2)"
             >
-              <span v-if="!getStatusUserInfo.telePhoneBind">绑定</span>
+              <span v-if="!SecurityCenter.isPhoneBind">绑定</span>
               <span v-else>修改</span>
             </button>
           </div>
@@ -150,7 +150,7 @@
           <div class="security-status text-align-r">
             <button class="security-verify border-radius2 font-size12 cursor-pointer">
               <span
-                v-if="!getStatusUserInfo.googleBind"
+                v-if="!SecurityCenter.isGoogleBind"
                 @click="showStatusVerificationPopups(3)"
               >
                 开启验证
@@ -165,7 +165,7 @@
               class="security-binding border-radius2 font-size12 cursor-pointer"
               @click="setShowStatusSecurity(3)"
             >
-              <span v-if="!getStatusUserInfo.googleBind">绑定</span>
+              <span v-if="!SecurityCenter.isGoogleBind">绑定</span>
               <span v-else>修改</span>
             </button>
           </div>
@@ -195,7 +195,7 @@
               class="security-binding border-radius2 font-size12 cursor-pointer"
               @click="setShowStatusSecurity(4)"
             >
-              <span v-if="!getStatusUserInfo.tradePasswordType">设置</span>
+              <span v-if="!SecurityCenter.payPassword">设置</span>
               <span v-else>修改</span>
             </button>
           </div>
@@ -271,20 +271,32 @@
             :data="logonRecord"
             style="width: 100%">
             <el-table-column
-              prop="time"
-              label="登陆时间">
+              label="登陆时间"
+            >
+              <template slot-scope = "s">
+                <div>{{ s.row.operateTime }}</div>
+              </template>
             </el-table-column>
             <el-table-column
-              prop="IP"
-              label="登录IP">
+              label="登录IP"
+            >
+              <template slot-scope = "s">
+                <div>{{ s.row.ip }}</div>
+              </template>
             </el-table-column>
             <el-table-column
-              prop="placeBelonging"
-              label="归属地">
+              label="归属地"
+            >
+              <template slot-scope = "s">
+                <div>{{ s.row.operateAddress }}</div>
+              </template>
             </el-table-column>
             <el-table-column
-              prop="source"
-              label="来源">
+              label="来源"
+            >
+              <template slot-scope = "s">
+                <div>{{ s.row.source }}</div>
+              </template>
             </el-table-column>
           </el-table>
         </el-tab-pane>
@@ -293,20 +305,32 @@
             :data="securityRecord"
             style="width: 100%">
             <el-table-column
-              prop="time"
-              label="登陆时间">
+              label="登陆时间"
+            >
+              <template slot-scope = "s">
+                <div>{{ s.row.operateTime }}</div>
+              </template>
             </el-table-column>
             <el-table-column
-              prop="name"
-              label="设备名称">
+              label="设备名称"
+            >
+              <template slot-scope = "s">
+                <div>{{ s.row.operateAddress }}</div>
+              </template>
             </el-table-column>
             <el-table-column
-              prop="IP"
-              label="登录IP">
+              label="登录IP"
+            >
+              <template slot-scope = "s">
+                <div>{{ s.row.ip }}</div>
+              </template>
             </el-table-column>
             <el-table-column
-              prop="placeBelonging"
-              label="归属地">
+              label="归属地"
+            >
+              <template slot-scope = "s">
+                <div>{{ s.row.source }}</div>
+              </template>
             </el-table-column>
           </el-table>
         </el-tab-pane>
@@ -318,6 +342,8 @@
 <script>
 import {mapState} from 'vuex'
 import IconFontCommon from '../../Common/IconFontCommon'
+import {statusSecurityCenter} from '../../../utils/api/apiDoc'
+import {returnAjaxMessage} from '../../../utils/commonFunc'
 export default {
   components: {
     IconFontCommon // 字体图标
@@ -327,64 +353,16 @@ export default {
     return {
       securityActiveName: 'first', // 默认显示第一个
       // 最近登录记录
-      logonRecord: [
-        {
-          time: '2016-05-02',
-          IP: '登录IP',
-          placeBelonging: '中国、香港九龙',
-          source: 'WEB'
-        },
-        {
-          time: '2016-05-02',
-          IP: '登录IP',
-          placeBelonging: '中国、香港九龙',
-          source: 'WEB'
-        },
-        {
-          time: '2016-05-02',
-          IP: '登录IP',
-          placeBelonging: '中国、香港九龙',
-          source: 'WEB'
-        },
-        {
-          time: '2016-05-02',
-          IP: '登录IP',
-          placeBelonging: '中国、香港九龙',
-          source: 'WEB'
-        }
-      ],
-      securityRecord: [
-        {
-          time: '2016-05-02',
-          name: '设置交易密码',
-          IP: '202.102.224.68',
-          placeBelonging: '香港铜锣湾'
-        },
-        {
-          time: '2016-05-02',
-          name: '设置交易密码',
-          IP: '202.102.224.68',
-          placeBelonging: '香港铜锣湾'
-        },
-        {
-          time: '2016-05-02',
-          name: '设置交易密码',
-          IP: '202.102.224.68',
-          placeBelonging: '香港铜锣湾'
-        },
-        {
-          time: '2016-05-02',
-          name: '设置交易密码',
-          IP: '202.102.224.68',
-          placeBelonging: '香港铜锣湾'
-        }
-      ],
+      logonRecord: [],
+      // 安全设置记录
+      securityRecord: [],
       getStatusUserInfo: {}, // 个人信息
       dialogFormVisible: false, // 验证弹窗
       openSwitch: false, // 弹出层状态 开启 关闭
       emailOpenVerify: false, // 邮箱开启关闭验证
       phoneOpenVerify: false, // 手机开启关闭验证
-      googleOpenVerify: false // 谷歌开启关闭验证
+      googleOpenVerify: false, // 谷歌开启关闭验证
+      SecurityCenter: {}
     }
   },
   created () {
@@ -397,6 +375,7 @@ export default {
     // 获取全局个人信息
     this.getStatusUserInfo = this.userInfo.data.user
     console.log(this.getStatusUserInfo)
+    this.getSecurityCenter()
   },
   mounted () {},
   activited () {},
@@ -445,6 +424,31 @@ export default {
           this.googleOpenVerify = true
           console.log(e)
           break
+      }
+    },
+    /**
+     * 安全中心
+     */
+    async getSecurityCenter () {
+      let data = await statusSecurityCenter({
+        // userId: this.userInfo.userId // 商户id
+        token: 'f1ecf736-a770-4827-89dd-d1c19372f79e' // 商户id
+      })
+      console.log(data)
+      if (!(returnAjaxMessage(data, this, 0))) {
+        return false
+      } else {
+        // 返回冲提记录列表展示
+        this.SecurityCenter = data.data.data
+        this.logonRecord = data.data.data.setLog
+        this.securityRecord = data.data.data.loginLog
+        console.log(this.SecurityCenter)
+        console.log(this.logonRecord)
+        console.log(this.securityRecord)
+        console.log(this.SecurityCenter.isMailBind)
+        console.log(this.SecurityCenter.isGoogleBind)
+        console.log(this.SecurityCenter.isPhoneBind)
+        console.log(this.SecurityCenter.payPassword)
       }
     }
   },

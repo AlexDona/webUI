@@ -17,3 +17,7 @@
   background-color: #19202E;
   color: #fff;
 }
+.billing-details.personal .el-table__empty-block {
+  background-color: #1e2636;
+  color: #fff;
+}

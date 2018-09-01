@@ -12,3 +12,6 @@
   width: 120px;
   height: 30px;
 }
+.billing-details.personal .el-table th>.cell {
+  text-align: center;
+}

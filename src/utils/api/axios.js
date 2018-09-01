@@ -5,7 +5,7 @@ import {baseUrl} from '../env'
 import axios from 'axios'
 import store from '../../vuex'
 import router from '../../router/index'
-import {getStoreWithJson} from '../index'
+// import {getStoreWithJson} from '../index'
 
 let util = {}
 util.ajax = axios.create({
@@ -17,14 +17,9 @@ util.ajax.interceptors.request.use((config) => {
   // 商户id
   config.headers['partnerId'] = '474629374641963008'
   config.headers['partnerNo'] = '100001'
-
-  // console.log(getStoreWithJson('loginStep1Info').token)
-  // console.log(store.state.user.loginStep1Info.token)
-  let userToken = getStoreWithJson('loginStep1Info').token || store.state.user.loginStep1Info.token
-  // console.log(userToken)
-  if (userToken) {
+  if (store.state.user.loginStep1Info.token) {
+    let userToken = store.state.user.loginStep1Info.token
     config.headers['token'] = userToken
-    // config.headers['token'] = '354535'
   }
   return config
 }, (error) => {

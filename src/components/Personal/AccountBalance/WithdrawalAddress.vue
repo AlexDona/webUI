@@ -20,7 +20,7 @@
                 <el-option
                   v-for="(item, index) in currencyList"
                   :key="index"
-                  :label="item.shortName"
+                  :label="item.name"
                   :value="item.coinId"
                 >
                 </el-option>
@@ -98,6 +98,15 @@
           </template>
         </el-table-column>
       </el-table>
+      <!--分页-->
+      <el-pagination
+        background
+        v-show="activeName === 'current-entrust' && gainAddressList.length"
+        layout="prev, pager, next"
+        :page-count="totalPageForMyEntrust"
+        @current-change="changeCurrentPage"
+      >
+      </el-pagination>
       <el-dialog
         :title="删除提币地址"
         :visible.sync="dialogVisible"
@@ -140,6 +149,9 @@ export default {
       // 地址列表
       gainAddressList: [],
       operation: '删除',
+      activeName: 'current-entrust',
+      currentPageForMyEntrust: 1, // 当前委托页码
+      totalPageForMyEntrust: 1, // 当前委托总页数
       dialogVisible: false, // 取消弹窗默认隐藏
       deleteWithdrawalId: '' // 每行数据ID
     }
@@ -151,7 +163,7 @@ export default {
     require('../../../../static/css/theme/day/Personal/AccountBalance/WithdrawalAddressDay.css')
     // 黑色主题样式
     require('../../../../static/css/theme/night/Personal/AccountBalance/WithdrawalAddressNight.css')
-    this.WithdrawalAddressList()
+    // this.WithdrawalAddressList()
   },
   mounted () {},
   activited () {},
@@ -198,9 +210,13 @@ export default {
      *  刚进页面时候 提币地址列表查询
      */
     async WithdrawalAddressList () {
-      let data = await inquireWithdrawalAddressList()
+      let params = {
+        currentPage: this.currentPageForMyEntrust,
+        pageSize: this.pageSize
+      }
+      let data = await inquireWithdrawalAddressList(params)
       // console.log(data)
-      if (!(returnAjaxMessage(data, this, 1))) {
+      if (!(returnAjaxMessage(data, this, 0))) {
         return false
       } else {
         // 返回列表数据
@@ -208,6 +224,7 @@ export default {
         this.currencyValue = data.data.data.canWithdrawPartnerCoinList[0].name
         this.currencyValue = data.data.data.canWithdrawPartnerCoinList[0].coinId
         this.gainAddressList = data.data.data.UserWithdrawAddressPage.list
+        this.totalPageForMyEntrust = data.data.data.UserWithdrawAddressPage.pages - 0
         console.log(this.currencyList)
         console.log(this.currencyValue)
       }
@@ -240,6 +257,11 @@ export default {
         this.dialogVisible = false
         console.log(data)
       }
+    },
+    // 分页
+    changeCurrentPage (pageNum) {
+      this.currentPageForMyEntrust = pageNum
+      this.WithdrawalAddressList()
     }
   },
   filter: {},
