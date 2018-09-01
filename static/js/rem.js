@@ -7,6 +7,7 @@ function getSize () {
   /* 取到屏幕的宽度 */
   let width = window.innerWidth
   let height = window.innerHeight
+  console.log(width)
   let isPC = IsPC()
   if (width < 1050 || !isPC) {
     store.commit('user/TOGGLE_PC_MOBILE', true)

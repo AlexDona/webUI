@@ -74,7 +74,7 @@
 <!--请严格按照如下书写书序-->
 <script>
 import {timeFilter} from '../../utils'
-import {getOTCEntrustingOrders} from '../../utils/api/apiDoc'
+import {getOTCEntrustingOrders} from '../../utils/api/OTC'
 import {returnAjaxMessage} from '../../utils/commonFunc'
 export default {
   components: {},

@@ -6,7 +6,7 @@
   text-align: center;
 }
 .coin-orders.personal .el-table th>.cell {
-  text-align: center;
+  /*text-align: center;*/
 }
 .coin-orders.personal .el-table th.is-leaf {
   border-bottom: 0;
@@ -20,6 +20,7 @@
   height:30px;
   background:rgba(25,32,46,1);
   border-radius:2px;
+  border:none;
 }
 .coin-orders.personal .el-date-editor.el-input{
   width:100px;
@@ -44,8 +45,10 @@
 .coin-orders.personal .el-table td{
   border-bottom:none;
 }
-/*.coin-orders.personal*/
-/*.coin-orders.personal*/
+.coin-orders.personal .el-pagination{
+  text-align: right;
+}
+
 /*.coin-orders.personal*/
 /*.coin-orders.personal*/
 /*.coin-orders.personal*/

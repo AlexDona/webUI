@@ -313,7 +313,7 @@
 </template>
 <!--请严格按照如下书写书序-->
 <script>
-import {getPushAssetList, getPushTotalByCoinId, pushAssetsSubmit, revocationPushProperty, pushPropertyTransaction} from '../../../utils/api/apiDoc'
+import {getPushAssetList, getPushTotalByCoinId, pushAssetsSubmit, revocationPushProperty, pushPropertyTransaction} from '../../../utils/api/personal'
 import CountDownButton from '../../Common/CountDownCommon'
 import {timeFilter} from '../../../utils/index'
 import {createNamespacedHelpers, mapState} from 'vuex'

@@ -283,7 +283,7 @@ import UserInfo from '../AccountBalance/UserInfo'
 import IconFontCommon from '../../Common/IconFontCommon'
 import VueClipboard from 'vue-clipboard2'
 import { createNamespacedHelpers, mapState } from 'vuex'
-import {assetCurrenciesList, inquireWithdrawalAddressList, inquireRechargeAddressList} from '../../../utils/api/apiDoc'
+import {assetCurrenciesList, inquireWithdrawalAddressList, inquireRechargeAddressList} from '../../../utils/api/personal'
 import {returnAjaxMessage} from '../../../utils/commonFunc'
 const { mapMutations } = createNamespacedHelpers('personal')
 Vue.use(VueClipboard)

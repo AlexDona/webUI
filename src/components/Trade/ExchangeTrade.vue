@@ -340,7 +340,7 @@
 import IconFont from '../Common/IconFontCommon'
 // import Slider from './SliderTrader'
 import {formatNumberInput} from '../../utils'
-import {saveEntrustTrade} from '../../utils/api/apiDoc'
+import {saveEntrustTrade} from '../../utils/api/trade'
 import {returnAjaxMessage} from '../../utils/commonFunc'
 import { createNamespacedHelpers, mapState } from 'vuex'
 const { mapMutations } = createNamespacedHelpers('trade')

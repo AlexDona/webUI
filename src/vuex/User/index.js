@@ -5,7 +5,7 @@ import {getStoreWithJson} from '../../utils'
 // Vue.use(Vuex)
 
 const state = {
-  isLogin: true, // 用户登录状态
+  isLogin: false, // 用户登录状态
   isMobile: false, // 移动端标识
   loginStep: {
     step1: true, // 用户是否在步骤一:用户名密码验证

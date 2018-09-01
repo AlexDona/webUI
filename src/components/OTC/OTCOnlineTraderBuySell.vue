@@ -295,7 +295,7 @@
 </template>
 <!--请严格按照如下书写书序-->
 <script>
-import {pickOrdersToBuy, pickOrdersToSell, querySelectedOrdersDetails, queryUserTradeFeeAndCoinInfo} from '../../utils/api/apiDoc'
+import {pickOrdersToBuy, pickOrdersToSell, querySelectedOrdersDetails, queryUserTradeFeeAndCoinInfo} from '../../utils/api/OTC'
 import NavCommon from '../Common/HeaderCommon'
 import FooterCommon from '../Common/FooterCommon'
 import IconFontCommon from '../Common/IconFontCommon'

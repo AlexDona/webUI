@@ -9,8 +9,8 @@
         <el-tabs
           v-model="activeName">
           <el-tab-pane
-            :label="outItem.label"
-            :name="outItem.name"
+            :label="outItem.i18nName"
+            :name="outItem.id"
             v-for="(outItem,outIndex) in tabList"
             :key="outIndex"
           >
@@ -376,6 +376,8 @@ import VueDND from 'awe-dnd'
 import {mapState, mapMutations} from 'vuex'
 import {getStore, setStore} from '../../utils'
 import {Io} from '../../utils/tradingview/socket'
+import {getPartnerList} from '../../utils/api/home'
+import {returnAjaxMessage} from '../../utils/commonFunc'
 Vue.use(VueDND)
 export default{
   components: {
@@ -420,7 +422,8 @@ export default{
       toggleSideList: []
     }
   },
-  created () {
+  async created () {
+    this.getPartnerList()
     require('../../../static/css/list/Home/MarketListHome.css')
     require('../../../static/css/theme/day/Home/MarketListHomeDay.css')
     require('../../../static/css/theme/night/Home/MarketListHomeNight.css')
@@ -454,24 +457,24 @@ export default{
       this.initSideBar(true)
     })
     // 获取tab个数
-    this.tabList = [
-      {
-        id: 0,
-        name: 'first',
-        label: '全部'
-      },
-      {
-        id: 1,
-        name: 'second',
-        label: '主交易区'
-      },
-      {
-        id: 2,
-        name: 'third',
-        label: '创新区'
-      }
-    ]
-    this.activeName = this.tabList[0].name
+    // this.tabList = [
+    //   {
+    //     id: 0,
+    //     name: 'first',
+    //     label: '全部'
+    //   },
+    //   {
+    //     id: 1,
+    //     name: 'second',
+    //     label: '主交易区'
+    //   },
+    //   {
+    //     id: 2,
+    //     name: 'third',
+    //     label: '创新区'
+    //   }
+    // ]
+    console.log(this.tabList)
     console.log(this.marketList)
     // 获取本地搜藏列表
     // this.collectList = JSON.parse(getStore('collectList')) || []
@@ -917,6 +920,20 @@ export default{
     ...mapMutations('home', [
       'CHANGE_COLLECT_LIST'
     ]),
+    // 获取板块列表
+    async getPartnerList () {
+      let params = {
+        partnerId: this.partnerId,
+        i18n: 'ZN_CN'
+      }
+      const data = await getPartnerList(params)
+      if (!returnAjaxMessage(data, this, 0)) {
+        return false
+      } else {
+        this.tabList = data.data.data
+        this.activeName = this.tabList[0].id
+      }
+    },
     // 发送
 
     // 初始化 侧边栏正反面
@@ -1081,7 +1098,8 @@ export default{
     ...mapState({
       theme: state => state.common.theme,
       language: state => state.common.language, // 语言
-      plateList: state => state.home.plateList // 板块列表
+      plateList: state => state.home.plateList, // 板块列表
+      partnerId: state => state.common.partnerId // 商户id
     })
     // // 筛选列表
     // filterMarketList () {

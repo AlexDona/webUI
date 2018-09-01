@@ -127,7 +127,7 @@
 <!--请严格按照如下书写书序-->
 <script>
 import {timeFilter} from '../../utils'
-import {getOTCCompletedOrders} from '../../utils/api/apiDoc'
+import {getOTCCompletedOrders} from '../../utils/api/OTC'
 import {returnAjaxMessage} from '../../utils/commonFunc'
 export default {
   components: {},

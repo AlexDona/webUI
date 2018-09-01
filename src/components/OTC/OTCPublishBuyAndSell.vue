@@ -304,7 +304,7 @@
 </template>
 <!--请严格按照如下书写书序-->
 <script>
-import {getOTCAvailableCurrency, getMerchantAvailablelegalTender, addOTCPutUpOrders, queryUserTradeFeeAndCoinInfo} from '../../utils/api/apiDoc'
+import {getOTCAvailableCurrency, getMerchantAvailablelegalTender, addOTCPutUpOrders, queryUserTradeFeeAndCoinInfo} from '../../utils/api/OTC'
 import NavCommon from '../Common/HeaderCommon'
 import FooterCommon from '../Common/FooterCommon'
 import {returnAjaxMessage} from '../../utils/commonFunc'

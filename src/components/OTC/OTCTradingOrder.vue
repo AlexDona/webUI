@@ -402,7 +402,7 @@
 <script>
 import {timeFilter} from '../../utils'
 import IconFontCommon from '../Common/IconFontCommon'
-import {getOTCTradingOrders} from '../../utils/api/apiDoc'
+import {getOTCTradingOrders} from '../../utils/api/OTC'
 import {returnAjaxMessage} from '../../utils/commonFunc'
 export default {
   components: {

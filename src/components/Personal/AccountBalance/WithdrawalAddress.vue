@@ -124,7 +124,7 @@
 <!--请严格按照如下书写书序-->
 <script>
 import {mapState} from 'vuex'
-import {inquireWithdrawalAddressList, addNewWithdrawalAddress, deleteUserWithdrawAddress} from '../../../utils/api/apiDoc'
+import {inquireWithdrawalAddressList, addNewWithdrawalAddress, deleteUserWithdrawAddress} from '../../../utils/api/personal'
 import {returnAjaxMessage} from '../../../utils/commonFunc'
 export default {
   components: {},

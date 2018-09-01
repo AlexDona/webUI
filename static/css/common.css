@@ -7,3 +7,48 @@
 .collected{
   color:#f5c34a;
 }
+/*分页样式*/
+.el-pagination.is-background .btn-next,
+.el-pagination.is-background .btn-prev,
+.el-pagination.is-background .el-pager li
+{
+  min-width: 0;
+}
+.el-pagination button{
+  width:20px;
+  height:20px;
+  min-width:0;
+  background-color: pink;
+}
+.el-pagination.is-background .btn-next,
+.el-pagination.is-background .btn-prev,
+.el-pagination.is-background .el-pager li
+{
+  min-width:0;
+}
+.el-pager li{
+  width:20px;
+  height:20px;
+  line-height: 20px;
+}
+.night .el-pagination button{
+  background-color: rgba(43,54,64,1) !important;
+}
+.night .el-pager li {
+  background-color:rgba(43,54,64,1) !important;
+}
+
+.night .el-pagination.is-background .el-pager li:not(.disabled).active{
+  background-color: #338FF5 !important;
+}
+/*日期组件*/
+.night .el-picker-panel{
+  background-color: #2a3242;
+  border:none;
+}
+.night .el-popper[x-placement^=bottom] .popper__arrow::after{
+  border-bottom-color: #2a3242;
+}
+.night .el-popper[x-placement^=bottom] .popper__arrow{
+  border-bottom-color: #2a3242;
+}

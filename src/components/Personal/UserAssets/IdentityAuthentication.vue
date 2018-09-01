@@ -304,7 +304,7 @@
 import {mapState} from 'vuex'
 import IconFontCommon from '../../Common/IconFontCommon'
 // import lrz from 'lrz'
-import {queryCountryList, submitRealNameAuthentication, submitSeniorCertification, realNameInformation} from '../../../utils/api/apiDoc'
+import {queryCountryList, submitRealNameAuthentication, submitSeniorCertification, realNameInformation} from '../../../utils/api/personal'
 import {returnAjaxMessage} from '../../../utils/commonFunc'
 export default {
   components: {

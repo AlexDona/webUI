@@ -459,7 +459,7 @@ import {EMAIL_REG, PHONE_REG} from '../../utils/regExp' // 正则验证
 import {
   userLoginForStep1,
   userLoginForStep2
-} from '../../utils/api/apiDoc'
+} from '../../utils/api/user'
 import {
   returnAjaxMessage,
   sendPhoneOrEmailCodeAjax

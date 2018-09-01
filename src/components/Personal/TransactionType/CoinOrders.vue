@@ -70,7 +70,344 @@
                 </el-date-picker>
               </div>
               <div class="search-box condition-item">
-                <button class="search-btn">查询</button>
+                <button
+                  class="search-btn cursor-pointer"
+                >查询</button>
+              </div>
+            </div>
+            <!--查询结果-->
+            <div class="result-box">
+              <el-table
+                :data="currentEntrustList"
+              >
+                <el-table-column
+                  label="时间"
+                  width="125"
+                >
+                  <template slot-scope="s">
+                    <span>{{ s.row.createTime }}</span>
+                  </template>
+                </el-table-column>
+                <el-table-column
+                  label="交易对"
+                >
+                  <template slot-scope="s">
+                    <span>{{ s.row.tradeName }}</span>
+                  </template>
+                </el-table-column>
+                <el-table-column
+                  label="交易类型"
+                  width="70"
+                >
+                  <template slot-scope="s">
+
+                  </template>
+                </el-table-column>
+                <el-table-column
+                  label="方向"
+                  width="50"
+                >
+                  <template slot-scope="s">
+                    <span v-show="language !== 'zh_CN'">{{s.row.type}}</span>
+                    <span v-show="language === 'zh_CN'">{{s.row.typeName}}</span>
+                  </template>
+                </el-table-column>
+                <el-table-column
+                  label="数量"
+                  width="110"
+                >
+                  <template slot-scope="s">
+                    <span>{{ s.row.count-0 }}</span>
+                  </template>
+                </el-table-column>
+                <el-table-column
+                  label="委托总额"
+                  width="120"
+                >
+                  <template slot-scope="s">
+                    <span>{{ s.row.amount-0}}</span>
+                  </template>
+                </el-table-column>
+                <el-table-column
+                  label="已成交"
+                  width="120"
+                >
+                  <template slot-scope="s">
+                    <span>{{s.row.completeCount-0}}</span>
+                  </template>
+                </el-table-column>
+                <el-table-column
+                  label="未成交"
+                  width="120"
+                >
+                  <template slot-scope="s">
+                    <span>{{ s.row.leftCount-0}}</span>
+                  </template>
+                </el-table-column>
+                <el-table-column
+                  label="状态"
+                  width="60"
+                >
+                  <template slot-scope="s">
+                    <span>{{ s.row.statusName }}</span>
+                  </template>
+                </el-table-column>
+                <el-table-column
+                  label="操作"
+                  width="60"
+                >
+                  <template slot-scope="s">
+                    <button
+                      class="cursor-pointer repeal-btn"
+                      @click="repealMyEntrust(s.row.id,s.row.version)"
+                    >撤销</button>
+                  </template>
+                </el-table-column>
+              </el-table>
+              <!--分页-->
+              <el-pagination
+                background
+                v-show="activeName === 'current-entrust' && currentEntrustList.length"
+                layout="prev, pager, next"
+                :page-count="totalPageForMyEntrust"
+                @current-change="changeCurrentPage(0,$event)"
+              >
+              </el-pagination>
+            </div>
+          </div>
+        </el-tab-pane>
+        <el-tab-pane
+          label="历史委托"
+          name="history-entrust"
+        >
+          <div class="inner-box">
+            <!--查询条件-->
+            <div class="search-condition-box">
+              <div class="symbol-box condition-item">
+                <span class="currency-span">交易对</span>
+                <!--币种-->
+                <input
+                  type="text"
+                  placeholder="币种名称"
+                  class="currency-input"
+                />
+                <span class="currency-span">/</span>
+                <!--交易区下拉-->
+                <el-select
+                  v-model="value"
+                  placeholder="请选择"
+                >
+                  <el-option
+                    v-for="item in entrustSelectList"
+                    :key="item.id"
+                    :label="item.name"
+                    :value="item.id"
+                  >
+                  </el-option>
+                </el-select>
+              </div>
+              <!--类型-->
+              <div class="trade-type-box condition-item">
+                <span class="currency-span">类型</span>
+                <el-select
+                  v-model="value"
+                  placeholder="请选择"
+                >
+                  <el-option
+                    v-for="item in typeList"
+                    :key="item.id"
+                    :label="item.name"
+                    :value="item.id"
+                  >
+                  </el-option>
+                </el-select>
+              </div>
+              <!--起止时间-->
+              <div class="start-end-time-box condition-item">
+                <span>起止时间</span>
+                <el-date-picker
+                  v-model="startTime"
+                  type="date"
+                  placeholder="选择日期">
+                </el-date-picker>
+                <span class="middle-line"> - </span>
+                <el-date-picker
+                  v-model="endTime"
+                  type="date"
+                  placeholder="选择日期">
+                </el-date-picker>
+              </div>
+              <div class="search-box condition-item">
+                <button
+                  class="search-btn cursor-pointer"
+                >查询</button>
+              </div>
+            </div>
+            <!--查询结果-->
+            <div class="result-box">
+              <el-table
+                :data="currentEntrustList"
+              >
+                <el-table-column
+                  label="时间"
+                  width="125"
+                >
+                  <template slot-scope="s">
+                    <span>{{ s.row.createTime }}</span>
+                  </template>
+                </el-table-column>
+                <el-table-column
+                  label="交易对"
+                >
+                  <template slot-scope="s">
+                    <span>{{ s.row.tradeName }}</span>
+                  </template>
+                </el-table-column>
+                <el-table-column
+                  label="交易类型"
+                >
+                  <template slot-scope="s">
+
+                  </template>
+                </el-table-column>
+                <el-table-column
+                  label="方向"
+                  width="50"
+                >
+                  <template slot-scope="s">
+                    <span v-show="language !== 'zh_CN'">{{s.row.type}}</span>
+                    <span v-show="language === 'zh_CN'">{{s.row.typeName}}</span>
+                  </template>
+                </el-table-column>
+                <el-table-column
+                  label="数量"
+                  width="120"
+                >
+                  <template slot-scope="s">
+                    <span>{{ s.row.count-0 }}</span>
+                  </template>
+                </el-table-column>
+                <el-table-column
+                  label="委托总额"
+                  width="120"
+                >
+                  <template slot-scope="s">
+                    <span>{{ s.row.amount-0}}</span>
+                  </template>
+                </el-table-column>
+                <el-table-column
+                  label="已成交"
+                  width="120"
+                >
+                  <template slot-scope="s">
+                    <span>{{s.row.completeCount-0}}</span>
+                  </template>
+                </el-table-column>
+                <el-table-column
+                  label="未成交"
+                  width="120"
+                >
+                  <template slot-scope="s">
+                    <span>{{ s.row.leftCount-0}}</span>
+                  </template>
+                </el-table-column>
+                <el-table-column
+                  label="状态"
+                  width="60"
+                >
+                  <template slot-scope="s">
+                    <span>{{ s.row.statusName }}</span>
+                  </template>
+                </el-table-column>
+                <el-table-column
+                  label="操作"
+                  width="60"
+                >
+                  <template slot-scope="s">
+                    <button
+                      class="cursor-pointer repeal-btn"
+                      @click="repealMyEntrust(s.row.id,s.row.version)"
+                    >撤销</button>
+                  </template>
+                </el-table-column>
+              </el-table>
+              <!--分页-->
+              <el-pagination
+                background
+                v-show="activeName === 'current-entrust' && currentEntrustList.length"
+                layout="prev, pager, next"
+                :page-count="totalPageForMyEntrust"
+                @current-change="changeCurrentPage(0,$event)"
+              >
+              </el-pagination>
+            </div>
+          </div>
+        </el-tab-pane>
+        <el-tab-pane
+          label="成交明细"
+          name="exchange-detail"
+        >
+          <div class="inner-box">
+            <!--查询条件-->
+            <div class="search-condition-box">
+              <div class="symbol-box condition-item">
+                <span class="currency-span">交易对</span>
+                <!--币种-->
+                <input
+                  type="text"
+                  placeholder="币种名称"
+                  class="currency-input"
+                />
+                <span class="currency-span">/</span>
+                <!--交易区下拉-->
+                <el-select
+                  v-model="value"
+                  placeholder="请选择"
+                >
+                  <el-option
+                    v-for="item in entrustSelectList"
+                    :key="item.id"
+                    :label="item.name"
+                    :value="item.id"
+                  >
+                  </el-option>
+                </el-select>
+              </div>
+              <!--类型-->
+              <div class="trade-type-box condition-item">
+                <span class="currency-span">类型</span>
+                <el-select
+                  v-model="value"
+                  placeholder="请选择"
+                >
+                  <el-option
+                    v-for="item in typeList"
+                    :key="item.id"
+                    :label="item.name"
+                    :value="item.id"
+                  >
+                  </el-option>
+                </el-select>
+              </div>
+              <!--起止时间-->
+              <div class="start-end-time-box condition-item">
+                <span>起止时间</span>
+                <el-date-picker
+                  v-model="startTime"
+                  type="date"
+                  placeholder="选择日期">
+                </el-date-picker>
+                <span class="middle-line"> - </span>
+                <el-date-picker
+                  v-model="endTime"
+                  type="date"
+                  placeholder="选择日期">
+                </el-date-picker>
+              </div>
+              <div class="search-box condition-item">
+                <button
+                  class="search-btn cursor-pointer"
+                >查询</button>
               </div>
             </div>
             <!--查询结果-->
@@ -173,18 +510,6 @@
             </div>
           </div>
         </el-tab-pane>
-        <el-tab-pane
-          label="历史委托"
-          name="history-entrust"
-        >
-          历史委托
-        </el-tab-pane>
-        <el-tab-pane
-          label="成交明细"
-          name="exchange-detail"
-        >
-          成交明细
-        </el-tab-pane>
       </el-tabs>
     </div>
   </div>
@@ -193,9 +518,11 @@
 <script>
 import {mapState} from 'vuex'
 import {
-  getMyEntrust,
+  getMyEntrust
+} from '../../../utils/api/trade'
+import {
   getEntrustSelectBox
-} from '../../../utils/api/apiDoc'
+} from '../../../utils/api/personal'
 import {
   returnAjaxMessage,
   repealMyEntrustCommon
@@ -351,7 +678,7 @@ export default {
             vertical-align: top;
           }
           >.currency-input{
-            background-color: pink;
+            color:#fff;
             height:30px;
             vertical-align: top;
             width:80px;
@@ -368,6 +695,11 @@ export default {
             border-radius:4px;
             color: #fff;
           }
+        }
+      }
+      >.result-box{
+        .repeal-btn{
+          color:$mainColor;
         }
       }
     }

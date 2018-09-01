@@ -23,7 +23,7 @@
               >
                 <template slot-scope="s">
                   <span>
-                    {{s.row.bourse}}
+                    {{s.row.bourseName}}
                   </span>
                 </template>
               </el-table-column>
@@ -32,7 +32,7 @@
               >
                 <template slot-scope="s">
                   <span>
-                    {{s.row.symbol}}
+                    {{s.row.bourseTrade}}
                   </span>
                 </template>
               </el-table-column>
@@ -55,7 +55,7 @@
                     <!--&gt;-->
                     <!--{{s.row.price}}-->
                     <!--</span>-->
-                    {{s.row.price}}
+                    {{s.row.boursePrice}}
                   </div>
                   <!--货币转换-->
                   <div class="bottom"
@@ -89,7 +89,7 @@
                       <!--&gt;-->
                           <!--{{s.row.price}}-->
                         <!--</span>-->
-                      {{s.row.price}}
+                      {{s.row.bourseCount}}
                     </div>
                     <!--货币转换-->
                     <div class="bottom"
@@ -108,6 +108,8 @@
 </template>
 <script>
 import {mapState} from 'vuex'
+import {returnAjaxMessage} from '../../utils/commonFunc'
+import {getGLobalMarket} from '../../utils/api/trade'
 export default {
   components: {},
   // props,
@@ -122,42 +124,54 @@ export default {
     require('../../../static/css/list/Trade/GlobalMarket.css')
     require('../../../static/css/theme/day/Trade/GlobalMarketTradeDay.css')
     require('../../../static/css/theme/night/Trade/GlobalMarketTradeNight.css')
-    this.globalMarketList = [
-      {
-        id: 0,
-        bourse: 'Fubt.top', // 交易所
-        symbol: 'BTC/USDT', // 交易对
-        price: 7718.94, // 交易价
-        volume: 561.82 // 成交量
-      },
-      {
-        id: 1,
-        bourse: 'bitfinex', // 交易所
-        symbol: 'BTC/USD', // 交易对
-        price: 7718.94, // 交易价
-        volume: 561.82 // 成交量
-      },
-      {
-        id: 2,
-        bourse: 'okex', // 交易所
-        symbol: 'BTC/USDT', // 交易对
-        price: 7718.94, // 交易价
-        volume: 561.82 // 成交量
-      },
-      {
-        id: 3,
-        bourse: 'huobipro', // 交易所
-        symbol: 'BTC/USD', // 交易对
-        price: 7718.94, // 交易价
-        volume: 561.82 // 成交量
-      }
-    ]
+    // this.globalMarketList = [
+    //   {
+    //     id: 0,
+    //     bourse: 'Fubt.top', // 交易所
+    //     symbol: 'BTC/USDT', // 交易对
+    //     price: 7718.94, // 交易价
+    //     volume: 561.82 // 成交量
+    //   },
+    //   {
+    //     id: 1,
+    //     bourse: 'bitfinex', // 交易所
+    //     symbol: 'BTC/USD', // 交易对
+    //     price: 7718.94, // 交易价
+    //     volume: 561.82 // 成交量
+    //   },
+    //   {
+    //     id: 2,
+    //     bourse: 'okex', // 交易所
+    //     symbol: 'BTC/USDT', // 交易对
+    //     price: 7718.94, // 交易价
+    //     volume: 561.82 // 成交量
+    //   },
+    //   {
+    //     id: 3,
+    //     bourse: 'huobipro', // 交易所
+    //     symbol: 'BTC/USD', // 交易对
+    //     price: 7718.94, // 交易价
+    //     volume: 561.82 // 成交量
+    //   }
+    // ]
+    // this.getGlobalMarket()
   },
   mounted () {},
   activited () {},
   update () {},
   beforeRouteUpdate () {},
   methods: {
+    // 获取全球行情
+    async getGlobalMarket () {
+      const data = await getGLobalMarket()
+      if (!returnAjaxMessage(data, this, 0)) {
+        return false
+      } else {
+        console.log(data)
+        this.globalMarketList = data.data.data
+        console.log(this.globalMarketList)
+      }
+    },
     // 切换内容显示隐藏
     toggleShowContent () {
       this.contentShowStatus = !this.contentShowStatus

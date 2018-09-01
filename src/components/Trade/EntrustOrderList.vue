@@ -57,7 +57,8 @@
                 class="not-login content"
                 v-if="!isLogin"
               >
-                您还没有登录，请 <router-link to="/123"> 登录</router-link> 或 <router-link to="/">注册</router-link> 后查看
+                您还没有登录，请 <router-link to="/Login"> 登录</router-link> 或 <router-link to="/Register">注册</router-link> 后查看
+
               </div>
               <!--已登录-->
               <div
@@ -155,7 +156,7 @@
                 class="not-login content"
                 v-if="!isLogin"
               >
-                您还没有登录，请 <router-link to="/123"> 登录</router-link> 或 <router-link to="/">注册</router-link> 后查看
+                您还没有登录，请 <router-link to="/Login"> 登录</router-link> 或 <router-link to="/Register">注册</router-link> 后查看
               </div>
               <!--已登录-->
               <div
@@ -214,7 +215,7 @@ import {timeFilter} from '../../utils'
 import {
   getMyEntrust,
   getHistoryEntrust
-} from '../../utils/api/apiDoc'
+} from '../../utils/api/trade'
 import {
   returnAjaxMessage,
   repealMyEntrustCommon
@@ -255,7 +256,7 @@ export default {
     ]
     this.historyEntrustList = []
     // 获取我的当前委托
-    this.getMyCurrentEntrust()
+    // this.getMyCurrentEntrust()
     // 获取历史委托
     // this.getHistoryEntrust()
   },

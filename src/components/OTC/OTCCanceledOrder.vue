@@ -76,7 +76,7 @@
 <script>
 import {timeFilter} from '../../utils'
 // import {mapState, mapMutations} from 'vuex'
-import {getOTCCanceledOrders} from '../../utils/api/apiDoc'
+import {getOTCCanceledOrders} from '../../utils/api/OTC'
 import {returnAjaxMessage} from '../../utils/commonFunc'
 export default {
   components: {},

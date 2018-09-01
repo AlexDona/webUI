@@ -34,6 +34,7 @@ const state = {
     buyAndSellData: {},
     tardeRecordList: [] // 交易记录
   },
+  partnerId: '474629374641963008', // 商户id
   end: ''// 占位
 }
 

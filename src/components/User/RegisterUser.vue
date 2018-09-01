@@ -310,7 +310,7 @@ import {
   // sendMsgByPhoneOrEmial,
   sendRegisterUser,
   checkUserExist
-} from '../../utils/api/apiDoc'
+} from '../../utils/api/user'
 import {
   returnAjaxMessage, // 接口返回信息
   validateNumForUserInput, // 用户输入验证

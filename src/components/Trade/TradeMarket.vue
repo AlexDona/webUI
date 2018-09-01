@@ -35,7 +35,7 @@
               @tab-click="changeTab"
             >
               <el-tab-pane
-                :label="outItem.label"
+                :label="outItem.name"
                 :name="outItem.name"
                 v-for="(outItem,outIndex) in tabList"
                 :key="outIndex"
@@ -180,6 +180,8 @@
 </template>
 <script>
 import {getStore, setStore} from '../../utils'
+import {getPartnerAreaList} from '../../utils/api/trade'
+import {returnAjaxMessage} from '../../utils/commonFunc'
 import {mapState, createNamespacedHelpers} from 'vuex'
 const { mapMutations } = createNamespacedHelpers('home')
 export default {
@@ -189,7 +191,12 @@ export default {
   data () {
     return {
       contentShowStatus: true, // 显示隐藏控制
-      tabList: [], // tab栏个数
+      tabList: [
+        {
+          id: 0,
+          name: '自选'
+        }
+      ], // tab栏个数
       activeName: '', // 当前tabItem
       sortBy: '', // 排序依据: price-asc price-desc rose-asc rose-desc
       marketList: [], // 行情数据
@@ -211,28 +218,29 @@ export default {
     require('../../../static/css/theme/day/Trade/TradeMarketDay.css')
     require('../../../static/css/theme/night/Trade/TradeMarketNight.css')
     // 获取tab个数
-    this.tabList = [
-      {
-        id: 0,
-        name: 'first',
-        label: '自选'
-      },
-      {
-        id: 1,
-        name: 'second',
-        label: 'FBT'
-      },
-      {
-        id: 2,
-        name: 'third',
-        label: 'BTC'
-      },
-      {
-        id: 3,
-        name: 'fourth',
-        label: 'ETH'
-      }
-    ]
+    // this.tabList = [
+    //   {
+    //     id: 0,
+    //     name: 'first',
+    //     label: '自选'
+    //   },
+    //   {
+    //     id: 1,
+    //     name: 'second',
+    //     label: 'FBT'
+    //   },
+    //   {
+    //     id: 2,
+    //     name: 'third',
+    //     label: 'BTC'
+    //   },
+    //   {
+    //     id: 3,
+    //     name: 'fourth',
+    //     label: 'ETH'
+    //   }
+    // ]
+    this.getPartnerList()
     // 获取行情数据
     this.marketList = [
       {
@@ -868,7 +876,6 @@ export default {
     this.resetCollectList()
     this.filterMarketList = this.marketList
 
-    this.activeName = this.tabList[1].name
     this.setFilterMarketList(this.activeName, this.BTCMarketList)
   },
   mounted () {
@@ -883,6 +890,20 @@ export default {
     ...mapMutations([
       'CHANGE_COLLECT_LIST'
     ]),
+    // 获取板块列表
+    async getPartnerList () {
+      let params = {
+        partnerId: this.partnerId
+      }
+      const data = await getPartnerAreaList(params)
+      if (!returnAjaxMessage(data, this)) {
+        return false
+      } else {
+        const list = this.tabList.concat(data.data.data)
+        this.tabList = list
+        this.activeName = this.tabList[1].name
+      }
+    },
     // 排序
     sortByUser (sortMethod) {
       switch (sortMethod) {
@@ -983,7 +1004,7 @@ export default {
     setFilterMarketList (tabName, list) {
       // 自选区
       if (tabName == this.tabList[0].name) {
-        this.plateList.forEach((item) => {
+        this.tabList.forEach((item) => {
           this.collectList.forEach((innerItem) => {
             if (item.id == innerItem.plateId) {
               this.filterMarketList[item.id].content.push(innerItem)
@@ -1068,7 +1089,7 @@ export default {
       language: state => state.common.language,
       globalCollectList: state => state.home.globalCollectList,
       globalCollectStatusList: state => state.home.globalCollectStatusList,
-      plateList: state => state.home.plateList
+      partnerId: state => state.common.partnerId // 商户id
     }),
     // 搜索关键字过滤列表过滤
     searchFilterMarketList () {

@@ -3,7 +3,13 @@
 .coin-orders.personal.night .el-tabs__item.is-active{
   background-color: transparent;
   color: #ccc;
-  border-bottom: 1px solid #ccc;
+  border-bottom:2px solid #0079fe;
+  border-left:none;
+}
+.coin-orders.personal.night .el-tabs__item:hover{
+  border-left:none;
+  color:#fff;
+  background-color: transparent;
 }
 .coin-orders.personal.night .el-table th, .el-table tr{
   background-color: #1E2636;
@@ -21,3 +27,26 @@
   background-color: #1E2636;
   color: #fff;
 }
+.coin-orders.night .el-pagination{
+  text-align: right;
+  background-color: transparent;
+}
+
+/*.coin-orders.night*/
+/*.coin-orders.night*/
+/*.coin-orders.night*/
+/*.coin-orders.night*/
+/*.coin-orders.night*/
+/*.coin-orders.night*/
+/*.coin-orders.night*/
+/*.coin-orders.night*/
+/*.coin-orders.night*/
+/*.coin-orders.night*/
+/*.coin-orders.night*/
+/*.coin-orders.night*/
+/*.coin-orders.night*/
+/*.coin-orders.night*/
+/*.coin-orders.night*/
+/*.coin-orders.night*/
+/*.coin-orders.night*/
+/*.coin-orders.night*/

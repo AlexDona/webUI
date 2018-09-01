@@ -2,10 +2,14 @@
  * 和业务逻辑相关的全局方法
  */
 import {
-  sendMsgByPhoneOrEmial,
-  sendMsgByPushPhoneOrEmial,
   repealMyEntrustAjax
-} from '../utils/api/apiDoc'
+} from '../utils/api/trade'
+import {
+  sendMsgByPushPhoneOrEmial
+} from '../utils/api/personal'
+import {
+  sendMsgByPhoneOrEmial
+} from '../utils/api/user'
 import {PHONE_REG, EMAIL_REG, ID_REG, PWD_REG, ALIPAY_REG, BANK_REG, GOOGLE_REG} from './regExp'
 // 请求接口后正确或者错误的提示提示信息：
 // 如果返回 错误 了就提示错误并不能继续往下进行；

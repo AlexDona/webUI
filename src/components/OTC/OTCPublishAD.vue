@@ -303,7 +303,7 @@
 <!--请严格按照如下书写书序-->
 <script>
 // 引入接口
-import {getOTCAvailableCurrency, getMerchantAvailablelegalTender, addOTCPutUpOrdersMerchantdedicated, queryUserTradeFeeAndCoinInfo} from '../../utils/api/apiDoc'
+import {getOTCAvailableCurrency, getMerchantAvailablelegalTender, addOTCPutUpOrdersMerchantdedicated, queryUserTradeFeeAndCoinInfo} from '../../utils/api/OTC'
 // 引入组件
 import NavCommon from '../Common/HeaderCommon'
 import FooterCommon from '../Common/FooterCommon'

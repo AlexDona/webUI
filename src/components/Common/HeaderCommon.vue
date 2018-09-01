@@ -317,7 +317,7 @@
   </div>
 </template>
 <script>
-import {getMerchantAvailablelegalTender} from '../../utils/api/apiDoc'
+import {getMerchantAvailablelegalTender} from '../../utils/api/OTC'
 import IconFontCommon from '../Common/IconFontCommon'
 import {setStore} from '../../utils'
 import { createNamespacedHelpers, mapState } from 'vuex'

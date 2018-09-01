@@ -340,7 +340,7 @@
 </template>
 <!--请严格按照如下书写书序-->
 <script>
-import {getOTCAvailableCurrency, getOTCPutUpOrders, getMerchantAvailablelegalTender} from '../../utils/api/apiDoc'
+import {getOTCAvailableCurrency, getOTCPutUpOrders, getMerchantAvailablelegalTender} from '../../utils/api/OTC'
 import IconFontCommon from '../Common/IconFontCommon'
 import NavCommon from '../Common/HeaderCommon'
 import FooterCommon from '../Common/FooterCommon'

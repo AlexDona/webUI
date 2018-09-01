@@ -38,3 +38,7 @@
   background:rgba(51,143,245,.5) !important;
   color:#338FF5;
 }
+.trade-market-box .el-tabs__nav{
+  height:40px;
+  line-height:40px;
+}

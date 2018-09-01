@@ -211,7 +211,7 @@
 </template>
 <!--请严格按照如下书写书序-->
 <script>
-import {cancelAllOrdersOnekey} from '../../utils/api/apiDoc'
+import {cancelAllOrdersOnekey} from '../../utils/api/OTC'
 import NavCommon from '../Common/HeaderCommon'
 import FooterCommon from '../Common/FooterCommon'
 import IconFontCommon from '../Common/IconFontCommon'
