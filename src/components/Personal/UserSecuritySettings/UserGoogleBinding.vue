@@ -24,12 +24,23 @@
         <div class="google-content-from min-height500">
           <div class="google-images-show display-flex">
             <div class="google-validator flex1">
+              <div class="google-images">
+                <img :src="googleImages">
+              </div>
               <p class="google-info paddinglr15">
                 若未安装谷歌验证器请
                 <span class="google-info-download">扫码下载</span>
               </p>
             </div>
             <div class="google-validator validator-margin flex1">
+              <div class="google-images">
+                <VueQrcode
+                  class="ercode"
+                  :value="googleUserInformation.googleSecret"
+                  :options="{ size: 100 }"
+                >
+                </VueQrcode>
+              </div>
               <p class="google-info padding-l15">
                 请扫码或手工输入密钥，将手机上生成的
                 <span class="google-info-download">扫码下载</span>
@@ -42,18 +53,22 @@
               :label-position="labelPosition"
               label-width="120px"
             >
-              <el-form-item label="姓      名：">
-              <span class="google-content-name">
-                {{ globalUserInformation.googleUrl }}
-              </span>
+              <el-form-item label="私      钥：">
+                <span class="google-content-name">
+                  {{ googleUserInformation.googleSecret }}
+                </span>
+              </el-form-item>
+              <el-form-item label="谷歌账户：">
+                 <span class="google-content-name">
+                  {{ googleUserInformation.googleAccount }}
+                </span>
               </el-form-item>
               <el-form-item label="谷歌验证码：">
                 <input
-                  type="password"
+                  type="text"
                   class="google-input border-radius2 padding-l15 box-sizing"
                   @focus="emptyStatus"
-                  ref="amendDataPhone.transactionPassword"
-                  @keyup="changeInputValue('transactionPassword')"
+                  v-model="googleVerificationCode"
                 />
               </el-form-item>
             </el-form>
@@ -62,7 +77,7 @@
             </div>
             <button
               class="google-button border-radius4 cursor-pointer"
-              @click="getStatusSubmit"
+              @click="getGoogleStatusSubmit"
             >
             确认绑定
             </button>
@@ -78,6 +93,8 @@
 // 头部
 import HeaderCommon from '../../Common/HeaderCommon'
 import IconFontCommon from '../../Common/IconFontCommon'
+import {returnAjaxMessage} from '../../../utils/commonFunc'
+import {bindGoogleAddressPage, bindGoogleAddress} from '../../../utils/api/apiDoc'
 // 底部
 import FooterCommon from '../../Common/FooterCommon'
 import { createNamespacedHelpers, mapState } from 'vuex'
@@ -85,15 +102,22 @@ const { mapMutations } = createNamespacedHelpers('personal')
 export default {
   components: {
     HeaderCommon, // 头部
+    // 二维码组件
+    VueQrcode: resolve => {
+      require([('@xkeshi/vue-qrcode')], resolve)
+    },
     IconFontCommon, // 字体图标
     FooterCommon // 底部
   },
   data () {
     return {
+      googleImages: require('../../../assets/user/goolevalidatepig.png'), // 谷歌验证码
       globalUserInformation: {}, // 个人信息
       errorMsg: '', // 错误信息提示
-      emailAccounts: '', // 邮箱账号
-      emailCode: '' // 邮箱验证码
+      googleAccount: '', // 谷歌账号
+      googleTheSecretKey: '', // 谷歌秘钥
+      googleVerificationCode: '', // 谷歌验证码
+      googleUserInformation: {} // 谷歌验证信息
     }
   },
   created () {
@@ -105,6 +129,7 @@ export default {
     require('../../../../static/css/theme/night/Personal/UserSecuritySettings/UserGoogleBindingNight.css')
     // 获取全局个人信息
     this.globalUserInformation = this.userInfo.data.user
+    this.getGoogleVerificationCode()
   },
   mounted () {},
   activited () {},
@@ -129,16 +154,51 @@ export default {
       this[ref] = this.$refs[ref].value
       // console.log(this[ref])
     },
-    // 确定绑定
-    getStatusSubmit () {
-      if (!this.emailAccounts) {
-        this.errorMsg = '邮箱账号不能为空'
-      } else if (!this.emailCode) {
-        this.errorMsg = '验证码不能为空'
+    /**
+    * 获取谷歌验证码
+    * */
+    async getGoogleVerificationCode () {
+      let data
+      let param = {}
+      data = await bindGoogleAddressPage(param)
+      console.log(data)
+      if (!(returnAjaxMessage(data, this, 0))) {
+        return false
       } else {
-        this.errorMsg = ''
+        this.googleUserInformation = data.data.data
+        this.googleAccount = data.data.data.googleAccount
+        this.googleTheSecretKey = data.data.data.googleSecret
+        console.log(this.googleUserInformation)
+        console.log(this.googleAccount)
+        console.log(this.googleTheSecretKey)
       }
+    },
+    // 确定绑定
+    getGoogleStatusSubmit () {
+      // if (!this.emailAccounts) {
+      //   this.errorMsg = '邮箱账号不能为空'
+      // } else if (!this.emailCode) {
+      //   this.errorMsg = '验证码不能为空'
+      // } else {
+      //   this.errorMsg = ''
+      // }
+      this.confirmBindingBailPhone()
       console.log(1)
+    },
+    // 确定绑定
+    async confirmBindingBailPhone () {
+      let data
+      let param = {
+        googleSecret: this.googleTheSecretKey,
+        googleAccount: this.googleAccount, // 谷歌账户
+        code: this.googleVerificationCode // 谷歌验证码
+      }
+      data = await bindGoogleAddress(param)
+      if (!(returnAjaxMessage(data, this, 1))) {
+        return false
+      } else {
+        console.log(data)
+      }
     }
   },
   filter: {},
@@ -180,6 +240,11 @@ export default {
           >.google-images-show {
             >.google-validator {
               height: 200px;
+              >.google-images {
+                width: 96px;
+                height: 115px;
+                margin: 0 auto;
+              }
             }
             >.validator-margin {
               margin-left: 97px;

@@ -20,6 +20,7 @@
     <div class="billing-details-main paddinglr20">
       <div class="billing-details-query">
         <div class="float-left cursor-pointer">
+          <span class="demonstration display-inline-block">币种</span>
           <el-select v-model="currencyListValue">
             <el-option
               v-for="item in currencyList"
@@ -30,6 +31,7 @@
           </el-select>
         </div>
         <div class="float-left margin-left50 cursor-pointer">
+          <span class="demonstration">类型</span>
           <el-select v-model="currencyTypeValue">
             <el-option
               v-for="item in currencyType"
@@ -132,7 +134,7 @@
             width="100"
           >
             <template slot-scope = "s">
-              <div>{{ s.row.currency }}</div>
+              <div>{{ s.row.coinName }}</div>
             </template>
           </el-table-column>
           <el-table-column
@@ -147,14 +149,14 @@
             label="数量"
           >
             <template slot-scope = "s">
-              <div>{{ s.row.quantity }}</div>
+              <div>{{ s.row.amount }}</div>
             </template>
           </el-table-column>
           <el-table-column
             label="提交时间"
           >
             <template slot-scope = "s">
-              <div>{{ s.row.submitTime }}</div>
+              <div>{{ s.row.networkFees }}</div>
             </template>
           </el-table-column>
           <el-table-column
@@ -170,7 +172,7 @@
             label="状态"
           >
             <template slot-scope = "s">
-              <div>{{ s.row.state }}</div>
+              <div>{{ s.row.status }}</div>
             </template>
           </el-table-column>
         </el-table>
@@ -181,101 +183,112 @@
 <!--请严格按照如下书写书序-->
 <script>
 import {mapState} from 'vuex'
+import {statusRushedToRecordList} from '../../../utils/api/apiDoc'
+import {returnAjaxMessage} from '../../../utils/commonFunc'
 export default {
   components: {},
   // props,
   data () {
     return {
       // 充提记录
-      chargeRecordList: [{
-        currency: 'BTC',
-        type: '全部',
-        quantity: '12312',
-        submitTime: '2016-05-02 10:30:30',
-        updateTime: '2016-05-02 11:30:30',
-        state: '已完成'
-      }, {
-        currency: 'BTC',
-        type: '全部',
-        quantity: '12312',
-        submitTime: '2016-05-02 10:30:30',
-        updateTime: '2016-05-02 11:30:30',
-        state: '已完成'
-      }, {
-        currency: 'BTC',
-        type: '全部',
-        quantity: '12312',
-        submitTime: '2016-05-02 10:30:30',
-        updateTime: '2016-05-02 11:30:30',
-        state: '已完成'
-      }, {
-        currency: 'BTC',
-        type: '全部',
-        quantity: '12312',
-        submitTime: '2016-05-02 10:30:30',
-        updateTime: '2016-05-02 11:30:30',
-        state: '已完成'
-      }],
-      otherRecordsList: [{
-        currency: 'BTC',
-        type: '全部',
-        quantity: '12312',
-        submitTime: '2016-05-02 10:30:30',
-        updateTime: '2016-05-02 11:30:30',
-        state: '已完成'
-      }, {
-        currency: 'BTC',
-        type: '全部',
-        quantity: '12312',
-        submitTime: '2016-05-02 10:30:30',
-        updateTime: '2016-05-02 11:30:30',
-        state: '已完成'
-      }, {
-        currency: 'BTC',
-        type: '全部',
-        quantity: '12312',
-        submitTime: '2016-05-02 10:30:30',
-        updateTime: '2016-05-02 11:30:30',
-        state: '已完成'
-      }, {
-        currency: 'BTC',
-        type: '全部',
-        quantity: '12312',
-        submitTime: '2016-05-02 10:30:30',
-        updateTime: '2016-05-02 11:30:30',
-        state: '已完成'
-      }],
+      chargeRecordList: [
+        // {
+        //   currency: 'BTC',
+        //   type: '全部',
+        //   quantity: '12312',
+        //   submitTime: '2016-05-02 10:30:30',
+        //   updateTime: '2016-05-02 11:30:30',
+        //   state: '已完成'
+        // }, {
+        //   currency: 'BTC',
+        //   type: '全部',
+        //   quantity: '12312',
+        //   submitTime: '2016-05-02 10:30:30',
+        //   updateTime: '2016-05-02 11:30:30',
+        //   state: '已完成'
+        // }, {
+        //   currency: 'BTC',
+        //   type: '全部',
+        //   quantity: '12312',
+        //   submitTime: '2016-05-02 10:30:30',
+        //   updateTime: '2016-05-02 11:30:30',
+        //   state: '已完成'
+        // }, {
+        //   currency: 'BTC',
+        //   type: '全部',
+        //   quantity: '12312',
+        //   submitTime: '2016-05-02 10:30:30',
+        //   updateTime: '2016-05-02 11:30:30',
+        //   state: '已完成'
+        // }
+      ],
+      // 其他记录
+      otherRecordsList: [
+        {
+          currency: 'BTC',
+          type: '全部',
+          quantity: '12312',
+          submitTime: '2016-05-02 10:30:30',
+          updateTime: '2016-05-02 11:30:30',
+          state: '已完成'
+        }, {
+          currency: 'BTC',
+          type: '全部',
+          quantity: '12312',
+          submitTime: '2016-05-02 10:30:30',
+          updateTime: '2016-05-02 11:30:30',
+          state: '已完成'
+        }, {
+          currency: 'BTC',
+          type: '全部',
+          quantity: '12312',
+          submitTime: '2016-05-02 10:30:30',
+          updateTime: '2016-05-02 11:30:30',
+          state: '已完成'
+        }, {
+          currency: 'BTC',
+          type: '全部',
+          quantity: '12312',
+          submitTime: '2016-05-02 10:30:30',
+          updateTime: '2016-05-02 11:30:30',
+          state: '已完成'
+        }
+      ],
       showStatusRecordList: true, // 充提记录
       hiddenStatusRecordList: false, // 其他记录
       currencyListValue: '全部', // 币种名称
-      currencyList: [{
-        value: '1',
-        label: '全部'
-      }, {
-        value: '2',
-        label: 'EHT'
-      }, {
-        value: '3',
-        label: 'EHT'
-      }, {
-        value: '4',
-        label: 'FUC'
-      }, {
-        value: '5',
-        label: 'HT'
-      }],
+      currencyList: [
+        {
+          value: '1',
+          label: '全部'
+        }, {
+          value: '2',
+          label: 'EHT'
+        }, {
+          value: '3',
+          label: 'EHT'
+        }, {
+          value: '4',
+          label: 'FUC'
+        }, {
+          value: '5',
+          label: 'HT'
+        }
+      ],
       // 币种名称
       currencyTypeValue: '全部',
-      currencyType: [{
-        value: '1',
-        label: '全部'
-      }, {
-        value: '2',
-        label: '充币'
-      }, {
-        value: '3',
-        label: '提币'
-      }]
+      currencyType: [
+        {
+          value: '1',
+          label: '全部'
+        }, {
+          value: '2',
+          label: '充币'
+        }, {
+          value: '3',
+          label: '提币'
+        }
+      ]
     }
   },
   created () {
@@ -285,6 +298,8 @@ export default {
     require('../../../../static/css/theme/day/Personal/AccountBalance/BillingDetailsDay.css')
     // 黑色主题样式
     require('../../../../static/css/theme/night/Personal/AccountBalance/BillingDetailsNight.css')
+    // console.log(this.userInfo)
+    // this.getPushRecordList()
   },
   mounted () {},
   activited () {},
@@ -296,16 +311,35 @@ export default {
       if (val == 1) {
         this.hiddenStatusRecordList = false
         this.showStatusRecordList = true
+        this.getPushRecordList()
       } else if (val == 2) {
         this.showStatusRecordList = false
         this.hiddenStatusRecordList = true
+      }
+    },
+    /**
+     * 刚进页面时候 冲提记录列表展示
+     */
+    async getPushRecordList () {
+      let data = await statusRushedToRecordList({
+        // userId: this.userInfo.userId // 商户id
+        userId: 4 // 商户id
+      })
+      console.log(data)
+      if (!(returnAjaxMessage(data, this, 0))) {
+        return false
+      } else {
+        // 返回冲提记录列表展示
+        this.chargeRecordList = data.data.data.list
+        console.log(this.chargeRecordList)
       }
     }
   },
   filter: {},
   computed: {
     ...mapState({
-      theme: state => state.common.theme
+      theme: state => state.common.theme,
+      userInfo: state => state.user.loginStep1Info // 用户详细信息
     })
   },
   watch: {}
@@ -329,6 +363,9 @@ export default {
         /*>.search-condition {*/
           /*width*/
         /*}*/
+        .demonstration {
+          margin-right: 5px;
+        }
       }
     }
     >.billing-details-header {
