@@ -35,24 +35,21 @@
               <input
                 class="login-input border-radius2 padding-l15 box-sizing"
                 @focus="emptyStatus"
-                ref="originalLoginPassword"
-                @keyup="changeInputValue('originalLoginPassword')"
+                v-model="originalLoginPassword"
               />
             </el-form-item>
             <el-form-item label="新登录密码：">
               <input
                 class="login-input border-radius2 padding-l15 box-sizing"
                 @focus="emptyStatus"
-                ref="newLoginPassword"
-                @keyup="changeInputValue('newLoginPassword')"
+                v-model="newLoginPassword"
               />
             </el-form-item>
             <el-form-item label="确认登录密码：">
               <input
                 class="login-input border-radius2 padding-l15 box-sizing"
                 @focus="emptyStatus"
-                ref="confirmLoginPassword"
-                @keyup="changeInputValue('confirmLoginPassword')"
+                v-model="confirmLoginPassword"
               />
             </el-form-item>
             <div class="prompt-message">
@@ -76,8 +73,8 @@
 // 头部
 import HeaderCommon from '../../Common/HeaderCommon'
 import IconFontCommon from '../../Common/IconFontCommon'
-// import {statusSecurityCenter} from '../../../utils/api/apiDoc'
-// import {returnAjaxMessage} from '../../../utils/commonFunc'
+import {modifyLoginPassword} from '../../../utils/api/personal'
+import {returnAjaxMessage} from '../../../utils/commonFunc'
 // 底部
 import FooterCommon from '../../Common/FooterCommon'
 import { createNamespacedHelpers, mapState } from 'vuex'
@@ -117,29 +114,38 @@ export default {
     ]),
     // 点击返回上个页面
     returnSuperior () {
-      this.CHANGE_USER_CENTER_ACTIVE_NAME('seven')
+      this.CHANGE_USER_CENTER_ACTIVE_NAME('security-center')
       this.$router.go(-1)
     },
     // 清空内容信息
     emptyStatus () {
       this.errorMsg = ''
     },
-    // 修改input value
-    changeInputValue (ref) {
-      // console.dir(this.$refs[ref])
-      this[ref] = this.$refs[ref].value
-      // console.log(this[ref])
-    },
-    // 确定绑定
+    // 确定修改登录密码
     getStatusSubmit () {
-      if (!this.emailAccounts) {
-        this.errorMsg = '邮箱账号不能为空'
-      } else if (!this.emailCode) {
-        this.errorMsg = '验证码不能为空'
-      } else {
-        this.errorMsg = ''
-      }
       console.log(1)
+      // if (!this.emailAccounts) {
+      //   this.errorMsg = '邮箱账号不能为空'
+      // } else if (!this.emailCode) {
+      //   this.errorMsg = '验证码不能为空'
+      // } else {
+      //   this.errorMsg = ''
+      // }
+      this.confirmModifyLoginPassword()
+    },
+    // 确定修改方法
+    async confirmModifyLoginPassword () {
+      let data
+      let param = {
+        oldPassword: this.originalLoginPassword, // 旧登录密码
+        newPassword: this.newLoginPassword // 新登录密码
+      }
+      data = await modifyLoginPassword(param)
+      if (!(returnAjaxMessage(data, this, 1))) {
+        return false
+      } else {
+        console.log(data)
+      }
     }
   },
   filter: {},

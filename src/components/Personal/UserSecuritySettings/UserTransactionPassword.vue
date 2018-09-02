@@ -34,32 +34,32 @@
           *请确认您的银行卡已开启短信通知功能
         </header>
         <div class="transaction-content-from">
+          <!--修改交易密码-->
           <el-form
-            v-if="!globalUserInformation.tradePasswordType"
+            v-if="globalUserInformation.tradePasswordType"
             :label-position="labelPosition"
             label-width="120px"
           >
             <el-form-item label="交易密码：">
               <input
+                type="password"
                 class="transaction-input border-radius2 padding-l15 box-sizing"
                 @focus="emptyStatus"
-                ref="transactionPassword"
-                @keyup="changeInputValue('transactionPassword')"
+                v-model="modifyPassword.modifyTransactionPassword"
               />
             </el-form-item>
             <el-form-item label="重置交易密码：">
               <input
+                type="password"
                 class="transaction-input border-radius2 padding-l15 box-sizing"
                 @focus="emptyStatus"
-                ref="resetTransactionPassword"
-                @keyup="changeInputValue('resetTransactionPassword')"
+                v-model="modifyPassword.modifyResetTransactionPassword"
               />
             </el-form-item>
             <el-form-item label="验  证  码：">
               <el-input
                 @focus="emptyStatus"
-                ref="transactionPasswordCode"
-                @keyup="changeInputValue('transactionPasswordCode')"
+                v-model="modifyPassword.modifyTransactionPasswordCode"
               >
                 <template slot="append">验证码</template>
               </el-input>
@@ -74,6 +74,7 @@
               确认绑定
             </button>
           </el-form>
+          <!--设置交易密码-->
           <el-form
             v-else
             :label-position="labelPosition"
@@ -81,27 +82,32 @@
           >
             <el-form-item label="新交易密码：">
               <input
+                type="password"
                 class="transaction-input border-radius2 padding-l15 box-sizing"
                 @focus="emptyStatus"
-                ref="transactionPassword"
-                @keyup="changeInputValue('transactionPassword')"
+                v-model="setPassword.newTransactionPassword"
               />
             </el-form-item>
             <el-form-item label="确认交易密码：">
               <input
+                type="password"
                 class="transaction-input border-radius2 padding-l15 box-sizing"
                 @focus="emptyStatus"
-                ref="resetTransactionPassword"
-                @keyup="changeInputValue('resetTransactionPassword')"
+                v-model="setPassword.confirmTransactionPassword"
               />
             </el-form-item>
             <el-form-item label="验  证  码：">
               <el-input
                 @focus="emptyStatus"
-                ref="transactionPasswordCode"
-                @keyup="changeInputValue('transactionPasswordCode')"
+                v-model="setPassword.transactionPasswordCode"
               >
-                <template slot="append">验证码</template>
+                <template slot="append">
+                  <CountDownButton
+                    class="send-code-btn cursor-pointer"
+                    :status="disabledOfPhoneBtn"
+                    @run="sendPhoneOrEmailCode(0)"
+                  />
+                </template>
               </el-input>
             </el-form-item>
             <div class="prompt-message">
@@ -125,6 +131,9 @@
 // 头部
 import HeaderCommon from '../../Common/HeaderCommon'
 import IconFontCommon from '../../Common/IconFontCommon'
+import CountDownButton from '../../Common/CountDownCommon'
+import {returnAjaxMessage, sendPhoneOrEmailCodeAjax} from '../../../utils/commonFunc'
+import {setTransactionPassword} from '../../../utils/api/personal'
 // 底部
 import FooterCommon from '../../Common/FooterCommon'
 import { createNamespacedHelpers, mapState } from 'vuex'
@@ -133,15 +142,25 @@ export default {
   components: {
     HeaderCommon, // 头部
     IconFontCommon, // 字体图标
+    CountDownButton, // 短信倒计时
     FooterCommon // 底部
   },
   data () {
     return {
       globalUserInformation: {}, // 个人信息
       errorMsg: '', // 错误信息提示
-      transactionPassword: '', // 交易密码
-      resetTransactionPassword: '', // 重置交易密码.
-      transactionPasswordCode: '' // 验证码
+      // 设置交易密码
+      setPassword: {
+        newTransactionPassword: '', // 设置新交易密码
+        confirmTransactionPassword: '', // 确认交易密码.
+        transactionPasswordCode: '' // 验证码
+      },
+      // 修改交易密码
+      modifyPassword: {
+        modifyTransactionPassword: '', // 修改交易密码
+        modifyResetTransactionPassword: '', // 修改 重置交易密码.
+        modifyTransactionPasswordCode: '' // 修改 验证码
+      }
     }
   },
   created () {
@@ -164,7 +183,7 @@ export default {
     ]),
     // 点击返回上个页面
     returnSuperior () {
-      this.CHANGE_USER_CENTER_ACTIVE_NAME('seven')
+      this.CHANGE_USER_CENTER_ACTIVE_NAME('security-center')
       this.$router.go(-1)
     },
     // 清空内容信息
@@ -177,23 +196,79 @@ export default {
       this[ref] = this.$refs[ref].value
       // console.log(this[ref])
     },
-    // 确定绑定
-    getStatusSubmit () {
-      if (!this.emailAccounts) {
-        this.errorMsg = '邮箱账号不能为空'
-      } else if (!this.emailCode) {
-        this.errorMsg = '验证码不能为空'
-      } else {
-        this.errorMsg = ''
+    // 发送手机验证码
+    sendPhoneOrEmailCode (loginType) {
+      console.log(this.disabledOfPhoneBtn)
+      console.log(this.disabledOfEmailBtn)
+      if (this.disabledOfPhoneBtn || this.disabledOfEmailBtn) {
+        return false
       }
+      let params = {
+        // phone: this.bindingDataPhone.bindingNewPhoneAccounts // 手机号
+        phone: 15994026836 // 手机号
+        // country: this.activeCountryCode
+      }
+      sendPhoneOrEmailCodeAjax(loginType, params, (data) => {
+        console.log(this.disabledOfPhoneBtn)
+        // 提示信息
+        if (!returnAjaxMessage(data, this)) {
+          console.log('error')
+          return false
+        } else {
+          switch (loginType) {
+            case 0:
+              this.$store.commit('user/SET_USER_BUTTON_STATUS', {
+                loginType: 0,
+                status: true
+              })
+              break
+            case 1:
+              this.$store.commit('user/SET_USER_BUTTON_STATUS', {
+                loginType: 1,
+                status: true
+              })
+              break
+          }
+        }
+      })
+    },
+    // 确定设置交易密码
+    getStatusSubmit () {
+      // if (!this.emailAccounts) {
+      //   this.errorMsg = '邮箱账号不能为空'
+      // } else if (!this.emailCode) {
+      //   this.errorMsg = '验证码不能为空'
+      // } else {
+      //   this.errorMsg = ''
+      // }
+      this.confirmTransactionPassword()
       console.log(1)
+    },
+    // 确定绑定
+    async confirmTransactionPassword () {
+      let data
+      let param = {
+        payPassword: this.setPassword.newTransactionPassword, // 手机号
+        code: this.setPassword.transactionPasswordCode // 手机验证码
+      }
+      data = await setTransactionPassword(param)
+      if (!(returnAjaxMessage(data, this, 1))) {
+        return false
+      } else {
+        console.log(data)
+        console.log(this.emailAccounts)
+        console.log(this.emailCode)
+        // this.statusSecurityCenter()
+      }
     }
   },
   filter: {},
   computed: {
     ...mapState({
       theme: state => state.common.theme,
-      userInfo: state => state.personal.userInfo
+      userInfo: state => state.personal.userInfo,
+      disabledOfPhoneBtn: state => state.user.disabledOfPhoneBtn,
+      disabledOfEmailBtn: state => state.user.disabledOfEmailBtn
     })
   },
   watch: {}

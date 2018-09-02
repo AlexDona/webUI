@@ -73,7 +73,7 @@ import HeaderCommon from '../../Common/HeaderCommon'
 import IconFontCommon from '../../Common/IconFontCommon'
 import CountDownButton from '../../Common/CountDownCommon'
 import {returnAjaxMessage, sendPhoneOrEmailCodeAjax} from '../../../utils/commonFunc'
-import {bindEmailAddress} from '../../../utils/api/apiDoc'
+import {bindEmailAddress} from '../../../utils/api/personal'
 // 底部
 import FooterCommon from '../../Common/FooterCommon'
 import { createNamespacedHelpers, mapState } from 'vuex'
@@ -113,7 +113,7 @@ export default {
     ]),
     // 点击返回上个页面
     returnSuperior () {
-      this.CHANGE_USER_CENTER_ACTIVE_NAME('seven')
+      this.CHANGE_USER_CENTER_ACTIVE_NAME('security-center')
       this.$router.go(-1)
     },
     // 清空内容信息

@@ -6,7 +6,9 @@
     <HeaderCommon />
     <div class="binding-google-main margin25">
       <header class="binding-google-header personal-height60 line-height60 line-height70 margin25">
-        <span class="header-content-left header-content font-size16 font-weight600">
+        <span
+          class="header-content-left header-content font-size16 font-weight600"
+        >
           绑定谷歌验证器
         </span>
         <span
@@ -76,10 +78,18 @@
               <div v-show="errorMsg">{{ errorMsg }}</div>
             </div>
             <button
+              v-if="!globalUserInformation.googleBind"
               class="google-button border-radius4 cursor-pointer"
               @click="getGoogleStatusSubmit"
             >
-            确认绑定
+              确认绑定
+            </button>
+            <button
+              v-else
+              class="google-button border-radius4 cursor-pointer"
+              @click="getGoogleStatusSubmitUnbind"
+            >
+              确认解绑
             </button>
           </div>
         </div>
@@ -94,7 +104,7 @@
 import HeaderCommon from '../../Common/HeaderCommon'
 import IconFontCommon from '../../Common/IconFontCommon'
 import {returnAjaxMessage} from '../../../utils/commonFunc'
-import {bindGoogleAddressPage, bindGoogleAddress} from '../../../utils/api/apiDoc'
+import {bindGoogleAddressPage, bindGoogleAddress, unbindCheckGoogle} from '../../../utils/api/personal'
 // 底部
 import FooterCommon from '../../Common/FooterCommon'
 import { createNamespacedHelpers, mapState } from 'vuex'
@@ -128,8 +138,9 @@ export default {
     // 黑色主题样式
     require('../../../../static/css/theme/night/Personal/UserSecuritySettings/UserGoogleBindingNight.css')
     // 获取全局个人信息
-    this.globalUserInformation = this.userInfo.data.user
-    this.getGoogleVerificationCode()
+    // this.globalUserInformation = this.userInfo.data.user
+    // console.log(this.globalUserInformation)
+    // this.getGoogleVerificationCode()
   },
   mounted () {},
   activited () {},
@@ -141,18 +152,12 @@ export default {
     ]),
     // 点击返回上个页面
     returnSuperior () {
-      this.CHANGE_USER_CENTER_ACTIVE_NAME('seven')
+      this.CHANGE_USER_CENTER_ACTIVE_NAME('security-center')
       this.$router.go(-1)
     },
     // 清空内容信息
     emptyStatus () {
       this.errorMsg = ''
-    },
-    // 修改input value
-    changeInputValue (ref) {
-      // console.dir(this.$refs[ref])
-      this[ref] = this.$refs[ref].value
-      // console.log(this[ref])
     },
     /**
     * 获取谷歌验证码
@@ -168,12 +173,9 @@ export default {
         this.googleUserInformation = data.data.data
         this.googleAccount = data.data.data.googleAccount
         this.googleTheSecretKey = data.data.data.googleSecret
-        console.log(this.googleUserInformation)
-        console.log(this.googleAccount)
-        console.log(this.googleTheSecretKey)
       }
     },
-    // 确定绑定
+    // 确定提交绑定谷歌验证
     getGoogleStatusSubmit () {
       // if (!this.emailAccounts) {
       //   this.errorMsg = '邮箱账号不能为空'
@@ -185,7 +187,7 @@ export default {
       this.confirmBindingBailPhone()
       console.log(1)
     },
-    // 确定绑定
+    // 确定绑定谷歌验证接口
     async confirmBindingBailPhone () {
       let data
       let param = {
@@ -199,12 +201,29 @@ export default {
       } else {
         console.log(data)
       }
+    },
+    // 确定解绑谷歌验证
+    getGoogleStatusSubmitUnbind () {
+      this.confirmBindingUnbind()
+    },
+    async confirmBindingUnbind () {
+      let data
+      let param = {
+        code: this.googleVerificationCode // 谷歌验证码
+      }
+      data = await unbindCheckGoogle(param)
+      if (!(returnAjaxMessage(data, this, 1))) {
+        return false
+      } else {
+        console.log(data)
+      }
     }
   },
   filter: {},
   computed: {
     ...mapState({
       theme: state => state.common.theme,
+      // userInfo: state => state.user.loginStep1Info // 用户详细信息
       userInfo: state => state.personal.userInfo
     })
   },

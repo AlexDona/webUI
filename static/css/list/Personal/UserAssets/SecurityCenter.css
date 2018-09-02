@@ -37,3 +37,15 @@
 .security-center.personal .el-dialog__headerbtn {
   top: 13px;
 }
+.security-center.personal .el-dialog__body {
+  padding: 25px 20px 0;
+}
+.login-password.personal .el-input__inner {
+  height: 36px;
+  border-radius: 2px 0 0px 2px;
+}
+.security-center.personal .el-input-group {
+  width: 220px;
+  height: 36px;
+  border-radius: 4px;
+}

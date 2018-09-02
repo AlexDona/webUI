@@ -28,7 +28,7 @@ const state = {
         'safetyGrade': '', // 0低 1中 2高
         'identification': '412726199509016752', // 证件号码
         'emailBind': true, // 邮箱状态默认false未绑定 true已绑定0关闭 1开启
-        'telePhoneBind': false, // 是否绑定手机false true  0关闭 1开启
+        'telePhoneBind': true, // 是否绑定手机false true  0关闭 1开启
         'googleBind': false, // 是否绑定谷歌验证0 未绑定 1已绑定 2开启 3关闭
         'tradePasswordType': null, // 交易密码状态 null空 1有交易密码
         'identificationType': 0, // 证件类型 0身份证 1护照
@@ -44,7 +44,7 @@ const state = {
     }
   },
   // 个人中心默认显示第一个
-  userCenterActiveName: 'first'
+  userCenterActiveName: 'assets'
 }
 
 export default {
