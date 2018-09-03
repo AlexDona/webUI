@@ -8,9 +8,7 @@ const state = {
   // OTC改变选中的可用币种名字
   selectedOTCAvailableCurrencyName: '',
   // OTC改变选中的可用币种id
-  selectedOTCAvailableCurrencyCoinID: '',
-  // otc 商家和普通用户通用挂单页面可用币种起订量
-  merchantAndCommonPutOnOrderMinCount: 0
+  selectedOTCAvailableCurrencyCoinID: ''
 }
 
 export default {
