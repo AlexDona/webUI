@@ -355,7 +355,7 @@ export default {
     // 黑色主题样式
     require('../../../../static/css/theme/night/Personal/AccountBalance/AccountAssetsNight.css')
     // 刚进页面时候 个人资产列表展示
-    this.getAssetCurrenciesList()
+    // this.getAssetCurrenciesList()
   },
   mounted () {},
   activited () {},

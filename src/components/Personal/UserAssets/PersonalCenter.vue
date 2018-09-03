@@ -10,7 +10,7 @@
         <el-tabs
           v-model = "userCenterActiveName"
           :tab-position = "tabPosition"
-          @tab-click = "gitPersonal"
+          @tab-click = "statusSwitchPanel"
         >
           <!--账户资产-->
           <el-tab-pane
@@ -22,21 +22,21 @@
           <!--我的资产-->
           <el-tab-pane
             label = "我的资产"
-            name = "first"
+            name = "assets"
           >
             <AccountAssets ref = "accountAssetsValue"/>
           </el-tab-pane>
           <!--账单明细-->
           <el-tab-pane
             label = "账单明细"
-            name = "second"
+            name = "billing-details"
           >
             <BillingDetails ref = "billingDetailsValue"/>
           </el-tab-pane>
           <!--提币地址-->
           <el-tab-pane
             label = "提币地址"
-            name = "third"
+            name = "mention-address"
           >
             <WithdrawalAddress ref = "withdrawalAddressValue"/>
           </el-tab-pane>
@@ -49,7 +49,7 @@
           </el-tab-pane>
           <el-tab-pane
             label = "身份认证"
-            name = "fourth"
+            name = "identity-authentication"
           >
             <IdentityAuthentication ref = "identityValue"/>
           </el-tab-pane>
@@ -57,7 +57,7 @@
           <!--收款账户-->
           <el-tab-pane
             label = "收款账户"
-            name = "fifth"
+            name = "account-credited"
           >
             <AccountCredited ref = "accountCreditedValue"/>
           </el-tab-pane>
@@ -65,7 +65,7 @@
           <!--邀请推广-->
           <el-tab-pane
             label = "邀请推广"
-            name = "six"
+            name = "invitation-promote"
           >
             <InvitingPromotion ref = "invitingPromotionValue"/>
           </el-tab-pane>
@@ -73,21 +73,21 @@
           <!--安全中心-->
           <el-tab-pane
             label = "安全中心"
-            name = "seven"
+            name = "security-center"
           >
             <SecurityCenter ref = "securityCenterValue"/>
           </el-tab-pane>
           <!--API管理-->
           <el-tab-pane
             label = "API管理"
-            name = "eight"
+            name = "api-management"
           >
             <APIManagement ref = "apiManagementValue"/>
           </el-tab-pane>
           <!--PUSH资产-->
           <el-tab-pane
             label = "PUSH资产"
-            name = "nine"
+            name = "push-asset"
           >
             <PushAsset ref = "pushAssetValue"/>
           </el-tab-pane>
@@ -100,13 +100,13 @@
           </el-tab-pane>
           <el-tab-pane
             label = "币币订单"
-            name = "ten"
+            name = "coin-orders"
           >
             <CoinOrders ref = "coinOrdersValue"/>
           </el-tab-pane>
           <el-tab-pane
             label = "法币订单"
-            name = "eleven"
+            name = "fiat-orders"
           >
             <FiatOrders ref = "fiatOrdersValue"/>
           </el-tab-pane>
@@ -168,6 +168,7 @@ export default {
   // props,
   data () {
     return {
+      activeName: 'first',
       tabPosition: 'left' // 导航位置方向
     }
   },
@@ -178,9 +179,16 @@ export default {
     require('../../../../static/css/theme/day/Personal/UserAssets/PersonalCenterDay.css')
     // 黑色主题样式
     require('../../../../static/css/theme/night/Personal/UserAssets/PersonalCenterNight.css')
+    if (this.$route.params.id) {
+      this.activeName = this.$route.params.id
+    }
   },
   mounted () {},
-  activited () {},
+  activited () {
+    if (this.$route.params.id) {
+      this.activeName = this.$route.params.id
+    }
+  },
   update () {},
   beforeRouteUpdate () {},
   methods: {
@@ -188,8 +196,35 @@ export default {
       'CHANGE_USER_CENTER_ACTIVE_NAME'
     ]),
     // 面板跳转
-    gitPersonal (tab) {
-      this.CHANGE_USER_CENTER_ACTIVE_NAME(tab.name)
+    statusSwitchPanel (tab) {
+      switch (tab.name) {
+        case 'assets':
+          break
+        case 'billing-details':
+          this.$refs.securityCenterValue.WithdrawalAddressList()
+          break
+        case 'mention-address':
+          break
+        case 'identity-authentication':
+          this.$refs.securityCenterValue.getRealNameInformation()
+          break
+        case 'account-credited':
+          break
+        case 'invitation-promote':
+          break
+        case 'security-center':
+          this.$refs.securityCenterValue.getSecurityCenter()
+          break
+        case 'api-management':
+          break
+        case 'push-asset':
+          this.$refs.securityCenterValue.getPushRecordList()
+          break
+        case 'coin-orders':
+          break
+        case 'fiat-orders':
+          break
+      }
     }
   },
   filter: {},

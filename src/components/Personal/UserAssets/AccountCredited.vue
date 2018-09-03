@@ -255,7 +255,7 @@ export default {
     // 点击去认证跳转到身份认证
     authenticationJump () {
       this.centerModelWarning = false
-      this.CHANGE_USER_CENTER_ACTIVE_NAME('fourth')
+      this.CHANGE_USER_CENTER_ACTIVE_NAME('identity-authentication')
     }
   },
   filter: {},

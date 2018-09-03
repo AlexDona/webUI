@@ -44,19 +44,19 @@
               v-if="!globalUserInformation.telePhoneBind"
               label="手机号码："
             >
-              <el-select v-model="amendDataPhone.areaCodeValue" placeholder="请选择">
+              <el-select v-model="bindingDataPhone.bindingAreaCodeValue">
                 <el-option
-                  v-for="item in amendDataPhone.areaCodeList"
-                  :key="item.value"
+                  v-for="(item, index) in bindingDataPhone.bindingAreaCodeList"
+                  :key="index"
                   :label="item.label"
-                  :value="item.value">
+                  :value="item.label">
                 </el-option>
               </el-select>
               <input
                 type="text"
                 class="phone-input phone-input-left border-radius2 padding-l15 box-sizing"
                 @focus="emptyStatus"
-                v-model="amendDataPhone.newPhoneAccounts"
+                v-model="bindingDataPhone.bindingNewPhoneAccounts"
               >
             </el-form-item>
             <el-form-item
@@ -86,7 +86,7 @@
               label="短信验证码：">
               <el-input
                 @focus="emptyStatus"
-                v-model="bindingDataPhone.oldPhoneCode"
+                v-model="bindingDataPhone.bindingNewPhoneCode"
               >
                 <template slot="append">
                   <CountDownButton
@@ -121,39 +121,48 @@
             <el-form-item label="短信验证码：">
               <el-input
                 @focus="emptyStatus"
-                ref="amendDataPhone.oldPhoneCode"
-                @keyup="changeInputValue('oldPhoneCode')"
+                v-model="amendDataPhone.oldPhoneCode"
               >
-                <template slot="append">验证码</template>
+                <template slot="append">
+                  <CountDownButton
+                    class="send-code-btn cursor-pointer"
+                    :status="disabledOfPhoneBtn"
+                    @run="sendPhoneOrEmailCode(0, 1)"
+                  />
+                </template>
               </el-input>
             </el-form-item>
             <el-form-item label="新手机号码：">
               <el-select
                 v-model="amendDataPhone.areaCodeValue"
-                placeholder="请选择"
               >
                 <el-option
-                  v-for="item in amendDataPhone.areaCodeList"
-                  :key="item.value"
+                  v-for="(item, index) in amendDataPhone.areaCodeList"
+                  :key="index"
                   :label="item.label"
-                  :value="item.value">
+                  :value="item.label"
+                >
                 </el-option>
               </el-select>
               <input
                 type="text"
                 class="phone-input phone-input-left border-radius2 padding-l15 box-sizing"
                 @focus="emptyStatus"
-                ref="amendDataPhone.newPhoneAccounts"
-                @keyup="changeInputValue('newPhoneAccounts')"
+                v-model="amendDataPhone.newPhoneAccounts"
               >
             </el-form-item>
             <el-form-item label="短信验证码：">
               <el-input
                 @focus="emptyStatus"
-                ref="amendDataPhone.newPhoneCode"
-                @keyup="changeInputValue('newPhoneCode')"
+                v-model="amendDataPhone.newPhoneCode"
               >
-                <template slot="append">验证码</template>
+                <template slot="append">
+                  <CountDownButton
+                    class="send-code-btn cursor-pointer"
+                    :status="disabledOfPhoneBtn"
+                    @run="sendPhoneOrEmailCode(0, 2)"
+                  />
+                </template>
               </el-input>
             </el-form-item>
             <el-form-item label="交  易  密  码：">
@@ -161,8 +170,7 @@
                 type="password"
                 class="phone-input border-radius2 padding-l15 box-sizing"
                 @focus="emptyStatus"
-                ref="amendDataPhone.transactionPassword"
-                @keyup="changeInputValue('transactionPassword')"
+                v-model="amendDataPhone.transactionPassword"
               />
             </el-form-item>
             <div class="prompt-message">
@@ -192,7 +200,7 @@ import { createNamespacedHelpers, mapState } from 'vuex'
 import ImageValidate from '../../Common/ImageValidateCommon' // 图片验证吗
 import CountDownButton from '../../Common/CountDownCommon'
 import {returnAjaxMessage, sendPhoneOrEmailCodeAjax} from '../../../utils/commonFunc'
-import {bindPhoneAddress} from '../../../utils/api/apiDoc'
+import {bindPhoneAddress} from '../../../utils/api/personal'
 const { mapMutations } = createNamespacedHelpers('personal')
 export default {
   components: {
@@ -207,8 +215,15 @@ export default {
       globalUserInformation: {}, // 个人信息
       errorMsg: '', // 错误信息提示
       bindingDataPhone: {
+        bindingAreaCodeValue: '86',
+        bindingAreaCodeList: [{
+          value: '1',
+          label: '86'
+        }],
+        bindingNewPhoneAccounts: '', // 手机号
+        identifyCode: '1235', // 图片验证码
         userInputImageCode: '', // 用户输入的图片验证码
-        identifyCode: '1235' // 图片验证码
+        bindingNewPhoneCode: '' // 新手机验证码
       },
       amendDataPhone: {
         newPhoneAccounts: '', // 手机号
@@ -217,22 +232,10 @@ export default {
         areaCode: '', // 区号
         newPhoneCode: '', // 新手机验证码
         transactionPassword: '', // 交易密码
-        areaCodeValue: '+86',
+        areaCodeValue: '86',
         areaCodeList: [{
           value: '1',
-          label: '+86'
-        }, {
-          value: '2',
-          label: '+96'
-        }, {
-          value: '3',
-          label: '+36'
-        }, {
-          value: '4',
-          label: '+25'
-        }, {
-          value: '5',
-          label: '+89'
+          label: '86'
         }]
       }
     }
@@ -257,7 +260,7 @@ export default {
     ]),
     // 点击返回上个页面
     returnSuperior () {
-      this.CHANGE_USER_CENTER_ACTIVE_NAME('seven')
+      this.CHANGE_USER_CENTER_ACTIVE_NAME('security-center')
       this.$router.go(-1)
     },
     // 清空内容信息
@@ -276,18 +279,43 @@ export default {
     },
     // 刷新验证码
     refreshCode () {
-      this.identifyCode = this.getRandomNum()
+      this.bindingDataPhone.identifyCode = this.getRandomNum()
     },
     // 发送邮箱验证码
-    sendPhoneOrEmailCode (loginType) {
+    sendPhoneOrEmailCode (loginType, val) {
       console.log(this.disabledOfPhoneBtn)
       console.log(this.disabledOfEmailBtn)
       if (this.disabledOfPhoneBtn || this.disabledOfEmailBtn) {
         return false
       }
       let params = {
-        email: this.emailAccounts // 邮箱账号
-        // country: this.activeCountryCode
+      //   phone: this.bindingDataPhone.bindingNewPhoneAccounts, // 手机号
+        country: this.bindingDataPhone.bindingAreaCodeValue // 国家编码
+      //   // country: this.activeCountryCode
+      }
+      if (!this.globalUserInformation.telePhoneBind) {
+        switch (loginType) {
+          case 0:
+            params.phone = this.userInfo.telePhone
+            break
+          case 1:
+            params.address = this.userInfo.email
+            break
+        }
+      } else {
+        switch (loginType) {
+          case 0:
+            params.phone = this.userInfo.telePhone
+            if (val == 1) {
+              params.phone = '13838282547'
+            } else {
+              params.phone = this.amendDataPhone.newPhoneAccounts
+            }
+            break
+          case 1:
+            params.address = this.userInfo.email
+            break
+        }
       }
       sendPhoneOrEmailCodeAjax(loginType, params, (data) => {
         console.log(this.disabledOfPhoneBtn)
@@ -315,22 +343,24 @@ export default {
     },
     // 确定提交绑定手机
     getStatusSubmit () {
-      if (!this.newPhoneAccounts) {
-        this.errorMsg = '邮箱账号不能为空'
-      } else if (!this.phoneCode) {
-        this.errorMsg = '验证码不能为空'
-      } else {
-        this.errorMsg = ''
-      }
-      console.log(1)
+      // if (!this.newPhoneAccounts) {
+      //   this.errorMsg = '邮箱账号不能为空'
+      // } else if (!this.phoneCode) {
+      //   this.errorMsg = '验证码不能为空'
+      // } else {
+      //   this.errorMsg = ''
+      // }
+      // console.log(1)
       this.confirmBindingBailPhone()
     },
     // 确定绑定
     async confirmBindingBailPhone () {
       let data
       let param = {
-        phone: this.emailAccounts, // 邮箱账号
-        code: this.emailCode // 邮箱验证码
+        phone: this.amendDataPhone.newPhoneAccounts, // 手机号
+        oldCode: this.amendDataPhone.oldPhoneCode, // 旧手机验证码
+        newCode: this.amendDataPhone.newPhoneCode, // 新手机验证码
+        payPassword: this.amendDataPhone.transactionPassword // 交易密码
       }
       data = await bindPhoneAddress(param)
       if (!(returnAjaxMessage(data, this, 1))) {

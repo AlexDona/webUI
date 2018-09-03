@@ -76,7 +76,7 @@
                   <CountDownButton
                     class="send-code-btn cursor-pointer"
                     :status="disabledOfPhoneBtn"
-                    @run="sendPhoneOrEmailCode(0)"
+                    @run="sendPhoneOrEmailCodeWithPush(0)"
                   />
                 </template>
               </el-input>
@@ -86,12 +86,13 @@
                 @focus="emptyStatus"
                 v-model="emailCode"
               >
-                <template slot="append">验证码</template>
-                <CountDownButton
-                  class="send-code-btn cursor-pointer"
-                  :status="disabledOfEmailBtn"
-                  @run="sendPhoneOrEmailCode(1)"
-                />
+                <template slot="append">
+                  <CountDownButton
+                    class="send-code-btn cursor-pointer"
+                    :status="disabledOfEmailBtn"
+                    @run="sendPhoneOrEmailCodeWithPush(1)"
+                  />
+                </template>
               </el-input>
             </el-form-item>
             <el-form-item label="谷歌验证码">
@@ -318,7 +319,7 @@ import {getPushAssetList, getPushTotalByCoinId, pushAssetsSubmit, revocationPush
 import CountDownButton from '../../Common/CountDownCommon'
 import {timeFilter} from '../../../utils/index'
 import {createNamespacedHelpers, mapState} from 'vuex'
-import {returnAjaxMessage, pushSendPhoneOrEmailCodeAjax} from '../../../utils/commonFunc'
+import {returnAjaxMessage, sendPhoneOrEmailCodeAjax} from '../../../utils/commonFunc'
 const {mapMutations} = createNamespacedHelpers('personal')
 export default {
   components: {
@@ -450,16 +451,16 @@ export default {
     /**
      * 发送短信验证码或邮箱验证码
      */
-    sendPhoneOrEmailCode (loginType) {
+    sendPhoneOrEmailCodeWithPush (loginType) {
       console.log(this.disabledOfPhoneBtn)
-      console.log(this.disabledOfEmailBtn)
+      // console.log(this.disabledOfEmailBtn)
       if (this.disabledOfPhoneBtn || this.disabledOfEmailBtn) {
         return false
       }
       let params = {
         country: this.activeCountryCode
       }
-      pushSendPhoneOrEmailCodeAjax(loginType, params, (data) => {
+      sendPhoneOrEmailCodeAjax(loginType, params, (data) => {
         console.log(this.disabledOfPhoneBtn)
         // 提示信息
         if (!returnAjaxMessage(data, this)) {
@@ -468,13 +469,21 @@ export default {
         } else {
           switch (loginType) {
             case 0:
-              this.$store.commit('push/SET_PUSH_BUTTON_STATUS', {
+              this.$store.commit('user/SET_USER_BUTTON_STATUS', {
                 loginType: 0,
                 status: true
               })
+              // this.$store.commit('push/SET_PUSH_BUTTON_STATUS', {
+              //   loginType: 0,
+              //   status: true
+              // })
               break
             case 1:
-              this.$store.commit('push/SET_PUSH_BUTTON_STATUS', {
+              // this.$store.commit('push/SET_PUSH_BUTTON_STATUS', {
+              //   loginType: 1,
+              //   status: true
+              // })
+              this.$store.commit('user/SET_USER_BUTTON_STATUS', {
                 loginType: 1,
                 status: true
               })

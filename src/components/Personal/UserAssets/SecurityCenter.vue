@@ -14,7 +14,9 @@
             账号安全级别：
             <span class="level">中</span>
           </span>
-            <span class="flex1"><el-progress :percentage="70"></el-progress></span>
+            <span class="flex1">
+              <el-progress :percentage="70"></el-progress>
+            </span>
             <span class="flex1 security-verification">建议开启双重验证</span>
           </div>
           <div class="security-title-info flex1"></div>
@@ -22,15 +24,15 @@
         <div class="security-title-info margin-top20 font-size12">
           <div class="login-time float-left">
             <span>上次登录时间：</span>
-            <span>2015-10-01 12:12:12</span>
+            <span>{{ SecurityCenter.loginTime }}</span>
           </div>
           <div class="login-ip float-left">
             <span>IP：</span>
-            <span>202.102.224.68</span>
+            <span>{{ SecurityCenter.ip }}</span>
           </div>
           <div class="login-address">
             <span>归属：</span>
-            <span>河南省网通机房</span>
+            <span>{{ SecurityCenter.ipLocation }}</span>
           </div>
         </div>
       </div>
@@ -61,15 +63,20 @@
             </p>
           </div>
           <div class="security-status text-align-r">
-            <button class="security-verify border-radius2 font-size12 cursor-pointer">
-              <span
-                v-if="!SecurityCenter.isMailBind"
-                @click="showStatusVerificationPopups(1)"
-              >
+            <button
+              v-if="!SecurityCenter.isMailBind"
+              class="security-verify border-radius2 font-size12 cursor-pointer"
+            >
+              <span @click="showStatusVerificationClose(1, 1)">
                 开启验证
               </span>
+            </button>
+            <button
+              v-else
+              class="security-verify border-radius2 font-size12 cursor-pointer"
+            >
               <span
-                v-else
+                @click="showStatusVerificationClose(1, 2)"
               >
                 关闭验证
               </span>
@@ -105,15 +112,20 @@
             </p>
           </div>
           <div class="security-status text-align-r">
-            <button class="security-verify border-radius2 font-size12 cursor-pointer">
-              <span
-                v-if="!SecurityCenter.isPhoneBind"
-                @click="showStatusVerificationPopups(2)"
-              >
+            <button
+              v-if="!SecurityCenter.isPhoneBind"
+              class="security-verify border-radius2 font-size12 cursor-pointer"
+            >
+              <span @click="showStatusVerificationClose(2, 1)">
                 开启验证
               </span>
+            </button>
+            <button
+              v-else
+              class="security-verify border-radius2 font-size12 cursor-pointer"
+            >
               <span
-                v-else
+                @click="showStatusVerificationClose(2, 2)"
               >
                 关闭验证
               </span>
@@ -148,15 +160,20 @@
             </p>
           </div>
           <div class="security-status text-align-r">
-            <button class="security-verify border-radius2 font-size12 cursor-pointer">
-              <span
-                v-if="!SecurityCenter.isGoogleBind"
-                @click="showStatusVerificationPopups(3)"
-              >
+            <button
+              v-if="!SecurityCenter.isGoogleBind"
+              class="security-verify border-radius2 font-size12 cursor-pointer"
+            >
+              <span @click="showStatusVerificationClose(3, 1)">
                 开启验证
               </span>
+            </button>
+            <button
+              v-else
+              class="security-verify border-radius2 font-size12 cursor-pointer"
+            >
               <span
-                v-else
+                @click="showStatusVerificationClose(3, 2)"
               >
                 关闭验证
               </span>
@@ -166,7 +183,7 @@
               @click="setShowStatusSecurity(3)"
             >
               <span v-if="!SecurityCenter.isGoogleBind">绑定</span>
-              <span v-else>修改</span>
+              <span v-else>解绑</span>
             </button>
           </div>
         </div>
@@ -225,41 +242,121 @@
             </button>
           </div>
         </div>
-        <el-dialog :visible.sync="dialogFormVisible">
-          <div v-if="openSwitch">开启验证</div>
-          <div v-else>关闭验证</div>
-          <div
-            v-show="emailOpenVerify"
-            class="open-box"
-          >
-            <div class="email-open-box">邮箱</div>
-          </div>
-          <div
-            v-show="phoneOpenVerify"
-            class="open-box"
-          >
-            <div class="phone-open-box">手机开启</div>
-          </div>
-          <div
-            v-show="googleOpenVerify"
-            class="open-box"
-          >
-            <div class="google-open-box">谷歌验证</div>
-          </div>
-          <!--<el-form>-->
-            <!--<el-form-item label="活动名称">-->
-              <!--<el-input v-model="name" auto-complete="off"></el-input>-->
-            <!--</el-form-item>-->
-            <!--<el-form-item label="活动区域">-->
-              <!--<el-select v-model="region" placeholder="请选择活动区域">-->
-                <!--<el-option label="区域一" value="shanghai"></el-option>-->
-                <!--<el-option label="区域二" value="beijing"></el-option>-->
-              <!--</el-select>-->
-            <!--</el-form-item>-->
-          <!--</el-form>-->
+        <!--关闭验证-->
+        <el-dialog
+          title="关闭验证"
+          :visible.sync="closeValidation"
+        >
+          <el-form label-width="120px">
+            <!--没有绑定手机不显示-->
+            <div v-if="!SecurityCenter.isPhoneBind"></div>
+            <!--绑定手机之后显示-->
+            <el-form-item
+              label="手机验证"
+              v-else
+            >
+              <el-input
+                v-model="phoneCode"
+              >
+                <template slot="append">
+                  <CountDownButton
+                    class="send-code-btn cursor-pointer"
+                    :status="disabledOfPhoneBtn"
+                    @run="sendPhoneOrEmailCode(0)"
+                  />
+                </template>
+              </el-input>
+            </el-form-item>
+            <!--没有绑定邮箱不显示-->
+            <div v-if="!SecurityCenter.isMailBind"></div>
+            <!--绑定邮箱之后显示-->
+            <el-form-item
+              label="邮箱验证"
+              v-else
+            >
+              <el-input
+                v-model="emailCode"
+              >
+                <template slot="append">
+                  <CountDownButton
+                    class="send-code-btn cursor-pointer"
+                    :status="disabledOfEmailBtn"
+                    @run="sendPhoneOrEmailCode(1)"
+                  />
+                </template>
+              </el-input>
+            </el-form-item>
+            <!--没有绑定谷歌不显示-->
+            <div v-if="!SecurityCenter.isGoogleBind"></div>
+            <!--绑定谷歌之后显示-->
+            <el-form-item
+              label="谷歌验证"
+              v-else
+            >
+              <input
+                class="input border-radius2 padding-l15 box-sizing"
+                v-model="googleCode"
+              />
+            </el-form-item>
+          </el-form>
           <div slot="footer" class="dialog-footer">
-            <el-button @click="dialogFormVisible = false">取 消</el-button>
-            <el-button type="primary" @click="dialogFormVisible = false">确 定</el-button>
+            <el-button @click="closeValidation = false">取 消</el-button>
+            <el-button type="primary" @click="determineTheClosed">确 定</el-button>
+          </div>
+        </el-dialog>
+        <el-dialog
+          title="关闭验证"
+          :visible.sync="openTheValidation"
+        >
+          <el-form label-width="120px">
+            <!--开启邮箱-->
+            <el-form-item
+              label="邮箱验证"
+              v-show="openEmail"
+            >
+              <el-input
+                v-model="emailCode"
+              >
+                <template slot="append">
+                  <CountDownButton
+                    class="send-code-btn cursor-pointer"
+                    :status="disabledOfEmailBtn"
+                    @run="sendPhoneOrEmailCode(1)"
+                  />
+                </template>
+              </el-input>
+            </el-form-item>
+            <!--开启手机-->
+            <el-form-item
+              label="手机验证"
+              v-show="openPhone"
+            >
+              <el-input
+                v-model="phoneCode"
+              >
+                <template slot="append">
+                  <CountDownButton
+                    class="send-code-btn cursor-pointer"
+                    :status="disabledOfPhoneBtn"
+                    @run="sendPhoneOrEmailCode(0)"
+                  />
+                </template>
+              </el-input>
+            </el-form-item>
+            <!--开启谷歌-->
+            <el-form-item
+              label="谷歌验证"
+              v-show="openGoogle"
+            >
+              <input
+                class="input border-radius2 padding-l15 box-sizing"
+                v-model="googleCode"
+              />
+            </el-form-item>
+          </el-form>
+          <div slot="footer" class="dialog-footer">
+            <el-button @click="openTheValidation = false">取 消</el-button>
+            <el-button type="primary" @click="determineTheClosed">确 定</el-button>
           </div>
         </el-dialog>
       </div>
@@ -340,13 +437,16 @@
 </template>
 <!--请严格按照如下书写书序-->
 <script>
-import {mapState} from 'vuex'
+import CountDownButton from '../../Common/CountDownCommon'
 import IconFontCommon from '../../Common/IconFontCommon'
-import {statusSecurityCenter} from '../../../utils/api/apiDoc'
-import {returnAjaxMessage} from '../../../utils/commonFunc'
+import {statusSecurityCenter, securityVerificationOnOff} from '../../../utils/api/personal'
+import {returnAjaxMessage, sendPhoneOrEmailCodeAjax} from '../../../utils/commonFunc'
+import {mapState, createNamespacedHelpers} from 'vuex'
+const { mapMutations } = createNamespacedHelpers('user')
 export default {
   components: {
-    IconFontCommon // 字体图标
+    IconFontCommon, // 字体图标
+    CountDownButton // 短信倒计时
   },
   // props,
   data () {
@@ -357,12 +457,16 @@ export default {
       // 安全设置记录
       securityRecord: [],
       getStatusUserInfo: {}, // 个人信息
-      dialogFormVisible: false, // 验证弹窗
+      closeValidation: false, // 关闭验证弹窗
+      openTheValidation: false, // 开启验证弹窗
       openSwitch: false, // 弹出层状态 开启 关闭
-      emailOpenVerify: false, // 邮箱开启关闭验证
-      phoneOpenVerify: false, // 手机开启关闭验证
-      googleOpenVerify: false, // 谷歌开启关闭验证
-      SecurityCenter: {}
+      openEmail: false, // 邮箱开启关闭验证
+      openPhone: false, // 手机开启关闭验证
+      openGoogle: false, // 谷歌开启关闭验证
+      SecurityCenter: {},
+      emailCode: '', // 邮箱验证
+      phoneCode: '', // 手机验证
+      googleCode: '' // 谷歌验证
     }
   },
   created () {
@@ -373,15 +477,19 @@ export default {
     // 黑色主题样式
     require('../../../../static/css/theme/night/Personal/UserAssets/SecurityCenterNight.css')
     // 获取全局个人信息
-    this.getStatusUserInfo = this.userInfo.data.user
-    console.log(this.getStatusUserInfo)
-    this.getSecurityCenter()
+    // this.getStatusUserInfo = this.userInfo
+    console.log(this.userInfo)
+    // 调用安全中心登陆记录 安全设置记录 邮箱 手机 谷歌 交易密码 状态
+    // this.getSecurityCenter()
   },
   mounted () {},
   activited () {},
   update () {},
   beforeRouteUpdate () {},
   methods: {
+    ...mapMutations([
+      'SET_USER_BUTTON_STATUS'
+    ]),
     // 路由跳转对应组件
     setShowStatusSecurity (val) {
       switch (val) {
@@ -402,28 +510,109 @@ export default {
           break
       }
     },
-    // 开启关闭验证状态事件
-    showStatusVerificationPopups (e) {
+    // 发送手机邮箱验证码
+    sendPhoneOrEmailCode (loginType) {
+      console.log(this.disabledOfPhoneBtn)
+      console.log(this.disabledOfEmailBtn)
+      if (this.disabledOfPhoneBtn || this.disabledOfEmailBtn) {
+        return false
+      }
+      let params = {
+        // country: this.activeCountryCode
+      }
+      switch (loginType) {
+        case 0:
+          params.phone = this.userInfo.phone
+          break
+        case 1:
+          params.address = this.userInfo.email
+          break
+      }
+      console.log(params)
+      sendPhoneOrEmailCodeAjax(loginType, params, (data) => {
+        // console.log(this.disabledOfPhoneBtn)
+        // 提示信息
+        if (!returnAjaxMessage(data, this)) {
+          console.log('error')
+          return false
+        } else {
+          switch (loginType) {
+            case 0:
+              this.SET_USER_BUTTON_STATUS({
+                loginType: 0,
+                status: true
+              })
+              break
+            case 1:
+              this.SET_USER_BUTTON_STATUS({
+                loginType: 1,
+                status: true
+              })
+              break
+          }
+        }
+      })
+    },
+    // 关闭验证状态事件
+    showStatusVerificationClose (e, a) {
+      console.log(e)
       switch (e) {
         case 1:
-          this.openSwitch = true
-          this.emailOpenVerify = true
-          this.phoneOpenVerify = false
-          this.googleOpenVerify = false
-          console.log(e)
+          if (a == 1) {
+            console.log(a)
+            this.openEmail = true
+            this.openTheValidation = true
+          } else {
+            console.log(a)
+            this.closeValidation = true
+          }
           break
         case 2:
-          this.emailOpenVerify = false
-          this.phoneOpenVerify = true
-          this.googleOpenVerify = false
-          console.log(e)
+          if (a == 1) {
+            console.log(a)
+            this.openPhone = true
+            this.openTheValidation = true
+          } else {
+            console.log(a)
+            this.closeValidation = true
+          }
           break
         case 3:
-          this.emailOpenVerify = false
-          this.phoneOpenVerify = false
-          this.googleOpenVerify = true
-          console.log(e)
+          if (a == 1) {
+            console.log(a)
+            this.openGoogle = true
+            this.openTheValidation = true
+          } else {
+            console.log(a)
+            this.closeValidation = true
+          }
           break
+      }
+    },
+    // 确认开启关闭
+    determineTheClosed () {
+      console.log(1)
+      this.confirmTransactionPassword()
+    },
+    // 确定绑定
+    async confirmTransactionPassword () {
+      let data
+      let param = {
+        email: '1530469928@qq.com',
+        phone: '15994026836',
+        emailCode: this.emailCode, // 邮箱验证
+        phoneCode: this.phoneCode, // 手机验证
+        googleCode: this.googleCode, // 谷歌验证
+        userId: this.userInfo.userId
+      }
+      data = await securityVerificationOnOff(param)
+      if (!(returnAjaxMessage(data, this, 1))) {
+        return false
+      } else {
+        console.log(data)
+        console.log(this.emailAccounts)
+        console.log(this.emailCode)
+        // this.statusSecurityCenter()
       }
     },
     /**
@@ -432,7 +621,7 @@ export default {
     async getSecurityCenter () {
       let data = await statusSecurityCenter({
         // userId: this.userInfo.userId // 商户id
-        token: 'f1ecf736-a770-4827-89dd-d1c19372f79e' // 商户id
+        token: this.userInfo.token // token
       })
       console.log(data)
       if (!(returnAjaxMessage(data, this, 0))) {
@@ -456,7 +645,10 @@ export default {
   computed: {
     ...mapState({
       theme: state => state.common.theme,
-      userInfo: state => state.personal.userInfo
+      userInfo: state => state.user.loginStep1Info, // 用户详细信息
+      activeCountryCode: state => state.user.loginStep1Info.countryCode, // 国籍码
+      disabledOfPhoneBtn: state => state.user.disabledOfPhoneBtn,
+      disabledOfEmailBtn: state => state.user.disabledOfEmailBtn
     })
   },
   watch: {}
@@ -482,6 +674,10 @@ export default {
         height: 50px;
       }
       >.security-setting-box {
+        .input {
+          width: 220px;
+          height: 34px;
+        }
         .security-type-icon {
           width: 30px;
         }
@@ -534,6 +730,13 @@ export default {
           color: #fff;
         }
         .security-setting-box {
+          .input {
+            border: 1px solid #485776;
+            color: #fff;
+            &:focus {
+              border: 1px solid #338FF5;
+            }
+          }
           >.setting-type-box {
             border-bottom: 1px solid #39424D;
           }

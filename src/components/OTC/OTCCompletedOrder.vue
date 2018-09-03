@@ -191,7 +191,7 @@ export default {
         // pageNum: '1',
         // pageSize: '10'
       })
-      console.log(data)
+      // console.log(data)
       // 提示信息
       if (!(returnAjaxMessage(data, this, 0))) {
         return false

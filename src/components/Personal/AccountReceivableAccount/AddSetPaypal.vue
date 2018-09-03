@@ -89,7 +89,7 @@ export default {
     ]),
     // 点击返回上个页面
     returnSuperior () {
-      this.CHANGE_USER_CENTER_ACTIVE_NAME('fifth')
+      this.CHANGE_USER_CENTER_ACTIVE_NAME('account-credited')
       this.$router.go(-1)
     }
   },
