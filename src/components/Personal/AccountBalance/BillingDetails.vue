@@ -183,7 +183,7 @@
 <!--请严格按照如下书写书序-->
 <script>
 import {mapState} from 'vuex'
-import {statusRushedToRecordList} from '../../../utils/api/apiDoc'
+import {statusRushedToRecordList} from '../../../utils/api/personal'
 import {returnAjaxMessage} from '../../../utils/commonFunc'
 export default {
   components: {},
@@ -191,37 +191,7 @@ export default {
   data () {
     return {
       // 充提记录
-      chargeRecordList: [
-        // {
-        //   currency: 'BTC',
-        //   type: '全部',
-        //   quantity: '12312',
-        //   submitTime: '2016-05-02 10:30:30',
-        //   updateTime: '2016-05-02 11:30:30',
-        //   state: '已完成'
-        // }, {
-        //   currency: 'BTC',
-        //   type: '全部',
-        //   quantity: '12312',
-        //   submitTime: '2016-05-02 10:30:30',
-        //   updateTime: '2016-05-02 11:30:30',
-        //   state: '已完成'
-        // }, {
-        //   currency: 'BTC',
-        //   type: '全部',
-        //   quantity: '12312',
-        //   submitTime: '2016-05-02 10:30:30',
-        //   updateTime: '2016-05-02 11:30:30',
-        //   state: '已完成'
-        // }, {
-        //   currency: 'BTC',
-        //   type: '全部',
-        //   quantity: '12312',
-        //   submitTime: '2016-05-02 10:30:30',
-        //   updateTime: '2016-05-02 11:30:30',
-        //   state: '已完成'
-        // }
-      ],
+      chargeRecordList: [],
       // 其他记录
       otherRecordsList: [
         {
@@ -323,7 +293,7 @@ export default {
     async getChargeMentionList () {
       let data = await statusRushedToRecordList({
         // userId: this.userInfo.userId // 商户id
-        userId: 4 // 商户id
+        userId: 4 // 商户userId
       })
       console.log(data)
       if (!(returnAjaxMessage(data, this, 0))) {
