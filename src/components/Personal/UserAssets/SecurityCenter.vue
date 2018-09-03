@@ -621,7 +621,7 @@ export default {
     async getSecurityCenter () {
       let data = await statusSecurityCenter({
         // userId: this.userInfo.userId // 商户id
-        token: 'f1ecf736-a770-4827-89dd-d1c19372f79e' // 商户id
+        token: this.userInfo.token // token
       })
       console.log(data)
       if (!(returnAjaxMessage(data, this, 0))) {

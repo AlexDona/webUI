@@ -10,7 +10,7 @@
         <el-tabs
           v-model = "userCenterActiveName"
           :tab-position = "tabPosition"
-          @tab-click = "gitPersonal"
+          @tab-click = "statusSwitchPanel"
         >
           <!--账户资产-->
           <el-tab-pane
@@ -24,21 +24,21 @@
             label = "我的资产"
             name = "assets"
           >
-            <AccountAssets/>
+            <AccountAssets ref = "accountAssetsValue"/>
           </el-tab-pane>
           <!--账单明细-->
           <el-tab-pane
             label = "账单明细"
             name = "billing-details"
           >
-            <BillingDetails/>
+            <BillingDetails ref = "billingDetailsValue"/>
           </el-tab-pane>
           <!--提币地址-->
           <el-tab-pane
             label = "提币地址"
             name = "mention-address"
           >
-            <WithdrawalAddress/>
+            <WithdrawalAddress ref = "withdrawalAddressValue"/>
           </el-tab-pane>
           <!--个人中心-->
           <el-tab-pane
@@ -51,7 +51,7 @@
             label = "身份认证"
             name = "identity-authentication"
           >
-            <IdentityAuthentication/>
+            <IdentityAuthentication ref = "identityValue"/>
           </el-tab-pane>
 
           <!--收款账户-->
@@ -59,7 +59,7 @@
             label = "收款账户"
             name = "account-credited"
           >
-            <AccountCredited/>
+            <AccountCredited ref = "accountCreditedValue"/>
           </el-tab-pane>
 
           <!--邀请推广-->
@@ -67,7 +67,7 @@
             label = "邀请推广"
             name = "invitation-promote"
           >
-            <InvitingPromotion/>
+            <InvitingPromotion ref = "invitingPromotionValue"/>
           </el-tab-pane>
 
           <!--安全中心-->
@@ -75,21 +75,21 @@
             label = "安全中心"
             name = "security-center"
           >
-            <SecurityCenter/>
+            <SecurityCenter ref = "securityCenterValue"/>
           </el-tab-pane>
           <!--API管理-->
           <el-tab-pane
             label = "API管理"
             name = "api-management"
           >
-            <APIManagement/>
+            <APIManagement ref = "apiManagementValue"/>
           </el-tab-pane>
           <!--PUSH资产-->
           <el-tab-pane
             label = "PUSH资产"
             name = "push-asset"
           >
-            <PushAsset/>
+            <PushAsset ref = "pushAssetValue"/>
           </el-tab-pane>
           <!--我的交易-->
           <el-tab-pane
@@ -102,13 +102,13 @@
             label = "币币订单"
             name = "coin-orders"
           >
-            <CoinOrders/>
+            <CoinOrders ref = "coinOrdersValue"/>
           </el-tab-pane>
           <el-tab-pane
             label = "法币订单"
             name = "fiat-orders"
           >
-            <FiatOrders/>
+            <FiatOrders ref = "fiatOrdersValue"/>
           </el-tab-pane>
         </el-tabs>
       </div>
@@ -196,7 +196,7 @@ export default {
       'CHANGE_USER_CENTER_ACTIVE_NAME'
     ]),
     // 面板跳转
-    gitPersonal (tab) {
+    statusSwitchPanel (tab) {
       switch (tab.name) {
         case 'assets':
           break
