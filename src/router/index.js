@@ -159,7 +159,7 @@ export default new Router({
     // },
     {
       // OTC在线交易买卖
-      path: '/OTCOnlineTraderBuySell/:styleId/:id/:coinId',
+      path: '/OTCOnlineTraderBuySell/:styleId/:id/:partnerCoinId',
       // name: 'OTCOnlineTraderBuySell',
       component: OTCOnlineTraderBuySell
     },

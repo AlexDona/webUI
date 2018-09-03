@@ -34,3 +34,5 @@ export const queryUserTradeFeeAndCoinInfo = (params) => get('otcCOin/getUserTrad
 export const cancelAllOrdersOnekey = (params) => get('otcEntrust/cancelAllEntrusts', {params})
 // otc交易中订单，otc买家确认付款
 export const buyerPayForOrder = (params) => postWithURLencoded('otcOrder/payForOrder', params)
+// otc交易中订单， otc卖家确认收款
+export const sellerConfirmGetMoney = (params) => postWithURLencoded('otcOrder/confirmReceiveForOrder', params)
