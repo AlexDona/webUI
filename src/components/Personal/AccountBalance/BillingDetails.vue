@@ -299,7 +299,7 @@ export default {
     // 黑色主题样式
     require('../../../../static/css/theme/night/Personal/AccountBalance/BillingDetailsNight.css')
     // console.log(this.userInfo)
-    // this.getPushRecordList()
+    // this.getChargeMentionList()
   },
   mounted () {},
   activited () {},
@@ -320,7 +320,7 @@ export default {
     /**
      * 刚进页面时候 冲提记录列表展示
      */
-    async getPushRecordList () {
+    async getChargeMentionList () {
       let data = await statusRushedToRecordList({
         // userId: this.userInfo.userId // 商户id
         userId: 4 // 商户id
