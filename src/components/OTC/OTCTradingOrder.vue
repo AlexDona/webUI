@@ -502,7 +502,8 @@
 </template>
 <!--请严格按照如下书写书序-->
 <script>
-import {getOTCTradingOrders, buyerPayForOrder} from '../../utils/api/apiDoc'
+// import {getOTCTradingOrders, buyerPayForOrder} from '../../utils/api/apiDoc'
+import {getOTCTradingOrders, buyerPayForOrder} from '../../utils/api/OTC'
 import {timeFilter} from '../../utils'
 import IconFontCommon from '../Common/IconFontCommon'
 import {returnAjaxMessage} from '../../utils/commonFunc'
