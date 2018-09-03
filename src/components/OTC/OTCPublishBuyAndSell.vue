@@ -390,8 +390,6 @@ export default {
   },
   methods: {
     ...mapMutations([
-      // otc 商家和普通用户通用挂单页面可用币种起订量:选中不同的币种获得不同币种的起订量
-      // 'CHANGE_OTC_MERCHANT_AND_COMMON_MINCOUNT'
     ]),
     //  修改input value
     changeInputValue (ref) {
@@ -441,8 +439,6 @@ export default {
         this.coinStyleList = data.data.data
         // this.minOrderCount = this.coinStyleList[0].minCount
         // console.log(this.coinStyleList[0].minCount)
-        // this.CHANGE_OTC_MERCHANT_AND_COMMON_MINCOUNT(this.coinStyleList[0].minCount)
-        // console.log(this.merchantAndCommonPutOnOrderMinCount)
       }
     },
     //  2.0 查询可用法币币种列表
@@ -538,21 +534,21 @@ export default {
         param.entrustCount = this.entrustCountSell // 挂单数量
         param.price = this.priceSell // 单价
       }
-      console.log('传输的参数共8个')
-      console.log(this.coinId)
-      console.log(this.hopePaymentCoinId)
-      if (this.publishStyle === 'buy') {
-        console.log(this.entrustCountBuy)
-        console.log(this.priceBuy)
-      }
-      if (this.publishStyle === 'sell') {
-        console.log(this.entrustCountSell)
-        console.log(this.priceSell)
-      }
-      console.log(this.minCount)
-      console.log(this.maxCount)
-      console.log(this.remarkText)
-      console.log(this.tradePassword)
+      // console.log('传输的参数共8个')
+      // console.log(this.coinId)
+      // console.log(this.hopePaymentCoinId)
+      // if (this.publishStyle === 'buy') {
+      //   console.log(this.entrustCountBuy)
+      //   console.log(this.priceBuy)
+      // }
+      // if (this.publishStyle === 'sell') {
+      //   console.log(this.entrustCountSell)
+      //   console.log(this.priceSell)
+      // }
+      // console.log(this.minCount)
+      // console.log(this.maxCount)
+      // console.log(this.remarkText)
+      // console.log(this.tradePassword)
       const data = await addOTCPutUpOrders(param)
       console.log(data)
       // 提示信息
@@ -571,8 +567,6 @@ export default {
       merchantID: state => state.common.merchantID,
       // 测试拿到userinfo
       userInfo: state => state.personal.userInfo
-      // otc 商家和普通用户通用挂单页面可用币种起订量:选中不同的币种获得不同币种的起订量
-      // merchantAndCommonPutOnOrderMinCount: state => state.OTC.merchantAndCommonPutOnOrderMinCount
     })
   },
   watch: {}

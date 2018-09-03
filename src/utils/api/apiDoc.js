@@ -40,6 +40,8 @@ export const querySelectedOrdersDetails = (params) => get('otcEntrust/selectUser
 export const queryUserTradeFeeAndCoinInfo = (params) => get('otcCOin/getUserTradeFeeAndCoinInfo', params)
 // otc广告管理一键撤销用户所有挂单--商家专用
 export const cancelAllOrdersOnekey = (params) => get('otcEntrust/cancelAllEntrusts', {})
+// otc交易中订单，otc买家确认付款
+export const buyerPayForOrder = (params) => postWithURLencoded('otcOrder/payForOrder', params)
 /**
  * 币币交易
  */

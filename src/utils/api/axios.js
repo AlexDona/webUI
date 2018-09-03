@@ -3,9 +3,9 @@
  */
 import {baseUrl} from '../env'
 import axios from 'axios'
-import store from '../../vuex'
+// import store from '../../vuex'
 import router from '../../router/index'
-import {getStoreWithJson} from '../index'
+// import {getStoreWithJson} from '../index'
 
 let util = {}
 util.ajax = axios.create({
@@ -20,12 +20,12 @@ util.ajax.interceptors.request.use((config) => {
 
   // console.log(getStoreWithJson('loginStep1Info').token)
   // console.log(store.state.user.loginStep1Info.token)
-  let userToken = getStoreWithJson('loginStep1Info').token || store.state.user.loginStep1Info.token
+  // let userToken = getStoreWithJson('loginStep1Info').token || store.state.user.loginStep1Info.token
   // console.log(userToken)
-  if (userToken) {
-    config.headers['token'] = userToken
-    // config.headers['token'] = '354535'
-  }
+  // if (userToken) {
+  //   config.headers['token'] = userToken
+  //   // config.headers['token'] = '354535'
+  // }
   return config
 }, (error) => {
   return Promise.reject(error)
@@ -33,7 +33,7 @@ util.ajax.interceptors.request.use((config) => {
 
 util.ajax.interceptors.response.use(
   response => {
-    console.log(response)
+    // console.log(response)
     return response
   },
   error => {

@@ -3,20 +3,25 @@
     <!-- 交易中订单 -->
     <div class="otc-trading-order-content">
       <!-- 订单列表 ：1.0 买单 -->
-      <div class="order-list">
-        <!-- 表头 -->
+      <div
+        class="order-list"
+        v-for="(item, index) in tradingOrderList"
+        :key="index"
+        v-if="item.orderType === 'BUY'"
+      >
+        <!-- 1.1 表头 -->
         <div class="order-list-head">
           <!-- 买卖家 -->
           <div class="buyer-seller">
-            卖家：王先生
+            卖家：{{item.sellName}}
           </div>
           <!-- 订单号 -->
           <div class="order-id">
-            订单号：123456789525874
+            订单号：{{item.orderSequence}}
           </div>
           <!-- 成交时间 -->
           <div class="deal-time">
-            成交时间：2018-08-12 12:00:00
+            挂单时间：{{item.createTime}}
           </div>
           <div class="order-list-head-icon buy-icon">
             <!-- <img src="../../assets/develop/buy.png" alt=""> -->
@@ -25,51 +30,47 @@
             买
           </div>
         </div>
-        <!-- 表身体 -->
+        <!-- 1.2 表身体 -->
         <div class="order-list-body">
-          <!-- 表左侧 -->
+          <!-- 1.2.1 表左侧 -->
           <div class="order-list-body-left">
+            <!-- logo图标和名字 -->
             <div class="logo">
+              <!-- src="../../assets/develop/bi.png" -->
               <img
-                src="../../assets/develop/bi.png"
+                :src="item.coinUrl"
                 width="30"
                 class="logo-icon"
               >
-              <p class="logo-name">BTC</p>
+              <p class="logo-name">{{item.coinName}}</p>
             </div>
             <div class="left-info">
               <!-- 金额 -->
               <p class="trade-info">
                 <span>金额：</span>
-                <span class="money">￥688.00</span>
+                <span class="money">{{item.symbol}}{{item.payAmount}}</span>
               </p>
               <!-- 单价 -->
               <p class="trade-info">
-                <span>单价：88</span>
+                <span>单价：{{item.price}}</span>
                 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                <span>数量：188</span>
+                <span>数量：{{item.pickCount}}</span>
               </p>
               <!-- 卖家手机号 -->
+              <!-- 付款前不显示 -->
               <p
                 class="trade-info"
-                v-if="buyerConfirmPayMoney"
               >
-                卖家手机号：**********
-              </p>
-              <p
-                class="trade-info"
-                v-else
-              >
-                卖家手机号：15738818082
+                卖家手机号：{{item.sellPhone}}
               </p>
             </div>
           </div>
-          <!-- 表中部 -->
+          <!-- 1.2.2 表中部 -->
           <div class="order-list-body-middle">
             <!-- 付款前 -->
             <div
               class="middle-content"
-              v-if = "buyerConfirmPayMoney"
+              v-if="item.status == 'PICKED'"
             >
               <div class="trader-info display-inline-block">
                 <!-- 选择支付方式 -->
@@ -80,31 +81,53 @@
                     />
                   </div>
                   <el-select
-                    v-model="activitedPayStyle"
                     placeholder="选择支付方式"
+                    v-model="activePayModeList[index]"
+                    @change="changeUserBankInfo(index)"
                   >
                     <el-option
-                      v-for="item in options"
-                      :key="item.value"
-                      :label="item.label"
-                      :value="item.value"
+                      v-for="item1 in item.userBankList"
+                      :key="item1.id"
+                      :label="item1.bankName"
+                      :value="item1.cardNo"
                     >
                     </el-option>
                   </el-select>
                 </div>
                 <!-- 收款人 -->
                 <p class="bank-info">
-                  <span>收款人: 王先生</span>
+                  <span>收款人: {{item.sellName}}</span>
                 </p>
                 <!-- 开户行 -->
-                <p class="bank-info">
-                  <span>开户行: 上海浦东发展银行</span>
+                <p
+                  class="bank-info"
+                  v-if="activeBankType[index] === 'bank'"
+                >
+                  <span>开户行: </span>
+                  <span>{{activeBankProv[index]}}{{activeBankCity[index]}}{{activeBankArea[index]}}{{activeBankName[index]}}{{activeBankDetailAddress[index]}}</span>
                 </p>
                 <!-- 账户 -->
-                <p class="bank-info">
+                <p
+                  class="bank-info"
+                  v-if="activeBankType[index] === 'bank'"
+                >
                   <span>
-                    账&nbsp;&nbsp;&nbsp;户: 621788888888888888
+                    账&nbsp;&nbsp;&nbsp;户: {{activePayModeList[index]}}
                   </span>
+                </p>
+                <p
+                  class="bank-info"
+                  v-if="activeBankType[index] === 'alipay'"
+                >
+                  <span>支付宝账户:</span>
+                  <span>{{activePayModeList[index]}}</span>
+                </p>
+                <p
+                  class="bank-info"
+                  v-if="activeBankType[index] === 'wx'"
+                >
+                  <span>微信账户:</span>
+                  <span>{{activePayModeList[index]}}</span>
                 </p>
               </div>
               <div class="bank-info-picture display-inline-block">
@@ -126,22 +149,60 @@
             <!-- 付款后 -->
             <div
               class="middle-content"
-              v-else
+              v-if="item.status == 'PAYED'"
             >
               <div class="trader-info display-inline-block">
                 <p class="bankMoneyInfo">
-                  <IconFontCommon
-                    iconName="icon-yinhangqia"
-                  />
-                  <span>银行卡已付款</span>
+                  <span
+                    v-if="item.payType === 'bank'"
+                  >
+                    <IconFontCommon
+                      class="font-size16"
+                      iconName="icon-yinhangqia"
+                    />
+                    银行卡已付款
+                  </span>
+                  <span
+                    v-if="item.payType === 'alipay'"
+                  >
+                    <IconFontCommon
+                      class="font-size16"
+                      iconName="icon-zhifubao1"
+                    />
+                    支付宝已付款
+                  </span>
+                  <span
+                    v-if="item.payType === 'wx'"
+                  >
+                    <IconFontCommon
+                      class="font-size16"
+                      iconName="icon-weixin1"
+                    />
+                    微信已付款
+                  </span>
+                  <span
+                    v-if="item.payType === 'xilian'"
+                  >
+                    <img src="../../assets/user/xilian.png" alt="" class="xilian">
+                    西联汇款已付款
+                  </span>
+                  <span
+                    v-if="item.payType === 'paypal'"
+                  >
+                    <IconFontCommon
+                      class="font-size16"
+                      iconName="icon-paypal"
+                    />
+                    PAYPAL已付款
+                  </span>
                 </p>
                 <p class="bankMoneyInfo">
-                  <span>转账金额: </span><span>￥688.00</span>
+                  <span>转账金额: </span><span>{{item.symbol}}{{item.payAmount}}</span>
                 </p>
                 <p class="bankMoneyInfo">
                   <span>
                     账&nbsp;&nbsp;&nbsp;户: </span>
-                    <span>621766666666666666</span>
+                    <span>{{item.payAcctount}}</span>
                 </p>
               </div>
               <div class="bank-info-picture display-inline-block">
@@ -161,11 +222,12 @@
               </div>
             </div>
           </div>
-          <!-- 表右部 -->
+          <!-- 1.2.3 表右部 -->
           <div class="order-list-body-right">
+            <!-- 付款前 -->
             <div
               class="right-content"
-              v-if = "buyerConfirmPayMoney"
+              v-if="item.status == 'PICKED'"
             >
               <!-- 等待付款确认付款按钮 -->
               <p class="action-tips">
@@ -175,6 +237,7 @@
                   size="mini"
                   @click="comfirmPayMoney"
                 >
+                <!-- :disabled="payForButtondisabledStatus" -->
                   确认付款
                 </el-button>
               </p>
@@ -183,9 +246,10 @@
                 注意！计时结束前未手动转账并点击"确认付款"，您的订单将自动取消，若上述情况累计出现3次，您的账户将被冻结24小时。
               </p>
             </div>
+            <!-- 付款后 -->
             <div
               class="right-content"
-              v-else
+              v-if="item.status == 'PAYED'"
             >
               <p class="action-tips submitted-confirm-payment">已提交确认付款</p>
               <p class="action-tips">
@@ -196,20 +260,25 @@
         </div>
       </div>
       <!-- 订单列表 ：2.0 卖单 -->
-      <div class="order-list">
-        <!-- 表头 -->
+      <div
+        class="order-list"
+        v-for="(item, index) in tradingOrderList"
+        :key="index"
+        v-if="item.orderType === 'SELL'"
+      >
+        <!-- 2.1 表头 -->
         <div class="order-list-head">
-          <!-- 买卖家 -->
+          <!-- 买家 -->
           <div class="buyer-seller">
-            买家：刘女士
+            买家：{{item.buyName}}
           </div>
           <!-- 订单号 -->
           <div class="order-id">
-            订单号：666666666666
+            订单号：{{item.orderSequence}}
           </div>
           <!-- 成交时间 -->
           <div class="deal-time">
-            成交时间：2018-08-10 12:00:00
+            成交时间：{{item.createTime}}
           </div>
           <div class="order-list-head-icon sell-icon">
             <!-- <img src="../../assets/develop/sell.png" alt=""> -->
@@ -218,37 +287,38 @@
             卖
           </div>
         </div>
-        <!-- 表身体 -->
+        <!-- 2.2 表身体 -->
         <div class="order-list-body">
-          <!-- 表左侧 -->
+          <!-- 2.2.1 表左侧 -->
           <div class="order-list-body-left">
             <div class="logo">
+              <!-- src="../../assets/develop/bi.png" -->
               <img
-                src="../../assets/develop/bi.png"
+                :src="item.coinUrl"
                 width="30"
                 class="logo-icon"
               >
-              <p class="logo-name">BTC</p>
+              <p class="logo-name">{{item.coinName}}</p>
             </div>
             <div class="left-info">
               <!-- 金额 -->
               <p class="trade-info">
                 <span>金额：</span>
-                <span class="money">￥688.00</span>
+                <span class="money">{{item.symbol}}{{item.payAmount}}</span>
               </p>
               <!-- 单价 -->
               <p class="trade-info">
-                <span>单价：88</span>
+                <span>单价：{{item.price}}</span>
                 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                <span>数量：188</span>
+                <span>数量：{{item.pickCount}}</span>
               </p>
               <!-- 卖家手机号 -->
               <p class="trade-info">
-                卖家手机号：1589657458
+                买家手机号：{{item.buyPhone}}
               </p>
             </div>
           </div>
-          <!-- 表中部 -->
+          <!-- 2.2.2 表中部 -->
           <div class="order-list-body-middle">
             <!-- 付款前 -->
             <div
@@ -313,7 +383,7 @@
               </div>
             </div>
           </div>
-          <!-- 表右部 -->
+          <!-- 2.2.3 表右部 -->
           <div class="order-list-body-right">
             <div
               class="right-content"
@@ -395,14 +465,46 @@
           </div>
         </div>
       </div>
+      <!-- 4.0 弹出交易密码框 -->
+      <div class="password-dialog">
+        <el-dialog
+          title="交易密码"
+          :visible.sync="dialogVisible"
+          top="25vh"
+          width="470"
+        >
+          <div>请输入交易密码</div>
+          <div class="input">
+            <input
+              type="password"
+              class="password-input"
+              v-model="tradePassword"
+            >
+          </div>
+          <div class="error-info">
+            <!-- 错误提示 -->
+            <div class="tips">错误提示</div>
+          </div>
+          <span
+            slot="footer"
+            class="dialog-footer">
+              <el-button
+                type="primary"
+                @click="submitButton"
+              >
+                提 交
+              </el-button>
+          </span>
+        </el-dialog>
+      </div>
     </div>
   </div>
 </template>
 <!--请严格按照如下书写书序-->
 <script>
+import {getOTCTradingOrders, buyerPayForOrder} from '../../utils/api/apiDoc'
 import {timeFilter} from '../../utils'
 import IconFontCommon from '../Common/IconFontCommon'
-import {getOTCTradingOrders} from '../../utils/api/apiDoc'
 import {returnAjaxMessage} from '../../utils/commonFunc'
 export default {
   components: {
@@ -411,24 +513,28 @@ export default {
   // props,
   data () {
     return {
+      // orderStatus: '', // 订单状态:（已创建，已付款，已完成，已取消，已冻结 PICKED PAYED COMPLETED CANCELED FROZEN）
+      // payForButtondisabledStatus: true, // 确认付款按钮禁用状态
+      dialogVisible: false, // 交易密码框
       appealTextareaValue: '', // 订单申诉原因文本域内容
-      buyerConfirmPayMoney: true, // 买家确认付款按钮状态
       sellerConfirmGatherMoney: true, // 卖家确认收款按钮状态
-      // 支付方式
-      options: [{
-        value: '选项1',
-        label: '银行卡',
-        account: '612788888888888888'
-      }, {
-        value: '选项2',
-        label: '支付宝',
-        account: '15738818082'
-      }, {
-        value: '选项3',
-        label: '微信',
-        account: '16638128394'
-      }],
-      activitedPayStyle: '' //  选中的支付方式
+      activitedPayStyle: '', //  选中的支付方式
+      activitedPayStyleId: '', //  选中的支付方式id-往后台传送的参数
+      // 交易中订单列表
+      tradingOrderList: [],
+      // 选中的订单id
+      activedTradingOrderId: '',
+      // ren测试支付方式
+      activePayModeList: [], // 当前选中支付方式中的哪一个
+      activeBankFidList: [], // 当前选中支付方式的id
+      activeBankProv: [], // 当前选中支付银行所在省
+      activeBankCity: [], // 当前选中支付银行所在市
+      activeBankArea: [], // 当前选中支付银行所在区
+      activeBankName: [], // 当前选中支付银行名字
+      activeBankDetailAddress: [], // 当前选中支付银行具体地址
+      activeBankType: [], // 当前选中支付方式类型（银行卡、支付宝等）
+      activeBankCode: [], // 支付码
+      tradePassword: '' // 交易密码
     }
   },
   created () {
@@ -454,17 +560,84 @@ export default {
         // pageNum: '1',
         // pageSize: '10'
       })
+      console.log('交易中订单列表')
       console.log(data)
       // 提示信息
       if (!(returnAjaxMessage(data, this, 0))) {
         return false
       } else {
         // 返回数据正确的逻辑
+        this.tradingOrderList = data.data.data.list
+        console.log('交易中订单')
+        console.log(this.tradingOrderList)
+        // 订单状态
+        // this.orderStatus = data.data.data.status
+        // console.log(this.orderStatus)
       }
     },
-    // 买家点击确认付款按钮
+    // 3.0 改变交易方式
+    changeUserBankInfo (index) {
+      console.log('选中订单的订单号')
+      console.log(this.tradingOrderList[index].id)
+      this.activedTradingOrderId = this.tradingOrderList[index].id
+      this.tradingOrderList[index].userBankList.forEach((item) => {
+        if (item.cardNo == this.activePayModeList[index]) {
+          this.activeBankFidList[index] = item.id
+          console.log('选中的支付方式id')
+          console.log(this.activeBankFidList[index])
+          this.activitedPayStyleId = this.activeBankFidList[index]
+          // 省
+          this.activeBankProv[index] = item.prov
+          // 市
+          this.activeBankCity[index] = item.city
+          // 区
+          this.activeBankArea[index] = item.area
+          // 银行名字
+          this.activeBankName[index] = item.bankName
+          // 具体地址
+          this.activeBankDetailAddress[index] = item.address
+          // 支付类型
+          this.activeBankType[index] = item.bankType
+          // console.log(this.activeBankType[index])
+          // 支付码
+          this.activeBankCode[index] = item.qrcode
+          // console.log(this.activeBankCode[index])
+        }
+        // this.payForButtondisabledStatus = false
+      })
+      // 遍历订单取到支付方式数组
+      // this.tradingOrderList.forEach(item => {
+      //   if (item.id === orderId) {
+      //     this.payWayArr = item.userBankList
+      //   }
+      // })
+    },
+    // 4.0 买家点击确认付款按钮
     comfirmPayMoney () {
-      this.buyerConfirmPayMoney = false
+      // 弹出交易密码框
+      this.dialogVisible = true
+    },
+    // 5.0 点击交易密码框中的提交按钮
+    async submitButton () {
+      const data = await buyerPayForOrder({
+        orderId: this.activedTradingOrderId, // 订单id
+        payId: this.activitedPayStyleId, // 支付账户id
+        tradePassword: this.tradePassword // 交易密码
+      })
+      console.log(data)
+      // 提示信息
+      if (!(returnAjaxMessage(data, this, 1))) {
+        return false
+      } else {
+        // 先判断status订单状态（已创建，已付款，已完成，已取消，已冻结 PICKED PAYED COMPLETED CANCELED FROZEN）
+        // 付款成功后，根据返回的状态再渲染
+        // 付款成功后逻辑
+        // 1关闭交易密码框
+        this.dialogVisible = false
+        // 2再次调用接口刷新列表
+        this.getOTCTradingOrdersList()
+        // 3再次渲染页面:根据返回的订单状态
+      }
     },
     // 卖家点击确认收款按钮
     comfirmGatherMoney () {
@@ -600,6 +773,9 @@ export default {
                 .icon{
                   width: 16px;
                   height: 14px;
+                }
+                .xilian{
+                  vertical-align: middle;
                 }
               }
             }
