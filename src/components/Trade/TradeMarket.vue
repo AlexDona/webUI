@@ -36,7 +36,7 @@
             >
               <el-tab-pane
                 :label="outItem.name"
-                :name="outItem.name"
+                :name="outItem.id"
                 v-for="(outItem,outIndex) in tabList"
                 :key="outIndex"
               >
@@ -117,30 +117,30 @@
                         <span>
                           <!--收藏按钮-->
                           <!--自选区-->
-                          <span v-show="activeName==tabList[0].name">
+                          <span v-show="activeName===tabList[0].id">
                             <i
                               class="el-icon-star-on cursor-pointer collected"
-                              @click="toggleCollect(innerItem.id,0,innerItem)"
+                              @click="toggleCollect(innerItem.id+innerItem.plateId,0,innerItem)"
                             ></i>
                           </span>
                           <!--非自选区-->
-                          <span v-show="activeName!==tabList[0].name">
+                          <span v-show="activeName!==tabList[0].id">
                             <i
                               class="el-icon-star-off cursor-pointer"
-                              v-show="!collectStatusList[innerItem.id]"
-                              @click="toggleCollect(innerItem.id,1,innerItem)"
+                              v-show="!collectStatusList[innerItem.id+innerItem.plateId]"
+                              @click="toggleCollect(innerItem.id+innerItem.plateId,1,innerItem)"
                             ></i>
                             <i
                               class="el-icon-star-on cursor-pointer collected"
-                              v-show="collectStatusList[innerItem.id]"
-                              @click="toggleCollect(innerItem.id,0,innerItem)"
+                              v-show="collectStatusList[innerItem.id+innerItem.plateId]"
+                              @click="toggleCollect(innerItem.id+innerItem.plateId,0,innerItem)"
                             ></i>
                           </span>
                           <span class="base-currency">{{innerItem.sellsymbol}}</span>
                           <!--币中文名-->
                           <span
                             class="currency-chn-name"
-                            v-show="language == 'zh_CN'"
+                            v-show="language === 'zh_CN'"
                           >{{innerItem.sellname}}</span>
                           <span
                             class="area"
@@ -182,6 +182,7 @@
 import {getStore, setStore} from '../../utils'
 import {getPartnerAreaList} from '../../utils/api/trade'
 import {returnAjaxMessage} from '../../utils/commonFunc'
+import {socket} from '../../utils/tradingview/socket'
 import {mapState, createNamespacedHelpers} from 'vuex'
 const { mapMutations } = createNamespacedHelpers('home')
 export default {
@@ -240,643 +241,644 @@ export default {
     //     label: 'ETH'
     //   }
     // ]
-    this.getPartnerList()
+    this.getTradeAreaList()
     // 获取行情数据
-    this.marketList = [
-      {
-        plateId: 0, // 交易区id( 0:主区， 1:创新区)
-        plateName: '主区', // 交易区名称
-        content: [
-          {
-            id: 0, // 交易对id
-            plateId: 0, // 板块id（主区，交易区。。。）
-            image: 'https://www.fubt.top//fubt/upload/coin/a7e56fc38ea44e1f8ed4c395193ec2e0组.png', // 币种图标
-            sellsymbol: 'FUC', // 币种简称
-            sellname: '富链', // 币种全程
-            area: 'BTC', // 交易区
-            price: 0.21761239, // 最新价格
-            high: 0.21761232, // 最高价
-            low: 0.21761232, // 最低价
-            volume: 21761232, // 24小时成交量
-            rose: -0.16123, // 涨跌
-            tendency: [2.35, 1.23, 1.89, 1.24, 2.1, 1.59, 0.1, 2.35],
-            hot: false // 是否为最热交易对
-          },
-          {
-            id: 1, // 交易对id
-            plateId: 0, // 板块id（主区，交易区。。。）
-            image: 'https://www.fubt.top//fubt/upload/coin/a7e56fc38ea44e1f8ed4c395193ec2e0组.png', // 币种图标
-            sellsymbol: 'AiFC', // 币种简称
-            sellname: 'Aifc', // 币种全程
-            area: 'BTC', // 交易区
-            price: 0.20761232, // 最新价格
-            high: 0.21721232, // 最高价
-            low: 0.21761232, // 最低价
-            volume: 21461232, // 24小时成交量
-            rose: 0.16123, // 涨跌
-            tendency: [2.35, 1.23, 1.89, 1.24, 2.1, 1.59],
-            hot: false // 是否为最热交易对
-          },
-          {
-            id: 2, // 交易对id
-            plateId: 0, // 板块id（主区，交易区。。。）
-            image: 'https://www.fubt.top//fubt/upload/coin/a7e56fc38ea44e1f8ed4c395193ec2e0组.png', // 币种图标
-            sellsymbol: 'TKC', // 币种简称
-            sellname: '富比特', // 币种全程
-            area: 'BTC', // 交易区
-            price: 0.21761232, // 最新价格
-            high: 0.21761232, // 最高价
-            low: 0.21761232, // 最低价
-            volume: 21761232, // 24小时成交量
-            rose: 0.16123, // 涨跌
-            tendency: [1.23, 1.24, 2.35, 2.1, 1.59, 6.89],
-            hot: true // 是否为最热交易对
-          },
-          {
-            id: 3, // 交易对id
-            plateId: 0, // 板块id（主区，交易区。。。）
-            image: 'https://www.fubt.top//fubt/upload/coin/a7e56fc38ea44e1f8ed4c395193ec2e0组.png', // 币种图标
-            sellsymbol: 'LTC', // 币种简称
-            sellname: '莱特币', // 币种全程
-            area: 'BTC', // 交易区
-            price: 0.21711292, // 最新价格
-            high: 0.21761239, // 最高价
-            low: 0.21761232, // 最低价
-            volume: 21761232, // 24小时成交量
-            rose: 0.16123, // 涨跌
-            tendency: [1.23, 1.24, 2.35, 2.1, 1.59, 1.89],
-            hot: false // 是否为最热交易对
-          },
-          {
-            id: 4, // 交易对id
-            plateId: 0, // 板块id（主区，交易区。。。）
-            image: 'https://www.fubt.top//fubt/upload/coin/a7e56fc38ea44e1f8ed4c395193ec2e0组.png', // 币种图标
-            sellsymbol: 'ETH', // 币种简称
-            sellname: '以太坊', // 币种全程
-            area: 'BTC', // 交易区
-            price: 0.21761232, // 最新价格
-            high: 0.21761232, // 最高价
-            low: 0.21761232, // 最低价
-            volume: 21761232, // 24小时成交量
-            rose: -0.16123, // 涨跌
-            tendency: [1.23, 1.24, 2.35, 2.1, 1.59, 1.89],
-            hot: true // 是否为最热交易对
-          },
-          {
-            id: 5, // 交易对id
-            plateId: 0, // 板块id（主区，交易区。。。）
-            image: 'https://www.fubt.top//fubt/upload/coin/a7e56fc38ea44e1f8ed4c395193ec2e0组.png', // 币种图标
-            sellsymbol: 'EOS', // 币种简称
-            sellname: 'EOS', // 币种全程
-            area: 'BTC', // 交易区
-            price: 0.21761232, // 最新价格
-            high: 0.21761232, // 最高价
-            low: 0.21761232, // 最低价
-            volume: 21761232, // 24小时成交量
-            rose: 0.16123, // 涨跌
-            tendency: [1.23, 1.24, 2.35, 2.1, 1.59, 1.89],
-            hot: false // 是否为最热交易对
-          },
-          {
-            id: 6, // 交易对id
-            plateId: 0, // 板块id（主区，交易区。。。）
-            image: 'https://www.fubt.top//fubt/upload/coin/a7e56fc38ea44e1f8ed4c395193ec2e0组.png', // 币种图标
-            sellsymbol: 'SWFTC', // 币种简称
-            sellname: 'SWFTC', // 币种全程
-            area: 'BTC', // 交易区
-            price: 0.21761232, // 最新价格
-            high: 0.21761232, // 最高价
-            low: 0.21761232, // 最低价
-            volume: 21761232, // 24小时成交量
-            rose: 0.16123, // 涨跌
-            tendency: [1.23, 1.24, 2.35, 2.1, 1.59, 6.89],
-            hot: false // 是否为最热交易对
-          },
-          {
-            id: 7, // 交易对id
-            plateId: 0, // 板块id（主区，交易区。。。）
-            image: 'https://www.fubt.top//fubt/upload/coin/a7e56fc38ea44e1f8ed4c395193ec2e0组.png', // 币种图标
-            sellsymbol: 'TOPC', // 币种简称
-            sellname: 'TOPC', // 币种全程
-            area: 'BTC', // 交易区
-            price: 0.21761232, // 最新价格
-            high: 0.21761232, // 最高价
-            low: 0.21761232, // 最低价
-            volume: 21761232, // 24小时成交量
-            rose: 0.16123, // 涨跌
-            tendency: [1.23, 1.24, 2.35, 2.1, 1.59, 1.89],
-            hot: false // 是否为最热交易对
-          },
-          {
-            id: 8, // 交易对id
-            plateId: 0, // 板块id（主区，交易区。。。）
-            image: 'https://www.fubt.top//fubt/upload/coin/a7e56fc38ea44e1f8ed4c395193ec2e0组.png', // 币种图标
-            sellsymbol: 'OMG', // 币种简称
-            sellname: 'OMG', // 币种全程
-            area: 'BTC', // 交易区
-            price: 0.21761232, // 最新价格
-            high: 0.21761232, // 最高价
-            low: 0.21761232, // 最低价
-            volume: 21761232, // 24小时成交量
-            rose: -0.16123, // 涨跌
-            tendency: [1.23, 1.24, 2.35, 2.1, 1.59, 6.89],
-            hot: false // 是否为最热交易对
-          },
-          {
-            id: 9, // 交易对id
-            plateId: 0, // 板块id（主区，交易区。。。）
-            image: 'https://www.fubt.top//fubt/upload/coin/a7e56fc38ea44e1f8ed4c395193ec2e0组.png', // 币种图标
-            sellsymbol: 'IOST', // 币种简称
-            sellname: 'IOST', // 币种全程
-            area: 'BTC', // 交易区
-            price: 0.21761232, // 最新价格
-            high: 0.21761232, // 最高价
-            low: 0.21761232, // 最低价
-            volume: 21761232, // 24小时成交量
-            rose: 0.16123, // 涨跌
-            tendency: [1.23, 1.24, 2.35, 2.1, 1.59, 6.89],
-            hot: false // 是否为最热交易对
-          },
-          {
-            id: 10, // 交易对id
-            plateId: 0, // 板块id（主区，交易区。。。）
-            image: 'https://www.fubt.top//fubt/upload/coin/a7e56fc38ea44e1f8ed4c395193ec2e0组.png', // 币种图标
-            sellsymbol: 'BTM', // 币种简称
-            sellname: 'BTM', // 币种全程
-            area: 'BTC', // 交易区
-            price: 0.21761232, // 最新价格
-            high: 0.21761232, // 最高价
-            low: 0.21761232, // 最低价
-            volume: 21761232, // 24小时成交量
-            rose: 0.16123, // 涨跌
-            tendency: [1.23, 1.24, 2.35, 2.1, 1.59, 6.89],
-            hot: false // 是否为最热交易对
-          },
-          {
-            id: 11, // 交易对id
-            plateId: 0, // 板块id（主区，交易区。。。）
-            image: 'https://www.fubt.top//fubt/upload/coin/a7e56fc38ea44e1f8ed4c395193ec2e0组.png', // 币种图标
-            sellsymbol: 'BTM', // 币种简称
-            sellname: 'BTM', // 币种全程
-            area: 'BTC', // 交易区
-            price: 0.21761232, // 最新价格
-            high: 0.21761232, // 最高价
-            low: 0.21761232, // 最低价
-            volume: 21761232, // 24小时成交量
-            rose: 0.16123, // 涨跌
-            tendency: [1.23, 1.24, 2.35, 2.1, 1.59, 6.89],
-            hot: false // 是否为最热交易对
-          }
-        ]
-      },
-      {
-        plateId: 1,
-        plateName: '创新区',
-        content: [
-          {
-            id: 12, // 交易对id
-            plateId: 1, // 板块id（主区，交易区。。。）
-            image: 'https://www.fubt.top//fubt/upload/coin/a7e56fc38ea44e1f8ed4c395193ec2e0组.png', // 币种图标
-            sellsymbol: 'LOCC', // 币种简称
-            sellname: '创新区币种', // 币种全程
-            area: 'FBT', // 交易区
-            price: 0.21761239, // 最新价格
-            high: 0.21761232, // 最高价
-            low: 0.21761232, // 最低价
-            volume: 21761232, // 24小时成交量
-            rose: -0.16123, // 涨跌
-            tendency: [2.35, 1.23, 1.89, 1.24, 2.1, 1.59, 0.1, 2.35],
-            hot: false // 是否为最热交易对
-          }
-        ]
-      }
-    ]
-    // BTC 交易区模拟数据
-    this.BTCMarketList = [
-      {
-        plateId: 0, // 交易区id( 0:主区， 1:创新区)
-        plateName: '主区', // 交易区名称
-        content: [
-          {
-            id: 13, // 交易对id
-            plateId: 0, // 板块id（主区，交易区。。。）
-            image: 'https://www.fubt.top//fubt/upload/coin/a7e56fc38ea44e1f8ed4c395193ec2e0组.png', // 币种图标
-            sellsymbol: 'FUC', // 币种简称
-            sellname: '富链BTC', // 币种全程
-            area: 'BTC', // 交易区
-            price: 0.21761239, // 最新价格
-            high: 0.21761232, // 最高价
-            low: 0.21761232, // 最低价
-            volume: 21761232, // 24小时成交量
-            rose: -0.16123, // 涨跌
-            tendency: [2.35, 1.23, 1.89, 1.24, 2.1, 1.59, 0.1, 2.35],
-            hot: false // 是否为最热交易对
-          },
-          {
-            id: 14, // 交易对id
-            plateId: 0, // 板块id（主区，交易区。。。）
-            image: 'https://www.fubt.top//fubt/upload/coin/a7e56fc38ea44e1f8ed4c395193ec2e0组.png', // 币种图标
-            sellsymbol: 'AiFC', // 币种简称
-            sellname: 'Aifc', // 币种全程
-            area: 'BTC 富链BTC', // 交易区
-            price: 0.20761232, // 最新价格
-            high: 0.21721232, // 最高价
-            low: 0.21761232, // 最低价
-            volume: 21461232, // 24小时成交量
-            rose: 0.16123, // 涨跌
-            tendency: [2.35, 1.23, 1.89, 1.24, 2.1, 1.59],
-            hot: false // 是否为最热交易对
-          },
-          {
-            id: 15, // 交易对id
-            plateId: 0, // 板块id（主区，交易区。。。）
-            image: 'https://www.fubt.top//fubt/upload/coin/a7e56fc38ea44e1f8ed4c395193ec2e0组.png', // 币种图标
-            sellsymbol: 'TKC', // 币种简称
-            sellname: '富比特 富链BTC', // 币种全程
-            area: 'BTC', // 交易区
-            price: 0.21761232, // 最新价格
-            high: 0.21761232, // 最高价
-            low: 0.21761232, // 最低价
-            volume: 21761232, // 24小时成交量
-            rose: 0.16123, // 涨跌
-            tendency: [1.23, 1.24, 2.35, 2.1, 1.59, 6.89],
-            hot: true // 是否为最热交易对
-          },
-          {
-            id: 16, // 交易对id
-            plateId: 0, // 板块id（主区，交易区。。。）
-            image: 'https://www.fubt.top//fubt/upload/coin/a7e56fc38ea44e1f8ed4c395193ec2e0组.png', // 币种图标
-            sellsymbol: 'LTC', // 币种简称
-            sellname: '莱特币 BTC', // 币种全程
-            area: 'BTC', // 交易区
-            price: 0.21711292, // 最新价格
-            high: 0.21761239, // 最高价
-            low: 0.21761232, // 最低价
-            volume: 21761232, // 24小时成交量
-            rose: 0.16123, // 涨跌
-            tendency: [1.23, 1.24, 2.35, 2.1, 1.59, 1.89],
-            hot: false // 是否为最热交易对
-          },
-          {
-            id: 17, // 交易对id
-            plateId: 0, // 板块id（主区，交易区。。。）
-            image: 'https://www.fubt.top//fubt/upload/coin/a7e56fc38ea44e1f8ed4c395193ec2e0组.png', // 币种图标
-            sellsymbol: 'ETH', // 币种简称
-            sellname: '以太坊 BTC', // 币种全程
-            area: 'BTC', // 交易区
-            price: 0.21761232, // 最新价格
-            high: 0.21761232, // 最高价
-            low: 0.21761232, // 最低价
-            volume: 21761232, // 24小时成交量
-            rose: -0.16123, // 涨跌
-            tendency: [1.23, 1.24, 2.35, 2.1, 1.59, 1.89],
-            hot: true // 是否为最热交易对
-          },
-          {
-            id: 18, // 交易对id
-            plateId: 0, // 板块id（主区，交易区。。。）
-            image: 'https://www.fubt.top//fubt/upload/coin/a7e56fc38ea44e1f8ed4c395193ec2e0组.png', // 币种图标
-            sellsymbol: 'EOS', // 币种简称
-            sellname: 'EOS BTC', // 币种全程
-            area: 'BTC', // 交易区
-            price: 0.21761232, // 最新价格
-            high: 0.21761232, // 最高价
-            low: 0.21761232, // 最低价
-            volume: 21761232, // 24小时成交量
-            rose: 0.16123, // 涨跌
-            tendency: [1.23, 1.24, 2.35, 2.1, 1.59, 1.89],
-            hot: false // 是否为最热交易对
-          },
-          {
-            id: 19, // 交易对id
-            plateId: 0, // 板块id（主区，交易区。。。）
-            image: 'https://www.fubt.top//fubt/upload/coin/a7e56fc38ea44e1f8ed4c395193ec2e0组.png', // 币种图标
-            sellsymbol: 'SWFTC', // 币种简称
-            sellname: 'SWFTC BTC', // 币种全程
-            area: 'BTC', // 交易区
-            price: 0.21761232, // 最新价格
-            high: 0.21761232, // 最高价
-            low: 0.21761232, // 最低价
-            volume: 21761232, // 24小时成交量
-            rose: 0.16123, // 涨跌
-            tendency: [1.23, 1.24, 2.35, 2.1, 1.59, 6.89],
-            hot: false // 是否为最热交易对
-          },
-          {
-            id: 20, // 交易对id
-            plateId: 0, // 板块id（主区，交易区。。。）
-            image: 'https://www.fubt.top//fubt/upload/coin/a7e56fc38ea44e1f8ed4c395193ec2e0组.png', // 币种图标
-            sellsymbol: 'TOPC', // 币种简称
-            sellname: 'TOPC BTC', // 币种全程
-            area: 'BTC', // 交易区
-            price: 0.21761232, // 最新价格
-            high: 0.21761232, // 最高价
-            low: 0.21761232, // 最低价
-            volume: 21761232, // 24小时成交量
-            rose: 0.16123, // 涨跌
-            tendency: [1.23, 1.24, 2.35, 2.1, 1.59, 1.89],
-            hot: false // 是否为最热交易对
-          },
-          {
-            id: 21, // 交易对id
-            plateId: 0, // 板块id（主区，交易区。。。）
-            image: 'https://www.fubt.top//fubt/upload/coin/a7e56fc38ea44e1f8ed4c395193ec2e0组.png', // 币种图标
-            sellsymbol: 'OMG', // 币种简称
-            sellname: 'OMG BTC', // 币种全程
-            area: 'BTC', // 交易区
-            price: 0.21761232, // 最新价格
-            high: 0.21761232, // 最高价
-            low: 0.21761232, // 最低价
-            volume: 21761232, // 24小时成交量
-            rose: -0.16123, // 涨跌
-            tendency: [1.23, 1.24, 2.35, 2.1, 1.59, 6.89],
-            hot: false // 是否为最热交易对
-          },
-          {
-            id: 22, // 交易对id
-            plateId: 0, // 板块id（主区，交易区。。。）
-            image: 'https://www.fubt.top//fubt/upload/coin/a7e56fc38ea44e1f8ed4c395193ec2e0组.png', // 币种图标
-            sellsymbol: 'IOST', // 币种简称
-            sellname: 'IOST BTC', // 币种全程
-            area: 'BTC', // 交易区
-            price: 0.21761232, // 最新价格
-            high: 0.21761232, // 最高价
-            low: 0.21761232, // 最低价
-            volume: 21761232, // 24小时成交量
-            rose: 0.16123, // 涨跌
-            tendency: [1.23, 1.24, 2.35, 2.1, 1.59, 6.89],
-            hot: false // 是否为最热交易对
-          },
-          {
-            id: 23, // 交易对id
-            plateId: 0, // 板块id（主区，交易区。。。）
-            image: 'https://www.fubt.top//fubt/upload/coin/a7e56fc38ea44e1f8ed4c395193ec2e0组.png', // 币种图标
-            sellsymbol: 'BTM', // 币种简称
-            sellname: 'BTM BTC', // 币种全程
-            area: 'BTC', // 交易区
-            price: 0.21761232, // 最新价格
-            high: 0.21761232, // 最高价
-            low: 0.21761232, // 最低价
-            volume: 21761232, // 24小时成交量
-            rose: 0.16123, // 涨跌
-            tendency: [1.23, 1.24, 2.35, 2.1, 1.59, 6.89],
-            hot: false // 是否为最热交易对
-          },
-          {
-            id: 24, // 交易对id
-            plateId: 0, // 板块id（主区，交易区。。。）
-            image: 'https://www.fubt.top//fubt/upload/coin/a7e56fc38ea44e1f8ed4c395193ec2e0组.png', // 币种图标
-            sellsymbol: 'BTM', // 币种简称
-            sellname: 'BTM BTC', // 币种全程
-            area: 'BTC', // 交易区
-            price: 0.21761232, // 最新价格
-            high: 0.21761232, // 最高价
-            low: 0.21761232, // 最低价
-            volume: 21761232, // 24小时成交量
-            rose: 0.16123, // 涨跌
-            tendency: [1.23, 1.24, 2.35, 2.1, 1.59, 6.89],
-            hot: false // 是否为最热交易对
-          }
-        ]
-      },
-      {
-        plateId: 1,
-        plateName: '创新区',
-        content: [
-          {
-            id: 25, // 交易对id
-            plateId: 1, // 板块id（主区，交易区。。。）
-            image: 'https://www.fubt.top//fubt/upload/coin/a7e56fc38ea44e1f8ed4c395193ec2e0组.png', // 币种图标
-            sellsymbol: 'LOCC', // 币种简称
-            sellname: '创新区币种 BTC', // 币种全程
-            area: 'FBT', // 交易区
-            price: 0.21761239, // 最新价格
-            high: 0.21761232, // 最高价
-            low: 0.21761232, // 最低价
-            volume: 21761232, // 24小时成交量
-            rose: -0.16123, // 涨跌
-            tendency: [2.35, 1.23, 1.89, 1.24, 2.1, 1.59, 0.1, 2.35],
-            hot: false // 是否为最热交易对
-          }
-        ]
-      }
-    ]
-    this.ETHMarketList = [
-      {
-        plateId: 0, // 交易区id( 0:主区， 1:创新区)
-        plateName: '主区', // 交易区名称
-        content: [
-          {
-            id: 26, // 交易对id
-            plateId: 0, // 板块id（主区，交易区。。。）
-            image: 'https://www.fubt.top//fubt/upload/coin/a7e56fc38ea44e1f8ed4c395193ec2e0组.png', // 币种图标
-            sellsymbol: 'FUC', // 币种简称
-            sellname: '富链', // 币种全程
-            area: 'BTC', // 交易区
-            price: 0.21761239, // 最新价格
-            high: 0.21761232, // 最高价
-            low: 0.21761232, // 最低价
-            volume: 21761232, // 24小时成交量
-            rose: -0.16123, // 涨跌
-            tendency: [2.35, 1.23, 1.89, 1.24, 2.1, 1.59, 0.1, 2.35],
-            hot: false // 是否为最热交易对
-          },
-          {
-            id: 27, // 交易对id
-            plateId: 0, // 板块id（主区，交易区。。。）
-            image: 'https://www.fubt.top//fubt/upload/coin/a7e56fc38ea44e1f8ed4c395193ec2e0组.png', // 币种图标
-            sellsymbol: 'AiFC', // 币种简称
-            sellname: 'Aifc', // 币种全程
-            area: 'BTC', // 交易区
-            price: 0.20761232, // 最新价格
-            high: 0.21721232, // 最高价
-            low: 0.21761232, // 最低价
-            volume: 21461232, // 24小时成交量
-            rose: 0.16123, // 涨跌
-            tendency: [2.35, 1.23, 1.89, 1.24, 2.1, 1.59],
-            hot: false // 是否为最热交易对
-          },
-          {
-            id: 28, // 交易对id
-            plateId: 0, // 板块id（主区，交易区。。。）
-            image: 'https://www.fubt.top//fubt/upload/coin/a7e56fc38ea44e1f8ed4c395193ec2e0组.png', // 币种图标
-            sellsymbol: 'TKC', // 币种简称
-            sellname: '富比特', // 币种全程
-            area: 'BTC', // 交易区
-            price: 0.21761232, // 最新价格
-            high: 0.21761232, // 最高价
-            low: 0.21761232, // 最低价
-            volume: 21761232, // 24小时成交量
-            rose: 0.16123, // 涨跌
-            tendency: [1.23, 1.24, 2.35, 2.1, 1.59, 6.89],
-            hot: true // 是否为最热交易对
-          },
-          {
-            id: 29, // 交易对id
-            plateId: 0, // 板块id（主区，交易区。。。）
-            image: 'https://www.fubt.top//fubt/upload/coin/a7e56fc38ea44e1f8ed4c395193ec2e0组.png', // 币种图标
-            sellsymbol: 'LTC', // 币种简称
-            sellname: '莱特币', // 币种全程
-            area: 'BTC', // 交易区
-            price: 0.21711292, // 最新价格
-            high: 0.21761239, // 最高价
-            low: 0.21761232, // 最低价
-            volume: 21761232, // 24小时成交量
-            rose: 0.16123, // 涨跌
-            tendency: [1.23, 1.24, 2.35, 2.1, 1.59, 1.89],
-            hot: false // 是否为最热交易对
-          },
-          {
-            id: 30, // 交易对id
-            plateId: 0, // 板块id（主区，交易区。。。）
-            image: 'https://www.fubt.top//fubt/upload/coin/a7e56fc38ea44e1f8ed4c395193ec2e0组.png', // 币种图标
-            sellsymbol: 'ETH', // 币种简称
-            sellname: '以太坊', // 币种全程
-            area: 'BTC', // 交易区
-            price: 0.21761232, // 最新价格
-            high: 0.21761232, // 最高价
-            low: 0.21761232, // 最低价
-            volume: 21761232, // 24小时成交量
-            rose: -0.16123, // 涨跌
-            tendency: [1.23, 1.24, 2.35, 2.1, 1.59, 1.89],
-            hot: true // 是否为最热交易对
-          },
-          {
-            id: 31, // 交易对id
-            plateId: 0, // 板块id（主区，交易区。。。）
-            image: 'https://www.fubt.top//fubt/upload/coin/a7e56fc38ea44e1f8ed4c395193ec2e0组.png', // 币种图标
-            sellsymbol: 'EOS', // 币种简称
-            sellname: 'EOS', // 币种全程
-            area: 'BTC', // 交易区
-            price: 0.21761232, // 最新价格
-            high: 0.21761232, // 最高价
-            low: 0.21761232, // 最低价
-            volume: 21761232, // 24小时成交量
-            rose: 0.16123, // 涨跌
-            tendency: [1.23, 1.24, 2.35, 2.1, 1.59, 1.89],
-            hot: false // 是否为最热交易对
-          },
-          {
-            id: 32, // 交易对id
-            plateId: 0, // 板块id（主区，交易区。。。）
-            image: 'https://www.fubt.top//fubt/upload/coin/a7e56fc38ea44e1f8ed4c395193ec2e0组.png', // 币种图标
-            sellsymbol: 'SWFTC', // 币种简称
-            sellname: 'SWFTC', // 币种全程
-            area: 'BTC', // 交易区
-            price: 0.21761232, // 最新价格
-            high: 0.21761232, // 最高价
-            low: 0.21761232, // 最低价
-            volume: 21761232, // 24小时成交量
-            rose: 0.16123, // 涨跌
-            tendency: [1.23, 1.24, 2.35, 2.1, 1.59, 6.89],
-            hot: false // 是否为最热交易对
-          },
-          {
-            id: 33, // 交易对id
-            plateId: 0, // 板块id（主区，交易区。。。）
-            image: 'https://www.fubt.top//fubt/upload/coin/a7e56fc38ea44e1f8ed4c395193ec2e0组.png', // 币种图标
-            sellsymbol: 'TOPC', // 币种简称
-            sellname: 'TOPC', // 币种全程
-            area: 'BTC', // 交易区
-            price: 0.21761232, // 最新价格
-            high: 0.21761232, // 最高价
-            low: 0.21761232, // 最低价
-            volume: 21761232, // 24小时成交量
-            rose: 0.16123, // 涨跌
-            tendency: [1.23, 1.24, 2.35, 2.1, 1.59, 1.89],
-            hot: false // 是否为最热交易对
-          },
-          {
-            id: 34, // 交易对id
-            plateId: 0, // 板块id（主区，交易区。。。）
-            image: 'https://www.fubt.top//fubt/upload/coin/a7e56fc38ea44e1f8ed4c395193ec2e0组.png', // 币种图标
-            sellsymbol: 'OMG', // 币种简称
-            sellname: 'OMG', // 币种全程
-            area: 'BTC', // 交易区
-            price: 0.21761232, // 最新价格
-            high: 0.21761232, // 最高价
-            low: 0.21761232, // 最低价
-            volume: 21761232, // 24小时成交量
-            rose: -0.16123, // 涨跌
-            tendency: [1.23, 1.24, 2.35, 2.1, 1.59, 6.89],
-            hot: false // 是否为最热交易对
-          },
-          {
-            id: 35, // 交易对id
-            plateId: 0, // 板块id（主区，交易区。。。）
-            image: 'https://www.fubt.top//fubt/upload/coin/a7e56fc38ea44e1f8ed4c395193ec2e0组.png', // 币种图标
-            sellsymbol: 'IOST', // 币种简称
-            sellname: 'IOST', // 币种全程
-            area: 'BTC', // 交易区
-            price: 0.21761232, // 最新价格
-            high: 0.21761232, // 最高价
-            low: 0.21761232, // 最低价
-            volume: 21761232, // 24小时成交量
-            rose: 0.16123, // 涨跌
-            tendency: [1.23, 1.24, 2.35, 2.1, 1.59, 6.89],
-            hot: false // 是否为最热交易对
-          },
-          {
-            id: 36, // 交易对id
-            plateId: 0, // 板块id（主区，交易区。。。）
-            image: 'https://www.fubt.top//fubt/upload/coin/a7e56fc38ea44e1f8ed4c395193ec2e0组.png', // 币种图标
-            sellsymbol: 'BTM', // 币种简称
-            sellname: 'BTM', // 币种全程
-            area: 'BTC', // 交易区
-            price: 0.21761232, // 最新价格
-            high: 0.21761232, // 最高价
-            low: 0.21761232, // 最低价
-            volume: 21761232, // 24小时成交量
-            rose: 0.16123, // 涨跌
-            tendency: [1.23, 1.24, 2.35, 2.1, 1.59, 6.89],
-            hot: false // 是否为最热交易对
-          },
-          {
-            id: 37, // 交易对id
-            plateId: 0, // 板块id（主区，交易区。。。）
-            image: 'https://www.fubt.top//fubt/upload/coin/a7e56fc38ea44e1f8ed4c395193ec2e0组.png', // 币种图标
-            sellsymbol: 'BTM', // 币种简称
-            sellname: 'BTM', // 币种全程
-            area: 'BTC', // 交易区
-            price: 0.21761232, // 最新价格
-            high: 0.21761232, // 最高价
-            low: 0.21761232, // 最低价
-            volume: 21761232, // 24小时成交量
-            rose: 0.16123, // 涨跌
-            tendency: [1.23, 1.24, 2.35, 2.1, 1.59, 6.89],
-            hot: false // 是否为最热交易对
-          }
-        ]
-      },
-      {
-        plateId: 1,
-        plateName: '创新区',
-        content: [
-          {
-            id: 38, // 交易对id
-            plateId: 1, // 板块id（主区，交易区。。。）
-            image: 'https://www.fubt.top//fubt/upload/coin/a7e56fc38ea44e1f8ed4c395193ec2e0组.png', // 币种图标
-            sellsymbol: 'LOCC', // 币种简称
-            sellname: '创新区币种', // 币种全程
-            area: 'FBT', // 交易区
-            price: 0.21761239, // 最新价格
-            high: 0.21761232, // 最高价
-            low: 0.21761232, // 最低价
-            volume: 21761232, // 24小时成交量
-            rose: -0.16123, // 涨跌
-            tendency: [2.35, 1.23, 1.89, 1.24, 2.1, 1.59, 0.1, 2.35],
-            hot: false // 是否为最热交易对
-          }
-        ]
-      }
-    ]
+    // this.marketList = [
+    //   {
+    //     plateId: 0, // 交易区id( 0:主区， 1:创新区)
+    //     plateName: '主区', // 交易区名称
+    //     content: [
+    //       {
+    //         id: 0, // 交易对id
+    //         plateId: 0, // 板块id（主区，交易区。。。）
+    //         image: 'https://www.fubt.top//fubt/upload/coin/a7e56fc38ea44e1f8ed4c395193ec2e0组.png', // 币种图标
+    //         sellsymbol: 'FUC', // 币种简称
+    //         sellname: '富链', // 币种全程
+    //         area: 'BTC', // 交易区
+    //         price: 0.21761239, // 最新价格
+    //         high: 0.21761232, // 最高价
+    //         low: 0.21761232, // 最低价
+    //         volume: 21761232, // 24小时成交量
+    //         rose: -0.16123, // 涨跌
+    //         tendency: [2.35, 1.23, 1.89, 1.24, 2.1, 1.59, 0.1, 2.35],
+    //         hot: false // 是否为最热交易对
+    //       },
+    //       {
+    //         id: 1, // 交易对id
+    //         plateId: 0, // 板块id（主区，交易区。。。）
+    //         image: 'https://www.fubt.top//fubt/upload/coin/a7e56fc38ea44e1f8ed4c395193ec2e0组.png', // 币种图标
+    //         sellsymbol: 'AiFC', // 币种简称
+    //         sellname: 'Aifc', // 币种全程
+    //         area: 'BTC', // 交易区
+    //         price: 0.20761232, // 最新价格
+    //         high: 0.21721232, // 最高价
+    //         low: 0.21761232, // 最低价
+    //         volume: 21461232, // 24小时成交量
+    //         rose: 0.16123, // 涨跌
+    //         tendency: [2.35, 1.23, 1.89, 1.24, 2.1, 1.59],
+    //         hot: false // 是否为最热交易对
+    //       },
+    //       {
+    //         id: 2, // 交易对id
+    //         plateId: 0, // 板块id（主区，交易区。。。）
+    //         image: 'https://www.fubt.top//fubt/upload/coin/a7e56fc38ea44e1f8ed4c395193ec2e0组.png', // 币种图标
+    //         sellsymbol: 'TKC', // 币种简称
+    //         sellname: '富比特', // 币种全程
+    //         area: 'BTC', // 交易区
+    //         price: 0.21761232, // 最新价格
+    //         high: 0.21761232, // 最高价
+    //         low: 0.21761232, // 最低价
+    //         volume: 21761232, // 24小时成交量
+    //         rose: 0.16123, // 涨跌
+    //         tendency: [1.23, 1.24, 2.35, 2.1, 1.59, 6.89],
+    //         hot: true // 是否为最热交易对
+    //       },
+    //       {
+    //         id: 3, // 交易对id
+    //         plateId: 0, // 板块id（主区，交易区。。。）
+    //         image: 'https://www.fubt.top//fubt/upload/coin/a7e56fc38ea44e1f8ed4c395193ec2e0组.png', // 币种图标
+    //         sellsymbol: 'LTC', // 币种简称
+    //         sellname: '莱特币', // 币种全程
+    //         area: 'BTC', // 交易区
+    //         price: 0.21711292, // 最新价格
+    //         high: 0.21761239, // 最高价
+    //         low: 0.21761232, // 最低价
+    //         volume: 21761232, // 24小时成交量
+    //         rose: 0.16123, // 涨跌
+    //         tendency: [1.23, 1.24, 2.35, 2.1, 1.59, 1.89],
+    //         hot: false // 是否为最热交易对
+    //       },
+    //       {
+    //         id: 4, // 交易对id
+    //         plateId: 0, // 板块id（主区，交易区。。。）
+    //         image: 'https://www.fubt.top//fubt/upload/coin/a7e56fc38ea44e1f8ed4c395193ec2e0组.png', // 币种图标
+    //         sellsymbol: 'ETH', // 币种简称
+    //         sellname: '以太坊', // 币种全程
+    //         area: 'BTC', // 交易区
+    //         price: 0.21761232, // 最新价格
+    //         high: 0.21761232, // 最高价
+    //         low: 0.21761232, // 最低价
+    //         volume: 21761232, // 24小时成交量
+    //         rose: -0.16123, // 涨跌
+    //         tendency: [1.23, 1.24, 2.35, 2.1, 1.59, 1.89],
+    //         hot: true // 是否为最热交易对
+    //       },
+    //       {
+    //         id: 5, // 交易对id
+    //         plateId: 0, // 板块id（主区，交易区。。。）
+    //         image: 'https://www.fubt.top//fubt/upload/coin/a7e56fc38ea44e1f8ed4c395193ec2e0组.png', // 币种图标
+    //         sellsymbol: 'EOS', // 币种简称
+    //         sellname: 'EOS', // 币种全程
+    //         area: 'BTC', // 交易区
+    //         price: 0.21761232, // 最新价格
+    //         high: 0.21761232, // 最高价
+    //         low: 0.21761232, // 最低价
+    //         volume: 21761232, // 24小时成交量
+    //         rose: 0.16123, // 涨跌
+    //         tendency: [1.23, 1.24, 2.35, 2.1, 1.59, 1.89],
+    //         hot: false // 是否为最热交易对
+    //       },
+    //       {
+    //         id: 6, // 交易对id
+    //         plateId: 0, // 板块id（主区，交易区。。。）
+    //         image: 'https://www.fubt.top//fubt/upload/coin/a7e56fc38ea44e1f8ed4c395193ec2e0组.png', // 币种图标
+    //         sellsymbol: 'SWFTC', // 币种简称
+    //         sellname: 'SWFTC', // 币种全程
+    //         area: 'BTC', // 交易区
+    //         price: 0.21761232, // 最新价格
+    //         high: 0.21761232, // 最高价
+    //         low: 0.21761232, // 最低价
+    //         volume: 21761232, // 24小时成交量
+    //         rose: 0.16123, // 涨跌
+    //         tendency: [1.23, 1.24, 2.35, 2.1, 1.59, 6.89],
+    //         hot: false // 是否为最热交易对
+    //       },
+    //       {
+    //         id: 7, // 交易对id
+    //         plateId: 0, // 板块id（主区，交易区。。。）
+    //         image: 'https://www.fubt.top//fubt/upload/coin/a7e56fc38ea44e1f8ed4c395193ec2e0组.png', // 币种图标
+    //         sellsymbol: 'TOPC', // 币种简称
+    //         sellname: 'TOPC', // 币种全程
+    //         area: 'BTC', // 交易区
+    //         price: 0.21761232, // 最新价格
+    //         high: 0.21761232, // 最高价
+    //         low: 0.21761232, // 最低价
+    //         volume: 21761232, // 24小时成交量
+    //         rose: 0.16123, // 涨跌
+    //         tendency: [1.23, 1.24, 2.35, 2.1, 1.59, 1.89],
+    //         hot: false // 是否为最热交易对
+    //       },
+    //       {
+    //         id: 8, // 交易对id
+    //         plateId: 0, // 板块id（主区，交易区。。。）
+    //         image: 'https://www.fubt.top//fubt/upload/coin/a7e56fc38ea44e1f8ed4c395193ec2e0组.png', // 币种图标
+    //         sellsymbol: 'OMG', // 币种简称
+    //         sellname: 'OMG', // 币种全程
+    //         area: 'BTC', // 交易区
+    //         price: 0.21761232, // 最新价格
+    //         high: 0.21761232, // 最高价
+    //         low: 0.21761232, // 最低价
+    //         volume: 21761232, // 24小时成交量
+    //         rose: -0.16123, // 涨跌
+    //         tendency: [1.23, 1.24, 2.35, 2.1, 1.59, 6.89],
+    //         hot: false // 是否为最热交易对
+    //       },
+    //       {
+    //         id: 9, // 交易对id
+    //         plateId: 0, // 板块id（主区，交易区。。。）
+    //         image: 'https://www.fubt.top//fubt/upload/coin/a7e56fc38ea44e1f8ed4c395193ec2e0组.png', // 币种图标
+    //         sellsymbol: 'IOST', // 币种简称
+    //         sellname: 'IOST', // 币种全程
+    //         area: 'BTC', // 交易区
+    //         price: 0.21761232, // 最新价格
+    //         high: 0.21761232, // 最高价
+    //         low: 0.21761232, // 最低价
+    //         volume: 21761232, // 24小时成交量
+    //         rose: 0.16123, // 涨跌
+    //         tendency: [1.23, 1.24, 2.35, 2.1, 1.59, 6.89],
+    //         hot: false // 是否为最热交易对
+    //       },
+    //       {
+    //         id: 10, // 交易对id
+    //         plateId: 0, // 板块id（主区，交易区。。。）
+    //         image: 'https://www.fubt.top//fubt/upload/coin/a7e56fc38ea44e1f8ed4c395193ec2e0组.png', // 币种图标
+    //         sellsymbol: 'BTM', // 币种简称
+    //         sellname: 'BTM', // 币种全程
+    //         area: 'BTC', // 交易区
+    //         price: 0.21761232, // 最新价格
+    //         high: 0.21761232, // 最高价
+    //         low: 0.21761232, // 最低价
+    //         volume: 21761232, // 24小时成交量
+    //         rose: 0.16123, // 涨跌
+    //         tendency: [1.23, 1.24, 2.35, 2.1, 1.59, 6.89],
+    //         hot: false // 是否为最热交易对
+    //       },
+    //       {
+    //         id: 11, // 交易对id
+    //         plateId: 0, // 板块id（主区，交易区。。。）
+    //         image: 'https://www.fubt.top//fubt/upload/coin/a7e56fc38ea44e1f8ed4c395193ec2e0组.png', // 币种图标
+    //         sellsymbol: 'BTM', // 币种简称
+    //         sellname: 'BTM', // 币种全程
+    //         area: 'BTC', // 交易区
+    //         price: 0.21761232, // 最新价格
+    //         high: 0.21761232, // 最高价
+    //         low: 0.21761232, // 最低价
+    //         volume: 21761232, // 24小时成交量
+    //         rose: 0.16123, // 涨跌
+    //         tendency: [1.23, 1.24, 2.35, 2.1, 1.59, 6.89],
+    //         hot: false // 是否为最热交易对
+    //       }
+    //     ]
+    //   },
+    //   {
+    //     plateId: 1,
+    //     plateName: '创新区',
+    //     content: [
+    //       {
+    //         id: 12, // 交易对id
+    //         plateId: 1, // 板块id（主区，交易区。。。）
+    //         image: 'https://www.fubt.top//fubt/upload/coin/a7e56fc38ea44e1f8ed4c395193ec2e0组.png', // 币种图标
+    //         sellsymbol: 'LOCC', // 币种简称
+    //         sellname: '创新区币种', // 币种全程
+    //         area: 'FBT', // 交易区
+    //         price: 0.21761239, // 最新价格
+    //         high: 0.21761232, // 最高价
+    //         low: 0.21761232, // 最低价
+    //         volume: 21761232, // 24小时成交量
+    //         rose: -0.16123, // 涨跌
+    //         tendency: [2.35, 1.23, 1.89, 1.24, 2.1, 1.59, 0.1, 2.35],
+    //         hot: false // 是否为最热交易对
+    //       }
+    //     ]
+    //   }
+    // ]
+    // // BTC 交易区模拟数据
+    // this.BTCMarketList = [
+    //   {
+    //     plateId: 0, // 交易区id( 0:主区， 1:创新区)
+    //     plateName: '主区', // 交易区名称
+    //     content: [
+    //       {
+    //         id: 13, // 交易对id
+    //         plateId: 0, // 板块id（主区，交易区。。。）
+    //         image: 'https://www.fubt.top//fubt/upload/coin/a7e56fc38ea44e1f8ed4c395193ec2e0组.png', // 币种图标
+    //         sellsymbol: 'FUC', // 币种简称
+    //         sellname: '富链BTC', // 币种全程
+    //         area: 'BTC', // 交易区
+    //         price: 0.21761239, // 最新价格
+    //         high: 0.21761232, // 最高价
+    //         low: 0.21761232, // 最低价
+    //         volume: 21761232, // 24小时成交量
+    //         rose: -0.16123, // 涨跌
+    //         tendency: [2.35, 1.23, 1.89, 1.24, 2.1, 1.59, 0.1, 2.35],
+    //         hot: false // 是否为最热交易对
+    //       },
+    //       {
+    //         id: 14, // 交易对id
+    //         plateId: 0, // 板块id（主区，交易区。。。）
+    //         image: 'https://www.fubt.top//fubt/upload/coin/a7e56fc38ea44e1f8ed4c395193ec2e0组.png', // 币种图标
+    //         sellsymbol: 'AiFC', // 币种简称
+    //         sellname: 'Aifc', // 币种全程
+    //         area: 'BTC 富链BTC', // 交易区
+    //         price: 0.20761232, // 最新价格
+    //         high: 0.21721232, // 最高价
+    //         low: 0.21761232, // 最低价
+    //         volume: 21461232, // 24小时成交量
+    //         rose: 0.16123, // 涨跌
+    //         tendency: [2.35, 1.23, 1.89, 1.24, 2.1, 1.59],
+    //         hot: false // 是否为最热交易对
+    //       },
+    //       {
+    //         id: 15, // 交易对id
+    //         plateId: 0, // 板块id（主区，交易区。。。）
+    //         image: 'https://www.fubt.top//fubt/upload/coin/a7e56fc38ea44e1f8ed4c395193ec2e0组.png', // 币种图标
+    //         sellsymbol: 'TKC', // 币种简称
+    //         sellname: '富比特 富链BTC', // 币种全程
+    //         area: 'BTC', // 交易区
+    //         price: 0.21761232, // 最新价格
+    //         high: 0.21761232, // 最高价
+    //         low: 0.21761232, // 最低价
+    //         volume: 21761232, // 24小时成交量
+    //         rose: 0.16123, // 涨跌
+    //         tendency: [1.23, 1.24, 2.35, 2.1, 1.59, 6.89],
+    //         hot: true // 是否为最热交易对
+    //       },
+    //       {
+    //         id: 16, // 交易对id
+    //         plateId: 0, // 板块id（主区，交易区。。。）
+    //         image: 'https://www.fubt.top//fubt/upload/coin/a7e56fc38ea44e1f8ed4c395193ec2e0组.png', // 币种图标
+    //         sellsymbol: 'LTC', // 币种简称
+    //         sellname: '莱特币 BTC', // 币种全程
+    //         area: 'BTC', // 交易区
+    //         price: 0.21711292, // 最新价格
+    //         high: 0.21761239, // 最高价
+    //         low: 0.21761232, // 最低价
+    //         volume: 21761232, // 24小时成交量
+    //         rose: 0.16123, // 涨跌
+    //         tendency: [1.23, 1.24, 2.35, 2.1, 1.59, 1.89],
+    //         hot: false // 是否为最热交易对
+    //       },
+    //       {
+    //         id: 17, // 交易对id
+    //         plateId: 0, // 板块id（主区，交易区。。。）
+    //         image: 'https://www.fubt.top//fubt/upload/coin/a7e56fc38ea44e1f8ed4c395193ec2e0组.png', // 币种图标
+    //         sellsymbol: 'ETH', // 币种简称
+    //         sellname: '以太坊 BTC', // 币种全程
+    //         area: 'BTC', // 交易区
+    //         price: 0.21761232, // 最新价格
+    //         high: 0.21761232, // 最高价
+    //         low: 0.21761232, // 最低价
+    //         volume: 21761232, // 24小时成交量
+    //         rose: -0.16123, // 涨跌
+    //         tendency: [1.23, 1.24, 2.35, 2.1, 1.59, 1.89],
+    //         hot: true // 是否为最热交易对
+    //       },
+    //       {
+    //         id: 18, // 交易对id
+    //         plateId: 0, // 板块id（主区，交易区。。。）
+    //         image: 'https://www.fubt.top//fubt/upload/coin/a7e56fc38ea44e1f8ed4c395193ec2e0组.png', // 币种图标
+    //         sellsymbol: 'EOS', // 币种简称
+    //         sellname: 'EOS BTC', // 币种全程
+    //         area: 'BTC', // 交易区
+    //         price: 0.21761232, // 最新价格
+    //         high: 0.21761232, // 最高价
+    //         low: 0.21761232, // 最低价
+    //         volume: 21761232, // 24小时成交量
+    //         rose: 0.16123, // 涨跌
+    //         tendency: [1.23, 1.24, 2.35, 2.1, 1.59, 1.89],
+    //         hot: false // 是否为最热交易对
+    //       },
+    //       {
+    //         id: 19, // 交易对id
+    //         plateId: 0, // 板块id（主区，交易区。。。）
+    //         image: 'https://www.fubt.top//fubt/upload/coin/a7e56fc38ea44e1f8ed4c395193ec2e0组.png', // 币种图标
+    //         sellsymbol: 'SWFTC', // 币种简称
+    //         sellname: 'SWFTC BTC', // 币种全程
+    //         area: 'BTC', // 交易区
+    //         price: 0.21761232, // 最新价格
+    //         high: 0.21761232, // 最高价
+    //         low: 0.21761232, // 最低价
+    //         volume: 21761232, // 24小时成交量
+    //         rose: 0.16123, // 涨跌
+    //         tendency: [1.23, 1.24, 2.35, 2.1, 1.59, 6.89],
+    //         hot: false // 是否为最热交易对
+    //       },
+    //       {
+    //         id: 20, // 交易对id
+    //         plateId: 0, // 板块id（主区，交易区。。。）
+    //         image: 'https://www.fubt.top//fubt/upload/coin/a7e56fc38ea44e1f8ed4c395193ec2e0组.png', // 币种图标
+    //         sellsymbol: 'TOPC', // 币种简称
+    //         sellname: 'TOPC BTC', // 币种全程
+    //         area: 'BTC', // 交易区
+    //         price: 0.21761232, // 最新价格
+    //         high: 0.21761232, // 最高价
+    //         low: 0.21761232, // 最低价
+    //         volume: 21761232, // 24小时成交量
+    //         rose: 0.16123, // 涨跌
+    //         tendency: [1.23, 1.24, 2.35, 2.1, 1.59, 1.89],
+    //         hot: false // 是否为最热交易对
+    //       },
+    //       {
+    //         id: 21, // 交易对id
+    //         plateId: 0, // 板块id（主区，交易区。。。）
+    //         image: 'https://www.fubt.top//fubt/upload/coin/a7e56fc38ea44e1f8ed4c395193ec2e0组.png', // 币种图标
+    //         sellsymbol: 'OMG', // 币种简称
+    //         sellname: 'OMG BTC', // 币种全程
+    //         area: 'BTC', // 交易区
+    //         price: 0.21761232, // 最新价格
+    //         high: 0.21761232, // 最高价
+    //         low: 0.21761232, // 最低价
+    //         volume: 21761232, // 24小时成交量
+    //         rose: -0.16123, // 涨跌
+    //         tendency: [1.23, 1.24, 2.35, 2.1, 1.59, 6.89],
+    //         hot: false // 是否为最热交易对
+    //       },
+    //       {
+    //         id: 22, // 交易对id
+    //         plateId: 0, // 板块id（主区，交易区。。。）
+    //         image: 'https://www.fubt.top//fubt/upload/coin/a7e56fc38ea44e1f8ed4c395193ec2e0组.png', // 币种图标
+    //         sellsymbol: 'IOST', // 币种简称
+    //         sellname: 'IOST BTC', // 币种全程
+    //         area: 'BTC', // 交易区
+    //         price: 0.21761232, // 最新价格
+    //         high: 0.21761232, // 最高价
+    //         low: 0.21761232, // 最低价
+    //         volume: 21761232, // 24小时成交量
+    //         rose: 0.16123, // 涨跌
+    //         tendency: [1.23, 1.24, 2.35, 2.1, 1.59, 6.89],
+    //         hot: false // 是否为最热交易对
+    //       },
+    //       {
+    //         id: 23, // 交易对id
+    //         plateId: 0, // 板块id（主区，交易区。。。）
+    //         image: 'https://www.fubt.top//fubt/upload/coin/a7e56fc38ea44e1f8ed4c395193ec2e0组.png', // 币种图标
+    //         sellsymbol: 'BTM', // 币种简称
+    //         sellname: 'BTM BTC', // 币种全程
+    //         area: 'BTC', // 交易区
+    //         price: 0.21761232, // 最新价格
+    //         high: 0.21761232, // 最高价
+    //         low: 0.21761232, // 最低价
+    //         volume: 21761232, // 24小时成交量
+    //         rose: 0.16123, // 涨跌
+    //         tendency: [1.23, 1.24, 2.35, 2.1, 1.59, 6.89],
+    //         hot: false // 是否为最热交易对
+    //       },
+    //       {
+    //         id: 24, // 交易对id
+    //         plateId: 0, // 板块id（主区，交易区。。。）
+    //         image: 'https://www.fubt.top//fubt/upload/coin/a7e56fc38ea44e1f8ed4c395193ec2e0组.png', // 币种图标
+    //         sellsymbol: 'BTM', // 币种简称
+    //         sellname: 'BTM BTC', // 币种全程
+    //         area: 'BTC', // 交易区
+    //         price: 0.21761232, // 最新价格
+    //         high: 0.21761232, // 最高价
+    //         low: 0.21761232, // 最低价
+    //         volume: 21761232, // 24小时成交量
+    //         rose: 0.16123, // 涨跌
+    //         tendency: [1.23, 1.24, 2.35, 2.1, 1.59, 6.89],
+    //         hot: false // 是否为最热交易对
+    //       }
+    //     ]
+    //   },
+    //   {
+    //     plateId: 1,
+    //     plateName: '创新区',
+    //     content: [
+    //       {
+    //         id: 25, // 交易对id
+    //         plateId: 1, // 板块id（主区，交易区。。。）
+    //         image: 'https://www.fubt.top//fubt/upload/coin/a7e56fc38ea44e1f8ed4c395193ec2e0组.png', // 币种图标
+    //         sellsymbol: 'LOCC', // 币种简称
+    //         sellname: '创新区币种 BTC', // 币种全程
+    //         area: 'FBT', // 交易区
+    //         price: 0.21761239, // 最新价格
+    //         high: 0.21761232, // 最高价
+    //         low: 0.21761232, // 最低价
+    //         volume: 21761232, // 24小时成交量
+    //         rose: -0.16123, // 涨跌
+    //         tendency: [2.35, 1.23, 1.89, 1.24, 2.1, 1.59, 0.1, 2.35],
+    //         hot: false // 是否为最热交易对
+    //       }
+    //     ]
+    //   }
+    // ]
+    // this.ETHMarketList = [
+    //   {
+    //     plateId: 0, // 交易区id( 0:主区， 1:创新区)
+    //     plateName: '主区', // 交易区名称
+    //     content: [
+    //       {
+    //         id: 26, // 交易对id
+    //         plateId: 0, // 板块id（主区，交易区。。。）
+    //         image: 'https://www.fubt.top//fubt/upload/coin/a7e56fc38ea44e1f8ed4c395193ec2e0组.png', // 币种图标
+    //         sellsymbol: 'FUC', // 币种简称
+    //         sellname: '富链', // 币种全程
+    //         area: 'BTC', // 交易区
+    //         price: 0.21761239, // 最新价格
+    //         high: 0.21761232, // 最高价
+    //         low: 0.21761232, // 最低价
+    //         volume: 21761232, // 24小时成交量
+    //         rose: -0.16123, // 涨跌
+    //         tendency: [2.35, 1.23, 1.89, 1.24, 2.1, 1.59, 0.1, 2.35],
+    //         hot: false // 是否为最热交易对
+    //       },
+    //       {
+    //         id: 27, // 交易对id
+    //         plateId: 0, // 板块id（主区，交易区。。。）
+    //         image: 'https://www.fubt.top//fubt/upload/coin/a7e56fc38ea44e1f8ed4c395193ec2e0组.png', // 币种图标
+    //         sellsymbol: 'AiFC', // 币种简称
+    //         sellname: 'Aifc', // 币种全程
+    //         area: 'BTC', // 交易区
+    //         price: 0.20761232, // 最新价格
+    //         high: 0.21721232, // 最高价
+    //         low: 0.21761232, // 最低价
+    //         volume: 21461232, // 24小时成交量
+    //         rose: 0.16123, // 涨跌
+    //         tendency: [2.35, 1.23, 1.89, 1.24, 2.1, 1.59],
+    //         hot: false // 是否为最热交易对
+    //       },
+    //       {
+    //         id: 28, // 交易对id
+    //         plateId: 0, // 板块id（主区，交易区。。。）
+    //         image: 'https://www.fubt.top//fubt/upload/coin/a7e56fc38ea44e1f8ed4c395193ec2e0组.png', // 币种图标
+    //         sellsymbol: 'TKC', // 币种简称
+    //         sellname: '富比特', // 币种全程
+    //         area: 'BTC', // 交易区
+    //         price: 0.21761232, // 最新价格
+    //         high: 0.21761232, // 最高价
+    //         low: 0.21761232, // 最低价
+    //         volume: 21761232, // 24小时成交量
+    //         rose: 0.16123, // 涨跌
+    //         tendency: [1.23, 1.24, 2.35, 2.1, 1.59, 6.89],
+    //         hot: true // 是否为最热交易对
+    //       },
+    //       {
+    //         id: 29, // 交易对id
+    //         plateId: 0, // 板块id（主区，交易区。。。）
+    //         image: 'https://www.fubt.top//fubt/upload/coin/a7e56fc38ea44e1f8ed4c395193ec2e0组.png', // 币种图标
+    //         sellsymbol: 'LTC', // 币种简称
+    //         sellname: '莱特币', // 币种全程
+    //         area: 'BTC', // 交易区
+    //         price: 0.21711292, // 最新价格
+    //         high: 0.21761239, // 最高价
+    //         low: 0.21761232, // 最低价
+    //         volume: 21761232, // 24小时成交量
+    //         rose: 0.16123, // 涨跌
+    //         tendency: [1.23, 1.24, 2.35, 2.1, 1.59, 1.89],
+    //         hot: false // 是否为最热交易对
+    //       },
+    //       {
+    //         id: 30, // 交易对id
+    //         plateId: 0, // 板块id（主区，交易区。。。）
+    //         image: 'https://www.fubt.top//fubt/upload/coin/a7e56fc38ea44e1f8ed4c395193ec2e0组.png', // 币种图标
+    //         sellsymbol: 'ETH', // 币种简称
+    //         sellname: '以太坊', // 币种全程
+    //         area: 'BTC', // 交易区
+    //         price: 0.21761232, // 最新价格
+    //         high: 0.21761232, // 最高价
+    //         low: 0.21761232, // 最低价
+    //         volume: 21761232, // 24小时成交量
+    //         rose: -0.16123, // 涨跌
+    //         tendency: [1.23, 1.24, 2.35, 2.1, 1.59, 1.89],
+    //         hot: true // 是否为最热交易对
+    //       },
+    //       {
+    //         id: 31, // 交易对id
+    //         plateId: 0, // 板块id（主区，交易区。。。）
+    //         image: 'https://www.fubt.top//fubt/upload/coin/a7e56fc38ea44e1f8ed4c395193ec2e0组.png', // 币种图标
+    //         sellsymbol: 'EOS', // 币种简称
+    //         sellname: 'EOS', // 币种全程
+    //         area: 'BTC', // 交易区
+    //         price: 0.21761232, // 最新价格
+    //         high: 0.21761232, // 最高价
+    //         low: 0.21761232, // 最低价
+    //         volume: 21761232, // 24小时成交量
+    //         rose: 0.16123, // 涨跌
+    //         tendency: [1.23, 1.24, 2.35, 2.1, 1.59, 1.89],
+    //         hot: false // 是否为最热交易对
+    //       },
+    //       {
+    //         id: 32, // 交易对id
+    //         plateId: 0, // 板块id（主区，交易区。。。）
+    //         image: 'https://www.fubt.top//fubt/upload/coin/a7e56fc38ea44e1f8ed4c395193ec2e0组.png', // 币种图标
+    //         sellsymbol: 'SWFTC', // 币种简称
+    //         sellname: 'SWFTC', // 币种全程
+    //         area: 'BTC', // 交易区
+    //         price: 0.21761232, // 最新价格
+    //         high: 0.21761232, // 最高价
+    //         low: 0.21761232, // 最低价
+    //         volume: 21761232, // 24小时成交量
+    //         rose: 0.16123, // 涨跌
+    //         tendency: [1.23, 1.24, 2.35, 2.1, 1.59, 6.89],
+    //         hot: false // 是否为最热交易对
+    //       },
+    //       {
+    //         id: 33, // 交易对id
+    //         plateId: 0, // 板块id（主区，交易区。。。）
+    //         image: 'https://www.fubt.top//fubt/upload/coin/a7e56fc38ea44e1f8ed4c395193ec2e0组.png', // 币种图标
+    //         sellsymbol: 'TOPC', // 币种简称
+    //         sellname: 'TOPC', // 币种全程
+    //         area: 'BTC', // 交易区
+    //         price: 0.21761232, // 最新价格
+    //         high: 0.21761232, // 最高价
+    //         low: 0.21761232, // 最低价
+    //         volume: 21761232, // 24小时成交量
+    //         rose: 0.16123, // 涨跌
+    //         tendency: [1.23, 1.24, 2.35, 2.1, 1.59, 1.89],
+    //         hot: false // 是否为最热交易对
+    //       },
+    //       {
+    //         id: 34, // 交易对id
+    //         plateId: 0, // 板块id（主区，交易区。。。）
+    //         image: 'https://www.fubt.top//fubt/upload/coin/a7e56fc38ea44e1f8ed4c395193ec2e0组.png', // 币种图标
+    //         sellsymbol: 'OMG', // 币种简称
+    //         sellname: 'OMG', // 币种全程
+    //         area: 'BTC', // 交易区
+    //         price: 0.21761232, // 最新价格
+    //         high: 0.21761232, // 最高价
+    //         low: 0.21761232, // 最低价
+    //         volume: 21761232, // 24小时成交量
+    //         rose: -0.16123, // 涨跌
+    //         tendency: [1.23, 1.24, 2.35, 2.1, 1.59, 6.89],
+    //         hot: false // 是否为最热交易对
+    //       },
+    //       {
+    //         id: 35, // 交易对id
+    //         plateId: 0, // 板块id（主区，交易区。。。）
+    //         image: 'https://www.fubt.top//fubt/upload/coin/a7e56fc38ea44e1f8ed4c395193ec2e0组.png', // 币种图标
+    //         sellsymbol: 'IOST', // 币种简称
+    //         sellname: 'IOST', // 币种全程
+    //         area: 'BTC', // 交易区
+    //         price: 0.21761232, // 最新价格
+    //         high: 0.21761232, // 最高价
+    //         low: 0.21761232, // 最低价
+    //         volume: 21761232, // 24小时成交量
+    //         rose: 0.16123, // 涨跌
+    //         tendency: [1.23, 1.24, 2.35, 2.1, 1.59, 6.89],
+    //         hot: false // 是否为最热交易对
+    //       },
+    //       {
+    //         id: 36, // 交易对id
+    //         plateId: 0, // 板块id（主区，交易区。。。）
+    //         image: 'https://www.fubt.top//fubt/upload/coin/a7e56fc38ea44e1f8ed4c395193ec2e0组.png', // 币种图标
+    //         sellsymbol: 'BTM', // 币种简称
+    //         sellname: 'BTM', // 币种全程
+    //         area: 'BTC', // 交易区
+    //         price: 0.21761232, // 最新价格
+    //         high: 0.21761232, // 最高价
+    //         low: 0.21761232, // 最低价
+    //         volume: 21761232, // 24小时成交量
+    //         rose: 0.16123, // 涨跌
+    //         tendency: [1.23, 1.24, 2.35, 2.1, 1.59, 6.89],
+    //         hot: false // 是否为最热交易对
+    //       },
+    //       {
+    //         id: 37, // 交易对id
+    //         plateId: 0, // 板块id（主区，交易区。。。）
+    //         image: 'https://www.fubt.top//fubt/upload/coin/a7e56fc38ea44e1f8ed4c395193ec2e0组.png', // 币种图标
+    //         sellsymbol: 'BTM', // 币种简称
+    //         sellname: 'BTM', // 币种全程
+    //         area: 'BTC', // 交易区
+    //         price: 0.21761232, // 最新价格
+    //         high: 0.21761232, // 最高价
+    //         low: 0.21761232, // 最低价
+    //         volume: 21761232, // 24小时成交量
+    //         rose: 0.16123, // 涨跌
+    //         tendency: [1.23, 1.24, 2.35, 2.1, 1.59, 6.89],
+    //         hot: false // 是否为最热交易对
+    //       }
+    //     ]
+    //   },
+    //   {
+    //     plateId: 1,
+    //     plateName: '创新区',
+    //     content: [
+    //       {
+    //         id: 38, // 交易对id
+    //         plateId: 1, // 板块id（主区，交易区。。。）
+    //         image: 'https://www.fubt.top//fubt/upload/coin/a7e56fc38ea44e1f8ed4c395193ec2e0组.png', // 币种图标
+    //         sellsymbol: 'LOCC', // 币种简称
+    //         sellname: '创新区币种', // 币种全程
+    //         area: 'FBT', // 交易区
+    //         price: 0.21761239, // 最新价格
+    //         high: 0.21761232, // 最高价
+    //         low: 0.21761232, // 最低价
+    //         volume: 21761232, // 24小时成交量
+    //         rose: -0.16123, // 涨跌
+    //         tendency: [2.35, 1.23, 1.89, 1.24, 2.1, 1.59, 0.1, 2.35],
+    //         hot: false // 是否为最热交易对
+    //       }
+    //     ]
+    //   }
+    // ]
     // fbt交易区模拟数据
     // 获取本地搜藏列表
     this.collectList = JSON.parse(getStore('collectList')) || []
+    console.log(this.collectList)
     this.resetCollectList()
     this.filterMarketList = this.marketList
 
-    this.setFilterMarketList(this.activeName, this.BTCMarketList)
+    // this.setFilterMarketList(this.activeName, this.BTCMarketList)
   },
   mounted () {
   },
@@ -890,8 +892,65 @@ export default {
     ...mapMutations([
       'CHANGE_COLLECT_LIST'
     ]),
+    // 重新订阅请求socket
+    resetSocketMarket (areaId) {
+      socket.subscribeKline({
+        'type': 'trade_market', // 请求类型
+        areaId
+      }, (data) => {
+        switch (data.type) {
+          // 请求socket
+          case 0:
+            if (data.data) {
+              console.log(data.data[0])
+              this.marketList = data.data
+              this.collectList = JSON.parse(getStore('collectList')) || []
+              this.resetCollectList()
+              this.filterMarketList = this.marketList
+              this.setFilterMarketList(this.activeName, this.marketList)
+            }
+            break
+          // 订阅socket
+          case 1:
+            // let newData = data.data[0]
+            // let newContent = newData.content[0]
+            // let collectContent = this.marketList[1].content
+            // this.marketList.forEach((item, index) => {
+            //   // 非自选区
+            //   if (item.id === newData.id) {
+            //     item.content.forEach((innerItem, innerIndex) => {
+            //       if (innerItem.id === newData.content[0].id) {
+            //         this.$set(this.marketList[index].content, innerIndex, newContent)
+            //         return false
+            //       }
+            //     })
+            //   }
+            //   // 自选区
+            //   if (collectContent.length) {
+            //     collectContent.forEach((item, index) => {
+            //       if (item.id === newContent.id) {
+            //         this.$set(collectContent, index, newContent)
+            //         this.$set(collectContent[index].tendency, 0, newContent.tendency[0])
+            //         this.$set(collectContent[index].tendency, 1, newContent.tendency[1])
+            //         // console.log(collectContent)
+            //         return false
+            //       }
+            //     })
+            //   }
+            //   return false
+            // })
+            break
+        }
+        // let resultArr = splitSocketParams(data)
+        // console.log(resultArr)
+        // console.log(this.marketList)
+        // if (this.collectList.length) {
+        //   this.setMarketList(this.collectAreaId, this.collectList)
+        // }
+      })
+    },
     // 获取板块列表
-    async getPartnerList () {
+    async getTradeAreaList () {
       let params = {
         partnerId: this.partnerId
       }
@@ -901,7 +960,10 @@ export default {
       } else {
         const list = this.tabList.concat(data.data.data)
         this.tabList = list
-        this.activeName = this.tabList[1].name
+        console.log(this.tabList)
+        this.activeName = this.tabList[1].id
+        this.$store.commit('common/CHANGE_ACTIVE_TRADE_AREA', this.tabList[1])
+        this.resetSocketMarket(this.tabList[1].id)
       }
     },
     // 排序
@@ -1003,12 +1065,20 @@ export default {
     // 设置filterMarketList
     setFilterMarketList (tabName, list) {
       // 自选区
-      if (tabName == this.tabList[0].name) {
-        this.tabList.forEach((item) => {
-          this.collectList.forEach((innerItem) => {
-            if (item.id == innerItem.plateId) {
-              this.filterMarketList[item.id].content.push(innerItem)
-            }
+      // console.log(tabName)
+      console.log(this.tabList)
+      if (tabName == this.tabList[0].id) {
+        console.log(this.filterMarketList)
+        this.tabList.forEach((item, index) => {
+          this.collectList.forEach((innerItem, innerIndex) => {
+            // console.log(item)
+            console.log(innerItem)
+            console.log(this.filterMarketList)
+            // if (item.id == innerItem.areaId) {
+            //   console.log(innerIndex)
+            //   console.log(this.filterMarketList)
+            //   this.filterMarketList[item.id].content.push(innerItem)
+            // }
           })
         })
       } else {
@@ -1031,6 +1101,7 @@ export default {
     },
     // 切换收藏
     toggleCollect (id, status, row) {
+      console.log(id)
       console.log(row)
       status = Boolean(status)
       // this.collectStatusList[id] = Boolean(status)
@@ -1049,7 +1120,7 @@ export default {
       setStore('collectList', this.collectList)
       this.CHANGE_COLLECT_LIST(this.collectList)
       setStore('collectStatusList', this.collectStatusList)
-      if (this.activeName == this.tabList[0].name) {
+      if (this.activeName == this.tabList[0].id) {
         this.resetList(this.filterMarketList)
         this.setFilterMarketList(this.activeName, this.ETHMarketList)
       }
@@ -1065,17 +1136,23 @@ export default {
     changeTab (e) {
       const name = e.name
       // 自选区
-      if (name == this.tabList[0].name) {
+      if (name == this.tabList[0].id) {
         this.resetList(this.filterMarketList)
-        this.setFilterMarketList(this.activeName, this.ETHMarketList)
+        console.log(this.marketList)
+        this.setFilterMarketList(this.activeName, this.marketList)
+        console.log(this.filterMarketList)
       } else {
         // 接口请求不同交易区数据
-        if (this.activeName == this.tabList[1].name) {
-          this.setFilterMarketList(this.activeName, this.BTCMarketList)
-        } else if (this.activeName == this.tabList[2].name) {
-          this.setFilterMarketList(this.activeName, this.ETHMarketList)
-        }
+        console.log(this.activeName)
+        this.resetSocketMarket(this.activeName)
+        // if (this.activeName == this.tabList[1].id) {
+        //   this.setFilterMarketList(this.activeName, this.BTCMarketList)
+        // } else if (this.activeName == this.tabList[2].id) {
+        //   this.setFilterMarketList(this.activeName, this.ETHMarketList)
+        // }
       }
+      this.$store.commit('common/CHANGE_ACTIVE_TRADE_AREA', e)
+      console.log(e)
     },
     // 切换内容显示隐藏
     toggleShowContent () {
@@ -1089,7 +1166,8 @@ export default {
       language: state => state.common.language,
       globalCollectList: state => state.home.globalCollectList,
       globalCollectStatusList: state => state.home.globalCollectStatusList,
-      partnerId: state => state.common.partnerId // 商户id
+      partnerId: state => state.common.partnerId, // 商户id
+      activeTradeArea: state => state.common.activeTradeArea
     }),
     // 搜索关键字过滤列表过滤
     searchFilterMarketList () {

@@ -46,7 +46,7 @@
                   placeholder="请选择"
                 >
                   <el-option
-                    v-for="item in typeList"
+                    v-for="item in statusList"
                     :key="item.id"
                     :label="item.name"
                     :value="item.id"
@@ -214,8 +214,8 @@
                   placeholder="请选择"
                 >
                   <el-option
-                    v-for="item in typeList"
-                    :key="item.id"
+                    v-for="item in statusList"
+                    :key="item.value"
                     :label="item.name"
                     :value="item.id"
                   >
@@ -361,7 +361,7 @@
                 <span class="currency-span">/</span>
                 <!--交易区下拉-->
                 <el-select
-                  v-model="value"
+                  v-model="activeExchangeArea"
                   placeholder="请选择"
                 >
                   <el-option
@@ -377,14 +377,14 @@
               <div class="trade-type-box condition-item">
                 <span class="currency-span">类型</span>
                 <el-select
-                  v-model="value"
+                  v-model="activeStatus"
                   placeholder="请选择"
                 >
                   <el-option
-                    v-for="item in typeList"
-                    :key="item.id"
-                    :label="item.name"
-                    :value="item.id"
+                    v-for="item in statusList"
+                    :key="item.code"
+                    :label="item.value"
+                    :value="item.code"
                   >
                   </el-option>
                 </el-select>
@@ -558,7 +558,9 @@ export default {
       totalPageForHistoryEntrust: 1, // 历史委托总页数
       pageSize: 10,
       entrustSelectList: [], // 交易区下拉列表
-      typeList: [], // 类型列表
+      statusList: [], // 类型列表
+      activeExchangeArea: '', // 当前选中交易区
+      activeStatus: '', // 当前选中状态
       end: '' // 占位
     }
   },
@@ -569,7 +571,7 @@ export default {
     require('../../../../static/css/theme/day/Personal/TransactionType/CoinOrdersDay.css')
     // 黑色主题样式
     require('../../../../static/css/theme/night/Personal/TransactionType/CoinOrdersNight.css')
-    // this.getEntrustSelectBox()
+    this.getEntrustSelectBox()
     // this.getMyCurrentEntrust()
   },
   mounted () {},
@@ -590,7 +592,7 @@ export default {
       } else {
         console.log(data)
         this.entrustSelectList = data.data.data.coinList
-        this.typeList = data.data.data.statusList
+        this.statusList = data.data.data.statusList
       }
     },
     /**

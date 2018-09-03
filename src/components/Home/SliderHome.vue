@@ -160,10 +160,12 @@ export default {
 </script>
 <style scoped lang="scss">
   .slider-box{
-    height:300px;
-    margin:200px auto;
+    /*height:300px;*/
+    /*margin:200px auto;*/
     width:100%;
     transition: all 4s;
+    position: absolute;
+    bottom:40px;
     &.active{
       opacity:.2;
     }

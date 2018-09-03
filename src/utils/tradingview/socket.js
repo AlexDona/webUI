@@ -30,19 +30,37 @@ function sendData (ws, params) {
 }
 
 function subscribe (ws, params) {
-  // console.log(params)
   // 首页行情
-  if (!params.type) {
+  if (params.type === 'home_market') {
     // console.log('qidong')
-    ws.send(JSON.stringify({
+    sendData(ws, {
       'tag': 'REQ',
-      'content': `market.ticker.474629374641963008.481417408695762944.all.i18nCode`,
+      'content': `market.ticker.${store.state.common.partnerId}.${params.plateId}.0.i18nCode`,
+      'id': `market_001`
+    })
+    sendData(ws, {
+      'tag': 'SUB',
+      'content': `market.ticker.${store.state.common.partnerId}.${params.plateId}.0.i18nCode`,
+      'id': `market_001`
+    })
+  // 币币交易市场
+  } else if (params.type === 'trade_market') {
+    // 币币交易市场
+    sendData(ws, {
+      'tag': 'REQ',
+      'content': `market.bbticker.${store.state.common.partnerId}.${params.areaId}`,
+      'id': `market_001`
+    })
+    // 币币交易市场
+    ws.send(JSON.stringify({
+      'tag': 'SUB',
+      'content': `market.bbticker.${store.state.common.partnerId}.${params.areaId}`,
       'id': `market_001`
     }))
   } else {
   //  币币交易
     let symbols = [params.symbol]
-    // console.log(symbols)
+    console.log(symbols)
     let resolution = '1'
 
     switch (params.resolution) {
@@ -94,11 +112,11 @@ function subscribe (ws, params) {
 
       // 交易记录
       if (store.state.common.reqRefreshStatus) {
-        sendData(ws, {
-          'tag': 'REQ',
-          'content': `market.${symbol}.trade`,
-          'id': `trade_${symbol}`
-        })
+        // sendData(ws, {
+        //   'tag': 'REQ',
+        //   'content': `market.${symbol}.trade`,
+        //   'id': `trade_${symbol}`
+        // })
       }
       // 实时行情
       // sendData(ws, {
@@ -119,6 +137,7 @@ function subscribe (ws, params) {
           'id': `depth_${symbol}`
         })
       }
+
       // K线
       // console.log(resolution)
       // console.log(symbol)
@@ -129,11 +148,11 @@ function subscribe (ws, params) {
       // })
       // 交易记录
       if (store.state.common.reqRefreshStatus) {
-        sendData(ws, {
-          'tag': 'SUB',
-          'content': `market.${symbol}.trade`,
-          'id': `trade_${symbol}`
-        })
+        // sendData(ws, {
+        //   'tag': 'SUB',
+        //   'content': `market.${symbol}.trade`,
+        //   'id': `trade_${symbol}`
+        // })
       }
     // // 实时行情(首页数据)
     // sendData(ws, {
@@ -166,7 +185,7 @@ function subscribe (ws, params) {
    */
 }
 
-const Io = {
+const socket = {
   ws: null,
   init: function () {
     const BrowserWebSocket = window.WebSocket || window.MozWebSocket
@@ -206,6 +225,6 @@ const Io = {
 }
 
 export {
-  Io
+  socket
   // orderbook
 }

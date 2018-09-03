@@ -38,7 +38,6 @@ export default {
           style: {
             color: '#c7cce6',
             width: '250px'
-
           },
           axisPointer: {
             type: 'line',
@@ -51,7 +50,7 @@ export default {
             // }
           },
           formatter: function (params) {
-            console.log(params)
+            // console.log(params)
             return `
                       委托价：${params[0].data[0].toFixed(4)}<br/>
                       委托量：${params[0].data[1].toFixed(4)}
@@ -86,11 +85,34 @@ export default {
             data: this.sells,
             symbolSize: 0
           }
-        ]
-      }
+        ],
+        animation: false
+      },
+      series: [
+        {
+          name: '委托量',
+          type: 'line',
+          color: '#243235', // 填充顏色
+          areaStyle: {},
+          data: this.buys,
+          symbolSize: 0
+        },
+        {
+          name: '委托量',
+          type: 'line',
+          color: '#392231',
+          areaStyle: {},
+          data: this.sells,
+          symbolSize: 0
+        }
+      ]
     }
   },
   created () {
+    // this.resetChart(this.options)
+  },
+  mounted () {
+    // this.drawLine()
     this.buys = [
       [28408, 298.2393],
       [28412.73, 298.1026],
@@ -395,17 +417,26 @@ export default {
       [29558, 709.2143],
       [29560, 710.2282]
     ]
-    // this.options.series[0].data = this.buys
-    // this.options.series[1].data = this.sells
-    // this.depthCharts.setOption(this.options)
-  },
-  mounted () {
-    this.drawLine()
+    this.series[0].data = this.buys
+    this.series[1].data = this.sells
+    let backgroundColor = this.theme === 'night' ? '#10172d' : '#fff'
+    this.options.backgroundColor = backgroundColor
+    this.options.series = this.series
+    this.resetChart(this.options)
   },
   activited () {},
   update () {},
   beforeRouteUpdate () {},
   methods: {
+    // 重新绘制图标
+    resetChart (params) {
+      this.depthCharts = echarts.init(document.getElementById('depth'))
+      for (let k in params) {
+        this.options[k] = params[k]
+      }
+      this.depthCharts.setOption(this.options)
+      window.onresize = this.depthCharts.resize
+    },
     drawLine () {
       this.depthCharts = echarts.init(document.getElementById('depth'))
       this.depthCharts.setOption(this.options)
@@ -416,7 +447,8 @@ export default {
   computed: {
     ...mapState({
       socketData: state => state.common.socketData,
-      depthData: state => state.common.socketData.depthData
+      depthData: state => state.common.socketData.depthData,
+      theme: state => state.common.theme
       // buy: state => state.common.socketData.depthData.buy,
       // sell: state => state.common.socketData.depthData.sell
     })
@@ -429,10 +461,19 @@ export default {
   },
   watch: {
     depthData (newVal) {
-      // console.log(newVal)
-      this.options.series[0].data = newVal.buy
-      this.options.series[1].data = newVal.sell
-      this.depthCharts.setOption(this.options)
+      console.log(newVal)
+      // this.options.series[0].data = newVal.buy
+      // this.options.series[1].data = newVal.sell
+      // this.depthCharts.setOption(this.options)
+      this.series[0].data = newVal.buy
+      this.series[1].data = newVal.sell
+      this.options.series = this.series
+      this.resetChart(this.options)
+    },
+    theme (newVal) {
+      let backgroundColor = newVal === 'night' ? '#10172d' : '#fff'
+      this.options.backgroundColor = backgroundColor
+      this.resetChart(this.options)
     }
     // buy (newVal) {
     //   // console.log(newVal)

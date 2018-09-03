@@ -89,3 +89,15 @@ export const pushSendPhoneOrEmailCodeAjax = async (type, params, callback) => {
   const data = await sendMsgByPushPhoneOrEmial(type, params)
   callback(data)
 }
+
+// socket 请求类型参数分割
+export const splitSocketParams = (params) => {
+  // console.log(params)
+  let resultArr = []
+  if (params.rep) {
+    resultArr = params.rep.split('.')
+  } else if (params.sub) {
+    resultArr = params.sub.split('.')
+  }
+  return resultArr
+}
