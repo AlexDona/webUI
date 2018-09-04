@@ -42,6 +42,7 @@ export const removeStore = name => {
  *  'normal'：通用格式（2018-01-01 11：02：23）
  *  'date': 只取日期（2018-01-01）
  *  'time'：只取时间（11：02：23）
+ *  'BIH': 国际标准时分秒 (09ˋ40′32″)
  */
 export const timeFilter = (date, methods) => {
   let filterTime
@@ -60,6 +61,7 @@ export const timeFilter = (date, methods) => {
   let second = date.getSeconds()
   second = second < 10 ? '0' + second : second
   const time = hour + ':' + minute + ':' + second
+  const BIHTime = hour + 'ˋ' + minute + '′' + second + '″'
   switch (methods) {
     case 'normal':
       filterTime = newDate + time
@@ -69,6 +71,9 @@ export const timeFilter = (date, methods) => {
       break
     case 'time':
       filterTime = time
+      break
+    case 'BIH':
+      filterTime = BIHTime
       break
   }
   return filterTime

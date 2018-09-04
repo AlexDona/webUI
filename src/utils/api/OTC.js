@@ -36,3 +36,5 @@ export const cancelAllOrdersOnekey = (params) => get('otcEntrust/cancelAllEntrus
 export const buyerPayForOrder = (params) => postWithURLencoded('otcOrder/payForOrder', params)
 // otc交易中订单， otc卖家确认收款
 export const sellerConfirmGetMoney = (params) => postWithURLencoded('otcOrder/confirmReceiveForOrder', params)
+// otc交易中订单， otc卖家申诉
+export const sellerSendAppeal = (params) => postWithURLencoded('otcAppeal/applyOtcAppeal', params)
