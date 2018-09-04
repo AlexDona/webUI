@@ -39,8 +39,6 @@
             </div>
           </header>
         </div>
-        <!--v-for="(item,index) in  (showStatusButton?filteredData1:filteredData2)"-->
-        <!--v-for="(item, index) in withdrawDepositIsShowList"-->
         <div class="account-assets-content">
           <!--账户资产币种列表-->
           <div class="content-list min-height500">
@@ -198,7 +196,10 @@
                       <div class="recharge-list-left display-flex">
                         <div class="list-left-flex flex1 font-size12">
                           <div class="flex-box padding-top10">
-                            <p class="left-flex-hint">{{ chargeMoneyName }}提币地址</p>
+                            <p class="left-flex-hint">
+                              {{ chargeMoneyName }}
+                              提币地址
+                            </p>
                             <el-select
                               v-model="mentionAddressValue"
                               @change="changeId"
@@ -219,7 +220,9 @@
                         </span>
                           </div>
                           <div class="flex-box padding-top40">
-                            <p class="left-flex-hint">手续费 (5~10)</p>
+                            <p class="left-flex-hint">
+                              手续费 (5~10)
+                            </p>
                             <input
                               type="text"
                               class="flex-input border-radius2 padding-l15 box-sizing"
@@ -254,10 +257,18 @@
                         </div>
                       </div>
                       <div class="text-info flex1 font-size12">
-                        <p class="currency-rule">BTC提现费率规则：</p>
-                        <p class="prompt-message">* 为了用户资金安全，平台可能会电话确认您的提币操作，请注意接听；</p>
-                        <p class="prompt-message"> * BTC充值经过1个确认后，才允许提现；</p>
-                        <p class="prompt-message">* 可提现金额≤账户可用资产-未确认的数字资产。</p>
+                        <p class="currency-rule">
+                          BTC提现费率规则：
+                        </p>
+                        <p class="prompt-message">
+                          * 为了用户资金安全，平台可能会电话确认您的提币操作，请注意接听；
+                        </p>
+                        <p class="prompt-message">
+                          * BTC充值经过1个确认后，才允许提现；
+                        </p>
+                        <p class="prompt-message">
+                          * 可提现金额≤账户可用资产-未确认的数字资产。
+                        </p>
                         <p class="mention-button">
                           <button
                             class="font-size12 submit-but border-radius4 cursor-pointer"
@@ -292,7 +303,11 @@ import UserInfo from '../AccountBalance/UserInfo'
 import IconFontCommon from '../../Common/IconFontCommon'
 import VueClipboard from 'vue-clipboard2'
 import { createNamespacedHelpers, mapState } from 'vuex'
-import {assetCurrenciesList, inquireWithdrawalAddressList, inquireRechargeAddressList} from '../../../utils/api/personal'
+import {
+  assetCurrenciesList,
+  inquireWithdrawalAddressList,
+  inquireRechargeAddressList
+} from '../../../utils/api/personal'
 import {returnAjaxMessage} from '../../../utils/commonFunc'
 const { mapMutations } = createNamespacedHelpers('personal')
 Vue.use(VueClipboard)
@@ -452,10 +467,9 @@ export default {
     // 查询提币地址列表查询
     async queryWithdrawalAddressList () {
       let data = await inquireWithdrawalAddressList({
-        shortName: this.merchantID, // 币种名称
+        shortName: this.partnerId, // 币种名称
         selectType: this.hideStatusButton // all：所有币种 noall：有资产币种
       })
-      // let data = await inquireWithdrawalAddressList()
       // console.log(data)
       if (!(returnAjaxMessage(data, this, 0))) {
         return false
@@ -475,7 +489,6 @@ export default {
       let data = await inquireRechargeAddressList({
         coinId: this.chargeMoneyAddressId
       })
-      // let data = await inquireRechargeAddressList()
       console.log(data)
       if (!(returnAjaxMessage(data, this, 0))) {
         return false
@@ -512,11 +525,11 @@ export default {
     // 点击跳转账单明细
     stateRechargeRecord () {
       console.log('1')
-      this.CHANGE_USER_CENTER_ACTIVE_NAME('second')
+      this.CHANGE_USER_CENTER_ACTIVE_NAME('billing-details')
     },
     // 点击跳转提币地址
     stateMentionAddress () {
-      this.CHANGE_USER_CENTER_ACTIVE_NAME('third')
+      this.CHANGE_USER_CENTER_ACTIVE_NAME('mention-address')
     },
     //  点击复制
     onCopy (e) {

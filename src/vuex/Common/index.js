@@ -28,7 +28,6 @@ const state = {
     hot: false // 是否为最热交易对
   },
   activeTradeArea: {}, // 当前选中交易区
-  merchantID: '474629374641963008', // 商户id
   reqRefreshStatus: true, // socket刷新
   // socket 数据
   socketData: {

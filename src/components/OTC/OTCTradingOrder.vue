@@ -19,7 +19,7 @@
           <div class="order-id">
             订单号：{{item.orderSequence}}
           </div>
-          <!-- 成交时间 -->
+          <!-- 挂单时间 -->
           <div class="deal-time">
             挂单时间：{{item.createTime}}
           </div>
@@ -129,6 +129,20 @@
                   <span>微信账户:</span>
                   <span>{{activePayModeList[index]}}</span>
                 </p>
+                <p
+                  class="bank-info"
+                  v-if="activeBankType[index] === 'paypal'"
+                >
+                  <span>paypal账户:</span>
+                  <span>{{activePayModeList[index]}}</span>
+                </p>
+                <p
+                  class="bank-info"
+                  v-if="activeBankType[index] === 'xilian'"
+                >
+                  <span>西联汇款账户:</span>
+                  <span>{{activePayModeList[index]}}</span>
+                </p>
               </div>
               <div class="bank-info-picture display-inline-block">
                 <div class="picture-box">
@@ -205,6 +219,7 @@
                     <span>{{item.payAcctount}}</span>
                 </p>
               </div>
+              <!-- 扫码支付 -->
               <div class="bank-info-picture display-inline-block">
                 <div class="picture-box">
                   <el-popover
@@ -276,9 +291,9 @@
           <div class="order-id">
             订单号：{{item.orderSequence}}
           </div>
-          <!-- 成交时间 -->
+          <!-- 挂单时间 -->
           <div class="deal-time">
-            成交时间：{{item.createTime}}
+            挂单时间：{{item.createTime}}
           </div>
           <div class="order-list-head-icon sell-icon">
             <!-- <img src="../../assets/develop/sell.png" alt=""> -->
@@ -323,24 +338,33 @@
             <!-- 付款前 -->
             <div
               class="middle-content"
-              v-if = "sellerConfirmGatherMoney"
+              v-if="item.status == 'PICKED'"
             >
               <div class="trader-info display-inline-block">
                 <p class="order-cancle-tips">
-                  订单生成后N分钟内对方未确认收款，订单将自动取消
+                  订单生成后{{item.cancelRestTime}}分钟内对方未提交付款，订单将自动取消
                 </p>
               </div>
+              <!-- 扫码支付 -->
               <div class="bank-info-picture display-inline-block">
                 <div class="picture-box">
                   <el-popover
                     placement="bottom"
                     trigger="click"
                   >
+                    <!-- 此处的图片需要从后台获取：只有微信和支付宝支持扫码支付 -->
+                    <!-- 当用户选择是支付宝 -->
                     <img
                       width="140"
                       height="200"
                       src="../../assets/develop/weixin.png"
                     >
+                    <!-- 当用户选择是微信 -->
+                    <!-- <img
+                      width="140"
+                      height="200"
+                      src="../../assets/develop/weixin.png"
+                    > -->
                     <el-button slot="reference">扫码支付</el-button>
                   </el-popover>
                 </div>
@@ -348,24 +372,67 @@
             </div>
             <!-- 付款后 -->
             <div class="middle-content"
-              v-else
+              v-if="item.status == 'PAYED'"
             >
               <div class="trader-info display-inline-block">
                 <p class="bankMoneyInfo">
-                  <IconFontCommon
+                  <span
+                    v-if="item.payType === 'bank'"
+                  >
+                    <IconFontCommon
+                      class="font-size16"
+                      iconName="icon-yinhangqia"
+                    />
+                    银行卡已付款
+                  </span>
+                  <span
+                    v-if="item.payType === 'alipay'"
+                  >
+                    <IconFontCommon
+                      class="font-size16"
+                      iconName="icon-zhifubao1"
+                    />
+                    支付宝已付款
+                  </span>
+                  <span
+                    v-if="item.payType === 'wx'"
+                  >
+                    <IconFontCommon
+                      class="font-size16"
+                      iconName="icon-weixin1"
+                    />
+                    微信已付款
+                  </span>
+                  <span
+                    v-if="item.payType === 'xilian'"
+                  >
+                    <img src="../../assets/user/xilian.png" alt="" class="xilian">
+                    西联汇款已付款
+                  </span>
+                  <span
+                    v-if="item.payType === 'paypal'"
+                  >
+                    <IconFontCommon
+                      class="font-size16"
+                      iconName="icon-paypal"
+                    />
+                    PAYPAL已付款
+                  </span>
+                  <!-- <IconFontCommon
                     iconName="icon-yinhangqia"
                   />
-                  <span>银行卡已付款22</span>
+                  <span>银行卡已付款22</span> -->
                 </p>
                 <p class="bankMoneyInfo">
-                  <span>转账金额:</span><span>￥688.00</span>
+                  <span>转账金额: </span><span>{{item.symbol}}{{item.payAmount}}</span>
                 </p>
                 <p class="bankMoneyInfo">
                   <span>
                     账&nbsp;&nbsp;&nbsp;户:</span>
-                    <span>612799999999999999</span>
+                   <span>{{item.payAcctount}}</span>
                 </p>
               </div>
+              <!-- 扫码支付 -->
               <div class="bank-info-picture display-inline-block">
                 <div class="picture-box">
                   <el-popover
@@ -385,26 +452,31 @@
           </div>
           <!-- 2.2.3 表右部 -->
           <div class="order-list-body-right">
+            <!-- 付款前 -->
             <div
               class="right-content"
-              v-if = "sellerConfirmGatherMoney"
+              v-if="item.status == 'PICKED'"
             >
               <p class="action-explain">
               <el-button
                 type="primary"
                 size="mini"
-                @click="comfirmGatherMoney"
               >
                 确认收款
               </el-button>
               </p>
               <p class="action-explain">等待买家付款。</p>
             </div>
-            <div class="right-content" v-else>
+            <!-- 付款后 -->
+            <div
+              class="right-content"
+              v-if="item.status == 'PAYED'"
+            >
               <p class="action-explain">
                 <el-button
                   type="primary"
                   size="mini"
+                  @click="comfirmGatherMoney(item.id)"
                 >
                   确认收款
                 </el-button>
@@ -421,7 +493,8 @@
               <p class="action-explain count-down-time">
                 <span>剩余时间：</span>
                 <span class="remaining-time">
-                  11小时12分钟25秒
+                  <!-- 11小时12分钟25秒 -->
+                  {{timeFormatting(item.completeRestTime * 1000)}}
                 </span>
               </p>
             </div>
@@ -465,15 +538,15 @@
           </div>
         </div>
       </div>
-      <!-- 4.0 弹出交易密码框 -->
+      <!-- 4.0 买家点击确认付款按钮 弹出交易密码框 -->
       <div class="password-dialog">
         <el-dialog
           title="交易密码"
-          :visible.sync="dialogVisible"
+          :visible.sync="dialogVisible1"
           top="25vh"
           width="470"
         >
-          <div>请输入交易密码</div>
+          <div>请输入交易密码1</div>
           <div class="input">
             <input
               type="password"
@@ -490,7 +563,39 @@
             class="dialog-footer">
               <el-button
                 type="primary"
-                @click="submitButton"
+                @click="submitButton1"
+              >
+                提 交
+              </el-button>
+          </span>
+        </el-dialog>
+      </div>
+      <!-- 5.0 卖家点击确认收款按钮 弹出交易密码框 -->
+      <div class="password-dialog">
+        <el-dialog
+          title="交易密码"
+          :visible.sync="dialogVisible2"
+          top="25vh"
+          width="470"
+        >
+          <div>请输入交易密码2</div>
+          <div class="input">
+            <input
+              type="password"
+              class="password-input"
+              v-model="tradePassword"
+            >
+          </div>
+          <div class="error-info">
+            <!-- 错误提示 -->
+            <div class="tips">错误提示</div>
+          </div>
+          <span
+            slot="footer"
+            class="dialog-footer">
+              <el-button
+                type="primary"
+                @click="submitButton2"
               >
                 提 交
               </el-button>
@@ -502,7 +607,7 @@
 </template>
 <!--请严格按照如下书写书序-->
 <script>
-import {getOTCTradingOrders, buyerPayForOrder} from '../../utils/api/apiDoc'
+import {getOTCTradingOrders, buyerPayForOrder, sellerConfirmGetMoney} from '../../utils/api/OTC'
 import {timeFilter} from '../../utils'
 import IconFontCommon from '../Common/IconFontCommon'
 import {returnAjaxMessage} from '../../utils/commonFunc'
@@ -515,9 +620,9 @@ export default {
     return {
       // orderStatus: '', // 订单状态:（已创建，已付款，已完成，已取消，已冻结 PICKED PAYED COMPLETED CANCELED FROZEN）
       // payForButtondisabledStatus: true, // 确认付款按钮禁用状态
-      dialogVisible: false, // 交易密码框
+      dialogVisible1: false, // 交易密码框
+      dialogVisible2: false, // 交易密码框
       appealTextareaValue: '', // 订单申诉原因文本域内容
-      sellerConfirmGatherMoney: true, // 卖家确认收款按钮状态
       activitedPayStyle: '', //  选中的支付方式
       activitedPayStyleId: '', //  选中的支付方式id-往后台传送的参数
       // 交易中订单列表
@@ -551,7 +656,7 @@ export default {
   methods: {
     // 1.0 时间格式化
     timeFormatting (date) {
-      return timeFilter(date, 'normal')
+      return timeFilter(date, 'time')
     },
     // 2.0 请求交易中订单列表
     async getOTCTradingOrdersList () {
@@ -605,20 +710,14 @@ export default {
         }
         // this.payForButtondisabledStatus = false
       })
-      // 遍历订单取到支付方式数组
-      // this.tradingOrderList.forEach(item => {
-      //   if (item.id === orderId) {
-      //     this.payWayArr = item.userBankList
-      //   }
-      // })
     },
-    // 4.0 买家点击确认付款按钮
+    // 4.0 买家点击确认付款按钮 弹出交易密码框
     comfirmPayMoney () {
       // 弹出交易密码框
-      this.dialogVisible = true
+      this.dialogVisible1 = true
     },
-    // 5.0 点击交易密码框中的提交按钮
-    async submitButton () {
+    // 5.0 买家点击确认付款按钮 点击交易密码框中的提交按钮
+    async submitButton1 () {
       const data = await buyerPayForOrder({
         orderId: this.activedTradingOrderId, // 订单id
         payId: this.activitedPayStyleId, // 支付账户id
@@ -633,15 +732,40 @@ export default {
         // 付款成功后，根据返回的状态再渲染
         // 付款成功后逻辑
         // 1关闭交易密码框
-        this.dialogVisible = false
+        this.dialogVisible1 = false
         // 2再次调用接口刷新列表
         this.getOTCTradingOrdersList()
         // 3再次渲染页面:根据返回的订单状态
       }
     },
-    // 卖家点击确认收款按钮
-    comfirmGatherMoney () {
-      this.sellerConfirmGatherMoney = false
+    // 6.0 卖家点击确认收款按钮
+    comfirmGatherMoney (id) {
+      this.activedTradingOrderId = id
+      // 弹出交易密码框
+      this.dialogVisible2 = true
+      // console.log(id)
+      console.log(this.activedTradingOrderId)
+    },
+    // 7.0 卖家点击确认收款按钮 弹出交易密码框 点击交易密码框中的提交按钮
+    async submitButton2 () {
+      const data = await sellerConfirmGetMoney({
+        orderId: this.activedTradingOrderId, // 订单id
+        tradePassword: this.tradePassword // 交易密码
+      })
+      console.log(data)
+      // 提示信息
+      if (!(returnAjaxMessage(data, this, 1))) {
+        return false
+      } else {
+        // 先判断status订单状态（已创建，已付款，已完成，已取消，已冻结 PICKED PAYED COMPLETED CANCELED FROZEN）
+        // 付款成功后，根据返回的状态再渲染
+        // 付款成功后逻辑
+        // 1关闭交易密码框
+        this.dialogVisible2 = false
+        // 2再次调用接口刷新列表
+        this.getOTCTradingOrdersList()
+        // 3再次渲染页面:根据返回的订单状态
+      }
     }
   },
   filter: {},

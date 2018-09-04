@@ -149,11 +149,12 @@ import { createNamespacedHelpers, mapState } from 'vuex'
 const { mapMutations } = createNamespacedHelpers('personal')
 export default {
   components: {
-    // 个人中心
+    // 我的资产
     HeaderCommon, // 头部
     AccountAssets, // 账户资产
     BillingDetails, // 账单明细
     WithdrawalAddress, // 提币地址
+    // 个人中心
     IdentityAuthentication, // 身份认证
     AccountCredited, // 收款账户
     InvitingPromotion, // 邀请推广
@@ -168,7 +169,6 @@ export default {
   // props,
   data () {
     return {
-      activeName: 'first',
       tabPosition: 'left' // 导航位置方向
     }
   },
@@ -179,34 +179,28 @@ export default {
     require('../../../../static/css/theme/day/Personal/UserAssets/PersonalCenterDay.css')
     // 黑色主题样式
     require('../../../../static/css/theme/night/Personal/UserAssets/PersonalCenterNight.css')
-    if (this.$route.params.id) {
-      this.activeName = this.$route.params.id
-    }
   },
   mounted () {},
-  activited () {
-    if (this.$route.params.id) {
-      this.activeName = this.$route.params.id
-    }
-  },
+  activited () {},
   update () {},
   beforeRouteUpdate () {},
   methods: {
     ...mapMutations([
       'CHANGE_USER_CENTER_ACTIVE_NAME'
     ]),
-    // 面板跳转
+    // tab面板切换
     statusSwitchPanel (tab) {
       switch (tab.name) {
         case 'assets':
           break
         case 'billing-details':
-          this.$refs.securityCenterValue.WithdrawalAddressList()
+          this.$refs.billingDetailsValue.getChargeMentionList()
           break
         case 'mention-address':
+          this.$refs.billingDetailsValue.WithdrawalAddressList()
           break
         case 'identity-authentication':
-          this.$refs.securityCenterValue.getRealNameInformation()
+          this.$refs.identityValue.getRealNameInformation()
           break
         case 'account-credited':
           break
@@ -218,7 +212,7 @@ export default {
         case 'api-management':
           break
         case 'push-asset':
-          this.$refs.securityCenterValue.getPushRecordList()
+          this.$refs.pushAssetValue.getPushRecordList()
           break
         case 'coin-orders':
           break

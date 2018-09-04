@@ -483,8 +483,13 @@ export default {
   },
   data () {
     return {
-      username: '18625512985',
-      password: 'a11111111',
+      // username: '15738818082',
+      username: '18625512987',
+      // username: '18625512985',
+      // password: 'a11111111',
+      // username: '18625512986',
+      // username: '18625512988',
+      password: 'a1111111',
       userNameErrorMsg: '', // 错误提示
       loadingCircle: {},
       userInputImageCode: '', // 图形验证码(用户输入)

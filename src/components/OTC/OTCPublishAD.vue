@@ -390,7 +390,7 @@ export default {
     require('../../../static/css/theme/night/OTC/OTCPublishADNight.css')
     // 从全局获得商户id
     console.log('从全局获得商户id')
-    console.log(this.merchantID)
+    console.log(this.partnerId)
     // 1.0 otc可用币种查询：
     this.getOTCAvailableCurrencyList()
     // 2.0 otc可用法币查询：
@@ -412,7 +412,7 @@ export default {
     //  2.0 otc可用币种查询：
     async getOTCAvailableCurrencyList () {
       const data = await getOTCAvailableCurrency({
-        partnerId: this.merchantID
+        partnerId: this.partnerId
       })
       console.log('可用币种列表')
       console.log(data)
@@ -460,7 +460,7 @@ export default {
     // 4.0 otc可用法币查询
     async getMerchantAvailablelegalTenderList () {
       const data = await getMerchantAvailablelegalTender({
-        partnerId: this.merchantID
+        partnerId: this.partnerId
       })
       console.log('可用法币')
       console.log(data)
@@ -646,7 +646,7 @@ export default {
   filter: {},
   computed: {
     ...mapState({
-      merchantID: state => state.common.merchantID
+      partnerId: state => state.common.partnerId
     })
   },
   watch: {}

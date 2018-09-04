@@ -405,7 +405,7 @@ export default {
      */
     async getPushRecordList () {
       let data = await getPushAssetList({
-        partnerId: this.merchantID // 商户id
+        partnerId: this.partnerId // 商户id
       })
       console.log(data)
       if (!(returnAjaxMessage(data, this, 0))) {
@@ -595,7 +595,7 @@ export default {
       theme: state => state.common.theme,
       userInfo: state => state.personal.userInfo,
       // userInfo: state => state.user.loginStep1Info, // 用户详细信息
-      merchantID: state => state.common.merchantID,
+      partnerId: state => state.common.partnerId,
       loginType: state => state.user.loginType, // 发送类型
       disabledOfPhoneBtn: state => state.user.disabledOfPhoneBtn,
       disabledOfEmailBtn: state => state.user.disabledOfEmailBtn

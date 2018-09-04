@@ -4,7 +4,6 @@ import {get, postWithURLencoded} from './axios'
  */
 // 查询某商户可用法币币种列表
 export const getMerchantAvailablelegalTender = (params) => get('otcCOin/getAvailCurrencyCoins', params)
-
 // otc可用币种查询：我要购买/我要出售的币种列表
 export const getOTCAvailableCurrency = (params) => get('otcCOin/getAvailOTCCoins', params)
 // otc主页面查询otc挂单列表
@@ -33,3 +32,7 @@ export const querySelectedOrdersDetails = (params) => get('otcEntrust/selectUser
 export const queryUserTradeFeeAndCoinInfo = (params) => get('otcCOin/getUserTradeFeeAndCoinInfo', params)
 // otc广告管理一键撤销用户所有挂单--商家专用
 export const cancelAllOrdersOnekey = (params) => get('otcEntrust/cancelAllEntrusts', {params})
+// otc交易中订单，otc买家确认付款
+export const buyerPayForOrder = (params) => postWithURLencoded('otcOrder/payForOrder', params)
+// otc交易中订单， otc卖家确认收款
+export const sellerConfirmGetMoney = (params) => postWithURLencoded('otcOrder/confirmReceiveForOrder', params)
