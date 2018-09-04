@@ -33,19 +33,25 @@ function subscribe (ws, params) {
   // 首页行情
   if (params.type === 'home_market') {
     // console.log('qidong')
+    const plateId = params.plateId == 0 ? 'all' : '0'
     sendData(ws, {
       'tag': 'REQ',
-      'content': `market.ticker.${store.state.common.partnerId}.${params.plateId}.0.i18nCode`,
+      'content': `market.ticker.${store.state.common.partnerId}.${params.plateId}.${plateId}.i18nCode`,
       'id': `market_001`
     })
     sendData(ws, {
       'tag': 'SUB',
-      'content': `market.ticker.${store.state.common.partnerId}.${params.plateId}.0.i18nCode`,
+      'content': `market.ticker.${store.state.common.partnerId}.${params.plateId}.${plateId}.i18nCode`,
       'id': `market_001`
     })
   // 币币交易市场
   } else if (params.type === 'trade_market') {
     // 币币交易市场
+    sendData(ws, {
+      'tag': 'CANCEL',
+      'content': `market.bbticker.${store.state.common.partnerId}.${params.areaId}`,
+      'id': `market_001`
+    })
     sendData(ws, {
       'tag': 'REQ',
       'content': `market.bbticker.${store.state.common.partnerId}.${params.areaId}`,

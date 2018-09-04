@@ -134,6 +134,7 @@
                     :style="'height:'+(50*(item.content.length||1)+108)+'px'"
                   >
                     <el-table
+                      class="cursor-pointer"
                       :data="item.content"
                       @row-click="changeActiveSymbol"
                     >
@@ -174,7 +175,7 @@
                         </template>
                       </el-table-column>
                       <el-table-column
-                        label="最新价格(BTCC)"
+                        label="最新价格"
                         width="160px"
                         sortable
                       >
@@ -212,7 +213,7 @@
                       </el-table-column>
                       <el-table-column
                         prop="high"
-                        label="最高价(BTCC)"
+                        label="最高价"
                         width="145px"
                         sortable
                       >
@@ -231,7 +232,7 @@
                       </el-table-column>
                       <el-table-column
                         prop="low"
-                        label="最低价(BTCC)"
+                        label="最低价"
                         width="145px"
                         sortable
                       >
@@ -308,7 +309,7 @@
                           <!--非自选区-->
                           <div
                             class="collect-box"
-                            v-show="item.id!==collectAreaId"
+                            v-show="item.id!=collectAreaId"
                           >
                             <i
                               class="el-icon-star-on collected collect font-size16 cursor-pointer"
@@ -324,7 +325,7 @@
                           <!--自选区-->
                           <div
                             class="collect-box"
-                            v-show="item.id===collectAreaId"
+                            v-show="item.id==collectAreaId"
                           >
                             <i
                               class="el-icon-star-on collected collect font-size16 cursor-pointer"
@@ -378,10 +379,11 @@ import IconFontCommon from '../Common/IconFontCommon'
 import VueDND from 'awe-dnd'
 import {getStore, setStore} from '../../utils'
 import {socket} from '../../utils/tradingview/socket'
-import {getPartnerList} from '../../utils/api/home'
+// import {getPartnerList} from '../../utils/api/home'
 import {
-  returnAjaxMessage
+  returnAjaxMessage,
   // splitSocketParams
+  getPartnerListAjax
 } from '../../utils/commonFunc'
 import {mapState, createNamespacedHelpers} from 'vuex'
 const { mapMutations } = createNamespacedHelpers('home')
@@ -414,7 +416,7 @@ export default{
       // 自选区 id
       collectAreaId: 99,
       // 自选区状态列表
-      collectStatusList: [],
+      collectStatusList: {},
       // 自选区列表
       collectList: [],
       // 当前选中tab
@@ -483,8 +485,8 @@ export default{
     //     label: '创新区'
     //   }
     // ]
-    console.log(this.tabList)
-    console.log(this.marketList)
+    // console.log(this.tabList)
+    // console.log(this.marketList)
     // 获取本地搜藏列表
     // this.collectList = JSON.parse(getStore('collectList')) || []
     // this.collectList.forEach((item) => {
@@ -911,7 +913,7 @@ export default{
     //     ]
     //   }
     // ]
-    console.log(this.toggleSideList)
+    // console.log(this.toggleSideList)
   },
   mounted () {
     // 搜索区、自选区禁止拖拽
@@ -938,12 +940,13 @@ export default{
       this.$store.commit('common/CHANGE_ACTIVE_TRADE_AREA', {
         areaId
       })
+      this.$router.push({'path': '/TradeCenter'})
     },
     // 重新订阅请求socket
     resetSocketMarket (plateId) {
       socket.subscribeKline({
         'type': 'home_market', // 请求类型
-        'plateId': plateId
+        plateId
       }, (data) => {
         // console.log(data)
         switch (data.type) {
@@ -1013,19 +1016,22 @@ export default{
       this.resetSocketMarket(this.activeName)
     },
     // 获取板块列表
-    async getPartnerList () {
-      let params = {
-        partnerId: this.partnerId,
-        i18n: 'ZN_CN'
-      }
-      const data = await getPartnerList(params)
-      if (!returnAjaxMessage(data, this, 0)) {
-        return false
-      } else {
-        this.tabList = data.data.data
-        this.activeName = this.tabList[0].id
-        this.resetSocketMarket(this.activeName)
-      }
+    getPartnerList () {
+      getPartnerListAjax(this.partnerId, (data) => {
+        if (!returnAjaxMessage(data, this, 0)) {
+          return false
+        } else {
+          this.tabList = data.data.data
+          // 全部板块
+          // this.tabList.unshift({
+          //   i18nName: 'all-plate',
+          //   id: '0',
+          //   language: 'ZN_CN'
+          // })
+          this.activeName = this.tabList[0].id
+          this.resetSocketMarket(this.activeName)
+        }
+      })
     },
     // 发送
 
@@ -1192,7 +1198,7 @@ export default{
     ...mapState({
       theme: state => state.common.theme,
       language: state => state.common.language, // 语言
-      plateList: state => state.home.plateList, // 板块列表
+      plateList: state => state.common.plateList, // 板块列表
       partnerId: state => state.common.partnerId, // 商户id
       activeSymbol: state => state.common.activeSymbol,
       activeTradeArea: state => state.common.activeTradeArea

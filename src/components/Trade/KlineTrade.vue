@@ -85,12 +85,12 @@ export default {
   },
   watch: {
     theme (newVal) {
-      this.paneProperties.background = newVal === 'night' ? '#10172d' : '#fff'
-      Tv.init({
-        symbol: this.activeSymbol.sellsymbol + this.activeSymbol.area,
-        interval: this.interval,
-        paneProperties: this.paneProperties
-      })
+      // this.paneProperties.background = newVal === 'night' ? '#10172d' : '#fff'
+      // Tv.init({
+      //   symbol: this.activeSymbol.sellsymbol + this.activeSymbol.area,
+      //   interval: this.interval,
+      //   paneProperties: this.paneProperties
+      // })
     },
     activeTradeArea (newVal) {
       console.log(newVal)

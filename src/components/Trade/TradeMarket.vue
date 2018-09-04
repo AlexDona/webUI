@@ -107,33 +107,36 @@
                       >
                         {{item.plateName}}
                       </div>
-                    <dl class="coin-item">
+                    <dl
+                      class="coin-item "
+                    >
                       <dt></dt>
                       <dd
-                        class="coin-item"
+                        class="coin-item cursor-pointer"
                         v-for="(innerItem,innerIndex) in item.content"
                         :key="innerIndex"
+                        @click =changeActiveSymbol(innerItem)
                       >
                         <span>
                           <!--收藏按钮-->
                           <!--自选区-->
-                          <span v-show="activeName===tabList[0].id">
+                          <span v-show="activeName==tabList[0].id">
                             <i
                               class="el-icon-star-on cursor-pointer collected"
-                              @click="toggleCollect(innerItem.id+innerItem.plateId,0,innerItem)"
+                              @click="toggleCollect(innerItem.id,0,innerItem)"
                             ></i>
                           </span>
                           <!--非自选区-->
-                          <span v-show="activeName!==tabList[0].id">
+                          <span v-show="activeName!=tabList[0].id">
                             <i
                               class="el-icon-star-off cursor-pointer"
-                              v-show="!collectStatusList[innerItem.id+innerItem.plateId]"
-                              @click="toggleCollect(innerItem.id+innerItem.plateId,1,innerItem)"
+                              v-show="!collectStatusList[innerItem.id]"
+                              @click="toggleCollect(innerItem.id,1,innerItem)"
                             ></i>
                             <i
                               class="el-icon-star-on cursor-pointer collected"
-                              v-show="collectStatusList[innerItem.id+innerItem.plateId]"
-                              @click="toggleCollect(innerItem.id+innerItem.plateId,0,innerItem)"
+                              v-show="collectStatusList[innerItem.id]"
+                              @click="toggleCollect(innerItem.id,0,innerItem)"
                             ></i>
                           </span>
                           <span class="base-currency">{{innerItem.sellsymbol}}</span>
@@ -181,7 +184,10 @@
 <script>
 import {getStore, setStore} from '../../utils'
 import {getPartnerAreaList} from '../../utils/api/trade'
-import {returnAjaxMessage} from '../../utils/commonFunc'
+import {
+  returnAjaxMessage,
+  getPartnerListAjax
+} from '../../utils/commonFunc'
 import {socket} from '../../utils/tradingview/socket'
 import {mapState, createNamespacedHelpers} from 'vuex'
 const { mapMutations } = createNamespacedHelpers('home')
@@ -194,7 +200,7 @@ export default {
       contentShowStatus: true, // 显示隐藏控制
       tabList: [
         {
-          id: 0,
+          id: 99,
           name: '自选'
         }
       ], // tab栏个数
@@ -205,12 +211,13 @@ export default {
       // searchFilterMarketList: [], // 搜索过滤
       collectAreaId: '', // 自选区id
       collectList: [], // 收藏列表
-      collectStatusList: [], // 收藏状态
+      collectStatusList: {}, // 收藏状态
       // BTC 交易区模拟数据
       BTCMarketList: [],
       // ETH 交易区模拟数据
       ETHMarketList: [],
       searchKeyWord: '', // 搜索关键字
+      plateList: [], // 板块列表
       nothing: '' // 占位
     }
   },
@@ -242,6 +249,8 @@ export default {
     //   }
     // ]
     this.getTradeAreaList()
+    // 获取板块
+    this.getPartnerList()
     // 获取行情数据
     // this.marketList = [
     //   {
@@ -877,7 +886,6 @@ export default {
     console.log(this.collectList)
     this.resetCollectList()
     this.filterMarketList = this.marketList
-
     // this.setFilterMarketList(this.activeName, this.BTCMarketList)
   },
   mounted () {
@@ -892,17 +900,41 @@ export default {
     ...mapMutations([
       'CHANGE_COLLECT_LIST'
     ]),
+    // 设置 当前交易区
+    changeActiveSymbol (data) {
+      this.$store.commit('common/CHANGE_ACTIVE_SYMBOL', data)
+    },
+    // 获取板块列表
+    getPartnerList () {
+      getPartnerListAjax(this.partnerId, (data) => {
+        if (!returnAjaxMessage(data, this, 0)) {
+          return false
+        } else {
+          this.plateList = data.data.data
+          // this.tabList = data.data.data
+          // // 全部板块
+          // this.tabList.unshift({
+          //   i18nName: 'all-plate',
+          //   id: '0',
+          //   language: 'ZN_CN'
+          // })
+          // this.activeName = this.tabList[0].id
+          // this.resetSocketMarket(this.activeName)
+        }
+      })
+    },
     // 重新订阅请求socket
     resetSocketMarket (areaId) {
       socket.subscribeKline({
         'type': 'trade_market', // 请求类型
         areaId
       }, (data) => {
+        // console.log(data)
         switch (data.type) {
           // 请求socket
           case 0:
             if (data.data) {
-              console.log(data.data[0])
+              // console.log(data.data[0])
               this.marketList = data.data
               this.collectList = JSON.parse(getStore('collectList')) || []
               this.resetCollectList()
@@ -912,6 +944,42 @@ export default {
             break
           // 订阅socket
           case 1:
+            const newData = data.data[0].content[0]
+            // console.log(newData.id)
+            if (newData.id == this.activeSymbol.id) {
+              this.changeActiveSymbol(newData)
+            }
+            // 非自选器
+            if (this.activeName != this.tabList[0].id) {
+              this.marketList.forEach((item, index) => {
+                if (item.plateId === data.data[0].plateId) {
+                  item.content.forEach((innerItem, innerIndex) => {
+                    // console.log(innerItem, innerIndex)
+                    // console.log(data.data)
+                    if (innerItem.id == newData.id) {
+                      // this.marketList[index].content[innerIndex] = newData
+                      this.$set(this.marketList[index].content, innerIndex, newData)
+                      this.filterMarketList = this.marketList
+                      return false
+                    }
+                  })
+                }
+              })
+            } else {
+              // console.log(this.filterMarketList)
+              // console.log(newData)
+              this.filterMarketList.forEach((item, index) => {
+                if (item.plateId == newData.plateId) {
+                  // console.log(item)
+                  item.content.forEach((innerItem, innerIndex) => {
+                    if (innerItem.id == newData.id) {
+                      this.$set(this.filterMarketList[index].content, innerIndex, newData)
+                    }
+                  })
+                }
+              })
+            }
+
             // let newData = data.data[0]
             // let newContent = newData.content[0]
             // let collectContent = this.marketList[1].content
@@ -949,7 +1017,7 @@ export default {
         // }
       })
     },
-    // 获取板块列表
+    // 获取交易区列表
     async getTradeAreaList () {
       let params = {
         partnerId: this.partnerId
@@ -1064,21 +1132,23 @@ export default {
     },
     // 设置filterMarketList
     setFilterMarketList (tabName, list) {
-      // 自选区
       // console.log(tabName)
-      console.log(this.tabList)
+      // console.log(tabName)
+      // 自选区
       if (tabName == this.tabList[0].id) {
         console.log(this.filterMarketList)
-        this.tabList.forEach((item, index) => {
+        this.resetList(this.filterMarketList)
+        this.plateList.forEach((item, index) => {
+          // console.log(item)
           this.collectList.forEach((innerItem, innerIndex) => {
             // console.log(item)
-            console.log(innerItem)
-            console.log(this.filterMarketList)
-            // if (item.id == innerItem.areaId) {
-            //   console.log(innerIndex)
-            //   console.log(this.filterMarketList)
-            //   this.filterMarketList[item.id].content.push(innerItem)
-            // }
+            // console.log(innerItem)
+            // console.log(this.filterMarketList)
+            if (item.id == innerItem.plateId) {
+              // console.log(innerIndex)
+              console.log(this.filterMarketList)
+              this.filterMarketList[index].content.push(innerItem)
+            }
           })
         })
       } else {
@@ -1089,13 +1159,14 @@ export default {
             this.$set(this.filterMarketList[index], 'content', item.content)
           }
         })
-        console.log(this.filterMarketList)
+        // console.log(this.filterMarketList)
         this.resetCollectList()
       }
     },
     // 初始化自选区
     resetCollectList () {
       this.collectList.forEach((item) => {
+        console.log(item)
         this.collectStatusList[item.id] = true
       })
     },
@@ -1121,8 +1192,10 @@ export default {
       this.CHANGE_COLLECT_LIST(this.collectList)
       setStore('collectStatusList', this.collectStatusList)
       if (this.activeName == this.tabList[0].id) {
+        console.log(this.activeName)
+        console.log(this.tabList[0].id)
         this.resetList(this.filterMarketList)
-        this.setFilterMarketList(this.activeName, this.ETHMarketList)
+        this.setFilterMarketList(this.activeName, this.collectList)
       }
       console.log(this.collectStatusList)
     },
@@ -1134,16 +1207,27 @@ export default {
     },
     // 切换tab
     changeTab (e) {
-      const name = e.name
+      console.log(e.name)
+      console.log(this.activeName)
+      console.log(this.tabList[0].id)
+      // this.activeName
       // 自选区
-      if (name == this.tabList[0].id) {
-        this.resetList(this.filterMarketList)
-        console.log(this.marketList)
-        this.setFilterMarketList(this.activeName, this.marketList)
-        console.log(this.filterMarketList)
+      if (this.activeName == this.tabList[0].id) {
+        // this.resetList(this.filterMarketList)
+        // console.log(this.filterMarketList)
+        this.filterMarketList = []
+        this.plateList.forEach((item, index) => {
+          this.filterMarketList.push({
+            plateId: item.id,
+            plateName: item.i18nName,
+            content: []
+          })
+        })
+        // console.log(this.collectList)
+        this.setFilterMarketList(this.activeName, this.collectList)
+        // console.log(this.filterMarketList)
       } else {
         // 接口请求不同交易区数据
-        console.log(this.activeName)
         this.resetSocketMarket(this.activeName)
         // if (this.activeName == this.tabList[1].id) {
         //   this.setFilterMarketList(this.activeName, this.BTCMarketList)
@@ -1152,7 +1236,7 @@ export default {
         // }
       }
       this.$store.commit('common/CHANGE_ACTIVE_TRADE_AREA', e)
-      console.log(e)
+      // console.log(e)
     },
     // 切换内容显示隐藏
     toggleShowContent () {
@@ -1167,7 +1251,8 @@ export default {
       globalCollectList: state => state.home.globalCollectList,
       globalCollectStatusList: state => state.home.globalCollectStatusList,
       partnerId: state => state.common.partnerId, // 商户id
-      activeTradeArea: state => state.common.activeTradeArea
+      activeTradeArea: state => state.common.activeTradeArea,
+      activeSymbol: state => state.common.activeSymbol // 当前选中交易对
     }),
     // 搜索关键字过滤列表过滤
     searchFilterMarketList () {

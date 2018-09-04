@@ -4,12 +4,15 @@
 import {
   repealMyEntrustAjax
 } from '../utils/api/trade'
-import {
-  sendMsgByPushPhoneOrEmial
-} from '../utils/api/personal'
+// import {
+//   sendMsgByPushPhoneOrEmial
+// } from '../utils/api/personal'
 import {
   sendMsgByPhoneOrEmial
 } from '../utils/api/user'
+import {
+  getPartnerList
+} from '../utils/api/home'
 import {PHONE_REG, EMAIL_REG, ID_REG, PWD_REG, ALIPAY_REG, BANK_REG, GOOGLE_REG} from './regExp'
 // 请求接口后正确或者错误的提示提示信息：
 // 如果返回 错误 了就提示错误并不能继续往下进行；
@@ -84,11 +87,6 @@ export const repealMyEntrustCommon = async (params, callback) => {
   const repealData = await repealMyEntrustAjax(params)
   callback(repealData)
 }
-// 发送验证码（短信、邮箱）
-export const pushSendPhoneOrEmailCodeAjax = async (type, params, callback) => {
-  const data = await sendMsgByPushPhoneOrEmial(type, params)
-  callback(data)
-}
 
 // socket 请求类型参数分割
 export const splitSocketParams = (params) => {
@@ -100,4 +98,13 @@ export const splitSocketParams = (params) => {
     resultArr = params.sub.split('.')
   }
   return resultArr
+}
+// 获取板块信息
+export const getPartnerListAjax = async (partnerId, callback) => {
+  let params = {
+    partnerId,
+    i18n: 'ZN_CN'
+  }
+  const data = await getPartnerList(params)
+  callback(data)
 }

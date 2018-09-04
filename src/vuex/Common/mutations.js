@@ -5,7 +5,8 @@ import {
   CHANGE_SOCKET_REFRESH_STATUS,
   CHANGE_SOCKET_DATA,
   CHANGE_ACTIVE_SYMBOL,
-  CHANGE_ACTIVE_TRADE_AREA
+  CHANGE_ACTIVE_TRADE_AREA,
+  CHANGE_PALTE_LIST
 } from './mutations-types.js'
 
 // import {setStore, getStore} from '../utils'
@@ -51,5 +52,9 @@ export default {
   // 更改当前选中交易区
   [CHANGE_ACTIVE_TRADE_AREA] (state, data) {
     state.activeTradeArea = data
+  },
+  // 更改板块
+  [CHANGE_PALTE_LIST] (state, data) {
+    state.plateList = data
   }
 }
