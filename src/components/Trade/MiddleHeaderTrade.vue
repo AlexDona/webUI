@@ -77,13 +77,25 @@
       </div>
       <div class="item">
         <div class="top font-size12">
+          <span>24hr成交量</span>
+        </div>
+        <div class="bottom">
+            <span
+              class="font-size14"
+            >
+              {{activeSymbol.volume}}
+            </span>
+        </div>
+      </div>
+      <div class="item">
+        <div class="top font-size12">
           <span>24hr成交额</span>
         </div>
         <div class="bottom">
           <span
             class="font-size14"
           >
-            {{activeSymbol.volume}} {{activeSymbol.sellsymbol}}
+            {{activeSymbol.amount24h}} {{activeSymbol.sellsymbol}}
           </span>
         </div>
       </div>
@@ -134,9 +146,10 @@ export default {
         }
         &.logo{
           text-align: center;
+          flex:0.5;
           >.logo{
             width:30px;
-            margin-left:40px;
+            /*margin-left:40px;*/
           }
         }
         &.symbol{
@@ -145,7 +158,7 @@ export default {
           }
         }
         &.latest-price{
-          flex:2;
+          flex:1.5;
           >.top{
           }
         }

@@ -400,9 +400,9 @@ export default {
     // 新增委单
     async addEntrust (type) {
       let params = {
-        partnerId: '474629374641963008',
-        userId: '476053529258098688',
-        tradeId: '477495977800892416',
+        partnerId: this.partnerId,
+        // userId: this.loginStep1Info.userId,
+        tradeId: this.activeSymbol.tradeId,
         payPwd: this.payPwd,
         type: type ? 'SELL' : 'BUY', // 委单类型
         matchType: this.matchType, // 撮合类型
@@ -458,7 +458,10 @@ export default {
   computed: {
     ...mapState({
       theme: state => state.common.theme,
-      refreshEntrustStatus: state => state.trade.refreshEntrustStatus
+      refreshEntrustStatus: state => state.trade.refreshEntrustStatus,
+      partnerId: state => state.common.partnerId,
+      loginStep1Info: state => state.user.loginStep1Info,
+      activeSymbol: state => state.common.activeSymbol
     })
   },
   watch: {}

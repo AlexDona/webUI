@@ -1,6 +1,15 @@
 export const M = {
   'home': '首页',
   // 公共部分
+  entrust_msg_type_001: '卖单',
+  entrust_msg_type_002: '买单',
+  entrust_msg_status_001: '未成交',
+  entrust_msg_status_002: '部分成交',
+  entrust_msg_status_003: '完全成交',
+  entrust_msg_status_004: '已撤销',
+  entrust_msg_match_type_001: '市价单',
+  'entrust_msg_match_type_002': '限价单',
+  'all-plate': '全部',
   // 首页
   // 币币交易
   // OTC交易

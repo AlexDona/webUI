@@ -3,7 +3,10 @@ import {
   CHANGE_LANGUAGE,
   CHANGE_CONVERT_CURRENCY,
   CHANGE_SOCKET_REFRESH_STATUS,
-  CHANGE_SOCKET_DATA
+  CHANGE_SOCKET_DATA,
+  CHANGE_ACTIVE_SYMBOL,
+  CHANGE_ACTIVE_TRADE_AREA,
+  CHANGE_PALTE_LIST
 } from './mutations-types.js'
 
 // import {setStore, getStore} from '../utils'
@@ -41,5 +44,17 @@ export default {
     state.socketData.depthData = data.depthData
     state.socketData.buyAndSellData = data.buyAndSellData
     state.socketData.tardeRecordList = data.tardeRecordList
+  },
+  // 更改当前选中交易对
+  [CHANGE_ACTIVE_SYMBOL] (state, data) {
+    state.activeSymbol = data
+  },
+  // 更改当前选中交易区
+  [CHANGE_ACTIVE_TRADE_AREA] (state, data) {
+    state.activeTradeArea = data
+  },
+  // 更改板块
+  [CHANGE_PALTE_LIST] (state, data) {
+    state.plateList = data
   }
 }

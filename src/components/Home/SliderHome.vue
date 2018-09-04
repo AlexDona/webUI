@@ -18,6 +18,8 @@
 </template>
 <script>
 import Slider from 'vue-concise-slider'// 引入slider组件
+import {getBanner} from '../../utils/api/home'
+import {returnAjaxMessage} from '../../utils/commonFunc'
 import {mapState, createNamespacedHelpers} from 'vuex'
 const { mapMutations } = createNamespacedHelpers('home')
 export default {
@@ -37,14 +39,15 @@ export default {
         loop: true, // 无限循环
         autoplay: 4000, // 自动播放:时间[ms]
         infinite: 8
-      }
+      },
+      sliderListAjax: []
     }
   },
   created () {
     require('../../../static/css/list/Home/SliderHome.css')
 
     // 请求轮播图数据
-
+    this.getBanner()
     let sliderListAjax = [
       {
         id: 1,
@@ -142,13 +145,90 @@ export default {
   update () {},
   beforeRouteUpdate () {},
   methods: {
+    // 获取轮播图
+    async getBanner () {
+      const params = {
+        partnerId: this.partnerId,
+        language: 'CHN'
+      }
+      const data = await getBanner(params)
+      if (!returnAjaxMessage(data, this, 0)) {
+        return false
+      } else {
+        console.log(data)
+        this.sliderListAjax = data.data.data
+        console.log(this.sliderListAjax)
+        this.renderSlider()
+      }
+    },
+    renderSlider () {
+      let sliderList = []
+      this.sliderListAjax.forEach((item) => {
+        sliderList.push({
+          style: {
+            width: '230px',
+            height: '120px',
+            borderRadius: '4px',
+            margin: '20px',
+            cursor: 'pointer',
+            overflow: 'hidden'
+          },
+          component: {
+            props: ['item', 'sliderinit', 'pages'],
+            data () {
+              return {
+                miniImg: item.url,
+                background: 'http://fubt-3.oss-cn-hongkong.aliyuncs.com/5dd01753-6e61-4cf0-b24b-3e49c1343de2'
+              }
+            },
+            mounted () {
+            },
+            methods: {
+              ...mapMutations([
+                'CHANGE_BANNER_ACTIVE',
+                'CHANGE_BANNER_BACKGROUND'
+              ]),
+              mouseOver (e) {
+                const URL = e.target.attributes.background.value
+                this.CHANGE_BANNER_ACTIVE(true)
+                this.CHANGE_BANNER_BACKGROUND(URL)
+              },
+              mouseLeave () {
+                this.CHANGE_BANNER_ACTIVE(false)
+                this.CHANGE_BANNER_BACKGROUND(this.bannerDefaultBackground)
+              }
+            },
+            computed: {
+              ...mapState({
+                bannerActive: state => state.home.bannerActive,
+                bannerDefaultBackground: state => state.home.bannerDefaultBackground
+              })
+            },
+            template: `<router-link
+                       style="width: 100%;height:100%"
+                       to="/home/${item.id}"
+                     >
+                       <img
+                        style="width: 100%;height:100%"
+                        :src="miniImg"
+                        :background="background"
+                        @mouseenter="mouseOver"
+                        @mouseleave="mouseLeave"
+                       />
+                     </router-link>`
+          }
+        })
+      })
 
+      this.pages = sliderList
+    }
   },
   filter: {},
   computed: {
-    ...mapState([
-      'bannerActive'
-    ])
+    ...mapState({
+      // 'bannerActive',
+      partnerId: state => state.common.partnerId
+    })
   },
   watch: {
     'bannerActive' (now) {
@@ -160,10 +240,12 @@ export default {
 </script>
 <style scoped lang="scss">
   .slider-box{
-    height:300px;
-    margin:200px auto;
+    /*height:300px;*/
+    /*margin:200px auto;*/
     width:100%;
     transition: all 4s;
+    position: absolute;
+    bottom:40px;
     &.active{
       opacity:.2;
     }

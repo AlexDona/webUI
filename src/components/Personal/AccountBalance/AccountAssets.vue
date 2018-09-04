@@ -467,7 +467,7 @@ export default {
     // 查询提币地址列表查询
     async queryWithdrawalAddressList () {
       let data = await inquireWithdrawalAddressList({
-        shortName: this.merchantID, // 币种名称
+        shortName: this.partnerId, // 币种名称
         selectType: this.hideStatusButton // all：所有币种 noall：有资产币种
       })
       // console.log(data)

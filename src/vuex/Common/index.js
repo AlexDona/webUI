@@ -14,6 +14,7 @@ const state = {
   // 当前选中交易对
   activeSymbol: {
     id: 0, // 交易对id
+    tradeId: '486137900174409728',
     image: 'https://www.fubt.top//fubt/upload/coin/a7e56fc38ea44e1f8ed4c395193ec2e0组.png', // 币种图标
     sellsymbol: 'FUC', // 币种简称
     sellname: '富链', // 币种全程
@@ -26,7 +27,7 @@ const state = {
     tendency: [2.35, 1.23, 1.89, 1.24, 2.1, 1.59, 0.1, 2.35],
     hot: false // 是否为最热交易对
   },
-  merchantID: '474629374641963008', // 商户id
+  activeTradeArea: {}, // 当前选中交易区
   reqRefreshStatus: true, // socket刷新
   // socket 数据
   socketData: {
@@ -34,6 +35,8 @@ const state = {
     buyAndSellData: {},
     tardeRecordList: [] // 交易记录
   },
+  // 公用 板块
+  plateList: [], // 板块列表
   partnerId: '474629374641963008', // 商户id
   end: ''// 占位
 }

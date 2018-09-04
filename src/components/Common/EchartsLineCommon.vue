@@ -2,7 +2,12 @@
   echarts折线图封装
 -->
 <template>
-  <div class="line-box common" :id="id" :style="{width: '120px', height: '50px'}" :data="data">
+  <div
+    class="line-box common"
+    :id="id"
+    :style="{width: '120px', height: '50px'}"
+    :data="data"
+  >
   <!--<div class="line-box common" :id="id" :style="{width: '100px', height: '50px'}">-->
   </div>
 </template>
@@ -15,6 +20,7 @@ export default {
   props: ['data', 'id'],
   data () {
     return {
+      chart: '',
       options: {
         // backgroundColor: 'transparent',
         xAxis: {
@@ -36,15 +42,16 @@ export default {
             data: this.data,
             symbolSize: 0
           }
-        ]
+        ],
+        animation: false
       }
     }
   },
   created () {
   },
   mounted () {
-    let myChart = echarts.init(document.getElementById(this.id))
-    myChart.setOption(this.options)
+    this.chart = echarts.init(document.getElementById(this.id))
+    this.chart.setOption(this.options)
   },
   activited () {},
   update () {},
@@ -52,7 +59,13 @@ export default {
   methods: {},
   filter: {},
   computed: {},
-  watch: {}
+  watch: {
+    data (newVal) {
+      // console.log(newVal)
+      this.options.series[0].data = newVal
+      this.chart.setOption(this.options)
+    }
+  }
 }
 </script>
 <style scoped lang="scss">

@@ -300,6 +300,7 @@ import NavCommon from '../Common/HeaderCommon'
 import FooterCommon from '../Common/FooterCommon'
 import IconFontCommon from '../Common/IconFontCommon'
 import {returnAjaxMessage} from '../../utils/commonFunc'
+import {timeFilter} from '../../utils'
 export default {
   components: {
     NavCommon, //  头部导航
@@ -348,7 +349,7 @@ export default {
       buyPrice: '', // 购买金额
       tradePassword: '', // 交易密码
       id: '', // 往后台传送的参数 挂单id（otc首页挂单列表中每行的币种id）
-      coinId: '', // 币种id
+      partnerCoinId: '', // 商户币种id
       userType: '', // 挂单人类型（COMMON普通用户 ，MERCHANT商家）
       // 数量错误提示
       numberTips: '',
@@ -363,23 +364,23 @@ export default {
     // 1.0 从OTCCenter传过来的URL中获取的
     // 在线买卖的类型 购买（onlineBuy）和 出售（onlineSell)
     // id：挂单id
-    // coinId：币种id
-    // console.log(this.$route.params)
+    // partnerCoinId：商户币种id
+    console.log(this.$route.params)
     // console.log(this.$route.params.styleId)
     // console.log(this.$route.params.id)
-    // console.log(this.$route.params.coinId)
+    // console.log(this.$route.params.partnerCoinId)
     this.onlineTraderStatus = this.$route.params.styleId
     this.id = this.$route.params.id
-    this.coinId = this.$route.params.coinId
+    this.partnerCoinId = this.$route.params.partnerCoinId
     console.log(this.onlineTraderStatus)
     console.log(this.id)
-    console.log(this.coinId)
+    console.log(this.partnerCoinId)
     // 2.0 查询选中的挂单，利用挂单id请求详情信息
     if (this.id) {
       this.querySelectedOrdersDetails()
     }
     // 3.0 查询用户交易币种手续费率以及币种详情
-    if (this.coinId) {
+    if (this.partnerCoinId) {
       this.queryUserTradeFeeAndCoinInfo()
     }
   },
@@ -388,6 +389,10 @@ export default {
   update () {},
   beforeRouteUpdate () {},
   methods: {
+    // 1.0 时间格式化
+    timeFormatting (date) {
+      return timeFilter(date, 'date')
+    },
     // 1.0 显示输入密码框
     showDialog () {
       this.dialogVisible = true
@@ -590,7 +595,7 @@ export default {
     // 4.0 查询用户交易币种手续费率以及币种详情
     async queryUserTradeFeeAndCoinInfo () {
       const data = await queryUserTradeFeeAndCoinInfo({
-        coinId: this.coinId // 挂单id
+        partnerCoinId: this.partnerCoinId // 商户币种id
       })
       console.log('用户交易币种手续费率以及币种详情')
       console.log(data)

@@ -1,7 +1,8 @@
 import './chart'
-import {Io} from './socket'
+import {socket} from './socket'
 import Datafeeds from './datafeed'
 import store from '../../vuex'
+import {splitSocketParams} from '../../utils/commonFunc'
 console.log(store)
 // import '../../../../static/charting_library/static/css/custom_color_black.css'
 export default {
@@ -65,7 +66,7 @@ export default {
       locale: 'zh',
       debug: false,
       supports_group_request: false,
-      toolbar_bg: '#10172d', // 工具栏背景色
+      toolbar_bg: options.paneProperties.background, // 工具栏背景色
       // toolbar_bg: options.toolbar_bg, // 工具栏背景色
       studies_overrides: {
         // "volume.volume.color.0": "#d45858", // 成交量 k柱 背景色
@@ -73,8 +74,8 @@ export default {
         'volume.volume.transparency': 100
       },
       overrides: {
-        'paneProperties.background': '#10172d', // 背景色
-        // 'paneProperties.background': options.bgColor, // 背景色
+        // 'paneProperties.background': '#10172d', // 背景色
+        'paneProperties.background': options.paneProperties.background, // 背景色
         'paneProperties.vertGridProperties.color': '#1f2943', // 列分割线
         'paneProperties.horzGridProperties.color': '#1f2943', // 行分割线
         'symbolWatermarkProperties.transparency': 90,
@@ -236,9 +237,10 @@ export default {
         symbol: symbol,
         type: 'updata',
         from: from,
-        to: to
+        to: to,
+        activeTradeArea: store.state.common.activeTradeArea
       }
-      Io.subscribeKline(params, this.onUpdateData.bind(this))
+      socket.subscribeKline(params, this.onUpdateData.bind(this))
     }
     // 请求数据
     const requestData = list => {
@@ -247,18 +249,19 @@ export default {
         symbol: symbol,
         type: 'kline',
         from: from,
-        to: to
+        to: to,
+        activeTradeArea: store.state.common.activeTradeArea
       }
       // console.log(resolution)
-      Io.subscribeKline(params, this.onUpdateData.bind(this))
-      // if (store.state.reqRefreshStatus) {
-      this.getBarTimer = setTimeout(() => {
-        this.getBars(symbol, resolution, from, to, callback)
-        // console.log('reflash')
-        store.commit('common/CHANGE_SOCKET_REFRESH_STATUS', false)
-        // console.log(store.state.common.reqRefreshStatus)
-      }, 1000)
-      // }
+      socket.subscribeKline(params, this.onUpdateData.bind(this))
+      if (store.state.reqRefreshStatus) {
+        this.getBarTimer = setTimeout(() => {
+          this.getBars(symbol, resolution, from, to, callback)
+          // console.log('reflash')
+          store.commit('common/CHANGE_SOCKET_REFRESH_STATUS', false)
+          // console.log(store.state.common.reqRefreshStatus)
+        }, 1000)
+      }
     }
     data ? fetchCacheData(data) : requestData()
   },
@@ -291,27 +294,26 @@ export default {
     }
   },
   onUpdateData: function (data) {
-    // console.log(data)
     // console.log('***********************************************************')
+    let tradeType = data.tradeType
     let dataArr = []
     let dataType = data.type
     // 数据类型
-    let type = ''
+    // let type = ''
     // 交易对
     let symbol = ''
     // 分辨率（时间周期）
     let resolution = ''
-    if (data.rep) {
-      dataArr = data.rep.split('.')
-    } else if (data.sub) {
-      dataArr = data.sub.split('.')
-    }
+    // if (data.rep) {
+    //   dataArr = data.rep.split('.')
+    // } else if (data.sub) {
+    //   dataArr = data.sub.split('.')
+    // }
+    dataArr = splitSocketParams(data)
     symbol = dataArr[1]
-    type = dataArr[2]
     resolution = dataArr[3]
-    // console.log(symbol)
     //  k线
-    if (type === 'kline') {
+    if (tradeType === 'KLINE') {
       // 分辨率转换
       switch (resolution) {
         case 'min':
@@ -422,9 +424,8 @@ export default {
       // this.dataCache[symbol][resolution] = data.data
       // console.log(this.dataCache[symbol][resolution])
     //  深度图
-    } else if (type == 'depth') {
+    } else if (tradeType == 'DEPTH') {
       // 深度图、买列表、卖列表
-      // console.log(data)
       if (data.data) {
         // const depthData = {
         //   depthData: data.data.depthData,
@@ -436,7 +437,7 @@ export default {
         // console.log(store.state.common.socketData)
       }
     //  交易记录
-    } else if (type === 'trade') {
+    } else if (tradeType === 'TRADE') {
       if (data.data) {
         if (!dataType) {
           this.socketData.tardeRecordList = data.data
@@ -445,6 +446,9 @@ export default {
           this.socketData.tardeRecordList.unshift(data.data)
         }
       }
+    // 币币交易市场信息
+    } else if (tradeType === 'BBTICKER') {
+      console.log(data)
     }
     store.commit('common/CHANGE_SOCKET_DATA', this.socketData)
   }

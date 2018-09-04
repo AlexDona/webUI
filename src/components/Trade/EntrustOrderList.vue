@@ -81,23 +81,23 @@
                   </li>
                   <!--委托量-->
                   <li class="td price">
-                    {{item.count}}
+                    {{item.count-0}}
                   </li>
                   <!--委托价-->
                   <li class="td price">
-                    {{item.price}}
+                    {{item.price-0}}
                   </li>
                   <!--总金额-->
                   <li class="td price">
-                    {{item.amount}}
+                    {{item.amount-0}}
                   </li>
                   <!--成交量-->
                   <li class="td price">
-                    {{item.completeCount}}
+                    {{item.completeCount-0}}
                   </li>
                   <!--未成交量-->
                   <li class="td price">
-                    {{item.leftCount}}
+                    {{item.leftCount-0}}
                   </li>
                   <!--操作-->
                   <li class="td todos">
@@ -178,19 +178,19 @@
                   </li>
                   <!--委托量-->
                   <li class="td price">
-                    {{item.count}}
+                    {{item.count-0}}
                   </li>
                   <!--委托价-->
                   <li class="td price">
-                    {{item.price}}
+                    {{item.price-0}}
                   </li>
                   <!--总金额-->
                   <li class="td price">
-                    {{item.amount}}
+                    {{item.amount-0}}
                   </li>
                   <!--成交量-->
                   <li class="td price">
-                    {{item.completeCount}}
+                    {{item.completeCount-0}}
                   </li>
                 </ul>
               </div>
@@ -242,23 +242,23 @@ export default {
   },
   created () {
     require('../../../static/css/list/Trade/TradeCenter.css')
-    this.currentEntrustList = [
-      {
-        time: new Date().getTime(),
-        type: '类型',
-        count: 123123,
-        price: 1.11211,
-        amount: 345345.123,
-        doneVolume: 123123,
-        freeVolume: 123123,
-        status: 0 // 状态码
-      }
-    ]
-    this.historyEntrustList = []
+    // this.currentEntrustList = [
+    //   {
+    //     time: new Date().getTime(),
+    //     type: '类型',
+    //     count: 123123,
+    //     price: 1.11211,
+    //     amount: 345345.123,
+    //     doneVolume: 123123,
+    //     freeVolume: 123123,
+    //     status: 0 // 状态码
+    //   }
+    // ]
+    // this.historyEntrustList = []
     // 获取我的当前委托
-    // this.getMyCurrentEntrust()
+    this.getMyCurrentEntrust()
     // 获取历史委托
-    // this.getHistoryEntrust()
+    this.getHistoryEntrust()
   },
   mounted () {},
   activited () {},
@@ -308,7 +308,7 @@ export default {
     // 获取历史委托
     async getHistoryEntrust () {
       let params = {
-        userId: '476053529258098688',
+        userId: this.userInfo.userId,
         currentPage: this.currentPageForHistoryEntrust,
         pageSize: this.pageSize
       }
@@ -323,7 +323,7 @@ export default {
     // 获取我的当前委单
     async getMyCurrentEntrust () {
       let params = {
-        userId: '476053529258098688',
+        userId: this.userInfo.userId,
         currentPage: this.currentPageForMyEntrust,
         pageSize: this.pageSize
       }
@@ -346,7 +346,8 @@ export default {
       theme: state => state.common.theme,
       language: state => state.common.language,
       isLogin: state => state.user.isLogin,
-      refreshEntrustStatus: state => state.trade.refreshEntrustStatus
+      refreshEntrustStatus: state => state.trade.refreshEntrustStatus,
+      userInfo: state => state.user.loginStep1Info
     })
   },
   watch: {

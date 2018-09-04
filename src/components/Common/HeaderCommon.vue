@@ -320,6 +320,10 @@
 import {getMerchantAvailablelegalTender} from '../../utils/api/OTC'
 import IconFontCommon from '../Common/IconFontCommon'
 import {setStore} from '../../utils'
+// import {getPartnerList} from '../../utils/api/home'
+// import {
+//   returnAjaxMessage
+// } from '../../utils/commonFunc'
 import { createNamespacedHelpers, mapState } from 'vuex'
 const { mapMutations } = createNamespacedHelpers('common')
 // const { mapMutationsForUser } = createNamespacedHelpers('user')
@@ -377,7 +381,10 @@ export default{
     // console.log(this.theme)
     this.activeTheme = this.theme
     // 查询某商户可用法币币种列表
-    // this.getMerchantAvailablelegalTenderList()
+    // 默认登录
+    if (this.loginStep1Info.userInfo) {
+      this.$store.commit('user/USER_LOGIN', this.loginStep1Info)
+    }
   },
   methods: {
     ...mapMutations([
@@ -386,11 +393,15 @@ export default{
       // 修改折算货币
       'CHANGE_CONVERT_CURRENCY',
       // 修改主题
-      'CHANGE_THEME'
+      'CHANGE_THEME',
+      // 设置板块
+      'CHANGE_PALTE_LIST'
     ]),
     // ...mapMutationsForUser([
     //   ''
     // ]),
+    // 获取板块列表
+
     // 用户登出
     userLoginOut () {
       console.log('logout')
@@ -441,7 +452,7 @@ export default{
     async getMerchantAvailablelegalTenderList () {
       let data
       data = await getMerchantAvailablelegalTender({
-        partnerId: '474629374641963008'
+        partnerId: this.partnerId
       })
       console.log(data)
       if (data.data.meta.code !== 200) {
@@ -462,7 +473,9 @@ export default{
       theme: state => state.common.theme,
       language: state => state.common.language,
       isLogin: state => state.user.isLogin,
-      userInfo: state => state.user.loginStep1Info.userInfo
+      loginStep1Info: state => state.user.loginStep1Info,
+      userInfo: state => state.user.loginStep1Info.userInfo,
+      partnerId: state => state.common.partnerId // 商户id
     })
   }
 }
