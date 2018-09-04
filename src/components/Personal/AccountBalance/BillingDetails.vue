@@ -175,7 +175,7 @@
             label="提交时间"
           >
             <template slot-scope = "s">
-              <div>{{ timeFormatting(s.row.networkFees) }}</div>
+              <div>{{ s.row.createTime }}</div>
             </template>
           </el-table-column>
           <el-table-column
@@ -183,7 +183,7 @@
             label="更新时间"
           >
             <template slot-scope = "s">
-              <div>{{ timeFormatting(s.row.updateTime) }}</div>
+              <div>{{ s.row.updateTime }}</div>
             </template>
           </el-table-column>
           <el-table-column
@@ -250,7 +250,7 @@ export default {
       ],
       showStatusRecordList: true, // 充提记录
       hiddenStatusRecordList: false, // 其他记录
-      currencyListValue: '', // 币种名称
+      currencyListValue: '全部', // 币种名称
       currencyList: [
         {
           value: '1',
