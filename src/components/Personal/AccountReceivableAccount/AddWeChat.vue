@@ -36,22 +36,38 @@
               <span class="chat-content-type">微信</span>
             </el-form-item>
             <el-form-item label="微信账号：">
-              <input class="chat-input border-radius2"/>
-            </el-form-item>
-            <el-form-item label="手  机  号  码：">
-              <el-input>
-                <template slot="append">验证码</template>
-              </el-input>
+              <input
+                class="chat-input border-radius2"
+                v-model="cardNo"
+              />
             </el-form-item>
             <el-form-item label="上传收款码：">
               <div class="chat-upload border-radius4">
-                <IconFontCommon
-                  class="font-size40 icon-plus"
-                  iconName="icon-iconjia"
-                />
+                <el-upload
+                  action="http://192.168.1.217:8888/uploadfile"
+                  :headers="tokenObj"
+                  list-type="picture-card"
+                  :on-success="handleSuccessHand"
+                  :on-remove="handleRemove"
+                >
+                  <IconFontCommon
+                    class="font-size40 icon-plus"
+                    iconName="icon-iconjia"
+                  />
+                </el-upload>
               </div>
             </el-form-item>
-            <button class="chat-button border-radius4">
+            <el-form-item label="交易密码：">
+              <input
+                type="password"
+                class="chat-input border-radius2"
+                v-model="password"
+              />
+            </el-form-item>
+            <button
+              class="chat-button border-radius4"
+              @click="stateSubmitWeChat"
+            >
               确认修改
             </button>
           </el-form>
@@ -66,6 +82,8 @@
 // 头部
 import HeaderCommon from '../../Common/HeaderCommon'
 import IconFontCommon from '../../Common/IconFontCommon'
+import {returnAjaxMessage} from '../../../utils/commonFunc'
+import {statusCardSettings} from '../../../utils/api/personal'
 // 底部
 import FooterCommon from '../../Common/FooterCommon'
 import { createNamespacedHelpers, mapState } from 'vuex'
@@ -77,7 +95,14 @@ export default {
     FooterCommon // 底部
   },
   data () {
-    return {}
+    return {
+      tokenObj: {
+        'token': this.userInfo.token
+      },
+      cardNo: '', // 微信账号
+      password: '', // 交易密码
+      dialogImageHandUrl: '' // 图片url
+    }
   },
   created () {
     // 覆盖Element样式
@@ -99,6 +124,29 @@ export default {
     returnSuperior () {
       this.CHANGE_USER_CENTER_ACTIVE_NAME('account-credited')
       this.$router.go(-1)
+    },
+    handleSuccessHand (response, file, fileList) {
+      this.dialogImageHandUrl = response.data.fileUrl
+      console.log(response, file, fileList)
+    },
+    // 确认设置我新账号
+    stateSubmitWeChat () {
+      this.stateSeniorCertification()
+    },
+    async stateSeniorCertification () {
+      let data
+      let param = {
+        cardNo: this.account, // 微信账号
+        qrcode: this.dialogImageHandUrl, // 二维码
+        bankType: 'weixin' // type
+      }
+      data = await statusCardSettings(param)
+      console.log(data)
+      if (!(returnAjaxMessage(data, this, 1))) {
+        return false
+      } else {
+        // this.getRealNameInformation()
+      }
     }
   },
   filter: {},
@@ -146,7 +194,8 @@ export default {
             padding-left: 15px;
           }
           .chat-upload {
-            width: 118px;
+            float: left;
+            /*width: 118px;*/
             height: 106px;
             text-align: center;
             line-height: 100px;
@@ -186,7 +235,7 @@ export default {
               color: #fff;
             }
             .chat-upload {
-              background-color: #485776;
+              /*background-color: #485776;*/
               .icon-plus {
                 color: #828EA6;
               }

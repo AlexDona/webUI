@@ -303,7 +303,6 @@
 <script>
 import {mapState} from 'vuex'
 import IconFontCommon from '../../Common/IconFontCommon'
-// import lrz from 'lrz'
 import {queryCountryList, submitRealNameAuthentication, submitSeniorCertification, realNameInformation} from '../../../utils/api/personal'
 import {returnAjaxMessage} from '../../../utils/commonFunc'
 export default {
@@ -314,7 +313,7 @@ export default {
   data () {
     return {
       tokenObj: {
-        'token': 'f1ecf736-a770-4827-89dd-d1c19372f79e'
+        'token': 'ee4cbf93-a8a0-4e1d-b67e-5ff8bf06d38b'
       },
       regionValue: '', // 国家
       regionList: [
@@ -368,7 +367,7 @@ export default {
     // 清空图片和关闭弹窗this.clearUserPicture()
     // this.getCountryListings()
     // this.getRealNameInformation()
-    // console.log(this.userInfo)
+    // console.log(this.tokenObj)
   },
   mounted () {},
   activited () {},
@@ -432,7 +431,7 @@ export default {
     async getRealNameInformation () {
       let data = await realNameInformation()
       console.log(data)
-      if (!(returnAjaxMessage(data, this, 1))) {
+      if (!(returnAjaxMessage(data, this, 0))) {
         return false
       } else {
         // 返回列表数据

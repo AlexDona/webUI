@@ -60,6 +60,7 @@ export default {
     // console.log(loginType)
     if (!data.loginType) {
       state.disabledOfPhoneBtn = data.status
+      state.disabledOfOldPhoneBtn = data.status
     } else {
       state.disabledOfEmailBtn = data.status
     }

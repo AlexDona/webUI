@@ -19,6 +19,7 @@
           <span class="right">操作</span>
         </div>
         <div class="payment-content">
+          <!--银行卡-->
           <div class="payment-box">
             <p class="payment-left">
               <span>
@@ -29,28 +30,27 @@
               </span>
               <span class="payment-card">银行转账</span>
             </p>
-            <p class="payment-right">
-              <el-switch
-                v-model="bankState"
-              >
-              </el-switch>
+            <div class="payment-right">
               <img
+                v-if="paymentTerm.isBnakEnable === 'disable'"
+                @click="statusOpenToClose('bank', 'enable')"
                 class="switch-img"
-                v-show="!bankState"
                 :src="closePictureSrc"
               >
               <img
+                v-else
+                @click="statusOpenToClose('bank', 'disable')"
                 class="switch-img"
-                v-show="!!bankState"
                 :src="openPictureSrc"
               >
-              <router-link to="/AddBankCard">
+              <router-link  to="/AddBankCard">
                 <span class="payment-state cursor-pointer">
-                  设置
+                    设置
                 </span>
               </router-link>
-            </p>
+            </div>
           </div>
+          <!--微信-->
           <div class="payment-box">
             <p class="payment-left">
               <span>
@@ -62,18 +62,16 @@
               <span class="payment-card">微信</span>
             </p>
             <p class="payment-right">
-              <el-switch
-                v-model="weChat"
-              >
-              </el-switch>
               <img
+                v-if="paymentTerm.isWeixinEnable === 'disable'"
+                @click="statusOpenToClose('chat', 'enable')"
                 class="switch-img"
-                v-show="!weChat"
                 :src="closePictureSrc"
               >
               <img
+                v-else
+                @click="statusOpenToClose('chat', 'disable')"
                 class="switch-img"
-                v-show="!!weChat"
                 :src="openPictureSrc"
               >
               <router-link to="/AddWeChat">
@@ -83,6 +81,7 @@
               </router-link>
             </p>
           </div>
+          <!--支付宝-->
           <div class="payment-box">
             <p class="payment-left">
               <span>
@@ -94,18 +93,16 @@
               <span class="payment-card">支付宝</span>
             </p>
             <p class="payment-right">
-              <el-switch
-                v-model="alipay"
-              >
-              </el-switch>
               <img
+                v-if="paymentTerm.isAlipayEnable === 'disable'"
+                @click="statusOpenToClose('alipay', 'enable')"
                 class="switch-img"
-                v-show="!alipay"
                 :src="closePictureSrc"
               >
               <img
+                v-else
+                @click="statusOpenToClose('alipay', 'disable')"
                 class="switch-img"
-                v-show="!!alipay"
                 :src="openPictureSrc"
               >
               <router-link to="/AddSetAlipay">
@@ -115,6 +112,7 @@
               </router-link>
             </p>
           </div>
+          <!--PAYPAL-->
           <div class="payment-box">
             <p class="payment-left">
               <span>
@@ -126,29 +124,26 @@
               <span class="payment-card">PAYPAL</span>
             </p>
             <p class="payment-right">
-              <el-switch
-                v-model="paypal"
-                on-text="ON"
-                off-text="OFF"
-              >
-              </el-switch>
               <img
+                v-if="paymentTerm.isPaypalEnable === 'disable'"
+                @click="statusOpenToClose('paypal', 'enable')"
                 class="switch-img"
-                v-show="!paypal"
                 :src="closePictureSrc"
               >
               <img
+                v-else
+                @click="statusOpenToClose('paypal', 'disable')"
                 class="switch-img"
-                v-show="!!paypal"
                 :src="openPictureSrc"
               >
-              <router-link to="/AddSetPaypal">
+              <router-link class="setting-btn" to="/AddSetPaypal">
                 <span class="payment-state cursor-pointer">
                   设置
                 </span>
               </router-link>
             </p>
           </div>
+          <!--西联汇款-->
           <div class="payment-box">
             <p class="payment-left">
               <span>
@@ -157,27 +152,26 @@
               <span class="payment-card">西联汇款</span>
             </p>
             <p class="payment-right">
-              <el-switch
-                v-model="westernUnion"
-              >
-              </el-switch>
               <img
+                v-if="paymentTerm.isXilianEnable === 'disable'"
+                @click="statusOpenToClose('western', 'enable')"
                 class="switch-img"
-                v-show="!westernUnion"
                 :src="closePictureSrc"
               >
               <img
+                v-else
+                @click="statusOpenToClose('western', 'disable')"
                 class="switch-img"
-                v-show="!!westernUnion"
                 :src="openPictureSrc"
               >
-              <router-link to="/AddWesternUnion">
-                <span class="payment-state cursor-pointer">
+              <router-link class="setting-btn" to="/AddWesternUnion">
+                <!--<span class="payment-state cursor-pointer">-->
                   设置
-                </span>
+                <!--</span>-->
               </router-link>
             </p>
           </div>
+          <!--未实名认证前弹框提示-->
           <el-dialog
             :visible.sync="centerModelWarning"
             center
@@ -205,7 +199,64 @@
               </el-button>
           </span>
           </el-dialog>
-
+          <!--开启二次确认弹框-->
+          <el-dialog
+            title="开启收款方式"
+            :visible.sync="openCollectionMode"
+            center
+          >
+            <!--<span>是否确定关闭当前收款方式</span>-->
+            <span v-show="closeBankCard">开启银行卡收款方式</span>
+            <span v-show="closeMicroLetter">开启微信收款方式</span>
+            <span v-show="closeAlipay">开启支付宝收款方式</span>
+            <span v-show="closePayapl">开启payapl收款方式</span>
+            <span v-show="closeWesternUnion">开启西联汇款收款方式</span>
+            <span
+              slot="footer"
+              class="dialog-footer"
+            >
+              <el-button
+                @click="closeCollectionMode = false"
+              >
+                取 消
+              </el-button>
+              <el-button
+                type="primary"
+                @click="determineTheOpen"
+              >
+                  确 定
+              </el-button>
+            </span>
+          </el-dialog>
+          <!--关闭二次确认弹框-->
+          <el-dialog
+            title="关闭收款方式"
+            :visible.sync="closeCollectionMode"
+            center
+          >
+            <!--<span>是否确定关闭当前收款方式</span>-->
+            <span v-show="closeBankCard">是否确定关闭银行卡收款方式</span>
+            <span v-show="closeMicroLetter">是否确定关闭微信收款方式</span>
+            <span v-show="closeAlipay">是否确定关闭支付宝收款方式</span>
+            <span v-show="closePayapl">是否确定关闭payapl收款方式</span>
+            <span v-show="closeWesternUnion">是否确定关闭西联汇款收款方式</span>
+            <span
+              slot="footer"
+              class="dialog-footer"
+            >
+              <el-button
+                @click="closeCollectionMode = false"
+              >
+                取 消
+              </el-button>
+              <el-button
+                type="primary"
+                @click="determineTheOpen"
+              >
+                  确 定
+              </el-button>
+            </span>
+          </el-dialog>
         </div>
       </div>
     </div>
@@ -214,7 +265,9 @@
 <!--请严格按照如下书写书序-->
 <script>
 import IconFontCommon from '../../Common/IconFontCommon'
-import { createNamespacedHelpers, mapState } from 'vuex'
+import {returnAjaxMessage} from '../../../utils/commonFunc'
+import {accountPaymentTerm, openAndCloseModeSetting} from '../../../utils/api/personal'
+import {mapState, createNamespacedHelpers} from 'vuex'
 const { mapMutations } = createNamespacedHelpers('personal')
 export default {
   components: {
@@ -224,14 +277,23 @@ export default {
   data () {
     return {
       bankState: false, // 银行卡状态的设置
-      weChat: false, // 银行卡状态的设置
+      weChat: false, // 微信状态的设置
       alipay: false, // 支付宝状态的设置
       paypal: false, // PAYPAL状态的设置
+      westernUnion: false, // 西联汇款状态的设置
       closePictureSrc: require('../../../assets/user/wrong.png'), // 关闭
       openPictureSrc: require('../../../assets/user/yes.png'), // 开启
-      westernUnion: false, // 西联汇款状态的设置
-      centerModelWarning: false, // 警告提示框
-      authenticationInfo: {} // 个人信息
+      centerModelWarning: false, // 未实名认证前弹框提示
+      openCollectionMode: false, // 开启收款方式
+      closeCollectionMode: false, // 关闭收款方式
+      paymentTerm: {}, // 收款方式
+      closeBankCard: false, // 默认关闭银行卡
+      closeMicroLetter: false, // 默认关闭微信
+      closeAlipay: false, // 默认关闭支付宝
+      closePayapl: false, // 默认关闭paypal
+      closeWesternUnion: false, // 默认关闭西联汇款
+      activeType: '', // 当前值
+      state: '' // 开启关闭
     }
   },
   created () {
@@ -242,7 +304,7 @@ export default {
     // 黑色主题样式
     require('../../../../static/css/theme/night/Personal/UserAssets/AccountCreditedNight.css')
     // 获取全局个人信息
-    this.authenticationInfo = this.userInfo.data.user
+    // this.authenticationInfo = this.userInfo.data.user
   },
   mounted () {},
   activited () {},
@@ -256,21 +318,251 @@ export default {
     authenticationJump () {
       this.centerModelWarning = false
       this.CHANGE_USER_CENTER_ACTIVE_NAME('identity-authentication')
-    }
-  },
-  filter: {},
-  computed: {
-    ...mapState({
-      theme: state => state.common.theme,
-      userInfo: state => state.personal.userInfo
-    })
-  },
-  watch: {}
+    },
+    // 收款方式
+    async getAccountPaymentTerm () {
+      let data = await accountPaymentTerm({})
+      console.log(data)
+      if (!(returnAjaxMessage(data, this, 0))) {
+        return false
+      } else {
+        // 返回冲提记录列表展示
+        this.paymentTerm = data.data.data
+        console.log(this.paymentTerm)
+      }
+    },
+    // 确认开启关闭
+    statusOpenToClose (e, a) {
+      // 把方法中定义的activeType、state在这里进行赋值 点击哪一个那当前的类型和状态传给后台
+      this.activeType = e
+      this.state = a
+      // console.log(this.activeType)
+      // console.log(this.state)
+      switch (e) {
+        case 'bank':
+          if (!this.paymentTerm.isBankBind) {
+            if (a === 'enable') {
+              this.openCollectionMode = true
+              this.closeBankCard = true
+              this.closeMicroLetter = false
+              this.closeAlipay = false
+              this.closePayapl = false
+              this.closeWesternUnion = false
+            } else {
+              if (this.paymentTerm.isBankBind &&
+                !this.paymentTerm.isWeixinBind &&
+                !this.paymentTerm.isAlipayBind &&
+                !this.paymentTerm.isPaypalBind &&
+                !this.paymentTerm.isXilianBind) {
+                this.closeCollectionMode = true
+                this.closeBankCard = true
+                this.closeMicroLetter = false
+                this.closeAlipay = false
+                this.closePayapl = false
+                this.closeWesternUnion = false
+              } else {
+                this.closeCollectionMode = false
+              }
+            }
+          } else {
+            this.openCollectionMode = false
+          }
+          break
+        case 'chat':
+          if (!this.paymentTerm.isWeixinBind) {
+            if (a === 'enable') {
+              this.openCollectionMode = true
+              this.closeBankCard = false
+              this.closeMicroLetter = true
+              this.closeAlipay = false
+              this.closePayapl = false
+              this.closeWesternUnion = false
+            } else {
+              if (!this.paymentTerm.isBankBind &&
+                this.paymentTerm.isWeixinBind &&
+                !this.paymentTerm.isAlipayBind &&
+                !this.paymentTerm.isPaypalBind &&
+                !this.paymentTerm.isXilianBind) {
+                this.closeCollectionMode = true
+                this.closeBankCard = false
+                this.closeMicroLetter = true
+                this.closeAlipay = false
+                this.closePayapl = false
+                this.closeWesternUnion = false
+              } else {
+                this.closeCollectionMode = false
+              }
+            }
+          } else {
+            this.openCollectionMode = false
+          }
+          break
+        case 'alipay':
+          if (!this.paymentTerm.isAlipayBind) {
+            if (a === 'enable') {
+              this.openCollectionMode = true
+              this.closeBankCard = false
+              this.closeMicroLetter = false
+              this.closeAlipay = true
+              this.closePayapl = false
+              this.closeWesternUnion = false
+            } else {
+              if (!this.paymentTerm.isBankBind &&
+                !this.paymentTerm.isWeixinBind &&
+                this.paymentTerm.isAlipayBind &&
+                !this.paymentTerm.isPaypalBind &&
+                !this.paymentTerm.isXilianBind) {
+                this.closeCollectionMode = true
+                this.closeBankCard = false
+                this.closeMicroLetter = false
+                this.closeAlipay = true
+                this.closePayapl = false
+                this.closeWesternUnion = false
+              } else {
+                this.closeCollectionMode = false
+              }
+            }
+          } else {
+            this.openCollectionMode = false
+          }
+          break
+        case 'paypal':
+          if (!this.paymentTerm.isPaypalBind) {
+            if (a === 'enable') {
+              this.openCollectionMode = true
+              this.closeBankCard = false
+              this.closeMicroLetter = false
+              this.closeAlipay = false
+              this.closePayapl = true
+              this.closeWesternUnion = false
+            } else {
+              if (!this.paymentTerm.isBankBind &&
+                !this.paymentTerm.isWeixinBind &&
+                !this.paymentTerm.isAlipayBind &&
+                this.paymentTerm.isPaypalBind &&
+                !this.paymentTerm.isXilianBind) {
+                this.closeCollectionMode = true
+                this.closeBankCard = false
+                this.closeMicroLetter = false
+                this.closeAlipay = false
+                this.closePayapl = true
+                this.closeWesternUnion = false
+              } else {
+                this.closeCollectionMode = false
+              }
+            }
+          } else {
+            this.openCollectionMode = false
+          }
+          break
+        case 'western':
+          if (!this.paymentTerm.isXilianBind) {
+            if (a === 'enable') {
+              this.openCollectionMode = true
+              this.closeBankCard = false
+              this.closeMicroLetter = false
+              this.closeAlipay = false
+              this.closePayapl = false
+              this.closeWesternUnion = true
+            } else {
+              if (!this.paymentTerm.isBankBind &&
+                !this.paymentTerm.isWeixinBind &&
+                !this.paymentTerm.isAlipayBind &&
+                !this.paymentTerm.isPaypalBind &&
+                this.paymentTerm.isXilianBind) {
+                this.closeCollectionMode = true
+                this.closeBankCard = false
+                this.closeMicroLetter = false
+                this.closeAlipay = false
+                this.closePayapl = false
+                this.closeWesternUnion = true
+              } else {
+                this.closeCollectionMode = false
+              }
+            }
+          } else {
+            this.openCollectionMode = false
+          }
+          break
+      }
+    },
+    // 确认关闭
+    determineTheOpen () {
+      this.confirmTransactionPassword(this.activeType, this.state)
+    },
+    // 关闭开启收款方式
+    async confirmTransactionPassword (type, state) {
+      let data
+      let params = {
+        type: '', // 银行卡 微信 支付宝 paypal 西联汇款
+        status: '' // 开启 关闭
+      }
+      switch (type) {
+        case 'bank':
+          params.type = 'bank'
+          if (state === 'enable') {
+            params.status = 'enable'
+          } else {
+            params.status = 'disable'
+          }
+          break
+        case 'chat':
+          params.type = 'weixin'
+          if (state === 'enable') {
+            params.status = 'enable'
+          } else {
+            params.status = 'disable'
+          }
+          break
+        case 'alipay':
+          params.type = 'alipay'
+          if (state === 'enable') {
+            params.status = 'enable'
+          } else {
+            params.status = 'disable'
+          }
+          break
+        case 'paypal':
+          params.type = 'paypal'
+          if (state === 'enable') {
+            params.status = 'enable'
+          } else {
+            params.status = 'disable'
+          }
+          break
+        case 'western':
+          params.type = 'xilian'
+          if (state === 'enable') {
+            params.status = 'enable'
+          } else {
+            params.status = 'disable'
+          }
+          break
+      }
+      data = await openAndCloseModeSetting(params)
+      if (!(returnAjaxMessage(data, this, 0))) {
+        return false
+      } else {
+        // 安全中心状态刷新
+        this.getAccountPaymentTerm()
+        this.openCollectionMode = false // 开启收款方式
+        this.closeCollectionMode = false // 关闭收款方式
+      }
+    },
+    filter: {},
+    computed: {
+      ...mapState({
+        theme: state => state.common.theme,
+        userInfo: state => state.user.loginStep1Info // 用户详细信息
+      })
+    },
+    watch: {}
+  }
 }
 </script>
 <style scoped lang="scss">
   @import "../../../../static/css/scss/Personal/UserAssets/AccountCredited";
-  .credited-credited{
+  .credited-credited {
     >.credited-credited-main {
       >.credited-box{
         padding: 30px 23px;
@@ -331,10 +623,37 @@ export default {
       background-color: $nightBgColor;
       color:$nightFontColor;
       >.background-color {
-        background-color: #1E2636;
+        /*background-color: #1E2636;*/
+        background-color: red;
       }
       >.credited-credited-main {
         background-color: #1E2636;
+        .credited-box{
+          >.payment-content {
+            >.payment-box {
+              .payment-right {
+                .setting-btn {
+                  color: #fff
+                }
+              }
+            }
+            .payment-card {
+              color: #fff;
+            }
+            .payment-state {
+              color: #fff;
+            }
+            .dialog-warning {
+              background:rgba(42,122,211,0.2);
+              .dialog-warning-box {
+                background:linear-gradient(90deg,rgba(43,57,110,1),rgba(42,80,130,1));
+              }
+            }
+            .warning-text {
+              color: #fff;
+            }
+          }
+        }
       }
       >.credited-credited-header{
         >.header-content{
@@ -352,23 +671,6 @@ export default {
       .title-status {
         background:rgba(248,249,252,0.05);
         color: #fff;
-      }
-      .payment-content {
-        .payment-card {
-          color: #fff;
-        }
-        .payment-state {
-          color: #338FF5;
-        }
-        .dialog-warning {
-          background:rgba(42,122,211,0.2);
-          .dialog-warning-box {
-            background:linear-gradient(90deg,rgba(43,57,110,1),rgba(42,80,130,1));
-          }
-        }
-        .warning-text {
-          color: #fff;
-        }
       }
     }
     &.day{

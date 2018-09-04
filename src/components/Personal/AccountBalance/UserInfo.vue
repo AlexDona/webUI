@@ -14,14 +14,14 @@
           </p>
           <p class="text-align-c margin-top16">
             <span>UID:</span>
-            <span>{{ showStateUserInfo.uid }}</span>
+            <span>{{ userInfo.userInfo.id }}</span>
           </p>
         </div>
         <div class="info float-left">
           <p class="info-top">
             <!--已实名-->
             <span
-              v-if="!showStateUserInfo.hasrealvaliDate"
+              v-if="!userInfo.userInfo.realname"
               class="real-name info-right display-inline-block text-align-c"
             >
               <IconFontCommon
@@ -41,7 +41,7 @@
             </span>
             <!--已绑定邮箱-->
             <span
-              v-if="!showStateUserInfo.emailBind"
+              v-if="!userInfo.userInfo.email"
               class="icon-user-info info-right display-inline-block text-align-c"
             >
               <IconFontCommon
@@ -61,7 +61,7 @@
             </span>
             <!--已绑定绑定手机-->
             <span
-              v-if="!showStateUserInfo.telePhoneBind"
+              v-if="!userInfo.userInfo.phone"
               class="icon-user-info info-right display-inline-block text-align-c"
             >
               <IconFontCommon
@@ -81,7 +81,7 @@
             </span>
             <!--已绑定谷歌-->
             <span
-              v-if="showStateUserInfo.googleBind !== ''"
+              v-if="userInfo.userInfo.google !== ''"
               class="icon-user-info display-inline-block text-align-c"
             >
               <IconFontCommon
@@ -168,8 +168,10 @@ export default {
     // 黑色主题样式
     require('../../../../static/css/theme/night/Personal/AccountBalance/UserInfoNight.css')
     // 获取全局个人信息
-    this.showStateUserInfo = this.userInfo.data.user
-    console.log(this.showStateUserInfo)
+    // this.showStateUserInfo = this.userInfo.data.user
+    console.log(this.userInfo.userInfo)
+    // console.log(this.userInfo.userInfo.phone)
+    // console.log(this.userInfo.userInfo.google)
   },
   mounted () {},
   activited () {},
@@ -180,7 +182,7 @@ export default {
   computed: {
     ...mapState({
       theme: state => state.common.theme,
-      userInfo: state => state.personal.userInfo
+      userInfo: state => state.user.loginStep1Info // 用户详细信息
     })
   },
   watch: {}

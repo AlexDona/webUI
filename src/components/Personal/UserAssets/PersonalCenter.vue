@@ -192,17 +192,19 @@ export default {
     statusSwitchPanel (tab) {
       switch (tab.name) {
         case 'assets':
+          this.$refs.accountAssetsValue.getAssetCurrenciesList()
           break
         case 'billing-details':
           this.$refs.billingDetailsValue.getChargeMentionList()
           break
         case 'mention-address':
-          this.$refs.billingDetailsValue.WithdrawalAddressList()
+          this.$refs.withdrawalAddressValue.WithdrawalAddressList()
           break
         case 'identity-authentication':
           this.$refs.identityValue.getRealNameInformation()
           break
         case 'account-credited':
+          this.$refs.accountCreditedValue.getAccountPaymentTerm()
           break
         case 'invitation-promote':
           break
