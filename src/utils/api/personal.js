@@ -10,6 +10,8 @@ export const assetCurrenciesList = (params) => get('personal/getUserFinanceList'
 export const inquireWithdrawalAddressList = (params) => get('personal/getWithdrawAddress', params)
 // 账单明细—冲提记录
 export const statusRushedToRecordList = (params) => get('queryWithdrawRecording', params)
+// 账单明细—获取商户币种列表
+export const getMerchantCurrencyList = (params) => get('queryPartnerCoinList', params)
 // 提币
 export const statusSubmitWithdrawButton = (params) => post('addWithdraw', params)
 // 新增用户提币地址
@@ -35,8 +37,10 @@ export const bindGoogleAddressPage = (params) => get('user/security/bindGoogle',
 export const bindGoogleAddress = (params) => postWithURLencoded('user/security/bindGoogle', params)
 // 解绑谷歌
 export const unbindCheckGoogle = (params) => postWithURLencoded('user/security/unBindGoogle', params)
-// 交易密码
+// 设置交易密码
 export const setTransactionPassword = (params) => postWithURLencoded('user/security/payPassword', params)
+// 重置交易密码
+export const resetUpdatePayPassword = (params) => postWithURLencoded('user/security/updatePayPassword', params)
 // 修改登录密码
 export const modifyLoginPassword = (params) => postWithURLencoded('user/security/password', params)
 /**
@@ -83,7 +87,7 @@ export const sendMsgByPushPhoneOrEmial = (type, params) => {
  * 收款方式
  * */
 // 收款方式
-export const accountPaymentTerm = (params) => get('user/bank/', {})
+export const accountPaymentTerm = () => get('user/bank/', {})
 // 收款方式设置
 export const statusCardSettings = (params) => postWithURLencoded('user/bank/save', params)
 // 开启关闭收款方式设置

@@ -196,6 +196,7 @@ export default {
           break
         case 'billing-details':
           this.$refs.billingDetailsValue.getChargeMentionList()
+          this.$refs.billingDetailsValue.inquireCurrencyList()
           break
         case 'mention-address':
           this.$refs.withdrawalAddressValue.WithdrawalAddressList()
@@ -215,6 +216,7 @@ export default {
           break
         case 'push-asset':
           this.$refs.pushAssetValue.getPushRecordList()
+          this.$refs.pushAssetValue.getSecurityCenter()
           break
         case 'coin-orders':
           break

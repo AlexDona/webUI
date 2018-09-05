@@ -428,7 +428,6 @@ export default{
           this.CHANGE_USER_CENTER_ACTIVE_NAME('api-management')
           break
       }
-      // this.CHANGE_USER_CENTER_ACTIVE_NAME('account-credited')
     },
     // 用户登出
     userLoginOut () {

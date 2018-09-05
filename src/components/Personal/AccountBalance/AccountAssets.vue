@@ -12,28 +12,36 @@
               我的资产
             </div>
             <div class="header-flex header-right flex1 padding-right23 display-flex">
-              <p class="header-right-left float-left flex1">
-                <span class="header-right-text text-align-r display-inline-block">
+              <div class="header-right-left float-left flex1">
+                <div class="header-right-text text-align-r">
                   显示有资金币种
-                </span>
-                <span>
-                  <el-switch
-                    v-model="hideStatusButton"
-                    active-color="#2A7AD3"
-                    inactive-color="#38424C"
-                    @click="showStatusCurrency"
-                  >
-                  </el-switch>
-                </span>
-              </p>
+                  <p class="float-right header-right-show margin-left10">
+                    <img
+                      v-show="showStatusButton"
+                      @click="statusOpenToClose('all')"
+                      class="switch-img"
+                      :src="closePictureSrc"
+                    >
+                    <img
+                      v-show="hideStatusButton"
+                      @click="statusOpenToClose('noall')"
+                      class="switch-img"
+                      :src="openPictureSrc"
+                    >
+                  </p>
+                </div>
+              </div>
               <p class="header-right-right float-left flex1 text-align-r">
                 <IconFontCommon
                   class="font-size16 icon-color"
                   iconName="icon-sousuo-copy"
                 />
+                <!--搜索框-->
                 <input
                   type="text"
                   class="header-right-search border-radius2 padding-left25 font-size12"
+                  v-model="searchKeyWord"
+                  @keyup="searchFromUserAssetsList"
                 >
               </p>
             </div>
@@ -82,35 +90,35 @@
               </div>
               <div
                 class="table-tr margin20 font-size12"
-                v-for="(item, index) in withdrawDepositIsShowList"
+                v-for="(assetItem, index) in withdrawDepositIsShowList"
                 :key="index"
               >
                 <div class="table-box display-flex">
                   <div class="table-td flex1">
-                    {{ item.coinName }}
+                    {{ assetItem.coinName }}
                   </div>
                   <div class="table-td flex1">
-                    {{ item.frozen + item.total }}
+                    {{ assetItem.frozen + assetItem.total }}
                   </div>
                   <div class="table-td flex1">
-                    {{ item.frozen }}
+                    {{ assetItem.frozen }}
                   </div>
                   <div class="table-td flex1">
-                    {{ item.total }}
+                    {{ assetItem.total }}
                   </div>
                   <div class="table-td flex1 text-align-c">
-                    {{ item.assetValuation }}
+                    {{ assetItem.assetValuation }}
                   </div>
                   <div class="table-td flex1 display-flex text-align-r font-size12">
                     <div
                       class="table-charge-money flex1 cursor-pointer"
-                      @click="showRechargeBox(item.coinId, item.coinName, index)"
+                      @click="showRechargeBox(assetItem.coinId, assetItem.coinName, index)"
                     >
                       充币
                     </div>
                     <div
                       class="table-mention-money flex1 cursor-pointer"
-                      @click="mentionMoneyButton(item.coinId, item.coinName, index)"
+                      @click="mentionMoneyButton(assetItem.coinId, assetItem.coinName, index)"
                     >
                       提币
                     </div>
@@ -124,10 +132,10 @@
                         <span class="triangle-border display-inline-block"></span>
                         <p
                           class="transaction-list text-align-c"
-                          v-for="(item, index) in currencyTrading"
+                          v-for="(assetItem, index) in currencyTrading"
                           :key="index"
                         >
-                          {{ item.currency }}
+                          {{ assetItem.currency }}
                         </p>
                       </div>
                     </div>
@@ -322,10 +330,14 @@ export default {
   },
   // props,
   data () {
-    return {activeNames: ['1'],
+    return {
+      activeNames: ['1'],
       showStatusButton: true, // 显示币种
-      hideStatusButton: true, // 隐藏币种// 显示所有/余额切换，
-      searchName: '', // 搜索关键字
+      hideStatusButton: false, // 隐藏币种// 显示所有/余额切换，
+      closePictureSrc: require('../../../assets/user/wrong.png'), // 显示部分
+      openPictureSrc: require('../../../assets/user/yes.png'), // 全显示
+      searchKeyWord: '', // 搜索关键字
+      searchList: [], // 搜索列表
       withdrawDepositIsShowList: [],
       activeCoinId: '', // 提现币种id
       rechargeIsShowList: false, // 充币内容
@@ -359,7 +371,8 @@ export default {
       // 提币地址列表
       mentionAddressList: [],
       activeCurrency: {}, // 当前选中币种
-      end: '' // 站位
+      end: '', // 站位
+      activeType: '' // 显示类型
     }
   },
   created () {
@@ -381,14 +394,39 @@ export default {
       'CHANGE_USER_CENTER_ACTIVE_NAME'
     ]),
     // 切换当前币种
-
-    // 隐藏币种为零的
-    showStatusCurrency () {
-      if (!this.hideStatusButton) {
-        this.hideStatusButton = false
-        this.queryWithdrawalAddressList()
+    // 确认开启关闭
+    statusOpenToClose (e) {
+      // 把方法中定义的activeType、state在这里进行赋值 点击哪一个那当前的类型和状态传给后台
+      // this.activeType = e
+      console.log(e)
+      switch (e) {
+        case 'all':
+          this.showStatusButton = false
+          this.hideStatusButton = true
+          break
+        case 'noall':
+          this.hideStatusButton = false
+          this.showStatusButton = true
+          break
       }
-      console.log(1)
+      this.getAssetCurrenciesList(e)
+    },
+    // 搜索关键字
+    searchFromUserAssetsList () {
+      console.log('1')
+      this.searchList = []
+      if (this.searchKeyWord.trim() !== '') {
+        console.log('2')
+        this.withdrawDepositIsShowList.forEach((assetItem) => {
+          console.log('3')
+          const result = assetItem.shortName.search(this.searchKeyWord)
+          if (result !== -1) {
+            console.log('-1')
+            this.searchList.push(assetItem)
+          }
+        })
+        this.getAssetCurrenciesList(this.searchList)
+      }
     },
     // 修改input value
     changeInputValue (ref, index) {
@@ -435,9 +473,20 @@ export default {
     /**
      * 刚进页面时候 个人资产列表展示
      */
-    async getAssetCurrenciesList () {
-      let data = await assetCurrenciesList()
-      console.log(data)
+    async getAssetCurrenciesList (type) {
+      let data
+      let params = {
+        selectType: 'all' // all：所有币种 noall：有资产币种
+      }
+      switch (type) {
+        case 'all':
+          params.selectType = 'all'
+          break
+        case 'noall':
+          params.selectType = 'noall'
+          break
+      }
+      data = await assetCurrenciesList(params)
       if (!(returnAjaxMessage(data, this, 0))) {
         return false
       } else {
@@ -446,10 +495,10 @@ export default {
           rechargeIsShow: false,
           withdrawDepositIsShow: false
         })
-        console.log(data.data.data.userCoinWalletVOPageInfo.list)
+        // console.log(data.data.data.userCoinWalletVOPageInfo.list)
         // 返回数据
         this.withdrawDepositIsShowList = data.data.data.userCoinWalletVOPageInfo.list
-        // console.log(this.withdrawDepositIsShowList)
+        console.log(this.withdrawDepositIsShowList)
       }
     },
     /**
@@ -467,8 +516,8 @@ export default {
     // 查询提币地址列表查询
     async queryWithdrawalAddressList () {
       let data = await inquireWithdrawalAddressList({
-        shortName: this.partnerId, // 币种名称
-        selectType: this.hideStatusButton // all：所有币种 noall：有资产币种
+        // shortName: this.partnerId, // 币种名称
+        // selectType: this.hideStatusButton // all：所有币种 noall：有资产币种
       })
       // console.log(data)
       if (!(returnAjaxMessage(data, this, 0))) {
@@ -570,6 +619,9 @@ export default {
             >.header-right-left {
               >.header-right-text {
                 width: 180px;
+                >.header-right-show {
+                  line-height: 50px;
+                }
               }
             }
             >.header-right-right {

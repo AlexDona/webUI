@@ -38,7 +38,7 @@
               <div class="google-images">
                 <VueQrcode
                   class="ercode"
-                  :value="googleUserInformation.googleSecret"
+                  :value="googleUserInformation.url"
                   :options="{ size: 100 }"
                 >
                 </VueQrcode>
@@ -126,8 +126,10 @@ export default {
       errorMsg: '', // 错误信息提示
       googleAccount: '', // 谷歌账号
       googleTheSecretKey: '', // 谷歌秘钥
+      googleTheSecretUrl: '', // 二维码
       googleVerificationCode: '', // 谷歌验证码
-      googleUserInformation: {} // 谷歌验证信息
+      googleUserInformation: {}, // 谷歌验证信息
+      successCountDown: 1 // 成功倒计时
     }
   },
   created () {
@@ -173,6 +175,8 @@ export default {
         this.googleUserInformation = data.data.data
         this.googleAccount = data.data.data.googleAccount
         this.googleTheSecretKey = data.data.data.googleSecret
+        this.googleTheSecretUrl = data.data.data.url
+        console.log(this.googleTheSecretUrl)
       }
     },
     // 确定提交绑定谷歌验证
@@ -225,6 +229,7 @@ export default {
       setInterval(() => {
         if (this.successCountDown === 0) {
           this.CHANGE_USER_CENTER_ACTIVE_NAME('security-center')
+          this.$router.go(-1)
         }
         this.successCountDown--
       }, 1000)

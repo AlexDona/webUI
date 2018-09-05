@@ -16,7 +16,7 @@
             <div class="header-border margin20 display-flex">
               <span class="font-size16 main-header-title">实名认证</span>
               <p
-                v-if="this.realNameInformationObj.realnameAuth"
+                v-if="realNameInformationObj.realnameAuth"
                 class="authentication-type-info font-size12 box-sizing"
               >
                 <span class="authentication-info">您已通过实名认证</span>
@@ -48,7 +48,7 @@
           </div>
       </div>
       <div
-        v-if="!this.realNameInformationObj.realnameAuth"
+        v-if="!realNameInformationObj.realnameAuth"
         class="name-authentication-content margin-top9"
       >
         <el-form
@@ -61,8 +61,8 @@
               @change="changeId"
             >
               <el-option
-                v-for="item in regionList"
-                :key="item.regionName"
+                v-for="(item, index) in regionList"
+                :key="index"
                 :label="item.regionName"
                 :value="item.regionName"
               >
@@ -75,8 +75,8 @@
               placeholder="请选择证件类型"
             >
               <el-option
-                v-for="item in documentTypeList"
-                :key="item.certificateName"
+                v-for="(item, index) in documentTypeList"
+                :key="index"
                 :label="item.certificateName"
                 :value="item.certificateName"
               >
@@ -125,7 +125,7 @@
           @click="authenticationMethod">
           <span class="font-size16 main-header-title">高级认证</span>
           <span
-            v-if="this.realNameInformationObj.advancedAuth"
+            v-if="realNameInformationObj.advancedAuth"
             class="authentication-type font-size12"
           >
             （已实名认证）
@@ -269,7 +269,7 @@
         </div>
         <div
           class="success-after name-authentication-content"
-          v-if="authenticationInfo.userIdentity == true"
+          v-if="authenticationInfo.userIdentity"
         ></div>
       </div>
       <el-dialog

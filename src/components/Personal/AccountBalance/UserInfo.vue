@@ -169,7 +169,7 @@ export default {
     require('../../../../static/css/theme/night/Personal/AccountBalance/UserInfoNight.css')
     // 获取全局个人信息
     // this.showStateUserInfo = this.userInfo.data.user
-    console.log(this.userInfo.userInfo)
+    // console.log(this.userInfo.userInfo)
     // console.log(this.userInfo.userInfo.phone)
     // console.log(this.userInfo.userInfo.google)
   },

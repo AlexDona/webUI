@@ -295,7 +295,7 @@ export default {
       if (!returnAjaxMessage(data, this, 0)) {
         return false
       } else {
-        console.log(data)
+        // console.log(data)
         this.entrustSelectList = data.data.data.coinList
         // this.statusList = data.data.data.statusList
         this.typeList = data.data.data.typeList

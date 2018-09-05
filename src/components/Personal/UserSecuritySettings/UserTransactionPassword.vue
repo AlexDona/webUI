@@ -7,7 +7,7 @@
     <div class="transaction-password-main margin25">
       <header class="transaction-password-header personal-height60 line-height60 line-height70 margin25">
         <span
-          v-if="!globalUserInformation.tradePasswordType"
+          v-if="!SecurityCenter.payPassword"
           class="header-content-left header-content font-size16 font-weight600"
         >
           设置交易密码
@@ -34,9 +34,49 @@
           *请确认您的银行卡已开启短信通知功能
         </header>
         <div class="transaction-content-from">
-          <!--修改交易密码-->
+          <!--设置交易密码-->
           <el-form
-            v-if="globalUserInformation.tradePasswordType"
+            v-if="SecurityCenter.payPassword"
+            :label-position="labelPosition"
+            label-width="120px"
+          >
+            <el-form-item label="昵称：">
+              <input
+                type="text"
+                class="transaction-input border-radius2 padding-l15 box-sizing"
+                @focus="emptyStatus"
+                v-model="setPassword.nickname"
+              />
+            </el-form-item>
+            <el-form-item label="交易密码：">
+              <input
+                type="password"
+                class="transaction-input border-radius2 padding-l15 box-sizing"
+                @focus="emptyStatus"
+                v-model="setPassword.newPassword"
+              />
+            </el-form-item>
+            <el-form-item label="重复交易密码：">
+              <input
+                type="password"
+                class="transaction-input border-radius2 padding-l15 box-sizing"
+                @focus="emptyStatus"
+                v-model="setPassword.confirmPassword"
+              />
+            </el-form-item>
+            <div class="prompt-message">
+              <div v-show="errorMsg">{{ errorMsg }}</div>
+            </div>
+            <button
+              class="transaction-button border-radius4 cursor-pointer"
+              @click="setStatusSubmit"
+            >
+              确认绑定
+            </button>
+          </el-form>
+          <!--重置交易密码-->
+          <el-form
+            v-else
             :label-position="labelPosition"
             label-width="120px"
           >
@@ -45,7 +85,7 @@
                 type="password"
                 class="transaction-input border-radius2 padding-l15 box-sizing"
                 @focus="emptyStatus"
-                v-model="modifyPassword.modifyTransactionPassword"
+                v-model="modifyPassword.transactionPassword"
               />
             </el-form-item>
             <el-form-item label="重置交易密码：">
@@ -53,71 +93,66 @@
                 type="password"
                 class="transaction-input border-radius2 padding-l15 box-sizing"
                 @focus="emptyStatus"
-                v-model="modifyPassword.modifyResetTransactionPassword"
+                v-model="modifyPassword.resetTransactionPassword"
               />
             </el-form-item>
-            <el-form-item label="验  证  码：">
-              <el-input
-                @focus="emptyStatus"
-                v-model="modifyPassword.modifyTransactionPasswordCode"
-              >
-                <template slot="append">验证码</template>
-              </el-input>
-            </el-form-item>
-            <div class="prompt-message">
-              <div v-show="errorMsg">{{ errorMsg }}</div>
-            </div>
-            <button
-              class="transaction-button border-radius4 cursor-pointer"
-              @click="getStatusSubmit"
+            <el-form-item
+              label="验  证  码："
+              v-if="!SecurityCenter.isMailBind"
             >
-              确认绑定
-            </button>
-          </el-form>
-          <!--设置交易密码-->
-          <el-form
-            v-else
-            :label-position="labelPosition"
-            label-width="120px"
-          >
-            <el-form-item label="新交易密码：">
-              <input
-                type="password"
-                class="transaction-input border-radius2 padding-l15 box-sizing"
-                @focus="emptyStatus"
-                v-model="setPassword.newTransactionPassword"
-              />
-            </el-form-item>
-            <el-form-item label="确认交易密码：">
-              <input
-                type="password"
-                class="transaction-input border-radius2 padding-l15 box-sizing"
-                @focus="emptyStatus"
-                v-model="setPassword.confirmTransactionPassword"
-              />
-            </el-form-item>
-            <el-form-item label="验  证  码：">
               <el-input
+                type="text"
                 @focus="emptyStatus"
-                v-model="setPassword.transactionPasswordCode"
+                v-model="modifyPassword.phoneCode"
               >
                 <template slot="append">
                   <CountDownButton
                     class="send-code-btn cursor-pointer"
                     :status="disabledOfPhoneBtn"
-                    @run="sendPhoneOrEmailCode(0)"
+                    @run="sendPhoneOrEmailCodeWithPush(0)"
                   />
                 </template>
               </el-input>
             </el-form-item>
+            <span v-else></span>
+            <el-form-item
+              v-if="!SecurityCenter.isPhoneBind"
+              label="邮箱验证码"
+            >
+              <el-input
+                @focus="emptyStatus"
+                v-model="modifyPassword.emailCode"
+              >
+                <template slot="append">
+                  <CountDownButton
+                    class="send-code-btn cursor-pointer"
+                    :status="disabledOfEmailBtn"
+                    @run="sendPhoneOrEmailCodeWithPush(1)"
+                  />
+                </template>
+              </el-input>
+            </el-form-item>
+            <span v-else></span>
+            <el-form-item
+              label="谷歌验证码"
+              v-if="!SecurityCenter.isPhoneBind"
+            >
+              <input
+                type="text"
+                class="transaction-input border-radius2 padding-l15 box-sizing"
+                @focus="emptyStatus"
+                v-model="modifyPassword.googleCode"
+              />
+            </el-form-item>
+            <span v-else></span>
             <div class="prompt-message">
               <div v-show="errorMsg">{{ errorMsg }}</div>
             </div>
             <button
               class="transaction-button border-radius4 cursor-pointer"
-              @click="getStatusSubmit"
+              @click="getUpdatePayPassword"
             >
-              确认绑定
+              确认重置
             </button>
           </el-form>
         </div>
@@ -133,7 +168,12 @@ import HeaderCommon from '../../Common/HeaderCommon'
 import IconFontCommon from '../../Common/IconFontCommon'
 import CountDownButton from '../../Common/CountDownCommon'
 import {returnAjaxMessage, sendPhoneOrEmailCodeAjax} from '../../../utils/commonFunc'
-import {setTransactionPassword} from '../../../utils/api/personal'
+import {
+  setTransactionPassword,
+  resetUpdatePayPassword,
+  securityVerificationOnOff,
+  statusSecurityCenter
+} from '../../../utils/api/personal'
 // 底部
 import FooterCommon from '../../Common/FooterCommon'
 import { createNamespacedHelpers, mapState } from 'vuex'
@@ -147,20 +187,23 @@ export default {
   },
   data () {
     return {
-      globalUserInformation: {}, // 个人信息
       errorMsg: '', // 错误信息提示
       // 设置交易密码
       setPassword: {
-        newTransactionPassword: '', // 设置新交易密码
-        confirmTransactionPassword: '', // 确认交易密码.
-        transactionPasswordCode: '' // 验证码
+        nickname: '', // 昵称
+        newPassword: '', // 设置新交易密码
+        confirmPassword: '' // 确认交易密码.
       },
+      SecurityCenter: {},
       // 修改交易密码
       modifyPassword: {
-        modifyTransactionPassword: '', // 修改交易密码
-        modifyResetTransactionPassword: '', // 修改 重置交易密码.
-        modifyTransactionPasswordCode: '' // 修改 验证码
-      }
+        transactionPassword: '', // 修改交易密码
+        resetTransactionPassword: '', // 修改 重置交易密码.
+        phoneCode: '', // 修改 手机验证码
+        emailCode: '', // 修改 邮箱验证码
+        googleCode: '' // 修改 谷歌验证码
+      },
+      successCountDown: 1 // 成功倒计时
     }
   },
   created () {
@@ -170,8 +213,6 @@ export default {
     require('../../../../static/css/theme/day/Personal/UserSecuritySettings/UserTransactionPasswordDay.css')
     // 黑色主题样式
     require('../../../../static/css/theme/night/Personal/UserSecuritySettings/UserTransactionPasswordNight.css')
-    // 获取全局个人信息
-    this.globalUserInformation = this.userInfo.data.user
   },
   mounted () {},
   activited () {},
@@ -196,17 +237,25 @@ export default {
       this[ref] = this.$refs[ref].value
       // console.log(this[ref])
     },
-    // 发送手机验证码
-    sendPhoneOrEmailCode (loginType) {
+    /**
+     * 发送短信验证码或邮箱验证码
+     */
+    sendPhoneOrEmailCodeWithPush (loginType) {
       console.log(this.disabledOfPhoneBtn)
       console.log(this.disabledOfEmailBtn)
       if (this.disabledOfPhoneBtn || this.disabledOfEmailBtn) {
         return false
       }
       let params = {
-        // phone: this.bindingDataPhone.bindingNewPhoneAccounts // 手机号
-        phone: 15994026836 // 手机号
-        // country: this.activeCountryCode
+        country: this.activeCountryCode
+      }
+      switch (loginType) {
+        case 0:
+          params.phone = this.userInfo.userInfo.phone
+          break
+        case 1:
+          params.address = this.userInfo.userInfo.email
+          break
       }
       sendPhoneOrEmailCodeAjax(loginType, params, (data) => {
         console.log(this.disabledOfPhoneBtn)
@@ -233,7 +282,7 @@ export default {
       })
     },
     // 确定设置交易密码
-    getStatusSubmit () {
+    setStatusSubmit () {
       // if (!this.emailAccounts) {
       //   this.errorMsg = '邮箱账号不能为空'
       // } else if (!this.emailCode) {
@@ -242,31 +291,87 @@ export default {
       //   this.errorMsg = ''
       // }
       this.confirmTransactionPassword()
-      console.log(1)
     },
-    // 确定绑定
+    // 确定设置接口处理
     async confirmTransactionPassword () {
       let data
       let param = {
-        payPassword: this.setPassword.newTransactionPassword, // 手机号
-        code: this.setPassword.transactionPasswordCode // 手机验证码
+        nickName: this.setPassword.nickname, // 昵称
+        payPassword: this.setPassword.newPassword // 交易密码
       }
       data = await setTransactionPassword(param)
       if (!(returnAjaxMessage(data, this, 1))) {
         return false
       } else {
+        this.successJump()
         console.log(data)
-        console.log(this.emailAccounts)
-        console.log(this.emailCode)
         // this.statusSecurityCenter()
       }
+    },
+    // 确定重置交易密码
+    getUpdatePayPassword () {
+      this.confirmUpdate()
+      this.confirmVerifyInformation()
+    },
+    // 确定重置接口处理
+    async confirmUpdate () {
+      let data
+      let param = {
+        payPassword: this.modifyPassword.resetTransactionPassword // 重置交易密码
+      }
+      data = await resetUpdatePayPassword(param)
+      if (!(returnAjaxMessage(data, this, 1))) {
+        return false
+      } else {
+        this.successJump()
+        console.log(data)
+      }
+    },
+    // 手机邮箱谷歌验证
+    async confirmVerifyInformation () {
+      let data
+      let params = {
+        email: this.userInfo.userInfo.email, // 邮箱
+        phone: this.userInfo.userInfo.phone, // 手机
+        emailCode: this.emailCode, // 邮箱验证
+        phoneCode: this.phoneCode, // 手机验证
+        googleCode: this.googleCode // 谷歌验证
+      }
+      data = await securityVerificationOnOff(params)
+      if (!(returnAjaxMessage(data, this, 1))) {
+        return false
+      } else {
+        // this.getSecurityCenter()
+      }
+    },
+    async getSecurityCenter () {
+      let data = await statusSecurityCenter({
+        token: this.userInfo.userInfo.token // token
+      })
+      console.log(data)
+      if (!(returnAjaxMessage(data, this, 0))) {
+        return false
+      } else {
+        // 返回展示
+        this.SecurityCenter = data.data.data
+      }
+    },
+    // 谷歌绑定成功自动跳转
+    successJump () {
+      setInterval(() => {
+        if (this.successCountDown === 0) {
+          this.CHANGE_USER_CENTER_ACTIVE_NAME('security-center')
+          this.$router.go(-1)
+        }
+        this.successCountDown--
+      }, 1000)
     }
   },
   filter: {},
   computed: {
     ...mapState({
       theme: state => state.common.theme,
-      userInfo: state => state.personal.userInfo,
+      userInfo: state => state.user.loginStep1Info, // 用户详细信息
       disabledOfPhoneBtn: state => state.user.disabledOfPhoneBtn,
       disabledOfEmailBtn: state => state.user.disabledOfEmailBtn
     })
