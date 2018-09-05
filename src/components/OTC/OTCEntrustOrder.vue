@@ -61,7 +61,7 @@
           <span class="item eighth-action">
             <el-button
               type="text"
-              @click="revocationOrder"
+              @click="revocationOrder(item.id)"
             >
               撤单
             </el-button>
@@ -74,7 +74,9 @@
 <!--请严格按照如下书写书序-->
 <script>
 import {timeFilter} from '../../utils'
-import {getOTCEntrustingOrders} from '../../utils/api/OTC'
+import {getOTCEntrustingOrders,
+  querySelectedOrdersRevocation
+} from '../../utils/api/OTC'
 import {returnAjaxMessage} from '../../utils/commonFunc'
 export default {
   components: {},
@@ -125,12 +127,25 @@ export default {
       // 返回数据正确的逻辑
       this.OTCEntrustOrderList = data.data.data.list
     },
+    async getOTCEntrustingOrdersRevocation (id) {
+      let data = await querySelectedOrdersRevocation({
+        entrustId: id
+      })
+      // 提示信息
+      if (!(returnAjaxMessage(data, this, 0))) {
+        return false
+      } else {
+        // 返回数据正确的逻辑
+        this.getOTCEntrustingOrdersList()
+      }
+    },
     // 3.0 撤单按钮
-    revocationOrder () {
+    revocationOrder (id) {
       this.$confirm('您确定要撤销此单吗, 是否继续?', '提示', {
         confirmButtonText: '确定',
         cancelButtonText: '取消'
       }).then(() => {
+        this.getOTCEntrustingOrdersRevocation(id)
         this.$message({
           type: 'success',
           message: '撤单成功!'

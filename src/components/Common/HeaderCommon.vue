@@ -33,10 +33,11 @@
                 <span>OTC交易</span>
               </router-link>
               <!--otc子导航-->
+              <!-- yuxia改的子导航显示 -->
               <ul
                 class="sub-nav-list otc"
-                v-show="$route.path ==='/OTCCenter'"
-              >
+                v-show="$route.path.indexOf('OTC') != -1"
+                >
                 <li class="sub-nav-item">
                   <router-link to="/OTCBusinessApply">商家申请</router-link>
                 </li>
@@ -255,9 +256,10 @@
           </ul>
         </div>
       </div>
+      <!-- yuxia改的bottom的显示条件 -->
       <div
         class="bottom"
-        v-show="$route.path === '/OTCCenter' || $route.path === '/ActivityCenter'"
+        v-show="$route.path.indexOf('OTC') != -1 || $route.path === '/ActivityCenter'"
       >
       </div>
       <div class="box">
