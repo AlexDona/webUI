@@ -76,7 +76,7 @@
             <p>2.录制视频资料，要求如下：</p>
             <p>手持本人身份证正面进行录制，保持录制过程中声音和影像都清晰。</p>
             <p>录制时要求诵读：本人（姓名），身份证号（身份证号码），我的资金来源合法可靠，自愿交易比特币等数字资产，本人充分了解数字货币及潜在风险，本人具有抗风险的能力并愿意承担一切风险。</p>
-            <p>3.申请资质条件：①申请人需在OTC中成功交易100次。②申请人账户中FUC数量需≥500000</p>
+            <p>3.申请资质条件：①申请人需在OTC中成功交易<spn>{{successTimes}}</spn>次。②申请人账户中<span>{{coinName}}</span>数量需≥<span>{{count}}</span></p>
             <h4 class="title">步骤二：发送申请邮件</h4>
             <p>请将以上申请资料和视频资料发送邮件至otc@FUBT.top，邮件主题为“申请成为OTC商家”。</p>
             <h4 class="title">步骤三：提交申请</h4>
@@ -96,7 +96,7 @@
         <!-- 2.2.4 同意协议部分 -->
         <div class="agree font-size12">
           <span>
-            <el-checkbox v-model="checked">
+            <el-checkbox v-model="checked" @change='changeVal'>
             </el-checkbox>
           </span>
           <span>我已阅读并同意</span>
@@ -111,6 +111,7 @@
           <button
             class="button font-size16 cursor-pointer"
             @click="submit"
+            :disabled="!checked"
           >
             申请成为商家
           </button>
@@ -150,6 +151,8 @@
 import NavCommon from '../Common/HeaderCommon'
 import FooterCommon from '../Common/FooterCommon'
 import IconFontCommon from '../Common/IconFontCommon'
+import {businessApply, firstEnterBusinessApply} from '../../utils/api/OTC'
+import {returnAjaxMessage} from '../../utils/commonFunc'
 export default {
   components: {
     NavCommon, //  头部导航
@@ -161,13 +164,17 @@ export default {
       // 商家申请状态
       applyStatus: 1,
       // 同意协议按钮:默认不勾选
-      checked: false
+      checked: false,
+      successTimes: '0',
+      coinName: 'FUC',
+      count: '0'
     }
   },
   created () {
     require('../../../static/css/list/OTC/OTCBusinessApply.css')
     require('../../../static/css/theme/day/OTC/OTCBusinessApplyDay.css')
     require('../../../static/css/theme/night/OTC/OTCBusinessApplyNight.css')
+    this.determineUser()
   },
   mounted () {},
   activited () {},
@@ -176,7 +183,47 @@ export default {
   methods: {
     // 点击申请商家用户按钮发送请求
     submit () {
-      this.applyStatus = 2
+      this.getOTCBusinessApply()
+    },
+    // 请求申请状态
+    async getOTCBusinessApply () {
+      const data = await businessApply({})
+      // 提示信息
+      if (!(returnAjaxMessage(data, this, 0))) {
+        return false
+      } else {
+        // 返回数据正确的逻辑
+        if (data.data.meta.success == true) {
+          this.applyStatus = 2
+        } else {
+          this.applyStatus = 1
+        }
+      }
+    },
+    changeVal (e) {
+      this.checked = e
+    },
+    async determineUser () {
+      const data = await firstEnterBusinessApply({})
+      // 提示信息
+      if (!(returnAjaxMessage(data, this, 0))) {
+        return false
+      } else {
+        // 返回数据正确的逻辑
+        this.successTimes = data.data.data.successTimes
+        this.coinName = data.data.data.coinName
+        this.count = data.data.data.count
+        // 返回数据的状态 1 表示展示初次进入
+        if (data.data.data.status == 1) {
+          this.applyStatus = 1
+        // 状态 2 表示审核正在进行中
+        } else if (data.data.data.status == 2) {
+          this.applyStatus = 2
+        // 状态 3 表示审核通过
+        } else {
+          this.applyStatus = 3
+        }
+      }
     }
   },
   filter: {},

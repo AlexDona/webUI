@@ -20,31 +20,31 @@
         <!--表格上部分-->
         <div class="canceled-info-top">
           <!-- 订单号 -->
-          <span class="item">{{item.orderId}}</span>
+          <span class="item">{{item.orderSequence}}</span>
           <!-- 类型 买入 -->
           <span
             class="item"
-            v-if="item.style === '买入'"
-            :class="{ red: item.styleStatus === 1 }"
+            v-if="item.orderType === 'BUY'"
+            :class="{ red: item.orderType === 'BUY' }"
           >
-            {{item.style}}
+            买入
           </span>
           <!-- 类型卖出 -->
           <span
             class="item"
-            v-if="item.style === '卖出'"
-            :class="{ green: item.styleStatus === 2 }"
+            v-if="item.orderType === 'SELL'"
+            :class="{ green: item.orderType === 'SELL' }"
           >
-            {{item.style}}
+            卖出
           </span>
           <!-- 币种 -->
           <span class="item">{{item.coinName}}</span>
           <!-- 价格 -->
-          <span class="item">{{item.price}}</span>
+          <span class="item">{{item.price}}({{ item.currencyName }})</span>
           <!-- 数量 -->
-          <span class="item">{{item.sum}}</span>
+          <span class="item">{{item.pickCount}}({{ item.coinName }})</span>
           <!-- 总金额 -->
-          <span class="item">{{item.totalMoney}}</span>
+          <span class="item">{{(item.price*item.pickCount).toFixed(2)}}({{ item.currencyName }})</span>
           <!-- 下单时间 -->
           <span class="item">{{timeFormatting(item.createTime)}}</span>
         </div>
@@ -57,10 +57,10 @@
           <div class="info-middle">
             <p class="text-info text-blue">卖家信息</p>
             <p class="text-info">
-              <span>姓名：</span><span>{{item.buyerName}}</span>
+              <span>姓名：</span><span>{{item.sellName}}</span>
             </p>
             <p class="text-info">
-              <span>卖家手机号：</span><span>{{item.buyerPhone}}</span>
+              <span>卖家手机号：</span><span>{{item.sellPhone}}</span>
             </p>
           </div>
           <div class="info-right">
@@ -69,6 +69,13 @@
           </div>
         </div>
       </div>
+      <el-pagination
+        v-if="getOTCCanceledOrderList.length >= 10 "
+        background
+        layout="prev, pager, next"
+        :total="100"
+        >
+      </el-pagination>
     </div>
   </div>
 </template>
@@ -85,51 +92,51 @@ export default {
     return {
       // OTC取消订单列表
       getOTCCanceledOrderList: [
-        {
-          orderId: '20180812111111',
-          style: '买入',
-          styleStatus: 1, // 1:买入，2：卖出
-          coinName: 'BTC',
-          price: '567812.12',
-          sum: '0.0012345',
-          totalMoney: '20180812123456',
-          createTime: 1534298399000,
-          sellerName: '张三封',
-          sellerPhone: '15711111111',
-          buyerName: '任付伟',
-          buyerPhone: '15722222222',
-          cancelTime: 1534298399000
-        },
-        {
-          orderId: '20180812222222',
-          style: '卖出',
-          styleStatus: 2, // 1:买入，2：卖出
-          coinName: 'BTC',
-          price: '567812.12',
-          sum: '0.0012345',
-          totalMoney: '20180812123456',
-          createTime: 1534298399000,
-          sellerName: '张三封',
-          sellerPhone: '15711111111',
-          buyerName: '任付伟',
-          buyerPhone: '15722222222',
-          cancelTime: 1534298399000
-        },
-        {
-          orderId: '20180812222222',
-          style: '卖出',
-          styleStatus: 2, // 1:买入，2：卖出
-          coinName: 'BTC',
-          price: '567812.12',
-          sum: '0.0012345',
-          totalMoney: '20180812123456',
-          createTime: 1534298399000,
-          sellerName: '张三封',
-          sellerPhone: '15711111111',
-          buyerName: '任付伟',
-          buyerPhone: '15722222222',
-          cancelTime: 1534298399000
-        }
+        // {
+        //   orderId: '20180812111111',
+        //   style: '买入',
+        //   styleStatus: 1, // 1:买入，2：卖出
+        //   coinName: 'BTC',
+        //   price: '567812.12',
+        //   sum: '0.0012345',
+        //   totalMoney: '20180812123456',
+        //   createTime: 1534298399000,
+        //   sellerName: '张三封',
+        //   sellerPhone: '15711111111',
+        //   buyerName: '任付伟',
+        //   buyerPhone: '15722222222',
+        //   cancelTime: 1534298399000
+        // }
+        // {
+        //   orderId: '20180812222222',
+        //   style: '卖出',
+        //   styleStatus: 2, // 1:买入，2：卖出
+        //   coinName: 'BTC',
+        //   price: '567812.12',
+        //   sum: '0.0012345',
+        //   totalMoney: '20180812123456',
+        //   createTime: 1534298399000,
+        //   sellerName: '张三封',
+        //   sellerPhone: '15711111111',
+        //   buyerName: '任付伟',
+        //   buyerPhone: '15722222222',
+        //   cancelTime: 1534298399000
+        // },
+        // {
+        //   orderId: '20180812222222',
+        //   style: '卖出',
+        //   styleStatus: 2, // 1:买入，2：卖出
+        //   coinName: 'BTC',
+        //   price: '567812.12',
+        //   sum: '0.0012345',
+        //   totalMoney: '20180812123456',
+        //   createTime: 1534298399000,
+        //   sellerName: '张三封',
+        //   sellerPhone: '15711111111',
+        //   buyerName: '任付伟',
+        //   buyerPhone: '15722222222',
+        //   cancelTime: 1534298399000
+        // }
       ]
     }
   },
@@ -162,6 +169,9 @@ export default {
         return false
       } else {
         // 返回数据正确的逻辑
+        this.getOTCCanceledOrderList = data.data.data.list.slice(5)
+        console.log('取消订单')
+        console.log(this.getOTCCanceledOrderList)
       }
     }
   },

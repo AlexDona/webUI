@@ -17,15 +17,21 @@
                 </p>
                 <p class="order-info-left">
                   <span>姓名：</span>
-                  <span>张三封</span>
+                  <span>{{props.row.buyName}}</span>
                 </p>
                 <p class="order-info-left">
                   <span>付款方式：</span>
-                  <span>银行卡</span>
+                  <!-- 判断付款方式 -->
+                  <span v-if="props.row.payType === 'alipay'">支付宝</span>
+                  <span v-if="props.row.payType === 'bank'">银行卡</span>
+                  <span v-if="props.row.payType === 'xilian'">西联汇款</span>
+                  <span v-if="props.row.payType === 'paypal'">PAYPAL</span>
+                  <span v-if="props.row.payType === 'weixin'">微信</span>
+                  <!-- <span>{{props.row.payType}}</span> -->
                 </p>
                 <p class="order-info-left">
                   <span>银行卡账号：</span>
-                  <span>95847856845842522</span>
+                  <span>{{props.row.payAcctount}}</span>
                 </p>
               </div>
               <!-- 中间 -->
@@ -35,11 +41,11 @@
                 </p>
                 <p class="order-info-middle">
                   <span>姓名：</span>
-                  <span>张三封</span>
+                  <span>{{props.row.sellName}}</span>
                 </p>
                 <p class="order-info-middle">
                   <span>卖家手机号：</span>
-                  <span>15738818082</span>
+                  <span>{{props.row.sellPhone}}</span>
                 </p>
               </div>
               <!-- 右侧 -->
@@ -49,11 +55,11 @@
                 </p>
                 <p class="order-info-right">
                   <span>付款确认时间：</span>
-                  <span>2018-12-12 12:20:20</span>
+                  <span>{{props.row.payTime}}</span>
                 </p>
                 <p class="order-info-right">
                   <span>收款确认时间：</span>
-                  <span>2018-12-12 12:30:20</span>
+                  <span>{{props.row.confirmTime ? props.row.confirmTime : props.row.completeTime}}</span>
                 </p>
               </div>
             </div>
@@ -64,7 +70,7 @@
           label="订单号"
         >
           <template slot-scope="scope">
-            {{ scope.row.id }}
+            {{scope.row.orderSequence}}
           </template>
         </el-table-column>
         <el-table-column
@@ -72,14 +78,14 @@
         >
           <template slot-scope="scope">
             <span
-              v-if="scope.row.orderStatus === 1"
-              :class="{ red: scope.row.orderStatus === 1 }"
+              v-if="scope.row.orderType === 'BUY'"
+              :class="{ red: scope.row.orderType === 'BUY' }"
             >
               买入
             </span>
             <span
-              v-if="scope.row.orderStatus === 2"
-              :class="{ green: scope.row.orderStatus === 2 }"
+              v-if="scope.row.orderType === 'SELL'"
+              :class="{ green: scope.row.orderType === 'SELL' }"
             >
               卖出
             </span>
@@ -89,35 +95,35 @@
           label="币种"
         >
           <template slot-scope="scope">
-            {{ scope.row.name }}
+            {{ scope.row.coinName }}
           </template>
         </el-table-column>
         <el-table-column
           label="价格"
         >
           <template slot-scope="scope">
-            {{ scope.row.price }}
+            {{ scope.row.price }}({{ scope.row.currencyName }})
           </template>
         </el-table-column>
         <el-table-column
           label="数量"
         >
           <template slot-scope="scope">
-            {{ scope.row.num }}
+            {{ scope.row.pickCount }}({{ scope.row.coinName }})
           </template>
         </el-table-column>
         <el-table-column
           label="总金额"
         >
           <template slot-scope="scope">
-            {{ scope.row.total }}
+            {{ (scope.row.price*scope.row.pickCount).toFixed(2)}}({{ scope.row.currencyName }})
           </template>
         </el-table-column>
          <el-table-column
           label="下单时间"
         >
           <template slot-scope="scope">
-            {{timeFormatting(scope.row.time)}}
+            {{timeFormatting(scope.row.createTime)}}
           </template>
         </el-table-column>
       </el-table>
@@ -135,36 +141,36 @@ export default {
   data () {
     return {
       tableData5: [
-        {
-          orderStatus: 1, //  买单
-          id: '12987122',
-          style: '买入',
-          name: 'FBT',
-          price: '88888(CNY)',
-          num: '0.1258(BTC)',
-          total: '10333(CNY)',
-          time: 1302486032000
-        },
-        {
-          orderStatus: 2, //  卖单
-          id: '12987123',
-          style: '卖出',
-          name: 'ETH',
-          price: '88888(CNY)',
-          num: '0.1258(BTC)',
-          total: '10333(CNY)',
-          time: 1302486032000
-        },
-        {
-          orderStatus: 2, //  卖单
-          id: '12987123',
-          style: '卖出',
-          name: 'ETH',
-          price: '88888(CNY)',
-          num: '0.1258(BTC)',
-          total: '10333(CNY)',
-          time: 1302486032000
-        }
+        // {
+        //   orderStatus: 1, //  买单
+        //   id: '12987122',
+        //   style: '买入',
+        //   name: 'FBT',
+        //   price: '88888(CNY)',
+        //   num: '0.1258(BTC)',
+        //   total: '10333(CNY)',
+        //   time: 1302486032000
+        // },
+        // {
+        //   orderStatus: 2, //  卖单
+        //   id: '12987123',
+        //   style: '卖出',
+        //   name: 'ETH',
+        //   price: '88888(CNY)',
+        //   num: '0.1258(BTC)',
+        //   total: '10333(CNY)',
+        //   time: 1302486032000
+        // },
+        // {
+        //   orderStatus: 2, //  卖单
+        //   id: '12987123',
+        //   style: '卖出',
+        //   name: 'ETH',
+        //   price: '88888(CNY)',
+        //   num: '0.1258(BTC)',
+        //   total: '10333(CNY)',
+        //   time: 1302486032000
+        // }
       ]
     }
   },
@@ -191,12 +197,12 @@ export default {
         // pageNum: '1',
         // pageSize: '10'
       })
-      console.log(data)
       // 提示信息
       if (!(returnAjaxMessage(data, this, 0))) {
         return false
       } else {
         // 返回数据正确的逻辑
+        this.tableData5 = data.data.data.list
       }
     }
   },

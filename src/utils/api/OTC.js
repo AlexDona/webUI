@@ -28,6 +28,8 @@ export const pickOrdersToBuy = (params) => postWithURLencoded('otcOrder/pickEntr
 export const pickOrdersToSell = (params) => postWithURLencoded('otcOrder/pickEntrustSell', params)
 // 查询otc挂单详情-商家和普通用户通用
 export const querySelectedOrdersDetails = (params) => get('otcEntrust/selectUserEntrustDetail', params)
+// 查询otc挂单撤销
+export const querySelectedOrdersRevocation = (params) => postWithURLencoded('otcEntrust/cancelOtcEntrust', params)
 // 查询otc挂单用户交易币种手续费率以及币种详情
 export const queryUserTradeFeeAndCoinInfo = (params) => get('otcCOin/getUserTradeFeeAndCoinInfo', params)
 // otc广告管理一键撤销用户所有挂单--商家专用
@@ -38,3 +40,8 @@ export const buyerPayForOrder = (params) => postWithURLencoded('otcOrder/payForO
 export const sellerConfirmGetMoney = (params) => postWithURLencoded('otcOrder/confirmReceiveForOrder', params)
 // otc交易中订单， otc卖家申诉
 export const sellerSendAppeal = (params) => postWithURLencoded('otcAppeal/applyOtcAppeal', params)
+// 提交otc商家申请
+export const businessApply = (params) => postWithURLencoded('otcMerchApply/applyOTCMerch', params)
+// 首次进入otc商家申请页面
+export const firstEnterBusinessApply = (params) => get('otcMerchApply/getUserMerchInfo', params)
+
