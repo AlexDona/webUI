@@ -64,10 +64,10 @@
           </div>
           <div class="security-status text-align-r">
             <button
-              v-if="!SecurityCenter.isMailBind"
+              v-if="!SecurityCenter.isMailEnable"
               class="security-verify border-radius2 font-size12 cursor-pointer"
             >
-              <span @click="showStatusVerificationClose(1, 1)">
+              <span @click="showStatusVerificationClose('email', 'enable')">
                 开启验证
               </span>
             </button>
@@ -76,7 +76,7 @@
               class="security-verify border-radius2 font-size12 cursor-pointer"
             >
               <span
-                @click="showStatusVerificationClose(1, 2)"
+                @click="showStatusVerificationClose('email', 'disable')"
               >
                 关闭验证
               </span>
@@ -84,7 +84,7 @@
             <button
               v-if="!SecurityCenter.isMailBind"
               class="security-binding border-radius2 font-size12 cursor-pointer"
-              @click="setShowStatusSecurity(1)"
+              @click="setShowStatusSecurity('email')"
             >
               绑定
             </button>
@@ -113,10 +113,10 @@
           </div>
           <div class="security-status text-align-r">
             <button
-              v-if="!SecurityCenter.isPhoneBind"
+              v-if="!SecurityCenter.isPhoneEnable"
               class="security-verify border-radius2 font-size12 cursor-pointer"
             >
-              <span @click="showStatusVerificationClose(2, 1)">
+              <span @click="showStatusVerificationClose('phone', 'enable')">
                 开启验证
               </span>
             </button>
@@ -125,14 +125,14 @@
               class="security-verify border-radius2 font-size12 cursor-pointer"
             >
               <span
-                @click="showStatusVerificationClose(2, 2)"
+                @click="showStatusVerificationClose('phone', 'disable')"
               >
                 关闭验证
               </span>
             </button>
             <button
               class="security-binding border-radius2 font-size12 cursor-pointer"
-              @click="setShowStatusSecurity(2)"
+              @click="setShowStatusSecurity('phone')"
             >
               <span v-if="!SecurityCenter.isPhoneBind">绑定</span>
               <span v-else>修改</span>
@@ -161,10 +161,10 @@
           </div>
           <div class="security-status text-align-r">
             <button
-              v-if="!SecurityCenter.isGoogleBind"
+              v-if="!SecurityCenter.isGoogleEnable"
               class="security-verify border-radius2 font-size12 cursor-pointer"
             >
-              <span @click="showStatusVerificationClose(3, 1)">
+              <span @click="showStatusVerificationClose('google', 'enable')">
                 开启验证
               </span>
             </button>
@@ -173,14 +173,14 @@
               class="security-verify border-radius2 font-size12 cursor-pointer"
             >
               <span
-                @click="showStatusVerificationClose(3, 2)"
+                @click="showStatusVerificationClose('google', 'disable')"
               >
                 关闭验证
               </span>
             </button>
             <button
               class="security-binding border-radius2 font-size12 cursor-pointer"
-              @click="setShowStatusSecurity(3)"
+              @click="setShowStatusSecurity('google')"
             >
               <span v-if="!SecurityCenter.isGoogleBind">绑定</span>
               <span v-else>解绑</span>
@@ -301,11 +301,12 @@
           </el-form>
           <div slot="footer" class="dialog-footer">
             <el-button @click="closeValidation = false">取 消</el-button>
-            <el-button type="primary" @click="determineTheClosed">确 定</el-button>
+            <el-button type="primary" @click="determineTheOpen">确 定</el-button>
           </div>
         </el-dialog>
+        <!--开启验证-->
         <el-dialog
-          title="关闭验证"
+          title="开启验证"
           :visible.sync="openTheValidation"
         >
           <el-form label-width="120px">
@@ -356,7 +357,7 @@
           </el-form>
           <div slot="footer" class="dialog-footer">
             <el-button @click="openTheValidation = false">取 消</el-button>
-            <el-button type="primary" @click="determineTheClosed">确 定</el-button>
+            <el-button type="primary" @click="determineTheOpen">确 定</el-button>
           </div>
         </el-dialog>
       </div>
@@ -371,7 +372,7 @@
               label="登陆时间"
             >
               <template slot-scope = "s">
-                <div>{{ s.row.operateTime }}</div>
+                <div>{{ timeFormatting(s.row.operateTime) }}</div>
               </template>
             </el-table-column>
             <el-table-column
@@ -405,7 +406,7 @@
               label="登陆时间"
             >
               <template slot-scope = "s">
-                <div>{{ s.row.operateTime }}</div>
+                <div>{{ timeFormatting(s.row.operateTime) }}</div>
               </template>
             </el-table-column>
             <el-table-column
@@ -439,10 +440,18 @@
 <script>
 import CountDownButton from '../../Common/CountDownCommon'
 import IconFontCommon from '../../Common/IconFontCommon'
-import {statusSecurityCenter, securityVerificationOnOff} from '../../../utils/api/personal'
-import {returnAjaxMessage, sendPhoneOrEmailCodeAjax} from '../../../utils/commonFunc'
+import {
+  statusSecurityCenter,
+  securityVerificationOnOff,
+  enableTheClosing
+} from '../../../utils/api/personal'
+import {
+  returnAjaxMessage,
+  sendPhoneOrEmailCodeAjax
+} from '../../../utils/commonFunc'
+import {timeFilter} from '../../../utils/index'
 import {mapState, createNamespacedHelpers} from 'vuex'
-const { mapMutations } = createNamespacedHelpers('user')
+const { mapMutations } = createNamespacedHelpers('personal')
 export default {
   components: {
     IconFontCommon, // 字体图标
@@ -466,7 +475,9 @@ export default {
       SecurityCenter: {},
       emailCode: '', // 邮箱验证
       phoneCode: '', // 手机验证
-      googleCode: '' // 谷歌验证
+      googleCode: '', // 谷歌验证
+      activeType: '', // 当前值
+      state: '' // 开启关闭
     }
   },
   created () {
@@ -478,7 +489,7 @@ export default {
     require('../../../../static/css/theme/night/Personal/UserAssets/SecurityCenterNight.css')
     // 获取全局个人信息
     // this.getStatusUserInfo = this.userInfo
-    console.log(this.userInfo)
+    // console.log(this.userInfo)
     // 调用安全中心登陆记录 安全设置记录 邮箱 手机 谷歌 交易密码 状态
     // this.getSecurityCenter()
   },
@@ -490,16 +501,20 @@ export default {
     ...mapMutations([
       'SET_USER_BUTTON_STATUS'
     ]),
+    // 1.时间格式化
+    timeFormatting (date) {
+      return timeFilter(date, 'normal')
+    },
     // 路由跳转对应组件
     setShowStatusSecurity (val) {
       switch (val) {
-        case 1:
+        case 'email':
           this.$router.push({path: '/SecureEmail'})
           break
-        case 2:
+        case 'phone':
           this.$router.push({path: '/SecurePhone'})
           break
-        case 3:
+        case 'google':
           this.$router.push({path: '/GoogleBinding'})
           break
         case 4:
@@ -522,10 +537,10 @@ export default {
       }
       switch (loginType) {
         case 0:
-          params.phone = this.userInfo.phone
+          params.phone = this.userInfo.userInfo.phone
           break
         case 1:
-          params.address = this.userInfo.email
+          params.address = this.userInfo.userInfo.email
           break
       }
       console.log(params)
@@ -553,66 +568,117 @@ export default {
         }
       })
     },
-    // 关闭验证状态事件
+    // 关闭开启验证状态事件
     showStatusVerificationClose (e, a) {
-      console.log(e)
+      // 把方法中定义的activeType、state在这里进行赋值 点击哪一个那当前的类型和状态传给后台
+      this.activeType = e
+      this.state = a
       switch (e) {
-        case 1:
-          if (a == 1) {
-            console.log(a)
-            this.openEmail = true
-            this.openTheValidation = true
+        case 'email':
+          if (!this.SecurityCenter.isMailBind) {
+            this.openTheValidation = false
           } else {
-            console.log(a)
-            this.closeValidation = true
+            if (a === 'enable') {
+              this.openEmail = true
+              this.openPhone = false
+              this.openGoogle = false
+              this.openTheValidation = true
+            } else {
+              this.closeValidation = true
+            }
           }
           break
-        case 2:
-          if (a == 1) {
-            console.log(a)
-            this.openPhone = true
-            this.openTheValidation = true
+        case 'phone':
+          if (!this.SecurityCenter.isPhoneBind) {
+            this.openTheValidation = false
           } else {
-            console.log(a)
-            this.closeValidation = true
+            if (a === 'enable') {
+              this.openEmail = false
+              this.openPhone = true
+              this.openGoogle = false
+              this.openTheValidation = true
+            } else {
+              this.closeValidation = true
+            }
           }
           break
-        case 3:
-          if (a == 1) {
-            console.log(a)
-            this.openGoogle = true
-            this.openTheValidation = true
+        case 'google':
+          if (!this.SecurityCenter.isGoogleBind) {
+            this.openTheValidation = false
           } else {
-            console.log(a)
-            this.closeValidation = true
+            if (a === 'enable') {
+              this.openEmail = false
+              this.openPhone = false
+              this.openGoogle = true
+              this.openTheValidation = true
+            } else {
+              this.closeValidation = true
+            }
           }
           break
       }
     },
-    // 确认开启关闭
-    determineTheClosed () {
-      console.log(1)
-      this.confirmTransactionPassword()
+    // 确认关闭
+    determineTheOpen () {
+      this.confirmTransactionPassword(this.activeType, this.state)
     },
-    // 确定绑定
-    async confirmTransactionPassword () {
+    // 关闭开启手机邮箱谷歌验证
+    async confirmTransactionPassword (type, state) {
+      console.log(type)
+      console.log(state)
       let data
-      let param = {
-        email: '1530469928@qq.com',
-        phone: '15994026836',
+      let params = {
+        email: this.userInfo.userInfo.email, // 邮箱
+        phone: this.userInfo.userInfo.phone, // 手机
         emailCode: this.emailCode, // 邮箱验证
         phoneCode: this.phoneCode, // 手机验证
         googleCode: this.googleCode, // 谷歌验证
-        userId: this.userInfo.userId
+        userId: this.userInfo.userId, // 用户id
+        type: '', // 邮箱 手机 谷歌 验证验证
+        status: '' // 开启 关闭
       }
-      data = await securityVerificationOnOff(param)
+      switch (type) {
+        case 'email':
+          console.log(type)
+          params.type = 'email'
+          // this.activeType = 'email'
+          console.log(params)
+          if (state === 'enable') {
+            params.status = 'enable'
+          } else {
+            params.status = 'disable'
+          }
+          break
+        case 'phone':
+          params.type = 'phone'
+          if (state === 'enable') {
+            params.status = 'enable'
+          } else {
+            params.status = 'disable'
+          }
+          break
+        case 'google':
+          params.type = 'google'
+          if (state === 'enable') {
+            params.status = 'enable'
+          } else {
+            params.status = 'disable'
+          }
+          break
+      }
+      if (!this.SecurityCenter.isMailEnable) {
+        data = await securityVerificationOnOff(params)
+        data = await enableTheClosing(params)
+      } else {
+        data = await enableTheClosing(params)
+      }
       if (!(returnAjaxMessage(data, this, 1))) {
         return false
       } else {
-        console.log(data)
-        console.log(this.emailAccounts)
-        console.log(this.emailCode)
-        // this.statusSecurityCenter()
+        // 安全中心状态刷新
+        this.getSecurityCenter()
+        this.openTheValidation = false
+        this.closeValidation = false
       }
     },
     /**
@@ -631,13 +697,7 @@ export default {
         this.SecurityCenter = data.data.data
         this.logonRecord = data.data.data.setLog
         this.securityRecord = data.data.data.loginLog
-        console.log(this.SecurityCenter)
-        console.log(this.logonRecord)
-        console.log(this.securityRecord)
-        console.log(this.SecurityCenter.isMailBind)
-        console.log(this.SecurityCenter.isGoogleBind)
-        console.log(this.SecurityCenter.isPhoneBind)
-        console.log(this.SecurityCenter.payPassword)
+        // console.log(this.SecurityCenter)
       }
     }
   },

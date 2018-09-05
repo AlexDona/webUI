@@ -33,6 +33,7 @@
           >
             <el-form-item label="原登录密码：">
               <input
+                type="password"
                 class="login-input border-radius2 padding-l15 box-sizing"
                 @focus="emptyStatus"
                 v-model="originalLoginPassword"
@@ -40,6 +41,7 @@
             </el-form-item>
             <el-form-item label="新登录密码：">
               <input
+                type="password"
                 class="login-input border-radius2 padding-l15 box-sizing"
                 @focus="emptyStatus"
                 v-model="newLoginPassword"
@@ -47,6 +49,7 @@
             </el-form-item>
             <el-form-item label="确认登录密码：">
               <input
+                type="password"
                 class="login-input border-radius2 padding-l15 box-sizing"
                 @focus="emptyStatus"
                 v-model="confirmLoginPassword"

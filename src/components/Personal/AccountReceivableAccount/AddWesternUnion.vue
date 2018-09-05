@@ -37,13 +37,21 @@
                 type="textarea"
                 :autosize="{ minRows: 4, maxRows: 2}"
                 placeholder="请输入内容"
+                v-model="telegraphicTransferAddress"
               >
               </el-input>
             </el-form-item>
-            <el-form-item label="资金账号：">
-              <input class="western-input border-radius2"/>
+            <el-form-item label="交易密码：">
+              <input
+                type="password"
+                class="western-input border-radius2"
+                v-model="transactionPassword"
+              />
             </el-form-item>
-            <button class="western-button border-radius4">
+            <button
+              class="western-button border-radius4"
+              @click="stateSubmitWesternUnion"
+            >
               确认修改
             </button>
           </el-form>
@@ -58,6 +66,8 @@
 // 头部
 import HeaderCommon from '../../Common/HeaderCommon'
 import IconFontCommon from '../../Common/IconFontCommon'
+import {returnAjaxMessage} from '../../../utils/commonFunc'
+import {statusCardSettings} from '../../../utils/api/personal'
 // 底部
 import FooterCommon from '../../Common/FooterCommon'
 import { createNamespacedHelpers, mapState } from 'vuex'
@@ -69,7 +79,11 @@ export default {
     FooterCommon // 底部
   },
   data () {
-    return {}
+    return {
+      telegraphicTransferAddress: '', // 电汇地址
+      transactionPassword: '', // 交易密码
+      bankType: 'xilian' // type类型
+    }
   },
   created () {
     // 覆盖Element样式
@@ -91,6 +105,25 @@ export default {
     returnSuperior () {
       this.CHANGE_USER_CENTER_ACTIVE_NAME('account-credited')
       this.$router.go(-1)
+    },
+    // 确认设置西联汇款账号
+    stateSubmitWesternUnion () {
+      this.stateSeniorCertification()
+    },
+    async stateSeniorCertification () {
+      let data
+      let param = {
+        address: this.telegraphicTransferAddress, // 西联汇款账号
+        password: this.transactionPassword, // 交易密码
+        bankType: 'xilian' // type
+      }
+      data = await statusCardSettings(param)
+      console.log(data)
+      if (!(returnAjaxMessage(data, this, 1))) {
+        return false
+      } else {
+        // this.getRealNameInformation()
+      }
     }
   },
   filter: {},

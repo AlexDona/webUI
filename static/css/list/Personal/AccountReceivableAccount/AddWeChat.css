@@ -11,3 +11,12 @@
   padding: 0 16px;
   border-radius: 0 4px 4px 0;
 }
+.add-chat.chat .el-upload-list__item {
+  width: 118px;
+  height: 118px;
+}
+.add-chat.chat .el-upload--picture-card {
+  width: 118px;
+  height: 118px;
+  line-height: 106px;
+}

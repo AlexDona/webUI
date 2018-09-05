@@ -140,7 +140,7 @@ export default {
     // 获取全局个人信息
     // this.globalUserInformation = this.userInfo.data.user
     // console.log(this.globalUserInformation)
-    // this.getGoogleVerificationCode()
+    this.getGoogleVerificationCode()
   },
   mounted () {},
   activited () {},
@@ -199,6 +199,7 @@ export default {
       if (!(returnAjaxMessage(data, this, 1))) {
         return false
       } else {
+        this.successJump()
         console.log(data)
       }
     },
@@ -216,7 +217,17 @@ export default {
         return false
       } else {
         console.log(data)
+        this.successJump()
       }
+    },
+    // 谷歌绑定成功自动跳转
+    successJump () {
+      setInterval(() => {
+        if (this.successCountDown === 0) {
+          this.CHANGE_USER_CENTER_ACTIVE_NAME('security-center')
+        }
+        this.successCountDown--
+      }, 1000)
     }
   },
   filter: {},

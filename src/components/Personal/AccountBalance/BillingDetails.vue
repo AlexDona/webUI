@@ -21,23 +21,30 @@
       <div class="billing-details-query">
         <div class="float-left cursor-pointer">
           <span class="demonstration display-inline-block">币种</span>
-          <el-select v-model="currencyListValue">
+          <el-select
+            v-model="currencyListValue"
+            @change="changeId"
+          >
             <el-option
               v-for="item in currencyList"
               :key="item.value"
               :label="item.label"
-              :value="item.value">
+              :value="item.value"
+            >
             </el-option>
           </el-select>
         </div>
         <div class="float-left margin-left50 cursor-pointer">
           <span class="demonstration">类型</span>
-          <el-select v-model="currencyTypeValue">
+          <el-select
+            v-model="currencyTypeValue"
+          >
             <el-option
               v-for="item in currencyType"
               :key="item.value"
               :label="item.label"
-              :value="item.value">
+              :value="item.value"
+            >
             </el-option>
           </el-select>
         </div>
@@ -45,19 +52,22 @@
           <div class="block">
             <span class="demonstration">日期</span>
             <el-date-picker
-              v-model="value1"
+              v-model="startTime"
               type="date"
               placeholder="选择日期">
             </el-date-picker>
             &nbsp;&nbsp;-&nbsp;&nbsp;
             <el-date-picker
-              v-model="value1"
+              v-model="endTime"
               type="date"
               placeholder="选择日期">
             </el-date-picker>
           </div>
         </div>
-        <div class="search-button float-right border-radius2 text-align-c cursor-pointer">
+        <div
+          class="search-button float-right border-radius2 text-align-c cursor-pointer"
+          @click="stateSearchButton"
+        >
           搜索
         </div>
       </div>
@@ -84,7 +94,7 @@
             width="100"
           >
             <template slot-scope = "s">
-              <div>{{ s.row.type }}</div>
+              <div>{{ s.row.typeName }}</div>
             </template>
           </el-table-column>
           <el-table-column
@@ -98,7 +108,7 @@
             label="提交时间"
           >
             <template slot-scope = "s">
-              <div>{{ s.row.submitTime }}</div>
+              <div>{{ s.row.createTime }}</div>
             </template>
           </el-table-column>
           <el-table-column
@@ -114,10 +124,19 @@
             label="状态"
           >
             <template slot-scope = "s">
-              <div>{{ s.row.state }}</div>
+              <div>{{ s.row.statusName }}</div>
             </template>
           </el-table-column>
         </el-table>
+        <!--分页-->
+        <el-pagination
+          background
+          v-show="activeName === 'current-entrust' && chargeRecordList.length"
+          layout="prev, pager, next"
+          :page-count="totalPageForMyEntrust"
+          @current-change="changeCurrentPage"
+        >
+        </el-pagination>
       </div>
       <!--其他记录-->
       <div
@@ -156,7 +175,7 @@
             label="提交时间"
           >
             <template slot-scope = "s">
-              <div>{{ s.row.networkFees }}</div>
+              <div>{{ s.row.createTime }}</div>
             </template>
           </el-table-column>
           <el-table-column
@@ -192,6 +211,11 @@ export default {
     return {
       // 充提记录
       chargeRecordList: [],
+      activeName: 'current-entrust',
+      currentPageForMyEntrust: 1, // 当前委托页码
+      totalPageForMyEntrust: 1, // 当前委托总页数
+      startTime: '', // 开始起止时间
+      endTime: '', // 结束起止时间
       // 其他记录
       otherRecordsList: [
         {
@@ -252,10 +276,10 @@ export default {
           value: '1',
           label: '全部'
         }, {
-          value: '2',
+          value: 'RECHARGE',
           label: '充币'
         }, {
-          value: '3',
+          value: 'WITHDRAW',
           label: '提币'
         }
       ]
@@ -287,13 +311,28 @@ export default {
         this.hiddenStatusRecordList = true
       }
     },
+    // 资产币种下拉
+    changeId (e) {
+      this.currencyList.forEach(item => {
+        if (e === item.id) {
+          this.toggleAssetsCurrencyId(e)
+        }
+      })
+    },
+    // 搜索按钮
+    stateSearchButton () {
+      this.getChargeMentionList()
+    },
     /**
      * 刚进页面时候 冲提记录列表展示
      */
     async getChargeMentionList () {
       let data = await statusRushedToRecordList({
-        // userId: this.userInfo.userId // 商户id
-        userId: 4 // 商户userId
+        currentPage: this.currentPageForMyEntrust, // 当前委托页码
+        pageSize: this.pageSize, // 每页显示条数
+        type: this.currencyTypeValue, // 类型（RECHARGE:充值 WITHDRAW:提现）
+        startTime: this.startTime, // 开始起止时间
+        endTime: this.endTime // 结束起止时间
       })
       console.log(data)
       if (!(returnAjaxMessage(data, this, 0))) {
@@ -301,8 +340,14 @@ export default {
       } else {
         // 返回冲提记录列表展示
         this.chargeRecordList = data.data.data.list
+        this.totalPageForMyEntrust = data.data.data.pages - 0
         console.log(this.chargeRecordList)
       }
+    },
+    // 分页
+    changeCurrentPage (pageNum) {
+      this.currentPageForMyEntrust = pageNum
+      this.getChargeMentionList()
     }
   },
   filter: {},

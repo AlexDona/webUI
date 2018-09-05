@@ -12,3 +12,6 @@
   border-color: #364654;
   color: #fff;
 }
+.add-chat.chat.night .el-upload--picture-card {
+ background-color: #485776;
+}

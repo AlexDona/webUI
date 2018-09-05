@@ -144,6 +144,7 @@ export default {
     // 时间格式化
     timeFormatting (date) {
       return timeFilter(date, 'normal')
+      // return timeFilter(date, 'BIH')
     },
     // 2.0 请求冻结中订单列表
     async getOTCFrezzingOrdersList () {
