@@ -7,7 +7,9 @@
       <!--表头-->
       <template>
         <el-tabs
-          v-model="activeName">
+          v-model="activeName"
+          @tab-click="changeTab"
+        >
           <el-tab-pane
             :label="outItem.i18nName"
             :name="outItem.id"
@@ -98,7 +100,7 @@
                                 <span class="right">
                                 <span
                                   class="top font-size14"
-                                  :class="{up:innerItem.rose>0,down:innerItem.rose<0}"
+                                  :class="{up:innerItem.rose>=0,down:innerItem.rose<0}"
                                 >
                                   {{innerItem.price}}
                                 </span>
@@ -132,20 +134,22 @@
                     :style="'height:'+(50*(item.content.length||1)+108)+'px'"
                   >
                     <el-table
+                      class="cursor-pointer"
                       :data="item.content"
+                      @row-click="changeActiveSymbol"
                     >
                       <el-table-column
                         label="交易对"
                         width="126px"
                       >
-                        <template slot-scope="scope">
+                        <template slot-scope="s">
                           <div style="padding-left:14px;display:flex;width:126px !important;box-sizing: border-box;">
                             <div class="left" style="border-radius: 50%;">
                               <img
                                 style="width:22px;vertical-align: middle;
                                 display:inline-block;
                                 margin:14px 0;"
-                                :src="scope.row.image">
+                                :src="s.row.image">
                             </div>
                             <div class="right"
                                  style="height:30px;margin:10px 4px;"
@@ -153,50 +157,50 @@
                               <div class="top"
                                    style="height:15px;line-height: 15px"
                               >
-                                <span class="symbol">{{scope.row.sellsymbol}}</span>
+                                <span class="symbol">{{s.row.sellsymbol}}</span>
                                 <span
                                   class="area"
                                   v-show="language!=='zh_CN'"
-                                >/{{scope.row.area}}</span>
+                                >/{{s.row.area}}</span>
                               </div>
                               <div
                                 class="bottom sellname"
                                 style="height:20px;line-height: 20px"
                                 v-show="language=='zh_CN'"
                               >
-                                {{scope.row.sellname}}
+                                {{s.row.sellname}}
                               </div>
                             </div>
                           </div>
                         </template>
                       </el-table-column>
                       <el-table-column
-                        label="最新价格(BTCC)"
+                        label="最新价格"
                         width="160px"
                         sortable
                       >
-                        <template slot-scope="scope">
+                        <template slot-scope="s">
                           <div
                             style="
-                        padding-left:10px;
-                        width:160px;
-                        height:30px;
-                        margin:10px auto;
-                      ">
+                              padding-left:10px;
+                              width:160px;
+                              height:30px;
+                              margin:10px auto;
+                          ">
                             <div class="top"
                                  style="height:15px;line-height: 15px"
                             >
                         <span
-                          v-show="scope.row.rose>0"
+                          v-show="s.row.rose>=0"
                           style="color:#D45858;"
                         >
-                          {{scope.row.price}}
+                          {{s.row.price}}
                         </span>
                               <span
-                                v-show="scope.row.rose<0"
+                                v-show="s.row.rose<0"
                                 style="color:#008069;"
                               >
-                          {{scope.row.price}}
+                          {{s.row.price}}
                         </span>
                             </div>
                             <!--货币转换-->
@@ -209,11 +213,11 @@
                       </el-table-column>
                       <el-table-column
                         prop="high"
-                        label="最高价(BTCC)"
+                        label="最高价"
                         width="145px"
                         sortable
                       >
-                        <template slot-scope="scope">
+                        <template slot-scope="s">
                           <div
                             style="
                         padding-left:10px;
@@ -222,17 +226,17 @@
                         line-height: 30px;
                         margin:10px auto;
                       ">
-                            {{scope.row.high}}
+                            {{s.row.high}}
                           </div>
                         </template>
                       </el-table-column>
                       <el-table-column
                         prop="low"
-                        label="最低价(BTCC)"
+                        label="最低价"
                         width="145px"
                         sortable
                       >
-                        <template slot-scope="scope">
+                        <template slot-scope="s">
                           <div
                             style="
                         width:140px;
@@ -241,7 +245,7 @@
                         line-height: 30px;
                         margin:10px auto;
                       ">
-                            {{scope.row.low}}
+                            {{s.row.low}}
                           </div>
                         </template>
                       </el-table-column>
@@ -251,7 +255,7 @@
                         width="120px"
                         sortable
                       >
-                        <template slot-scope="scope">
+                        <template slot-scope="s">
                           <div
                             style="
                         width: 120px;
@@ -260,7 +264,7 @@
                         line-height: 30px;
                         margin:10px auto;
                       ">
-                            {{scope.row.volume}}
+                            {{s.row.volume}}
                           </div>
                         </template>
                       </el-table-column>
@@ -270,7 +274,7 @@
                         width="80px"
                         sortable
                       >
-                        <template slot-scope="scope">
+                        <template slot-scope="s">
                           <div
                             style="
                         width:74px;
@@ -279,8 +283,8 @@
                         line-height: 30px;
                         margin:10px auto;
                       ">
-                            <span v-show="scope.row.rose>0" style="color:#D45858;">{{scope.row.rose}}</span>
-                            <span v-show="scope.row.rose<0" style="color:#008069;">{{scope.row.rose}}</span>
+                            <span v-show="s.row.rose>0" style="color:#D45858;">{{s.row.rose}}</span>
+                            <span v-show="s.row.rose<0" style="color:#008069;">{{s.row.rose}}</span>
                           </div>
                         </template>
                       </el-table-column>
@@ -289,10 +293,10 @@
                         label="价格趋势(3日)"
                         width="120px"
                       >
-                        <template slot-scope="scope">
+                        <template slot-scope="s">
                           <EchartsLineCommon
-                            :id="scope.row.id + Math.random()"
-                            :data="scope.row.tendency"/>
+                            :id="s.row.id + Math.random()"
+                            :data="s.row.tendency"/>
                         </template>
                       </el-table-column>
                       <!--收藏-->
@@ -301,21 +305,21 @@
                         label=" "
                         width="36px"
                       >
-                        <template slot-scope="scope">
+                        <template slot-scope="s">
                           <!--非自选区-->
                           <div
                             class="collect-box"
-                            v-show="item.id!==collectAreaId"
+                            v-show="item.id!=collectAreaId"
                           >
                             <i
                               class="el-icon-star-on collected collect font-size16 cursor-pointer"
-                              @click="toggleCollect(scope.row.id,0,scope.row)"
-                              v-show="collectStatusList[scope.row.id]"
+                              @click="toggleCollect(s.row.id,0,s.row)"
+                              v-show="collectStatusList[s.row.id]"
                             ></i>
                             <i
                               class="el-icon-star-off collect font-size16 cursor-pointer"
-                              @click="toggleCollect(scope.row.id,1,scope.row)"
-                              v-show="!collectStatusList[scope.row.id]"
+                              @click="toggleCollect(s.row.id,1,s.row)"
+                              v-show="!collectStatusList[s.row.id]"
                             ></i>
                           </div>
                           <!--自选区-->
@@ -325,7 +329,7 @@
                           >
                             <i
                               class="el-icon-star-on collected collect font-size16 cursor-pointer"
-                              @click="toggleCollect(scope.row.id,0,scope.row)"
+                              @click="toggleCollect(s.row.id,0,s.row)"
                             ></i>
                           </div>
                         </template>
@@ -373,11 +377,16 @@ import EchartsLineCommon from '../Common/EchartsLineCommon'
 import IconFontCommon from '../Common/IconFontCommon'
 // 文件拖动
 import VueDND from 'awe-dnd'
-import {mapState, mapMutations} from 'vuex'
 import {getStore, setStore} from '../../utils'
-import {Io} from '../../utils/tradingview/socket'
-import {getPartnerList} from '../../utils/api/home'
-import {returnAjaxMessage} from '../../utils/commonFunc'
+import {socket} from '../../utils/tradingview/socket'
+// import {getPartnerList} from '../../utils/api/home'
+import {
+  returnAjaxMessage,
+  // splitSocketParams
+  getPartnerListAjax
+} from '../../utils/commonFunc'
+import {mapState, createNamespacedHelpers} from 'vuex'
+const { mapMutations } = createNamespacedHelpers('home')
 Vue.use(VueDND)
 export default{
   components: {
@@ -407,7 +416,7 @@ export default{
       // 自选区 id
       collectAreaId: 99,
       // 自选区状态列表
-      collectStatusList: [],
+      collectStatusList: {},
       // 自选区列表
       collectList: [],
       // 当前选中tab
@@ -423,39 +432,41 @@ export default{
     }
   },
   async created () {
-    this.getPartnerList()
     require('../../../static/css/list/Home/MarketListHome.css')
     require('../../../static/css/theme/day/Home/MarketListHomeDay.css')
     require('../../../static/css/theme/night/Home/MarketListHomeNight.css')
     this.collectList = JSON.parse(getStore('collectList')) || []
+    console.log(this.collectList)
     this.collectList.forEach((item) => {
       this.collectStatusList[item.id] = true
     })
+    this.getPartnerList()
+
     // 初始化socket
-    Io.subscribeKline({
-      'type': 0 // 请求类型
-    }, (data) => {
-      console.log(data)
-      this.marketList = data.data
-      this.marketList.unshift(
-        {
-          area: '搜索区',
-          id: this.searchAreaId,
-          content: []
-        },
-        {
-          area: '自选区', // 交易区名称
-          id: this.collectAreaId,
-          content: []
-        }
-      )
-      console.log(this.marketList)
-      this.getFilterMarketList(this.marketList)
-      // if (this.collectList.length) {
-      //   this.setMarketList(this.collectAreaId, this.collectList)
-      // }
-      this.initSideBar(true)
-    })
+    // socket.subscribeKline({
+    //   'type': 0 // 请求类型
+    // }, (data) => {
+    //   console.log(data)
+    //   this.marketList = data.data
+    //   this.marketList.unshift(
+    //     {
+    //       area: '搜索区',
+    //       id: this.searchAreaId,
+    //       content: []
+    //     },
+    //     {
+    //       area: '自选区', // 交易区名称
+    //       id: this.collectAreaId,
+    //       content: []
+    //     }
+    //   )
+    //   console.log(this.marketList)
+    //   this.getFilterMarketList(this.marketList)
+    //   // if (this.collectList.length) {
+    //   //   this.setMarketList(this.collectAreaId, this.collectList)
+    //   // }
+    //   this.initSideBar(true)
+    // })
     // 获取tab个数
     // this.tabList = [
     //   {
@@ -474,8 +485,8 @@ export default{
     //     label: '创新区'
     //   }
     // ]
-    console.log(this.tabList)
-    console.log(this.marketList)
+    // console.log(this.tabList)
+    // console.log(this.marketList)
     // 获取本地搜藏列表
     // this.collectList = JSON.parse(getStore('collectList')) || []
     // this.collectList.forEach((item) => {
@@ -902,7 +913,7 @@ export default{
     //     ]
     //   }
     // ]
-    console.log(this.toggleSideList)
+    // console.log(this.toggleSideList)
   },
   mounted () {
     // 搜索区、自选区禁止拖拽
@@ -917,22 +928,110 @@ export default{
   update () {},
   beforeRouteUpdate () {},
   methods: {
-    ...mapMutations('home', [
+    ...mapMutations([
       'CHANGE_COLLECT_LIST'
     ]),
+    // 更改当前交易对
+    changeActiveSymbol (e) {
+      this.$store.commit('common/CHANGE_ACTIVE_SYMBOL', e)
+      console.log(this.activeSymbol)
+      // 设置当前交易区
+      const areaId = e.areaId
+      this.$store.commit('common/CHANGE_ACTIVE_TRADE_AREA', {
+        areaId
+      })
+      this.$router.push({'path': '/TradeCenter'})
+    },
+    // 重新订阅请求socket
+    resetSocketMarket (plateId) {
+      socket.subscribeKline({
+        'type': 'home_market', // 请求类型
+        plateId
+      }, (data) => {
+        // console.log(data)
+        switch (data.type) {
+          // 请求socket
+          case 0:
+            if (data.data) {
+              this.marketList = data.data
+              this.marketList.unshift(
+                {
+                  area: '搜索区',
+                  id: this.searchAreaId,
+                  content: []
+                },
+                {
+                  area: '自选区', // 交易区名称
+                  id: this.collectAreaId,
+                  content: []
+                }
+              )
+              this.marketList[1].content = this.collectList
+              this.getFilterMarketList(this.marketList)
+              this.initSideBar(true)
+            }
+            break
+          // 订阅socket
+          case 1:
+            let newData = data.data[0]
+            let newContent = newData.content[0]
+            let collectContent = this.marketList[1].content
+            this.marketList.forEach((item, index) => {
+              // 非自选区
+              if (item.id === newData.id) {
+                item.content.forEach((innerItem, innerIndex) => {
+                  if (innerItem.id === newData.content[0].id) {
+                    this.$set(this.marketList[index].content, innerIndex, newContent)
+                    return false
+                  }
+                })
+              }
+              // 自选区
+              if (collectContent.length) {
+                collectContent.forEach((item, index) => {
+                  if (item.id === newContent.id) {
+                    this.$set(collectContent, index, newContent)
+                    this.$set(collectContent[index].tendency, 0, newContent.tendency[0])
+                    this.$set(collectContent[index].tendency, 1, newContent.tendency[1])
+                    // console.log(collectContent)
+                    return false
+                  }
+                })
+              }
+              return false
+            })
+            break
+        }
+        // let resultArr = splitSocketParams(data)
+        // console.log(resultArr)
+        // console.log(this.marketList)
+        // if (this.collectList.length) {
+        //   this.setMarketList(this.collectAreaId, this.collectList)
+        // }
+      })
+    },
+    // 切换板块
+    changeTab (e) {
+      console.log(e.name)
+      this.resetSocketMarket(this.activeName)
+    },
     // 获取板块列表
-    async getPartnerList () {
-      let params = {
-        partnerId: this.partnerId,
-        i18n: 'ZN_CN'
-      }
-      const data = await getPartnerList(params)
-      if (!returnAjaxMessage(data, this, 0)) {
-        return false
-      } else {
-        this.tabList = data.data.data
-        this.activeName = this.tabList[0].id
-      }
+    getPartnerList () {
+      getPartnerListAjax(this.partnerId, (data) => {
+        if (!returnAjaxMessage(data, this, 0)) {
+          return false
+        } else {
+          this.tabList = data.data.data
+          // 全部板块
+          // this.tabList.unshift({
+          //   i18nName: 'all-plate',
+          //   id: '0',
+          //   language: 'ZN_CN'
+          // })
+          this.activeName = this.tabList[0].id
+          this.resetSocketMarket(this.activeName)
+        }
+      })
     },
     // 发送
 
@@ -994,8 +1093,8 @@ export default{
           let status = item.id !== this.searchAreaId && item.id !== this.collectAreaId
           if (status) {
             item.content.forEach((innerItem) => {
-              let result1 = innerItem.sellsymbol.search(this.searchKeyWord.toUpperCase())
-              let result2 = innerItem.sellname.search(this.searchKeyWord)
+              const result1 = innerItem.sellsymbol.search(this.searchKeyWord.toUpperCase())
+              const result2 = innerItem.sellname.search(this.searchKeyWord)
               if (result1 !== -1 || result2 !== -1) {
                 console.log(this.searchList)
                 this.searchList.push(innerItem)
@@ -1024,8 +1123,9 @@ export default{
     toggleCollect (id, status, row) {
       console.log(row)
       status = Boolean(status)
-      this.collectStatusList[id] = Boolean(status)
+      // this.collectStatusList[id] = Boolean(status)
       this.$set(this.collectStatusList, id, status)
+      console.log(this.collectStatusList)
       if (status) {
         //  添加收藏
         this.collectList.push(row)
@@ -1098,8 +1198,10 @@ export default{
     ...mapState({
       theme: state => state.common.theme,
       language: state => state.common.language, // 语言
-      plateList: state => state.home.plateList, // 板块列表
-      partnerId: state => state.common.partnerId // 商户id
+      plateList: state => state.common.plateList, // 板块列表
+      partnerId: state => state.common.partnerId, // 商户id
+      activeSymbol: state => state.common.activeSymbol,
+      activeTradeArea: state => state.common.activeTradeArea
     })
     // // 筛选列表
     // filterMarketList () {

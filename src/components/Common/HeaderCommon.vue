@@ -142,13 +142,13 @@
                       <button class="nav-button">立即开通</button>
                     </div>
                     <ul class="personal-user">
-                      <li>账户资产</li>
-                      <li>订单管理</li>
-                      <li>身份认证</li>
-                      <li>安全中心</li>
-                      <li>收款设置</li>
-                      <li>邀请推广</li>
-                      <li>API管理</li>
+                      <li @click="stateReturnSuperior('account-balance')">账户资产</li>
+                      <li @click="stateReturnSuperior('order-management')">订单管理</li>
+                      <li @click="stateReturnSuperior('identity-authentication')">身份认证</li>
+                      <li @click="stateReturnSuperior('security-center')">安全中心</li>
+                      <li @click="stateReturnSuperior('receiving-set')">收款设置</li>
+                      <li @click="stateReturnSuperior('invite')">邀请推广</li>
+                      <li @click="stateReturnSuperior('api')">API管理</li>
                       <li @click="userLoginOut">退出</li>
                     </ul>
                   </div>
@@ -322,8 +322,12 @@
 import {getMerchantAvailablelegalTender} from '../../utils/api/OTC'
 import IconFontCommon from '../Common/IconFontCommon'
 import {setStore} from '../../utils'
+// import {getPartnerList} from '../../utils/api/home'
+// import {
+//   returnAjaxMessage
+// } from '../../utils/commonFunc'
 import { createNamespacedHelpers, mapState } from 'vuex'
-const { mapMutations } = createNamespacedHelpers('common')
+const { mapMutations } = createNamespacedHelpers('personal')
 // const { mapMutationsForUser } = createNamespacedHelpers('user')
 // import {Io} from '../../utils/tradingview/socket'
 export default{
@@ -379,7 +383,10 @@ export default{
     // console.log(this.theme)
     this.activeTheme = this.theme
     // 查询某商户可用法币币种列表
-    // this.getMerchantAvailablelegalTenderList()
+    // 默认登录
+    if (this.loginStep1Info.userInfo) {
+      this.$store.commit('user/USER_LOGIN', this.loginStep1Info)
+    }
   },
   methods: {
     ...mapMutations([
@@ -388,11 +395,43 @@ export default{
       // 修改折算货币
       'CHANGE_CONVERT_CURRENCY',
       // 修改主题
-      'CHANGE_THEME'
+      'CHANGE_THEME',
+      // 设置板块
+      'CHANGE_PALTE_LIST',
+      // 用户点击跳转指定页面
+      'CHANGE_USER_CENTER_ACTIVE_NAME'
     ]),
     // ...mapMutationsForUser([
     //   ''
     // ]),
+    // 获取板块列表
+    // 用户跳转到指定页面
+    stateReturnSuperior (val) {
+      switch (val) {
+        case 'account-balance':
+          this.CHANGE_USER_CENTER_ACTIVE_NAME('assets')
+          break
+        case 'order-management':
+          this.CHANGE_USER_CENTER_ACTIVE_NAME('coin-orders')
+          break
+        case 'identity-authentication':
+          this.CHANGE_USER_CENTER_ACTIVE_NAME('identity-authentication')
+          break
+        case 'security-center':
+          this.CHANGE_USER_CENTER_ACTIVE_NAME('security-center')
+          break
+        case 'receiving-set':
+          this.CHANGE_USER_CENTER_ACTIVE_NAME('account-credited')
+          break
+        case 'invite':
+          this.CHANGE_USER_CENTER_ACTIVE_NAME('invitation-promote')
+          break
+        case 'api':
+          this.CHANGE_USER_CENTER_ACTIVE_NAME('api-management')
+          break
+      }
+      // this.CHANGE_USER_CENTER_ACTIVE_NAME('account-credited')
+    },
     // 用户登出
     userLoginOut () {
       console.log('logout')
@@ -443,7 +482,7 @@ export default{
     async getMerchantAvailablelegalTenderList () {
       let data
       data = await getMerchantAvailablelegalTender({
-        partnerId: '474629374641963008'
+        partnerId: this.partnerId
       })
       console.log(data)
       if (data.data.meta.code !== 200) {
@@ -464,7 +503,9 @@ export default{
       theme: state => state.common.theme,
       language: state => state.common.language,
       isLogin: state => state.user.isLogin,
-      userInfo: state => state.user.loginStep1Info.userInfo
+      loginStep1Info: state => state.user.loginStep1Info,
+      userInfo: state => state.user.loginStep1Info.userInfo,
+      partnerId: state => state.common.partnerId // 商户id
     })
   }
 }

@@ -30,26 +30,51 @@
             label-width="120px"
           >
             <el-form-item label="名 称：">
-              <span class="bank-content-name">杨</span>
+              <span class="bank-content-name">
+                {{ userInfo.userInfo.realname }}
+              </span>
             </el-form-item>
             <el-form-item label="银  行  名  称：">
-              <input class="bank-input border-radius2"/>
+              <input
+                class="bank-input border-radius2"
+                v-model="bankName"
+              />
             </el-form-item>
             <el-form-item label="银  行  卡  号：">
-              <input class="bank-input border-radius2"/>
+              <input
+                class="bank-input border-radius2"
+                v-model="bankCard"
+              />
             </el-form-item>
             <el-form-item label="支  行  地  址：">
-              <input class="bank-input border-radius2" />
+              <input
+                class="bank-input border-radius2"
+                v-model="branchAddress"
+              />
             </el-form-item>
             <el-form-item label="手  机  号  码：">
-              <el-input>
-                <template slot="append">验证码</template>
+              <el-input
+                v-model="phone"
+              >
+                <template slot="append">
+                  <CountDownButton
+                    class="send-code-btn cursor-pointer"
+                    :status="disabledOfPhoneBtn"
+                    @run="sendPhoneOrEmailCode(0)"
+                  />
+                </template>
               </el-input>
             </el-form-item>
             <el-form-item label="短信验证码：">
-              <input class="bank-input border-radius2"/>
+              <input
+                class="bank-input border-radius2"
+                v-model="code"
+              />
             </el-form-item>
-            <button class="bank-button border-radius4">
+            <button
+              class="bank-button border-radius4"
+              @click="statusTetBankCard"
+            >
               确认修改
             </button>
           </el-form>
@@ -64,6 +89,9 @@
 // 头部
 import HeaderCommon from '../../Common/HeaderCommon'
 import IconFontCommon from '../../Common/IconFontCommon'
+import CountDownButton from '../../Common/CountDownCommon'
+import {returnAjaxMessage, sendPhoneOrEmailCodeAjax} from '../../../utils/commonFunc'
+import {statusCardSettings} from '../../../utils/api/personal'
 // 底部
 import FooterCommon from '../../Common/FooterCommon'
 import { createNamespacedHelpers, mapState } from 'vuex'
@@ -72,15 +100,18 @@ export default {
   components: {
     HeaderCommon, // 头部
     IconFontCommon, // 字体图标
+    CountDownButton, // 短信倒计时
     FooterCommon // 底部
   },
   data () {
     return {
-      name: '', // 名称
+      realName: '杨孝喜', // 真实姓名
       bankName: '', // 银行名称
       bankCard: '', // 银行卡号
       branchAddress: '', // 支行地址
-      code: '' // 短信验证码
+      phone: '', // 手机号码
+      code: '', // 短信验证码
+      paymentTerm: {}
     }
   },
   created () {
@@ -90,6 +121,7 @@ export default {
     require('../../../../static/css/theme/day/Personal/AccountReceivableAccount/AddBankCardDay.css')
     // 黑色主题样式
     require('../../../../static/css/theme/night/Personal/AccountReceivableAccount/AddBankCardNight.css')
+    // console.log(this.getAccountPaymentTerm)
   },
   mounted () {},
   activited () {},
@@ -103,12 +135,81 @@ export default {
     returnSuperior () {
       this.CHANGE_USER_CENTER_ACTIVE_NAME('account-credited')
       this.$router.go(-1)
+    },
+    // 发送邮箱验证码
+    sendPhoneOrEmailCode (loginType) {
+      console.log(this.disabledOfPhoneBtn)
+      console.log(this.disabledOfEmailBtn)
+      if (this.disabledOfPhoneBtn || this.disabledOfEmailBtn) {
+        return false
+      }
+      let params = {
+        phone: this.phone // 手机号
+      }
+      switch (loginType) {
+        case 0:
+          params.phone = this.phone
+          break
+        case 1:
+          params.address = this.userInfo.userInfo.email
+          break
+      }
+      sendPhoneOrEmailCodeAjax(loginType, params, (data) => {
+        console.log(this.disabledOfPhoneBtn)
+        // 提示信息
+        if (!returnAjaxMessage(data, this)) {
+          console.log('error')
+          return false
+        } else {
+          switch (loginType) {
+            case 0:
+              this.$store.commit('user/SET_USER_BUTTON_STATUS', {
+                loginType: 0,
+                status: true
+              })
+              break
+            case 1:
+              this.$store.commit('user/SET_USER_BUTTON_STATUS', {
+                loginType: 1,
+                status: true
+              })
+              break
+          }
+        }
+      })
+    },
+    statusTetBankCard () {
+      this.confirmTiePhone()
+    },
+    // 确定设置
+    async confirmTiePhone () {
+      let data
+      let params = {
+        realname: this.userInfo.userInfo.realname, // 真实姓名
+        bankName: this.bankName, // 银行卡名称
+        cardNo: this.bankCard, // 银行卡号
+        address: this.branchAddress, // 开户地址
+        phone: this.phone, // 银行卡预留手机号
+        code: this.code, // 手机验证码
+        bankType: 'bank' // type
+      }
+      data = await statusCardSettings(params)
+      if (!(returnAjaxMessage(data, this, 1))) {
+        return false
+      } else {
+        console.log(data)
+        // console.log(this.emailAccounts)
+      }
     }
   },
   filter: {},
   computed: {
     ...mapState({
-      theme: state => state.common.theme
+      theme: state => state.common.theme,
+      userInfo: state => state.user.loginStep1Info, // 用户详细信息
+      // 手机验证码
+      disabledOfPhoneBtn: state => state.user.disabledOfPhoneBtn,
+      disabledOfEmailBtn: state => state.user.disabledOfEmailBtn
     })
   },
   watch: {}

@@ -13,13 +13,46 @@ export default {
   components: {},
   // props,
   data () {
-    return {}
+    return {
+      paneProperties: {
+        background: '',
+        vertGridProperties: {
+          color: ''
+        },
+        horzGridProperties: {
+          color: ''
+        }
+      },
+      params: {
+        symbol: this.activeSymbol.sellsymbol + this.activeSymbol.area,
+        interval: this.interval,
+        paneProperties: this.paneProperties
+      }, // K线请求参数
+      interval: '1' // 时间周期
+    }
   },
   created () {
-    // require('../../../static/charting_library/static/css/t-night.css')
+    require('../../../static/charting_library/static/css/t-night.css')
+    require('../../../static/css/theme/day/Trade/KlieneDay.css')
+    console.log(this.paneProperties)
   },
   mounted () {
-    Tv.init({symbol: 'ASASSWEWES', interval: '1'})
+    // this.paneProperties.background = this.theme === 'night' ? '#10172d' : '#fff'
+    // Tv.init({
+    //   symbol: 'ASASSWEWES',
+    //   interval: '1',
+    //   paneProperties: this.paneProperties
+    // })
+    // console.log(this.paneProperties)
+    //
+    // this.paneProperties.background = this.theme === 'night' ? '#10172d' : '#fff'
+    // this.params = {
+    //   symbol: this.activeSymbol.sellsymbol + this.activeSymbol.area,
+    //   interval: this.interval,
+    //   paneProperties: this.paneProperties
+    // }
+    // console.log(this.)
+    // this.resetKline(this.params)
     // Tv.init({symbol: 'AA', interval: '1'})
     // 开启交易面板
     // const eventList = [
@@ -37,14 +70,35 @@ export default {
   activited () {},
   update () {},
   beforeRouteUpdate () {},
-  methods: {},
+  methods: {
+    resetKline (params) {
+      Tv.init(params)
+    }
+  },
   filter: {},
   computed: {
     ...mapState({
-      theme: state => state.common.theme
+      theme: state => state.common.theme,
+      activeSymbol: state => state.common.activeSymbol,
+      activeTradeArea: state => state.common.activeTradeArea
     })
   },
   watch: {
+    theme (newVal) {
+      // this.paneProperties.background = newVal === 'night' ? '#10172d' : '#fff'
+      // Tv.init({
+      //   symbol: this.activeSymbol.sellsymbol + this.activeSymbol.area,
+      //   interval: this.interval,
+      //   paneProperties: this.paneProperties
+      // })
+    },
+    activeTradeArea (newVal) {
+      console.log(newVal)
+      if (newVal.id) {
+        // console.log(this.params)
+        // this.resetKline(this.params)
+      }
+    }
   }
 }
 </script>
@@ -59,7 +113,7 @@ export default {
     /*width: 1923px;*/
     /*height: 480px;*/
     &.night {
-      background-color: pink;
+      /*background-color: pink;*/
     }
   }
 </style>

@@ -27,6 +27,8 @@ export const statusSecurityCenter = (params) => get('user/security/index', param
 export const bindEmailAddress = (params) => postWithURLencoded('user/security/bindMail', params)
 // 绑定手机
 export const bindPhoneAddress = (params) => postWithURLencoded('user/security/bindPhone', params)
+// 解绑手机
+export const changeMobilePhone = (params) => postWithURLencoded('user/security/changePhone', params)
 // 绑定谷歌页面
 export const bindGoogleAddressPage = (params) => get('user/security/bindGoogle', params)
 // 绑定谷歌
@@ -40,7 +42,10 @@ export const modifyLoginPassword = (params) => postWithURLencoded('user/security
 /**
  * 开启关闭验证
  * */
+// 邮箱、短信、谷歌验证码验证
 export const securityVerificationOnOff = (params) => postWithURLencoded('user/validate', params)
+// 启用关闭手机邮箱验证
+export const enableTheClosing = (params) => postWithURLencoded('user/security/enable', params)
 // 提交实名认证
 export const submitRealNameAuthentication = (params) => postWithURLencoded('user/center/realNameAuth', params)
 // 提交高级认证
@@ -58,7 +63,7 @@ export const pushAssetsSubmit = (params) => post('push/pushSub', params)
 // push资产撤销
 export const revocationPushProperty = (params) => put('push/pushCancel', params)
 // push资产成交
-export const pushPropertyTransaction = (params) => put('push//pushPay', params)
+export const pushPropertyTransaction = (params) => put('push/pushPay', params)
 // push短信发送接口
 export const sendMsgByPushPhoneOrEmial = (type, params) => {
   let result
@@ -74,3 +79,12 @@ export const sendMsgByPushPhoneOrEmial = (type, params) => {
   }
   return result
 }
+/**
+ * 收款方式
+ * */
+// 收款方式
+export const accountPaymentTerm = (params) => get('user/bank/', {})
+// 收款方式设置
+export const statusCardSettings = (params) => postWithURLencoded('user/bank/save', params)
+// 开启关闭收款方式设置
+export const openAndCloseModeSetting = (params) => postWithURLencoded('user/bank/enable', params)

@@ -7,7 +7,7 @@
     <div class="set-phone-main margin25">
       <header class="set-phone-header personal-height60 line-height60 line-height70 margin25">
         <span
-          v-if="!globalUserInformation.telePhoneBind"
+          v-if="!securityCenter.isPhoneBind"
           class="header-content-left header-content font-size16 font-weight600"
         >
           绑定手机
@@ -36,12 +36,11 @@
         <div class="phone-content-from">
           <!--绑定手机-->
           <el-form
-            v-if="!globalUserInformation.telePhoneBind"
+            v-if="securityCenter.isPhoneBind"
             :label-position="labelPosition"
             label-width="120px"
           >
             <el-form-item
-              v-if="!globalUserInformation.telePhoneBind"
               label="手机号码："
             >
               <el-select v-model="bindingDataPhone.bindingAreaCodeValue">
@@ -115,7 +114,7 @@
           >
             <el-form-item label="姓      名：">
               <span class="bank-content-name">
-                {{ globalUserInformation.realName }}
+                {{ userInfo.realName }}
               </span>
             </el-form-item>
             <el-form-item label="短信验证码：">
@@ -126,7 +125,7 @@
                 <template slot="append">
                   <CountDownButton
                     class="send-code-btn cursor-pointer"
-                    :status="disabledOfPhoneBtn"
+                    :status="disabledOfOldPhoneBtn"
                     @run="sendPhoneOrEmailCode(0, 1)"
                   />
                 </template>
@@ -178,9 +177,9 @@
             </div>
             <button
               class="phone-button border-radius4 cursor-pointer"
-              @click="getStatusSubmit"
+              @click="stateTieStatusSubmit"
             >
-              确认绑定
+              确认换绑
             </button>
           </el-form>
         </div>
@@ -200,7 +199,7 @@ import { createNamespacedHelpers, mapState } from 'vuex'
 import ImageValidate from '../../Common/ImageValidateCommon' // 图片验证吗
 import CountDownButton from '../../Common/CountDownCommon'
 import {returnAjaxMessage, sendPhoneOrEmailCodeAjax} from '../../../utils/commonFunc'
-import {bindPhoneAddress} from '../../../utils/api/personal'
+import {bindPhoneAddress, changeMobilePhone, statusSecurityCenter} from '../../../utils/api/personal'
 const { mapMutations } = createNamespacedHelpers('personal')
 export default {
   components: {
@@ -212,7 +211,7 @@ export default {
   },
   data () {
     return {
-      globalUserInformation: {}, // 个人信息
+      securityCenter: {}, // 个人信息
       errorMsg: '', // 错误信息提示
       bindingDataPhone: {
         bindingAreaCodeValue: '86',
@@ -247,8 +246,7 @@ export default {
     require('../../../../static/css/theme/day/Personal/UserSecuritySettings/UserSecurePhoneDay.css')
     // 黑色主题样式
     require('../../../../static/css/theme/night/Personal/UserSecuritySettings/UserSecurePhoneNight.css')
-    // 获取全局个人信息
-    this.globalUserInformation = this.userInfo.data.user
+    console.log(this.userInfo)
   },
   mounted () {},
   activited () {},
@@ -293,30 +291,31 @@ export default {
         country: this.bindingDataPhone.bindingAreaCodeValue // 国家编码
       //   // country: this.activeCountryCode
       }
-      if (!this.globalUserInformation.telePhoneBind) {
-        switch (loginType) {
-          case 0:
-            params.phone = this.userInfo.telePhone
-            break
-          case 1:
-            params.address = this.userInfo.email
-            break
-        }
-      } else {
-        switch (loginType) {
-          case 0:
-            params.phone = this.userInfo.telePhone
-            if (val == 1) {
-              params.phone = '13838282547'
-            } else {
-              params.phone = this.amendDataPhone.newPhoneAccounts
-            }
-            break
-          case 1:
-            params.address = this.userInfo.email
-            break
-        }
+      // if (!this.securityCenter.isPhoneBind) {
+      //   switch (loginType) {
+      //     case 0:
+      //       params.phone = this.userInfo.phone
+      //       break
+      //     case 1:
+      //       params.address = this.userInfo.email
+      //       break
+      //   }
+      // } else {
+      switch (loginType) {
+        case 0:
+          if (val == 1) {
+            console.log(val)
+            params.phone = this.userInfo.userInfo.phone
+          } else {
+            console.log(val)
+            params.phone = this.amendDataPhone.newPhoneAccounts
+          }
+          break
+        case 1:
+          params.address = this.userInfo.userInfo.email
+          break
       }
+      // }
       sendPhoneOrEmailCodeAjax(loginType, params, (data) => {
         console.log(this.disabledOfPhoneBtn)
         // 提示信息
@@ -357,10 +356,8 @@ export default {
     async confirmBindingBailPhone () {
       let data
       let param = {
-        phone: this.amendDataPhone.newPhoneAccounts, // 手机号
-        oldCode: this.amendDataPhone.oldPhoneCode, // 旧手机验证码
-        newCode: this.amendDataPhone.newPhoneCode, // 新手机验证码
-        payPassword: this.amendDataPhone.transactionPassword // 交易密码
+        phone: this.emailAccounts, // 邮箱账号
+        code: this.emailCode // 邮箱验证码
       }
       data = await bindPhoneAddress(param)
       if (!(returnAjaxMessage(data, this, 1))) {
@@ -371,13 +368,67 @@ export default {
         console.log(this.emailCode)
         // this.statusSecurityCenter()
       }
+    },
+    stateTieStatusSubmit () {
+      // if (!this.newPhoneAccounts) {
+      //   this.errorMsg = '邮箱账号不能为空'
+      // } else if (!this.phoneCode) {
+      //   this.errorMsg = '验证码不能为空'
+      // } else {
+      //   this.errorMsg = ''
+      // }
+      // console.log(1)
+      this.confirmTiePhone()
+    },
+    // 确定换绑手机
+    async confirmTiePhone () {
+      let data
+      let param = {
+        phone: this.amendDataPhone.newPhoneAccounts, // 手机号
+        oldCode: this.amendDataPhone.oldPhoneCode, // 旧手机验证码
+        newCode: this.amendDataPhone.newPhoneCode, // 新手机验证码
+        payPassword: this.amendDataPhone.transactionPassword // 交易密码
+      }
+      data = await changeMobilePhone(param)
+      if (!(returnAjaxMessage(data, this, 1))) {
+        return false
+      } else {
+        console.log(data)
+        console.log(this.emailAccounts)
+        console.log(this.emailCode)
+        // this.statusSecurityCenter()
+      }
+    },
+    /**
+     * 安全中心
+     */
+    async getSecurityCenter () {
+      let data = await statusSecurityCenter({
+        // userId: this.userInfo.userId // 商户id
+        token: this.userInfo.token // token
+      })
+      console.log(data)
+      if (!(returnAjaxMessage(data, this, 0))) {
+        return false
+      } else {
+        // 返回冲提记录列表展示
+        this.securityCenter = data.data.data
+        console.log(this.SecurityCenter)
+        console.log(this.logonRecord)
+        console.log(this.securityRecord)
+        console.log(this.SecurityCenter.isMailBind)
+        console.log(this.SecurityCenter.isGoogleBind)
+        console.log(this.SecurityCenter.isPhoneBind)
+        console.log(this.SecurityCenter.payPassword)
+      }
     }
   },
   filter: {},
   computed: {
     ...mapState({
       theme: state => state.common.theme,
-      userInfo: state => state.personal.userInfo,
+      userInfo: state => state.user.loginStep1Info, // 用户详细信息
+      disabledOfOldPhoneBtn: state => state.user.disabledOfOldPhoneBtn,
       disabledOfPhoneBtn: state => state.user.disabledOfPhoneBtn,
       disabledOfEmailBtn: state => state.user.disabledOfEmailBtn
     })

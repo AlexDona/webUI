@@ -1,8 +1,11 @@
 <template>
   <div
     class="banner-box home"
-    :style="{background:`url(${bannerBackgroundImage}) no-repeat center/100%`}"
-    :class="{height500:screenWidth<=1920}"
+    :style="{
+      background:`url(${bannerBackgroundImage}) no-repeat center center/100% 100%`,
+      width:screenWidth*3+'px',
+      height:screenWidth/1.19+'px'
+    }"
   >
     <SliderHome/>
   </div>
@@ -32,7 +35,7 @@ export default {
       bannerBackgroundImage: state => state.home.bannerBackgroundImage
     }),
     screenWidth () {
-      return window.innerWidth
+      return window.innerWidth / 3
     }
   },
   watch: {}
@@ -40,14 +43,12 @@ export default {
 </script>
 <style scoped lang="scss">
   .banner-box{
-    &.height500{
-      height:500px;
-    }
     width:100%;
     background:linear-gradient(#1d3863,#251f3d);
     -webkit-background-size: 100% 100%;
     background-size: 100% 100%;
     overflow: hidden;
     transition: all 1s;
+    position: relative;
   }
 </style>
