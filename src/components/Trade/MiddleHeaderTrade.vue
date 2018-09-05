@@ -87,18 +87,6 @@
             </span>
         </div>
       </div>
-      <div class="item">
-        <div class="top font-size12">
-          <span>24hr成交额</span>
-        </div>
-        <div class="bottom">
-          <span
-            class="font-size14"
-          >
-            {{activeSymbol.amount24h}} {{activeSymbol.sellsymbol}}
-          </span>
-        </div>
-      </div>
     </div>
   </div>
 </template>

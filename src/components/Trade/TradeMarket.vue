@@ -248,6 +248,7 @@ export default {
     //     label: 'ETH'
     //   }
     // ]
+    // 获取交易区信息
     this.getTradeAreaList()
     // 获取板块
     this.getPartnerList()
@@ -883,7 +884,7 @@ export default {
     // fbt交易区模拟数据
     // 获取本地搜藏列表
     this.collectList = JSON.parse(getStore('collectList')) || []
-    console.log(this.collectList)
+    // console.log(this.collectList)
     this.resetCollectList()
     this.filterMarketList = this.marketList
     // this.setFilterMarketList(this.activeName, this.BTCMarketList)
@@ -901,8 +902,24 @@ export default {
       'CHANGE_COLLECT_LIST'
     ]),
     // 设置 当前交易区
-    changeActiveSymbol (data) {
-      this.$store.commit('common/CHANGE_ACTIVE_SYMBOL', data)
+    changeActiveSymbol (activeSymbol, previousSymbol) {
+      console.log('active----------------->', activeSymbol.id)
+      console.log('previous--------------->', this.previousSymbol.id)
+      if (!this.previousSymbol.id) {
+        this.$store.commit('common/CHANGE_ACTIVE_SYMBOL', {
+          activeSymbol,
+          previousSymbol: activeSymbol
+        })
+      } else {
+        this.$store.commit('common/CHANGE_ACTIVE_SYMBOL', {
+          activeSymbol,
+          previousSymbol
+        })
+      }
+      // this.$store.commit('common/CHANGE_ACTIVE_SYMBOL', {
+      //   activeSymbol,
+      //   previousSymbol
+      // })
     },
     // 获取板块列表
     getPartnerList () {
@@ -929,85 +946,96 @@ export default {
         'type': 'trade_market', // 请求类型
         areaId
       }, (data) => {
-        // console.log(data)
-        switch (data.type) {
-          // 请求socket
-          case 0:
-            if (data.data) {
-              // console.log(data.data[0])
-              this.marketList = data.data
-              this.collectList = JSON.parse(getStore('collectList')) || []
-              this.resetCollectList()
-              this.filterMarketList = this.marketList
-              this.setFilterMarketList(this.activeName, this.marketList)
-            }
-            break
-          // 订阅socket
-          case 1:
-            const newData = data.data[0].content[0]
-            // console.log(newData.id)
-            if (newData.id == this.activeSymbol.id) {
-              this.changeActiveSymbol(newData)
-            }
-            // 非自选器
-            if (this.activeName != this.tabList[0].id) {
-              this.marketList.forEach((item, index) => {
-                if (item.plateId === data.data[0].plateId) {
-                  item.content.forEach((innerItem, innerIndex) => {
-                    // console.log(innerItem, innerIndex)
-                    // console.log(data.data)
-                    if (innerItem.id == newData.id) {
-                      // this.marketList[index].content[innerIndex] = newData
-                      this.$set(this.marketList[index].content, innerIndex, newData)
-                      this.filterMarketList = this.marketList
-                      return false
-                    }
-                  })
-                }
-              })
-            } else {
-              // console.log(this.filterMarketList)
-              // console.log(newData)
-              this.filterMarketList.forEach((item, index) => {
-                if (item.plateId == newData.plateId) {
-                  // console.log(item)
-                  item.content.forEach((innerItem, innerIndex) => {
-                    if (innerItem.id == newData.id) {
-                      this.$set(this.filterMarketList[index].content, innerIndex, newData)
-                    }
-                  })
-                }
-              })
-            }
+        // 币币交易
+        if (data.tradeType === 'BBTICKER') {
+          console.log(data)
+          switch (data.type) {
+            // 请求socket
+            case 0:
+              if (data.data) {
+                // console.log(data.data[0])
+                this.marketList = data.data
+                this.collectList = JSON.parse(getStore('collectList')) || []
+                this.resetCollectList()
+                this.filterMarketList = this.marketList
+                this.setFilterMarketList(this.activeName, this.marketList)
+              }
+              break
+            // 订阅socket
+            case 1:
+              const newData = data.data[0].content[0]
+              // 设置当前选中交易对
+              // console.log(this.activeSymbol.id)
+              if (!this.activeSymbol.id) {
+                // this.activeSymbol = newData
+                // console.log('111')
+                this.changeActiveSymbol(newData)
+              }
+              // console.log(newData.id)
+              // console.log(this.activeSymbol.id)
+              if (newData.id == this.activeSymbol.id) {
+                // console.log('222')
+                this.changeActiveSymbol(newData)
+                // console.log(this.activeSymbol.id)
+              }
+              // 非自选区
+              if (this.activeName != this.tabList[0].id) {
+                this.marketList.forEach((item, index) => {
+                  if (item.plateId === data.data[0].plateId) {
+                    item.content.forEach((innerItem, innerIndex) => {
+                      if (innerItem.id == newData.id) {
+                        // this.marketList[index].content[innerIndex] = newData
+                        this.$set(this.marketList[index].content, innerIndex, newData)
+                        this.filterMarketList = this.marketList
+                        return false
+                      }
+                    })
+                  }
+                })
+              } else {
+                // console.log(this.filterMarketList)
+                // console.log(newData)
+                this.filterMarketList.forEach((item, index) => {
+                  if (item.plateId == newData.plateId) {
+                    // console.log(item)
+                    item.content.forEach((innerItem, innerIndex) => {
+                      if (innerItem.id == newData.id) {
+                        this.$set(this.filterMarketList[index].content, innerIndex, newData)
+                      }
+                    })
+                  }
+                })
+              }
 
-            // let newData = data.data[0]
-            // let newContent = newData.content[0]
-            // let collectContent = this.marketList[1].content
-            // this.marketList.forEach((item, index) => {
-            //   // 非自选区
-            //   if (item.id === newData.id) {
-            //     item.content.forEach((innerItem, innerIndex) => {
-            //       if (innerItem.id === newData.content[0].id) {
-            //         this.$set(this.marketList[index].content, innerIndex, newContent)
-            //         return false
-            //       }
-            //     })
-            //   }
-            //   // 自选区
-            //   if (collectContent.length) {
-            //     collectContent.forEach((item, index) => {
-            //       if (item.id === newContent.id) {
-            //         this.$set(collectContent, index, newContent)
-            //         this.$set(collectContent[index].tendency, 0, newContent.tendency[0])
-            //         this.$set(collectContent[index].tendency, 1, newContent.tendency[1])
-            //         // console.log(collectContent)
-            //         return false
-            //       }
-            //     })
-            //   }
-            //   return false
-            // })
-            break
+              // let newData = data.data[0]
+              // let newContent = newData.content[0]
+              // let collectContent = this.marketList[1].content
+              // this.marketList.forEach((item, index) => {
+              //   // 非自选区
+              //   if (item.id === newData.id) {
+              //     item.content.forEach((innerItem, innerIndex) => {
+              //       if (innerItem.id === newData.content[0].id) {
+              //         this.$set(this.marketList[index].content, innerIndex, newContent)
+              //         return false
+              //       }
+              //     })
+              //   }
+              //   // 自选区
+              //   if (collectContent.length) {
+              //     collectContent.forEach((item, index) => {
+              //       if (item.id === newContent.id) {
+              //         this.$set(collectContent, index, newContent)
+              //         this.$set(collectContent[index].tendency, 0, newContent.tendency[0])
+              //         this.$set(collectContent[index].tendency, 1, newContent.tendency[1])
+              //         // console.log(collectContent)
+              //         return false
+              //       }
+              //     })
+              //   }
+              //   return false
+              // })
+              break
+          }
         }
         // let resultArr = splitSocketParams(data)
         // console.log(resultArr)
@@ -1028,7 +1056,7 @@ export default {
       } else {
         const list = this.tabList.concat(data.data.data)
         this.tabList = list
-        console.log(this.tabList)
+        // console.log(this.tabList)
         this.activeName = this.tabList[1].id
         this.$store.commit('common/CHANGE_ACTIVE_TRADE_AREA', this.tabList[1])
         this.resetSocketMarket(this.tabList[1].id)
@@ -1207,9 +1235,9 @@ export default {
     },
     // 切换tab
     changeTab (e) {
-      console.log(e.name)
-      console.log(this.activeName)
-      console.log(this.tabList[0].id)
+      // console.log(e.name)
+      // console.log(this.activeName)
+      // console.log(this.tabList[0].id)
       // this.activeName
       // 自选区
       if (this.activeName == this.tabList[0].id) {
@@ -1252,7 +1280,8 @@ export default {
       globalCollectStatusList: state => state.home.globalCollectStatusList,
       partnerId: state => state.common.partnerId, // 商户id
       activeTradeArea: state => state.common.activeTradeArea,
-      activeSymbol: state => state.common.activeSymbol // 当前选中交易对
+      activeSymbol: state => state.common.activeSymbol, // 当前选中交易对
+      previousSymbol: state => state.common.previousSymbol
     }),
     // 搜索关键字过滤列表过滤
     searchFilterMarketList () {

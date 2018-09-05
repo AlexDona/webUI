@@ -425,6 +425,7 @@ export default {
       // console.log(this.dataCache[symbol][resolution])
     //  深度图
     } else if (tradeType == 'DEPTH') {
+      // console.log(data)
       // 深度图、买列表、卖列表
       if (data.data) {
         // const depthData = {
@@ -448,7 +449,7 @@ export default {
       }
     // 币币交易市场信息
     } else if (tradeType === 'BBTICKER') {
-      console.log(data)
+      // console.log(data)
     }
     store.commit('common/CHANGE_SOCKET_DATA', this.socketData)
   }

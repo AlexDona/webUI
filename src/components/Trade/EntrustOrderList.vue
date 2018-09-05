@@ -113,7 +113,7 @@
           <!--分页-->
           <el-pagination
             background
-            v-show="activeName === 'current-entrust' && !currentEntrustList.length"
+            v-show="activeName === 'current-entrust' && currentEntrustList.length && isLogin"
             layout="prev, pager, next"
             :page-count="totalPageForMyEntrust"
             @current-change="changeCurrentPage(0,$event)"
@@ -200,7 +200,7 @@
         <!--分页-->
         <el-pagination
           background
-          v-show="activeName === 'history-entrust' && !historyEntrustList.length && isLogin"
+          v-show="activeName === 'history-entrust' && currentEntrustList.length && isLogin"
           layout="prev, pager, next"
           :page-count="totalPageForHistoryEntrust"
           @current-change="changeCurrentPage(1,$event)"
@@ -256,9 +256,9 @@ export default {
     // ]
     // this.historyEntrustList = []
     // 获取我的当前委托
-    this.getMyCurrentEntrust()
+    // this.getMyCurrentEntrust()
     // 获取历史委托
-    this.getHistoryEntrust()
+    // this.getHistoryEntrust()
   },
   mounted () {},
   activited () {},

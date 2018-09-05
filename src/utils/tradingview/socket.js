@@ -98,9 +98,17 @@ function subscribe (ws, params) {
     console.log(resolution)
     // 请求
     for (let symbol of symbols) {
+      sendData(ws, {
+        'tag': 'CANCEL',
+        'content': `market.${symbol}.depth.step1`,
+        'id': `depth_${symbol}`
+      })
       // console.log(symbol)
       // 深度
       // 谨慎选择合并的深度，ws每次推送全量的深度数据，若未能及时处理容易引起消息堆积并且引发行情延时
+      // if (store.state.common.reqRefreshStatus) {
+      //   console.log('cancel')
+      // }
       if (store.state.common.reqRefreshStatus) {
         sendData(ws, {
           'tag': 'REQ',
@@ -118,11 +126,11 @@ function subscribe (ws, params) {
 
       // 交易记录
       if (store.state.common.reqRefreshStatus) {
-        // sendData(ws, {
-        //   'tag': 'REQ',
-        //   'content': `market.${symbol}.trade`,
-        //   'id': `trade_${symbol}`
-        // })
+        sendData(ws, {
+          'tag': 'REQ',
+          'content': `market.${symbol}.trade`,
+          'id': `trade_${symbol}`
+        })
       }
       // 实时行情
       // sendData(ws, {
@@ -154,11 +162,11 @@ function subscribe (ws, params) {
       // })
       // 交易记录
       if (store.state.common.reqRefreshStatus) {
-        // sendData(ws, {
-        //   'tag': 'SUB',
-        //   'content': `market.${symbol}.trade`,
-        //   'id': `trade_${symbol}`
-        // })
+        sendData(ws, {
+          'tag': 'SUB',
+          'content': `market.${symbol}.trade`,
+          'id': `trade_${symbol}`
+        })
       }
     // // 实时行情(首页数据)
     // sendData(ws, {
@@ -168,27 +176,6 @@ function subscribe (ws, params) {
     // })
     }
   }
-  /**
-   * from:1532835197
-     resolution:"1"
-     symbol:"AA"
-     to:1532921657
-     type:"kline"
-   */
-  /**
-   * 数据格式
-   *ws.send(JSON.stringify({
-        "tag": "REQ",
-        "content": `market.ticker.55.477187759069462528.all`,
-        "id": `tick_fucfbt`
-    }))
-
-   ws.send(JSON.stringify({
-       "tag": "SUB",
-        "content": `market.ticker.55.477187759069462528.all`,
-        "id": `tick_fucfbt`
-    }));
-   */
 }
 
 const socket = {
