@@ -7,6 +7,9 @@
 }
 .otc-publish-AD-box .choice .el-input__inner{
   height: 36px;
+  /*yuxia改动的下拉选框的输入框的背景和边框*/
+  background: #333A41;
+  border:none;
 }
 .otc-publish-AD-box .trade-way .el-checkbox-group{
   margin-top: 15px;

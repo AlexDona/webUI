@@ -405,7 +405,6 @@ export default {
     ]),
     // 1.0 改变发布广告 买卖 类型
     changeBuySellStyle (e) {
-      // console.log(e)
       this.activitedBuySellStyle = e
       console.log(this.activitedBuySellStyle)
     },
