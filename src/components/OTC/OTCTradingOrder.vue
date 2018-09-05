@@ -256,13 +256,13 @@
                   >
                     确认付款
                   </el-button>
-                  <!-- 倒计时 -->
+                  <!-- 自动取消倒计时 -->
                   <span class="count-time">
                     <IconFontCommon
                       class="font-size16 wait-pay"
                       iconName="icon-daojishi"
                     />
-                    <span>{{item.cancelRestTime}}</span>
+                    <span>{{BIHTimeFormatting(cancelOrderTimeArr[index])}}</span>
                   </span>
                 </p>
                 <!-- 注意 -->
@@ -277,7 +277,7 @@
               >
                 <p class="action-tips submitted-confirm-payment">已提交确认付款</p>
                 <p class="action-tips">
-                  注意！请联系卖家确认收款并确认订单，如果卖家12小时内未确认订单，系统自动成交。
+                  注意！请联系卖家确认收款并确认订单，如果卖家{{item.completeTerm/3600}}小时内未确认订单，系统自动成交。
                 </p>
               </div>
             </div>
@@ -357,7 +357,7 @@
               >
                 <div class="trader-info display-inline-block">
                   <p class="order-cancle-tips">
-                    订单生成后{{item.cancelRestTime}}分钟内对方未提交付款，订单将自动取消
+                    订单生成后{{item.cancelTerm/60}}分钟内对方未提交付款，订单将自动取消
                   </p>
                 </div>
                 <!-- 扫码支付 -->
@@ -498,11 +498,16 @@
                 <p class="action-explain">
                   买家付款已付款
                 </p>
+                <!-- 自动成交倒计时 -->
                 <p class="action-explain count-down-time">
-                  <span>剩余时间：</span>
+                  <span>
+                    <IconFontCommon
+                      class="font-size16 timeIcon"
+                      iconName="icon-daojishi"
+                    />
+                  </span>
                   <span class="remaining-time">
-                    <!-- 11小时12分钟25秒 -->
-                    {{timeFormatting(item.completeRestTime * 1000)}}
+                    <span>{{BIHTimeFormatting(accomplishOrderTimeArr[index])}}</span>
                   </span>
                 </p>
               </div>
@@ -549,7 +554,7 @@
           </div>
         </div>
       </div>
-      <!-- 4.0 买家点击确认付款按钮 弹出交易密码框 -->
+      <!-- 3.0 买家点击确认付款按钮 弹出交易密码框 -->
       <div class="password-dialog">
         <el-dialog
           title="交易密码"
@@ -581,7 +586,7 @@
           </span>
         </el-dialog>
       </div>
-      <!-- 5.0 卖家点击确认收款按钮 弹出交易密码框 -->
+      <!-- 4.0 卖家点击确认收款按钮 弹出交易密码框 -->
       <div class="password-dialog">
         <el-dialog
           title="交易密码"
@@ -613,7 +618,7 @@
           </span>
         </el-dialog>
       </div>
-      <!-- 6.0 点击提交申诉按钮 弹出交易密码框 -->
+      <!-- 5.0 点击提交申诉按钮 弹出交易密码框 -->
       <div class="password-dialog">
         <el-dialog
           title="交易密码"
@@ -651,7 +656,7 @@
 <!--请严格按照如下书写书序-->
 <script>
 import {getOTCTradingOrders, buyerPayForOrder, sellerConfirmGetMoney, sellerSendAppeal} from '../../utils/api/OTC'
-import {timeFilter} from '../../utils'
+import {timeFilter, formatSeconds} from '../../utils'
 import IconFontCommon from '../Common/IconFontCommon'
 import {returnAjaxMessage} from '../../utils/commonFunc'
 export default {
@@ -683,7 +688,9 @@ export default {
       activeBankCode: [], // 支付码
       tradePassword: '', // 交易密码
       buttonStatusArr: [], // 确认付款按钮是否可用状态集
-      showOrderAppeal: [] // 订单申诉框显示与隐藏状态集
+      showOrderAppeal: [], // 订单申诉框显示与隐藏状态集
+      cancelOrderTimeArr: [], // 自动取消订单倒计时数组集
+      accomplishOrderTimeArr: [] // 自动成交倒计时数组集
     }
   },
   created () {
@@ -702,13 +709,26 @@ export default {
     timeFormatting (date) {
       return timeFilter(date, 'time')
     },
-    // 倒计时时间格式化-国际标准格式
+    // 倒计时时间格式化-国际标准格式(09ˋ40′32″)
     BIHTimeFormatting (date) {
-      return timeFilter(date, 'BIH')
+      return formatSeconds(date)
     },
-    // 倒计时setTimeout
-    setInter () {
+    // 自动取消订单倒计时
+    cancelSetInter () {
       this.timer = setInterval(() => {
+        // 循环自动取消倒计时时间数组
+        this.cancelOrderTimeArr.forEach((item, index) => {
+          this.$set(this.cancelOrderTimeArr, index, this.cancelOrderTimeArr[index] - 1000)
+        })
+      }, 1000)
+    },
+    // 自动成交倒计时
+    accomplishSetInter () {
+      this.timer = setInterval(() => {
+        // 循环自动成交倒计时数组
+        this.accomplishOrderTimeArr.forEach((item, index) => {
+          this.$set(this.accomplishOrderTimeArr, index, this.accomplishOrderTimeArr[index] - 1000)
+        })
       }, 1000)
     },
     // 2.0 请求交易中订单列表
@@ -718,8 +738,8 @@ export default {
         // pageNum: '1',
         // pageSize: '10'
       })
-      console.log('交易中订单列表')
-      console.log(data)
+      // console.log('交易中订单列表')
+      // console.log(data)
       // 提示信息
       if (!(returnAjaxMessage(data, this, 0))) {
         return false
@@ -732,7 +752,15 @@ export default {
         this.tradingOrderList.forEach((item, index) => {
           this.buttonStatusArr[index] = false
           this.showOrderAppeal[index] = false
+          // 自动取消订单倒计时数组集
+          this.cancelOrderTimeArr[index] = item.cancelRestTime // cancelRestTime毫秒单位
+          // 自动成交倒计时数组集
+          this.accomplishOrderTimeArr[index] = item.completeRestTime // completeRestTime毫秒单位
         })
+        // 调用自动取消倒计时方法
+        this.cancelSetInter()
+        // 调用自动成交倒计时方法
+        this.accomplishSetInter()
       }
     },
     // 3.0 改变交易方式
@@ -1040,6 +1068,10 @@ export default {
               >.count-down-time{
                 // line-height: 1rem;
                 line-height: 20px;
+                .timeIcon{
+                  color: #D45858;
+                  margin-right: 10px;
+                }
               }
             }
           }
