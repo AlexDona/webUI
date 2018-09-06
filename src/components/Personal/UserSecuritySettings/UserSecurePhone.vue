@@ -236,7 +236,8 @@ export default {
           value: '1',
           label: '86'
         }]
-      }
+      },
+      successCountDown: 1 // 成功倒计时
     }
   },
   created () {
@@ -393,6 +394,7 @@ export default {
       if (!(returnAjaxMessage(data, this, 1))) {
         return false
       } else {
+        this.successJump()
         console.log(data)
         console.log(this.emailAccounts)
         console.log(this.emailCode)
@@ -421,6 +423,16 @@ export default {
         console.log(this.SecurityCenter.isPhoneBind)
         console.log(this.SecurityCenter.payPassword)
       }
+    },
+    // 谷歌绑定成功自动跳转
+    successJump () {
+      setInterval(() => {
+        if (this.successCountDown === 0) {
+          this.CHANGE_USER_CENTER_ACTIVE_NAME('security-center')
+          this.$router.go(-1)
+        }
+        this.successCountDown--
+      }, 1000)
     }
   },
   filter: {},

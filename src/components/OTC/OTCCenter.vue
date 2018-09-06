@@ -1,4 +1,4 @@
-1<template>
+<template>
   <div class="otc-box otc">
     <!-- 1.0 导航 -->
     <NavCommon/>

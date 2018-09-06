@@ -26,10 +26,10 @@
             @change="changeId"
           >
             <el-option
-              v-for="item in currencyList"
-              :key="item.value"
-              :label="item.label"
-              :value="item.value"
+              v-for="(item, index) in currencyList"
+              :key="index"
+              :label="item.name"
+              :value="item.id"
             >
             </el-option>
           </el-select>
@@ -86,7 +86,7 @@
             width="100"
           >
             <template slot-scope = "s">
-              <div>{{ s.row.currency }}</div>
+              <div>{{ s.row.coinName }}</div>
             </template>
           </el-table-column>
           <el-table-column
@@ -101,7 +101,7 @@
             label="数量"
           >
             <template slot-scope = "s">
-              <div>{{ s.row.quantity }}</div>
+              <div>{{ s.row.amount }}</div>
             </template>
           </el-table-column>
           <el-table-column
@@ -202,7 +202,10 @@
 <!--请严格按照如下书写书序-->
 <script>
 import {mapState} from 'vuex'
-import {statusRushedToRecordList} from '../../../utils/api/personal'
+import {
+  statusRushedToRecordList,
+  getMerchantCurrencyList
+} from '../../../utils/api/personal'
 import {returnAjaxMessage} from '../../../utils/commonFunc'
 export default {
   components: {},
@@ -250,27 +253,27 @@ export default {
       ],
       showStatusRecordList: true, // 充提记录
       hiddenStatusRecordList: false, // 其他记录
-      currencyListValue: '全部', // 币种名称
+      currencyListValue: '', // 币种名称
       currencyList: [
-        {
-          value: '1',
-          label: '全部'
-        }, {
-          value: '2',
-          label: 'EHT'
-        }, {
-          value: '3',
-          label: 'EHT'
-        }, {
-          value: '4',
-          label: 'FUC'
-        }, {
-          value: '5',
-          label: 'HT'
-        }
+        // {
+        //   value: '1',
+        //   label: '全部'
+        // }, {
+        //   value: '2',
+        //   label: 'EHT'
+        // }, {
+        //   value: '3',
+        //   label: 'EHT'
+        // }, {
+        //   value: '4',
+        //   label: 'FUC'
+        // }, {
+        //   value: '5',
+        //   label: 'HT'
+        // }
       ],
       // 币种名称
-      currencyTypeValue: '全部',
+      currencyTypeValue: '',
       currencyType: [
         {
           value: '1',
@@ -292,8 +295,8 @@ export default {
     require('../../../../static/css/theme/day/Personal/AccountBalance/BillingDetailsDay.css')
     // 黑色主题样式
     require('../../../../static/css/theme/night/Personal/AccountBalance/BillingDetailsNight.css')
-    // console.log(this.userInfo)
-    // this.getChargeMentionList()
+    // console.log(this.inquireCurrencyList)
+    // this.inquireCurrencyList()
   },
   mounted () {},
   activited () {},
@@ -311,14 +314,6 @@ export default {
         this.hiddenStatusRecordList = true
       }
     },
-    // 资产币种下拉
-    changeId (e) {
-      this.currencyList.forEach(item => {
-        if (e === item.id) {
-          this.toggleAssetsCurrencyId(e)
-        }
-      })
-    },
     // 搜索按钮
     stateSearchButton () {
       this.getChargeMentionList()
@@ -334,7 +329,7 @@ export default {
         startTime: this.startTime, // 开始起止时间
         endTime: this.endTime // 结束起止时间
       })
-      console.log(data)
+      // console.log(data)
       if (!(returnAjaxMessage(data, this, 0))) {
         return false
       } else {
@@ -342,6 +337,28 @@ export default {
         this.chargeRecordList = data.data.data.list
         this.totalPageForMyEntrust = data.data.data.pages - 0
         console.log(this.chargeRecordList)
+      }
+    },
+    // 资产币种下拉
+    changeId (e) {
+      this.currencyList.forEach(item => {
+        if (e === item.id) {
+          this.inquireCurrencyList(e)
+        }
+      })
+    },
+    // 获取商户币种列表
+    async inquireCurrencyList () {
+      let data
+      let param = {
+        partnerId: this.partnerId // 商户id
+      }
+      data = await getMerchantCurrencyList(param)
+      if (!(returnAjaxMessage(data, this, 0))) {
+        return false
+      } else {
+        this.currencyList = data.data.data
+        console.log(this.currencyList)
       }
     },
     // 分页
@@ -354,6 +371,7 @@ export default {
   computed: {
     ...mapState({
       theme: state => state.common.theme,
+      partnerId: state => state.common.partnerId, // 商户id
       userInfo: state => state.user.loginStep1Info // 用户详细信息
     })
   },

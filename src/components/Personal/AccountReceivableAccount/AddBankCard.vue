@@ -90,11 +90,16 @@
 import HeaderCommon from '../../Common/HeaderCommon'
 import IconFontCommon from '../../Common/IconFontCommon'
 import CountDownButton from '../../Common/CountDownCommon'
-import {returnAjaxMessage, sendPhoneOrEmailCodeAjax} from '../../../utils/commonFunc'
+import {
+  returnAjaxMessage, // 接口返回信息
+  sendPhoneOrEmailCodeAjax
+} from '../../../utils/commonFunc'
 import {statusCardSettings} from '../../../utils/api/personal'
 // 底部
 import FooterCommon from '../../Common/FooterCommon'
 import { createNamespacedHelpers, mapState } from 'vuex'
+import ContentPage from '../UserAssets/AccountCredited'
+var content = ContentPage // 在这个地方赋值一下
 const { mapMutations } = createNamespacedHelpers('personal')
 export default {
   components: {
@@ -111,7 +116,8 @@ export default {
       branchAddress: '', // 支行地址
       phone: '', // 手机号码
       code: '', // 短信验证码
-      paymentTerm: {}
+      paymentTerm: {},
+      successCountDown: 1 // 成功倒计时
     }
   },
   created () {
@@ -135,6 +141,7 @@ export default {
     returnSuperior () {
       this.CHANGE_USER_CENTER_ACTIVE_NAME('account-credited')
       this.$router.go(-1)
+      content.methods.getAccountPaymentTerm()
     },
     // 发送邮箱验证码
     sendPhoneOrEmailCode (loginType) {
@@ -200,6 +207,16 @@ export default {
         console.log(data)
         // console.log(this.emailAccounts)
       }
+    },
+    // 成功自动跳转
+    successJump () {
+      setInterval(() => {
+        if (this.successCountDown === 0) {
+          this.CHANGE_USER_CENTER_ACTIVE_NAME('account-credited')
+          this.$router.go(-1)
+        }
+        this.successCountDown--
+      }, 1000)
     }
   },
   filter: {},

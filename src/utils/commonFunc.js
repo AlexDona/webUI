@@ -4,6 +4,9 @@
 import {
   repealMyEntrustAjax
 } from '../utils/api/trade'
+import {
+  accountPaymentTerm
+} from '../utils/api/personal'
 // import {
 //   sendMsgByPushPhoneOrEmial
 // } from '../utils/api/personal'
@@ -87,7 +90,13 @@ export const repealMyEntrustCommon = async (params, callback) => {
   const repealData = await repealMyEntrustAjax(params)
   callback(repealData)
 }
-
+/**
+ * 收款方式状态值刷新
+ */
+export const statusOfCollectionMode = async (params, callback) => {
+  const statusData = await accountPaymentTerm(params)
+  callback(statusData)
+}
 // socket 请求类型参数分割
 export const splitSocketParams = (params) => {
   // console.log(params)

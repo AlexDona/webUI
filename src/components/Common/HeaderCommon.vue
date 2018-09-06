@@ -33,10 +33,11 @@
                 <span>OTC交易</span>
               </router-link>
               <!--otc子导航-->
+              <!-- yuxia改的子导航显示 -->
               <ul
                 class="sub-nav-list otc"
-                v-show="$route.path ==='/OTCCenter'"
-              >
+                v-show="$route.path.indexOf('OTC') != -1"
+                >
                 <li class="sub-nav-item">
                   <router-link to="/OTCBusinessApply">商家申请</router-link>
                 </li>
@@ -255,9 +256,10 @@
           </ul>
         </div>
       </div>
+      <!-- yuxia改的bottom的显示条件 -->
       <div
         class="bottom"
-        v-show="$route.path === '/OTCCenter' || $route.path === '/ActivityCenter'"
+        v-show="$route.path.indexOf('OTC') != -1 || $route.path === '/ActivityCenter'"
       >
       </div>
       <div class="box">
@@ -417,6 +419,8 @@ export default{
     // 获取板块列表
     // 用户跳转到指定页面
     stateReturnSuperior (val) {
+      this.$router.push({path: '/PersonalCenter'})
+      console.log(val)
       switch (val) {
         case 'account-balance':
           this.CHANGE_USER_CENTER_ACTIVE_NAME('assets')
@@ -440,7 +444,6 @@ export default{
           this.CHANGE_USER_CENTER_ACTIVE_NAME('api-management')
           break
       }
-      // this.CHANGE_USER_CENTER_ACTIVE_NAME('account-credited')
     },
     // 用户登出
     userLoginOut () {

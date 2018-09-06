@@ -15,3 +15,6 @@
 .billing-details.personal .el-table th>.cell {
   text-align: center;
 }
+.billing-details.personal .el-table .cell {
+  text-align: center;
+}

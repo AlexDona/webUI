@@ -67,7 +67,10 @@
                 @keyup="changeInputValue('transactionPassword')"
               />
             </el-form-item>
-            <el-form-item label="手机验证码">
+            <el-form-item
+              label="手机验证码"
+              v-if="SecurityCenter.isPhoneBind"
+            >
               <el-input
                 @focus="emptyStatus"
                 v-model="phoneCode"
@@ -81,7 +84,11 @@
                 </template>
               </el-input>
             </el-form-item>
-            <el-form-item label="邮箱验证码">
+            <span v-else></span>
+            <el-form-item
+              label="邮箱验证码"
+              v-if="SecurityCenter.isMailBind"
+            >
               <el-input
                 @focus="emptyStatus"
                 v-model="emailCode"
@@ -95,14 +102,19 @@
                 </template>
               </el-input>
             </el-form-item>
-            <el-form-item label="谷歌验证码">
+            <span v-else></span>
+            <el-form-item
+              label="谷歌验证码"
+              v-if="SecurityCenter.isGoogleBind"
+            >
               <input
-                type="password"
+                type="text"
                 class="form-input-common border-radius2 padding-l15"
                 @focus="emptyStatus"
                 v-model="googleCode"
               />
             </el-form-item>
+            <span v-else></span>
             <div v-show="errorMsg">{{ errorMsg }}</div>
             <button
               class="form-button-common border-radius4"
@@ -315,7 +327,14 @@
 </template>
 <!--请严格按照如下书写书序-->
 <script>
-import {getPushAssetList, getPushTotalByCoinId, pushAssetsSubmit, revocationPushProperty, pushPropertyTransaction} from '../../../utils/api/personal'
+import {
+  getPushAssetList,
+  getPushTotalByCoinId,
+  pushAssetsSubmit,
+  revocationPushProperty,
+  pushPropertyTransaction,
+  statusSecurityCenter
+} from '../../../utils/api/personal'
 import CountDownButton from '../../Common/CountDownCommon'
 import {timeFilter} from '../../../utils/index'
 import {createNamespacedHelpers, mapState} from 'vuex'
@@ -361,7 +380,8 @@ export default {
       pushUID: '', // 每行数据ID
       pushPassword: '',
       // push列表记录
-      pushRecordList: []
+      pushRecordList: [],
+      SecurityCenter: {}
     }
   },
   created () {
@@ -473,16 +493,8 @@ export default {
                 loginType: 0,
                 status: true
               })
-              // this.$store.commit('push/SET_PUSH_BUTTON_STATUS', {
-              //   loginType: 0,
-              //   status: true
-              // })
               break
             case 1:
-              // this.$store.commit('push/SET_PUSH_BUTTON_STATUS', {
-              //   loginType: 1,
-              //   status: true
-              // })
               this.$store.commit('user/SET_USER_BUTTON_STATUS', {
                 loginType: 1,
                 status: true
@@ -586,6 +598,20 @@ export default {
         return false
       } else {
         this.getPushRecordList()
+      }
+    },
+    // 手机邮箱谷歌状态判断
+    async getSecurityCenter () {
+      let data = await statusSecurityCenter({
+        // userId: this.userInfo.userId // 商户id
+        // token: this.userInfo.userInfo.token // token
+      })
+      console.log(data)
+      if (!(returnAjaxMessage(data, this, 0))) {
+        return false
+      } else {
+        // 返回展示
+        this.SecurityCenter = data.data.data
       }
     }
   },

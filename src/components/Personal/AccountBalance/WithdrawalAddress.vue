@@ -133,7 +133,11 @@
 <!--请严格按照如下书写书序-->
 <script>
 import {mapState} from 'vuex'
-import {inquireWithdrawalAddressList, addNewWithdrawalAddress, deleteUserWithdrawAddress} from '../../../utils/api/personal'
+import {
+  inquireWithdrawalAddressList,
+  addNewWithdrawalAddress,
+  deleteUserWithdrawAddress
+} from '../../../utils/api/personal'
 import {returnAjaxMessage} from '../../../utils/commonFunc'
 export default {
   components: {},
@@ -255,7 +259,7 @@ export default {
       } else {
         this.WithdrawalAddressList()
         this.dialogVisible = false
-        console.log(data)
+        // console.log(data)
       }
     },
     // 分页

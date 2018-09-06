@@ -21,7 +21,6 @@ util.ajax.interceptors.request.use((config) => {
     let userToken = store.state.user.loginStep1Info.token
     config.headers['token'] = userToken
   }
-  // config.headers['token'] = 'ee4cbf93-a8a0-4e1d-b67e-5ff8bf06d38b'
   return config
 }, (error) => {
   return Promise.reject(error)
@@ -83,7 +82,6 @@ export const postWithURLencoded = (url, params) => {
     }
   })
 }
-
 export const get = (url, params) => {
   return util.ajax({
     method: 'get',

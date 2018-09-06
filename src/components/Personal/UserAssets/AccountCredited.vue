@@ -326,7 +326,7 @@ export default {
       if (!(returnAjaxMessage(data, this, 0))) {
         return false
       } else {
-        // 返回冲提记录列表展示
+        // 返回状态展示
         this.paymentTerm = data.data.data
         console.log(this.paymentTerm)
       }

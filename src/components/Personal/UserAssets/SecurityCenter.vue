@@ -213,7 +213,7 @@
               @click="setShowStatusSecurity(4)"
             >
               <span v-if="!SecurityCenter.payPassword">设置</span>
-              <span v-else>修改</span>
+              <span v-else>重置</span>
             </button>
           </div>
         </div>
@@ -310,23 +310,6 @@
           :visible.sync="openTheValidation"
         >
           <el-form label-width="120px">
-            <!--开启邮箱-->
-            <el-form-item
-              label="邮箱验证"
-              v-show="openEmail"
-            >
-              <el-input
-                v-model="emailCode"
-              >
-                <template slot="append">
-                  <CountDownButton
-                    class="send-code-btn cursor-pointer"
-                    :status="disabledOfEmailBtn"
-                    @run="sendPhoneOrEmailCode(1)"
-                  />
-                </template>
-              </el-input>
-            </el-form-item>
             <!--开启手机-->
             <el-form-item
               label="手机验证"
@@ -340,6 +323,23 @@
                     class="send-code-btn cursor-pointer"
                     :status="disabledOfPhoneBtn"
                     @run="sendPhoneOrEmailCode(0)"
+                  />
+                </template>
+              </el-input>
+            </el-form-item>
+            <!--开启邮箱-->
+            <el-form-item
+              label="邮箱验证"
+              v-show="openEmail"
+            >
+              <el-input
+                v-model="emailCode"
+              >
+                <template slot="append">
+                  <CountDownButton
+                    class="send-code-btn cursor-pointer"
+                    :status="disabledOfEmailBtn"
+                    @run="sendPhoneOrEmailCode(1)"
                   />
                 </template>
               </el-input>
@@ -584,7 +584,14 @@ export default {
               this.openGoogle = false
               this.openTheValidation = true
             } else {
-              this.closeValidation = true
+              if (this.SecurityCenter.isMailBind &&
+                !this.SecurityCenter.isPhoneBind &&
+                !this.SecurityCenter.isGoogleBind
+              ) {
+                this.closeValidation = false
+              } else {
+                this.closeValidation = true
+              }
             }
           }
           break
@@ -598,7 +605,14 @@ export default {
               this.openGoogle = false
               this.openTheValidation = true
             } else {
-              this.closeValidation = true
+              if (!this.SecurityCenter.isMailBind &&
+                this.SecurityCenter.isPhoneBind &&
+                !this.SecurityCenter.isGoogleBind
+              ) {
+                this.closeValidation = false
+              } else {
+                this.closeValidation = true
+              }
             }
           }
           break
@@ -612,7 +626,14 @@ export default {
               this.openGoogle = true
               this.openTheValidation = true
             } else {
-              this.closeValidation = true
+              if (!this.SecurityCenter.isMailBind &&
+                !this.SecurityCenter.isPhoneBind &&
+                this.SecurityCenter.isGoogleBind
+              ) {
+                this.closeValidation = false
+              } else {
+                this.closeValidation = true
+              }
             }
           }
           break
@@ -687,13 +708,13 @@ export default {
     async getSecurityCenter () {
       let data = await statusSecurityCenter({
         // userId: this.userInfo.userId // 商户id
-        token: this.userInfo.token // token
+        token: this.userInfo.userInfo.token // token
       })
       console.log(data)
       if (!(returnAjaxMessage(data, this, 0))) {
         return false
       } else {
-        // 返回冲提记录列表展示
+        // 返回展示
         this.SecurityCenter = data.data.data
         this.logonRecord = data.data.data.setLog
         this.securityRecord = data.data.data.loginLog

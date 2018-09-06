@@ -70,7 +70,7 @@ export default new Router({
     },
     {
       // 个人中心
-      path: '/PersonalCenter/:id',
+      path: '/PersonalCenter',
       // name: 'PersonalCenter',
       component: PersonalCenter
     },

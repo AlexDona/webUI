@@ -29,9 +29,11 @@
             </el-select>
           </span>
           <span class="filtrate-text font-size14">交易币种</span>
+          <!-- 币种选择 -->
           <span class="market-input">
               <el-select
                 v-model="activitedADManageMarketList"
+                @change="changeADManageMarketList"
               >
                 <el-option
                   v-for="item in ADManageMarketList"
@@ -43,12 +45,14 @@
               </el-select>
           </span>
           <span class="filtrate-text font-size14">交易法币</span>
+          <!-- 法币选择 -->
           <span class="market-input">
               <el-select
-                v-model="activitedADManageMarketList"
+                v-model="activitedADManageCurrencyId"
+                @change="changeADManageCurrencyId"
               >
                 <el-option
-                  v-for="item in ADManageMarketList"
+                  v-for="item in ADManageCurrencyId"
                   :key="item.value"
                   :label="item.label"
                   :value="item.value"
@@ -71,7 +75,7 @@
             </el-select>
           </span>
           <span class="inquire-button">
-            <el-button type="primary">查询</el-button>
+            <el-button type="primary" @click="findFilter">查询</el-button>
           </span>
           <span
             class="all-unshelve cursor-pointer"
@@ -211,7 +215,7 @@
 </template>
 <!--请严格按照如下书写书序-->
 <script>
-import {cancelAllOrdersOnekey} from '../../utils/api/OTC'
+import {cancelAllOrdersOnekey, getOTCAvailableCurrency, getMerchantAvailablelegalTender} from '../../utils/api/OTC'
 import NavCommon from '../Common/HeaderCommon'
 import FooterCommon from '../Common/FooterCommon'
 import IconFontCommon from '../Common/IconFontCommon'
@@ -239,15 +243,17 @@ export default {
       // 2.0 广告管理筛选下拉框数组--市场
       activitedADManageMarketList: '', // 选中的筛选项
       ADManageMarketList: [
-        {
-          value: '选项1',
-          label: '市场1'
-        },
-        {
-          value: '选项2',
-          label: '市场2'
-        }
+        // {
+        //   value: '选项1',
+        //   label: '市场1'
+        // },
+        // {
+        //   value: '选项2',
+        //   label: '市场2'
+        // }
       ],
+      activitedADManageCurrencyId: '',
+      ADManageCurrencyId: [],
       // 3.0 广告管理筛选下拉框数组--状态
       activitedADManageStatusList: '', // 选中的筛选项
       ADManageStatusList: [
@@ -309,6 +315,10 @@ export default {
     require('../../../static/css/list/OTC/OTCADManage.css')
     require('../../../static/css/theme/day/OTC/OTCADManageDay.css')
     require('../../../static/css/theme/night/OTC/OTCADManageNight.css')
+    // 1.0 otc可用币种查询：
+    this.getOTCAvailableCurrencyList()
+    // 2.0 otc可用法币查询：
+    this.getMerchantAvailablelegalTenderList()
   },
   mounted () {
   },
@@ -322,6 +332,40 @@ export default {
     // 时间格式化
     timeFormatting (date) {
       return timeFilter(date, 'normal')
+    },
+    changeADManageMarketList (e) {
+      this.activitedADManageMarketList = e
+    },
+    changeADManageCurrencyId (e) {
+      this.activitedADManageCurrencyId = e
+    },
+    // 币种请求
+    async getOTCAvailableCurrencyList () {
+      const data = await getOTCAvailableCurrency({
+        partnerId: this.partnerId
+      })
+      console.log('可用币种列表')
+      console.log(data)
+      if (!(returnAjaxMessage(data, this, 0))) {
+        return false
+      } else {
+        // 返回数据正确的逻辑
+        this.ADManageMarketList = data.data.data
+      }
+    },
+    // 可用法币查询
+    async getMerchantAvailablelegalTenderList () {
+      const data = await getMerchantAvailablelegalTender({
+        partnerId: this.partnerId
+      })
+      console.log('可用法币')
+      console.log(data)
+      if (!(returnAjaxMessage(data, this, 0))) {
+        return false
+      } else {
+        // 返回数据正确的逻辑
+        this.ADManageCurrencyId = data.data.data
+      }
     },
     // 一键下架所有广告
     async cancelAllOnekey () {
@@ -373,6 +417,11 @@ export default {
         })
       })
     }
+    // findFilter () {
+    //   console.log(this.activitedADManageTraderStyleList)
+    //   console.log(this.activitedADManageMarketList)
+    //   console.log(this.activitedADManageStatusList)
+    // }
   },
   filter: {},
   computed: {},

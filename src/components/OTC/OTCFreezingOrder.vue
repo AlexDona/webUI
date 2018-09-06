@@ -20,31 +20,31 @@
         <!--表格上部分-->
         <div class="freezing-info-top">
           <!-- 订单号 -->
-          <span class="item">{{item.orderId}}</span>
+          <span class="item">{{item.orderSequence}}</span>
           <!-- 类型 买入 -->
           <span
             class="item"
-            v-if="item.style === '买入'"
-            :class="{ red: item.style === '买入' }"
+            v-if="item.orderType === 'BUY'"
+            :class="{ red: item.orderType === 'BUY' }"
           >
-            {{item.style}}
+            买入
           </span>
           <!-- 类型卖出 -->
           <span
             class="item"
-            v-if="item.style === '卖出'"
-            :class="{ green: item.style === '卖出' }"
+            v-if="item.orderType === 'SELL'"
+            :class="{ green: item.orderType === 'SELL' }"
           >
-            {{item.style}}
+            卖出
           </span>
           <!-- 币种 -->
           <span class="item">{{item.coinName}}</span>
           <!-- 价格 -->
-          <span class="item">{{item.price}}</span>
+          <span class="item">{{item.price}}({{ item.currencyName }})</span>
           <!-- 数量 -->
-          <span class="item">{{item.sum}}</span>
+          <span class="item">{{item.pickCount}}({{ item.coinName }})</span>
           <!-- 总金额 -->
-          <span class="item">{{item.totalMoney}}</span>
+          <span class="item">{{(item.price*item.pickCount).toFixed(2)}}({{ item.currencyName }})</span>
           <!-- 下单时间 -->
           <span class="item">{{timeFormatting(item.createTime)}}</span>
         </div>
@@ -57,15 +57,15 @@
           <div class="info-middle">
             <p class="text-info text-blue">卖家信息</p>
             <p class="text-info">
-              <span>姓名：</span><span>{{item.buyerName}}</span>
+              <span>姓名：</span><span>{{item.sellName}}</span>
             </p>
             <p class="text-info">
-              <span>卖家手机号：</span><span>{{item.buyerPhone}}</span>
+              <span>卖家手机号：</span><span>{{item.sellPhone}}</span>
             </p>
           </div>
           <div class="info-right">
             <p class="text-info text-blue">冻结时间</p>
-            <p class="text-info">{{timeFormatting(item.freezingTime)}}</p>
+            <p class="text-info">{{timeFormatting(item.freezeTime)}}</p>
           </div>
         </div>
       </div>
@@ -84,48 +84,48 @@ export default {
     return {
       // OTC冻结订单列表
       getOTCFreezingOrderList: [
-        {
-          orderId: '20180812111111',
-          style: '买入',
-          coinName: 'BTC',
-          price: '567812.12',
-          sum: '0.0012345',
-          totalMoney: '20180812123456',
-          createTime: 1523756432000,
-          sellerName: '张三封',
-          sellerPhone: '15711111111',
-          buyerName: '任付伟',
-          buyerPhone: '15722222222',
-          freezingTime: 1523756432000
-        },
-        {
-          orderId: '20180812222222',
-          style: '卖出',
-          coinName: 'BTC',
-          price: '567812.12',
-          sum: '0.0012345',
-          totalMoney: '20180812123456',
-          createTime: 1523756432000,
-          sellerName: '张三封',
-          sellerPhone: '15711111111',
-          buyerName: '任付伟',
-          buyerPhone: '15722222222',
-          freezingTime: 1523756432000
-        },
-        {
-          orderId: '20180812222222',
-          style: '卖出',
-          coinName: 'BTC',
-          price: '567812.12',
-          sum: '0.0012345',
-          totalMoney: '20180812123456',
-          createTime: 1523756432000,
-          sellerName: '张三封',
-          sellerPhone: '15711111111',
-          buyerName: '任付伟',
-          buyerPhone: '15722222222',
-          freezingTime: 1523756432000
-        }
+        // {
+        //   orderId: '20180812111111',
+        //   style: '买入',
+        //   coinName: 'BTC',
+        //   price: '567812.12',
+        //   sum: '0.0012345',
+        //   totalMoney: '20180812123456',
+        //   createTime: 1523756432000,
+        //   sellerName: '张三封',
+        //   sellerPhone: '15711111111',
+        //   buyerName: '任付伟',
+        //   buyerPhone: '15722222222',
+        //   freezingTime: 1523756432000
+        // },
+        // {
+        //   orderId: '20180812222222',
+        //   style: '卖出',
+        //   coinName: 'BTC',
+        //   price: '567812.12',
+        //   sum: '0.0012345',
+        //   totalMoney: '20180812123456',
+        //   createTime: 1523756432000,
+        //   sellerName: '张三封',
+        //   sellerPhone: '15711111111',
+        //   buyerName: '任付伟',
+        //   buyerPhone: '15722222222',
+        //   freezingTime: 1523756432000
+        // },
+        // {
+        //   orderId: '20180812222222',
+        //   style: '卖出',
+        //   coinName: 'BTC',
+        //   price: '567812.12',
+        //   sum: '0.0012345',
+        //   totalMoney: '20180812123456',
+        //   createTime: 1523756432000,
+        //   sellerName: '张三封',
+        //   sellerPhone: '15711111111',
+        //   buyerName: '任付伟',
+        //   buyerPhone: '15722222222',
+        //   freezingTime: 1523756432000
+        // }
       ]
     }
   },
@@ -159,6 +159,7 @@ export default {
         return false
       } else {
         // 返回数据正确的逻辑
+        this.getOTCFreezingOrderList = data.data.data.list
       }
     }
   },
