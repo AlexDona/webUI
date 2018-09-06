@@ -44,4 +44,5 @@ export const sellerSendAppeal = (params) => postWithURLencoded('otcAppeal/applyO
 export const businessApply = (params) => postWithURLencoded('otcMerchApply/applyOTCMerch', params)
 // 首次进入otc商家申请页面
 export const firstEnterBusinessApply = (params) => get('otcMerchApply/getUserMerchInfo', params)
-
+// 广告管理列表请求
+export const getOTCADManageApplyList = (params) => get('otcEntrust/selectMerchEntrustsPage', params)

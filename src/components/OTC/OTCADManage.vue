@@ -37,9 +37,9 @@
               >
                 <el-option
                   v-for="item in ADManageMarketList"
-                  :key="item.value"
+                  :key="item.name"
                   :label="item.label"
-                  :value="item.value"
+                  :value="item.name"
                 >
                 </el-option>
               </el-select>
@@ -53,9 +53,9 @@
               >
                 <el-option
                   v-for="item in ADManageCurrencyId"
-                  :key="item.value"
+                  :key="item.name"
                   :label="item.label"
-                  :value="item.value"
+                  :value="item.name"
                 >
                 </el-option>
               </el-select>
@@ -215,11 +215,13 @@
 </template>
 <!--请严格按照如下书写书序-->
 <script>
-import {cancelAllOrdersOnekey, getOTCAvailableCurrency, getMerchantAvailablelegalTender} from '../../utils/api/OTC'
+import {cancelAllOrdersOnekey, getOTCAvailableCurrency, getMerchantAvailablelegalTender, getOTCADManageApplyList} from '../../utils/api/OTC'
 import NavCommon from '../Common/HeaderCommon'
 import FooterCommon from '../Common/FooterCommon'
 import IconFontCommon from '../Common/IconFontCommon'
 import {timeFilter} from '../../utils'
+import {returnAjaxMessage} from '../../utils/commonFunc'
+import {mapState} from 'vuex'
 export default {
   components: {
     NavCommon, //  头部导航
@@ -270,6 +272,10 @@ export default {
           label: '已完成'
         }
       ],
+      // 设置默认列表页数
+      pageNum: 0,
+      // 设置列表页面长度
+      pageSize: 10,
       // 广告列表
       ADList: [
         {
@@ -315,6 +321,10 @@ export default {
     require('../../../static/css/list/OTC/OTCADManage.css')
     require('../../../static/css/theme/day/OTC/OTCADManageDay.css')
     require('../../../static/css/theme/night/OTC/OTCADManageNight.css')
+    // 从全局获得商户id
+    console.log(this.partnerId)
+    // 获取otc广告管理列表
+    this.getOTCADManageList()
     // 1.0 otc可用币种查询：
     this.getOTCAvailableCurrencyList()
     // 2.0 otc可用法币查询：
@@ -333,13 +343,28 @@ export default {
     timeFormatting (date) {
       return timeFilter(date, 'normal')
     },
+    // 获取广告管理列表
+    async getOTCADManageList () {
+      const data = await getOTCADManageApplyList({
+        // pageNum: this.pageNum,
+        // pageSize: this.pageSize
+      })
+      console.log('可用币种列表')
+      console.log(data)
+      if (!(returnAjaxMessage(data, this, 0))) {
+        return false
+      } else {
+        // 返回数据正确的逻辑
+        this.ADList = data.data.data.list
+      }
+    },
     changeADManageMarketList (e) {
       this.activitedADManageMarketList = e
     },
     changeADManageCurrencyId (e) {
       this.activitedADManageCurrencyId = e
     },
-    // 币种请求
+    // 币种查询
     async getOTCAvailableCurrencyList () {
       const data = await getOTCAvailableCurrency({
         partnerId: this.partnerId
@@ -424,7 +449,11 @@ export default {
     // }
   },
   filter: {},
-  computed: {},
+  computed: {
+    ...mapState({
+      partnerId: state => state.common.partnerId
+    })
+  },
   watch: {}
 }
 </script>
