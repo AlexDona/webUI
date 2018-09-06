@@ -84,7 +84,8 @@ export default {
       theme: state => state.common.theme,
       activeSymbol: state => state.common.activeSymbol,
       activeSymbolId: state => state.common.activeSymbol.id,
-      activeTradeArea: state => state.common.activeTradeArea
+      activeTradeArea: state => state.common.activeTradeArea,
+      activeTabId: state => state.trade.activeTabId
     })
   },
   watch: {
@@ -108,8 +109,11 @@ export default {
       // console.log(newVal)
     },
     activeSymbolId (newVal) {
-      // console.log(this.activeSymbol.id)
+      console.log(this.activeSymbol.id)
       this.params.symbol = newVal
+      this.params.areaId = this.activeTabId
+      this.params.interval = '1'
+      console.log(this.params)
       this.resetKline(this.params)
     }
   }

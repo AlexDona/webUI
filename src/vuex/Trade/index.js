@@ -6,6 +6,7 @@ import actions from './action'
 
 const state = {
   refreshEntrustStatus: false, // 刷新委单状态
+  activeTabId: '', // 币币交易市场当前选中交易区id
   end: '' // 占位
 }
 

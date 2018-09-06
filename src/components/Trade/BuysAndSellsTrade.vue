@@ -430,7 +430,8 @@ export default {
     })
   },
   watch: {
-    depthData (newVal) {
+    buysAndSellsList (newVal) {
+      // console.log(newVal)
     }
   }
 }

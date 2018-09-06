@@ -1,5 +1,6 @@
 import {
-  TOGGLE_REFRESH_ENTRUST_LIST_STATUS
+  TOGGLE_REFRESH_ENTRUST_LIST_STATUS,
+  CHANGE_ACTIVE_TAB_ID
 } from './mutations-types.js'
 
 // import {setStore} from '../../utils'
@@ -10,5 +11,8 @@ export default {
   // 切换委托列表刷新状态
   [TOGGLE_REFRESH_ENTRUST_LIST_STATUS] (state, data) {
     state.refreshEntrustStatus = data
+  },
+  [CHANGE_ACTIVE_TAB_ID] (state, data) {
+    state.activeTabId = data
   }
 }

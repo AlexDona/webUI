@@ -13,8 +13,8 @@ export default {
   // 获取 到的socket 数据
   socketData: {},
   init: function (options) {
+    console.log(options)
     this.dataFeed = new Datafeeds(this)
-
     this.widget = new TradingView.widget({
       autosize: true,
       symbol: options.symbol,
@@ -235,7 +235,7 @@ export default {
       const params = {
         resolution: resolution,
         symbol: symbol,
-        type: 'updata',
+        type: 'kline',
         from: from,
         to: to,
         activeTradeArea: store.state.common.activeTradeArea
@@ -294,6 +294,7 @@ export default {
     }
   },
   onUpdateData: function (data) {
+    // console.log(data)
     // console.log('***********************************************************')
     let tradeType = data.tradeType
     let dataArr = []

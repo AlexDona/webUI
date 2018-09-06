@@ -517,6 +517,11 @@ export default{
       userInfo: state => state.user.loginStep1Info.userInfo,
       partnerId: state => state.common.partnerId // 商户id
     })
+  },
+  watch: {
+    '$route' (to, from) {
+      console.log(to, from)
+    }
   }
 }
 </script>

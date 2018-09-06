@@ -190,7 +190,7 @@ import {
 } from '../../utils/commonFunc'
 import {socket} from '../../utils/tradingview/socket'
 import {mapState, createNamespacedHelpers} from 'vuex'
-const { mapMutations } = createNamespacedHelpers('home')
+const { mapMutations } = createNamespacedHelpers('common')
 export default {
   components: {
   },
@@ -218,6 +218,7 @@ export default {
       ETHMarketList: [],
       searchKeyWord: '', // 搜索关键字
       plateList: [], // 板块列表
+      socketCount: 0, // socket计数
       nothing: '' // 占位
     }
   },
@@ -248,10 +249,6 @@ export default {
     //     label: 'ETH'
     //   }
     // ]
-    // 获取交易区信息
-    this.getTradeAreaList()
-    // 获取板块
-    this.getPartnerList()
     // 获取行情数据
     // this.marketList = [
     //   {
@@ -883,13 +880,17 @@ export default {
     // ]
     // fbt交易区模拟数据
     // 获取本地搜藏列表
+  },
+  mounted () {
+    // 获取交易区信息
+    this.getTradeAreaList()
+    // 获取板块
+    this.getPartnerList()
     this.collectList = JSON.parse(getStore('collectList')) || []
     // console.log(this.collectList)
     this.resetCollectList()
     this.filterMarketList = this.marketList
     // this.setFilterMarketList(this.activeName, this.BTCMarketList)
-  },
-  mounted () {
   },
   activited () {
   },
@@ -899,27 +900,19 @@ export default {
   },
   methods: {
     ...mapMutations([
-      'CHANGE_COLLECT_LIST'
+      // 'CHANGE_COLLECT_LIST'
+      'CHANGE_ACTIVE_SYMBOL'
     ]),
     // 设置 当前交易区
     changeActiveSymbol (activeSymbol, previousSymbol) {
       console.log('active----------------->', activeSymbol.id)
-      console.log('previous--------------->', this.previousSymbol.id)
-      if (!this.previousSymbol.id) {
-        this.$store.commit('common/CHANGE_ACTIVE_SYMBOL', {
-          activeSymbol,
-          previousSymbol: activeSymbol
-        })
-      } else {
-        this.$store.commit('common/CHANGE_ACTIVE_SYMBOL', {
-          activeSymbol,
-          previousSymbol
-        })
-      }
-      // this.$store.commit('common/CHANGE_ACTIVE_SYMBOL', {
-      //   activeSymbol,
-      //   previousSymbol
-      // })
+      console.log(this.activeTabId)
+      // console.log('previous--------------->', this.previousSymbol.id)
+      // this.$store.commit('common/CHANGE_ACTIVE_SYMBOL', activeSymbol)
+      this.$store.commit('common/CHANGE_ACTIVE_SYMBOL', {
+        activeSymbol,
+        previousSymbol
+      })
     },
     // 获取板块列表
     getPartnerList () {
@@ -943,12 +936,12 @@ export default {
     // 重新订阅请求socket
     resetSocketMarket (areaId) {
       socket.subscribeKline({
-        'type': 'trade_market', // 请求类型
+        type: 'trade_market', // 请求类型
         areaId
       }, (data) => {
+        // console.log(data)
         // 币币交易
-        if (data.tradeType === 'BBTICKER') {
-          console.log(data)
+        if (data.tradeType == 'BBTICKER') {
           switch (data.type) {
             // 请求socket
             case 0:
@@ -964,19 +957,12 @@ export default {
             // 订阅socket
             case 1:
               const newData = data.data[0].content[0]
+              console.log(newData)
               // 设置当前选中交易对
-              // console.log(this.activeSymbol.id)
-              if (!this.activeSymbol.id) {
-                // this.activeSymbol = newData
-                // console.log('111')
-                this.changeActiveSymbol(newData)
-              }
-              // console.log(newData.id)
-              // console.log(this.activeSymbol.id)
-              if (newData.id == this.activeSymbol.id) {
-                // console.log('222')
-                this.changeActiveSymbol(newData)
-                // console.log(this.activeSymbol.id)
+              if (!this.socketCount) {
+                console.log('activeSymbol')
+                // this.changeActiveSymbol(newData)
+                this.socketCount += 1
               }
               // 非自选区
               if (this.activeName != this.tabList[0].id) {
@@ -984,7 +970,6 @@ export default {
                   if (item.plateId === data.data[0].plateId) {
                     item.content.forEach((innerItem, innerIndex) => {
                       if (innerItem.id == newData.id) {
-                        // this.marketList[index].content[innerIndex] = newData
                         this.$set(this.marketList[index].content, innerIndex, newData)
                         this.filterMarketList = this.marketList
                         return false
@@ -993,11 +978,8 @@ export default {
                   }
                 })
               } else {
-                // console.log(this.filterMarketList)
-                // console.log(newData)
                 this.filterMarketList.forEach((item, index) => {
                   if (item.plateId == newData.plateId) {
-                    // console.log(item)
                     item.content.forEach((innerItem, innerIndex) => {
                       if (innerItem.id == newData.id) {
                         this.$set(this.filterMarketList[index].content, innerIndex, newData)
@@ -1006,7 +988,21 @@ export default {
                   }
                 })
               }
-
+              if (!this.activeSymbol.id) {
+                // this.activeSymbol = newData
+                console.log('111')
+                // this.changeActiveSymbol(newData)
+                // this.$store.commit('common/CHANGE_ACTIVE_SYMBOL', newData)
+                // this.CHANGE_ACTIVE_SYMBOL(newData)
+                // console.log(this.activeSymbol)
+              }
+              // console.log(newData.id)
+              // console.log(this.activeSymbol.id)
+              if (newData.id == this.activeSymbol.id) {
+                console.log('222')
+                // this.changeActiveSymbol(newData)
+                // console.log(this.activeSymbol.id)
+              }
               // let newData = data.data[0]
               // let newContent = newData.content[0]
               // let collectContent = this.marketList[1].content
@@ -1037,12 +1033,6 @@ export default {
               break
           }
         }
-        // let resultArr = splitSocketParams(data)
-        // console.log(resultArr)
-        // console.log(this.marketList)
-        // if (this.collectList.length) {
-        //   this.setMarketList(this.collectAreaId, this.collectList)
-        // }
       })
     },
     // 获取交易区列表
@@ -1059,7 +1049,8 @@ export default {
         // console.log(this.tabList)
         this.activeName = this.tabList[1].id
         this.$store.commit('common/CHANGE_ACTIVE_TRADE_AREA', this.tabList[1])
-        this.resetSocketMarket(this.tabList[1].id)
+        this.$store.commit('trade/CHANGE_ACTIVE_TAB_ID', this.activeName)
+        this.resetSocketMarket(this.activeName)
       }
     },
     // 排序
@@ -1217,7 +1208,8 @@ export default {
         })
       }
       setStore('collectList', this.collectList)
-      this.CHANGE_COLLECT_LIST(this.collectList)
+      // this.CHANGE_COLLECT_LIST(this.collectList)
+      this.$store.commit('home/CHANGE_COLLECT_LIST', this.collectList)
       setStore('collectStatusList', this.collectStatusList)
       if (this.activeName == this.tabList[0].id) {
         console.log(this.activeName)
@@ -1239,6 +1231,7 @@ export default {
       // console.log(this.activeName)
       // console.log(this.tabList[0].id)
       // this.activeName
+      this.$store.commit('trade/CHANGE_ACTIVE_TAB_ID', this.activeName)
       // 自选区
       if (this.activeName == this.tabList[0].id) {
         // this.resetList(this.filterMarketList)
@@ -1256,6 +1249,7 @@ export default {
         // console.log(this.filterMarketList)
       } else {
         // 接口请求不同交易区数据
+        console.log(this.activeName)
         this.resetSocketMarket(this.activeName)
         // if (this.activeName == this.tabList[1].id) {
         //   this.setFilterMarketList(this.activeName, this.BTCMarketList)
@@ -1281,7 +1275,8 @@ export default {
       partnerId: state => state.common.partnerId, // 商户id
       activeTradeArea: state => state.common.activeTradeArea,
       activeSymbol: state => state.common.activeSymbol, // 当前选中交易对
-      previousSymbol: state => state.common.previousSymbol
+      previousSymbol: state => state.common.previousSymbol,
+      activeTabId: state => state.trade.activeTabId
     }),
     // 搜索关键字过滤列表过滤
     searchFilterMarketList () {
@@ -1308,7 +1303,11 @@ export default {
       return newArr
     }
   },
-  watch: {}
+  watch: {
+    activeName (newVal) {
+      console.log(newVal)
+    }
+  }
 }
 </script>
 <style scoped lang="scss">
