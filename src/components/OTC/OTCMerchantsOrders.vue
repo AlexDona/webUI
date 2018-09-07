@@ -16,9 +16,38 @@
           <span class="style-input">
             <el-select
               v-model="activitedMerchantsOrdersTraderStyleList"
+              @change="changeMerchantsOrdersTraderStyleList"
             >
               <el-option
                 v-for="item in merchantsOrdersTraderStyleList"
+                :key="item.value"
+                :label="item.label"
+                :value="item.value"
+              >
+              </el-option>
+            </el-select>
+          </span>
+          <span class="filtrate-text font-size14">币种</span>
+          <span class="status-input">
+            <el-select
+              v-model="activitedMerchantsOrdersStatusList"
+            >
+              <el-option
+                v-for="item in merchantsOrdersStatusList"
+                :key="item.value"
+                :label="item.label"
+                :value="item.value"
+              >
+              </el-option>
+            </el-select>
+          </span>
+          <span class="filtrate-text font-size14">货币</span>
+          <span class="status-input">
+            <el-select
+              v-model="activitedMerchantsOrdersStatusList"
+            >
+              <el-option
+                v-for="item in merchantsOrdersStatusList"
                 :key="item.value"
                 :label="item.label"
                 :value="item.value"
@@ -30,6 +59,7 @@
           <span class="status-input">
             <el-select
               v-model="activitedMerchantsOrdersStatusList"
+              @change="changeMerchantsOrdersStatusList"
             >
               <el-option
                 v-for="item in merchantsOrdersStatusList"
@@ -48,6 +78,7 @@
               v-model="value1"
               type="date"
               value-format="yyyy-MM-dd"
+              @change="startDate"
             >
             </el-date-picker>
             <span class="date-short-line">-</span>
@@ -57,12 +88,13 @@
               v-model="value2"
               value-format="yyyy-MM-dd"
               type="date"
+              @change="endDate"
             >
             </el-date-picker>
           </span>
           <span class="inquire-button">
-            <el-button type="primary">查询</el-button>
-            <el-button type="primary">重置</el-button>
+            <el-button type="primary" @click="findFilter">查询</el-button>
+            <el-button type="primary" @click="resetCondition">重置</el-button>
           </span>
           <!-- <span class="all-clear cursor-pointer">
             <span class="clear-text font-size12">全部清除筛选</span>
@@ -70,85 +102,149 @@
         </div>
         <!-- 下部分表格内容 -->
         <div class="orders-main-bottom">
-          <!-- 2.3 订单管理-->
-          <div class="otc-order-manage">
-            <el-tabs
-              :tab-position = "tabPosition"
-              @tab-click = "toggleTabPane"
-              v-model = "activeName"
+          <el-table
+            :data = "merchantsOrdersList"
+            style = "width: 100%"
+            empty-text="暂无数据"
+          >
+            <!-- 交易日期 -->
+            <el-table-column
+              label = "交易日期"
             >
-              <!-- 2.2.1 交易中的订单 -->
-              <el-tab-pane name = "first">
-                <span slot="label">
-                  <i
-                    class="el-icon-caret-right otc-tab-pane-arrow-right"
-                    v-show="activeName === 'first'">
-                  </i>
+              <template slot-scope = "scope">
+                <div>{{timeFormatting(scope.row.traderTime)}}</div>
+              </template>
+            </el-table-column>
+            <!-- 订单号 -->
+            <el-table-column
+              label = "订单号"
+              width="130"
+            >
+              <template slot-scope = "scope">
+                <div>{{scope.row.orderId}}</div>
+              </template>
+            </el-table-column>
+            <!-- 币种 -->
+            <el-table-column
+              label = "币种"
+            >
+              <template slot-scope = "scope">
+                <div>{{scope.row.moneyStyle}}</div>
+              </template>
+            </el-table-column>
+            <!-- 交易类型 -->
+            <el-table-column
+              label = "交易类型"
+            >
+              <template slot-scope = "scope">
+                <div
+                  v-if="scope.row.buySellStatus === 1"
+                  :class="{red:scope.row.buySellStatus === 1}"
+                >
+                  购买
+                </div>
+                <div
+                  v-if="scope.row.buySellStatus === 2"
+                  :class="{green:scope.row.buySellStatus === 2}"
+                >
+                  出售
+                </div>
+              </template>
+            </el-table-column>
+            <!-- 订单状态 -->
+            <el-table-column
+              label = "订单状态"
+            >
+              <template slot-scope = "scope">
+                <div>{{scope.row.moneyStyle}}</div>
+              </template>
+            </el-table-column>
+            <!-- 货币 -->
+            <el-table-column
+              label = "货币"
+            >
+              <template slot-scope = "scope">
+                <div>{{scope.row.moneyStyle}}</div>
+              </template>
+            </el-table-column>
+            <!-- 支付方式 -->
+            <el-table-column
+              label = "支付方式"
+            >
+              <template slot-scope = "scope">
+                <!-- <div>{{scope.row.payStyle}}</div> -->
+                <div>
+                  <!-- 支付宝 -->
                   <IconFontCommon
-                    iconName="icon-shalou"
+                    class="font-size16"
+                    iconName="icon-zhifubao1"
+                    v-if="scope.row.payStyle === 1"
                   />
-                  交易中订单
-                </span>
-                <OTCTradingOrder></OTCTradingOrder>
-              </el-tab-pane>
-              <!-- 2.2.2 已完成订单 -->
-              <el-tab-pane name = "second">
-                <span slot="label">
-                  <i
-                    class="el-icon-caret-right otc-tab-pane-arrow-right"
-                    v-show="activeName === 'second'">
-                  </i>
+                  <!-- 微信 -->
                   <IconFontCommon
-                    iconName="icon-msnui-task-complete"
+                    class="font-size16"
+                    iconName="icon-weixin1"
+                    v-if="scope.row.payStyle === 2"
                   />
-                  已完成订单
-                </span>
-                <OTCCompletedOrder></OTCCompletedOrder>
-              </el-tab-pane>
-              <!-- 2.2.3 已取消订单 -->
-              <el-tab-pane name = "third">
-                <span slot="label">
-                  <i
-                    class="el-icon-caret-right otc-tab-pane-arrow-right"
-                    v-show="activeName === 'third'">
-                  </i>
+                  <!-- 银行卡 -->
                   <IconFontCommon
-                    iconName="icon-cancel_order"
+                    class="font-size16"
+                    iconName="icon-yinhangqia"
+                    v-if="scope.row.payStyle === 3"
                   />
-                  已取消订单
-                </span>
-                <OTCCanceledOrder></OTCCanceledOrder>
-              </el-tab-pane>
-              <!-- 2.2.4 冻结中订单 -->
-              <el-tab-pane name = "fourth">
-                <span slot="label">
-                  <i
-                    class="el-icon-caret-right otc-tab-pane-arrow-right"
-                    v-show="activeName === 'fourth'">
-                  </i>
+                  <!-- 4西联汇款 -->
+                  <span>
+                    <img src="../../assets/user/xilian.png" alt="" class="xilian">
+                  </span>
+                  <!--  5PAYPAL -->
                   <IconFontCommon
-                    iconName="icon-dongjie"
+                    class="font-size16"
+                    iconName="icon-paypal"
                   />
-                  冻结中订单
-                </span>
-                <OTCFreezingOrder></OTCFreezingOrder>
-              </el-tab-pane>
-              <!-- 2.2.5 委托订单 -->
-              <el-tab-pane name = "fifth">
-                <span slot="label">
-                  <i
-                    class="el-icon-caret-right otc-tab-pane-arrow-right"
-                    v-show="activeName === 'fifth'">
-                  </i>
-                  <IconFontCommon
-                    iconName="icon-daohang2"
-                  />
-                  委托订单
-                </span>
-                <OTCEntrustOrder></OTCEntrustOrder>
-              </el-tab-pane>
-            </el-tabs>
-          </div>
+                </div>
+              </template>
+            </el-table-column>
+            <!-- 成交价 -->
+            <el-table-column
+              label = "成交价"
+            >
+              <template slot-scope = "scope">
+                <div>{{scope.row.transactionPrice}}</div>
+              </template>
+            </el-table-column>
+            <!-- 成交量 -->
+            <el-table-column
+              label = "成交量"
+            >
+              <template slot-scope = "scope">
+                <div>{{scope.row.tradingVolume}}</div>
+              </template>
+            </el-table-column>
+            <!-- 总金额 -->
+            <el-table-column
+              label = "总金额"
+            >
+              <template slot-scope = "scope">
+                <div>{{scope.row.totalMoney}}</div>
+              </template>
+            </el-table-column>
+            <!-- 对方姓名 -->
+            <el-table-column
+              label = "对方姓名"
+            >
+              <template slot-scope = "scope">
+                <div>{{scope.row.otherName}}</div>
+              </template>
+            </el-table-column>
+            <!-- 申诉记录 -->
+            <el-table-column
+              label = "申诉记录"
+            >
+              <template slot-scope = "scope">
+                <div>{{scope.row.complaintRecord}}</div>
+              </template>
+            </el-table-column>
+          </el-table>
         </div>
       </div>
     </div>
@@ -162,39 +258,27 @@ import NavCommon from '../Common/HeaderCommon'
 import FooterCommon from '../Common/FooterCommon'
 import IconFontCommon from '../Common/IconFontCommon'
 import {timeFilter} from '../../utils'
-// import {getOTCAvailableCurrency, getOTCPutUpOrders} from '../../utils/api/apiDoc'
-import OTCTradingOrder from './OTCTradingOrder'
-import OTCCompletedOrder from './OTCCompletedOrder'
-import OTCCanceledOrder from './OTCCanceledOrder'
-import OTCFreezingOrder from './OTCFreezingOrder'
-import OTCEntrustOrder from './OTCEntrustOrder'
-// import {returnAjaxMessage} from '../../utils/commonFunc'
-// import {createNamespacedHelpers, mapState} from 'vuex'
-// const {mapMutations} = createNamespacedHelpers('OTC')
 export default {
   components: {
     NavCommon, //  头部导航
     FooterCommon, //  底部
-    IconFontCommon, //  字体图标
-    OTCTradingOrder, //  交易中订单
-    OTCCompletedOrder, //  已完成订单
-    OTCCanceledOrder, //  已取消订单
-    OTCFreezingOrder, //  冻结中订单
-    OTCEntrustOrder //  委托订单
+    IconFontCommon //  字体图标
   },
   data () {
     return {
-      activeName: 'first', // 选中的tab面板的序号
-      tabPosition: 'left', //  订单管理面板标签方向状态
       // 1.0 商家订单筛选下拉框数组--交易类型
       activitedMerchantsOrdersTraderStyleList: '', // 选中的筛选项
       merchantsOrdersTraderStyleList: [
         {
           value: '选项1',
+          label: '全部'
+        },
+        {
+          value: '选项1',
           label: '购买'
         },
         {
-          value: '选项2',
+          value: 'SELL',
           label: '出售'
         }
       ],
@@ -203,15 +287,23 @@ export default {
       merchantsOrdersStatusList: [
         {
           value: '选项1',
-          label: '已上架'
+          label: '已付款'
         },
         {
           value: '选项2',
-          label: '已下架'
+          label: '未付款'
         },
         {
-          value: '选项2',
+          value: '选项3',
           label: '已完成'
+        },
+        {
+          value: '选项4',
+          label: '已取消'
+        },
+        {
+          value: '选项5',
+          label: '已冻结'
         }
       ],
       value1: '', // 默认开始时间
@@ -276,6 +368,48 @@ export default {
     // 时间格式化
     timeFormatting (date) {
       return timeFilter(date, 'date')
+    },
+    // 选中的交易类型赋值
+    changeMerchantsOrdersTraderStyleList (e) {
+      this.activitedMerchantsOrdersTraderStyleList = e
+    },
+    // 选中的状态赋值
+    changeMerchantsOrdersStatusList (e) {
+      this.activitedMerchantsOrdersStatusList = e
+    },
+    // 初始日期赋值
+    startDate (e) {
+      this.value1 = e
+    },
+    // 结束日期赋值
+    endDate (e) {
+      this.value2 = e
+    },
+    // findFilter () {
+    //   let param = {
+    //     A:this.activitedMerchantsOrdersTraderStyleList, //获取选中的
+    //     B:this.activitedMerchantsOrdersStatusList,
+    //     C:this.value1,
+    //     D:this.value2
+    //   }
+    //   if (this.activeName == 'first') {
+    //     //当选中交易中订单时触发
+    //      // this.$ref.OTCTradingOrder.
+    //   } else if (this.activeName == 'second') {
+
+    //   } else if (this.activeName == 'third') {
+
+    //   } else if (this.activeName == 'fourth') {
+
+    //   } else if (this.activeName == 'fifth') {
+
+    //   }
+    // },
+    resetCondition () {
+      this.activitedMerchantsOrdersTraderStyleList = ''
+      this.activitedMerchantsOrdersStatusList = ''
+      this.value1 = ''
+      this.value2 = ''
     }
   },
   filter: {},
@@ -291,6 +425,7 @@ export default {
       width: 1150px;
       height: 1000px;
       margin: 70px auto;
+      // background-color: #2B2B2B;
       padding-top: 50px;
       >.merchants-title{
         height: 30px;
@@ -304,20 +439,19 @@ export default {
           height: 60px;
           line-height: 60px;
           margin-bottom: 25px;
-          padding-left: 10px;
           >.filtrate-text{
             color: #9DA5B3;
-            margin-right: 10px;
+            // margin-right: 10px;
           }
           >.style-input{
-            margin-right: 30px;
+            // margin-right: 30px;
           }
           >.status-input{
-            margin-right: 30px;
+            // margin-right: 30px;
           }
           >.date-picker{
             // margin-right: 80px;
-            margin-right: 200px;
+            // margin-right: 200px;
             >.date-short-line{
               margin: 0 3px;
             }
@@ -330,21 +464,15 @@ export default {
           }
         }
         >.orders-main-bottom{
-          >.otc-order-manage{
-            height: 1200px;
-            margin-top: 5px;
-            .otc-tab-pane-arrow-right{
-              position: absolute;
-              right: -12px;
-              top: 27px;
-              font-size: 20px;
-              color: #338FF5;
-            }
-            .icon{
-              position: absolute;
-              left: 35px;
-              top: 22px;
-            }
+          height: 500px;
+          .red{
+            color: #D45858;
+          }
+          .green{
+            color: #008069;
+          }
+          .xilian{
+            vertical-align: middle
           }
         }
       }

@@ -142,12 +142,12 @@
               </el-table-column>
               <!-- 信用 -->
               <el-table-column
-                label="信用"
+                label="成交率"
                 width="180"
               >
                 <template slot-scope = "s">
-                  <div v-if="s.row.successOrderTimes === 0 || s.row.tradeTimes === 0">成功率0%</div>
-                  <div v-else>成功率{{((s.row.successOrderTimes/(s.row.tradeTimes)) * 100).toFixed(2)}}%</div>
+                  <div v-if="s.row.successOrderTimes === 0 || s.row.tradeTimes === 0">0%</div>
+                  <div v-else>{{((s.row.successOrderTimes/(s.row.tradeTimes)) * 100).toFixed(2)}}%</div>
                 </template>
               </el-table-column>
               <!-- 数量 -->
@@ -195,7 +195,7 @@
                       iconName="icon-yinhangqia"
                       v-if="s.row.payTypes[2] === '1'"
                     />
-                     <!-- 4西联汇款 -->
+                    <!-- 4西联汇款 -->
                     <span v-if="s.row.payTypes[3] == '1'">
                       <img src="../../assets/user/xilian.png" alt="" class="xilian">
                     </span>
@@ -730,7 +730,7 @@ export default {
         background-color: #1D2331;
       }
       >.otc-merchant-content{
-        height: 800px;
+        height: 564px;
         background-color: #202A33;
         margin-top: 30px;
         >.otc-filtrate-publish{

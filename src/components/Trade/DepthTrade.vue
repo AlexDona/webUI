@@ -461,19 +461,23 @@ export default {
   },
   watch: {
     depthData (newVal) {
-      console.log(newVal)
+      // console.log(newVal)
       // this.options.series[0].data = newVal.buy
       // this.options.series[1].data = newVal.sell
       // this.depthCharts.setOption(this.options)
-      this.series[0].data = newVal.buy
-      this.series[1].data = newVal.sell
+      if (newVal.buy) {
+        this.series[0].data = newVal.buy
+      }
+      if (newVal.sell) {
+        this.series[1].data = newVal.sell
+      }
       this.options.series = this.series
       this.resetChart(this.options)
     },
     theme (newVal) {
       let backgroundColor = newVal === 'night' ? '#10172d' : '#fff'
       this.options.backgroundColor = backgroundColor
-      this.resetChart(this.options)
+      // this.resetChart(this.options)
     }
     // buy (newVal) {
     //   // console.log(newVal)

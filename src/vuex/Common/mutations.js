@@ -46,8 +46,13 @@ export default {
     state.socketData.tardeRecordList = data.tardeRecordList
   },
   // 更改当前选中交易对
-  [CHANGE_ACTIVE_SYMBOL] (state, data) {
-    state.activeSymbol = data
+  [CHANGE_ACTIVE_SYMBOL] (state, {activeSymbol, previousSymbol}) {
+    if (activeSymbol) {
+      state.activeSymbol = activeSymbol
+    }
+    if (previousSymbol) {
+      state.previousSymbol = previousSymbol
+    }
   },
   // 更改当前选中交易区
   [CHANGE_ACTIVE_TRADE_AREA] (state, data) {

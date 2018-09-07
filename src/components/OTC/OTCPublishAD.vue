@@ -85,6 +85,7 @@
                   class="price-input"
                   placeholder="卖出单价"
                   ref="price"
+                  :value="this.$route.query.price ? this.$route.query.price : ''"
                   @keyup="changePriceValue('price')"
                 >
                 <span class="unit font-size12">CNY</span>
@@ -125,6 +126,7 @@
                   class="input-sum"
                   placeholder="交易数量"
                   ref="entrustCount"
+                  :value="this.$route.query.matchCount ? this.$route.query.matchCount : ''"
                   @keyup="changeEntrustCountValue('entrustCount')"
                 >
                 <span class="unit font-size14">BTC</span>
@@ -141,6 +143,7 @@
                   class="input-min"
                   placeholder="单笔最小限额"
                   ref="minCountValue"
+                  :value="this.$route.query.minCount ? this.$route.query.minCount : ''"
                   @keyup="changeMinCountInputValue('minCountValue')"
                 >
                 <span class="unit font-size14">CNY</span>
@@ -150,6 +153,7 @@
                   class="input-max"
                   placeholder="单笔最大限额"
                   ref="maxCountValue"
+                  :value="this.$route.query.maxCount ? this.$route.query.maxCount : ''"
                   @keyup="changeMaxCountInputValue('maxCountValue')"
                 >
                 <span class="unit font-size14">CNY</span>
@@ -208,6 +212,7 @@
                   type="text"
                   class="input-limit"
                   ref="limitOrderCount"
+                  :value="this.$route.query.totalAmount ? this.$route.query.totalAmount : ''"
                   @keyup="changeLimitOrderCountValue('limitOrderCount')"
                 >
                 <!-- 错误提示 -->
@@ -221,6 +226,7 @@
                   type="text"
                   class="input-limit"
                   ref="successOrderCount"
+                  :value="this.$route.query.tradeTimes ? this.$route.query.tradeTimes : ''"
                   @keyup="changeSuccessOrderCountValue('successOrderCount')"
                 >
                 <!-- 错误提示 -->
@@ -336,7 +342,7 @@ export default {
         }
       ],
       // 2.0 币种名字下拉数组：商家可用币种
-      activitedCoinId: '', // 选中的商家可用币种id
+      activitedCoinId: this.$route.query.coinName ? this.$route.query.coinName : '', // 选中的商家可用币种id
       availableCoinName: [],
       // 3.0 可用法币币种数组
       activitedCurrencyId: '', // 选中的可用法币id
@@ -367,7 +373,7 @@ export default {
       tradePassword: '',
       // 支付方式（用，隔开的名字）
       // checkList: ['支付宝']
-      activitedPayTypes: [],
+      activitedPayTypes: this.$route.query.payType ? this.$route.query.payType.split(',') : [],
       // 往后台传参数的支付方式类型
       parameterPayTypes: '',
       // 定价设置中的价格错误提示信息
@@ -391,10 +397,23 @@ export default {
     // 从全局获得商户id
     console.log('从全局获得商户id')
     console.log(this.partnerId)
+    console.log(this.$route.query)
     // 1.0 otc可用币种查询：
     this.getOTCAvailableCurrencyList()
     // 2.0 otc可用法币查询：
     this.getMerchantAvailablelegalTenderList()
+    if (this.$route.query.entrustType === 'BUY') {
+      this.activitedBuySellStyle = '购买'
+    } else if (this.$route.query.entrustType === 'SELL') {
+      this.activitedBuySellStyle = '出售'
+    } else {
+      this.activitedBuySellStyle = ''
+    }
+    if (this.$route.query.currencyName === 'USD') {
+      this.activitedCurrencyId = '美元'
+    } else if (this.$route.query.currencyName === 'CNY') {
+      this.activitedCurrencyId = '人民币'
+    }
   },
   mounted () {},
   activited () {},
@@ -473,7 +492,7 @@ export default {
     // 5.0 改变可用法币的币种id
     changeCurrencyId (e) {
       this.activitedCurrencyId = e
-      // console.log(e)
+      console.log(e)
       console.log(this.activitedCurrencyId)
     },
     // 校验用户输入的 定价设置：键盘弹起事件
@@ -570,7 +589,7 @@ export default {
     },
     // 8.0 改变支付方式
     changePayTypes (e) {
-      // console.log(e)
+      console.log(e)
       this.activitedPayTypes = e
       // console.log(this.activitedPayTypes)
       // 处理支付方式数据格式，转成 a,b,c 形势
@@ -647,6 +666,8 @@ export default {
     ...mapState({
       partnerId: state => state.common.partnerId
     })
+    // activitedBuySellStyle () {
+    // }
   },
   watch: {}
 }

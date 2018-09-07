@@ -13,8 +13,8 @@ export default {
   // 获取 到的socket 数据
   socketData: {},
   init: function (options) {
+    console.log(options)
     this.dataFeed = new Datafeeds(this)
-
     this.widget = new TradingView.widget({
       autosize: true,
       symbol: options.symbol,
@@ -235,7 +235,7 @@ export default {
       const params = {
         resolution: resolution,
         symbol: symbol,
-        type: 'updata',
+        type: 'kline',
         from: from,
         to: to,
         activeTradeArea: store.state.common.activeTradeArea
@@ -294,6 +294,7 @@ export default {
     }
   },
   onUpdateData: function (data) {
+    // console.log(data)
     // console.log('***********************************************************')
     let tradeType = data.tradeType
     let dataArr = []
@@ -425,6 +426,7 @@ export default {
       // console.log(this.dataCache[symbol][resolution])
     //  深度图
     } else if (tradeType == 'DEPTH') {
+      // console.log(data)
       // 深度图、买列表、卖列表
       if (data.data) {
         // const depthData = {
@@ -448,7 +450,7 @@ export default {
       }
     // 币币交易市场信息
     } else if (tradeType === 'BBTICKER') {
-      console.log(data)
+      // console.log(data)
     }
     store.commit('common/CHANGE_SOCKET_DATA', this.socketData)
   }

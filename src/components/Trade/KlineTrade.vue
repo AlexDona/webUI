@@ -24,9 +24,12 @@ export default {
         }
       },
       params: {
-        symbol: this.activeSymbol.sellsymbol + this.activeSymbol.area,
+        // symbol: this.activeSymbol.sellsymbol + this.activeSymbol.area,
+        symbol: '',
+        previousSymbol: '', // 上一个交易对（取消用）
         interval: this.interval,
-        paneProperties: this.paneProperties
+        // paneProperties: this.paneProperties
+        paneProperties: ''
       }, // K线请求参数
       interval: '1' // 时间周期
     }
@@ -34,10 +37,10 @@ export default {
   created () {
     require('../../../static/charting_library/static/css/t-night.css')
     require('../../../static/css/theme/day/Trade/KlieneDay.css')
-    console.log(this.paneProperties)
+    // console.log(this.paneProperties)
   },
   mounted () {
-    // this.paneProperties.background = this.theme === 'night' ? '#10172d' : '#fff'
+    this.paneProperties.background = this.theme === 'night' ? '#10172d' : '#fff'
     // Tv.init({
     //   symbol: 'ASASSWEWES',
     //   interval: '1',
@@ -80,12 +83,15 @@ export default {
     ...mapState({
       theme: state => state.common.theme,
       activeSymbol: state => state.common.activeSymbol,
-      activeTradeArea: state => state.common.activeTradeArea
+      activeSymbolId: state => state.common.activeSymbol.id,
+      activeTradeArea: state => state.common.activeTradeArea,
+      activeTabId: state => state.trade.activeTabId
     })
   },
   watch: {
     theme (newVal) {
-      // this.paneProperties.background = newVal === 'night' ? '#10172d' : '#fff'
+      console.log(newVal)
+      this.paneProperties.background = newVal === 'night' ? '#10172d' : '#fff'
       // Tv.init({
       //   symbol: this.activeSymbol.sellsymbol + this.activeSymbol.area,
       //   interval: this.interval,
@@ -93,11 +99,22 @@ export default {
       // })
     },
     activeTradeArea (newVal) {
-      console.log(newVal)
+      // console.log(newVal)
       if (newVal.id) {
         // console.log(this.params)
         // this.resetKline(this.params)
       }
+    },
+    activeSymbol (newVal) {
+      // console.log(newVal)
+    },
+    activeSymbolId (newVal) {
+      console.log(this.activeSymbol.id)
+      this.params.symbol = newVal
+      this.params.areaId = this.activeTabId
+      this.params.interval = '1'
+      console.log(this.params)
+      this.resetKline(this.params)
     }
   }
 }

@@ -933,7 +933,7 @@ export default{
     ]),
     // 更改当前交易对
     changeActiveSymbol (e) {
-      this.$store.commit('common/CHANGE_ACTIVE_SYMBOL', e)
+      this.$store.commit('common/CHANGE_ACTIVE_SYMBOL', {activeSymbol: e})
       console.log(this.activeSymbol)
       // 设置当前交易区
       const areaId = e.areaId
