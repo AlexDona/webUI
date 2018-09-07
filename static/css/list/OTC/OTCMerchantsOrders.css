@@ -1,13 +1,13 @@
 /* 商家订单样式重置 */
 /* 1.0筛选条件中的下拉框样式 */
 .otc-merchants-orders-box .style-input .el-select{
-  width: 120px;
+  width: 100px;
 }
 .otc-merchants-orders-box .status-input .el-select{
-  width: 140px;
+  width: 100px;
 }
 .otc-merchants-orders-box .date-picker .el-date-editor.el-input{
-  width: 134px;
+  width: 135px;
 }
 .otc-merchants-orders-box .el-input__inner {
   height: 34px;
@@ -22,7 +22,7 @@
   padding: 9px 20px;
 }
 /*3.0广告列表表格样式*/
-/* .otc-merchants-orders-box .orders-main-bottom .el-table__header{
+.otc-merchants-orders-box .orders-main-bottom .el-table__header{
   margin-bottom: 10px;
 }
 .otc-merchants-orders-box .orders-main-bottom .el-table{
@@ -41,9 +41,9 @@
 .otc-merchants-orders-box .orders-main-bottom .el-table td{
   border-bottom: 0;
   padding: 0 0;
-} */
+}
 /* 重置饿了么表格中边框的样式和边框的圆角 开始 */
-/* .otc-merchants-orders-box .orders-main-bottom .el-table .el-table__body tr td:first-of-type  {
+.otc-merchants-orders-box .orders-main-bottom .el-table .el-table__body tr td:first-of-type  {
   border-left: 1px solid #262F38;
 }
 .otc-merchants-orders-box .orders-main-bottom .el-table .el-table__body tr td:last-of-type  {
@@ -53,13 +53,15 @@
   border-bottom: 1px solid #262F38;
 }
 .otc-merchants-orders-box .orders-main-bottom .el-table .el-table__body tr:last-of-type td:last-of-type  {
+  /* border-bottom: 1px solid red; */
   border-bottom-right-radius: 5px;
 }
 .otc-merchants-orders-box .orders-main-bottom .el-table .el-table__body tr:last-of-type td:first-of-type  {
+  /* border-bottom: 1px solid red; */
   border-bottom-left-radius: 5px;
-} */
+}
 /* 重置饿了么表格中边框的样式和边框的圆角 结束 */
-/* .el-table--enable-row-hover .el-table__body tr:hover>td{
+.el-table--enable-row-hover .el-table__body tr:hover>td{
   background-color: #202A33;
 }
 .otc-merchants-orders-box .orders-main-bottom .el-table th.is-leaf {
@@ -75,71 +77,5 @@
   border-top-right-radius: 5px;
   border-bottom-right-radius: 5px;
   border-right: 1px solid #262F38;
-} */
-/* 3.0 订单管理左侧tabs切换面板 */
-/* tabs组件出现蓝色边框问题 */
-.otc-merchants-orders-box .otc-order-manage .el-tabs__active-bar{
-  height: 0 !important;
 }
-.otc-merchants-orders-box .otc-order-manage .el-tabs__nav-wrap::after{
-  background-color: transparent;
-}
-/*做二级导航宽度*/
-.otc-merchants-orders-box .otc-order-manage .el-tabs--left .el-tabs__item.is-left{
-  width: 180px;
-  text-align: center;
-}
-.otc-merchants-orders-box .otc-order-manage .el-tabs__item{
-  height: 45px;
-  line-height: 45px;
-  padding: 0 0;
-  color: #4F85DA;
-}
-.otc-merchants-orders-box .otc-order-manage .is-disabled{
-  background-color: rgba(29, 35, 49, 1);
-}
-/*鼠标点击*/
-.otc-merchants-orders-box .otc-order-manage .el-tabs__item.is-active{
-  color: #FFFFFF;
-  background-color: #338FF5;
-}
-.otc-merchants-orders-box .otc-order-manage .el-tabs--left .el-tabs__item.is-left{
-  width: 90px;
-  height: 84px;
-  line-height: 110px;
-}
-.otc-merchants-orders-box .otc-order-manage .el-tabs__content{
-  min-height: 1000px;
-}
-.otc-merchants-orders-box .otc-order-manage .el-tabs__nav-wrap,.el-tabs__nav-scroll{
-  overflow: visible;
-}
-.otc-merchants-orders-box .otc-order-manage .el-tabs--left .el-tabs__header.is-left {
-  margin-right: 16px;
-}
-/* 4.0 订单管理右侧订单管理 */
-.otc-merchants-orders-box .otc-order-manage .el-table th, .el-table tr{
-  background-color: #202A33;
-}
-.otc-merchants-orders-box .otc-order-manage .el-table thead {
-  color: #617499;
-}
-.otc-merchants-orders-box .otc-order-manage .el-table td{
-  padding: 7px 0;
-}
-/* 5.0在线交易支付方式下拉框 */
-.otc-merchants-orders-box .otc-order-manage .otc-merchant-list .pay-way .el-input--suffix .el-input__inner{
-  width: 105px;
-  height: 30px;
-}
-.otc-merchants-orders-box .otc-order-manage .otc-merchant-list .pay-way .el-input__inner{
-  border: 0px;
-  background-color: #202A33;
-  color: #617499;
-  font-size: 14px;
-  color: #202A33;
-}
-/* 右侧下拉箭头的颜色 */
-.otc-merchants-orders-box .otc-order-manage .otc-merchant-list .pay-way .el-select .el-input .el-select__caret{
-  color: #338FF5;
-}
+/* 4.0 */

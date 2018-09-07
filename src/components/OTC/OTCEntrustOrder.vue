@@ -65,24 +65,54 @@
             >
               撤单
             </el-button>
+            <!-- <el-button
+              type="text"
+              @click="dialogVisible = true"
+            >
+              撤单
+            </el-button>
+            <el-dialog
+              title="提示"
+              :visible.sync="dialogVisible"
+              width="30%"
+              :before-close="handleClose">
+              <span>这是一段信息</span>
+              <span slot="footer" class="dialog-footer">
+                <el-button @click="dialogVisible = false">取 消</el-button>
+                <el-button type="primary" @click="revocationOrder(item.id)">确 定</el-button>
+              </span>
+            </el-dialog> -->
           </span>
         </div>
       </div>
+      <!-- 弹出框 -->
+      <!-- <div class="dialog">
+        <el-dialog
+          title="提示"
+          :visible.sync="dialogVisible"
+          width="30%"
+          :before-close="handleClose">
+          <span>这是一段信息</span>
+          <span slot="footer" class="dialog-footer">
+            <el-button @click="dialogVisible = false">取 消</el-button>
+            <el-button type="primary" @click="dialogVisible = false">确 定</el-button>
+          </span>
+        </el-dialog>
+      </div> -->
     </div>
   </div>
 </template>
 <!--请严格按照如下书写书序-->
 <script>
 import {timeFilter} from '../../utils'
-import {getOTCEntrustingOrders,
-  querySelectedOrdersRevocation
-} from '../../utils/api/OTC'
+import {getOTCEntrustingOrders, querySelectedOrdersRevocation} from '../../utils/api/OTC'
 import {returnAjaxMessage} from '../../utils/commonFunc'
 export default {
   components: {},
   // props,
   data () {
     return {
+      dialogVisible: false,
       // OTC委托订单列表
       OTCEntrustOrderList: []
     }
@@ -116,41 +146,32 @@ export default {
       // console.log(data)
       // 提示信息
       returnAjaxMessage(data, this, 0)
-      // if (data.data.meta.code !== 200) {
-      //   this.$message({
-      //     message: data.data.meta.message,
-      //     type: 'error',
-      //     center: true
-      //   })
-      //   return false
-      // }
-      // 返回数据正确的逻辑
       this.OTCEntrustOrderList = data.data.data.list
     },
-    async getOTCEntrustingOrdersRevocation (id) {
-      let data = await querySelectedOrdersRevocation({
-        entrustId: id
-      })
-      // 提示信息
-      if (!(returnAjaxMessage(data, this, 0))) {
-        return false
-      } else {
-        // 返回数据正确的逻辑
-        this.getOTCEntrustingOrdersList()
-      }
-    },
-    // 3.0 撤单按钮
+    // 3.0 点击撤单按钮
     revocationOrder (id) {
+      // this.getOTCEntrustingOrdersRevocation(id)
       this.$confirm('您确定要撤销此单吗, 是否继续?', '提示', {
         confirmButtonText: '确定',
         cancelButtonText: '取消'
       }).then(() => {
         this.getOTCEntrustingOrdersRevocation(id)
-        this.$message({
-          type: 'success',
-          message: '撤单成功!'
-        })
+      }).catch(() => {
       })
+    },
+    // 4.0 提交撤单
+    async getOTCEntrustingOrdersRevocation (id) {
+      let data = await querySelectedOrdersRevocation({
+        entrustId: id
+      })
+      // 提示信息
+      if (!(returnAjaxMessage(data, this, 1))) {
+        return false
+      } else {
+        // 返回数据正确的逻辑
+        // this.dialogVisible = false
+        this.getOTCEntrustingOrdersList()
+      }
     }
   },
   filter: {},
