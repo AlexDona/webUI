@@ -26,7 +26,7 @@
                     <div class="shoper-statistics">
                       <div class="trader-total">
                         <p class="blue">{{tradeTimes}}</p>
-                        <p class="text">交易次数</p>
+                        <p class="text">成交次数</p>
                       </div>
                       <div class="failed">
                         <p class="blue">{{freezeTimes}}</p>
@@ -34,7 +34,7 @@
                       </div>
                       <div class="freeze">
                         <p class="blue">{{freezeTimes}}</p>
-                        <p class="text">冻结次数</p>
+                        <p class="text">账户冻结次数</p>
                       </div>
                     </div>
                 </div>
@@ -55,7 +55,7 @@
                       报价：
                     </span>
                     <span class="details-data">
-                      {{price}}CNY
+                      {{price}}{{currencyName}}
                     </span>
                   </div>
                   <!-- 最小交易量 -->
@@ -64,7 +64,7 @@
                       限额：
                     </span>
                     <span class="details-data">
-                      {{minCount}}~{{maxCount}}CNY
+                      {{minCount}}~{{maxCount}}{{currencyName}}
                     </span>
                   </div>
                   <!-- 剩余数量 -->
@@ -157,44 +157,80 @@
                         <div class="sell-buy-input">
                           <!-- 1.0 数量部分 -->
                           <!--出售-->
-                          <input
+                          <!-- <input
                             type="text"
                             placeholder="卖出量"
                             class="sell-sum"
                             v-if="onlineTraderStatus === 'onlineSell'"
                             ref="sellCount"
                             @keyup="calculatePriceValue('sellCount')"
+                          > -->
+                          <input
+                            type="text"
+                            placeholder="卖出量"
+                            class="sell-sum"
+                            v-if="onlineTraderStatus === 'onlineSell'"
+                            ref="sellCount"
+                            @keyup="calculatePriceValue('sellCount', pointLength)"
+                            @input="calculatePriceValue('sellCount', pointLength)"
                           >
                           <!--购买-->
-                          <input
+                          <!-- <input
                             type="text"
                             placeholder="买入量"
                             class="sell-sum"
                             v-if="onlineTraderStatus === 'onlineBuy'"
                             ref="buyCount"
                             @keyup="calculatePriceValue('buyCount')"
+                          > -->
+                          <input
+                            type="text"
+                            placeholder="买入量"
+                            class="sell-sum"
+                            v-if="onlineTraderStatus === 'onlineBuy'"
+                            ref="buyCount"
+                            @keyup="calculatePriceValue('buyCount', pointLength)"
+                            @input="calculatePriceValue('buyCount', pointLength)"
                           >
                           <span class="unit">{{name}}</span>
                           <!-- 2.0 金额部分 -->
                           <!--出售-->
-                          <input
+                          <!-- <input
                             type="text"
                             placeholder="金额"
                             class="sell-sum"
                             v-if="onlineTraderStatus === 'onlineSell'"
                             ref="sellPrice"
                             @keyup="calculateCountValue('sellPrice')"
+                          > -->
+                          <input
+                            type="text"
+                            placeholder="金额"
+                            class="sell-sum"
+                            v-if="onlineTraderStatus === 'onlineSell'"
+                            ref="sellPrice"
+                            @keyup="calculateCountValue('sellPrice', moneyPointLength)"
+                            @input="calculateCountValue('sellPrice', moneyPointLength)"
                           >
                           <!--购买-->
-                          <input
+                          <!-- <input
                             type="text"
                             placeholder="金额"
                             class="sell-sum"
                             v-if="onlineTraderStatus === 'onlineBuy'"
                             ref="buyPrice"
                             @keyup="calculateCountValue('buyPrice')"
+                          > -->
+                          <input
+                            type="text"
+                            placeholder="金额"
+                            class="sell-sum"
+                            v-if="onlineTraderStatus === 'onlineBuy'"
+                            ref="buyPrice"
+                            @keyup="calculateCountValue('buyPrice', moneyPointLength)"
+                            @input="calculateCountValue('buyPrice', moneyPointLength)"
                           >
-                          <span class="unit">CNY</span>
+                          <span class="unit">{{currencyName}}</span>
                         </div>
                         <!-- input框错误提示信息 -->
                         <div class="errorInfo">
@@ -206,14 +242,14 @@
                           <button
                             class="trader-submit-button trader-submit-sell"
                             v-if="onlineTraderStatus === 'onlineSell'"
-                            @click.prevent="showDialog"
+                            @click.prevent="showDialog(onlineTraderStatus)"
                           >
                             确定出售
                           </button>
                           <button
                             class="trader-submit-button trader-submit-buy"
                             v-if="onlineTraderStatus === 'onlineBuy'"
-                            @click.prevent="showDialog"
+                            @click.prevent="showDialog(onlineTraderStatus)"
                           >
                             确定购买
                           </button>
@@ -259,13 +295,15 @@
                 <div class="input">
                   <input
                     type="password"
+                    placeholder="请输入交易密码"
                     class="password-input"
                     v-model="tradePassword"
+                    @focus="tradePasswordFocus"
                   >
                 </div>
                 <div class="error-info">
                   <!-- 错误提示 -->
-                  <div class="tips">错误提示</div>
+                  <div class="tips">{{tradePasswordTips}}</div>
                 </div>
                 <span
                   slot="footer"
@@ -275,14 +313,14 @@
                       v-if="this.onlineTraderStatus === 'onlineBuy'"
                       @click="submitPickOrdersToBuy"
                     >
-                      确定购买提交
+                      提交
                     </el-button>
                     <el-button
                       type="primary"
                       v-if="this.onlineTraderStatus === 'onlineSell'"
                       @click="submitPickOrdersToSell"
                     >
-                      确定出售提交
+                      提交
                     </el-button>
                 </span>
               </el-dialog>
@@ -300,7 +338,8 @@ import NavCommon from '../Common/HeaderCommon'
 import FooterCommon from '../Common/FooterCommon'
 import IconFontCommon from '../Common/IconFontCommon'
 import {returnAjaxMessage} from '../../utils/commonFunc'
-import {timeFilter} from '../../utils'
+// import {formatNumberInput} from '../../utils'
+import {timeFilter, formatNumberInput} from '../../utils'
 export default {
   components: {
     NavCommon, //  头部导航
@@ -323,8 +362,8 @@ export default {
       remark: '',
       // 报价
       price: '',
-      // 最小交易量
-      // minCount: '',
+      // 当前摘单的法币币种
+      currencyName: '',
       // 付款方式
       payTypes: [],
       // 付款期限
@@ -354,7 +393,11 @@ export default {
       // 数量错误提示
       numberTips: '',
       // 金额错误提示
-      moneyTips: ''
+      moneyTips: '',
+      // 密码错误提示
+      tradePasswordTips: '',
+      pointLength: 4, // 当前币种返回的保留小数点位数限制
+      moneyPointLength: 2 // 当前金额小数点限制位数
     }
   },
   created () {
@@ -372,9 +415,9 @@ export default {
     this.onlineTraderStatus = this.$route.params.styleId
     this.id = this.$route.params.id
     this.partnerCoinId = this.$route.params.partnerCoinId
-    console.log(this.onlineTraderStatus)
-    console.log(this.id)
-    console.log(this.partnerCoinId)
+    // console.log(this.onlineTraderStatus)
+    // console.log(this.id)
+    // console.log(this.partnerCoinId)
     // 2.0 查询选中的挂单，利用挂单id请求详情信息
     if (this.id) {
       this.querySelectedOrdersDetails()
@@ -389,23 +432,52 @@ export default {
   update () {},
   beforeRouteUpdate () {},
   methods: {
+    // 输入限制
+    formatInput (ref, pointLength) {
+      let target = this.$refs[ref]
+      formatNumberInput(target, pointLength)
+    },
     // 1.0 时间格式化
     timeFormatting (date) {
       return timeFilter(date, 'date')
     },
-    // 1.0 显示输入密码框
-    showDialog () {
-      this.dialogVisible = true
+    // 2.0 显示输入密码框
+    showDialog (val) {
+      if (val === 'onlineBuy') {
+        if (!this.$refs.buyCount.value) {
+          this.numberTips = '请输入买入数量'
+        } else if (!this.$refs.buyPrice.value) {
+          this.moneyTips = '请输入金额'
+        } else {
+          this.dialogVisible = true
+        }
+      }
+      if (val === 'onlineSell') {
+        if (!this.$refs.sellCount.value) {
+          this.numberTips = '请输入卖出数量'
+        } else if (!this.$refs.sellPrice.value) {
+          this.moneyTips = '请输入金额'
+        } else {
+          this.dialogVisible = true
+        }
+      }
     },
-    // 2.0 卖出量/买入量input框键盘弹起事件:计算金额
-    calculatePriceValue (ref) {
+    // 3.0 卖出量/买入量input框键盘弹起事件:计算金额
+    calculatePriceValue (ref, pointLength) {
       this[ref] = this.$refs[ref].value
-      console.log(this[ref])
+      // console.log(this[ref])
+      // 限制输入数字和位数
+      let target = this.$refs[ref]
+      formatNumberInput(target, pointLength)
       // 计算金额
+      // 买
       if (this.onlineTraderStatus === 'onlineBuy') {
         if (this.$refs.buyCount.value) {
           this.$refs.buyPrice.value = this.$refs.buyCount.value * this.price
-          // 下面的拿上来
+          this.$refs.buyPrice.value = Number(this.$refs.buyPrice.value).toFixed(2)
+          // 手续费
+          this.serviceCharge = this.$refs.buyCount.value * this.rate
+          this.serviceCharge = Number(this.serviceCharge).toFixed(this.pointLength)
           if (this.$refs.buyCount.value * this.price < this.minCount) {
             this.moneyTips = '单笔最小限额为' + this.minCount
             return false
@@ -425,10 +497,14 @@ export default {
           this.numberTips = ''
         }
       }
+      // 卖
       if (this.onlineTraderStatus === 'onlineSell') {
         if (this.$refs.sellCount.value) {
           this.$refs.sellPrice.value = this.$refs.sellCount.value * this.price
-          // 下面的拿上来
+          this.$refs.sellPrice.value = Number(this.$refs.sellPrice.value).toFixed(2)
+          // 手续费
+          this.serviceCharge = this.$refs.sellCount.value * this.rate
+          this.serviceCharge = Number(this.serviceCharge).toFixed(this.pointLength)
           if (this.$refs.sellCount.value * this.price < this.minCount) {
             this.moneyTips = '单笔最小限额为' + this.minCount
             return false
@@ -448,48 +524,22 @@ export default {
           this.numberTips = ''
         }
       }
-      // 验证输入的数字的准确性 假如 10--100
-      // 3.输入数量 ：数量 * 价格 < 单笔最小限额 金额提示“单笔最小限额为10”
-      // 4.输入数量 ：数量 * 价格 > 单笔最大限额 金额提示“单笔最大限额为100”，数量提示“最大剩余数量为：剩余数量”
-      // 5.输入数量 > 剩余数量 金额提示“单笔最大限额为100”，数量提示“最大剩余数量为：剩余数量”
-      if (this.onlineTraderStatus === 'onlineBuy') {
-        // if (this.$refs.buyCount.value * this.price < this.minCount) {
-        //   this.moneyTips = '单笔最小限额为' + this.minCount
-        // } else if (this.$refs.buyCount.value * this.price > this.maxCount) {
-        //   this.moneyTips = '单笔最大限额为' + this.maxCount
-        //   this.numberTips = '最大剩余数量为' + this.remainingNum
-        // } else if (this.$refs.buyCount.value > this.remainingNum) {
-        //   this.moneyTips = '单笔最大限额为' + this.maxCount
-        //   this.numberTips = '最大剩余数量为' + this.remainingNum
-        // } else {
-        //   this.moneyTips = ''
-        //   this.numberTips = ''
-        // }
-      }
-      if (this.onlineTraderStatus === 'onlineSell') {
-        // if (this.$refs.sellCount.value * this.price < this.minCount) {
-        //   this.moneyTips = '单笔最小限额为' + this.minCount
-        // } else if (this.$refs.sellCount.value * this.price > this.maxCount) {
-        //   this.moneyTips = '单笔最大限额为' + this.maxCount
-        //   this.numberTips = '最大剩余数量为' + this.remainingNum
-        // } else if (this.$refs.sellCount.value > this.remainingNum) {
-        //   this.moneyTips = '单笔最大限额为' + this.maxCount
-        //   this.numberTips = '最大剩余数量为' + this.remainingNum
-        // } else {
-        //   this.moneyTips = ''
-        //   this.numberTips = ''
-        // }
-      }
     },
-    // 3.0 金额input框键盘弹起事件:计算卖出量/买入量
-    calculateCountValue (ref) {
+    // 4.0 金额input框键盘弹起事件:计算卖出量/买入量
+    calculateCountValue (ref, pointLength) {
       this[ref] = this.$refs[ref].value
-      console.log(this[ref])
+      // console.log(this[ref])
+      // 限制输入数字和位数
+      let target = this.$refs[ref]
+      formatNumberInput(target, pointLength)
       // 计算卖出量/买入量
       if (this.onlineTraderStatus === 'onlineBuy') {
         if (this.$refs.buyPrice.value) {
           this.$refs.buyCount.value = this.$refs.buyPrice.value / this.price
-          // 下面的拿上来
+          this.$refs.buyCount.value = Number(this.$refs.buyCount.value).toFixed(this.pointLength)
+          // 手续费
+          this.serviceCharge = this.$refs.buyCount.value * this.rate
+          this.serviceCharge = Number(this.serviceCharge).toFixed(this.pointLength)
           if (this.$refs.buyPrice.value < this.minCount) {
             this.moneyTips = '单笔最小限额为' + this.minCount
             return false
@@ -508,7 +558,10 @@ export default {
       if (this.onlineTraderStatus === 'onlineSell') {
         if (this.$refs.sellPrice.value) {
           this.$refs.sellCount.value = this.$refs.sellPrice.value / this.price
-          // 下面的拿上来
+          this.$refs.sellCount.value = Number(this.$refs.sellCount.value).toFixed(this.pointLength)
+          // 手续费
+          this.serviceCharge = this.$refs.sellCount.value * this.rate
+          this.serviceCharge = Number(this.serviceCharge).toFixed(this.pointLength)
           if (this.$refs.sellPrice.value < this.minCount) {
             this.moneyTips = '单笔最小限额为' + this.minCount
             return false
@@ -530,43 +583,21 @@ export default {
       // 2.金额>单笔最大限额 金额提示“单笔最大限额为100”,数量提示“最大剩余数量为：剩余数量”
       // 3.输入数量 ：数量 * 价格 < 单笔最小限额 金额提示“单笔最小限额为10”
       // 4.输入数量 ：数量 * 价格 > 单笔最大限额 金额提示“单笔最大限额为100”，数量提示“最大剩余数量为：剩余数量”
-      if (this.onlineTraderStatus === 'onlineBuy') {
-        // if (this.$refs.buyPrice.value < this.minCount) {
-        //   this.moneyTips = '单笔最小限额为' + this.minCount
-        // } else if (this.$refs.buyPrice.value > this.maxCount) {
-        //   this.moneyTips = '单笔最大限额为' + this.maxCount
-        //   this.numberTips = '最大剩余数量为' + this.remainingNum
-        // } else {
-        //   this.moneyTips = ''
-        //   this.numberTips = ''
-        // }
-      }
-      if (this.onlineTraderStatus === 'onlineSell') {
-        // if (this.$refs.sellPrice.value < this.minCount) {
-        //   this.moneyTips = '单笔最小限额为' + this.minCount
-        // } else if (this.$refs.sellPrice.value > this.maxCount) {
-        //   this.moneyTips = '单笔最大限额为' + this.maxCount
-        //   this.numberTips = '最大剩余数量为' + this.remainingNum
-        // } else {
-        //   this.moneyTips = ''
-        //   this.numberTips = ''
-        // }
-      }
+      // 5.输入数量 > 剩余数量 金额提示“单笔最大限额为100”，数量提示“最大剩余数量为：剩余数量”
     },
-    // 2.0 修改input value
-    changeInputValue (ref) {
-      this[ref] = this.$refs[ref].value
-      console.log(this[ref])
-      if (this.onlineTraderStatus === 'onlineBuy') {
-        // 手续费
-        this.serviceCharge = this.$refs.buyCount.value * this.rate
-      }
-      if (this.onlineTraderStatus === 'onlineSell') {
-        // 手续费
-        this.serviceCharge = this.$refs.sellCount.value * this.rate
-      }
-    },
-    // 3.0 查询otc挂单详情-商家和普通用户通用
+    // 5.0 修改input value
+    // changeInputValue (ref) {
+    //   this[ref] = this.$refs[ref].value
+    //   console.log(this[ref])
+    //   // 手续费
+    //   if (this.onlineTraderStatus === 'onlineBuy') {
+    //     this.serviceCharge = this.$refs.buyCount.value * this.rate
+    //   }
+    //   if (this.onlineTraderStatus === 'onlineSell') {
+    //     this.serviceCharge = this.$refs.sellCount.value * this.rate
+    //   }
+    // },
+    // 6.0 查询otc挂单详情-商家和普通用户通用
     async querySelectedOrdersDetails () {
       const data = await querySelectedOrdersDetails({
         entrustId: this.id // 挂单id
@@ -590,6 +621,7 @@ export default {
         this.maxCount = data.data.data.maxCount // 单笔最大限额
         this.minCount = data.data.data.minCount // 单笔最小限额
         this.userType = data.data.data.userType // 挂单人类型（COMMON普通用户 ，MERCHANT商家）
+        this.currencyName = data.data.data.currencyName // 当前摘单的法币币种
       }
     },
     // 4.0 查询用户交易币种手续费率以及币种详情
@@ -604,8 +636,9 @@ export default {
         return false
       } else {
         // 返回数据正确的逻辑:将返回的数据赋值到页面中
-        // this.minCount = data.data.data.minCount // 最小交易量
         this.name = data.data.data.name // 最小交易量币种名字（单位）
+        this.pointLength = data.data.data.unit // 每个币种返回的保留小数点位数限制
+        console.log(this.pointLength)
         if (this.onlineTraderStatus === 'onlineBuy') {
           this.rate = data.data.data.buyRate // 费率
         }
@@ -616,43 +649,59 @@ export default {
     },
     // 5.0 点击 确认购买 按钮提交数据
     async submitPickOrdersToBuy () {
-      console.log('购买')
+      // console.log('购买')
+      if (!this.tradePassword) {
+        this.tradePasswordTips = '请输入交易密码'
+        return false
+      }
       const data = await pickOrdersToBuy({
         entrustId: this.id, // 挂单id
         buyCount: this.buyCount, // 买入数量
         tradePassword: this.tradePassword // 交易密码
       })
-      // console.log('往后台传送的参数共3个')
-      // console.log(this.id)
-      // console.log(this.buyCount)
-      // console.log(this.tradePassword)
-      // console.log(data)
       // 提示信息
       if (!(returnAjaxMessage(data, this, 1))) {
         return false
       } else {
         // 返回数据正确的逻辑
         this.dialogVisible = false
+        this.clearInput(this.onlineTraderStatus)
       }
+    },
+    // 交易密码框获得焦点事件
+    tradePasswordFocus () {
+      this.tradePasswordTips = ''
+    },
+    // 清空数量和金额和交易密码
+    clearInput (val) {
+      if (val === 'onlineBuy') {
+        this.$refs.buyCount.value = ''
+        this.$refs.buyPrice.value = ''
+      }
+      if (val === 'onlineSell') {
+        this.$refs.sellCount.value = ''
+        this.$refs.sellPrice.value = ''
+      }
+      this.tradePassword = ''
     },
     // 6.0 点击 确认出售 按钮提交数据
     async submitPickOrdersToSell () {
-      console.log('出售')
+      // console.log('出售')
+      if (!this.tradePassword) {
+        this.tradePasswordTips = '请输入交易密码'
+        return false
+      }
       const data = await pickOrdersToSell({
         entrustId: this.id, // 挂单id
         sellCount: this.sellCount, // 卖出数量
         tradePassword: this.tradePassword // 交易密码
       })
-      // console.log('往后台传送的参数共3个')
-      // console.log(this.id)
-      // console.log(this.sellCount)
-      // console.log(this.tradePassword)
-      // console.log(data)
       if (!(returnAjaxMessage(data, this, 1))) {
         return false
       } else {
         // 返回数据正确的逻辑
         this.dialogVisible = false
+        this.clearInput(this.onlineTraderStatus)
       }
     }
   },
@@ -766,6 +815,9 @@ export default {
                       >.details-data{
                         color: #fff;
                         font-size: 12px;
+                      }
+                      .xilian{
+                        vertical-align: middle
                       }
                     }
                     >.form{

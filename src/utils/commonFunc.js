@@ -5,7 +5,7 @@ import {
   repealMyEntrustAjax
 } from '../utils/api/trade'
 import {
-  accountPaymentTerm
+  assetCurrenciesList
 } from '../utils/api/personal'
 // import {
 //   sendMsgByPushPhoneOrEmial
@@ -33,6 +33,7 @@ export const returnAjaxMessage = (data, self, noTip) => {
     if (noTip) {
       self.$message({
         type: 'success',
+        duration: 5000000,
         message: self.$t(`M.${meta.i18n_code}`)
       })
     }
@@ -91,11 +92,15 @@ export const repealMyEntrustCommon = async (params, callback) => {
   callback(repealData)
 }
 /**
- * 收款方式状态值刷新
+ * 个人资产信息
+ * 币种
+ * 总数量
+ * 冻结数量
+ * 可用数量 = 总数量 + 冻结数量
  */
-export const statusOfCollectionMode = async (params, callback) => {
-  const statusData = await accountPaymentTerm(params)
-  callback(statusData)
+export const globalPersonalAssetsInformation = async (params, callback) => {
+  const assetData = await assetCurrenciesList(params)
+  callback(assetData)
 }
 // socket 请求类型参数分割
 export const splitSocketParams = (params) => {

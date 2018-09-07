@@ -115,7 +115,7 @@ export default {
       let data
       let param = {
         cardNo: this.paypalAccount, // paypal账号
-        transactionPassword: '', // 交易密码
+        payPassword: this.transactionPassword, // 交易密码
         bankType: 'paypal' // type
       }
       data = await statusCardSettings(param)

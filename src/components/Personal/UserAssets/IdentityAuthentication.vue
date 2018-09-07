@@ -317,10 +317,10 @@ export default {
       },
       regionValue: '', // 国家
       regionList: [
-        {
-          regionId: 1,
-          regionName: '中国'
-        }
+        // {
+        //   regionId: 1,
+        //   regionName: '中国'
+        // }
       ], // 国家地区列表
       documentTypeValue: '身份证', // 证件
       documentTypeList: [
@@ -405,13 +405,13 @@ export default {
     /**
      * 刚进页面时候 国家列表展示
      */
-    // changeId (e) {
-    //   this.currencyList.forEach(item => {
-    //     if (e === item.id) {
-    //       this.getCountryListings(e)
-    //     }
-    //   })
-    // },
+    changeId (e) {
+      this.currencyList.forEach(item => {
+        if (e === item.id) {
+          this.getCountryListings(e)
+        }
+      })
+    },
     async getCountryListings () {
       let data = await queryCountryList()
       console.log(data)

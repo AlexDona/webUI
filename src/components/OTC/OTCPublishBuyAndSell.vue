@@ -77,7 +77,7 @@
                 </div>
                 <!-- 当前可用和市价 -->
                 <div class="want-buy-sell-sum-content">
-                  <span class="want-text">当前可用：</span>
+                  <span class="want-text" v-show="publishStyle === 'sell'">当前可用：</span>
                   <span
                     class="max-sum"
                     v-show="publishStyle === 'sell'"
@@ -85,13 +85,13 @@
                   >
                     {{currentlyAvailable}}{{coinName}}
                   </span>
-                  <span
+                  <!-- <span
                     class="max-sum"
                     v-show="publishStyle === 'buy'"
                     :class="{ buyOrange: publishStyle === 'buy' }"
                   >
                     {{currentlyAvailable}}{{coinName}}
-                  </span>
+                  </span> -->
                   <span class="want-text">市价：</span>
                   <span
                     class="market-price"

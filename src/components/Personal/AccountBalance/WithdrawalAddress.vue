@@ -230,7 +230,7 @@ export default {
         this.gainAddressList = data.data.data.UserWithdrawAddressPage.list
         this.totalPageForMyEntrust = data.data.data.UserWithdrawAddressPage.pages - 0
         console.log(this.currencyList)
-        console.log(this.currencyValue)
+        console.log(this.gainAddressList)
       }
     },
     // 删除提币地址

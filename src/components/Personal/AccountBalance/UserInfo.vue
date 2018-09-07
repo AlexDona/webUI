@@ -14,24 +14,14 @@
           </p>
           <p class="text-align-c margin-top16">
             <span>UID:</span>
-            <span>{{ userInfo.userInfo.id }}</span>
+            <span>{{ userInfo.userInfo.showId }}</span>
           </p>
         </div>
         <div class="info float-left">
           <p class="info-top">
-            <!--已实名-->
-            <span
-              v-if="!userInfo.userInfo.realname"
-              class="real-name info-right display-inline-block text-align-c"
-            >
-              <IconFontCommon
-                class="font-size16 icon-color"
-                iconName="icon-yonghu"
-              />
-            </span>
             <!--未实名-->
             <span
-              v-else
+              v-if="!userInfo.userInfo.realname"
               class="icon-user-info info-right display-inline-block text-align-c"
             >
               <IconFontCommon
@@ -39,7 +29,17 @@
                 iconName="icon-yonghu"
               />
             </span>
-            <!--已绑定邮箱-->
+            <!--已实名-->
+            <span
+              v-else
+              class="real-name info-right display-inline-block text-align-c"
+            >
+              <IconFontCommon
+                class="font-size16 icon-color"
+                iconName="icon-yonghu"
+              />
+            </span>
+            <!--未绑定邮箱-->
             <span
               v-if="!userInfo.userInfo.email"
               class="icon-user-info info-right display-inline-block text-align-c"
@@ -49,17 +49,17 @@
                 iconName="icon-xin-copy"
               />
             </span>
-            <!--未绑定邮箱-->
+            <!--已绑定邮箱-->
             <span
               v-else
-              class="icon-user-info info-right display-inline-block text-align-c"
+              class="real-name info-right display-inline-block text-align-c"
             >
               <IconFontCommon
                 class="font-size16 icon-color"
                 iconName="icon-xin-copy"
               />
             </span>
-            <!--已绑定绑定手机-->
+            <!--未绑定绑定手机-->
             <span
               v-if="!userInfo.userInfo.phone"
               class="icon-user-info info-right display-inline-block text-align-c"
@@ -69,19 +69,19 @@
                 iconName="icon-shouji"
               />
             </span>
-            <!--未绑定绑定手机-->
+            <!--已绑定绑定手机-->
             <span
               v-else
-              class="icon-user-info info-right display-inline-block text-align-c"
+              class="real-name info-right display-inline-block text-align-c"
             >
               <IconFontCommon
                 class="font-size20 icon-color"
                 iconName="icon-shouji"
               />
             </span>
-            <!--已绑定谷歌-->
+            <!--未绑定谷歌-->
             <span
-              v-if="userInfo.userInfo.google !== ''"
+              v-if="!userInfo.userInfo.googleSecretKey"
               class="icon-user-info display-inline-block text-align-c"
             >
               <IconFontCommon
@@ -89,10 +89,10 @@
                 iconName="icon-google"
               />
             </span>
-            <!--未绑定谷歌-->
+            <!--已绑定谷歌-->
             <span
               v-else
-              class="icon-user-info display-inline-block text-align-c"
+              class="real-name display-inline-block text-align-c"
             >
               <IconFontCommon
                 class="font-size16 icon-color"
@@ -124,7 +124,7 @@
           </p>
         </div>
         <div class="asset float-left">
-          <p class="asset-text font-size12">近30天交易量</p>
+          <p class="asset-text font-size12">当前资产总估值</p>
           <p class="asset-info margin-top9">
             <span class="info-color font-size16">{{ BTCAssets }}</span>
             <span class="info-color font-size12">BTC</span>
@@ -170,8 +170,10 @@ export default {
     // 获取全局个人信息
     // this.showStateUserInfo = this.userInfo.data.user
     // console.log(this.userInfo.userInfo)
-    // console.log(this.userInfo.userInfo.phone)
-    // console.log(this.userInfo.userInfo.google)
+    console.log(this.userInfo.userInfo.realname)
+    console.log(this.userInfo.userInfo.email)
+    console.log(this.userInfo.userInfo.phone)
+    console.log(this.userInfo.userInfo.googleAccount)
   },
   mounted () {},
   activited () {},

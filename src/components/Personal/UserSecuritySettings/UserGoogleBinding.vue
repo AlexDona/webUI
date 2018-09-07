@@ -69,14 +69,16 @@
                 <input
                   type="text"
                   class="google-input border-radius2 padding-l15 box-sizing"
-                  @focus="emptyStatus"
                   v-model="googleVerificationCode"
+                  @keydown="setErrorMsg(0, '')"
+                  @blur="checkoutInputFormat(0, googleVerificationCode)"
+                />
+                <ErrorBox
+                  :text="errorShowStatusList"
+                  :isShow="!!errorShowStatusList"
                 />
               </el-form-item>
             </el-form>
-            <div class="prompt-message">
-              <div v-show="errorMsg">{{ errorMsg }}</div>
-            </div>
             <button
               v-if="!globalUserInformation.googleBind"
               class="google-button border-radius4 cursor-pointer"
@@ -103,8 +105,16 @@
 // 头部
 import HeaderCommon from '../../Common/HeaderCommon'
 import IconFontCommon from '../../Common/IconFontCommon'
-import {returnAjaxMessage} from '../../../utils/commonFunc'
-import {bindGoogleAddressPage, bindGoogleAddress, unbindCheckGoogle} from '../../../utils/api/personal'
+import ErrorBox from '../../User/ErrorBox'
+import {
+  returnAjaxMessage,
+  validateNumForUserInput // 用户输入验证
+} from '../../../utils/commonFunc'
+import {
+  bindGoogleAddressPage,
+  bindGoogleAddress,
+  unbindCheckGoogle
+} from '../../../utils/api/personal'
 // 底部
 import FooterCommon from '../../Common/FooterCommon'
 import { createNamespacedHelpers, mapState } from 'vuex'
@@ -112,6 +122,7 @@ const { mapMutations } = createNamespacedHelpers('personal')
 export default {
   components: {
     HeaderCommon, // 头部
+    ErrorBox,
     // 二维码组件
     VueQrcode: resolve => {
       require([('@xkeshi/vue-qrcode')], resolve)
@@ -129,7 +140,8 @@ export default {
       googleTheSecretUrl: '', // 二维码
       googleVerificationCode: '', // 谷歌验证码
       googleUserInformation: {}, // 谷歌验证信息
-      successCountDown: 1 // 成功倒计时
+      successCountDown: 1, // 成功倒计时
+      errorShowStatusList: ''
     }
   },
   created () {
@@ -157,9 +169,22 @@ export default {
       this.CHANGE_USER_CENTER_ACTIVE_NAME('security-center')
       this.$router.go(-1)
     },
-    // 清空内容信息
-    emptyStatus () {
-      this.errorMsg = ''
+    // 检测输入格式
+    checkoutInputFormat (type, targetNum) {
+      switch (validateNumForUserInput('google', targetNum)) {
+        case 0:
+          this.setErrorMsg(0, '')
+          this.$forceUpdate()
+          return 1
+        case 1:
+          this.setErrorMsg(0, '请输入谷歌验证码')
+          this.$forceUpdate()
+          return 0
+      }
+    },
+    // 设置错误信息
+    setErrorMsg (index, msg) {
+      this.errorShowStatusList = msg
     },
     /**
     * 获取谷歌验证码
@@ -181,15 +206,12 @@ export default {
     },
     // 确定提交绑定谷歌验证
     getGoogleStatusSubmit () {
-      // if (!this.emailAccounts) {
-      //   this.errorMsg = '邮箱账号不能为空'
-      // } else if (!this.emailCode) {
-      //   this.errorMsg = '验证码不能为空'
-      // } else {
-      //   this.errorMsg = ''
-      // }
+      if (!this.googleVerificationCode) {
+        this.errorMsg = '请输入谷歌验证码'
+      } else {
+        this.errorMsg = ''
+      }
       this.confirmBindingBailPhone()
-      console.log(1)
     },
     // 确定绑定谷歌验证接口
     async confirmBindingBailPhone () {
@@ -209,6 +231,11 @@ export default {
     },
     // 确定解绑谷歌验证
     getGoogleStatusSubmitUnbind () {
+      if (!this.googleVerificationCode) {
+        this.errorMsg = '请输入谷歌验证码'
+      } else {
+        this.errorMsg = ''
+      }
       this.confirmBindingUnbind()
     },
     async confirmBindingUnbind () {
@@ -296,7 +323,7 @@ export default {
             }
             .prompt-message {
               height: 20px;
-              padding-left: 35px;
+              padding-left: 25px;
             }
           }
         }
@@ -341,6 +368,9 @@ export default {
               .google-button {
                 background:linear-gradient(0deg,rgba(43,57,110,1),rgba(42,80,130,1));
                 color: #fff;
+              }
+              .prompt-message {
+                color: red;
               }
             }
           }

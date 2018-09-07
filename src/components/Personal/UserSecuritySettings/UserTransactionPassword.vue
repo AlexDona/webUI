@@ -44,34 +44,49 @@
               <input
                 type="text"
                 class="transaction-input border-radius2 padding-l15 box-sizing"
-                @focus="emptyStatus"
                 v-model="setPassword.nickname"
+                @keydown="setErrorMsg(0,'')"
+                @blur="checkoutInputFormat(0, setPassword.nickname)"
+              />
+              <!--错误提示-->
+              <ErrorBox
+                :text="errorShowStatusList[0]"
+                :isShow="!!errorShowStatusList[0]"
               />
             </el-form-item>
             <el-form-item label="交易密码：">
               <input
                 type="password"
                 class="transaction-input border-radius2 padding-l15 box-sizing"
-                @focus="emptyStatus"
                 v-model="setPassword.newPassword"
+                @keydown="setErrorMsg(1,'')"
+                @blur="checkoutInputFormat(1, setPassword.newPassword)"
+              />
+              <!--错误提示-->
+              <ErrorBox
+                :text="errorShowStatusList[1]"
+                :isShow="!!errorShowStatusList[1]"
               />
             </el-form-item>
             <el-form-item label="重复交易密码：">
               <input
                 type="password"
                 class="transaction-input border-radius2 padding-l15 box-sizing"
-                @focus="emptyStatus"
                 v-model="setPassword.confirmPassword"
+                @keydown="setErrorMsg(2,'')"
+                @blur="checkoutInputFormat(2, setPassword.confirmPassword)"
+              />
+              <!--错误提示-->
+              <ErrorBox
+                :text="errorShowStatusList[2]"
+                :isShow="!!errorShowStatusList[2]"
               />
             </el-form-item>
-            <div class="prompt-message">
-              <div v-show="errorMsg">{{ errorMsg }}</div>
-            </div>
             <button
               class="transaction-button border-radius4 cursor-pointer"
               @click="setStatusSubmit"
             >
-              确认绑定
+              确认设置
             </button>
           </el-form>
           <!--重置交易密码-->
@@ -84,16 +99,28 @@
               <input
                 type="password"
                 class="transaction-input border-radius2 padding-l15 box-sizing"
-                @focus="emptyStatus"
                 v-model="modifyPassword.transactionPassword"
+                @keydown="tieErrorMsg(0,'')"
+                @blur="tieCheckoutInputFormat(0, modifyPassword.transactionPassword)"
+              />
+              <!--错误提示-->
+              <ErrorBox
+                :text="tieErrorShowStatusList[0]"
+                :isShow="!!tieErrorShowStatusList[0]"
               />
             </el-form-item>
             <el-form-item label="重置交易密码：">
               <input
                 type="password"
                 class="transaction-input border-radius2 padding-l15 box-sizing"
-                @focus="emptyStatus"
                 v-model="modifyPassword.resetTransactionPassword"
+                @keydown="tieErrorMsg(1,'')"
+                @blur="tieCheckoutInputFormat(1, modifyPassword.resetTransactionPassword)"
+              />
+              <!--错误提示-->
+              <ErrorBox
+                :text="tieErrorShowStatusList[1]"
+                :isShow="!!tieErrorShowStatusList[1]"
               />
             </el-form-item>
             <el-form-item
@@ -102,8 +129,9 @@
             >
               <el-input
                 type="text"
-                @focus="emptyStatus"
                 v-model="modifyPassword.phoneCode"
+                @keydown="tieErrorMsg(2,'')"
+                @blur="tieCheckoutInputFormat(2, modifyPassword.phoneCode)"
               >
                 <template slot="append">
                   <CountDownButton
@@ -113,6 +141,11 @@
                   />
                 </template>
               </el-input>
+              <!--错误提示-->
+              <ErrorBox
+                :text="tieErrorShowStatusList[2]"
+                :isShow="!!tieErrorShowStatusList[2]"
+              />
             </el-form-item>
             <span v-else></span>
             <el-form-item
@@ -120,8 +153,9 @@
               label="邮箱验证码"
             >
               <el-input
-                @focus="emptyStatus"
                 v-model="modifyPassword.emailCode"
+                @keydown="tieErrorMsg(3,'')"
+                @blur="tieCheckoutInputFormat(3, modifyPassword.emailCode)"
               >
                 <template slot="append">
                   <CountDownButton
@@ -131,6 +165,11 @@
                   />
                 </template>
               </el-input>
+              <!--错误提示-->
+              <ErrorBox
+                :text="tieErrorShowStatusList[3]"
+                :isShow="!!tieErrorShowStatusList[3]"
+              />
             </el-form-item>
             <span v-else></span>
             <el-form-item
@@ -140,14 +179,17 @@
               <input
                 type="text"
                 class="transaction-input border-radius2 padding-l15 box-sizing"
-                @focus="emptyStatus"
                 v-model="modifyPassword.googleCode"
+                @keydown="tieErrorMsg(4,'')"
+                @blur="tieCheckoutInputFormat(4, modifyPassword.googleCode)"
+              />
+              <!--错误提示-->
+              <ErrorBox
+                :text="tieErrorShowStatusList[4]"
+                :isShow="!!tieErrorShowStatusList[4]"
               />
             </el-form-item>
             <span v-else></span>
-            <div class="prompt-message">
-              <div v-show="errorMsg">{{ errorMsg }}</div>
-            </div>
             <button
               class="transaction-button border-radius4 cursor-pointer"
               @click="getUpdatePayPassword"
@@ -167,7 +209,11 @@
 import HeaderCommon from '../../Common/HeaderCommon'
 import IconFontCommon from '../../Common/IconFontCommon'
 import CountDownButton from '../../Common/CountDownCommon'
-import {returnAjaxMessage, sendPhoneOrEmailCodeAjax} from '../../../utils/commonFunc'
+import ErrorBox from '../../User/ErrorBox'
+import {
+  returnAjaxMessage, // 接口返回信息
+  sendPhoneOrEmailCodeAjax
+} from '../../../utils/commonFunc'
 import {
   setTransactionPassword,
   resetUpdatePayPassword,
@@ -182,6 +228,7 @@ export default {
   components: {
     HeaderCommon, // 头部
     IconFontCommon, // 字体图标
+    ErrorBox, // 错误提示信息
     CountDownButton, // 短信倒计时
     FooterCommon // 底部
   },
@@ -194,6 +241,10 @@ export default {
         newPassword: '', // 设置新交易密码
         confirmPassword: '' // 确认交易密码.
       },
+      errorShowStatusList: [
+        '', // 交易密码
+        '' // 重复交易密码
+      ],
       SecurityCenter: {},
       // 修改交易密码
       modifyPassword: {
@@ -203,6 +254,13 @@ export default {
         emailCode: '', // 修改 邮箱验证码
         googleCode: '' // 修改 谷歌验证码
       },
+      tieErrorShowStatusList: [
+        '', // 交易密码
+        '', // 重置交易密码
+        '', // 短信验证码
+        '', // 邮箱验证码
+        '' // 谷歌验证码
+      ],
       successCountDown: 1 // 成功倒计时
     }
   },
@@ -226,16 +284,6 @@ export default {
     returnSuperior () {
       this.CHANGE_USER_CENTER_ACTIVE_NAME('security-center')
       this.$router.go(-1)
-    },
-    // 清空内容信息
-    emptyStatus () {
-      this.errorMsg = ''
-    },
-    // 修改input value
-    changeInputValue (ref) {
-      // console.dir(this.$refs[ref])
-      this[ref] = this.$refs[ref].value
-      // console.log(this[ref])
     },
     /**
      * 发送短信验证码或邮箱验证码
@@ -281,50 +329,169 @@ export default {
         }
       })
     },
+    // 确定设置检测输入格式
+    checkoutInputFormat (type, targetNum) {
+      switch (type) {
+        // 交易密码
+        case 0:
+          if (!targetNum) {
+            this.setErrorMsg(0, '请输入交易密码')
+            this.$forceUpdate()
+            return 0
+          } else {
+            this.setErrorMsg(0, '')
+            this.$forceUpdate()
+            return 1
+          }
+        // 重复交易密码
+        case 1:
+          if (!targetNum) {
+            this.setErrorMsg(1, '请输入确认交易密码')
+            this.$forceUpdate()
+            return 0
+          } else if (targetNum === this.setPassword.newPassword) {
+            this.setErrorMsg(1, '')
+            this.$forceUpdate()
+            return 1
+          } else {
+            this.setErrorMsg(1, '密码不一致，请重新确认')
+            this.$forceUpdate()
+            return 0
+          }
+      }
+    },
+    // 确定设置设置错误信息
+    setErrorMsg (index, msg) {
+      this.errorShowStatusList[index] = msg
+    },
     // 确定设置交易密码
     setStatusSubmit () {
-      // if (!this.emailAccounts) {
-      //   this.errorMsg = '邮箱账号不能为空'
-      // } else if (!this.emailCode) {
-      //   this.errorMsg = '验证码不能为空'
-      // } else {
-      //   this.errorMsg = ''
-      // }
+      this.checkoutInputFormat()
       this.confirmTransactionPassword()
     },
     // 确定设置接口处理
     async confirmTransactionPassword () {
-      let data
-      let param = {
-        nickName: this.setPassword.nickname, // 昵称
-        payPassword: this.setPassword.newPassword // 交易密码
-      }
-      data = await setTransactionPassword(param)
-      if (!(returnAjaxMessage(data, this, 1))) {
-        return false
+      let goOnStatus = 0
+      if (
+        this.checkoutInputFormat(0, this.setPassword.newPassword) &&
+        this.checkoutInputFormat(1, this.setPassword.confirmPassword)
+      ) {
+        goOnStatus = 1
       } else {
-        this.successJump()
-        console.log(data)
-        // this.statusSecurityCenter()
+        goOnStatus = 0
       }
+      if (goOnStatus) {
+        let data
+        let param = {
+          nickName: this.setPassword.nickname, // 昵称
+          payPassword: this.setPassword.newPassword // 交易密码
+        }
+        data = await setTransactionPassword(param)
+        if (!(returnAjaxMessage(data, this, 1))) {
+          return false
+        } else {
+          this.successJump()
+          console.log(data)
+        }
+      }
+    },
+    // 确定重置检测输入格式
+    tieCheckoutInputFormat (type, targetNum) {
+      switch (type) {
+        // 交易密码
+        case 0:
+          if (!targetNum) {
+            this.tieErrorMsg(0, '请输入交易密码')
+            this.$forceUpdate()
+            return 0
+          } else {
+            this.tieErrorMsg(0, '')
+            this.$forceUpdate()
+            return 1
+          }
+        // 重置交易密码
+        case 1:
+          if (!targetNum) {
+            this.tieErrorMsg(1, '请输入确认交易密码')
+            this.$forceUpdate()
+            return 0
+          } else if (targetNum === this.modifyPassword.transactionPassword) {
+            this.tieErrorMsg(1, '')
+            this.$forceUpdate()
+            return 1
+          } else {
+            this.tieErrorMsg(1, '密码不一致，请重新确认')
+            this.$forceUpdate()
+            return 0
+          }
+        // 短信验证码
+        case 2:
+          if (!targetNum) {
+            this.tieErrorMsg(2, '请输入短信验证码')
+            this.$forceUpdate()
+            return 0
+          } else {
+            this.tieErrorMsg(2, '')
+            this.$forceUpdate()
+            return 1
+          }
+        // 邮箱验证码
+        case 3:
+          if (!targetNum) {
+            this.tieErrorMsg(3, '请输入邮箱验证码')
+            this.$forceUpdate()
+            return 0
+          } else {
+            this.tieErrorMsg(3, '')
+            this.$forceUpdate()
+            return 1
+          }
+        // 谷歌验证码
+        case 4:
+          if (!targetNum) {
+            this.tieErrorMsg(4, '请输入谷歌验证码')
+            this.$forceUpdate()
+            return 0
+          } else {
+            this.tieErrorMsg(4, '')
+            this.$forceUpdate()
+            return 1
+          }
+      }
+    },
+    // 确定重置设置错误信息
+    tieErrorMsg (index, msg) {
+      this.tieErrorShowStatusList[index] = msg
     },
     // 确定重置交易密码
     getUpdatePayPassword () {
+      this.tieCheckoutInputFormat()
       this.confirmUpdate()
       this.confirmVerifyInformation()
     },
     // 确定重置接口处理
     async confirmUpdate () {
-      let data
-      let param = {
-        payPassword: this.modifyPassword.resetTransactionPassword // 重置交易密码
-      }
-      data = await resetUpdatePayPassword(param)
-      if (!(returnAjaxMessage(data, this, 1))) {
-        return false
+      let goOnStatus = 0
+      if (
+        this.checkoutInputFormat(0, this.modifyPassword.transactionPassword) &&
+        this.checkoutInputFormat(1, this.modifyPassword.resetTransactionPassword)
+      ) {
+        goOnStatus = 1
       } else {
-        this.successJump()
-        console.log(data)
+        goOnStatus = 0
+      }
+      if (goOnStatus) {
+        let data
+        let param = {
+          payPassword: this.modifyPassword.resetTransactionPassword // 重置交易密码
+        }
+        data = await resetUpdatePayPassword(param)
+        if (!(returnAjaxMessage(data, this, 1))) {
+          return false
+        } else {
+          this.successJump()
+          console.log(data)
+        }
       }
     },
     // 手机邮箱谷歌验证

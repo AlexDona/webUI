@@ -14,7 +14,7 @@
         class="header-content display-inline-block font-size16 cursor-pointer"
         @click="clickTableCut(2)"
       >
-        其他地址
+        其他记录
       </span>
     </header>
     <div class="billing-details-main paddinglr20">
@@ -34,6 +34,7 @@
             </el-option>
           </el-select>
         </div>
+        <!--充提记录-->
         <div class="float-left margin-left50 cursor-pointer">
           <span class="demonstration">类型</span>
           <el-select
@@ -41,6 +42,21 @@
           >
             <el-option
               v-for="item in currencyType"
+              :key="item.value"
+              :label="item.label"
+              :value="item.value"
+            >
+            </el-option>
+          </el-select>
+        </div>
+        <!--其他记录-->
+        <div class="float-left margin-left50 cursor-pointer">
+          <span class="demonstration">类型</span>
+          <el-select
+            v-model="otherRecordsValue"
+          >
+            <el-option
+              v-for="item in otherRecordsType"
               :key="item.value"
               :label="item.label"
               :value="item.value"
@@ -149,8 +165,14 @@
           empty-text="暂无数据"
         >
           <el-table-column
+            label="时间"
+          >
+            <template slot-scope = "s">
+              <div>{{ s.row.time }}</div>
+            </template>
+          </el-table-column>
+          <el-table-column
             label="币种"
-            width="100"
           >
             <template slot-scope = "s">
               <div>{{ s.row.coinName }}</div>
@@ -158,7 +180,6 @@
           </el-table-column>
           <el-table-column
             label="类型"
-            width="100"
           >
             <template slot-scope = "s">
               <div>{{ s.row.type }}</div>
@@ -169,21 +190,6 @@
           >
             <template slot-scope = "s">
               <div>{{ s.row.amount }}</div>
-            </template>
-          </el-table-column>
-          <el-table-column
-            label="提交时间"
-          >
-            <template slot-scope = "s">
-              <div>{{ s.row.createTime }}</div>
-            </template>
-          </el-table-column>
-          <el-table-column
-            prop="address"
-            label="更新时间"
-          >
-            <template slot-scope = "s">
-              <div>{{ s.row.updateTime }}</div>
             </template>
           </el-table-column>
           <el-table-column
@@ -213,67 +219,18 @@ export default {
   data () {
     return {
       // 充提记录
+      showStatusRecordList: true, // 充提记录
       chargeRecordList: [],
       activeName: 'current-entrust',
       currentPageForMyEntrust: 1, // 当前委托页码
       totalPageForMyEntrust: 1, // 当前委托总页数
       startTime: '', // 开始起止时间
       endTime: '', // 结束起止时间
-      // 其他记录
-      otherRecordsList: [
-        {
-          currency: 'BTC',
-          type: '全部',
-          quantity: '12312',
-          submitTime: '2016-05-02 10:30:30',
-          updateTime: '2016-05-02 11:30:30',
-          state: '已完成'
-        }, {
-          currency: 'BTC',
-          type: '全部',
-          quantity: '12312',
-          submitTime: '2016-05-02 10:30:30',
-          updateTime: '2016-05-02 11:30:30',
-          state: '已完成'
-        }, {
-          currency: 'BTC',
-          type: '全部',
-          quantity: '12312',
-          submitTime: '2016-05-02 10:30:30',
-          updateTime: '2016-05-02 11:30:30',
-          state: '已完成'
-        }, {
-          currency: 'BTC',
-          type: '全部',
-          quantity: '12312',
-          submitTime: '2016-05-02 10:30:30',
-          updateTime: '2016-05-02 11:30:30',
-          state: '已完成'
-        }
-      ],
-      showStatusRecordList: true, // 充提记录
-      hiddenStatusRecordList: false, // 其他记录
-      currencyListValue: '', // 币种名称
-      currencyList: [
-        // {
-        //   value: '1',
-        //   label: '全部'
-        // }, {
-        //   value: '2',
-        //   label: 'EHT'
-        // }, {
-        //   value: '3',
-        //   label: 'EHT'
-        // }, {
-        //   value: '4',
-        //   label: 'FUC'
-        // }, {
-        //   value: '5',
-        //   label: 'HT'
-        // }
-      ],
       // 币种名称
-      currencyTypeValue: '',
+      currencyListValue: '', // 默认币种
+      currencyList: [], // 币种列表
+      // 充提记录类型
+      currencyTypeValue: '', // 默认类型
       currencyType: [
         {
           value: '1',
@@ -285,7 +242,57 @@ export default {
           value: 'WITHDRAW',
           label: '提币'
         }
-      ]
+      ], // 默认类型
+      // 其他记录
+      otherRecordsList: [
+        {
+          time: '2016-05-02 10:30:30',
+          coinName: 'BTC',
+          type: '全部',
+          amount: '12312',
+          status: '已完成'
+        }, {
+          time: '2016-05-02 10:30:30',
+          coinName: 'BTC',
+          type: '全部',
+          amount: '12312',
+          status: '已完成'
+        }, {
+          time: '2016-05-02 10:30:30',
+          coinName: 'BTC',
+          type: '全部',
+          amount: '12312',
+          status: '已完成'
+        }, {
+          time: '2016-05-02 10:30:30',
+          coinName: 'BTC',
+          type: '全部',
+          amount: '12312',
+          status: '已完成'
+        }
+      ],
+      hiddenStatusRecordList: false, // 其他记录
+      // 其他记录类型
+      otherRecordsValue: '',
+      otherRecordsType: [
+        {
+          value: '1',
+          label: '全部'
+        }, {
+          value: '2',
+          label: '活动奖励'
+        }, {
+          value: '3',
+          label: '糖果奖励'
+        }, {
+          value: '4',
+          label: '系统赠送'
+        }, {
+          value: '5',
+          label: '邀请奖励'
+        }
+      ],
+      otherRecordTypes: false
     }
   },
   created () {

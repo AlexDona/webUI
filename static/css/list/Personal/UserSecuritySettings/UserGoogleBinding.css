@@ -1,0 +1,4 @@
+/* 覆盖Element样式*/
+.binding-google .el-form-item__content {
+  width: 600px;
+}

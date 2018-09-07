@@ -80,9 +80,9 @@ export const timeFilter = (date, methods) => {
 }
 // 交易中订单倒计时国际标准时分秒 (09ˋ40′32″)
 export const formatSeconds = (date) => {
-  var secondTime = parseInt(date / 1000)// 秒
-  var minuteTime = 0 // 分
-  var hourTime = 0 // 小时
+  let secondTime = parseInt(date / 1000)// 秒
+  let minuteTime = 0 // 分
+  let hourTime = 0 // 小时
   if (secondTime > 60) { // 如果秒数大于60，将秒数转换成整数
     // 获取分钟，除以60取整数，得到整数分钟
     minuteTime = parseInt(secondTime / 60)
@@ -96,7 +96,7 @@ export const formatSeconds = (date) => {
       minuteTime = parseInt(minuteTime % 60)
     }
   }
-  var result = '' + parseInt(secondTime) + '″'
+  let result = '' + parseInt(secondTime) + '″'
   if (minuteTime > 0) {
     result = '' + parseInt(minuteTime) + '′' + result
   }
@@ -125,6 +125,7 @@ export function formatNumberInput (event, targetPointLength) {
   let finalVal = ''
   let count1 = 0
   // pointLength为小数点后几位
+  console.log(val)
   let count = (val.match(/\./g) || []).length// 小数点个数
   // 只允许输入一个小数点
   if (count > 0) {

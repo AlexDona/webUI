@@ -114,7 +114,7 @@
     line-height: 110px;
 }
 .otc-box .el-tabs__content{
-    min-height: 1000px;
+    /* min-height: 1000px; */
 }
 .otc-box .el-tabs__nav-wrap,.el-tabs__nav-scroll{
     overflow: visible;

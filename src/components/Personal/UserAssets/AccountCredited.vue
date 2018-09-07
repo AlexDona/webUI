@@ -34,13 +34,13 @@
               <img
                 v-if="paymentTerm.isBnakEnable === 'disable'"
                 @click="statusOpenToClose('bank', 'enable')"
-                class="switch-img"
+                class="switch-img cursor-pointer"
                 :src="closePictureSrc"
               >
               <img
                 v-else
                 @click="statusOpenToClose('bank', 'disable')"
-                class="switch-img"
+                class="switch-img cursor-pointer"
                 :src="openPictureSrc"
               >
               <router-link  to="/AddBankCard">
@@ -65,13 +65,13 @@
               <img
                 v-if="paymentTerm.isWeixinEnable === 'disable'"
                 @click="statusOpenToClose('chat', 'enable')"
-                class="switch-img"
+                class="switch-img cursor-pointer"
                 :src="closePictureSrc"
               >
               <img
                 v-else
                 @click="statusOpenToClose('chat', 'disable')"
-                class="switch-img"
+                class="switch-img cursor-pointer"
                 :src="openPictureSrc"
               >
               <router-link to="/AddWeChat">
@@ -96,13 +96,13 @@
               <img
                 v-if="paymentTerm.isAlipayEnable === 'disable'"
                 @click="statusOpenToClose('alipay', 'enable')"
-                class="switch-img"
+                class="switch-img cursor-pointer"
                 :src="closePictureSrc"
               >
               <img
                 v-else
                 @click="statusOpenToClose('alipay', 'disable')"
-                class="switch-img"
+                class="switch-img cursor-pointer"
                 :src="openPictureSrc"
               >
               <router-link to="/AddSetAlipay">
@@ -127,13 +127,13 @@
               <img
                 v-if="paymentTerm.isPaypalEnable === 'disable'"
                 @click="statusOpenToClose('paypal', 'enable')"
-                class="switch-img"
+                class="switch-img cursor-pointer"
                 :src="closePictureSrc"
               >
               <img
                 v-else
                 @click="statusOpenToClose('paypal', 'disable')"
-                class="switch-img"
+                class="switch-img cursor-pointer"
                 :src="openPictureSrc"
               >
               <router-link class="setting-btn" to="/AddSetPaypal">
@@ -155,13 +155,13 @@
               <img
                 v-if="paymentTerm.isXilianEnable === 'disable'"
                 @click="statusOpenToClose('western', 'enable')"
-                class="switch-img"
+                class="switch-img cursor-pointer"
                 :src="closePictureSrc"
               >
               <img
                 v-else
                 @click="statusOpenToClose('western', 'disable')"
-                class="switch-img"
+                class="switch-img cursor-pointer"
                 :src="openPictureSrc"
               >
               <router-link class="setting-btn" to="/AddWesternUnion">
@@ -332,16 +332,15 @@ export default {
       }
     },
     // 确认开启关闭
-    statusOpenToClose (e, a) {
+    statusOpenToClose (paymentType, safeState) {
       // 把方法中定义的activeType、state在这里进行赋值 点击哪一个那当前的类型和状态传给后台
-      this.activeType = e
-      this.state = a
-      // console.log(this.activeType)
-      // console.log(this.state)
-      switch (e) {
+      this.activeType = paymentType
+      this.state = safeState
+      switch (paymentType) {
         case 'bank':
+          console.log(paymentType)
           if (!this.paymentTerm.isBankBind) {
-            if (a === 'enable') {
+            if (safeState === 'enable') {
               this.openCollectionMode = true
               this.closeBankCard = true
               this.closeMicroLetter = false
@@ -349,20 +348,12 @@ export default {
               this.closePayapl = false
               this.closeWesternUnion = false
             } else {
-              if (this.paymentTerm.isBankBind &&
-                !this.paymentTerm.isWeixinBind &&
-                !this.paymentTerm.isAlipayBind &&
-                !this.paymentTerm.isPaypalBind &&
-                !this.paymentTerm.isXilianBind) {
-                this.closeCollectionMode = true
-                this.closeBankCard = true
-                this.closeMicroLetter = false
-                this.closeAlipay = false
-                this.closePayapl = false
-                this.closeWesternUnion = false
-              } else {
-                this.closeCollectionMode = false
-              }
+              this.closeCollectionMode = true
+              this.closeBankCard = true
+              this.closeMicroLetter = false
+              this.closeAlipay = false
+              this.closePayapl = false
+              this.closeWesternUnion = false
             }
           } else {
             this.openCollectionMode = false
@@ -370,7 +361,7 @@ export default {
           break
         case 'chat':
           if (!this.paymentTerm.isWeixinBind) {
-            if (a === 'enable') {
+            if (safeState === 'enable') {
               this.openCollectionMode = true
               this.closeBankCard = false
               this.closeMicroLetter = true
@@ -378,20 +369,12 @@ export default {
               this.closePayapl = false
               this.closeWesternUnion = false
             } else {
-              if (!this.paymentTerm.isBankBind &&
-                this.paymentTerm.isWeixinBind &&
-                !this.paymentTerm.isAlipayBind &&
-                !this.paymentTerm.isPaypalBind &&
-                !this.paymentTerm.isXilianBind) {
-                this.closeCollectionMode = true
-                this.closeBankCard = false
-                this.closeMicroLetter = true
-                this.closeAlipay = false
-                this.closePayapl = false
-                this.closeWesternUnion = false
-              } else {
-                this.closeCollectionMode = false
-              }
+              this.closeCollectionMode = true
+              this.closeBankCard = false
+              this.closeMicroLetter = true
+              this.closeAlipay = false
+              this.closePayapl = false
+              this.closeWesternUnion = false
             }
           } else {
             this.openCollectionMode = false
@@ -399,7 +382,7 @@ export default {
           break
         case 'alipay':
           if (!this.paymentTerm.isAlipayBind) {
-            if (a === 'enable') {
+            if (safeState === 'enable') {
               this.openCollectionMode = true
               this.closeBankCard = false
               this.closeMicroLetter = false
@@ -407,20 +390,12 @@ export default {
               this.closePayapl = false
               this.closeWesternUnion = false
             } else {
-              if (!this.paymentTerm.isBankBind &&
-                !this.paymentTerm.isWeixinBind &&
-                this.paymentTerm.isAlipayBind &&
-                !this.paymentTerm.isPaypalBind &&
-                !this.paymentTerm.isXilianBind) {
-                this.closeCollectionMode = true
-                this.closeBankCard = false
-                this.closeMicroLetter = false
-                this.closeAlipay = true
-                this.closePayapl = false
-                this.closeWesternUnion = false
-              } else {
-                this.closeCollectionMode = false
-              }
+              this.closeCollectionMode = true
+              this.closeBankCard = false
+              this.closeMicroLetter = false
+              this.closeAlipay = true
+              this.closePayapl = false
+              this.closeWesternUnion = false
             }
           } else {
             this.openCollectionMode = false
@@ -428,7 +403,7 @@ export default {
           break
         case 'paypal':
           if (!this.paymentTerm.isPaypalBind) {
-            if (a === 'enable') {
+            if (safeState === 'enable') {
               this.openCollectionMode = true
               this.closeBankCard = false
               this.closeMicroLetter = false
@@ -436,20 +411,12 @@ export default {
               this.closePayapl = true
               this.closeWesternUnion = false
             } else {
-              if (!this.paymentTerm.isBankBind &&
-                !this.paymentTerm.isWeixinBind &&
-                !this.paymentTerm.isAlipayBind &&
-                this.paymentTerm.isPaypalBind &&
-                !this.paymentTerm.isXilianBind) {
-                this.closeCollectionMode = true
-                this.closeBankCard = false
-                this.closeMicroLetter = false
-                this.closeAlipay = false
-                this.closePayapl = true
-                this.closeWesternUnion = false
-              } else {
-                this.closeCollectionMode = false
-              }
+              this.closeCollectionMode = true
+              this.closeBankCard = false
+              this.closeMicroLetter = false
+              this.closeAlipay = false
+              this.closePayapl = true
+              this.closeWesternUnion = false
             }
           } else {
             this.openCollectionMode = false
@@ -457,7 +424,7 @@ export default {
           break
         case 'western':
           if (!this.paymentTerm.isXilianBind) {
-            if (a === 'enable') {
+            if (safeState === 'enable') {
               this.openCollectionMode = true
               this.closeBankCard = false
               this.closeMicroLetter = false
@@ -465,20 +432,12 @@ export default {
               this.closePayapl = false
               this.closeWesternUnion = true
             } else {
-              if (!this.paymentTerm.isBankBind &&
-                !this.paymentTerm.isWeixinBind &&
-                !this.paymentTerm.isAlipayBind &&
-                !this.paymentTerm.isPaypalBind &&
-                this.paymentTerm.isXilianBind) {
-                this.closeCollectionMode = true
-                this.closeBankCard = false
-                this.closeMicroLetter = false
-                this.closeAlipay = false
-                this.closePayapl = false
-                this.closeWesternUnion = true
-              } else {
-                this.closeCollectionMode = false
-              }
+              this.closeCollectionMode = true
+              this.closeBankCard = false
+              this.closeMicroLetter = false
+              this.closeAlipay = false
+              this.closePayapl = false
+              this.closeWesternUnion = true
             }
           } else {
             this.openCollectionMode = false

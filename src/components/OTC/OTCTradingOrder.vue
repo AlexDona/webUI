@@ -145,7 +145,7 @@
                     <span>{{activePayModeList[index]}}</span>
                   </p>
                 </div>
-                <!-- 扫码支付 -->
+                <!-- 扫码支付 activeBankCode[index]  :src="item.coinUrl"-->
                 <div class="bank-info-picture display-inline-block" v-if="activeBankType[index] === 'wx' || activeBankType[index] === 'alipay'">
                   <div class="picture-box">
                     <el-popover
@@ -155,8 +155,9 @@
                       <img
                         width="140"
                         height="200"
-                        src="../../assets/develop/weixin.png"
+                        :src="activeBankCode[index]"
                       >
+                      <!-- src="../../assets/develop/weixin.png" -->
                       <el-button slot="reference">扫码支付</el-button>
                     </el-popover>
                   </div>
@@ -221,7 +222,7 @@
                       <span>{{item.payAcctount}}</span>
                   </p>
                 </div>
-                <!-- 扫码支付 -->
+                <!-- 扫码支付 qrCodeUrl  :src="item.coinUrl"-->
                 <div class="bank-info-picture display-inline-block" v-if="item.payType === 'alipay' || item.payType === 'wx'">
                   <div class="picture-box">
                     <el-popover
@@ -231,8 +232,9 @@
                       <img
                         width="140"
                         height="200"
-                        src="../../assets/develop/weixin.png"
+                        :src="item.qrCodeUrl"
                       >
+                      <!-- src="../../assets/develop/weixin.png" -->
                       <el-button slot="reference">扫码支付</el-button>
                     </el-popover>
                   </div>
@@ -360,22 +362,6 @@
                     订单生成后{{item.cancelTerm/60}}分钟内对方未提交付款，订单将自动取消
                   </p>
                 </div>
-                <!-- 扫码支付 -->
-                <!-- <div class="bank-info-picture display-inline-block">
-                  <div class="picture-box">
-                    <el-popover
-                      placement="bottom"
-                      trigger="click"
-                    >
-                      <img
-                        width="140"
-                        height="200"
-                        src="../../assets/develop/weixin.png"
-                      >
-                      <el-button slot="reference">扫码支付</el-button>
-                    </el-popover>
-                  </div>
-                </div> -->
               </div>
               <!-- 付款后 -->
               <div class="middle-content"
@@ -439,22 +425,6 @@
                     <span>{{item.payAcctount}}</span>
                   </p>
                 </div>
-                <!-- 扫码支付 -->
-                <!-- <div class="bank-info-picture display-inline-block">
-                  <div class="picture-box">
-                    <el-popover
-                      placement="bottom"
-                      trigger="click"
-                    >
-                      <img
-                        width="140"
-                        height="200"
-                        src="../../assets/develop/weixin.png"
-                      >
-                      <el-button slot="reference">扫码支付</el-button>
-                    </el-popover>
-                  </div>
-                </div> -->
               </div>
             </div>
             <!-- 2.2.3 表右部 -->
@@ -529,6 +499,7 @@
                 <span class="appeal-reason">*申诉原因</span>
                 <el-input
                   type="textarea"
+                  maxlength="20"
                   v-model="appealTextareaValue"
                 >
                 </el-input>
@@ -685,7 +656,7 @@ export default {
       activeBankName: [], // 当前选中支付银行名字
       activeBankDetailAddress: [], // 当前选中支付银行具体地址
       activeBankType: [], // 当前选中支付方式类型（银行卡、支付宝等）
-      activeBankCode: [], // 支付码
+      activeBankCode: [], // 选中的支付宝和尾微信的支付码
       tradePassword: '', // 交易密码
       buttonStatusArr: [], // 确认付款按钮是否可用状态集
       showOrderAppeal: [], // 订单申诉框显示与隐藏状态集
@@ -791,7 +762,7 @@ export default {
           console.log(this.activeBankType[index])
           // 支付码
           this.activeBankCode[index] = item.qrcode
-          // console.log(this.activeBankCode[index])
+          console.log(this.activeBankCode[index])
         }
         this.buttonStatusArr[index] = true
       })
