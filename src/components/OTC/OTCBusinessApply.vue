@@ -203,6 +203,7 @@ export default {
     changeVal (e) {
       this.checked = e
     },
+    // 首次点击商家申请决定进入哪个界面
     async determineUser () {
       const data = await firstEnterBusinessApply({})
       // 提示信息

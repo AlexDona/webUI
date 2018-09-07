@@ -18,6 +18,7 @@
           <span class="style-input">
             <el-select
               v-model="activitedADManageTraderStyleList"
+              @change="changeADManageTraderStyleList"
             >
               <el-option
                 v-for="item in ADManageTraderStyleList"
@@ -36,10 +37,10 @@
                 @change="changeADManageMarketList"
               >
                 <el-option
-                  v-for="item in ADManageMarketList"
-                  :key="item.value"
-                  :label="item.label"
-                  :value="item.value"
+                  v-for="(item,index) in ADManageMarketList"
+                  :key="index"
+                  :label="item.name"
+                  :value="item.coinId"
                 >
                 </el-option>
               </el-select>
@@ -52,10 +53,10 @@
                 @change="changeADManageCurrencyId"
               >
                 <el-option
-                  v-for="item in ADManageCurrencyId"
-                  :key="item.value"
-                  :label="item.label"
-                  :value="item.value"
+                  v-for="(item,index) in ADManageCurrencyId"
+                  :key="index"
+                  :label="item.name"
+                  :value="item.id"
                 >
                 </el-option>
               </el-select>
@@ -64,6 +65,7 @@
           <span class="status-input">
             <el-select
               v-model="activitedADManageStatusList"
+              @change="changeADManageStatusList"
             >
               <el-option
                 v-for="item in ADManageStatusList"
@@ -92,6 +94,13 @@
             </span>
           </span>
         </div>
+         <!-- <el-pagination
+            background
+            @prev-click='prevClick'
+            @next-click='nextClick'
+            layout="prev, pager, next"
+            :total="100">
+          </el-pagination> -->
         <!-- 下部分表格内容 -->
         <div class="manage-main-bottom">
           <el-table
@@ -105,7 +114,7 @@
               width="180"
             >
               <template slot-scope="scope">
-                <div>{{timeFormatting(scope.row.time)}}</div>
+                <div>{{timeFormatting(scope.row.createTime)}}</div>
               </template>
             </el-table-column>
             <!-- 交易类型 -->
@@ -114,14 +123,14 @@
             >
               <template slot-scope="scope">
                 <div
-                  v-if="scope.row.buySellStatus === 1"
-                  :class="{red:scope.row.buySellStatus === 1}"
+                  v-if="scope.row.entrustType === 'BUY'"
+                  :class="{red:scope.row.entrustType === 'BUY'}"
                 >
                   购买
                 </div>
                 <div
-                  v-if="scope.row.buySellStatus === 2"
-                  :class="{green:scope.row.buySellStatus === 2}"
+                  v-if="scope.row.entrustType === 'SELL'"
+                  :class="{green:scope.row.entrustType === 'SELL'}"
                 >
                   出售
                 </div>
@@ -132,14 +141,15 @@
               label="币种"
             >
               <template slot-scope="scope">
-                <div>{{scope.row.market}}</div>
+                <div>{{scope.row.coinName
+}}</div>
               </template>
             </el-table-column>
             <el-table-column
               label="法币"
             >
               <template slot-scope="scope">
-                <div>{{scope.row.market}}</div>
+                <div>{{scope.row.currencyName}}</div>
               </template>
             </el-table-column>
             <!-- 单价 -->
@@ -155,7 +165,7 @@
               label="数量"
             >
               <template slot-scope="scope">
-                <div>{{scope.row.sum}}</div>
+                <div>{{scope.row.entrustCount}}</div>
               </template>
             </el-table-column>
             <!-- 剩余数量 -->
@@ -163,7 +173,7 @@
               label="剩余数量"
             >
               <template slot-scope="scope">
-                <div>{{scope.row.residue}}</div>
+                <div>{{scope.row.entrustCount - scope.row.matchCount}}</div>
               </template>
             </el-table-column>
             <!-- 已完成数量 -->
@@ -171,7 +181,7 @@
               label="已完成数量"
             >
               <template slot-scope="scope">
-                <div>{{scope.row.complete}}</div>
+                <div>{{scope.row.matchCount}}</div>
               </template>
             </el-table-column>
             <!-- 状态 -->
@@ -179,7 +189,9 @@
               label="状态"
             >
               <template slot-scope="scope">
-                <div>{{scope.row.status}}</div>
+                <div v-if="scope.row.status === 'ENTRUSTED'">已上架</div>
+                <div v-if="scope.row.status === 'COMPLETED'">已完成</div>
+                <div v-if="scope.row.status === 'CANCELED'">已下架</div>
               </template>
             </el-table-column>
             <!-- 操作 -->
@@ -191,15 +203,15 @@
                 :id = "scope.row.fid"  -->
                 <el-button
                   type="text"
+                  v-if="scope.row.status === 'ENTRUSTED'"
                   @click="updateADUnshelve(scope.row.id)"
-                  v-if="scope.row.adStatus === 1"
                 >
                   下架
                 </el-button>
                 <el-button
                   type="text"
-                  v-if="scope.row.adStatus === 2"
-                  @click="modifyAD(scope.row.id)"
+                  v-if="scope.row.status === 'CANCELED'"
+                  @click="modifyAD(scope.row)"
                 >
                   修改
                 </el-button>
@@ -215,11 +227,13 @@
 </template>
 <!--请严格按照如下书写书序-->
 <script>
-import {cancelAllOrdersOnekey, getOTCAvailableCurrency, getMerchantAvailablelegalTender} from '../../utils/api/OTC'
+import {cancelAllOrdersOnekey, getOTCAvailableCurrency, getMerchantAvailablelegalTender, getOTCADManageApplyList, querySelectedOrdersRevocation} from '../../utils/api/OTC'
 import NavCommon from '../Common/HeaderCommon'
 import FooterCommon from '../Common/FooterCommon'
 import IconFontCommon from '../Common/IconFontCommon'
 import {timeFilter} from '../../utils'
+import {returnAjaxMessage} from '../../utils/commonFunc'
+import {mapState} from 'vuex'
 export default {
   components: {
     NavCommon, //  头部导航
@@ -232,11 +246,11 @@ export default {
       activitedADManageTraderStyleList: '', // 选中的筛选项
       ADManageTraderStyleList: [
         {
-          value: '选项1',
+          value: 'BUY',
           label: '购买'
         },
         {
-          value: '选项2',
+          value: 'SELL',
           label: '出售'
         }
       ],
@@ -252,62 +266,67 @@ export default {
         //   label: '市场2'
         // }
       ],
+      // 交易法币
       activitedADManageCurrencyId: '',
       ADManageCurrencyId: [],
       // 3.0 广告管理筛选下拉框数组--状态
       activitedADManageStatusList: '', // 选中的筛选项
       ADManageStatusList: [
         {
-          value: '选项1',
+          value: 'ENTRUSTED',
           label: '已上架'
         },
         {
-          value: '选项2',
+          value: 'CANCELED',
           label: '已下架'
         },
         {
-          value: '选项2',
+          value: 'COMPLETED',
           label: '已完成'
         }
       ],
+      // 设置默认列表页数
+      pageNum: 0,
+      // 设置列表页面长度
+      pageSize: 10,
       // 广告列表
       ADList: [
-        {
-          time: 1302486032000,
-          id: 1,
-          market: 'FBT',
-          price: '67812.21',
-          sum: '2.7869',
-          residue: '0.00123',
-          complete: '2.78951',
-          status: '已下架',
-          buySellStatus: 1, // 1:买 2：卖
-          adStatus: 2 // 1:已上架 2：已下架 3：已完成
-        },
-        {
-          time: 1802486032000,
-          id: 2,
-          market: 'CNY',
-          price: '67812.21',
-          sum: '2.7869',
-          residue: '0.00123',
-          complete: '2.78951',
-          status: '已上架',
-          buySellStatus: 2, // 1:买 2：卖
-          adStatus: 1 // 1:已上架 2：已下架 3：已完成
-        },
-        {
-          time: 1802486032000,
-          id: 3,
-          market: 'FBT',
-          price: '67812.21',
-          sum: '2.7869',
-          residue: '0.00123',
-          complete: '2.78951',
-          status: '已完成',
-          buySellStatus: 1, // 1:买 2：卖
-          adStatus: 3 // 1:已上架 2：已下架 3：已完成
-        }
+        // {
+        //   time: 1302486032000,
+        //   id: 1,
+        //   market: 'FBT',
+        //   price: '67812.21',
+        //   sum: '2.7869',
+        //   residue: '0.00123',
+        //   complete: '2.78951',
+        //   status: '已下架',
+        //   buySellStatus: 1, // 1:买 2：卖
+        //   adStatus: 2 // 1:已上架 2：已下架 3：已完成
+        // },
+        // {
+        //   time: 1802486032000,
+        //   id: 2,
+        //   market: 'CNY',
+        //   price: '67812.21',
+        //   sum: '2.7869',
+        //   residue: '0.00123',
+        //   complete: '2.78951',
+        //   status: '已上架',
+        //   buySellStatus: 2, // 1:买 2：卖
+        //   adStatus: 1 // 1:已上架 2：已下架 3：已完成
+        // },
+        // {
+        //   time: 1802486032000,
+        //   id: 3,
+        //   market: 'FBT',
+        //   price: '67812.21',
+        //   sum: '2.7869',
+        //   residue: '0.00123',
+        //   complete: '2.78951',
+        //   status: '已完成',
+        //   buySellStatus: 1, // 1:买 2：卖
+        //   adStatus: 3 // 1:已上架 2：已下架 3：已完成
+        // }
       ]
     }
   },
@@ -315,6 +334,10 @@ export default {
     require('../../../static/css/list/OTC/OTCADManage.css')
     require('../../../static/css/theme/day/OTC/OTCADManageDay.css')
     require('../../../static/css/theme/night/OTC/OTCADManageNight.css')
+    // 从全局获得商户id
+    console.log(this.partnerId)
+    // 获取otc广告管理列表
+    this.getOTCADManageList()
     // 1.0 otc可用币种查询：
     this.getOTCAvailableCurrencyList()
     // 2.0 otc可用法币查询：
@@ -333,13 +356,41 @@ export default {
     timeFormatting (date) {
       return timeFilter(date, 'normal')
     },
+    // 获取广告管理列表
+    async getOTCADManageList () {
+      const data = await getOTCADManageApplyList({
+        entrustType: this.activitedADManageTraderStyleList ? this.activitedADManageTraderStyleList : '',
+        coinId: this.activitedADManageMarketList ? this.activitedADManageMarketList : '',
+        currencyId: this.activitedADManageCurrencyId ? this.activitedADManageCurrencyId : '',
+        status: this.activitedADManageStatusList ? this.activitedADManageStatusList : ''
+        // pageNum: this.pageNum,
+        // pageSize: this.pageSize
+      })
+      console.log(data)
+      if (!(returnAjaxMessage(data, this, 0))) {
+        return false
+      } else {
+        // 返回数据正确的逻辑 渲染列表
+        this.ADList = data.data.data.list
+      }
+    },
+    // 交易类型选中赋值
+    changeADManageTraderStyleList (e) {
+      this.activitedADManageTraderStyleList = e
+    },
+    // 交易币种选中赋值
     changeADManageMarketList (e) {
       this.activitedADManageMarketList = e
     },
+    // 交易法币选中赋值
     changeADManageCurrencyId (e) {
       this.activitedADManageCurrencyId = e
     },
-    // 币种请求
+    // 交易状态选中赋值
+    changeADManageStatusList (e) {
+      this.activitedADManageStatusList = e
+    },
+    // 币种查询
     async getOTCAvailableCurrencyList () {
       const data = await getOTCAvailableCurrency({
         partnerId: this.partnerId
@@ -371,22 +422,22 @@ export default {
     async cancelAllOnekey () {
       // console.log('d')
       const data = await cancelAllOrdersOnekey({})
-      console.log(data)
       // 提示信息
       if (!(returnAjaxMessage(data, this, 1))) {
         return false
       } else {
         // 返回数据正确的逻辑
+        this.getOTCADManageList()
       }
     },
     // 点击表格中的下架按钮触发的事件
-    updateADUnshelve (val) {
-      console.log(val)
+    updateADUnshelve (id) {
       this.$confirm('此操作将永久下架该文件, 是否继续?', '提示', {
         confirmButtonText: '确定',
         cancelButtonText: '取消',
         type: 'warning'
       }).then(() => {
+        this.getOTCEntrustingOrdersRevocation(id)
         this.$message({
           type: 'success',
           message: '下架成功!'
@@ -398,14 +449,28 @@ export default {
         })
       })
     },
+    // 点击下架按钮 请求撤单接口
+    async getOTCEntrustingOrdersRevocation (id) {
+      let data = await querySelectedOrdersRevocation({
+        entrustId: id
+      })
+      // 提示信息
+      if (!(returnAjaxMessage(data, this, 0))) {
+        return false
+      } else {
+        // 返回数据正确的逻辑 重新渲染列表
+        this.getOTCADManageList()
+      }
+    },
     // 点击修改按钮钮触发的事件
-    modifyAD (val) {
-      console.log(val)
+    modifyAD (item) {
       this.$confirm('此操作将永久修改该文件, 是否继续?', '提示', {
         confirmButtonText: '确定',
         cancelButtonText: '取消',
         type: 'warning'
       }).then(() => {
+        // 跳转发布广告页面并携带一条信息的参数
+        this.$router.push({path: '/OTCPublishAD', query: item})
         this.$message({
           type: 'success',
           message: '修改成功!'
@@ -416,15 +481,18 @@ export default {
           message: '已取消修改'
         })
       })
+    },
+    // 点击查询按钮 重新请求列表数据
+    findFilter () {
+      this.getOTCADManageList()
     }
-    // findFilter () {
-    //   console.log(this.activitedADManageTraderStyleList)
-    //   console.log(this.activitedADManageMarketList)
-    //   console.log(this.activitedADManageStatusList)
-    // }
   },
   filter: {},
-  computed: {},
+  computed: {
+    ...mapState({
+      partnerId: state => state.common.partnerId
+    })
+  },
   watch: {}
 }
 </script>
