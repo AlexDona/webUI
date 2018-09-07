@@ -730,7 +730,6 @@ export default {
         background-color: #1D2331;
       }
       >.otc-merchant-content{
-        // height: 564px;
         min-height: 564px;
         background-color: #202A33;
         margin-top: 30px;
