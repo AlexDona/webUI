@@ -492,7 +492,7 @@ export default {
     // 5.0 改变可用法币的币种id
     changeCurrencyId (e) {
       this.activitedCurrencyId = e
-      // console.log(e)
+      console.log(e)
       console.log(this.activitedCurrencyId)
     },
     // 校验用户输入的 定价设置：键盘弹起事件
