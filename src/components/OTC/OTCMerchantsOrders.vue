@@ -16,6 +16,7 @@
           <span class="style-input">
             <el-select
               v-model="activitedMerchantsOrdersTraderStyleList"
+              @change="changeMerchantsOrdersTraderStyleList"
             >
               <el-option
                 v-for="item in merchantsOrdersTraderStyleList"
@@ -30,6 +31,7 @@
           <span class="status-input">
             <el-select
               v-model="activitedMerchantsOrdersStatusList"
+              @change="changeMerchantsOrdersStatusList"
             >
               <el-option
                 v-for="item in merchantsOrdersStatusList"
@@ -48,6 +50,7 @@
               v-model="value1"
               type="date"
               value-format="yyyy-MM-dd"
+              @change="startDate"
             >
             </el-date-picker>
             <span class="date-short-line">-</span>
@@ -57,12 +60,13 @@
               v-model="value2"
               value-format="yyyy-MM-dd"
               type="date"
+              @change="endDate"
             >
             </el-date-picker>
           </span>
           <span class="inquire-button">
-            <el-button type="primary">查询</el-button>
-            <el-button type="primary">重置</el-button>
+            <el-button type="primary" @click="findFilter">查询</el-button>
+            <el-button type="primary" @click="resetCondition">重置</el-button>
           </span>
           <!-- <span class="all-clear cursor-pointer">
             <span class="clear-text font-size12">全部清除筛选</span>
@@ -89,7 +93,7 @@
                   />
                   交易中订单
                 </span>
-                <OTCTradingOrder></OTCTradingOrder>
+                <OTCTradingOrder ref='OTCTradingOrder'></OTCTradingOrder>
               </el-tab-pane>
               <!-- 2.2.2 已完成订单 -->
               <el-tab-pane name = "second">
@@ -190,11 +194,11 @@ export default {
       activitedMerchantsOrdersTraderStyleList: '', // 选中的筛选项
       merchantsOrdersTraderStyleList: [
         {
-          value: '选项1',
+          value: 'BUY',
           label: '购买'
         },
         {
-          value: '选项2',
+          value: 'SELL',
           label: '出售'
         }
       ],
@@ -202,15 +206,15 @@ export default {
       activitedMerchantsOrdersStatusList: '', // 选中的筛选项
       merchantsOrdersStatusList: [
         {
-          value: '选项1',
+          value: 'ENTRUSTED',
           label: '已上架'
         },
         {
-          value: '选项2',
+          value: 'CANCELED',
           label: '已下架'
         },
         {
-          value: '选项2',
+          value: 'COMPLETED',
           label: '已完成'
         }
       ],
@@ -276,6 +280,48 @@ export default {
     // 时间格式化
     timeFormatting (date) {
       return timeFilter(date, 'date')
+    },
+    // 选中的交易类型赋值
+    changeMerchantsOrdersTraderStyleList (e) {
+      this.activitedMerchantsOrdersTraderStyleList = e
+    },
+    // 选中的状态赋值
+    changeMerchantsOrdersStatusList (e) {
+      this.activitedMerchantsOrdersStatusList = e
+    },
+    // 初始日期赋值
+    startDate (e) {
+      this.value1 = e
+    },
+    // 结束日期赋值
+    endDate (e) {
+      this.value2 = e
+    },
+    // findFilter () {
+    //   let param = {
+    //     A:this.activitedMerchantsOrdersTraderStyleList, //获取选中的
+    //     B:this.activitedMerchantsOrdersStatusList,
+    //     C:this.value1,
+    //     D:this.value2
+    //   }
+    //   if (this.activeName == 'first') {
+    //     //当选中交易中订单时触发
+    //      // this.$ref.OTCTradingOrder.
+    //   } else if (this.activeName == 'second') {
+
+    //   } else if (this.activeName == 'third') {
+
+    //   } else if (this.activeName == 'fourth') {
+
+    //   } else if (this.activeName == 'fifth') {
+
+    //   }
+    // },
+    resetCondition () {
+      this.activitedMerchantsOrdersTraderStyleList = ''
+      this.activitedMerchantsOrdersStatusList = ''
+      this.value1 = ''
+      this.value2 = ''
     }
   },
   filter: {},

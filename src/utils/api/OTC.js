@@ -33,7 +33,7 @@ export const querySelectedOrdersRevocation = (params) => postWithURLencoded('otc
 // 查询otc挂单用户交易币种手续费率以及币种详情
 export const queryUserTradeFeeAndCoinInfo = (params) => get('otcCOin/getUserTradeFeeAndCoinInfo', params)
 // otc广告管理一键撤销用户所有挂单--商家专用
-export const cancelAllOrdersOnekey = (params) => get('otcEntrust/cancelAllEntrusts', {params})
+export const cancelAllOrdersOnekey = (params) => postWithURLencoded('otcEntrust/cancelAllEntrusts', {params})
 // otc交易中订单，otc买家确认付款
 export const buyerPayForOrder = (params) => postWithURLencoded('otcOrder/payForOrder', params)
 // otc交易中订单， otc卖家确认收款
