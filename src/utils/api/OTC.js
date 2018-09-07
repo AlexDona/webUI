@@ -46,3 +46,5 @@ export const businessApply = (params) => postWithURLencoded('otcMerchApply/apply
 export const firstEnterBusinessApply = (params) => get('otcMerchApply/getUserMerchInfo', params)
 // 广告管理列表请求
 export const getOTCADManageApplyList = (params) => get('otcEntrust/selectMerchEntrustsPage', params)
+// 商家订单列表请求
+export const getOTCMerchantsOrdersList = (params) => get('otcOrder/selectMerchOrdersPage', params)
