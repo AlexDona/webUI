@@ -1,3 +1,7 @@
+/* 覆盖Element样式*/
+.set-email.personal .el-form-item__content {
+  width: 600px;
+}
 .set-email.personal .el-input__inner {
   height: 36px;
   border-radius: 2px;

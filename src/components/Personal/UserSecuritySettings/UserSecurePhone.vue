@@ -54,9 +54,15 @@
               <input
                 type="text"
                 class="phone-input phone-input-left border-radius2 padding-l15 box-sizing"
-                @focus="emptyStatus"
                 v-model="bindingDataPhone.bindingNewPhoneAccounts"
+                @keydown="setErrorMsg(0,'')"
+                @blur="checkoutInputFormat(0, bindingDataPhone.bindingNewPhoneAccounts)"
               >
+              <!--错误提示-->
+              <ErrorBox
+                :text="errorShowStatusList[0]"
+                :isShow="!!errorShowStatusList[0]"
+              />
             </el-form-item>
             <el-form-item
               label="图片验证码：">
@@ -65,6 +71,8 @@
                 type="text"
                 class="phone-input phone-image border-radius2 padding-l15 box-sizing"
                 v-model="bindingDataPhone.userInputImageCode"
+                @keydown="setErrorMsg(1,'')"
+                @blur="checkoutInputFormat(1, bindingDataPhone.userInputImageCode)"
                 placeholder="验证码"
               >
               <!--获取图片验证码-->
@@ -80,12 +88,18 @@
                 class="display-inline-block image-input"
               />
               </span>
+              <!--错误提示-->
+              <ErrorBox
+                :text="errorShowStatusList[1]"
+                :isShow="!!errorShowStatusList[1]"
+              />
             </el-form-item>
             <el-form-item
               label="短信验证码：">
               <el-input
-                @focus="emptyStatus"
                 v-model="bindingDataPhone.bindingNewPhoneCode"
+                @keydown="setErrorMsg(2,'')"
+                @blur="checkoutInputFormat(2, bindingDataPhone.userInputImageCode)"
               >
                 <template slot="append">
                   <CountDownButton
@@ -94,6 +108,11 @@
                     @run="sendPhoneOrEmailCode(0)"
                   />
                 </template>
+                <!--错误提示-->
+                <ErrorBox
+                  :text="errorShowStatusList[2]"
+                  :isShow="!!errorShowStatusList[2]"
+                />
               </el-input>
             </el-form-item>
             <div class="prompt-message">
@@ -119,8 +138,9 @@
             </el-form-item>
             <el-form-item label="短信验证码：">
               <el-input
-                @focus="emptyStatus"
                 v-model="amendDataPhone.oldPhoneCode"
+                @keydown="tieErrorMsg(0,'')"
+                @blur="tieCheckoutInputFormat(0, amendDataPhone.oldPhoneCode)"
               >
                 <template slot="append">
                   <CountDownButton
@@ -130,6 +150,11 @@
                   />
                 </template>
               </el-input>
+              <!--错误提示-->
+              <ErrorBox
+                :text="tieErrorShowStatusList[0]"
+                :isShow="!!tieErrorShowStatusList[0]"
+              />
             </el-form-item>
             <el-form-item label="新手机号码：">
               <el-select
@@ -146,14 +171,21 @@
               <input
                 type="text"
                 class="phone-input phone-input-left border-radius2 padding-l15 box-sizing"
-                @focus="emptyStatus"
                 v-model="amendDataPhone.newPhoneAccounts"
+                @keydown="tieErrorMsg(1,'')"
+                @blur="tieCheckoutInputFormat(1, amendDataPhone.newPhoneAccounts)"
               >
+              <!--错误提示-->
+              <ErrorBox
+                :text="tieErrorShowStatusList[1]"
+                :isShow="!!tieErrorShowStatusList[1]"
+              />
             </el-form-item>
             <el-form-item label="短信验证码：">
               <el-input
-                @focus="emptyStatus"
                 v-model="amendDataPhone.newPhoneCode"
+                @keydown="tieErrorMsg(2,'')"
+                @blur="tieCheckoutInputFormat(2, amendDataPhone.newPhoneCode)"
               >
                 <template slot="append">
                   <CountDownButton
@@ -163,18 +195,26 @@
                   />
                 </template>
               </el-input>
+              <!--错误提示-->
+              <ErrorBox
+                :text="tieErrorShowStatusList[2]"
+                :isShow="!!tieErrorShowStatusList[2]"
+              />
             </el-form-item>
             <el-form-item label="交  易  密  码：">
               <input
                 type="password"
                 class="phone-input border-radius2 padding-l15 box-sizing"
-                @focus="emptyStatus"
                 v-model="amendDataPhone.transactionPassword"
+                @keydown="tieErrorMsg(3,'')"
+                @blur="tieCheckoutInputFormat(3, amendDataPhone.transactionPassword)"
+              />
+              <!--错误提示-->
+              <ErrorBox
+                :text="tieErrorShowStatusList[3]"
+                :isShow="!!tieErrorShowStatusList[3]"
               />
             </el-form-item>
-            <div class="prompt-message">
-              <div v-show="errorMsg">{{ errorMsg }}</div>
-            </div>
             <button
               class="phone-button border-radius4 cursor-pointer"
               @click="stateTieStatusSubmit"
@@ -193,19 +233,29 @@
 // 头部
 import HeaderCommon from '../../Common/HeaderCommon'
 import IconFontCommon from '../../Common/IconFontCommon'
+import ErrorBox from '../../User/ErrorBox'
 // 底部
 import FooterCommon from '../../Common/FooterCommon'
 import { createNamespacedHelpers, mapState } from 'vuex'
 import ImageValidate from '../../Common/ImageValidateCommon' // 图片验证吗
 import CountDownButton from '../../Common/CountDownCommon'
-import {returnAjaxMessage, sendPhoneOrEmailCodeAjax} from '../../../utils/commonFunc'
-import {bindPhoneAddress, changeMobilePhone, statusSecurityCenter} from '../../../utils/api/personal'
+import {
+  returnAjaxMessage, // 接口返回信息
+  validateNumForUserInput, // 用户输入验证
+  sendPhoneOrEmailCodeAjax
+} from '../../../utils/commonFunc'
+import {
+  bindPhoneAddress,
+  changeMobilePhone,
+  statusSecurityCenter
+} from '../../../utils/api/personal'
 const { mapMutations } = createNamespacedHelpers('personal')
 export default {
   components: {
     HeaderCommon, // 头部
     IconFontCommon, // 字体图标
     ImageValidate, // 图片验证吗
+    ErrorBox, // 错误提示信息
     CountDownButton, // 短信倒计时
     FooterCommon // 底部
   },
@@ -215,15 +265,17 @@ export default {
       errorMsg: '', // 错误信息提示
       bindingDataPhone: {
         bindingAreaCodeValue: '86',
-        bindingAreaCodeList: [{
-          value: '1',
-          label: '86'
-        }],
+        bindingAreaCodeList: [],
         bindingNewPhoneAccounts: '', // 手机号
         identifyCode: '1235', // 图片验证码
         userInputImageCode: '', // 用户输入的图片验证码
         bindingNewPhoneCode: '' // 新手机验证码
       },
+      errorShowStatusList: [
+        '', // 手机号码
+        '', // 图片验证码
+        '' // 短信验证码
+      ],
       amendDataPhone: {
         newPhoneAccounts: '', // 手机号
         oldPhoneCode: '', // 旧手机验证码
@@ -232,11 +284,14 @@ export default {
         newPhoneCode: '', // 新手机验证码
         transactionPassword: '', // 交易密码
         areaCodeValue: '86',
-        areaCodeList: [{
-          value: '1',
-          label: '86'
-        }]
+        areaCodeList: []
       },
+      tieErrorShowStatusList: [
+        '', // 旧短信验证码
+        '', // 新手机号码
+        '', // 短信验证码
+        '' // 交易密码
+      ],
       successCountDown: 1 // 成功倒计时
     }
   },
@@ -247,7 +302,6 @@ export default {
     require('../../../../static/css/theme/day/Personal/UserSecuritySettings/UserSecurePhoneDay.css')
     // 黑色主题样式
     require('../../../../static/css/theme/night/Personal/UserSecuritySettings/UserSecurePhoneNight.css')
-    console.log(this.userInfo)
   },
   mounted () {},
   activited () {},
@@ -262,16 +316,6 @@ export default {
       this.CHANGE_USER_CENTER_ACTIVE_NAME('security-center')
       this.$router.go(-1)
     },
-    // 清空内容信息
-    emptyStatus () {
-      this.errorMsg = ''
-    },
-    // 修改input value
-    changeInputValue (ref) {
-      // console.dir(this.$refs[ref])
-      this[ref] = this.$refs[ref].value
-      // console.log(this[ref])
-    },
     // 4位随机数
     getRandomNum () {
       return parseInt(Math.random() * 10000) + ''
@@ -280,7 +324,7 @@ export default {
     refreshCode () {
       this.bindingDataPhone.identifyCode = this.getRandomNum()
     },
-    // 发送邮箱验证码
+    // 发送验证码
     sendPhoneOrEmailCode (loginType, val) {
       console.log(this.disabledOfPhoneBtn)
       console.log(this.disabledOfEmailBtn)
@@ -292,31 +336,32 @@ export default {
         country: this.bindingDataPhone.bindingAreaCodeValue // 国家编码
       //   // country: this.activeCountryCode
       }
-      // if (!this.securityCenter.isPhoneBind) {
-      //   switch (loginType) {
-      //     case 0:
-      //       params.phone = this.userInfo.phone
-      //       break
-      //     case 1:
-      //       params.address = this.userInfo.email
-      //       break
-      //   }
-      // } else {
-      switch (loginType) {
-        case 0:
-          if (val == 1) {
-            console.log(val)
-            params.phone = this.userInfo.userInfo.phone
-          } else {
-            console.log(val)
-            params.phone = this.amendDataPhone.newPhoneAccounts
-          }
-          break
-        case 1:
-          params.address = this.userInfo.userInfo.email
-          break
+      if (this.securityCenter.isPhoneBind) {
+        switch (loginType) {
+          // 当是绑定手机时给收入新手机号发验证码
+          case 0:
+            params.phone = this.bindingDataPhone.bindingNewPhoneAccounts
+            break
+          case 1:
+            params.address = this.userInfo.userInfo.email
+            break
+        }
+      } else {
+        switch (loginType) {
+          case 0:
+            if (val == 1) {
+              // 当是换绑手机时给原手机号发验证码
+              params.phone = this.userInfo.userInfo.phone
+            } else {
+              // 当是换绑手机时给收入新手机号发验证码
+              params.phone = this.amendDataPhone.newPhoneAccounts
+            }
+            break
+          case 1:
+            params.address = this.userInfo.userInfo.email
+            break
+        }
       }
-      // }
       sendPhoneOrEmailCodeAjax(loginType, params, (data) => {
         console.log(this.disabledOfPhoneBtn)
         // 提示信息
@@ -341,64 +386,182 @@ export default {
         }
       })
     },
+    // 绑定手机检测输入格式
+    checkoutInputFormat (type, targetNum) {
+      switch (type) {
+        // 手机号
+        case 0:
+          switch (validateNumForUserInput('phone', targetNum)) {
+            case 0:
+              this.setErrorMsg(0, '')
+              this.$forceUpdate()
+              return 1
+            case 1:
+              this.setErrorMsg(0, '请输入手机号')
+              this.$forceUpdate()
+              return 0
+            case 2:
+              this.setErrorMsg(0, '请输入正确的手机号')
+              this.$forceUpdate()
+              return 0
+          }
+          break
+        // 图片验证码
+        case 1:
+          if (!targetNum) {
+            this.setErrorMsg(1, '请输入图片验证码')
+            this.$forceUpdate()
+            return 0
+          } else if (this.bindingDataPhone.userInputImageCode === this.bindingDataPhone.identifyCode) {
+            this.setErrorMsg(1, '')
+            this.$forceUpdate()
+            return 1
+          } else {
+            this.setErrorMsg(1, '请输入正确的图片验证码')
+            this.$forceUpdate()
+            return 0
+          }
+        // 短信验证码
+        case 2:
+          if (!targetNum) {
+            this.setErrorMsg(2, '请输入短信验证码')
+            this.$forceUpdate()
+            return 0
+          } else {
+            this.setErrorMsg(2, '')
+            this.$forceUpdate()
+            return 1
+          }
+      }
+    },
+    // 绑定手机设置错误信息
+    setErrorMsg (index, msg) {
+      this.errorShowStatusList[index] = msg
+    },
     // 确定提交绑定手机
     getStatusSubmit () {
-      // if (!this.newPhoneAccounts) {
-      //   this.errorMsg = '邮箱账号不能为空'
-      // } else if (!this.phoneCode) {
-      //   this.errorMsg = '验证码不能为空'
-      // } else {
-      //   this.errorMsg = ''
-      // }
-      // console.log(1)
       this.confirmBindingBailPhone()
     },
     // 确定绑定
     async confirmBindingBailPhone () {
-      let data
-      let param = {
-        phone: this.emailAccounts, // 邮箱账号
-        code: this.emailCode // 邮箱验证码
-      }
-      data = await bindPhoneAddress(param)
-      if (!(returnAjaxMessage(data, this, 1))) {
-        return false
+      let goOnStatus = 0
+      if (
+        this.checkoutInputFormat(0, this.amendDataPhone.newPhoneAccounts) &&
+        this.checkoutInputFormat(1, this.bindingDataPhone.bindingNewPhoneCode)
+      ) {
+        goOnStatus = 1
       } else {
-        console.log(data)
-        console.log(this.emailAccounts)
-        console.log(this.emailCode)
-        // this.statusSecurityCenter()
+        goOnStatus = 0
+      }
+      if (goOnStatus) {
+        let data
+        let param = {
+          phone: this.bindingDataPhone.bindingNewPhoneAccounts, // 手机号
+          code: this.bindingDataPhone.bindingNewPhoneCode // 手机验证码
+        }
+        data = await bindPhoneAddress(param)
+        if (!(returnAjaxMessage(data, this, 1))) {
+          return false
+        } else {
+          console.log(data)
+        }
       }
     },
+    // 换绑手机检测输入格式
+    tieCheckoutInputFormat (type, targetNum) {
+      switch (type) {
+        // 旧短信验证码
+        case 0:
+          if (!targetNum) {
+            console.log('111')
+            this.tieErrorMsg(0, '请输入旧手机短信验证码')
+            console.log(this.tieErrorShowStatusList)
+            this.$forceUpdate()
+            return 0
+          } else {
+            this.tieErrorMsg(0, '')
+            this.$forceUpdate()
+            return 1
+          }
+        // 新手机号码
+        case 1:
+          switch (validateNumForUserInput('phone', targetNum)) {
+            case 0:
+              this.tieErrorMsg(1, '')
+              this.$forceUpdate()
+              return 1
+            case 1:
+              this.tieErrorMsg(1, '请输入手机号')
+              this.$forceUpdate()
+              return 0
+            case 2:
+              this.tieErrorMsg(1, '请输入正确的手机号')
+              this.$forceUpdate()
+              return 0
+          }
+          break
+        // 新短信验证码
+        case 2:
+          if (!targetNum) {
+            this.tieErrorMsg(2, '请输入新手机短信验证码')
+            this.$forceUpdate()
+            return 0
+          } else {
+            this.tieErrorMsg(2, '')
+            this.$forceUpdate()
+            return 1
+          }
+        // 交易密码
+        case 3:
+          if (!targetNum) {
+            this.tieErrorMsg(3, '交易密码')
+            this.$forceUpdate()
+            return 0
+          } else {
+            this.tieErrorMsg(3, '')
+            this.$forceUpdate()
+            return 1
+          }
+      }
+    },
+    // 换绑手机设置错误信息
+    tieErrorMsg (index, msg) {
+      this.tieErrorShowStatusList[index] = msg
+    },
     stateTieStatusSubmit () {
-      // if (!this.newPhoneAccounts) {
-      //   this.errorMsg = '邮箱账号不能为空'
-      // } else if (!this.phoneCode) {
-      //   this.errorMsg = '验证码不能为空'
-      // } else {
-      //   this.errorMsg = ''
-      // }
-      // console.log(1)
       this.confirmTiePhone()
     },
     // 确定换绑手机
     async confirmTiePhone () {
-      let data
-      let param = {
-        phone: this.amendDataPhone.newPhoneAccounts, // 手机号
-        oldCode: this.amendDataPhone.oldPhoneCode, // 旧手机验证码
-        newCode: this.amendDataPhone.newPhoneCode, // 新手机验证码
-        payPassword: this.amendDataPhone.transactionPassword // 交易密码
-      }
-      data = await changeMobilePhone(param)
-      if (!(returnAjaxMessage(data, this, 1))) {
-        return false
+      let goOnStatus = 0
+      if (
+        this.checkoutInputFormat(0, this.amendDataPhone.newPhoneAccounts) &&
+        this.checkoutInputFormat(1, this.amendDataPhone.oldPhoneCode) &&
+        this.checkoutInputFormat(2, this.amendDataPhone.newPhoneCode) &&
+        this.checkoutInputFormat(3, this.amendDataPhone.transactionPassword)
+      ) {
+        goOnStatus = 1
       } else {
-        this.successJump()
-        console.log(data)
-        console.log(this.emailAccounts)
-        console.log(this.emailCode)
-        // this.statusSecurityCenter()
+        goOnStatus = 0
+      }
+      if (goOnStatus) {
+        let data
+        let param = {
+          phone: this.amendDataPhone.newPhoneAccounts, // 手机号
+          oldCode: this.amendDataPhone.oldPhoneCode, // 旧手机验证码
+          newCode: this.amendDataPhone.newPhoneCode, // 新手机验证码
+          payPassword: this.amendDataPhone.transactionPassword // 交易密码
+        }
+        data = await changeMobilePhone(param)
+        if (!(returnAjaxMessage(data, this, 1))) {
+          return false
+        } else {
+          this.successJump()
+          console.log(data)
+          console.log(this.emailAccounts)
+          console.log(this.emailCode)
+          // this.statusSecurityCenter()
+        }
       }
     },
     /**
@@ -415,16 +578,9 @@ export default {
       } else {
         // 返回冲提记录列表展示
         this.securityCenter = data.data.data
-        console.log(this.SecurityCenter)
-        console.log(this.logonRecord)
-        console.log(this.securityRecord)
-        console.log(this.SecurityCenter.isMailBind)
-        console.log(this.SecurityCenter.isGoogleBind)
-        console.log(this.SecurityCenter.isPhoneBind)
-        console.log(this.SecurityCenter.payPassword)
       }
     },
-    // 谷歌绑定成功自动跳转
+    // 成功自动跳转
     successJump () {
       setInterval(() => {
         if (this.successCountDown === 0) {

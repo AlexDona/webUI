@@ -32,14 +32,21 @@
             <el-form-item label="邮箱账号：">
               <input
                 class="email-input border-radius2 padding-l15 box-sizing"
-                @focus="emptyStatus"
                 v-model="emailAccounts"
+                @keydown="setErrorMsg(0,'')"
+                @blur="checkoutInputFormat('email', emailAccounts)"
+              />
+              <!--错误提示-->
+              <ErrorBox
+                :text="errorShowStatusList[0]"
+                :isShow="!!errorShowStatusList[0]"
               />
             </el-form-item>
             <el-form-item label="验  证  码：">
               <el-input
-                @focus="emptyStatus"
                 v-model="emailCode"
+                @keydown="setErrorMsg(1,'')"
+                @blur="checkoutInputFormat(1, emailCode)"
               >
                 <template slot="append">
                   <CountDownButton
@@ -49,10 +56,12 @@
                   />
                 </template>
               </el-input>
+              <!--错误提示-->
+              <ErrorBox
+                :text="errorShowStatusList[1]"
+                :isShow="!!errorShowStatusList[1]"
+              />
             </el-form-item>
-            <div class="prompt-message">
-              <div v-show="errorMsg">{{ errorMsg }}</div>
-            </div>
             <button
               class="email-button border-radius4 cursor-pointer"
               @click="confirmBindingBailSubmit"
@@ -72,7 +81,12 @@
 import HeaderCommon from '../../Common/HeaderCommon'
 import IconFontCommon from '../../Common/IconFontCommon'
 import CountDownButton from '../../Common/CountDownCommon'
-import {returnAjaxMessage, sendPhoneOrEmailCodeAjax} from '../../../utils/commonFunc'
+import ErrorBox from '../../User/ErrorBox'
+import {
+  returnAjaxMessage, // 接口返回信息
+  validateNumForUserInput, // 用户输入验证
+  sendPhoneOrEmailCodeAjax
+} from '../../../utils/commonFunc'
 import {bindEmailAddress} from '../../../utils/api/personal'
 // 底部
 import FooterCommon from '../../Common/FooterCommon'
@@ -82,16 +96,20 @@ export default {
   components: {
     HeaderCommon, // 头部
     IconFontCommon, // 字体图标
+    ErrorBox, // 错误信息提示
     CountDownButton, // 短信倒计时
     FooterCommon // 底部
   },
   data () {
     return {
       globalUserInformation: {}, // 个人信息
-      errorMsg: '', // 错误信息提示
       emailAccounts: '', // 邮箱账号
       emailCode: '', // 邮箱验证码
-      successCountDown: 1 // 成功倒计时
+      successCountDown: 1, // 成功倒计时
+      errorShowStatusList: [
+        '', // 邮箱账号
+        '' // 验证码
+      ]
     }
   },
   created () {
@@ -117,27 +135,6 @@ export default {
       this.CHANGE_USER_CENTER_ACTIVE_NAME('security-center')
       this.$router.go(-1)
     },
-    // 清空内容信息
-    emptyStatus () {
-      this.errorMsg = ''
-    },
-    // 修改input value
-    changeInputValue (ref) {
-      // console.dir(this.$refs[ref])
-      this[ref] = this.$refs[ref].value
-      // console.log(this[ref])
-    },
-    // 确定绑定
-    // getStatusSubmit () {
-    //   if (!this.emailAccounts) {
-    //     this.errorMsg = '邮箱账号不能为空'
-    //   } else if (!this.emailCode) {
-    //     this.errorMsg = '验证码不能为空'
-    //   } else {
-    //     this.errorMsg = ''
-    //   }
-    //   console.log(1)
-    // },
     // 发送邮箱验证码
     sendPhoneOrEmailCode (loginType) {
       console.log(this.disabledOfPhoneBtn)
@@ -176,22 +173,70 @@ export default {
     /**
      * 确认绑定邮箱
      */
+    // 检测输入格式
+    checkoutInputFormat (type, targetNum) {
+      switch (type) {
+        // 邮箱账号
+        case 0:
+          switch (validateNumForUserInput('email', targetNum)) {
+            case 0:
+              this.setErrorMsg(0, '')
+              this.$forceUpdate()
+              return 1
+            case 1:
+              this.setErrorMsg(0, '请输入邮箱地址')
+              this.$forceUpdate()
+              return 0
+            case 2:
+              this.setErrorMsg(0, '请输入正确的邮箱地址')
+              this.$forceUpdate()
+              return 0
+          }
+          break
+        // 邮箱验证码
+        case 1:
+          if (!targetNum) {
+            this.setErrorMsg(1, '请输入邮箱验证码')
+            this.$forceUpdate()
+            return 0
+          } else {
+            this.setErrorMsg(1, '')
+            this.$forceUpdate()
+            return 1
+          }
+      }
+    },
+    // 设置错误信息
+    setErrorMsg (index, msg) {
+      this.errorShowStatusList[index] = msg
+    },
     confirmBindingBailSubmit () {
       this.confirmBindingBail()
     },
     // 确定绑定
     async confirmBindingBail () {
-      let data
-      let param = {
-        email: this.emailAccounts, // 邮箱账号
-        code: this.emailCode // 邮箱验证码
-      }
-      data = await bindEmailAddress(param)
-      if (!(returnAjaxMessage(data, this, 1))) {
-        return false
+      let goOnStatus = 0
+      if (
+        this.checkoutInputFormat(0, this.emailAccounts) &&
+        this.checkoutInputFormat(1, this.emailCode)
+      ) {
+        goOnStatus = 1
       } else {
-        this.successJump()
-        console.log(data)
+        goOnStatus = 0
+      }
+      if (goOnStatus) {
+        let data
+        let param = {
+          email: this.emailAccounts, // 邮箱账号
+          code: this.emailCode // 邮箱验证码
+        }
+        data = await bindEmailAddress(param)
+        if (!(returnAjaxMessage(data, this, 1))) {
+          return false
+        } else {
+          this.successJump()
+          console.log(data)
+        }
       }
     },
     // 谷歌绑定成功自动跳转

@@ -35,29 +35,44 @@
               <input
                 type="password"
                 class="login-input border-radius2 padding-l15 box-sizing"
-                @focus="emptyStatus"
                 v-model="originalLoginPassword"
+                @keydown="setErrorMsg(0,'')"
+                @blur="checkoutInputFormat(0, originalLoginPassword)"
+              />
+              <!--错误提示-->
+              <ErrorBox
+                :text="errorShowStatusList[0]"
+                :isShow="!!errorShowStatusList[0]"
               />
             </el-form-item>
             <el-form-item label="新登录密码：">
               <input
                 type="password"
                 class="login-input border-radius2 padding-l15 box-sizing"
-                @focus="emptyStatus"
                 v-model="newLoginPassword"
+                @keydown="setErrorMsg(1,'')"
+                @blur="checkoutInputFormat(1, newLoginPassword)"
+              />
+              <!--错误提示-->
+              <ErrorBox
+                :text="errorShowStatusList[1]"
+                :isShow="!!errorShowStatusList[1]"
               />
             </el-form-item>
             <el-form-item label="确认登录密码：">
               <input
                 type="password"
                 class="login-input border-radius2 padding-l15 box-sizing"
-                @focus="emptyStatus"
                 v-model="confirmLoginPassword"
+                @keydown="setErrorMsg(2,'')"
+                @blur="checkoutInputFormat(2, confirmLoginPassword)"
+              />
+              <!--错误提示-->
+              <ErrorBox
+                :text="errorShowStatusList[2]"
+                :isShow="!!errorShowStatusList[2]"
               />
             </el-form-item>
-            <div class="prompt-message">
-              <div v-show="errorMsg">{{ errorMsg }}</div>
-            </div>
             <button
               class="login-button border-radius4 cursor-pointer"
               @click="getStatusSubmit"
@@ -76,6 +91,7 @@
 // 头部
 import HeaderCommon from '../../Common/HeaderCommon'
 import IconFontCommon from '../../Common/IconFontCommon'
+import ErrorBox from '../../User/ErrorBox'
 import {modifyLoginPassword} from '../../../utils/api/personal'
 import {returnAjaxMessage} from '../../../utils/commonFunc'
 // 底部
@@ -86,16 +102,21 @@ export default {
   components: {
     HeaderCommon, // 头部
     IconFontCommon, // 字体图标
+    ErrorBox,
     FooterCommon // 底部
   },
   data () {
     return {
       globalUserInformation: {}, // 个人信息
-      errorMsg: '', // 错误信息提示
       originalLoginPassword: '', // 原登录密码
       newLoginPassword: '', // 新登录密码
       confirmLoginPassword: '', // 确认登录密码
-      successCountDown: 1 // 成功倒计时
+      successCountDown: 1, // 成功倒计时
+      errorShowStatusList: [
+        '', // 原登录密码
+        '', // 新登录密码
+        '' // 确认登录密码
+      ]
     }
   },
   created () {
@@ -121,35 +142,81 @@ export default {
       this.CHANGE_USER_CENTER_ACTIVE_NAME('security-center')
       this.$router.go(-1)
     },
-    // 清空内容信息
-    emptyStatus () {
-      this.errorMsg = ''
+    // 检测输入格式
+    checkoutInputFormat (type, targetNum) {
+      switch (type) {
+        // 原登录密码
+        case 0:
+          if (!targetNum) {
+            this.setErrorMsg(0, '请输入原登录密码')
+            this.$forceUpdate()
+            return 1
+          } else {
+            this.setErrorMsg(0, '')
+            this.$forceUpdate()
+            return 0
+          }
+        // 新登录密码
+        case 1:
+          if (!targetNum) {
+            this.setErrorMsg(1, '请输入新登录密码')
+            this.$forceUpdate()
+            return 0
+          } else {
+            this.setErrorMsg(1, '')
+            this.$forceUpdate()
+            return 1
+          }
+        // 确认密码
+        case 2:
+          if (!targetNum) {
+            this.setErrorMsg(2, '请输入确认登录密码')
+            this.$forceUpdate()
+            return 0
+          } else if (targetNum === this.newLoginPassword) {
+            this.setErrorMsg(2, '')
+            this.$forceUpdate()
+            return 1
+          } else {
+            this.setErrorMsg(2, '密码不一致，请重新确认')
+            this.$forceUpdate()
+            return 0
+          }
+      }
+    },
+    // 设置错误信息
+    setErrorMsg (index, msg) {
+      this.errorShowStatusList[index] = msg
     },
     // 确定修改登录密码
     getStatusSubmit () {
-      console.log(1)
-      // if (!this.emailAccounts) {
-      //   this.errorMsg = '邮箱账号不能为空'
-      // } else if (!this.emailCode) {
-      //   this.errorMsg = '验证码不能为空'
-      // } else {
-      //   this.errorMsg = ''
-      // }
       this.confirmModifyLoginPassword()
     },
     // 确定修改方法
     async confirmModifyLoginPassword () {
-      let data
-      let param = {
-        oldPassword: this.originalLoginPassword, // 旧登录密码
-        newPassword: this.newLoginPassword // 新登录密码
-      }
-      data = await modifyLoginPassword(param)
-      if (!(returnAjaxMessage(data, this, 1))) {
-        return false
+      let goOnStatus = 0
+      if (
+        this.checkoutInputFormat(0, this.originalLoginPassword) &&
+        this.checkoutInputFormat(0, this.newLoginPassword) &&
+        this.checkoutInputFormat(1, this.confirmLoginPassword)
+      ) {
+        goOnStatus = 1
       } else {
-        this.successJump()
-        console.log(data)
+        goOnStatus = 0
+      }
+      if (goOnStatus) {
+        let data
+        let param = {
+          oldPassword: this.originalLoginPassword, // 旧登录密码
+          newPassword: this.newLoginPassword // 新登录密码
+        }
+        data = await modifyLoginPassword(param)
+        if (!(returnAjaxMessage(data, this, 1))) {
+          return false
+        } else {
+          this.successJump()
+          console.log(data)
+        }
       }
     },
     // 谷歌绑定成功自动跳转

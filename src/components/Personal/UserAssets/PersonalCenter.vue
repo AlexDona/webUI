@@ -203,6 +203,7 @@ export default {
           break
         case 'identity-authentication':
           this.$refs.identityValue.getRealNameInformation()
+          this.$refs.identityValue.getCountryListings()
           break
         case 'account-credited':
           this.$refs.accountCreditedValue.getAccountPaymentTerm()

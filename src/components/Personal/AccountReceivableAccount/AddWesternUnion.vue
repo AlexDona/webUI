@@ -115,7 +115,7 @@ export default {
       let data
       let param = {
         address: this.telegraphicTransferAddress, // 西联汇款账号
-        password: this.transactionPassword, // 交易密码
+        payPassword: this.transactionPassword, // 交易密码
         bankType: 'xilian' // type
       }
       data = await statusCardSettings(param)

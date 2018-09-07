@@ -20,9 +20,9 @@
                 @change="changeId"
               >
                 <el-option
-                  v-for="item in currencyList"
-                  :key="item.coinId"
-                  :label="item.shortName"
+                  v-for="(item, index) in currencyList"
+                  :key="index"
+                  :label="item.name"
                   :value="item.coinId">
                 </el-option>
               </el-select>
@@ -37,85 +37,59 @@
             <el-form-item label="买方UID">
               <input
                 class="form-input-common border-radius2 padding-l15"
-                @focus="emptyStatus"
-                ref="buyUID"
-                @keyup="changeInputValue('buyUID')"
+                v-model="buyUID"
+                @keydown="setErrorMsg(0, '')"
+                @blur="checkoutInputFormat(0, buyUID)"
+              />
+              <!--错误提示-->
+              <ErrorBox
+                :text="errorShowStatusList[0]"
+                :isShow="!!errorShowStatusList[0]"
               />
             </el-form-item>
             <el-form-item label="数量">
               <input
                 class="form-input-common border-radius2 padding-l15"
-                @focus="emptyStatus"
                 ref="count"
                 @keyup="changeInputValue('count')"
+                @keydown="setErrorMsg(1, '')"
+                @blur="checkoutInputFormat(1, count)"
+              />
+              <!--错误提示-->
+              <ErrorBox
+                :text="errorShowStatusList[1]"
+                :isShow="!!errorShowStatusList[1]"
               />
             </el-form-item>
             <el-form-item label="价格">
               <input
                 class="form-input-common border-radius2 padding-l15"
-                @focus="emptyStatus"
                 ref="price"
                 @keyup="changeInputValue('price')"
+                @keydown="setErrorMsg(2, '')"
+                @blur="checkoutInputFormat(2, price)"
+              />
+              <!--错误提示-->
+              <ErrorBox
+                :text="errorShowStatusList[2]"
+                :isShow="!!errorShowStatusList[2]"
               />
             </el-form-item>
             <el-form-item label="交易密码">
               <input
                 type="password"
                 class="form-input-common border-radius2 padding-l15"
-                @focus="emptyStatus"
-                ref="transactionPassword"
-                @keyup="changeInputValue('transactionPassword')"
+                v-model="transactionPassword"
+                @keydown="setErrorMsg(3, '')"
+                @blur="checkoutInputFormat(3, transactionPassword)"
+              />
+              <!--错误提示-->
+              <ErrorBox
+                :text="errorShowStatusList[3]"
+                :isShow="!!errorShowStatusList[3]"
               />
             </el-form-item>
-            <el-form-item
-              label="手机验证码"
-              v-if="SecurityCenter.isPhoneBind"
-            >
-              <el-input
-                @focus="emptyStatus"
-                v-model="phoneCode"
-              >
-                <template slot="append">
-                  <CountDownButton
-                    class="send-code-btn cursor-pointer"
-                    :status="disabledOfPhoneBtn"
-                    @run="sendPhoneOrEmailCodeWithPush(0)"
-                  />
-                </template>
-              </el-input>
-            </el-form-item>
-            <span v-else></span>
-            <el-form-item
-              label="邮箱验证码"
-              v-if="SecurityCenter.isMailBind"
-            >
-              <el-input
-                @focus="emptyStatus"
-                v-model="emailCode"
-              >
-                <template slot="append">
-                  <CountDownButton
-                    class="send-code-btn cursor-pointer"
-                    :status="disabledOfEmailBtn"
-                    @run="sendPhoneOrEmailCodeWithPush(1)"
-                  />
-                </template>
-              </el-input>
-            </el-form-item>
-            <span v-else></span>
-            <el-form-item
-              label="谷歌验证码"
-              v-if="SecurityCenter.isGoogleBind"
-            >
-              <input
-                type="text"
-                class="form-input-common border-radius2 padding-l15"
-                @focus="emptyStatus"
-                v-model="googleCode"
-              />
-            </el-form-item>
-            <span v-else></span>
-            <div v-show="errorMsg">{{ errorMsg }}</div>
+            <!--<div v-show="errorMsg">{{ errorMsg }}</div>-->
             <button
               class="form-button-common border-radius4"
               @click="getStatusSubmit"
@@ -335,19 +309,29 @@ import {
   pushPropertyTransaction,
   statusSecurityCenter
 } from '../../../utils/api/personal'
+import ErrorBox from '../../User/ErrorBox'
 import CountDownButton from '../../Common/CountDownCommon'
 import {timeFilter} from '../../../utils/index'
 import {createNamespacedHelpers, mapState} from 'vuex'
-import {returnAjaxMessage, sendPhoneOrEmailCodeAjax} from '../../../utils/commonFunc'
+import {
+  returnAjaxMessage
+} from '../../../utils/commonFunc'
 const {mapMutations} = createNamespacedHelpers('personal')
 export default {
   components: {
+    ErrorBox, // 错误提示接口
     CountDownButton // 短信倒计时
   },
   // props,
   data () {
     return {
       errorMsg: '', // 错误信息提示
+      errorShowStatusList: [
+        '', // 买方UID
+        '', // 数量
+        '', // 价格
+        '' // 交易密码
+      ],
       showStatusUserInfo: {}, // 个人信息
       // 币种
       currencyValue: '',
@@ -391,11 +375,6 @@ export default {
     require('../../../../static/css/theme/day/Personal/UserAssets/PushAssetDay.css')
     // 黑色主题样式
     require('../../../../static/css/theme/night/Personal/UserAssets/PushAssetNight.css')
-    // 获取全局个人信息
-    // console.log(this.userInfo)
-    this.showStatusUserInfo = this.userInfo.data.user
-    // this.getPushRecordList()
-    // console.log(this.getPushRecordList())
   },
   mounted () {},
   activited () {},
@@ -408,10 +387,6 @@ export default {
     // 1.时间格式化
     timeFormatting (date) {
       return timeFilter(date, 'normal')
-    },
-    // 2.清空内容信息
-    emptyStatus () {
-      this.errorMsg = ''
     },
     // 3.修改input value
     changeInputValue (ref) {
@@ -434,22 +409,23 @@ export default {
         // 返回push记录数据
         this.pushRecordList = data.data.data.userPushVOPageInfo.list
         // 返回push币种信息列表
-        this.currencyValue = data.data.data.coinLists[0].shortName
+        this.currencyValue = data.data.data.coinLists[0].name
         this.currencyValue = data.data.data.coinLists[0].coinId
         // 刷新列表默认币种
         this.balance = data.data.data.total
         this.currencyList = data.data.data.coinLists
-        // console.log(this.currencyList)
-        // console.log(this.balance)
         // 金额
         this.sum = data.data.data.pushPayCoinName
-        console.log(this.sum)
+        console.log(this.pushRecordList)
+        console.log(this.currencyValue)
+        console.log(this.balance)
       }
     },
     // 资产币种下拉
     changeId (e) {
       this.currencyList.forEach(item => {
         if (e === item.id) {
+          console.log(e)
           this.toggleAssetsCurrencyId(e)
         }
       })
@@ -466,48 +442,69 @@ export default {
       } else {
         // 点击资产币种下拉
         this.balance = data.data.data.total
+        console.log(this.balance)
       }
-    },
-    /**
-     * 发送短信验证码或邮箱验证码
-     */
-    sendPhoneOrEmailCodeWithPush (loginType) {
-      console.log(this.disabledOfPhoneBtn)
-      // console.log(this.disabledOfEmailBtn)
-      if (this.disabledOfPhoneBtn || this.disabledOfEmailBtn) {
-        return false
-      }
-      let params = {
-        country: this.activeCountryCode
-      }
-      sendPhoneOrEmailCodeAjax(loginType, params, (data) => {
-        console.log(this.disabledOfPhoneBtn)
-        // 提示信息
-        if (!returnAjaxMessage(data, this)) {
-          console.log('error')
-          return false
-        } else {
-          switch (loginType) {
-            case 0:
-              this.$store.commit('user/SET_USER_BUTTON_STATUS', {
-                loginType: 0,
-                status: true
-              })
-              break
-            case 1:
-              this.$store.commit('user/SET_USER_BUTTON_STATUS', {
-                loginType: 1,
-                status: true
-              })
-              break
-          }
-        }
-      })
     },
     /**
      * 5.提交push
      */
+    // 检测输入格式
+    checkoutInputFormat (type, targetNum) {
+      console.log(type)
+      switch (type) {
+        // 买方UID
+        case 0:
+          console.log(type)
+          if (!targetNum) {
+            this.setErrorMsg(0, '请输入买方UID')
+            this.$forceUpdate()
+            return 0
+          } else {
+            this.setErrorMsg(0, '')
+            this.$forceUpdate()
+            return 1
+          }
+        // 数量
+        case 1:
+          if (!targetNum) {
+            this.setErrorMsg(1, '请输入数量')
+            this.$forceUpdate()
+            return 0
+          } else {
+            this.setErrorMsg(1, '')
+            this.$forceUpdate()
+            return 1
+          }
+        // 价格
+        case 2:
+          if (!targetNum) {
+            this.setErrorMsg(2, '请输入价格')
+            this.$forceUpdate()
+            return 0
+          } else {
+            this.setErrorMsg(2, '')
+            this.$forceUpdate()
+            return 0
+          }
+        // 交易密码
+        case 3:
+          if (!targetNum) {
+            this.setErrorMsg(3, '请输入交易密码密码')
+            this.$forceUpdate()
+            return 0
+          } else {
+            this.setErrorMsg(3, '')
+            this.$forceUpdate()
+            return 1
+          }
+      }
+    },
+    // 设置错误信息
+    setErrorMsg (index, msg) {
+      this.errorShowStatusList[index] = msg
+    },
     getStatusSubmit () {
+      this.checkoutInputFormat()
       this.stateSubmitPushAssets()
     },
     // 提交push资产
@@ -518,8 +515,8 @@ export default {
         uid: this.buyUID, // 买方id
         count: this.count, // push数量
         price: this.price, // push价格
-        password: this.transactionPassword, // 交易密码
-        code: this.phoneCode // 短信验证码
+        password: this.transactionPassword // 交易密码
+        // code: this.phoneCode // 短信验证码
       }
       data = await pushAssetsSubmit(param)
       if (!(returnAjaxMessage(data, this, 1))) {

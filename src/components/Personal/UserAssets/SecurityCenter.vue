@@ -569,29 +569,22 @@ export default {
       })
     },
     // 关闭开启验证状态事件
-    showStatusVerificationClose (e, a) {
+    showStatusVerificationClose (paymentType, safeState) {
       // 把方法中定义的activeType、state在这里进行赋值 点击哪一个那当前的类型和状态传给后台
-      this.activeType = e
-      this.state = a
-      switch (e) {
+      this.activeType = paymentType
+      this.state = safeState
+      switch (paymentType) {
         case 'email':
           if (!this.SecurityCenter.isMailBind) {
             this.openTheValidation = false
           } else {
-            if (a === 'enable') {
+            if (safeState === 'enable') {
               this.openEmail = true
               this.openPhone = false
               this.openGoogle = false
               this.openTheValidation = true
             } else {
-              if (this.SecurityCenter.isMailBind &&
-                !this.SecurityCenter.isPhoneBind &&
-                !this.SecurityCenter.isGoogleBind
-              ) {
-                this.closeValidation = false
-              } else {
-                this.closeValidation = true
-              }
+              this.closeValidation = true
             }
           }
           break
@@ -599,20 +592,13 @@ export default {
           if (!this.SecurityCenter.isPhoneBind) {
             this.openTheValidation = false
           } else {
-            if (a === 'enable') {
+            if (safeState === 'enable') {
               this.openEmail = false
               this.openPhone = true
               this.openGoogle = false
               this.openTheValidation = true
             } else {
-              if (!this.SecurityCenter.isMailBind &&
-                this.SecurityCenter.isPhoneBind &&
-                !this.SecurityCenter.isGoogleBind
-              ) {
-                this.closeValidation = false
-              } else {
-                this.closeValidation = true
-              }
+              this.closeValidation = true
             }
           }
           break
@@ -620,20 +606,13 @@ export default {
           if (!this.SecurityCenter.isGoogleBind) {
             this.openTheValidation = false
           } else {
-            if (a === 'enable') {
+            if (safeState === 'enable') {
               this.openEmail = false
               this.openPhone = false
               this.openGoogle = true
               this.openTheValidation = true
             } else {
-              if (!this.SecurityCenter.isMailBind &&
-                !this.SecurityCenter.isPhoneBind &&
-                this.SecurityCenter.isGoogleBind
-              ) {
-                this.closeValidation = false
-              } else {
-                this.closeValidation = true
-              }
+              this.closeValidation = true
             }
           }
           break

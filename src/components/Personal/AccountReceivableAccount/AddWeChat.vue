@@ -137,7 +137,7 @@ export default {
     async stateSeniorCertification () {
       let data
       let param = {
-        cardNo: this.account, // 微信账号
+        cardNo: this.cardNo, // 微信账号
         qrcode: this.dialogImageHandUrl, // 二维码
         bankType: 'weixin' // type
       }

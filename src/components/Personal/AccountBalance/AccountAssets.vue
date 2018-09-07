@@ -89,7 +89,7 @@
                 </div>
               </div>
               <div
-                class="table-tr margin20 font-size12"
+                class="table-tr font-size12 paddinglr20"
                 v-for="(assetItem, index) in withdrawDepositIsShowList"
                 :key="index"
               >
@@ -107,7 +107,7 @@
                     {{ assetItem.total }}
                   </div>
                   <div class="table-td flex1 text-align-c">
-                    {{ assetItem.assetValuation }}
+                    {{ assetItem.frozen + assetItem.total }}
                   </div>
                   <div class="table-td flex1 display-flex text-align-r font-size12">
                     <div
@@ -197,7 +197,7 @@
                     </div>
                     <!--提币内容-->
                     <div
-                      class="recharge-list recharge-list-mention display-flex padding20"
+                      class="recharge-list recharge-list-mention display-flex"
                       v-show="withdrawDepositIsShowList[index].withdrawDepositIsShow"
                     >
                       <p class="triangle triangle-one"></p>
@@ -215,7 +215,7 @@
                               <el-option
                                 v-for="(item, index) in mentionAddressList"
                                 :key="index"
-                                :label="item.address"
+                                :label="item.address + '—' + item.remark"
                                 :value="item.coinId"
                               >
                               </el-option>
@@ -224,19 +224,26 @@
                               class="new-address cursor-pointer"
                               @click="stateMentionAddress"
                             >
-                          新增
-                        </span>
+                              新增
+                            </span>
                           </div>
-                          <div class="flex-box padding-top40">
+                          <div class="flex-box padding-top20">
                             <p class="left-flex-hint">
-                              手续费 (5~10)
+                              手续费
                             </p>
                             <input
                               type="text"
                               class="flex-input border-radius2 padding-l15 box-sizing"
                               ref="serviceCharge"
-                              @keyup="changeInputValue('serviceCharge', index)"
+                              @keyup="changeInputValue('serviceCharge', index, pointLength)"
+                              @input="changeInputValue('serviceCharge', index, pointLength)"
                             >
+                            <span
+                              class="new-address new-address-currency cursor-pointer"
+                            >
+                              {{ chargeMoneyName }}
+                            </span>
+                            <span class="service-charge display-inline-block text-align-r">(1~2)</span>
                           </div>
                         </div>
                         <div class="count-box flex1 font-size12">
@@ -246,14 +253,15 @@
                               type="text"
                               class="count-flex-input border-radius2 paddinglr15 box-sizing text-align-r"
                               ref="rechargeCount"
-                              @keyup="changeInputValue('rechargeCount', index)"
+                              @keyup="changeInputValue('rechargeCount', index, pointLength)"
+                              @input="changeInputValue('rechargeCount', index, pointLength)"
                             >
                             <p class="count-flex-text text-align-r">
                               <span>限额：</span>
                               <span>600000.00CNY</span>
                             </p>
                           </div>
-                          <div class="count-flex-box padding-top40">
+                          <div class="count-flex-box padding-top20">
                             <p class="content-flex-hint">到账数量</p>
                             <input
                               type="text"
@@ -266,13 +274,13 @@
                       </div>
                       <div class="text-info flex1 font-size12">
                         <p class="currency-rule">
-                          BTC提现费率规则：
+                          <span>{{ chargeMoneyName }}</span>提现费率规则：
                         </p>
                         <p class="prompt-message">
                           * 为了用户资金安全，平台可能会电话确认您的提币操作，请注意接听；
                         </p>
                         <p class="prompt-message">
-                          * BTC充值经过1个确认后，才允许提现；
+                          * <span>{{ chargeMoneyName }}</span>充值经过1个确认后，才允许提现；
                         </p>
                         <p class="prompt-message">
                           * 可提现金额≤账户可用资产-未确认的数字资产。
@@ -310,11 +318,13 @@ import UserInfo from '../AccountBalance/UserInfo'
 // 字体图标
 import IconFontCommon from '../../Common/IconFontCommon'
 import VueClipboard from 'vue-clipboard2'
+import {formatNumberInput} from '../../../utils'
 import { createNamespacedHelpers, mapState } from 'vuex'
 import {
   assetCurrenciesList,
   inquireWithdrawalAddressList,
-  inquireRechargeAddressList
+  inquireRechargeAddressList,
+  statusSubmitWithdrawButton
 } from '../../../utils/api/personal'
 import {returnAjaxMessage} from '../../../utils/commonFunc'
 const { mapMutations } = createNamespacedHelpers('personal')
@@ -360,14 +370,16 @@ export default {
         }
       ],
       // 充值
-      chargeDialogVisible: false, // 取消弹窗默认隐藏
+      chargeDialogVisible: false, // 默认隐藏
       chargeMoneyAddressId: '', // 每行数据ID
       chargeMoneyName: '', // 每行数据币种名称
       // 提币
-      mentionDialogVisible: false, // 取消弹窗默认隐藏
+      mentionDialogVisible: false, // 默认隐藏
       mentionMoneyAddressId: '', // 每行数据ID
       mentionMoneyName: '', // 每行数据币种名称
       mentionAddressValue: '', // 每行数据提币地址
+      amount: '', // 数量
+      pointLength: 4, // 小数为限制
       // 提币地址列表
       mentionAddressList: [],
       activeCurrency: {}, // 当前选中币种
@@ -396,8 +408,6 @@ export default {
     // 切换当前币种
     // 确认开启关闭
     statusOpenToClose (e) {
-      // 把方法中定义的activeType、state在这里进行赋值 点击哪一个那当前的类型和状态传给后台
-      // this.activeType = e
       console.log(e)
       switch (e) {
         case 'all':
@@ -428,22 +438,22 @@ export default {
         this.getAssetCurrenciesList(this.searchList)
       }
     },
-    // 修改input value
-    changeInputValue (ref, index) {
-      // console.dir(this.$refs[ref])
+    // 输入限制
+    // 修改input value 输入限制
+    changeInputValue (ref, index, pointLength) {
+      // 获取ref中input值
       this[ref] = this.$refs[ref].value
-      // console.log(this[ref])
-      if (!this.serviceCharge) {
-        this.serviceChargeCount = this.$refs.rechargeCount[index].value
-        console.log(this.serviceChargeCount)
-      } else {
-        this.serviceChargeCount = Math.abs(this.$refs.rechargeCount[index].value - this.$refs.serviceCharge[index].value)
-        console.log(this.serviceChargeCount)
-      }
+      // 限制数量小数位位数
+      let target = this.$refs[ref][index]
+      formatNumberInput(target, pointLength)
+      // 获取输入数量
+      this.amount = this.$refs.rechargeCount[index].value
+      // 输入数量之后显示在到账数量框中显示,在手续费中输入手续费并且以输入数量之后减去的值显示在到账数量
+      this.serviceChargeCount = Math.abs(this.$refs.rechargeCount[index].value - this.$refs.serviceCharge[index].value)
+      console.log(this.serviceChargeCount)
     },
     // 显示充值框
     showRechargeBox (id, name, index) {
-      console.log(id)
       this.chargeDialogVisible = true
       this.chargeMoneyAddressId = id
       this.chargeMoneyName = name
@@ -451,14 +461,16 @@ export default {
         item.rechargeIsShow = false
         item.withdrawDepositIsShow = false
       })
-      this.withdrawDepositIsShowList[index].rechargeIsShow = true
+      if (!this.withdrawDepositIsShowList[index].rechargeIsShow) {
+        this.withdrawDepositIsShowList[index].rechargeIsShow = true
+      } else {
+        this.withdrawDepositIsShowList[index].withdrawDepositIsShow = false
+      }
       // 调用充币地址方法
       this.fillingCurrencyAddress()
     },
     // 显示提现框
     mentionMoneyButton (id, name, index) {
-      console.log(id)
-      console.log(index)
       this.mentionDialogVisible = true
       this.mentionMoneyAddressId = id
       this.mentionMoneyName = name
@@ -467,6 +479,7 @@ export default {
         item.withdrawDepositIsShow = false
       })
       this.withdrawDepositIsShowList[index].withdrawDepositIsShow = true
+      this.withdrawDepositIsShowList[index].rechargeIsShow = false
       // 调用充币地址方法
       this.queryWithdrawalAddressList()
     },
@@ -507,9 +520,9 @@ export default {
     // 资产币种提币地址选择
     changeId (e) {
       this.mentionAddressList.forEach(item => {
-        if (e === item.id) {
-          this.mentionAddressValue = e
-          console.log(item.currencyValue)
+        console.log(item)
+        if (e === item.coinId) {
+          this.mentionAddressValue = item.address
         }
       })
     },
@@ -519,14 +532,13 @@ export default {
         // shortName: this.partnerId, // 币种名称
         // selectType: this.hideStatusButton // all：所有币种 noall：有资产币种
       })
-      // console.log(data)
+      console.log(data)
       if (!(returnAjaxMessage(data, this, 0))) {
         return false
       } else {
         // 返回列表数据
         this.mentionAddressList = data.data.data.UserWithdrawAddressPage.list
         this.mentionAddressValue = data.data.data.UserWithdrawAddressPage.list[0].address
-        this.mentionAddressValue = data.data.data.UserWithdrawAddressPage.list[0].coinId
         console.log(this.mentionAddressList)
         console.log(this.mentionAddressValue)
       }
@@ -557,18 +569,16 @@ export default {
     async stateSubmitPushAssets () {
       let data
       let param = {
-        coinId: this.currencyValue, // 提币地址id
-        userId: this.buyUID, // 用户id
-        partnerId: this.count, // 商户id
-        amount: this.price, // 提币数量
-        withdrawAddress: this.transactionPassword // 交易密码
+        coinId: this.mentionMoneyAddressId, // 币种ID
+        withdrawAddress: this.mentionAddressValue, // 提币地址
+        amount: this.amount // 提币数量
       }
       data = await statusSubmitWithdrawButton(param)
       if (!(returnAjaxMessage(data, this, 1))) {
         return false
       } else {
         // 提币地址列表查询
-        this.queryWithdrawalAddressList()
+        this.getAssetCurrenciesList()
       }
     },
     // 点击跳转账单明细
@@ -601,6 +611,7 @@ export default {
   filter: {},
   computed: {
     ...mapState({
+      partnerId: state => state.common.partnerId,
       theme: state => state.common.theme
     })
   },
@@ -645,6 +656,7 @@ export default {
               width: 100%;
               height: 50px;
               >.table-tr {
+                /*padding: 14px;*/
                 >.table-box {
                   >.recharge-list-mention {
                     height:225px !important;
@@ -652,6 +664,7 @@ export default {
                   >.recharge-list {
                     position: relative;
                     height:195px;
+                    padding: 20px 6px;
                     >.triangle {
                       position: absolute;
                       top: -7px;
@@ -706,13 +719,17 @@ export default {
                       }
                     }
                     >.recharge-list-left {
-                      flex: 3;
+                      flex: 2;
                       >.list-left-flex {
                         >.flex-box {
                           position: relative;
                           height: 80px;
                           >.left-flex-hint {
                             line-height: 20px ;
+                          }
+                          >.service-charge {
+                            width: 100%;
+                            height: 20px;
                           }
                           >.flex-input,
                           >.text-input {
@@ -723,6 +740,9 @@ export default {
                             position: absolute;
                             top: 30px;
                             right: 15px;
+                          }
+                          >.new-address-currency {
+                            top: 40px;
                           }
                         }
                       }
@@ -746,6 +766,7 @@ export default {
                       }
                     }
                     >.text-info {
+                      padding-left: 15px;
                       >.currency-rule,
                       >.prompt-message {
                         line-height: 20px;
