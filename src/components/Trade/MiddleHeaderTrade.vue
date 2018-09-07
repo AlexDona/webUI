@@ -33,7 +33,7 @@
               'down':activeSymbol.rose<0
             }"
           >{{activeSymbol.price}}</span>
-          <span class="font-size12">≈ 0.25</span>
+          <span class="font-size12 theme-color">≈ 0.25</span>
         </div>
       </div>
       <!--涨跌-->
@@ -71,7 +71,7 @@
         </div>
         <div class="bottom">
           <span
-            class="font-size14"
+            class="font-size14 theme-color"
           >{{activeSymbol.low}}</span>
         </div>
       </div>
@@ -81,7 +81,7 @@
         </div>
         <div class="bottom">
             <span
-              class="font-size14"
+              class="font-size14 theme-color"
             >
               {{activeSymbol.volume}}
             </span>
@@ -111,7 +111,11 @@ export default {
       activeSymbol: state => state.common.activeSymbol
     })
   },
-  watch: {}
+  watch: {
+    activeSymbol (newVal) {
+      console.log(newVal)
+    }
+  }
 }
 </script>
 <style scoped lang="scss">
@@ -137,7 +141,6 @@ export default {
           flex:0.5;
           >.logo{
             width:30px;
-            /*margin-left:40px;*/
           }
         }
         &.symbol{
@@ -164,11 +167,71 @@ export default {
         }
       }
     }
-    &.day{
-      background-color: #fff;
-    }
     &.night{
       background-color: $nightMainTitleBgColor;
+      >.inner-box{
+        .item{
+          >.top,>.bottom{
+          }
+          &.logo{
+            >.logo{
+            }
+          }
+          &.symbol{
+            color:#fff;
+            >.top{
+            }
+          }
+          &.latest-price{
+            >.top{
+            }
+          }
+          >.bottom{
+            >span{
+              &.up{
+              }
+              &.down{
+              }
+            }
+            >.theme-color{
+              color:#fff;
+            }
+          }
+        }
+      }
+    }
+    &.day{
+      background-color: #fff;
+      >.inner-box{
+        .item{
+          >.top,>.bottom{
+          }
+          &.logo{
+            >.logo{
+            }
+          }
+          &.symbol{
+            color:#333;
+            >.top{
+            }
+          }
+          &.latest-price{
+            >.top{
+            }
+          }
+          >.bottom{
+            >span{
+              &.up{
+              }
+              &.down{
+              }
+            }
+            >.theme-color{
+              color:#333;
+            }
+          }
+        }
+      }
     }
   }
 </style>

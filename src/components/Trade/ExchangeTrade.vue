@@ -28,7 +28,7 @@
                   <span class="margin-left10 buy">
                     可买：
                     <span>--</span>
-                    <span>BTC</span>
+                    <span>{{activeSymbol.sellsymbol}}</span>
                   </span>
                 </div>
                 <div class="right item">
@@ -45,8 +45,9 @@
                     :ref="limitBuyPriceInputRef"
                     @keyup="formatInput(limitBuyPriceInputRef,pointLength)"
                     @input="formatInput(limitBuyPriceInputRef,pointLength)"
+                    @keydown="autoChangeData('buy-price', $event)"
                   >
-                  <span class="currency">FBT</span>
+                  <span class="currency">{{activeSymbol.area}}</span>
                   <div class="rate-changer">
                     ≈ 0.25
                   </div>
@@ -56,11 +57,12 @@
                   <input
                     type="text"
                     placeholder="买入量"
-                    :ref="limitBuyAcountInputRef"
-                    @keyup="formatInput(limitBuyAcountInputRef,pointLength)"
-                    @input="formatInput(limitBuyAcountInputRef,pointLength)"
+                    :ref="limitBuyCountInputRef"
+                    @keyup="formatInput(limitBuyCountInputRef,pointLength)"
+                    @input="formatInput(limitBuyCountInputRef,pointLength)"
+                    @keydown="autoChangeData('buy-acount', $event)"
                   >
-                  <span class="currency">BTC</span>
+                  <span class="currency">{{activeSymbol.sellsymbol}}</span>
                 </div>
                 <!--交易密码-->
                 <div class="input">
@@ -77,16 +79,8 @@
                 <div class="volume-rate">
                   <div class="item">
                     <span>预计交易额：</span>
-                    <span class="buy">0</span>
-                    <span>FBT</span>
-                  </div>
-                  <div class="item right">
-                    <span>手续费：</span>
-                    <span class="buy">0</span>
-                    <span>FBT</span>
-                    <span>
-                      (费率：<span class="buy">0.1%</span>)
-                    </span>
+                    <span class="buy">{{limitExchange.buyAmount}}</span>
+                    <span>{{activeSymbol.area}}</span>
                   </div>
                 </div>
                 <div class="submit">
@@ -103,9 +97,9 @@
                 <div class="left item">
                   <IconFont iconName="icon-qianbao-"/>
                   <span class="margin-left10 sell">
-                    可买：
+                    可卖：
                     <span>--</span>
-                    <span>BTC</span>
+                    <span>{{activeSymbol.sellsymbol}}</span>
                   </span>
                 </div>
                 <div class="right item">
@@ -122,8 +116,9 @@
                     :ref="limitSellPriceInputRef"
                     @keyup="formatInput(limitSellPriceInputRef,pointLength)"
                     @input="formatInput(limitSellPriceInputRef,pointLength)"
+                    @keydown="autoChangeData('sell-price', $event)"
                   >
-                  <span class="currency">FBT</span>
+                  <span class="currency">{{activeSymbol.area}}</span>
                   <div class="rate-changer">
                     ≈ 0.25
                   </div>
@@ -136,8 +131,9 @@
                     :ref="limitSellAcountInputRef"
                     @keyup="formatInput(limitSellAcountInputRef,pointLength)"
                     @input="formatInput(limitSellAcountInputRef,pointLength)"
+                    @keydown="autoChangeData('sell-count', $event)"
                   >
-                  <span class="currency">BTC</span>
+                  <span class="currency">{{activeSymbol.sellsymbol}}</span>
                 </div>
                 <!--交易密码-->
                 <div class="input">
@@ -154,16 +150,8 @@
                 <div class="volume-rate">
                   <div class="item">
                     <span>预计交易额：</span>
-                    <span class="sell">0</span>
-                    <span>FBT</span>
-                  </div>
-                  <div class="item right">
-                    <span>手续费：</span>
-                    <span class="sell">0</span>
-                    <span>FBT</span>
-                    <span>
-                      (费率：<span class="sell">0.1%</span>)
-                    </span>
+                    <span class="sell">{{limitExchange.sellAmount}}</span>
+                    <span>{{activeSymbol.area}}</span>
                   </div>
                 </div>
                 <div class="submit">
@@ -188,7 +176,7 @@
                   <span class="margin-left10 buy">
                     可买：
                     <span>--</span>
-                    <span>BTC</span>
+                    <span>{{activeSymbol.sellsymbol}}</span>
                   </span>
                 </div>
                 <div class="right item">
@@ -199,15 +187,8 @@
               <div class="content">
                 <!--市场成交价-->
                 <div class="input">
-                  <!--<input-->
-                    <!--type="text"-->
-                    <!--placeholder="买入价"-->
-                    <!--:ref="buyPriceInputRef"-->
-                    <!--@keyup="formatInput(buyPriceInputRef,pointLength)"-->
-                    <!--@input="formatInput(buyPriceInputRef,pointLength)"-->
-                  <!--&gt;-->
                   <div class="market-price buy-price">市场成交价</div>
-                  <span class="currency">FBT</span>
+                  <span class="currency">{{activeSymbol.area}}</span>
                 </div>
                 <!--买入量-->
                 <div class="input">
@@ -218,7 +199,7 @@
                     @keyup="formatInput(marketBuyAcountInputRef,pointLength)"
                     @input="formatInput(marketBuyAcountInputRef,pointLength)"
                   >
-                  <span class="currency">BTC</span>
+                  <span class="currency">{{activeSymbol.sellsymbol}}</span>
                 </div>
                 <!--交易密码-->
                 <div class="input">
@@ -236,15 +217,7 @@
                   <div class="item">
                     <span>预计交易额：</span>
                     <span class="buy">0</span>
-                    <span>FBT</span>
-                  </div>
-                  <div class="item right">
-                    <span>手续费：</span>
-                    <span class="buy">0</span>
-                    <span>FBT</span>
-                    <span>
-                      (费率：<span class="buy">0.1%</span>)
-                    </span>
+                    <span>{{activeSymbol.area}}</span>
                   </div>
                 </div>
                 <div class="submit">
@@ -261,9 +234,9 @@
                 <div class="left item">
                   <IconFont iconName="icon-qianbao-"/>
                   <span class="margin-left10 sell">
-                    可买：
+                    可卖：
                     <span>--</span>
-                    <span>BTC</span>
+                    <span>{{activeSymbol.sellsymbol}}</span>
                   </span>
                 </div>
                 <div class="right item">
@@ -274,15 +247,8 @@
               <div class="content">
                 <!--市场成交价-->
                 <div class="input">
-                  <!--<input-->
-                    <!--type="text"-->
-                    <!--placeholder="卖出价"-->
-                    <!--:ref="sellPriceInputRef"-->
-                    <!--@keyup="formatInput(sellPriceInputRef,pointLength)"-->
-                    <!--@input="formatInput(sellPriceInputRef,pointLength)"-->
-                  <!--&gt;-->
                   <div class="market-price sell-price">市场成交价</div>
-                  <span class="currency">FBT</span>
+                  <span class="currency">{{activeSymbol.area}}</span>
                 </div>
                 <!--卖出量-->
                 <div class="input">
@@ -293,7 +259,7 @@
                     @keyup="formatInput(marketSellAcountInputRef,pointLength)"
                     @input="formatInput(marketSellAcountInputRef,pointLength)"
                   >
-                  <span class="currency">BTC</span>
+                  <span class="currency">{{activeSymbol.sellsymbol}}</span>
                 </div>
                 <!--交易密码-->
                 <div class="input">
@@ -311,15 +277,7 @@
                   <div class="item">
                     <span>预计交易额：</span>
                     <span class="sell">0</span>
-                    <span>FBT</span>
-                  </div>
-                  <div class="item right">
-                    <span>手续费：</span>
-                    <span class="sell">0</span>
-                    <span>FBT</span>
-                    <span>
-                      (费率：<span class="sell">0.1%</span>)
-                    </span>
+                    <span>{{activeSymbol.area}}</span>
                   </div>
                 </div>
                 <div class="submit">
@@ -367,6 +325,10 @@ export default {
       buyInputValue: '', // 买入input
       pointLength: 4, // 当前币种小数点限制位数
       matchType: 'LIMIT', // 撮合类型： LIMIT:限价单 MARKET:市价单
+      limitExchange: {
+        buyAmount: 0, // 买入成交额
+        sellAmount: 0 // 卖出成交额
+      },
       end: '' // 占位，项目完成后删除
     }
   },
@@ -386,6 +348,20 @@ export default {
     ...mapMutations([
       'TOGGLE_REFRESH_ENTRUST_LIST_STATUS'
     ]),
+    // 数据联动
+    autoChangeData (type, e) {
+      console.log(e.target.value)
+      switch (type) {
+        case 'buy-price':
+          break
+        case 'sell-price':
+          break
+        case 'buy-count':
+          break
+        case 'sell-count':
+          break
+      }
+    },
     // 切换撮合类型
     toggleMatchType (e) {
       switch (e.name) {
@@ -399,6 +375,10 @@ export default {
     },
     // 新增委单
     async addEntrust (type) {
+      if (!this.isLogin) {
+        this.$router.push('/login')
+        return false
+      }
       let params = {
         partnerId: this.partnerId,
         // userId: this.loginStep1Info.userId,
@@ -408,7 +388,6 @@ export default {
         matchType: this.matchType, // 撮合类型
         source: 'Web' // 来源
       }
-      console.dir(this.$refs[this.marketBuyAcountInputRef])
       // 限价单添加价格
       switch (type) {
         // 买单
@@ -461,10 +440,15 @@ export default {
       refreshEntrustStatus: state => state.trade.refreshEntrustStatus,
       partnerId: state => state.common.partnerId,
       loginStep1Info: state => state.user.loginStep1Info,
-      activeSymbol: state => state.common.activeSymbol
+      activeSymbol: state => state.common.activeSymbol,
+      isLogin: state => state.user.isLogin
     })
   },
-  watch: {}
+  watch: {
+    activeSymbol (newVal) {
+      console.log(newVal)
+    }
+  }
 }
 </script>
 <style scoped lang="scss">
@@ -512,9 +496,6 @@ export default {
               }
             }
             >.left{
-            }
-            >.right{
-              text-align: right;
             }
           }
           >.content{

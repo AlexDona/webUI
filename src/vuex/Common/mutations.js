@@ -29,7 +29,8 @@ export default {
   },
   // 切换语言
   [CHANGE_LANGUAGE] (state, data) {
-    state.language = data
+    state.activeLanguage = data
+    state.language = data.shortName
   },
   // 设置折算货币
   [CHANGE_CONVERT_CURRENCY] (state, data) {
@@ -44,6 +45,7 @@ export default {
     state.socketData.depthData = data.depthData
     state.socketData.buyAndSellData = data.buyAndSellData
     state.socketData.tardeRecordList = data.tardeRecordList
+    state.socketData.tradeMarketList = data.tradeMarketList
   },
   // 更改当前选中交易对
   [CHANGE_ACTIVE_SYMBOL] (state, {activeSymbol, previousSymbol}) {

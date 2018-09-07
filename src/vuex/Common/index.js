@@ -9,12 +9,17 @@ const state = {
   theme: getStore('theme') || 'night',
   // 国际化语言
   language: 'zh_CN',
+  activeLanguage: '',
+  mainColor: {
+    $mainNightBgColor: '#1e2636',
+    $mainDayBgColor: '#fff'
+  },
   // 折算货币
   activeConvertCurrency: 'CNY',
   previousSymbol: {}, // 上一个交易对
   // 当前选中交易对
   activeSymbol: {
-    id: 0, // 交易对id 正常数据为 'fbtbtc'
+    id: '', // 交易对id 正常数据为 'fbtbtc'
     tradeId: '',
     image: '', // 币种图标
     sellsymbol: '', // 币种简称
@@ -34,7 +39,8 @@ const state = {
   socketData: {
     depthData: {},
     buyAndSellData: {},
-    tardeRecordList: [] // 交易记录
+    tardeRecordList: [], // 交易记录
+    tradeMarketList: [] // 交易区列表
   },
   // 公用 板块
   plateList: [], // 板块列表

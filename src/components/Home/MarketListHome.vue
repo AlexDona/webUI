@@ -313,12 +313,12 @@
                           >
                             <i
                               class="el-icon-star-on collected collect font-size16 cursor-pointer"
-                              @click="toggleCollect(s.row.id,0,s.row)"
+                              @click.stop="toggleCollect(s.row.id,0,s.row)"
                               v-show="collectStatusList[s.row.id]"
                             ></i>
                             <i
                               class="el-icon-star-off collect font-size16 cursor-pointer"
-                              @click="toggleCollect(s.row.id,1,s.row)"
+                              @click.stop="toggleCollect(s.row.id,1,s.row)"
                               v-show="!collectStatusList[s.row.id]"
                             ></i>
                           </div>
@@ -329,7 +329,7 @@
                           >
                             <i
                               class="el-icon-star-on collected collect font-size16 cursor-pointer"
-                              @click="toggleCollect(s.row.id,0,s.row)"
+                              @click.stop="toggleCollect(s.row.id,0,s.row)"
                             ></i>
                           </div>
                         </template>

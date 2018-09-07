@@ -25,7 +25,7 @@ export default {
     const theme = getStore('theme') || 'night'
     this.CHANGE_THEME(theme)
     document.body.classList.add(theme)
-
+    console.log(document.body)
     // 取折算货币
     const convertCurrency = getStore('convertCurrency')
     this.CHANGE_CONVERT_CURRENCY(convertCurrency)
