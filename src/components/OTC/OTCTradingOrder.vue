@@ -499,6 +499,7 @@
                 <span class="appeal-reason">*申诉原因</span>
                 <el-input
                   type="textarea"
+                  maxlength="20"
                   v-model="appealTextareaValue"
                 >
                 </el-input>

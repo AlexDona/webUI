@@ -104,11 +104,11 @@
                 v-model="activitedPayTypes"
                 @change='changePayTypes'
               >
-                <el-checkbox label="alipay">支付宝</el-checkbox>
-                <el-checkbox label="wx">微信</el-checkbox>
-                <el-checkbox label="bank">银行卡</el-checkbox>
-                <el-checkbox label="xilian">西联汇款</el-checkbox>
-                <el-checkbox label="paypal">PAYPAL</el-checkbox>
+                <el-checkbox label="alipay" v-show="payForListArr[0] === '1'">支付宝</el-checkbox>
+                <el-checkbox label="wx" v-show="payForListArr[1] === '1'">微信</el-checkbox>
+                <el-checkbox label="bank" v-show="payForListArr[2] === '1'">银行卡</el-checkbox>
+                <el-checkbox label="xilian" v-show="payForListArr[3] === '1'">西联汇款</el-checkbox>
+                <el-checkbox label="paypal" v-show="payForListArr[4] === '1'">PAYPAL</el-checkbox>
               </el-checkbox-group>
             </div>
           </div>
@@ -174,6 +174,7 @@
               <el-input
                 type="textarea"
                 auto-complete="off"
+                maxlength="20"
                 placeholder="输入留言: 请说明有关于您交易的相关条款或者其它您想让对方获悉得信息，以便对方和您快速交易"
                 v-model="remarkText"
               >
@@ -347,6 +348,8 @@ export default {
       // 3.0 可用法币币种数组
       activitedCurrencyId: '', // 选中的可用法币id
       availableCurrencyId: [],
+      // 4.0 当前用户所有的支付方式数组
+      payForListArr: ['1', '1', '0', '1', '0'],
       // 挂单数量
       entrustCount: '',
       // 用户输入的 单笔最小限额
