@@ -310,7 +310,7 @@
 <!--请严格按照如下书写书序-->
 <script>
 // 引入接口
-import {getOTCAvailableCurrency, getMerchantAvailablelegalTender, addOTCPutUpOrdersMerchantdedicated, queryUserTradeFeeAndCoinInfo} from '../../utils/api/OTC'
+import {getOTCAvailableCurrency, getMerchantAvailablelegalTender, addOTCPutUpOrdersMerchantdedicated, queryUserTradeFeeAndCoinInfo, queryUserPayTypes} from '../../utils/api/OTC'
 // 引入组件
 import NavCommon from '../Common/HeaderCommon'
 import FooterCommon from '../Common/FooterCommon'
@@ -349,7 +349,8 @@ export default {
       activitedCurrencyId: '', // 选中的可用法币id
       availableCurrencyId: [],
       // 4.0 当前用户所有的支付方式数组
-      payForListArr: ['1', '1', '0', '1', '0'],
+      // payForListArr: ['1', '1', '0', '1', '0'],
+      payForListArr: [],
       // 挂单数量
       entrustCount: '',
       // 用户输入的 单笔最小限额
@@ -417,6 +418,8 @@ export default {
     } else if (this.$route.query.currencyName === 'CNY') {
       this.activitedCurrencyId = '人民币'
     }
+    // 3.0 查询用户现有支付方式
+    this.queryUserPayTypesList()
   },
   mounted () {},
   activited () {},
@@ -442,6 +445,21 @@ export default {
       } else {
         // 返回数据正确的逻辑
         this.availableCoinName = data.data.data
+      }
+    },
+    //  2.1 查询用户现有支付方式
+    async queryUserPayTypesList () {
+      const data = await queryUserPayTypes({
+        // partnerId: this.partnerId
+      })
+      console.log('用户现有支付方式')
+      console.log(data)
+      if (!(returnAjaxMessage(data, this, 0))) {
+        return false
+      } else {
+        // 返回数据正确的逻辑
+        this.payForListArr = data.data.data
+        console.log(this.payForListArr)
       }
     },
     // 3.0 改变可用币种id

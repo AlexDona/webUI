@@ -98,14 +98,14 @@
                     v-show="publishStyle === 'sell'"
                     :class="{ sellGreen: publishStyle === 'sell' }"
                   >
-                    {{marketPrice}}CNY
+                    {{marketPrice}}{{currencyName}}
                   </span>
                   <span
                     class="market-price"
                     v-show="publishStyle === 'buy'"
                     :class="{ buyOrange: publishStyle === 'buy' }"
                   >
-                    {{marketPrice}}CNY
+                    {{marketPrice}}{{currencyName}}
                   </span>
                   <el-button
                     type="primary"
@@ -117,39 +117,51 @@
                 </div>
                 <!-- 卖出量和单价  买入量和单价 -->
                 <div class="sell-buy-input">
+                  <!-- 卖出量 -->
                   <input
                     type="text"
                     placeholder="卖出量"
                     class="sell-sum"
                     v-show="publishStyle === 'sell'"
                     ref="entrustCountSell"
-                    @keyup="changeInputValue('entrustCountSell')"
+                    @keyup="changeInputValue('entrustCountSell', pointLength)"
+                    @input="changeInputValue('entrustCountSell', pointLength)"
                   >
+                  <!-- @keyup="changeInputValue('entrustCountSell')" -->
+                  <!-- 买入量 -->
                   <input
                     type="text"
                     placeholder="买入量"
                     class="sell-sum"
                     v-show="publishStyle === 'buy'"
                     ref="entrustCountBuy"
-                    @keyup="changeInputValue('entrustCountBuy')"
+                    @keyup="changeInputValue('entrustCountBuy', pointLength)"
+                    @input="changeInputValue('entrustCountBuy', pointLength)"
                   >
+                  <!-- @keyup="changeInputValue('entrustCountBuy')" -->
                   <span class="unit">{{coinName}}</span>
+                  <!-- 卖出单价 -->
                   <input
                     type="text"
                     placeholder="卖出单价"
                     class="sell-sum"
                     v-show="publishStyle === 'sell'"
                     ref="priceSell"
-                    @keyup="changeInputValue('priceSell')"
+                    @keyup="changeInputValue('priceSell', moneyPointLength)"
+                    @input="changeInputValue('priceSell', moneyPointLength)"
                   >
+                  <!-- @keyup="changeInputValue('priceSell')" -->
+                  <!-- 买入单价 -->
                   <input
                     type="text"
                     placeholder="买入单价"
                     class="sell-sum"
                     v-show="publishStyle === 'buy'"
                     ref="priceBuy"
-                    @keyup="changeInputValue('priceBuy')"
+                    @keyup="changeInputValue('priceBuy', moneyPointLength)"
+                    @input="changeInputValue('priceBuy', moneyPointLength)"
                   >
+                  <!-- @keyup="changeInputValue('priceBuy')" -->
                   <span class="unit">{{CurrencyCoinsName}}</span>
                 </div>
                 <!-- 错误提示信息 -->
@@ -157,6 +169,7 @@
                   <!-- 卖出量和买入量的提示 -->
                   <span class="errorSell">{{errorTipsSum}}</span>
                   <!-- 卖出单价和买入单价的提示 -->
+                  <!-- <span class="errorBuy">{{errorTipsPrice}}{{minPrice}}-{{maxPrice}}</span> -->
                   <span class="errorBuy">{{errorTipsPrice}}</span>
                 </div>
               </el-form-item>
@@ -197,23 +210,34 @@
                 <el-input
                   type="textarea"
                   auto-complete="off"
-                  placeholder="请输入留言:"
+                  placeholder="请输入留言：最多20个汉字"
+                  maxlength="20"
                   v-model="remarkText"
                 >
                 </el-input>
                 <!-- 预计交易和手续费 -->
                 <div class="predict">
                   <span class="predict-text">
-                      预计交易额：
+                    预计交易额：
                   </span>
-                  <span class="predict-sum">
-                    1.00 {{CurrencyCoinsName}}
+                  <!-- 卖 -->
+                  <span class="predict-sum" v-if="this.publishStyle === 'sell'">
+                    {{entrustCountSell * priceSell}} {{CurrencyCoinsName}}
+                  </span>
+                  <!-- 买 -->
+                  <span class="predict-sum" v-if="this.publishStyle === 'buy'">
+                    {{entrustCountBuy * priceBuy}} {{CurrencyCoinsName}}
                   </span>
                   <span class="predict-text">
                     手续费：
                   </span>
-                  <span class="predict-sum">
-                    0 {{coinName}}
+                  <!-- 卖 -->
+                  <span class="predict-sum" v-if="this.publishStyle === 'sell'">
+                    {{entrustCountSell * rate}} {{coinName}}
+                  </span>
+                  <!-- 买 -->
+                  <span class="predict-sum" v-if="this.publishStyle === 'buy'">
+                    {{entrustCountBuy * rate}} {{coinName}}
                   </span>
                   <span class="rate-text">
                     ( 费率
@@ -309,6 +333,7 @@ import NavCommon from '../Common/HeaderCommon'
 import FooterCommon from '../Common/FooterCommon'
 import {returnAjaxMessage} from '../../utils/commonFunc'
 import {createNamespacedHelpers, mapState} from 'vuex'
+import {timeFilter, formatNumberInput} from '../../utils'
 const {mapMutations} = createNamespacedHelpers('OTC')
 export default {
   components: {
@@ -341,6 +366,10 @@ export default {
       //  4单价
       priceSell: '',
       priceBuy: '',
+      // 最低价
+      minPrice: '',
+      // 最高价
+      maxPrice: '',
       //  5单笔最小限额（CNY）
       minCount: '',
       //  6单笔最大限额（CNY）
@@ -352,23 +381,27 @@ export default {
       // 起订量
       // minOrderCount: 0
       // 当前可用
-      currentlyAvailable: '456',
+      currentlyAvailable: '',
       // 市价
-      marketPrice: '132',
+      marketPrice: '',
+      // 市价币种名称
+      currencyName: '',
       // 预计交易额
       tradingVolumes: '',
       // 手续费
       serviceCharge: '',
       // 费率
-      rate: '0.008',
+      rate: '',
       // 卖出量和买入量的提示
-      errorTipsSum: '错误提示1',
+      errorTipsSum: '',
       // 卖出单价和买入单价的提示
-      errorTipsPrice: '错误提示2',
+      errorTipsPrice: '',
       // 单笔成交限额最小错误提示
       errorTipsLimitMin: '错误提示1',
       // 单笔成交限额最大错误提示
-      errorTipsLimitMax: '错误提示2'
+      errorTipsLimitMax: '错误提示2',
+      pointLength: 4, // 当前币种返回的保留小数点位数限制
+      moneyPointLength: 2 // 当前金额小数点限制位数
     }
   },
   created () {
@@ -391,13 +424,43 @@ export default {
   methods: {
     ...mapMutations([
     ]),
-    //  修改input value
-    changeInputValue (ref) {
+    // 1.0 输入限制
+    formatInput (ref, pointLength) {
+      let target = this.$refs[ref]
+      formatNumberInput(target, pointLength)
+    },
+    // 2.0 时间格式化
+    timeFormatting (date) {
+      return timeFilter(date, 'date')
+    },
+    //  3.0 修改input value
+    changeInputValue (ref, pointLength) {
       this[ref] = this.$refs[ref].value
       // console.dir(this.$refs[ref])
       console.log(this[ref])
-      // this.entrustCount = this.$refs.entrustCount.value
-      // console.log(this.entrustCount)
+      // this.entrustCountSell = this.$refs.entrustCountSell.value
+      console.log(this.entrustCountSell)
+      // 开始input框验证
+      // 限制输入数字和位数
+      let target = this.$refs[ref]
+      // 卖出量 买入量验证：>0 保留返回的小数位数
+      // 卖出单价 买入单价验证：>0 保留2个小数位数
+      formatNumberInput(target, pointLength)
+      // 卖出单价、买入单价价格区间控制
+      if (this.$refs.priceSell.value) {
+        if (this.$refs.priceSell.value < this.minPrice || this.$refs.priceSell.value > this.maxPrice) {
+          this.errorTipsPrice = '请输入' + this.minPrice + '~' + this.maxPrice + '之间的价格'
+        } else {
+          this.errorTipsPrice = ''
+        }
+      }
+      if (this.$refs.priceBuy.value) {
+        if (this.$refs.priceBuy.value < this.minPrice || this.$refs.priceBuy.value > this.maxPrice) {
+          this.errorTipsPrice = '请输入' + this.minPrice + '~' + this.maxPrice + '之间的价格'
+        } else {
+          this.errorTipsPrice = ''
+        }
+      }
     },
     //  点击 购买 和 出售 按钮切换
     toggleSellButton () {
@@ -484,8 +547,6 @@ export default {
           this.CurrencyCoinsName = item.shortName
         }
       })
-      // 可用法币币种名称还未赋值
-      // this.CurrencyCoinsName =
     },
     //  1.2 根据可用币种id 查询用户交易币种手续费率以及币种详情
     async queryUserTradeFeeAndCoinInfo () {
@@ -505,6 +566,13 @@ export default {
         this.currentlyAvailable = data.data.data.total
         // 市价
         this.marketPrice = data.data.data.marketPrice
+        // 最低价
+        this.minPrice = data.data.data.minPrice
+        // 最高价
+        this.maxPrice = data.data.data.maxPrice
+        // 市价币种名称
+        this.currencyName = data.data.data.currencyName
+        this.pointLength = data.data.data.unit // 每个币种返回的保留小数点位数限制
         // 费率
         if (this.publishStyle === 'sell') {
           this.rate = data.data.data.sellRate
