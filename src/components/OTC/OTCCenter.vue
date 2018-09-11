@@ -253,8 +253,20 @@
       </div>
       <!-- 2.2 订单管理-->
       <div class="otc-order-manage">
+        <!-- 查询更多 -->
         <!-- <div class="more"> -->
-          <router-link to="/" class="more">查询更多</router-link>
+          <!-- <router-link
+            to="/"
+            class="more"
+          >
+            查询更多
+          </router-link> -->
+          <span
+            class="more"
+            @click="queryMoreOrder"
+          >
+            查询更多
+          </span>
         <!-- </div> -->
         <el-tabs
           :tab-position = "tabPosition"
@@ -462,6 +474,9 @@ export default {
     // console.log(this.userInfo)
     // 2.0 otc可用法币查询：
     // this.getMerchantAvailablelegalTenderList()
+    console.log('是否登录' + this.isLogin)
+    console.log('用户信息')
+    console.log(this.userInfo)
   },
   mounted () {},
   activited () {},
@@ -479,27 +494,57 @@ export default {
     },
     // 0.2 点击发布订单按钮跳转到发布订单页面
     toPublishOrder () {
-      // this.$router.push({path: '/OTCPublishBuyAndSell'})
-      // this.OTCBuySellStyle 当前买卖类型
-      // this.selectedOTCAvailablePartnerCoinId 选中的可用商户币种id
-      // this.activitedCurrencyId 当前选中的可用法币id
-      this.$router.push({path: '/OTCPublishBuyAndSell/' + this.OTCBuySellStyle + '/' + this.selectedOTCAvailablePartnerCoinId + '/' + this.activitedCurrencyId})
+      console.log(123)
+      // 未登录跳转到登录页面
+      if (!this.isLogin) {
+        this.$router.push({path: '/login'})
+      } else {
+        // this.$router.push({path: '/OTCPublishBuyAndSell'})
+        // this.OTCBuySellStyle 当前买卖类型
+        // this.selectedOTCAvailablePartnerCoinId 选中的可用商户币种id
+        // this.activitedCurrencyId 当前选中的可用法币id
+        this.$router.push({path: '/OTCPublishBuyAndSell/' + this.OTCBuySellStyle + '/' + this.selectedOTCAvailablePartnerCoinId + '/' + this.activitedCurrencyId})
+      }
     },
     // 0.3 点击购买按钮跳转到在线购买页面
     toOnlineBuy (id, partnerCoinId) {
-      // console.log("买")
-      // console.log(id) // 挂单id
-      // console.log(partnerCoinId) // 商户币种id
-      // this.$router.push({path: '/OTCOnlineTraderBuySell/' + this.OTCBuySellStyle})
-      this.$router.push({path: '/OTCOnlineTraderBuySell/' + this.OTCBuySellStyle + '/' + id + '/' + partnerCoinId})
+      if (!this.isLogin) {
+        this.$router.push({path: '/login'})
+      } else {
+        // console.log("买")
+        // console.log(id) // 挂单id
+        // console.log(partnerCoinId) // 商户币种id
+        // this.$router.push({path: '/OTCOnlineTraderBuySell/' + this.OTCBuySellStyle})
+        this.$router.push({path: '/OTCOnlineTraderBuySell/' + this.OTCBuySellStyle + '/' + id + '/' + partnerCoinId})
+      }
     },
     // 0.4 点击出售按钮跳转到在线出售页面
     toOnlineSell (id, partnerCoinId) {
-      // console.log("卖")
-      // console.log(id) // 挂单id
-      // console.log(partnerCoinId) // 商户币种id
-      // this.$router.push({path: '/OTCOnlineTraderBuySell/' + this.OTCBuySellStyle})
-      this.$router.push({path: '/OTCOnlineTraderBuySell/' + this.OTCBuySellStyle + '/' + id + '/' + partnerCoinId})
+      if (!this.isLogin) {
+        this.$router.push({path: '/login'})
+      } else {
+        // console.log("卖")
+        // console.log(id) // 挂单id
+        // console.log(partnerCoinId) // 商户币种id
+        // this.$router.push({path: '/OTCOnlineTraderBuySell/' + this.OTCBuySellStyle})
+        this.$router.push({path: '/OTCOnlineTraderBuySell/' + this.OTCBuySellStyle + '/' + id + '/' + partnerCoinId})
+      }
+    },
+    // 0.5 查询更多订单按钮点击事件
+    queryMoreOrder () {
+      // 未登录跳转登录页
+      if (!this.isLogin) {
+        this.$router.push({path: '/login'})
+      } else {
+        // 登录后：商家用户跳转到商家订单；普通用户跳转到个人中心中的法币订单
+        if (this.userInfo.type === 'COMMON') {
+          this.$store.commit('personal/CHANGE_USER_CENTER_ACTIVE_NAME', 'fiat-orders')
+          this.$router.push({path: '/PersonalCenter'})
+        }
+        if (this.userInfo.type === 'MERCHANT') {
+          this.$router.push({path: '/OTCMerchantsOrders'})
+        }
+      }
     },
     //  1.0 otc可用币种查询：我要购买/我要出售的币种列表
     async getOTCAvailableCurrencyList () {
@@ -712,8 +757,8 @@ export default {
       selectedOTCAvailablePartnerCoinId: state => state.OTC.selectedOTCAvailablePartnerCoinId,
       selectedOTCAvailableCurrencyCoinID: state => state.OTC.selectedOTCAvailableCurrencyCoinID,
       partnerId: state => state.common.partnerId,
-      // 测试拿到userinfo
-      userInfo: state => state.personal.userInfo
+      userInfo: state => state.user.loginStep1Info.userInfo, // 用户详细信息
+      isLogin: state => state.user.isLogin // 用户登录状态 false 未登录； true 登录
     })
   },
   watch: {}
@@ -820,7 +865,7 @@ export default {
       }
     }
     >.otc-order-manage{
-      height: 1200px;
+      height: 800px;
       margin-top: 50px;
       // ceshi
       position: relative;
@@ -831,8 +876,8 @@ export default {
         left: 15px;
         font-size: 14px;
         color: #338FF5;
-        // text-decoration: underline;
         text-decoration: underline !important;
+        cursor: pointer;
       }
       .otc-tab-pane-arrow-right{
         position: absolute;

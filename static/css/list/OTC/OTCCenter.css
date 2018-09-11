@@ -1,20 +1,20 @@
 /* otc首页样式重写 */
 /* 1.0 在线购买在线出售 */
-.otc-box .el-radio-button__inner{
+.otc-box .otc-online-buy-and-sell-button .el-radio-button__inner{
     color: #D8D8D8;
     background: #202A33;
     border: 0;
 }
-.otc-box .el-radio-button:first-child .el-radio-button__inner{
+.otc-box .otc-online-buy-and-sell-button .el-radio-button:first-child .el-radio-button__inner{
     border-left: 0;
 }
-.otc-box .el-radio-button__orig-radio:checked+.el-radio-button__inner{
+.otc-box .otc-online-buy-and-sell-button .el-radio-button__orig-radio:checked+.el-radio-button__inner{
     box-shadow: -1px 0 0 0 #008069;
 }
-.otc-box .el-radio-button:first-child.is-active .el-radio-button__inner{
+.otc-box .otc-online-buy-and-sell-button .el-radio-button:first-child.is-active .el-radio-button__inner{
     background-color: #D45858;
 }
-.otc-box .el-radio-button:last-child.is-active .el-radio-button__inner{
+.otc-box .otc-online-buy-and-sell-button .el-radio-button:last-child.is-active .el-radio-button__inner{
     background-color: #008069;
 }
 /* input 框样式重置-适用全局-自己先写试试 */
@@ -80,6 +80,9 @@
 .otc-box .otc-merchant-list .el-button--success {
     background-color: #008069;
     border-color: #008069;
+}
+.otc-box .otc-merchant-list .el-table__empty-block{
+    height: 400px;
 }
 /* 3.0 订单管理左侧tabs切换面板 */
 /* tabs组件出现蓝色边框问题 */
