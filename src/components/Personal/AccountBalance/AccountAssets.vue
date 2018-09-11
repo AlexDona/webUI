@@ -124,16 +124,20 @@
                     </div>
                     <div
                       class="table-deal flex1 cursor-pointer"
+                      @mouseenter="showStatusCode(1, assetItem.coinId, index)"
+                      @mouseleave="showStatusCode(2, assetItem.coinId,  index)"
                     >
                       交易
                       <div
                         class="type-transaction border-radius4"
+                        v-show="stateIsShowId"
                       >
                         <span class="triangle-border display-inline-block"></span>
                         <p
                           class="transaction-list text-align-c"
-                          v-for="(assetItem, index) in currencyTrading"
+                          v-for="(assetItem, index) in currencyTradingList"
                           :key="index"
+                          @click="tradingId(assetItem.coinId, index)"
                         >
                           {{ assetItem.currency }}
                         </p>
@@ -354,6 +358,7 @@
                           <span v-else></span>
                           <el-form-item label="交易密码">
                             <input
+                              type="password"
                               class="content-input input-google padding-l15 box-sizing"
                               v-model="password"
                             >
@@ -401,7 +406,8 @@ import {
   inquireRechargeAddressList,
   statusSubmitWithdrawButton,
   withdrawalInformation,
-  statusSecurityCenter
+  statusSecurityCenter,
+  queryTransactionInformation
 } from '../../../utils/api/personal'
 import {
   returnAjaxMessage,
@@ -437,7 +443,7 @@ export default {
       serviceChargeList: {}, // 手续费区间
       rechargeCount: '', // 提币数量
       serviceChargeCount: '', // 自定义到账数量
-      currencyTrading: [
+      currencyTradingList: [
         {
           id: 1,
           currency: 'OTC'
@@ -451,6 +457,7 @@ export default {
           currency: 'BTC/FBT'
         }
       ],
+      stateIsShowId: false, // 二维码显示状态
       // 充值
       chargeDialogVisible: false, // 默认隐藏
       chargeMoneyAddressId: '', // 每行数据ID
@@ -472,7 +479,9 @@ export default {
       mentionAddressList: [],
       activeCurrency: {}, // 当前选中币种
       end: '', // 站位
-      activeType: '' // 显示类型
+      activeType: '', // 显示类型
+      tradingOnId: '', // 根据coinido跳转到对应交易信息
+      currencyTradingId: '' // 根据coinido跳转到对应交易信息
     }
   },
   created () {
@@ -484,6 +493,7 @@ export default {
     require('../../../../static/css/theme/night/Personal/AccountBalance/AccountAssetsNight.css')
     // 刚进页面时候 个人资产列表展示
     this.getAssetCurrenciesList()
+    // this.getQueryTransactionInformation()
   },
   mounted () {},
   activited () {},
@@ -572,6 +582,37 @@ export default {
       // 调用手续费信息
       this.getWithdrawalInformation(index)
     },
+    // 显示交易对跳转币种信息
+    // showStatusCode (val, id, index) {
+    //   this.currencyTradingId = id
+    //   this.getQueryTransactionInformation()
+    //   if (val == 1) {
+    //     // 显示二维码
+    //     this.stateIsShowId[index] = true
+    //   } else {
+    //     // 隐藏二维码
+    //     this.stateIsShowId[index] = false
+    //   }
+    // },
+    // 根据coinid跳转交易信息
+    tradingId (id, index) {
+      console.log(id)
+      this.currencyTradingId = id
+      console.log(this.currencyTradingId)
+      this.currencyTradingList.forEach((assetItem, index) => {
+        // console.log(assetItem)
+        // if (assetItem.id == id) {
+        //   console.log(assetItem.id)
+        //   this.currencyTradingId = id
+        //   console.log(this.currencyTradingId)
+        //   this.getQueryTransactionInformation()
+        //   // this.push = item.fcoin_s
+        //   // this.pros = item.fprice
+        //   // this.number = item.fcount
+        //   // this.money = item.famount
+        // }
+      })
+    },
     // 发送邮箱验证码
     sendPhoneOrEmailCode (loginType) {
       // console.log(this.disabledOfPhoneBtn)
@@ -643,7 +684,7 @@ export default {
         // console.log(data.data.data.userCoinWalletVOPageInfo.list)
         // 返回数据
         this.withdrawDepositIsShowList = data.data.data.userCoinWalletVOPageInfo.list
-        console.log(this.withdrawDepositIsShowList)
+        // console.log(this.withdrawDepositIsShowList)
       }
     },
     /**
@@ -663,7 +704,7 @@ export default {
         // shortName: this.partnerId, // 币种名称
         // selectType: this.hideStatusButton // all：所有币种 noall：有资产币种
       })
-      console.log(data)
+      // console.log(data)
       if (!(returnAjaxMessage(data, this, 0))) {
         return false
       } else {
@@ -733,12 +774,11 @@ export default {
     },
     // 点击跳转账单明细
     stateRechargeRecord () {
-      console.log('1')
       this.CHANGE_USER_CENTER_ACTIVE_NAME('billing-details')
     },
     // 点击跳转提币地址
     stateMentionAddress () {
-      this.CHANGE_USER_CENTER_ACTIVE_NAME('billing-details')
+      this.CHANGE_USER_CENTER_ACTIVE_NAME('mention-address')
     },
     //  点击复制
     onCopy (e) {
@@ -770,6 +810,23 @@ export default {
       } else {
         // 返回展示
         this.securityCenter = data.data.data
+      }
+    },
+    /**
+     * 根据coinid查询交易信息
+     */
+    async getQueryTransactionInformation () {
+      let data = await queryTransactionInformation({
+        coinId: this.currencyTradingId // 币种coinId
+        // coinId: '487583965889167360' // 币种coinId
+      })
+      console.log(data)
+      if (!(returnAjaxMessage(data, this, 0))) {
+        return false
+      } else {
+        // 返回展示
+        this.currencyTradingList = data.data.data
+        console.log(this.currencyTradingList)
       }
     }
   },
@@ -969,7 +1026,7 @@ export default {
         .table-deal {
           position: relative;
           .type-transaction {
-            display: none;
+            /*display: none;*/
             width: 135px;
             position: absolute;
             top: 10px;
@@ -985,9 +1042,9 @@ export default {
               line-height: 30px;
             }
           }
-          &:hover >.type-transaction {
-            display: block;
-          }
+          /*&:hover >.type-transaction {*/
+            /*display: block;*/
+          /*}*/
         }
       }
     }

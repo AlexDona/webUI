@@ -141,14 +141,14 @@
               label="用户UID"
             >
               <template slot-scope = "s">
-                <div>{{ s.row.id }}</div>
+                <div>{{ s.row.inviter }}</div>
               </template>
             </el-table-column>
             <el-table-column
               label="登录名"
             >
               <template slot-scope = "s">
-                <div>{{ s.row.loginName }}</div>
+                <div>{{ s.row.userName }}</div>
               </template>
             </el-table-column>
             <el-table-column
@@ -156,28 +156,36 @@
               width="180"
             >
               <template slot-scope = "s">
-                <div>{{ timeFormatting(s.row.registerTime) }}</div>
+                <div>{{ timeFormatting(s.row.regTime) }}</div>
               </template>
             </el-table-column>
             <el-table-column
               label="姓名"
             >
               <template slot-scope = "s">
-                <div>{{ s.row.name }}</div>
+                <div>{{ s.row.realname }}</div>
               </template>
             </el-table-column>
             <el-table-column
               label="高级认证"
             >
               <template slot-scope = "s">
-                <div>{{ s.row.authenticationState }}</div>
+                <div v-if="advancedAuth === 'waitVeritfy'">
+                  {{ waitVeritfy  }}
+                </div>
+                <div v-if="advancedAuth === 'pass'">
+                  {{ pass }}
+                </div>
+                <div v-if="advancedAuth = 'notPass'">
+                  {{ notPass }}
+                </div>
               </template>
             </el-table-column>
             <el-table-column
               label="直接推荐人UID"
             >
               <template slot-scope = "s">
-                <div>{{ s.row.refereeUID }}</div>
+                <div>{{ s.row.showId }}</div>
               </template>
             </el-table-column>
           </el-table>
@@ -267,6 +275,9 @@ export default {
         value: 'second',
         label: '间接推广'
       }],
+      waitVeritfy: '待审核',
+      pass: '已通过',
+      notPass: '未通过',
       activeName: 'current-entrust',
       currentPageForMyEntrust: 1, // 当前委托页码
       totalPageForMyEntrust: 1, // 当前委托总页数
@@ -392,7 +403,7 @@ export default {
         return false
       } else {
         // 返回展示
-        this.extensionList = data.data.data
+        this.extensionList = data.data.data.list
         console.log(this.extensionList)
       }
     },
