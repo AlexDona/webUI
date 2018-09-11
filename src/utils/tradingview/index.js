@@ -48,11 +48,12 @@ export default {
         'border_around_the_chart',
         'timezone_menu',
         'volume_force_overlay', // 成交量上移
-        // "move_logo_to_main_pane", //
+        'move_logo_to_main_pane', //
         'timeframes_toolbar', // 底部栏时间
         'header_undo_redo',
         'header_chart_type',
-        'header_screenshot'
+        'header_screenshot',
+        'header_settings'
       ],
       enabled_features: [
         // "study_templates", // 显示 交易对话框
@@ -66,29 +67,30 @@ export default {
       locale: 'zh',
       debug: false,
       supports_group_request: false,
-      toolbar_bg: options.paneProperties.background, // 工具栏背景色
+      // toolbar_bg: options.paneProperties.background, // 工具栏背景色
       // toolbar_bg: options.toolbar_bg, // 工具栏背景色
+      toolbar_bg: 'transparent', // 工具栏背景色
       studies_overrides: {
-        // "volume.volume.color.0": "#d45858", // 成交量 k柱 背景色
-        // "volume.volume.color.1": "#008069", // 成交量 k柱 背景色
+        'volume.volume.color.0': '#008069', // 成交量 k柱 背景色
+        'volume.volume.color.1': '#EC5E5E', // 成交量 k柱 背景色
         'volume.volume.transparency': 100
       },
       overrides: {
         // 'paneProperties.background': '#10172d', // 背景色
         'paneProperties.background': options.paneProperties.background, // 背景色
-        'paneProperties.vertGridProperties.color': '#1f2943', // 列分割线
-        'paneProperties.horzGridProperties.color': '#1f2943', // 行分割线
+        'paneProperties.vertGridProperties.color': '#39424D', // 列分割线
+        'paneProperties.horzGridProperties.color': '#39424D', // 行分割线
         'symbolWatermarkProperties.transparency': 90,
         // "scalesProperties.textColor": "#AAA",
         // "scalesProperties.backgroundColor": "#ff00ff",
         'scalesProperties.lineColor': '#61688a', // 右侧边框颜色
         'scalesProperties.textColor': '#61688a', // 左上角文字颜色
-        'mainSeriesProperties.candleStyle.upColor': '#008069', // k 柱颜色
-        'mainSeriesProperties.candleStyle.downColor': '#d45858', // k 柱颜色
+        'mainSeriesProperties.candleStyle.upColor': '#036251', // k 柱颜色
+        'mainSeriesProperties.candleStyle.downColor': '#B44747', // k 柱颜色
         'mainSeriesProperties.candleStyle.borderUpColor': '#008069', // k 柱边框颜色
-        'mainSeriesProperties.candleStyle.borderDownColor': '#d45858', // k 柱边框颜色
+        'mainSeriesProperties.candleStyle.borderDownColor': '#EC5E5E', // k 柱边框颜色
         // "mainSeriesProperties.candleStyle.wickColor": "#737375",
-        'mainSeriesProperties.candleStyle.wickUpColor': '#008069', // 上涨 蜡烛线颜色
+        'mainSeriesProperties.candleStyle.wickUpColor': '#036251', // 上涨 蜡烛线颜色
         'mainSeriesProperties.candleStyle.wickDownColor': '#d45858', // 下降 蜡烛线颜色
         // "mainSeriesProperties.hollowCandleStyle.borderColor": "#000",
         // "mainSeriesProperties.hollowCandleStyle.borderUpColor": "#ff00ff",
@@ -189,6 +191,7 @@ export default {
       this.widget.chart().createStudy('Moving Average', false, true, [30, 'close', 0], null, {'Plot.color': '#A0D75B'})
       this.widget.chart().createStudy('MA Cross', false, false, [30, 120])
     })
+    console.log(document.querySelector('#tv_chart_container'))
   },
   updateSelectedIntervalButton (button) {
     this.widget.selectedIntervalButton && this.widget.selectedIntervalButton.removeClass('selected')
@@ -198,7 +201,7 @@ export default {
 
   getBars: function (symbol, resolution, from, to, callback) {
     // console.log(from)
-    // console.log(to)
+    console.log(resolution)
     let data
     const symbolData = this.dataCache[symbol]
     // console.log(this.dataCache[symbol]);
@@ -235,10 +238,13 @@ export default {
       const params = {
         resolution: resolution,
         symbol: symbol,
+        // symbol: 'btmbtc',
         type: 'kline',
         from: from,
         to: to,
-        activeTradeArea: store.state.common.activeTradeArea
+        activeTradeArea: store.state.common.activeTradeArea,
+        areaId: store.state.common.activeTradeArea.id,
+        tradeType: 'kline'
       }
       socket.subscribeKline(params, this.onUpdateData.bind(this))
     }
@@ -247,22 +253,25 @@ export default {
       const params = {
         resolution: resolution,
         symbol: symbol,
+        // symbol: 'btmbtc',
         type: 'kline',
         from: from,
         to: to,
-        activeTradeArea: store.state.common.activeTradeArea
+        activeTradeArea: store.state.common.activeTradeArea,
+        areaId: store.state.common.activeTradeArea.id,
+        tradeType: 'kline'
       }
       // console.log(resolution)
       socket.subscribeKline(params, this.onUpdateData.bind(this))
-      if (store.state.reqRefreshStatus) {
-        this.getBarTimer = setTimeout(() => {
-          this.getBars(symbol, resolution, from, to, callback)
-          // console.log('reflash')
-          store.commit('common/CHANGE_SOCKET_REFRESH_STATUS', false)
-          // console.log(store.state.common.reqRefreshStatus)
-        }, 1000)
-      }
+      // if (store.state.reqRefreshStatus) {
+      this.getBarTimer = setTimeout(() => {
+        this.getBars(symbol, resolution, from, to, callback)
+        // console.log('reflash')
+        store.commit('common/CHANGE_SOCKET_REFRESH_STATUS', false)
+        // console.log(store.state.common.reqRefreshStatus)
+      }, 500)
     }
+    // }
     data ? fetchCacheData(data) : requestData()
   },
 
@@ -273,7 +282,10 @@ export default {
   getServerTime: function () {
     return parseInt(Date.now() / 1000)
   },
-
+  // 修改样式
+  applyOverrides: function (overrides) {
+    this.widget.applyOverrides(overrides)
+  },
   resolveTVSymbol: function (symbol) {
     return {
       'name': '',
@@ -315,6 +327,7 @@ export default {
     resolution = dataArr[3]
     //  k线
     if (tradeType === 'KLINE') {
+      console.log(data)
       // 分辨率转换
       switch (resolution) {
         case 'min':
@@ -353,10 +366,11 @@ export default {
       switch (dataType) {
         // 请求历史数据
         case 0:
+          console.log(this.dataCache)
+
           // console.log(data)
           this.dataCache[symbol][resolution] = data.data
           // console.log(new Date(this.dataCache[symbol][resolution][0].time))
-          // console.log(this.dataCache)
           break
         case 1:
           // 订阅当前数据
@@ -440,6 +454,7 @@ export default {
       }
     //  交易记录
     } else if (tradeType === 'TRADE') {
+      // console.log(data)
       if (data.data) {
         if (!dataType) {
           this.socketData.tardeRecordList = data.data
@@ -451,8 +466,10 @@ export default {
     // 币币交易市场信息
     } else if (tradeType === 'BBTICKER') {
       // console.log(data)
+      this.socketData.tradeMarketList = data
     }
     store.commit('common/CHANGE_SOCKET_DATA', this.socketData)
+    // console.log(store)
   }
   // onUpdateData: function (data) {
   //   console.log(data.id)

@@ -9,18 +9,14 @@ const WS_URL = 'ws://192.168.1.52:8087/market'
 var orderbook = {}
 
 function handle (data) {
-  console.log(data)
   // console.log('received', data.ch, 'data.ts', data.ts, 'crawler.ts', moment().format('x'));
   let symbol = data.ch.split('.')[1]
   let channel = data.ch.split('.')[2]
-  // console.log(symbol)
-  // console.log(channel)
   switch (channel) {
     case 'depth':
       orderbook[symbol] = data.tick
       break
     case 'kline':
-      // console.log('kline', data.tick)
       break
   }
 }
@@ -45,29 +41,31 @@ function subscribe (ws, params) {
       'id': `market_001`
     })
   // 币币交易市场
-  } else {
-    // sendData(ws, {
-    //   'tag': 'CANCEL',
-    //   'content': `market.bbticker.${store.state.common.partnerId}.${params.areaId}`,
-    //   'id': `market_001`
-    // })
-    // setTimeout(() => {
-    console.log(params)
+  } else if (params.type === 'trade_market') {
     sendData(ws, {
-      'tag': 'REQ',
+      'tag': 'CANCEL',
       'content': `market.bbticker.${store.state.common.partnerId}.${params.areaId}`,
       'id': `market_001`
     })
-    // 币币交易市场
-    ws.send(JSON.stringify({
-      'tag': 'SUB',
-      'content': `market.bbticker.${store.state.common.partnerId}.${params.areaId}`,
-      'id': `market_001`
-    }))
-    // }, 100)
+    setTimeout(() => {
+      console.log(params)
+
+      sendData(ws, {
+        'tag': 'REQ',
+        'content': `market.bbticker.${store.state.common.partnerId}.${params.areaId}`,
+        'id': `market_001`
+      })
+      // 币币交易市场
+      ws.send(JSON.stringify({
+        'tag': 'SUB',
+        'content': `market.bbticker.${store.state.common.partnerId}.${params.areaId}`,
+        'id': `market_001`
+      }))
+    }, 100)
+  } else {
     //  币币交易
     let symbols = [params.symbol]
-    console.log(symbols)
+    // console.log(symbols)
     let resolution = '1'
 
     switch (params.resolution) {
@@ -105,26 +103,21 @@ function subscribe (ws, params) {
           'content': `market.${symbol}.depth.step1`,
           'id': `depth_${symbol}`
         })
-        // console.log(symbol)
         // 深度
-        // 谨慎选择合并的深度，ws每次推送全量的深度数据，若未能及时处理容易引起消息堆积并且引发行情延时
-        // if (store.state.common.reqRefreshStatus) {
-        //   console.log('cancel')
-        // }
-        if (store.state.common.reqRefreshStatus) {
+        if (store.state.common.reqRefreshStatus && symbol) {
+          console.log(symbol)
           sendData(ws, {
             'tag': 'REQ',
             'content': `market.${symbol}.depth.step1`,
             'id': `depth_${symbol}`
           })
         }
-        // console.log(resolution)
         // K线
-        // sendData(ws, {
-        //   'tag': 'REQ',
-        //   'content': `market.${symbol}.kline.${resolution}`,
-        //   'id': `kline_${symbol}`
-        // })
+        sendData(ws, {
+          'tag': 'REQ',
+          'content': `market.${symbol}.kline.${resolution}.step5`,
+          'id': `kline_${symbol}`
+        })
 
         // 交易记录
         if (store.state.common.reqRefreshStatus) {
@@ -134,18 +127,11 @@ function subscribe (ws, params) {
             'id': `trade_${symbol}`
           })
         }
-        // 实时行情
-        // sendData(ws, {
-        //   'tag': 'REQ',
-        //   'content': `market.${symbol}.ticker`,
-        //   'id': `tick_${symbol}`
-        // })
       }
       // 订阅
       for (let symbol of symbols) {
         // symbol = symbol.toLowerCase()
         // 深度
-        // 谨慎选择合并的深度，ws每次推送全量的深度数据，若未能及时处理容易引起消息堆积并且引发行情延时
         if (store.state.common.reqRefreshStatus) {
           sendData(ws, {
             'tag': 'SUB',
@@ -155,13 +141,11 @@ function subscribe (ws, params) {
         }
 
         // K线
-        // console.log(resolution)
-        // console.log(symbol)
-        // sendData(ws, {
-        //   'tag': 'SUB',
-        //   'content': `market.${symbol}.kline.${resolution}`,
-        //   'id': `kline_${symbol}14`
-        // })
+        sendData(ws, {
+          'tag': 'SUB',
+          'content': `market.${symbol}.kline.${resolution}.step5`,
+          'id': `kline_${symbol}14`
+        })
         // 交易记录
         if (store.state.common.reqRefreshStatus) {
           sendData(ws, {
@@ -170,12 +154,6 @@ function subscribe (ws, params) {
             'id': `trade_${symbol}`
           })
         }
-        // // 实时行情(首页数据)
-        // sendData(ws, {
-        //   'tag': 'SUB',
-        //   'content': `market.${symbol}.ticker`,
-        //   'id': `tick_${symbol}`
-        // })
       }
     }, 1000)
   }
@@ -190,6 +168,11 @@ const socket = {
   subscribeKline: function (params, callback) {
     if (this.ws === null) {
       this.init()
+    }
+    console.log(params)
+    if (!params) {
+      console.log('return ')
+      return false
     }
     if (this.ws.readyState) {
       subscribe(this.ws, params)

@@ -29,7 +29,7 @@ export default {
         previousSymbol: '', // 上一个交易对（取消用）
         interval: this.interval,
         // paneProperties: this.paneProperties
-        paneProperties: ''
+        paneProperties: {}
       }, // K线请求参数
       interval: '1' // 时间周期
     }
@@ -40,7 +40,6 @@ export default {
     // console.log(this.paneProperties)
   },
   mounted () {
-    this.paneProperties.background = this.theme === 'night' ? '#10172d' : '#fff'
     // Tv.init({
     //   symbol: 'ASASSWEWES',
     //   interval: '1',
@@ -85,13 +84,19 @@ export default {
       activeSymbol: state => state.common.activeSymbol,
       activeSymbolId: state => state.common.activeSymbol.id,
       activeTradeArea: state => state.common.activeTradeArea,
-      activeTabId: state => state.trade.activeTabId
+      activeTabId: state => state.trade.activeTabId,
+      mainColor: state => state.common.mainColor
     })
   },
   watch: {
     theme (newVal) {
       console.log(newVal)
-      this.paneProperties.background = newVal === 'night' ? '#10172d' : '#fff'
+      // 更新K线主题
+      Tv.applyOverrides({
+        'paneProperties.background': this.theme === 'night' ? this.mainColor.$mainNightBgColor : this.mainColor.$mainDayBgColor,
+        'paneProperties.vertGridProperties.color': this.theme === 'night' ? 'rgba(57,66,77,.2)' : '', // 行分割线
+        'paneProperties.horzGridProperties.color': this.theme === 'night' ? 'rgba(57,66,77,.2)' : '' // 列分割线
+      })
       // Tv.init({
       //   symbol: this.activeSymbol.sellsymbol + this.activeSymbol.area,
       //   interval: this.interval,
@@ -99,19 +104,16 @@ export default {
       // })
     },
     activeTradeArea (newVal) {
-      // console.log(newVal)
       if (newVal.id) {
-        // console.log(this.params)
-        // this.resetKline(this.params)
       }
     },
     activeSymbol (newVal) {
-      // console.log(newVal)
     },
     activeSymbolId (newVal) {
       console.log(this.activeSymbol.id)
       this.params.symbol = newVal
       this.params.areaId = this.activeTabId
+      this.params.paneProperties.background = this.theme === 'night' ? this.mainColor.$mainNightBgColor : this.mainColor.$mainDayBgColor
       this.params.interval = '1'
       console.log(this.params)
       this.resetKline(this.params)
@@ -120,17 +122,15 @@ export default {
 }
 </script>
 <style scoped lang="scss">
+  @import '../../../static/css/scss/index';
   #tv_chart_container {
-    /*position: absolute;*/
-    /*margin: 10px auto;*/
     width: 100%;
     height: 445px;
-    /*left: 50%;*/
-    /*transform: translate(-50%, 0);*/
-    /*width: 1923px;*/
-    /*height: 480px;*/
     &.night {
-      /*background-color: pink;*/
+      background-color: $mainNightBgColor;
+    }
+    &.day{
+      background-color: #fff;
     }
   }
 </style>

@@ -9,7 +9,9 @@
     <NavCommon/>
 
     <!--banner-->
-    <BannerHome/>
+    <keep-alive>
+      <BannerHome/>
+    </keep-alive>
 
     <!--交易区-->
     <MarketListHome/>

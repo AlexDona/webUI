@@ -348,7 +348,7 @@ class DataPulseUpdater {
     }
 
     if (typeof updateFrequency != 'undefined' && updateFrequency > 0) {
-      console.log(updateFrequency)
+      // console.log(updateFrequency)
       // 刷新订阅
       setInterval(update, updateFrequency)
     }

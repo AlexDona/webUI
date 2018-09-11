@@ -74,6 +74,7 @@ export default {
   // 用户出
   [USER_LOGOUT] (state) {
     state.isLogin = false
+    state.loginStep1Info = {}
     removeStore('loginStep1Info')
   }
 }

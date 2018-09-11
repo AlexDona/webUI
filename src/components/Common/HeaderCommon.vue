@@ -84,11 +84,19 @@
                 </li>
               </ul>
             </li>
+<<<<<<< HEAD
           <li class="nav-item">
             <router-link to="/VipMainContent">
               <span>VIP</span>
             </router-link>
           </li>
+=======
+          <!--<li class="nav-item">-->
+            <!--<router-link to="/PersonalCenter/first">-->
+              <!--<span>个人中心</span>-->
+            <!--</router-link>-->
+          <!--</li>-->
+>>>>>>> 9ea52b492dce27fe53525617cd58d8409b544e74
           </ul>
         </div>
         <!--注册登录-->
@@ -164,47 +172,9 @@
               >
                 <dt
                   class="lang-selected"
-                  v-show="language=='zh_CN'"
                 >
-                  <IconFontCommon
-                    iconName="icon-zhongguo"
-                  />
-                  <span class="language-text">简体中文</span>
-                  <i class="el-icon-caret-bottom
-"></i>
-                </dt>
-                <dt
-                  class="lang-selected"
-                  v-show="language=='en_US'"
-                >
-                  <IconFontCommon
-                    iconName="icon-yingguo"
-                  />
-                  <span class="language-text">English</span>
-                  <i class="el-icon-caret-bottom
-"></i>
-                </dt>
-                <dt
-                  class="lang-selected"
-                  v-show="language=='zh_TW'"
-                >
-                  <IconFontCommon
-                    iconName="icon-fantizhongwen"
-                  />
-                  <span class="language-text">繁体中文</span>
-                  <i class="el-icon-caret-bottom
-"></i>
-                </dt>
-                <dt
-                  class="lang-selected"
-                  v-show="language=='ko_KR'"
-                >
-                  <IconFontCommon
-                    iconName="icon-hanguo"
-                  />
-                  <span class="language-text">韩语</span>
-                  <i class="el-icon-caret-bottom
-"></i>
+                  <span class="language-text">{{activeLanguage.name}}</span>
+                  <i class="el-icon-caret-bottom"></i>
                 </dt>
                 <dd
                   class="lang-list"
@@ -213,42 +183,11 @@
                   <a
                     class="lang-item"
                     href="#"
-                    @click="changeLanguage('zh_CN')"
+                    @click="changeLanguage(item)"
+                    v-for="(item,index) in languageList"
+                    :key="index"
                   >
-                    <IconFontCommon
-                      iconName="icon-zhongguo"
-                    />
-                    简体中文
-                  </a>
-                  <a
-                    class="lang-item"
-                    href="#"
-                    @click="changeLanguage('en_US')"
-                  >
-                    <IconFontCommon
-                      iconName="icon-yingguo"
-                    />
-                    English
-                  </a>
-                  <a
-                    class="lang-item"
-                    href="#"
-                    @click="changeLanguage('zh_TW')"
-                  >
-                    <IconFontCommon
-                      iconName="icon-fantizhongwen"
-                    />
-                    繁体中文
-                  </a>
-                  <a
-                    class="lang-item"
-                    href="#"
-                    @click="changeLanguage('ko_KR')"
-                  >
-                    <IconFontCommon
-                      iconName="icon-hanguo"
-                    />
-                    韩语
+                    {{item.name}}
                   </a>
                 </dd>
               </dl>
@@ -328,7 +267,7 @@ import {
   returnAjaxMessage
 } from '../../utils/commonFunc'
 import { createNamespacedHelpers, mapState } from 'vuex'
-const { mapMutations } = createNamespacedHelpers('personal')
+const { mapMutations } = createNamespacedHelpers('common')
 // const { mapMutationsForUser } = createNamespacedHelpers('user')
 // import {Io} from '../../utils/tradingview/socket'
 export default{
@@ -356,6 +295,8 @@ export default{
         //   version: 1
         // }
       ],
+      // 语言列表
+      languageList: [],
       // 当前折算货币
       activeConvertCurrency: '',
       // 主题列表
@@ -382,7 +323,7 @@ export default{
   },
   created () {
     // 获取 语言列表
-    // this.getLanguageList()
+    this.getLanguageList()
     // console.log(this.theme)
     this.activeTheme = this.theme
     // 查询某商户可用法币币种列表
@@ -390,6 +331,7 @@ export default{
     if (this.loginStep1Info.userInfo) {
       this.$store.commit('user/USER_LOGIN', this.loginStep1Info)
     }
+    // this.getMerchantAvailablelegalTenderList()
   },
   methods: {
     ...mapMutations([
@@ -400,9 +342,7 @@ export default{
       // 修改主题
       'CHANGE_THEME',
       // 设置板块
-      'CHANGE_PALTE_LIST',
-      // 用户点击跳转指定页面
-      'CHANGE_USER_CENTER_ACTIVE_NAME'
+      'CHANGE_PALTE_LIST'
     ]),
     // 获取国家列表
     async getLanguageList () {
@@ -410,38 +350,42 @@ export default{
       if (!returnAjaxMessage(data, this)) {
         return false
       } else {
-        console.log(data)
+        this.languageList = data.data.data
+        this.CHANGE_LANGUAGE(this.languageList[0])
+        console.log(this.languageList[0])
+        console.log(this.activeLanguage)
       }
     },
-    // ...mapMutationsForUser([
-    //   ''
-    // ]),
     // 获取板块列表
+    // 设置个人中心跳转
+    setPersonalJump (target) {
+      this.$store.commit('personal/CHANGE_USER_CENTER_ACTIVE_NAME', target)
+    },
     // 用户跳转到指定页面
     stateReturnSuperior (val) {
       this.$router.push({path: '/PersonalCenter'})
       console.log(val)
       switch (val) {
         case 'account-balance':
-          this.CHANGE_USER_CENTER_ACTIVE_NAME('assets')
+          this.setPersonalJump('assets')
           break
         case 'order-management':
-          this.CHANGE_USER_CENTER_ACTIVE_NAME('coin-orders')
+          this.setPersonalJump('orders')
           break
         case 'identity-authentication':
-          this.CHANGE_USER_CENTER_ACTIVE_NAME('identity-authentication')
+          this.setPersonalJump('identity-authentication')
           break
         case 'security-center':
-          this.CHANGE_USER_CENTER_ACTIVE_NAME('security-center')
+          this.setPersonalJump('security-center')
           break
         case 'receiving-set':
-          this.CHANGE_USER_CENTER_ACTIVE_NAME('account-credited')
+          this.setPersonalJump('account-credited')
           break
         case 'invite':
-          this.CHANGE_USER_CENTER_ACTIVE_NAME('invitation-promote')
+          this.setPersonalJump('invitation-promote')
           break
         case 'api':
-          this.CHANGE_USER_CENTER_ACTIVE_NAME('api-management')
+          this.setPersonalJump('api-management')
           break
       }
     },
@@ -472,8 +416,9 @@ export default{
     },
     // 切换语言
     changeLanguage (e) {
+      console.log(e)
       this.CHANGE_LANGUAGE(e)
-      this.$i18n.locale = e
+      this.$i18n.locale = e.shortName
     },
     // 切换主题
     changeTheme (e) {
@@ -518,7 +463,8 @@ export default{
       isLogin: state => state.user.isLogin,
       loginStep1Info: state => state.user.loginStep1Info,
       userInfo: state => state.user.loginStep1Info.userInfo,
-      partnerId: state => state.common.partnerId // 商户id
+      partnerId: state => state.common.partnerId, // 商户id
+      activeLanguage: state => state.common.activeLanguage
     })
   },
   watch: {

@@ -169,6 +169,7 @@
                             type="text"
                             placeholder="卖出量"
                             class="sell-sum"
+                            :class = "{ red: errorWarningBorder }"
                             v-if="onlineTraderStatus === 'onlineSell'"
                             ref="sellCount"
                             @keyup="calculatePriceValue('sellCount', pointLength)"
@@ -187,12 +188,18 @@
                             type="text"
                             placeholder="买入量"
                             class="sell-sum"
+                            :class = "{ red: errorWarningBorder }"
                             v-if="onlineTraderStatus === 'onlineBuy'"
                             ref="buyCount"
                             @keyup="calculatePriceValue('buyCount', pointLength)"
                             @input="calculatePriceValue('buyCount', pointLength)"
                           >
-                          <span class="unit">{{name}}</span>
+                          <span
+                            class="unit"
+                            :class = "{ coinNameBorder: errorWarningBorder }"
+                          >
+                            {{name}}
+                          </span>
                           <!-- 2.0 金额部分 -->
                           <!--出售-->
                           <!-- <input
@@ -207,6 +214,7 @@
                             type="text"
                             placeholder="金额"
                             class="sell-sum"
+                            :class = "{ red: errorWarningBorder }"
                             v-if="onlineTraderStatus === 'onlineSell'"
                             ref="sellPrice"
                             @keyup="calculateCountValue('sellPrice', moneyPointLength)"
@@ -225,12 +233,18 @@
                             type="text"
                             placeholder="金额"
                             class="sell-sum"
+                            :class = "{ red: errorWarningBorder }"
                             v-if="onlineTraderStatus === 'onlineBuy'"
                             ref="buyPrice"
                             @keyup="calculateCountValue('buyPrice', moneyPointLength)"
                             @input="calculateCountValue('buyPrice', moneyPointLength)"
                           >
-                          <span class="unit">{{currencyName}}</span>
+                          <span
+                           class="unit"
+                            :class = "{ coinNameBorder: errorWarningBorder }"
+                          >
+                            {{currencyName}}
+                          </span>
                         </div>
                         <!-- input框错误提示信息 -->
                         <div class="errorInfo">
@@ -348,6 +362,8 @@ export default {
   },
   data () {
     return {
+      // input框输入错误显示红色边框状态
+      errorWarningBorder: false,
       // 弹窗显示状态
       dialogVisible: false,
       // 挂单人姓名
@@ -480,21 +496,26 @@ export default {
           this.serviceCharge = Number(this.serviceCharge).toFixed(this.pointLength)
           if (this.$refs.buyCount.value * this.price < this.minCount) {
             this.moneyTips = '单笔最小限额为' + this.minCount
+            this.errorWarningBorder = true
             return false
           } else if (this.$refs.buyCount.value * this.price > this.maxCount) {
             this.moneyTips = '单笔最大限额为' + this.maxCount
             this.numberTips = '最大剩余数量为' + this.remainingNum
+            this.errorWarningBorder = true
             return false
           } else if (this.$refs.buyCount.value > this.remainingNum) {
             this.moneyTips = '单笔最大限额为' + this.maxCount
             this.numberTips = '最大剩余数量为' + this.remainingNum
+            this.errorWarningBorder = true
             return false
           } else {
             this.moneyTips = ''
             this.numberTips = ''
+            this.errorWarningBorder = false
           }
         } else {
           this.numberTips = ''
+          this.errorWarningBorder = false
         }
       }
       // 卖
@@ -507,21 +528,26 @@ export default {
           this.serviceCharge = Number(this.serviceCharge).toFixed(this.pointLength)
           if (this.$refs.sellCount.value * this.price < this.minCount) {
             this.moneyTips = '单笔最小限额为' + this.minCount
+            this.errorWarningBorder = true
             return false
           } else if (this.$refs.sellCount.value * this.price > this.maxCount) {
             this.moneyTips = '单笔最大限额为' + this.maxCount
             this.numberTips = '最大剩余数量为' + this.remainingNum
+            this.errorWarningBorder = true
             return false
           } else if (this.$refs.sellCount.value > this.remainingNum) {
             this.moneyTips = '单笔最大限额为' + this.maxCount
             this.numberTips = '最大剩余数量为' + this.remainingNum
+            this.errorWarningBorder = true
             return false
           } else {
             this.moneyTips = ''
             this.numberTips = ''
+            this.errorWarningBorder = false
           }
         } else {
           this.numberTips = ''
+          this.errorWarningBorder = false
         }
       }
     },
@@ -542,17 +568,21 @@ export default {
           this.serviceCharge = Number(this.serviceCharge).toFixed(this.pointLength)
           if (this.$refs.buyPrice.value < this.minCount) {
             this.moneyTips = '单笔最小限额为' + this.minCount
+            this.errorWarningBorder = true
             return false
           } else if (this.$refs.buyPrice.value > this.maxCount) {
             this.moneyTips = '单笔最大限额为' + this.maxCount
             this.numberTips = '最大剩余数量为' + this.remainingNum
+            this.errorWarningBorder = true
             return false
           } else {
             this.moneyTips = ''
             this.numberTips = ''
+            this.errorWarningBorder = false
           }
         } else {
           this.moneyTips = ''
+          this.errorWarningBorder = false
         }
       }
       if (this.onlineTraderStatus === 'onlineSell') {
@@ -564,17 +594,21 @@ export default {
           this.serviceCharge = Number(this.serviceCharge).toFixed(this.pointLength)
           if (this.$refs.sellPrice.value < this.minCount) {
             this.moneyTips = '单笔最小限额为' + this.minCount
+            this.errorWarningBorder = true
             return false
           } else if (this.$refs.sellPrice.value > this.maxCount) {
             this.moneyTips = '单笔最大限额为' + this.maxCount
             this.numberTips = '最大剩余数量为' + this.remainingNum
+            this.errorWarningBorder = true
             return false
           } else {
             this.moneyTips = ''
             this.numberTips = ''
+            this.errorWarningBorder = false
           }
         } else {
           this.moneyTips = ''
+          this.errorWarningBorder = false
         }
       }
       // 验证输入的数字的准确性 假如 10--100
@@ -835,9 +869,18 @@ export default {
                       .sell-buy-input{
                         // padding: 10px 0 10px 0;
                         padding: 10px 0 0 0;
+                        .red{
+                          border: 1px solid red;
+                          border-right: 0;
+                        }
+                        .coinNameBorder{
+                          border: 1px solid red;
+                          border-left: 0;
+                        }
                         >.sell-sum{
                           width: 190px;
                           height: 36px;
+                          box-sizing: border-box;
                           background-color: #333A41;
                           padding-left: 10px;
                           color: #9DA5B3;
@@ -845,6 +888,7 @@ export default {
                         >.unit{
                           width: 70px;
                           height: 36px;
+                          box-sizing: border-box;
                           color: #338FF5;
                           font-size: 16px;
                           background-color: #414951;
@@ -863,7 +907,6 @@ export default {
                           height: 30px;
                           line-height: 30px;
                           font-size: 12px;
-                          // background-color: red;
                         }
                         >.money{
                           display: inline-block;
@@ -871,7 +914,6 @@ export default {
                           height: 30px;
                           line-height: 30px;
                           font-size: 12px;
-                          // background-color: green;
                         }
                       }
                       .trader-submit{
