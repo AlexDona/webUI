@@ -115,26 +115,26 @@
                         class="coin-item cursor-pointer"
                         v-for="(innerItem,innerIndex) in item.content"
                         :key="innerIndex"
-                        @click =changeActiveSymbol(innerItem)
+                        @click=changeActiveSymbol.stop(innerItem)
                       >
                         <span>
                           <!--收藏按钮-->
                           <!--自选区-->
                           <span v-show="activeName==tabList[0].id">
                             <i
-                              class="el-icon-star-on cursor-pointer collected"
+                              class="el-icon-star-on cursor-pointer collected font-size16"
                               @click="toggleCollect(innerItem.id,0,innerItem)"
                             ></i>
                           </span>
                           <!--非自选区-->
                           <span v-show="activeName!=tabList[0].id">
                             <i
-                              class="el-icon-star-off cursor-pointer"
+                              class="el-icon-star-off cursor-pointer font-size16"
                               v-show="!collectStatusList[innerItem.id]"
                               @click="toggleCollect(innerItem.id,1,innerItem)"
                             ></i>
                             <i
-                              class="el-icon-star-on cursor-pointer collected"
+                              class="el-icon-star-on cursor-pointer collected font-size16"
                               v-show="collectStatusList[innerItem.id]"
                               @click="toggleCollect(innerItem.id,0,innerItem)"
                             ></i>
@@ -182,14 +182,20 @@
   </div>
 </template>
 <script>
-import {getStore, setStore} from '../../utils'
+import {
+  getStore,
+  setStore
+} from '../../utils'
 import {getPartnerAreaList} from '../../utils/api/trade'
 import {
   returnAjaxMessage,
   getPartnerListAjax
 } from '../../utils/commonFunc'
 import {socket} from '../../utils/tradingview/socket'
-import {mapState, createNamespacedHelpers} from 'vuex'
+import {
+  mapState,
+  createNamespacedHelpers
+} from 'vuex'
 const { mapMutations } = createNamespacedHelpers('common')
 export default {
   components: {
@@ -599,13 +605,14 @@ export default {
         display: flex;
         > .text {
           flex: 1;
-          font-weight: 700;
+          /*font-weight: 700;*/
           display: inline-block;
           height: 100%;
           > span {
             text-indent: 4px;
             display: inline-block;
             height: 100%;
+            color:$mainColor;
             //border-bottom: 2px solid $mainColor;
           }
         }

@@ -95,67 +95,67 @@ function subscribe (ws, params) {
         break
     }
     console.log(resolution)
-    setTimeout(() => {
-      // 请求
-      for (let symbol of symbols) {
+    // setTimeout(() => {
+    // 请求
+    for (let symbol of symbols) {
+      // sendData(ws, {
+      //   'tag': 'CANCEL',
+      //   'content': `market.${symbol}.depth.step1`,
+      //   'id': `depth_${symbol}`
+      // })
+      // 深度
+      if (store.state.common.reqRefreshStatus && symbol) {
+        console.log(symbol)
         sendData(ws, {
-          'tag': 'CANCEL',
+          'tag': 'REQ',
           'content': `market.${symbol}.depth.step1`,
           'id': `depth_${symbol}`
         })
-        // 深度
-        if (store.state.common.reqRefreshStatus && symbol) {
-          console.log(symbol)
-          sendData(ws, {
-            'tag': 'REQ',
-            'content': `market.${symbol}.depth.step1`,
-            'id': `depth_${symbol}`
-          })
-        }
-        // K线
+      }
+      // K线
+      sendData(ws, {
+        'tag': 'REQ',
+        'content': `market.${symbol}.kline.${resolution}.step5`,
+        'id': `kline_${symbol}`
+      })
+
+      // 交易记录
+      if (store.state.common.reqRefreshStatus) {
         sendData(ws, {
           'tag': 'REQ',
-          'content': `market.${symbol}.kline.${resolution}.step5`,
-          'id': `kline_${symbol}`
+          'content': `market.${symbol}.trade`,
+          'id': `trade_${symbol}`
         })
-
-        // 交易记录
-        if (store.state.common.reqRefreshStatus) {
-          sendData(ws, {
-            'tag': 'REQ',
-            'content': `market.${symbol}.trade`,
-            'id': `trade_${symbol}`
-          })
-        }
       }
-      // 订阅
-      for (let symbol of symbols) {
-        // symbol = symbol.toLowerCase()
-        // 深度
-        if (store.state.common.reqRefreshStatus) {
-          sendData(ws, {
-            'tag': 'SUB',
-            'content': `market.${symbol}.depth.step1`,
-            'id': `depth_${symbol}`
-          })
-        }
-
-        // K线
+    }
+    // 订阅
+    for (let symbol of symbols) {
+      // symbol = symbol.toLowerCase()
+      // 深度
+      if (store.state.common.reqRefreshStatus) {
         sendData(ws, {
           'tag': 'SUB',
-          'content': `market.${symbol}.kline.${resolution}.step5`,
-          'id': `kline_${symbol}14`
+          'content': `market.${symbol}.depth.step1`,
+          'id': `depth_${symbol}`
         })
-        // 交易记录
-        if (store.state.common.reqRefreshStatus) {
-          sendData(ws, {
-            'tag': 'SUB',
-            'content': `market.${symbol}.trade`,
-            'id': `trade_${symbol}`
-          })
-        }
       }
-    }, 1000)
+
+      // K线
+      sendData(ws, {
+        'tag': 'SUB',
+        'content': `market.${symbol}.kline.${resolution}.step5`,
+        'id': `kline_${symbol}14`
+      })
+      // 交易记录
+      if (store.state.common.reqRefreshStatus) {
+        sendData(ws, {
+          'tag': 'SUB',
+          'content': `market.${symbol}.trade`,
+          'id': `trade_${symbol}`
+        })
+      }
+    }
+    // }, 1000)
   }
 }
 

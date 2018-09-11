@@ -16,6 +16,8 @@ const state = {
   },
   // 折算货币
   activeConvertCurrency: 'CNY',
+  // 折算货币税率列表
+  currencyRateList: [],
   previousSymbol: {}, // 上一个交易对
   // 当前选中交易对
   activeSymbol: {
@@ -45,6 +47,7 @@ const state = {
   // 公用 板块
   plateList: [], // 板块列表
   partnerId: '474629374641963008', // 商户id
+  routerTo: '', // 路由跳转
   end: ''// 占位
 }
 

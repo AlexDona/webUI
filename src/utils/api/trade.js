@@ -11,6 +11,7 @@ export const getHistoryEntrust = (params) => get('queryMyHisEntrust', params)
 // 撤销当前委单
 export const repealMyEntrustAjax = (params) => put('cancelEntrust', params)
 // 全球行情
-export const getGLobalMarket = (params) => get('market3rd/ETH_BTC', params)
+// params 格式： ETH_BTC
+export const getGLobalMarket = (params) => get(`market3rd/${params}`)
 // 交易区信息
 export const getPartnerAreaList = (params) => get('queryPartnerArea', params)

@@ -470,7 +470,8 @@ export default {
   methods: {
     ...mapMutations([
       'CHANGE_OTC_AVAILABLE_CURRENCY_NAME',
-      'CHANGE_OTC_AVAILABLE_CURRENCY_ID'
+      'CHANGE_OTC_AVAILABLE_CURRENCY_ID',
+      'CHANGE_OTC_AVAILABLE_PARTNER_COIN_ID'
     ]),
     // 0.1 切换tab面板
     toggleTabPane (tab, event) {
@@ -478,7 +479,11 @@ export default {
     },
     // 0.2 点击发布订单按钮跳转到发布订单页面
     toPublishOrder () {
-      this.$router.push({path: '/OTCPublishBuyAndSell'})
+      // this.$router.push({path: '/OTCPublishBuyAndSell'})
+      // this.OTCBuySellStyle 当前买卖类型
+      // this.selectedOTCAvailablePartnerCoinId 选中的可用商户币种id
+      // this.activitedCurrencyId 当前选中的可用法币id
+      this.$router.push({path: '/OTCPublishBuyAndSell/' + this.OTCBuySellStyle + '/' + this.selectedOTCAvailablePartnerCoinId + '/' + this.activitedCurrencyId})
     },
     // 0.3 点击购买按钮跳转到在线购买页面
     toOnlineBuy (id, partnerCoinId) {
@@ -511,6 +516,7 @@ export default {
         this.IWantToBuySellArr = data.data.data
         this.CHANGE_OTC_AVAILABLE_CURRENCY_NAME(this.IWantToBuySellArr[0].name)
         this.CHANGE_OTC_AVAILABLE_CURRENCY_ID(this.IWantToBuySellArr[0].coinId)
+        this.CHANGE_OTC_AVAILABLE_PARTNER_COIN_ID(this.IWantToBuySellArr[0].partnerCoinId)
         // console.log(this.selectedOTCAvailableCurrencyName)
         // console.log(this.selectedOTCAvailableCurrencyCoinID)
         // 在得到可用币种之后再调用方法根据币种的第一项的币种id来渲染表格数据
@@ -568,13 +574,12 @@ export default {
     selectCurrencyName (index) {
       console.log(index)
       this.selectCurrencyNameStatus = index
-      // this.IWantToBuySellArr[index].coinId
-      // this.IWantToBuySellArr[index].name
-      // console.log(this.IWantToBuySellArr[index].minCount);
       this.CHANGE_OTC_AVAILABLE_CURRENCY_NAME(this.IWantToBuySellArr[index].name)
+      this.CHANGE_OTC_AVAILABLE_PARTNER_COIN_ID(this.IWantToBuySellArr[index].partnerCoinId)
       this.CHANGE_OTC_AVAILABLE_CURRENCY_ID(this.IWantToBuySellArr[index].coinId)
       console.log(this.selectedOTCAvailableCurrencyName)
       console.log(this.selectedOTCAvailableCurrencyCoinID)
+      console.log(this.selectedOTCAvailablePartnerCoinId)
       // 请求接口数据渲染表格
       this.getSelectCurrencyNametOTCPutUpOrdersList()
     },
@@ -606,7 +611,7 @@ export default {
     async toggleBuyOrSellStyle (e) {
       // console.log(e)
       this.OTCBuySellStyle = e
-      // console.log(this.OTCBuySellStyle)
+      console.log(this.OTCBuySellStyle)
       let param = {
         payType: this.checkedPayType, // 按照选中的支付方式查询列表
         partnerId: this.partnerId, // 商户id
@@ -704,6 +709,7 @@ export default {
   computed: {
     ...mapState({
       selectedOTCAvailableCurrencyName: state => state.OTC.selectedOTCAvailableCurrencyName,
+      selectedOTCAvailablePartnerCoinId: state => state.OTC.selectedOTCAvailablePartnerCoinId,
       selectedOTCAvailableCurrencyCoinID: state => state.OTC.selectedOTCAvailableCurrencyCoinID,
       partnerId: state => state.common.partnerId,
       // 测试拿到userinfo

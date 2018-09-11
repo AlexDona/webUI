@@ -34,7 +34,7 @@ export const returnAjaxMessage = (data, self, noTip) => {
     if (noTip) {
       self.$message({
         type: 'success',
-        duration: 5000000,
+        // duration: 5000000,
         message: self.$t(`M.${meta.i18n_code}`)
       })
     }

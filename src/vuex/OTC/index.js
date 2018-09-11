@@ -8,7 +8,9 @@ const state = {
   // OTC改变选中的可用币种名字
   selectedOTCAvailableCurrencyName: '',
   // OTC改变选中的可用币种id
-  selectedOTCAvailableCurrencyCoinID: ''
+  selectedOTCAvailableCurrencyCoinID: '',
+  // OTC改变选中的可用币种partnerCoinId
+  selectedOTCAvailablePartnerCoinId: ''
 }
 
 export default {

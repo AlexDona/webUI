@@ -7,7 +7,7 @@
   color:#d8d8d8;
 }
 .trade-box.night .el-table--enable-row-hover .el-table__body tr:hover>td{
-  background-color: #202a34;
+  background-color: #1c2433;
 }
 .trade-box.night .el-table th.is-leaf{
   border-color:#39424d;
@@ -22,6 +22,23 @@
 .trade-box.night>.inner-box>.middle .el-tabs__item{
   color:#fff;
 }
+/*滚动条*/
+.trade-box.night .el-table--scrollable-y .el-table__body-wrapper::-webkit-scrollbar {
+  width: 4px;
+}
+/*滚动条*/
+.trade-box.night .el-table--scrollable-y .el-table__body-wrapper::-webkit-scrollbar-track-piece {
+  background-color: #2a343e;
+}
+/*滚动条背景*/
+.trade-box.night .el-table--scrollable-y .el-table__body-wrapper::-webkit-scrollbar-thumb {
+  background-color: #4A5662;
+}
+.trade-box.night .el-table--scrollable-y .el-table__body-wrapper::-webkit-scrollbar-button {
+  background-color: #fff;
+  display: none;
+}
+
 
 /*.trade-box.night*/
 /*.trade-box.night*/

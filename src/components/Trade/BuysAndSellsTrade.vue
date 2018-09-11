@@ -28,7 +28,11 @@
           ></button>
         </span>
       </div>
-      <div class="content">
+      <div
+        class="content"
+        v-if="buysAndSellsList"
+      >
+        <el-collapse-transition>
           <div
             v-show="contentShowStatus"
             class="inner-box"
@@ -36,21 +40,21 @@
             <dl class="title-box">
               <dt class="header">
                 <span class="price text-align-l">
-                  价格(USDT)
+                  价格({{activeSymbol.area}})
                 </span>
                 <span class="amount text-align-c">
                   数量
-                  <span class="uppercase">(btc)</span>
+                  <span class="uppercase">（{{activeSymbol.sellsymbol}}）</span>
                 </span>
                 <span class="total text-align-r">
                   总计
-                  <span class="uppercase">(btc)</span>
+                  <span class="uppercase">({{activeSymbol.area}})</span>
                 </span>
               </dt>
             </dl>
             <!--buys、sells-->
             <div
-              class="mibble-box content-box"
+              class="middle-box content-box"
               v-if="listOrder==='middle'"
             >
               <!--买入-->
@@ -58,13 +62,16 @@
                 class="buys-list"
               >
                 <dd
-                  class="buys-item"
+                  class="buys-item cursor-pointer"
                   v-for="(item,index) in buysAndSellsList.buys.list.slice(0,9)"
                   :key="index"
                   :class="{'odd':index%2!==0}"
+                  @click="changeActivePriceItem(item)"
                 >
                   <div class="inner">
-                  <span class="price text-align-l">
+                  <span
+                    class="price text-align-l buy-bg"
+                  >
                     {{item.price}}
                   </span>
                     <span class="amount text-align-r">
@@ -101,13 +108,14 @@
                 class="sells-list"
               >
                 <dd
-                  class="sells-item"
+                  class="sells-item cursor-pointer"
                   v-for="(item,index) in buysAndSellsList.sells.list.slice(0,9)"
                   :key="index"
                   :class="{'even':index%2==0}"
+                  @click="changeActivePriceItem(item)"
                 >
                   <div class="inner">
-                  <span class="price text-align-l">
+                  <span class="price text-align-l sell-bg">
                     {{item.price}}
                   </span>
                     <span class="amount text-align-r">
@@ -150,13 +158,14 @@
                 class="buys-list"
               >
                 <dd
-                  class="buys-item"
+                  class="buys-item cursor-pointer"
                   v-for="(item,index) in buysAndSellsList.buys.list.slice(0,19)"
                   :key="index"
                   :class="{'odd':index%2!==0}"
+                  @click="changeActivePriceItem(item)"
                 >
                   <div class="inner">
-                  <span class="price text-align-l">
+                  <span class="price text-align-l buy-bg">
                     {{item.price}}
                   </span>
                     <span class="amount text-align-r">
@@ -200,13 +209,14 @@
                 class="sells-list"
               >
                 <dd
-                  class="sells-item"
+                  class="sells-item cursor-pointer"
                   v-for="(item,index) in buysAndSellsList.sells.list.slice(0,19)"
                   :key="index"
                   :class="{'even':index%2==0}"
+                  @click="changeActivePriceItem(item)"
                 >
                   <div class="inner">
-                  <span class="price text-align-l">
+                  <span class="price text-align-l sell-bg">
                     {{item.price}}
                   </span>
                     <span class="amount text-align-r">
@@ -227,6 +237,7 @@
             </div>
             <!--</el-collapse-transition>-->
           </div>
+        </el-collapse-transition>
       </div>
     </div>
   </div>
@@ -234,10 +245,10 @@
 <script>
 import IconFontCommon from '../Common/IconFontCommon'
 import {
-  // createNamespacedHelpers,
+  createNamespacedHelpers,
   mapState
 } from 'vuex'
-// const { mapMutations } = createNamespacedHelpers('common')
+const { mapMutations } = createNamespacedHelpers('trade')
 export default {
   components: {
     IconFontCommon
@@ -249,8 +260,10 @@ export default {
       contentShowStatus: true,
       // 买卖数据列表
       buysAndsells: {},
+      reflashCount: 0, // 买卖单数据刷新次数
       // 显示顺序(buys,middle,sells)
-      listOrder: 'middle' // 切换显示顺序
+      listOrder: 'middle', // 切换显示顺序
+      buysAndSellsFilterList: []
     }
   },
   created () {
@@ -401,6 +414,13 @@ export default {
   beforeRouteUpdate () {
   },
   methods: {
+    ...mapMutations([
+      'CHANGE_ACTIVE_PRICE_ITEM'
+    ]),
+    // 选中某一个买卖单价格
+    changeActivePriceItem (item) {
+      this.CHANGE_ACTIVE_PRICE_ITEM(item.price)
+    },
     // 切换内容显示隐藏
     toggleShowContent () {
       this.contentShowStatus = !this.contentShowStatus
@@ -426,12 +446,21 @@ export default {
       theme: state => state.common.theme,
       socketData: state => state.common.socketData,
       depthData: state => state.common.socketData.depthData,
-      buysAndSellsList: state => state.common.socketData.buyAndSellData
+      buysAndSellsList: state => state.common.socketData.buyAndSellData,
+      activeSymbol: state => state.common.activeSymbol,
+      activeSymbolId: state => state.common.activeSymbol.id
     })
   },
   watch: {
+    activeSymbolId (newVal) {
+      this.reflashCount = 0
+    },
     buysAndSellsList (newVal) {
       // console.log(newVal)
+      if (!this.reflashCount && newVal) {
+        this.CHANGE_ACTIVE_PRICE_ITEM(newVal.latestDone.price)
+        this.reflashCount++
+      }
     }
   }
 }
@@ -450,7 +479,7 @@ export default {
         display: flex;
         > .text {
           flex:1;
-          font-weight: 700;
+          /*font-weight: 700;*/
           display: inline-block;
           height: 100%;
           >span{
@@ -458,6 +487,7 @@ export default {
             display: inline-block;
             height: 100%;
             border-bottom: 2px solid $mainColor;
+            color:$mainColor;
           }
         }
         /*买卖单顺序操作按钮*/
@@ -508,14 +538,20 @@ export default {
                 line-height: 24px;
                 >.inner{
                   display: flex;
+                  position: relative;
+                  z-index: 1;
+                  >.buy-bg{
+                    color:$upColor;
+                  }
+                  >.sell-bg{
+                    color:$downColor;
+                  }
                   >span{
                     flex:1;
                   }
                   >.amount{
                     padding-right:18%;
                   }
-                  position: relative;
-                  z-index: 1;
                   >.color-buy-bg,>.color-sell-bg{
                     max-width:100%;
                     position: absolute;
@@ -526,10 +562,10 @@ export default {
                     opacity: .1;
                   }
                   >.color-buy-bg{
-                    background-color:$upColor;
+                    background-color:rgba(212,88,88,0.7);
                   }
                   >.color-sell-bg{
-                    background-color:$downColor;
+                    background-color:rgba(0,128,105,0.7);
                   }
                 }
               }
@@ -556,8 +592,23 @@ export default {
         > .title {
           color: $nightMainTitleColor;
           background-color: $nightMainTitleBgColor;
+          > .text {
+            >span{
+            }
+          }
+          /*买卖单顺序操作按钮*/
+          >.right{
+            >button{
+            }
+            >.middle{
+            }
+            >.bottom{
+            }
+            >.top{
+            }
+          }
         }
-        > .content {
+        >.content {
           background-color: $nightMainContentBgColor;
           >.inner-box{
             /*表头*/
@@ -567,29 +618,34 @@ export default {
                 }
               }
             }
-            >.buys-list,.sells-list{
-              >dd{
-                >.inner{
-                  >span{
+            >.content-box{
+              >.buys-list,.sells-list{
+                >dd{
+                  &.odd,&.even,&:hover{
+                    background-color: #1c2433;
+                  }
+                  >.inner{
+                    >span{
+                    }
+                    >.amount{
+                    }
+                    >.color-buy-bg,>.color-sell-bg{
+                    }
+                    >.color-buy-bg{
+                    }
+                    >.color-sell-bg{
+                    }
                   }
                 }
               }
-            }
-            /*最新价*/
-            .new-price{
-            }
-            /*买入表*/
-            >.buys-list{
-              >.buys-item{
-                &.odd{
-                  background-color: #182128;
-                }
+              /*最新价*/
+              .new-price{
               }
-            }
-            >.sells-list{
-              >.sells-item{
-                &.even{
-                  background-color: #182128;
+              /*买入表*/
+              >.buys-list{
+                &.height22{
+                }
+                >.buys-item{
                 }
               }
             }
@@ -602,8 +658,23 @@ export default {
         > .title {
           color: $dayMainTitleColor;
           background-color: $dayMainBgColor;
+          > .text {
+            >span{
+            }
+          }
+          /*买卖单顺序操作按钮*/
+          >.right{
+            >button{
+            }
+            >.middle{
+            }
+            >.bottom{
+            }
+            >.top{
+            }
+          }
         }
-        > .content {
+        >.content {
           background-color: #fff;
           >.inner-box{
             /*表头*/
@@ -613,29 +684,36 @@ export default {
                 }
               }
             }
-            >.buys-list,.sells-list{
-              >dd{
-                >.inner{
-                  >span{
+            >.content-box{
+              >.buys-list,.sells-list{
+                >dd{
+                  &.odd,&.even,&:hover{
+                    background-color: #f2f2f2;
+                  }
+                  >.inner{
+                    >span{
+                    }
+                    >.amount{
+                    }
+                    >.color-buy-bg,>.color-sell-bg{
+                    }
+                    >.color-buy-bg{
+                      background-color:rgba(212,88,88,0.8);
+                    }
+                    >.color-sell-bg{
+                      background-color:rgba(0,128,105,0.8);
+                    }
                   }
                 }
               }
-            }
-            /*最新价*/
-            .new-price{
-            }
-            /*买入表*/
-            >.buys-list{
-              >.buys-item{
-                &.odd{
-                  background-color: #f2f2f2;
-                }
+              /*最新价*/
+              .new-price{
               }
-            }
-            >.sells-list{
-              >.sells-item{
-                &.even{
-                  background-color: #f2f2f2;
+              /*买入表*/
+              >.buys-list{
+                &.height22{
+                }
+                >.buys-item{
                 }
               }
             }

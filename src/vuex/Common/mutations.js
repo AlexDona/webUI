@@ -6,7 +6,10 @@ import {
   CHANGE_SOCKET_DATA,
   CHANGE_ACTIVE_SYMBOL,
   CHANGE_ACTIVE_TRADE_AREA,
-  CHANGE_PALTE_LIST
+  CHANGE_PALTE_LIST,
+  CHANGE_CURRENCY_RATE_LIST,
+  // eslint-disable-next-line
+  CHANGE_ROUTER_PATH
 } from './mutations-types.js'
 
 // import {setStore, getStore} from '../utils'
@@ -63,5 +66,12 @@ export default {
   // 更改板块
   [CHANGE_PALTE_LIST] (state, data) {
     state.plateList = data
+  },
+  [CHANGE_CURRENCY_RATE_LIST] (state, data) {
+    state.currencyRateList = data
+  },
+  // 登录后路由跳转
+  CHANGE_ROUTER_PATH (state, path) {
+    state.routerTo = path
   }
 }

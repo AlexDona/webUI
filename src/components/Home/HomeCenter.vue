@@ -3,7 +3,9 @@
   <div class="home-box home">
 
     <!--公告-->
-    <NoticeHome/>
+    <keep-alive>
+      <NoticeHome/>
+    </keep-alive>
 
     <!--导航-->
     <NavCommon/>

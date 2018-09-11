@@ -7,3 +7,5 @@ export const CHANGE_SOCKET_DATA = 'CHANGE_SOCKET_DATA' // 改变socket数据
 export const CHANGE_ACTIVE_SYMBOL = 'CHANGE_ACTIVE_SYMBOL' // 更改当前选中交易对
 export const CHANGE_ACTIVE_TRADE_AREA = 'CHANGE_ACTIVE_TRADE_AREA' // 更改当前选中交易区
 export const CHANGE_PALTE_LIST = 'CHANGE_PALTE_LIST' // 更改板块
+export const CHANGE_CURRENCY_RATE_LIST = 'CHANGE_CURRENCY_RATE_LIST' // 更新当前汇率列表
+export const CHANGE_ROUTER_PATH = 'CHANGE_ROUTER_PATH' // 路由跳转

@@ -2,6 +2,7 @@
   <div class="login-box user">
     <HeaderCommon/>
     <div class="inner-box">
+      <div class="bg-image"></div>
       <!--PC端-->
       <div
         class="pc-box"
@@ -483,8 +484,8 @@ export default {
   },
   data () {
     return {
-      username: '15738818082',
-      // username: '18625512987',
+      // username: '15738818082',
+      username: '18625512987',
       // username: '18600929234',
       // username: '17600854297',
       // username: '18625512985',
@@ -1210,6 +1211,7 @@ export default {
     height:100%;
     background:linear-gradient(150deg,rgba(30,38,54,1),rgba(37,75,117,1));
     >.inner-box{
+      background:url('../../assets/develop/login-bg.png') 25% center  no-repeat ;
       >.pc-box {
         width: 370px;
         height: 330px;

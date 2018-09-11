@@ -65,7 +65,7 @@
                 </template>
               </el-table-column>
               <el-table-column
-                label="成交量(BTCCC)"
+                :label="`成交量(${activeSymbol.area})`"
               >
                 <template slot-scope="s">
                   <div
@@ -154,7 +154,6 @@ export default {
     //     volume: 561.82 // 成交量
     //   }
     // ]
-    // this.getGlobalMarket()
   },
   mounted () {},
   activited () {},
@@ -163,13 +162,13 @@ export default {
   methods: {
     // 获取全球行情
     async getGlobalMarket () {
-      const data = await getGLobalMarket()
+      let params = `${this.activeSymbol.sellsymbol}_${this.activeSymbol.area}`.toUpperCase()
+
+      const data = await getGLobalMarket(params)
       if (!returnAjaxMessage(data, this, 0)) {
         return false
       } else {
-        console.log(data)
         this.globalMarketList = data.data.data
-        console.log(this.globalMarketList)
       }
     },
     // 切换内容显示隐藏
@@ -181,10 +180,18 @@ export default {
   filter: {},
   computed: {
     ...mapState({
-      theme: state => state.common.theme
+      theme: state => state.common.theme,
+      activeSymbol: state => state.common.activeSymbol,
+      activeSymbolId: state => state.common.activeSymbol.id
     })
   },
-  watch: {}
+  watch: {
+    activeSymbolId (newVal) {
+      if (newVal) {
+        this.getGlobalMarket()
+      }
+    }
+  }
 }
 </script>
 <style scoped lang="scss">
@@ -194,7 +201,7 @@ export default {
       >.title{
         height:34px;
         line-height: 34px;
-        font-weight: 700;
+        /*font-weight: 700;*/
         margin-bottom:4px;
         box-shadow:0 2px 6px rgba(0,0,0,.1);
         >.text{
@@ -202,6 +209,7 @@ export default {
           text-indent: 4px;
           height:100%;
           border-bottom:2px solid $mainColor;
+          color:$mainColor;
         }
       }
       >.content{
