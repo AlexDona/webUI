@@ -525,6 +525,8 @@
           </div>
         </div>
       </div>
+      <!-- 暂无数据 -->
+      <div class="no-data" v-if="!tradingOrderList.length">暂无数据</div>
       <!-- 3.0 买家点击确认付款按钮 弹出交易密码框 -->
       <div class="password-dialog">
         <el-dialog
@@ -876,6 +878,9 @@ export default {
 @import url(../../../static/css/scss/OTC/OTCTradingOrder.scss);
 .otc-trading-order-box{
   >.otc-trading-order-content{
+    min-height: 472px;
+    background-color: #202A33;
+    border-radius: 5px;
     >.order-list{
       width: 1045px;
       height: 170px;
@@ -1079,6 +1084,12 @@ export default {
         }
       }
       }
+    }
+    >.no-data{
+      width: 1043px;
+      height: 472px;
+      line-height: 472px;
+      text-align: center;
     }
   }
 }

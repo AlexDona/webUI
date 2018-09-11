@@ -69,6 +69,7 @@
           </div>
         </div>
       </div>
+      <div class="no-data" v-if="!getOTCCanceledOrderList.length">暂无数据</div>
       <el-pagination
         v-if="getOTCCanceledOrderList.length >= 10 "
         background
@@ -96,36 +97,6 @@ export default {
         //   orderId: '20180812111111',
         //   style: '买入',
         //   styleStatus: 1, // 1:买入，2：卖出
-        //   coinName: 'BTC',
-        //   price: '567812.12',
-        //   sum: '0.0012345',
-        //   totalMoney: '20180812123456',
-        //   createTime: 1534298399000,
-        //   sellerName: '张三封',
-        //   sellerPhone: '15711111111',
-        //   buyerName: '任付伟',
-        //   buyerPhone: '15722222222',
-        //   cancelTime: 1534298399000
-        // }
-        // {
-        //   orderId: '20180812222222',
-        //   style: '卖出',
-        //   styleStatus: 2, // 1:买入，2：卖出
-        //   coinName: 'BTC',
-        //   price: '567812.12',
-        //   sum: '0.0012345',
-        //   totalMoney: '20180812123456',
-        //   createTime: 1534298399000,
-        //   sellerName: '张三封',
-        //   sellerPhone: '15711111111',
-        //   buyerName: '任付伟',
-        //   buyerPhone: '15722222222',
-        //   cancelTime: 1534298399000
-        // },
-        // {
-        //   orderId: '20180812222222',
-        //   style: '卖出',
-        //   styleStatus: 2, // 1:买入，2：卖出
         //   coinName: 'BTC',
         //   price: '567812.12',
         //   sum: '0.0012345',
@@ -183,8 +154,8 @@ export default {
 <style scoped lang="scss" type="text/scss">
   @import url(../../../static/css/scss/OTC/OTCCanceledOrder.scss);
   .otc-canceled-order-box{
-    .canceled-order-content{
-      .canceled-table-head{
+    >.canceled-order-content{
+      >.canceled-table-head{
         box-sizing: border-box;
         width: 1043px;
         height: 35px;
@@ -274,6 +245,13 @@ export default {
             }
           }
         }
+      }
+      >.no-data{
+        width: 1043px;
+        height: 432px;
+        line-height: 432px;
+        text-align: center;
+        background-color: #202A33;
       }
     }
   }
