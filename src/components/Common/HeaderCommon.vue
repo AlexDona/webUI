@@ -84,19 +84,6 @@
                 </li>
               </ul>
             </li>
-<<<<<<< HEAD
-          <li class="nav-item">
-            <router-link to="/VipMainContent">
-              <span>VIP</span>
-            </router-link>
-          </li>
-=======
-          <!--<li class="nav-item">-->
-            <!--<router-link to="/PersonalCenter/first">-->
-              <!--<span>个人中心</span>-->
-            <!--</router-link>-->
-          <!--</li>-->
->>>>>>> 9ea52b492dce27fe53525617cd58d8409b544e74
           </ul>
         </div>
         <!--注册登录-->
