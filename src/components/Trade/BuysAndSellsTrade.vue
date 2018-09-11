@@ -227,10 +227,10 @@
                   </span>
                     <!--宽度条-->
                     <i
-                      class="color-sell-bg"
-                      :style="'width:'+ item.amount/buysAndSellsList.buys.highestAmount*100+'%'"
-                    >
-                    </i>
+                    class="color-sell-bg"
+                    :style="'width:'+ item.amount/buysAndSellsList.buys.highestAmount*100+'%'"
+                  >
+                  </i>
                   </div>
                 </dd>
               </dl>

@@ -372,7 +372,9 @@ export default {
       dialogVisibleHand: false,
       seniorCertificationList: {},
       realNameInformationObj: {}, //  获取用户实名信息
-      statusRealNameInformation: {},
+      statusRealNameInformation: {
+        cardNo: ''
+      },
       errorShowStatusList: [
         '', // 真实姓名
         '' // 证件号码

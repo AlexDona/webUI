@@ -50,7 +50,7 @@
             </div>
             <div class="todos">
               <router-link
-                to="/"
+                to="/ForgetPassword"
               >
                 忘记密码?
               </router-link>
@@ -520,7 +520,7 @@ export default {
         *
         */
       beginClientX: 0, /* 距离屏幕左端距离 */
-      mouseMoveStata: false, /* 触发拖动状态  判断 */
+      mouseMoveStatus: false, /* 触发拖动状态  判断 */
       maxwidth: 340, /* 拖动最大宽度，依据滑块宽度算出来的 */
       // confirmWords: '请按住滑块，拖动滑块验证', /*滑块文字*/
       confirmWords: '请按住滑块，拖动滑块验证', /* 滑块文字 */
@@ -552,7 +552,7 @@ export default {
   },
   mounted () {
     $('body').on('mousemove', (e) => { // 拖动，这里需要用箭头函数，不然this的指向不会是vue对象
-      if (this.mouseMoveStata) {
+      if (this.mouseMoveStatus) {
         var width = e.clientX - this.beginClientX
         if (width > 0 && width <= this.maxwidth) {
           $('.handler').css({'left': width})
@@ -564,7 +564,7 @@ export default {
     })
     $('body').on('mouseup', (e) => { // 鼠标放开
       // console.log('mouseup')
-      this.mouseMoveStata = false
+      this.mouseMoveStatus = false
       var width = e.clientX - this.beginClientX
       if (width < this.maxwidth) {
         $('.handler').animate({'left': 0}, 500)
@@ -685,7 +685,7 @@ export default {
         $('body').on('mousedown', (e) => {
         })
         $('body').on('mousemove', (e) => { // 拖动，这里需要用箭头函数，不然this的指向不会是vue对象
-          if (this.mouseMoveStata) {
+          if (this.mouseMoveStatus) {
             var width = e.clientX - this.beginClientX
             if (width > 0 && width <= this.maxwidth) {
               $('.handler').css({'left': width})
@@ -696,7 +696,7 @@ export default {
           }
         })
         $('body').on('mouseup', (e) => { // 鼠标放开
-          this.mouseMoveStata = false
+          this.mouseMoveStatus = false
           var width = e.clientX - this.beginClientX
           if (width < this.maxwidth) {
             $('.handler').animate({'left': 0}, 500)
@@ -728,19 +728,9 @@ export default {
       console.log(disabled)
     },
     sendPhoneOrEmailCode (loginType) {
-      // console.log(this.disabledOfPhoneBtn)
-      // console.log(this.disabledOfEmailBtn)
       if (this.disabledOfPhoneBtn || this.disabledOfEmailBtn) {
         return false
       }
-      // this.SET_USER_BUTTON_STATUS({
-      //   loginType: 0,
-      //   status: false
-      // })
-      // this.SET_USER_BUTTON_STATUS({
-      //   loginType: 1,
-      //   status: false
-      // })
       let params = {
         country: this.activeCountryCode,
         type: 'LOGIN_RECORD'
@@ -753,9 +743,7 @@ export default {
           params.address = this.userInfo.email
           break
       }
-      // console.log(params)
       sendPhoneOrEmailCodeAjax(loginType, params, (data) => {
-        // console.log(this.disabledOfPhoneBtn)
         // 提示信息
         if (!returnAjaxMessage(data, this)) {
           console.log('error')
@@ -775,41 +763,8 @@ export default {
               })
               break
           }
-          // this.msgCountDown = 60
-          // this.disabledOfPhoneBtn = true
-          // this.msgCountDown()
-          // console.log(this.disabledOfPhoneBtn)
         }
       })
-      // let url = common.apidomain
-      // let fd = new FormData()
-      // return new Promise((resolve, reject) => {
-      //   if (loginType == 0) {
-      //     url += 'user/send_sms'
-      //     fd.append('type', 123)
-      //     fd.append('msgtype', 1)
-      //     fd.append('areaCode', 86)
-      //     fd.append('phone', this.username)
-      //   } else if (loginType == 1) {
-      //     url += 'user/send_login_email'
-      //     fd.append('address', this.username)
-      //   }
-      //   // ajax(url, 'post', fd, (res) => {
-      //   //   if (res.data.code !== 200) {
-      //   //     this.$message({
-      //   //       type: 'error',
-      //   //       message: res.data.msg
-      //   //     })
-      //   //     return
-      //   //   }
-      //   //   this.msgTime = 60
-      //   //   this.disabledOfPhoneBtn = true
-      //   //   this.msgCountDown()
-      //   //   resolve(res)
-      //   // }, error => {
-      //   //   reject(error)
-      //   // })
-      // })
     },
     // 加载个人资产
     loadCurrencyList () {
@@ -1049,7 +1004,7 @@ export default {
     mousedownFn: function (e) {
       // if (this.dragStatus) {
       this.dragStatus = false
-      this.mouseMoveStata = true
+      this.mouseMoveStatus = true
       this.beginClientX = e.clientX
       // console.log('mousedown')
       // }
@@ -1066,7 +1021,7 @@ export default {
         $('body').unbind('mouseup')
         this.confirmSuccess = true
         this.loginSliderStatus = false
-        this.mouseMoveStata = false
+        this.mouseMoveStatus = false
         $('.handler').css({'left': 0})
         $('.drag_bg').css({'width': 0})
         /*
