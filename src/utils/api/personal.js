@@ -20,6 +20,8 @@ export const addNewWithdrawalAddress = (params) => post('personal/addWithdrawAdd
 export const deleteUserWithdrawAddress = (params) => put('personal/deleteUserWithdrawAddress', params)
 // 查询充币地址
 export const inquireRechargeAddressList = (params) => get('personal/getRechargeAddress', params)
+// 获取提币信息
+export const withdrawalInformation = (params) => get('queryWithdrawInfo', params)
 /**
  * 安全中心
  * */
@@ -68,7 +70,9 @@ export const pushAssetsSubmit = (params) => post('push/pushSub', params)
 export const revocationPushProperty = (params) => put('push/pushCancel', params)
 // push资产成交
 export const pushPropertyTransaction = (params) => put('push/pushPay', params)
-// push短信发送接口
+// push资产成交
+export const userPromotionList = (params) => get('user/center/inviter', params)
+// 用户推广列表
 export const sendMsgByPushPhoneOrEmial = (type, params) => {
   let result
   switch (type) {

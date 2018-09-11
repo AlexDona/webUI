@@ -10,13 +10,13 @@
           v-if="!securityCenter.isPhoneBind"
           class="header-content-left header-content font-size16 font-weight600"
         >
-          绑定手机
+          修改手机
         </span>
         <span
           v-else
           class="header-content-left header-content font-size16 font-weight600"
         >
-          修改手机
+          绑定手机
         </span>
         <span
           class="header-content-right font-size12 cursor-pointer"
@@ -249,6 +249,7 @@ import {
   changeMobilePhone,
   statusSecurityCenter
 } from '../../../utils/api/personal'
+import {checkUserExist} from '../../../utils/api/user'
 const { mapMutations } = createNamespacedHelpers('personal')
 export default {
   components: {
@@ -309,12 +310,14 @@ export default {
   beforeRouteUpdate () {},
   methods: {
     ...mapMutations([
-      'CHANGE_USER_CENTER_ACTIVE_NAME'
+      'CHANGE_USER_CENTER_ACTIVE_NAME',
+      'CHANGE_REF_SECURITY_CENTER_INFO'
     ]),
     // 点击返回上个页面
     returnSuperior () {
+      this.CHANGE_REF_SECURITY_CENTER_INFO(true)
       this.CHANGE_USER_CENTER_ACTIVE_NAME('security-center')
-      this.$router.go(-1)
+      this.$router.push({path: '/PersonalCenter'})
     },
     // 4位随机数
     getRandomNum () {
@@ -385,6 +388,33 @@ export default {
           }
         }
       })
+    },
+    // 检测用户名是否存在
+    async checkUserExistAjax (type, userName) {
+      if (!validateNumForUserInput(type, userName)) {
+        let params = {
+          userName: userName,
+          regType: type
+        }
+        const data = await checkUserExist(params)
+        if (!returnAjaxMessage(data, this, 1)) {
+          return false
+        }
+      } else {
+        switch (type) {
+          case 'phone':
+            if (this.securityCenter.isPhoneBind) {
+              if (this.checkoutInputFormat(0, userName)) {
+                return false
+              }
+            } else {
+              if (this.checkoutInputFormat(1, userName)) {
+                return false
+              }
+            }
+            break
+        }
+      }
     },
     // 绑定手机检测输入格式
     checkoutInputFormat (type, targetNum) {
@@ -557,10 +587,6 @@ export default {
           return false
         } else {
           this.successJump()
-          console.log(data)
-          console.log(this.emailAccounts)
-          console.log(this.emailCode)
-          // this.statusSecurityCenter()
         }
       }
     },
@@ -584,8 +610,9 @@ export default {
     successJump () {
       setInterval(() => {
         if (this.successCountDown === 0) {
+          this.CHANGE_REF_SECURITY_CENTER_INFO(true)
           this.CHANGE_USER_CENTER_ACTIVE_NAME('security-center')
-          this.$router.go(-1)
+          this.$router.push({path: '/PersonalCenter'})
         }
         this.successCountDown--
       }, 1000)

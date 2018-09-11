@@ -30,7 +30,9 @@
   border: 0;
   color: #fff;
 }
-.invitation-promotion.personal.day .el-input__inner:focus {
+.invitation-promotion.personal.night .el-input__inner:focus {
   border: 0;
 }
-
+.invitation-promotion.personal.night .el-table__empty-block {
+  background-color: #1E2636;
+}

@@ -1,5 +1,7 @@
-/*覆盖element样式*/
-
+/* 覆盖Element样式*/
+.push-assets .el-form-item__content {
+  width: 500px;
+}
 .push-assets.personal .el-select .el-input__inner,.el-input-group{
   width: 270px;
   height: 36px;

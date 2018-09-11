@@ -33,8 +33,8 @@
               <input
                 class="email-input border-radius2 padding-l15 box-sizing"
                 v-model="emailAccounts"
-                @keydown="setErrorMsg(0,'')"
-                @blur="checkoutInputFormat('email', emailAccounts)"
+                @keydown="setErrorMsg(0, '')"
+                @blur="checkUserExistAjax('email', emailAccounts)"
               />
               <!--错误提示-->
               <ErrorBox
@@ -45,7 +45,7 @@
             <el-form-item label="验  证  码：">
               <el-input
                 v-model="emailCode"
-                @keydown="setErrorMsg(1,'')"
+                @keydown="setErrorMsg(1, '')"
                 @blur="checkoutInputFormat(1, emailCode)"
               >
                 <template slot="append">
@@ -88,6 +88,7 @@ import {
   sendPhoneOrEmailCodeAjax
 } from '../../../utils/commonFunc'
 import {bindEmailAddress} from '../../../utils/api/personal'
+import {checkUserExist} from '../../../utils/api/user'
 // 底部
 import FooterCommon from '../../Common/FooterCommon'
 import { createNamespacedHelpers, mapState } from 'vuex'
@@ -128,12 +129,14 @@ export default {
   beforeRouteUpdate () {},
   methods: {
     ...mapMutations([
-      'CHANGE_USER_CENTER_ACTIVE_NAME'
+      'CHANGE_USER_CENTER_ACTIVE_NAME',
+      'CHANGE_REF_SECURITY_CENTER_INFO'
     ]),
     // 点击返回上个页面
     returnSuperior () {
+      this.CHANGE_REF_SECURITY_CENTER_INFO(true)
       this.CHANGE_USER_CENTER_ACTIVE_NAME('security-center')
-      this.$router.go(-1)
+      this.$router.push({path: '/PersonalCenter'})
     },
     // 发送邮箱验证码
     sendPhoneOrEmailCode (loginType) {
@@ -173,21 +176,46 @@ export default {
     /**
      * 确认绑定邮箱
      */
+    // 检测用户名是否存在
+    async checkUserExistAjax (type, userName) {
+      if (!validateNumForUserInput(type, userName)) {
+        let params = {
+          userName: userName,
+          regType: type
+        }
+        const data = await checkUserExist(params)
+        if (!returnAjaxMessage(data, this, 1)) {
+          return false
+        }
+      } else {
+        switch (type) {
+          case 'email':
+            if (this.checkoutInputFormat(0, userName)) {
+              return false
+            }
+            break
+        }
+      }
+    },
     // 检测输入格式
     checkoutInputFormat (type, targetNum) {
       switch (type) {
         // 邮箱账号
         case 0:
+          console.log(type)
           switch (validateNumForUserInput('email', targetNum)) {
             case 0:
+              console.log(type)
               this.setErrorMsg(0, '')
               this.$forceUpdate()
               return 1
             case 1:
+              console.log(type)
               this.setErrorMsg(0, '请输入邮箱地址')
               this.$forceUpdate()
               return 0
             case 2:
+              console.log(type)
               this.setErrorMsg(0, '请输入正确的邮箱地址')
               this.$forceUpdate()
               return 0
@@ -196,10 +224,12 @@ export default {
         // 邮箱验证码
         case 1:
           if (!targetNum) {
+            console.log(type)
             this.setErrorMsg(1, '请输入邮箱验证码')
             this.$forceUpdate()
             return 0
           } else {
+            console.log(type)
             this.setErrorMsg(1, '')
             this.$forceUpdate()
             return 1
@@ -243,8 +273,9 @@ export default {
     successJump () {
       setInterval(() => {
         if (this.successCountDown === 0) {
+          this.CHANGE_REF_SECURITY_CENTER_INFO(true)
           this.CHANGE_USER_CENTER_ACTIVE_NAME('security-center')
-          this.$router.go(-1)
+          this.$router.push({path: '/PersonalCenter'})
         }
         this.successCountDown--
       }, 1000)

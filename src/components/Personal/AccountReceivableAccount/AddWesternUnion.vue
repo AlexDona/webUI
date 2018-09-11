@@ -100,12 +100,14 @@ export default {
   beforeRouteUpdate () {},
   methods: {
     ...mapMutations([
-      'CHANGE_USER_CENTER_ACTIVE_NAME'
+      'CHANGE_USER_CENTER_ACTIVE_NAME',
+      'CHANGE_REF_ACCOUNT_CREDITED_STATE'
     ]),
     // 点击返回上个页面
     returnSuperior () {
+      this.CHANGE_REF_ACCOUNT_CREDITED_STATE(true)
       this.CHANGE_USER_CENTER_ACTIVE_NAME('account-credited')
-      this.$router.go(-1)
+      this.$router.push({path: '/PersonalCenter'})
     },
     // 确认设置西联汇款账号
     stateSubmitWesternUnion () {
@@ -124,15 +126,15 @@ export default {
         return false
       } else {
         this.successJump()
-        // this.getRealNameInformation()
       }
     },
     // 成功自动跳转
     successJump () {
       setInterval(() => {
         if (this.successCountDown === 0) {
+          this.CHANGE_REF_ACCOUNT_CREDITED_STATE(true)
           this.CHANGE_USER_CENTER_ACTIVE_NAME('account-credited')
-          this.$router.go(-1)
+          this.$router.push({path: '/PersonalCenter'})
         }
         this.successCountDown--
       }, 1000)
@@ -141,7 +143,8 @@ export default {
   filter: {},
   computed: {
     ...mapState({
-      theme: state => state.common.theme
+      theme: state => state.common.theme,
+      refAccountCenterStatus: state => state.personal.refAccountCenterStatus
     })
   },
   watch: {}

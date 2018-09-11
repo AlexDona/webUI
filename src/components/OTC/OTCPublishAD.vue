@@ -83,7 +83,7 @@
                 <input
                   type="text"
                   class="price-input"
-                  placeholder="卖出单价"
+                  placeholder="单价"
                   ref="price"
                   :value="this.$route.query.price ? this.$route.query.price : ''"
                   @keyup="changePriceValue('price')"
@@ -310,7 +310,7 @@
 <!--请严格按照如下书写书序-->
 <script>
 // 引入接口
-import {getOTCAvailableCurrency, getMerchantAvailablelegalTender, addOTCPutUpOrdersMerchantdedicated, queryUserTradeFeeAndCoinInfo} from '../../utils/api/OTC'
+import {getOTCAvailableCurrency, getMerchantAvailablelegalTender, addOTCPutUpOrdersMerchantdedicated, queryUserTradeFeeAndCoinInfo, queryUserPayTypes} from '../../utils/api/OTC'
 // 引入组件
 import NavCommon from '../Common/HeaderCommon'
 import FooterCommon from '../Common/FooterCommon'
@@ -349,7 +349,8 @@ export default {
       activitedCurrencyId: '', // 选中的可用法币id
       availableCurrencyId: [],
       // 4.0 当前用户所有的支付方式数组
-      payForListArr: ['1', '1', '0', '1', '0'],
+      // payForListArr: ['1', '1', '0', '1', '0'],
+      payForListArr: [],
       // 挂单数量
       entrustCount: '',
       // 用户输入的 单笔最小限额
@@ -390,7 +391,9 @@ export default {
       // 同时处理最大订单数（0=不限制）错误提示
       errorInfoLimitOrderCount: '',
       // 卖家必须成交过几次（0=不限制）错误提示
-      errorInfoSuccessOrderCount: ''
+      errorInfoSuccessOrderCount: '',
+      matchCount: '',
+      tradeTimes: ''
     }
   },
   created () {
@@ -417,14 +420,25 @@ export default {
     } else if (this.$route.query.currencyName === 'CNY') {
       this.activitedCurrencyId = '人民币'
     }
+    // 3.0 查询用户现有支付方式
+    this.queryUserPayTypesList()
   },
-  mounted () {},
+  mounted () {
+    // this.getRouterData()
+  },
   activited () {},
   update () {},
   beforeRouteUpdate () {},
   methods: {
     ...mapMutations([
     ]),
+    // 页面加载时获取默认值
+    // getRouterData () {
+    //   this.$refs.entrustCount.value = this.$route.query.matchCount ? this.$route.query.matchCount : ''
+    //   this.$refs.minCountValue.value = this.$route.query.minCount ? this.$route.query.minCount : ''
+    //   this.$refs.maxCountValue.value = this.$route.query.maxCount ? this.$route.query.maxCount : ''
+    //   this.$refs.successOrderCount.value = this.$route.query.tradeTimes ? this.$route.query.tradeTimes : ''
+    // },
     // 1.0 改变发布广告 买卖 类型
     changeBuySellStyle (e) {
       this.activitedBuySellStyle = e
@@ -442,6 +456,21 @@ export default {
       } else {
         // 返回数据正确的逻辑
         this.availableCoinName = data.data.data
+      }
+    },
+    //  2.1 查询用户现有支付方式
+    async queryUserPayTypesList () {
+      const data = await queryUserPayTypes({
+        // partnerId: this.partnerId
+      })
+      console.log('用户现有支付方式')
+      console.log(data)
+      if (!(returnAjaxMessage(data, this, 0))) {
+        return false
+      } else {
+        // 返回数据正确的逻辑
+        this.payForListArr = data.data.data
+        console.log(this.payForListArr)
       }
     },
     // 3.0 改变可用币种id

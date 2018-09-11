@@ -29,3 +29,6 @@
 .withdrawal-address.personal.night .el-table .cell {
   color: #9DA5B3;
 }
+.withdrawal-address.personal.night .el-table__empty-block {
+  background-color: #1E2636;
+}

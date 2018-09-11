@@ -1,3 +1,8 @@
+/* 覆盖Element样式*/
+.identity-authentication .el-form-item__content {
+  width: 600px;
+}
+
 /* 折叠面板默认的边框修改 */
 .identity-authentication.personal
 .el-collapse,

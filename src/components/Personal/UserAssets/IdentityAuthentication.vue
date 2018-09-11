@@ -16,13 +16,19 @@
             <div class="header-border margin20 display-flex">
               <span class="font-size16 main-header-title">实名认证</span>
               <p
-                v-if="realNameInformationObj.realnameAuth"
+                v-if="!realNameInformationObj.realnameAuth"
+                class="authentication-type font-size12"
+              >
+                （请先通过实名认证）
+              </p>
+              <p
+                v-else
                 class="authentication-type-info font-size12 box-sizing"
               >
                 <span class="authentication-info">您已通过实名认证</span>
-                <!--{{ realNameInformationList.realname.substring(0,1)}}-->
+                <!--{{ statusRealNameInformation.realname.substring(0,1)}}-->
                 <!--*-->
-                <!--{{ realNameInformationList.realName.substring(2,3)}}-->
+                <!--{{ statusRealNameInformation.realName.substring(2,3)}}-->
                 （&nbsp;
                 <span class="type-info">
                   姓名：
@@ -36,12 +42,6 @@
                   <!-- {{  authenticationInfo.identification }}-->
                 </span>
                 &nbsp;）
-              </p>
-              <p
-                v-else
-                class="authentication-type font-size12"
-              >
-                （请先通过实名认证）
               </p>
               <i class="el-icon-arrow-down icon-down float-right"></i>
             </div>
@@ -63,8 +63,8 @@
               <el-option
                 v-for="(item, index) in regionList"
                 :key="index"
-                :label="item.regionName"
-                :value="item.regionName"
+                :label="item.chinese"
+                :value="item.chinese"
               >
               </el-option>
             </el-select>
@@ -87,13 +87,26 @@
             <input
               class="common-input"
               v-model="realName"
-              @focus="emptyStatus"
+              @keydown="setErrorMsg(0, '')"
+              @blur="checkoutInputFormat(0, transactionPassword)"
+            />
+            <!--错误提示-->
+            <ErrorBox
+              :text="errorShowStatusList[0]"
+              :isShow="!!errorShowStatusList[0]"
             />
           </el-form-item>
           <el-form-item label="证件号码">
             <input
               class="common-input"
               v-model="identificationNumber"
+              @keydown="setErrorMsg(1, '')"
+              @blur="checkoutInputFormat(1, transactionPassword)"
+            />
+            <!--错误提示-->
+            <ErrorBox
+              :text="errorShowStatusList[1]"
+              :isShow="!!errorShowStatusList[1]"
             />
           </el-form-item>
           <div
@@ -112,7 +125,10 @@
           </el-form-item>
         </el-form>
       </div>
-      <div v-else class="name-authentication-content success-height"></div>
+      <div
+        v-else
+        class="name-authentication-content success-height">
+      </div>
     </div>
     <!--高级认证-->
     <div class="advanced-certification-main identity-background margin-top9"
@@ -125,17 +141,18 @@
           @click="authenticationMethod">
           <span class="font-size16 main-header-title">高级认证</span>
           <span
-            v-if="realNameInformationObj.advancedAuth"
+            v-if="!realNameInformationObj.advancedAuth"
             class="authentication-type font-size12"
           >
-            （已实名认证）
+            （请先通过实名认证）
           </span>
           <span
             v-else
             class="authentication-type font-size12"
           >
-            （请先通过实名认证）
+            （已通过实名认证并且通过高级认证）
           </span>
+
           <i class="el-icon-arrow-down icon-down float-right"></i>
         </p>
       </div>
@@ -146,19 +163,25 @@
               <div class="personal-information">
                 <p class="information">
                   <span class="info-type font-size12">国际：</span>
-                  <span class="user-info font-size14">中国</span>
+                  <span class="user-info font-size14">{{ statusRealNameInformation.country }}</span>
                 </p>
                 <p class="information">
                   <span class="info-type font-size12">姓名：</span>
-                  <span class="user-info font-size14">王二麻</span>
+                  <span class="user-info font-size14">{{ statusRealNameInformation.realname }}</span>
                 </p>
                 <p class="information">
                   <span class="info-type font-size12">证件号：</span>
-                  <span class="user-info font-size14">4127556497832164</span>
+                  <span class="user-info font-size14">
+                    {{ statusRealNameInformation.cardNo.substring(0,6)}}
+                  ****
+                   {{ statusRealNameInformation.cardNo.substring(14,18)}}
+                  </span>
                 </p>
                 <p class="information">
                   <span class="info-type font-size12">证件类型：</span>
-                  <span class="user-info font-size14">身份证</span>
+                  <span class="user-info font-size14">
+                    {{ statusRealNameInformation.cardType }}
+                  </span>
                 </p>
               </div>
               <div class="advanced-prompt font-size12">
@@ -302,11 +325,13 @@
 <!--请严格按照如下书写书序-->
 <script>
 import {mapState} from 'vuex'
+import ErrorBox from '../../User/ErrorBox'
 import IconFontCommon from '../../Common/IconFontCommon'
 import {queryCountryList, submitRealNameAuthentication, submitSeniorCertification, realNameInformation} from '../../../utils/api/personal'
 import {returnAjaxMessage} from '../../../utils/commonFunc'
 export default {
   components: {
+    ErrorBox, // 错误提示接口
     IconFontCommon // 字体图标
   },
   // props,
@@ -316,12 +341,7 @@ export default {
         'token': 'ee4cbf93-a8a0-4e1d-b67e-5ff8bf06d38b'
       },
       regionValue: '', // 国家
-      regionList: [
-        // {
-        //   regionId: 1,
-        //   regionName: '中国'
-        // }
-      ], // 国家地区列表
+      regionList: [], // 国家地区列表
       documentTypeValue: '身份证', // 证件
       documentTypeList: [
         {
@@ -352,7 +372,11 @@ export default {
       dialogVisibleHand: false,
       seniorCertificationList: {},
       realNameInformationObj: {}, //  获取用户实名信息
-      statusRealNameInformation: {}
+      statusRealNameInformation: {},
+      errorShowStatusList: [
+        '', // 真实姓名
+        '' // 证件号码
+      ]
     }
   },
   created () {
@@ -362,12 +386,6 @@ export default {
     require('../../../../static/css/theme/day/Personal/UserAssets/IdentityAuthenticationDay.css')
     // 黑色主题样式
     require('../../../../static/css/theme/night/Personal/UserAssets/IdentityAuthenticationNight.css')
-    // 获取全局个人信息
-    // this.authenticationInfo = this.userInfo.data.user
-    // 清空图片和关闭弹窗this.clearUserPicture()
-    // this.getCountryListings()
-    // this.getRealNameInformation()
-    // console.log(this.tokenObj)
   },
   mounted () {},
   activited () {},
@@ -406,9 +424,9 @@ export default {
      * 刚进页面时候 国家列表展示
      */
     changeId (e) {
-      this.currencyList.forEach(item => {
+      this.regionList.forEach(item => {
         if (e === item.id) {
-          this.getCountryListings(e)
+          this.regionValue = e
         }
       })
     },
@@ -422,7 +440,6 @@ export default {
         this.regionList = data.data.data
         this.regionValue = data.data.data[0].id
         this.regionValue = data.data.data[0].chinese
-        console.log(this.regionList)
       }
     },
     /**
@@ -437,27 +454,44 @@ export default {
         // 返回列表数据
         this.realNameInformationObj = data.data.data
         this.statusRealNameInformation = data.data.data.authInfo
-        console.log(this.realNameInformationObj.realnameAuth)
-        console.log(this.statusRealNameInformation.realname)
+        console.log(this.statusRealNameInformation)
       }
+    },
+    // 检测输入格式
+    checkoutInputFormat (type, targetNum) {
+      console.log(type)
+      switch (type) {
+        // 真实姓名
+        case 0:
+          console.log(type)
+          if (!targetNum) {
+            this.setErrorMsg(0, '请输入真实姓名')
+            this.$forceUpdate()
+            return 0
+          } else {
+            this.setErrorMsg(0, '')
+            this.$forceUpdate()
+            return 1
+          }
+        // 证件号码
+        case 1:
+          if (!targetNum) {
+            this.setErrorMsg(1, '请输入证件号码')
+            this.$forceUpdate()
+            return 0
+          } else {
+            this.setErrorMsg(1, '')
+            this.$forceUpdate()
+            return 1
+          }
+      }
+    },
+    // 设置错误信息
+    setErrorMsg (index, msg) {
+      this.errorShowStatusList[index] = msg
     },
     // 提交实名认证认证
     submitRealName () {
-      // if (!this.region) {
-      //   this.errorMsg = '请选择地区国家'
-      //   return
-      // } else if (!this.documentType) {
-      //   this.errorMsg = '请选择证件类型'
-      //   return
-      // } else if (!this.realName) {
-      //   this.errorMsg = '真实姓名不能为空'
-      //   return
-      // } else if (!this.identificationNumber) {
-      //   this.errorMsg = '证件号码不能为空'
-      //   return
-      // } else {
-      //   this.errorMsg = ''
-      // }
       this.stateSubmitRealName()
     },
     async stateSubmitRealName () {
@@ -476,21 +510,19 @@ export default {
         console.log(data)
       }
     },
-    // 清空内容信息
-    emptyStatus () {
-      this.errorMsg = ''
-    },
     // 高级认证弹窗
     authenticationMethod () {
       // 判断是否高级认证&&实名认证
-      if (this.realNameInformationObj.realnameAuth == true && this.realNameInformationObj.advancedAuth == false) {
+      if (this.realNameInformationObj.realnameAuth && !this.realNameInformationObj.advancedAuth) {
         this.seniorAuthentication = true
+      } else {
+        this.seniorAuthentication = false
       }
     },
     // 高级认证内容
     authenticationAuthentication () {
       // 点击进入高级认证时隐藏弹窗
-      if (this.realNameInformationObj.advancedAuth == false) {
+      if (!this.realNameInformationObj.advancedAuth) {
         this.authenticationStatusFront = true
       }
       this.seniorAuthentication = false

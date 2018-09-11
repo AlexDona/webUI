@@ -5,7 +5,8 @@ import {
   repealMyEntrustAjax
 } from '../utils/api/trade'
 import {
-  assetCurrenciesList
+  assetCurrenciesList,
+  statusSecurityCenter
 } from '../utils/api/personal'
 // import {
 //   sendMsgByPushPhoneOrEmial
@@ -89,6 +90,13 @@ export const sendPhoneOrEmailCodeAjax = async (type, params, callback) => {
  */
 export const repealMyEntrustCommon = async (params, callback) => {
   const repealData = await repealMyEntrustAjax(params)
+  callback(repealData)
+}
+/**
+ * 安全中心状态
+ */
+export const stateSafeCentral = async (params, callback) => {
+  const repealData = await statusSecurityCenter(params)
   callback(repealData)
 }
 /**

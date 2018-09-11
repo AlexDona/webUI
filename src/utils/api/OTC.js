@@ -48,3 +48,7 @@ export const firstEnterBusinessApply = (params) => get('otcMerchApply/getUserMer
 export const getOTCADManageApplyList = (params) => get('otcEntrust/selectMerchEntrustsPage', params)
 // 商家订单列表请求
 export const getOTCMerchantsOrdersList = (params) => get('otcOrder/selectMerchOrdersPage', params)
+// 查询用户现有支付方式
+export const queryUserPayTypes = (params) => get('otcCOin/getUserPayTypes', params)
+// 报表统计
+export const getOTCReportFormStatisticsData = (params) => get('otcOrder/selectMerchStatics', params)
