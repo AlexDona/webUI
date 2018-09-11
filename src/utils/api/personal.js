@@ -22,6 +22,8 @@ export const deleteUserWithdrawAddress = (params) => put('personal/deleteUserWit
 export const inquireRechargeAddressList = (params) => get('personal/getRechargeAddress', params)
 // 获取提币信息
 export const withdrawalInformation = (params) => get('queryWithdrawInfo', params)
+// 根据coinid查询交易信息
+export const queryTransactionInformation = (params) => get('personal/getTradeUrl', params)
 /**
  * 安全中心
  * */
@@ -72,21 +74,7 @@ export const revocationPushProperty = (params) => put('push/pushCancel', params)
 export const pushPropertyTransaction = (params) => put('push/pushPay', params)
 // push资产成交
 export const userPromotionList = (params) => get('user/center/inviter', params)
-// 用户推广列表
-export const sendMsgByPushPhoneOrEmial = (type, params) => {
-  let result
-  switch (type) {
-    // 短信验证码
-    case 0:
-      result = get('push/sendSMS', params)
-      break
-    // 邮箱验证码
-    case 1:
-      result = get('push/sendMail', params)
-      break
-  }
-  return result
-}
+
 /**
  * 收款方式
  * */

@@ -503,7 +503,7 @@ export default {
     background-color: #1D2331;
     >.otc-merchants-orders-content{
       width: 1150px;
-      height: 1000px;
+      min-height: 500px;
       margin: 70px auto;
       // background-color: #2B2B2B;
       padding-top: 50px;
@@ -544,7 +544,7 @@ export default {
           }
         }
         >.orders-main-bottom{
-          height: 500px;
+          min-height: 500px;
           .red{
             color: #D45858;
           }
