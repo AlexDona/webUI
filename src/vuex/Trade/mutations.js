@@ -1,6 +1,7 @@
 import {
   TOGGLE_REFRESH_ENTRUST_LIST_STATUS,
-  CHANGE_ACTIVE_TAB_ID
+  CHANGE_ACTIVE_TAB_ID,
+  CHANGE_ACTIVE_PRICE_ITEM
 } from './mutations-types.js'
 
 // import {setStore} from '../../utils'
@@ -14,5 +15,8 @@ export default {
   },
   [CHANGE_ACTIVE_TAB_ID] (state, data) {
     state.activeTabId = data
+  },
+  [CHANGE_ACTIVE_PRICE_ITEM] (state, data) {
+    state.activePriceItem = data
   }
 }

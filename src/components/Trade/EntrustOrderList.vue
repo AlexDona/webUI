@@ -29,23 +29,23 @@
               </li>
               <li class="th price">
                 委托量
-                <span>（BTC）</span>
+                <span>（{{activeSymbol.sellsymbol}}）</span>
               </li>
               <li class="th price">
                 委托价
-                <span>（BTC）</span>
+                <span>（{{activeSymbol.area}}）</span>
               </li>
               <li class="th price">
                 总金额
-                <span>（BTC）</span>
+                <span>（{{activeSymbol.area}}）</span>
               </li>
               <li class="th price">
                 成交量
-                <span>（BTC）</span>
+                <span>（{{activeSymbol.sellsymbol}}）</span>
               </li>
               <li class="th price">
                 未成交量
-                <span>（BTC）</span>
+                <span>（{{activeSymbol.sellsymbol}}）</span>
               </li>
               <li class="th">
                 操作
@@ -135,19 +135,19 @@
               </li>
               <li class="th price">
                 委托量
-                <span>（BTC）</span>
+                <span>（{{activeSymbol.sellsymbol}}）</span>
               </li>
               <li class="th price">
                 委托价
-                <span>（BTC）</span>
+                <span>（{{activeSymbol.area}}）</span>
               </li>
               <li class="th price">
                 总金额
-                <span>（BTC）</span>
+                <span>（{{activeSymbol.area}}）</span>
               </li>
               <li class="th price">
                 成交量
-                <span>（BTC）</span>
+                <span>（{{activeSymbol.sellsymbol}}）</span>
               </li>
             </ul>
             <div class="tbody">
@@ -347,7 +347,8 @@ export default {
       language: state => state.common.language,
       isLogin: state => state.user.isLogin,
       refreshEntrustStatus: state => state.trade.refreshEntrustStatus,
-      userInfo: state => state.user.loginStep1Info
+      userInfo: state => state.user.loginStep1Info,
+      activeSymbol: state => state.common.activeSymbol
     })
   },
   watch: {

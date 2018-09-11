@@ -34,11 +34,12 @@
                   'max-height':!itemAreaMoreStatus
                   }"
                 >
-                  <!--侧边栏-->
-                  <div
-                    class="left"
+                  <!--侧边栏
                     @mouseenter="toggleSide(item.id,0)"
                     @mouseleave="toggleSide(item.id,1)"
+                    -->
+                  <div
+                    class="left"
                   >
                     <!--正面-->
                     <!--<transition enter-active-class="animated fadeIn">-->
@@ -55,16 +56,17 @@
                           <span>{{item.area}}</span>
                           <span v-show="item.id!==collectAreaId&&item.id!==searchAreaId">交易区</span>
                         </div>
-                        <div class="bottom">
-                          <el-button
-                            type="default"
-                            class="more-btn"
-                            @click="itemViewMore(item.id,item.content)"
-                          >
-                            {{itemViewMoreBtnText}}
-                            <i class="el-icon-arrow-down el-icon--right"></i>
-                          </el-button>
-                        </div>
+                        <!--查看更多-->
+                        <!--<div class="bottom">-->
+                          <!--<el-button-->
+                            <!--type="default"-->
+                            <!--class="more-btn"-->
+                            <!--@click="itemViewMore(item.id,item.content)"-->
+                          <!--&gt;-->
+                            <!--{{itemViewMoreBtnText}}-->
+                            <!--<i class="el-icon-arrow-down el-icon&#45;&#45;right"></i>-->
+                          <!--</el-button>-->
+                        <!--</div>-->
                       </div>
                     </transition>
                     <!--反面-->
@@ -108,23 +110,24 @@
                                 <span class="bottom font-size12">
                                   ≈
                                   <span></span>
-                                  0.25
+                                  {{currencyRateList[innerItem.area]*innerItem.price}}
                                 </span>
                               </span>
                               </router-link>
                             </li>
                           </ul>
                         </div>
-                        <div class="more-btn">
-                          <el-button
-                            type="default"
-                            class="more-btn"
-                            @click="itemViewMore(item.id,item.content)"
-                          >
-                            {{itemViewMoreBtnText}}
-                            <i class="el-icon-arrow-down el-icon--right"></i>
-                          </el-button>
-                        </div>
+                        <!--查看更多按钮-->
+                        <!--<div class="more-btn">-->
+                          <!--<el-button-->
+                            <!--type="default"-->
+                            <!--class="more-btn"-->
+                            <!--@click="itemViewMore(item.id,item.content)"-->
+                          <!--&gt;-->
+                            <!--{{itemViewMoreBtnText}}-->
+                            <!--<i class="el-icon-arrow-down el-icon&#45;&#45;right"></i>-->
+                          <!--</el-button>-->
+                        <!--</div>-->
                       </div>
                     </transition>
                   </div>
@@ -137,6 +140,7 @@
                       class="cursor-pointer"
                       :data="item.content"
                       @row-click="changeActiveSymbol"
+                      height="547"
                     >
                       <el-table-column
                         label="交易对"
@@ -206,7 +210,7 @@
                             <!--货币转换-->
                             <div class="bottom"
                                  style="height:15px;line-height: 15px">
-                              ≈ 0.25
+                              ≈ {{(currencyRateList[s.row.area]-0)*(s.row.price-0)}}
                             </div>
                           </div>
                         </template>
@@ -949,58 +953,63 @@ export default{
         plateId
       }, (data) => {
         // console.log(data)
-        switch (data.type) {
-          // 请求socket
-          case 0:
-            if (data.data) {
-              this.marketList = data.data
-              this.marketList.unshift(
-                {
-                  area: '搜索区',
-                  id: this.searchAreaId,
-                  content: []
-                },
-                {
-                  area: '自选区', // 交易区名称
-                  id: this.collectAreaId,
-                  content: []
+        if (data.tradeType === 'TICKER') {
+          if (data.data) {
+            switch (data.type) {
+              // 请求socket
+              case 0:
+                if (data.data) {
+                  this.marketList = data.data
+                  this.marketList.unshift(
+                    {
+                      area: '搜索区',
+                      id: this.searchAreaId,
+                      content: []
+                    },
+                    {
+                      area: '自选区', // 交易区名称
+                      id: this.collectAreaId,
+                      content: []
+                    }
+                  )
+                  this.marketList[1].content = this.collectList
+                  this.getFilterMarketList(this.marketList)
+                  this.initSideBar(true)
                 }
-              )
-              this.marketList[1].content = this.collectList
-              this.getFilterMarketList(this.marketList)
-              this.initSideBar(true)
+                break
+              // 订阅socket
+              case 1:
+                // console.log(data.data)
+                let newData = data.data[0]
+                let newContent = newData.content[0]
+                let collectContent = this.marketList[1].content
+                this.marketList.forEach((item, index) => {
+                  // 非自选区
+                  if (item.id === newData.id) {
+                    item.content.forEach((innerItem, innerIndex) => {
+                      if (innerItem.id === newData.content[0].id) {
+                        this.$set(this.marketList[index].content, innerIndex, newContent)
+                        return false
+                      }
+                    })
+                  }
+                  // 自选区
+                  if (collectContent.length) {
+                    collectContent.forEach((item, index) => {
+                      if (item.id === newContent.id) {
+                        this.$set(collectContent, index, newContent)
+                        this.$set(collectContent[index].tendency, 0, newContent.tendency[0])
+                        this.$set(collectContent[index].tendency, 1, newContent.tendency[1])
+                        // console.log(collectContent)
+                        return false
+                      }
+                    })
+                  }
+                  return false
+                })
+                break
             }
-            break
-          // 订阅socket
-          case 1:
-            let newData = data.data[0]
-            let newContent = newData.content[0]
-            let collectContent = this.marketList[1].content
-            this.marketList.forEach((item, index) => {
-              // 非自选区
-              if (item.id === newData.id) {
-                item.content.forEach((innerItem, innerIndex) => {
-                  if (innerItem.id === newData.content[0].id) {
-                    this.$set(this.marketList[index].content, innerIndex, newContent)
-                    return false
-                  }
-                })
-              }
-              // 自选区
-              if (collectContent.length) {
-                collectContent.forEach((item, index) => {
-                  if (item.id === newContent.id) {
-                    this.$set(collectContent, index, newContent)
-                    this.$set(collectContent[index].tendency, 0, newContent.tendency[0])
-                    this.$set(collectContent[index].tendency, 1, newContent.tendency[1])
-                    // console.log(collectContent)
-                    return false
-                  }
-                })
-              }
-              return false
-            })
-            break
+          }
         }
         // let resultArr = splitSocketParams(data)
         // console.log(resultArr)
@@ -1201,7 +1210,8 @@ export default{
       plateList: state => state.common.plateList, // 板块列表
       partnerId: state => state.common.partnerId, // 商户id
       activeSymbol: state => state.common.activeSymbol,
-      activeTradeArea: state => state.common.activeTradeArea
+      activeTradeArea: state => state.common.activeTradeArea,
+      currencyRateList: state => state.common.currencyRateList // 折算货币列表
     })
     // // 筛选列表
     // filterMarketList () {
@@ -1226,6 +1236,9 @@ export default{
     filterMarketList (newest, old) {
       console.log(newest)
       console.log(old)
+    },
+    currencyRateList (newVal) {
+      console.log(newVal)
     }
   }
 }

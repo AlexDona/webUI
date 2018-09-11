@@ -1,7 +1,13 @@
 <template>
   <!--首页公告-->
-  <div class="notice-box home">
-    <div class="inner-box">
+  <div
+    class="notice-box home"
+    :class="{close:this.closeStatus}"
+  >
+    <div
+      class="inner-box"
+      :class="{'animate':this.animate}"
+    >
       <div
         class="item"
         v-for="(item,index) in noticeList"
@@ -13,16 +19,31 @@
         </router-link>
       </div>
     </div>
+    <div
+      class="close-btn"
+      @click="closeNotice"
+    >
+      <IconFont
+        class="font-size22 iconfont"
+        iconName="icon-cha-"
+      />
+    </div>
   </div>
 </template>
 <!--请严格按照如下书写书序-->
 <script>
+import IconFont from '../Common/IconFontCommon'
 export default {
-  components: {},
+  components: {
+    IconFont
+  },
   // props,
   data () {
     return {
-      noticeList: [] // 新闻（公告）列表
+      noticeList: [], // 新闻（公告）列表
+      animate: false,
+      timer: null,
+      closeStatus: false // 是否关闭
     }
   },
   created () {
@@ -46,12 +67,26 @@ export default {
         title: 'fuc火热上线2' // 标题
       }
     ]
+    this.timer = setInterval(this.autoPlay, 3000)
   },
   mounted () {},
   activited () {},
   update () {},
   beforeRouteUpdate () {},
-  methods: {},
+  methods: {
+    // 关闭组件
+    closeNotice () {
+      this.closeStatus = true
+    },
+    autoPlay () {
+      this.animate = true
+      setTimeout(() => {
+        this.noticeList.push(this.noticeList[0])
+        this.noticeList.shift()
+        this.animate = false
+      }, 500)
+    }
+  },
   filter: {},
   computed: {},
   watch: {}
@@ -62,13 +97,22 @@ export default {
   .notice-box{
     height:30px;
     width:100%;
+    overflow: hidden;
     background-color: #0a1b2f;
     color:#8b8e92;
     line-height: 30px;
-    /*position: fixed;*/
+    transition: all 2s;
     top:0;
+    &.close{
+      display:none;
+    }
     .inner-box{
       padding:0 30px;
+      position: relative;
+      &.animate{
+        transition: all .5s;
+        margin-top: -30px;
+      }
       >.item{
         >a{
           >.type {
@@ -76,6 +120,19 @@ export default {
           }
           color:#fff;
         }
+      }
+    }
+    >.close-btn{
+      position: absolute;
+      right:10px;
+      top:0;
+      width:30px;
+      height:30px;
+      .iconfont{
+        cursor:pointer;
+        color:#fff;
+        width:30px;
+        height:30px;
       }
     }
   }

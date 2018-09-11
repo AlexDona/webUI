@@ -670,13 +670,12 @@ export default {
     >.inner-box{
       width:100%;
       height:100%;
+      background:url('../../assets/develop/login-bg.png') 25% 4%  no-repeat ;
       .main-color{
         color:$mainColor;
       }
       >.main-box{
         width:370px;
-        width:370px;
-        height:500px;
         background:linear-gradient(201deg,rgba(42,88,137,1) 0%,rgba(43,58,111,1) 100%);
         box-shadow:0px 4px 21px 0px rgba(26,42,71,1);
         margin: 12% 0 0 50%;

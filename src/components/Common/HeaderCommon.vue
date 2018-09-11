@@ -168,20 +168,22 @@
                   <span class="language-text">{{activeLanguage.name}}</span>
                   <i class="el-icon-caret-bottom"></i>
                 </dt>
-                <dd
-                  class="lang-list"
-                  v-show="langSelecting"
-                >
-                  <a
-                    class="lang-item"
-                    href="#"
-                    @click="changeLanguage(item)"
-                    v-for="(item,index) in languageList"
-                    :key="index"
+                <el-collapse-transition>
+                  <dd
+                    class="lang-list"
+                    v-show="langSelecting"
                   >
-                    {{item.name}}
-                  </a>
-                </dd>
+                    <a
+                      class="lang-item"
+                      href="#"
+                      @click="changeLanguage(item)"
+                      v-for="(item,index) in languageList"
+                      :key="index"
+                    >
+                      {{item.name}}
+                    </a>
+                  </dd>
+                </el-collapse-transition>
               </dl>
             </li>
           </ul>
@@ -207,12 +209,13 @@
           <el-select
             v-model="activeConvertCurrency"
             placeholder="请选择"
+            @change="changeActiveTransitionCurrency"
           >
             <el-option
               v-for="item in convertCurrencyList"
-              :key="item.id"
-              :label="item.shortName"
-              :value="item.id">
+              :key="item.shortName"
+              :label="language=='zh_CN' ? item.name : item.shortName"
+              :value="item.shortName">
             </el-option>
           </el-select>
           <p class="title line-height50 font-size14">主题</p>
@@ -251,7 +254,10 @@
 </template>
 <script>
 import {getMerchantAvailablelegalTender} from '../../utils/api/OTC'
-import {getLanguageList} from '../../utils/api/header'
+import {
+  getLanguageList,
+  getTransitionCurrencyRate // 获取汇率转换费率
+} from '../../utils/api/header'
 import IconFontCommon from '../Common/IconFontCommon'
 import {setStore} from '../../utils'
 // import {getPartnerList} from '../../utils/api/home'
@@ -323,7 +329,50 @@ export default{
     if (this.loginStep1Info.userInfo) {
       this.$store.commit('user/USER_LOGIN', this.loginStep1Info)
     }
+    // 折算货币
     // this.getMerchantAvailablelegalTenderList()
+    this.convertCurrencyList = [
+      {
+        'countryId': '469217916009578496',
+        'createTime': '2018-08-06 11:01:13',
+        'id': '123',
+        'language': '1',
+        'name': '人民币',
+        'partnerId': '474629374641963008',
+        'shortName': 'CNY',
+        'status': 'ENABLE',
+        'symbol': '￥',
+        'updateTime': '2018-08-06 11:01:16',
+        'version': 1
+      },
+      {
+        'countryId': '2',
+        'createTime': null,
+        'id': '456',
+        'language': '2',
+        'name': '美元',
+        'partnerId': '474629374641963008',
+        'shortName': 'USD',
+        'status': 'ENABLE',
+        'symbol': '',
+        'updateTime': '2018-09-06 16:56:33',
+        'version': 4
+      },
+      {
+        'countryId': '4',
+        'createTime': '2018-09-07 09:53:21',
+        'id': '487560999356858368',
+        'language': '5',
+        'name': '日元',
+        'partnerId': '474629374641963008',
+        'shortName': 'JPY',
+        'status': 'ENABLE',
+        'symbol': '',
+        'updateTime': null,
+        'version': 1
+      }
+    ]
+    this.changeActiveTransitionCurrency('CNY')
   },
   methods: {
     ...mapMutations([
@@ -334,8 +383,27 @@ export default{
       // 修改主题
       'CHANGE_THEME',
       // 设置板块
-      'CHANGE_PALTE_LIST'
+      'CHANGE_PALTE_LIST',
+      // 更新当前汇率列表
+      'CHANGE_CURRENCY_RATE_LIST'
     ]),
+    // 更改当前选中汇率转换货币
+    changeActiveTransitionCurrency (e) {
+      const params = {
+        partnerId: this.partnerId,
+        shortName: e
+      }
+      this.getTransitionCurrencyRate(params)
+    },
+    async getTransitionCurrencyRate (params) {
+      console.log(params)
+      const data = await getTransitionCurrencyRate(params)
+      if (!returnAjaxMessage(data, this, 0)) {
+        return false
+      } else {
+        this.CHANGE_CURRENCY_RATE_LIST(data.data)
+      }
+    },
     // 获取国家列表
     async getLanguageList () {
       const data = await getLanguageList()
@@ -445,6 +513,7 @@ export default{
       }
       // 返回数据正确的逻辑
       this.convertCurrencyList = data.data.data
+      // setStore('convertCurrencyList', this.convertCurrencyList)
     }
 
   },
@@ -467,6 +536,7 @@ export default{
 }
 </script>
 <style scoped lang="scss" type="text/scss">
+  @import "../../../static/css/scss/index";
   @import "../../../static/css/scss/Common/HeaderCommon.scss";
 .nav-box{
   position: relative;
@@ -484,7 +554,7 @@ export default{
       line-height: 66px;
       display:flex;
       padding:0 30px;
-      background-color: $dayNavBgColor;
+      background-color: $mainNightBgColor;
       >.left{
         flex:2;
         position: relative;
@@ -662,6 +732,7 @@ export default{
                 }
               }
               >.lang-list{
+                background-color: #2A3242;
                 position: absolute;
                 left:0;
                 top:64px;
@@ -672,7 +743,6 @@ export default{
                   height:30px;
                   line-height:30px;
                   text-align: left;
-                  width:100%;
                   padding:0 20px 0 10px;
                   &:hover{
                     background-color: $mainColor;
@@ -698,6 +768,104 @@ export default{
     }
   }
   &.day{
+    >.inner-box{
+      >.top{
+        >.left{
+          >.nav-list{
+            >.nav-item{
+              &:first-of-type{
+              }
+              /*子导航list*/
+              >.sub-nav-list{
+                &:before{
+                }
+                /*otc子导航*/
+                &.otc{
+                }
+                /*活动中心子导航*/
+                &.activity-center{
+                }
+                >.sub-nav-item{
+                  &:hover{
+                  }
+                  >a{
+                  }
+                }
+              }
+              &:hover{
+              }
+              >a{
+              }
+              >.logo{
+                >.img{
+                }
+              }
+            }
+          }
+        }
+        >.right{
+          >.ul-list{
+            >.li-split{
+            }
+            >.li-item{
+              /*用户登陆后鼠标悬浮出现个人中心效果*/
+              .login{
+                >.username{
+                }
+                >.login-info{
+                  >.sub-nav-user{
+                    >.nav-vip{
+                    }
+                    >.nav-button{
+                    }
+                  }
+                  >.personal-user {
+                    >li{
+                      &:hover {
+                      }
+                    }
+                  }
+                }
+                &:hover .login-info{
+                }
+              }
+              >a{
+                &:hover{
+                }
+              }
+              &.setting-li{
+              }
+              /*设置*/
+              .setting{
+              }
+              /*语言选择 dl*/
+              >.lang-box{
+                /*当前语言 dt*/
+                >.lang-selected{
+                  >.icon{
+                  }
+                  >.language-text{
+                  }
+                }
+                >.lang-list{
+                  background-color: #fff;
+                  >.lang-item{
+                    color: #7d90ac;
+                    &:hover{
+                      color:#fff;
+                    }
+                    >.icon{
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+      >.bottom{
+      }
+    }
   }
 }
 </style>

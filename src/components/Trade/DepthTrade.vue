@@ -20,7 +20,8 @@ export default {
       sells: [],
       depthCharts: '',
       options: {
-        backgroundColor: '#10172d',
+        // backgroundColor: this.theme === 'night' ? this.mainColor.$mainNightBgColor : this.mainColor.$mainDayBgColor,
+        backgroundColor: '',
         name: '123',
         title: {},
         textStyle: {
@@ -32,6 +33,9 @@ export default {
         },
         tooltip: {
           trigger: 'axis',
+          position: function (point, params, dom, rect, size) {
+            return [point[0], point[1]]
+          },
           backgroundColor: '#262A42',
           borderColor: '#262A42',
           borderRadius: 3,
@@ -40,6 +44,8 @@ export default {
             width: '250px'
           },
           axisPointer: {
+            snap: true,
+            confine: true,
             type: 'line',
             lineStyle: {
               color: 'transparent'
@@ -68,39 +74,32 @@ export default {
           }
 
         },
-        series: [
-          {
-            name: '委托量',
-            type: 'line',
-            color: '#243235', // 填充顏色
-            areaStyle: {},
-            data: this.buys,
-            symbolSize: 0
-          },
-          {
-            name: '委托量',
-            type: 'line',
-            color: '#392231',
-            areaStyle: {},
-            data: this.sells,
-            symbolSize: 0
-          }
-        ],
         animation: false
       },
       series: [
         {
           name: '委托量',
           type: 'line',
-          color: '#243235', // 填充顏色
-          areaStyle: {},
+          color: 'rgba(0,128,105,0.2)',
+          itemStyle: {
+            normal: {
+            }
+          },
+          lineStyle: {
+            width: 0
+          },
+          areaStyle: {
+          },
           data: this.buys,
           symbolSize: 0
         },
         {
           name: '委托量',
           type: 'line',
-          color: '#392231',
+          color: 'rgba(212,88,88,0.2)',
+          lineStyle: {
+            width: 0
+          },
           areaStyle: {},
           data: this.sells,
           symbolSize: 0
@@ -434,8 +433,15 @@ export default {
       for (let k in params) {
         this.options[k] = params[k]
       }
+      console.log(params)
       this.depthCharts.setOption(this.options)
       window.onresize = this.depthCharts.resize
+    },
+    // 重新设置 options
+    resetOptions () {
+      this.options.tooltip.backgroundColor = this.theme === 'night' ? this.mainColor.$mainNightBgColor : this.mainColor.$mainDayBgColor
+      this.options.tooltip.borderColor = this.theme === 'night' ? this.mainColor.$mainNightBgColor : this.mainColor.$mainDayBgColor
+      this.options.backgroundColor = this.theme === 'night' ? this.mainColor.$mainNightBgColor : this.mainColor.$mainDayBgColor
     },
     drawLine () {
       this.depthCharts = echarts.init(document.getElementById('depth'))
@@ -448,7 +454,8 @@ export default {
     ...mapState({
       socketData: state => state.common.socketData,
       depthData: state => state.common.socketData.depthData,
-      theme: state => state.common.theme
+      theme: state => state.common.theme,
+      mainColor: state => state.common.mainColor
       // buy: state => state.common.socketData.depthData.buy,
       // sell: state => state.common.socketData.depthData.sell
     })
@@ -472,12 +479,12 @@ export default {
         this.series[1].data = newVal.sell
       }
       this.options.series = this.series
+      this.resetOptions()
       this.resetChart(this.options)
     },
-    theme (newVal) {
-      let backgroundColor = newVal === 'night' ? '#10172d' : '#fff'
-      this.options.backgroundColor = backgroundColor
-      // this.resetChart(this.options)
+    theme () {
+      this.resetOptions()
+      this.resetChart(this.options)
     }
     // buy (newVal) {
     //   // console.log(newVal)

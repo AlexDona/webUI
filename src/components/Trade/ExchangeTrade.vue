@@ -32,8 +32,8 @@
                   </span>
                 </div>
                 <div class="right item">
-                  <router-link to="/">充币</router-link>
-                  <router-link to="/">提币</router-link>
+                  <router-link to="/PersonalCenter">充币</router-link>
+                  <router-link to="/PersonalCenter">提币</router-link>
                 </div>
               </div>
               <div class="content">
@@ -43,9 +43,8 @@
                     type="text"
                     placeholder="买入价"
                     :ref="limitBuyPriceInputRef"
-                    @keyup="formatInput(limitBuyPriceInputRef,pointLength)"
-                    @input="formatInput(limitBuyPriceInputRef,pointLength)"
-                    @keydown="autoChangeData('buy-price', $event)"
+                    @keyup="autoChangeData('limit-buy',limitBuyPriceInputRef,activeSymbol.priceExchange)"
+                    @input="formatInput(limitBuyPriceInputRef,activeSymbol.priceExchange)"
                   >
                   <span class="currency">{{activeSymbol.area}}</span>
                   <div class="rate-changer">
@@ -58,9 +57,8 @@
                     type="text"
                     placeholder="买入量"
                     :ref="limitBuyCountInputRef"
-                    @keyup="formatInput(limitBuyCountInputRef,pointLength)"
-                    @input="formatInput(limitBuyCountInputRef,pointLength)"
-                    @keydown="autoChangeData('buy-acount', $event)"
+                    @keyup="autoChangeData('limit-buy',limitBuyCountInputRef,activeSymbol.priceExchange)"
+                    @input="formatInput(limitBuyCountInputRef,activeSymbol.priceExchange)"
                   >
                   <span class="currency">{{activeSymbol.sellsymbol}}</span>
                 </div>
@@ -79,7 +77,8 @@
                 <div class="volume-rate">
                   <div class="item">
                     <span>预计交易额：</span>
-                    <span class="buy">{{limitExchange.buyAmount}}</span>
+                    <!--<span class="buy">{{limitExchange.buyAmount}}</span>-->
+                    <span class="buy">{{limitBuyAmount}}</span>
                     <span>{{activeSymbol.area}}</span>
                   </div>
                 </div>
@@ -103,8 +102,8 @@
                   </span>
                 </div>
                 <div class="right item">
-                  <router-link to="/">充币</router-link>
-                  <router-link to="/">提币</router-link>
+                  <router-link to="/PersonalCenter">充币</router-link>
+                  <router-link to="/PersonalCenter">提币</router-link>
                 </div>
               </div>
               <div class="content">
@@ -114,9 +113,8 @@
                     type="text"
                     placeholder="卖出价"
                     :ref="limitSellPriceInputRef"
-                    @keyup="formatInput(limitSellPriceInputRef,pointLength)"
-                    @input="formatInput(limitSellPriceInputRef,pointLength)"
-                    @keydown="autoChangeData('sell-price', $event)"
+                    @keyup="autoChangeData('limit-sell',limitSellPriceInputRef,activeSymbol.priceExchange)"
+                    @input="formatInput(limitSellPriceInputRef,activeSymbol.priceExchange)"
                   >
                   <span class="currency">{{activeSymbol.area}}</span>
                   <div class="rate-changer">
@@ -128,10 +126,9 @@
                   <input
                     type="text"
                     placeholder="卖出量"
-                    :ref="limitSellAcountInputRef"
-                    @keyup="formatInput(limitSellAcountInputRef,pointLength)"
-                    @input="formatInput(limitSellAcountInputRef,pointLength)"
-                    @keydown="autoChangeData('sell-count', $event)"
+                    :ref="limitSellCountInputRef"
+                    @keyup="autoChangeData('limit-sell',limitSellCountInputRef,activeSymbol.priceExchange)"
+                    @input="formatInput(limitSellCountInputRef,activeSymbol.priceExchange)"
                   >
                   <span class="currency">{{activeSymbol.sellsymbol}}</span>
                 </div>
@@ -150,7 +147,8 @@
                 <div class="volume-rate">
                   <div class="item">
                     <span>预计交易额：</span>
-                    <span class="sell">{{limitExchange.sellAmount}}</span>
+                    <!--<span class="sell">{{limitExchange.sellAmount}}</span>-->
+                    <span class="sell">{{limitSellAmount}}</span>
                     <span>{{activeSymbol.area}}</span>
                   </div>
                 </div>
@@ -180,8 +178,8 @@
                   </span>
                 </div>
                 <div class="right item">
-                  <router-link to="/">充币</router-link>
-                  <router-link to="/">提币</router-link>
+                  <router-link to="/PersonalCenter">充币</router-link>
+                  <router-link to="/PersonalCenter">提币</router-link>
                 </div>
               </div>
               <div class="content">
@@ -195,9 +193,9 @@
                   <input
                     type="text"
                     placeholder="买入量"
-                    :ref="marketBuyAcountInputRef"
-                    @keyup="formatInput(marketBuyAcountInputRef,pointLength)"
-                    @input="formatInput(marketBuyAcountInputRef,pointLength)"
+                    :ref="marketBuyCountInputRef"
+                    @keyup="formatInput(marketBuyCountInputRef,activeSymbol.priceExchange)"
+                    @input="formatInput(marketBuyCountInputRef,activeSymbol.priceExchange)"
                   >
                   <span class="currency">{{activeSymbol.sellsymbol}}</span>
                 </div>
@@ -240,8 +238,8 @@
                   </span>
                 </div>
                 <div class="right item">
-                  <router-link to="/">充币</router-link>
-                  <router-link to="/">提币</router-link>
+                  <router-link to="/PersonalCenter">充币</router-link>
+                  <router-link to="/PersonalCenter">提币</router-link>
                 </div>
               </div>
               <div class="content">
@@ -255,9 +253,9 @@
                   <input
                     type="text"
                     placeholder="卖出量"
-                    :ref="marketSellAcountInputRef"
-                    @keyup="formatInput(marketSellAcountInputRef,pointLength)"
-                    @input="formatInput(marketSellAcountInputRef,pointLength)"
+                    :ref="marketSellCountInputRef"
+                    @keyup="formatInput(marketSellCountInputRef,activeSymbol.priceExchange)"
+                    @input="formatInput(marketSellCountInputRef,activeSymbol.priceExchange)"
                   >
                   <span class="currency">{{activeSymbol.sellsymbol}}</span>
                 </div>
@@ -297,7 +295,10 @@
 <script>
 import IconFont from '../Common/IconFontCommon'
 // import Slider from './SliderTrader'
-import {formatNumberInput} from '../../utils'
+import {
+  formatNumberInput,
+  getRefValue
+} from '../../utils'
 import {saveEntrustTrade} from '../../utils/api/trade'
 import {returnAjaxMessage} from '../../utils/commonFunc'
 import { createNamespacedHelpers, mapState } from 'vuex'
@@ -314,19 +315,31 @@ export default {
       sliderValue: '',
       limitBuySliderDisabled: false,
       limitBuyPriceInputRef: 'limitBuyPriceInput', // 限价交易 买入价input ref name
-      limitBuyAcountInputRef: 'limitBuyAcountInput', // 限价交易 买入量input ref name
-      marketBuyAcountInputRef: 'marketBuyAcountInput', // 市价交易 买入量input ref name
+      limitBuyCountInputRef: 'limitBuyCountInput', // 限价交易 买入量input ref name
+      marketBuyCountInputRef: 'marketBuyCountInput', // 市价交易 买入量input ref name
       limitSellPriceInputRef: 'limitSellPriceInput', // 限价交易 卖出价input ref name
-      limitSellAcountInputRef: 'limitSellAcountInput', // 限价交易 卖出量input ref name
-      marketSellAcountInputRef: 'marketSellAcountInput', // 市价交易 卖出量input ref name
+      limitSellCountInputRef: 'limitSellCountInput', // 限价交易 卖出量input ref name
+      marketSellCountInputRef: 'marketSellCountInput', // 市价交易 卖出量input ref name
       sellPriceInputRef: 'sellPriceInput', // 卖出价input ref name
-      sellAcountInputRef: 'sellAcountInput', // 卖出量input ref name
+      sellCountInputRef: 'sellCountInput', // 卖出量input ref name
       payPwd: '', // 交易密码
       buyInputValue: '', // 买入input
       pointLength: 4, // 当前币种小数点限制位数
       matchType: 'LIMIT', // 撮合类型： LIMIT:限价单 MARKET:市价单
       limitExchange: {
+        buyPrice: 0,
+        buyCount: 0,
         buyAmount: 0, // 买入成交额
+        sellPrice: 0,
+        sellCount: 0,
+        sellAmount: 0 // 卖出成交额
+      },
+      marketExchange: {
+        buyPrice: 0,
+        buyCount: 0,
+        buyAmount: 0, // 买入成交额
+        sellPrice: 0,
+        sellCount: 0,
         sellAmount: 0 // 卖出成交额
       },
       end: '' // 占位，项目完成后删除
@@ -340,7 +353,9 @@ export default {
     require('../../../static/css/theme/day/Trade/ExchangeDay.css')
     require('../../../static/css/theme/night/Trade/ExchangeNight.css')
   },
-  mounted () {},
+  mounted () {
+    this.getRefValue(this.limitBuyPriceInputRef)
+  },
   activited () {},
   update () {},
   beforeRouteUpdate () {},
@@ -348,20 +363,34 @@ export default {
     ...mapMutations([
       'TOGGLE_REFRESH_ENTRUST_LIST_STATUS'
     ]),
+    getRefValue (refName) {
+      return getRefValue(this, refName)
+    },
     // 数据联动
-    autoChangeData (type, e) {
-      console.log(e.target.value)
+    autoChangeData (type, ref, pointLength) {
+      this.formatInput(ref, pointLength)
+      // let buyPriceVal = 0
+      // let buyCountVal = 0
       switch (type) {
-        case 'buy-price':
+        // 限价买
+        case 'limit-buy':
+          this.limitExchange.buyPrice = this.getRefValue(this.limitBuyPriceInputRef)
+          this.limitExchange.buyCount = this.getRefValue(this.limitBuyCountInputRef)
           break
-        case 'sell-price':
+        // 限价卖
+        case 'limit-sell':
+          this.limitExchange.sellPrice = this.getRefValue(this.limitSellPriceInputRef)
+          this.limitExchange.sellCount = this.getRefValue(this.limitSellCountInputRef)
           break
-        case 'buy-count':
+        // 市价买
+        case 'market-buy':
           break
-        case 'sell-count':
+        // 市价卖
+        case 'market-sell':
           break
       }
     },
+    // 获取 ref value
     // 切换撮合类型
     toggleMatchType (e) {
       switch (e.name) {
@@ -372,6 +401,11 @@ export default {
           this.matchType = 'LIMIT'
           break
       }
+    },
+    // 输入限制
+    formatInput (ref, pointLength) {
+      let target = this.$refs[ref]
+      return formatNumberInput(target, pointLength)
     },
     // 新增委单
     async addEntrust (type) {
@@ -395,10 +429,10 @@ export default {
           switch (this.matchType) {
             case 'LIMIT':
               params.price = this.$refs[this.limitBuyPriceInputRef].value
-              params.count = this.$refs[this.limitBuyAcountInputRef].value
+              params.count = this.$refs[this.limitBuyCountInputRef].value
               break
             case 'MARKET':
-              params.count = this.$refs[this.marketBuyAcountInputRef].value
+              params.count = this.$refs[this.marketBuyCountInputRef].value
               console.log(params)
               break
           }
@@ -408,10 +442,10 @@ export default {
           switch (this.matchType) {
             case 'LIMIT':
               params.price = this.$refs[this.limitSellPriceInputRef].value
-              params.count = this.$refs[this.limitSellAcountInputRef].value
+              params.count = this.$refs[this.limitSellCountInputRef].value
               break
             case 'MARKET':
-              params.count = this.$refs[this.marketSellAcountInputRef].value
+              params.count = this.$refs[this.marketSellCountInputRef].value
               break
           }
           break
@@ -426,11 +460,6 @@ export default {
         console.log(this.refreshEntrustStatus)
       }
       console.log(data)
-    },
-    // 输入限制
-    formatInput (ref, pointLength) {
-      let target = this.$refs[ref]
-      formatNumberInput(target, pointLength)
     }
   },
   filter: {},
@@ -441,12 +470,33 @@ export default {
       partnerId: state => state.common.partnerId,
       loginStep1Info: state => state.user.loginStep1Info,
       activeSymbol: state => state.common.activeSymbol,
-      isLogin: state => state.user.isLogin
-    })
+      isLogin: state => state.user.isLogin,
+      activePriceItem: state => state.trade.activePriceItem
+    }),
+    // 限价买预计成交额
+    limitBuyAmount () {
+      return this.limitExchange.buyPrice * this.limitExchange.buyCount
+    },
+    // 限价买预计成交额
+    limitSellAmount () {
+      return this.limitExchange.sellPrice * this.limitExchange.sellCount
+    }
+    // limitExchange[buyAmount] () {
+    //   console.log(this.limitExchange.buyPrice * this.limitExchange.buyCount)
+    //   return this.limitExchange.buyPrice * this.limitExchange.buyCount
+    // }
   },
   watch: {
     activeSymbol (newVal) {
       console.log(newVal)
+    },
+    // 用户手动设置价格
+    activePriceItem (newVal) {
+      console.log(newVal)
+      this.$refs[this.limitBuyPriceInputRef].value = newVal
+      this.$refs[this.limitSellPriceInputRef].value = newVal
+      this.formatInput(this.limitBuyPriceInputRef, this.activeSymbol.priceExchange)
+      this.formatInput(this.limitSellPriceInputRef, this.activeSymbol.priceExchange)
     }
   }
 }
@@ -613,8 +663,8 @@ export default {
                 }
                 /*限价input框*/
                 >input{
-                  border-color:#909090;
-                  background-color: #33373b;
+                  border-color:#A9BED4;
+                  background-color: $mainNightBgColor;
                   color:$nightFontColor;
                 }
                 >.currency{

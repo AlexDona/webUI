@@ -30,7 +30,7 @@
                   </template>
                 </el-table-column>
                 <el-table-column
-                  label="成交价(BTCC)"
+                  :label="`成交价(${activeSymbol.area})`"
                 >
                   <template slot-scope="s">
                     <span
@@ -44,7 +44,7 @@
                   </template>
                 </el-table-column>
                 <el-table-column
-                  label="成交量(BTCCC)"
+                  :label="`成交量(${activeSymbol.sellsymbol})`"
                 >
                   <template slot-scope="s">
                       <span class="text-align-r font-size12">
@@ -186,7 +186,8 @@ export default {
   computed: {
     ...mapState({
       theme: state => state.common.theme,
-      orderRecordList: state => state.common.socketData.tardeRecordList
+      orderRecordList: state => state.common.socketData.tardeRecordList,
+      activeSymbol: state => state.common.activeSymbol
     })
   },
   watch: {}
@@ -199,7 +200,7 @@ export default {
       >.title{
         height:34px;
         line-height: 34px;
-        font-weight: 700;
+        /*font-weight: 700;*/
         margin-bottom:4px;
         box-shadow:0 2px 6px rgba(0,0,0,.1);
         >.text{
@@ -207,6 +208,7 @@ export default {
           text-indent: 4px;
           height:100%;
           border-bottom:2px solid $mainColor;
+          color:$mainColor;
         }
       }
       >.content{

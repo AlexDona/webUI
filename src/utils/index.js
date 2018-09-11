@@ -125,7 +125,6 @@ export function formatNumberInput (event, targetPointLength) {
   let finalVal = ''
   let count1 = 0
   // pointLength为小数点后几位
-  console.log(val)
   let count = (val.match(/\./g) || []).length// 小数点个数
   // 只允许输入一个小数点
   if (count > 0) {
@@ -161,4 +160,9 @@ export function formatNumberInput (event, targetPointLength) {
     finalVal = newVal3
   }
   event.value = finalVal
+  return finalVal
+}
+
+export function getRefValue (self, refName) {
+  return self.$refs[refName].value
 }

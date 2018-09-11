@@ -301,7 +301,7 @@
 }
 .header-chart-panel .button:hover{
   /*background-color: pink;*/
-  background-color:#3D505A;
+  background-color:#eaeaea;
   color:#338FF5 !important;
 }
 .header-chart-panel .button:hover svg{

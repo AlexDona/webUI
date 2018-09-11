@@ -44,7 +44,24 @@
 .market-list-box.home .el-tabs__item.is-active{
   color:#fff;
 }
+
 /*表头颜色*/
 .market-list-box.home.night .el-table th div{
   color:#fff;
+}
+/*滚动条*/
+.market-list-box.home.night .el-table--scrollable-y .el-table__body-wrapper::-webkit-scrollbar {
+  width: 4px;
+}
+/*滚动条*/
+.market-list-box.home.night .el-table--scrollable-y .el-table__body-wrapper::-webkit-scrollbar-track-piece {
+  background-color: #338ff5;
+}
+/*滚动条背景*/
+.market-list-box.home.night .el-table--scrollable-y .el-table__body-wrapper::-webkit-scrollbar-thumb {
+  background-color: #4A5662;
+}
+.market-list-box.home.night .el-table--scrollable-y .el-table__body-wrapper::-webkit-scrollbar-button {
+  background-color: #fff;
+  display: none;
 }

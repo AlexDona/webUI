@@ -47,9 +47,13 @@
   border:none;
 }
 .night .el-popper[x-placement^=bottom] .popper__arrow::after{
-  border-bottom-color: #2a3242;
+  /*border-bottom-color: #2a3242;*/
+  border-bottom-color: transparent;
 }
 .night .el-popper[x-placement^=bottom] .popper__arrow{
-  border-bottom-color: #2a3242;
+  /*border-bottom-color: #2a3242;*/
+  border-bottom:none;
 }
-
+.el-popper .popper__arrow{
+  border:none !important;
+}

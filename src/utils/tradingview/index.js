@@ -327,7 +327,7 @@ export default {
     resolution = dataArr[3]
     //  k线
     if (tradeType === 'KLINE') {
-      console.log(data)
+      // console.log(data)
       // 分辨率转换
       switch (resolution) {
         case 'min':
@@ -366,7 +366,7 @@ export default {
       switch (dataType) {
         // 请求历史数据
         case 0:
-          console.log(this.dataCache)
+          // console.log(this.dataCache)
 
           // console.log(data)
           this.dataCache[symbol][resolution] = data.data
@@ -440,7 +440,7 @@ export default {
       // console.log(this.dataCache[symbol][resolution])
     //  深度图
     } else if (tradeType == 'DEPTH') {
-      // console.log(data)
+      console.log(data)
       // 深度图、买列表、卖列表
       if (data.data) {
         // const depthData = {
