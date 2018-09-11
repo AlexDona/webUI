@@ -189,19 +189,15 @@ const router = new Router({
     },
     {
       // OTC发布购买和出售
-      path: '/OTCPublishBuyAndSell',
+      // path: '/OTCPublishBuyAndSell',
+      // 买卖类型：styleID；可用商户币种id:partnerCoinId; 可用法币id：currencyID
+      path: '/OTCPublishBuyAndSell/:styleID/:partnerCoinId/:currencyID',
       // name: 'OTCPublishBuyAndSell',
       component: OTCPublishBuyAndSell,
       meta: {
         auth: true
       }
     },
-    // {
-    //   // OTC在线交易买卖
-    //   path: '/OTCOnlineTraderBuySell/:styleId',
-    //   // name: 'OTCOnlineTraderBuySell',
-    //   component: OTCOnlineTraderBuySell
-    // },
     {
       // OTC在线交易买卖
       path: '/OTCOnlineTraderBuySell/:styleId/:id/:partnerCoinId',

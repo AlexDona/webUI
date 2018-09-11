@@ -69,6 +69,7 @@
           </div>
         </div>
       </div>
+      <div class="no-data" v-if="!getOTCFreezingOrderList.length">暂无数据</div>
     </div>
   </div>
 </template>
@@ -87,34 +88,6 @@ export default {
         // {
         //   orderId: '20180812111111',
         //   style: '买入',
-        //   coinName: 'BTC',
-        //   price: '567812.12',
-        //   sum: '0.0012345',
-        //   totalMoney: '20180812123456',
-        //   createTime: 1523756432000,
-        //   sellerName: '张三封',
-        //   sellerPhone: '15711111111',
-        //   buyerName: '任付伟',
-        //   buyerPhone: '15722222222',
-        //   freezingTime: 1523756432000
-        // },
-        // {
-        //   orderId: '20180812222222',
-        //   style: '卖出',
-        //   coinName: 'BTC',
-        //   price: '567812.12',
-        //   sum: '0.0012345',
-        //   totalMoney: '20180812123456',
-        //   createTime: 1523756432000,
-        //   sellerName: '张三封',
-        //   sellerPhone: '15711111111',
-        //   buyerName: '任付伟',
-        //   buyerPhone: '15722222222',
-        //   freezingTime: 1523756432000
-        // },
-        // {
-        //   orderId: '20180812222222',
-        //   style: '卖出',
         //   coinName: 'BTC',
         //   price: '567812.12',
         //   sum: '0.0012345',
@@ -171,8 +144,8 @@ export default {
 <style scoped lang="scss" type="text/scss">
   @import url(../../../static/css/scss/OTC/OTCFreezingOrder.scss);
   .otc-freezing-order-box{
-    .freezing-order-content{
-      .freezing-table-head{
+    >.freezing-order-content{
+      >.freezing-table-head{
         box-sizing: border-box;
         width: 1043px;
         height: 35px;
@@ -261,6 +234,13 @@ export default {
             }
           }
         }
+      }
+      >.no-data{
+        width: 1043px;
+        height: 432px;
+        line-height: 432px;
+        text-align: center;
+        background-color: #202A33;
       }
     }
   }
