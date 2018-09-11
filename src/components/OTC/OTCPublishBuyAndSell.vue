@@ -435,11 +435,6 @@ export default {
     this.hopePaymentCoinId = this.$route.params.currencyID
     //  2.0 查询可用法币币种列表
     this.getMerchantAvailablelegalTenderList()
-    // this.hopePaymentCoinStyleList.forEach(item => {
-    //   if (this.hopePaymentCoinId === item.id) {
-    //     this.CurrencyCoinsName = item.shortName
-    //   }
-    // })
   },
   mounted () {
   },
