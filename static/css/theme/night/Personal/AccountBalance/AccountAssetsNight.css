@@ -20,3 +20,12 @@
   background-color: #181E24;
   color: #fff;
 }
+.account-assets.personal.night .el-dialog {
+  background-color: #28334A;
+}
+.account-assets.personal .el-dialog__header {
+  background-color: #282E43;
+}
+.account-assets.personal.night .el-dialog__title {
+  color: #fff;
+}

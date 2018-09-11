@@ -85,8 +85,8 @@
               </ul>
             </li>
           <li class="nav-item">
-            <router-link to="/PersonalCenter/first">
-              <span>个人中心</span>
+            <router-link to="/VipMainContent">
+              <span>VIP</span>
             </router-link>
           </li>
           </ul>

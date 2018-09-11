@@ -32,6 +32,10 @@ const TransactionPassword = r => require.ensure([], () => r(require('@/component
 // 修改登录密码
 const LoginPassword = r => require.ensure([], () => r(require('@/components/Personal/UserSecuritySettings/UserLoginPassword')), 'login-password')
 /**
+ * VIP
+ */
+const VipMainContent = r => require.ensure([], () => r(require('@/components/Personal/VipMainContent/VipMainContent')), 'vip-main')
+/**
  * OTC
  */
 const OTCCenter = r => require.ensure([], () => r(require('@/components/OTC/OTCCenter')), 'otc-center')
@@ -73,6 +77,12 @@ export default new Router({
       path: '/PersonalCenter',
       // name: 'PersonalCenter',
       component: PersonalCenter
+    },
+    {
+      // VIP
+      path: '/VipMainContent',
+      // name: 'VipMainContent',
+      component: VipMainContent
     },
     {
       path: '/TradeCenter',

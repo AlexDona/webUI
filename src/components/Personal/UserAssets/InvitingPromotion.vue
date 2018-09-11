@@ -21,11 +21,11 @@
                   class="code-right-rendering"
                   id="text"
                 >
-                  {{ this.text }}
+                  {{ userInfo.userInfo.showId }}
                 </span>
                 <span
                   class="code-copy border-radius5 cursor-pointer"
-                  v-clipboard:copy="this.text"
+                  v-clipboard:copy="userInfo.userInfo.showId"
                   v-clipboard:success="onCopy"
                   v-clipboard:error="onError"
                 >
@@ -44,7 +44,7 @@
                   class="code-right-rendering"
                   id="link"
                 >
-                  {{ this.link }}
+                  {{ link + userInfo.userInfo.showId }}
                 </span>
                 <span
                   class="code-copy border-radius5 cursor-pointer"
@@ -59,7 +59,7 @@
                 </span>
                 <span
                   class="code-copy border-radius5 cursor-pointer"
-                  v-clipboard:copy="this.link"
+                  v-clipboard:copy="link + userInfo.userInfo.showId"
                   v-clipboard:success="onCopy"
                   v-clipboard:error="onError"
                 >
@@ -70,7 +70,7 @@
                   复制
                   <VueQrcode
                     class="ercode"
-                    :value="String(this.qrcode)"
+                    :value="String(link + userInfo.userInfo.showId)"
                     :options="{ size: 100 }"
                     v-show="ercodeIsShowId"
                   >
@@ -117,10 +117,12 @@
           <span class="font-size16 header-color header-right">推广统计</span>
           <div class="header-right header-select">
             <el-select
-              v-model="value"
-              placeholder="请选择">
+              v-model="generalizeValue"
+              placeholder="请选择"
+              @change="changeId"
+            >
               <el-option
-                v-for="item in options"
+                v-for="item in generalizeOptionsList"
                 :key="item.value"
                 :label="item.label"
                 :value="item.value"
@@ -139,7 +141,7 @@
               label="用户UID"
             >
               <template slot-scope = "s">
-                <div>{{ s.row.userUID }}</div>
+                <div>{{ s.row.id }}</div>
               </template>
             </el-table-column>
             <el-table-column
@@ -179,6 +181,15 @@
               </template>
             </el-table-column>
           </el-table>
+          <!--分页-->
+          <el-pagination
+            background
+            v-show="activeName === 'current-entrust' && extensionList.length"
+            layout="prev, pager, next"
+            :page-count="totalPageForMyEntrust"
+            @current-change="changeCurrentPage"
+          >
+          </el-pagination>
         </div>
       </div>
       <!--奖励记录-->
@@ -231,6 +242,10 @@
 import {mapState} from 'vuex'
 import IconFontCommon from '../../Common/IconFontCommon'
 import VueClipboard from 'vue-clipboard2'
+import {
+  userPromotionList
+} from '../../../utils/api/personal'
+import {returnAjaxMessage} from '../../../utils/commonFunc'
 import {timeFilter} from '../../../utils/index'
 Vue.use(VueClipboard)
 export default {
@@ -244,60 +259,63 @@ export default {
   // props,
   data () {
     return {
-      value: '直接推广',
-      options: [{
-        value: '1',
+      generalizeValue: 'first',
+      generalizeOptionsList: [{
+        value: 'first',
         label: '直接推广'
       }, {
-        value: '2',
+        value: 'second',
         label: '间接推广'
       }],
+      activeName: 'current-entrust',
+      currentPageForMyEntrust: 1, // 当前委托页码
+      totalPageForMyEntrust: 1, // 当前委托总页数
       text: 'SADFASD',
-      link: 'https://www.kucoin.com/#/?r=',
+      link: 'http://localhost:8000/?#/Register?showId=',
       ercodeIsShowId: false, // 二维码显示状态
       qrcode: '123456',
       // 推广统计
       extensionList: [
-        {
-          userUID: '3355446',
-          loginName: '18033****',
-          registerTime: '2018-08-04 10:30:41',
-          name: '二麻子',
-          authenticationState: '未认证',
-          refereeUID: '5566887'
-        },
-        {
-          userUID: '3355446',
-          loginName: '18033****',
-          registerTime: '2018-08-04 10:30:41',
-          name: '二麻子',
-          authenticationState: '未认证',
-          refereeUID: '5566887'
-        },
-        {
-          userUID: '3355446',
-          loginName: '18033****',
-          registerTime: '2018-08-04 10:30:41',
-          name: '二麻子',
-          authenticationState: '未认证',
-          refereeUID: '5566887'
-        },
-        {
-          userUID: '3355446',
-          loginName: '18033****',
-          registerTime: '2018-08-04 10:30:41',
-          name: '二麻子',
-          authenticationState: '未认证',
-          refereeUID: '5566887'
-        },
-        {
-          userUID: '3355446',
-          loginName: '18033****',
-          registerTime: '2018-08-04 10:30:41',
-          name: '二麻子',
-          authenticationState: '未认证',
-          refereeUID: '5566887'
-        }
+        // {
+        //   userUID: '3355446',
+        //   loginName: '18033****',
+        //   registerTime: '2018-08-04 10:30:41',
+        //   name: '二麻子',
+        //   authenticationState: '未认证',
+        //   refereeUID: '5566887'
+        // },
+        // {
+        //   userUID: '3355446',
+        //   loginName: '18033****',
+        //   registerTime: '2018-08-04 10:30:41',
+        //   name: '二麻子',
+        //   authenticationState: '未认证',
+        //   refereeUID: '5566887'
+        // },
+        // {
+        //   userUID: '3355446',
+        //   loginName: '18033****',
+        //   registerTime: '2018-08-04 10:30:41',
+        //   name: '二麻子',
+        //   authenticationState: '未认证',
+        //   refereeUID: '5566887'
+        // },
+        // {
+        //   userUID: '3355446',
+        //   loginName: '18033****',
+        //   registerTime: '2018-08-04 10:30:41',
+        //   name: '二麻子',
+        //   authenticationState: '未认证',
+        //   refereeUID: '5566887'
+        // },
+        // {
+        //   userUID: '3355446',
+        //   loginName: '18033****',
+        //   registerTime: '2018-08-04 10:30:41',
+        //   name: '二麻子',
+        //   authenticationState: '未认证',
+        //   refereeUID: '5566887'
+        // }
       ],
       // 奖励记录
       awardList: [
@@ -351,6 +369,38 @@ export default {
     timeFormatting (date) {
       return timeFilter(date, 'normal')
     },
+    // 类型筛选（直接 间接）
+    changeId (e) {
+      console.log(e)
+      this.generalizeOptionsList.forEach(item => {
+        if (e === item.value) {
+          this.generalizeValue = e
+          console.log(item.generalizeValue)
+          this.getUserPromotionList()
+        }
+      })
+    },
+    // 直接推广 间接推广列表
+    async getUserPromotionList () {
+      let data = await userPromotionList({
+        type: this.generalizeValue, // 筛选类型
+        currentPage: this.currentPageForMyEntrust, // 分页
+        pageSize: this.pageSize // 页码
+      })
+      console.log(data)
+      if (!(returnAjaxMessage(data, this, 0))) {
+        return false
+      } else {
+        // 返回展示
+        this.extensionList = data.data.data
+        console.log(this.extensionList)
+      }
+    },
+    // 分页
+    changeCurrentPage (pageNum) {
+      this.currentPageForMyEntrust = pageNum
+      this.getUserPromotionList()
+    },
     //  点击复制
     onCopy (e) {
       // 已拷贝
@@ -381,7 +431,8 @@ export default {
   filter: {},
   computed: {
     ...mapState({
-      theme: state => state.common.theme
+      theme: state => state.common.theme,
+      userInfo: state => state.user.loginStep1Info // 用户详细信息
     })
   },
   watch: {}
@@ -418,6 +469,7 @@ export default {
               }
               >.code-right,
               >.link-right{
+                flex: 2;
                 >.code-right-rendering,
                 >.code-right-rendering {
                   margin-right: 10px;
@@ -433,6 +485,7 @@ export default {
                     position: absolute;
                     bottom: 35px;
                     right: 180px;
+                    border-radius: 5px;
                   }
                 }
               }

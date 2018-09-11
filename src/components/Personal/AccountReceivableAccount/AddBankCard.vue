@@ -98,8 +98,6 @@ import {statusCardSettings} from '../../../utils/api/personal'
 // 底部
 import FooterCommon from '../../Common/FooterCommon'
 import { createNamespacedHelpers, mapState } from 'vuex'
-import ContentPage from '../UserAssets/AccountCredited'
-var content = ContentPage // 在这个地方赋值一下
 const { mapMutations } = createNamespacedHelpers('personal')
 export default {
   components: {
@@ -135,13 +133,14 @@ export default {
   beforeRouteUpdate () {},
   methods: {
     ...mapMutations([
-      'CHANGE_USER_CENTER_ACTIVE_NAME'
+      'CHANGE_USER_CENTER_ACTIVE_NAME',
+      'CHANGE_REF_ACCOUNT_CREDITED_STATE'
     ]),
     // 点击返回上个页面
     returnSuperior () {
+      this.CHANGE_REF_ACCOUNT_CREDITED_STATE(true)
+      this.$router.push({path: '/PersonalCenter'})
       this.CHANGE_USER_CENTER_ACTIVE_NAME('account-credited')
-      this.$router.go(-1)
-      content.methods.getAccountPaymentTerm()
     },
     // 发送邮箱验证码
     sendPhoneOrEmailCode (loginType) {
@@ -205,15 +204,15 @@ export default {
         return false
       } else {
         console.log(data)
-        // console.log(this.emailAccounts)
       }
     },
     // 成功自动跳转
     successJump () {
       setInterval(() => {
         if (this.successCountDown === 0) {
+          this.CHANGE_REF_ACCOUNT_CREDITED_STATE(true)
+          this.$router.push({path: '/PersonalCenter'})
           this.CHANGE_USER_CENTER_ACTIVE_NAME('account-credited')
-          this.$router.go(-1)
         }
         this.successCountDown--
       }, 1000)
@@ -226,7 +225,8 @@ export default {
       userInfo: state => state.user.loginStep1Info, // 用户详细信息
       // 手机验证码
       disabledOfPhoneBtn: state => state.user.disabledOfPhoneBtn,
-      disabledOfEmailBtn: state => state.user.disabledOfEmailBtn
+      disabledOfEmailBtn: state => state.user.disabledOfEmailBtn,
+      refsAccountCenterStatus: state => state.personal.refsAccountCenterStatus
     })
   },
   watch: {}

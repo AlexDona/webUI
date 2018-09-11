@@ -165,9 +165,9 @@
                 :src="openPictureSrc"
               >
               <router-link class="setting-btn" to="/AddWesternUnion">
-                <!--<span class="payment-state cursor-pointer">-->
+                <span class="payment-state cursor-pointer">
                   设置
-                <!--</span>-->
+                </span>
               </router-link>
             </p>
           </div>
@@ -303,8 +303,12 @@ export default {
     require('../../../../static/css/theme/day/Personal/UserAssets/AccountCreditedDay.css')
     // 黑色主题样式
     require('../../../../static/css/theme/night/Personal/UserAssets/AccountCreditedNight.css')
-    // 获取全局个人信息
-    // this.authenticationInfo = this.userInfo.data.user
+    // 调用收款方式 银行卡 微信 支付宝 paypal 西联汇款 状态
+    if (this.refsAccountCenterStatus) {
+      this.getAccountPaymentTerm()
+      console.log(this.refsAccountCenterStatus)
+      this.CHANGE_REF_ACCOUNT_CREDITED_STATE(false)
+    }
   },
   mounted () {},
   activited () {},
@@ -312,24 +316,13 @@ export default {
   beforeRouteUpdate () {},
   methods: {
     ...mapMutations([
-      'CHANGE_USER_CENTER_ACTIVE_NAME'
+      'CHANGE_USER_CENTER_ACTIVE_NAME',
+      'CHANGE_REF_ACCOUNT_CREDITED_STATE'
     ]),
     // 点击去认证跳转到身份认证
     authenticationJump () {
       this.centerModelWarning = false
       this.CHANGE_USER_CENTER_ACTIVE_NAME('identity-authentication')
-    },
-    // 收款方式
-    async getAccountPaymentTerm () {
-      let data = await accountPaymentTerm({})
-      console.log(data)
-      if (!(returnAjaxMessage(data, this, 0))) {
-        return false
-      } else {
-        // 返回状态展示
-        this.paymentTerm = data.data.data
-        console.log(this.paymentTerm)
-      }
     },
     // 确认开启关闭
     statusOpenToClose (paymentType, safeState) {
@@ -508,15 +501,26 @@ export default {
         this.closeCollectionMode = false // 关闭收款方式
       }
     },
-    filter: {},
-    computed: {
-      ...mapState({
-        theme: state => state.common.theme,
-        userInfo: state => state.user.loginStep1Info // 用户详细信息
-      })
-    },
-    watch: {}
-  }
+    // 收款方式
+    async getAccountPaymentTerm () {
+      let data = await accountPaymentTerm()
+      if (!(returnAjaxMessage(data, this, 0))) {
+        return false
+      } else {
+        // 返回状态展示
+        this.paymentTerm = data.data.data
+      }
+    }
+  },
+  filter: {},
+  computed: {
+    ...mapState({
+      theme: state => state.common.theme,
+      userInfo: state => state.user.loginStep1Info, // 用户详细信息
+      refsAccountCenterStatus: state => state.personal.refsAccountCenterStatus
+    })
+  },
+  watch: {}
 }
 </script>
 <style scoped lang="scss">
@@ -582,8 +586,7 @@ export default {
       background-color: $nightBgColor;
       color:$nightFontColor;
       >.background-color {
-        /*background-color: #1E2636;*/
-        background-color: red;
+        background-color: #1E2636;
       }
       >.credited-credited-main {
         background-color: #1E2636;
@@ -600,7 +603,7 @@ export default {
               color: #fff;
             }
             .payment-state {
-              color: #fff;
+              color: #338FF5;
             }
             .dialog-warning {
               background:rgba(42,122,211,0.2);

@@ -24,15 +24,15 @@
         <div class="security-title-info margin-top20 font-size12">
           <div class="login-time float-left">
             <span>上次登录时间：</span>
-            <span>{{ SecurityCenter.loginTime }}</span>
+            <span>{{ securityCenter.loginTime }}</span>
           </div>
           <div class="login-ip float-left">
             <span>IP：</span>
-            <span>{{ SecurityCenter.ip }}</span>
+            <span>{{ securityCenter.ip }}</span>
           </div>
           <div class="login-address">
             <span>归属：</span>
-            <span>{{ SecurityCenter.ipLocation }}</span>
+            <span>{{ securityCenter.ipLocation }}</span>
           </div>
         </div>
       </div>
@@ -54,6 +54,7 @@
             <p>
               <span class="secure-email font-size14">安全邮箱</span>
               <IconFontCommon
+                v-if="!securityCenter.isMailEnable"
                 class="font-size16"
                 iconName="icon-wuuiconsuotanhao-copy"
               />
@@ -64,7 +65,7 @@
           </div>
           <div class="security-status text-align-r">
             <button
-              v-if="!SecurityCenter.isMailEnable"
+              v-if="!securityCenter.isMailBind"
               class="security-verify border-radius2 font-size12 cursor-pointer"
             >
               <span @click="showStatusVerificationClose('email', 'enable')">
@@ -82,7 +83,7 @@
               </span>
             </button>
             <button
-              v-if="!SecurityCenter.isMailBind"
+              v-if="!securityCenter.isMailBind"
               class="security-binding border-radius2 font-size12 cursor-pointer"
               @click="setShowStatusSecurity('email')"
             >
@@ -103,6 +104,7 @@
             <p>
               <span class="secure-email font-size14">安全手机</span>
               <IconFontCommon
+                v-if="!securityCenter.isPhoneBind"
                 class="font-size16"
                 iconName="icon-wuuiconsuotanhao-copy"
               />
@@ -113,7 +115,7 @@
           </div>
           <div class="security-status text-align-r">
             <button
-              v-if="!SecurityCenter.isPhoneEnable"
+              v-if="!securityCenter.isPhoneEnable"
               class="security-verify border-radius2 font-size12 cursor-pointer"
             >
               <span @click="showStatusVerificationClose('phone', 'enable')">
@@ -134,7 +136,7 @@
               class="security-binding border-radius2 font-size12 cursor-pointer"
               @click="setShowStatusSecurity('phone')"
             >
-              <span v-if="!SecurityCenter.isPhoneBind">绑定</span>
+              <span v-if="!securityCenter.isPhoneBind">绑定</span>
               <span v-else>修改</span>
             </button>
           </div>
@@ -151,6 +153,7 @@
             <p>
               <span class="secure-email font-size14">谷歌验证</span>
               <IconFontCommon
+                v-if="!securityCenter.isGoogleBind"
                 class="font-size16"
                 iconName="icon-wuuiconsuotanhao-copy"
               />
@@ -161,7 +164,7 @@
           </div>
           <div class="security-status text-align-r">
             <button
-              v-if="!SecurityCenter.isGoogleEnable"
+              v-if="!securityCenter.isGoogleEnable"
               class="security-verify border-radius2 font-size12 cursor-pointer"
             >
               <span @click="showStatusVerificationClose('google', 'enable')">
@@ -182,7 +185,7 @@
               class="security-binding border-radius2 font-size12 cursor-pointer"
               @click="setShowStatusSecurity('google')"
             >
-              <span v-if="!SecurityCenter.isGoogleBind">绑定</span>
+              <span v-if="!securityCenter.isGoogleBind">绑定</span>
               <span v-else>解绑</span>
             </button>
           </div>
@@ -199,6 +202,7 @@
             <p>
               <span class="secure-email font-size14">交易密码</span>
               <IconFontCommon
+                v-if="!securityCenter.payPassword"
                 class="font-size16"
                 iconName="icon-wuuiconsuotanhao-copy"
               />
@@ -210,9 +214,9 @@
           <div class="security-status text-align-r">
             <button
               class="security-binding border-radius2 font-size12 cursor-pointer"
-              @click="setShowStatusSecurity(4)"
+              @click="setShowStatusSecurity('transaction-password')"
             >
-              <span v-if="!SecurityCenter.payPassword">设置</span>
+              <span v-if="!securityCenter.payPassword">设置</span>
               <span v-else>重置</span>
             </button>
           </div>
@@ -236,7 +240,7 @@
           <div class="security-status text-align-r">
             <button
               class="security-binding border-radius2 font-size12 cursor-pointer"
-              @click="setShowStatusSecurity(5)"
+              @click="setShowStatusSecurity('login-password')"
             >
               <span>修改</span>
             </button>
@@ -249,7 +253,7 @@
         >
           <el-form label-width="120px">
             <!--没有绑定手机不显示-->
-            <div v-if="!SecurityCenter.isPhoneBind"></div>
+            <div v-if="!securityCenter.isPhoneBind"></div>
             <!--绑定手机之后显示-->
             <el-form-item
               label="手机验证"
@@ -268,7 +272,7 @@
               </el-input>
             </el-form-item>
             <!--没有绑定邮箱不显示-->
-            <div v-if="!SecurityCenter.isMailBind"></div>
+            <div v-if="!securityCenter.isMailBind"></div>
             <!--绑定邮箱之后显示-->
             <el-form-item
               label="邮箱验证"
@@ -287,7 +291,7 @@
               </el-input>
             </el-form-item>
             <!--没有绑定谷歌不显示-->
-            <div v-if="!SecurityCenter.isGoogleBind"></div>
+            <div v-if="!securityCenter.isGoogleBind"></div>
             <!--绑定谷歌之后显示-->
             <el-form-item
               label="谷歌验证"
@@ -442,7 +446,6 @@ import CountDownButton from '../../Common/CountDownCommon'
 import IconFontCommon from '../../Common/IconFontCommon'
 import {
   statusSecurityCenter,
-  securityVerificationOnOff,
   enableTheClosing
 } from '../../../utils/api/personal'
 import {
@@ -472,7 +475,7 @@ export default {
       openEmail: false, // 邮箱开启关闭验证
       openPhone: false, // 手机开启关闭验证
       openGoogle: false, // 谷歌开启关闭验证
-      SecurityCenter: {},
+      securityCenter: {},
       emailCode: '', // 邮箱验证
       phoneCode: '', // 手机验证
       googleCode: '', // 谷歌验证
@@ -487,11 +490,11 @@ export default {
     require('../../../../static/css/theme/day/Personal/UserAssets/SecurityCenterDay.css')
     // 黑色主题样式
     require('../../../../static/css/theme/night/Personal/UserAssets/SecurityCenterNight.css')
-    // 获取全局个人信息
-    // this.getStatusUserInfo = this.userInfo
-    // console.log(this.userInfo)
     // 调用安全中心登陆记录 安全设置记录 邮箱 手机 谷歌 交易密码 状态
-    // this.getSecurityCenter()
+    if (this.refSecurityCenterStatus) {
+      this.getSecurityCenter()
+      this.CHANGE_REF_SECURITY_CENTER_INFO(false)
+    }
   },
   mounted () {},
   activited () {},
@@ -499,7 +502,8 @@ export default {
   beforeRouteUpdate () {},
   methods: {
     ...mapMutations([
-      'SET_USER_BUTTON_STATUS'
+      'SET_USER_BUTTON_STATUS',
+      'CHANGE_REF_SECURITY_CENTER_INFO'
     ]),
     // 1.时间格式化
     timeFormatting (date) {
@@ -517,10 +521,10 @@ export default {
         case 'google':
           this.$router.push({path: '/GoogleBinding'})
           break
-        case 4:
+        case 'transaction-password':
           this.$router.push({path: '/TransactionPassword'})
           break
-        case 5:
+        case 'login-password':
           this.$router.push({path: '/LoginPassword'})
           break
       }
@@ -545,7 +549,6 @@ export default {
       }
       console.log(params)
       sendPhoneOrEmailCodeAjax(loginType, params, (data) => {
-        // console.log(this.disabledOfPhoneBtn)
         // 提示信息
         if (!returnAjaxMessage(data, this)) {
           console.log('error')
@@ -575,7 +578,7 @@ export default {
       this.state = safeState
       switch (paymentType) {
         case 'email':
-          if (!this.SecurityCenter.isMailBind) {
+          if (!this.securityCenter.isMailBind) {
             this.openTheValidation = false
           } else {
             if (safeState === 'enable') {
@@ -589,7 +592,7 @@ export default {
           }
           break
         case 'phone':
-          if (!this.SecurityCenter.isPhoneBind) {
+          if (!this.securityCenter.isPhoneBind) {
             this.openTheValidation = false
           } else {
             if (safeState === 'enable') {
@@ -603,7 +606,7 @@ export default {
           }
           break
         case 'google':
-          if (!this.SecurityCenter.isGoogleBind) {
+          if (!this.securityCenter.isGoogleBind) {
             this.openTheValidation = false
           } else {
             if (safeState === 'enable') {
@@ -641,7 +644,6 @@ export default {
         case 'email':
           console.log(type)
           params.type = 'email'
-          // this.activeType = 'email'
           console.log(params)
           if (state === 'enable') {
             params.status = 'enable'
@@ -666,17 +668,12 @@ export default {
           }
           break
       }
-      if (!this.SecurityCenter.isMailEnable) {
-        data = await securityVerificationOnOff(params)
-        data = await enableTheClosing(params)
-      } else {
-        data = await enableTheClosing(params)
-      }
+      data = await enableTheClosing(params)
       if (!(returnAjaxMessage(data, this, 1))) {
         return false
       } else {
-        // 安全中心状态刷新
         this.getSecurityCenter()
+        // 安全中心状态刷新
         this.openTheValidation = false
         this.closeValidation = false
       }
@@ -686,18 +683,16 @@ export default {
      */
     async getSecurityCenter () {
       let data = await statusSecurityCenter({
-        // userId: this.userInfo.userId // 商户id
-        token: this.userInfo.userInfo.token // token
+        token: this.userInfo.token // token
       })
       console.log(data)
       if (!(returnAjaxMessage(data, this, 0))) {
         return false
       } else {
         // 返回展示
-        this.SecurityCenter = data.data.data
+        this.securityCenter = data.data.data
         this.logonRecord = data.data.data.setLog
         this.securityRecord = data.data.data.loginLog
-        // console.log(this.SecurityCenter)
       }
     }
   },
@@ -708,7 +703,8 @@ export default {
       userInfo: state => state.user.loginStep1Info, // 用户详细信息
       activeCountryCode: state => state.user.loginStep1Info.countryCode, // 国籍码
       disabledOfPhoneBtn: state => state.user.disabledOfPhoneBtn,
-      disabledOfEmailBtn: state => state.user.disabledOfEmailBtn
+      disabledOfEmailBtn: state => state.user.disabledOfEmailBtn,
+      refSecurityCenterStatus: state => state.personal.refSecurityCenterStatus
     })
   },
   watch: {}

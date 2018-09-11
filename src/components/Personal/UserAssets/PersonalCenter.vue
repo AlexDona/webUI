@@ -192,32 +192,44 @@ export default {
     statusSwitchPanel (tab) {
       switch (tab.name) {
         case 'assets':
+          // 个人资产列表展示
           this.$refs.accountAssetsValue.getAssetCurrenciesList()
           break
         case 'billing-details':
+          // 冲提记录列表展示
           this.$refs.billingDetailsValue.getChargeMentionList()
+          // 获取商户币种列表
           this.$refs.billingDetailsValue.inquireCurrencyList()
           break
         case 'mention-address':
+          // 提币地址列表查询
           this.$refs.withdrawalAddressValue.WithdrawalAddressList()
           break
         case 'identity-authentication':
+          // 获取用户实名信息
           this.$refs.identityValue.getRealNameInformation()
+          // 国家列表展示
           this.$refs.identityValue.getCountryListings()
           break
         case 'account-credited':
+          // 收款方式状态查询
           this.$refs.accountCreditedValue.getAccountPaymentTerm()
           break
         case 'invitation-promote':
+          // 直接推广间接推广列表
+          this.$refs.invitingPromotionValue.getUserPromotionList()
           break
         case 'security-center':
+          // 安全中心状态显示
           this.$refs.securityCenterValue.getSecurityCenter()
           break
         case 'api-management':
           break
         case 'push-asset':
+          // push列表展示
           this.$refs.pushAssetValue.getPushRecordList()
-          this.$refs.pushAssetValue.getSecurityCenter()
+          // 清空数据
+          this.$refs.pushAssetValue.emptyInputData()
           break
         case 'coin-orders':
           break

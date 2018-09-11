@@ -32,3 +32,26 @@
 .account-assets.personal .el-input__icon {
   display: none;
 }
+.account-assets.personal .el-dialog {
+  width: 400px;
+}
+.account-assets.personal .el-dialog__header {
+  height: 50px;
+  padding: 10px 20px 10px;
+}
+.account-assets.personal .el-dialog__body {
+  padding: 0px 25px;
+}
+.account-assets.personal .el-dialog__header {
+  border-radius: 5px;
+  line-height: 30px;
+}
+.account-assets.personal .el-form-item {
+  margin-bottom: 0px;
+}
+.account-assets.personal .el-dialog__title {
+  font-size: 16px;
+}
+.account-assets.personal .el-form-item__label {
+  margin-top: 18px;
+}

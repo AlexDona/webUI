@@ -51,9 +51,10 @@
               <input
                 class="form-input-common border-radius2 padding-l15"
                 ref="count"
-                @keyup="changeInputValue('count')"
                 @keydown="setErrorMsg(1, '')"
                 @blur="checkoutInputFormat(1, count)"
+                @keyup="changeInputValue('count', pointLength)"
+                @input="changeInputValue('count', pointLength)"
               />
               <!--错误提示-->
               <ErrorBox
@@ -65,9 +66,10 @@
               <input
                 class="form-input-common border-radius2 padding-l15"
                 ref="price"
-                @keyup="changeInputValue('price')"
                 @keydown="setErrorMsg(2, '')"
                 @blur="checkoutInputFormat(2, price)"
+                @keyup="changeInputValue('price', pointLength)"
+                @input="changeInputValue('price', pointLength)"
               />
               <!--错误提示-->
               <ErrorBox
@@ -89,7 +91,6 @@
                 :isShow="!!errorShowStatusList[3]"
               />
             </el-form-item>
-            <!--<div v-show="errorMsg">{{ errorMsg }}</div>-->
             <button
               class="form-button-common border-radius4"
               @click="getStatusSubmit"
@@ -118,11 +119,15 @@
               label="类型"
             >
               <template slot-scope = "s">
-                <!--<div>{{ s.row.type }}</div>-->
-                <!--v-if="s.row.fuid !== $store.state.userInfo.fshowid"-->
-                <!--v-else-->
-                <div>{{ rollIn }}</div>
-                <!--<div>{{ $t(rollOut) }}</div>-->
+                <div>{{ s.row.type }}</div>
+                <div
+                  v-if="s.row.fuid !== $store.state.userInfo.fshowid"
+                >
+                  {{ rollIn }}
+                </div>
+                <div v-else>
+                  {{ $t(rollOut) }}
+                </div>
               </template>
             </el-table-column>
             <el-table-column
@@ -184,22 +189,22 @@
                 <!--<div>{{ s.row.operate }}</div>-->
                 <!--v-if="s.row.state == 1 && s.row.fuid == s.row.showid"-->
                 <!--v-if="s.row.state == 1 && s.row.fuid !== s.row.showid"-->
-                <!--<div-->
-                  <!--v-if="s.row.state == 'PUSH_REGISTER' && showStatusUserInfo.uid == s.row.pushId"-->
-                  <!--class="cursor-pointer state-status"-->
-                  <!--@click="cancelId(s.row.id)"-->
-                  <!--:id="s.row.id"-->
-                <!--&gt;-->
-                  <!--{{ cancel }}-->
-                <!--</div>-->
-                <!--<div-->
-                  <!--v-if="s.row.state == 'PUSH_REGISTER' && showStatusUserInfo.uid !== s.row.pushId"-->
-                  <!--class="cursor state-status"-->
-                  <!--@click="paymentId(s.row.id)"-->
-                  <!--:id="s.row.id"-->
-                <!--&gt;-->
-                  <!--{{ payment }}-->
-                <!--</div>-->
+                <div
+                  v-if="s.row.state == 'PUSH_REGISTER' && showStatusUserInfo.uid == s.row.pushId"
+                  class="cursor-pointer state-status"
+                  @click="cancelId(s.row.id)"
+                  :id="s.row.id"
+                >
+                  {{ cancel }}
+                </div>
+                <div
+                  v-if="s.row.state == 'PUSH_REGISTER' && showStatusUserInfo.uid !== s.row.pushId"
+                  class="cursor state-status"
+                  @click="paymentId(s.row.id)"
+                  :id="s.row.id"
+                >
+                  {{ payment }}
+                </div>
               </template>
             </el-table-column>
           </el-table>
@@ -311,7 +316,7 @@ import {
 } from '../../../utils/api/personal'
 import ErrorBox from '../../User/ErrorBox'
 import CountDownButton from '../../Common/CountDownCommon'
-import {timeFilter} from '../../../utils/index'
+import {timeFilter, formatNumberInput} from '../../../utils/index'
 import {createNamespacedHelpers, mapState} from 'vuex'
 import {
   returnAjaxMessage
@@ -365,7 +370,8 @@ export default {
       pushPassword: '',
       // push列表记录
       pushRecordList: [],
-      SecurityCenter: {}
+      SecurityCenter: {},
+      pointLength: 4 // 保留小数位后四位
     }
   },
   created () {
@@ -388,9 +394,13 @@ export default {
     timeFormatting (date) {
       return timeFilter(date, 'normal')
     },
-    // 3.修改input value
-    changeInputValue (ref) {
+    // 3.修改input value  输入限制
+    changeInputValue (ref, pointLength) {
+      // 获取ref中input值
       this[ref] = this.$refs[ref].value
+      // 限制数量小数位位数
+      let target = this.$refs[ref]
+      formatNumberInput(target, pointLength)
     },
     /**
      * push资产
@@ -417,8 +427,6 @@ export default {
         // 金额
         this.sum = data.data.data.pushPayCoinName
         console.log(this.pushRecordList)
-        console.log(this.currencyValue)
-        console.log(this.balance)
       }
     },
     // 资产币种下拉
@@ -503,6 +511,7 @@ export default {
     setErrorMsg (index, msg) {
       this.errorShowStatusList[index] = msg
     },
+    // 确认提交push资产
     getStatusSubmit () {
       this.checkoutInputFormat()
       this.stateSubmitPushAssets()
@@ -516,14 +525,23 @@ export default {
         count: this.count, // push数量
         price: this.price, // push价格
         password: this.transactionPassword // 交易密码
-        // code: this.phoneCode // 短信验证码
       }
       data = await pushAssetsSubmit(param)
       if (!(returnAjaxMessage(data, this, 1))) {
         return false
       } else {
+        // push列表展示
         this.getPushRecordList()
+        // 清空数据
+        this.emptyInputData()
       }
+    },
+    // 清空数据
+    emptyInputData () {
+      this.buyUID = ''
+      this.count = ''
+      this.price = ''
+      this.transactionPassword = ''
     },
     /**
      * 取消push

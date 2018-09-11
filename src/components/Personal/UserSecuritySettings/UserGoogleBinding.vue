@@ -80,7 +80,7 @@
               </el-form-item>
             </el-form>
             <button
-              v-if="!globalUserInformation.googleBind"
+              v-if="!securityCenter.isGoogleBind"
               class="google-button border-radius4 cursor-pointer"
               @click="getGoogleStatusSubmit"
             >
@@ -113,7 +113,8 @@ import {
 import {
   bindGoogleAddressPage,
   bindGoogleAddress,
-  unbindCheckGoogle
+  unbindCheckGoogle,
+  statusSecurityCenter
 } from '../../../utils/api/personal'
 // 底部
 import FooterCommon from '../../Common/FooterCommon'
@@ -133,7 +134,7 @@ export default {
   data () {
     return {
       googleImages: require('../../../assets/user/goolevalidatepig.png'), // 谷歌验证码
-      globalUserInformation: {}, // 个人信息
+      securityCenter: {}, // 个人信息
       errorMsg: '', // 错误信息提示
       googleAccount: '', // 谷歌账号
       googleTheSecretKey: '', // 谷歌秘钥
@@ -152,8 +153,7 @@ export default {
     // 黑色主题样式
     require('../../../../static/css/theme/night/Personal/UserSecuritySettings/UserGoogleBindingNight.css')
     // 获取全局个人信息
-    // this.globalUserInformation = this.userInfo.data.user
-    // console.log(this.globalUserInformation)
+    this.getSecurityCenter()
     this.getGoogleVerificationCode()
   },
   mounted () {},
@@ -162,12 +162,14 @@ export default {
   beforeRouteUpdate () {},
   methods: {
     ...mapMutations([
-      'CHANGE_USER_CENTER_ACTIVE_NAME'
+      'CHANGE_USER_CENTER_ACTIVE_NAME',
+      'CHANGE_REF_SECURITY_CENTER_INFO'
     ]),
     // 点击返回上个页面
     returnSuperior () {
+      this.CHANGE_REF_SECURITY_CENTER_INFO(true)
       this.CHANGE_USER_CENTER_ACTIVE_NAME('security-center')
-      this.$router.go(-1)
+      this.$router.push({path: '/PersonalCenter'})
     },
     // 检测输入格式
     checkoutInputFormat (type, targetNum) {
@@ -255,19 +257,34 @@ export default {
     successJump () {
       setInterval(() => {
         if (this.successCountDown === 0) {
+          this.CHANGE_REF_SECURITY_CENTER_INFO(true)
           this.CHANGE_USER_CENTER_ACTIVE_NAME('security-center')
-          this.$router.go(-1)
+          this.$router.push({path: '/PersonalCenter'})
         }
         this.successCountDown--
       }, 1000)
+    },
+    /**
+     * 安全中心
+     */
+    async getSecurityCenter () {
+      let data = await statusSecurityCenter({
+        token: this.userInfo.token // token
+      })
+      console.log(data)
+      if (!(returnAjaxMessage(data, this, 0))) {
+        return false
+      } else {
+        // 返回展示
+        this.securityCenter = data.data.data
+      }
     }
   },
   filter: {},
   computed: {
     ...mapState({
       theme: state => state.common.theme,
-      // userInfo: state => state.user.loginStep1Info // 用户详细信息
-      userInfo: state => state.personal.userInfo
+      userInfo: state => state.user.loginStep1Info // 用户详细信息
     })
   },
   watch: {}

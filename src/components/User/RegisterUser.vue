@@ -258,7 +258,8 @@
            <div class="inner-box">
              <!--邀请码-->
              <input
-               type="password"
+               v-model="inviter"
+               type="text"
                class="input "
                placeholder="邀请码（没有可不填）"
              >
@@ -361,6 +362,11 @@ export default {
   created () {
     require('../../../static/css/list/User/Register.css')
     // changeLang({'lan': 'zh_CN'})
+    let params = this.$route.query.showId
+    console.log(params)
+    if (params) {
+      this.inviter = params
+    }
   },
   mounted () {
   },

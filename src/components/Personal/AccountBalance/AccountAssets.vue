@@ -243,7 +243,11 @@
                             >
                               {{ chargeMoneyName }}
                             </span>
-                            <span class="service-charge display-inline-block text-align-r">(1~2)</span>
+                            <span class="service-charge display-inline-block text-align-r">
+                              {{serviceChargeList.minFees}}
+                              -
+                              {{serviceChargeList.maxFees}}
+                            </span>
                           </div>
                         </div>
                         <div class="count-box flex1 font-size12">
@@ -288,7 +292,7 @@
                         <p class="mention-button">
                           <button
                             class="font-size12 submit-but border-radius4 cursor-pointer"
-                            @click="submitMentionMoney"
+                            @click="moneyConfirmState"
                           >
                             提币
                           </button>
@@ -300,6 +304,76 @@
                       </span>
                         </p>
                       </div>
+                      <el-dialog title="提币" :visible.sync="mentionMoneyConfirm">
+                        <el-form :model="form">
+                          <!--手机已认证-->
+                          <el-form-item
+                            v-if="securityCenter.isPhoneEnable"
+                            label="手机验证"
+                          >
+                            <input
+                              class="content-input padding-l15 box-sizing"
+                              v-model="phoneVerification"
+                            >
+                            <CountDownButton
+                              class="send-code-btn cursor-pointer"
+                              :status="disabledOfPhoneBtn"
+                              @run="sendPhoneOrEmailCode(0)"
+                            />
+                          </el-form-item>
+                          <!--手机未认证-->
+                          <span v-else></span>
+                          <!--邮箱已认证-->
+                          <el-form-item
+                            v-if="securityCenter.isMailEnable"
+                            label="邮箱验证"
+                          >
+                            <input
+                              class="content-input padding-l15 box-sizing"
+                              v-model="emailVerification"
+                            >
+                            <CountDownButton
+                              class="send-code-btn cursor-pointer"
+                              :status="disabledOfEmailBtn"
+                              @run="sendPhoneOrEmailCode(1)"
+                            />
+                          </el-form-item>
+                          <!--邮箱未认证-->
+                          <span v-elsee></span>
+                          <!--谷歌已认证-->
+                          <el-form-item
+                            v-if="securityCenter.isGoogleEnable"
+                            label="谷歌验证"
+                          >
+                            <input
+                              class="content-input input-google padding-l15 box-sizing"
+                              v-model="googleVerification"
+                            >
+                          </el-form-item>
+                          <!--谷歌未认证-->
+                          <span v-else></span>
+                          <el-form-item label="交易密码">
+                            <input
+                              class="content-input input-google padding-l15 box-sizing"
+                              v-model="password"
+                            >
+                          </el-form-item>
+                        </el-form>
+                        <div
+                          slot="footer"
+                          class="dialog-footer"
+                        >
+                          <el-button @click="mentionMoneyConfirm = false">
+                            取 消
+                          </el-button>
+                          <el-button
+                            type="primary"
+                            @click="submitMentionMoney"
+                          >
+                            确 定
+                          </el-button>
+                        </div>
+                      </el-dialog>
                     </div>
                   </div>
                 </transition>
@@ -317,6 +391,7 @@
 import UserInfo from '../AccountBalance/UserInfo'
 // 字体图标
 import IconFontCommon from '../../Common/IconFontCommon'
+import CountDownButton from '../../Common/CountDownCommon'
 import VueClipboard from 'vue-clipboard2'
 import {formatNumberInput} from '../../../utils'
 import { createNamespacedHelpers, mapState } from 'vuex'
@@ -324,15 +399,21 @@ import {
   assetCurrenciesList,
   inquireWithdrawalAddressList,
   inquireRechargeAddressList,
-  statusSubmitWithdrawButton
+  statusSubmitWithdrawButton,
+  withdrawalInformation,
+  statusSecurityCenter
 } from '../../../utils/api/personal'
-import {returnAjaxMessage} from '../../../utils/commonFunc'
+import {
+  returnAjaxMessage,
+  sendPhoneOrEmailCodeAjax
+} from '../../../utils/commonFunc'
 const { mapMutations } = createNamespacedHelpers('personal')
 Vue.use(VueClipboard)
 export default {
   components: {
     UserInfo, // 我的资产
     IconFontCommon, // 字体图标
+    CountDownButton, // 短信倒计时
     // 二维码组件
     VueQrcode: resolve => {
       require([('@xkeshi/vue-qrcode')], resolve)
@@ -342,8 +423,8 @@ export default {
   data () {
     return {
       activeNames: ['1'],
-      showStatusButton: true, // 显示币种
-      hideStatusButton: false, // 隐藏币种// 显示所有/余额切换，
+      showStatusButton: false, // 显示币种
+      hideStatusButton: true, // 隐藏币种// 显示所有/余额切换，
       closePictureSrc: require('../../../assets/user/wrong.png'), // 显示部分
       openPictureSrc: require('../../../assets/user/yes.png'), // 全显示
       searchKeyWord: '', // 搜索关键字
@@ -353,6 +434,7 @@ export default {
       rechargeIsShowList: false, // 充币内容
       chargeMoney: '', // 根据充币地址生成二维码条件
       serviceCharge: '', // 自定义手续费
+      serviceChargeList: {}, // 手续费区间
       rechargeCount: '', // 提币数量
       serviceChargeCount: '', // 自定义到账数量
       currencyTrading: [
@@ -374,12 +456,18 @@ export default {
       chargeMoneyAddressId: '', // 每行数据ID
       chargeMoneyName: '', // 每行数据币种名称
       // 提币
+      securityCenter: {},
       mentionDialogVisible: false, // 默认隐藏
       mentionMoneyAddressId: '', // 每行数据ID
       mentionMoneyName: '', // 每行数据币种名称
       mentionAddressValue: '', // 每行数据提币地址
       amount: '', // 数量
       pointLength: 4, // 小数为限制
+      mentionMoneyConfirm: false, // 默认提币确认弹窗
+      emailVerification: '', // 邮箱验证
+      phoneVerification: '', // 手机验证
+      googleVerification: '', // 谷歌验证
+      password: '', // 交易密码
       // 提币地址列表
       mentionAddressList: [],
       activeCurrency: {}, // 当前选中币种
@@ -408,7 +496,6 @@ export default {
     // 切换当前币种
     // 确认开启关闭
     statusOpenToClose (e) {
-      console.log(e)
       switch (e) {
         case 'all':
           this.showStatusButton = false
@@ -447,7 +534,7 @@ export default {
       let target = this.$refs[ref][index]
       formatNumberInput(target, pointLength)
       // 获取输入数量
-      this.amount = this.$refs.rechargeCount[index].value
+      // this.amount = this.$refs.rechargeCount[index].value
       // 输入数量之后显示在到账数量框中显示,在手续费中输入手续费并且以输入数量之后减去的值显示在到账数量
       this.serviceChargeCount = Math.abs(this.$refs.rechargeCount[index].value - this.$refs.serviceCharge[index].value)
       console.log(this.serviceChargeCount)
@@ -482,6 +569,51 @@ export default {
       this.withdrawDepositIsShowList[index].rechargeIsShow = false
       // 调用充币地址方法
       this.queryWithdrawalAddressList()
+      // 调用手续费信息
+      this.getWithdrawalInformation(index)
+    },
+    // 发送邮箱验证码
+    sendPhoneOrEmailCode (loginType) {
+      // console.log(this.disabledOfPhoneBtn)
+      // console.log(this.disabledOfEmailBtn)
+      if (this.disabledOfPhoneBtn || this.disabledOfEmailBtn) {
+        return false
+      }
+      let params = {
+        // address: this.emailAccounts, // 邮箱账号
+        // country: this.activeCountryCode // 邮箱国籍
+      }
+      switch (loginType) {
+        case 0:
+          params.phone = this.userInfo.userInfo.phone
+          break
+        case 1:
+          params.address = this.userInfo.userInfo.email
+          break
+      }
+      sendPhoneOrEmailCodeAjax(loginType, params, (data) => {
+        console.log(this.disabledOfPhoneBtn)
+        // 提示信息
+        if (!returnAjaxMessage(data, this)) {
+          console.log('error')
+          return false
+        } else {
+          switch (loginType) {
+            case 0:
+              this.$store.commit('user/SET_USER_BUTTON_STATUS', {
+                loginType: 0,
+                status: true
+              })
+              break
+            case 1:
+              this.$store.commit('user/SET_USER_BUTTON_STATUS', {
+                loginType: 1,
+                status: true
+              })
+              break
+          }
+        }
+      })
     },
     /**
      * 刚进页面时候 个人资产列表展示
@@ -520,7 +652,6 @@ export default {
     // 资产币种提币地址选择
     changeId (e) {
       this.mentionAddressList.forEach(item => {
-        console.log(item)
         if (e === item.coinId) {
           this.mentionAddressValue = item.address
         }
@@ -539,8 +670,23 @@ export default {
         // 返回列表数据
         this.mentionAddressList = data.data.data.UserWithdrawAddressPage.list
         this.mentionAddressValue = data.data.data.UserWithdrawAddressPage.list[0].address
-        console.log(this.mentionAddressList)
-        console.log(this.mentionAddressValue)
+      }
+    },
+    /**
+     *  点击提币按钮时 获取提币信息
+     */
+    async getWithdrawalInformation (index) {
+      let data = await withdrawalInformation({
+        coinId: this.mentionMoneyAddressId
+      })
+      console.log(data)
+      if (!(returnAjaxMessage(data, this, 0))) {
+        return false
+      } else {
+        // 返回列表数据
+        this.serviceChargeList = data.data.data
+        this.serviceCharge = data.data.data.minFees
+        this.$refs.serviceCharge[index].value = this.serviceCharge
       }
     },
     /**
@@ -562,6 +708,10 @@ export default {
     /**
     * 点击提币按钮
     * */
+    moneyConfirmState () {
+      this.mentionMoneyConfirm = true
+      this.getSecurityCenter()
+    },
     submitMentionMoney () {
       this.stateSubmitPushAssets()
     },
@@ -588,7 +738,7 @@ export default {
     },
     // 点击跳转提币地址
     stateMentionAddress () {
-      this.CHANGE_USER_CENTER_ACTIVE_NAME('mention-address')
+      this.CHANGE_USER_CENTER_ACTIVE_NAME('billing-details')
     },
     //  点击复制
     onCopy (e) {
@@ -606,13 +756,31 @@ export default {
         type: 'success',
         message: msg
       })
+    },
+    /**
+     * 安全中心
+     */
+    async getSecurityCenter () {
+      let data = await statusSecurityCenter({
+        token: this.userInfo.token // token
+      })
+      console.log(data)
+      if (!(returnAjaxMessage(data, this, 0))) {
+        return false
+      } else {
+        // 返回展示
+        this.securityCenter = data.data.data
+      }
     }
   },
   filter: {},
   computed: {
     ...mapState({
+      theme: state => state.common.theme,
       partnerId: state => state.common.partnerId,
-      theme: state => state.common.theme
+      userInfo: state => state.user.loginStep1Info, // 用户详细信息
+      disabledOfPhoneBtn: state => state.user.disabledOfPhoneBtn,
+      disabledOfEmailBtn: state => state.user.disabledOfEmailBtn
     })
   },
   watch: {}
@@ -778,6 +946,20 @@ export default {
                         }
                       }
                     }
+                    .content-input {
+                      width: 180px;
+                      height: 34px;
+                      margin-top: 20px;
+                    }
+                    .input-google {
+                      width: 270px;
+                    }
+                    .send-code-btn {
+                      width: 90px;
+                      height: 35px;
+                      margin-left: -3px;
+                      padding: 0;
+                    }
                   }
                 }
               }
@@ -858,6 +1040,17 @@ export default {
               }
               >.recharge-list {
                 border: 1px solid #338FF5;
+                .content-input {
+                  border: 1px solid #485776;
+                  color: #fff;
+                  &:focus {
+                    border: 1px solid #338FF5;
+                  }
+                }
+                .send-code-btn {
+                  background-color: #338FF5;
+                  color: #fff;
+                }
                 >.triangle {
                   border-right: 1px solid transparent;
                   border-top: 1px solid transparent;
@@ -937,6 +1130,10 @@ export default {
                       color: #fff;
                     }
                   }
+                }
+                >.email-input {
+                  width: 220px;
+                  height: 34px;
                 }
               }
             }

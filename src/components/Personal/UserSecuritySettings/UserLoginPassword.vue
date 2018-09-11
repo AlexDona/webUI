@@ -116,7 +116,8 @@ export default {
         '', // 原登录密码
         '', // 新登录密码
         '' // 确认登录密码
-      ]
+      ],
+      securityCenter: {}
     }
   },
   created () {
@@ -127,7 +128,7 @@ export default {
     // 黑色主题样式
     require('../../../../static/css/theme/night/Personal/UserSecuritySettings/UserloginPasswordNight.css')
     // 获取全局个人信息
-    this.globalUserInformation = this.userInfo.data.user
+    // this.globalUserInformation = this.userInfo.data.user
   },
   mounted () {},
   activited () {},
@@ -150,11 +151,11 @@ export default {
           if (!targetNum) {
             this.setErrorMsg(0, '请输入原登录密码')
             this.$forceUpdate()
-            return 1
+            return 0
           } else {
             this.setErrorMsg(0, '')
             this.$forceUpdate()
-            return 0
+            return 1
           }
         // 新登录密码
         case 1:
@@ -197,13 +198,14 @@ export default {
       let goOnStatus = 0
       if (
         this.checkoutInputFormat(0, this.originalLoginPassword) &&
-        this.checkoutInputFormat(0, this.newLoginPassword) &&
-        this.checkoutInputFormat(1, this.confirmLoginPassword)
+        this.checkoutInputFormat(1, this.newLoginPassword) &&
+        this.checkoutInputFormat(2, this.confirmLoginPassword)
       ) {
         goOnStatus = 1
       } else {
         goOnStatus = 0
       }
+      console.log(goOnStatus)
       if (goOnStatus) {
         let data
         let param = {
@@ -215,7 +217,6 @@ export default {
           return false
         } else {
           this.successJump()
-          console.log(data)
         }
       }
     },
@@ -223,8 +224,7 @@ export default {
     successJump () {
       setInterval(() => {
         if (this.successCountDown === 0) {
-          this.CHANGE_USER_CENTER_ACTIVE_NAME('security-center')
-          this.$router.go(-1)
+          this.$router.push({'path': '/login'})
         }
         this.successCountDown--
       }, 1000)

@@ -273,17 +273,21 @@ export default {
     require('../../../../static/css/theme/night/Personal/UserSecuritySettings/UserTransactionPasswordNight.css')
   },
   mounted () {},
-  activited () {},
+  activited () {
+    // console.log(this.refSecurityCenterStatus)
+  },
   update () {},
   beforeRouteUpdate () {},
   methods: {
     ...mapMutations([
-      'CHANGE_USER_CENTER_ACTIVE_NAME'
+      'CHANGE_USER_CENTER_ACTIVE_NAME',
+      'CHANGE_REF_SECURITY_CENTER_INFO'
     ]),
     // 点击返回上个页面
     returnSuperior () {
+      this.CHANGE_REF_SECURITY_CENTER_INFO(true)
       this.CHANGE_USER_CENTER_ACTIVE_NAME('security-center')
-      this.$router.go(-1)
+      this.$router.push({path: '/PersonalCenter'})
     },
     /**
      * 发送短信验证码或邮箱验证码
@@ -489,6 +493,8 @@ export default {
         if (!(returnAjaxMessage(data, this, 1))) {
           return false
         } else {
+          this.CHANGE_REF_SECURITY_CENTER_INFO(true)
+          console.log(this.refSecurityCenter)
           this.successJump()
           console.log(data)
         }
@@ -527,8 +533,9 @@ export default {
     successJump () {
       setInterval(() => {
         if (this.successCountDown === 0) {
+          this.CHANGE_REF_SECURITY_CENTER_INFO(true)
+          this.$router.push({path: '/PersonalCenter'})
           this.CHANGE_USER_CENTER_ACTIVE_NAME('security-center')
-          this.$router.go(-1)
         }
         this.successCountDown--
       }, 1000)
@@ -540,7 +547,8 @@ export default {
       theme: state => state.common.theme,
       userInfo: state => state.user.loginStep1Info, // 用户详细信息
       disabledOfPhoneBtn: state => state.user.disabledOfPhoneBtn,
-      disabledOfEmailBtn: state => state.user.disabledOfEmailBtn
+      disabledOfEmailBtn: state => state.user.disabledOfEmailBtn,
+      refSecurityCenterStatus: state => state.personal.refSecurityCenterStatus
     })
   },
   watch: {}
