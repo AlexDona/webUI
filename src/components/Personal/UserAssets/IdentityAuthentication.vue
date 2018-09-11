@@ -27,7 +27,7 @@
               >
                 <span class="authentication-info">您已通过实名认证</span>
                 <!--{{ statusRealNameInformation.realname.substring(0,1)}}-->
-                <!--*-->
+                *
                 <!--{{ statusRealNameInformation.realName.substring(2,3)}}-->
                 （&nbsp;
                 <span class="type-info">
@@ -372,7 +372,9 @@ export default {
       dialogVisibleHand: false,
       seniorCertificationList: {},
       realNameInformationObj: {}, //  获取用户实名信息
-      statusRealNameInformation: {},
+      statusRealNameInformation: {
+        cardNo: ''
+      },
       errorShowStatusList: [
         '', // 真实姓名
         '' // 证件号码

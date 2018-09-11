@@ -115,7 +115,7 @@
                         class="coin-item cursor-pointer"
                         v-for="(innerItem,innerIndex) in item.content"
                         :key="innerIndex"
-                        @click=changeActiveSymbol.stop(innerItem)
+                        @click=changeActiveSymbol(innerItem)
                       >
                         <span>
                           <!--收藏按钮-->

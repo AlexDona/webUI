@@ -529,15 +529,16 @@ export default {
           break
       }
     },
-    // 发送手机邮箱验证码
+    // 发送验证码
     sendPhoneOrEmailCode (loginType) {
-      console.log(this.disabledOfPhoneBtn)
-      console.log(this.disabledOfEmailBtn)
+      // console.log(this.disabledOfPhoneBtn)
+      // console.log(this.disabledOfEmailBtn)
       if (this.disabledOfPhoneBtn || this.disabledOfEmailBtn) {
         return false
       }
       let params = {
-        // country: this.activeCountryCode
+        // address: this.emailAccounts, // 邮箱账号
+        // country: this.activeCountryCode // 邮箱国籍
       }
       switch (loginType) {
         case 0:
@@ -547,8 +548,8 @@ export default {
           params.address = this.userInfo.userInfo.email
           break
       }
-      console.log(params)
       sendPhoneOrEmailCodeAjax(loginType, params, (data) => {
+        console.log(this.disabledOfPhoneBtn)
         // 提示信息
         if (!returnAjaxMessage(data, this)) {
           console.log('error')
@@ -556,13 +557,13 @@ export default {
         } else {
           switch (loginType) {
             case 0:
-              this.SET_USER_BUTTON_STATUS({
+              this.$store.commit('user/SET_USER_BUTTON_STATUS', {
                 loginType: 0,
                 status: true
               })
               break
             case 1:
-              this.SET_USER_BUTTON_STATUS({
+              this.$store.commit('user/SET_USER_BUTTON_STATUS', {
                 loginType: 1,
                 status: true
               })

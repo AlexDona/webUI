@@ -304,6 +304,7 @@
                             class="float-right cursor-pointer"
                             @click="stateRechargeRecord"
                           >
+                          <div class="false-tips fz14 ml100 mt0 mb20 pl10 tl" v-show="errorMessage"><i></i>{{errorMessage}}</div>
                         提币记录
                       </span>
                         </p>
@@ -429,6 +430,7 @@ export default {
   data () {
     return {
       activeNames: ['1'],
+      errorMessage: '',
       showStatusButton: false, // 显示币种
       hideStatusButton: true, // 隐藏币种// 显示所有/余额切换，
       closePictureSrc: require('../../../assets/user/wrong.png'), // 显示部分
@@ -457,7 +459,7 @@ export default {
           currency: 'BTC/FBT'
         }
       ],
-      stateIsShowId: false, // 二维码显示状态
+      stateIsShowId: false,
       // 充值
       chargeDialogVisible: false, // 默认隐藏
       chargeMoneyAddressId: '', // 每行数据ID
@@ -518,17 +520,19 @@ export default {
       }
       this.getAssetCurrenciesList(e)
     },
-    // 搜索关键字
+    // 搜索币种关键字
     searchFromUserAssetsList () {
       console.log('1')
       this.searchList = []
       if (this.searchKeyWord.trim() !== '') {
         console.log('2')
+        console.log(this.searchKeyWord)
         this.withdrawDepositIsShowList.forEach((assetItem) => {
-          console.log('3')
+          console.log(this.withdrawDepositIsShowList)
           const result = assetItem.shortName.search(this.searchKeyWord)
           if (result !== -1) {
             console.log('-1')
+            console.log(result)
             this.searchList.push(assetItem)
           }
         })
@@ -544,7 +548,7 @@ export default {
       let target = this.$refs[ref][index]
       formatNumberInput(target, pointLength)
       // 获取输入数量
-      // this.amount = this.$refs.rechargeCount[index].value
+      this.amount = this.$refs.rechargeCount[index].value
       // 输入数量之后显示在到账数量框中显示,在手续费中输入手续费并且以输入数量之后减去的值显示在到账数量
       this.serviceChargeCount = Math.abs(this.$refs.rechargeCount[index].value - this.$refs.serviceCharge[index].value)
       console.log(this.serviceChargeCount)
@@ -568,6 +572,9 @@ export default {
     },
     // 显示提现框
     mentionMoneyButton (id, name, index) {
+      this.rechargeCount = ''
+      this.amount = ''
+      this.serviceChargeCount = ''
       this.mentionDialogVisible = true
       this.mentionMoneyAddressId = id
       this.mentionMoneyName = name
@@ -583,34 +590,34 @@ export default {
       this.getWithdrawalInformation(index)
     },
     // 显示交易对跳转币种信息
-    // showStatusCode (val, id, index) {
-    //   this.currencyTradingId = id
-    //   this.getQueryTransactionInformation()
-    //   if (val == 1) {
-    //     // 显示二维码
-    //     this.stateIsShowId[index] = true
-    //   } else {
-    //     // 隐藏二维码
-    //     this.stateIsShowId[index] = false
-    //   }
-    // },
+    showStatusCode (val, id, index) {
+      this.currencyTradingId = id
+      if (val == 1) {
+        // 显示二维码
+        this.getQueryTransactionInformation()
+        this.stateIsShowId[index] = true
+      } else {
+        // 隐藏二维码
+        this.stateIsShowId[index] = false
+      }
+    },
     // 根据coinid跳转交易信息
     tradingId (id, index) {
       console.log(id)
       this.currencyTradingId = id
       console.log(this.currencyTradingId)
       this.currencyTradingList.forEach((assetItem, index) => {
-        // console.log(assetItem)
-        // if (assetItem.id == id) {
-        //   console.log(assetItem.id)
-        //   this.currencyTradingId = id
-        //   console.log(this.currencyTradingId)
-        //   this.getQueryTransactionInformation()
-        //   // this.push = item.fcoin_s
-        //   // this.pros = item.fprice
-        //   // this.number = item.fcount
-        //   // this.money = item.famount
-        // }
+        console.log(assetItem)
+        if (assetItem.id == id) {
+          console.log(assetItem.id)
+          this.currencyTradingId = id
+          console.log(this.currencyTradingId)
+          this.getQueryTransactionInformation(index)
+          // this.push = item.fcoin_s
+          // this.pros = item.fprice
+          // this.number = item.fcount
+          // this.money = item.famount
+        }
       })
     },
     // 发送邮箱验证码
@@ -750,14 +757,27 @@ export default {
     * 点击提币按钮
     * */
     moneyConfirmState () {
+      // if (!this.rechargeCount) {
+      //   this.errorMessage = '数量不能为空'
+      //   return
+      // } else if (!this.rechargeCount) {
+      //   this.errorMessage = '提币数量不能大于总数量'
+      //   return
+      // } else if (this.serviceChargeList.maxFees > this.serviceCharge > this.serviceChargeList.minFees) {
+      //   this.errorMessage = '手续费只能在' +
+      //     this.serviceChargeList.maxFees +
+      //     '与' + this.serviceChargeList.minFees +
+      //     '之间'
+      //   return
+      // }
       this.mentionMoneyConfirm = true
       this.getSecurityCenter()
     },
     submitMentionMoney () {
-      this.stateSubmitPushAssets()
+      this.stateSubmitAssets()
     },
     // 提交提币接口
-    async stateSubmitPushAssets () {
+    async stateSubmitAssets () {
       let data
       let param = {
         coinId: this.mentionMoneyAddressId, // 币种ID
@@ -774,6 +794,7 @@ export default {
     },
     // 点击跳转账单明细
     stateRechargeRecord () {
+      console.log('1')
       this.CHANGE_USER_CENTER_ACTIVE_NAME('billing-details')
     },
     // 点击跳转提币地址
