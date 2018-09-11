@@ -78,6 +78,12 @@
                 <p class="warning font-size12">必填</p>
             </div>
             <div class="right display-inline-block">
+              <div>
+                <p>
+                  <span v-if="activitedBuySellStyle === 'SELL'">最大可卖出量:{{coinName}}{{coinName}}</span>
+                  <span>市价:{{$route.query.currencyName}}{{$route.query.currencyName}}</span>
+                </p>
+              </div>
               <p>定价设置</p>
               <div class="input">
                 <input
@@ -85,7 +91,7 @@
                   class="price-input"
                   placeholder="单价"
                   ref="price"
-                  :value="this.$route.query.price ? this.$route.query.price : ''"
+                  :value="$route.query.price >= 0 ? $route.query.price : ''"
                   @keyup="changePriceValue('price')"
                 >
                 <span class="unit font-size12">CNY</span>
@@ -126,7 +132,7 @@
                   class="input-sum"
                   placeholder="交易数量"
                   ref="entrustCount"
-                  :value="this.$route.query.matchCount ? this.$route.query.matchCount : ''"
+                  :value="$route.query.matchCount >= 0 ? $route.query.matchCount : ''"
                   @keyup="changeEntrustCountValue('entrustCount')"
                 >
                 <span class="unit font-size14">BTC</span>
@@ -143,7 +149,7 @@
                   class="input-min"
                   placeholder="单笔最小限额"
                   ref="minCountValue"
-                  :value="this.$route.query.minCount ? this.$route.query.minCount : ''"
+                  :value="$route.query.minCount >= 0 ? $route.query.minCount : ''"
                   @keyup="changeMinCountInputValue('minCountValue')"
                 >
                 <span class="unit font-size14">CNY</span>
@@ -153,7 +159,7 @@
                   class="input-max"
                   placeholder="单笔最大限额"
                   ref="maxCountValue"
-                  :value="this.$route.query.maxCount ? this.$route.query.maxCount : ''"
+                  :value="$route.query.maxCount >= 0 ? $route.query.maxCount : ''"
                   @keyup="changeMaxCountInputValue('maxCountValue')"
                 >
                 <span class="unit font-size14">CNY</span>
@@ -213,7 +219,7 @@
                   type="text"
                   class="input-limit"
                   ref="limitOrderCount"
-                  :value="this.$route.query.totalAmount ? this.$route.query.totalAmount : ''"
+                  :value="$route.query.totalAmount >=0 ? $route.query.totalAmount : ''"
                   @keyup="changeLimitOrderCountValue('limitOrderCount')"
                 >
                 <!-- 错误提示 -->
@@ -227,7 +233,7 @@
                   type="text"
                   class="input-limit"
                   ref="successOrderCount"
-                  :value="this.$route.query.tradeTimes ? this.$route.query.tradeTimes : ''"
+                  :value="$route.query.tradeTimes >=0 ? $route.query.tradeTimes : ''"
                   @keyup="changeSuccessOrderCountValue('successOrderCount')"
                 >
                 <!-- 错误提示 -->
@@ -392,8 +398,10 @@ export default {
       errorInfoLimitOrderCount: '',
       // 卖家必须成交过几次（0=不限制）错误提示
       errorInfoSuccessOrderCount: '',
-      matchCount: '',
-      tradeTimes: ''
+      // 最大可卖出量
+      maxCount:'',
+      // 市场价
+      marketPrice:''
     }
   },
   created () {
@@ -423,22 +431,13 @@ export default {
     // 3.0 查询用户现有支付方式
     this.queryUserPayTypesList()
   },
-  mounted () {
-    // this.getRouterData()
-  },
+  mounted () {},
   activited () {},
   update () {},
   beforeRouteUpdate () {},
   methods: {
     ...mapMutations([
     ]),
-    // 页面加载时获取默认值
-    // getRouterData () {
-    //   this.$refs.entrustCount.value = this.$route.query.matchCount ? this.$route.query.matchCount : ''
-    //   this.$refs.minCountValue.value = this.$route.query.minCount ? this.$route.query.minCount : ''
-    //   this.$refs.maxCountValue.value = this.$route.query.maxCount ? this.$route.query.maxCount : ''
-    //   this.$refs.successOrderCount.value = this.$route.query.tradeTimes ? this.$route.query.tradeTimes : ''
-    // },
     // 1.0 改变发布广告 买卖 类型
     changeBuySellStyle (e) {
       this.activitedBuySellStyle = e
