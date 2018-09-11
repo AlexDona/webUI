@@ -19,6 +19,7 @@
             <el-select
               v-model="activitedADManageTraderStyleList"
               @change="changeADManageTraderStyleList"
+              clearable
             >
               <el-option
                 v-for="item in ADManageTraderStyleList"
@@ -35,6 +36,7 @@
               <el-select
                 v-model="activitedADManageMarketList"
                 @change="changeADManageMarketList"
+                clearable
               >
                 <el-option
                   v-for="(item,index) in ADManageMarketList"
@@ -51,6 +53,7 @@
               <el-select
                 v-model="activitedADManageCurrencyId"
                 @change="changeADManageCurrencyId"
+                clearable
               >
                 <el-option
                   v-for="(item,index) in ADManageCurrencyId"
@@ -66,6 +69,7 @@
             <el-select
               v-model="activitedADManageStatusList"
               @change="changeADManageStatusList"
+              clearable
             >
               <el-option
                 v-for="item in ADManageStatusList"

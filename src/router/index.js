@@ -1,7 +1,11 @@
 import Vue from 'vue'
 import Router from 'vue-router'
+<<<<<<< HEAD
 // eslint-disable-next-line
 import store from '../vuex'
+=======
+// import store from '../vuex'
+>>>>>>> yu
 
 Vue.use(Router)
 /**
