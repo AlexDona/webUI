@@ -26,20 +26,19 @@
                 class="authentication-type-info font-size12 box-sizing"
               >
                 <span class="authentication-info">您已通过实名认证</span>
-                <!--{{ statusRealNameInformation.realname.substring(0,1)}}-->
-                *
-                <!--{{ statusRealNameInformation.realName.substring(2,3)}}-->
                 （&nbsp;
                 <span class="type-info">
                   姓名：
-                  {{ statusRealNameInformation.realname }}
+                  {{ statusRealNameInformation.realname.substring(0,1)}}
+                *
+                  {{ statusRealNameInformation.realName.substring(2,3)}}
+                  <!--{{ statusRealNameInformation.realname }}-->
                 </span>、
                 <span class="type-info">
                   身份证号：
                    {{ statusRealNameInformation.cardNo.substring(0,6)}}
                   ****
                    {{ statusRealNameInformation.cardNo.substring(14,18)}}
-                  <!-- {{  authenticationInfo.identification }}-->
                 </span>
                 &nbsp;）
               </p>
@@ -373,7 +372,8 @@ export default {
       seniorCertificationList: {},
       realNameInformationObj: {}, //  获取用户实名信息
       statusRealNameInformation: {
-        cardNo: ''
+        cardNo: '',
+        cardType: ''
       },
       errorShowStatusList: [
         '', // 真实姓名
@@ -455,7 +455,9 @@ export default {
       } else {
         // 返回列表数据
         this.realNameInformationObj = data.data.data
-        this.statusRealNameInformation = data.data.data.authInfo
+        if (data.data.data.authInfo) {
+          this.statusRealNameInformation = data.data.data.authInfo
+        }
         console.log(this.statusRealNameInformation)
       }
     },

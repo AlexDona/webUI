@@ -52,25 +52,6 @@
                 v-model="branchAddress"
               />
             </el-form-item>
-            <el-form-item label="手  机  号  码：">
-              <el-input
-                v-model="phone"
-              >
-                <template slot="append">
-                  <CountDownButton
-                    class="send-code-btn cursor-pointer"
-                    :status="disabledOfPhoneBtn"
-                    @run="sendPhoneOrEmailCode(0)"
-                  />
-                </template>
-              </el-input>
-            </el-form-item>
-            <el-form-item label="短信验证码：">
-              <input
-                class="bank-input border-radius2"
-                v-model="code"
-              />
-            </el-form-item>
             <button
               class="bank-button border-radius4"
               @click="statusTetBankCard"
@@ -91,8 +72,7 @@ import HeaderCommon from '../../Common/HeaderCommon'
 import IconFontCommon from '../../Common/IconFontCommon'
 import CountDownButton from '../../Common/CountDownCommon'
 import {
-  returnAjaxMessage, // 接口返回信息
-  sendPhoneOrEmailCodeAjax
+  returnAjaxMessage // 接口返回信息
 } from '../../../utils/commonFunc'
 import {statusCardSettings} from '../../../utils/api/personal'
 // 底部
@@ -108,12 +88,10 @@ export default {
   },
   data () {
     return {
-      realName: '杨孝喜', // 真实姓名
+      realName: '', // 真实姓名
       bankName: '', // 银行名称
       bankCard: '', // 银行卡号
       branchAddress: '', // 支行地址
-      phone: '', // 手机号码
-      code: '', // 短信验证码
       paymentTerm: {},
       successCountDown: 1 // 成功倒计时
     }
@@ -142,48 +120,6 @@ export default {
       this.$router.push({path: '/PersonalCenter'})
       this.CHANGE_USER_CENTER_ACTIVE_NAME('account-credited')
     },
-    // 发送邮箱验证码
-    sendPhoneOrEmailCode (loginType) {
-      console.log(this.disabledOfPhoneBtn)
-      console.log(this.disabledOfEmailBtn)
-      if (this.disabledOfPhoneBtn || this.disabledOfEmailBtn) {
-        return false
-      }
-      let params = {
-        phone: this.phone // 手机号
-      }
-      switch (loginType) {
-        case 0:
-          params.phone = this.phone
-          break
-        case 1:
-          params.address = this.userInfo.userInfo.email
-          break
-      }
-      sendPhoneOrEmailCodeAjax(loginType, params, (data) => {
-        console.log(this.disabledOfPhoneBtn)
-        // 提示信息
-        if (!returnAjaxMessage(data, this)) {
-          console.log('error')
-          return false
-        } else {
-          switch (loginType) {
-            case 0:
-              this.$store.commit('user/SET_USER_BUTTON_STATUS', {
-                loginType: 0,
-                status: true
-              })
-              break
-            case 1:
-              this.$store.commit('user/SET_USER_BUTTON_STATUS', {
-                loginType: 1,
-                status: true
-              })
-              break
-          }
-        }
-      })
-    },
     statusTetBankCard () {
       this.confirmTiePhone()
     },
@@ -195,8 +131,6 @@ export default {
         bankName: this.bankName, // 银行卡名称
         cardNo: this.bankCard, // 银行卡号
         address: this.branchAddress, // 开户地址
-        phone: this.phone, // 银行卡预留手机号
-        code: this.code, // 手机验证码
         bankType: 'bank' // type
       }
       data = await statusCardSettings(params)

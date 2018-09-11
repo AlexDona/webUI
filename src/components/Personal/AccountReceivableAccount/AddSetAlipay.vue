@@ -30,7 +30,9 @@
             label-width="120px"
           >
             <el-form-item label="名 称：">
-              <span class="account-content-type">杨</span>
+              <span class="account-content-type">
+                {{ userInfo.userInfo.realname }}
+              </span>
             </el-form-item>
             <el-form-item label="收  款  类  型：">
               <span class="account-content-type">支付宝</span>
