@@ -288,7 +288,6 @@ router.beforeEach((to, from, next) => {
   // if (to.path !== '/login') {
   //   store.commit('common/CHANGE_ROUTER_PATH', to.path)
   // }
-  //
   // if (to.matched.some(m => m.meta.auth)) {
   //   // 对路由进行验证
   //   if (store.state.common.isLogin) { // 已经登陆
