@@ -535,7 +535,7 @@
           top="25vh"
           width="470"
         >
-          <div>请输入交易密码1</div>
+          <div>请输入交易密码</div>
           <div class="input">
             <input
               type="password"
