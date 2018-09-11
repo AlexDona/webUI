@@ -83,7 +83,7 @@
                 <input
                   type="text"
                   class="price-input"
-                  placeholder="卖出单价"
+                  placeholder="单价"
                   ref="price"
                   :value="this.$route.query.price ? this.$route.query.price : ''"
                   @keyup="changePriceValue('price')"
@@ -391,7 +391,9 @@ export default {
       // 同时处理最大订单数（0=不限制）错误提示
       errorInfoLimitOrderCount: '',
       // 卖家必须成交过几次（0=不限制）错误提示
-      errorInfoSuccessOrderCount: ''
+      errorInfoSuccessOrderCount: '',
+      matchCount: '',
+      tradeTimes: ''
     }
   },
   created () {
@@ -421,13 +423,22 @@ export default {
     // 3.0 查询用户现有支付方式
     this.queryUserPayTypesList()
   },
-  mounted () {},
+  mounted () {
+    // this.getRouterData()
+  },
   activited () {},
   update () {},
   beforeRouteUpdate () {},
   methods: {
     ...mapMutations([
     ]),
+    // 页面加载时获取默认值
+    // getRouterData () {
+    //   this.$refs.entrustCount.value = this.$route.query.matchCount ? this.$route.query.matchCount : ''
+    //   this.$refs.minCountValue.value = this.$route.query.minCount ? this.$route.query.minCount : ''
+    //   this.$refs.maxCountValue.value = this.$route.query.maxCount ? this.$route.query.maxCount : ''
+    //   this.$refs.successOrderCount.value = this.$route.query.tradeTimes ? this.$route.query.tradeTimes : ''
+    // },
     // 1.0 改变发布广告 买卖 类型
     changeBuySellStyle (e) {
       this.activitedBuySellStyle = e

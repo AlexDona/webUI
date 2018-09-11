@@ -190,29 +190,29 @@
                   <IconFontCommon
                     class="font-size16"
                     iconName="icon-zhifubao1"
-                    v-if="scope.row.payType[0] === '1'"
+                    v-if="scope.row.payType === 'alipay'"
                   />
                   <!-- 微信 -->
                   <IconFontCommon
                     class="font-size16"
                     iconName="icon-weixin1"
-                    v-if="scope.row.payType[1] === '1'"
+                    v-if="scope.row.payType === 'weixin'"
                   />
                   <!-- 银行卡 -->
                   <IconFontCommon
                     class="font-size16"
                     iconName="icon-yinhangqia"
-                    v-if="scope.row.payType[2] === '1'"
+                    v-if="scope.row.payType === 'bank'"
                   />
                   <!-- 4西联汇款 -->
-                  <span v-if="scope.row.payType[3] === '1'">
+                  <span v-if="scope.row.payType === 'xilian'">
                     <img src="../../assets/user/xilian.png" alt="" class="xilian">
                   </span>
                   <!--  5PAYPAL -->
                   <IconFontCommon
                     class="font-size16"
                     iconName="icon-paypal"
-                    v-if="scope.row.payType[4] === '1'"
+                    v-if="scope.row.payType === 'xilian'"
                   />
                 </div>
               </template>
@@ -445,6 +445,7 @@ export default {
     endDate (e) {
       this.value2 = e
     },
+    // 点击查询按钮
     findFilter () {
       this.getOTCEntrustingOrdersRevocation()
     },

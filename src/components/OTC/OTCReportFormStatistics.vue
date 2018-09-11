@@ -17,6 +17,7 @@
           <el-select
             v-model="activitedTraderCoinId"
             @change="changeCoinId"
+            clearable
           >
             <el-option
               v-for="(item,index) in traderCoinList"
@@ -35,11 +36,12 @@
           <el-select
             v-model="activitedtraderCurrencyCoinsId"
             @change="changeCurrencyCoinsId"
+            clearable
           >
             <el-option
               v-for="(item,index) in traderCurrencyCoinsList"
               :key="index"
-              :value="item.coinId"
+              :value="item.id"
               :label="item.name"
             >
               {{ item.name }}
@@ -54,7 +56,7 @@
         </div>
         <div class="content font-size18">
           <span>总资产≈</span>
-          <span>0.00</span>
+          <span>{{totalAssets}}</span>
           <span>{{activitedtraderCurrencyCoinsName}}</span>
         </div>
       </div>
@@ -73,58 +75,58 @@
               </div>
               <div class="right">
                 <p>
-                  <span>购买数量:</span><span class="data"> 45645646BTC</span>
+                  <span>购买数量:</span><span class="data">{{ buyDayMap.count }}{{ activitedTraderCoinName }}</span>
                 </p>
                 <p>
-                  <span>购买均价:</span><span class="data"> 45645646BTC</span>
+                  <span>购买均价:</span><span class="data"> {{ buyDayMap.average }}{{ activitedtraderCurrencyCoinsName }}</span>
                 </p>
                 <p>
-                  <span>支出金额:</span><span class="data"> 45645646BTC</span>
+                  <span>支出金额:</span><span class="data"> {{ buyDayMap.amount }}{{ activitedtraderCurrencyCoinsName }}</span>
                 </p>
                 <p>
-                  <span>成交订单:</span><span class="data"> 45645646笔</span>
+                  <span>成交订单:</span><span class="data"> {{ buyDayMap.num }}笔</span>
                 </p>
               </div>
             </div>
             <div class="together border-radius5 week">
               <div class="left">
                 <span class="round font-size12">
-                  上周<br />交易
+                  本周<br />交易
                 </span>
               </div>
               <div class="right">
                 <p>
-                  <span>购买数量:</span><span class="data"> 45645646BTC</span>
+                  <span>购买数量:</span><span class="data"> {{ buyWeekMap.count }}{{ activitedTraderCoinName }}</span>
                 </p>
                 <p>
-                  <span>购买均价:</span><span class="data"> 45645646BTC</span>
+                  <span>购买均价:</span><span class="data">{{ buyWeekMap.average }}{{ activitedtraderCurrencyCoinsName }}</span>
                 </p>
                 <p>
-                  <span>支出金额:</span><span class="data"> 45645646BTC</span>
+                  <span>支出金额:</span><span class="data">{{ buyWeekMap.amount }}{{ activitedtraderCurrencyCoinsName }}</span>
                 </p>
                 <p>
-                  <span>成交订单:</span><span class="data"> 45645646笔</span>
+                  <span>成交订单:</span><span class="data"> {{ buyWeekMap.num }}笔</span>
                 </p>
               </div>
             </div>
             <div class="together border-radius5 month">
               <div class="left">
                 <span class="round font-size12">
-                  上月<br />交易
+                  本月<br />交易
                 </span>
               </div>
               <div class="right">
                 <p>
-                  <span>购买数量:</span><span class="data"> 45645646BTC</span>
+                  <span>购买数量:</span><span class="data">{{ buyMonthMap.count }}{{ activitedTraderCoinName }}</span>
                 </p>
                 <p>
-                  <span>购买均价:</span><span class="data"> 45645646BTC</span>
+                  <span>购买均价:</span><span class="data"> {{ buyMonthMap.average }}{{ activitedtraderCurrencyCoinsName }}</span>
                 </p>
                 <p>
-                  <span>支出金额:</span><span class="data"> 45645646BTC</span>
+                  <span>支出金额:</span><span class="data"> {{ buyMonthMap.amount }}{{ activitedtraderCurrencyCoinsName }}</span>
                 </p>
                 <p>
-                  <span>成交订单:</span><span class="data"> 45645646笔</span>
+                  <span>成交订单:</span><span class="data"> {{ buyMonthMap.num }}笔</span>
                 </p>
               </div>
             </div>
@@ -136,16 +138,20 @@
               </div>
               <div class="right">
                 <p>
-                  <span>购买数量:</span><span class="data"> 45645646BTC</span>
+                  <span>购买数量:</span><span class="data"> {{ buyHistoryMap
+.count }}{{ activitedTraderCoinName }}</span>
                 </p>
                 <p>
-                  <span>购买均价:</span><span class="data"> 45645646BTC</span>
+                  <span>购买均价:</span><span class="data">{{ buyHistoryMap
+.average }}{{ activitedtraderCurrencyCoinsName }}</span>
                 </p>
                 <p>
-                  <span>支出金额:</span><span class="data"> 45645646BTC</span>
+                  <span>支出金额:</span><span class="data">{{ buyHistoryMap
+.amount }}{{ activitedtraderCurrencyCoinsName }}</span>
                 </p>
                 <p>
-                  <span>成交订单:</span><span class="data"> 45645646笔</span>
+                  <span>成交订单:</span><span class="data"> {{ buyHistoryMap
+.num }}笔</span>
                 </p>
               </div>
             </div>
@@ -164,58 +170,58 @@
               </div>
               <div class="right">
                 <p>
-                  <span>购买数量:</span><span class="data"> 45645646BTC</span>
+                  <span>购买数量:</span><span class="data">{{ sellDayMap.count }}{{ activitedTraderCoinName }}</span>
                 </p>
                 <p>
-                  <span>购买均价:</span><span class="data"> 45645646BTC</span>
+                  <span>购买均价:</span><span class="data">{{ sellDayMap.average }}{{ activitedtraderCurrencyCoinsName }}</span>
                 </p>
                 <p>
-                  <span>支出金额:</span><span class="data"> 45645646BTC</span>
+                  <span>支出金额:</span><span class="data">{{ sellDayMap.amount }}{{ activitedtraderCurrencyCoinsName }}</span>
                 </p>
                 <p>
-                  <span>成交订单:</span><span class="data"> 45645646笔</span>
+                  <span>成交订单:</span><span class="data">{{ sellDayMap.num }}笔</span>
                 </p>
               </div>
             </div>
             <div class="together border-radius5 week">
               <div class="left">
                 <span class="round font-size12">
-                  上周<br />交易
+                  本周<br />交易
                 </span>
               </div>
               <div class="right">
                 <p>
-                  <span>购买数量:</span><span class="data"> 45645646BTC</span>
+                  <span>购买数量:</span><span class="data"> {{ sellWeekMap.count }}{{ activitedTraderCoinName }}</span>
                 </p>
                 <p>
-                  <span>购买均价:</span><span class="data"> 45645646BTC</span>
+                  <span>购买均价:</span><span class="data"> {{ sellWeekMap.average }}{{ activitedtraderCurrencyCoinsName }}</span>
                 </p>
                 <p>
-                  <span>支出金额:</span><span class="data"> 45645646BTC</span>
+                  <span>支出金额:</span><span class="data">{{ sellWeekMap.amount }}{{ activitedtraderCurrencyCoinsName }}</span>
                 </p>
                 <p>
-                  <span>成交订单:</span><span class="data"> 45645646笔</span>
+                  <span>成交订单:</span><span class="data">{{ sellWeekMap.num }}笔</span>
                 </p>
               </div>
             </div>
             <div class="together border-radius5 month">
               <div class="left">
                 <span class="round font-size12">
-                  上月<br />交易
+                  本月<br />交易
                 </span>
               </div>
               <div class="right">
                 <p>
-                  <span>购买数量:</span><span class="data"> 45645646BTC</span>
+                  <span>购买数量:</span><span class="data"> {{ sellMonthMap.count }}{{ activitedTraderCoinName }}</span>
                 </p>
                 <p>
-                  <span>购买均价:</span><span class="data"> 45645646BTC</span>
+                  <span>购买均价:</span><span class="data"> {{ sellMonthMap.average }}{{ activitedtraderCurrencyCoinsName }}</span>
                 </p>
                 <p>
-                  <span>支出金额:</span><span class="data"> 45645646BTC</span>
+                  <span>支出金额:</span><span class="data"> {{ sellMonthMap.amount }}{{ activitedtraderCurrencyCoinsName }}</span>
                 </p>
                 <p>
-                  <span>成交订单:</span><span class="data"> 45645646笔</span>
+                  <span>成交订单:</span><span class="data"> {{ sellMonthMap.num }}{{ activitedTraderCoinName }}笔</span>
                 </p>
               </div>
             </div>
@@ -227,16 +233,16 @@
               </div>
               <div class="right">
                 <p>
-                  <span>购买数量:</span><span class="data"> 45645646BTC</span>
+                  <span>购买数量:</span><span class="data"> {{ sellHistoryMap.count }}{{ activitedTraderCoinName }}</span>
                 </p>
                 <p>
-                  <span>购买均价:</span><span class="data"> 45645646BTC</span>
+                  <span>购买均价:</span><span class="data"> {{ sellHistoryMap.average }}{{ activitedtraderCurrencyCoinsName }}</span>
                 </p>
                 <p>
-                  <span>支出金额:</span><span class="data"> 45645646BTC</span>
+                  <span>支出金额:</span><span class="data"> {{ sellHistoryMap.amount }}{{ activitedtraderCurrencyCoinsName }}</span>
                 </p>
                 <p>
-                  <span>成交订单:</span><span class="data"> 45645646笔</span>
+                  <span>成交订单:</span><span class="data"> {{ sellHistoryMap.num }}笔</span>
                 </p>
               </div>
             </div>
@@ -263,6 +269,7 @@
                   v-model="value1"
                   type="date"
                   value-format="yyyy-MM-dd"
+                  @change="startTime"
                 >
                 </el-date-picker>
                 <span class="date-short-line">-</span>
@@ -272,16 +279,17 @@
                   v-model="value2"
                   value-format="yyyy-MM-dd"
                   type="date"
+                  @change="endTime"
                 >
                 </el-date-picker>
               </span>
             </div>
             <!-- 右侧单选日期按钮 -->
             <div class="radio-date">
-              <el-radio-group v-model="radio2">
+              <el-radio-group v-model="radio2" @change="radioChouse">
                 <el-radio :label="1">当日</el-radio>
-                <el-radio :label="2">上周</el-radio>
-                <el-radio :label="3">上月</el-radio>
+                <el-radio :label="2">本周</el-radio>
+                <el-radio :label="3">本月</el-radio>
                 <el-radio :label="4">历史</el-radio>
               </el-radio-group>
             </div>
@@ -299,7 +307,7 @@
                 width="180"
               >
                 <template slot-scope = "scope">
-                    <div>{{timeFormatting(scope.row.time)}}</div>
+                    <div>{{timeFormatting(scope.row.createTime)}}</div>
                 </template>
               </el-table-column>
               <!-- 订单号 -->
@@ -307,7 +315,7 @@
                 label = "订单号"
               >
                 <template slot-scope = "scope">
-                  <div>{{scope.row.orderID}}</div>
+                  <div>{{scope.row.orderSequence}}</div>
                 </template>
               </el-table-column>
               <!-- 交易类型 -->
@@ -316,14 +324,14 @@
               >
                 <template slot-scope = "scope">
                   <div
-                    v-if="scope.row.buySellStatus === 1"
-                    :class="{red:scope.row.buySellStatus === 1}"
+                    v-if="scope.row.orderType === 'BUY'"
+                    :class="{red:scope.row.orderType === 'BUY'}"
                   >
                     购买
                   </div>
                   <div
-                    v-if="scope.row.buySellStatus === 2"
-                    :class="{green:scope.row.buySellStatus === 2}"
+                    v-if="scope.row.orderType === 'SELL'"
+                    :class="{green:scope.row.orderType === 'SELL'}"
                   >
                     出售
                   </div>
@@ -334,7 +342,7 @@
                 label = "资金类型"
               >
                 <template slot-scope = "scope">
-                  <div>{{scope.row.monenyStyle}}</div>
+                  <div>{{scope.row.currencyName}}</div>
                 </template>
               </el-table-column>
               <!-- 数量 -->
@@ -342,7 +350,7 @@
                 label = "数量"
               >
                 <template slot-scope = "scope">
-                  <div>{{scope.row.sum}}</div>
+                  <div>{{scope.row.pickCount}}</div>
                 </template>
               </el-table-column>
               <!-- 单价 -->
@@ -358,7 +366,7 @@
                 label = "总金额"
               >
                 <template slot-scope = "scope">
-                  <div>{{scope.row.totalMoney}}</div>
+                  <div>{{scope.row.payAmount}}</div>
                 </template>
               </el-table-column>
             </el-table>
@@ -372,12 +380,13 @@
 </template>
 <!--请严格按照如下书写书序-->
 <script>
-import {getOTCAvailableCurrency, getMerchantAvailablelegalTender} from '../../utils/api/OTC'
+import {getOTCAvailableCurrency, getMerchantAvailablelegalTender, getOTCMerchantsOrdersList, getOTCReportFormStatisticsData} from '../../utils/api/OTC'
 import NavCommon from '../Common/HeaderCommon'
 import FooterCommon from '../Common/FooterCommon'
 import IconFontCommon from '../Common/IconFontCommon'
 import {timeFilter} from '../../utils'
 import {createNamespacedHelpers, mapState} from 'vuex'
+import {returnAjaxMessage} from '../../utils/commonFunc'
 const {mapMutations} = createNamespacedHelpers('OTC')
 export default {
   components: {
@@ -389,88 +398,48 @@ export default {
     return {
       // 1.0 广告管理筛选下拉框数组--交易币种
       traderCoinList: [
-        {
-          coinId: '1',
-          name: 'BTC'
-        },
-        {
-          coinId: '2',
-          name: 'fuc'
-        }
+        // {
+        //   coinId: '1',
+        //   name: 'BTC'
+        // }
       ],
       activitedTraderCoinId: '', // 选中的交易币种id
       activitedTraderCoinName: '', // 选中的交易币种name
       // 2.0 广告管理筛选下拉框数组--交易法币
       traderCurrencyCoinsList: [
-        {
-          coinId: '123',
-          name: '人民币',
-          shortName: 'CNY'
-        },
-        {
-          coinId: '456',
-          name: '美元',
-          shortName: 'USD'
-        }
+        // {
+        //   coinId: '123',
+        //   name: '人民币',
+        //   shortName: 'CNY'
+        // }
       ],
       activitedtraderCurrencyCoinsId: '', // 选中的交易法币id
       activitedtraderCurrencyCoinsName: '', // 选中的交易法币name
       value1: '', // 默认开始时间
       value2: '', // 默认结束时间
       radio2: 1, // 单选按钮时间
+      totalAssets: '',
       // 订单详情
       orderInfoList: [
-        {
-          id: 1,
-          time: 1302486032000,
-          orderID: '20180818001',
-          buySellStatus: 1, // 1:买 2：卖
-          monenyStyle: 'CNY',
-          sum: '2.7869',
-          price: '67812.21',
-          totalMoney: '0.00123'
-        },
-        {
-          id: 2,
-          time: 1302486032000,
-          orderID: '20180818002',
-          buySellStatus: 2, // 1:买 2：卖
-          monenyStyle: 'CNY',
-          sum: '3.3869',
-          price: '63312.21',
-          totalMoney: '0.0033323'
-        },
-        {
-          id: 3,
-          time: 1302486032000,
-          orderID: '20180818002',
-          buySellStatus: 1, // 1:买 2：卖
-          monenyStyle: 'CNY',
-          sum: '3.3869',
-          price: '63312.21',
-          totalMoney: '0.0033323'
-        },
-        {
-          id: 4,
-          time: 1302486032000,
-          orderID: '20180818002',
-          buySellStatus: 2, // 1:买 2：卖
-          monenyStyle: 'CNY',
-          sum: '3.3869',
-          price: '63312.21',
-          totalMoney: '0.0033323'
-        },
-        {
-          id: 5,
-          time: 1302486032000,
-          orderID: '20180818002',
-          buySellStatus: 1, // 1:买 2：卖
-          monenyStyle: 'CNY',
-          sum: '3.3869',
-          price: '63312.21',
-          totalMoney: '0.0033323'
-        }
-      ]
+        // {
+        //   id: 1,
+        //   time: 1302486032000,
+        //   orderID: '20180818001',
+        //   buySellStatus: 1, // 1:买 2：卖
+        //   monenyStyle: 'CNY',
+        //   sum: '2.7869',
+        //   price: '67812.21',
+        //   totalMoney: '0.00123'
+        // }
+      ],
+      buyDayMap: {}, // 购买当日交易
+      buyHistoryMap: {}, // 购买历史交易
+      buyMonthMap: {}, // 购买当月交易
+      buyWeekMap: {}, // 购买本周交易
+      sellDayMap: {}, // 出售当日交易
+      sellHistoryMap: {}, // 出售历史交易
+      sellMonthMap: {}, // 出售本月交易
+      sellWeekMap: {} // 出售本周交易
     }
   },
   created () {
@@ -481,6 +450,10 @@ export default {
     this.getOTCAvailableCurrencyList()
     // 2.0 查询可用法币币种列表
     this.getMerchantAvailablelegalTenderList()
+    // 订单详情列表
+    this.getOTCEntrustingOrdersRevocation()
+    // 报表统计主页
+    // this.getOTCReportFormStatistics()
   },
   mounted () {},
   activited () {},
@@ -505,14 +478,19 @@ export default {
         return false
       } else {
         // 返回数据正确的逻辑
-        // this.traderCoinList = data.data.data
+        this.traderCoinList = data.data.data
+        // 设置币种默认选中值
+        this.activitedTraderCoinId = this.traderCoinList[0].coinId
+        // 设置币种默认选中值的名称
+        this.activitedTraderCoinName = this.traderCoinList[0].name
+        // 重新请求列表
+        this.getOTCReportFormStatistics()
       }
     },
     //  2.1 改变可用币种类型
     changeCoinId (e) {
       // console.log(e)
       this.activitedTraderCoinId = e
-      console.log(this.activitedTraderCoinId)
       this.traderCoinList.forEach(item => {
         // console.log(item)
         // console.log(item.coinId)
@@ -522,6 +500,8 @@ export default {
           console.log(this.activitedTraderCoinName)
         }
       })
+      this.getOTCReportFormStatistics()
+      this.getOTCEntrustingOrdersRevocation()
     },
     //  3.0 查询 可用法币 币种列表
     async getMerchantAvailablelegalTenderList () {
@@ -533,24 +513,105 @@ export default {
       if (!(returnAjaxMessage(data, this, 0))) {
         return false
       } else {
-        // 返回数据正确的逻辑
-        // this.traderCurrencyCoinsList = data.data.data
+        // 返回数据正确的逻辑 将币种列表赋值
+        this.traderCurrencyCoinsList = data.data.data
+        // 设置法币默认选中值
+        this.activitedtraderCurrencyCoinsId = this.traderCurrencyCoinsList[0].id
+        // 设置法币默认选中值的name
+        this.activitedtraderCurrencyCoinsName = this.traderCurrencyCoinsList[0].shortName
+        // 重新请求列表
+        this.getOTCReportFormStatistics()
       }
     },
     //  3.1 改变 可用法币 币种类型
     changeCurrencyCoinsId (e) {
-      // console.log(e)
       this.activitedtraderCurrencyCoinsId = e
-      console.log(this.activitedtraderCurrencyCoinsId)
       this.traderCurrencyCoinsList.forEach(item => {
         // console.log(item)
         // console.log(item.coinId)
-        if (e === item.coinId) {
-          // console.log(item.shortName)
+        if (e === item.id) {
           this.activitedtraderCurrencyCoinsName = item.shortName
-          console.log(this.activitedtraderCurrencyCoinsName)
         }
       })
+      this.getOTCReportFormStatistics()
+      this.getOTCEntrustingOrdersRevocation()
+    },
+    startTime (e) {
+      this.value1 = e
+      this.getOTCEntrustingOrdersRevocation()
+    },
+    endTime (e) {
+      this.value2 = e
+      this.getOTCEntrustingOrdersRevocation()
+    },
+    radioChouse (e) {
+      if (e != '4') {
+        this.radio2 = e
+      } else {
+        this.radio2 = ''
+      }
+      this.getOTCEntrustingOrdersRevocation()
+    },
+    // 报表统计的主页面
+    async getOTCReportFormStatistics () {
+      let data = await getOTCReportFormStatisticsData({
+        // 币种
+        coinId: this.activitedTraderCoinId,
+        // 法币
+        currencyId: this.activitedtraderCurrencyCoinsId
+      })
+      // 提示信息
+      console.log(data)
+      if (!(returnAjaxMessage(data, this, 0))) {
+        return false
+      } else {
+        // 返回数据正确的逻辑
+        // 总资产赋值
+        this.totalAssets = data.data.data.totalAssets
+        // 当天交易
+        this.buyDayMap = data.data.data.buyDayMap
+        // 购买历史交易赋值
+        this.buyHistoryMap = data.data.data.buyHistoryMap
+        // 购买本月赋值
+        this.buyMonthMap = data.data.data.buyMonthMap
+        // 购买本周赋值
+        this.buyWeekMap = data.data.data.buyWeekMap
+        // 出售当天赋值
+        this.sellDayMap = data.data.data.sellDayMap
+        // 出售历史赋值
+        this.sellHistoryMap = data.data.data.sellHistoryMap
+        // 出售当月赋值
+        this.sellMonthMap = data.data.data.sellMonthMap
+        // 出售本周赋值
+        this.sellWeekMap = data.data.data.sellWeekMap
+      }
+    },
+    // 页面加载时请求接口渲染订单详情列表
+    async getOTCEntrustingOrdersRevocation () {
+      let data = await getOTCMerchantsOrdersList({
+        // 页数
+        // pageNum: 0,
+        // 每页条数
+        // pageSize: 0,
+        // 币种
+        coinId: this.activitedTraderCoinId,
+        // 法币
+        currencyId: this.activitedtraderCurrencyCoinsId,
+        // 开始时间
+        startTime: this.value1,
+        // 结束时间
+        endTime: this.value2,
+        // 日期类型
+        dateType: this.radio2
+      })
+      // 提示信息
+      console.log(data)
+      if (!(returnAjaxMessage(data, this, 0))) {
+        return false
+      } else {
+        // 返回数据正确的逻辑 重新渲染列表
+        this.orderInfoList = data.data.data.list
+      }
     }
   },
   filter: {},
