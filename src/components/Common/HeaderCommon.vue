@@ -315,7 +315,7 @@ export default{
   },
   created () {
     // 获取 语言列表
-    this.getLanguageList()
+    // this.getLanguageList()
     // console.log(this.theme)
     this.activeTheme = this.theme
     // 查询某商户可用法币币种列表
