@@ -554,6 +554,9 @@ export default {
           .green {
             color: #008069;
           }
+          > .manage-main-bottom{
+            min-height: 450px!important;
+          }
         }
       }
     }

@@ -212,7 +212,7 @@
                   <IconFontCommon
                     class="font-size16"
                     iconName="icon-paypal"
-                    v-if="scope.row.payType === 'xilian'"
+                    v-if="scope.row.payType === 'paypal'"
                   />
                 </div>
               </template>

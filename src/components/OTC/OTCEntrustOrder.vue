@@ -230,7 +230,7 @@ export default {
         }
       }
       > .entrust-table-body {
-        height: 432px;
+        min-height: 432px;
         background-color: #202A33;
         color: #9DA5B3;
         border: 1px solid #262F38;

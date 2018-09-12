@@ -417,7 +417,7 @@ export default {
       activitedtraderCurrencyCoinsName: '', // 选中的交易法币name
       value1: '', // 默认开始时间
       value2: '', // 默认结束时间
-      radio2: 1, // 单选按钮时间
+      radio2: 0, // 单选按钮时间
       totalAssets: '',
       // 订单详情
       orderInfoList: [
@@ -538,17 +538,19 @@ export default {
     },
     startTime (e) {
       this.value1 = e
+      this.radio2 = 0
       this.getOTCEntrustingOrdersRevocation()
     },
     endTime (e) {
       this.value2 = e
+      this.radio2 = 0
       this.getOTCEntrustingOrdersRevocation()
     },
     radioChouse (e) {
-      if (e != '4') {
-        this.radio2 = e
-      } else {
+      if (e == '4') {
         this.radio2 = ''
+      } else {
+        this.radio2 = e
       }
       this.getOTCEntrustingOrdersRevocation()
     },
