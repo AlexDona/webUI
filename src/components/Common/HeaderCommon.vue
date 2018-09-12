@@ -407,8 +407,8 @@ export default{
       } else {
         this.languageList = data.data.data
         this.CHANGE_LANGUAGE(this.languageList[0])
-        console.log(this.languageList[0])
-        console.log(this.activeLanguage)
+        // console.log(this.languageList[0])
+        // console.log(this.activeLanguage)
       }
     },
     // 获取板块列表

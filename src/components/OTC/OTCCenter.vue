@@ -439,7 +439,7 @@ export default {
           shortName: '支付宝'
         },
         {
-          id: 'wx',
+          id: 'weixin',
           shortName: '微信'
         },
         {
@@ -584,6 +584,7 @@ export default {
         // 返回数据正确的逻辑
         this.availableCurrencyId = data.data.data
         this.activitedCurrencyId = this.availableCurrencyId[0].id
+        this.activitedCurrencyName = this.availableCurrencyId[0].shortName
         // 3.0 otc主页面查询挂单列表:
         this.getOTCPutUpOrdersList()
       }

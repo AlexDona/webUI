@@ -89,7 +89,7 @@
                       <el-option
                         v-for="item1 in item.userBankList"
                         :key="item1.id"
-                        :label="item1.bankName"
+                        :label="item1.bankType"
                         :value="item1.cardNo"
                       >
                       </el-option>
@@ -535,17 +535,18 @@
           top="25vh"
           width="470"
         >
-          <div>请输入交易密码1</div>
+          <div>请输入交易密码</div>
           <div class="input">
             <input
               type="password"
               class="password-input"
               v-model="tradePassword"
+              @focus="passWordFocus"
             >
           </div>
           <div class="error-info">
             <!-- 错误提示 -->
-            <div class="tips">错误提示</div>
+            <div class="tips">{{errpwd}}</div>
           </div>
           <span
             slot="footer"
@@ -663,7 +664,8 @@ export default {
       buttonStatusArr: [], // 确认付款按钮是否可用状态集
       showOrderAppeal: [], // 订单申诉框显示与隐藏状态集
       cancelOrderTimeArr: [], // 自动取消订单倒计时数组集
-      accomplishOrderTimeArr: [] // 自动成交倒计时数组集
+      accomplishOrderTimeArr: [], // 自动成交倒计时数组集
+      errpwd: '' // 交易密码错提示
     }
   },
   created () {
@@ -783,28 +785,41 @@ export default {
         this.dialogVisible1 = true
       }
     },
+    // 买家点击确认付款按钮 点击交易密码框中的提交按钮--交易密码狂获得焦点
+    passWordFocus () {
+      this.errpwd = ''
+    },
     // 5.0 买家点击确认付款按钮 点击交易密码框中的提交按钮
     async submitButton1 () {
-      const data = await buyerPayForOrder({
-        orderId: this.activedTradingOrderId, // 订单id
-        payId: this.activitedPayStyleId, // 支付账户id
-        tradePassword: this.tradePassword // 交易密码
-      })
-      console.log(data)
-      // 提示信息
-      if (!(returnAjaxMessage(data, this, 1))) {
+      if (!this.tradePassword) {
+        this.errpwd = '请输入交易密码'
         return false
       } else {
-        // 先判断status订单状态（已创建，已付款，已完成，已取消，已冻结 PICKED PAYED COMPLETED CANCELED FROZEN）
-        // 付款成功后，根据返回的状态再渲染
-        // 付款成功后逻辑
-        // 1关闭交易密码框
-        this.dialogVisible1 = false
-        // 2再次调用接口刷新列表
-        this.getOTCTradingOrdersList()
-        // 3再次渲染页面:根据返回的订单状态
+        const data = await buyerPayForOrder({
+          orderId: this.activedTradingOrderId, // 订单id
+          payId: this.activitedPayStyleId, // 支付账户id
+          tradePassword: this.tradePassword // 交易密码
+        })
+        console.log(data)
+        // 提示信息
+        if (!(returnAjaxMessage(data, this, 1))) {
+          return false
+        } else {
+          // 先判断status订单状态（已创建，已付款，已完成，已取消，已冻结 PICKED PAYED COMPLETED CANCELED FROZEN）
+          // 付款成功后，根据返回的状态再渲染
+          // 付款成功后逻辑
+          // 1关闭交易密码框
+          this.dialogVisible1 = false
+          // 2再次调用接口刷新列表
+          this.getOTCTradingOrdersList()
+          // 3再次渲染页面:根据返回的订单状态
+        }
       }
     },
+    // 交易密码框错误提示
+    // tradePasswordLeave (e) {
+    //  console.log(e)
+    // },
     // 6.0 卖家点击确认收款按钮
     comfirmGatherMoney (id) {
       this.activedTradingOrderId = id
@@ -879,7 +894,7 @@ export default {
 .otc-trading-order-box{
   >.otc-trading-order-content{
     min-height: 472px;
-    background-color: #202A33;
+    // background-color: #202A33;
     border-radius: 5px;
     >.order-list{
       width: 1045px;
