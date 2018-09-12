@@ -89,7 +89,7 @@
                       <el-option
                         v-for="item1 in item.userBankList"
                         :key="item1.id"
-                        :label="item1.bankName"
+                        :label="item1.bankType"
                         :value="item1.cardNo"
                       >
                       </el-option>
