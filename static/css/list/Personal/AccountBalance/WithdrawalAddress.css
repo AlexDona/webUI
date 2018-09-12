@@ -10,4 +10,21 @@
 .withdrawal-address.personal .el-table--fit{
   padding: 0 25px;
 }
-
+.withdrawal-address.personal .el-dialog {
+  width: 300px;
+  height: 200px;
+  border-radius: 5px;
+}
+.withdrawal-address.personal .el-dialog__close {
+  display: none;
+}
+.withdrawal-address.personal .el-button:first-child {
+  width: 90px;
+  height: 35px;
+  line-height: 0;
+}
+.withdrawal-address.personal .el-dialog__body {
+  text-align: center;
+  /*padding: 25px 25px 30px;*/
+  color: #fff;
+}

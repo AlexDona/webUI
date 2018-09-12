@@ -110,7 +110,7 @@
       <el-dialog
         :title="删除提币地址"
         :visible.sync="dialogVisible"
-        width="300px" center
+        center
       >
         <span class="info">确定删除提币地址吗？</span>
         <span slot="footer" class="dialog-footer">
@@ -122,7 +122,10 @@
           >
             确 定
           </el-button>
-          <el-button @click="dialogVisible = false">
+          <el-button
+            class="btn"
+            @click="dialogVisible = false"
+          >
             取 消
           </el-button>
         </span>
@@ -303,6 +306,11 @@ export default {
         height: 50px;
         line-height: 50px;
       }
+      .btn {
+        width: 90px;
+        height: 35px;
+        line-height: 0;
+      }
     }
     &.night{
       background-color: $nightBgColor;
@@ -334,6 +342,11 @@ export default {
         >.address-list-header {
           color: #fff;
           border-bottom: 1px solid #39424D;
+        }
+        .btn {
+          color: #fff;
+          background-color: transparent;
+          border: 1px solid #338FF5;
         }
       }
     }

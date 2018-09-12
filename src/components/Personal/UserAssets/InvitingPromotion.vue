@@ -215,31 +215,40 @@
               label="奖励类型"
             >
               <template slot-scope = "s">
-                <div>{{ s.row.type }}</div>
+                <div>邀请奖励</div>
               </template>
             </el-table-column>
             <el-table-column
               label="币种"
             >
               <template slot-scope = "s">
-                <div>{{ s.row.currency }}</div>
+                <div>{{ s.row.coinName }}</div>
               </template>
             </el-table-column>
             <el-table-column
               label="数量"
             >
               <template slot-scope = "s">
-                <div>{{ s.row.count }}</div>
+                <div>{{ s.row.totalChange }}</div>
               </template>
             </el-table-column>
             <el-table-column
               label="时间"
             >
               <template slot-scope = "s">
-                <div>{{ timeFormatting(s.row.time) }}</div>
+                <div>{{ timeFormatting(s.row.createTime) }}</div>
               </template>
             </el-table-column>
           </el-table>
+          <!--分页-->
+          <el-pagination
+            background
+            v-show="activeAwardList === 'current-awardList' && awardList.length"
+            layout="prev, pager, next"
+            :page-count="totalPageMyEntrust"
+            @current-change="changeCurrentPageAward"
+          >
+          </el-pagination>
         </div>
       </div>
     </div>
@@ -251,7 +260,8 @@ import {mapState} from 'vuex'
 import IconFontCommon from '../../Common/IconFontCommon'
 import VueClipboard from 'vue-clipboard2'
 import {
-  userPromotionList
+  userPromotionList,
+  recommendUserPromotionList
 } from '../../../utils/api/personal'
 import {returnAjaxMessage} from '../../../utils/commonFunc'
 import {timeFilter} from '../../../utils/index'
@@ -328,38 +338,41 @@ export default {
         //   refereeUID: '5566887'
         // }
       ],
+      activeAwardList: 'current-awardList',
+      currentPageMyEntrust: 1, // 当前委托页码
+      totalPageMyEntrust: 1, // 当前委托总页数
       // 奖励记录
       awardList: [
-        {
-          type: '推荐奖励',
-          currency: 'FUC',
-          count: '200.00',
-          time: '2018-08-04 10:30:41'
-        },
-        {
-          type: '推荐奖励',
-          currency: 'FUC',
-          count: '200.00',
-          time: '2018-08-04 10:30:41'
-        },
-        {
-          type: '推荐奖励',
-          currency: 'FUC',
-          count: '200.00',
-          time: '2018-08-04 10:30:41'
-        },
-        {
-          type: '推荐奖励',
-          currency: 'FUC',
-          count: '200.00',
-          time: '2018-08-04 10:30:41'
-        },
-        {
-          type: '推荐奖励',
-          currency: 'FUC',
-          count: '200.00',
-          time: '2018-08-04 10:30:41'
-        }
+        // {
+        //   type: '推荐奖励',
+        //   currency: 'FUC',
+        //   count: '200.00',
+        //   time: '2018-08-04 10:30:41'
+        // },
+        // {
+        //   type: '推荐奖励',
+        //   currency: 'FUC',
+        //   count: '200.00',
+        //   time: '2018-08-04 10:30:41'
+        // },
+        // {
+        //   type: '推荐奖励',
+        //   currency: 'FUC',
+        //   count: '200.00',
+        //   time: '2018-08-04 10:30:41'
+        // },
+        // {
+        //   type: '推荐奖励',
+        //   currency: 'FUC',
+        //   count: '200.00',
+        //   time: '2018-08-04 10:30:41'
+        // },
+        // {
+        //   type: '推荐奖励',
+        //   currency: 'FUC',
+        //   count: '200.00',
+        //   time: '2018-08-04 10:30:41'
+        // }
       ]
     }
   },
@@ -386,7 +399,6 @@ export default {
       this.generalizeOptionsList.forEach(item => {
         if (e === item.value) {
           this.generalizeValue = e
-          console.log(item.generalizeValue)
           this.getUserPromotionList()
         }
       })
@@ -404,6 +416,7 @@ export default {
       } else {
         // 返回展示
         this.extensionList = data.data.data.list
+        this.totalPageForMyEntrust = data.data.data.pages - 0
         console.log(this.extensionList)
       }
     },
@@ -411,6 +424,27 @@ export default {
     changeCurrentPage (pageNum) {
       this.currentPageForMyEntrust = pageNum
       this.getUserPromotionList()
+    },
+    // 推荐用户币种列表
+    async getRecommendUserPromotion () {
+      let data = await recommendUserPromotionList({
+        pageNumber: this.currentPageMyEntrust, // 页码
+        pageSize: this.pageSize // 条数
+      })
+      console.log(data)
+      if (!(returnAjaxMessage(data, this, 0))) {
+        return false
+      } else {
+        // 返回展示
+        this.awardList = data.data.data.list
+        this.totalPageMyEntrust = data.data.data.pages - 0
+        console.log(this.awardList)
+      }
+    },
+    // 分页
+    changeCurrentPageAward (pageNum) {
+      this.currentPageMyEntrust = pageNum
+      this.getRecommendUserPromotion()
     },
     //  点击复制
     onCopy (e) {

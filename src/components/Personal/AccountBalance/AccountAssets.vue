@@ -41,7 +41,6 @@
                   type="text"
                   class="header-right-search border-radius2 padding-left25 font-size12"
                   v-model="searchKeyWord"
-                  @keyup="searchFromUserAssetsList"
                 >
               </p>
             </div>
@@ -90,7 +89,7 @@
               </div>
               <div
                 class="table-tr font-size12 paddinglr20"
-                v-for="(assetItem, index) in withdrawDepositIsShowList"
+                v-for="(assetItem, index) in filteredData"
                 :key="index"
               >
                 <div class="table-box display-flex">
@@ -123,23 +122,23 @@
                       提币
                     </div>
                     <div
-                      class="table-deal flex1 cursor-pointer"
-                      @mouseenter="showStatusCode(1, assetItem.coinId, index)"
-                      @mouseleave="showStatusCode(2, assetItem.coinId,  index)"
+                      class="table-deal flex1 cursor-pointer text-align-c"
+                      @mouseenter="enter(assetItem.coinId, index)"
+                      @mouseleave="leave()"
                     >
                       交易
                       <div
                         class="type-transaction border-radius4"
-                        v-show="stateIsShowId"
+                        v-show="seen&&index==current"
                       >
                         <span class="triangle-border display-inline-block"></span>
                         <p
                           class="transaction-list text-align-c"
-                          v-for="(assetItem, index) in currencyTradingList"
+                          v-for="(item, index) in currencyTradingList"
                           :key="index"
-                          @click="tradingId(assetItem.coinId, index)"
+                          @click="tradingId(item.name, index, parameterSymbol)"
                         >
-                          {{ assetItem.currency }}
+                          {{ item.name }}
                         </p>
                       </div>
                     </div>
@@ -318,7 +317,7 @@
                           >
                             <input
                               class="content-input padding-l15 box-sizing"
-                              v-model="phoneVerification"
+                              v-model="phoneCode"
                             >
                             <CountDownButton
                               class="send-code-btn cursor-pointer"
@@ -335,7 +334,7 @@
                           >
                             <input
                               class="content-input padding-l15 box-sizing"
-                              v-model="emailVerification"
+                              v-model="emailCode"
                             >
                             <CountDownButton
                               class="send-code-btn cursor-pointer"
@@ -352,7 +351,7 @@
                           >
                             <input
                               class="content-input input-google padding-l15 box-sizing"
-                              v-model="googleVerification"
+                              v-model="googleCode"
                             >
                           </el-form-item>
                           <!--谷歌未认证-->
@@ -384,6 +383,15 @@
                   </div>
                 </transition>
               </div>
+              <!--分页-->
+              <el-pagination
+                background
+                v-show="activeName === 'current-entrust' && withdrawDepositIsShowList.length"
+                layout="prev, pager, next"
+                :page-count="totalPageForMyEntrust"
+                @current-change="changeCurrentPage"
+              >
+              </el-pagination>
             </div>
           </div>
         </div>
@@ -445,21 +453,13 @@ export default {
       serviceChargeList: {}, // 手续费区间
       rechargeCount: '', // 提币数量
       serviceChargeCount: '', // 自定义到账数量
-      currencyTradingList: [
-        {
-          id: 1,
-          currency: 'OTC'
-        },
-        {
-          id: 2,
-          currency: 'BTC/USDT'
-        },
-        {
-          id: 3,
-          currency: 'BTC/FBT'
-        }
-      ],
+      seen: false,
+      current: 0,
+      currencyTradingList: [],
       stateIsShowId: false,
+      activeName: 'current-entrust',
+      currentPageForMyEntrust: 1, // 当前委托页码
+      totalPageForMyEntrust: 1, // 当前委托总页数
       // 充值
       chargeDialogVisible: false, // 默认隐藏
       chargeMoneyAddressId: '', // 每行数据ID
@@ -473,9 +473,9 @@ export default {
       amount: '', // 数量
       pointLength: 4, // 小数为限制
       mentionMoneyConfirm: false, // 默认提币确认弹窗
-      emailVerification: '', // 邮箱验证
-      phoneVerification: '', // 手机验证
-      googleVerification: '', // 谷歌验证
+      phoneCode: '', // 邮箱验证
+      emailCode: '', // 手机验证
+      googleCode: '', // 谷歌验证
       password: '', // 交易密码
       // 提币地址列表
       mentionAddressList: [],
@@ -483,7 +483,16 @@ export default {
       end: '', // 站位
       activeType: '', // 显示类型
       tradingOnId: '', // 根据coinido跳转到对应交易信息
-      currencyTradingId: '' // 根据coinido跳转到对应交易信息
+      currencyTradingId: '', // 根据coinido跳转到对应交易信息
+      parameterSymbol: {
+        area: 'FBT',
+        areaId: '486108701678108672',
+        id: 'ltcfbt',
+        sellname: '莱特币',
+        sellsymbol: 'LTC',
+        tradeId: '486138009935151100',
+        volume: '1903130.8'
+      }
     }
   },
   created () {
@@ -496,14 +505,25 @@ export default {
     // 刚进页面时候 个人资产列表展示
     this.getAssetCurrenciesList()
     // this.getQueryTransactionInformation()
+    console.log(this.filteredData1)
   },
-  mounted () {},
+  mounted () {
+    // this.parameterSymbol = {
+    //   // area: '',
+    //   // areaId: '',
+    //   // id: '',
+    //   // sellname: '',
+    //   // sellsymbol: '',
+    //   // tradeId: ''
+    // }
+  },
   activited () {},
   update () {},
   beforeRouteUpdate () {},
   methods: {
     ...mapMutations([
-      'CHANGE_USER_CENTER_ACTIVE_NAME'
+      'CHANGE_USER_CENTER_ACTIVE_NAME',
+      'CHANGE_ACTIVE_SYMBOL'
     ]),
     // 切换当前币种
     // 确认开启关闭
@@ -521,24 +541,24 @@ export default {
       this.getAssetCurrenciesList(e)
     },
     // 搜索币种关键字
-    searchFromUserAssetsList () {
-      console.log('1')
-      this.searchList = []
-      if (this.searchKeyWord.trim() !== '') {
-        console.log('2')
-        console.log(this.searchKeyWord)
-        this.withdrawDepositIsShowList.forEach((assetItem) => {
-          console.log(this.withdrawDepositIsShowList)
-          const result = assetItem.shortName.search(this.searchKeyWord)
-          if (result !== -1) {
-            console.log('-1')
-            console.log(result)
-            this.searchList.push(assetItem)
-          }
-        })
-        this.getAssetCurrenciesList(this.searchList)
-      }
-    },
+    // searchFromUserAssetsList () {
+    //   console.log('1')
+    //   this.searchList = []
+    //   if (this.searchKeyWord.trim() !== '') {
+    //     console.log('2')
+    //     console.log(this.searchKeyWord)
+    //     // this.withdrawDepositIsShowList.forEach((assetItem) => {
+    //     //   console.log(this.withdrawDepositIsShowList)
+    //     //   const result = assetItem.shortName.search(this.searchKeyWord)
+    //     //   if (result !== -1) {
+    //     //     console.log('-1')
+    //     //     console.log(result)
+    //     //     this.searchList.push(assetItem)
+    //     //   }
+    //     // })
+    //     this.getAssetCurrenciesList(this.searchList)
+    //   }
+    // },
     // 输入限制
     // 修改input value 输入限制
     changeInputValue (ref, index, pointLength) {
@@ -590,34 +610,22 @@ export default {
       this.getWithdrawalInformation(index)
     },
     // 显示交易对跳转币种信息
-    showStatusCode (val, id, index) {
+    enter (id, index) {
       this.currencyTradingId = id
-      if (val == 1) {
-        // 显示二维码
-        this.getQueryTransactionInformation()
-        this.stateIsShowId[index] = true
-      } else {
-        // 隐藏二维码
-        this.stateIsShowId[index] = false
-      }
+      this.seen = true
+      this.current = index
+      this.getQueryTransactionInformation()
+    },
+    leave () {
+      this.seen = false
+      this.current = null
     },
     // 根据coinid跳转交易信息
-    tradingId (id, index) {
-      console.log(id)
-      this.currencyTradingId = id
-      console.log(this.currencyTradingId)
-      this.currencyTradingList.forEach((assetItem, index) => {
-        console.log(assetItem)
-        if (assetItem.id == id) {
-          console.log(assetItem.id)
-          this.currencyTradingId = id
-          console.log(this.currencyTradingId)
-          this.getQueryTransactionInformation(index)
-          // this.push = item.fcoin_s
-          // this.pros = item.fprice
-          // this.number = item.fcount
-          // this.money = item.famount
-        }
+    tradingId (name, index, activeSymbol) {
+      console.log(this.parameterSymbol)
+      this.currencyTradingId = name
+      this.$store.commit('common/CHANGE_ACTIVE_SYMBOL', {
+        activeSymbol
       })
     },
     // 发送邮箱验证码
@@ -669,6 +677,8 @@ export default {
     async getAssetCurrenciesList (type) {
       let data
       let params = {
+        pageNum: this.currentPageForMyEntrust,
+        pageSize: this.pageSize,
         selectType: 'all' // all：所有币种 noall：有资产币种
       }
       switch (type) {
@@ -691,8 +701,14 @@ export default {
         // console.log(data.data.data.userCoinWalletVOPageInfo.list)
         // 返回数据
         this.withdrawDepositIsShowList = data.data.data.userCoinWalletVOPageInfo.list
-        // console.log(this.withdrawDepositIsShowList)
+        this.totalPageForMyEntrust = data.data.data.userCoinWalletVOPageInfo.pages - 0
+        console.log(this.withdrawDepositIsShowList)
       }
+    },
+    // 分页
+    changeCurrentPage (pageNum) {
+      this.currentPageForMyEntrust = pageNum
+      this.getAssetCurrenciesList()
     },
     /**
      *  刚进页面时候 提币地址列表查询
@@ -780,9 +796,13 @@ export default {
     async stateSubmitAssets () {
       let data
       let param = {
+        msgCode: this.phoneCode, // 短信验证码
+        emailCode: this.emailCode, // 邮箱验证码
+        googleCode: this.googleCode, // 谷歌验证码
         coinId: this.mentionMoneyAddressId, // 币种ID
         withdrawAddress: this.mentionAddressValue, // 提币地址
-        amount: this.amount // 提币数量
+        amount: this.amount, // 提币数量
+        payCode: this.password // 交易密码
       }
       data = await statusSubmitWithdrawButton(param)
       if (!(returnAjaxMessage(data, this, 1))) {
@@ -839,15 +859,13 @@ export default {
     async getQueryTransactionInformation () {
       let data = await queryTransactionInformation({
         coinId: this.currencyTradingId // 币种coinId
-        // coinId: '487583965889167360' // 币种coinId
       })
       console.log(data)
       if (!(returnAjaxMessage(data, this, 0))) {
         return false
       } else {
         // 返回展示
-        this.currencyTradingList = data.data.data
-        console.log(this.currencyTradingList)
+        this.currencyTradingList = data.data.data.entrust
       }
     }
   },
@@ -857,9 +875,22 @@ export default {
       theme: state => state.common.theme,
       partnerId: state => state.common.partnerId,
       userInfo: state => state.user.loginStep1Info, // 用户详细信息
+      activeSymbol: state => state.common.activeSymbol, // 当前选中交易对
       disabledOfPhoneBtn: state => state.user.disabledOfPhoneBtn,
       disabledOfEmailBtn: state => state.user.disabledOfEmailBtn
-    })
+    }),
+    filteredData: function () {
+      var self = this
+      return this.withdrawDepositIsShowList.filter((item, index) => {
+        console.log(item)
+        return (item['coinName'].toLocaleUpperCase()).indexOf(self.searchKeyWord.toLocaleUpperCase()) !== -1
+      })
+    },
+    filteredData1: function () {
+      return this.filteredData.filter(function (item) {
+        return item
+      })
+    }
   },
   watch: {}
 }

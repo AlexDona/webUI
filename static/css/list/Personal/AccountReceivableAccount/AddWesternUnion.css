@@ -1,5 +1,5 @@
 /*覆盖element样式*/
-.add-western.western .el-textarea__inner{
+.add-western.personal .el-textarea__inner{
   width: 237px;
   height: 90px;
 }

@@ -595,7 +595,7 @@ export default {
           userName: userName,
           password: this.password,
           checkCode: this.checkCode,
-          // inviter: this.inviter,
+          inviter: this.inviter,
           regType: regType,
           country: countryCode
         }

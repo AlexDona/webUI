@@ -1,21 +1,21 @@
 /*覆盖element样式*/
-.add-chat.chat .el-input-group{
+.add-chat.personal .el-input-group{
   width: 62.5%;
 }
-.add-chat.chat .el-input__inner {
+.add-chat.personal .el-input__inner {
   height: 36px;
   border-radius: 2px;
 }
-.add-chat.chat .el-input-group__append {
+.add-chat.personal .el-input-group__append {
   font-size: 12px;
   padding: 0 16px;
   border-radius: 0 4px 4px 0;
 }
-.add-chat.chat .el-upload-list__item {
+.add-chat.personal .el-upload-list__item {
   width: 118px;
   height: 118px;
 }
-.add-chat.chat .el-upload--picture-card {
+.add-chat.personal .el-upload--picture-card {
   width: 118px;
   height: 118px;
   line-height: 106px;

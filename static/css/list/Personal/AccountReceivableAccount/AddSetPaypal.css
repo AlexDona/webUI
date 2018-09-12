@@ -1,5 +1,5 @@
 /*覆盖element样式*/
-.add-payment.payment .el-textarea__inner{
+.add-payment.personal .el-textarea__inner{
   width: 237px;
   height: 90px;
 }

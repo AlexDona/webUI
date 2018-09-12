@@ -1,6 +1,6 @@
 <template>
   <div
-    class="add-bank card"
+    class="add-bank personal"
     :class="{'day':theme == 'day','night':theme == 'night' }"
   >
     <HeaderCommon />
@@ -52,6 +52,13 @@
                 v-model="branchAddress"
               />
             </el-form-item>
+            <el-form-item label="交  易  密  码：">
+              <input
+                type="password"
+                class="bank-input border-radius2"
+                v-model="password"
+              />
+            </el-form-item>
             <button
               class="bank-button border-radius4"
               @click="statusTetBankCard"
@@ -92,6 +99,7 @@ export default {
       bankName: '', // 银行名称
       bankCard: '', // 银行卡号
       branchAddress: '', // 支行地址
+      password: '', // 交易密码
       paymentTerm: {},
       successCountDown: 1 // 成功倒计时
     }
@@ -127,10 +135,12 @@ export default {
     async confirmTiePhone () {
       let data
       let params = {
+        token: this.userInfo.token,
         realname: this.userInfo.userInfo.realname, // 真实姓名
         bankName: this.bankName, // 银行卡名称
         cardNo: this.bankCard, // 银行卡号
         address: this.branchAddress, // 开户地址
+        payPassword: this.password, // 交易密码
         bankType: 'bank' // type
       }
       data = await statusCardSettings(params)
@@ -149,7 +159,7 @@ export default {
           this.CHANGE_USER_CENTER_ACTIVE_NAME('account-credited')
         }
         this.successCountDown--
-      }, 1000)
+      }, 500)
     }
   },
   filter: {},

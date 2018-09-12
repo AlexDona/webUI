@@ -1,6 +1,6 @@
 <template>
   <div
-    class="add-western western"
+    class="add-western personal"
     :class="{'day':theme == 'day','night':theme == 'night' }"
   >
     <HeaderCommon />
