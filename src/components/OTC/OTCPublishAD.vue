@@ -80,7 +80,7 @@
             <div class="right display-inline-block">
               <div>
                 <p>
-                  <span v-if="activitedBuySellStyle === 'SELL'|| $route.query.entrustType ==='SELL'">最大可卖出量:{{total}}{{activeedCoinName}}</span>
+                  <span v-if="activitedBuySellStyle === 'SELL'">最大可卖出量:{{total}}{{activeedCoinName}}</span>
                   <span>市价:{{marketPrice}}{{activeedCurrencyName}}</span>
                 </p>
               </div>
@@ -110,7 +110,7 @@
                 @change='changePayTypes'
               >
                 <el-checkbox label="alipay" v-show="payForListArr[0] === '1'">支付宝</el-checkbox>
-                <el-checkbox label="wx" v-show="payForListArr[1] === '1'">微信</el-checkbox>
+                <el-checkbox label="weixin" v-show="payForListArr[1] === '1'">微信</el-checkbox>
                 <el-checkbox label="bank" v-show="payForListArr[2] === '1'">银行卡</el-checkbox>
                 <el-checkbox label="xilian" v-show="payForListArr[3] === '1'">西联汇款</el-checkbox>
                 <el-checkbox label="paypal" v-show="payForListArr[4] === '1'">PAYPAL</el-checkbox>
@@ -399,8 +399,6 @@ export default {
       marketPrice: '',
       // 最大可卖出量
       total: '',
-      // 市场价
-      marketPrice: '',
       // 广告管理传过来的id
       messageId: this.$route.query.id
     }
@@ -413,6 +411,9 @@ export default {
     console.log('从全局获得商户id')
     console.log(this.partnerId)
     console.log(this.$route.query.id)
+    // if (this.userInfo.type == 'COMMON') {
+    //   this.$router.push({path: '/OTCCenter'})
+    // }
     // 1.0 otc可用币种查询：
     this.getOTCAvailableCurrencyList()
     // 2.0 otc可用法币查询：
@@ -420,7 +421,7 @@ export default {
     // 3.0 查询用户现有支付方式
     this.queryUserPayTypesList()
     // 请求挂单详情接口
-    if (this.$route.query.id) {
+    if (this.$route.query.id && this.payForListArr) {
       this.getOTCSelectedOrdersDetails()
     }
   },
@@ -431,43 +432,6 @@ export default {
   methods: {
     ...mapMutations([
     ]),
-    // 广告管理跳转过来 请求详情接口
-    async getOTCSelectedOrdersDetails () {
-      const data = await querySelectedOrdersDetails({
-        entrustId: this.messageId
-      })
-      console.log('挂单详情')
-      console.log(data)
-      if (!(returnAjaxMessage(data, this, 0))) {
-        return false
-      } else {
-        // 返回数据正确的逻辑
-        // 选中交易类型赋值
-        this.activitedBuySellStyle = data.data.data.entrustType
-        // 选中币种赋值
-        this.activitedCurrencyId = data.data.data.currencyId
-        // 选中法币赋值
-        this.activitedCoinId = data.data.data.partnerCoinId
-        // 选中法币的name
-        this.activeedCurrencyName = data.data.data.currencyName
-        // 查询用户交易币种手续费率以及币种详情
-        this.queryUserTradeFeeAndCoinInfo()
-        // 单价
-        this.$refs.price.value = data.data.data.price
-        // 交易数量
-        this.$refs.entrustCount.value = data.data.data.matchCount
-        // 最小交易量
-        this.$refs.minCountValue.value = data.data.data.minCount
-        // 最大交易量
-        this.$refs.maxCountValue.value = data.data.data.maxCount
-        // 同时处理最大订单数
-        this.$refs.limitOrderCount.value = data.data.data.totalAmount
-        // 用户成功交易次数
-        this.$refs.successOrderCount.value = data.data.data.tradeTimes
-        // 交易方式赋值
-        this.activitedPayTypes = data.data.data.payTypes
-      }
-    },
     // 1.0 改变发布广告 买卖 类型
     changeBuySellStyle (e) {
       this.activitedBuySellStyle = e
@@ -500,6 +464,45 @@ export default {
         // 返回数据正确的逻辑
         this.payForListArr = data.data.data
         console.log(this.payForListArr)
+      }
+    },
+    // 广告管理跳转过来 请求详情接口
+    async getOTCSelectedOrdersDetails () {
+      const data = await querySelectedOrdersDetails({
+        entrustId: this.messageId
+      })
+      console.log('挂单详情')
+      console.log(data)
+      if (!(returnAjaxMessage(data, this, 0))) {
+        return false
+      } else {
+        // 返回数据正确的逻辑
+        // 选中交易类型赋值
+        this.activitedBuySellStyle = data.data.data.entrustType
+        // 选中币种赋值
+        this.activitedCurrencyId = data.data.data.currencyId
+        // 选中法币赋值
+        this.activitedCoinId = data.data.data.partnerCoinId
+        // 选中法币的name
+        this.activeedCurrencyName = data.data.data.currencyName
+        // 选中币种的名称
+        this.activeedCoinName = data.data.data.coinName
+        // 查询用户交易币种手续费率以及币种详情
+        this.queryUserTradeFeeAndCoinInfo()
+        // 单价
+        this.$refs.price.value = data.data.data.price
+        // 交易数量
+        this.$refs.entrustCount.value = data.data.data.matchCount
+        // 最小交易量
+        this.$refs.minCountValue.value = data.data.data.minCount
+        // 最大交易量
+        this.$refs.maxCountValue.value = data.data.data.maxCount
+        // 同时处理最大订单数
+        this.$refs.limitOrderCount.value = data.data.data.totalAmount
+        // 用户成功交易次数
+        this.$refs.successOrderCount.value = data.data.data.tradeTimes
+        // 交易支付方式赋值
+        this.payForListArr = data.data.data.payTypes
       }
     },
     // 3.0 改变可用币种id
@@ -737,6 +740,7 @@ export default {
   computed: {
     ...mapState({
       partnerId: state => state.common.partnerId
+      // userInfo: state => state.user.loginStep1Info.userInfo
     })
     // activitedBuySellStyle () {
     // }
