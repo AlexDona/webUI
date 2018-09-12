@@ -25,7 +25,7 @@
                     <!-- 商家交易统计 -->
                     <div class="shoper-statistics">
                       <div class="trader-total">
-                        <p class="blue">{{tradeTimes}}</p>
+                        <p class="blue">{{successTimes}}</p>
                         <p class="text">成交次数</p>
                       </div>
                       <div class="failed">
@@ -368,8 +368,8 @@ export default {
       dialogVisible: false,
       // 挂单人姓名
       userName: '',
-      // 交易次数
-      tradeTimes: '',
+      // 成交次数
+      successTimes: '',
       // 失败次数
       failTimes: '',
       // 冻结次数
@@ -462,8 +462,12 @@ export default {
       if (val === 'onlineBuy') {
         if (!this.$refs.buyCount.value) {
           this.numberTips = '请输入买入数量'
+          return false
         } else if (!this.$refs.buyPrice.value) {
           this.moneyTips = '请输入金额'
+          return false
+        } else if (this.numberTips || this.moneyTips) {
+          return false
         } else {
           this.dialogVisible = true
         }
@@ -471,8 +475,12 @@ export default {
       if (val === 'onlineSell') {
         if (!this.$refs.sellCount.value) {
           this.numberTips = '请输入卖出数量'
+          return false
         } else if (!this.$refs.sellPrice.value) {
           this.moneyTips = '请输入金额'
+          return false
+        } else if (this.numberTips || this.moneyTips) {
+          return false
         } else {
           this.dialogVisible = true
         }
@@ -644,7 +652,7 @@ export default {
       } else {
         // 返回数据正确的逻辑:将返回的数据赋值到页面中
         this.userName = data.data.data.userName // 挂单人姓名
-        this.tradeTimes = data.data.data.tradeTimes // 交易次数
+        this.successTimes = data.data.data.successTimes // 成交次数
         this.failTimes = data.data.data.failTimes // 失败次数
         this.freezeTimes = data.data.data.freezeTimes // 冻结次数
         this.remark = data.data.data.remark // 备注
@@ -684,13 +692,9 @@ export default {
     // 5.0 点击 确认购买 按钮提交数据
     async submitPickOrdersToBuy () {
       // console.log('购买')
-      if (!this.tradePassword) {
-        this.tradePasswordTips = '请输入交易密码'
-        return false
-      }
       const data = await pickOrdersToBuy({
         entrustId: this.id, // 挂单id
-        buyCount: this.buyCount, // 买入数量
+        buyCount: this.$refs.buyCount.value, // 买入数量
         tradePassword: this.tradePassword // 交易密码
       })
       // 提示信息
@@ -700,6 +704,8 @@ export default {
         // 返回数据正确的逻辑
         this.dialogVisible = false
         this.clearInput(this.onlineTraderStatus)
+        this.querySelectedOrdersDetails()
+        this.queryUserTradeFeeAndCoinInfo()
       }
     },
     // 交易密码框获得焦点事件
@@ -727,15 +733,17 @@ export default {
       }
       const data = await pickOrdersToSell({
         entrustId: this.id, // 挂单id
-        sellCount: this.sellCount, // 卖出数量
+        sellCount: this.$refs.sellCount.value, // 卖出数量
         tradePassword: this.tradePassword // 交易密码
       })
       if (!(returnAjaxMessage(data, this, 1))) {
         return false
       } else {
         // 返回数据正确的逻辑
-        this.dialogVisible = false
-        this.clearInput(this.onlineTraderStatus)
+        this.dialogVisible = false // 关闭弹窗框
+        this.clearInput(this.onlineTraderStatus) // 清空数据
+        this.querySelectedOrdersDetails()
+        this.queryUserTradeFeeAndCoinInfo()
       }
     }
   },

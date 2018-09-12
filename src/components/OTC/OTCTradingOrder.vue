@@ -89,7 +89,7 @@
                       <el-option
                         v-for="item1 in item.userBankList"
                         :key="item1.id"
-                        :label="item1.bankName"
+                        :label="item1.bankType"
                         :value="item1.cardNo"
                       >
                       </el-option>
@@ -879,7 +879,7 @@ export default {
 .otc-trading-order-box{
   >.otc-trading-order-content{
     min-height: 472px;
-    background-color: #202A33;
+    // background-color: #202A33;
     border-radius: 5px;
     >.order-list{
       width: 1045px;
