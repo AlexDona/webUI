@@ -72,9 +72,10 @@ export const pushAssetsSubmit = (params) => post('push/pushSub', params)
 export const revocationPushProperty = (params) => put('push/pushCancel', params)
 // push资产成交
 export const pushPropertyTransaction = (params) => put('push/pushPay', params)
-// push资产成交
+// 直接推广 间接推广列表
 export const userPromotionList = (params) => get('user/center/inviter', params)
-
+// 推荐用户币种列表
+export const recommendUserPromotionList = (params) => get('user/center/inviterCoin', params)
 /**
  * 收款方式
  * */

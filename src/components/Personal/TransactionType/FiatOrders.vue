@@ -3,40 +3,40 @@
     class="fiat-orders personal"
     :class="{'day':theme == 'day','night':theme == 'night' }"
   >
-    <header class="personal-height background-color line-height70 font-size16">
-      <span class="padding-left15">法币订单</span>
+    <header class="personal-height background-color line-height40 personal-height40 font-size16">
+      <span class="padding-left15 fiat-color font-weight600">法币订单</span>
     </header>
-    <div class="fiat-main background-color min-height500 margin-top5">
+    <div class="fiat-main background-color min-height500 margin-top9">
       <el-tabs v-model="activeName">
         <el-tab-pane
           label="交易中的订单"
           name="first"
         >
-          交易中的订单
+          <OTCTradingOrder />
         </el-tab-pane>
         <el-tab-pane
           label="已完成订单"
           name="second"
         >
-          已完成订单
+          <OTCCompletedOrder />
         </el-tab-pane>
         <el-tab-pane
           label="已取消订单"
           name="third"
         >
-          已取消订单
+          <OTCCanceledOrder />
         </el-tab-pane>
         <el-tab-pane
           label="冻结中订单"
           name="fourth"
         >
-          冻结中订单
+          <OTCFreezingOrder />
         </el-tab-pane>
         <el-tab-pane
           label="委托订单"
           name="five"
         >
-          委托订单
+          <OTCEntrustOrder />
         </el-tab-pane>
       </el-tabs>
     </div>
@@ -44,9 +44,21 @@
 </template>
 <!--请严格按照如下书写书序-->
 <script>
-import {mapState} from 'vuex'
+import OTCTradingOrder from '../../OTC/OTCTradingOrder'
+import OTCCompletedOrder from '../../OTC/OTCCompletedOrder'
+import OTCCanceledOrder from '../../OTC/OTCCanceledOrder'
+import OTCFreezingOrder from '../../OTC/OTCFreezingOrder'
+import OTCEntrustOrder from '../../OTC/OTCEntrustOrder'
+import {createNamespacedHelpers, mapState} from 'vuex'
+const {mapMutations} = createNamespacedHelpers('OTC')
 export default {
-  components: {},
+  components: {
+    OTCTradingOrder, //  交易中订单
+    OTCCompletedOrder, //  已完成订单
+    OTCCanceledOrder, //  已取消订单
+    OTCFreezingOrder, //  冻结中订单
+    OTCEntrustOrder //  委托订单
+  },
   // props,
   data () {
     return {
@@ -65,7 +77,13 @@ export default {
   activited () {},
   update () {},
   beforeRouteUpdate () {},
-  methods: {},
+  methods: {
+    ...mapMutations([
+      'CHANGE_OTC_AVAILABLE_CURRENCY_NAME',
+      'CHANGE_OTC_AVAILABLE_CURRENCY_ID',
+      'CHANGE_OTC_AVAILABLE_PARTNER_COIN_ID'
+    ])
+  },
   filter: {},
   computed: {
     ...mapState({
@@ -82,7 +100,10 @@ export default {
     background-color: $nightBgColor;
     color:$nightFontColor;
     >.background-color{
-      background-color: rgba(37, 46, 63, 1);
+      background-color: #1E2636;
+      >.fiat-color{
+        color: #338FF5;
+      }
     }
   }
   &.day{

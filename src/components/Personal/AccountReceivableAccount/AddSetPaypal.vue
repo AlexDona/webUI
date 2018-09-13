@@ -1,6 +1,6 @@
 <template>
   <div
-    class="add-payment payment"
+    class="add-payment personal"
     :class="{'day':theme == 'day','night':theme == 'night' }"
   >
     <HeaderCommon />

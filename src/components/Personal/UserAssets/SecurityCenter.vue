@@ -65,7 +65,7 @@
           </div>
           <div class="security-status text-align-r">
             <button
-              v-if="!securityCenter.isMailBind"
+              v-if="!securityCenter.isMailEnable"
               class="security-verify border-radius2 font-size12 cursor-pointer"
             >
               <span @click="showStatusVerificationClose('email', 'enable')">

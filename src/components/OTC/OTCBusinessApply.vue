@@ -153,6 +153,8 @@ import FooterCommon from '../Common/FooterCommon'
 import IconFontCommon from '../Common/IconFontCommon'
 import {businessApply, firstEnterBusinessApply} from '../../utils/api/OTC'
 import {returnAjaxMessage} from '../../utils/commonFunc'
+import {createNamespacedHelpers, mapState} from 'vuex'
+const {mapMutations} = createNamespacedHelpers('OTC')
 export default {
   components: {
     NavCommon, //  头部导航
@@ -181,9 +183,15 @@ export default {
   update () {},
   beforeRouteUpdate () {},
   methods: {
+    ...mapMutations([]),
     // 点击申请商家用户按钮发送请求
     submit () {
-      this.getOTCBusinessApply()
+      // 点击按钮时判断商家是否登录
+      if (this.isLogin) {
+        this.getOTCBusinessApply()
+      } else {
+        this.$message({showClose: true, message: '请先登录!'})
+      }
     },
     // 请求申请状态
     async getOTCBusinessApply () {
@@ -196,6 +204,8 @@ export default {
         if (data.data.meta.success == true) {
           this.applyStatus = 2
         } else {
+          // 如果失败提示返回的数据
+          this.$message({showClose: true, message: data.data.meta.message})
           this.applyStatus = 1
         }
       }
@@ -228,7 +238,12 @@ export default {
     }
   },
   filter: {},
-  computed: {},
+  computed: {
+    ...mapState({
+      userInfo: state => state.user.loginStep1Info.userInfo, // 用户详细信息
+      isLogin: state => state.user.isLogin // 用户登录状态 false 未登录； true 登录
+    })
+  },
   watch: {}
 }
 </script>

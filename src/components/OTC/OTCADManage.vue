@@ -474,7 +474,7 @@ export default {
         type: 'warning'
       }).then(() => {
         // 跳转发布广告页面并携带一条信息的参数
-        this.$router.push({path: '/OTCPublishAD', query: item})
+        this.$router.push({path: '/OTCPublishAD', query: {id: item.id}})
         this.$message({
           type: 'success',
           message: '修改成功!'
@@ -553,6 +553,9 @@ export default {
           }
           .green {
             color: #008069;
+          }
+          > .manage-main-bottom{
+            min-height: 450px!important;
           }
         }
       }

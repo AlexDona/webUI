@@ -198,9 +198,9 @@
                 <!-- 错误提示信息 -->
                 <div class="limitErrorTips">
                   <!-- 单笔最小的提示 -->
-                  <span class="errorSell">{{errorTipsLimitMin}}</span>
+                  <span class="errorLimitMin">{{errorTipsLimitMin}}</span>
                   <!-- 单笔最大的提示 -->
-                  <span class="errorBuy">{{errorTipsLimitMax}}</span>
+                  <span class="errorLimitMax">{{errorTipsLimitMax}}</span>
                 </div>
               </el-form-item>
               <!-- 5.0备注 -->
@@ -398,8 +398,10 @@ export default {
       // 卖出单价和买入单价的提示
       errorTipsPrice: '',
       // 单笔成交限额最小错误提示
+      // errorTipsLimitMin: '单笔成交限额最小错误提示',
       errorTipsLimitMin: '',
       // 单笔成交限额最大错误提示
+      // errorTipsLimitMax: '单笔成交限额最大错误提示',
       errorTipsLimitMax: '',
       // 交易密码错误提示
       errorPWd: '',
@@ -471,8 +473,8 @@ export default {
     },
     //  4.0 清空input框数据
     clearInputData () {
-      this.coinId = ''
-      this.hopePaymentCoinId = ''
+      // this.coinId = ''
+      // this.hopePaymentCoinId = ''
       this.$refs.entrustCountSell.value = ''
       this.$refs.entrustCountBuy.value = ''
       this.$refs.priceSell.value = ''
@@ -481,6 +483,7 @@ export default {
       this.$refs.maxCount.value = ''
       this.remarkText = ''
       this.tradePassword = ''
+      this.entrustCountSell = 0
     },
     //  5.0 otc可用币种查询
     async getOTCAvailableCurrencyList () {
@@ -790,6 +793,7 @@ export default {
                 // background-color: green;
               }
               >.errorBuy{
+                color: #D45858;
               }
             }
             .volume-business {
@@ -826,14 +830,14 @@ export default {
               }
             }
             .limitErrorTips{
-              // >.errorSell,.errorBuy{
-              //   display: inline-block;
-              //   width: 212px;
-              //   font-size: 12px;
-              //   color: #D45858;
-              // }
-              // >.errorBuy{
-              // }
+              >.errorLimitMin,.errorLimitMax{
+                display: inline-block;
+                width: 212px;
+                font-size: 12px;
+                color: #D45858;
+              }
+              >.errorLimitMax{
+              }
             }
             .remark {
               color: #9DA5B3;

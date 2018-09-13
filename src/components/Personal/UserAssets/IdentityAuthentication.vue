@@ -19,27 +19,29 @@
                 v-if="!realNameInformationObj.realnameAuth"
                 class="authentication-type font-size12"
               >
-                （请先通过实名认证）
+                （未认证）
               </p>
               <p
                 v-else
                 class="authentication-type-info font-size12 box-sizing"
               >
                 <span class="authentication-info">您已通过实名认证</span>
-                <!--{{ statusRealNameInformation.realname.substring(0,1)}}-->
-                *
-                <!--{{ statusRealNameInformation.realName.substring(2,3)}}-->
                 （&nbsp;
-                <span class="type-info">
+                <!--<span v-if="statusRealNameInformation.realname == null"></span>-->
+                <span
+                  class="type-info"
+                >
                   姓名：
                   {{ statusRealNameInformation.realname }}
+                  <!--{{ statusRealNameInformation.realname.substring(0,1)}}-->
+                <!--*-->
+                  <!--{{ statusRealNameInformation.realName.substring(2,3)}}-->
                 </span>、
                 <span class="type-info">
                   身份证号：
-                   {{ statusRealNameInformation.cardNo.substring(0,6)}}
+                   {{ statusRealNameInformation.cardNo.substring(0,2)}}
                   ****
-                   {{ statusRealNameInformation.cardNo.substring(14,18)}}
-                  <!-- {{  authenticationInfo.identification }}-->
+                   {{ statusRealNameInformation.cardNo.substring(16,18)}}
                 </span>
                 &nbsp;）
               </p>
@@ -141,10 +143,10 @@
           @click="authenticationMethod">
           <span class="font-size16 main-header-title">高级认证</span>
           <span
-            v-if="!realNameInformationObj.advancedAuth"
+            v-if="!realNameInformationObj.realnameAuth"
             class="authentication-type font-size12"
           >
-            （请先通过实名认证）
+            （未高级认证）
           </span>
           <span
             v-else
@@ -163,11 +165,18 @@
               <div class="personal-information">
                 <p class="information">
                   <span class="info-type font-size12">国际：</span>
-                  <span class="user-info font-size14">{{ statusRealNameInformation.country }}</span>
+                  <span class="user-info font-size14">
+                    {{ statusRealNameInformation.country }}
+                  </span>
                 </p>
                 <p class="information">
                   <span class="info-type font-size12">姓名：</span>
-                  <span class="user-info font-size14">{{ statusRealNameInformation.realname }}</span>
+                  <!--<span v-if="statusRealNameInformation.realname == null"></span>-->
+                  <span
+                    class="user-info font-size14"
+                  >
+                    {{ statusRealNameInformation.realname }}
+                  </span>
                 </p>
                 <p class="information">
                   <span class="info-type font-size12">证件号：</span>
@@ -455,8 +464,9 @@ export default {
       } else {
         // 返回列表数据
         this.realNameInformationObj = data.data.data
+        // if (data.data.data.authInfo) {
         this.statusRealNameInformation = data.data.data.authInfo
-        console.log(this.statusRealNameInformation)
+        // }
       }
     },
     // 检测输入格式

@@ -26,8 +26,10 @@
         <div class="google-content-from min-height500">
           <div class="google-images-show display-flex">
             <div class="google-validator flex1">
-              <div class="google-images">
-                <img :src="googleImages">
+              <div class="google-images img-background">
+                <div class="img-box">
+                  <img :src="googleImages">
+                </div>
               </div>
               <p class="google-info paddinglr15">
                 若未安装谷歌验证器请
@@ -35,11 +37,11 @@
               </p>
             </div>
             <div class="google-validator validator-margin flex1">
-              <div class="google-images">
+              <div class="google-images google-images1 img-background1">
                 <VueQrcode
                   class="ercode"
                   :value="googleUserInformation.url"
-                  :options="{ size: 100 }"
+                  :options="{ size: 97 }"
                 >
                 </VueQrcode>
               </div>
@@ -56,11 +58,26 @@
               label-width="120px"
             >
               <el-form-item label="私      钥：">
-                <span class="google-content-name">
+                <span
+                  id="text"
+                  class="google-content-name"
+                >
                   {{ googleUserInformation.googleSecret }}
                 </span>
+                <span
+                  class="code-copy border-radius5 cursor-pointer font-size12"
+                  v-clipboard:copy="googleUserInformation.googleSecret"
+                  v-clipboard:success="onCopy"
+                  v-clipboard:error="onError"
+                >
+                  <IconFontCommon
+                    class="font-size12"
+                    iconName="icon-fuzhi"
+                  />
+                  复制
+                </span>
               </el-form-item>
-              <el-form-item label="谷歌账户：">
+              <el-form-item label="谷歌账户：" style="display: none">
                  <span class="google-content-name">
                   {{ googleUserInformation.googleAccount }}
                 </span>
@@ -278,6 +295,23 @@ export default {
         // 返回展示
         this.securityCenter = data.data.data
       }
+    },
+    //  点击复制
+    onCopy (e) {
+      // 已拷贝
+      let msg = '已拷贝'
+      this.$message({
+        type: 'success',
+        message: msg
+      })
+    },
+    onError (e) {
+      // 拷贝失败，请稍后重试
+      let msg = '拷贝失败，请稍后重试'
+      this.$message({
+        type: 'success',
+        message: msg
+      })
     }
   },
   filter: {},
@@ -318,11 +352,20 @@ export default {
           margin-left: 30px;
           >.google-images-show {
             >.google-validator {
-              height: 200px;
+              height: 250px;
+              >.google-images1 {
+                padding: 20px 9px !important;
+              }
               >.google-images {
-                width: 96px;
-                height: 115px;
+                width: 115px;
+                height: 140px;
                 margin: 0 auto;
+                padding: 20px 7px;
+                .img-box {
+                  padding: 10px;
+                  width: 100px;
+                  height: 100px;
+                }
               }
             }
             >.validator-margin {
@@ -330,6 +373,21 @@ export default {
             }
           }
           >.google-info-show {
+            .code-copy {
+              text-align: center;
+              display: inline-block;
+              width: 54px;
+              height: 26px;
+              line-height: 26px;
+              margin-left: 15px;
+              position: relative;
+              .ercode {
+                position: absolute;
+                bottom: 35px;
+                right: 180px;
+                border-radius: 5px;
+              }
+            }
             .google-input {
               width: 220px;
               height: 34px;
@@ -363,6 +421,15 @@ export default {
         >.binding-google-content {
           >.google-content-from {
             >.google-images-show {
+              .img-background {
+                background-color: #338FF5;
+              }
+              .img-background1 {
+                background-color: #2B3C71;
+              }
+              .img-box {
+                background-color: #fff;
+              }
               .google-info {
                 color: #9DA5B3;
                 .google-info-download {
@@ -371,6 +438,10 @@ export default {
               }
             }
             >.google-info-show {
+              .code-copy {
+                color: #fff;
+                background-color: #338FF5;
+              }
               color: #fff;
               .google-content-name {
                 color: #fff;

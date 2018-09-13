@@ -1,6 +1,6 @@
 <template>
   <div
-    class="add-chat chat"
+    class="add-chat personal"
     :class="{'day':theme == 'day','night':theme == 'night' }"
   >
     <HeaderCommon />
@@ -30,7 +30,9 @@
             label-width="120px"
           >
             <el-form-item label="名 称：">
-              <span class="chat-content-type">杨</span>
+              <span class="chat-content-type">
+                {{ userInfo.userInfo.realname }}
+              </span>
             </el-form-item>
             <el-form-item label="收  款  类  型：">
               <span class="chat-content-type">微信</span>
@@ -44,7 +46,7 @@
             <el-form-item label="上传收款码：">
               <div class="chat-upload border-radius4">
                 <el-upload
-                  action="http://192.168.1.217:8888/uploadfile"
+                  action="http://192.168.1.200:8888/uploadfile"
                   :headers="tokenObj"
                   list-type="picture-card"
                   :on-success="handleSuccessHand"
@@ -65,7 +67,7 @@
               />
             </el-form-item>
             <button
-              class="chat-button border-radius4"
+              class="chat-button border-radius4 cursor-pointer"
               @click="stateSubmitWeChat"
             >
               确认修改
@@ -141,6 +143,7 @@ export default {
       let param = {
         cardNo: this.cardNo, // 微信账号
         qrcode: this.dialogImageHandUrl, // 二维码
+        payPassword: this.password, // 交易密码
         bankType: 'weixin' // type
       }
       data = await statusCardSettings(param)
@@ -149,7 +152,6 @@ export default {
         return false
       } else {
         this.successJump()
-        // this.getRealNameInformation()
       }
     },
     // 成功自动跳转
@@ -168,6 +170,7 @@ export default {
   computed: {
     ...mapState({
       theme: state => state.common.theme,
+      userInfo: state => state.user.loginStep1Info, // 用户详细信息
       refAccountCenterStatus: state => state.personal.refAccountCenterStatus
     })
   },

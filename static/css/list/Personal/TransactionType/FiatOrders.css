@@ -5,4 +5,29 @@
   width: 105px;
   text-align: center;
 }
-
+.fiat-orders.personal.night .el-tabs__item.is-active {
+  border-left: 0;
+}
+.fiat-orders.personal .el-tabs__item:hover {
+  border-left: 0;
+}
+/*覆盖element样式*/
+.fiat-orders.personal .el-input__inner {
+  width: 100px;
+  height: 30px;
+  border: 0;
+}
+.fiat-orders.personal .el-date-editor.el-input {
+  width: 120px;
+  height: 30px;
+}
+.fiat-orders.personal .el-date-editor .el-input__inner {
+  width: 120px;
+  height: 30px;
+}
+.fiat-orders.personal .el-table th>.cell {
+  text-align: center;
+}
+.fiat-orders.personal .el-table .cell {
+  text-align: center;
+}

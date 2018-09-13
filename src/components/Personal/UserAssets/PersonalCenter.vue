@@ -218,6 +218,7 @@ export default {
         case 'invitation-promote':
           // 直接推广间接推广列表
           this.$refs.invitingPromotionValue.getUserPromotionList()
+          this.$refs.invitingPromotionValue.getRecommendUserPromotion()
           break
         case 'security-center':
           // 安全中心状态显示
@@ -232,8 +233,10 @@ export default {
           this.$refs.pushAssetValue.emptyInputData()
           break
         case 'coin-orders':
+          this.$refs.coinOrdersValue.getMyCurrentEntrust()
           break
         case 'fiat-orders':
+          this.$refs.fiatOrdersValue.getOTCTradingOrdersList()
           break
       }
     }
