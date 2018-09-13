@@ -425,7 +425,7 @@ export default{
           this.setPersonalJump('assets')
           break
         case 'order-management':
-          this.setPersonalJump('orders')
+          this.setPersonalJump('coin-orders')
           break
         case 'identity-authentication':
           this.setPersonalJump('identity-authentication')

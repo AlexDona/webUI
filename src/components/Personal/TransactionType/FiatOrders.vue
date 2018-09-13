@@ -12,31 +12,31 @@
           label="交易中的订单"
           name="first"
         >
-          交易中的订单
+          <OTCTradingOrder />
         </el-tab-pane>
         <el-tab-pane
           label="已完成订单"
           name="second"
         >
-          已完成订单
+          <OTCCompletedOrder />
         </el-tab-pane>
         <el-tab-pane
           label="已取消订单"
           name="third"
         >
-          已取消订单
+          <OTCCanceledOrder />
         </el-tab-pane>
         <el-tab-pane
           label="冻结中订单"
           name="fourth"
         >
-          冻结中订单
+          <OTCFreezingOrder />
         </el-tab-pane>
         <el-tab-pane
           label="委托订单"
           name="five"
         >
-          委托订单
+          <OTCEntrustOrder />
         </el-tab-pane>
       </el-tabs>
     </div>
@@ -44,9 +44,21 @@
 </template>
 <!--请严格按照如下书写书序-->
 <script>
-import {mapState} from 'vuex'
+import OTCTradingOrder from '../../OTC/OTCTradingOrder'
+import OTCCompletedOrder from '../../OTC/OTCCompletedOrder'
+import OTCCanceledOrder from '../../OTC/OTCCanceledOrder'
+import OTCFreezingOrder from '../../OTC/OTCFreezingOrder'
+import OTCEntrustOrder from '../../OTC/OTCEntrustOrder'
+import {createNamespacedHelpers, mapState} from 'vuex'
+const {mapMutations} = createNamespacedHelpers('OTC')
 export default {
-  components: {},
+  components: {
+    OTCTradingOrder, //  交易中订单
+    OTCCompletedOrder, //  已完成订单
+    OTCCanceledOrder, //  已取消订单
+    OTCFreezingOrder, //  冻结中订单
+    OTCEntrustOrder //  委托订单
+  },
   // props,
   data () {
     return {
@@ -65,7 +77,13 @@ export default {
   activited () {},
   update () {},
   beforeRouteUpdate () {},
-  methods: {},
+  methods: {
+    ...mapMutations([
+      'CHANGE_OTC_AVAILABLE_CURRENCY_NAME',
+      'CHANGE_OTC_AVAILABLE_CURRENCY_ID',
+      'CHANGE_OTC_AVAILABLE_PARTNER_COIN_ID'
+    ])
+  },
   filter: {},
   computed: {
     ...mapState({

@@ -236,6 +236,7 @@ export default {
           this.$refs.coinOrdersValue.getMyCurrentEntrust()
           break
         case 'fiat-orders':
+          this.$refs.fiatOrdersValue.getOTCTradingOrdersList()
           break
       }
     }

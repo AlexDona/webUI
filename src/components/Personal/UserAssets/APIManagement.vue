@@ -15,7 +15,6 @@
         <div class="extension-info-content display-flex">
           <div class="info-content info-content-left flex1">
             <el-form
-              :label-position="labelPosition"
               label-width="120px"
             >
               <el-form-item label="备注：">
@@ -32,6 +31,7 @@
               </el-form-item>
               <button
                 class="api-button border-radius4 cursor-pointer font-size14"
+                @click="stateEstablishApiButton"
               >
                 创建
               </button>
@@ -121,24 +121,165 @@
           </el-table>
         </div>
       </div>
+      <!--验证方式验证-->
+      <el-dialog
+        title="安全验证"
+        :visible.sync="APIMoneyConfirm"
+      >
+        <el-form
+          :label-position="labelPosition"
+        >
+          <!--手机已认证-->
+          <el-form-item
+            v-if="securityCenter.isPhoneEnable"
+            label="手机验证"
+          >
+            <input
+              class="content-input padding-l15 box-sizing"
+              v-model="phoneCode"
+            >
+            <CountDownButton
+              class="send-code-btn cursor-pointer"
+              :status="disabledOfPhoneBtn"
+              @run="sendPhoneOrEmailCode(0)"
+            />
+          </el-form-item>
+          <!--手机未认证-->
+          <span v-else></span>
+          <!--邮箱已认证-->
+          <el-form-item
+            v-if="securityCenter.isMailEnable"
+            label="邮箱验证"
+          >
+            <input
+              class="content-input padding-l15 box-sizing"
+              v-model="emailCode"
+            >
+            <CountDownButton
+              class="send-code-btn cursor-pointer"
+              :status="disabledOfEmailBtn"
+              @run="sendPhoneOrEmailCode(1)"
+            />
+          </el-form-item>
+          <!--邮箱未认证-->
+          <span v-elsee></span>
+          <!--谷歌已认证-->
+          <el-form-item
+            v-if="securityCenter.isGoogleEnable"
+            label="谷歌验证"
+          >
+            <input
+              class="content-input input-google padding-l15 box-sizing"
+              v-model="googleCode"
+            >
+          </el-form-item>
+          <!--谷歌未认证-->
+          <span v-else></span>
+        </el-form>
+        <div
+          slot="footer"
+          class="dialog-footer"
+        >
+          <button
+            type="primary"
+            class="primary-button"
+            @click="stateSubmitDetermineValidation"
+          >
+            确 定
+          </button>
+        </div>
+      </el-dialog>
+      <!--二次信息确认弹框-->
+      <el-dialog
+        title="创建成功"
+        :visible.sync="apiSecondaryConfirmation"
+      >
+        <el-form
+          :label-position="labelPosition"
+        >
+          <el-form-item
+            style="margin-bottom: 0"
+            label="API访问秘钥 （Access Key）"
+          >
+            <input
+              class="content-input input-google padding-l15 box-sizing"
+              v-model="apiAccessTheSecretKey"
+            >
+          </el-form-item>
+          <el-form-item
+            style="margin-bottom: 0"
+            label="API访问秘钥 （Access Key）"
+          >
+            <input
+              class="content-input input-google padding-l15 box-sizing"
+              v-model="apiAccessTheSecretKey"
+            >
+            <p class="font-size12 text-info text-margin ">（仅显示1次，遗失后不可找回，请务必妥善保存）</p>
+          </el-form-item>
+          <el-form-item
+            label="绑定IP地址"
+          >
+            <input
+              class="content-input input-google padding-l15 box-sizing"
+              v-model="setUpApiIp"
+            >
+            <p class="font-size12 text-info text-margin">提示</p>
+            <p class="font-size12 text-info">• 请不要泄露您的Secret Key，避免造成资产损失。</p>
+            <p class="font-size12 text-info text-bottom">• 如您忘记了Secret Key，请删除该密钥对并申请新的密钥对。</p>
+          </el-form-item>
+        </el-form>
+        <div
+          slot="footer"
+          class="dialog-footer"
+        >
+          <button
+            type="primary"
+            class="primary-button"
+            @click="stateSubmitDetermineValidation"
+          >
+            确 定
+          </button>
+        </div>
+      </el-dialog>
     </div>
   </div>
 </template>
 <!--请严格按照如下书写书序-->
 <script>
-import {mapState} from 'vuex'
+import CountDownButton from '../../Common/CountDownCommon'// 字体图标
+import IconFontCommon from '../../Common/IconFontCommon'
+import { createNamespacedHelpers, mapState } from 'vuex'
+import {
+  statusSecurityCenter
+} from '../../../utils/api/personal'
+import {
+  returnAjaxMessage,
+  sendPhoneOrEmailCodeAjax
+} from '../../../utils/commonFunc'
 import {timeFilter} from '../../../utils/index'
+const { mapMutations } = createNamespacedHelpers('personal')
 export default {
-  components: {},
+  components: {
+    IconFontCommon, // 字体图标
+    CountDownButton // 短信倒计时
+  },
   data () {
     return {
-      // 推广统计
+      labelPosition: 'top',
       // creationTime 创建时间
       // remark 备注
       // secretKey API访问秘钥
       // IpSite IP地址
       // state 状态
-      // operation 操作
+      securityCenter: {},
+      APIMoneyConfirm: false, // 默认API确认弹窗
+      phoneCode: '', // 邮箱验证
+      emailCode: '', // 手机验证
+      googleCode: '', // 谷歌验证
+      // 默认创建之后弹出二次挨批创建信息框
+      apiSecondaryConfirmation: false,
+      apiAccessTheSecretKey: 'SDFGSDFGSDFGSDFGSDFGS', // API访问秘钥 （Access Key）
+      setUpApiIp: '192.168.1087', // 绑定IP地址
       extensionList: [
         {
           creationTime: '2018-08-04 10:30:41',
@@ -196,15 +337,81 @@ export default {
   update () {},
   beforeRouteUpdate () {},
   methods: {
+    ...mapMutations([]),
     // 时间格式化
     timeFormatting (date) {
       return timeFilter(date, 'normal')
+    },
+    // 发送验证码
+    sendPhoneOrEmailCode (loginType) {
+      if (this.disabledOfPhoneBtn || this.disabledOfEmailBtn) {
+        return false
+      }
+      let params = {}
+      switch (loginType) {
+        case 0:
+          params.phone = this.userInfo.userInfo.phone
+          break
+        case 1:
+          params.address = this.userInfo.userInfo.email
+          break
+      }
+      sendPhoneOrEmailCodeAjax(loginType, params, (data) => {
+        console.log(this.disabledOfPhoneBtn)
+        // 提示信息
+        if (!returnAjaxMessage(data, this)) {
+          console.log('error')
+          return false
+        } else {
+          switch (loginType) {
+            case 0:
+              this.$store.commit('user/SET_USER_BUTTON_STATUS', {
+                loginType: 0,
+                status: true
+              })
+              break
+            case 1:
+              this.$store.commit('user/SET_USER_BUTTON_STATUS', {
+                loginType: 1,
+                status: true
+              })
+              break
+          }
+        }
+      })
+    },
+    // 点击创建
+    stateEstablishApiButton () {
+      // 手机谷歌邮箱杨峥方式验证
+      this.APIMoneyConfirm = true
+      this.getSecurityCenter()
+    },
+    // 创建之后弹出二次挨批创建信息框
+    stateSubmitDetermineValidation () {
+      this.apiSecondaryConfirmation = true
+      this.APIMoneyConfirm = false
+    },
+    /**
+     * 安全中心
+     */
+    async getSecurityCenter () {
+      let data = await statusSecurityCenter({
+        token: this.userInfo.token // token
+      })
+      console.log(data)
+      if (!(returnAjaxMessage(data, this, 0))) {
+        return false
+      } else {
+        // 返回展示
+        this.securityCenter = data.data.data
+      }
     }
   },
   filter: {},
   computed: {
     ...mapState({
-      theme: state => state.common.theme
+      theme: state => state.common.theme,
+      userInfo: state => state.user.loginStep1Info // 用户详细信息
     })
   },
   watch: {}
@@ -214,7 +421,34 @@ export default {
   @import "../../../../static/css/scss/Personal/UserAssets/APIManagement";
   .api-management{
     >.invitation-promotion-main{
-      /*推广信息*/
+      .content-input {
+        width: 200px;
+        height: 35px;
+      }
+      .text-margin {
+        margin-top: 10px;
+      }
+      .input-google {
+        width: 300px;
+      }
+      .text-bottom {
+        margin-bottom: 10px;
+      }
+      .text-info {
+        height: 20px;
+        line-height: 20px;
+      }
+      .primary-button {
+        width: 300px;
+        height: 35px;
+        border-radius:4px;
+      }
+      .send-code-btn {
+        width: 100px;
+        height: 35px;
+        margin-left: -4px;
+        padding: 0;
+      }
       >.extension-info{
         min-height: 350px;
         >.extension-info-header {
@@ -254,7 +488,6 @@ export default {
           }
         }
       }
-      /*推广统计*/
       >.extension-statistics{
         min-height: 200px;
         >.extension-statistics-header{
@@ -272,6 +505,24 @@ export default {
         background-color: #1E2636;
       }
       .invitation-promotion-main{
+        .content-input {
+          border: 1px solid #485776;
+          color: #fff;
+          &:focus {
+            border: 1px solid #338FF5;
+          }
+        }
+        .text-info {
+          color: #D45858;
+        }
+        .primary-button {
+          background: linear-gradient(81deg,rgba(43,57,110,1) 0%,rgba(42,80,130,1) 100%);
+          color: #fff;
+        }
+        .send-code-btn {
+          background-color: #338FF5;
+          color: #fff;
+        }
         >.extension-info{
           background-color: #1E2636;
           >.extension-info-header{

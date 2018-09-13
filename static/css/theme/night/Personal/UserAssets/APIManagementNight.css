@@ -1,5 +1,5 @@
-.api-management.personal .el-form-item__label {
-  color: #fff;
+.api-management.personal.night .el-form-item__label {
+  color: #B8BDD0;
 }
 .api-management.personal.night .el-table th, .el-table tr{
   background-color: #1E2636;
@@ -13,4 +13,14 @@
 }
 .api-management.personal.night .el-table--enable-row-hover .el-table__body tr:hover>td{
   background-color: #1E2636;
+}
+.api-management.personal .el-dialog {
+  background-color: #28334A;
+  border-radius: 5px;
+}
+.api-management.personal .el-dialog__header {
+  background-color: #20293C;
+}
+.api-management.personal .el-dialog__title {
+  color: #fff;
 }

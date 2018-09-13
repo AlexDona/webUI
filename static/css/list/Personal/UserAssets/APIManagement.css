@@ -4,3 +4,28 @@
 .api-management.personal .el-table td{
   border-bottom: 0;
 }
+.api-management.personal .el-dialog {
+  width: 360px;
+}
+.api-management.personal .el-dialog__header {
+  border-radius: 5px 5px 0 0;
+  padding: 0 20px 0;
+  height: 44px;
+  line-height: 44px;
+  font-size: 18px;
+}
+.api-management.personal .el-dialog__headerbtn {
+  top: 13px;
+}
+.api-management.personal .el-dialog__body {
+  padding: 20px 30px 0;
+}
+.api-management.personal .el-form-item__label {
+  padding: 0;
+}
+.api-management.personal .el-dialog__footer {
+  padding: 10px 30px 30px;
+}
+.api-management.personal .el-form-item {
+  margin-bottom: 15px;
+}

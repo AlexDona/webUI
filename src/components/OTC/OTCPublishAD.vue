@@ -546,7 +546,6 @@ export default {
         // 返回数据正确的逻辑
         this.payForListArr = data.data.data
         // console.log(this.payForListArr)
-
       }
     },
     // 3.0 改变可用币种id
