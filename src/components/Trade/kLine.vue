@@ -51,7 +51,6 @@ export default {
   created () {
     // require('../../../static/charting_library/static/css/t-night.css')
     require('../../../static/css/theme/day/Trade/KlieneDay.css')
-    console.log(this.activeSymbol)
     // this.widget = null
     // 获取默认交易对
     this.getDefaultSymbol()
@@ -91,10 +90,9 @@ export default {
         return false
       } else {
         const obj = data.data.data
-        console.log(obj)
         const activeSymbol = {
           id: obj.sellCoinName + obj.buyCoinName,
-          tradeId: '',
+          tradeId: obj.id,
           sellsymbol: obj.sellCoinName, // 币种简称
           sellname: obj.buyCoinName, // 币种全程
           area: obj.buyCoinName, // 交易区
@@ -103,6 +101,7 @@ export default {
         // 是否从其他页面跳转
         const finalSymbol = this.isJumpToTradeCenter ? this.jumpSymbol : activeSymbol
         this.CHANGE_ACTIVE_SYMBOL({activeSymbol: finalSymbol})
+        console.log(activeSymbol)
         this.symbol = this.activeSymbol.id
         this.socket.doOpen()
         this.socket.on('open', () => {

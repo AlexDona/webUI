@@ -413,9 +413,10 @@ export default {
         this.$router.push('/login')
         return false
       }
+      console.log(this.activeSymbol)
       let params = {
         partnerId: this.partnerId,
-        // userId: this.loginStep1Info.userId,
+        userId: this.loginStep1Info.userId,
         tradeId: this.activeSymbol.tradeId,
         payPwd: this.payPwd,
         type: type ? 'SELL' : 'BUY', // 委单类型
