@@ -451,7 +451,8 @@ export default {
           break
       }
 
-      // console.log(params)
+      console.log(params)
+      console.log(this.activeSymbol)
       const data = await saveEntrustTrade(params)
       if (!returnAjaxMessage(data, this, 1)) {
         return false
@@ -488,11 +489,11 @@ export default {
   },
   watch: {
     activeSymbol (newVal) {
-      console.log(newVal)
+      // console.log(newVal)
     },
     // 用户手动设置价格
     activePriceItem (newVal) {
-      console.log(newVal)
+      // console.log(newVal)
       this.$refs[this.limitBuyPriceInputRef].value = newVal
       this.$refs[this.limitSellPriceInputRef].value = newVal
       this.formatInput(this.limitBuyPriceInputRef, this.activeSymbol.priceExchange)

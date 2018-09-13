@@ -7,17 +7,17 @@
       <div class="item logo">
           <img
             class="logo"
-            :src="activeSymbol.image"
+            :src="middleTopData.image"
           >
       </div>
       <div class="item symbol">
         <div class="top">
-          <span>{{activeSymbol.sellsymbol}}</span>
+          <span>{{middleTopData.sellsymbol}}</span>
           /
-          <span>{{activeSymbol.area}}</span>
+          <span>{{middleTopData.area}}</span>
         </div>
         <div class="bottom font-size12">
-          <span>{{activeSymbol.sellname}}</span>
+          <span>{{middleTopData.sellname}}</span>
         </div>
       </div>
       <!--最新价-->
@@ -29,10 +29,10 @@
           <span
             class="font-size14"
             :class="{
-              'up':activeSymbol.rose>0,
-              'down':activeSymbol.rose<0
+              'up':middleTopData.rose>0,
+              'down':middleTopData.rose<0
             }"
-          >{{activeSymbol.price}}</span>
+          >{{middleTopData.price}}</span>
           <span class="font-size12 theme-color">≈ 0.25</span>
         </div>
       </div>
@@ -45,10 +45,10 @@
           <span
             class="font-size14"
             :class="{
-              'up':activeSymbol.rose>0,
-              'down':activeSymbol.rose<0
+              'up':middleTopData.rose>0,
+              'down':middleTopData.rose<0
             }"
-          >{{activeSymbol.rose}}</span>
+          >{{middleTopData.rose}}</span>
         </div>
       </div>
       <div class="item">
@@ -59,10 +59,10 @@
           <span
             class="font-size14"
             :class="{
-              'up':activeSymbol.rose>0,
-              'down':activeSymbol.rose<0
+              'up':middleTopData.rose>0,
+              'down':middleTopData.rose<0
             }"
-          >{{activeSymbol.high}}</span>
+          >{{middleTopData.high}}</span>
         </div>
       </div>
       <div class="item">
@@ -72,7 +72,7 @@
         <div class="bottom">
           <span
             class="font-size14 theme-color"
-          >{{activeSymbol.low}}</span>
+          >{{middleTopData.low}}</span>
         </div>
       </div>
       <div class="item">
@@ -83,7 +83,7 @@
             <span
               class="font-size14 theme-color"
             >
-              {{activeSymbol.volume}}
+              {{middleTopData.volume}}
             </span>
         </div>
       </div>
@@ -108,7 +108,8 @@ export default {
   computed: {
     ...mapState({
       theme: state => state.common.theme,
-      activeSymbol: state => state.common.activeSymbol
+      activeSymbol: state => state.common.activeSymbol,
+      middleTopData: state => state.trade.middleTopData
     })
   },
   watch: {

@@ -285,21 +285,20 @@ const router = new Router({
 })
 
 router.beforeEach((to, from, next) => {
-  // if (to.path !== '/login') {
-  //   store.commit('common/CHANGE_ROUTER_PATH', to.path)
-  // }
-  // if (to.matched.some(m => m.meta.auth)) {
-  //   // 对路由进行验证
-  //   if (store.state.common.isLogin) { // 已经登陆
-  //     next() // 正常跳转到你设置好的页面
-  //   } else {
-  //     // 未登录则跳转到登陆界面，query:{ Rurl: to.fullPath}表示把当前路由信息传递过去方便登录后跳转回来；
-  //     next({path: '/login', query: {Rurl: to.fullPath}})
-  //   }
-  // } else {
-  //   next()
-  // }
-  next()
+  if (to.path !== '/login') {
+    store.commit('common/CHANGE_ROUTER_PATH', to.path)
+  }
+  if (to.matched.some(m => m.meta.auth)) {
+    // 对路由进行验证
+    if (store.state.user.isLogin) { // 已经登陆
+      next() // 正常跳转到你设置好的页面
+    } else {
+      // 未登录则跳转到登陆界面，query:{ Rurl: to.fullPath}表示把当前路由信息传递过去方便登录后跳转回来；
+      next({path: '/login', query: {Rurl: to.fullPath}})
+    }
+  } else {
+    next()
+  }
 })
 
 export default router

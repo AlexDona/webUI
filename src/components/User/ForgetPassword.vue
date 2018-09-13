@@ -3,6 +3,7 @@
     class="froget-password-box"
     :class="{'day':theme == 'day','night':theme == 'night' }"
   >
+    <HeaderCommon/>
     <div class="inner-box">
       <div class="title">
         找回密码
@@ -64,7 +65,10 @@
               <span class="label">验证</span>
               <!--滑块验证-->
               <span class="label-content">
-                <div class="drag-box border-radius4">
+                <div
+                  class="drag-box border-radius4"
+                  v-if="!confirmSuccess"
+                >
                 <div class="drag cursor-pointer border-radius4">
                   <div class="drag_bg border-radius4">
                   </div>
@@ -81,13 +85,22 @@
                   </div>
                 </div>
               </div>
+                <div class="slider-success"
+                  v-else
+                >
+                  <i class="el-icon-circle-check font-size18"></i>
+                  验证成功
+                </div>
               </span>
             </div>
             <div class="item">
               <span class="label"></span>
               <span class="label-content">
                 <!--下一步按钮-->
-                <button class="next-btn">下一步</button>
+                <button
+                  class="next-btn cursor-pointer"
+                  @click="findPasswordStep1"
+                >下一步</button>
               </span>
             </div>
           </div>
@@ -98,14 +111,20 @@
           v-else-if="activeStepNumber == 2"
         >
           <div class="inner-box">
-            <div class="item">
+            <div
+              class="item"
+              v-if="userInfo.isEnablePhone"
+            >
               <span class="label">验证手机</span>
               <span class="label-content">
-                <span class="number">18625512982</span>
+                <span class="number">{{phoneNumberFormat(userInfo.phone)}}</span>
                 <span class="tips">{{phoneNumTips}}</span>
               </span>
             </div>
-            <div class="item">
+            <div
+              class="item"
+              v-if="userInfo.isEnablePhone"
+            >
               <span class="label">手机验证码</span>
               <span class="label-content">
                 <input
@@ -121,14 +140,20 @@
                 />
               </span>
             </div>
-            <div class="item">
+            <div
+              class="item"
+              v-if="userInfo.isEnableMail"
+            >
               <span class="label">验证邮箱</span>
               <span class="label-content">
-                <span class="number">999999999@qq.com</span>
+                <span class="number">{{phoneNumberFormat(userInfo.email)}}</span>
                 <span class="tips">{{phoneNumTips}}</span>
               </span>
             </div>
-            <div class="item">
+            <div
+              class="item"
+              v-if="userInfo.isEnableMail"
+            >
               <span class="label">邮箱验证码</span>
               <span class="label-content">
                 <input
@@ -144,18 +169,89 @@
                 />
               </span>
             </div>
+            <div
+              class="item"
+              v-if="userInfo.isEnableGoogle"
+            >
+              <span class="label">谷歌验证码</span>
+              <span class="label-content">
+                <input
+                  class="username-input"
+                  type="text"
+                  v-model="googleCode"
+                />
+              </span>
+            </div>
+            <div class="item">
+              <span class="label"></span>
+              <span class="label-content">
+                <!--下一步按钮-->
+                <button
+                  class="next-btn cursor-pointer"
+                  @click="findPasswordStep2"
+                >下一步</button>
+              </span>
+            </div>
           </div>
         </div>
         <!--步骤三-->
         <div
           class="content-item step3"
           v-else-if="activeStepNumber == 3"
-        ></div>
+        >
+          <div class="inner-box">
+            <div class="item">
+              <span class="label">新登录密码</span>
+              <span class="label-content">
+                <input
+                  class="username-input"
+                  type="text"
+                  v-model="newPassword"
+                />
+              </span>
+            </div>
+            <div class="item">
+              <span class="label">确认密码</span>
+              <span class="label-content">
+                <input
+                  class="username-input"
+                  type="text"
+                  v-model="confirmPassword"
+                />
+              </span>
+            </div>
+            <div class="item">
+              <span class="label"></span>
+              <span class="label-content">
+                <!--下一步按钮-->
+                <button
+                  class="next-btn cursor-pointer"
+                  @click="findPasswordStep3"
+                >下一步</button>
+              </span>
+            </div>
+          </div>
+        </div>
         <!--步骤四-->
         <div
           class="content-item step4"
           v-else
-        ></div>
+        >
+          <div class="inner-box">
+            <div class="success-box">
+              <div class="left">
+                <IconFont class="icon-text" iconName="icon-dui1"/>
+              </div>
+              <div class="right">
+                <p class="success-msg">新密码设置成功！</p>
+                <p class="success-tips">
+                  请牢记您新设置的密码。
+                  <router-link to="/login">立即登录</router-link>
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
   </div>
@@ -164,32 +260,59 @@
 <script>
 import IconFont from '../Common/IconFontCommon'
 import CountDownButton from '../Common/CountDownCommon'
+import HeaderCommon from '../Common/HeaderCommon'
+import {
+  findPasswordStep1,
+  findPasswordStep2,
+  findPasswordStep3
+} from '../../utils/api/user'
+import {phoneNumberFormat} from '../../utils'
+import {
+  returnAjaxMessage,
+  sendPhoneOrEmailCodeAjax
+} from '../../utils/commonFunc'
 import { createNamespacedHelpers, mapState } from 'vuex'
 const { mapMutations } = createNamespacedHelpers('user')
 export default {
   components: {
     IconFont,
+    HeaderCommon,
     CountDownButton
   },
   // props,
   data () {
     return {
-      activeStepNumber: 2, // 当前步骤
-      username: '',
+      activeStepNumber: 1, // 当前步骤
+      username: '18625512985',
+      userInfo: {
+        countryCode: '86',
+        email: null,
+        isEnableGoogle: false,
+        isEnableMail: false,
+        isEnablePhone: false,
+        phone: '18625512982',
+        token: '99b9e025-8c40-48a8-925f-eaf8f9112784'
+      }, // 用户信息
       phoneCode: '', // 手机验证码
       emailCode: '', // 邮箱验证码
+      googleCode: '', // google验证码
+      newPassword: '', // 新登录密码
+      confirmPassword: '', // 确认密码
       confirmWords: '请按住滑块，拖动到最右边', /* 滑块文字 */
-      sliderFlag: true, // 滑块调用节流阀
+
+      beginClientX: 0, /* 距离屏幕左端距离 */
       mouseMoveStatus: false, // 触发拖动状态
+      sliderFlag: true, // 滑块调用节流阀
       confirmSuccess: false, // 验证成功判断
       dragStatus: true, // 拖动标记
-      maxwidth: 340, // 拖动最大宽度，依据滑块宽度算出来的
+      maxwidth: 160, // 拖动最大宽度，依据滑块宽度算出来的
       phoneNumTips: '若该手机号无法使用请联系客服', // 手机号提示信息
       emailNumTips: '若该邮箱无法使用请联系客服', // 邮箱号提示信息
       end: ''
     }
   },
   created () {
+    // console.log(phoneNumberFormat(this.username))
   },
   mounted () {
     $('body').on('mousemove', (e) => { // 拖动，这里需要用箭头函数，不然this的指向不会是vue对象
@@ -204,6 +327,7 @@ export default {
       }
     })
     $('body').on('mouseup', (e) => { // 鼠标放开
+      // console.log('mouseup')
       this.mouseMoveStatus = false
       var width = e.clientX - this.beginClientX
       if (width < this.maxwidth) {
@@ -212,6 +336,8 @@ export default {
       }
       $('body').off('mousemove')
       $('body').off('mouseup')
+      // this.onmousemove = null;
+      // this.onmouseup = null;
     })
     $('body').on('dblclick', (e) => {
 
@@ -224,14 +350,131 @@ export default {
     ...mapMutations([
       'SET_USER_BUTTON_STATUS'
     ]),
+    // 封装 phoneNumberFormat
+    phoneNumberFormat (phoneNum) {
+      return phoneNumberFormat(phoneNum)
+    },
+    // 找回密码步骤3
+    async findPasswordStep3 () {
+      const params = {
+        token: this.userInfo.token,
+        newPassword: this.newPassword
+      }
+      const data = await findPasswordStep3(params)
+      if (!returnAjaxMessage(data, this)) {
+        return false
+      } else {
+        this.activeStepNumber = 4
+      }
+    },
+    // 找回密码步骤2
+    async findPasswordStep2 () {
+      if (this.userInfo.isEnablePhone && !this.phoneCode) {
+        this.$message({
+          type: 'error',
+          message: '请输入短信验证码'
+        })
+        return false
+      }
+
+      if (this.userInfo.isEnableMail && !this.emailCode) {
+        this.$message({
+          type: 'error',
+          message: '请输入邮箱验证码'
+        })
+        return false
+      }
+      if (this.userInfo.isEnableGoogle && !this.googleCode) {
+        this.$message({
+          type: 'error',
+          message: '请输入谷歌验证码'
+        })
+        return false
+      }
+
+      const params = {
+        token: this.userInfo.token,
+        phoneCode: this.phoneCode,
+        mailCode: this.emailCode,
+        googleCode: this.googleCode
+      }
+      const data = await findPasswordStep2(params)
+      if (!returnAjaxMessage(data, this)) {
+        return false
+      } else {
+        console.log(data)
+        this.activeStepNumber = 3
+      }
+    },
+    // 找回密码步骤1
+    async findPasswordStep1 () {
+      if (!this.confirmSuccess) {
+        this.$message({
+          type: 'error',
+          message: '请通过滑块验证'
+        })
+        return false
+      }
+      let params = {
+        userName: this.username
+      }
+      const data = await findPasswordStep1(params)
+      if (!returnAjaxMessage(data, this)) {
+        return false
+      } else {
+        this.userInfo = data.data.data
+        console.log(this.userInfo)
+        this.activeStepNumber = 2
+      }
+    },
+    // 发送验证码
+    sendPhoneOrEmailCode (msgType) {
+      if (this.disabledOfPhoneBtn || this.disabledOfEmailBtn) {
+        return false
+      }
+      let params = {
+        country: this.userInfo.countryCode,
+        type: 'LOGIN_RECORD'
+      }
+      switch (msgType) {
+        case 0:
+          params.phone = this.userInfo.phone
+          break
+        case 1:
+          params.address = this.userInfo.email
+          break
+      }
+      sendPhoneOrEmailCodeAjax(msgType, params, (data) => {
+        // 提示信息
+        if (!returnAjaxMessage(data, this)) {
+          console.log('error')
+          return false
+        } else {
+          switch (msgType) {
+            case 0:
+              this.SET_USER_BUTTON_STATUS({
+                loginType: 0,
+                status: true
+              })
+              break
+            case 1:
+              this.SET_USER_BUTTON_STATUS({
+                loginType: 1,
+                status: true
+              })
+              break
+          }
+        }
+      })
+    },
     /**
      * 滑块验证
      */
     mouseupFn (e) {
       console.log('mouseup')
-      // this.dragStatus = true;
+      // this.dragStatus = true
     },
-    mousedownFn: function (e) {
+    mousedownFn (e) {
       // if (this.dragStatus) {
       this.dragStatus = false
       this.mouseMoveStatus = true
@@ -399,11 +642,20 @@ export default {
                   border-radius:4px;
                   color:#fff;
                 }
+                >.slider-success{
+                  width:200px;
+                  height:36px;
+                  background:rgba(32,55,90,1);
+                  border:1px solid rgba(51,143,245,1);
+                  border-radius:4px;
+                  text-align: center;
+                  color:$mainColor;
+                }
               }
               /*滑块*/
               .drag-box{
                 width:200px;
-                display:inline-block;
+                /*display:inline-block;*/
                 overflow: hidden;
                 >.drag{
                   position: relative;
@@ -460,6 +712,42 @@ export default {
                     }
                   }
                 }
+              }
+            }
+            /*步骤4， 已成功*/
+            >.success-box{
+              width:500px;
+              height:100px;
+              line-height:100px;
+              margin:0 auto;
+              display:flex;
+              >.left{
+                flex:1;
+              }
+              >.right{
+                padding-top:30px;
+                flex:3;
+                text-align: left;
+                >p{
+                  line-height:30px;
+                  height:30px;
+                  >a{
+                    color:#fff;
+                  }
+                }
+                >.success-msg{
+                  color:#338FF5;
+                  font-size: 14px;
+                }
+                >.success-tips{
+                  color:#5E8FCC;
+                  font-size: 12px;
+                }
+              }
+              .icon-text{
+                font-size: 100px;
+                color:#1296db;
+                vertical-align: top;
               }
             }
           }

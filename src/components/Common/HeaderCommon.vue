@@ -407,8 +407,8 @@ export default{
       } else {
         this.languageList = data.data.data
         this.CHANGE_LANGUAGE(this.languageList[0])
-        console.log(this.languageList[0])
-        console.log(this.activeLanguage)
+        // console.log(this.languageList[0])
+        // console.log(this.activeLanguage)
       }
     },
     // 获取板块列表
@@ -448,6 +448,7 @@ export default{
     userLoginOut () {
       console.log('logout')
       this.$store.commit('user/USER_LOGOUT')
+      this.$router.push({path: '/'})
     },
     // 显示状态切换（子导航）
     toggleShowSubNavBox (item, status) {

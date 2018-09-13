@@ -7,7 +7,7 @@
   </div>
 </template>
 <script>
-import Tv from '../../utils/tradingview'
+// import Tv from '../../utils/tradingview'
 import {mapState} from 'vuex'
 export default {
   components: {},
