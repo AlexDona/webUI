@@ -7,7 +7,7 @@
     <div class="transaction-password-main margin25">
       <header class="transaction-password-header personal-height60 line-height60 line-height70 margin25">
         <span
-          v-if="!SecurityCenter.payPassword"
+          v-if="!securityCenter.payPassword"
           class="header-content-left header-content font-size16 font-weight600"
         >
           设置交易密码
@@ -36,7 +36,7 @@
         <div class="transaction-content-from">
           <!--设置交易密码-->
           <el-form
-            v-if="SecurityCenter.payPassword"
+            v-if="securityCenter.payPassword"
             :label-position="labelPosition"
             label-width="120px"
           >
@@ -125,7 +125,7 @@
             </el-form-item>
             <el-form-item
               label="验  证  码："
-              v-if="!SecurityCenter.isMailBind"
+              v-if="!securityCenter.isPhoneEnable"
             >
               <el-input
                 type="text"
@@ -149,7 +149,7 @@
             </el-form-item>
             <span v-else></span>
             <el-form-item
-              v-if="!SecurityCenter.isPhoneBind"
+              v-if="!securityCenter.isMailEnable"
               label="邮箱验证码"
             >
               <el-input
@@ -174,7 +174,7 @@
             <span v-else></span>
             <el-form-item
               label="谷歌验证码"
-              v-if="!SecurityCenter.isPhoneBind"
+              v-if="!securityCenter.isGoogleEnable"
             >
               <input
                 type="text"
@@ -245,7 +245,7 @@ export default {
         '', // 交易密码
         '' // 重复交易密码
       ],
-      SecurityCenter: {},
+      securityCenter: {},
       // 修改交易密码
       modifyPassword: {
         transactionPassword: '', // 修改交易密码
@@ -526,7 +526,7 @@ export default {
         return false
       } else {
         // 返回展示
-        this.SecurityCenter = data.data.data
+        this.securityCenter = data.data.data
       }
     },
     // 谷歌绑定成功自动跳转

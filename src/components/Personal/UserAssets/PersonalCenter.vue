@@ -236,7 +236,8 @@ export default {
           this.$refs.coinOrdersValue.getMyCurrentEntrust()
           break
         case 'fiat-orders':
-          this.$refs.fiatOrdersValue.getOTCTradingOrdersList()
+          // 页面加载时请求接口渲染列表
+          this.$refs.fiatOrdersValue.getOTCEntrustingOrdersRevocation()
           break
       }
     }

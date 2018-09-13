@@ -85,3 +85,24 @@ export const accountPaymentTerm = () => get('user/bank/', {})
 export const statusCardSettings = (params) => postWithURLencoded('user/bank/save', params)
 // 开启关闭收款方式设置
 export const openAndCloseModeSetting = (params) => postWithURLencoded('user/bank/enable', params)
+/**
+ * 法币订单
+ * */
+// 查询某商户可用法币币种列表
+export const getMerchantAvailablelegalTender = (params) => get('otcCOin/getAvailCurrencyCoins', params)
+// 可用币种查询：我要购买/我要出售的币种列表
+export const getOTCAvailableCurrency = (params) => get('otcCOin/getAvailOTCCoins', params)
+// 查询用户所有挂单列表（分页）:也就是订单中的 委托中的订单
+export const getOTCEntrustingOrders = (params) => get('otcEntrust/selectEntrustsPage', params)
+// 分页查询所有用户otc各状态交易订单列表
+export const getQueryAllOrdersList = (params) => get('otcOrder/selectUserOrdersPage', params)
+// 查询otc挂单撤销
+export const querySelectedOrdersRevocation = (params) => postWithURLencoded('otcEntrust/cancelOtcEntrust', params)
+// 交易中订单，买家确认付款
+export const buyerPayForOrder = (params) => postWithURLencoded('otcOrder/payForOrder', params)
+// otc交易中订单， otc卖家确认收款
+export const sellerConfirmGetMoney = (params) => postWithURLencoded('otcOrder/confirmReceiveForOrder', params)
+// otc交易中订单， otc卖家申诉
+export const sellerSendAppeal = (params) => postWithURLencoded('otcAppeal/applyOtcAppeal', params)
+// 商家订单列表请求
+export const getOTCMerchantsOrdersList = (params) => get('otcOrder/selectMerchOrdersPage', params)
