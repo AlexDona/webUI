@@ -45,6 +45,8 @@ const state = {
   // },
   // 个人中心默认显示第一个
   userCenterActiveName: 'assets',
+  // 个人中心默认显示第一个
+  fiatMoneyOrdersName: 'trade-order',
   // 安全中心默认
   refSecurityCenterStatus: false,
   // 收款方式
