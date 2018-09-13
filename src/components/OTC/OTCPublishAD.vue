@@ -794,6 +794,7 @@ export default {
       if (this.errorInfoMaxCount) {
         return false
       }
+      // 限制设置--还未写记得写
       this.dialogVisible = true
     },
     // 10.0 点击密码框中的提交按提交钮发布广告
