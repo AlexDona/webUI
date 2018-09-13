@@ -691,6 +691,10 @@ export default {
     },
     // 5.0 点击 确认购买 按钮提交数据
     async submitPickOrdersToBuy () {
+      if (!this.tradePassword) {
+        this.tradePasswordTips = '请输入交易密码'
+        return false
+      }
       // console.log('购买')
       const data = await pickOrdersToBuy({
         entrustId: this.id, // 挂单id
