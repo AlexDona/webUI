@@ -379,10 +379,10 @@
 import Footer from './NoticeHome'
 import EchartsLineCommon from '../Common/EchartsLineCommon'
 import IconFontCommon from '../Common/IconFontCommon'
+import socket from '../../utils/datafeeds/socket'
 // 文件拖动
 import VueDND from 'awe-dnd'
 import {getStore, setStore} from '../../utils'
-import {socket} from '../../utils/tradingview/socket'
 // import {getPartnerList} from '../../utils/api/home'
 import {
   returnAjaxMessage,
@@ -432,7 +432,8 @@ export default{
       // 前两项行情数据
       filterMarketList: [],
       // 切换正反面显示列表
-      toggleSideList: []
+      toggleSideList: [],
+      socket: new socket()
     }
   },
   async created () {
@@ -931,28 +932,37 @@ export default{
   activited () {},
   update () {},
   beforeRouteUpdate () {},
+  destroyed () {
+    this.socket.destroy()
+  },
   methods: {
     ...mapMutations([
       'CHANGE_COLLECT_LIST'
     ]),
     // 更改当前交易对
     changeActiveSymbol (e) {
-      this.$store.commit('common/CHANGE_ACTIVE_SYMBOL', {activeSymbol: e})
+      this.$store.commit('trade/SET_JUMP_STATUS', true)
+      this.$store.commit('trade/SET_JUMP_SYMBOL', e)
       console.log(this.activeSymbol)
       // 设置当前交易区
-      const areaId = e.areaId
+      const id = e.areaId
+      const name = e.area
+      console.log(e)
       this.$store.commit('common/CHANGE_ACTIVE_TRADE_AREA', {
-        areaId
+        id,
+        name
       })
       this.$router.push({'path': '/TradeCenter'})
     },
     // 重新订阅请求socket
     resetSocketMarket (plateId) {
-      socket.subscribeKline({
-        'type': 'home_market', // 请求类型
-        plateId
-      }, (data) => {
-        // console.log(data)
+      this.socket.doOpen()
+      this.socket.on('open', () => {
+        this.getSocketData('REQ', plateId)
+        this.getSocketData('SUB', plateId)
+      })
+      this.socket.on('message', (data) => {
+        console.log(data)
         if (data.tradeType === 'TICKER') {
           if (data.data) {
             switch (data.type) {
@@ -1011,12 +1021,29 @@ export default{
             }
           }
         }
-        // let resultArr = splitSocketParams(data)
-        // console.log(resultArr)
-        // console.log(this.marketList)
-        // if (this.collectList.length) {
-        //   this.setMarketList(this.collectAreaId, this.collectList)
-        // }
+      })
+
+      socket.subscribeKline({
+        'type': 'home_market', // 请求类型
+        plateId
+      }, (data) => {
+        // console.log(data)
+      //
+      //
+      //   // let resultArr = splitSocketParams(data)
+      //   // console.log(resultArr)
+      //   // console.log(this.marketList)
+      //   // if (this.collectList.length) {
+      //   //   this.setMarketList(this.collectAreaId, this.collectList)
+      //   // }
+      })
+    },
+    getSocketData (type, plateId) {
+      // 首页socket
+      this.socket.send({
+        'tag': 'REQ',
+        'content': `market.ticker.${this.partnerId}.${plateId}.0.i18nCode`,
+        'id': `market_001`
       })
     },
     // 切换板块

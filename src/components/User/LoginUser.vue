@@ -485,6 +485,7 @@ export default {
   data () {
     return {
       username: '15738818082',
+      // password: '000000', // 15738818082的密码
       // username: '18625512987',
       // username: '18600929234',
       // username: '17600854297',
@@ -492,7 +493,7 @@ export default {
       // password: 'a11111111',
       // username: '18625512986',
       // username: '18625512988',
-      password: 'a1111111',
+      password: 'a111111111',
       userNameErrorMsg: '', // 错误提示
       loadingCircle: {},
       userInputImageCode: '', // 图形验证码(用户输入)
@@ -911,6 +912,29 @@ export default {
         this.step3DialogShowStatus = false
         // this.SET_STEP1_INFO(data.data.data)
         this.USER_LOGIN(data.data.data)
+
+        if (this.routerTo &&
+          !this.routerTo.startsWith('/addNewPwdByPhone') &&
+          !this.routerTo.startsWith('/addNewPwdByEmail') &&
+          !this.routerTo.startsWith('/register') &&
+          !this.routerTo.startsWith('/login') &&
+          !this.routerTo.startsWith('/forgetPwd') &&
+          !this.routerTo.startsWith('/changePwdByPhone') &&
+          !this.routerTo.startsWith('/changePwdByEmail') &&
+          !this.routerTo.startsWith('/nofind404')
+        ) {
+          // getPersonalAssetsList(this.$store, this.$message).then((res) => {
+          //   if (res.data.code !== 200) {
+          //
+          //   } else {
+          this.$router.push({path: this.routerTo})
+          //   }
+          // })
+          // console.log(this.$store.state.personalAsset);
+        } else {
+          this.$router.push({path: '/home'})
+        }
+
         // 登录成功
         this.$router.push({'path': '/'})
       }
@@ -1141,7 +1165,8 @@ export default {
       userInfo: state => state.user.loginStep1Info, // 用户详细信息
       loginType: state => state.user.loginType, // 登录类型
       disabledOfPhoneBtn: state => state.user.disabledOfPhoneBtn,
-      disabledOfEmailBtn: state => state.user.disabledOfEmailBtn
+      disabledOfEmailBtn: state => state.user.disabledOfEmailBtn,
+      routerTo: state => state.common.routerTo // 路由跳转
     })
     // step1 () {
     // return this.$store.state.loginStep.step1

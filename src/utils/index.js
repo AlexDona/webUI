@@ -166,3 +166,12 @@ export function formatNumberInput (event, targetPointLength) {
 export function getRefValue (self, refName) {
   return self.$refs[refName].value
 }
+
+/**
+ * 手机号、email隐藏封装
+ * @param phoneNum
+ * @returns {string}
+ */
+export function phoneNumberFormat (phoneNum) {
+  return `${phoneNum.substring(0, 3)}****${phoneNum.substring(phoneNum.length - 4)}`
+}

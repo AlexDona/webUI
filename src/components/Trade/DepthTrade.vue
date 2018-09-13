@@ -433,7 +433,7 @@ export default {
       for (let k in params) {
         this.options[k] = params[k]
       }
-      console.log(params)
+      // console.log(params)
       this.depthCharts.setOption(this.options)
       window.onresize = this.depthCharts.resize
     },
@@ -472,15 +472,17 @@ export default {
       // this.options.series[0].data = newVal.buy
       // this.options.series[1].data = newVal.sell
       // this.depthCharts.setOption(this.options)
-      if (newVal.buy) {
-        this.series[0].data = newVal.buy
+      if (newVal) {
+        if (newVal.buy) {
+          this.series[0].data = newVal.buy
+        }
+        if (newVal.sell) {
+          this.series[1].data = newVal.sell
+        }
+        this.options.series = this.series
+        this.resetOptions()
+        this.resetChart(this.options)
       }
-      if (newVal.sell) {
-        this.series[1].data = newVal.sell
-      }
-      this.options.series = this.series
-      this.resetOptions()
-      this.resetChart(this.options)
     },
     theme () {
       this.resetOptions()

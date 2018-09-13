@@ -448,6 +448,7 @@ export default{
     userLoginOut () {
       console.log('logout')
       this.$store.commit('user/USER_LOGOUT')
+      this.$router.push({path: '/'})
     },
     // 显示状态切换（子导航）
     toggleShowSubNavBox (item, status) {
