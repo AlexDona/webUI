@@ -5,7 +5,7 @@
   >
     <div class="completed-order-content">
       <el-table
-        :data="tableData5"
+        :data="CompletedOrdersList"
         :default-expand-all="true"
         empty-text="暂无数据"
       >
@@ -147,7 +147,7 @@ export default {
   // props,
   data () {
     return {
-      tableData5: []
+      CompletedOrdersList: []
     }
   },
   created () {
@@ -179,8 +179,8 @@ export default {
         return false
       } else {
         // 返回数据正确的逻辑
-        this.tableData5 = data.data.data.list
-        console.log(this.tableData5)
+        this.completedOrdersList = data.data.data.list
+        console.log(this.completedOrdersList)
       }
     }
   },

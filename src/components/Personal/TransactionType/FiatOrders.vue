@@ -245,10 +245,6 @@ export default {
         case 'trade-order':
           // 交易中的订单列表展示
           this.$refs.tradeOrder.getOTCTradingOrdersList()
-          // 可用币种查询
-          this.$refs.tradeOrder.getOTCAvailableCurrencyList()
-          // 可用法币查询
-          this.$refs.tradeOrder.getMerchantAvailablelegalTenderList()
           break
         case 'completed-order':
           // 已完成订单列表展示
@@ -330,10 +326,6 @@ export default {
         case 'trade-order':
           // 交易中的订单列表展示
           this.$refs.tradeOrder.getOTCTradingOrdersList()
-          // 可用币种查询
-          this.$refs.tradeOrder.getOTCAvailableCurrencyList()
-          // 可用法币查询
-          this.$refs.tradeOrder.getMerchantAvailablelegalTenderList()
           break
         case 'completed-order':
           // 已完成订单列表展示
@@ -397,7 +389,7 @@ export default {
   computed: {
     ...mapState({
       theme: state => state.common.theme,
-      withdrawDepositIsShowList: state => state.common.withdrawDepositIsShowList,
+      withdrawDepositList: state => state.common.withdrawDepositList,
       userInfo: state => state.user.loginStep1Info, // 用户详细信息
       fiatMoneyOrdersName: state => state.personal.fiatMoneyOrdersName
     })

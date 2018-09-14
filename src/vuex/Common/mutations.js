@@ -77,6 +77,6 @@ export default {
   },
   // 切换主题
   [USER_ASSETS_LIST] (state, data) {
-    state.withdrawDepositIsShowList = data
+    state.withdrawDepositList = data
   }
 }
