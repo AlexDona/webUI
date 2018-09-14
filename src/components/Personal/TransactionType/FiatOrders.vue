@@ -226,6 +226,7 @@ export default {
     console.log(this.userInfo.userInfo.partnerId)
     this.getOTCAvailableCurrencyList()
     this.getMerchantAvailablelegalTenderList()
+    console.log(this.USER_ASSETS_LIST)
   },
   mounted () {},
   activited () {},
@@ -235,7 +236,8 @@ export default {
     ...mapMutations([
       'CHANGE_OTC_AVAILABLE_CURRENCY_NAME',
       'CHANGE_OTC_AVAILABLE_CURRENCY_ID',
-      'CHANGE_OTC_AVAILABLE_PARTNER_COIN_ID'
+      'CHANGE_OTC_AVAILABLE_PARTNER_COIN_ID',
+      'USER_ASSETS_LIST'
     ]),
     // tab面板切换
     statusSwitchPanel (tab) {
@@ -395,6 +397,7 @@ export default {
   computed: {
     ...mapState({
       theme: state => state.common.theme,
+      withdrawDepositIsShowList: state => state.common.withdrawDepositIsShowList,
       userInfo: state => state.user.loginStep1Info, // 用户详细信息
       fiatMoneyOrdersName: state => state.personal.fiatMoneyOrdersName
     })
