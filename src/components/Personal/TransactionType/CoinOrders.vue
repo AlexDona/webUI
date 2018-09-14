@@ -94,7 +94,7 @@
           <div class="search-box condition-item">
             <button
               class="search-btn cursor-pointer"
-              @click="searchWithCondition(entrustType)"
+              @click="searchWithCondition(activeName)"
             >
               查询
             </button>
@@ -300,7 +300,7 @@
           <!--分页-->
           <el-pagination
             background
-            v-show="activeHistory === 'history-entrust' && historyEntrustList.length"
+            v-show="activeName === 'history-entrust' && historyEntrustList.length"
             layout="prev, pager, next"
             :page-count="totalPageForHistoryEntrust"
             @current-change="changeCurrentPage(1,$event)"
@@ -382,7 +382,7 @@
           <!--分页-->
           <el-pagination
             background
-            v-show="activeMake === 'make-detail' && currentMakeDetailList.length"
+            v-show="activeName === 'make-detail' && currentMakeDetailList.length"
             layout="prev, pager, next"
             :page-count="totalPageForMakeDetailEntrust"
             @current-change="changeCurrentPage(2,$event)"
@@ -474,6 +474,7 @@ export default {
   beforeRouteUpdate () {},
   methods: {
     coinMoneyOrders (tab) {
+      // this.commissionList(entrustType)
       switch (tab.name) {
         case 'current-entrust':
           // 查询当前委单
@@ -561,9 +562,42 @@ export default {
         }
       })
     },
+    // async commissionList (entrustType) {
+    //   let params = {
+    //     userId: this.userInfo.userId,
+    //     currentPage: '',
+    //     pageSize: this.pageSize,
+    //     buyCoinName: this.activeSymbol,
+    //     type: this.activeType,
+    //     sellCoinName: this.activeExchangeArea,
+    //     startTime: this.startTime === '' ? '' : timeFilter(this.startTime, 'normal'),
+    //     endTime: this.endTime === '' ? '' : timeFilter(this.endTime, 'normal')
+    //   }
+    //   switch (entrustType) {
+    //     case 'current-entrust':
+    //       params.currentPage = this.currentPageForMyEntrust
+    //       break
+    //     case 'history-entrust':
+    //       params.currentPage = this.currentPageForHistoryEntrust
+    //       break
+    //     case 'make-detail':
+    //       params.currentPage = this.currentPageMakeDetailEntrust
+    //       break
+    //   }
+    //   const data = await getMyEntrust(params)
+    //   console.log(data)
+    //   if (!returnAjaxMessage(data, this, 0)) {
+    //     return false
+    //   } else {
+    //     // console.log(data.data.data.list)
+    //     if (data.data.data.list) {
+    //       this.currentEntrustList = data.data.data.list
+    //       this.totalPageForMyEntrust = data.data.data.pages - 0
+    //     }
+    //   }
+    // },
     // 查询当前委单
     async getMyCurrentEntrust () {
-      this.currentEntrustList = []
       let params = {
         userId: this.userInfo.userId,
         currentPage: this.currentPageForMyEntrust,

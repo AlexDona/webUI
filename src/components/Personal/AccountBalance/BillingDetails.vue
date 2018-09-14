@@ -332,6 +332,8 @@ export default {
       let data = await statusRushedToRecordList({
         currentPage: this.currentPageForMyEntrust, // 当前委托页码
         pageSize: this.pageSize, // 每页显示条数
+        userId: this.userInfo.userInfo.userId, // 用户ID
+        coinId: this.currencyListValue, // 币种ID
         type: this.currencyTypeValue, // 类型（RECHARGE:充值 WITHDRAW:提现）
         startTime: this.startTime, // 开始起止时间
         endTime: this.endTime // 结束起止时间
@@ -348,11 +350,20 @@ export default {
     },
     // 资产币种下拉
     changeId (e) {
+      console.log(e)
       this.currencyList.forEach(item => {
         if (e === item.id) {
+          console.log(e)
           this.inquireCurrencyList(e)
         }
       })
+      // this.currencyList.forEach(item => {
+      //   if (id === item.coinId) {
+      //     this.currencyListValue = id
+      //     this.inquireCurrencyList(id)
+      //     console.log(id)
+      //   }
+      // })
     },
     // 获取商户币种列表
     async inquireCurrencyList () {

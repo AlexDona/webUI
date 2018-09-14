@@ -1,4 +1,4 @@
-import {post, get, put, postWithURLencoded} from './axios'
+import {post, get, put, postWithURLencoded, deleteMethod} from './axios'
 /**
  * 个人中心
  */
@@ -104,5 +104,29 @@ export const buyerPayForOrder = (params) => postWithURLencoded('otcOrder/payForO
 export const sellerConfirmGetMoney = (params) => postWithURLencoded('otcOrder/confirmReceiveForOrder', params)
 // otc交易中订单， otc卖家申诉
 export const sellerSendAppeal = (params) => postWithURLencoded('otcAppeal/applyOtcAppeal', params)
-// 商家订单列表请求
+// async getSecurityCenter () {
+//       let data = await statusSecurityCenter({
+//         token: this.userInfo.token // token
+//       })
+//       console.log(data)
+//       if (!(returnAjaxMessage(data, this, 0))) {
+//         return false
+//       } else {
+//         // 返回展示
+//         this.securityCenter = data.data.data
+//       }
+//     }
 export const getOTCMerchantsOrdersList = (params) => get('otcOrder/selectMerchOrdersPage', params)
+/**
+ * API
+ * */
+// 获取多个用户api信息
+export const multipleUserAPIInfo = (params) => get('userApi', params)
+// 添加用户api信息
+export const stateCreationApi = (params) => post('userApi', params)
+//  获取秘钥
+export const accessAecretKeyInfo = (params) => get('userApi/secretKey', params)
+//  修改用户api信息
+export const modifyUserInformation = (params) => put('userApi', params)
+//   删除用户api信息
+export const deleteUserInformation = (params) => deleteMethod('userApi', params)

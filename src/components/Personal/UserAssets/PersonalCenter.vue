@@ -225,6 +225,8 @@ export default {
           this.$refs.securityCenterValue.getSecurityCenter()
           break
         case 'api-management':
+          // 获取多个用户api信息
+          this.$refs.apiManagementValue.getMultipleUserAPIInfo()
           break
         case 'push-asset':
           // push列表展示

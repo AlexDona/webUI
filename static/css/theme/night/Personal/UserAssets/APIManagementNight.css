@@ -24,3 +24,6 @@
 .api-management.personal .el-dialog__title {
   color: #fff;
 }
+.api-management.personal .el-table__empty-block {
+  background-color: #1E2636;
+}

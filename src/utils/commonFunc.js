@@ -19,11 +19,13 @@ import {
   getPartnerList
 } from '../utils/api/home'
 import {PHONE_REG, EMAIL_REG, ID_REG, PWD_REG, ALIPAY_REG, BANK_REG, GOOGLE_REG} from './regExp'
-import {
-  CHANGE_CANCELED_ORDERS_LIST,
-  CHANGE_COMPLETED_ORDERS_LIST, CHANGE_ENTRUST_ORDERS_LIST, CHANGE_FROZEN_ORDERS_LIST,
-  CHANGE_MERCHANTS_ORDERS_LIST
-} from "../vuex/Personal/mutations-types";
+// import {
+//   CHANGE_CANCELED_ORDERS_LIST,
+//   CHANGE_COMPLETED_ORDERS_LIST,
+//   CHANGE_ENTRUST_ORDERS_LIST,
+//   CHANGE_FROZEN_ORDERS_LIST,
+//   CHANGE_MERCHANTS_ORDERS_LIST
+// } from "../vuex/Personal/mutations-types";
 // 请求接口后正确或者错误的提示提示信息：
 // 如果返回 错误 了就提示错误并不能继续往下进行；
 // 如果返回了 正确 的数据：不需要正确的提示noTip传0；需要正确的提示noTip传1；
@@ -145,14 +147,15 @@ export const getPartnerListAjax = async (partnerId, callback) => {
 }
 
 // 封装全部请求方法
-export function getAllList (route, message) {
-  Promise.all([
-    getMerchantsOrdersList('c2cOrderSublist', message)
-  ]).then((res) => {
-    store.commit('CHANGE_MERCHANTS_ORDERS_LIST', res[0].data.data) // 交易中订单
-    store.commit('CHANGE_COMPLETED_ORDERS_LIST', res[1].data.data) // 已完成订单
-    store.commit('CHANGE_CANCELED_ORDERS_LIST', res[2].data.data) // 已取消订单
-    store.commit('CHANGE_FROZEN_ORDERS_LIST', res[3].data.data) // 冻结中的订单
-    store.commit('CHANGE_ENTRUST_ORDERS_LIST', res[4].data.data) // 委托订单
-  })
-}
+// export function getAllList (route, message) {
+//   // Promise.all([
+//   //   getMerchantsOrdersList('c2cOrderSublist', message)
+//   // ]).then((res) => {
+//   getMerchantsOrdersList(message)
+//   store.commit('CHANGE_MERCHANTS_ORDERS_LIST', res[0].data.data) // 交易中订单
+//   store.commit('CHANGE_COMPLETED_ORDERS_LIST', res[1].data.data) // 已完成订单
+//   store.commit('CHANGE_CANCELED_ORDERS_LIST', res[2].data.data) // 已取消订单
+//   store.commit('CHANGE_FROZEN_ORDERS_LIST', res[3].data.data) // 冻结中的订单
+//   store.commit('CHANGE_ENTRUST_ORDERS_LIST', res[4].data.data) // 委托订单
+//   // })
+// }
