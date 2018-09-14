@@ -18,7 +18,7 @@
   border: 0;
 }
 .fiat-orders.personal .el-date-editor.el-input {
-  width: 120px;
+  width: 130px;
   height: 30px;
 }
 .fiat-orders.personal .el-date-editor .el-input__inner {
@@ -39,4 +39,5 @@
   height: 34px;
   padding: 0;
   border: 0;
+  margin-left: 77px;
 }

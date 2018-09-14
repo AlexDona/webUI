@@ -48,6 +48,7 @@ const state = {
   plateList: [], // 板块列表
   partnerId: '474629374641963008', // 商户id
   routerTo: '', // 路由跳转
+  withdrawDepositIsShowList: [], // 我的资产列表信息数据
   end: ''// 占位
 }
 

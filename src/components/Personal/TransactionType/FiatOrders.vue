@@ -15,7 +15,7 @@
         <!-- 上部分筛选条件 -->
         <div class="orders-main-top">
           <div class="main-top-type trade-type float-left">
-            <span class="filtrate-text font-size14">交易类型</span>
+            <span class="filtrate-text font-size14">类型</span>
             <span class="style-input">
               <el-select
                 v-model="activitedMerchantsOrdersTraderStyleList"
@@ -404,7 +404,7 @@ export default {
 </script>
 <style scoped lang="scss">
   @import "../../../../static/css/scss/Personal/TransactionType/CoinOrders";
-.fiat-orders{
+.fiat-orders {
   .fiat-main {
     .orders-main-top{
       height: 100px;
@@ -419,10 +419,14 @@ export default {
       .main-top-type {
         height: 50px;
         line-height: 50px;
-        >.filtrate-text {}
+        >.filtrate-text {
+          margin-right: 5px;
+        }
         >.style-input {}
         >.date-picker {}
-        >.date-short-line {}
+        .date-short-line {
+          margin: 0 25px;
+        }
         >.inquire-button {}
       }
       >.filtrate-text{

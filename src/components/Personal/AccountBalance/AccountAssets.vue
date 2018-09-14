@@ -540,25 +540,6 @@ export default {
       }
       this.getAssetCurrenciesList(e)
     },
-    // 搜索币种关键字
-    // searchFromUserAssetsList () {
-    //   console.log('1')
-    //   this.searchList = []
-    //   if (this.searchKeyWord.trim() !== '') {
-    //     console.log('2')
-    //     console.log(this.searchKeyWord)
-    //     // this.withdrawDepositIsShowList.forEach((assetItem) => {
-    //     //   console.log(this.withdrawDepositIsShowList)
-    //     //   const result = assetItem.shortName.search(this.searchKeyWord)
-    //     //   if (result !== -1) {
-    //     //     console.log('-1')
-    //     //     console.log(result)
-    //     //     this.searchList.push(assetItem)
-    //     //   }
-    //     // })
-    //     this.getAssetCurrenciesList(this.searchList)
-    //   }
-    // },
     // 输入限制
     // 修改input value 输入限制
     changeInputValue (ref, index, pointLength) {
