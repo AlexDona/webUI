@@ -417,7 +417,7 @@ export default {
       let params = {
         partnerId: this.partnerId,
         userId: this.loginStep1Info.userId,
-        tradeId: this.activeSymbol.tradeId,
+        tradeId: this.activeSymbol.tradeId + '',
         payPwd: this.payPwd,
         type: type ? 'SELL' : 'BUY', // 委单类型
         matchType: this.matchType, // 撮合类型

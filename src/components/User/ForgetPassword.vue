@@ -283,14 +283,14 @@ export default {
   data () {
     return {
       activeStepNumber: 1, // 当前步骤
-      username: '18625512985',
+      username: '15800000000',
       userInfo: {
         countryCode: '86',
         email: null,
         isEnableGoogle: false,
         isEnableMail: false,
         isEnablePhone: false,
-        phone: '18625512982',
+        phone: '15800000000',
         token: '99b9e025-8c40-48a8-925f-eaf8f9112784'
       }, // 用户信息
       phoneCode: '', // 手机验证码

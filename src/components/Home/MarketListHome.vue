@@ -962,8 +962,8 @@ export default{
         this.getSocketData('SUB', plateId)
       })
       this.socket.on('message', (data) => {
-        console.log(data)
         if (data.tradeType === 'TICKER') {
+          console.log(data)
           if (data.data) {
             switch (data.type) {
               // 请求socket
@@ -1023,11 +1023,11 @@ export default{
         }
       })
 
-      socket.subscribeKline({
-        'type': 'home_market', // 请求类型
-        plateId
-      }, (data) => {
-        // console.log(data)
+      // socket.subscribeKline({
+      //   'type': 'home_market', // 请求类型
+      //   plateId
+      // }, (data) => {
+      // console.log(data)
       //
       //
       //   // let resultArr = splitSocketParams(data)
@@ -1036,12 +1036,12 @@ export default{
       //   // if (this.collectList.length) {
       //   //   this.setMarketList(this.collectAreaId, this.collectList)
       //   // }
-      })
+      // })
     },
     getSocketData (type, plateId) {
       // 首页socket
       this.socket.send({
-        'tag': 'REQ',
+        'tag': type,
         'content': `market.ticker.${this.partnerId}.${plateId}.0.i18nCode`,
         'id': `market_001`
       })
@@ -1266,6 +1266,9 @@ export default{
     },
     currencyRateList (newVal) {
       console.log(newVal)
+    },
+    activeName (newVal, oldVal) {
+      console.log(newVal, oldVal)
     }
   }
 }
