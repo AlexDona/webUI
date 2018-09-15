@@ -1,5 +1,8 @@
 <template>
-  <div class="otc-box otc">
+  <div
+    class="otc-box otc"
+    :class="{'day':theme == 'day','night':theme == 'night' }"
+  >
     <!-- 1.0 导航 -->
     <NavCommon/>
     <!--2.0 在线交易和订单管理-->
@@ -108,23 +111,6 @@
           </div>
           <!--商户列表表格部分-->
           <div class="otc-merchant-list">
-            <!-- 支付方式 -->
-            <!-- <div class="pay-way">
-              <el-select
-                v-model="activedPayWayBankinfoItem"
-                @change="payWayChangeValue"
-              >
-                <el-option
-                  v-for="(item,index) in payWayBankinfoList"
-                  :key="index"
-                  :value="item.id"
-                  :label="item.shortName"
-                >
-                  {{ item.shortName }}
-                </el-option>
-              </el-select>
-            </div>
-            <div class="shade-pay-way">支付方式</div> -->
             <!-- 表格信息 -->
             <el-table
               :data="onlineBuySellTableList"
@@ -233,7 +219,7 @@
                     type="danger"
                     size="mini"
                     v-if="OTCBuySellStyle === 'onlineBuy'"
-                    @click="toOnlineBuy(s.row.id,s.row.partnerCoinId)"
+                    @click="toOnlineBuy(s.row.id,s.row.coinId)"
                   >
                     购买
                   </el-button>
@@ -241,7 +227,7 @@
                     type="success"
                     size="mini"
                     v-if="OTCBuySellStyle === 'onlineSell'"
-                    @click="toOnlineSell(s.row.id,s.row.partnerCoinId)"
+                    @click="toOnlineSell(s.row.id,s.row.coinId)"
                   >
                     出售
                   </el-button>
@@ -254,13 +240,6 @@
       <!-- 2.2 订单管理-->
       <div class="otc-order-manage">
         <!-- 查询更多 -->
-        <!-- <div class="more"> -->
-          <!-- <router-link
-            to="/"
-            class="more"
-          >
-            查询更多
-          </router-link> -->
           <span
             class="more"
             @click="queryMoreOrder"
@@ -390,43 +369,6 @@ export default {
       selectCurrencyNameStatus: 0, //  选中我要购买或者出售的币种名称
       // 在线购买和在线出售表格列表
       onlineBuySellTableList: [
-        // {
-        //   'coinId': '123',
-        //   'coinName': 'BTC',
-        //   'createTime': '2018-08-04 11:07:48',
-        //   'currencyId': '123',
-        //   'currencyName': 'CNY',
-        //   'entrustCount': 2.5000000000,
-        //   'entrustLimitId': '123',
-        //   'entrustType': 'SELL',
-        //   'failOrderTimes': 2,
-        //   'floatPriceId': 0,
-        //   'freezeTimes': 0,
-        //   'id': '123',
-        //   'matchAmount': 0E-10,
-        //   'matchCount': 0E-10,
-        //   'maxCount': 0E-10,
-        //   'minCount': 60000.0000000000,
-        //   'partnerId': '474629374641963008',
-        //   'payType': 'paypal,xilian',
-        //   'price': 60000.0000000000,
-        //   'priceSetType': 'DINGJIA',
-        //   'rateId': '123',
-        //   'remark': '本人电话xxxxx,男女老幼概不欺骗。',
-        //   'source': 'web',
-        //   'status': 'ENTRUSTED',
-        //   'successOrderTimes': 10,
-        //   'totalAmount': 150000.0000000000,
-        //   'updateTime': '2018-08-04 11:07:56',
-        //   'userAcct': '13966666666',
-        //   'userId': '132',
-        //   'userName': '张三',
-        //   'userNick': '',
-        //   'userType': 'COMMON',
-        //   'userUid': 10001,
-        //   'userVipId': 0,
-        //   'version': 1
-        // }
       ],
       // 支付方式下拉框数据
       payWayBankinfoList: [
@@ -499,35 +441,32 @@ export default {
       if (!this.isLogin) {
         this.$router.push({path: '/login'})
       } else {
-        // this.$router.push({path: '/OTCPublishBuyAndSell'})
         // this.OTCBuySellStyle 当前买卖类型
-        // this.selectedOTCAvailablePartnerCoinId 选中的可用商户币种id
+        // this.selectedOTCAvailableCurrencyCoinID 选中的可用币种id
         // this.activitedCurrencyId 当前选中的可用法币id
-        this.$router.push({path: '/OTCPublishBuyAndSell/' + this.OTCBuySellStyle + '/' + this.selectedOTCAvailablePartnerCoinId + '/' + this.activitedCurrencyId})
+        this.$router.push({path: '/OTCPublishBuyAndSell/' + this.OTCBuySellStyle + '/' + this.selectedOTCAvailableCurrencyCoinID + '/' + this.activitedCurrencyId})
       }
     },
     // 0.3 点击购买按钮跳转到在线购买页面
-    toOnlineBuy (id, partnerCoinId) {
+    toOnlineBuy (id, coinId) {
       if (!this.isLogin) {
         this.$router.push({path: '/login'})
       } else {
         // console.log("买")
         // console.log(id) // 挂单id
-        // console.log(partnerCoinId) // 商户币种id
-        // this.$router.push({path: '/OTCOnlineTraderBuySell/' + this.OTCBuySellStyle})
-        this.$router.push({path: '/OTCOnlineTraderBuySell/' + this.OTCBuySellStyle + '/' + id + '/' + partnerCoinId})
+        // console.log(coinId) // 币种id
+        this.$router.push({path: '/OTCOnlineTraderBuySell/' + this.OTCBuySellStyle + '/' + id + '/' + coinId})
       }
     },
     // 0.4 点击出售按钮跳转到在线出售页面
-    toOnlineSell (id, partnerCoinId) {
+    toOnlineSell (id, coinId) {
       if (!this.isLogin) {
         this.$router.push({path: '/login'})
       } else {
         // console.log("卖")
         // console.log(id) // 挂单id
-        // console.log(partnerCoinId) // 商户币种id
-        // this.$router.push({path: '/OTCOnlineTraderBuySell/' + this.OTCBuySellStyle})
-        this.$router.push({path: '/OTCOnlineTraderBuySell/' + this.OTCBuySellStyle + '/' + id + '/' + partnerCoinId})
+        // console.log(coinId) // 币种id
+        this.$router.push({path: '/OTCOnlineTraderBuySell/' + this.OTCBuySellStyle + '/' + id + '/' + coinId})
       }
     },
     // 0.5 查询更多订单按钮点击事件
@@ -591,7 +530,6 @@ export default {
     },
     //  3.0 刚进页面时候 otc主页面查询挂单列表
     async getOTCPutUpOrdersList () {
-      // console.log(this.selectedOTCAvailableCurrencyCoinID)
       let param = {
         payType: this.checkedPayType, // 按照选中的支付方式查询列表
         partnerId: this.partnerId, // 商户id
@@ -620,9 +558,9 @@ export default {
     selectCurrencyName (index) {
       console.log(index)
       this.selectCurrencyNameStatus = index
-      this.CHANGE_OTC_AVAILABLE_CURRENCY_NAME(this.IWantToBuySellArr[index].name)
-      this.CHANGE_OTC_AVAILABLE_PARTNER_COIN_ID(this.IWantToBuySellArr[index].partnerCoinId)
-      this.CHANGE_OTC_AVAILABLE_CURRENCY_ID(this.IWantToBuySellArr[index].coinId)
+      this.CHANGE_OTC_AVAILABLE_CURRENCY_NAME(this.IWantToBuySellArr[index].name) // 币种名称
+      this.CHANGE_OTC_AVAILABLE_PARTNER_COIN_ID(this.IWantToBuySellArr[index].partnerCoinId) // 商户币种id
+      this.CHANGE_OTC_AVAILABLE_CURRENCY_ID(this.IWantToBuySellArr[index].coinId) // 币种id
       console.log(this.selectedOTCAvailableCurrencyName)
       console.log(this.selectedOTCAvailableCurrencyCoinID)
       console.log(this.selectedOTCAvailablePartnerCoinId)
@@ -655,7 +593,6 @@ export default {
     },
     //  6.0 切换在线购买和在线售出状态并调接口渲染列表
     async toggleBuyOrSellStyle (e) {
-      // console.log(e)
       this.OTCBuySellStyle = e
       console.log(this.OTCBuySellStyle)
       let param = {
@@ -683,7 +620,6 @@ export default {
     //  7.0 改变可用法币的币种id
     changeCurrencyId (e) {
       this.activitedCurrencyId = e
-      // console.log(e)
       console.log(this.activitedCurrencyId)
       this.availableCurrencyId.forEach(item => {
         if (e === item.id) {
@@ -720,7 +656,6 @@ export default {
     },
     // 9.0 改变支付方式下拉框的选中值
     payWayChangeValue (e) {
-      console.log(e) //  选中的支付方式的id
       this.checkedPayType = e
       console.log(this.checkedPayType) //  选中的支付方式的id
       // 调主页面查询otc挂单列表接口按照支付方式查询列表
@@ -754,6 +689,7 @@ export default {
   filter: {},
   computed: {
     ...mapState({
+      theme: state => state.common.theme,
       selectedOTCAvailableCurrencyName: state => state.OTC.selectedOTCAvailableCurrencyName,
       selectedOTCAvailablePartnerCoinId: state => state.OTC.selectedOTCAvailablePartnerCoinId,
       selectedOTCAvailableCurrencyCoinID: state => state.OTC.selectedOTCAvailableCurrencyCoinID,
@@ -766,9 +702,8 @@ export default {
 }
 </script>
 <style scoped lang="scss" type="text/scss">
-@import url(../../../static/css/scss/OTC/OTCCenter.scss);
+@import "../../../static/css/scss/OTC/OTCCenter.scss";
 .otc-box{
-  background-color: #1D2331;
   >.otc-center-content{
     width: 1150px;
     margin: 0 auto;
@@ -779,7 +714,6 @@ export default {
         line-height: 45px;
         text-align: center;
         padding-bottom: 20px;
-        background-color: #1D2331;
       }
       >.otc-merchant-content{
         min-height: 564px;
@@ -793,12 +727,12 @@ export default {
             display: flex;
             align-items: center;
             >.otc-i-wan{
-              color: #fff;
+              // color: #fff;
             }
             >.otc-filtrate-style{
-              color: #838EA6;
+              // color: #838EA6;
               .currencyNameActived{
-                color: #338FF5;
+                // color: #338FF5;
                 // font-weight: 700;
               }
               >.otc-filtrate-currency-name{
@@ -808,13 +742,12 @@ export default {
             }
           }
           >.otc-publish-box{
-            // background-color: pink;
-            // asdfasdfasdfasdfasfd
             >.pay-style{
               position: relative;
               >.pay-style-icon{
                 width: 14px;
                 height: 14px;
+                // color: #fff;
                 position: absolute;
                 left: 10px;
                 top: 1px;
@@ -824,7 +757,7 @@ export default {
             >.currency-style{
               position: relative;
               >.currency-style-icon{
-                color: #fff;
+                // color: #fff;
                 width: 14px;
                 height: 14px;
                 position: absolute;
@@ -891,6 +824,131 @@ export default {
         position: absolute;
         left: 35px;
         top: 22px;
+      }
+    }
+  }
+  &.night{
+    background-color: $mainNightColor;
+    >.otc-center-content{
+      >.otc-online-trading{
+        >.otc-online-buy-and-sell-button{
+          background-color: $mainNightColor;
+        }
+        >.otc-merchant-content{
+          background-color: #202A33;
+          >.otc-filtrate-publish{
+            >.otc-filtrate-box{
+              >.otc-i-wan{
+                color: #fff;
+              }
+              >.otc-filtrate-style{
+                color: #A8AFBF;
+                .currencyNameActived{
+                  color: #338FF5;
+                }
+                >.otc-filtrate-currency-name{
+                }
+              }
+            }
+            >.otc-publish-box{
+              >.pay-style{
+                >.pay-style-icon{
+                  color: #fff;
+                }
+              }
+              >.currency-style{
+                >.currency-style-icon{
+                  color: #fff;
+                }
+              }
+            }
+          }
+          >.otc-merchant-list{
+            .xilian{
+            }
+            .red{
+              color: #D45858;
+            }
+            >.pay-way{
+            }
+            >.shade-pay-way{
+              color: #617499;
+            }
+          }
+        }
+      }
+      >.otc-order-manage{
+        >.more{
+          color: #338FF5;
+        }
+        .otc-tab-pane-arrow-right{
+          color: #338FF5;
+        }
+        .icon{
+        }
+      }
+    }
+  }
+  &.day{
+    background-color: $mainDayColor;
+    >.otc-center-content{
+      >.otc-online-trading{
+        >.otc-online-buy-and-sell-button{
+          background-color: $mainDayColor;
+        }
+        >.otc-merchant-content{
+          background-color: #202A33;
+          >.otc-filtrate-publish{
+            >.otc-filtrate-box{
+              >.otc-i-wan{
+                color: #333333;
+              }
+              >.otc-filtrate-style{
+                color: #7D90AC;
+                .currencyNameActived{
+                  color: #338FF5;
+                }
+                >.otc-filtrate-currency-name{
+                  cursor: pointer;
+                }
+              }
+            }
+            >.otc-publish-box{
+              >.pay-style{
+                >.pay-style-icon{
+                  color: #338FF5;
+                }
+              }
+              >.currency-style{
+                >.currency-style-icon{
+                  color: #338FF5;
+                }
+              }
+            }
+          }
+          >.otc-merchant-list{
+            .xilian{
+            }
+            .red{
+              color: #D45858;
+            }
+            >.pay-way{
+            }
+            >.shade-pay-way{
+              color: #617499;
+            }
+          }
+        }
+      }
+      >.otc-order-manage{
+        >.more{
+          color: #338FF5;
+        }
+        .otc-tab-pane-arrow-right{
+          color: #338FF5;
+        }
+        .icon{
+        }
       }
     }
   }
