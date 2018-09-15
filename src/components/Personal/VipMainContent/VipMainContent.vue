@@ -201,7 +201,10 @@
           class="detail-page-duration display-flex"
         >
           <div class="duration-title font-size14">开通时长</div>
-          <div class="duration cursor-pointer cursor-pointer text-align-c">
+          <div
+            class="duration cursor-pointer cursor-pointer text-align-c"
+            @click="changeMonth(3, filteredData[0].id)"
+          >
             <p class="duration-month font-size16">
               3个月
             </p>
@@ -209,7 +212,10 @@
               {{filteredData[0].value}}FUC
             </p>
           </div>
-          <div class="duration duration-left cursor-pointer text-align-c">
+          <div
+            class="duration duration-left cursor-pointer text-align-c"
+            @click="changeMonth(6, filteredData[1].id)"
+          >
             <p class="duration-month font-size16">
               6个月
             </p>
@@ -220,7 +226,10 @@
               600FUC
             </p>
           </div>
-          <div class="duration duration-left cursor-pointer text-align-c">
+          <div
+            class="duration duration-left cursor-pointer text-align-c"
+            @click="changeMonth(12, filteredData[2].id)"
+          >
             <p class="duration-month font-size16">
               12个月
             </p>
@@ -231,7 +240,10 @@
               1200FUC
             </p>
           </div>
-          <div class="duration duration-left cursor-pointer text-align-c">
+          <div
+            class="duration duration-left cursor-pointer text-align-c"
+            @click="changeMonth(1, filteredData[3].id)"
+          >
             <p class="duration-month font-size16">
               1个月
             </p>
@@ -256,7 +268,10 @@
           </div>
         </div>
         <div class="detail-page-btn text-align-c">
-          <button class="page-btn cursor-pointer">
+          <button
+            class="page-btn cursor-pointer"
+            @click="confirmSubmit"
+          >
             确定
           </button>
         </div>
@@ -272,13 +287,13 @@
         <p class="warm-text-color">开通即代表您已同意<span class="prompt-color">《VIP服务协议》</span></p>
       </div>
       <el-dialog title="kaitongVIP" :visible.sync="dialogFormVisible">
-        <el-form :model="form">
+        <el-form>
           <el-form-item
             label="交易密码"
           >
             <el-input
-              v-model="form.name"
               auto-complete="off"
+              v-model="password"
             >
             </el-input>
           </el-form-item>
@@ -289,7 +304,7 @@
         >
           <el-button
             type="primary"
-            @click="dialogFormVisible = false"
+            @click="dialogFormVisibleButton"
           >
             确 定
           </el-button>
@@ -308,7 +323,8 @@ import HeaderCommon from '../../Common/HeaderCommon'
 import FooterCommon from '../../Common/FooterCommon'
 import { createNamespacedHelpers, mapState } from 'vuex'
 import {
-  vipPriceInfo
+  vipPriceInfo,
+  buyVipPriceInfo
 } from '../../../utils/api/personal'
 import {
   returnAjaxMessage
@@ -325,9 +341,13 @@ export default {
       vipPictureBanner: require('../../../assets/user/vipBanner.png'), // vip banner
       showOpenTheVIPPage: true, // 开启vip页面默认
       vipShowDetailsPage: false, // 开启vip详情页面默认
+      password: '', // 开启vip详情页面默认
       vipPriceInfo: [], // vip信息接收
+      dialogFormVisible: false,
       type: '1', // vip类型
-      active: 0
+      active: 0,
+      month: '', //
+      vipName: '' //
     }
   },
   created () {
@@ -346,19 +366,18 @@ export default {
   },
   methods: {
     ...mapMutations([
-      // 'CHANGE_USER_CENTER_ACTIVE_NAME'
     ]),
     // 点击返回上个页面
     returnSuperior () {
-      console.log(1)
-      // this.$store.commit('personal/CHANGE_USER_CENTER_ACTIVE_NAME', 'assets')
       this.$router.push({path: '/PersonalCenter'})
     },
     // vip开通页面点击页面
-    statusImmediatelyOpened (val, type) {
+    statusImmediatelyOpened (paymentType, safeState) {
+      this.activeType = paymentType
+      this.state = safeState
       this.showOpenTheVIPPage = false
       this.vipShowDetailsPage = true
-      switch (val) {
+      switch (paymentType) {
         case 'vip1':
           this.active = 1
           this.type = 1
@@ -388,8 +407,52 @@ export default {
     // vip详情页面资产渲染
     stateOpeningLevel (type) {
       this.type = type
-      console.log(type)
     },
+    // 确定提交
+    confirmSubmit () {
+      this.dialogFormVisible = true
+    },
+    changeMonth (month, vipName) {
+      console.log(month, vipName)
+      switch (month) {
+        case 3:
+          this.month = '3'
+          this.vipName = vipName
+          break
+        case 6:
+          this.month = '6'
+          this.vipName = vipName
+          break
+        case 12:
+          this.month = '12'
+          this.vipName = vipName
+          break
+        case 1:
+          this.month = '1'
+          this.vipName = vipName
+          break
+      }
+    },
+    dialogFormVisibleButton () {
+      this.confirmTransactionPassword()
+    },
+    async confirmTransactionPassword (type, state) {
+      let data
+      let params = {
+        payPassword: this.password, // 用户id
+        vipName: this.vipName,
+        month: this.month
+      }
+      data = await buyVipPriceInfo(params)
+      if (!(returnAjaxMessage(data, this, 1))) {
+        return false
+      } else {
+        this.dialogFormVisible = false
+        console.log(data)
+        // 安全中心状态刷新
+      }
+    },
+    /**
     /**
      * vip价格
      */
@@ -401,7 +464,6 @@ export default {
       } else {
         // 返回展示
         this.vipPriceInfo = data.data.data
-        // console.log(this.vipPriceInfo)
       }
     }
   },

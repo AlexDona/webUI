@@ -276,15 +276,16 @@
               class="dialog-footer"
             >
               <el-button
-                @click="closeCollectionMode = false"
-              >
-                取 消
-              </el-button>
-              <el-button
                 type="primary"
                 @click="determineTheOpen"
               >
                   确 定
+              </el-button>
+              <el-button
+                class="btn"
+                @click="closeCollectionMode = false"
+              >
+                取 消
               </el-button>
             </span>
           </el-dialog>
@@ -305,15 +306,16 @@
               class="dialog-footer"
             >
               <el-button
-                @click="closeCollectionMode = false"
-              >
-                取 消
-              </el-button>
-              <el-button
                 type="primary"
                 @click="determineTheOpen"
               >
                   确 定
+              </el-button>
+               <el-button
+                 class="btn"
+                 @click="closeCollectionMode = false"
+               >
+                取 消
               </el-button>
             </span>
           </el-dialog>
@@ -601,6 +603,11 @@ export default {
           padding: 9px 73px 8px 17px;
         }
         >.payment-content {
+          .btn {
+            width: 90px;
+            height: 35px;
+            line-height: 0;
+          }
           min-height: 200px;
           >.payment-box {
             height: 22px;
@@ -657,6 +664,11 @@ export default {
         background-color: #1E2636;
         .credited-box{
           >.payment-content {
+            .btn {
+              color: #fff;
+              background-color: transparent;
+              border: 1px solid #338FF5;
+            }
             >.payment-box {
               .payment-right {
                 .setting-btn {
@@ -727,6 +739,11 @@ export default {
         color: #000;
       }
       .payment-content {
+        .btn {
+          color: #fff;
+          background-color: transparent;
+          border: 1px solid #338FF5;
+        }
         .payment-card {
           color: #000;
         }

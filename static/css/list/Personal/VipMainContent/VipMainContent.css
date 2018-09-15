@@ -1,1 +1,6 @@
 /*覆盖Element样式*/
+.vip-main.personal .el-dialog{
+  border-radius: 10px;
+  width: 400px;
+  top: 15%;
+}

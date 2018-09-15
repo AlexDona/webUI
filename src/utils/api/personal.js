@@ -137,3 +137,5 @@ export const deleteUserInformation = (params) => deleteMethod('userApi', params)
  * */
 // vip价格
 export const vipPriceInfo = (params) => get('vip/price', params)
+// 购买vip
+export const buyVipPriceInfo = (params) => postWithURLencoded('vip/buy', params)

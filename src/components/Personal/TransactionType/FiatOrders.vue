@@ -8,7 +8,7 @@
     </header>
     <div class="fiat-main background-color min-height500 margin-top9">
       <el-tabs
-        v-model="fiatMoneyOrdersName"
+        v-model="activeName"
         :tab-position = "tabPosition"
         @tab-click = "statusSwitchPanel"
       >
@@ -99,32 +99,35 @@
           </div>
           <div class="main-top-type float-left">
              <span class="inquire-button">
-              <el-button type="primary" @click="findFilter">查询</el-button>
+              <el-button
+                type="primary"
+                @click="findFilter(activeName)"
+              >查询</el-button>
               <!--<el-button type="primary" @click="resetCondition">重置</el-button>-->
             </span>
            </div>
         </div>
         <el-tab-pane
           label="交易中的订单"
-          name="trade-order"
+          name="TRADING"
         >
           <FiatCoinTradingOrder ref = "tradeOrder"/>
         </el-tab-pane>
         <el-tab-pane
           label="已完成订单"
-          name="completed-order"
+          name="COMPLETED"
         >
           <FiatCoinCompletedOrder ref = "cancelledOrder"/>
         </el-tab-pane>
         <el-tab-pane
           label="已取消订单"
-          name="cancelled-order"
+          name="CANCELED"
         >
           <FiatCoinCanceledOrder ref = "completedOrder"/>
         </el-tab-pane>
         <el-tab-pane
           label="冻结中订单"
-          name="pending-order"
+          name="FROZEN"
         >
           <FiatCoinFreezingOrder ref = "pendingOrder"/>
         </el-tab-pane>
@@ -150,10 +153,10 @@ import {timeFilter} from '../../../utils'
 import IconFontCommon from '../../Common/IconFontCommon'
 import {
   getOTCAvailableCurrency,
-  getMerchantAvailablelegalTender,
-  getOTCMerchantsOrdersList
+  getMerchantAvailablelegalTender
+  // getOTCMerchantsOrdersList
 } from '../../../utils/api/personal'
-import {returnAjaxMessage} from '../../../utils/commonFunc'
+import {returnAjaxMessage, getMerchantsOrdersList} from '../../../utils/commonFunc'
 const {mapMutations} = createNamespacedHelpers('personal')
 export default {
   components: {
@@ -167,7 +170,7 @@ export default {
   // props,
   data () {
     return {
-      // activeName: 'first',
+      activeName: 'trade-order',
       // 1.0 商家订单筛选下拉框数组--交易类型
       activitedMerchantsOrdersTraderStyleList: '', // 选中的筛选项
       merchantsOrdersTraderStyleList: [
@@ -322,30 +325,34 @@ export default {
       this.value2 = e
     },
     // 点击查询按钮
-    findFilter (tab) {
-      switch (tab.name) {
-        case 'trade-order':
-          // 交易中的订单列表展示
-          this.$refs.tradeOrder.getOTCTradingOrdersList()
-          break
-        case 'completed-order':
-          // 已完成订单列表展示
-          this.$refs.cancelledOrder.getOTCCompletedOrdersList()
-          break
-        case 'cancelled-order':
-          // 已取消订单列表查询
-          this.$refs.completedOrder.getOTCCanceledOrdersList()
-          break
-        case 'pending-order':
-          // 冻结中订单列表展示
-          this.$refs.pendingOrder.getOTCFrezzingOrdersList()
-          break
-        case 'entrust-orders':
-          // 委托订单列表展示
-          this.$refs.entrustOrders.getOTCEntrustingOrdersList()
-          break
-      }
-      // this.getOTCEntrustingOrdersRevocation()
+    findFilter (activeName) {
+      this.getOTCEntrustingOrdersRevocation(activeName)
+      // console.log(activeName)
+      // // 状态 (交易中 TRADING 已完成 COMPLETED  已取消  CANCELED 冻结中 FROZEN)
+      // let data = await getOTCMerchantsOrdersList({
+      //   // 页数
+      //   // pageNum: 0,
+      //   // 每页条数
+      //   // pageSize: 0,
+      //   // 币种
+      //   coinId: this.activitedMerchantsOrdersCoin,
+      //   // 法币
+      //   currencyId: this.activitedMerchantsOrdersCurrency,
+      //   // 状态
+      //   status: this.activitedMerchantsOrdersStatusList,
+      //   // 开始时间
+      //   startTime: this.startTime,
+      //   // 结束时间
+      //   endTime: this.endTime,
+      //   // 类型
+      //   tradeType: this.activitedMerchantsOrdersTraderStyleList
+      // })
+      // if (!(returnAjaxMessage(data, this, 0))) {
+      //   return false
+      // } else {
+      //   // 返回数据正确的逻辑 重新渲染列表
+      //   this.merchantsOrdersList = data.data.data.list
+      // }
     },
     resetCondition () {
       this.activitedMerchantsOrdersTraderStyleList = ''
@@ -357,33 +364,29 @@ export default {
       this.getOTCEntrustingOrdersRevocation()
     },
     // 页面加载时请求接口渲染列表
-    async getOTCEntrustingOrdersRevocation () {
-      let data = await getOTCMerchantsOrdersList({
-        // 页数
-        // pageNum: 0,
-        // 每页条数
-        // pageSize: 0,
+    async getOTCEntrustingOrdersRevocation (activeName) {
+      let params = {
         // 币种
         coinId: this.activitedMerchantsOrdersCoin,
         // 法币
         currencyId: this.activitedMerchantsOrdersCurrency,
         // 状态
-        status: this.activitedMerchantsOrdersStatusList,
+        status: activeName,
         // 开始时间
         startTime: this.startTime,
         // 结束时间
         endTime: this.endTime,
         // 类型
         tradeType: this.activitedMerchantsOrdersTraderStyleList
-      })
-      // 提示信息
-      console.log(data)
-      if (!(returnAjaxMessage(data, this, 0))) {
-        return false
-      } else {
-        // 返回数据正确的逻辑 重新渲染列表
-        this.merchantsOrdersList = data.data.data.list
       }
+      getMerchantsOrdersList (params, (data) => {
+        if (!(returnAjaxMessage(data, this, 0))) {
+          return false
+        } else {
+          // 返回数据正确的逻辑 重新渲染列表
+          this.merchantsOrdersList = data.data.data.list
+        }
+      })
     }
   },
   filter: {},
@@ -391,8 +394,8 @@ export default {
     ...mapState({
       theme: state => state.common.theme,
       withdrawDepositList: state => state.common.withdrawDepositList,
-      userInfo: state => state.user.loginStep1Info, // 用户详细信息
-      fiatMoneyOrdersName: state => state.personal.fiatMoneyOrdersName
+      userInfo: state => state.user.loginStep1Info // 用户详细信息
+      // fiatMoneyOrdersName: state => state.personal.fiatMoneyOrdersName
     })
   },
   watch: {}

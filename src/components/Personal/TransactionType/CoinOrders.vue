@@ -463,7 +463,7 @@ export default {
     require('../../../../static/css/theme/day/Personal/TransactionType/CoinOrdersDay.css')
     // 黑色主题样式
     require('../../../../static/css/theme/night/Personal/TransactionType/CoinOrdersNight.css')
-    // this.getEntrustSelectBox()
+    this.getEntrustSelectBox()
     // this.getMyCurrentEntrust()
     // this.getHistoryEntrust()
     // this.getMakeDetailEntrust()
@@ -474,39 +474,43 @@ export default {
   beforeRouteUpdate () {},
   methods: {
     coinMoneyOrders (tab) {
-      // this.commissionList(entrustType)
-      switch (tab.name) {
-        case 'current-entrust':
-          // 查询当前委单
-          this.getMyCurrentEntrust()
-          break
-        case 'history-entrust':
-          // 查询历史委托
-          this.getHistoryEntrust()
-          break
-        case 'make-detail':
-          // 查询成交明细
-          this.getMakeDetailEntrust()
-          break
-      }
+      this.commissionList(tab.name)
+      // switch (tab.name) {
+      //   case 'current-entrust':
+      //     // 查询当前委单
+      //     console.log(tab)
+      //     this.commissionList()
+      //     break
+      //   case 'history-entrust':
+      //     // 查询历史委托
+      //     console.log(tab)
+      //     this.commissionList()
+      //     break
+      //   case 'make-detail':
+      //     console.log(tab)
+      //     // 查询成交明细
+      //     this.commissionList()
+      //     break
+      // }
     },
     // 查询列表
     async searchWithCondition (entrustType) {
       console.log(entrustType)
-      switch (entrustType) {
-        case 'current-entrust':
-          console.log(1)
-          this.getMyCurrentEntrust()
-          break
-        case 'history-entrust':
-          console.log(2)
-          this.getHistoryEntrust()
-          break
-        case 'make-detail':
-          console.log(3)
-          this.getMakeDetailEntrust()
-          break
-      }
+      this.commissionList(entrustType)
+      // switch (entrustType) {
+      //   case 'current-entrust':
+      //     console.log(1)
+      //     this.getMyCurrentEntrust()
+      //     break
+      //   case 'history-entrust':
+      //     console.log(2)
+      //     this.getHistoryEntrust()
+      //     break
+      //   case 'make-detail':
+      //     console.log(3)
+      //     this.getMakeDetailEntrust()
+      //     break
+      // }
     },
     /**
      * 交易区列表查询
@@ -534,15 +538,15 @@ export default {
       switch (entrustType) {
         case 0:
           this.currentPageForMyEntrust = pageNum
-          this.getMyCurrentEntrust()
+          this.commissionList(entrustType)
           break
         case 1:
           this.currentPageForHistoryEntrust = pageNum
-          this.getHistoryEntrust()
+          this.commissionList(entrustType)
           break
         case 2:
           this.currentPageMakeDetailEntrust = pageNum
-          this.getMakeDetailEntrust()
+          this.commissionList(entrustType)
       }
     },
     /**
@@ -558,31 +562,79 @@ export default {
         if (!returnAjaxMessage(res, this, 1)) {
           return false
         } else {
-          this.getMyCurrentEntrust()
+          this.commissionList()
         }
       })
     },
-    // async commissionList (entrustType) {
+    async commissionList (entrustType) {
+      console.log(entrustType)
+      let params = {
+        userId: this.userInfo.userId,
+        currentPage: '',
+        pageSize: this.pageSize,
+        buyCoinName: this.activeSymbol,
+        type: this.activeType,
+        sellCoinName: this.activeExchangeArea,
+        startTime: this.startTime === '' ? '' : timeFilter(this.startTime, 'normal'),
+        endTime: this.endTime === '' ? '' : timeFilter(this.endTime, 'normal')
+      }
+      let data
+      let data1
+      let data2
+      switch (entrustType) {
+        case 'current-entrust':
+          console.log(1)
+          params.currentPage = this.currentPageForMyEntrust
+          data = await getMyEntrust(params)
+          console.log(data)
+          if (!returnAjaxMessage(data, this, 0)) {
+            return false
+          } else {
+            if (data.data.data.list) {
+              this.currentEntrustList = data.data.data.list
+              this.totalPageForMyEntrust = data.data.data.pages - 0
+            }
+          }
+          break
+        case 'history-entrust':
+          params.currentPage = this.currentPageForHistoryEntrust
+          data1 = await getHistoryEntrust(params)
+          console.log(data1)
+          if (!returnAjaxMessage(data1, this, 0)) {
+            return false
+          } else {
+            if (data1.data.data.list) {
+              this.historyEntrustList = data1.data.data.list
+              this.totalPageForHistoryEntrust = data1.data.data.pages - 0
+            }
+          }
+          break
+        case 'make-detail':
+          params.currentPage = this.currentPageMakeDetailEntrust
+          data2 = await getMakeDetail(params)
+          console.log(data2)
+          if (!returnAjaxMessage(data2, this, 0)) {
+            return false
+          } else {
+            if (data2.data.data.list) {
+              this.currentMakeDetailList = data2.data.data.list
+              this.totalPageForMakeDetailEntrust = data2.data.data.pages - 0
+            }
+          }
+          break
+      }
+    }
+    // // 查询当前委单
+    // async getMyCurrentEntrust () {
     //   let params = {
     //     userId: this.userInfo.userId,
-    //     currentPage: '',
+    //     currentPage: this.currentPageForMyEntrust,
     //     pageSize: this.pageSize,
     //     buyCoinName: this.activeSymbol,
     //     type: this.activeType,
     //     sellCoinName: this.activeExchangeArea,
     //     startTime: this.startTime === '' ? '' : timeFilter(this.startTime, 'normal'),
     //     endTime: this.endTime === '' ? '' : timeFilter(this.endTime, 'normal')
-    //   }
-    //   switch (entrustType) {
-    //     case 'current-entrust':
-    //       params.currentPage = this.currentPageForMyEntrust
-    //       break
-    //     case 'history-entrust':
-    //       params.currentPage = this.currentPageForHistoryEntrust
-    //       break
-    //     case 'make-detail':
-    //       params.currentPage = this.currentPageMakeDetailEntrust
-    //       break
     //   }
     //   const data = await getMyEntrust(params)
     //   console.log(data)
@@ -596,81 +648,57 @@ export default {
     //     }
     //   }
     // },
-    // 查询当前委单
-    async getMyCurrentEntrust () {
-      let params = {
-        userId: this.userInfo.userId,
-        currentPage: this.currentPageForMyEntrust,
-        pageSize: this.pageSize,
-        buyCoinName: this.activeSymbol,
-        type: this.activeType,
-        sellCoinName: this.activeExchangeArea,
-        startTime: this.startTime === '' ? '' : timeFilter(this.startTime, 'normal'),
-        endTime: this.endTime === '' ? '' : timeFilter(this.endTime, 'normal')
-      }
-      const data = await getMyEntrust(params)
-      console.log(data)
-      if (!returnAjaxMessage(data, this, 0)) {
-        return false
-      } else {
-        // console.log(data.data.data.list)
-        if (data.data.data.list) {
-          this.currentEntrustList = data.data.data.list
-          this.totalPageForMyEntrust = data.data.data.pages - 0
-        }
-      }
-    },
-    // 查询历史委托
-    async getHistoryEntrust () {
-      this.historyEntrustList = []
-      let params = {
-        userId: this.userInfo.userId,
-        currentPage: this.currentPageForHistoryEntrust,
-        pageSize: this.pageSize,
-        buyCoinName: this.activeSymbol,
-        type: this.activeType,
-        sellCoinName: this.activeExchangeArea,
-        startTime: this.startTime === '' ? '' : timeFilter(this.startTime, 'normal'),
-        endTime: this.endTime === '' ? '' : timeFilter(this.endTime, 'normal')
-      }
-      const data = await getHistoryEntrust(params)
-      console.log(data)
-      if (!returnAjaxMessage(data, this, 0)) {
-        return false
-      } else {
-        // console.log(data.data.data.list)
-        if (data.data.data.list) {
-          this.historyEntrustList = data.data.data.list
-          this.totalPageForHistoryEntrust = data.data.data.pages - 0
-          console.log(this.totalPageForHistoryEntrust)
-        }
-      }
-    },
-    // 查询成交明细
-    async getMakeDetailEntrust () {
-      this.currentMakeDetailList = []
-      let params = {
-        userId: this.userInfo.userId,
-        currentPage: this.currentPageMakeDetailEntrust,
-        pageSize: this.pageSize,
-        buyCoinName: this.activeSymbol,
-        type: this.activeType,
-        sellCoinName: this.activeExchangeArea,
-        startTime: this.startTime === '' ? '' : timeFilter(this.startTime, 'normal'),
-        endTime: this.endTime === '' ? '' : timeFilter(this.endTime, 'normal')
-      }
-      const data = await getMakeDetail(params)
-      console.log(data)
-      if (!returnAjaxMessage(data, this, 0)) {
-        return false
-      } else {
-        // console.log(data.data.data.list)
-        if (data.data.data.list) {
-          this.currentMakeDetailList = data.data.data.list
-          this.totalPageForMakeDetailEntrust = data.data.data.pages - 0
-        }
-      }
-    }
+    // // 查询历史委托
+    // async getHistoryEntrust () {
+    //   this.historyEntrustList = []
+    //   let params = {
+    //     userId: this.userInfo.userId,
+    //     currentPage: this.currentPageForHistoryEntrust,
+    //     pageSize: this.pageSize,
+    //     buyCoinName: this.activeSymbol,
+    //     type: this.activeType,
+    //     sellCoinName: this.activeExchangeArea,
+    //     startTime: this.startTime === '' ? '' : timeFilter(this.startTime, 'normal'),
+    //     endTime: this.endTime === '' ? '' : timeFilter(this.endTime, 'normal')
+    //   }
+    //   const data = await getHistoryEntrust(params)
+    //   console.log(data)
+    //   if (!returnAjaxMessage(data, this, 0)) {
+    //     return false
+    //   } else {
+    //     // console.log(data.data.data.list)
+    //     if (data.data.data.list) {
+    //       this.historyEntrustList = data.data.data.list
+    //       this.totalPageForHistoryEntrust = data.data.data.pages - 0
+    //       console.log(this.totalPageForHistoryEntrust)
+    //     }
+    //   }
+    // },
+    // // 查询成交明细
+    // async getMakeDetailEntrust () {
+    //   this.currentMakeDetailList = []
+    //   let params = {
+    //     userId: this.userInfo.userId,
+    //     currentPage: this.currentPageMakeDetailEntrust,
+    //     pageSize: this.pageSize,
+    //     buyCoinName: this.activeSymbol,
+    //     type: this.activeType,
+    //     sellCoinName: this.activeExchangeArea,
+    //     startTime: this.startTime === '' ? '' : timeFilter(this.startTime, 'normal'),
+    //     endTime: this.endTime === '' ? '' : timeFilter(this.endTime, 'normal')
+    //   }
+    //   const data = await getMakeDetail(params)
+    //   console.log(data)
+    //   if (!returnAjaxMessage(data, this, 0)) {
+    //     return false
+    //   } else {
+    //     // console.log(data.data.data.list)
+    //     if (data.data.data.list) {
+    //       this.currentMakeDetailList = data.data.data.list
+    //       this.totalPageForMakeDetailEntrust = data.data.data.pages - 0
+    //     }
+    //   }
+    // }
   },
   filter: {},
   computed: {

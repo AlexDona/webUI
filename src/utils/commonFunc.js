@@ -143,13 +143,16 @@ export const getPartnerListAjax = async (params, callback) => {
 }
 
 // 封装全部请求方法
-// export function getAllList (route, message) {
-//   Promise.all([
-//     getMerchantsOrdersList('c2cOrderSublist', message)
-//   ]).then((res) => {
-//     store.commit('CHANGE_MERCHANTS_ORDERS_LIST', res[0].data.data) // 交易中订单
-//     store.commit('CHANGE_COMPLETED_ORDERS_LIST', res[1].data.data) // 已完成订单
-//     store.commit('CHANGE_CANCELED_ORDERS_LIST', res[2].data.data) // 已取消订单
-//     store.commit('CHANGE_FROZEN_ORDERS_LIST', res[3].data.data) // 冻结中的订单
-//     store.commit('CHANGE_ENTRUST_ORDERS_LIST', res[4].data.data) // 委托订单
-//   })
+export const getAllList = async (params, callback) => {
+  const data = await getMerchantsOrdersList(params)
+  callback(data)
+  // Promise.all([
+  //   getMerchantsOrdersList('c2cOrderSublist', message)
+  // ]).then((res) => {
+  //   store.commit('CHANGE_MERCHANTS_ORDERS_LIST', res[0].data.data) // 交易中订单
+  //   store.commit('CHANGE_COMPLETED_ORDERS_LIST', res[1].data.data) // 已完成订单
+  //   store.commit('CHANGE_CANCELED_ORDERS_LIST', res[2].data.data) // 已取消订单
+  //   store.commit('CHANGE_FROZEN_ORDERS_LIST', res[3].data.data) // 冻结中的订单
+  //   store.commit('CHANGE_ENTRUST_ORDERS_LIST', res[4].data.data) // 委托订单
+  // })
+}

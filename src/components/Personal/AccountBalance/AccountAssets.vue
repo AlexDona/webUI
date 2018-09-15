@@ -97,7 +97,7 @@
                     {{ assetItem.coinName }}
                   </div>
                   <div class="table-td flex1">
-                    {{ assetItem.frozen + assetItem.total }}
+                    {{ assetItem.sum }}
                   </div>
                   <div class="table-td flex1">
                     {{ assetItem.frozen }}
@@ -106,7 +106,7 @@
                     {{ assetItem.total }}
                   </div>
                   <div class="table-td flex1 text-align-c">
-                    {{ assetItem.frozen + assetItem.total }}
+                    {{ assetItem.btcValue }}
                   </div>
                   <div class="table-td flex1 display-flex text-align-r font-size12">
                     <div
@@ -480,6 +480,7 @@ export default {
       // 提币地址列表
       mentionAddressList: [],
       activeCurrency: {}, // 当前选中币种
+      totalSumBTC: '', // 资产总估值BTC
       end: '', // 站位
       activeType: '', // 显示类型
       tradingOnId: '', // 根据coinido跳转到对应交易信息
@@ -681,9 +682,9 @@ export default {
         })
         // console.log(data.data.data.userCoinWalletVOPageInfo.list)
         // 返回数据
+        this.totalSumBTC = data.data.data.totalSum
         this.withdrawDepositList = data.data.data.userCoinWalletVOPageInfo.list
         this.totalPageForMyEntrust = data.data.data.userCoinWalletVOPageInfo.pages - 0
-        console.log(this.withdrawDepositList)
       }
     },
     // 分页
