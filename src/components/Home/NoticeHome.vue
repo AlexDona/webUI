@@ -33,6 +33,9 @@
 <!--请严格按照如下书写书序-->
 <script>
 import IconFont from '../Common/IconFontCommon'
+import {getNewsNoticeList} from '../../utils/api/home'
+import {returnAjaxMessage} from '../../utils/commonFunc'
+import {mapState} from 'vuex'
 export default {
   components: {
     IconFont
@@ -43,7 +46,9 @@ export default {
       noticeList: [], // 新闻（公告）列表
       animate: false,
       timer: null,
-      closeStatus: false // 是否关闭
+      closeStatus: false, // 是否关闭
+      pageNum: 1, // 当前页
+      pageSize: 10 // 每页显示
     }
   },
   created () {
@@ -67,6 +72,7 @@ export default {
         title: 'fuc火热上线2' // 标题
       }
     ]
+    this.getNewsNoticeList()
     this.timer = setInterval(this.autoPlay, 3000)
   },
   mounted () {},
@@ -74,6 +80,22 @@ export default {
   update () {},
   beforeRouteUpdate () {},
   methods: {
+    // 获取新闻公告列表
+    async getNewsNoticeList () {
+      const params = {
+        partnerId: this.partnerId,
+        pageNum: this.pageNum,
+        pageSize: this.pageSize,
+        language: this.language
+      }
+      const data = await getNewsNoticeList(params)
+      if (!returnAjaxMessage(data, this)) {
+        return false
+      } else {
+        this.noticeList = data.data.data.list
+        console.log(this.noticeList)
+      }
+    },
     // 关闭组件
     closeNotice () {
       this.closeStatus = true
@@ -88,8 +110,17 @@ export default {
     }
   },
   filter: {},
-  computed: {},
-  watch: {}
+  computed: {
+    ...mapState({
+      partnerId: state => state.common.partnerId,
+      language: state => state.common.language
+    })
+  },
+  watch: {
+    language () {
+      this.getNewsNoticeList()
+    }
+  }
 }
 </script>
 <style scoped lang="scss">

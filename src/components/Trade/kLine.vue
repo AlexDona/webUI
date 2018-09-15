@@ -380,6 +380,7 @@ export default {
       }
     },
     onMessage (data) {
+      console.log(data)
       switch (data.tradeType) {
         case 'KLINE':
           console.log(data)
@@ -445,7 +446,7 @@ export default {
             this.socketData.tradeMarketList = data
           }
           break
-        case 'DEPTHRENDER':
+        case 'DEFAULTTRADE':
           console.log(data)
           if (data.data) {
             this.$store.commit('trade/SET_MIDDLE_TOP_DATA', data.data[0].content[0])

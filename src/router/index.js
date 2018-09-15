@@ -72,6 +72,11 @@ const TradeCenter = r => require.ensure([], () => r(require('@/components/Trade/
  */
 const ActivityCenter = r => require.ensure([], () => r(require('@/components/ActivityCenter/ActivityCenter')), 'activity-center')
 
+/**
+ * 新闻公告
+ */
+const NewsAndNoticeList = r => require.ensure([], () => r(require('@/components/NoticeAndNews/NewsAndNoticeList')), 'news-andNotice-list')
+
 const router = new Router({
   routes: [
     {
@@ -296,6 +301,11 @@ const router = new Router({
       // 活动中心
       path: '/ActivityCenter',
       component: ActivityCenter
+    },
+    {
+      // 新闻中心
+      path: '/NewsAndNoticeList',
+      component: NewsAndNoticeList
     }
   ]
 })

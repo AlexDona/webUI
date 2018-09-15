@@ -257,8 +257,9 @@ export default {
     ]),
     // 设置 当前交易区
     changeActiveSymbol (activeSymbol, previousSymbol) {
-      console.log('active----------------->', activeSymbol.id)
-      console.log(this.activeTabId)
+      // console.log('active----------------->', activeSymbol)
+      console.log(activeSymbol.tradeId)
+      // console.log(this.activeTabId)
       // console.log('previous--------------->', this.previousSymbol.id)
       // this.$store.commit('common/CHANGE_ACTIVE_SYMBOL', activeSymbol)
       this.$store.commit('common/CHANGE_ACTIVE_SYMBOL', {
@@ -268,7 +269,11 @@ export default {
     },
     // 获取板块列表
     getPartnerList () {
-      getPartnerListAjax(this.partnerId, (data) => {
+      const params = {
+        partnerId: this.partnerId,
+        i18n: this.language
+      }
+      getPartnerListAjax(params, (data) => {
         if (!returnAjaxMessage(data, this, 0)) {
           return false
         } else {

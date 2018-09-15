@@ -1,0 +1,425 @@
+<template>
+  <div
+    class="news-and-notice-box"
+    :class="{'day':theme == 'day','night':theme == 'night' }"
+  >
+    <HeaderCommon/>
+    <div class="inner-box">
+      <!--搜索区-->
+      <div class="search-box">
+        <input
+          type="text"
+          class="search-input"
+          v-model="searchKeyWord"
+        />
+      </div>
+      <!--列表区-->
+      <div class="content-box">
+        <div class="inner-box">
+          <el-tabs v-model="activeName">
+            <el-tab-pane
+              label="官方公告"
+              name="notice"
+            >
+              <div class="item-content">
+                <ul class="content-list">
+                  <li
+                    class="content-item"
+                    v-for="(item,index) in noticeFilterList"
+                    :key="index"
+                  >
+                    <router-link
+                      class="content-item-link"
+                      to="/"
+                    >
+                      <div class="left">
+                        <div class="top">2018年</div>
+                        <div class="bottom">6月</div>
+                      </div>
+                      <div class="right">
+                        <p class="top">
+                          {{item.title}}
+                        </p>
+                        <p class="middle">
+                          {{item.briefIntroduction}}
+                        </p>
+                        <p class="bottom">
+                          <span class="author">{{item.author}}</span>
+                          <span class="date">{{item.time}}</span>
+                        </p>
+                      </div>
+                    </router-link>
+                  </li>
+                </ul>
+              </div>
+            </el-tab-pane>
+            <el-tab-pane
+              label="行业资讯"
+              name="news"
+            >
+              <div class="item-content">
+                <ul class="content-list">
+                  <li
+                    class="content-item"
+                    v-for="(item,index) in newsFilterList"
+                    :key="index"
+                  >
+                    <router-link
+                      class="content-item-link"
+                      to="/"
+                    >
+                      <div class="left">
+
+                      </div>
+                      <div class="right">
+                        <p class="top">
+                          {{item.title}}
+                        </p>
+                        <p class="middle">
+                          {{item.briefIntroduction}}
+                        </p>
+                        <p class="bottom">
+                          <span class="author">{{item.author}}</span>
+                          <span class="date">{{item.time}}</span>
+                        </p>
+                      </div>
+                    </router-link>
+                  </li>
+                </ul>
+              </div>
+            </el-tab-pane>
+            <el-tab-pane
+              label="帮助中心"
+              name="help"
+            >
+              <div class="item-content help">
+                <ul class="content-list">
+                  <li
+                    class="content-item"
+                    v-for="(item,index) in helpFilterList"
+                    :key="index"
+                  >
+                    <div
+                      class="content-item-link"
+                    >
+                      <div class="title">
+                        <span
+                          class="icon-box cursor-pointer"
+                          v-show="!helpShowStatusList[index]"
+                          @click="toggleShowHelpItem(index,1)"
+                        >
+                          +
+                        </span>
+                        <span
+                          class="icon-box cursor-pointer"
+                          v-show="helpShowStatusList[index]"
+                          @click="toggleShowHelpItem(index,0)"
+                        >
+                          -
+                        </span>
+                        <span class="title-content">{{item.title}}</span>
+                      </div>
+                      <el-collapse-transition>
+                        <div
+                          class="content"
+                          v-show="helpShowStatusList[index]"
+                        >
+                          {{item.content}}
+                        </div>
+                      </el-collapse-transition>
+                    </div>
+                  </li>
+                </ul>
+              </div>
+            </el-tab-pane>
+          </el-tabs>
+        </div>
+      </div>
+    </div>
+  </div>
+</template>
+<!--请严格按照如下书写书序-->
+<script>
+import HeaderCommon from '../Common/HeaderCommon'
+import {getNewsNoticeList} from '../../utils/api/home'
+import {returnAjaxMessage} from '../../utils/commonFunc'
+import {mapState} from 'vuex'
+export default {
+  components: {
+    HeaderCommon
+  },
+  // props,
+  data () {
+    return {
+      activeName: 'notice', // news, notice, help
+      // 新闻公告列表
+      noticeList: [
+        {
+          time: '2018-09-14 20:27',
+          title: '表头',
+          briefIntroduction: '简介',
+          author: '今日财经'
+        },
+        {
+          time: '2018-09-14 20:27',
+          title: '表头',
+          briefIntroduction: '简介',
+          author: '今日财经'
+        },
+        {
+          time: '2018-09-14 20:27',
+          title: '表头',
+          briefIntroduction: '简介',
+          author: '今日财经'
+        }
+      ],
+      searchKeyWord: '',
+      helpList: [
+        {
+          title: '帮助title',
+          subTitle: '子帮助主题',
+          content: '帮助内容'
+        }
+      ],
+      helpShowStatusList: [],
+      end: ''
+    }
+  },
+  created () {
+    require('../../../static/css/list/NewsAndNotice/NewsAndNotice.css')
+    require('../../../static/css/theme/day/NewsAndNotice/NewsAndNoticeDay.css')
+    require('../../../static/css/theme/night/NewsAndNotice/NewsAndNoticeNight.css')
+    // this.getNewsNoticeList()
+    this.helpList.forEach(() => {
+      this.helpShowStatusList.push(false)
+    })
+  },
+  mounted () {},
+  activited () {},
+  update () {},
+  beforeRouteUpdate () {},
+  methods: {
+    toggleShowHelpItem (index, status) {
+      this.$set(this.helpShowStatusList, index, status)
+    },
+    // 获取新闻公告列表
+    async getNewsNoticeList () {
+      const params = {
+        partnerId: this.partnerId,
+        pageNum: this.pageNum,
+        pageSize: this.pageSize,
+        language: this.language
+      }
+      const data = await getNewsNoticeList(params)
+      if (!returnAjaxMessage(data, this)) {
+        return false
+      } else {
+        this.noticeList = data.data.data.list
+        console.log(this.noticeList)
+      }
+    }
+  },
+  filter: {},
+  computed: {
+    ...mapState({
+      partnerId: state => state.common.partnerId,
+      language: state => state.common.language,
+      theme: state => state.common.theme
+    }),
+    noticeFilterList () {
+      return this.noticeList.filter((item) => {
+        return (item['title'].indexOf(this.searchKeyWord) != -1 ||
+               item['briefIntroduction'].indexOf(this.searchKeyWord) != -1)
+        // item['type'] == 0
+      })
+    },
+    newsFilterList () {
+      return this.noticeList.filter((item) => {
+        return (item['title'].indexOf(this.searchKeyWord) != -1 ||
+          item['briefIntroduction'].indexOf(this.searchKeyWord) != -1)
+        // item['type'] == 1
+      })
+    },
+    helpFilterList () {
+      return this.helpList.filter((item) => {
+        return (item['title'].indexOf(this.searchKeyWord) != -1 ||
+          item['content'].indexOf(this.searchKeyWord) != -1)
+      })
+    }
+  },
+  watch: {}
+}
+</script>
+<style scoped lang="scss" type="text/scss">
+  .news-and-notice-box{
+    >.inner-box{
+      >.search-box{
+        height:250px;
+        line-height:250px;
+        text-align: center;
+        >.search-input{
+          width:571px;
+          height:50px;
+          padding:0 20px;
+          box-sizing: border-box;
+        }
+      }
+      >.content-box{
+        height:1215px;
+        >.inner-box{
+          width:1100px;
+          height:1100px;
+          margin:0 auto;
+          .item-content{
+            >.content-list{
+              >.content-item{
+                text-align: left;
+                padding: 50px 144px;
+                >.content-item-link{
+                  display:inline-block;
+                  >.left,>.right{
+                    display:inline-block;
+                  }
+                  >.left{
+                    width: 85px;
+                    height:60px;
+                    vertical-align: top;
+                    margin-right:20px;
+                    text-align: center;
+                    >.top{
+                      height:25px;
+                    }
+                    >.bottom{
+                      height:60px;
+                      line-height: 60px;                    }
+                  }
+                  >.right{
+                    >.top{
+                      width:378px;
+                      height:15px;
+                      font-size:14px;
+                      font-weight:bold;
+                      color:rgba(255,255,255,1);
+                      margin-bottom:10px;
+                    }
+                    >.middle{
+                      font-size:12px;
+                      font-weight:400;
+                      color:rgba(139,160,202,1);
+                      margin-bottom:10px;
+                    }
+                    >.bottom{
+                      font-size:12px;
+                      font-weight:400;
+                      color:rgba(68,81,107,1);
+                    }
+                  }
+                }
+              }
+            }
+            &.help{
+              >.content-list{
+                >.content-item{
+                  >.content-item-link{
+                    width:100%;
+                    height:40px;
+                    >.title{
+                      text-align: left;
+                      height:40px;
+                      >.icon-box{
+                        display:inline-block;
+                        height:40px;
+                        width:40px;
+                        font-size: 40px;
+                        line-height: 40px;
+                        text-align: center;
+                        vertical-align: top;
+                      }
+                      >.title-content{
+                        height:40px;
+                        display:inline-block;
+                        line-height: 40px;
+                        margin-left:10px;
+                        color:#fff;
+                      }
+                    }
+                    >.content{
+                      text-align: left;
+                      padding:10px 50px;
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+    &.night{
+     >.inner-box{
+       >.search-box{
+         >.search-input{
+           background:rgba(30,38,54,1);
+           border:1px solid rgba(42,130,200,1);
+           border-radius:6px;
+           box-shadow:1px 1px 24px 0px rgba(50,83,122,1);
+           color:#fff;
+         }
+       }
+       >.content-box{
+         background-color: #121824;
+         >.inner-box{
+           .item-content{
+             >.content-list{
+               >.content-item{
+                 >.content-item-link{
+                   >.left,>.right{
+                   }
+                   >.left{
+                     >.top{
+                       background-color: #95A0B8;
+                     }
+                     >.bottom{
+                       background-color: #1F90EA;
+                     }
+                   }
+                   >.right{
+                     >.title{
+                     }
+                     >.middle{
+                     }
+                     >.bottom{
+                     }
+                   }
+                 }
+               }
+             }
+             &.help{
+               >.content-list{
+                 >.content-item{
+                   >.content-item-link{
+                     background-color: #293140;
+                     >.title{
+                       >.icon-box{
+                         background-color: #338FF5;
+                         color:#1E2636;
+                       }
+                       >.title-content{
+                       }
+                     }
+                     >.content{
+                     }
+                   }
+                 }
+               }
+             }
+           }
+         }
+       }
+     }
+    }
+    &.day{
+
+    }
+  }
+</style>
