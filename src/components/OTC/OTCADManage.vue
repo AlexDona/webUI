@@ -442,13 +442,13 @@ export default {
         type: 'warning'
       }).then(() => {
         this.getOTCEntrustingOrdersRevocation(id)
-        this.$message({
-          type: 'success',
-          message: '下架成功!'
-        })
+        // this.$message({
+        //   type: 'success',
+        //   message: '下架成功!'
+        // })
       }).catch(() => {
         this.$message({
-          type: 'info',
+          type: 'success',
           message: '已取消下架'
         })
       })
@@ -464,6 +464,10 @@ export default {
       } else {
         // 返回数据正确的逻辑 重新渲染列表
         this.getOTCADManageList()
+        this.$message({
+          type: 'success',
+          message: '下架成功!'
+        })
       }
     },
     // 点击修改按钮钮触发的事件
@@ -475,15 +479,15 @@ export default {
       }).then(() => {
         // 跳转发布广告页面并携带一条信息的参数
         this.$router.push({path: '/OTCPublishAD', query: {id: item.id}})
-        this.$message({
-          type: 'success',
-          message: '修改成功!'
-        })
+        // this.$message({
+        //   type: 'success',
+        //   message: '修改成功!'
+        // })
       }).catch(() => {
-        this.$message({
-          type: 'info',
-          message: '已取消修改'
-        })
+        // this.$message({
+        //   type: 'success',
+        //   message: '已取消修改'
+        // })
       })
     },
     // 点击查询按钮 重新请求列表数据
