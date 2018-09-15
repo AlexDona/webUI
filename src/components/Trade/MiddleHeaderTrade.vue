@@ -35,7 +35,7 @@
           >{{middleTopData.price}}</span>
           <span
             class="font-size12 theme-color"
-            v-show="middleTopData.price"
+            v-show="middleTopData.price&&activeConvertCurrencyObj.symbol"
           >≈ {{activeConvertCurrencyObj.symbol}}{{keep2Num((currencyRateList[middleTopData.area]-0)*(middleTopData.price-0))}}</span>
         </div>
       </div>

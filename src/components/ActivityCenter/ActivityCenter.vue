@@ -1,5 +1,8 @@
 <template>
-  <div class="activity-center-box">
+  <div
+    class="activity-center-box"
+    :class="{'day':theme == 'day','night':theme == 'night' }"
+  >
     <HeaderCommon/>
     活动中心
   </div>

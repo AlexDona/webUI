@@ -255,10 +255,12 @@ export default {
     //   }
     // ]
     // this.historyEntrustList = []
-    // 获取我的当前委托
-    // this.getMyCurrentEntrust()
-    // 获取历史委托
-    // this.getHistoryEntrust()
+    if (this.isLogin) {
+      // 获取我的当前委托
+      this.getMyCurrentEntrust()
+      // 获取历史委托
+      this.getHistoryEntrust()
+    }
   },
   mounted () {},
   activited () {},

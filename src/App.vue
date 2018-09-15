@@ -17,6 +17,7 @@ export default {
     return {}
   },
   async created () {
+    console.log(this.isLogin)
     require('../static/css/common.css')
     require('../static/css/list/Common/HeaderCommon/HeaderCommon.css')
     require('../static/css/theme/night/Common/HeaderCommonNight.css')
@@ -31,6 +32,7 @@ export default {
     this.CHANGE_CONVERT_CURRENCY(convertCurrency)
   },
   mounted () {
+    console.log(this.userInfo)
   },
   activited () {},
   update () {},
@@ -43,18 +45,22 @@ export default {
   },
   filter: {},
   computed: {
-    ...mapState([
-      'theme'
-    ])
+    ...mapState({
+      theme: state => state.common.theme,
+      isLogin: state => state.user.isLogin,
+      userInfo: state => state.user.loginStep1Info
+    })
   },
   watch: {
     '$route' (to, from) {
-      // console.log(to)
       switch (to.path) {
         case '/Register':
           document.body.classList.add('register')
           break
       }
+    },
+    userInfo (newVal) {
+      console.log(newVal)
     }
   }
 }

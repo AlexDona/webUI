@@ -530,12 +530,16 @@ export default {
     },
     // 获取币币交易市场 socket
     getTradeMarketBySocket (type, areaId = this.activeTradeArea.id) {
-      // 币币交易市场
-      this.socket.send({
-        'tag': type,
-        'content': `market.bbticker.${this.partnerId}.${areaId}`,
-        'id': `market_001`
-      })
+      if (areaId) {
+        // 币币交易市场
+        this.socket.send({
+          'tag': type,
+          'content': `market.bbticker.${this.partnerId}.${areaId}`,
+          'id': `market_001`
+        })
+      } else {
+        setTimeout(this.getTradeMarketBySocket(type), 1000)
+      }
     }
   },
   filter: {},

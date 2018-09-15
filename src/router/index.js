@@ -70,7 +70,7 @@ const TradeCenter = r => require.ensure([], () => r(require('@/components/Trade/
 /**
  * ActivityCenter
  */
-const ActivityCenter = r => require.ensure([], () => r(require('@/components/ActivityCenter/ActivityCenter')), 'activity-center')
+const RankingListOfInvitation = r => require.ensure([], () => r(require('@/components/ActivityCenter/RankingListOfInvitation')), 'ranking-list-of-invitation')
 // 上币申请
 const currencyApplication = r => require.ensure([], () => r(require('@/components/ActivityCenter/currencyApplication')), 'currency-application')
 
@@ -302,12 +302,16 @@ const router = new Router({
     {
       // 活动中心
       path: '/ActivityCenter',
-      component: ActivityCenter
+      redirect: '/CurrencyApplication'
     },
     {
       // 上币申请
       path: '/CurrencyApplication',
       component: currencyApplication
+    },
+    {
+      path: '/RankingListOfInvitation',
+      component: RankingListOfInvitation
     },
     {
       // 新闻中心
@@ -319,7 +323,13 @@ const router = new Router({
 
 router.beforeEach((to, from, next) => {
   if (to.path !== '/login') {
+    console.log(store.state.common.routerTo)
     store.commit('common/CHANGE_ROUTER_PATH', to.path)
+    console.log(store.state.common.routerTo)
+  }
+  console.log()
+  if (store.state.user.loginStep1Info.userInfo) {
+    store.commit('user/USER_LOGIN', store.state.user.loginStep1Info)
   }
   if (to.matched.some(m => m.meta.auth)) {
     // 对路由进行验证

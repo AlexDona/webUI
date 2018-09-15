@@ -71,7 +71,7 @@
               <!--活动中心子导航-->
               <ul
                 class="sub-nav-list activity-center"
-                v-show="$route.path ==='/ActivityCenter'"
+                v-show="$route.path ==='/ActivityCenter'||$route.path ==='/CurrencyApplication'||$route.path==='/RankingListOfInvitation'"
               >
                 <li class="sub-nav-item">
                   <router-link to="/">新币投票</router-link>
@@ -80,7 +80,7 @@
                   <router-link to="/CurrencyApplication">上币申请</router-link>
                 </li>
                 <li class="sub-nav-item">
-                  <router-link to="/">邀请排行</router-link>
+                  <router-link to="/RankingListOfInvitation">邀请排行</router-link>
                 </li>
               </ul>
             </li>
@@ -187,7 +187,11 @@
       <!-- yuxia改的bottom的显示条件 -->
       <div
         class="bottom"
-        v-show="$route.path.indexOf('OTC') != -1 || $route.path === '/ActivityCenter'"
+        v-show="
+        $route.path.indexOf('OTC') != -1 ||
+        $route.path === '/ActivityCenter' ||
+         $route.path === '/CurrencyApplication'||
+         $route.path === '/RankingListOfInvitation'"
       >
       </div>
       <div class="box">
@@ -316,57 +320,12 @@ export default{
   },
   created () {
     // 获取 语言列表:任付伟先注释此方法防止每次刷新报错-有需要请放开
-    // this.getLanguageList()
+    this.getLanguageList()
     // console.log(this.theme)
     this.activeTheme = this.theme
     // 查询某商户可用法币币种列表
-    // 默认登录
-    if (this.loginStep1Info.userInfo) {
-      this.$store.commit('user/USER_LOGIN', this.loginStep1Info)
-    }
     // 折算货币
     this.getMerchantAvailablelegalTenderList()
-    // this.convertCurrencyList = [
-    //   {
-    //     'countryId': '469217916009578496',
-    //     'createTime': '2018-08-06 11:01:13',
-    //     'id': '123',
-    //     'language': '1',
-    //     'name': '人民币',
-    //     'partnerId': '474629374641963008',
-    //     'shortName': 'CNY',
-    //     'status': 'ENABLE',
-    //     'symbol': '￥',
-    //     'updateTime': '2018-08-06 11:01:16',
-    //     'version': 1
-    //   },
-    //   {
-    //     'countryId': '2',
-    //     'createTime': null,
-    //     'id': '456',
-    //     'language': '2',
-    //     'name': '美元',
-    //     'partnerId': '474629374641963008',
-    //     'shortName': 'USD',
-    //     'status': 'ENABLE',
-    //     'symbol': '',
-    //     'updateTime': '2018-09-06 16:56:33',
-    //     'version': 4
-    //   },
-    //   {
-    //     'countryId': '4',
-    //     'createTime': '2018-09-07 09:53:21',
-    //     'id': '487560999356858368',
-    //     'language': '5',
-    //     'name': '日元',
-    //     'partnerId': '474629374641963008',
-    //     'shortName': 'JPY',
-    //     'status': 'ENABLE',
-    //     'symbol': '',
-    //     'updateTime': null,
-    //     'version': 1
-    //   }
-    // ]
   },
   methods: {
     ...mapMutations([

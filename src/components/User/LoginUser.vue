@@ -497,7 +497,7 @@ export default {
       // password: 'a11111111',
       // username: '18625512986',
       // username: '18625512988',
-      password: 'a1111111',
+      password: '000000',
       userNameErrorMsg: '', // 错误提示
       loadingCircle: {},
       userInputImageCode: '', // 图形验证码(用户输入)
@@ -612,18 +612,6 @@ export default {
         case 0:
           if (!targetNum) {
             this.setErrorMsg(0, '请输入用户名')
-            // return 0
-          } else if (PHONE_REG.test(targetNum)) {
-            this.SET_LOGIN_TYPE(0) // phone
-            // this.errorShowStatusList[0].status = 0
-            this.setErrorMsg(0, '')
-            // return 1
-          } else if (EMAIL_REG.test(this.username)) {
-            this.SET_LOGIN_TYPE(1) // phone
-            this.setErrorMsg(0, '')
-            // return 1
-          } else {
-            this.setErrorMsg(0, '请输入正确的邮箱地址或手机号！')
             // return 0
           }
           this.$forceUpdate()
@@ -883,114 +871,29 @@ export default {
       if (!returnAjaxMessage(data, this, 0)) {
         return false
       } else {
-        console.log(data)
         this.step3DialogShowStatus = false
-        // this.SET_STEP1_INFO(data.data.data)
         this.USER_LOGIN(data.data.data)
-
+        console.log(this.routerTo)
         if (this.routerTo &&
-          !this.routerTo.startsWith('/addNewPwdByPhone') &&
-          !this.routerTo.startsWith('/addNewPwdByEmail') &&
-          !this.routerTo.startsWith('/register') &&
+          !this.routerTo.startsWith('/Register') &&
           !this.routerTo.startsWith('/login') &&
-          !this.routerTo.startsWith('/forgetPwd') &&
-          !this.routerTo.startsWith('/changePwdByPhone') &&
-          !this.routerTo.startsWith('/changePwdByEmail') &&
+          !this.routerTo.startsWith('/ForgetPassword') &&
           !this.routerTo.startsWith('/nofind404')
         ) {
-          // getPersonalAssetsList(this.$store, this.$message).then((res) => {
-          //   if (res.data.code !== 200) {
-          //
-          //   } else {
           this.loadCurrencyList()
           this.$router.push({path: this.routerTo})
-          //   }
-          // })
-          // console.log(this.$store.state.personalAsset);
         } else {
           this.$router.push({path: '/home'})
         }
-
-        // 登录成功
-        this.$router.push({'path': '/'})
       }
       console.log(data)
-    },
-    loginWithCode (loginType, code) {
-      if (this.loginFlag) {
-        this.loginFlag = false
-        this.loadingCircle = this.$loading({
-          lock: true,
-          background: 'rgba(0, 0, 0, 0.7)'
-        })
-        // let url = common.apidomain + 'login'
-        let fd = new FormData()
-        if (!loginType) { // phone
-          fd.append('type', 0)
-        } else {
-          fd.append('type', 1)// email
-        }
-
-        if (code) {
-          fd.append('code', code)
-        }
-        fd.append('loginName', this.username)
-        fd.append('password', this.password)
-        ajax(url, 'post', fd, res => {
-          this.loginFlag = true
-          if (res.data.code !== 200) {
-            this.$message({
-              type: 'error',
-              message: res.data.msg
-            })
-            this.googleCode = ''
-            this.loadingCircle.close()
-            return
-          }
-          this.googleCode = ''
-          this.setEntrustCountData(0)
-          this.loadingCircle.close()
-
-          this.$store.commit('userLogin', res.data.data)
-
-          localStorage.setItem('userInfo', JSON.stringify(res.data.data.user))
-          if (this.$store.state.routerTo &&
-                  !this.$store.state.routerTo.startsWith('/addNewPwdByPhone') &&
-                  !this.$store.state.routerTo.startsWith('/addNewPwdByEmail') &&
-                  !this.$store.state.routerTo.startsWith('/register') &&
-                  !this.$store.state.routerTo.startsWith('/login') &&
-                  !this.$store.state.routerTo.startsWith('/forgetPwd') &&
-                  !this.$store.state.routerTo.startsWith('/changePwdByPhone') &&
-                  !this.$store.state.routerTo.startsWith('/changePwdByEmail') &&
-                  !this.$store.state.routerTo.startsWith('/nofind404')
-          ) {
-            // getPersonalAssetsList(this.$store, this.$message).then((res) => {
-            //   if (res.data.code !== 200) {
-            //
-            //   } else {
-            //     this.$router.push({path: this.$store.state.routerTo})
-            //   }
-            // })
-            // console.log(this.$store.state.personalAsset);
-          } else {
-            this.$router.push({path: '/home'})
-          }
-        }, (err) => {
-          this.loginFlag = true
-          this.loadingCircle.close()
-          this.$message({
-            type: 'error',
-            message: err.msg
-          })
-        })
-      }
     },
     /**
       * 谷歌验证码自动提交登录
       */
     googleAutoLogin () {
       if (this.googleCode.length > 6 || this.googleCode.length == 6) {
-        this.loginWithCode(this.loginType, this.googleCode)
+        // this.loginWithCode(this.loginType, this.googleCode)
       }
     },
 
