@@ -258,6 +258,15 @@
               </template>
             </el-table-column>
           </el-table>
+          <!--分页-->
+          <el-pagination
+            background
+            v-show="merchantsOrdersList.length"
+            layout="prev, pager, next"
+            :page-count="totalPages"
+            @current-change="changeCurrentPage"
+          >
+          </el-pagination>
         </div>
       </div>
     </div>
@@ -282,6 +291,9 @@ export default {
   },
   data () {
     return {
+      // 分页
+      currentPage: 1, // 当前页码
+      totalPages: 1, // 总页数
       // 1.0 商家订单筛选下拉框数组--交易类型
       activitedMerchantsOrdersTraderStyleList: '', // 选中的筛选项
       merchantsOrdersTraderStyleList: [
@@ -327,50 +339,7 @@ export default {
       value1: '', // 默认开始时间
       value2: '', // 默认结束时间
       // 商家订单列表
-      merchantsOrdersList: [
-        // {
-        //   id: 1,
-        //   traderTime: 1302486032000,
-        //   orderId: '20180515001',
-        //   buySellStatus: 1, // 1:买 2：卖
-        //   moneyStyle: 'CNY',
-        //   payStyle: 1, // 1:支付宝 2：微信 3：银行卡 4：某某 5：啥啥
-        //   transactionPrice: '251.25',
-        //   tradingVolume: '1.2358',
-        //   totalMoney: '5268.25',
-        //   orderStatus: '已完成',
-        //   otherName: '张无忌',
-        //   complaintRecord: '无'
-        // },
-        // {
-        //   id: 2,
-        //   traderTime: 1302486032000,
-        //   orderId: '20180515001',
-        //   buySellStatus: 2, // 1:买 2：卖
-        //   moneyStyle: 'CNY',
-        //   payStyle: 2, // 1:支付宝 2：微信 3：银行卡 4：某某 5：啥啥
-        //   transactionPrice: '251.25',
-        //   tradingVolume: '1.2358',
-        //   totalMoney: '5268.25',
-        //   orderStatus: '已完成',
-        //   otherName: '刘二黑',
-        //   complaintRecord: '无'
-        // },
-        // {
-        //   id: 3,
-        //   traderTime: 1302486032000,
-        //   orderId: '20180515001',
-        //   buySellStatus: 1, // 1:买 2：卖
-        //   moneyStyle: 'CNY',
-        //   payStyle: 3, // 1:支付宝 2：微信 3：银行卡 4：某某 5：啥啥
-        //   transactionPrice: '251.25',
-        //   tradingVolume: '1.2358',
-        //   totalMoney: '5268.25',
-        //   orderStatus: '已完成',
-        //   otherName: '赵敏',
-        //   complaintRecord: '无'
-        // }
-      ]
+      merchantsOrdersList: []
     }
   },
   created () {
@@ -389,6 +358,12 @@ export default {
   update () {},
   beforeRouteUpdate () {},
   methods: {
+    // 分页
+    changeCurrentPage (pageNum) {
+      console.log(pageNum)
+      this.currentPage = pageNum
+      this.getOTCEntrustingOrdersRevocation()
+    },
     // 时间格式化
     timeFormatting (date) {
       return timeFilter(date, 'date')
@@ -461,10 +436,10 @@ export default {
     // 页面加载时请求接口渲染列表
     async getOTCEntrustingOrdersRevocation () {
       let data = await getOTCMerchantsOrdersList({
-        // 页数
-        // pageNum: 0,
+        // 当前页数
+        pageNum: this.currentPage,
         // 每页条数
-        // pageSize: 0,
+        pageSize: '10',
         // 币种
         coinId: this.activitedMerchantsOrdersCoin,
         // 法币
@@ -485,6 +460,8 @@ export default {
       } else {
         // 返回数据正确的逻辑 重新渲染列表
         this.merchantsOrdersList = data.data.data.list
+        // 分页
+        this.totalPages = data.data.data.pages - 0
       }
     }
   },

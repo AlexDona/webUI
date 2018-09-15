@@ -74,6 +74,15 @@
         </div>
       </div>
       <div class="no-data" v-if="!getOTCFreezingOrderList.length">暂无数据</div>
+      <!--分页-->
+      <el-pagination
+        background
+        v-show="getOTCFreezingOrderList.length"
+        layout="prev, pager, next"
+        :page-count="totalPages"
+        @current-change="changeCurrentPage"
+      >
+      </el-pagination>
     </div>
   </div>
 </template>
@@ -87,23 +96,11 @@ export default {
   // props,
   data () {
     return {
+      // 分页
+      currentPage: 1, // 当前页码
+      totalPages: 1, // 总页数
       // OTC冻结订单列表
-      getOTCFreezingOrderList: [
-        // {
-        //   orderId: '20180812111111',
-        //   style: '买入',
-        //   coinName: 'BTC',
-        //   price: '567812.12',
-        //   sum: '0.0012345',
-        //   totalMoney: '20180812123456',
-        //   createTime: 1523756432000,
-        //   sellerName: '张三封',
-        //   sellerPhone: '15711111111',
-        //   buyerName: '任付伟',
-        //   buyerPhone: '15722222222',
-        //   freezingTime: 1523756432000
-        // }
-      ]
+      getOTCFreezingOrderList: []
     }
   },
   created () {
@@ -118,6 +115,12 @@ export default {
   update () {},
   beforeRouteUpdate () {},
   methods: {
+    // 分页
+    changeCurrentPage (pageNum) {
+      console.log(pageNum)
+      this.currentPage = pageNum
+      this.getOTCFrezzingOrdersList()
+    },
     // 时间格式化
     timeFormatting (date) {
       return timeFilter(date, 'normal')
@@ -126,9 +129,9 @@ export default {
     // 2.0 请求冻结中订单列表
     async getOTCFrezzingOrdersList () {
       const data = await getOTCFrezzingOrders({
-        status: 'FROZEN' // 状态 (交易中 TRADING 已完成 COMPLETED  已取消  CANCELED 冻结中 FROZEN)
-        // pageNum: '1',
-        // pageSize: '10'
+        status: 'FROZEN', // 状态 (交易中 TRADING 已完成 COMPLETED  已取消  CANCELED 冻结中 FROZEN)
+        pageNum: this.currentPage,
+        pageSize: '5'
       })
       console.log('冻结中订单')
       console.log(data)
@@ -138,6 +141,8 @@ export default {
       } else {
         // 返回数据正确的逻辑
         this.getOTCFreezingOrderList = data.data.data.list
+        // 分页
+        this.totalPages = data.data.data.pages - 0
       }
     }
   },
