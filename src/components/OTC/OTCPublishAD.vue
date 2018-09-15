@@ -334,7 +334,7 @@
 <script>
 // 引入接口
 import {formatNumberInput} from '../../utils'
-import {querySelectedOrdersDetails, getOTCAvailableCurrency, getMerchantAvailablelegalTender, addOTCPutUpOrdersMerchantdedicated, queryUserTradeFeeAndCoinInfo, queryUserPayTypes} from '../../utils/api/OTC'
+import {querySelectedOrdersDetails, getOTCAvailableCurrency, getMerchantAvailablelegalTender, addOTCPutUpOrdersMerchantdedicated, queryUserTradeFeeAndCoinInfo, queryUserPayTypes, getOTCChangeRate} from '../../utils/api/OTC'
 // 引入组件
 import NavCommon from '../Common/HeaderCommon'
 import FooterCommon from '../Common/FooterCommon'
@@ -373,6 +373,8 @@ export default {
       activitedCurrencyId: '', // 选中的可用法币id
       activeedCurrencyName: '', // 选中的可用法币name
       availableCurrencyId: [], // 可用法币币种数组
+      transformationOldCurrencyName: '', // 法币改变之前选中的法币名称
+      transformationNewCurrencyName: '', // 法币改变之后选中的法币名称
       // 4.0 当前用户所有的支付方式数组
       // payForListArr: ['1', '1', '0', '1', '0'],
       payForListArr: [],
@@ -438,30 +440,118 @@ export default {
     // 从全局获得商户id
     // console.log('从全局获得商户id')
     // console.log(this.partnerId)
-    console.log('从广告管理传过来的URL中的订单id')
-    console.log(this.$route.query.id)
-    // if (this.userInfo.type == 'COMMON') {
-    //   this.$router.push({path: '/OTCCenter'})
-    // }
+    // console.log('从广告管理传过来的URL中的订单id')
+    // console.log(this.$route.query.id)
     // 1.0 otc可用币种查询：
-    this.getOTCAvailableCurrencyList()
+    // this.getOTCAvailableCurrencyList()
     // 2.0 otc可用法币查询：
-    this.getMerchantAvailablelegalTenderList()
+    // this.getMerchantAvailablelegalTenderList()
     // 3.0 查询用户现有支付方式
-    this.queryUserPayTypesList()
-    // 请求挂单详情接口
+    // this.queryUserPayTypesList()
+    // 4.0 请求挂单详情接口
     // 根据 从广告管理传过来的URL中的订单id 请求挂单详情数据 再塞到页面中
+    // if (this.$route.query.id && this.payForListArr) {
+    //   console.log('URL有id才出现我')
+    //   this.getOTCSelectedOrdersDetails()
+    // }
+    // 5.0 汇率转换:刚进页面时候(当币种和法币都返回以后调接口)
+    // if (this.availableCoinName && this.availableCurrencyId) {
+    //   console.log('1234')
+    //   this.changeRateMinCreated()
+    //   this.changeRateMaxCreated()
+    // }
+  },
+  mounted () {
+    this.getOTCAvailableCurrencyList()
+    this.getMerchantAvailablelegalTenderList()
+    this.queryUserPayTypesList()
     if (this.$route.query.id && this.payForListArr) {
       this.getOTCSelectedOrdersDetails()
     }
+    if (this.activeedCoinName && this.activeedCurrencyName) {
+      console.log('1234')
+      console.log(this.$refs)
+      console.log(this.activeedCurrencyName)
+      // this.changeRateMinCreated()
+      // this.changeRateMaxCreated()
+    }
   },
-  mounted () {},
   activited () {},
   update () {},
   beforeRouteUpdate () {},
   methods: {
     ...mapMutations([
     ]),
+    // 刚进页面汇率转换：单笔最小限额
+    async changeRateMinCreated () {
+      console.log('刚开始最小')
+      console.log(this.$refs.minCountValue.value)
+      console.log(this.$refs)
+      console.log(this.minCount)
+      const data = await getOTCChangeRate({
+        selectName: this.activeedCurrencyName, // 选中的otc结算货币名称:也就是选中后的法币币种名称
+        // price: this.$refs.minCountValue.value, // 金额
+        price: this.minCount, // 金额
+        priceName: 'CNY' // 市价对应货币名称：默认进来是人民币
+      })
+      console.log('汇率换算')
+      console.log(data)
+      if (!(returnAjaxMessage(data, this, 0))) {
+        return false
+      } else {
+        // 返回数据正确的逻辑
+        this.$refs.minCountValue.value = data.data.data.exchangePrice
+      }
+    },
+    // 刚进页面汇率转换：单笔最大限额
+    async changeRateMaxCreated () {
+      const data = await getOTCChangeRate({
+        selectName: this.activeedCurrencyName, // 选中的otc结算货币名称:也就是选中后的法币币种名称
+        // price: this.$refs.maxCountValue.value, // 金额
+        price: this.maxCount, // 金额
+        priceName: 'CNY' // 市价对应货币名称：默认进来是人民币
+      })
+      console.log('汇率换算')
+      console.log(data)
+      if (!(returnAjaxMessage(data, this, 0))) {
+        return false
+      } else {
+        // 返回数据正确的逻辑
+        this.$refs.maxCountValue.value = data.data.data.exchangePrice
+      }
+    },
+    // 法币改变时候 汇率换算:单笔最小限额
+    async changeRateMin () {
+      const data = await getOTCChangeRate({
+        selectName: this.transformationNewCurrencyName, // 选中的otc结算货币名称:也就是选中后的法币币种名称
+        price: this.$refs.minCountValue.value, // 金额
+        priceName: this.transformationOldCurrencyName // 市价对应货币名称：也就是选中前的法币的名称
+      })
+      console.log('汇率换算')
+      console.log(data)
+      if (!(returnAjaxMessage(data, this, 0))) {
+        return false
+      } else {
+        // 返回数据正确的逻辑
+        this.$refs.minCountValue.value = data.data.data.exchangePrice
+      }
+    },
+    // 法币改变时候 汇率换算:单笔最大限额
+    async changeRateMax () {
+      const data = await getOTCChangeRate({
+        selectName: this.transformationNewCurrencyName, // 选中的otc结算货币名称:也就是选中后的法币币种名称
+        price: this.$refs.maxCountValue.value, // 金额
+        priceName: this.transformationOldCurrencyName // 市价对应货币名称：也就是选中前的法币的名称
+      })
+      console.log('汇率换算')
+      console.log(data)
+      if (!(returnAjaxMessage(data, this, 0))) {
+        return false
+      } else {
+        // 返回数据正确的逻辑
+        this.$refs.maxCountValue.value = data.data.data.exchangePrice
+      }
+    },
     //  输入限制
     formatInput (ref, pointLength) {
       let target = this.$refs[ref]
@@ -469,6 +559,7 @@ export default {
     },
     // 广告管理跳转过来 请求详情接口
     async getOTCSelectedOrdersDetails () {
+      console.log('111111')
       const data = await querySelectedOrdersDetails({
         entrustId: this.messageId
       })
@@ -477,6 +568,7 @@ export default {
       if (!(returnAjaxMessage(data, this, 0))) {
         return false
       } else {
+        console.log('222222')
         // 返回数据正确的逻辑
         // 选中交易类型赋值
         this.activitedBuySellStyle = data.data.data.entrustType
@@ -489,7 +581,8 @@ export default {
         // 选中可用币种的name
         this.activeedCoinName = data.data.data.coinName
         // 查询用户交易币种手续费率以及币种详情
-        this.queryUserTradeFeeAndCoinInfo()
+        // ============================此处需要获取最大可卖和市价=================================
+        // this.queryUserTradeFeeAndCoinInfo()
         // 单价
         this.$refs.price.value = data.data.data.price
         // 交易数量
@@ -502,11 +595,17 @@ export default {
         // this.$refs.limitOrderCount.value = data.data.data.totalAmount
         this.limitOrderCount = data.data.data.totalAmount
         // 用户成功交易次数
-        this.$refs.successOrderCount.value = data.data.data.tradeTimes
+        console.log(this.$refs)
+        // this.successOrderCount.value = data.data.data.tradeTimes
         // this.$refs.successOrderCount.value = data.data.data.tradeTimes
         this.successOrderCount = data.data.data.tradeTimes
         // 交易方式赋值
         this.payForListArr = data.data.data.payTypes
+        console.log(this.$refs.minCountValue.value)
+        // 从广告管理跳转过来时，第一次汇率换算
+        console.log('阿斯利康的假发克里斯多夫即可拉伸')
+        // this.changeRateMinCreated()
+        // this.changeRateMaxCreated()
       }
     },
     // 1.0 改变发布广告 买卖 类型
@@ -527,10 +626,12 @@ export default {
         // 返回数据正确的逻辑
         this.availableCoinName = data.data.data
         // 刚进页面将第一个币种选中
-        this.activitedCoinId = this.availableCoinName[0].partnerCoinId
+        // this.activitedCoinId = this.availableCoinName[0].partnerCoinId
+        this.activitedCoinId = this.availableCoinName[0].coinId
         this.activeedCoinName = this.availableCoinName[0].name
         // 刚进页面根据可用币种id 查询用户交易币种手续费率以及币种详情
         this.queryUserTradeFeeAndCoinInfo()
+        // this.changeRate() // 汇率转换
       }
     },
     //  2.1 查询用户现有支付方式
@@ -565,7 +666,7 @@ export default {
     // 3.01 根据可用币种id 查询用户交易币种手续费率以及币种详情
     async queryUserTradeFeeAndCoinInfo () {
       const data = await queryUserTradeFeeAndCoinInfo({
-        partnerCoinId: this.activitedCoinId // 挂单id
+        coinId: this.activitedCoinId // 挂单id
       })
       console.log('用户交易币种手续费率以及币种详情')
       console.log(data)
@@ -575,21 +676,30 @@ export default {
       } else {
         // 返回数据正确的逻辑:将返回的数据赋值到页面中
         // 单笔最小限额（单位：选中法币） 0 - 不限制
+        this.$refs.minCountValue.value = data.data.data.minCount
+        this.minCount = this.$refs.minCountValue.value
+        // this.minCount = data.data.data.minCount
+        // this.$refs.minCountValue.value = this.minCount
+        console.log(this.minCount)
+        console.log(this.$refs.minCountValue.value)
         // this.$refs.minCountValue.value = data.data.data.minCount
-        this.minCount = data.data.data.minCount
-        this.$refs.minCountValue.value = this.minCount
         // 单笔最大限额（单位：选中法币） 0 - 不限制
         // this.$refs.maxCountValue.value = data.data.data.maxCount
         this.maxCount = data.data.data.maxCount
         this.$refs.maxCountValue.value = this.maxCount
+        // this.$refs.maxCountValue.value = data.data.data.maxCount
         this.minPrice = data.data.data.minPrice // 最低价
         this.maxPrice = data.data.data.maxPrice // 最高价
         this.total = data.data.data.total // 最大可卖出量
         this.marketPrice = data.data.data.marketPrice // 市场价
         this.pointLength = data.data.data.unit // 每个币种返回的保留小数点位数限制
-        // console.log(this.minPrice)
-        // console.log(this.maxPrice)
+        console.log(this.$refs.minCountValue.value)
+        console.log(this.$refs.maxCountValue.value)
+        console.log('asdfasfdasfdasdf')
+        this.changeRateMinCreated()
+        this.changeRateMaxCreated()
       }
+      // console.log(typeof (this.$refs.minCountValue.value))
     },
     // 4.0 otc可用法币查询
     async getMerchantAvailablelegalTenderList () {
@@ -604,8 +714,11 @@ export default {
         // 返回数据正确的逻辑
         this.availableCurrencyId = data.data.data
         // 刚进页面将第一个币种选中
-        this.activitedCurrencyId = this.availableCurrencyId[0].id
+        // this.activitedCurrencyId = this.availableCurrencyId[0].id
+        this.activitedCurrencyId = this.availableCurrencyId[0].coinId
         this.activeedCurrencyName = this.availableCurrencyId[0].shortName
+        console.log(this.activitedCurrencyId)
+        console.log(this.activeedCurrencyName)
       }
     },
     // 5.0 改变可用法币的币种id
@@ -618,6 +731,7 @@ export default {
           this.activeedCurrencyName = item.shortName
         }
       })
+      // this.changeRate()
     },
     // 6.0 修改input value
     changeInputValue (ref) {
@@ -794,7 +908,7 @@ export default {
       if (this.errorInfoMaxCount) {
         return false
       }
-      // 限制设置--还未写记得写
+      // 限制设置--非必输选项
       this.dialogVisible = true
     },
     // 10.0 点击密码框中的提交按提交钮发布广告
@@ -805,14 +919,15 @@ export default {
       }
       let param = {
         entrustType: this.activitedBuySellStyle, // 挂单类型(BUY SELL)
-        partnerCoinId: this.activitedCoinId, // 挂单币种
+        // partnerCoinId: this.activitedCoinId, // 挂单币种
+        coinId: this.activitedCoinId, // 挂单币种
         currencyId: this.activitedCurrencyId, // 法币Id
         // entrustCount: this.entrustCount, // 挂单数量
         entrustCount: this.$refs.entrustCount.value, // 挂单数量
         // price: this.price, // 单价
         price: this.$refs.price.value, // 单价
-        minCount: this.minCount, // 单笔最小限额（单位：选中法币） 0 - 不限制
-        maxCount: this.maxCount, // 单笔最大限额（单位：选中法币） 0 - 不限制
+        minCount: this.$refs.minCountValue.value, // 用户输入的单笔最小限额（单位：选中法币） 0 - 不限制
+        maxCount: this.$refs.maxCountValue.value, // 用户输入的单笔最大限额（单位：选中法币） 0 - 不限制
         limitOrderCount: this.limitOrderCount, // 同时处理最大订单数(0=不限制)
         successOrderCount: this.successOrderCount, // 买家必须成交过几次(0=不限制)
         remark: this.remarkText, // 备注
@@ -844,7 +959,17 @@ export default {
     // activitedBuySellStyle () {
     // }
   },
-  watch: {}
+  watch: {
+    // 监控法币change之前之后的法币名称
+    activeedCurrencyName (transformationNew, transformationOld) { // 新的  旧的
+      this.transformationNewCurrencyName = transformationNew
+      console.log(this.transformationNewCurrencyName)
+      this.transformationOldCurrencyName = transformationOld
+      console.log(this.transformationOldCurrencyName)
+      this.changeRateMin()
+      this.changeRateMax()
+    }
+  }
 }
 </script>
 <style scoped lang="scss" type="text/scss">
