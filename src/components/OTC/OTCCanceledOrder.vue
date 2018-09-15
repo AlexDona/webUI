@@ -52,7 +52,7 @@
         <div class="canceled-info-bottom">
           <div class="info-left">
             <p class="text-info text-blue">付款信息</p>
-            <p class="text-info">卖家超时未付款，系统自动取消</p>
+            <p class="text-info">买家超时未付款，系统自动取消</p>
           </div>
           <div class="info-middle">
             <p class="text-info text-blue">卖家信息</p>
@@ -70,12 +70,14 @@
         </div>
       </div>
       <div class="no-data" v-if="!getOTCCanceledOrderList.length">暂无数据</div>
+      <!--分页-->
       <el-pagination
-        v-if="getOTCCanceledOrderList.length >= 10 "
         background
+        v-show="getOTCCanceledOrderList.length"
         layout="prev, pager, next"
-        :total="100"
-        >
+        :page-count="totalPages"
+        @current-change="changeCurrentPage"
+      >
       </el-pagination>
     </div>
   </div>
@@ -91,24 +93,11 @@ export default {
   // props,
   data () {
     return {
+      // 分页
+      currentPage: 1, // 当前页码
+      totalPages: 1, // 总页数
       // OTC取消订单列表
-      getOTCCanceledOrderList: [
-        // {
-        //   orderId: '20180812111111',
-        //   style: '买入',
-        //   styleStatus: 1, // 1:买入，2：卖出
-        //   coinName: 'BTC',
-        //   price: '567812.12',
-        //   sum: '0.0012345',
-        //   totalMoney: '20180812123456',
-        //   createTime: 1534298399000,
-        //   sellerName: '张三封',
-        //   sellerPhone: '15711111111',
-        //   buyerName: '任付伟',
-        //   buyerPhone: '15722222222',
-        //   cancelTime: 1534298399000
-        // }
-      ]
+      getOTCCanceledOrderList: []
     }
   },
   created () {
@@ -123,6 +112,12 @@ export default {
   update () {},
   beforeRouteUpdate () {},
   methods: {
+    // 分页
+    changeCurrentPage (pageNum) {
+      console.log(pageNum)
+      this.currentPage = pageNum
+      this.getOTCCanceledOrdersList()
+    },
     // 1.0 时间格式化
     timeFormatting (date) {
       return timeFilter(date, 'normal')
@@ -130,17 +125,20 @@ export default {
     // 2.0 请求已取消订单列表
     async getOTCCanceledOrdersList () {
       const data = await getOTCCanceledOrders({
-        status: 'CANCELED' // 状态 (交易中 TRADING 已完成 COMPLETED  已取消  CANCELED 冻结中 FROZEN)
-        // pageNum: '1',
-        // pageSize: '10'
+        status: 'CANCELED', // 状态 (交易中 TRADING 已完成 COMPLETED  已取消  CANCELED 冻结中 FROZEN)
+        pageNum: this.currentPage,
+        pageSize: '5'
       })
-      // console.log(data)
+      console.log('请求已取消订单列表')
+      console.log(data)
       // 提示信息
       if (!(returnAjaxMessage(data, this, 0))) {
         return false
       } else {
         // 返回数据正确的逻辑
-        this.getOTCCanceledOrderList = data.data.data.list.slice(5)
+        this.getOTCCanceledOrderList = data.data.data.list
+        // 分页
+        this.totalPages = data.data.data.pages - 0
         console.log('取消订单')
         console.log(this.getOTCCanceledOrderList)
       }

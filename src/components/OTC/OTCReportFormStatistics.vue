@@ -141,20 +141,16 @@
               </div>
               <div class="right">
                 <p>
-                  <span>购买数量:</span><span class="data"> {{ buyHistoryMap
-.count }}{{ activitedTraderCoinName }}</span>
+                  <span>购买数量:</span><span class="data"> {{ buyHistoryMap.count }}{{ activitedTraderCoinName }}</span>
                 </p>
                 <p>
-                  <span>购买均价:</span><span class="data">{{ buyHistoryMap
-.average }}{{ activitedtraderCurrencyCoinsName }}</span>
+                  <span>购买均价:</span><span class="data">{{ buyHistoryMap.average }}{{ activitedtraderCurrencyCoinsName }}</span>
                 </p>
                 <p>
-                  <span>支出金额:</span><span class="data">{{ buyHistoryMap
-.amount }}{{ activitedtraderCurrencyCoinsName }}</span>
+                  <span>支出金额:</span><span class="data">{{ buyHistoryMap.amount }}{{ activitedtraderCurrencyCoinsName }}</span>
                 </p>
                 <p>
-                  <span>成交订单:</span><span class="data"> {{ buyHistoryMap
-.num }}笔</span>
+                  <span>成交订单:</span><span class="data"> {{ buyHistoryMap.num }}笔</span>
                 </p>
               </div>
             </div>
@@ -373,6 +369,15 @@
                 </template>
               </el-table-column>
             </el-table>
+            <!--分页-->
+            <el-pagination
+              background
+              v-show="orderInfoList.length"
+              layout="prev, pager, next"
+              :page-count="totalPages"
+              @current-change="changeCurrentPage"
+            >
+            </el-pagination>
           </div>
         </div>
       </div>
@@ -399,23 +404,15 @@ export default {
   },
   data () {
     return {
+      // 分页
+      currentPage: 1, // 当前页码
+      totalPages: 1, // 总页数
       // 1.0 广告管理筛选下拉框数组--交易币种
-      traderCoinList: [
-        // {
-        //   coinId: '1',
-        //   name: 'BTC'
-        // }
-      ],
+      traderCoinList: [],
       activitedTraderCoinId: '', // 选中的交易币种id
       activitedTraderCoinName: '', // 选中的交易币种name
       // 2.0 广告管理筛选下拉框数组--交易法币
-      traderCurrencyCoinsList: [
-        // {
-        //   coinId: '123',
-        //   name: '人民币',
-        //   shortName: 'CNY'
-        // }
-      ],
+      traderCurrencyCoinsList: [],
       activitedtraderCurrencyCoinsId: '', // 选中的交易法币id
       activitedtraderCurrencyCoinsName: '', // 选中的交易法币name
       value1: '', // 默认开始时间
@@ -423,18 +420,7 @@ export default {
       radio2: 0, // 单选按钮时间
       totalAssets: '', // 总资产
       // 订单详情
-      orderInfoList: [
-        // {
-        //   id: 1,
-        //   time: 1302486032000,
-        //   orderID: '20180818001',
-        //   buySellStatus: 1, // 1:买 2：卖
-        //   monenyStyle: 'CNY',
-        //   sum: '2.7869',
-        //   price: '67812.21',
-        //   totalMoney: '0.00123'
-        // }
-      ],
+      orderInfoList: [],
       buyDayMap: {}, // 购买当日交易
       buyHistoryMap: {}, // 购买历史交易
       buyMonthMap: {}, // 购买当月交易
@@ -466,6 +452,12 @@ export default {
     ...mapMutations([
       // 'CHANGE_OTC_MERCHANT_AND_COMMON_MINCOUNT'
     ]),
+    // 分页
+    changeCurrentPage (pageNum) {
+      console.log(pageNum)
+      this.currentPage = pageNum
+      this.getOTCEntrustingOrdersRevocation()
+    },
     // 1.0 时间格式化
     timeFormatting (date) {
       return timeFilter(date, 'normal')
@@ -566,6 +558,7 @@ export default {
         currencyId: this.activitedtraderCurrencyCoinsId
       })
       // 提示信息
+      console.log('资产信息')
       console.log(data)
       if (!(returnAjaxMessage(data, this, 0))) {
         return false
@@ -594,10 +587,10 @@ export default {
     // 页面加载时请求接口渲染订单详情列表
     async getOTCEntrustingOrdersRevocation () {
       let data = await getOTCMerchantsOrdersList({
-        // 页数
-        // pageNum: 0,
+        // 当前页数
+        pageNum: this.currentPage,
         // 每页条数
-        // pageSize: 0,
+        pageSize: '10',
         // 币种
         coinId: this.activitedTraderCoinId,
         // 法币
@@ -610,12 +603,15 @@ export default {
         dateType: this.radio2
       })
       // 提示信息
+      console.log('报表列表')
       console.log(data)
       if (!(returnAjaxMessage(data, this, 0))) {
         return false
       } else {
         // 返回数据正确的逻辑 重新渲染列表
         this.orderInfoList = data.data.data.list
+        // 分页
+        this.totalPages = data.data.data.pages - 0
       }
     }
   },

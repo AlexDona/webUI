@@ -2,7 +2,7 @@
   <div class="otc-completed-order-box otc">
     <div class="completed-order-content">
       <el-table
-        :data="tableData5"
+        :data="completedOrdersList"
         :default-expand-all="true"
         empty-text="暂无数据"
       >
@@ -128,6 +128,15 @@
         </el-table-column>
       </el-table>
     </div>
+    <!--分页-->
+    <el-pagination
+      background
+      v-show="completedOrdersList.length"
+      layout="prev, pager, next"
+      :page-count="totalPages"
+      @current-change="changeCurrentPage"
+    >
+    </el-pagination>
   </div>
 </template>
 <!--请严格按照如下书写书序-->
@@ -140,38 +149,10 @@ export default {
   // props,
   data () {
     return {
-      tableData5: [
-        // {
-        //   orderStatus: 1, //  买单
-        //   id: '12987122',
-        //   style: '买入',
-        //   name: 'FBT',
-        //   price: '88888(CNY)',
-        //   num: '0.1258(BTC)',
-        //   total: '10333(CNY)',
-        //   time: 1302486032000
-        // },
-        // {
-        //   orderStatus: 2, //  卖单
-        //   id: '12987123',
-        //   style: '卖出',
-        //   name: 'ETH',
-        //   price: '88888(CNY)',
-        //   num: '0.1258(BTC)',
-        //   total: '10333(CNY)',
-        //   time: 1302486032000
-        // },
-        // {
-        //   orderStatus: 2, //  卖单
-        //   id: '12987123',
-        //   style: '卖出',
-        //   name: 'ETH',
-        //   price: '88888(CNY)',
-        //   num: '0.1258(BTC)',
-        //   total: '10333(CNY)',
-        //   time: 1302486032000
-        // }
-      ]
+      // 分页
+      currentPage: 1, // 当前页码
+      totalPages: 1, // 总页数
+      completedOrdersList: []
     }
   },
   created () {
@@ -186,23 +167,32 @@ export default {
   update () {},
   beforeRouteUpdate () {},
   methods: {
+    // 分页
+    changeCurrentPage (pageNum) {
+      console.log(pageNum)
+      this.currentPage = pageNum
+      this.getOTCCompletedOrdersList()
+    },
     // 1.0 时间格式化
     timeFormatting (date) {
       return timeFilter(date, 'normal')
     },
     // 2.0 请求已完成订单列表
     async getOTCCompletedOrdersList () {
+      console.log('当前页：' + this.currentPage)
       const data = await getOTCCompletedOrders({
-        status: 'COMPLETED' // 状态 (交易中 TRADING 已完成 COMPLETED  已取消  CANCELED 冻结中 FROZEN)
-        // pageNum: '1',
-        // pageSize: '10'
+        status: 'COMPLETED', // 状态 (交易中 TRADING 已完成 COMPLETED  已取消  CANCELED 冻结中 FROZEN)
+        pageNum: this.currentPage,
+        pageSize: '5'
       })
       // 提示信息
       if (!(returnAjaxMessage(data, this, 0))) {
         return false
       } else {
         // 返回数据正确的逻辑
-        this.tableData5 = data.data.data.list
+        this.completedOrdersList = data.data.data.list
+        // 分页
+        this.totalPages = data.data.data.pages - 0
       }
     }
   },

@@ -527,6 +527,15 @@
       </div>
       <!-- 暂无数据 -->
       <div class="no-data" v-if="!tradingOrderList.length">暂无数据</div>
+      <!--分页-->
+      <el-pagination
+        background
+        v-show="tradingOrderList.length"
+        layout="prev, pager, next"
+        :page-count="totalPages"
+        @current-change="changeCurrentPage"
+      >
+      </el-pagination>
       <!-- 3.0 买家点击确认付款按钮 弹出交易密码框 -->
       <div class="password-dialog">
         <el-dialog
@@ -642,6 +651,9 @@ export default {
   // props,
   data () {
     return {
+      // 分页
+      currentPage: 1, // 当前页码
+      totalPages: 1, // 总页数
       dialogVisible1: false, // 确认付款交易密码框
       dialogVisible2: false, // 确认收款交易密码框
       dialogVisible3: false, // 提交申诉交易密码框
@@ -676,12 +688,22 @@ export default {
     require('../../../static/css/theme/night/OTC/OTCTradingOrderNight.css')
     // 1.0 请求交易中订单列表
     this.getOTCTradingOrdersList()
+    // setInterval(() => {
+    //   console.log('定时器一秒一次')
+    //   this.getOTCTradingOrdersList()
+    // }, 1000)
   },
   mounted () {},
   activited () {},
   update () {},
   beforeRouteUpdate () {},
   methods: {
+    // 分页
+    changeCurrentPage (pageNum) {
+      console.log(pageNum)
+      this.currentPage = pageNum
+      this.getOTCTradingOrdersList()
+    },
     // 1.0 时间格式化
     timeFormatting (date) {
       return timeFilter(date, 'time')
@@ -710,13 +732,14 @@ export default {
     },
     // 2.0 请求交易中订单列表
     async getOTCTradingOrdersList () {
+      console.log('当前页：' + this.currentPage)
       const data = await getOTCTradingOrders({
-        status: 'TRADING' // 状态 (交易中 TRADING )
-        // pageNum: '1',
-        // pageSize: '10'
+        status: 'TRADING', // 状态 (交易中 TRADING )
+        pageNum: this.currentPage,
+        pageSize: '5'
       })
-      // console.log('交易中订单列表')
-      // console.log(data)
+      console.log('交易中订单列表')
+      console.log(data)
       // 提示信息
       if (!(returnAjaxMessage(data, this, 0))) {
         return false
@@ -725,6 +748,8 @@ export default {
         this.tradingOrderList = data.data.data.list
         console.log('交易中订单')
         console.log(this.tradingOrderList)
+        // 分页
+        this.totalPages = data.data.data.pages - 0
         // 循环数组
         this.tradingOrderList.forEach((item, index) => {
           this.buttonStatusArr[index] = false

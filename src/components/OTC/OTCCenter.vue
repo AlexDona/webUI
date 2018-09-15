@@ -120,7 +120,6 @@
               <!-- 商户 -->
               <el-table-column
                 label="商户"
-                width="180"
               >
                 <template slot-scope = "s">
                   <div>{{s.row.userName}}</div>
@@ -129,7 +128,6 @@
               <!-- 信用 -->
               <el-table-column
                 label="成交率"
-                width="180"
               >
                 <template slot-scope = "s">
                   <div v-if="s.row.successOrderTimes === 0 || s.row.tradeTimes === 0">0%</div>
@@ -236,6 +234,15 @@
             </el-table>
           </div>
         </div>
+        <!--分页-->
+        <el-pagination
+          background
+          v-show="onlineBuySellTableList.length"
+          layout="prev, pager, next"
+          :page-count="totalPages"
+          @current-change="changeCurrentPage"
+        >
+        </el-pagination>
       </div>
       <!-- 2.2 订单管理-->
       <div class="otc-order-manage">
@@ -264,7 +271,7 @@
               />
               交易中订单
             </span>
-            <OTCTradingOrder></OTCTradingOrder>
+            <OTCTradingOrder ref = "trading"></OTCTradingOrder>
           </el-tab-pane>
           <!-- 2.2.2 已完成订单 -->
           <el-tab-pane name = "second">
@@ -278,7 +285,7 @@
               />
               已完成订单
             </span>
-            <OTCCompletedOrder></OTCCompletedOrder>
+            <OTCCompletedOrder ref = "complete"></OTCCompletedOrder>
           </el-tab-pane>
           <!-- 2.2.3 已取消订单 -->
           <el-tab-pane name = "third">
@@ -292,7 +299,7 @@
               />
               已取消订单
             </span>
-            <OTCCanceledOrder></OTCCanceledOrder>
+            <OTCCanceledOrder ref = "canceled"></OTCCanceledOrder>
           </el-tab-pane>
           <!-- 2.2.4 冻结中订单 -->
           <el-tab-pane name = "fourth">
@@ -306,7 +313,7 @@
               />
               冻结中订单
             </span>
-            <OTCFreezingOrder></OTCFreezingOrder>
+            <OTCFreezingOrder ref = "freezing"></OTCFreezingOrder>
           </el-tab-pane>
           <!-- 2.2.5 委托订单 -->
           <el-tab-pane name = "fifth">
@@ -320,7 +327,7 @@
               />
               委托订单
             </span>
-            <OTCEntrustOrder></OTCEntrustOrder>
+            <OTCEntrustOrder ref = "entrust"></OTCEntrustOrder>
           </el-tab-pane>
         </el-tabs>
       </div>
@@ -359,6 +366,9 @@ export default {
   // props,
   data () {
     return {
+      // 分页
+      currentPage: 1, // 当前页码
+      totalPages: 1, // 总页数
       // 3.0 可用法币币种数组
       activitedCurrencyId: '', // 选中的可用法币id
       activitedCurrencyName: '', // 选中的可用法币name
@@ -430,9 +440,40 @@ export default {
       'CHANGE_OTC_AVAILABLE_CURRENCY_ID',
       'CHANGE_OTC_AVAILABLE_PARTNER_COIN_ID'
     ]),
+    // 分页
+    changeCurrentPage (pageNum) {
+      console.log(pageNum)
+      this.currentPage = pageNum
+      this.getOTCPutUpOrdersList()
+      // 按照选中的分页调接口渲染列表数据
+      // this.getSelectCurrencyNametOTCPutUpOrdersList() // 切换我要购买和出售时候调取接口获得数据渲染列表
+      // this.toggleBuyOrSellStyle() // 切换在线购买和在线售出状态并调接口渲染列表
+      // this.getChangeCurrencyIdOTCPutUpOrdersList() //  改变可用法币的下拉框的选中值，调主页面查询otc挂单列表接口
+      // this.getChangePayWayOTCPutUpOrdersList() // 改变支付方式下拉框的选中值，调主页面查询otc挂单列表接口
+    },
     // 0.1 切换tab面板
     toggleTabPane (tab, event) {
       console.log(this.activeName)
+      if (this.activeName === 'first') {
+        console.log('调交易中订单')
+        this.$refs.trading.getOTCTradingOrdersList() // 调用子组件交易中订单的方法
+      }
+      if (this.activeName === 'second') {
+        console.log('调已完成订单')
+        this.$refs.complete.getOTCCompletedOrdersList() // 调用子组件已完成订单的方法
+      }
+      if (this.activeName === 'third') {
+        console.log('调已取消订单')
+        this.$refs.canceled.getOTCCanceledOrdersList() // 调用子组件已取消订单的方法
+      }
+      if (this.activeName === 'fourth') {
+        console.log('调冻结中订单')
+        this.$refs.freezing.getOTCFrezzingOrdersList() // 调用子组件冻结中订单的方法
+      }
+      if (this.activeName === 'fifth') {
+        console.log('调委托订单')
+        this.$refs.entrust.getOTCEntrustingOrdersList() // 调用子组件委托订单的方法
+      }
     },
     // 0.2 点击发布订单按钮跳转到发布订单页面
     toPublishOrder () {
@@ -515,7 +556,7 @@ export default {
       const data = await getMerchantAvailablelegalTender({
         partnerId: this.partnerId
       })
-      console.log('otc可用法币查')
+      console.log('otc法币查询')
       console.log(data)
       if (!(returnAjaxMessage(data, this, 0))) {
         return false
@@ -530,7 +571,9 @@ export default {
     },
     //  3.0 刚进页面时候 otc主页面查询挂单列表
     async getOTCPutUpOrdersList () {
+      console.log('当前页：' + this.currentPage)
       let param = {
+        pageNum: this.currentPage,
         payType: this.checkedPayType, // 按照选中的支付方式查询列表
         partnerId: this.partnerId, // 商户id
         // 刚进页面默认显示可用币种的第一个
@@ -552,6 +595,8 @@ export default {
       } else {
         // 返回数据正确的逻辑
         this.onlineBuySellTableList = data.data.data.list
+        // 分页
+        this.totalPages = data.data.data.pages - 0
       }
     },
     //  4.0 选中我想购买和出售币种名称
@@ -562,14 +607,15 @@ export default {
       this.CHANGE_OTC_AVAILABLE_PARTNER_COIN_ID(this.IWantToBuySellArr[index].partnerCoinId) // 商户币种id
       this.CHANGE_OTC_AVAILABLE_CURRENCY_ID(this.IWantToBuySellArr[index].coinId) // 币种id
       console.log(this.selectedOTCAvailableCurrencyName)
-      console.log(this.selectedOTCAvailableCurrencyCoinID)
-      console.log(this.selectedOTCAvailablePartnerCoinId)
+      console.log('币种id：' + this.selectedOTCAvailableCurrencyCoinID)
+      // console.log(this.selectedOTCAvailablePartnerCoinId)
       // 请求接口数据渲染表格
       this.getSelectCurrencyNametOTCPutUpOrdersList()
     },
     //  5.0 切换我要购买和出售时候调取接口获得数据渲染列表
     async getSelectCurrencyNametOTCPutUpOrdersList () {
       let param = {
+        pageNum: this.currentPage,
         payType: this.checkedPayType, // 按照选中的支付方式查询列表
         partnerId: this.partnerId, // 商户id
         coinId: this.selectedOTCAvailableCurrencyCoinID, // 币种id
@@ -582,13 +628,16 @@ export default {
         param.entrustType = 'BUY' // 挂单类型（BUY SELL）
       }
       const data = await getOTCPutUpOrders(param)
-      // console.log(data)
+      console.log('otc主页面查询挂单列表')
+      console.log(data)
       // 提示信息
       if (!returnAjaxMessage(data, this, 0)) {
         return false
       } else {
         // 返回数据正确的逻辑
         this.onlineBuySellTableList = data.data.data.list
+        // 分页
+        this.totalPages = data.data.data.pages - 0
       }
     },
     //  6.0 切换在线购买和在线售出状态并调接口渲染列表
@@ -596,6 +645,7 @@ export default {
       this.OTCBuySellStyle = e
       console.log(this.OTCBuySellStyle)
       let param = {
+        pageNum: this.currentPage,
         payType: this.checkedPayType, // 按照选中的支付方式查询列表
         partnerId: this.partnerId, // 商户id
         coinId: this.selectedOTCAvailableCurrencyCoinID, // 币种id
@@ -608,13 +658,16 @@ export default {
         param.entrustType = 'BUY' // 挂单类型（BUY SELL）
       }
       const data = await getOTCPutUpOrders(param)
-      // console.log(data)
+      console.log('otc主页面查询挂单列表')
+      console.log(data)
       // 提示信息
       if (!returnAjaxMessage(data, this, 0)) {
         return false
       } else {
         // 返回数据正确的逻辑
         this.onlineBuySellTableList = data.data.data.list
+        // 分页
+        this.totalPages = data.data.data.pages - 0
       }
     },
     //  7.0 改变可用法币的币种id
@@ -633,6 +686,7 @@ export default {
     //  8.0 改变可用法币的下拉框的选中值，调主页面查询otc挂单列表接口
     async getChangeCurrencyIdOTCPutUpOrdersList () {
       let param = {
+        pageNum: this.currentPage,
         payType: this.checkedPayType, // 按照选中的支付方式查询列表
         partnerId: this.partnerId, // 商户id
         coinId: this.selectedOTCAvailableCurrencyCoinID, // 币种id
@@ -645,6 +699,7 @@ export default {
         param.entrustType = 'BUY' // 挂单类型（BUY SELL）
       }
       const data = await getOTCPutUpOrders(param)
+      console.log('otc主页面查询挂单列表')
       console.log(data)
       // 提示信息
       if (!returnAjaxMessage(data, this, 0)) {
@@ -652,6 +707,8 @@ export default {
       } else {
         // 返回数据正确的逻辑
         this.onlineBuySellTableList = data.data.data.list
+        // 分页
+        this.totalPages = data.data.data.pages - 0
       }
     },
     // 9.0 改变支付方式下拉框的选中值
@@ -664,6 +721,7 @@ export default {
     // 10.0 改变支付方式下拉框的选中值，调主页面查询otc挂单列表接口
     async getChangePayWayOTCPutUpOrdersList () {
       let param = {
+        pageNum: this.currentPage,
         payType: this.checkedPayType, // 按照选中的支付方式查询列表
         partnerId: this.partnerId, // 商户id
         coinId: this.selectedOTCAvailableCurrencyCoinID, // 币种id
@@ -676,6 +734,7 @@ export default {
         param.entrustType = 'BUY' // 挂单类型（BUY SELL）
       }
       const data = await getOTCPutUpOrders(param)
+      console.log('otc主页面查询挂单列表')
       console.log(data)
       // 提示信息
       if (!returnAjaxMessage(data, this, 0)) {
@@ -683,6 +742,8 @@ export default {
       } else {
         // 返回数据正确的逻辑
         this.onlineBuySellTableList = data.data.data.list
+        // 分页
+        this.totalPages = data.data.data.pages - 0
       }
     }
   },

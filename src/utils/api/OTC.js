@@ -54,3 +54,5 @@ export const queryUserPayTypes = (params) => get('otcCOin/getUserPayTypes', para
 export const getOTCReportFormStatisticsData = (params) => get('otcOrder/selectMerchStatics', params)
 //  汇率转换
 export const getOTCChangeRate = (params) => get('otcCOin/changeRate', params)
+//  币种详情：商家和普通用户挂单页面请求币种详情渲染页面
+export const getOTCCoinInfo = (params) => get('otcCOin/getCoinInfo', params)

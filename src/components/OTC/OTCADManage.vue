@@ -98,13 +98,6 @@
             </span>
           </span>
         </div>
-         <!-- <el-pagination
-            background
-            @prev-click='prevClick'
-            @next-click='nextClick'
-            layout="prev, pager, next"
-            :total="100">
-          </el-pagination> -->
         <!-- 下部分表格内容 -->
         <div class="manage-main-bottom">
           <el-table
@@ -145,8 +138,7 @@
               label="币种"
             >
               <template slot-scope="scope">
-                <div>{{scope.row.coinName
-}}</div>
+                <div>{{scope.row.coinName}}</div>
               </template>
             </el-table-column>
             <el-table-column
@@ -223,6 +215,15 @@
             </el-table-column>
           </el-table>
         </div>
+        <!--分页-->
+        <el-pagination
+          background
+          v-show="ADList.length"
+          layout="prev, pager, next"
+          :page-count="totalPages"
+          @current-change="changeCurrentPage"
+        >
+        </el-pagination>
       </div>
     </div>
     <!-- 3.0 底部 -->
@@ -246,6 +247,9 @@ export default {
   },
   data () {
     return {
+      // 分页
+      currentPage: 1, // 当前页码
+      totalPages: 1, // 总页数
       // 1.0 广告管理筛选下拉框数组--交易类型
       activitedADManageTraderStyleList: '', // 选中的筛选项
       ADManageTraderStyleList: [
@@ -260,16 +264,7 @@ export default {
       ],
       // 2.0 广告管理筛选下拉框数组--市场
       activitedADManageMarketList: '', // 选中的筛选项
-      ADManageMarketList: [
-        // {
-        //   value: '选项1',
-        //   label: '市场1'
-        // },
-        // {
-        //   value: '选项2',
-        //   label: '市场2'
-        // }
-      ],
+      ADManageMarketList: [],
       // 交易法币
       activitedADManageCurrencyId: '',
       ADManageCurrencyId: [],
@@ -294,44 +289,7 @@ export default {
       // 设置列表页面长度
       pageSize: 10,
       // 广告列表
-      ADList: [
-        // {
-        //   time: 1302486032000,
-        //   id: 1,
-        //   market: 'FBT',
-        //   price: '67812.21',
-        //   sum: '2.7869',
-        //   residue: '0.00123',
-        //   complete: '2.78951',
-        //   status: '已下架',
-        //   buySellStatus: 1, // 1:买 2：卖
-        //   adStatus: 2 // 1:已上架 2：已下架 3：已完成
-        // },
-        // {
-        //   time: 1802486032000,
-        //   id: 2,
-        //   market: 'CNY',
-        //   price: '67812.21',
-        //   sum: '2.7869',
-        //   residue: '0.00123',
-        //   complete: '2.78951',
-        //   status: '已上架',
-        //   buySellStatus: 2, // 1:买 2：卖
-        //   adStatus: 1 // 1:已上架 2：已下架 3：已完成
-        // },
-        // {
-        //   time: 1802486032000,
-        //   id: 3,
-        //   market: 'FBT',
-        //   price: '67812.21',
-        //   sum: '2.7869',
-        //   residue: '0.00123',
-        //   complete: '2.78951',
-        //   status: '已完成',
-        //   buySellStatus: 1, // 1:买 2：卖
-        //   adStatus: 3 // 1:已上架 2：已下架 3：已完成
-        // }
-      ]
+      ADList: []
     }
   },
   created () {
@@ -356,6 +314,12 @@ export default {
   beforeRouteUpdate () {
   },
   methods: {
+    // 分页
+    changeCurrentPage (pageNum) {
+      console.log(pageNum)
+      this.currentPage = pageNum
+      this.getOTCADManageList()
+    },
     // 时间格式化
     timeFormatting (date) {
       return timeFilter(date, 'normal')
@@ -366,9 +330,8 @@ export default {
         entrustType: this.activitedADManageTraderStyleList ? this.activitedADManageTraderStyleList : '',
         coinId: this.activitedADManageMarketList ? this.activitedADManageMarketList : '',
         currencyId: this.activitedADManageCurrencyId ? this.activitedADManageCurrencyId : '',
-        status: this.activitedADManageStatusList ? this.activitedADManageStatusList : ''
-        // pageNum: this.pageNum,
-        // pageSize: this.pageSize
+        status: this.activitedADManageStatusList ? this.activitedADManageStatusList : '',
+        pageNum: this.currentPage
       })
       console.log(data)
       if (!(returnAjaxMessage(data, this, 0))) {
@@ -376,6 +339,8 @@ export default {
       } else {
         // 返回数据正确的逻辑 渲染列表
         this.ADList = data.data.data.list
+        // 分页
+        this.totalPages = data.data.data.pages - 0
       }
     },
     // 交易类型选中赋值
@@ -442,13 +407,13 @@ export default {
         type: 'warning'
       }).then(() => {
         this.getOTCEntrustingOrdersRevocation(id)
-        this.$message({
-          type: 'success',
-          message: '下架成功!'
-        })
+        // this.$message({
+        //   type: 'success',
+        //   message: '下架成功!'
+        // })
       }).catch(() => {
         this.$message({
-          type: 'info',
+          type: 'success',
           message: '已取消下架'
         })
       })
@@ -464,6 +429,10 @@ export default {
       } else {
         // 返回数据正确的逻辑 重新渲染列表
         this.getOTCADManageList()
+        this.$message({
+          type: 'success',
+          message: '下架成功!'
+        })
       }
     },
     // 点击修改按钮钮触发的事件
@@ -475,15 +444,15 @@ export default {
       }).then(() => {
         // 跳转发布广告页面并携带一条信息的参数
         this.$router.push({path: '/OTCPublishAD', query: {id: item.id}})
-        this.$message({
-          type: 'success',
-          message: '修改成功!'
-        })
+        // this.$message({
+        //   type: 'success',
+        //   message: '修改成功!'
+        // })
       }).catch(() => {
-        this.$message({
-          type: 'info',
-          message: '已取消修改'
-        })
+        // this.$message({
+        //   type: 'success',
+        //   message: '已取消修改'
+        // })
       })
     },
     // 点击查询按钮 重新请求列表数据

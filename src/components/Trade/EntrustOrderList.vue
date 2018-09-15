@@ -6,10 +6,10 @@
     <div class="inner-box">
       <!--查看更多委单记录-->
       <div class="view-more">
-        <router-link to="/">
+        <a href="#" @click="jumpToPersonal">
           <span>查看更多</span>
           <i class="el-icon-d-arrow-right"></i>
-        </router-link>
+        </a>
       </div>
       <el-tabs
         v-model="activeName"
@@ -270,6 +270,11 @@ export default {
     ...mapMutations([
       'TOGGLE_REFRESH_ENTRUST_LIST_STATUS'
     ]),
+    // 跳转到个人中心
+    jumpToPersonal () {
+      this.$store.commit('personal/CHANGE_USER_CENTER_ACTIVE_NAME', 'coin-orders')
+      this.$router.push({path: '/PersonalCenter'})
+    },
     /**
      *撤销委单
      */
