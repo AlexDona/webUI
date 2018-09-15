@@ -208,9 +208,12 @@
                         </span>
                             </div>
                             <!--货币转换-->
-                            <div class="bottom"
-                                 style="height:15px;line-height: 15px">
-                              ≈ {{(currencyRateList[s.row.area]-0)*(s.row.price-0)}}
+                            <div
+                              class="bottom"
+                              style="height:15px;line-height: 15px"
+                              v-show="activeConvertCurrencyObj"
+                            >
+                              ≈ {{activeConvertCurrencyObj.symbol}}{{keep2Num((currencyRateList[s.row.area]-0)*(s.row.price-0))}}
                             </div>
                           </div>
                         </template>
@@ -382,7 +385,11 @@ import IconFontCommon from '../Common/IconFontCommon'
 import socket from '../../utils/datafeeds/socket'
 // 文件拖动
 import VueDND from 'awe-dnd'
-import {getStore, setStore} from '../../utils'
+import {
+  getStore,
+  setStore,
+  keep2Num
+} from '../../utils'
 // import {getPartnerList} from '../../utils/api/home'
 import {
   returnAjaxMessage,
@@ -441,12 +448,11 @@ export default{
     require('../../../static/css/theme/day/Home/MarketListHomeDay.css')
     require('../../../static/css/theme/night/Home/MarketListHomeNight.css')
     this.collectList = JSON.parse(getStore('collectList')) || []
-    console.log(this.collectList)
+    console.log(this.activeConvertCurrency)
     this.collectList.forEach((item) => {
       this.collectStatusList[item.id] = true
     })
     this.getPartnerList()
-
     // 初始化socket
     // socket.subscribeKline({
     //   'type': 0 // 请求类型
@@ -939,6 +945,10 @@ export default{
     ...mapMutations([
       'CHANGE_COLLECT_LIST'
     ]),
+    // 截取2位小数
+    keep2Num (number) {
+      return keep2Num(number)
+    },
     // 更改当前交易对
     changeActiveSymbol (e) {
       this.$store.commit('trade/SET_JUMP_STATUS', true)
@@ -1010,7 +1020,6 @@ export default{
                         this.$set(collectContent, index, newContent)
                         this.$set(collectContent[index].tendency, 0, newContent.tendency[0])
                         this.$set(collectContent[index].tendency, 1, newContent.tendency[1])
-                        // console.log(collectContent)
                         return false
                       }
                     })
@@ -1022,21 +1031,6 @@ export default{
           }
         }
       })
-
-      // socket.subscribeKline({
-      //   'type': 'home_market', // 请求类型
-      //   plateId
-      // }, (data) => {
-      // console.log(data)
-      //
-      //
-      //   // let resultArr = splitSocketParams(data)
-      //   // console.log(resultArr)
-      //   // console.log(this.marketList)
-      //   // if (this.collectList.length) {
-      //   //   this.setMarketList(this.collectAreaId, this.collectList)
-      //   // }
-      // })
     },
     getSocketData (type, plateId) {
       // 首页socket
@@ -1053,7 +1047,11 @@ export default{
     },
     // 获取板块列表
     getPartnerList () {
-      getPartnerListAjax(this.partnerId, (data) => {
+      const params = {
+        partnerId: this.partnerId,
+        i18n: this.language
+      }
+      getPartnerListAjax(params, (data) => {
         if (!returnAjaxMessage(data, this, 0)) {
           return false
         } else {
@@ -1238,7 +1236,9 @@ export default{
       partnerId: state => state.common.partnerId, // 商户id
       activeSymbol: state => state.common.activeSymbol,
       activeTradeArea: state => state.common.activeTradeArea,
-      currencyRateList: state => state.common.currencyRateList // 折算货币列表
+      currencyRateList: state => state.common.currencyRateList, // 折算货币列表
+      activeConvertCurrencyObj: state => state.common.activeConvertCurrencyObj // 目标货币
+
     })
     // // 筛选列表
     // filterMarketList () {
@@ -1269,6 +1269,9 @@ export default{
     },
     activeName (newVal, oldVal) {
       console.log(newVal, oldVal)
+    },
+    language (newVal) {
+      this.getPartnerList()
     }
   }
 }

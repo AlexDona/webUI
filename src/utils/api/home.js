@@ -6,3 +6,5 @@ import {get} from './axios'
 export const getPartnerList = (params) => get('queryPartnerForm', params)
 // 获取轮播图
 export const getBanner = (params) => get('banner/', params)
+// 分页查询新闻公告
+export const getNewsNoticeList = (params) => get('newsBulletin/pageQuery', params)

@@ -269,7 +269,11 @@ export default {
     },
     // 获取板块列表
     getPartnerList () {
-      getPartnerListAjax(this.partnerId, (data) => {
+      const params = {
+        partnerId: this.partnerId,
+        i18n: this.language
+      }
+      getPartnerListAjax(params, (data) => {
         if (!returnAjaxMessage(data, this, 0)) {
           return false
         } else {

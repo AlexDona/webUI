@@ -462,6 +462,9 @@ import {
   userLoginForStep2
 } from '../../utils/api/user'
 import {
+  assetCurrenciesList
+} from '../../utils/api/personal'
+import {
   returnAjaxMessage,
   sendPhoneOrEmailCodeAjax
 } from '../../utils/commonFunc'
@@ -710,24 +713,6 @@ export default {
     /**
       * 发送短信验证码或邮箱验证码
       */
-    msgCountDown (countDown, text, disabled) {
-      console.log(countDown)
-      console.log(text)
-      console.log(disabled)
-      if (countDown > 0) {
-        countDown--
-        // this.msgTxt = this.msgTime + "秒后重试";
-        text = countDown + ' s 秒后重试'
-        setTimeout(this.msgCountDown, 1000)
-      } else {
-        countDown = 0
-        text = '发送验证码'
-        disabled = false
-      }
-      console.log(countDown)
-      console.log(text)
-      console.log(disabled)
-    },
     sendPhoneOrEmailCode (loginType) {
       if (this.disabledOfPhoneBtn || this.disabledOfEmailBtn) {
         return false
@@ -768,25 +753,14 @@ export default {
       })
     },
     // 加载个人资产
-    loadCurrencyList () {
-      // 点击登录按钮时候清空验证码输入框中的数据
-      this.msgCode = ''
-      this.googleCode = ''
-
-      this.loginForStep1Old().then((res) => {
-        this.SET_STEP1_INFO(res.data.data)
-        if (!this.step2) {
-        }
-      }).catch((err) => {
-        this.loadingCircle.close()
-        this.$message({
-          type: 'error',
-          // message: err.msg
-          message: err.message
-        })
-      })
+    async loadCurrencyList () {
+      const data = await assetCurrenciesList()
+      if (!returnAjaxMessage(data, this)) {
+        return false
+      } else {
+        console.log(data)
+      }
     },
-
     // 4位随机数
     getRandomNum () {
       return parseInt(Math.random() * 10000) + ''
@@ -927,6 +901,7 @@ export default {
           //   if (res.data.code !== 200) {
           //
           //   } else {
+          this.loadCurrencyList()
           this.$router.push({path: this.routerTo})
           //   }
           // })
