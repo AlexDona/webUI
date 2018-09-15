@@ -676,6 +676,10 @@ export default {
     require('../../../static/css/theme/night/OTC/OTCTradingOrderNight.css')
     // 1.0 请求交易中订单列表
     this.getOTCTradingOrdersList()
+    // setInterval(() => {
+    //   console.log('定时器一秒一次')
+    //   this.getOTCTradingOrdersList()
+    // }, 1000)
   },
   mounted () {},
   activited () {},
