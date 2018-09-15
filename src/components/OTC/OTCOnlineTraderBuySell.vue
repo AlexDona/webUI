@@ -669,7 +669,7 @@ export default {
     // 4.0 查询用户交易币种手续费率以及币种详情
     async queryUserTradeFeeAndCoinInfo () {
       const data = await queryUserTradeFeeAndCoinInfo({
-        partnerCoinId: this.partnerCoinId // 商户币种id
+        coinId: this.partnerCoinId // 商户币种id
       })
       console.log('用户交易币种手续费率以及币种详情')
       console.log(data)

@@ -18,6 +18,8 @@ const state = {
   activeConvertCurrency: 'CNY',
   // 折算货币税率列表
   currencyRateList: [],
+  // 当前折算货币obj
+  activeConvertCurrencyObj: {},
   previousSymbol: {}, // 上一个交易对
   // 当前选中交易对
   activeSymbol: {

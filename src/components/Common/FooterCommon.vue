@@ -19,17 +19,12 @@
               v-for="(item,index) in shareList"
               :key="index"
             >
-              <div class="hidden-box">
-                <img
-                  :src="item.ercodeSrc"
-                >
-              </div>
-              <div class="mini-icon">
+              <a href="#" class="mini-icon">
                 <Iconfont
                   :icon-name="item.iconName"
                   class-name="icon-text"
                 />
-              </div>
+              </a>
             </li>
           </ul>
         </div>
@@ -151,6 +146,7 @@ export default {
               display:inline-block;
               margin-right:10px;
               >.mini-icon{
+                display:inline-block;
                 width:20px;
                 height:20px;
                 line-height:16px;

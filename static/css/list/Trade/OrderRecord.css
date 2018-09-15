@@ -1,6 +1,7 @@
 .order-record-box .el-table th,
 .order-record-box .el-table__header-wrapper{
   height:24px;
+  line-height: 24px;
 }
 .order-record-box .el-table td{
   padding:0;

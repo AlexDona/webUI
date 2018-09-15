@@ -188,7 +188,7 @@ export default {
   watch: {
     activeSymbolId (newVal) {
       if (newVal) {
-        // this.getGlobalMarket()
+        this.getGlobalMarket()
       }
     }
   }

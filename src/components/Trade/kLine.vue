@@ -380,6 +380,7 @@ export default {
       }
     },
     onMessage (data) {
+      console.log(data)
       switch (data.tradeType) {
         case 'KLINE':
           console.log(data)
@@ -445,7 +446,7 @@ export default {
             this.socketData.tradeMarketList = data
           }
           break
-        case 'DEPTHRENDER':
+        case 'DEFAULTTRADE':
           console.log(data)
           if (data.data) {
             this.$store.commit('trade/SET_MIDDLE_TOP_DATA', data.data[0].content[0])
@@ -529,12 +530,16 @@ export default {
     },
     // 获取币币交易市场 socket
     getTradeMarketBySocket (type, areaId = this.activeTradeArea.id) {
-      // 币币交易市场
-      this.socket.send({
-        'tag': type,
-        'content': `market.bbticker.${this.partnerId}.${areaId}`,
-        'id': `market_001`
-      })
+      if (areaId) {
+        // 币币交易市场
+        this.socket.send({
+          'tag': type,
+          'content': `market.bbticker.${this.partnerId}.${areaId}`,
+          'id': `market_001`
+        })
+      } else {
+        setTimeout(this.getTradeMarketBySocket(type), 1000)
+      }
     }
   },
   filter: {},

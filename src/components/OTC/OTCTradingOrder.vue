@@ -125,7 +125,7 @@
                   </p>
                   <p
                     class="bank-info"
-                    v-if="activeBankType[index] === 'wx'"
+                    v-if="activeBankType[index] === 'weixin'"
                   >
                     <span>微信账户:</span>
                     <span>{{activePayModeList[index]}}</span>
@@ -146,7 +146,7 @@
                   </p>
                 </div>
                 <!-- 扫码支付 activeBankCode[index]  :src="item.coinUrl"-->
-                <div class="bank-info-picture display-inline-block" v-if="activeBankType[index] === 'wx' || activeBankType[index] === 'alipay'">
+                <div class="bank-info-picture display-inline-block" v-if="activeBankType[index] === 'weixin' || activeBankType[index] === 'alipay'">
                   <div class="picture-box">
                     <el-popover
                       placement="bottom"
@@ -189,7 +189,7 @@
                       支付宝已付款
                     </span>
                     <span
-                      v-if="item.payType === 'wx'"
+                      v-if="item.payType === 'weixin'"
                     >
                       <IconFontCommon
                         class="font-size16"
@@ -223,7 +223,7 @@
                   </p>
                 </div>
                 <!-- 扫码支付 qrCodeUrl  :src="item.coinUrl"-->
-                <div class="bank-info-picture display-inline-block" v-if="item.payType === 'alipay' || item.payType === 'wx'">
+                <div class="bank-info-picture display-inline-block" v-if="item.payType === 'alipay' || item.payType === 'weixin'">
                   <div class="picture-box">
                     <el-popover
                       placement="bottom"
@@ -388,7 +388,7 @@
                       支付宝已付款
                     </span>
                     <span
-                      v-if="item.payType === 'wx'"
+                      v-if="item.payType === 'weixin'"
                     >
                       <IconFontCommon
                         class="font-size16"
@@ -568,18 +568,18 @@
           top="25vh"
           width="470"
         >
-          <div>请输入交易密码2</div>
+          <div>请输入交易密码</div>
           <div class="input">
             <input
               type="password"
               class="password-input"
               v-model="tradePassword"
-              @focus="insureTradePassword"
+              @focus="passWordFocus"
             >
           </div>
           <div class="error-info">
             <!-- 错误提示 -->
-            <div class="tips">{{insureErrorText}}</div>
+            <div class="tips">{{errpwd}}</div>
           </div>
           <span
             slot="footer"
@@ -601,18 +601,18 @@
           top="25vh"
           width="470"
         >
-          <div>请输入交易密码3</div>
+          <div>请输入交易密码</div>
           <div class="input">
             <input
               type="password"
               class="password-input"
               v-model="tradePassword"
-              @focus="sellerAppealPassword"
+              @focus="passWordFocus"
             >
           </div>
           <div class="error-info">
             <!-- 错误提示 -->
-            <div class="tips">{{appealErrorText}}</div>
+            <div class="tips">{{errpwd}}</div>
           </div>
           <span
             slot="footer"
@@ -667,8 +667,7 @@ export default {
       showOrderAppeal: [], // 订单申诉框显示与隐藏状态集
       cancelOrderTimeArr: [], // 自动取消订单倒计时数组集
       accomplishOrderTimeArr: [], // 自动成交倒计时数组集
-      errpwd: '', // 交易密码错提示
-      insureErrorText: '' // 交易密码错误提示2
+      errpwd: '' // 交易密码错提示
     }
   },
   created () {
@@ -831,14 +830,10 @@ export default {
       // console.log(id)
       console.log(this.activedTradingOrderId)
     },
-    // 卖家确认收款弹框输入框聚焦时
-    insureTradePassword () {
-      this.insureErrorText = ''
-    },
     // 7.0 卖家点击确认收款按钮 弹出交易密码框 点击交易密码框中的提交按钮
     async submitButton2 () {
       if (!this.tradePassword) {
-        this.insureErrorText = '请输入正确的交易密码！'
+        this.errpwd = '请输入交易密码'
         return false
       }
       const data = await sellerConfirmGetMoney({
@@ -875,6 +870,13 @@ export default {
     },
     // 10.0 卖家提交申诉按钮弹出交易密码框
     sellerAppeal () {
+      if (!this.appealTextareaValue) {
+        this.$message({
+          message: '请输入原因',
+          type: 'error'
+        })
+        return false
+      }
       this.dialogVisible3 = true
     },
     sellerAppealPassword () {
@@ -883,7 +885,7 @@ export default {
     // 11.0 卖家提交申诉按钮
     async submitsellerAppeal () {
       if (!this.tradePassword) {
-        this.appealErrorText = '请输入正确的交易密码'
+        this.errpwd = '请输入交易密码'
         return false
       }
       const data = await sellerSendAppeal({

@@ -71,16 +71,16 @@
               <!--活动中心子导航-->
               <ul
                 class="sub-nav-list activity-center"
-                v-show="$route.path ==='/ActivityCenter'"
+                v-show="$route.path ==='/ActivityCenter'||$route.path ==='/CurrencyApplication'||$route.path==='/RankingListOfInvitation'"
               >
                 <li class="sub-nav-item">
                   <router-link to="/">新币投票</router-link>
                 </li>
                 <li class="sub-nav-item">
-                  <router-link to="/">上币申请</router-link>
+                  <router-link to="/CurrencyApplication">上币申请</router-link>
                 </li>
                 <li class="sub-nav-item">
-                  <router-link to="/">邀请排行</router-link>
+                  <router-link to="/RankingListOfInvitation">邀请排行</router-link>
                 </li>
               </ul>
             </li>
@@ -192,7 +192,11 @@
       <!-- yuxia改的bottom的显示条件 -->
       <div
         class="bottom"
-        v-show="$route.path.indexOf('OTC') != -1 || $route.path === '/ActivityCenter'"
+        v-show="
+        $route.path.indexOf('OTC') != -1 ||
+        $route.path === '/ActivityCenter' ||
+         $route.path === '/CurrencyApplication'||
+         $route.path === '/RankingListOfInvitation'"
       >
       </div>
       <div class="box">
@@ -209,7 +213,6 @@
           <el-select
             v-model="activeConvertCurrency"
             placeholder="请选择"
-            @change="changeActiveTransitionCurrency"
           >
             <el-option
               v-for="item in convertCurrencyList"
@@ -297,6 +300,7 @@ export default{
       languageList: [],
       // 当前折算货币
       activeConvertCurrency: '',
+      activeConvertCurrencyObj: {}, // 当前折算货币obj
       // 主题列表
       themeList: [
         {
@@ -325,54 +329,8 @@ export default{
     // console.log(this.theme)
     this.activeTheme = this.theme
     // 查询某商户可用法币币种列表
-    // 默认登录
-    if (this.loginStep1Info.userInfo) {
-      this.$store.commit('user/USER_LOGIN', this.loginStep1Info)
-    }
     // 折算货币
-    // this.getMerchantAvailablelegalTenderList()
-    this.convertCurrencyList = [
-      {
-        'countryId': '469217916009578496',
-        'createTime': '2018-08-06 11:01:13',
-        'id': '123',
-        'language': '1',
-        'name': '人民币',
-        'partnerId': '474629374641963008',
-        'shortName': 'CNY',
-        'status': 'ENABLE',
-        'symbol': '￥',
-        'updateTime': '2018-08-06 11:01:16',
-        'version': 1
-      },
-      {
-        'countryId': '2',
-        'createTime': null,
-        'id': '456',
-        'language': '2',
-        'name': '美元',
-        'partnerId': '474629374641963008',
-        'shortName': 'USD',
-        'status': 'ENABLE',
-        'symbol': '',
-        'updateTime': '2018-09-06 16:56:33',
-        'version': 4
-      },
-      {
-        'countryId': '4',
-        'createTime': '2018-09-07 09:53:21',
-        'id': '487560999356858368',
-        'language': '5',
-        'name': '日元',
-        'partnerId': '474629374641963008',
-        'shortName': 'JPY',
-        'status': 'ENABLE',
-        'symbol': '',
-        'updateTime': null,
-        'version': 1
-      }
-    ]
-    // this.changeActiveTransitionCurrency('CNY')
+    this.getMerchantAvailablelegalTenderList()
   },
   methods: {
     ...mapMutations([
@@ -388,20 +346,30 @@ export default{
       'CHANGE_CURRENCY_RATE_LIST'
     ]),
     // 更改当前选中汇率转换货币
-    changeActiveTransitionCurrency (e) {
+    changeActiveTransitionCurrency () {
       const params = {
         partnerId: this.partnerId,
-        shortName: e
+        shortName: this.activeConvertCurrency || 'CNY'
       }
+      this.convertCurrencyList.forEach((item) => {
+        if (item.shortName === params.shortName) {
+          console.log(item.shortName)
+          this.activeConvertCurrencyObj = item
+          return false
+        }
+      })
       this.getTransitionCurrencyRate(params)
     },
+    // 获取目标汇率
     async getTransitionCurrencyRate (params) {
-      console.log(params)
       const data = await getTransitionCurrencyRate(params)
       if (!returnAjaxMessage(data, this, 0)) {
         return false
       } else {
-        this.CHANGE_CURRENCY_RATE_LIST(data.data)
+        this.CHANGE_CURRENCY_RATE_LIST({
+          currencyRateList: data.data.data,
+          activeConvertCurrencyObj: this.activeConvertCurrencyObj
+        })
       }
     },
     // 获取国家列表
@@ -491,12 +459,14 @@ export default{
     },
     // 更改设置
     changeSetting () {
-      // console.log(this)
+      // 主题设置
       this.CHANGE_THEME(this.activeTheme)
       setStore('theme', this.activeTheme)
       document.body.classList.remove('day')
       document.body.classList.remove('night')
       document.body.classList.add(this.activeTheme)
+      // 汇率转换设置
+      this.changeActiveTransitionCurrency()
       this.CHANGE_CONVERT_CURRENCY(this.activeConvertCurrency)
       setStore('convertCurrency', this.activeConvertCurrency || 'CNY')
       this.toggleShowSettingBox(0)
@@ -518,6 +488,7 @@ export default{
       }
       // 返回数据正确的逻辑
       this.convertCurrencyList = data.data.data
+      this.changeActiveTransitionCurrency()
       // setStore('convertCurrencyList', this.convertCurrencyList)
     }
 
@@ -530,12 +501,19 @@ export default{
       loginStep1Info: state => state.user.loginStep1Info,
       userInfo: state => state.user.loginStep1Info.userInfo,
       partnerId: state => state.common.partnerId, // 商户id
-      activeLanguage: state => state.common.activeLanguage
+      activeLanguage: state => state.common.activeLanguage,
+      withdrawDepositList: state => state.common.withdrawDepositList
     })
   },
   watch: {
     '$route' (to, from) {
       console.log(to, from)
+    },
+    activeConvertCurrencyObj (newVal, oldVal) {
+      console.log(newVal)
+    },
+    withdrawDepositList (newVal) {
+      console.log(newVal)
     }
   }
 }

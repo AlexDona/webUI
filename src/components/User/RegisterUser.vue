@@ -278,6 +278,7 @@
               :isShow="!!errorShowStatusList[6]"
             />
           </div>
+          <div class="error-msg">error</div>
           <button
             class="register-btn btn cursor-pointer"
             @click="sendRegister"
@@ -288,7 +289,6 @@
     <!--注册成功-->
     <div
       class="inner-box"
-      v-else
     >
       <div class="success-box">
         <p class="title"><span>{{successCountDown}}</span>秒后跳转登录页面...</p>
@@ -389,10 +389,10 @@ export default {
               this.setErrorMsg(0, '请输入手机号')
               this.$forceUpdate()
               return 0
-            case 2:
-              this.setErrorMsg(0, '请输入正确的手机号')
-              this.$forceUpdate()
-              return 0
+            // case 2:
+            //   this.setErrorMsg(0, '请输入正确的手机号')
+            //   this.$forceUpdate()
+            //   return 0
           }
           break
         // 邮箱验证
@@ -685,7 +685,7 @@ export default {
         background:linear-gradient(201deg,rgba(42,88,137,1) 0%,rgba(43,58,111,1) 100%);
         box-shadow:0px 4px 21px 0px rgba(26,42,71,1);
         margin: 12% 0 0 50%;
-        padding:12px 40px;
+        padding:12px 40px 50px;
         border-radius: 10px;
         /*注册方式选择*/
         >.methods-list{
@@ -718,6 +718,8 @@ export default {
               &.user-agreement{
                 background: none;
                 padding:0;
+                height:20px;
+                margin-bottom:0;
               }
               >.input{
                 &::-webkit-input-placeholder{
@@ -773,6 +775,11 @@ export default {
               }
             }*/
           }
+          >.error-msg{
+            height:30px;
+            line-height: 30px;
+            background-color: pink;
+          }
           /*注册，忘记密码*/
           >.link{
             width:100%;
@@ -803,7 +810,6 @@ export default {
       >.success-box{
         width:240px;
         height:300px;
-        background-color: pink;
         text-align: center;
         margin:300px auto;
         >.title{

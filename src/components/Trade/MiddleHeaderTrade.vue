@@ -33,7 +33,10 @@
               'down':middleTopData.rose<0
             }"
           >{{middleTopData.price}}</span>
-          <span class="font-size12 theme-color">≈ 0.25</span>
+          <span
+            class="font-size12 theme-color"
+            v-show="middleTopData.price&&activeConvertCurrencyObj.symbol"
+          >≈ {{activeConvertCurrencyObj.symbol}}{{keep2Num((currencyRateList[middleTopData.area]-0)*(middleTopData.price-0))}}</span>
         </div>
       </div>
       <!--涨跌-->
@@ -92,6 +95,8 @@
 </template>
 <script>
 import {mapState} from 'vuex'
+import {keep2Num} from '../../utils'
+
 export default {
   components: {},
   // props,
@@ -103,17 +108,27 @@ export default {
   activited () {},
   update () {},
   beforeRouteUpdate () {},
-  methods: {},
+  methods: {
+    // 截取2位小数
+    keep2Num (number) {
+      return keep2Num(number)
+    }
+  },
   filter: {},
   computed: {
     ...mapState({
       theme: state => state.common.theme,
       activeSymbol: state => state.common.activeSymbol,
-      middleTopData: state => state.trade.middleTopData
+      middleTopData: state => state.trade.middleTopData,
+      currencyRateList: state => state.common.currencyRateList, // 折算货币列表
+      activeConvertCurrencyObj: state => state.common.activeConvertCurrencyObj // 目标货币
     })
   },
   watch: {
     activeSymbol (newVal) {
+      console.log(newVal)
+    },
+    activeConvertCurrencyObj (newVal) {
       console.log(newVal)
     }
   }
