@@ -135,10 +135,18 @@
                     <div class="sub-nav-user">
                       <p class="nav-vip">VIP享手续费、提现优惠</p>
                       <button
+                        v-if="!userInfo.level"
                         class="nav-button"
                         @click="stateOpenVip"
                       >
                         立即开通
+                      </button>
+                       <button
+                         v-else
+                         class="nav-button"
+                         @click="stateOpenVip"
+                       >
+                        查看我的VIP
                       </button>
                     </div>
                     <ul class="personal-user">
@@ -325,12 +333,13 @@ export default{
   },
   created () {
     // 获取 语言列表:任付伟先注释此方法防止每次刷新报错-有需要请放开
-    this.getLanguageList()
+    // this.getLanguageList()
     // console.log(this.theme)
     this.activeTheme = this.theme
     // 查询某商户可用法币币种列表
     // 折算货币
     this.getMerchantAvailablelegalTenderList()
+    this.getTransitionCurrencyRate()
   },
   methods: {
     ...mapMutations([
@@ -363,6 +372,7 @@ export default{
     // 获取目标汇率
     async getTransitionCurrencyRate (params) {
       const data = await getTransitionCurrencyRate(params)
+      console.log(data)
       if (!returnAjaxMessage(data, this, 0)) {
         return false
       } else {

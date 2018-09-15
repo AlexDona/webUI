@@ -235,7 +235,7 @@ export default {
           this.$refs.pushAssetValue.emptyInputData()
           break
         case 'coin-orders':
-          this.$refs.coinOrdersValue.getMyCurrentEntrust()
+          this.$refs.coinOrdersValue.commissionList()
           break
         case 'fiat-orders':
           // 页面加载时请求接口渲染列表

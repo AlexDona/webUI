@@ -120,7 +120,6 @@
               <!-- 商户 -->
               <el-table-column
                 label="商户"
-                width="180"
               >
                 <template slot-scope = "s">
                   <div>{{s.row.userName}}</div>
@@ -129,7 +128,6 @@
               <!-- 信用 -->
               <el-table-column
                 label="成交率"
-                width="180"
               >
                 <template slot-scope = "s">
                   <div v-if="s.row.successOrderTimes === 0 || s.row.tradeTimes === 0">0%</div>
@@ -234,17 +232,17 @@
                 </template>
               </el-table-column>
             </el-table>
-            <!--分页-->
-            <el-pagination
-              background
-              v-show="onlineBuySellTableList.length"
-              layout="prev, pager, next"
-              :page-count="totalPageForMyEntrust"
-              @current-change="changeCurrentPage"
-            >
-            </el-pagination>
           </div>
         </div>
+        <!--分页-->
+        <el-pagination
+          background
+          v-show="onlineBuySellTableList.length"
+          layout="prev, pager, next"
+          :page-count="totalPages"
+          @current-change="changeCurrentPage"
+        >
+        </el-pagination>
       </div>
       <!-- 2.2 订单管理-->
       <div class="otc-order-manage">
@@ -369,8 +367,8 @@ export default {
   data () {
     return {
       // 分页
-      currentPageForMyEntrust: 1, // 当前页码
-      totalPageForMyEntrust: 1, // 当前总页数
+      currentPage: 1, // 当前页码
+      totalPages: 1, // 总页数
       // 3.0 可用法币币种数组
       activitedCurrencyId: '', // 选中的可用法币id
       activitedCurrencyName: '', // 选中的可用法币name
@@ -445,9 +443,13 @@ export default {
     // 分页
     changeCurrentPage (pageNum) {
       console.log(pageNum)
-      this.currentPageForMyEntrust = pageNum
+      this.currentPage = pageNum
+      this.getOTCPutUpOrdersList()
       // 按照选中的分页调接口渲染列表数据
-      // this.WithdrawalAddressList()
+      // this.getSelectCurrencyNametOTCPutUpOrdersList() // 切换我要购买和出售时候调取接口获得数据渲染列表
+      // this.toggleBuyOrSellStyle() // 切换在线购买和在线售出状态并调接口渲染列表
+      // this.getChangeCurrencyIdOTCPutUpOrdersList() //  改变可用法币的下拉框的选中值，调主页面查询otc挂单列表接口
+      // this.getChangePayWayOTCPutUpOrdersList() // 改变支付方式下拉框的选中值，调主页面查询otc挂单列表接口
     },
     // 0.1 切换tab面板
     toggleTabPane (tab, event) {
@@ -569,7 +571,9 @@ export default {
     },
     //  3.0 刚进页面时候 otc主页面查询挂单列表
     async getOTCPutUpOrdersList () {
+      console.log('当前页：' + this.currentPage)
       let param = {
+        pageNum: this.currentPage,
         payType: this.checkedPayType, // 按照选中的支付方式查询列表
         partnerId: this.partnerId, // 商户id
         // 刚进页面默认显示可用币种的第一个
@@ -592,7 +596,7 @@ export default {
         // 返回数据正确的逻辑
         this.onlineBuySellTableList = data.data.data.list
         // 分页
-        // this.totalPageForMyEntrust = data.data.data.pages - 0
+        this.totalPages = data.data.data.pages - 0
       }
     },
     //  4.0 选中我想购买和出售币种名称
@@ -611,6 +615,7 @@ export default {
     //  5.0 切换我要购买和出售时候调取接口获得数据渲染列表
     async getSelectCurrencyNametOTCPutUpOrdersList () {
       let param = {
+        pageNum: this.currentPage,
         payType: this.checkedPayType, // 按照选中的支付方式查询列表
         partnerId: this.partnerId, // 商户id
         coinId: this.selectedOTCAvailableCurrencyCoinID, // 币种id
@@ -623,13 +628,16 @@ export default {
         param.entrustType = 'BUY' // 挂单类型（BUY SELL）
       }
       const data = await getOTCPutUpOrders(param)
-      // console.log(data)
+      console.log('otc主页面查询挂单列表')
+      console.log(data)
       // 提示信息
       if (!returnAjaxMessage(data, this, 0)) {
         return false
       } else {
         // 返回数据正确的逻辑
         this.onlineBuySellTableList = data.data.data.list
+        // 分页
+        this.totalPages = data.data.data.pages - 0
       }
     },
     //  6.0 切换在线购买和在线售出状态并调接口渲染列表
@@ -637,6 +645,7 @@ export default {
       this.OTCBuySellStyle = e
       console.log(this.OTCBuySellStyle)
       let param = {
+        pageNum: this.currentPage,
         payType: this.checkedPayType, // 按照选中的支付方式查询列表
         partnerId: this.partnerId, // 商户id
         coinId: this.selectedOTCAvailableCurrencyCoinID, // 币种id
@@ -649,13 +658,16 @@ export default {
         param.entrustType = 'BUY' // 挂单类型（BUY SELL）
       }
       const data = await getOTCPutUpOrders(param)
-      // console.log(data)
+      console.log('otc主页面查询挂单列表')
+      console.log(data)
       // 提示信息
       if (!returnAjaxMessage(data, this, 0)) {
         return false
       } else {
         // 返回数据正确的逻辑
         this.onlineBuySellTableList = data.data.data.list
+        // 分页
+        this.totalPages = data.data.data.pages - 0
       }
     },
     //  7.0 改变可用法币的币种id
@@ -674,6 +686,7 @@ export default {
     //  8.0 改变可用法币的下拉框的选中值，调主页面查询otc挂单列表接口
     async getChangeCurrencyIdOTCPutUpOrdersList () {
       let param = {
+        pageNum: this.currentPage,
         payType: this.checkedPayType, // 按照选中的支付方式查询列表
         partnerId: this.partnerId, // 商户id
         coinId: this.selectedOTCAvailableCurrencyCoinID, // 币种id
@@ -686,6 +699,7 @@ export default {
         param.entrustType = 'BUY' // 挂单类型（BUY SELL）
       }
       const data = await getOTCPutUpOrders(param)
+      console.log('otc主页面查询挂单列表')
       console.log(data)
       // 提示信息
       if (!returnAjaxMessage(data, this, 0)) {
@@ -693,6 +707,8 @@ export default {
       } else {
         // 返回数据正确的逻辑
         this.onlineBuySellTableList = data.data.data.list
+        // 分页
+        this.totalPages = data.data.data.pages - 0
       }
     },
     // 9.0 改变支付方式下拉框的选中值
@@ -705,6 +721,7 @@ export default {
     // 10.0 改变支付方式下拉框的选中值，调主页面查询otc挂单列表接口
     async getChangePayWayOTCPutUpOrdersList () {
       let param = {
+        pageNum: this.currentPage,
         payType: this.checkedPayType, // 按照选中的支付方式查询列表
         partnerId: this.partnerId, // 商户id
         coinId: this.selectedOTCAvailableCurrencyCoinID, // 币种id
@@ -717,6 +734,7 @@ export default {
         param.entrustType = 'BUY' // 挂单类型（BUY SELL）
       }
       const data = await getOTCPutUpOrders(param)
+      console.log('otc主页面查询挂单列表')
       console.log(data)
       // 提示信息
       if (!returnAjaxMessage(data, this, 0)) {
@@ -724,6 +742,8 @@ export default {
       } else {
         // 返回数据正确的逻辑
         this.onlineBuySellTableList = data.data.data.list
+        // 分页
+        this.totalPages = data.data.data.pages - 0
       }
     }
   },

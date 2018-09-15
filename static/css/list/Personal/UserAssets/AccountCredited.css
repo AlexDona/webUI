@@ -9,8 +9,8 @@
 }
 .credited-credited.personal .el-dialog{
   border-radius: 10px;
-  width: 350px;
-  height: 300px;
+  width: 300px;
+  height: 200px;
   top: 15%;
 }
 .credited-credited.personal .el-dialog__close {
@@ -19,4 +19,14 @@
 .credited-credited.personal .el-button--primary {
   padding: 7px 28px 8px 29px;
   border: 0;
+}
+.credited-credited.personal .el-button:first-child {
+  width: 90px;
+  height: 35px;
+  line-height: 0;
+}
+.credited-credited.personal .el-dialog__body {
+  text-align: center;
+  /*padding: 25px 25px 30px;*/
+  color: #fff;
 }

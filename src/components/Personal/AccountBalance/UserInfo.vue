@@ -6,15 +6,15 @@
     <div class="user-info-main">
       <div class="user-info-content-box">
         <div class="user float-left">
-          <p class="user-background text-align-c line-height56">
+          <p class="user-background text-align-c line-height56 float-left">
             <IconFontCommon
               class="font-size40 icon-user"
               iconName="icon-yonghu1"
             />
           </p>
-          <p class="text-align-c margin-top16">
-            <span>UID:</span>
-            <span>{{ userInfo.userInfo.showId }}</span>
+          <p class="text-align-id margin-top16 float-right">
+            <span>您好，{{ userInfo.userInfo.userName }}</span><br/>
+            <span>UID: {{ userInfo.userInfo.showId }}</span>
           </p>
         </div>
         <div class="info float-left">
@@ -126,7 +126,7 @@
         <div class="asset float-left">
           <p class="asset-text font-size12">当前资产总估值</p>
           <p class="asset-info margin-top9">
-            <span class="info-color font-size16">{{ BTCAssets }}</span>
+            <span class="info-color font-size16">{{ totalSumBTC }}</span>
             <span class="info-color font-size12">BTC</span>
             或
             <span class="info-color font-size16">{{ CNYAssets }}</span>
@@ -143,6 +143,12 @@
 <!--请严格按照如下书写书序-->
 <script>
 import {mapState} from 'vuex'
+import {
+  assetCurrenciesList
+} from '../../../utils/api/personal'
+import {
+  returnAjaxMessage
+} from '../../../utils/commonFunc'
 // 字体图标
 import IconFontCommon from '../../Common/IconFontCommon'
 export default {
@@ -156,7 +162,7 @@ export default {
       vipShowPictureSrc: require('../../../assets/user/vip.png'), // VIP图片
       userShowVipGrade: 'V1', // 自定义VIP等级
       discountRate: '无', // 自定义折扣率
-      BTCAssets: '0.0000', // btc资产
+      totalSumBTC: '', // btc资产
       CNYAssets: '0.0000' // bcny资产
     }
   },
@@ -167,19 +173,37 @@ export default {
     require('../../../../static/css/theme/day/Personal/AccountBalance/UserInfoDay.css')
     // 黑色主题样式
     require('../../../../static/css/theme/night/Personal/AccountBalance/UserInfoNight.css')
-    // 获取全局个人信息
-    // this.showStateUserInfo = this.userInfo.data.user
-    // console.log(this.userInfo.userInfo)
-    console.log(this.userInfo.userInfo.realname)
-    console.log(this.userInfo.userInfo.email)
-    console.log(this.userInfo.userInfo.phone)
-    console.log(this.userInfo.userInfo.googleAccount)
+    this.getAssetCurrenciesList()
   },
   mounted () {},
   activited () {},
   update () {},
   beforeRouteUpdate () {},
-  methods: {},
+  methods: {
+    /**
+     * 刚进页面时候 个人资产列表展示
+     */
+    async getAssetCurrenciesList (type) {
+      let data
+      let params = {}
+      switch (type) {
+        case 'all':
+          params.selectType = 'all'
+          break
+        case 'noall':
+          params.selectType = 'noall'
+          break
+      }
+      data = await assetCurrenciesList(params)
+      if (!(returnAjaxMessage(data, this, 0))) {
+        return false
+      } else {
+        // 返回数据
+        this.totalSumBTC = data.data.data.totalSum
+        console.log(this.totalSumBTC)
+      }
+    }
+  },
   filter: {},
   computed: {
     ...mapState({
@@ -205,18 +229,22 @@ export default {
           height: 100%;
         }
         >.user {
-          width: 146px;
+          width: 250px;
           >.user-background {
             width: 48px;
             height: 48px;
             border-radius: 50%;
-            margin: 0 auto;
+            margin: 25px 30px;
+          }
+          >.text-align-id {
+            width: 140px;
+            margin-top: 35px;
           }
         }
         >.info {
-          width: 234px;
+          width: 300px;
           >.info-top {
-            padding: 0 40px;
+            padding: 0 70px;
             >.icon-user-info,
             >.real-name {
               width: 26px;
@@ -229,7 +257,7 @@ export default {
             }
           }
           >.info-centre {
-            padding: 0 40px;
+            padding: 0 70px;
             >.info-picture {
               position: relative;
               >.info-centre-right{
@@ -240,14 +268,14 @@ export default {
             }
           }
           >.info-discount {
-            padding: 0 40px;
+            padding: 0 70px;
             >.discount-text {
 
             }
           }
         }
         >.volume {
-          width: 242px;
+          width: 300px;
           >.volume-text {
             padding: 0 25px;
             margin-top: 23px;
@@ -257,7 +285,7 @@ export default {
           }
         }
         >.asset {
-          width: 295px;
+          width: 350px;
           >.asset-text {
             padding: 0 20px;
             margin-top: 23px;
