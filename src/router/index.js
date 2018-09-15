@@ -78,7 +78,6 @@ const currencyApplication = r => require.ensure([], () => r(require('@/component
  * 新闻公告
  */
 const NewsAndNoticeList = r => require.ensure([], () => r(require('@/components/NoticeAndNews/NewsAndNoticeList')), 'news-andNotice-list')
-
 const router = new Router({
   routes: [
     {
