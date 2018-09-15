@@ -234,6 +234,15 @@
                 </template>
               </el-table-column>
             </el-table>
+            <!--分页-->
+            <el-pagination
+              background
+              v-show="onlineBuySellTableList.length"
+              layout="prev, pager, next"
+              :page-count="totalPageForMyEntrust"
+              @current-change="changeCurrentPage"
+            >
+            </el-pagination>
           </div>
         </div>
       </div>
@@ -264,7 +273,7 @@
               />
               交易中订单
             </span>
-            <OTCTradingOrder></OTCTradingOrder>
+            <OTCTradingOrder ref = "trading"></OTCTradingOrder>
           </el-tab-pane>
           <!-- 2.2.2 已完成订单 -->
           <el-tab-pane name = "second">
@@ -278,7 +287,7 @@
               />
               已完成订单
             </span>
-            <OTCCompletedOrder></OTCCompletedOrder>
+            <OTCCompletedOrder ref = "complete"></OTCCompletedOrder>
           </el-tab-pane>
           <!-- 2.2.3 已取消订单 -->
           <el-tab-pane name = "third">
@@ -292,7 +301,7 @@
               />
               已取消订单
             </span>
-            <OTCCanceledOrder></OTCCanceledOrder>
+            <OTCCanceledOrder ref = "canceled"></OTCCanceledOrder>
           </el-tab-pane>
           <!-- 2.2.4 冻结中订单 -->
           <el-tab-pane name = "fourth">
@@ -306,7 +315,7 @@
               />
               冻结中订单
             </span>
-            <OTCFreezingOrder></OTCFreezingOrder>
+            <OTCFreezingOrder ref = "freezing"></OTCFreezingOrder>
           </el-tab-pane>
           <!-- 2.2.5 委托订单 -->
           <el-tab-pane name = "fifth">
@@ -320,7 +329,7 @@
               />
               委托订单
             </span>
-            <OTCEntrustOrder></OTCEntrustOrder>
+            <OTCEntrustOrder ref = "entrust"></OTCEntrustOrder>
           </el-tab-pane>
         </el-tabs>
       </div>
@@ -359,6 +368,9 @@ export default {
   // props,
   data () {
     return {
+      // 分页
+      currentPageForMyEntrust: 1, // 当前页码
+      totalPageForMyEntrust: 1, // 当前总页数
       // 3.0 可用法币币种数组
       activitedCurrencyId: '', // 选中的可用法币id
       activitedCurrencyName: '', // 选中的可用法币name
@@ -430,9 +442,36 @@ export default {
       'CHANGE_OTC_AVAILABLE_CURRENCY_ID',
       'CHANGE_OTC_AVAILABLE_PARTNER_COIN_ID'
     ]),
+    // 分页
+    changeCurrentPage (pageNum) {
+      console.log(pageNum)
+      this.currentPageForMyEntrust = pageNum
+      // 按照选中的分页调接口渲染列表数据
+      // this.WithdrawalAddressList()
+    },
     // 0.1 切换tab面板
     toggleTabPane (tab, event) {
       console.log(this.activeName)
+      if (this.activeName === 'first') {
+        console.log('调交易中订单')
+        this.$refs.trading.getOTCTradingOrdersList() // 调用子组件交易中订单的方法
+      }
+      if (this.activeName === 'second') {
+        console.log('调已完成订单')
+        this.$refs.complete.getOTCCompletedOrdersList() // 调用子组件已完成订单的方法
+      }
+      if (this.activeName === 'third') {
+        console.log('调已取消订单')
+        this.$refs.canceled.getOTCCanceledOrdersList() // 调用子组件已取消订单的方法
+      }
+      if (this.activeName === 'fourth') {
+        console.log('调冻结中订单')
+        this.$refs.freezing.getOTCFrezzingOrdersList() // 调用子组件冻结中订单的方法
+      }
+      if (this.activeName === 'fifth') {
+        console.log('调委托订单')
+        this.$refs.entrust.getOTCEntrustingOrdersList() // 调用子组件委托订单的方法
+      }
     },
     // 0.2 点击发布订单按钮跳转到发布订单页面
     toPublishOrder () {
@@ -515,7 +554,7 @@ export default {
       const data = await getMerchantAvailablelegalTender({
         partnerId: this.partnerId
       })
-      console.log('otc可用法币查')
+      console.log('otc法币查询')
       console.log(data)
       if (!(returnAjaxMessage(data, this, 0))) {
         return false
@@ -552,6 +591,8 @@ export default {
       } else {
         // 返回数据正确的逻辑
         this.onlineBuySellTableList = data.data.data.list
+        // 分页
+        // this.totalPageForMyEntrust = data.data.data.pages - 0
       }
     },
     //  4.0 选中我想购买和出售币种名称
@@ -562,8 +603,8 @@ export default {
       this.CHANGE_OTC_AVAILABLE_PARTNER_COIN_ID(this.IWantToBuySellArr[index].partnerCoinId) // 商户币种id
       this.CHANGE_OTC_AVAILABLE_CURRENCY_ID(this.IWantToBuySellArr[index].coinId) // 币种id
       console.log(this.selectedOTCAvailableCurrencyName)
-      console.log(this.selectedOTCAvailableCurrencyCoinID)
-      console.log(this.selectedOTCAvailablePartnerCoinId)
+      console.log('币种id：' + this.selectedOTCAvailableCurrencyCoinID)
+      // console.log(this.selectedOTCAvailablePartnerCoinId)
       // 请求接口数据渲染表格
       this.getSelectCurrencyNametOTCPutUpOrdersList()
     },
