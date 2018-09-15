@@ -85,6 +85,15 @@
           </span>
         </div>
       </div>
+      <!--分页-->
+      <el-pagination
+        background
+        v-show="OTCEntrustOrderList.length"
+        layout="prev, pager, next"
+        :page-count="totalPages"
+        @current-change="changeCurrentPage"
+      >
+      </el-pagination>
       <!-- 弹出框 -->
       <!-- <div class="dialog">
         <el-dialog
@@ -112,6 +121,9 @@ export default {
   // props,
   data () {
     return {
+      // 分页
+      currentPage: 1, // 当前页码
+      totalPages: 1, // 总页数
       dialogVisible: false,
       // OTC委托订单列表
       OTCEntrustOrderList: []
@@ -133,6 +145,12 @@ export default {
   beforeRouteUpdate () {
   },
   methods: {
+    // 分页
+    changeCurrentPage (pageNum) {
+      console.log(pageNum)
+      this.currentPage = pageNum
+      this.getOTCEntrustingOrdersList()
+    },
     // 1.0 时间格式化
     timeFormatting (date) {
       return timeFilter(date, 'date')
@@ -141,12 +159,16 @@ export default {
     async getOTCEntrustingOrdersList () {
       let data
       data = await getOTCEntrustingOrders({
-        status: 'ENTRUSTED' // 状态（ENTRUSTED 挂单中 HISTORY 历史挂单）
+        status: 'ENTRUSTED', // 状态（ENTRUSTED 挂单中 HISTORY 历史挂单）
+        pageNum: this.currentPage,
+        pageSize: '10'
       })
       // console.log(data)
       // 提示信息
       returnAjaxMessage(data, this, 0)
       this.OTCEntrustOrderList = data.data.data.list
+      // 分页
+      this.totalPages = data.data.data.pages - 0
     },
     // 3.0 点击撤单按钮
     revocationOrder (id) {
