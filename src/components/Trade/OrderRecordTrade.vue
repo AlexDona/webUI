@@ -190,7 +190,11 @@ export default {
       activeSymbol: state => state.common.activeSymbol
     })
   },
-  watch: {}
+  watch: {
+    orderRecordList (newVal) {
+      console.log(newVal)
+    }
+  }
 }
 </script>
 <style scoped lang="scss">
