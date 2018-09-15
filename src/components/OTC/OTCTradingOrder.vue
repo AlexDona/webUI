@@ -662,7 +662,7 @@ export default {
       activeBankDetailAddress: [], // 当前选中支付银行具体地址
       activeBankType: [], // 当前选中支付方式类型（银行卡、支付宝等）
       activeBankCode: [], // 选中的支付宝和尾微信的支付码
-      tradePassword: '', // 交易密码
+      tradePassword: '', // 交易密码1
       buttonStatusArr: [], // 确认付款按钮是否可用状态集
       showOrderAppeal: [], // 订单申诉框显示与隐藏状态集
       cancelOrderTimeArr: [], // 自动取消订单倒计时数组集
@@ -878,6 +878,9 @@ export default {
         return false
       }
       this.dialogVisible3 = true
+    },
+    sellerAppealPassword () {
+      this.appealErrorText = ''
     },
     // 11.0 卖家提交申诉按钮
     async submitsellerAppeal () {

@@ -30,7 +30,10 @@
               </span>
               <span class="payment-card">银行转账</span>
             </p>
-            <div class="payment-right">
+            <div
+              class="payment-right"
+              @click="setCollectionMode"
+            >
               <img
                 v-if="paymentTerm.isBnakEnable === 'disable'"
                 @click="statusOpenToClose('bank', 'enable')"
@@ -43,7 +46,7 @@
                 class="switch-img cursor-pointer"
                 :src="openPictureSrc"
               >
-              <router-link  to="/AddBankCard">
+              <router-link to="/AddBankCard">
                 <span class="payment-state cursor-pointer">
                     设置
                 </span>
@@ -61,7 +64,10 @@
               </span>
               <span class="payment-card">微信</span>
             </p>
-            <p class="payment-right">
+            <p
+              class="payment-right"
+              @click="setCollectionMode"
+            >
               <img
                 v-if="paymentTerm.isWeixinEnable === 'disable'"
                 @click="statusOpenToClose('chat', 'enable')"
@@ -92,7 +98,10 @@
               </span>
               <span class="payment-card">支付宝</span>
             </p>
-            <p class="payment-right">
+            <p
+              class="payment-right"
+              @click="setCollectionMode"
+            >
               <img
                 v-if="paymentTerm.isAlipayEnable === 'disable'"
                 @click="statusOpenToClose('alipay', 'enable')"
@@ -123,7 +132,10 @@
               </span>
               <span class="payment-card">PAYPAL</span>
             </p>
-            <p class="payment-right">
+            <p
+              class="payment-right"
+              @click="setCollectionMode"
+            >
               <img
                 v-if="paymentTerm.isPaypalEnable === 'disable'"
                 @click="statusOpenToClose('paypal', 'enable')"
@@ -151,7 +163,10 @@
               </span>
               <span class="payment-card">西联汇款</span>
             </p>
-            <p class="payment-right">
+            <p
+              class="payment-right"
+              @click="setCollectionMode"
+            >
               <img
                 v-if="paymentTerm.isXilianEnable === 'disable'"
                 @click="statusOpenToClose('western', 'enable')"
@@ -306,7 +321,6 @@ export default {
     // 调用收款方式 银行卡 微信 支付宝 paypal 西联汇款 状态
     if (this.refsAccountCenterStatus) {
       this.getAccountPaymentTerm()
-      console.log(this.refsAccountCenterStatus)
       this.CHANGE_REF_ACCOUNT_CREDITED_STATE(false)
     }
   },
@@ -322,7 +336,14 @@ export default {
     // 点击去认证跳转到身份认证
     authenticationJump () {
       this.centerModelWarning = false
+      this.$router.push({path: '/PersonalCenter'})
       this.CHANGE_USER_CENTER_ACTIVE_NAME('identity-authentication')
+    },
+    // 判断是否实名认证
+    setCollectionMode () {
+      if (!this.userInfo.userInfo.realname) {
+        this.centerModelWarning = true
+      }
     },
     // 确认开启关闭
     statusOpenToClose (paymentType, safeState) {
@@ -331,7 +352,6 @@ export default {
       this.state = safeState
       switch (paymentType) {
         case 'bank':
-          console.log(paymentType)
           if (!this.paymentTerm.isBankBind) {
             if (safeState === 'enable') {
               this.openCollectionMode = true

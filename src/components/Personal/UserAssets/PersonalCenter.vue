@@ -225,6 +225,8 @@ export default {
           this.$refs.securityCenterValue.getSecurityCenter()
           break
         case 'api-management':
+          // 获取多个用户api信息
+          this.$refs.apiManagementValue.getMultipleUserAPIInfo()
           break
         case 'push-asset':
           // push列表展示
@@ -236,7 +238,8 @@ export default {
           this.$refs.coinOrdersValue.getMyCurrentEntrust()
           break
         case 'fiat-orders':
-          this.$refs.fiatOrdersValue.getOTCTradingOrdersList()
+          // 页面加载时请求接口渲染列表
+          this.$refs.fiatOrdersValue.getOTCEntrustingOrdersRevocation()
           break
       }
     }

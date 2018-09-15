@@ -8,6 +8,7 @@ import {
   CHANGE_ACTIVE_TRADE_AREA,
   CHANGE_PALTE_LIST,
   CHANGE_CURRENCY_RATE_LIST,
+  USER_ASSETS_LIST,
   // eslint-disable-next-line
   CHANGE_ROUTER_PATH
 } from './mutations-types.js'
@@ -68,10 +69,15 @@ export default {
     state.plateList = data
   },
   [CHANGE_CURRENCY_RATE_LIST] (state, data) {
-    state.currencyRateList = data
+    state.currencyRateList = data.currencyRateList
+    state.activeConvertCurrencyObj = data.activeConvertCurrencyObj
   },
   // 登录后路由跳转
   CHANGE_ROUTER_PATH (state, path) {
     state.routerTo = path
+  },
+  // 切换主题
+  [USER_ASSETS_LIST] (state, data) {
+    state.withdrawDepositList = data
   }
 }

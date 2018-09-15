@@ -14,3 +14,13 @@
   border-left: 0 solid transparent;
   background-color: #1E2636;
 }
+.fiat-orders.personal.night .el-input__inner {
+  background-color: #19202E;
+}
+.fiat-orders.personal.night .el-button {
+  color: #fff;
+  background:linear-gradient(90deg,rgba(43,57,110,1) 0%,rgba(42,80,130,1) 100%);
+}
+.fiat-orders.personal.night .el-tabs__content {
+  background-color: #1E2636;
+}

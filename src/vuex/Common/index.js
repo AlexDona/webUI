@@ -18,6 +18,8 @@ const state = {
   activeConvertCurrency: 'CNY',
   // 折算货币税率列表
   currencyRateList: [],
+  // 当前折算货币obj
+  activeConvertCurrencyObj: {},
   previousSymbol: {}, // 上一个交易对
   // 当前选中交易对
   activeSymbol: {
@@ -48,6 +50,7 @@ const state = {
   plateList: [], // 板块列表
   partnerId: '474629374641963008', // 商户id
   routerTo: '', // 路由跳转
+  withdrawDepositList: [], // 我的资产列表信息数据
   end: ''// 占位
 }
 

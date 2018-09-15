@@ -7,17 +7,17 @@
       <div class="item logo">
           <img
             class="logo"
-            :src="activeSymbol.image"
+            :src="middleTopData.image"
           >
       </div>
       <div class="item symbol">
         <div class="top">
-          <span>{{activeSymbol.sellsymbol}}</span>
+          <span>{{middleTopData.sellsymbol}}</span>
           /
-          <span>{{activeSymbol.area}}</span>
+          <span>{{middleTopData.area}}</span>
         </div>
         <div class="bottom font-size12">
-          <span>{{activeSymbol.sellname}}</span>
+          <span>{{middleTopData.sellname}}</span>
         </div>
       </div>
       <!--最新价-->
@@ -29,11 +29,14 @@
           <span
             class="font-size14"
             :class="{
-              'up':activeSymbol.rose>0,
-              'down':activeSymbol.rose<0
+              'up':middleTopData.rose>0,
+              'down':middleTopData.rose<0
             }"
-          >{{activeSymbol.price}}</span>
-          <span class="font-size12 theme-color">≈ 0.25</span>
+          >{{middleTopData.price}}</span>
+          <span
+            class="font-size12 theme-color"
+            v-show="middleTopData.price"
+          >≈ {{activeConvertCurrencyObj.symbol}}{{keep2Num((currencyRateList[middleTopData.area]-0)*(middleTopData.price-0))}}</span>
         </div>
       </div>
       <!--涨跌-->
@@ -45,10 +48,10 @@
           <span
             class="font-size14"
             :class="{
-              'up':activeSymbol.rose>0,
-              'down':activeSymbol.rose<0
+              'up':middleTopData.rose>0,
+              'down':middleTopData.rose<0
             }"
-          >{{activeSymbol.rose}}</span>
+          >{{middleTopData.rose}}</span>
         </div>
       </div>
       <div class="item">
@@ -59,10 +62,10 @@
           <span
             class="font-size14"
             :class="{
-              'up':activeSymbol.rose>0,
-              'down':activeSymbol.rose<0
+              'up':middleTopData.rose>0,
+              'down':middleTopData.rose<0
             }"
-          >{{activeSymbol.high}}</span>
+          >{{middleTopData.high}}</span>
         </div>
       </div>
       <div class="item">
@@ -72,7 +75,7 @@
         <div class="bottom">
           <span
             class="font-size14 theme-color"
-          >{{activeSymbol.low}}</span>
+          >{{middleTopData.low}}</span>
         </div>
       </div>
       <div class="item">
@@ -83,7 +86,7 @@
             <span
               class="font-size14 theme-color"
             >
-              {{activeSymbol.volume}}
+              {{middleTopData.volume}}
             </span>
         </div>
       </div>
@@ -92,6 +95,8 @@
 </template>
 <script>
 import {mapState} from 'vuex'
+import {keep2Num} from '../../utils'
+
 export default {
   components: {},
   // props,
@@ -103,16 +108,27 @@ export default {
   activited () {},
   update () {},
   beforeRouteUpdate () {},
-  methods: {},
+  methods: {
+    // 截取2位小数
+    keep2Num (number) {
+      return keep2Num(number)
+    }
+  },
   filter: {},
   computed: {
     ...mapState({
       theme: state => state.common.theme,
-      activeSymbol: state => state.common.activeSymbol
+      activeSymbol: state => state.common.activeSymbol,
+      middleTopData: state => state.trade.middleTopData,
+      currencyRateList: state => state.common.currencyRateList, // 折算货币列表
+      activeConvertCurrencyObj: state => state.common.activeConvertCurrencyObj // 目标货币
     })
   },
   watch: {
     activeSymbol (newVal) {
+      console.log(newVal)
+    },
+    activeConvertCurrencyObj (newVal) {
       console.log(newVal)
     }
   }

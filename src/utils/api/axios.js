@@ -89,3 +89,13 @@ export const get = (url, params) => {
     params
   })
 }
+export const deleteMethod = (url, params) => {
+  return util.ajax({
+    method: 'delete',
+    url,
+    data: params,
+    headers: {
+      'Content-Type': 'application/json; charset=UTF-8'
+    }
+  })
+}

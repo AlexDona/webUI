@@ -1,7 +1,10 @@
 import {
   TOGGLE_REFRESH_ENTRUST_LIST_STATUS,
   CHANGE_ACTIVE_TAB_ID,
-  CHANGE_ACTIVE_PRICE_ITEM
+  CHANGE_ACTIVE_PRICE_ITEM,
+  SET_MIDDLE_TOP_DATA,
+  SET_JUMP_STATUS,
+  SET_JUMP_SYMBOL
 } from './mutations-types.js'
 
 // import {setStore} from '../../utils'
@@ -18,5 +21,14 @@ export default {
   },
   [CHANGE_ACTIVE_PRICE_ITEM] (state, data) {
     state.activePriceItem = data
+  },
+  [SET_MIDDLE_TOP_DATA] (state, data) {
+    state.middleTopData = data
+  },
+  [SET_JUMP_STATUS] (state, data) {
+    state.isJumpToTradeCenter = data
+  },
+  [SET_JUMP_SYMBOL] (state, data) {
+    state.jumpSymbol = data
   }
 }

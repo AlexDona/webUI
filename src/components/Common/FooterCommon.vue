@@ -9,12 +9,24 @@
             <img src="../../assets/develop/logo.png">
           </div>
           <!--简介-->
-          <div class="introduction">
+          <div class="introduction font-size12">
             专注于数字资产交易所领域的新一代服务平台
           </div>
           <!--分享-->
-          <div class="share-box">
-          </div>
+          <ul class="share-box">
+            <li
+              class="share-item"
+              v-for="(item,index) in shareList"
+              :key="index"
+            >
+              <a href="#" class="mini-icon">
+                <Iconfont
+                  :icon-name="item.iconName"
+                  class-name="icon-text"
+                />
+              </a>
+            </li>
+          </ul>
         </div>
         <div class="right">
           <dl class="right-dl">
@@ -54,11 +66,38 @@
   </div>
 </template>
 <script>
+import Iconfont from '../Common/IconFontCommon'
 export default {
-  components: {},
+  components: {
+    Iconfont
+  },
   // props,
   data () {
-    return {}
+    return {
+      ercodeImgSrc: 'https://old.fubt.top/front/images/index/wechat.jpg',
+      shareList: [
+        {
+          iconName: 'icon-twitter',
+          ercodeSrc: 'https://old.fubt.top/front/images/index/wechat.jpg'
+        },
+        {
+          iconName: 'icon-twitter',
+          ercodeSrc: 'https://old.fubt.top/front/images/index/wechat.jpg'
+        },
+        {
+          iconName: 'icon-twitter',
+          ercodeSrc: 'https://old.fubt.top/front/images/index/wechat.jpg'
+        },
+        {
+          iconName: 'icon-twitter',
+          ercodeSrc: 'https://old.fubt.top/front/images/index/wechat.jpg'
+        },
+        {
+          iconName: 'icon-twitter',
+          ercodeSrc: 'https://old.fubt.top/front/images/index/wechat.jpg'
+        }
+      ]
+    }
   },
   created () {},
   mounted () {},
@@ -80,7 +119,6 @@ export default {
     >.inner-box{
       width:1130px;
       height:300px;
-      background-color: pink;
       margin:0 auto;
       padding:50px 0;
       >.top{
@@ -90,21 +128,57 @@ export default {
         }
         >.left{
           flex:1;
-          background-color: green;
           >.logo{
             >img{
               width:100px;
             }
           }
+          .introduction{
+            margin-top:20px;
+          }
+          /**/
+          >.share-box{
+            margin-top:20px;
+            >.share-item{
+              position: relative;
+              width:20px;
+              height:20px;
+              display:inline-block;
+              margin-right:10px;
+              >.mini-icon{
+                display:inline-block;
+                width:20px;
+                height:20px;
+                line-height:16px;
+                background-color: #CFCFCF;
+                border-radius: 50%;
+                text-align: center;
+                .icon{
+                  font-size: 16px;
+                  color:#1e2636;
+                }
+              }
+              >.hidden-box{
+                width:110px;
+                height:110px;
+                background-color: green;
+                position: absolute;
+                top:-120px;
+                left:50%;
+                transform: translate(-50%,0);
+                >img{
+                  width:110px;
+                }
+              }
+            }
+          }
         }
         >.right{
           flex:1;
-          background-color: yellow;
           justify-content: center;
           display:flex;
           >.right-dl{
             flex:1;
-            border:1px solid red;
             margin-left:5%;
             >.title{
               height:50px;

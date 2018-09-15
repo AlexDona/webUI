@@ -417,7 +417,7 @@
               label="设备名称"
             >
               <template slot-scope = "s">
-                <div>{{ s.row.operateAddress }}</div>
+                <div>{{ s.row.source }}</div>
               </template>
             </el-table-column>
             <el-table-column
@@ -431,7 +431,7 @@
               label="归属地"
             >
               <template slot-scope = "s">
-                <div>{{ s.row.source }}</div>
+                <div>{{ s.row.operateAddress }}</div>
               </template>
             </el-table-column>
           </el-table>

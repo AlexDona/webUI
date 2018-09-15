@@ -9,3 +9,5 @@ export const CHANGE_ACTIVE_TRADE_AREA = 'CHANGE_ACTIVE_TRADE_AREA' // 更改当�
 export const CHANGE_PALTE_LIST = 'CHANGE_PALTE_LIST' // 更改板块
 export const CHANGE_CURRENCY_RATE_LIST = 'CHANGE_CURRENCY_RATE_LIST' // 更新当前汇率列表
 export const CHANGE_ROUTER_PATH = 'CHANGE_ROUTER_PATH' // 路由跳转
+// 个人中心 我的资产列表
+export const USER_ASSETS_LIST = 'USER_ASSETS_LIST' // 我的资产列表

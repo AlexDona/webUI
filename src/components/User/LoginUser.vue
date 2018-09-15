@@ -462,6 +462,9 @@ import {
   userLoginForStep2
 } from '../../utils/api/user'
 import {
+  assetCurrenciesList
+} from '../../utils/api/personal'
+import {
   returnAjaxMessage,
   sendPhoneOrEmailCodeAjax
 } from '../../utils/commonFunc'
@@ -485,12 +488,12 @@ export default {
   data () {
     return {
       // username: '15738818082',
-      // password: '000000', // 15738818082的密码
       // username: '18625512987',
+      username: '18625512987',
       // username: '18600929234',
       // username: '17600854297',
       // username: '18625512985',
-      username: '15994026836',
+      // username: '15994026836',
       // password: 'a11111111',
       // username: '18625512986',
       // username: '18625512988',
@@ -711,24 +714,6 @@ export default {
     /**
       * 发送短信验证码或邮箱验证码
       */
-    msgCountDown (countDown, text, disabled) {
-      console.log(countDown)
-      console.log(text)
-      console.log(disabled)
-      if (countDown > 0) {
-        countDown--
-        // this.msgTxt = this.msgTime + "秒后重试";
-        text = countDown + ' s 秒后重试'
-        setTimeout(this.msgCountDown, 1000)
-      } else {
-        countDown = 0
-        text = '发送验证码'
-        disabled = false
-      }
-      console.log(countDown)
-      console.log(text)
-      console.log(disabled)
-    },
     sendPhoneOrEmailCode (loginType) {
       if (this.disabledOfPhoneBtn || this.disabledOfEmailBtn) {
         return false
@@ -769,25 +754,14 @@ export default {
       })
     },
     // 加载个人资产
-    loadCurrencyList () {
-      // 点击登录按钮时候清空验证码输入框中的数据
-      this.msgCode = ''
-      this.googleCode = ''
-
-      this.loginForStep1Old().then((res) => {
-        this.SET_STEP1_INFO(res.data.data)
-        if (!this.step2) {
-        }
-      }).catch((err) => {
-        this.loadingCircle.close()
-        this.$message({
-          type: 'error',
-          // message: err.msg
-          message: err.message
-        })
-      })
+    async loadCurrencyList () {
+      const data = await assetCurrenciesList()
+      if (!returnAjaxMessage(data, this)) {
+        return false
+      } else {
+        console.log(data)
+      }
     },
-
     // 4位随机数
     getRandomNum () {
       return parseInt(Math.random() * 10000) + ''
@@ -913,6 +887,30 @@ export default {
         this.step3DialogShowStatus = false
         // this.SET_STEP1_INFO(data.data.data)
         this.USER_LOGIN(data.data.data)
+
+        if (this.routerTo &&
+          !this.routerTo.startsWith('/addNewPwdByPhone') &&
+          !this.routerTo.startsWith('/addNewPwdByEmail') &&
+          !this.routerTo.startsWith('/register') &&
+          !this.routerTo.startsWith('/login') &&
+          !this.routerTo.startsWith('/forgetPwd') &&
+          !this.routerTo.startsWith('/changePwdByPhone') &&
+          !this.routerTo.startsWith('/changePwdByEmail') &&
+          !this.routerTo.startsWith('/nofind404')
+        ) {
+          // getPersonalAssetsList(this.$store, this.$message).then((res) => {
+          //   if (res.data.code !== 200) {
+          //
+          //   } else {
+          this.loadCurrencyList()
+          this.$router.push({path: this.routerTo})
+          //   }
+          // })
+          // console.log(this.$store.state.personalAsset);
+        } else {
+          this.$router.push({path: '/home'})
+        }
+
         // 登录成功
         this.$router.push({'path': '/'})
       }
@@ -1143,7 +1141,8 @@ export default {
       userInfo: state => state.user.loginStep1Info, // 用户详细信息
       loginType: state => state.user.loginType, // 登录类型
       disabledOfPhoneBtn: state => state.user.disabledOfPhoneBtn,
-      disabledOfEmailBtn: state => state.user.disabledOfEmailBtn
+      disabledOfEmailBtn: state => state.user.disabledOfEmailBtn,
+      routerTo: state => state.common.routerTo // 路由跳转
     })
     // step1 () {
     // return this.$store.state.loginStep.step1

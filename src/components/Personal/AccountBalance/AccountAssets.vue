@@ -150,7 +150,7 @@
                   >
                     <!--充币内容-->
                     <div
-                      v-show="withdrawDepositIsShowList[index].rechargeIsShow"
+                      v-show="withdrawDepositList[index].rechargeIsShow"
                       class="recharge-list display-flex"
                     >
                       <p class="triangle"></p>
@@ -201,7 +201,7 @@
                     <!--提币内容-->
                     <div
                       class="recharge-list recharge-list-mention display-flex"
-                      v-show="withdrawDepositIsShowList[index].withdrawDepositIsShow"
+                      v-show="withdrawDepositList[index].withdrawDepositIsShow"
                     >
                       <p class="triangle triangle-one"></p>
                       <div class="recharge-list-left display-flex">
@@ -386,7 +386,7 @@
               <!--分页-->
               <el-pagination
                 background
-                v-show="activeName === 'current-entrust' && withdrawDepositIsShowList.length"
+                v-show="activeName === 'current-entrust' && withdrawDepositList.length"
                 layout="prev, pager, next"
                 :page-count="totalPageForMyEntrust"
                 @current-change="changeCurrentPage"
@@ -445,7 +445,7 @@ export default {
       openPictureSrc: require('../../../assets/user/yes.png'), // 全显示
       searchKeyWord: '', // 搜索关键字
       searchList: [], // 搜索列表
-      withdrawDepositIsShowList: [],
+      withdrawDepositList: [],
       activeCoinId: '', // 提现币种id
       rechargeIsShowList: false, // 充币内容
       chargeMoney: '', // 根据充币地址生成二维码条件
@@ -540,25 +540,6 @@ export default {
       }
       this.getAssetCurrenciesList(e)
     },
-    // 搜索币种关键字
-    // searchFromUserAssetsList () {
-    //   console.log('1')
-    //   this.searchList = []
-    //   if (this.searchKeyWord.trim() !== '') {
-    //     console.log('2')
-    //     console.log(this.searchKeyWord)
-    //     // this.withdrawDepositIsShowList.forEach((assetItem) => {
-    //     //   console.log(this.withdrawDepositIsShowList)
-    //     //   const result = assetItem.shortName.search(this.searchKeyWord)
-    //     //   if (result !== -1) {
-    //     //     console.log('-1')
-    //     //     console.log(result)
-    //     //     this.searchList.push(assetItem)
-    //     //   }
-    //     // })
-    //     this.getAssetCurrenciesList(this.searchList)
-    //   }
-    // },
     // 输入限制
     // 修改input value 输入限制
     changeInputValue (ref, index, pointLength) {
@@ -578,14 +559,14 @@ export default {
       this.chargeDialogVisible = true
       this.chargeMoneyAddressId = id
       this.chargeMoneyName = name
-      this.withdrawDepositIsShowList.forEach((item) => {
+      this.withdrawDepositList.forEach((item) => {
         item.rechargeIsShow = false
         item.withdrawDepositIsShow = false
       })
-      if (!this.withdrawDepositIsShowList[index].rechargeIsShow) {
-        this.withdrawDepositIsShowList[index].rechargeIsShow = true
+      if (!this.withdrawDepositList[index].rechargeIsShow) {
+        this.withdrawDepositList[index].rechargeIsShow = true
       } else {
-        this.withdrawDepositIsShowList[index].withdrawDepositIsShow = false
+        this.withdrawDepositList[index].withdrawDepositIsShow = false
       }
       // 调用充币地址方法
       this.fillingCurrencyAddress()
@@ -598,12 +579,12 @@ export default {
       this.mentionDialogVisible = true
       this.mentionMoneyAddressId = id
       this.mentionMoneyName = name
-      this.withdrawDepositIsShowList.forEach((item) => {
+      this.withdrawDepositList.forEach((item) => {
         item.rechargeIsShow = false
         item.withdrawDepositIsShow = false
       })
-      this.withdrawDepositIsShowList[index].withdrawDepositIsShow = true
-      this.withdrawDepositIsShowList[index].rechargeIsShow = false
+      this.withdrawDepositList[index].withdrawDepositIsShow = true
+      this.withdrawDepositList[index].rechargeIsShow = false
       // 调用充币地址方法
       this.queryWithdrawalAddressList()
       // 调用手续费信息
@@ -693,16 +674,16 @@ export default {
       if (!(returnAjaxMessage(data, this, 0))) {
         return false
       } else {
-        this.withdrawDepositIsShowList.push({
+        this.withdrawDepositList.push({
           allIsShow: false,
           rechargeIsShow: false,
           withdrawDepositIsShow: false
         })
         // console.log(data.data.data.userCoinWalletVOPageInfo.list)
         // 返回数据
-        this.withdrawDepositIsShowList = data.data.data.userCoinWalletVOPageInfo.list
+        this.withdrawDepositList = data.data.data.userCoinWalletVOPageInfo.list
         this.totalPageForMyEntrust = data.data.data.userCoinWalletVOPageInfo.pages - 0
-        console.log(this.withdrawDepositIsShowList)
+        console.log(this.withdrawDepositList)
       }
     },
     // 分页
@@ -881,7 +862,7 @@ export default {
     }),
     filteredData: function () {
       var self = this
-      return this.withdrawDepositIsShowList.filter((item, index) => {
+      return this.withdrawDepositList.filter((item, index) => {
         console.log(item)
         return (item['coinName'].toLocaleUpperCase()).indexOf(self.searchKeyWord.toLocaleUpperCase()) !== -1
       })
