@@ -134,7 +134,12 @@
                   <div class="login-info">
                     <div class="sub-nav-user">
                       <p class="nav-vip">VIP享手续费、提现优惠</p>
-                      <button class="nav-button">立即开通</button>
+                      <button
+                        class="nav-button"
+                        @click="stateOpenVip"
+                      >
+                        立即开通
+                      </button>
                     </div>
                     <ul class="personal-user">
                       <li @click="stateReturnSuperior('account-balance')">账户资产</li>
@@ -415,6 +420,10 @@ export default{
     // 设置个人中心跳转
     setPersonalJump (target) {
       this.$store.commit('personal/CHANGE_USER_CENTER_ACTIVE_NAME', target)
+    },
+    // 开启vip
+    stateOpenVip () {
+      this.$router.push({path: '/VipMainContent'})
     },
     // 用户跳转到指定页面
     stateReturnSuperior (val) {

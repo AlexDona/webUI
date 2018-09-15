@@ -67,7 +67,11 @@
 import HeaderCommon from '../../Common/HeaderCommon'
 import IconFontCommon from '../../Common/IconFontCommon'
 import {returnAjaxMessage} from '../../../utils/commonFunc'
-import {statusCardSettings} from '../../../utils/api/personal'
+import {
+  statusCardSettings,
+  modificationAccountPaymentTerm,
+  accountPaymentTerm
+} from '../../../utils/api/personal'
 // 底部
 import FooterCommon from '../../Common/FooterCommon'
 import { createNamespacedHelpers, mapState } from 'vuex'
@@ -83,7 +87,10 @@ export default {
       paypalAccount: '', // paypal账号
       transactionPassword: '', // 交易密码
       bankType: 'paypal', // 类型
-      successCountDown: 1 // 成功倒计时
+      id: '', // ID
+      paymentTerm: {},
+      successCountDown: 1, // 成功倒计时
+      paymentMethodList: {}
     }
   },
   created () {
@@ -93,6 +100,8 @@ export default {
     require('../../../../static/css/theme/day/Personal/AccountReceivableAccount/AddSetPaypalDay.css')
     // 黑色主题样式
     require('../../../../static/css/theme/night/Personal/AccountReceivableAccount/AddSetPaypalNight.css')
+    this.getAccountPaymentTerm()
+    this.paymentMethodInformation()
   },
   mounted () {},
   activited () {},
@@ -118,7 +127,8 @@ export default {
       let param = {
         cardNo: this.paypalAccount, // paypal账号
         payPassword: this.transactionPassword, // 交易密码
-        bankType: 'paypal' // type
+        bankType: 'paypal', // type
+        id: this.id
       }
       data = await statusCardSettings(param)
       console.log(data)
@@ -126,6 +136,35 @@ export default {
         return false
       } else {
         this.successJump()
+      }
+    },
+    // 获取支付方式信息
+    async paymentMethodInformation () {
+      let data
+      let params = {
+        userId: this.userInfo.userId,
+        type: 'paypal'
+      }
+      data = await modificationAccountPaymentTerm(params)
+      if (!(returnAjaxMessage(data, this, 0))) {
+        return false
+      } else {
+        // 返回状态展示
+        this.paymentMethodList = data.data.data
+        this.paypalAccount = data.data.data.cardNo
+        this.id = data.data.data.id
+        console.log(this.paymentMethodList)
+      }
+    },
+    // 收款方式
+    async getAccountPaymentTerm () {
+      let data = await accountPaymentTerm()
+      if (!(returnAjaxMessage(data, this, 0))) {
+        return false
+      } else {
+        // 返回状态展示
+        this.paymentTerm = data.data.data
+        console.log(this.paymentTerm)
       }
     },
     // 成功自动跳转
@@ -144,6 +183,7 @@ export default {
   computed: {
     ...mapState({
       theme: state => state.common.theme,
+      userInfo: state => state.user.loginStep1Info, // 用户详细信息
       refAccountCenterStatus: state => state.personal.refAccountCenterStatus
     })
   },

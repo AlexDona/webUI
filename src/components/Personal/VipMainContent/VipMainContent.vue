@@ -13,7 +13,10 @@
     </div>
     <div class="content-main-content">
       <!--开通vip页面-->
-      <div class="content-main display-flex">
+      <div
+        class="content-main display-flex"
+        v-show="showOpenTheVIPPage"
+      >
         <div class="content-module cursor-pointer">
           <p class="content-vip-one text-align-c">
             VIP1
@@ -25,7 +28,12 @@
             <span>/月</span>
           </p>
           <p class="content-button">
-            <button class="click-btn cursor-pointer">立即开通</button>
+            <button
+              class="click-btn cursor-pointer"
+              @click="statusImmediatelyOpened('vip1')"
+            >
+              立即开通
+            </button>
           </p>
         </div>
         <div class="content-module content-border-rl cursor-pointer">
@@ -39,7 +47,12 @@
             <span>/月</span>
           </p>
           <p class="content-button">
-            <button class="click-btn cursor-pointer">立即开通</button>
+            <button
+              class="click-btn cursor-pointer"
+              @click="statusImmediatelyOpened('vip2')"
+            >
+              立即开通
+            </button>
           </p>
         </div>
         <div class="content-module cursor-pointer">
@@ -53,7 +66,12 @@
             <span>/月</span>
           </p>
           <p class="content-button">
-            <button class="click-btn cursor-pointer">立即开通</button>
+            <button
+              class="click-btn cursor-pointer"
+              @click="statusImmediatelyOpened('vip3')"
+            >
+              立即开通
+            </button>
           </p>
         </div>
         <div class="content-module margin-top30 cursor-pointer">
@@ -67,7 +85,12 @@
             <span>/月</span>
           </p>
           <p class="content-button">
-            <button class="click-btn cursor-pointer">立即开通</button>
+            <button
+              class="click-btn cursor-pointer"
+              @click="statusImmediatelyOpened('vip4')"
+            >
+              立即开通
+            </button>
           </p>
         </div>
         <div class="content-module margin-top30 content-border-rl cursor-pointer">
@@ -81,7 +104,12 @@
             <span>/月</span>
           </p>
           <p class="content-button">
-            <button class="click-btn cursor-pointer">立即开通</button>
+            <button
+              class="click-btn cursor-pointer"
+              @click="statusImmediatelyOpened('vip5')"
+            >
+              立即开通
+            </button>
           </p>
         </div>
         <div class="content-module margin-top30 cursor-pointer">
@@ -95,7 +123,12 @@
             <span>/月</span>
           </p>
           <p class="content-button">
-            <button class="click-btn cursor-pointer">立即开通</button>
+            <button
+              class="click-btn cursor-pointer"
+              @click="statusImmediatelyOpened('vip6')"
+            >
+              立即开通
+            </button>
           </p>
         </div>
         <p class="content-info-hint text-align-r padding-right23 box-sizing font-size12">
@@ -109,53 +142,102 @@
         </p>
       </div>
       <!--开通vip详情页面-->
-      <div class="content-detail-page">
+      <div
+        class="content-detail-page"
+        v-show="vipShowDetailsPage"
+      >
         <div class="detail-page-grade display-flex">
           <div class="page-grade-title font-size14">开通等级</div>
-          <div class="grade cursor-pointer text-align-c">
+          <div
+            class="grade cursor-pointer text-align-c"
+            @click="stateOpeningLevel(1)"
+            :class="{ blue:active == 1}"
+          >
             <p class="font-size16 grade-color font-weight600">VIP1</p>
             <p class="font-size12 grade-height">手续费9折</p>
           </div>
-          <div class="grade cursor-pointer text-align-c">
+          <div
+            class="grade cursor-pointer text-align-c"
+            @click="stateOpeningLevel(2)"
+            :class="{ blue:active == 2}"
+          >
             <p class="font-size16 grade-color font-weight600">VIP2</p>
             <p class="font-size12 grade-height">手续费8折</p>
           </div>
-          <div class="grade cursor-pointer text-align-c">
+          <div
+            class="grade cursor-pointer text-align-c"
+            @click="stateOpeningLevel(3)"
+            :class="{ blue:active == 3}"
+          >
             <p class="font-size16 grade-color font-weight600">VIP3</p>
             <p class="font-size12 grade-height">手续费7折</p>
           </div>
-          <div class="grade cursor-pointer text-align-c">
+          <div
+            class="grade cursor-pointer text-align-c"
+            @click="stateOpeningLevel(4)"
+            :class="{ blue:active == 4}"
+          >
             <p class="font-size16 grade-color font-weight600">VIP4</p>
             <p class="font-size12 grade-height">手续费6折</p>
           </div>
-          <div class="grade cursor-pointer text-align-c">
+          <div
+            class="grade cursor-pointer text-align-c"
+            @click="stateOpeningLevel(5)"
+            :class="{ blue:active == 5}"
+          >
             <p class="font-size16 grade-color font-weight600">VIP5</p>
             <p class="font-size12 grade-height">手续费5折</p>
           </div>
-          <div class="grade cursor-pointer text-align-c">
+          <div
+            class="grade cursor-pointer text-align-c"
+            @click="stateOpeningLevel(6)"
+            :class="{ blue:active == 6}"
+          >
             <p class="font-size16 grade-color font-weight600">VIP6</p>
             <p class="font-size12 grade-height">手续费4折</p>
           </div>
         </div>
-        <div class="detail-page-duration display-flex">
+        <div
+          class="detail-page-duration display-flex"
+        >
           <div class="duration-title font-size14">开通时长</div>
           <div class="duration cursor-pointer cursor-pointer text-align-c">
-            <p class="duration-month font-size16">3个月</p>
-            <p class="duration-currency font-size18">100FUC</p>
+            <p class="duration-month font-size16">
+              3个月
+            </p>
+            <p class="duration-currency font-size18">
+              {{filteredData[0].value}}FUC
+            </p>
           </div>
           <div class="duration duration-left cursor-pointer text-align-c">
-            <p class="duration-month font-size16">6个月</p>
-            <p class="duration-currency font-size18">100FUC</p>
-            <p class="duration-through ">600FUC</p>
+            <p class="duration-month font-size16">
+              6个月
+            </p>
+            <p class="duration-currency font-size18">
+              {{filteredData[1].value}}FUC
+            </p>
+            <p class="duration-through ">
+              600FUC
+            </p>
           </div>
           <div class="duration duration-left cursor-pointer text-align-c">
-            <p class="duration-month font-size16">12个月</p>
-            <p class="duration-currency font-size18">100FUC</p>
-            <p class="duration-through">1200FUC</p>
+            <p class="duration-month font-size16">
+              12个月
+            </p>
+            <p class="duration-currency font-size18">
+              {{filteredData[2].value}}FUC
+            </p>
+            <p class="duration-through">
+              1200FUC
+            </p>
           </div>
           <div class="duration duration-left cursor-pointer text-align-c">
-            <p class="duration-month font-size16">1个月</p>
-            <p class="duration-currency font-size18">100FUC</p>
+            <p class="duration-month font-size16">
+              1个月
+            </p>
+            <p class="duration-currency font-size18">
+              {{filteredData[3].value}}FUC
+            </p>
           </div>
         </div>
         <div class="detail-usable display-flex">
@@ -165,11 +247,16 @@
               0.0000
               <sub class="currency font-size12">FUC</sub>
             </span>
-            <span class="usable-gain cursor-pointer font-size12 display-inline-block">立即获取</span>
+            <span
+              class="usable-gain cursor-pointer font-size12 display-inline-block"
+              @click="returnSuperior"
+            >
+              立即获取
+            </span>
           </div>
         </div>
         <div class="detail-page-btn text-align-c">
-          <button class="page-btn">
+          <button class="page-btn cursor-pointer">
             确定
           </button>
         </div>
@@ -184,6 +271,31 @@
         <p class="warm-text-color">一个月有效期时长为30个自然日</p>
         <p class="warm-text-color">开通即代表您已同意<span class="prompt-color">《VIP服务协议》</span></p>
       </div>
+      <el-dialog title="kaitongVIP" :visible.sync="dialogFormVisible">
+        <el-form :model="form">
+          <el-form-item
+            label="交易密码"
+          >
+            <el-input
+              v-model="form.name"
+              auto-complete="off"
+            >
+            </el-input>
+          </el-form-item>
+        </el-form>
+        <div
+          slot="footer"
+          class="dialog-footer"
+        >
+          <el-button
+            type="primary"
+            @click="dialogFormVisible = false"
+          >
+            确 定
+          </el-button>
+        </div>
+      </el-dialog>
+
     </div>
     <!--底部-->
     <FooterCommon/>
@@ -193,9 +305,15 @@
 <script>
 // 头部
 import HeaderCommon from '../../Common/HeaderCommon'
-// 底部
 import FooterCommon from '../../Common/FooterCommon'
-import {mapState, createNamespacedHelpers} from 'vuex'
+import { createNamespacedHelpers, mapState } from 'vuex'
+import {
+  vipPriceInfo
+} from '../../../utils/api/personal'
+import {
+  returnAjaxMessage
+} from '../../../utils/commonFunc'
+// 底部
 const { mapMutations } = createNamespacedHelpers('personal')
 export default {
   components: {
@@ -204,7 +322,12 @@ export default {
   },
   data () {
     return {
-      vipPictureBanner: require('../../../assets/user/vipBanner.png') // vip banner
+      vipPictureBanner: require('../../../assets/user/vipBanner.png'), // vip banner
+      showOpenTheVIPPage: true, // 开启vip页面默认
+      vipShowDetailsPage: false, // 开启vip详情页面默认
+      vipPriceInfo: [], // vip信息接收
+      type: '1', // vip类型
+      active: 0
     }
   },
   created () {
@@ -214,26 +337,85 @@ export default {
     require('../../../../static/css/theme/day/Personal/VipMainContent/VipMainContentDay.css')
     // 黑色主题样式
     require('../../../../static/css/theme/night/Personal/VipMainContent/VipMainContentNight.css')
+    this.getVipPriceInfo()
   },
   mounted () {},
   activited () {},
   update () {},
-  beforeRouteUpdate () {},
+  beforeRouteUpdate () {
+  },
   methods: {
     ...mapMutations([
-      'CHANGE_USER_CENTER_ACTIVE_NAME'
+      // 'CHANGE_USER_CENTER_ACTIVE_NAME'
     ]),
     // 点击返回上个页面
     returnSuperior () {
-      this.CHANGE_USER_CENTER_ACTIVE_NAME('assets')
+      console.log(1)
+      // this.$store.commit('personal/CHANGE_USER_CENTER_ACTIVE_NAME', 'assets')
       this.$router.push({path: '/PersonalCenter'})
+    },
+    // vip开通页面点击页面
+    statusImmediatelyOpened (val, type) {
+      this.showOpenTheVIPPage = false
+      this.vipShowDetailsPage = true
+      switch (val) {
+        case 'vip1':
+          this.active = 1
+          this.type = 1
+          break
+        case 'vip2':
+          this.active = 2
+          this.type = 2
+          break
+        case 'vip3':
+          this.active = 3
+          this.type = 3
+          break
+        case 'vip4':
+          this.active = 4
+          this.type = 3
+          break
+        case 'vip5':
+          this.active = 5
+          this.type = 5
+          break
+        case 'vip6':
+          this.active = 6
+          this.type = 6
+          break
+      }
+    },
+    // vip详情页面资产渲染
+    stateOpeningLevel (type) {
+      this.type = type
+      console.log(type)
+    },
+    /**
+     * vip价格
+     */
+    async getVipPriceInfo () {
+      let data = await vipPriceInfo({})
+      console.log(data)
+      if (!(returnAjaxMessage(data, this, 0))) {
+        return false
+      } else {
+        // 返回展示
+        this.vipPriceInfo = data.data.data
+        // console.log(this.vipPriceInfo)
+      }
     }
   },
   filter: {},
   computed: {
     ...mapState({
       theme: state => state.common.theme
-    })
+    }),
+    filteredData () {
+      return this.vipPriceInfo.filter((item) => {
+        // console.log(item)
+        return item.id == this.type
+      })
+    }
   },
   watch: {}
 }
@@ -436,6 +618,21 @@ export default {
         }
         > .content-detail-page {
           >.detail-page-grade {
+            .p1 {
+              color: red;
+              font-size: 30px;
+            }
+            .p {
+              color: blue
+            }
+            .blue {
+              background-color: transparent !important;
+              border: 1px solid #338FF5 !important;
+              >.grade-color,
+              >.grade-height {
+                color: #338FF5 !important;
+              }
+            }
             .grade {
               background-color: #1A2233;
               border: 1px solid #354057;

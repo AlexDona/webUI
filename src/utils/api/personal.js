@@ -85,6 +85,8 @@ export const accountPaymentTerm = () => get('user/bank/', {})
 export const statusCardSettings = (params) => postWithURLencoded('user/bank/save', params)
 // 开启关闭收款方式设置
 export const openAndCloseModeSetting = (params) => postWithURLencoded('user/bank/enable', params)
+// 获取支付方式信息
+export const modificationAccountPaymentTerm = (params) => get('user/bank/info', params)
 /**
  * 法币订单
  * */
@@ -130,3 +132,8 @@ export const accessAecretKeyInfo = (params) => get('userApi/secretKey', params)
 export const modifyUserInformation = (params) => put('userApi', params)
 //   删除用户api信息
 export const deleteUserInformation = (params) => deleteMethod('userApi', params)
+/**
+ * VIP
+ * */
+// vip价格
+export const vipPriceInfo = (params) => get('vip/price', params)

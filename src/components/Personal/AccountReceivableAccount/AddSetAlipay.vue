@@ -6,7 +6,16 @@
     <HeaderCommon />
     <div class="add-account-main margin25">
       <header class="add-account-header personal-height60 line-height60 line-height70 margin25">
-        <span class="header-content-left header-content font-size16 font-weight600">
+         <span
+           v-if="paymentTerm.isAlipayBind"
+           class="header-content-left header-content font-size16 font-weight600"
+         >
+          设置支付宝账号
+        </span>
+        <span
+          v-else
+          class="header-content-left header-content font-size16 font-weight600"
+        >
           修改支付宝账号
         </span>
         <span
@@ -70,7 +79,7 @@
               class="account-button border-radius4"
               @click="stateSubmitWeChat"
             >
-              确认修改
+              确认
             </button>
           </el-form>
         </div>
@@ -85,7 +94,11 @@
 import HeaderCommon from '../../Common/HeaderCommon'
 import IconFontCommon from '../../Common/IconFontCommon'
 import {returnAjaxMessage} from '../../../utils/commonFunc'
-import {statusCardSettings} from '../../../utils/api/personal'
+import {
+  statusCardSettings,
+  modificationAccountPaymentTerm,
+  accountPaymentTerm
+} from '../../../utils/api/personal'
 // 底部
 import FooterCommon from '../../Common/FooterCommon'
 import { createNamespacedHelpers, mapState } from 'vuex'
@@ -99,12 +112,15 @@ export default {
   data () {
     return {
       tokenObj: {
-        'token': this.userInfo.token
+        'token': ''
       },
       alipayAccount: '', // 支付宝账号
       password: '', // 交易密码
       dialogImageHandUrl: '', // 图片url
-      successCountDown: 3 // 成功倒计时
+      id: '', // ID
+      paymentTerm: {},
+      successCountDown: 1, // 成功倒计时
+      paymentMethodList: {}
     }
   },
   created () {
@@ -114,6 +130,10 @@ export default {
     require('../../../../static/css/theme/day/Personal/AccountReceivableAccount/AddSetAlipayDay.css')
     // 黑色主题样式
     require('../../../../static/css/theme/night/Personal/AccountReceivableAccount/AddSetAlipayNight.css')
+    this.tokenObj.token = this.userInfo.token
+    console.log(this.userInfo)
+    this.getAccountPaymentTerm()
+    this.paymentMethodInformation()
   },
   mounted () {},
   activited () {},
@@ -141,10 +161,12 @@ export default {
     async stateSeniorCertification () {
       let data
       let param = {
+        token: this.userInfo.token,
         cardNo: this.alipayAccount, // 微信账号
         qrcode: this.dialogImageHandUrl, // 二维码
         payPassword: this.password, // 交易密码
-        bankType: 'alipay' // type
+        bankType: 'alipay', // type
+        id: this.id
       }
       data = await statusCardSettings(param)
       console.log(data)
@@ -152,6 +174,36 @@ export default {
         return false
       } else {
         this.successJump()
+      }
+    },
+    // 获取支付方式信息
+    async paymentMethodInformation () {
+      let data
+      let params = {
+        userId: this.userInfo.userId,
+        type: 'alipay'
+      }
+      data = await modificationAccountPaymentTerm(params)
+      if (!(returnAjaxMessage(data, this, 0))) {
+        return false
+      } else {
+        // 返回状态展示
+        this.paymentMethodList = data.data.data
+        this.alipayAccount = data.data.data.cardNo
+        this.dialogImageHandUrl = data.data.data.qrcode
+        this.id = data.data.data.id
+        console.log(this.paymentMethodList)
+      }
+    },
+    // 收款方式
+    async getAccountPaymentTerm () {
+      let data = await accountPaymentTerm()
+      if (!(returnAjaxMessage(data, this, 0))) {
+        return false
+      } else {
+        // 返回状态展示
+        this.paymentTerm = data.data.data
+        console.log(this.paymentTerm)
       }
     },
     // 成功自动跳转

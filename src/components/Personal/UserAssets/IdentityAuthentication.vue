@@ -16,7 +16,7 @@
             <div class="header-border margin20 display-flex">
               <span class="font-size16 main-header-title">实名认证</span>
               <p
-                v-if="!realNameInformationObj.realnameAuth"
+                v-if="realNameInformationObj.realname"
                 class="authentication-type font-size12"
               >
                 （未认证）

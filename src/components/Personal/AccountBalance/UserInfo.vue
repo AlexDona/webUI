@@ -113,16 +113,16 @@
           </p>
           <p></p>
         </div>
-        <div class="volume float-left">
-          <p class="volume-text font-size12">近30天交易量</p>
-          <p class="volume-info margin-top9">
-            <span class="info-color font-size16">{{ BTCAssets }}</span>
-            <span class="info-color font-size12">BTC</span>
-            或
-            <span class="info-color font-size16">{{ CNYAssets }}</span>
-            <span class="info-color font-size12">CNY</span>
-          </p>
-        </div>
+        <!--<div class="volume float-left">-->
+          <!--<p class="volume-text font-size12">近30天交易量</p>-->
+          <!--<p class="volume-info margin-top9">-->
+            <!--<span class="info-color font-size16">{{ BTCAssets }}</span>-->
+            <!--<span class="info-color font-size12">BTC</span>-->
+            <!--或-->
+            <!--<span class="info-color font-size16">{{ CNYAssets }}</span>-->
+            <!--<span class="info-color font-size12">CNY</span>-->
+          <!--</p>-->
+        <!--</div>-->
         <div class="asset float-left">
           <p class="asset-text font-size12">当前资产总估值</p>
           <p class="asset-info margin-top9">

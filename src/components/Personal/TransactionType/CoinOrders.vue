@@ -59,7 +59,7 @@
           </div>
           <!--方向（买入，卖出）-->
           <div class="trade-type-box condition-item">
-            <span class="currency-span">方向</span>
+            <span class="currency-span">委单类型</span>
             <el-select
               clearable
               v-model="activeType"

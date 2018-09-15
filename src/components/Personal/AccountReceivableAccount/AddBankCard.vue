@@ -6,8 +6,17 @@
     <HeaderCommon />
     <div class="add-bank-main margin25">
       <header class="add-bank-header personal-height60 line-height60 line-height70 margin25">
-        <span class="header-content-left header-content font-size16 font-weight600">
+        <span
+          v-if="paymentTerm.isBankBind"
+          class="header-content-left header-content font-size16 font-weight600"
+        >
           设置银行卡
+        </span>
+        <span
+          v-else
+          class="header-content-left header-content font-size16 font-weight600"
+        >
+          修改银行卡
         </span>
         <span
           class="header-content-right font-size12 cursor-pointer"
@@ -81,7 +90,11 @@ import CountDownButton from '../../Common/CountDownCommon'
 import {
   returnAjaxMessage // 接口返回信息
 } from '../../../utils/commonFunc'
-import {statusCardSettings} from '../../../utils/api/personal'
+import {
+  statusCardSettings,
+  accountPaymentTerm,
+  modificationAccountPaymentTerm
+} from '../../../utils/api/personal'
 // 底部
 import FooterCommon from '../../Common/FooterCommon'
 import { createNamespacedHelpers, mapState } from 'vuex'
@@ -100,8 +113,10 @@ export default {
       bankCard: '', // 银行卡号
       branchAddress: '', // 支行地址
       password: '', // 交易密码
+      id: '', // ID
       paymentTerm: {},
-      successCountDown: 1 // 成功倒计时
+      successCountDown: 1, // 成功倒计时
+      paymentMethodList: {}
     }
   },
   created () {
@@ -111,6 +126,8 @@ export default {
     require('../../../../static/css/theme/day/Personal/AccountReceivableAccount/AddBankCardDay.css')
     // 黑色主题样式
     require('../../../../static/css/theme/night/Personal/AccountReceivableAccount/AddBankCardNight.css')
+    this.getAccountPaymentTerm()
+    this.paymentMethodInformation()
     // console.log(this.getAccountPaymentTerm)
   },
   mounted () {},
@@ -141,13 +158,44 @@ export default {
         cardNo: this.bankCard, // 银行卡号
         address: this.branchAddress, // 开户地址
         payPassword: this.password, // 交易密码
-        bankType: 'bank' // type
+        bankType: 'bank', // type
+        id: this.id
       }
       data = await statusCardSettings(params)
       if (!(returnAjaxMessage(data, this, 1))) {
         return false
       } else {
         console.log(data)
+      }
+    },
+    // 获取支付方式信息
+    async paymentMethodInformation () {
+      let data
+      let params = {
+        userId: this.userInfo.userId,
+        type: 'bank'
+      }
+      data = await modificationAccountPaymentTerm(params)
+      if (!(returnAjaxMessage(data, this, 0))) {
+        return false
+      } else {
+        // 返回状态展示
+        this.paymentMethodList = data.data.data
+        this.bankName = data.data.data.bankName
+        this.bankCard = data.data.data.cardNo
+        this.branchAddress = data.data.data.address
+        this.id = data.data.data.id
+        console.log(this.paymentMethodList)
+      }
+    },
+    // 收款方式
+    async getAccountPaymentTerm () {
+      let data = await accountPaymentTerm()
+      if (!(returnAjaxMessage(data, this, 0))) {
+        return false
+      } else {
+        // 返回状态展示
+        this.paymentTerm = data.data.data
       }
     },
     // 成功自动跳转

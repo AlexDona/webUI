@@ -47,8 +47,17 @@
                 :src="openPictureSrc"
               >
               <router-link to="/AddBankCard">
-                <span class="payment-state cursor-pointer">
+                <span
+                  v-if="paymentTerm.isBankBind"
+                  class="payment-state cursor-pointer"
+                >
                     设置
+                </span>
+                <span
+                  v-else
+                  class="payment-state cursor-pointer"
+                >
+                    修改
                 </span>
               </router-link>
             </div>
@@ -81,8 +90,17 @@
                 :src="openPictureSrc"
               >
               <router-link to="/AddWeChat">
-                <span class="payment-state cursor-pointer">
-                  设置
+                <span
+                  v-if="paymentTerm.isWeixinBind"
+                  class="payment-state cursor-pointer"
+                >
+                    设置
+                </span>
+                <span
+                  v-else
+                  class="payment-state cursor-pointer"
+                >
+                    修改
                 </span>
               </router-link>
             </p>
@@ -115,8 +133,17 @@
                 :src="openPictureSrc"
               >
               <router-link to="/AddSetAlipay">
-                <span class="payment-state cursor-pointer">
+                <span
+                  v-if="paymentTerm.isAlipayBind"
+                  class="payment-state cursor-pointer"
+                >
                   设置
+                </span>
+                <span
+                  v-else
+                  class="payment-state cursor-pointer"
+                >
+                  修改
                 </span>
               </router-link>
             </p>
@@ -149,8 +176,17 @@
                 :src="openPictureSrc"
               >
               <router-link class="setting-btn" to="/AddSetPaypal">
-                <span class="payment-state cursor-pointer">
+                <span
+                  v-if="paymentTerm.isPaypalBind"
+                  class="payment-state cursor-pointer"
+                >
                   设置
+                </span>
+                <span
+                  v-else
+                  class="payment-state cursor-pointer"
+                >
+                  修改
                 </span>
               </router-link>
             </p>
@@ -180,8 +216,17 @@
                 :src="openPictureSrc"
               >
               <router-link class="setting-btn" to="/AddWesternUnion">
-                <span class="payment-state cursor-pointer">
+                <span
+                  v-if="paymentTerm.isXilianBind"
+                  class="payment-state cursor-pointer"
+                >
                   设置
+                </span>
+                <span
+                  v-else
+                  class="payment-state cursor-pointer"
+                >
+                  修改
                 </span>
               </router-link>
             </p>
