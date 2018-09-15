@@ -153,7 +153,7 @@ import {
   getMerchantAvailablelegalTender,
   getOTCMerchantsOrdersList
 } from '../../../utils/api/personal'
-import {returnAjaxMessage, getAllList} from '../../../utils/commonFunc'
+import {returnAjaxMessage} from '../../../utils/commonFunc'
 const {mapMutations} = createNamespacedHelpers('personal')
 export default {
   components: {

@@ -42,7 +42,7 @@
                   <el-option
                     v-for="(item,index) in coinStyleList"
                     :key="index"
-                    :value="item.partnerCoinId"
+                    :value="item.coinId"
                     :label="item.name"
                   >
                   <!-- :value="item.coinId" -->
@@ -311,7 +311,7 @@
               1、发布买卖是免费的；
             </p>
             <p class="release-tips">
-              2、您可以在设置种设置您的收款方式，发布买卖时直接选择，它会显示在您的委托列表中；
+              2、您可以在设置种设置您的收款方式；
             </p>
             <p class="release-tips">
               3、交易中请注意判断和防范有欺诈风险的付款方式；
@@ -429,7 +429,7 @@ export default {
     if (this.$route.params.styleID === 'onlineSell') {
       this.publishStyle = 'sell'
     }
-    // 可用币种
+    // 可用币种id
     this.coinId = this.$route.params.partnerCoinId
     // 根据可用币种id 查询用户交易币种手续费率以及币种详情
     this.queryUserTradeFeeAndCoinInfo()
@@ -490,6 +490,7 @@ export default {
       const data = await getOTCAvailableCurrency({
         partnerId: this.partnerId
       })
+      console.log('可用币种')
       console.log(data)
       // 提示信息
       if (!(returnAjaxMessage(data, this, 0))) {
@@ -510,7 +511,7 @@ export default {
     //  5.2 根据可用币种id 查询用户交易币种手续费率以及币种详情
     async queryUserTradeFeeAndCoinInfo () {
       const data = await queryUserTradeFeeAndCoinInfo({
-        partnerCoinId: this.coinId // 挂单id
+        coinId: this.coinId // 挂单币种id
       })
       console.log('用户交易币种手续费率以及币种详情')
       console.log(data)
@@ -642,7 +643,8 @@ export default {
         return false
       }
       let param = {
-        partnerCoinId: this.coinId, // 商户币种id
+        // partnerCoinId: this.coinId, // 商户币种id
+        coinId: this.coinId, // 可用币种id
         currencyId: this.hopePaymentCoinId, // 法币id
         minCount: this.minCount, // 单笔最小限额（CNY）
         maxCount: this.maxCount, // 单笔最大限额（CNY）

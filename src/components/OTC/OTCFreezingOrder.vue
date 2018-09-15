@@ -67,6 +67,10 @@
             <p class="text-info text-blue">冻结时间</p>
             <p class="text-info">{{timeFormatting(item.freezeTime)}}</p>
           </div>
+          <div class="info-reason">
+            <p class="text-info text-blue">申诉原因</p>
+            <p class="text-info">{{item.appealCause}}</p>
+          </div>
         </div>
       </div>
       <div class="no-data" v-if="!getOTCFreezingOrderList.length">暂无数据</div>
@@ -126,7 +130,8 @@ export default {
         // pageNum: '1',
         // pageSize: '10'
       })
-      // console.log(data)
+      console.log('冻结中订单')
+      console.log(data)
       // 提示信息
       if (!(returnAjaxMessage(data, this, 0))) {
         return false
@@ -193,11 +198,11 @@ export default {
           box-sizing: border-box;
           border-top: 1px solid #262F38;
           display: flex;
-          flex: 7;
+          flex: 4;
           padding: 30px 30px 0 30px;
           color: #9DA5B3;
           >.info-left{
-            flex: 2;
+            flex: 1;
             box-sizing: border-box;
             border-right: 1px solid #262F38;
             >.text-info{
@@ -209,7 +214,7 @@ export default {
             }
           }
           >.info-middle{
-            flex: 2;
+            flex: 1;
             box-sizing: border-box;
             border-right: 1px solid #262F38;
             margin-left: 30px;
@@ -222,7 +227,20 @@ export default {
             }
           }
           >.info-right{
-            flex: 3;
+            flex: 1;
+            box-sizing: border-box;
+            border-right: 1px solid #262F38;
+            margin-left: 30px;
+            >.text-info{
+              // line-height: 1.5rem;
+              line-height: 20px;
+            }
+            >.text-blue{
+              color: #5E95EC;
+            }
+          }
+          >.info-reason{
+            flex: 1;
             box-sizing: border-box;
             margin-left: 30px;
             >.text-info{

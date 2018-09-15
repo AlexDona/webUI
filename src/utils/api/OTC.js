@@ -52,3 +52,5 @@ export const getOTCMerchantsOrdersList = (params) => get('otcOrder/selectMerchOr
 export const queryUserPayTypes = (params) => get('otcCOin/getUserPayTypes', params)
 // 报表统计
 export const getOTCReportFormStatisticsData = (params) => get('otcOrder/selectMerchStatics', params)
+//  汇率转换
+export const getOTCChangeRate = (params) => get('otcCOin/changeRate', params)
