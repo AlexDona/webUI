@@ -121,7 +121,7 @@
               <template slot-scope = "s">
                 <div>{{ s.row.type }}</div>
                 <div
-                  v-if="s.row.fuid !== $store.state.userInfo.fshowid"
+                  v-if="s.row.id !== userInfo.userInfo.showid"
                 >
                   {{ rollIn }}
                 </div>
@@ -280,6 +280,7 @@
             <el-form>
               <el-form-item label="交易密码">
                 <input
+                  type="password"
                   class="form-input-common border-radius2 padding-l15 box-sizing"
                   v-model="pushPassword"
                   auto-complete="off"
@@ -634,8 +635,7 @@ export default {
   computed: {
     ...mapState({
       theme: state => state.common.theme,
-      userInfo: state => state.personal.userInfo,
-      // userInfo: state => state.user.loginStep1Info, // 用户详细信息
+      userInfo: state => state.user.loginStep1Info, // 用户详细信息
       partnerId: state => state.common.partnerId,
       loginType: state => state.user.loginType, // 发送类型
       disabledOfPhoneBtn: state => state.user.disabledOfPhoneBtn,

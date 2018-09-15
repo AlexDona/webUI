@@ -55,7 +55,10 @@
           资产配置
         </div>
         <div class="content font-size18">
-          <span>总资产≈</span>
+          <!-- 总资产法币 -->
+          <span>{{totalAssets}}</span>
+          <span>{{activitedTraderCoinId}}</span>
+          <!-- 总资产人名币 -->
           <span>{{totalAssets}}</span>
           <span>{{activitedtraderCurrencyCoinsName}}</span>
         </div>
@@ -418,7 +421,7 @@ export default {
       value1: '', // 默认开始时间
       value2: '', // 默认结束时间
       radio2: 0, // 单选按钮时间
-      totalAssets: '',
+      totalAssets: '', // 总资产
       // 订单详情
       orderInfoList: [
         // {
@@ -568,7 +571,7 @@ export default {
         return false
       } else {
         // 返回数据正确的逻辑
-        // 总资产赋值
+        // 总资产人名币赋值
         this.totalAssets = data.data.data.totalAssets
         // 当天交易
         this.buyDayMap = data.data.data.buyDayMap

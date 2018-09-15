@@ -49,6 +49,11 @@ const OTCMerchantsOrders = r => require.ensure([], () => r(require('@/components
 const OTCReportFormStatistics = r => require.ensure([], () => r(require('@/components/OTC/OTCReportFormStatistics')), 'otc-report-form-statistics')
 const OTCBusinessApply = r => require.ensure([], () => r(require('@/components/OTC/OTCBusinessApply')), 'otc-business-apply')
 /**
+ * 投资理财
+ */
+const FinanceCenter = r => require.ensure([], () => r(require('@/components/InvestmentFinance/FinanceCenter')), 'finance-center')
+const FinanceInvestmentRecord = r => require.ensure([], () => r(require('@/components/InvestmentFinance/FinanceInvestmentRecord')), 'finance-investment-record')
+/**
  * User
  */
 // 登录
@@ -257,6 +262,17 @@ const router = new Router({
       meta: {
         auth: true
       }
+    },
+    {
+      // 投资理财中心
+      path: '/FinanceCenter',
+      name: 'FinanceCenter',
+      component: FinanceCenter
+    },
+    {
+      path: '/FinanceInvestmentRecord',
+      name: 'FinanceInvestmentRecord',
+      component: FinanceInvestmentRecord
     },
     // 币币交易
     {

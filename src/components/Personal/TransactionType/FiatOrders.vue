@@ -153,7 +153,7 @@ import {
   getMerchantAvailablelegalTender,
   getOTCMerchantsOrdersList
 } from '../../../utils/api/personal'
-import {returnAjaxMessage} from '../../../utils/commonFunc'
+import {returnAjaxMessage, getAllList} from '../../../utils/commonFunc'
 const {mapMutations} = createNamespacedHelpers('personal')
 export default {
   components: {
@@ -241,28 +241,29 @@ export default {
     ]),
     // tab面板切换
     statusSwitchPanel (tab) {
-      switch (tab.name) {
-        case 'trade-order':
-          // 交易中的订单列表展示
-          this.$refs.tradeOrder.getOTCTradingOrdersList()
-          break
-        case 'completed-order':
-          // 已完成订单列表展示
-          this.$refs.cancelledOrder.getOTCCompletedOrdersList()
-          break
-        case 'cancelled-order':
-          // 已取消订单列表查询
-          this.$refs.completedOrder.getOTCCanceledOrdersList()
-          break
-        case 'pending-order':
-          // 冻结中订单列表展示
-          this.$refs.pendingOrder.getOTCFrezzingOrdersList()
-          break
-        case 'entrust-orders':
-          // 委托订单列表展示
-          this.$refs.entrustOrders.getOTCEntrustingOrdersList()
-          break
-      }
+      getAllList(this.$route, this.$message)
+      // switch (tab.name) {
+      //   case 'trade-order':
+      //     // 交易中的订单列表展示
+      //     this.$refs.tradeOrder.getOTCTradingOrdersList()
+      //     break
+      //   case 'completed-order':
+      //     // 已完成订单列表展示
+      //     this.$refs.cancelledOrder.getOTCCompletedOrdersList()
+      //     break
+      //   case 'cancelled-order':
+      //     // 已取消订单列表查询
+      //     this.$refs.completedOrder.getOTCCanceledOrdersList()
+      //     break
+      //   case 'pending-order':
+      //     // 冻结中订单列表展示
+      //     this.$refs.pendingOrder.getOTCFrezzingOrdersList()
+      //     break
+      //   case 'entrust-orders':
+      //     // 委托订单列表展示
+      //     this.$refs.entrustOrders.getOTCEntrustingOrdersList()
+      //     break
+      // }
     },
     // 时间格式化
     timeFormatting (date) {

@@ -21,12 +21,14 @@
                 <input
                   type="text"
                   class="api-input border-radius2 padding-l15 box-sizing"
+                  v-model="remark"
                 >
               </el-form-item>
               <el-form-item label="绑定IP地址：">
                 <input
                   type="text"
                   class="api-input border-radius2 padding-l15 box-sizing"
+                  v-model="ipSite"
                 >
               </el-form-item>
               <button
@@ -76,14 +78,15 @@
           >
             <el-table-column
               label="创建时间"
-              width="180"
+              width="150"
             >
               <template slot-scope = "s">
-                <div>{{timeFormatting(s.row.creationTime) }}</div>
+                <div>{{timeFormatting(s.row.createTime) }}</div>
               </template>
             </el-table-column>
             <el-table-column
               label="备注"
+              width="80"
             >
               <template slot-scope = "s">
                 <div>{{ s.row.remark }}</div>
@@ -91,31 +94,48 @@
             </el-table-column>
             <el-table-column
               label="API访问秘钥"
-              width="180"
+              width="370"
             >
               <template slot-scope = "s">
-                <div>{{ s.row.secretKey }}</div>
+                <div>{{ s.row.accessKey }}</div>
               </template>
             </el-table-column>
             <el-table-column
               label="IP地址"
+              width="130"
             >
               <template slot-scope = "s">
-                <div>{{ s.row.IpSite }}</div>
+                <div>{{ s.row.ip }}</div>
               </template>
             </el-table-column>
             <el-table-column
               label="状态"
+              width="50"
             >
               <template slot-scope = "s">
-                <div>{{ s.row.state }}</div>
+                <div v-if="s.row.status == 'enable'">{{ enable }}</div>
+                <div v-if="s.row.status == 'disable'">{{ disable }}</div>
               </template>
             </el-table-column>
             <el-table-column
               label="操作"
+              width="100"
             >
               <template slot-scope = "s">
-                <div>{{ s.row.operation }}</div>
+                <div
+                  class="compile float-left cursor-pointer"
+                  @click="compileApi(s.row.id)"
+                  :id="s.row.id"
+                >
+                  编辑
+                </div>
+                <div
+                  class="compile float-left cursor-pointer"
+                  @click="deleteUser(s.row.id)"
+                  :id="s.row.id"
+                >
+                  删除
+                </div>
               </template>
             </el-table-column>
           </el-table>
@@ -203,7 +223,8 @@
           >
             <input
               class="content-input input-google padding-l15 box-sizing"
-              v-model="apiAccessTheSecretKey"
+              v-model="accessKey"
+              disabled
             >
           </el-form-item>
           <el-form-item
@@ -212,7 +233,8 @@
           >
             <input
               class="content-input input-google padding-l15 box-sizing"
-              v-model="apiAccessTheSecretKey"
+              v-model="secretKey"
+              disabled
             >
             <p class="font-size12 text-info text-margin ">（仅显示1次，遗失后不可找回，请务必妥善保存）</p>
           </el-form-item>
@@ -221,7 +243,8 @@
           >
             <input
               class="content-input input-google padding-l15 box-sizing"
-              v-model="setUpApiIp"
+              v-model="ip"
+              disabled
             >
             <p class="font-size12 text-info text-margin">提示</p>
             <p class="font-size12 text-info">• 请不要泄露您的Secret Key，避免造成资产损失。</p>
@@ -235,11 +258,75 @@
           <button
             type="primary"
             class="primary-button"
-            @click="stateSubmitDetermineValidation"
+            @click="stateSubmitAffirm"
           >
             确 定
           </button>
         </div>
+      </el-dialog>
+      <!--编辑api-->
+      <!--二次信息确认弹框-->
+      <el-dialog
+        title="编辑api"
+        :visible.sync="compileUserApi"
+      >
+        <el-form
+          :label-position="labelPosition"
+        >
+          <el-form-item
+            style="margin-bottom: 0"
+            label="备注"
+          >
+            <input
+              class="content-input input-google padding-l15 box-sizing"
+              v-model="apiRemark"
+            >
+          </el-form-item>
+          <el-form-item
+            label="绑定IP地址"
+          >
+            <input
+              class="content-input input-google padding-l15 box-sizing"
+              v-model="ipAddress"
+            >
+          </el-form-item>
+        </el-form>
+        <div
+          slot="footer"
+          class="dialog-footer"
+        >
+          <button
+            type="primary"
+            class="primary-button"
+            @click="stateCompileUserApi"
+          >
+            确 定
+          </button>
+        </div>
+      </el-dialog>
+      <!-- 删除api-->
+      <el-dialog
+        :title="删除api地址"
+        :visible.sync="dialogVisible"
+        center
+      >
+        <span class="info">确定删除提币地址吗？</span>
+        <span slot="footer" class="dialog-footer">
+         <!--确 定 取 消-->
+          <el-button
+            type="primary"
+            @click="deleteUserConfirm"
+            :disabled="statel"
+          >
+            确 定
+          </el-button>
+          <el-button
+            class="btn"
+            @click="dialogVisible = false"
+          >
+            取 消
+          </el-button>
+        </span>
       </el-dialog>
     </div>
   </div>
@@ -250,7 +337,13 @@ import CountDownButton from '../../Common/CountDownCommon'// 字体图标
 import IconFontCommon from '../../Common/IconFontCommon'
 import { createNamespacedHelpers, mapState } from 'vuex'
 import {
-  statusSecurityCenter
+  statusSecurityCenter,
+  multipleUserAPIInfo,
+  stateCreationApi,
+  securityVerificationOnOff,
+  accessAecretKeyInfo,
+  modifyUserInformation,
+  deleteUserInformation
 } from '../../../utils/api/personal'
 import {
   returnAjaxMessage,
@@ -267,61 +360,28 @@ export default {
     return {
       labelPosition: 'top',
       // creationTime 创建时间
-      // remark 备注
+      // remark: '备注',
       // secretKey API访问秘钥
-      // IpSite IP地址
-      // state 状态
+      // 'IpSite' IP地址
       securityCenter: {},
+      enable: '启用',
+      disable: '禁用',
       APIMoneyConfirm: false, // 默认API确认弹窗
       phoneCode: '', // 邮箱验证
       emailCode: '', // 手机验证
       googleCode: '', // 谷歌验证
       // 默认创建之后弹出二次挨批创建信息框
       apiSecondaryConfirmation: false,
-      apiAccessTheSecretKey: 'SDFGSDFGSDFGSDFGSDFGS', // API访问秘钥 （Access Key）
-      setUpApiIp: '192.168.1087', // 绑定IP地址
-      extensionList: [
-        {
-          creationTime: '2018-08-04 10:30:41',
-          remark: '阿斯顿发',
-          secretKey: '18033****',
-          IpSite: '二麻子',
-          state: '未认证',
-          operation: '5566887'
-        },
-        {
-          creationTime: '2018-08-04 10:30:41',
-          remark: '阿斯顿发',
-          secretKey: '18033****',
-          IpSite: '二麻子',
-          state: '未认证',
-          operation: '5566887'
-        },
-        {
-          creationTime: '2018-08-04 10:30:41',
-          remark: '阿斯顿发',
-          secretKey: '18033****',
-          IpSite: '二麻子',
-          state: '未认证',
-          operation: '5566887'
-        },
-        {
-          creationTime: '2018-08-04 10:30:41',
-          remark: '阿斯顿发',
-          secretKey: '18033****',
-          IpSite: '二麻子',
-          state: '未认证',
-          operation: '5566887'
-        },
-        {
-          creationTime: '2018-08-04 10:30:41',
-          remark: '阿斯顿发',
-          secretKey: '18033****',
-          IpSite: '二麻子',
-          state: '未认证',
-          operation: '5566887'
-        }
-      ]
+      accessKey: '', // API访问秘钥 （Access Key）
+      secretKey: '', // API访问秘钥 （Access Key）
+      ipSite: '', // 绑定IP地址
+      ip: '', // 绑定IP地址
+      extensionList: [],
+      compileUserApi: false, // 编辑用户api
+      userId: '', // 编辑用户api
+      apiRemark: '', // 编辑用户备注
+      ipAddress: '', // 编辑用户ip
+      dialogVisible: false
     }
   },
   created () {
@@ -331,6 +391,7 @@ export default {
     require('../../../../static/css/theme/day/Personal/UserAssets/APIManagementDay.css')
     // 黑色主题样式
     require('../../../../static/css/theme/night/Personal/UserAssets/APIManagementNight.css')
+    // this.stateCompileApi()
   },
   mounted () {},
   activited () {},
@@ -382,14 +443,141 @@ export default {
     },
     // 点击创建
     stateEstablishApiButton () {
-      // 手机谷歌邮箱杨峥方式验证
       this.APIMoneyConfirm = true
       this.getSecurityCenter()
+      this.ip = this.ipSite
     },
     // 创建之后弹出二次挨批创建信息框
     stateSubmitDetermineValidation () {
+      // 返回展示
       this.apiSecondaryConfirmation = true
       this.APIMoneyConfirm = false
+      //  获取秘钥
+      this.getAccessAecretKey()
+      // 手机谷歌邮箱方式验证
+      // this.multipleValidationMethods()
+    },
+    // 二次确认框创建挨批完成
+    stateSubmitAffirm () {
+      // 创建api
+      this.statusCreationApi()
+    },
+    // 创建api
+    async statusCreationApi () {
+      let data = await stateCreationApi({
+        remark: this.remark, // 备注
+        ip: this.ip, // ip地址
+        accessKey: this.accessKey, // token
+        secretKey: this.secretKey // sk私钥
+      })
+      console.log(data)
+      if (!(returnAjaxMessage(data, this, 1))) {
+        return false
+      } else {
+        // 返回展示
+        console.log(data)
+        this.apiSecondaryConfirmation = false
+        this.getMultipleUserAPIInfo()
+      }
+    },
+    // 编辑用户api
+    compileApi (id) {
+      this.compileUserApi = true
+      this.userId = id
+      // this.extensionList.forEach((item, index) => {
+      //   if (item.id == id) {
+      //   }
+      // })
+    },
+    // 编辑确认
+    stateCompileUserApi () {
+      this.stateCompileApi()
+    },
+    //  编辑用户api接口
+    async stateCompileApi () {
+      let data = await modifyUserInformation({
+        id: this.userId,
+        remark: this.apiRemark, // 编辑用户备注
+        ip: this.ipAddress // 编辑用户ip
+      })
+      console.log(data)
+      if (!(returnAjaxMessage(data, this, 1))) {
+        return false
+      } else {
+        // 返回展示
+        this.getMultipleUserAPIInfo()
+        this.compileUserApi = false
+      }
+    },
+    // 删除
+    deleteUser (id) {
+      this.dialogVisible = true
+      this.userId = id
+    },
+    deleteUserConfirm () {
+      this.deleteUserApi()
+    },
+    //  获取秘钥
+    async deleteUserApi () {
+      let data = await deleteUserInformation({
+        id: this.userId
+      })
+      console.log(data)
+      if (!(returnAjaxMessage(data, this, 0))) {
+        return false
+      } else {
+        // 返回展示
+        this.getMultipleUserAPIInfo()
+        this.dialogVisible = false
+      }
+    },
+    // 邮箱、短信、谷歌验证码验证
+    async multipleValidationMethods () {
+      let data = await securityVerificationOnOff({
+        email: this.userInfo.userInfo.email, // 邮箱
+        phone: this.userInfo.userInfo.phone, // 手机
+        emailCode: this.emailCode, // 邮箱验证
+        phoneCode: this.phoneCode, // 手机验证
+        googleCode: this.googleCode // 谷歌验证
+      })
+      console.log(data)
+      if (!(returnAjaxMessage(data, this, 0))) {
+        return false
+      } else {
+        // // 返回展示
+        // this.apiSecondaryConfirmation = true
+        // this.APIMoneyConfirm = false
+        // //  获取秘钥
+        // this.getAccessAecretKey()
+        // this.extensionList = data.data.data
+        // console.log(this.extensionList)
+      }
+    },
+    // 获取多个用户api信息
+    async getMultipleUserAPIInfo () {
+      let data = await multipleUserAPIInfo({
+        // token: this.userInfo.token // token
+      })
+      console.log(data)
+      if (!(returnAjaxMessage(data, this, 0))) {
+        return false
+      } else {
+        // 返回展示
+        this.extensionList = data.data.data
+        console.log(this.extensionList)
+      }
+    },
+    //  获取秘钥
+    async getAccessAecretKey () {
+      let data = await accessAecretKeyInfo({})
+      console.log(data)
+      if (!(returnAjaxMessage(data, this, 0))) {
+        return false
+      } else {
+        // 返回展示
+        this.accessKey = data.data.data.accessKey
+        this.secretKey = data.data.data.secretKey
+      }
     },
     /**
      * 安全中心
@@ -411,7 +599,9 @@ export default {
   computed: {
     ...mapState({
       theme: state => state.common.theme,
-      userInfo: state => state.user.loginStep1Info // 用户详细信息
+      userInfo: state => state.user.loginStep1Info, // 用户详细信息
+      disabledOfPhoneBtn: state => state.user.disabledOfPhoneBtn,
+      disabledOfEmailBtn: state => state.user.disabledOfEmailBtn
     })
   },
   watch: {}
@@ -495,6 +685,9 @@ export default {
         }
         >.extension-statistics-content{
           min-height: 130px;
+          .compile{
+            width: 40px;
+          }
         }
       }
     }
@@ -560,6 +753,9 @@ export default {
             >.header-color {
               color: #fff;
             }
+          }
+          .compile {
+            color: #338FF5;
           }
         }
       }

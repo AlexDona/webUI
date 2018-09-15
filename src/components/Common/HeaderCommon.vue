@@ -56,7 +56,7 @@
               </ul>
             </li>
             <li class="nav-item">
-              <router-link to="/">
+              <router-link to="/FinanceCenter">
                 <span>投资理财</span>
               </router-link>
             </li>

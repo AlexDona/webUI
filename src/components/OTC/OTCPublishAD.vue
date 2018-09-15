@@ -502,7 +502,7 @@ export default {
         // this.$refs.limitOrderCount.value = data.data.data.totalAmount
         this.limitOrderCount = data.data.data.totalAmount
         // 用户成功交易次数
-        this.$refs.successOrderCount.value = data.data.data.tradeTimes
+        // this.$refs.successOrderCount.value = data.data.data.tradeTimes
         // this.$refs.successOrderCount.value = data.data.data.tradeTimes
         this.successOrderCount = data.data.data.tradeTimes
         // 交易方式赋值

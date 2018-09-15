@@ -574,11 +574,12 @@
               type="password"
               class="password-input"
               v-model="tradePassword"
+              @focus="insureTradePassword"
             >
           </div>
           <div class="error-info">
             <!-- 错误提示 -->
-            <div class="tips">错误提示</div>
+            <div class="tips">{{insureErrorText}}</div>
           </div>
           <span
             slot="footer"
@@ -606,11 +607,12 @@
               type="password"
               class="password-input"
               v-model="tradePassword"
+              @focus="sellerAppealPassword"
             >
           </div>
           <div class="error-info">
             <!-- 错误提示 -->
-            <div class="tips">错误提示</div>
+            <div class="tips">{{appealErrorText}}</div>
           </div>
           <span
             slot="footer"
@@ -660,12 +662,13 @@ export default {
       activeBankDetailAddress: [], // 当前选中支付银行具体地址
       activeBankType: [], // 当前选中支付方式类型（银行卡、支付宝等）
       activeBankCode: [], // 选中的支付宝和尾微信的支付码
-      tradePassword: '', // 交易密码
+      tradePassword: '', // 交易密码1
       buttonStatusArr: [], // 确认付款按钮是否可用状态集
       showOrderAppeal: [], // 订单申诉框显示与隐藏状态集
       cancelOrderTimeArr: [], // 自动取消订单倒计时数组集
       accomplishOrderTimeArr: [], // 自动成交倒计时数组集
-      errpwd: '' // 交易密码错提示
+      errpwd: '', // 交易密码错提示
+      insureErrorText: '' // 交易密码错误提示2
     }
   },
   created () {
@@ -828,8 +831,16 @@ export default {
       // console.log(id)
       console.log(this.activedTradingOrderId)
     },
+    // 卖家确认收款弹框输入框聚焦时
+    insureTradePassword () {
+      this.insureErrorText = ''
+    },
     // 7.0 卖家点击确认收款按钮 弹出交易密码框 点击交易密码框中的提交按钮
     async submitButton2 () {
+      if (!this.tradePassword) {
+        this.insureErrorText = '请输入正确的交易密码！'
+        return false
+      }
       const data = await sellerConfirmGetMoney({
         orderId: this.activedTradingOrderId, // 订单id
         tradePassword: this.tradePassword // 交易密码
@@ -866,8 +877,15 @@ export default {
     sellerAppeal () {
       this.dialogVisible3 = true
     },
+    sellerAppealPassword () {
+      this.appealErrorText = ''
+    },
     // 11.0 卖家提交申诉按钮
     async submitsellerAppeal () {
+      if (!this.tradePassword) {
+        this.appealErrorText = '请输入正确的交易密码'
+        return false
+      }
       const data = await sellerSendAppeal({
         orderId: this.activedTradingOrderId, // 订单id
         reason: this.appealTextareaValue, // 申诉原因

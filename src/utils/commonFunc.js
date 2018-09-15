@@ -21,7 +21,9 @@ import {
 import {PHONE_REG, EMAIL_REG, ID_REG, PWD_REG, ALIPAY_REG, BANK_REG, GOOGLE_REG} from './regExp'
 // import {
 //   CHANGE_CANCELED_ORDERS_LIST,
-//   CHANGE_COMPLETED_ORDERS_LIST, CHANGE_ENTRUST_ORDERS_LIST, CHANGE_FROZEN_ORDERS_LIST,
+//   CHANGE_COMPLETED_ORDERS_LIST,
+//   CHANGE_ENTRUST_ORDERS_LIST,
+//   CHANGE_FROZEN_ORDERS_LIST,
 //   CHANGE_MERCHANTS_ORDERS_LIST
 // } from "../vuex/Personal/mutations-types";
 // 请求接口后正确或者错误的提示提示信息：
@@ -151,4 +153,3 @@ export const getPartnerListAjax = async (params, callback) => {
 //     store.commit('CHANGE_FROZEN_ORDERS_LIST', res[3].data.data) // 冻结中的订单
 //     store.commit('CHANGE_ENTRUST_ORDERS_LIST', res[4].data.data) // 委托订单
 //   })
-// }
