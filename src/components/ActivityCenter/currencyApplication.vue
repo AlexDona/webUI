@@ -1,9 +1,11 @@
 <template>
-  <div class="demo-box">
-    vue书写demo
+  <div class="currency-application-box">
+    <div class="inner-box">
+      <div class="top"></div>
+      <div class="bottom"></div>
+    </div>
   </div>
 </template>
-<!--请严格按照如下书写书序-->
 <script>
 export default {
   components: {},
@@ -23,5 +25,9 @@ export default {
 }
 </script>
 <style scoped lang="scss" type="text/scss">
+  .currency-application-box{
+    >.inner-box{
 
+    }
+  }
 </style>

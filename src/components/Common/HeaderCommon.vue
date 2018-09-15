@@ -77,7 +77,7 @@
                   <router-link to="/">新币投票</router-link>
                 </li>
                 <li class="sub-nav-item">
-                  <router-link to="/">上币申请</router-link>
+                  <router-link to="/CurrencyApplication">上币申请</router-link>
                 </li>
                 <li class="sub-nav-item">
                   <router-link to="/">邀请排行</router-link>

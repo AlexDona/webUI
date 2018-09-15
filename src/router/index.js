@@ -71,6 +71,8 @@ const TradeCenter = r => require.ensure([], () => r(require('@/components/Trade/
  * ActivityCenter
  */
 const ActivityCenter = r => require.ensure([], () => r(require('@/components/ActivityCenter/ActivityCenter')), 'activity-center')
+// 上币申请
+const currencyApplication = r => require.ensure([], () => r(require('@/components/ActivityCenter/currencyApplication')), 'currency-application')
 
 /**
  * 新闻公告
@@ -301,6 +303,11 @@ const router = new Router({
       // 活动中心
       path: '/ActivityCenter',
       component: ActivityCenter
+    },
+    {
+      // 上币申请
+      path: '/CurrencyApplication',
+      component: currencyApplication
     },
     {
       // 新闻中心
