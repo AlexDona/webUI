@@ -463,7 +463,7 @@ export default {
     require('../../../../static/css/theme/day/Personal/TransactionType/CoinOrdersDay.css')
     // 黑色主题样式
     require('../../../../static/css/theme/night/Personal/TransactionType/CoinOrdersNight.css')
-    // this.getEntrustSelectBox()
+    this.getEntrustSelectBox()
     // this.getMyCurrentEntrust()
     // this.getHistoryEntrust()
     // this.getMakeDetailEntrust()

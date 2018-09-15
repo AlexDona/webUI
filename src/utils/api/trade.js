@@ -19,3 +19,5 @@ export const getGLobalMarket = (params) => get(`market3rd/${params}`)
 export const getPartnerAreaList = (params) => get('queryPartnerArea', params)
 // 默认交易对
 export const getDefaultSymbol = () => get('trade/default')
+// 获取用户默认交易对资产
+export const getUserAssetOfActiveSymbol = (params) => get('push/getTotalByTradeId', params)

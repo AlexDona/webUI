@@ -20,9 +20,8 @@
   padding:0 38% 0 0;
 }
 .order-record-box .cell>span.buy{
-  color:rgb(0, 128, 105);
-
+  color:rgb(212, 88, 88);
 }
 .order-record-box .cell>span.sell{
-  color:rgb(212, 88, 88);
+  color:rgb(0, 128, 105);
 }

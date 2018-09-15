@@ -211,7 +211,7 @@
                             <div
                               class="bottom"
                               style="height:15px;line-height: 15px"
-                              v-show="activeConvertCurrencyObj.symbol"
+                              v-show="currencyRateList[s.row.area]&&activeConvertCurrencyObj.symbol"
                             >
                               ≈ {{activeConvertCurrencyObj.symbol}}{{keep2Num((currencyRateList[s.row.area]-0)*(s.row.price-0))}}
                             </div>

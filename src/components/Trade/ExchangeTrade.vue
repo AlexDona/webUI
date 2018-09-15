@@ -27,7 +27,8 @@
                   <IconFont iconName="icon-qianbao-"/>
                   <span class="margin-left10 buy">
                     可买：
-                    <span>--</span>
+                    <span v-show="!sellUserCoinWallet.total">--</span>
+                    <span v-show="sellUserCoinWallet.total">{{limitExchange.userCanBuyCount}}</span>
                     <span>{{activeSymbol.sellsymbol}}</span>
                   </span>
                 </div>
@@ -99,7 +100,8 @@
                   <IconFont iconName="icon-qianbao-"/>
                   <span class="margin-left10 sell">
                     可卖：
-                    <span>--</span>
+                    <span v-show="!buyUserCoinWallet.total">--</span>
+                    <span v-show="buyUserCoinWallet.total">{{buyUserCoinWallet.total}}</span>
                     <span>{{activeSymbol.sellsymbol}}</span>
                   </span>
                 </div>
@@ -178,7 +180,8 @@
                   <IconFont iconName="icon-qianbao-"/>
                   <span class="margin-left10 buy">
                     可买：
-                    <span>--</span>
+                    <span v-show="!sellUserCoinWallet.total">--</span>
+                    <span v-show="sellUserCoinWallet.total">{{sellUserCoinWallet.total/middleTopData.price}}</span>
                     <span>{{activeSymbol.sellsymbol}}</span>
                   </span>
                 </div>
@@ -199,7 +202,7 @@
                     type="text"
                     placeholder="买入量"
                     :ref="marketBuyCountInputRef"
-                    @keyup="formatInput(marketBuyCountInputRef,activeSymbol.priceExchange)"
+                    @keyup="autoChangeData('market-buy',marketBuyCountInputRef,activeSymbol.priceExchange)"
                     @input="formatInput(marketBuyCountInputRef,activeSymbol.priceExchange)"
                   >
                   <span class="currency">{{activeSymbol.sellsymbol}}</span>
@@ -219,7 +222,7 @@
                 <div class="volume-rate">
                   <div class="item">
                     <span>预计交易额：</span>
-                    <span class="buy">0</span>
+                    <span class="buy">{{marketBuyAmount}}</span>
                     <span>{{activeSymbol.area}}</span>
                   </div>
                 </div>
@@ -238,7 +241,8 @@
                   <IconFont iconName="icon-qianbao-"/>
                   <span class="margin-left10 sell">
                     可卖：
-                    <span>--</span>
+                    <span v-show="!buyUserCoinWallet.total">--</span>
+                    <span v-show="buyUserCoinWallet.total">{{buyUserCoinWallet.total}}</span>
                     <span>{{activeSymbol.sellsymbol}}</span>
                   </span>
                 </div>
@@ -259,7 +263,7 @@
                     type="text"
                     placeholder="卖出量"
                     :ref="marketSellCountInputRef"
-                    @keyup="formatInput(marketSellCountInputRef,activeSymbol.priceExchange)"
+                    @keyup="autoChangeData('market-sell',marketSellCountInputRef,activeSymbol.priceExchange)"
                     @input="formatInput(marketSellCountInputRef,activeSymbol.priceExchange)"
                   >
                   <span class="currency">{{activeSymbol.sellsymbol}}</span>
@@ -279,7 +283,7 @@
                 <div class="volume-rate">
                   <div class="item">
                     <span>预计交易额：</span>
-                    <span class="sell">0</span>
+                    <span class="sell">{{marketSellAmount}}</span>
                     <span>{{activeSymbol.area}}</span>
                   </div>
                 </div>
@@ -305,7 +309,10 @@ import {
   getRefValue,
   keep2Num
 } from '../../utils'
-import {saveEntrustTrade} from '../../utils/api/trade'
+import {
+  saveEntrustTrade,
+  getUserAssetOfActiveSymbol
+} from '../../utils/api/trade'
 import {returnAjaxMessage} from '../../utils/commonFunc'
 import { createNamespacedHelpers, mapState } from 'vuex'
 const { mapMutations } = createNamespacedHelpers('trade')
@@ -334,6 +341,7 @@ export default {
       limitExchange: {
         buyPrice: 0,
         transformBuyPrice: 0, // 转换后的价格
+        userCanBuyCount: 0, // 用户可买
         buyCount: 0,
         buyAmount: 0, // 买入成交额
         sellPrice: 0,
@@ -344,6 +352,7 @@ export default {
         sellPwd: ''
       },
       marketExchange: {
+        userCanBuyCount: 0, // 用户可买
         buyPrice: 0,
         buyCount: 0,
         buyAmount: 0, // 买入成交额
@@ -354,6 +363,8 @@ export default {
         sellPwd: ''
       },
       reflashCount: 0, // 当前交易对刷新次数
+      buyUserCoinWallet: {}, // 当前交易对 买方币种用户资产
+      sellUserCoinWallet: {}, // 当前交易对 卖方币种用户资产
       end: '' // 占位，项目完成后删除
     }
   },
@@ -367,6 +378,7 @@ export default {
   },
   mounted () {
     this.getRefValue(this.limitBuyPriceInputRef)
+    console.log(this.limitExchange.buyPrice)
   },
   activited () {},
   update () {},
@@ -375,6 +387,22 @@ export default {
     ...mapMutations([
       'TOGGLE_REFRESH_ENTRUST_LIST_STATUS'
     ]),
+    // 获取用户对应交易对资产
+    async getUserAssetOfActiveSymbol (price) {
+      const params = {
+        tradeId: this.activeSymbol.tradeId // 交易对id
+      }
+      const data = await getUserAssetOfActiveSymbol(params)
+      if (!returnAjaxMessage(data, this)) {
+        return false
+      } else {
+        console.log(data)
+        this.buyUserCoinWallet = data.data.data.buyUserCoinWallet
+        this.sellUserCoinWallet = data.data.data.sellUserCoinWallet
+        console.log(price)
+        this.setBuyAndSellPrice(price)
+      }
+    },
     // 清空交易密码
     removePwd () {
       this.limitExchange.buyPwd = ''
@@ -392,6 +420,7 @@ export default {
         case 'limit-buy':
           this.limitExchange.transformBuyPrice = this.keep2Num(this.currencyRateList[this.activeSymbol.area] * targetNum)
           console.log(targetNum)
+          console.log(this.currencyRateList)
           console.log(this.currencyRateList[this.activeSymbol.area])
           console.log(this.limitExchange.transformBuyPrice)
           break
@@ -415,6 +444,9 @@ export default {
           this.limitExchange.buyPrice = this.getRefValue(this.limitBuyPriceInputRef)
           this.limitExchange.buyCount = this.getRefValue(this.limitBuyCountInputRef)
           this.setTransformPrice('limit-buy', this.limitExchange.buyPrice)
+          if (this.limitExchange.buyPrice) {
+            this.limitExchange.userCanBuyCount = this.keep2Num(this.sellUserCoinWallet.total / (this.limitExchange.buyPrice - 0))
+          }
           break
         // 限价卖
         case 'limit-sell':
@@ -424,9 +456,13 @@ export default {
           break
         // 市价买
         case 'market-buy':
+          // this.marketExchange.buyCount = this.getRefValue(this.limitSellPriceInputRef)
+          this.marketExchange.buyCount = this.getRefValue(this.marketBuyCountInputRef)
+          console.log(this.marketExchange.buyCount)
           break
         // 市价卖
         case 'market-sell':
+          this.marketExchange.sellCount = this.getRefValue(this.marketSellCountInputRef)
           break
       }
     },
@@ -515,17 +551,27 @@ export default {
         return false
       } else {
         this.TOGGLE_REFRESH_ENTRUST_LIST_STATUS(true)
+        // 刷新用户资产
+        this.getUserAssetOfActiveSymbol()
         this.removePwd()
       }
     },
     // 设置买卖价格
     setBuyAndSellPrice (targetPrice) {
+      console.log(targetPrice)
       this.$refs[this.limitBuyPriceInputRef].value = targetPrice
       this.$refs[this.limitSellPriceInputRef].value = targetPrice
       const newBuyPrice = this.formatInput(this.limitBuyPriceInputRef, this.activeSymbol.priceExchange)
       const newSellPrice = this.formatInput(this.limitSellPriceInputRef, this.activeSymbol.priceExchange)
       this.setTransformPrice('limit-buy', newBuyPrice)
       this.setTransformPrice('limit-sell', newSellPrice)
+      console.log(newBuyPrice)
+      // this.setSimulationData(this.sellUserCoinWallet.total, newBuyPrice - 0 , this.limitExchange.userCanBuyCount)
+      console.log(this.sellUserCoinWallet.total)
+      if (newBuyPrice) {
+        this.limitExchange.userCanBuyCount = this.keep2Num(this.sellUserCoinWallet.total / (newBuyPrice - 0))
+        console.log(this.limitExchange.userCanBuyCount)
+      }
     }
   },
   filter: {},
@@ -539,16 +585,22 @@ export default {
       isLogin: state => state.user.isLogin,
       activePriceItem: state => state.trade.activePriceItem,
       currencyRateList: state => state.common.currencyRateList, // 折算货币列表
-      activeConvertCurrencyObj: state => state.common.activeConvertCurrencyObj // 目标货币
-
+      activeConvertCurrencyObj: state => state.common.activeConvertCurrencyObj, // 目标货币
+      middleTopData: state => state.trade.middleTopData
     }),
     // 限价买预计成交额
     limitBuyAmount () {
-      return this.limitExchange.buyPrice * this.limitExchange.buyCount
+      return this.keep2Num(this.limitExchange.buyPrice * this.limitExchange.buyCount)
     },
     // 限价买预计成交额
     limitSellAmount () {
-      return this.limitExchange.sellPrice * this.limitExchange.sellCount
+      return this.keep2Num(this.limitExchange.sellPrice * this.limitExchange.sellCount)
+    },
+    marketBuyAmount () {
+      return this.keep2Num(this.middleTopData.price * this.marketExchange.buyCount)
+    },
+    marketSellAmount () {
+      return this.keep2Num(this.middleTopData.price * this.marketExchange.sellCount)
     }
     // limitExchange[buyAmount] () {
     //   console.log(this.limitExchange.buyPrice * this.limitExchange.buyCount)
@@ -557,15 +609,24 @@ export default {
   },
   watch: {
     activeSymbol (newVal) {
-      if (!this.reflashCount) {
-        this.reflashCount++
-        this.setBuyAndSellPrice(newVal.price)
-      }
+      // console.log(newVal)
     },
     // 用户手动设置价格
     activePriceItem (newVal) {
       console.log(newVal)
       this.setBuyAndSellPrice(newVal)
+    },
+    middleTopData (newVal) {
+      console.log(newVal)
+      if (!this.reflashCount) {
+        if (newVal.price) {
+          this.reflashCount++
+        }
+        if (this.isLogin) {
+          console.log(newVal)
+          this.getUserAssetOfActiveSymbol(newVal.price)
+        }
+      }
     }
   }
 }
@@ -615,6 +676,7 @@ export default {
               }
             }
             >.left{
+              flex:2;
             }
           }
           >.content{
