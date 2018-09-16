@@ -6,9 +6,12 @@
 <!--请严格按照如下书写书序-->
 <script>
 import echarts from 'echarts/lib/echarts'
+import {mapState} from 'vuex'
 require('echarts/lib/chart/pie')
 // 引入提示框
 require('echarts/lib/component/tooltip')
+// 引入图例
+require('echarts/lib/component/legend')
 export default {
   data () {
     return {
@@ -20,9 +23,15 @@ export default {
         // formatter: "{a} <br/>{b}: {c} ({d}%)"
         },
         legend: {
-          orient: 'vertical',
+          orient: 'horizontal',
+          selectedMode: false,
           y: 'bottom',
+          type: 'plain',
           show: 'true',
+          textStyle: {
+            color: '#fff',
+            fontSize: 10
+          },
           data: ['投资', '收益']
         },
         color: ['#008069', '#D45858'],
@@ -69,21 +78,45 @@ export default {
   },
   created () {},
   mounted () {
-    this.drawLine()
+    
+    this.resetOptions()
+    this.resetChart(this.options)
+    // this.drawLine()
   },
   activited () {},
   update () {},
   beforeRouteUpdate () {},
   methods: {
+    resetChart (params) {
+      this.financePieCharts = echarts.init(document.getElementById('financePie'))
+      for (let k in params) {
+        this.options[k] = params[k]
+      }
+      // console.log(params)
+      this.financePieCharts.setOption(this.options)
+      window.onresize = this.financePieCharts.resize
+    },
     drawLine () {
       this.financePieCharts = echarts.init(document.getElementById('financePie'))
       this.financePieCharts.setOption(this.options)
-      // window.onresize = this.financeCharts.resize
+      window.onresize = this.financePieCharts.resize
+    },
+    resetOptions () {
+      this.options.legend.textStyle.color = this.theme === 'night' ? '#fff' : '#666'
     }
   },
   filter: {},
-  computed: {},
-  watch: {}
+  computed: {
+    ...mapState({
+      theme: state => state.common.theme
+    })
+  },
+  watch: {
+    theme () {
+      this.resetOptions()
+      this.resetChart(this.options)
+    }
+  }
 }
 </script>
 <style scoped lang="scss">

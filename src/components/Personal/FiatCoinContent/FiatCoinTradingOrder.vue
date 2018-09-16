@@ -973,7 +973,6 @@ export default {
                 display: inline-block;
                 margin-right: 20px;
                 >.logo-icon{
-
                 }
                 >.logo-name{
                   margin-top: 10px;
@@ -1004,6 +1003,8 @@ export default {
                     margin-left: 20px;
                     margin-bottom: 8px;
                     position: relative;
+                    width: 150px;
+                    height: 23px;;
                     >.qiandai-icon{
                       >.icon{
                         width: 14px;
@@ -1138,9 +1139,182 @@ export default {
     &.day{
       background-color: $dayBgColor;
       color:$dayFontColor;
-      >.background-color{
-        background-color: #CCCCCC;
+      >.fiat-trading-order-content{
+      // background-color: #202A33;
+      >.order-list{
+        /*width: 1045px;*/
+        background-color: #fff;
+        border: 1px solid  rgba(72,87,118,0.1);;
+        >.order{
+          >.order-list-head{
+            color: #333;
+            border-bottom: 1px solid rgba(72,87,118,0.1);;
+            >.buyer-seller{}
+            >.order-id{
+            }
+            >.deal-time{}
+            >.order-list-head-icon{
+            }
+            >.buy-icon{
+            }
+            >.sell-icon{
+            }
+            >.buy-sell-icon{
+            }
+          }
+          >.order-list-body{
+            color:#7D90AC;
+            >.order-list-body-left{
+              border-right: 1px solid rgba(72,87,118,0.1);
+              >.logo{
+                >.logo-icon{
+                }
+                >.logo-name{
+                }
+              }
+              >.left-info{
+                >.trade-info{
+                  >.money{
+                  }
+                }
+              }
+            }
+            >.order-list-body-middle{
+              box-sizing: border-box;
+              flex: 2;
+              border-right: 1px solid rgba(72,87,118,0.1);;
+              >.middle-content{
+                // display: flex;
+                // flex: 2;
+                .trader-info{
+                  width: 190px;
+                  // flex: 1;
+                  >.pay-style{;
+                    height: 30px;
+                    border-radius: 4px;
+                    background: rgba(51,143,245,0.1);
+                    width: 200px;
+                    >.qiandai-icon{
+                      >.el-input__inner{
+                        border:none;
+                      }
+                      >.icon{
+                        width: 14px;
+                        height: 14px;
+                        position: absolute;
+                        left: 10px;
+                        top: 5px;
+                        z-index: 2;
+                      }
+                    }
+                  }
+                  >.bank-info{
+                    margin-left: 20px;
+                    // line-height: 1.4rem;
+                    line-height: 20px;
+                  }
+                  >.order-cancle-tips{
+                    margin-left: 20px;
+                    // line-height: 1.5rem;
+                    line-height: 20px;
+                  }
+                  >.bankMoneyInfo{
+                    margin-left: 20px;
+                    // line-height: 1.5rem;
+                    line-height: 20px;
+                    .icon{
+                      width: 16px;
+                      height: 14px;
+                    }
+                    .xilian{
+                      vertical-align: middle;
+                    }
+                  }
+                }
+                >.bank-info-picture{
+                  vertical-align: top;
+                  padding-left: 10px;
+                  >.picture-box{
+                  }
+                }
+              }
+            }
+            >.order-list-body-right{
+              flex: 3;
+              >.right-content{
+                >.action-tips{
+                  margin-left: 20px;
+                  margin-bottom: 10px;
+                  .wait-pay{
+                    color: #E8554F;
+                    margin-right: 10px;
+                  }
+                  .count-time{
+                    margin-left: 10px;
+                  }
+                }
+                >.submitted-confirm-payment{
+                  color: #5E95EC;
+                }
+                >.action-explain{
+                  margin-left: 20px;
+                  // line-height: 2rem;
+                  line-height: 20px;
+                  >.remaining-time{
+                    color: #D45858;
+                  }
+                }
+                >.count-down-time{
+                  // line-height: 1rem;
+                  line-height: 20px;
+                  .timeIcon{
+                    color: #D45858;
+                    margin-right: 10px;
+                  }
+                }
+              }
+            }
+          }
+        }
+        >.appeal{
+          >.appeal-head{
+            height: 36px;
+            line-height: 36px;
+            box-sizing: border-box;
+            padding: 0 77px 0 25px;
+            color: #FFFFFF;
+            border-bottom: 1px solid #262F38;
+          }
+          >.appeal-body{
+            >.appeal-body-content{
+              display: flex;
+              flex: 3;
+              >.appeal-textarea{
+                margin-top: 15px;
+                margin-left: 20px;
+                flex: 2;
+                display: flex;
+                justify-content: flex-start;
+                >.appeal-reason{
+                  margin-right: 10px;
+                  color: #338FF5;
+                }
+              }
+              >.appeal-button{
+                flex: 1;
+                padding-top: 80px;
+              }
+            }
+          }
+        }
       }
+      >.no-data{
+        /*width: 1043px;*/
+        height: 472px;
+        line-height: 472px;
+        text-align: center;
+      }
+    }
     }
   }
 </style>

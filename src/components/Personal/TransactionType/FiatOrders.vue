@@ -216,7 +216,8 @@ export default {
       startTime: '', // 默认开始时间
       endTime: '', // 默认结束时间
       // 商家订单列表
-      merchantsOrdersList: []
+      merchantsOrdersList: [],
+      activeName: 'TRADING'
     }
   },
   created () {
@@ -379,7 +380,7 @@ export default {
         // 类型
         tradeType: this.activitedMerchantsOrdersTraderStyleList
       }
-      getMerchantsOrdersList (params, (data) => {
+      getMerchantsOrdersList(params, (data) => {
         if (!(returnAjaxMessage(data, this, 0))) {
           return false
         } else {
@@ -466,8 +467,14 @@ export default {
   &.day{
     background-color: $dayBgColor;
     color:$dayFontColor;
-    >.background-color{
-      background-color: #CCCCCC;
+    >header{
+      border:1px solid #ECF1F8;
+      >span{
+        color:#338FF5;
+      }
+    }
+    >div{
+      border:1px solid #ECF1F8;
     }
   }
 }

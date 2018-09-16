@@ -72,9 +72,11 @@
         </div>
         <el-pagination
             background
+            v-if="investList.length"
             layout="prev, pager, next"
             page-size='10'
-            :total="100">
+            @current-change='changePage'
+            :total='totalPages'>
         </el-pagination>
       </div>
       </div>
@@ -100,8 +102,8 @@ export default {
   },
   data () {
     return {
-      pageNo: 1,
-      pageSize: 10,
+      currnetPage: 1,
+      totalPages: 1,
       investList: [
         {
           coinid: '00000',
@@ -170,7 +172,12 @@ export default {
   activited () {},
   update () {},
   beforeRouteUpdate () {},
-  methods: {},
+  methods: {
+    changePage (pageNum) {
+      this.currnetPage = pageNum
+      // 重新获取列表
+    }
+  },
   filter: {},
   computed: {
     ...mapState({
@@ -227,6 +234,10 @@ export default {
           /*background-color: $dayMainBgColor;*/
         }
       }
+      .invest{
+      color: #338FF5;
+      background:linear-gradient(left,rgba(51,143,245,0.5),transparent);
+    }
     }
     .goback-icon{
       font-size: 16px;
