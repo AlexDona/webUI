@@ -1076,9 +1076,6 @@ export default {
               line-height: 30px;
             }
           }
-          /*&:hover >.type-transaction {*/
-            /*display: block;*/
-          /*}*/
         }
       }
     }
@@ -1238,8 +1235,7 @@ export default {
       color:$dayFontColor;
       .account-assets-box {
         background-color: #1E2636;
-        >.account-assets-header {
-          box-shadow: 0px 2px 13px rgba(24,30,42,1);
+        .account-assets-header {
           >.header-left {
             color: #338FF5;
           }
@@ -1256,6 +1252,130 @@ export default {
           >.table-title-th {
             border-bottom: 1px solid #39424D;
             color: #A9BED4;
+          }
+          >.table-tr {
+            >.table-box {
+              >.table-td {
+                color: #9DA5B3;
+                >.table-charge-money,
+                >.table-mention-money,
+                >.table-deal {
+                  color: #3E79D6;
+                  >.type-transaction {
+                    background-color: #2a3242;
+                    >.triangle-border {
+                      border-right: 8px solid #2a3242;
+                      border-top: 8px solid transparent;
+                      border-bottom: 8px solid transparent;
+                    }
+                    >.transaction-list {
+                      color:  #7a8093;
+                      &:hover {
+                        color: #3E79D6;
+                      }
+                    }
+                  }
+                }
+              }
+              >.recharge-list {
+                border: 1px solid #338FF5;
+                .content-input {
+                  border: 1px solid #485776;
+                  color: #fff;
+                  &:focus {
+                    border: 1px solid #338FF5;
+                  }
+                }
+                .send-code-btn {
+                  background-color: #338FF5;
+                  color: #fff;
+                }
+                >.triangle {
+                  border-right: 1px solid transparent;
+                  border-top: 1px solid transparent;
+                  border-left: 1px solid #338FF5;
+                  border-bottom: 1px solid #338FF5;
+                  background-color: #1E2636;
+                }
+                >.recharge-content {
+                  >.recharge-content-hint {
+                    color: #338FF5;
+                  }
+                  >.input-box {
+                    >.hint-input {
+                      background-color: #181E24;
+                      color: #fff;
+                    }
+                    >.code-copy {
+                      background-color: #338FF5;
+                      color: #fff;
+                    }
+                  }
+                  >.recharge-content-title {
+                    color: #D45858;
+                  }
+                }
+                >.recharge-content-right {
+                  >.recharge-content-code {
+                    background-color: #fff;
+                  }
+                }
+                >.recharge-list-left {
+                  >.list-left-flex {
+                    >.flex-box {
+                      >.flex-input {
+                        background-color: #181E24;
+                        color: #fff;
+                      }
+                      >.text-input {
+                        background-color: #37424C;
+                        color: #fff;
+                      }
+                      >.left-flex-hint,
+                      >.new-address {
+                        color: #338FF5;
+                      }
+                    }
+                  }
+                  >.count-box {
+                    >.count-flex-box {
+                      >.content-flex-hint {
+                        color: #338FF5;
+                      }
+                      >.count-flex-text {
+                        color: #83909B;
+                      }
+                      >.count-flex-input{
+                        background-color: #181E24;
+                        color: #fff;
+                      }
+                      >.count-text-input {
+                        background-color: #37424C;
+                        color: #fff;
+                      }
+                    }
+                  }
+                }
+                >.text-info {
+                  >.currency-rule {
+                    color: #D45858;
+                  }
+                  >.prompt-message {
+                    color: #58616A;
+                  }
+                  >.mention-button {
+                    >.submit-but {
+                      background:linear-gradient(0deg,rgba(43,57,110,1),rgba(42,80,130,1));
+                      color: #fff;
+                    }
+                  }
+                }
+                >.email-input {
+                  width: 220px;
+                  height: 34px;
+                }
+              }
+            }
           }
         }
       }

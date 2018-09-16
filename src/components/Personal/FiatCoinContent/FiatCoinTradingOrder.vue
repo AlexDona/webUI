@@ -554,12 +554,13 @@
           <span
             slot="footer"
             class="dialog-footer">
-              <el-button
+              <button
+                class="button"
                 type="primary"
                 @click="submitButton1"
               >
                 提 交
-              </el-button>
+              </button>
           </span>
         </el-dialog>
       </div>
@@ -586,12 +587,13 @@
           <span
             slot="footer"
             class="dialog-footer">
-              <el-button
+              <button
+                class="button"
                 type="primary"
                 @click="submitButton2"
               >
                 提 交
-              </el-button>
+              </button>
           </span>
         </el-dialog>
       </div>
@@ -618,12 +620,13 @@
           <span
             slot="footer"
             class="dialog-footer">
-              <el-button
+              <button
+                class="button"
                 type="primary"
                 @click="submitsellerAppeal"
               >
                 提 交
-              </el-button>
+              </button>
           </span>
         </el-dialog>
       </div>
@@ -679,9 +682,9 @@ export default {
     }
   },
   created () {
-    require('../../../../static/css/list/Personal/FiatCoinContent/FiatCoinCanceledOrder.css')
-    require('../../../../static/css/theme/day/Personal/FiatCoinContent/FiatCoinCanceledOrderDay.css')
-    require('../../../../static/css/theme/night/Personal/FiatCoinContent/FiatCoinCanceledOrderNight.css')
+    require('../../../../static/css/list/Personal/FiatCoinContent/FiatCoinTradingOrder.css')
+    require('../../../../static/css/theme/day/Personal/FiatCoinContent/FiatCoinTradingOrderDay.css')
+    require('../../../../static/css/theme/night/Personal/FiatCoinContent/FiatCoinTradingOrderNight.css')
     // 1.0 请求交易中订单列表
     // this.getOTCTradingOrdersList()
   },
@@ -905,9 +908,14 @@ export default {
 }
 </script>
 <style scoped lang="scss" type="text/scss">
-  @import "../../../../static/css/scss/Personal/FiatCoinContent/FiatCoinCanceledOrder.scss";
+  @import "../../../../static/css/scss/Personal/FiatCoinContent/FiatCoinTradingOrder.scss";
   .fiat-trading-order-box{
     >.fiat-trading-order-content{
+      .button {
+        width: 290px;
+        padding: 8px 20px;
+        border: 0;
+      }
       min-height: 472px;
       // background-color: #202A33;
       border-radius: 5px;
@@ -1127,6 +1135,9 @@ export default {
       color:$nightFontColor;
       >.fiat-trading-order-content{
         background-color: #1E2636;
+        .button {
+          background:linear-gradient(81deg,rgba(43,57,110,1) 0%,rgba(42,80,130,1) 100%);
+        }
       }
       >.background-color{
         background-color: #1E2636;

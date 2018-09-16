@@ -76,10 +76,18 @@
               />
             </el-form-item>
             <button
+              v-if="paymentTerm.isAlipayBind"
               class="account-button border-radius4"
               @click="stateSubmitWeChat"
             >
-              确认
+              确认设置
+            </button>
+            <button
+              v-else
+              class="account-button border-radius4"
+              @click="stateSubmitWeChat"
+            >
+              确认修改
             </button>
           </el-form>
         </div>

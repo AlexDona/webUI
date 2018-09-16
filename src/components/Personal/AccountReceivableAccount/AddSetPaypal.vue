@@ -6,7 +6,16 @@
     <HeaderCommon />
     <div class="add-payment-main margin25">
       <header class="add-payment-header personal-height60 line-height60 line-height70 margin25">
-        <span class="header-content-left header-content font-size16 font-weight600">
+         <span
+           v-if="paymentTerm.isPaypalBind"
+           class="header-content-left header-content font-size16 font-weight600"
+         >
+          设置paypal
+        </span>
+        <span
+          v-else
+          class="header-content-left header-content font-size16 font-weight600"
+        >
           修改paypal
         </span>
         <span
@@ -49,6 +58,14 @@
               />
             </el-form-item>
             <button
+              v-if="paymentTerm.isPaypalBind"
+              class="payment-button border-radius4"
+              @click="stateSubmitPaypal"
+            >
+              确认设置
+            </button>
+            <button
+              v-else
               class="payment-button border-radius4"
               @click="stateSubmitPaypal"
             >

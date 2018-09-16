@@ -386,15 +386,83 @@ export default {
     &.day{
       background-color: $dayBgColor;
       color:$dayFontColor;
-      /*>.user-info-main{*/
-        /*>.user-info-content-box,*/
-        /*>.user-info-content {*/
-          /*background-color: #1E2636;*/
-        /*}*/
-        /*>.user-info-content {*/
-          /*min-height: 500px;*/
-        /*}*/
-      /*}*/
+      >.user-info-main{
+        background-color: $dayBgColor;
+        color:$dayFontColor;
+        border: 1px solid;
+        >.user-info-content-box {
+          >.user,
+          >.info,
+          >.volume {
+            border-right: 1px solid rgba(97,116,153,0.1);
+          }
+          >.user {
+            >.user-background{
+              background:linear-gradient(90deg,rgba(43,57,110,1),rgba(42,80,130,1));
+              .icon-user {
+                color: #E1F3FF;
+              }
+            }
+            >.text-align-id {
+              .text-color {
+                color: #333;
+              }
+              .color {
+                color: #338FF5 !important;
+              }
+            }
+          }
+          >.info {
+            padding-top: 10px;
+            >.info-top {
+              >.icon-user-info,
+              >.real-name {
+                background-color: #46525D;
+                >.icon-color {
+                  color: #fff;
+                }
+              }
+              >.real-name {
+                background-color: #338FF5;
+              }
+            }
+            >.info-centre {
+              >.info-picture {
+                >.info-centre-right {
+                  color: #fff;
+                }
+              }
+              >.info-centre-left {
+                color: #9DA5B3;
+              }
+            }
+            >.info-discount {
+              >.discount-text {
+                color: #9DA5B3;
+              }
+              >.discount-state {
+                color: #fff;
+              }
+            }
+          }
+          >.volume,
+          >.asset{
+            >.volume-text,
+            >.asset-text {
+              color: #9DA5B3;
+            }
+            >.volume-info,
+            >.asset-info {
+              >.info-color {
+                color: #fff;
+              }
+            }
+            >.asset-color {
+              color: #9DA5B3;
+            }
+          }
+        }
+      }
     }
   }
 </style>

@@ -79,8 +79,6 @@
 <!--请严格按照如下书写书序-->
 <script>
 import {timeFilter} from '../../../utils'
-import {getQueryAllOrdersList} from '../../../utils/api/personal'
-import {returnAjaxMessage} from '../../../utils/commonFunc'
 import {createNamespacedHelpers, mapState} from 'vuex'
 const {mapMutations} = createNamespacedHelpers('personal')
 export default {
@@ -88,8 +86,6 @@ export default {
   // props,
   data () {
     return {
-      // OTC冻结订单列表
-      // OTCFreezingOrderList: []
     }
   },
   created () {
@@ -106,7 +102,6 @@ export default {
     // 时间格式化
     timeFormatting (date) {
       return timeFilter(date, 'normal')
-      // return timeFilter(date, 'BIH')
     }
   },
   filter: {},

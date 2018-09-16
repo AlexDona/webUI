@@ -3,6 +3,10 @@
   background-color: #1E2636;
   /* border-bottom: 26px solid #1d2331 !important; */
 }
+.fiat-completed-order-box.personal .el-table td, .el-table th {
+  height: 0;
+  line-height: 0;
+}
 .fiat-completed-order-box.personal .el-table th{
   padding: 5px 0;
   box-shadow: 4px 4px 6px #191E28;

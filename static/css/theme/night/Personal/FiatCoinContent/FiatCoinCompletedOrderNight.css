@@ -1,0 +1,106 @@
+/* 完成订单组件样式重写 */
+.fiat-completed-order-box.personal.night .el-table__expanded-cell {
+  background-color: #1E2636;
+  /* border-bottom: 26px solid #1d2331 !important; */
+}
+.fiat-completed-order-box.personal.night .el-table th{
+  padding: 5px 0;
+  box-shadow: 4px 4px 6px #191E28;
+}
+.fiat-completed-order-box.personal.night .el-table{
+  color: #9DA5B3;
+}
+.fiat-completed-order-box.personal.night .el-table--enable-row-hover .el-table__body tr:hover>td {
+  background-color: #1E2636;
+}
+.fiat-completed-order-box.personal.night .el-table td {
+  /*padding: 0;*/
+  height: 40px;
+}
+.fiat-completed-order-box.personal.night .el-table__header{
+  margin-bottom: 5px;
+}
+.fiat-completed-order-box.personal.night .el-table{
+  background-color: #1E2636;
+}
+.fiat-completed-order-box.personal.night .el-table th.is-leaf{
+  border-bottom: 1px solid #262F38;
+  border-top: 1px solid #262F38;
+}
+.fiat-completed-order-box.personal.night .el-table__body{
+  border-collapse: separate !important;
+}
+.fiat-completed-order-box.personal.night.el-table{
+  border-collapse: separate !important;
+}
+.fiat-completed-order-box.personal.night .el-table__expanded-cell{
+  border-bottom:25px solid #1d2331;
+}
+.fiat-completed-order-box.personal.night .el-icon-arrow-right:before {
+  content: " ";
+}
+.fiat-completed-order-box.personal.night .el-table_2_column_9 .el-table__expand-column .is-leaf{
+  border-top-left-radius: 5px;
+  border-bottom-left-radius: 5px;
+}
+.fiat-completed-order-box.personal.night .el-table th.is-leaf:first-of-type{
+  border-top-left-radius: 5px;
+  border-bottom-left-radius: 5px;
+  border-left: 1px solid #262F38;
+}
+.fiat-completed-order-box.personal.night .el-table th.is-leaf:nth-last-of-type(2){
+  border-top-right-radius: 5px;
+  border-bottom-right-radius: 5px;
+  border-right: 1px solid #262F38;
+}
+.fiat-completed-order-box.personal.night .el-table--enable-row-transition .el-table__body td:first-of-type{
+  border-top-left-radius: 5px;
+  /*border-left: 1px solid #262F38;*/
+}
+.fiat-completed-order-box.personal.night .el-table--enable-row-transition .el-table__body td:first-of-type.el-table__expanded-cell{
+  border-top-left-radius: 0px;
+  border-top: 0px solid #262F38;
+  /*border-right: 1px solid #262F38;*/
+  /*border-left: 1px solid #262F38;*/
+}
+.fiat-completed-order-box.personal.night .el-table--enable-row-transition .el-table__body td:nth-last-of-type(1){
+  border-top-right-radius: 5px;
+  /*border-right: 1px solid #262F38*/
+}
+.fiat-completed-order-box.personal.night .el-table--enable-row-transition .el-table__body td:nth-last-of-type(1).el-table__expanded-cell{
+  border-top-right-radius: 0px;
+  /*border-right: 1px solid #262F38;*/
+}
+.fiat-completed-order-box.personal.night .el-table--enable-row-transition .el-table__body td:first-of-type.el-table__expanded-cell{
+  /*border-bottom-right-radius: 10px;*/
+  /*border-bottom-left-radius: 10px;*/
+
+}
+.fiat-completed-order-box.personal.night .el-table--enable-row-transition .el-table__body td:first-of-type.el-table__expanded-cell ::after{
+  content: '';
+  /*width: 1045px;*/
+  height: 20px;
+  position: absolute;
+  left: 0;
+  bottom: -10px;
+  background-color: #1E2636;
+  border-bottom-left-radius: 5px;
+  border-bottom-right-radius: 5px;
+  border-bottom: 1px solid #262F38;
+}
+.fiat-completed-order-box.personal.night .el-table--enable-row-transition .el-table__body td{
+  border-top: 1px solid #262F38;
+}
+.fiat-completed-order-box.personal.night .el-table td {
+  /* border-bottom: 1px solid red; */
+}
+.el-table td {
+  border-bottom: 1px solid #262F38;
+}
+.fiat-completed-order-box.personal.night .el-table th {
+  background-color: #1E2636;
+}
+.fiat-completed-order-box.personal.night .el-table__empty-block {
+  min-height: 432px;
+  background-color: #1E2636;
+}

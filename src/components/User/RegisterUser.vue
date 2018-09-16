@@ -71,11 +71,6 @@
                @blur="checkUserExistAjax('phone',phoneNum)"
              >
            </div>
-            <!--错误提示-->
-            <ErrorBox
-              :text="errorShowStatusList[0]"
-              :isShow="!!errorShowStatusList[0]"
-            />
           </div>
         </div>
         </transition>
@@ -151,11 +146,6 @@
                @blur="checkUserExistAjax('email',emailNum)"
              >
            </div>
-            <!--错误提示-->
-            <ErrorBox
-              :text="errorShowStatusList[1]"
-              :isShow="!!errorShowStatusList[1]"
-            />
           </div>
         </div>
         </transition>
@@ -186,11 +176,6 @@
               />
             </span>
             </div>
-            <!--错误提示-->
-            <ErrorBox
-              :text="errorShowStatusList[2]"
-              :isShow="!!errorShowStatusList[2]"
-            />
           </div>
           <div class="input">
             <div class="inner-box">
@@ -212,11 +197,6 @@
                 @click="sendPhoneOrEmailCode(activeMethod)"
               >
             </div>
-            <!--错误提示-->
-            <ErrorBox
-              :text="errorShowStatusList[3]"
-              :isShow="!!errorShowStatusList[3]"
-            />
           </div>
           <div class="input">
            <div class="inner-box">
@@ -230,11 +210,6 @@
                @blur="checkoutInputFormat(4,password)"
              >
            </div>
-            <!--错误提示-->
-            <ErrorBox
-              :text="errorShowStatusList[4]"
-              :isShow="!!errorShowStatusList[4]"
-            />
           </div>
           <div class="input">
            <div class="inner-box">
@@ -248,11 +223,6 @@
                @blur="checkoutInputFormat(5,repeatPassword)"
              >
            </div>
-            <!--错误提示-->
-            <ErrorBox
-              :text="errorShowStatusList[5]"
-              :isShow="!!errorShowStatusList[5]"
-            />
           </div>
           <div class="input">
            <div class="inner-box">
@@ -273,12 +243,14 @@
                <router-link to="/" class="main-color">《用户协议》</router-link>
              </el-checkbox>
            </div>
-            <ErrorBox
-              :text="errorShowStatusList[6]"
-              :isShow="!!errorShowStatusList[6]"
-            />
           </div>
-          <div class="error-msg">error</div>
+          <!--错误提示-->
+          <div
+            class = "error-msg font-size12"
+            v-show = "errorMsg"
+          >
+            {{ errorMsg }}
+          </div>
           <button
             class="register-btn btn cursor-pointer"
             @click="sendRegister"
@@ -344,16 +316,7 @@ export default {
       msgCountDown: 60,
       sendMsgBtnText: '发送验证码',
       sendMsgBtnDisabled: false,
-      errorMsg: '错误信息', // 错误信息
-      errorShowStatusList: [
-        '', // 手机号
-        '', // 邮箱地址
-        '', // 图片验证码
-        '', // 短信、邮箱验证码
-        '', // 密码
-        '', // 确认密码
-        '' // 用户协议
-      ],
+      errorMsg: '', // 错误信息
       isRegisterSuccess: false, // 注册成功
       successCountDown: 3, // 成功倒计时
       end: '' // 占位
@@ -486,7 +449,7 @@ export default {
     },
     // 设置错误信息
     setErrorMsg (index, msg) {
-      this.errorShowStatusList[index] = msg
+      this.errorMsg = msg
     },
     // 检测用户名是否存在
     async checkUserExistAjax (type, userName) {
@@ -778,7 +741,7 @@ export default {
           >.error-msg{
             height:30px;
             line-height: 30px;
-            background-color: pink;
+            color: rgb(212, 88, 88);
           }
           /*注册，忘记密码*/
           >.link{

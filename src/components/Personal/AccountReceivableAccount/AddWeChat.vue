@@ -6,8 +6,17 @@
     <HeaderCommon />
     <div class="add-chat-main margin25">
       <header class="add-chat-header personal-height60 line-height60 line-height70 margin25">
-        <span class="header-content-left header-content font-size16 font-weight600">
+        <span
+          v-if="paymentTerm.isWeixinBind"
+          class="header-content-left header-content font-size16 font-weight600"
+        >
           设置微信账号
+        </span>
+        <span
+          v-else
+          class="header-content-left header-content font-size16 font-weight600"
+        >
+          修改微信账号
         </span>
         <span
           class="header-content-right font-size12 cursor-pointer"
@@ -67,6 +76,14 @@
               />
             </el-form-item>
             <button
+              v-if="paymentTerm.isWeixinBind"
+              class="chat-button border-radius4 cursor-pointer"
+              @click="stateSubmitWeChat"
+            >
+              确认设置
+            </button>
+            <button
+              v-else
               class="chat-button border-radius4 cursor-pointer"
               @click="stateSubmitWeChat"
             >

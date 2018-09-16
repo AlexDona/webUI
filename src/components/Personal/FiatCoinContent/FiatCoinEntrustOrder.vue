@@ -177,8 +177,6 @@ export default {
         return false
       } else {
         // 返回数据正确的逻辑
-        // this.dialogVisible = false
-        // this.getOTCEntrustingOrdersList()
         this.SET_LEGAL_TENDER_REFLASH_STATUS({
           type: 'entrust-orders',
           status: true

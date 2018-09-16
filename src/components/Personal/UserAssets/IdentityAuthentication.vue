@@ -356,7 +356,7 @@ export default {
   data () {
     return {
       tokenObj: {
-        'token': 'ee4cbf93-a8a0-4e1d-b67e-5ff8bf06d38b'
+        'token': ''
       },
       regionValue: '', // 国家
       regionList: [], // 国家地区列表
@@ -408,6 +408,7 @@ export default {
     require('../../../../static/css/theme/day/Personal/UserAssets/IdentityAuthenticationDay.css')
     // 黑色主题样式
     require('../../../../static/css/theme/night/Personal/UserAssets/IdentityAuthenticationNight.css')
+    this.tokenObj.token = this.userInfo.token
   },
   mounted () {},
   activited () {},
@@ -426,21 +427,17 @@ export default {
     //   }
     //   return isJPG && isLt2M
     // },
-    handleSuccessFront (response, file, fileList) {
+    handleSuccessFront (response) {
       this.dialogImageFrontUrl = response.data.fileUrl
       this.firstPictureSrcShow = false
-      // console.log(response.data.fileUrl)
-      // console.log(response, file, fileList)
     },
-    handleSuccessReverseSide (response, file, fileList) {
+    handleSuccessReverseSide (response) {
       this.dialogImageReverseSideUrl = response.data.fileUrl
       this.secondPictureSrcShow = false
-      // console.log(response, file, fileList)
     },
-    handleSuccessHand (response, file, fileList) {
+    handleSuccessHand (response) {
       this.dialogImageHandUrl = response.data.fileUrl
       this.thirdPictureSrcShow = false
-      // console.log(response, file, fileList)
     },
     handleRemove (file) {
       console.log(file)

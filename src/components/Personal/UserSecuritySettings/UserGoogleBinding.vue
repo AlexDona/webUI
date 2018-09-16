@@ -7,6 +7,13 @@
     <div class="binding-google-main margin25">
       <header class="binding-google-header personal-height60 line-height60 line-height70 margin25">
         <span
+          v-if="!securityCenter.isGoogleBind"
+          class="header-content-left header-content font-size16 font-weight600"
+        >
+          绑定谷歌验证器
+        </span>
+        <span
+          v-else
           class="header-content-left header-content font-size16 font-weight600"
         >
           绑定谷歌验证器

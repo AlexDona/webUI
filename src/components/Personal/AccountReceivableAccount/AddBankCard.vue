@@ -69,6 +69,14 @@
               />
             </el-form-item>
             <button
+              v-if="paymentTerm.isBankBind"
+              class="bank-button border-radius4"
+              @click="statusTetBankCard"
+            >
+              确认设置
+            </button>
+            <button
+              v-else
               class="bank-button border-radius4"
               @click="statusTetBankCard"
             >
