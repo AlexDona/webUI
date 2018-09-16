@@ -2,3 +2,25 @@
 .account-assets.personal.day {
   background-color: #ccc;
 }
+.account-assets.personal.day .el-tabs__nav {
+  border:1px solid rgba(38,47,56,0.1);
+}
+.account-assets.personal.day .el-input__inner {
+  background:rgba(51,143,245,0.1);
+  color: #333;
+  border: 1px solid rgba(38,47,56,0.1);
+}
+.account-assets.personal.day .el-select-dropdown__list {
+  background: #fff;
+}
+.account-assets.personal.day .el-select-dropdown__item.hover, .el-select-dropdown__item:hover {
+  background:rgba(51,143,245,0.1);
+  color: #333 !important;
+}
+.account-assets.personal.day .el-dialog__header {
+  background:rgba(51,143,245,0.1);
+  color: #333;
+}
+.account-assets.personal.day .el-button {
+  background:linear-gradient(81deg,rgba(43,57,110,1) 0%,rgba(42,80,130,1) 100%);
+}

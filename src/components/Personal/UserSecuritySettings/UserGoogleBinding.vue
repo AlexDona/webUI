@@ -7,6 +7,13 @@
     <div class="binding-google-main margin25">
       <header class="binding-google-header personal-height60 line-height60 line-height70 margin25">
         <span
+          v-if="!securityCenter.isGoogleBind"
+          class="header-content-left header-content font-size16 font-weight600"
+        >
+          绑定谷歌验证器
+        </span>
+        <span
+          v-else
           class="header-content-left header-content font-size16 font-weight600"
         >
           绑定谷歌验证器
@@ -31,7 +38,7 @@
                   <img :src="googleImages">
                 </div>
               </div>
-              <p class="google-info paddinglr15">
+              <p class="google-info paddinglr15 margin-top16 font-size12">
                 若未安装谷歌验证器请
                 <span class="google-info-download">扫码下载</span>
               </p>
@@ -45,7 +52,7 @@
                 >
                 </VueQrcode>
               </div>
-              <p class="google-info padding-l15">
+              <p class="google-info padding-l15 margin-top16 font-size12">
                 请扫码或手工输入密钥，将手机上生成的
                 <span class="google-info-download">扫码下载</span>
                 填到下边输入框。
@@ -346,7 +353,7 @@ export default {
       }
       >.binding-google-content {
         min-height: 300px;
-        margin: 16px 25px;
+        margin: 40px 25px;
         >.google-content-from {
           width: 400px;
           margin-left: 30px;
@@ -439,12 +446,12 @@ export default {
             }
             >.google-info-show {
               .code-copy {
-                color: #fff;
+                color: rgba(255,255,255,0.7);
                 background-color: #338FF5;
               }
-              color: #fff;
+              color: rgba(255,255,255,0.7);
               .google-content-name {
-                color: #fff;
+                color: rgba(255,255,255,0.7);
               }
               .google-input {
                 border: 1px solid #485776;
@@ -455,7 +462,7 @@ export default {
               }
               .google-button {
                 background:linear-gradient(0deg,rgba(43,57,110,1),rgba(42,80,130,1));
-                color: #fff;
+                color: rgba(255,255,255,0.7);
               }
               .prompt-message {
                 color: red;

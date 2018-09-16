@@ -6,8 +6,7 @@ import {
 } from '../utils/api/trade'
 import {
   assetCurrenciesList,
-  statusSecurityCenter,
-  getOTCMerchantsOrdersList
+  statusSecurityCenter
 } from '../utils/api/personal'
 // import {
 //   sendMsgByPushPhoneOrEmial
@@ -107,13 +106,13 @@ export const stateSafeCentral = async (params, callback) => {
   const repealData = await statusSecurityCenter(params)
   callback(repealData)
 }
-/**
- * 商家订单列表请求
- */
-export const getMerchantsOrdersList = async (params, callback) => {
-  const repealData = await getOTCMerchantsOrdersList(params)
-  callback(repealData)
-}
+// /**
+//  * 商家订单列表请求
+//  */
+// export const getMerchantsOrdersList = async (params, callback) => {
+//   const repealData = await getQueryAllOrdersList(params)
+//   callback(repealData)
+// }
 /**
  * 个人资产信息
  * 币种
@@ -155,4 +154,14 @@ export const getAllList = async (params, callback) => {
   //   store.commit('CHANGE_FROZEN_ORDERS_LIST', res[3].data.data) // 冻结中的订单
   //   store.commit('CHANGE_ENTRUST_ORDERS_LIST', res[4].data.data) // 委托订单
   // })
+}
+// 法币交易分页切换
+export const changeCurrentPageForLegalTrader = (currentPage, type, that) => {
+  that.CHANGE_LEGAL_PAGE({
+    legalTradePageNum: currentPage
+  })
+  that.SET_LEGAL_TENDER_REFLASH_STATUS({
+    type,
+    status: true
+  })
 }

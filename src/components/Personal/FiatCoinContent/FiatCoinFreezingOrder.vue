@@ -17,7 +17,7 @@
       <!--表格-->
       <div
         class="freezing-table-body"
-        v-for="(item,index) in getOTCFreezingOrderList"
+        v-for="(item,index) in OTCFreezingOrderList"
         :key="index"
       >
         <!--表格上部分-->
@@ -72,15 +72,24 @@
           </div>
         </div>
       </div>
-      <div class="no-data" v-if="!getOTCFreezingOrderList.length">暂无数据</div>
+      <!--分页-->
+      <el-pagination
+        background
+        v-show="OTCFreezingOrderList.length"
+        layout="prev, pager, next"
+        :current-page="legalTradePageNum"
+        :page-count="legalTradePageTotals"
+        @current-change="changeCurrentPage"
+      >
+      </el-pagination>
+      <div class="no-data" v-if="!OTCFreezingOrderList.length">暂无数据</div>
     </div>
   </div>
 </template>
 <!--请严格按照如下书写书序-->
 <script>
 import {timeFilter} from '../../../utils'
-import {getQueryAllOrdersList} from '../../../utils/api/personal'
-import {returnAjaxMessage} from '../../../utils/commonFunc'
+import {changeCurrentPageForLegalTrader} from '../../../utils/commonFunc'
 import {createNamespacedHelpers, mapState} from 'vuex'
 const {mapMutations} = createNamespacedHelpers('personal')
 export default {
@@ -88,50 +97,42 @@ export default {
   // props,
   data () {
     return {
-      // OTC冻结订单列表
-      getOTCFreezingOrderList: []
     }
   },
   created () {
     require('../../../../static/css/list/Personal/FiatCoinContent/FiatCoinFreezingOrder.css')
     require('../../../../static/css/theme/day/Personal/FiatCoinContent/FiatCoinFreezingOrderDay.css')
     require('../../../../static/css/theme/night/Personal/FiatCoinContent/FiatCoinFreezingOrderNight.css')
-    // 1.0 请求冻结中订单列表
-    // this.getOTCFrezzingOrdersList()
   },
   mounted () {},
   activited () {},
   update () {},
   beforeRouteUpdate () {},
   methods: {
-    ...mapMutations([]),
+    ...mapMutations([
+      'SET_LEGAL_TENDER_REFLASH_STATUS',
+      'CHANGE_LEGAL_PAGE'
+    ]),
+    // 分页
+    changeCurrentPage (e) {
+      changeCurrentPageForLegalTrader(e, 'TRADING', this)
+    },
     // 时间格式化
     timeFormatting (date) {
       return timeFilter(date, 'normal')
-      // return timeFilter(date, 'BIH')
-    },
-    // 2.0 请求冻结中订单列表
-    async getOTCFrezzingOrdersList () {
-      const data = await getQueryAllOrdersList({
-        status: 'FROZEN' // 状态 (交易中 TRADING 已完成 COMPLETED  已取消  CANCELED 冻结中 FROZEN)
-        // pageNum: '1',
-        // pageSize: '10'
-      })
-      // console.log(data)
-      // 提示信息
-      if (!(returnAjaxMessage(data, this, 0))) {
-        return false
-      } else {
-        // 返回数据正确的逻辑
-        this.getOTCFreezingOrderList = data.data.data.list
-      }
     }
   },
   filter: {},
   computed: {
     ...mapState({
-      theme: state => state.common.theme
-    })
+      theme: state => state.common.theme,
+      legalTraderForzenList: state => state.personal.legalTraderForzenList,
+      legalTradePageTotals: state => state.personal.legalTradePageTotals,
+      legalTradePageNum: state => state.personal.legalTradePageNum
+    }),
+    OTCFreezingOrderList () {
+      return this.legalTraderForzenList
+    }
   },
   watch: {}
 }

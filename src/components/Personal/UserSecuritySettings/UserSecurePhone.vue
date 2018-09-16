@@ -7,7 +7,7 @@
     <div class="set-phone-main margin25">
       <header class="set-phone-header personal-height60 line-height60 line-height70 margin25">
         <span
-          v-if="!securityCenter.isPhoneBind"
+          v-if="securityCenter.isPhoneBind"
           class="header-content-left header-content font-size16 font-weight600"
         >
           修改手机
@@ -701,7 +701,7 @@ export default {
         >.set-phone-header {
           border-bottom: 1px solid #39424D;
           >.header-content-left {
-            color: #fff;
+            color: (255,255,255,0.7);
           }
           >.header-content-right {
             color: #A9BED4;
@@ -714,11 +714,11 @@ export default {
           }
           >.phone-content-from {
             .bank-content-name {
-              color: #fff;
+              color: rgba(255,255,255,0.7);
             }
             .phone-input {
               border: 1px solid #485776;
-              color: #fff;
+              color: rgba(255,255,255,0.7);
               &:focus {
                 border: 1px solid #338FF5;
               }
@@ -731,7 +731,7 @@ export default {
               vertical-align: middle;
             }
             .phone-content-name {
-              color: #fff;
+              color: rgba(255,255,255,0.7);
             }
             .phone-upload {
               background-color: #323E48;
@@ -741,7 +741,7 @@ export default {
             }
             .phone-button {
               background:linear-gradient(0deg,rgba(43,57,110,1),rgba(42,80,130,1));
-              color: #fff;
+              color: rgba(255,255,255,0.7);
             }
           }
         }

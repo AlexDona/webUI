@@ -5,7 +5,7 @@
   >
     <div class="completed-order-content">
       <el-table
-        :data="CompletedOrdersList"
+        :data="completedOrdersList"
         :default-expand-all="true"
         empty-text="暂无数据"
       >
@@ -132,65 +132,72 @@
           </template>
         </el-table-column>
       </el-table>
+      <!--分页-->
+      <el-pagination
+        background
+        v-show="completedOrdersList.length"
+        layout="prev, pager, next"
+        :current-page="legalTradePageNum"
+        :page-count="legalTradePageTotals"
+        @current-change="changeCurrentPage"
+      >
+      </el-pagination>
     </div>
   </div>
 </template>
 <!--请严格按照如下书写书序-->
 <script>
 import {timeFilter} from '../../../utils'
-import {getQueryAllOrdersList} from '../../../utils/api/personal'
-import {returnAjaxMessage} from '../../../utils/commonFunc'
 import {createNamespacedHelpers, mapState} from 'vuex'
+import {changeCurrentPageForLegalTrader} from '../../../utils/commonFunc'
 const {mapMutations} = createNamespacedHelpers('personal')
 export default {
   components: {},
   // props,
   data () {
     return {
-      CompletedOrdersList: []
+      // completedOrdersList: []
     }
   },
   created () {
     require('../../../../static/css/list/Personal/FiatCoinContent/FiatCoinCompletedOrder.css')
     require('../../../../static/css/theme/day/Personal/FiatCoinContent/FiatCoinCompletedOrderDay.css')
     require('../../../../static/css/theme/night/Personal/FiatCoinContent/FiatCoinCompletedOrderNight.css')
-    // 1.0 请求已完成订单列表
-    // this.getOTCCompletedOrdersList()
   },
   mounted () {},
   activited () {},
   update () {},
   beforeRouteUpdate () {},
   methods: {
-    ...mapMutations([]),
+    ...mapMutations([
+      'CHANGE_LEGAL_PAGE',
+      'SET_LEGAL_TENDER_REFLASH_STATUS'
+    ]),
+    // 分页
+    changeCurrentPage (e) {
+      changeCurrentPageForLegalTrader(e, 'COMPLETED', this)
+    },
     // 1.0 时间格式化
     timeFormatting (date) {
       return timeFilter(date, 'normal')
-    },
-    // 2.0 请求已完成订单列表
-    async getOTCCompletedOrdersList () {
-      const data = await getQueryAllOrdersList({
-        status: 'COMPLETED' // 状态 (交易中 TRADING 已完成 COMPLETED  已取消  CANCELED 冻结中 FROZEN)
-        // pageNum: '1',
-        // pageSize: '10'
-      })
-      // 提示信息
-      if (!(returnAjaxMessage(data, this, 0))) {
-        return false
-      } else {
-        // 返回数据正确的逻辑
-        this.completedOrdersList = data.data.data.list
-        console.log(this.completedOrdersList)
-      }
     }
   },
   filter: {},
   computed: {
     ...mapState({
-      theme: state => state.common.theme
-    })
+      theme: state => state.common.theme,
+      legalTraderCompletedList: state => state.personal.legalTraderCompletedList,
+      legalTraderCompletedReflashStatus: state => state.personal.legalTraderCompletedReflashStatus,
+      legalTradePageTotals: state => state.personal.legalTradePageTotals,
+      legalTradePageNum: state => state.personal.legalTradePageNum
+
+    }),
+    completedOrdersList () {
+      return this.legalTraderCompletedList
+    }
   },
-  watch: {}
+  watch: {
+  }
 }
 </script>
 <style scoped lang="scss" type="text/scss">

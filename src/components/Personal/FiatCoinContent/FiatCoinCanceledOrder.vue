@@ -5,19 +5,19 @@
   >
     <div class="canceled-order-content">
       <!--&lt;!&ndash;表头属性&ndash;&gt;-->
-      <!--<div class="canceled-table-head display-flex">-->
-        <!--<span class="item flex1">订单号</span>-->
-        <!--<span class="item flex1">类型</span>-->
-        <!--<span class="item flex1">币种</span>-->
-        <!--<span class="item flex1">价格</span>-->
-        <!--<span class="item flex1">数量</span>-->
-        <!--<span class="item flex1">总金额</span>-->
-        <!--<span class="item flex1">下单时间</span>-->
-      <!--</div>-->
+      <div class="canceled-table-head display-flex">
+        <span class="item flex1">订单号</span>
+        <span class="item flex1">类型</span>
+        <span class="item flex1">币种</span>
+        <span class="item flex1">价格</span>
+        <span class="item flex1">数量</span>
+        <span class="item flex1">总金额</span>
+        <span class="item flex1">下单时间</span>
+      </div>
       <!--表格-->
       <div
         class="canceled-table-body"
-        v-for="(item,index) in getOTCCanceledOrderList"
+        v-for="(item,index) in OTCCanceledOrderList"
         :key="index"
       >
         <!--表格上部分-->
@@ -72,12 +72,15 @@
           </div>
         </div>
       </div>
-      <div class="no-data" v-if="!getOTCCanceledOrderList.length">暂无数据</div>
+      <div class="no-data" v-if="!OTCCanceledOrderList.length">暂无数据</div>
+      <!--分页-->
       <el-pagination
-        v-if="getOTCCanceledOrderList.length >= 10 "
         background
+        v-show="OTCCanceledOrderList.length"
         layout="prev, pager, next"
-        :total="100"
+        :page-count="legalTradePageTotals"
+        :current-page="legalTradePageNum"
+        @current-change="changeCurrentPage"
       >
       </el-pagination>
     </div>
@@ -87,62 +90,53 @@
 <script>
 import {timeFilter} from '../../../utils'
 // import {mapState, mapMutations} from 'vuex'
-import {getQueryAllOrdersList} from '../../../utils/api/personal'
-import {returnAjaxMessage} from '../../../utils/commonFunc'
+import {changeCurrentPageForLegalTrader} from '../../../utils/commonFunc'
 import {createNamespacedHelpers, mapState} from 'vuex'
 const {mapMutations} = createNamespacedHelpers('personal')
 export default {
   components: {},
   // props,
   data () {
-    return {
-      // OTC取消订单列表
-      getOTCCanceledOrderList: []
-    }
+    return {}
   },
   created () {
     require('../../../../static/css/list/Personal/FiatCoinContent/FiatCoinCanceledOrder.css')
     require('../../../../static/css/theme/day/Personal/FiatCoinContent/FiatCoinCanceledOrderDay.css')
     require('../../../../static/css/theme/night/Personal/FiatCoinContent/FiatCoinCanceledOrderNight.css')
-    // 1.0 请求已取消订单列表
-    // this.getOTCCanceledOrdersList()
   },
   mounted () {},
   activited () {},
   update () {},
   beforeRouteUpdate () {},
   methods: {
-    ...mapMutations([]),
+    ...mapMutations([
+      'CHANGE_LEGAL_PAGE',
+      'SET_LEGAL_TENDER_REFLASH_STATUS'
+    ]),
+    // 分页
+    changeCurrentPage (e) {
+      changeCurrentPageForLegalTrader(e, 'CANCELED', this)
+    },
     // 1.0 时间格式化
     timeFormatting (date) {
       return timeFilter(date, 'normal')
-    },
-    // 2.0 请求已取消订单列表
-    async getOTCCanceledOrdersList () {
-      const data = await getQueryAllOrdersList({
-        status: 'CANCELED' // 状态 (交易中 TRADING 已完成 COMPLETED  已取消  CANCELED 冻结中 FROZEN)
-        // pageNum: '1',
-        // pageSize: '10'
-      })
-      // console.log(data)
-      // 提示信息
-      if (!(returnAjaxMessage(data, this, 0))) {
-        return false
-      } else {
-        // 返回数据正确的逻辑
-        this.getOTCCanceledOrderList = data.data.data.list.slice(5)
-        console.log('取消订单')
-        console.log(this.getOTCCanceledOrderList)
-      }
     }
   },
   filter: {},
   computed: {
     ...mapState({
-      theme: state => state.common.theme
-    })
+      theme: state => state.common.theme,
+      legalTraderCanceledList: state => state.personal.legalTraderCanceledList,
+      legalTradePageTotals: state => state.personal.legalTradePageTotals,
+      legalTradePageNum: state => state.personal.legalTradePageNum
+    }),
+    OTCCanceledOrderList () {
+      return this.legalTraderCanceledList
+    }
   },
-  watch: {}
+  watch: {
+
+  }
 }
 </script>
 <style scoped lang="scss" type="text/scss">

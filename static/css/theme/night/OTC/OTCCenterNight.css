@@ -1,0 +1,78 @@
+/* otc首页样式重写 */
+/* 1.0 在线购买在线出售 */
+.otc-box.night .otc-online-buy-and-sell-button .el-radio-button__inner{
+  color: #fff;
+  background: #1E2636;
+}
+.otc-box.night .otc-online-buy-and-sell-button .el-radio-button__orig-radio:checked+.el-radio-button__inner{
+  box-shadow: -1px 0 0 0 #008069;
+}
+.otc-box.night .otc-online-buy-and-sell-button .el-radio-button:first-child.is-active .el-radio-button__inner{
+  background-color: #D45858;
+}
+.otc-box.night .otc-online-buy-and-sell-button .el-radio-button:last-child.is-active .el-radio-button__inner{
+  background-color: #008069;
+}
+/* input 框样式重置-适用全局-自己先写试试 */
+/* 2.0 挂单列表增加支付方式和法币类型筛选条件*/
+/* input框 */
+.otc-box.night .otc-publish-box .el-input__inner{
+  background-color: #19202E;
+}
+/* 3.0 发布订单按钮样式大小*/
+.otc-box.night .otc-publish-box .el-button{
+  background:linear-gradient(90deg,rgba(43,57,110,1) 0%,rgba(42,80,130,1) 100%);
+}
+/* 增加支付方式和法币类型图标 */
+/* 2.0 商家表格 */
+.otc-box.night .el-table th, .el-table tr{
+  background-color: #1E2636;
+}
+.otc-box.night .el-table thead {
+  color: #617499;
+}
+.otc-box.night .el-table th.is-leaf {
+  border-bottom: 1px solid rgba(97,116,153,1);
+}
+.otc-box.night .otc-center-content .otc-merchant-content .el-table td{
+  border-bottom: 1px solid rgba(97,116,153,0.05);
+}
+.otc-box.night .el-table--enable-row-hover .el-table__body tr:hover>td{
+  background-color: #1D2331;
+}
+.otc-box.night .el-table{
+  color: #fff;
+  background-color: #202A33;
+}
+.otc-box.night .el-table th>.cell.highlight{
+  color: #617499;
+}
+.otc-box.night .el-table__column-filter-trigger i{
+  color: #338FF5;
+}
+.otc-box.night .el-button--danger{
+  background-color: #D45858;
+  border-color: #D45858;
+}
+.otc-box.night .el-button--success {
+  background-color: #008069;
+  border-color: #008069;
+}
+.otc-box.night .el-table__empty-block{
+  background-color: #1e2636;
+}
+/* 3.0 订单管理左侧tabs切换面板 */
+/* tabs组件出现蓝色边框问题 */
+
+/*做二级导航宽度*/
+.otc-box.night .el-tabs__item{
+  color: #4F85DA;
+}
+.otc-box.night .is-disabled{
+  background-color: rgba(29, 35, 49, 1);
+}
+/*鼠标点击*/
+.otc-box.night .el-tabs__item.is-active{
+  color: #FFFFFF;
+  background-color: #338FF5;
+}

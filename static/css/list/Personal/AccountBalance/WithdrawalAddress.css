@@ -19,12 +19,29 @@
   display: none;
 }
 .withdrawal-address.personal .el-button:first-child {
-  width: 90px;
+  width: 80px;
   height: 35px;
+  border: 0;
   line-height: 0;
+  margin-right: 15px;
 }
 .withdrawal-address.personal .el-dialog__body {
   text-align: center;
   /*padding: 25px 25px 30px;*/
   color: #fff;
+}
+.withdrawal-address.personal .el-table td {
+  border-bottom: 0;
+}
+.withdrawal-address.personal .el-table th>.cell {
+  font-size: 12px;
+}
+.withdrawal-address.personal .el-table th:nth-child(4)>.cell{
+  text-align: right;
+  padding-right: 90px;
+}
+.withdrawal-address.personal .el-table td:nth-child(4){
+  text-align: right;
+  padding-right: 75px;
+  cursor: pointer;
 }

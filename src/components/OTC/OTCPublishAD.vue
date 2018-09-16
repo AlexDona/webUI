@@ -506,9 +506,19 @@ export default {
         this.activitedCoinId = data.data.data.coinId // 可用币种id
         this.activitedCurrencyId = data.data.data.currencyId // 法币id
         this.activitedBuySellStyle = data.data.data.entrustType // 挂单类型
-        this.limitOrderCount = data.data.data.totalAmount // 同时处理最大订单数
-        this.successOrderCount = data.data.data.tradeTimes // 卖家必须成交过几次
+        this.limitOrderCount = data.data.data.limitOrderCount // 同时处理最大订单数
+        this.successOrderCount = data.data.data.successOrderCount // 卖家必须成交过几次
         this.$refs.entrustCount.value = data.data.data.entrustCount // 挂单数量
+        // this.$refs.price.value = data.data.data.price // 单价
+        this.price = data.data.data.price // 单价
+        this.$refs.price.value = this.price // 单价
+        // 下面两个如果有id的话从挂单详情中渲染数据
+        // 币种单笔最大限额
+        // this.maxCount = data.data.data.maxCount
+        // this.$refs.maxCountValue.value = this.maxCount
+        // 币种单笔最小限额
+        // this.minCount = data.data.data.minCount
+        // this.$refs.minCountValue.value = this.minCount
         this.getOTCCoinInfo()
       }
     },
@@ -552,16 +562,15 @@ export default {
         this.maxPrice = data.data.data.otcCoinQryResponse.maxPrice
         // 当前币种返回的保留小数点位数限制
         this.pointLength = data.data.data.otcCoinQryResponse.unit
+        // 下面这两个字段当URL中没id时候才用这个渲染页面
+        // if (!this.$route.query.id) {
         // 币种单笔最大限额
-        // this.$refs.maxCountValue.value = data.data.data.otcCoinQryResponse.maxCount
-        // 测试
         this.maxCount = data.data.data.otcCoinQryResponse.maxCount
         this.$refs.maxCountValue.value = this.maxCount
         // 币种单笔最小限额
-        // this.$refs.minCountValue.value = data.data.data.otcCoinQryResponse.minCount
-        // 测试
         this.minCount = data.data.data.otcCoinQryResponse.minCount
         this.$refs.minCountValue.value = this.minCount
+        // }
       }
     },
     // 2.0 改变发布广告 买卖 类型

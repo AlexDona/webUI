@@ -3,18 +3,27 @@
   background-color: #FFFFFF;
 }
 .personal-center.personal.day .el-tabs__item{
-  color: #333;
+  color: #6F798A;
 }
 .personal-center.personal.day .is-disabled{
-  background-color: #333;
-  color: #fff;
+  background-color: #fff;
+  color: #338FF5;
 }
 /*手表移上去*/
 .personal-center.personal.day .el-tabs__item:hover{
   color: #333;
 }
 /*鼠标点击*/
-.personal-center.personal.day .el-tabs__item.is-active{
-  color: #333;
-  background-color: #999;
+.personal-center.personal.day .el-tabs__item.is-active {
+  color: #338FF5;
+  background: rgba(51,143,245,0.1);
+  border-left: 4px solid rgba(0, 121, 254, 1);
+}
+.personal-center.personal.day .el-tabs__item:hover {
+  color: #338FF5;
+  background: rgba(51,143,245,0.1);
+  border-left: 4px solid rgba(0, 121, 254, 1);
+}
+.personal-center.personal .el-tabs--left .el-tabs__header.is-left{
+  border:1px solid rgba(38,47,56,0.1);
 }

@@ -6,7 +6,16 @@
     <HeaderCommon />
     <div class="add-western-main margin25">
       <header class="add-western-header personal-height60 line-height60 line-height70 margin25">
-        <span class="header-content-left header-content font-size16 font-weight600">
+        <span
+          v-if="paymentTerm.isXilianBind"
+          class="header-content-left header-content font-size16 font-weight600"
+        >
+          设置西联汇款
+        </span>
+        <span
+          v-else
+          class="header-content-left header-content font-size16 font-weight600"
+        >
           修改西联汇款
         </span>
         <span
@@ -49,6 +58,14 @@
               />
             </el-form-item>
             <button
+              v-if="paymentTerm.isXilianBind"
+              class="western-button border-radius4"
+              @click="stateSubmitWesternUnion"
+            >
+              确认设置
+            </button>
+            <button
+              v-else
               class="western-button border-radius4"
               @click="stateSubmitWesternUnion"
             >
@@ -261,10 +278,10 @@ export default {
           >.western-content-from {
             .western-input {
               border: 1px solid #485776;
-              color: #fff;
+              color: rgba(255,255,255,0.7);
             }
             .western-content-name {
-              color: #fff;
+              color: rgba(255,255,255,0.7);
             }
             .western-upload {
               background-color: #323E48;
@@ -275,7 +292,7 @@ export default {
             .western-button {
               padding: 10px 33px;
               background:linear-gradient(0deg,rgba(43,57,110,1),rgba(42,80,130,1));
-              color: #fff;
+              color: rgba(255,255,255,0.7);
             }
           }
         }

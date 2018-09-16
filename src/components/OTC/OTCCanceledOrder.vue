@@ -1,5 +1,8 @@
 <template>
-  <div class="otc-canceled-order-box otc">
+  <div
+    class="otc-canceled-order-box otc"
+    :class="{'day':theme == 'day','night':theme == 'night' }"
+  >
     <div class="canceled-order-content">
       <!--表头属性-->
       <div class="canceled-table-head">
@@ -65,27 +68,29 @@
           </div>
           <div class="info-right">
             <p class="text-info text-blue">取消时间</p>
-            <p class="text-info">{{timeFormatting(item.cancelTime)}}</p>
+            <p class="text-info cancel-time">{{timeFormatting(item.cancelTime)}}</p>
           </div>
         </div>
       </div>
       <div class="no-data" v-if="!getOTCCanceledOrderList.length">暂无数据</div>
       <!--分页-->
-      <el-pagination
-        background
-        v-show="getOTCCanceledOrderList.length"
-        layout="prev, pager, next"
-        :page-count="totalPages"
-        @current-change="changeCurrentPage"
-      >
-      </el-pagination>
+      <div class="page">
+        <el-pagination
+          background
+          v-show="getOTCCanceledOrderList.length"
+          layout="prev, pager, next"
+          :page-count="totalPages"
+          @current-change="changeCurrentPage"
+        >
+        </el-pagination>
+      </div>
     </div>
   </div>
 </template>
 <!--请严格按照如下书写书序-->
 <script>
 import {timeFilter} from '../../utils'
-// import {mapState, mapMutations} from 'vuex'
+import {mapState} from 'vuex'
 import {getOTCCanceledOrders} from '../../utils/api/OTC'
 import {returnAjaxMessage} from '../../utils/commonFunc'
 export default {
@@ -145,12 +150,16 @@ export default {
     }
   },
   filter: {},
-  computed: {},
+  computed: {
+    ...mapState({
+      theme: state => state.common.theme
+    })
+  },
   watch: {}
 }
 </script>
 <style scoped lang="scss" type="text/scss">
-  @import url(../../../static/css/scss/OTC/OTCCanceledOrder.scss);
+  @import "../../../static/css/scss/OTC/OTCCanceledOrder.scss";
   .otc-canceled-order-box{
     >.canceled-order-content{
       >.canceled-table-head{
@@ -158,13 +167,12 @@ export default {
         width: 1043px;
         height: 35px;
         line-height: 35px;
-        background-color: #202A33;
-        color: #617499;
-        border: 1px solid #262F38;
+        // background-color: #202A33;
+        // color: #617499;
+        // border: 1px solid #262F38;
         border-radius: 5px;
-        margin-bottom: 5px;
-        /*box-shadow:底边阴影;*/
-        box-shadow: -2px 3px 5px 1px #191E28;
+        margin-bottom: 15px;
+        // box-shadow: -2px 3px 5px 1px #191E28;
         >.item{
           display: inline-block;
           width: 140px;
@@ -175,22 +183,21 @@ export default {
         box-sizing: border-box;
         width: 1043px;
         height: 170px;
-        background-color: #202A33;
-        border: 1px solid #262F38;
+        // background-color: #202A33;
+        // border: 1px solid #262F38;
         border-radius: 5px;
         margin-bottom: 15px;
         >.canceled-info-top{
           height: 40px;
           line-height: 40px;
-          background-color: #202A33;
-          color: #617499;
-          /*border: 1px solid #262F38;*/
+          // background-color: #202A33;
+          // color: #617499;
           border-radius: 5px;
           .red{
-            color: #D45858;
+            // color: #D45858;
           }
           .green{
-            color: #008069;
+            // color: #008069;
           }
           >.item{
             display: inline-block;
@@ -200,34 +207,32 @@ export default {
         }
         >.canceled-info-bottom{
           box-sizing: border-box;
-          border-top: 1px solid #262F38;
+          // border-top: 1px solid #262F38;
           display: flex;
           flex: 7;
           padding: 30px 30px 0 30px;
-          color: #9DA5B3;
+          // color: #9DA5B3;
           >.info-left{
             flex: 2;
             box-sizing: border-box;
-            border-right: 1px solid #262F38;
+            // border-right: 1px solid #262F38;
             >.text-info{
-              // line-height: 1.5rem;
               line-height: 20px;
             }
             >.text-blue{
-              color: #5E95EC;
+              // color: #5E95EC;
             }
           }
           >.info-middle{
            flex: 2;
             box-sizing: border-box;
-            border-right: 1px solid #262F38;
+            // border-right: 1px solid #262F38;
             margin-left: 30px;
             >.text-info{
-              // line-height: 1.5rem;
               line-height: 20px;
             }
             >.text-blue{
-              color: #5E95EC;
+              // color: #5E95EC;
             }
           }
           >.info-right{
@@ -235,11 +240,10 @@ export default {
             box-sizing: border-box;
             margin-left: 30px;
             >.text-info{
-              // line-height: 1.5rem;
               line-height: 20px;
             }
             >.text-blue{
-              color: #5E95EC;
+              // color: #5E95EC;
             }
           }
         }
@@ -249,7 +253,132 @@ export default {
         height: 432px;
         line-height: 432px;
         text-align: center;
-        background-color: #202A33;
+        // background-color: #202A33;
+      }
+      >.page{
+        text-align: center;
+        padding: 5px 0 15px 0;
+      }
+    }
+    &.night{
+      >.canceled-order-content{
+        >.canceled-table-head{
+          background-color: #1E2636;
+          color: #A9BED4;
+          border: 1px solid #485776;
+          >.item{
+          }
+        }
+        >.canceled-table-body{
+          background-color: #1E2636;
+          border: 1px solid #485776;
+          >.canceled-info-top{
+            background-color: #1E2636;
+            color: #9DA5B3;
+            .red{
+              color: #D45858;
+            }
+            .green{
+              color: #008069;
+            }
+            >.item{
+            }
+          }
+          >.canceled-info-bottom{
+            border-top: 1px solid #262F38;
+            color: #9DA5B3;
+            >.info-left{
+              border-right: 1px solid #262F38;
+              >.text-info{
+              }
+              >.text-blue{
+                color: #5E95EC;
+              }
+            }
+            >.info-middle{
+              border-right: 1px solid #262F38;
+              >.text-info{
+              }
+              >.text-blue{
+                color: #5E95EC;
+              }
+            }
+            >.info-right{
+              >.text-info{
+              }
+              >.text-blue{
+                color: #5E95EC;
+              }
+            }
+          }
+        }
+        >.no-data{
+          background-color: $mainNightBgColor;
+        }
+        >.page{
+        }
+      }
+    }
+    &.day{
+      >.canceled-order-content{
+        >.canceled-table-head{
+          background-color: $mainDayColor;
+          color: #617499;
+          border: 1px solid #ECF1F8;
+          >.item{
+          }
+        }
+        >.canceled-table-body{
+          background-color: $mainDayColor;
+          border: 1px solid #ECF1F8;
+          >.canceled-info-top{
+            background-color: $mainDayColor;
+            color: #333333;
+            .red{
+              color: #D45858;
+            }
+            .green{
+              color: #008069;
+            }
+            >.item{
+            }
+          }
+          >.canceled-info-bottom{
+            border-top: 1px solid rgba(38,47,56,0.1);
+            color: #7D90AC;
+            >.info-left{
+              border-right: 1px solid rgba(38,47,56,0.1);
+              >.text-info{
+              }
+              >.text-blue{
+                color: #5E95EC;
+              }
+            }
+            >.info-middle{
+              border-right: 1px solid rgba(38,47,56,0.1);
+              >.text-info{
+              }
+              >.text-blue{
+                color: #5E95EC;
+              }
+            }
+            >.info-right{
+              >.text-info{
+              }
+              >.text-blue{
+                color: #5E95EC;
+              }
+              >.cancel-time{
+                color: #333333;
+              }
+            }
+          }
+        }
+        >.no-data{
+          background-color: $mainNightBgColor;
+        }
+        >.page{
+        }
       }
     }
   }

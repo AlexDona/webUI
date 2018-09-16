@@ -20,7 +20,7 @@
     <div class="billing-details-main paddinglr20">
       <div class="billing-details-query">
         <div class="float-left cursor-pointer">
-          <span class="demonstration display-inline-block">币种</span>
+          <span class="demonstration display-inline-block font-size12">币种</span>
           <el-select
             v-model="currencyListValue"
             @change="changeId"
@@ -36,7 +36,7 @@
         </div>
         <!--充提记录-->
         <div class="float-left margin-left50 cursor-pointer">
-          <span class="demonstration">类型</span>
+          <span class="demonstration font-size12">类型</span>
           <el-select
             v-model="currencyTypeValue"
           >
@@ -50,23 +50,23 @@
           </el-select>
         </div>
         <!--其他记录-->
-        <div class="float-left margin-left50 cursor-pointer">
-          <span class="demonstration">类型</span>
-          <el-select
-            v-model="otherRecordsValue"
-          >
-            <el-option
-              v-for="item in otherRecordsType"
-              :key="item.value"
-              :label="item.label"
-              :value="item.value"
-            >
-            </el-option>
-          </el-select>
-        </div>
+        <!--<div class="float-left margin-left50 cursor-pointer">-->
+          <!--<span class="demonstration">类型</span>-->
+          <!--<el-select-->
+            <!--v-model="otherRecordsValue"-->
+          <!--&gt;-->
+            <!--<el-option-->
+              <!--v-for="item in otherRecordsType"-->
+              <!--:key="item.value"-->
+              <!--:label="item.label"-->
+              <!--:value="item.value"-->
+            <!--&gt;-->
+            <!--</el-option>-->
+          <!--</el-select>-->
+        <!--</div>-->
         <div class="float-left margin-left58 cursor-pointer">
           <div class="block">
-            <span class="demonstration">日期</span>
+            <span class="demonstration font-size12">日期</span>
             <el-date-picker
               v-model="startTime"
               type="date"
@@ -81,7 +81,7 @@
           </div>
         </div>
         <div
-          class="search-button float-right border-radius2 text-align-c cursor-pointer"
+          class="search-button float-right border-radius2 text-align-c cursor-pointer font-size12"
           @click="stateSearchButton"
         >
           搜索
@@ -95,7 +95,7 @@
         <el-table
           :data="chargeRecordList"
           style="width: 100%"
-          empty-text="暂无数据"
+          empty-text="暂无充提记录"
         >
           <el-table-column
             label="币种"
@@ -162,7 +162,7 @@
         <el-table
           :data="otherRecordsList"
           style="width: 100%"
-          empty-text="暂无数据"
+          empty-text="暂无其他记录"
         >
           <el-table-column
             label="时间"
@@ -446,8 +446,24 @@ export default {
     &.day{
       background-color: $dayBgColor;
       color:$dayFontColor;
+      >.billing-details-main {
+        background-color: $dayBgColor;
+        >.billing-details-query {
+          border-bottom: 1px solid rgba(57,66,77,0.1);
+          >.search-button {
+            background:linear-gradient(9deg,rgba(43,57,110,1),rgba(42,80,130,1));
+            color: #fff;
+          }
+          .demonstration {
+            color: #7D90AC;
+          }
+        }
+      }
       >.billing-details-header{
-        background-color: #ccc;
+        background: rgb(255,255,255);
+        border: 1px solid rgb(236,241,248);
+        border-radius: 2px;
+        box-shadow: 1px 0px 3px rgb(236,236,236);
       }
     }
   }

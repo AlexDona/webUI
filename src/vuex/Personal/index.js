@@ -6,18 +6,20 @@ import actions from './action'
 
 const state = {
   // 交易中的订单
-  tradingList: [],
+  legalTraderTradingList: [],
+  legalTraderTradingReflashStatus: false, // 刷新状态
   //  已完成的订单
-  completedList: [],
-  completedExpands: [],
+  legalTraderCompletedList: [],
+  legalTraderCompletedReflashStatus: false,
   //  已取消的订单
-  canceledList: [],
-  canceledExpands: [],
+  legalTraderCanceledList: [],
+  legalTraderCancelReflashStatus: false,
   //  冻结中的订单
-  forzenList: [],
-  forzenExpands: [],
+  legalTraderForzenList: [],
+  legalTraderFrozenReflashStatus: false,
   //  委托订单
-  entrustList: [],
+  legalTraderEntrustList: [],
+  legalTraderEntrustReflashStatus: false,
   // 个人中心默认显示第一个
   userCenterActiveName: 'assets',
   // 个人中心默认显示第一个
@@ -25,7 +27,10 @@ const state = {
   // 安全中心默认
   refSecurityCenterStatus: false,
   // 收款方式
-  refsAccountCenterStatus: false
+  refsAccountCenterStatus: false,
+  legalTradePageSize: 10, // 每页数据量
+  legalTradePageNum: 1, // 开始页码
+  legalTradePageTotals: 0 // 总页数
 }
 
 export default {

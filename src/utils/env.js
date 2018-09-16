@@ -6,7 +6,6 @@
  * imgBaseUrl: 图片所在域名地址
  *
  */
-
 let baseUrl = ''
 let routerMode = 'hash'
 

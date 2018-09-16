@@ -1,5 +1,8 @@
 <template>
-  <div class="otc-entrust-order-box otc">
+  <div
+    class="otc-entrust-order-box otc"
+    :class="{'day':theme == 'day','night':theme == 'night' }"
+  >
     <!-- 委托订单表格 -->
     <div
       class="otc-entrust-order-table"
@@ -65,49 +68,20 @@
             >
               撤单
             </el-button>
-            <!-- <el-button
-              type="text"
-              @click="dialogVisible = true"
-            >
-              撤单
-            </el-button>
-            <el-dialog
-              title="提示"
-              :visible.sync="dialogVisible"
-              width="30%"
-              :before-close="handleClose">
-              <span>这是一段信息</span>
-              <span slot="footer" class="dialog-footer">
-                <el-button @click="dialogVisible = false">取 消</el-button>
-                <el-button type="primary" @click="revocationOrder(item.id)">确 定</el-button>
-              </span>
-            </el-dialog> -->
           </span>
         </div>
       </div>
       <!--分页-->
-      <el-pagination
-        background
-        v-show="OTCEntrustOrderList.length"
-        layout="prev, pager, next"
-        :page-count="totalPages"
-        @current-change="changeCurrentPage"
-      >
-      </el-pagination>
-      <!-- 弹出框 -->
-      <!-- <div class="dialog">
-        <el-dialog
-          title="提示"
-          :visible.sync="dialogVisible"
-          width="30%"
-          :before-close="handleClose">
-          <span>这是一段信息</span>
-          <span slot="footer" class="dialog-footer">
-            <el-button @click="dialogVisible = false">取 消</el-button>
-            <el-button type="primary" @click="dialogVisible = false">确 定</el-button>
-          </span>
-        </el-dialog>
-      </div> -->
+      <div class="page">
+        <el-pagination
+          background
+          v-show="OTCEntrustOrderList.length"
+          layout="prev, pager, next"
+          :page-count="totalPages"
+          @current-change="changeCurrentPage"
+        >
+        </el-pagination>
+      </div>
     </div>
   </div>
 </template>
@@ -116,6 +90,7 @@
 import {timeFilter} from '../../utils'
 import {getOTCEntrustingOrders, querySelectedOrdersRevocation} from '../../utils/api/OTC'
 import {returnAjaxMessage} from '../../utils/commonFunc'
+import {mapState} from 'vuex'
 export default {
   components: {},
   // props,
@@ -124,7 +99,6 @@ export default {
       // 分页
       currentPage: 1, // 当前页码
       totalPages: 1, // 总页数
-      dialogVisible: false,
       // OTC委托订单列表
       OTCEntrustOrderList: []
     }
@@ -191,19 +165,21 @@ export default {
         return false
       } else {
         // 返回数据正确的逻辑
-        // this.dialogVisible = false
         this.getOTCEntrustingOrdersList()
       }
     }
   },
   filter: {},
-  computed: {},
+  computed: {
+    ...mapState({
+      theme: state => state.common.theme
+    })
+  },
   watch: {}
 }
 </script>
 <style scoped lang="scss" type="text/scss">
-  @import url(../../../static/css/scss/OTC/OTCEntrustOrder.scss);
-
+  @import "../../../static/css/scss/OTC/OTCEntrustOrder.scss";
   .otc-entrust-order-box {
     .otc-entrust-order-table {
       > .entrust-table-head {
@@ -211,14 +187,12 @@ export default {
         width: 1045px;
         height: 35px;
         line-height: 35px;
-        background-color: #202A33;
-        color: #617499;
-        border: 1px solid #262F38;
+        // background-color: #1E2636;
+        // color: #A9BED4;
+        // border: 1px solid #262F38;
         border-radius: 5px;
-        margin-bottom: 5px;
-        /*box-shadow:底边阴影;*/
-        // box-shadow: 2px 4px 6px #191E28;
-        box-shadow: -2px 3px 5px 1px #191E28;
+        // margin-bottom: 5px;
+        // box-shadow: -2px 3px 5px 1px #191E28;
         z-index: 200;
         > .item {
           display: inline-block;
@@ -253,9 +227,9 @@ export default {
       }
       > .entrust-table-body {
         min-height: 432px;
-        background-color: #202A33;
-        color: #9DA5B3;
-        border: 1px solid #262F38;
+        // background-color: #1E2636;
+        // color: #9DA5B3;
+        // border: 1px solid #262F38;
         border-top: none;
         border-bottom-right-radius: 5px;
         border-bottom-left-radius: 5px;
@@ -265,19 +239,18 @@ export default {
         }
         > .entrust-list-content {
           display: flex;
-          height: 34px;
-          line-height: 34px;
+          height: 40px;
+          line-height: 40px;
           .red {
-            color: #D45858;
+            // color: #D45858;
           }
           .green {
-            color: #008069;
+            // color: #008069;
           }
           > .item {
             display: inline-block;
             width: 126px;
             text-align: center;
-            // text-align: left;
           }
           > .first-style {
             width: 80px;
@@ -303,6 +276,140 @@ export default {
           > .eighth-action {
             width: 80px;
           }
+        }
+      }
+      >.page{
+        text-align: center;
+        padding: 10px 0;
+      }
+    }
+    &.night{
+      .otc-entrust-order-table {
+        > .entrust-table-head {
+          background-color: #1E2636;
+          color: #A9BED4;
+          border: 1px solid #262F38;
+          box-shadow: -2px 3px 5px 1px #191E28;
+          > .item {
+          }
+          > .first-style {
+          }
+          > .second-coin {
+          }
+          > .third-price {
+          }
+          > .fourth-entrust-count {
+          }
+          > .fifth-match-count {
+          }
+          > .sixth-total-amount {
+          }
+          > .senventh-create-time {
+          }
+          > .eighth-action {
+          }
+        }
+        > .entrust-table-body {
+          background-color: #1E2636;
+          color: #9DA5B3;
+          border: 1px solid #262F38;
+          > .no-data {
+          }
+          > .entrust-list-content {
+            .red {
+              color: #D45858;
+            }
+            .green {
+              color: #008069;
+            }
+            > .item {
+            }
+            > .first-style {
+            }
+            > .second-coin {
+            }
+            > .third-price {
+            }
+            > .fourth-entrust-count {
+            }
+            > .fifth-match-count {
+            }
+            > .sixth-total-amount {
+            }
+            > .senventh-create-time {
+            }
+            > .eighth-action {
+            }
+          }
+        }
+        >.page{
+          text-align: center;
+          padding: 10px 0;
+        }
+      }
+    }
+    &.day{
+      .otc-entrust-order-table {
+        > .entrust-table-head {
+          background-color: #fff;
+          color: #8A909E;
+          border: 1px solid #ECF1F8;
+          // box-shadow: -2px 3px 5px 1px #191E28;
+          > .item {
+          }
+          > .first-style {
+          }
+          > .second-coin {
+          }
+          > .third-price {
+          }
+          > .fourth-entrust-count {
+          }
+          > .fifth-match-count {
+          }
+          > .sixth-total-amount {
+          }
+          > .senventh-create-time {
+          }
+          > .eighth-action {
+          }
+        }
+        > .entrust-table-body {
+          background-color: #fff;
+          color: #666666;
+          border: 1px solid #ECF1F8;
+          > .no-data {
+          }
+          > .entrust-list-content {
+            .red {
+              color: #D45858;
+            }
+            .green {
+              color: #008069;
+            }
+            > .item {
+            }
+            > .first-style {
+            }
+            > .second-coin {
+            }
+            > .third-price {
+            }
+            > .fourth-entrust-count {
+            }
+            > .fifth-match-count {
+            }
+            > .sixth-total-amount {
+            }
+            > .senventh-create-time {
+            }
+            > .eighth-action {
+            }
+          }
+        }
+        >.page{
+          text-align: center;
+          padding: 10px 0;
         }
       }
     }

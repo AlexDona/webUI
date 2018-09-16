@@ -2,11 +2,9 @@ import {
   CHANGE_USER_CENTER_ACTIVE_NAME,
   CHANGE_REF_SECURITY_CENTER_INFO,
   CHANGE_REF_ACCOUNT_CREDITED_STATE,
-  CHANGE_MERCHANTS_ORDERS_LIST,
-  CHANGE_COMPLETED_ORDERS_LIST,
-  CHANGE_CANCELED_ORDERS_LIST,
-  CHANGE_FROZEN_ORDERS_LIST,
-  CHANGE_ENTRUST_ORDERS_LIST
+  SET_LEGAL_TENDER_LIST,
+  SET_LEGAL_TENDER_REFLASH_STATUS,
+  CHANGE_LEGAL_PAGE
 } from './mutations-types.js'
 
 // import {setStore, getStore} from '../utils'
@@ -22,34 +20,58 @@ export default {
   [CHANGE_REF_ACCOUNT_CREDITED_STATE] (state, data) {
     state.refsAccountCenterStatus = data
   },
-  // 获取交易中的订单
-  [CHANGE_MERCHANTS_ORDERS_LIST] (state, data) {
-    state.merchantsOrdersList = data
+  // 获取法币交易订单
+  [SET_LEGAL_TENDER_LIST] (state, data) {
+    switch (data.type) {
+      case 'TRADING':
+        state.legalTraderTradingList = data.data
+        break
+      case 'COMPLETED':
+        state.legalTraderCompletedList = data.data
+        break
+      case 'CANCELED':
+        state.legalTraderCanceledList = data.data
+        break
+      case 'FROZEN':
+        state.legalTraderForzenList = data.data
+        break
+      case 'ENTRUSTED':
+        state.legalTraderEntrustList = data.data
+        break
+    }
   },
-  // 获取已完成的订单
-  [CHANGE_COMPLETED_ORDERS_LIST] (state, data) {
-    state.completedOrdersList = data
-    // state.completedOrdersList.forEach((item, index) => {
-    //   state.completedExpands.push(item.fid)
-    // })
+  [SET_LEGAL_TENDER_REFLASH_STATUS] (state, {type, status}) {
+    switch (type) {
+      case 'TRADING':
+        state.legalTraderTradingReflashStatus = status
+        break
+      case 'COMPLETED':
+        state.legalTraderCompletedReflashStatus = status
+        break
+      case 'CANCELED':
+        state.legalTraderCancelReflashStatus = status
+        break
+      case 'FROZEN':
+        state.legalTraderFrozenReflashStatus = status
+        break
+      case 'ENTRUSTED':
+        state.legalTraderEntrustReflashStatus = status
+        break
+    }
   },
-  // 获取已取消的订单
-  [CHANGE_CANCELED_ORDERS_LIST] (state, data) {
-    state.getOTCCanceledOrderList = data
-    // state.canceledList.forEach((item, index) => {
-    //   state.canceledExpands.push(item.fid)
-    // })
-  },
-  // 获取冻结中的订单[CHANGE_FROZEN_ORDERS_LIST]
-  [CHANGE_FROZEN_ORDERS_LIST] (state, data) {
-    state.getOTCFreezingOrderList = data
-    // 展开默认行
-    // state.forzenList.forEach((item, index) => {
-    //   state.forzenExpands.push(item.fid)
-    // })
-  },
-  // 获取委托订单
-  [CHANGE_ENTRUST_ORDERS_LIST] (state, data) {
-    state.OTCEntrustOrderList = data
+  [CHANGE_LEGAL_PAGE] (state, {
+    legalTradePageSize,
+    legalTradePageNum,
+    legalTradePageTotals
+  }) {
+    if (legalTradePageSize) {
+      state.legalTradePageSize = legalTradePageSize
+    }
+    if (legalTradePageNum) {
+      state.legalTradePageNum = legalTradePageNum
+    }
+    if (legalTradePageTotals) {
+      state.legalTradePageTotals = legalTradePageTotals
+    }
   }
 }
