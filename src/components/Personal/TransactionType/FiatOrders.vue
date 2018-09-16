@@ -10,7 +10,6 @@
       <el-tabs
         v-model="activeName"
         :tab-position = "tabPosition"
-        @tab-click = "getLegalTradeData(activeName)"
       >
         <!-- 上部分筛选条件 -->
         <div class="orders-main-top">
@@ -101,7 +100,7 @@
              <span class="inquire-button">
               <el-button
                 type="primary"
-                @click="getLegalTradeData(activeName)"
+                @click="getLegalTradeDataByCondition"
               >查询</el-button>
               <!--<el-button type="primary" @click="resetCondition">重置</el-button>-->
             </span>
@@ -133,7 +132,7 @@
         </el-tab-pane>
         <el-tab-pane
           label="委托订单"
-          name="entrust-orders"
+          name="ENTRUSTED"
         >
           <FiatCoinEntrustOrder ref = "entrustOrders"/>
         </el-tab-pane>
@@ -245,8 +244,16 @@ export default {
       'CHANGE_OTC_AVAILABLE_PARTNER_COIN_ID',
       'USER_ASSETS_LIST',
       'SET_LEGAL_TENDER_LIST',
-      'SET_LEGAL_TENDER_REFLASH_STATUS'
+      'SET_LEGAL_TENDER_REFLASH_STATUS',
+      'CHANGE_LEGAL_PAGE'
     ]),
+    // 条件查询
+    getLegalTradeDataByCondition () {
+      this.CHANGE_LEGAL_PAGE({
+        legalTradePageNum: 1
+      })
+      this.getLegalTradeData(this.activeName)
+    },
     // 时间格式化
     timeFormatting (date) {
       return timeFilter(date, 'date')
@@ -314,10 +321,25 @@ export default {
     },
     // 页面加载时请求接口渲染列表
     async getLegalTradeData (activeName) {
-      if (activeName === 'entrust-orders') {
-        const params = {
-          status: 'ENTRUSTED'
-        }
+      let params = {
+        // 币种
+        coinId: this.activitedMerchantsOrdersCoin,
+        // 法币
+        currencyId: this.activitedMerchantsOrdersCurrency,
+        // 状态
+        status: activeName,
+        // 开始时间
+        startTime: this.startTime,
+        // 结束时间
+        endTime: this.endTime,
+        // 类型
+        tradeType: this.activitedMerchantsOrdersTraderStyleList,
+
+        pageNum: this.legalTradePageNum,
+
+        pageSize: this.legalTradePageSize
+      }
+      if (activeName === 'ENTRUSTED') {
         const data = await getOTCEntrustingOrders(params)
         if (!returnAjaxMessage(data, this)) {
           return false
@@ -327,27 +349,15 @@ export default {
             type: activeName,
             data: data.data.data.list
           })
-          // console.log(this.legalTraderTradingList)
+          this.CHANGE_LEGAL_PAGE({
+            legalTradePageTotals: data.data.data.pages - 0
+          })
           this.SET_LEGAL_TENDER_REFLASH_STATUS({
             type: activeName,
             status: false
           })
         }
       } else {
-        let params = {
-          // 币种
-          coinId: this.activitedMerchantsOrdersCoin,
-          // 法币
-          currencyId: this.activitedMerchantsOrdersCurrency,
-          // 状态
-          status: activeName,
-          // 开始时间
-          startTime: this.startTime,
-          // 结束时间
-          endTime: this.endTime,
-          // 类型
-          tradeType: this.activitedMerchantsOrdersTraderStyleList
-        }
         console.log(params)
         const data = await getQueryAllOrdersList(params)
         if (!returnAjaxMessage(data, this)) {
@@ -358,7 +368,11 @@ export default {
             type: activeName,
             data: data.data.data.list
           })
+          this.CHANGE_LEGAL_PAGE({
+            legalTradePageTotals: data.data.data.pages - 0
+          })
           console.log(this.legalTraderTradingList)
+          console.log(this.legalTradePageTotals)
           this.SET_LEGAL_TENDER_REFLASH_STATUS({
             type: activeName,
             status: false
@@ -375,8 +389,13 @@ export default {
       legalTraderTradingList: state => state.personal.legalTraderTradingList,
       legalTraderTradingReflashStatus: state => state.personal.legalTraderTradingReflashStatus,
       legalTraderEntrustReflashStatus: state => state.personal.legalTraderEntrustReflashStatus,
-      userInfo: state => state.user.loginStep1Info // 用户详细信息
-      // fiatMoneyOrdersName: state => state.personal.fiatMoneyOrdersName
+      legalTraderCompletedReflashStatus: state => state.personal.legalTraderCompletedReflashStatus,
+      legalTraderCancelReflashStatus: state => state.personal.legalTraderCancelReflashStatus,
+      legalTraderFrozenReflashStatus: state => state.personal.legalTraderFrozenReflashStatus,
+      userInfo: state => state.user.loginStep1Info, // 用户详细信息
+      legalTradePageSize: state => state.personal.legalTradePageSize,
+      legalTradePageNum: state => state.personal.legalTradePageNum,
+      legalTradePageTotals: state => state.personal.legalTradePageTotals
     })
   },
   watch: {
@@ -390,6 +409,31 @@ export default {
       if (newVal) {
         this.getLegalTradeData(this.activeName)
       }
+    },
+    legalTraderCompletedReflashStatus (newVal) {
+      if (newVal) {
+        this.getLegalTradeData(this.activeName)
+      }
+    },
+    legalTraderCancelReflashStatus (newVal) {
+      if (newVal) {
+        this.getLegalTradeData(this.activeName)
+      }
+    },
+    legalTraderFrozenReflashStatus (newVal) {
+      if (newVal) {
+        this.getLegalTradeData(this.activeName)
+      }
+    },
+    activeName (newVal) {
+      console.log(newVal)
+      this.CHANGE_LEGAL_PAGE({
+        legalTradePageNum: 1
+      })
+      this.getLegalTradeData(newVal)
+    },
+    legalTradePageNum (newVal) {
+      console.log(newVal)
     }
   }
 }

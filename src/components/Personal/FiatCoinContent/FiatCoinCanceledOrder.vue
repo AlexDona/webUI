@@ -73,11 +73,14 @@
         </div>
       </div>
       <div class="no-data" v-if="!OTCCanceledOrderList.length">暂无数据</div>
+      <!--分页-->
       <el-pagination
-        v-if="OTCCanceledOrderList.length >= 10 "
         background
+        v-show="OTCCanceledOrderList.length"
         layout="prev, pager, next"
-        :total="100"
+        :page-count="legalTradePageTotals"
+        :current-page="legalTradePageNum"
+        @current-change="changeCurrentPage"
       >
       </el-pagination>
     </div>
@@ -86,6 +89,8 @@
 <!--请严格按照如下书写书序-->
 <script>
 import {timeFilter} from '../../../utils'
+// import {mapState, mapMutations} from 'vuex'
+import {changeCurrentPageForLegalTrader} from '../../../utils/commonFunc'
 import {createNamespacedHelpers, mapState} from 'vuex'
 const {mapMutations} = createNamespacedHelpers('personal')
 export default {
@@ -104,7 +109,14 @@ export default {
   update () {},
   beforeRouteUpdate () {},
   methods: {
-    ...mapMutations([]),
+    ...mapMutations([
+      'CHANGE_LEGAL_PAGE',
+      'SET_LEGAL_TENDER_REFLASH_STATUS'
+    ]),
+    // 分页
+    changeCurrentPage (e) {
+      changeCurrentPageForLegalTrader(e, 'CANCELED', this)
+    },
     // 1.0 时间格式化
     timeFormatting (date) {
       return timeFilter(date, 'normal')
@@ -114,13 +126,17 @@ export default {
   computed: {
     ...mapState({
       theme: state => state.common.theme,
-      legalTraderCanceledList: state => state.personal.legalTraderCanceledList
+      legalTraderCanceledList: state => state.personal.legalTraderCanceledList,
+      legalTradePageTotals: state => state.personal.legalTradePageTotals,
+      legalTradePageNum: state => state.personal.legalTradePageNum
     }),
     OTCCanceledOrderList () {
       return this.legalTraderCanceledList
     }
   },
-  watch: {}
+  watch: {
+
+  }
 }
 </script>
 <style scoped lang="scss" type="text/scss">

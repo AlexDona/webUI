@@ -132,6 +132,16 @@
           </template>
         </el-table-column>
       </el-table>
+      <!--分页-->
+      <el-pagination
+        background
+        v-show="completedOrdersList.length"
+        layout="prev, pager, next"
+        :current-page="legalTradePageNum"
+        :page-count="legalTradePageTotals"
+        @current-change="changeCurrentPage"
+      >
+      </el-pagination>
     </div>
   </div>
 </template>
@@ -139,6 +149,7 @@
 <script>
 import {timeFilter} from '../../../utils'
 import {createNamespacedHelpers, mapState} from 'vuex'
+import {changeCurrentPageForLegalTrader} from '../../../utils/commonFunc'
 const {mapMutations} = createNamespacedHelpers('personal')
 export default {
   components: {},
@@ -158,7 +169,14 @@ export default {
   update () {},
   beforeRouteUpdate () {},
   methods: {
-    ...mapMutations([]),
+    ...mapMutations([
+      'CHANGE_LEGAL_PAGE',
+      'SET_LEGAL_TENDER_REFLASH_STATUS'
+    ]),
+    // 分页
+    changeCurrentPage (e) {
+      changeCurrentPageForLegalTrader(e, 'COMPLETED', this)
+    },
     // 1.0 时间格式化
     timeFormatting (date) {
       return timeFilter(date, 'normal')
@@ -169,7 +187,10 @@ export default {
     ...mapState({
       theme: state => state.common.theme,
       legalTraderCompletedList: state => state.personal.legalTraderCompletedList,
-      legalTraderCompletedReflashStatus: state => state.personal.legalTraderCompletedReflashStatus
+      legalTraderCompletedReflashStatus: state => state.personal.legalTraderCompletedReflashStatus,
+      legalTradePageTotals: state => state.personal.legalTradePageTotals,
+      legalTradePageNum: state => state.personal.legalTradePageNum
+
     }),
     completedOrdersList () {
       return this.legalTraderCompletedList

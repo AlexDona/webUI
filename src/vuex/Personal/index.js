@@ -10,10 +10,13 @@ const state = {
   legalTraderTradingReflashStatus: false, // 刷新状态
   //  已完成的订单
   legalTraderCompletedList: [],
+  legalTraderCompletedReflashStatus: false,
   //  已取消的订单
   legalTraderCanceledList: [],
+  legalTraderCancelReflashStatus: false,
   //  冻结中的订单
   legalTraderForzenList: [],
+  legalTraderFrozenReflashStatus: false,
   //  委托订单
   legalTraderEntrustList: [],
   legalTraderEntrustReflashStatus: false,
@@ -24,7 +27,10 @@ const state = {
   // 安全中心默认
   refSecurityCenterStatus: false,
   // 收款方式
-  refsAccountCenterStatus: false
+  refsAccountCenterStatus: false,
+  legalTradePageSize: 1, // 每页数据量
+  legalTradePageNum: 1, // 开始页码
+  legalTradePageTotals: 0 // 总页数
 }
 
 export default {
