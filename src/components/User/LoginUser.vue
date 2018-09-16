@@ -883,7 +883,7 @@ export default {
           this.loadCurrencyList()
           this.$router.push({path: this.routerTo})
         } else {
-          this.$router.push({path: '/home'})
+          this.$router.push({path: '/'})
         }
       }
       console.log(data)

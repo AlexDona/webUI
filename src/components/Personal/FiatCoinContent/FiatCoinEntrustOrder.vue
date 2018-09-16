@@ -87,6 +87,16 @@
             </el-dialog> -->
           </span>
         </div>
+        <!--分页-->
+        <el-pagination
+          background
+          v-show="OTCEntrustOrderList.length"
+          layout="prev, pager, next"
+          :current-page="legalTradePageNum"
+          :page-count="legalTradePageTotals"
+          @current-change="changeCurrentPage"
+        >
+        </el-pagination>
       </div>
       <!-- 弹出框 -->
       <!-- <div class="dialog">
@@ -108,8 +118,13 @@
 <!--请严格按照如下书写书序-->
 <script>
 import {timeFilter} from '../../../utils'
-import {getOTCEntrustingOrders, querySelectedOrdersRevocation} from '../../../utils/api/personal'
-import {returnAjaxMessage} from '../../../utils/commonFunc'
+import {
+  querySelectedOrdersRevocation
+} from '../../../utils/api/personal'
+import {
+  returnAjaxMessage,
+  changeCurrentPageForLegalTrader
+} from '../../../utils/commonFunc'
 import {createNamespacedHelpers, mapState} from 'vuex'
 const {mapMutations} = createNamespacedHelpers('personal')
 export default {
@@ -126,8 +141,6 @@ export default {
     require('../../../../static/css/list/Personal/FiatCoinContent/FiatCoinEntrustOrder.css')
     require('../../../../static/css/theme/day/Personal/FiatCoinContent/FiatCoinEntrustOrderDay.css')
     require('../../../../static/css/theme/night/Personal/FiatCoinContent/FiatCoinEntrustOrderNight.css')
-    // 1.0 刚进页面调取接口获取委托中的订单列表
-    // this.getOTCEntrustingOrdersList()
   },
   mounted () {
   },
@@ -139,22 +152,16 @@ export default {
   },
   methods: {
     ...mapMutations([
+      'CHANGE_LEGAL_PAGE',
       'SET_LEGAL_TENDER_REFLASH_STATUS'
     ]),
+    // 分页
+    changeCurrentPage (e) {
+      changeCurrentPageForLegalTrader(e, 'ENTRUSTED', this)
+    },
     // 1.0 时间格式化
     timeFormatting (date) {
       return timeFilter(date, 'date')
-    },
-    // 2.0 请求委托中订单列表
-    async getOTCEntrustingOrdersList () {
-      let data
-      data = await getOTCEntrustingOrders({
-        status: 'ENTRUSTED' // 状态（ENTRUSTED 挂单中 HISTORY 历史挂单）
-      })
-      // console.log(data)
-      // 提示信息
-      returnAjaxMessage(data, this, 0)
-      // this.OTCEntrustOrderList = data.data.data.list
     },
     // 3.0 点击撤单按钮
     revocationOrder (id) {
@@ -191,13 +198,18 @@ export default {
     ...mapState({
       theme: state => state.common.theme,
       legalTraderEntrustList: state => state.personal.legalTraderEntrustList,
-      legalTraderEntrustReflashStatus: state => state.personal.legalTraderEntrustReflashStatus
+      legalTraderEntrustReflashStatus: state => state.personal.legalTraderEntrustReflashStatus,
+      legalTradePageTotals: state => state.personal.legalTradePageTotals,
+      legalTradePageNum: state => state.personal.legalTradePageNum
     }),
     OTCEntrustOrderList () {
       return this.legalTraderEntrustList
     }
   },
   watch: {
+    OTCEntrustOrderList (newVal) {
+      console.log(newVal)
+    }
   }
 }
 </script>

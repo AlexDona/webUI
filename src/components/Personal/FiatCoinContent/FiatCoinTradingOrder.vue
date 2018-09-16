@@ -530,6 +530,16 @@
       </div>
       <!-- 暂无数据 -->
       <div class="no-data" v-if="!tradingOrderList.length">暂无数据</div>
+      <!--分页-->
+      <el-pagination
+        background
+        v-show="tradingOrderList.length"
+        layout="prev, pager, next"
+        :current-page="legalTradePageNum"
+        :page-count="legalTradePageTotals"
+        @current-change="changeCurrentPage"
+      >
+      </el-pagination>
       <!-- 3.0 买家点击确认付款按钮 弹出交易密码框 -->
       <div class="password-dialog">
         <el-dialog
@@ -640,7 +650,10 @@ import {
 } from '../../../utils/api/personal'
 import {timeFilter, formatSeconds} from '../../../utils'
 import IconFontCommon from '../../Common/IconFontCommon'
-import {returnAjaxMessage} from '../../../utils/commonFunc'
+import {
+  returnAjaxMessage,
+  changeCurrentPageForLegalTrader
+} from '../../../utils/commonFunc'
 import {createNamespacedHelpers, mapState} from 'vuex'
 const {mapMutations} = createNamespacedHelpers('personal')
 export default {
@@ -676,6 +689,7 @@ export default {
       cancelOrderTimeArr: [], // 自动取消订单倒计时数组集
       accomplishOrderTimeArr: [], // 自动成交倒计时数组集
       errpwd: '' // 交易密码错提示
+      // pageSize:
     }
   },
   created () {
@@ -691,8 +705,13 @@ export default {
   beforeRouteUpdate () {},
   methods: {
     ...mapMutations([
-      'SET_LEGAL_TENDER_REFLASH_STATUS'
+      'SET_LEGAL_TENDER_REFLASH_STATUS',
+      'CHANGE_LEGAL_PAGE'
     ]),
+    // 分页
+    changeCurrentPage (e) {
+      changeCurrentPageForLegalTrader(e, 'TRADING', this)
+    },
     // 1.0 时间格式化
     timeFormatting (date) {
       return timeFilter(date, 'time')
@@ -876,7 +895,9 @@ export default {
     ...mapState({
       theme: state => state.common.theme,
       legalTraderTradingList: state => state.personal.legalTraderTradingList,
-      legalTraderTradingReflashStatus: state => state.personal.legalTraderTradingReflashStatus
+      legalTraderTradingReflashStatus: state => state.personal.legalTraderTradingReflashStatus,
+      legalTradePageTotals: state => state.personal.legalTradePageTotals,
+      legalTradePageNum: state => state.personal.legalTradePageNum
     }),
     tradingOrderList () {
       return this.legalTraderTradingList
@@ -900,6 +921,9 @@ export default {
         // 调用自动成交倒计时方法
         this.accomplishSetInter()
       }
+    },
+    legalTradePageTotals (newVal) {
+      console.log(newVal)
     }
   }
 }

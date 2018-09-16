@@ -156,3 +156,13 @@ export const getAllList = async (params, callback) => {
   //   store.commit('CHANGE_ENTRUST_ORDERS_LIST', res[4].data.data) // 委托订单
   // })
 }
+// 法币交易分页切换
+export const changeCurrentPageForLegalTrader = (currentPage, type, that) => {
+  that.CHANGE_LEGAL_PAGE({
+    legalTradePageNum: currentPage
+  })
+  that.SET_LEGAL_TENDER_REFLASH_STATUS({
+    type,
+    status: true
+  })
+}

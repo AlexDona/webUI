@@ -72,6 +72,16 @@
           </div>
         </div>
       </div>
+      <!--分页-->
+      <el-pagination
+        background
+        v-show="OTCFreezingOrderList.length"
+        layout="prev, pager, next"
+        :current-page="legalTradePageNum"
+        :page-count="legalTradePageTotals"
+        @current-change="changeCurrentPage"
+      >
+      </el-pagination>
       <div class="no-data" v-if="!OTCFreezingOrderList.length">暂无数据</div>
     </div>
   </div>
@@ -79,8 +89,7 @@
 <!--请严格按照如下书写书序-->
 <script>
 import {timeFilter} from '../../../utils'
-import {getQueryAllOrdersList} from '../../../utils/api/personal'
-import {returnAjaxMessage} from '../../../utils/commonFunc'
+import {changeCurrentPageForLegalTrader} from '../../../utils/commonFunc'
 import {createNamespacedHelpers, mapState} from 'vuex'
 const {mapMutations} = createNamespacedHelpers('personal')
 export default {
@@ -102,7 +111,14 @@ export default {
   update () {},
   beforeRouteUpdate () {},
   methods: {
-    ...mapMutations([]),
+    ...mapMutations([
+      'SET_LEGAL_TENDER_REFLASH_STATUS',
+      'CHANGE_LEGAL_PAGE'
+    ]),
+    // 分页
+    changeCurrentPage (e) {
+      changeCurrentPageForLegalTrader(e, 'TRADING', this)
+    },
     // 时间格式化
     timeFormatting (date) {
       return timeFilter(date, 'normal')
@@ -113,7 +129,9 @@ export default {
   computed: {
     ...mapState({
       theme: state => state.common.theme,
-      legalTraderForzenList: state => state.personal.legalTraderForzenList
+      legalTraderForzenList: state => state.personal.legalTraderForzenList,
+      legalTradePageTotals: state => state.personal.legalTradePageTotals,
+      legalTradePageNum: state => state.personal.legalTradePageNum
     }),
     OTCFreezingOrderList () {
       return this.legalTraderForzenList
