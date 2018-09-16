@@ -338,7 +338,7 @@ export default {
               >.real-name {
                 background-color: #46525D;
                 >.icon-color {
-                  color: #fff;
+                  color: #D5D8DC;
                 }
               }
               >.real-name {
@@ -389,7 +389,7 @@ export default {
       >.user-info-main{
         background-color: $dayBgColor;
         color:$dayFontColor;
-        border: 1px solid;
+        border:1px solid rgba(38,47,56,0.1);
         >.user-info-content-box {
           >.user,
           >.info,
@@ -433,12 +433,12 @@ export default {
                 }
               }
               >.info-centre-left {
-                color: #9DA5B3;
+                color: #333333;
               }
             }
             >.info-discount {
               >.discount-text {
-                color: #9DA5B3;
+                color: #333333;
               }
               >.discount-state {
                 color: #fff;
@@ -449,16 +449,16 @@ export default {
           >.asset{
             >.volume-text,
             >.asset-text {
-              color: #9DA5B3;
+              color: #333333;
             }
             >.volume-info,
             >.asset-info {
               >.info-color {
-                color: #fff;
+                color: #338FF5;
               }
             }
             >.asset-color {
-              color: #9DA5B3;
+              color: #7D90AC;
             }
           }
         }

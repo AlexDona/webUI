@@ -1,27 +1,34 @@
 /*个人中心（白色主题）*/
-/*.account-assets.personal.night .el-switch__core::after {*/
-  /*background-color: #fff;*/
-/*}*/
-/*.withdrawal-address.personal.night .el-table {*/
-  /*background-color: #1E2636;*/
-/*}*/
-/*.withdrawal-address.personal.night .el-table__header-wrapper {*/
-  /*background-color: #1E2636;*/
-/*}*/
-/*.withdrawal-address.personal.night .el-table th.is-leaf {*/
-  /*background-color: #1E2636;*/
-  /*border: 0;*/
-/*}*/
-/*.withdrawal-address.personal.night .el-table td {*/
-  /*background-color: #1E2636;*/
-  /*border: 0;*/
-/*}*/
-/*.withdrawal-address.personal.night .el-table__body tr:hover>td {*/
-  /*background-color: #1E2636;*/
-/*}*/
-/*.withdrawal-address.personal.night .el-table th>.cell {*/
-  /*color: #A9BED4;*/
-/*}*/
-/*.withdrawal-address.personal.night .el-table .cell {*/
-  /*color: #9DA5B3;*/
-/*}*/
+.account-assets.personal.day .el-switch__core::after {
+  background-color: #fff;
+}
+.withdrawal-address.personal.day
+.el-switch__core::after,
+.el-table,
+.el-table__header-wrapper,
+.el-table th.is-leaf,
+.el-table td {
+  background-color: #fff;
+}
+.el-table td {
+  border-bottom: 1px solid #fff;
+}
+.withdrawal-address.personal.day .el-table__body tr:hover>td {
+  background-color: #fff;
+}
+.withdrawal-address.personal.day .el-table th>.cell {
+  color: #333;
+}
+.withdrawal-address.personal.day .el-table .cell {
+  color: #333;
+}
+.withdrawal-address.personal.day .el-form-item__label {
+  color: #7D90AC;
+}
+.withdrawal-address.personal .el-input__inner {
+  background:rgba(255,255,255,1);
+  border:1px solid rgba(236,241,248,1);
+}
+.withdrawal-address.personal.day .el-table td:nth-child(4) div{
+  color: #338FF5;
+}

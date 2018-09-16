@@ -1,0 +1,26 @@
+/* 覆盖黑色主题的啊样式 */
+.finance-box.day .inner-box .finance-inner .container .finance-form-header .el-input__inner{
+    background:#fff!important;
+}
+.finance-box.day .inner-box .finance-inner .container .finance-form-header .newnestPrice .newnestPriceColor{
+    color:#000;
+}
+.finance-box.day .finance-inner-box .left .left-body .el-input__inner{
+    background: #eaf4fe;
+    border: 1px solid #338FF5;
+}
+.finance-box.day .nvest-list-body .el-table{
+    color: #666;
+    background: transparent;
+}
+.finance-box.day .nvest-list-body .el-table th{
+    color:#617499;
+    border-top:1px solid rgba(51,143,245,1);
+    background:#eaf4fe;
+}
+.finance-box.day .nvest-list-body .el-table td, .el-table th.is-leaf{
+    border-bottom:1px solid rgba(169,190,212,0.2);
+}
+.finance-box.day .nvest-list-body .el-table--enable-row-hover .el-table__body tr:hover>td{
+    background:#eaf4fe;
+}

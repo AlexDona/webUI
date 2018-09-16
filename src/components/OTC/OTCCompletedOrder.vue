@@ -1,5 +1,8 @@
 <template>
-  <div class="otc-completed-order-box otc">
+  <div
+    class="otc-completed-order-box otc"
+    :class="{'day':theme == 'day','night':theme == 'night' }"
+  >
     <div class="completed-order-content">
       <el-table
         :data="completedOrdersList"
@@ -127,16 +130,18 @@
           </template>
         </el-table-column>
       </el-table>
+      <!--分页-->
+      <div class="page">
+        <el-pagination
+          background
+          v-show="completedOrdersList.length"
+          layout="prev, pager, next"
+          :page-count="totalPages"
+          @current-change="changeCurrentPage"
+        >
+        </el-pagination>
+      </div>
     </div>
-    <!--分页-->
-    <el-pagination
-      background
-      v-show="completedOrdersList.length"
-      layout="prev, pager, next"
-      :page-count="totalPages"
-      @current-change="changeCurrentPage"
-    >
-    </el-pagination>
   </div>
 </template>
 <!--请严格按照如下书写书序-->
@@ -144,6 +149,7 @@
 import {timeFilter} from '../../utils'
 import {getOTCCompletedOrders} from '../../utils/api/OTC'
 import {returnAjaxMessage} from '../../utils/commonFunc'
+import {mapState} from 'vuex'
 export default {
   components: {},
   // props,
@@ -197,12 +203,17 @@ export default {
     }
   },
   filter: {},
-  computed: {},
+  computed: {
+    ...mapState({
+      theme: state => state.common.theme
+    })
+  },
   watch: {}
 }
 </script>
 <style scoped lang="scss" type="text/scss">
-@import url(../../../static/css/scss/OTC/OTCCompletedOrder.scss);
+// @import url(../../../static/css/scss/OTC/OTCCompletedOrder.scss);
+@import "../../../static/css/scss/OTC/OTCCompletedOrder.scss";
 .otc-completed-order-box{
   >.completed-order-content{
     .red{
@@ -211,26 +222,18 @@ export default {
     .green{
       color: #008069;
     }
+    .page{
+      text-align: center;
+      padding: 10px 0;
+    }
     .completed-info{
       display: flex;
       flex: 7;
       color: #9DA5B3;
-      &::after{
-        /*content: '';*/
-        /*width: 5px;*/
-        /*height: 5px;*/
-        /*position: absolute;*/
-        /*right: 0;*/
-        /*top: 0px;*/
-        /*bottom: 0px;*/
-        /*background-color: red;*/
-      }
       >.completed-info-left{
         flex: 2;
         border-right: 1px solid #262F38;
         >.order-info-left{
-          // margin-left: 50px;
-          // line-height: 1.5rem;
           line-height: 20px;
           >.pay-info{
             color: #5E95EC;
@@ -242,7 +245,6 @@ export default {
         border-right: 1px solid #262F38;
         >.order-info-middle{
           margin-left: 50px;
-          // line-height: 1.5rem;
           line-height: 20px;
           >.buyer-seller-info{
             color: #5E95EC;
@@ -253,7 +255,6 @@ export default {
         flex: 3;
         >.order-info-right{
           margin-left: 50px;
-          // line-height: 1.5rem;
           line-height: 20px;
           >.confirm-time{
             color: #5E95EC;
@@ -262,5 +263,7 @@ export default {
       }
     }
   }
-}
+  &.night{}
+  &.day{}
+  }
 </style>

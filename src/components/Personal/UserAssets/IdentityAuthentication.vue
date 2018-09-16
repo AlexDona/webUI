@@ -820,49 +820,65 @@ export default {
     background-color: $dayBgColor;
     color:$dayFontColor;
     .identity-header-background{
-      background-color: #ccc;
+      background-color: $dayBgColor;
       .header-content{
-        color: #333;
+        color: #338FF5;
       }
     }
+    .identity-authentication-main {
+      background-color: #1E2636;
+      .header-border {
+        border-bottom: 1px solid #39424D;
+      }
+      .authentication-type {
+        color: #0099FF;
+      }
+      .authentication-type-info {
+        color: #D45858;
+        >.authentication-info {
+          color: #D45858;
+        }
+      }
+    }
+    .icon-down,
+    .main-header-title{
+      color: #fff;
+    }
     .identity-background{
-      background-color: #ccc;
+      background-color: #1E2636;
     }
     >.advanced-certification-main{
       .header-border {
-        border-bottom: 1px solid #aaa;
+        border-bottom: 1px solid #39424D;
       }
       .authentication-type {
-        color: #333;
-        >.icon-down{
-          color: #ccc;
-        }
+        color: #0099FF;
       }
       .upload-submit{
-        border: 1px solid #ccc;
-        color: #333;
+        border: 1px solid #338FF5;
+        color: #338FF5;
       }
       .submit-information {
         background:linear-gradient(0deg,rgba(43,57,110,1),rgba(42,80,130,1));
-        color: #333;
+        color: #fff;
       }
       .text-hints {
-        color: #333;
+        color: #A9BED4;
       }
       .icon-font-color {
-        color: #333;
+        color: #C65252;
       }
       .info-type {
-        color: #555;
+        color: #617499
       }
       .user-info {;
-        color: #000;
+        color: #fff;
       }
       .advanced-certification-text{
         >.text-tips{
-          color: #ccc;
+          color:rgba(254,254,255, 0.7);
           >.tips-refresh{
-            color: #ccc;
+            color: #338FF5;
           }
         }
       }

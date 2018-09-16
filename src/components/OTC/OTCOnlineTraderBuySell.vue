@@ -1,5 +1,8 @@
 <template>
-  <div class="otc-online-trader-buy-sell-box otc">
+  <div
+    class="otc-online-trader-buy-sell-box otc"
+    :class="{'day':theme == 'day','night':theme == 'night' }"
+  >
     <!-- otc在线交易 摘单 页面 -->
     <!-- 1.0 导航 -->
     <NavCommon/>
@@ -272,10 +275,15 @@
                     </el-form>
                   </div>
                   <!--最下右边手续费-->
-                  <div class="service-charge ">
+                  <div class="service-charge" v-if="onlineTraderStatus === 'onlineBuy'">
                     <span>手续费：</span>
-                    <span>{{serviceCharge}} {{name}}</span>
-                    <span>( 费率 <span>{{rate*100}}%</span> )</span>
+                    <span class="service-data">{{serviceCharge}} {{name}}</span>
+                    <span>( 费率 <span class="rate-data">{{rate*100}}%</span> )</span>
+                  </div>
+                  <div class="service-charge-sell" v-if="onlineTraderStatus === 'onlineSell'">
+                    <span>手续费：</span>
+                    <span class="service-data-sell">{{serviceCharge}} {{name}}</span>
+                    <span>( 费率 <span class="rate-data-sell">{{rate*100}}%</span> )</span>
                   </div>
                 </div>
                 <!-- 右下交易须知 -->
@@ -352,7 +360,7 @@ import NavCommon from '../Common/HeaderCommon'
 import FooterCommon from '../Common/FooterCommon'
 import IconFontCommon from '../Common/IconFontCommon'
 import {returnAjaxMessage} from '../../utils/commonFunc'
-// import {formatNumberInput} from '../../utils'
+import {mapState} from 'vuex'
 import {timeFilter, formatNumberInput} from '../../utils'
 export default {
   components: {
@@ -752,232 +760,512 @@ export default {
     }
   },
   filter: {},
-  computed: {},
+  computed: {
+    ...mapState({
+      theme: state => state.common.theme
+    })
+  },
   watch: {}
 }
 </script>
 <style scoped lang="scss" type="text/scss">
-@import url(../../../static/css/scss/OTC/OTCPublishBuyAndSell.scss);
+@import "../../../static/css/scss/OTC/OTCPublishBuyAndSell.scss";
 .otc-online-trader-buy-sell-box{
-    background-color: #1D2331;
-    >.online-trader-buy-sell-content{
-        width: 1150px;
-        margin: 0 auto;
-        margin-top: 50px;
-        margin-bottom: 150px;
-        >.online-trader{
-            display: flex;
-            flex: 10;
-            >.online-trader-left{
+  // background-color: #1D2331;
+  >.online-trader-buy-sell-content{
+    width: 1150px;
+    margin: 0 auto;
+    margin-top: 50px;
+    margin-bottom: 150px;
+    >.online-trader{
+        display: flex;
+        flex: 10;
+        >.online-trader-left{
+            flex: 3;
+            >.shoper-info{
+                width: 320px;
+                height: 180px;
+                box-sizing: border-box;
+                // background-color: #202A33;
+                border-radius: 5px;
+                padding: 40px 40px 0 40px;
+              >.shoper-name{
+                height: 20px;
+                line-height: 20px;
+                >.shang-icon{
+                  display: inline-block;
+                  width: 14px;
+                  height: 19px;
+                  vertical-align: top;
+                }
+                >.name{
+                  display: inline-block;
+                  // color: #FFFFFF;
+                  font-size: 16px;
+                  margin-left: 10px;
+                }
+              }
+              >.shoper-statistics{
+                display: flex;
                 flex: 3;
-                >.shoper-info{
-                    width: 320px;
-                    height: 180px;
-                    box-sizing: border-box;
-                    background-color: #202A33;
-                    border-radius: 5px;
-                    padding: 40px 40px 0 40px;
-                  >.shoper-name{
-                    height: 20px;
-                    line-height: 20px;
-                    >.shang-icon{
-                      display: inline-block;
-                      width: 14px;
-                      height: 19px;
-                      vertical-align: top;
+                text-align: center;
+                margin-top: 40px;
+                .blue{
+                  // color: #3E79D6;
+                  font-size:14px;
+                }
+                .text{
+                  font-size: 12px;
+                  // color: #9DA5B3;
+                  margin-top: 5px;
+                }
+                >.trader-total{
+                  flex: 3;
+                }
+                >.failed{
+                  flex: 3;
+                }
+                >.freeze{
+                  flex: 3;
+                }
+              }
+            }
+            >.shoper-remark{
+                width: 320px;
+                height: 130px;
+                box-sizing: border-box;
+                // background-color: #202A33;
+                margin-top: 20px;
+                border-radius: 5px;
+                padding: 30px 49px 0 39px;
+              >.remark-title{
+                // color: #7D90AC;
+                font-size: 14px;
+              }
+              >.remark-content{
+                // color: #9DA5B3;
+                font-size: 12px;
+                margin-top: 5px;
+                // line-height: 1.2rem;
+                line-height: 20px;
+              }
+            }
+        }
+        >.online-trader-right{
+            flex: 7;
+            box-sizing: border-box;
+            >.trader-details{
+                width: 760px;
+                height: 500px;
+                box-sizing: border-box;
+                // background-color: #202A33;
+                border-radius: 5px;
+                padding: 35px 0 0 48px;
+                >.details-row{
+                  height: 30px;
+                  line-height: 30px;
+                  >.details-tip{
+                    // color: #9DA5B3;
+                    font-size: 12px;
+                    width: 75px;
+                    display: inline-block;
+                  }
+                  >.details-data{
+                    // color: #fff;
+                    font-size: 12px;
+                  }
+                  .xilian{
+                    vertical-align: middle
+                  }
+                }
+                >.form{
+                  .want{
+                    margin-top: 40px;
+                    >.want-text{
+                      // color: #3E79D6;
+                      font-size: 20px;
+                      margin-right: 20px;
                     }
-                    >.name{
-                      display: inline-block;
-                      color: #FFFFFF;
-                      font-size: 16px;
-                      margin-left: 10px;
+                    >.charge-money{
+
                     }
                   }
-                  >.shoper-statistics{
-                    display: flex;
-                    flex: 3;
-                    text-align: center;
-                    margin-top: 40px;
-                    .blue{
-                      color: #3E79D6;
-                      font-size:14px;
+                  .sell-buy-input{
+                    // padding: 10px 0 10px 0;
+                    padding: 10px 0 0 0;
+                    .red{
+                      // border: 1px solid red;
+                      border-right: 0;
                     }
-                    .text{
+                    .coinNameBorder{
+                      // border: 1px solid red;
+                      border-left: 0;
+                    }
+                    >.sell-sum{
+                      width: 190px;
+                      height: 36px;
+                      box-sizing: border-box;
+                      // background-color: #333A41;
+                      padding-left: 10px;
+                      // color: #9DA5B3;
+                    }
+                    >.unit{
+                      width: 70px;
+                      height: 36px;
+                      box-sizing: border-box;
+                      // color: #338FF5;
+                      font-size: 16px;
+                      // background-color: #414951;
+                      display: inline-block;
+                      vertical-align: middle;
+                      margin-left: -4px;
+                      line-height: 36px;
+                      text-align: center;
+                      margin-right: 50px;
+                    }
+                  }
+                  .errorInfo{
+                    >.number{
+                      display: inline-block;
+                      width: 320px;
+                      height: 30px;
+                      line-height: 30px;
                       font-size: 12px;
-                      color: #9DA5B3;
-                      margin-top: 5px;
                     }
-                    >.trader-total{
-                      flex: 3;
+                    >.money{
+                      display: inline-block;
+                        width: 320px;
+                      height: 30px;
+                      line-height: 30px;
+                      font-size: 12px;
                     }
-                    >.failed{
-                      flex: 3;
+                  }
+                  .trader-submit{
+                    >.trader-submit-button{
+                      width: 602px;
+                      height: 40px;
+                      // color: #FFFFFF;
+                      font-size: 14px;
+                      border-radius:4px;
+                      margin-top: 20px;
+                      cursor: pointer;
                     }
-                    >.freeze{
-                      flex: 3;
+                    >.trader-submit-sell{
+                      // background-color: #008069;
+                    }
+                    >.trader-submit-buy{
+                      // background-color: #D45858;
                     }
                   }
                 }
-                >.shoper-remark{
-                    width: 320px;
-                    height: 130px;
-                    box-sizing: border-box;
-                    background-color: #202A33;
-                    margin-top: 20px;
-                    border-radius: 5px;
-                    padding: 30px 49px 0 39px;
-                  >.remark-title{
-                    color: #7D90AC;
-                    font-size: 14px;
+                >.service-charge{
+                  width: 602px;
+                  // color: #9DA5B3;
+                  font-size: 14px;
+                  text-align: right;
+                  .service-data{
                   }
-                  >.remark-content{
-                    color: #9DA5B3;
-                    font-size: 12px;
-                    margin-top: 5px;
-                    // line-height: 1.2rem;
-                    line-height: 20px;
+                  .rate-data{
+                  }
+                }
+                >.service-charge-sell{
+                  width: 602px;
+                  font-size: 14px;
+                  text-align: right;
+                  .service-data-sell{
+                  }
+                  .rate-data-sell{
                   }
                 }
             }
-            >.online-trader-right{
-                flex: 7;
+            >.trading-notes{
+                width: 760px;
+                height: 122px;
                 box-sizing: border-box;
-                >.trader-details{
-                    width: 760px;
-                    height: 500px;
-                    box-sizing: border-box;
-                    background-color: #202A33;
-                    border-radius: 5px;
-                    padding: 35px 0 0 48px;
-                    >.details-row{
-                      height: 30px;
-                      line-height: 30px;
-                      >.details-tip{
-                        color: #9DA5B3;
-                        font-size: 12px;
-                        width: 75px;
-                        display: inline-block;
-                      }
-                      >.details-data{
-                        color: #fff;
-                        font-size: 12px;
-                      }
-                      .xilian{
-                        vertical-align: middle
-                      }
-                    }
-                    >.form{
-                      .want{
-                        margin-top: 40px;
-                        >.want-text{
-                          color: #3E79D6;
-                          font-size: 20px;
-                          margin-right: 20px;
-                        }
-                        >.charge-money{
-
-                        }
-                      }
-                      .sell-buy-input{
-                        // padding: 10px 0 10px 0;
-                        padding: 10px 0 0 0;
-                        .red{
-                          border: 1px solid red;
-                          border-right: 0;
-                        }
-                        .coinNameBorder{
-                          border: 1px solid red;
-                          border-left: 0;
-                        }
-                        >.sell-sum{
-                          width: 190px;
-                          height: 36px;
-                          box-sizing: border-box;
-                          background-color: #333A41;
-                          padding-left: 10px;
-                          color: #9DA5B3;
-                        }
-                        >.unit{
-                          width: 70px;
-                          height: 36px;
-                          box-sizing: border-box;
-                          color: #338FF5;
-                          font-size: 16px;
-                          background-color: #414951;
-                          display: inline-block;
-                          vertical-align: middle;
-                          margin-left: -4px;
-                          line-height: 36px;
-                          text-align: center;
-                          margin-right: 50px;
-                        }
-                      }
-                      .errorInfo{
-                        >.number{
-                          display: inline-block;
-                          width: 320px;
-                          height: 30px;
-                          line-height: 30px;
-                          font-size: 12px;
-                        }
-                        >.money{
-                          display: inline-block;
-                           width: 320px;
-                          height: 30px;
-                          line-height: 30px;
-                          font-size: 12px;
-                        }
-                      }
-                      .trader-submit{
-                        >.trader-submit-button{
-                          width: 602px;
-                          height: 40px;
-                          color: #FFFFFF;
-                          font-size: 14px;
-                          border-radius:4px;
-                          margin-top: 20px;
-                          cursor: pointer;
-                        }
-                        >.trader-submit-sell{
-                          background-color: #008069;
-                        }
-                        >.trader-submit-buy{
-                          background-color: #D45858;
-                        }
-                      }
-                    }
-                    >.service-charge{
-                      width: 602px;
-                      color: #9DA5B3;
-                      font-size: 14px;
-                      text-align: right;
-                    }
+                padding: 35px 0 0 48px;
+              >.notes{
+                >.title{
+                  // color: #B43B3B;
+                  font-size: 14px;
+                  margin-bottom: 15px;
                 }
-                >.trading-notes{
-                    width: 760px;
-                    height: 122px;
-                    box-sizing: border-box;
-                    padding: 35px 0 0 48px;
-                  >.notes{
-                    >.title{
-                      color: #B43B3B;
-                      font-size: 14px;
-                      margin-bottom: 15px;
-                    }
-                    >.tip{
-                      color: #7D90AC;
-                      font-size: 14px;
-                      // line-height: 1.3rem;
-                      line-height: 20px;
-                      >.warning{
-                        color: #B43B3B;
-                        font-size: 14px;
-                      }
-                    }
+                >.tip{
+                  // color: #7D90AC;
+                  font-size: 14px;
+                  line-height: 20px;
+                  >.warning{
+                    // color: #B43B3B;
+                    font-size: 14px;
                   }
                 }
+              }
             }
         }
     }
+  }
+  &.night{
+    background-color: #121824;
+    >.online-trader-buy-sell-content{
+      >.online-trader{
+          >.online-trader-left{
+              >.shoper-info{
+                  background-color: #1E2636;
+                >.shoper-name{
+                  >.shang-icon{
+                  }
+                  >.name{
+                    color: #FFFFFF;
+                  }
+                }
+                >.shoper-statistics{
+                  .blue{
+                    color: #3E79D6;
+                  }
+                  .text{
+                    color: #A9BED4;
+                  }
+                  >.trader-total{
+                  }
+                  >.failed{
+                  }
+                  >.freeze{
+                  }
+                }
+              }
+              >.shoper-remark{
+                  background-color: #1E2636;
+                >.remark-title{
+                  color: #FFFFFF;
+                }
+                >.remark-content{
+                  color: #A9BED4;
+                }
+              }
+          }
+          >.online-trader-right{
+              >.trader-details{
+                  background-color: #1E2636;
+                  >.details-row{
+                    >.details-tip{
+                      color: #A9BED4;
+                    }
+                    >.details-data{
+                      color: #fff;
+                    }
+                    .xilian{
+                    }
+                  }
+                  >.form{
+                    .want{
+                      >.want-text{
+                        color: #3E79D6;
+                      }
+                      >.charge-money{
+
+                      }
+                    }
+                    .sell-buy-input{
+                      .red{
+                        border: 1px solid red;
+                      }
+                      .coinNameBorder{
+                        border: 1px solid red;
+                      }
+                      >.sell-sum{
+                        background-color: #232F44;
+                        color: #A9BED4;
+                      }
+                      >.unit{
+                        color: #338FF5;
+                        background-color: #303F59;
+                      }
+                    }
+                    .errorInfo{
+                      >.number{
+                      }
+                      >.money{
+                      }
+                    }
+                    .trader-submit{
+                      >.trader-submit-button{
+                        color: #FFFFFF;
+                      }
+                      >.trader-submit-sell{
+                        background-color: #008069;
+                      }
+                      >.trader-submit-buy{
+                        background-color: #D45858;
+                      }
+                    }
+                  }
+                  >.service-charge{
+                    color: #A9BED4;
+                    .service-data{
+                      color: #BB4C4C;
+                    }
+                    .rate-data{
+                      color: #BB4C4C;
+                    }
+                  }
+                  >.service-charge-sell{
+                    color: #A9BED4;
+                    .service-data-sell{
+                      color: #008069;
+                    }
+                    .rate-data-sell{
+                      color: #008069;
+                    }
+                  }
+              }
+              >.trading-notes{
+                >.notes{
+                  >.title{
+                    color: #BB4C4C;
+                  }
+                  >.tip{
+                    color: #7D90AC;
+                    >.warning{
+                      color: #BB4C4C;
+                    }
+                  }
+                }
+              }
+          }
+      }
+    }
+  }
+  &.day{
+    background-color: #fff;
+    >.online-trader-buy-sell-content{
+      >.online-trader{
+          >.online-trader-left{
+              >.shoper-info{
+                  // background-color: #202A33;
+                >.shoper-name{
+                  >.shang-icon{
+                  }
+                  >.name{
+                    color: #333333;
+                  }
+                }
+                >.shoper-statistics{
+                  .blue{
+                    color: #3E79D6;
+                  }
+                  .text{
+                    color: #333333;
+                  }
+                  >.trader-total{
+                  }
+                  >.failed{
+                  }
+                  >.freeze{
+                  }
+                }
+              }
+              >.shoper-remark{
+                  // background-color: #202A33;
+                >.remark-title{
+                  color: #333333;
+                }
+                >.remark-content{
+                  color: #7D90AC;
+                }
+              }
+          }
+          >.online-trader-right{
+              >.trader-details{
+                  // background-color: #202A33;
+                  >.details-row{
+                    >.details-tip{
+                      color: #7D90AC;
+                    }
+                    >.details-data{
+                      color: #333333;
+                    }
+                    .xilian{
+                    }
+                  }
+                  >.form{
+                    .want{
+                      >.want-text{
+                        color: #3E79D6;
+                      }
+                      >.charge-money{
+
+                      }
+                    }
+                    .sell-buy-input{
+                      .red{
+                        border: 1px solid red;
+                      }
+                      .coinNameBorder{
+                        border: 1px solid red;
+                      }
+                      >.sell-sum{
+                        background-color: #FFFFFF;
+                        color: #333333;
+                        border:1px solid rgba(236,241,248,1);
+                      }
+                      >.unit{
+                        color: #7EA9E4;
+                        background-color: #CBDDF4;
+                        border:1px solid rgba(236,241,248,1);
+                      }
+                    }
+                    .errorInfo{
+                      >.number{
+                      }
+                      >.money{
+                      }
+                    }
+                    .trader-submit{
+                      >.trader-submit-button{
+                        color: #FFFFFF;
+                      }
+                      >.trader-submit-sell{
+                        background-color: #008069;
+                      }
+                      >.trader-submit-buy{
+                        background-color: #D45858;
+                      }
+                    }
+                  }
+                  >.service-charge{
+                    color: #333333;
+                    .service-data{
+                      color: #BB4C4C;
+                    }
+                    .rate-data{
+                      color: #BB4C4C;
+                    }
+                  }
+                  >.service-charge-sell{
+                    color: #333333;
+                    .service-data-sell{
+                      color: #008069;
+                    }
+                    .rate-data-sell{
+                      color: #008069;
+                    }
+                  }
+              }
+              >.trading-notes{
+                >.notes{
+                  >.title{
+                    color: #BB4C4C;
+                  }
+                  >.tip{
+                    color: #7D90AC;
+                    >.warning{
+                      color: #B43B3B;
+                    }
+                  }
+                }
+              }
+          }
+      }
+    }
+  }
 }
 </style>
