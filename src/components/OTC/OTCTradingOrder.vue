@@ -716,6 +716,7 @@ export default {
     },
     // 自动取消订单倒计时
     cancelSetInter () {
+      clearInterval(this.timerCancel)
       this.timerCancel = setInterval(() => {
         // 循环自动取消倒计时时间数组
         this.cancelOrderTimeArr.forEach((item, index) => {
@@ -725,6 +726,7 @@ export default {
     },
     // 自动成交倒计时
     accomplishSetInter () {
+      clearInterval(this.timerAccomplish)
       this.timerAccomplish = setInterval(() => {
         // 循环自动成交倒计时数组
         this.accomplishOrderTimeArr.forEach((item, index) => {
@@ -734,7 +736,6 @@ export default {
     },
     // 2.0 请求交易中订单列表
     async getOTCTradingOrdersList () {
-      clearInterval(this.timerCancel)
       console.log('当前页：' + this.currentPage)
       const data = await getOTCTradingOrders({
         status: 'TRADING', // 状态 (交易中 TRADING )
@@ -836,8 +837,6 @@ export default {
           return false
         } else {
           this.dialogVisible1 = false
-          // 清除定时器
-          clearInterval(this.timerCancel)
           // 2再次调用接口刷新列表
           this.getOTCTradingOrdersList()
         }
@@ -867,8 +866,6 @@ export default {
         return false
       } else {
         this.dialogVisible2 = false
-        // 清除定时器
-        clearInterval(this.timerCancel)
         this.getOTCTradingOrdersList()
       }
     },
@@ -927,7 +924,7 @@ export default {
   destroyed () {
     // 离开本组件清除定时器
     clearInterval(this.timerCancel)
-    clearInterval(timerAccomplish)
+    clearInterval(this.timerAccomplish)
   }
 }
 </script>

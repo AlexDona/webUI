@@ -28,7 +28,7 @@ const state = {
   refSecurityCenterStatus: false,
   // 收款方式
   refsAccountCenterStatus: false,
-  legalTradePageSize: 1, // 每页数据量
+  legalTradePageSize: 10, // 每页数据量
   legalTradePageNum: 1, // 开始页码
   legalTradePageTotals: 0 // 总页数
 }

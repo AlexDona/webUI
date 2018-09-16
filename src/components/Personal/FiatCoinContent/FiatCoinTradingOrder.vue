@@ -691,7 +691,9 @@ export default {
       showOrderAppeal: [], // 订单申诉框显示与隐藏状态集
       cancelOrderTimeArr: [], // 自动取消订单倒计时数组集
       accomplishOrderTimeArr: [], // 自动成交倒计时数组集
-      errpwd: '' // 交易密码错提示
+      errpwd: '', // 交易密码错提示
+      accomplishTimer: null,
+      cancelTimer: null
       // pageSize:
     }
   },
@@ -725,7 +727,8 @@ export default {
     },
     // 自动取消订单倒计时
     cancelSetInter () {
-      this.timer = setInterval(() => {
+      clearInterval(this.cancelTimer)
+      this.cancelTimer = setInterval(() => {
         // 循环自动取消倒计时时间数组
         this.cancelOrderTimeArr.forEach((item, index) => {
           this.$set(this.cancelOrderTimeArr, index, this.cancelOrderTimeArr[index] - 1000)
@@ -734,7 +737,8 @@ export default {
     },
     // 自动成交倒计时
     accomplishSetInter () {
-      this.timer = setInterval(() => {
+      clearInterval(this.accomplishTimer)
+      this.accomplishTimer = setInterval(() => {
         // 循环自动成交倒计时数组
         this.accomplishOrderTimeArr.forEach((item, index) => {
           this.$set(this.accomplishOrderTimeArr, index, this.accomplishOrderTimeArr[index] - 1000)
