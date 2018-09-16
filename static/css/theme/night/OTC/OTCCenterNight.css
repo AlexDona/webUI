@@ -34,7 +34,7 @@
 .otc-box.night .el-table th.is-leaf {
   border-bottom: 1px solid rgba(97,116,153,1);
 }
-.otc-box.night .el-table td{
+.otc-box.night .otc-center-content .otc-merchant-content .el-table td{
   border-bottom: 1px solid rgba(97,116,153,0.05);
 }
 .otc-box.night .el-table--enable-row-hover .el-table__body tr:hover>td{
