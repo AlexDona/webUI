@@ -633,7 +633,7 @@
 <!--请严格按照如下书写书序-->
 <script>
 import {
-  getQueryAllOrdersList,
+  // getQueryAllOrdersList,
   buyerPayForOrder,
   sellerConfirmGetMoney,
   sellerSendAppeal
@@ -657,7 +657,7 @@ export default {
       activitedPayStyle: '', //  选中的支付方式
       activitedPayStyleId: '', //  选中的支付方式id-往后台传送的参数
       // 交易中订单列表
-      tradingOrderList: [],
+      // tradingOrderList: [],
       // 选中的订单id
       activedTradingOrderId: '',
       // ren测试支付方式
@@ -683,14 +683,16 @@ export default {
     require('../../../../static/css/theme/day/Personal/FiatCoinContent/FiatCoinCanceledOrderDay.css')
     require('../../../../static/css/theme/night/Personal/FiatCoinContent/FiatCoinCanceledOrderNight.css')
     // 1.0 请求交易中订单列表
-    this.getOTCTradingOrdersList()
+    // this.getOTCTradingOrdersList()
   },
   mounted () {},
   activited () {},
   update () {},
   beforeRouteUpdate () {},
   methods: {
-    ...mapMutations([]),
+    ...mapMutations([
+      'SET_LEGAL_TENDER_REFLASH_STATUS'
+    ]),
     // 1.0 时间格式化
     timeFormatting (date) {
       return timeFilter(date, 'time')
@@ -716,38 +718,6 @@ export default {
           this.$set(this.accomplishOrderTimeArr, index, this.accomplishOrderTimeArr[index] - 1000)
         })
       }, 1000)
-    },
-    // 2.0 请求交易中订单列表
-    async getOTCTradingOrdersList () {
-      const data = await getQueryAllOrdersList({
-        status: 'TRADING' // 状态 (交易中 TRADING )
-        // pageNum: '1',
-        // pageSize: '10'
-      })
-      // console.log('交易中订单列表')
-      // console.log(data)
-      // 提示信息
-      if (!(returnAjaxMessage(data, this, 0))) {
-        return false
-      } else {
-        // 返回数据正确的逻辑
-        this.tradingOrderList = data.data.data.list
-        console.log('交易中订单')
-        console.log(this.tradingOrderList)
-        // 循环数组
-        this.tradingOrderList.forEach((item, index) => {
-          this.buttonStatusArr[index] = false
-          this.showOrderAppeal[index] = false
-          // 自动取消订单倒计时数组集
-          this.cancelOrderTimeArr[index] = item.cancelRestTime // cancelRestTime毫秒单位
-          // 自动成交倒计时数组集
-          this.accomplishOrderTimeArr[index] = item.completeRestTime // completeRestTime毫秒单位
-        })
-        // 调用自动取消倒计时方法
-        this.cancelSetInter()
-        // 调用自动成交倒计时方法
-        this.accomplishSetInter()
-      }
     },
     // 3.0 改变交易方式
     changeUserBankInfo (index) {
@@ -822,8 +792,10 @@ export default {
           // 1关闭交易密码框
           this.dialogVisible1 = false
           // 2再次调用接口刷新列表
-          this.getOTCTradingOrdersList()
-          // 3再次渲染页面:根据返回的订单状态
+          this.SET_LEGAL_TENDER_REFLASH_STATUS({
+            type: 'TRADING',
+            status: true
+          })
         }
       }
     },
@@ -856,8 +828,10 @@ export default {
         // 1关闭交易密码框
         this.dialogVisible2 = false
         // 2再次调用接口刷新列表
-        this.getOTCTradingOrdersList()
-        // 3再次渲染页面:根据返回的订单状态
+        this.SET_LEGAL_TENDER_REFLASH_STATUS({
+          type: 'TRADING',
+          status: true
+        })
       }
     },
     // 8.0 点击订单申诉弹窗申诉框
@@ -890,18 +864,44 @@ export default {
         return false
       } else {
         this.dialogVisible3 = false
-        // 再次调用接口刷新列表
-        this.getOTCTradingOrdersList()
+        this.SET_LEGAL_TENDER_REFLASH_STATUS({
+          type: 'TRADING',
+          status: true
+        })
       }
     }
   },
   filter: {},
   computed: {
     ...mapState({
-      theme: state => state.common.theme
-    })
+      theme: state => state.common.theme,
+      legalTraderTradingList: state => state.personal.legalTraderTradingList,
+      legalTraderTradingReflashStatus: state => state.personal.legalTraderTradingReflashStatus
+    }),
+    tradingOrderList () {
+      return this.legalTraderTradingList
+    }
   },
-  watch: {}
+  watch: {
+    tradingOrderList (newVal) {
+      console.log(newVal)
+      if (newVal) {
+        // 循环数组
+        newVal.forEach((item, index) => {
+          this.buttonStatusArr[index] = false
+          this.showOrderAppeal[index] = false
+          // 自动取消订单倒计时数组集
+          this.cancelOrderTimeArr[index] = item.cancelRestTime // cancelRestTime毫秒单位
+          // 自动成交倒计时数组集
+          this.accomplishOrderTimeArr[index] = item.completeRestTime // completeRestTime毫秒单位
+        })
+        // 调用自动取消倒计时方法
+        this.cancelSetInter()
+        // 调用自动成交倒计时方法
+        this.accomplishSetInter()
+      }
+    }
+  }
 }
 </script>
 <style scoped lang="scss" type="text/scss">

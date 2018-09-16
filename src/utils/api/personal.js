@@ -118,7 +118,7 @@ export const sellerSendAppeal = (params) => postWithURLencoded('otcAppeal/applyO
 //         this.securityCenter = data.data.data
 //       }
 //     }
-export const getOTCMerchantsOrdersList = (params) => get('otcOrder/selectMerchOrdersPage', params)
+// export const getOTCMerchantsOrdersList = (params) => get('otcOrder/selectMerchOrdersPage', params)
 /**
  * API
  * */

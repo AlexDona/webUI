@@ -117,9 +117,9 @@ export default {
   // props,
   data () {
     return {
-      dialogVisible: false,
+      dialogVisible: false
       // OTC委托订单列表
-      OTCEntrustOrderList: []
+      // OTCEntrustOrderList: []
     }
   },
   created () {
@@ -138,7 +138,9 @@ export default {
   beforeRouteUpdate () {
   },
   methods: {
-    ...mapMutations([]),
+    ...mapMutations([
+      'SET_LEGAL_TENDER_REFLASH_STATUS'
+    ]),
     // 1.0 时间格式化
     timeFormatting (date) {
       return timeFilter(date, 'date')
@@ -152,7 +154,7 @@ export default {
       // console.log(data)
       // 提示信息
       returnAjaxMessage(data, this, 0)
-      this.OTCEntrustOrderList = data.data.data.list
+      // this.OTCEntrustOrderList = data.data.data.list
     },
     // 3.0 点击撤单按钮
     revocationOrder (id) {
@@ -176,17 +178,27 @@ export default {
       } else {
         // 返回数据正确的逻辑
         // this.dialogVisible = false
-        this.getOTCEntrustingOrdersList()
+        // this.getOTCEntrustingOrdersList()
+        this.SET_LEGAL_TENDER_REFLASH_STATUS({
+          type: 'entrust-orders',
+          status: true
+        })
       }
     }
   },
   filter: {},
   computed: {
     ...mapState({
-      theme: state => state.common.theme
-    })
+      theme: state => state.common.theme,
+      legalTraderEntrustList: state => state.personal.legalTraderEntrustList,
+      legalTraderEntrustReflashStatus: state => state.personal.legalTraderEntrustReflashStatus
+    }),
+    OTCEntrustOrderList () {
+      return this.legalTraderEntrustList
+    }
   },
-  watch: {}
+  watch: {
+  }
 }
 </script>
 <style scoped lang="scss" type="text/scss">

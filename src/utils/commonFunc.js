@@ -6,8 +6,7 @@ import {
 } from '../utils/api/trade'
 import {
   assetCurrenciesList,
-  statusSecurityCenter,
-  getOTCMerchantsOrdersList
+  statusSecurityCenter
 } from '../utils/api/personal'
 // import {
 //   sendMsgByPushPhoneOrEmial
@@ -107,13 +106,13 @@ export const stateSafeCentral = async (params, callback) => {
   const repealData = await statusSecurityCenter(params)
   callback(repealData)
 }
-/**
- * 商家订单列表请求
- */
-export const getMerchantsOrdersList = async (params, callback) => {
-  const repealData = await getOTCMerchantsOrdersList(params)
-  callback(repealData)
-}
+// /**
+//  * 商家订单列表请求
+//  */
+// export const getMerchantsOrdersList = async (params, callback) => {
+//   const repealData = await getQueryAllOrdersList(params)
+//   callback(repealData)
+// }
 /**
  * 个人资产信息
  * 币种
