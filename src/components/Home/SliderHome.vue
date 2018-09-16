@@ -49,7 +49,7 @@ export default {
     // 请求轮播图数据
     this.getBanner()
     let sliderList = []
-    sliderListAjax.forEach((item) => {
+    this.sliderListAjax.forEach((item) => {
       sliderList.push({
         style: {
           width: '230px',
@@ -125,7 +125,7 @@ export default {
       } else {
         console.log(data)
         this.sliderListAjax = data.data.data
-        console.log(this.sliderListAjax)
+        // console.log(this.sliderListAjax)
         this.renderSlider()
       }
     },

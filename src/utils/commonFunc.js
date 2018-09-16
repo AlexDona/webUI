@@ -109,10 +109,10 @@ export const stateSafeCentral = async (params, callback) => {
 // /**
 //  * 商家订单列表请求
 //  */
-// export const getMerchantsOrdersList = async (params, callback) => {
-//   const repealData = await getQueryAllOrdersList(params)
-//   callback(repealData)
-// }
+export const getMerchantsOrdersList = async (params, callback) => {
+  const repealData = await getQueryAllOrdersList(params)
+  callback(repealData)
+}
 /**
  * 个人资产信息
  * 币种
