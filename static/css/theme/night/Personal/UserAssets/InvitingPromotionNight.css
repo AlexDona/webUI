@@ -6,16 +6,15 @@
   color: #617499;
 }
 .invitation-promotion.personal.night .el-table th.is-leaf {
-  /*border-bottom: 1px solid rgba(97,116,153,1);*/
   border-bottom: 0;
 }
 .invitation-promotion.personal.night .el-table td{
-  /*border-bottom: 1px solid rgba(97,116,153,0.05);*/
-  /*padding: 7px 0;*/
   color: #ccc;
   border-bottom: 0;
 }
-
+.invitation-promotion.personal.night .el-table .cell {
+  color: #A9BED4;
+}
 .invitation-promotion.personal.night .el-table--enable-row-hover .el-table__body tr:hover>td{
   background-color: #1D2331;
 }

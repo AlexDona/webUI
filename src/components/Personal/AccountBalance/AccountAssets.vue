@@ -1109,6 +1109,7 @@ export default {
           >.table-tr {
             >.table-box {
               >.table-td {
+                color: #9DA5B3;
                 >.table-charge-money,
                 >.table-mention-money,
                 >.table-deal {

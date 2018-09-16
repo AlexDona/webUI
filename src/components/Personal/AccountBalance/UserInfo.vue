@@ -4,20 +4,25 @@
     :class="{'day':theme == 'day','night':theme == 'night' }"
   >
     <div class="user-info-main">
-      <div class="user-info-content-box">
-        <div class="user float-left">
+      <div class="user-info-content-box display-flex">
+        <div class="user float-left flex1">
           <p class="user-background text-align-c line-height56 float-left">
             <IconFontCommon
               class="font-size40 icon-user"
               iconName="icon-yonghu1"
             />
           </p>
-          <p class="text-align-id margin-top16 float-right">
-            <span>您好，{{ userInfo.userInfo.userName }}</span><br/>
-            <span>UID: {{ userInfo.userInfo.showId }}</span>
-          </p>
+          <div class="text-align-id margin-top16 float-right">
+            <p class="font-size12">
+              <span class="text-color">您好，</span>
+              <span class="color">{{ userInfo.userInfo.userName }}</span>
+            </p>
+            <span class="display-inline-block margin-top9 text-color">
+              UID: {{ userInfo.userInfo.showId }}
+            </span>
+          </div>
         </div>
-        <div class="info float-left">
+        <div class="info float-left flex1">
           <p class="info-top">
             <!--未实名-->
             <span
@@ -104,7 +109,7 @@
             <span class="info-centre-left float-left font-size12">会员等级 -</span>
             <p class="info-picture margin-left10 float-left">
               <img :src="vipShowPictureSrc">
-              <span class="info-centre-right font-size12">{{ userShowVipGrade }}</span>
+              <span class="info-centre-right font-size12">{{ userInfo.userInfo.level }}</span>
             </p>
           </div>
           <p class="info-discount margin-top45">
@@ -123,7 +128,7 @@
             <!--<span class="info-color font-size12">CNY</span>-->
           <!--</p>-->
         <!--</div>-->
-        <div class="asset float-left">
+        <div class="asset float-left flex1">
           <p class="asset-text font-size12">当前资产总估值</p>
           <p class="asset-info margin-top9">
             <span class="info-color font-size16">{{ totalSumBTC }}</span>
@@ -160,7 +165,7 @@ export default {
     return {
       showStateUserInfo: {}, // 获取全局个人信息
       vipShowPictureSrc: require('../../../assets/user/vip.png'), // VIP图片
-      userShowVipGrade: 'V1', // 自定义VIP等级
+      // userShowVipGrade: 'V1', // 自定义VIP等级
       discountRate: '无', // 自定义折扣率
       totalSumBTC: '', // btc资产
       CNYAssets: '0.0000' // bcny资产
@@ -229,20 +234,20 @@ export default {
           height: 100%;
         }
         >.user {
-          width: 250px;
+          /*width: 250px;*/
           >.user-background {
-            width: 48px;
-            height: 48px;
+            width: 59px;
+            height: 60px;
             border-radius: 50%;
-            margin: 25px 30px;
+            margin: 15px 20px 0 36px;
           }
           >.text-align-id {
-            width: 140px;
-            margin-top: 35px;
+            width: 185px;
+            margin-top: 25px;
           }
         }
         >.info {
-          width: 300px;
+          /*width: 300px;*/
           >.info-top {
             padding: 0 70px;
             >.icon-user-info,
@@ -263,7 +268,7 @@ export default {
               >.info-centre-right{
                 position: absolute;
                 top: 0;
-                left: 22px;
+                left: 17px;
               }
             }
           }
@@ -275,7 +280,7 @@ export default {
           }
         }
         >.volume {
-          width: 300px;
+          /*width: 300px;*/
           >.volume-text {
             padding: 0 25px;
             margin-top: 23px;
@@ -285,7 +290,7 @@ export default {
           }
         }
         >.asset {
-          width: 350px;
+          /*width: 350px;*/
           >.asset-text {
             padding: 0 20px;
             margin-top: 23px;
@@ -317,8 +322,17 @@ export default {
                 color: #E1F3FF;
               }
             }
+            >.text-align-id {
+              .text-color {
+                color: rgba(255,255,255,0.9);
+              }
+              .color {
+                color: #338FF5 !important;
+              }
+            }
           }
           >.info {
+            padding-top: 10px;
             >.info-top {
               >.icon-user-info,
               >.real-name {

@@ -32,9 +32,9 @@
   background-color: #1c2237;
 }
 
-.night .el-select-dropdown__list {
-  background-color: #181d2e;
-}
+/*.night .el-select-dropdown__list {*/
+  /*background-color: #181d2e;*/
+/*}*/
 .night .el-select-dropdown{
   border-color:#282E43;
 }
@@ -46,11 +46,11 @@
   background-color: rgba(51, 143, 245, .05);
   color: #fff;
 }
-.night .el-select-dropdown__item.hover,
-.night .el-select-dropdown__item:hover{
-  background-color: #282E43;
-  color:#fff;
-}
+/*.night .el-select-dropdown__item.hover,*/
+/*.night .el-select-dropdown__item:hover{*/
+  /*background-color: #282E43;*/
+  /*color:#fff;*/
+/*}*/
 .night .el-input__inner{
   color:#DEE1EA;
 }

@@ -1,4 +1,4 @@
 /*个人中心（黑色主题）*/
 .binding-google.personal.night .el-form-item__label {
-  color: #fff;
+  color: rgba(255,255,255,0.7);
 }

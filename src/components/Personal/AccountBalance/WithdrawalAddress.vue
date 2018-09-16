@@ -287,6 +287,9 @@ export default {
       min-height: 390px;
       >.withdrawal-header {
         margin-bottom: 2px;
+        >.header-content {
+          font-weight: 400;
+        }
       }
       >.withdrawal-address-content {
         >.withdrawal-address-box {
@@ -307,7 +310,7 @@ export default {
         line-height: 50px;
       }
       .btn {
-        width: 90px;
+        width: 80px;
         height: 35px;
         line-height: 0;
       }
@@ -321,30 +324,30 @@ export default {
           background-color: #1E2636;
           box-shadow:2px 0px 3px rgba(24,30,42,1);
           >.header-content {
-            color: #fff;
+            color: rgba(255,255,255,0.7);
           }
         }
         >.withdrawal-address-content {
           >.withdrawal-address-box {
             .form-input {
               border: 1px solid #485776;
-              color: #fff;
+              color: rgba(255,255,255,0.7);
             }
             .form-input:focus {
               border: 1px solid #338FF5;
             }
             .form-button {
               background:linear-gradient(0deg,rgba(43,57,110,1),rgba(42,80,130,1));
-              color: #fff;
+              color: rgba(255,255,255,0.7);
             }
           }
         }
         >.address-list-header {
-          color: #fff;
+          color: rgba(255,255,255,0.7);
           border-bottom: 1px solid #39424D;
         }
         .btn {
-          color: #fff;
+          color: rgba(255,255,255,0.7);
           background-color: transparent;
           border: 1px solid #338FF5;
         }

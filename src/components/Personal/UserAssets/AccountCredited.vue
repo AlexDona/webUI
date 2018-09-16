@@ -16,7 +16,7 @@
         </p>
         <div class="title-status font-size12">
           <span class="left">收款方式</span>
-          <span class="right">操作</span>
+          <span class="right text-align-r">操作</span>
         </div>
         <div class="payment-content">
           <!--银行卡-->
@@ -597,6 +597,7 @@ export default {
       >.credited-box{
         padding: 30px 23px;
         >.title-status {
+          width: 100%;
           height: 35px;
           border-radius: 2px;
           margin-top: 24px;
@@ -709,7 +710,7 @@ export default {
       }
       .title-status {
         background:rgba(248,249,252,0.05);
-        color: #fff;
+        color: rgba(255,255,255,0.7);
       }
     }
     &.day{

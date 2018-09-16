@@ -288,11 +288,11 @@ export default {
           }
           >.chat-content-from {
             .chat-content-type {
-              color: #fff;
+              color: rgba(255,255,255,0.7);
             }
             .chat-input {
               border: 1px solid #485776;
-              color: #fff;
+              color: rgba(255,255,255,0.7);
             }
             .chat-upload {
               /*background-color: #485776;*/
@@ -303,7 +303,7 @@ export default {
             .chat-button {
               padding: 10px 33px;
               background:linear-gradient(0deg,rgba(43,57,110,1),rgba(42,80,130,1));
-              color: #fff;
+              color: rgba(255,255,255,0.7);
             }
           }
         }

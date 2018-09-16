@@ -302,7 +302,7 @@ export default {
             }
             .account-input {
               border: 1px solid #485776;
-              color: #fff;
+              color: rgba(255,255,255,0.7);
             }
             .account-upload {
               background-color: #323E48;
@@ -313,7 +313,7 @@ export default {
             .account-button {
               padding: 10px 33px;
               background:linear-gradient(0deg,rgba(43,57,110,1),rgba(42,80,130,1));
-              color: #fff;
+              color: rgba(255,255,255,0.7);
             }
           }
         }

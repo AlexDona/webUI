@@ -15,3 +15,6 @@
 .invitation-promotion.personal .el-scrollbar{
   width: 120px;
 }
+.invitation-promotion.personal.night .el-table .cell {
+  font-size: 12px;
+}
