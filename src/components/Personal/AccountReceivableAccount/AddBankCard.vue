@@ -314,9 +314,15 @@ export default {
       background-color: $dayBgColor;
       color:$dayFontColor;
       .add-bank-main {
-        background-color: #ccc;
+        background:rgba(255,255,255,1);
+        border:1px solid rgba(246,246,246,1);
+        border-radius:4px;
+        box-shadow:0px 0px 4px rgba(235,240,248,1);
         > .add-bank-header {
           border-bottom: 1px solid #ccc;
+          .header-content-right {
+            color: #7D90AC;
+          }
         }
         >.add-bank-content {
           >.bank-content-title {
@@ -325,8 +331,9 @@ export default {
           }
           >.bank-content-from {
             .bank-input {
-              border: 1px solid #000;
-              color: #000;
+              color: #333;
+              background:rgba(255,255,255,1);
+              border:1px solid rgba(236,241,248,1);
             }
             .bank-button {
               padding: 10px 33px;

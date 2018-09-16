@@ -7,10 +7,14 @@
 .credited-credited.personal .el-switch__core:after{
   z-index: 9;
 }
+.credited-credited.personal .el-dialog__header {
+  height: 0;
+  padding: 0;
+}
 .credited-credited.personal .el-dialog{
   border-radius: 10px;
-  width: 300px;
-  height: 200px;
+  width: 350px;
+  height: 300px;
   top: 15%;
 }
 .credited-credited.personal .el-dialog__close {
