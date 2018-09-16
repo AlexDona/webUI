@@ -78,7 +78,6 @@ export default {
   },
   created () {},
   mounted () {
-    
     this.resetOptions()
     this.resetChart(this.options)
     // this.drawLine()
