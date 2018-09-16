@@ -20,9 +20,8 @@ export default {
         // formatter: "{a} <br/>{b}: {c} ({d}%)"
         },
         legend: {
-          type: 'scroll',
           orient: 'vertical',
-          x: 'left',
+          y: 'bottom',
           show: 'true',
           data: ['投资', '收益']
         },
