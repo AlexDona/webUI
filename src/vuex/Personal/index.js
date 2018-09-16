@@ -6,18 +6,17 @@ import actions from './action'
 
 const state = {
   // 交易中的订单
-  tradingList: [],
+  legalTraderTradingList: [],
+  legalTraderTradingReflashStatus: false, // 刷新状态
   //  已完成的订单
-  completedList: [],
-  completedExpands: [],
+  legalTraderCompletedList: [],
   //  已取消的订单
-  canceledList: [],
-  canceledExpands: [],
+  legalTraderCanceledList: [],
   //  冻结中的订单
-  forzenList: [],
-  forzenExpands: [],
+  legalTraderForzenList: [],
   //  委托订单
-  entrustList: [],
+  legalTraderEntrustList: [],
+  legalTraderEntrustReflashStatus: false,
   // 个人中心默认显示第一个
   userCenterActiveName: 'assets',
   // 个人中心默认显示第一个

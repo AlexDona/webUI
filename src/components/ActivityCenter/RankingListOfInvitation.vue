@@ -78,7 +78,7 @@
                   {{item.secondCount}}
                 </span>
                 <span class="td">
-                  <!--{{item.secondCount}}-->
+                  {{item.account}}{{item.coinName}}
                 </span>
               </li>
             </ul>

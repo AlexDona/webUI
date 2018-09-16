@@ -258,7 +258,7 @@ export default {
     // 设置 当前交易区
     changeActiveSymbol (activeSymbol, previousSymbol) {
       // console.log('active----------------->', activeSymbol)
-      console.log(activeSymbol.tradeId)
+      // console.log(activeSymbol.tradeId)
       // console.log(this.activeTabId)
       // console.log('previous--------------->', this.previousSymbol.id)
       // this.$store.commit('common/CHANGE_ACTIVE_SYMBOL', activeSymbol)
@@ -495,7 +495,7 @@ export default {
     },
     // 切换tab
     changeTab (e) {
-      console.log(e)
+      // console.log(e)
       this.$store.commit('trade/CHANGE_ACTIVE_TAB_ID', this.activeName)
       // 自选区
       if (this.activeName == this.tabList[0].id) {
@@ -511,7 +511,7 @@ export default {
       } else {
         // 接口请求不同交易区数据
         this.$store.commit('common/CHANGE_ACTIVE_TRADE_AREA', this.tabList[e.index])
-        console.log(this.activeTradeArea)
+        // console.log(this.activeTradeArea)
         // this.resetSocketMarket(this.activeName)
       }
     },
@@ -601,14 +601,14 @@ export default {
         switch (data.type) {
           case 0:
             this.marketList = data.data
-            console.log(this.marketList)
+            // console.log(this.marketList)
             this.marketList.forEach((item) => {
-              console.log(item)
+              // console.log(item)
               item.content.forEach((innerItem) => {
                 if (innerItem.id.toLocaleUpperCase() == this.activeSymbolId.toLocaleUpperCase()) {
                   this.CHANGE_ACTIVE_SYMBOL(innerItem)
-                  console.log(innerItem.id)
-                  console.log(this.activeSymbolId)
+                  // console.log(innerItem.id)
+                  // console.log(this.activeSymbolId)
                   return false
                 }
               })

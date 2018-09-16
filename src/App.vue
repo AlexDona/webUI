@@ -17,7 +17,7 @@ export default {
     return {}
   },
   async created () {
-    console.log(this.isLogin)
+    // console.log(this.isLogin)
     require('../static/css/common.css')
     require('../static/css/list/Common/HeaderCommon/HeaderCommon.css')
     require('../static/css/theme/night/Common/HeaderCommonNight.css')
@@ -26,13 +26,13 @@ export default {
     const theme = getStore('theme') || 'night'
     this.CHANGE_THEME(theme)
     document.body.classList.add(theme)
-    console.log(document.body)
+    // console.log(document.body)
     // 取折算货币
     const convertCurrency = getStore('convertCurrency')
     this.CHANGE_CONVERT_CURRENCY(convertCurrency)
   },
   mounted () {
-    console.log(this.userInfo)
+    // console.log(this.userInfo)
   },
   activited () {},
   update () {},
@@ -60,7 +60,7 @@ export default {
       }
     },
     userInfo (newVal) {
-      console.log(newVal)
+      // console.log(newVal)
     }
   }
 }

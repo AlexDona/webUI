@@ -17,7 +17,7 @@
       <!--表格-->
       <div
         class="canceled-table-body"
-        v-for="(item,index) in getOTCCanceledOrderList"
+        v-for="(item,index) in OTCCanceledOrderList"
         :key="index"
       >
         <!--表格上部分-->
@@ -72,9 +72,9 @@
           </div>
         </div>
       </div>
-      <div class="no-data" v-if="!getOTCCanceledOrderList.length">暂无数据</div>
+      <div class="no-data" v-if="!OTCCanceledOrderList.length">暂无数据</div>
       <el-pagination
-        v-if="getOTCCanceledOrderList.length >= 10 "
+        v-if="OTCCanceledOrderList.length >= 10 "
         background
         layout="prev, pager, next"
         :total="100"
@@ -97,15 +97,13 @@ export default {
   data () {
     return {
       // OTC取消订单列表
-      getOTCCanceledOrderList: []
+      // OTCCanceledOrderList: []
     }
   },
   created () {
     require('../../../../static/css/list/Personal/FiatCoinContent/FiatCoinCanceledOrder.css')
     require('../../../../static/css/theme/day/Personal/FiatCoinContent/FiatCoinCanceledOrderDay.css')
     require('../../../../static/css/theme/night/Personal/FiatCoinContent/FiatCoinCanceledOrderNight.css')
-    // 1.0 请求已取消订单列表
-    // this.getOTCCanceledOrdersList()
   },
   mounted () {},
   activited () {},
@@ -116,31 +114,17 @@ export default {
     // 1.0 时间格式化
     timeFormatting (date) {
       return timeFilter(date, 'normal')
-    },
-    // 2.0 请求已取消订单列表
-    async getOTCCanceledOrdersList () {
-      const data = await getQueryAllOrdersList({
-        status: 'CANCELED' // 状态 (交易中 TRADING 已完成 COMPLETED  已取消  CANCELED 冻结中 FROZEN)
-        // pageNum: '1',
-        // pageSize: '10'
-      })
-      // console.log(data)
-      // 提示信息
-      if (!(returnAjaxMessage(data, this, 0))) {
-        return false
-      } else {
-        // 返回数据正确的逻辑
-        this.getOTCCanceledOrderList = data.data.data.list.slice(5)
-        console.log('取消订单')
-        console.log(this.getOTCCanceledOrderList)
-      }
     }
   },
   filter: {},
   computed: {
     ...mapState({
-      theme: state => state.common.theme
-    })
+      theme: state => state.common.theme,
+      legalTraderCanceledList: state => state.personal.legalTraderCanceledList
+    }),
+    OTCCanceledOrderList () {
+      return this.legalTraderCanceledList
+    }
   },
   watch: {}
 }

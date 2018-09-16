@@ -380,10 +380,10 @@ export default {
       }
     },
     onMessage (data) {
-      console.log(data)
+      // console.log(data)
       switch (data.tradeType) {
         case 'KLINE':
-          console.log(data)
+          // console.log(data)
           if (data.data && data.data.length && !data.type) {
             const list = []
             const ticker = `${this.symbol}-${this.interval}`
@@ -423,14 +423,14 @@ export default {
           }
           break
         case 'DEPTH':
-          console.log(data)
+          // console.log(data)
           if (data.data) {
             this.socketData.depthData = data.data.depthData
             this.socketData.buyAndSellData = data.data.depthRender
           }
           break
         case 'TRADE':
-          console.log(data)
+          // console.log(data)
           if (data.data) {
             if (!data.type) {
               this.socketData.tardeRecordList = data.data
@@ -441,13 +441,13 @@ export default {
           }
           break
         case 'BBTICKER':
-          console.log(data)
+          // console.log(data)
           if (data.data) {
             this.socketData.tradeMarketList = data
           }
           break
         case 'DEFAULTTRADE':
-          console.log(data)
+          // console.log(data)
           if (data.data) {
             this.$store.commit('trade/SET_MIDDLE_TOP_DATA', data.data[0].content[0])
             // this.CHANGE_ACTIVE_SYMBOL({activeSymbol: data.data[0].content[0]})
