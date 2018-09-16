@@ -679,7 +679,9 @@ export default {
       showOrderAppeal: [], // 订单申诉框显示与隐藏状态集
       cancelOrderTimeArr: [], // 自动取消订单倒计时数组集
       accomplishOrderTimeArr: [], // 自动成交倒计时数组集
-      errpwd: '' // 交易密码错提示
+      errpwd: '', // 交易密码错提示
+      timerCancel: null, // 自动取消订单倒计时
+      timerAccomplish: null // 自动成交倒计时
     }
   },
   created () {
@@ -714,7 +716,8 @@ export default {
     },
     // 自动取消订单倒计时
     cancelSetInter () {
-      this.timer = setInterval(() => {
+      clearInterval(this.timerCancel)
+      this.timerCancel = setInterval(() => {
         // 循环自动取消倒计时时间数组
         this.cancelOrderTimeArr.forEach((item, index) => {
           this.$set(this.cancelOrderTimeArr, index, this.cancelOrderTimeArr[index] - 1000)
@@ -723,7 +726,8 @@ export default {
     },
     // 自动成交倒计时
     accomplishSetInter () {
-      this.timer = setInterval(() => {
+      clearInterval(this.timerAccomplish)
+      this.timerAccomplish = setInterval(() => {
         // 循环自动成交倒计时数组
         this.accomplishOrderTimeArr.forEach((item, index) => {
           this.$set(this.accomplishOrderTimeArr, index, this.accomplishOrderTimeArr[index] - 1000)
@@ -832,21 +836,12 @@ export default {
         if (!(returnAjaxMessage(data, this, 1))) {
           return false
         } else {
-          // 先判断status订单状态（已创建，已付款，已完成，已取消，已冻结 PICKED PAYED COMPLETED CANCELED FROZEN）
-          // 付款成功后，根据返回的状态再渲染
-          // 付款成功后逻辑
-          // 1关闭交易密码框
           this.dialogVisible1 = false
           // 2再次调用接口刷新列表
           this.getOTCTradingOrdersList()
-          // 3再次渲染页面:根据返回的订单状态
         }
       }
     },
-    // 交易密码框错误提示
-    // tradePasswordLeave (e) {
-    //  console.log(e)
-    // },
     // 6.0 卖家点击确认收款按钮
     comfirmGatherMoney (id) {
       this.activedTradingOrderId = id
@@ -870,14 +865,8 @@ export default {
       if (!(returnAjaxMessage(data, this, 1))) {
         return false
       } else {
-        // 先判断status订单状态（已创建，已付款，已完成，已取消，已冻结 PICKED PAYED COMPLETED CANCELED FROZEN）
-        // 付款成功后，根据返回的状态再渲染
-        // 付款成功后逻辑
-        // 1关闭交易密码框
         this.dialogVisible2 = false
-        // 2再次调用接口刷新列表
         this.getOTCTradingOrdersList()
-        // 3再次渲染页面:根据返回的订单状态
       }
     },
     // 8.0 点击订单申诉弹窗申诉框
@@ -931,7 +920,12 @@ export default {
   },
   filter: {},
   computed: {},
-  watch: {}
+  watch: {},
+  destroyed () {
+    // 离开本组件清除定时器
+    clearInterval(this.timerCancel)
+    clearInterval(this.timerAccomplish)
+  }
 }
 </script>
 <style scoped lang="scss" type="text/scss">

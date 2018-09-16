@@ -55,10 +55,10 @@
           资产配置
         </div>
         <div class="content font-size18">
+          <!-- 总资产可用币种 -->
+          <span>{{total}}</span>
+          <span>{{activitedTraderCoinName}}</span>
           <!-- 总资产法币 -->
-          <span>{{totalAssets}}</span>
-          <span>{{activitedTraderCoinId}}</span>
-          <!-- 总资产人名币 -->
           <span>{{totalAssets}}</span>
           <span>{{activitedtraderCurrencyCoinsName}}</span>
         </div>
@@ -419,6 +419,7 @@ export default {
       value2: '', // 默认结束时间
       radio2: 0, // 单选按钮时间
       totalAssets: '', // 总资产
+      total: '',
       // 订单详情
       orderInfoList: [],
       buyDayMap: {}, // 购买当日交易
@@ -431,20 +432,21 @@ export default {
       sellWeekMap: {} // 出售本周交易
     }
   },
-  created () {
+  async created () {
     require('../../../static/css/list/OTC/OTCReportFormStatistics.css')
     require('../../../static/css/theme/day/OTC/OTCReportFormStatisticsDay.css')
     require('../../../static/css/theme/night/OTC/OTCReportFormStatisticsNight.css')
     // 1.0 otc可用币种查询
     this.getOTCAvailableCurrencyList()
     // 2.0 查询可用法币币种列表
-    this.getMerchantAvailablelegalTenderList()
+    // this.getMerchantAvailablelegalTenderList()
     // 订单详情列表
-    this.getOTCEntrustingOrdersRevocation()
+    // this.getOTCEntrustingOrdersRevocation()
     // 报表统计主页
     // this.getOTCReportFormStatistics()
   },
-  mounted () {},
+  mounted () {
+  },
   activited () {},
   update () {},
   beforeRouteUpdate () {},
@@ -467,6 +469,7 @@ export default {
       const data = await getOTCAvailableCurrency({
         partnerId: this.partnerId
       })
+      console.log('otc可用币种查询')
       console.log(data)
       // 提示信息
       if (!(returnAjaxMessage(data, this, 0))) {
@@ -480,6 +483,9 @@ export default {
         this.activitedTraderCoinName = this.traderCoinList[0].name
         // 重新请求列表
         this.getOTCReportFormStatistics()
+        // 表格渲染
+        // this.getOTCEntrustingOrdersRevocation()
+        this.getMerchantAvailablelegalTenderList()
       }
     },
     //  2.1 改变可用币种类型
@@ -503,6 +509,7 @@ export default {
       const data = await getMerchantAvailablelegalTender({
         partnerId: this.partnerId
       })
+      console.log('查询 可用法币 币种列表')
       console.log(data)
       // 提示信息
       if (!(returnAjaxMessage(data, this, 0))) {
@@ -516,6 +523,8 @@ export default {
         this.activitedtraderCurrencyCoinsName = this.traderCurrencyCoinsList[0].shortName
         // 重新请求列表
         this.getOTCReportFormStatistics()
+        // 表格渲染
+        this.getOTCEntrustingOrdersRevocation()
       }
     },
     //  3.1 改变 可用法币 币种类型
@@ -566,6 +575,7 @@ export default {
         // 返回数据正确的逻辑
         // 总资产人名币赋值
         this.totalAssets = data.data.data.totalAssets
+        this.total = data.data.data.total
         // 当天交易
         this.buyDayMap = data.data.data.buyDayMap
         // 购买历史交易赋值
