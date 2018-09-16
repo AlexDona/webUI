@@ -19,11 +19,13 @@ import {
   getPartnerList
 } from '../utils/api/home'
 import {PHONE_REG, EMAIL_REG, ID_REG, PWD_REG, ALIPAY_REG, BANK_REG, GOOGLE_REG} from './regExp'
-import {
-  CHANGE_CANCELED_ORDERS_LIST,
-  CHANGE_COMPLETED_ORDERS_LIST, CHANGE_ENTRUST_ORDERS_LIST, CHANGE_FROZEN_ORDERS_LIST,
-  CHANGE_MERCHANTS_ORDERS_LIST
-} from "../vuex/Personal/mutations-types";
+// import {
+//   CHANGE_CANCELED_ORDERS_LIST,
+//   CHANGE_COMPLETED_ORDERS_LIST,
+//   CHANGE_ENTRUST_ORDERS_LIST,
+//   CHANGE_FROZEN_ORDERS_LIST,
+//   CHANGE_MERCHANTS_ORDERS_LIST
+// } from '../vuex/Personal/mutations-types'
 // 请求接口后正确或者错误的提示提示信息：
 // 如果返回 错误 了就提示错误并不能继续往下进行；
 // 如果返回了 正确 的数据：不需要正确的提示noTip传0；需要正确的提示noTip传1；

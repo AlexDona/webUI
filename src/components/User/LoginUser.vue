@@ -487,7 +487,7 @@ export default {
       // username: '15738818082',
       // password: '000000', // 15738818082的密码
       // username: '18625512987',
-      username: '18625512987',
+      // username: '18625512987',
       // username: '18600929234',
       // username: '17600854297',
       username: '18625512985',

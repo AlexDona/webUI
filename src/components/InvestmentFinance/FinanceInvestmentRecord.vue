@@ -12,7 +12,8 @@
       <div class="invest-list">
         <div class="invest-list-header">
           <div class='invest'>投资记录</div>
-          <router-link class="blue" to="/FinanceCenter">返回投资</router-link>
+          <router-link class="blue" to="/FinanceCenter">
+          <IconFontCommon class="blue goback-icon" iconName='icon-fanhui'/>返回投资</router-link>
         </div>
         <div class="nvest-list-body">
           <el-table
@@ -87,13 +88,15 @@ import HeaderCommon from '../Common/HeaderCommon'
 import FooterCommon from '../Common/FooterCommon'
 import FinanceBrokenLine from './FinanceBrokenLine'
 import FinanceBrokenPie from './FinanceBrokenPie'
+import IconFontCommon from '../Common/IconFontCommon'
 import {mapState} from 'vuex'
 export default {
   components: {
     HeaderCommon,
     FooterCommon,
     FinanceBrokenLine,
-    FinanceBrokenPie
+    FinanceBrokenPie,
+    IconFontCommon
   },
   data () {
     return {
@@ -201,8 +204,8 @@ export default {
         >.invest-list-header{
           display: flex;
           justify-content: space-between;
-          router-link{
-            line-height: 100px;
+          a{
+            line-height: 57px;
             cursor: pointer;
           }
         }
@@ -224,6 +227,10 @@ export default {
           /*background-color: $dayMainBgColor;*/
         }
       }
+    }
+    .goback-icon{
+      font-size: 16px;
+      margin-right:5px;
     }
     .blue{
       color: #338FF5;
