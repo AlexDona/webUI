@@ -203,7 +203,6 @@ export default {
         line-height: 34px;
         /*font-weight: 700;*/
         margin-bottom:4px;
-        box-shadow:0 2px 6px rgba(0,0,0,.1);
         >.text{
           display:inline-block;
           text-indent: 4px;
@@ -220,6 +219,7 @@ export default {
         >.title{
           color:$nightMainTitleColor;
           background-color: $nightMainTitleBgColor;
+          box-shadow:2px 0px 3px rgba(27,35,49,1);
         }
         >.content{
           background-color: $nightMainContentBgColor;
@@ -232,6 +232,7 @@ export default {
         >.title{
           color:$dayMainTitleColor;
           background-color: $dayMainBgColor;
+          box-shadow:2px 0px 3px rgba(239,239,239,1);
         }
         >.content{
           background-color: #fff;

@@ -68,7 +68,7 @@
           </div>
           <div class="info-right">
             <p class="text-info text-blue">取消时间</p>
-            <p class="text-info">{{timeFormatting(item.cancelTime)}}</p>
+            <p class="text-info cancel-time">{{timeFormatting(item.cancelTime)}}</p>
           </div>
         </div>
       </div>
@@ -262,66 +262,124 @@ export default {
     }
     &.night{
       >.canceled-order-content{
-      >.canceled-table-head{
-        box-sizing: border-box;
-        background-color: #1E2636;
-        color: #A9BED4;
-        border: 1px solid #485776;
-        >.item{
-        }
-      }
-      >.canceled-table-body{
-        background-color: #1E2636;
-        border: 1px solid #485776;
-        >.canceled-info-top{
+        >.canceled-table-head{
           background-color: #1E2636;
-          color: #9DA5B3;
-          .red{
-            color: #D45858;
-          }
-          .green{
-            color: #008069;
-          }
+          color: #A9BED4;
+          border: 1px solid #485776;
           >.item{
           }
         }
-        >.canceled-info-bottom{
-          border-top: 1px solid #262F38;
-          color: #9DA5B3;
-          >.info-left{
-            border-right: 1px solid #262F38;
-            >.text-info{
+        >.canceled-table-body{
+          background-color: #1E2636;
+          border: 1px solid #485776;
+          >.canceled-info-top{
+            background-color: #1E2636;
+            color: #9DA5B3;
+            .red{
+              color: #D45858;
             }
-            >.text-blue{
-              color: #5E95EC;
+            .green{
+              color: #008069;
             }
-          }
-          >.info-middle{
-            border-right: 1px solid #262F38;
-            >.text-info{
-            }
-            >.text-blue{
-              color: #5E95EC;
+            >.item{
             }
           }
-          >.info-right{
-            >.text-info{
+          >.canceled-info-bottom{
+            border-top: 1px solid #262F38;
+            color: #9DA5B3;
+            >.info-left{
+              border-right: 1px solid #262F38;
+              >.text-info{
+              }
+              >.text-blue{
+                color: #5E95EC;
+              }
             }
-            >.text-blue{
-              color: #5E95EC;
+            >.info-middle{
+              border-right: 1px solid #262F38;
+              >.text-info{
+              }
+              >.text-blue{
+                color: #5E95EC;
+              }
+            }
+            >.info-right{
+              >.text-info{
+              }
+              >.text-blue{
+                color: #5E95EC;
+              }
             }
           }
         }
+        >.no-data{
+          background-color: $mainNightBgColor;
+        }
+        >.page{
+        }
       }
-      >.no-data{
-        background-color: $mainNightBgColor;
-      }
-      >.page{
-      }
-    }
     }
     &.day{
-
+      >.canceled-order-content{
+        >.canceled-table-head{
+          background-color: $mainDayColor;
+          color: #617499;
+          border: 1px solid #ECF1F8;
+          >.item{
+          }
+        }
+        >.canceled-table-body{
+          background-color: $mainDayColor;
+          border: 1px solid #ECF1F8;
+          >.canceled-info-top{
+            background-color: $mainDayColor;
+            color: #333333;
+            .red{
+              color: #D45858;
+            }
+            .green{
+              color: #008069;
+            }
+            >.item{
+            }
+          }
+          >.canceled-info-bottom{
+            border-top: 1px solid rgba(38,47,56,0.1);
+            color: #7D90AC;
+            >.info-left{
+              border-right: 1px solid rgba(38,47,56,0.1);
+              >.text-info{
+              }
+              >.text-blue{
+                color: #5E95EC;
+              }
+            }
+            >.info-middle{
+              border-right: 1px solid rgba(38,47,56,0.1);
+              >.text-info{
+              }
+              >.text-blue{
+                color: #5E95EC;
+              }
+            }
+            >.info-right{
+              >.text-info{
+              }
+              >.text-blue{
+                color: #5E95EC;
+              }
+              >.cancel-time{
+                color: #333333;
+              }
+            }
+          }
+        }
+        >.no-data{
+          background-color: $mainNightBgColor;
+        }
+        >.page{
+        }
+      }
     }
   }
 </style>

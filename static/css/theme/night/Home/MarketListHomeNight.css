@@ -1,7 +1,7 @@
 /*首页交易区（night主题）*/
 /*tab栏背景*/
 .market-list-box.home.night .ivu-tabs-nav-scroll{
-  background-color: #1d2331;
+  background-color: #121824;
 }
 /*input search 文字*/
 .market-list-box.home.night .search-box .ivu-input{
@@ -25,11 +25,11 @@
 }
 
 .market-list-box.home.night .el-table{
-  background-color: #202a33;
+  background-color: #1e2636;
 }
 /*选中行颜色*/
 .market-list-box.night .el-table--enable-row-hover .el-table__body tr:hover>td{
-  background-color:#202a34;
+  background-color:#293140;
 }
 /*tab栏每一项*/
 .market-list-box.home.night .el-tabs__item {

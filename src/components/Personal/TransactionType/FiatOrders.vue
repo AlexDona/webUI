@@ -10,6 +10,7 @@
       <el-tabs
         v-model="activeName"
         :tab-position = "tabPosition"
+        @tab-click = "statusSwitchPanel"
       >
         <!-- 上部分筛选条件 -->
         <div class="orders-main-top">
@@ -76,7 +77,7 @@
              <!--开始日期-->
              <el-date-picker
                placeholder="选择日期"
-               v-model="startTime"
+               v-model="value1"
                type="date"
                value-format="yyyy-MM-dd"
                @change="startDate"
@@ -87,7 +88,7 @@
               <!--结束日期-->
              <el-date-picker
                placeholder="选择日期"
-               v-model="endTime"
+               v-model="value2"
                value-format="yyyy-MM-dd"
                type="date"
                @change="endDate"
@@ -100,7 +101,7 @@
              <span class="inquire-button">
               <el-button
                 type="primary"
-                @click="getLegalTradeDataByCondition"
+                @click="findFilter(activeName)"
               >查询</el-button>
               <!--<el-button type="primary" @click="resetCondition">重置</el-button>-->
             </span>
@@ -132,7 +133,7 @@
         </el-tab-pane>
         <el-tab-pane
           label="委托订单"
-          name="ENTRUSTED"
+          name="entrust-orders"
         >
           <FiatCoinEntrustOrder ref = "entrustOrders"/>
         </el-tab-pane>
@@ -152,12 +153,10 @@ import {timeFilter} from '../../../utils'
 import IconFontCommon from '../../Common/IconFontCommon'
 import {
   getOTCAvailableCurrency,
-  getMerchantAvailablelegalTender,
-  getQueryAllOrdersList,
-  getOTCEntrustingOrders
+  getMerchantAvailablelegalTender
   // getOTCMerchantsOrdersList
 } from '../../../utils/api/personal'
-import {returnAjaxMessage} from '../../../utils/commonFunc'
+import {returnAjaxMessage, getMerchantsOrdersList} from '../../../utils/commonFunc'
 const {mapMutations} = createNamespacedHelpers('personal')
 export default {
   components: {
@@ -171,7 +170,7 @@ export default {
   // props,
   data () {
     return {
-      activeName: 'TRADING',
+      activeName: 'trade-order',
       // 1.0 商家订单筛选下拉框数组--交易类型
       activitedMerchantsOrdersTraderStyleList: '', // 选中的筛选项
       merchantsOrdersTraderStyleList: [
@@ -217,7 +216,8 @@ export default {
       startTime: '', // 默认开始时间
       endTime: '', // 默认结束时间
       // 商家订单列表
-      merchantsOrdersList: []
+      merchantsOrdersList: [],
+      activeName: 'TRADING'
     }
   },
   created () {
@@ -227,11 +227,10 @@ export default {
     require('../../../../static/css/theme/day/Personal/TransactionType/FiatOrdersDay.css')
     // 黑色主题样式
     require('../../../../static/css/theme/night/Personal/TransactionType/FiatOrdersNight.css')
-    // console.log(this.userInfo.userInfo.partnerId)
+    console.log(this.userInfo.userInfo.partnerId)
     this.getOTCAvailableCurrencyList()
     this.getMerchantAvailablelegalTenderList()
-    // console.log(this.USER_ASSETS_LIST)
-    this.getLegalTradeData(this.activeName)
+    console.log(this.USER_ASSETS_LIST)
   },
   mounted () {},
   activited () {},
@@ -242,17 +241,33 @@ export default {
       'CHANGE_OTC_AVAILABLE_CURRENCY_NAME',
       'CHANGE_OTC_AVAILABLE_CURRENCY_ID',
       'CHANGE_OTC_AVAILABLE_PARTNER_COIN_ID',
-      'USER_ASSETS_LIST',
-      'SET_LEGAL_TENDER_LIST',
-      'SET_LEGAL_TENDER_REFLASH_STATUS',
-      'CHANGE_LEGAL_PAGE'
+      'USER_ASSETS_LIST'
     ]),
-    // 条件查询
-    getLegalTradeDataByCondition () {
-      this.CHANGE_LEGAL_PAGE({
-        legalTradePageNum: 1
-      })
-      this.getLegalTradeData(this.activeName)
+    // tab面板切换
+    statusSwitchPanel (tab) {
+      // getAllList(this.$route, this.$message)
+      switch (tab.name) {
+        case 'trade-order':
+          // 交易中的订单列表展示
+          this.$refs.tradeOrder.getOTCTradingOrdersList()
+          break
+        case 'completed-order':
+          // 已完成订单列表展示
+          this.$refs.cancelledOrder.getOTCCompletedOrdersList()
+          break
+        case 'cancelled-order':
+          // 已取消订单列表查询
+          this.$refs.completedOrder.getOTCCanceledOrdersList()
+          break
+        case 'pending-order':
+          // 冻结中订单列表展示
+          this.$refs.pendingOrder.getOTCFrezzingOrdersList()
+          break
+        case 'entrust-orders':
+          // 委托订单列表展示
+          this.$refs.entrustOrders.getOTCEntrustingOrdersList()
+          break
+      }
     },
     // 时间格式化
     timeFormatting (date) {
@@ -303,13 +318,43 @@ export default {
       this.activitedMerchantsOrdersStatusList = e
     },
     // 初始 日期赋值
-    // startDate (e) {
-    //   this.value1 = e
-    // },
-    // // 结束 日期赋值
-    // endDate (e) {
-    //   this.value2 = e
-    // },
+    startDate (e) {
+      this.value1 = e
+    },
+    // 结束 日期赋值
+    endDate (e) {
+      this.value2 = e
+    },
+    // 点击查询按钮
+    findFilter (activeName) {
+      this.getOTCEntrustingOrdersRevocation(activeName)
+      // console.log(activeName)
+      // // 状态 (交易中 TRADING 已完成 COMPLETED  已取消  CANCELED 冻结中 FROZEN)
+      // let data = await getOTCMerchantsOrdersList({
+      //   // 页数
+      //   // pageNum: 0,
+      //   // 每页条数
+      //   // pageSize: 0,
+      //   // 币种
+      //   coinId: this.activitedMerchantsOrdersCoin,
+      //   // 法币
+      //   currencyId: this.activitedMerchantsOrdersCurrency,
+      //   // 状态
+      //   status: this.activitedMerchantsOrdersStatusList,
+      //   // 开始时间
+      //   startTime: this.startTime,
+      //   // 结束时间
+      //   endTime: this.endTime,
+      //   // 类型
+      //   tradeType: this.activitedMerchantsOrdersTraderStyleList
+      // })
+      // if (!(returnAjaxMessage(data, this, 0))) {
+      //   return false
+      // } else {
+      //   // 返回数据正确的逻辑 重新渲染列表
+      //   this.merchantsOrdersList = data.data.data.list
+      // }
+    },
     resetCondition () {
       this.activitedMerchantsOrdersTraderStyleList = ''
       this.activitedMerchantsOrdersCoin = ''
@@ -317,10 +362,10 @@ export default {
       this.activitedMerchantsOrdersStatusList = ''
       this.startTime = ''
       this.endTime = ''
-      // this.getLegalTradeData()
+      this.getOTCEntrustingOrdersRevocation()
     },
     // 页面加载时请求接口渲染列表
-    async getLegalTradeData (activeName) {
+    async getOTCEntrustingOrdersRevocation (activeName) {
       let params = {
         // 币种
         coinId: this.activitedMerchantsOrdersCoin,
@@ -333,52 +378,16 @@ export default {
         // 结束时间
         endTime: this.endTime,
         // 类型
-        tradeType: this.activitedMerchantsOrdersTraderStyleList,
-
-        pageNum: this.legalTradePageNum,
-
-        pageSize: this.legalTradePageSize
+        tradeType: this.activitedMerchantsOrdersTraderStyleList
       }
-      if (activeName === 'ENTRUSTED') {
-        const data = await getOTCEntrustingOrders(params)
-        if (!returnAjaxMessage(data, this)) {
+      getMerchantsOrdersList(params, (data) => {
+        if (!(returnAjaxMessage(data, this, 0))) {
           return false
         } else {
-          console.log(data)
-          this.SET_LEGAL_TENDER_LIST({
-            type: activeName,
-            data: data.data.data.list
-          })
-          this.CHANGE_LEGAL_PAGE({
-            legalTradePageTotals: data.data.data.pages - 0
-          })
-          this.SET_LEGAL_TENDER_REFLASH_STATUS({
-            type: activeName,
-            status: false
-          })
+          // 返回数据正确的逻辑 重新渲染列表
+          this.merchantsOrdersList = data.data.data.list
         }
-      } else {
-        console.log(params)
-        const data = await getQueryAllOrdersList(params)
-        if (!returnAjaxMessage(data, this)) {
-          return false
-        } else {
-          console.log(data)
-          this.SET_LEGAL_TENDER_LIST({
-            type: activeName,
-            data: data.data.data.list
-          })
-          this.CHANGE_LEGAL_PAGE({
-            legalTradePageTotals: data.data.data.pages - 0
-          })
-          console.log(this.legalTraderTradingList)
-          console.log(this.legalTradePageTotals)
-          this.SET_LEGAL_TENDER_REFLASH_STATUS({
-            type: activeName,
-            status: false
-          })
-        }
-      }
+      })
     }
   },
   filter: {},
@@ -386,56 +395,11 @@ export default {
     ...mapState({
       theme: state => state.common.theme,
       withdrawDepositList: state => state.common.withdrawDepositList,
-      legalTraderTradingList: state => state.personal.legalTraderTradingList,
-      legalTraderTradingReflashStatus: state => state.personal.legalTraderTradingReflashStatus,
-      legalTraderEntrustReflashStatus: state => state.personal.legalTraderEntrustReflashStatus,
-      legalTraderCompletedReflashStatus: state => state.personal.legalTraderCompletedReflashStatus,
-      legalTraderCancelReflashStatus: state => state.personal.legalTraderCancelReflashStatus,
-      legalTraderFrozenReflashStatus: state => state.personal.legalTraderFrozenReflashStatus,
-      userInfo: state => state.user.loginStep1Info, // 用户详细信息
-      legalTradePageSize: state => state.personal.legalTradePageSize,
-      legalTradePageNum: state => state.personal.legalTradePageNum,
-      legalTradePageTotals: state => state.personal.legalTradePageTotals
+      userInfo: state => state.user.loginStep1Info // 用户详细信息
+      // fiatMoneyOrdersName: state => state.personal.fiatMoneyOrdersName
     })
   },
-  watch: {
-    legalTraderTradingReflashStatus (newVal) {
-      console.log(newVal)
-      if (newVal) {
-        this.getLegalTradeData(this.activeName)
-      }
-    },
-    legalTraderEntrustReflashStatus (newVal) {
-      if (newVal) {
-        this.getLegalTradeData(this.activeName)
-      }
-    },
-    legalTraderCompletedReflashStatus (newVal) {
-      if (newVal) {
-        this.getLegalTradeData(this.activeName)
-      }
-    },
-    legalTraderCancelReflashStatus (newVal) {
-      if (newVal) {
-        this.getLegalTradeData(this.activeName)
-      }
-    },
-    legalTraderFrozenReflashStatus (newVal) {
-      if (newVal) {
-        this.getLegalTradeData(this.activeName)
-      }
-    },
-    activeName (newVal) {
-      console.log(newVal)
-      this.CHANGE_LEGAL_PAGE({
-        legalTradePageNum: 1
-      })
-      this.getLegalTradeData(newVal)
-    },
-    legalTradePageNum (newVal) {
-      console.log(newVal)
-    }
-  }
+  watch: {}
 }
 </script>
 <style scoped lang="scss">
@@ -503,8 +467,14 @@ export default {
   &.day{
     background-color: $dayBgColor;
     color:$dayFontColor;
-    >.background-color{
-      background-color: #CCCCCC;
+    >header{
+      border:1px solid #ECF1F8;
+      >span{
+        color:#338FF5;
+      }
+    }
+    >div{
+      border:1px solid #ECF1F8;
     }
   }
 }

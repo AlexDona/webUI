@@ -63,31 +63,32 @@
             </div>
             <div class="item">
               <span class="label">验证</span>
-              <!--滑块验证-->
               <span class="label-content">
-                <div
-                  class="drag-box border-radius4"
-                  v-if="!confirmSuccess"
-                >
-                <div class="drag cursor-pointer border-radius4">
-                  <div class="drag_bg border-radius4">
-                  </div>
-                  <div class="drag_text border-radius4">
-                    {{confirmWords}}
-                    <!--请按住滑块，拖动到最右边-->
-                  </div>
-                  <div
-                    @mouseup="mouseupFn($event)"
-                    @mousedown="mousedownFn($event)"
-                    class="handler handler_bg"
+                  <input
+                    class="username-input image-validate"
+                    type="text"
+                    v-if="!confirmSuccess"
+                    v-model="userInputImageCode"
+                    @keyup="validateImageCode"
+                  />
+                  <!--获取图片验证码-->
+                  <span
+                    @click="refreshCode"
+                    class="cursor-pointer refresh-code-btn"
+                    v-if="!confirmSuccess"
                   >
-                    <IconFont class="icon-text" iconName="icon-icon-right"/>
-                  </div>
-                </div>
-              </div>
-                <div class="slider-success"
-                  v-else
-                >
+                    <ImageValidate
+                      id="register"
+                      :content-width="60"
+                      :content-height="36"
+                      :identifyCode="identifyCode"
+                      :fontSizeMax="40"
+                      class="display-inline-block"
+                    />
+                  </span>
+                  <div class="slider-success"
+                       v-else
+                  >
                   <i class="el-icon-circle-check font-size18"></i>
                   验证成功
                 </div>
@@ -271,19 +272,21 @@ import {
   returnAjaxMessage,
   sendPhoneOrEmailCodeAjax
 } from '../../utils/commonFunc'
+import ImageValidate from '../Common/ImageValidateCommon'
 import { createNamespacedHelpers, mapState } from 'vuex'
 const { mapMutations } = createNamespacedHelpers('user')
 export default {
   components: {
     IconFont,
     HeaderCommon,
-    CountDownButton
+    CountDownButton,
+    ImageValidate
   },
   // props,
   data () {
     return {
       activeStepNumber: 1, // 当前步骤
-      username: '15800000000',
+      username: '',
       userInfo: {
         countryCode: '86',
         email: null,
@@ -293,19 +296,14 @@ export default {
         phone: '15800000000',
         token: '99b9e025-8c40-48a8-925f-eaf8f9112784'
       }, // 用户信息
+      identifyCode: '',
+      userInputImageCode: '', // 用户输入图片验证码
       phoneCode: '', // 手机验证码
       emailCode: '', // 邮箱验证码
       googleCode: '', // google验证码
       newPassword: '', // 新登录密码
       confirmPassword: '', // 确认密码
-      confirmWords: '请按住滑块，拖动到最右边', /* 滑块文字 */
-
-      beginClientX: 0, /* 距离屏幕左端距离 */
-      mouseMoveStatus: false, // 触发拖动状态
-      sliderFlag: true, // 滑块调用节流阀
       confirmSuccess: false, // 验证成功判断
-      dragStatus: true, // 拖动标记
-      maxwidth: 160, // 拖动最大宽度，依据滑块宽度算出来的
       phoneNumTips: '若该手机号无法使用请联系客服', // 手机号提示信息
       emailNumTips: '若该邮箱无法使用请联系客服', // 邮箱号提示信息
       end: ''
@@ -313,35 +311,9 @@ export default {
   },
   created () {
     // console.log(phoneNumberFormat(this.username))
+    this.refreshCode()
   },
   mounted () {
-    $('body').on('mousemove', (e) => { // 拖动，这里需要用箭头函数，不然this的指向不会是vue对象
-      if (this.mouseMoveStatus) {
-        var width = e.clientX - this.beginClientX
-        if (width > 0 && width <= this.maxwidth) {
-          $('.handler').css({'left': width})
-          $('.drag_bg').css({'width': width})
-        } else if (width > this.maxwidth) {
-          this.successFunction()
-        }
-      }
-    })
-    $('body').on('mouseup', (e) => { // 鼠标放开
-      // console.log('mouseup')
-      this.mouseMoveStatus = false
-      var width = e.clientX - this.beginClientX
-      if (width < this.maxwidth) {
-        $('.handler').animate({'left': 0}, 500)
-        $('.drag_bg').animate({'width': 0}, 500)
-      }
-      $('body').off('mousemove')
-      $('body').off('mouseup')
-      // this.onmousemove = null;
-      // this.onmouseup = null;
-    })
-    $('body').on('dblclick', (e) => {
-
-    })
   },
   activited () {},
   update () {},
@@ -350,6 +322,13 @@ export default {
     ...mapMutations([
       'SET_USER_BUTTON_STATUS'
     ]),
+    // 4位随机数
+    getRandomNum () {
+      return parseInt(Math.random() * 10000) + ''
+    },
+    refreshCode () {
+      this.identifyCode = this.getRandomNum()
+    },
     // 封装 phoneNumberFormat
     phoneNumberFormat (phoneNum) {
       return phoneNumberFormat(phoneNum)
@@ -406,12 +385,25 @@ export default {
         this.activeStepNumber = 3
       }
     },
+    // 图片验证码验证
+    validateImageCode () {
+      if (this.userInputImageCode == this.identifyCode) {
+        this.confirmSuccess = true
+      }
+    },
     // 找回密码步骤1
     async findPasswordStep1 () {
+      if (!this.username) {
+        this.$message({
+          type: 'error',
+          message: '请输入用户名'
+        })
+        return false
+      }
       if (!this.confirmSuccess) {
         this.$message({
           type: 'error',
-          message: '请通过滑块验证'
+          message: '请通过图片验证'
         })
         return false
       }
@@ -466,37 +458,6 @@ export default {
           }
         }
       })
-    },
-    /**
-     * 滑块验证
-     */
-    mouseupFn (e) {
-      console.log('mouseup')
-      // this.dragStatus = true
-    },
-    mousedownFn (e) {
-      // if (this.dragStatus) {
-      this.dragStatus = false
-      this.mouseMoveStatus = true
-      this.beginClientX = e.clientX
-      // console.log('mousedown')
-      // }
-    },
-    // 按下滑块函数
-    successFunction () {
-      // console.log('success0')
-      if (this.sliderFlag) {
-        // console.log('success1')
-        this.sliderFlag = false// 调用函数节流阀
-        $('.handler').css({'left': this.maxwidth})
-        $('.drag_bg').css({'width': this.maxwidth})
-        $('body').unbind('mousemove')
-        $('body').unbind('mouseup')
-        this.confirmSuccess = true
-        this.mouseMoveStatus = false
-        $('.handler').css({'left': 0})
-        $('.drag_bg').css({'width': 0})
-      } // 验证成功函数
     }
   },
   filter: {},
@@ -512,6 +473,8 @@ export default {
 <style scoped lang="scss">
   @import '../../../static/css/scss/index';
   .froget-password-box{
+    background:linear-gradient(150deg,rgba(30,38,54,1),rgba(37,75,117,1));
+    height:100%;
     >.inner-box{
       margin:180px auto;
       width:780px;
@@ -631,6 +594,10 @@ export default {
                   padding:0 10px;
                   box-sizing: border-box;
                   color:#fff;
+                  vertical-align: top;
+                }
+                >.image-validate{
+                  width:135px;
                 }
                 >.validate-code-input{
                   width:126px;

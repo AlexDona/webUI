@@ -30,7 +30,7 @@
           </el-select>
           <ul class="newnestPrice">
             <li>
-              <p>5.231<span>{{selecteCoindName}}</span></p>
+              <p class="newnestPriceColor">5.231<span>{{selecteCoindName}}</span></p>
               最新价钱
             </li>
             <li>
@@ -67,13 +67,17 @@
             <label for="">
               投资数量:
               <div class='invest-mounte'>
-                <input v-model="input" placeholder="请输入内容"/>
+                <input v-model="investMounte" placeholder="请输入数量"/>
                 <span>{{selecteCoindName}}</span>
               </div>
             </label>
             <label for="">
               <div class='submitBtn'>
-                <input type="button" value="投资领收益" disabled/>
+                <el-button
+                 plain
+                 @click="getInvestEarnings"
+                 :disabled='!selectedInvestTypeValue&&!investMounte'
+                >投资领收益</el-button>
               </div>
             </label>
             <button></button>
@@ -151,9 +155,11 @@
               </template>
             </el-table-column>
             <el-table-column
-              prop="createdTime"
               width="180"
               label="创建时间">
+              <template slot-scope = "scope">
+                <div>{{timeFormatting(scope.row.createdTime)}}</div>
+              </template>
             </el-table-column>
             <el-table-column
               prop="operations"
@@ -176,6 +182,7 @@ import HeaderCommon from '../Common/HeaderCommon'
 import FooterCommon from '../Common/FooterCommon'
 import FinanceBrokenLine from './FinanceBrokenLine'
 import FinanceBrokenPie from './FinanceBrokenPie'
+import {timeFilter} from '../../utils'
 // import {businessApply, firstEnterBusinessApply} from '../../utils/api/OTC'
 // import {returnAjaxMessage} from '../../utils/commonFunc'
 // import {createNamespacedHelpers, mapState} from 'vuex'
@@ -211,6 +218,9 @@ export default {
           name: 'ETH'
         }
       ],
+      // 投资数量
+      investMounte: '',
+      // 投资类型
       selectedInvestTypeValue: '',
       investTypeList: [
         {
@@ -290,8 +300,11 @@ export default {
     }
   },
   created () {
+    // 对element ui样式重置
     require('../../../static/css/list/InvestmentFinance/FinanceCenter.css')
+    // 白样式
     require('../../../static/css/theme/day/InvestmentFinance/FinanceCenter.css')
+    // 黑样式
     require('../../../static/css/theme/night/InvestmentFinance/FinanceCenter.css')
     // 页面创建完成请求币种接口
   },
@@ -300,6 +313,14 @@ export default {
   update () {},
   beforeRouteUpdate () {},
   methods: {
+    timeFormatting (data) {
+      return timeFilter(data, 'data')
+    },
+    // 点击投资领收益按钮执行
+    getInvestEarnings () {
+      // 发送接口请求
+      console.log(111)
+    },
     // 币种选择变化时赋值币种名称
     changeTraderCoin (e) {
       this.selectedValue = e
@@ -324,6 +345,7 @@ export default {
 }
 </script>
 <style scoped lang="scss">
+ // 公共scss样式
   @import "../../../static/css/scss/InvestmentFinance/FinanceCenter";
   .finance-box{
     min-width:1300px;
@@ -354,6 +376,7 @@ export default {
                 text-align: center;
                 >p{
                   font-size:22px;
+                  font-weight: bolder;
                   >span{
                     font-size:12px;
                   }
@@ -400,7 +423,7 @@ export default {
                 justify-content: space-between;
                 margin-left: 10px;
                 padding: 13px 11px;
-                border-radius: 4px;
+                border-radius: 2px;
                 border:1px solid rgba(169,190,212,1);
                 width: 407px;
                 height: 48px;
@@ -412,14 +435,14 @@ export default {
                 }
               }
               .submitBtn{
-                width: 407px;
-                height: 48px;
-                margin-left: 70px;
-                text-align: center;
-                border: 1px solid #fff;
-                border-image: -webkit-linear-gradient(left,#2B396E,#2A5082);
-                background: -webkit-linear-gradient(left,#2B396E,#2A5082);
-                >input{
+                >button{
+                  width: 407px;
+                  height: 48px;
+                  margin-left: 70px;
+                  text-align: center;
+                  border: 1px solid #fff;
+                  border-image: -webkit-linear-gradient(top,#2B396E,#2A5082);
+                  background: -webkit-linear-gradient(left,#2B396E,#2A5082);
                   color:#fff;
                 }
               }
@@ -442,6 +465,7 @@ export default {
               font-size:12px;
               >span{
                 font-size: 22px;
+                font-weight: bolder;
               }
               }
             }
@@ -477,10 +501,87 @@ export default {
     &.day{
       >.inner-box{
         background-color: $dayInnerBoxBg;
-        >div{
-          /*background-color: $dayMainBgColor;*/
+        >.finance-inner{
+          >.container{
+          >.finance-form-header{
+            >.newnestPrice{
+              flex: 1;
+              height: 48px;
+              display:flex;
+              >li{
+                border-right:1px solid rgba(30,38,54,0.3);
+                color:#666;
+                >p{
+                  font-size:22px;
+                  >span{
+                    font-size:12px;
+                  }
+                }
+                &:last-child{
+                  border: none;
+                }
+              }
+          }
+          }
+        }
+        .finance-inner-box{
+        >.left{
+          color:#666;
+          >.nav-header{
+            >.balance{
+              color:#666;
+              >div{
+                color:#338FF5;
+                >span{
+                }
+              }
+            }
+          }
+          .left-body{
+            >label{
+              >.invest-mounte{
+                >input{
+                  width: 380px;
+                  color:#666;
+                  vertical-align: center;
+                }
+              }
+              .submitBtn{
+                >button{
+                }
+              }
+            }
+          }
+        }
+        >.right{
+          >.pieCharts-box{
+          >.right-infor{
+            >div{
+              >p{
+              >span{
+              }
+              }
+            }
+          }
+          >.pieCharts{
+            padding-top: 50px;
+            width: 282px;
+          }
+          }
         }
       }
+      >.invest-list{
+        >.invest-list-header{
+          a{
+          }
+        }
+      }
+      }
+      }
+      .invest{
+      color: #338FF5;
+      background:linear-gradient(left,rgba(51,143,245,0.5),transparent);
+    }
     }
     .blue{
       color: #338FF5;
