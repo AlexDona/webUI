@@ -130,6 +130,7 @@ export default {
         >.title{
           color:$nightMainTitleColor;
           background-color: $nightMainTitleBgColor;
+          box-shadow:2px 0px 3px rgba(27,35,49,1);
         }
         >.content{
           background-color: $nightMainContentBgColor;
@@ -141,6 +142,7 @@ export default {
         >.title{
           color:$dayMainTitleColor;
           background-color: $dayMainBgColor;
+          box-shadow:2px 0px 3px rgba(239,239,239,1);
         }
         >.content{
           background-color: #fff;

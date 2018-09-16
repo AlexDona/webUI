@@ -16,7 +16,7 @@
     </keep-alive>
 
     <!--交易区-->
-    <MarketListHome/>
+    <MarketListHome class="margin-1"/>
 
     <!--底部-->
     <FooterCommon/>
@@ -46,6 +46,9 @@ export default {
 <style scoped lang="scss">
   .home-box{
     min-width: 1130px;
+    .margin-1{
+      margin-top:-1px;
+    }
     >.fixed{
       position: fixed;
       z-index: 2009;

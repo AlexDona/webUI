@@ -48,38 +48,6 @@ export default {
 
     // 请求轮播图数据
     this.getBanner()
-    let sliderListAjax = [
-      {
-        id: 1,
-        miniImg: 'https://s.zb.cn/statics/img/v3/home/h-sban-zb.jpg',
-        background: 'https://fubt.oss-ap-southeast-1.aliyuncs.com/fubt/upload/args/0c2a11e3ee9145819210f96f004ec9f2n.jpg'
-      },
-      {
-        id: 2,
-        miniImg: 'https://s.zb.cn/statics/img/v3/home/h-sban-zbcn.jpg',
-        background: 'https://fubt.oss-ap-southeast-1.aliyuncs.com/fubt/upload/args/080615cb1cd54126989cdda57fdd4f5dc3.jpg'
-      },
-      {
-        id: 3,
-        miniImg: 'https://s.zb.cn/statics/img/v3/home/h-sban-bw2.png',
-        background: 'https://fubt.oss-ap-southeast-1.aliyuncs.com/fubt/upload/args/018be2b832764bbdb25aaa49c9f49dd6m4.jpg'
-      },
-      {
-        id: 4,
-        miniImg: 'https://s.zb.cn/statics/img/v3/home/h-sban-coinvote.jpg',
-        background: 'https://fubt.oss-ap-southeast-1.aliyuncs.com/fubt/upload/args/59369f2172564ab2aa1a25ccd4ba4dceTKC2.jpg'
-      },
-      {
-        id: 5,
-        miniImg: 'https://s.zb.cn/statics/img/v3/home/h-sban-zb.jpg',
-        background: 'https://fubt.oss-ap-southeast-1.aliyuncs.com/fubt/upload/args/080615cb1cd54126989cdda57fdd4f5dc3.jpg'
-      },
-      {
-        id: 6,
-        miniImg: 'https://s.zb.cn/statics/img/v3/home/h-sban-coinvote.jpg',
-        background: 'https://fubt.oss-ap-southeast-1.aliyuncs.com/fubt/upload/args/59369f2172564ab2aa1a25ccd4ba4dceTKC2.jpg'
-      }
-    ]
     let sliderList = []
     sliderListAjax.forEach((item) => {
       sliderList.push({
@@ -178,7 +146,7 @@ export default {
             data () {
               return {
                 miniImg: item.url,
-                background: 'http://fubt-3.oss-cn-hongkong.aliyuncs.com/5dd01753-6e61-4cf0-b24b-3e49c1343de2'
+                background: `${require('../../assets/develop/banner-bg.png')}`
               }
             },
             mounted () {
