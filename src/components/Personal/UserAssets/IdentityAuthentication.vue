@@ -19,14 +19,14 @@
                 v-if="realNameInformationObj.realname"
                 class="authentication-type font-size12"
               >
-                （未认证）
+                （请如实填写您的身份信息，一经认证不可修改）
               </p>
               <p
                 v-else
                 class="authentication-type-info font-size12 box-sizing"
               >
+                （
                 <span class="authentication-info">您已通过实名认证</span>
-                （&nbsp;
                 <!--<span v-if="statusRealNameInformation.realname == null"></span>-->
                 <span
                   class="type-info"
@@ -218,7 +218,10 @@
                       :on-success="handleSuccessFront"
                       :on-remove="handleRemove"
                     >
-                      <div class="picture">
+                      <div
+                        class="picture"
+                        v-show="firstPictureSrcShow"
+                      >
                         <img
                           class="default-picture cursor-pointer"
                           :src="firstPictureSrc"
@@ -229,7 +232,7 @@
                   <button
                     type="primary"
                     class="upload-submit cursor-pointer font-size12 margin-top30"
-                    @click="choosePicture(1)"
+                    @click="handleSuccessFront"
                   >
                     上传身份证正面
                   </button>
@@ -244,7 +247,10 @@
                       :on-success="handleSuccessReverseSide"
                       :on-remove="handleRemove"
                     >
-                      <div class="picture">
+                      <div
+                        class="picture"
+                        v-show="secondPictureSrcShow"
+                      >
                         <img
                           class="default-picture cursor-pointer"
                           :src="secondPictureSrc"
@@ -255,7 +261,7 @@
                   <button
                     type="primary"
                     class="upload-submit cursor-pointer font-size12 margin-top30"
-                    @click="choosePicture(2)"
+                    @click="handleSuccessReverseSide"
                   >
                     上传身份证反面
                   </button>
@@ -268,8 +274,11 @@
                       :headers="tokenObj"
                       list-type="picture-card"
                       :on-success="handleSuccessHand"
-                      :on-remove="handleRemove">
-                      <div class="picture"
+                      :on-remove="handleRemove"
+                    >
+                      <div
+                        class="picture"
+                        v-show="thirdPictureSrcShow"
                       >
                         <img
                           class="default-picture cursor-pointer"
@@ -281,7 +290,7 @@
                   <button
                     type="primary"
                     class="upload-submit cursor-pointer font-size12 margin-top30"
-                    @click="choosePicture(3)"
+                    @click="handleSuccessHand"
                   >
                     上传手持身份证
                   </button>
@@ -313,11 +322,11 @@
           <img src="../../../assets/user/er.png" alt="">
         </div>
         <div class="advanced-certification-text">
-          <p class="text-tips">
+          <p class="text-tips font-size12">
             请准备好您本人身份证使用浏览器扫码进行高级认证如二维码过 期请刷新重试。
-            <a class="tips-refresh" href="">点击刷新</a>
+            <a class="tips-refresh">点击刷新</a>
           </p>
-          <p class="text-tips">
+          <p class="text-tips font-size12 tips-top">
             请在浏览器中打开，并升级浏览器至最新版本,无法通过认证的用户，
             <span
               class="tips-refresh cursor-pointer"
@@ -371,10 +380,12 @@ export default {
       authenticationStatusFront: false, // 用户高级认证前
       // 身份认证默认图片
       firstPictureSrc: require('../../../assets/user/card_negative.png'), // 正面
+      firstPictureSrcShow: true,
       secondPictureSrc: require('../../../assets/user/card_positive.png'), // 反面
+      secondPictureSrcShow: true,
       thirdPictureSrc: require('../../../assets/user/card_handheld.png'), // 手持
+      thirdPictureSrcShow: true,
       dialogImageFrontUrl: '', // 上传身份证正面url
-      // dialogVisibleFront: false,
       dialogImageReverseSideUrl: '', // 上传身份证反面url
       dialogVisibleReverseSide: false,
       dialogImageHandUrl: '', // 上传手持身份证url
@@ -417,16 +428,19 @@ export default {
     // },
     handleSuccessFront (response, file, fileList) {
       this.dialogImageFrontUrl = response.data.fileUrl
-      console.log(response.data.fileUrl)
-      console.log(response, file, fileList)
+      this.firstPictureSrcShow = false
+      // console.log(response.data.fileUrl)
+      // console.log(response, file, fileList)
     },
     handleSuccessReverseSide (response, file, fileList) {
       this.dialogImageReverseSideUrl = response.data.fileUrl
-      console.log(response, file, fileList)
+      this.secondPictureSrcShow = false
+      // console.log(response, file, fileList)
     },
     handleSuccessHand (response, file, fileList) {
       this.dialogImageHandUrl = response.data.fileUrl
-      console.log(response, file, fileList)
+      this.thirdPictureSrcShow = false
+      // console.log(response, file, fileList)
     },
     handleRemove (file) {
       console.log(file)
@@ -657,6 +671,12 @@ export default {
       width: 337px;
       height: 93px;
       margin: 0 auto;
+      .tips-top {
+        margin-top: 15px;
+      }
+      .text-tips {
+        line-height: 20px;
+      }
     }
     .transition-box{
       >.advanced-upload {
@@ -698,7 +718,7 @@ export default {
           width:200px;
           height:34px;
           line-height: 34px;
-          margin: 200px auto 83px;
+          margin: 90px auto 83px;
           border-radius:4px;
         }
       }
@@ -749,8 +769,9 @@ export default {
         color: #0099FF;
       }
       .authentication-type-info {
+        color: #D45858;
         >.authentication-info {
-          color: #0099FF;
+          color: #D45858;
         }
       }
     }
@@ -777,7 +798,7 @@ export default {
         color: #fff;
       }
       .text-hints {
-        color: #9DA5B3;
+        color: #A9BED4;
       }
       .icon-font-color {
         color: #C65252;
@@ -790,7 +811,7 @@ export default {
       }
       .advanced-certification-text{
         >.text-tips{
-          color: #8BA0CA;
+          color:rgba(254,254,255, 0.7);
           >.tips-refresh{
             color: #338FF5;
           }

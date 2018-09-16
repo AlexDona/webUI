@@ -3,6 +3,7 @@
   width: 100px;
   height: 30px;
   border: 0;
+  font-size: 12px;
 }
 .billing-details.personal .el-date-editor.el-input {
   width: 120px;
@@ -13,8 +14,10 @@
   height: 30px;
 }
 .billing-details.personal .el-table th>.cell {
+  font-size: 12px;
   text-align: center;
 }
 .billing-details.personal .el-table .cell {
   text-align: center;
+  font-size: 12px;
 }

@@ -771,8 +771,9 @@ export default {
         color: #338FF5;
       }
       .security-title-info {
+        color: #A9BED4;
         >.security-level {
-          color: #fff;
+          color: #A9BED4;
           >.level {
             color: #F64D4D;
           }

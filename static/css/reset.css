@@ -93,6 +93,13 @@ button,input{
   background: none;
 }
 
+.el-select-dropdown__list {
+  background-color: #2A3242;
+}
+.el-select-dropdown__item.hover{
+  background-color: #338FF5 !important;
+  color:#fff !important;
+}
 .icon {
   width: 1em;
   height: 1em;

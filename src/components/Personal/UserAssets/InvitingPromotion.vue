@@ -18,7 +18,7 @@
               <div class="code-left font-size12 code-color">推广码</div>
               <div class="code-right text-align-r">
                 <span
-                  class="code-right-rendering"
+                  class="code-right-rendering text-align-r"
                   id="text"
                 >
                   {{ userInfo.userInfo.showId }}
@@ -84,7 +84,7 @@
               <div class="promotion-info">
                 <p class="info-left">
                   <span class="info-left-color font-size30">
-                    0
+                    {{ totalPageMyNumber - 0 }}
                   </span>
                   <span class="font-size12">
                     人
@@ -274,7 +274,6 @@ export default {
       require([('@xkeshi/vue-qrcode')], resolve)
     }
   },
-  // props,
   data () {
     return {
       generalizeValue: 'first',
@@ -291,89 +290,18 @@ export default {
       activeName: 'current-entrust',
       currentPageForMyEntrust: 1, // 当前委托页码
       totalPageForMyEntrust: 1, // 当前委托总页数
+      totalPageMyNumber: 1, // 条数
       text: 'SADFASD',
       link: 'http://localhost:8000/?#/Register?showId=',
       ercodeIsShowId: false, // 二维码显示状态
       qrcode: '123456',
       // 推广统计
-      extensionList: [
-        // {
-        //   userUID: '3355446',
-        //   loginName: '18033****',
-        //   registerTime: '2018-08-04 10:30:41',
-        //   name: '二麻子',
-        //   authenticationState: '未认证',
-        //   refereeUID: '5566887'
-        // },
-        // {
-        //   userUID: '3355446',
-        //   loginName: '18033****',
-        //   registerTime: '2018-08-04 10:30:41',
-        //   name: '二麻子',
-        //   authenticationState: '未认证',
-        //   refereeUID: '5566887'
-        // },
-        // {
-        //   userUID: '3355446',
-        //   loginName: '18033****',
-        //   registerTime: '2018-08-04 10:30:41',
-        //   name: '二麻子',
-        //   authenticationState: '未认证',
-        //   refereeUID: '5566887'
-        // },
-        // {
-        //   userUID: '3355446',
-        //   loginName: '18033****',
-        //   registerTime: '2018-08-04 10:30:41',
-        //   name: '二麻子',
-        //   authenticationState: '未认证',
-        //   refereeUID: '5566887'
-        // },
-        // {
-        //   userUID: '3355446',
-        //   loginName: '18033****',
-        //   registerTime: '2018-08-04 10:30:41',
-        //   name: '二麻子',
-        //   authenticationState: '未认证',
-        //   refereeUID: '5566887'
-        // }
-      ],
+      extensionList: [],
       activeAwardList: 'current-awardList',
       currentPageMyEntrust: 1, // 当前委托页码
       totalPageMyEntrust: 1, // 当前委托总页数
       // 奖励记录
-      awardList: [
-        // {
-        //   type: '推荐奖励',
-        //   currency: 'FUC',
-        //   count: '200.00',
-        //   time: '2018-08-04 10:30:41'
-        // },
-        // {
-        //   type: '推荐奖励',
-        //   currency: 'FUC',
-        //   count: '200.00',
-        //   time: '2018-08-04 10:30:41'
-        // },
-        // {
-        //   type: '推荐奖励',
-        //   currency: 'FUC',
-        //   count: '200.00',
-        //   time: '2018-08-04 10:30:41'
-        // },
-        // {
-        //   type: '推荐奖励',
-        //   currency: 'FUC',
-        //   count: '200.00',
-        //   time: '2018-08-04 10:30:41'
-        // },
-        // {
-        //   type: '推荐奖励',
-        //   currency: 'FUC',
-        //   count: '200.00',
-        //   time: '2018-08-04 10:30:41'
-        // }
-      ]
+      awardList: []
     }
   },
   created () {
@@ -438,6 +366,7 @@ export default {
         // 返回展示
         this.awardList = data.data.data.list
         this.totalPageMyEntrust = data.data.data.pages - 0
+        this.totalPageMyNumber = data.data.data.total
         console.log(this.awardList)
       }
     },

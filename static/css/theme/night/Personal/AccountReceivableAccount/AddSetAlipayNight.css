@@ -1,13 +1,13 @@
 /*个人中心黑色主题*/
-.add-account.account.night .el-form-item__label {
-  color: #fff;
+.add-account.personal.night .el-form-item__label {
+  color: rgba(255,255,255,0.7);
 }
-.add-account.account.night .el-input__inner {
+.add-account.personal.night .el-input__inner {
   border: 1px solid #485776;
-  color: #fff;
+  color: rgba(255,255,255,0.7);
 }
-.add-account.account.night .el-input-group__append {
+.add-account.personal.night .el-input-group__append {
   background-color: #338FF5;
   border-color: #364654;
-  color: #fff;
+  color: rgba(255,255,255,0.7);
 }

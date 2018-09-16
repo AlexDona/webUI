@@ -109,7 +109,7 @@
                 :isShow="!!tieErrorShowStatusList[0]"
               />
             </el-form-item>
-            <el-form-item label="重置交易密码：">
+            <el-form-item label="重复交易密码：">
               <input
                 type="password"
                 class="transaction-input border-radius2 padding-l15 box-sizing"
@@ -637,7 +637,7 @@ export default {
               }
             }
             .transaction-content-name {
-              color: #fff;
+              color: rgba(255,255,255,0.7);
             }
             .transaction-upload {
               background-color: #323E48;
@@ -647,7 +647,7 @@ export default {
             }
             .transaction-button {
               background:linear-gradient(0deg,rgba(43,57,110,1),rgba(42,80,130,1));
-              color: #fff;
+              color: rgba(255,255,255,0.7);
             }
           }
         }

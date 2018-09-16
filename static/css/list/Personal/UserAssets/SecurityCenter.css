@@ -13,11 +13,16 @@
 .security-center.personal .el-tabs__nav{
   padding-left: 15px;
 }
-/*点击切换时背景色和字体颜色*/
 .security-center.personal .el-tabs__item{
   padding: 0;
   width: 105px;
   text-align: center;
+}
+.security-center.personal.night .el-table th>.cell {
+  font-size: 12px;
+}
+.security-center.personal.night .el-table td div {
+  font-size: 12px;
 }
 .security-center.personal .el-progress {
   width: 170px;
