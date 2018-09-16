@@ -13,7 +13,7 @@
           <div
             class="advanced-main-header"
           >
-            <div class="header-border margin20 display-flex">
+            <div class="header-border display-flex margin20">
               <span class="font-size16 main-header-title">实名认证</span>
               <p
                 v-if="realNameInformationObj.realname"
@@ -139,7 +139,7 @@
         class="advanced-main-header"
       >
         <p
-          class="margin20 header-border"
+          class="header-border paddinglr20"
           @click="authenticationMethod">
           <span class="font-size16 main-header-title">高级认证</span>
           <span
@@ -158,7 +158,7 @@
           <i class="el-icon-arrow-down icon-down float-right"></i>
         </p>
       </div>
-      <div>
+      <div class="identity-box">
         <div v-show="authenticationStatusFront">
           <el-collapse-transition>
             <div class="transition-box">
@@ -643,9 +643,9 @@ export default {
       margin: 0 auto;
       padding-bottom: 25px;
     }
-    .header-border {
-      margin-right: 23px;
-    }
+    /*.header-border {*/
+      /*padding: 0 25px;*/
+    /*}*/
     .authentication-type {
       line-height: 56px;
       cursor: pointer;
@@ -674,6 +674,9 @@ export default {
       .text-tips {
         line-height: 20px;
       }
+    }
+    .identity-box {
+      border:1px solid rgba(38,47,56,0.1);
     }
     .transition-box{
       >.advanced-upload {
@@ -821,14 +824,28 @@ export default {
     color:$dayFontColor;
     .identity-header-background{
       background-color: $dayBgColor;
+      border:1px solid rgba(38,47,56,0.1);
+      border-radius: 2px;
       .header-content{
         color: #338FF5;
       }
     }
     .identity-authentication-main {
-      background-color: #1E2636;
+      border:1px solid rgba(38,47,56,0.1);
+      .name-authentication-content {
+        .common-input {
+          border:1px solid rgba(38,47,56,0.1);
+          color: #333;
+        }
+        .submit {
+          color: #fff;
+          background:linear-gradient(81deg,rgba(43,57,110,1) 0%,rgba(42,80,130,1) 100%);
+        }
+      }
+      background-color: #fff;
       .header-border {
-        border-bottom: 1px solid #39424D;
+        padding: 0 20px;
+        border-bottom: 1px solid rgba(38,47,56,0.1);
       }
       .authentication-type {
         color: #0099FF;
@@ -842,14 +859,15 @@ export default {
     }
     .icon-down,
     .main-header-title{
-      color: #fff;
+      color: #333;
     }
     .identity-background{
-      background-color: #1E2636;
+      background-color: #fff;
     }
     >.advanced-certification-main{
       .header-border {
-        border-bottom: 1px solid #39424D;
+        border:1px solid rgba(38,47,56,0.1);
+        /*border-bottom: 1px solid #39424D;*/
       }
       .authentication-type {
         color: #0099FF;
@@ -863,20 +881,20 @@ export default {
         color: #fff;
       }
       .text-hints {
-        color: #A9BED4;
+        color: #666666;
       }
       .icon-font-color {
         color: #C65252;
       }
       .info-type {
-        color: #617499
+        color: #7D90AC;
       }
       .user-info {;
-        color: #fff;
+        color: #333;
       }
       .advanced-certification-text{
         >.text-tips{
-          color:rgba(254,254,255, 0.7);
+          color: #333;
           >.tips-refresh{
             color: #338FF5;
           }

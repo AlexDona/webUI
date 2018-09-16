@@ -24,6 +24,9 @@
 .billing-details.personal.day .el-table th>.cell {
   color: #333;
 }
-.billing-details.personal .el-table .cell {
+.billing-details.personal.day .el-table .cell {
   color: #7D90AC;
+}
+.billing-details.personal.day .el-table__empty-block {
+  background-color: #fff;
 }

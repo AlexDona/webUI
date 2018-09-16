@@ -140,7 +140,7 @@ export default {
       }
       // 设置坐标背横杠为虚线
       this.options.yAxis.splitLine.lineStyle.type = this.theme === 'night' ? 'solid' : 'dotted'
-      this.options.yAxis.splitLine.lineStyle.color = this.theme === 'night' ? '#1e2636' :'rgba(30,38,54,0.2)' 
+      this.options.yAxis.splitLine.lineStyle.color = this.theme === 'night' ? '#1e2636' :'#1E263602' 
     }
   },
   filter: {},

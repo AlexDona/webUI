@@ -8,6 +8,7 @@
         :data="completedOrdersList"
         :default-expand-all="true"
         empty-text="暂无数据"
+        width="800"
       >
         <div>
           <el-table-column type="expand">

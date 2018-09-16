@@ -244,7 +244,7 @@
                 />
               </div>
             </div>
-            <p class="font-size14 warning-text margin-top35 text-align-c">
+            <p class="font-size12 warning-text margin-top35 text-align-c">
               请先完成身份认证，再来设置OTC收款账户!
             </p>
             <span
@@ -266,11 +266,36 @@
             center
           >
             <!--<span>是否确定关闭当前收款方式</span>-->
-            <span v-show="closeBankCard">开启银行卡收款方式</span>
-            <span v-show="closeMicroLetter">开启微信收款方式</span>
-            <span v-show="closeAlipay">开启支付宝收款方式</span>
-            <span v-show="closePayapl">开启payapl收款方式</span>
-            <span v-show="closeWesternUnion">开启西联汇款收款方式</span>
+            <span
+              class="text-info"
+              v-show="closeBankCard"
+            >
+              开启银行卡收款方式
+            </span>
+            <span
+              class="text-info"
+              v-show="closeMicroLetter"
+            >
+              开启微信收款方式
+            </span>
+            <span
+              class="text-info"
+              v-show="closeAlipay"
+            >
+              开启支付宝收款方式
+            </span>
+            <span
+              class="text-info"
+              v-show="closePayapl"
+            >
+              开启payapl收款方式
+            </span>
+            <span
+              class="text-info"
+              v-show="closeWesternUnion"
+            >
+              开启西联汇款收款方式
+            </span>
             <span
               slot="footer"
               class="dialog-footer"
@@ -296,11 +321,36 @@
             center
           >
             <!--<span>是否确定关闭当前收款方式</span>-->
-            <span v-show="closeBankCard">是否确定关闭银行卡收款方式</span>
-            <span v-show="closeMicroLetter">是否确定关闭微信收款方式</span>
-            <span v-show="closeAlipay">是否确定关闭支付宝收款方式</span>
-            <span v-show="closePayapl">是否确定关闭payapl收款方式</span>
-            <span v-show="closeWesternUnion">是否确定关闭西联汇款收款方式</span>
+            <span
+              v-show="closeBankCard"
+              class="text-info"
+            >
+              是否确定关闭银行卡收款方式
+            </span>
+            <span
+              v-show="closeMicroLetter"
+              class="text-info"
+            >
+              是否确定关闭微信收款方式
+            </span>
+            <span
+              v-show="closeAlipay"
+              class="text-info"
+            >
+              是否确定关闭支付宝收款方式
+            </span>
+            <span
+              v-show="closePayapl"
+              class="text-info"
+            >
+              是否确定关闭payapl收款方式
+            </span>
+            <span
+              v-show="closeWesternUnion"
+              class="text-info"
+            >
+              是否确定关闭西联汇款收款方式
+            </span>
             <span
               slot="footer"
               class="dialog-footer"
@@ -665,6 +715,9 @@ export default {
         background-color: #1E2636;
         .credited-box{
           >.payment-content {
+            .text-info {
+              color: #333;
+            }
             .btn {
               color: #fff;
               background-color: transparent;
@@ -720,24 +773,27 @@ export default {
         background-color: #ccc;
       }
       >.credited-credited-main {
-        background-color: #CCCCCC;
+        background-color: $dayBgColor;
+        border:1px solid rgba(38,47,56,0.1);
       }
       >.credited-credited-header{
+        background:rgba(255,255,255,1);
+        border:1px solid rgba(236,241,248,1);
         >.header-content{
           color: #333;
         }
       }
       .content-title{
         >.title-tips {
-          color: #333;
+          color: #D45858;
         }
         >.tips-content {
-          color: #333;
+          color: #7D90AC;
         }
       }
       .title-status {
-        background-color: #000;
-        color: #000;
+        background:rgba(51,143,245,0.1);
+        color: #333;
       }
       .payment-content {
         .btn {
@@ -746,10 +802,10 @@ export default {
           border: 1px solid #338FF5;
         }
         .payment-card {
-          color: #000;
+          color: #333;
         }
         .payment-state {
-          color: #333;
+          color: #338FF5;
         }
         .dialog-warning {
           background:rgba(42,122,211,0.9);

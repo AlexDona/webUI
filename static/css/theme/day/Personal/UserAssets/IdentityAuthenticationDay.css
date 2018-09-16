@@ -20,8 +20,8 @@
 }
 /*select*/
 .identity-authentication.personal.day .el-input__inner{
-  border: 1px solid #333;
-  background-color: #333;
+  background:rgba(255,255,255,1);
+  border:1px solid rgba(236,241,248,1);
 }
 .identity-authentication.personal.day .el-input__inner:focus{
   border: 1px solid #333;
@@ -31,11 +31,11 @@
 }
 /*高级认证弹框*/
 .identity-authentication.personal.day .el-dialog{
-  background-color: #ccc;
+  background-color: #fff;
 }
 .identity-authentication.personal.day .el-dialog__header{
-  background-color: #282E43;
-  box-shadow: 0px 2px 5px #1D2131;
+  background:rgba(51,143,245,0.1);
+  box-shadow:0px 1px 2px 0px rgba(29,33,49,0.1);
 }
 .identity-authentication.personal.day .el-dialog__title{
   color: #555;
@@ -44,4 +44,3 @@
 .main-header-title{
   color: #ccc;
 }
-
