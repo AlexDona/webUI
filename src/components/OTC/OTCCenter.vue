@@ -122,7 +122,16 @@
                 label="商户"
               >
                 <template slot-scope = "s">
-                  <div>{{s.row.userName}}</div>
+                  <div>
+                    <!-- 如果是商家用户就显示商家图标 -->
+                    <img
+                      src="../../assets/develop/shangjia.png"
+                      alt=""
+                      class="shang-icon"
+                      v-if="userInfo.type === 'MERCHANT'"
+                    >
+                    {{s.row.userName}}
+                  </div>
                 </template>
               </el-table-column>
               <!-- 信用 -->
@@ -232,17 +241,19 @@
                 </template>
               </el-table-column>
             </el-table>
+            <!--分页-->
+            <div class="page">
+              <el-pagination
+                background
+                v-show="onlineBuySellTableList.length"
+                layout="prev, pager, next"
+                :page-count="totalPages"
+                @current-change="changeCurrentPage"
+              >
+              </el-pagination>
+            </div>
           </div>
         </div>
-        <!--分页-->
-        <el-pagination
-          background
-          v-show="onlineBuySellTableList.length"
-          layout="prev, pager, next"
-          :page-count="totalPages"
-          @current-change="changeCurrentPage"
-        >
-        </el-pagination>
       </div>
       <!-- 2.2 订单管理-->
       <div class="otc-order-manage">
@@ -764,6 +775,7 @@ export default {
 </script>
 <style scoped lang="scss" type="text/scss">
 @import "../../../static/css/scss/OTC/OTCCenter.scss";
+@import "../../../static/css/scss/index.scss";
 .otc-box{
   >.otc-center-content{
     width: 1150px;
@@ -778,7 +790,7 @@ export default {
       }
       >.otc-merchant-content{
         min-height: 564px;
-        background-color: #202A33;
+        // background-color: #202A33;
         margin-top: 30px;
         >.otc-filtrate-publish{
           display: flex;
@@ -831,11 +843,22 @@ export default {
         }
         >.otc-merchant-list{
           margin-top: 30px;
+          .page{
+            text-align: center;
+            margin-top: 10px;
+            padding-bottom: 20px;
+          }
+          .shang-icon{
+            display: inline-block;
+            width: 14px;
+            height: 19px;
+            vertical-align: top;
+          }
           .xilian{
             vertical-align: middle;
           }
           .red{
-            color: #D45858;
+            // color: #D45858;
           }
           // 测试
           position: relative;
@@ -849,7 +872,7 @@ export default {
           }
           >.shade-pay-way{
             // 测试
-            color: #617499;
+            // color: #617499;
             display: inline-block;
             top: 15px;
             left: 631px;
@@ -860,7 +883,7 @@ export default {
       }
     }
     >.otc-order-manage{
-      height: 800px;
+      // height: 800px;
       margin-top: 50px;
       // ceshi
       position: relative;
@@ -870,7 +893,7 @@ export default {
         top: 440px;
         left: 15px;
         font-size: 14px;
-        color: #338FF5;
+        // color: #338FF5;
         text-decoration: underline !important;
         cursor: pointer;
       }
@@ -879,7 +902,7 @@ export default {
         right: -12px;
         top: 27px;
         font-size: 20px;
-        color: #338FF5;
+        // color: #338FF5;
       }
       .icon{
         position: absolute;
@@ -889,14 +912,14 @@ export default {
     }
   }
   &.night{
-    background-color: $mainNightColor;
+    background-color: $rockBottomNightBgColor;
     >.otc-center-content{
       >.otc-online-trading{
         >.otc-online-buy-and-sell-button{
-          background-color: $mainNightColor;
+          background-color: $rockBottomNightBgColor;
         }
         >.otc-merchant-content{
-          background-color: #202A33;
+          background-color: $mainNightBgColor;
           >.otc-filtrate-publish{
             >.otc-filtrate-box{
               >.otc-i-wan{
@@ -925,6 +948,11 @@ export default {
             }
           }
           >.otc-merchant-list{
+            .page{
+              text-align: center;
+              margin-top: 10px;
+              padding-bottom: 20px;
+            }
             .xilian{
             }
             .red{
@@ -951,14 +979,15 @@ export default {
     }
   }
   &.day{
-    background-color: $mainDayColor;
+    background-color: $mainDayBgColor;
     >.otc-center-content{
       >.otc-online-trading{
         >.otc-online-buy-and-sell-button{
           background-color: $mainDayColor;
         }
         >.otc-merchant-content{
-          background-color: #202A33;
+          // background-color: #202A33;
+          background-color: $mainDayColor;
           >.otc-filtrate-publish{
             >.otc-filtrate-box{
               >.otc-i-wan{
@@ -988,6 +1017,11 @@ export default {
             }
           }
           >.otc-merchant-list{
+            .page{
+              text-align: center;
+              margin-top: 10px;
+              padding-bottom: 20px;
+            }
             .xilian{
             }
             .red{

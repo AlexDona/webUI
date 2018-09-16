@@ -1,21 +1,21 @@
 /* otc首页样式重写 */
 /* 1.0 在线购买在线出售 */
 .otc-box .otc-online-buy-and-sell-button .el-radio-button__inner{
-    color: #D8D8D8;
-    background: #202A33;
+    /* color: #D8D8D8;
+    background: #202A33; */
     border: 0;
 }
 .otc-box .otc-online-buy-and-sell-button .el-radio-button:first-child .el-radio-button__inner{
     border-left: 0;
 }
 .otc-box .otc-online-buy-and-sell-button .el-radio-button__orig-radio:checked+.el-radio-button__inner{
-    box-shadow: -1px 0 0 0 #008069;
+    /* box-shadow: -1px 0 0 0 #008069; */
 }
 .otc-box .otc-online-buy-and-sell-button .el-radio-button:first-child.is-active .el-radio-button__inner{
-    background-color: #D45858;
+    /* background-color: #D45858; */
 }
 .otc-box .otc-online-buy-and-sell-button .el-radio-button:last-child.is-active .el-radio-button__inner{
-    background-color: #008069;
+    /* background-color: #008069; */
 }
 /* input 框样式重置-适用全局-自己先写试试 */
 /* 2.0 挂单列表增加支付方式和法币类型筛选条件*/
@@ -24,7 +24,7 @@
 }
 /* input框 */
 .otc-box .otc-publish-box .el-input__inner{
-    background-color: #19202E;
+    /* background-color: #19202E; */
     height: 30px;
     line-height: 30px;
     border: 0;
@@ -41,45 +41,45 @@
 .otc-box .otc-publish-box .el-button{
     padding: 8px 15px;
     border: 0;
-    background:linear-gradient(90deg,rgba(43,57,110,1) 0%,rgba(42,80,130,1) 100%);
+    /* background:linear-gradient(90deg,rgba(43,57,110,1) 0%,rgba(42,80,130,1) 100%); */
 }
 /* 增加支付方式和法币类型图标 */
 /* 2.0 商家表格 */
 .otc-box .otc-merchant-list .el-table th, .el-table tr{
-    background-color: #202A33;
+    /* background-color: #202A33; */
 }
 .otc-box .otc-merchant-list .el-table thead {
-    color: #617499;
+    /* color: #617499; */
 }
 .otc-box .otc-merchant-list .el-table th.is-leaf {
-    border-bottom: 1px solid rgba(97,116,153,1);
+    /* border-bottom: 1px solid rgba(97,116,153,1); */
 }
 .otc-box .otc-merchant-list .el-table td{
-    border-bottom: 1px solid rgba(97,116,153,0.05);
+    /* border-bottom: 1px solid rgba(97,116,153,0.05); */
     padding: 7px 0;
 }
 .otc-box .otc-merchant-list .el-table--enable-row-hover .el-table__body tr:hover>td{
-    background-color: #1D2331;
+    /* background-color: #1D2331; */
 }
 .otc-box .otc-merchant-list .el-table{
-    color: #fff;
-    background-color: #202A33;
+    /* color: #fff;
+    background-color: #202A33; */
 }
 .otc-box .otc-merchant-list .el-table th>.cell.highlight{
-    color: #617499;
+    /* color: #617499; */
 }
 .otc-box .otc-merchant-list .el-table__column-filter-trigger i{
-    color: #338FF5;
+    /* color: #338FF5; */
     font-size: 14px;
     font-weight: 700;
 }
 .otc-box .otc-merchant-list .el-button--danger{
-    background-color: #D45858;
-    border-color: #D45858;
+    /* background-color: #D45858;
+    border-color: #D45858; */
 }
 .otc-box .otc-merchant-list .el-button--success {
-    background-color: #008069;
-    border-color: #008069;
+    /* background-color: #008069;
+    border-color: #008069; */
 }
 .otc-box .otc-merchant-list .el-table__empty-block{
     height: 400px;
@@ -101,15 +101,15 @@
     height: 45px;
     line-height: 45px;
     padding: 0 0;
-    color: #4F85DA;
+    /* color: #4F85DA; */
 }
 .otc-box .is-disabled{
     background-color: rgba(29, 35, 49, 1);
 }
   /*鼠标点击*/
 .otc-box .el-tabs__item.is-active{
-    color: #FFFFFF;
-    background-color: #338FF5;
+    /* color: #FFFFFF;
+    background-color: #338FF5; */
 }
 .otc-box .el-tabs--left .el-tabs__item.is-left{
     width: 90px;

@@ -1,5 +1,8 @@
 <template>
-  <div class="otc-freezing-order-box otc">
+  <div
+    class="otc-freezing-order-box otc"
+    :class="{'day':theme == 'day','night':theme == 'night' }"
+  >
     <div class="freezing-order-content">
       <!--表头属性-->
       <div class="freezing-table-head">
@@ -75,14 +78,16 @@
       </div>
       <div class="no-data" v-if="!getOTCFreezingOrderList.length">暂无数据</div>
       <!--分页-->
-      <el-pagination
-        background
-        v-show="getOTCFreezingOrderList.length"
-        layout="prev, pager, next"
-        :page-count="totalPages"
-        @current-change="changeCurrentPage"
-      >
-      </el-pagination>
+      <div class="page">
+        <el-pagination
+          background
+          v-show="getOTCFreezingOrderList.length"
+          layout="prev, pager, next"
+          :page-count="totalPages"
+          @current-change="changeCurrentPage"
+        >
+        </el-pagination>
+      </div>
     </div>
   </div>
 </template>
@@ -91,6 +96,7 @@
 import {timeFilter} from '../../utils'
 import {getOTCFrezzingOrders} from '../../utils/api/OTC'
 import {returnAjaxMessage} from '../../utils/commonFunc'
+import {mapState} from 'vuex'
 export default {
   components: {},
   // props,
@@ -147,12 +153,17 @@ export default {
     }
   },
   filter: {},
-  computed: {},
+  computed: {
+    ...mapState({
+      theme: state => state.common.theme
+    })
+  },
   watch: {}
 }
 </script>
 <style scoped lang="scss" type="text/scss">
-  @import url(../../../static/css/scss/OTC/OTCFreezingOrder.scss);
+  // @import url(../../../static/css/scss/OTC/OTCFreezingOrder.scss);
+  @import "../../../static/css/scss/OTC/OTCFreezingOrder.scss";
   .otc-freezing-order-box{
     >.freezing-order-content{
       >.freezing-table-head{
@@ -160,13 +171,12 @@ export default {
         width: 1043px;
         height: 35px;
         line-height: 35px;
-        background-color: #202A33;
-        color: #617499;
-        border: 1px solid #262F38;
+        // background-color: #202A33;
+        // color: #617499;
+        // border: 1px solid #262F38;
         border-radius: 5px;
-        margin-bottom: 5px;
-        /*box-shadow:底边阴影;*/
-        box-shadow: -2px 3px 5px 1px #191E28;
+        margin-bottom: 15px;
+        // box-shadow: -2px 3px 5px 1px #191E28;
         >.item{
           display: inline-block;
           width: 140px;
@@ -177,21 +187,21 @@ export default {
         box-sizing: border-box;
         width: 1043px;
         height: 170px;
-        background-color: #202A33;
-        border: 1px solid #262F38;
+        // background-color: #202A33;
+        // border: 1px solid #262F38;
         border-radius: 5px;
         margin-bottom: 15px;
         >.freezing-info-top{
           height: 40px;
           line-height: 40px;
-          background-color: #202A33;
-          color: #617499;
+          // background-color: #202A33;
+          // color: #617499;
           border-radius: 5px;
           .red{
-            color: #D45858;
+            // color: #D45858;
           }
           .green{
-            color: #008069;
+            // color: #008069;
           }
           >.item{
             display: inline-block;
@@ -201,47 +211,44 @@ export default {
         }
         >.freezing-info-bottom{
           box-sizing: border-box;
-          border-top: 1px solid #262F38;
+          // border-top: 1px solid #262F38;
           display: flex;
           flex: 4;
           padding: 30px 30px 0 30px;
-          color: #9DA5B3;
+          // color: #9DA5B3;
           >.info-left{
             flex: 1;
             box-sizing: border-box;
-            border-right: 1px solid #262F38;
+            // border-right: 1px solid #262F38;
             >.text-info{
-              // line-height: 1.5rem;
               line-height: 20px;
             }
             >.text-blue{
-              color: #5E95EC;
+              // color: #5E95EC;
             }
           }
           >.info-middle{
             flex: 1;
             box-sizing: border-box;
-            border-right: 1px solid #262F38;
+            // border-right: 1px solid #262F38;
             margin-left: 30px;
             >.text-info{
-              // line-height: 1.5rem;
               line-height: 20px;
             }
             >.text-blue{
-              color: #5E95EC;
+              // color: #5E95EC;
             }
           }
           >.info-right{
             flex: 1;
             box-sizing: border-box;
-            border-right: 1px solid #262F38;
+            // border-right: 1px solid #262F38;
             margin-left: 30px;
             >.text-info{
-              // line-height: 1.5rem;
               line-height: 20px;
             }
             >.text-blue{
-              color: #5E95EC;
+              // color: #5E95EC;
             }
           }
           >.info-reason{
@@ -249,11 +256,10 @@ export default {
             box-sizing: border-box;
             margin-left: 30px;
             >.text-info{
-              // line-height: 1.5rem;
               line-height: 20px;
             }
             >.text-blue{
-              color: #5E95EC;
+              // color: #5E95EC;
             }
           }
         }
@@ -263,8 +269,141 @@ export default {
         height: 432px;
         line-height: 432px;
         text-align: center;
-        background-color: #202A33;
+        // background-color: #202A33;
       }
+      >.page{
+        text-align: center;
+        padding-bottom: 20px;
+      }
+    }
+    &.night{
+      >.freezing-order-content{
+      >.freezing-table-head{
+        background-color: #1E2636;
+        color: #A9BED4;
+        border: 1px solid #485776;
+        // box-shadow: -2px 3px 5px 1px #191E28;
+        >.item{
+        }
+      }
+      >.freezing-table-body{
+        background-color: #1E2636;
+        border: 1px solid #485776;
+        >.freezing-info-top{
+          color: #9DA5B3;
+          .red{
+            color: #D45858;
+          }
+          .green{
+            color: #008069;
+          }
+          >.item{
+          }
+        }
+        >.freezing-info-bottom{
+          border-top: 1px solid #262F38;
+          color: #9DA5B3;
+          >.info-left{
+            border-right: 1px solid #262F38;
+            >.text-info{
+            }
+            >.text-blue{
+              color: #5E95EC;
+            }
+          }
+          >.info-middle{
+            border-right: 1px solid #262F38;
+            >.text-info{
+            }
+            >.text-blue{
+              color: #5E95EC;
+            }
+          }
+          >.info-right{
+            border-right: 1px solid #262F38;
+            >.text-info{
+            }
+            >.text-blue{
+              color: #5E95EC;
+            }
+          }
+          >.info-reason{
+            >.text-info{
+            }
+            >.text-blue{
+              color: #5E95EC;
+            }
+          }
+        }
+      }
+      >.no-data{
+        background-color: #1E2636;
+      }
+    }
+    }
+    &.day{
+      >.freezing-order-content{
+      >.freezing-table-head{
+        background-color: $mainDayColor;
+        color: #617499;
+        border: 1px solid #ECF1F8;
+        >.item{
+        }
+      }
+      >.freezing-table-body{
+        background-color: $mainDayColor;
+        border: 1px solid #ECF1F8;
+        >.freezing-info-top{
+          color: #333;
+          .red{
+            color: #D45858;
+          }
+          .green{
+            color: #008069;
+          }
+          >.item{
+          }
+        }
+        >.freezing-info-bottom{
+          border-top: 1px solid rgba(38,47,56,0.1);
+          color: #7D90AC;
+          >.info-left{
+            border-right: 1px solid rgba(38,47,56,0.1);
+            >.text-info{
+            }
+            >.text-blue{
+              color: #5E95EC;
+            }
+          }
+          >.info-middle{
+            border-right: 1px solid rgba(38,47,56,0.1);
+            >.text-info{
+            }
+            >.text-blue{
+              color: #5E95EC;
+            }
+          }
+          >.info-right{
+            border-right: 1px solid rgba(38,47,56,0.1);
+            >.text-info{
+            }
+            >.text-blue{
+              color: #5E95EC;
+            }
+          }
+          >.info-reason{
+            >.text-info{
+            }
+            >.text-blue{
+              color: #5E95EC;
+            }
+          }
+        }
+      }
+      >.no-data{
+        background-color: #1E2636;
+      }
+    }
     }
   }
 </style>
