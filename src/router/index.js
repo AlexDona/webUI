@@ -78,6 +78,12 @@ const currencyApplication = r => require.ensure([], () => r(require('@/component
  * 新闻公告
  */
 const NewsAndNoticeList = r => require.ensure([], () => r(require('@/components/NoticeAndNews/NewsAndNoticeList')), 'news-andNotice-list')
+/**
+ * FooterInfo
+ */
+// aboutUs
+const AboutUs = r => require.ensure([], () => r(require('@/components/FooterInfo/AboutUs')), 'about-us')
+const ServiceAndProtocol = r => require.ensure([], () => r(require('@/components/FooterInfo/ServiceAndProtocol')), 'service-protocol')
 const router = new Router({
   routes: [
     {
@@ -316,6 +322,15 @@ const router = new Router({
       // 新闻中心
       path: '/NewsAndNoticeList',
       component: NewsAndNoticeList
+    },
+    {
+      // 关于我们
+      path: '/AboutUs',
+      component: AboutUs
+    },
+    {
+      path: '/ServiceAndProtocol',
+      component: ServiceAndProtocol
     }
   ]
 })
