@@ -48,7 +48,7 @@
         </div>
         <div class="account-assets-content">
           <!--账户资产币种列表-->
-          <div class="content-list min-height500">
+          <div class="content-list">
             <div class="table-body text-align-l line-height50">
               <!-- 表头 -->
               <div class="table-title-th display-flex margin20 font-size12">
@@ -308,7 +308,10 @@
                       </span>
                         </p>
                       </div>
-                      <el-dialog title="提币" :visible.sync="mentionMoneyConfirm">
+                      <el-dialog
+                        title="提币"
+                        :visible.sync="mentionMoneyConfirm"
+                      >
                         <el-form :model="form">
                           <!--手机已认证-->
                           <el-form-item
@@ -368,9 +371,6 @@
                           slot="footer"
                           class="dialog-footer"
                         >
-                          <el-button @click="mentionMoneyConfirm = false">
-                            取 消
-                          </el-button>
                           <el-button
                             type="primary"
                             @click="submitMentionMoney"
@@ -882,7 +882,7 @@ export default {
   .account-assets{
     >.account-assets-main {
       >.account-assets-box {
-        min-height: 600px;
+        min-height: 300px;
         .account-assets-header {
           >.header-flex {
             height: 100%;
@@ -913,10 +913,9 @@ export default {
           >.content-list {
             >.table-body {
               width: 100%;
-              height: 50px;
               >.table-tr {
-                /*padding: 14px;*/
                 >.table-box {
+                  width: 100%;
                   >.recharge-list-mention {
                     height:225px !important;
                   }
@@ -924,6 +923,7 @@ export default {
                     position: relative;
                     height:195px;
                     padding: 20px 6px;
+                    z-index: 2;
                     >.triangle {
                       position: absolute;
                       top: -7px;
@@ -950,7 +950,7 @@ export default {
                       >.input-box {
                         >.hint-input {
                           width: 430px;
-                          height: 34px;
+                          height: 32px;
                         }
                         >.code-copy {
                           width: 89px;
@@ -1060,7 +1060,6 @@ export default {
         .table-deal {
           position: relative;
           .type-transaction {
-            /*display: none;*/
             width: 135px;
             position: absolute;
             top: 10px;
@@ -1234,37 +1233,46 @@ export default {
       background-color: $dayBgColor;
       color:$dayFontColor;
       .account-assets-box {
-        background-color: #1E2636;
+        background-color: $dayBgColor;
+        color:$dayFontColor;
+        border:1px solid rgba(38,47,56,0.1);
         .account-assets-header {
           >.header-left {
             color: #338FF5;
           }
           >.header-right {
             >.header-right-right {
+              >.icon-color {
+                color: #D5D8DC;
+              }
               >.header-right-search {
-                background-color: #333F4A;
-                color: #fff;
+                background-color: #fff;
+                color: #333;
+                border: 1px solid rgba(38,47,56,0.1);
               }
             }
           }
         }
         .table-body {
           >.table-title-th {
-            border-bottom: 1px solid #39424D;
-            color: #A9BED4;
+            border-bottom: 1px solid rgba(57,66,77,0.1);
+            color: #333333;
           }
           >.table-tr {
             >.table-box {
+              background-color: #fff;
               >.table-td {
-                color: #9DA5B3;
+                color: #666666;
                 >.table-charge-money,
                 >.table-mention-money,
                 >.table-deal {
-                  color: #3E79D6;
+                  color:  #7D90AC;
                   >.type-transaction {
-                    background-color: #2a3242;
+                    background-color: #fff;
+                    color: #333;
+                    border: 1px solid rgba(38,47,56,0.1);
                     >.triangle-border {
-                      border-right: 8px solid #2a3242;
+                      border-right: 8px solid rgba(38,47,56,0.1);
                       border-top: 8px solid transparent;
                       border-bottom: 8px solid transparent;
                     }
@@ -1279,9 +1287,10 @@ export default {
               }
               >.recharge-list {
                 border: 1px solid #338FF5;
+                background: #fff;
                 .content-input {
-                  border: 1px solid #485776;
-                  color: #fff;
+                  border: 1px solid #ECF1F8;
+                  color: #333;
                   &:focus {
                     border: 1px solid #338FF5;
                   }
@@ -1295,7 +1304,7 @@ export default {
                   border-top: 1px solid transparent;
                   border-left: 1px solid #338FF5;
                   border-bottom: 1px solid #338FF5;
-                  background-color: #1E2636;
+                  background-color: #fff;
                 }
                 >.recharge-content {
                   >.recharge-content-hint {
@@ -1303,8 +1312,9 @@ export default {
                   }
                   >.input-box {
                     >.hint-input {
-                      background-color: #181E24;
-                      color: #fff;
+                      background:rgba(51,143,245,0.1);
+                      color: #333;
+                      border:1px solid rgba(38,47,56,0.1);
                     }
                     >.code-copy {
                       background-color: #338FF5;
@@ -1324,8 +1334,9 @@ export default {
                   >.list-left-flex {
                     >.flex-box {
                       >.flex-input {
-                        background-color: #181E24;
-                        color: #fff;
+                        background:rgba(51,143,245,0.1);
+                        color: #333;
+                        border: 1px solid rgba(38,47,56,0.1);
                       }
                       >.text-input {
                         background-color: #37424C;
@@ -1346,12 +1357,14 @@ export default {
                         color: #83909B;
                       }
                       >.count-flex-input{
-                        background-color: #181E24;
-                        color: #fff;
+                        background:rgba(51,143,245,0.1);
+                        color: #333;
+                        border: 1px solid rgba(38,47,56,0.1);
                       }
                       >.count-text-input {
-                        background-color: #37424C;
-                        color: #fff;
+                        background:rgba(51,143,245,0.1);
+                        color: #333;
+                        border: 1px solid rgba(38,47,56,0.1);
                       }
                     }
                   }

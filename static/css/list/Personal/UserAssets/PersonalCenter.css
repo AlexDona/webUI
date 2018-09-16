@@ -7,7 +7,7 @@
 }
 /*做二级导航宽度*/
 .personal-center.personal .el-tabs--left .el-tabs__item.is-left{
-  width: 163px;
+  width: 162px;
   text-align: left;
 }
 personal-center.personal .el-tabs__nav{
@@ -32,4 +32,7 @@ personal-center.personal .el-tabs__nav{
 }
 .personal .el-tabs--left {
   overflow: unset;
+}
+.el-tabs--left .el-tabs__nav-wrap.is-left {
+  margin-right: 0px;
 }

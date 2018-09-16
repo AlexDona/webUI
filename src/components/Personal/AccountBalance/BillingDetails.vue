@@ -446,8 +446,24 @@ export default {
     &.day{
       background-color: $dayBgColor;
       color:$dayFontColor;
+      >.billing-details-main {
+        background-color: $dayBgColor;
+        >.billing-details-query {
+          border-bottom: 1px solid rgba(57,66,77,0.1);
+          >.search-button {
+            background:linear-gradient(9deg,rgba(43,57,110,1),rgba(42,80,130,1));
+            color: #fff;
+          }
+          .demonstration {
+            color: #7D90AC;
+          }
+        }
+      }
       >.billing-details-header{
-        background-color: #ccc;
+        background: rgb(255,255,255);
+        border: 1px solid rgb(236,241,248);
+        border-radius: 2px;
+        box-shadow: 1px 0px 3px rgb(236,236,236);
       }
     }
   }

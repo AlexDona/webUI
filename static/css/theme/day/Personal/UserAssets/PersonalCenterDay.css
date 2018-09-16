@@ -24,3 +24,6 @@
   background: rgba(51,143,245,0.1);
   border-left: 4px solid rgba(0, 121, 254, 1);
 }
+.personal-center.personal .el-tabs--left .el-tabs__header.is-left{
+  border:1px solid rgba(38,47,56,0.1);
+}

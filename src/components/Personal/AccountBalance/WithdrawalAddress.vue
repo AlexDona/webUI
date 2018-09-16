@@ -52,7 +52,7 @@
       </div>
     </div>
     <div class="withdrawal-address-main margin-top9">
-      <header class="address-list-header background-color margin25 border-radius2">
+      <header class="address-list-header background-color border-radius2">
         <span class="header-content display-inline-block font-size16 cursor-pointer">
           地址列表
         </span>
@@ -284,6 +284,7 @@ export default {
   @import "../../../../static/css/scss/Personal/AccountBalance/WithdrawalAddress";
   .withdrawal-address{
     >.withdrawal-address-main{
+      border-radius: 5px;
       min-height: 390px;
       >.withdrawal-header {
         margin-bottom: 2px;
@@ -308,6 +309,7 @@ export default {
       >.address-list-header {
         height: 50px;
         line-height: 50px;
+        padding: 0 25px;
       }
       .btn {
         width: 80px;
@@ -356,21 +358,42 @@ export default {
     &.day{
       background-color: $dayBgColor;
       color:$dayFontColor;
-      /*>.withdrawal-address-main {*/
-        /*background-color: #ccc;*/
-        /*>.withdrawal-header {*/
-          /*background-color: #1E2636;*/
-          /*box-shadow:2px 0px 3px rgba(24,30,42,1);*/
-        /*}*/
-        /*>.withdrawal-address-content {*/
-          /*>.withdrawal-address-box {*/
-            /*.form-input {*/
-              /*border: 1px solid #485776;*/
-                /*color: #fff;*/
-            /*}*/
-          /*}*/
-        /*}*/
-      /*}*/
+      >.withdrawal-address-main {
+        background-color: $dayBgColor;
+        color:$dayFontColor;
+        border:1px solid rgba(236,241,248,1);
+        >.withdrawal-header {
+          background:rgba(255,255,255,1);
+          border:1px solid rgba(236,241,248,1);
+          >.header-content {
+            color: #338FF5;
+          }
+        }
+        >.withdrawal-address-content {
+          >.withdrawal-address-box {
+            .form-input {
+              background:rgba(255,255,255,1);
+              border:1px solid rgba(236,241,248,1);
+            }
+            .form-input:focus {
+              border: 1px solid #338FF5;
+            }
+            .form-button {
+              background:linear-gradient(0deg,rgba(43,57,110,1),rgba(42,80,130,1));
+              color: rgba(255,255,255,0.7);
+            }
+          }
+        }
+        >.address-list-header {
+          color: #338FF5;
+          border-bottom: 1px solid rgba(236,241,248,1);
+        }
+        .btn {
+          color: rgba(255,255,255,0.7);
+          background-color: transparent;
+          border: 1px solid #338FF5;
+        }
+      }
     }
   }
 </style>
