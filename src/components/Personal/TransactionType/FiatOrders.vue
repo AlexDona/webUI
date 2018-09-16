@@ -379,7 +379,7 @@ export default {
         // 类型
         tradeType: this.activitedMerchantsOrdersTraderStyleList
       }
-      getMerchantsOrdersList (params, (data) => {
+      getMerchantsOrdersList(params, (data) => {
         if (!(returnAjaxMessage(data, this, 0))) {
           return false
         } else {
