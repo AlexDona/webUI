@@ -458,7 +458,7 @@ export default {
         >.invest-list-header{
           display: flex;
           justify-content: space-between;
-          router-link{
+          a{
             line-height: 57px;
             cursor: pointer;
           }
