@@ -78,6 +78,7 @@
         </el-table-column>
         <el-table-column
           label="类型"
+          width="118"
         >
           <template slot-scope="scope">
             <span
@@ -96,6 +97,7 @@
         </el-table-column>
         <el-table-column
           label="币种"
+          width="118"
         >
           <template slot-scope="scope">
             {{ scope.row.coinName }}
@@ -103,6 +105,7 @@
         </el-table-column>
         <el-table-column
           label="价格"
+          width="118"
         >
           <template slot-scope="scope">
             {{ scope.row.price }}({{ scope.row.currencyName }})
@@ -217,10 +220,10 @@ export default {
 .otc-completed-order-box{
   >.completed-order-content{
     .red{
-      color: #D45858;
+      // color: #D45858;
     }
     .green{
-      color: #008069;
+      // color: #008069;
     }
     .page{
       text-align: center;
@@ -229,25 +232,25 @@ export default {
     .completed-info{
       display: flex;
       flex: 7;
-      color: #9DA5B3;
+      // color: #9DA5B3;
       >.completed-info-left{
         flex: 2;
-        border-right: 1px solid #262F38;
+        // border-right: 1px solid #262F38;
         >.order-info-left{
           line-height: 20px;
           >.pay-info{
-            color: #5E95EC;
+            // color: #5E95EC;
           }
         }
       }
       >.completed-info-middle{
         flex: 2;
-        border-right: 1px solid #262F38;
+        // border-right: 1px solid #262F38;
         >.order-info-middle{
           margin-left: 50px;
           line-height: 20px;
           >.buyer-seller-info{
-            color: #5E95EC;
+            // color: #5E95EC;
           }
         }
       }
@@ -257,13 +260,88 @@ export default {
           margin-left: 50px;
           line-height: 20px;
           >.confirm-time{
-            color: #5E95EC;
+            // color: #5E95EC;
           }
         }
       }
     }
   }
-  &.night{}
-  &.day{}
+  &.night{
+    >.completed-order-content{
+      .red{
+        color: #D45858;
+      }
+      .green{
+        color: #008069;
+      }
+      .page{
+      }
+      .completed-info{
+        color: #9DA5B3;
+        >.completed-info-left{
+          border-right: 1px solid #262F38;
+          >.order-info-left{
+            >.pay-info{
+              color: #5E95EC;
+            }
+          }
+        }
+        >.completed-info-middle{
+          border-right: 1px solid #262F38;
+          >.order-info-middle{
+            >.buyer-seller-info{
+              color: #5E95EC;
+            }
+          }
+        }
+        >.completed-info-right{
+          >.order-info-right{
+            >.confirm-time{
+              color: #5E95EC;
+            }
+          }
+        }
+      }
+    }
   }
+  &.day{
+    >.completed-order-content{
+      .red{
+        color: #D45858;
+      }
+      .green{
+        color: #008069;
+      }
+      .page{
+      }
+      .completed-info{
+        // color: #9DA5B3;
+        color: #7D90AC;
+        >.completed-info-left{
+          border-right: 1px solid rgba(38,47,56,0.1);
+          >.order-info-left{
+            >.pay-info{
+              color: #5E95EC;
+            }
+          }
+        }
+        >.completed-info-middle{
+        border-right: 1px solid rgba(38,47,56,0.1);
+          >.order-info-middle{
+            >.buyer-seller-info{
+              color: #5E95EC;
+            }
+          }
+        }
+        >.completed-info-right{
+          >.order-info-right{
+            >.confirm-time{
+              color: #5E95EC;
+            }
+          }
+        }
+      }
+    }
+  }
+}
 </style>

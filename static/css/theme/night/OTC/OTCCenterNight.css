@@ -25,7 +25,7 @@
 }
 /* 增加支付方式和法币类型图标 */
 /* 2.0 商家表格 */
-.otc-box.night .el-table th, .el-table tr{
+.otc-box.night .el-table th, .otc-box.night .el-table tr{
   background-color: #1E2636;
 }
 .otc-box.night .el-table thead {
