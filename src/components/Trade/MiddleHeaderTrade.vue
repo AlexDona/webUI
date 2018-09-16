@@ -188,6 +188,7 @@ export default {
     }
     &.night{
       background-color: $nightMainTitleBgColor;
+      box-shadow:2px 0px 3px rgba(27,35,49,1);
       >.inner-box{
         .item{
           >.top,>.bottom{
@@ -221,6 +222,7 @@ export default {
     }
     &.day{
       background-color: #fff;
+      box-shadow:2px 0px 3px rgba(239,239,239,1);
       >.inner-box{
         .item{
           >.top,>.bottom{

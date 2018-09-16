@@ -149,7 +149,7 @@ export default {
           >.type {
             color:$mainColor;
           }
-          color:#fff;
+          color:#8B8E92;
         }
       }
     }

@@ -40,7 +40,9 @@
 }
 
 
-/*.trade-box.night*/
+.trade-box.night .el-tabs__header{
+  box-shadow:2px 0px 3px rgba(27,35,49,1);
+}
 /*.trade-box.night*/
 /*.trade-box.night*/
 /*.trade-box.night*/

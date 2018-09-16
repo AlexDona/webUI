@@ -456,7 +456,7 @@
 </template>
 <script>
 // import {ajax} from '../../kits/http'
-import {EMAIL_REG, PHONE_REG} from '../../utils/regExp' // 正则验证
+import {EMAIL_REG} from '../../utils/regExp' // 正则验证
 import {
   userLoginForStep1,
   userLoginForStep2
@@ -501,7 +501,7 @@ export default {
       userNameErrorMsg: '', // 错误提示
       loadingCircle: {},
       userInputImageCode: '', // 图形验证码(用户输入)
-      identifyCode: '1234', // 图片验证码（后台生成）
+      identifyCode: '', // 图片验证码（后台生成）
       step3PhoneMsgCode: '', // 步骤3 手机验证码
       step3EmailMsgCode: '', // 步骤3 邮箱验证码
       step3GoogleMsgCode: '', // 步骤3 谷歌验证码
@@ -552,6 +552,7 @@ export default {
   created () {
     require('../../../static/css/list/User/Login.css')
     this.ENTER_STEP1()
+    this.refreshCode()
     // 清空input框值
     // this.clearInputValue()
   },
@@ -568,7 +569,6 @@ export default {
       }
     })
     $('body').on('mouseup', (e) => { // 鼠标放开
-      // console.log('mouseup')
       this.mouseMoveStatus = false
       var width = e.clientX - this.beginClientX
       if (width < this.maxwidth) {
@@ -577,11 +577,8 @@ export default {
       }
       $('body').off('mousemove')
       $('body').off('mouseup')
-      // this.onmousemove = null;
-      // this.onmouseup = null;
     })
     $('body').on('dblclick', (e) => {
-
     })
   },
   activated () {
@@ -646,19 +643,16 @@ export default {
 
       this.checkoutInputFormat(1, this.password)
       // 判断登录方式
-      if (PHONE_REG.test(this.username)) {
-        this.SET_LOGIN_TYPE(0)// phone
-        let str = this.username + ''
-        this.hiddenUsername = str.substring(0, 3) + '****' + str.substring(7)
-      } else if (EMAIL_REG.test(this.username)) {
+      if (EMAIL_REG.test(this.username)) {
         console.log('email')
         let str = (this.username + '').split('@')[0]
         let str1 = this.username.split('@')[1]
         this.hiddenUsername = str.substring(0, 3) + ' **** ' + '@' + str1
         this.SET_LOGIN_TYPE(1)// email
       } else {
-        console.log('error')
-        return false
+        this.SET_LOGIN_TYPE(0)// phone
+        let str = this.username + ''
+        this.hiddenUsername = str.substring(0, 3) + '****' + str.substring(7)
       }
       // 调用第一接口
       let params = {
@@ -697,7 +691,6 @@ export default {
           }
         })
       }
-      // console.log(data)
     },
     /**
       * 发送短信验证码或邮箱验证码
@@ -784,60 +777,9 @@ export default {
           this.loginImageValidateStatus = false
           this.ENTER_STEP3()
           this.step3DialogShowStatus = true
-
-          // this.sendPhoneAndEmailCodeWithStep3((msgRes) => {
-          //   console.log(msgRes)
-          // }, (emailRes) => {
-          //   console.log(emailRes)
-          // })
-
-          // if (!this.isBindGoogle) {
-          //   // 短信、邮箱验证码
-          //
-          //   // this.sendPhoneOrEmailCode(this.loginType).then((res) => {
-          //   // }).catch(err => {
-          //   //   this.$message({
-          //   //     type: 'error',
-          //   //     message: err.msg
-          //   //   })
-          //   // })
-          // }
         }
       }
     },
-    // 步骤3 发送验证码封装
-    // sendCheckCodeGolbal (type) {
-    //   this.sendPhoneAndEmailCodeWithStep3((phoneRes) => {
-    //     console.log(phoneRes)
-    //     this.disabledOfPhoneBtn = true
-    //     // this.countDownOfPhone = 60
-    //     // this.msgCountDown(this.countDownOfPhone, this.TextOfSendMsgBtnWithPhone, this.disabledOfPhoneBtn)
-    //     // console.log(this.TextOfSendMsgBtnWithPhone)
-    //   }, (res) => {
-    //     this.msgCountDown(this.countDownOfEmail, this.TextOfSendMsgBtnWithEmail, this.disabledOfEmailBtn)
-    //   }, type)
-    // },
-    // 步骤3  发送短信、邮箱验证码
-    // sendPhoneAndEmailCodeWithStep3 (msgCallback, emailCallback, type) {
-    //   if ((!type || type === 1) && this.isBindPhone) {
-    //     let params = {
-    //       country: this.activeCountryCode,
-    //       type: 'LOGIN_RECORD',
-    //       phone: this.userInfo.phone
-    //     }
-    //     // 发送短信验证码
-    //     sendPhoneOrEmailCodeAjax(0, params, msgCallback)
-    //   }
-    //   if ((!type || type === 2) && this.isBindEmail) {
-    //     let params = {
-    //       country: this.activeCountryCode,
-    //       type: 'LOGIN_RECORD',
-    //       address: this.userInfo.email
-    //     }
-    //     // 发送邮箱验证码
-    //     sendPhoneOrEmailCodeAjax(1, params, emailCallback)
-    //   }
-    // },
     /**
       * 需要输入验证码登录
       */
@@ -940,60 +882,7 @@ export default {
         } else {
           // 登录第三步
           this.step3DialogShowStatus = true
-          // this.sendPhoneAndEmailCodeWithStep3((msgRes) => {
-          //   console.log(msgRes)
-          // }, (emailRes) => {
-          //   console.log(emailRes)
-          // })
-          // if (this.isBindPhone) {
-          //   let params = {
-          //     country: this.activeCountryCode,
-          //     type: 'LOGIN_RECORD',
-          //     phone: this.userInfo.phone
-          //   }
-          //   // 发送短信验证码
-          //   sendPhoneOrEmailCodeAjax(0, params, function (res) {
-          //     console.log(res)
-          //   })
-          // }
-          // if (this.isBindEmail) {
-          //   let params = {
-          //     country: this.activeCountryCode,
-          //     type: 'LOGIN_RECORD',
-          //     email: this.userInfo.email
-          //   }
-          //   // 发送邮箱验证码
-          //   sendPhoneOrEmailCodeAjax(1, params, function (res) {
-          //     console.log(res)
-          //   })
-          // }
-
-          // 正常登录
-          //   this.SET_STEP1_INFO
         }
-        // else if (!this.isLastIp) {
-        //   // console.log('异常IP');
-        //   /**
-        //     * 是否需要谷歌验证码或短信验证码
-        //     * 条件：
-        //     * 1、谷歌验证码：已绑定谷歌验证器&&异地IP登录
-        //     * 2、短信、邮箱验证码：未绑定谷歌验证器&&异地IP登录
-        //     */
-        //   this.ENTER_STEP3()
-        //   if (!this.isBindGoogle) {
-        //     this.sliderFlag = true
-        //     // console.log('未绑定谷歌验证器');
-        //     this.sendPhoneOrEmailCode(this.loginType)
-        //   }
-        // } else {
-        //   if (this.isBindGoogle) {
-        //     this.sliderFlag = true
-        //     this.ENTER_STEP3()
-        //   } else {
-        //     this.sliderFlag = true
-        //     this.loginWithCode(this.loginType)
-        //   }
-        // }
       } // 验证成功函数
     },
 

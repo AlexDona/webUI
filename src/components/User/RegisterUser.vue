@@ -304,7 +304,7 @@ export default {
       activeCountryCodeWithPhone: '86',
       activeCountryCodeWithEmail: this.language === 'zh_CN' ? '中国' : 'China',
       activeCodePlaceholder: !this.activeMethod ? '短信验证码' : '邮箱验证码',
-      identifyCode: '1235', // 图片验证码
+      identifyCode: '', // 图片验证码
       userInputImageCode: '', // 用户输入的图片验证码
       phoneNum: '', // 手机号
       emailNum: '', // email 地址
@@ -330,6 +330,7 @@ export default {
     if (params) {
       this.inviter = params
     }
+    this.refreshCode()
   },
   mounted () {
   },
@@ -790,6 +791,7 @@ export default {
           opacity:0.5;
           border-radius:4px;
           margin:100px auto;
+          color:#fff;
         }
       }
     }
