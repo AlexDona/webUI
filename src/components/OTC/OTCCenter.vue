@@ -230,7 +230,7 @@
                     type="danger"
                     size="mini"
                     v-if="OTCBuySellStyle === 'onlineBuy'"
-                    @click="toOnlineBuy(s.row.id,s.row.coinId)"
+                    @click="toOnlineBuy(s.row.id,s.row.coinId,s.row.userId)"
                   >
                     购买
                   </el-button>
@@ -238,7 +238,7 @@
                     type="success"
                     size="mini"
                     v-if="OTCBuySellStyle === 'onlineSell'"
-                    @click="toOnlineSell(s.row.id,s.row.coinId)"
+                    @click="toOnlineSell(s.row.id,s.row.coinId,s.row.userId)"
                   >
                     出售
                   </el-button>
@@ -460,15 +460,16 @@ export default {
       console.log(pageNum)
       this.currentPage = pageNum
       this.getOTCPutUpOrdersList()
-      // 按照选中的分页调接口渲染列表数据
-      // this.getSelectCurrencyNametOTCPutUpOrdersList() // 切换我要购买和出售时候调取接口获得数据渲染列表
-      // this.toggleBuyOrSellStyle() // 切换在线购买和在线售出状态并调接口渲染列表
-      // this.getChangeCurrencyIdOTCPutUpOrdersList() //  改变可用法币的下拉框的选中值，调主页面查询otc挂单列表接口
-      // this.getChangePayWayOTCPutUpOrdersList() // 改变支付方式下拉框的选中值，调主页面查询otc挂单列表接口
     },
     // 0.1 切换tab面板
     toggleTabPane (tab, event) {
       console.log(this.activeName)
+      console.log(this.isLogin)
+      // 未登录跳转到登录页面去
+      if (!this.isLogin) {
+        this.$router.push({path: '/login'})
+        return false
+      }
       if (this.activeName === 'first') {
         console.log('调交易中订单')
         this.$refs.trading.getOTCTradingOrdersList() // 调用子组件交易中订单的方法
@@ -504,25 +505,41 @@ export default {
       }
     },
     // 0.3 点击购买按钮跳转到在线购买页面
-    toOnlineBuy (id, coinId) {
+    toOnlineBuy (id, coinId, userId) {
       if (!this.isLogin) {
         this.$router.push({path: '/login'})
       } else {
-        // console.log("买")
-        // console.log(id) // 挂单id
-        // console.log(coinId) // 币种id
-        this.$router.push({path: '/OTCOnlineTraderBuySell/' + this.OTCBuySellStyle + '/' + id + '/' + coinId})
+        if (userId === this.userInfo.id) {
+          this.$message({
+            message: '禁止自买自卖！',
+            type: 'error'
+          })
+          return false
+        } else {
+          // console.log("买")
+          // console.log(id) // 挂单id
+          // console.log(coinId) // 币种id
+          this.$router.push({path: '/OTCOnlineTraderBuySell/' + this.OTCBuySellStyle + '/' + id + '/' + coinId})
+        }
       }
     },
     // 0.4 点击出售按钮跳转到在线出售页面
-    toOnlineSell (id, coinId) {
+    toOnlineSell (id, coinId, userId) {
       if (!this.isLogin) {
         this.$router.push({path: '/login'})
       } else {
-        // console.log("卖")
-        // console.log(id) // 挂单id
-        // console.log(coinId) // 币种id
-        this.$router.push({path: '/OTCOnlineTraderBuySell/' + this.OTCBuySellStyle + '/' + id + '/' + coinId})
+        if (userId === this.userInfo.id) {
+          this.$message({
+            message: '禁止自买自卖！',
+            type: 'error'
+          })
+          return false
+        } else {
+          // console.log("卖")
+          // console.log(id) // 挂单id
+          // console.log(coinId) // 币种id
+          this.$router.push({path: '/OTCOnlineTraderBuySell/' + this.OTCBuySellStyle + '/' + id + '/' + coinId})
+        }
       }
     },
     // 0.5 查询更多订单按钮点击事件
@@ -898,7 +915,7 @@ export default {
         left: 15px;
         font-size: 14px;
         // color: #338FF5;
-        text-decoration: underline !important;
+        // text-decoration: underline !important;
         cursor: pointer;
       }
       .otc-tab-pane-arrow-right{

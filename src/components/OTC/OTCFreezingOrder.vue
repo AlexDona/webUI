@@ -103,6 +103,7 @@ export default {
   data () {
     return {
       // 分页
+      pageSize: 5,
       currentPage: 1, // 当前页码
       totalPages: 1, // 总页数
       // OTC冻结订单列表
@@ -113,8 +114,10 @@ export default {
     require('../../../static/css/list/OTC/OTCFreezingOrder.css')
     require('../../../static/css/theme/day/OTC/OTCFreezingOrderDay.css')
     require('../../../static/css/theme/night/OTC/OTCFreezingOrderNight.css')
-    // 1.0 请求冻结中订单列表
-    this.getOTCFrezzingOrdersList()
+    // 1.0 请求冻结中订单列表:只有登录了才调用
+    if (this.isLogin) {
+      this.getOTCFrezzingOrdersList()
+    }
   },
   mounted () {},
   activited () {},
@@ -137,7 +140,7 @@ export default {
       const data = await getOTCFrezzingOrders({
         status: 'FROZEN', // 状态 (交易中 TRADING 已完成 COMPLETED  已取消  CANCELED 冻结中 FROZEN)
         pageNum: this.currentPage,
-        pageSize: '5'
+        pageSize: this.pageSize
       })
       console.log('冻结中订单')
       console.log(data)
@@ -155,7 +158,8 @@ export default {
   filter: {},
   computed: {
     ...mapState({
-      theme: state => state.common.theme
+      theme: state => state.common.theme,
+      isLogin: state => state.user.isLogin // 是否登录
     })
   },
   watch: {}
@@ -166,6 +170,7 @@ export default {
   @import "../../../static/css/scss/OTC/OTCFreezingOrder.scss";
   .otc-freezing-order-box{
     >.freezing-order-content{
+      min-height: 472px;
       >.freezing-table-head{
         box-sizing: border-box;
         width: 1043px;

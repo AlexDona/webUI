@@ -407,6 +407,7 @@ export default {
   data () {
     return {
       // 分页
+      pageSize: 10,
       currentPage: 1, // 当前页码
       totalPages: 1, // 总页数
       // 1.0 广告管理筛选下拉框数组--交易币种
@@ -602,7 +603,7 @@ export default {
         // 当前页数
         pageNum: this.currentPage,
         // 每页条数
-        pageSize: '10',
+        pageSize: this.pageSize,
         // 币种
         coinId: this.activitedTraderCoinId,
         // 法币
@@ -642,7 +643,7 @@ export default {
 <style scoped lang="scss" type="text/scss">
 @import url(../../../static/css/scss/OTC/OTCReportFormStatistics.scss);
 .otc-report-form-statistics-box{
-  background-color: #1D2331;
+  background-color: #121824;
   >.report-form-statistics-content{
     width: 1150px;
     margin: 70px auto;

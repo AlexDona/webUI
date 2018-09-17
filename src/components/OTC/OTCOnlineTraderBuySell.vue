@@ -251,7 +251,9 @@
                         </div>
                         <!-- input框错误提示信息 -->
                         <div class="errorInfo">
+                          <!-- 买入量和卖出量 -->
                           <span class="number">{{numberTips}}</span>
+                          <!-- 金额 -->
                           <span class="money">{{moneyTips}}</span>
                         </div>
                         <!-- 确定按钮 -->
@@ -313,7 +315,7 @@
                 top="25vh"
                 width="470"
               >
-                <div>请输入交易密码</div>
+                <!-- <div>请输入交易密码</div> -->
                 <div class="input">
                   <input
                     type="password"
@@ -1001,6 +1003,12 @@ export default {
               }
             }
         }
+        >.password-dialog{
+          .error-info{
+            >.tips{
+            }
+          }
+        }
     }
   }
   &.night{
@@ -1082,8 +1090,10 @@ export default {
                     }
                     .errorInfo{
                       >.number{
+                        color: red;
                       }
                       >.money{
+                        color: red;
                       }
                     }
                     .trader-submit{
@@ -1130,6 +1140,13 @@ export default {
                   }
                 }
               }
+          }
+          >.password-dialog{
+            .error-info{
+              >.tips{
+                color: red;
+              }
+            }
           }
       }
     }
@@ -1215,8 +1232,10 @@ export default {
                     }
                     .errorInfo{
                       >.number{
+                        color: red;
                       }
                       >.money{
+                        color: red;
                       }
                     }
                     .trader-submit{
@@ -1263,6 +1282,13 @@ export default {
                   }
                 }
               }
+          }
+          >.password-dialog{
+            .error-info{
+              >.tips{
+                color: red;
+              }
+            }
           }
       }
     }

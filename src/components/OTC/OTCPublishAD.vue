@@ -51,9 +51,6 @@
                   </el-option>
                 </el-select>
                 <span class="double-sided-arrow display-inline-block">
-                  <!-- <IconFontCommon
-                    iconName="icon-zhuanhuannei"
-                  /> -->
                 </span>
                 <!-- 可用法币 -->
                 <el-select
@@ -83,11 +80,15 @@
                   <span v-if="activitedBuySellStyle === 'SELL'">
                     最大可卖出量:
                     <!-- {{total}}{{activeedCoinName}} -->
-                    {{total ? total : '--'}}{{activeedCoinName}}
+                    <span class="max-avail-sell">
+                      {{total ? total : '--'}}{{activeedCoinName}}
+                    </span>
                   </span>
                   <span>市价:
                     <!-- {{marketPrice}}{{activeedCurrencyName}} -->
-                    {{marketPrice ? marketPrice : '--'}}{{activeedCurrencyName}}
+                    <span class="markder-price">
+                      {{marketPrice ? marketPrice : '--'}}{{activeedCurrencyName}}
+                    </span>
                   </span>
                 </p>
               </div>
@@ -797,7 +798,6 @@ export default {
       if (this.$refs.maxCountValue.value > this.$refs.minCountValue.value - 0) {
         this.errorInfoMinCount = ''
       }
-
       // if (!(this.maxCountValue > this.minCountValue && this.maxCountValue <= this.maxCount)) {
       //   this.errorInfoMaxCount = '输入有误max'
       //   return false
@@ -1020,17 +1020,15 @@ export default {
 <style scoped lang="scss" type="text/scss">
   @import url(../../../static/css/scss/OTC/OTCPublishAD.scss);
 .otc-publish-AD-box{
-  background-color: #1D2331;
+  background-color: #121824;
   >.otc-publish-AD-content{
     width: 1150px;
     margin: 70px auto;
-    // background-color: #2B2B2B;
     display: flex;
     flex: 3;
     padding-top: 50px;
     >.publish-AD-left{
       flex: 2;
-      // background-color: #1B2136;
       >.AD-title{
         height: 30px;
         line-height: 30px;
@@ -1063,17 +1061,10 @@ export default {
           }
         }
         >.choice{
-          // box-sizing: border-box;
-          // padding-bottom: 30px;
-          // border-bottom: 1px solid #39424D;
           >.left{
-            // width: 110px;
-            // vertical-align: middle;
             >.tips{
-              // color: #fff;
             }
             >.warning{
-              // color: #3E79D6;
             }
           }
           >.right{
@@ -1082,7 +1073,6 @@ export default {
             }
             >.right-change{
               >.double-sided-arrow{
-                /*transform:rotate(180deg);*/
                 color: #797979;
                 margin: 0 10px;
               }
@@ -1091,6 +1081,13 @@ export default {
         }
         >.sale-price{
           >.right{
+            .max-avail-sell{
+              color: #30C296;
+              padding-right: 10px;
+            }
+            .markder-price{
+              color: #E97345;
+            }
             >.input{
               margin: 10px 0 5px 0;
               >.price-input{
@@ -1126,8 +1123,6 @@ export default {
           >.right{
             .err-min-count{
               margin-right: 100px;
-              // display: inline-block;
-              // width: 250px;
             }
             >.input-top{
               margin-top: 15px;
@@ -1203,7 +1198,6 @@ export default {
           border-bottom: 0;
           >.right{
             .question-mark{
-              // cursor: pointer;
             }
             .input-limit{
               width: 258px;
@@ -1239,7 +1233,6 @@ export default {
         }
         >.tip{
           color: #9DA5B3;
-          // line-height: 1.5rem;
           line-height: 20px;
         }
       }

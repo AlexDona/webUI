@@ -303,6 +303,7 @@ export default {
   data () {
     return {
       // 分页
+      pageSize: 10,
       currentPage: 1, // 当前页码
       totalPages: 1, // 总页数
       // 1.0 商家订单筛选下拉框数组--交易类型
@@ -450,7 +451,7 @@ export default {
         // 当前页数
         pageNum: this.currentPage,
         // 每页条数
-        pageSize: '10',
+        pageSize: this.pageSize,
         // 币种
         coinId: this.activitedMerchantsOrdersCoin,
         // 法币
@@ -489,7 +490,7 @@ export default {
 <style scoped lang="scss" type="text/scss">
   @import url(../../../static/css/scss/OTC/OTCMerchantsOrders.scss);
   .otc-merchants-orders-box{
-    background-color: #1D2331;
+    background-color: #121824;
     >.otc-merchants-orders-content{
       width: 1150px;
       min-height: 500px;

@@ -185,7 +185,7 @@ export default {
       } else {
         // 返回数据正确的逻辑
         this.SET_LEGAL_TENDER_REFLASH_STATUS({
-          type: 'entrust-orders',
+          type: 'ENTRUSTED',
           status: true
         })
       }

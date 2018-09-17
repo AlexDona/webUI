@@ -17,7 +17,7 @@
       <!--列表区-->
       <div class="content-box">
         <div class="inner-box">
-          <el-tabs v-model="activeName">
+          <el-tabs v-model="newsAndNoticeActiveName">
             <el-tab-pane
               label="官方公告"
               name="notice"
@@ -161,7 +161,6 @@ export default {
   // props,
   data () {
     return {
-      activeName: 'notice', // news, notice, help
       // 新闻公告列表
       noticeList: [
         {
@@ -240,7 +239,8 @@ export default {
     ...mapState({
       partnerId: state => state.common.partnerId,
       language: state => state.common.language,
-      theme: state => state.common.theme
+      theme: state => state.common.theme,
+      newsAndNoticeActiveName: state => state.footerInfo.newsAndNoticeActiveName
     }),
     noticeFilterList () {
       return this.noticeList.filter((item) => {
