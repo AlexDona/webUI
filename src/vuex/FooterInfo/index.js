@@ -6,7 +6,8 @@ import actions from './action'
 // Vue.use(Vuex)
 
 const state = {
-  newsAndNoticeActiveName: '',
+  newsAndNoticeActiveName: '', // 新闻公告全局当前激活标签
+  serviceActiveName: '', // 服务条款激活标签
   end: ''// 占位
 }
 

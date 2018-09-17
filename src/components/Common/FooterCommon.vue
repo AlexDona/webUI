@@ -160,15 +160,14 @@ export default {
   beforeRouteUpdate () {},
   methods: {
     ...mapMutations([
-      'CHANGE_NEWS_AND_NOTICE_ACTIVENAME'
+      'CHANGE_FOOTER_ACTIVENAME'
     ]),
     jumpToOtherPage (router, activeName) {
-      switch (router) {
-        case '/NewsAndNoticeList':
-          break
-        case '/ServiceAndProtocol':
-          break
-      }
+      this.CHANGE_FOOTER_ACTIVENAME({
+        activeName,
+        type: router
+      })
+      this.$router.push({path: router})
     },
     async getFooterInfo () {
       const params = {

@@ -102,10 +102,15 @@ export default {
   filter: {},
   computed: {
     ...mapState({
-      theme: state => state.common.theme
+      theme: state => state.common.theme,
+      serviceActiveName: state => state.footerInfo.serviceActiveName
     })
   },
-  watch: {}
+  watch: {
+    serviceActiveName (newVal) {
+      console.log(newVal)
+    }
+  }
 }
 </script>
 <style scoped lang="scss" type="text/scss">

@@ -646,7 +646,7 @@
 <!--请严格按照如下书写书序-->
 <script>
 import {
-  getQueryAllOrdersList,
+  // getQueryAllOrdersList,
   buyerPayForOrder,
   sellerConfirmGetMoney,
   sellerSendAppeal
