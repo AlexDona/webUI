@@ -18,9 +18,7 @@
         </ul>
       </div>
       <div class="right">
-        <template slot-scope="">
-          
-        </template>
+
       </div>
     </div>
   </div>
@@ -93,7 +91,7 @@ export default {
       this.currencyId = id
     },
     // 币种详情
-    async getFootCurrencyInforList () {
+    async getFootCurrencyInforDetail () {
       const data = await getCurrencyInforList({
         id: this.currencyId
       })
