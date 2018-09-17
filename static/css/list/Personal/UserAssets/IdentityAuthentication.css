@@ -4,10 +4,9 @@
 }
 
 /* 折叠面板默认的边框修改 */
-.identity-authentication.personal
-.el-collapse,
-.el-collapse-item__header,
-.el-collapse-item__wrap
+.identity-authentication.personal .el-collapse,
+.identity-authentication.personal .el-collapse-item__header,
+.identity-authentication.personal .el-collapse-item__wrap
 {
   background-color: transparent;
   border: 0;
