@@ -11,6 +11,7 @@
           type="text"
           class="search-input"
           v-model="searchKeyWord"
+          placeholder="请输入关键字"
         />
       </div>
       <!--列表区-->
@@ -33,8 +34,8 @@
                       to="/"
                     >
                       <div class="left">
-                        <div class="top">2018年</div>
-                        <div class="bottom">6月</div>
+                        <div class="top">{{item.time.split('-')[0]+' 年'}}</div>
+                        <div class="bottom">{{item.time.split('-')[1]-0+' 月'}}</div>
                       </div>
                       <div class="right">
                         <p class="top">
@@ -51,6 +52,14 @@
                     </router-link>
                   </li>
                 </ul>
+                <el-pagination
+                  background
+                  layout="prev, pager, next"
+                  :current-page="noticePageNum"
+                  :page-count="noticeTotalPages"
+                  @current-change="changeCurrentPage($event,'notice')"
+                >
+                </el-pagination>
               </div>
             </el-tab-pane>
             <el-tab-pane
@@ -156,8 +165,8 @@ export default {
       noticeList: [
         {
           time: '2018-09-14 20:27',
-          title: '表头',
-          briefIntroduction: '简介',
+          title: '表头表头表头表头表头表头表头表表头表头表头表头表头表头表头表头表头表头表头表头表头表头表头表头头',
+          briefIntroduction: '简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介',
           author: '今日财经'
         },
         {
@@ -182,6 +191,9 @@ export default {
         }
       ],
       helpShowStatusList: [],
+      noticeTotalPages: 0, // 公告总条数
+      pageSize: 10,
+      noticePageNum: 1, // 当前页
       end: ''
     }
   },
@@ -199,6 +211,9 @@ export default {
   update () {},
   beforeRouteUpdate () {},
   methods: {
+    changeCurrentPage (e, type) {
+
+    },
     toggleShowHelpItem (index, status) {
       this.$set(this.helpShowStatusList, index, status)
     },
@@ -257,11 +272,19 @@ export default {
         height:250px;
         line-height:250px;
         text-align: center;
+        background: url(../../assets/develop/helpbanner.png) no-repeat center center;
+        -webkit-background-size: 100% 100%;
+        background-size: 100% 100%;
         >.search-input{
           width:571px;
           height:50px;
           padding:0 20px;
           box-sizing: border-box;
+          background:rgba(30,38,54,1);
+          border:1px solid rgba(42,130,200,1);
+          border-radius:6px;
+          box-shadow:1px 1px 24px 0px rgba(50,83,122,1);
+          color:#fff;
         }
       }
       >.content-box{
@@ -288,30 +311,51 @@ export default {
                     text-align: center;
                     >.top{
                       height:25px;
+                      line-height:25px;
+                      color:#fff;
+                      background:rgba(149,160,184,1);
                     }
                     >.bottom{
                       height:60px;
-                      line-height: 60px;                    }
+                      line-height: 60px;
+                      font-size: 26px;
+                      background:rgba(31,144,234,1);
+                      color:#fff;
+                    }
                   }
                   >.right{
+                    /*background-color: green;*/
+                    width:700px;
                     >.top{
-                      width:378px;
-                      height:15px;
+                      width:100%;
                       font-size:14px;
                       font-weight:bold;
                       color:rgba(255,255,255,1);
                       margin-bottom:10px;
+                      overflow: hidden;
+                      text-overflow:ellipsis;
+                      white-space: nowrap;
                     }
                     >.middle{
                       font-size:12px;
                       font-weight:400;
                       color:rgba(139,160,202,1);
                       margin-bottom:10px;
+                      overflow:hidden;
+                      text-overflow:ellipsis;
+                      display: -webkit-box;
+                      -webkit-box-orient: vertical;
+                      -webkit-line-clamp: 3;
+                      line-height: 20px;
+                      height:60px;
                     }
                     >.bottom{
                       font-size:12px;
                       font-weight:400;
                       color:rgba(68,81,107,1);
+                      >.author{
+                        margin-right:20px;
+                      }
                     }
                   }
                 }
@@ -359,11 +403,6 @@ export default {
      >.inner-box{
        >.search-box{
          >.search-input{
-           background:rgba(30,38,54,1);
-           border:1px solid rgba(42,130,200,1);
-           border-radius:6px;
-           box-shadow:1px 1px 24px 0px rgba(50,83,122,1);
-           color:#fff;
          }
        }
        >.content-box{
@@ -377,14 +416,13 @@ export default {
                    }
                    >.left{
                      >.top{
-                       background-color: #95A0B8;
                      }
                      >.bottom{
-                       background-color: #1F90EA;
                      }
                    }
                    >.right{
-                     >.title{
+                     >.top{
+                       color:#fff;
                      }
                      >.middle{
                      }
@@ -419,7 +457,63 @@ export default {
      }
     }
     &.day{
-
+      >.inner-box{
+        >.search-box{
+          >.search-input{
+          }
+        }
+        >.content-box{
+          background-color: #fff;
+          >.inner-box{
+            .item-content{
+              >.content-list{
+                >.content-item{
+                  >.content-item-link{
+                    >.left,>.right{
+                    }
+                    >.left{
+                      >.top{
+                      }
+                      >.bottom{
+                      }
+                    }
+                    >.right{
+                      >.top{
+                        color:#338FF5;
+                      }
+                      >.middle{
+                        color:#666;
+                      }
+                      >.bottom{
+                        color:#666;
+                      }
+                    }
+                  }
+                }
+              }
+              &.help{
+                >.content-list{
+                  >.content-item{
+                    >.content-item-link{
+                      background-color: #293140;
+                      >.title{
+                        >.icon-box{
+                          background-color: #338FF5;
+                          color:#1E2636;
+                        }
+                        >.title-content{
+                        }
+                      }
+                      >.content{
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
     }
   }
 </style>

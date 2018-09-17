@@ -355,7 +355,8 @@ export default{
       // 设置板块
       'CHANGE_PALTE_LIST',
       // 更新当前汇率列表
-      'CHANGE_CURRENCY_RATE_LIST'
+      'CHANGE_CURRENCY_RATE_LIST',
+      'SET_COUNTRY_AREA_LIST'
     ]),
     getCountryList () {
       getCountryListAjax(this, (data) => {
