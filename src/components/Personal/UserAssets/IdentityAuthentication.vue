@@ -143,24 +143,30 @@
           @click="authenticationMethod">
           <span class="font-size16 main-header-title">高级认证</span>
           <span
-            v-if="statusRealNameInformation.status === 'notPass'"
+            v-if="userInfoRefresh.advancedAuth === 'notPass' || userInfoRefresh.advancedAuth === ''"
             class="authentication-type font-size12"
           >
             （未高级认证）
           </span>
           <span
-            v-if="statusRealNameInformation.status === 'pass'"
+            v-if="userInfoRefresh.advancedAuth === 'pass'"
             class="authentication-type font-size12"
           >
-            （已通过实名认证并且通过高级认证）
+            （已通过实名认证）
           </span>
           <span
-            v-if="statusRealNameInformation.status === 'waitVeritfy'"
+            v-if="userInfoRefresh.advancedAuth === 'waitVeritfy'"
             class="authentication-type font-size12"
           >
             （待审核）
           </span>
-          <i class="el-icon-arrow-down icon-down float-right"></i>
+          <span
+            class="float-right authentication-type font-size12"
+            v-if="userInfoRefresh.advancedAuth === 'notPass' || userInfoRefresh.advancedAuth === ''"
+          >
+            去认证
+          </span>
+          <span v-else></span>
         </p>
       </div>
       <div class="identity-box">
@@ -171,7 +177,7 @@
                 <p class="information">
                   <span class="info-type font-size12">国际：</span>
                   <span class="user-info font-size14">
-                    {{ statusRealNameInformation.country }}
+                    {{ userInfoRefresh.country }}
                   </span>
                 </p>
                 <p class="information">
@@ -180,15 +186,15 @@
                   <span
                     class="user-info font-size14"
                   >
-                    {{ statusRealNameInformation.realname }}
+                    {{ userInfoRefresh.realname }}
                   </span>
                 </p>
                 <p class="information">
                   <span class="info-type font-size12">证件号：</span>
                   <span class="user-info font-size14">
-                    {{ statusRealNameInformation.cardNo.substring(0,6)}}
+                    {{ userInfoRefresh.cardNo.substring(0,6)}}
                   ****
-                   {{ statusRealNameInformation.cardNo.substring(14,18)}}
+                   {{ userInfoRefresh.cardNo.substring(14,18)}}
                   </span>
                 </p>
                 <p class="information">
@@ -302,6 +308,13 @@
                 </div>
               </div>
               <div class="upload-button">
+                <div
+                  class = "false-tips fz14 tl mt-5"
+                  v-show = "errorMsg"
+                >
+                  <i></i>
+                  {{ errorMsg }}
+                </div>
                 <!--提交按钮-->
                 <button
                   class="submit-information font-size16 cursor-pointer"
@@ -312,6 +325,17 @@
               </div>
             </div>
           </el-collapse-transition>
+        </div>
+        <div
+          class="wait-veritfy-back"
+          v-if="statusRealNameInformation.advancedAuth === 'waitVeritfy'"
+        >
+          <div class="wait-veritfy text-align-c">
+            <IconFontCommon
+              class="font-size60 color-coin"
+              iconName="icon-daishenhe"
+            />
+          </div>
         </div>
         <div
           class="success-after name-authentication-content"
@@ -350,7 +374,13 @@
 import {mapState} from 'vuex'
 import ErrorBox from '../../User/ErrorBox'
 import IconFontCommon from '../../Common/IconFontCommon'
-import {queryCountryList, submitRealNameAuthentication, submitSeniorCertification, realNameInformation} from '../../../utils/api/personal'
+import {
+  queryCountryList,
+  submitRealNameAuthentication,
+  submitSeniorCertification,
+  realNameInformation,
+  userRefreshUser
+} from '../../../utils/api/personal'
 import {returnAjaxMessage} from '../../../utils/commonFunc'
 export default {
   components: {
@@ -376,6 +406,7 @@ export default {
           certificateName: '护照'
         }
       ], // 证件类型列表
+      waitVeritfy: false, // 待审核
       realName: '', // 真实姓名
       identificationNumber: '', // 证件号码
       errorMsg: '', // 错误信息提示
@@ -397,6 +428,7 @@ export default {
       dialogVisibleHand: false,
       seniorCertificationList: {},
       realNameInformationObj: {}, //  获取用户实名信息
+      userInfoRefresh: {}, //  刷新用户信息
       statusRealNameInformation: {
         cardNo: ''
       },
@@ -413,6 +445,7 @@ export default {
     require('../../../../static/css/theme/day/Personal/UserAssets/IdentityAuthenticationDay.css')
     // 黑色主题样式
     require('../../../../static/css/theme/night/Personal/UserAssets/IdentityAuthenticationNight.css')
+    this.getUserRefreshUser()
     this.tokenObj.token = this.userInfo.token
   },
   mounted () {},
@@ -485,6 +518,21 @@ export default {
         // }
       }
     },
+    /**
+     *  刷新用户信息
+     */
+    async getUserRefreshUser () {
+      let data = await userRefreshUser({
+        token: this.userInfo.token
+      })
+      console.log(data)
+      if (!(returnAjaxMessage(data, this, 0))) {
+        return false
+      } else {
+        // 返回列表数据
+        this.userInfoRefresh = data.data.data.userInfo
+      }
+    },
     // 检测输入格式
     checkoutInputFormat (type, targetNum) {
       console.log(type)
@@ -518,24 +566,36 @@ export default {
     setErrorMsg (index, msg) {
       this.errorShowStatusList[index] = msg
     },
-    // 提交实名认证认证
+    // 提交实名认证
     submitRealName () {
       this.stateSubmitRealName()
     },
     async stateSubmitRealName () {
-      let data
-      let param = {
-        country: this.regionValue, // 国籍
-        cardType: this.documentTypeValue, // 证件类型
-        realname: this.realName, // 真实姓名
-        cardNo: this.identificationNumber // 证件号码
-      }
-      data = await submitRealNameAuthentication(param)
-      if (!(returnAjaxMessage(data, this, 1))) {
-        return false
+      let goOnStatus = 0
+      if (
+        this.checkoutInputFormat(0, this.realName) &&
+        this.checkoutInputFormat(1, this.identificationNumber)
+      ) {
+        goOnStatus = 1
       } else {
-        this.getRealNameInformation()
-        console.log(data)
+        goOnStatus = 0
+      }
+      if (goOnStatus) {
+        let data
+        let param = {
+          country: this.regionValue, // 国籍
+          cardType: this.documentTypeValue, // 证件类型
+          realname: this.realName, // 真实姓名
+          cardNo: this.identificationNumber // 证件号码
+        }
+        data = await submitRealNameAuthentication(param)
+        if (!(returnAjaxMessage(data, this, 1))) {
+          return false
+        } else {
+          this.getUserRefreshUser()
+          this.getRealNameInformation()
+          console.log(data)
+        }
       }
     },
     // 高级认证弹窗
@@ -563,6 +623,28 @@ export default {
       this.stateSeniorCertification()
     },
     async stateSeniorCertification () {
+      if (!this.dialogImageFrontUrl) {
+        // this.errorMsg = '请上传身份证正面'
+        this.$message({
+          message: '请上传身份证正面',
+          type: 'error'
+        })
+        return
+      } else if (!this.dialogImageReverseSideUrl) {
+        this.$message({
+          message: '请上传身份证反面',
+          type: 'error'
+        })
+        return
+      } else if (!this.dialogImageReverseSideUrl) {
+        this.$message({
+          message: '请上传手持身份证',
+          type: 'error'
+        })
+        return
+      } else {
+        this.errorMsg = ''
+      }
       let data
       let param = {
         idcardFront: this.dialogImageFrontUrl, // 上传身份证正面
@@ -648,9 +730,10 @@ export default {
       margin: 0 auto;
       padding-bottom: 25px;
     }
-    /*.header-border {*/
-      /*padding: 0 25px;*/
-    /*}*/
+    .header-border {
+      height: 50px;
+      line-height: 50px;
+    }
     .authentication-type {
       line-height: 56px;
       cursor: pointer;
@@ -681,7 +764,16 @@ export default {
       }
     }
     .identity-box {
-      border:1px solid rgba(38,47,56,0.1);
+      /*border:1px solid rgba(38,47,56,0.1);*/
+      >.wait-veritfy-back {
+        height: 393px;
+        line-height: 350px;
+        >.wait-veritfy{
+          >.color-coin {
+            color: #338FF5;
+          }
+        }
+      }
     }
     .transition-box{
       >.advanced-upload {
@@ -726,6 +818,9 @@ export default {
           margin: 90px auto 83px;
           border-radius:4px;
         }
+        .false-tips {
+          height: 20px;
+        }
       }
       >.advanced-prompt{
         margin: 20px 138px 0 27px;
@@ -767,6 +862,9 @@ export default {
     }
     .identity-authentication-main {
       background-color: #1E2636;
+      .false-tips {
+        color: #D45858;
+      }
       .header-border {
         border-bottom: 1px solid #39424D;
       }
@@ -788,6 +886,16 @@ export default {
       background-color: #1E2636;
     }
     >.advanced-certification-main{
+      .identity-box {
+        border:1px solid rgba(38,47,56,0.1);
+        >.wait-veritfy-back {
+          >.wait-veritfy{
+            >.color-coin {
+              color: #338FF5;
+            }
+          }
+        }
+      }
       .header-border {
         border-bottom: 1px solid #39424D;
       }
@@ -838,6 +946,9 @@ export default {
     .identity-authentication-main {
       border:1px solid rgba(38,47,56,0.1);
       .name-authentication-content {
+        .false-tips {
+          color: #D45858;
+        }
         .common-input {
           border:1px solid rgba(38,47,56,0.1);
           color: #333;
@@ -870,6 +981,16 @@ export default {
       background-color: #fff;
     }
     >.advanced-certification-main{
+      .identity-box {
+        border:1px solid rgba(38,47,56,0.1);
+        >.wait-veritfy-back {
+          >.wait-veritfy{
+            >.color-coin {
+              color: #338FF5;
+            }
+          }
+        }
+      }
       .header-border {
         border:1px solid rgba(38,47,56,0.1);
         /*border-bottom: 1px solid #39424D;*/

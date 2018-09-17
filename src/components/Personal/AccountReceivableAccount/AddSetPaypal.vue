@@ -39,7 +39,9 @@
             label-width="120px"
           >
             <el-form-item label="名 称：">
-              <span class="payment-content-name">杨</span>
+              <span class="payment-content-name">
+                {{ userInfo.userInfo.realname }}
+              </span>
             </el-form-item>
             <el-form-item label="paypal账号：">
               <el-input
@@ -47,7 +49,14 @@
                 :autosize="{ minRows: 4, maxRows: 2}"
                 placeholder="请输入内容"
                 v-model="paypalAccount"
+                @keydown="setErrorMsg(0, '')"
+                @blur="checkoutInputFormat(0, paypalAccount)"
               >
+                <!--错误提示-->
+                <ErrorBox
+                  :text="errorShowStatusList[0]"
+                  :isShow="!!errorShowStatusList[0]"
+                />
               </el-input>
             </el-form-item>
             <el-form-item label="交易密码：">
@@ -55,6 +64,13 @@
                 type="password"
                 class="payment-input border-radius2"
                 v-model="transactionPassword"
+                @keydown="setErrorMsg(1, '')"
+                @blur="checkoutInputFormat(1, transactionPassword)"
+              />
+              <!--错误提示-->
+              <ErrorBox
+                :text="errorShowStatusList[1]"
+                :isShow="!!errorShowStatusList[1]"
               />
             </el-form-item>
             <button
@@ -83,6 +99,7 @@
 // 头部
 import HeaderCommon from '../../Common/HeaderCommon'
 import IconFontCommon from '../../Common/IconFontCommon'
+import ErrorBox from '../../User/ErrorBox'
 import {returnAjaxMessage} from '../../../utils/commonFunc'
 import {
   statusCardSettings,
@@ -96,6 +113,7 @@ const { mapMutations } = createNamespacedHelpers('personal')
 export default {
   components: {
     HeaderCommon, // 头部
+    ErrorBox, // 错误提示接口
     IconFontCommon, // 字体图标
     FooterCommon // 底部
   },
@@ -107,7 +125,11 @@ export default {
       id: '', // ID
       paymentTerm: {},
       successCountDown: 1, // 成功倒计时
-      paymentMethodList: {}
+      paymentMethodList: {},
+      errorShowStatusList: [
+        '', // paypal账号
+        '' // 交易密码
+      ]
     }
   },
   created () {
@@ -135,24 +157,70 @@ export default {
       this.CHANGE_USER_CENTER_ACTIVE_NAME('account-credited')
       this.$router.push({path: '/PersonalCenter'})
     },
+    // 检测输入格式
+    checkoutInputFormat (type, targetNum) {
+      console.log(type)
+      switch (type) {
+        // 请输入支付宝张号
+        case 0:
+          console.log(type)
+          if (!targetNum) {
+            this.setErrorMsg(0, '请输入paypal账号')
+            this.$forceUpdate()
+            return 0
+          } else {
+            this.setErrorMsg(0, '')
+            this.$forceUpdate()
+            return 1
+          }
+        // 请输入支付宝张号
+        case 1:
+          console.log(type)
+          if (!targetNum) {
+            this.setErrorMsg(1, '请输入交易密码')
+            this.$forceUpdate()
+            return 0
+          } else {
+            this.setErrorMsg(1, '')
+            this.$forceUpdate()
+            return 1
+          }
+      }
+    },
+    // 设置错误信息
+    setErrorMsg (index, msg) {
+      this.errorShowStatusList[index] = msg
+    },
     // 确认设置paypal账号
     stateSubmitPaypal () {
       this.stateSeniorCertification()
     },
     async stateSeniorCertification () {
-      let data
-      let param = {
-        cardNo: this.paypalAccount, // paypal账号
-        payPassword: this.transactionPassword, // 交易密码
-        bankType: 'paypal', // type
-        id: this.id
-      }
-      data = await statusCardSettings(param)
-      console.log(data)
-      if (!(returnAjaxMessage(data, this, 1))) {
-        return false
+      let goOnStatus = 0
+      if (
+        this.checkoutInputFormat(0, this.alipayAccount)
+      ) {
+        goOnStatus = 1
       } else {
-        this.successJump()
+        goOnStatus = 0
+      }
+      if (goOnStatus) {
+        let data
+        let param = {
+          cardNo: this.paypalAccount, // paypal账号
+          payPassword: this.transactionPassword, // 交易密码
+          bankType: 'paypal', // type
+          id: this.id
+        }
+        data = await statusCardSettings(param)
+        console.log(data)
+        if (!(returnAjaxMessage(data, this, 1))) {
+          return false
+        } else {
+          this.successJump()
+          this.paypalAccount = ''
+          this.transactionPassword = ''
+        }
       }
     },
     // 获取支付方式信息

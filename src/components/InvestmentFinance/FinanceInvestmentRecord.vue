@@ -10,74 +10,128 @@
       <div class="finance-inner">
       <!-- 投资 -->
       <div class="invest-list">
-        <div class="invest-list-header">
-          <div class='invest'>投资记录</div>
-          <router-link class="blue" to="/FinanceCenter">
-          <IconFontCommon class="blue goback-icon" iconName='icon-fanhui'/>返回投资</router-link>
+         <div class="nvest-list-body">
+          <div class="gobackInvest">
+            <IconFontCommon class='blue' iconName="icon-fanhui" style="font-size:12px" />
+            <router-link class="blue" to="/FinanceCenter">查看全部</router-link>
+          </div>
+          <!-- 投资记录 -->
+          <el-tabs v-model="activeName" @tab-click="handleClick">
+            <el-tab-pane label="投资记录" name="1">
+              <el-table
+                :data="investList"
+                style="width: 100%"
+                empty-text="暂无数据"
+                >
+                <el-table-column
+                  prop="coinName"
+                  label="投资币种"
+                  width="100">
+                </el-table-column>
+                <el-table-column
+                  prop="investType"
+                  label="投资类型"
+                  width="180">
+                </el-table-column>
+                <el-table-column
+                  prop="count"
+                  width="100"
+                  label="数量"
+                  >
+                </el-table-column>
+                <el-table-column
+                  prop="prospectiveEarning"
+                  label="预计收益">
+                </el-table-column>
+                <el-table-column
+                  prop="gaveOutTime"
+                  width="180"
+                  label="预计发放时间">
+                </el-table-column>
+                <el-table-column
+                  label="状态">
+                  <template slot-scope = "data">
+                    <div v-if="data.row.status == 'COMPLETED'">已完成</div>
+                    <div v-if="data.row.status == 'GAVEOUT'">已发放</div>
+                    <div v-if="data.row.status == 'FROZENED'">冻结</div>
+                    <div v-if="data.row.status == 'CANCELED'">取消</div>
+                    <div v-if="data.row.status == 'REDEMPTIONED'">已赎回</div>
+                  </template>
+                </el-table-column>
+                <el-table-column
+                  width="180"
+                  label="创建时间">
+                  <template slot-scope = "scope">
+                    <div>{{timeFormatting(scope.row.createdTime)}}</div>
+                  </template>
+                </el-table-column>
+                <el-table-column
+                  prop="operations"
+                  label="操作">
+                  <template slot-scope = "data">
+                    <div v-if="data.row.operations == 'CANCELED'" class="blue">取消</div>
+                  </template>
+                </el-table-column>
+              </el-table>
+              <!-- <el-pagination
+                  background
+                  v-if="investList.length"
+                  layout="prev, pager, next"
+                  page-size='10'
+                  @current-change='changePage'
+                  :total='totalPages'>
+              </el-pagination> -->
+            </el-tab-pane>
+            <!-- 收益记录 -->
+            <el-tab-pane label="收益记录" name="2">
+              <el-table
+                :data="investList"
+                style="width: 100%"
+                empty-text="暂无数据"
+                >
+                <el-table-column
+                  prop="coinName"
+                  label="投资币种"
+                  width="150">
+                </el-table-column>
+                <el-table-column
+                  prop="investType"
+                  label="投资类型"
+                  width="230">
+                </el-table-column>
+                <el-table-column
+                  prop="count"
+                  width="180"
+                  label="数量"
+                  >
+                </el-table-column>
+                <el-table-column
+                  prop="prospectiveEarning"
+                  width="180"
+                  label="预计收益">
+                </el-table-column>
+                <el-table-column
+                  prop="prospectiveEarning"
+                  width="180"
+                  label="发放收益">
+                </el-table-column>
+                <el-table-column
+                  prop="gaveOutTime"
+                  width="180"
+                  label="预计发放时间">
+                </el-table-column>
+              </el-table>
+            </el-tab-pane>
+            <el-pagination
+                background
+                v-if="investList.length"
+                layout="prev, pager, next"
+                page-size='10'
+                @current-change='changePage'
+                :total='totalPages'>
+            </el-pagination>
+          </el-tabs>
         </div>
-        <div class="nvest-list-body">
-          <el-table
-            :data="investList"
-            style="width: 100%"
-            empty-text="暂无数据"
-            >
-            <el-table-column
-              prop="coinName"
-              label="投资币种"
-              width="100">
-            </el-table-column>
-            <el-table-column
-              prop="investType"
-              label="投资类型"
-              width="180">
-            </el-table-column>
-            <el-table-column
-              prop="count"
-              width="100"
-              label="数量"
-              >
-            </el-table-column>
-            <el-table-column
-              prop="prospectiveEarning"
-              label="预计收益">
-            </el-table-column>
-            <el-table-column
-              prop="gaveOutTime"
-              width="180"
-              label="预计发放时间">
-            </el-table-column>
-            <el-table-column
-              label="状态">
-              <template slot-scope = "data">
-                <div v-if="data.row.status == 'COMPLETED'">已完成</div>
-                <div v-if="data.row.status == 'GAVEOUT'">已发放</div>
-                <div v-if="data.row.status == 'FROZENED'">冻结</div>
-                <div v-if="data.row.status == 'CANCELED'">取消</div>
-                <div v-if="data.row.status == 'REDEMPTIONED'">已赎回</div>
-              </template>
-            </el-table-column>
-            <el-table-column
-              prop="createdTime"
-              width="180"
-              label="创建时间">
-            </el-table-column>
-            <el-table-column
-              prop="operations"
-              label="操作">
-              <template slot-scope = "data">
-                <div v-if="data.row.operations == 'CANCELED'" class="blue">取消</div>
-              </template>
-            </el-table-column>
-          </el-table>
-        </div>
-        <el-pagination
-            background
-            v-if="investList.length"
-            layout="prev, pager, next"
-            page-size='10'
-            @current-change='changePage'
-            :total='totalPages'>
-        </el-pagination>
       </div>
       </div>
     </div>
@@ -92,6 +146,7 @@ import FinanceBrokenLine from './FinanceBrokenLine'
 import FinanceBrokenPie from './FinanceBrokenPie'
 import IconFontCommon from '../Common/IconFontCommon'
 import {mapState} from 'vuex'
+import {timeFilter} from '../../utils'
 export default {
   components: {
     HeaderCommon,
@@ -104,6 +159,7 @@ export default {
     return {
       currnetPage: 1,
       totalPages: 1,
+      activeName: '1',
       investList: [
         {
           coinid: '00000',
@@ -173,6 +229,9 @@ export default {
   update () {},
   beforeRouteUpdate () {},
   methods: {
+    timeFormatting (data) {
+      return timeFilter(data, 'data')
+    },
     changePage (pageNum) {
       this.currnetPage = pageNum
       // 重新获取列表
@@ -197,7 +256,7 @@ export default {
     width:100%;
     height:100%;
       >.banner-box{
-          background:url('../../assets/finance/banner-jpg.jpg') no-repeat center center/100% 100%;
+          background:#121824 url('../../assets/finance/banner.png') no-repeat center center/100% 100%;
         }
       >.inner-box{
         display:flex;
@@ -215,6 +274,16 @@ export default {
             line-height: 57px;
             cursor: pointer;
           }
+        }
+        >.nvest-list-body{
+          position: relative;
+          >.gobackInvest{
+             position: absolute;
+             top:25px;
+             right: 0px;
+             z-index: 10;
+          }
+
         }
       }
       }

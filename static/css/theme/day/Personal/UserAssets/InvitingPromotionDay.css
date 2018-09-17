@@ -19,9 +19,9 @@
   color: #333;
 }
 
-.invitation-promotion.personal.day .el-table--enable-row-hover .el-table__body tr:hover>td{
+/*.invitation-promotion.personal.day .el-table--enable-row-hover .el-table__body tr:hover>td{
   background-color: #eeeeee;
-}
+}*/
 .invitation-promotion.personal.day .el-table{
   color: #fff;
 }

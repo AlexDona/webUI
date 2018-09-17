@@ -206,7 +206,7 @@
               <span class="label-content">
                 <input
                   class="username-input"
-                  type="text"
+                  type="password"
                   v-model="newPassword"
                 />
               </span>
@@ -216,7 +216,7 @@
               <span class="label-content">
                 <input
                   class="username-input"
-                  type="text"
+                  type="password"
                   v-model="confirmPassword"
                 />
               </span>
@@ -272,6 +272,7 @@ import {
   returnAjaxMessage,
   sendPhoneOrEmailCodeAjax
 } from '../../utils/commonFunc'
+import {PWD_REG} from '../../utils/regExp'
 import ImageValidate from '../Common/ImageValidateCommon'
 import { createNamespacedHelpers, mapState } from 'vuex'
 const { mapMutations } = createNamespacedHelpers('user')
@@ -335,6 +336,34 @@ export default {
     },
     // 找回密码步骤3
     async findPasswordStep3 () {
+      if (!this.newPassword) {
+        this.$message({
+          type: 'error',
+          message: '请输入新的密码'
+        })
+        return false
+      } else if (!PWD_REG.test(this.newPassword)) {
+        this.$message({
+          type: 'error',
+          message: '请输入8-20位字母、数字组合'
+        })
+        return false
+      }
+      if (!this.confirmPassword) {
+        this.$message({
+          type: 'error',
+          message: '请再次输入新的密码'
+        })
+        return false
+      }
+      if (this.confirmPassword !== this.newPassword) {
+        this.$message({
+          type: 'error',
+          message: '请输入相同的密码'
+        })
+        return false
+      }
+
       const params = {
         token: this.userInfo.token,
         newPassword: this.newPassword
@@ -467,7 +496,11 @@ export default {
       disabledOfEmailBtn: state => state.user.disabledOfEmailBtn
     })
   },
-  watch: {}
+  watch: {
+    activeStepNumber (newVal) {
+      console.log(newVal)
+    }
+  }
 }
 </script>
 <style scoped lang="scss">

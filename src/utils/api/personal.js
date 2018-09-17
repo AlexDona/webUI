@@ -24,6 +24,8 @@ export const inquireRechargeAddressList = (params) => get('personal/getRechargeA
 export const withdrawalInformation = (params) => get('queryWithdrawInfo', params)
 // 根据coinid查询交易信息
 export const queryTransactionInformation = (params) => get('personal/getTradeUrl', params)
+//  刷新用户信息
+export const userRefreshUser = (params) => get('user/refreshUser', params)
 /**
  * 安全中心
  * */

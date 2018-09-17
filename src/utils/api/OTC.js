@@ -56,3 +56,7 @@ export const getOTCReportFormStatisticsData = (params) => get('otcOrder/selectMe
 export const getOTCChangeRate = (params) => get('otcCOin/changeRate', params)
 //  币种详情：商家和普通用户挂单页面请求币种详情渲染页面
 export const getOTCCoinInfo = (params) => get('otcCOin/getCoinInfo', params)
+// 服务条款币种资料列表
+export const getCurrencyInforList = (params) => get('cms/coinInformation/all', params)
+// 服务条款币种列表对应的单个币种详细资料
+export const getCurrencyDetails = (params) => get(`cms/coinInformation/select/${params}`)

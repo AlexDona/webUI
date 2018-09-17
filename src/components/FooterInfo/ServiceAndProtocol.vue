@@ -15,42 +15,42 @@
           >
             <el-tab-pane
               label="用户协议"
-              name="first"
+              name="UserProtocol"
             >
               <UserProtocol/>
             </el-tab-pane>
             <el-tab-pane
               label="条款说明"
-              name="second">
+              name="ClauseExplain">
               <ClauseExplain/>
             </el-tab-pane>
             <el-tab-pane
               label="法律声明"
-              name="third"
+              name="LegislationExplain"
             >
               <LegislationExplain/>
             </el-tab-pane>
             <el-tab-pane
               label="隐私条款"
-              name="fourth"
+              name="PrivacyClause"
             >
               <PrivacyClause/>
             </el-tab-pane>
             <el-tab-pane
               label="API文档"
-              name="fifth"
+              name="APIDocument"
             >
               <APIDocument/>
             </el-tab-pane>
             <el-tab-pane
               label="币种资料"
-              name="sixth"
+              name="CurrencyInformation"
             >
               <CurrencyInformation/>
             </el-tab-pane>
             <el-tab-pane
               label="费率"
-              name="seventh"
+              name="Rate"
             >
               <Rate/>
             </el-tab-pane>
@@ -88,10 +88,12 @@ export default {
   // props,
   data () {
     return {
-      activeName: 'first'
+      activeName: 'UserProtocol'
     }
   },
-  created () {},
+  created () {
+    require('../../../static/css/list/FooterInfo/ServiceAndProtocol.css')
+  },
   mounted () {},
   activited () {},
   update () {},
@@ -100,16 +102,22 @@ export default {
   filter: {},
   computed: {
     ...mapState({
-      theme: state => state.common.theme
+      theme: state => state.common.theme,
+      serviceActiveName: state => state.footerInfo.serviceActiveName
     })
   },
-  watch: {}
+  watch: {
+    serviceActiveName (newVal) {
+      console.log(newVal)
+    }
+  }
 }
 </script>
 <style scoped lang="scss" type="text/scss">
   .service-protocol-box{
     width:100%;
     height:100%;
+    background-color: #121824;
     >.content{
       width:100%;
       >.top{
@@ -122,7 +130,8 @@ export default {
         padding-top:100px;
         >h1{
           font-size: 36px;
-          color:#338FF5;
+          color:#8BA0CA;
+          font-family:HYa4gj;
         }
         >p{
           font-size: 22px;
@@ -132,7 +141,8 @@ export default {
       >.content{
         overflow: hidden;
         >.inner-box{
-          margin:50px auto;
+          box-sizing: border-box;
+          margin:50px auto 0px;
           height:1100px;
           width:1100px;
           padding:50px;

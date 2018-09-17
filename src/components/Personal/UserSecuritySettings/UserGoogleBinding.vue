@@ -47,7 +47,7 @@
               <div class="google-images google-images1 img-background1">
                 <VueQrcode
                   class="ercode"
-                  :value="googleUserInformation.url"
+                  :value="googleTheSecretUrl"
                   :options="{ size: 97 }"
                 >
                 </VueQrcode>
@@ -226,7 +226,7 @@ export default {
         this.googleUserInformation = data.data.data
         this.googleAccount = data.data.data.googleAccount
         this.googleTheSecretKey = data.data.data.googleSecret
-        this.googleTheSecretUrl = data.data.data.url
+        this.googleTheSecretUrl = encodeURI(data.data.data.url)
         console.log(this.googleTheSecretUrl)
       }
     },
@@ -236,8 +236,8 @@ export default {
         this.errorMsg = '请输入谷歌验证码'
       } else {
         this.errorMsg = ''
+        this.confirmBindingBailPhone()
       }
-      this.confirmBindingBailPhone()
     },
     // 确定绑定谷歌验证接口
     async confirmBindingBailPhone () {
@@ -328,7 +328,11 @@ export default {
       userInfo: state => state.user.loginStep1Info // 用户详细信息
     })
   },
-  watch: {}
+  watch: {
+    googleTheSecretUrl (newVal) {
+      console.log(newVal)
+    }
+  }
 }
 </script>
 <style scoped lang="scss">
