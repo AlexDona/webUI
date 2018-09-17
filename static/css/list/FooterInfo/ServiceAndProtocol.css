@@ -1,20 +1,20 @@
-.el-tabs__nav-wrap::after{
+.service-protocol-box .el-tabs__nav-wrap::after{
     content: "";
     height: 0;
 }
-.el-tabs .el-tabs-top{
-    z-index: 10px;;
+.service-protocol-box .el-tabs .el-tabs-top{
+    z-index: 10;
 }
-.el-tabs__header{
+.service-protocol-box .el-tabs__header{
     margin: -155px 0px 6px -48px;
 }
-.user-protocol-box.night > .content > .content{
+.service-protocol-box .user-protocol-box.night > .content > .content{
     background-color:transparent!important;
 }
-.el-tabs__active-bar{
+.service-protocol-box .el-tabs__active-bar{
     background-color:transparent;
 }
-.el-tabs__item.is-active{
+.service-protocol-box .el-tabs__item.is-active{
     color: #fff;
     line-height: 70px;
     height: 70px;
@@ -25,13 +25,19 @@
     margin-bottom:-20px;
     border-right:none; 
 }
-.el-tabs--bottom .el-tabs__item.is-bottom:nth-child(2), .el-tabs--bottom .el-tabs__item.is-top:nth-child(2), .el-tabs--top .el-tabs__item.is-bottom:nth-child(2), .el-tabs--top .el-tabs__item.is-top:nth-child(2){
+.service-protocol-box .el-tabs--bottom .el-tabs__item.is-bottom:nth-child(2),
+.service-protocol-box .el-tabs--bottom .el-tabs__item.is-top:nth-child(2),
+.service-protocol-box .el-tabs--top .el-tabs__item.is-bottom:nth-child(2),
+.service-protocol-box .el-tabs--top .el-tabs__item.is-top:nth-child(2){
     padding-left:10px; 
 }
-.el-tabs--bottom .el-tabs__item.is-bottom:last-child, .el-tabs--bottom .el-tabs__item.is-top:last-child, .el-tabs--top .el-tabs__item.is-bottom:last-child, .el-tabs--top .el-tabs__item.is-top:last-child{
+.service-protocol-box .el-tabs--bottom .el-tabs__item.is-bottom:last-child,
+.service-protocol-box .el-tabs--bottom .el-tabs__item.is-top:last-child,
+.service-protocol-box .el-tabs--top .el-tabs__item.is-bottom:last-child,
+.service-protocol-box .el-tabs--top .el-tabs__item.is-top:last-child{
     padding-right: 10px;
 }
-.el-tabs__item{
+.service-protocol-box .el-tabs__item{
     padding: 0 10px;
     height: 40px;
     -webkit-box-sizing: border-box;
@@ -47,10 +53,10 @@
     opacity:0.6;
     position: relative;
 }
-.service-protocol-box > .content > .content[data-v-4fb01aa0]{
+.service-protocol-box .service-protocol-box > .content > .content{
     overflow: visible
 }
-.el-tabs__content{
+.service-protocol-box .el-tabs__content{
     margin-left:-60px;
     margin-top:50px; 
 }
