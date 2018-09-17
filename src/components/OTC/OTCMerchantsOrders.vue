@@ -108,9 +108,6 @@
             <el-button type="primary" @click="findFilter">查询</el-button>
             <el-button type="primary" @click="resetCondition">重置</el-button>
           </span>
-          <!-- <span class="all-clear cursor-pointer">
-            <span class="clear-text font-size12">全部清除筛选</span>
-          </span> -->
         </div>
         <!-- 下部分表格内容 -->
         <div class="orders-main-bottom">
@@ -122,6 +119,7 @@
             <!-- 交易日期 -->
             <el-table-column
               label = "交易日期"
+              width="95"
             >
               <template slot-scope = "scope">
                 <div>{{timeFormatting(scope.row.createTime)}}</div>
@@ -139,6 +137,7 @@
             <!-- 币种 -->
             <el-table-column
               label = "币种"
+              width="85"
             >
               <template slot-scope = "scope">
                 <div>{{scope.row.coinName}}</div>
@@ -147,6 +146,7 @@
             <!-- 交易类型 -->
             <el-table-column
               label = "交易类型"
+              width="80"
             >
               <template slot-scope = "scope">
                 <div
@@ -164,16 +164,24 @@
               </template>
             </el-table-column>
             <!-- 订单状态 -->
+            <!-- 状态 (未付款 PICKED 已付款 PAYED 已完成 COMPLETED  已取消  CANCELED 冻结中 FROZEN) -->
             <el-table-column
               label = "订单状态"
+              width="100"
             >
               <template slot-scope = "scope">
-                <div>{{scope.row.status}}</div>
+                <div v-show="scope.row.status === 'PICKED'">未付款</div>
+                <div v-show="scope.row.status === 'PAYED'">已付款</div>
+                <div v-show="scope.row.status === 'COMPLETED'">已完成</div>
+                <div v-show="scope.row.status === 'CANCELED'">已取消</div>
+                <div v-show="scope.row.status === 'FROZEN'">冻结中</div>
+                <!-- <div>{{scope.row.status}}</div> -->
               </template>
             </el-table-column>
             <!-- 货币 -->
             <el-table-column
               label = "货币"
+              width="85"
             >
               <template slot-scope = "scope">
                 <div>{{scope.row.currencyName}}</div>
@@ -252,13 +260,16 @@
             <!-- 申诉记录 -->
             <el-table-column
               label = "申诉记录"
+              width="80"
             >
               <template slot-scope = "scope">
                 <div>{{scope.row.appeal == 'YES'? '卖方申诉' : '无'}}</div>
               </template>
             </el-table-column>
           </el-table>
-          <!--分页-->
+        </div>
+        <!--分页-->
+        <div class="page">
           <el-pagination
             background
             v-show="merchantsOrdersList.length"
@@ -444,7 +455,7 @@ export default {
         coinId: this.activitedMerchantsOrdersCoin,
         // 法币
         currencyId: this.activitedMerchantsOrdersCurrency,
-        // 状态
+        // 状态 状态 (未付款 PICKED 已付款 PAYED 已完成 COMPLETED  已取消  CANCELED 冻结中 FROZEN)
         status: this.activitedMerchantsOrdersStatusList,
         // 开始时间
         startTime: this.value1,
@@ -454,6 +465,7 @@ export default {
         tradeType: this.activitedMerchantsOrdersTraderStyleList
       })
       // 提示信息
+      console.log('商家订单列表')
       console.log(data)
       if (!(returnAjaxMessage(data, this, 0))) {
         return false
@@ -482,7 +494,7 @@ export default {
       width: 1150px;
       min-height: 500px;
       margin: 70px auto;
-      // background-color: #2B2B2B;
+      margin-bottom: 10px;
       padding-top: 50px;
       >.merchants-title{
         height: 30px;
@@ -507,8 +519,7 @@ export default {
             // margin-right: 30px;
           }
           >.date-picker{
-            // margin-right: 80px;
-            // margin-right: 200px;
+            margin-right: 60px;
             >.date-short-line{
               margin: 0 3px;
             }
@@ -521,7 +532,7 @@ export default {
           }
         }
         >.orders-main-bottom{
-          min-height: 500px;
+          min-height: 440px;
           .red{
             color: #D45858;
           }
@@ -531,6 +542,10 @@ export default {
           .xilian{
             vertical-align: middle
           }
+        }
+        .page{
+          text-align: center;
+          padding: 10px 0;
         }
       }
     }

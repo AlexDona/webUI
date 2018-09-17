@@ -6,6 +6,7 @@
     <div class="content">
       <div class="content">
         <div class="inner-box">
+          <h2>用户协议</h2>
           香港FUBT交易所，致力于打造全球领先的区块链资产交易服务平台。
           FUBT前中国大陆站（即币兴网）于2017年6月搭建完成并开放注册，7月10日正式开启交易。上线伊始迅速发展壮大，用户激增、交易火爆，首发
           平台币BXB一度暴涨25倍领跑市场。后币兴网主动响应”中国9.4政策”而自主关停，并于同年底开启全新国际站香港富比特——www.fubt.top。
@@ -70,10 +71,16 @@ export default {
       >.content{
         overflow: hidden;
         >.inner-box{
-          margin:50px auto;
-          height:1100px;
-          width:1100px;
-          padding:50px;
+          margin:50px auto 0px auto;
+          height:1069px;
+          width:1000px;
+          box-sizing: border-box;
+          padding:0px;
+          line-height: 26px;
+          >h2{
+            text-align: center;
+            line-height: 70px;
+          }
         }
       }
     }
@@ -89,7 +96,7 @@ export default {
           background-color: #121824;
           >.inner-box{
             background-color: #1e2636;
-            color:#8BA0CA
+            color: #fff;
           }
         }
       }

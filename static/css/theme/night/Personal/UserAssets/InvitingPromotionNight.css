@@ -1,5 +1,6 @@
 /*个人中心（黑色主题）*/
-.invitation-promotion.personal.night .el-table th, .el-table tr{
+.invitation-promotion.personal.night .el-table th,
+.invitation-promotion.personal.night .el-table tr{
   background-color: #1E2636;
 }
 .invitation-promotion.personal.night .el-table thead {

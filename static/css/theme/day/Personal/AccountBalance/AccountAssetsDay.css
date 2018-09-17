@@ -13,7 +13,8 @@
 .account-assets.personal.day .el-select-dropdown__list {
   background: #fff;
 }
-.account-assets.personal.day .el-select-dropdown__item.hover, .account-assets.personal.day .el-select-dropdown__item:hover {
+.account-assets.personal.day .el-select-dropdown__item.hover,
+.account-assets.personal.day .el-select-dropdown__item:hover {
   background:rgba(51,143,245,0.1);
   color: #333 !important;
 }

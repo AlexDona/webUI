@@ -493,6 +493,7 @@ export default {
         if (!(returnAjaxMessage(data, this, 1))) {
           return false
         } else {
+          this.successJump()
           console.log(data)
         }
       }
@@ -563,12 +564,13 @@ export default {
     },
     // 确定换绑手机
     async confirmTiePhone () {
+      console.log(1)
       let goOnStatus = 0
       if (
-        this.checkoutInputFormat(0, this.amendDataPhone.newPhoneAccounts) &&
-        this.checkoutInputFormat(1, this.amendDataPhone.oldPhoneCode) &&
-        this.checkoutInputFormat(2, this.amendDataPhone.newPhoneCode) &&
-        this.checkoutInputFormat(3, this.amendDataPhone.transactionPassword)
+        this.tieCheckoutInputFormat(0, this.amendDataPhone.newPhoneAccounts) &&
+        this.tieCheckoutInputFormat(1, this.amendDataPhone.oldPhoneCode) &&
+        this.tieCheckoutInputFormat(2, this.amendDataPhone.newPhoneCode) &&
+        this.tieCheckoutInputFormat(3, this.amendDataPhone.transactionPassword)
       ) {
         goOnStatus = 1
       } else {

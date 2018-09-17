@@ -81,14 +81,18 @@
               </span>
               <!-- 支付方式 -->
               <span class="pay-style">
-                <IconFontCommon
+                <!-- <IconFontCommon
                   iconName="icon-qiandai-tianchong"
+                  class="pay-style-icon"
+                /> -->
+                <IconFontCommon
+                  iconName="icon-qiandai"
                   class="pay-style-icon"
                 />
                 <el-select
-                v-model="value"
-                placeholder="支付方式"
-                @change="payWayChangeValue"
+                  v-model="value"
+                  placeholder="支付方式"
+                  @change="payWayChangeValue"
                 >
                   <el-option
                     v-for="(item,index) in payWayBankinfoList"
