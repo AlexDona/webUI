@@ -97,6 +97,7 @@ export default {
   data () {
     return {
       // 分页
+      pageSize: 10,
       currentPage: 1, // 当前页码
       totalPages: 1, // 总页数
       // OTC委托订单列表
@@ -107,8 +108,10 @@ export default {
     require('../../../static/css/list/OTC/OTCEntrustOrder.css')
     require('../../../static/css/theme/day/OTC/OTCEntrustOrderDay.css')
     require('../../../static/css/theme/night/OTC/OTCEntrustOrderNight.css')
-    // 1.0 刚进页面调取接口获取委托中的订单列表
-    this.getOTCEntrustingOrdersList()
+    // 1.0 刚进页面调取接口获取委托中的订单列表:只有登录了才调用
+    if (this.isLogin) {
+      this.getOTCEntrustingOrdersList()
+    }
   },
   mounted () {
   },
@@ -135,7 +138,7 @@ export default {
       data = await getOTCEntrustingOrders({
         status: 'ENTRUSTED', // 状态（ENTRUSTED 挂单中 HISTORY 历史挂单）
         pageNum: this.currentPage,
-        pageSize: '10'
+        pageSize: this.pageSize
       })
       // console.log(data)
       // 提示信息
@@ -172,7 +175,8 @@ export default {
   filter: {},
   computed: {
     ...mapState({
-      theme: state => state.common.theme
+      theme: state => state.common.theme,
+      isLogin: state => state.user.isLogin // 是否登录
     })
   },
   watch: {}
@@ -226,7 +230,7 @@ export default {
         }
       }
       > .entrust-table-body {
-        min-height: 432px;
+        height: 400px;
         // background-color: #1E2636;
         // color: #9DA5B3;
         // border: 1px solid #262F38;

@@ -100,6 +100,7 @@
                     type="primary"
                     size="mini"
                     v-show="publishStyle === 'sell'"
+                    @click="chargeMoney"
                   >
                     充币
                   </el-button>
@@ -169,7 +170,7 @@
                 <div class="volume-business">
                   <input
                     type="text"
-                    placeholder="单笔最小限额"
+                    :placeholder="'单笔最小限额' + this.backReturnCurrentMinCount"
                     class="sell-sum"
                     ref="minCount"
                     @keyup="changeInputValue('minCount')"
@@ -178,7 +179,7 @@
                   <span class="range-line">-</span>
                   <input
                     type="text"
-                    placeholder="单笔最大成交额"
+                    :placeholder="'单笔最大限额' + this.backReturnCurrentMaxCount"
                     class="sell-sum max-sell-sum"
                     ref="maxCount"
                     @keyup="changeInputValue('maxCount')"
@@ -264,12 +265,13 @@
                   top="25vh"
                   width="470"
                 >
-                  <div>请输入交易密码</div>
+                  <!-- <div>请输入交易密码</div> -->
                   <div class="input">
                     <input
                       type="password"
                       class="password-input"
                       v-model="tradePassword"
+                      @focus="tradePasswordFocus"
                     >
                   </div>
                   <div class="error-info">
@@ -348,14 +350,18 @@ export default {
       // 4单价
       priceSell: '',
       priceBuy: '',
-      // 最低价
+      // 后台返回的最低价
       minPrice: '',
-      // 最高价
+      // 后台返回的最高价
       maxPrice: '',
-      // 5单笔最小限额（CNY）
+      // 5用户input框输入的单笔最小限额（CNY）
       minCount: '',
-      // 6单笔最大限额（CNY）
+      // 6用户input框输入的单笔最大限额（CNY）
       maxCount: '',
+      // 后台根据币种返回的当前币种的单笔最小限额
+      backReturnCurrentMinCount: '',
+      // 后台根据币种返回的当前币种的单笔最大限额
+      backReturnCurrentMaxCount: '',
       // 7备注
       remarkText: '',
       // 8交易密码
@@ -377,10 +383,8 @@ export default {
       // 卖出单价和买入单价的提示
       errorTipsPrice: '',
       // 单笔成交限额最小错误提示
-      // errorTipsLimitMin: '单笔成交限额最小错误提示',
       errorTipsLimitMin: '',
       // 单笔成交限额最大错误提示
-      // errorTipsLimitMax: '单笔成交限额最大错误提示',
       errorTipsLimitMax: '',
       // 交易密码错误提示
       errorPWd: '',
@@ -461,10 +465,14 @@ export default {
         this.currentlyAvailable = data.data.data.otcCoinQryResponse.total
         // 市价marketPrice
         this.marketPrice = data.data.data.otcCoinQryResponse.marketPrice
-        // 币种最大交易限额maxCount
-        this.$refs.maxCount.value = data.data.data.otcCoinQryResponse.maxCount
-        // 币种最小交易限额minCount
-        this.$refs.minCount.value = data.data.data.otcCoinQryResponse.minCount
+        // 币种 最大 交易限额maxCount
+        // this.$refs.maxCount.value = data.data.data.otcCoinQryResponse.maxCount
+        this.backReturnCurrentMaxCount = data.data.data.otcCoinQryResponse.maxCount
+        this.$refs.maxCount.value = this.backReturnCurrentMaxCount
+        // 币种 最小 交易限额minCount
+        // this.$refs.minCount.value = data.data.data.otcCoinQryResponse.minCount
+        this.backReturnCurrentMinCount = data.data.data.otcCoinQryResponse.minCount
+        this.$refs.minCount.value = this.backReturnCurrentMinCount
         // 交易数量最小小数位
         this.pointLength = data.data.data.otcCoinQryResponse.unit
         // 币种最高价格
@@ -531,9 +539,11 @@ export default {
       this.$refs.maxCount.value = ''
       this.remarkText = ''
       this.tradePassword = ''
+      this.errorPWd = ''
       this.entrustCountSell = 0
       this.entrustCountBuy = 0
     },
+    // 卖出量和买入量input 获得焦点
     countInputFocus () {
       this.errorTipsSum = ''
     },
@@ -565,7 +575,39 @@ export default {
           this.errorTipsPrice = ''
         }
       }
-      // 单笔成交限额验证--记得写啊*************
+      // 单笔成交限额验证
+      // 最小
+      if (this.$refs.minCount.value < this.backReturnCurrentMinCount) {
+        this.errorTipsLimitMin = '输入值不能小于最小限额'
+        return false
+      } else {
+        this.errorTipsLimitMin = ''
+      }
+      if (this.$refs.minCount.value > this.$refs.maxCount.value - 0) {
+        this.errorTipsLimitMin = '输入值不能大于最大限额'
+        return false
+      } else {
+        this.errorTipsLimitMin = ''
+      }
+      if (this.$refs.minCount.value < this.$refs.maxCount.value - 0) {
+        this.errorTipsLimitMax = ''
+      }
+      // 最大
+      if (this.$refs.maxCount.value > this.backReturnCurrentMaxCount) {
+        this.errorTipsLimitMax = '输入值不能大于最大限额'
+        return false
+      } else {
+        this.errorTipsLimitMax = ''
+      }
+      if (this.$refs.maxCount.value < this.$refs.minCount.value - 0) {
+        this.errorTipsLimitMax = '输入值不能小于最小限额'
+        return false
+      } else {
+        this.errorTipsLimitMax = ''
+      }
+      if (this.$refs.maxCount.value > this.$refs.minCount.value - 0) {
+        this.errorTipsLimitMin = ''
+      }
     },
     //  8.0 点击发布出售或者发布购买弹出输入交易密码框
     showPasswordDialog () {
@@ -589,15 +631,27 @@ export default {
           return false
         }
       }
-      if (!this.$refs.minCount.value) {
-        this.errorTipsLimitMin = '请输入单笔最小限额'
+      // 单笔最小最大限制
+      if (this.errorTipsLimitMin) {
         return false
       }
-      if (!this.$refs.maxCount.value) {
-        this.errorTipsLimitMax = '请输入单笔最大限额'
+      if (this.errorTipsLimitMax) {
         return false
       }
+      // =============
+      // if (!this.$refs.minCount.value) {
+      //   this.errorTipsLimitMin = '请输入单笔最小限额'
+      //   return false
+      // }
+      // if (!this.$refs.maxCount.value) {
+      //   this.errorTipsLimitMax = '请输入单笔最大限额'
+      //   return false
+      // }
       this.dialogVisible = true
+    },
+    // 交易密码框获得焦点清空错误提示信息
+    tradePasswordFocus () {
+      this.errorPWd = ''
     },
     // 9.0 点击输入密码框中的提交按钮
     async addOTCPutUpOrdersSubmitButton () {
@@ -639,7 +693,12 @@ export default {
         this.getOTCCoinInfo()
       }
     },
-    // ---------------------------------分割线---------------------------------------
+    // 10.0 充币按钮跳转
+    chargeMoney () {
+      this.$store.commit('personal/CHANGE_USER_CENTER_ACTIVE_NAME', 'assets')
+      this.$router.push({path: '/PersonalCenter'})
+    },
+    // ---------------------------------分割线 下不要了---------------------------------------
     //  5.0 otc可用币种查询-----没有用了
     async getOTCAvailableCurrencyList () {
       const data = await getOTCAvailableCurrency({
@@ -913,14 +972,11 @@ export default {
                 background-color: #008069;
               }
             }
-            //   >.password-dialog{
-            //       .password-input{
-            //           display: inline-block;
-            //           width: 280px;
-            //           height: 40px;
-            //           background-color: red;
-            //       }
-            //   }
+            .password-dialog{
+              .tips{
+                color: red;
+              }
+            }
           }
         }
         > .publish-content-right {
