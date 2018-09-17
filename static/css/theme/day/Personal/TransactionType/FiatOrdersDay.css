@@ -5,13 +5,13 @@
   color: #7D90AC;
   border-bottom: 1px solid #000;
 }
-.personal-center.personal.day .el-tabs__item{
+.fiat-orders.personal.day .el-tabs__item{
   border-bottom: 1px solid #ECF1F8;
 }
 .fiat-orders.day .el-tabs__header{
   padding: 0;
 }
-.personal-center.personal.day .el-tabs__item{
+.fiat-orders.personal.day .el-tabs__item{
   color:#7D90AC;
   /* border-right: 1px solid #ccc; */
 }
@@ -20,7 +20,7 @@
   border-left:none;
   border-bottom: 2px solid #338FF5;
 }
-.personal-center.personal.day .el-tabs__item:hover{
+.fiat-orders.personal.day .el-tabs__item:hover{
   border-left:none;
   color:#338FF5;
 }

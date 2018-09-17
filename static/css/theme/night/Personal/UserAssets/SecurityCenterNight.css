@@ -1,6 +1,7 @@
 /*个人中心（黑色主题）*/
 /*表格样式修改*/
-.security-center.personal.personal.night .el-table th, .el-table tr{
+.security-center.personal.personal.night .el-table th,
+.security-center.personal.personal.night .el-table tr{
   background-color: #1E2636;
 }
 .security-center.personal.night .el-table thead {

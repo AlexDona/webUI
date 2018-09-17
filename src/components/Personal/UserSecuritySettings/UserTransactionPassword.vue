@@ -7,7 +7,7 @@
     <div class="transaction-password-main margin25">
       <header class="transaction-password-header personal-height60 line-height60 line-height70 margin25">
         <span
-          v-if="securityCenter.payPassword"
+          v-if="!securityCenter.payPassword"
           class="header-content-left header-content font-size16 font-weight600"
         >
           设置交易密码
@@ -36,7 +36,7 @@
         <div class="transaction-content-from">
           <!--设置交易密码-->
           <el-form
-            v-if="securityCenter.payPassword"
+            v-if="!securityCenter.payPassword"
             :label-position="labelPosition"
             label-width="120px"
           >
@@ -125,7 +125,7 @@
             </el-form-item>
             <el-form-item
               label="验  证  码："
-              v-if="!securityCenter.isPhoneEnable"
+              v-if="securityCenter.isPhoneEnable"
             >
               <el-input
                 type="text"
@@ -149,7 +149,7 @@
             </el-form-item>
             <span v-else></span>
             <el-form-item
-              v-if="!securityCenter.isMailEnable"
+              v-if="securityCenter.isMailEnable"
               label="邮箱验证码"
             >
               <el-input
@@ -174,7 +174,7 @@
             <span v-else></span>
             <el-form-item
               label="谷歌验证码"
-              v-if="!securityCenter.isGoogleEnable"
+              v-if="securityCenter.isGoogleEnable"
             >
               <input
                 type="text"
@@ -218,7 +218,8 @@ import {
   setTransactionPassword,
   resetUpdatePayPassword,
   securityVerificationOnOff,
-  statusSecurityCenter
+  statusSecurityCenter,
+  userRefreshUser
 } from '../../../utils/api/personal'
 // 底部
 import FooterCommon from '../../Common/FooterCommon'
@@ -271,6 +272,7 @@ export default {
     require('../../../../static/css/theme/day/Personal/UserSecuritySettings/UserTransactionPasswordDay.css')
     // 黑色主题样式
     require('../../../../static/css/theme/night/Personal/UserSecuritySettings/UserTransactionPasswordNight.css')
+    this.getSecurityCenter()
   },
   mounted () {},
   activited () {
@@ -377,8 +379,8 @@ export default {
     async confirmTransactionPassword () {
       let goOnStatus = 0
       if (
-        this.checkoutInputFormat(0, this.setPassword.newPassword) &&
-        this.checkoutInputFormat(1, this.setPassword.confirmPassword)
+        this.checkoutInputFormat(0, this.setPassword.nickname) &&
+        this.checkoutInputFormat(1, this.setPassword.newPassword)
       ) {
         goOnStatus = 1
       } else {
@@ -471,16 +473,13 @@ export default {
     getUpdatePayPassword () {
       this.tieCheckoutInputFormat()
       this.confirmUpdate()
-      this.confirmVerifyInformation()
     },
     // 确定重置接口处理
     async confirmUpdate () {
       let goOnStatus = 0
       if (
-        this.checkoutInputFormat(0, this.modifyPassword.resetTransactionPassword) &&
-        this.checkoutInputFormat(1, this.modifyPassword.phoneCode) &&
-        this.checkoutInputFormat(2, this.modifyPassword.emailCode) &&
-        this.checkoutInputFormat(3, this.modifyPassword.googleCode)
+        this.tieCheckoutInputFormat(0, this.modifyPassword.transactionPassword) &&
+        this.tieCheckoutInputFormat(1, this.modifyPassword.resetTransactionPassword)
       ) {
         goOnStatus = 1
       } else {
@@ -499,7 +498,7 @@ export default {
           return false
         } else {
           this.successJump()
-          this.CHANGE_REF_SECURITY_CENTER_INFO(true)
+          this.confirmVerifyInformation()
         }
       }
     },
@@ -514,7 +513,7 @@ export default {
         googleCode: this.googleCode // 谷歌验证
       }
       data = await securityVerificationOnOff(params)
-      if (!(returnAjaxMessage(data, this, 1))) {
+      if (!(returnAjaxMessage(data, this, 0))) {
         return false
       } else {
         // this.getSecurityCenter()
