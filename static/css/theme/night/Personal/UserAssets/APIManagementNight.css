@@ -1,7 +1,8 @@
 .api-management.personal.night .el-form-item__label {
   color: #B8BDD0;
 }
-.api-management.personal.night .el-table th, .el-table tr{
+.api-management.personal.night .el-table th,
+.api-management.personal.night .el-table tr{
   background-color: #1E2636;
 }
 .api-management.personal.night .el-table thead {
