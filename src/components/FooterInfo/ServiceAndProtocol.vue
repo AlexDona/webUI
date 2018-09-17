@@ -91,7 +91,9 @@ export default {
       activeName: 'first'
     }
   },
-  created () {},
+  created () {
+    require('../../../static/css/list/FooterInfo/ServiceAndProtocol.css')
+  },
   mounted () {},
   activited () {},
   update () {},
@@ -110,6 +112,7 @@ export default {
   .service-protocol-box{
     width:100%;
     height:100%;
+    background-color: #121824;
     >.content{
       width:100%;
       >.top{
@@ -122,7 +125,8 @@ export default {
         padding-top:100px;
         >h1{
           font-size: 36px;
-          color:#338FF5;
+          color:#8BA0CA;
+          font-family:HYa4gj;
         }
         >p{
           font-size: 22px;
@@ -132,7 +136,8 @@ export default {
       >.content{
         overflow: hidden;
         >.inner-box{
-          margin:50px auto;
+          box-sizing: border-box;
+          margin:50px auto 0px;
           height:1100px;
           width:1100px;
           padding:50px;

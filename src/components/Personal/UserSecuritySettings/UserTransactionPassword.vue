@@ -218,8 +218,8 @@ import {
   setTransactionPassword,
   resetUpdatePayPassword,
   securityVerificationOnOff,
-  statusSecurityCenter,
-  userRefreshUser
+  statusSecurityCenter
+  // userRefreshUser
 } from '../../../utils/api/personal'
 // 底部
 import FooterCommon from '../../Common/FooterCommon'

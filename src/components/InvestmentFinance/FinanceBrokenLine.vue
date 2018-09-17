@@ -14,6 +14,7 @@ export default {
   data () {
     return {
       financeCharts: '',
+      props: ['coinType'],
       options: {
         xAxis: {
           type: 'category',
@@ -58,11 +59,22 @@ export default {
         },
         tooltip: {
           trigger: 'axis',
+          backgroundColor: '#000',
+          textStyle: {
+            color: '#338FF5'
+          },
           axisPointer: {
             type: '',
             label: {
               backgroundColor: '#1e2636'
             }
+          },
+          formatter: function (params) {
+            // console.log(params)
+            return `
+                      月份：${params[0].axisValue}<br/>
+                      收益值：${params[0].data}
+                      `
           }
         },
         series: [{
@@ -122,23 +134,26 @@ export default {
     resetOptions () {
       // 设置监听颜色改变
       this.options.xAxis.axisLabel.textStyle.color = this.theme === 'night' ? '#404d64' : '#ccc'
+      // 设置x轴线颜色
       this.options.xAxis.axisLine.lineStyle.color = this.theme === 'night' ? '' : '#ccc'
+      // 设置线条的颜色
+      this.options.series[0].itemStyle.normal.lineStyle.color = this.theme === 'night' ? '#2b7cd1' : '#499df6'
       // 设置图形渐变的颜色
       if (this.theme === 'night') {
         this.options.series[0].areaStyle.normal = {
           color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [{
             offset: 0,
-            color: 'rgba(112, 183, 247,1)'
+            color: 'rgba(28, 95, 155,1)'
           }, {
             offset: 1,
-            color: 'rgba(112, 183, 247,0.2)'
+            color: 'rgba(28, 95, 155,0.2)'
           }])
         }
       } else {
         this.options.series[0].areaStyle.normal = {
           color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [{
             offset: 0,
-            color: 'rgba(112, 183, 247,1)'
+            color: 'rgba(122, 183, 247,1)'
           }, {
             offset: 1,
             color: 'rgba(112, 183, 247,0.2)'
