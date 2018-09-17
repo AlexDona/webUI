@@ -32,18 +32,28 @@
           <dl class="right-dl">
             <dt class="title">下载</dt>
             <!--<dd class="dd-item">客户端下载</dd>-->
-            <dd class="dd-item">
-              帮助中心
-            </dd>
-            <dd class="dd-item" >API文档</dd>
             <dd
               class="dd-item"
-              @click="jumpToOtherPage('/ServiceAndProtocol','')"
+              @click="jumpToOtherPage('/NewsAndNoticeList','help')"
+            >
+              帮助中心
+            </dd>
+            <dd
+              class="dd-item"
+              @click="jumpToOtherPage('/ServiceAndProtocol','APIDocument')"
+            >API文档</dd>
+            <dd
+              class="dd-item"
+              @click="jumpToOtherPage('/ServiceAndProtocol','CurrencyInformation')"
             >币种资料</dd>
           </dl>
           <dl class="right-dl">
             <dt class="title">关于</dt>
-            <dd class="dd-item">关于我们</dd>
+            <dd
+              class="dd-item"
+            >
+              <router-link to="/AboutUs">关于我们</router-link>
+            </dd>
             <dd
               class="dd-item"
               @click="jumpToOtherPage('/NewsAndNoticeList','notice')"
@@ -53,23 +63,23 @@
             <dt class="title">说明</dt>
             <dd
               class="dd-item"
-              @click="jumpToOtherPage"
+              @click="jumpToOtherPage('/ServiceAndProtocol','ClauseExplain')"
             >条款说明</dd>
             <dd
               class="dd-item"
-              @click="jumpToOtherPage"
+              @click="jumpToOtherPage('/ServiceAndProtocol','UserProtocol')"
             >用户协议</dd>
             <dd
               class="dd-item"
-              @click="jumpToOtherPage"
+              @click="jumpToOtherPage('/ServiceAndProtocol','PrivacyClause')"
             >隐私条款</dd>
             <dd
               class="dd-item"
-              @click="jumpToOtherPage"
+              @click="jumpToOtherPage('/ServiceAndProtocol','LegislationExplain')"
             >法律声明</dd>
             <dd
               class="dd-item"
-              @click="jumpToOtherPage"
+              @click="jumpToOtherPage('/ServiceAndProtocol','Rate')"
             >费率</dd>
           </dl>
         </div>
@@ -150,10 +160,14 @@ export default {
   beforeRouteUpdate () {},
   methods: {
     ...mapMutations([
-      'CHANGE_NEWS_AND_NOTICE_ACTIVENAME'
+      'CHANGE_FOOTER_ACTIVENAME'
     ]),
     jumpToOtherPage (router, activeName) {
-
+      this.CHANGE_FOOTER_ACTIVENAME({
+        activeName,
+        type: router
+      })
+      this.$router.push({path: router})
     },
     async getFooterInfo () {
       const params = {
@@ -266,6 +280,10 @@ export default {
             }
             >.dd-item{
               line-height: 25px;
+              cursor: pointer;
+              >a{
+                color:#838dae;
+              }
             }
           }
         }

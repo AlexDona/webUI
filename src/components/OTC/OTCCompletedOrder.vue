@@ -4,135 +4,137 @@
     :class="{'day':theme == 'day','night':theme == 'night' }"
   >
     <div class="completed-order-content">
-      <el-table
-        :data="completedOrdersList"
-        :default-expand-all="true"
-        empty-text="暂无数据"
-      >
-      <div>
-        <el-table-column type="expand">
-          <template slot-scope="props">
-            <div class="completed-info">
-              <!-- 左侧 -->
-              <div class="completed-info-left">
-                <p class="order-info-left">
-                  <span class="pay-info">付款信息</span>
-                </p>
-                <p class="order-info-left">
-                  <span>姓名：</span>
-                  <span>{{props.row.buyName}}</span>
-                </p>
-                <p class="order-info-left">
-                  <span>付款方式：</span>
-                  <!-- 判断付款方式 -->
-                  <span v-if="props.row.payType === 'alipay'">支付宝</span>
-                  <span v-if="props.row.payType === 'bank'">银行卡</span>
-                  <span v-if="props.row.payType === 'xilian'">西联汇款</span>
-                  <span v-if="props.row.payType === 'paypal'">PAYPAL</span>
-                  <span v-if="props.row.payType === 'weixin'">微信</span>
-                  <!-- <span>{{props.row.payType}}</span> -->
-                </p>
-                <p class="order-info-left">
-                  <span>银行卡账号：</span>
-                  <span>{{props.row.payAcctount}}</span>
-                </p>
-              </div>
-              <!-- 中间 -->
-              <div class="completed-info-middle">
-                <p class="order-info-middle">
-                  <span class="buyer-seller-info">卖家信息</span>
-                </p>
-                <p class="order-info-middle">
-                  <span>姓名：</span>
-                  <span>{{props.row.sellName}}</span>
-                </p>
-                <p class="order-info-middle">
-                  <span>卖家手机号：</span>
-                  <span>{{props.row.sellPhone}}</span>
-                </p>
-              </div>
-              <!-- 右侧 -->
-              <div class="completed-info-right">
-                <p class="order-info-right">
-                  <span class="confirm-time">确认时间</span>
-                </p>
-                <p class="order-info-right">
-                  <span>付款确认时间：</span>
-                  <span>{{props.row.payTime}}</span>
-                </p>
-                <p class="order-info-right">
-                  <span>收款确认时间：</span>
-                  <span>{{props.row.confirmTime ? props.row.confirmTime : props.row.completeTime}}</span>
-                </p>
-              </div>
-            </div>
-          </template>
-        </el-table-column>
+      <div class="tables">
+        <el-table
+          :data="completedOrdersList"
+          :default-expand-all="true"
+          empty-text="暂无数据"
+        >
+          <div>
+            <el-table-column type="expand">
+              <template slot-scope="props">
+                <div class="completed-info">
+                  <!-- 左侧 -->
+                  <div class="completed-info-left">
+                    <p class="order-info-left">
+                      <span class="pay-info">付款信息</span>
+                    </p>
+                    <p class="order-info-left">
+                      <span>姓名：</span>
+                      <span>{{props.row.buyName}}</span>
+                    </p>
+                    <p class="order-info-left">
+                      <span>付款方式：</span>
+                      <!-- 判断付款方式 -->
+                      <span v-if="props.row.payType === 'alipay'">支付宝</span>
+                      <span v-if="props.row.payType === 'bank'">银行卡</span>
+                      <span v-if="props.row.payType === 'xilian'">西联汇款</span>
+                      <span v-if="props.row.payType === 'paypal'">PAYPAL</span>
+                      <span v-if="props.row.payType === 'weixin'">微信</span>
+                      <!-- <span>{{props.row.payType}}</span> -->
+                    </p>
+                    <p class="order-info-left">
+                      <span>银行卡账号：</span>
+                      <span>{{props.row.payAcctount}}</span>
+                    </p>
+                  </div>
+                  <!-- 中间 -->
+                  <div class="completed-info-middle">
+                    <p class="order-info-middle">
+                      <span class="buyer-seller-info">卖家信息</span>
+                    </p>
+                    <p class="order-info-middle">
+                      <span>姓名：</span>
+                      <span>{{props.row.sellName}}</span>
+                    </p>
+                    <p class="order-info-middle">
+                      <span>卖家手机号：</span>
+                      <span>{{props.row.sellPhone}}</span>
+                    </p>
+                  </div>
+                  <!-- 右侧 -->
+                  <div class="completed-info-right">
+                    <p class="order-info-right">
+                      <span class="confirm-time">确认时间</span>
+                    </p>
+                    <p class="order-info-right">
+                      <span>付款确认时间：</span>
+                      <span>{{props.row.payTime}}</span>
+                    </p>
+                    <p class="order-info-right">
+                      <span>收款确认时间：</span>
+                      <span>{{props.row.confirmTime ? props.row.confirmTime : props.row.completeTime}}</span>
+                    </p>
+                  </div>
+                </div>
+              </template>
+            </el-table-column>
+          </div>
+          <el-table-column
+            label="订单号"
+          >
+            <template slot-scope="scope">
+              {{scope.row.orderSequence}}
+            </template>
+          </el-table-column>
+          <el-table-column
+            label="类型"
+            width="118"
+          >
+            <template slot-scope="scope">
+              <span
+                v-if="scope.row.orderType === 'BUY'"
+                :class="{ red: scope.row.orderType === 'BUY' }"
+              >
+                买入
+              </span>
+              <span
+                v-if="scope.row.orderType === 'SELL'"
+                :class="{ green: scope.row.orderType === 'SELL' }"
+              >
+                卖出
+              </span>
+            </template>
+          </el-table-column>
+          <el-table-column
+            label="币种"
+            width="118"
+          >
+            <template slot-scope="scope">
+              {{ scope.row.coinName }}
+            </template>
+          </el-table-column>
+          <el-table-column
+            label="价格"
+            width="118"
+          >
+            <template slot-scope="scope">
+              {{ scope.row.price }}({{ scope.row.currencyName }})
+            </template>
+          </el-table-column>
+          <el-table-column
+            label="数量"
+          >
+            <template slot-scope="scope">
+              {{ scope.row.pickCount }}({{ scope.row.coinName }})
+            </template>
+          </el-table-column>
+          <el-table-column
+            label="总金额"
+          >
+            <template slot-scope="scope">
+              {{ (scope.row.price*scope.row.pickCount).toFixed(2)}}({{ scope.row.currencyName }})
+            </template>
+          </el-table-column>
+          <el-table-column
+            label="下单时间"
+          >
+            <template slot-scope="scope">
+              {{timeFormatting(scope.row.createTime)}}
+            </template>
+          </el-table-column>
+        </el-table>
       </div>
-        <el-table-column
-          label="订单号"
-        >
-          <template slot-scope="scope">
-            {{scope.row.orderSequence}}
-          </template>
-        </el-table-column>
-        <el-table-column
-          label="类型"
-          width="118"
-        >
-          <template slot-scope="scope">
-            <span
-              v-if="scope.row.orderType === 'BUY'"
-              :class="{ red: scope.row.orderType === 'BUY' }"
-            >
-              买入
-            </span>
-            <span
-              v-if="scope.row.orderType === 'SELL'"
-              :class="{ green: scope.row.orderType === 'SELL' }"
-            >
-              卖出
-            </span>
-          </template>
-        </el-table-column>
-        <el-table-column
-          label="币种"
-          width="118"
-        >
-          <template slot-scope="scope">
-            {{ scope.row.coinName }}
-          </template>
-        </el-table-column>
-        <el-table-column
-          label="价格"
-          width="118"
-        >
-          <template slot-scope="scope">
-            {{ scope.row.price }}({{ scope.row.currencyName }})
-          </template>
-        </el-table-column>
-        <el-table-column
-          label="数量"
-        >
-          <template slot-scope="scope">
-            {{ scope.row.pickCount }}({{ scope.row.coinName }})
-          </template>
-        </el-table-column>
-        <el-table-column
-          label="总金额"
-        >
-          <template slot-scope="scope">
-            {{ (scope.row.price*scope.row.pickCount).toFixed(2)}}({{ scope.row.currencyName }})
-          </template>
-        </el-table-column>
-         <el-table-column
-          label="下单时间"
-        >
-          <template slot-scope="scope">
-            {{timeFormatting(scope.row.createTime)}}
-          </template>
-        </el-table-column>
-      </el-table>
       <!--分页-->
       <div class="page">
         <el-pagination
@@ -159,6 +161,7 @@ export default {
   data () {
     return {
       // 分页
+      pageSize: 5,
       currentPage: 1, // 当前页码
       totalPages: 1, // 总页数
       completedOrdersList: []
@@ -168,8 +171,10 @@ export default {
     require('../../../static/css/list/OTC/OTCCompletedOrder.css')
     require('../../../static/css/theme/day/OTC/OTCCompletedOrderDay.css')
     require('../../../static/css/theme/night/OTC/OTCCompletedOrderNight.css')
-    // 1.0 请求已完成订单列表
-    this.getOTCCompletedOrdersList()
+    // 1.0 请求已完成订单列表:只有登录了才调用
+    if (this.isLogin) {
+      this.getOTCCompletedOrdersList()
+    }
   },
   mounted () {},
   activited () {},
@@ -192,7 +197,7 @@ export default {
       const data = await getOTCCompletedOrders({
         status: 'COMPLETED', // 状态 (交易中 TRADING 已完成 COMPLETED  已取消  CANCELED 冻结中 FROZEN)
         pageNum: this.currentPage,
-        pageSize: '5'
+        pageSize: this.pageSize
       })
       // 提示信息
       if (!(returnAjaxMessage(data, this, 0))) {
@@ -208,7 +213,8 @@ export default {
   filter: {},
   computed: {
     ...mapState({
-      theme: state => state.common.theme
+      theme: state => state.common.theme,
+      isLogin: state => state.user.isLogin // 是否登录
     })
   },
   watch: {}

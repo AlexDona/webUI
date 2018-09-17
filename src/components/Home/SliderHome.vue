@@ -20,6 +20,7 @@
 import Slider from 'vue-concise-slider'// 引入slider组件
 import {getBanner} from '../../utils/api/home'
 import {returnAjaxMessage} from '../../utils/commonFunc'
+// import lrz from 'lrz'
 import {mapState, createNamespacedHelpers} from 'vuex'
 const { mapMutations } = createNamespacedHelpers('home')
 export default {
@@ -125,7 +126,15 @@ export default {
       } else {
         console.log(data)
         this.sliderListAjax = data.data.data
-        // console.log(this.sliderListAjax)
+        console.log(this.sliderListAjax)
+        // this.sliderListAjax.forEach((item, index) => {
+        //   console.log(item.url)
+        //   lrz(item.url).then((res) => {
+        //     console.log(res)
+        //   }).catch((err) => {
+        //     console.log(err)
+        //   })
+        // })
         this.renderSlider()
       }
     },

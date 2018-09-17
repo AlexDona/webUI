@@ -198,6 +198,9 @@ export default {
     }
   },
   watch: {
+    legalTraderCompletedList (newVal) {
+      console.log(newVal)
+    }
   }
 }
 </script>

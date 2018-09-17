@@ -1,5 +1,5 @@
 import {
-  CHANGE_NEWS_AND_NOTICE_ACTIVENAME
+  CHANGE_FOOTER_ACTIVENAME
 } from './mutations-types.js'
 
 // import {setStore, getStore} from '../utils'
@@ -7,7 +7,14 @@ import {
 // import {localapi, proapi} from 'src/config/env'
 
 export default {
-  [CHANGE_NEWS_AND_NOTICE_ACTIVENAME] (state, data) {
-    state.newsAndNoticeActiveName = data
+  [CHANGE_FOOTER_ACTIVENAME] (state, data) {
+    console.log(data)
+    switch (data.type) {
+      case '/NewsAndNoticeList':
+        state.newsAndNoticeActiveName = data.activeName
+        break
+      case '/ServiceAndProtocol':
+        state.serviceActiveName = data.activeName
+    }
   }
 }

@@ -18,10 +18,10 @@
   width: 105px;
   text-align: center;
 }
-.security-center.personal.night .el-table th>.cell {
+.security-center.personal .el-table th>.cell {
   font-size: 12px;
 }
-.security-center.personal.night .el-table td div {
+.security-center.personal .el-table td div {
   font-size: 12px;
 }
 .security-center.personal .el-progress {

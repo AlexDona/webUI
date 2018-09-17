@@ -288,7 +288,7 @@ export default {
       ],
       // 设置默认列表页数
       pageNum: 0,
-      // 设置列表页面长度
+      // 设置列表当前页数
       pageSize: 10,
       // 广告列表
       ADList: []
@@ -333,7 +333,8 @@ export default {
         coinId: this.activitedADManageMarketList ? this.activitedADManageMarketList : '',
         currencyId: this.activitedADManageCurrencyId ? this.activitedADManageCurrencyId : '',
         status: this.activitedADManageStatusList ? this.activitedADManageStatusList : '',
-        pageNum: this.currentPage
+        pageNum: this.currentPage,
+        pageSize: this.pageSize
       })
       console.log(data)
       if (!(returnAjaxMessage(data, this, 0))) {
