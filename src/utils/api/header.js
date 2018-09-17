@@ -14,3 +14,7 @@ export const getLanguageList = () => get('lan/selectList')
 export const getTransitionCurrencyRate = (params) => get('exchangeRate/tradeAreaPrice', params)
 // 获取国家列表
 export const getCountryList = () => get('country/selectList')
+// 底部信息(1)
+export const getFooterInfo1 = (params) => get('foot', params)
+// 底部信息(2)
+export const getFooterInfo2 = (params) => get('home/bottom', params)

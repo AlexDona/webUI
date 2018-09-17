@@ -55,12 +55,14 @@
                     <!--&gt;-->
                     <!--{{s.row.price}}-->
                     <!--</span>-->
-                    {{s.row.boursePrice}}
+                    {{keep2Num(s.row.boursePrice)}}
                   </div>
                   <!--货币转换-->
                   <div class="bottom"
-                       style="height:15px;line-height: 15px">
-                    ≈ 0.25
+                       style="height:15px;line-height: 15px"
+                       v-show="currencyRateList[activeSymbol.area]"
+                  >
+                    ≈ {{(currencyRateList[activeSymbol.area]-0)*s.row.boursePrice}}
                   </div>
                 </template>
               </el-table-column>
@@ -89,12 +91,11 @@
                       <!--&gt;-->
                           <!--{{s.row.price}}-->
                         <!--</span>-->
-                      {{s.row.bourseCount}}
+                      {{keep2Num(s.row.bourseCount)}}
                     </div>
                     <!--货币转换-->
                     <div class="bottom"
                          style="height:15px;line-height: 15px">
-                      ≈ 0.25
                     </div>
                   </div>
                 </template>
@@ -110,6 +111,8 @@
 import {mapState} from 'vuex'
 import {returnAjaxMessage} from '../../utils/commonFunc'
 import {getGLobalMarket} from '../../utils/api/trade'
+import {keep2Num} from '../../utils'
+
 export default {
   components: {},
   // props,
@@ -160,6 +163,9 @@ export default {
   update () {},
   beforeRouteUpdate () {},
   methods: {
+    keep2Num (targetNum) {
+      return keep2Num(targetNum)
+    },
     // 获取全球行情
     async getGlobalMarket () {
       let params = `${this.activeSymbol.sellsymbol}_${this.activeSymbol.area}`.toUpperCase()
@@ -182,14 +188,19 @@ export default {
     ...mapState({
       theme: state => state.common.theme,
       activeSymbol: state => state.common.activeSymbol,
-      activeSymbolId: state => state.common.activeSymbol.id
+      activeSymbolId: state => state.common.activeSymbol.id,
+      currencyRateList: state => state.common.currencyRateList // 折算货币列表
     })
   },
   watch: {
     activeSymbolId (newVal) {
+      console.log(newVal)
       if (newVal) {
         this.getGlobalMarket()
       }
+    },
+    globalMarketList (newVal) {
+      console.log(newVal)
     }
   }
 }

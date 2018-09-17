@@ -11,3 +11,6 @@
   padding: 0 16px;
   border-radius: 0 4px 4px 0;
 }
+.add-bank.personal .el-form-item__content {
+  width: 600px;
+}

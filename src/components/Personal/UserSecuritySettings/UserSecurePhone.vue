@@ -45,10 +45,11 @@
             >
               <el-select v-model="bindingDataPhone.bindingAreaCodeValue">
                 <el-option
-                  v-for="(item, index) in bindingDataPhone.bindingAreaCodeList"
-                  :key="index"
-                  :label="item.label"
-                  :value="item.label">
+                  v-for="item in contryAreaList"
+                  :key="item.nationCode"
+                  :label="item.english"
+                  :value="item.nationCode"
+                >
                 </el-option>
               </el-select>
               <input
@@ -133,7 +134,7 @@
           >
             <el-form-item label="姓      名：">
               <span class="bank-content-name">
-                {{ userInfo.realName }}
+                {{ userInfo.userInfo.realname }}
               </span>
             </el-form-item>
             <el-form-item label="短信验证码：">
@@ -161,10 +162,10 @@
                 v-model="amendDataPhone.areaCodeValue"
               >
                 <el-option
-                  v-for="(item, index) in amendDataPhone.areaCodeList"
+                  v-for="(item, index) in contryAreaList"
                   :key="index"
-                  :label="item.label"
-                  :value="item.label"
+                  :label="item.nationCode"
+                  :value="item.nationCode"
                 >
                 </el-option>
               </el-select>
@@ -421,21 +422,15 @@ export default {
       switch (type) {
         // 手机号
         case 0:
-          switch (validateNumForUserInput('phone', targetNum)) {
-            case 0:
-              this.setErrorMsg(0, '')
-              this.$forceUpdate()
-              return 1
-            case 1:
-              this.setErrorMsg(0, '请输入手机号')
-              this.$forceUpdate()
-              return 0
-            case 2:
-              this.setErrorMsg(0, '请输入正确的手机号')
-              this.$forceUpdate()
-              return 0
+          if (!targetNum) {
+            this.setErrorMsg(0, '请输入手机号')
+            this.$forceUpdate()
+            return 0
+          } else {
+            this.setErrorMsg(0, '')
+            this.$forceUpdate()
+            return 1
           }
-          break
         // 图片验证码
         case 1:
           if (!targetNum) {
@@ -504,7 +499,6 @@ export default {
         // 旧短信验证码
         case 0:
           if (!targetNum) {
-            console.log('111')
             this.tieErrorMsg(0, '请输入旧手机短信验证码')
             console.log(this.tieErrorShowStatusList)
             this.$forceUpdate()
@@ -516,21 +510,15 @@ export default {
           }
         // 新手机号码
         case 1:
-          switch (validateNumForUserInput('phone', targetNum)) {
-            case 0:
-              this.tieErrorMsg(1, '')
-              this.$forceUpdate()
-              return 1
-            case 1:
-              this.tieErrorMsg(1, '请输入手机号')
-              this.$forceUpdate()
-              return 0
-            case 2:
-              this.tieErrorMsg(1, '请输入正确的手机号')
-              this.$forceUpdate()
-              return 0
+          if (!targetNum) {
+            this.tieErrorMsg(1, '请输入手机号')
+            this.$forceUpdate()
+            return 0
+          } else {
+            this.tieErrorMsg(1, '')
+            this.$forceUpdate()
+            return 1
           }
-          break
         // 新短信验证码
         case 2:
           if (!targetNum) {
@@ -625,12 +613,17 @@ export default {
     ...mapState({
       theme: state => state.common.theme,
       userInfo: state => state.user.loginStep1Info, // 用户详细信息
+      contryAreaList: state => state.common.contryAreaList,
       disabledOfOldPhoneBtn: state => state.user.disabledOfOldPhoneBtn,
       disabledOfPhoneBtn: state => state.user.disabledOfPhoneBtn,
       disabledOfEmailBtn: state => state.user.disabledOfEmailBtn
     })
   },
-  watch: {}
+  watch: {
+    contryAreaList (newVal) {
+      console.log(newVal)
+    }
+  }
 }
 </script>
 <style scoped lang="scss">

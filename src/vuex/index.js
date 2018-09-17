@@ -4,6 +4,7 @@ import OTC from './OTC'
 import personal from './Personal'
 import user from './User'
 import trade from './Trade'
+import footerInfo from './FooterInfo'
 // Vue.use(Vuex)
 
 export default new Vuex.Store({
@@ -13,6 +14,7 @@ export default new Vuex.Store({
     OTC,
     personal,
     user,
-    trade
+    trade,
+    footerInfo
   }
 })

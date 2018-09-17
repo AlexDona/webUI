@@ -50,6 +50,13 @@
               <input
                 class="chat-input border-radius2"
                 v-model="cardNo"
+                @keydown="setErrorMsg(0, '')"
+                @blur="checkoutInputFormat(0, cardNo)"
+              />
+              <!--错误提示-->
+              <ErrorBox
+                :text="errorShowStatusList[0]"
+                :isShow="!!errorShowStatusList[0]"
               />
             </el-form-item>
             <el-form-item label="上传收款码：">
@@ -73,6 +80,13 @@
                 type="password"
                 class="chat-input border-radius2"
                 v-model="password"
+                @keydown="setErrorMsg(1, '')"
+                @blur="checkoutInputFormat(1, password)"
+              />
+              <!--错误提示-->
+              <ErrorBox
+                :text="errorShowStatusList[1]"
+                :isShow="!!errorShowStatusList[1]"
               />
             </el-form-item>
             <button
@@ -101,6 +115,7 @@
 // 头部
 import HeaderCommon from '../../Common/HeaderCommon'
 import IconFontCommon from '../../Common/IconFontCommon'
+import ErrorBox from '../../User/ErrorBox'
 import {returnAjaxMessage} from '../../../utils/commonFunc'
 import {
   statusCardSettings,
@@ -114,6 +129,7 @@ const { mapMutations } = createNamespacedHelpers('personal')
 export default {
   components: {
     HeaderCommon, // 头部
+    ErrorBox, // 错误提示接口
     IconFontCommon, // 字体图标
     FooterCommon // 底部
   },
@@ -128,7 +144,11 @@ export default {
       id: '', // ID
       paymentTerm: {},
       successCountDown: 1, // 成功倒计时
-      paymentMethodList: {}
+      paymentMethodList: {},
+      errorShowStatusList: [
+        '', // 微信账号
+        '' // 交易密码
+      ]
     }
   },
   created () {
@@ -161,25 +181,71 @@ export default {
       this.dialogImageHandUrl = response.data.fileUrl
       console.log(response, file, fileList)
     },
+    // 检测输入格式
+    checkoutInputFormat (type, targetNum) {
+      console.log(type)
+      switch (type) {
+        // 请输入支付宝张号
+        case 0:
+          console.log(type)
+          if (!targetNum) {
+            this.setErrorMsg(0, '请输入微信账号')
+            this.$forceUpdate()
+            return 0
+          } else {
+            this.setErrorMsg(0, '')
+            this.$forceUpdate()
+            return 1
+          }
+        // 请输入支付宝张号
+        case 1:
+          console.log(type)
+          if (!targetNum) {
+            this.setErrorMsg(1, '请输入交易密码')
+            this.$forceUpdate()
+            return 0
+          } else {
+            this.setErrorMsg(1, '')
+            this.$forceUpdate()
+            return 1
+          }
+      }
+    },
+    // 设置错误信息
+    setErrorMsg (index, msg) {
+      this.errorShowStatusList[index] = msg
+    },
     // 确认设置我新账号
     stateSubmitWeChat () {
       this.stateSeniorCertification()
     },
     async stateSeniorCertification () {
-      let data
-      let param = {
-        token: this.userInfo.token,
-        cardNo: this.cardNo, // 微信账号
-        qrcode: this.dialogImageHandUrl, // 二维码
-        payPassword: this.password, // 交易密码
-        bankType: 'weixin' // type
-      }
-      data = await statusCardSettings(param)
-      console.log(data)
-      if (!(returnAjaxMessage(data, this, 1))) {
-        return false
+      let goOnStatus = 0
+      if (
+        this.checkoutInputFormat(0, this.alipayAccount)
+      ) {
+        goOnStatus = 1
       } else {
-        this.successJump()
+        goOnStatus = 0
+      }
+      if (goOnStatus) {
+        let data
+        let param = {
+          token: this.userInfo.token,
+          cardNo: this.cardNo, // 微信账号
+          qrcode: this.dialogImageHandUrl, // 二维码
+          payPassword: this.password, // 交易密码
+          bankType: 'weixin' // type
+        }
+        data = await statusCardSettings(param)
+        console.log(data)
+        if (!(returnAjaxMessage(data, this, 1))) {
+          return false
+        } else {
+          this.successJump()
+          this.cardNo = ''
+          this.password = ''
+        }
       }
     },
     // 获取支付方式信息

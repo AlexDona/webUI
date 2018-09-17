@@ -47,18 +47,39 @@
               <input
                 class="bank-input border-radius2"
                 v-model="bankName"
+                @keydown="setErrorMsg(0, '')"
+                @blur="checkoutInputFormat(0, bankName)"
+              />
+              <!--错误提示-->
+              <ErrorBox
+                :text="errorShowStatusList[0]"
+                :isShow="!!errorShowStatusList[0]"
               />
             </el-form-item>
             <el-form-item label="银  行  卡  号：">
               <input
                 class="bank-input border-radius2"
                 v-model="bankCard"
+                @keydown="setErrorMsg(1, '')"
+                @blur="checkoutInputFormat(1, bankCard)"
+              />
+              <!--错误提示-->
+              <ErrorBox
+                :text="errorShowStatusList[1]"
+                :isShow="!!errorShowStatusList[1]"
               />
             </el-form-item>
             <el-form-item label="支  行  地  址：">
               <input
                 class="bank-input border-radius2"
                 v-model="branchAddress"
+                @keydown="setErrorMsg(2, '')"
+                @blur="checkoutInputFormat(2, branchAddress)"
+              />
+              <!--错误提示-->
+              <ErrorBox
+                :text="errorShowStatusList[2]"
+                :isShow="!!errorShowStatusList[2]"
               />
             </el-form-item>
             <el-form-item label="交  易  密  码：">
@@ -66,6 +87,13 @@
                 type="password"
                 class="bank-input border-radius2"
                 v-model="password"
+                @keydown="setErrorMsg(3, '')"
+                @blur="checkoutInputFormat(3, branchAddress)"
+              />
+              <!--错误提示-->
+              <ErrorBox
+                :text="errorShowStatusList[3]"
+                :isShow="!!errorShowStatusList[3]"
               />
             </el-form-item>
             <button
@@ -94,6 +122,7 @@
 // 头部
 import HeaderCommon from '../../Common/HeaderCommon'
 import IconFontCommon from '../../Common/IconFontCommon'
+import ErrorBox from '../../User/ErrorBox'
 import CountDownButton from '../../Common/CountDownCommon'
 import {
   returnAjaxMessage // 接口返回信息
@@ -111,6 +140,7 @@ export default {
   components: {
     HeaderCommon, // 头部
     IconFontCommon, // 字体图标
+    ErrorBox,
     CountDownButton, // 短信倒计时
     FooterCommon // 底部
   },
@@ -124,7 +154,13 @@ export default {
       id: '', // ID
       paymentTerm: {},
       successCountDown: 1, // 成功倒计时
-      paymentMethodList: {}
+      paymentMethodList: {},
+      errorShowStatusList: [
+        '', // 银行名称
+        '', // 银行名称
+        '', // 支行地址
+        '' // 交易密码
+      ]
     }
   },
   created () {
@@ -158,23 +194,94 @@ export default {
     },
     // 确定设置
     async confirmTiePhone () {
-      let data
-      let params = {
-        token: this.userInfo.token,
-        realname: this.userInfo.userInfo.realname, // 真实姓名
-        bankName: this.bankName, // 银行卡名称
-        cardNo: this.bankCard, // 银行卡号
-        address: this.branchAddress, // 开户地址
-        payPassword: this.password, // 交易密码
-        bankType: 'bank', // type
-        id: this.id
-      }
-      data = await statusCardSettings(params)
-      if (!(returnAjaxMessage(data, this, 1))) {
-        return false
+      let goOnStatus = 0
+      if (
+        this.checkoutInputFormat(0, this.bankName) &&
+        this.checkoutInputFormat(1, this.bankCard) &&
+        this.checkoutInputFormat(2, this.branchAddress) &&
+        this.checkoutInputFormat(3, this.password)
+      ) {
+        goOnStatus = 1
       } else {
-        console.log(data)
+        goOnStatus = 0
       }
+      if (goOnStatus) {
+        let data
+        let params = {
+          token: this.userInfo.token,
+          realname: this.userInfo.userInfo.realname, // 真实姓名
+          bankName: this.bankName, // 银行卡名称
+          cardNo: this.bankCard, // 银行卡号
+          address: this.branchAddress, // 开户地址
+          payPassword: this.password, // 交易密码
+          bankType: 'bank', // type
+          id: this.id
+        }
+        data = await statusCardSettings(params)
+        if (!(returnAjaxMessage(data, this, 1))) {
+          return false
+        } else {
+          this.successJump()
+          this.bankName = '' // 银行卡名称
+          this.cardNo = '' // 银行卡号
+          this.address = '' // 开户地址
+          console.log(data)
+        }
+      }
+    },
+    // 检测输入格式
+    checkoutInputFormat (type, targetNum) {
+      switch (type) {
+        // 银行名称
+        case 0:
+          console.log(type)
+          if (!targetNum) {
+            this.setErrorMsg(0, '请输入银行名称')
+            this.$forceUpdate()
+            return 0
+          } else {
+            this.setErrorMsg(0, '')
+            this.$forceUpdate()
+            return 1
+          }
+        // 银行卡号
+        case 1:
+          if (!targetNum) {
+            this.setErrorMsg(1, '请输入银行卡号')
+            this.$forceUpdate()
+            return 0
+          } else {
+            this.setErrorMsg(1, '')
+            this.$forceUpdate()
+            return 1
+          }
+        // 支行地址
+        case 2:
+          if (!targetNum) {
+            this.setErrorMsg(2, '请输入支行地址')
+            this.$forceUpdate()
+            return 0
+          } else {
+            this.setErrorMsg(2, '')
+            this.$forceUpdate()
+            return 1
+          }
+        // 交易密码
+        case 3:
+          if (!targetNum) {
+            this.setErrorMsg(3, '请输入交易密码')
+            this.$forceUpdate()
+            return 0
+          } else {
+            this.setErrorMsg(3, '')
+            this.$forceUpdate()
+            return 1
+          }
+      }
+    },
+    // 设置错误信息
+    setErrorMsg (index, msg) {
+      this.errorShowStatusList[index] = msg
     },
     // 获取支付方式信息
     async paymentMethodInformation () {
