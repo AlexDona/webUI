@@ -442,6 +442,7 @@
                 <el-button
                   type="primary"
                   size="mini"
+                  @click="gatheringBefore"
                 >
                   确认收款
                 </el-button>
@@ -550,10 +551,11 @@
           top="25vh"
           width="470"
         >
-          <div>请输入交易密码</div>
+          <!-- <div>请输入交易密码</div> -->
           <div class="input">
             <input
               type="password"
+              placeholder="交易密码"
               class="password-input"
               v-model="tradePassword"
               @focus="passWordFocus"
@@ -583,10 +585,11 @@
           top="25vh"
           width="470"
         >
-          <div>请输入交易密码</div>
+          <!-- <div>请输入交易密码</div> -->
           <div class="input">
             <input
               type="password"
+              placeholder="交易密码"
               class="password-input"
               v-model="tradePassword"
               @focus="passWordFocus"
@@ -616,10 +619,11 @@
           top="25vh"
           width="470"
         >
-          <div>请输入交易密码</div>
+          <!-- <div>请输入交易密码</div> -->
           <div class="input">
             <input
               type="password"
+              placeholder="交易密码"
               class="password-input"
               v-model="tradePassword"
               @focus="passWordFocus"
@@ -688,19 +692,24 @@ export default {
       accomplishOrderTimeArr: [], // 自动成交倒计时数组集
       errpwd: '', // 交易密码错提示
       timerCancel: null, // 自动取消订单倒计时
-      timerAccomplish: null // 自动成交倒计时
+      timerAccomplish: null, // 自动成交倒计时
+      pageSize: 5
     }
   },
   created () {
     require('../../../static/css/list/OTC/OTCTradingOrder.css')
     require('../../../static/css/theme/day/OTC/OTCTradingOrderDay.css')
     require('../../../static/css/theme/night/OTC/OTCTradingOrderNight.css')
-    // 1.0 请求交易中订单列表
-    this.getOTCTradingOrdersList()
+    // 1.0 请求交易中订单列表:只有登录了才调用
+    if (this.isLogin) {
+      this.getOTCTradingOrdersList()
+    }
     // setInterval(() => {
     //   console.log('定时器一秒一次')
     //   this.getOTCTradingOrdersList()
     // }, 1000)
+    // console.log(this.userInfo)
+    console.log(this.isLogin)
   },
   mounted () {},
   activited () {},
@@ -747,7 +756,7 @@ export default {
       const data = await getOTCTradingOrders({
         status: 'TRADING', // 状态 (交易中 TRADING )
         pageNum: this.currentPage,
-        pageSize: '5'
+        pageSize: this.pageSize
       })
       console.log('交易中订单列表')
       console.log(data)
@@ -827,6 +836,13 @@ export default {
     passWordFocus () {
       this.errpwd = ''
     },
+    // 卖家在买家付款前点击确认收款按钮的提示事件
+    gatheringBefore () {
+      this.$message({
+        message: '请等待买家付款。',
+        type: 'error'
+      })
+    },
     // 5.0 买家点击确认付款按钮 点击交易密码框中的提交按钮
     async submitButton1 () {
       if (!this.tradePassword) {
@@ -844,6 +860,8 @@ export default {
           return false
         } else {
           this.dialogVisible1 = false
+          this.errpwd = ''
+          this.tradePassword = ''
           // 2再次调用接口刷新列表
           this.getOTCTradingOrdersList()
         }
@@ -873,6 +891,8 @@ export default {
         return false
       } else {
         this.dialogVisible2 = false
+        this.errpwd = ''
+        this.tradePassword = ''
         this.getOTCTradingOrdersList()
       }
     },
@@ -893,7 +913,7 @@ export default {
     sellerAppeal () {
       if (!this.appealTextareaValue) {
         this.$message({
-          message: '请输入原因',
+          message: '请输入申诉原因',
           type: 'error'
         })
         return false
@@ -920,6 +940,9 @@ export default {
         return false
       } else {
         this.dialogVisible3 = false
+        this.errpwd = '' // 清空密码错提示
+        this.tradePassword = '' // 清空密码框
+        this.appealTextareaValue = '' // 清空申诉原因
         // 再次调用接口刷新列表
         this.getOTCTradingOrdersList()
       }
@@ -928,7 +951,9 @@ export default {
   filter: {},
   computed: {
     ...mapState({
-      theme: state => state.common.theme
+      theme: state => state.common.theme,
+      isLogin: state => state.user.isLogin, // 是否登录
+      userInfo: state => state.user.loginStep1Info.userInfo // 用户详细信息
     })
   },
   watch: {},
@@ -1160,6 +1185,10 @@ export default {
       text-align: center;
       padding: 2px 0 15px 0;
     }
+    >.password-dialog{
+      .tips{
+      }
+    }
   }
   &.night{
     >.otc-trading-order-content{
@@ -1295,6 +1324,11 @@ export default {
       }
       .page{
       }
+      >.password-dialog{
+      .tips{
+        color: red;
+      }
+    }
     }
   }
   &.day{
@@ -1435,6 +1469,11 @@ export default {
         border-radius: 5px;
       }
       .page{
+      }
+      >.password-dialog{
+        .tips{
+          color: red;
+        }
       }
     }
   }

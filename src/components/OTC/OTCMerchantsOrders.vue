@@ -303,6 +303,7 @@ export default {
   data () {
     return {
       // 分页
+      pageSize: 10,
       currentPage: 1, // 当前页码
       totalPages: 1, // 总页数
       // 1.0 商家订单筛选下拉框数组--交易类型
@@ -450,7 +451,7 @@ export default {
         // 当前页数
         pageNum: this.currentPage,
         // 每页条数
-        pageSize: '10',
+        pageSize: this.pageSize,
         // 币种
         coinId: this.activitedMerchantsOrdersCoin,
         // 法币

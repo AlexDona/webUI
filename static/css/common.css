@@ -15,8 +15,10 @@
   min-width: 0;
 }
 .el-pagination button{
-  width:20px;
-  height:20px;
+  /* width:20px;
+  height:20px; */
+  width: 26px;
+  height: 25px;
   min-width:0;
   background-color: pink;
 }
@@ -27,9 +29,12 @@
   min-width:0;
 }
 .el-pager li{
-  width:20px;
+  /* width:20px;
   height:20px;
-  line-height: 20px;
+  line-height: 20px; */
+  width: 26px;
+  height: 25px;
+  line-height: 26px;
 }
 .night .el-pagination button{
   background-color: rgba(43,54,64,1) !important;
