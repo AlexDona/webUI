@@ -10,7 +10,6 @@
       <el-tabs
         v-model="activeName"
         :tab-position = "tabPosition"
-        @tab-click = "statusSwitchPanel"
       >
         <!-- 上部分筛选条件 -->
         <div class="orders-main-top">
@@ -398,7 +397,11 @@ export default {
       // fiatMoneyOrdersName: state => state.personal.fiatMoneyOrdersName
     })
   },
-  watch: {}
+  watch: {
+    activeName () {
+      this.getOTCEntrustingOrdersRevocation(this.activeName)
+    }
+  }
 }
 </script>
 <style scoped lang="scss">
