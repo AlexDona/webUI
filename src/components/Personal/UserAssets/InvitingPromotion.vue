@@ -346,6 +346,7 @@ export default {
         // 返回展示
         this.extensionList = data.data.data.list
         this.totalPageForMyEntrust = data.data.data.pages - 0
+        // this.totalPageMyNumber = data.data.data.list.total
         console.log(this.extensionList)
       }
     },
@@ -367,7 +368,6 @@ export default {
         // 返回展示
         this.awardList = data.data.data.list
         this.totalPageMyEntrust = data.data.data.pages - 0
-        this.totalPageMyNumber = data.data.data.total
         console.log(this.awardList)
       }
     },

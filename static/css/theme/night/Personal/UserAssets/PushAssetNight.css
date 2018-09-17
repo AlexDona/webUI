@@ -23,7 +23,8 @@
   border-right: 1px solid #485776;
   border-bottom: 1px solid #485776;
 }
-.push-assets.personal.night .el-table th, .el-table tr{
+.push-assets.personal.night .el-table th,
+.push-assets.personal.night .el-table tr{
   background-color: #1E2636;
 }
 .push-assets.personal.night .el-table thead {

@@ -438,7 +438,7 @@ export default {
     },
     // 判断是否实名认证
     setCollectionMode () {
-      if (!this.userInfo.userInfo.realname) {
+      if (this.userInfo.userInfo.realname) {
         this.centerModelWarning = true
       }
     },

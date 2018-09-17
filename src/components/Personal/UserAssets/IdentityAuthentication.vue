@@ -90,7 +90,7 @@
               class="common-input"
               v-model="realName"
               @keydown="setErrorMsg(0, '')"
-              @blur="checkoutInputFormat(0, transactionPassword)"
+              @blur="checkoutInputFormat(0, realName)"
             />
             <!--错误提示-->
             <ErrorBox
@@ -103,7 +103,7 @@
               class="common-input"
               v-model="identificationNumber"
               @keydown="setErrorMsg(1, '')"
-              @blur="checkoutInputFormat(1, transactionPassword)"
+              @blur="checkoutInputFormat(1, identificationNumber)"
             />
             <!--错误提示-->
             <ErrorBox
@@ -143,18 +143,23 @@
           @click="authenticationMethod">
           <span class="font-size16 main-header-title">高级认证</span>
           <span
-            v-if="!realNameInformationObj.realnameAuth"
+            v-if="statusRealNameInformation.status === 'notPass'"
             class="authentication-type font-size12"
           >
             （未高级认证）
           </span>
           <span
-            v-else
+            v-if="statusRealNameInformation.status === 'pass'"
             class="authentication-type font-size12"
           >
             （已通过实名认证并且通过高级认证）
           </span>
-
+          <span
+            v-if="statusRealNameInformation.status === 'waitVeritfy'"
+            class="authentication-type font-size12"
+          >
+            （待审核）
+          </span>
           <i class="el-icon-arrow-down icon-down float-right"></i>
         </p>
       </div>
