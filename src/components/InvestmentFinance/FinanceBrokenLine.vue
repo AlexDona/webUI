@@ -18,6 +18,11 @@ export default {
         xAxis: {
           type: 'category',
           boundaryGap: ['10%', '0%'],
+          axisLine: {
+            lineStyle: {
+              color: ''
+            }
+          },
           axisLabel: {
             show: true,
             textStyle: {
@@ -103,7 +108,7 @@ export default {
       this.financeCharts.setOption(this.options)
       window.onresize = this.financeCharts.resize
     },
-    // 重新绘制图标
+    // 重新绘制图表
     resetChart (params) {
       this.financeCharts = echarts.init(document.getElementById('finance'))
       for (let k in params) {
@@ -113,9 +118,11 @@ export default {
       this.financeCharts.setOption(this.options)
       window.onresize = this.financeCharts.resize
     },
+    // 设置options之后重绘列表
     resetOptions () {
-      // 设置监听颜色
+      // 设置监听颜色改变
       this.options.xAxis.axisLabel.textStyle.color = this.theme === 'night' ? '#404d64' : '#ccc'
+      this.options.xAxis.axisLine.lineStyle.color = this.theme === 'night' ? '' : '#ccc'
       // 设置图形渐变的颜色
       if (this.theme === 'night') {
         this.options.series[0].areaStyle.normal = {
@@ -140,7 +147,8 @@ export default {
       }
       // 设置坐标背横杠为虚线
       this.options.yAxis.splitLine.lineStyle.type = this.theme === 'night' ? 'solid' : 'dotted'
-      this.options.yAxis.splitLine.lineStyle.color = this.theme === 'night' ? '#1e2636' : '#1E263602'
+      // 设置背景坐标颜色
+      this.options.yAxis.splitLine.lineStyle.color = this.theme === 'night' ? '#1e2636' : '#ccc'
     }
   },
   filter: {},

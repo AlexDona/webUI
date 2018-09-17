@@ -61,15 +61,6 @@
     border-color: #66b1ff;
     color: #fff;
 }
-/* .otc-trading-order-box .bank-info-picture .el-popper[x-placement^=bottom] .popper__arrow {
-    border-bottom-color: #fff;
-} */
-/* .otc-trading-order-box .bank-info-picture .el-popper[x-placement^=bottom]{
-    margin-top: 6px;
-} */
-/* .otc-trading-order-box .el-popover{
-    padding: 4px !important;
-}  */
 /* 输入密码弹出框 */
 .otc-trading-order-box .password-dialog .el-dialog{
   border-radius: 4px;
