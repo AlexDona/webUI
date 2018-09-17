@@ -6,7 +6,8 @@ import {
 } from '../utils/api/trade'
 import {
   assetCurrenciesList,
-  statusSecurityCenter
+  statusSecurityCenter,
+  getQueryAllOrdersList
 } from '../utils/api/personal'
 // import {
 //   sendMsgByPushPhoneOrEmial

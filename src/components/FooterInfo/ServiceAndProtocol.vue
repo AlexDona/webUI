@@ -15,42 +15,42 @@
           >
             <el-tab-pane
               label="用户协议"
-              name="first"
+              name="UserProtocol"
             >
               <UserProtocol/>
             </el-tab-pane>
             <el-tab-pane
               label="条款说明"
-              name="second">
+              name="ClauseExplain">
               <ClauseExplain/>
             </el-tab-pane>
             <el-tab-pane
               label="法律声明"
-              name="third"
+              name="LegislationExplain"
             >
               <LegislationExplain/>
             </el-tab-pane>
             <el-tab-pane
               label="隐私条款"
-              name="fourth"
+              name="PrivacyClause"
             >
               <PrivacyClause/>
             </el-tab-pane>
             <el-tab-pane
               label="API文档"
-              name="fifth"
+              name="APIDocument"
             >
               <APIDocument/>
             </el-tab-pane>
             <el-tab-pane
               label="币种资料"
-              name="sixth"
+              name="CurrencyInformation"
             >
               <CurrencyInformation/>
             </el-tab-pane>
             <el-tab-pane
               label="费率"
-              name="seventh"
+              name="Rate"
             >
               <Rate/>
             </el-tab-pane>
@@ -88,7 +88,7 @@ export default {
   // props,
   data () {
     return {
-      activeName: 'first'
+      activeName: 'UserProtocol'
     }
   },
   created () {
