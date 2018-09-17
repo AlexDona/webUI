@@ -128,8 +128,8 @@ export default {
           }])
         }
       } else {
-          this.options.series[0].areaStyle.normal = {
-            color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [{
+        this.options.series[0].areaStyle.normal = {
+          color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [{
             offset: 0,
             color: 'rgba(112, 183, 247,1)'
           }, {
@@ -140,7 +140,7 @@ export default {
       }
       // 设置坐标背横杠为虚线
       this.options.yAxis.splitLine.lineStyle.type = this.theme === 'night' ? 'solid' : 'dotted'
-      this.options.yAxis.splitLine.lineStyle.color = this.theme === 'night' ? '#1e2636' :'#1E263602' 
+      this.options.yAxis.splitLine.lineStyle.color = this.theme === 'night' ? '#1e2636' : '#1E263602'
     }
   },
   filter: {},

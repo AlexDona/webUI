@@ -170,7 +170,7 @@ export default {
   // props,
   data () {
     return {
-      activeName: 'trade-order',
+      activeName: 'TRADING',
       // 1.0 商家订单筛选下拉框数组--交易类型
       activitedMerchantsOrdersTraderStyleList: '', // 选中的筛选项
       merchantsOrdersTraderStyleList: [
@@ -216,8 +216,7 @@ export default {
       startTime: '', // 默认开始时间
       endTime: '', // 默认结束时间
       // 商家订单列表
-      merchantsOrdersList: [],
-      activeName: 'TRADING'
+      merchantsOrdersList: []
     }
   },
   created () {
