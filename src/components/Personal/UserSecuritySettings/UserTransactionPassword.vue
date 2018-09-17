@@ -218,8 +218,7 @@ import {
   setTransactionPassword,
   resetUpdatePayPassword,
   securityVerificationOnOff,
-  statusSecurityCenter,
-  userRefreshUser
+  statusSecurityCenter
 } from '../../../utils/api/personal'
 // 底部
 import FooterCommon from '../../Common/FooterCommon'
@@ -471,8 +470,8 @@ export default {
     },
     // 确定重置交易密码
     getUpdatePayPassword () {
-      this.tieCheckoutInputFormat()
       this.confirmUpdate()
+      this.tieCheckoutInputFormat()
     },
     // 确定重置接口处理
     async confirmUpdate () {
@@ -497,6 +496,7 @@ export default {
         if (!(returnAjaxMessage(data, this, 1))) {
           return false
         } else {
+          console.log(1)
           this.successJump()
           this.confirmVerifyInformation()
         }
