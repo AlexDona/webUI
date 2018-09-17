@@ -707,8 +707,25 @@ export default {
       background-color: $dayBgColor;
       color:$dayFontColor;
       .background-color {
-        background-color: #CCCCCC;
+        background:rgba(255,255,255,1);
+        border:1px solid rgba(236,241,248,1);
+        >.coin-color{
+          color: #338FF5;
+        }
       }
+      .search-condition-box{
+        .condition-item{
+          .currency-input {
+            background: #fff;
+            border: 1px solid #ecf1f8;
+            color: #333;
+          }
+        }
+      }
+      .currency-span {
+        color: #7D90AC;
+      }
+
     }
   }
 </style>

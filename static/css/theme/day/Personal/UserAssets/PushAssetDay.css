@@ -7,3 +7,22 @@
 .push-assets.personal.day .el-select .el-input__inner:focus {
   border: 1px solid #eee;
 }
+.push-assets.personal.day .el-form-item__label {
+  color: #7D90AC;
+}
+.push-assets.personal.day .el-select .el-input__inner {
+  background-color: #fff;
+  border:1px solid rgba(236,241,248,1);
+}
+.push-assets.personal.day .el-table__empty-block {
+  background-color: #fff;
+}
+.push-assets.personal.day .el-table th>.cell {
+  color: #333;
+}
+.push-assets.personal.day .el-table td {
+  border-bottom: 1px solid #FFFFFF;
+  padding: 7px 0;
+  background-color: #fff;
+  color: #7D90AC;
+}

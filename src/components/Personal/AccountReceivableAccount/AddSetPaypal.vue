@@ -278,6 +278,9 @@ export default {
             .payment-input {
               border: 1px solid #485776;
               color: rgba(255,255,255,0.7);
+              &:focus {
+                border: 1px solid #338FF5;
+              }
             }
             .payment-content-name {
               color: rgba(255,255,255,0.7);
@@ -301,9 +304,15 @@ export default {
       background-color: $dayBgColor;
       color:$dayFontColor;
       .add-payment-main {
-        background-color: #ccc;
+        background:rgba(255,255,255,1);
+        border:1px solid rgba(246,246,246,1);
+        border-radius:4px;
+        box-shadow:0px 0px 4px rgba(235,240,248,1);
         > .add-payment-header {
-          border-bottom: 1px solid #ccc;
+          border-bottom: 1px solid rgba(57,66,77,0.1);
+          .header-content-right {
+            color: #7D90AC;
+          }
         }
         >.add-payment-content {
           >.payment-content-title {
@@ -311,9 +320,16 @@ export default {
             color: #ccc;
           }
           >.payment-content-from {
+            .payment-content-name {
+              color: #333;
+            }
             .payment-input {
-              border: 1px solid #000;
-              color: #000;
+              background:rgba(255,255,255,1);
+              border:1px solid rgba(236,241,248,1);
+              color: #333;
+              &:focus {
+                border: 1px solid #338FF5;
+              }
             }
             .payment-upload {
               background-color: #fff;

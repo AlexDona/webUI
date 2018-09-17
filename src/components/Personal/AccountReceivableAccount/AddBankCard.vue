@@ -30,9 +30,9 @@
         </span>
       </header>
       <div class="add-bank-content">
-        <header class="bank-content-title">
-          *请确认您的银行卡已开启短信通知功能
-        </header>
+        <!--<header class="bank-content-title">-->
+          <!--*请确认您的银行卡已开启短信通知功能-->
+        <!--</header>-->
         <div class="bank-content-from">
           <el-form
             :label-position="labelPosition"
@@ -300,6 +300,9 @@ export default {
             .bank-input {
               border: 1px solid #485776;
               color: rgba(255,255,255,0.7);
+              &:focus {
+                border: 1px solid #338FF5;
+              }
             }
             .bank-button {
               padding: 10px 33px;
@@ -319,7 +322,7 @@ export default {
         border-radius:4px;
         box-shadow:0px 0px 4px rgba(235,240,248,1);
         > .add-bank-header {
-          border-bottom: 1px solid #ccc;
+          border-bottom: 1px solid rgba(57,66,77,0.1);
           .header-content-right {
             color: #7D90AC;
           }
@@ -334,6 +337,9 @@ export default {
               color: #333;
               background:rgba(255,255,255,1);
               border:1px solid rgba(236,241,248,1);
+              &:focus {
+                border: 1px solid #338FF5;
+              }
             }
             .bank-button {
               padding: 10px 33px;

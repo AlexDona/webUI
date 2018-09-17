@@ -38,7 +38,7 @@
       </div>
     </div>
     <div class="security-setting security-background margin-top9">
-      <header class="security-setting-header line-height50 margin20 font-size16">
+      <header class="security-setting-header line-height50 paddinglr20 font-size16">
         安全设置
       </header>
       <div class="security-setting-box">
@@ -52,7 +52,7 @@
           </div>
           <div class="security-type-text padding-l15 box-sizing">
             <p>
-              <span class="secure-email font-size14">安全邮箱</span>
+              <span class="secure-email font-size14 font-weight600">安全邮箱</span>
               <IconFontCommon
                 v-if="!securityCenter.isMailEnable"
                 class="font-size16"
@@ -102,7 +102,7 @@
           </div>
           <div class="security-type-text padding-l15 box-sizing">
             <p>
-              <span class="secure-email font-size14">安全手机</span>
+              <span class="secure-email font-size14 font-weight600">安全手机</span>
               <IconFontCommon
                 v-if="!securityCenter.isPhoneBind"
                 class="font-size16"
@@ -151,7 +151,7 @@
           </div>
           <div class="security-type-text padding-l15 box-sizing">
             <p>
-              <span class="secure-email font-size14">谷歌验证</span>
+              <span class="secure-email font-size14 font-weight600">谷歌验证</span>
               <IconFontCommon
                 v-if="!securityCenter.isGoogleBind"
                 class="font-size16"
@@ -200,7 +200,7 @@
           </div>
           <div class="security-type-text padding-l15 box-sizing">
             <p>
-              <span class="secure-email font-size14">交易密码</span>
+              <span class="secure-email font-size14 font-weight600">交易密码</span>
               <IconFontCommon
                 v-if="!securityCenter.payPassword"
                 class="font-size16"
@@ -231,7 +231,7 @@
           </div>
           <div class="security-type-text padding-l15 box-sizing">
             <p>
-              <span class="secure-email font-size14">登陆密码</span>
+              <span class="secure-email font-size14 font-weight600">登陆密码</span>
             </p>
             <p class="security-info margin-top9 font-size12">
               用于提币、找回密码、修改安全设置、管理API时进行安全验证。
@@ -827,11 +827,65 @@ export default {
     &.day{
       background-color: $dayBgColor;
       color:$dayFontColor;
-      >.security-background{
-        background-color: #1E2636;
+      >.security-background {
+        background:rgba(255,255,255,1);
+        border:1px solid rgba(236,241,248,1);
       }
       >.security-header {
         color: #338FF5;
+      }
+      .security-title-info {
+        color: #7D90AC;
+        >.security-level {
+          color: #333;
+          >.level {
+            color: #F64D4D;
+          }
+        }
+        >.security-verification {
+          color: #7D90AC;
+        }
+      }
+      >.security-setting{
+        .security-setting-header {
+          border-bottom:1px solid rgba(236,241,248,1);
+          color: #333;
+        }
+        .security-setting-box {
+          .input {
+            border: 1px solid #485776;
+            color: #fff;
+            &:focus {
+              border: 1px solid #338FF5;
+            }
+          }
+          >.setting-type-box {
+            border-bottom:1px solid rgba(236,241,248,1);
+          }
+          >.security-type {
+            .security-type-text {
+              .secure-email {
+                color: #333;
+              }
+              >.security-info {
+                color: #7D90AC;
+              }
+              >.security-info-text {
+                color: #F57474;
+              }
+            }
+            .security-status {
+              >.security-verify {
+                background:linear-gradient(90deg,rgba(43,57,110,1),rgba(42,80,130,1));
+                color: #fff;
+              }
+              >.security-binding {
+                border: 1px solid #338FF5;
+                color: #338FF5;
+              }
+            }
+          }
+        }
       }
     }
   }

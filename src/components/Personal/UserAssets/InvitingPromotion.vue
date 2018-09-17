@@ -3,19 +3,19 @@
     class="invitation-promotion personal"
     :class="{'day':theme == 'day','night':theme == 'night' }"
   >
-    <header class="invitation-promotion-header personal-height40 line-height40 padding-left20 font-size16 background-color">
+    <header class="invitation-promotion-header personal-height40 line-height40 padding-left20 font-size16 background-color border-radius2">
       <span class="padding-left23 header-content">邀请推广</span>
     </header>
     <div class="invitation-promotion-main min-height500 margin-top9">
       <!--推广信息-->
-      <div class="extension-info padding-top0">
-        <header class="extension-info-header line-height56">
+      <div class="extension-info">
+        <header class="extension-info-header line-height56 paddinglr20 border-radius2">
           <span class="font-size16 header-color">推广信息</span>
         </header>
-        <div class="extension-info-content">
+        <div class="extension-info-content padding-top0">
           <div class="info-record border-radius2">
             <div class="extension-code">
-              <div class="code-left font-size12 code-color">推广码</div>
+              <div class="code-left font-size12">推广码</div>
               <div class="code-right text-align-r">
                 <span
                   class="code-right-rendering text-align-r"
@@ -90,7 +90,7 @@
                     人
                   </span>
                 </p>
-                <span class="font-size12 display-inline-block margin-top30">
+                <span class="color-text font-size12 display-inline-block margin-top30">
                   成功邀请
                 </span>
               </div>
@@ -103,7 +103,7 @@
                   </span>
                   <span>BTC</span>
                 </p>
-                <span class="font-size12 display-inline-block margin-top30">
+                <span class="color-text font-size12 display-inline-block margin-top30">
                   已获得的佣金预估
                 </span>
               </div>
@@ -592,32 +592,34 @@ export default {
       }
       .invitation-promotion-main {
         >.extension-info{
-          background-color: #ccc;
+          background:rgba(255,255,255,1);
+          border:1px solid rgba(236,241,248,1);
           >.extension-info-header{
-            border-bottom: 1px solid #39424D;
+            border-bottom:1px solid rgba(236,241,248,1);
             >.header-color {
-              color: #ccc;
+              color: #333;
             }
           }
           >.extension-info-content{
             >.info-record {
-              background:rgba(248,249,252,1);
+              background: #F3F8FF;
               >.extension-code {
                 border-bottom: 1px solid #364654;
                 >.extension-code,
                 >.extension-link{
                   >.code-left,
                   >.link-left {
-                    color: #9DA5B3;
+                    color: #333;
                   }
                   >.code-right,
                   >.link-right {
                     >.code-right-rendering {
-                      color: #9DA5B3;
+                      color: #333;
                     }
                     >.code-copy {
-                      color: #338FF5;
-                      background-color: #ccc;
+                      color: red;
+                      background: rgb(255,255,255);
+                      border:1px solid rgba(125,144,172,1);
                     }
                   }
                 }
@@ -628,36 +630,45 @@ export default {
                 .info-left-text {
                   color: #ccc;
                 }
+                .color-text {
+                  color: #333;
+                }
               }
               .info-left,
-              info-right {
-                color: #ccc;
+              .info-right {
+                >.info-left-color {
+                  color: #338FF5;
+                }
               }
             }
           }
         }
         >.extension-statistics {
-          background-color: #ccc;
+          background:rgba(255,255,255,1);
+          border:1px solid rgba(38,47,56,0.1);
           >.extension-statistics-header {
-            border-bottom: 1px solid #333;
+            border-bottom: 1px solid rgba(236,241,248,1);
             >.header-color {
-              color: #ccc;
+              color: #333;
             }
           }
         }
         >.award-record {
-          background-color: #ccc;
+          background:rgba(255,255,255,1);
+          border:1px solid rgba(38,47,56,0.1);
           >.award-record-header {
-            border-bottom: 1px solid #333;
+            border-bottom: 1px solid rgba(236,241,248,1);
             >.header-color {
-              color: #ccc;
+              color: #333;
             }
           }
         }
       }
       .invitation-promotion-header {
+        background:rgba(255,255,255,1);
+        border:1px solid rgba(236,241,248,1);
         .header-content {
-          color: #555;
+          color: #338FF5;
         }
       }
     }

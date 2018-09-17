@@ -1,9 +1,10 @@
 /*个人中心（白色主题）*/
 .invitation-promotion.personal.day .el-table th, .el-table tr{
-  background-color: #CCCCCC;
+  background-color: #fff;
+  color: #333;
 }
 .invitation-promotion.personal.day .el-table thead {
-  color: #CCCCCC;
+  color: #fff;
 }
 .invitation-promotion.personal.day .el-table th.is-leaf {
   /*border-bottom: 1px solid #FFFFFF;*/
@@ -27,10 +28,19 @@
   color: #b1b1b1;
 }
 .invitation-promotion.personal.day .el-input__inner{
-  background-color: #ccc;
+  background:rgba(236,244,254,1);
   border: 0;
   color: #333;
 }
 .invitation-promotion.personal.day .el-input__inner:focus {
   border: 0;
+}
+.invitation-promotion.personal.day .el-table th>.cell {
+  color: #333;
+}
+.invitation-promotion.personal.day .el-table .cell {
+  color: #333;
+}
+.invitation-promotion.personal.day .el-form-item__label {
+  color: #7D90AC;
 }

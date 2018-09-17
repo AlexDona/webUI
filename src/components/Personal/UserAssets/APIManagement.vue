@@ -78,7 +78,7 @@
           >
             <el-table-column
               label="创建时间"
-              width="150"
+              width="145"
             >
               <template slot-scope = "s">
                 <div>{{timeFormatting(s.row.createTime) }}</div>
@@ -310,7 +310,7 @@
         :visible.sync="dialogVisible"
         center
       >
-        <span class="info">确定删除提币地址吗？</span>
+        <span class="info">确定删除api地址吗？</span>
         <span slot="footer" class="dialog-footer">
          <!--确 定 取 消-->
           <el-button
@@ -769,18 +769,54 @@ export default {
       background-color: $dayBgColor;
       color:$dayFontColor;
       >.background-color {
-        background-color: #ccc;
+        background:rgba(255,255,255,1);
+        border:1px solid rgba(236,241,248,1);
       }
       .invitation-promotion-main {
+        .primary-button {
+          background: linear-gradient(81deg,rgba(43,57,110,1) 0%,rgba(42,80,130,1) 100%);
+          color: #fff;
+        }
+        .content-input {
+          border:1px solid rgba(236,241,248,1);
+          color: #333;
+          &:focus {
+            border: 1px solid #338FF5;
+          }
+        }
         >.extension-info{
-          background-color: #ccc;
+          background:rgba(255,255,255,1);
+          border:1px solid rgba(246,246,246,1);
+          border-radius:4px;
+          box-shadow:0px 0px 4px rgba(235,240,248,1);
           >.extension-info-header{
-            border-bottom: 1px solid #39424D;
+            border-bottom: 1px solid rgba(57,66,77,0.1);
             >.header-color {
-              color: #ccc;
+              color: #333;
             }
           }
           >.extension-info-content{
+            .send-code-btn {
+              background-color: #338FF5;
+              color: #fff;
+            }
+            .api-input {
+              border:1px solid rgba(236,241,248,1);
+              color: #fff;
+              &:focus {
+                border: 1px solid #338FF5;
+              }
+            }
+            .content-title {
+              color: #D45858;
+            }
+            .content-info {
+              color: #7D90AC;
+            }
+            .api-button {
+              background:linear-gradient(0deg,rgba(43,57,110,1),rgba(42,80,130,1));
+              color: #fff;
+            }
             >.promotion-box {
               .promotion-info {
                 .info-left-text {
@@ -795,18 +831,21 @@ export default {
           }
         }
         >.extension-statistics {
-          background-color: #ccc;
+          background:rgba(255,255,255,1);
+          border:1px solid rgba(246,246,246,1);
+          border-radius:4px;
+          box-shadow:0px 0px 4px rgba(235,240,248,1);
           >.extension-statistics-header {
-            border-bottom: 1px solid #333;
+            border-bottom: 1px solid rgba(57,66,77,0.1);
             >.header-color {
-              color: #ccc;
+              color: #333;
             }
           }
         }
       }
       .api-management-header {
         .header-content {
-          color: #555;
+          color: #338FF5;
         }
       }
     }

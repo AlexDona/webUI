@@ -736,6 +736,60 @@ export default {
     &.day{
       background-color: $dayBgColor;
       color:$dayFontColor;
+      >.push-assets-main {
+        >.push-assets-content,
+        >.push-assets-content-box {
+          background:rgba(255,255,255,1);
+          border:1px solid rgba(246,246,246,1);
+          border-radius:4px;
+          box-shadow:0px 0px 4px rgba(235,240,248,1);
+          >.push-header {
+            background:rgba(255,255,255,1);
+            border:1px solid rgba(236,241,248,1);
+            >.push-header-title {
+              color: #338FF5;
+            }
+          }
+          >.push-from-box {
+            .form-input-common {
+              border:1px solid rgba(236,241,248,1);
+              color: #333;
+              &:focus {
+                border: 1px solid #338FF5;
+              }
+            }
+            .form-input-common-state {
+              border:1px solid rgba(236,241,248,1);
+              color: #333;
+            }
+            .form-button-common {
+              background:linear-gradient(0deg,rgba(43,57,110,1),rgba(42,80,130,1));
+              color: #fff;
+            }
+          }
+        }
+        >.award-record {
+          background:rgba(255,255,255,1);
+          border:1px solid rgba(246,246,246,1);
+          border-radius:4px;
+          box-shadow:0px 0px 4px rgba(235,240,248,1);
+          >.award-record-header {
+            border-bottom: 1px solid rgba(57,66,77,0.1);
+            >.header-color {
+              color: #333;
+            }
+          }
+          .award-record-content{
+            >.state-status {
+              color: #338FF5;
+            }
+            .form-input-common {
+              color: #fff;
+              background-color: #1A2233;
+            }
+          }
+        }
+      }
     }
   }
 </style>

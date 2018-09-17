@@ -476,17 +476,62 @@ export default {
       background-color: $dayBgColor;
       color:$dayFontColor;
       .binding-google-main {
-        background-color: #ccc;
+        background:rgba(255,255,255,1);
+        border:1px solid rgba(246,246,246,1);
+        border-radius:4px;
+        box-shadow:0px 0px 4px rgba(235,240,248,1);
         >.binding-google-header {
-          border-bottom: 1px solid #ccc;
+          border-bottom: 1px solid rgba(57,66,77,0.1);
           >.header-content-left {
-            color: #555;
+            color: #333;
+          }
+          >.header-content-right {
+            color: #7D90AC;
           }
         }
         >.binding-google-content {
           >.google-content-from {
-            >.google-images-show {}
-            >.google-info-show {}
+            >.google-images-show {
+              .img-background {
+                background-color: #338FF5;
+              }
+              .img-background1 {
+                background-color: #2B3C71;
+              }
+              .img-box {
+                background-color: #fff;
+              }
+              .google-info {
+                color: #7D90AC;
+                .google-info-download {
+                  color: #338FF5;
+                }
+              }
+            }
+            >.google-info-show {
+              .code-copy {
+                color: rgba(255,255,255,0.7);
+                background-color: #338FF5;
+              }
+              color: rgba(255,255,255,0.7);
+              .google-content-name {
+                color: #333;
+              }
+              .google-input {
+                border:1px solid rgba(236,241,248,1);
+                color: #333;
+                &:focus {
+                  border: 1px solid #338FF5;
+                }
+              }
+              .google-button {
+                background:linear-gradient(0deg,rgba(43,57,110,1),rgba(42,80,130,1));
+                color: rgba(255,255,255,0.7);
+              }
+              .prompt-message {
+                color: red;
+              }
+            }
           }
         }
       }

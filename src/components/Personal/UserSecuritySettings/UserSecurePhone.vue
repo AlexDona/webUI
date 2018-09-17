@@ -751,22 +751,28 @@ export default {
       background-color: $dayBgColor;
       color:$dayFontColor;
       .set-phone-main {
-        background-color: #ccc;
+        background:rgba(255,255,255,1);
+        border:1px solid rgba(246,246,246,1);
+        border-radius:4px;
+        box-shadow:0px 0px 4px rgba(235,240,248,1);
         >.set-phone-header {
-          border-bottom: 1px solid #ccc;
+          border-bottom: 1px solid rgba(57,66,77,0.1);
           >.header-content-left {
-            color: #555;
+            color: #333;
+          }
+          >.header-content-right {
+            color: #7D90AC;
           }
         }
         >.set-phone-content {
           >.phone-content-title {
-            background:rgba(62,121,214,1);
-            color: #ccc;
+            background:rgba(51,143,245,0.1);
+            color: #333;
           }
           >.phone-content-from {
             .phone-input {
-              border: 1px solid #000;
-              color: #000;
+              border:1px solid rgba(236,241,248,1);
+              color: #333;
               &:focus {
                 border: 1px solid #338FF5;
               }

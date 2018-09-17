@@ -310,6 +310,9 @@ export default {
             .chat-input {
               border: 1px solid #485776;
               color: rgba(255,255,255,0.7);
+              &:focus {
+                border: 1px solid #338FF5;
+              }
             }
             .chat-upload {
               /*background-color: #485776;*/
@@ -330,30 +333,46 @@ export default {
       background-color: $dayBgColor;
       color:$dayFontColor;
       .add-chat-main {
-        background-color: #ccc;
-        > .add-chat-header {
-          border-bottom: 1px solid #ccc;
+        background:rgba(255,255,255,1);
+        border:1px solid rgba(246,246,246,1);
+        border-radius:4px;
+        box-shadow:0px 0px 4px rgba(235,240,248,1);
+        >.add-chat-header {
+          border-bottom: 1px solid rgba(57,66,77,0.1);
+          .header-content {
+            color: #7D90AC;
+          }
+          .header-content-right {
+            color: #A9BED4;
+          }
         }
         >.add-chat-content {
           >.chat-content-title {
-            background:rgba(62,121,214,1);
-            color: #ccc;
+            background:rgba(62,121,214,0.08);
+            color: #3E79D6;
           }
           >.chat-content-from {
+            .chat-content-type {
+              color: #333;
+            }
             .chat-input {
-              border: 1px solid #000;
-              color: #000;
+              color: #333;
+              background:rgba(255,255,255,1);
+              border:1px solid rgba(236,241,248,1);
+              &:focus {
+                border: 1px solid #338FF5;
+              }
             }
             .chat-upload {
-              background-color: #fff;
+              /*background-color: #485776;*/
               .icon-plus {
-                color: #555;
+                color: #828EA6;
               }
             }
             .chat-button {
               padding: 10px 33px;
               background:linear-gradient(0deg,rgba(43,57,110,1),rgba(42,80,130,1));
-              color: #ccc;
+              color: rgba(255,255,255,0.7);
             }
           }
         }

@@ -17,6 +17,9 @@
   border-radius: 0 4px 4px 0;
   cursor: pointer;
 }
-.set-phone.personal .el-form-item {
+.set-email.personal .el-form-item {
   margin-bottom: 30px;
+}
+.set-email.personal .el-input-group__append {
+  padding: 0;
 }

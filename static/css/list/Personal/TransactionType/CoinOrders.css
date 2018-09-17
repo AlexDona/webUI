@@ -56,7 +56,9 @@
 .coin-orders.personal .el-pagination{
   text-align: right;
 }
-
+.coin-orders.personal .el-table th.is-leaf {
+  border-bottom: none;
+}
 /*.coin-orders.personal*/
 /*.coin-orders.personal*/
 /*.coin-orders.personal*/

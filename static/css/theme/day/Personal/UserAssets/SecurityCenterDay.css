@@ -6,17 +6,18 @@
   color: #CCCCCC;
 }
 .security-center.personal.day .el-table th.is-leaf {
+  background-color: #fff;
   border-bottom: 1px solid #FFFFFF;
+  color: #333;
 }
 .security-center.personal.day .el-table td{
   border-bottom: 1px solid #FFFFFF;
   padding: 7px 0;
-  background-color: #ccc;
-  color: #333;
+  background-color: #fff;
+  color: #7D90AC;
 }
-
 .security-center.personal.day .el-table--enable-row-hover .el-table__body tr:hover>td{
-  background-color: #eeeeee;
+  background-color: #fff;
 }
 .security-center.personal.day .el-table{
   color: #fff;
@@ -27,6 +28,11 @@
 /*tabs切换*/
 .security-center.personal.day .el-tabs__item.is-active{
   background-color: transparent;
-  color: #333;
-  border-bottom: 1px solid #000;
+  border-left: 0;
+  color: #338FF5;
+  border-bottom: 2px solid #338FF5;
+}
+.security-center.personal.day .el-tabs__item:hover {
+  background-color: #fff;
+  /*border-bottom: 2px solid #338FF5;*/
 }

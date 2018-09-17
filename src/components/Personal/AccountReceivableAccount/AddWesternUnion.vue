@@ -279,6 +279,9 @@ export default {
             .western-input {
               border: 1px solid #485776;
               color: rgba(255,255,255,0.7);
+              &:focus {
+                border: 1px solid #338FF5;
+              }
             }
             .western-content-name {
               color: rgba(255,255,255,0.7);
@@ -302,11 +305,14 @@ export default {
       background-color: $dayBgColor;
       color:$dayFontColor;
       .add-western-main {
-        background-color: #ccc;
+        background:rgba(255,255,255,1);
+        border:1px solid rgba(246,246,246,1);
+        border-radius:4px;
+        box-shadow:0px 0px 4px rgba(235,240,248,1);
         > .add-western-header {
-          border-bottom: 1px solid #ccc;
+          border-bottom: 1px solid rgba(57,66,77,0.1);
           >.header-content-left {
-            color: #555;
+            color: #7D90AC;
           }
         }
         >.add-western-content {
@@ -316,8 +322,12 @@ export default {
           }
           >.western-content-from {
             .western-input {
-              border: 1px solid #000;
-              color: #000;
+              background:rgba(255,255,255,1);
+              border:1px solid rgba(236,241,248,1);
+              color: #333;
+              &:focus {
+                border: 1px solid #338FF5;
+              }
             }
             .western-upload {
               background-color: #fff;

@@ -1,7 +1,12 @@
 /*个人中心白色主题*/
-.add-western.western .day .el-textarea__inner{
-  background-color: #333;
-  border: 1px solid #333;
-  color: #9DA5B3;
+.add-western.personal.day .el-textarea__inner{
+  background:rgba(255,255,255,1);
+  border:1px solid rgba(236,241,248,1);
+  color: #333;
 }
-
+.add-western.personal.day .el-textarea__inner:focus {
+  border: 1px solid #338FF5;
+}
+.add-western.personal.day .el-form-item__label {
+  color: #7D90AC;
+}
