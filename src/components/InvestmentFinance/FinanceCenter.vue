@@ -359,7 +359,7 @@ export default {
       // 历史涨幅
       historyAmountIncrease: '',
       // 可用余额
-      availableBalance: '', 
+      availableBalance: '',
       // 是否可以点击立刻投资
       isClick: false
     }
@@ -391,7 +391,6 @@ export default {
         this.isClick()
       }
     },
-   
     // 投资理财页面查询
     async getFinancialManagementList () {
       const data = await getFinancialManagement({
@@ -436,7 +435,7 @@ export default {
           this.selecteCoindName = item.name
         }
       })
-    //  改变币种重新请求接口
+      //  改变币种重新请求接口
       this.getFinancialManagementList()
     }
   },
@@ -515,7 +514,7 @@ export default {
                 color:#7CB8FA;
                 height: 24px;
                 font-weight:600;
-                -webkit-box-reflect: below 0 -webkit-linear-gradient(top,rgba(124,184,250,0),rgba(124,184,250,0.2));
+                /*-webkit-box-reflect: below 0 -webkit-linear-gradient(top,rgba(124,184,250,0),rgba(124,184,250,0.2));*/
                 >span{
                   font-size: 12px;
                 }
