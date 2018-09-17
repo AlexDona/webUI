@@ -43,7 +43,9 @@
             </li>
           </ul>
       </div>
-      <FinanceBrokenLine/>
+      <FinanceBrokenLine
+       :coin-type="selecteCoindName"
+      />
       </div>
       <!-- 投资 -->
       <div class="finance-inner-box">
@@ -77,7 +79,7 @@
                  plain
                  @click="getInvestEarnings"
                  :disabled='!selectedInvestTypeValue&&!investMounte'
-                >投资领收益</el-button>
+                >立刻投资</el-button>
               </div>
             </label>
             <button></button>
@@ -109,66 +111,114 @@
         </div>
       </div>
       <div class="invest-list">
-        <div class="invest-list-header">
+        <!-- <div class="invest-list-header">
           <div class='invest'>投资记录</div>
-          <router-link class="blue" to="/FinanceInvestmentRecord">查看全部</router-link>
-        </div>
+        </div> -->
+        <!-- 投资记录和收益记录 -->
         <div class="nvest-list-body">
-          <el-table
-            :data="investList"
-            style="width: 100%"
-            empty-text="暂无数据"
-            >
-            <el-table-column
-              prop="coinName"
-              label="投资币种"
-              width="100">
-            </el-table-column>
-            <el-table-column
-              prop="investType"
-              label="投资类型"
-              width="180">
-            </el-table-column>
-            <el-table-column
-              prop="count"
-              width="100"
-              label="数量"
-              >
-            </el-table-column>
-            <el-table-column
-              prop="prospectiveEarning"
-              label="预计收益">
-            </el-table-column>
-            <el-table-column
-              prop="gaveOutTime"
-              width="180"
-              label="预计发放时间">
-            </el-table-column>
-            <el-table-column
-              label="状态">
-              <template slot-scope = "data">
-                <div v-if="data.row.status == 'COMPLETED'">已完成</div>
-                <div v-if="data.row.status == 'GAVEOUT'">已发放</div>
-                <div v-if="data.row.status == 'FROZENED'">冻结</div>
-                <div v-if="data.row.status == 'CANCELED'">取消</div>
-                <div v-if="data.row.status == 'REDEMPTIONED'">已赎回</div>
-              </template>
-            </el-table-column>
-            <el-table-column
-              width="180"
-              label="创建时间">
-              <template slot-scope = "scope">
-                <div>{{timeFormatting(scope.row.createdTime)}}</div>
-              </template>
-            </el-table-column>
-            <el-table-column
-              prop="operations"
-              label="操作">
-              <template slot-scope = "data">
-                <div v-if="data.row.operations == 'CANCELED'" class="blue">取消</div>
-              </template>
-            </el-table-column>
-          </el-table>
+          <div class='showAll'>
+            <router-link class="blue" to="/FinanceInvestmentRecord">查看全部</router-link>
+          </div>
+          <!-- 投资记录 -->
+          <el-tabs v-model="activeName" @tab-click="handleClick">
+            <el-tab-pane label="投资记录" name="1">
+              <el-table
+                :data="investList"
+                style="width: 100%"
+                empty-text="暂无数据"
+                >
+                <el-table-column
+                  prop="coinName"
+                  label="投资币种"
+                  width="100">
+                </el-table-column>
+                <el-table-column
+                  prop="investType"
+                  label="投资类型"
+                  width="180">
+                </el-table-column>
+                <el-table-column
+                  prop="count"
+                  width="100"
+                  label="数量"
+                  >
+                </el-table-column>
+                <el-table-column
+                  prop="prospectiveEarning"
+                  label="预计收益">
+                </el-table-column>
+                <el-table-column
+                  prop="gaveOutTime"
+                  width="180"
+                  label="预计发放时间">
+                </el-table-column>
+                <el-table-column
+                  label="状态">
+                  <template slot-scope = "data">
+                    <div v-if="data.row.status == 'COMPLETED'">已完成</div>
+                    <div v-if="data.row.status == 'GAVEOUT'">已发放</div>
+                    <div v-if="data.row.status == 'FROZENED'">冻结</div>
+                    <div v-if="data.row.status == 'CANCELED'">取消</div>
+                    <div v-if="data.row.status == 'REDEMPTIONED'">已赎回</div>
+                  </template>
+                </el-table-column>
+                <el-table-column
+                  width="180"
+                  label="创建时间">
+                  <template slot-scope = "scope">
+                    <div>{{timeFormatting(scope.row.createdTime)}}</div>
+                  </template>
+                </el-table-column>
+                <el-table-column
+                  prop="operations"
+                  label="操作">
+                  <template slot-scope = "data">
+                    <div v-if="data.row.operations == 'CANCELED'" class="blue">取消</div>
+                  </template>
+                </el-table-column>
+              </el-table>
+            </el-tab-pane>
+            <!-- 收益记录 -->
+            <el-tab-pane label="收益记录" name="2">
+              <el-table
+                :data="investList"
+                style="width: 100%"
+                empty-text="暂无数据"
+                >
+                <el-table-column
+                  prop="coinName"
+                  label="投资币种"
+                  width="150">
+                </el-table-column>
+                <el-table-column
+                  prop="investType"
+                  label="投资类型"
+                  width="230">
+                </el-table-column>
+                <el-table-column
+                  prop="count"
+                  width="180"
+                  label="数量"
+                  >
+                </el-table-column>
+                <el-table-column
+                  prop="prospectiveEarning"
+                  width="180"
+                  label="预计收益">
+                </el-table-column>
+                <el-table-column
+                  prop="prospectiveEarning"
+                  width="180"
+                  label="发放收益">
+                </el-table-column>
+                <el-table-column
+                  prop="gaveOutTime"
+                  width="180"
+                  label="预计发放时间">
+                </el-table-column>
+              </el-table>
+            </el-tab-pane>
+          </el-tabs>
         </div>
       </div>
       </div>
@@ -199,7 +249,7 @@ export default {
       // 选中币种的id
       selectedCoinId: 'BTC',
       // 选中币种的名称
-      selecteCoindName: '',
+      selecteCoindName: 'BTC',
       traderCoinList: [
         {
           coinId: '1',
@@ -240,6 +290,7 @@ export default {
           text: '【定期不可提前取回】60天收益3.075% 收益合年化15%'
         }
       ],
+      activeName: '1',
       investList: [
         {
           coinid: '00000',
@@ -352,7 +403,9 @@ export default {
     width:100%;
     height:100%;
       >.banner-box{
-          background:url('../../assets/finance/banner-jpg.jpg') no-repeat center center/100% 100%;
+        -webkit-background-size: 100% 100%;
+        background-size: 100% 100%;
+        background:url('../../assets/finance/banner-jpg.jpg') no-repeat center center;
         }
       >.inner-box{
         display:flex;
@@ -479,12 +532,13 @@ export default {
       }
       >.invest-list{
         margin-bottom:200px;
-        >.invest-list-header{
-          display: flex;
-          justify-content: space-between;
-          a{
-            line-height: 57px;
-            cursor: pointer;
+        >.nvest-list-body{
+          position: relative;
+          >.showAll{
+            position:absolute;
+            right: 0;
+            top:25px;
+            z-index: 10;
           }
         }
       }

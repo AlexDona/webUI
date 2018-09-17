@@ -1,0 +1,2 @@
+// 底部
+export const CHANGE_NEWS_AND_NOTICE_ACTIVENAME = 'CHANGE_NEWS_AND_NOTICE_ACTIVENAME' // 修改新闻公告页面activename
