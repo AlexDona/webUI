@@ -60,3 +60,5 @@ export const getOTCCoinInfo = (params) => get('otcCOin/getCoinInfo', params)
 export const getCurrencyInforList = (params) => get('cms/coinInformation/all', params)
 // 服务条款币种列表对应的单个币种详细资料
 export const getCurrencyDetails = (params) => get(`cms/coinInformation/select/${params}`)
+// 投资理财请求数据
+export const getFinancialManagement = (params) => get('financialManagement', params)

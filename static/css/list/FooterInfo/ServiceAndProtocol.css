@@ -3,17 +3,16 @@
     height: 0;
 }
 .service-protocol-box .el-tabs .el-tabs-top{
-<<<<<<< HEAD
-    z-index: 10px;;
-=======
     z-index: 10;
->>>>>>> 7e4cabde81020b526e2913dbd8c5cb3c296d91ab
 }
 .service-protocol-box .el-tabs__header{
     margin: -155px 0px 6px -48px;
 }
 .service-protocol-box .user-protocol-box.night > .content > .content{
     background-color:transparent!important;
+}
+.service-protocol-box > .content > .content{
+    overflow: visible!important;
 }
 .service-protocol-box .el-tabs__active-bar{
     background-color:transparent;

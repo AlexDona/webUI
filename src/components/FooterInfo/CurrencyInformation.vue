@@ -6,7 +6,7 @@
     <div class="inner-box">
       <div class="left">
         <div class="title">数字资产列表</div>
-        <ul class="list">
+        <ul class="list" id="list">
           <li
             class="currency-item"
             v-for="(item,index) in currencyList"
@@ -18,7 +18,21 @@
         </ul>
       </div>
       <div class="right">
-
+        <h2>BTC是什么</h2>
+        <P>
+          <span>1.这是标题</span><br>
+          香港FUBT交易所，致力于打造全球领先的区块链资产交易服务平台。
+          FUBT前中国大陆站（即币兴网）于2017年6月搭建完成并开放注册，7月10日正式开启交易。上线伊始迅速发展壮大，用户激增、交易火爆，首发
+          平台币BXB一度暴涨25倍领跑市场。后币兴网主动响应”中国9.4政策”而自主关停，并于同年底开启全新国际站香港富比特——www.fubt.top。
+          2018年上半年，FUBT陆续启动中国台湾、柬埔寨金边、日本东京、韩国首尔、美国纽约等全球各地分站。
+        </P>
+        <P>
+          <span>1.这是标题</span><br>
+          香港FUBT交易所，致力于打造全球领先的区块链资产交易服务平台。
+          FUBT前中国大陆站（即币兴网）于2017年6月搭建完成并开放注册，7月10日正式开启交易。上线伊始迅速发展壮大，用户激增、交易火爆，首发
+          平台币BXB一度暴涨25倍领跑市场。后币兴网主动响应”中国9.4政策”而自主关停，并于同年底开启全新国际站香港富比特——www.fubt.top。
+          2018年上半年，FUBT陆续启动中国台湾、柬埔寨金边、日本东京、韩国首尔、美国纽约等全球各地分站。
+        </P>
       </div>
     </div>
   </div>
@@ -89,6 +103,8 @@ export default {
     },
     currencyName (id) {
       this.currencyId = id
+      // 重新币种详情
+      this.getFootCurrencyInforDetail()
     },
     // 币种详情
     async getFootCurrencyInforDetail () {
@@ -119,6 +135,7 @@ export default {
   .currency-information-box{
     >.inner-box{
       margin-left:10px;
+      display: flex;//
       >.left{
         width:230px;
         height:720px;
@@ -148,7 +165,17 @@ export default {
         }
       }
       >.right{
-
+        width: 820px;
+        box-sizing: border-box;
+       padding:29px 35px;
+       color:#8BA0CA;
+       line-height: 22px;
+       >p{
+         padding:10px 0px;
+         >span{
+            color:#fff;
+         }
+       }
       }
     }
     &.night{
