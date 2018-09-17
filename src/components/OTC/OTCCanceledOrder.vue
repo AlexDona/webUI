@@ -99,6 +99,7 @@ export default {
   data () {
     return {
       // 分页
+      pageSize: 5,
       currentPage: 1, // 当前页码
       totalPages: 1, // 总页数
       // OTC取消订单列表
@@ -109,8 +110,10 @@ export default {
     require('../../../static/css/list/OTC/OTCCanceledOrder.css')
     require('../../../static/css/theme/day/OTC/OTCCanceledOrderDay.css')
     require('../../../static/css/theme/night/OTC/OTCCanceledOrderNight.css')
-    // 1.0 请求已取消订单列表
-    this.getOTCCanceledOrdersList()
+    // 1.0 请求已取消订单列表:只有登录了才调用
+    if (this.isLogin) {
+      this.getOTCCanceledOrdersList()
+    }
   },
   mounted () {},
   activited () {},
@@ -132,7 +135,7 @@ export default {
       const data = await getOTCCanceledOrders({
         status: 'CANCELED', // 状态 (交易中 TRADING 已完成 COMPLETED  已取消  CANCELED 冻结中 FROZEN)
         pageNum: this.currentPage,
-        pageSize: '5'
+        pageSize: this.pageSize
       })
       console.log('请求已取消订单列表')
       console.log(data)
@@ -152,7 +155,8 @@ export default {
   filter: {},
   computed: {
     ...mapState({
-      theme: state => state.common.theme
+      theme: state => state.common.theme,
+      isLogin: state => state.user.isLogin // 是否登录
     })
   },
   watch: {}

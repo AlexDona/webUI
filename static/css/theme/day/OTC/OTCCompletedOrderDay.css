@@ -31,7 +31,7 @@
 .otc-completed-order-box.day .completed-order-content .el-table__body{
   border-collapse: separate !important;
 }
-.otc-completed-order-box.day .completed-order-content.el-table{
+.otc-completed-order-box.day .completed-order-content .el-table{
   border-collapse: separate !important;
 }
 .otc-completed-order-box.day .completed-order-content .el-table__expanded-cell{

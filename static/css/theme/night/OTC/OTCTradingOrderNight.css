@@ -48,6 +48,7 @@
   height: 90px;
   font-size: 14px;
   resize: none;
+  color: #9DA5B3;
 }
 /* 4.0 扫码付款按钮及弹窗支付宝和微信图片*/
 .otc-trading-order-box.night .bank-info-picture .el-button{
