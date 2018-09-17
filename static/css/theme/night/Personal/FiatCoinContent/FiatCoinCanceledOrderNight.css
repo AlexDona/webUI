@@ -43,16 +43,6 @@
   border-color: #66b1ff;
   color: #fff;
 }
-/*.fiat-orders.personal.night .el-input__inner*/
-/* .fiat-canceled-order-box .bank-info-picture .el-popper[x-placement^=bottom] .popper__arrow {
-    border-bottom-color: #fff;
-} */
-/* .fiat-canceled-order-box .bank-info-picture .el-popper[x-placement^=bottom]{
-    margin-top: 6px;
-} */
-/* .fiat-canceled-order-box .el-popover{
-    padding: 4px !important;
-}  */
 /* 输入密码弹出框 */
 .fiat-canceled-order-box.personal.night .password-dialog .el-dialog{
   background: #28334A;

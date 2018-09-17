@@ -223,7 +223,7 @@
                   <!-- 上传身份证正面 -->
                   <div class="default-center">
                     <el-upload
-                      action="http://192.168.1.217:8888/uploadfile"
+                      action="http://192.168.1.200:8888/uploadfile"
                       :headers="tokenObj"
                       list-type="picture-card"
                       :on-success="handleSuccessFront"
@@ -252,7 +252,7 @@
                   <!-- 上传身份证反面 -->
                   <div class="default-center">
                     <el-upload
-                      action="http://192.168.1.217:8888/uploadfile"
+                      action="http://192.168.1.200:8888/uploadfile"
                       :headers="tokenObj"
                       list-type="picture-card"
                       :on-success="handleSuccessReverseSide"
@@ -281,7 +281,7 @@
                   <!-- 上传手持身份证 -->
                   <div class="default-center">
                     <el-upload
-                      action="http://192.168.1.217:8888/uploadfile"
+                      action="http://192.168.1.200:8888/uploadfile"
                       :headers="tokenObj"
                       list-type="picture-card"
                       :on-success="handleSuccessHand"
@@ -328,13 +328,14 @@
         </div>
         <div
           class="wait-veritfy-back"
-          v-if="statusRealNameInformation.advancedAuth === 'waitVeritfy'"
+          v-if="userInfoRefresh.advancedAuth === 'waitVeritfy'"
         >
           <div class="wait-veritfy text-align-c">
             <IconFontCommon
               class="font-size60 color-coin"
               iconName="icon-daishenhe"
             />
+            <p class="list-height">待审核...</p>
           </div>
         </div>
         <div
@@ -767,10 +768,14 @@ export default {
       /*border:1px solid rgba(38,47,56,0.1);*/
       >.wait-veritfy-back {
         height: 393px;
-        line-height: 350px;
+        padding-top: 130px;
         >.wait-veritfy{
           >.color-coin {
             color: #338FF5;
+          }
+          .list-height {
+            margin-top: 10px;
+            line-height: 25px;
           }
         }
       }

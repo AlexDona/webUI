@@ -429,24 +429,12 @@ export default {
         >.inquire-button {}
       }
       >.filtrate-text{
-        color: #9DA5B3;
-        // margin-right: 10px;
-      }
-      >.style-input{
-        // margin-right: 30px;
-      }
-      >.status-input{
-        // margin-right: 30px;
+        /*color: #9DA5B3;*/
       }
       >.date-picker{
-        // margin-right: 80px;
-        // margin-right: 200px;
         >.date-short-line{
           margin: 0 3px;
         }
-      }
-      >.inquire-button{
-        // margin-right: 100px;
       }
       >.all-clear{
         color: #338FF5;

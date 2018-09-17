@@ -5,15 +5,15 @@
   >
     <div class="canceled-order-content">
       <!--&lt;!&ndash;表头属性&ndash;&gt;-->
-      <div class="canceled-table-head display-flex">
-        <span class="item flex1">订单号</span>
-        <span class="item flex1">类型</span>
-        <span class="item flex1">币种</span>
-        <span class="item flex1">价格</span>
-        <span class="item flex1">数量</span>
-        <span class="item flex1">总金额</span>
-        <span class="item flex1">下单时间</span>
-      </div>
+      <!--<div class="canceled-table-head display-flex">-->
+        <!--<span class="item flex1">订单号</span>-->
+        <!--<span class="item flex1">类型</span>-->
+        <!--<span class="item flex1">币种</span>-->
+        <!--<span class="item flex1">价格</span>-->
+        <!--<span class="item flex1">数量</span>-->
+        <!--<span class="item flex1">总金额</span>-->
+        <!--<span class="item flex1">下单时间</span>-->
+      <!--</div>-->
       <!--表格-->
       <div
         class="canceled-table-body"

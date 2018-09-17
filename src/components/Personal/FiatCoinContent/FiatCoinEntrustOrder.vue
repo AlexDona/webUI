@@ -8,16 +8,16 @@
       class="fiat-entrust-order-table"
     >
       <!-- 表头 -->
-      <div class="entrust-table-head display-flex">
-        <span class="item first-style flex1">类型</span>
-        <span class="item second-coin flex1">币种</span>
-        <span class="item third-price flex1">价格</span>
-        <span class="item fourth-entrust-count flex1">挂单数量</span>
-        <span class="item fifth-match-count flex1">已匹配数量</span>
-        <span class="item sixth-total-amount flex1">总金额</span>
-        <span class="item senventh-create-time">挂单时间</span>
-        <span class="item eighth-action flex1">操作</span>
-      </div>
+      <!--<div class="entrust-table-head display-flex">-->
+        <!--<span class="item first-style flex1">类型</span>-->
+        <!--<span class="item second-coin flex1">币种</span>-->
+        <!--<span class="item third-price flex1">价格</span>-->
+        <!--<span class="item fourth-entrust-count flex1">挂单数量</span>-->
+        <!--<span class="item fifth-match-count flex1">已匹配数量</span>-->
+        <!--<span class="item sixth-total-amount flex1">总金额</span>-->
+        <!--<span class="item senventh-create-time">挂单时间</span>-->
+        <!--<span class="item eighth-action flex1">操作</span>-->
+      <!--</div>-->
       <!-- 表身体 -->
       <div
         class="entrust-table-body"
@@ -217,6 +217,109 @@ export default {
     .fiat-entrust-order-table {
       > .entrust-table-head {
         box-sizing: border-box;
+        height: 35px;
+        line-height: 35px;
+        border-radius: 5px;
+        margin-bottom: 5px;
+        z-index: 200;
+        > .item {
+          display: inline-block;
+          text-align: center;
+        }
+        > .senventh-create-time {
+          width: 150px;
+        }
+        > .senventh-create-time1 {
+          width: 120px;
+        }
+      }
+      > .entrust-table-body {
+        min-height: 432px;
+        border-top: none;
+        border-bottom-right-radius: 5px;
+        border-bottom-left-radius: 5px;
+        > .no-data {
+          line-height: 432px;
+          text-align: center;
+        }
+        > .entrust-list-content {
+          display: flex;
+          height: 34px;
+          line-height: 34px;
+          > .item {
+            display: inline-block;
+            text-align: center;
+          }
+          > .first-style {
+            width: 80px;
+          }
+          > .second-coin {
+            width: 150px;
+          }
+          > .third-price {
+            width: 150px;
+          }
+          > .fourth-entrust-count {
+            width: 150px;
+          }
+          > .fifth-match-count {
+            width: 150px;
+          }
+          > .sixth-total-amount {
+            width: 150px;
+          }
+          > .senventh-create-time {
+            width: 150px;
+          }
+          > .eighth-action {
+            width: 80px;
+          }
+        }
+      }
+    }
+    &.night{
+      background-color: $nightBgColor;
+      color:$nightFontColor;
+      >.background-color{
+        background-color: #1E2636;
+        >.fiat-color{
+          color: #338FF5;
+        }
+      }
+      > .entrust-table-head {
+        background-color: #1E2636;
+        color: #617499;
+        border: 1px solid #262F38;
+        box-shadow: -2px 3px 5px 1px #191E28; text-align: left;
+        }
+        > .senventh-create-time {
+          width: 150px;
+        }
+        > .senventh-create-time1 {
+          width: 120px;
+        }
+      > .entrust-table-body {
+        background-color: #1E2636;
+        color: #9DA5B3;
+        border: 1px solid #262F38;
+        > .entrust-list-content {
+          .red {
+            color: #D45858;
+          }
+          .green {
+            color: #008069;
+          }
+        }
+      }
+    }
+    &.day{
+      background-color: $dayBgColor;
+      color:$dayFontColor;
+      >.background-color{
+        background-color: #CCCCCC;
+      }
+      > .entrust-table-head {
+        box-sizing: border-box;
         /*width: 1045px;*/
         height: 35px;
         line-height: 35px;
@@ -236,22 +339,22 @@ export default {
           // text-align: left;
         }
         /*> .first-style {*/
-          /*width: 70px;*/
+        /*width: 70px;*/
         /*}*/
         /*> .second-coin {*/
-          /*width: 150px;*/
+        /*width: 150px;*/
         /*}*/
         /*> .third-price {*/
-          /*width: 150px;*/
+        /*width: 150px;*/
         /*}*/
         /*> .fourth-entrust-count {*/
-          /*width: 150px;*/
+        /*width: 150px;*/
         /*}*/
         /*> .fifth-match-count {*/
-          /*width: 150px;*/
+        /*width: 150px;*/
         /*}*/
         /*> .sixth-total-amount {*/
-          /*width: 150px;*/
+        /*width: 150px;*/
         /*}*/
         > .senventh-create-time {
           width: 150px;
@@ -260,7 +363,7 @@ export default {
           width: 120px;
         }
         /*> .eighth-action {*/
-          /*width: 70px;*/
+        /*width: 70px;*/
         /*}*/
       }
       > .entrust-table-body {
@@ -316,23 +419,6 @@ export default {
             width: 80px;
           }
         }
-      }
-    }
-    &.night{
-      background-color: $nightBgColor;
-      color:$nightFontColor;
-      >.background-color{
-        background-color: #1E2636;
-        >.fiat-color{
-          color: #338FF5;
-        }
-      }
-    }
-    &.day{
-      background-color: $dayBgColor;
-      color:$dayFontColor;
-      >.background-color{
-        background-color: #CCCCCC;
       }
     }
   }
