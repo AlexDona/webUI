@@ -286,8 +286,8 @@ import {
 import {
   returnAjaxMessage, // 接口返回信息
   validateNumForUserInput, // 用户输入验证
-  sendPhoneOrEmailCodeAjax,
-  getCountryListAjax
+  sendPhoneOrEmailCodeAjax
+  // getCountryListAjax
 } from '../../utils/commonFunc'
 
 export default {
@@ -300,7 +300,7 @@ export default {
   data () {
     return {
       activeMethod: 0, // 当前注册方式： 0： 手机注册 : 1 邮箱注册
-      contryAreaList: [], // 国家区域列表
+      // contryAreaList: [], // 国家区域列表
       activeCountryCodeWithPhone: '86',
       activeCountryCodeWithEmail: this.language === 'zh_CN' ? '中国' : 'China',
       activeCodePlaceholder: !this.activeMethod ? '短信验证码' : '邮箱验证码',
@@ -331,7 +331,7 @@ export default {
       this.inviter = params
     }
     this.refreshCode()
-    this.getCountryList()
+    // this.getCountryList()
   },
   mounted () {
   },
@@ -631,7 +631,8 @@ export default {
   computed: {
     ...mapState({
       theme: state => state.common.theme,
-      language: state => state.common.language
+      language: state => state.common.language,
+      contryAreaList: state => state.common.contryAreaList
       // activeCountryCodeWithPhone: state => state.user.countryCode // 国籍码
     })
   },

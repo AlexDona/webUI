@@ -369,7 +369,9 @@
                 </template>
               </el-table-column>
             </el-table>
-            <!--分页-->
+          </div>
+          <!--分页-->
+          <div class="page">
             <el-pagination
               background
               v-show="orderInfoList.length"
@@ -644,8 +646,8 @@ export default {
   >.report-form-statistics-content{
     width: 1150px;
     margin: 70px auto;
-    /*background-color: #2B2B2B;*/
     padding-top: 50px;
+    margin-bottom: 10px;
     >.report-form-title{
       height: 30px;
       line-height: 30px;
@@ -666,7 +668,7 @@ export default {
     }
     >.report-form-asset{
       color: #338FF5;
-      background-color: #202A33;
+      background-color: #1E2636;
       margin-top: 20px;
       >.title{
         height: 40px;
@@ -689,7 +691,7 @@ export default {
       flex: 2;
       margin-top: 20px;
       >.common{
-        background-color: #202A33;
+        background-color: #1E2636;
         >.head{
           width: 570px;
           height: 40px;
@@ -772,7 +774,7 @@ export default {
       }
     }
     >.report-form-details{
-      background-color: #202A33;
+      background-color: #1E2636;
       margin-top: 20px;
       border-bottom-left-radius: 5px;
       border-bottom-right-radius: 5px;
@@ -783,7 +785,7 @@ export default {
         box-shadow: 0px 4px 6px #191E28;
       }
       >.content{
-        height: 344px;
+        // height: 344px;
         >.date{
           height: 50px;
           line-height: 50px;
@@ -815,6 +817,10 @@ export default {
           .green{
             color: #008069;
           }
+        }
+        .page{
+          text-align: center;
+          padding: 10px 0;
         }
       }
     }

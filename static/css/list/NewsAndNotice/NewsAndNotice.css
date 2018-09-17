@@ -3,6 +3,7 @@
   height:60px;
   line-height: 60px;
   text-align: center;
+  margin-top:30px;
 }
 
 .news-and-notice-box .el-tabs__nav-wrap::after{
@@ -14,7 +15,6 @@
 }
 .news-and-notice-box .el-tabs__content{
   height:1100px;
-  background-color: #1e2636;
 }
 /*.news-and-notice-box*/
 /*.news-and-notice-box*/

@@ -2,12 +2,11 @@
 .account-assets.personal.day .el-switch__core::after {
   background-color: #fff;
 }
-.withdrawal-address.personal.day
-.el-switch__core::after,
-.el-table,
-.el-table__header-wrapper,
-.el-table th.is-leaf,
-.el-table td {
+.withdrawal-address.personal.day .el-switch__core::after,
+.withdrawal-address.personal.day .el-table,
+.withdrawal-address.personal.day .el-table__header-wrapper,
+.withdrawal-address.personal.day .el-table th.is-leaf,
+.withdrawal-address.personal.day .el-table td {
   background-color: #fff;
 }
 .el-table td {

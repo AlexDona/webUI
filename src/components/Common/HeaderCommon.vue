@@ -273,7 +273,8 @@ import IconFontCommon from '../Common/IconFontCommon'
 import {setStore} from '../../utils'
 // import {getPartnerList} from '../../utils/api/home'
 import {
-  returnAjaxMessage
+  returnAjaxMessage,
+  getCountryListAjax
 } from '../../utils/commonFunc'
 import { createNamespacedHelpers, mapState } from 'vuex'
 const { mapMutations } = createNamespacedHelpers('common')
@@ -341,6 +342,7 @@ export default{
     // 折算货币
     this.getMerchantAvailablelegalTenderList()
     this.getTransitionCurrencyRate()
+    this.getCountryList()
   },
   methods: {
     ...mapMutations([
@@ -353,8 +355,17 @@ export default{
       // 设置板块
       'CHANGE_PALTE_LIST',
       // 更新当前汇率列表
-      'CHANGE_CURRENCY_RATE_LIST'
+      'CHANGE_CURRENCY_RATE_LIST',
+      'SET_COUNTRY_AREA_LIST'
     ]),
+    getCountryList () {
+      getCountryListAjax(this, (data) => {
+        console.log(data)
+        // this.contryAreaList = data.data.data
+        this.SET_COUNTRY_AREA_LIST(data.data.data)
+        // console.log(this.contryAreaList)
+      })
+    },
     // 更改当前选中汇率转换货币
     changeActiveTransitionCurrency () {
       const params = {

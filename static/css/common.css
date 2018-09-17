@@ -57,3 +57,13 @@
 .el-popper .popper__arrow{
   border:none !important;
 }
+/* otc 交易中支付码样式-任付伟添加 */
+.day .el-popper[x-placement^=bottom] .popper__arrow::after{
+  border-bottom-color: #EAF4FE;
+}
+.day .el-popover{
+  background: #EAF4FE;
+}
+.night .el-popper[x-placement^=bottom] .popper__arrow::after{
+  border-bottom-color: #fff;
+}

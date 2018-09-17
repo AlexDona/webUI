@@ -5,34 +5,34 @@
     width: 170px;
 }
 .otc-trading-order-box .el-input__inner{
-    background-color: #303B45;
+    /* background-color: #303B45; */
     border:none;
-    color: #9DA5B3;
+    /* color: #9DA5B3; */
     padding: 0 30px;
 }
 .otc-trading-order-box .el-select-dropdown{
-    background-color: #29343F;
+    /* background-color: #29343F; */
     border:none;
 }
 .otc-trading-order-box .el-select-dropdown__item.selected{
-    color: #338FF5;
+    /* color: #338FF5; */
 }
 .otc-trading-order-box .el-select-dropdown__item {
     height: 30px !important;
     line-height: 30px !important;
 }
 .otc-trading-order-box .el-select-dropdown__item:hover {
-    background-color: #29343F;
+    /* background-color: #29343F; */
 }
 .otc-trading-order-box .el-select-dropdown__item.hover{
-    background-color: #29343F;
-    color: #338FF5;
+    /* background-color: #29343F; */
+    /* color: #338FF5; */
 }
 .otc-trading-order-box .el-popper[x-placement^=bottom] .popper__arrow::after {
-    border-bottom-color: #29343F;
+    /* border-bottom-color: #29343F; */
 }
 .otc-trading-order-box .el-popper[x-placement^=bottom] .popper__arrow {
-    border-bottom-color: #29343F;
+    /* border-bottom-color: #29343F; */
 }
 /* 2.0按钮样式 */
 .otc-trading-order-box .el-button--mini{
@@ -43,38 +43,38 @@
     width: 540px;
 }
 .otc-trading-order-box .el-textarea__inner{
-    background-color: #202A33;
-    border: 1px solid #7587A5;
+    /* background-color: #202A33; */
+    /* border: 1px solid #7587A5; */
     height: 90px;
     font-size: 14px;
     resize: none;
 }
 /* 4.0 扫码付款按钮及弹窗支付宝和微信图片*/
 .otc-trading-order-box .bank-info-picture .el-button{
-    color: #fff;
-    background-color: #409EFF;
-    border-color: #409EFF;
+    /* color: #fff; */
+    /* background-color: #409EFF; */
+    /* border-color: #409EFF; */
     padding: 2px 6px;
 }
 .otc-trading-order-box .bank-info-picture .el-button:hover{
-    background: #66b1ff;
-    border-color: #66b1ff;
-    color: #fff;
+    /* background: #66b1ff; */
+    /* border-color: #66b1ff; */
+    /* color: #fff; */
 }
 /* 输入密码弹出框 */
 .otc-trading-order-box .password-dialog .el-dialog{
   border-radius: 4px;
   width: 350px;
   height: 207px;
-  background: #28334A;
+  /* background: #28334A; */
 }
 .otc-trading-order-box .password-dialog .el-dialog__header{
-  background-color:#20293C;
+  /* background-color:#20293C; */
   padding: 10px 20px 10px;
   border-radius: 4px;
 }
 .otc-trading-order-box .password-dialog .el-dialog__title{
-  color: #fff;
+  /* color: #fff; */
   font-size: 14px;
 }
 .otc-trading-order-box .password-dialog .el-dialog__headerbtn{
@@ -82,7 +82,7 @@
   right: 10px;
 }
 .otc-trading-order-box .password-dialog .el-dialog__body{
-  color: #fff;
+  /* color: #fff; */
   font-size: 12px;
   padding: 15px 20px 10px 30px;
 }
@@ -93,14 +93,14 @@
   display: inline-block;
   width: 280px;
   height: 36px;
-  background-color: #1A2233;
+  /* background-color: #1A2233; */
   border-radius: 4px;
-  color: #fff;
+  /* color: #fff; */
   font-size: 14px;
   padding-left: 10px;
 }
 .otc-trading-order-box .password-dialog .el-dialog__body .error-info{
-  color: #fff;
+  /* color: #fff; */
   font-size: 12px;
   height: 20px;
   padding-top: 5px;

@@ -216,14 +216,16 @@
           </el-table>
         </div>
         <!--分页-->
-        <el-pagination
-          background
-          v-show="ADList.length"
-          layout="prev, pager, next"
-          :page-count="totalPages"
-          @current-change="changeCurrentPage"
-        >
-        </el-pagination>
+        <div class="page">
+          <el-pagination
+            background
+            v-show="ADList.length"
+            layout="prev, pager, next"
+            :page-count="totalPages"
+            @current-change="changeCurrentPage"
+          >
+          </el-pagination>
+        </div>
       </div>
     </div>
     <!-- 3.0 底部 -->
@@ -473,12 +475,11 @@ export default {
   @import url(../../../static/css/scss/OTC/OTCADManage.scss);
 
   .otc-AD-manage-box {
-    background-color: #1D2331;
+    background-color: #121824;
     > .otc-AD-manage-content {
       width: 1150px;
-      // height: 1000px;
       margin: 70px auto;
-      // background-color: #2B2B2B;
+      margin-bottom: 10px;
       padding-top: 50px;
       > .AD-title {
         height: 30px;
@@ -515,17 +516,17 @@ export default {
           }
         }
         > .manage-main-bottom {
-          // height: 500px;
-          /*background-color:#eee;*/
+          height: 450px!important;
           .red {
             color: #D45858;
           }
           .green {
             color: #008069;
           }
-          > .manage-main-bottom{
-            min-height: 450px!important;
-          }
+        }
+        .page{
+          text-align: center;
+          padding: 10px 0;
         }
       }
     }
