@@ -310,7 +310,6 @@
           </el-button>
         </div>
       </el-dialog>
-
     </div>
     <!--底部-->
     <FooterCommon/>
@@ -338,7 +337,7 @@ export default {
   },
   data () {
     return {
-      vipPictureBanner: require('../../../assets/user/vipBanner.png'), // vip banner
+      vipPictureBanner: require('../../../assets/user/VIPbanner.png'), // vip banner
       showOpenTheVIPPage: true, // 开启vip页面默认
       vipShowDetailsPage: false, // 开启vip详情页面默认
       password: '', // 开启vip详情页面默认
@@ -615,8 +614,7 @@ export default {
       background-color: $nightBgColor;
       color: $nightFontColor;
       > .header-content {
-        /*background-color: red;*/
-        /*margin: 0 auto;*/
+        background-color: #121824;
       }
       > .content-main-content {
         margin-top: -3px;
@@ -679,7 +677,7 @@ export default {
           }
         }
         > .content-detail-page {
-          >.detail-page-grade {
+          > .detail-page-grade {
             .p1 {
               color: red;
               font-size: 30px;
@@ -690,8 +688,8 @@ export default {
             .blue {
               background-color: transparent !important;
               border: 1px solid #338FF5 !important;
-              >.grade-color,
-              >.grade-height {
+              > .grade-color,
+              > .grade-height {
                 color: #338FF5 !important;
               }
             }
@@ -701,53 +699,53 @@ export default {
               &:hover {
                 background-color: transparent;
                 border: 1px solid #338FF5;
-                >.grade-color,
-                >.grade-height {
+                > .grade-color,
+                > .grade-height {
                   color: #338FF5;
                 }
               }
-              >.grade-color {
+              > .grade-color {
                 color: #fff;
               }
-              >.grade-height {
+              > .grade-height {
                 color: #9DA5B3;
               }
             }
           }
-          >.detail-page-duration {
+          > .detail-page-duration {
             > .duration {
               background-color: #1A2233;
               border: 1px solid #354057;
-              >.duration-month {
+              > .duration-month {
                 color: #fff;
               }
-              >.duration-currency {
+              > .duration-currency {
                 color: #D45858;
               }
-              >.duration-through {
+              > .duration-through {
                 color: #9DA5B3;
               }
             }
           }
-          >.detail-usable {
-            >.usable {
-              >.usable-asset {
+          > .detail-usable {
+            > .usable {
+              > .usable-asset {
                 color: #D45858;
                 font-weight: 600;
-                >.currency {
+                > .currency {
                   color: #fff;
                 }
               }
-              >.usable-gain {
+              > .usable-gain {
                 color: #338FF5;
               }
             }
           }
-          >.detail-page-btn {
-            >.page-btn {
+          > .detail-page-btn {
+            > .page-btn {
               color: #fff;
-              background:linear-gradient(81deg,rgba(43,57,110,1) 0%,rgba(42,80,130,1) 100%);
-              border-radius:4px;
+              background: linear-gradient(81deg, rgba(43, 57, 110, 1) 0%, rgba(42, 80, 130, 1) 100%);
+              border-radius: 4px;
             }
           }
           > .text-below {
@@ -762,17 +760,158 @@ export default {
             }
           }
         }
-        &.day {
-          background-color: $dayBgColor;
-          color: $dayFontColor;
-          /*>.header-content {*/
-          /**/
-          /*}*/
-          /*>.content-main {*/
-          /**/
-          /*}*/
-          /*>.text-below {*/
-          /**/
+      }
+    }
+    &.day {
+      background-color: $dayBgColor;
+      color: $dayFontColor;
+      > .content-main-content {
+        background-color: $dayBgColor;
+      }
+      > .content-main-content {
+        margin-top: -3px;
+        background-color: $dayBgColor;
+        > .content-main {
+          > .content-module {
+            background-color: #232D39;
+            border: 2px solid #33404B;
+            &:hover {
+              border: 4px solid #338FF5;
+              transform: scale(1.03);
+              box-shadow: 0 0 15px rgba(0, 0, 0, 1);
+              > .content-text {
+                font-weight: 600;
+                color: rgba(51, 143, 245, 1);
+              }
+              > .content-discount {
+                background-color: #1E2832;
+                color: rgba(255, 255, 255, 1);
+                > .content-discount-color {
+                  font-weight: 600;
+                  color: rgba(51, 143, 245, 1);
+                }
+              }
+              > .content-button {
+                > .click-btn {
+                  background: #338FF5;
+                  color: #fff;
+                }
+              }
+            }
+            > .content-vip-one {
+              color: #fff;
+            }
+            > .content-text {
+              color: rgba(51, 143, 245, 0.6);;
+            }
+            > .content-discount {
+              background-color: #1E2832;
+              color: rgba(255, 255, 255, 0.6);
+              > .content-discount-color {
+                color: rgba(51, 143, 245, 0.6);
+              }
+            }
+            > .content-button {
+              > .click-btn {
+                background: linear-gradient(0deg, rgba(41, 52, 64, 1) 0%, rgba(52, 62, 71, 1) 100%);
+                color: #fff;
+              }
+            }
+          }
+          > .content-info-hint {
+            > .hint-color {
+              color: #338FF5;
+            }
+          }
+          > .content-border-rl {
+            border-right: 0;
+            border-left: 0;
+          }
+        }
+        > .content-detail-page {
+          > .detail-page-grade {
+            .p1 {
+              color: red;
+              font-size: 30px;
+            }
+            .p {
+              color: blue
+            }
+            .blue {
+              background-color: transparent !important;
+              border: 1px solid #338FF5 !important;
+              > .grade-color,
+              > .grade-height {
+                color: #338FF5 !important;
+              }
+            }
+            .grade {
+              background-color: #1A2233;
+              border: 1px solid #354057;
+              &:hover {
+                background-color: transparent;
+                border: 1px solid #338FF5;
+                > .grade-color,
+                > .grade-height {
+                  color: #338FF5;
+                }
+              }
+              > .grade-color {
+                color: #fff;
+              }
+              > .grade-height {
+                color: #9DA5B3;
+              }
+            }
+          }
+          > .detail-page-duration {
+            background-color: $dayBgColor;
+            > .duration {
+              background-color: #1A2233;
+              border: 1px solid #354057;
+              > .duration-month {
+                color: #fff;
+              }
+              > .duration-currency {
+                color: #D45858;
+              }
+              > .duration-through {
+                color: #9DA5B3;
+              }
+            }
+          }
+          > .detail-usable {
+            > .usable {
+              > .usable-asset {
+                color: #D45858;
+                font-weight: 600;
+                > .currency {
+                  color: #fff;
+                }
+              }
+              > .usable-gain {
+                color: #338FF5;
+              }
+            }
+          }
+          > .detail-page-btn {
+            > .page-btn {
+              color: #fff;
+              background: linear-gradient(81deg, rgba(43, 57, 110, 1) 0%, rgba(42, 80, 130, 1) 100%);
+              border-radius: 4px;
+            }
+          }
+          > .text-below {
+            > .warm-prompt {
+              color: #fff;
+            }
+            .prompt-color {
+              color: #D45858;
+            }
+            .warm-text-color {
+              color: #9DA5B3;
+            }
+          }
         }
       }
     }

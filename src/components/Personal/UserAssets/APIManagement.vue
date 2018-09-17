@@ -802,7 +802,7 @@ export default {
             }
             .api-input {
               border:1px solid rgba(236,241,248,1);
-              color: #fff;
+              color: #333;
               &:focus {
                 border: 1px solid #338FF5;
               }
