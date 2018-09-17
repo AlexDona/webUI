@@ -401,7 +401,7 @@ export default {
         }
       }
       >.no-data{
-        background-color: #1E2636;
+        background-color: #fff;
       }
     }
     }
