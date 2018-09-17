@@ -813,6 +813,7 @@ export default {
         min-height: 564px;
         // background-color: #202A33;
         margin-top: 30px;
+        padding: 0 10px;
         >.otc-filtrate-publish{
           display: flex;
           justify-content: space-between;
