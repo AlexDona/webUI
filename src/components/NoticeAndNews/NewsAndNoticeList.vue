@@ -78,7 +78,8 @@
                       to="/"
                     >
                       <div class="left">
-
+                        <div class="top">{{item.time.split('-')[0]+' 年'}}</div>
+                        <div class="bottom">{{item.time.split('-')[1]-0+' 月'}}</div>
                       </div>
                       <div class="right">
                         <p class="top">
