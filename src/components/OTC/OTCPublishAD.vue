@@ -1020,7 +1020,7 @@ export default {
 <style scoped lang="scss" type="text/scss">
   @import url(../../../static/css/scss/OTC/OTCPublishAD.scss);
 .otc-publish-AD-box{
-  background-color: #1D2331;
+  background-color: #121824;
   >.otc-publish-AD-content{
     width: 1150px;
     margin: 70px auto;

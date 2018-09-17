@@ -915,7 +915,7 @@ export default {
         left: 15px;
         font-size: 14px;
         // color: #338FF5;
-        text-decoration: underline !important;
+        // text-decoration: underline !important;
         cursor: pointer;
       }
       .otc-tab-pane-arrow-right{
