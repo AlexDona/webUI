@@ -11,7 +11,7 @@
       <div class="content">
         <div class="inner-box">
           <el-tabs
-            v-model="activeName"
+            v-model="serviceActiveName"
           >
             <el-tab-pane
               label="用户协议"
@@ -88,7 +88,6 @@ export default {
   // props,
   data () {
     return {
-      activeName: 'UserProtocol'
     }
   },
   created () {
@@ -107,9 +106,6 @@ export default {
     })
   },
   watch: {
-    serviceActiveName (newVal) {
-      console.log(newVal)
-    }
   }
 }
 </script>
@@ -139,7 +135,7 @@ export default {
         }
       }
       >.content{
-        overflow: hidden;
+        /*overflow: hidden;*/
         >.inner-box{
           box-sizing: border-box;
           margin:50px auto 0px;
