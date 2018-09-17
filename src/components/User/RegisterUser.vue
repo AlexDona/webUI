@@ -41,23 +41,23 @@
              >
                <el-option
                  v-for="item in contryAreaList"
-                 :key="item.code"
-                 :label="item.code"
-                 :value="item.code"
+                 :key="item.nationCode"
+                 :label="item.nationCode"
+                 :value="item.nationCode"
                >
                 <span style="float: left">
                   <span v-show="language==='zh_CN'">
-                    {{ item.chName }}
+                    {{ item.chinese }}
                   </span>
                   <span v-show="language!=='zh_CN'">
-                    {{item.enName}}
+                    {{item.english}}
                   </span>
                 </span>
                  <span style="
                   float: right;
                   color: #8492a6;
                   font-size: 13px"
-                 >{{ item.code }}</span>
+                 >{{ item.nationCode }}</span>
                </el-option>
              </el-select>
              <span class="middle-line"></span>
@@ -92,20 +92,20 @@
               >
                 <el-option
                   v-for="item in contryAreaList"
-                  :key="item.code"
-                  :label="item.chName"
-                  :value="item.code"
+                  :key="item.nationCode"
+                  :label="item.chinese"
+                  :value="item.nationCode"
                 >
                     <span style="float: left">
                       <span>
-                        {{ item.chName }}
+                        {{ item.chinese }}
                       </span>
                     </span>
                   <span style="
                       float: right;
                       color: #8492a6;
                       font-size: 13px"
-                  >{{ item.code }}</span>
+                  >{{ item.nationCode }}</span>
                 </el-option>
               </el-select>
                 <!--非中文国籍选择-->
@@ -116,20 +116,20 @@
                 >
                   <el-option
                     v-for="item in contryAreaList"
-                    :key="item.code"
-                    :label="item.enName"
-                    :value="item.code"
+                    :key="item.nationCode"
+                    :label="item.english"
+                    :value="item.nationCode"
                   >
                     <span style="float: left">
                       <span>
-                        {{item.enName}}
+                        {{item.english}}
                       </span>
                     </span>
                     <span style="
                       float: right;
                       color: #8492a6;
                       font-size: 13px"
-                    >{{ item.code }}</span>
+                    >{{ item.nationCode }}</span>
                   </el-option>
                 </el-select>
               </div>
@@ -277,7 +277,6 @@ import ImageValidate from '../Common/ImageValidateCommon'
 import HeaderCommon from '../Common/HeaderCommon'
 import ErrorBox from './ErrorBox'
 import {mapState} from 'vuex'
-import {list as contryAreaList} from '../../../static/js/countryAreaList'
 // import {EMAIL_REG, PHONE_REG, PWD_REG} from '../../utils/regExp' // 正则验证
 import {
   // sendMsgByPhoneOrEmial,
@@ -287,7 +286,8 @@ import {
 import {
   returnAjaxMessage, // 接口返回信息
   validateNumForUserInput, // 用户输入验证
-  sendPhoneOrEmailCodeAjax
+  sendPhoneOrEmailCodeAjax,
+  getCountryListAjax
 } from '../../utils/commonFunc'
 
 export default {
@@ -300,7 +300,7 @@ export default {
   data () {
     return {
       activeMethod: 0, // 当前注册方式： 0： 手机注册 : 1 邮箱注册
-      contryAreaList: contryAreaList, // 国家区域列表
+      contryAreaList: [], // 国家区域列表
       activeCountryCodeWithPhone: '86',
       activeCountryCodeWithEmail: this.language === 'zh_CN' ? '中国' : 'China',
       activeCodePlaceholder: !this.activeMethod ? '短信验证码' : '邮箱验证码',
@@ -331,6 +331,7 @@ export default {
       this.inviter = params
     }
     this.refreshCode()
+    this.getCountryList()
   },
   mounted () {
   },
@@ -338,6 +339,13 @@ export default {
   update () {},
   beforeRouteUpdate () {},
   methods: {
+    getCountryList () {
+      getCountryListAjax(this, (data) => {
+        console.log(data)
+        this.contryAreaList = data.data.data
+        console.log(this.contryAreaList)
+      })
+    },
     // 检测输入格式
     checkoutInputFormat (type, targetNum) {
       console.log(type)

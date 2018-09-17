@@ -12,3 +12,5 @@ import {
 export const getLanguageList = () => get('lan/selectList')
 // 获取货币转换汇率价格
 export const getTransitionCurrencyRate = (params) => get('exchangeRate/tradeAreaPrice', params)
+// 获取国家列表
+export const getCountryList = () => get('country/selectList')

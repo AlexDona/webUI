@@ -1,5 +1,6 @@
 /* 委托订单样式重写 */
-.fiat-completed-order-box.personal .el-table td, .el-table th {
+.fiat-completed-order-box.personal .el-table td,
+.el-table th {
   padding: 0;
   height: 45px;
   line-height: 45px;

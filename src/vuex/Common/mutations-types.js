@@ -11,3 +11,4 @@ export const CHANGE_CURRENCY_RATE_LIST = 'CHANGE_CURRENCY_RATE_LIST' // 更新�
 export const CHANGE_ROUTER_PATH = 'CHANGE_ROUTER_PATH' // 路由跳转
 // 个人中心 我的资产列表
 export const USER_ASSETS_LIST = 'USER_ASSETS_LIST' // 我的资产列表
+export const SET_COUNTRY_AREA_LIST = 'SET_COUNTRY_AREA_LIST' // 国家列表
