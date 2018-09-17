@@ -375,7 +375,7 @@ export default {
           }
         }
         >.no-data{
-          background-color: $mainNightBgColor;
+          background-color: $mainDayColor;
         }
         >.page{
         }

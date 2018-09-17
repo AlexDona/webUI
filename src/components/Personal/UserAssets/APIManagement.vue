@@ -78,7 +78,7 @@
           >
             <el-table-column
               label="创建时间"
-              width="145"
+              width="150"
             >
               <template slot-scope = "s">
                 <div>{{timeFormatting(s.row.createTime) }}</div>

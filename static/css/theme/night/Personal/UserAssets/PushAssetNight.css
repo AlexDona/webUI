@@ -4,6 +4,7 @@
   border: 1px solid #485776;
   color: #a9bed4;
 }
+
 .push-assets.personal.night .el-select .el-input__inner:focus {
   border: 1px solid #338FF5;
 }
@@ -32,7 +33,9 @@
   background-color: #28334A;
 }
 .push-assets.personal.night .el-table td{
-  color: #ccc;
+  background-color: #1E2636;
+  color: #9DA5B3;
+  border-bottom: 0;
 }
 .push-assets.personal.night .el-table--enable-row-hover .el-table__body tr:hover>td{
   background-color: #1E2636;

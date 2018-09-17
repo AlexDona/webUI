@@ -134,7 +134,7 @@
               label="对方UID"
             >
               <template slot-scope = "s">
-                <div>{{ s.row.pushId }}</div>
+                <div>{{ s.row.showUid }}</div>
               </template>
             </el-table-column>
             <el-table-column
@@ -186,11 +186,8 @@
               label="操作"
             >
               <template slot-scope = "s">
-                <!--<div>{{ s.row.operate }}</div>-->
-                <!--v-if="s.row.state == 1 && s.row.fuid == s.row.showid"-->
-                <!--v-if="s.row.state == 1 && s.row.fuid !== s.row.showid"-->
                 <div
-                  v-if="s.row.state == 'PUSH_REGISTER' && showStatusUserInfo.uid == s.row.pushId"
+                  v-if="s.row.state == 'PUSH_REGISTER' && showStatusUserInfo.uid !== s.row.pushId"
                   class="cursor-pointer state-status"
                   @click="cancelId(s.row.id)"
                   :id="s.row.id"
@@ -198,7 +195,7 @@
                   {{ cancel }}
                 </div>
                 <div
-                  v-if="s.row.state == 'PUSH_REGISTER' && showStatusUserInfo.uid !== s.row.pushId"
+                  v-if="s.row.state == 'PUSH_REGISTER' && showStatusUserInfo.uid == s.row.pushId"
                   class="cursor state-status"
                   @click="paymentId(s.row.id)"
                   :id="s.row.id"
@@ -531,6 +528,7 @@ export default {
       if (!(returnAjaxMessage(data, this, 1))) {
         return false
       } else {
+        this.passwordVisible = false
         // push列表展示
         this.getPushRecordList()
         // 清空数据
@@ -571,6 +569,7 @@ export default {
       if (!(returnAjaxMessage(data, this, 0))) {
         return false
       } else {
+        this.dialogVisible = false
         console.log(data)
       }
     },
@@ -613,6 +612,7 @@ export default {
       if (!(returnAjaxMessage(data, this, 1))) {
         return false
       } else {
+        this.dialogVisible = false
         this.getPushRecordList()
       }
     },
@@ -722,7 +722,7 @@ export default {
             }
           }
           .award-record-content{
-            >.state-status {
+            .state-status {
               color: #338FF5;
             }
             .form-input-common {
@@ -780,7 +780,7 @@ export default {
             }
           }
           .award-record-content{
-            >.state-status {
+            .state-status {
               color: #338FF5;
             }
             .form-input-common {

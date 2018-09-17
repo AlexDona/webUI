@@ -1,5 +1,6 @@
 /*个人中心（白色主题）*/
-.security-center.personal.day .el-table th, .el-table tr{
+.security-center.personal.day .el-table th,
+.security-center.personal.day .el-table tr{
   background-color: #CCCCCC;
 }
 .security-center.personal.day .el-table thead {

@@ -328,6 +328,7 @@ export default {
         if (e === item.value) {
           this.generalizeValue = e
           this.getUserPromotionList()
+          console.log(this.generalizeValue)
         }
       })
     },

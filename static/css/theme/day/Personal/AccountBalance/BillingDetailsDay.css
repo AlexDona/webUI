@@ -1,5 +1,6 @@
 /*个人中心（白色主题）*/
-.billing-details.personal.day .el-table th, .el-table tr{
+.billing-details.personal.day .el-table th,
+.billing-details.personal.day .el-table tr{
   background-color: #fff;
 }
 .billing-details.personal.day .el-table thead {

@@ -1,5 +1,6 @@
 /*个人中心（白色主题）*/
-.invitation-promotion.personal.day .el-table th, .el-table tr{
+.invitation-promotion.personal.day .el-table th,
+.invitation-promotion.personal.day .el-table tr{
   background-color: #fff;
   color: #333;
 }
