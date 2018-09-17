@@ -3,3 +3,6 @@
   width: 237px;
   height: 90px;
 }
+.add-western.personal .el-form-item__content {
+  width: 600px;
+}

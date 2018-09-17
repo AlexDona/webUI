@@ -65,7 +65,7 @@
           </div>
           <div class="security-status text-align-r">
             <button
-              v-if="!securityCenter.isMailBind"
+              v-if="!securityCenter.isMailEnable"
               class="security-verify border-radius2 font-size12 cursor-pointer"
             >
               <span @click="showStatusVerificationClose('email', 'enable')">
@@ -115,7 +115,7 @@
           </div>
           <div class="security-status text-align-r">
             <button
-              v-if="!securityCenter.isPhoneBind"
+              v-if="!securityCenter.isPhoneEnable"
               class="security-verify border-radius2 font-size12 cursor-pointer"
             >
               <span @click="showStatusVerificationClose('phone', 'enable')">
@@ -164,7 +164,7 @@
           </div>
           <div class="security-status text-align-r">
             <button
-              v-if="!securityCenter.isGoogleBind"
+              v-if="!securityCenter.isGoogleEnable"
               class="security-verify border-radius2 font-size12 cursor-pointer"
             >
               <span @click="showStatusVerificationClose('google', 'enable')">
@@ -314,12 +314,12 @@
           :visible.sync="openTheValidation"
         >
           <el-form label-width="120px">
-            <!--没有绑定手机不显示-->
-            <div v-if="!securityCenter.isPhoneEnable"></div>
+            <!--&lt;!&ndash;没有绑定手机不显示&ndash;&gt;-->
+            <!--<div v-if="!securityCenter.isPhoneEnable"></div>-->
             <!--开启手机-->
             <el-form-item
               label="手机验证"
-              v-else
+              v-show="openPhone"
             >
               <el-input
                 v-model="phoneCode"
@@ -334,11 +334,11 @@
               </el-input>
             </el-form-item>
             <!--没有绑定邮箱不显示-->
-            <div v-if="!securityCenter.isMailEnable"></div>
+            <!--<div v-if="!securityCenter.isMailEnable"></div>-->
             <!--开启邮箱-->
             <el-form-item
               label="邮箱验证"
-              v-else
+              v-show="openEmail"
             >
               <el-input
                 v-model="emailCode"
@@ -353,11 +353,11 @@
               </el-input>
             </el-form-item>
             <!--没有绑定谷歌不显示-->
-            <div v-if="!securityCenter.isGoogleEnable"></div>
+            <!--<div v-if="!securityCenter.isGoogleEnable"></div>-->
             <!--开启谷歌-->
             <el-form-item
               label="谷歌验证"
-              v-else
+              v-show="openGoogle"
             >
               <input
                 class="input border-radius2 padding-l15 box-sizing"

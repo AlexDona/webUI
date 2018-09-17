@@ -208,6 +208,7 @@ export default {
         case 'identity-authentication':
           // 获取用户实名信息
           this.$refs.identityValue.getRealNameInformation()
+          this.$refs.identityValue.getUserRefreshUser()
           // 国家列表展示
           this.$refs.identityValue.getCountryListings()
           break

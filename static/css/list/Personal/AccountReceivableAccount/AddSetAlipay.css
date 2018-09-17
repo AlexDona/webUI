@@ -20,3 +20,6 @@
   height: 118px;
   line-height: 106px;
 }
+.add-account.personal .el-form-item__content {
+  width: 600px;
+}

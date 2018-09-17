@@ -126,7 +126,7 @@
                   {{ rollIn }}
                 </div>
                 <div v-else>
-                  {{ $t(rollOut) }}
+                  {{ rollOut }}
                 </div>
               </template>
             </el-table-column>
@@ -187,7 +187,7 @@
             >
               <template slot-scope = "s">
                 <div
-                  v-if="s.row.state == 'PUSH_REGISTER' && showStatusUserInfo.uid !== s.row.pushId"
+                  v-if="s.row.state == 'PUSH_REGISTER' && showStatusUserInfo.uid == s.row.pushId"
                   class="cursor-pointer state-status"
                   @click="cancelId(s.row.id)"
                   :id="s.row.id"
@@ -195,7 +195,7 @@
                   {{ cancel }}
                 </div>
                 <div
-                  v-if="s.row.state == 'PUSH_REGISTER' && showStatusUserInfo.uid == s.row.pushId"
+                  v-if="s.row.state == 'PUSH_REGISTER' && showStatusUserInfo.uid !== s.row.pushId"
                   class="cursor state-status"
                   @click="paymentId(s.row.id)"
                   :id="s.row.id"

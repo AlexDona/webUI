@@ -143,24 +143,30 @@
           @click="authenticationMethod">
           <span class="font-size16 main-header-title">高级认证</span>
           <span
-            v-if="userInfoRefresh.status === 'notPass'"
+            v-if="userInfoRefresh.advancedAuth === 'notPass' || userInfoRefresh.advancedAuth === ''"
             class="authentication-type font-size12"
           >
             （未高级认证）
           </span>
           <span
-            v-if="userInfoRefresh.status === 'pass'"
+            v-if="userInfoRefresh.advancedAuth === 'pass'"
             class="authentication-type font-size12"
           >
-            （已通过实名认证并且通过高级认证）
+            （已通过实名认证）
           </span>
           <span
-            v-if="userInfoRefresh.status === 'waitVeritfy'"
+            v-if="userInfoRefresh.advancedAuth === 'waitVeritfy'"
             class="authentication-type font-size12"
           >
             （待审核）
           </span>
-          <i class="el-icon-arrow-down icon-down float-right"></i>
+          <span
+            class="float-right authentication-type font-size12"
+            v-if="userInfoRefresh.advancedAuth === 'notPass' || userInfoRefresh.advancedAuth === ''"
+          >
+            去认证
+          </span>
+          <span v-else></span>
         </p>
       </div>
       <div class="identity-box">
@@ -322,7 +328,7 @@
         </div>
         <div
           class="wait-veritfy-back"
-          v-if="statusRealNameInformation.status === 'waitVeritfy'"
+          v-if="statusRealNameInformation.advancedAuth === 'waitVeritfy'"
         >
           <div class="wait-veritfy text-align-c">
             <IconFontCommon
@@ -560,17 +566,15 @@ export default {
     setErrorMsg (index, msg) {
       this.errorShowStatusList[index] = msg
     },
-    // 提交实名认证认证
+    // 提交实名认证
     submitRealName () {
       this.stateSubmitRealName()
     },
     async stateSubmitRealName () {
       let goOnStatus = 0
       if (
-        this.checkoutInputFormat(0, this.regionValue) &&
-        this.checkoutInputFormat(1, this.documentTypeValue) &&
-        this.checkoutInputFormat(2, this.realName) &&
-        this.checkoutInputFormat(3, this.identificationNumber)
+        this.checkoutInputFormat(0, this.realName) &&
+        this.checkoutInputFormat(1, this.identificationNumber)
       ) {
         goOnStatus = 1
       } else {
