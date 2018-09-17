@@ -192,9 +192,10 @@
                 <p class="information">
                   <span class="info-type font-size12">证件号：</span>
                   <span class="user-info font-size14">
-                    {{ userInfoRefresh.cardNo.substring(0,6)}}
+                  <!--  {{ userInfoRefresh.cardNo.substring(0,6)}}
                   ****
-                   {{ userInfoRefresh.cardNo.substring(14,18)}}
+                   {{ userInfoRefresh.cardNo.substring(14,18)}}-->
+                     {{ userInfoRefresh.cardNo}}
                   </span>
                 </p>
                 <p class="information">

@@ -121,11 +121,13 @@
               <template slot-scope = "s">
                 <div>{{ s.row.type }}</div>
                 <div
-                  v-if="s.row.id !== userInfo.userInfo.showid"
+                  v-if="s.row.pushId !== userInfo.userInfo.id"
                 >
                   {{ rollIn }}
                 </div>
-                <div v-else>
+                <div
+                  v-if="s.row.pushId == userInfo.userInfo.id"
+                >
                   {{ rollOut }}
                 </div>
               </template>
@@ -187,7 +189,7 @@
             >
               <template slot-scope = "s">
                 <div
-                  v-if="s.row.state == 'PUSH_REGISTER' && showStatusUserInfo.uid == s.row.pushId"
+                  v-if="s.row.state == 'PUSH_REGISTER' && userInfo.userInfo.id == s.row.pushId"
                   class="cursor-pointer state-status"
                   @click="cancelId(s.row.id)"
                   :id="s.row.id"
@@ -195,7 +197,7 @@
                   {{ cancel }}
                 </div>
                 <div
-                  v-if="s.row.state == 'PUSH_REGISTER' && showStatusUserInfo.uid !== s.row.pushId"
+                  v-if="s.row.state == 'PUSH_REGISTER' && userInfo.userInfo.id !== s.row.pushId"
                   class="cursor state-status"
                   @click="paymentId(s.row.id)"
                   :id="s.row.id"
@@ -569,6 +571,7 @@ export default {
       if (!(returnAjaxMessage(data, this, 0))) {
         return false
       } else {
+        this.getPushRecordList()
         this.dialogVisible = false
         console.log(data)
       }

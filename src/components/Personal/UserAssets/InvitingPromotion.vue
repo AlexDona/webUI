@@ -290,7 +290,7 @@ export default {
       activeName: 'current-entrust',
       currentPageForMyEntrust: 1, // 当前委托页码
       totalPageForMyEntrust: 1, // 当前委托总页数
-      totalPageMyNumber: 1, // 条数
+      totalPageMyNumber: '', // 条数
       text: 'SADFASD',
       link: 'http://localhost:8000/?#/Register?showId=',
       ercodeIsShowId: false, // 二维码显示状态
@@ -346,7 +346,7 @@ export default {
         // 返回展示
         this.extensionList = data.data.data.list
         this.totalPageForMyEntrust = data.data.data.pages - 0
-        // this.totalPageMyNumber = data.data.data.list.total
+        this.totalPageMyNumber = data.data.data.list.pages
         console.log(this.extensionList)
       }
     },

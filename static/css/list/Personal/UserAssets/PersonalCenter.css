@@ -36,3 +36,7 @@ personal-center.personal .el-tabs__nav{
 .personal-center.personal .el-tabs--left .el-tabs__nav-wrap.is-left {
   margin-right: 0px;
 }
+/*.personal-center.personal .is-disabled:hover {*/
+  /*background-color: #1E2636;*/
+  /*color: red;*/
+/*}*/
