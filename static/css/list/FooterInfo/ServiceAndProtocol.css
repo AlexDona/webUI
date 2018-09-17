@@ -6,7 +6,7 @@
     z-index: 10px;;
 }
 .el-tabs__header{
-    margin: -155px 0px 6px 0px;
+    margin: -155px 0px 6px -48px;
 }
 .user-protocol-box.night > .content > .content{
     background-color:transparent!important;
@@ -49,4 +49,8 @@
 }
 .service-protocol-box > .content > .content[data-v-4fb01aa0]{
     overflow: visible
+}
+.el-tabs__content{
+    margin-left:-60px;
+    margin-top:50px; 
 }
