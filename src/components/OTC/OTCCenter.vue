@@ -241,17 +241,17 @@
                 </template>
               </el-table-column>
             </el-table>
-            <!--分页-->
-            <div class="page">
-              <el-pagination
-                background
-                v-show="onlineBuySellTableList.length"
-                layout="prev, pager, next"
-                :page-count="totalPages"
-                @current-change="changeCurrentPage"
-              >
-              </el-pagination>
-            </div>
+          </div>
+          <!--分页-->
+          <div class="page">
+            <el-pagination
+              background
+              v-show="onlineBuySellTableList.length"
+              layout="prev, pager, next"
+              :page-count="totalPages"
+              @current-change="changeCurrentPage"
+            >
+            </el-pagination>
           </div>
         </div>
       </div>
@@ -948,11 +948,7 @@ export default {
             }
           }
           >.otc-merchant-list{
-            .page{
-              text-align: center;
-              margin-top: 10px;
-              padding-bottom: 20px;
-            }
+            height: 480px;
             .xilian{
             }
             .red{
@@ -963,6 +959,11 @@ export default {
             >.shade-pay-way{
               color: #617499;
             }
+          }
+          .page{
+            text-align: center;
+            margin-top: 10px;
+            padding-bottom: 20px;
           }
         }
       }
@@ -1017,11 +1018,7 @@ export default {
             }
           }
           >.otc-merchant-list{
-            .page{
-              text-align: center;
-              margin-top: 10px;
-              padding-bottom: 20px;
-            }
+            height: 480px;
             .xilian{
             }
             .red{
@@ -1032,6 +1029,11 @@ export default {
             >.shade-pay-way{
               color: #617499;
             }
+          }
+          .page{
+            text-align: center;
+            margin-top: 10px;
+            padding-bottom: 20px;
           }
         }
       }

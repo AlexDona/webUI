@@ -1,5 +1,8 @@
 <template>
-  <div class="otc-trading-order-box otc">
+  <div
+   class="otc-trading-order-box otc"
+   :class="{'day':theme == 'day','night':theme == 'night' }"
+  >
     <!-- 交易中订单 -->
     <div class="otc-trading-order-content">
       <!-- 订单列表 ：1.0 买单 -->
@@ -644,6 +647,7 @@ import {getOTCTradingOrders, buyerPayForOrder, sellerConfirmGetMoney, sellerSend
 import {timeFilter, formatSeconds} from '../../utils'
 import IconFontCommon from '../Common/IconFontCommon'
 import {returnAjaxMessage} from '../../utils/commonFunc'
+import {mapState} from 'vuex'
 export default {
   components: {
     IconFontCommon //  字体图标组件
@@ -919,7 +923,11 @@ export default {
     }
   },
   filter: {},
-  computed: {},
+  computed: {
+    ...mapState({
+      theme: state => state.common.theme
+    })
+  },
   watch: {},
   destroyed () {
     // 离开本组件清除定时器
@@ -929,11 +937,11 @@ export default {
 }
 </script>
 <style scoped lang="scss" type="text/scss">
-@import url(../../../static/css/scss/OTC/OTCTradingOrder.scss);
+// @import url(../../../static/css/scss/OTC/OTCTradingOrder.scss);
+@import "../../../static/css/scss/OTC/OTCTradingOrder.scss";
 .otc-trading-order-box{
   >.otc-trading-order-content{
     min-height: 472px;
-    // background-color: #202A33;
     border-radius: 5px;
     >.order-list{
       width: 1045px;
@@ -1006,7 +1014,6 @@ export default {
             >.left-info{
               display: inline-block;
               >.trade-info{
-                // line-height: 1.5rem;
                 line-height: 20px;
                 >.money{
                   color: #5E95EC;
@@ -1019,11 +1026,8 @@ export default {
             flex: 2;
             border-right: 1px solid #262F38;
             >.middle-content{
-              // display: flex;
-              // flex: 2;
               .trader-info{
                 width: 190px;
-                // flex: 1;
                 >.pay-style{
                   margin-left: 20px;
                   margin-bottom: 8px;
@@ -1041,17 +1045,14 @@ export default {
                 }
                 >.bank-info{
                   margin-left: 20px;
-                  // line-height: 1.4rem;
                   line-height: 20px;
                 }
                 >.order-cancle-tips{
                   margin-left: 20px;
-                  // line-height: 1.5rem;
                   line-height: 20px;
                 }
                 >.bankMoneyInfo{
                   margin-left: 20px;
-                  // line-height: 1.5rem;
                   line-height: 20px;
                   .icon{
                     width: 16px;
@@ -1089,14 +1090,12 @@ export default {
               }
               >.action-explain{
                 margin-left: 20px;
-                // line-height: 2rem;
                 line-height: 20px;
                 >.remaining-time{
                   color: #D45858;
                 }
               }
               >.count-down-time{
-                // line-height: 1rem;
                 line-height: 20px;
                 .timeIcon{
                   color: #D45858;
@@ -1148,5 +1147,130 @@ export default {
       background-color: #1E2636;
     }
   }
+  &.night{
+    >.otc-trading-order-content{
+      >.order-list{
+        background-color: #202A33;
+        border: 1px solid #262F38;
+        >.order{
+          >.order-list-head{
+            color: #9DA5B3;
+            border-bottom: 1px solid #262F38;
+            >.buyer-seller{}
+            >.order-id{
+            }
+            >.deal-time{}
+            >.order-list-head-icon{
+            }
+            >.buy-icon{
+              border-right:18px solid #D45858;
+              border-top:18px solid #D45858;
+            }
+            >.sell-icon{
+              border-right:18px solid #008069;
+              border-top:18px solid #008069;
+            }
+            >.buy-sell-icon{
+              color: #fff;
+            }
+          }
+          >.order-list-body{
+            color: #9DA5B3;
+            >.order-list-body-left{
+              border-right: 1px solid #262F38;
+              >.logo{
+                >.logo-icon{
+
+                }
+                >.logo-name{
+                }
+              }
+              >.left-info{
+                >.trade-info{
+                  >.money{
+                    color: #5E95EC;
+                  }
+                }
+              }
+            }
+            >.order-list-body-middle{
+              border-right: 1px solid #262F38;
+              >.middle-content{
+                .trader-info{
+                  >.pay-style{
+                    >.qiandai-icon{
+                      >.icon{
+                      }
+                    }
+                  }
+                  >.bank-info{
+                  }
+                  >.order-cancle-tips{
+                  }
+                  >.bankMoneyInfo{
+                    .icon{
+                    }
+                    .xilian{
+                    }
+                  }
+                }
+                >.bank-info-picture{
+                  >.picture-box{
+                  }
+                }
+              }
+            }
+            >.order-list-body-right{
+              flex: 3;
+              >.right-content{
+                >.action-tips{
+                  .wait-pay{
+                    color: #E8554F;
+                  }
+                  .count-time{
+                  }
+                }
+                >.submitted-confirm-payment{
+                  color: #5E95EC;
+                }
+                >.action-explain{
+                  >.remaining-time{
+                    color: #D45858;
+                  }
+                }
+                >.count-down-time{
+                  .timeIcon{
+                    color: #D45858;
+                  }
+                }
+              }
+            }
+          }
+        }
+        >.appeal{
+          >.appeal-head{
+            color: #FFFFFF;
+            border-bottom: 1px solid #262F38;
+          }
+          >.appeal-body{
+            >.appeal-body-content{
+              >.appeal-textarea{
+                >.appeal-reason{
+                  color: #338FF5;
+                }
+              }
+              >.appeal-button{
+              }
+          }
+        }
+        }
+      }
+      >.no-data{
+        color: rgba(255,255,255,0.8);
+        background-color: #1E2636;
+      }
+    }
+  }
+  &.day{}
 }
 </style>
