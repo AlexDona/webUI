@@ -531,14 +531,16 @@
       <!-- 暂无数据 -->
       <div class="no-data" v-if="!tradingOrderList.length">暂无数据</div>
       <!--分页-->
-      <el-pagination
-        background
-        v-show="tradingOrderList.length"
-        layout="prev, pager, next"
-        :page-count="totalPages"
-        @current-change="changeCurrentPage"
-      >
-      </el-pagination>
+      <div class="page">
+        <el-pagination
+          background
+          v-show="tradingOrderList.length"
+          layout="prev, pager, next"
+          :page-count="totalPages"
+          @current-change="changeCurrentPage"
+        >
+        </el-pagination>
+      </div>
       <!-- 3.0 买家点击确认付款按钮 弹出交易密码框 -->
       <div class="password-dialog">
         <el-dialog
@@ -1146,6 +1148,9 @@ export default {
       text-align: center;
       background-color: #1E2636;
     }
+    .page{
+      text-align: center;
+    }
   }
   &.night{
     >.otc-trading-order-content{
@@ -1268,6 +1273,9 @@ export default {
       >.no-data{
         color: rgba(255,255,255,0.8);
         background-color: #1E2636;
+      }
+      .page{
+        text-align: center;
       }
     }
   }
