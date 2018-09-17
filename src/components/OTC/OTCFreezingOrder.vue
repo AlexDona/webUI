@@ -170,6 +170,7 @@ export default {
   @import "../../../static/css/scss/OTC/OTCFreezingOrder.scss";
   .otc-freezing-order-box{
     >.freezing-order-content{
+      min-height: 472px;
       >.freezing-table-head{
         box-sizing: border-box;
         width: 1043px;
