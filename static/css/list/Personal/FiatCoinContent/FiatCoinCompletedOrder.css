@@ -99,7 +99,7 @@
 .fiat-completed-order-box.personal .el-table td {
   /* border-bottom: 1px solid red; */
 }
-.el-table td {
+.fiat-completed-order-box.personal .el-table td {
   border-bottom: 1px solid #262F38;
 }
 .fiat-completed-order-box.personal .el-table th {

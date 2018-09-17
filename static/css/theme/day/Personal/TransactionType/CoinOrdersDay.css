@@ -10,11 +10,11 @@
   background-color: #fff;
   /*border-bottom: 2px solid #338FF5;*/
 }
-.coin-orders.personal .el-input--suffix .el-input__inner {
+.coin-orders.personal.day .el-input--suffix .el-input__inner {
   background: #fff;
   border: 1px solid #ecf1f8;
   color: #333;
 }
-.coin-orders.personal .el-table th>.cell {
+.coin-orders.personal.day .el-table th>.cell {
   color: #333;
 }
