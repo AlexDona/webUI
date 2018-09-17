@@ -1,17 +1,4 @@
 /*个人中心（黑色主题）*/
-/*.account-assets.personal.night {*/
-  /*background-color: #1E2636;*/
-/*}*/
-/*.account-assets.personal.night .el-switch__core::after {*/
-  /*background-color: #fff;*/
-/*}*/
-/*.account-assets.personal.night .el-input__inner {*/
-  /*background-color: #181E24;*/
-/*}*/
-/*.account-assets.personal .el-input-group__append {*/
-  /*background-color: #338FF5;*/
-  /*color: #fff;*/
-/*}*/
 .account-assets.personal.night .el-button {
   background-color: transparent;
   color: #3E79D6;

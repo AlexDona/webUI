@@ -6,6 +6,7 @@
 }
 .api-management.personal .el-dialog {
   width: 360px;
+  min-height: 100px;
 }
 .api-management.personal .el-dialog__header {
   border-radius: 5px 5px 0 0;

@@ -2,6 +2,7 @@
 .withdrawal-address.personal.night .el-input__inner {
   background-color: #19202E;
   color: rgba(255,255,255,0.7);
+  border: 0;
 }
 .withdrawal-address.personal.night .el-form-item__label {
   color: rgba(255,255,255,0.7);

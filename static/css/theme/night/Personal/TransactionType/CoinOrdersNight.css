@@ -11,11 +11,20 @@
   color:#fff;
   background-color: transparent;
 }
-.coin-orders.personal.night .el-table th, .el-table tr{
+.coin-orders.personal.night .el-table th,
+.coin-orders.personal.night .el-table tr{
   background-color: #1E2636;
 }
 .coin-orders.personal.night .el-table thead {
   color: #617499;
+}
+.coin-orders.personal.night .el-input--suffix .el-input__inner {
+  background: #19202E;
+  border: 0;
+  color: #fff;
+}
+.coin-orders.personal.night .el-table th>.cell {
+  color: #333;
 }
 .coin-orders.personal.night .el-table td{
   color: #ccc;
@@ -27,7 +36,7 @@
   background-color: #1E2636;
   color: #fff;
 }
-.coin-orders.night .el-pagination{
+.coin-orders.personal.night .el-pagination{
   text-align: right;
   background-color: transparent;
 }
