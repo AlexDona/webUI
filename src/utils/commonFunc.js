@@ -17,6 +17,7 @@ import {
 import {
   getPartnerList
 } from '../utils/api/home'
+import {getCountryList} from '../utils/api/header'
 import {PHONE_REG, EMAIL_REG, ID_REG, PWD_REG, ALIPAY_REG, BANK_REG, GOOGLE_REG} from './regExp'
 // import {
 //   CHANGE_CANCELED_ORDERS_LIST,
@@ -164,4 +165,12 @@ export const changeCurrentPageForLegalTrader = (currentPage, type, that) => {
     type,
     status: true
   })
+}
+export const getCountryListAjax = async (that, callback) => {
+  const data = await getCountryList()
+  if (!returnAjaxMessage(data, that)) {
+    return false
+  } else {
+    callback(data)
+  }
 }
