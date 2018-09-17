@@ -286,7 +286,7 @@ import {
 import {
   returnAjaxMessage, // 接口返回信息
   validateNumForUserInput, // 用户输入验证
-  sendPhoneOrEmailCodeAjax,
+  sendPhoneOrEmailCodeAjax
   // getCountryListAjax
 } from '../../utils/commonFunc'
 
