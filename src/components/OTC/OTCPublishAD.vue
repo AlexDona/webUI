@@ -1093,7 +1093,7 @@ export default {
               >.price-input{
                 width: 234px;
                 height: 36px;
-                background-color: #333A41;
+                background-color: #232F44;
                 padding-left: 10px;
                 color: #9DA5B3;
                 border-top-left-radius: 4px;
@@ -1104,7 +1104,7 @@ export default {
                 height: 36px;
                 line-height: 36px;
                 color: #7EA9E4;
-                background-color: #414951;
+                background-color: #303F59;
                 display: inline-block;
                 vertical-align: top;
                 margin-left: -4px;
@@ -1130,7 +1130,7 @@ export default {
               >.input-sum{
                 width: 198px;
                 height: 36px;
-                background-color: #333A41;
+                background-color: #232F44;
                 padding-left: 10px;
                 color: #9DA5B3;
                 border-top-left-radius: 4px;
@@ -1141,7 +1141,7 @@ export default {
                 height: 36px;
                 line-height: 36px;
                 color: #7EA9E4;
-                background-color: #414951;
+                background-color: #303F59;
                 display: inline-block;
                 vertical-align: top;
                 margin-left: -4px;
@@ -1165,7 +1165,7 @@ export default {
               >.input-min,.input-max{
                 width: 140px;
                 height: 36px;
-                background-color: #333A41;
+                background-color: #232F44;
                 padding-left: 10px;
                 color: #9DA5B3;
                 border-top-left-radius: 4px;
@@ -1176,7 +1176,7 @@ export default {
                 height: 36px;
                 line-height: 36px;
                 color: #7EA9E4;
-                background-color: #414951;
+                background-color: #303F59;
                 display: inline-block;
                 vertical-align: top;
                 margin-left: -4px;
@@ -1202,7 +1202,7 @@ export default {
             .input-limit{
               width: 258px;
               height: 36px;
-              background-color: #333A41;
+              background-color: #232F44;
               padding-left: 10px;
               border-radius: 4px;
               margin: 15px 0 5px 0;
