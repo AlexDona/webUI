@@ -643,7 +643,7 @@ export default {
 <style scoped lang="scss" type="text/scss">
 @import url(../../../static/css/scss/OTC/OTCReportFormStatistics.scss);
 .otc-report-form-statistics-box{
-  background-color: #1D2331;
+  background-color: #121824;
   >.report-form-statistics-content{
     width: 1150px;
     margin: 70px auto;
