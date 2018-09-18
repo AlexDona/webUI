@@ -13,6 +13,7 @@ require('echarts/lib/component/tooltip')
 // 引入图例
 require('echarts/lib/component/legend')
 export default {
+  props: ['investmentValue', 'getMoneyValue'],
   data () {
     return {
       financePieCharts: '',
@@ -26,6 +27,7 @@ export default {
           }
         // formatter: "{a} <br/>{b}: {c} ({d}%)"
         },
+        // 设置图例
         legend: {
           orient: 'horizontal',
           selectedMode: false,
@@ -38,7 +40,9 @@ export default {
           },
           data: ['投资', '收益']
         },
+        // 设置颜色
         color: ['#008069', '#D45858'],
+        // 设置线的颜色
         series: [
           {
             name: '',
@@ -80,7 +84,10 @@ export default {
       }
     }
   },
-  created () {},
+  created () {
+    console.log(typeof this.investmentValue)
+    console.log(typeof this.getMoneyValue)
+  },
   mounted () {
     this.resetOptions()
     this.resetChart(this.options)

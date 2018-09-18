@@ -24,99 +24,95 @@
                 empty-text="暂无数据"
                 >
                 <el-table-column
-                  prop="coinName"
+                  prop="coinShortName"
                   label="投资币种"
                   width="100">
                 </el-table-column>
                 <el-table-column
-                  prop="investType"
+                  prop="typeDescription"
                   label="投资类型"
                   width="180">
                 </el-table-column>
                 <el-table-column
-                  prop="count"
+                  prop="number"
                   width="100"
                   label="数量"
                   >
                 </el-table-column>
                 <el-table-column
-                  prop="prospectiveEarning"
+                  prop="expectedEarning"
                   label="预计收益">
                 </el-table-column>
                 <el-table-column
-                  prop="gaveOutTime"
+                  prop="expectedTime"
                   width="180"
                   label="预计发放时间">
                 </el-table-column>
                 <el-table-column
+                  prop="state"
                   label="状态">
-                  <template slot-scope = "data">
-                    <div v-if="data.row.status == 'COMPLETED'">已完成</div>
-                    <div v-if="data.row.status == 'GAVEOUT'">已发放</div>
-                    <div v-if="data.row.status == 'FROZENED'">冻结</div>
-                    <div v-if="data.row.status == 'CANCELED'">取消</div>
-                    <div v-if="data.row.status == 'REDEMPTIONED'">已赎回</div>
-                  </template>
                 </el-table-column>
                 <el-table-column
+                  prop="createTime"
                   width="180"
                   label="创建时间">
-                  <template slot-scope = "scope">
-                    <div>{{timeFormatting(scope.row.createdTime)}}</div>
-                  </template>
                 </el-table-column>
                 <el-table-column
                   prop="operations"
                   label="操作">
                   <template slot-scope = "data">
-                    <div v-if="data.row.operations == 'CANCELED'" class="blue">取消</div>
+                    <div
+                    v-if="data.row.state == '活期'"
+                    class="blue"
+                    @click="cancleInvest(data.row.id)"
+                    >取消</div>
                   </template>
                 </el-table-column>
               </el-table>
-              <!-- <el-pagination
+              <el-pagination
                   background
                   v-if="investList.length"
                   layout="prev, pager, next"
                   page-size='10'
-                  @current-change='changePage'
-                  :total='totalPages'>
-              </el-pagination> -->
+                  @current-change='changeInvestPage'
+                  :total='investTotalPages'>
+              </el-pagination>
             </el-tab-pane>
             <!-- 收益记录 -->
             <el-tab-pane label="收益记录" name="2">
               <el-table
-                :data="investList"
+                :data="userInterestRecord"
                 style="width: 100%"
                 empty-text="暂无数据"
                 >
                 <el-table-column
-                  prop="coinName"
+                  prop="coinShortName"
                   label="投资币种"
                   width="150">
                 </el-table-column>
                 <el-table-column
-                  prop="investType"
+                  prop="description"
                   label="投资类型"
                   width="230">
                 </el-table-column>
                 <el-table-column
-                  prop="count"
+                  prop="number"
                   width="180"
                   label="数量"
                   >
                 </el-table-column>
                 <el-table-column
-                  prop="prospectiveEarning"
+                  prop="expected_earning"
                   width="180"
                   label="预计收益">
                 </el-table-column>
                 <el-table-column
-                  prop="prospectiveEarning"
+                  prop="interest"
                   width="180"
                   label="发放收益">
                 </el-table-column>
                 <el-table-column
-                  prop="gaveOutTime"
+                  prop="createTime"
                   width="180"
                   label="预计发放时间">
                 </el-table-column>
@@ -124,11 +120,10 @@
             </el-tab-pane>
             <el-pagination
                 background
-                v-if="investList.length"
+                v-if="userInterestRecord.length"
                 layout="prev, pager, next"
-                page-size='10'
-                @current-change='changePage'
-                :total='totalPages'>
+                @current-change='changeInterestPage'
+                :total='interestTotalPages'>
             </el-pagination>
           </el-tabs>
         </div>
@@ -147,6 +142,8 @@ import FinanceBrokenPie from './FinanceBrokenPie'
 import IconFontCommon from '../Common/IconFontCommon'
 import {mapState} from 'vuex'
 import {timeFilter} from '../../utils'
+import {getFinancialManagement, cancleInvestment} from '../../utils/api/OTC'
+import {returnAjaxMessage} from '../../utils/commonFunc'
 export default {
   components: {
     HeaderCommon,
@@ -157,8 +154,10 @@ export default {
   },
   data () {
     return {
-      currnetPage: 1,
-      totalPages: 1,
+      investCurrnetPage: '1',
+      investTotalPages: '1',
+      interestCurrnetPage: '1',
+      interestTotalPages: '1',
       activeName: '1',
       investList: [
         {
@@ -216,13 +215,16 @@ export default {
           createdTime: '2015-07-28 15:15:15',
           operations: 'CANCELED'
         }
-      ]
+      ],
+      // 收益列表
+      userInterestRecord: []
     }
   },
   created () {
     require('../../../static/css/list/InvestmentFinance/FinanceCenter.css')
     require('../../../static/css/theme/day/InvestmentFinance/FinanceCenter.css')
     require('../../../static/css/theme/night/InvestmentFinance/FinanceCenter.css')
+    this.getFinancialManagementList()
   },
   mounted () {},
   activited () {},
@@ -232,15 +234,60 @@ export default {
     timeFormatting (data) {
       return timeFilter(data, 'data')
     },
-    changePage (pageNum) {
-      this.currnetPage = pageNum
+    // 点击投资记录列表下一页查寻
+    changeInvestPage (pageNum) {
+      this.investCurrnetPage = pageNum
       // 重新获取列表
+      this.getFinancialManagementList(this.investCurrnetPage)
+    },
+    // 点击收益记录下一页查询
+    changeInterestPage (pageNum) {
+      this.interestCurrnetPage = pageNum
+      this.getFinancialManagementList(this.interestCurrnetPage)
+    },
+    async getFinancialManagementList (pageNum) {
+      const data = await getFinancialManagement({
+        pageNum: pageNum,
+        pageSize: this.pageSize,
+        partnerId: this.partnerId
+      })
+      console.log('投资理财页面查询')
+      console.log(data)
+      if (!(returnAjaxMessage(data, this, 0))) {
+        return false
+      } else {
+        // 投资记录列表赋值
+        this.investList = data.data.data.userFinancialManagementRecord.list
+        // 投资记录总页数
+        this.investTotalPages = data.data.data.userFinancialManagementRecord.total
+        // 投资记录列表
+        this.userInterestRecord = data.data.data.userInterestRecord.list
+        // 收益记录总页数
+        this.interestTotalPages = data.data.data.userInterestRecord.total
+      }
+    },
+    // 点击取消按钮执行
+    async clickCancleInvestment (id) {
+      const data = await cancleInvestment(id)
+      console.log('用户取消按钮')
+      console.log(data)
+      if (!(returnAjaxMessage(data, this, 0))) {
+        return false
+      } else {
+        // 重新请求币种接口刷新列表
+        this.getFinancialManagementList()
+      }
+    },
+    cancleInvest (id) {
+      // 用户点击取消按钮需要请求接口
+      this.clickCancleInvestment(id)
     }
   },
   filter: {},
   computed: {
     ...mapState({
-      theme: state => state.common.theme
+      theme: state => state.common.theme,
+      partnerId: state => state.common.partnerId
     }),
     screenWidth () {
       return window.innerWidth / 3

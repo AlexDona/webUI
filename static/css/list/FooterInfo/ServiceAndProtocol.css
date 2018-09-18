@@ -11,6 +11,9 @@
 .service-protocol-box .user-protocol-box.night > .content > .content{
     background-color:transparent!important;
 }
+.service-protocol-box > .content > .content{
+    overflow: visible!important;
+}
 .service-protocol-box .el-tabs__active-bar{
     background-color:transparent;
 }

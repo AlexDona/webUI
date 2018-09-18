@@ -493,15 +493,35 @@ export default {
     },
     // 0.2 点击发布订单按钮跳转到发布订单页面
     toPublishOrder () {
-      console.log(123)
       // 未登录跳转到登录页面
       if (!this.isLogin) {
         this.$router.push({path: '/login'})
       } else {
-        // this.OTCBuySellStyle 当前买卖类型
-        // this.selectedOTCAvailableCurrencyCoinID 选中的可用币种id
-        // this.activitedCurrencyId 当前选中的可用法币id
-        this.$router.push({path: '/OTCPublishBuyAndSell/' + this.OTCBuySellStyle + '/' + this.selectedOTCAvailableCurrencyCoinID + '/' + this.activitedCurrencyId})
+        // 未设置交易密码、未实名认证，未高级认证，不能进行交易
+        if (!this.userInfo.payPassword) {
+          this.$message({
+            message: '请先去个人中心设置交易密码！',
+            type: 'error'
+          })
+          return false
+        } else if (!this.userInfo.realname) {
+          this.$message({
+            message: '请先去个人中心完成实名认证！',
+            type: 'error'
+          })
+          return false
+        } else if (!(this.userInfo.advancedAuth === 'pass')) {
+          this.$message({
+            message: '请先去个人中心完成高级认证！',
+            type: 'error'
+          })
+          return false
+        } else {
+          // this.OTCBuySellStyle 当前买卖类型
+          // this.selectedOTCAvailableCurrencyCoinID 选中的可用币种id
+          // this.activitedCurrencyId 当前选中的可用法币id
+          this.$router.push({path: '/OTCPublishBuyAndSell/' + this.OTCBuySellStyle + '/' + this.selectedOTCAvailableCurrencyCoinID + '/' + this.activitedCurrencyId})
+        }
       }
     },
     // 0.3 点击购买按钮跳转到在线购买页面
@@ -509,17 +529,38 @@ export default {
       if (!this.isLogin) {
         this.$router.push({path: '/login'})
       } else {
-        if (userId === this.userInfo.id) {
+        // 未设置交易密码、未实名认证，未高级认证，不能进行交易
+        if (!this.userInfo.payPassword) {
           this.$message({
-            message: '禁止自买自卖！',
+            message: '请先去个人中心设置交易密码！',
+            type: 'error'
+          })
+          return false
+        } else if (!this.userInfo.realname) {
+          this.$message({
+            message: '请先去个人中心完成实名认证！',
+            type: 'error'
+          })
+          return false
+        } else if (!(this.userInfo.advancedAuth === 'pass')) {
+          this.$message({
+            message: '请先去个人中心完成高级认证！',
             type: 'error'
           })
           return false
         } else {
-          // console.log("买")
-          // console.log(id) // 挂单id
-          // console.log(coinId) // 币种id
-          this.$router.push({path: '/OTCOnlineTraderBuySell/' + this.OTCBuySellStyle + '/' + id + '/' + coinId})
+          if (userId === this.userInfo.id) {
+            this.$message({
+              message: '禁止自买自卖！',
+              type: 'error'
+            })
+            return false
+          } else {
+            // console.log("买")
+            // console.log(id) // 挂单id
+            // console.log(coinId) // 币种id
+            this.$router.push({path: '/OTCOnlineTraderBuySell/' + this.OTCBuySellStyle + '/' + id + '/' + coinId})
+          }
         }
       }
     },
@@ -528,17 +569,38 @@ export default {
       if (!this.isLogin) {
         this.$router.push({path: '/login'})
       } else {
-        if (userId === this.userInfo.id) {
+        // 未设置交易密码、未实名认证，未高级认证，不能进行交易
+        if (!this.userInfo.payPassword) {
           this.$message({
-            message: '禁止自买自卖！',
+            message: '请先去个人中心设置交易密码！',
+            type: 'error'
+          })
+          return false
+        } else if (!this.userInfo.realname) {
+          this.$message({
+            message: '请先去个人中心完成实名认证！',
+            type: 'error'
+          })
+          return false
+        } else if (!(this.userInfo.advancedAuth === 'pass')) {
+          this.$message({
+            message: '请先去个人中心完成高级认证！',
             type: 'error'
           })
           return false
         } else {
-          // console.log("卖")
-          // console.log(id) // 挂单id
-          // console.log(coinId) // 币种id
-          this.$router.push({path: '/OTCOnlineTraderBuySell/' + this.OTCBuySellStyle + '/' + id + '/' + coinId})
+          if (userId === this.userInfo.id) {
+            this.$message({
+              message: '禁止自买自卖！',
+              type: 'error'
+            })
+            return false
+          } else {
+            // console.log("卖")
+            // console.log(id) // 挂单id
+            // console.log(coinId) // 币种id
+            this.$router.push({path: '/OTCOnlineTraderBuySell/' + this.OTCBuySellStyle + '/' + id + '/' + coinId})
+          }
         }
       }
     },
@@ -813,6 +875,7 @@ export default {
         min-height: 564px;
         // background-color: #202A33;
         margin-top: 30px;
+        padding: 0 10px;
         >.otc-filtrate-publish{
           display: flex;
           justify-content: space-between;

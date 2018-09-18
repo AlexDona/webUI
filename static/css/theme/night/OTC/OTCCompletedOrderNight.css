@@ -9,18 +9,24 @@
 .otc-completed-order-box.night .completed-order-content .el-table{
   /* color: #9DA5B3; */
 }
+.otc-completed-order-box.night .completed-order-content .el-table__empty-text{
+  color: rgba(255, 255, 255, 0.8);
+}
 .otc-completed-order-box.night.night .completed-order-content .el-table--enable-row-hover .el-table__body tr:hover>td {
   background-color: #1E2636;
 }
 .otc-completed-order-box.night .completed-order-content .el-table__header{
-  margin-bottom: 5px;
+  margin-bottom: 15px;
 }
 .otc-completed-order-box.night .completed-order-content .el-table{
-  background-color: #1D2331;
+  /* background-color: #1D2331; */
+  background-color: #121824;
 }
 .otc-completed-order-box.night .completed-order-content .el-table th.is-leaf{
   border-bottom: 1px solid #262F38;
   border-top: 1px solid #262F38;
+  /* border-bottom: 1px solid #485776;
+  border-top: 1px solid #485776; */
 }
 .otc-completed-order-box.night .completed-order-content .el-table__body{
   border-collapse: separate !important;

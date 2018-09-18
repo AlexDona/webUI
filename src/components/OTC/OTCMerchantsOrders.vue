@@ -436,6 +436,7 @@ export default {
     findFilter () {
       this.getOTCEntrustingOrdersRevocation()
     },
+    // 重置
     resetCondition () {
       this.activitedMerchantsOrdersTraderStyleList = ''
       this.activitedMerchantsOrdersCoin = ''

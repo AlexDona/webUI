@@ -115,6 +115,7 @@ export default {
     height:100%;
     background-color: #121824;
     >.content{
+      overflow: visible;
       width:100%;
       >.top{
         height:250px;

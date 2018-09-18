@@ -8,7 +8,7 @@
 .otc-publish-AD-box .choice .el-input__inner{
   height: 36px;
   /*yuxia改动的下拉选框的输入框的背景和边框*/
-  background: #333A41;
+  background: #232F44;
   border:none;
 }
 .otc-publish-AD-box .trade-way .el-checkbox-group{
@@ -20,7 +20,7 @@
   width: 600px;
   height: 160px;
   color: #9DA5B3;
-  background-color: #333A41;
+  background-color: #232F44;
   border: 0;
   margin-bottom: 10px;
 }
@@ -29,7 +29,7 @@
   color: #9DA5B3;
 }
 .otc-publish-AD-box .trade-way .el-checkbox__inner{
-  background-color: #333A41;
+  background-color: #232F44;
   border: 1px solid #435372;
 }
 .otc-publish-AD-box .trade-way .el-checkbox__inner::after{

@@ -1,8 +1,7 @@
 import {
-  CHANGE_BANNER_BACKGROUND,
-  CHANGE_COLLECT_LIST,
-  CHANGE_COLLECT_STATUS_LIST,
-  CHANGE_BANNER_ACTIVE
+  FINANCE_LINE_SELECT_COIDINFOR,
+  FINANCE_PIE_INVESTMENT_VALUE,
+  FINANCE_PIE_GET_MONEY_VALUE,
 } from './mutations-types.js'
 
 // import {setStore, getStore} from '../utils'
@@ -10,16 +9,13 @@ import {
 // import {localapi, proapi} from 'src/config/env'
 
 export default {
-  [CHANGE_BANNER_ACTIVE] (state, data) {
-    state.bannerActive = data
+  [FINANCE_LINE_SELECT_COIDINFOR] (state, data) {
+    state.financeLineSelecteCoindInfor = data
   },
-  [CHANGE_BANNER_BACKGROUND] (state, data = '') {
-    state.bannerBackgroundImage = data
+  [FINANCE_PIE_INVESTMENT_VALUE] (state, data) {
+    state.financePieInvestmentValue = data
   },
-  [CHANGE_COLLECT_LIST] (state, data) {
-    state.globalCollectList = data
-  },
-  [CHANGE_COLLECT_STATUS_LIST] (state, data) {
-    state.globalCollectStatusList = data
+  [FINANCE_PIE_GET_MONEY_VALUE] (state, data) {
+    state.financePieGetMoneyValue = data
   }
 }

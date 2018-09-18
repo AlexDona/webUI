@@ -58,6 +58,7 @@
           <!-- 总资产可用币种 -->
           <span>{{total}}</span>
           <span>{{activitedTraderCoinName}}</span>
+          <span>≈</span>
           <!-- 总资产法币 -->
           <span>{{totalAssets}}</span>
           <span>{{activitedtraderCurrencyCoinsName}}</span>
@@ -285,7 +286,7 @@
             </div>
             <!-- 右侧单选日期按钮 -->
             <div class="radio-date">
-              <el-radio-group v-model="radio2" @change="radioChouse">
+              <el-radio-group v-model="activedRadioId" @change="radioChouse">
                 <el-radio :label="1">当日</el-radio>
                 <el-radio :label="2">本周</el-radio>
                 <el-radio :label="3">本月</el-radio>
@@ -420,7 +421,7 @@ export default {
       activitedtraderCurrencyCoinsName: '', // 选中的交易法币name
       value1: '', // 默认开始时间
       value2: '', // 默认结束时间
-      radio2: 0, // 单选按钮时间
+      activedRadioId: '', // 单选按钮时间
       totalAssets: '', // 总资产
       total: '',
       // 订单详情
@@ -485,9 +486,10 @@ export default {
         // 设置币种默认选中值的名称
         this.activitedTraderCoinName = this.traderCoinList[0].name
         // 重新请求列表
-        this.getOTCReportFormStatistics()
+        // this.getOTCReportFormStatistics()
         // 表格渲染
         // this.getOTCEntrustingOrdersRevocation()
+        // 法币列表
         this.getMerchantAvailablelegalTenderList()
       }
     },
@@ -525,7 +527,7 @@ export default {
         // 设置法币默认选中值的name
         this.activitedtraderCurrencyCoinsName = this.traderCurrencyCoinsList[0].shortName
         // 重新请求列表
-        this.getOTCReportFormStatistics()
+        // this.getOTCReportFormStatistics()
         // 表格渲染
         this.getOTCEntrustingOrdersRevocation()
       }
@@ -545,20 +547,23 @@ export default {
     },
     startTime (e) {
       this.value1 = e
-      this.radio2 = 0
+      this.activedRadioId = ''
       this.getOTCEntrustingOrdersRevocation()
     },
     endTime (e) {
       this.value2 = e
-      this.radio2 = 0
+      this.activedRadioId = ''
       this.getOTCEntrustingOrdersRevocation()
     },
     radioChouse (e) {
+      // console.log(e)
+      this.activedRadioId = e
       if (e == '4') {
-        this.radio2 = ''
-      } else {
-        this.radio2 = e
+        this.value1 = ''
+        this.value2 = ''
       }
+      // console.log(this.value1)
+      // console.log(this.value2)
       this.getOTCEntrustingOrdersRevocation()
     },
     // 报表统计的主页面
@@ -613,7 +618,7 @@ export default {
         // 结束时间
         endTime: this.value2,
         // 日期类型
-        dateType: this.radio2
+        dateType: this.activedRadioId
       })
       // 提示信息
       console.log('报表列表')

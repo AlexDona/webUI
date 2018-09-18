@@ -11,10 +11,14 @@ require('echarts/lib/chart/line')
 // 引入提示框
 require('echarts/lib/component/tooltip')
 export default {
+  props: {
+    selecteCoindInfor: {
+      type: Object
+    }
+  },
   data () {
     return {
       financeCharts: '',
-      props: ['coinType'],
       options: {
         xAxis: {
           type: 'category',
@@ -105,7 +109,9 @@ export default {
       }
     }
   },
-  created () {},
+  created () {
+    console.log(this.selecteCoindInfor)
+  },
   mounted () {
     // this.drawLine()
     this.resetOptions()
@@ -130,7 +136,7 @@ export default {
       this.financeCharts.setOption(this.options)
       window.onresize = this.financeCharts.resize
     },
-    // 设置options之后重绘列表
+    // 监听主题变化options之后重绘列表
     resetOptions () {
       // 设置监听颜色改变
       this.options.xAxis.axisLabel.textStyle.color = this.theme === 'night' ? '#404d64' : '#ccc'
@@ -174,7 +180,6 @@ export default {
   },
   watch: {
     theme (newVal) {
-      console.log(newVal)
       this.resetOptions()
       this.resetChart(this.options)
     }
