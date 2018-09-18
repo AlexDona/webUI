@@ -318,6 +318,7 @@ export default {
         }
         >.no-data{
           background-color: $mainNightBgColor;
+          color: rgba(255, 255, 255, 0.8);
         }
         >.page{
         }
@@ -380,6 +381,7 @@ export default {
         }
         >.no-data{
           background-color: $mainDayColor;
+          color: #333333;
         }
         >.page{
         }

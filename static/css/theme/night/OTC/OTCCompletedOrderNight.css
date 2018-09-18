@@ -9,6 +9,9 @@
 .otc-completed-order-box.night .completed-order-content .el-table{
   /* color: #9DA5B3; */
 }
+.otc-completed-order-box.night .completed-order-content .el-table__empty-text{
+  color: rgba(255, 255, 255, 0.8);
+}
 .otc-completed-order-box.night.night .completed-order-content .el-table--enable-row-hover .el-table__body tr:hover>td {
   background-color: #1E2636;
 }

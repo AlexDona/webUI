@@ -61,6 +61,9 @@
 .otc-box.night .el-table__empty-block{
   background-color: #1e2636;
 }
+.otc-box.night .el-table__empty-text{
+  color: rgba(255, 255, 255, 0.8);
+}
 /* 3.0 订单管理左侧tabs切换面板 */
 /* tabs组件出现蓝色边框问题 */
 
