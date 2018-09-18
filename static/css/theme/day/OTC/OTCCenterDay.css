@@ -62,6 +62,9 @@
 .otc-box.day .el-table__empty-block{
   background-color: #fff;
 }
+.otc-box.day .el-table__empty-text{
+  color: #333333;
+}
 /* 3.0 订单管理左侧tabs切换面板 */
 /* tabs组件出现蓝色边框问题 */
 

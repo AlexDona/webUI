@@ -4,7 +4,7 @@
   width:80px;
   display:inline-block;
 }
-.email-select .el-input__inner{
+.register-box .email-select .el-input__inner{
   width:100%;
 }
 
@@ -12,10 +12,10 @@
   color:#8B9197;
 }
 
-.el-checkbox__input.is-checked+.el-checkbox__label{
+.register-box .el-checkbox__input.is-checked+.el-checkbox__label{
   color:#338ff5;
 }
-.el-checkbox__input.is-checked .el-checkbox__inner{
+.register-box .el-checkbox__input.is-checked .el-checkbox__inner{
   background-color: #338ff5;
   border-color:#338ff5;
 }
@@ -24,20 +24,20 @@
   background-color: transparent;
   border:none;
 }
-.popper__arrow{
+.register-box .popper__arrow{
   border-top-color: transparent !important;
 }
-.el-popper[x-placement^=bottom] .popper__arrow::after{
+.register-box .el-popper[x-placement^=bottom] .popper__arrow::after{
   border-color:transparent;
 }
-.el-popper[x-placement^=bottom] .popper__arrow{
+.register-box .el-popper[x-placement^=bottom] .popper__arrow{
   border-color:transparent;
 }
-.el-scrollbar__wrap{
+.register-box .el-scrollbar__wrap{
   margin-right:-20px !important;
   margin-bottom:-18px !important;
 }
-.register .el-select-dropdown__list{
+/* .register .el-select-dropdown__list{
   background-color: #1c3151;
 }
 .register .el-select-dropdown__item.hover{
@@ -46,7 +46,7 @@
 .register .el-select-dropdown__item.selected{
   font-weight: 400;
   color:#fff;
-}
+} */
 /*.register-box*/
 /*.register-box*/
 /*.register-box*/

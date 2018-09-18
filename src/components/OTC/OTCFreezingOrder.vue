@@ -343,6 +343,7 @@ export default {
       }
       >.no-data{
         background-color: #1E2636;
+        color: rgba(255, 255, 255, 0.8);
       }
     }
     }
@@ -407,6 +408,7 @@ export default {
       }
       >.no-data{
         background-color: #fff;
+        color: #333333;
       }
     }
     }
