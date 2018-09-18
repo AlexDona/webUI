@@ -161,7 +161,6 @@
                         height="200"
                         :src="activeBankCode[index]"
                       >
-                      <!-- src="../../assets/develop/weixin.png" -->
                       <el-button slot="reference">扫码支付</el-button>
                     </el-popover>
                   </div>
@@ -547,7 +546,7 @@
       <div class="password-dialog">
         <el-dialog
           title="交易密码"
-          :visible.sync="dialogVisible1"
+          :visible.sync="dialogVisibleConfirmPayment"
           top="25vh"
           width="470"
         >
@@ -570,7 +569,7 @@
             class="dialog-footer">
               <el-button
                 type="primary"
-                @click="submitButton1"
+                @click="submitConfirmPayment"
               >
                 提 交
               </el-button>
@@ -581,7 +580,7 @@
       <div class="password-dialog">
         <el-dialog
           title="交易密码"
-          :visible.sync="dialogVisible2"
+          :visible.sync="dialogVisibleConfirmReceipt"
           top="25vh"
           width="470"
         >
@@ -604,7 +603,7 @@
             class="dialog-footer">
               <el-button
                 type="primary"
-                @click="submitButton2"
+                @click="submitConfirmGathering"
               >
                 提 交
               </el-button>
@@ -615,7 +614,7 @@
       <div class="password-dialog">
         <el-dialog
           title="交易密码"
-          :visible.sync="dialogVisible3"
+          :visible.sync="dialogVisibleSubmitComplaint"
           top="25vh"
           width="470"
         >
@@ -638,7 +637,7 @@
             class="dialog-footer">
               <el-button
                 type="primary"
-                @click="submitsellerAppeal"
+                @click="sellerSubmitAppeal"
               >
                 提 交
               </el-button>
@@ -665,9 +664,9 @@ export default {
       // 分页
       currentPage: 1, // 当前页码
       totalPages: 1, // 总页数
-      dialogVisible1: false, // 确认付款交易密码框
-      dialogVisible2: false, // 确认收款交易密码框
-      dialogVisible3: false, // 提交申诉交易密码框
+      dialogVisibleConfirmPayment: false, // 确认付款交易密码框
+      dialogVisibleConfirmReceipt: false, // 确认收款交易密码框
+      dialogVisibleSubmitComplaint: false, // 提交申诉交易密码框
       appealTextareaValue: '', // 订单申诉原因文本域内容
       activitedPayStyle: '', //  选中的支付方式
       activitedPayStyleId: '', //  选中的支付方式id-往后台传送的参数
@@ -691,8 +690,8 @@ export default {
       cancelOrderTimeArr: [], // 自动取消订单倒计时数组集
       accomplishOrderTimeArr: [], // 自动成交倒计时数组集
       errpwd: '', // 交易密码错提示
-      timerCancel: null, // 自动取消订单倒计时
-      timerAccomplish: null, // 自动成交倒计时
+      cancelOrdersTimer: null, // 自动取消订单倒计时
+      accomplishOrdersTimer: null, // 自动成交倒计时
       pageSize: 5
     }
   },
@@ -701,49 +700,44 @@ export default {
     require('../../../static/css/theme/day/OTC/OTCTradingOrderDay.css')
     require('../../../static/css/theme/night/OTC/OTCTradingOrderNight.css')
     // 1.0 请求交易中订单列表:只有登录了才调用
+    console.log(this.isLogin)
     if (this.isLogin) {
       this.getOTCTradingOrdersList()
     }
-    // setInterval(() => {
-    //   console.log('定时器一秒一次')
-    //   this.getOTCTradingOrdersList()
-    // }, 1000)
-    // console.log(this.userInfo)
-    console.log(this.isLogin)
   },
   mounted () {},
   activited () {},
   update () {},
   beforeRouteUpdate () {},
   methods: {
-    // 分页
+    // 1.0 分页
     changeCurrentPage (pageNum) {
       console.log(pageNum)
       this.currentPage = pageNum
       this.getOTCTradingOrdersList()
     },
-    // 1.0 时间格式化
+    // 1.1 时间格式化
     timeFormatting (date) {
       return timeFilter(date, 'time')
     },
-    // 倒计时时间格式化-国际标准格式(09ˋ40′32″)
+    // 1.2 倒计时时间格式化-国际标准格式(09ˋ40′32″)
     BIHTimeFormatting (date) {
       return formatSeconds(date)
     },
-    // 自动取消订单倒计时
+    // 1.3 自动取消订单倒计时
     cancelSetInter () {
-      clearInterval(this.timerCancel)
-      this.timerCancel = setInterval(() => {
+      clearInterval(this.cancelOrdersTimer)
+      this.cancelOrdersTimer = setInterval(() => {
         // 循环自动取消倒计时时间数组
         this.cancelOrderTimeArr.forEach((item, index) => {
           this.$set(this.cancelOrderTimeArr, index, this.cancelOrderTimeArr[index] - 1000)
         })
       }, 1000)
     },
-    // 自动成交倒计时
+    // 1.4 自动成交倒计时
     accomplishSetInter () {
-      clearInterval(this.timerAccomplish)
-      this.timerAccomplish = setInterval(() => {
+      clearInterval(this.accomplishOrdersTimer)
+      this.accomplishOrdersTimer = setInterval(() => {
         // 循环自动成交倒计时数组
         this.accomplishOrderTimeArr.forEach((item, index) => {
           this.$set(this.accomplishOrderTimeArr, index, this.accomplishOrderTimeArr[index] - 1000)
@@ -829,22 +823,22 @@ export default {
       }
       if (this.buttonStatusArr[index] === true) {
         // 弹出交易密码框
-        this.dialogVisible1 = true
+        this.dialogVisibleConfirmPayment = true
       }
     },
-    // 买家点击确认付款按钮 点击交易密码框中的提交按钮--交易密码狂获得焦点
+    // 5.0 买家点击确认付款按钮 点击交易密码框中的提交按钮--交易密码狂获得焦点
     passWordFocus () {
       this.errpwd = ''
     },
-    // 卖家在买家付款前点击确认收款按钮的提示事件
+    // 6.0 卖家在买家付款前点击确认收款按钮的提示事件
     gatheringBefore () {
       this.$message({
         message: '请等待买家付款。',
         type: 'error'
       })
     },
-    // 5.0 买家点击确认付款按钮 点击交易密码框中的提交按钮
-    async submitButton1 () {
+    // 7.0 买家点击确认付款按钮 点击交易密码框中的提交按钮
+    async submitConfirmPayment () {
       if (!this.tradePassword) {
         this.errpwd = '请输入交易密码'
         return false
@@ -859,7 +853,7 @@ export default {
         if (!(returnAjaxMessage(data, this, 1))) {
           return false
         } else {
-          this.dialogVisible1 = false
+          this.dialogVisibleConfirmPayment = false
           this.errpwd = ''
           this.tradePassword = ''
           // 2再次调用接口刷新列表
@@ -867,16 +861,16 @@ export default {
         }
       }
     },
-    // 6.0 卖家点击确认收款按钮
+    // 8.0 卖家点击确认收款按钮
     comfirmGatherMoney (id) {
       this.activedTradingOrderId = id
       // 弹出交易密码框
-      this.dialogVisible2 = true
+      this.dialogVisibleConfirmReceipt = true
       // console.log(id)
       console.log(this.activedTradingOrderId)
     },
-    // 7.0 卖家点击确认收款按钮 弹出交易密码框 点击交易密码框中的提交按钮
-    async submitButton2 () {
+    // 9.0 卖家点击确认收款按钮 弹出交易密码框 点击交易密码框中的提交按钮
+    async submitConfirmGathering () {
       if (!this.tradePassword) {
         this.errpwd = '请输入交易密码'
         return false
@@ -890,13 +884,13 @@ export default {
       if (!(returnAjaxMessage(data, this, 1))) {
         return false
       } else {
-        this.dialogVisible2 = false
+        this.dialogVisibleConfirmReceipt = false
         this.errpwd = ''
         this.tradePassword = ''
         this.getOTCTradingOrdersList()
       }
     },
-    // 8.0 点击订单申诉弹窗申诉框
+    // 10.0 点击订单申诉弹窗申诉框
     orderAppeal (id, index) {
       console.log(id)
       // this.showOrderAppeal[index] = true
@@ -904,12 +898,12 @@ export default {
       this.activedTradingOrderId = id
       console.log(this.activedTradingOrderId)
     },
-    // 9.0 取消订单申诉按钮
+    // 11.0 取消订单申诉按钮
     cancelOrderAppeal (index) {
       // this.showOrderAppeal = false
       this.$set(this.showOrderAppeal, index, false)
     },
-    // 10.0 卖家提交申诉按钮弹出交易密码框
+    // 12.0 卖家提交申诉按钮弹出交易密码框
     sellerAppeal () {
       if (!this.appealTextareaValue) {
         this.$message({
@@ -918,13 +912,10 @@ export default {
         })
         return false
       }
-      this.dialogVisible3 = true
+      this.dialogVisibleSubmitComplaint = true
     },
-    sellerAppealPassword () {
-      this.appealErrorText = ''
-    },
-    // 11.0 卖家提交申诉按钮
-    async submitsellerAppeal () {
+    // 13.0 卖家提交申诉按钮
+    async sellerSubmitAppeal () {
       if (!this.tradePassword) {
         this.errpwd = '请输入交易密码'
         return false
@@ -939,7 +930,7 @@ export default {
       if (!(returnAjaxMessage(data, this, 1))) {
         return false
       } else {
-        this.dialogVisible3 = false
+        this.dialogVisibleSubmitComplaint = false
         this.errpwd = '' // 清空密码错提示
         this.tradePassword = '' // 清空密码框
         this.appealTextareaValue = '' // 清空申诉原因
@@ -959,13 +950,12 @@ export default {
   watch: {},
   destroyed () {
     // 离开本组件清除定时器
-    clearInterval(this.timerCancel)
-    clearInterval(this.timerAccomplish)
+    clearInterval(this.cancelOrdersTimer)
+    clearInterval(this.accomplishOrdersTimer)
   }
 }
 </script>
 <style scoped lang="scss" type="text/scss">
-// @import url(../../../static/css/scss/OTC/OTCTradingOrder.scss);
 @import "../../../static/css/scss/OTC/OTCTradingOrder.scss";
 .otc-trading-order-box{
   >.otc-trading-order-content{
@@ -1463,7 +1453,7 @@ export default {
         }
       }
       >.no-data{
-        color: #7D90AC;
+        color: #333333;
         background-color: #fff;
         border:1px solid rgba(72,87,118,0.1);
         border-radius: 5px;

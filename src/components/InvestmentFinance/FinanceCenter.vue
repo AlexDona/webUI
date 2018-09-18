@@ -435,7 +435,7 @@ export default {
           this.selecteCoindName = item.name
         }
       })
-      //  改变币种重新请求接口
+      // 改变币种重新请求接口
       this.getFinancialManagementList()
     }
   },

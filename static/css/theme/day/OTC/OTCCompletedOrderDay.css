@@ -11,6 +11,9 @@
 .otc-completed-order-box.day .completed-order-content .el-table{
   color: #9DA5B3;
 }
+.otc-completed-order-box.day .completed-order-content .el-table__empty-text{
+  color: #333333;
+}
 .otc-completed-order-box.day .completed-order-content .el-table--enable-row-hover .el-table__body tr:hover>td {
   /* background-color: #1E2636; */
   background-color: #fff;

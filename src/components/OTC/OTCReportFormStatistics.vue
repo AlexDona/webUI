@@ -58,6 +58,7 @@
           <!-- 总资产可用币种 -->
           <span>{{total}}</span>
           <span>{{activitedTraderCoinName}}</span>
+          <span>≈</span>
           <!-- 总资产法币 -->
           <span>{{totalAssets}}</span>
           <span>{{activitedtraderCurrencyCoinsName}}</span>
