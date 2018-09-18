@@ -8,6 +8,8 @@ export const queryCountryList = (params) => get('country/selectList', params)
 export const assetCurrenciesList = (params) => get('personal/getUserFinanceList', params)
 // 提币地址列表查询
 export const inquireWithdrawalAddressList = (params) => get('personal/getWithdrawAddress', params)
+// 根据币种id查询提币地址
+export const inquireWithdrawalAddressId = (params) => get('personal/getCoinWithdrawAddress', params)
 // 账单明细—冲提记录
 export const statusRushedToRecordList = (params) => get('queryWithdrawRecording', params)
 // 账单明细—获取商户币种列表

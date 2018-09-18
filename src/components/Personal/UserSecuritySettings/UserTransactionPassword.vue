@@ -192,7 +192,7 @@
             <span v-else></span>
             <button
               class="transaction-button border-radius4 cursor-pointer"
-              @click="getUpdatePayPassword"
+              @click.prevent="getUpdatePayPassword"
             >
               确认重置
             </button>

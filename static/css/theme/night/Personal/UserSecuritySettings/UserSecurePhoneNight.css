@@ -24,10 +24,6 @@
 .set-phone.personal.night div.el-select .el-input__inner {
   background-color: #485776;
 }
-/*.set-phone.personal.night div.el-select .el-input__inner:focus {*/
-  /*border: 1px solid #485776;*/
-  /*color: #485776;*/
-/*}*/
 .set-phone.personal.night div.el-select .el-input__inner:focus{
   border: 1px solid #485776;
 }

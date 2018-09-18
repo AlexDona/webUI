@@ -319,7 +319,7 @@
                 <div class="input">
                   <input
                     type="password"
-                    placeholder="请输入交易密码"
+                    placeholder="交易密码"
                     class="password-input"
                     v-model="tradePassword"
                     @focus="tradePasswordFocus"

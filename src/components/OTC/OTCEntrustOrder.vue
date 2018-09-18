@@ -185,6 +185,7 @@ export default {
 <style scoped lang="scss" type="text/scss">
   @import "../../../static/css/scss/OTC/OTCEntrustOrder.scss";
   .otc-entrust-order-box {
+    height: 500px;
     .otc-entrust-order-table {
       > .entrust-table-head {
         box-sizing: border-box;
@@ -231,6 +232,7 @@ export default {
       }
       > .entrust-table-body {
         height: 400px;
+        margin-top: 15px;
         // background-color: #1E2636;
         // color: #9DA5B3;
         // border: 1px solid #262F38;
@@ -318,6 +320,7 @@ export default {
           color: #9DA5B3;
           border: 1px solid #262F38;
           > .no-data {
+            color: rgba(255, 255, 255, 0.8);
           }
           > .entrust-list-content {
             .red {
@@ -383,6 +386,7 @@ export default {
           color: #666666;
           border: 1px solid #ECF1F8;
           > .no-data {
+            color: #333333;
           }
           > .entrust-list-content {
             .red {

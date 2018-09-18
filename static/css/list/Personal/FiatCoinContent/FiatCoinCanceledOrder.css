@@ -32,17 +32,6 @@
 .fiat-canceled-order-box.personal .bank-info-picture .el-button{
   padding: 2px 6px;
 }
-
-/*.fiat-orders.personal.night .el-input__inner*/
-/* .fiat-canceled-order-box .bank-info-picture .el-popper[x-placement^=bottom] .popper__arrow {
-    border-bottom-color: #fff;
-} */
-/* .fiat-canceled-order-box .bank-info-picture .el-popper[x-placement^=bottom]{
-    margin-top: 6px;
-} */
-/* .fiat-canceled-order-box .el-popover{
-    padding: 4px !important;
-}  */
 /* 输入密码弹出框 */
 .fiat-canceled-order-box.personal .password-dialog .el-dialog{
   border-radius: 4px;

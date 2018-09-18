@@ -10,6 +10,7 @@ import {
   CHANGE_CURRENCY_RATE_LIST,
   USER_ASSETS_LIST,
   SET_COUNTRY_AREA_LIST,
+  USER_INFORMATION_REFRESH,
   // eslint-disable-next-line
   CHANGE_ROUTER_PATH
 } from './mutations-types.js'
@@ -83,5 +84,8 @@ export default {
   },
   [SET_COUNTRY_AREA_LIST] (state, data) {
     state.contryAreaList = data
+  },
+  [USER_INFORMATION_REFRESH] (state, data) {
+    state.userRefreshUserList = data
   }
 }

@@ -112,25 +112,25 @@
             </button>
           </p>
         </div>
-        <div class="content-module margin-top30 cursor-pointer">
-          <p class="content-vip-one text-align-c">
-            VIP6
-          </p>
-          <p class="content-discount line-height50 text-align-c font-size16">手续费折扣</p>
-          <p class="content-text line-height50 text-align-c font-size18">四折</p>
-          <p class="content-discount line-height50 text-align-c font-size16">
-            <span>100FUC</span>
-            <span>/月</span>
-          </p>
-          <p class="content-button">
-            <button
-              class="click-btn cursor-pointer"
-              @click="statusImmediatelyOpened('vip6')"
-            >
-              立即开通
-            </button>
-          </p>
-        </div>
+        <!--<div class="content-module margin-top30 cursor-pointer">-->
+          <!--<p class="content-vip-one text-align-c">-->
+            <!--VIP6-->
+          <!--</p>-->
+          <!--<p class="content-discount line-height50 text-align-c font-size16">手续费折扣</p>-->
+          <!--<p class="content-text line-height50 text-align-c font-size18">四折</p>-->
+          <!--<p class="content-discount line-height50 text-align-c font-size16">-->
+            <!--<span>100FUC</span>-->
+            <!--<span>/月</span>-->
+          <!--</p>-->
+          <!--<p class="content-button">-->
+            <!--<button-->
+              <!--class="click-btn cursor-pointer"-->
+              <!--@click="statusImmediatelyOpened('vip6')"-->
+            <!--&gt;-->
+              <!--立即开通-->
+            <!--</button>-->
+          <!--</p>-->
+        <!--</div>-->
         <p class="content-info-hint text-align-r padding-right23 box-sizing font-size12">
           <span>还没有FUC?</span>
           <span
@@ -188,14 +188,14 @@
             <p class="font-size16 grade-color font-weight600">VIP5</p>
             <p class="font-size12 grade-height">手续费5折</p>
           </div>
-          <div
-            class="grade cursor-pointer text-align-c"
-            @click="stateOpeningLevel(6)"
-            :class="{ blue:active == 6}"
-          >
-            <p class="font-size16 grade-color font-weight600">VIP6</p>
-            <p class="font-size12 grade-height">手续费4折</p>
-          </div>
+          <!--<div-->
+            <!--class="grade cursor-pointer text-align-c"-->
+            <!--@click="stateOpeningLevel(6)"-->
+            <!--:class="{ blue:active == 6}"-->
+          <!--&gt;-->
+            <!--<p class="font-size16 grade-color font-weight600">VIP6</p>-->
+            <!--<p class="font-size12 grade-height">手续费4折</p>-->
+          <!--</div>-->
         </div>
         <div
           class="detail-page-duration display-flex"

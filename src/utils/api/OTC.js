@@ -1,4 +1,4 @@
-import {get, postWithURLencoded} from './axios'
+import {get, postWithURLencoded, post} from './axios'
 /**
  *OTC
  */
@@ -56,6 +56,9 @@ export const getOTCReportFormStatisticsData = (params) => get('otcOrder/selectMe
 export const getOTCChangeRate = (params) => get('otcCOin/changeRate', params)
 //  币种详情：商家和普通用户挂单页面请求币种详情渲染页面
 export const getOTCCoinInfo = (params) => get('otcCOin/getCoinInfo', params)
-
 // 投资理财请求数据
 export const getFinancialManagement = (params) => get('financialManagement', params)
+// 投资理财立投资请求接口
+export const imediateInvestment = (params) => post('financialManagement', params)
+// 投资理财取消投资接口
+export const cancleInvestment = (params) => get(`financialManagement/${params}`)

@@ -5,7 +5,7 @@ import {
   repealMyEntrustAjax
 } from '../utils/api/trade'
 import {
-  assetCurrenciesList,
+  userRefreshUser,
   statusSecurityCenter,
   getQueryAllOrdersList
 } from '../utils/api/personal'
@@ -120,14 +120,10 @@ export const getMerchantsOrdersList = async (params, callback) => {
 }
 /**
  * 个人资产信息
- * 币种
- * 总数量
- * 冻结数量
- * 可用数量 = 总数量 + 冻结数量
  */
 export const globalPersonalAssetsInformation = async (params, callback) => {
-  const assetData = await assetCurrenciesList(params)
-  callback(assetData)
+  const data = await userRefreshUser(params)
+  callback(data)
 }
 // socket 请求类型参数分割
 export const splitSocketParams = (params) => {

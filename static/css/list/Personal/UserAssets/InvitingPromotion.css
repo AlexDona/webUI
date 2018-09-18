@@ -1,9 +1,4 @@
 /*覆盖element样式*/
-/*.invitation-promotion.personal .el-table th>.cell,*/
-/*.cell {*/
-  /*text-align: center;*/
-/*}*/
-
 .invitation-promotion.personal .el-input__inner {
   width: 120px;
   height: 30px;

@@ -274,7 +274,8 @@ import {setStore} from '../../utils'
 // import {getPartnerList} from '../../utils/api/home'
 import {
   returnAjaxMessage,
-  getCountryListAjax
+  getCountryListAjax,
+  globalPersonalAssetsInformation
 } from '../../utils/commonFunc'
 import { createNamespacedHelpers, mapState } from 'vuex'
 const { mapMutations } = createNamespacedHelpers('common')
@@ -343,6 +344,7 @@ export default{
     this.getMerchantAvailablelegalTenderList()
     this.getTransitionCurrencyRate()
     this.getCountryList()
+    this.getGlobalPersonalAssetsInformation()
   },
   methods: {
     ...mapMutations([
@@ -356,13 +358,22 @@ export default{
       'CHANGE_PALTE_LIST',
       // 更新当前汇率列表
       'CHANGE_CURRENCY_RATE_LIST',
-      'SET_COUNTRY_AREA_LIST'
+      'SET_COUNTRY_AREA_LIST',
+      'USER_INFORMATION_REFRESH'
     ]),
     getCountryList () {
       getCountryListAjax(this, (data) => {
         console.log(data)
         // this.contryAreaList = data.data.data
         this.SET_COUNTRY_AREA_LIST(data.data.data)
+        // console.log(this.contryAreaList)
+      })
+    },
+    getGlobalPersonalAssetsInformation () {
+      globalPersonalAssetsInformation(this, (data) => {
+        console.log(data)
+        // this.contryAreaList = data.data.data
+        this.USER_INFORMATION_REFRESH(data.data.data)
         // console.log(this.contryAreaList)
       })
     },
@@ -413,34 +424,42 @@ export default{
     },
     // 开启vip
     stateOpenVip () {
-      this.$router.push({path: '/VipMainContent'})
+      if (this.userInfo.payPassword) {
+        this.$router.push({path: '/VipMainContent'})
+      } else {
+        this.$router.push({path: '/TransactionPassword'})
+      }
     },
     // 用户跳转到指定页面
     stateReturnSuperior (val) {
-      this.$router.push({path: '/PersonalCenter'})
-      console.log(val)
-      switch (val) {
-        case 'account-balance':
-          this.setPersonalJump('assets')
-          break
-        case 'order-management':
-          this.setPersonalJump('coin-orders')
-          break
-        case 'identity-authentication':
-          this.setPersonalJump('identity-authentication')
-          break
-        case 'security-center':
-          this.setPersonalJump('security-center')
-          break
-        case 'receiving-set':
-          this.setPersonalJump('account-credited')
-          break
-        case 'invite':
-          this.setPersonalJump('invitation-promote')
-          break
-        case 'api':
-          this.setPersonalJump('api-management')
-          break
+      if (this.userInfo.payPassword) {
+        this.$router.push({path: '/PersonalCenter'})
+        console.log(val)
+        switch (val) {
+          case 'account-balance':
+            this.setPersonalJump('assets')
+            break
+          case 'order-management':
+            this.setPersonalJump('coin-orders')
+            break
+          case 'identity-authentication':
+            this.setPersonalJump('identity-authentication')
+            break
+          case 'security-center':
+            this.setPersonalJump('security-center')
+            break
+          case 'receiving-set':
+            this.setPersonalJump('account-credited')
+            break
+          case 'invite':
+            this.setPersonalJump('invitation-promote')
+            break
+          case 'api':
+            this.setPersonalJump('api-management')
+            break
+        }
+      } else {
+        this.$router.push({path: '/TransactionPassword'})
       }
     },
     // 用户登出

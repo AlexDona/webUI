@@ -1,8 +1,7 @@
 /* 覆盖Element样式*/
-.identity-authentication .el-form-item__content {
+.identity-authentication.personal .el-form-item__content {
   width: 600px;
 }
-
 /* 折叠面板默认的边框修改 */
 .identity-authentication.personal .el-collapse,
 .identity-authentication.personal .el-collapse-item__header,
@@ -18,9 +17,8 @@
   margin:0 23px;
 }
 /*行高*/
-.identity-authentication.personal
-.el-collapse-item__header,
-.el-collapse-item__arrow{
+.identity-authentication.personal .el-collapse-item__header,
+.identity-authentication.personal .el-collapse-item__arrow{
   line-height: 56px;
 }
 /*字体*/

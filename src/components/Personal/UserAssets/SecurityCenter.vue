@@ -251,7 +251,10 @@
           title="关闭验证"
           :visible.sync="closeValidation"
         >
-          <el-form label-width="120px">
+          <el-form
+            :label-position="labelPosition"
+            label-width="120px"
+          >
             <!--没有绑定手机不显示-->
             <div v-if="!securityCenter.isPhoneEnable"></div>
             <!--绑定手机之后显示-->
@@ -303,9 +306,18 @@
               />
             </el-form-item>
           </el-form>
-          <div slot="footer" class="dialog-footer">
-            <el-button @click="closeValidation = false">取 消</el-button>
-            <el-button type="primary" @click="determineTheOpen">确 定</el-button>
+          <div
+            slot="footer"
+            class="dialog-footer"
+          >
+            <!--<el-button @click="closeValidation = false">取 消</el-button>-->
+            <el-button
+              class="button"
+              type="primary"
+              @click="determineTheOpen"
+            >
+              确 定
+            </el-button>
           </div>
         </el-dialog>
         <!--开启验证-->
@@ -313,7 +325,10 @@
           title="开启验证"
           :visible.sync="openTheValidation"
         >
-          <el-form label-width="120px">
+          <el-form
+            label-width="120px"
+            :label-position="labelPosition"
+          >
             <!--&lt;!&ndash;没有绑定手机不显示&ndash;&gt;-->
             <!--<div v-if="!securityCenter.isPhoneEnable"></div>-->
             <!--开启手机-->
@@ -365,9 +380,18 @@
               />
             </el-form-item>
           </el-form>
-          <div slot="footer" class="dialog-footer">
-            <el-button @click="openTheValidation = false">取 消</el-button>
-            <el-button type="primary" @click="determineTheOpen">确 定</el-button>
+          <div
+            slot="footer"
+            class="dialog-footer"
+          >
+            <!--<el-button @click="openTheValidation = false">取 消</el-button>-->
+            <el-button
+              class="button"
+              ype="primary"
+              @click="determineTheOpen"
+            >
+              确 定
+            </el-button>
           </div>
         </el-dialog>
       </div>
@@ -469,6 +493,7 @@ export default {
   // props,
   data () {
     return {
+      labelPosition: 'top',
       securityActiveName: 'first', // 默认显示第一个
       // 最近登录记录
       logonRecord: [],
@@ -580,6 +605,9 @@ export default {
     },
     // 关闭开启验证状态事件
     showStatusVerificationClose (paymentType, safeState) {
+      this.openEmail = ''
+      this.openPhone = ''
+      this.openGoogle = ''
       // 把方法中定义的activeType、state在这里进行赋值 点击哪一个那当前的类型和状态传给后台
       this.activeType = paymentType
       this.state = safeState
@@ -588,7 +616,7 @@ export default {
           if (!this.securityCenter.isMailBind) {
             this.openTheValidation = false
           } else {
-            if (safeState === 'enable') {
+            if (safeState === true) {
               this.openEmail = true
               this.openPhone = false
               this.openGoogle = false
@@ -602,7 +630,7 @@ export default {
           if (!this.securityCenter.isPhoneBind) {
             this.openTheValidation = false
           } else {
-            if (safeState === 'enable') {
+            if (safeState === true) {
               this.openEmail = false
               this.openPhone = true
               this.openGoogle = false
@@ -616,7 +644,7 @@ export default {
           if (!this.securityCenter.isGoogleBind) {
             this.openTheValidation = false
           } else {
-            if (safeState === 'enable') {
+            if (safeState === true) {
               this.openEmail = false
               this.openPhone = false
               this.openGoogle = true
@@ -634,8 +662,6 @@ export default {
     },
     // 关闭开启手机邮箱谷歌验证
     async confirmTransactionPassword (type, state) {
-      console.log(type)
-      console.log(state)
       let data
       let params = {
         email: this.userInfo.userInfo.email, // 邮箱
@@ -737,6 +763,14 @@ export default {
         height: 50px;
       }
       >.security-setting-box {
+        .button {
+          width: 270px;
+          height: 34px;
+          background: linear-gradient(90deg, #2b396e, #2a5082);
+          color: #fff;
+          border: 0;
+          line-height: 0;
+        }
         .input {
           width: 220px;
           height: 34px;

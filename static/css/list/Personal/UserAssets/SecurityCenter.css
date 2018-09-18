@@ -28,7 +28,7 @@
   width: 170px;
 }
 .security-center.personal .el-dialog {
-  width: 470px;
+  width: 325px;
   border-radius: 7px;
 }
 .security-center.personal .el-dialog__header {
@@ -43,9 +43,13 @@
   top: 13px;
 }
 .security-center.personal .el-dialog__body {
-  padding: 25px 20px 0;
+  padding: 10px 20px 0;
 }
-.login-password.personal .el-input__inner {
+.security-center.personal .el-input-group__append {
+  padding: 0 5px;
+}
+.security-center.personal .el-input__inner {
+  width: 180px;
   height: 36px;
   border-radius: 2px 0 0px 2px;
 }
@@ -56,4 +60,10 @@
 }
 .security-center.personal .el-tabs__item {
   height: 45px;
+}
+.security-center.personal .el-form--label-top .el-form-item__label {
+  padding: 0;
+}
+.security-center.personal .el-dialog__footer {
+  text-align: left;
 }
