@@ -112,6 +112,42 @@
           </el-tab-pane>
         </el-tabs>
       </div>
+      <!--未实名认证前弹框提示-->
+      <el-dialog
+        :visible.sync="dialogVisible"
+        center
+      >
+        <div class="dialog-warning">
+          <div class="dialog-warning-box">
+            <IconFontCommon
+              class="font-size60"
+              iconName="icon-gantanhao"
+            />
+          </div>
+        </div>
+        <p class="font-size12 warning-text margin-top35 text-align-c">
+          请先完成身份认证并且设置交易密码，再来设置OTC收款账户!
+        </p>
+        <span
+          slot="footer"
+          class="dialog-footer"
+        >
+          <!--确 定 取 消-->
+        <button
+          class="button-color border-radius4 cursor-pointer"
+          type="primary"
+          @click="confirm"
+        >
+          确 定
+        </button>
+        <button
+          class="btn border-radius4 cursor-pointer"
+          @click="dialogVisible = false"
+        >
+          取 消
+        </button>
+        </span>
+      </el-dialog>
     </div>
     <!--底部-->
     <FooterCommon/>
@@ -145,11 +181,17 @@ import CoinOrders from '../TransactionType/CoinOrders'
 import FiatOrders from '../TransactionType/FiatOrders'
 // 底部
 import FooterCommon from '../../Common/FooterCommon'
+import {
+  userRefreshUser
+} from '../../../utils/api/personal'
+import IconFontCommon from '../../Common/IconFontCommon'
+import {returnAjaxMessage} from '../../../utils/commonFunc'
 import { createNamespacedHelpers, mapState } from 'vuex'
 const { mapMutations } = createNamespacedHelpers('personal')
 export default {
   components: {
     // 我的资产
+    IconFontCommon, // 字体图标
     HeaderCommon, // 头部
     AccountAssets, // 账户资产
     BillingDetails, // 账单明细
@@ -169,7 +211,8 @@ export default {
   // props,
   data () {
     return {
-      tabPosition: 'left' // 导航位置方向
+      tabPosition: 'left', // 导航位置方向
+      dialogVisible: false
     }
   },
   created () {
@@ -179,6 +222,7 @@ export default {
     require('../../../../static/css/theme/day/Personal/UserAssets/PersonalCenterDay.css')
     // 黑色主题样式
     require('../../../../static/css/theme/night/Personal/UserAssets/PersonalCenterNight.css')
+    this.getUserRefreshUser()
   },
   mounted () {},
   activited () {},
@@ -213,11 +257,16 @@ export default {
           this.$refs.identityValue.getCountryListings()
           break
         case 'account-credited':
-          // 收款方式状态查询
-          this.$refs.accountCreditedValue.getAccountPaymentTerm()
+          if (this.userInfo.payPassword !== '') {
+            this.$refs.accountCreditedValue.getAccountPaymentTerm()
+          } else {
+            // 收款方式状态查询
+            this.$refs.accountCreditedValue.getAccountPaymentTerm()
+            this.dialogVisible = true
+          }
           break
         case 'invitation-promote':
-          // 直接推广间接推广列表
+          // 直接推广间接推广列表getRecommendUserPromotion
           this.$refs.invitingPromotionValue.getUserPromotionList()
           this.$refs.invitingPromotionValue.getRecommendUserPromotion()
           break
@@ -236,12 +285,30 @@ export default {
           this.$refs.pushAssetValue.emptyInputData()
           break
         case 'coin-orders':
-          this.$refs.coinOrdersValue.commissionList()
+          this.$refs.coinOrdersValue.getEntrustSelectBox()
           break
         case 'fiat-orders':
           // 页面加载时请求接口渲染列表
           this.$refs.fiatOrdersValue.getOTCEntrustingOrdersRevocation()
           break
+      }
+    },
+    confirm () {
+      this.$router.push({path: '/TransactionPassword'})
+    },
+    /**
+     *  刷新用户信息
+     */
+    async getUserRefreshUser () {
+      let data = await userRefreshUser({
+        token: this.userInfo.token
+      })
+      console.log(data)
+      if (!(returnAjaxMessage(data, this, 0))) {
+        return false
+      } else {
+        // 返回列表数据
+        this.userInfoRefresh = data.data.data.userInfo
       }
     }
   },
@@ -249,7 +316,8 @@ export default {
   computed: {
     ...mapState({
       theme: state => state.common.theme,
-      userCenterActiveName: state => state.personal.userCenterActiveName
+      userCenterActiveName: state => state.personal.userCenterActiveName,
+      userInfo: state => state.user.loginStep1Info.userInfo
     })
   },
   watch: {}
@@ -262,6 +330,47 @@ export default {
       width: 1100px;
       min-height: 1350px;
       margin: 60px auto;
+      .dialog-warning {
+        width: 90px;
+        height: 90px;
+        border-radius: 50%;
+        padding-top: 6px;
+        margin: 0 auto;
+        background: rgba(42, 122, 211, 0.2);
+        .dialog-warning-box {
+          background: linear-gradient(90deg, #2b396e, #2a5082);
+          width: 78px;
+          height: 78px;
+          border-radius: 50%;
+          margin: 0 auto;
+          text-align: center;
+          line-height: 75px;
+        }
+      }
+      .warning-text {
+        color: #fff;
+      }
+      .info {
+        color: #fff;
+        padding-left: 83px;
+      }
+      .button-color {
+        width: 80px;
+        height: 35px;
+        border: 0;
+        line-height: 0;
+        margin-right: 15px;
+        color: rgba(255,255,255,0.7);
+        background: linear-gradient(81deg,rgba(43,57,110,1) 0%,rgba(42,80,130,1) 100%);
+      }
+      .btn{
+        width: 80px;
+        height: 35px;
+        line-height: 0;
+        color: rgba(255, 255, 255, 0.7);
+        background-color: transparent;
+        border: 1px solid #338FF5;
+      }
       > .personal-center-content{
         width: 1100px;
       }

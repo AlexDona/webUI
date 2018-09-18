@@ -218,7 +218,7 @@ export default {
      */
     async WithdrawalAddressList () {
       let params = {
-        currentPage: this.currentPageForMyEntrust,
+        pageNum: this.currentPageForMyEntrust,
         pageSize: this.pageSize
       }
       let data = await inquireWithdrawalAddressList(params)

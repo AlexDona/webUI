@@ -8,16 +8,16 @@
       class="fiat-entrust-order-table"
     >
       <!-- 表头 -->
-      <!--<div class="entrust-table-head display-flex">-->
-        <!--<span class="item first-style flex1">类型</span>-->
-        <!--<span class="item second-coin flex1">币种</span>-->
-        <!--<span class="item third-price flex1">价格</span>-->
-        <!--<span class="item fourth-entrust-count flex1">挂单数量</span>-->
-        <!--<span class="item fifth-match-count flex1">已匹配数量</span>-->
-        <!--<span class="item sixth-total-amount flex1">总金额</span>-->
-        <!--<span class="item senventh-create-time">挂单时间</span>-->
-        <!--<span class="item eighth-action flex1">操作</span>-->
-      <!--</div>-->
+      <div class="entrust-table-head display-flex">
+        <span class="item first-style flex1">类型</span>
+        <span class="item second-coin flex1">币种</span>
+        <span class="item third-price flex1">价格</span>
+        <span class="item fourth-entrust-count flex1">挂单数量</span>
+        <span class="item fifth-match-count flex1">已匹配数量</span>
+        <span class="item sixth-total-amount flex1">总金额</span>
+        <span class="item senventh-create-time">挂单时间</span>
+        <span class="item eighth-action flex1">操作</span>
+      </div>
       <!-- 表身体 -->
       <div
         class="entrust-table-body"
@@ -233,7 +233,9 @@ export default {
           width: 120px;
         }
       }
-      > .entrust-table-body {
+      > .entrust-table-body,
+      .item{
+        background-color: #1E2636;
         min-height: 432px;
         border-top: none;
         border-bottom-right-radius: 5px;

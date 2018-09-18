@@ -83,8 +83,10 @@
             <div class="promotion-number">
               <div class="promotion-info">
                 <p class="info-left">
-                  <span class="info-left-color font-size30">
-                    {{ totalPageMyNumber - 0 }}
+                  <span
+                    class="info-left-color font-size30"
+                  >
+                    {{ totalPageMyNumber }}
                   </span>
                   <span class="font-size12">
                     人
@@ -141,7 +143,7 @@
               label="用户UID"
             >
               <template slot-scope = "s">
-                <div>{{ s.row.inviter }}</div>
+                <div>{{ s.row.showId }}</div>
               </template>
             </el-table-column>
             <el-table-column
@@ -185,7 +187,7 @@
               label="直接推荐人UID"
             >
               <template slot-scope = "s">
-                <div>{{ s.row.showId }}</div>
+                <div>{{ s.row.inviter }}</div>
               </template>
             </el-table-column>
           </el-table>
@@ -346,7 +348,7 @@ export default {
         // 返回展示
         this.extensionList = data.data.data.list
         this.totalPageForMyEntrust = data.data.data.pages - 0
-        this.totalPageMyNumber = data.data.data.list.pages
+        this.totalPageMyNumber = data.data.data.total - 0
         console.log(this.extensionList)
       }
     },
@@ -359,6 +361,7 @@ export default {
     async getRecommendUserPromotion () {
       let data = await recommendUserPromotionList({
         pageNumber: this.currentPageMyEntrust, // 页码
+        // type: this.generalizeValue, // 页码
         pageSize: this.pageSize // 条数
       })
       console.log(data)

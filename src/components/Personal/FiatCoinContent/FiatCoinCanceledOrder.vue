@@ -5,15 +5,15 @@
   >
     <div class="canceled-order-content">
       <!--&lt;!&ndash;表头属性&ndash;&gt;-->
-      <!--<div class="canceled-table-head display-flex">-->
-        <!--<span class="item flex1">订单号</span>-->
-        <!--<span class="item flex1">类型</span>-->
-        <!--<span class="item flex1">币种</span>-->
-        <!--<span class="item flex1">价格</span>-->
-        <!--<span class="item flex1">数量</span>-->
-        <!--<span class="item flex1">总金额</span>-->
-        <!--<span class="item flex1">下单时间</span>-->
-      <!--</div>-->
+      <div class="canceled-table-head display-flex">
+        <span class="item flex1">订单号</span>
+        <span class="item flex1">类型</span>
+        <span class="item flex1">币种</span>
+        <span class="item flex1">价格</span>
+        <span class="item flex1">数量</span>
+        <span class="item flex1">总金额</span>
+        <span class="item flex1">下单时间</span>
+      </div>
       <!--表格-->
       <div
         class="canceled-table-body"
@@ -145,84 +145,6 @@ export default {
     >.canceled-order-content{
       >.canceled-table-head{
         box-sizing: border-box;
-        height: 35px;
-        line-height: 35px;
-        border-radius: 5px;
-        margin-bottom: 5px;
-        >.item{
-          display: inline-block;
-          text-align: center;
-        }
-      }
-      >.canceled-table-body{
-        box-sizing: border-box;
-        height: 170px;
-        border-radius: 5px;
-        margin-bottom: 15px;
-        >.canceled-info-top{
-          height: 40px;
-          line-height: 40px;
-          border-radius: 5px;
-          >.item{
-            display: inline-block;
-            text-align: center;
-          }
-          >.order-time {
-            width: 170px;
-          }
-        }
-        >.canceled-info-bottom{
-          box-sizing: border-box;
-          display: flex;
-          flex: 7;
-          padding: 30px 30px 0 30px;
-          color: #9DA5B3;
-          >.info-left{
-            flex: 2;
-            box-sizing: border-box;
-            >.text-info{
-              line-height: 20px;
-            }
-            >.text-blue{
-              color: #5E95EC;
-            }
-          }
-          >.info-middle{
-            flex: 2;
-            box-sizing: border-box;
-            margin-left: 30px;
-            >.text-info{
-              line-height: 20px;
-            }
-          }
-          >.info-right{
-            flex: 3;
-            box-sizing: border-box;
-            margin-left: 30px;
-            >.text-info{
-              line-height: 20px;
-            }
-          }
-        }
-      }
-      >.no-data{
-        width: 1043px;
-        height: 432px;
-        line-height: 432px;
-        text-align: center;
-      }
-    }
-    &.night{
-      background-color: $nightBgColor;
-      color:$nightFontColor;
-      >.background-color{
-        background-color: #1E2636;
-        >.fiat-color{
-          color: #338FF5;
-        }
-      }
-      >.canceled-table-head{
-        box-sizing: border-box;
         /*width: 1043px;*/
         height: 35px;
         line-height: 35px;
@@ -238,6 +160,9 @@ export default {
           /*width: 140px;*/
           text-align: center;
         }
+        /*>.order-time {*/
+        /*width: 150px;*/
+        /*}*/
       }
       >.canceled-table-body{
         box-sizing: border-box;
@@ -323,67 +248,21 @@ export default {
         background-color: #1E2636;
       }
     }
+    &.night{
+      background-color: $nightBgColor;
+      color:$nightFontColor;
+      >.background-color{
+        background-color: #1E2636;
+        >.fiat-color{
+          color: #338FF5;
+        }
+      }
+    }
     &.day{
       background-color: $dayBgColor;
       color:$dayFontColor;
       >.background-color{
         background-color: #CCCCCC;
-      }
-      >.canceled-table-head{
-        box-sizing: border-box;
-        /*width: 1043px;*/
-        height: 35px;
-        line-height: 35px;
-        background-color: #1E2636;
-        color: #617499;
-        border: 1px solid #262F38;
-        border-radius: 5px;
-        margin-bottom: 5px;
-        /*box-shadow:底边阴影;*/
-        box-shadow: -2px 3px 5px 1px #191E28;
-        >.item{
-          display: inline-block;
-          /*width: 140px;*/
-          text-align: center;
-        }
-      }
-      >.canceled-table-body{
-        background-color: #fff;
-        border:1px solid rgba(72,87,118,0.1);
-        >.canceled-info-top{
-          background-color: #1E2636;
-          color: #617499;
-          .red{
-            color: #D45858;
-          }
-          .green{
-            color: #008069;
-          }
-        }
-        >.canceled-info-bottom{
-          border-top: 1px solid #262F38;
-          color: #9DA5B3;
-          >.info-left{
-            border-right: 1px solid #262F38;
-            >.text-blue{
-              color: #5E95EC;
-            }
-          }
-          >.info-middle{
-            border-right: 1px solid #262F38;
-            >.text-blue{
-              color: #5E95EC;
-            }
-          }
-          >.info-right{
-            >.text-blue{
-              color: #5E95EC;
-            }
-          }
-        }
-      }
-      >.no-data{
-        background-color: #1E2636;
       }
     }
   }

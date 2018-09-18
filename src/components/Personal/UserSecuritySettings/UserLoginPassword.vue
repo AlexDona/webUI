@@ -224,7 +224,8 @@ export default {
     successJump () {
       setInterval(() => {
         if (this.successCountDown === 0) {
-          this.$router.push({'path': '/login'})
+          this.$store.commit('user/USER_LOGOUT')
+          this.$router.push({path: '/'})
         }
         this.successCountDown--
       }, 1000)

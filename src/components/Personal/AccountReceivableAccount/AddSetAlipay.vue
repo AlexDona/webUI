@@ -337,9 +337,9 @@ export default {
             padding-left: 15px;
           }
           .account-upload {
-            width: 118px;
+            /*width: 118px;*/
             height: 106px;
-            text-align: center;
+            /*text-align: center;*/
             line-height: 100px;
           }
           .account-button {
@@ -380,7 +380,7 @@ export default {
               }
             }
             .account-upload {
-              background-color: #323E48;
+              /*background-color: #323E48;*/
               .icon-plus {
                 color: #828EA6;
               }

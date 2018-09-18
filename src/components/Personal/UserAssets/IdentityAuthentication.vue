@@ -16,7 +16,7 @@
             <div class="header-border display-flex margin20">
               <span class="font-size16 main-header-title">实名认证</span>
               <p
-                v-if="realNameInformationObj.realname"
+                v-if="userInfoRefresh.realname === ''"
                 class="authentication-type font-size12"
               >
                 （请如实填写您的身份信息，一经认证不可修改）
@@ -50,7 +50,7 @@
           </div>
       </div>
       <div
-        v-if="!realNameInformationObj.realnameAuth"
+        v-if="userInfoRefresh.realname === ''"
         class="name-authentication-content margin-top9"
       >
         <el-form
@@ -63,7 +63,7 @@
               @change="changeId"
             >
               <el-option
-                v-for="(item, index) in regionList"
+                v-for="(item, index) in contryAreaList"
                 :key="index"
                 :label="item.chinese"
                 :value="item.chinese"
@@ -603,10 +603,10 @@ export default {
     // 高级认证弹窗
     authenticationMethod () {
       // 判断是否高级认证&&实名认证
-      if (this.realNameInformationObj.realnameAuth && !this.realNameInformationObj.advancedAuth) {
-        this.seniorAuthentication = true
-      } else {
+      if (!this.userInfoRefresh.realname && !this.userInfoRefresh.advancedAuth) {
         this.seniorAuthentication = false
+      } else if (this.userInfoRefresh.realname) {
+        this.seniorAuthentication = true
       }
     },
     // 高级认证内容
@@ -658,7 +658,9 @@ export default {
       if (!(returnAjaxMessage(data, this, 1))) {
         return false
       } else {
+        this.getUserRefreshUser()
         this.getRealNameInformation()
+        this.authenticationStatusFront = false
         this.dialogImageFrontUrl = ''
         this.dialogImageReverseSideUrl = ''
         this.dialogImageHandUrl = ''
@@ -677,6 +679,7 @@ export default {
   computed: {
     ...mapState({
       theme: state => state.common.theme,
+      contryAreaList: state => state.common.contryAreaList,
       userInfo: state => state.user.loginStep1Info // 用户详细信息
     })
   },

@@ -21,3 +21,9 @@
   background:rgba(51,143,245,0.1);
   border-left: 4px solid rgba(0, 121, 254, 1);
 }
+.personal-center.personal.night .el-dialog {
+  background-color: #28334A;
+}
+.personal-center.personal.night .el-dialog__title{
+  color: #fff;
+}

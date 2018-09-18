@@ -265,7 +265,11 @@
                             >
                             <p class="count-flex-text text-align-r">
                               <span>限额：</span>
-                              <span>600000.00CNY</span>
+                              <span>
+                                {{serviceChargeList.minWithdraw}}
+                                -
+                                {{serviceChargeList.maxWithdraw}}
+                              </span>
                             </p>
                           </div>
                           <div class="count-flex-box padding-top20">
@@ -312,7 +316,9 @@
                         title="提币"
                         :visible.sync="mentionMoneyConfirm"
                       >
-                        <el-form :model="form">
+                        <el-form
+                          :label-position="labelPosition"
+                        >
                           <!--手机已认证-->
                           <el-form-item
                             v-if="securityCenter.isPhoneEnable"
@@ -379,6 +385,31 @@
                           </el-button>
                         </div>
                       </el-dialog>
+                      <el-dialog
+                        title="设置交易密码"
+                        :visible.sync="dialogVisible"
+                        center
+                      >
+                        <span class="info text-align-c display-inline-block">设置交易密码</span>
+                        <span
+                          slot="footer"
+                          class="dialog-footer footer"
+                        ><!--确 定 取 消-->
+                          <button
+                            class="button-color border-radius4 cursor-pointer"
+                            type="primary"
+                            @click="confirm"
+                          >
+                            确 定
+                          </button>
+                          <button
+                            class="btn border-radius4 cursor-pointer"
+                            @click="dialogVisible = false"
+                          >
+                            取 消
+                          </button>
+                        </span>
+                      </el-dialog>
                     </div>
                   </div>
                 </transition>
@@ -411,12 +442,13 @@ import {formatNumberInput} from '../../../utils'
 import { createNamespacedHelpers, mapState } from 'vuex'
 import {
   assetCurrenciesList,
-  inquireWithdrawalAddressList,
   inquireRechargeAddressList,
   statusSubmitWithdrawButton,
   withdrawalInformation,
   statusSecurityCenter,
-  queryTransactionInformation
+  queryTransactionInformation,
+  inquireWithdrawalAddressId,
+  userRefreshUser
 } from '../../../utils/api/personal'
 import {
   returnAjaxMessage,
@@ -437,6 +469,7 @@ export default {
   // props,
   data () {
     return {
+      labelPosition: 'top',
       activeNames: ['1'],
       errorMessage: '',
       showStatusButton: false, // 显示币种
@@ -455,6 +488,7 @@ export default {
       serviceChargeCount: '', // 自定义到账数量
       seen: false,
       current: 0,
+      dialogVisible: false,
       currencyTradingList: [],
       stateIsShowId: false,
       activeName: 'current-entrust',
@@ -471,6 +505,7 @@ export default {
       mentionMoneyName: '', // 每行数据币种名称
       mentionAddressValue: '', // 每行数据提币地址
       amount: '', // 数量
+      service: '', // 手续费
       pointLength: 4, // 小数为限制
       mentionMoneyConfirm: false, // 默认提币确认弹窗
       phoneCode: '', // 邮箱验证
@@ -493,7 +528,8 @@ export default {
         sellsymbol: 'LTC',
         tradeId: '486138009935151100',
         volume: '1903130.8'
-      }
+      },
+      userInfoRefresh: {}
     }
   },
   created () {
@@ -550,10 +586,11 @@ export default {
       let target = this.$refs[ref][index]
       formatNumberInput(target, pointLength)
       // 获取输入数量
+      this.service = this.$refs.serviceCharge[index].value
       this.amount = this.$refs.rechargeCount[index].value
       // 输入数量之后显示在到账数量框中显示,在手续费中输入手续费并且以输入数量之后减去的值显示在到账数量
       this.serviceChargeCount = Math.abs(this.$refs.rechargeCount[index].value - this.$refs.serviceCharge[index].value)
-      console.log(this.serviceChargeCount)
+      console.log(this.amount)
     },
     // 显示充值框
     showRechargeBox (id, name, index) {
@@ -610,16 +647,12 @@ export default {
         activeSymbol
       })
     },
-    // 发送邮箱验证码
+    // 发送验证码
     sendPhoneOrEmailCode (loginType) {
-      // console.log(this.disabledOfPhoneBtn)
-      // console.log(this.disabledOfEmailBtn)
       if (this.disabledOfPhoneBtn || this.disabledOfEmailBtn) {
         return false
       }
       let params = {
-        // address: this.emailAccounts, // 邮箱账号
-        // country: this.activeCountryCode // 邮箱国籍
       }
       switch (loginType) {
         case 0:
@@ -705,7 +738,8 @@ export default {
     },
     // 查询提币地址列表查询
     async queryWithdrawalAddressList () {
-      let data = await inquireWithdrawalAddressList({
+      let data = await inquireWithdrawalAddressId({
+        coinId: this.mentionMoneyAddressId
         // shortName: this.partnerId, // 币种名称
         // selectType: this.hideStatusButton // all：所有币种 noall：有资产币种
       })
@@ -713,9 +747,9 @@ export default {
       if (!(returnAjaxMessage(data, this, 0))) {
         return false
       } else {
-        // 返回列表数据
-        this.mentionAddressList = data.data.data.UserWithdrawAddressPage.list
-        this.mentionAddressValue = data.data.data.UserWithdrawAddressPage.list[0].address
+        // 返回列表数据userWithdrawAddressDtoList
+        this.mentionAddressList = data.data.data.userWithdrawAddressDtoList
+        // this.mentionAddressValue = data.data.data.userWithdrawAddressDtoList[0].address
       }
     },
     /**
@@ -732,7 +766,8 @@ export default {
         // 返回列表数据
         this.serviceChargeList = data.data.data
         this.serviceCharge = data.data.data.minFees
-        this.$refs.serviceCharge[index].value = this.serviceCharge
+        // this.$refs.serviceCharge[index].value = this.serviceCharge
+        // console.log(this.$refs.serviceCharge[index].value)
       }
     },
     /**
@@ -755,21 +790,19 @@ export default {
     * 点击提币按钮
     * */
     moneyConfirmState () {
-      // if (!this.rechargeCount) {
-      //   this.errorMessage = '数量不能为空'
-      //   return
-      // } else if (!this.rechargeCount) {
-      //   this.errorMessage = '提币数量不能大于总数量'
-      //   return
-      // } else if (this.serviceChargeList.maxFees > this.serviceCharge > this.serviceChargeList.minFees) {
-      //   this.errorMessage = '手续费只能在' +
-      //     this.serviceChargeList.maxFees +
-      //     '与' + this.serviceChargeList.minFees +
-      //     '之间'
-      //   return
-      // }
-      this.mentionMoneyConfirm = true
-      this.getSecurityCenter()
+      this.phoneCode = '' // 短信验证码
+      this.emailCode = '' // 邮箱验证码
+      this.googleCode = '' // 谷歌验证码
+      this.payPassword = ''
+      if (this.userInfoRefresh.payPassword !== '') {
+        this.mentionMoneyConfirm = true
+        this.getSecurityCenter()
+      } else {
+        this.dialogVisible = true
+      }
+    },
+    confirm () {
+      this.$router.push({path: '/TransactionPassword'})
     },
     submitMentionMoney () {
       this.stateSubmitAssets()
@@ -783,6 +816,7 @@ export default {
         googleCode: this.googleCode, // 谷歌验证码
         coinId: this.mentionMoneyAddressId, // 币种ID
         withdrawAddress: this.mentionAddressValue, // 提币地址
+        networkFees: this.service, // 手续费
         amount: this.amount, // 提币数量
         payCode: this.password // 交易密码
       }
@@ -819,6 +853,21 @@ export default {
         type: 'success',
         message: msg
       })
+    },
+    /**
+     *  刷新用户信息
+     */
+    async getUserRefreshUser () {
+      let data = await userRefreshUser({
+        token: this.userInfo.token
+      })
+      console.log(data)
+      if (!(returnAjaxMessage(data, this, 0))) {
+        return false
+      } else {
+        // 返回列表数据
+        this.userInfoRefresh = data.data.data.userInfo
+      }
     },
     /**
      * 安全中心
@@ -924,6 +973,27 @@ export default {
                     height:195px;
                     padding: 20px 6px;
                     z-index: 2;
+                    .info {
+                      color: #fff;
+                    }
+                    .button-color {
+                      width: 80px;
+                      height: 35px;
+                      border: 0;
+                      line-height: 0;
+                      margin-left: 50px;
+                      margin-right: 15px;
+                      color: rgba(255,255,255,0.7);
+                      background: linear-gradient(81deg,rgba(43,57,110,1) 0%,rgba(42,80,130,1) 100%);
+                    }
+                    .btn{
+                      width: 80px;
+                      height: 35px;
+                      line-height: 0;
+                      color: rgba(255, 255, 255, 0.7);
+                      background-color: transparent;
+                      border: 1px solid #338FF5;
+                    }
                     >.triangle {
                       position: absolute;
                       top: -7px;
@@ -988,7 +1058,10 @@ export default {
                           }
                           >.service-charge {
                             width: 100%;
+                            position: absolute;
+                            top: 70px;
                             height: 20px;
+                            right: 0;
                           }
                           >.flex-input,
                           >.text-input {
@@ -1013,9 +1086,9 @@ export default {
                           >.count-flex-text {
                             line-height: 20px ;
                           }
-                          >.count-flex-text {
-                            padding-right: 25px;
-                          }
+                          /*>.count-flex-text {*/
+                            /*padding-right: 25px;*/
+                          /*}*/
                           >.count-flex-input,
                           >.count-text-input {
                             width: 250px;
@@ -1040,7 +1113,7 @@ export default {
                     .content-input {
                       width: 180px;
                       height: 34px;
-                      margin-top: 20px;
+                      /*margin-top: 20px;*/
                     }
                     .input-google {
                       width: 270px;
@@ -1048,7 +1121,7 @@ export default {
                     .send-code-btn {
                       width: 90px;
                       height: 35px;
-                      margin-left: -3px;
+                      margin-left: -4px;
                       padding: 0;
                     }
                   }

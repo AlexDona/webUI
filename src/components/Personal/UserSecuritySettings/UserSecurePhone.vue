@@ -7,7 +7,7 @@
     <div class="set-phone-main margin25">
       <header class="set-phone-header personal-height60 line-height60 line-height70 margin25">
         <span
-          v-if="securityCenter.isPhoneBind"
+          v-if="!securityCenter.isPhoneBind"
           class="header-content-left header-content font-size16 font-weight600"
         >
           修改手机

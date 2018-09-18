@@ -528,6 +528,7 @@ export default {
         // this.statusList = data.data.data.statusList
         this.typeList = data.data.data.typeList
         this.matchTypeList = data.data.data.matchTypeList
+        console.log(this.matchTypeList)
       }
     },
     /**
@@ -573,6 +574,7 @@ export default {
         currentPage: '',
         pageSize: this.pageSize,
         buyCoinName: this.activeSymbol,
+        matchType: this.activeMatchType,
         type: this.activeType,
         sellCoinName: this.activeExchangeArea,
         startTime: this.startTime === '' ? '' : timeFilter(this.startTime, 'normal'),

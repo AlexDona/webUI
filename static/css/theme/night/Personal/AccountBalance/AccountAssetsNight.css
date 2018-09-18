@@ -16,3 +16,10 @@
 .account-assets.personal.night .el-dialog__title {
   color: #fff;
 }
+.account-assets.personal.night  .el-button {
+  background: linear-gradient(0deg, #2b396e, #2a5082);
+  color: #fff;
+}
+.account-assets.personal .el-form-item__label {
+  color: rgba(255, 255, 255, 0.7);
+}
