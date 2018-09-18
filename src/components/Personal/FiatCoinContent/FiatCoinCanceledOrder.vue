@@ -161,7 +161,7 @@ export default {
           text-align: center;
         }
         /*>.order-time {*/
-          /*width: 150px;*/
+        /*width: 150px;*/
         /*}*/
       }
       >.canceled-table-body{

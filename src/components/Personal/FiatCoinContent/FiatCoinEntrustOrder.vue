@@ -217,57 +217,26 @@ export default {
     .fiat-entrust-order-table {
       > .entrust-table-head {
         box-sizing: border-box;
-        /*width: 1045px;*/
         height: 35px;
         line-height: 35px;
-        background-color: #1E2636;
-        color: #617499;
-        border: 1px solid #262F38;
         border-radius: 5px;
         margin-bottom: 5px;
-        /*box-shadow:底边阴影;*/
-        // box-shadow: 2px 4px 6px #191E28;
-        box-shadow: -2px 3px 5px 1px #191E28;
         z-index: 200;
         > .item {
           display: inline-block;
-          /*width: 126px;*/
           text-align: center;
-          // text-align: left;
         }
-        /*> .first-style {*/
-          /*width: 70px;*/
-        /*}*/
-        /*> .second-coin {*/
-          /*width: 150px;*/
-        /*}*/
-        /*> .third-price {*/
-          /*width: 150px;*/
-        /*}*/
-        /*> .fourth-entrust-count {*/
-          /*width: 150px;*/
-        /*}*/
-        /*> .fifth-match-count {*/
-          /*width: 150px;*/
-        /*}*/
-        /*> .sixth-total-amount {*/
-          /*width: 150px;*/
-        /*}*/
         > .senventh-create-time {
           width: 150px;
         }
         > .senventh-create-time1 {
           width: 120px;
         }
-        /*> .eighth-action {*/
-          /*width: 70px;*/
-        /*}*/
       }
-      > .entrust-table-body {
-        min-height: 432px;
+      > .entrust-table-body,
+      .item{
         background-color: #1E2636;
-        color: #9DA5B3;
-        border: 1px solid #262F38;
+        min-height: 432px;
         border-top: none;
         border-bottom-right-radius: 5px;
         border-bottom-left-radius: 5px;
@@ -279,17 +248,9 @@ export default {
           display: flex;
           height: 34px;
           line-height: 34px;
-          .red {
-            color: #D45858;
-          }
-          .green {
-            color: #008069;
-          }
           > .item {
             display: inline-block;
-            /*width: 126px;*/
             text-align: center;
-            // text-align: left;
           }
           > .first-style {
             width: 80px;
@@ -327,12 +288,56 @@ export default {
           color: #338FF5;
         }
       }
+      > .entrust-table-head {
+        background-color: #1E2636;
+        color: #617499;
+        border: 1px solid #262F38;
+        box-shadow: -2px 3px 5px 1px #191E28; text-align: left;
+        }
+        > .senventh-create-time {
+          width: 150px;
+        }
+        > .senventh-create-time1 {
+          width: 120px;
+        }
+      > .entrust-table-body {
+        background-color: #1E2636;
+        color: #9DA5B3;
+        border: 1px solid #262F38;
+        > .entrust-list-content {
+          .red {
+            color: #D45858;
+          }
+          .green {
+            color: #008069;
+          }
+        }
+      }
     }
     &.day{
       background-color: $dayBgColor;
       color:$dayFontColor;
       >.background-color{
         background-color: #CCCCCC;
+      }
+      > .entrust-table-head {
+        background-color: #1E2636;
+        color: #617499;
+        border: 1px solid #262F38;
+      }
+      > .entrust-table-body {
+        min-height: 432px;
+        background-color: #fff;
+        color: #9DA5B3;
+        border: 1px solid #262F38;
+        > .entrust-list-content {
+          .red {
+            color: #D45858;
+          }
+          .green {
+            color: #008069;
+          }
+        }
       }
     }
   }

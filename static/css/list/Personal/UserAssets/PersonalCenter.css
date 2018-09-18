@@ -18,21 +18,36 @@ personal-center.personal .el-tabs__nav{
   line-height: 34px;
   margin: 10px 0;
 }
+.personal-center.personal .el-dialog:nth-child(1) {
+  border-radius: 10px;
+  /*width: 300px;*/
+  /* height: 200px; */
+  top: 15%;
+}
 .personal-center.personal .el-tabs--left .el-tabs__header.is-left{
   margin-right: 16px;
 }
 .personal-center.personal .is-disabled{
   font-size: 18px;
 }
-.personal .el-tabs__content {
+.personal-center.personal .el-tabs__content {
   float: right;
   width: 920px;
   overflow: unset;
   position: relative;
 }
-.personal .el-tabs--left {
+.personal-center.personal .el-tabs--left {
   overflow: unset;
 }
-.el-tabs--left .el-tabs__nav-wrap.is-left {
+.personal-center.personal .el-tabs--left .el-tabs__nav-wrap.is-left {
   margin-right: 0px;
+}
+/*.personal-center.personal .is-disabled:hover {*/
+  /*background-color: #1E2636;*/
+  /*color: red;*/
+/*}*/
+.personal-center.personal .el-dialog {
+  width: 300px;
+  /*height: 200px;*/
+  border-radius: 5px;
 }

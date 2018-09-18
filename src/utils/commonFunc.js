@@ -5,7 +5,7 @@ import {
   repealMyEntrustAjax
 } from '../utils/api/trade'
 import {
-  assetCurrenciesList,
+  userRefreshUser,
   statusSecurityCenter,
   getQueryAllOrdersList
 } from '../utils/api/personal'
@@ -18,7 +18,10 @@ import {
 import {
   getPartnerList
 } from '../utils/api/home'
-import {getCountryList} from '../utils/api/header'
+import {
+  getCountryList,
+  getServiceProtocoDataAjax
+} from '../utils/api/header'
 import {PHONE_REG, EMAIL_REG, ID_REG, PWD_REG, ALIPAY_REG, BANK_REG, GOOGLE_REG} from './regExp'
 // import {
 //   CHANGE_CANCELED_ORDERS_LIST,
@@ -117,14 +120,10 @@ export const getMerchantsOrdersList = async (params, callback) => {
 }
 /**
  * 个人资产信息
- * 币种
- * 总数量
- * 冻结数量
- * 可用数量 = 总数量 + 冻结数量
  */
 export const globalPersonalAssetsInformation = async (params, callback) => {
-  const assetData = await assetCurrenciesList(params)
-  callback(assetData)
+  const data = await userRefreshUser(params)
+  callback(data)
 }
 // socket 请求类型参数分割
 export const splitSocketParams = (params) => {
@@ -169,6 +168,15 @@ export const changeCurrentPageForLegalTrader = (currentPage, type, that) => {
 }
 export const getCountryListAjax = async (that, callback) => {
   const data = await getCountryList()
+  if (!returnAjaxMessage(data, that)) {
+    return false
+  } else {
+    callback(data)
+  }
+}
+// 服务条款接口
+export const getServiceProtocolData = async (that, params, callback) => {
+  const data = await getServiceProtocoDataAjax(params)
   if (!returnAjaxMessage(data, that)) {
     return false
   } else {

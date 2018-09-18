@@ -18,3 +18,9 @@ export const getCountryList = () => get('country/selectList')
 export const getFooterInfo1 = (params) => get('foot', params)
 // 底部信息(2)
 export const getFooterInfo2 = (params) => get('home/bottom', params)
+// 服务条款币种资料列表
+export const getCurrencyInfoList = (params) => get('cms/coinInformation/all', params)
+// 服务条款币种列表对应的单个币种详细资料
+export const getCurrencyDetails = (params) => get(`cms/coinInformation/select/${params}`)
+
+export const getServiceProtocoDataAjax = (params) => get('cms/terms/selectAll', params)

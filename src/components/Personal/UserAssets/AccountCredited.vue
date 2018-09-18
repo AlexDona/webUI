@@ -46,20 +46,22 @@
                 class="switch-img cursor-pointer"
                 :src="openPictureSrc"
               >
-              <router-link to="/AddBankCard">
+              <!--<router-link to="/AddBankCard">-->
                 <span
                   v-if="paymentTerm.isBankBind"
                   class="payment-state cursor-pointer"
+                  @click="setShowStatusSecurity('bank')"
                 >
                     设置
                 </span>
                 <span
                   v-else
                   class="payment-state cursor-pointer"
+                  @click="setShowStatusSecurity('bank')"
                 >
                     修改
                 </span>
-              </router-link>
+              <!--</router-link>-->
             </div>
           </div>
           <!--微信-->
@@ -89,20 +91,22 @@
                 class="switch-img cursor-pointer"
                 :src="openPictureSrc"
               >
-              <router-link to="/AddWeChat">
+              <!--<router-link to="/AddWeChat">-->
                 <span
                   v-if="paymentTerm.isWeixinBind"
                   class="payment-state cursor-pointer"
+                  @click="setShowStatusSecurity('weChat')"
                 >
                     设置
                 </span>
                 <span
                   v-else
                   class="payment-state cursor-pointer"
+                  @click="setShowStatusSecurity('weChat')"
                 >
                     修改
                 </span>
-              </router-link>
+              <!--</router-link>-->
             </p>
           </div>
           <!--支付宝-->
@@ -132,20 +136,22 @@
                 class="switch-img cursor-pointer"
                 :src="openPictureSrc"
               >
-              <router-link to="/AddSetAlipay">
+              <!--<router-link to="/AddSetAlipay">-->
                 <span
                   v-if="paymentTerm.isAlipayBind"
                   class="payment-state cursor-pointer"
+                  @click="setShowStatusSecurity('alipay')"
                 >
                   设置
                 </span>
                 <span
                   v-else
                   class="payment-state cursor-pointer"
+                  @click="setShowStatusSecurity('alipay')"
                 >
                   修改
                 </span>
-              </router-link>
+              <!--</router-link>-->
             </p>
           </div>
           <!--PAYPAL-->
@@ -175,20 +181,22 @@
                 class="switch-img cursor-pointer"
                 :src="openPictureSrc"
               >
-              <router-link class="setting-btn" to="/AddSetPaypal">
+              <!--<router-link class="setting-btn" to="/AddSetPaypal">-->
                 <span
                   v-if="paymentTerm.isPaypalBind"
                   class="payment-state cursor-pointer"
+                  @click="setShowStatusSecurity('paypal')"
                 >
                   设置
                 </span>
                 <span
                   v-else
                   class="payment-state cursor-pointer"
+                  @click="setShowStatusSecurity('paypal')"
                 >
                   修改
                 </span>
-              </router-link>
+              <!--</router-link>-->
             </p>
           </div>
           <!--西联汇款-->
@@ -215,83 +223,57 @@
                 class="switch-img cursor-pointer"
                 :src="openPictureSrc"
               >
-              <router-link class="setting-btn" to="/AddWesternUnion">
+              <!--<router-link class="setting-btn" to="/AddWesternUnion">-->
                 <span
                   v-if="paymentTerm.isXilianBind"
                   class="payment-state cursor-pointer"
+                  @click="setShowStatusSecurity('westernUnion')"
                 >
                   设置
                 </span>
                 <span
                   v-else
                   class="payment-state cursor-pointer"
+                  @click="setShowStatusSecurity('westernUnion')"
                 >
                   修改
                 </span>
-              </router-link>
+              <!--</router-link>-->
             </p>
           </div>
-          <!--未实名认证前弹框提示-->
-          <el-dialog
-            :visible.sync="centerModelWarning"
-            center
-          >
-            <div class="dialog-warning">
-              <div class="dialog-warning-box">
-                <IconFontCommon
-                  class="font-size60"
-                  iconName="icon-gantanhao"
-                />
-              </div>
-            </div>
-            <p class="font-size12 warning-text margin-top35 text-align-c">
-              请先完成身份认证，再来设置OTC收款账户!
-            </p>
-            <span
-              slot="footer"
-              class="dialog-footer"
-            >
-              <el-button
-                type="primary"
-                @click="authenticationJump"
-              >
-                去认证
-              </el-button>
-          </span>
-          </el-dialog>
           <!--开启二次确认弹框-->
           <el-dialog
-            title="开启收款方式"
+            title=""
             :visible.sync="openCollectionMode"
             center
           >
             <!--<span>是否确定关闭当前收款方式</span>-->
             <span
-              class="text-info"
+              class="text-info font-size16"
               v-show="closeBankCard"
             >
               开启银行卡收款方式
             </span>
             <span
-              class="text-info"
+              class="text-info font-size16"
               v-show="closeMicroLetter"
             >
               开启微信收款方式
             </span>
             <span
-              class="text-info"
+              class="text-info font-size16"
               v-show="closeAlipay"
             >
               开启支付宝收款方式
             </span>
             <span
-              class="text-info"
+              class="text-info font-size16"
               v-show="closePayapl"
             >
               开启payapl收款方式
             </span>
             <span
-              class="text-info"
+              class="text-info font-size16"
               v-show="closeWesternUnion"
             >
               开启西联汇款收款方式
@@ -316,38 +298,38 @@
           </el-dialog>
           <!--关闭二次确认弹框-->
           <el-dialog
-            title="关闭收款方式"
+            title=""
             :visible.sync="closeCollectionMode"
             center
           >
             <!--<span>是否确定关闭当前收款方式</span>-->
             <span
               v-show="closeBankCard"
-              class="text-info"
+              class="text-info font-size16"
             >
               是否确定关闭银行卡收款方式
             </span>
             <span
               v-show="closeMicroLetter"
-              class="text-info"
+              class="text-info font-size16"
             >
               是否确定关闭微信收款方式
             </span>
             <span
               v-show="closeAlipay"
-              class="text-info"
+              class="text-info font-size16"
             >
               是否确定关闭支付宝收款方式
             </span>
             <span
               v-show="closePayapl"
-              class="text-info"
+              class="text-info font-size16"
             >
               是否确定关闭payapl收款方式
             </span>
             <span
               v-show="closeWesternUnion"
-              class="text-info"
+              class="text-info font-size16"
             >
               是否确定关闭西联汇款收款方式
             </span>
@@ -369,6 +351,34 @@
               </el-button>
             </span>
           </el-dialog>
+          <!--未实名认证前弹框提示-->
+          <el-dialog
+            :visible.sync="centerModelWarning"
+            center
+          >
+            <div class="dialog-warning">
+              <div class="dialog-warning-box">
+                <IconFontCommon
+                  class="font-size60"
+                  iconName="icon-gantanhao"
+                />
+              </div>
+            </div>
+            <p class="font-size12 warning-text margin-top35 text-align-c">
+              请先完成身份认证并且设置交易密码，再来设置OTC收款账户!
+            </p>
+            <span
+              slot="footer"
+              class="dialog-footer"
+            >
+              <el-button
+                type="primary"
+                @click="authenticationJump"
+              >
+                去认证
+              </el-button>
+            </span>
+          </el-dialog>
         </div>
       </div>
     </div>
@@ -378,7 +388,11 @@
 <script>
 import IconFontCommon from '../../Common/IconFontCommon'
 import {returnAjaxMessage} from '../../../utils/commonFunc'
-import {accountPaymentTerm, openAndCloseModeSetting} from '../../../utils/api/personal'
+import {
+  accountPaymentTerm,
+  openAndCloseModeSetting,
+  userRefreshUser
+} from '../../../utils/api/personal'
 import {mapState, createNamespacedHelpers} from 'vuex'
 const { mapMutations } = createNamespacedHelpers('personal')
 export default {
@@ -393,6 +407,7 @@ export default {
       alipay: false, // 支付宝状态的设置
       paypal: false, // PAYPAL状态的设置
       westernUnion: false, // 西联汇款状态的设置
+      userInfoRefresh: {},
       closePictureSrc: require('../../../assets/user/wrong.png'), // 关闭
       openPictureSrc: require('../../../assets/user/yes.png'), // 开启
       centerModelWarning: false, // 未实名认证前弹框提示
@@ -436,10 +451,32 @@ export default {
       this.$router.push({path: '/PersonalCenter'})
       this.CHANGE_USER_CENTER_ACTIVE_NAME('identity-authentication')
     },
+    // 路由跳转对应组件
+    setShowStatusSecurity (val) {
+      switch (val) {
+        case 'bank':
+          this.$router.push({path: '/AddBankCard'})
+          break
+        case 'weChat':
+          this.$router.push({path: '/AddWeChat'})
+          break
+        case 'alipay':
+          this.$router.push({path: '/AddSetAlipay'})
+          break
+        case 'paypal':
+          this.$router.push({path: '/AddSetPaypal'})
+          break
+        case 'westernUnion':
+          this.$router.push({path: '/AddWesternUnion'})
+          break
+      }
+    },
     // 判断是否实名认证
     setCollectionMode () {
-      if (this.userInfo.userInfo.realname) {
+      if (this.userInfoRefresh.realname === '') {
         this.centerModelWarning = true
+      } else {
+        this.centerModelWarning = false
       }
     },
     // 确认开启关闭
@@ -627,6 +664,21 @@ export default {
         // 返回状态展示
         this.paymentTerm = data.data.data
       }
+    },
+    /**
+     *  刷新用户信息
+     */
+    async getUserRefreshUser () {
+      let data = await userRefreshUser({
+        token: this.userInfo.token
+      })
+      console.log(data)
+      if (!(returnAjaxMessage(data, this, 0))) {
+        return false
+      } else {
+        // 返回列表数据
+        this.userInfoRefresh = data.data.data.userInfo
+      }
     }
   },
   filter: {},
@@ -654,6 +706,10 @@ export default {
           padding: 9px 73px 8px 17px;
         }
         >.payment-content {
+          .text-info {
+            display: inline-block;
+            margin: 45px 0 0px;
+          }
           .btn {
             width: 90px;
             height: 35px;
@@ -716,7 +772,7 @@ export default {
         .credited-box{
           >.payment-content {
             .text-info {
-              color: #333;
+              color: #fff;
             }
             .btn {
               color: #fff;
@@ -796,6 +852,9 @@ export default {
         color: #333;
       }
       .payment-content {
+        .text-info {
+          color: #333;
+        }
         .btn {
           color: #fff;
           background-color: transparent;

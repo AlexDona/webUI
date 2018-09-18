@@ -1,38 +1,47 @@
 <template>
   <div
-    class="user-protocol-box"
+    class="rate-box"
     :class="{'day':theme == 'day','night':theme == 'night' }"
   >
     <div class="content">
       <div class="content">
         <div class="inner-box">
-          <ul class="table">
-            <li class="th">
-              <span class="td">交易对</span>
-              <span class="td">买单</span>
-              <span class="td">卖单</span>
-              <span class="td">提币</span>
-            </li>
-            <li
-              class="tr"
-              v-for="(item,index) in rateList"
-              :key="index"
-            >
-              <span class="td">
-                {{item.symbol}}
-              </span>
-              <span class="td">
-                {{item.buyRate}}
-              </span>
-              <span class="td">
-                {{item.sellRate}}
-              </span>
-              <span class="td">
-                {{item.withdrawCurrency}}
-              </span>
-            </li>
-          </ul>
+          <h2>{{rateData.termsTypeName}}</h2>
+          <div
+            class="content"
+            v-html="rateData.content"
+          >
+
+          </div>
         </div>
+        <!--<div class="inner-box">-->
+          <!--<ul class="table">-->
+            <!--<li class="th">-->
+              <!--<span class="td">交易对</span>-->
+              <!--<span class="td">买单</span>-->
+              <!--<span class="td">卖单</span>-->
+              <!--<span class="td">提币</span>-->
+            <!--</li>-->
+            <!--<li-->
+              <!--class="tr"-->
+              <!--v-for="(item,index) in rateList"-->
+              <!--:key="index"-->
+            <!--&gt;-->
+              <!--<span class="td">-->
+                <!--{{item.symbol}}-->
+              <!--</span>-->
+              <!--<span class="td">-->
+                <!--{{item.buyRate}}-->
+              <!--</span>-->
+              <!--<span class="td">-->
+                <!--{{item.sellRate}}-->
+              <!--</span>-->
+              <!--<span class="td">-->
+                <!--{{item.withdrawCurrency}}-->
+              <!--</span>-->
+            <!--</li>-->
+          <!--</ul>-->
+        <!--</div>-->
       </div>
     </div>
   </div>
@@ -77,45 +86,33 @@ export default {
   filter: {},
   computed: {
     ...mapState({
-      theme: state => state.common.theme
+      theme: state => state.common.theme,
+      rateData: state => state.footerInfo.serviceProtocolData.rateData
+
     })
   },
   watch: {}
 }
 </script>
 <style scoped lang="scss" type="text/scss">
-  .user-protocol-box{
+  .rate-box{
     width:100%;
     height:100%;
     >.content{
       width:100%;
       >.content{
-        overflow: hidden;
+        background-color: green;
+        /*overflow: hidden;*/
         >.inner-box{
-          margin:50px auto;
-          height:1100px;
-          width:1100px;
-          padding:50px;
-          >.table{
+          margin:0;
+          height:1069px;
+          width:1000px;
+          box-sizing: border-box;
+          padding:0px 50px;
+          line-height: 26px;
+          >h2{
             text-align: center;
-            >.th,>.tr{
-              display:flex;
-              >.td{
-                flex:1;
-              }
-            }
-            >.th{
-              height:65px;
-              background-color: #33425f;
-              line-height:65px;
-              color:#fff;
-            }
-            >.tr{
-              height:50px;
-              line-height:50px;
-              border-bottom:1px solid rgba(40,49,67,1);
-              >.td{}
-            }
+            line-height: 70px;
           }
         }
       }
@@ -132,7 +129,7 @@ export default {
           background-color: #121824;
           >.inner-box{
             background-color: #1e2636;
-            color:#8BA0CA
+            /*color: #fff;*/
           }
         }
       }

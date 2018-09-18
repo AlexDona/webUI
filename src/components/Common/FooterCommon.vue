@@ -2,15 +2,19 @@
   <div class="footer-box common">
     <div class="inner-box">
       <!--顶部-->
-      <div class="top">
+      <div
+        class="top"
+       v-if="footerInfo1.logo"
+      >
         <div class="left">
           <!--logo-->
-          <div class="logo">
-            <!--<img :src="footerInfo1.logo.url">-->
+          <div class="logo"
+          >
+            <img :src="footerInfo1.logo.url">
           </div>
           <!--简介-->
           <div class="introduction font-size12">
-            <!--{{footerInfo1.logo.content}}-->
+            {{footerInfo1.logo.content}}
           </div>
           <!--分享-->
           <ul class="share-box">
@@ -34,9 +38,10 @@
             <!--<dd class="dd-item">客户端下载</dd>-->
             <dd
               class="dd-item"
-              @click="jumpToOtherPage('/NewsAndNoticeList','help')"
             >
-              帮助中心
+              <router-link to="/HelpCenter">
+                帮助中心
+              </router-link>
             </dd>
             <dd
               class="dd-item"
@@ -109,10 +114,10 @@
 </template>
 <script>
 import {
-  // getFooterInfo1,
+  getFooterInfo1,
   getFooterInfo2
 } from '../../utils/api/header'
-// import {returnAjaxMessage} from '../../utils/commonFunc'
+import {returnAjaxMessage} from '../../utils/commonFunc'
 import Iconfont from '../Common/IconFontCommon'
 import {createNamespacedHelpers, mapState} from 'vuex'
 const {mapMutations} = createNamespacedHelpers('footerInfo')
@@ -174,24 +179,24 @@ export default {
         partnerId: this.partnerId,
         language: this.language
       }
-      // const data1 = await getFooterInfo1(params)
+      const data1 = await getFooterInfo1(params)
       const data2 = await getFooterInfo2(params)
-      // console.log(data1)
+      console.log(data1)
       console.log(data2)
-      // if (!returnAjaxMessage(data1, this) && !returnAjaxMessage(data2, this)) {
-      //   return false
-      // } else {
-      //   this.footerInfo1 = data1.data.data
-      //   this.shareList[0].ercodeSrc = this.footerInfo1.twitter
-      //   this.shareList[1].ercodeSrc = this.footerInfo1.facebook
-      //   this.shareList[2].ercodeSrc = this.footerInfo1.weixin
-      //   this.shareList[3].ercodeSrc = this.footerInfo1.qq
-      //   this.shareList[4].ercodeSrc = this.footerInfo1.telegraph_group
-      this.footerInfo2 = data2.data.data
-      //   console.log(this.footerInfo2)
-      // console.log(this.footerInfo2)
-      this.linkList = this.footerInfo2.blogrollList
-      // }
+      if (!returnAjaxMessage(data1, this) && !returnAjaxMessage(data2, this)) {
+        return false
+      } else {
+        this.footerInfo1 = data1.data.data
+        this.shareList[0].ercodeSrc = this.footerInfo1.twitter
+        this.shareList[1].ercodeSrc = this.footerInfo1.facebook
+        this.shareList[2].ercodeSrc = this.footerInfo1.weixin
+        this.shareList[3].ercodeSrc = this.footerInfo1.qq
+        this.shareList[4].ercodeSrc = this.footerInfo1.telegraph_group
+        this.footerInfo2 = data2.data.data
+        //   console.log(this.footerInfo2)
+        // console.log(this.footerInfo2)
+        this.linkList = this.footerInfo2.blogrollList
+      }
     }
   },
   filter: {},

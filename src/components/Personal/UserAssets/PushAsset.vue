@@ -92,7 +92,7 @@
               />
             </el-form-item>
             <button
-              class="form-button-common border-radius4"
+              class="form-button-common border-radius4 cursor-pointer"
               @click="getStatusSubmit"
             >
               提交
@@ -121,11 +121,13 @@
               <template slot-scope = "s">
                 <div>{{ s.row.type }}</div>
                 <div
-                  v-if="s.row.id !== userInfo.userInfo.showid"
+                  v-if="s.row.pushId !== userInfo.userInfo.id"
                 >
                   {{ rollIn }}
                 </div>
-                <div v-else>
+                <div
+                  v-if="s.row.pushId == userInfo.userInfo.id"
+                >
                   {{ rollOut }}
                 </div>
               </template>
@@ -187,7 +189,7 @@
             >
               <template slot-scope = "s">
                 <div
-                  v-if="s.row.state == 'PUSH_REGISTER' && showStatusUserInfo.uid == s.row.pushId"
+                  v-if="s.row.state == 'PUSH_REGISTER' && userInfo.userInfo.id == s.row.pushId"
                   class="cursor-pointer state-status"
                   @click="cancelId(s.row.id)"
                   :id="s.row.id"
@@ -195,7 +197,7 @@
                   {{ cancel }}
                 </div>
                 <div
-                  v-if="s.row.state == 'PUSH_REGISTER' && showStatusUserInfo.uid !== s.row.pushId"
+                  v-if="s.row.state == 'PUSH_REGISTER' && userInfo.userInfo.id !== s.row.pushId"
                   class="cursor state-status"
                   @click="paymentId(s.row.id)"
                   :id="s.row.id"
@@ -328,7 +330,6 @@ export default {
   // props,
   data () {
     return {
-      errorMsg: '', // 错误信息提示
       errorShowStatusList: [
         '', // 买方UID
         '', // 数量
@@ -460,7 +461,6 @@ export default {
       switch (type) {
         // 买方UID
         case 0:
-          console.log(type)
           if (!targetNum) {
             this.setErrorMsg(0, '请输入买方UID')
             this.$forceUpdate()
@@ -511,28 +511,41 @@ export default {
     },
     // 确认提交push资产
     getStatusSubmit () {
-      this.checkoutInputFormat()
       this.stateSubmitPushAssets()
     },
     // 提交push资产
     async stateSubmitPushAssets () {
-      let data
-      let param = {
-        coinId: this.currencyValue, // 币种id
-        uid: this.buyUID, // 买方id
-        count: this.count, // push数量
-        price: this.price, // push价格
-        password: this.transactionPassword // 交易密码
-      }
-      data = await pushAssetsSubmit(param)
-      if (!(returnAjaxMessage(data, this, 1))) {
-        return false
+      let goOnStatus = 0
+      if (
+        this.checkoutInputFormat(0, this.buyUID) &&
+        // this.checkoutInputFormat(1, this.count) &&
+        // this.checkoutInputFormat(2, this.price) &&
+        this.checkoutInputFormat(3, this.transactionPassword)
+      ) {
+        goOnStatus = 1
       } else {
-        this.passwordVisible = false
-        // push列表展示
-        this.getPushRecordList()
-        // 清空数据
-        this.emptyInputData()
+        goOnStatus = 0
+      }
+      console.log(goOnStatus)
+      if (goOnStatus) {
+        let data
+        let param = {
+          coinId: this.currencyValue, // 币种id
+          uid: this.buyUID, // 买方id
+          count: this.count, // push数量
+          price: this.price, // push价格
+          password: this.transactionPassword // 交易密码
+        }
+        data = await pushAssetsSubmit(param)
+        if (!(returnAjaxMessage(data, this, 1))) {
+          return false
+        } else {
+          this.passwordVisible = false
+          // push列表展示
+          this.getPushRecordList()
+          // 清空数据
+          this.emptyInputData()
+        }
       }
     },
     // 清空数据
@@ -569,6 +582,7 @@ export default {
       if (!(returnAjaxMessage(data, this, 0))) {
         return false
       } else {
+        this.getPushRecordList()
         this.dialogVisible = false
         console.log(data)
       }

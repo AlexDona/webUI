@@ -4,9 +4,37 @@
 .api-management.personal .el-table td{
   border-bottom: 0;
 }
-.api-management.personal .el-dialog {
+.api-management.personal .el-dialog:first-child {
   width: 360px;
+  min-height: 100px !important;
+}
+.api-management.personal .el-dialog:first-child .el-dialog__body {
+  padding: 0px 30px 0;
+  /*height: ;*/
+}
+.api-management.personal .el-dialog:nth-child(2) {
+   width: 360px;
+   height: 480px !important;
+}
+.api-management.personal .el-dialog:nth-child(4) {
+  width: 300px;
+  height: 200px !important;
+}
+.api-management.personal .el-dialog:last-child
+.el-dialog__headerbtn .el-dialog__close {
+  display: none;
+}
+.api-management.personal .el-dialog:last-child {
+  width: 360px;
+  height: 200px;
   min-height: 100px;
+}
+.api-management.personal.night .el-dialog:last-child .el-button:first-child{
+  border: 0;
+}
+.api-management.personal.night .el-dialog:last-child .el-button:last-child{
+  border: 0;
+  background-color: transparent;
 }
 .api-management.personal .el-dialog__header {
   border-radius: 5px 5px 0 0;

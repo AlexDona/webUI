@@ -16,7 +16,7 @@
             <div class="header-border display-flex margin20">
               <span class="font-size16 main-header-title">实名认证</span>
               <p
-                v-if="realNameInformationObj.realname"
+                v-if="userInfoRefresh.realname === ''"
                 class="authentication-type font-size12"
               >
                 （请如实填写您的身份信息，一经认证不可修改）
@@ -50,7 +50,7 @@
           </div>
       </div>
       <div
-        v-if="!realNameInformationObj.realnameAuth"
+        v-if="userInfoRefresh.realname === ''"
         class="name-authentication-content margin-top9"
       >
         <el-form
@@ -63,7 +63,7 @@
               @change="changeId"
             >
               <el-option
-                v-for="(item, index) in regionList"
+                v-for="(item, index) in contryAreaList"
                 :key="index"
                 :label="item.chinese"
                 :value="item.chinese"
@@ -192,9 +192,10 @@
                 <p class="information">
                   <span class="info-type font-size12">证件号：</span>
                   <span class="user-info font-size14">
-                    {{ userInfoRefresh.cardNo.substring(0,6)}}
+                  <!--  {{ userInfoRefresh.cardNo.substring(0,6)}}
                   ****
-                   {{ userInfoRefresh.cardNo.substring(14,18)}}
+                   {{ userInfoRefresh.cardNo.substring(14,18)}}-->
+                     {{ userInfoRefresh.cardNo}}
                   </span>
                 </p>
                 <p class="information">
@@ -223,7 +224,7 @@
                   <!-- 上传身份证正面 -->
                   <div class="default-center">
                     <el-upload
-                      action="http://192.168.1.217:8888/uploadfile"
+                      action="http://192.168.1.200:8888/uploadfile"
                       :headers="tokenObj"
                       list-type="picture-card"
                       :on-success="handleSuccessFront"
@@ -252,7 +253,7 @@
                   <!-- 上传身份证反面 -->
                   <div class="default-center">
                     <el-upload
-                      action="http://192.168.1.217:8888/uploadfile"
+                      action="http://192.168.1.200:8888/uploadfile"
                       :headers="tokenObj"
                       list-type="picture-card"
                       :on-success="handleSuccessReverseSide"
@@ -281,7 +282,7 @@
                   <!-- 上传手持身份证 -->
                   <div class="default-center">
                     <el-upload
-                      action="http://192.168.1.217:8888/uploadfile"
+                      action="http://192.168.1.200:8888/uploadfile"
                       :headers="tokenObj"
                       list-type="picture-card"
                       :on-success="handleSuccessHand"
@@ -328,13 +329,14 @@
         </div>
         <div
           class="wait-veritfy-back"
-          v-if="statusRealNameInformation.advancedAuth === 'waitVeritfy'"
+          v-if="userInfoRefresh.advancedAuth === 'waitVeritfy'"
         >
           <div class="wait-veritfy text-align-c">
             <IconFontCommon
               class="font-size60 color-coin"
               iconName="icon-daishenhe"
             />
+            <p class="list-height">待审核...</p>
           </div>
         </div>
         <div
@@ -601,10 +603,10 @@ export default {
     // 高级认证弹窗
     authenticationMethod () {
       // 判断是否高级认证&&实名认证
-      if (this.realNameInformationObj.realnameAuth && !this.realNameInformationObj.advancedAuth) {
-        this.seniorAuthentication = true
-      } else {
+      if (!this.userInfoRefresh.realname && !this.userInfoRefresh.advancedAuth) {
         this.seniorAuthentication = false
+      } else if (this.userInfoRefresh.realname) {
+        this.seniorAuthentication = true
       }
     },
     // 高级认证内容
@@ -656,7 +658,9 @@ export default {
       if (!(returnAjaxMessage(data, this, 1))) {
         return false
       } else {
+        this.getUserRefreshUser()
         this.getRealNameInformation()
+        this.authenticationStatusFront = false
         this.dialogImageFrontUrl = ''
         this.dialogImageReverseSideUrl = ''
         this.dialogImageHandUrl = ''
@@ -675,6 +679,7 @@ export default {
   computed: {
     ...mapState({
       theme: state => state.common.theme,
+      contryAreaList: state => state.common.contryAreaList,
       userInfo: state => state.user.loginStep1Info // 用户详细信息
     })
   },
@@ -767,10 +772,14 @@ export default {
       /*border:1px solid rgba(38,47,56,0.1);*/
       >.wait-veritfy-back {
         height: 393px;
-        line-height: 350px;
+        padding-top: 130px;
         >.wait-veritfy{
           >.color-coin {
             color: #338FF5;
+          }
+          .list-height {
+            margin-top: 10px;
+            line-height: 25px;
           }
         }
       }

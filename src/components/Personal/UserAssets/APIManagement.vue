@@ -22,6 +22,8 @@
                   type="text"
                   class="api-input border-radius2 padding-l15 box-sizing"
                   v-model="remark"
+                  @keydown="setErrorMsg(0,'')"
+                  @blur="checkoutInputFormat(0, remark)"
                 >
               </el-form-item>
               <el-form-item label="绑定IP地址：">
@@ -29,8 +31,16 @@
                   type="text"
                   class="api-input border-radius2 padding-l15 box-sizing"
                   v-model="ipSite"
+                  @keydown="setErrorMsg(1,'')"
+                  @blur="checkoutInputFormat(1, ipSite)"
                 >
               </el-form-item>
+              <!--错误提示-->
+              <div
+                class = "error-msg font-size12"
+              >
+                <span v-show = "errorMsg">{{ errorMsg }}</span>
+              </div>
               <button
                 class="api-button border-radius4 cursor-pointer font-size14"
                 @click="stateEstablishApiButton"
@@ -157,6 +167,8 @@
             <input
               class="content-input padding-l15 box-sizing"
               v-model="phoneCode"
+              @keydown="setVerifyErrorMsg(0,'')"
+              @blur="verifyInputFormat(0, phoneCode)"
             >
             <CountDownButton
               class="send-code-btn cursor-pointer"
@@ -174,6 +186,8 @@
             <input
               class="content-input padding-l15 box-sizing"
               v-model="emailCode"
+              @keydown="setVerifyErrorMsg(1,'')"
+              @blur="verifyInputFormat(1, emailCode)"
             >
             <CountDownButton
               class="send-code-btn cursor-pointer"
@@ -191,11 +205,19 @@
             <input
               class="content-input input-google padding-l15 box-sizing"
               v-model="googleCode"
+              @keydown="setVerifyErrorMsg(2,'')"
+              @blur="verifyInputFormat(2, googleCode)"
             >
           </el-form-item>
           <!--谷歌未认证-->
           <span v-else></span>
         </el-form>
+        <!--错误提示-->
+        <div
+          class = "error-msg error-msg1 font-size12"
+        >
+          <span v-show = "errorVerifyMsg">{{ errorVerifyMsg }}</span>
+        </div>
         <div
           slot="footer"
           class="dialog-footer"
@@ -280,6 +302,8 @@
             <input
               class="content-input input-google padding-l15 box-sizing"
               v-model="apiRemark"
+              @keydown="setEditorErrorMsg(0,'')"
+              @blur="editorInputFormat(0, apiRemark)"
             >
           </el-form-item>
           <el-form-item
@@ -288,16 +312,24 @@
             <input
               class="content-input input-google padding-l15 box-sizing"
               v-model="ipAddress"
+              @keydown="setEditorErrorMsg(1,'')"
+              @blur="editorInputFormat(1, ipAddress)"
             >
           </el-form-item>
         </el-form>
+        <!--错误提示-->
+        <div
+          class = "error-msg font-size12"
+        >
+          <span v-show = "errorEditorMsg">{{ errorEditorMsg }}</span>
+        </div>
         <div
           slot="footer"
           class="dialog-footer"
         >
           <button
             type="primary"
-            class="primary-button"
+            class="primary-button cursor-pointer"
             @click="stateCompileUserApi"
           >
             确 定
@@ -335,6 +367,7 @@
 <script>
 import CountDownButton from '../../Common/CountDownCommon'// 字体图标
 import IconFontCommon from '../../Common/IconFontCommon'
+import ErrorBox from '../../User/ErrorBox'
 import { createNamespacedHelpers, mapState } from 'vuex'
 import {
   statusSecurityCenter,
@@ -354,6 +387,7 @@ const { mapMutations } = createNamespacedHelpers('personal')
 export default {
   components: {
     IconFontCommon, // 字体图标
+    ErrorBox,
     CountDownButton // 短信倒计时
   },
   data () {
@@ -363,18 +397,22 @@ export default {
       // remark: '备注',
       // secretKey API访问秘钥
       // 'IpSite' IP地址
+      errorMsg: '', // 错误信息
+      errorVerifyMsg: '', // 错误信息
+      errorEditorMsg: '', // 错误信息
+      // errorMsg: '', // 错误信息
       securityCenter: {},
       enable: '启用',
       disable: '禁用',
       APIMoneyConfirm: false, // 默认API确认弹窗
-      phoneCode: '', // 邮箱验证
-      emailCode: '', // 手机验证
+      phoneCode: '', // 手机验证
+      emailCode: '', // 邮箱验证
       googleCode: '', // 谷歌验证
       // 默认创建之后弹出二次挨批创建信息框
       apiSecondaryConfirmation: false,
       accessKey: '', // API访问秘钥 （Access Key）
       secretKey: '', // API访问秘钥 （Access Key）
-      ipSite: '', // 绑定IP地址
+      ipSite: '', // 备注
       ip: '', // 绑定IP地址
       extensionList: [],
       compileUserApi: false, // 编辑用户api
@@ -441,21 +479,116 @@ export default {
         }
       })
     },
+    // 创建api检测输入格式
+    checkoutInputFormat (type, targetNum) {
+      switch (type) {
+        // 备注
+        case 0:
+          if (!targetNum) {
+            this.setErrorMsg(0, '请输入备注')
+            this.$forceUpdate()
+            return 0
+          } else {
+            this.setErrorMsg(0, '')
+            this.$forceUpdate()
+            return 1
+          }
+        // API访问秘钥
+        case 1:
+          if (!targetNum) {
+            this.setErrorMsg(1, '请输入API访问秘钥')
+            this.$forceUpdate()
+            return 0
+          } else {
+            this.setErrorMsg(1, '')
+            this.$forceUpdate()
+            return 1
+          }
+      }
+    },
+    // 设置错误信息
+    setErrorMsg (index, msg) {
+      this.errorMsg = msg
+    },
     // 点击创建
     stateEstablishApiButton () {
-      this.APIMoneyConfirm = true
-      this.getSecurityCenter()
-      this.ip = this.ipSite
+      let goOnStatus = 0
+      if (
+        this.checkoutInputFormat(0, this.remark) &&
+        this.checkoutInputFormat(1, this.ipSite)
+      ) {
+        goOnStatus = 1
+      } else {
+        goOnStatus = 0
+      }
+      if (goOnStatus) {
+        this.APIMoneyConfirm = true
+        this.getSecurityCenter()
+        this.ip = this.ipSite
+      }
+      // this.checkoutInputFormat()
+    },
+    // 创建api检测输入格式
+    verifyInputFormat (type, targetNum) {
+      switch (type) {
+        // 手机验证
+        case 0:
+          if (!targetNum) {
+            this.setVerifyErrorMsg(0, '请输入手机验证')
+            this.$forceUpdate()
+            return 0
+          } else {
+            this.setVerifyErrorMsg(0, '')
+            this.$forceUpdate()
+            return 1
+          }
+        // 邮箱验证
+        case 1:
+          if (!targetNum) {
+            this.setVerifyErrorMsg(1, '请输入邮箱验证')
+            this.$forceUpdate()
+            return 0
+          } else {
+            this.setVerifyErrorMsg(1, '')
+            this.$forceUpdate()
+            return 1
+          }
+        // 新登录密码
+        case 2:
+          if (!targetNum) {
+            this.setVerifyErrorMsg(2, '请输入谷歌验证')
+            this.$forceUpdate()
+            return 0
+          } else {
+            this.setVerifyErrorMsg(2, '')
+            this.$forceUpdate()
+            return 1
+          }
+      }
+    },
+    // 设置错误信息
+    setVerifyErrorMsg (index, msg) {
+      this.errorVerifyMsg = msg
     },
     // 创建之后弹出二次挨批创建信息框
     stateSubmitDetermineValidation () {
-      // 返回展示
-      this.apiSecondaryConfirmation = true
-      this.APIMoneyConfirm = false
-      //  获取秘钥
-      this.getAccessAecretKey()
-      // 手机谷歌邮箱方式验证
-      // this.multipleValidationMethods()
+      let goOnStatus = 0
+      if (
+        this.verifyInputFormat(0, this.phoneCode) ||
+        this.verifyInputFormat(1, this.emailCode) ||
+        this.verifyInputFormat(2, this.googleCode)
+      ) {
+        goOnStatus = 1
+      } else {
+        goOnStatus = 0
+      }
+      if (goOnStatus) {
+        // 返回展示
+        this.apiSecondaryConfirmation = true
+        this.APIMoneyConfirm = false
+        //  获取秘钥
+        this.getAccessAecretKey()
+      }
     },
     // 二次确认框创建挨批完成
     stateSubmitAffirm () {
@@ -478,16 +611,45 @@ export default {
         console.log(data)
         this.apiSecondaryConfirmation = false
         this.getMultipleUserAPIInfo()
+        this.remark = ''
+        this.ip = ''
       }
     },
     // 编辑用户api
     compileApi (id) {
       this.compileUserApi = true
       this.userId = id
-      // this.extensionList.forEach((item, index) => {
-      //   if (item.id == id) {
-      //   }
-      // })
+    },
+    // 创建api检测输入格式
+    editorInputFormat (type, targetNum) {
+      switch (type) {
+        // 编辑用户备注
+        case 0:
+          if (!targetNum) {
+            this.setEditorErrorMsg(0, '请输入用户备注')
+            this.$forceUpdate()
+            return 0
+          } else {
+            this.setEditorErrorMsg(0, '')
+            this.$forceUpdate()
+            return 1
+          }
+        // 编辑用户ip
+        case 1:
+          if (!targetNum) {
+            this.setEditorErrorMsg(1, '请输入用户ip')
+            this.$forceUpdate()
+            return 0
+          } else {
+            this.setEditorErrorMsg(1, '')
+            this.$forceUpdate()
+            return 1
+          }
+      }
+    },
+    // 设置错误信息
+    setEditorErrorMsg (index, msg) {
+      this.errorEditorMsg = msg
     },
     // 编辑确认
     stateCompileUserApi () {
@@ -495,18 +657,29 @@ export default {
     },
     //  编辑用户api接口
     async stateCompileApi () {
-      let data = await modifyUserInformation({
-        id: this.userId,
-        remark: this.apiRemark, // 编辑用户备注
-        ip: this.ipAddress // 编辑用户ip
-      })
-      console.log(data)
-      if (!(returnAjaxMessage(data, this, 1))) {
-        return false
+      let goOnStatus = 0
+      if (
+        this.editorInputFormat(0, this.apiRemark) &&
+        this.editorInputFormat(1, this.ipAddress)
+      ) {
+        goOnStatus = 1
       } else {
-        // 返回展示
-        this.getMultipleUserAPIInfo()
-        this.compileUserApi = false
+        goOnStatus = 0
+      }
+      if (goOnStatus) {
+        let data = await modifyUserInformation({
+          id: this.userId,
+          remark: this.apiRemark, // 编辑用户备注
+          ip: this.ipAddress // 编辑用户ip
+        })
+        console.log(data)
+        if (!(returnAjaxMessage(data, this, 1))) {
+          return false
+        } else {
+          // 返回展示
+          this.getMultipleUserAPIInfo()
+          this.compileUserApi = false
+        }
       }
     },
     // 删除
@@ -611,6 +784,18 @@ export default {
   @import "../../../../static/css/scss/Personal/UserAssets/APIManagement";
   .api-management{
     >.invitation-promotion-main{
+      .error-msg{
+        height:30px;
+        line-height: 30px;
+        padding-left: 35px;
+        color: rgb(212, 88, 88);
+      }
+      .error-msg1{
+        padding-left: 0px;
+      }
+      .error-msg2{
+        padding-left: 0px;
+      }
       .content-input {
         width: 200px;
         height: 35px;
@@ -669,7 +854,7 @@ export default {
             }
             .api-button {
               padding: 10px 96px;
-              margin: 30px 0 0 120px;
+              margin: 20px 0 0 120px;
             }
             .prompt-message {
               height: 20px;

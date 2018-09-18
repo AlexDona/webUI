@@ -52,6 +52,7 @@ const state = {
   partnerId: '474629374641963008', // 商户id
   routerTo: '', // 路由跳转
   withdrawDepositList: [], // 我的资产列表信息数据
+  userRefreshUserList: [], // 刷新用户信息
   end: ''// 占位
 }
 

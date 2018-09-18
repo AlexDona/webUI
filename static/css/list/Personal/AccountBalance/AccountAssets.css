@@ -33,7 +33,7 @@
   display: none;
 }
 .account-assets.personal .el-dialog {
-  width: 400px;
+  width: 325px;
 }
 .account-assets.personal .el-dialog__header {
   height: 50px;
@@ -48,15 +48,28 @@
 }
 .account-assets.personal .el-form-item {
   margin-bottom: 0px;
+  height: 85px;
 }
 .account-assets.personal .el-dialog__title {
   font-size: 16px;
 }
 .account-assets.personal .el-form-item__label {
-  margin-top: 18px;
+  /*margin-top: 18px;*/
+  height: 20px;
+  line-height: 20px;
 }
-.account-assets.personal.day .el-button {
+.account-assets.personal .el-button {
   width:270px;
-  height:40px;
-  margin: 0 20px;
+  height:34px;
+  /*margin: 0 20px;*/
+}
+.account-assets.personal .el-form--label-top .el-form-item__label{
+  float: none;
+  text-align: left;
+  padding: 0;
+}
+.account-assets.personal .el-dialog__footer {
+  text-align: left;
+  margin-top: 10px;
+  padding-left: 25px;
 }
