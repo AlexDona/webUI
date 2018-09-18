@@ -1,4 +1,4 @@
-import {get, postWithURLencoded} from './axios'
+import {get, postWithURLencoded, post} from './axios'
 /**
  *OTC
  */
@@ -60,5 +60,9 @@ export const getOTCCoinInfo = (params) => get('otcCOin/getCoinInfo', params)
 export const getCurrencyInforList = (params) => get('cms/coinInformation/all', params)
 // 服务条款币种列表对应的单个币种详细资料
 export const getCurrencyDetails = (params) => get(`cms/coinInformation/select/${params}`)
-// 投资理财请求数据
+// 投资理财币种类型请求数据
 export const getFinancialManagement = (params) => get('financialManagement', params)
+// 投资理财立投资请求接口
+export const imediateInvestment = (params) => post('financialManagement', params)
+// 投资理财取消投资接口
+export const cancleInvestment = (params) => get(`financialManagement/${params}`)

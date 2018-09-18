@@ -525,7 +525,7 @@ export default {
         // 设置法币默认选中值的name
         this.activitedtraderCurrencyCoinsName = this.traderCurrencyCoinsList[0].shortName
         // 重新请求列表
-        this.getOTCReportFormStatistics()
+        // this.getOTCReportFormStatistics()
         // 表格渲染
         this.getOTCEntrustingOrdersRevocation()
       }
