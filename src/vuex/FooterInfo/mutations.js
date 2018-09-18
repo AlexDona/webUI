@@ -1,5 +1,6 @@
 import {
-  CHANGE_FOOTER_ACTIVENAME
+  CHANGE_FOOTER_ACTIVENAME,
+  CHANGE_PROTOCOL_DATA
 } from './mutations-types.js'
 
 // import {setStore, getStore} from '../utils'
@@ -15,6 +16,33 @@ export default {
         break
       case '/ServiceAndProtocol':
         state.serviceActiveName = data.activeName
+    }
+  },
+  [CHANGE_PROTOCOL_DATA] (state, {
+    userProtocolData,
+    clauseExplainData,
+    legislationExplainData,
+    privacyClauseData,
+    APIDocumentData,
+    rateData
+  }) {
+    if (userProtocolData) {
+      state.serviceProtocolData.userProtocolData = userProtocolData
+    }
+    if (clauseExplainData) {
+      state.serviceProtocolData.clauseExplainData = clauseExplainData
+    }
+    if (legislationExplainData) {
+      state.serviceProtocolData.legislationExplainData = legislationExplainData
+    }
+    if (privacyClauseData) {
+      state.serviceProtocolData.privacyClauseData = privacyClauseData
+    }
+    if (APIDocumentData) {
+      state.serviceProtocolData.APIDocumentData = APIDocumentData
+    }
+    if (rateData) {
+      state.serviceProtocolData.rateData = rateData
     }
   }
 }

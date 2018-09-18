@@ -17,10 +17,16 @@
       <!--列表区-->
       <div class="content-box">
         <div class="inner-box">
-          <el-tabs v-model="newsAndNoticeActiveName">
+          <el-tabs
+            v-model="activeName"
+            @tab-click="changeTab"
+          >
+            <!--定死-->
             <el-tab-pane
-              label="官方公告"
-              name="notice"
+              :label="outerItem.name"
+              :name="outerItem.id"
+              v-for="(outerItem,index) in newsTypeList"
+              :key="index"
             >
               <div class="item-content">
                 <ul class="content-list">
@@ -34,19 +40,19 @@
                       to="/"
                     >
                       <div class="left">
-                        <div class="top">{{item.time.split('-')[0]+' 年'}}</div>
-                        <div class="bottom">{{item.time.split('-')[1]-0+' 月'}}</div>
+                        <div class="top">{{item.createTime.split('-')[0]+' 年'}}</div>
+                        <div class="bottom">{{item.createTime.split('-')[1]-0+' 月'}}</div>
                       </div>
                       <div class="right">
                         <p class="top">
                           {{item.title}}
                         </p>
                         <p class="middle">
-                          {{item.briefIntroduction}}
+                          {{item.keyword}}
                         </p>
                         <p class="bottom">
-                          <span class="author">{{item.author}}</span>
-                          <span class="date">{{item.time}}</span>
+                          <span class="author">{{item.creator}}</span>
+                          <span class="date">{{item.createTime}}</span>
                         </p>
                       </div>
                     </router-link>
@@ -55,93 +61,53 @@
                 <el-pagination
                   background
                   layout="prev, pager, next"
-                  :current-page="noticePageNum"
-                  :page-count="noticeTotalPages"
-                  @current-change="changeCurrentPage($event,'notice')"
+                  :current-page="pageNum"
+                  :page-count="totalPages"
+                  @current-change="changeCurrentPage"
                 >
                 </el-pagination>
               </div>
             </el-tab-pane>
-            <el-tab-pane
-              label="行业资讯"
-              name="news"
-            >
-              <div class="item-content">
-                <ul class="content-list">
-                  <li
-                    class="content-item"
-                    v-for="(item,index) in newsFilterList"
-                    :key="index"
-                  >
-                    <router-link
-                      class="content-item-link"
-                      to="/"
-                    >
-                      <div class="left">
-                        <div class="top">{{item.time.split('-')[0]+' 年'}}</div>
-                        <div class="bottom">{{item.time.split('-')[1]-0+' 月'}}</div>
-                      </div>
-                      <div class="right">
-                        <p class="top">
-                          {{item.title}}
-                        </p>
-                        <p class="middle">
-                          {{item.briefIntroduction}}
-                        </p>
-                        <p class="bottom">
-                          <span class="author">{{item.author}}</span>
-                          <span class="date">{{item.time}}</span>
-                        </p>
-                      </div>
-                    </router-link>
-                  </li>
-                </ul>
-              </div>
-            </el-tab-pane>
-            <el-tab-pane
-              label="帮助中心"
-              name="help"
-            >
-              <div class="item-content help">
-                <ul class="content-list">
-                  <li
-                    class="content-item"
-                    v-for="(item,index) in helpFilterList"
-                    :key="index"
-                  >
-                    <div
-                      class="content-item-link"
-                    >
-                      <div class="title">
-                        <span
-                          class="icon-box cursor-pointer"
-                          v-show="!helpShowStatusList[index]"
-                          @click="toggleShowHelpItem(index,1)"
-                        >
-                          +
-                        </span>
-                        <span
-                          class="icon-box cursor-pointer"
-                          v-show="helpShowStatusList[index]"
-                          @click="toggleShowHelpItem(index,0)"
-                        >
-                          -
-                        </span>
-                        <span class="title-content">{{item.title}}</span>
-                      </div>
-                      <el-collapse-transition>
-                        <div
-                          class="content"
-                          v-show="helpShowStatusList[index]"
-                        >
-                          {{item.content}}
-                        </div>
-                      </el-collapse-transition>
-                    </div>
-                  </li>
-                </ul>
-              </div>
-            </el-tab-pane>
+            <!--<el-tab-pane-->
+              <!--label="行业资讯"-->
+              <!--name="2"-->
+            <!--&gt;-->
+              <!--<div-->
+                <!--class="item-content"-->
+                <!--v-if="newsFilterList.length"-->
+              <!--&gt;-->
+                <!--<ul class="content-list">-->
+                  <!--<li-->
+                    <!--class="content-item"-->
+                    <!--v-for="(item,index) in newsFilterList"-->
+                    <!--:key="index"-->
+                  <!--&gt;-->
+                    <!--<router-link-->
+                      <!--class="content-item-link"-->
+                      <!--to="/"-->
+                    <!--&gt;-->
+                      <!--<div class="left">-->
+                        <!--<div class="top">{{item.createTime.split('-')[0]+' 年'}}</div>-->
+                        <!--<div class="bottom">{{item.createTime.split('-')[1]-0+' 月'}}</div>-->
+                      <!--</div>-->
+                      <!--<div class="right">-->
+                        <!--<p class="top">-->
+                          <!--{{item.title}}-->
+                        <!--</p>-->
+                        <!--<p class="middle">-->
+                          <!--{{item.keyword}}-->
+                        <!--</p>-->
+                        <!--<p class="bottom">-->
+                          <!--<span class="author">{{item.creator}}</span>-->
+                          <!--<span class="date">{{item.createTime}}</span>-->
+                        <!--</p>-->
+                      <!--</div>-->
+                    <!--</router-link>-->
+                  <!--</li>-->
+                <!--</ul>-->
+              <!--</div>-->
+            <!--</el-tab-pane>-->
+            <!--后台动态添加的-->
           </el-tabs>
         </div>
       </div>
@@ -151,7 +117,10 @@
 <!--请严格按照如下书写书序-->
 <script>
 import HeaderCommon from '../Common/HeaderCommon'
-import {getNewsNoticeList} from '../../utils/api/home'
+import {
+  getNewsNoticeList,
+  getAllNewsTypeList
+} from '../../utils/api/home'
 import {returnAjaxMessage} from '../../utils/commonFunc'
 import {mapState} from 'vuex'
 export default {
@@ -161,47 +130,54 @@ export default {
   // props,
   data () {
     return {
+      activeName: '1',
       // 新闻公告列表
       noticeList: [
-        {
-          time: '2018-09-14 20:27',
-          title: '表头表头表头表头表头表头表头表表头表头表头表头表头表头表头表头表头表头表头表头表头表头表头表头头',
-          briefIntroduction: '简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介',
-          author: '今日财经'
-        },
-        {
-          time: '2018-09-14 20:27',
-          title: '表头',
-          briefIntroduction: '简介',
-          author: '今日财经'
-        },
-        {
-          time: '2018-09-14 20:27',
-          title: '表头',
-          briefIntroduction: '简介',
-          author: '今日财经'
-        }
+        // {
+        //   time: '2018-09-14 20:27',
+        //   title: '表头表头表头表头表头表头表头表表头表头表头表头表头表头表头表头表头表头表头表头表头表头表头表头头',
+        //   briefIntroduction: '简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介',
+        //   author: '今日财经'
+        // },
+        // {
+        //   time: '2018-09-14 20:27',
+        //   title: '表头',
+        //   briefIntroduction: '简介',
+        //   author: '今日财经'
+        // },
+        // {
+        //   time: '2018-09-14 20:27',
+        //   title: '表头',
+        //   briefIntroduction: '简介',
+        //   author: '今日财经'
+        // }
+      ], // 公告列表
+      newList: [], // 新闻列表
+      helpList: [
+        // {
+        //   title: '帮助title',
+        //   subTitle: '子帮助主题',
+        //   content: '帮助内容'
+        // }
       ],
       searchKeyWord: '',
-      helpList: [
-        {
-          title: '帮助title',
-          subTitle: '子帮助主题',
-          content: '帮助内容'
-        }
-      ],
       helpShowStatusList: [],
-      noticeTotalPages: 0, // 公告总条数
-      pageSize: 10,
-      noticePageNum: 1, // 当前页
+      totalPages: 0, // 公告总条数
+      pageSize: 1,
+      pageNum: 1, // 当前页
+      newsTypeList: [], // 新闻类型列表
+      newsTypeId: 1, // 当前新闻类型id
       end: ''
     }
   },
-  created () {
+  async created () {
     require('../../../static/css/list/NewsAndNotice/NewsAndNotice.css')
     require('../../../static/css/theme/day/NewsAndNotice/NewsAndNoticeDay.css')
     require('../../../static/css/theme/night/NewsAndNotice/NewsAndNoticeNight.css')
-    // this.getNewsNoticeList()
+    await this.getAllNewsTypeList()
+    console.log(this.newsTypeList)
+    this.newsTypeId = this.newsTypeList[0].id
+    await this.getNewsNoticeList()
     this.helpList.forEach(() => {
       this.helpShowStatusList.push(false)
     })
@@ -211,11 +187,29 @@ export default {
   update () {},
   beforeRouteUpdate () {},
   methods: {
-    changeCurrentPage (e, type) {
-
+    changeTab (e) {
+      console.log(e.name)
+      this.newsTypeId = e.name
+      this.pageNum = 1
+      this.getNewsNoticeList()
     },
-    toggleShowHelpItem (index, status) {
-      this.$set(this.helpShowStatusList, index, status)
+    changeCurrentPage (e) {
+      this.pageNum = e
+      this.getNewsNoticeList()
+    },
+    // 获取所有新闻类型
+    async getAllNewsTypeList () {
+      const params = {
+        partnerId: this.partnerId
+      }
+      const data = await getAllNewsTypeList(params)
+      if (!returnAjaxMessage(data, this)) {
+        return false
+      } else {
+        console.log(data)
+        this.newsTypeList = data.data.data
+        console.log(this.newsTypeList)
+      }
     },
     // 获取新闻公告列表
     async getNewsNoticeList () {
@@ -223,14 +217,32 @@ export default {
         partnerId: this.partnerId,
         pageNum: this.pageNum,
         pageSize: this.pageSize,
-        language: this.language
+        language: this.language,
+        newsTypeId: this.newsTypeId
       }
       const data = await getNewsNoticeList(params)
       if (!returnAjaxMessage(data, this)) {
         return false
       } else {
-        this.noticeList = data.data.data.list
-        console.log(this.noticeList)
+        console.log(data)
+        const targetData = data.data.data
+        this.noticeList = targetData.list
+        this.pageNum = targetData.pageNum
+        this.totalPages = targetData.pages
+
+        // switch (this.newsTypeId) {
+        //   // 官方公告
+        //   case 1:
+        //     console.log(this.noticeList)
+        //     break
+        //   // 行业资讯
+        //   case 2:
+        //     break
+        //   // 帮助中心
+        //   case 3:
+        //     break
+        // }
+        // console.log(this.noticeList)
       }
     }
   },
@@ -239,20 +251,20 @@ export default {
     ...mapState({
       partnerId: state => state.common.partnerId,
       language: state => state.common.language,
-      theme: state => state.common.theme,
-      newsAndNoticeActiveName: state => state.footerInfo.newsAndNoticeActiveName
+      theme: state => state.common.theme
+      // newsAndNoticeActiveName: state => state.footerInfo.newsAndNoticeActiveName
     }),
     noticeFilterList () {
       return this.noticeList.filter((item) => {
         return (item['title'].indexOf(this.searchKeyWord) != -1 ||
-               item['briefIntroduction'].indexOf(this.searchKeyWord) != -1)
+               item['keyword'].indexOf(this.searchKeyWord) != -1)
         // item['type'] == 0
       })
     },
     newsFilterList () {
       return this.noticeList.filter((item) => {
         return (item['title'].indexOf(this.searchKeyWord) != -1 ||
-          item['briefIntroduction'].indexOf(this.searchKeyWord) != -1)
+          item['keyword'].indexOf(this.searchKeyWord) != -1)
         // item['type'] == 1
       })
     },
