@@ -548,7 +548,7 @@ export default {
             type: 'error'
           })
           return false
-        } else{
+        } else {
           if (userId === this.userInfo.id) {
             this.$message({
               message: '禁止自买自卖！',
@@ -588,7 +588,7 @@ export default {
             type: 'error'
           })
           return false
-        } else{
+        } else {
           if (userId === this.userInfo.id) {
             this.$message({
               message: '禁止自买自卖！',

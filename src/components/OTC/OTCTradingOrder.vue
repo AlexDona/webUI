@@ -3,7 +3,7 @@
    class="otc-trading-order-box otc"
    :class="{'day':theme == 'day','night':theme == 'night' }"
   >
-    <!-- 交易中订单 -->
+    <!-- 一、交易中订单 -->
     <div class="otc-trading-order-content">
       <!-- 订单列表 ：1.0 买单 -->
       <div
@@ -103,13 +103,14 @@
                   <p class="bank-info">
                     <span>收款人: {{item.sellName}}</span>
                   </p>
-                  <!-- 开户行 -->
+                  <!-- 开户行 :显示省，市，地址-->
                   <p
                     class="bank-info"
                     v-if="activeBankType[index] === 'bank'"
                   >
                     <span>开户行: </span>
-                    <span>{{activeBankProv[index]}}{{activeBankCity[index]}}{{activeBankArea[index]}}{{activeBankName[index]}}{{activeBankDetailAddress[index]}}</span>
+                    <!-- <span>{{activeBankProv[index]}}{{activeBankCity[index]}}{{activeBankArea[index]}}{{activeBankName[index]}}{{activeBankDetailAddress[index]}}</span> -->
+                    <span>{{activeBankProv[index]}}{{activeBankCity[index]}}{{activeBankDetailAddress[index]}}</span>
                   </p>
                   <!-- 账户 -->
                   <p
@@ -529,9 +530,9 @@
           </div>
         </div>
       </div>
-      <!-- 暂无数据 -->
+      <!-- 二、暂无数据 -->
       <div class="no-data" v-if="!tradingOrderList.length">暂无数据</div>
-      <!--分页-->
+      <!-- 三、分页-->
       <div class="page">
         <el-pagination
           background
