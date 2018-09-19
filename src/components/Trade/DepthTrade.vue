@@ -77,10 +77,11 @@ export default {
         animation: false
       },
       series: [
+        // 买
         {
           name: '委托量',
           type: 'line',
-          color: 'rgba(0,128,105,0.2)',
+          color: 'rgba(212,88,88,0.2)',
           itemStyle: {
             normal: {
             }
@@ -93,10 +94,11 @@ export default {
           data: this.buys,
           symbolSize: 0
         },
+        // 卖
         {
           name: '委托量',
           type: 'line',
-          color: 'rgba(212,88,88,0.2)',
+          color: 'rgba(0,128,105,0.2)', //
           lineStyle: {
             width: 0
           },
@@ -468,7 +470,7 @@ export default {
   },
   watch: {
     depthData (newVal) {
-      // console.log(newVal)
+      console.log(newVal)
       // this.options.series[0].data = newVal.buy
       // this.options.series[1].data = newVal.sell
       // this.depthCharts.setOption(this.options)
@@ -487,6 +489,9 @@ export default {
     theme () {
       this.resetOptions()
       this.resetChart(this.options)
+    },
+    buy (newVal) {
+      console.log(newVal)
     }
     // buy (newVal) {
     //   // console.log(newVal)

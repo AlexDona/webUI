@@ -7,10 +7,13 @@
     <div class="inner-box">
       <!--币种资料跳转-->
       <div class="currency-info">
-        <router-link to="/">
+        <span
+          class="cursor-pointer router-link"
+          @click="jumpToOtherPage('/ServiceAndProtocol','CurrencyInformation')"
+        >
           <i class="el-icon-document"></i>
           <span>币种资料</span>
-        </router-link>
+        </span>
       </div>
       <el-tabs
         v-model="activeName"
@@ -180,8 +183,8 @@
                   <IconFont iconName="icon-qianbao-"/>
                   <span class="margin-left10 buy">
                     可买：
-                    <span v-show="!sellUserCoinWallet.total">--</span>
-                    <span v-show="sellUserCoinWallet.total">{{sellUserCoinWallet.total/middleTopData.price}}</span>
+                    <span v-show="!sellUserCoinWallet.total||!middleTopData.price">--</span>
+                    <span v-show="sellUserCoinWallet.total&&middleTopData.price">{{sellUserCoinWallet.total/middleTopData.price}}</span>
                     <span>{{activeSymbol.sellsymbol}}</span>
                   </span>
                 </div>
@@ -414,6 +417,15 @@ export default {
     keep2Num (number) {
       return keep2Num(number)
     },
+    // 跳转
+    jumpToOtherPage (router, activeName) {
+      console.log(this.activeSymbol)
+      this.$store.commit('footerInfo/CHANGE_FOOTER_ACTIVENAME', {
+        activeName,
+        type: router
+      })
+      this.$router.push({path: router})
+    },
     // 设置转换后的价格
     setTransformPrice (type, targetNum) {
       switch (type) {
@@ -444,7 +456,7 @@ export default {
           this.limitExchange.buyPrice = this.getRefValue(this.limitBuyPriceInputRef)
           this.limitExchange.buyCount = this.getRefValue(this.limitBuyCountInputRef)
           this.setTransformPrice('limit-buy', this.limitExchange.buyPrice)
-          if (this.limitExchange.buyPrice) {
+          if (this.limitExchange.buyPrice - 0) {
             this.limitExchange.userCanBuyCount = this.keep2Num(this.sellUserCoinWallet.total / (this.limitExchange.buyPrice - 0))
           }
           break
@@ -568,7 +580,7 @@ export default {
       console.log(newBuyPrice)
       // this.setSimulationData(this.sellUserCoinWallet.total, newBuyPrice - 0 , this.limitExchange.userCanBuyCount)
       console.log(this.sellUserCoinWallet.total)
-      if (newBuyPrice) {
+      if (newBuyPrice - 0) {
         this.limitExchange.userCanBuyCount = this.keep2Num(this.sellUserCoinWallet.total / (newBuyPrice - 0))
         console.log(this.limitExchange.userCanBuyCount)
       }
@@ -649,7 +661,7 @@ export default {
         z-index: 2000;
         text-align: right;
         padding-right:27px;
-        >a{
+        >.router-link{
           color: $mainColor;
         }
       }
