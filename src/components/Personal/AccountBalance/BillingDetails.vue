@@ -6,16 +6,16 @@
     <header class="billing-details-header personal-height40 line-height40 background-color padding-left23">
       <span
         class="header-content display-inline-block font-size16 cursor-pointer"
-        @click.prevent.prevent="clickTableCut(1)"
       >
         充提记录
+        <!--@click.prevent.prevent="clickTableCut(1)"-->
       </span>
-      <span
-        class="header-content display-inline-block font-size16 cursor-pointer"
-        @click.prevent.prevent="clickTableCut(2)"
-      >
-        其他记录
-      </span>
+      <!--<span-->
+        <!--class="header-content display-inline-block font-size16 cursor-pointer"-->
+        <!--@click.prevent.prevent="clickTableCut(2)"-->
+      <!--&gt;-->
+        <!--其他记录-->
+      <!--</span>-->
     </header>
     <div class="billing-details-main paddinglr20">
       <div class="billing-details-query">

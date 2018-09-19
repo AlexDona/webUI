@@ -290,6 +290,7 @@ export default {
           break
         case 'coin-orders':
           this.$refs.coinOrdersValue.getEntrustSelectBox()
+          this.$refs.coinOrdersValue.commissionList()
           break
         case 'fiat-orders':
           // 页面加载时请求接口渲染列表

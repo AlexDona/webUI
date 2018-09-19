@@ -255,10 +255,10 @@ export default {
         // 返回数据地逻辑
         data.data.data.forEach(item => {
           if (item.keyword === 'OTC协议') {
-              this.argumentContent = item.content
+            this.argumentContent = item.content
           }
         })
-        document.getElementById('argumentContentBox').innerHTML = this.argumentContent;
+        document.getElementById('argumentContentBox').innerHTML = this.argumentContent
       }
     },
     businessArgument () {

@@ -136,7 +136,7 @@
                           class="transaction-list text-align-c"
                           v-for="(item, index) in currencyTradingList"
                           :key="index"
-                          @click.prevent="tradingId(item.name, index, parameterSymbol)"
+                          @click.prevent="changeActiveSymbol(item, index)"
                         >
                           {{ item.name }}
                         </p>
@@ -527,15 +527,11 @@ export default {
       activeType: '', // 显示类型
       tradingOnId: '', // 根据coinido跳转到对应交易信息
       currencyTradingId: '', // 根据coinido跳转到对应交易信息
-      parameterSymbol: {
-        area: 'FBT',
-        areaId: '486108701678108672',
-        id: 'ltcfbt',
-        sellname: '莱特币',
-        sellsymbol: 'LTC',
-        tradeId: '486138009935151100',
-        volume: '1903130.8'
-      },
+      area: '', // 交易区名称
+      areaId: '', // 交易区id
+      id: '', // 币种Id
+      sellname: '',
+      sellsymbol: '',
       userInfoRefresh: {}
     }
   },
@@ -583,6 +579,30 @@ export default {
       }
       this.getAssetCurrenciesList(e)
     },
+    // 根据coinid跳转交易信息
+    // tradingId (name, index, activeSymbol) {
+    //   console.log(this.parameterSymbol)
+    //   this.currencyTradingId = name
+    //   this.$store.commit('common/CHANGE_ACTIVE_SYMBOL', {
+    //     activeSymbol
+    //   })
+    // },
+    // 跳转当前交易对
+    changeActiveSymbol (e) {
+      console.log(e)
+      this.$store.commit('trade/SET_JUMP_STATUS', true)
+      this.$store.commit('trade/SET_JUMP_SYMBOL', e)
+      console.log(this.activeSymbol)
+      // 设置当前交易区
+      const id = e.areaId
+      const name = e.area
+      console.log(e)
+      // this.$store.commit('common/CHANGE_ACTIVE_TRADE_AREA', {
+      //   id,
+      //   name
+      // })
+      // this.$router.push({'path': '/TradeCenter'})
+    },
     // 输入限制
     // 修改input value 输入限制
     changeInputValue (ref, index, pointLength) {
@@ -623,6 +643,7 @@ export default {
       this.mentionDialogVisible = true
       this.mentionMoneyAddressId = id
       this.mentionMoneyName = name
+      this.mentionMoneyConfirm = false
       this.withdrawDepositList.forEach((item) => {
         item.rechargeIsShow = false
         item.withdrawDepositIsShow = false
@@ -644,14 +665,6 @@ export default {
     leave () {
       this.seen = false
       this.current = null
-    },
-    // 根据coinid跳转交易信息
-    tradingId (name, index, activeSymbol) {
-      console.log(this.parameterSymbol)
-      this.currencyTradingId = name
-      this.$store.commit('common/CHANGE_ACTIVE_SYMBOL', {
-        activeSymbol
-      })
     },
     // 发送验证码
     sendPhoneOrEmailCode (loginType) {
@@ -812,7 +825,7 @@ export default {
           type: 'error'
         })
         this.mentionMoneyConfirm = false
-      } else if (!this.userInfoRefresh.payPassword) {
+      } else if (this.userInfoRefresh.payPassword) {
         this.dialogVisible = true
       } else {
         this.mentionMoneyConfirm = true
@@ -915,6 +928,21 @@ export default {
       } else {
         // 返回展示
         this.currencyTradingList = data.data.data.entrust
+        // this.area = data.data.data.entrust.buyCoinName
+        // this.areaId = data.data.data.entrust.tradeAreaId
+        // this.id = data.data.data.entrust.sellCoinName + data.data.data.entrust.buyCoinName
+        // // this.sellname = data.data.data.entrust.sellCoinName
+        // this.sellsymbol = data.data.data.entrust.sellCoinName
+        // // this.buyName = data.data.data.entrust
+        // // this.buysymbol = data.data.data.entrust
+        // this.tradeId = data.data.data.entrust.tradeId
+        // area: "ETH"
+        // areaId: "486108806841892864"
+        // id: "wtcfbt"
+        // plateId: "486108580110401536"
+        // sellname: "沃尔顿链"
+        // sellsymbol: "WTC"
+        // tradeId: "491725015746609152"
       }
     }
   },
