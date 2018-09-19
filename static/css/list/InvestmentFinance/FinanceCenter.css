@@ -69,3 +69,6 @@
     background:#1E2636;
 }
 /* 设置全局分页剧中 */
+.finance-box .el-table__body-wrapper{
+    min-height: 200px;
+}

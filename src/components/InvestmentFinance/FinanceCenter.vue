@@ -281,7 +281,7 @@ export default {
       // 是否可以点击立刻投资
       isClick: false,
       // 投资估值
-      InvestmentValue: '',
+      InvestmentValue: '1',
       // 历史收益值
       getMoneyValue: '',
       // 取消投资id
@@ -289,6 +289,10 @@ export default {
     }
   },
   created () {
+    // this.InvestmentValue = '3'
+    // setTimeout(()=>{
+    // this.InvestmentValue = '4'
+    // },1000)
     // 对element ui样式重置
     require('../../../static/css/list/InvestmentFinance/FinanceCenter.css')
     // 白样式
@@ -438,7 +442,11 @@ export default {
       return window.innerWidth / 3
     }
   },
-  watch: {}
+  watch: {
+    InvestmentValue(newVal, oldVal){
+      console.log(newVal, oldVal)
+    }
+  }
 }
 </script>
 <style scoped lang="scss">
