@@ -79,23 +79,17 @@ export default {
               }
             },
             data: [
-              {value: this.investment, name: '投资'},
-              {value: this.getMoney, name: '收益'}
+              {value: '', name: '投资'},
+              {value: '', name: '收益'}
             ]
           }
         ]
       }
-      // // 投资比值
-      // investProportions: 0.5,
-      // // 收益比值
-      // earingProportions: 0.5
     }
   },
   created () {
     console.log(this.investmentValue)
     console.log(this.getMoneyValue)
-    this.resetOptions()
-    this.resetChart(this.options)
   },
   mounted () {
     this.resetOptions()
@@ -137,7 +131,7 @@ export default {
       this.resetChart(this.options)
     },
     investmentValue (val, oldval) {
-      this.investment = val
+      this.investment = oldval
       this.resetOptions()
       this.resetChart(this.options)
     },
