@@ -7,10 +7,13 @@
     <div class="inner-box">
       <!--币种资料跳转-->
       <div class="currency-info">
-        <router-link to="/">
+        <span
+          class="cursor-pointer router-link"
+          @click="jumpToOtherPage('/ServiceAndProtocol','CurrencyInformation')"
+        >
           <i class="el-icon-document"></i>
           <span>币种资料</span>
-        </router-link>
+        </span>
       </div>
       <el-tabs
         v-model="activeName"
@@ -414,6 +417,14 @@ export default {
     keep2Num (number) {
       return keep2Num(number)
     },
+    // 跳转
+    jumpToOtherPage (router, activeName) {
+      this.$store.commit('footerInfo/CHANGE_FOOTER_ACTIVENAME', {
+        activeName,
+        type: router
+      })
+      this.$router.push({path: router})
+    },
     // 设置转换后的价格
     setTransformPrice (type, targetNum) {
       switch (type) {
@@ -649,7 +660,7 @@ export default {
         z-index: 2000;
         text-align: right;
         padding-right:27px;
-        >a{
+        >.router-link{
           color: $mainColor;
         }
       }
