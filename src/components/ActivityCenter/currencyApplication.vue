@@ -104,6 +104,8 @@
   </div>
 </template>
 <script>
+import {getCurrencyApplicationDownloadUrl} from '../../utils/api/activityCenter'
+import {returnAjaxMessage} from '../../utils/commonFunc'
 import HeaderCommon from '../Common/HeaderCommon'
 import FooterCommon from '../Common/FooterCommon'
 import {
@@ -120,12 +122,28 @@ export default {
   data () {
     return {}
   },
-  created () {},
+  created () {
+    this.getDownUrl()
+  },
   mounted () {},
   activited () {},
   update () {},
   beforeRouteUpdate () {},
   methods: {
+    // 获取资产列表下载地址
+    async getDownUrl () {
+      console.log(1)
+      let params = {
+        key: 'COIN_APPLY'
+      }
+      const data = await getCurrencyApplicationDownloadUrl(params)
+      if (!returnAjaxMessage(data, this)) {
+        console.log(data)
+        return false
+      } else {
+        console.log(data)
+      }
+    },
     // 下载资产预览表
     downloadPreviewTable () {
 

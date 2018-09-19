@@ -1,44 +1,59 @@
 <template>
-  <div class="help-box">
+  <div
+    class="help-box"
+    :class="{'day':theme == 'day','night':theme == 'night' }"
+  >
     <HeaderCommon/>
-    <div class="item-content help">
-      <ul class="content-list">
-        <li
-          class="content-item"
-          v-for="(item,index) in helpFilterList"
-          :key="index"
-        >
-          <div
-            class="content-item-link"
-          >
-            <div class="title">
-                        <span
-                          class="icon-box cursor-pointer"
-                          v-show="!helpShowStatusList[index]"
-                          @click="toggleShowHelpItem(index,1)"
-                        >
-                          +
-                        </span>
+    <div class="inner-box">
+      <div class="search-box">
+        <input
+          type="text"
+          class="search-input"
+          v-model="searchKeyWord"
+          placeholder="请输入关键字"
+        />
+      </div>
+      <div class="item-content help">
+        <div class="inner-box">
+          <ul class="content-list">
+            <li
+              class="content-item"
+              v-for="(item,index) in helpFilterList"
+              :key="index"
+            >
+              <div
+                class="content-item-link"
+              >
+                <div class="title">
               <span
                 class="icon-box cursor-pointer"
-                v-show="helpShowStatusList[index]"
-                @click="toggleShowHelpItem(index,0)"
+                v-show="!helpShowStatusList[index]"
+                @click="toggleShowHelpItem(index,1)"
               >
-                           -
-                        </span>
-              <span class="title-content">{{item.title}}</span>
-            </div>
-            <el-collapse-transition>
-              <div
-                class="content"
-                v-show="helpShowStatusList[index]"
-              >
-                {{item.content}}
+                +
+              </span>
+                  <span
+                    class="icon-box cursor-pointer"
+                    v-show="helpShowStatusList[index]"
+                    @click="toggleShowHelpItem(index,0)"
+                  >
+                -
+              </span>
+                  <span class="title-content">{{item.title}}</span>
+                </div>
+                <el-collapse-transition>
+                  <div
+                    class="content"
+                    v-show="helpShowStatusList[index]"
+                  >
+                    {{item.content}}
+                  </div>
+                </el-collapse-transition>
               </div>
-            </el-collapse-transition>
-          </div>
-        </li>
-      </ul>
+            </li>
+          </ul>
+        </div>
+      </div>
     </div>
     <FooterCommon/>
   </div>
@@ -46,6 +61,7 @@
 <script>
 import HeaderCommon from '../Common/HeaderCommon'
 import FooterCommon from '../Common/FooterCommon'
+import {mapState} from 'vuex'
 export default {
   components: {
     HeaderCommon,
@@ -54,6 +70,7 @@ export default {
   // props,
   data () {
     return {
+      searchKeyWord: '', // 搜索关键字
       helpFilterList: [
         {
           title: '帮助title',
@@ -75,109 +92,78 @@ export default {
     }
   },
   filter: {},
-  computed: {},
+  computed: {
+    ...mapState({
+      partnerId: state => state.common.partnerId,
+      language: state => state.common.language,
+      theme: state => state.common.theme
+    })
+  },
   watch: {}
 }
 </script>
 <style scoped lang="scss" type="text/scss">
   .help-box{
-    .item-content{
-      >.content-list{
-        >.content-item{
-          text-align: left;
-          padding: 50px 144px;
-          >.content-item-link{
-            display:inline-block;
-            >.left,>.right{
-              display:inline-block;
-            }
-            >.left{
-              width: 85px;
-              height:60px;
-              vertical-align: top;
-              margin-right:20px;
-              text-align: center;
-              >.top{
-                height:25px;
-                line-height:25px;
-                color:#fff;
-                background:rgba(149,160,184,1);
-              }
-              >.bottom{
-                height:60px;
-                line-height: 60px;
-                font-size: 26px;
-                background:rgba(31,144,234,1);
-                color:#fff;
-              }
-            }
-            >.right{
-              /*background-color: green;*/
-              width:700px;
-              >.top{
-                width:100%;
-                font-size:14px;
-                font-weight:bold;
-                color:rgba(255,255,255,1);
-                margin-bottom:10px;
-                overflow: hidden;
-                text-overflow:ellipsis;
-                white-space: nowrap;
-              }
-              >.middle{
-                font-size:12px;
-                font-weight:400;
-                color:rgba(139,160,202,1);
-                margin-bottom:10px;
-                overflow:hidden;
-                text-overflow:ellipsis;
-                display: -webkit-box;
-                -webkit-box-orient: vertical;
-                -webkit-line-clamp: 3;
-                line-height: 20px;
-                height:60px;
-              }
-              >.bottom{
-                font-size:12px;
-                font-weight:400;
-                color:rgba(68,81,107,1);
-                >.author{
-                  margin-right:20px;
-                }
-              }
-            }
-          }
+    >.inner-box{
+      >.search-box{
+        height:250px;
+        line-height:250px;
+        text-align: center;
+        background: url(../../assets/develop/helpbanner.png) no-repeat center center;
+        -webkit-background-size: 100% 100%;
+        background-size: 100% 100%;
+        >.search-input{
+          width:571px;
+          height:50px;
+          padding:0 20px;
+          box-sizing: border-box;
+          background:rgba(30,38,54,1);
+          border:1px solid rgba(42,130,200,1);
+          border-radius:6px;
+          box-shadow:1px 1px 24px 0px rgba(50,83,122,1);
+          color:#fff;
         }
       }
-      &.help{
-        >.content-list{
-          >.content-item{
-            >.content-item-link{
-              width:100%;
-              height:40px;
-              >.title{
-                text-align: left;
+      >.item-content{
+        width:100%;
+        height:1200px;
+        overflow: hidden;
+        background-color: #121824;
+        >.inner-box{
+          width:1100px;
+          margin: 50px auto;
+          background-color: #1e2636;
+          height:1100px;
+          padding: 45px 90px;
+          >.content-list{
+            >.content-item{
+              >.content-item-link{
+                width:100%;
                 height:40px;
-                >.icon-box{
-                  display:inline-block;
+                >.title{
+                  text-align: left;
                   height:40px;
-                  width:40px;
-                  font-size: 40px;
-                  line-height: 40px;
-                  text-align: center;
-                  vertical-align: top;
+                  >.icon-box{
+                    display:inline-block;
+                    height:40px;
+                    width:40px;
+                    font-size: 40px;
+                    line-height: 40px;
+                    text-align: center;
+                    vertical-align: top;
+                  }
+                  >.title-content{
+                    height:40px;
+                    display:inline-block;
+                    line-height: 40px;
+                    margin-left:10px;
+                    color:#fff;
+                  }
                 }
-                >.title-content{
-                  height:40px;
-                  display:inline-block;
-                  line-height: 40px;
-                  margin-left:10px;
-                  color:#fff;
+                >.content{
+                  text-align: left;
+                  padding:10px 50px;
                 }
-              }
-              >.content{
-                text-align: left;
-                padding:10px 50px;
               }
             }
           }

@@ -30,8 +30,8 @@
                   <IconFont iconName="icon-qianbao-"/>
                   <span class="margin-left10 buy">
                     可买：
-                    <span v-show="!sellUserCoinWallet.total">--</span>
-                    <span v-show="sellUserCoinWallet.total">{{limitExchange.userCanBuyCount}}</span>
+                    <span v-show="!buyUserCoinWallet.total">--</span>
+                    <span v-show="buyUserCoinWallet.total">{{limitExchange.userCanBuyCount}}</span>
                     <span>{{activeSymbol.sellsymbol}}</span>
                   </span>
                 </div>
@@ -183,8 +183,8 @@
                   <IconFont iconName="icon-qianbao-"/>
                   <span class="margin-left10 buy">
                     可买：
-                    <span v-show="!sellUserCoinWallet.total||!middleTopData.price">--</span>
-                    <span v-show="sellUserCoinWallet.total&&middleTopData.price">{{sellUserCoinWallet.total/middleTopData.price}}</span>
+                    <span v-show="!buyUserCoinWallet.total||!middleTopData.price">--</span>
+                    <span v-show="buyUserCoinWallet.total&&middleTopData.price">{{buyUserCoinWallet.total/middleTopData.price}}</span>
                     <span>{{activeSymbol.sellsymbol}}</span>
                   </span>
                 </div>
@@ -457,7 +457,7 @@ export default {
           this.limitExchange.buyCount = this.getRefValue(this.limitBuyCountInputRef)
           this.setTransformPrice('limit-buy', this.limitExchange.buyPrice)
           if (this.limitExchange.buyPrice - 0) {
-            this.limitExchange.userCanBuyCount = this.keep2Num(this.sellUserCoinWallet.total / (this.limitExchange.buyPrice - 0))
+            this.limitExchange.userCanBuyCount = this.keep2Num(this.buyUserCoinWallet.total / (this.limitExchange.buyPrice - 0))
           }
           break
         // 限价卖
@@ -544,6 +544,13 @@ export default {
               params.count = this.$refs[this.marketBuyCountInputRef].value
               break
           }
+          if (this.buyUserCoinWallet.total / this.middleTopData.price < params.count - 0) {
+            this.$message({
+              type: 'error',
+              message: '可用币种数量不足'
+            })
+            return false
+          }
           break
         // 卖单
         case 1:
@@ -556,8 +563,18 @@ export default {
               params.count = this.$refs[this.marketSellCountInputRef].value
               break
           }
+          if (this.buyUserCoinWallet.total < params.count - 0) {
+            this.$message({
+              type: 'error',
+              message: '可用币种数量不足'
+            })
+            return false
+          }
           break
       }
+      console.log(this.buyUserCoinWallet.total)
+      console.log(params.count)
+
       const data = await saveEntrustTrade(params)
       if (!returnAjaxMessage(data, this, 1)) {
         return false
@@ -581,7 +598,7 @@ export default {
       // this.setSimulationData(this.sellUserCoinWallet.total, newBuyPrice - 0 , this.limitExchange.userCanBuyCount)
       console.log(this.sellUserCoinWallet.total)
       if (newBuyPrice - 0) {
-        this.limitExchange.userCanBuyCount = this.keep2Num(this.sellUserCoinWallet.total / (newBuyPrice - 0))
+        this.limitExchange.userCanBuyCount = this.keep2Num(this.buyUserCoinWallet.total / (newBuyPrice - 0))
         console.log(this.limitExchange.userCanBuyCount)
       }
     }

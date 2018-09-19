@@ -36,10 +36,12 @@ import {PHONE_REG, EMAIL_REG, ID_REG, PWD_REG, ALIPAY_REG, BANK_REG, GOOGLE_REG}
 // 使用方法：returnAjaxMessage(data, this, 0) 或者 returnAjaxMessage(data, this, 1)
 export const returnAjaxMessage = (data, self, noTip) => {
   const meta = data.data.meta
+  console.log(meta)
   if (meta.code !== 200) {
     self.$message({
       type: 'error',
-      message: self.$t(`M.${meta.i18n_code}`)
+      message: !meta.params ? self.$t(`M.${meta.i18n_code}`) : self.$t(`M.${meta.i18n_code}`).format(meta.params)
+    //  $t('m.financial_recharge_notice5').format(item.shortName)}}
     })
     return 0
   } else {
@@ -182,4 +184,26 @@ export const getServiceProtocolData = async (that, params, callback) => {
   } else {
     callback(data)
   }
+}
+// eslint-disable-next-line
+String.prototype.format = function (args) {
+  var result = this
+  if (arguments.length > 0) {
+    if (arguments.length == 1 && typeof (args) == 'object') {
+      for (var key in args) {
+        if (args[key] != undefined) {
+          let reg = new RegExp('({' + key + '})', 'g')
+          result = result.replace(reg, args[key])
+        }
+      }
+    } else {
+      for (var i = 0; i < arguments.length; i++) {
+        if (arguments[i] != undefined) {
+          let reg = new RegExp('({)' + i + '(})', 'g')
+          result = result.replace(reg, arguments[i])
+        }
+      }
+    }
+  }
+  return result
 }
