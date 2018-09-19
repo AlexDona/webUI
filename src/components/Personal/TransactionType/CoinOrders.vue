@@ -190,7 +190,9 @@
                     <button
                       class="cursor-pointer repeal-btn"
                       @click.prevent="repealMyEntrust(s.row.id,s.row.version)"
-                    >撤销</button>
+                    >
+                      撤销
+                    </button>
                   </template>
                 </el-table-column>
               </el-table>
@@ -200,12 +202,43 @@
                 v-show="activeName === 'current-entrust' && currentEntrustList.length"
                 layout="prev, pager, next"
                 :page-count="totalPageForMyEntrust"
-                @current-change="changeCurrentPage(0,$event)"
+                @current-change="changeCurrentPage('current-entrust',$event)"
               >
               </el-pagination>
             </div>
           </div>
         </el-tab-pane>
+        <!-- 取消委托订单 -->
+        <div class="cancel-push">
+          <el-dialog
+            :title="取消委托订单"
+            :visible.sync="cancellationOfOrder"
+            center
+          >
+              <span class="text-align-c">
+                确定取消取消委托订单吗？
+              </span>
+            <span
+              slot="footer"
+              class="dialog-footer"
+            >
+             <!--确 定 取 消-->
+              <el-button
+                type="primary"
+                @click.prevent="confirm"
+                class="mg1"
+                :disabled="statel"
+              >
+                确 定
+              </el-button>
+              <el-button
+                @click.prevent="cancellationOfOrder = false"
+              >
+                取 消
+              </el-button>
+            </span>
+          </el-dialog>
+        </div>
         <el-tab-pane
           label="历史委托"
           name="history-entrust"
@@ -297,13 +330,44 @@
               </template>
             </el-table-column>
           </el-table>
+          <!-- 取消历史订单 -->
+          <div class="cancel-push">
+            <el-dialog
+              :title="取消历史订单"
+              :visible.sync="cancelHistoricalOrder"
+              center
+            >
+              <span class="text-align-c">
+                确定取消取消委托订单吗？
+              </span>
+              <span
+                slot="footer"
+                class="dialog-footer"
+              >
+             <!--确 定 取 消-->
+              <el-button
+                type="primary"
+                @click.prevent="confirm"
+                class="mg1"
+                :disabled="statel"
+              >
+                确 定
+              </el-button>
+              <el-button
+                @click.prevent="cancelHistoricalOrder = false"
+              >
+                取 消
+              </el-button>
+            </span>
+            </el-dialog>
+          </div>
           <!--分页-->
           <el-pagination
             background
             v-show="activeName === 'history-entrust' && historyEntrustList.length"
             layout="prev, pager, next"
             :page-count="totalPageForHistoryEntrust"
-            @current-change="changeCurrentPage(1,$event)"
+            @current-change="changeCurrentPage('history-entrust',$event)"
           >
           </el-pagination>
         </el-tab-pane>
@@ -375,7 +439,7 @@
               width="120"
             >
               <template slot-scope="s">
-                <span>{{s.row.completeCount-0}}</span>
+                <span>{{s.row.fees - 0}}</span>
               </template>
             </el-table-column>
           </el-table>
@@ -385,7 +449,7 @@
             v-show="activeName === 'make-detail' && currentMakeDetailList.length"
             layout="prev, pager, next"
             :page-count="totalPageForMakeDetailEntrust"
-            @current-change="changeCurrentPage(2,$event)"
+            @current-change="changeCurrentPage('make-detail',$event)"
           >
           </el-pagination>
         </el-tab-pane>
@@ -453,10 +517,12 @@ export default {
       activeMatchType: '', // 当前撮合类型
       activeSymbol: '', // 用户输入币种名称
       activeType: '', // 当前选中方向
+      cancellationOfOrder: false, // 撤销当前委单
+      cancelHistoricalOrder: false, // 删除历史订单
       end: '' // 占位
     }
   },
-  created () {
+  created (entrustType) {
     // 覆盖Element样式
     require('../../../../static/css/list/Personal/TransactionType/CoinOrders.css')
     // 白色主题样式
@@ -464,9 +530,7 @@ export default {
     // 黑色主题样式
     require('../../../../static/css/theme/night/Personal/TransactionType/CoinOrdersNight.css')
     this.getEntrustSelectBox()
-    // this.getMyCurrentEntrust()
-    // this.getHistoryEntrust()
-    // this.getMakeDetailEntrust()
+    this.commissionList('current-entrust')
   },
   mounted () {},
   activited () {},
@@ -474,43 +538,12 @@ export default {
   beforeRouteUpdate () {},
   methods: {
     coinMoneyOrders (tab) {
+      console.log(tab.name)
       this.commissionList(tab.name)
-      // switch (tab.name) {
-      //   case 'current-entrust':
-      //     // 查询当前委单
-      //     console.log(tab)
-      //     this.commissionList()
-      //     break
-      //   case 'history-entrust':
-      //     // 查询历史委托
-      //     console.log(tab)
-      //     this.commissionList()
-      //     break
-      //   case 'make-detail':
-      //     console.log(tab)
-      //     // 查询成交明细
-      //     this.commissionList()
-      //     break
-      // }
     },
     // 查询列表
     async searchWithCondition (entrustType) {
-      console.log(entrustType)
       this.commissionList(entrustType)
-      // switch (entrustType) {
-      //   case 'current-entrust':
-      //     console.log(1)
-      //     this.getMyCurrentEntrust()
-      //     break
-      //   case 'history-entrust':
-      //     console.log(2)
-      //     this.getHistoryEntrust()
-      //     break
-      //   case 'make-detail':
-      //     console.log(3)
-      //     this.getMakeDetailEntrust()
-      //     break
-      // }
     },
     /**
      * 交易区列表查询
@@ -525,7 +558,6 @@ export default {
       } else {
         // console.log(data)
         this.entrustSelectList = data.data.data.coinList
-        // this.statusList = data.data.data.statusList
         this.typeList = data.data.data.typeList
         this.matchTypeList = data.data.data.matchTypeList
         console.log(this.matchTypeList)
@@ -536,16 +568,17 @@ export default {
      * @entrustType: 订单类型： 0：当前委托 1： 历史委托 2:  成交明细
      */
     changeCurrentPage (entrustType, pageNum) {
+      console.log(pageNum)
       switch (entrustType) {
-        case 0:
+        case 'current-entrust':
           this.currentPageForMyEntrust = pageNum
           this.commissionList(entrustType)
           break
-        case 1:
+        case 'history-entrust':
           this.currentPageForHistoryEntrust = pageNum
           this.commissionList(entrustType)
           break
-        case 2:
+        case 'make-detail':
           this.currentPageMakeDetailEntrust = pageNum
           this.commissionList(entrustType)
       }
@@ -568,7 +601,6 @@ export default {
       })
     },
     async commissionList (entrustType) {
-      console.log(entrustType)
       let params = {
         userId: this.userInfo.userId,
         currentPage: '',
@@ -688,12 +720,8 @@ export default {
         }
       }
     }
-    .inner-box{
-      >.result-box{
-        .repeal-btn{
-          color:$mainColor;
-        }
-      }
+    .repeal-btn{
+      color:#338ff5;
     }
     &.night{
       background-color: $nightBgColor;

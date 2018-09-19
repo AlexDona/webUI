@@ -247,153 +247,180 @@
           </div>
         </div>
         <!--关闭验证-->
-        <el-dialog
-          title="关闭验证"
-          :visible.sync="closeValidation"
-        >
-          <el-form
-            :label-position="labelPosition"
-            label-width="120px"
+        <div class="close-validation">
+          <el-dialog
+            title="关闭验证"
+            :visible.sync="closeValidation"
           >
-            <!--没有绑定手机不显示-->
-            <div v-if="!securityCenter.isPhoneEnable"></div>
-            <!--绑定手机之后显示-->
-            <el-form-item
-              label="手机验证"
-              v-else
+            <el-form
+              :label-position="labelPosition"
+              label-width="120px"
             >
-              <el-input
-                v-model="phoneCode"
+              <!--没有绑定手机不显示-->
+              <div v-if="!securityCenter.isPhoneEnable"></div>
+              <!--绑定手机之后显示-->
+              <el-form-item
+                label="手机验证"
+                v-else
               >
-                <template slot="append">
-                  <CountDownButton
-                    class="send-code-btn cursor-pointer"
-                    :status="disabledOfPhoneBtn"
-                    @run="sendPhoneOrEmailCode(0)"
-                  />
-                </template>
-              </el-input>
-            </el-form-item>
-            <!--没有绑定邮箱不显示-->
-            <div v-if="!securityCenter.isMailEnable"></div>
-            <!--绑定邮箱之后显示-->
-            <el-form-item
-              label="邮箱验证"
-              v-else
-            >
-              <el-input
-                v-model="emailCode"
+                <el-input
+                  v-model="phoneCode"
+                  @keydown="setErrorMsg(0,'')"
+                  @blur="checkoutInputFormat(0, phoneCode)"
+                >
+                  <template slot="append">
+                    <CountDownButton
+                      class="send-code-btn cursor-pointer"
+                      :status="disabledOfPhoneBtn"
+                      @run="sendPhoneOrEmailCode(0)"
+                    />
+                  </template>
+                </el-input>
+              </el-form-item>
+              <!--没有绑定邮箱不显示-->
+              <div v-if="!securityCenter.isMailEnable"></div>
+              <!--绑定邮箱之后显示-->
+              <el-form-item
+                label="邮箱验证"
+                v-else
               >
-                <template slot="append">
-                  <CountDownButton
-                    class="send-code-btn cursor-pointer"
-                    :status="disabledOfEmailBtn"
-                    @run="sendPhoneOrEmailCode(1)"
-                  />
-                </template>
-              </el-input>
-            </el-form-item>
-            <!--没有绑定谷歌不显示-->
-            <div v-if="!securityCenter.isGoogleEnable"></div>
-            <!--绑定谷歌之后显示-->
-            <el-form-item
-              label="谷歌验证"
-              v-else
+                <el-input
+                  v-model="emailCode"
+                  @keydown="setErrorMsg(1,'')"
+                  @blur="checkoutInputFormat(1, emailCode)"
+                >
+                  <template slot="append">
+                    <CountDownButton
+                      class="send-code-btn cursor-pointer"
+                      :status="disabledOfEmailBtn"
+                      @run="sendPhoneOrEmailCode(1)"
+                    />
+                  </template>
+                </el-input>
+              </el-form-item>
+              <!--没有绑定谷歌不显示-->
+              <div v-if="!securityCenter.isGoogleEnable"></div>
+              <!--绑定谷歌之后显示-->
+              <el-form-item
+                label="谷歌验证"
+                v-else
+              >
+                <input
+                  class="input border-radius2 padding-l15 box-sizing"
+                  v-model="googleCode"
+                  @keydown="setErrorMsg(2,'')"
+                  @blur="checkoutInputFormat(2, googleCode)"
+                />
+              </el-form-item>
+            </el-form>
+            <!--错误提示-->
+            <div
+              class = "error-msg font-size12"
             >
-              <input
-                class="input border-radius2 padding-l15 box-sizing"
-                v-model="googleCode"
-              />
-            </el-form-item>
-          </el-form>
-          <div
-            slot="footer"
-            class="dialog-footer"
-          >
-            <!--<el-button @click.prevent="closeValidation = false">取 消</el-button>-->
-            <el-button
-              class="button"
-              type="primary"
-              @click.prevent="determineTheOpen"
+              <span v-show = "errorMsg">{{ errorMsg }}</span>
+            </div>
+            <div
+              slot="footer"
+              class="dialog-footer"
             >
-              确 定
-            </el-button>
-          </div>
-        </el-dialog>
+              <!--<el-button @click.prevent="closeValidation = false">取 消</el-button>-->
+              <el-button
+                class="button"
+                type="primary"
+                @click.prevent="determineTheOpen"
+              >
+                确 定
+              </el-button>
+            </div>
+          </el-dialog>
+        </div>
         <!--开启验证-->
-        <el-dialog
-          title="开启验证"
-          :visible.sync="openTheValidation"
-        >
-          <el-form
-            label-width="120px"
-            :label-position="labelPosition"
+        <div class="open-validation">
+          <el-dialog
+            title="开启验证"
+            :visible.sync="openTheValidation"
           >
-            <!--&lt;!&ndash;没有绑定手机不显示&ndash;&gt;-->
-            <!--<div v-if="!securityCenter.isPhoneEnable"></div>-->
-            <!--开启手机-->
-            <el-form-item
-              label="手机验证"
-              v-show="openPhone"
+            <el-form
+              label-width="120px"
+              :label-position="labelPosition"
             >
-              <el-input
-                v-model="phoneCode"
+              <!--&lt;!&ndash;没有绑定手机不显示&ndash;&gt;-->
+              <!--<div v-if="!securityCenter.isPhoneEnable"></div>-->
+              <!--开启手机-->
+              <el-form-item
+                label="手机验证"
+                v-show="openPhone"
               >
-                <template slot="append">
-                  <CountDownButton
-                    class="send-code-btn cursor-pointer"
-                    :status="disabledOfPhoneBtn"
-                    @run="sendPhoneOrEmailCode(0)"
-                  />
-                </template>
-              </el-input>
-            </el-form-item>
-            <!--没有绑定邮箱不显示-->
-            <!--<div v-if="!securityCenter.isMailEnable"></div>-->
-            <!--开启邮箱-->
-            <el-form-item
-              label="邮箱验证"
-              v-show="openEmail"
-            >
-              <el-input
-                v-model="emailCode"
+                <el-input
+                  v-model="phoneCode"
+                  @keydown="setErrorMsg(0,'')"
+                  @blur="checkoutInputFormat(0, phoneCode)"
+                >
+                  <template slot="append">
+                    <CountDownButton
+                      class="send-code-btn cursor-pointer"
+                      :status="disabledOfPhoneBtn"
+                      @run="sendPhoneOrEmailCode(0)"
+                    />
+                  </template>
+                </el-input>
+              </el-form-item>
+              <!--没有绑定邮箱不显示-->
+              <!--<div v-if="!securityCenter.isMailEnable"></div>-->
+              <!--开启邮箱-->
+              <el-form-item
+                label="邮箱验证"
+                v-show="openEmail"
               >
-                <template slot="append">
-                  <CountDownButton
-                    class="send-code-btn cursor-pointer"
-                    :status="disabledOfEmailBtn"
-                    @run="sendPhoneOrEmailCode(1)"
-                  />
-                </template>
-              </el-input>
-            </el-form-item>
-            <!--没有绑定谷歌不显示-->
-            <!--<div v-if="!securityCenter.isGoogleEnable"></div>-->
-            <!--开启谷歌-->
-            <el-form-item
-              label="谷歌验证"
-              v-show="openGoogle"
+                <el-input
+                  v-model="emailCode"
+                  @keydown="setErrorMsg(1,'')"
+                  @blur="checkoutInputFormat(1, emailCode)"
+                >
+                  <template slot="append">
+                    <CountDownButton
+                      class="send-code-btn cursor-pointer"
+                      :status="disabledOfEmailBtn"
+                      @run="sendPhoneOrEmailCode(1)"
+                    />
+                  </template>
+                </el-input>
+              </el-form-item>
+              <!--没有绑定谷歌不显示-->
+              <!--<div v-if="!securityCenter.isGoogleEnable"></div>-->
+              <!--开启谷歌-->
+              <el-form-item
+                label="谷歌验证"
+                v-show="openGoogle"
+              >
+                <input
+                  class="input border-radius2 padding-l15 box-sizing"
+                  v-model="googleCode"
+                  @keydown="setErrorMsg(2,'')"
+                  @blur="checkoutInputFormat(2, googleCode)"
+                />
+              </el-form-item>
+            </el-form>
+            <div
+              class = "error-msg font-size12"
             >
-              <input
-                class="input border-radius2 padding-l15 box-sizing"
-                v-model="googleCode"
-              />
-            </el-form-item>
-          </el-form>
-          <div
-            slot="footer"
-            class="dialog-footer"
-          >
-            <!--<el-button @click.prevent="openTheValidation = false">取 消</el-button>-->
-            <el-button
-              class="button"
-              ype="primary"
-              @click.prevent="determineTheOpen"
+              <span v-show = "errorMsg">{{ errorMsg }}</span>
+            </div>
+            <div
+              slot="footer"
+              class="dialog-footer"
             >
-              确 定
-            </el-button>
-          </div>
-        </el-dialog>
+              <!--<el-button @click.prevent="openTheValidation = false">取 消</el-button>-->
+              <el-button
+                class="button"
+                ype="primary"
+                @click.prevent="determineTheOpen"
+              >
+                确 定
+              </el-button>
+            </div>
+          </el-dialog>
+        </div>
       </div>
     </div>
     <div class="security-record security-background margin-top9">
@@ -511,7 +538,9 @@ export default {
       phoneCode: '', // 手机验证
       googleCode: '', // 谷歌验证
       activeType: '', // 当前值
-      state: '' // 开启关闭
+      state: '', // 开启关闭
+      errorMsg: '', // 关闭错误提示
+      errorMsg1: '' // 开启错误提示
     }
   },
   created () {
@@ -603,8 +632,52 @@ export default {
         }
       })
     },
+    // 创建api检测输入格式
+    checkoutInputFormat (type, targetNum) {
+      switch (type) {
+        // 手机验证码
+        case 0:
+          if (!targetNum) {
+            this.setErrorMsg(0, '请输入手机验证码')
+            this.$forceUpdate()
+            return 0
+          } else {
+            this.setErrorMsg(0, '')
+            this.$forceUpdate()
+            return 1
+          }
+        // 邮箱验证码
+        case 1:
+          if (!targetNum) {
+            this.setErrorMsg(1, '请输入邮箱验证码')
+            this.$forceUpdate()
+            return 0
+          } else {
+            this.setErrorMsg(1, '')
+            this.$forceUpdate()
+            return 1
+          }
+        // 谷歌验证码
+        case 2:
+          if (!targetNum) {
+            this.setErrorMsg(2, '请输入谷歌验证码')
+            this.$forceUpdate()
+            return 0
+          } else {
+            this.setErrorMsg(2, '')
+            this.$forceUpdate()
+            return 1
+          }
+      }
+    },
+    // 设置错误信息
+    setErrorMsg (index, msg) {
+      this.errorMsg = msg
+    },
     // 关闭开启验证状态事件
     showStatusVerificationClose (paymentType, safeState) {
+      console.log(paymentType)
+      console.log(safeState)
       this.openEmail = ''
       this.openPhone = ''
       this.openGoogle = ''
@@ -614,9 +687,13 @@ export default {
       switch (paymentType) {
         case 'email':
           if (!this.securityCenter.isMailBind) {
+            this.$message({
+              message: '未绑定邮箱请先绑定邮箱',
+              type: 'error'
+            })
             this.openTheValidation = false
           } else {
-            if (safeState === true) {
+            if (safeState === 'enable') {
               this.openEmail = true
               this.openPhone = false
               this.openGoogle = false
@@ -628,9 +705,13 @@ export default {
           break
         case 'phone':
           if (!this.securityCenter.isPhoneBind) {
+            this.$message({
+              message: '未绑定手机请先绑定手机',
+              type: 'error'
+            })
             this.openTheValidation = false
           } else {
-            if (safeState === true) {
+            if (safeState === 'enable') {
               this.openEmail = false
               this.openPhone = true
               this.openGoogle = false
@@ -642,9 +723,13 @@ export default {
           break
         case 'google':
           if (!this.securityCenter.isGoogleBind) {
+            this.$message({
+              message: '未绑定谷歌请先绑定谷歌',
+              type: 'error'
+            })
             this.openTheValidation = false
           } else {
-            if (safeState === true) {
+            if (safeState === 'enable') {
               this.openEmail = false
               this.openPhone = false
               this.openGoogle = true
@@ -656,59 +741,80 @@ export default {
           break
       }
     },
-    // 确认关闭
+    // 确认关闭开启
     determineTheOpen () {
       this.confirmTransactionPassword(this.activeType, this.state)
     },
     // 关闭开启手机邮箱谷歌验证
     async confirmTransactionPassword (type, state) {
-      let data
-      let params = {
-        email: this.userInfo.userInfo.email, // 邮箱
-        phone: this.userInfo.userInfo.phone, // 手机
-        emailCode: this.emailCode, // 邮箱验证
-        phoneCode: this.phoneCode, // 手机验证
-        googleCode: this.googleCode, // 谷歌验证
-        userId: this.userInfo.userId, // 用户id
-        type: '', // 邮箱 手机 谷歌 验证验证
-        status: '' // 开启 关闭
-      }
-      switch (type) {
-        case 'email':
-          console.log(type)
-          params.type = 'email'
-          console.log(params)
-          if (state === 'enable') {
-            params.status = 'enable'
-          } else {
-            params.status = 'disable'
-          }
-          break
-        case 'phone':
-          params.type = 'phone'
-          if (state === 'enable') {
-            params.status = 'enable'
-          } else {
-            params.status = 'disable'
-          }
-          break
-        case 'google':
-          params.type = 'google'
-          if (state === 'enable') {
-            params.status = 'enable'
-          } else {
-            params.status = 'disable'
-          }
-          break
-      }
-      data = await enableTheClosing(params)
-      if (!(returnAjaxMessage(data, this, 1))) {
-        return false
+      let goOnStatus = 0
+      if (type == 'email') {
+        this.checkoutInputFormat(1, this.emailCode)
+        goOnStatus = 1
       } else {
-        this.getSecurityCenter()
-        // 安全中心状态刷新
-        this.openTheValidation = false
-        this.closeValidation = false
+        goOnStatus = 0
+      }
+      if (type == 'phone') {
+        this.checkoutInputFormat(0, this.phoneCode)
+        goOnStatus = 1
+      } else {
+        goOnStatus = 0
+      }
+      if (type == 'google') {
+        this.checkoutInputFormat(2, this.googleCode)
+        goOnStatus = 1
+      } else {
+        goOnStatus = 0
+      }
+      if (goOnStatus) {
+        let data
+        let params = {
+          email: this.userInfo.userInfo.email, // 邮箱
+          phone: this.userInfo.userInfo.phone, // 手机
+          emailCode: this.emailCode, // 邮箱验证
+          phoneCode: this.phoneCode, // 手机验证
+          googleCode: this.googleCode, // 谷歌验证
+          userId: this.userInfo.userId, // 用户id
+          type: '', // 邮箱 手机 谷歌 验证验证
+          status: '' // 开启 关闭
+        }
+        switch (type) {
+          case 'email':
+            console.log(type)
+            params.type = 'email'
+            console.log(params)
+            if (state === 'enable') {
+              params.status = 'enable'
+            } else {
+              params.status = 'disable'
+            }
+            break
+          case 'phone':
+            params.type = 'phone'
+            if (state === 'enable') {
+              params.status = 'enable'
+            } else {
+              params.status = 'disable'
+            }
+            break
+          case 'google':
+            params.type = 'google'
+            if (state === 'enable') {
+              params.status = 'enable'
+            } else {
+              params.status = 'disable'
+            }
+            break
+        }
+        data = await enableTheClosing(params)
+        if (!(returnAjaxMessage(data, this, 1))) {
+          return false
+        } else {
+          this.getSecurityCenter()
+          // 安全中心状态刷新
+          this.openTheValidation = false
+          this.closeValidation = false
+        }
       }
     },
     /**
@@ -828,6 +934,11 @@ export default {
           color: #fff;
         }
         .security-setting-box {
+          .error-msg{
+            height:25px;
+            line-height: 25px;
+            color: rgb(212, 88, 88);
+          }
           .input {
             border: 1px solid #485776;
             color: #fff;

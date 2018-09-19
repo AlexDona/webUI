@@ -199,7 +199,7 @@
                 </div>
                 <div
                   v-if="s.row.state == 'PUSH_REGISTER' && userInfo.userInfo.id !== s.row.pushId"
-                  class="cursor state-status"
+                  class="cursor state-status cursor-pointer"
                   @click.prevent="paymentId(s.row.id)"
                   :id="s.row.id"
                 >
