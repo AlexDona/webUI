@@ -20,6 +20,7 @@ export default {
     return {
       financeCharts: '',
       options: {
+        animation: false,
         xAxis: {
           type: 'category',
           boundaryGap: ['10%', '0%'],

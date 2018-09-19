@@ -52,7 +52,7 @@
           </div>
           <div class="left-body">
             <label for="">
-              投资类型:
+              投资类型:&nbsp;&nbsp;&nbsp;
               <el-select
               v-model="selectedInvestTypeId"
               @change="electedInvestTypeDisc"
@@ -66,9 +66,9 @@
               </el-select>
             </label>
             <label for="">
-              投资数量:
+              投资数量:&nbsp;&nbsp;&nbsp;
               <div class='invest-mounte'>
-                <input v-model="investMounte" placeholder="请输入数量"/>
+                <input v-model="investMounte" placeholder="请输入数量" oninput="value=value.replace(/^[0]+[0-9]*$/g,'')"/>
                 <span>{{selecteCoindName}}</span>
               </div>
             </label>
@@ -77,7 +77,6 @@
                 <el-button
                  plain
                  @click="getInvestEarnings"
-                 :disabled='!selectedInvestTypeDiscri && !investMounte'
                 >立刻投资</el-button>
               </div>
             </label>
@@ -314,8 +313,15 @@ export default {
     },
     // 点击立刻投资按钮执行
     getInvestEarnings () {
-      // 执行投资按钮
-      this.clickImmediateInvestment()
+      if (this.selectedInvestTypeId && this.investMounte) {
+        // 执行投资按钮
+        this.clickImmediateInvestment()
+      } else {
+        this.$message({
+          message: '投资类型或投资数量不能为空',
+          type: 'error'
+        })
+      }
     },
     // 添加理财记录
     async clickImmediateInvestment () {
@@ -341,7 +347,7 @@ export default {
         coinId: this.selectedCoinId,
         coinName: this.selecteCoindName
       })
-      console.log('你好世界投资理财页面查询')
+      console.log('投资理财页面查询')
       console.log(data)
       if (!(returnAjaxMessage(data, this, 0))) {
         return false
@@ -521,7 +527,6 @@ export default {
               >.invest-mounte{
                 display: flex;
                 justify-content: space-between;
-                margin-left: 10px;
                 padding: 13px 11px;
                 border-radius: 2px;
                 border:1px solid rgba(169,190,212,1);
@@ -538,7 +543,7 @@ export default {
                 >button{
                   width: 407px;
                   height: 48px;
-                  margin-left: 70px;
+                  margin-left: 72px;
                   text-align: center;
                   border: 1px solid #fff;
                   border-image: -webkit-linear-gradient(top,#2B396E,#2A5082);
