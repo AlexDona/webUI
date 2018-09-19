@@ -110,7 +110,6 @@
           <button
             class="button font-size16 cursor-pointer"
             @click="submit"
-            :disabled="!checked"
           >
             申请成为商家
           </button>
@@ -190,6 +189,13 @@ export default {
     submit () {
       // 点击按钮时判断商家是否登录
       if (this.isLogin) {
+        if (!this.checked) {
+          this.$message({
+            message: '请先同意认证商家协议',
+            type: 'error'
+          })
+          return false
+        }
         this.getOTCBusinessApply()
       } else {
         this.$message({showClose: true, message: '请先登录!'})
@@ -255,10 +261,10 @@ export default {
         // 返回数据地逻辑
         data.data.data.forEach(item => {
           if (item.keyword === 'OTC协议') {
-              this.argumentContent = item.content
+            this.argumentContent = item.content
           }
         })
-        document.getElementById('argumentContentBox').innerHTML = this.argumentContent;
+        document.getElementById('argumentContentBox').innerHTML = this.argumentContent
       }
     },
     businessArgument () {

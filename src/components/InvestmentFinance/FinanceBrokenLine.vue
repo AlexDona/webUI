@@ -110,7 +110,8 @@ export default {
     }
   },
   created () {
-    console.log(this.selecteCoindInfor)
+    this.resetChart(this.options)
+    this.isReciveSelecteCoindInfor()
   },
   mounted () {
     // this.drawLine()
@@ -121,6 +122,20 @@ export default {
   update () {},
   beforeRouteUpdate () {},
   methods: {
+    // 组建创建完成判断页面传值是否收到了
+    isReciveSelecteCoindInfor () {
+      if (this.selecteCoindInfor) {
+        this.financeCharts = echarts.init(document.getElementById('finance'))
+        this.financeCharts.setOption({
+          xAxis: {
+            data: this.selecteCoindInfor.renderTimeList
+          },
+          series: [{
+            data: this.selecteCoindInfor.renderPriceList
+          }]
+        })
+      }
+    },
     drawLine () {
       this.financeCharts = echarts.init(document.getElementById('finance'))
       this.financeCharts.setOption(this.options)
