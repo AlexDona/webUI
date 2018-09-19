@@ -73,9 +73,9 @@
                 class="sub-nav-list activity-center"
                 v-show="$route.path ==='/ActivityCenter'||$route.path ==='/CurrencyApplication'||$route.path==='/RankingListOfInvitation'"
               >
-                <li class="sub-nav-item">
-                  <router-link to="/">新币投票</router-link>
-                </li>
+                <!--<li class="sub-nav-item">-->
+                  <!--<router-link to="/">新币投票</router-link>-->
+                <!--</li>-->
                 <li class="sub-nav-item">
                   <router-link to="/CurrencyApplication">上币申请</router-link>
                 </li>
@@ -758,6 +758,7 @@ export default{
               >.lang-list{
                 background-color: #2A3242;
                 position: absolute;
+                z-index: 2;
                 left:0;
                 top:64px;
                 >.lang-item{

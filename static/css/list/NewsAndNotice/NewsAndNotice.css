@@ -16,7 +16,9 @@
 .news-and-notice-box .el-tabs__content{
   height:1100px;
 }
-/*.news-and-notice-box*/
+.news-and-notice-box .el-pagination{
+  text-align: center;
+}
 /*.news-and-notice-box*/
 /*.news-and-notice-box*/
 /*.news-and-notice-box*/

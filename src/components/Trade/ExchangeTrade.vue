@@ -419,6 +419,7 @@ export default {
     },
     // 跳转
     jumpToOtherPage (router, activeName) {
+      console.log(this.activeSymbol)
       this.$store.commit('footerInfo/CHANGE_FOOTER_ACTIVENAME', {
         activeName,
         type: router

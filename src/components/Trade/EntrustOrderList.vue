@@ -180,7 +180,8 @@
                   </li>
                   <!--委托类型-->
                   <li class="td type">
-                    {{item.type}}
+                    <span v-show="language !== 'zh_CN'">{{item.type}}</span>
+                    <span v-show="language === 'zh_CN'">{{item.typeName}}</span>
                   </li>
                   <!--委托量-->
                   <li class="td price">
