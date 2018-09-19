@@ -59,15 +59,15 @@
                     </div>
                   </li>
                 </ul>
-                <el-pagination
-                  background
-                  layout="prev, pager, next"
-                  :current-page="pageNum"
-                  :page-count="totalPages"
-                  @current-change="changeCurrentPage"
-                >
-                </el-pagination>
               </div>
+              <el-pagination
+                background
+                layout="prev, pager, next"
+                :current-page="pageNum"
+                :page-count="totalPages"
+                @current-change="changeCurrentPage"
+              >
+              </el-pagination>
             </el-tab-pane>
           </el-tabs>
           <div
@@ -132,38 +132,13 @@ export default {
     return {
       activeName: '1',
       // 新闻公告列表
-      noticeList: [
-        // {
-        //   time: '2018-09-14 20:27',
-        //   title: '表头表头表头表头表头表头表头表表头表头表头表头表头表头表头表头表头表头表头表头表头表头表头表头头',
-        //   briefIntroduction: '简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介',
-        //   author: '今日财经'
-        // },
-        // {
-        //   time: '2018-09-14 20:27',
-        //   title: '表头',
-        //   briefIntroduction: '简介',
-        //   author: '今日财经'
-        // },
-        // {
-        //   time: '2018-09-14 20:27',
-        //   title: '表头',
-        //   briefIntroduction: '简介',
-        //   author: '今日财经'
-        // }
-      ], // 公告列表
+      noticeList: [], // 公告列表
       newList: [], // 新闻列表
-      helpList: [
-        // {
-        //   title: '帮助title',
-        //   subTitle: '子帮助主题',
-        //   content: '帮助内容'
-        // }
-      ],
+      helpList: [],
       searchKeyWord: '',
       helpShowStatusList: [],
       totalPages: 0, // 公告总条数
-      pageSize: 1,
+      pageSize: 7,
       pageNum: 1, // 当前页
       newsTypeList: [], // 新闻类型列表
       newsTypeId: 1, // 当前新闻类型id
@@ -180,7 +155,7 @@ export default {
     require('../../../static/css/theme/day/NewsAndNotice/NewsAndNoticeDay.css')
     require('../../../static/css/theme/night/NewsAndNotice/NewsAndNoticeNight.css')
     await this.getAllNewsTypeList()
-    console.log(this.newsTypeList)
+    // console.log(this.newsTypeList)
     this.newsTypeId = this.newsTypeList[0].id
     await this.getNewsNoticeList()
     this.helpList.forEach(() => {
@@ -340,10 +315,11 @@ export default {
           margin:0 auto;
           overflow: hidden;
           .item-content{
+            height:950px;
             >.content-list{
               >.content-item{
                 text-align: left;
-                padding: 50px 144px;
+                padding: 30px 144px 15px;
                 >.content-item-link{
                   display:inline-block;
                   >.left,>.right{
@@ -386,14 +362,14 @@ export default {
                       font-size:12px;
                       font-weight:400;
                       color:rgba(139,160,202,1);
-                      margin-bottom:10px;
+                      margin-bottom:5px;
                       overflow:hidden;
                       text-overflow:ellipsis;
                       display: -webkit-box;
                       -webkit-box-orient: vertical;
                       -webkit-line-clamp: 3;
                       line-height: 20px;
-                      height:60px;
+                      height:40px;
                     }
                     >.bottom{
                       font-size:12px;
@@ -449,6 +425,7 @@ export default {
             background-color: #1e2636;
             display:flex;
             padding:50px;
+            overflow-y:auto;
             >.left{
               flex:2;
               /*border:1px solid #fff;*/

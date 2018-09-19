@@ -63,7 +63,7 @@
               <!--已登录-->
               <div
                 class="logined content"
-                v-else
+                v-else-if="currentEntrustList.length!=0"
               >
                 <ul
                   class="tr"
@@ -107,6 +107,12 @@
                     >撤销</button>
                   </li>
                 </ul>
+              </div>
+              <div
+                class="content empty"
+                v-else
+              >
+                <p>暂无数据</p>
               </div>
             </div>
           </div>
@@ -161,7 +167,7 @@
               <!--已登录-->
               <div
                 class="logined content"
-                v-else
+                v-else-if="historyEntrustList.length!=0"
               >
                 <ul
                   class="tr"
@@ -174,7 +180,8 @@
                   </li>
                   <!--委托类型-->
                   <li class="td type">
-                    {{item.type}}
+                    <span v-show="language !== 'zh_CN'">{{item.type}}</span>
+                    <span v-show="language === 'zh_CN'">{{item.typeName}}</span>
                   </li>
                   <!--委托量-->
                   <li class="td price">
@@ -194,13 +201,19 @@
                   </li>
                 </ul>
               </div>
+              <div
+                class="content empty"
+                v-else
+              >
+                <p>暂无数据</p>
+              </div>
             </div>
           </div>
         </el-tab-pane>
         <!--分页-->
         <el-pagination
           background
-          v-show="activeName === 'history-entrust' && currentEntrustList.length && isLogin"
+          v-show="activeName === 'history-entrust' && historyEntrustList.length && isLogin"
           layout="prev, pager, next"
           :page-count="totalPageForHistoryEntrust"
           @current-change="changeCurrentPage(1,$event)"
@@ -279,16 +292,22 @@ export default {
      *撤销委单
      */
     repealMyEntrust (id, version) {
-      let params = {
-        id,
-        version
-      }
-      repealMyEntrustCommon(params, (res) => {
-        if (!returnAjaxMessage(res, this, 1)) {
-          return false
-        } else {
-          this.getMyCurrentEntrust()
+      this.$confirm('您确定要撤销此单吗, 是否继续?', '提示', {
+        confirmButtonText: '确定',
+        cancelButtonText: '取消'
+      }).then(() => {
+        let params = {
+          id,
+          version
         }
+        repealMyEntrustCommon(params, (res) => {
+          if (!returnAjaxMessage(res, this, 1)) {
+            return false
+          } else {
+            this.getMyCurrentEntrust()
+          }
+        })
+      }).catch(() => {
       })
       // console.log(id)
       // console.log(version)
@@ -338,7 +357,7 @@ export default {
       if (!returnAjaxMessage(data, this, 0)) {
         return false
       } else {
-        this.currentEntrustList = data.data.data.list
+        this.currentEntrustList = data.data.data.list || []
         this.totalPageForMyEntrust = data.data.data.pages - 0
       }
     },
@@ -452,6 +471,12 @@ export default {
               line-height: 180px;
               >a{
                 color:$mainColor;
+              }
+            }
+            &.empty{
+              >p{
+                line-height: 180px;
+                text-align: center;
               }
             }
             >.tr{

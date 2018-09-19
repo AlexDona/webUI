@@ -361,10 +361,6 @@ export default {
               this.setErrorMsg(0, '请输入手机号')
               this.$forceUpdate()
               return 0
-            // case 2:
-            //   this.setErrorMsg(0, '请输入正确的手机号')
-            //   this.$forceUpdate()
-            //   return 0
           }
           break
         // 邮箱验证
@@ -471,7 +467,7 @@ export default {
           regType: type
         }
         const data = await checkUserExist(params)
-        if (!returnAjaxMessage(data, this, 1)) {
+        if (!returnAjaxMessage(data, this)) {
           return false
         }
       } else {
@@ -508,10 +504,16 @@ export default {
       }
       switch (type) {
         case 0:
+          if (!this.checkoutInputFormat(type, this.phoneNum)) {
+            return false
+          }
           params.phone = this.phoneNum
           params.country = this.activeCountryCodeWithPhone
           break
         case 1:
+          if (!this.checkoutInputFormat(type, this.emailNum)) {
+            return false
+          }
           params.address = this.emailNum
           params.country = this.activeCountryCodeWithEmail
           break

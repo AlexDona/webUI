@@ -124,6 +124,7 @@
                             <!--class="more-btn"-->
                             <!--@click="itemViewMore(item.id,item.content)"-->
                           <!--&gt;-->
+                          <!--&gt;-->
                             <!--{{itemViewMoreBtnText}}-->
                             <!--<i class="el-icon-arrow-down el-icon&#45;&#45;right"></i>-->
                           <!--</el-button>-->
@@ -144,10 +145,10 @@
                     >
                       <el-table-column
                         label="交易对"
-                        width="126px"
+                        width="132px"
                       >
                         <template slot-scope="s">
-                          <div style="padding-left:14px;display:flex;width:126px !important;box-sizing: border-box;">
+                          <div style="padding-left:14px;display:flex;width: 132px !important;box-sizing: border-box;">
                             <div class="left" style="border-radius: 50%;">
                               <img
                                 style="width:22px;vertical-align: middle;
@@ -443,7 +444,8 @@ export default{
       filterMarketList: [],
       // 切换正反面显示列表
       toggleSideList: [],
-      socket: new socket()
+      socket: new socket(),
+      tabChangeCount: 0 // tab栏切换次数
     }
   },
   async created () {
@@ -482,13 +484,13 @@ export default{
     },
     // 更改当前交易对
     changeActiveSymbol (e) {
+      console.log(e)
       this.$store.commit('trade/SET_JUMP_STATUS', true)
       this.$store.commit('trade/SET_JUMP_SYMBOL', e)
       console.log(this.activeSymbol)
       // 设置当前交易区
       const id = e.areaId
       const name = e.area
-      console.log(e)
       this.$store.commit('common/CHANGE_ACTIVE_TRADE_AREA', {
         id,
         name
@@ -498,13 +500,20 @@ export default{
     // 重新订阅请求socket
     resetSocketMarket (plateId) {
       this.socket.doOpen()
-      this.socket.on('open', () => {
+      // 第一次加载
+      if (!this.tabChangeCount) {
+        this.socket.on('open', () => {
+          this.getSocketData('REQ', plateId)
+          this.getSocketData('SUB', plateId)
+        })
+      } else {
         this.getSocketData('REQ', plateId)
         this.getSocketData('SUB', plateId)
-      })
+      }
+
       this.socket.on('message', (data) => {
+        console.log(data)
         if (data.tradeType === 'TICKER') {
-          console.log(data)
           if (data.data) {
             switch (data.type) {
               // 请求socket
@@ -572,8 +581,8 @@ export default{
       })
     },
     // 切换板块
-    changeTab (e) {
-      console.log(e.name)
+    changeTab () {
+      this.tabChangeCount++
       this.resetSocketMarket(this.activeName)
     },
     // 获取板块列表
@@ -799,7 +808,7 @@ export default{
       console.log(newVal)
     },
     activeName (newVal, oldVal) {
-      console.log(newVal, oldVal)
+      // console.log(newVal, oldVal)
     },
     language (newVal) {
       this.getPartnerList()
