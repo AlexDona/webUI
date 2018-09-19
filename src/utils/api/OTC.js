@@ -44,6 +44,8 @@ export const sellerSendAppeal = (params) => postWithURLencoded('otcAppeal/applyO
 export const businessApply = (params) => postWithURLencoded('otcMerchApply/applyOTCMerch', params)
 // 首次进入otc商家申请页面
 export const firstEnterBusinessApply = (params) => get('otcMerchApply/getUserMerchInfo', params)
+// 商家申请页面点击用户协议
+export const argumentBusinessApply = (params) => get('cms/terms/selectAll', params)
 // 广告管理列表请求
 export const getOTCADManageApplyList = (params) => get('otcEntrust/selectMerchEntrustsPage', params)
 // 商家订单列表请求
@@ -56,11 +58,7 @@ export const getOTCReportFormStatisticsData = (params) => get('otcOrder/selectMe
 export const getOTCChangeRate = (params) => get('otcCOin/changeRate', params)
 //  币种详情：商家和普通用户挂单页面请求币种详情渲染页面
 export const getOTCCoinInfo = (params) => get('otcCOin/getCoinInfo', params)
-// 服务条款币种资料列表
-export const getCurrencyInforList = (params) => get('cms/coinInformation/all', params)
-// 服务条款币种列表对应的单个币种详细资料
-export const getCurrencyDetails = (params) => get(`cms/coinInformation/select/${params}`)
-// 投资理财币种类型请求数据
+// 投资理财请求数据
 export const getFinancialManagement = (params) => get('financialManagement', params)
 // 投资理财立投资请求接口
 export const imediateInvestment = (params) => post('financialManagement', params)

@@ -1,6 +1,6 @@
 <template>
   <div
-    class="demo-box"
+    class="news-detail-box"
     :class="{'day':theme == 'day','night':theme == 'night' }"
   >
     <HeaderCommon/>

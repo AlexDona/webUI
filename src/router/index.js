@@ -78,6 +78,7 @@ const currencyApplication = r => require.ensure([], () => r(require('@/component
  * 新闻公告
  */
 const NewsAndNoticeList = r => require.ensure([], () => r(require('@/components/NoticeAndNews/NewsAndNoticeList')), 'news-andNotice-list')
+const HelpCenter = r => require.ensure([], () => r(require('@/components/FooterInfo/HelpCenter')), 'news-andNotice-list')
 /**
  * FooterInfo
  */
@@ -327,6 +328,10 @@ const router = new Router({
       // 关于我们
       path: '/AboutUs',
       component: AboutUs
+    },
+    {
+      path: '/HelpCenter',
+      component: HelpCenter
     },
     {
       path: '/ServiceAndProtocol',

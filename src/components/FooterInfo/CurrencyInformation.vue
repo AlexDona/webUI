@@ -8,38 +8,54 @@
         <div class="title">数字资产列表</div>
         <ul class="list" id="list">
           <li
-            class="currency-item"
+            class="currency-item cursor-pointer"
+            :class="{'active':currencyId==item.id}"
             v-for="(item,index) in currencyList"
             :key="index"
-            @click="currencyName(item.id)"
+            @click="changeCurrentCurrency(item.id)"
           >
-            <span>{{item.name}}({{item.shortName}})</span>
+            <span>{{item.name}} {{item.shortName}} </span>
           </li>
         </ul>
       </div>
       <div class="right">
-        <h2>BTC是什么</h2>
-        <P>
-          <span>1.这是标题</span><br>
-          香港FUBT交易所，致力于打造全球领先的区块链资产交易服务平台。
-          FUBT前中国大陆站（即币兴网）于2017年6月搭建完成并开放注册，7月10日正式开启交易。上线伊始迅速发展壮大，用户激增、交易火爆，首发
-          平台币BXB一度暴涨25倍领跑市场。后币兴网主动响应”中国9.4政策”而自主关停，并于同年底开启全新国际站香港富比特——www.fubt.top。
-          2018年上半年，FUBT陆续启动中国台湾、柬埔寨金边、日本东京、韩国首尔、美国纽约等全球各地分站。
-        </P>
-        <P>
-          <span>1.这是标题</span><br>
-          香港FUBT交易所，致力于打造全球领先的区块链资产交易服务平台。
-          FUBT前中国大陆站（即币兴网）于2017年6月搭建完成并开放注册，7月10日正式开启交易。上线伊始迅速发展壮大，用户激增、交易火爆，首发
-          平台币BXB一度暴涨25倍领跑市场。后币兴网主动响应”中国9.4政策”而自主关停，并于同年底开启全新国际站香港富比特——www.fubt.top。
-          2018年上半年，FUBT陆续启动中国台湾、柬埔寨金边、日本东京、韩国首尔、美国纽约等全球各地分站。
-        </P>
+        <div
+          class="inner-box"
+        >
+          <h1>
+            {{currencyInfo.name}} {{currencyInfo.shortName}}
+          </h1>
+          <div
+            class="information"
+            v-html="currencyInfo.information"
+          >
+          </div>
+        </div>
+        <!--<h2>BTC是什么</h2>-->
+        <!--<P>-->
+          <!--<span>1.这是标题</span><br>-->
+          <!--香港FUBT交易所，致力于打造全球领先的区块链资产交易服务平台。-->
+          <!--FUBT前中国大陆站（即币兴网）于2017年6月搭建完成并开放注册，7月10日正式开启交易。上线伊始迅速发展壮大，用户激增、交易火爆，首发-->
+          <!--平台币BXB一度暴涨25倍领跑市场。后币兴网主动响应”中国9.4政策”而自主关停，并于同年底开启全新国际站香港富比特——www.fubt.top。-->
+          <!--2018年上半年，FUBT陆续启动中国台湾、柬埔寨金边、日本东京、韩国首尔、美国纽约等全球各地分站。-->
+        <!--</P>-->
+        <!--<P>-->
+          <!--<span>1.这是标题</span><br>-->
+          <!--香港FUBT交易所，致力于打造全球领先的区块链资产交易服务平台。-->
+          <!--FUBT前中国大陆站（即币兴网）于2017年6月搭建完成并开放注册，7月10日正式开启交易。上线伊始迅速发展壮大，用户激增、交易火爆，首发-->
+          <!--平台币BXB一度暴涨25倍领跑市场。后币兴网主动响应”中国9.4政策”而自主关停，并于同年底开启全新国际站香港富比特——www.fubt.top。-->
+          <!--2018年上半年，FUBT陆续启动中国台湾、柬埔寨金边、日本东京、韩国首尔、美国纽约等全球各地分站。-->
+        <!--</P>-->
       </div>
     </div>
   </div>
 </template>
 <!--请严格按照如下书写书序-->
 <script>
-import {getCurrencyInforList, getCurrencyDetails} from '../../utils/api/OTC'
+import {
+  getCurrencyInfoList,
+  getCurrencyDetails
+} from '../../utils/api/header'
 import HeaderCommon from '../Common/HeaderCommon'
 import FooterCommon from '../Common/FooterCommon'
 import {returnAjaxMessage} from '../../utils/commonFunc'
@@ -54,32 +70,27 @@ export default {
     return {
       currencyId: '',
       currencyList: [
-        {
-          id: 1,
-          name: '比特币',
-          shortName: 'BTC'
-        },
-        {
-          id: 2,
-          name: '比特币',
-          shortName: 'BTC'
-        },
-        {
-          id: 3,
-          name: '比特币',
-          shortName: 'BTC'
-        },
-        {
-          id: 4,
-          name: '比特币',
-          shortName: 'BTC'
-        }
       ],
-      currencyDetails: ''
+      currencyInfo: {
+        // coinId: '486124940777488384',
+        // createTime: '2018-09-18 10:12:17',
+        // id: '491552030104485888',
+        // information: `↵        <!DOCTYPE html>↵        <html>↵        <head lang="en">↵            <meta charset="UTF-8">↵            <title></title>↵            <link href="https://cdn.bootcss.com/quill/1.3.6/quill.snow.css" rel="stylesheet">↵        </head>↵        <body>↵          <p>比特币<img src="http://fubt-3.oss-cn-hongkong.aliyuncs.com/b91b13c4-af14-4c90-b217-c1f33c3b993b"></p>    ↵        </body>↵        </html>↵      `,
+        // intro: '比特币',
+        // language: 'zh_CN',
+        // logo: 'http://fubt-3.oss-cn-hongkong.aliyuncs.com/3829bdfa-390b-46f7-b6cc-b201883ca93e',
+        // modifier: '申',
+        // name: 'BTC',
+        // partnerId: '474629374641963008',
+        // shortName: '比特币',
+        // updateTime: '2018-09-18 10:12:17',
+        // version: 1
+      }
     }
   },
-  created () {
-    this.getFootCurrencyInforList()
+  async created () {
+    this.getFootCurrencyInfoList()
+    this.getFootCurrencyInforDetail()
   },
   mounted () {},
   activited () {},
@@ -87,36 +98,33 @@ export default {
   beforeRouteUpdate () {},
   methods: {
     // 数字资产列表
-    async getFootCurrencyInforList () {
-      const data = await getCurrencyDetails({
+    async getFootCurrencyInfoList () {
+      const data = await getCurrencyInfoList({
         language: this.language,
         partnerId: this.partnerId
       })
-      console.log('你好')
       console.log(data)
-      if (!(returnAjaxMessage(data, this, 0))) {
+      if (!returnAjaxMessage(data, this)) {
         return false
       } else {
-        this.currencyId = data.data.data.list[0].id
-        this.currencyList = data.data.data.list
+        this.currencyList = data.data.data
+        this.currencyId = this.currencyList[0].id
+        console.log(this.currencyList)
       }
     },
-    currencyName (id) {
+    changeCurrentCurrency (id) {
       this.currencyId = id
       // 重新币种详情
       this.getFootCurrencyInforDetail()
     },
     // 币种详情
     async getFootCurrencyInforDetail () {
-      const data = await getCurrencyInforList({
-        id: this.currencyId
-      })
-      console.log('你好世界')
-      console.log(data)
+      const data = await getCurrencyDetails(this.currencyId)
       if (!(returnAjaxMessage(data, this, 0))) {
         return false
       } else {
-        // this.currencyDetails=data.data.data
+        this.currencyInfo = data.data.data
+        console.log(this.currencyDetails)
       }
     }
   },
@@ -133,56 +141,125 @@ export default {
 </script>
 <style scoped lang="scss" type="text/scss">
   .currency-information-box{
+    width:100%;
     >.inner-box{
+      width:100%;
       margin-left:10px;
       display: flex;//
       >.left{
-        width:230px;
+        width:180px;
         height:720px;
-        background:#1E2636;
-        border-right:50px solid #121824;
-        border-bottom:50px solid #121824;
+        margin-right:20px;
         >.title{
-          background:rgba(51,66,95,0.5);
           height: 30px;
-          color: #fff;
           line-height: 30px;
           text-align: center;
-          margin-bottom:10px;
-          box-shadow:2px 0px 2px rgba(11,14,22,0.5)
+          color: #fff;
         }
         >.list{
           text-align: center;
-          height: 720px;;
+          height: 100%;
+          width:180px;
           overflow-y: auto;
+          padding:0 2px;
           >.currency-item{
             line-height: 30px;
-            >.current{
-              background: #121824;
+            width:176px;
+            height:30px;
+            box-sizing: border-box;
+            &.active{
               color: #338FF5;
             }
           }
         }
       }
       >.right{
-        width: 820px;
+        width: 890px;
         box-sizing: border-box;
-       padding:29px 35px;
-       color:#8BA0CA;
-       line-height: 22px;
+        padding:29px 35px;
+        line-height: 22px;
+        >.inner-box{
+          >h1{
+            font-weight: 700;
+            font-size: 16px;
+            margin-bottom:20px;
+          }
+          img{
+          }
+        }
        >p{
          padding:10px 0px;
          >span{
-            color:#fff;
          }
        }
       }
     }
     &.night{
-      >.content{
-        >.content{
+      background-color: #121824;
+      >.inner-box{
+        >.left{
+          background:#1E2636;
+          >.title{
+            background:rgba(51,66,95,0.5);
+            box-shadow:2px 0px 2px rgba(11,14,22,0.5)
+          }
+          >.list{
+            >.currency-item{
+              &.active{
+                background: #121824;
+              }
+            }
+          }
+        }
+        >.right{
+          background-color: #1e2636;
+          color:#8BA0CA;
           >.inner-box{
-            background: transparent;
+            >h1{
+              color:#338FF5;
+            }
+          }
+          >p{
+            padding:10px 0px;
+            >span{
+              color:#fff;
+            }
+          }
+        }
+      }
+    }
+    &.day{
+      background-color: #fff;
+      >.inner-box{
+        >.left{
+          background:#fff;
+          border:1px solid rgba(236,241,248,1);
+          >.title{
+            background:rgba(51,143,245,.5);
+            box-shadow:2px 0px 2px rgba(202,216,231,1);
+          }
+          >.list{
+            >.currency-item{
+              &.active{
+                background:rgba(190,217,248,1);
+              }
+            }
+          }
+        }
+        >.right{
+          background-color: #fff;
+          color:#8BA0CA;
+          border:1px solid rgba(236,241,248,1);
+          >.inner-box{
+            >h1{
+              color:#338FF5;
+            }
+          }
+          >p{
+            padding:10px 0px;
+            >span{
+              color:#fff;
+            }
           }
         }
       }

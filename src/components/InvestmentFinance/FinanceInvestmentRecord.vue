@@ -16,7 +16,7 @@
             <router-link class="blue" to="/FinanceCenter">查看全部</router-link>
           </div>
           <!-- 投资记录 -->
-          <el-tabs v-model="activeName" @tab-click="handleClick">
+          <el-tabs v-model="activeName">
             <el-tab-pane label="投资记录" name="1">
               <el-table
                 :data="investList"
@@ -160,61 +160,61 @@ export default {
       interestTotalPages: '1',
       activeName: '1',
       investList: [
-        {
-          coinid: '00000',
-          coinName: 'BTC',
-          investType: '定期不可取回',
-          count: '100',
-          prospectiveEarning: '200',
-          gaveOutTime: '2015-07-15 12:12:12',
-          status: 'COMPLETED',
-          createdTime: '2015-07-28 15:15:15',
-          operations: 'CANCELED'
-        },
-        {
-          coinid: '00000',
-          coinName: 'BTF',
-          investType: '定期不可取回',
-          count: '100',
-          prospectiveEarning: '200',
-          gaveOutTime: '2015-07-15 12:12:12',
-          status: 'GAVEOUT',
-          createdTime: '2015-07-28 15:15:15',
-          operations: ''
-        },
-        {
-          coinid: '00000',
-          coinName: 'BTT',
-          investType: '定期不可取回',
-          count: '100',
-          prospectiveEarning: '200',
-          gaveOutTime: '2015-07-15 12:12:12',
-          status: 'FROZENED',
-          createdTime: '2015-07-28 15:15:15',
-          operations: 'CANCELED'
-        },
-        {
-          coinid: '00000',
-          coinName: 'BTCD',
-          investType: '定期不可取回',
-          count: '100',
-          prospectiveEarning: '200',
-          gaveOutTime: '2015-07-15 12:12:12',
-          status: 'CANCELED',
-          createdTime: '2015-07-28 15:15:15',
-          operations: ''
-        },
-        {
-          coinid: '00000',
-          coinName: 'BTCD',
-          investType: '定期不可取回',
-          count: '100',
-          prospectiveEarning: '200',
-          gaveOutTime: '2015-07-15 12:12:12',
-          status: 'REDEMPTIONED',
-          createdTime: '2015-07-28 15:15:15',
-          operations: 'CANCELED'
-        }
+        // {
+        //   coinid: '00000',
+        //   coinName: 'BTC',
+        //   investType: '定期不可取回',
+        //   count: '100',
+        //   prospectiveEarning: '200',
+        //   gaveOutTime: '2015-07-15 12:12:12',
+        //   status: 'COMPLETED',
+        //   createdTime: '2015-07-28 15:15:15',
+        //   operations: 'CANCELED'
+        // },
+        // {
+        //   coinid: '00000',
+        //   coinName: 'BTF',
+        //   investType: '定期不可取回',
+        //   count: '100',
+        //   prospectiveEarning: '200',
+        //   gaveOutTime: '2015-07-15 12:12:12',
+        //   status: 'GAVEOUT',
+        //   createdTime: '2015-07-28 15:15:15',
+        //   operations: ''
+        // },
+        // {
+        //   coinid: '00000',
+        //   coinName: 'BTT',
+        //   investType: '定期不可取回',
+        //   count: '100',
+        //   prospectiveEarning: '200',
+        //   gaveOutTime: '2015-07-15 12:12:12',
+        //   status: 'FROZENED',
+        //   createdTime: '2015-07-28 15:15:15',
+        //   operations: 'CANCELED'
+        // },
+        // {
+        //   coinid: '00000',
+        //   coinName: 'BTCD',
+        //   investType: '定期不可取回',
+        //   count: '100',
+        //   prospectiveEarning: '200',
+        //   gaveOutTime: '2015-07-15 12:12:12',
+        //   status: 'CANCELED',
+        //   createdTime: '2015-07-28 15:15:15',
+        //   operations: ''
+        // },
+        // {
+        //   coinid: '00000',
+        //   coinName: 'BTCD',
+        //   investType: '定期不可取回',
+        //   count: '100',
+        //   prospectiveEarning: '200',
+        //   gaveOutTime: '2015-07-15 12:12:12',
+        //   status: 'REDEMPTIONED',
+        //   createdTime: '2015-07-28 15:15:15',
+        //   operations: 'CANCELED'
+        // }
       ],
       // 收益列表
       userInterestRecord: []
@@ -248,7 +248,6 @@ export default {
     async getFinancialManagementList (pageNum) {
       const data = await getFinancialManagement({
         pageNum: pageNum,
-        pageSize: this.pageSize,
         partnerId: this.partnerId
       })
       console.log('投资理财页面查询')

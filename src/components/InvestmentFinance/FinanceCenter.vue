@@ -555,7 +555,7 @@ export default {
             display: flex;
           >.right-infor{
             padding-top:100px;
-            width: 200px;
+            width: 245px;
             overflow: hidden;
             >div{
               line-height: 30px;
