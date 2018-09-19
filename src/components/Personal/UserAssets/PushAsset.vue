@@ -208,6 +208,15 @@
               </template>
             </el-table-column>
           </el-table>
+          <!--分页-->
+          <el-pagination
+            background
+            v-show="pushRecordList.length"
+            layout="prev, pager, next"
+            :page-count="totalPageForMyEntrust"
+            @current-change="changeCurrentPage"
+          >
+          </el-pagination>
           <!-- 取消push -->
           <div class="cancel-push">
             <el-dialog
@@ -410,6 +419,8 @@ export default {
       pushPassword: '',
       // push列表记录
       pushRecordList: [],
+      currentPageForMyEntrust: 1, // 当前委托页码
+      totalPageForMyEntrust: 1, // 当前委托总页数
       SecurityCenter: {},
       pointLength: 4, // 保留小数位后四位
       errorMsg: '' // 错误提示
@@ -459,6 +470,7 @@ export default {
       } else {
         // 返回push记录数据
         this.pushRecordList = data.data.data.userPushVOPageInfo.list
+        this.totalPageForMyEntrust = data.data.data.userPushVOPageInfo.list.pages - 0
         // 返回push币种信息列表
         this.currencyValue = data.data.data.coinLists[0].name
         this.currencyValue = data.data.data.coinLists[0].coinId
@@ -589,6 +601,11 @@ export default {
           this.emptyInputData()
         }
       }
+    },
+    // 分页
+    changeCurrentPage (pageNum) {
+      this.currentPageForMyEntrust = pageNum
+      this.getPushRecordList()
     },
     // 清空数据
     emptyInputData (ref) {
