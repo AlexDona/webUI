@@ -32,17 +32,16 @@
             </p>
             <div
               class="payment-right"
-              @click="setCollectionMode"
             >
               <img
                 v-if="paymentTerm.isBnakEnable === 'disable'"
-                @click="statusOpenToClose('bank', 'enable')"
+                @click.prevent="statusOpenToClose('bank', 'enable')"
                 class="switch-img cursor-pointer"
                 :src="closePictureSrc"
               >
               <img
                 v-else
-                @click="statusOpenToClose('bank', 'disable')"
+                @click.prevent="statusOpenToClose('bank', 'disable')"
                 class="switch-img cursor-pointer"
                 :src="openPictureSrc"
               >
@@ -50,14 +49,14 @@
                 <span
                   v-if="paymentTerm.isBankBind"
                   class="payment-state cursor-pointer"
-                  @click="setShowStatusSecurity('bank')"
+                  @click.prevent="setShowStatusSecurity('bank')"
                 >
                     设置
                 </span>
                 <span
                   v-else
                   class="payment-state cursor-pointer"
-                  @click="setShowStatusSecurity('bank')"
+                  @click.prevent="setShowStatusSecurity('bank')"
                 >
                     修改
                 </span>
@@ -77,17 +76,16 @@
             </p>
             <p
               class="payment-right"
-              @click="setCollectionMode"
             >
               <img
                 v-if="paymentTerm.isWeixinEnable === 'disable'"
-                @click="statusOpenToClose('chat', 'enable')"
+                @click.prevent="statusOpenToClose('chat', 'enable')"
                 class="switch-img cursor-pointer"
                 :src="closePictureSrc"
               >
               <img
                 v-else
-                @click="statusOpenToClose('chat', 'disable')"
+                @click.prevent="statusOpenToClose('chat', 'disable')"
                 class="switch-img cursor-pointer"
                 :src="openPictureSrc"
               >
@@ -95,14 +93,14 @@
                 <span
                   v-if="paymentTerm.isWeixinBind"
                   class="payment-state cursor-pointer"
-                  @click="setShowStatusSecurity('weChat')"
+                  @click.prevent="setShowStatusSecurity('weChat')"
                 >
                     设置
                 </span>
                 <span
                   v-else
                   class="payment-state cursor-pointer"
-                  @click="setShowStatusSecurity('weChat')"
+                  @click.prevent="setShowStatusSecurity('weChat')"
                 >
                     修改
                 </span>
@@ -122,17 +120,16 @@
             </p>
             <p
               class="payment-right"
-              @click="setCollectionMode"
             >
               <img
                 v-if="paymentTerm.isAlipayEnable === 'disable'"
-                @click="statusOpenToClose('alipay', 'enable')"
+                @click.prevent="statusOpenToClose('alipay', 'enable')"
                 class="switch-img cursor-pointer"
                 :src="closePictureSrc"
               >
               <img
                 v-else
-                @click="statusOpenToClose('alipay', 'disable')"
+                @click.prevent="statusOpenToClose('alipay', 'disable')"
                 class="switch-img cursor-pointer"
                 :src="openPictureSrc"
               >
@@ -140,14 +137,14 @@
                 <span
                   v-if="paymentTerm.isAlipayBind"
                   class="payment-state cursor-pointer"
-                  @click="setShowStatusSecurity('alipay')"
+                  @click.prevent="setShowStatusSecurity('alipay')"
                 >
                   设置
                 </span>
                 <span
                   v-else
                   class="payment-state cursor-pointer"
-                  @click="setShowStatusSecurity('alipay')"
+                  @click.prevent="setShowStatusSecurity('alipay')"
                 >
                   修改
                 </span>
@@ -167,17 +164,16 @@
             </p>
             <p
               class="payment-right"
-              @click="setCollectionMode"
             >
               <img
                 v-if="paymentTerm.isPaypalEnable === 'disable'"
-                @click="statusOpenToClose('paypal', 'enable')"
+                @click.prevent="statusOpenToClose('paypal', 'enable')"
                 class="switch-img cursor-pointer"
                 :src="closePictureSrc"
               >
               <img
                 v-else
-                @click="statusOpenToClose('paypal', 'disable')"
+                @click.prevent="statusOpenToClose('paypal', 'disable')"
                 class="switch-img cursor-pointer"
                 :src="openPictureSrc"
               >
@@ -185,14 +181,14 @@
                 <span
                   v-if="paymentTerm.isPaypalBind"
                   class="payment-state cursor-pointer"
-                  @click="setShowStatusSecurity('paypal')"
+                  @click.prevent="setShowStatusSecurity('paypal')"
                 >
                   设置
                 </span>
                 <span
                   v-else
                   class="payment-state cursor-pointer"
-                  @click="setShowStatusSecurity('paypal')"
+                  @click.prevent="setShowStatusSecurity('paypal')"
                 >
                   修改
                 </span>
@@ -209,17 +205,16 @@
             </p>
             <p
               class="payment-right"
-              @click="setCollectionMode"
             >
               <img
                 v-if="paymentTerm.isXilianEnable === 'disable'"
-                @click="statusOpenToClose('western', 'enable')"
+                @click.prevent="statusOpenToClose('western', 'enable')"
                 class="switch-img cursor-pointer"
                 :src="closePictureSrc"
               >
               <img
                 v-else
-                @click="statusOpenToClose('western', 'disable')"
+                @click.prevent="statusOpenToClose('western', 'disable')"
                 class="switch-img cursor-pointer"
                 :src="openPictureSrc"
               >
@@ -227,14 +222,14 @@
                 <span
                   v-if="paymentTerm.isXilianBind"
                   class="payment-state cursor-pointer"
-                  @click="setShowStatusSecurity('westernUnion')"
+                  @click.prevent="setShowStatusSecurity('westernUnion')"
                 >
                   设置
                 </span>
                 <span
                   v-else
                   class="payment-state cursor-pointer"
-                  @click="setShowStatusSecurity('westernUnion')"
+                  @click.prevent="setShowStatusSecurity('westernUnion')"
                 >
                   修改
                 </span>
@@ -284,13 +279,13 @@
             >
               <el-button
                 type="primary"
-                @click="determineTheOpen"
+                @click.prevent="determineTheOpen"
               >
                   确 定
               </el-button>
               <el-button
                 class="btn"
-                @click="closeCollectionMode = false"
+                @click.prevent="closeCollectionMode = false"
               >
                 取 消
               </el-button>
@@ -339,13 +334,13 @@
             >
               <el-button
                 type="primary"
-                @click="determineTheOpen"
+                @click.prevent="determineTheOpen"
               >
                   确 定
               </el-button>
                <el-button
                  class="btn"
-                 @click="closeCollectionMode = false"
+                 @click.prevent="closeCollectionMode = false"
                >
                 取 消
               </el-button>
@@ -373,7 +368,7 @@
             >
               <el-button
                 type="primary"
-                @click="authenticationJump"
+                @click.prevent="authenticationJump"
               >
                 去认证
               </el-button>
@@ -453,32 +448,37 @@ export default {
     },
     // 路由跳转对应组件
     setShowStatusSecurity (val) {
-      switch (val) {
-        case 'bank':
-          this.$router.push({path: '/AddBankCard'})
-          break
-        case 'weChat':
-          this.$router.push({path: '/AddWeChat'})
-          break
-        case 'alipay':
-          this.$router.push({path: '/AddSetAlipay'})
-          break
-        case 'paypal':
-          this.$router.push({path: '/AddSetPaypal'})
-          break
-        case 'westernUnion':
-          this.$router.push({path: '/AddWesternUnion'})
-          break
+      // 判断是否实名认证
+      if (this.userInfoRefresh.realname == '' && this.userInfoRefresh.payPassword == '') {
+        this.centerModelWarning = true
+      } else {
+        switch (val) {
+          case 'bank':
+            this.$router.push({path: '/AddBankCard'})
+            break
+          case 'weChat':
+            this.$router.push({path: '/AddWeChat'})
+            break
+          case 'alipay':
+            this.$router.push({path: '/AddSetAlipay'})
+            break
+          case 'paypal':
+            this.$router.push({path: '/AddSetPaypal'})
+            break
+          case 'westernUnion':
+            this.$router.push({path: '/AddWesternUnion'})
+            break
+        }
       }
     },
     // 判断是否实名认证
-    setCollectionMode () {
-      if (this.userInfoRefresh.realname === '') {
-        this.centerModelWarning = true
-      } else {
-        this.centerModelWarning = false
-      }
-    },
+    // setCollectionMode () {
+    //   if (this.userInfoRefresh.realname == '' && this.userInfoRefresh.payPassword == '') {
+    //     this.centerModelWarning = true
+    //   } else {
+    //     this.centerModelWarning = false
+    //   }
+    // },
     // 确认开启关闭
     statusOpenToClose (paymentType, safeState) {
       // 把方法中定义的activeType、state在这里进行赋值 点击哪一个那当前的类型和状态传给后台

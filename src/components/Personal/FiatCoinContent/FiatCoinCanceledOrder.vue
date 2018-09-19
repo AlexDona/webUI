@@ -241,7 +241,7 @@ export default {
         }
       }
       >.no-data{
-        width: 1043px;
+        /*width: 1043px;*/
         height: 432px;
         line-height: 432px;
         text-align: center;

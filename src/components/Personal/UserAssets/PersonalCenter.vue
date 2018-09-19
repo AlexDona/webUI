@@ -136,13 +136,13 @@
         <button
           class="button-color border-radius4 cursor-pointer"
           type="primary"
-          @click="confirm"
+          @click.prevent="confirm"
         >
           确 定
         </button>
         <button
           class="btn border-radius4 cursor-pointer"
-          @click="dialogVisible = false"
+          @click.prevent="dialogVisible = false"
         >
           取 消
         </button>
@@ -212,6 +212,7 @@ export default {
   data () {
     return {
       tabPosition: 'left', // 导航位置方向
+      userInfoRefresh: {},
       dialogVisible: false
     }
   },
@@ -222,7 +223,7 @@ export default {
     require('../../../../static/css/theme/day/Personal/UserAssets/PersonalCenterDay.css')
     // 黑色主题样式
     require('../../../../static/css/theme/night/Personal/UserAssets/PersonalCenterNight.css')
-    this.getUserRefreshUser()
+    // this.getUserRefreshUser()
   },
   mounted () {},
   activited () {},
@@ -257,7 +258,10 @@ export default {
           this.$refs.identityValue.getCountryListings()
           break
         case 'account-credited':
-          if (this.userInfo.payPassword !== '') {
+          if (!this.userInfoRefresh.payPassword) {
+            this.$refs.accountCreditedValue.getAccountPaymentTerm()
+          } else if (!this.userInfoRefresh.realname) {
+            // 收款方式状态查询
             this.$refs.accountCreditedValue.getAccountPaymentTerm()
           } else {
             // 收款方式状态查询

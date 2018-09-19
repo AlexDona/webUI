@@ -33,9 +33,9 @@
             >
               <el-option
                 v-for="item in entrustSelectList"
-                :key="item.id"
+                :key="item.name"
                 :label="item.name"
-                :value="item.id"
+                :value="item.name"
               >
               </el-option>
             </el-select>
@@ -94,7 +94,7 @@
           <div class="search-box condition-item">
             <button
               class="search-btn cursor-pointer"
-              @click="searchWithCondition(activeName)"
+              @click.prevent="searchWithCondition(activeName)"
             >
               查询
             </button>
@@ -189,7 +189,7 @@
                   <template slot-scope="s">
                     <button
                       class="cursor-pointer repeal-btn"
-                      @click="repealMyEntrust(s.row.id,s.row.version)"
+                      @click.prevent="repealMyEntrust(s.row.id,s.row.version)"
                     >撤销</button>
                   </template>
                 </el-table-column>
@@ -292,7 +292,7 @@
               <template slot-scope="s">
                 <button
                   class="cursor-pointer repeal-btn"
-                  @click="repealMyEntrust(s.row.id,s.row.version)"
+                  @click.prevent="repealMyEntrust(s.row.id,s.row.version)"
                 >删除</button>
               </template>
             </el-table-column>

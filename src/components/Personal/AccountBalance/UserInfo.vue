@@ -109,7 +109,18 @@
             <span class="info-centre-left float-left font-size12">会员等级 -</span>
             <p class="info-picture margin-left10 float-left">
               <img :src="vipShowPictureSrc">
-              <span class="info-centre-right font-size12">{{ userInfo.userInfo.level }}</span>
+              <span
+                v-if="!userInfoRefresh"
+                class="info-centre-right font-size12"
+              >
+                {{ userInfoRefresh.level }}
+              </span>
+              <span
+                v-else
+                class="info-centre-right font-size12"
+              >
+                VIP0
+              </span>
             </p>
           </div>
           <p class="info-discount margin-top45">
@@ -149,7 +160,8 @@
 <script>
 import {mapState} from 'vuex'
 import {
-  assetCurrenciesList
+  assetCurrenciesList,
+  userRefreshUser
 } from '../../../utils/api/personal'
 import {
   returnAjaxMessage
@@ -163,7 +175,7 @@ export default {
   // props,
   data () {
     return {
-      showStateUserInfo: {}, // 获取全局个人信息
+      userInfoRefresh: {}, // 获取全局个人信息
       vipShowPictureSrc: require('../../../assets/user/vip.png'), // VIP图片
       // userShowVipGrade: 'V1', // 自定义VIP等级
       discountRate: '无', // 自定义折扣率
@@ -206,6 +218,21 @@ export default {
         // 返回数据
         this.totalSumBTC = data.data.data.totalSum
         console.log(this.totalSumBTC)
+      }
+    },
+    /**
+     *  刷新用户信息
+     */
+    async getUserRefreshUser () {
+      let data = await userRefreshUser({
+        token: this.userInfo.token
+      })
+      console.log(data)
+      if (!(returnAjaxMessage(data, this, 0))) {
+        return false
+      } else {
+        // 返回列表数据
+        this.userInfoRefresh = data.data.data.userInfo
       }
     }
   },

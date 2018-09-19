@@ -93,7 +93,7 @@
             </el-form-item>
             <button
               class="form-button-common border-radius4 cursor-pointer"
-              @click="getStatusSubmit"
+              @click.prevent="getStatusSubmit"
             >
               提交
             </button>
@@ -136,7 +136,8 @@
               label="对方UID"
             >
               <template slot-scope = "s">
-                <div>{{ s.row.showUid }}</div>
+                <div v-if="userInfo.userInfo.showId !== s.row.showPushId">{{ s.row.showPushId }}</div>
+                <div v-if="userInfo.userInfo.showId == s.row.showPushId">{{ s.row.showUid }}</div>
               </template>
             </el-table-column>
             <el-table-column
@@ -191,7 +192,7 @@
                 <div
                   v-if="s.row.state == 'PUSH_REGISTER' && userInfo.userInfo.id == s.row.pushId"
                   class="cursor-pointer state-status"
-                  @click="cancelId(s.row.id)"
+                  @click.prevent="cancelId(s.row.id)"
                   :id="s.row.id"
                 >
                   {{ cancel }}
@@ -199,7 +200,7 @@
                 <div
                   v-if="s.row.state == 'PUSH_REGISTER' && userInfo.userInfo.id !== s.row.pushId"
                   class="cursor state-status"
-                  @click="paymentId(s.row.id)"
+                  @click.prevent="paymentId(s.row.id)"
                   :id="s.row.id"
                 >
                   {{ payment }}
@@ -208,97 +209,137 @@
             </el-table-column>
           </el-table>
           <!-- 取消push -->
-          <!--温馨提示-->
-          <el-dialog :title="取消push" :visible.sync="dialogVisible" width="300px" center>
-            <span class="info">确定取消PUSH资产吗？</span>
-            <span slot="footer" class="dialog-footer">
-               <!--确 定 取 消-->
-                <el-button type="primary" @click="confirm"
-                           class="mg1" :disabled="statel">
-                  确 定
-                </el-button>
-                <el-button @click="dialogVisible = false">
-                  取 消
-                </el-button>
-            </span>
-          </el-dialog>
-          <!--PUSH确认-->
-          <el-dialog
-            title="付款"
-            :visible.sync="paymentVisible"
-            center
-          >
-            <el-form
-              :label-position="labelPosition"
-              class="form_padding"
-              label-width="100px"
+          <div class="cancel-push">
+            <el-dialog
+              :title="取消push"
+              :visible.sync="dialogVisible"
+              center
             >
-              <!--PUSH资产-->
-              <el-form-item label="资产">
-                <input
-                  class="form-input-common border-radius2 padding-l15 box-sizing"
-                  type="text"
-                  v-model="pushAsset"
-                  disabled
-                >
-              </el-form-item>
-              <!--PUSH价格-->
-              <el-form-item label="价格">
-                <input
-                  class="form-input-common border-radius2 padding-l15 box-sizing"
-                  type="text"
-                  v-model="pushPrice"
-                  disabled
-                >
-              </el-form-item>
-              <!--PUSH数量-->
-              <el-form-item label="数量">
-                <input
-                  class="form-input-common border-radius2 padding-l15 box-sizing"
-                  type="text"
-                  v-model="pushCount"
-                  disabled
-                >
-              </el-form-item>
-              <!--付款金额-->
-              <el-form-item label="付款金额">
-                <input
-                  class="form-input-common border-radius2 padding-l15 box-sizing"
-                  type="text"
-                  v-model="pushPaymentAmount"
-                  disabled
-                >
-              </el-form-item>
-            </el-form>
-            <el-button @click="paymentVisible = false">取 消</el-button>
-            <el-button type="primary" @click="statusUserInfo">确 定</el-button>
-          </el-dialog>
-          <el-dialog
-            title="收货地址"
-            :visible.sync="passwordVisible">
-            <el-form>
-              <el-form-item label="交易密码">
-                <input
-                  type="password"
-                  class="form-input-common border-radius2 padding-l15 box-sizing"
-                  v-model="pushPassword"
-                  auto-complete="off"
-                >
-              </el-form-item>
-            </el-form>
-            <div
-              slot="footer"
-              class="dialog-footer"
-            >
-              <el-button @click="passwordVisible = false">取 消</el-button>
+              <span class="text-align-c">
+                确定取消PUSH资产吗？
+              </span>
+              <span
+                slot="footer"
+                class="dialog-footer"
+              >
+             <!--确 定 取 消-->
               <el-button
                 type="primary"
-                @click="confirmSubmit"
+                @click.prevent="confirm"
+                class="mg1"
+                :disabled="statel"
               >
                 确 定
               </el-button>
-            </div>
-          </el-dialog>
+              <el-button
+                @click.prevent="dialogVisible = false"
+              >
+                取 消
+              </el-button>
+            </span>
+            </el-dialog>
+          </div>
+          <!--PUSH确认-->
+          <div class="push-affirm">
+            <el-dialog
+              title="付款"
+              :visible.sync="paymentVisible"
+              center
+            >
+              <el-form
+                :label-position="labelPosition"
+                class="form_padding"
+                label-width="100px"
+              >
+                <!--PUSH资产-->
+                <el-form-item label="资产">
+                  <input
+                    class="form-input-common border-radius2 padding-l15 box-sizing"
+                    type="text"
+                    v-model="pushAsset"
+                    disabled
+                  >
+                </el-form-item>
+                <!--PUSH价格-->
+                <el-form-item label="价格">
+                  <input
+                    class="form-input-common border-radius2 padding-l15 box-sizing"
+                    type="text"
+                    v-model="pushPrice"
+                    disabled
+                  >
+                </el-form-item>
+                <!--PUSH数量-->
+                <el-form-item label="数量">
+                  <input
+                    class="form-input-common border-radius2 padding-l15 box-sizing"
+                    type="text"
+                    v-model="pushCount"
+                    disabled
+                  >
+                </el-form-item>
+                <!--付款金额-->
+                <el-form-item label="付款金额">
+                  <input
+                    class="form-input-common border-radius2 padding-l15 box-sizing"
+                    type="text"
+                    v-model="pushPaymentAmount"
+                    disabled
+                  >
+                </el-form-item>
+              </el-form>
+              <span
+                slot="footer"
+                class="dialog-footer"
+              >
+                <el-button
+                  type="primary"
+                  @click.prevent="statusUserInfo"
+                >
+                  确 定
+                </el-button>
+              </span>
+            </el-dialog>
+          </div>
+          <!--收货地址-->
+          <div class="shipping-address">
+            <el-dialog
+              title="收货地址"
+              :visible.sync="passwordVisible"
+            >
+              <el-form
+                :label-position="labelPosition"
+              >
+                <el-form-item label="交易密码">
+                  <input
+                    type="password"
+                    class="form-input-common border-radius2 padding-l15 box-sizing"
+                    v-model="pushPassword"
+                    @keydown="stateErrorMsg(0, '')"
+                    @blur="stateInputFormat(0, pushPassword)"
+                  >
+                </el-form-item>
+              </el-form>
+              <!--错误提示-->
+              <div
+                class = "error-msg font-size12"
+                v-show = "errorMsg"
+              >
+                {{ errorMsg }}
+              </div>
+              <div
+                slot="footer"
+                class="dialog-footer"
+              >
+                <el-button
+                  type="primary"
+                  @click.prevent="confirmSubmit"
+                >
+                  确 定
+                </el-button>
+              </div>
+            </el-dialog>
+          </div>
         </div>
       </div>
     </div>
@@ -362,7 +403,7 @@ export default {
       pushCount: '', // PUSH数量信息展示
       pushPaymentAmount: '', // 付款金额信息展示
       dialogVisible: false, // 取消弹窗默认隐藏
-      // labelPosition: 'top', // form表单
+      labelPosition: 'top', // form表单
       paymentVisible: false, // 付款二次确认弹窗默认隐藏
       passwordVisible: false, // 付款二次确认之后交易密码弹窗默认隐藏
       pushUID: '', // 每行数据ID
@@ -370,7 +411,8 @@ export default {
       // push列表记录
       pushRecordList: [],
       SecurityCenter: {},
-      pointLength: 4 // 保留小数位后四位
+      pointLength: 4, // 保留小数位后四位
+      errorMsg: '' // 错误提示
     }
   },
   created () {
@@ -549,10 +591,12 @@ export default {
       }
     },
     // 清空数据
-    emptyInputData () {
+    emptyInputData (ref) {
       this.buyUID = ''
-      this.count = ''
-      this.price = ''
+      this.$refs.count.value = ''
+      this.$refs.price.value = ''
+      // this.count = ''
+      // this.price = ''
       this.transactionPassword = ''
     },
     /**
@@ -611,23 +655,53 @@ export default {
       this.paymentVisible = false
       this.passwordVisible = true
     },
+    // 绑定手机检测输入格式
+    stateInputFormat (type, targetNum) {
+      switch (type) {
+        // 交易密码
+        case 0:
+          if (!targetNum) {
+            this.stateErrorMsg(0, '请输入交易密码')
+            this.$forceUpdate()
+            return 0
+          } else {
+            this.stateErrorMsg(0, '')
+            this.$forceUpdate()
+            return 1
+          }
+      }
+    },
+    // 绑定手机设置错误信息
+    stateErrorMsg (index, msg) {
+      this.errorMsg = msg
+    },
     // 确定付款
     confirmSubmit () {
       this.statePushPropertyTransaction()
-      this.passwordVisible = false
     },
     async statePushPropertyTransaction () {
-      let data
-      let param = {
-        id: this.pushUID, // 列表id
-        password: this.pushPassword // 用户付款时交易密码
-      }
-      data = await pushPropertyTransaction(param)
-      if (!(returnAjaxMessage(data, this, 1))) {
-        return false
+      let goOnStatus = 0
+      if (
+        this.stateInputFormat(0, this.pushPassword)
+      ) {
+        goOnStatus = 1
       } else {
-        this.dialogVisible = false
-        this.getPushRecordList()
+        goOnStatus = 0
+      }
+      if (goOnStatus) {
+        let data
+        let param = {
+          id: this.pushUID, // 列表id
+          password: this.pushPassword // 用户付款时交易密码
+        }
+        data = await pushPropertyTransaction(param)
+        if (!(returnAjaxMessage(data, this, 1))) {
+          return false
+        } else {
+          this.passwordVisible = false
+          this.dialogVisible = false
+          this.getPushRecordList()
+        }
       }
     },
     // 手机邮箱谷歌状态判断
@@ -692,6 +766,12 @@ export default {
           .form-input-common {
             width: 270px;
             height: 36px;
+          }
+          .error-msg{
+            height:30px;
+            line-height: 30px;
+            margin-left: 30px;
+            color: rgb(212, 88, 88);
           }
         }
       }

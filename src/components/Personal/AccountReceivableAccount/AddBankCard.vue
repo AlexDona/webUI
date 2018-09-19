@@ -20,7 +20,7 @@
         </span>
         <span
           class="header-content-right font-size12 cursor-pointer"
-          @click="returnSuperior"
+          @click.prevent="returnSuperior"
         >
           <IconFontCommon
             class="font-size22"
@@ -99,14 +99,14 @@
             <button
               v-if="paymentTerm.isBankBind"
               class="bank-button border-radius4"
-              @click="statusTetBankCard"
+              @click.prevent="statusTetBankCard"
             >
               确认设置
             </button>
             <button
               v-else
               class="bank-button border-radius4"
-              @click="statusTetBankCard"
+              @click.prevent="statusTetBankCard"
             >
               确认修改
             </button>

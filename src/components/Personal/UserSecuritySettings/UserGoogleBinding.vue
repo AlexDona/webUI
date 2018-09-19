@@ -20,7 +20,7 @@
         </span>
         <span
           class="header-content-right font-size12 cursor-pointer"
-          @click="returnSuperior"
+          @click.prevent="returnSuperior"
         >
           <IconFontCommon
             class="font-size22"
@@ -106,14 +106,14 @@
             <button
               v-if="!securityCenter.isGoogleBind"
               class="google-button border-radius4 cursor-pointer"
-              @click="getGoogleStatusSubmit"
+              @click.prevent="getGoogleStatusSubmit"
             >
               确认绑定
             </button>
             <button
               v-else
               class="google-button border-radius4 cursor-pointer"
-              @click="getGoogleStatusSubmitUnbind"
+              @click.prevent="getGoogleStatusSubmitUnbind"
             >
               确认解绑
             </button>
