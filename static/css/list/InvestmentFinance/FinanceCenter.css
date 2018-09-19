@@ -68,7 +68,4 @@
 .finance-box .nvest-list-body .el-table--enable-row-hover .el-table__body tr:hover>td{
     background:#1E2636;
 }
-.finance-box .el-pagination{
-    margin-top:30px; 
-    text-align: center;
-}
+/* 设置全局分页剧中 */
