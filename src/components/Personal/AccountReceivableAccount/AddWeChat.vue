@@ -338,10 +338,11 @@ export default {
           }
           .chat-upload {
             float: left;
-            /*width: 118px;*/
-            height: 106px;
+            width: 118px;
+            height: 118px;
             text-align: center;
             line-height: 100px;
+            overflow: hidden;
           }
           .chat-button {
             padding: 9px 33px;

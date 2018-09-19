@@ -228,7 +228,7 @@
                       :headers="tokenObj"
                       list-type="picture-card"
                       :on-success="handleSuccessFront"
-                      :on-remove="handleRemove"
+                      :on-remove="handleRemoveFront"
                     >
                       <div
                         class="picture"
@@ -257,7 +257,7 @@
                       :headers="tokenObj"
                       list-type="picture-card"
                       :on-success="handleSuccessReverseSide"
-                      :on-remove="handleRemove"
+                      :on-remove="handleRemoveSide"
                     >
                       <div
                         class="picture"
@@ -286,7 +286,7 @@
                       :headers="tokenObj"
                       list-type="picture-card"
                       :on-success="handleSuccessHand"
-                      :on-remove="handleRemove"
+                      :on-remove="handleRemoveHand"
                     >
                       <div
                         class="picture"
@@ -479,8 +479,14 @@ export default {
       this.dialogImageHandUrl = response.data.fileUrl
       this.thirdPictureSrcShow = false
     },
-    handleRemove (file) {
-      console.log(file)
+    handleRemoveFront () {
+      this.firstPictureSrcShow = true
+    },
+    handleRemoveSide () {
+      this.secondPictureSrcShow = true
+    },
+    handleRemoveHand () {
+      this.thirdPictureSrcShow = true
     },
     /**
      * 刚进页面时候 国家列表展示

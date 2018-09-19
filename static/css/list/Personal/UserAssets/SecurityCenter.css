@@ -28,7 +28,7 @@
   width: 170px;
 }
 .security-center.personal .el-dialog {
-  width: 325px;
+  width: 310px;
   border-radius: 7px;
 }
 .security-center.personal .el-dialog__header {
@@ -41,6 +41,13 @@
 }
 .security-center.personal .el-dialog__headerbtn {
   top: 13px;
+}
+.security-center.personal .el-form-item {
+  margin-bottom: 10px;
+}
+.security-center.personal .el-form--label-top .el-form-item__label {
+  height: 25px;
+  line-height: 25px;
 }
 .security-center.personal .el-dialog__body {
   padding: 10px 20px 0;
