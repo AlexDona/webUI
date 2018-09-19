@@ -23,7 +23,7 @@ export default {
           // 显示提示数据
           formatter: function (params) {
             // console.log(params)
-            return `${params.name}:${params.percent}%`
+            // return `${params.name}:${params.percent}%`
           }
         // formatter: "{a} <br/>{b}: {c} ({d}%)"
         },

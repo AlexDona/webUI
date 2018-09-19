@@ -84,12 +84,7 @@
             <h4 class="title">步骤四：资料审核</h4>
             <p>我们将在3个工作日内对您的商家申请资料进行审核。我们会主动与您取得联系，请保持通讯畅通。</p>
             <h4 class="title tips">请您务必仔细阅读并透彻理解
-              <a
-                href="#"
-                class="agree font-size14"
-              >
-                《认证商家协议》
-              </a>
+              <el-button type="text" @click="businessArgument" class="agree font-size14">《认证商家协议》</el-button>
             </h4>
           </div>
         </div>
@@ -100,11 +95,15 @@
             </el-checkbox>
           </span>
           <span>我已阅读并同意</span>
-          <span>
-            <a href="#" class="agreement">
-              《认证商家协议》
-            </a>
-            </span>
+          <el-button type="text" @click="businessArgument" class="agreement">《认证商家协议》</el-button>
+          <el-dialog
+            title="认证商家协议"
+            :visible.sync="dialogVisible"
+            width="50%"
+            height="500px"
+            :before-close="handleClose">
+            <div id="argumentContentBox"></div>
+          </el-dialog>
         </div>
         <!-- 2.2.5 申请为商家按钮部分 -->
         <div class="submit">
@@ -151,7 +150,7 @@
 import NavCommon from '../Common/HeaderCommon'
 import FooterCommon from '../Common/FooterCommon'
 import IconFontCommon from '../Common/IconFontCommon'
-import {businessApply, firstEnterBusinessApply} from '../../utils/api/OTC'
+import {businessApply, firstEnterBusinessApply, argumentBusinessApply} from '../../utils/api/OTC'
 import {returnAjaxMessage} from '../../utils/commonFunc'
 import {createNamespacedHelpers, mapState} from 'vuex'
 const {mapMutations} = createNamespacedHelpers('OTC')
@@ -169,7 +168,10 @@ export default {
       checked: false,
       successTimes: '0',
       coinName: 'FUC',
-      count: '0'
+      count: '0',
+      dialogVisible: false,
+      // 协议文件
+      argumentContent: ''
     }
   },
   created () {
@@ -215,7 +217,9 @@ export default {
     },
     // 首次点击商家申请决定进入哪个界面
     async determineUser () {
-      const data = await firstEnterBusinessApply({})
+      const data = await firstEnterBusinessApply({
+
+      })
       // 提示信息
       if (!(returnAjaxMessage(data, this, 0))) {
         return false
@@ -235,13 +239,40 @@ export default {
           this.applyStatus = 3
         }
       }
+    },
+    // 商家申请界面用户协议
+    async argumentBusinessApplyRequest () {
+      const data = await argumentBusinessApply({
+        partnerId: this.partnerId,
+        termsTypeids: 9,
+        language: this.language
+      })
+      console.log(data)
+      // 提示信息
+      if (!(returnAjaxMessage(data, this, 0))) {
+        return false
+      } else {
+        // 返回数据地逻辑
+        data.data.data.forEach(item => {
+          if (item.keyword === 'OTC协议') {
+              this.argumentContent = item.content
+          }
+        })
+        document.getElementById('argumentContentBox').innerHTML = this.argumentContent;
+      }
+    },
+    businessArgument () {
+      this.dialogVisible = true
+      this.argumentBusinessApplyRequest()
     }
   },
   filter: {},
   computed: {
     ...mapState({
       userInfo: state => state.user.loginStep1Info.userInfo, // 用户详细信息
-      isLogin: state => state.user.isLogin // 用户登录状态 false 未登录； true 登录
+      isLogin: state => state.user.isLogin, // 用户登录状态 false 未登录； true 登录
+      partnerId: state => state.common.partnerId,
+      language: state => state.common.language
     })
   },
   watch: {}
