@@ -180,8 +180,8 @@
                   <IconFont iconName="icon-qianbao-"/>
                   <span class="margin-left10 buy">
                     可买：
-                    <span v-show="!sellUserCoinWallet.total">--</span>
-                    <span v-show="sellUserCoinWallet.total">{{sellUserCoinWallet.total/middleTopData.price}}</span>
+                    <span v-show="!sellUserCoinWallet.total||!middleTopData.price">--</span>
+                    <span v-show="sellUserCoinWallet.total&&middleTopData.price">{{sellUserCoinWallet.total/middleTopData.price}}</span>
                     <span>{{activeSymbol.sellsymbol}}</span>
                   </span>
                 </div>
@@ -444,7 +444,7 @@ export default {
           this.limitExchange.buyPrice = this.getRefValue(this.limitBuyPriceInputRef)
           this.limitExchange.buyCount = this.getRefValue(this.limitBuyCountInputRef)
           this.setTransformPrice('limit-buy', this.limitExchange.buyPrice)
-          if (this.limitExchange.buyPrice) {
+          if (this.limitExchange.buyPrice - 0) {
             this.limitExchange.userCanBuyCount = this.keep2Num(this.sellUserCoinWallet.total / (this.limitExchange.buyPrice - 0))
           }
           break
@@ -568,7 +568,7 @@ export default {
       console.log(newBuyPrice)
       // this.setSimulationData(this.sellUserCoinWallet.total, newBuyPrice - 0 , this.limitExchange.userCanBuyCount)
       console.log(this.sellUserCoinWallet.total)
-      if (newBuyPrice) {
+      if (newBuyPrice - 0) {
         this.limitExchange.userCanBuyCount = this.keep2Num(this.sellUserCoinWallet.total / (newBuyPrice - 0))
         console.log(this.limitExchange.userCanBuyCount)
       }

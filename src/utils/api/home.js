@@ -10,5 +10,7 @@ export const getBanner = (params) => get('banner/', params)
 export const getAllNewsTypeList = (params) => get('cms/newsType/selectAll', params)
 // 分页查询新闻公告
 export const getNewsNoticeList = (params) => get('newsBulletin/pageQuery', params)
+// 首页获取所有新闻列表
+export const getAllNewsNoticeListForHomePage = (params) => get('newsBulletin/all', params)
 // 获取新闻详情
 export const getNewsDetail = (params) => get(`newsBulletin/${params}`)
