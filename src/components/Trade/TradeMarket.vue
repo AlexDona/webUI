@@ -257,6 +257,7 @@ export default {
     ]),
     // 设置 当前交易区
     changeActiveSymbol (activeSymbol, previousSymbol) {
+      console.log(activeSymbol)
       // console.log('active----------------->', activeSymbol)
       // console.log(activeSymbol.tradeId)
       // console.log(this.activeTabId)

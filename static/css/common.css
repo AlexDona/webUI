@@ -70,5 +70,34 @@
   background: #EAF4FE;
 }
 .night .el-popper[x-placement^=bottom] .popper__arrow::after{
-  border-bottom-color: #fff;
+  /* border-bottom-color: #fff; */
+  border-bottom-color: #2A3242;
+}
+/* 修改全局样式 */
+.el-pagination{
+  margin-top:30px; 
+  text-align: center;
+}
+/* 设置全局下拉框样式 */
+.night .el-select-dropdown{
+  background: #2A3242;
+}
+.night .el-select-dropdown__item{
+  color:#7A8093;
+}
+.night .el-select-dropdown__item.hover, .el-select-dropdown__item:hover{
+  background-color: #338FF5!important;
+  color:#fff;
+}
+.night .el-select-dropdown__item.selected{
+  color:#fff!important;
+}
+.night .el-select-dropdown__wrap.el-scrollbar__wrap{
+  margin-bottom: -10px!important;
+}
+.night .el-popper[x-placement^=top] .popper__arrow::after{
+  border-top-color: #2A3242;
+}
+.day .el-select-dropdown__wrap.el-scrollbar__wrap{
+  margin-bottom:-10px!important;
 }

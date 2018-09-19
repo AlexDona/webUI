@@ -71,11 +71,11 @@
               </el-table>
               <el-pagination
                   background
-                  v-if="investList.length"
+                  v-if="investTotal > 10 && this.activeName == '1'"
                   layout="prev, pager, next"
                   page-size='10'
                   @current-change='changeInvestPage'
-                  :total='investTotalPages'>
+                  :page-count='investTotalPages'>
               </el-pagination>
             </el-tab-pane>
             <!-- 收益记录 -->
@@ -120,10 +120,10 @@
             </el-tab-pane>
             <el-pagination
                 background
-                v-if="userInterestRecord.length"
+                v-if="interestTotal > 10 && this.activeName == '2'"
                 layout="prev, pager, next"
                 @current-change='changeInterestPage'
-                :total='interestTotalPages'>
+                :page-count='interestTotalPages'>
             </el-pagination>
           </el-tabs>
         </div>
@@ -154,68 +154,21 @@ export default {
   },
   data () {
     return {
+      // 设置投资记录当前页码
       investCurrnetPage: '1',
-      investTotalPages: '1',
+      // 设置投资记录总页数
+      investTotalPages: '',
+      // 设置投资记录总条数
+      investTotal: '',
+      // 设置收益列表当前页码
       interestCurrnetPage: '1',
+      // 设置收益总页数
       interestTotalPages: '1',
+      // 设置收益列表总条数
+      interestTotal: '',
+      // 默认显示投资列表
       activeName: '1',
-      investList: [
-        // {
-        //   coinid: '00000',
-        //   coinName: 'BTC',
-        //   investType: '定期不可取回',
-        //   count: '100',
-        //   prospectiveEarning: '200',
-        //   gaveOutTime: '2015-07-15 12:12:12',
-        //   status: 'COMPLETED',
-        //   createdTime: '2015-07-28 15:15:15',
-        //   operations: 'CANCELED'
-        // },
-        // {
-        //   coinid: '00000',
-        //   coinName: 'BTF',
-        //   investType: '定期不可取回',
-        //   count: '100',
-        //   prospectiveEarning: '200',
-        //   gaveOutTime: '2015-07-15 12:12:12',
-        //   status: 'GAVEOUT',
-        //   createdTime: '2015-07-28 15:15:15',
-        //   operations: ''
-        // },
-        // {
-        //   coinid: '00000',
-        //   coinName: 'BTT',
-        //   investType: '定期不可取回',
-        //   count: '100',
-        //   prospectiveEarning: '200',
-        //   gaveOutTime: '2015-07-15 12:12:12',
-        //   status: 'FROZENED',
-        //   createdTime: '2015-07-28 15:15:15',
-        //   operations: 'CANCELED'
-        // },
-        // {
-        //   coinid: '00000',
-        //   coinName: 'BTCD',
-        //   investType: '定期不可取回',
-        //   count: '100',
-        //   prospectiveEarning: '200',
-        //   gaveOutTime: '2015-07-15 12:12:12',
-        //   status: 'CANCELED',
-        //   createdTime: '2015-07-28 15:15:15',
-        //   operations: ''
-        // },
-        // {
-        //   coinid: '00000',
-        //   coinName: 'BTCD',
-        //   investType: '定期不可取回',
-        //   count: '100',
-        //   prospectiveEarning: '200',
-        //   gaveOutTime: '2015-07-15 12:12:12',
-        //   status: 'REDEMPTIONED',
-        //   createdTime: '2015-07-28 15:15:15',
-        //   operations: 'CANCELED'
-        // }
-      ],
+      investList: [],
       // 收益列表
       userInterestRecord: []
     }
@@ -258,11 +211,15 @@ export default {
         // 投资记录列表赋值
         this.investList = data.data.data.userFinancialManagementRecord.list
         // 投资记录总页数
-        this.investTotalPages = data.data.data.userFinancialManagementRecord.total
+        this.investTotalPages = data.data.data.userFinancialManagementRecord.pages
+        // 投资记录总条数
+        this.investTotal = data.data.data.userFinancialManagementRecord.total
         // 投资记录列表
         this.userInterestRecord = data.data.data.userInterestRecord.list
         // 收益记录总页数
-        this.interestTotalPages = data.data.data.userInterestRecord.total
+        this.interestTotalPages = data.data.data.userInterestRecord.pages
+        // 收益记录总条数
+        this.interestTotal = data.data.data.userInterestRecord.total
       }
     },
     // 点击取消按钮执行

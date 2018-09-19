@@ -6,6 +6,7 @@
     width: 168px;
     height:48px;
     background:linear-gradient(180deg,rgba(13, 17, 25, 0.5) 0%);
+    background:#152337;
     border-radius:2px;
     border:1px solid #338FF5;
 }
@@ -39,7 +40,6 @@
     width: 407px;
     height: 48px;
     border-radius: 2px;
-    margin-left: 10px;
     background: #1E2636;
     border: 1px solid #464E5F;
 }
@@ -68,7 +68,4 @@
 .finance-box .nvest-list-body .el-table--enable-row-hover .el-table__body tr:hover>td{
     background:#1E2636;
 }
-.finance-box .el-pagination{
-    margin-top:30px; 
-    text-align: center;
-}
+/* 设置全局分页剧中 */

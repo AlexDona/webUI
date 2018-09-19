@@ -173,13 +173,6 @@
                   @keydown="setErrorMsg(3,'')"
                   @blur="checkoutInputFormat(3,checkCode)"
                 >
-                <!--<button-->
-                  <!--:disabled="disabledOfPhoneBtn"-->
-                  <!--class="send-code-btn cursor-pointer"-->
-                  <!--@click="sendCheckCodeGolbal(1)"-->
-                <!--&gt;-->
-                  <!--{{TextOfSendMsgBtnWithPhone}}-->
-                <!--</button>-->
                 <CountDownButton
                   class="send-code-btn cursor-pointer"
                   :status="disabledOfPhoneBtn"
@@ -205,20 +198,6 @@
                   @keydown="setErrorMsg(3,'')"
                   @blur="checkoutInputFormat(3,checkCode)"
                 >
-                <!--再次发送-->
-                <!--<button-->
-                  <!--:disabled="disabledOfPhoneBtn"-->
-                  <!--class="send-code-btn cursor-pointer"-->
-                  <!--@click="sendCheckCodeGolbal(2)"-->
-                <!--&gt;-->
-                  <!--{{TextOfSendMsgBtnWithEmail}}-->
-                <!--</button>-->
-                <!--<CountDownButton-->
-                  <!--:disabled="disabledOfEmailBtn"-->
-                  <!--class="send-code-btn"-->
-                  <!--:text="TextOfSendMsgBtnWithEmail"-->
-                  <!--@click="sendCheckCodeGolbal(2)"-->
-                <!--/>-->
                 <CountDownButton
                   class="send-code-btn cursor-pointer"
                   :status="disabledOfEmailBtn"
@@ -244,16 +223,6 @@
                 >
               </div>
             </div>
-            <!--<el-button-->
-              <!--v-if="!isBindGoogle"-->
-              <!--class="mt20 cp send-again-btn"-->
-              <!--:disabled="disabledOfPhoneBtn"-->
-              <!--:class="{'blue':!disabledOfPhoneBtn}"-->
-              <!--@click="sendPhoneOrEmailCode(loginType)"-->
-            <!--&gt;{{ sendMsgBtnText }}-->
-            <!--</el-button>-->
-
-            <!-- 确定 -->
             <button
               size="midium"
               class="login-btn blue-bg fz16 cursor-pointer"
@@ -497,7 +466,7 @@ export default {
       // password: 'a11111111',
       // username: '18625512986',
       // username: '18625512988',
-      password: '000000',
+      password: 'a1111111',
       userNameErrorMsg: '', // 错误提示
       loadingCircle: {},
       userInputImageCode: '', // 图形验证码(用户输入)
@@ -785,22 +754,28 @@ export default {
       */
     async loginForStep2 () {
       // 谷歌验证
-      // if (this.isBindGoogle) {
-      //   if (!this.googleCode) {
-      //     // this.userNameErrorMsg = '请输入谷歌验证码';
-      //     this.userNameErrorMsg = '请输入谷歌验证码'
-      //     return
-      //   }
-      //   this.loginWithCode(this.loginType, this.googleCode)
-      // } else {
-      //   // 短信、邮箱验证码验证
-      //   if (!this.msgCode) {
-      //     // this.userNameErrorMsg = '请输入验证码';
-      //     this.userNameErrorMsg = '请输入验证码'
-      //     return
-      //   }
-      //   this.loginWithCode(this.loginType, this.msgCode)
-      // }
+      if (this.isBindGoogle && !this.step3GoogleMsgCode) {
+        this.$message({
+          type: 'error',
+          message: '请输入谷歌验证码'
+        })
+        return false
+      }
+      if (this.isBindEmail && !this.step3EmailMsgCode) {
+        this.$message({
+          type: 'error',
+          message: '请输入邮箱验证码'
+        })
+        return false
+      }
+      if (this.isBindPhone && !this.step3PhoneMsgCode) {
+        this.$message({
+          type: 'error',
+          message: '请输入手机验证码'
+        })
+        return false
+      }
+
       let params = {
         token: this.token,
         phone: this.userInfo.phone,
@@ -810,7 +785,7 @@ export default {
         googleCode: this.step3GoogleMsgCode
       }
       const data = await userLoginForStep2(params)
-      if (!returnAjaxMessage(data, this, 0)) {
+      if (!returnAjaxMessage(data, this, 1)) {
         return false
       } else {
         this.step3DialogShowStatus = false
@@ -1097,6 +1072,7 @@ export default {
                 vertical-align: top;
                 padding:0 20px;
                 box-sizing: border-box;
+                color:#fff;
               }
               >.refresh-code-btn{
                 display: inline-block;
