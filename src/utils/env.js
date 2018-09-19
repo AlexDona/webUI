@@ -13,8 +13,8 @@ if (process.env.NODE_ENV == 'development') {
   // baseUrl = 'http://192.168.1.72:8062/' // 刘耀
   // baseUrl = 'http://192.168.1.71:8888/' // 亚男
   // baseUrl = 'http://192.168.1.217:8888/' // 爱军
-  // baseUrl = 'http://192.168.1.200:8888/' // 本地测试
-  baseUrl = 'http://192.168.1.176:8888/' // 帅飞
+  baseUrl = 'http://192.168.1.200:8888/' // 本地测试
+  // baseUrl = 'http://192.168.1.176:8888/' // 帅飞
   // baseUrl = 'https://rest.fubt.top/'
   // baseUrl = 'http://192.168.1.77:8888' // 张新杰
   // baseUrl = 'http://192.168.1.52:9000' // 滑浩田
