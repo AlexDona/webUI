@@ -522,15 +522,16 @@ export default {
       end: '' // 占位
     }
   },
-  created (entrustType) {
+  async created () {
     // 覆盖Element样式
     require('../../../../static/css/list/Personal/TransactionType/CoinOrders.css')
     // 白色主题样式
     require('../../../../static/css/theme/day/Personal/TransactionType/CoinOrdersDay.css')
     // 黑色主题样式
     require('../../../../static/css/theme/night/Personal/TransactionType/CoinOrdersNight.css')
-    this.getEntrustSelectBox()
-    this.commissionList('current-entrust')
+    await this.getEntrustSelectBox()
+
+    await this.commissionList('current-entrust')
   },
   mounted () {},
   activited () {},
@@ -600,7 +601,8 @@ export default {
         }
       })
     },
-    async commissionList (entrustType) {
+    async commissionList (entrustType1) {
+      const entrustType = entrustType1 || 'current-entrust'
       this.currentEntrustList = []
       this.historyEntrustList = []
       this.currentMakeDetailList = []
@@ -608,17 +610,17 @@ export default {
         userId: this.userInfo.userId,
         currentPage: '',
         pageSize: this.pageSize,
-        buyCoinName: this.activeSymbol,
+        buyCoinName: this.activeExchangeArea,
         matchType: this.activeMatchType,
         type: this.activeType,
-        sellCoinName: this.activeExchangeArea,
+        sellCoinName: this.activeSymbol,
         startTime: this.startTime === '' ? '' : timeFilter(this.startTime, 'normal'),
         endTime: this.endTime === '' ? '' : timeFilter(this.endTime, 'normal')
       }
-      console.log(params)
       let data
       let data1
       let data2
+      console.log(params)
       switch (entrustType) {
         case 'current-entrust':
           console.log(1)

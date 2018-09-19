@@ -302,6 +302,9 @@ export default {
           } else if (!this.userInfoRefresh.realname) {
             this.$refs.accountCreditedValue.getAccountPaymentTerm()
             this.dialogVisible1 = true
+          } else if (this.userInfoRefresh.realname) {
+            this.$refs.accountCreditedValue.getAccountPaymentTerm()
+            this.dialogVisible1 = false
           }
           if (this.userInfoRefresh.payPassword && this.userInfoRefresh.realname) {
             // 收款方式状态查询

@@ -306,20 +306,18 @@
               type="password"
               auto-complete="off"
               v-model="password"
-              @keydown="setEditorErrorMsg(0,'')"
-              @blur="editorInputFormat(0, password)"
             >
             </el-input>
           </el-form-item>
         </el-form>
         <!--错误提示-->
-        <div
-          class = "error-msg font-size12"
-        >
-          <span v-show = "errorEditorMsg">
-            {{ errorEditorMsg }}
-          </span>
-        </div>
+        <!--<div-->
+          <!--class = "error-msg font-size12"-->
+        <!--&gt;-->
+          <!--<span v-show = "errorEditorMsg">-->
+            <!--{{ errorEditorMsg }}-->
+          <!--</span>-->
+        <!--</div>-->
         <div
           slot="footer"
           class="dialog-footer"
@@ -431,23 +429,23 @@ export default {
       this.type = type
     },
     // 创建api检测输入格式
-    editorInputFormat (type, targetNum) {
-      switch (type) {
-        // 编辑用户备注
-        case 0:
-          if (!targetNum) {
-            this.setEditorErrorMsg(0, '请输入交易密码')
-            this.$forceUpdate()
-            return 0
-          } else {
-            this.setEditorErrorMsg(0, '')
-            this.$forceUpdate()
-            return 1
-          }
-      }
-    },
+    // checkoutInputFormat (type, targetNum) {
+    //   switch (type) {
+    //     // 编辑用户备注
+    //     case 0:
+    //       if (!targetNum) {
+    //         this.setErrorMsg(0, '请输入交易密码')
+    //         this.$forceUpdate()
+    //         return 0
+    //       } else {
+    //         this.setErrorMsg(0, '')
+    //         this.$forceUpdate()
+    //         return 1
+    //       }
+    //   }
+    // },
     // 设置错误信息
-    setEditorErrorMsg (index, msg) {
+    setErrorMsg (index, msg) {
       this.errorEditorMsg = msg
     },
     // 确定提交
@@ -479,29 +477,19 @@ export default {
       this.confirmTransactionPassword()
     },
     async confirmTransactionPassword () {
-      let goOnStatus = 0
-      if (
-        this.checkoutInputFormat(0, this.password)
-      ) {
-        goOnStatus = 1
-      } else {
-        goOnStatus = 0
+      let data
+      let params = {
+        payPassword: this.password, // 用户id
+        vipName: this.vipName,
+        month: this.month
       }
-      if (goOnStatus) {
-        let data
-        let params = {
-          payPassword: this.password, // 用户id
-          vipName: this.vipName,
-          month: this.month
-        }
-        data = await buyVipPriceInfo(params)
-        if (!(returnAjaxMessage(data, this, 1))) {
-          return false
-        } else {
-          this.dialogFormVisible = false
-          console.log(data)
-          // 安全中心状态刷新
-        }
+      data = await buyVipPriceInfo(params)
+      if (!(returnAjaxMessage(data, this, 1))) {
+        return false
+      } else {
+        this.dialogFormVisible = false
+        console.log(data)
+        // 安全中心状态刷新
       }
     },
     /**
