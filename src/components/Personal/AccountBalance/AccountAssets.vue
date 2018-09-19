@@ -590,17 +590,80 @@ export default {
     // 跳转当前交易对
     changeActiveSymbol (e) {
       console.log(e)
+      // changeActiveSymbol
+      /*
+        * {
+        "data":{
+        "entrust":[
+          {
+            "buyCoinId":"491719528745533440",
+            "buyCoinName":"USDT",
+            "buyCoinNickname":"USDT",
+            "buyFee":0.0000000000,
+            "buyStatus":"",
+            "createTime":"2018-09-19 15:51:32",
+            "forumId":"486108441757089792",
+            "id":"491999795670417408",
+            "isStop":"true",
+            "isTransaction":"true",
+            "maxCount":0.0000,
+            "maxPrice":0.0000000000,
+            "minCount":0.0000,
+            "minPrice":0.0000000000,
+            "modifier":"申",
+            "name":"BTC/USDT",
+            "openPrice":0.00000000,
+            "openTime":null,
+            "operable":"true",
+            "priceDecimalPlace":"6",
+            "quantityDecimalPlace":"6",
+            "sellCoinId":"486124940777488384",
+            "sellCoinName":"BTC",
+            "sellCoinNickname":"BTC",
+            "sellFee":0.0000000000,
+            "sellStatus":"",
+            "sort":0,
+            "status":"enabled",
+            "stopTime":null,
+            "tradeAreaId":"491998732594708480",
+            "tradeId":"491999715173335040",
+            "tradeStatus":"",
+            "updateTime":"2018-09-19 17:21:05"
+          */
+      /*
+          * area: ""
+          high: 0
+          hot: false
+          id: ""
+          image: ""
+          low: 0
+          price: 0
+          rose: 0
+          sellname: ""
+          sellsymbol: ""
+          tendency: Array(8)
+          tradeId: ""
+          volume: 0 */
+      let activeSymbol = {
+        id: '',
+        price: 0,
+        rose: 0,
+        sellname: '',
+        sellsymbol: '',
+        tradeId: '',
+        volume: 0
+      }
       this.$store.commit('trade/SET_JUMP_STATUS', true)
-      this.$store.commit('trade/SET_JUMP_SYMBOL', e)
+      this.$store.commit('trade/SET_JUMP_SYMBOL', activeSymbol)
       console.log(this.activeSymbol)
       // 设置当前交易区
-      const id = e.areaId
-      const name = e.area
+      const id = e.buyCoinId
+      const name = e.buyCoinName
       console.log(e)
-      // this.$store.commit('common/CHANGE_ACTIVE_TRADE_AREA', {
-      //   id,
-      //   name
-      // })
+      this.$store.commit('common/CHANGE_ACTIVE_TRADE_AREA', {
+        id,
+        name
+      })
       // this.$router.push({'path': '/TradeCenter'})
     },
     // 输入限制

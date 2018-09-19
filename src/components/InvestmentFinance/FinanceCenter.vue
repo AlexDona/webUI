@@ -443,7 +443,7 @@ export default {
     }
   },
   watch: {
-    InvestmentValue(newVal, oldVal){
+    InvestmentValue (newVal, oldVal) {
       console.log(newVal, oldVal)
     }
   }
@@ -518,7 +518,7 @@ export default {
                 color:#7CB8FA;
                 height: 24px;
                 font-weight:600;
-                -webkit-box-reflect: below 0 -webkit-linear-gradient(top,rgba(124,184,250,0),rgba(124,184,250,0.2));
+                /*-webkit-box-reflect: below 0 -webkit-linear-gradient(45deg,rgba(124,184,250,0),rgba(124,184,250,0.2));*/
                 >span{
                   font-size: 12px;
                 }
