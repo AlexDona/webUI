@@ -709,7 +709,7 @@ export default {
       width: 150px;
       color: #fff;
       padding:14px 0px 14px 26px;
-      background:linear-gradient(left,rgba(34,80,135,1),transparent);
+      background:linear-gradient(90deg,rgba(34,80,135,1),transparent);
     }
  }
  .el-select-dropdown{

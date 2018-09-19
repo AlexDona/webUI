@@ -36,9 +36,8 @@
   /*background-color: #181d2e;*/
 /*}*/
 .night .el-select-dropdown{
-  border-color:#282E43;
+  border-color:#282E43!important;
 }
-
 .nav-box.common .ivu-select-item {
   /*color:;*/
 }
