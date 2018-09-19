@@ -497,7 +497,7 @@ export default {
       // password: 'a11111111',
       // username: '18625512986',
       // username: '18625512988',
-      password: '000000',
+      password: 'a1111111',
       userNameErrorMsg: '', // 错误提示
       loadingCircle: {},
       userInputImageCode: '', // 图形验证码(用户输入)

@@ -55,13 +55,13 @@
           资产配置
         </div>
         <div class="content font-size18">
-          <!-- 总资产可用币种 -->
+          <!-- 币种总资产 -->
           <span>{{total}}</span>
           <span>{{activitedTraderCoinName}}</span>
-          <span>≈</span>
-          <!-- 总资产法币 -->
-          <span>{{totalAssets}}</span>
-          <span>{{activitedtraderCurrencyCoinsName}}</span>
+          <span v-if="totalAssets">≈</span>
+          <!-- 法币总资产 -->
+          <span v-if="totalAssets">{{totalAssets}}</span>
+          <span v-if="totalAssets">{{activitedtraderCurrencyCoinsName}}</span>
         </div>
       </div>
       <!-- 2.4 购买和销售 -->
@@ -422,8 +422,8 @@ export default {
       value1: '', // 默认开始时间
       value2: '', // 默认结束时间
       activedRadioId: '', // 单选按钮时间
-      totalAssets: '', // 总资产
-      total: '',
+      totalAssets: '', // 法币总资产
+      total: '', // 币种总资产
       // 订单详情
       orderInfoList: [],
       buyDayMap: {}, // 购买当日交易
@@ -441,13 +441,13 @@ export default {
     require('../../../static/css/theme/day/OTC/OTCReportFormStatisticsDay.css')
     require('../../../static/css/theme/night/OTC/OTCReportFormStatisticsNight.css')
     // 1.0 otc可用币种查询
-    this.getOTCAvailableCurrencyList()
+    await this.getOTCAvailableCurrencyList()
     // 2.0 查询可用法币币种列表
-    // this.getMerchantAvailablelegalTenderList()
+    await this.getMerchantAvailablelegalTenderList()
     // 订单详情列表
-    // this.getOTCEntrustingOrdersRevocation()
+    this.getOTCEntrustingOrdersRevocation()
     // 报表统计主页
-    // this.getOTCReportFormStatistics()
+    this.getOTCReportFormStatistics()
   },
   mounted () {
   },
@@ -490,7 +490,7 @@ export default {
         // 表格渲染
         // this.getOTCEntrustingOrdersRevocation()
         // 法币列表
-        this.getMerchantAvailablelegalTenderList()
+        // this.getMerchantAvailablelegalTenderList()
       }
     },
     //  2.1 改变可用币种类型
@@ -529,7 +529,7 @@ export default {
         // 重新请求列表
         // this.getOTCReportFormStatistics()
         // 表格渲染
-        this.getOTCEntrustingOrdersRevocation()
+        // this.getOTCEntrustingOrdersRevocation()
       }
     },
     //  3.1 改变 可用法币 币种类型
@@ -581,9 +581,9 @@ export default {
         return false
       } else {
         // 返回数据正确的逻辑
-        // 总资产人名币赋值
-        this.totalAssets = data.data.data.totalAssets
-        this.total = data.data.data.total
+        // 总资产人民币赋值
+        this.totalAssets = data.data.data.totalAssets  // 法币总资产
+        this.total = data.data.data.total  // 币种总资产
         // 当天交易
         this.buyDayMap = data.data.data.buyDayMap
         // 购买历史交易赋值
