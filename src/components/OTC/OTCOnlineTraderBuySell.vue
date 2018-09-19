@@ -151,6 +151,7 @@
                             <el-button
                               type="primary"
                               size="mini"
+                              @click="chargeMoney"
                             >
                               充币
                             </el-button>
@@ -458,6 +459,11 @@ export default {
   update () {},
   beforeRouteUpdate () {},
   methods: {
+    // 10.0 充币按钮跳转
+    chargeMoney () {
+      this.$store.commit('personal/CHANGE_USER_CENTER_ACTIVE_NAME', 'assets')
+      this.$router.push({path: '/PersonalCenter'})
+    },
     // 输入限制
     formatInput (ref, pointLength) {
       let target = this.$refs[ref]

@@ -23,14 +23,14 @@ export default {
           // 显示提示数据
           formatter: function (params) {
             // console.log(params)
-            // return `${params.name}:${params.percent}%`
+            return `${params.name}:${params.percent}%`
           }
         // formatter: "{a} <br/>{b}: {c} ({d}%)"
         },
         // 设置图例
         legend: {
           orient: 'horizontal',
-          selectedMode: false,
+          // selectedMode: false,
           y: 'bottom',
           type: 'plain',
           show: 'true',
@@ -48,7 +48,8 @@ export default {
             name: '',
             type: 'pie',
             radius: ['30%', '80%'],
-            selectedMode: 'single',
+            // 设置饼状图不可点击
+            // selectedMode: 'single',
             avoidLabelOverlap: false,
             itemStyle: {
               emphasis: {
@@ -76,17 +77,25 @@ export default {
               }
             },
             data: [
-              {value: '30', name: '投资'},
-              {value: '70', name: '收益'}
+              {value: this.investProportions ? this.investProportions : '30', name: '投资'},
+              {value: this.earingProportions ? this.earingProportions : '70', name: '收益'}
             ]
           }
         ]
-      }
+      },
+      // 投资比值
+      investProportions: '',
+      // 收益比值
+      earingProportions: ''
     }
   },
   created () {
-    console.log(typeof this.investmentValue)
-    console.log(typeof this.getMoneyValue)
+    if (this.investmentValue && this.getMoneyValue) {
+      // 获取投资比值
+      this.investProportions = (this.investmentValue / (this.this.investmentValue + this.getMoneyValue)).toFixed(2)
+      // 获取收益比值
+      this.earingProportions = (this.getMoneyValue / (this.this.investmentValue + this.getMoneyValue)).toFixed(2)
+    }
   },
   mounted () {
     this.resetOptions()

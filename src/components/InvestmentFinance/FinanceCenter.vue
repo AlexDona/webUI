@@ -7,7 +7,7 @@
     <HeaderCommon/>
     <!-- banner -->
     <div class="banner-box">
-      <img src="../../assets/finance/banner-jpg.jpg" alt="">
+      <img src="../../assets/finance/banner.png" alt="">
     </div>
     <div class="inner-box">
       <div class="finance-inner">
@@ -366,7 +366,7 @@ export default {
         // 理财类型数组
         this.investTypeList = data.data.data.managementList
         // 设置投资类型默认值
-        this.selectedInvestTypeId = data.data.data.managementList[0].id
+        this.selectedInvestTypeId = data.data.data.managementList[0] ? data.data.data.managementList[0].id : ''
         // 设置可用余额
         this.availableBalance = data.data.data.userTotal
         // 投资估计值
@@ -444,6 +444,7 @@ export default {
     height:100%;
       >.banner-box{
         height: 459px;
+        background: #121824;
         >img{
           width: 100%;
           height: 100%;
@@ -706,4 +707,8 @@ export default {
       background:linear-gradient(left,rgba(34,80,135,1),transparent);
     }
  }
+ .el-select-dropdown{
+      min-width: 408px!important;
+      left:169px!important;
+  }
 </style>
