@@ -100,9 +100,9 @@
              <span class="inquire-button">
               <el-button
                 type="primary"
-                @click="findFilter(activeName)"
+                @click.prevent="findFilter(activeName)"
               >查询</el-button>
-              <!--<el-button type="primary" @click="resetCondition">重置</el-button>-->
+              <!--<el-button type="primary" @click.prevent="resetCondition">重置</el-button>-->
             </span>
            </div>
         </div>

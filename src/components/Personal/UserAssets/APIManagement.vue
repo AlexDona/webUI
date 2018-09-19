@@ -43,7 +43,7 @@
               </div>
               <button
                 class="api-button border-radius4 cursor-pointer font-size14"
-                @click="stateEstablishApiButton"
+                @click.prevent="stateEstablishApiButton"
               >
                 创建
               </button>
@@ -134,14 +134,14 @@
               <template slot-scope = "s">
                 <div
                   class="compile float-left cursor-pointer"
-                  @click="compileApi(s.row.id)"
+                  @click.prevent="compileApi(s.row.id)"
                   :id="s.row.id"
                 >
                   编辑
                 </div>
                 <div
                   class="compile float-left cursor-pointer"
-                  @click="deleteUser(s.row.id)"
+                  @click.prevent="deleteUser(s.row.id)"
                   :id="s.row.id"
                 >
                   删除
@@ -152,214 +152,221 @@
         </div>
       </div>
       <!--验证方式验证-->
-      <el-dialog
-        title="安全验证"
-        :visible.sync="APIMoneyConfirm"
-      >
-        <el-form
-          :label-position="labelPosition"
+      <div class="verification-method">
+        <el-dialog
+          title="安全验证"
+          :visible.sync="APIMoneyConfirm"
         >
-          <!--手机已认证-->
-          <el-form-item
-            v-if="securityCenter.isPhoneEnable"
-            label="手机验证"
+          <el-form
+            :label-position="labelPosition"
           >
-            <input
-              class="content-input padding-l15 box-sizing"
-              v-model="phoneCode"
-              @keydown="setVerifyErrorMsg(0,'')"
-              @blur="verifyInputFormat(0, phoneCode)"
+            <!--手机已认证-->
+            <el-form-item
+              v-if="securityCenter.isPhoneEnable"
+              label="手机验证"
             >
-            <CountDownButton
-              class="send-code-btn cursor-pointer"
-              :status="disabledOfPhoneBtn"
-              @run="sendPhoneOrEmailCode(0)"
-            />
-          </el-form-item>
-          <!--手机未认证-->
-          <span v-else></span>
-          <!--邮箱已认证-->
-          <el-form-item
-            v-if="securityCenter.isMailEnable"
-            label="邮箱验证"
-          >
-            <input
-              class="content-input padding-l15 box-sizing"
-              v-model="emailCode"
-              @keydown="setVerifyErrorMsg(1,'')"
-              @blur="verifyInputFormat(1, emailCode)"
+              <input
+                class="content-input padding-l15 box-sizing"
+                v-model="phoneCode"
+                @keydown="setVerifyErrorMsg(0,'')"
+                @blur="verifyInputFormat(0, phoneCode)"
+              >
+              <CountDownButton
+                class="send-code-btn cursor-pointer"
+                :status="disabledOfPhoneBtn"
+                @run="sendPhoneOrEmailCode(0)"
+              />
+            </el-form-item>
+            <!--手机未认证-->
+            <span v-else></span>
+            <!--邮箱已认证-->
+            <el-form-item
+              v-if="securityCenter.isMailEnable"
+              label="邮箱验证"
             >
-            <CountDownButton
-              class="send-code-btn cursor-pointer"
-              :status="disabledOfEmailBtn"
-              @run="sendPhoneOrEmailCode(1)"
-            />
-          </el-form-item>
-          <!--邮箱未认证-->
-          <span v-elsee></span>
-          <!--谷歌已认证-->
-          <el-form-item
-            v-if="securityCenter.isGoogleEnable"
-            label="谷歌验证"
-          >
-            <input
-              class="content-input input-google padding-l15 box-sizing"
-              v-model="googleCode"
-              @keydown="setVerifyErrorMsg(2,'')"
-              @blur="verifyInputFormat(2, googleCode)"
+              <input
+                class="content-input padding-l15 box-sizing"
+                v-model="emailCode"
+                @keydown="setVerifyErrorMsg(1,'')"
+                @blur="verifyInputFormat(1, emailCode)"
+              >
+              <CountDownButton
+                class="send-code-btn cursor-pointer"
+                :status="disabledOfEmailBtn"
+                @run="sendPhoneOrEmailCode(1)"
+              />
+            </el-form-item>
+            <!--邮箱未认证-->
+            <span v-elsee></span>
+            <!--谷歌已认证-->
+            <el-form-item
+              v-if="securityCenter.isGoogleEnable"
+              label="谷歌验证"
             >
-          </el-form-item>
-          <!--谷歌未认证-->
-          <span v-else></span>
-        </el-form>
-        <!--错误提示-->
-        <div
-          class = "error-msg error-msg1 font-size12"
-        >
-          <span v-show = "errorVerifyMsg">{{ errorVerifyMsg }}</span>
-        </div>
-        <div
-          slot="footer"
-          class="dialog-footer"
-        >
-          <button
-            type="primary"
-            class="primary-button"
-            @click="stateSubmitDetermineValidation"
+              <input
+                class="content-input input-google padding-l15 box-sizing"
+                v-model="googleCode"
+                @keydown="setVerifyErrorMsg(2,'')"
+                @blur="verifyInputFormat(2, googleCode)"
+              >
+            </el-form-item>
+            <!--谷歌未认证-->
+            <span v-else></span>
+          </el-form>
+          <!--错误提示-->
+          <div
+            class = "error-msg error-msg1 font-size12"
           >
-            确 定
-          </button>
-        </div>
-      </el-dialog>
+            <span v-show = "errorVerifyMsg">{{ errorVerifyMsg }}</span>
+          </div>
+          <div
+            slot="footer"
+            class="dialog-footer"
+          >
+            <button
+              type="primary"
+              class="primary-button"
+              @click.prevent="stateSubmitDetermineValidation"
+            >
+              确 定
+            </button>
+          </div>
+        </el-dialog>
+      </div>
       <!--二次信息确认弹框-->
-      <el-dialog
-        title="创建成功"
-        :visible.sync="apiSecondaryConfirmation"
-      >
-        <el-form
-          :label-position="labelPosition"
+      <div class="secondary-confirmation">
+        <el-dialog
+          title="创建成功"
+          :visible.sync="apiSecondaryConfirmation"
         >
-          <el-form-item
-            style="margin-bottom: 0"
-            label="API访问秘钥 （Access Key）"
+          <el-form
+            :label-position="labelPosition"
           >
-            <input
-              class="content-input input-google padding-l15 box-sizing"
-              v-model="accessKey"
-              disabled
+            <el-form-item
+              style="margin-bottom: 0"
+              label="API访问秘钥 （Access Key）"
             >
-          </el-form-item>
-          <el-form-item
-            style="margin-bottom: 0"
-            label="API访问秘钥 （Access Key）"
-          >
-            <input
-              class="content-input input-google padding-l15 box-sizing"
-              v-model="secretKey"
-              disabled
+              <input
+                class="content-input input-google padding-l15 box-sizing"
+                v-model="accessKey"
+                disabled
+              >
+            </el-form-item>
+            <el-form-item
+              style="margin-bottom: 0"
+              label="API访问秘钥 （Access Key）"
             >
-            <p class="font-size12 text-info text-margin ">（仅显示1次，遗失后不可找回，请务必妥善保存）</p>
-          </el-form-item>
-          <el-form-item
-            label="绑定IP地址"
-          >
-            <input
-              class="content-input input-google padding-l15 box-sizing"
-              v-model="ip"
-              disabled
+              <input
+                class="content-input input-google padding-l15 box-sizing"
+                v-model="secretKey"
+                disabled
+              >
+              <p class="font-size12 text-info text-margin ">（仅显示1次，遗失后不可找回，请务必妥善保存）</p>
+            </el-form-item>
+            <el-form-item
+              label="绑定IP地址"
             >
-            <p class="font-size12 text-info text-margin">提示</p>
-            <p class="font-size12 text-info">• 请不要泄露您的Secret Key，避免造成资产损失。</p>
-            <p class="font-size12 text-info text-bottom">• 如您忘记了Secret Key，请删除该密钥对并申请新的密钥对。</p>
-          </el-form-item>
-        </el-form>
-        <div
-          slot="footer"
-          class="dialog-footer"
-        >
-          <button
-            type="primary"
-            class="primary-button"
-            @click="stateSubmitAffirm"
+              <input
+                class="content-input input-google padding-l15 box-sizing"
+                v-model="ip"
+                disabled
+              >
+              <p class="font-size12 text-info text-margin">提示</p>
+              <p class="font-size12 text-info">• 请不要泄露您的Secret Key，避免造成资产损失。</p>
+              <p class="font-size12 text-info text-bottom">• 如您忘记了Secret Key，请删除该密钥对并申请新的密钥对。</p>
+            </el-form-item>
+          </el-form>
+          <div
+            slot="footer"
+            class="dialog-footer"
           >
-            确 定
-          </button>
-        </div>
-      </el-dialog>
+            <button
+              type="primary"
+              class="primary-button"
+              @click.prevent="stateSubmitAffirm"
+            >
+              确 定
+            </button>
+          </div>
+        </el-dialog>
+      </div>
       <!--编辑api-->
-      <!--二次信息确认弹框-->
-      <el-dialog
-        title="编辑api"
-        :visible.sync="compileUserApi"
-      >
-        <el-form
-          :label-position="labelPosition"
+      <div class="editor">
+        <el-dialog
+          title="编辑api"
+          :visible.sync="compileUserApi"
         >
-          <el-form-item
-            style="margin-bottom: 0"
-            label="备注"
+          <el-form
+            :label-position="labelPosition"
           >
-            <input
-              class="content-input input-google padding-l15 box-sizing"
-              v-model="apiRemark"
-              @keydown="setEditorErrorMsg(0,'')"
-              @blur="editorInputFormat(0, apiRemark)"
+            <el-form-item
+              style="margin-bottom: 0"
+              label="备注"
             >
-          </el-form-item>
-          <el-form-item
-            label="绑定IP地址"
-          >
-            <input
-              class="content-input input-google padding-l15 box-sizing"
-              v-model="ipAddress"
-              @keydown="setEditorErrorMsg(1,'')"
-              @blur="editorInputFormat(1, ipAddress)"
+              <input
+                class="content-input input-google padding-l15 box-sizing"
+                v-model="apiRemark"
+                @keydown="setEditorErrorMsg(0,'')"
+                @blur="editorInputFormat(0, apiRemark)"
+              >
+            </el-form-item>
+            <el-form-item
+              label="绑定IP地址"
             >
-          </el-form-item>
-        </el-form>
-        <!--错误提示-->
-        <div
-          class = "error-msg font-size12"
-        >
-          <span v-show = "errorEditorMsg">{{ errorEditorMsg }}</span>
-        </div>
-        <div
-          slot="footer"
-          class="dialog-footer"
-        >
-          <button
-            type="primary"
-            class="primary-button cursor-pointer"
-            @click="stateCompileUserApi"
+              <input
+                class="content-input input-google padding-l15 box-sizing"
+                v-model="ipAddress"
+                @keydown="setEditorErrorMsg(1,'')"
+                @blur="editorInputFormat(1, ipAddress)"
+              >
+            </el-form-item>
+          </el-form>
+          <!--错误提示-->
+          <div
+            class = "error-msg font-size12"
           >
-            确 定
-          </button>
-        </div>
-      </el-dialog>
+            <span v-show = "errorEditorMsg">{{ errorEditorMsg }}</span>
+          </div>
+          <div
+            slot="footer"
+            class="dialog-footer"
+          >
+            <button
+              type="primary"
+              class="primary-button cursor-pointer"
+              @click.prevent="stateCompileUserApi"
+            >
+              确 定
+            </button>
+          </div>
+        </el-dialog>
+      </div>
       <!-- 删除api-->
-      <el-dialog
-        :title="删除api地址"
-        :visible.sync="dialogVisible"
-        center
-      >
-        <span class="info">确定删除api地址吗？</span>
-        <span slot="footer" class="dialog-footer">
+      <div class="delete">
+        <el-dialog
+          :title="删除api地址"
+          :visible.sync="dialogVisible"
+          center
+        >
+          <span class="info">确定删除api地址吗？</span>
+          <span slot="footer" class="dialog-footer">
          <!--确 定 取 消-->
           <el-button
             type="primary"
-            @click="deleteUserConfirm"
+            @click.prevent="deleteUserConfirm"
             :disabled="statel"
           >
             确 定
           </el-button>
           <el-button
             class="btn"
-            @click="dialogVisible = false"
+            @click.prevent="dialogVisible = false"
           >
             取 消
           </el-button>
         </span>
-      </el-dialog>
+        </el-dialog>
+      </div>
     </div>
   </div>
 </template>
@@ -612,7 +619,7 @@ export default {
         this.apiSecondaryConfirmation = false
         this.getMultipleUserAPIInfo()
         this.remark = ''
-        this.ip = ''
+        this.ipSite = ''
       }
     },
     // 编辑用户api

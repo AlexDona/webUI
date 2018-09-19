@@ -33,7 +33,7 @@
                 @focus="emptyStatus"
               />
             </el-form-item>
-            <el-form-item label="充值地址">
+            <el-form-item label="提币地址">
               <input
                 class="form-input border-radius4 padding-left15"
                 v-model="prepaidAddress"
@@ -43,7 +43,7 @@
             <div v-show="errorMsg">{{ errorMsg }}</div>
             <button
               class="form-button border-radius4 cursor-pointer"
-              @click="addAddress"
+              @click.prevent="addAddress"
             >
               增加
             </button>
@@ -90,7 +90,7 @@
         >
           <template slot-scope = "s">
             <div
-              @click="cancelId(s.row.id)"
+              @click.prevent="cancelId(s.row.id)"
               :id="s.row.id"
             >
               {{ operation }}
@@ -117,14 +117,14 @@
          <!--确 定 取 消-->
           <el-button
             type="primary"
-            @click="confirm"
+            @click.prevent="confirm"
             :disabled="statel"
           >
             确 定
           </el-button>
           <el-button
             class="btn"
-            @click="dialogVisible = false"
+            @click.prevent="dialogVisible = false"
           >
             取 消
           </el-button>

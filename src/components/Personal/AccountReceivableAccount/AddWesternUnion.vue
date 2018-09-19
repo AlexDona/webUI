@@ -20,7 +20,7 @@
         </span>
         <span
           class="header-content-right font-size12 cursor-pointer"
-          @click="returnSuperior"
+          @click.prevent="returnSuperior"
         >
           <IconFontCommon
             class="font-size22"
@@ -75,15 +75,15 @@
             </el-form-item>
             <button
               v-if="paymentTerm.isXilianBind"
-              class="western-button border-radius4"
-              @click="stateSubmitWesternUnion"
+              class="western-button border-radius4 cursor-pointer"
+              @click.prevent="stateSubmitWesternUnion"
             >
               确认设置
             </button>
             <button
               v-else
-              class="western-button border-radius4"
-              @click="stateSubmitWesternUnion"
+              class="western-button border-radius4 cursor-pointer"
+              @click.prevent="stateSubmitWesternUnion"
             >
               确认修改
             </button>
@@ -198,7 +198,8 @@ export default {
     async stateSeniorCertification () {
       let goOnStatus = 0
       if (
-        this.checkoutInputFormat(0, this.alipayAccount)
+        this.checkoutInputFormat(0, this.telegraphicTransferAddress) &&
+        this.checkoutInputFormat(1, this.transactionPassword)
       ) {
         goOnStatus = 1
       } else {

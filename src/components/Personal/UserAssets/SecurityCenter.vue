@@ -68,7 +68,7 @@
               v-if="!securityCenter.isMailEnable"
               class="security-verify border-radius2 font-size12 cursor-pointer"
             >
-              <span @click="showStatusVerificationClose('email', 'enable')">
+              <span @click.prevent="showStatusVerificationClose('email', 'enable')">
                 开启验证
               </span>
             </button>
@@ -77,7 +77,7 @@
               class="security-verify border-radius2 font-size12 cursor-pointer"
             >
               <span
-                @click="showStatusVerificationClose('email', 'disable')"
+                @click.prevent="showStatusVerificationClose('email', 'disable')"
               >
                 关闭验证
               </span>
@@ -85,7 +85,7 @@
             <button
               v-if="!securityCenter.isMailBind"
               class="security-binding border-radius2 font-size12 cursor-pointer"
-              @click="setShowStatusSecurity('email')"
+              @click.prevent="setShowStatusSecurity('email')"
             >
               绑定
             </button>
@@ -118,7 +118,7 @@
               v-if="!securityCenter.isPhoneEnable"
               class="security-verify border-radius2 font-size12 cursor-pointer"
             >
-              <span @click="showStatusVerificationClose('phone', 'enable')">
+              <span @click.prevent="showStatusVerificationClose('phone', 'enable')">
                 开启验证
               </span>
             </button>
@@ -127,14 +127,14 @@
               class="security-verify border-radius2 font-size12 cursor-pointer"
             >
               <span
-                @click="showStatusVerificationClose('phone', 'disable')"
+                @click.prevent="showStatusVerificationClose('phone', 'disable')"
               >
                 关闭验证
               </span>
             </button>
             <button
               class="security-binding border-radius2 font-size12 cursor-pointer"
-              @click="setShowStatusSecurity('phone')"
+              @click.prevent="setShowStatusSecurity('phone')"
             >
               <span v-if="!securityCenter.isPhoneBind">绑定</span>
               <span v-else>修改</span>
@@ -167,7 +167,7 @@
               v-if="!securityCenter.isGoogleEnable"
               class="security-verify border-radius2 font-size12 cursor-pointer"
             >
-              <span @click="showStatusVerificationClose('google', 'enable')">
+              <span @click.prevent="showStatusVerificationClose('google', 'enable')">
                 开启验证
               </span>
             </button>
@@ -176,14 +176,14 @@
               class="security-verify border-radius2 font-size12 cursor-pointer"
             >
               <span
-                @click="showStatusVerificationClose('google', 'disable')"
+                @click.prevent="showStatusVerificationClose('google', 'disable')"
               >
                 关闭验证
               </span>
             </button>
             <button
               class="security-binding border-radius2 font-size12 cursor-pointer"
-              @click="setShowStatusSecurity('google')"
+              @click.prevent="setShowStatusSecurity('google')"
             >
               <span v-if="!securityCenter.isGoogleBind">绑定</span>
               <span v-else>解绑</span>
@@ -214,7 +214,7 @@
           <div class="security-status text-align-r">
             <button
               class="security-binding border-radius2 font-size12 cursor-pointer"
-              @click="setShowStatusSecurity('transaction-password')"
+              @click.prevent="setShowStatusSecurity('transaction-password')"
             >
               <span v-if="!securityCenter.payPassword">设置</span>
               <span v-else>重置</span>
@@ -240,7 +240,7 @@
           <div class="security-status text-align-r">
             <button
               class="security-binding border-radius2 font-size12 cursor-pointer"
-              @click="setShowStatusSecurity('login-password')"
+              @click.prevent="setShowStatusSecurity('login-password')"
             >
               <span>修改</span>
             </button>
@@ -310,11 +310,11 @@
             slot="footer"
             class="dialog-footer"
           >
-            <!--<el-button @click="closeValidation = false">取 消</el-button>-->
+            <!--<el-button @click.prevent="closeValidation = false">取 消</el-button>-->
             <el-button
               class="button"
               type="primary"
-              @click="determineTheOpen"
+              @click.prevent="determineTheOpen"
             >
               确 定
             </el-button>
@@ -384,11 +384,11 @@
             slot="footer"
             class="dialog-footer"
           >
-            <!--<el-button @click="openTheValidation = false">取 消</el-button>-->
+            <!--<el-button @click.prevent="openTheValidation = false">取 消</el-button>-->
             <el-button
               class="button"
               ype="primary"
-              @click="determineTheOpen"
+              @click.prevent="determineTheOpen"
             >
               确 定
             </el-button>

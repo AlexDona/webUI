@@ -6,13 +6,13 @@
     <header class="billing-details-header personal-height40 line-height40 background-color padding-left23">
       <span
         class="header-content display-inline-block font-size16 cursor-pointer"
-        @click="clickTableCut(1)"
+        @click.prevent.prevent="clickTableCut(1)"
       >
         充提记录
       </span>
       <span
         class="header-content display-inline-block font-size16 cursor-pointer"
-        @click="clickTableCut(2)"
+        @click.prevent.prevent="clickTableCut(2)"
       >
         其他记录
       </span>
@@ -84,7 +84,7 @@
         </div>
         <div
           class="search-button float-right border-radius2 text-align-c cursor-pointer font-size12"
-          @click="stateSearchButton"
+          @click.prevent="stateSearchButton"
         >
           搜索
         </div>
@@ -235,7 +235,7 @@ export default {
       currencyTypeValue: '', // 默认类型
       currencyType: [
         {
-          value: '1',
+          value: '',
           label: '全部'
         }, {
           value: 'RECHARGE',

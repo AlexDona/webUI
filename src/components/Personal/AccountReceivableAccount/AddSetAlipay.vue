@@ -20,7 +20,7 @@
         </span>
         <span
           class="header-content-right font-size12 cursor-pointer"
-          @click="returnSuperior"
+          @click.prevent="returnSuperior"
         >
           <IconFontCommon
             class="font-size22"
@@ -92,14 +92,14 @@
             <button
               v-if="paymentTerm.isAlipayBind"
               class="account-button border-radius4"
-              @click="stateSubmitWeChat"
+              @click.prevent="stateSubmitWeChat"
             >
               确认设置
             </button>
             <button
               v-else
               class="account-button border-radius4"
-              @click="stateSubmitWeChat"
+              @click.prevent="stateSubmitWeChat"
             >
               确认修改
             </button>

@@ -38,8 +38,91 @@
   border-bottom: 0;
 }
 .push-assets.personal .el-dialog {
-  width: 470px;
   top: 10%;
+}
+.push-assets.personal .cancel-push .el-dialog__body {
+  padding: 25px 25px 30px;
+  text-align: center;
+  color: #fff;
+}
+.push-assets.personal .cancel-push .el-dialog__headerbtn {
+  display: none;
+}
+.push-assets.personal .cancel-push .el-dialog {
+  text-align: center;
+  width: 300px;
+  height: 200px;
+  padding: 0;
+  top: 10%;
+}
+.push-assets.personal .cancel-push .el-button:nth-child(1){
+  width: 80px;
+  height: 35px;
+  border: 0;
+  line-height: 0;
+  margin-right: 15px;
+  color: rgba(255,255,255,0.7);
+  background: linear-gradient(81deg,rgba(43,57,110,1) 0%,rgba(42,80,130,1) 100%);
+}
+.push-assets.personal .cancel-push .el-button:nth-child(2){
+  width: 80px;
+  height: 35px;
+  line-height: 0;
+  margin-right: 15px;
+  color: rgba(255, 255, 255, 0.7);
+  background-color: transparent;
+  border: 1px solid #338FF5;
+}
+/*PUSH确认*/
+.push-assets.personal .push-affirm .el-dialog {
+  width: 350px;
+  /*height: 200px;*/
+  padding: 0;
+  top: 10%;
+  border-radius: 5px;
+}
+.push-assets.personal .push-affirm .el-form-item {
+  margin-bottom: 0;
+}
+.push-assets.personal .push-affirm .el-dialog__body {
+  padding: 0px 40px 25px;
+}
+.push-assets.personal .push-affirm .el-dialog__header {
+  border-radius: 5px 5px 0 0;
+  background-color: #20293C;
+  padding: 10px 40px 10px;
+}
+.push-assets.personal .push-affirm .el-dialog__headerbtn {
+  top: 13px;
+}
+.push-assets.personal .push-affirm .el-dialog__footer {
+  text-align: center;
+}
+.push-assets.personal .push-affirm .el-button {
+  width: 270px;
+  height: 36px;
+  line-height: 0;
+  border: 0;
+  background:linear-gradient(81deg,rgba(43,57,110,1) 0%,rgba(42,80,130,1) 100%);
+}
+.push-assets.personal .shipping-address .el-dialog {
+  width: 320px;
+}
+.push-assets.personal .shipping-address .el-dialog__header {
+  padding: 20px 25px 5px;
+}
+.push-assets.personal .shipping-address .el-form-item {
+  margin-bottom: 0;
+}
+.push-assets.personal .shipping-address .el-dialog__footer {
+  text-align: center;
+}
+.push-assets.personal .shipping-address .el-button {
+  width: 270px;
+  height: 36px;
+  line-height: 0;
+  border: 0;
+  background:linear-gradient(81deg,rgba(43,57,110,1) 0%,rgba(42,80,130,1) 100%);
 }
 .push-assets.personal .el-form--label-top .el-form-item__label {
   padding: 0;

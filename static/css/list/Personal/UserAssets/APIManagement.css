@@ -4,13 +4,8 @@
 .api-management.personal .el-table td{
   border-bottom: 0;
 }
-.api-management.personal .el-dialog:first-child {
+.api-management.personal .verification-method .el-dialog {
   width: 360px;
-  min-height: 100px !important;
-}
-.api-management.personal .el-dialog:first-child .el-dialog__body {
-  padding: 0px 30px 0;
-  /*height: ;*/
 }
 .api-management.personal .el-dialog:nth-child(2) {
    width: 360px;
@@ -24,17 +19,32 @@
 .el-dialog__headerbtn .el-dialog__close {
   display: none;
 }
-.api-management.personal .el-dialog:last-child {
+.api-management.personal .secondary-confirmation .el-dialog{
   width: 360px;
-  height: 200px;
-  min-height: 100px;
 }
-.api-management.personal.night .el-dialog:last-child .el-button:first-child{
-  border: 0;
+.api-management.personal .editor .el-dialog{
+  width: 360px;
 }
-.api-management.personal.night .el-dialog:last-child .el-button:last-child{
+.api-management.personal .delete .el-dialog .el-dialog__body {
+  text-align: center;
+  color: #fff;
+}
+.api-management.personal .delete .el-dialog .el-button:first-child{
+  width:80px;
+  height:36px;
+  line-height: 0;
+  color: #fff;
+}
+.api-management.personal .delete .el-dialog .el-button:last-child{
+  width:80px;
+  height:36px;
+  line-height: 0;
+  border:1px solid rgba(51,143,245,1);
+  background-color: #28334A;
+  color: #fff;
+}
+.api-management.personal .el-dialog:last-child .el-button:first-child{
   border: 0;
-  background-color: transparent;
 }
 .api-management.personal .el-dialog__header {
   border-radius: 5px 5px 0 0;
@@ -45,9 +55,6 @@
 }
 .api-management.personal .el-dialog__headerbtn {
   top: 13px;
-}
-.api-management.personal .el-dialog__body {
-  padding: 20px 30px 0;
 }
 .api-management.personal .el-form-item__label {
   padding: 0;
