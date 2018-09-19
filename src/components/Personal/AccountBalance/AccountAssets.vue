@@ -594,8 +594,8 @@ export default {
       this.$store.commit('trade/SET_JUMP_SYMBOL', e)
       console.log(this.activeSymbol)
       // 设置当前交易区
-      const id = e.areaId
-      const name = e.area
+      // const id = e.areaId
+      // const name = e.area
       console.log(e)
       // this.$store.commit('common/CHANGE_ACTIVE_TRADE_AREA', {
       //   id,

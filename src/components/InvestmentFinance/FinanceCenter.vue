@@ -281,14 +281,18 @@ export default {
       // 是否可以点击立刻投资
       isClick: false,
       // 投资估值
-      InvestmentValue: '',
+      InvestmentValue: 0,
       // 历史收益值
-      getMoneyValue: '',
+      getMoneyValue: 0,
       // 取消投资id
       cancleInvestId: ''
     }
   },
   created () {
+    // this.InvestmentValue = '3'
+    // setTimeout(()=>{
+    // this.InvestmentValue = '4'
+    // },1000)
     // 对element ui样式重置
     require('../../../static/css/list/InvestmentFinance/FinanceCenter.css')
     // 白样式
@@ -438,7 +442,11 @@ export default {
       return window.innerWidth / 3
     }
   },
-  watch: {}
+  watch: {
+    InvestmentValue (newVal, oldVal) {
+      console.log(newVal, oldVal)
+    }
+  }
 }
 </script>
 <style scoped lang="scss">
@@ -510,7 +518,7 @@ export default {
                 color:#7CB8FA;
                 height: 24px;
                 font-weight:600;
-                -webkit-box-reflect: below 0 -webkit-linear-gradient(top,rgba(124,184,250,0),rgba(124,184,250,0.2));
+                -webkit-box-reflect: below 0 -webkit-linear-gradient(-90deg,rgba(124,184,250,0),rgba(124,184,250,0.2));
                 >span{
                   font-size: 12px;
                 }

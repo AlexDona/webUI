@@ -582,8 +582,8 @@ export default {
       } else {
         // 返回数据正确的逻辑
         // 总资产人民币赋值
-        this.totalAssets = data.data.data.totalAssets  // 法币总资产
-        this.total = data.data.data.total  // 币种总资产
+        this.totalAssets = data.data.data.totalAssets // 法币总资产
+        this.total = data.data.data.total // 币种总资产
         // 当天交易
         this.buyDayMap = data.data.data.buyDayMap
         // 购买历史交易赋值
