@@ -112,7 +112,7 @@
           </el-tab-pane>
         </el-tabs>
       </div>
-      <!--未实名认证前弹框提示-->
+      <!--设置交易密码前弹框提示-->
       <el-dialog
         :visible.sync="dialogVisible"
         center
@@ -126,7 +126,7 @@
           </div>
         </div>
         <p class="font-size12 warning-text margin-top35 text-align-c">
-          请先完成身份认证并且设置交易密码，再来设置OTC收款账户!
+          请先设置交易密码，再来设置OTC收款账户!
         </p>
         <span
           slot="footer"
@@ -136,13 +136,49 @@
         <button
           class="button-color border-radius4 cursor-pointer"
           type="primary"
-          @click.prevent="confirm"
+          @click.prevent="confirm(1)"
         >
           确 定
         </button>
         <button
           class="btn border-radius4 cursor-pointer"
           @click.prevent="dialogVisible = false"
+        >
+          取 消
+        </button>
+        </span>
+      </el-dialog>
+      <!--未实名认证前弹框提示-->
+      <el-dialog
+        :visible.sync="dialogVisible1"
+        center
+      >
+        <div class="dialog-warning">
+          <div class="dialog-warning-box">
+            <IconFontCommon
+              class="font-size60"
+              iconName="icon-gantanhao"
+            />
+          </div>
+        </div>
+        <p class="font-size12 warning-text margin-top35 text-align-c">
+          请先完成身份认证，再来设置OTC收款账户!
+        </p>
+        <span
+          slot="footer"
+          class="dialog-footer"
+        >
+          <!--确 定 取 消-->
+        <button
+          class="button-color border-radius4 cursor-pointer"
+          type="primary"
+          @click.prevent="confirm(2)"
+        >
+          确 定
+        </button>
+        <button
+          class="btn border-radius4 cursor-pointer"
+          @click.prevent="dialogVisible1 = false"
         >
           取 消
         </button>
@@ -213,7 +249,8 @@ export default {
     return {
       tabPosition: 'left', // 导航位置方向
       userInfoRefresh: {},
-      dialogVisible: false
+      dialogVisible: false,
+      dialogVisible1: false
     }
   },
   created () {
@@ -259,10 +296,15 @@ export default {
           break
         case 'account-credited':
           console.log(this.userInfoRefresh)
-          if (!this.userInfoRefresh.payPassword && !this.userInfoRefresh.realname) {
-            console.log(1)
+          if (!this.userInfoRefresh.payPassword) {
             this.$refs.accountCreditedValue.getAccountPaymentTerm()
             this.dialogVisible = true
+          } else if (!this.userInfoRefresh.realname) {
+            this.$refs.accountCreditedValue.getAccountPaymentTerm()
+            this.dialogVisible1 = true
+          } else if (this.userInfoRefresh.realname) {
+            this.$refs.accountCreditedValue.getAccountPaymentTerm()
+            this.dialogVisible1 = false
           }
           if (this.userInfoRefresh.payPassword && this.userInfoRefresh.realname) {
             // 收款方式状态查询
@@ -298,8 +340,14 @@ export default {
           break
       }
     },
-    confirm () {
-      this.$router.push({path: '/TransactionPassword'})
+    confirm (val) {
+      if (val == 1) {
+        this.$router.push({path: '/TransactionPassword'})
+      } else {
+        this.$store.commit('personal/CHANGE_USER_CENTER_ACTIVE_NAME', 'identity-authentication')
+        this.$router.push({path: '/PersonalCenter'})
+        this.dialogVisible1 = false
+      }
     },
     /**
      *  刷新用户信息

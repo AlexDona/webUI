@@ -209,5 +209,7 @@ export const M = {
   'user-fail-inviter-notexist': '推荐人不存在,',
   'user-fail-login-lock': '账号被锁定',
   'user-fail-usernameisblank': '用户名不能为空,',
-  'user-fail-reg-phone-exist': '手机号已被注册,'
+  'user-fail-reg-phone-exist': '手机号已被注册,',
+  'entrust_failure_0023': '交易对被禁用或相关币种被禁用',
+  'entrust_failure_0024': '该交易对未开启交易'
 }

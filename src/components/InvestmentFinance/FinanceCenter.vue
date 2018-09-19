@@ -72,7 +72,7 @@
                 <span>{{selecteCoindName}}</span>
               </div>
             </label>
-            <label for="">
+            <label for=" ">
               <div class='submitBtn'>
                 <el-button
                  plain

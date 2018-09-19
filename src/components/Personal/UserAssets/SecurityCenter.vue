@@ -747,75 +747,75 @@ export default {
     },
     // 关闭开启手机邮箱谷歌验证
     async confirmTransactionPassword (type, state) {
-      let goOnStatus = 0
-      if (type == 'email') {
-        this.checkoutInputFormat(1, this.emailCode)
-        goOnStatus = 1
+      // let goOnStatus = 0
+      // if (type == 'phone') {
+      //   this.checkoutInputFormat(0, this.phoneCode)
+      //   goOnStatus = 1
+      // } else {
+      //   goOnStatus = 0
+      // }
+      // if (type == 'email') {
+      //   this.checkoutInputFormat(1, this.emailCode)
+      //   goOnStatus = 1
+      // } else {
+      //   goOnStatus = 0
+      // }
+      // if (type == 'google') {
+      //   this.checkoutInputFormat(2, this.googleCode)
+      //   goOnStatus = 1
+      // } else {
+      //   goOnStatus = 0
+      // }
+      // if (goOnStatus) {
+      let data
+      let params = {
+        email: this.userInfo.userInfo.email, // 邮箱
+        phone: this.userInfo.userInfo.phone, // 手机
+        emailCode: this.emailCode, // 邮箱验证
+        phoneCode: this.phoneCode, // 手机验证
+        googleCode: this.googleCode, // 谷歌验证
+        userId: this.userInfo.userId, // 用户id
+        type: '', // 邮箱 手机 谷歌 验证验证
+        status: '' // 开启 关闭
+      }
+      switch (type) {
+        case 'email':
+          console.log(type)
+          params.type = 'email'
+          console.log(params)
+          if (state === 'enable') {
+            params.status = 'enable'
+          } else {
+            params.status = 'disable'
+          }
+          break
+        case 'phone':
+          params.type = 'phone'
+          if (state === 'enable') {
+            params.status = 'enable'
+          } else {
+            params.status = 'disable'
+          }
+          break
+        case 'google':
+          params.type = 'google'
+          if (state === 'enable') {
+            params.status = 'enable'
+          } else {
+            params.status = 'disable'
+          }
+          break
+      }
+      data = await enableTheClosing(params)
+      if (!(returnAjaxMessage(data, this, 1))) {
+        return false
       } else {
-        goOnStatus = 0
+        this.getSecurityCenter()
+        // 安全中心状态刷新
+        this.openTheValidation = false
+        this.closeValidation = false
       }
-      if (type == 'phone') {
-        this.checkoutInputFormat(0, this.phoneCode)
-        goOnStatus = 1
-      } else {
-        goOnStatus = 0
-      }
-      if (type == 'google') {
-        this.checkoutInputFormat(2, this.googleCode)
-        goOnStatus = 1
-      } else {
-        goOnStatus = 0
-      }
-      if (goOnStatus) {
-        let data
-        let params = {
-          email: this.userInfo.userInfo.email, // 邮箱
-          phone: this.userInfo.userInfo.phone, // 手机
-          emailCode: this.emailCode, // 邮箱验证
-          phoneCode: this.phoneCode, // 手机验证
-          googleCode: this.googleCode, // 谷歌验证
-          userId: this.userInfo.userId, // 用户id
-          type: '', // 邮箱 手机 谷歌 验证验证
-          status: '' // 开启 关闭
-        }
-        switch (type) {
-          case 'email':
-            console.log(type)
-            params.type = 'email'
-            console.log(params)
-            if (state === 'enable') {
-              params.status = 'enable'
-            } else {
-              params.status = 'disable'
-            }
-            break
-          case 'phone':
-            params.type = 'phone'
-            if (state === 'enable') {
-              params.status = 'enable'
-            } else {
-              params.status = 'disable'
-            }
-            break
-          case 'google':
-            params.type = 'google'
-            if (state === 'enable') {
-              params.status = 'enable'
-            } else {
-              params.status = 'disable'
-            }
-            break
-        }
-        data = await enableTheClosing(params)
-        if (!(returnAjaxMessage(data, this, 1))) {
-          return false
-        } else {
-          this.getSecurityCenter()
-          // 安全中心状态刷新
-          this.openTheValidation = false
-          this.closeValidation = false
-        }
-      }
+      // }
     },
     /**
      * 安全中心
