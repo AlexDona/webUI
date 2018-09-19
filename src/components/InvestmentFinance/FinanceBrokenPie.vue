@@ -17,6 +17,8 @@ export default {
   data () {
     return {
       financePieCharts: '',
+      investment: '',
+      getMoney: '',
       options: {
         tooltip: {
           trigger: 'item',
@@ -77,30 +79,27 @@ export default {
               }
             },
             data: [
-              {value: this.investProportions ? this.investProportions : '30', name: '投资'},
-              {value: this.earingProportions ? this.earingProportions : '70', name: '收益'}
+              {value: this.investment, name: '投资'},
+              {value: this.getMoney, name: '收益'}
             ]
           }
         ]
-      },
-      // 投资比值
-      investProportions: '',
-      // 收益比值
-      earingProportions: ''
+      }
+      // // 投资比值
+      // investProportions: 0.5,
+      // // 收益比值
+      // earingProportions: 0.5
     }
   },
   created () {
-    if (this.investmentValue && this.getMoneyValue) {
-      // 获取投资比值
-      this.investProportions = (this.investmentValue / (this.this.investmentValue + this.getMoneyValue)).toFixed(2)
-      // 获取收益比值
-      this.earingProportions = (this.getMoneyValue / (this.this.investmentValue + this.getMoneyValue)).toFixed(2)
-    }
+    console.log(this.investmentValue)
+    console.log(this.getMoneyValue)
+    this.resetOptions()
+    this.resetChart(this.options)
   },
   mounted () {
     this.resetOptions()
     this.resetChart(this.options)
-    // this.drawLine()
   },
   activited () {},
   update () {},
@@ -122,6 +121,8 @@ export default {
     },
     resetOptions () {
       this.options.legend.textStyle.color = this.theme === 'night' ? '#fff' : '#666'
+      this.options.series[0].data[0].value = this.investment
+      this.options.series[0].data[1].value = this.getMoney
     }
   },
   filter: {},
@@ -132,6 +133,16 @@ export default {
   },
   watch: {
     theme () {
+      this.resetOptions()
+      this.resetChart(this.options)
+    },
+    investmentValue (val, oldval) {
+      this.investment = val
+      this.resetOptions()
+      this.resetChart(this.options)
+    },
+    getMoneyValue (val) {
+      this.getMoney = val
       this.resetOptions()
       this.resetChart(this.options)
     }
