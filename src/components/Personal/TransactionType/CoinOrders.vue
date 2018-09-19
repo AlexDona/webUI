@@ -542,7 +542,7 @@ export default {
       this.commissionList(tab.name)
     },
     // 查询列表
-    async searchWithCondition (entrustType) {
+    searchWithCondition (entrustType) {
       this.commissionList(entrustType)
     },
     /**
@@ -601,6 +601,9 @@ export default {
       })
     },
     async commissionList (entrustType) {
+      this.currentEntrustList = []
+      this.historyEntrustList = []
+      this.currentMakeDetailList = []
       let params = {
         userId: this.userInfo.userId,
         currentPage: '',
@@ -612,6 +615,7 @@ export default {
         startTime: this.startTime === '' ? '' : timeFilter(this.startTime, 'normal'),
         endTime: this.endTime === '' ? '' : timeFilter(this.endTime, 'normal')
       }
+      console.log(params)
       let data
       let data1
       let data2
@@ -670,6 +674,9 @@ export default {
   },
   watch: {
     startTime (newVal) {
+      console.log(newVal)
+    },
+    activeMatchType (newVal) {
       console.log(newVal)
     }
   }
