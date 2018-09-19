@@ -72,7 +72,7 @@
                 <span>{{selecteCoindName}}</span>
               </div>
             </label>
-            <label for="">
+            <label for=" ">
               <div class='submitBtn'>
                 <el-button
                  plain
@@ -281,9 +281,9 @@ export default {
       // 是否可以点击立刻投资
       isClick: false,
       // 投资估值
-      InvestmentValue: '1',
+      InvestmentValue: 0,
       // 历史收益值
-      getMoneyValue: '',
+      getMoneyValue: 0,
       // 取消投资id
       cancleInvestId: ''
     }
@@ -518,7 +518,7 @@ export default {
                 color:#7CB8FA;
                 height: 24px;
                 font-weight:600;
-                /*-webkit-box-reflect: below 0 -webkit-linear-gradient(45deg,rgba(124,184,250,0),rgba(124,184,250,0.2));*/
+                -webkit-box-reflect: below 0 -webkit-linear-gradient(-90deg,rgba(124,184,250,0),rgba(124,184,250,0.2));
                 >span{
                   font-size: 12px;
                 }

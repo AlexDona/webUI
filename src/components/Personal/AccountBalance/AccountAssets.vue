@@ -645,13 +645,10 @@ export default {
           tradeId: ""
           volume: 0 */
       let activeSymbol = {
-        id: '',
-        price: 0,
-        rose: 0,
+        id: e.sellCoinName + e.buyCoinName,
         sellname: '',
         sellsymbol: '',
-        tradeId: '',
-        volume: 0
+        tradeId: e.tradeId
       }
       this.$store.commit('trade/SET_JUMP_STATUS', true)
       this.$store.commit('trade/SET_JUMP_SYMBOL', activeSymbol)
@@ -664,7 +661,7 @@ export default {
         id,
         name
       })
-      // this.$router.push({'path': '/TradeCenter'})
+      this.$router.push({'path': '/TradeCenter'})
     },
     // 输入限制
     // 修改input value 输入限制
@@ -991,14 +988,14 @@ export default {
       } else {
         // 返回展示
         this.currencyTradingList = data.data.data.entrust
-        // this.area = data.data.data.entrust.buyCoinName
-        // this.areaId = data.data.data.entrust.tradeAreaId
-        // this.id = data.data.data.entrust.sellCoinName + data.data.data.entrust.buyCoinName
-        // // this.sellname = data.data.data.entrust.sellCoinName
-        // this.sellsymbol = data.data.data.entrust.sellCoinName
-        // // this.buyName = data.data.data.entrust
-        // // this.buysymbol = data.data.data.entrust
-        // this.tradeId = data.data.data.entrust.tradeId
+        this.area = this.currencyTradingList.buyCoinName
+        this.areaId = this.currencyTradingList.tradeAreaId
+        this.id = this.currencyTradingList.sellCoinName + this.currencyTradingList.buyCoinName
+        // this.sellname = data.data.data.entrust.sellCoinName
+        this.sellsymbol = this.currencyTradingList.sellCoinName
+        // this.buyName = data.data.data.entrust
+        // this.buysymbol = data.data.data.entrust
+        this.tradeId = this.currencyTradingList.tradeId
         // area: "ETH"
         // areaId: "486108806841892864"
         // id: "wtcfbt"
@@ -1006,6 +1003,13 @@ export default {
         // sellname: "沃尔顿链"
         // sellsymbol: "WTC"
         // tradeId: "491725015746609152"
+        console.log(this.currencyTradingList)
+        console.log(this.area)
+        console.log(this.areaId)
+        console.log(this.id)
+        console.log(this.sellsymbol)
+        console.log(this.tradeId)
+        console.log(this.currencyTradingId)
       }
     }
   },

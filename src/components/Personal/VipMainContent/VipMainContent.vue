@@ -294,18 +294,32 @@
           <span class="prompt-color">《VIP服务协议》</span>
         </p>
       </div>
-      <el-dialog title="kaitongVIP" :visible.sync="dialogFormVisible">
+      <el-dialog
+        title="kaitongVIP"
+        visible.sync="dialogFormVisible"
+      >
         <el-form>
           <el-form-item
             label="交易密码"
           >
             <el-input
+              type="password"
               auto-complete="off"
               v-model="password"
+              @keydown="setEditorErrorMsg(0,'')"
+              @blur="editorInputFormat(0, password)"
             >
             </el-input>
           </el-form-item>
         </el-form>
+        <!--错误提示-->
+        <div
+          class = "error-msg font-size12"
+        >
+          <span v-show = "errorEditorMsg">
+            {{ errorEditorMsg }}
+          </span>
+        </div>
         <div
           slot="footer"
           class="dialog-footer"
@@ -346,6 +360,7 @@ export default {
   data () {
     return {
       vipPictureBanner: require('../../../assets/user/VIPbanner.png'), // vip banner
+      errorEditorMsg: '',
       showOpenTheVIPPage: true, // 开启vip页面默认
       vipShowDetailsPage: false, // 开启vip详情页面默认
       password: '', // 开启vip详情页面默认
@@ -415,6 +430,26 @@ export default {
     stateOpeningLevel (type) {
       this.type = type
     },
+    // 创建api检测输入格式
+    editorInputFormat (type, targetNum) {
+      switch (type) {
+        // 编辑用户备注
+        case 0:
+          if (!targetNum) {
+            this.setEditorErrorMsg(0, '请输入交易密码')
+            this.$forceUpdate()
+            return 0
+          } else {
+            this.setEditorErrorMsg(0, '')
+            this.$forceUpdate()
+            return 1
+          }
+      }
+    },
+    // 设置错误信息
+    setEditorErrorMsg (index, msg) {
+      this.errorEditorMsg = msg
+    },
     // 确定提交
     confirmSubmit () {
       this.dialogFormVisible = true
@@ -443,23 +478,30 @@ export default {
     dialogFormVisibleButton () {
       this.confirmTransactionPassword()
     },
-    async confirmTransactionPassword (type, state) {
-      // if(){
-      //
-      // }
-      let data
-      let params = {
-        payPassword: this.password, // 用户id
-        vipName: this.vipName,
-        month: this.month
-      }
-      data = await buyVipPriceInfo(params)
-      if (!(returnAjaxMessage(data, this, 1))) {
-        return false
+    async confirmTransactionPassword () {
+      let goOnStatus = 0
+      if (
+        this.checkoutInputFormat(0, this.password)
+      ) {
+        goOnStatus = 1
       } else {
-        this.dialogFormVisible = false
-        console.log(data)
-        // 安全中心状态刷新
+        goOnStatus = 0
+      }
+      if (goOnStatus) {
+        let data
+        let params = {
+          payPassword: this.password, // 用户id
+          vipName: this.vipName,
+          month: this.month
+        }
+        data = await buyVipPriceInfo(params)
+        if (!(returnAjaxMessage(data, this, 1))) {
+          return false
+        } else {
+          this.dialogFormVisible = false
+          console.log(data)
+          // 安全中心状态刷新
+        }
       }
     },
     /**
@@ -505,6 +547,12 @@ export default {
     }
     > .content-main-content {
       > .content-main {
+        .error-msg{
+          height:30px;
+          line-height: 30px;
+          padding-left: 35px;
+          color: rgb(212, 88, 88);
+        }
         width: 756px;
         min-height: 800px;
         margin: 0 auto;
