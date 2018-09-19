@@ -20,7 +20,7 @@
         </span>
         <span
           class="header-content-right font-size12 cursor-pointer"
-          @click="returnSuperior"
+          @click.prevent="returnSuperior"
         >
           <IconFontCommon
             class="font-size22"
@@ -84,7 +84,7 @@
             </el-form-item>
             <button
               class="transaction-button border-radius4 cursor-pointer"
-              @click="setStatusSubmit"
+              @click.prevent="setStatusSubmit"
             >
               确认设置
             </button>
@@ -192,7 +192,7 @@
             <span v-else></span>
             <button
               class="transaction-button border-radius4 cursor-pointer"
-              @click.prevent="getUpdatePayPassword"
+              @click.prevent.prevent="getUpdatePayPassword"
             >
               确认重置
             </button>

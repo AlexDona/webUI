@@ -20,7 +20,7 @@
         </span>
         <span
           class="header-content-right font-size12 cursor-pointer"
-          @click="returnSuperior"
+          @click.prevent="returnSuperior"
         >
           <IconFontCommon
             class="font-size22"
@@ -92,14 +92,14 @@
             <button
               v-if="paymentTerm.isWeixinBind"
               class="chat-button border-radius4 cursor-pointer"
-              @click="stateSubmitWeChat"
+              @click.prevent="stateSubmitWeChat"
             >
               确认设置
             </button>
             <button
               v-else
               class="chat-button border-radius4 cursor-pointer"
-              @click="stateSubmitWeChat"
+              @click.prevent="stateSubmitWeChat"
             >
               确认修改
             </button>
@@ -199,7 +199,6 @@ export default {
           }
         // 请输入支付宝张号
         case 1:
-          console.log(type)
           if (!targetNum) {
             this.setErrorMsg(1, '请输入交易密码')
             this.$forceUpdate()
@@ -222,7 +221,8 @@ export default {
     async stateSeniorCertification () {
       let goOnStatus = 0
       if (
-        this.checkoutInputFormat(0, this.alipayAccount)
+        this.checkoutInputFormat(0, this.cardNo) &&
+        this.checkoutInputFormat(1, this.cardNo)
       ) {
         goOnStatus = 1
       } else {

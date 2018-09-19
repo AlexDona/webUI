@@ -20,6 +20,7 @@
           <el-tabs
             v-model="activeName"
             @tab-click="changeTab"
+            v-show="showNewsList"
           >
             <!--定死-->
             <el-tab-pane
@@ -31,13 +32,13 @@
               <div class="item-content">
                 <ul class="content-list">
                   <li
-                    class="content-item"
+                    class="content-item cursor-pointer"
                     v-for="(item,index) in noticeFilterList"
                     :key="index"
+                    @click="jumpToDetail(item)"
                   >
-                    <router-link
+                    <div
                       class="content-item-link"
-                      to="/"
                     >
                       <div class="left">
                         <div class="top">{{item.createTime.split('-')[0]+' 年'}}</div>
@@ -55,7 +56,7 @@
                           <span class="date">{{item.createTime}}</span>
                         </p>
                       </div>
-                    </router-link>
+                    </div>
                   </li>
                 </ul>
                 <el-pagination
@@ -68,47 +69,45 @@
                 </el-pagination>
               </div>
             </el-tab-pane>
-            <!--<el-tab-pane-->
-              <!--label="行业资讯"-->
-              <!--name="2"-->
-            <!--&gt;-->
-              <!--<div-->
-                <!--class="item-content"-->
-                <!--v-if="newsFilterList.length"-->
-              <!--&gt;-->
-                <!--<ul class="content-list">-->
-                  <!--<li-->
-                    <!--class="content-item"-->
-                    <!--v-for="(item,index) in newsFilterList"-->
-                    <!--:key="index"-->
-                  <!--&gt;-->
-                    <!--<router-link-->
-                      <!--class="content-item-link"-->
-                      <!--to="/"-->
-                    <!--&gt;-->
-                      <!--<div class="left">-->
-                        <!--<div class="top">{{item.createTime.split('-')[0]+' 年'}}</div>-->
-                        <!--<div class="bottom">{{item.createTime.split('-')[1]-0+' 月'}}</div>-->
-                      <!--</div>-->
-                      <!--<div class="right">-->
-                        <!--<p class="top">-->
-                          <!--{{item.title}}-->
-                        <!--</p>-->
-                        <!--<p class="middle">-->
-                          <!--{{item.keyword}}-->
-                        <!--</p>-->
-                        <!--<p class="bottom">-->
-                          <!--<span class="author">{{item.creator}}</span>-->
-                          <!--<span class="date">{{item.createTime}}</span>-->
-                        <!--</p>-->
-                      <!--</div>-->
-                    <!--</router-link>-->
-                  <!--</li>-->
-                <!--</ul>-->
-              <!--</div>-->
-            <!--</el-tab-pane>-->
-            <!--后台动态添加的-->
           </el-tabs>
+          <div
+            class="news-detail"
+            v-show="!showNewsList"
+          >
+            <div class="left">
+              <h2>{{newDetail.newsTypeName}}</h2>
+              <div class="detail-content">
+                <h3 class="title">{{newDetail.title}}</h3>
+                <p class="time">{{newDetail.createTime}}</p>
+                <div
+                  class="content"
+                  v-html="newDetail.content"
+                ></div>
+              </div>
+            </div>
+            <div class="right">
+              <div
+                class="news-type-list"
+                v-for="(outerItem,outIndex) in newsTypeList"
+                :key="outIndex"
+              >
+                <h2 class="news-type-title">{{outerItem.name}}</h2>
+                <ul
+                  class="news-type-content"
+                >
+                  <li
+                    class="news-type-item cursor-pointer"
+                    v-for="(item,index) in detailAllNewsList[outIndex]"
+                    :key="index"
+                    @click="jumpToDetail(item)"
+                  >
+                    <span class="title">{{item.title}}</span>
+                    <span class="time">{{item.createTime.split(' ')[0]}}</span>
+                  </li>
+                </ul>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
     </div>
@@ -119,7 +118,8 @@
 import HeaderCommon from '../Common/HeaderCommon'
 import {
   getNewsNoticeList,
-  getAllNewsTypeList
+  getAllNewsTypeList,
+  getNewsDetail
 } from '../../utils/api/home'
 import {returnAjaxMessage} from '../../utils/commonFunc'
 import {mapState} from 'vuex'
@@ -167,6 +167,11 @@ export default {
       pageNum: 1, // 当前页
       newsTypeList: [], // 新闻类型列表
       newsTypeId: 1, // 当前新闻类型id
+      // showNewsList: false, // 显示列表、详情状态
+      showNewsList: true, // 显示列表、详情状态
+      newDetail: {
+      },
+      detailAllNewsList: [], // 详情页面新闻列表
       end: ''
     }
   },
@@ -181,6 +186,8 @@ export default {
     this.helpList.forEach(() => {
       this.helpShowStatusList.push(false)
     })
+    console.log(this.newsTypeList)
+    this.getAllTypeListNewsList()
   },
   mounted () {},
   activited () {},
@@ -196,6 +203,45 @@ export default {
     changeCurrentPage (e) {
       this.pageNum = e
       this.getNewsNoticeList()
+    },
+    // 获取全部type类型的前5条数据
+    async getAllTypeListNewsList () {
+      let params = {
+        partnerId: this.partnerId,
+        pageNum: 1,
+        pageSize: 5,
+        language: this.language
+      }
+      for (let i = 0; i < this.newsTypeList.length; i++) {
+        const item = this.newsTypeList[i]
+        params.newsTypeId = item.id - 0
+        console.log(params)
+        const data = await getNewsNoticeList(params)
+        console.log(data)
+        if (!returnAjaxMessage(data, this)) {
+          return false
+        } else {
+          console.log(data)
+          const targetData = data.data.data.list
+          this.detailAllNewsList.push(targetData)
+        }
+      }
+      console.log(this.detailAllNewsList)
+    },
+    // 详情跳转
+    jumpToDetail (item) {
+      this.getDetailInfo(item.id)
+    },
+    // 获取详情信息
+    async getDetailInfo (id) {
+      const data = await getNewsDetail(id)
+      if (!returnAjaxMessage(data, this)) {
+        return false
+      } else {
+        this.showNewsList = false
+        this.newDetail = data.data.data
+        console.log(this.newDetail)
+      }
     },
     // 获取所有新闻类型
     async getAllNewsTypeList () {
@@ -229,20 +275,6 @@ export default {
         this.noticeList = targetData.list
         this.pageNum = targetData.pageNum
         this.totalPages = targetData.pages
-
-        // switch (this.newsTypeId) {
-        //   // 官方公告
-        //   case 1:
-        //     console.log(this.noticeList)
-        //     break
-        //   // 行业资讯
-        //   case 2:
-        //     break
-        //   // 帮助中心
-        //   case 3:
-        //     break
-        // }
-        // console.log(this.noticeList)
       }
     }
   },
@@ -306,6 +338,7 @@ export default {
           width:1100px;
           height:1100px;
           margin:0 auto;
+          overflow: hidden;
           .item-content{
             >.content-list{
               >.content-item{
@@ -403,6 +436,74 @@ export default {
                     >.content{
                       text-align: left;
                       padding:10px 50px;
+                    }
+                  }
+                }
+              }
+            }
+          }
+          >.news-detail{
+            width:100%;
+            height:100%;
+            margin-top:50px;
+            background-color: #1e2636;
+            display:flex;
+            padding:50px;
+            >.left{
+              flex:2;
+              /*border:1px solid #fff;*/
+              >h2{
+                color:#338FF5;
+                font-size: 18px;
+                font-weight: 400;
+                border-left: 2px solid #338FF5;
+                padding: 0 10px;
+              }
+              >.detail-content{
+                margin:50px;
+                >.title{
+                  text-align: center;
+                  color:#fff;
+                  line-height: 40px;
+                }
+                >.time{
+                  text-align: center;
+                  margin-bottom:40px;
+                  color:#8BA0CA;
+                }
+                >.content{
+                  color:#8BA0CA;
+                }
+              }
+            }
+            >.right{
+              flex:1;
+              /*border:1px solid #fff;*/
+              >.news-type-list{
+                margin-bottom: 30px;
+                >h2{
+                  font-size: 18px;
+                  font-weight: 400;
+                  color:#338FF5;
+                  border-left: 2px solid #338FF5;
+                  padding: 0 10px;
+                  margin-bottom:20px;
+                }
+                >.news-type-content{
+                  >.news-type-item{
+                    display:flex;
+                    line-height: 30px;
+                    >.title{
+                      flex:2;
+                      overflow: hidden;
+                      text-overflow:ellipsis;
+                      white-space: nowrap;
+                      color:#fff;
+                    }
+                    >.time{
+                      flex:1;
+                      text-align: right;
+                      color:#8BA0CA;
                     }
                   }
                 }

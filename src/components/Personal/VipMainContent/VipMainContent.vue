@@ -30,7 +30,7 @@
           <p class="content-button">
             <button
               class="click-btn cursor-pointer"
-              @click="statusImmediatelyOpened('vip1')"
+              @click.prevent="statusImmediatelyOpened('vip1')"
             >
               立即开通
             </button>
@@ -49,7 +49,7 @@
           <p class="content-button">
             <button
               class="click-btn cursor-pointer"
-              @click="statusImmediatelyOpened('vip2')"
+              @click.prevent="statusImmediatelyOpened('vip2')"
             >
               立即开通
             </button>
@@ -68,7 +68,7 @@
           <p class="content-button">
             <button
               class="click-btn cursor-pointer"
-              @click="statusImmediatelyOpened('vip3')"
+              @click.prevent="statusImmediatelyOpened('vip3')"
             >
               立即开通
             </button>
@@ -87,7 +87,7 @@
           <p class="content-button">
             <button
               class="click-btn cursor-pointer"
-              @click="statusImmediatelyOpened('vip4')"
+              @click.prevent="statusImmediatelyOpened('vip4')"
             >
               立即开通
             </button>
@@ -106,7 +106,7 @@
           <p class="content-button">
             <button
               class="click-btn cursor-pointer"
-              @click="statusImmediatelyOpened('vip5')"
+              @click.prevent="statusImmediatelyOpened('vip5')"
             >
               立即开通
             </button>
@@ -125,7 +125,7 @@
           <!--<p class="content-button">-->
             <!--<button-->
               <!--class="click-btn cursor-pointer"-->
-              <!--@click="statusImmediatelyOpened('vip6')"-->
+              <!--@click.prevent="statusImmediatelyOpened('vip6')"-->
             <!--&gt;-->
               <!--立即开通-->
             <!--</button>-->
@@ -135,7 +135,7 @@
           <span>还没有FUC?</span>
           <span
             class="hint-color cursor-pointer"
-            @click="returnSuperior"
+            @click.prevent="returnSuperior"
           >
             立即购买
           </span>
@@ -150,7 +150,7 @@
           <div class="page-grade-title font-size14">开通等级</div>
           <div
             class="grade cursor-pointer text-align-c"
-            @click="stateOpeningLevel(1)"
+            @click.prevent="stateOpeningLevel(1)"
             :class="{ blue:active == 1}"
           >
             <p class="font-size16 grade-color font-weight600">VIP1</p>
@@ -158,7 +158,7 @@
           </div>
           <div
             class="grade cursor-pointer text-align-c"
-            @click="stateOpeningLevel(2)"
+            @click.prevent="stateOpeningLevel(2)"
             :class="{ blue:active == 2}"
           >
             <p class="font-size16 grade-color font-weight600">VIP2</p>
@@ -166,7 +166,7 @@
           </div>
           <div
             class="grade cursor-pointer text-align-c"
-            @click="stateOpeningLevel(3)"
+            @click.prevent="stateOpeningLevel(3)"
             :class="{ blue:active == 3}"
           >
             <p class="font-size16 grade-color font-weight600">VIP3</p>
@@ -174,7 +174,7 @@
           </div>
           <div
             class="grade cursor-pointer text-align-c"
-            @click="stateOpeningLevel(4)"
+            @click.prevent="stateOpeningLevel(4)"
             :class="{ blue:active == 4}"
           >
             <p class="font-size16 grade-color font-weight600">VIP4</p>
@@ -182,7 +182,7 @@
           </div>
           <div
             class="grade cursor-pointer text-align-c"
-            @click="stateOpeningLevel(5)"
+            @click.prevent="stateOpeningLevel(5)"
             :class="{ blue:active == 5}"
           >
             <p class="font-size16 grade-color font-weight600">VIP5</p>
@@ -190,7 +190,7 @@
           </div>
           <!--<div-->
             <!--class="grade cursor-pointer text-align-c"-->
-            <!--@click="stateOpeningLevel(6)"-->
+            <!--@click.prevent="stateOpeningLevel(6)"-->
             <!--:class="{ blue:active == 6}"-->
           <!--&gt;-->
             <!--<p class="font-size16 grade-color font-weight600">VIP6</p>-->
@@ -203,7 +203,7 @@
           <div class="duration-title font-size14">开通时长</div>
           <div
             class="duration cursor-pointer cursor-pointer text-align-c"
-            @click="changeMonth(3, filteredData[0].id)"
+            @click.prevent="changeMonth(3, filteredData[0].id)"
           >
             <p class="duration-month font-size16">
               3个月
@@ -214,7 +214,7 @@
           </div>
           <div
             class="duration duration-left cursor-pointer text-align-c"
-            @click="changeMonth(6, filteredData[1].id)"
+            @click.prevent="changeMonth(6, filteredData[1].id)"
           >
             <p class="duration-month font-size16">
               6个月
@@ -228,7 +228,7 @@
           </div>
           <div
             class="duration duration-left cursor-pointer text-align-c"
-            @click="changeMonth(12, filteredData[2].id)"
+            @click.prevent="changeMonth(12, filteredData[2].id)"
           >
             <p class="duration-month font-size16">
               12个月
@@ -242,7 +242,7 @@
           </div>
           <div
             class="duration duration-left cursor-pointer text-align-c"
-            @click="changeMonth(1, filteredData[3].id)"
+            @click.prevent="changeMonth(1, filteredData[3].id)"
           >
             <p class="duration-month font-size16">
               1个月
@@ -261,16 +261,22 @@
             </span>
             <span
               class="usable-gain cursor-pointer font-size12 display-inline-block"
-              @click="returnSuperior"
+              @click.prevent="returnSuperior"
             >
               立即获取
             </span>
           </div>
         </div>
+        <!--错误提示-->
+        <div
+          class = "error-msg font-size12"
+        >
+          <span v-show = "errorMsg">{{ errorMsg }}</span>
+        </div>
         <div class="detail-page-btn text-align-c">
           <button
             class="page-btn cursor-pointer"
-            @click="confirmSubmit"
+            @click.prevent="confirmSubmit"
           >
             确定
           </button>
@@ -284,7 +290,9 @@
         </p>
         <p class="warm-text-color">费率折扣仅对交易手续费生效</p>
         <p class="warm-text-color">一个月有效期时长为30个自然日</p>
-        <p class="warm-text-color">开通即代表您已同意<span class="prompt-color">《VIP服务协议》</span></p>
+        <p class="warm-text-color">开通即代表您已同意
+          <span class="prompt-color">《VIP服务协议》</span>
+        </p>
       </div>
       <el-dialog title="kaitongVIP" :visible.sync="dialogFormVisible">
         <el-form>
@@ -304,7 +312,7 @@
         >
           <el-button
             type="primary"
-            @click="dialogFormVisibleButton"
+            @click.prevent="dialogFormVisibleButton"
           >
             确 定
           </el-button>
@@ -436,6 +444,9 @@ export default {
       this.confirmTransactionPassword()
     },
     async confirmTransactionPassword (type, state) {
+      // if(){
+      //
+      // }
       let data
       let params = {
         payPassword: this.password, // 用户id

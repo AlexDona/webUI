@@ -120,7 +120,7 @@
             <button
               class="submit"
               type="button"
-              @click="submitRealName"
+              @click.prevent="submitRealName"
             >
               提交认证
             </button>
@@ -140,7 +140,7 @@
       >
         <p
           class="header-border paddinglr20"
-          @click="authenticationMethod">
+          @click.prevent="authenticationMethod">
           <span class="font-size16 main-header-title">高级认证</span>
           <span
             v-if="userInfoRefresh.advancedAuth === 'notPass' || userInfoRefresh.advancedAuth === ''"
@@ -244,7 +244,7 @@
                   <button
                     type="primary"
                     class="upload-submit cursor-pointer font-size12 margin-top30"
-                    @click="handleSuccessFront"
+                    @click.prevent="handleSuccessFront"
                   >
                     上传身份证正面
                   </button>
@@ -273,7 +273,7 @@
                   <button
                     type="primary"
                     class="upload-submit cursor-pointer font-size12 margin-top30"
-                    @click="handleSuccessReverseSide"
+                    @click.prevent="handleSuccessReverseSide"
                   >
                     上传身份证反面
                   </button>
@@ -302,7 +302,7 @@
                   <button
                     type="primary"
                     class="upload-submit cursor-pointer font-size12 margin-top30"
-                    @click="handleSuccessHand"
+                    @click.prevent="handleSuccessHand"
                   >
                     上传手持身份证
                   </button>
@@ -319,7 +319,7 @@
                 <!--提交按钮-->
                 <button
                   class="submit-information font-size16 cursor-pointer"
-                  @click="stateSubmitSeniorCertification"
+                  @click.prevent="stateSubmitSeniorCertification"
                 >
                   确认提交
                 </button>
@@ -361,7 +361,7 @@
             请在浏览器中打开，并升级浏览器至最新版本,无法通过认证的用户，
             <span
               class="tips-refresh cursor-pointer"
-              @click="authenticationAuthentication"
+              @click.prevent="authenticationAuthentication"
             >
               请点击这里
             </span>
@@ -603,10 +603,10 @@ export default {
     // 高级认证弹窗
     authenticationMethod () {
       // 判断是否高级认证&&实名认证
-      if (!this.userInfoRefresh.realname && !this.userInfoRefresh.advancedAuth) {
-        this.seniorAuthentication = false
-      } else if (this.userInfoRefresh.realname) {
+      if (this.userInfoRefresh.realname !== '' && this.userInfoRefresh.advancedAuth === 'notPass') {
         this.seniorAuthentication = true
+      } else if (this.userInfoRefresh.realname == '') {
+        this.seniorAuthentication = false
       }
     },
     // 高级认证内容

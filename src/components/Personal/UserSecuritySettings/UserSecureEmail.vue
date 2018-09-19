@@ -11,7 +11,7 @@
         </span>
         <span
           class="header-content-right font-size12 cursor-pointer"
-          @click="returnSuperior"
+          @click.prevent="returnSuperior"
         >
           <IconFontCommon
             class="font-size22"
@@ -64,7 +64,7 @@
             </el-form-item>
             <button
               class="email-button border-radius4 cursor-pointer"
-              @click="confirmBindingBailSubmit"
+              @click.prevent="confirmBindingBailSubmit"
             >
               确认绑定
             </button>

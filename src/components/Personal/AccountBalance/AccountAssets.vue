@@ -18,13 +18,13 @@
                   <p class="float-right header-right-show margin-left10">
                     <img
                       v-show="showStatusButton"
-                      @click="statusOpenToClose('all')"
+                      @click.prevent="statusOpenToClose('all')"
                       class="switch-img"
                       :src="closePictureSrc"
                     >
                     <img
                       v-show="hideStatusButton"
-                      @click="statusOpenToClose('noall')"
+                      @click.prevent="statusOpenToClose('noall')"
                       class="switch-img"
                       :src="openPictureSrc"
                     >
@@ -111,13 +111,13 @@
                   <div class="table-td flex1 display-flex text-align-r font-size12">
                     <div
                       class="table-charge-money flex1 cursor-pointer"
-                      @click="showRechargeBox(assetItem.coinId, assetItem.coinName, index)"
+                      @click.prevent="showRechargeBox(assetItem.coinId, assetItem.coinName, index)"
                     >
                       充币
                     </div>
                     <div
                       class="table-mention-money flex1 cursor-pointer"
-                      @click="mentionMoneyButton(assetItem.coinId, assetItem.coinName, index)"
+                      @click.prevent="mentionMoneyButton(assetItem.coinId, assetItem.coinName, index)"
                     >
                       提币
                     </div>
@@ -136,7 +136,7 @@
                           class="transaction-list text-align-c"
                           v-for="(item, index) in currencyTradingList"
                           :key="index"
-                          @click="tradingId(item.name, index, parameterSymbol)"
+                          @click.prevent="tradingId(item.name, index, parameterSymbol)"
                         >
                           {{ item.name }}
                         </p>
@@ -192,7 +192,7 @@
                         </p>
                         <p
                           class="code-list text-align-r float-right cursor-pointer font-size12"
-                          @click="stateRechargeRecord"
+                          @click.prevent="stateRechargeRecord"
                         >
                           充值记录
                         </p>
@@ -225,7 +225,7 @@
                             </el-select>
                             <span
                               class="new-address cursor-pointer"
-                              @click="stateMentionAddress"
+                              @click.prevent="stateMentionAddress"
                             >
                               新增
                             </span>
@@ -299,15 +299,20 @@
                         <p class="mention-button">
                           <button
                             class="font-size12 submit-but border-radius4 cursor-pointer"
-                            @click="moneyConfirmState"
+                            @click.prevent="moneyConfirmState"
                           >
                             提币
                           </button>
                           <span
                             class="float-right cursor-pointer"
-                            @click="stateRechargeRecord"
+                            @click.prevent="stateRechargeRecord"
                           >
-                          <div class="false-tips fz14 ml100 mt0 mb20 pl10 tl" v-show="errorMessage"><i></i>{{errorMessage}}</div>
+                          <div
+                            class="false-tips fz14 ml100 mt0 mb20 pl10 tl"
+                            v-show="errorMessage"
+                          >
+                            {{errorMessage}}
+                          </div>
                         提币记录
                       </span>
                         </p>
@@ -379,7 +384,7 @@
                         >
                           <el-button
                             type="primary"
-                            @click="submitMentionMoney"
+                            @click.prevent="submitMentionMoney"
                           >
                             确 定
                           </el-button>
@@ -390,7 +395,9 @@
                         :visible.sync="dialogVisible"
                         center
                       >
-                        <span class="info text-align-c display-inline-block">设置交易密码</span>
+                        <span class="info text-align-c display-inline-block">
+                          您还未设置交易密码请先设置交易密码在进行提币
+                        </span>
                         <span
                           slot="footer"
                           class="dialog-footer footer"
@@ -398,13 +405,13 @@
                           <button
                             class="button-color border-radius4 cursor-pointer"
                             type="primary"
-                            @click="confirm"
+                            @click.prevent="confirm"
                           >
                             确 定
                           </button>
                           <button
                             class="btn border-radius4 cursor-pointer"
-                            @click="dialogVisible = false"
+                            @click.prevent="dialogVisible = false"
                           >
                             取 消
                           </button>
@@ -542,7 +549,6 @@ export default {
     // 刚进页面时候 个人资产列表展示
     this.getAssetCurrenciesList()
     // this.getQueryTransactionInformation()
-    console.log(this.filteredData1)
   },
   mounted () {
     // this.parameterSymbol = {
@@ -794,11 +800,23 @@ export default {
       this.emailCode = '' // 邮箱验证码
       this.googleCode = '' // 谷歌验证码
       this.payPassword = ''
-      if (this.userInfoRefresh.payPassword !== '') {
+      if (!this.amount) {
+        this.$message({
+          message: '请上输入提币数量',
+          type: 'error'
+        })
+        this.mentionMoneyConfirm = false
+      } else if (!this.service) {
+        this.$message({
+          message: '请输入手续费',
+          type: 'error'
+        })
+        this.mentionMoneyConfirm = false
+      } else if (!this.userInfoRefresh.payPassword) {
+        this.dialogVisible = true
+      } else {
         this.mentionMoneyConfirm = true
         this.getSecurityCenter()
-      } else {
-        this.dialogVisible = true
       }
     },
     confirm () {

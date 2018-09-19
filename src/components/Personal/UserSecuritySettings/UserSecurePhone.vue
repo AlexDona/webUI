@@ -20,7 +20,7 @@
         </span>
         <span
           class="header-content-right font-size12 cursor-pointer"
-          @click="returnSuperior"
+          @click.prevent="returnSuperior"
         >
           <IconFontCommon
             class="font-size22"
@@ -78,7 +78,7 @@
               >
               <!--获取图片验证码-->
               <span
-                @click="refreshCode"
+                @click.prevent="refreshCode"
                 class="cursor-pointer display-inline-block phone-input-align"
               >
               <ImageValidate
@@ -121,7 +121,7 @@
             </div>
             <button
               class="phone-button border-radius4 cursor-pointer"
-              @click="getStatusSubmit"
+              @click.prevent="getStatusSubmit"
             >
               确认绑定
             </button>
@@ -218,7 +218,7 @@
             </el-form-item>
             <button
               class="phone-button border-radius4 cursor-pointer"
-              @click="stateTieStatusSubmit"
+              @click.prevent="stateTieStatusSubmit"
             >
               确认换绑
             </button>
