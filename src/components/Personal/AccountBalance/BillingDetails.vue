@@ -23,6 +23,7 @@
           <span class="demonstration display-inline-block font-size12">币种</span>
           <el-select
             v-model="currencyListValue"
+            clearable
             @change="changeId"
           >
             <el-option

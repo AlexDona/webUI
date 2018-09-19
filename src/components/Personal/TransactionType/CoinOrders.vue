@@ -202,7 +202,7 @@
                 v-show="activeName === 'current-entrust' && currentEntrustList.length"
                 layout="prev, pager, next"
                 :page-count="totalPageForMyEntrust"
-                @current-change="changeCurrentPage(0,$event)"
+                @current-change="changeCurrentPage('current-entrust',$event)"
               >
               </el-pagination>
             </div>
@@ -367,7 +367,7 @@
             v-show="activeName === 'history-entrust' && historyEntrustList.length"
             layout="prev, pager, next"
             :page-count="totalPageForHistoryEntrust"
-            @current-change="changeCurrentPage(1,$event)"
+            @current-change="changeCurrentPage('history-entrust',$event)"
           >
           </el-pagination>
         </el-tab-pane>
@@ -449,7 +449,7 @@
             v-show="activeName === 'make-detail' && currentMakeDetailList.length"
             layout="prev, pager, next"
             :page-count="totalPageForMakeDetailEntrust"
-            @current-change="changeCurrentPage(2,$event)"
+            @current-change="changeCurrentPage('make-detail',$event)"
           >
           </el-pagination>
         </el-tab-pane>
@@ -538,6 +538,7 @@ export default {
   beforeRouteUpdate () {},
   methods: {
     coinMoneyOrders (tab) {
+      console.log(tab.name)
       this.commissionList(tab.name)
     },
     // 查询列表
@@ -569,15 +570,15 @@ export default {
     changeCurrentPage (entrustType, pageNum) {
       console.log(pageNum)
       switch (entrustType) {
-        case 0:
+        case 'current-entrust':
           this.currentPageForMyEntrust = pageNum
           this.commissionList(entrustType)
           break
-        case 1:
+        case 'history-entrust':
           this.currentPageForHistoryEntrust = pageNum
           this.commissionList(entrustType)
           break
-        case 2:
+        case 'make-detail':
           this.currentPageMakeDetailEntrust = pageNum
           this.commissionList(entrustType)
       }

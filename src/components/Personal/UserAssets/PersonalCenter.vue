@@ -223,7 +223,7 @@ export default {
     require('../../../../static/css/theme/day/Personal/UserAssets/PersonalCenterDay.css')
     // 黑色主题样式
     require('../../../../static/css/theme/night/Personal/UserAssets/PersonalCenterNight.css')
-    // this.getUserRefreshUser()
+    this.getUserRefreshUser()
   },
   mounted () {},
   activited () {},
@@ -258,15 +258,15 @@ export default {
           this.$refs.identityValue.getCountryListings()
           break
         case 'account-credited':
-          if (!this.userInfoRefresh.payPassword) {
-            this.$refs.accountCreditedValue.getAccountPaymentTerm()
-          } else if (!this.userInfoRefresh.realname) {
-            // 收款方式状态查询
-            this.$refs.accountCreditedValue.getAccountPaymentTerm()
-          } else {
-            // 收款方式状态查询
+          console.log(this.userInfoRefresh)
+          if (!this.userInfoRefresh.payPassword && !this.userInfoRefresh.realname) {
+            console.log(1)
             this.$refs.accountCreditedValue.getAccountPaymentTerm()
             this.dialogVisible = true
+          }
+          if (this.userInfoRefresh.payPassword && this.userInfoRefresh.realname) {
+            // 收款方式状态查询
+            this.$refs.accountCreditedValue.getAccountPaymentTerm()
           }
           break
         case 'invitation-promote':
@@ -305,6 +305,7 @@ export default {
      *  刷新用户信息
      */
     async getUserRefreshUser () {
+      console.log(this.userInfo)
       let data = await userRefreshUser({
         token: this.userInfo.token
       })
@@ -322,7 +323,7 @@ export default {
     ...mapState({
       theme: state => state.common.theme,
       userCenterActiveName: state => state.personal.userCenterActiveName,
-      userInfo: state => state.user.loginStep1Info.userInfo
+      userInfo: state => state.user.loginStep1Info
     })
   },
   watch: {}

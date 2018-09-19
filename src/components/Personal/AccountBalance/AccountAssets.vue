@@ -544,7 +544,7 @@ export default {
     require('../../../../static/css/theme/night/Personal/AccountBalance/AccountAssetsNight.css')
     // 刚进页面时候 个人资产列表展示
     this.getAssetCurrenciesList()
-    // this.getQueryTransactionInformation()
+    this.getUserRefreshUser()
   },
   mounted () {
     // this.parameterSymbol = {
@@ -825,7 +825,7 @@ export default {
           type: 'error'
         })
         this.mentionMoneyConfirm = false
-      } else if (this.userInfoRefresh.payPassword) {
+      } else if (this.userInfoRefresh.payPassword == '') {
         this.dialogVisible = true
       } else {
         this.mentionMoneyConfirm = true
