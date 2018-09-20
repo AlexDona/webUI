@@ -1075,7 +1075,7 @@ export default {
               }
               >.icon-color {
                 position: absolute;
-                left: 85px;
+                left: 95px;
                 top: 12px;
               }
             }
