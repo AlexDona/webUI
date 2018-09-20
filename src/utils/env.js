@@ -22,7 +22,8 @@ if (process.env.NODE_ENV == 'development') {
   // baseUrl = 'http://192.168.1.252:8103' // 施伯兵
 } else if (process.env.NODE_ENV == 'production') {
   // baseUrl = 'https://rest.fubt.top/'
-  baseUrl = 'http://192.168.1.200:8888/' // 本地测试
+  // baseUrl = 'http://192.168.1.200:8888/' // 本地测试
+  baseUrl = 'http://api.new.fubt.com/' // 本地测试
 }
 
 export {

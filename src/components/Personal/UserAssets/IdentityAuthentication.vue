@@ -220,7 +220,7 @@
                   <!-- 上传身份证正面 -->
                   <div class="default-center">
                     <el-upload
-                      action="http://192.168.1.200:8888/uploadfile"
+                      :action="baseUrl+'uploadfile'"
                       :headers="tokenObj"
                       list-type="picture-card"
                       :on-success="handleSuccessFront"
@@ -250,7 +250,7 @@
                   <!-- 上传身份证反面 -->
                   <div class="default-center">
                     <el-upload
-                      action="http://192.168.1.200:8888/uploadfile"
+                      :action="baseUrl+'uploadfile'"
                       :headers="tokenObj"
                       list-type="picture-card"
                       :on-success="handleSuccessReverseSide"
@@ -279,7 +279,7 @@
                   <!-- 上传手持身份证 -->
                   <div class="default-center">
                     <el-upload
-                      action="http://192.168.1.200:8888/uploadfile"
+                      :action="baseUrl+'uploadfile'"
                       :headers="tokenObj"
                       list-type="picture-card"
                       :on-success="handleSuccessHand"
@@ -383,6 +383,7 @@ import {
   returnAjaxMessage,
   reflashUserInfo
 } from '../../../utils/commonFunc'
+import {baseUrl} from '../../../utils/env'
 import {createNamespacedHelpers, mapState} from 'vuex'
 const {mapMutations} = createNamespacedHelpers('common')
 export default {
@@ -694,7 +695,10 @@ export default {
       contryAreaList: state => state.common.contryAreaList,
       userInfo: state => state.user.loginStep1Info, // 用户详细信息
       userCenterActiveName: state => state.personal.userCenterActiveName
-    })
+    }),
+    baseUrl () {
+      return baseUrl
+    }
   },
   watch: {
     userCenterActiveName (newVal) {
