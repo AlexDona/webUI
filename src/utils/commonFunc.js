@@ -37,10 +37,13 @@ import {PHONE_REG, EMAIL_REG, ID_REG, PWD_REG, ALIPAY_REG, BANK_REG, GOOGLE_REG}
 export const returnAjaxMessage = (data, self, noTip) => {
   const meta = data.data.meta
   console.log(meta)
+  console.log(meta.i18n_code)
+  console.log(self.$t(`M.${meta.i18n_code}`))
   if (meta.code !== 200) {
     self.$message({
       type: 'error',
-      message: !meta.params ? self.$t(`M.${meta.i18n_code}`) : self.$t(`M.${meta.i18n_code}`).format(meta.params)
+      // message: !meta.params.length ? self.$t(`M.${meta.i18n_code}`) : self.$t(`M.${meta.i18n_code}`).format(meta.params[0])
+      message: self.$t(`M.${meta.i18n_code}`).format(meta.params[0])
     //  $t('m.financial_recharge_notice5').format(item.shortName)}}
     })
     return 0
@@ -164,6 +167,15 @@ export const getServiceProtocolData = async (that, params, callback) => {
 // eslint-disable-next-line
 String.prototype.format = function (args) {
   var result = this
+  const arr = result.split('')
+  let newArr = ''
+  arr.forEach((item) => {
+    newArr += item
+    if (item == '{') {
+      newArr += '0'
+    }
+  })
+  result = newArr
   if (arguments.length > 0) {
     if (arguments.length == 1 && typeof (args) == 'object') {
       for (var key in args) {

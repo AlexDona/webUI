@@ -475,32 +475,7 @@ export default {
     },
     // 2.0 显示输入密码框
     showDialog (val) {
-      if (val === 'onlineBuy') {
-        if (!this.$refs.buyCount.value) {
-          this.numberTips = '请输入买入数量'
-          return false
-        } else if (!this.$refs.buyPrice.value) {
-          this.moneyTips = '请输入金额'
-          return false
-        } else if (this.numberTips || this.moneyTips) {
-          return false
-        } else {
-          this.dialogVisible = true
-        }
-      }
-      if (val === 'onlineSell') {
-        if (!this.$refs.sellCount.value) {
-          this.numberTips = '请输入卖出数量'
-          return false
-        } else if (!this.$refs.sellPrice.value) {
-          this.moneyTips = '请输入金额'
-          return false
-        } else if (this.numberTips || this.moneyTips) {
-          return false
-        } else {
-          this.dialogVisible = true
-        }
-      }
+      this.dialogVisible = true
     },
     // 3.0 卖出量/买入量input框键盘弹起事件:计算金额
     calculatePriceValue (ref, pointLength) {
@@ -518,28 +493,6 @@ export default {
           // 手续费
           this.serviceCharge = this.$refs.buyCount.value * this.rate
           this.serviceCharge = Number(this.serviceCharge).toFixed(this.pointLength)
-          if (this.$refs.buyCount.value * this.price < this.minCount) {
-            this.moneyTips = '单笔最小限额为' + this.minCount
-            this.errorWarningBorder = true
-            return false
-          } else if (this.$refs.buyCount.value * this.price > this.maxCount) {
-            this.moneyTips = '单笔最大限额为' + this.maxCount
-            this.numberTips = '最大剩余数量为' + this.remainingNum
-            this.errorWarningBorder = true
-            return false
-          } else if (this.$refs.buyCount.value > this.remainingNum) {
-            this.moneyTips = '单笔最大限额为' + this.maxCount
-            this.numberTips = '最大剩余数量为' + this.remainingNum
-            this.errorWarningBorder = true
-            return false
-          } else {
-            this.moneyTips = ''
-            this.numberTips = ''
-            this.errorWarningBorder = false
-          }
-        } else {
-          this.numberTips = ''
-          this.errorWarningBorder = false
         }
       }
       // 卖
@@ -550,28 +503,6 @@ export default {
           // 手续费
           this.serviceCharge = this.$refs.sellCount.value * this.rate
           this.serviceCharge = Number(this.serviceCharge).toFixed(this.pointLength)
-          if (this.$refs.sellCount.value * this.price < this.minCount) {
-            this.moneyTips = '单笔最小限额为' + this.minCount
-            this.errorWarningBorder = true
-            return false
-          } else if (this.$refs.sellCount.value * this.price > this.maxCount) {
-            this.moneyTips = '单笔最大限额为' + this.maxCount
-            this.numberTips = '最大剩余数量为' + this.remainingNum
-            this.errorWarningBorder = true
-            return false
-          } else if (this.$refs.sellCount.value > this.remainingNum) {
-            this.moneyTips = '单笔最大限额为' + this.maxCount
-            this.numberTips = '最大剩余数量为' + this.remainingNum
-            this.errorWarningBorder = true
-            return false
-          } else {
-            this.moneyTips = ''
-            this.numberTips = ''
-            this.errorWarningBorder = false
-          }
-        } else {
-          this.numberTips = ''
-          this.errorWarningBorder = false
         }
       }
     },
@@ -590,23 +521,6 @@ export default {
           // 手续费
           this.serviceCharge = this.$refs.buyCount.value * this.rate
           this.serviceCharge = Number(this.serviceCharge).toFixed(this.pointLength)
-          if (this.$refs.buyPrice.value < this.minCount) {
-            this.moneyTips = '单笔最小限额为' + this.minCount
-            this.errorWarningBorder = true
-            return false
-          } else if (this.$refs.buyPrice.value > this.maxCount) {
-            this.moneyTips = '单笔最大限额为' + this.maxCount
-            this.numberTips = '最大剩余数量为' + this.remainingNum
-            this.errorWarningBorder = true
-            return false
-          } else {
-            this.moneyTips = ''
-            this.numberTips = ''
-            this.errorWarningBorder = false
-          }
-        } else {
-          this.moneyTips = ''
-          this.errorWarningBorder = false
         }
       }
       if (this.onlineTraderStatus === 'onlineSell') {
@@ -616,23 +530,6 @@ export default {
           // 手续费
           this.serviceCharge = this.$refs.sellCount.value * this.rate
           this.serviceCharge = Number(this.serviceCharge).toFixed(this.pointLength)
-          if (this.$refs.sellPrice.value < this.minCount) {
-            this.moneyTips = '单笔最小限额为' + this.minCount
-            this.errorWarningBorder = true
-            return false
-          } else if (this.$refs.sellPrice.value > this.maxCount) {
-            this.moneyTips = '单笔最大限额为' + this.maxCount
-            this.numberTips = '最大剩余数量为' + this.remainingNum
-            this.errorWarningBorder = true
-            return false
-          } else {
-            this.moneyTips = ''
-            this.numberTips = ''
-            this.errorWarningBorder = false
-          }
-        } else {
-          this.moneyTips = ''
-          this.errorWarningBorder = false
         }
       }
       // 验证输入的数字的准确性 假如 10--100
@@ -707,10 +604,6 @@ export default {
     },
     // 5.0 点击 确认购买 按钮提交数据
     async submitPickOrdersToBuy () {
-      if (!this.tradePassword) {
-        this.tradePasswordTips = '请输入交易密码'
-        return false
-      }
       // console.log('购买')
       const data = await pickOrdersToBuy({
         entrustId: this.id, // 挂单id
@@ -747,10 +640,6 @@ export default {
     // 6.0 点击 确认出售 按钮提交数据
     async submitPickOrdersToSell () {
       // console.log('出售')
-      if (!this.tradePassword) {
-        this.tradePasswordTips = '请输入交易密码'
-        return false
-      }
       const data = await pickOrdersToSell({
         entrustId: this.id, // 挂单id
         sellCount: this.$refs.sellCount.value, // 卖出数量
