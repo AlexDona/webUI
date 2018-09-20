@@ -807,8 +807,9 @@ export default {
         }
         .upload {
           .default-center {
-            height: 113px;
+            height: 116px;
             position: relative;
+            overflow: hidden;
             >.upload-input {
               display: none;
             }
