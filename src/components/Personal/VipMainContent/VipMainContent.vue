@@ -267,12 +267,6 @@
             </span>
           </div>
         </div>
-        <!--错误提示-->
-        <div
-          class = "error-msg font-size12"
-        >
-          <span v-show = "errorMsg">{{ errorMsg }}</span>
-        </div>
         <div class="detail-page-btn text-align-c">
           <button
             class="page-btn cursor-pointer"
@@ -296,7 +290,7 @@
       </div>
       <el-dialog
         title="kaitongVIP"
-        visible.sync="dialogFormVisible"
+        :visible.sync="dialogFormVisible"
       >
         <el-form>
           <el-form-item
@@ -304,20 +298,19 @@
           >
             <el-input
               type="password"
-              auto-complete="off"
               v-model="password"
             >
             </el-input>
           </el-form-item>
         </el-form>
         <!--错误提示-->
-        <!--<div-->
-          <!--class = "error-msg font-size12"-->
-        <!--&gt;-->
-          <!--<span v-show = "errorEditorMsg">-->
-            <!--{{ errorEditorMsg }}-->
-          <!--</span>-->
-        <!--</div>-->
+        <div
+          class = "error-msg font-size12"
+        >
+          <span v-show = "errorEditorMsg">
+            {{ errorEditorMsg }}
+          </span>
+        </div>
         <div
           slot="footer"
           class="dialog-footer"
@@ -429,27 +422,28 @@ export default {
       this.type = type
     },
     // 创建api检测输入格式
-    // checkoutInputFormat (type, targetNum) {
-    //   switch (type) {
-    //     // 编辑用户备注
-    //     case 0:
-    //       if (!targetNum) {
-    //         this.setErrorMsg(0, '请输入交易密码')
-    //         this.$forceUpdate()
-    //         return 0
-    //       } else {
-    //         this.setErrorMsg(0, '')
-    //         this.$forceUpdate()
-    //         return 1
-    //       }
-    //   }
-    // },
+    checkoutInputFormat (type, targetNum) {
+      switch (type) {
+        // 编辑用户备注
+        case 0:
+          if (!targetNum) {
+            this.setErrorMsg(0, '请输入交易密码')
+            this.$forceUpdate()
+            return 0
+          } else {
+            this.setErrorMsg(0, '')
+            this.$forceUpdate()
+            return 1
+          }
+      }
+    },
     // 设置错误信息
     setErrorMsg (index, msg) {
       this.errorEditorMsg = msg
     },
     // 确定提交
     confirmSubmit () {
+      console.log(1)
       this.dialogFormVisible = true
     },
     changeMonth (month, vipName) {
@@ -477,19 +471,29 @@ export default {
       this.confirmTransactionPassword()
     },
     async confirmTransactionPassword () {
-      let data
-      let params = {
-        payPassword: this.password, // 用户id
-        vipName: this.vipName,
-        month: this.month
-      }
-      data = await buyVipPriceInfo(params)
-      if (!(returnAjaxMessage(data, this, 1))) {
-        return false
+      let goOnStatus = 0
+      if (
+        this.checkoutInputFormat(0, this.password)
+      ) {
+        goOnStatus = 1
       } else {
-        this.dialogFormVisible = false
-        console.log(data)
-        // 安全中心状态刷新
+        goOnStatus = 0
+      }
+      if (goOnStatus) {
+        let data
+        let params = {
+          payPassword: this.password, // 用户id
+          vipName: this.vipName,
+          month: this.month
+        }
+        data = await buyVipPriceInfo(params)
+        if (!(returnAjaxMessage(data, this, 1))) {
+          return false
+        } else {
+          this.dialogFormVisible = false
+          console.log(data)
+          // 安全中心状态刷新
+        }
       }
     },
     /**
@@ -534,6 +538,11 @@ export default {
       }
     }
     > .content-main-content {
+      .error-msg{
+        height:30px;
+        line-height: 30px;
+        color: rgb(212, 88, 88);
+      }
       > .content-main {
         .error-msg{
           height:30px;
