@@ -225,6 +225,7 @@ export default {
 @import "../../../static/css/scss/OTC/OTCCompletedOrder.scss";
 .otc-completed-order-box{
   >.completed-order-content{
+    min-height: 500px;
     .red{
       // color: #D45858;
     }
