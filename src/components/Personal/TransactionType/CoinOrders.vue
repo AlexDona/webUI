@@ -593,12 +593,18 @@ export default {
         id,
         version
       }
-      repealMyEntrustCommon(params, (res) => {
-        if (!returnAjaxMessage(res, this, 1)) {
-          return false
-        } else {
-          this.commissionList()
-        }
+      this.$confirm('确定撤销订单吗, 是否继续?', {
+        cancelButtonText: '取消',
+        confirmButtonText: '确定'
+      }).then(() => {
+        repealMyEntrustCommon(params, (res) => {
+          if (!returnAjaxMessage(res, this, 1)) {
+            return false
+          } else {
+            this.commissionList()
+          }
+        })
+      }).catch(() => {
       })
     },
     async commissionList (entrustType1) {

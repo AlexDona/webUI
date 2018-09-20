@@ -204,6 +204,7 @@
           <div
             class="duration cursor-pointer cursor-pointer text-align-c"
             @click.prevent="changeMonth(3, filteredData[0].id)"
+            :class="{ red:changeRed == 3}"
           >
             <p class="duration-month font-size16">
               3个月
@@ -215,6 +216,7 @@
           <div
             class="duration duration-left cursor-pointer text-align-c"
             @click.prevent="changeMonth(6, filteredData[1].id)"
+            :class="{ red:changeRed == 6}"
           >
             <p class="duration-month font-size16">
               6个月
@@ -229,6 +231,7 @@
           <div
             class="duration duration-left cursor-pointer text-align-c"
             @click.prevent="changeMonth(12, filteredData[2].id)"
+            :class="{ red:changeRed == 12}"
           >
             <p class="duration-month font-size16">
               12个月
@@ -243,6 +246,7 @@
           <div
             class="duration duration-left cursor-pointer text-align-c"
             @click.prevent="changeMonth(1, filteredData[3].id)"
+            :class="{ red:changeRed == 1}"
           >
             <p class="duration-month font-size16">
               1个月
@@ -256,7 +260,7 @@
           <div class="usable-title font-size14">可用</div>
           <div class="usable">
             <span class="usable-asset font-size16">
-              0.0000
+              {{ currencyAsset }}
               <sub class="currency font-size12">FUC</sub>
             </span>
             <span
@@ -336,7 +340,8 @@ import FooterCommon from '../../Common/FooterCommon'
 import { createNamespacedHelpers, mapState } from 'vuex'
 import {
   vipPriceInfo,
-  buyVipPriceInfo
+  buyVipPriceInfo,
+  getPushTotalByCoinId
 } from '../../../utils/api/personal'
 import {
   returnAjaxMessage
@@ -359,8 +364,10 @@ export default {
       dialogFormVisible: false,
       type: '1', // vip类型
       active: 0,
-      month: '', //
-      vipName: '' //
+      changeRed: 0,
+      month: '', // 月份
+      vipName: '', // vip名称
+      currencyAsset: '' // 币种数量
     }
   },
   created () {
@@ -371,6 +378,7 @@ export default {
     // 黑色主题样式
     require('../../../../static/css/theme/night/Personal/VipMainContent/VipMainContentNight.css')
     this.getVipPriceInfo()
+    this.toggleAssetsCurrencyId()
   },
   mounted () {},
   activited () {},
@@ -446,30 +454,41 @@ export default {
       console.log(1)
       this.dialogFormVisible = true
     },
+    // 选择当前开通月数显示样式
+    change (index) {
+      this.changeRed = index
+    },
+    // 选择当前开通月数
     changeMonth (month, vipName) {
       console.log(month, vipName)
       switch (month) {
         case 3:
           this.month = '3'
+          this.changeRed = 3
           this.vipName = vipName
           break
         case 6:
           this.month = '6'
+          this.changeRed = 6
           this.vipName = vipName
           break
         case 12:
           this.month = '12'
+          this.changeRed = 12
           this.vipName = vipName
           break
         case 1:
           this.month = '1'
+          this.changeRed = 1
           this.vipName = vipName
           break
       }
     },
+    // 提交开通vip交易密码
     dialogFormVisibleButton () {
       this.confirmTransactionPassword()
     },
+    // 提交开通vip接口请求
     async confirmTransactionPassword () {
       let goOnStatus = 0
       if (
@@ -492,7 +511,6 @@ export default {
         } else {
           this.dialogFormVisible = false
           console.log(data)
-          // 安全中心状态刷新
         }
       }
     },
@@ -509,12 +527,27 @@ export default {
         // 返回展示
         this.vipPriceInfo = data.data.data
       }
+    },
+    // 根据币种id获取可用余额
+    async toggleAssetsCurrencyId () {
+      let data
+      let param = {
+        coinId: '492286346086318080' // 币种coinId
+      }
+      data = await getPushTotalByCoinId(param)
+      console.log(data)
+      if (!(returnAjaxMessage(data, this, 0))) {
+        return false
+      } else {
+        this.currencyAsset = data.data.data.total
+      }
     }
   },
   filter: {},
   computed: {
     ...mapState({
-      theme: state => state.common.theme
+      theme: state => state.common.theme,
+      partnerId: state => state.common.partnerId
     }),
     filteredData () {
       return this.vipPriceInfo.filter((item) => {
@@ -613,7 +646,23 @@ export default {
             height: 150px;
             line-height: 150px;
           }
+          .red{
+            background-color: transparent !important;
+            border: 1px solid #338FF5 !important;
+            .duration-month {
+              color: #338FF5 !important;
+              font-weight: 600;
+            }
+          }
           > .duration {
+            &:hover {
+              background-color: transparent !important;
+              border: 1px solid #338FF5 !important;
+              .duration-month {
+                color: #338FF5 !important;
+                font-weight: 600;
+              }
+            }
             width: 140px;
             height: 150px;
             padding: 30px;

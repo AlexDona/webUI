@@ -563,6 +563,7 @@ export default {
   .transaction-password {
     >.transaction-password-main {
       width: 1100px;
+      min-height: 600px;
       margin: 60px auto 100px;
       >.transaction-password-header {
         display: flex;

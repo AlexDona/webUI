@@ -120,3 +120,39 @@
   min-width: 0;
   top: 40%;
 }
+/*全局二次弹窗样式*/
+.el-message-box__header {
+  padding: 0;
+}
+.el-message-box {
+  width:300px;
+  height:190px;
+  border: 0;
+  background:rgba(40,51,74,1);
+}
+.el-message-box__headerbtn .el-message-box__close {
+  display: none;
+}
+.el-message-box__btns button {
+  width:80px;
+  height:36px;
+  border: 0;
+}
+.el-message-box__content {
+  padding: 45px 15px 25px;
+}
+.el-message-box__message p {
+  text-align: center;
+  font-size: 14px;
+}
+.el-message-box__btns button:nth-child(2) {
+  border-radius:4px;
+  margin-left: 44px;
+}
+.el-message-box__btns {
+  margin-top: 10px;
+  text-align: center;
+}
+.el-message-box__status+.el-message-box__message {
+   padding-left: 0;
+}

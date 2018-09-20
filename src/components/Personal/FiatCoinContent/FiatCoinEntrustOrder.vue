@@ -166,7 +166,7 @@ export default {
     // 3.0 点击撤单按钮
     revocationOrder (id) {
       // this.getOTCEntrustingOrdersRevocation(id)
-      this.$confirm('您确定要撤销此单吗, 是否继续?', '提示', {
+      this.$confirm('您确定要撤销此单吗, 是否继续?', {
         confirmButtonText: '确定',
         cancelButtonText: '取消'
       }).then(() => {

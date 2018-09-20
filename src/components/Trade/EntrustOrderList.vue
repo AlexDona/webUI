@@ -292,7 +292,7 @@ export default {
      *撤销委单
      */
     repealMyEntrust (id, version) {
-      this.$confirm('您确定要撤销此单吗, 是否继续?', '提示', {
+      this.$confirm('您确定要撤销此单吗, 是否继续?', {
         confirmButtonText: '确定',
         cancelButtonText: '取消'
       }).then(() => {
