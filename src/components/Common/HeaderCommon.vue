@@ -359,7 +359,8 @@ export default{
       // 更新当前汇率列表
       'CHANGE_CURRENCY_RATE_LIST',
       'SET_COUNTRY_AREA_LIST',
-      'USER_INFORMATION_REFRESH'
+      'USER_INFORMATION_REFRESH',
+      'SET_USER_INFO_REFRESH_STATUS'
     ]),
     getCountryList () {
       getCountryListAjax(this, (data) => {
@@ -374,7 +375,8 @@ export default{
         console.log(data)
         // this.contryAreaList = data.data.data
         this.USER_INFORMATION_REFRESH(data.data.data)
-        // console.log(this.contryAreaList)
+        this.$store.commit('user/SET_STEP1_INFO', data.data.data)
+        console.log(this.userInfo)
       })
     },
     // 更改当前选中汇率转换货币
@@ -543,7 +545,8 @@ export default{
       userInfo: state => state.user.loginStep1Info.userInfo,
       partnerId: state => state.common.partnerId, // 商户id
       activeLanguage: state => state.common.activeLanguage,
-      withdrawDepositList: state => state.common.withdrawDepositList
+      withdrawDepositList: state => state.common.withdrawDepositList,
+      userInfoRefreshStatus: state => state.common.userInfoRefreshStatus
     })
   },
   watch: {
@@ -555,6 +558,13 @@ export default{
     },
     withdrawDepositList (newVal) {
       console.log(newVal)
+    },
+    userInfoRefreshStatus (newVal) {
+      console.log(newVal)
+      if (newVal) {
+        this.getGlobalPersonalAssetsInformation()
+        this.SET_USER_INFO_REFRESH_STATUS(false)
+      }
     }
   }
 }

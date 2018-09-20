@@ -11,6 +11,7 @@ import {
   USER_ASSETS_LIST,
   SET_COUNTRY_AREA_LIST,
   USER_INFORMATION_REFRESH,
+  SET_USER_INFO_REFRESH_STATUS,
   // eslint-disable-next-line
   CHANGE_ROUTER_PATH
 } from './mutations-types.js'
@@ -87,5 +88,8 @@ export default {
   },
   [USER_INFORMATION_REFRESH] (state, data) {
     state.userRefreshUserList = data
+  },
+  [SET_USER_INFO_REFRESH_STATUS] (state, data) {
+    state.userInfoRefreshStatus = data
   }
 }
