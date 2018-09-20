@@ -372,30 +372,6 @@ export default {
         this.dialogVisible1 = true
       }
     }
-
-    // async userCenterActiveName (newVal) {
-    //   if (newVal === 'account-credited') {
-    //     await this.getUserRefreshUser()
-    //     console.log('123')
-    //     if (!this.userInfo.userInfo.payPassword) {
-    //       this.$refs.accountCreditedValue.getAccountPaymentTerm()
-    //       this.dialogVisible = true
-    //       return false
-    //     }
-    //     if (!this.userInfo.userInfo.realname) {
-    //       this.$refs.accountCreditedValue.getAccountPaymentTerm()
-    //       this.dialogVisible1 = true
-    //       return false
-    //     } else {
-    //       this.$refs.accountCreditedValue.getAccountPaymentTerm()
-    //       this.dialogVisible1 = false
-    //     }
-    //     if (this.userInfo.userInfo.payPassword && this.userInfo.userInfo.realname) {
-    //       // 收款方式状态查询
-    //       this.$refs.accountCreditedValue.getAccountPaymentTerm()
-    //     }
-    //   }
-    // }
   }
 }
 </script>

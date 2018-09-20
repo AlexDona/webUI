@@ -62,6 +62,9 @@
 import HeaderCommon from '../Common/HeaderCommon'
 import FooterCommon from '../Common/FooterCommon'
 import {mapState} from 'vuex'
+import {getNewsNoticeList} from '../../utils/api/home'
+import {returnAjaxMessage} from '../../utils/commonFunc'
+
 export default {
   components: {
     HeaderCommon,
@@ -81,12 +84,30 @@ export default {
       helpShowStatusList: []
     }
   },
-  created () {},
+  created () {
+    this.getHelpList()
+  },
   mounted () {},
   activited () {},
   update () {},
   beforeRouteUpdate () {},
   methods: {
+    async getHelpList () {
+      const params = {
+        partnerId: this.partnerId,
+        pageNum: 1,
+        pageSize: 5,
+        language: this.language,
+        newsTypeId: 2
+      }
+      const data = await getNewsNoticeList(params)
+      if (!returnAjaxMessage(data, this)) {
+        return false
+      } else {
+        console.log(data)
+      }
+    },
+    // 切换显示状态
     toggleShowHelpItem (index, status) {
       this.$set(this.helpShowStatusList, index, status)
     }
