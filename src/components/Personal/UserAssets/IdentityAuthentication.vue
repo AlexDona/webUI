@@ -440,14 +440,14 @@ export default {
       ]
     }
   },
-  created () {
+  async created () {
     // 覆盖Element样式
     require('../../../../static/css/list/Personal/UserAssets/IdentityAuthentication.css')
     // 白色主题样式
     require('../../../../static/css/theme/day/Personal/UserAssets/IdentityAuthenticationDay.css')
     // 黑色主题样式
     require('../../../../static/css/theme/night/Personal/UserAssets/IdentityAuthenticationNight.css')
-    this.getUserRefreshUser()
+    await this.getUserRefreshUser()
     this.tokenObj.token = this.userInfo.token
   },
   mounted () {},
@@ -600,8 +600,8 @@ export default {
         if (!(returnAjaxMessage(data, this, 1))) {
           return false
         } else {
-          this.getUserRefreshUser()
-          this.getRealNameInformation()
+          await this.getUserRefreshUser()
+          await this.getRealNameInformation()
           console.log(data)
         }
       }
@@ -664,8 +664,8 @@ export default {
       if (!(returnAjaxMessage(data, this, 1))) {
         return false
       } else {
-        this.getUserRefreshUser()
-        this.getRealNameInformation()
+        await this.getUserRefreshUser()
+        await this.getRealNameInformation()
         this.authenticationStatusFront = false
         this.dialogImageFrontUrl = ''
         this.dialogImageReverseSideUrl = ''

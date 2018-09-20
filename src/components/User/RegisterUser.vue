@@ -585,20 +585,7 @@ export default {
         } catch (err) {
           console.log(err)
         }
-        // returnAjaxMessage(data, this)
       }
-      // switch (regType) {
-      //   case 'phone':
-      //     if (this.checkoutInputFormat(0, this.phoneNum)) {
-      //       return false
-      //     }
-      //     break
-      //   case 'email':
-      //     if (this.checkoutInputFormat(1, this.emailNum)) {
-      //       return false
-      //     }
-      //     break
-      // }
     },
     // 登录成功自动跳转
     successJump () {

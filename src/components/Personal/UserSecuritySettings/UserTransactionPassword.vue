@@ -370,9 +370,9 @@ export default {
       this.errorShowStatusList[index] = msg
     },
     // 确定设置交易密码
-    setStatusSubmit () {
+    async setStatusSubmit () {
       this.checkoutInputFormat()
-      this.confirmTransactionPassword()
+      await this.confirmTransactionPassword()
     },
     // 确定设置接口处理
     async confirmTransactionPassword () {
@@ -395,8 +395,9 @@ export default {
         if (!(returnAjaxMessage(data, this, 1))) {
           return false
         } else {
-          this.successJump()
           console.log(data)
+          this.$store.commit('common/SET_USER_INFO_REFRESH_STATUS', true)
+          this.successJump()
         }
       }
     },
@@ -469,9 +470,10 @@ export default {
       this.tieErrorShowStatusList[index] = msg
     },
     // 确定重置交易密码
-    getUpdatePayPassword () {
-      this.confirmUpdate()
+    async getUpdatePayPassword () {
+      await this.confirmUpdate()
       this.tieCheckoutInputFormat()
+      this.$store.commit('common/SET_USER_INFO_REFRESH_STATUS', true)
     },
     // 确定重置接口处理
     async confirmUpdate () {

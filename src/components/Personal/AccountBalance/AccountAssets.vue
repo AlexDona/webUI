@@ -4,6 +4,7 @@
     :class="{'day':theme == 'day','night':theme == 'night' }"
   >
     <div class="account-assets-main">
+      <!-- 用户信息-->
       <UserInfo />
       <div class="account-assets-box margin-top16">
         <div>

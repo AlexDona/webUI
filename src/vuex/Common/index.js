@@ -53,6 +53,7 @@ const state = {
   routerTo: '', // 路由跳转
   withdrawDepositList: [], // 我的资产列表信息数据
   userRefreshUserList: [], // 刷新用户信息
+  userInfoRefreshStatus: false, // 用户信息接口刷新状态
   end: ''// 占位
 }
 

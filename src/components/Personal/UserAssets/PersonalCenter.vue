@@ -271,7 +271,7 @@ export default {
       'CHANGE_USER_CENTER_ACTIVE_NAME'
     ]),
     // tab面板切换
-    statusSwitchPanel (tab) {
+    async statusSwitchPanel (tab) {
       switch (tab.name) {
         case 'assets':
           // 个人资产列表展示
@@ -295,14 +295,18 @@ export default {
           this.$refs.identityValue.getCountryListings()
           break
         case 'account-credited':
+          await this.getUserRefreshUser()
           console.log(this.userInfoRefresh)
           if (!this.userInfoRefresh.payPassword) {
             this.$refs.accountCreditedValue.getAccountPaymentTerm()
             this.dialogVisible = true
-          } else if (!this.userInfoRefresh.realname) {
+            return false
+          }
+          if (!this.userInfoRefresh.realname) {
             this.$refs.accountCreditedValue.getAccountPaymentTerm()
             this.dialogVisible1 = true
-          } else if (this.userInfoRefresh.realname) {
+            return false
+          } else {
             this.$refs.accountCreditedValue.getAccountPaymentTerm()
             this.dialogVisible1 = false
           }
@@ -361,6 +365,7 @@ export default {
       if (!(returnAjaxMessage(data, this, 0))) {
         return false
       } else {
+        this.$store.commit('user/SET_STEP1_INFO', data.data.data)
         // 返回列表数据
         this.userInfoRefresh = data.data.data.userInfo
       }

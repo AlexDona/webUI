@@ -449,26 +449,26 @@ export default {
     // 路由跳转对应组件
     setShowStatusSecurity (val) {
       // 判断是否实名认证
-      if (this.userInfoRefresh.realname == '' && this.userInfoRefresh.payPassword == '') {
+      if (!this.userInfoRefresh.realname && !this.userInfoRefresh.payPassword) {
         this.centerModelWarning = true
-      } else {
-        switch (val) {
-          case 'bank':
-            this.$router.push({path: '/AddBankCard'})
-            break
-          case 'weChat':
-            this.$router.push({path: '/AddWeChat'})
-            break
-          case 'alipay':
-            this.$router.push({path: '/AddSetAlipay'})
-            break
-          case 'paypal':
-            this.$router.push({path: '/AddSetPaypal'})
-            break
-          case 'westernUnion':
-            this.$router.push({path: '/AddWesternUnion'})
-            break
-        }
+        return false
+      }
+      switch (val) {
+        case 'bank':
+          this.$router.push({path: '/AddBankCard'})
+          break
+        case 'weChat':
+          this.$router.push({path: '/AddWeChat'})
+          break
+        case 'alipay':
+          this.$router.push({path: '/AddSetAlipay'})
+          break
+        case 'paypal':
+          this.$router.push({path: '/AddSetPaypal'})
+          break
+        case 'westernUnion':
+          this.$router.push({path: '/AddWesternUnion'})
+          break
       }
     },
     // 判断是否实名认证
@@ -676,6 +676,7 @@ export default {
       if (!(returnAjaxMessage(data, this, 0))) {
         return false
       } else {
+        this.$store.commit('user/SET_STEP1_INFO', data.data.data)
         // 返回列表数据
         this.userInfoRefresh = data.data.data.userInfo
       }

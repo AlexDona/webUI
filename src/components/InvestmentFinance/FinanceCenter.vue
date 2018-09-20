@@ -68,7 +68,12 @@
             <label for="">
               投资数量:&nbsp;&nbsp;&nbsp;
               <div class='invest-mounte'>
-                <input v-model="investMounte" placeholder="请输入数量" oninput="value=value.replace(/^[0]+[0-9]*$/g,'')"/>
+                <input
+                v-model="investMounte"
+                placeholder="请输入数量"
+                onkeyup="if(this.value.length==1){this.value=this.value.replace(/[^1-9]/g,'')}else{this.value=this.value.replace(/\D/g,'')}"
+                onafterpaste="if(this.value.length==1){this.value=this.value.replace(/[^1-9]/g,'')}else{this.value=this.value.replace(/\D/g,'')}">
+                <!-- <input   @input="handleInput"/> -->
                 <span>{{selecteCoindName}}</span>
               </div>
             </label>
@@ -317,7 +322,6 @@ export default {
     },
     // 点击立刻投资按钮执行
     getInvestEarnings () {
-      console.log(this.isLogin)
       if (this.isLogin) {
         if (this.selectedInvestTypeId && this.investMounte) {
         // 执行投资按钮
@@ -471,9 +475,9 @@ export default {
           width: 100%;
           height: 100%;
         }
-        background-attachment: fixed;
-        background-size: cover;
-        -webkit-background-size: cover;
+        // background-attachment: fixed;
+        // background-size: cover;
+        // -webkit-background-size: cover;
         // background:url('../../assets/finance/banner-jpg.jpg') no-repeat center center;
         }
       >.inner-box{

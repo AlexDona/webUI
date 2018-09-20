@@ -144,9 +144,11 @@
           <p class="asset-info margin-top9">
             <span class="info-color font-size16">{{ totalSumBTC }}</span>
             <span class="info-color font-size12">BTC</span>
-            或
-            <span class="info-color font-size16">{{ CNYAssets }}</span>
-            <span class="info-color font-size12">CNY</span>
+            <span class="info-color" v-show="CNYAssets">
+              或
+              <span class="info-color font-size16">{{ CNYAssets }}</span>
+              <span class="info-color font-size12">CNY</span>
+            </span>
           </p>
           <p class="asset-color margin-top9 font-size12">
             （注：资产总估仅提供参考，请以单项资金为准）
@@ -161,7 +163,8 @@
 import {mapState} from 'vuex'
 import {
   assetCurrenciesList,
-  userRefreshUser
+  userRefreshUser,
+  currencyTransform
 } from '../../../utils/api/personal'
 import {
   returnAjaxMessage
@@ -180,23 +183,40 @@ export default {
       // userShowVipGrade: 'V1', // 自定义VIP等级
       discountRate: '无', // 自定义折扣率
       totalSumBTC: '', // btc资产
-      CNYAssets: '0.0000' // bcny资产
+      BTC2CNYRate: '' // 转换汇率
+      // CNYAssets: '0.0000' // bcny资产
     }
   },
-  created () {
+  async created () {
     // 覆盖Element样式
     require('../../../../static/css/list/Personal/AccountBalance/UserInfo.css')
     // 白色主题样式
     require('../../../../static/css/theme/day/Personal/AccountBalance/UserInfoDay.css')
     // 黑色主题样式
     require('../../../../static/css/theme/night/Personal/AccountBalance/UserInfoNight.css')
-    this.getAssetCurrenciesList()
+    await this.currencyTransform()
+    await this.getAssetCurrenciesList()
   },
   mounted () {},
   activited () {},
   update () {},
   beforeRouteUpdate () {},
   methods: {
+    async currencyTransform () {
+      const params = {
+        coinName: 'BTC',
+        shortName: 'CNY'
+      }
+      const data = await currencyTransform(params)
+      if (!returnAjaxMessage(data, this)) {
+        return false
+      } else {
+        console.log(data)
+        if (data.data.data.coinPrice) {
+          this.BTC2CNYRate = data.data.data.coinPrice
+        }
+      }
+    },
     /**
      * 刚进页面时候 个人资产列表展示
      */
@@ -241,9 +261,16 @@ export default {
     ...mapState({
       theme: state => state.common.theme,
       userInfo: state => state.user.loginStep1Info // 用户详细信息
-    })
+    }),
+    // CNY 资产
+    CNYAssets () {
+      return (this.BTC2CNYRate - 0) * (this.totalSumBTC - 0)
+    }
   },
-  watch: {}
+  watch: {
+    totalSumBTC () {
+    }
+  }
 }
 </script>
 <style scoped lang="scss">
