@@ -33,15 +33,16 @@ export default {
         },
         tooltip: {
           trigger: 'axis',
-          position: function (point, params, dom, rect, size) {
-            return [point[0], point[1]]
-          },
           backgroundColor: '#262A42',
           borderColor: '#262A42',
           borderRadius: 3,
           style: {
-            color: '#c7cce6',
-            width: '250px'
+            // color: '#c7cce6',
+            // color: '#000',
+            // width: '250px'
+          },
+          textStyle: {
+            color: 'red'
           },
           axisPointer: {
             snap: true,
@@ -442,8 +443,8 @@ export default {
     // 重新设置 options
     resetOptions () {
       this.options.tooltip.backgroundColor = this.theme === 'night' ? this.mainColor.$mainNightBgColor : this.mainColor.$mainDayBgColor
-      // this.options.tooltip.style.color = this.theme === 'night' ? this.mainColor.$mainNightBgColor : this.mainColor.$mainDayBgColor
-      this.options.tooltip.borderColor = this.theme === 'night' ? this.mainColor.$mainNightBgColor : this.mainColor.$mainDayBgColor
+      this.options.tooltip.textStyle.color = this.theme === 'night' ? this.mainColor.$mainNightBgColor : this.mainColor.$mainDayBgColor
+      this.options.tooltip.borderColor = this.theme === 'night' ? '#fff' : '#000'
       this.options.backgroundColor = this.theme === 'night' ? this.mainColor.$mainNightBgColor : this.mainColor.$mainDayBgColor
     },
     drawLine () {
