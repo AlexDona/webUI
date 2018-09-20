@@ -9,7 +9,7 @@
   text-align: center;
 }
 .coin-orders.personal .el-table th.is-leaf {
-  border-bottom: 0;
+  border-bottom: 1px solid rgba(57,66,77,1);
 }
 .coin-orders.personal .el-table td{
   border-bottom: 0;
@@ -45,6 +45,7 @@
 }
 .coin-orders.personal .el-table .cell {
   text-align: center;
+  padding: 12px 0;
 }
 .coin-orders.personal .el-table .cell,
 .coin-orders.personal .el-table th div{
@@ -56,9 +57,9 @@
 .coin-orders.personal .el-pagination{
   text-align: right;
 }
-.coin-orders.personal .el-table th.is-leaf {
-  border-bottom: none;
-}
+/*.coin-orders.personal .el-table th.is-leaf {*/
+  /*border-bottom: none;*/
+/*}*/
 /*.coin-orders.personal*/
 /*.coin-orders.personal*/
 /*.coin-orders.personal*/

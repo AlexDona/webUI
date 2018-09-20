@@ -151,7 +151,7 @@
           <div
             class="grade cursor-pointer text-align-c"
             @click.prevent="stateOpeningLevel(1)"
-            :class="{ blue:active == 1}"
+            :class="{ blue1:changeRed1 == 1}"
           >
             <p class="font-size16 grade-color font-weight600">VIP1</p>
             <p class="font-size12 grade-height">手续费9折</p>
@@ -159,7 +159,7 @@
           <div
             class="grade cursor-pointer text-align-c"
             @click.prevent="stateOpeningLevel(2)"
-            :class="{ blue:active == 2}"
+            :class="{ blue1:changeRed1 == 2}"
           >
             <p class="font-size16 grade-color font-weight600">VIP2</p>
             <p class="font-size12 grade-height">手续费8折</p>
@@ -167,7 +167,7 @@
           <div
             class="grade cursor-pointer text-align-c"
             @click.prevent="stateOpeningLevel(3)"
-            :class="{ blue:active == 3}"
+            :class="{ blue1:changeRed1 == 3}"
           >
             <p class="font-size16 grade-color font-weight600">VIP3</p>
             <p class="font-size12 grade-height">手续费7折</p>
@@ -175,7 +175,7 @@
           <div
             class="grade cursor-pointer text-align-c"
             @click.prevent="stateOpeningLevel(4)"
-            :class="{ blue:active == 4}"
+            :class="{ blue1:changeRed1 == 4}"
           >
             <p class="font-size16 grade-color font-weight600">VIP4</p>
             <p class="font-size12 grade-height">手续费6折</p>
@@ -183,7 +183,7 @@
           <div
             class="grade cursor-pointer text-align-c"
             @click.prevent="stateOpeningLevel(5)"
-            :class="{ blue:active == 5}"
+            :class="{ blue1:changeRed1 == 5}"
           >
             <p class="font-size16 grade-color font-weight600">VIP5</p>
             <p class="font-size12 grade-height">手续费5折</p>
@@ -191,7 +191,7 @@
           <!--<div-->
             <!--class="grade cursor-pointer text-align-c"-->
             <!--@click.prevent="stateOpeningLevel(6)"-->
-            <!--:class="{ blue:active == 6}"-->
+            <!--:class="{ blue1:changeRed1 == 6}""-->
           <!--&gt;-->
             <!--<p class="font-size16 grade-color font-weight600">VIP6</p>-->
             <!--<p class="font-size12 grade-height">手续费4折</p>-->
@@ -293,7 +293,7 @@
         </p>
       </div>
       <el-dialog
-        title="kaitongVIP"
+        title="开通VIP"
         :visible.sync="dialogFormVisible"
       >
         <el-form>
@@ -365,6 +365,7 @@ export default {
       type: '1', // vip类型
       active: 0,
       changeRed: 0,
+      changeRed1: 0,
       month: '', // 月份
       vipName: '', // vip名称
       currencyAsset: '' // 币种数量
@@ -398,35 +399,35 @@ export default {
       this.state = safeState
       this.showOpenTheVIPPage = false
       this.vipShowDetailsPage = true
-      switch (paymentType) {
-        case 'vip1':
-          this.active = 1
-          this.type = 1
-          break
-        case 'vip2':
-          this.active = 2
-          this.type = 2
-          break
-        case 'vip3':
-          this.active = 3
-          this.type = 3
-          break
-        case 'vip4':
-          this.active = 4
-          this.type = 3
-          break
-        case 'vip5':
-          this.active = 5
-          this.type = 5
-          break
-        case 'vip6':
-          this.active = 6
-          this.type = 6
-          break
-      }
     },
     // vip详情页面资产渲染
     stateOpeningLevel (type) {
+      switch (type) {
+        case 1:
+          this.type = 1
+          this.changeRed1 = 1
+          break
+        case 2:
+          this.type = 2
+          this.changeRed1 = 2
+          break
+        case 3:
+          this.type = 3
+          this.changeRed1 = 3
+          break
+        case 4:
+          this.type = 3
+          this.changeRed1 = 4
+          break
+        case 5:
+          this.type = 5
+          this.changeRed1 = 5
+          break
+        case 6:
+          this.type = 6
+          this.changeRed1 = 6
+          break
+      }
       this.type = type
     },
     // 创建api检测输入格式
@@ -618,6 +619,14 @@ export default {
         }
       }
       > .content-detail-page {
+        .blue1{
+          background-color: transparent !important;
+          border: 1px solid #338FF5 !important;
+          .duration-month {
+            color: #338FF5 !important;
+            font-weight: 600;
+          }
+        }
         width: 900px;
         min-height: 500px;
         margin: 0 auto;

@@ -340,6 +340,7 @@ export default {
   .binding-google {
     >.binding-google-main {
       width: 1100px;
+      min-height: 700px;
       margin: 60px auto 100px;
       >.binding-google-header {
         display: flex;
@@ -404,8 +405,8 @@ export default {
               height: 34px;
             }
             .google-button {
-              padding: 10px 33px;
-              margin: 30px 0 50px 25px;
+              padding: 10px 85px;
+              margin: 30px 0 50px 120px;
             }
             .prompt-message {
               height: 20px;
