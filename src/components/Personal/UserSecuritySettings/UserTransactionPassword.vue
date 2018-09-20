@@ -212,7 +212,8 @@ import CountDownButton from '../../Common/CountDownCommon'
 import ErrorBox from '../../User/ErrorBox'
 import {
   returnAjaxMessage, // 接口返回信息
-  sendPhoneOrEmailCodeAjax
+  sendPhoneOrEmailCodeAjax,
+  reflashUserInfo
 } from '../../../utils/commonFunc'
 import {
   setTransactionPassword,
@@ -272,6 +273,7 @@ export default {
     // 黑色主题样式
     require('../../../../static/css/theme/night/Personal/UserSecuritySettings/UserTransactionPasswordNight.css')
     this.getSecurityCenter()
+    reflashUserInfo(this)
   },
   mounted () {},
   activited () {
