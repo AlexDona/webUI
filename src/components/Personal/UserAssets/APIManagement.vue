@@ -781,10 +781,17 @@ export default {
       theme: state => state.common.theme,
       userInfo: state => state.user.loginStep1Info, // 用户详细信息
       disabledOfPhoneBtn: state => state.user.disabledOfPhoneBtn,
-      disabledOfEmailBtn: state => state.user.disabledOfEmailBtn
+      disabledOfEmailBtn: state => state.user.disabledOfEmailBtn,
+      userCenterActiveName: state => state.personal.userCenterActiveName
     })
   },
-  watch: {}
+  watch: {
+    userCenterActiveName (newVal) {
+      if (newVal === 'api-management') {
+        this.getMultipleUserAPIInfo()
+      }
+    }
+  }
 }
 </script>
 <style scoped lang="scss">

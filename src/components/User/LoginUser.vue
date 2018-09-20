@@ -456,7 +456,7 @@ export default {
   },
   data () {
     return {
-      username: '15738818082',
+      username: '',
       // username: '18625512987',
       // username: '18625512987',
       // username: '18625512987',
@@ -466,7 +466,7 @@ export default {
       // password: 'a11111111',
       // username: '18625512986',
       // username: '18625512988',
-      password: 'a1111111',
+      password: '',
       userNameErrorMsg: '', // 错误提示
       loadingCircle: {},
       userInputImageCode: '', // 图形验证码(用户输入)
@@ -523,7 +523,7 @@ export default {
     this.ENTER_STEP1()
     this.refreshCode()
     // 清空input框值
-    // this.clearInputValue()
+    this.clearInputValue()
   },
   mounted () {
     $('body').on('mousemove', (e) => { // 拖动，这里需要用箭头函数，不然this的指向不会是vue对象
@@ -788,6 +788,7 @@ export default {
       if (!returnAjaxMessage(data, this, 1)) {
         return false
       } else {
+        this.clearInputValue()
         this.step3DialogShowStatus = false
         this.USER_LOGIN(data.data.data)
         console.log(this.routerTo)

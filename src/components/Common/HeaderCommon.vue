@@ -435,7 +435,6 @@ export default{
     // 用户跳转到指定页面
     stateReturnSuperior (val) {
       if (this.userInfo.payPassword) {
-        this.$router.push({path: '/PersonalCenter'})
         console.log(val)
         switch (val) {
           case 'account-balance':
@@ -451,6 +450,7 @@ export default{
             this.setPersonalJump('security-center')
             break
           case 'receiving-set':
+            this.$store.commit('personal/CHANGE_REF_ACCOUNT_CREDITED_STATE', true)
             this.setPersonalJump('account-credited')
             break
           case 'invite':
@@ -460,6 +460,7 @@ export default{
             this.setPersonalJump('api-management')
             break
         }
+        this.$router.push({path: '/PersonalCenter'})
       } else {
         this.$router.push({path: '/TransactionPassword'})
       }

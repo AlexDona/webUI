@@ -253,14 +253,20 @@ export default {
       dialogVisible1: false
     }
   },
-  created () {
+  async created () {
     // 覆盖Element样式
     require('../../../../static/css/list/Personal/UserAssets/PersonalCenter.css')
     // 白色主题样式
     require('../../../../static/css/theme/day/Personal/UserAssets/PersonalCenterDay.css')
     // 黑色主题样式
     require('../../../../static/css/theme/night/Personal/UserAssets/PersonalCenterNight.css')
-    this.getUserRefreshUser()
+    await this.getUserRefreshUser()
+    if (!this.realname && this.userCenterActiveName === 'account-credited') {
+      this.dialogVisible1 = true
+    }
+    if (!this.payPassword && this.userCenterActiveName === 'account-credited') {
+      this.dialogVisible = true
+    }
   },
   mounted () {},
   activited () {},
@@ -272,75 +278,42 @@ export default {
     ]),
     // tab面板切换
     async statusSwitchPanel (tab) {
+      this.CHANGE_USER_CENTER_ACTIVE_NAME(tab.name)
       switch (tab.name) {
         case 'assets':
           // 个人资产列表展示
-          this.$refs.accountAssetsValue.getAssetCurrenciesList()
           break
         case 'billing-details':
-          // 冲提记录列表展示
-          this.$refs.billingDetailsValue.getChargeMentionList()
-          // 获取商户币种列表
-          this.$refs.billingDetailsValue.inquireCurrencyList()
           break
         case 'mention-address':
           // 提币地址列表查询
-          this.$refs.withdrawalAddressValue.WithdrawalAddressList()
           break
         case 'identity-authentication':
-          // 获取用户实名信息
-          this.$refs.identityValue.getRealNameInformation()
-          this.$refs.identityValue.getUserRefreshUser()
-          // 国家列表展示
-          this.$refs.identityValue.getCountryListings()
           break
         case 'account-credited':
           await this.getUserRefreshUser()
-          console.log(this.userInfoRefresh)
-          if (!this.userInfoRefresh.payPassword) {
-            this.$refs.accountCreditedValue.getAccountPaymentTerm()
+          if (!this.userInfo.userInfo.payPassword) {
             this.dialogVisible = true
             return false
           }
-          if (!this.userInfoRefresh.realname) {
-            this.$refs.accountCreditedValue.getAccountPaymentTerm()
+          if (!this.userInfo.userInfo.realname) {
             this.dialogVisible1 = true
             return false
           } else {
-            this.$refs.accountCreditedValue.getAccountPaymentTerm()
             this.dialogVisible1 = false
-          }
-          if (this.userInfoRefresh.payPassword && this.userInfoRefresh.realname) {
-            // 收款方式状态查询
-            this.$refs.accountCreditedValue.getAccountPaymentTerm()
           }
           break
         case 'invitation-promote':
-          // 直接推广间接推广列表getRecommendUserPromotion
-          this.$refs.invitingPromotionValue.getUserPromotionList()
-          this.$refs.invitingPromotionValue.getRecommendUserPromotion()
           break
         case 'security-center':
-          // 安全中心状态显示
-          this.$refs.securityCenterValue.getSecurityCenter()
           break
         case 'api-management':
-          // 获取多个用户api信息
-          this.$refs.apiManagementValue.getMultipleUserAPIInfo()
           break
         case 'push-asset':
-          // push列表展示
-          this.$refs.pushAssetValue.getPushRecordList()
-          // 清空数据
-          this.$refs.pushAssetValue.emptyInputData()
           break
         case 'coin-orders':
-          this.$refs.coinOrdersValue.getEntrustSelectBox()
-          this.$refs.coinOrdersValue.commissionList()
           break
         case 'fiat-orders':
-          // 页面加载时请求接口渲染列表
-          this.$refs.fiatOrdersValue.getOTCEntrustingOrdersRevocation()
           break
       }
     },
@@ -368,6 +341,9 @@ export default {
         this.$store.commit('user/SET_STEP1_INFO', data.data.data)
         // 返回列表数据
         this.userInfoRefresh = data.data.data.userInfo
+        if (!this.payPassword) {
+          this.dialogVisible = true
+        }
       }
     }
   },
@@ -376,10 +352,49 @@ export default {
     ...mapState({
       theme: state => state.common.theme,
       userCenterActiveName: state => state.personal.userCenterActiveName,
-      userInfo: state => state.user.loginStep1Info
+      userInfo: state => state.user.loginStep1Info,
+      payPassword: state => state.user.loginStep1Info.userInfo.payPassword,
+      realname: state => state.user.loginStep1Info.userInfo.realname
     })
   },
-  watch: {}
+  watch: {
+    payPassword (newVal) {
+      if (!newVal) {
+        this.dialogVisible = true
+      }
+    },
+    realname (newVal) {
+      if (!newVal) {
+        this.dialogVisible1 = true
+      }
+    },
+    async userCenterActiveName () {
+      await this.getUserRefreshUser()
+    }
+    // async userCenterActiveName (newVal) {
+    //   if (newVal === 'account-credited') {
+    //     await this.getUserRefreshUser()
+    //     console.log('123')
+    //     if (!this.userInfo.userInfo.payPassword) {
+    //       this.$refs.accountCreditedValue.getAccountPaymentTerm()
+    //       this.dialogVisible = true
+    //       return false
+    //     }
+    //     if (!this.userInfo.userInfo.realname) {
+    //       this.$refs.accountCreditedValue.getAccountPaymentTerm()
+    //       this.dialogVisible1 = true
+    //       return false
+    //     } else {
+    //       this.$refs.accountCreditedValue.getAccountPaymentTerm()
+    //       this.dialogVisible1 = false
+    //     }
+    //     if (this.userInfo.userInfo.payPassword && this.userInfo.userInfo.realname) {
+    //       // 收款方式状态查询
+    //       this.$refs.accountCreditedValue.getAccountPaymentTerm()
+    //     }
+    //   }
+    // }
+  }
 }
 </script>
 <style scoped lang="scss">
