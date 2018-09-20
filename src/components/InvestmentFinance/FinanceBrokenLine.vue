@@ -186,7 +186,7 @@ export default {
       })
       // 监听y轴数组的变化
       this.$set(this.options.series, 'data', this.financeLineRenderPriceList)
-      this.options.series.data = this.financeLineRenderPriceList
+      this.options.series[0].data = this.financeLineRenderPriceList
       this.arrTime = this.financeLineRenderPriceList.sort((a, b) => a - b)
       this.options.yAxis.min = this.arrTime[0]
       this.options.yAxis.max = this.arrTime[this.arrTime.length - 1]
