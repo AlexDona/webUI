@@ -441,11 +441,13 @@ export default {
     // console.log(this.userInfo)
     // 2.0 otc可用法币查询：
     // this.getMerchantAvailablelegalTenderList()
-    console.log('是否登录' + this.isLogin)
-    console.log('用户信息')
-    console.log(this.userInfo)
-    // 刷新用户信息
-    reflashUserInfo(this)
+    // console.log('是否登录' + this.isLogin)
+    // console.log('用户信息')
+    // console.log(this.userInfo)
+    if (this.isLogin) {
+      // 刷新用户信息
+      reflashUserInfo(this)
+    }
   },
   mounted () {},
   activited () {},
