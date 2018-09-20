@@ -184,3 +184,77 @@ export function phoneNumberFormat (phoneNum) {
 export function keep2Num (number) {
   return number.toFixed(2)
 }
+
+/**
+ * 修正精度
+ * @param num1
+ * @param num2
+ * @param symbol 计算符号
+ * @returns {*}
+ */
+export function amendPrecision (num1, num2, symbol) {
+  num1 = scientificToNumber(num1)
+  num2 = scientificToNumber(num2)
+  let num1PointLength = (num1 + '').split('.')[1].length
+  console.log(num2)
+  let num2PointLength = (num2 + '').split('.')[1].length
+  let maxPointLength = num1PointLength > num2PointLength ? num1PointLength : num2PointLength
+  let newNum1 = Math.pow(10, maxPointLength) * num1
+  let newNum2 = Math.pow(10, maxPointLength) * num2
+  switch (symbol) {
+    case '*':
+      return scientificToNumber(newNum1 * newNum2 / Math.pow(Math.pow(10, maxPointLength), 2))
+    case '-':
+      return scientificToNumber((newNum1 - newNum2) / Math.pow(10, maxPointLength))
+    case '+':
+      return scientificToNumber((newNum1 + newNum2) / Math.pow(10, maxPointLength))
+    case '/':
+      return scientificToNumber((newNum1 * Math.pow(10, maxPointLength))) / (newNum2 * Math.pow(10, maxPointLength))
+  }
+}
+
+/**
+ * 科学计数法
+ * @param number
+ * @returns {*}
+ */
+export function scientificToNumber (number) {
+  var str = (number + '').toString()
+  if (str.indexOf('.') == -1) {
+    var reg = /^(\d+)(e)([\-]?\d+)$/
+    let arr
+    let len
+    let zero = ''
+
+    /* 6e7或6e+7 都会自动转换数值 */
+    if ((!reg.test(str))) {
+      return number
+    } else {
+      /* 6e-7 需要手动转换 */
+      arr = reg.exec(str)
+      len = Math.abs(arr[3]) - 1
+      for (var i = 0; i < len; i++) {
+        zero += '0'
+      }
+      return '0.' + zero + arr[1]
+    }
+  } else {
+    let reg = /^(\d+[.]?\d+)(e)([\-]?\d+)$/
+    let arr
+    let len
+    let zero = ''
+
+    /* 6e7或6e+7 都会自动转换数值 */
+    if ((!reg.test(str))) {
+      return number
+    } else {
+      /* 6e-7 需要手动转换 */
+      arr = reg.exec(str)
+      len = Math.abs(arr[3]) - 1
+      for (let i = 0; i < len; i++) {
+        zero += '0'
+      }
+      return '0.' + zero + arr[1].replace('.', '')
+    }
+  }
+}
