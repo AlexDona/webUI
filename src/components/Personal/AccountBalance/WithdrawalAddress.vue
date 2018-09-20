@@ -262,10 +262,17 @@ export default {
   filter: {},
   computed: {
     ...mapState({
-      theme: state => state.common.theme
+      theme: state => state.common.theme,
+      userCenterActiveName: state => state.personal.userCenterActiveName
     })
   },
-  watch: {}
+  watch: {
+    userCenterActiveName (newVal) {
+      if (newVal === 'mention-address') {
+        this.WithdrawalAddressList()
+      }
+    }
+  }
 }
 </script>
 <style scoped lang="scss">

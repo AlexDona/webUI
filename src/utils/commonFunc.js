@@ -37,10 +37,13 @@ import {PHONE_REG, EMAIL_REG, ID_REG, PWD_REG, ALIPAY_REG, BANK_REG, GOOGLE_REG}
 export const returnAjaxMessage = (data, self, noTip) => {
   const meta = data.data.meta
   console.log(meta)
+  console.log(meta.i18n_code)
+  console.log(self.$t(`M.${meta.i18n_code}`))
   if (meta.code !== 200) {
     self.$message({
       type: 'error',
-      message: !meta.params ? self.$t(`M.${meta.i18n_code}`) : self.$t(`M.${meta.i18n_code}`).format(meta.params)
+      // message: !meta.params.length ? self.$t(`M.${meta.i18n_code}`) : self.$t(`M.${meta.i18n_code}`).format(meta.params[0])
+      message: self.$t(`M.${meta.i18n_code}`).format(meta.params[0])
     //  $t('m.financial_recharge_notice5').format(item.shortName)}}
     })
     return 0
@@ -127,37 +130,13 @@ export const globalPersonalAssetsInformation = async (params, callback) => {
   const data = await userRefreshUser(params)
   callback(data)
 }
-// socket 请求类型参数分割
-export const splitSocketParams = (params) => {
-  // console.log(params)
-  let resultArr = []
-  if (params.rep) {
-    resultArr = params.rep.split('.')
-  } else if (params.sub) {
-    resultArr = params.sub.split('.')
-  }
-  return resultArr
-}
+
 // 获取板块信息
 export const getPartnerListAjax = async (params, callback) => {
   const data = await getPartnerList(params)
   callback(data)
 }
 
-// 封装全部请求方法
-export const getAllList = async (params, callback) => {
-  const data = await getMerchantsOrdersList(params)
-  callback(data)
-  // Promise.all([
-  //   getMerchantsOrdersList('c2cOrderSublist', message)
-  // ]).then((res) => {
-  //   store.commit('CHANGE_MERCHANTS_ORDERS_LIST', res[0].data.data) // 交易中订单
-  //   store.commit('CHANGE_COMPLETED_ORDERS_LIST', res[1].data.data) // 已完成订单
-  //   store.commit('CHANGE_CANCELED_ORDERS_LIST', res[2].data.data) // 已取消订单
-  //   store.commit('CHANGE_FROZEN_ORDERS_LIST', res[3].data.data) // 冻结中的订单
-  //   store.commit('CHANGE_ENTRUST_ORDERS_LIST', res[4].data.data) // 委托订单
-  // })
-}
 // 法币交易分页切换
 export const changeCurrentPageForLegalTrader = (currentPage, type, that) => {
   that.CHANGE_LEGAL_PAGE({
@@ -188,6 +167,15 @@ export const getServiceProtocolData = async (that, params, callback) => {
 // eslint-disable-next-line
 String.prototype.format = function (args) {
   var result = this
+  const arr = result.split('')
+  let newArr = ''
+  arr.forEach((item) => {
+    newArr += item
+    if (item == '{') {
+      newArr += '0'
+    }
+  })
+  result = newArr
   if (arguments.length > 0) {
     if (arguments.length == 1 && typeof (args) == 'object') {
       for (var key in args) {

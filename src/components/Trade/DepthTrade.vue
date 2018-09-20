@@ -20,7 +20,6 @@ export default {
       sells: [],
       depthCharts: '',
       options: {
-        // backgroundColor: this.theme === 'night' ? this.mainColor.$mainNightBgColor : this.mainColor.$mainDayBgColor,
         backgroundColor: '',
         name: '123',
         title: {},
@@ -36,6 +35,7 @@ export default {
           backgroundColor: '#262A42',
           borderColor: '#262A42',
           borderRadius: 3,
+          padding: 10,
           style: {
             // color: '#c7cce6',
             // color: '#000',

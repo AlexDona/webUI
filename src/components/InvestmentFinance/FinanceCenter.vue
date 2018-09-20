@@ -26,11 +26,11 @@
           </el-select>
           <ul class="newnestPrice">
             <li>
-              <p class="newnestPriceColor">{{newnestPrice}}<span>{{selecteCoindName}}</span></p>
+              <p class="newnestPriceColor">{{newnestPrice}}<span>USDT</span></p>
               最新价钱
             </li>
             <li>
-              <p class="green">{{dayAmountIncrease}}</p>
+              <p class="green">{{dayAmountIncrease}}<span>USDT</span></p>
               当日涨幅
             </li>
             <li v-if = 'this.historyAmountIncrease'>
@@ -39,9 +39,7 @@
             </li>
           </ul>
       </div>
-      <FinanceBrokenLine
-       :selecte-coind-infor="selecteCoindInfor"
-      />
+      <FinanceBrokenLine ref="childLineCharts"/>
       </div>
       <!-- 投资 -->
       <div class="finance-inner-box">
@@ -71,12 +69,13 @@
                 <input
                 v-model="investMounte"
                 placeholder="请输入数量"
+                @blur="changeInvestMounte"
                 onkeyup="if(this.value.length==1){this.value=this.value.replace(/[^1-9]/g,'')}else{this.value=this.value.replace(/\D/g,'')}"
                 onafterpaste="if(this.value.length==1){this.value=this.value.replace(/[^1-9]/g,'')}else{this.value=this.value.replace(/\D/g,'')}">
-                <!-- <input   @input="handleInput"/> -->
                 <span>{{selecteCoindName}}</span>
               </div>
             </label>
+            <div  class="totalTipsPositon" v-if="isShow">您投资的币种数量已超过该币种的总资产</div>
             <label for=" ">
               <div class='submitBtn'>
                 <el-button
@@ -97,13 +96,13 @@
               <div>投资估值
                 <p class="green">
                   <span>{{InvestmentValue}}</span>
-                  {{selecteCoindName}}
+                  USDT
                 </p>
               </div>
               <div>历史收溢
                 <p class="red">
                   <span>{{getMoneyValue}}</span>
-                    {{selecteCoindName}}
+                      USDT
                 </p>
               </div>
           </div>
@@ -236,9 +235,10 @@ import FinanceBrokenLine from './FinanceBrokenLine'
 import FinanceBrokenPie from './FinanceBrokenPie'
 import {timeFilter} from '../../utils'
 import {getFinancialManagement, imediateInvestment, cancleInvestment} from '../../utils/api/OTC'
+import {getPushTotalByCoinId} from '../../utils/api/personal'
 import {returnAjaxMessage} from '../../utils/commonFunc'
 import {createNamespacedHelpers, mapState} from 'vuex'
-const {mapMutations} = createNamespacedHelpers('Finance')
+const {mapMutations} = createNamespacedHelpers('finance')
 export default {
   components: {
     HeaderCommon,
@@ -267,8 +267,6 @@ export default {
       investList: [],
       // 收益列表
       userInterestRecord: [],
-      // 向线性走势图传值
-      selecteCoindInfor: {},
       // 默认数据条数
       pageSize: '10',
       // 当前页码
@@ -283,14 +281,18 @@ export default {
       historyAmountIncrease: '',
       // 可用余额
       availableBalance: '',
-      // 是否可以点击立刻投资
-      isClick: false,
+      // 是否立刻投资显示立即投资错误提示
+      isShow: false,
       // 投资估值
       InvestmentValue: 0,
       // 历史收益值
       getMoneyValue: 0,
-      // 取消投资id
-      cancleInvestId: ''
+      // 获取用户总资产
+      userCoindTotal: '',
+      // 走势图x轴数组
+      renderTimeList: '',
+      // 走势图y轴数组
+      renderPriceList: ''
     }
   },
   created () {
@@ -306,24 +308,51 @@ export default {
     require('../../../static/css/theme/night/InvestmentFinance/FinanceCenter.css')
     // 页面创建完成请求币种接口
     this.getFinancialManagementList()
+    // 页面创建完成时获取默认币种的总资产
   },
-  mounted () {},
+  mounted () {
+  },
   activited () {},
   update () {},
   beforeRouteUpdate () {},
   methods: {
     ...mapMutations([
-      'FINANCE_LINE_SELECT_COIDINFOR',
-      'FINANCE_PIE_INVESTMENT_VALUE',
-      'FINANCE_PIE_GET_MONEY_VALUE'
+      'FINANCE_LINE_RENDER_TIME_LIST',
+      'FINANCE_LINE_RENDER_PRICE_LIST'
     ]),
     timeFormatting (data) {
       return timeFilter(data, 'data')
     },
+    // 失去焦点时触发
+    changeInvestMounte (e) {
+      if (this.isLogin) {
+        if (e.target.value >= this.userCoindTotal) {
+          this.isShow = true
+        } else {
+          this.isShow = false
+        }
+      } else {
+        this.isShow = false
+      }
+    },
+    // 输入金额改变时检测用户输入的币种总金额
+    async getUserCoindTotal () {
+      const data = await getPushTotalByCoinId({
+        coinId: this.selectedCoinId
+      })
+      console.log('获取币种总资产')
+      console.log(data)
+      if (!(returnAjaxMessage(data, this, 0))) {
+        return false
+      } else {
+        // 重新掉一次币种接口刷新列表
+        this.userCoindTotal = data.data.data.total
+      }
+    },
     // 点击立刻投资按钮执行
     getInvestEarnings () {
       if (this.isLogin) {
-        if (this.selectedInvestTypeId && this.investMounte) {
+        if (this.selectedInvestTypeId && this.investMounte && this.isShow === false) {
         // 执行投资按钮
           this.clickImmediateInvestment()
         } else {
@@ -399,10 +428,13 @@ export default {
         this.investList = this.isLogin ? data.data.data.userFinancialManagementRecord.list : ''
         // 收益记录列表
         this.userInterestRecord = this.isLogin ? data.data.data.userInterestRecord.list : ''
-        // 获取走势图所需数据
-        this.selecteCoindInfor = data.data.data.tickerPriceResult
-        // 取消投资传递id
-        this.cancleInvestId = data.data.data.tickerPriceResult.renderPriceList
+        // 走势图x轴赋值
+        this.FINANCE_LINE_RENDER_PRICE_LIST(data.data.data.tickerPriceResult.renderPriceList)
+        // 走势图y轴赋值
+        this.FINANCE_LINE_RENDER_TIME_LIST(data.data.data.tickerPriceResult.renderTimeList)
+        this.getUserCoindTotal()
+        this.$refs.childLineCharts.resetOptions()
+        this.$refs.childLineCharts.resetChart(this.options)
       }
     },
     // 用户取消投资接口
@@ -448,7 +480,9 @@ export default {
     ...mapState({
       theme: state => state.common.theme,
       isLogin: state => state.user.isLogin,
-      partnerId: state => state.common.partnerId
+      partnerId: state => state.common.partnerId,
+      financeLineRenderTimeList: state => state.finance.financeLineRenderTimeList,
+      financeLineRenderPriceList: state => state.finance.financeLineRenderPriceList
     }),
     screenWidth () {
       return window.innerWidth / 3
@@ -730,6 +764,10 @@ export default {
       color: #fff;
       padding:14px 0px 14px 26px;
       background:linear-gradient(90deg,rgba(34,80,135,1),transparent);
+    }
+    .totalTipsPositon{
+      margin:-36px 0px -20px 72px;
+      color: #D45858;
     }
  }
  .el-select-dropdown{

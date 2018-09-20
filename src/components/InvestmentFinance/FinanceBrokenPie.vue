@@ -88,9 +88,9 @@ export default {
     }
   },
   created () {
-    console.log(this.investmentValue)
-    console.log(this.getMoneyValue)
-    console.log(this.options)
+    // console.log(this.investmentValue)
+    // console.log(this.getMoneyValue)
+    // console.log(this.options)
   },
   mounted () {
     this.resetOptions()

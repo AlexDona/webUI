@@ -700,10 +700,19 @@ export default {
       partnerId: state => state.common.partnerId,
       loginType: state => state.user.loginType, // 发送类型
       disabledOfPhoneBtn: state => state.user.disabledOfPhoneBtn,
-      disabledOfEmailBtn: state => state.user.disabledOfEmailBtn
+      disabledOfEmailBtn: state => state.user.disabledOfEmailBtn,
+      userCenterActiveName: state => state.personal.userCenterActiveName
     })
   },
-  watch: {}
+  watch: {
+    userCenterActiveName (newVal) {
+      if (newVal === 'push-asset') {
+        this.getPushRecordList()
+        // 清空数据
+        this.emptyInputData()
+      }
+    }
+  }
 }
 </script>
 <style scoped lang="scss">

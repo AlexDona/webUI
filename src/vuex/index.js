@@ -5,6 +5,7 @@ import personal from './Personal'
 import user from './User'
 import trade from './Trade'
 import footerInfo from './FooterInfo'
+import finance from './Finance'
 // Vue.use(Vuex)
 
 export default new Vuex.Store({
@@ -15,6 +16,7 @@ export default new Vuex.Store({
     personal,
     user,
     trade,
-    footerInfo
+    footerInfo,
+    finance
   }
 })

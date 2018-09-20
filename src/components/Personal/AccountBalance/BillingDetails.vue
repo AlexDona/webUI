@@ -393,10 +393,18 @@ export default {
     ...mapState({
       theme: state => state.common.theme,
       partnerId: state => state.common.partnerId, // 商户id
-      userInfo: state => state.user.loginStep1Info // 用户详细信息
+      userInfo: state => state.user.loginStep1Info, // 用户详细信息
+      userCenterActiveName: state => state.personal.userCenterActiveName
     })
   },
-  watch: {}
+  watch: {
+    userCenterActiveName (newVal) {
+      if (newVal === 'billing-details') {
+        this.getChargeMentionList()
+        this.inquireCurrencyList()
+      }
+    }
+  }
 }
 </script>
 <style scoped lang="scss">

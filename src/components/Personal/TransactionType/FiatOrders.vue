@@ -398,7 +398,8 @@ export default {
       legalTradePageSize: state => state.personal.legalTradePageSize,
       legalTraderCompletedReflashStatus: state => state.personal.legalTraderCompletedReflashStatus,
       legalTraderEntrustReflashStatus: state => state.personal.legalTraderEntrustReflashStatus,
-      userInfo: state => state.user.loginStep1Info // 用户详细信息
+      userInfo: state => state.user.loginStep1Info, // 用户详细信息
+      userCenterActiveName: state => state.personal.userCenterActiveName
       // fiatMoneyOrdersName: state => state.personal.fiatMoneyOrdersName
     })
   },
@@ -415,6 +416,11 @@ export default {
     legalTraderEntrustReflashStatus (newVal) {
       console.log(newVal)
       this.getOTCEntrustingOrdersRevocation(this.activeName)
+    },
+    userCenterActiveName (newVal) {
+      if (newVal === 'fiat-orders') {
+        this.getOTCEntrustingOrdersRevocation()
+      }
     }
   }
 }

@@ -410,10 +410,18 @@ export default {
   computed: {
     ...mapState({
       theme: state => state.common.theme,
-      userInfo: state => state.user.loginStep1Info // 用户详细信息
+      userInfo: state => state.user.loginStep1Info, // 用户详细信息
+      userCenterActiveName: state => state.personal.userCenterActiveName
     })
   },
-  watch: {}
+  watch: {
+    userCenterActiveName (newVal) {
+      if (newVal === 'invitation-promote') {
+        this.getUserPromotionList()
+        this.getRecommendUserPromotion()
+      }
+    }
+  }
 }
 </script>
 <style scoped lang="scss">

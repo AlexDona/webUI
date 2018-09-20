@@ -342,6 +342,7 @@
             </el-table-column>
             <el-table-column
               label="委托类型"
+              width="110"
             >
               <template slot-scope="s">
                 <span v-show="language !== 'zh_CN'">{{s.row.type}}</span>
@@ -611,7 +612,8 @@ export default {
       theme: state => state.common.theme,
       language: state => state.common.language,
       partnerId: state => state.common.partnerId,
-      userInfo: state => state.user.loginStep1Info
+      userInfo: state => state.user.loginStep1Info,
+      userCenterActiveName: state => state.personal.userCenterActiveName
     })
   },
   watch: {
@@ -620,6 +622,12 @@ export default {
     },
     activeMatchType (newVal) {
       console.log(newVal)
+    },
+    userCenterActiveName (newVal) {
+      if (newVal === 'coin-orders') {
+        this.getEntrustSelectBox()
+        this.commissionList()
+      }
     }
   }
 }
