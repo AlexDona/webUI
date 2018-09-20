@@ -90,6 +90,7 @@ export default {
   created () {
     console.log(this.investmentValue)
     console.log(this.getMoneyValue)
+    console.log(this.options)
   },
   mounted () {
     this.resetOptions()
@@ -115,8 +116,8 @@ export default {
     },
     resetOptions () {
       this.options.legend.textStyle.color = this.theme === 'night' ? '#fff' : '#666'
-      this.options.series[0].data[0].value = this.investment
-      this.options.series[0].data[1].value = this.getMoney
+      this.options.series[0].data[0].value = this.investmentValue
+      this.options.series[0].data[1].value = this.getMoneyValue
     }
   },
   filter: {},
