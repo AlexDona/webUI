@@ -42,7 +42,7 @@ export default {
             // width: '250px'
           },
           textStyle: {
-            color: 'red'
+            color: ''
           },
           axisPointer: {
             snap: true,
@@ -443,8 +443,8 @@ export default {
     // 重新设置 options
     resetOptions () {
       this.options.tooltip.backgroundColor = this.theme === 'night' ? this.mainColor.$mainNightBgColor : this.mainColor.$mainDayBgColor
-      this.options.tooltip.textStyle.color = this.theme === 'night' ? this.mainColor.$mainNightBgColor : this.mainColor.$mainDayBgColor
-      this.options.tooltip.borderColor = this.theme === 'night' ? '#fff' : '#000'
+      this.options.tooltip.textStyle.color = this.theme === 'night' ? '#fff' : 'rgb(102,102,102)'
+      this.options.tooltip.borderColor = this.theme === 'night' ? this.mainColor.$mainNightBgColor : this.mainColor.$mainDayBgColor
       this.options.backgroundColor = this.theme === 'night' ? this.mainColor.$mainNightBgColor : this.mainColor.$mainDayBgColor
     },
     drawLine () {
