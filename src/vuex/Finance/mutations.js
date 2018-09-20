@@ -1,7 +1,6 @@
 import {
-  FINANCE_LINE_SELECT_COIDINFOR,
-  FINANCE_PIE_INVESTMENT_VALUE,
-  FINANCE_PIE_GET_MONEY_VALUE,
+  FINANCE_LINE_RENDER_TIME_LIST,
+  FINANCE_LINE_RENDER_PRICE_LIST
 } from './mutations-types.js'
 
 // import {setStore, getStore} from '../utils'
@@ -9,13 +8,10 @@ import {
 // import {localapi, proapi} from 'src/config/env'
 
 export default {
-  [FINANCE_LINE_SELECT_COIDINFOR] (state, data) {
-    state.financeLineSelecteCoindInfor = data
+  [FINANCE_LINE_RENDER_TIME_LIST] (state, data) {
+    state.financeLineRenderTimeList = data
   },
-  [FINANCE_PIE_INVESTMENT_VALUE] (state, data) {
-    state.financePieInvestmentValue = data
-  },
-  [FINANCE_PIE_GET_MONEY_VALUE] (state, data) {
-    state.financePieGetMoneyValue = data
+  [FINANCE_LINE_RENDER_PRICE_LIST] (state, data) {
+    state.financeLineRenderPriceList = data
   }
 }
