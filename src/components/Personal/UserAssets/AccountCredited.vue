@@ -402,7 +402,6 @@ export default {
       alipay: false, // 支付宝状态的设置
       paypal: false, // PAYPAL状态的设置
       westernUnion: false, // 西联汇款状态的设置
-      userInfoRefresh: {},
       closePictureSrc: require('../../../assets/user/wrong.png'), // 关闭
       openPictureSrc: require('../../../assets/user/yes.png'), // 开启
       centerModelWarning: false, // 未实名认证前弹框提示
@@ -696,8 +695,6 @@ export default {
         return false
       } else {
         this.$store.commit('user/SET_STEP1_INFO', data.data.data)
-        // 返回列表数据
-        this.userInfoRefresh = data.data.data.userInfo
       }
     }
   },

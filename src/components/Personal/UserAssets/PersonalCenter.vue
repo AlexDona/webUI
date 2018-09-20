@@ -24,21 +24,21 @@
             label = "我的资产"
             name = "assets"
           >
-            <AccountAssets ref = "accountAssetsValue"/>
+            <AccountAssets/>
           </el-tab-pane>
           <!--账单明细-->
           <el-tab-pane
             label = "账单明细"
             name = "billing-details"
           >
-            <BillingDetails ref = "billingDetailsValue"/>
+            <BillingDetails/>
           </el-tab-pane>
           <!--提币地址-->
           <el-tab-pane
             label = "提币地址"
             name = "mention-address"
           >
-            <WithdrawalAddress ref = "withdrawalAddressValue"/>
+            <WithdrawalAddress/>
           </el-tab-pane>
           <!--个人中心-->
           <el-tab-pane
@@ -51,7 +51,7 @@
             label = "身份认证"
             name = "identity-authentication"
           >
-            <IdentityAuthentication ref = "identityValue"/>
+            <IdentityAuthentication/>
           </el-tab-pane>
 
           <!--收款账户-->
@@ -59,7 +59,7 @@
             label = "收款账户"
             name = "account-credited"
           >
-            <AccountCredited ref = "accountCreditedValue"/>
+            <AccountCredited/>
           </el-tab-pane>
 
           <!--邀请推广-->
@@ -67,7 +67,7 @@
             label = "邀请推广"
             name = "invitation-promote"
           >
-            <InvitingPromotion ref = "invitingPromotionValue"/>
+            <InvitingPromotion/>
           </el-tab-pane>
 
           <!--安全中心-->
@@ -75,21 +75,21 @@
             label = "安全中心"
             name = "security-center"
           >
-            <SecurityCenter ref = "securityCenterValue"/>
+            <SecurityCenter/>
           </el-tab-pane>
           <!--API管理-->
           <el-tab-pane
             label = "API管理"
             name = "api-management"
           >
-            <APIManagement ref = "apiManagementValue"/>
+            <APIManagement/>
           </el-tab-pane>
           <!--PUSH资产-->
           <el-tab-pane
             label = "PUSH资产"
             name = "push-asset"
           >
-            <PushAsset ref = "pushAssetValue"/>
+            <PushAsset/>
           </el-tab-pane>
           <!--我的交易-->
           <el-tab-pane
@@ -102,13 +102,13 @@
             label = "币币订单"
             name = "coin-orders"
           >
-            <CoinOrders ref = "coinOrdersValue"/>
+            <CoinOrders/>
           </el-tab-pane>
           <el-tab-pane
             label = "法币订单"
             name = "fiat-orders"
           >
-            <FiatOrders ref = "fiatOrdersValue"/>
+            <FiatOrders/>
           </el-tab-pane>
         </el-tabs>
       </div>

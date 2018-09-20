@@ -240,8 +240,9 @@
                   <button
                     type="primary"
                     class="upload-submit cursor-pointer font-size12 margin-top30"
-                    @click.prevent="handleSuccessFront"
+                    on-success="handleSuccessFront"
                   >
+                    <!--@click.prevent="handleSuccessFront"-->
                     上传身份证正面
                   </button>
                 </div>
@@ -378,7 +379,10 @@ import {
   realNameInformation,
   userRefreshUser
 } from '../../../utils/api/personal'
-import {returnAjaxMessage} from '../../../utils/commonFunc'
+import {
+  returnAjaxMessage,
+  reflashUserInfo
+} from '../../../utils/commonFunc'
 import {createNamespacedHelpers, mapState} from 'vuex'
 const {mapMutations} = createNamespacedHelpers('common')
 export default {
@@ -447,6 +451,7 @@ export default {
     this.SET_USER_INFO_REFRESH_STATUS(true)
     await this.getUserRefreshUser()
     this.tokenObj.token = this.userInfo.token
+    reflashUserInfo(this)
   },
   mounted () {},
   activited () {},
@@ -534,7 +539,6 @@ export default {
       let data = await userRefreshUser({
         token: this.userInfo.token
       })
-      console.log(data)
       if (!(returnAjaxMessage(data, this, 0))) {
         return false
       } else {
@@ -634,7 +638,6 @@ export default {
     },
     async stateSeniorCertification () {
       if (!this.dialogImageFrontUrl) {
-        // this.errorMsg = '请上传身份证正面'
         this.$message({
           message: '请上传身份证正面',
           type: 'error'
@@ -646,7 +649,7 @@ export default {
           type: 'error'
         })
         return
-      } else if (!this.dialogImageReverseSideUrl) {
+      } else if (!this.dialogImageHandUrl) {
         this.$message({
           message: '请上传手持身份证',
           type: 'error'
