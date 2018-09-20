@@ -27,21 +27,17 @@
               >
                 （
                 <span class="authentication-info">您已通过实名认证</span>
-                <!--<span v-if="statusRealNameInformation.realname == null"></span>-->
                 <span
                   class="type-info"
                 >
                   姓名：
-                  {{ statusRealNameInformation.realname }}
-                  <!--{{ statusRealNameInformation.realname.substring(0,1)}}-->
-                <!--*-->
-                  <!--{{ statusRealNameInformation.realName.substring(2,3)}}-->
+                  {{ userInfo.userInfo.realname }}
                 </span>、
                 <span class="type-info">
                   身份证号：
-                   {{ statusRealNameInformation.cardNo.substring(0,2)}}
+                   {{ userInfo.userInfo.cardNo.substring(0,2)}}
                   ****
-                   {{ statusRealNameInformation.cardNo.substring(16,18)}}
+                   {{ userInfo.userInfo.cardNo.substring(16,18)}}
                 </span>
                 &nbsp;）
               </p>
