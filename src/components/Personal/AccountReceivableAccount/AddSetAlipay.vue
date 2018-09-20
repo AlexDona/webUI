@@ -69,6 +69,7 @@
                   :on-remove="handleRemove"
                   >
                   <img
+                    v-show="dialogImageHandUrl1"
                     width="118"
                     height="118"
                     :src="dialogImageHandUrl1"
