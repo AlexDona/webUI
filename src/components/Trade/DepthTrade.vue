@@ -442,6 +442,7 @@ export default {
     // 重新设置 options
     resetOptions () {
       this.options.tooltip.backgroundColor = this.theme === 'night' ? this.mainColor.$mainNightBgColor : this.mainColor.$mainDayBgColor
+      // this.options.tooltip.style.color = this.theme === 'night' ? this.mainColor.$mainNightBgColor : this.mainColor.$mainDayBgColor
       this.options.tooltip.borderColor = this.theme === 'night' ? this.mainColor.$mainNightBgColor : this.mainColor.$mainDayBgColor
       this.options.backgroundColor = this.theme === 'night' ? this.mainColor.$mainNightBgColor : this.mainColor.$mainDayBgColor
     },
