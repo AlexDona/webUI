@@ -631,6 +631,7 @@ export default {
   .set-phone {
     >.set-phone-main {
       width: 1100px;
+      min-height: 700px;
       margin: 60px auto 100px;
       >.set-phone-header {
         display: flex;
@@ -652,7 +653,7 @@ export default {
         >.phone-content-title {
           height: 32px;
           line-height: 32px;
-          margin-bottom: 30px;
+          margin-bottom: 40px;
         }
         >.phone-content-from {
           width: 500px;
@@ -678,8 +679,8 @@ export default {
             line-height: 100px;
           }
           .phone-button {
-            padding: 10px 33px;
-            margin: 30px 0 50px 25px;
+            padding: 10px 85px;
+            margin: 30px 0 50px 120px;
           }
           .prompt-message {
             height: 20px;

@@ -102,9 +102,6 @@
       </div>
     </div>
     <div class="push-assets-main margin-top9">
-      <!--<div class="push-assets-content padding-left15">-->
-        <!--push资产-->
-      <!--</div>-->
       <div class="award-record margin-top9 padding-top0">
         <header class="award-record-header line-height56">
           <span class="font-size16 header-color">PUSH记录</span>
@@ -217,37 +214,6 @@
             @current-change="changeCurrentPage"
           >
           </el-pagination>
-          <!-- 取消push -->
-          <!--<div class="cancel-push">-->
-            <!--<el-dialog-->
-              <!--:title="取消push"-->
-              <!--:visible.sync="dialogVisible"-->
-              <!--center-->
-            <!--&gt;-->
-              <!--<span class="text-align-c">-->
-                <!--确定取消PUSH资产吗？-->
-              <!--</span>-->
-              <!--<span-->
-                <!--slot="footer"-->
-                <!--class="dialog-footer"-->
-              <!--&gt;-->
-             <!--&lt;!&ndash;确 定 取 消&ndash;&gt;-->
-              <!--<el-button-->
-                <!--type="primary"-->
-                <!--@click.prevent="confirm"-->
-                <!--class="mg1"-->
-                <!--:disabled="statel"-->
-              <!--&gt;-->
-                <!--确 定-->
-              <!--</el-button>-->
-              <!--<el-button-->
-                <!--@click.prevent="dialogVisible = false"-->
-              <!--&gt;-->
-                <!--取 消-->
-              <!--</el-button>-->
-            <!--</span>-->
-            <!--</el-dialog>-->
-          <!--</div>-->
           <!--PUSH确认-->
           <div class="push-affirm">
             <el-dialog
@@ -470,7 +436,7 @@ export default {
       } else {
         // 返回push记录数据
         this.pushRecordList = data.data.data.userPushVOPageInfo.list
-        this.totalPageForMyEntrust = data.data.data.userPushVOPageInfo.list.pages - 0
+        this.totalPageForMyEntrust = data.data.data.userPushVOPageInfo.pages - 0
         // 返回push币种信息列表
         this.currencyValue = data.data.data.coinLists[0].name
         this.currencyValue = data.data.data.coinLists[0].coinId
@@ -486,14 +452,6 @@ export default {
     changeId (e) {
       console.log(e)
       this.toggleAssetsCurrencyId(e)
-      // this.currencyList.forEach(item => {
-      //   if (e === item.id) {
-      //     console.log(e)
-      //     this.currencyValue = e
-      //     console.log(e)
-      //     this.toggleAssetsCurrencyId(e)
-      //   }
-      // })
     },
     // 4.选择push资产币种
     async toggleAssetsCurrencyId (e) {
@@ -625,8 +583,6 @@ export default {
      */
     // 点击获取当前取消push id
     cancelId (id) {
-      console.log(id)
-      // this.dialogVisible = true
       this.pushUID = id
       this.$confirm('确定删除提币地址吗, 是否继续?', {
         cancelButtonText: '取消',
@@ -635,16 +591,8 @@ export default {
         this.stateRevocationInformation(id)
       }).catch(() => {
       })
-      // this.pushRecordList.forEach((fid, item) => {
-      //   if (item.id == id) {
-      //     this.pushRecordList = item
-      //   }
-      // })
     },
     // 确定撤销
-    // confirm () {
-    //   this.stateRevocationInformation()
-    // },
     async stateRevocationInformation () {
       let data
       let param = {
@@ -734,10 +682,7 @@ export default {
     },
     // 手机邮箱谷歌状态判断
     async getSecurityCenter () {
-      let data = await statusSecurityCenter({
-        // userId: this.userInfo.userId // 商户id
-        // token: this.userInfo.userInfo.token // token
-      })
+      let data = await statusSecurityCenter({ })
       console.log(data)
       if (!(returnAjaxMessage(data, this, 0))) {
         return false

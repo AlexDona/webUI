@@ -32,7 +32,7 @@ personal-center.personal .el-tabs__nav{
 }
 .personal-center.personal .el-tabs__content {
   float: right;
-  width: 920px;
+  width: 970px;
   overflow: unset;
   position: relative;
 }
@@ -46,8 +46,8 @@ personal-center.personal .el-tabs__nav{
   /*background-color: #1E2636;*/
   /*color: red;*/
 /*}*/
-.personal-center.personal .el-dialog {
-  /*width: 300px;*/
+.personal-center.personal .warning .el-dialog {
+  width: 350px;
   /*height: 200px;*/
   border-radius: 5px;
 }

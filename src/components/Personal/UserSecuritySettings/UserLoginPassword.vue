@@ -93,7 +93,10 @@ import HeaderCommon from '../../Common/HeaderCommon'
 import IconFontCommon from '../../Common/IconFontCommon'
 import ErrorBox from '../../User/ErrorBox'
 import {modifyLoginPassword} from '../../../utils/api/personal'
-import {returnAjaxMessage} from '../../../utils/commonFunc'
+import {
+  returnAjaxMessage,
+  validateNumForUserInput
+} from '../../../utils/commonFunc'
 // 底部
 import FooterCommon from '../../Common/FooterCommon'
 import { createNamespacedHelpers, mapState } from 'vuex'
@@ -140,8 +143,10 @@ export default {
     ]),
     // 点击返回上个页面
     returnSuperior () {
+      this.$router.push({path: '/PersonalCenter'})
       this.CHANGE_USER_CENTER_ACTIVE_NAME('security-center')
-      this.$router.go(-1)
+      // this.CHANGE_USER_CENTER_ACTIVE_NAME('security-center')
+      // this.$router.go(-1)
     },
     // 检测输入格式
     checkoutInputFormat (type, targetNum) {
@@ -159,15 +164,21 @@ export default {
           }
         // 新登录密码
         case 1:
-          if (!targetNum) {
-            this.setErrorMsg(1, '请输入新登录密码')
-            this.$forceUpdate()
-            return 0
-          } else {
-            this.setErrorMsg(1, '')
-            this.$forceUpdate()
-            return 1
+          switch (validateNumForUserInput('password', targetNum)) {
+            case 0:
+              this.setErrorMsg(1, '')
+              this.$forceUpdate()
+              return 1
+            case 1:
+              this.setErrorMsg(1, '请输入密码')
+              this.$forceUpdate()
+              return 0
+            case 2:
+              this.setErrorMsg(1, '请输入 8-20 位字母和数字组合')
+              this.$forceUpdate()
+              return 0
           }
+          break
         // 确认密码
         case 2:
           if (!targetNum) {
@@ -246,7 +257,7 @@ export default {
   .login-password {
     >.login-password-main {
       width: 1100px;
-      height: 500px;
+      min-height: 700px;
       margin: 60px auto 100px;
       >.login-password-header {
         display: flex;
@@ -284,8 +295,8 @@ export default {
             line-height: 100px;
           }
           .login-button {
-            padding: 10px 33px;
-            margin: 30px 0 50px 40px;
+            padding: 10px 85px;
+            margin: 30px 0 50px 120px;
           }
           .prompt-message {
             height: 20px;

@@ -113,25 +113,26 @@
         </el-tabs>
       </div>
       <!--设置交易密码前弹框提示-->
-      <el-dialog
-        :visible.sync="dialogVisible"
-        center
-      >
-        <div class="dialog-warning">
-          <div class="dialog-warning-box">
-            <IconFontCommon
-              class="font-size60"
-              iconName="icon-gantanhao"
-            />
-          </div>
-        </div>
-        <p class="font-size12 warning-text margin-top35 text-align-c">
-          请先设置交易密码，再来设置OTC收款账户!
-        </p>
-        <span
-          slot="footer"
-          class="dialog-footer"
+      <div class="warning">
+        <el-dialog
+          :visible.sync="dialogVisible"
+          center
         >
+          <div class="dialog-warning">
+            <div class="dialog-warning-box">
+              <IconFontCommon
+                class="font-size60"
+                iconName="icon-gantanhao"
+              />
+            </div>
+          </div>
+          <p class="font-size12 warning-text margin-top35 text-align-c">
+            请先设置交易密码，再来设置OTC收款账户!
+          </p>
+          <span
+            slot="footer"
+            class="dialog-footer"
+          >
           <!--确 定 取 消-->
         <button
           class="button-color border-radius4 cursor-pointer"
@@ -147,27 +148,29 @@
           取 消
         </button>
         </span>
-      </el-dialog>
+        </el-dialog>
+      </div>
       <!--未实名认证前弹框提示-->
-      <el-dialog
-        :visible.sync="dialogVisible1"
-        center
-      >
-        <div class="dialog-warning">
-          <div class="dialog-warning-box">
-            <IconFontCommon
-              class="font-size60"
-              iconName="icon-gantanhao"
-            />
-          </div>
-        </div>
-        <p class="font-size12 warning-text margin-top35 text-align-c">
-          请先完成身份认证，再来设置OTC收款账户!
-        </p>
-        <span
-          slot="footer"
-          class="dialog-footer"
+      <div class="warning">
+        <el-dialog
+          :visible.sync="dialogVisible1"
+          center
         >
+          <div class="dialog-warning">
+            <div class="dialog-warning-box">
+              <IconFontCommon
+                class="font-size60"
+                iconName="icon-gantanhao"
+              />
+            </div>
+          </div>
+          <p class="font-size12 warning-text margin-top35 text-align-c">
+            请先完成身份认证，再来设置OTC收款账户!
+          </p>
+          <span
+            slot="footer"
+            class="dialog-footer"
+          >
           <!--确 定 取 消-->
         <button
           class="button-color border-radius4 cursor-pointer"
@@ -183,7 +186,8 @@
           取 消
         </button>
         </span>
-      </el-dialog>
+        </el-dialog>
+      </div>
     </div>
     <!--底部-->
     <FooterCommon/>
@@ -375,7 +379,7 @@ export default {
   @import "../../../../static/css/scss/Personal/UserAssets/PersonalCenter";
   .personal-center{
     > .personal-center-main {
-      width: 1100px;
+      width: 1150px;
       min-height: 1350px;
       margin: 60px auto;
       .dialog-warning {
@@ -420,7 +424,7 @@ export default {
         border: 1px solid #338FF5;
       }
       > .personal-center-content{
-        width: 1100px;
+        width: 1150px;
       }
     }
     &.night{

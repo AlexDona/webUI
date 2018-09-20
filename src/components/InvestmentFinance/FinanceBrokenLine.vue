@@ -1,21 +1,18 @@
 <template>
   <div class="financeline-box">
-    <div id="finance" class="finance"></div>
+    <div id="finance" class="finance-line"></div>
   </div>
 </template>
 <!--请严格按照如下书写书序-->
 <script>
 import echarts from 'echarts/lib/echarts'
-import {mapState} from 'vuex'
+import {timeFilter} from '../../utils'
+import {createNamespacedHelpers, mapState} from 'vuex'
+const {mapMutations} = createNamespacedHelpers('finance')
 require('echarts/lib/chart/line')
 // 引入提示框
 require('echarts/lib/component/tooltip')
 export default {
-  props: {
-    selecteCoindInfor: {
-      type: Object
-    }
-  },
   data () {
     return {
       financeCharts: '',
@@ -31,18 +28,20 @@ export default {
           },
           axisLabel: {
             show: true,
+            rotate: 45,
             textStyle: {
-              color: '#404d64'
+              color: '#404d64',
+              fontSize: 10
             }
           },
           minInterval: '10',
-          data: ['6/10', '2/3', '3/4', '4/5', '5/6', '6/7', '7/8', '8/9', '9/10', '10/11', '11/12', '12/13', '13/14', '14/15', '15/16']
+          data: []
         },
         yAxis: {
           type: 'value',
           bottom: '3%',
-          min: '0',
-          max: '100',
+          min: '',
+          max: '',
           splitNumber: 5,
           lineStyle: {
             color: ''
@@ -77,13 +76,13 @@ export default {
           formatter: function (params) {
             // console.log(params)
             return `
-                      月份：${params[0].axisValue}<br/>
+                      时间：${params[0].axisValue}<br/>
                       收益值：${params[0].data}
                       `
           }
         },
         series: [{
-          data: [80, 10, 80, 35, 15, 40, 50, 60, 70, 80, 90, 75, 20, 60, 10],
+          data: ['30', '80'],
           type: 'line',
           smooth: 'none',
           symbol: 'none',
@@ -107,41 +106,32 @@ export default {
             }
           }
         }]
-      }
+      },
+      arrTime: [],
+      arrPrice: []
     }
   },
-  created () {
-    this.resetChart(this.options)
-    this.isReciveSelecteCoindInfor()
-  },
+  created () {},
   mounted () {
-    // this.drawLine()
     this.resetOptions()
     this.resetChart(this.options)
   },
   activited () {},
-  update () {},
+  update () {
+    this.resetOptions()
+    this.resetChart(this.options)
+  },
   beforeRouteUpdate () {},
   methods: {
-    // 组建创建完成判断页面传值是否收到了
-    // isReciveSelecteCoindInfor () {
-    //   if (this.selecteCoindInfor) {
-    //     this.financeCharts = echarts.init(document.getElementById('finance'))
-    //     this.financeCharts.setOption({
-    //       xAxis: {
-    //         data: this.selecteCoindInfor.renderTimeList
-    //       },
-    //       series: [{
-    //         data: this.selecteCoindInfor.renderPriceList
-    //       }]
-    //     })
-    //   }
-    // },
-    drawLine () {
-      this.financeCharts = echarts.init(document.getElementById('finance'))
-      this.financeCharts.setOption(this.options)
-      window.onresize = this.financeCharts.resize
+    ...mapMutations([]),
+    timeFormatting (data) {
+      return timeFilter(data, 'date')
     },
+    // drawLine () {
+    //   this.financeCharts = echarts.init(document.getElementById('finance'))
+    //   this.financeCharts.setOption(this.options, true)
+    //   window.onresize = this.financeCharts.resize
+    // },
     // 重新绘制图表
     resetChart (params) {
       this.financeCharts = echarts.init(document.getElementById('finance'))
@@ -149,11 +139,14 @@ export default {
         this.options[k] = params[k]
       }
       // console.log(params)
-      this.financeCharts.setOption(this.options)
+      this.financeCharts.setOption(this.options, true)
       window.onresize = this.financeCharts.resize
     },
     // 监听主题变化options之后重绘列表
     resetOptions () {
+      console.log('333333333333333333333333333333333333333333')
+      console.log(this.financeLineRenderPriceList)
+      console.log(this.financeLineRenderTimeList)
       // 设置监听颜色改变
       this.options.xAxis.axisLabel.textStyle.color = this.theme === 'night' ? '#404d64' : '#ccc'
       // 设置x轴线颜色
@@ -187,45 +180,53 @@ export default {
       // 设置背景坐标颜色
       this.options.yAxis.splitLine.lineStyle.color = this.theme === 'night' ? '#1e2636' : '#ccc'
       // 监听x轴数组的变化
-      this.options.xAxis.data = this.renderTimeList
+      this.arrPrice = this.financeLineRenderTimeList.map(item => +item)
+      this.options.xAxis.data = (this.arrPrice.sort((a, b) => a - b)).map(item => {
+        return this.timeFormatting(item)
+      })
       // 监听y轴数组的变化
-      this.options.yAxis.data = this.renderPriceList
+      this.$set(this.options.series, 'data', this.financeLineRenderPriceList)
+      this.options.series[0].data = this.financeLineRenderPriceList
+      this.arrTime = this.financeLineRenderPriceList.sort((a, b) => a - b)
+      this.options.yAxis.min = this.arrTime[0]
+      this.options.yAxis.max = this.arrTime[this.arrTime.length - 1]
+      console.log(this.options)
     }
   },
   filter: {},
   computed: {
     ...mapState({
-      theme: state => state.common.theme
-    }),
-    // 监听数组的变化
-    renderTimeList () {
-      return this.selecteCoindInfor.renderTimeList
-    },
-    renderPriceList () {
-      return this.selecteCoindInfor.renderTimeList
-    }
+      theme: state => state.common.theme,
+      financeLineRenderTimeList: state => state.finance.financeLineRenderTimeList,
+      financeLineRenderPriceList: state => state.finance.financeLineRenderPriceList
+    })
+    // financeLineRenderTimeList () {
+    //   return this.financeLineRenderTimeList
+    // },
+    // financeLineRenderPriceList () {
+    //   return this.financeLineRenderPriceList
+    // }
   },
   watch: {
     theme (newVal) {
       this.resetOptions()
       this.resetChart(this.options)
     },
-    // 监听传进来的值发生变化
-    renderTimeList (newVal, oldVal) {
-      for (var i = 0; i < newVal.lenght; i++) {
+    financeLineRenderTimeList (newVal, oldVal) {
+      for (let i = 0; i < newVal.lenght; i++) {
         if (newVal[i] != oldVal[i]) {
-          oldVal[i] = newVal[i]
+          this.resetOptions()
+          this.resetChart(this.options)
         }
       }
-      return oldVal
     },
-    renderPriceList (newVal, oldVal) {
-      for (var i = 0; i < newVal.lenght; i++) {
+    financeLineRenderPriceList (newVal, oldVal) {
+      for (let i = 0; i < newVal.lenght; i++) {
         if (newVal[i] != oldVal[i]) {
-          oldVal[i] = newVal[i]
+          this.resetOptions()
+          this.resetChart(this.options)
         }
       }
-      return oldVal
     }
   }
 }
@@ -234,7 +235,7 @@ export default {
     .financeline-box{
         width: 1000px;
         margin:80px auto;
-        >.finance{
+        >.finance-line{
             width: 100%;
             height: 450px;
             margin-left: -100px;
