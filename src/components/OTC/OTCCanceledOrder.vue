@@ -166,6 +166,7 @@ export default {
   @import "../../../static/css/scss/OTC/OTCCanceledOrder.scss";
   .otc-canceled-order-box{
     >.canceled-order-content{
+      min-height: 500px;
       >.canceled-table-head{
         box-sizing: border-box;
         width: 1043px;
