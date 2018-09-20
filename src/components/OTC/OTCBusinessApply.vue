@@ -433,7 +433,7 @@ export default {
   }
   >.business-applying-content,.business-apply-success-content{
     width: 1150px;
-    height: 500px;
+    height: 600px;
     margin: 70px auto;
     padding-top: 20px;
     text-align: center;

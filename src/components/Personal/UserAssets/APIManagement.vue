@@ -37,7 +37,7 @@
               </el-form-item>
               <!--错误提示-->
               <div
-                class = "error-msg font-size12"
+                class = "error-msg-text error-msg font-size12"
               >
                 <span v-show = "errorMsg">{{ errorMsg }}</span>
               </div>
@@ -112,7 +112,7 @@
             </el-table-column>
             <el-table-column
               label="IP地址"
-              width="130"
+              width="135"
             >
               <template slot-scope = "s">
                 <div>{{ s.row.ip }}</div>
@@ -120,7 +120,7 @@
             </el-table-column>
             <el-table-column
               label="状态"
-              width="50"
+              width="75"
             >
               <template slot-scope = "s">
                 <div v-if="s.row.status == 'enable'">{{ enable }}</div>
@@ -129,7 +129,7 @@
             </el-table-column>
             <el-table-column
               label="操作"
-              width="100"
+              width="120"
             >
               <template slot-scope = "s">
                 <div
@@ -359,32 +359,6 @@
           </div>
         </el-dialog>
       </div>
-      <!-- 删除api-->
-      <!--<div class="delete">-->
-        <!--<el-dialog-->
-          <!--:title="删除api地址"-->
-          <!--:visible.sync="dialogVisible"-->
-          <!--center-->
-        <!--&gt;-->
-          <!--<span class="info">确定删除api地址吗？</span>-->
-          <!--<span slot="footer" class="dialog-footer">-->
-         <!--&lt;!&ndash;确 定 取 消&ndash;&gt;-->
-          <!--<el-button-->
-            <!--type="primary cursor-pointer"-->
-            <!--@click.prevent="deleteUserConfirm"-->
-            <!--:disabled="statel"-->
-          <!--&gt;-->
-            <!--确 定-->
-          <!--</el-button>-->
-          <!--<el-button-->
-            <!--class="btn cursor-pointer"-->
-            <!--@click.prevent="dialogVisible = false"-->
-          <!--&gt;-->
-            <!--取 消-->
-          <!--</el-button>-->
-        <!--</span>-->
-        <!--</el-dialog>-->
-      <!--</div>-->
     </div>
   </div>
 </template>
@@ -418,10 +392,6 @@ export default {
   data () {
     return {
       labelPosition: 'top',
-      // creationTime 创建时间
-      // remark: '备注',
-      // secretKey API访问秘钥
-      // 'IpSite' IP地址
       errorMsg: '', // 错误信息
       errorVerifyMsg: '', // 错误信息
       errorEditorMsg: '', // 错误信息
@@ -709,7 +679,6 @@ export default {
     },
     // 删除
     deleteUser (id) {
-      // this.dialogVisible = true
       this.userId = id
       this.$confirm('确定删除API地址吗, 是否继续?', {
         cancelButtonText: '取消',
@@ -719,9 +688,6 @@ export default {
       }).catch(() => {
       })
     },
-    // deleteUserConfirm () {
-    //   this.deleteUserApi()
-    // },
     //  获取秘钥
     async deleteUserApi () {
       let data = await deleteUserInformation({
@@ -750,19 +716,11 @@ export default {
         return false
       } else {
         // // 返回展示
-        // this.apiSecondaryConfirmation = true
-        // this.APIMoneyConfirm = false
-        // //  获取秘钥
-        // this.getAccessAecretKey()
-        // this.extensionList = data.data.data
-        // console.log(this.extensionList)
       }
     },
     // 获取多个用户api信息
     async getMultipleUserAPIInfo () {
-      let data = await multipleUserAPIInfo({
-        // token: this.userInfo.token // token
-      })
+      let data = await multipleUserAPIInfo({})
       console.log(data)
       if (!(returnAjaxMessage(data, this, 0))) {
         return false
@@ -840,6 +798,9 @@ export default {
         right: 1px;
         top: 4px;
         line-height: 33px;
+      }
+      .error-msg-text {
+        padding-left: 35px;
       }
       .error-msg{
         height:30px;

@@ -35,8 +35,15 @@
 .api-management.personal .secondary-confirmation .el-dialog__footer {
   text-align: center;
 }
+.api-management.personal .editor .el-dialog__header{
+  padding: 0 40px;
+  border-radius: 5px 5px 0 0;
+}
 .api-management.personal .editor .el-dialog{
   width: 380px;
+}
+.api-management.personal .editor .el-dialog__body{
+  padding: 0 40px;
 }
 .api-management.personal .editor .el-dialog__footer {
   text-align: center;

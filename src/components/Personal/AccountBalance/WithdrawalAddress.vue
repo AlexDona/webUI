@@ -107,29 +107,6 @@
         @current-change="changeCurrentPage"
       >
       </el-pagination>
-      <el-dialog
-        :title="删除提币地址"
-        :visible.sync="dialogVisible"
-        center
-      >
-        <span class="info">确定删除提币地址吗？</span>
-        <span slot="footer" class="dialog-footer">
-         <!--确 定 取 消-->
-          <el-button
-            type="primary"
-            @click.prevent="confirm"
-            :disabled="statel"
-          >
-            确 定
-          </el-button>
-          <el-button
-            class="btn"
-            @click.prevent="dialogVisible = false"
-          >
-            取 消
-          </el-button>
-        </span>
-      </el-dialog>
     </div>
   </div>
 </template>
@@ -200,6 +177,17 @@ export default {
     },
     // 新增用户提币地址按钮
     async stateSubmitAddAddress () {
+      if (!this.mentionRemark) {
+        // 请输入备注
+        this.errorMsg = '请输入备注'
+        return
+      } else if (!this.prepaidAddress) {
+        // 提币地址不能为空
+        this.errorMsg = '提币地址不能为空'
+        return
+      } else {
+        this.errorMsg = ''
+      }
       let data
       let param = {
         coinId: this.currencyValue, // 币种coinId
@@ -247,11 +235,6 @@ export default {
         this.deleteWithdrawal(id)
       }).catch(() => {
       })
-      // this.gainAddressList.forEach((fid, item) => {
-      //   if (item.id == id) {
-      //     this.gainAddressList = item
-      //   }
-      // })
     },
     // 确认删除提币地址
     async deleteWithdrawal () {
@@ -265,6 +248,8 @@ export default {
       } else {
         this.WithdrawalAddressList()
         this.dialogVisible = false
+        this.mentionRemark = ''
+        this.prepaidAddress = ''
         // console.log(data)
       }
     },

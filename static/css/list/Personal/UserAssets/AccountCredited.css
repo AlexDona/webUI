@@ -14,7 +14,7 @@
 .credited-credited.personal .el-dialog:nth-child(1){
   border-radius: 10px;
   width: 300px;
-  height: 200px;
+  /*height: 200px;*/
   top: 15%;
 }
 .credited-credited.personal .el-dialog:nth-child(1) .el-dialog__header{

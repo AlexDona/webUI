@@ -112,7 +112,7 @@
               >
                 <el-table-column
                   label="时间"
-                  width="125"
+                  width="135"
                 >
                   <template slot-scope="s">
                     <span>{{ s.row.createTime }}</span>
@@ -120,6 +120,7 @@
                 </el-table-column>
                 <el-table-column
                   label="交易对"
+                  width="80"
                 >
                   <template slot-scope="s">
                     <span>{{ s.row.tradeName }}</span>
@@ -134,8 +135,8 @@
                   </template>
                 </el-table-column>
                 <el-table-column
-                  label="方向"
-                  width="50"
+                  label="委单类型"
+                  width="70"
                 >
                   <template slot-scope="s">
                     <span v-show="language !== 'zh_CN'">{{s.row.type}}</span>
@@ -184,7 +185,7 @@
                 </el-table-column>
                 <el-table-column
                   label="操作"
-                  width="60"
+                  width="85"
                 >
                   <template slot-scope="s">
                     <button
@@ -208,37 +209,6 @@
             </div>
           </div>
         </el-tab-pane>
-        <!-- 取消委托订单 -->
-        <div class="cancel-push">
-          <el-dialog
-            :title="取消委托订单"
-            :visible.sync="cancellationOfOrder"
-            center
-          >
-              <span class="text-align-c">
-                确定取消取消委托订单吗？
-              </span>
-            <span
-              slot="footer"
-              class="dialog-footer"
-            >
-             <!--确 定 取 消-->
-              <el-button
-                type="primary"
-                @click.prevent="confirm"
-                class="mg1"
-                :disabled="statel"
-              >
-                确 定
-              </el-button>
-              <el-button
-                @click.prevent="cancellationOfOrder = false"
-              >
-                取 消
-              </el-button>
-            </span>
-          </el-dialog>
-        </div>
         <el-tab-pane
           label="历史委托"
           name="history-entrust"
@@ -248,7 +218,7 @@
           >
             <el-table-column
               label="时间"
-              width="125"
+              width="135"
             >
               <template slot-scope="s">
                 <span>{{ s.row.createTime }}</span>
@@ -256,6 +226,7 @@
             </el-table-column>
             <el-table-column
               label="交易对"
+              width="80"
             >
               <template slot-scope="s">
                 <span>{{ s.row.tradeName }}</span>
@@ -270,8 +241,8 @@
               </template>
             </el-table-column>
             <el-table-column
-              label="方向"
-              width="50"
+              label="委单类型"
+              width="70"
             >
               <template slot-scope="s">
                 <span v-show="language !== 'zh_CN'">{{s.row.type}}</span>
@@ -320,7 +291,7 @@
             </el-table-column>
             <el-table-column
               label="操作"
-              width="60"
+              width="85"
             >
               <template slot-scope="s">
                 <button
@@ -330,37 +301,6 @@
               </template>
             </el-table-column>
           </el-table>
-          <!-- 取消历史订单 -->
-          <div class="cancel-push">
-            <el-dialog
-              :title="取消历史订单"
-              :visible.sync="cancelHistoricalOrder"
-              center
-            >
-              <span class="text-align-c">
-                确定取消取消委托订单吗？
-              </span>
-              <span
-                slot="footer"
-                class="dialog-footer"
-              >
-             <!--确 定 取 消-->
-              <el-button
-                type="primary"
-                @click.prevent="confirm"
-                class="mg1"
-                :disabled="statel"
-              >
-                确 定
-              </el-button>
-              <el-button
-                @click.prevent="cancelHistoricalOrder = false"
-              >
-                取 消
-              </el-button>
-            </span>
-            </el-dialog>
-          </div>
           <!--分页-->
           <el-pagination
             background
@@ -395,15 +335,13 @@
             </el-table-column>
             <el-table-column
               label="撮合类型"
-              width="70"
             >
               <template slot-scope="s">
                 <span>{{ s.row.matchTypeName }}</span>
               </template>
             </el-table-column>
             <el-table-column
-              label="方向"
-              width="50"
+              label="委托类型"
             >
               <template slot-scope="s">
                 <span v-show="language !== 'zh_CN'">{{s.row.type}}</span>
@@ -412,7 +350,6 @@
             </el-table-column>
             <el-table-column
               label="价格"
-              width="110"
             >
               <template slot-scope="s">
                 <span>{{ s.row.count-0 }}</span>
@@ -420,7 +357,6 @@
             </el-table-column>
             <el-table-column
               label="数量"
-              width="110"
             >
               <template slot-scope="s">
                 <span>{{ s.row.count-0 }}</span>
@@ -428,7 +364,6 @@
             </el-table-column>
             <el-table-column
               label="成交额"
-              width="120"
             >
               <template slot-scope="s">
                 <span>{{ s.row.amount-0}}</span>
@@ -436,7 +371,6 @@
             </el-table-column>
             <el-table-column
               label="手续费"
-              width="120"
             >
               <template slot-scope="s">
                 <span>{{s.row.fees - 0}}</span>

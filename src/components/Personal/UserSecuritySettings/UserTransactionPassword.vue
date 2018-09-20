@@ -335,12 +335,13 @@ export default {
       })
     },
     // 确定设置检测输入格式
+    // 确定设置检测输入格式
     checkoutInputFormat (type, targetNum) {
       switch (type) {
-        // 交易密码
+        // 昵称
         case 0:
           if (!targetNum) {
-            this.setErrorMsg(0, '请输入交易密码')
+            this.setErrorMsg(0, '请输入昵称')
             this.$forceUpdate()
             return 0
           } else {
@@ -348,18 +349,29 @@ export default {
             this.$forceUpdate()
             return 1
           }
-        // 重复交易密码
+        // 交易密码
         case 1:
           if (!targetNum) {
-            this.setErrorMsg(1, '请输入确认交易密码')
+            this.setErrorMsg(1, '请输入交易密码')
             this.$forceUpdate()
             return 0
-          } else if (targetNum === this.setPassword.newPassword) {
+          } else {
             this.setErrorMsg(1, '')
             this.$forceUpdate()
             return 1
+          }
+        // 重复交易密码
+        case 2:
+          if (!targetNum) {
+            this.setErrorMsg(2, '请输入确认交易密码')
+            this.$forceUpdate()
+            return 0
+          } else if (targetNum === this.setPassword.newPassword) {
+            this.setErrorMsg(2, '')
+            this.$forceUpdate()
+            return 1
           } else {
-            this.setErrorMsg(1, '密码不一致，请重新确认')
+            this.setErrorMsg(2, '密码不一致，请重新确认')
             this.$forceUpdate()
             return 0
           }
@@ -379,7 +391,7 @@ export default {
       let goOnStatus = 0
       if (
         this.checkoutInputFormat(0, this.setPassword.nickname) &&
-        this.checkoutInputFormat(1, this.setPassword.newPassword)
+        this.checkoutInputFormat(1, this.setPassword.confirmPassword)
       ) {
         goOnStatus = 1
       } else {
@@ -410,10 +422,14 @@ export default {
             this.tieErrorMsg(0, '请输入交易密码')
             this.$forceUpdate()
             return 0
-          } else {
+          } else if (targetNum) {
             this.tieErrorMsg(0, '')
             this.$forceUpdate()
             return 1
+          } else {
+            this.tieErrorMsg(0, '请输入6位纯数字')
+            this.$forceUpdate()
+            return 0
           }
         // 重置交易密码
         case 1:
@@ -563,7 +579,7 @@ export default {
   .transaction-password {
     >.transaction-password-main {
       width: 1100px;
-      min-height: 600px;
+      min-height: 700px;
       margin: 60px auto 100px;
       >.transaction-password-header {
         display: flex;
@@ -601,8 +617,8 @@ export default {
             line-height: 100px;
           }
           .transaction-button {
-            padding: 10px 33px;
-            margin: 30px 0 50px 40px;
+            padding: 10px 85px;
+            margin: 30px 0 50px 120px;
           }
           .prompt-message {
             height: 20px;

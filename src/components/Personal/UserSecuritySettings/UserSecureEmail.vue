@@ -299,6 +299,7 @@ export default {
   .set-email {
     >.set-email-main {
       width: 1100px;
+      min-height: 700px;
       margin: 60px auto 100px;
       >.set-email-header {
         display: flex;
@@ -336,8 +337,8 @@ export default {
             line-height: 100px;
           }
           .email-button {
-            padding: 10px 33px;
-            margin: 30px 0 50px 40px;
+            padding: 10px 85px;
+            margin: 30px 0 50px 120px;
           }
           .prompt-message {
             height: 20px;
