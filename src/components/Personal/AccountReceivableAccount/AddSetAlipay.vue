@@ -75,6 +75,7 @@
                     :src="dialogImageHandUrl1"
                   >
                   <IconFontCommon
+                    v-show="!dialogImageHandUrl1"
                     class="font-size40 icon-plus"
                     iconName="icon-iconjia"
                   />
