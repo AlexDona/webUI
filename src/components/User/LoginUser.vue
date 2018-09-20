@@ -57,7 +57,7 @@
               <!-- 忘记密码？ -->
               <router-link
                 class="text-align-r"
-                to="/register"
+                to="/Register"
               >
                 免费注册
               </router-link><!-- 免费注册 -->
