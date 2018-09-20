@@ -138,3 +138,6 @@
 .night .el-message-box__btns button:nth-child(2) {
   background:linear-gradient(81deg,rgba(43,57,110,1) 0%,rgba(42,80,130,1) 100%);
 }
+.el-message{
+  z-index: 2300 !important;
+}
