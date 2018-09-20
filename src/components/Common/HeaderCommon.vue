@@ -270,7 +270,10 @@ import {
   getTransitionCurrencyRate // 获取汇率转换费率
 } from '../../utils/api/header'
 import IconFontCommon from '../Common/IconFontCommon'
-import {setStore} from '../../utils'
+import {
+  setStore,
+  amendPrecision
+} from '../../utils'
 // import {getPartnerList} from '../../utils/api/home'
 import {
   returnAjaxMessage,
@@ -346,7 +349,6 @@ export default{
     this.getTransitionCurrencyRate()
     this.getCountryList()
     this.getGlobalPersonalAssetsInformation()
-    reflashUserInfo(this)
   },
   methods: {
     ...mapMutations([

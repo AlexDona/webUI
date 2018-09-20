@@ -28,15 +28,10 @@ import {PHONE_REG, EMAIL_REG, ID_REG, PWD_REG, ALIPAY_REG, BANK_REG, GOOGLE_REG}
 // 使用方法：returnAjaxMessage(data, this, 0) 或者 returnAjaxMessage(data, this, 1)
 export const returnAjaxMessage = (data, self, noTip) => {
   const meta = data.data.meta
-  console.log(meta)
-  console.log(meta.i18n_code)
-  console.log(self.$t(`M.${meta.i18n_code}`))
   if (meta.code !== 200) {
     self.$message({
       type: 'error',
-      // message: !meta.params.length ? self.$t(`M.${meta.i18n_code}`) : self.$t(`M.${meta.i18n_code}`).format(meta.params[0])
-      message: self.$t(`M.${meta.i18n_code}`).format(meta.params[0])
-    //  $t('m.financial_recharge_notice5').format(item.shortName)}}
+      message: !meta.params.length ? self.$t(`M.${meta.i18n_code}`) : self.$t(`M.${meta.i18n_code}`).format(meta.params[0])
     })
     return 0
   } else {
@@ -170,6 +165,7 @@ export const reflashUserInfo = async (that) => {
     store.commit('user/SET_STEP1_INFO', data.data.data)
   }
 }
+
 // eslint-disable-next-line
 String.prototype.format = function (args) {
   var result = this
