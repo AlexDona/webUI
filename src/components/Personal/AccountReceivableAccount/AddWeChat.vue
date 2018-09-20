@@ -68,6 +68,11 @@
                   :on-success="handleSuccessHand"
                   :on-remove="handleRemove"
                 >
+                  <img
+                    width="118"
+                    height="118"
+                    :src="dialogImageHandUrl1"
+                  >
                   <IconFontCommon
                     class="font-size40 icon-plus"
                     iconName="icon-iconjia"
@@ -141,6 +146,7 @@ export default {
       cardNo: '', // 微信账号
       password: '', // 交易密码
       dialogImageHandUrl: '', // 图片url
+      dialogImageHandUrl1: '', // 图片url
       id: '', // ID
       paymentTerm: {},
       successCountDown: 1, // 成功倒计时
@@ -262,7 +268,7 @@ export default {
         // 返回状态展示
         this.paymentMethodList = data.data.data
         this.cardNo = data.data.data.cardNo
-        this.dialogImageHandUrl = data.data.data.qrcode
+        this.dialogImageHandUrl1 = data.data.data.qrcode
         this.id = data.data.data.id
         console.log(this.paymentMethodList)
       }
@@ -385,6 +391,9 @@ export default {
               /*background-color: #485776;*/
               .icon-plus {
                 color: #828EA6;
+                position: absolute;
+                top: 35px;
+                right: 35px;
               }
             }
             .chat-button {
@@ -434,6 +443,9 @@ export default {
               /*background-color: #485776;*/
               .icon-plus {
                 color: #828EA6;
+                position: absolute;
+                top: 35px;
+                right: 35px;
               }
             }
             .chat-button {

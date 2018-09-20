@@ -265,8 +265,7 @@
               >
                 <el-input
                   v-model="phoneCode"
-                  @keydown="setErrorMsg(0,'')"
-                  @blur="checkoutInputFormat(0, phoneCode)"
+                  @focus="handleinput1"
                 >
                   <template slot="append">
                     <CountDownButton
@@ -286,8 +285,7 @@
               >
                 <el-input
                   v-model="emailCode"
-                  @keydown="setErrorMsg(1,'')"
-                  @blur="checkoutInputFormat(1, emailCode)"
+                  @focus="handleinput1"
                 >
                   <template slot="append">
                     <CountDownButton
@@ -308,8 +306,7 @@
                 <input
                   class="input border-radius2 padding-l15 box-sizing"
                   v-model="googleCode"
-                  @keydown="setErrorMsg(2,'')"
-                  @blur="checkoutInputFormat(2, googleCode)"
+                  @focus="handleinput1"
                 />
               </el-form-item>
             </el-form>
@@ -317,7 +314,7 @@
             <div
               class = "error-msg font-size12"
             >
-              <span v-show = "errorMsg">{{ errorMsg }}</span>
+              <span v-show = "errorMsg1">{{ errorMsg1 }}</span>
             </div>
             <div
               slot="footer"
@@ -353,8 +350,7 @@
               >
                 <el-input
                   v-model="phoneCode"
-                  @keydown="setErrorMsg(0,'')"
-                  @blur="checkoutInputFormat(0, phoneCode)"
+                  @focus="handleinput"
                 >
                   <template slot="append">
                     <CountDownButton
@@ -374,8 +370,7 @@
               >
                 <el-input
                   v-model="emailCode"
-                  @keydown="setErrorMsg(1,'')"
-                  @blur="checkoutInputFormat(1, emailCode)"
+                  @focus="handleinput"
                 >
                   <template slot="append">
                     <CountDownButton
@@ -396,8 +391,7 @@
                 <input
                   class="input border-radius2 padding-l15 box-sizing"
                   v-model="googleCode"
-                  @keydown="setErrorMsg(2,'')"
-                  @blur="checkoutInputFormat(2, googleCode)"
+                  @focus="handleinput"
                 />
               </el-form-item>
             </el-form>
@@ -745,6 +739,12 @@ export default {
     determineTheOpen () {
       this.confirmTransactionPassword(this.activeType, this.state)
     },
+    handleinput () {
+      this.errorMsg = ''
+    },
+    handleinput1 () {
+      this.errorMsg1 = ''
+    },
     // 关闭开启手机邮箱谷歌验证
     async confirmTransactionPassword (type, state) {
       // let goOnStatus = 0
@@ -814,6 +814,9 @@ export default {
         // 安全中心状态刷新
         this.openTheValidation = false
         this.closeValidation = false
+        this.emailCode = ''
+        this.phoneCode = ''
+        this.googleCode = ''
       }
       // }
     },

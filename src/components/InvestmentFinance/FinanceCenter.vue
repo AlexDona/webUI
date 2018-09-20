@@ -317,12 +317,20 @@ export default {
     },
     // 点击立刻投资按钮执行
     getInvestEarnings () {
-      if (this.selectedInvestTypeId && this.investMounte) {
+      console.log(this.isLogin)
+      if (this.isLogin) {
+        if (this.selectedInvestTypeId && this.investMounte) {
         // 执行投资按钮
-        this.clickImmediateInvestment()
+          this.clickImmediateInvestment()
+        } else {
+          this.$message({
+            message: '投资类型或投资数量不能为空',
+            type: 'error'
+          })
+        }
       } else {
         this.$message({
-          message: '投资类型或投资数量不能为空',
+          message: '请先登录',
           type: 'error'
         })
       }
@@ -384,9 +392,9 @@ export default {
         // 历史收益
         this.getMoneyValue = data.data.data.userInterest
         // 投资记录列表赋值
-        this.investList = data.data.data.userFinancialManagementRecord.list
+        this.investList = this.isLogin ? data.data.data.userFinancialManagementRecord.list : ''
         // 收益记录列表
-        this.userInterestRecord = data.data.data.userInterestRecord.list
+        this.userInterestRecord = this.isLogin ? data.data.data.userInterestRecord.list : ''
         // 获取走势图所需数据
         this.selecteCoindInfor = data.data.data.tickerPriceResult
         // 取消投资传递id

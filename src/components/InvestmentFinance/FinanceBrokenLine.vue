@@ -124,19 +124,19 @@ export default {
   beforeRouteUpdate () {},
   methods: {
     // 组建创建完成判断页面传值是否收到了
-    isReciveSelecteCoindInfor () {
-      if (this.selecteCoindInfor) {
-        this.financeCharts = echarts.init(document.getElementById('finance'))
-        this.financeCharts.setOption({
-          xAxis: {
-            data: this.selecteCoindInfor.renderTimeList
-          },
-          series: [{
-            data: this.selecteCoindInfor.renderPriceList
-          }]
-        })
-      }
-    },
+    // isReciveSelecteCoindInfor () {
+    //   if (this.selecteCoindInfor) {
+    //     this.financeCharts = echarts.init(document.getElementById('finance'))
+    //     this.financeCharts.setOption({
+    //       xAxis: {
+    //         data: this.selecteCoindInfor.renderTimeList
+    //       },
+    //       series: [{
+    //         data: this.selecteCoindInfor.renderPriceList
+    //       }]
+    //     })
+    //   }
+    // },
     drawLine () {
       this.financeCharts = echarts.init(document.getElementById('finance'))
       this.financeCharts.setOption(this.options)
@@ -186,18 +186,46 @@ export default {
       this.options.yAxis.splitLine.lineStyle.type = this.theme === 'night' ? 'solid' : 'dotted'
       // 设置背景坐标颜色
       this.options.yAxis.splitLine.lineStyle.color = this.theme === 'night' ? '#1e2636' : '#ccc'
+      // 监听x轴数组的变化
+      this.options.xAxis.data = this.renderTimeList
+      // 监听y轴数组的变化
+      this.options.yAxis.data = this.renderPriceList
     }
   },
   filter: {},
   computed: {
     ...mapState({
       theme: state => state.common.theme
-    })
+    }),
+    // 监听数组的变化
+    renderTimeList () {
+      return this.selecteCoindInfor.renderTimeList
+    },
+    renderPriceList () {
+      return this.selecteCoindInfor.renderTimeList
+    }
   },
   watch: {
     theme (newVal) {
       this.resetOptions()
       this.resetChart(this.options)
+    },
+    // 监听传进来的值发生变化
+    renderTimeList (newVal, oldVal) {
+      for (var i = 0; i < newVal.lenght; i++) {
+        if (newVal[i] != oldVal[i]) {
+          oldVal[i] = newVal[i]
+        }
+      }
+      return oldVal
+    },
+    renderPriceList (newVal, oldVal) {
+      for (var i = 0; i < newVal.lenght; i++) {
+        if (newVal[i] != oldVal[i]) {
+          oldVal[i] = newVal[i]
+        }
+      }
+      return oldVal
     }
   }
 }

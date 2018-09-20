@@ -23,3 +23,6 @@
 .add-account.personal .el-form-item__content {
   width: 600px;
 }
+.add-account.personal .el-upload--picture-card {
+  position: relative;
+}
