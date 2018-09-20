@@ -246,6 +246,7 @@ export default {
   .login-password {
     >.login-password-main {
       width: 1100px;
+      height: 500px;
       margin: 60px auto 100px;
       >.login-password-header {
         display: flex;

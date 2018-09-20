@@ -75,8 +75,8 @@
 }
 /* 修改全局样式 */
 .el-pagination{
-  margin-top:10px; 
-  margin-bottom:10px; 
+  margin-top:10px;
+  margin-bottom:10px;
   text-align: center;
 }
 /* 设置全局下拉框样式 */
@@ -101,4 +101,40 @@
 }
 .day .el-select-dropdown__wrap.el-scrollbar__wrap{
   margin-bottom:-10px!important;
+}
+/*全局二次弹窗样式*/
+.day .el-message-box {
+  background: #fff;
+}
+.day .el-message-box__btns button:nth-child(1) {
+  border: 1px solid rgba(51,143,245,1);
+  background-color: transparent;
+  color: #63A5EF;
+}
+.day .el-message-box__message p {
+  color: #333;
+}
+.day .el-message-box__btns button:nth-child(2) {
+  background:linear-gradient(81deg,rgba(43,57,110,1) 0%,rgba(42,80,130,1) 100%);
+}
+/*全局二次弹窗样式*/
+.night .el-message-box__header {
+  padding: 0;
+}
+.night .el-message-box {
+  background:rgba(40,51,74,1);
+}
+.night .el-button:hover {
+  color: #fff;
+}
+.night .el-message-box__btns button:nth-child(1) {
+  border: 1px solid rgba(51,143,245,1);
+  background-color: #28334A;
+  color: #fff;
+}
+.night .el-message-box__message p {
+  color: #fff;
+}
+.night .el-message-box__btns button:nth-child(2) {
+  background:linear-gradient(81deg,rgba(43,57,110,1) 0%,rgba(42,80,130,1) 100%);
 }

@@ -35,3 +35,6 @@
 .api-management.personal.night .el-table td div {
   color: #9DA5B3;
 }
+.api-management.personal.night  .el-dialog__header {
+  background:rgba(32,41,60,1);
+}

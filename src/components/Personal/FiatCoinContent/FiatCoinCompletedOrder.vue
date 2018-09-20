@@ -126,7 +126,7 @@
         </el-table-column>
         <el-table-column
           label="下单时间"
-          width="150px"
+          width="160px"
         >
           <template slot-scope="scope">
             {{timeFormatting(scope.row.createTime)}}
@@ -280,6 +280,44 @@ export default {
       color:$dayFontColor;
       >.background-color{
         background-color: #CCCCCC;
+      }
+      .completed-info{
+        display: flex;
+        flex: 7;
+        color: #9DA5B3;
+        >.completed-info-left{
+          flex: 2;
+          border-right: 1px solid rgba(38,47,56,0.1);
+          >.order-info-left{
+            line-height: 20px;
+            >.pay-info{
+              color: #5E95EC;
+            }
+          }
+        }
+        >.completed-info-middle{
+          flex: 2;
+          border-right: 1px solid rgba(38,47,56,0.1);
+          >.order-info-middle{
+            margin-left: 50px;
+            // line-height: 1.5rem;
+            line-height: 20px;
+            >.buyer-seller-info{
+              color: #5E95EC;
+            }
+          }
+        }
+        >.completed-info-right{
+          flex: 3;
+          >.order-info-right{
+            margin-left: 50px;
+            // line-height: 1.5rem;
+            line-height: 20px;
+            >.confirm-time{
+              color: #5E95EC;
+            }
+          }
+        }
       }
     }
   }

@@ -14,7 +14,7 @@
             <div class="header-flex header-right flex1 padding-right23 display-flex">
               <div class="header-right-left float-left flex1">
                 <div class="header-right-text text-align-r">
-                  显示有资金币种
+                  显示资产为0的币种
                   <p class="float-right header-right-show margin-left10">
                     <img
                       v-show="showStatusButton"

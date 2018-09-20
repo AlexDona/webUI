@@ -225,7 +225,7 @@
           >
             <button
               type="primary"
-              class="primary-button"
+              class="primary-button cursor-pointer"
               @click.prevent="stateSubmitDetermineValidation"
             >
               确 定
@@ -251,6 +251,14 @@
                 v-model="accessKey"
                 disabled
               >
+              <span
+                class="code-copy cursor-pointer text-align-c display-inline-block"
+                v-clipboard:copy="accessKey"
+                v-clipboard:success="onCopy"
+                v-clipboard:error="onError"
+              >
+                |&nbsp;&nbsp;复制
+              </span>
             </el-form-item>
             <el-form-item
               style="margin-bottom: 0"
@@ -261,7 +269,17 @@
                 v-model="secretKey"
                 disabled
               >
-              <p class="font-size12 text-info text-margin ">（仅显示1次，遗失后不可找回，请务必妥善保存）</p>
+              <span
+                class="code-copy cursor-pointer text-align-c display-inline-block"
+                v-clipboard:copy="secretKey"
+                v-clipboard:success="onCopy"
+                v-clipboard:error="onError"
+              >
+                |&nbsp;&nbsp;复制
+              </span>
+              <p class="font-size12 text-info text-margin ">
+                （仅显示1次，遗失后不可找回，请务必妥善保存）
+              </p>
             </el-form-item>
             <el-form-item
               label="绑定IP地址"
@@ -282,7 +300,7 @@
           >
             <button
               type="primary"
-              class="primary-button"
+              class="primary-button cursor-pointer"
               @click.prevent="stateSubmitAffirm"
             >
               确 定
@@ -342,31 +360,31 @@
         </el-dialog>
       </div>
       <!-- 删除api-->
-      <div class="delete">
-        <el-dialog
-          :title="删除api地址"
-          :visible.sync="dialogVisible"
-          center
-        >
-          <span class="info">确定删除api地址吗？</span>
-          <span slot="footer" class="dialog-footer">
-         <!--确 定 取 消-->
-          <el-button
-            type="primary"
-            @click.prevent="deleteUserConfirm"
-            :disabled="statel"
-          >
-            确 定
-          </el-button>
-          <el-button
-            class="btn"
-            @click.prevent="dialogVisible = false"
-          >
-            取 消
-          </el-button>
-        </span>
-        </el-dialog>
-      </div>
+      <!--<div class="delete">-->
+        <!--<el-dialog-->
+          <!--:title="删除api地址"-->
+          <!--:visible.sync="dialogVisible"-->
+          <!--center-->
+        <!--&gt;-->
+          <!--<span class="info">确定删除api地址吗？</span>-->
+          <!--<span slot="footer" class="dialog-footer">-->
+         <!--&lt;!&ndash;确 定 取 消&ndash;&gt;-->
+          <!--<el-button-->
+            <!--type="primary cursor-pointer"-->
+            <!--@click.prevent="deleteUserConfirm"-->
+            <!--:disabled="statel"-->
+          <!--&gt;-->
+            <!--确 定-->
+          <!--</el-button>-->
+          <!--<el-button-->
+            <!--class="btn cursor-pointer"-->
+            <!--@click.prevent="dialogVisible = false"-->
+          <!--&gt;-->
+            <!--取 消-->
+          <!--</el-button>-->
+        <!--</span>-->
+        <!--</el-dialog>-->
+      <!--</div>-->
     </div>
   </div>
 </template>
@@ -691,12 +709,19 @@ export default {
     },
     // 删除
     deleteUser (id) {
-      this.dialogVisible = true
+      // this.dialogVisible = true
       this.userId = id
+      this.$confirm('确定删除API地址吗, 是否继续?', {
+        cancelButtonText: '取消',
+        confirmButtonText: '确定'
+      }).then(() => {
+        this.deleteUserApi(id)
+      }).catch(() => {
+      })
     },
-    deleteUserConfirm () {
-      this.deleteUserApi()
-    },
+    // deleteUserConfirm () {
+    //   this.deleteUserApi()
+    // },
     //  获取秘钥
     async deleteUserApi () {
       let data = await deleteUserInformation({
@@ -773,6 +798,23 @@ export default {
         // 返回展示
         this.securityCenter = data.data.data
       }
+    },
+    //  点击复制
+    onCopy (e) {
+      // 已拷贝
+      let msg = '已拷贝'
+      this.$message({
+        type: 'success',
+        message: msg
+      })
+    },
+    onError (e) {
+      // 拷贝失败，请稍后重试
+      let msg = '拷贝失败，请稍后重试'
+      this.$message({
+        type: 'success',
+        message: msg
+      })
     }
   },
   filter: {},
@@ -791,10 +833,17 @@ export default {
   @import "../../../../static/css/scss/Personal/UserAssets/APIManagement";
   .api-management{
     >.invitation-promotion-main{
+      .code-copy{
+        width: 55px;
+        height: 33px;
+        position: absolute;
+        right: 1px;
+        top: 4px;
+        line-height: 33px;
+      }
       .error-msg{
         height:30px;
         line-height: 30px;
-        padding-left: 35px;
         color: rgb(212, 88, 88);
       }
       .error-msg1{
@@ -890,8 +939,14 @@ export default {
         background-color: #1E2636;
       }
       .invitation-promotion-main{
+        .code-copy{
+          color: #338FF5;
+          background-color: #1A2233;
+        }
         .content-input {
-          border: 1px solid #485776;
+          border:1px solid rgba(72,87,118,1);
+          background:rgba(26,34,51,1);
+          border-radius: 3px;
           color: #fff;
           &:focus {
             border: 1px solid #338FF5;
@@ -965,6 +1020,10 @@ export default {
         border:1px solid rgba(236,241,248,1);
       }
       .invitation-promotion-main {
+        .code-copy{
+          color: #338FF5;
+          background-color: #fff;
+        }
         .primary-button {
           background: linear-gradient(81deg,rgba(43,57,110,1) 0%,rgba(42,80,130,1) 100%);
           color: #fff;

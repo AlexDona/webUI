@@ -420,6 +420,9 @@ export default {
   @import "../../../../static/css/scss/Personal/UserAssets/InvitingPromotion";
   .invitation-promotion{
     >.invitation-promotion-main{
+      .code-copy {
+        color: #338FF5;
+      }
       /*推广信息*/
       >.extension-info{
         min-height: 200px;
