@@ -1,7 +1,7 @@
 const pako = require('pako')
 
 class socket {
-  constructor (url = 'ws://192.168.1.52:8087/market', options) {
+  constructor (url = 'ws://192.168.1.200:8087/market', options) {
     this.heartBeatTimer = null
     this.options = options
     this.messageMap = {}

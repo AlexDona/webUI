@@ -408,7 +408,18 @@ export default {
       centerModelWarning: false, // 未实名认证前弹框提示
       openCollectionMode: false, // 开启收款方式
       closeCollectionMode: false, // 关闭收款方式
-      paymentTerm: {}, // 收款方式
+      paymentTerm: {
+        // isAlipayBind: '',
+        // isAlipayEnable: 'disable',
+        // isBankBind: '',
+        // isBnakEnable: 'disable',
+        // isPaypalBind: '',
+        // isPaypalEnable: 'disable',
+        // isWeixinBind: '',
+        // isWeixinEnable: 'disable',
+        // isXilianBind: '',
+        // isXilianEnable: 'disable'
+      }, // 收款方式
       closeBankCard: false, // 默认关闭银行卡
       closeMicroLetter: false, // 默认关闭微信
       closeAlipay: false, // 默认关闭支付宝
@@ -443,32 +454,39 @@ export default {
     // 点击去认证跳转到身份认证
     authenticationJump () {
       this.centerModelWarning = false
-      this.$router.push({path: '/PersonalCenter'})
-      this.CHANGE_USER_CENTER_ACTIVE_NAME('identity-authentication')
+      if (!this.realUserInfo.payPassword) {
+        this.$router.push({path: '/TransactionPassword'})
+      }
+      if (!this.realUserInfo.realname) {
+        this.CHANGE_USER_CENTER_ACTIVE_NAME('identity-authentication')
+        this.$router.push({path: '/PersonalCenter'})
+      }
+      console.log(this.userCenterActiveName)
     },
     // 路由跳转对应组件
     setShowStatusSecurity (val) {
+      console.log(this.userInfo)
       // 判断是否实名认证
-      if (this.userInfoRefresh.realname == '' && this.userInfoRefresh.payPassword == '') {
+      if (!this.userInfo.userInfo.realname || !this.userInfo.userInfo.payPassword) {
         this.centerModelWarning = true
-      } else {
-        switch (val) {
-          case 'bank':
-            this.$router.push({path: '/AddBankCard'})
-            break
-          case 'weChat':
-            this.$router.push({path: '/AddWeChat'})
-            break
-          case 'alipay':
-            this.$router.push({path: '/AddSetAlipay'})
-            break
-          case 'paypal':
-            this.$router.push({path: '/AddSetPaypal'})
-            break
-          case 'westernUnion':
-            this.$router.push({path: '/AddWesternUnion'})
-            break
-        }
+        return false
+      }
+      switch (val) {
+        case 'bank':
+          this.$router.push({path: '/AddBankCard'})
+          break
+        case 'weChat':
+          this.$router.push({path: '/AddWeChat'})
+          break
+        case 'alipay':
+          this.$router.push({path: '/AddSetAlipay'})
+          break
+        case 'paypal':
+          this.$router.push({path: '/AddSetPaypal'})
+          break
+        case 'westernUnion':
+          this.$router.push({path: '/AddWesternUnion'})
+          break
       }
     },
     // 判断是否实名认证
@@ -663,6 +681,7 @@ export default {
       } else {
         // 返回状态展示
         this.paymentTerm = data.data.data
+        console.log(data)
       }
     },
     /**
@@ -676,6 +695,7 @@ export default {
       if (!(returnAjaxMessage(data, this, 0))) {
         return false
       } else {
+        this.$store.commit('user/SET_STEP1_INFO', data.data.data)
         // 返回列表数据
         this.userInfoRefresh = data.data.data.userInfo
       }
@@ -686,10 +706,36 @@ export default {
     ...mapState({
       theme: state => state.common.theme,
       userInfo: state => state.user.loginStep1Info, // 用户详细信息
-      refsAccountCenterStatus: state => state.personal.refsAccountCenterStatus
+      realUserInfo: state => state.user.loginStep1Info.userInfo,
+      refsAccountCenterStatus: state => state.personal.refsAccountCenterStatus,
+      userCenterActiveName: state => state.personal.userCenterActiveName
     })
   },
-  watch: {}
+  watch: {
+    async userCenterActiveName (newVal) {
+      if (newVal === 'account-credited') {
+        await this.getUserRefreshUser()
+        await this.getAccountPaymentTerm()
+        // if (!this.userInfo.userInfo.payPassword) {
+        //   this.getAccountPaymentTerm()
+        //   return false
+        // }
+        // if (!this.userInfo.userInfo.realname) {
+        //   this.getAccountPaymentTerm()
+        //   return false
+        // } else {
+        //   this.getAccountPaymentTerm()
+        // }
+        // if (this.userInfo.userInfo.payPassword && this.userInfo.userInfo.realname) {
+        //   // 收款方式状态查询
+        //   this.getAccountPaymentTerm()
+        // }
+      }
+    },
+    paymentTerm (newVal) {
+      console.log(newVal)
+    }
+  }
 }
 </script>
 <style scoped lang="scss">

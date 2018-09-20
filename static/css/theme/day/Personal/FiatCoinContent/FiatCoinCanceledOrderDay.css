@@ -14,6 +14,9 @@
     width: 100%;
     background-color: #fff;
 }
-.fiat-canceled-order-box.personal.day{
+.fiat-canceled-order-box.personal.day {
     border: 1px solid #ECF1F8;
+}
+.fiat-canceled-order-box.personal.day .el-table tr {
+  background-color: #fff;
 }

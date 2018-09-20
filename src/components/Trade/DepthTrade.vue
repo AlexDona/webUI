@@ -20,7 +20,6 @@ export default {
       sells: [],
       depthCharts: '',
       options: {
-        // backgroundColor: this.theme === 'night' ? this.mainColor.$mainNightBgColor : this.mainColor.$mainDayBgColor,
         backgroundColor: '',
         name: '123',
         title: {},
@@ -33,15 +32,17 @@ export default {
         },
         tooltip: {
           trigger: 'axis',
-          position: function (point, params, dom, rect, size) {
-            return [point[0], point[1]]
-          },
           backgroundColor: '#262A42',
           borderColor: '#262A42',
           borderRadius: 3,
+          padding: 10,
           style: {
-            color: '#c7cce6',
-            width: '250px'
+            // color: '#c7cce6',
+            // color: '#000',
+            // width: '250px'
+          },
+          textStyle: {
+            color: ''
           },
           axisPointer: {
             snap: true,
@@ -442,6 +443,7 @@ export default {
     // 重新设置 options
     resetOptions () {
       this.options.tooltip.backgroundColor = this.theme === 'night' ? this.mainColor.$mainNightBgColor : this.mainColor.$mainDayBgColor
+      this.options.tooltip.textStyle.color = this.theme === 'night' ? '#fff' : 'rgb(102,102,102)'
       this.options.tooltip.borderColor = this.theme === 'night' ? this.mainColor.$mainNightBgColor : this.mainColor.$mainDayBgColor
       this.options.backgroundColor = this.theme === 'night' ? this.mainColor.$mainNightBgColor : this.mainColor.$mainDayBgColor
     },

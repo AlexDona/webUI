@@ -4,6 +4,7 @@
     :class="{'day':theme == 'day','night':theme == 'night' }"
   >
     <div class="account-assets-main">
+      <!-- 用户信息-->
       <UserInfo />
       <div class="account-assets-box margin-top16">
         <div>
@@ -14,7 +15,7 @@
             <div class="header-flex header-right flex1 padding-right23 display-flex">
               <div class="header-right-left float-left flex1">
                 <div class="header-right-text text-align-r">
-                  显示有资金币种
+                  显示资产为0的币种
                   <p class="float-right header-right-show margin-left10">
                     <img
                       v-show="showStatusButton"
@@ -543,8 +544,8 @@ export default {
     // 黑色主题样式
     require('../../../../static/css/theme/night/Personal/AccountBalance/AccountAssetsNight.css')
     // 刚进页面时候 个人资产列表展示
-    this.getAssetCurrenciesList()
-    this.getUserRefreshUser()
+    // this.getAssetCurrenciesList()
+    // this.getUserRefreshUser()
   },
   mounted () {
     // this.parameterSymbol = {
@@ -1021,7 +1022,8 @@ export default {
       userInfo: state => state.user.loginStep1Info, // 用户详细信息
       activeSymbol: state => state.common.activeSymbol, // 当前选中交易对
       disabledOfPhoneBtn: state => state.user.disabledOfPhoneBtn,
-      disabledOfEmailBtn: state => state.user.disabledOfEmailBtn
+      disabledOfEmailBtn: state => state.user.disabledOfEmailBtn,
+      userCenterActiveName: state => state.personal.userCenterActiveName
     }),
     filteredData: function () {
       var self = this
@@ -1036,7 +1038,15 @@ export default {
       })
     }
   },
-  watch: {}
+  watch: {
+    userCenterActiveName (newVal) {
+      if (newVal === 'assets') {
+        console.log(newVal)
+        this.getAssetCurrenciesList()
+        this.getUserRefreshUser()
+      }
+    }
+  }
 }
 </script>
 <style scoped lang="scss">

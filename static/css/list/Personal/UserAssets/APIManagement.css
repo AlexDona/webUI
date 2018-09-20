@@ -5,7 +5,10 @@
   border-bottom: 0;
 }
 .api-management.personal .verification-method .el-dialog {
-  width: 360px;
+  width: 340px;
+}
+.api-management.personal .verification-method .el-dialog__body {
+  padding: 0px 20px;
 }
 .api-management.personal .el-dialog:nth-child(2) {
    width: 360px;
@@ -19,11 +22,24 @@
 .el-dialog__headerbtn .el-dialog__close {
   display: none;
 }
+.api-management.personal .secondary-confirmation .el-dialog__header{
+  padding: 0 40px;
+}
 .api-management.personal .secondary-confirmation .el-dialog{
-  width: 360px;
+  width: 380px;
+  top: 5%;
+}
+.api-management.personal .secondary-confirmation .el-dialog__body {
+  padding: 5px 40px;
+}
+.api-management.personal .secondary-confirmation .el-dialog__footer {
+  text-align: center;
 }
 .api-management.personal .editor .el-dialog{
-  width: 360px;
+  width: 380px;
+}
+.api-management.personal .editor .el-dialog__footer {
+  text-align: center;
 }
 .api-management.personal .delete .el-dialog .el-dialog__body {
   text-align: center;
@@ -60,7 +76,7 @@
   padding: 0;
 }
 .api-management.personal .el-dialog__footer {
-  padding: 10px 30px 30px;
+  padding: 10px 20px 30px;
 }
 .api-management.personal .el-form-item {
   margin-bottom: 15px;

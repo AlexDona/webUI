@@ -359,7 +359,8 @@ export default{
       // 更新当前汇率列表
       'CHANGE_CURRENCY_RATE_LIST',
       'SET_COUNTRY_AREA_LIST',
-      'USER_INFORMATION_REFRESH'
+      'USER_INFORMATION_REFRESH',
+      'SET_USER_INFO_REFRESH_STATUS'
     ]),
     getCountryList () {
       getCountryListAjax(this, (data) => {
@@ -374,7 +375,8 @@ export default{
         console.log(data)
         // this.contryAreaList = data.data.data
         this.USER_INFORMATION_REFRESH(data.data.data)
-        // console.log(this.contryAreaList)
+        this.$store.commit('user/SET_STEP1_INFO', data.data.data)
+        console.log(this.userInfo)
       })
     },
     // 更改当前选中汇率转换货币
@@ -433,7 +435,6 @@ export default{
     // 用户跳转到指定页面
     stateReturnSuperior (val) {
       if (this.userInfo.payPassword) {
-        this.$router.push({path: '/PersonalCenter'})
         console.log(val)
         switch (val) {
           case 'account-balance':
@@ -449,6 +450,7 @@ export default{
             this.setPersonalJump('security-center')
             break
           case 'receiving-set':
+            this.$store.commit('personal/CHANGE_REF_ACCOUNT_CREDITED_STATE', true)
             this.setPersonalJump('account-credited')
             break
           case 'invite':
@@ -458,6 +460,7 @@ export default{
             this.setPersonalJump('api-management')
             break
         }
+        this.$router.push({path: '/PersonalCenter'})
       } else {
         this.$router.push({path: '/TransactionPassword'})
       }
@@ -543,7 +546,8 @@ export default{
       userInfo: state => state.user.loginStep1Info.userInfo,
       partnerId: state => state.common.partnerId, // 商户id
       activeLanguage: state => state.common.activeLanguage,
-      withdrawDepositList: state => state.common.withdrawDepositList
+      withdrawDepositList: state => state.common.withdrawDepositList,
+      userInfoRefreshStatus: state => state.common.userInfoRefreshStatus
     })
   },
   watch: {
@@ -555,6 +559,13 @@ export default{
     },
     withdrawDepositList (newVal) {
       console.log(newVal)
+    },
+    userInfoRefreshStatus (newVal) {
+      console.log(newVal)
+      if (newVal) {
+        this.getGlobalPersonalAssetsInformation()
+        this.SET_USER_INFO_REFRESH_STATUS(false)
+      }
     }
   }
 }

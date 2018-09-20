@@ -69,11 +69,13 @@
                   :on-remove="handleRemove"
                 >
                   <img
+                    v-show="dialogImageHandUrl1"
                     width="118"
                     height="118"
                     :src="dialogImageHandUrl1"
                   >
                   <IconFontCommon
+                    v-show="!dialogImageHandUrl1"
                     class="font-size40 icon-plus"
                     iconName="icon-iconjia"
                   />

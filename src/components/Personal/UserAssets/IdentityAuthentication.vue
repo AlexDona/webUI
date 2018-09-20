@@ -16,7 +16,7 @@
             <div class="header-border display-flex margin20">
               <span class="font-size16 main-header-title">实名认证</span>
               <p
-                v-if="userInfoRefresh.realname === ''"
+                v-if="userInfo.userInfo.realname === ''"
                 class="authentication-type font-size12"
               >
                 （请如实填写您的身份信息，一经认证不可修改）
@@ -50,7 +50,7 @@
           </div>
       </div>
       <div
-        v-if="userInfoRefresh.realname === ''"
+        v-if="userInfo.userInfo.realname === ''"
         class="name-authentication-content margin-top9"
       >
         <el-form
@@ -143,26 +143,26 @@
           @click.prevent="authenticationMethod">
           <span class="font-size16 main-header-title">高级认证</span>
           <span
-            v-if="userInfoRefresh.advancedAuth === 'notPass' || userInfoRefresh.advancedAuth === ''"
+            v-if="userInfo.userInfo.advancedAuth === 'notPass' || userInfo.userInfo.advancedAuth === ''"
             class="authentication-type font-size12"
           >
             （未高级认证）
           </span>
           <span
-            v-if="userInfoRefresh.advancedAuth === 'pass'"
+            v-if="userInfo.userInfo.advancedAuth === 'pass'"
             class="authentication-type font-size12"
           >
             （已通过实名认证）
           </span>
           <span
-            v-if="userInfoRefresh.advancedAuth === 'waitVeritfy'"
+            v-if="userInfo.userInfo.advancedAuth === 'waitVeritfy'"
             class="authentication-type font-size12"
           >
             （待审核）
           </span>
           <span
             class="float-right authentication-type font-size12"
-            v-if="userInfoRefresh.advancedAuth === 'notPass' || userInfoRefresh.advancedAuth === ''"
+            v-if="userInfo.userInfo.advancedAuth === 'notPass' || userInfo.userInfo.advancedAuth === ''"
           >
             去认证
           </span>
@@ -177,7 +177,7 @@
                 <p class="information">
                   <span class="info-type font-size12">国际：</span>
                   <span class="user-info font-size14">
-                    {{ userInfoRefresh.country }}
+                    {{ userInfo.userInfo.country }}
                   </span>
                 </p>
                 <p class="information">
@@ -186,7 +186,7 @@
                   <span
                     class="user-info font-size14"
                   >
-                    {{ userInfoRefresh.realname }}
+                    {{ userInfo.userInfo.realname }}
                   </span>
                 </p>
                 <p class="information">
@@ -195,7 +195,7 @@
                   <!--  {{ userInfoRefresh.cardNo.substring(0,6)}}
                   ****
                    {{ userInfoRefresh.cardNo.substring(14,18)}}-->
-                     {{ userInfoRefresh.cardNo}}
+                     {{ userInfo.userInfo.cardNo}}
                   </span>
                 </p>
                 <p class="information">
@@ -373,7 +373,6 @@
 </template>
 <!--请严格按照如下书写书序-->
 <script>
-import {mapState} from 'vuex'
 import ErrorBox from '../../User/ErrorBox'
 import IconFontCommon from '../../Common/IconFontCommon'
 import {
@@ -384,6 +383,8 @@ import {
   userRefreshUser
 } from '../../../utils/api/personal'
 import {returnAjaxMessage} from '../../../utils/commonFunc'
+import {createNamespacedHelpers, mapState} from 'vuex'
+const {mapMutations} = createNamespacedHelpers('common')
 export default {
   components: {
     ErrorBox, // 错误提示接口
@@ -440,14 +441,15 @@ export default {
       ]
     }
   },
-  created () {
+  async created () {
     // 覆盖Element样式
     require('../../../../static/css/list/Personal/UserAssets/IdentityAuthentication.css')
     // 白色主题样式
     require('../../../../static/css/theme/day/Personal/UserAssets/IdentityAuthenticationDay.css')
     // 黑色主题样式
     require('../../../../static/css/theme/night/Personal/UserAssets/IdentityAuthenticationNight.css')
-    this.getUserRefreshUser()
+    this.SET_USER_INFO_REFRESH_STATUS(true)
+    await this.getUserRefreshUser()
     this.tokenObj.token = this.userInfo.token
   },
   mounted () {},
@@ -455,6 +457,9 @@ export default {
   update () {},
   beforeRouteUpdate () {},
   methods: {
+    ...mapMutations([
+      'SET_USER_INFO_REFRESH_STATUS'
+    ]),
     // beforeAvatarUpload (file) {
     //   const isJPG = file.type === 'image/jpeg/bmp/png'
     //   const isLt2M = file.size / 1024 / 1024 < 2
@@ -537,6 +542,7 @@ export default {
       if (!(returnAjaxMessage(data, this, 0))) {
         return false
       } else {
+        this.$store.commit('user/SET_STEP1_INFO', data.data.data)
         // 返回列表数据
         this.userInfoRefresh = data.data.data.userInfo
       }
@@ -600,8 +606,8 @@ export default {
         if (!(returnAjaxMessage(data, this, 1))) {
           return false
         } else {
-          this.getUserRefreshUser()
-          this.getRealNameInformation()
+          await this.getUserRefreshUser()
+          await this.getRealNameInformation()
           console.log(data)
         }
       }
@@ -664,8 +670,9 @@ export default {
       if (!(returnAjaxMessage(data, this, 1))) {
         return false
       } else {
-        this.getUserRefreshUser()
-        this.getRealNameInformation()
+        this.SET_USER_INFO_REFRESH_STATUS(true)
+        await this.getUserRefreshUser()
+        await this.getRealNameInformation()
         this.authenticationStatusFront = false
         this.dialogImageFrontUrl = ''
         this.dialogImageReverseSideUrl = ''
@@ -686,10 +693,21 @@ export default {
     ...mapState({
       theme: state => state.common.theme,
       contryAreaList: state => state.common.contryAreaList,
-      userInfo: state => state.user.loginStep1Info // 用户详细信息
+      userInfo: state => state.user.loginStep1Info, // 用户详细信息
+      userCenterActiveName: state => state.personal.userCenterActiveName
     })
   },
-  watch: {}
+  watch: {
+    userCenterActiveName (newVal) {
+      if (newVal === 'identity-authentication') {
+        this.getRealNameInformation()
+        this.SET_USER_INFO_REFRESH_STATUS(true)
+        this.getUserRefreshUser()
+        // 国家列表展示
+        this.getCountryListings()
+      }
+    }
+  }
 }
 </script>
 <style scoped lang="scss">

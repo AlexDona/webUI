@@ -134,8 +134,8 @@
                   </template>
                 </el-table-column>
                 <el-table-column
-                  label="方向"
-                  width="50"
+                  label="委托类型"
+                  width="110"
                 >
                   <template slot-scope="s">
                     <span v-show="language !== 'zh_CN'">{{s.row.type}}</span>
@@ -270,8 +270,8 @@
               </template>
             </el-table-column>
             <el-table-column
-              label="方向"
-              width="50"
+              label="委托类型"
+              width="110"
             >
               <template slot-scope="s">
                 <span v-show="language !== 'zh_CN'">{{s.row.type}}</span>
@@ -402,8 +402,8 @@
               </template>
             </el-table-column>
             <el-table-column
-              label="方向"
-              width="50"
+              label="委托类型"
+              width="110"
             >
               <template slot-scope="s">
                 <span v-show="language !== 'zh_CN'">{{s.row.type}}</span>
@@ -593,12 +593,18 @@ export default {
         id,
         version
       }
-      repealMyEntrustCommon(params, (res) => {
-        if (!returnAjaxMessage(res, this, 1)) {
-          return false
-        } else {
-          this.commissionList()
-        }
+      this.$confirm('确定撤销订单吗, 是否继续?', {
+        cancelButtonText: '取消',
+        confirmButtonText: '确定'
+      }).then(() => {
+        repealMyEntrustCommon(params, (res) => {
+          if (!returnAjaxMessage(res, this, 1)) {
+            return false
+          } else {
+            this.commissionList()
+          }
+        })
+      }).catch(() => {
       })
     },
     async commissionList (entrustType1) {
@@ -671,7 +677,8 @@ export default {
       theme: state => state.common.theme,
       language: state => state.common.language,
       partnerId: state => state.common.partnerId,
-      userInfo: state => state.user.loginStep1Info
+      userInfo: state => state.user.loginStep1Info,
+      userCenterActiveName: state => state.personal.userCenterActiveName
     })
   },
   watch: {
@@ -680,6 +687,12 @@ export default {
     },
     activeMatchType (newVal) {
       console.log(newVal)
+    },
+    userCenterActiveName (newVal) {
+      if (newVal === 'coin-orders') {
+        this.getEntrustSelectBox()
+        this.commissionList()
+      }
     }
   }
 }

@@ -846,10 +846,17 @@ export default {
       activeCountryCode: state => state.user.loginStep1Info.countryCode, // 国籍码
       disabledOfPhoneBtn: state => state.user.disabledOfPhoneBtn,
       disabledOfEmailBtn: state => state.user.disabledOfEmailBtn,
-      refSecurityCenterStatus: state => state.personal.refSecurityCenterStatus
+      refSecurityCenterStatus: state => state.personal.refSecurityCenterStatus,
+      userCenterActiveName: state => state.personal.userCenterActiveName
     })
   },
-  watch: {}
+  watch: {
+    userCenterActiveName (newVal) {
+      if (newVal === 'security-center') {
+        this.getSecurityCenter()
+      }
+    }
+  }
 }
 </script>
 <style scoped lang="scss">

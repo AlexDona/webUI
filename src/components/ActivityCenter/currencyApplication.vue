@@ -91,10 +91,14 @@
             </div>
             <p>数字资产上线合作，请下载填写申请信息并邮箱至 <span class="target-email">XINBI@FUBT.TOP</span>审核。</p>
             <div class="download-box">
-              <button
+              <!--<button-->
+                <!--class="download-btn cursor-pointer"-->
+                <!--@click="downloadPreviewTable"-->
+              <!--&gt;预览下载</button>-->
+              <a
                 class="download-btn cursor-pointer"
-                @click="downloadPreviewTable"
-              >预览下载</button>
+                :href="downloadUrl"
+              >预览下载</a>
             </div>
           </div>
         </div>
@@ -120,7 +124,9 @@ export default {
   },
   // props,
   data () {
-    return {}
+    return {
+      downloadUrl: '' // 下载地址
+    }
   },
   created () {
     this.getDownUrl()
@@ -138,10 +144,10 @@ export default {
       }
       const data = await getCurrencyApplicationDownloadUrl(params)
       if (!returnAjaxMessage(data, this)) {
-        console.log(data)
         return false
       } else {
         console.log(data)
+        this.downloadUrl = data.data.data.image
       }
     },
     // 下载资产预览表
@@ -250,8 +256,10 @@ export default {
               width:100%;
               text-align: center;
               >.download-btn{
+                display:inline-block;
                 width:300px;
                 height:50px;
+                line-height:50px;
                 background:linear-gradient(90deg,rgba(43,57,110,1) 0%,rgba(42,80,130,1) 100%);
                 border-radius:4px;
                 color:#fff;

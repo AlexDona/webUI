@@ -239,18 +239,21 @@ export default {
     // 删除提币地址
     cancelId (id) {
       console.log(id)
-      this.dialogVisible = true
       this.deleteWithdrawalId = id
-      this.gainAddressList.forEach((fid, item) => {
-        if (item.id == id) {
-          this.gainAddressList = item
-        }
+      this.$confirm('确定删除提币地址吗, 是否继续?', {
+        cancelButtonText: '取消',
+        confirmButtonText: '确定'
+      }).then(() => {
+        this.deleteWithdrawal(id)
+      }).catch(() => {
       })
+      // this.gainAddressList.forEach((fid, item) => {
+      //   if (item.id == id) {
+      //     this.gainAddressList = item
+      //   }
+      // })
     },
     // 确认删除提币地址
-    confirm () {
-      this.deleteWithdrawal()
-    },
     async deleteWithdrawal () {
       let data
       let param = {
@@ -274,10 +277,17 @@ export default {
   filter: {},
   computed: {
     ...mapState({
-      theme: state => state.common.theme
+      theme: state => state.common.theme,
+      userCenterActiveName: state => state.personal.userCenterActiveName
     })
   },
-  watch: {}
+  watch: {
+    userCenterActiveName (newVal) {
+      if (newVal === 'mention-address') {
+        this.WithdrawalAddressList()
+      }
+    }
+  }
 }
 </script>
 <style scoped lang="scss">

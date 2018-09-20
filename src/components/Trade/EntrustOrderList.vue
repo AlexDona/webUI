@@ -292,7 +292,7 @@ export default {
      *撤销委单
      */
     repealMyEntrust (id, version) {
-      this.$confirm('您确定要撤销此单吗, 是否继续?', '提示', {
+      this.$confirm('您确定要撤销此单吗, 是否继续?', {
         confirmButtonText: '确定',
         cancelButtonText: '取消'
       }).then(() => {
@@ -342,7 +342,7 @@ export default {
       if (!returnAjaxMessage(data, this, 0)) {
         return false
       } else {
-        this.historyEntrustList = data.data.data.list
+        this.historyEntrustList = data.data.data.list || []
         this.totalPageForHistoryEntrust = data.data.data.pages - 0
       }
     },
@@ -395,6 +395,9 @@ export default {
         this.getHistoryEntrust()
         this.TOGGLE_REFRESH_ENTRUST_LIST_STATUS(false)
       }
+    },
+    historyEntrustList (newVal) {
+      console.log(newVal)
     }
   }
 }

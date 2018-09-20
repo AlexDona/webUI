@@ -218,36 +218,36 @@
           >
           </el-pagination>
           <!-- 取消push -->
-          <div class="cancel-push">
-            <el-dialog
-              :title="取消push"
-              :visible.sync="dialogVisible"
-              center
-            >
-              <span class="text-align-c">
-                确定取消PUSH资产吗？
-              </span>
-              <span
-                slot="footer"
-                class="dialog-footer"
-              >
-             <!--确 定 取 消-->
-              <el-button
-                type="primary"
-                @click.prevent="confirm"
-                class="mg1"
-                :disabled="statel"
-              >
-                确 定
-              </el-button>
-              <el-button
-                @click.prevent="dialogVisible = false"
-              >
-                取 消
-              </el-button>
-            </span>
-            </el-dialog>
-          </div>
+          <!--<div class="cancel-push">-->
+            <!--<el-dialog-->
+              <!--:title="取消push"-->
+              <!--:visible.sync="dialogVisible"-->
+              <!--center-->
+            <!--&gt;-->
+              <!--<span class="text-align-c">-->
+                <!--确定取消PUSH资产吗？-->
+              <!--</span>-->
+              <!--<span-->
+                <!--slot="footer"-->
+                <!--class="dialog-footer"-->
+              <!--&gt;-->
+             <!--&lt;!&ndash;确 定 取 消&ndash;&gt;-->
+              <!--<el-button-->
+                <!--type="primary"-->
+                <!--@click.prevent="confirm"-->
+                <!--class="mg1"-->
+                <!--:disabled="statel"-->
+              <!--&gt;-->
+                <!--确 定-->
+              <!--</el-button>-->
+              <!--<el-button-->
+                <!--@click.prevent="dialogVisible = false"-->
+              <!--&gt;-->
+                <!--取 消-->
+              <!--</el-button>-->
+            <!--</span>-->
+            <!--</el-dialog>-->
+          <!--</div>-->
           <!--PUSH确认-->
           <div class="push-affirm">
             <el-dialog
@@ -484,18 +484,22 @@ export default {
     },
     // 资产币种下拉
     changeId (e) {
-      this.currencyList.forEach(item => {
-        if (e === item.id) {
-          console.log(e)
-          this.toggleAssetsCurrencyId(e)
-        }
-      })
+      console.log(e)
+      this.toggleAssetsCurrencyId(e)
+      // this.currencyList.forEach(item => {
+      //   if (e === item.id) {
+      //     console.log(e)
+      //     this.currencyValue = e
+      //     console.log(e)
+      //     this.toggleAssetsCurrencyId(e)
+      //   }
+      // })
     },
     // 4.选择push资产币种
-    async toggleAssetsCurrencyId (val) {
+    async toggleAssetsCurrencyId (e) {
       let data
       let param = {
-        coinId: val // 币种coinId
+        coinId: e // 币种coinId
       }
       data = await getPushTotalByCoinId(param)
       if (!(returnAjaxMessage(data, this, 0))) {
@@ -622,18 +626,25 @@ export default {
     // 点击获取当前取消push id
     cancelId (id) {
       console.log(id)
-      this.dialogVisible = true
+      // this.dialogVisible = true
       this.pushUID = id
-      this.pushRecordList.forEach((fid, item) => {
-        if (item.id == id) {
-          this.pushRecordList = item
-        }
+      this.$confirm('确定删除提币地址吗, 是否继续?', {
+        cancelButtonText: '取消',
+        confirmButtonText: '确定'
+      }).then(() => {
+        this.stateRevocationInformation(id)
+      }).catch(() => {
       })
+      // this.pushRecordList.forEach((fid, item) => {
+      //   if (item.id == id) {
+      //     this.pushRecordList = item
+      //   }
+      // })
     },
     // 确定撤销
-    confirm () {
-      this.stateRevocationInformation()
-    },
+    // confirm () {
+    //   this.stateRevocationInformation()
+    // },
     async stateRevocationInformation () {
       let data
       let param = {
@@ -744,10 +755,19 @@ export default {
       partnerId: state => state.common.partnerId,
       loginType: state => state.user.loginType, // 发送类型
       disabledOfPhoneBtn: state => state.user.disabledOfPhoneBtn,
-      disabledOfEmailBtn: state => state.user.disabledOfEmailBtn
+      disabledOfEmailBtn: state => state.user.disabledOfEmailBtn,
+      userCenterActiveName: state => state.personal.userCenterActiveName
     })
   },
-  watch: {}
+  watch: {
+    userCenterActiveName (newVal) {
+      if (newVal === 'push-asset') {
+        this.getPushRecordList()
+        // 清空数据
+        this.emptyInputData()
+      }
+    }
+  }
 }
 </script>
 <style scoped lang="scss">

@@ -341,7 +341,7 @@ const router = new Router({
 })
 
 router.beforeEach((to, from, next) => {
-  if (to.path !== '/login') {
+  if (to.path !== '/login' || to.path !== '/Register') {
     console.log(store.state.common.routerTo)
     store.commit('common/CHANGE_ROUTER_PATH', to.path)
     console.log(store.state.common.routerTo)

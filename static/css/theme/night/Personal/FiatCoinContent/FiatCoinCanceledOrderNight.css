@@ -69,7 +69,6 @@
 .fiat-canceled-order-box.personal.night .password-dialog .el-button--primary{
   background:linear-gradient(9deg,rgba(43,57,110,1),rgba(42,80,130,1));
 }
-
-.fiat-canceled-order-box.personal.night .el-table tr{
+.fiat-canceled-order-box.personal.night .el-table tr {
   background-color: #1E2636;
 }
