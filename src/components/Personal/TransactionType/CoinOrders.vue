@@ -135,7 +135,7 @@
                 </el-table-column>
                 <el-table-column
                   label="委托类型"
-                  width="50"
+                  width="110"
                 >
                   <template slot-scope="s">
                     <span v-show="language !== 'zh_CN'">{{s.row.type}}</span>
@@ -270,8 +270,8 @@
               </template>
             </el-table-column>
             <el-table-column
-              label="方向"
-              width="50"
+              label="委托类型"
+              width="110"
             >
               <template slot-scope="s">
                 <span v-show="language !== 'zh_CN'">{{s.row.type}}</span>
@@ -403,7 +403,7 @@
             </el-table-column>
             <el-table-column
               label="委托类型"
-              width="50"
+              width="110"
             >
               <template slot-scope="s">
                 <span v-show="language !== 'zh_CN'">{{s.row.type}}</span>

@@ -32,7 +32,7 @@
                         <p class="text">成交次数</p>
                       </div>
                       <div class="failed">
-                        <p class="blue">{{freezeTimes}}</p>
+                        <p class="blue">{{failTimes}}</p>
                         <p class="text">失败次数</p>
                       </div>
                       <div class="freeze">

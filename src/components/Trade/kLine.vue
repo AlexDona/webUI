@@ -408,15 +408,19 @@ export default {
             let newData = data.data[0]
             this.datafeeds.barsUpdater.updateData()
             const ticker = `${this.symbol}-${this.interval}`
+            console.log(this.interval)
             const barsData = {
-              // time: data.id * 1000,
-              time: this.lastTime,
+              time: newData.time,
+              // time: this.lastTime,
               open: newData.open,
               high: newData.high,
               low: newData.low,
               close: newData.close,
               volume: newData.volume
             }
+            console.log(barsData.time)
+            console.log(this.lastTime)
+            console.log(barsData.time - this.lastTime)
             if (barsData.time >= this.lastTime && this.cacheData[ticker] && this.cacheData[ticker].length) {
               this.cacheData[ticker][this.cacheData[ticker].length - 1] = barsData
             }

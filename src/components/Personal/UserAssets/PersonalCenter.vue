@@ -367,10 +367,8 @@ export default {
       if (!newVal) {
         this.dialogVisible1 = true
       }
-    },
-    async userCenterActiveName () {
-      await this.getUserRefreshUser()
     }
+
     // async userCenterActiveName (newVal) {
     //   if (newVal === 'account-credited') {
     //     await this.getUserRefreshUser()
