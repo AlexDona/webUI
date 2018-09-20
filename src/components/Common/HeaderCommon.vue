@@ -271,15 +271,15 @@ import {
 } from '../../utils/api/header'
 import IconFontCommon from '../Common/IconFontCommon'
 import {
-  setStore,
-  amendPrecision
+  setStore
+  // amendPrecision
 } from '../../utils'
 // import {getPartnerList} from '../../utils/api/home'
 import {
   returnAjaxMessage,
   getCountryListAjax,
-  globalPersonalAssetsInformation,
-  reflashUserInfo
+  globalPersonalAssetsInformation
+  // reflashUserInfo
 } from '../../utils/commonFunc'
 import { createNamespacedHelpers, mapState } from 'vuex'
 const { mapMutations } = createNamespacedHelpers('common')
