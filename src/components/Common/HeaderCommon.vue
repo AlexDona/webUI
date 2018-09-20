@@ -346,6 +346,7 @@ export default{
     this.getTransitionCurrencyRate()
     this.getCountryList()
     this.getGlobalPersonalAssetsInformation()
+    reflashUserInfo(this)
   },
   methods: {
     ...mapMutations([
