@@ -184,7 +184,7 @@
                   <span class="margin-left10 buy">
                     可买：
                     <span v-show="!buyUserCoinWallet.total||!middleTopData.price">--</span>
-                    <span v-show="buyUserCoinWallet.total&&middleTopData.price">{{buyUserCoinWallet.total/middleTopData.price}}</span>
+                    <span v-show="buyUserCoinWallet.total&&middleTopData.price">{{(buyUserCoinWallet.total/middleTopData.price).toFixed(middleTopData.priceExchange)}}</span>
                     <span>{{activeSymbol.sellsymbol}}</span>
                   </span>
                 </div>
@@ -539,18 +539,28 @@ export default {
             case 'LIMIT':
               params.price = this.$refs[this.limitBuyPriceInputRef].value
               params.count = this.$refs[this.limitBuyCountInputRef].value
+              if ((this.buyUserCoinWallet.total / params.price) < params.count - 0) {
+                this.$message({
+                  type: 'error',
+                  message: '可用币种数量不足'
+                })
+                return false
+              }
               break
             case 'MARKET':
               params.count = this.$refs[this.marketBuyCountInputRef].value
+              if ((this.buyUserCoinWallet.total / this.middleTopData.price) < params.count - 0) {
+                this.$message({
+                  type: 'error',
+                  message: '可用币种数量不足'
+                })
+                return false
+              }
               break
           }
-          if (this.buyUserCoinWallet.total / this.middleTopData.price < params.count - 0) {
-            this.$message({
-              type: 'error',
-              message: '可用币种数量不足'
-            })
-            return false
-          }
+          // console.log(this.buyUserCoinWallet.total)
+          console.log(this.buyUserCoinWallet.total / params.price)
+          console.log(params.count)
           break
         // 卖单
         case 1:
@@ -563,7 +573,7 @@ export default {
               params.count = this.$refs[this.marketSellCountInputRef].value
               break
           }
-          if (this.buyUserCoinWallet.total < params.count - 0) {
+          if (this.sellUserCoinWallet.total < params.count - 0) {
             this.$message({
               type: 'error',
               message: '可用币种数量不足'
