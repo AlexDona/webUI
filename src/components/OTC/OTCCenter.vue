@@ -362,7 +362,7 @@ import OTCCompletedOrder from './OTCCompletedOrder'
 import OTCCanceledOrder from './OTCCanceledOrder'
 import OTCFreezingOrder from './OTCFreezingOrder'
 import OTCEntrustOrder from './OTCEntrustOrder'
-import {returnAjaxMessage} from '../../utils/commonFunc'
+import {returnAjaxMessage, reflashUserInfo} from '../../utils/commonFunc'
 // import {mapState, mapMutations} from 'vuex'
 import {createNamespacedHelpers, mapState} from 'vuex'
 const {mapMutations} = createNamespacedHelpers('OTC')
@@ -441,9 +441,13 @@ export default {
     // console.log(this.userInfo)
     // 2.0 otc可用法币查询：
     // this.getMerchantAvailablelegalTenderList()
-    console.log('是否登录' + this.isLogin)
-    console.log('用户信息')
-    console.log(this.userInfo)
+    // console.log('是否登录' + this.isLogin)
+    // console.log('用户信息')
+    // console.log(this.userInfo)
+    if (this.isLogin) {
+      // 刷新用户信息
+      reflashUserInfo(this)
+    }
   },
   mounted () {},
   activited () {},
@@ -497,6 +501,8 @@ export default {
       if (!this.isLogin) {
         this.$router.push({path: '/login'})
       } else {
+        // 刷新用户信息
+        reflashUserInfo(this)
         // 未设置交易密码、未实名认证，未高级认证，不能进行交易
         if (!this.userInfo.payPassword) {
           this.$message({
@@ -529,6 +535,8 @@ export default {
       if (!this.isLogin) {
         this.$router.push({path: '/login'})
       } else {
+        // 刷新用户信息
+        reflashUserInfo(this)
         // 未设置交易密码、未实名认证，未高级认证，不能进行交易
         if (!this.userInfo.payPassword) {
           this.$message({
@@ -569,6 +577,8 @@ export default {
       if (!this.isLogin) {
         this.$router.push({path: '/login'})
       } else {
+        // 刷新用户信息
+        reflashUserInfo(this)
         // 未设置交易密码、未实名认证，未高级认证，不能进行交易
         if (!this.userInfo.payPassword) {
           this.$message({

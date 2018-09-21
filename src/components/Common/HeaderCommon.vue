@@ -270,12 +270,16 @@ import {
   getTransitionCurrencyRate // 获取汇率转换费率
 } from '../../utils/api/header'
 import IconFontCommon from '../Common/IconFontCommon'
-import {setStore} from '../../utils'
+import {
+  setStore
+  // amendPrecision
+} from '../../utils'
 // import {getPartnerList} from '../../utils/api/home'
 import {
   returnAjaxMessage,
   getCountryListAjax,
   globalPersonalAssetsInformation
+  // reflashUserInfo
 } from '../../utils/commonFunc'
 import { createNamespacedHelpers, mapState } from 'vuex'
 const { mapMutations } = createNamespacedHelpers('common')
@@ -333,14 +337,14 @@ export default{
       activityCenterSubNavStatus: false
     }
   },
-  created () {
+  async created () {
     require('../../../static/css/theme/day/Common/HeaderCommonDay.css')
     // 获取 语言列表:任付伟先注释此方法防止每次刷新报错-有需要请放开
     this.getLanguageList()
     // console.log(this.theme)
     this.activeTheme = this.theme
     // 查询某商户可用法币币种列表
-    // 折算货币
+    // 折算货币s
     this.getMerchantAvailablelegalTenderList()
     this.getTransitionCurrencyRate()
     this.getCountryList()

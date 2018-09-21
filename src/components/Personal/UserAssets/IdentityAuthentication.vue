@@ -27,21 +27,17 @@
               >
                 （
                 <span class="authentication-info">您已通过实名认证</span>
-                <!--<span v-if="statusRealNameInformation.realname == null"></span>-->
                 <span
                   class="type-info"
                 >
                   姓名：
-                  {{ statusRealNameInformation.realname }}
-                  <!--{{ statusRealNameInformation.realname.substring(0,1)}}-->
-                <!--*-->
-                  <!--{{ statusRealNameInformation.realName.substring(2,3)}}-->
+                  {{ userInfo.userInfo.realname }}
                 </span>、
                 <span class="type-info">
                   身份证号：
-                   {{ statusRealNameInformation.cardNo.substring(0,2)}}
+                   {{ userInfo.userInfo.cardNo.substring(0,2)}}
                   ****
-                   {{ statusRealNameInformation.cardNo.substring(16,18)}}
+                   {{ userInfo.userInfo.cardNo.substring(16,18)}}
                 </span>
                 &nbsp;）
               </p>
@@ -224,7 +220,7 @@
                   <!-- 上传身份证正面 -->
                   <div class="default-center">
                     <el-upload
-                      action="http://192.168.1.200:8888/uploadfile"
+                      :action="baseUrl+'uploadfile'"
                       :headers="tokenObj"
                       list-type="picture-card"
                       :on-success="handleSuccessFront"
@@ -244,8 +240,9 @@
                   <button
                     type="primary"
                     class="upload-submit cursor-pointer font-size12 margin-top30"
-                    @click.prevent="handleSuccessFront"
+                    on-success="handleSuccessFront"
                   >
+                    <!--@click.prevent="handleSuccessFront"-->
                     上传身份证正面
                   </button>
                 </div>
@@ -253,7 +250,7 @@
                   <!-- 上传身份证反面 -->
                   <div class="default-center">
                     <el-upload
-                      action="http://192.168.1.200:8888/uploadfile"
+                      :action="baseUrl+'uploadfile'"
                       :headers="tokenObj"
                       list-type="picture-card"
                       :on-success="handleSuccessReverseSide"
@@ -282,7 +279,7 @@
                   <!-- 上传手持身份证 -->
                   <div class="default-center">
                     <el-upload
-                      action="http://192.168.1.200:8888/uploadfile"
+                      :action="baseUrl+'uploadfile'"
                       :headers="tokenObj"
                       list-type="picture-card"
                       :on-success="handleSuccessHand"
@@ -382,7 +379,11 @@ import {
   realNameInformation,
   userRefreshUser
 } from '../../../utils/api/personal'
-import {returnAjaxMessage} from '../../../utils/commonFunc'
+import {
+  returnAjaxMessage,
+  reflashUserInfo
+} from '../../../utils/commonFunc'
+import {baseUrl} from '../../../utils/env'
 import {createNamespacedHelpers, mapState} from 'vuex'
 const {mapMutations} = createNamespacedHelpers('common')
 export default {
@@ -451,6 +452,7 @@ export default {
     this.SET_USER_INFO_REFRESH_STATUS(true)
     await this.getUserRefreshUser()
     this.tokenObj.token = this.userInfo.token
+    reflashUserInfo(this)
   },
   mounted () {},
   activited () {},
@@ -538,7 +540,6 @@ export default {
       let data = await userRefreshUser({
         token: this.userInfo.token
       })
-      console.log(data)
       if (!(returnAjaxMessage(data, this, 0))) {
         return false
       } else {
@@ -638,7 +639,6 @@ export default {
     },
     async stateSeniorCertification () {
       if (!this.dialogImageFrontUrl) {
-        // this.errorMsg = '请上传身份证正面'
         this.$message({
           message: '请上传身份证正面',
           type: 'error'
@@ -650,7 +650,7 @@ export default {
           type: 'error'
         })
         return
-      } else if (!this.dialogImageReverseSideUrl) {
+      } else if (!this.dialogImageHandUrl) {
         this.$message({
           message: '请上传手持身份证',
           type: 'error'
@@ -695,7 +695,10 @@ export default {
       contryAreaList: state => state.common.contryAreaList,
       userInfo: state => state.user.loginStep1Info, // 用户详细信息
       userCenterActiveName: state => state.personal.userCenterActiveName
-    })
+    }),
+    baseUrl () {
+      return baseUrl
+    }
   },
   watch: {
     userCenterActiveName (newVal) {
