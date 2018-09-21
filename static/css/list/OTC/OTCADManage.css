@@ -47,7 +47,7 @@
   padding: 0 0;
 }
 .otc-AD-manage-box .manage-main-bottom .el-table__empty-block {
-  min-height: 500px;
+  min-height: 410px;
 }
 /* 重置饿了么表格中边框的样式和边框的圆角 开始 */
 .otc-AD-manage-box .manage-main-bottom .el-table .el-table__body tr td:first-of-type  {

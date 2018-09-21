@@ -220,7 +220,7 @@
                   <!-- 上传身份证正面 -->
                   <div class="default-center">
                     <el-upload
-                      :action="baseUrl+'uploadfile'"
+                      :action="apiCommonUrl+'uploadfile'"
                       :headers="tokenObj"
                       list-type="picture-card"
                       :on-success="handleSuccessFront"
@@ -250,7 +250,7 @@
                   <!-- 上传身份证反面 -->
                   <div class="default-center">
                     <el-upload
-                      :action="baseUrl+'uploadfile'"
+                      :action="apiCommonUrl+'uploadfile'"
                       :headers="tokenObj"
                       list-type="picture-card"
                       :on-success="handleSuccessReverseSide"
@@ -279,7 +279,7 @@
                   <!-- 上传手持身份证 -->
                   <div class="default-center">
                     <el-upload
-                      :action="baseUrl+'uploadfile'"
+                      :action="apiCommonUrl+'uploadfile'"
                       :headers="tokenObj"
                       list-type="picture-card"
                       :on-success="handleSuccessHand"
@@ -383,7 +383,7 @@ import {
   returnAjaxMessage,
   reflashUserInfo
 } from '../../../utils/commonFunc'
-import {baseUrl} from '../../../utils/env'
+import {apiCommonUrl} from '../../../utils/env'
 import {createNamespacedHelpers, mapState} from 'vuex'
 const {mapMutations} = createNamespacedHelpers('common')
 export default {
@@ -674,10 +674,14 @@ export default {
         await this.getUserRefreshUser()
         await this.getRealNameInformation()
         this.authenticationStatusFront = false
-        this.dialogImageFrontUrl = ''
-        this.dialogImageReverseSideUrl = ''
-        this.dialogImageHandUrl = ''
+        this.stateEmptyData()
       }
+    },
+    // 接口请求完成之后清空数据
+    stateEmptyData () {
+      this.dialogImageFrontUrl = ''
+      this.dialogImageReverseSideUrl = ''
+      this.dialogImageHandUrl = ''
     },
     // 检测上传图片大小
     bytesToSize (bytes) {
@@ -696,8 +700,8 @@ export default {
       userInfo: state => state.user.loginStep1Info, // 用户详细信息
       userCenterActiveName: state => state.personal.userCenterActiveName
     }),
-    baseUrl () {
-      return baseUrl
+    apiCommonUrl () {
+      return apiCommonUrl
     }
   },
   watch: {

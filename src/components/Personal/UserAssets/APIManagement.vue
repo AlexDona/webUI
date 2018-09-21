@@ -54,7 +54,7 @@
             <div class="content-info">
               <span class="style">● </span>
               <p class="content-text">
-                FUBT 为您提供了强大的API，您可以通过 API 使用行情查询、自动
+                本平台为您提供了强大的API，您可以通过 API 使用行情查询、自动
                 交易等服务。通过 API 文档 查看如何使用;
               </p>
             </div>
@@ -96,7 +96,7 @@
             </el-table-column>
             <el-table-column
               label="备注"
-              width="80"
+              width="85"
             >
               <template slot-scope = "s">
                 <div>{{ s.row.remark }}</div>
@@ -129,7 +129,7 @@
             </el-table-column>
             <el-table-column
               label="操作"
-              width="120"
+              width="115"
             >
               <template slot-scope = "s">
                 <div
@@ -673,9 +673,15 @@ export default {
         } else {
           // 返回展示
           this.getMultipleUserAPIInfo()
+          this.stateEmptyData()
           this.compileUserApi = false
         }
       }
+    },
+    // 接口请求完成之后清空数据
+    stateEmptyData () {
+      this.apiRemark = ''
+      this.ipAddress = ''
     },
     // 删除
     deleteUser (id) {

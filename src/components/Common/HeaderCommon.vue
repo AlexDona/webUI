@@ -272,14 +272,12 @@ import {
 import IconFontCommon from '../Common/IconFontCommon'
 import {
   setStore
-  // amendPrecision
 } from '../../utils'
 // import {getPartnerList} from '../../utils/api/home'
 import {
   returnAjaxMessage,
   getCountryListAjax,
   globalPersonalAssetsInformation
-  // reflashUserInfo
 } from '../../utils/commonFunc'
 import { createNamespacedHelpers, mapState } from 'vuex'
 const { mapMutations } = createNamespacedHelpers('common')
@@ -497,9 +495,10 @@ export default{
     },
     // 切换语言
     changeLanguage (e) {
-      console.log(e)
+      // console.log(e)
       this.CHANGE_LANGUAGE(e)
       this.$i18n.locale = e.shortName
+      console.log(this.activeLanguage)
     },
     // 切换主题
     changeTheme (e) {

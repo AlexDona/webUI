@@ -15,7 +15,7 @@
             <div class="header-flex header-right flex1 padding-right23 display-flex">
               <div class="header-right-left float-left flex1">
                 <div class="header-right-text text-align-r">
-                  显示资产为0的币种
+                  隐藏资产为0的币种
                   <p class="float-right header-right-show margin-left10">
                     <img
                       v-show="showStatusButton"
@@ -42,6 +42,7 @@
                   type="text"
                   class="header-right-search border-radius2 padding-left25 font-size12"
                   v-model="searchKeyWord"
+                  @keyup="statusSearch"
                 >
               </p>
             </div>
@@ -90,7 +91,7 @@
               </div>
               <div
                 class="table-tr font-size12 paddinglr20"
-                v-for="(assetItem, index) in filteredData"
+                v-for="(assetItem, index) in withdrawDepositList"
                 :key="index"
               >
                 <div class="table-box display-flex">
@@ -446,7 +447,9 @@ import UserInfo from '../AccountBalance/UserInfo'
 import IconFontCommon from '../../Common/IconFontCommon'
 import CountDownButton from '../../Common/CountDownCommon'
 import VueClipboard from 'vue-clipboard2'
-import {formatNumberInput} from '../../../utils'
+import {
+  formatNumberInput
+} from '../../../utils'
 import { createNamespacedHelpers, mapState } from 'vuex'
 import {
   assetCurrenciesList,
@@ -546,17 +549,9 @@ export default {
     // 刚进页面时候 个人资产列表展示
     // this.getAssetCurrenciesList()
     // this.getUserRefreshUser()
+    // this.amendPrecision
   },
-  mounted () {
-    // this.parameterSymbol = {
-    //   // area: '',
-    //   // areaId: '',
-    //   // id: '',
-    //   // sellname: '',
-    //   // sellsymbol: '',
-    //   // tradeId: ''
-    // }
-  },
+  mounted () {},
   activited () {},
   update () {},
   beforeRouteUpdate () {},
@@ -676,8 +671,10 @@ export default {
       this.service = this.$refs.serviceCharge[index].value
       this.amount = this.$refs.rechargeCount[index].value
       // 输入数量之后显示在到账数量框中显示,在手续费中输入手续费并且以输入数量之后减去的值显示在到账数量
+      // 先引入方法 用变量接收 再调用方法 然后传入参数 得到结构 再做逻辑渲染判断
       this.serviceChargeCount = Math.abs(this.$refs.rechargeCount[index].value - this.$refs.serviceCharge[index].value)
-      console.log(this.amount)
+      // this.amendPrecision(this.$refs.rechargeCount[index].value, this.$refs.serviceCharge[index].value, '-')
+      // console.log(this.amount)
     },
     // 显示充值框
     showRechargeBox (id, name, index) {
@@ -766,6 +763,18 @@ export default {
         }
       })
     },
+    // 搜索关键字
+    statusSearch (item) {
+      console.log(item)
+      // if (this.searchKeyWord) {
+      //   this.$message({
+      //     message: '搜索币种不存在',
+      //     type: 'error'
+      //   })
+      // } else {
+      this.getAssetCurrenciesList()
+      // }
+    },
     /**
      * 刚进页面时候 个人资产列表展示
      */
@@ -774,6 +783,7 @@ export default {
       let params = {
         pageNum: this.currentPageForMyEntrust,
         pageSize: this.pageSize,
+        shortName: this.searchKeyWord, // 搜索关键字
         selectType: 'all' // all：所有币种 noall：有资产币种
       }
       switch (type) {
@@ -817,7 +827,7 @@ export default {
       })
     },
     // 查询提币地址列表查询
-    async queryWithdrawalAddressList () {
+    async queryWithdrawalAddressList (index) {
       let data = await inquireWithdrawalAddressId({
         coinId: this.mentionMoneyAddressId
         // shortName: this.partnerId, // 币种名称
@@ -829,7 +839,7 @@ export default {
       } else {
         // 返回列表数据userWithdrawAddressDtoList
         this.mentionAddressList = data.data.data.userWithdrawAddressDtoList
-        // this.mentionAddressValue = data.data.data.userWithdrawAddressDtoList[0].address
+        this.mentionAddressValue = data.data.data.userWithdrawAddressDtoList[0].address
       }
     },
     /**
@@ -870,10 +880,6 @@ export default {
     * 点击提币按钮
     * */
     moneyConfirmState () {
-      this.phoneCode = '' // 短信验证码
-      this.emailCode = '' // 邮箱验证码
-      this.googleCode = '' // 谷歌验证码
-      this.payPassword = ''
       if (!this.amount) {
         this.$message({
           message: '请上输入提币数量',
@@ -918,7 +924,15 @@ export default {
       } else {
         // 提币地址列表查询
         this.getAssetCurrenciesList()
+        this.stateEmptyData()
       }
+    },
+    // 接口请求完成之后清空数据
+    stateEmptyData () {
+      this.phoneCode = '' // 短信验证码
+      this.emailCode = '' // 邮箱验证码
+      this.googleCode = '' // 谷歌验证码
+      this.payPassword = ''
     },
     // 点击跳转账单明细
     stateRechargeRecord () {
@@ -1024,19 +1038,19 @@ export default {
       disabledOfPhoneBtn: state => state.user.disabledOfPhoneBtn,
       disabledOfEmailBtn: state => state.user.disabledOfEmailBtn,
       userCenterActiveName: state => state.personal.userCenterActiveName
-    }),
-    filteredData: function () {
-      var self = this
-      return this.withdrawDepositList.filter((item, index) => {
-        console.log(item)
-        return (item['coinName'].toLocaleUpperCase()).indexOf(self.searchKeyWord.toLocaleUpperCase()) !== -1
-      })
-    },
-    filteredData1: function () {
-      return this.filteredData.filter(function (item) {
-        return item
-      })
-    }
+    })
+    // filteredData: function () {
+    //   var self = this
+    //   return this.withdrawDepositList.filter((item, index) => {
+    //     console.log(item)
+    //     return (item['coinName'].toLocaleUpperCase()).indexOf(self.searchKeyWord.toLocaleUpperCase()) !== -1
+    //   })
+    // },
+    // filteredData1: function () {
+    //   return this.filteredData.filter(function (item) {
+    //     return item
+    //   })
+    // }
   },
   watch: {
     userCenterActiveName (newVal) {
@@ -1222,6 +1236,7 @@ export default {
                     }
                     >.text-info {
                       padding-left: 15px;
+                      padding-top: 20px;
                       >.currency-rule,
                       >.prompt-message {
                         line-height: 20px;

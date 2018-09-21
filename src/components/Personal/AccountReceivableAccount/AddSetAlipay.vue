@@ -62,7 +62,7 @@
             <el-form-item label="上传收款码：">
               <div class="account-upload border-radius4">
                 <el-upload
-                  :action="baseUrl+'uploadfile'"
+                  :action="apiCommonUrl+'uploadfile'"
                   :headers="tokenObj"
                   list-type="picture-card"
                   :on-success="handleSuccessHand"
@@ -130,7 +130,7 @@ import {
   accountPaymentTerm
 } from '../../../utils/api/personal'
 
-import {baseUrl} from '../../../utils/env'
+import {apiCommonUrl} from '../../../utils/env'
 // 底部
 import FooterCommon from '../../Common/FooterCommon'
 import { createNamespacedHelpers, mapState } from 'vuex'
@@ -255,8 +255,14 @@ export default {
           return false
         } else {
           this.successJump()
+          this.stateEmptyData()
         }
       }
+    },
+    // 接口请求完成之后清空数据
+    stateEmptyData () {
+      this.alipayAccount = ''
+      this.password = ''
     },
     // 获取支付方式信息
     async paymentMethodInformation () {
@@ -307,8 +313,8 @@ export default {
       userInfo: state => state.user.loginStep1Info, // 用户详细信息
       refAccountCenterStatus: state => state.personal.refAccountCenterStatus
     }),
-    baseUrl () {
-      return baseUrl
+    apiCommonUrl () {
+      return apiCommonUrl
     }
   },
   watch: {}
@@ -357,8 +363,8 @@ export default {
             overflow: hidden;
           }
           .account-button {
-            padding: 9px 33px;
-            margin: 30px 0 50px 25px;
+            padding: 10px 93px;
+            margin: 30px 0 50px 120px;
           }
         }
       }
@@ -403,7 +409,6 @@ export default {
               }
             }
             .account-button {
-              padding: 10px 33px;
               background:linear-gradient(0deg,rgba(43,57,110,1),rgba(42,80,130,1));
               color: rgba(255,255,255,0.7);
             }
@@ -452,7 +457,6 @@ export default {
               }
             }
             .account-button {
-              padding: 10px 33px;
               background:linear-gradient(0deg,rgba(43,57,110,1),rgba(42,80,130,1));
               color: #ccc;
             }

@@ -219,10 +219,14 @@ export default {
           return false
         } else {
           this.successJump()
-          this.paypalAccount = ''
-          this.transactionPassword = ''
+          this.stateEmptyData()
         }
       }
+    },
+    // 接口请求完成之后清空数据
+    stateEmptyData () {
+      this.paypalAccount = ''
+      this.transactionPassword = ''
     },
     // 获取支付方式信息
     async paymentMethodInformation () {
@@ -318,8 +322,8 @@ export default {
             line-height: 100px;
           }
           .payment-button {
-            padding: 9px 33px;
-            margin: 30px 0 50px 25px;
+            padding: 10px 93px;
+            margin: 30px 0 50px 120px;
           }
         }
       }
@@ -361,7 +365,6 @@ export default {
               }
             }
             .payment-button {
-              padding: 10px 33px;
               background:linear-gradient(0deg,rgba(43,57,110,1),rgba(42,80,130,1));
               color: rgba(255,255,255,0.7);
             }
@@ -407,7 +410,6 @@ export default {
               }
             }
             .payment-button {
-              padding: 10px 33px;
               background:linear-gradient(0deg,rgba(43,57,110,1),rgba(42,80,130,1));
               color: #ccc;
             }

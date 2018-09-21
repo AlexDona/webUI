@@ -511,6 +511,7 @@ export default {
           return false
         } else {
           this.dialogFormVisible = false
+          this.password = ''
           console.log(data)
         }
       }

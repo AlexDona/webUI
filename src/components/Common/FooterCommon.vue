@@ -128,7 +128,6 @@ export default {
   // props,
   data () {
     return {
-      ercodeImgSrc: 'https://old.fubt.top/front/images/index/wechat.jpg',
       shareList: [
         {
           iconName: 'icon-twitter',
