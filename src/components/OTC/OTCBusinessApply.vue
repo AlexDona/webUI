@@ -295,14 +295,13 @@ export default {
 <style scoped lang="scss" type="text/scss">
 @import url(../../../static/css/scss/OTC/OTCBusinessApply.scss);
 .otc-business-apply-box{
-  background-color: #1D2331;
   >.business-apply-content{
     width: 1150px;
     margin: 70px auto;
     padding-top: 20px;
     >.privilege{
       >.title{
-        color: #fff;
+        // color: #fff;
         text-align: center;
       }
       >.content{
@@ -312,7 +311,7 @@ export default {
           margin-top: 120px;
           width: 210px;
           height: 250px;
-          background: #202740;
+          // background: #202740;
           position: relative;
           text-align: center;
           &::before{
@@ -324,7 +323,7 @@ export default {
             height: 0;
             border-left: 105px solid transparent;
             border-right: 105px solid transparent;
-            border-bottom: 25px solid #202740;
+            // border-bottom: 25px solid #202740;
           }
           &::after{
             content: "";
@@ -335,19 +334,17 @@ export default {
             height: 0;
             border-left: 105px solid transparent;
             border-right: 105px solid transparent;
-            border-top: 25px solid #202740;
+            // border-top: 25px solid #202740;
           }
           >.title{
             width: 83px;
             color: #338FF5;
             padding-bottom: 10px;
             font-weight: 700;
-            /*font-family: Microsoft YaHei;*/
-            border-bottom: 1px dashed rgba(51, 143, 245,.3);
+            // border-bottom: 1px dashed rgba(51, 143, 245,.3);
           }
           >.text{
-            color: #fff;
-            // line-height: 2rem;
+            // color: #fff;
             line-height: 25px;
             margin-top: 60px;
           }
@@ -361,7 +358,7 @@ export default {
     }
     >.approve{
       >.title{
-        color: #fff;
+        // color: #fff;
         text-align: center;
         margin-top: 100px;
       }
@@ -372,7 +369,7 @@ export default {
         background: url(../../assets/develop/step.png) no-repeat center;
         margin-top: 70px;
         >.common{
-          color: #fff;
+          // color: #fff;
           font-size: 18px;
         }
         >.apply{
@@ -395,35 +392,34 @@ export default {
         background: url(../../assets/develop/business-apply-bgm.png) no-repeat center;
         padding-left: 238px;
         padding-top: 40px;
-        color: #8F9CA6;
+        // color: #8F9CA6;
         font-size: 14px;
         >.content{
           width: 620px;
           >p{
-            // line-height: 2rem;
             line-height: 30px;
           }
           >.title{
-            color: #fff;
+            // color: #fff;
             margin-top: 30px;
             &:first-child{
               margin-top: 20px;
             }
           }
           >.tips{
-            color: #4B5D6E;
+            // color: #4B5D6E;
             >.agree{
-              color: #D45858;
+              // color: #D45858;
             }
           }
         }
       }
       >.agree{
         text-align: center;
-        color: #fff;
+        // color: #fff;
         margin-top: 70px;
         .agreement{
-          color: #D45858;
+          // color: #D45858;
         }
       }
       >.submit{
@@ -432,8 +428,8 @@ export default {
         >.button{
           width: 300px;
           height: 50px;
-          color: #fff;
-          background: linear-gradient(0deg,rgba(43,57,110,1),rgba(42,80,130,1));
+          // color: #fff;
+          // background: linear-gradient(0deg,rgba(43,57,110,1),rgba(42,80,130,1));
           border-radius: 5px;
         }
       }
@@ -463,6 +459,164 @@ export default {
     }
     >.text{
       margin-top: 10px;
+    }
+  }
+  &.night{
+    background-color: #1D2331;
+    >.business-apply-content{
+      >.privilege{
+        >.title{
+          color: #fff;
+        }
+        >.content{
+          >.common{
+            background: #202740;
+            &::before{
+              border-bottom: 25px solid #202740;
+            }
+            &::after{
+              border-top: 25px solid #202740;
+            }
+            >.title{
+              color: #338FF5;
+              font-weight: 700;
+              border-bottom: 1px dashed rgba(51, 143, 245,.3);
+            }
+            >.text{
+              color: #fff;
+            }
+            >.location-picture{
+            }
+          }
+        }
+      }
+      >.approve{
+        >.title{
+          color: #fff;
+        }
+        >.number{
+          >.common{
+            color: #fff;
+          }
+          >.apply{
+          }
+          >.send-email{
+          }
+          >.submit-apply{
+          }
+          >.pass{
+          }
+        }
+        >.step{
+          color: #8F9CA6;
+          >.content{
+            >p{
+            }
+            >.title{
+              color: #fff;
+              &:first-child{
+              }
+            }
+            >.tips{
+              color: #4B5D6E;
+              >.agree{
+                color: #D45858;
+              }
+            }
+          }
+        }
+        >.agree{
+          color: #fff;
+          .agreement{
+            color: #D45858;
+          }
+        }
+        >.submit{
+          >.button{
+            color: #fff;
+            background: linear-gradient(0deg,rgba(43,57,110,1),rgba(42,80,130,1));
+          }
+        }
+      }
+    }
+  }
+  &.day{
+    background-color: #fff;
+    >.business-apply-content{
+      >.privilege{
+        >.title{
+          color: #333333;
+        }
+        >.content{
+          >.common{
+            background: #202740;
+            &::before{
+              border-bottom: 25px solid #202740;
+            }
+            &::after{
+              border-top: 25px solid #202740;
+            }
+            >.title{
+              color: #338FF5;
+              font-weight: 700;
+              border-bottom: 1px dashed rgba(51, 143, 245,.3);
+            }
+            >.text{
+              color: #fff;
+            }
+            >.location-picture{
+            }
+          }
+        }
+      }
+      >.approve{
+        >.title{
+          color: #333;
+        }
+        >.number{
+          >.common{
+            color: #333;
+          }
+          >.apply{
+          }
+          >.send-email{
+          }
+          >.submit-apply{
+          }
+          >.pass{
+          }
+        }
+        >.step{
+          color: #8F9CA6;
+          >.content{
+            >p{
+            }
+            >.title{
+              color: #fff;
+              &:first-child{
+              }
+            }
+            >.tips{
+              color: #4B5D6E;
+              >.agree{
+                color: #D45858;
+              }
+            }
+          }
+        }
+        >.agree{
+          color: #333;
+          .agreement{
+            color: #D45858;
+          }
+        }
+        >.submit{
+          >.button{
+            color: #fff;
+            background: linear-gradient(0deg,rgba(43,57,110,1),rgba(42,80,130,1));
+          }
+        }
+      }
     }
   }
 }

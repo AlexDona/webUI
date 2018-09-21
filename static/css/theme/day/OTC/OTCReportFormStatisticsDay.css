@@ -39,6 +39,9 @@
 .otc-report-form-statistics-box.day > .report-form-statistics-content > .report-form-buy-sell > .common > .body > .together > .left > .round[data-v-e69a84f0]{
     background-color: rgba(212,88,88,0.15);
 }
+.otc-report-form-statistics-box.day > .report-form-statistics-content > .report-form-buy-sell > .sell > .body .together > .left > .round[data-v-e69a84f0]{
+    background:rgba(84,189,116,0.15);
+}
 .otc-report-form-statistics-box.day > .report-form-statistics-content > .report-form-details[data-v-e69a84f0]{
    background-color: #fff;
    border: 1px solid rgba(38,47,56,0.1);
