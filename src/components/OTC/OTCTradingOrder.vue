@@ -90,6 +90,10 @@
                       v-model="activePayModeList[index]"
                       @change="changeUserBankInfo(index)"
                     >
+                    <!-- :label="item1.bankType" -->
+                    <!-- :label="$t('m.latestprice')+'(***)'" -->
+                    <!-- :label="$t(`M.${item.i18nName}`)" -->
+                    <!-- :label="language === 'zh_CN'? item1.version : item1.bankType" -->
                       <el-option
                         v-for="item1 in item.userBankList"
                         :key="item1.id"
@@ -944,11 +948,23 @@ export default {
   computed: {
     ...mapState({
       theme: state => state.common.theme,
+      // 当前选中语言
+      language: state => state.common.language,
+      activeLanguage: state => state.common.activeLanguage,
       isLogin: state => state.user.isLogin, // 是否登录
       userInfo: state => state.user.loginStep1Info.userInfo // 用户详细信息
     })
   },
-  watch: {},
+  watch: {
+    activeLanguage (newVal) {
+      console.log('当前选中语言')
+      console.log(newVal)
+    },
+    language (newVal) {
+      console.log('language')
+      console.log(newVal)
+    }
+  },
   destroyed () {
     // 离开本组件清除定时器
     clearInterval(this.cancelOrdersTimer)

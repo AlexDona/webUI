@@ -497,9 +497,10 @@ export default{
     },
     // 切换语言
     changeLanguage (e) {
-      console.log(e)
+      // console.log(e)
       this.CHANGE_LANGUAGE(e)
       this.$i18n.locale = e.shortName
+      console.log(this.activeLanguage)
     },
     // 切换主题
     changeTheme (e) {
