@@ -62,7 +62,7 @@
             <el-form-item label="上传收款码：">
               <div class="account-upload border-radius4">
                 <el-upload
-                  :action="baseUrl+'uploadfile'"
+                  :action="apiCommonUrl+'uploadfile'"
                   :headers="tokenObj"
                   list-type="picture-card"
                   :on-success="handleSuccessHand"
@@ -130,7 +130,7 @@ import {
   accountPaymentTerm
 } from '../../../utils/api/personal'
 
-import {baseUrl} from '../../../utils/env'
+import {apiCommonUrl} from '../../../utils/env'
 // 底部
 import FooterCommon from '../../Common/FooterCommon'
 import { createNamespacedHelpers, mapState } from 'vuex'
@@ -307,8 +307,8 @@ export default {
       userInfo: state => state.user.loginStep1Info, // 用户详细信息
       refAccountCenterStatus: state => state.personal.refAccountCenterStatus
     }),
-    baseUrl () {
-      return baseUrl
+    apiCommonUrl () {
+      return apiCommonUrl
     }
   },
   watch: {}
