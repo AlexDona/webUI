@@ -466,7 +466,6 @@ export default {
     // 黑色主题样式
     require('../../../../static/css/theme/night/Personal/TransactionType/CoinOrdersNight.css')
     await this.getEntrustSelectBox()
-
     await this.commissionList('current-entrust')
   },
   mounted () {},

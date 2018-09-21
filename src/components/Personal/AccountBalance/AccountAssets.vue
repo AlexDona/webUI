@@ -42,8 +42,8 @@
                   type="text"
                   class="header-right-search border-radius2 padding-left25 font-size12"
                   v-model="searchKeyWord"
-                  @keyup="statusSearch"
                 >
+                <!--@keyup="statusSearch"-->
               </p>
             </div>
           </header>
@@ -91,7 +91,7 @@
               </div>
               <div
                 class="table-tr font-size12 paddinglr20"
-                v-for="(assetItem, index) in withdrawDepositList"
+                v-for="(assetItem, index) in filteredData1"
                 :key="index"
               >
                 <div class="table-box display-flex">
@@ -112,14 +112,30 @@
                   </div>
                   <div class="table-td flex1 display-flex text-align-r font-size12">
                     <div
+                      v-if="withdrawDepositList[index].isRecharge === 'true'"
                       class="table-charge-money flex1 cursor-pointer"
                       @click.prevent="showRechargeBox(assetItem.coinId, assetItem.coinName, index)"
                     >
                       充币
                     </div>
                     <div
+                      v-else
+                      class="money-color flex1 cursor-pointer"
+                      title="充值暂停，钱包维护中"
+                    >
+                      充币
+                    </div>
+                    <div
+                      v-if="withdrawDepositList[index].isWithdraw === 'true'"
                       class="table-mention-money flex1 cursor-pointer"
                       @click.prevent="mentionMoneyButton(assetItem.coinId, assetItem.coinName, index)"
+                    >
+                      提币
+                    </div>
+                    <div
+                      v-else
+                      class="money-color flex1 cursor-pointer"
+                      title="暂停提币"
                     >
                       提币
                     </div>
@@ -527,6 +543,8 @@ export default {
       mentionAddressList: [],
       activeCurrency: {}, // 当前选中币种
       totalSumBTC: '', // 资产总估值BTC
+      isRecharge: '', // 是否允许充币
+      isWithdraw: '', // 是否允许提币
       end: '', // 站位
       activeType: '', // 显示类型
       tradingOnId: '', // 根据coinido跳转到对应交易信息
@@ -547,7 +565,7 @@ export default {
     // 黑色主题样式
     require('../../../../static/css/theme/night/Personal/AccountBalance/AccountAssetsNight.css')
     // 刚进页面时候 个人资产列表展示
-    // this.getAssetCurrenciesList()
+    this.getAssetCurrenciesList()
     // this.getUserRefreshUser()
     // this.amendPrecision
   },
@@ -763,22 +781,16 @@ export default {
         }
       })
     },
-    // 搜索关键字
-    statusSearch (item) {
-      console.log(item)
-      // if (this.searchKeyWord) {
-      //   this.$message({
-      //     message: '搜索币种不存在',
-      //     type: 'error'
-      //   })
-      // } else {
-      this.getAssetCurrenciesList()
-      // }
-    },
+    // 调取后台接口 搜索关键字模糊查询
+    // statusSearch (ev) {
+    //   if (ev.keyCode == 13) {
+    //     this.getAssetCurrenciesList()
+    //   }
+    // },
     /**
      * 刚进页面时候 个人资产列表展示
      */
-    async getAssetCurrenciesList (type) {
+    async getAssetCurrenciesList (type, item) {
       let data
       let params = {
         pageNum: this.currentPageForMyEntrust,
@@ -803,11 +815,11 @@ export default {
           rechargeIsShow: false,
           withdrawDepositIsShow: false
         })
-        // console.log(data.data.data.userCoinWalletVOPageInfo.list)
         // 返回数据
         this.totalSumBTC = data.data.data.totalSum
         this.withdrawDepositList = data.data.data.userCoinWalletVOPageInfo.list
         this.totalPageForMyEntrust = data.data.data.userCoinWalletVOPageInfo.pages - 0
+        // console.log(this.withdrawDepositList)
       }
     },
     // 分页
@@ -830,8 +842,6 @@ export default {
     async queryWithdrawalAddressList (index) {
       let data = await inquireWithdrawalAddressId({
         coinId: this.mentionMoneyAddressId
-        // shortName: this.partnerId, // 币种名称
-        // selectType: this.hideStatusButton // all：所有币种 noall：有资产币种
       })
       // console.log(data)
       if (!(returnAjaxMessage(data, this, 0))) {
@@ -1038,19 +1048,20 @@ export default {
       disabledOfPhoneBtn: state => state.user.disabledOfPhoneBtn,
       disabledOfEmailBtn: state => state.user.disabledOfEmailBtn,
       userCenterActiveName: state => state.personal.userCenterActiveName
-    })
-    // filteredData: function () {
-    //   var self = this
-    //   return this.withdrawDepositList.filter((item, index) => {
-    //     console.log(item)
-    //     return (item['coinName'].toLocaleUpperCase()).indexOf(self.searchKeyWord.toLocaleUpperCase()) !== -1
-    //   })
-    // },
-    // filteredData1: function () {
-    //   return this.filteredData.filter(function (item) {
-    //     return item
-    //   })
-    // }
+    }),
+    // 前端模糊查询筛选
+    filteredData: function () {
+      var self = this
+      return this.withdrawDepositList.filter((item, index) => {
+        // console.log(item)
+        return (item['coinName'].toLocaleUpperCase()).indexOf(self.searchKeyWord.toLocaleUpperCase()) !== -1
+      })
+    },
+    filteredData1: function () {
+      return this.filteredData.filter(function (item) {
+        return item
+      })
+    }
   },
   watch: {
     userCenterActiveName (newVal) {
@@ -1317,6 +1328,9 @@ export default {
             >.table-box {
               >.table-td {
                 color: #9DA5B3;
+                .money-color {
+                  color: #9DA5B3;
+                }
                 >.table-charge-money,
                 >.table-mention-money,
                 >.table-deal {
