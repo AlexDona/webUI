@@ -68,23 +68,6 @@
             >
               撤单
             </el-button>
-            <!-- <el-button
-              type="text"
-              @click="dialogVisible = true"
-            >
-              撤单
-            </el-button>
-            <el-dialog
-              title="提示"
-              :visible.sync="dialogVisible"
-              width="30%"
-              :before-close="handleClose">
-              <span>这是一段信息</span>
-              <span slot="footer" class="dialog-footer">
-                <el-button @click="dialogVisible = false">取 消</el-button>
-                <el-button type="primary" @click="revocationOrder(item.id)">确 定</el-button>
-              </span>
-            </el-dialog> -->
           </span>
         </div>
         <!--分页-->
@@ -98,20 +81,6 @@
         >
         </el-pagination>
       </div>
-      <!-- 弹出框 -->
-      <!-- <div class="dialog">
-        <el-dialog
-          title="提示"
-          :visible.sync="dialogVisible"
-          width="30%"
-          :before-close="handleClose">
-          <span>这是一段信息</span>
-          <span slot="footer" class="dialog-footer">
-            <el-button @click="dialogVisible = false">取 消</el-button>
-            <el-button type="primary" @click="dialogVisible = false">确 定</el-button>
-          </span>
-        </el-dialog>
-      </div> -->
     </div>
   </div>
 </template>
@@ -235,8 +204,6 @@ export default {
       }
       > .entrust-table-body,
       .item{
-        background-color: #1E2636;
-        min-height: 432px;
         border-top: none;
         border-bottom-right-radius: 5px;
         border-bottom-left-radius: 5px;
@@ -249,32 +216,7 @@ export default {
           height: 34px;
           line-height: 34px;
           > .item {
-            display: inline-block;
             text-align: center;
-          }
-          > .first-style {
-            width: 80px;
-          }
-          > .second-coin {
-            width: 150px;
-          }
-          > .third-price {
-            width: 150px;
-          }
-          > .fourth-entrust-count {
-            width: 150px;
-          }
-          > .fifth-match-count {
-            width: 150px;
-          }
-          > .sixth-total-amount {
-            width: 150px;
-          }
-          > .senventh-create-time {
-            width: 150px;
-          }
-          > .eighth-action {
-            width: 80px;
           }
         }
       }
@@ -288,28 +230,24 @@ export default {
           color: #338FF5;
         }
       }
-      > .entrust-table-head {
-        background-color: #1E2636;
-        color: #617499;
-        border: 1px solid #262F38;
-        box-shadow: -2px 3px 5px 1px #191E28; text-align: left;
+      >.fiat-entrust-order-table{
+        > .entrust-table-head {
+          background-color: #1E2636;
+          color: #617499;
+          border: 1px solid #262F38;
+          box-shadow: -2px 3px 5px 1px #191E28; text-align: left;
         }
-        > .senventh-create-time {
-          width: 150px;
-        }
-        > .senventh-create-time1 {
-          width: 120px;
-        }
-      > .entrust-table-body {
-        background-color: #1E2636;
-        color: #9DA5B3;
-        border: 1px solid #262F38;
-        > .entrust-list-content {
-          .red {
-            color: #D45858;
-          }
-          .green {
-            color: #008069;
+        > .entrust-table-body {
+          background-color: #1E2636;
+          color: #9DA5B3;
+          border: 1px solid #262F38;
+          > .entrust-list-content {
+            .red {
+              color: #D45858;
+            }
+            .green {
+              color: #008069;
+            }
           }
         }
       }
@@ -318,24 +256,29 @@ export default {
       background-color: $dayBgColor;
       color:$dayFontColor;
       >.background-color{
-        background-color: #CCCCCC;
+        background-color: $dayBgColor;
       }
-      > .entrust-table-head {
-        background-color: #1E2636;
-        color: #617499;
-        border: 1px solid #262F38;
-      }
-      > .entrust-table-body {
-        min-height: 432px;
-        background-color: #fff;
-        color: #9DA5B3;
-        border: 1px solid #262F38;
-        > .entrust-list-content {
-          .red {
-            color: #D45858;
-          }
-          .green {
-            color: #008069;
+      >.fiat-entrust-order-table {
+        > .entrust-table-head {
+          background-color: $dayBgColor;
+          color: #617499;
+          border-bottom: 1px solid rgba(72,87,118,0.1);
+        }
+        > .entrust-table-body {
+          min-height: 432px;
+          background-color: #fff;
+          color: #9DA5B3;
+          border: 1px solid rgba(72,87,118,0.1);
+          > .entrust-list-content {
+            > .item {
+              background-color: #fff;
+            }
+            .red {
+              color: #D45858;
+            }
+            .green {
+              color: #008069;
+            }
           }
         }
       }

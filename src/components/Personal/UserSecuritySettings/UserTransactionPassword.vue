@@ -410,10 +410,17 @@ export default {
           return false
         } else {
           console.log(data)
+          this.stateEmptyData()
           this.$store.commit('common/SET_USER_INFO_REFRESH_STATUS', true)
           this.successJump()
         }
       }
+    },
+    // 接口请求完成之后青口数据
+    stateEmptyData () {
+      this.setPassword.nickname = ''
+      this.setPassword.newPassword = ''
+      this.setPassword.confirmPassword = ''
     },
     // 确定重置检测输入格式
     tieCheckoutInputFormat (type, targetNum) {
@@ -710,7 +717,6 @@ export default {
               }
             }
             .transaction-button {
-              padding: 10px 33px;
               background:linear-gradient(0deg,rgba(43,57,110,1),rgba(42,80,130,1));
               color: #ccc;
             }

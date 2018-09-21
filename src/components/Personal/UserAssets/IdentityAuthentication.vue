@@ -674,10 +674,14 @@ export default {
         await this.getUserRefreshUser()
         await this.getRealNameInformation()
         this.authenticationStatusFront = false
-        this.dialogImageFrontUrl = ''
-        this.dialogImageReverseSideUrl = ''
-        this.dialogImageHandUrl = ''
+        this.stateEmptyData()
       }
+    },
+    // 接口请求完成之后清空数据
+    stateEmptyData () {
+      this.dialogImageFrontUrl = ''
+      this.dialogImageReverseSideUrl = ''
+      this.dialogImageHandUrl = ''
     },
     // 检测上传图片大小
     bytesToSize (bytes) {

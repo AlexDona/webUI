@@ -272,13 +272,11 @@ import {
 import IconFontCommon from '../Common/IconFontCommon'
 import {
   setStore
-  // amendPrecision
 } from '../../utils'
 // import {getPartnerList} from '../../utils/api/home'
 import {
   returnAjaxMessage,
   getCountryListAjax,
-  globalPersonalAssetsInformation,
   reflashUserInfo
 } from '../../utils/commonFunc'
 import { createNamespacedHelpers, mapState } from 'vuex'
@@ -351,7 +349,6 @@ export default{
     if (this.isLogin) {
       await reflashUserInfo(this)
     }
-    // this.getGlobalPersonalAssetsInformation()
   },
   methods: {
     ...mapMutations([
@@ -375,15 +372,6 @@ export default{
         // this.contryAreaList = data.data.data
         this.SET_COUNTRY_AREA_LIST(data.data.data)
         // console.log(this.contryAreaList)
-      })
-    },
-    getGlobalPersonalAssetsInformation () {
-      globalPersonalAssetsInformation(this, (data) => {
-        console.log(data)
-        // this.contryAreaList = data.data.data
-        this.USER_INFORMATION_REFRESH(data.data.data)
-        this.$store.commit('user/SET_STEP1_INFO', data.data.data)
-        console.log(this.userInfo)
       })
     },
     // 更改当前选中汇率转换货币
@@ -500,9 +488,10 @@ export default{
     },
     // 切换语言
     changeLanguage (e) {
-      console.log(e)
+      // console.log(e)
       this.CHANGE_LANGUAGE(e)
       this.$i18n.locale = e.shortName
+      console.log(this.activeLanguage)
     },
     // 切换主题
     changeTheme (e) {
@@ -570,7 +559,6 @@ export default{
     userInfoRefreshStatus (newVal) {
       console.log(newVal)
       if (newVal) {
-        // this.getGlobalPersonalAssetsInformation()
         if (this.isLogin) {
           reflashUserInfo(this)
         }

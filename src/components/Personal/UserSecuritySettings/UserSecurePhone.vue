@@ -576,9 +576,17 @@ export default {
         if (!(returnAjaxMessage(data, this, 1))) {
           return false
         } else {
+          this.stateEmptyData()
           this.successJump()
         }
       }
+    },
+    // 接口请求完成之后清空数据
+    stateEmptyData () {
+      this.amendDataPhone.newPhoneAccounts = ''
+      this.amendDataPhone.oldPhoneCode = ''
+      this.amendDataPhone.newPhoneCode = ''
+      this.amendDataPhone.transactionPassword = ''
     },
     /**
      * 安全中心
@@ -780,7 +788,6 @@ export default {
               }
             }
             .phone-button {
-              padding: 10px 33px;
               background:linear-gradient(0deg,rgba(43,57,110,1),rgba(42,80,130,1));
               color: #ccc;
             }

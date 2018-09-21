@@ -123,10 +123,10 @@
               </span>
             </p>
           </div>
-          <p class="info-discount margin-top45">
-            <span class="discount-text font-size12">折扣率</span>&nbsp;
-            <span class="discount-state font-size12">{{ discountRate }}</span>
-          </p>
+          <!--<p class="info-discount margin-top45">-->
+            <!--<span class="discount-text font-size12">折扣率</span>&nbsp;-->
+            <!--<span class="discount-state font-size12">{{ discountRate }}</span>-->
+          <!--</p>-->
           <p></p>
         </div>
         <!--<div class="volume float-left">-->

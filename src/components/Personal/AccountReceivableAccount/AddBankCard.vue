@@ -222,12 +222,16 @@ export default {
           return false
         } else {
           this.successJump()
-          this.bankName = '' // 银行卡名称
-          this.cardNo = '' // 银行卡号
-          this.address = '' // 开户地址
+          this.stateEmptyData()
           console.log(data)
         }
       }
+    },
+    // 接口请求完成之后清空数据
+    stateEmptyData () {
+      this.bankName = '' // 银行卡名称
+      this.cardNo = '' // 银行卡号
+      this.address = '' // 开户地址
     },
     // 检测输入格式
     checkoutInputFormat (type, targetNum) {
@@ -375,8 +379,8 @@ export default {
             padding-left: 15px;
           }
           .bank-button {
-            padding: 9px 33px;
-            margin: 30px 0 50px 25px;
+            padding: 10px 93px;
+            margin: 30px 0 50px 120px;
           }
         }
       }
@@ -412,7 +416,6 @@ export default {
               }
             }
             .bank-button {
-              padding: 10px 33px;
               background:linear-gradient(0deg,rgba(43,57,110,1),rgba(42,80,130,1));
               color: rgba(255,255,255,0.7);
             }
@@ -449,7 +452,6 @@ export default {
               }
             }
             .bank-button {
-              padding: 10px 33px;
               background:linear-gradient(0deg,rgba(43,57,110,1),rgba(42,80,130,1));
               color: #ccc;
             }

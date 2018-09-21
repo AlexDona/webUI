@@ -216,9 +216,17 @@
               <!-- 备注 -->
               <el-table-column
                 label="备注"
+                width="100"
               >
                 <template slot-scope = "s">
-                  <div>{{s.row.remark}}</div>
+                  <!-- 1.0 原来的 -->
+                  <!-- <div>{{s.row.remark}}</div> -->
+                  <!-- 2.0 测试1 -->
+                  <!-- <div :title="s.row.remark" style="text-overflow:ellipsis;white-space:nowrap;overflow: hidden;">{{s.row.remark}}</div> -->
+                  <!-- 3.0 测试2 -->
+                  <el-tooltip effect="dark" :content="s.row.remark" placement="bottom">
+                    <span style="text-overflow: ellipsis;white-space: nowrap;overflow: hidden;cursor:pointer;">{{s.row.remark}}</span>
+                  </el-tooltip>
                 </template>
               </el-table-column>
               <!-- 操作 -->
@@ -440,10 +448,10 @@ export default {
     // console.log(this.partnerId)
     // console.log(this.userInfo)
     // 2.0 otc可用法币查询：
-    // this.getMerchantAvailablelegalTenderList()
-    // console.log('是否登录' + this.isLogin)
-    // console.log('用户信息')
-    // console.log(this.userInfo)
+    // this.getMerchantAvailablelegalTenderList()AD
+    console.log('是否登录' + this.isLogin)
+    console.log('用户信息')
+    console.log(this.userInfo)
     if (this.isLogin) {
       // 刷新用户信息
       reflashUserInfo(this)
@@ -859,11 +867,19 @@ export default {
       selectedOTCAvailablePartnerCoinId: state => state.OTC.selectedOTCAvailablePartnerCoinId,
       selectedOTCAvailableCurrencyCoinID: state => state.OTC.selectedOTCAvailableCurrencyCoinID,
       partnerId: state => state.common.partnerId,
+      // 当前选中语言
+      language: state => state.common.language,
+      activeLanguage: state => state.common.activeLanguage,
       userInfo: state => state.user.loginStep1Info.userInfo, // 用户详细信息
       isLogin: state => state.user.isLogin // 用户登录状态 false 未登录； true 登录
     })
   },
-  watch: {}
+  watch: {
+    activeLanguage (newVal) {
+      console.log('当前选中语言')
+      console.log(newVal)
+    }
+  }
 }
 </script>
 <style scoped lang="scss" type="text/scss">
@@ -1082,6 +1098,9 @@ export default {
         }
         >.otc-merchant-content{
           // background-color: #202A33;
+          // border:1px solid rgba(39,49,58,0.1);
+          // border-top: 0;
+          box-shadow:0px 0px 6px rgba(204,222,242,1);
           background-color: $mainDayColor;
           >.otc-filtrate-publish{
             >.otc-filtrate-box{

@@ -13,8 +13,10 @@
           @tab-click = "statusSwitchPanel"
         >
           <!--账户资产-->
+          <div class="asset-title asset-info">
+            账户资产
+          </div>
           <el-tab-pane
-            label = "账户资产"
             disabled
             class="title"
           >
@@ -41,6 +43,9 @@
             <WithdrawalAddress/>
           </el-tab-pane>
           <!--个人中心-->
+          <div class="user-title asset-info">
+            个人中心
+          </div>
           <el-tab-pane
             label = "个人中心"
             disabled
@@ -92,6 +97,9 @@
             <PushAsset/>
           </el-tab-pane>
           <!--我的交易-->
+          <div class="user-order asset-info">
+            我的交易
+          </div>
           <el-tab-pane
             label = "我的交易"
             disabled
@@ -426,14 +434,41 @@ export default {
       > .personal-center-content{
         width: 1150px;
       }
+      .asset-info {
+        position: absolute;
+        font-size: 18px;
+        left: -179px;
+        color: #338FF5;
+        z-index: 2;
+        background: #fff;
+        width: 160px;
+        height: 44px;
+        padding-left: 25px;
+        line-height: 40px;
+      }
+      .asset-title {
+        top: 10px;
+      }
+      .user-title {
+        top: 180px;
+      }
+      .user-order {
+        top: 490px;
+      }
     }
     &.night{
       background-color: $nightBgColor;
       color:$nightFontColor;
+      .asset-info {
+        background: #1E2636;
+      }
     }
     &.day{
       background-color: $dayBgColor;
       color:$dayFontColor;
+      .asset-info {
+        background: #fff;
+      }
     }
   }
 

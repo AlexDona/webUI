@@ -51,3 +51,7 @@ personal-center.personal .el-tabs__nav{
   /*height: 200px;*/
   border-radius: 5px;
 }
+.personal-center.personal .el-tabs__item.is-disabled:hover {
+  color: #fff;
+  border-left: 4px solid #fff;
+}
