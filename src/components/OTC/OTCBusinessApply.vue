@@ -286,7 +286,7 @@ export default {
       isLogin: state => state.user.isLogin, // 用户登录状态 false 未登录； true 登录
       partnerId: state => state.common.partnerId,
       language: state => state.common.language,
-      theme: state => state.common.theme,
+      theme: state => state.common.theme
     })
   },
   watch: {}

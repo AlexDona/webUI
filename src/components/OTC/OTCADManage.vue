@@ -469,7 +469,7 @@ export default {
   computed: {
     ...mapState({
       partnerId: state => state.common.partnerId,
-      theme: state => state.common.theme,
+      theme: state => state.common.theme
     })
   },
   watch: {}

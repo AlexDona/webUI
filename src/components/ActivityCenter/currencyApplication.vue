@@ -110,7 +110,10 @@
 </template>
 <script>
 import {getCurrencyApplicationDownloadUrl} from '../../utils/api/activityCenter'
-import {returnAjaxMessage} from '../../utils/commonFunc'
+import {
+  returnAjaxMessage,
+  getServiceProtocolData
+} from '../../utils/commonFunc'
 import HeaderCommon from '../Common/HeaderCommon'
 import FooterCommon from '../Common/FooterCommon'
 import {
@@ -126,17 +129,30 @@ export default {
   // props,
   data () {
     return {
+      termsTypeIds: 6, // 上币申请类型id
       downloadUrl: '' // 下载地址
     }
   },
   created () {
     this.getDownUrl()
+    // 上币申请动态文案
+    // this.getServiceProtocolData()
   },
   mounted () {},
   activited () {},
   update () {},
   beforeRouteUpdate () {},
   methods: {
+    getServiceProtocolData () {
+      const params = {
+        partnerId: this.partnerId,
+        termsTypeIds: this.termsTypeIds, // 用户协议代号
+        language: this.language
+      }
+      getServiceProtocolData(this, params, (data) => {
+        console.log(data)
+      })
+    },
     // 获取资产列表下载地址
     async getDownUrl () {
       console.log(1)
@@ -159,7 +175,9 @@ export default {
   filter: {},
   computed: {
     ...mapState({
-      theme: state => state.common.theme
+      theme: state => state.common.theme,
+      language: state => state.common.language,
+      partnerId: state => state.common.partnerId
     })
   },
   watch: {}
