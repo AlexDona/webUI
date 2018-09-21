@@ -577,7 +577,7 @@ export default {
         case 0:
           if (!targetNum) {
             this.setErrorMsg(0, '请输入用户名')
-            // return 0
+            return 0
           }
           this.$forceUpdate()
           break
@@ -585,8 +585,10 @@ export default {
         case 1:
           if (!targetNum) {
             this.setErrorMsg(1, '请输入密码！')
+            // return 0
           } else {
             this.setErrorMsg(1, '')
+            // return 1
           }
           this.$forceUpdate()
           break
@@ -607,9 +609,10 @@ export default {
       */
     async loginForStep1 () {
       this.checkoutInputFormat(0, this.username)
-      // console.log(this.errorShowStatusList)
-
       this.checkoutInputFormat(1, this.password)
+      // if (!usernameCheckout) {
+      //   return false
+      // }
       // 判断登录方式
       if (EMAIL_REG.test(this.username)) {
         console.log('email')
