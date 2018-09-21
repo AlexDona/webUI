@@ -103,8 +103,8 @@
                   <IconFont iconName="icon-qianbao-"/>
                   <span class="margin-left10 sell">
                     可卖：
-                    <span v-show="!buyUserCoinWallet.total">--</span>
-                    <span v-show="buyUserCoinWallet.total">{{buyUserCoinWallet.total}}</span>
+                    <span v-show="!sellUserCoinWallet.total">--</span>
+                    <span v-show="sellUserCoinWallet.total">{{sellUserCoinWallet.total}}</span>
                     <span>{{activeSymbol.sellsymbol}}</span>
                   </span>
                 </div>
@@ -244,8 +244,8 @@
                   <IconFont iconName="icon-qianbao-"/>
                   <span class="margin-left10 sell">
                     可卖：
-                    <span v-show="!buyUserCoinWallet.total">--</span>
-                    <span v-show="buyUserCoinWallet.total">{{buyUserCoinWallet.total}}</span>
+                    <span v-show="!sellUserCoinWallet.total">--</span>
+                    <span v-show="sellUserCoinWallet.total">{{sellUserCoinWallet.total}}</span>
                     <span>{{activeSymbol.sellsymbol}}</span>
                   </span>
                 </div>
@@ -457,7 +457,7 @@ export default {
           this.limitExchange.buyCount = this.getRefValue(this.limitBuyCountInputRef)
           this.setTransformPrice('limit-buy', this.limitExchange.buyPrice)
           if (this.limitExchange.buyPrice - 0) {
-            this.limitExchange.userCanBuyCount = this.keep2Num(this.buyUserCoinWallet.total / (this.limitExchange.buyPrice - 0))
+            this.limitExchange.userCanBuyCount = (this.buyUserCoinWallet.total / (this.limitExchange.buyPrice - 0)).toFixed(this.middleTopData.priceExchange)
           }
           break
         // 限价卖
@@ -598,7 +598,7 @@ export default {
       // this.setSimulationData(this.sellUserCoinWallet.total, newBuyPrice - 0 , this.limitExchange.userCanBuyCount)
       console.log(this.sellUserCoinWallet.total)
       if (newBuyPrice - 0) {
-        this.limitExchange.userCanBuyCount = this.keep2Num(this.buyUserCoinWallet.total / (newBuyPrice - 0))
+        this.limitExchange.userCanBuyCount = (this.buyUserCoinWallet.total / (newBuyPrice - 0)).toFixed(this.middleTopData.priceExchange)
         console.log(this.limitExchange.userCanBuyCount)
       }
     }
@@ -638,7 +638,7 @@ export default {
   },
   watch: {
     activeSymbol (newVal) {
-      // console.log(newVal)
+      console.log(newVal)
     },
     // 用户手动设置价格
     activePriceItem (newVal) {

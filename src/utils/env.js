@@ -23,8 +23,8 @@ if (process.env.NODE_ENV == 'development') {
   // apiCommonUrl = 'http://192.168.1.52:9000' // 滑浩田
   // apiCommonUrl = 'http://192.168.1.235:8046' // 吕冰洋
   // apiCommonUrl = 'http://192.168.1.252:8103' // 施伯兵
-  socketUrl = 'ws://192.168.1.52:8087/market' // socketUrl
-  // socketUrl = 'ws://ws.bzu.com/market'
+  // socketUrl = 'ws://192.168.1.52:8087/market' // socketUrl
+  socketUrl = 'ws://ws.bzu.com/market'
 } else if (process.env.NODE_ENV == 'production') {
   // apiCommonUrl = 'https://rest.fubt.top/'
   // apiCommonUrl = 'http://192.168.1.200:8888/' // 本地测试
