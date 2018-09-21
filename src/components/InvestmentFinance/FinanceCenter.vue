@@ -69,7 +69,7 @@
                 <input
                 v-model="investMounte"
                 placeholder="请输入数量"
-                @blur="changeInvestMounte"
+                @keyup="changeInvestMounte"
                 onkeyup="if(this.value.length==1){this.value=this.value.replace(/[^1-9]/g,'')}else{this.value=this.value.replace(/\D/g,'')}"
                 onafterpaste="if(this.value.length==1){this.value=this.value.replace(/[^1-9]/g,'')}else{this.value=this.value.replace(/\D/g,'')}">
                 <span>{{selecteCoindName}}</span>
@@ -302,9 +302,9 @@ export default {
     // 对element ui样式重置
     require('../../../static/css/list/InvestmentFinance/FinanceCenter.css')
     // 白样式
-    require('../../../static/css/theme/day/InvestmentFinance/FinanceCenter.css')
+    require('../../../static/css/theme/day/InvestmentFinance/FinanceCenterDay.css')
     // 黑样式
-    require('../../../static/css/theme/night/InvestmentFinance/FinanceCenter.css')
+    require('../../../static/css/theme/night/InvestmentFinance/FinanceCenterNight.css')
     // 页面创建完成请求币种接口
     this.getFinancialManagementList()
     // 页面创建完成时获取默认币种的总资产
@@ -322,16 +322,17 @@ export default {
     timeFormatting (data) {
       return timeFilter(data, 'data')
     },
-    // 失去焦点时触发
+    // 键盘弹起时时触发
     changeInvestMounte (e) {
       if (this.isLogin) {
-        if (e.target.value >= this.userCoindTotal) {
+        if (e.target.value > this.userCoindTotal) {
           this.isShow = true
         } else {
           this.isShow = false
         }
       } else {
         this.isShow = false
+        this.$router.push({path: '/login'})
       }
     },
     // 输入金额改变时检测用户输入的币种总金额
@@ -361,10 +362,8 @@ export default {
           })
         }
       } else {
-        this.$message({
-          message: '请先登录',
-          type: 'error'
-        })
+        this.$router.push({path: '/login'})
+        return false
       }
     },
     // 添加理财记录
@@ -396,41 +395,42 @@ export default {
       if (!(returnAjaxMessage(data, this, 0))) {
         return false
       } else {
+        let getData = data.data.data
         // 设置可用币种数组
-        this.traderCoinList = data.data.data.idNameDtoList
+        this.traderCoinList = getData.idNameDtoList
         this.traderCoinList.forEach(item => {
-          if (data.data.data.idNameDtoList.id == item.id) {
+          if (getData.idNameDtoList.id == item.id) {
             this.selectedCoinId = item.id
           }
         })
         // 设置每次返回回来的币种id
-        this.selectedCoinId = data.data.data.tickerPriceResult.coinId
+        this.selectedCoinId = getData.tickerPriceResult.coinId
         // 设置每次返回地币种名称
-        this.selecteCoindName = data.data.data.tickerPriceResult.coinName
+        this.selecteCoindName = getData.tickerPriceResult.coinName
         // 最新价钱
-        this.newnestPrice = data.data.data.tickerPriceResult.price
+        this.newnestPrice = getData.tickerPriceResult.price
         // 当日涨幅
-        this.dayAmountIncrease = data.data.data.tickerPriceResult.chg
+        this.dayAmountIncrease = getData.tickerPriceResult.chg
         // 历史涨幅
-        this.historyAmountIncrease = data.data.data.tickerPriceResult.historyAmountIncrease
+        this.historyAmountIncrease = getData.tickerPriceResult.historyAmountIncrease
         // 理财类型数组
-        this.investTypeList = data.data.data.managementList
+        this.investTypeList = getData.managementList
         // 设置投资类型默认值
-        this.selectedInvestTypeId = data.data.data.managementList[0] ? data.data.data.managementList[0].id : ''
+        this.selectedInvestTypeId = getData.managementList[0] ? getData.managementList[0].id : ''
         // 设置可用余额
-        this.availableBalance = data.data.data.userTotal
+        this.availableBalance = getData.userTotal
         // 投资估计值
-        this.InvestmentValue = data.data.data.userNumber
+        this.InvestmentValue = getData.userNumber
         // 历史收益
-        this.getMoneyValue = data.data.data.userInterest
+        this.getMoneyValue = getData.userInterest
         // 投资记录列表赋值
-        this.investList = this.isLogin ? data.data.data.userFinancialManagementRecord.list : ''
+        this.investList = this.isLogin ? getDatauserFinancialManagementRecord.list : ''
         // 收益记录列表
-        this.userInterestRecord = this.isLogin ? data.data.data.userInterestRecord.list : ''
+        this.userInterestRecord = this.isLogin ? getData.userInterestRecord.list : ''
         // 走势图x轴赋值
-        this.FINANCE_LINE_RENDER_PRICE_LIST(data.data.data.tickerPriceResult.renderPriceList)
+        this.FINANCE_LINE_RENDER_PRICE_LIST(getData.tickerPriceResult.renderPriceList)
         // 走势图y轴赋值
-        this.FINANCE_LINE_RENDER_TIME_LIST(data.data.data.tickerPriceResult.renderTimeList)
+        this.FINANCE_LINE_RENDER_TIME_LIST(getData.tickerPriceResult.renderTimeList)
         this.getUserCoindTotal()
         this.$refs.childLineCharts.resetOptions()
         this.$refs.childLineCharts.resetChart(this.options)
@@ -508,10 +508,6 @@ export default {
           width: 100%;
           height: 100%;
         }
-        // background-attachment: fixed;
-        // background-size: cover;
-        // -webkit-background-size: cover;
-        // background:url('../../assets/finance/banner-jpg.jpg') no-repeat center center;
         }
       >.inner-box{
         display:flex;
@@ -656,91 +652,6 @@ export default {
           /*<!--background-color: $nightMainTitleBgColor;-->*/
         }
       }
-    }
-    &.day{
-      >.inner-box{
-        background-color: $dayInnerBoxBg;
-        >.finance-inner{
-          >.container{
-          >.finance-form-header{
-            >.newnestPrice{
-              flex: 1;
-              height: 48px;
-              display:flex;
-              >li{
-                border-right:1px solid rgba(30,38,54,0.3);
-                color:#666;
-                >p{
-                  font-size:22px;
-                  >span{
-                    font-size:12px;
-                  }
-                }
-                &:last-child{
-                  border: none;
-                }
-              }
-          }
-          }
-        }
-        .finance-inner-box{
-        >.left{
-          color:#666;
-          >.nav-header{
-            >.balance{
-              color:#666;
-              >div{
-                color:#338FF5;
-                >span{
-                }
-              }
-            }
-          }
-          .left-body{
-            >label{
-              >.invest-mounte{
-                >input{
-                  width: 380px;
-                  color:#666;
-                  vertical-align: center;
-                }
-              }
-              .submitBtn{
-                >button{
-                }
-              }
-            }
-          }
-        }
-        >.right{
-          >.pieCharts-box{
-          >.right-infor{
-            >div{
-              >p{
-              >span{
-              }
-              }
-            }
-          }
-          >.pieCharts{
-            padding-top: 50px;
-            width: 282px;
-          }
-          }
-        }
-      }
-      >.invest-list{
-        >.invest-list-header{
-          a{
-          }
-        }
-      }
-      }
-      }
-      .invest{
-      color: #338FF5;
-      background:linear-gradient(left,rgba(51,143,245,0.5),transparent);
-    }
     }
     .blue{
       color: #338FF5;

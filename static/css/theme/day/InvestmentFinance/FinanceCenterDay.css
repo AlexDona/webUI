@@ -38,3 +38,38 @@
     padding:9px 0px 9px 26px;
     background:linear-gradient(90deg,rgba(51,143,245,0.8),transparent);
 }
+.finance-box.day .inner-box .finance-inner .container .finance-form-header .newnestPrice{
+    flex: 1;
+    height: 48px;
+    display:flex;
+}
+.finance-box.day .inner-box .finance-inner .container .finance-form-header .newnestPrice li{
+    border-right:1px solid rgba(30,38,54,0.3);
+    color:#666;
+}
+.finance-box.day .inner-box .finance-inner .container .finance-form-header .newnestPrice li p{
+    font-size:22px;
+}
+.finance-box.day .inner-box .finance-inner .container .finance-form-header .newnestPrice li p:last-child{
+    border: none;
+}
+.finance-box.day .inner-box .finance-inner .container .finance-form-header .newnestPrice li p span{
+    font-size:12px;
+}
+.finance-box.day .inner-box .finance-inner .finance-inner-box .left,
+.finance-box.day .inner-box .finance-inner .finance-inner-box .left .nav-header .balance
+{
+    color:#666;
+}
+.finance-box.day .inner-box .finance-inner .finance-inner-box .left .nav-header .balance div{
+    color:#338FF5;
+}
+.finance-box.day .inner-box .finance-inner .finance-inner-box .left .left-body .invest-mounte input{
+    width: 380px;
+    color:#666;
+    vertical-align: center;
+}
+.finance-box.day .inner-box .finance-inner .finance-inner-box .right .pieCharts{
+    padding-top: 50px;
+    width: 282px;
+}

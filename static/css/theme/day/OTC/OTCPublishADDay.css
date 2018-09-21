@@ -1,0 +1,49 @@
+.otc-publish-AD-box.day{
+   background: #fff;
+}
+.otc-publish-AD-box.day > .otc-publish-AD-content > .publish-AD-right > .publish-tips > .tip[data-v-6b1c45d6]{
+    color: #7D90AC;   
+}
+.otc-publish-AD-box.day .choice .el-input__inner{
+    background: #fff;
+    border: 1px solid #ECF1F8;
+    border-radius: 2px;
+}
+.otc-publish-AD-box.day > .otc-publish-AD-content > .publish-AD-left > .AD-big-form > .sale-price > .right > .input > .price-input[data-v-6b1c45d6],
+.otc-publish-AD-box.day > .otc-publish-AD-content > .publish-AD-left > .AD-big-form > .sum-limit > .right > .input-top > .input-sum[data-v-6b1c45d6],
+.otc-publish-AD-box.day > .otc-publish-AD-content > .publish-AD-left > .AD-big-form > .sum-limit > .right > .input-bottom > .input-min[data-v-6b1c45d6], 
+.otc-publish-AD-box.day > .otc-publish-AD-content > .publish-AD-left > .AD-big-form > .sum-limit > .right > .input-bottom .input-max[data-v-6b1c45d6],
+.otc-publish-AD-box.day > .otc-publish-AD-content > .publish-AD-left > .AD-big-form > .limit-set > .right .input-limit[data-v-6b1c45d6]
+{
+    background: #fff;
+    border: 1px solid #ECF1F8;
+    border-radius: 2px;
+}
+.otc-publish-AD-box.day > .otc-publish-AD-content > .publish-AD-left > .AD-big-form > .sale-price > .right > .input > .unit[data-v-6b1c45d6],
+.otc-publish-AD-box.day > .otc-publish-AD-content > .publish-AD-left > .AD-big-form > .sum-limit > .right > .input-top > .unit[data-v-6b1c45d6],
+.otc-publish-AD-box.day > .otc-publish-AD-content > .publish-AD-left > .AD-big-form > .sum-limit > .right > .input-bottom > .unit[data-v-6b1c45d6]
+{
+   background-color: #CBDDF4;
+   color: #338FF5;
+}
+.otc-publish-AD-box.day .trade-way .el-checkbox__inner{
+    border: 1px solid #435372;
+    background-color:#fff; 
+}
+.otc-publish-AD-box.day .el-checkbox__input.is-checked .el-checkbox__inner, .el-checkbox__input.is-indeterminate .el-checkbox__inner{
+    background-color: #fff;
+}
+.otc-publish-AD-box.day .el-textarea__inner{
+    border: 1px solid #ECF1F8;
+    background: #fff;
+    color: #7D90AC;
+}
+.otc-publish-AD-box.day > .otc-publish-AD-content > .publish-AD-left > .AD-big-form > .common[data-v-6b1c45d6]{
+    border-bottom: 1px solid rgba(57,66,77,0.1);
+}
+.otc-publish-AD-box.day > .otc-publish-AD-content > .publish-AD-left > .AD-big-form > .common > .left > .tips[data-v-6b1c45d6]{
+   color:#333;
+}
+.otc-publish-AD-box.day > .otc-publish-AD-content > .publish-AD-left > .AD-big-form > .common > .left > .warning[data-v-6b1c45d6]{
+  color: #3E79D6;
+}

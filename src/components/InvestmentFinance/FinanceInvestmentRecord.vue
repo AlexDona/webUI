@@ -173,8 +173,8 @@ export default {
   },
   created () {
     require('../../../static/css/list/InvestmentFinance/FinanceCenter.css')
-    require('../../../static/css/theme/day/InvestmentFinance/FinanceCenter.css')
-    require('../../../static/css/theme/night/InvestmentFinance/FinanceCenter.css')
+    require('../../../static/css/theme/day/InvestmentFinance/FinanceCenterDay.css')
+    require('../../../static/css/theme/night/InvestmentFinance/FinanceCenterNight.css')
     this.getFinancialManagementList()
   },
   mounted () {},

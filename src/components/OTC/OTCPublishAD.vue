@@ -1,5 +1,8 @@
 <template>
-  <div class="otc-publish-AD-box otc">
+  <div
+  class="otc-publish-AD-box otc"
+  :class="{'day':theme == 'day','night':theme == 'night' }"
+  >
     <!-- 商家发布广告挂单 -->
     <!-- 1.0 导航 -->
     <NavCommon/>
@@ -998,7 +1001,8 @@ export default {
   filter: {},
   computed: {
     ...mapState({
-      partnerId: state => state.common.partnerId
+      partnerId: state => state.common.partnerId,
+      theme: state => state.common.theme
       // userInfo: state => state.user.loginStep1Info.userInfo
     })
     // activitedBuySellStyle () {

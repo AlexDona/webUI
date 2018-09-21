@@ -1,0 +1,33 @@
+.otc-business-apply-box.night .el-dialog{
+    background: #121824;
+}
+.otc-business-apply-box.night .el-checkbox__inner{
+    background-color: #eee;
+  }
+  .otc-business-apply-box.night .el-checkbox__inner::after{
+    border: 1px solid #1F2F47;
+  }
+  .otc-business-apply-box.night .el-dialog__body{
+    color: #8494A6;
+  }
+  .otc-business-apply-box.night .el-dialog__title{
+    color: #338FF5; 
+  }
+  .otc-business-apply-box.night .el-dialog::-webkit-scrollbar-button    {
+    background-color:#292e42;
+  }
+  .otc-business-apply-box.night .el-dialog::-webkit-scrollbar-track     {
+    background:#292e42;
+  }
+  .otc-business-apply-box.night .el-dialog::-webkit-scrollbar-thumb{
+    background:#1e2636;
+  }
+  .otc-business-apply-box.night .el-dialog::-webkit-scrollbar-corner {
+    background:#292e42;
+  }
+  .otc-business-apply-box.night.el-dialog::-webkit-scrollbar-resizer  {
+    background:#292e42;
+  }
+  .otc-business-apply-box.night .el-dialog{
+    background:#121824;
+  }

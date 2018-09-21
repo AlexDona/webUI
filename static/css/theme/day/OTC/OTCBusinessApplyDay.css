@@ -1,6 +1,3 @@
-.otc-business-apply-box.day{
-   background-color: #fff;
-}
-.otc-business-apply-box.day > .business-apply-content > .approve > .agree[data-v-56c57fb1]{
-   color: #333;
-}
+.otc-business-apply-box.day .el-dialog{
+    background:#fff;
+  }
