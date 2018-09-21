@@ -22,7 +22,6 @@ function getSize () {
   html.style.fontSize = fontSize + 'px'
   html.style.height = height + 'px'
 }
-
 // 检测是否为pc
 function IsPC () {
   let userAgentInfo = navigator.userAgent

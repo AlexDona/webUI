@@ -127,6 +127,7 @@ export default {
     require('../../../static/css/list/Trade/GlobalMarket.css')
     require('../../../static/css/theme/day/Trade/GlobalMarketTradeDay.css')
     require('../../../static/css/theme/night/Trade/GlobalMarketTradeNight.css')
+    this.getGlobalMarket()
     // this.globalMarketList = [
     //   {
     //     id: 0,

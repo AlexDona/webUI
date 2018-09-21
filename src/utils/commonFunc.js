@@ -31,7 +31,8 @@ export const returnAjaxMessage = (data, self, noTip) => {
   if (meta.code !== 200) {
     self.$message({
       type: 'error',
-      message: !meta.params.length ? self.$t(`M.${meta.i18n_code}`) : self.$t(`M.${meta.i18n_code}`).format(meta.params[0])
+      // duration: 5000000,
+      message: !meta.params ? self.$t(`M.${meta.i18n_code}`) : self.$t(`M.${meta.i18n_code}`).format(meta.params)
     })
     return 0
   } else {

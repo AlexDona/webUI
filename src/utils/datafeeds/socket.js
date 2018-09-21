@@ -1,7 +1,7 @@
+import {socketUrl} from '../../utils/env'
 const pako = require('pako')
-
 class socket {
-  constructor (url = 'ws://192.168.1.200:8087/market', options) {
+  constructor (url = socketUrl, options) {
     this.heartBeatTimer = null
     this.options = options
     this.messageMap = {}
