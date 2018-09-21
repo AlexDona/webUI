@@ -278,8 +278,8 @@ import {
 import {
   returnAjaxMessage,
   getCountryListAjax,
-  globalPersonalAssetsInformation
-  // reflashUserInfo
+  globalPersonalAssetsInformation,
+  reflashUserInfo
 } from '../../utils/commonFunc'
 import { createNamespacedHelpers, mapState } from 'vuex'
 const { mapMutations } = createNamespacedHelpers('common')
@@ -345,10 +345,13 @@ export default{
     this.activeTheme = this.theme
     // 查询某商户可用法币币种列表
     // 折算货币s
-    this.getMerchantAvailablelegalTenderList()
-    this.getTransitionCurrencyRate()
-    this.getCountryList()
-    this.getGlobalPersonalAssetsInformation()
+    await this.getMerchantAvailablelegalTenderList()
+    await this.getTransitionCurrencyRate()
+    await this.getCountryList()
+    if (this.isLogin) {
+      await reflashUserInfo(this)
+    }
+    // this.getGlobalPersonalAssetsInformation()
   },
   methods: {
     ...mapMutations([
@@ -567,7 +570,10 @@ export default{
     userInfoRefreshStatus (newVal) {
       console.log(newVal)
       if (newVal) {
-        this.getGlobalPersonalAssetsInformation()
+        // this.getGlobalPersonalAssetsInformation()
+        if (this.isLogin) {
+          reflashUserInfo(this)
+        }
         this.SET_USER_INFO_REFRESH_STATUS(false)
       }
     }

@@ -4,7 +4,7 @@
 import {apiCommonUrl} from '../env'
 import axios from 'axios'
 import store from '../../vuex'
-// import router from '../../router/index'
+import router from '../../router/index'
 // import {getStoreWithJson} from '../index'
 
 let util = {}
@@ -23,7 +23,7 @@ util.ajax.interceptors.request.use((config) => {
   }
   return config
 }, (error) => {
-  return Promise.reject(error)
+  return error
 })
 
 util.ajax.interceptors.response.use(
@@ -49,7 +49,7 @@ util.ajax.interceptors.response.use(
         // return Promise.reject("您的账号已在其他终端登录，如非本人操作，则密码可能已泄露，请重置密码！")
       }
     }
-    return Promise.reject(error.response) // 返回接口返回的错误信息
+    return error.response // 返回接口返回的错误信息
   })
 
 export const post = (url, params) => {

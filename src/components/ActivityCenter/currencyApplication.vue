@@ -89,7 +89,7 @@
                 香港FUBT会对决定下线的项目提前5天发出下线公告，用户有30天的期限从钱包中移出资产。
               </p>
             </div>
-            <p>数字资产上线合作，请下载填写申请信息并邮箱至 <span class="target-email">XINBI@FUBT.TOP</span>审核。</p>
+            <p class="email-download">数字资产上线合作，请下载填写申请信息并邮箱至 <span class="target-email">XINBI@FUBT.TOP</span>审核。</p>
             <div class="download-box">
               <!--<button-->
                 <!--class="download-btn cursor-pointer"-->
@@ -98,6 +98,7 @@
               <a
                 class="download-btn cursor-pointer"
                 :href="downloadUrl"
+                v-if="downloadUrl"
               >预览下载</a>
             </div>
           </div>
@@ -246,8 +247,7 @@ export default {
                 line-height: 30px;
               }
             }
-            >p{
-              color:#fff;
+            >.email-download{
               .target-email{
                 color:#338FF5;
               }
@@ -272,6 +272,7 @@ export default {
       }
     }
     &.night {
+      color:#A9BED4;
       > .inner-box {
         > .top {
         }
@@ -294,12 +295,30 @@ export default {
               }
             }
             >.bottom{
+              padding:50px 40px;
+              >.item{
+                .title{
+                }
+                .content{
+                }
+              }
+              >.email-download{
+                .target-email{
+                  color:#338FF5;
+                }
+              }
+              >.download-box{
+                text-align: center;
+                >.download-btn{
+                }
+              }
             }
           }
         }
       }
     }
     &.day {
+      color:#000;
       > .inner-box {
         > .top {
         }
@@ -320,7 +339,29 @@ export default {
               }
             }
             >.bottom{
-
+              padding:50px 40px;
+              >.item{
+                margin-bottom:50px;
+                .title{
+                  font-size: 20px;
+                  color:#338FF5;
+                  font-weight: 700;
+                  line-height: 60px;
+                }
+                .content{
+                  font-size: 16px;
+                  line-height: 30px;
+                }
+              }
+              >.email-download{
+                .target-email{
+                  color:#338FF5;
+                }
+              }
+              >.download-box{
+                >.download-btn{
+                }
+              }
             }
           }
         }

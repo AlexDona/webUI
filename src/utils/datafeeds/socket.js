@@ -37,6 +37,9 @@ class socket {
     }
   }
   send (data) {
+    // if (this.socket) {
+    //   this.socket.send(JSON.stringify(data))
+    // }
     this.socket.send(JSON.stringify(data))
   }
   emit (data) {

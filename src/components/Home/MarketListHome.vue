@@ -349,7 +349,10 @@
                   </div>
                 </div>
               </div>
-              <div class="more-box">
+              <div
+                class="more-box"
+                v-show="filterMarketList.length"
+              >
                 <IconFontCommon
                   v-show="!tabContentMoreStatus"
                   iconName="icon-iconmore"
@@ -533,6 +536,7 @@ export default{
                     }
                   )
                   this.marketList[1].content = this.collectList
+                  console.log(this.marketList)
                   this.getFilterMarketList(this.marketList)
                   this.initSideBar(true)
                 }
@@ -568,6 +572,9 @@ export default{
                 })
                 break
             }
+          } else {
+            console.log(this.marketList)
+            this.setMarketList('', [])
           }
         }
       })
@@ -650,12 +657,18 @@ export default{
     },
     // marketList 赋值
     setMarketList (id, content) {
-      this.marketList.forEach((item) => {
-        if (item.id == id) {
+      if (id) {
+        this.marketList.forEach((item) => {
+          if (item.id == id) {
+            item.content = content
+            return false
+          }
+        })
+      } else {
+        this.marketList.forEach((item) => {
           item.content = content
-          return false
-        }
-      })
+        })
+      }
       this.getFilterMarketList(this.marketList)
     },
     // 搜索关键字
@@ -822,6 +835,7 @@ export default{
   .market-list-box{
     width:100%;
     overflow: hidden;
+    min-height:876px;
     /*表头*/
     .inner-box{
       width:1130px;

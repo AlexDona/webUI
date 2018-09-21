@@ -290,6 +290,7 @@ export default {
         symbol: this.activeSymbol.id,
         interval: 'min'
       }, (data) => {
+        console.log(data)
         // 币币交易
         if (data.tradeType == 'BBTICKER') {
           switch (data.type) {

@@ -115,8 +115,8 @@ export default {
           this.getDepthDataBySocket('SUB', this.symbol)
           this.getTradeRecordBySocket('REQ', this.symbol)
           this.getTradeRecordBySocket('SUB', this.symbol)
+          this.socket.on('message', this.onMessage)
         })
-        this.socket.on('message', this.onMessage)
       }
     },
     init (options) {
@@ -451,7 +451,7 @@ export default {
           }
           break
         case 'DEFAULTTRADE':
-          // console.log(data)
+          console.log(data)
           if (data.data) {
             this.$store.commit('trade/SET_MIDDLE_TOP_DATA', data.data[0].content[0])
             // this.CHANGE_ACTIVE_SYMBOL({activeSymbol: data.data[0].content[0]})

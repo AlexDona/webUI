@@ -643,7 +643,9 @@ export default {
     // 用户手动设置价格
     activePriceItem (newVal) {
       console.log(newVal)
-      this.setBuyAndSellPrice(newVal)
+      if (newVal) {
+        this.setBuyAndSellPrice(newVal)
+      }
     },
     middleTopData (newVal) {
       console.log(newVal)
@@ -652,8 +654,10 @@ export default {
           this.reflashCount++
         }
         if (this.isLogin) {
-          console.log(newVal)
           this.getUserAssetOfActiveSymbol(newVal.price)
+        } else {
+          let targetPrice = newVal.price != 0 ? newVal.price : newVal.kai
+          this.setBuyAndSellPrice(targetPrice)
         }
       }
     }
