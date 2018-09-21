@@ -1,0 +1,44 @@
+.otc-merchants-orders-box.day{
+    background-color: #fff;
+}
+.otc-merchants-orders-box.day .el-input__inner{
+    background-color: #fff;
+    border: 1px solid #ECF1F8;
+}
+.otc-merchants-orders-box.day > .otc-merchants-orders-content > .merchants-orders-main > .orders-main-top > .filtrate-text[data-v-3d7faed3]{
+    color: #7D90AC;
+}
+.otc-merchants-orders-box.day .el-input__inner{
+    color:#7D90AC!important; 
+}
+.otc-merchants-orders-box.day .el-input .el-input--suffix > input::-webkit-input-placeholder{
+    color:#7D90AC;
+}
+.otc-merchants-orders-box.day .orders-main-bottom .el-table{
+     background-color: #fff;
+     border: 1px solid #ECF1F8;
+}
+.otc-merchants-orders-box.day .orders-main-bottom .el-table th{
+     background-color: #fff;
+     box-shadow:none;
+}
+.otc-merchants-orders-box.day .orders-main-bottom .el-table th{
+    border-right: 1px solid 0px;
+}
+.otc-merchants-orders-box.day .orders-main-bottom .el-table th.is-leaf:first-of-type{
+     border-left: 0px solid #ECF1F8;
+     border-radius: 0;
+}
+.otc-merchants-orders-box.day .orders-main-bottom .el-table th.is-leaf:nth-last-of-type(2){
+    border-right: 0px solid #ECF1F8;
+    border-radius: 0;
+}
+.otc-merchants-orders-box.day .orders-main-bottom .el-table th.is-leaf{
+    border-bottom: 1px solid #ECF1F8;
+    border-top: 1px solid #ECF1F8;
+    box-shadow: inset 0px 1px 2px #ECF1F8;
+}
+.otc-merchants-orders-box.day .el-button--primary{
+    background: linear-gradient(90deg,rgba(43,57,110,1) 0%,rgba(42,80,130,1) 100%);
+    border:none;
+}

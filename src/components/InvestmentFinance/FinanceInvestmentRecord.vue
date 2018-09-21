@@ -30,8 +30,7 @@
                 </el-table-column>
                 <el-table-column
                   prop="typeDescription"
-                  label="投资类型"
-                  width="180">
+                  label="投资类型">
                 </el-table-column>
                 <el-table-column
                   prop="number"
@@ -45,19 +44,21 @@
                 </el-table-column>
                 <el-table-column
                   prop="expectedTime"
-                  width="180"
+                  width="150"
                   label="预计发放时间">
                 </el-table-column>
                 <el-table-column
                   prop="state"
+                  width="80"
                   label="状态">
                 </el-table-column>
                 <el-table-column
                   prop="createTime"
-                  width="180"
+                  width="150"
                   label="创建时间">
                 </el-table-column>
                 <el-table-column
+                  width="80"
                   prop="operations"
                   label="操作">
                   <template slot-scope = "data">
@@ -92,28 +93,25 @@
                 </el-table-column>
                 <el-table-column
                   prop="description"
-                  label="投资类型"
-                  width="230">
+                  label="投资类型">
                 </el-table-column>
                 <el-table-column
                   prop="number"
-                  width="180"
+                  width="100"
                   label="数量"
                   >
                 </el-table-column>
                 <el-table-column
                   prop="expected_earning"
-                  width="180"
                   label="预计收益">
                 </el-table-column>
                 <el-table-column
                   prop="interest"
-                  width="180"
                   label="发放收益">
                 </el-table-column>
                 <el-table-column
                   prop="createTime"
-                  width="180"
+                  width="150"
                   label="预计发放时间">
                 </el-table-column>
               </el-table>

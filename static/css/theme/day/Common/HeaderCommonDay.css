@@ -53,3 +53,23 @@
 .day.el-dialog {
   background-color: #fff;
 }
+/* 更改导航颜色 */
+.nav-box.common.day .inner-box > .bottom[data-v-346cd49c]{
+  background-color: #fff;
+  box-shadow:4px 4px 4px rgba(3,14,32,0.1);
+}
+.nav-box.common.day .inner-box > .top > .left > .nav-list > .nav-item > .sub-nav-list[data-v-346cd49c]{
+ background-color: #fff;
+}
+.nav-box.common.day .inner-box > .top > .left > .nav-list > .nav-item > .sub-nav-list[data-v-346cd49c]:before{
+  border-bottom-color: #fff;
+}
+.nav-box.common.day .inner-box > .top > .left > .nav-list > .nav-item > .sub-nav-list > .sub-nav-item > a[data-v-346cd49c]{
+  color: #000;
+}
+.nav-box.common.day .inner-box > .top > .left > .nav-list > .nav-item > .sub-nav-list > .sub-nav-item[data-v-346cd49c]:hover{
+  background-color: #fff;
+}
+.nav-box.common.day .inner-box > .top > .left > .nav-list > .nav-item > .sub-nav-list > .sub-nav-item[data-v-346cd49c]:hover > a{
+  color: #338FF5;
+}
