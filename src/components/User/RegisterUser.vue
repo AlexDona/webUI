@@ -302,7 +302,7 @@ export default {
       activeMethod: 0, // 当前注册方式： 0： 手机注册 : 1 邮箱注册
       // contryAreaList: [], // 国家区域列表
       activeCountryCodeWithPhone: '86',
-      activeCountryCodeWithEmail: this.language === 'zh_CN' ? '中国' : 'China',
+      activeCountryCodeWithEmail: '86',
       activeCodePlaceholder: !this.activeMethod ? '短信验证码' : '邮箱验证码',
       identifyCode: '', // 图片验证码
       userInputImageCode: '', // 用户输入的图片验证码
