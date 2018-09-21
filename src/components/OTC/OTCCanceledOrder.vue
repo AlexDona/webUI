@@ -383,6 +383,7 @@ export default {
         >.no-data{
           background-color: $mainDayColor;
           color: #333333;
+          border: 1px solid rgba(97,116,153,0.1);
         }
         >.page{
         }

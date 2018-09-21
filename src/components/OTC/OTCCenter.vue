@@ -1098,6 +1098,9 @@ export default {
         }
         >.otc-merchant-content{
           // background-color: #202A33;
+          // border:1px solid rgba(39,49,58,0.1);
+          // border-top: 0;
+          box-shadow:0px 0px 6px rgba(204,222,242,1);
           background-color: $mainDayColor;
           >.otc-filtrate-publish{
             >.otc-filtrate-box{
