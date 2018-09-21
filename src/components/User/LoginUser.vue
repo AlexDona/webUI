@@ -424,7 +424,6 @@
   </div>
 </template>
 <script>
-// import {ajax} from '../../kits/http'
 import {EMAIL_REG} from '../../utils/regExp' // 正则验证
 import {
   userLoginForStep1,

@@ -448,12 +448,12 @@ export default {
     // console.log(this.partnerId)
     // console.log(this.userInfo)
     // 2.0 otc可用法币查询：
-    // this.getMerchantAvailablelegalTenderList()
+    // this.getMerchantAvailablelegalTenderList()AD
     console.log('是否登录' + this.isLogin)
     console.log('用户信息')
     console.log(this.userInfo)
-    // 刷新用户信息
     if (this.isLogin) {
+      // 刷新用户信息
       reflashUserInfo(this)
     }
   },

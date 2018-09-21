@@ -1,7 +1,7 @@
 /**
  *请求封装
  */
-import {baseUrl} from '../env'
+import {apiCommonUrl} from '../env'
 import axios from 'axios'
 import store from '../../vuex'
 // import router from '../../router/index'
@@ -9,7 +9,7 @@ import store from '../../vuex'
 
 let util = {}
 util.ajax = axios.create({
-  baseURL: baseUrl,
+  baseURL: apiCommonUrl,
   timeout: 30000
 })
 
