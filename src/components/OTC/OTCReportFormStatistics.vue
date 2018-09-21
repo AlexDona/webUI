@@ -1,5 +1,8 @@
 <template>
-  <div class="otc-report-form-statistics-box otc">
+  <div
+  class="otc-report-form-statistics-box otc"
+  :class="{'day':theme == 'day','night':theme == 'night' }"
+  >
     <!-- 1.0 导航 -->
     <NavCommon/>
     <!-- 2.0 -->
@@ -638,6 +641,7 @@ export default {
     ...mapState({
       // 商户id
       partnerId: state => state.common.partnerId,
+      theme: state => state.common.theme,
       // 测试拿到userinfo
       userInfo: state => state.personal.userInfo
     })

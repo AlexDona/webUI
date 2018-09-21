@@ -1,0 +1,109 @@
+.otc-report-form-statistics-box.day{
+  background-color: #fff;
+}
+.otc-report-form-statistics-box.day .report-form-filtrate .el-input__inner{
+  background-color:#fff;
+  border:1px solid rgba(236,241,248,1);
+  border-radius:2px
+}
+.otc-report-form-statistics-box.day > .report-form-statistics-content > .report-form-asset[data-v-e69a84f0]{
+  border:1px solid rgba(38,47,56,0.1);
+  border-radius: 0px;
+  background-color: #fff;
+  margin-top: 20px;
+}
+.otc-report-form-statistics-box.day > .report-form-statistics-content > .report-form-asset > .content[data-v-e69a84f0]{
+  border:0px solid rgba(38,47,56,0.1);
+}
+.otc-report-form-statistics-box.day > .report-form-statistics-content > .report-form-asset > .title[data-v-e69a84f0]{
+   border: none;
+   border-bottom: 1px solid rgba(38,47,56,0.1);
+   box-shadow: 0px 0px 0px #191E28; 
+}
+.otc-report-form-statistics-box.day > .report-form-statistics-content > .report-form-buy-sell > .common[data-v-e69a84f0]{
+    background-color: #fff;
+}
+.otc-report-form-statistics-box.day > .report-form-statistics-content > .report-form-buy-sell > .common > .body[data-v-e69a84f0]{
+   border: 1px solid rgba(38,47,56,0.1);
+}
+.otc-report-form-statistics-box.day > .report-form-statistics-content > .report-form-buy-sell > .common > .head[data-v-e69a84f0]{
+    border: 1px solid rgba(38,47,56,0.1);
+    border-bottom:none;
+    border-bottom-right-radius: 0px;
+    border-bottom-left-radius: 0px;
+    box-shadow:inset 0px 2px 4px rgba(236,241,248,1);
+}
+.otc-report-form-statistics-box.day > .report-form-statistics-content > .report-form-buy-sell > .common > .body > .together[data-v-e69a84f0]{
+    border: 1px solid rgba(38,47,56,0.1);
+} 
+.otc-report-form-statistics-box.day > .report-form-statistics-content > .report-form-buy-sell > .common > .body > .together > .left > .round[data-v-e69a84f0]{
+    background-color: rgba(212,88,88,0.15);
+}
+.otc-report-form-statistics-box.day > .report-form-statistics-content > .report-form-details[data-v-e69a84f0]{
+   background-color: #fff;
+   border: 1px solid rgba(38,47,56,0.1);
+   border-top:0px solid #000;
+   border-top-right-radius: 5px;
+   border-top-left-radius: 5px;
+}
+.otc-report-form-statistics-box.day .border-radius5{
+    border-radius: 0px;
+}
+.otc-report-form-statistics-box.day > .report-form-statistics-content > .report-form-details > .title[data-v-e69a84f0]{
+    box-shadow: 0px 0px 0px #191E28;
+    border-top-right-radius: 5px;
+    border-top-left-radius: 5px;
+    border: 1px solid rgba(38,47,56,0.1);
+    border-left: none;
+    border-right:none;
+}
+.otc-report-form-statistics-box.day .date .select-date .el-input__inner{
+    background-color: #fff;
+    border: 1px solid rgba(38,47,56,0.1);
+}
+.otc-report-form-statistics-box.day .date .radio-date .el-radio__label{
+    color:#7D90AC;
+}
+.otc-report-form-statistics-box.day .date .radio-date .el-radio__inner{
+    background-color: #fff;
+    border: 1px solid rgba(38,47,56,0.1)
+}
+.otc-report-form-statistics-box.day .el-radio__input.is-checked .el-radio__inner {
+    border-color: rgb(64, 158, 255);
+    background: #fff;
+}
+.otc-report-form-statistics-box.day .order-table .el-table{
+    background-color: #fff;
+}
+.otc-report-form-statistics-box.day .order-table .el-table th.is-leaf{
+    border-bottom: 0px solid #262F38;
+}
+.otc-report-form-statistics-box.day .order-table .el-table th{
+    background-color: #fff;
+    color: #999;
+}
+.otc-report-form-statistics-box.day > .report-form-statistics-content > .report-form-filtrate > .filtrate-text[data-v-e69a84f0]{
+    color:#7D90AC;   
+}
+.otc-report-form-statistics-box.day .el-input__inner{
+    color:#7D90AC;      
+}
+.otc-report-form-statistics-box.day .nav-box > .inner-box > .bottom[data-v-346cd49c]{
+    background-color: #fff;
+    box-shadow:4px 4px 4px rgba(3,14,32,0.1);
+}
+.otc-report-form-statistics-box.day .nav-box > .inner-box > .top > .left > .nav-list > .nav-item > .sub-nav-list[data-v-346cd49c]{
+   background-color: #fff;
+}
+.otc-report-form-statistics-box.day .nav-box > .inner-box > .top > .left > .nav-list > .nav-item > .sub-nav-list[data-v-346cd49c]:before{
+    border-bottom-color: #fff;
+}
+.otc-report-form-statistics-box.day .nav-box > .inner-box > .top > .left > .nav-list > .nav-item > .sub-nav-list > .sub-nav-item > a[data-v-346cd49c]{
+    color: #000;
+}
+.otc-report-form-statistics-box.day .nav-box > .inner-box > .top > .left > .nav-list > .nav-item > .sub-nav-list > .sub-nav-item[data-v-346cd49c]:hover{
+    background-color: #fff;
+}
+.otc-report-form-statistics-box.day .nav-box > .inner-box > .top > .left > .nav-list > .nav-item > .sub-nav-list > .sub-nav-item[data-v-346cd49c]:hover > a{
+    color: #338FF5;
+}

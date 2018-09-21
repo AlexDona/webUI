@@ -1,5 +1,8 @@
 <template>
-  <div class="otc-merchants-orders-box otc">
+  <div
+  class="otc-merchants-orders-box otc"
+  :class="{'day':theme == 'day','night':theme == 'night' }"
+  >
     <!-- 1.0 导航 -->
     <NavCommon/>
     <!-- 2.0 商家订单 -->
@@ -482,6 +485,7 @@ export default {
   filter: {},
   computed: {
     ...mapState({
+      theme: state => state.common.theme,
       partnerId: state => state.common.partnerId
     })
   },

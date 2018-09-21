@@ -1,5 +1,8 @@
 <template>
-  <div class="otc-AD-manage-box otc">
+  <div
+  class="otc-AD-manage-box otc"
+  :class="{'day':theme == 'day','night':theme == 'night' }"
+  >
     <!-- 1.0 导航 -->
     <NavCommon/>
     <!-- 2.0 广告管理 -->
@@ -465,7 +468,8 @@ export default {
   filter: {},
   computed: {
     ...mapState({
-      partnerId: state => state.common.partnerId
+      partnerId: state => state.common.partnerId,
+      theme: state => state.common.theme,
     })
   },
   watch: {}
@@ -516,7 +520,7 @@ export default {
           }
         }
         > .manage-main-bottom {
-          height: 450px!important;
+         min-height: 450px!important;
           .red {
             color: #D45858;
           }

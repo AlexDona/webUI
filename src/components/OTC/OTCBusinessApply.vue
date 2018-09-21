@@ -1,5 +1,8 @@
 <template>
-  <div class="otc-business-apply-box otc">
+  <div
+  class="otc-business-apply-box otc"
+  :class="{'day':theme == 'day','night':theme == 'night' }"
+  >
     <!-- 1.0 导航 -->
     <NavCommon/>
     <!-- 2.1商家 申请 页面 -->
@@ -282,7 +285,8 @@ export default {
       userInfo: state => state.user.loginStep1Info.userInfo, // 用户详细信息
       isLogin: state => state.user.isLogin, // 用户登录状态 false 未登录； true 登录
       partnerId: state => state.common.partnerId,
-      language: state => state.common.language
+      language: state => state.common.language,
+      theme: state => state.common.theme,
     })
   },
   watch: {}
