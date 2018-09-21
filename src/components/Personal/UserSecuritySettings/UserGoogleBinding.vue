@@ -275,6 +275,7 @@ export default {
       } else {
         console.log(data)
         this.successJump()
+        this.googleVerificationCode = ''
       }
     },
     // 谷歌绑定成功自动跳转

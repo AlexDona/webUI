@@ -264,10 +264,15 @@ export default {
         if (!(returnAjaxMessage(data, this, 1))) {
           return false
         } else {
+          this.stateEmptyData()
           this.successJump()
-          console.log(data)
         }
       }
+    },
+    // 接口请求完成之后清空数据
+    stateEmptyData () {
+      this.emailAccounts = ''
+      this.emailCode = ''
     },
     // 谷歌绑定成功自动跳转
     successJump () {
@@ -428,7 +433,6 @@ export default {
               }
             }
             .email-button {
-              padding: 10px 33px;
               background:linear-gradient(0deg,rgba(43,57,110,1),rgba(42,80,130,1));
               color: #ccc;
             }

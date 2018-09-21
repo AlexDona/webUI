@@ -247,11 +247,14 @@ export default {
         return false
       } else {
         this.WithdrawalAddressList()
-        this.dialogVisible = false
-        this.mentionRemark = ''
-        this.prepaidAddress = ''
-        // console.log(data)
+        this.stateEmptyData()
       }
+    },
+    // 接口请求完成之后清空数据
+    stateEmptyData () {
+      this.dialogVisible = false
+      this.mentionRemark = ''
+      this.prepaidAddress = ''
     },
     // 分页
     changeCurrentPage (pageNum) {

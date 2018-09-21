@@ -8,9 +8,6 @@
 .coin-orders.personal .el-table th>.cell {
   text-align: center;
 }
-.coin-orders.personal .el-table th.is-leaf {
-  border-bottom: 1px solid rgba(57,66,77,1);
-}
 .coin-orders.personal .el-table td{
   border-bottom: 0;
 }

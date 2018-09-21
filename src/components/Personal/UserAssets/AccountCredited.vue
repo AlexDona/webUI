@@ -503,6 +503,7 @@ export default {
       this.state = safeState
       switch (paymentType) {
         case 'bank':
+          console.log(paymentType)
           if (!this.paymentTerm.isBankBind) {
             if (safeState === 'enable') {
               this.openCollectionMode = true
@@ -520,7 +521,11 @@ export default {
               this.closeWesternUnion = false
             }
           } else {
-            this.openCollectionMode = false
+            this.$message({
+              message: '请先设置银行卡',
+              type: 'error'
+            })
+            // this.openCollectionMode = false
           }
           break
         case 'chat':
@@ -541,6 +546,10 @@ export default {
               this.closeWesternUnion = false
             }
           } else {
+            this.$message({
+              message: '请先设置微信',
+              type: 'error'
+            })
             this.openCollectionMode = false
           }
           break
@@ -562,6 +571,10 @@ export default {
               this.closeWesternUnion = false
             }
           } else {
+            this.$message({
+              message: '请先设置支付宝',
+              type: 'error'
+            })
             this.openCollectionMode = false
           }
           break
@@ -583,6 +596,10 @@ export default {
               this.closeWesternUnion = false
             }
           } else {
+            this.$message({
+              message: '请先设置PAYPAL',
+              type: 'error'
+            })
             this.openCollectionMode = false
           }
           break
@@ -604,6 +621,10 @@ export default {
               this.closeWesternUnion = true
             }
           } else {
+            this.$message({
+              message: '请先设置西联汇款',
+              type: 'error'
+            })
             this.openCollectionMode = false
           }
           break

@@ -152,7 +152,7 @@
               </template>
             </el-table-column>
             <el-table-column
-              label="价格(FBT)"
+              :label="'价格 ('+ pushPayCoinName +')'"
             >
               <template slot-scope = "s">
                 <div>{{ s.row.price }}</div>
@@ -382,6 +382,7 @@ export default {
       paymentVisible: false, // 付款二次确认弹窗默认隐藏
       passwordVisible: false, // 付款二次确认之后交易密码弹窗默认隐藏
       pushUID: '', // 每行数据ID
+      pushPayCoinName: '', // 币种名称
       pushPassword: '',
       // push列表记录
       pushRecordList: [],
@@ -442,6 +443,7 @@ export default {
         this.currencyValue = data.data.data.coinLists[0].coinId
         // 刷新列表默认币种
         this.balance = data.data.data.total
+        this.pushPayCoinName = data.data.data.pushPayCoinName
         this.currencyList = data.data.data.coinLists
         // 金额
         this.sum = data.data.data.pushPayCoinName
@@ -574,8 +576,6 @@ export default {
       this.buyUID = ''
       this.$refs.count.value = ''
       this.$refs.price.value = ''
-      // this.count = ''
-      // this.price = ''
       this.transactionPassword = ''
     },
     /**

@@ -18,3 +18,12 @@
 .coin-orders.personal.day .el-table th>.cell {
   color: #333;
 }
+.coin-orders.personal .el-table th.is-leaf {
+  border-bottom: 1px solid rgba(57,66,77,0.1);
+}
+
+.coin-orders.personal.day .el-tabs__item:hover {
+  color: #338FF5;
+  background: rgba(51,143,245,0.1);
+  border-left: 0 solid #fff;
+}
