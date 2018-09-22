@@ -18,7 +18,7 @@
               <span class="color">{{ userInfo.userInfo.userName }}</span>
             </p>
             <span class="display-inline-block margin-top9 text-color">
-              UID: {{ userInfo.userInfo.showId }}
+              UID： {{ userInfo.userInfo.showId }}
             </span>
           </div>
         </div>

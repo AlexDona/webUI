@@ -31,6 +31,8 @@ export const userRefreshUser = (params) => get('user/refreshUser', params)
 /**
  * 安全中心
  * */
+// 邮箱、短信、谷歌验证码验证
+export const securityVerificationOnOff = (params) => postWithURLencoded('user/validate', params)
 // 安全中心
 export const statusSecurityCenter = (params) => get('user/security/index', params)
 // 绑定邮箱
@@ -51,19 +53,20 @@ export const setTransactionPassword = (params) => postWithURLencoded('user/secur
 export const resetUpdatePayPassword = (params) => postWithURLencoded('user/security/updatePayPassword', params)
 // 修改登录密码
 export const modifyLoginPassword = (params) => postWithURLencoded('user/security/password', params)
-/**
- * 开启关闭验证
- * */
-// 邮箱、短信、谷歌验证码验证
-export const securityVerificationOnOff = (params) => postWithURLencoded('user/validate', params)
 // 启用关闭手机邮箱验证
 export const enableTheClosing = (params) => postWithURLencoded('user/security/enable', params)
+/**
+ * 身份认证
+ * */
 // 提交实名认证
 export const submitRealNameAuthentication = (params) => postWithURLencoded('user/center/realNameAuth', params)
 // 提交高级认证
 export const submitSeniorCertification = (params) => postWithURLencoded('user/center/advancedAuth', params)
 //  获取用户实名信息
 export const realNameInformation = (params) => get('user/center/userauth', params)
+/**
+ * push资产
+ * */
 // push资产记录列表/push币种列表/默认余额total
 export const getPushAssetList = (params) => get('push/getPushList', params)
 // push根据币种id获取可用余额
@@ -76,6 +79,9 @@ export const pushAssetsSubmit = (params) => post('push/pushSub', params)
 export const revocationPushProperty = (params) => put('push/pushCancel', params)
 // push资产成交
 export const pushPropertyTransaction = (params) => put('push/pushPay', params)
+/**
+ * 邀请推广
+ * */
 // 直接推广 间接推广列表
 export const userPromotionList = (params) => get('user/center/inviter', params)
 // 推荐用户币种列表
@@ -94,35 +100,20 @@ export const modificationAccountPaymentTerm = (params) => get('user/bank/info', 
 /**
  * 法币订单
  * */
-// 查询某商户可用法币币种列表
-export const getMerchantAvailablelegalTender = (params) => get('otcCOin/getAvailCurrencyCoins', params)
 // 可用币种查询：我要购买/我要出售的币种列表
 export const getOTCAvailableCurrency = (params) => get('otcCOin/getAvailOTCCoins', params)
 // 查询用户所有挂单列表（分页）:也就是订单中的 委托中的订单
 export const getOTCEntrustingOrders = (params) => get('otcEntrust/selectEntrustsPage', params)
 // 分页查询所有用户otc各状态交易订单列表
 export const getQueryAllOrdersList = (params) => get('otcOrder/selectUserOrdersPage', params)
-// 查询otc挂单撤销
+// 个人中心查询otc挂单撤销
 export const querySelectedOrdersRevocation = (params) => postWithURLencoded('otcEntrust/cancelOtcEntrust', params)
 // 交易中订单，买家确认付款
 export const buyerPayForOrder = (params) => postWithURLencoded('otcOrder/payForOrder', params)
-// otc交易中订单， otc卖家确认收款
+// 个人中心交易中订单， 个人中心卖家确认收款
 export const sellerConfirmGetMoney = (params) => postWithURLencoded('otcOrder/confirmReceiveForOrder', params)
-// otc交易中订单， otc卖家申诉
+// 个人中心交易中订单， 个人中心卖家申诉
 export const sellerSendAppeal = (params) => postWithURLencoded('otcAppeal/applyOtcAppeal', params)
-// async getSecurityCenter () {
-//       let data = await statusSecurityCenter({
-//         token: this.userInfo.token // token
-//       })
-//       console.log(data)
-//       if (!(returnAjaxMessage(data, this, 0))) {
-//         return false
-//       } else {
-//         // 返回展示
-//         this.securityCenter = data.data.data
-//       }
-//     }
-// export const getOTCMerchantsOrdersList = (params) => get('otcOrder/selectMerchOrdersPage', params)
 /**
  * API
  * */

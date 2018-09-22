@@ -225,6 +225,7 @@
                       list-type="picture-card"
                       :on-success="handleSuccessFront"
                       :on-remove="handleRemoveFront"
+                      :before-upload="beforeAvatarUpload"
                     >
                       <div
                         class="picture"
@@ -253,8 +254,10 @@
                       :action="apiCommonUrl+'uploadfile'"
                       :headers="tokenObj"
                       list-type="picture-card"
+                      :show-file-list="false"
                       :on-success="handleSuccessReverseSide"
                       :on-remove="handleRemoveSide"
+                      :before-upload="beforeAvatarUpload"
                     >
                       <div
                         class="picture"
@@ -282,8 +285,10 @@
                       :action="apiCommonUrl+'uploadfile'"
                       :headers="tokenObj"
                       list-type="picture-card"
+                      :show-file-list="false"
                       :on-success="handleSuccessHand"
                       :on-remove="handleRemoveHand"
+                      :before-upload="beforeAvatarUpload"
                     >
                       <div
                         class="picture"
@@ -462,18 +467,6 @@ export default {
     ...mapMutations([
       'SET_USER_INFO_REFRESH_STATUS'
     ]),
-    // beforeAvatarUpload (file) {
-    //   const isJPG = file.type === 'image/jpeg/bmp/png'
-    //   const isLt2M = file.size / 1024 / 1024 < 2
-    //
-    //   if (!isJPG) {
-    //     this.$message.error('上传头像图片只能是 JPG 格式!')
-    //   }
-    //   if (!isLt500kb) {
-    //     this.$message.error('上传头像图片大小不能超过 500kb!')
-    //   }
-    //   return isJPG && isLt2M
-    // },
     handleSuccessFront (response) {
       this.dialogImageFrontUrl = response.data.fileUrl
       this.firstPictureSrcShow = false
@@ -494,6 +487,19 @@ export default {
     },
     handleRemoveHand () {
       this.thirdPictureSrcShow = true
+    },
+    beforeAvatarUpload (file) {
+      console.log(file)
+      // const isJPG = file.type === 'image/jpeg'
+      const isLt10M = file.size
+      // if (!isJPG) {
+      //   this.$message.error('上传头像图片只能是 JPG 格式!')
+      // }
+      if (isLt10M > 102400000) {
+        console.log(isLt10M)
+        this.$message.error('上传头像图片大小不能超过 10M!')
+        return false
+      }
     },
     /**
      * 刚进页面时候 国家列表展示
@@ -632,7 +638,6 @@ export default {
       this.authenticationContentStatus = true
     },
     // 选择图片文件
-
     // 确认提交高级认证
     stateSubmitSeniorCertification () {
       this.stateSeniorCertification()
