@@ -64,10 +64,13 @@
             <div class="item">
               <span class="label">验证</span>
               <span class="label-content">
+                <div
+                  class="image-validate-box"
+                  v-if="!confirmSuccess"
+                >
                   <input
                     class="username-input image-validate"
                     type="text"
-                    v-if="!confirmSuccess"
                     v-model="userInputImageCode"
                     @keyup="validateImageCode"
                   />
@@ -86,6 +89,7 @@
                       class="display-inline-block"
                     />
                   </span>
+                  </div>
                   <div class="slider-success"
                        v-else
                   >
@@ -629,8 +633,20 @@ export default {
                   color:#fff;
                   vertical-align: top;
                 }
-                >.image-validate{
-                  width:135px;
+                >.image-validate-box{
+                  transition: all 1s;
+                  >.image-validate{
+                    width:135px;
+                  }
+                  >.username-input{
+                    height:36px;
+                    background:rgba(32,55,90,1);
+                    border-radius:4px;
+                    padding:0 10px;
+                    box-sizing: border-box;
+                    color:#fff;
+                    vertical-align: top;
+                  }
                 }
                 >.validate-code-input{
                   width:126px;
@@ -643,6 +659,7 @@ export default {
                   color:#fff;
                 }
                 >.slider-success{
+                  transition: all 1s;
                   width:200px;
                   height:36px;
                   background:rgba(32,55,90,1);
@@ -650,67 +667,6 @@ export default {
                   border-radius:4px;
                   text-align: center;
                   color:$mainColor;
-                }
-              }
-              /*滑块*/
-              .drag-box{
-                width:200px;
-                /*display:inline-block;*/
-                overflow: hidden;
-                >.drag{
-                  position: relative;
-                  background-color: #20375a;
-                  width: 200px;
-                  height: 36px;
-                  line-height: 36px;
-                  text-align: center;
-                  /*border: 1px solid #4e5b85;*/
-                  cursor: pointer;
-                  color:#fff;
-                  >.drag_bg{
-                    background-color: #20375a;
-                    height: 36px;
-                  }
-                  >.drag_text{
-                    font-size: 12px;
-                    position: absolute;
-                    top: 0px;
-                    width: 200px;
-                    -moz-user-select: none;
-                    -webkit-user-select: none;
-                    user-select: none;
-                    -o-user-select: none;
-                    -ms-user-select: none;
-                    background: -webkit-gradient(linear, left top, right top, color-stop(0, #61688a), color-stop(.4, #61688a), color-stop(.5, #fff), color-stop(.6, #61688a), color-stop(1, #61688a));
-                    -webkit-background-clip: text;
-                    -webkit-text-fill-color: transparent;
-                    -webkit-animation: slidetounlock 3s infinite;
-                    -webkit-text-size-adjust: none;
-                  }
-
-                  @keyframes slidetounlock {
-                    0% {
-                      background-position: -100px 0;
-                    }
-                    100% {
-                      background-position: 100px 0;
-                    }
-                  }
-                  >.handler_bg{
-                    border-radius: 0px 3px 3px 0px;
-                    background: #5b89cf;
-                    position: absolute;
-                    top: 0px;
-                    left: 0px;
-                    width: 40px;
-                    height: 36px;
-                    /* border: 1px solid #ccc; */
-                    cursor: move;
-                    .icon-text{
-                      color:rgba(222,225,234,1);
-                      font-size: 12px;
-                    }
-                  }
                 }
               }
             }

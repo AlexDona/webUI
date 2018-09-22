@@ -577,21 +577,26 @@ export default {
         case 0:
           if (!targetNum) {
             this.setErrorMsg(0, '请输入用户名')
+            this.$forceUpdate()
             return 0
+          } else {
+            console.log(1)
+            this.setErrorMsg(0, '')
+            this.$forceUpdate()
+            return 1
           }
-          this.$forceUpdate()
-          break
         // 密码验证
         case 1:
           if (!targetNum) {
-            this.setErrorMsg(1, '请输入密码！')
-            // return 0
+            this.setErrorMsg(1, '请输入密码')
+            this.$forceUpdate()
+            return 0
           } else {
+            console.log(1)
             this.setErrorMsg(1, '')
-            // return 1
+            this.$forceUpdate()
+            return 1
           }
-          this.$forceUpdate()
-          break
       }
     },
     // 隐藏滑块验证
@@ -608,11 +613,12 @@ export default {
       * 登录第一步
       */
     async loginForStep1 () {
-      this.checkoutInputFormat(0, this.username)
-      this.checkoutInputFormat(1, this.password)
-      // if (!usernameCheckout) {
-      //   return false
-      // }
+      if (!this.checkoutInputFormat(0, this.username)) {
+        return false
+      }
+      if (!this.checkoutInputFormat(1, this.password)) {
+        return false
+      }
       // 判断登录方式
       if (EMAIL_REG.test(this.username)) {
         console.log('email')

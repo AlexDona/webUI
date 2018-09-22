@@ -94,7 +94,10 @@
         <!-- 2.2.4 同意协议部分 -->
         <div class="agree font-size12">
           <span>
-            <el-checkbox v-model="checked" @change='changeVal'>
+            <el-checkbox
+              v-model="checked"
+              @change="changeVal"
+            >
             </el-checkbox>
           </span>
           <span>我已阅读并同意</span>
@@ -154,8 +157,11 @@ import FooterCommon from '../Common/FooterCommon'
 import IconFontCommon from '../Common/IconFontCommon'
 import {businessApply, firstEnterBusinessApply, argumentBusinessApply} from '../../utils/api/OTC'
 import {returnAjaxMessage} from '../../utils/commonFunc'
-import {createNamespacedHelpers, mapState} from 'vuex'
-const {mapMutations} = createNamespacedHelpers('OTC')
+import {
+  // createNamespacedHelpers,
+  mapState
+} from 'vuex'
+// const {mapMutations} = createNamespacedHelpers('OTC')
 export default {
   components: {
     NavCommon, //  头部导航
@@ -189,7 +195,7 @@ export default {
   update () {},
   beforeRouteUpdate () {},
   methods: {
-    ...mapMutations([]),
+    // ...mapMutations([]),
     // 点击申请商家用户按钮发送请求
     submit () {
       // 点击按钮时判断商家是否登录
@@ -208,9 +214,9 @@ export default {
     },
     // 请求申请状态
     async getOTCBusinessApply () {
-      const data = await businessApply({})
+      const data = await businessApply()
       // 提示信息
-      if (!(returnAjaxMessage(data, this, 0))) {
+      if (!(returnAjaxMessage(data, this))) {
         return false
       } else {
         // 返回数据正确的逻辑
