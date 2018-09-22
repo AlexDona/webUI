@@ -21,7 +21,7 @@
           <span class="style-input">
             <el-select
               v-model="activitedADManageTraderStyleList"
-              @change="changeADManageTraderStyleList"
+              @change="changeSelectValue('changeADManageTraderStyleList', $event)"
               clearable
             >
               <el-option
@@ -38,7 +38,7 @@
           <span class="market-input">
               <el-select
                 v-model="activitedADManageMarketList"
-                @change="changeADManageMarketList"
+                @change="changeSelectValue('changeADManageMarketList', $event)"
                 clearable
               >
                 <el-option
@@ -55,7 +55,7 @@
           <span class="market-input">
               <el-select
                 v-model="activitedADManageCurrencyId"
-                @change="changeADManageCurrencyId"
+                @change="changeSelectValue('changeADManageCurrencyId', $event)"
                 clearable
               >
                 <el-option
@@ -71,7 +71,7 @@
           <span class="status-input">
             <el-select
               v-model="activitedADManageStatusList"
-              @change="changeADManageStatusList"
+              @change="changeSelectValue('changeADManageStatusList', $event)"
               clearable
             >
               <el-option
@@ -349,21 +349,25 @@ export default {
         this.totalPages = data.data.data.pages - 0
       }
     },
-    // 交易类型选中赋值
-    changeADManageTraderStyleList (e) {
-      this.activitedADManageTraderStyleList = e
-    },
-    // 交易币种选中赋值
-    changeADManageMarketList (e) {
-      this.activitedADManageMarketList = e
-    },
-    // 交易法币选中赋值
-    changeADManageCurrencyId (e) {
-      this.activitedADManageCurrencyId = e
-    },
-    // 交易状态选中赋值
-    changeADManageStatusList (e) {
-      this.activitedADManageStatusList = e
+    changeSelectValue (type, targetValue) {
+      switch (type) {
+        // 交易类型选中赋值
+        case 'changeADManageTraderStyleList':
+          this.activitedADManageTraderStyleList = targetValue
+          break
+        // 交易类型选中赋值
+        case 'changeADManageMarketList':
+          this.activitedADManageMarketList = targetValue
+          break
+        // 交易法币选中赋值
+        case 'changeADManageCurrencyId':
+          this.activitedADManageCurrencyId = targetValue
+          break
+        // 交易状态选中赋值
+        case 'changeADManageStatusList':
+          this.activitedADManageStatusList = targetValue
+          break
+      }
     },
     // 币种查询
     async getOTCAvailableCurrencyList () {
@@ -395,8 +399,7 @@ export default {
     },
     // 一键下架所有广告
     async cancelAllOnekey () {
-      // console.log('d')
-      const data = await cancelAllOrdersOnekey({})
+      const data = await cancelAllOrdersOnekey()
       // 提示信息
       if (!(returnAjaxMessage(data, this, 1))) {
         return false
@@ -449,10 +452,6 @@ export default {
       }).then(() => {
         // 跳转发布广告页面并携带一条信息的参数
         this.$router.push({path: '/OTCPublishAD', query: {id: item.id}})
-        // this.$message({
-        //   type: 'success',
-        //   message: '修改成功!'
-        // })
       }).catch(() => {
         // this.$message({
         //   type: 'success',
