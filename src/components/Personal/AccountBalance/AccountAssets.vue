@@ -77,11 +77,13 @@
                   可用数量
                 </div>
                 <div
-                  class="flex1 text-align-c"
+                  class="flex1"
                 >
                   资产估值(BTC)
-                  <i class="el-icon-caret-bottom"></i>
-                  <i class="el-icon-caret-top"></i>
+                  <div class="icon-caret">
+                    <i class="el-icon-caret-bottom caret-text cursor-pointer"></i>
+                    <i class="el-icon-caret-top caret-text1 cursor-pointer"></i>
+                  </div>
                 </div>
                 <div
                   class="flex1 text-align-c"
@@ -849,7 +851,9 @@ export default {
       } else {
         // 返回列表数据userWithdrawAddressDtoList
         this.mentionAddressList = data.data.data.userWithdrawAddressDtoList
-        this.mentionAddressValue = data.data.data.userWithdrawAddressDtoList[0].address
+        if (!data.data.data.userWithdrawAddressDtoList[0].address) {
+          this.mentionAddressValue = data.data.data.userWithdrawAddressDtoList[0].address
+        }
       }
     },
     /**
@@ -1013,14 +1017,16 @@ export default {
       } else {
         // 返回展示
         this.currencyTradingList = data.data.data.entrust
-        this.area = this.currencyTradingList.buyCoinName
-        this.areaId = this.currencyTradingList.tradeAreaId
-        this.id = this.currencyTradingList.sellCoinName + this.currencyTradingList.buyCoinName
+        // if (this.currencyTradingList !== '') {
+        //   this.area = this.currencyTradingList.buyCoinName
+        // }
+        // this.areaId = this.currencyTradingList.tradeAreaId
+        // this.id = this.currencyTradingList.sellCoinName + this.currencyTradingList.buyCoinName
         // this.sellname = data.data.data.entrust.sellCoinName
-        this.sellsymbol = this.currencyTradingList.sellCoinName
+        // this.sellsymbol = this.currencyTradingList.sellCoinName
         // this.buyName = data.data.data.entrust
         // this.buysymbol = data.data.data.entrust
-        this.tradeId = this.currencyTradingList.tradeId
+        // this.tradeId = this.currencyTradingList.tradeId
         // area: "ETH"
         // areaId: "486108806841892864"
         // id: "wtcfbt"
@@ -1110,6 +1116,22 @@ export default {
           >.content-list {
             >.table-body {
               width: 100%;
+              .icon-caret {
+                width: 40px;
+                height: 50px;
+                float: right;
+                position: relative;
+                .caret-text {
+                  position: absolute;
+                  top: 23px;
+                  left: 5px;
+                }
+                .caret-text1 {
+                  position: absolute;
+                  top: 15px;
+                  left: 5px;
+                }
+              }
               >.table-tr {
                 >.table-box {
                   width: 100%;

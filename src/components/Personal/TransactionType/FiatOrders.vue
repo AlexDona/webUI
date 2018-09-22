@@ -152,10 +152,12 @@ import {timeFilter} from '../../../utils'
 import IconFontCommon from '../../Common/IconFontCommon'
 import {
   getOTCAvailableCurrency,
-  getMerchantAvailablelegalTender,
   getOTCEntrustingOrders
   // getOTCMerchantsOrdersList
 } from '../../../utils/api/personal'
+import {
+  getMerchantAvailablelegalTender
+} from '../../../utils/api/OTC'
 import {returnAjaxMessage, getMerchantsOrdersList} from '../../../utils/commonFunc'
 const {mapMutations} = createNamespacedHelpers('personal')
 export default {

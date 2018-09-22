@@ -78,6 +78,7 @@
           <div class="start-end-time-box condition-item">
             <span class="currency-span">起止时间</span>
             <el-date-picker
+              clearable
               v-model="startTime"
               type="datetime"
               placeholder="选择日期"
@@ -555,8 +556,8 @@ export default {
         matchType: this.activeMatchType,
         type: this.activeType,
         sellCoinName: this.activeSymbol,
-        startTime: this.startTime === null ? '' : timeFilter(this.startTime, 'normal'),
-        endTime: this.endTime === null ? '' : timeFilter(this.endTime, 'normal')
+        startTime: this.startTime === '' ? '' : timeFilter(this.startTime, 'normal'),
+        endTime: this.endTime === '' ? '' : timeFilter(this.endTime, 'normal')
       }
       let data
       let data1
@@ -618,14 +619,14 @@ export default {
   },
   watch: {
     startTime (newVal) {
-      console.log(newVal)
-      timeFilter(newVal, 'normal')
-      console.log(timeFilter)
-      // if () {
-      //
-      // } else {
-      //
-      // }
+      if (!newVal) {
+        this.startTime = ''
+      }
+    },
+    endTime (newVal) {
+      if (!newVal) {
+        this.endTime = ''
+      }
     },
     activeMatchType (newVal) {
       console.log(newVal)

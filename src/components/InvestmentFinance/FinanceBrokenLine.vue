@@ -30,7 +30,7 @@ export default {
             show: true,
             rotate: 45,
             textStyle: {
-              color: '#404d64',
+              color: '#4E5C77',
               fontSize: 10
             }
           },
@@ -179,18 +179,20 @@ export default {
       this.options.yAxis.splitLine.lineStyle.type = this.theme === 'night' ? 'solid' : 'dotted'
       // 设置背景坐标颜色
       this.options.yAxis.splitLine.lineStyle.color = this.theme === 'night' ? '#1e2636' : '#ccc'
+      // 设置x轴的文字颜色
+      this.options.xAxis.axisLabel.textStyle.color = this.theme === 'night' ? '#4E5C77' : '#4E5C77'
       // 监听x轴数组的变化
-      this.arrPrice = this.financeLineRenderTimeList.map(item => +item)
-      this.options.xAxis.data = (this.arrPrice.sort((a, b) => a - b)).map(item => {
-        return this.timeFormatting(item)
+      this.options.xAxis.data = this.financeLineRenderTimeList.reverse().map(item => {
+        return this.timeFormatting(+item)
       })
       // 监听y轴数组的变化
-      this.$set(this.options.series, 'data', this.financeLineRenderPriceList)
-      this.options.series[0].data = this.financeLineRenderPriceList
+      // this.$set(this.options.series, 'data', this.financeLineRenderPriceList.reverse())
+      this.options.series[0].data = this.financeLineRenderPriceList.reverse()
       this.arrTime = this.financeLineRenderPriceList.sort((a, b) => a - b)
-      this.options.yAxis.min = this.arrTime[0]
+      this.options.yAxis.min = 0
       this.options.yAxis.max = this.arrTime[this.arrTime.length - 1]
       console.log(this.options)
+      console.log(this.financeLineRenderPriceList.reverse())
     }
   },
   filter: {},
@@ -200,12 +202,6 @@ export default {
       financeLineRenderTimeList: state => state.finance.financeLineRenderTimeList,
       financeLineRenderPriceList: state => state.finance.financeLineRenderPriceList
     })
-    // financeLineRenderTimeList () {
-    //   return this.financeLineRenderTimeList
-    // },
-    // financeLineRenderPriceList () {
-    //   return this.financeLineRenderPriceList
-    // }
   },
   watch: {
     theme (newVal) {
