@@ -8,7 +8,7 @@
   </div>
 </template>
 <script>
-import HeaderCommon from '../Common/HeaderCommon'
+import HeaderCommon from '../Common/HeaderCommonForPC'
 export default {
   components: {
     HeaderCommon

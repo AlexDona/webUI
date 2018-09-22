@@ -363,7 +363,7 @@
 <script>
 import {getOTCAvailableCurrency, getOTCPutUpOrders, getMerchantAvailablelegalTender} from '../../utils/api/OTC'
 import IconFontCommon from '../Common/IconFontCommon'
-import NavCommon from '../Common/HeaderCommon'
+import NavCommon from '../Common/HeaderCommonForPC'
 import FooterCommon from '../Common/FooterCommon'
 import OTCTradingOrder from './OTCTradingOrder'
 import OTCCompletedOrder from './OTCCompletedOrder'

@@ -1,7 +1,15 @@
 <template>
   <div class="login-box user">
-    <HeaderCommon/>
-    <div class="inner-box">
+    <HeaderCommonForPC
+      v-if="!isMobile"
+    />
+    <HeaderCommonForMobile
+      v-if="isMobile"
+    />
+    <div
+      class="inner-box"
+      :class="{'pc-bg': !isMobile}"
+    >
       <div class="bg-image"></div>
       <!--PC端-->
       <div
@@ -91,7 +99,7 @@
                @mousedown="mousedownFn($event)"
                class="handler handler_bg"
              >
-               <IconFont class="icon-text" iconName="icon-icon-right"/>
+               <!--<IconFont class="icon-text" iconName="icon-icon-right"/>-->
              </div>
            </div>
          </div>
@@ -242,60 +250,62 @@
         <div class="mobile-inner-box">
           <!--登录输入框-->
           <div
-            v-if="step1"
-            class="login-box"
+            class="login-box-step1"
           >
-            <el-form
-              label-position="top"
-              label-width="80px"
+            <div class="input-item">
+              <input
+                type="text"
+                v-model.trim="username"
+                placeholder="请输入邮箱/手机号"
+                @focus="setMobileErrorMsg('')"
+                @keyup.enter="loginForStep1"
+                @blur="checkoutInputFormat(0,username)"
+              />
+            </div>
+            <div class="input-item">
+              <input
+                type="password"
+                placeholder="请输入密码"
+                v-model.trim="password"
+                @focus="setErrorMsg('')"
+                @keyup.enter="loginForStep1"
+                @blur="checkoutInputFormat(1,password)"
+              />
+            </div>
+            <div class="input-item login-btn">
+              <button
+                class="login-btn"
+                @click="loginForStep1"
+              >
+                登录
+              </button>
+            </div>
+            <div
+              class="error-msg"
+              v-show="setMobileErrorMsg"
             >
-              <!-- 账号 -->
-              <el-form-item label="账号">
-                <el-input
-                  type="text"
-                  v-model.trim="username"
-                  @focus="clearuserNameErrorMsg"
-                ></el-input>
-              </el-form-item>
-
-              <!-- 密码 -->
-              <el-form-item label="密码">
-                <el-input
-                  type="password"
-                  v-model.trim="password"
-                  @focus="clearuserNameErrorMsg"
-                ></el-input>
-              </el-form-item>
-              <el-form-item>
-                <el-button
-                  size="large"
-                  class="blue-bg login-btn"
-                  @click="loginForStep1"
-                >
-                  登录
-                </el-button><!-- 登录 -->
-              </el-form-item>
-              <div class="todos clearfix">
-                <router-link
-                  to="/forgetPwd"
-                  class="fl blue"
-                >
-                  忘记密码
-                </router-link>
-                <!-- 忘记密码？ -->
-                <router-link
-                  to="/register"
-                  class="fr blue"
-                >
-                  免费注册
-                </router-link><!-- 免费注册 -->
-              </div>
-            </el-form>
+              {{ mobileErrorMsg }}
+            </div>
+            <div class="todos">
+              <router-link
+                class="jump-url"
+                to="/Register"
+              >
+                注册
+              </router-link>
+              <!-- 忘记密码？ -->
+              <router-link
+                to="/ForgetPassword"
+                class="jump-url text-align-r"
+              >
+                忘记密码?
+              </router-link><!-- 免费注册 -->
+            </div>
           </div>
           <!--短信验证码-->
           <div
             class="msg"
-            v-else-if="step3"
+            v-if="step3"
           >
             <div v-if="!isBindGoogle">
               <!--短信、邮箱验证码-->
@@ -353,20 +363,22 @@
           <div class="slider">
             <!-- 验证 -->
             <el-dialog
-              title="验证"
+              title="安全验证"
               :close-on-click-modal="false"
               :visible.sync="loginSliderStatus"
               class="slider"
             >
               <div class="drag cp bdr5">
                 <div class="drag_bg bdr5"></div>
-                <div class="drag_text bdr5">{{confirmWords}}</div>
+                <div class="drag_text bdr5">{{$t(confirmWords)}}</div>
                 <div
                   @touchstart.prevent="handleTouchStart"
                   @touchmove="handleTouchMove"
                   @touchend="handleTouchEnd"
                   class="handler handler_bg"
-                ></div>
+                >
+                  <!--<IconFont class="icon-text" iconName="icon-icon-right"/>-->
+                </div>
               </div>
             </el-dialog>
           </div>
@@ -384,36 +396,40 @@
                   请在下方输入验证码
                 </div>
                 <div class="content">
-                  <!-- 请输入内容 -->
-                  <el-input
-                    placeholder="请输入内容"
-                    v-model="userInputImageCode"
-                    @keyup.native.enter="checkoutuserInputImageCode"
-                  >
-                    <template slot="append">
-                      <div
-                        class="sidentify cp"
-                        @click="refreshCode"
-                      >
-                        <ImageValidate
-                          id="mobile-login"
-                          v-if="isMobile"
-                          :fontSizeMin="48"
-                          :fontSizeMax="100"
-                          :content-width="240"
-                          :content-height="150"
-                          :identifyCode="identifyCode"
-                        />
-                      </div>
-                    </template>
-                  </el-input>
-                  <el-button
-                    class="subimt blue-bg"
-                    @click="checkoutuserInputImageCode"
-                  >
-                    提交
-                  </el-button>
-                  <!-- 提交 -->
+                  <div class="inner-box">
+                    <!--图片验证码-->
+                    <input
+                      type="text"
+                      class="input image-validate"
+                      placeholder="验证码"
+                      v-model="userInputImageCode"
+                    >
+                    <!--获取图片验证码-->
+                    <span
+                      @click="refreshCode"
+                      class="cursor-pointer refresh-code-btn"
+                    >
+                  <ImageValidate
+                    id="register"
+                    :content-width="80"
+                    :content-height="44"
+                    :identifyCode="identifyCode"
+                    class="display-inline-block"
+                  />
+                </span>
+                  </div>
+                  <!--<ErrorBox-->
+                  <!--:text="errorShowStatusList[2]"-->
+                  <!--:isShow="!!errorShowStatusList[2]"-->
+                  <!--/>-->
+                  <div class="inner-box submit-box">
+                    <button
+                      class="subimt cursor-pointer"
+                      @click="checkoutuserInputImageCode"
+                    >
+                      提交
+                    </button>
+                  </div>
                 </div>
               </div>
             </el-dialog>
@@ -440,7 +456,8 @@ import {
 import CountDownButton from '../Common/CountDownCommon'
 import ErrorBox from './ErrorBox'
 import ImageValidate from '../Common/ImageValidateCommon'
-import HeaderCommon from '../Common/HeaderCommon'
+import HeaderCommonForPC from '../Common/HeaderCommonForPC'
+import HeaderCommonForMobile from '../Common/HeaderForMobile'
 import IconFont from '../Common/IconFontCommon'
 import { createNamespacedHelpers, mapState } from 'vuex'
 const { mapMutations } = createNamespacedHelpers('user')
@@ -448,14 +465,15 @@ const { mapMutations } = createNamespacedHelpers('user')
 export default {
   components: {
     CountDownButton, // 倒计时组件
-    HeaderCommon,
+    HeaderCommonForPC,
+    HeaderCommonForMobile,
     ImageValidate,
     ErrorBox,
     IconFont
   },
   data () {
     return {
-      username: '',
+      // username: '',
       // username: '18625512987',
       // username: '18625512987',
       // username: '18625512987',
@@ -463,9 +481,9 @@ export default {
       // username: '17600854297',
       // username: '18625512985',
       // password: 'a11111111',
-      // username: '18625512986',
+      username: '15638559236',
       // username: '18625512988',
-      password: '',
+      password: 'a1111111',
       userNameErrorMsg: '', // 错误提示
       loadingCircle: {},
       userInputImageCode: '', // 图形验证码(用户输入)
@@ -514,7 +532,8 @@ export default {
       loginSliderStatus: false, // 登录页面滑块显示隐藏状态
       loginImageValidateStatus: false, // 登录页面图片验证码显示隐藏状态
       step3DialogShowStatus: false, // 步骤3 登录状态
-      cacheOfuserInfo: null // 用户信息缓存
+      cacheOfuserInfo: null, // 用户信息缓存
+      mobileErrorMsg: '' // 移动端错误信息
     }
   },
   created () {
@@ -522,11 +541,11 @@ export default {
     this.ENTER_STEP1()
     this.refreshCode()
     // 清空input框值
-    this.clearInputValue()
+    // this.clearInputValue()
   },
   mounted () {
     $('body').on('mousemove', (e) => { // 拖动，这里需要用箭头函数，不然this的指向不会是vue对象
-      if (this.mouseMoveStatus) {
+      if (this.mouseMoveStata) {
         var width = e.clientX - this.beginClientX
         if (width > 0 && width <= this.maxwidth) {
           $('.handler').css({'left': width})
@@ -537,7 +556,8 @@ export default {
       }
     })
     $('body').on('mouseup', (e) => { // 鼠标放开
-      this.mouseMoveStatus = false
+      console.log('mouseup')
+      this.mouseMoveStata = false
       var width = e.clientX - this.beginClientX
       if (width < this.maxwidth) {
         $('.handler').animate({'left': 0}, 500)
@@ -545,8 +565,11 @@ export default {
       }
       $('body').off('mousemove')
       $('body').off('mouseup')
+      // this.onmousemove = null;
+      // this.onmouseup = null;
     })
     $('body').on('dblclick', (e) => {
+
     })
   },
   activated () {
@@ -566,9 +589,14 @@ export default {
       'SET_USER_BUTTON_STATUS',
       'USER_LOGIN'
     ]),
-    // 设置错误信息
+    // 设置错误信息（mobile）
+    setMobileErrorMsg (msg) {
+      this.mobileErrorMsg = msg
+    },
+    // 设置错误信息(PC)
     setErrorMsg (index, msg) {
       this.errorShowStatusList[index] = msg
+      this.mobileErrorMsg = msg
     },
     // 检测输入格式
     checkoutInputFormat (type, targetNum) {
@@ -870,9 +898,9 @@ export default {
       } // 验证成功函数
     },
 
-    /**
-      * 移动端拖动事件
-      */
+    /*
+    * 移动端拖动事件
+    * */
     handleTouchStart (e) {
       // console.log('start');
       this.startX = e.targetTouches[0].pageX
@@ -884,6 +912,7 @@ export default {
       if (targetLeft < 0 || left < 0) {
         return
       }
+      // console.log(targetLeft)
       if (targetLeft < this.mobileMaxwidth && targetLeft >= 0) {
         $(e.target).css({'left': left + 'px'})
       } else {
@@ -943,7 +972,9 @@ export default {
     height:100%;
     background:linear-gradient(150deg,rgba(30,38,54,1),rgba(37,75,117,1));
     >.inner-box{
-      background:url('../../assets/develop/login-bg.png') 25% center  no-repeat ;
+      &.pc-bg{
+        background:url('../../assets/develop/login-bg.png') 25% center  no-repeat ;
+      }
       >.pc-box {
         width: 370px;
         height: 330px;
@@ -1178,7 +1209,7 @@ export default {
             }
             >.handler_bg{
               border-radius: 0px 3px 3px 0px;
-              background: #4e5b85;
+              background: #485776 url(../../assets/develop/arrow-bg.png) no-repeat center center;
               position: absolute;
               top: 0px;
               left: 0px;
@@ -1196,14 +1227,53 @@ export default {
       }
       >.mobile-box {
         font-size: 30px;
-        margin: 200px auto;
+        margin: 120px auto;
         padding: 0 1rem;
         box-sizing: border-box;
         width: 100%;
-        /*登录*/
-        .login-box {
+        >.mobile-inner-box{
           width: 100%;
+          >.login-box-step1 {
+            width: 100%;
+            >.input-item{
+              height:4rem;
+              width:100%;
+              margin-bottom:3rem;
+              &.login-btn{
+                margin-bottom:1rem;
+              }
+              >input,>button{
+                box-sizing: border-box;
+                width:100%;
+                height:4rem;
+                background:rgba(40,68,110,1);
+                border-radius:0.4rem;
+                font-size: 1.2rem;
+                padding:0 40px;
+                color:#fff;
+              }
+              >.login-btn{
+                background:linear-gradient(81deg,rgba(61,152,249,1) 0%,rgba(71,135,255,1) 100%);
+                border-radius:20px;
+                box-shadow:1px 1px 8px 0px rgba(26,42,71,1);
+              }
+            }
+            >.error-msg{
+              color:#D45858;
+              margin-bottom:1rem;
+              font-size: 1rem;
+            }
+            >.todos{
+              display: flex;
+              >.jump-url{
+                flex:1;
+                color:rgba(47,120,202,1);
+                font-size: 1rem;
+              }
+            }
+          }
         }
+        /*登录*/
         /*滑块验证*/
         .slider {
           width: 100%;

@@ -24,7 +24,7 @@
 <script>
 import {getAboutUsDataAjax} from '../../utils/api/header'
 import {returnAjaxMessage} from '../../utils/commonFunc'
-import HeaderCommon from '../Common/HeaderCommon'
+import HeaderCommon from '../Common/HeaderCommonForPC'
 import FooterCommon from '../Common/FooterCommon'
 import {mapState} from 'vuex'
 export default {

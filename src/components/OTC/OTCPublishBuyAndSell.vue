@@ -322,7 +322,7 @@
 <!--请严格按照如下书写书序-->
 <script>
 import {getOTCAvailableCurrency, getMerchantAvailablelegalTender, addOTCPutUpOrders, queryUserTradeFeeAndCoinInfo, getOTCCoinInfo} from '../../utils/api/OTC'
-import NavCommon from '../Common/HeaderCommon'
+import NavCommon from '../Common/HeaderCommonForPC'
 import FooterCommon from '../Common/FooterCommon'
 import {returnAjaxMessage} from '../../utils/commonFunc'
 import {createNamespacedHelpers, mapState} from 'vuex'
