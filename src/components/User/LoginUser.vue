@@ -588,17 +588,16 @@ export default {
           }
         // 密码验证
         case 1:
-          switch (validateNumForUserInput('password', targetNum)) {
-            case 0:
-              this.setErrorMsg(1, '')
-              this.$forceUpdate()
-              return 1
-            case 1:
-              this.setErrorMsg(1, '请输入密码')
-              this.$forceUpdate()
-              return 0
+          if (!targetNum) {
+            this.setErrorMsg(1, '请输入密码')
+            this.$forceUpdate()
+            return 0
+          } else {
+            console.log(1)
+            this.setErrorMsg(1, '')
+            this.$forceUpdate()
+            return 1
           }
-          break
       }
     },
     // 隐藏滑块验证
