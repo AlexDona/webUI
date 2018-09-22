@@ -424,7 +424,7 @@
                   <!--/>-->
                   <div class="inner-box submit-box">
                     <button
-                      class="subimt cursor-pointer"
+                      class="submit cursor-pointer"
                       @click="checkoutuserInputImageCode"
                     >
                       提交
@@ -1269,6 +1269,56 @@ export default {
                 flex:1;
                 color:rgba(47,120,202,1);
                 font-size: 1rem;
+              }
+            }
+          }
+          /*图片盒子*/
+          >.img-verify{
+            .pic-verify{
+              >.title{
+                margin-bottom: 25px;
+                color: #fff;
+              }
+              >.content{
+                width: 600px;
+                >.inner-box{
+                  width: 410px;
+                  height: 44px;
+                  border-radius: 4px;
+                  border: 1px solid #485776;
+                  /* border-right-color: transparent; */
+                  -webkit-box-sizing: border-box;
+                  box-sizing: border-box;
+                  display: inline-block;
+                  padding: 0;
+                  &.submit-box{
+                    margin-top: 45px;
+                    border: none;
+                    >.submit{
+                      display: inline-block;
+                      width: 410px;
+                      height: 40px;
+                      background: linear-gradient(81deg, #2b396e 0%, #2a5082 100%);
+                      border-radius: 4px;
+                      color: #fff;
+                    }
+                  }
+                  >.input{
+                    width: 324px;
+                    height: 100%;
+                    vertical-align: top;
+                    padding: 0 20px;
+                    -webkit-box-sizing: border-box;
+                    box-sizing: border-box;
+                    color: #fff;
+                  }
+                  >.refresh-code-btn{
+                    display: inline-block;
+                    height: 42px;
+                    width: 80px;
+                    overflow: hidden;
+                  }
+                }
               }
             }
           }
