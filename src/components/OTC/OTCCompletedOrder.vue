@@ -193,7 +193,7 @@ export default {
     },
     // 2.0 请求已完成订单列表
     async getOTCCompletedOrdersList () {
-      console.log('当前页：' + this.currentPage)
+      // console.log('当前页：' + this.currentPage)
       const data = await getOTCCompletedOrders({
         status: 'COMPLETED', // 状态 (交易中 TRADING 已完成 COMPLETED  已取消  CANCELED 冻结中 FROZEN)
         pageNum: this.currentPage,

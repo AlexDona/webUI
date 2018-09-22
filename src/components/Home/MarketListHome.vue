@@ -351,7 +351,7 @@
               </div>
               <div
                 class="more-box"
-                v-show="filterMarketList.length"
+                v-show="moreBtnShowStatus"
               >
                 <IconFontCommon
                   v-show="!tabContentMoreStatus"
@@ -445,6 +445,7 @@ export default{
       marketList: [],
       // 前两项行情数据
       filterMarketList: [],
+      moreBtnShowStatus: false, // 查看更多按钮显示状态
       // 切换正反面显示列表
       toggleSideList: [],
       socket: new socket(),
@@ -793,29 +794,19 @@ export default{
       activeConvertCurrencyObj: state => state.common.activeConvertCurrencyObj // 目标货币
 
     })
-    // // 筛选列表
-    // filterMarketList () {
-    //   // 单个查看更多
-    //   if (this.itemAreaMoreStatus) {
-    //     this.marketList.forEach((item, index) => {
-    //       console.log(item)
-    //       if (item.id == this.activeAreaId) {
-    //         return this.marketList.slice(index, index + 1)
-    //       }
-    //     })
-    //   } else {
-    //     if (!this.tabContentMoreStatus) {
-    //       return this.marketList.slice(0, 4)
-    //     } else if (this.tabContentMoreStatus) {
-    //       return this.marketList
-    //     }
-    //   }
-    // }
   },
   watch: {
-    filterMarketList (newest, old) {
-      console.log(newest)
-      console.log(old)
+    filterMarketList (newVal) {
+      // 查看更多按钮显示状态判断
+      for (let i = 2; i < newVal.length; i++) {
+        let item = newVal[i]
+        if (item.content.length !== 0) {
+          this.moreBtnShowStatus = true
+          break
+        } else {
+          this.moreBtnShowStatus = false
+        }
+      }
     },
     currencyRateList (newVal) {
       console.log(newVal)

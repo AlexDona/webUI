@@ -260,7 +260,6 @@ export default {
   data () {
     return {
       tabPosition: 'left', // 导航位置方向
-      userInfoRefresh: {},
       dialogVisible: false,
       dialogVisible1: false
     }
@@ -291,49 +290,27 @@ export default {
     // tab面板切换
     async statusSwitchPanel (tab) {
       this.CHANGE_USER_CENTER_ACTIVE_NAME(tab.name)
-      switch (tab.name) {
-        case 'assets':
-          // 个人资产列表展示
-          break
-        case 'billing-details':
-          break
-        case 'mention-address':
-          // 提币地址列表查询
-          break
-        case 'identity-authentication':
-          break
-        case 'account-credited':
-          await this.getUserRefreshUser()
-          if (!this.userInfo.userInfo.payPassword) {
-            this.dialogVisible = true
-            return false
-          }
-          if (!this.userInfo.userInfo.realname) {
-            this.dialogVisible1 = true
-            return false
-          } else {
-            this.dialogVisible1 = false
-          }
-          break
-        case 'invitation-promote':
-          break
-        case 'security-center':
-          break
-        case 'api-management':
-          break
-        case 'push-asset':
-          break
-        case 'coin-orders':
-          break
-        case 'fiat-orders':
-          break
+      if (tab.name === 'account-credited') {
+        await this.getUserRefreshUser()
+        if (!this.payPassword) {
+          this.dialogVisible = true
+          return false
+        }
+        if (!this.realname) {
+          this.dialogVisible1 = true
+          return false
+        } else {
+          this.dialogVisible1 = false
+        }
       }
     },
     confirm (val) {
       if (val == 1) {
         this.$router.push({path: '/TransactionPassword'})
       } else {
-        this.$store.commit('personal/CHANGE_USER_CENTER_ACTIVE_NAME', 'identity-authentication')
+        // this.$store.commit('personal/CHANGE_USER_CENTER_ACTIVE_NAME', 'identity-authentication')
+        this.CHANGE_USER_CENTER_ACTIVE_NAME('identity-authentication')
+
         this.$router.push({path: '/PersonalCenter'})
         this.dialogVisible1 = false
       }
@@ -342,9 +319,8 @@ export default {
      *  刷新用户信息
      */
     async getUserRefreshUser () {
-      console.log(this.userInfo)
       let data = await userRefreshUser({
-        token: this.userInfo.token
+        token: this.token
       })
       console.log(data)
       if (!(returnAjaxMessage(data, this, 0))) {
@@ -352,7 +328,6 @@ export default {
       } else {
         this.$store.commit('user/SET_STEP1_INFO', data.data.data)
         // 返回列表数据
-        this.userInfoRefresh = data.data.data.userInfo
         if (!this.payPassword) {
           this.dialogVisible = true
         }
@@ -366,7 +341,8 @@ export default {
       userCenterActiveName: state => state.personal.userCenterActiveName,
       userInfo: state => state.user.loginStep1Info,
       payPassword: state => state.user.loginStep1Info.userInfo.payPassword,
-      realname: state => state.user.loginStep1Info.userInfo.realname
+      realname: state => state.user.loginStep1Info.userInfo.realname,
+      token: state => state.user.loginStep1Info.token
     })
   },
   watch: {

@@ -434,8 +434,7 @@ import {
 } from '../../utils/api/personal'
 import {
   returnAjaxMessage,
-  sendPhoneOrEmailCodeAjax,
-  validateNumForUserInput // 用户输入验证
+  sendPhoneOrEmailCodeAjax
 } from '../../utils/commonFunc'
 // import {getPersonalAssetsList} from '../../kits/globalFunction'
 import CountDownButton from '../Common/CountDownCommon'
