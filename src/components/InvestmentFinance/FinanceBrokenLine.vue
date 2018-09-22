@@ -144,9 +144,6 @@ export default {
     },
     // 监听主题变化options之后重绘列表
     resetOptions () {
-      console.log('333333333333333333333333333333333333333333')
-      console.log(this.financeLineRenderPriceList)
-      console.log(this.financeLineRenderTimeList)
       // 设置监听颜色改变
       this.options.xAxis.axisLabel.textStyle.color = this.theme === 'night' ? '#404d64' : '#ccc'
       // 设置x轴线颜色
@@ -187,9 +184,13 @@ export default {
       })
       // 监听y轴数组的变化
       // this.$set(this.options.series, 'data', this.financeLineRenderPriceList.reverse())
+      // 将时间数组倒序
       this.options.series[0].data = this.financeLineRenderPriceList.reverse()
+      // 将价钱数组从小到打排序
       this.arrTime = this.financeLineRenderPriceList.sort((a, b) => a - b)
+      // y轴最小值是数组的最小项
       this.options.yAxis.min = 0
+      // y轴最大值是数组的最大值
       this.options.yAxis.max = this.arrTime[this.arrTime.length - 1]
       console.log(this.options)
       console.log(this.financeLineRenderPriceList.reverse())
@@ -199,7 +200,9 @@ export default {
   computed: {
     ...mapState({
       theme: state => state.common.theme,
+      // 从全局获取时间数组
       financeLineRenderTimeList: state => state.finance.financeLineRenderTimeList,
+      // 冲全局获取价钱数组
       financeLineRenderPriceList: state => state.finance.financeLineRenderPriceList
     })
   },
@@ -208,6 +211,7 @@ export default {
       this.resetOptions()
       this.resetChart(this.options)
     },
+    // 监听时间轴数组的变化
     financeLineRenderTimeList (newVal, oldVal) {
       for (let i = 0; i < newVal.lenght; i++) {
         if (newVal[i] != oldVal[i]) {
@@ -216,6 +220,7 @@ export default {
         }
       }
     },
+    // 监听价钱轴数组的变化
     financeLineRenderPriceList (newVal, oldVal) {
       for (let i = 0; i < newVal.lenght; i++) {
         if (newVal[i] != oldVal[i]) {

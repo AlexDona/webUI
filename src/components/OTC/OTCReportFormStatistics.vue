@@ -20,7 +20,6 @@
           <el-select
             v-model="activitedTraderCoinId"
             @change="changeCoinId"
-            clearable
           >
             <el-option
               v-for="(item,index) in traderCoinList"
@@ -39,7 +38,6 @@
           <el-select
             v-model="activitedtraderCurrencyCoinsId"
             @change="changeCurrencyCoinsId"
-            clearable
           >
             <el-option
               v-for="(item,index) in traderCurrencyCoinsList"
@@ -269,7 +267,7 @@
                 <!--开始日期-->
                 <el-date-picker
                   placeholder="选择日期"
-                  v-model="value1"
+                  v-model="startTimeValue"
                   type="date"
                   value-format="yyyy-MM-dd"
                   @change="startTime"
@@ -279,7 +277,7 @@
                 <!--结束日期-->
                 <el-date-picker
                   placeholder="选择日期"
-                  v-model="value2"
+                  v-model="endTimeValue"
                   value-format="yyyy-MM-dd"
                   type="date"
                   @change="endTime"
@@ -422,8 +420,8 @@ export default {
       traderCurrencyCoinsList: [],
       activitedtraderCurrencyCoinsId: '', // 选中的交易法币id
       activitedtraderCurrencyCoinsName: '', // 选中的交易法币name
-      value1: '', // 默认开始时间
-      value2: '', // 默认结束时间
+      startTimeValue: '', // 默认开始时间
+      endTimeValue: '', // 默认结束时间
       activedRadioId: '', // 单选按钮时间
       totalAssets: '', // 法币总资产
       total: '', // 币种总资产
@@ -498,13 +496,9 @@ export default {
     },
     //  2.1 改变可用币种类型
     changeCoinId (e) {
-      // console.log(e)
       this.activitedTraderCoinId = e
       this.traderCoinList.forEach(item => {
-        // console.log(item)
-        // console.log(item.coinId)
         if (e === item.coinId) {
-          // console.log(item.name)
           this.activitedTraderCoinName = item.name
           console.log(this.activitedTraderCoinName)
         }
@@ -539,8 +533,6 @@ export default {
     changeCurrencyCoinsId (e) {
       this.activitedtraderCurrencyCoinsId = e
       this.traderCurrencyCoinsList.forEach(item => {
-        // console.log(item)
-        // console.log(item.coinId)
         if (e === item.id) {
           this.activitedtraderCurrencyCoinsName = item.shortName
         }
@@ -548,25 +540,24 @@ export default {
       this.getOTCReportFormStatistics()
       this.getOTCEntrustingOrdersRevocation()
     },
+    // 开始时间赋值
     startTime (e) {
-      this.value1 = e
+      this.startTimeValue = e
       this.activedRadioId = ''
       this.getOTCEntrustingOrdersRevocation()
     },
+    // 结束事件赋值
     endTime (e) {
-      this.value2 = e
+      this.endTimeValue = e
       this.activedRadioId = ''
       this.getOTCEntrustingOrdersRevocation()
     },
     radioChouse (e) {
-      // console.log(e)
       this.activedRadioId = e
       if (e == '4') {
-        this.value1 = ''
-        this.value2 = ''
+        this.startTimeValue = ''
+        this.endTimeValue = ''
       }
-      // console.log(this.value1)
-      // console.log(this.value2)
       this.getOTCEntrustingOrdersRevocation()
     },
     // 报表统计的主页面
@@ -583,26 +574,28 @@ export default {
       if (!(returnAjaxMessage(data, this, 0))) {
         return false
       } else {
+        let getData = data.data.data
         // 返回数据正确的逻辑
-        // 总资产人民币赋值
-        this.totalAssets = data.data.data.totalAssets // 法币总资产
-        this.total = data.data.data.total // 币种总资产
+        // 法币总资产
+        this.totalAssets = getData.totalAssets
+        // 币种总资产
+        this.total = getData.total
         // 当天交易
-        this.buyDayMap = data.data.data.buyDayMap
+        this.buyDayMap = getData.buyDayMap
         // 购买历史交易赋值
-        this.buyHistoryMap = data.data.data.buyHistoryMap
+        this.buyHistoryMap = getData.buyHistoryMap
         // 购买本月赋值
-        this.buyMonthMap = data.data.data.buyMonthMap
+        this.buyMonthMap = getData.buyMonthMap
         // 购买本周赋值
-        this.buyWeekMap = data.data.data.buyWeekMap
+        this.buyWeekMap = getData.buyWeekMap
         // 出售当天赋值
-        this.sellDayMap = data.data.data.sellDayMap
+        this.sellDayMap = getData.sellDayMap
         // 出售历史赋值
-        this.sellHistoryMap = data.data.data.sellHistoryMap
+        this.sellHistoryMap = getData.sellHistoryMap
         // 出售当月赋值
-        this.sellMonthMap = data.data.data.sellMonthMap
+        this.sellMonthMap = getData.sellMonthMap
         // 出售本周赋值
-        this.sellWeekMap = data.data.data.sellWeekMap
+        this.sellWeekMap = getData.sellWeekMap
       }
     },
     // 页面加载时请求接口渲染订单详情列表
@@ -617,9 +610,9 @@ export default {
         // 法币
         currencyId: this.activitedtraderCurrencyCoinsId,
         // 开始时间
-        startTime: this.value1,
+        startTime: this.startTimeValue,
         // 结束时间
-        endTime: this.value2,
+        endTime: this.endTimeValue,
         // 日期类型
         dateType: this.activedRadioId
       })

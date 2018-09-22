@@ -19,7 +19,7 @@
           <span class="style-input">
             <el-select
               v-model="activitedMerchantsOrdersTraderStyleList"
-              @change="changeMerchantsOrdersTraderStyleList"
+              @change="changeSelectValue('changeMerchantsOrdersTraderStyleList', $event)"
               clearable
               placeholder="全部"
             >
@@ -36,7 +36,7 @@
           <span class="status-input">
             <el-select
               v-model="activitedMerchantsOrdersCoin"
-              @change="changeMerchantsOrdersCoin"
+              @change="changeSelectValue('changeMerchantsOrdersCoin', $event)"
               clearable
               placeholder="全部"
             >
@@ -53,7 +53,7 @@
           <span class="status-input">
             <el-select
               v-model="activitedMerchantsOrdersCurrency"
-              @change="changeMerchantsOrdersCurrency"
+              @change="changeSelectValue('changeMerchantsOrdersCurrency', $event)"
               clearable
               placeholder="全部"
             >
@@ -70,7 +70,7 @@
           <span class="status-input">
             <el-select
               v-model="activitedMerchantsOrdersStatusList"
-              @change="changeMerchantsOrdersStatusList"
+              @change="changeSelectValue('changeMerchantsOrdersStatusList', $event)"
               clearable
               placeholder="全部"
             >
@@ -88,10 +88,10 @@
             <!--开始日期-->
             <el-date-picker
               placeholder="选择日期"
-              v-model="value1"
+              v-model="startTimeValue"
               type="date"
               value-format="yyyy-MM-dd"
-              @change="startDate"
+              @change="changeSelectValue('startDate' , $event)"
               clearable
             >
             </el-date-picker>
@@ -99,10 +99,10 @@
             <!--结束日期-->
             <el-date-picker
               placeholder="选择日期"
-              v-model="value2"
+              v-model="endTimeValue"
               value-format="yyyy-MM-dd"
               type="date"
-              @change="endDate"
+              @change="changeSelectValue('endDate', $event)"
               clearable
             >
             </el-date-picker>
@@ -351,8 +351,8 @@ export default {
           label: '已冻结'
         }
       ],
-      value1: '', // 默认开始时间
-      value2: '', // 默认结束时间
+      startTimeValue: '', // 默认开始时间
+      endTimeValue: '', // 默认结束时间
       // 商家订单列表
       merchantsOrdersList: []
     }
@@ -411,29 +411,35 @@ export default {
         this.merchantsOrdersCurrencyList = data.data.data
       }
     },
-    // 选中交易 类型 赋值
-    changeMerchantsOrdersTraderStyleList (e) {
-      this.activitedMerchantsOrdersTraderStyleList = e
-    },
-    // 选中 币种 状态赋值
-    changeMerchantsOrdersCoin (e) {
-      this.activitedMerchantsOrdersCoin = e
-    },
-    // 选中 货币 状态赋值
-    changeMerchantsOrdersCurrency (e) {
-      this.activitedMerchantsOrdersCurrency = e
-    },
-    // 选中 状态 赋值
-    changeMerchantsOrdersStatusList (e) {
-      this.activitedMerchantsOrdersStatusList = e
-    },
-    // 初始 日期赋值
-    startDate (e) {
-      this.value1 = e
-    },
-    // 结束 日期赋值
-    endDate (e) {
-      this.value2 = e
+    // change事件改变时赋值
+    changeSelectValue (type, targetValue) {
+      console.log('11111', type, targetValue)
+      switch (type) {
+        // 选中交易 类型 赋值
+        case 'changeMerchantsOrdersTraderStyleList':
+          this.activitedMerchantsOrdersTraderStyleList = targetValue
+          break
+        // 选中 币种 状态赋值
+        case 'changeMerchantsOrdersCoin':
+          this.activitedMerchantsOrdersCoin = targetValue
+          break
+        // 选中 货币 状态赋值
+        case 'changeMerchantsOrdersCurrency':
+          this.activitedMerchantsOrdersCurrency = targetValue
+          break
+        // 选中 状态 赋值
+        case 'changeMerchantsOrdersStatusList':
+          this.activitedMerchantsOrdersStatusList = targetValue
+          break
+        // 初始 日期赋值
+        case 'startDate':
+          this.startTimeValue = targetValue
+          break
+        // 结束 日期赋值
+        case 'endDate':
+          this.endTimeValue = targetValue
+          break
+      }
     },
     // 点击查询按钮
     findFilter () {
@@ -445,8 +451,8 @@ export default {
       this.activitedMerchantsOrdersCoin = ''
       this.activitedMerchantsOrdersCurrency = ''
       this.activitedMerchantsOrdersStatusList = ''
-      this.value1 = ''
-      this.value2 = ''
+      this.startTimeValue = ''
+      this.endTimeValue = ''
       this.getOTCEntrustingOrdersRevocation()
     },
     // 页面加载时请求接口渲染列表
@@ -463,9 +469,9 @@ export default {
         // 状态 状态 (未付款 PICKED 已付款 PAYED 已完成 COMPLETED  已取消  CANCELED 冻结中 FROZEN)
         status: this.activitedMerchantsOrdersStatusList,
         // 开始时间
-        startTime: this.value1,
+        startTime: this.startTimeValue,
         // 结束时间
-        endTime: this.value2,
+        endTime: this.endTimeValue,
         // 类型
         tradeType: this.activitedMerchantsOrdersTraderStyleList
       })
