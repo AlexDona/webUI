@@ -100,7 +100,7 @@
                 </p>
               </div>
               <div>历史收溢
-                <p class="red">
+                <p class="red2">
                   <span>{{getMoneyValue}}</span>
                       USDT
                 </p>
@@ -424,7 +424,7 @@ export default {
         // 历史收益
         this.getMoneyValue = getData.userInterest
         // 投资记录列表赋值
-        this.investList = this.isLogin ? getDatauserFinancialManagementRecord.list : ''
+        this.investList = this.isLogin ? getData.userFinancialManagementRecord.list : ''
         // 收益记录列表
         this.userInterestRecord = this.isLogin ? getData.userInterestRecord.list : ''
         // 走势图x轴赋值
@@ -661,6 +661,9 @@ export default {
     }
     .red{
       color:#D45858;
+    }
+    .red2{
+      color:#B73C36;
     }
     .nav-header{
       color:#fff;
