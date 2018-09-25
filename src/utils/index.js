@@ -196,7 +196,7 @@ export function amendPrecision (num1, num2, symbol) {
   num1 = scientificToNumber(num1)
   num2 = scientificToNumber(num2)
   let num1PointLength = (num1 + '').split('.')[1].length
-  console.log(num2)
+  // console.log(num2)
   let num2PointLength = (num2 + '').split('.')[1].length
   let maxPointLength = num1PointLength > num2PointLength ? num1PointLength : num2PointLength
   let newNum1 = Math.pow(10, maxPointLength) * num1
