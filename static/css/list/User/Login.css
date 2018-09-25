@@ -144,7 +144,9 @@
 .login-box .mobile-box>.mobile-inner-box .el-dialog__body{
   padding:3rem 1rem;
 }
-.login-box .mobile-box>.mobile-inner-box .pic-verify{}
+.login-box .mobile-box>.mobile-inner-box .img-verify .el-dialog__body{
+  padding:1rem;
+}
 /*.login-box .mobile-box>.mobile-inner-box*/
 /*.login-box*/
 /*.login-box*/
@@ -152,4 +154,9 @@
 /*.login-box*/
 .v-modal{
   z-index: 2003 !important;
+}
+
+/*移动端短信验证码、邮箱验证码、谷歌验证码*/
+.mobile-inner-box .msg-email-google-dialog.mobile .el-dialog__body{
+  padding: 1rem;
 }
