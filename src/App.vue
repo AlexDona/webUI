@@ -25,14 +25,12 @@ export default {
     // 取主题
     const theme = getStore('theme') || 'night'
     this.CHANGE_THEME(theme)
-    document.body.classList.add(theme)
-    // console.log(document.body)
+    this.setBodyClassName(true, theme)
     // 取折算货币
     const convertCurrency = getStore('convertCurrency')
     this.CHANGE_CONVERT_CURRENCY(convertCurrency)
   },
   mounted () {
-    // console.log(this.userInfo)
   },
   activited () {},
   update () {},
@@ -41,26 +39,33 @@ export default {
     ...mapMutations([
       'CHANGE_THEME',
       'CHANGE_CONVERT_CURRENCY'
-    ])
+    ]),
+    setBodyClassName (type, className) {
+      type ? document.body.classList.add(className) : document.body.classList.remove(className)
+    }
   },
   filter: {},
   computed: {
     ...mapState({
       theme: state => state.common.theme,
       isLogin: state => state.user.isLogin,
-      userInfo: state => state.user.loginStep1Info
+      userInfo: state => state.user.loginStep1Info,
+      isMobile: state => state.user.isMobile
     })
   },
   watch: {
     '$route' (to, from) {
       switch (to.path) {
         case '/Register':
-          document.body.classList.add('register')
+          this.setBodyClassName(true, 'register')
           break
       }
     },
     userInfo (newVal) {
-      // console.log(newVal)
+    },
+    isMobile (newVal) {
+      console.log(newVal)
+      this.setBodyClassName(newVal, 'mobile')
     }
   }
 }

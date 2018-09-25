@@ -184,7 +184,7 @@
                 <CountDownButton
                   class="send-code-btn cursor-pointer"
                   :status="disabledOfPhoneBtn"
-                  @run="sendPhoneOrEmailCode(0)"
+                  @run="sendPhoneOrEmailCode('pc',0)"
                 />
               </div>
             </div>
@@ -209,7 +209,7 @@
                 <CountDownButton
                   class="send-code-btn cursor-pointer"
                   :status="disabledOfEmailBtn"
-                  @run="sendPhoneOrEmailCode(1)"
+                  @run="sendPhoneOrEmailCode('pc',1)"
                 />
               </div>
             </div>
@@ -302,63 +302,92 @@
               </router-link><!-- 免费注册 -->
             </div>
           </div>
-          <!--短信验证码-->
-          <div
-            class="msg"
-            v-if="step3"
+          <!--短信验证码、邮箱验证码、谷歌验证码 步骤3-->
+          <el-dialog
+            class="msg-email-google-dialog mobile"
+            title="安全验证"
+            :visible.sync="step3DialogShowStatus"
           >
-            <div v-if="!isBindGoogle">
-              <!--短信、邮箱验证码-->
-              <!-- 请输入 收到的验证码 -->
-              <p class="mt50 mb50 tl">
-                <!--{{hiddenUsername}}-->
-                请输入 收到的验证码
-              </p>
-              <el-input
-                class="blue fz16"
-                @focus="clearuserNameErrorMsg"
-                v-model="msgCode"
-                @keyup.native.enter="loginForStep2"
-              ></el-input>
-            </div>
-            <div v-else>
-              <!--谷歌验证码-->
-              <!-- 请输入 谷歌验证器 中的验证码 -->
-              <p class="mt50 mb50 tl">
-                请输入 谷歌验证器 中的验证码
-              </p>
-              <!--谷歌验证码 input-->
-              <el-input
-                class="blue fz16 "
-                title=" "
-                min="0"
-                v-model="googleCode"
-                type="number"
-                @keyup.native.enter="loginForStep2"
-                @keyup.native="googleAutoLogin"
-              >
-              </el-input>
-            </div>
-
-            <!--<el-button-->
-              <!--v-if="!isBindGoogle"-->
-              <!--class="mt20  cp send-again-btn"-->
-              <!--:class="{'blue':!disabledOfPhoneBtn}"-->
-              <!--:disabled="disabledOfPhoneBtn"-->
-              <!--@click="sendPhoneOrEmailCode(loginType)"-->
-            <!--&gt;-->
-              <!--{{ sendMsgBtnText }}-->
-            <!--</el-button>-->
-
-            <!-- 确定 -->
-            <el-button
-              size="midium"
-              class="login-btn blue-bg fz16"
-              @click="loginForStep2"
+            <div
+              class="inner-box"
             >
-              确定
-            </el-button>
-          </div>
+              <!--已绑定手机号-->
+              <div v-if="isBindPhone" class="outer-box">
+                <!-- 请输入短信验证码 -->
+                <p class="title phone-msg">
+                  请输入
+                  {{userInfo.phone}}
+                  收到的验证码
+                </p>
+                <!--短信验证码-->
+                <div class="inner-box">
+                  <input
+                    type="text"
+                    class="input phone-validate"
+                    placeholder="短信验证码"
+                    v-model="step3PhoneMsgCode"
+                    @keydown="setErrorMsg(3,'')"
+                    @blur="checkoutInputFormat(3,checkCode)"
+                  >
+                  <CountDownButton
+                    class="send-code-btn cursor-pointer"
+                    :status="disabledOfMobilePhoneBtn"
+                    @run="sendPhoneOrEmailCode('mobile',0)"
+                  />
+                </div>
+              </div>
+              <!--已绑定邮箱-->
+              <div v-if="isBindEmail" class="outer-box">
+                <!-- 请输入邮箱验证码 -->
+                <p class="title email-msg">
+                  请输入
+                  {{userInfo.email}}
+                  收到的验证码
+                </p>
+                <!--邮箱验证码-->
+                <div class="inner-box">
+                  <input
+                    type="text"
+                    class="input email-validate"
+                    placeholder="邮箱验证码"
+                    v-model="step3EmailMsgCode"
+                    @keydown="setErrorMsg(3,'')"
+                    @blur="checkoutInputFormat(3,checkCode)"
+                  >
+                  <CountDownButton
+                    class="send-code-btn cursor-pointer"
+                    :status="disabledOfMobileEmailBtn"
+                    @run="sendPhoneOrEmailCode('mobile',1)"
+                  />
+                </div>
+              </div>
+              <!--已绑定google-->
+              <div v-if="isBindGoogle" class="outer-box">
+                <!--谷歌验证码: 请输入 谷歌验证器 中的验证码-->
+                <!-- 请输入邮箱验证码 -->
+                <p class="title google-msg">
+                  请输入 谷歌验证器 中的验证码
+                </p>
+                <div class="inner-box">
+                  <!--谷歌验证码 input-->
+                  <input
+                    type="text"
+                    class="input"
+                    v-model="step3GoogleMsgCode"
+                    @keyup.enter="loginForStep2"
+                    @keyup="googleAutoLogin"
+                  >
+                </div>
+              </div>
+              <button
+                size="midium"
+                class="login-btn blue-bg fz16 cursor-pointer"
+                @click="loginForStep2"
+              >
+                提交
+              </button>
+            </div>
+          </el-dialog>
           <!--滑块验证-->
           <div class="slider">
             <!-- 验证 -->
@@ -393,7 +422,7 @@
               <div class="pic-verify bdr5">
                 <!-- 请在下方输入验证码 -->
                 <div class="title">
-                  请在下方输入验证码
+                  请输入验证码
                 </div>
                 <div class="content">
                   <div class="inner-box">
@@ -401,7 +430,7 @@
                     <input
                       type="text"
                       class="input image-validate"
-                      placeholder="验证码"
+                      placeholder="请输入内容"
                       v-model="userInputImageCode"
                     >
                     <!--获取图片验证码-->
@@ -410,9 +439,11 @@
                       class="cursor-pointer refresh-code-btn"
                     >
                   <ImageValidate
-                    id="register"
-                    :content-width="80"
-                    :content-height="44"
+                    id="register-mobile"
+                    :content-width="240"
+                    :content-height="160"
+                    :font-size-min="70"
+                    :font-size-max="100"
                     :identifyCode="identifyCode"
                     class="display-inline-block"
                   />
@@ -700,10 +731,17 @@ export default {
     /**
       * 发送短信验证码或邮箱验证码
       */
-    sendPhoneOrEmailCode (loginType) {
-      if (this.disabledOfPhoneBtn || this.disabledOfEmailBtn) {
-        return false
+    sendPhoneOrEmailCode (sendType, loginType) {
+      if (sendType === 'pc') {
+        if (this.disabledOfPhoneBtn || this.disabledOfEmailBtn) {
+          return false
+        }
+      } else {
+        if (this.disabledOfMobilePhoneBtn || this.disabledOfMobileEmailBtn) {
+          return false
+        }
       }
+
       let params = {
         country: this.activeCountryCode,
         type: 'LOGIN_RECORD'
@@ -754,6 +792,7 @@ export default {
     },
     refreshCode () {
       this.identifyCode = this.getRandomNum()
+      console.log(this.identifyCode)
     },
     // 检查用户输入图片验证码
     checkoutuserInputImageCode () {
@@ -947,6 +986,8 @@ export default {
       loginType: state => state.user.loginType, // 登录类型
       disabledOfPhoneBtn: state => state.user.disabledOfPhoneBtn,
       disabledOfEmailBtn: state => state.user.disabledOfEmailBtn,
+      disabledOfMobilePhoneBtn: state => state.user.disabledOfMobilePhoneBtn, // 移动端发送验证码
+      disabledOfMobileEmailBtn: state => state.user.disabledOfMobileEmailBtn, // 移动端发送验证码
       routerTo: state => state.common.routerTo // 路由跳转
     })
     // step1 () {
@@ -1085,6 +1126,8 @@ export default {
           }
           .content{
             width:600px;
+            /*width: 16rem;*/
+            /*background: red;*/
             >.inner-box{
               width:410px;
               height:44px;
@@ -1278,12 +1321,17 @@ export default {
               >.title{
                 margin-bottom: 25px;
                 color: #fff;
+                font-size: 1rem;
               }
               >.content{
-                width: 600px;
+                /*width: 600px;*/
+                /*width:16rem;*/
+                width:1000px;
                 >.inner-box{
-                  width: 410px;
-                  height: 44px;
+                  width:1000px;
+                  /*width: 410px;*/
+                  height:160px;
+                  line-height: 160px;
                   border-radius: 4px;
                   border: 1px solid #485776;
                   /* border-right-color: transparent; */
@@ -1296,30 +1344,78 @@ export default {
                     border: none;
                     >.submit{
                       display: inline-block;
-                      width: 410px;
-                      height: 40px;
+                      width:1000px;
+                      height:160px;
                       background: linear-gradient(81deg, #2b396e 0%, #2a5082 100%);
+                      font-size: 0.7rem;
                       border-radius: 4px;
                       color: #fff;
                     }
                   }
                   >.input{
-                    width: 324px;
+                    width: 754px;
                     height: 100%;
                     vertical-align: top;
-                    padding: 0 20px;
+                    padding: 0 40px;
                     -webkit-box-sizing: border-box;
                     box-sizing: border-box;
                     color: #fff;
+                    font-size: 0.7rem;
                   }
                   >.refresh-code-btn{
                     display: inline-block;
-                    height: 42px;
-                    width: 80px;
+                    height:160px;
+                    width: 240px;
+                    /*background: pink;*/
                     overflow: hidden;
                   }
                 }
               }
+            }
+          }
+          /*短信验证码、邮箱验证码、谷歌验证码*/
+          .msg-email-google-dialog{
+            .outer-box{
+              font-size: 0.7rem;
+              padding:0 10px;
+              >.inner-box{
+                height: 160px;
+                line-height: 160px;
+                width: 1000px;
+                /*padding: 0 10px;*/
+                margin:30px 0;
+                display: inline-block;
+                vertical-align: middle;
+                >.input{
+                  width:1000px;
+                  height:160px;
+                  background:rgba(26,34,51,1);
+                  border:1px solid rgba(72,87,118,1);
+                  border-radius:4px;
+                  box-sizing: border-box;
+                  padding:0 40px;
+                  color:#fff;
+                  display:block;
+                  font-size: 0.7rem;
+                }
+                /*发送信息按钮*/
+                >.send-code-btn{
+                  display:block;
+                  margin:5px 0 0 0;
+                  padding:0 20px;
+                  color:$upColor;
+                  font-size: 0.7rem;
+                }
+              }
+            }
+            .login-btn{
+              width:1000px;
+              height:160px;
+              background:linear-gradient(81deg,rgba(43,57,110,1) 0%,rgba(42,80,130,1) 100%);
+              border-radius:4px;
+              margin:1rem 10px 20px 10px;
+              color:#fff;
+              font-size: 0.7rem;
             }
           }
         }
