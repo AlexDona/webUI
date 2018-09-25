@@ -11,10 +11,10 @@ function getSize () {
   let isPC = IsPC()
   if (width < 1050 || !isPC) {
     store.commit('user/TOGGLE_PC_MOBILE', true)
+    document.body.classList.add('mobile')
   } else {
-    // store.commit('toggleWidth', false)
     store.commit('user/TOGGLE_PC_MOBILE', false)
-    // store.commit('toggleFooterStatus', false)
+    document.body.classList.remove('mobile')
   }
   /* 640 100  320 50 */
   let fontSize = 100 / 1920 * width
