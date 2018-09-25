@@ -322,6 +322,7 @@ export default {
   .add-chat {
     >.add-chat-main {
       width: 1100px;
+      height: 700px;
       margin: 60px auto 100px;
       >.add-chat-header {
         display: flex;
