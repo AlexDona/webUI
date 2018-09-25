@@ -46,7 +46,7 @@
         <div class="left">
           <div class="nav-header">
             <div class="invest">投资</div>
-            <div class="balance">可用余额&nbsp;:&emsp; <div>{{availableBalance}}<span>{{selecteCoindName}}</span></div></div>
+            <div class="balance">可用余额&nbsp;:&emsp; <div>{{isLogin ? availableBalance : '--'}}<span> {{selecteCoindName}}</span></div></div>
           </div>
           <div class="left-body">
             <label for="">
@@ -95,13 +95,13 @@
               <div class="right-infor">
               <div>投资估值
                 <p class="green">
-                  <span>{{InvestmentValue}}</span>
+                  <span>{{isLogin ? InvestmentValue : '--'}}</span>
                   USDT
                 </p>
               </div>
               <div>历史收溢
                 <p class="red2">
-                  <span>{{getMoneyValue}}</span>
+                  <span>{{isLogin ? getMoneyValue : '--'}}</span>
                       USDT
                 </p>
               </div>
@@ -122,11 +122,14 @@
         <!-- 投资记录和收益记录 -->
         <div class="nvest-list-body">
           <div class='showAll'>
-            <router-link class="blue" :to="{path: '/FinanceInvestmentRecord', query:{coinId:selectedCoinId,coinName:selecteCoindName}}">查看全部</router-link>
+            <router-link class="blue" :to="{path: isLogin ? '/FinanceInvestmentRecord' : '/login', query:{coinId:selectedCoinId,coinName:selecteCoindName}}">查看全部</router-link>
           </div>
           <!-- 投资记录 -->
           <el-tabs v-model="activeName" @tab-click="handleClick">
             <el-tab-pane label="投资记录" name="1">
+              <div v-if = "!isLogin" class = 'tipsBox'>
+                @您还没有登陆,请<a href='/login'>登陆</a>或者<a href = '/Register'>注册</a>之后查看!
+              </div>
               <el-table
                 :data="investList"
                 style="width: 100%"
@@ -183,6 +186,9 @@
             </el-tab-pane>
             <!-- 收益记录 -->
             <el-tab-pane label="收益记录" name="2">
+              <div v-if = "!isLogin">
+                @您还没有登陆,请<a href='/login'>登陆</a>或者<a href = '/Register'>注册</a>之后查看
+              </div>
               <el-table
                 :data="userInterestRecord"
                 style="width: 100%"
@@ -307,7 +313,8 @@ export default {
     require('../../../static/css/theme/night/InvestmentFinance/FinanceCenterNight.css')
     // 页面创建完成请求币种接口
     this.getFinancialManagementList()
-    // 页面创建完成时获取默认币种的总资产
+    // 判断用户是否登录决定是否请求总资产
+    this.isLoging()
   },
   mounted () {
   },
@@ -321,6 +328,12 @@ export default {
     ]),
     timeFormatting (data) {
       return timeFilter(data, 'data')
+    },
+    // 进页面判断是否登录 登录获取总资产没有登录就跳转登录界面
+    isLoging () {
+      if (this.isLogin) {
+        this.getUserCoindTotal()
+      }
     },
     // 键盘弹起时时触发
     changeInvestMounte (e) {
@@ -431,7 +444,6 @@ export default {
         this.FINANCE_LINE_RENDER_PRICE_LIST(getData.tickerPriceResult.renderPriceList)
         // 走势图y轴赋值
         this.FINANCE_LINE_RENDER_TIME_LIST(getData.tickerPriceResult.renderTimeList)
-        this.getUserCoindTotal()
         this.$refs.childLineCharts.resetOptions()
         this.$refs.childLineCharts.resetChart(this.options)
       }

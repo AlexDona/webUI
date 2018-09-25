@@ -374,7 +374,7 @@ import {
   setStore,
   keep2Num
 } from '../../utils'
-// import {getPartnerList} from '../../utils/api/home'
+import {addUserCollectionAjax} from '../../utils/api/home'
 import {
   returnAjaxMessage,
   // splitSocketParams
@@ -459,6 +459,18 @@ export default{
     ...mapMutations([
       'CHANGE_COLLECT_LIST'
     ]),
+    // 添加收藏
+    async addUserCollection (tradeId) {
+      const params = {
+        content: tradeId
+      }
+      const data = await addUserCollectionAjax(params)
+      if (!returnAjaxMessage(data, this)) {
+        return false
+      } else {
+        console.log(data)
+      }
+    },
     // 截取2位小数
     keep2Num (number) {
       return keep2Num(number)
@@ -685,15 +697,18 @@ export default{
       this.moreBtnText = this.tabContentMoreStatus ? '收起' : '查看更多交易区'
     },
     // 切换收藏
-    toggleCollect (id, status, row) {
+    async toggleCollect (id, status, row) {
       console.log(row)
       status = Boolean(status)
       // this.collectStatusList[id] = Boolean(status)
       this.$set(this.collectStatusList, id, status)
-      console.log(this.collectStatusList)
+      // console.log(this.collectStatusList)
       if (status) {
         //  添加收藏
         this.collectList.push(row)
+        if (this.isLogin) {
+          await this.addUserCollection(row.tradeId)
+        }
       } else {
         // 取消收藏
         this.collectList.forEach((item, index) => {
