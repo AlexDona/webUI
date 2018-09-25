@@ -105,7 +105,7 @@
                   </div>
                   <!-- 收款人 -->
                   <p class="bank-info">
-                    <span>收款人: {{item.sellName}}</span>
+                    <span>收款3人: {{item.sellName}}</span>
                   </p>
                   <!-- 开户行 :显示省，市，地址-->
                   <p
