@@ -38,14 +38,14 @@ util.ajax.interceptors.response.use(
         case 401:
         // error.response.data.msg = '您的账号已在其他终端登录，如非本人操作，则密码可能已泄露，请重置密码！'
         // 返回 401 清除token信息并跳转到登录页面
-        //   localStorage.clear()
-        //   store.commit('user/USER_LOGOUT')
-        //   router.replace({
-        //     path: '/login',
-        //     query: {
-        //       redirect: router.currentRoute.fullPath
-        //     }
-        //   })
+          localStorage.clear()
+          store.commit('user/USER_LOGOUT')
+          router.replace({
+            path: '/login',
+            query: {
+              redirect: router.currentRoute.fullPath
+            }
+          })
         // return Promise.reject("您的账号已在其他终端登录，如非本人操作，则密码可能已泄露，请重置密码！")
       }
     }
