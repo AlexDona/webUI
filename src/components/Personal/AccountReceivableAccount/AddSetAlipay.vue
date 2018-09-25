@@ -325,6 +325,7 @@ export default {
   .add-account {
     >.add-account-main {
       width: 1100px;
+      height: 700px;
       margin: 60px auto 100px;
       >.add-account-header {
         display: flex;

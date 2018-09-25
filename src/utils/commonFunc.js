@@ -21,6 +21,7 @@ import {
   getServiceProtocoDataAjax
 } from '../utils/api/header'
 import store from '../vuex'
+import {removeStore} from './index'
 import {PHONE_REG, EMAIL_REG, ID_REG, PWD_REG, ALIPAY_REG, BANK_REG, GOOGLE_REG} from './regExp'
 // 请求接口后正确或者错误的提示提示信息：
 // 如果返回 错误 了就提示错误并不能继续往下进行；
@@ -34,6 +35,12 @@ export const returnAjaxMessage = (data, self, noTip) => {
       // duration: 5000000,
       message: !meta.params ? self.$t(`M.${meta.i18n_code}`) : self.$t(`M.${meta.i18n_code}`).format(meta.params)
     })
+    // 登录失效
+    if (meta.code == 401) {
+      removeStore('loginStep1Info')
+      // self.$router.push({path: '/'})
+      // store.commit('user/USER_LOGOUT')
+    }
     return 0
   } else {
     if (noTip) {

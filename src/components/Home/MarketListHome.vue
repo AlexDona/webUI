@@ -56,17 +56,6 @@
                           <span>{{item.area}}</span>
                           <span v-show="item.id!==collectAreaId&&item.id!==searchAreaId">交易区</span>
                         </div>
-                        <!--查看更多-->
-                        <!--<div class="bottom">-->
-                          <!--<el-button-->
-                            <!--type="default"-->
-                            <!--class="more-btn"-->
-                            <!--@click="itemViewMore(item.id,item.content)"-->
-                          <!--&gt;-->
-                            <!--{{itemViewMoreBtnText}}-->
-                            <!--<i class="el-icon-arrow-down el-icon&#45;&#45;right"></i>-->
-                          <!--</el-button>-->
-                        <!--</div>-->
                       </div>
                     </transition>
                     <!--反面-->
@@ -117,18 +106,6 @@
                             </li>
                           </ul>
                         </div>
-                        <!--查看更多按钮-->
-                        <!--<div class="more-btn">-->
-                          <!--<el-button-->
-                            <!--type="default"-->
-                            <!--class="more-btn"-->
-                            <!--@click="itemViewMore(item.id,item.content)"-->
-                          <!--&gt;-->
-                          <!--&gt;-->
-                            <!--{{itemViewMoreBtnText}}-->
-                            <!--<i class="el-icon-arrow-down el-icon&#45;&#45;right"></i>-->
-                          <!--</el-button>-->
-                        <!--</div>-->
                       </div>
                     </transition>
                   </div>
