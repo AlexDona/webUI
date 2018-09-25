@@ -4,7 +4,7 @@
 import {apiCommonUrl} from '../env'
 import axios from 'axios'
 import store from '../../vuex'
-import router from '../../router/index'
+// import router from '../../router/index'
 // import {getStoreWithJson} from '../index'
 // import Vue from 'vue'
 let util = {}

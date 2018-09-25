@@ -127,7 +127,7 @@
           <!-- 投资记录 -->
           <el-tabs v-model="activeName" @tab-click="handleClick">
             <el-tab-pane label="投资记录" name="1">
-              <div v-if = "!isLogin" class = 'tipsBox'>
+              <div v-if = "!isLogin" class = 'financeTsipsBox'>
                 @您还没有登陆,请<a href='/login'>登陆</a>或者<a href = '/Register'>注册</a>之后查看!
               </div>
               <el-table
@@ -186,8 +186,8 @@
             </el-tab-pane>
             <!-- 收益记录 -->
             <el-tab-pane label="收益记录" name="2">
-              <div v-if = "!isLogin">
-                @您还没有登陆,请<a href='/login'>登陆</a>或者<a href = '/Register'>注册</a>之后查看
+              <div v-if = "!isLogin" class = 'financeTsipsBox'>
+                @您还没有登陆,请<a href='/login'>登陆</a>或者<a href = '/Register'>注册</a>之后查看!
               </div>
               <el-table
                 :data="userInterestRecord"
@@ -314,7 +314,7 @@ export default {
     // 页面创建完成请求币种接口
     this.getFinancialManagementList()
     // 判断用户是否登录决定是否请求总资产
-    this.isLoging()
+    // this.isLoging()
   },
   mounted () {
   },
@@ -330,11 +330,11 @@ export default {
       return timeFilter(data, 'data')
     },
     // 进页面判断是否登录 登录获取总资产没有登录就跳转登录界面
-    isLoging () {
-      if (this.isLogin) {
-        this.getUserCoindTotal()
-      }
-    },
+    // isLoging () {
+    //   if (this.isLogin) {
+    //     this.getUserCoindTotal()
+    //   }
+    // },
     // 键盘弹起时时触发
     changeInvestMounte (e) {
       if (this.isLogin) {
@@ -440,6 +440,9 @@ export default {
         this.investList = this.isLogin ? getData.userFinancialManagementRecord.list : ''
         // 收益记录列表
         this.userInterestRecord = this.isLogin ? getData.userInterestRecord.list : ''
+        if (this.isLogin) {
+          this.getUserCoindTotal()
+        }
         // 走势图x轴赋值
         this.FINANCE_LINE_RENDER_PRICE_LIST(getData.tickerPriceResult.renderPriceList)
         // 走势图y轴赋值
@@ -653,6 +656,19 @@ export default {
             top:25px;
             z-index: 10;
           }
+          .financeTsipsBox{
+            position: absolute;
+            top: 55px;
+            left: 0px;
+            text-align: center;
+            z-index: 10;
+            width: 100%;
+            height: 100%;
+            line-height:200px;
+            >a{
+              color: #338FF5;
+            }
+          }
         }
       }
       }
@@ -663,6 +679,10 @@ export default {
         >div{
           /*<!--background-color: $nightMainTitleBgColor;-->*/
         }
+      }
+    }
+    &.day{
+      >.inner-box{
       }
     }
     .cancelBtn{

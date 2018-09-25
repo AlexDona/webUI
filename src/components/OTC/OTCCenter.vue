@@ -73,7 +73,7 @@
                 <el-select
                   v-model="activitedCurrencyId"
                   @change="changeCurrencyId"
-                  placeholder="$t('M.otc_index_currency_type')"
+                  :placeholder="$t('M.otc_index_currency_type')"
                 >
                   <el-option
                     v-for="(item,index) in availableCurrencyId"
@@ -96,7 +96,7 @@
                 />
                 <el-select
                   v-model="value"
-                  placeholder="$t('M.otc_index_Payment_method')"
+                  :placeholder="$t('M.otc_index_Payment_method')"
                   @change="payWayChangeValue"
                 >
                   <el-option
@@ -125,11 +125,11 @@
             <el-table
               :data="onlineBuySellTableList"
               style="width: 100%"
-              empty-text="$t('M.otc_index_Temporary_data')"
+              :empty-text="$t('M.otc_index_Temporary_data')"
             >
               <!-- 商户 -->
               <el-table-column
-                label="$t(M.otc_index_Merchant)"
+                :label="$t('M.otc_index_Merchant')"
               >
                 <template slot-scope = "s">
                   <div>
@@ -146,7 +146,7 @@
               </el-table-column>
               <!-- 信用 -->
               <el-table-column
-                label="成交率"
+                :label="$t('M.otc_index_turnover')"
               >
                 <template slot-scope = "s">
                   <div v-if="s.row.successOrderTimes === 0 || s.row.tradeTimes === 0">0%</div>
@@ -300,7 +300,8 @@
               <IconFontCommon
                 iconName="icon-shalou"
               />
-              交易中订单
+              <!-- 交易中的订单 -->
+              {{$t('M.otc_trading')}}
             </span>
             <OTCTradingOrder ref = "trading"></OTCTradingOrder>
           </el-tab-pane>
@@ -314,7 +315,8 @@
               <IconFontCommon
                 iconName="icon-msnui-task-complete"
               />
-              已完成订单
+              <!-- 已完成订单 -->
+              {{$t('M.otc_stocks')}}
             </span>
             <OTCCompletedOrder ref = "complete"></OTCCompletedOrder>
           </el-tab-pane>
@@ -328,7 +330,8 @@
               <IconFontCommon
                 iconName="icon-cancel_order"
               />
-              已取消订单
+              <!-- 已取消订单 -->
+              {{$t('M.otc_canceled')}}
             </span>
             <OTCCanceledOrder ref = "canceled"></OTCCanceledOrder>
           </el-tab-pane>
@@ -342,7 +345,8 @@
               <IconFontCommon
                 iconName="icon-dongjie"
               />
-              冻结中订单
+              <!-- 冻结中订单 -->
+              {{$t('M.otc_freezing')}}
             </span>
             <OTCFreezingOrder ref = "freezing"></OTCFreezingOrder>
           </el-tab-pane>
@@ -356,7 +360,8 @@
               <IconFontCommon
                 iconName="icon-daohang2"
               />
-              委托订单
+              <!-- 委托订单 -->
+              {{$t('M.otc_entrust')}}
             </span>
             <OTCEntrustOrder ref = "entrust"></OTCEntrustOrder>
           </el-tab-pane>
@@ -522,19 +527,19 @@ export default {
         // 未设置交易密码、未实名认证，未高级认证，不能进行交易
         if (!this.userInfo.payPassword) {
           this.$message({
-            message: '请先去个人中心设置交易密码！',
+            message: this.$t('M.otc_index_js'), // 去个人中心设置交易密码
             type: 'error'
           })
           return false
         } else if (!this.userInfo.realname) {
           this.$message({
-            message: '请先去个人中心完成实名认证！',
+            message: this.$t('M.otc_index_digo_tips'), // 去个人中心完成实名认证
             type: 'error'
           })
           return false
         } else if (!(this.userInfo.advancedAuth === 'pass')) {
           this.$message({
-            message: '请先去个人中心完成高级认证！',
+            message: this.$t('M.otc_index_digo_tips_pass'), // 去个人中心完成高级认证
             type: 'error'
           })
           return false
@@ -556,26 +561,26 @@ export default {
         // 未设置交易密码、未实名认证，未高级认证，不能进行交易
         if (!this.userInfo.payPassword) {
           this.$message({
-            message: '请先去个人中心设置交易密码！',
+            message: this.$t('M.otc_index_js'), // 去个人中心设置交易密码
             type: 'error'
           })
           return false
         } else if (!this.userInfo.realname) {
           this.$message({
-            message: '请先去个人中心完成实名认证！',
+            message: this.$t('M.otc_index_digo_tips'), // 去个人中心完成实名认证
             type: 'error'
           })
           return false
         } else if (!(this.userInfo.advancedAuth === 'pass')) {
           this.$message({
-            message: '请先去个人中心完成高级认证！',
+            message: this.$t('M.otc_index_digo_tips_pass'), // 去个人中心完成高级认证
             type: 'error'
           })
           return false
         } else {
           if (userId === this.userInfo.id) {
             this.$message({
-              message: '禁止自买自卖！',
+              message: this.$t('M.otc_index_forbided_buyand_sell'), // 禁止自买自卖
               type: 'error'
             })
             return false
@@ -598,26 +603,26 @@ export default {
         // 未设置交易密码、未实名认证，未高级认证，不能进行交易
         if (!this.userInfo.payPassword) {
           this.$message({
-            message: '请先去个人中心设置交易密码！',
+            message: this.$t('M.otc_index_js'), // 去个人中心设置交易密码
             type: 'error'
           })
           return false
         } else if (!this.userInfo.realname) {
           this.$message({
-            message: '请先去个人中心完成实名认证！',
+            message: this.$t('M.otc_index_digo_tips'), // 去个人中心完成实名认证
             type: 'error'
           })
           return false
         } else if (!(this.userInfo.advancedAuth === 'pass')) {
           this.$message({
-            message: '请先去个人中心完成高级认证！',
+            message: this.$t('M.otc_index_digo_tips_pass'), // 去个人中心完成高级认证
             type: 'error'
           })
           return false
         } else {
           if (userId === this.userInfo.id) {
             this.$message({
-              message: '禁止自买自卖！',
+              message: this.$t('M.otc_index_forbided_buyand_sell'), // 禁止自买自卖
               type: 'error'
             })
             return false
