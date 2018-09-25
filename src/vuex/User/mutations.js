@@ -61,8 +61,10 @@ export default {
     if (!data.loginType) {
       state.disabledOfPhoneBtn = data.status
       state.disabledOfOldPhoneBtn = data.status
+      state.disabledOfMobilePhoneBtn = data.status
     } else {
       state.disabledOfEmailBtn = data.status
+      state.disabledOfMobileEmailBtn = data.status
     }
   },
   // 用户登录

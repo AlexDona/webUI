@@ -41,7 +41,7 @@ import {
   getCurrencyInfoList,
   getCurrencyDetails
 } from '../../utils/api/header'
-import HeaderCommon from '../Common/HeaderCommon'
+import HeaderCommon from '../Common/HeaderCommonForPC'
 import FooterCommon from '../Common/FooterCommon'
 import {returnAjaxMessage} from '../../utils/commonFunc'
 import {mapState} from 'vuex'

@@ -80,9 +80,6 @@
                 信息披露出现重大偏差；
               </p>
               <p class="content">
-                信息披露出现重大偏差；
-              </p>
-              <p class="content">
                 不满足继续交易的其他事项。
               </p>
               <p class="content">
@@ -114,7 +111,7 @@ import {
   returnAjaxMessage,
   getServiceProtocolData
 } from '../../utils/commonFunc'
-import HeaderCommon from '../Common/HeaderCommon'
+import HeaderCommon from '../Common/HeaderCommonForPC'
 import FooterCommon from '../Common/FooterCommon'
 import {
   // createNamespacedHelpers,

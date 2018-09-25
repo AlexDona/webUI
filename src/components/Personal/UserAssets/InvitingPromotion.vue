@@ -265,7 +265,7 @@ import {
   userPromotionList,
   recommendUserPromotionList
 } from '../../../utils/api/personal'
-import {apiCommonUrl} from '../../../utils/env'
+import {domain} from '../../../utils/env'
 import {returnAjaxMessage} from '../../../utils/commonFunc'
 import {timeFilter} from '../../../utils/index'
 Vue.use(VueClipboard)
@@ -295,7 +295,7 @@ export default {
       totalPageForMyEntrust: 1, // 当前委托总页数
       totalPageMyNumber: '', // 条数
       text: 'SADFASD',
-      link: `${apiCommonUrl}Register?showId=`,
+      link: `${domain}Register?showId=`,
       ercodeIsShowId: false, // 二维码显示状态
       qrcode: '123456',
       // 推广统计

@@ -108,7 +108,7 @@
             width="50%"
             height="500px"
             :before-close="handleClose">
-            <div id="argumentContentBox"></div>
+            <div v-html = "argumentContent"></div>
           </el-dialog>
         </div>
         <!-- 2.2.5 申请为商家按钮部分 -->
@@ -152,7 +152,7 @@
   </div>
 </template>
 <script>
-import NavCommon from '../Common/HeaderCommon'
+import NavCommon from '../Common/HeaderCommonForPC'
 import FooterCommon from '../Common/FooterCommon'
 import IconFontCommon from '../Common/IconFontCommon'
 import {businessApply, firstEnterBusinessApply, argumentBusinessApply} from '../../utils/api/OTC'
@@ -277,7 +277,6 @@ export default {
             this.argumentContent = item.content
           }
         })
-        document.getElementById('argumentContentBox').innerHTML = this.argumentContent
       }
     },
     businessArgument () {

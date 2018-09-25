@@ -54,6 +54,7 @@ const state = {
   withdrawDepositList: [], // 我的资产列表信息数据
   userRefreshUserList: [], // 刷新用户信息
   userInfoRefreshStatus: false, // 用户信息接口刷新状态
+  logoSrc: require('../../assets/develop/logo.png'),
   end: ''// 占位
 }
 

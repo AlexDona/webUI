@@ -13,7 +13,7 @@
          <div class="nvest-list-body">
           <div class="gobackInvest">
             <IconFontCommon class='blue' iconName="icon-fanhui" style="font-size:12px" />
-            <router-link class="blue" to="/FinanceCenter">查看全部</router-link>
+            <router-link class="blue" to="/FinanceCenter">返回投资</router-link>
           </div>
           <!-- 投资记录 -->
           <el-tabs v-model="activeName">
@@ -64,7 +64,7 @@
                   <template slot-scope = "data">
                     <div
                     v-if="data.row.state == '活期'"
-                    class="blue"
+                    class="blue cancelBtn"
                     @click="cancleInvest(data.row.id)"
                     >取消</div>
                   </template>
@@ -76,7 +76,8 @@
                   layout="prev, pager, next"
                   page-size='10'
                   @current-change='changeInvestPage'
-                  :page-count='investTotalPages'>
+                  :current-page = 'investCurrnetPage'
+                  :page-count.sync = 'investTotalPages'>
               </el-pagination>
             </el-tab-pane>
             <!-- 收益记录 -->
@@ -121,7 +122,9 @@
                 v-if="interestTotal > 10 && this.activeName == '2'"
                 layout="prev, pager, next"
                 @current-change='changeInterestPage'
-                :page-count='interestTotalPages'>
+                :current-page.sync = 'interestCurrnetPage'
+                :page-count='interestTotalPages'
+                >
             </el-pagination>
           </el-tabs>
         </div>
@@ -133,7 +136,7 @@
 </template>
 <!--请严格按照如下书写书序-->
 <script>
-import HeaderCommon from '../Common/HeaderCommon'
+import HeaderCommon from '../Common/HeaderCommonForPC'
 import FooterCommon from '../Common/FooterCommon'
 import FinanceBrokenLine from './FinanceBrokenLine'
 import FinanceBrokenPie from './FinanceBrokenPie'
@@ -168,7 +171,9 @@ export default {
       activeName: '1',
       investList: [],
       // 收益列表
-      userInterestRecord: []
+      userInterestRecord: [],
+      coinId: this.$route.query.coinId,
+      coinName: this.$route.query.coinName
     }
   },
   created () {
@@ -176,6 +181,14 @@ export default {
     require('../../../static/css/theme/day/InvestmentFinance/FinanceCenterDay.css')
     require('../../../static/css/theme/night/InvestmentFinance/FinanceCenterNight.css')
     this.getFinancialManagementList()
+    // if (activeName == 1) {
+    //   let historyPage = this.investCurrnetPage
+    //   this.changeInvestPage(historyPage)
+    // } else {
+    //   let historyPage = this.interestCurrnetPage
+    //   this.changeInterestPage(historyPage)
+    // }
+    console.log(this.$route.query)
   },
   mounted () {},
   activited () {},
@@ -187,37 +200,51 @@ export default {
     },
     // 点击投资记录列表下一页查寻
     changeInvestPage (pageNum) {
+      console.log(pageNum)
       this.investCurrnetPage = pageNum
+      console.log(this.investCurrnetPage)
       // 重新获取列表
       this.getFinancialManagementList(this.investCurrnetPage)
     },
     // 点击收益记录下一页查询
     changeInterestPage (pageNum) {
+      console.log(pageNum)
       this.interestCurrnetPage = pageNum
       this.getFinancialManagementList(this.interestCurrnetPage)
     },
     async getFinancialManagementList (pageNum) {
       const data = await getFinancialManagement({
         pageNum: pageNum,
-        partnerId: this.partnerId
+        pageSize: 10,
+        partnerId: this.partnerId,
+        coinId: this.coinId,
+        coinName: this.coinName
       })
       console.log('投资理财页面查询')
       console.log(data)
       if (!(returnAjaxMessage(data, this, 0))) {
         return false
       } else {
-        // 投资记录列表赋值
-        this.investList = data.data.data.userFinancialManagementRecord.list
-        // 投资记录总页数
-        this.investTotalPages = data.data.data.userFinancialManagementRecord.pages
-        // 投资记录总条数
-        this.investTotal = data.data.data.userFinancialManagementRecord.total
-        // 投资记录列表
-        this.userInterestRecord = data.data.data.userInterestRecord.list
-        // 收益记录总页数
-        this.interestTotalPages = data.data.data.userInterestRecord.pages
-        // 收益记录总条数
-        this.interestTotal = data.data.data.userInterestRecord.total
+        let getData = data.data.data
+        if (this.activeName == '1') {
+          // 投资记录列表赋值
+          this.investList = getData.userFinancialManagementRecord.list
+          // 投资记录总页数
+          this.investTotalPages = getData.userFinancialManagementRecord.pages
+          // 投资记录总条数
+          this.investTotal = getData.userFinancialManagementRecord.total
+          // 从新赋值页码为当前页
+          // this.investCurrnetPage = pageNum
+        } else if (this.activeName == '2') {
+          // 投资记录列表
+          this.userInterestRecord = getData.userInterestRecord.list
+          // 收益记录总页数
+          this.interestTotalPages = getData.userInterestRecord.pages
+          // 收益记录总条数
+          this.interestTotal = getData.userInterestRecord.total
+          // 重新赋值收益列表在当前页
+          // this.interestCurrnetPage = pageNum
+        }
       }
     },
     // 点击取消按钮执行
@@ -228,8 +255,8 @@ export default {
       if (!(returnAjaxMessage(data, this, 0))) {
         return false
       } else {
-        // 重新请求币种接口刷新列表
-        this.getFinancialManagementList()
+        // 重新请求币种接口刷新列表 把当前页码传过去
+        this.getFinancialManagementList(this.investCurrnetPage)
       }
     },
     cancleInvest (id) {
@@ -312,6 +339,9 @@ export default {
     .goback-icon{
       font-size: 16px;
       margin-right:5px;
+    }
+    .cancelBtn{
+      cursor: pointer;
     }
     .blue{
       color: #338FF5;

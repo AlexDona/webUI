@@ -86,7 +86,7 @@ import LegislationExplain from './LegislationExplain'
 import ClauseExplain from './ClauseExplain'
 import UserProtocol from './UserProtocol'
 import CurrencyInformation from './CurrencyInformation'
-import HeaderCommon from '../Common/HeaderCommon'
+import HeaderCommon from '../Common/HeaderCommonForPC'
 import FooterCommon from '../Common/FooterCommon'
 import {createNamespacedHelpers, mapState} from 'vuex'
 const {mapMutations} = createNamespacedHelpers('footerInfo')

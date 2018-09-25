@@ -122,7 +122,7 @@
         <!-- 投资记录和收益记录 -->
         <div class="nvest-list-body">
           <div class='showAll'>
-            <router-link class="blue" to="/FinanceInvestmentRecord">查看全部</router-link>
+            <router-link class="blue" :to="{path: '/FinanceInvestmentRecord', query:{coinId:selectedCoinId,coinName:selecteCoindName}}">查看全部</router-link>
           </div>
           <!-- 投资记录 -->
           <el-tabs v-model="activeName" @tab-click="handleClick">
@@ -174,7 +174,7 @@
                   <template slot-scope = "data">
                     <div
                     v-if="data.row.state == '活期'"
-                    class="blue"
+                    class="blue cancelBtn"
                     @click="cancleInvest(data.row.id)"
                     >取消</div>
                   </template>
@@ -228,7 +228,7 @@
 </template>
 <!--请严格按照如下书写书序-->
 <script>
-import HeaderCommon from '../Common/HeaderCommon'
+import HeaderCommon from '../Common/HeaderCommonForPC'
 import FooterCommon from '../Common/FooterCommon'
 import FinanceBrokenLine from './FinanceBrokenLine'
 import FinanceBrokenPie from './FinanceBrokenPie'
@@ -652,6 +652,9 @@ export default {
           /*<!--background-color: $nightMainTitleBgColor;-->*/
         }
       }
+    }
+    .cancelBtn{
+       cursor: pointer;
     }
     .blue{
       color: #338FF5;
