@@ -40,7 +40,13 @@
                 @focus="emptyStatus"
               />
             </el-form-item>
-            <div v-show="errorMsg">{{ errorMsg }}</div>
+            <div
+              class="error-info"
+            >
+              <span v-show="errorMsg">
+                {{ errorMsg }}
+              </span>
+            </div>
             <button
               class="form-button border-radius4 cursor-pointer"
               @click.prevent="addAddress"
@@ -48,6 +54,74 @@
               增加
             </button>
           </el-form>
+          <div class="withdrawal-dialog">
+            <el-dialog
+              title="提币"
+              :visible.sync="mentionMoneyConfirm"
+            >
+              <el-form
+                :label-position="labelPosition"
+              >
+                <!--手机已认证-->
+                <el-form-item
+                  v-if="securityCenter.isPhoneEnable"
+                  label="手机验证"
+                >
+                  <input
+                    class="content-input padding-l15 box-sizing"
+                    v-model="phoneCode"
+                  >
+                  <CountDownButton
+                    class="send-code-btn cursor-pointer"
+                    :status="disabledOfPhoneBtn"
+                    @run="sendPhoneOrEmailCode(0)"
+                  />
+                </el-form-item>
+                <!--手机未认证-->
+                <span v-else></span>
+                <!--邮箱已认证-->
+                <el-form-item
+                  v-if="securityCenter.isMailEnable"
+                  label="邮箱验证"
+                >
+                  <input
+                    class="content-input padding-l15 box-sizing"
+                    v-model="emailCode"
+                  >
+                  <CountDownButton
+                    class="send-code-btn cursor-pointer"
+                    :status="disabledOfEmailBtn"
+                    @run="sendPhoneOrEmailCode(1)"
+                  />
+                </el-form-item>
+                <!--邮箱未认证-->
+                <span v-elsee></span>
+                <!--谷歌已认证-->
+                <el-form-item
+                  v-if="securityCenter.isGoogleEnable"
+                  label="谷歌验证"
+                >
+                  <input
+                    class="content-input input-google padding-l15 box-sizing"
+                    v-model="googleCode"
+                  >
+                </el-form-item>
+                <!--谷歌未认证-->
+                <span v-else></span>
+              </el-form>
+              <div
+                slot="footer"
+                class="dialog-footer"
+              >
+                <el-button
+                  type="primary"
+                  @click.prevent="submitMentionMoney"
+                >
+                  确 定
+                </el-button>
+              </div>
+            </el-dialog>
+          </div>
         </div>
       </div>
     </div>
@@ -116,17 +190,26 @@ import {mapState} from 'vuex'
 import {
   inquireWithdrawalAddressList,
   addNewWithdrawalAddress,
-  deleteUserWithdrawAddress
+  deleteUserWithdrawAddress,
+  statusSecurityCenter
 } from '../../../utils/api/personal'
-import {returnAjaxMessage} from '../../../utils/commonFunc'
+import CountDownButton from '../../Common/CountDownCommon'
+import {
+  returnAjaxMessage,
+  sendPhoneOrEmailCodeAjax
+} from '../../../utils/commonFunc'
 export default {
-  components: {},
+  components: {
+    CountDownButton // 短信倒计时
+  },
   // props,
   data () {
     return {
+      labelPosition: 'top',
       errorMsg: '', // 错误信息提示
       // 币种列表
       currencyValue: '',
+      securityCenter: {}, // 安全状态显示
       currencyList: [],
       mentionRemark: '', // 提现备注
       prepaidAddress: '', // 提币地址
@@ -137,6 +220,7 @@ export default {
       currentPageForMyEntrust: 1, // 当前委托页码
       totalPageForMyEntrust: 1, // 当前委托总页数
       dialogVisible: false, // 取消弹窗默认隐藏
+      mentionMoneyConfirm: false, // 默认隐藏
       deleteWithdrawalId: '' // 每行数据ID
     }
   },
@@ -147,7 +231,6 @@ export default {
     require('../../../../static/css/theme/day/Personal/AccountBalance/WithdrawalAddressDay.css')
     // 黑色主题样式
     require('../../../../static/css/theme/night/Personal/AccountBalance/WithdrawalAddressNight.css')
-    // this.WithdrawalAddressList()
   },
   mounted () {},
   activited () {},
@@ -158,12 +241,27 @@ export default {
     emptyStatus () {
       this.errorMsg = ''
     },
+    // 点击显示验证信息
     addAddress () {
       // if (!this.prepaidAddress) {
       //   this.errorMsg = '提币地址不能为空'
       // }
+      if (!this.mentionRemark) {
+        // 请输入备注
+        this.errorMsg = '请输入备注'
+        return
+      } else if (!this.prepaidAddress) {
+        // 提币地址不能为空
+        this.errorMsg = '提币地址不能为空'
+        return
+      } else {
+        this.errorMsg = ''
+      }
+      this.getSecurityCenter()
+    },
+    // 点击确认
+    submitMentionMoney () {
       this.stateSubmitAddAddress()
-      console.log('prepaidAddress')
     },
     // 资产币种下拉
     changeId (e) {
@@ -177,17 +275,6 @@ export default {
     },
     // 新增用户提币地址按钮
     async stateSubmitAddAddress () {
-      if (!this.mentionRemark) {
-        // 请输入备注
-        this.errorMsg = '请输入备注'
-        return
-      } else if (!this.prepaidAddress) {
-        // 提币地址不能为空
-        this.errorMsg = '提币地址不能为空'
-        return
-      } else {
-        this.errorMsg = ''
-      }
       let data
       let param = {
         coinId: this.currencyValue, // 币种coinId
@@ -199,6 +286,7 @@ export default {
         return false
       } else {
         this.WithdrawalAddressList()
+        this.stateEmptyData()
       }
     },
     /**
@@ -257,15 +345,73 @@ export default {
       this.prepaidAddress = ''
     },
     // 分页
+    // 发送验证码
+    sendPhoneOrEmailCode (loginType) {
+      if (this.disabledOfPhoneBtn || this.disabledOfEmailBtn) {
+        return false
+      }
+      let params = {
+      }
+      switch (loginType) {
+        case 0:
+          params.phone = this.userInfo.userInfo.phone
+          break
+        case 1:
+          params.address = this.userInfo.userInfo.email
+          break
+      }
+      sendPhoneOrEmailCodeAjax(loginType, params, (data) => {
+        console.log(this.disabledOfPhoneBtn)
+        // 提示信息
+        if (!returnAjaxMessage(data, this)) {
+          console.log('error')
+          return false
+        } else {
+          switch (loginType) {
+            case 0:
+              this.$store.commit('user/SET_USER_BUTTON_STATUS', {
+                loginType: 0,
+                status: true
+              })
+              break
+            case 1:
+              this.$store.commit('user/SET_USER_BUTTON_STATUS', {
+                loginType: 1,
+                status: true
+              })
+              break
+          }
+        }
+      })
+    },
     changeCurrentPage (pageNum) {
       this.currentPageForMyEntrust = pageNum
       this.WithdrawalAddressList()
+    },
+    /**
+     * 安全中心
+     */
+    async getSecurityCenter () {
+      let data = await statusSecurityCenter({
+        token: this.userInfo.token // token
+      })
+      console.log(data)
+      if (!(returnAjaxMessage(data, this, 0))) {
+        return false
+      } else {
+        // 返回展示
+        this.securityCenter = data.data.data
+        this.mentionMoneyConfirm = true
+      }
     }
   },
   filter: {},
   computed: {
     ...mapState({
       theme: state => state.common.theme,
+      userInfo: state => state.user.loginStep1Info, // 用户详细信息
+      disabledOfPhoneBtn: state => state.user.disabledOfPhoneBtn,
+      disabledOfEmailBtn: state => state.user.disabledOfEmailBtn,
       userCenterActiveName: state => state.personal.userCenterActiveName
     })
   },
@@ -293,6 +439,21 @@ export default {
       >.withdrawal-address-content {
         >.withdrawal-address-box {
           min-height: 100px;
+          .send-code-btn {
+            width: 90px;
+            height: 35px;
+            margin-left: -4px;
+            padding: 0;
+          }
+          .error-info {
+            height: 20px;
+            line-height: 20px;
+            color: red;
+          }
+          .content-input {
+            width: 180px;
+            height: 34px;
+          }
           .form-input,
           .form-button {
             width: 324px;
@@ -329,6 +490,17 @@ export default {
         }
         >.withdrawal-address-content {
           >.withdrawal-address-box {
+            .send-code-btn {
+              background-color: #338FF5;
+              color: #fff;
+            }
+            .content-input {
+              border: 1px solid #485776;
+              color: #fff;
+              &:focus {
+                border: 1px solid #338FF5;
+              }
+            }
             .form-input {
               border: 1px solid #485776;
               color: rgba(255,255,255,0.7);
@@ -369,6 +541,17 @@ export default {
         }
         >.withdrawal-address-content {
           >.withdrawal-address-box {
+            .send-code-btn {
+              background-color: #338FF5;
+              color: #fff;
+            }
+            .content-input {
+              border: 1px solid #ECF1F8;
+              color: #333;
+              &:focus {
+                border: 1px solid #338FF5;
+              }
+            }
             .form-input {
               background:rgba(255,255,255,1);
               border:1px solid rgba(236,241,248,1);

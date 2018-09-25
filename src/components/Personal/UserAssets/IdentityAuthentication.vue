@@ -209,7 +209,7 @@
                   />
                   <span class="font-size14 vertical-align">注意：</span>
                 </p>
-                <p class="text-hints">1.照片文件大小不能超过4M！文件格式须为jpg、bmp、png等！</p>
+                <p class="text-hints">1. 照片文件大小不能超过10M！文件格式须为jpg、bmp、png等！</p>
                 <p class="text-hints">2. 请确保照片无水印，无污渍，身份信息清晰，头像完整，非文字反向照片！照片请勿进行PS处理！</p>
                 <p class="text-hints">3. 手持身份证照片：需要您本人一只手持您的身份证，另一只手持一张有您手写的fubt.top账号ID的白纸。确保身份证和白纸
                   在您的胸前，不遮挡您的脸部，并且身份证和白纸上的信息清晰可见！</p>
@@ -273,7 +273,6 @@
                   <button
                     type="primary"
                     class="upload-submit cursor-pointer font-size12 margin-top30"
-                    @click.prevent="handleSuccessReverseSide"
                   >
                     上传身份证反面
                   </button>
@@ -304,7 +303,6 @@
                   <button
                     type="primary"
                     class="upload-submit cursor-pointer font-size12 margin-top30"
-                    @click.prevent="handleSuccessHand"
                   >
                     上传手持身份证
                   </button>

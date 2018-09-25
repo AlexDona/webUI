@@ -1034,13 +1034,13 @@ export default {
         // sellname: "沃尔顿链"
         // sellsymbol: "WTC"
         // tradeId: "491725015746609152"
-        console.log(this.currencyTradingList)
-        console.log(this.area)
-        console.log(this.areaId)
-        console.log(this.id)
-        console.log(this.sellsymbol)
-        console.log(this.tradeId)
-        console.log(this.currencyTradingId)
+        // console.log(this.currencyTradingList)
+        // console.log(this.area)
+        // console.log(this.areaId)
+        // console.log(this.id)
+        // console.log(this.sellsymbol)
+        // console.log(this.tradeId)
+        // console.log(this.currencyTradingId)
       }
     }
   },
