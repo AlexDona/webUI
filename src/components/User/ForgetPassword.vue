@@ -152,7 +152,7 @@
               <span class="label">验证邮箱</span>
               <span class="label-content">
                 <span class="number">{{phoneNumberFormat(userInfo.email)}}</span>
-                <span class="tips">{{phoneNumTips}}</span>
+                <span class="tips">{{emailNumTips}}</span>
               </span>
             </div>
             <div
@@ -265,7 +265,7 @@
 <script>
 import IconFont from '../Common/IconFontCommon'
 import CountDownButton from '../Common/CountDownCommon'
-import HeaderCommon from '../Common/HeaderCommon'
+import HeaderCommon from '../Common/HeaderCommonForPC'
 import {
   findPasswordStep1,
   findPasswordStep2,

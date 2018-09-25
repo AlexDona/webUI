@@ -274,7 +274,7 @@
 </template>
 <script>
 import ImageValidate from '../Common/ImageValidateCommon'
-import HeaderCommon from '../Common/HeaderCommon'
+import HeaderCommon from '../Common/HeaderCommonForPC'
 import ErrorBox from './ErrorBox'
 import {mapState} from 'vuex'
 // import {EMAIL_REG, PHONE_REG, PWD_REG} from '../../utils/regExp' // 正则验证

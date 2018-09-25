@@ -325,8 +325,6 @@ export default{
         }
       ],
       activeTheme: '',
-      // logo图片地址
-      logoSrc: require('../../assets/develop/logo.png'),
       // otc 子导航显示状态
       // otcSubNavStatus: false,
       // 任付伟大改动的：otc 子导航显示状态默认先显示，为了方便点击
@@ -543,7 +541,8 @@ export default{
       partnerId: state => state.common.partnerId, // 商户id
       activeLanguage: state => state.common.activeLanguage,
       withdrawDepositList: state => state.common.withdrawDepositList,
-      userInfoRefreshStatus: state => state.common.userInfoRefreshStatus
+      userInfoRefreshStatus: state => state.common.userInfoRefreshStatus,
+      logoSrc: state => state.common.logoSrc
     })
   },
   watch: {

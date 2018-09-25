@@ -238,7 +238,7 @@
 <!--请严格按照如下书写书序-->
 <script>
 import {cancelAllOrdersOnekey, getOTCAvailableCurrency, getMerchantAvailablelegalTender, getOTCADManageApplyList, querySelectedOrdersRevocation} from '../../utils/api/OTC'
-import NavCommon from '../Common/HeaderCommon'
+import NavCommon from '../Common/HeaderCommonForPC'
 import FooterCommon from '../Common/FooterCommon'
 import IconFontCommon from '../Common/IconFontCommon'
 import {timeFilter} from '../../utils'

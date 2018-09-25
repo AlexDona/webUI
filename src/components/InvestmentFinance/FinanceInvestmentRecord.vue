@@ -136,7 +136,7 @@
 </template>
 <!--请严格按照如下书写书序-->
 <script>
-import HeaderCommon from '../Common/HeaderCommon'
+import HeaderCommon from '../Common/HeaderCommonForPC'
 import FooterCommon from '../Common/FooterCommon'
 import FinanceBrokenLine from './FinanceBrokenLine'
 import FinanceBrokenPie from './FinanceBrokenPie'

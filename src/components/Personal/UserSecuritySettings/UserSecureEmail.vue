@@ -78,7 +78,7 @@
 <!--请严格按照如下书写书序-->
 <script>
 // 头部
-import HeaderCommon from '../../Common/HeaderCommon'
+import HeaderCommon from '../../Common/HeaderCommonForPC'
 import IconFontCommon from '../../Common/IconFontCommon'
 import CountDownButton from '../../Common/CountDownCommon'
 import ErrorBox from '../../User/ErrorBox'

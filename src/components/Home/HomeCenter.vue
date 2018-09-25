@@ -24,7 +24,7 @@
 </template>
 <script>
 import NoticeHome from './NoticeHome'
-import NavCommon from '../Common/HeaderCommon'
+import NavCommon from '../Common/HeaderCommonForPC'
 import BannerHome from './BannerHome'
 import FooterCommon from '../Common/FooterCommon'
 import MarketListHome from './MarketListHome'

@@ -347,7 +347,7 @@
 import {formatNumberInput} from '../../utils'
 import {querySelectedOrdersDetails, getOTCAvailableCurrency, getMerchantAvailablelegalTender, addOTCPutUpOrdersMerchantdedicated, queryUserTradeFeeAndCoinInfo, queryUserPayTypes, getOTCChangeRate, getOTCCoinInfo} from '../../utils/api/OTC'
 // 引入组件
-import NavCommon from '../Common/HeaderCommon'
+import NavCommon from '../Common/HeaderCommonForPC'
 import FooterCommon from '../Common/FooterCommon'
 import IconFontCommon from '../Common/IconFontCommon'
 // 引入提示信息

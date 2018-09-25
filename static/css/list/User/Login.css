@@ -14,6 +14,7 @@
   -khtml-user-select: none; /*早期浏览器*/
   user-select: none;
 }
+/*PC端*/
 .login-box .slider .el-dialog{
   height:280px
 }
@@ -53,7 +54,98 @@
   height:44px;
   border:none;
 }
-/*.login-box*/
+/*移动端*/
+.login-box .mobile-box>.mobile-inner-box .el-dialog{
+  margin-top:0 !important;
+  width:18rem;
+  height: 11rem;
+  position: fixed;
+  top:50%;
+  left:50%;
+  transform: translate(-50%,-50%);
+}
+.login-box .mobile-box>.mobile-inner-box .el-dialog__wrapper{
+  background-color: rgba(0,0,0,.8);
+}
+.login-box .mobile-box>.mobile-inner-box .el-dialog__header{
+  height:120px;
+  line-height:120px;
+  width:100%;
+}
+.login-box .mobile-box>.mobile-inner-box .el-dialog__header>span{
+  font-size: 40px;
+}
+.login-box .mobile-box>.mobile-inner-box .el-dialog__headerbtn{
+  top:40px;
+  right:40px;
+}
+.login-box .mobile-box>.mobile-inner-box .el-dialog__headerbtn .el-dialog__close{
+  font-size: 40px;
+}
+.login-box .mobile-box>.mobile-inner-box .drag {
+  position: relative;
+  background-color: #1e2235;
+  margin: 0 auto;
+  width: 1000px;
+  height: 2.5rem;
+  line-height: 2.5rem;
+  text-align: center;
+  border: 1px solid #4e5b85;
+}
+.login-box .mobile-box>.mobile-inner-box .drag_text {
+  font-size: .7rem;
+  position: absolute;
+  top: 0px;
+  width: 1000px;
+  -moz-user-select: none;
+  -webkit-user-select: none;
+  user-select: none;
+  -o-user-select: none;
+  -ms-user-select: none;
+  background: -webkit-gradient(linear, left top, right top, color-stop(0, #61688a), color-stop(.4, #61688a), color-stop(.5, #fff), color-stop(.6, #61688a), color-stop(1, #61688a));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  -webkit-animation: slidetounlockForMobile 4s infinite;
+  -webkit-text-size-adjust: none;
+
+}
+
+@keyframes slidetounlockForMobile {
+  0% {
+    background-position: -400px 0;
+  }
+  100% {
+    background-position: 400px 0;
+  }
+}
+.login-box .mobile-box>.mobile-inner-box .handler{
+  position: absolute;
+  top: 0px;
+  left: 0px;
+  width: 200px;
+  height: 2.5rem;
+  cursor: move;
+}
+.login-box .mobile-box>.mobile-inner-box .handler_bg{
+
+  background: #485776 url(../../../../src/assets/develop/arrow-bg.png) no-repeat center center;
+  -webkit-background-size: 50px 50px;
+  background-size: 50px 50px;
+  height:100%;
+  width:200px;
+  color:#fff;
+  /*font-family: ;*/
+  font-size: 2rem;
+}
+.login-box .mobile-box>.mobile-inner-box .handler_bg .icon {
+  font-size: 1rem;
+  color:#fff;
+}
+.login-box .mobile-box>.mobile-inner-box .el-dialog__body{
+  padding:3rem 1rem;
+}
+.login-box .mobile-box>.mobile-inner-box .pic-verify{}
+/*.login-box .mobile-box>.mobile-inner-box*/
 /*.login-box*/
 /*.login-box*/
 /*.login-box*/

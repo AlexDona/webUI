@@ -204,7 +204,7 @@
 <!--请严格按照如下书写书序-->
 <script>
 // 头部
-import HeaderCommon from '../../Common/HeaderCommon'
+import HeaderCommon from '../../Common/HeaderCommonForPC'
 // 账户资产
 import AccountAssets from '../AccountBalance/AccountAssets'
 // 账单明细
