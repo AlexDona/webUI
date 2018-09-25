@@ -43,3 +43,6 @@
 .withdrawal-address.personal.night .el-table td:nth-child(4)>.cell{
   color: #338FF5;
 }
+.withdrawal-address.personal.night .withdrawal-dialog .el-dialog__header {
+  background-color: #20293C;
+}

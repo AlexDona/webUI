@@ -226,6 +226,8 @@
                   <!-- 卖 -->
                   <span class="predict-sum" v-if="this.publishStyle === 'sell'">
                     {{entrustCountSell * rate}} {{coinName}}
+                    <!-- {{entrustCountSell * rate}} {{coinName}} -->
+                    <!-- {{amendPrecision(entrustCountSell, rate, '*')}} {{coinName}} -->
                   </span>
                   <!-- 买 -->
                   <span class="predict-sum" v-if="this.publishStyle === 'buy'">
@@ -326,7 +328,7 @@ import NavCommon from '../Common/HeaderCommonForPC'
 import FooterCommon from '../Common/FooterCommon'
 import {returnAjaxMessage} from '../../utils/commonFunc'
 import {createNamespacedHelpers, mapState} from 'vuex'
-import {timeFilter, formatNumberInput} from '../../utils'
+import {timeFilter, formatNumberInput, amendPrecision} from '../../utils'
 const {mapMutations} = createNamespacedHelpers('OTC')
 export default {
   components: {
@@ -393,6 +395,7 @@ export default {
     }
   },
   created () {
+    console.log(amendPrecision(3.2222, 2.1, '-'))
     require('../../../static/css/list/OTC/OTCPublishBuyAndSell.css')
     require('../../../static/css/theme/day/OTC/OTCPublishBuyAndSellDay.css')
     require('../../../static/css/theme/night/OTC/OTCPublishBuyAndSellNight.css')
@@ -555,6 +558,7 @@ export default {
       // this.entrustCountSell = this.$refs.entrustCountSell.value
       // console.log(this.entrustCountSell)
       // 开始input框验证
+      // console.log(amendPrecision(this.$refs.entrustCountSell.value, this.rate, '*'))
       // 限制输入数字和位数
       let target = this.$refs[ref]
       // 卖出量 买入量验证：>0 保留返回的小数位数
