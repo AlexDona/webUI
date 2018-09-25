@@ -15,7 +15,7 @@
             <span class="level">中</span>
           </span>
             <span class="flex1">
-              <el-progress :percentage="70"></el-progress>
+               <el-progress :text-inside="false" :stroke-width="5" :percentage="person"></el-progress>
             </span>
             <span class="flex1 security-verification">建议开启双重验证</span>
           </div>
@@ -208,7 +208,9 @@
               />
             </p>
             <p class="security-info-text margin-top9 font-size12">
-              交易密码用于账户交易，建议立即设置
+              交易密码用于账户交易
+              <span v-if="!securityCenter.payPassword">，建议立即设置</span>
+              <span v-else></span>
             </p>
           </div>
           <div class="security-status text-align-r">
@@ -534,7 +536,8 @@ export default {
       activeType: '', // 当前值
       state: '', // 开启关闭
       errorMsg: '', // 关闭错误提示
-      errorMsg1: '' // 开启错误提示
+      errorMsg1: '', // 开启错误提示
+      person: ''
     }
   },
   created () {
@@ -833,8 +836,10 @@ export default {
       } else {
         // 返回展示
         this.securityCenter = data.data.data
+        this.person = data.data.data.person
         this.logonRecord = data.data.data.setLog
         this.securityRecord = data.data.data.loginLog
+        console.log(this.person)
       }
     }
   },

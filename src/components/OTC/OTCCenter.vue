@@ -16,10 +16,12 @@
             @change="toggleBuyOrSellStyle"
           >
             <el-radio-button label="onlineBuy">
-              在线购买
+              <!-- 在线购买 -->
+              {{ $t('M.otc_index_online_buy') }}
             </el-radio-button>
             <el-radio-button label="onlineSell">
-              在线出售
+              <!-- 在线出售 -->
+              {{ $t('M.otc_index_online_sell') }}
             </el-radio-button>
           </el-radio-group>
         </div>
@@ -34,14 +36,16 @@
                 class="otc-i-wan"
                 v-show="OTCBuySellStyle === 'onlineBuy'"
               >
-                我要购买 ：
+                <!-- 我要购买 ： -->
+              {{ $t('M.otc_index_wantTo_buy') }} :
               </span>
               <!-- 我要出售 -->
               <span
                 class="otc-i-wan"
                 v-show="OTCBuySellStyle === 'onlineSell'"
               >
-                我要出售 ：
+                <!-- 我要出售 ： -->
+                {{ $t('M.otc_index_wantTo_sell') }} :
               </span>
               <div
                 class="otc-filtrate-style"
@@ -65,10 +69,11 @@
                   class="currency-style-icon"
                   iconName="icon-jinbi"
                 />
+                <!-- 货币类型 -->
                 <el-select
                   v-model="activitedCurrencyId"
                   @change="changeCurrencyId"
-                  placeholder="货币类型"
+                  placeholder="$t('M.otc_index_currency_type')"
                 >
                   <el-option
                     v-for="(item,index) in availableCurrencyId"
@@ -91,7 +96,7 @@
                 />
                 <el-select
                   v-model="value"
-                  placeholder="支付方式"
+                  placeholder="$t('M.otc_index_Payment_method')"
                   @change="payWayChangeValue"
                 >
                   <el-option
@@ -109,21 +114,22 @@
                 type="primary"
                 @click="toPublishOrder"
               >
-                发布订单
+                <!-- 发布订单 -->
+              {{ $t('M.otc_release_order') }}
               </el-button>
             </div>
           </div>
           <!--商户列表表格部分-->
           <div class="otc-merchant-list">
-            <!-- 表格信息 -->
+            <!-- 表格信息 暂时无数据-->
             <el-table
               :data="onlineBuySellTableList"
               style="width: 100%"
-              empty-text="暂无数据"
+              empty-text="$t('M.otc_index_Temporary_data')"
             >
               <!-- 商户 -->
               <el-table-column
-                label="商户"
+                label="$t(M.otc_index_Merchant)"
               >
                 <template slot-scope = "s">
                   <div>
@@ -240,7 +246,8 @@
                     v-if="OTCBuySellStyle === 'onlineBuy'"
                     @click="toOnlineBuy(s.row.id,s.row.coinId,s.row.userId)"
                   >
-                    购买
+                  <!-- 购买 -->
+                   {{$t('OTC.otc_index_buy')}}
                   </el-button>
                   <el-button
                     type="success"
@@ -248,7 +255,8 @@
                     v-if="OTCBuySellStyle === 'onlineSell'"
                     @click="toOnlineSell(s.row.id,s.row.coinId,s.row.userId)"
                   >
-                    出售
+                    <!-- 出售 -->
+                   {{$t('OTC.otc_index_sell')}}
                   </el-button>
                 </template>
               </el-table-column>
@@ -274,7 +282,7 @@
             class="more"
             @click="queryMoreOrder"
           >
-            查询更多
+            <!-- 查询更多 -->
           </span>
         <!-- </div> -->
         <el-tabs
@@ -371,8 +379,8 @@ import OTCCanceledOrder from './OTCCanceledOrder'
 import OTCFreezingOrder from './OTCFreezingOrder'
 import OTCEntrustOrder from './OTCEntrustOrder'
 import {returnAjaxMessage, reflashUserInfo} from '../../utils/commonFunc'
-// import {mapState, mapMutations} from 'vuex'
 import {createNamespacedHelpers, mapState} from 'vuex'
+
 const {mapMutations} = createNamespacedHelpers('OTC')
 export default {
   components: {

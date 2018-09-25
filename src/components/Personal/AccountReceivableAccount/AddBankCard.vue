@@ -348,6 +348,7 @@ export default {
   .add-bank {
     >.add-bank-main {
       width: 1100px;
+      height: 700px;
       margin: 60px auto 100px;
       >.add-bank-header {
         display: flex;
