@@ -135,6 +135,15 @@
 .night .el-message-box__message p {
   color: #fff;
 }
+/*移动端 消息*/
+.mobile .el-message-box__message{
+  /*font-size: 0.7rem;*/
+}
+.mobile .el-message .el-message__content,
+.mobile .el-message .el-icon-error
+{
+  font-size: 40px;
+}
 .night .el-message-box__btns button:nth-child(2) {
   background:linear-gradient(81deg,rgba(43,57,110,1) 0%,rgba(42,80,130,1) 100%);
 }
