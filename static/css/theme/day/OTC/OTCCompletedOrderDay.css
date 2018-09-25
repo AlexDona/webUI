@@ -51,14 +51,13 @@
 .otc-completed-order-box.day .completed-order-content .el-table th.is-leaf:first-of-type{
   border-top-left-radius: 5px;
   border-bottom-left-radius: 5px;
-  /* border-left: 1px solid #262F38; */
-  border-left: 1px solid #fff;
+  border-left: 1px solid #ECF1F8;
 }
 .otc-completed-order-box.day .completed-order-content .el-table th.is-leaf:nth-last-of-type(2){
   border-top-right-radius: 5px;
   border-bottom-right-radius: 5px;
   /* border-right: 1px solid #262F38; */
-  border-right: 1px solid #fff;
+  border-right: 1px solid #ECF1F8;
 }
 .otc-completed-order-box.day .completed-order-content .el-table--enable-row-transition .el-table__body td:first-of-type{
   border-top-left-radius: 5px;
