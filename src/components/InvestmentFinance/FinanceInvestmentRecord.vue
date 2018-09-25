@@ -255,8 +255,7 @@ export default {
       if (!(returnAjaxMessage(data, this, 0))) {
         return false
       } else {
-        // 重新请求币种接口刷新列表
-        console.log(this.investCurrnetPage)
+        // 重新请求币种接口刷新列表 把当前页码传过去
         this.getFinancialManagementList(this.investCurrnetPage)
       }
     },
