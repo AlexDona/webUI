@@ -459,7 +459,7 @@ export default {
       }
       let params = {
         country: this.userInfo.countryCode,
-        type: 'LOGIN_RECORD'
+        type: 'RETRIEVE_PASS'
       }
       switch (msgType) {
         case 0:

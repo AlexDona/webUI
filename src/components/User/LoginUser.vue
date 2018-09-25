@@ -748,7 +748,7 @@ export default {
 
       let params = {
         country: this.activeCountryCode,
-        type: 'LOGIN_RECORD'
+        type: 'LOGIN_CODE'
       }
       switch (loginType) {
         case 0:
