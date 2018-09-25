@@ -13,6 +13,7 @@
 .el-pagination.is-background .el-pager li
 {
   min-width: 0;
+  box-shadow: 0px 1px 1px 0px rgba(19,24,30,1);
 }
 .el-pagination button{
   /* width:20px;

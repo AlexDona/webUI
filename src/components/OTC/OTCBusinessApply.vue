@@ -75,7 +75,7 @@
         <div class="step">
           <div class="content">
             <h4 class="title">步骤一：准备资料</h4>
-            <p>1.请下载<a :href= 'downLoadUrl'>《商家申请资料模板》</a>，按照要求填写申请资料。</p>
+            <p>1.请下载<a :href= 'downLoadUrl' class="businessApplyModel">《商家申请资料模板》</a>，按照要求填写申请资料。</p>
             <p>2.录制视频资料，要求如下：</p>
             <p>手持本人身份证正面进行录制，保持录制过程中声音和影像都清晰。</p>
             <p>录制时要求诵读：本人（姓名），身份证号（身份证号码），我的资金来源合法可靠，自愿交易比特币等数字资产，本人充分了解数字货币及潜在风险，本人具有抗风险的能力并愿意承担一切风险。</p>
@@ -242,16 +242,17 @@ export default {
       if (!(returnAjaxMessage(data, this, 0))) {
         return false
       } else {
+        let getData = data.data.data
         // 返回数据正确的逻辑
-        this.successTimes = data.data.data.successTimes
-        this.coinName = data.data.data.coinName
-        this.count = data.data.data.count
-        this.downLoadUrl = data.data.data.downLoadUrl
+        this.successTimes = getData.successTimes
+        this.coinName = getData.coinName
+        this.count = getData.count
+        this.downLoadUrl = getData.downLoadUrl
         // 返回数据的状态 1 表示展示初次进入
-        if (data.data.data.status == 1) {
+        if (getData.status == 1) {
           this.applyStatus = 1
         // 状态 2 表示审核正在进行中
-        } else if (data.data.data.status == 2) {
+        } else if (getData.status == 2) {
           this.applyStatus = 2
         // 状态 3 表示审核通过
         } else {
@@ -623,6 +624,9 @@ export default {
         }
       }
     }
+  }
+  .businessApplyModel{
+    color: #D45858;
   }
 }
 </style>

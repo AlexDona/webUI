@@ -62,9 +62,6 @@
     border-top:1px solid #A9BED4;
     background:rgba(30,38,54,1);
 }
-.finance-box .nvest-list-body .el-table td, .el-table th.is-leaf{
-    border-bottom:1px solid #1d2531;
-}
 .finance-box .nvest-list-body .el-table--enable-row-hover .el-table__body tr:hover>td{
     background:#1E2636;
 }
