@@ -155,7 +155,6 @@ export default {
     require('../../../static/css/theme/day/NewsAndNotice/NewsAndNoticeDay.css')
     require('../../../static/css/theme/night/NewsAndNotice/NewsAndNoticeNight.css')
     await this.getAllNewsTypeList()
-    // console.log(this.newsTypeList)
     this.newsTypeId = this.newsTypeList[0].id
     await this.getNewsNoticeList()
     this.helpList.forEach(() => {
@@ -164,7 +163,12 @@ export default {
     console.log(this.newsTypeList)
     this.getAllTypeListNewsList()
   },
-  mounted () {},
+  mounted () {
+    console.log(this.newsDetailJumpId)
+    if (this.newsDetailJumpId) {
+      this.getDetailInfo(this.newsDetailJumpId)
+    }
+  },
   activited () {},
   update () {},
   beforeRouteUpdate () {},
@@ -258,7 +262,8 @@ export default {
     ...mapState({
       partnerId: state => state.common.partnerId,
       language: state => state.common.language,
-      theme: state => state.common.theme
+      theme: state => state.common.theme,
+      newsDetailJumpId: state => state.footerInfo.newsDetailJumpId
       // newsAndNoticeActiveName: state => state.footerInfo.newsAndNoticeActiveName
     }),
     noticeFilterList () {
@@ -282,7 +287,11 @@ export default {
       })
     }
   },
-  watch: {}
+  watch: {
+    newsDetailJumpId (newVal) {
+      console.log(newVal)
+    }
+  }
 }
 </script>
 <style scoped lang="scss" type="text/scss">
@@ -422,7 +431,6 @@ export default {
             width:100%;
             height:100%;
             margin-top:50px;
-            background-color: #1e2636;
             display:flex;
             padding:50px;
             overflow-y:auto;
@@ -543,6 +551,9 @@ export default {
                }
              }
            }
+           >.news-detail{
+             background-color: #1e2636;
+           }
          }
        }
      }
@@ -581,6 +592,9 @@ export default {
                     }
                   }
                 }
+              }
+              >.news-detail{
+                background-color: #fff;
               }
               &.help{
                 >.content-list{

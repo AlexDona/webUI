@@ -13,10 +13,13 @@
         v-for="(item,index) in noticeList"
         :key="index"
       >
-        <router-link to="/">
+        <span
+          class="cursor-pointer"
+          @click="jumpToNewsDetail(item)"
+        >
           <span class="type">【{{item.typeName}}】</span>
           <span>{{item.title}}</span>
-        </router-link>
+        </span>
       </div>
     </div>
     <div
@@ -35,7 +38,9 @@
 import IconFont from '../Common/IconFontCommon'
 import {getAllNewsNoticeListForHomePage} from '../../utils/api/home'
 import {returnAjaxMessage} from '../../utils/commonFunc'
-import {mapState} from 'vuex'
+import {createNamespacedHelpers, mapState} from 'vuex'
+const {mapMutations} = createNamespacedHelpers('footerInfo')
+
 export default {
   components: {
     IconFont
@@ -78,6 +83,14 @@ export default {
   update () {},
   beforeRouteUpdate () {},
   methods: {
+    ...mapMutations([
+      'CHANGE_NEWS_DETAIL_JUMP_ID'
+    ]),
+    jumpToNewsDetail (e) {
+      console.log(e)
+      this.CHANGE_NEWS_DETAIL_JUMP_ID(e.id)
+      this.$router.push({'path': '/NewsAndNoticeList'})
+    },
     // 获取新闻公告列表
     async getNewsNoticeList () {
       const params = {
