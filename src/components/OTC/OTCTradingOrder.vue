@@ -1011,7 +1011,7 @@ export default {
 }
 </script>
 <style scoped lang="scss" type="text/scss">
-@import "../../../static/css/scss/OTC/OTCTradingOrder.scss";
+@import "../../../static/css/scss/OTC/OTCCenter.scss";
 .otc-trading-order-box{
   >.otc-trading-order-content{
     min-height: 472px;

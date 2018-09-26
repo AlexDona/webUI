@@ -1,4 +1,4 @@
-import {get} from './axios'
+import {get, postWithURLencoded} from './axios'
 /**
  * 首页
  */
@@ -14,3 +14,7 @@ export const getNewsNoticeList = (params) => get('newsBulletin/pageQuery', param
 export const getAllNewsNoticeListForHomePage = (params) => get('newsBulletin/all', params)
 // 获取新闻详情
 export const getNewsDetail = (params) => get(`newsBulletin/${params}`)
+// 添加收藏
+export const addUserCollectionAjax = (params) => postWithURLencoded('collection', params)
+// 取消收藏
+export const removeCollectionAjax = (params) => postWithURLencoded('collection/cancel', params)

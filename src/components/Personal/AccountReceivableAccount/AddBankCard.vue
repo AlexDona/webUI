@@ -344,10 +344,11 @@ export default {
 }
 </script>
 <style scoped lang="scss">
-  @import "../../../../static/css/scss/Personal/AccountReceivableAccount/AddBankCard.scss";
+  @import "../../../../static/css/scss/Personal/IndexPersonal.scss";
   .add-bank {
     >.add-bank-main {
       width: 1100px;
+      height: 700px;
       margin: 60px auto 100px;
       >.add-bank-header {
         display: flex;

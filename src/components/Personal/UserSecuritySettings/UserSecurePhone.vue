@@ -635,7 +635,7 @@ export default {
 }
 </script>
 <style scoped lang="scss">
-  @import "../../../../static/css/scss/Personal/UserSecuritySettings/UserSecurePhone";
+  @import "../../../../static/css/scss/Personal/IndexPersonal";
   .set-phone {
     >.set-phone-main {
       width: 1100px;

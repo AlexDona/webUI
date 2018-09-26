@@ -183,7 +183,7 @@ export default {
 }
 </script>
 <style scoped lang="scss" type="text/scss">
-  @import "../../../static/css/scss/OTC/OTCEntrustOrder.scss";
+  @import "../../../static/css/scss/OTC/OTCCenter.scss";
   .otc-entrust-order-box {
     height: 500px;
     .otc-entrust-order-table {

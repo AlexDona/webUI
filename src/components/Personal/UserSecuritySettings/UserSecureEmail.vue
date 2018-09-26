@@ -147,6 +147,7 @@ export default {
       }
       let params = {
         address: this.emailAccounts, // 邮箱账号
+        // type: 'LOGIN_RECORD', // 类型
         country: this.activeCountryCode // 邮箱国籍
       }
       sendPhoneOrEmailCodeAjax(loginType, params, (data) => {
@@ -300,7 +301,7 @@ export default {
 }
 </script>
 <style scoped lang="scss">
-  @import "../../../../static/css/scss/Personal/UserSecuritySettings/UserSecureEmail";
+  @import "../../../../static/css/scss/Personal/IndexPersonal";
   .set-email {
     >.set-email-main {
       width: 1100px;

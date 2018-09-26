@@ -281,10 +281,11 @@ export default {
 }
 </script>
 <style scoped lang="scss">
-  @import "../../../../static/css/scss/Personal/AccountReceivableAccount/AddSetPaypal";
+  @import "../../../../static/css/scss/Personal/IndexPersonal";
   .add-payment {
     >.add-payment-main {
       width: 1100px;
+      height: 700px;
       margin: 60px auto 100px;
       >.add-payment-header {
         display: flex;

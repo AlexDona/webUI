@@ -228,7 +228,7 @@ export default {
 </script>
 <style scoped lang="scss" type="text/scss">
 // @import url(../../../static/css/scss/OTC/OTCCompletedOrder.scss);
-@import "../../../static/css/scss/OTC/OTCCompletedOrder.scss";
+@import "../../../static/css/scss/OTC/OTCCenter.scss";
 .otc-completed-order-box{
   >.completed-order-content{
     min-height: 500px;

@@ -19,7 +19,7 @@
             <li class="nav-item">
               <router-link to="/TradeCenter">
                 <span>币币交易</span>
-                <!-- <span>{{$t('M.commonSuccess')}}</span> -->
+                 <!--<span>{{$t('M.commonSuccess')}}</span>-->
               </router-link>
             </li>
             <li

@@ -14,8 +14,10 @@ const state = {
     legislationExplainData: {}, // 法律声明
     privacyClauseData: {}, // 隐私条款
     APIDocumentData: {}, // API文档
-    rateData: {} // 费率
+    rateData: {}, // 费率
+    newsDetailJumpId: '' // 首页跳转公告id
   },
+  // news
   end: ''// 占位
 }
 

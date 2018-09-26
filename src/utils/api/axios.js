@@ -6,7 +6,7 @@ import axios from 'axios'
 import store from '../../vuex'
 // import router from '../../router/index'
 // import {getStoreWithJson} from '../index'
-
+// import Vue from 'vue'
 let util = {}
 util.ajax = axios.create({
   baseURL: apiCommonUrl,
@@ -28,27 +28,10 @@ util.ajax.interceptors.request.use((config) => {
 
 util.ajax.interceptors.response.use(
   response => {
-    // console.log(response)
     return response
   },
   error => {
     console.dir(error)
-    if (error.response) {
-      switch (error.response.status) {
-        case 401:
-        // error.response.data.msg = '您的账号已在其他终端登录，如非本人操作，则密码可能已泄露，请重置密码！'
-        // 返回 401 清除token信息并跳转到登录页面
-        //   localStorage.clear()
-        //   store.commit('user/USER_LOGOUT')
-        //   router.replace({
-        //     path: '/login',
-        //     query: {
-        //       redirect: router.currentRoute.fullPath
-        //     }
-        //   })
-        // return Promise.reject("您的账号已在其他终端登录，如非本人操作，则密码可能已泄露，请重置密码！")
-      }
-    }
     return error.response // 返回接口返回的错误信息
   })
 

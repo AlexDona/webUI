@@ -5,7 +5,7 @@
     background-color: #eee;
   }
   .otc-business-apply-box.night .el-checkbox__inner::after{
-    border: 1px solid #1F2F47;
+    /* border: 1px solid #1F2F47; */
   }
   .otc-business-apply-box.night .el-dialog__body{
     color: #8494A6;

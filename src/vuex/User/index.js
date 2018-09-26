@@ -27,8 +27,6 @@ const state = {
   disabledOfPhoneBtn: false, // 短信验证码按钮可用状态
   disabledOfOldPhoneBtn: false, // 旧短信验证码按钮可用状态
   disabledOfEmailBtn: false, // 邮箱验证码按钮可用状态
-  disabledOfMobilePhoneBtn: false, // 旧短信验证码按钮可用状态
-  disabledOfMobileEmailBtn: false, // 邮箱验证码按钮可用状态
   end: '' // 占位
 }
 

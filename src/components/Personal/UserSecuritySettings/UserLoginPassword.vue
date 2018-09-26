@@ -139,10 +139,12 @@ export default {
   beforeRouteUpdate () {},
   methods: {
     ...mapMutations([
-      'CHANGE_USER_CENTER_ACTIVE_NAME'
+      'CHANGE_USER_CENTER_ACTIVE_NAME',
+      'CHANGE_REF_SECURITY_CENTER_INFO'
     ]),
     // 点击返回上个页面
     returnSuperior () {
+      this.CHANGE_REF_SECURITY_CENTER_INFO(true)
       this.$router.push({path: '/PersonalCenter'})
       this.CHANGE_USER_CENTER_ACTIVE_NAME('security-center')
       // this.CHANGE_USER_CENTER_ACTIVE_NAME('security-center')
@@ -259,7 +261,7 @@ export default {
 }
 </script>
 <style scoped lang="scss">
-  @import "../../../../static/css/scss/Personal/UserSecuritySettings/UserloginPassword";
+  @import "../../../../static/css/scss/Personal/IndexPersonal";
   .login-password {
     >.login-password-main {
       width: 1100px;

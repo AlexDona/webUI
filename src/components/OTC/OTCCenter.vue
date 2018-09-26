@@ -16,10 +16,12 @@
             @change="toggleBuyOrSellStyle"
           >
             <el-radio-button label="onlineBuy">
-              在线购买
+              <!-- 在线购买 -->
+              {{ $t('M.otc_index_online_buy') }}
             </el-radio-button>
             <el-radio-button label="onlineSell">
-              在线出售
+              <!-- 在线出售 -->
+              {{ $t('M.otc_index_online_sell') }}
             </el-radio-button>
           </el-radio-group>
         </div>
@@ -34,14 +36,16 @@
                 class="otc-i-wan"
                 v-show="OTCBuySellStyle === 'onlineBuy'"
               >
-                我要购买 ：
+                <!-- 我要购买 ： -->
+              {{ $t('M.otc_index_wantTo_buy') }} :
               </span>
               <!-- 我要出售 -->
               <span
                 class="otc-i-wan"
                 v-show="OTCBuySellStyle === 'onlineSell'"
               >
-                我要出售 ：
+                <!-- 我要出售 ： -->
+                {{ $t('M.otc_index_wantTo_sell') }} :
               </span>
               <div
                 class="otc-filtrate-style"
@@ -65,10 +69,11 @@
                   class="currency-style-icon"
                   iconName="icon-jinbi"
                 />
+                <!-- 货币类型 -->
                 <el-select
                   v-model="activitedCurrencyId"
                   @change="changeCurrencyId"
-                  placeholder="货币类型"
+                  :placeholder="$t('M.otc_index_currency_type')"
                 >
                   <el-option
                     v-for="(item,index) in availableCurrencyId"
@@ -91,7 +96,7 @@
                 />
                 <el-select
                   v-model="value"
-                  placeholder="支付方式"
+                  :placeholder="$t('M.otc_index_Payment_method')"
                   @change="payWayChangeValue"
                 >
                   <el-option
@@ -109,21 +114,22 @@
                 type="primary"
                 @click="toPublishOrder"
               >
-                发布订单
+                <!-- 发布订单 -->
+              {{ $t('M.otc_release_order') }}
               </el-button>
             </div>
           </div>
           <!--商户列表表格部分-->
           <div class="otc-merchant-list">
-            <!-- 表格信息 -->
+            <!-- 表格信息 暂时无数据-->
             <el-table
               :data="onlineBuySellTableList"
               style="width: 100%"
-              empty-text="暂无数据"
+              :empty-text="$t('M.otc_index_Temporary_data')"
             >
               <!-- 商户 -->
               <el-table-column
-                label="商户"
+                :label="$t('M.otc_index_Merchant')"
               >
                 <template slot-scope = "s">
                   <div>
@@ -140,7 +146,7 @@
               </el-table-column>
               <!-- 信用 -->
               <el-table-column
-                label="成交率"
+                :label="$t('M.otc_index_turnover')"
               >
                 <template slot-scope = "s">
                   <div v-if="s.row.successOrderTimes === 0 || s.row.tradeTimes === 0">0%</div>
@@ -240,7 +246,8 @@
                     v-if="OTCBuySellStyle === 'onlineBuy'"
                     @click="toOnlineBuy(s.row.id,s.row.coinId,s.row.userId)"
                   >
-                    购买
+                  <!-- 购买 -->
+                   {{$t('OTC.otc_index_buy')}}
                   </el-button>
                   <el-button
                     type="success"
@@ -248,7 +255,8 @@
                     v-if="OTCBuySellStyle === 'onlineSell'"
                     @click="toOnlineSell(s.row.id,s.row.coinId,s.row.userId)"
                   >
-                    出售
+                    <!-- 出售 -->
+                   {{$t('OTC.otc_index_sell')}}
                   </el-button>
                 </template>
               </el-table-column>
@@ -274,7 +282,7 @@
             class="more"
             @click="queryMoreOrder"
           >
-            查询更多
+            <!-- 查询更多 -->
           </span>
         <!-- </div> -->
         <el-tabs
@@ -292,7 +300,8 @@
               <IconFontCommon
                 iconName="icon-shalou"
               />
-              交易中订单
+              <!-- 交易中的订单 -->
+              {{$t('M.otc_trading')}}
             </span>
             <OTCTradingOrder ref = "trading"></OTCTradingOrder>
           </el-tab-pane>
@@ -306,7 +315,8 @@
               <IconFontCommon
                 iconName="icon-msnui-task-complete"
               />
-              已完成订单
+              <!-- 已完成订单 -->
+              {{$t('M.otc_stocks')}}
             </span>
             <OTCCompletedOrder ref = "complete"></OTCCompletedOrder>
           </el-tab-pane>
@@ -320,7 +330,8 @@
               <IconFontCommon
                 iconName="icon-cancel_order"
               />
-              已取消订单
+              <!-- 已取消订单 -->
+              {{$t('M.otc_canceled')}}
             </span>
             <OTCCanceledOrder ref = "canceled"></OTCCanceledOrder>
           </el-tab-pane>
@@ -334,7 +345,8 @@
               <IconFontCommon
                 iconName="icon-dongjie"
               />
-              冻结中订单
+              <!-- 冻结中订单 -->
+              {{$t('M.otc_freezing')}}
             </span>
             <OTCFreezingOrder ref = "freezing"></OTCFreezingOrder>
           </el-tab-pane>
@@ -348,7 +360,8 @@
               <IconFontCommon
                 iconName="icon-daohang2"
               />
-              委托订单
+              <!-- 委托订单 -->
+              {{$t('M.otc_entrust')}}
             </span>
             <OTCEntrustOrder ref = "entrust"></OTCEntrustOrder>
           </el-tab-pane>
@@ -371,8 +384,8 @@ import OTCCanceledOrder from './OTCCanceledOrder'
 import OTCFreezingOrder from './OTCFreezingOrder'
 import OTCEntrustOrder from './OTCEntrustOrder'
 import {returnAjaxMessage, reflashUserInfo} from '../../utils/commonFunc'
-// import {mapState, mapMutations} from 'vuex'
 import {createNamespacedHelpers, mapState} from 'vuex'
+
 const {mapMutations} = createNamespacedHelpers('OTC')
 export default {
   components: {
@@ -514,19 +527,19 @@ export default {
         // 未设置交易密码、未实名认证，未高级认证，不能进行交易
         if (!this.userInfo.payPassword) {
           this.$message({
-            message: '请先去个人中心设置交易密码！',
+            message: this.$t('M.otc_index_js'), // 去个人中心设置交易密码
             type: 'error'
           })
           return false
         } else if (!this.userInfo.realname) {
           this.$message({
-            message: '请先去个人中心完成实名认证！',
+            message: this.$t('M.otc_index_digo_tips'), // 去个人中心完成实名认证
             type: 'error'
           })
           return false
         } else if (!(this.userInfo.advancedAuth === 'pass')) {
           this.$message({
-            message: '请先去个人中心完成高级认证！',
+            message: this.$t('M.otc_index_digo_tips_pass'), // 去个人中心完成高级认证
             type: 'error'
           })
           return false
@@ -548,26 +561,26 @@ export default {
         // 未设置交易密码、未实名认证，未高级认证，不能进行交易
         if (!this.userInfo.payPassword) {
           this.$message({
-            message: '请先去个人中心设置交易密码！',
+            message: this.$t('M.otc_index_js'), // 去个人中心设置交易密码
             type: 'error'
           })
           return false
         } else if (!this.userInfo.realname) {
           this.$message({
-            message: '请先去个人中心完成实名认证！',
+            message: this.$t('M.otc_index_digo_tips'), // 去个人中心完成实名认证
             type: 'error'
           })
           return false
         } else if (!(this.userInfo.advancedAuth === 'pass')) {
           this.$message({
-            message: '请先去个人中心完成高级认证！',
+            message: this.$t('M.otc_index_digo_tips_pass'), // 去个人中心完成高级认证
             type: 'error'
           })
           return false
         } else {
           if (userId === this.userInfo.id) {
             this.$message({
-              message: '禁止自买自卖！',
+              message: this.$t('M.otc_index_forbided_buyand_sell'), // 禁止自买自卖
               type: 'error'
             })
             return false
@@ -590,26 +603,26 @@ export default {
         // 未设置交易密码、未实名认证，未高级认证，不能进行交易
         if (!this.userInfo.payPassword) {
           this.$message({
-            message: '请先去个人中心设置交易密码！',
+            message: this.$t('M.otc_index_js'), // 去个人中心设置交易密码
             type: 'error'
           })
           return false
         } else if (!this.userInfo.realname) {
           this.$message({
-            message: '请先去个人中心完成实名认证！',
+            message: this.$t('M.otc_index_digo_tips'), // 去个人中心完成实名认证
             type: 'error'
           })
           return false
         } else if (!(this.userInfo.advancedAuth === 'pass')) {
           this.$message({
-            message: '请先去个人中心完成高级认证！',
+            message: this.$t('M.otc_index_digo_tips_pass'), // 去个人中心完成高级认证
             type: 'error'
           })
           return false
         } else {
           if (userId === this.userInfo.id) {
             this.$message({
-              message: '禁止自买自卖！',
+              message: this.$t('M.otc_index_forbided_buyand_sell'), // 禁止自买自卖
               type: 'error'
             })
             return false
@@ -889,7 +902,7 @@ export default {
   >.otc-center-content{
     width: 1150px;
     margin: 0 auto;
-    margin-top: 80px;
+    margin-top: 107px;
     >.otc-online-trading{
       >.otc-online-buy-and-sell-button{
         height: 45px;

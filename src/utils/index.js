@@ -198,8 +198,8 @@ export function amendPrecision (num1, num2, symbol) {
   let num1PointLength = ((num1 + '').split('.')[1] || []).length
   let num2PointLength = ((num2 + '').split('.')[1] || []).length
   let maxPointLength = num1PointLength > num2PointLength ? num1PointLength : num2PointLength
-  let newNum1 = Math.pow(10, maxPointLength) * num1
-  let newNum2 = Math.pow(10, maxPointLength) * num2
+  let newNum1 = Math.round(Math.pow(10, maxPointLength) * num1)
+  let newNum2 = Math.round(Math.pow(10, maxPointLength) * num2)
   switch (symbol) {
     case '*':
       return scientificToNumber(newNum1 * newNum2 / Math.pow(Math.pow(10, maxPointLength), 2))

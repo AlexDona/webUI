@@ -16,7 +16,10 @@ export const personal = {
   'user_withdrawal_hint3': '充值经过1个确认后，才允许提现；',
   'user_withdrawal_hint4': '可提现金额≤账户可用资产-未确认的数字资产。',
   'user_no_transaction_password': '您还未设置交易密码请先设置交易密码在进行提币',
-  'user_grade_membership': '会员等级'
+  'user_grade_membership': '会员等级',
+  'user_or': '或',
+  'user_current_total': '当前资产总估值',
+  'user_attention': '注：资产总估仅提供参考，请以单项资金为准'
   // 账单明细
   // 列表记录
   // 提币地址

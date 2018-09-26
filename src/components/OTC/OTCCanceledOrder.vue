@@ -167,7 +167,7 @@ export default {
 }
 </script>
 <style scoped lang="scss" type="text/scss">
-  @import "../../../static/css/scss/OTC/OTCCanceledOrder.scss";
+  @import "../../../static/css/scss/OTC/OTCCenter.scss";
   .otc-canceled-order-box{
     >.canceled-order-content{
       min-height: 500px;

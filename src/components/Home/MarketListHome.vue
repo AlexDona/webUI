@@ -56,17 +56,6 @@
                           <span>{{item.area}}</span>
                           <span v-show="item.id!==collectAreaId&&item.id!==searchAreaId">交易区</span>
                         </div>
-                        <!--查看更多-->
-                        <!--<div class="bottom">-->
-                          <!--<el-button-->
-                            <!--type="default"-->
-                            <!--class="more-btn"-->
-                            <!--@click="itemViewMore(item.id,item.content)"-->
-                          <!--&gt;-->
-                            <!--{{itemViewMoreBtnText}}-->
-                            <!--<i class="el-icon-arrow-down el-icon&#45;&#45;right"></i>-->
-                          <!--</el-button>-->
-                        <!--</div>-->
                       </div>
                     </transition>
                     <!--反面-->
@@ -117,18 +106,6 @@
                             </li>
                           </ul>
                         </div>
-                        <!--查看更多按钮-->
-                        <!--<div class="more-btn">-->
-                          <!--<el-button-->
-                            <!--type="default"-->
-                            <!--class="more-btn"-->
-                            <!--@click="itemViewMore(item.id,item.content)"-->
-                          <!--&gt;-->
-                          <!--&gt;-->
-                            <!--{{itemViewMoreBtnText}}-->
-                            <!--<i class="el-icon-arrow-down el-icon&#45;&#45;right"></i>-->
-                          <!--</el-button>-->
-                        <!--</div>-->
                       </div>
                     </transition>
                   </div>
@@ -397,11 +374,15 @@ import {
   setStore,
   keep2Num
 } from '../../utils'
-// import {getPartnerList} from '../../utils/api/home'
+// import {
+//   addUserCollectionAjax,
+//   removeCollectionAjax
+// } from '../../utils/api/home'
 import {
   returnAjaxMessage,
   // splitSocketParams
-  getPartnerListAjax
+  getPartnerListAjax,
+  toggleUserCollection
 } from '../../utils/commonFunc'
 import {mapState, createNamespacedHelpers} from 'vuex'
 const { mapMutations } = createNamespacedHelpers('home')
@@ -453,6 +434,7 @@ export default{
     }
   },
   async created () {
+    // console.log(this.loginStep1Info)
     require('../../../static/css/list/Home/MarketListHome.css')
     require('../../../static/css/theme/day/Home/MarketListHomeDay.css')
     require('../../../static/css/theme/night/Home/MarketListHomeNight.css')
@@ -587,6 +569,11 @@ export default{
         'content': `market.ticker.${this.partnerId}.${plateId}.0.i18nCode`,
         'id': `market_001`
       })
+      this.socket.send({
+        'tag': type,
+        'content': `market.optionalarea.${this.partnerId}.${this.userId}.ticker`,
+        'id': `market_002`
+      })
     },
     // 切换板块
     changeTab () {
@@ -708,22 +695,29 @@ export default{
       this.moreBtnText = this.tabContentMoreStatus ? '收起' : '查看更多交易区'
     },
     // 切换收藏
-    toggleCollect (id, status, row) {
+    async toggleCollect (id, status, row) {
       console.log(row)
       status = Boolean(status)
       // this.collectStatusList[id] = Boolean(status)
       this.$set(this.collectStatusList, id, status)
-      console.log(this.collectStatusList)
+      // console.log(this.collectStatusList)
       if (status) {
         //  添加收藏
         this.collectList.push(row)
+        console.log(this.isLogin)
+        if (this.isLogin) {
+          await toggleUserCollection('add', row.tradeId, this)
+        }
       } else {
+        let chooseId
         // 取消收藏
         this.collectList.forEach((item, index) => {
           if (item.id == row.id) {
             this.collectList.splice(index, 1)
+            chooseId = item.tradeId
           }
         })
+        await toggleUserCollection('remove', chooseId, this)
       }
       setStore('collectList', this.collectList)
       this.CHANGE_COLLECT_LIST(this.collectList)
@@ -789,10 +783,13 @@ export default{
       plateList: state => state.common.plateList, // 板块列表
       partnerId: state => state.common.partnerId, // 商户id
       activeSymbol: state => state.common.activeSymbol,
+      isLogin: state => state.user.isLogin,
       activeTradeArea: state => state.common.activeTradeArea,
       currencyRateList: state => state.common.currencyRateList, // 折算货币列表
-      activeConvertCurrencyObj: state => state.common.activeConvertCurrencyObj // 目标货币
-
+      activeConvertCurrencyObj: state => state.common.activeConvertCurrencyObj, // 目标货币
+      loginStep1Info: state => state.user.loginStep1Info,
+      userId: state => state.user.loginStep1Info.userId,
+      userInfo: state => state.user.loginStep1Info.userInfo
     })
   },
   watch: {

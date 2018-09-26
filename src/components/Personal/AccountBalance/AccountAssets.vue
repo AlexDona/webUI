@@ -9,13 +9,15 @@
       <div class="account-assets-box margin-top16">
         <div>
           <header class="account-assets-header display-flex personal-height40 line-height40">
+            <!--我的资产-->
             <div class="header-flex header-left flex1 padding-left23 font-size16 font-weight600">
-              我的资产
+              {{ $t('M.comm_user_asset_information') }}
             </div>
             <div class="header-flex header-right flex1 padding-right23 display-flex">
               <div class="header-right-left float-left flex1">
                 <div class="header-right-text text-align-r">
-                  隐藏资产为0的币种
+                  <!--隐藏资产为0的币种-->
+                  {{ $t('M.user_hidden_assets') }}
                   <p class="float-right header-right-show margin-left10">
                     <img
                       v-show="showStatusButton"
@@ -42,8 +44,8 @@
                   type="text"
                   class="header-right-search border-radius2 padding-left25 font-size12"
                   v-model="searchKeyWord"
+                  @keyup="statusSearch"
                 >
-                <!--@keyup="statusSearch"-->
               </p>
             </div>
           </header>
@@ -58,28 +60,28 @@
                 <div
                   class="flex1"
                 >
-                  币种
+                  {{ $t('M.comm_currency') }}
                 </div>
                 <div
                   class="flex1"
                 >
-                  总数量
+                  {{ $t('M.comm_total_sum') }}{{ $t('M.comm_count') }}
                 </div>
                 <div
 
                   class="flex1"
                 >
-                  冻结数量
+                  {{ $t('M.comm_freeze') }}{{ $t('M.comm_count') }}
                 </div>
                 <div
                   class="flex1"
                 >
-                  可用数量
+                  {{ $t('M.comm_usable') }}{{ $t('M.comm_count') }}
                 </div>
                 <div
                   class="flex1"
                 >
-                  资产估值(BTC)
+                  {{ $t('M.user_asset_valuation') }}(BTC)
                   <div class="icon-caret">
                     <i class="el-icon-caret-bottom caret-text cursor-pointer"></i>
                     <i class="el-icon-caret-top caret-text1 cursor-pointer"></i>
@@ -88,12 +90,12 @@
                 <div
                   class="flex1 text-align-c"
                 >
-                  操作
+                  {{ $t('M.comm_operation') }}
                 </div>
               </div>
               <div
                 class="table-tr font-size12 paddinglr20"
-                v-for="(assetItem, index) in filteredData1"
+                v-for="(assetItem, index) in withdrawDepositList"
                 :key="index"
               >
                 <div class="table-box display-flex">
@@ -118,35 +120,40 @@
                       class="table-charge-money flex1 cursor-pointer"
                       @click.prevent="showRechargeBox(assetItem.coinId, assetItem.coinName, index)"
                     >
-                      充币
+                      <!--充币-->
+                      {{ $t('M.comm_charge_money') }}
                     </div>
                     <div
                       v-else
                       class="money-color flex1 cursor-pointer"
-                      title="充值暂停，钱包维护中"
+                      :title="$t('M.user_suspended')"
                     >
-                      充币
+                      <!--充币-->
+                      {{ $t('M.comm_charge_money') }}
                     </div>
                     <div
                       v-if="withdrawDepositList[index].isWithdraw === 'true'"
                       class="table-mention-money flex1 cursor-pointer"
                       @click.prevent="mentionMoneyButton(assetItem.coinId, assetItem.coinName, index)"
                     >
-                      提币
+                      <!--提币-->
+                      {{ $t('M.comm_mention_money') }}
                     </div>
                     <div
                       v-else
                       class="money-color flex1 cursor-pointer"
-                      title="暂停提币"
+                      :title="$t('M.user_pause_mention')"
                     >
-                      提币
+                      <!--提币-->
+                      {{ $t('M.comm_mention_money') }}
                     </div>
                     <div
                       class="table-deal flex1 cursor-pointer text-align-c"
                       @mouseenter="enter(assetItem.coinId, index)"
                       @mouseleave="leave()"
                     >
-                      交易
+                      <!--交易-->
+                      {{ $t('M.comm_deal') }}
                       <div
                         class="type-transaction border-radius4"
                         v-show="seen&&index==current"
@@ -176,7 +183,9 @@
                       <p class="triangle"></p>
                       <div class='recharge-content'>
                         <p class="recharge-content-hint font-size12">
-                          <span>{{ chargeMoneyName }}</span>充值地址
+                          <span>{{ chargeMoneyName }}</span>
+                          <!--充值地址-->
+                          {{ $t('M.comm_charge_recharge') }}
                         </p>
                         <div
                           class="input-box"
@@ -192,13 +201,17 @@
                             v-clipboard:success="onCopy"
                             v-clipboard:error="onError"
                           >
-                            复制地址
+                            <!--复制地址-->
+                            {{ $t('M.comm_copy') }}{{ $t('M.comm_site') }}
                           </span>
                         </div>
                         <div class="recharge-content-title font-size12 margin-top9 float-left">
-                          <p>* 禁止充值除{{ chargeMoneyName }}之外的其他资产，任何非{{ chargeMoneyName }}资产充值将不可找回</p>
-                          <p>* 往该地址充值，汇款完成，等待网络自动确认（4个确认）后系统自动到账</p>
-                          <p>* 为了快速到账，充值时可以适当提高网络手续费</p>
+                          <!--禁止充值除 之外的其他资产，任何非 资产充值将不可找回-->
+                          <!--往该地址充值，汇款完成，等待网络自动确认（4个确认）后系统自动到账-->
+                          <!--为了快速到账，充值时可以适当提高网络手续费-->
+                          <p>* {{ $t('M.user_recharge_hint1') }}{{ chargeMoneyName }}{{ $t('M.user_recharge_hint2') }}{{ chargeMoneyName }}{{ $t('M.user_recharge_hint3') }}</p>
+                          <p>* {{ $t('M.user_recharge_hint4') }}</p>
+                          <p>* {{ $t('M.user_recharge_hint5') }}</p>
                         </div>
                       </div>
                       <div class='recharge-content-right flex1'>
@@ -214,7 +227,8 @@
                           class="code-list text-align-r float-right cursor-pointer font-size12"
                           @click.prevent="stateRechargeRecord"
                         >
-                          充值记录
+                          <!--充值记录-->
+                          {{ $t('M.comm_charge_recharge') }}{{ $t('M.comm_record') }}
                         </p>
                       </div>
                     </div>
@@ -229,7 +243,8 @@
                           <div class="flex-box padding-top10">
                             <p class="left-flex-hint">
                               {{ chargeMoneyName }}
-                              提币地址
+                              <!--提币地址-->
+                              {{ $t('M.comm_mention_money') }}{{ $t('M.comm_site') }}
                             </p>
                             <el-select
                               v-model="mentionAddressValue"
@@ -247,12 +262,14 @@
                               class="new-address cursor-pointer"
                               @click.prevent="stateMentionAddress"
                             >
-                              新增
+                              <!--新增-->
+                              {{ $t('M.comm_newly_increased') }}
                             </span>
                           </div>
                           <div class="flex-box padding-top20">
                             <p class="left-flex-hint">
-                              手续费
+                              <!--手续费-->
+                              {{ $t('M.comm_service_charge') }}
                             </p>
                             <input
                               type="text"
@@ -275,7 +292,10 @@
                         </div>
                         <div class="count-box flex1 font-size12">
                           <div class="count-flex-box padding-top10">
-                            <p class="content-flex-hint">数量</p>
+                            <p class="content-flex-hint">
+                              <!--数量-->
+                              {{ $t('M.comm_count') }}
+                            </p>
                             <input
                               type="text"
                               class="count-flex-input border-radius2 paddinglr15 box-sizing text-align-r"
@@ -284,7 +304,10 @@
                               @input="changeInputValue('rechargeCount', index, pointLength)"
                             >
                             <p class="count-flex-text text-align-r">
-                              <span>限额：</span>
+                              <span>
+                                <!--限额：-->
+                                {{ $t('M.comm_limit') }}：
+                              </span>
                               <span>
                                 {{serviceChargeList.minWithdraw}}
                                 -
@@ -293,7 +316,10 @@
                             </p>
                           </div>
                           <div class="count-flex-box padding-top20">
-                            <p class="content-flex-hint">到账数量</p>
+                            <p class="content-flex-hint">
+                              <!--到账数量-->
+                              {{ $t('M.comm_account') }}{{ $t('M.comm_count') }}
+                            </p>
                             <input
                               type="text"
                               disabled
@@ -304,24 +330,31 @@
                         </div>
                       </div>
                       <div class="text-info flex1 font-size12">
+                        <!--提现费率规则：-->
+                        <!--为了用户资金安全，平台可能会电话确认您的提币操作，请注意接听；-->
+                        <!--充值经过1个确认后，才允许提现；-->
+                        <!--可提现金额≤账户可用资产-未确认的数字资产。-->
                         <p class="currency-rule">
-                          <span>{{ chargeMoneyName }}</span>提现费率规则：
+                          <span>{{ chargeMoneyName }}</span>
+                          {{ $t('M.user_withdrawal_hint1') }}：
                         </p>
                         <p class="prompt-message">
-                          * 为了用户资金安全，平台可能会电话确认您的提币操作，请注意接听；
+                          * {{ $t('M.user_withdrawal_hint2') }}
                         </p>
                         <p class="prompt-message">
-                          * <span>{{ chargeMoneyName }}</span>充值经过1个确认后，才允许提现；
+                          * <span>{{ chargeMoneyName }}</span>
+                          {{ $t('M.user_withdrawal_hint3') }}
                         </p>
                         <p class="prompt-message">
-                          * 可提现金额≤账户可用资产-未确认的数字资产。
+                          * {{ $t('M.user_withdrawal_hint4') }}
                         </p>
                         <p class="mention-button">
                           <button
                             class="font-size12 submit-but border-radius4 cursor-pointer"
                             @click.prevent="moneyConfirmState"
                           >
-                            提币
+                            <!--提币-->
+                            {{ $t('M.comm_mention_money') }}
                           </button>
                           <span
                             class="float-right cursor-pointer"
@@ -333,21 +366,24 @@
                           >
                             {{errorMessage}}
                           </div>
-                        提币记录
+                        <!--提币记录-->
+                            {{ $t('M.comm_mention_money') }}{{ $t('M.comm_record') }}
                       </span>
                         </p>
                       </div>
+                      <!--提币-->
                       <el-dialog
-                        title="提币"
+                        :label="$t('m.comm_mention_money')"
                         :visible.sync="mentionMoneyConfirm"
                       >
                         <el-form
                           :label-position="labelPosition"
                         >
                           <!--手机已认证-->
+                          <!--手机验证-->
                           <el-form-item
                             v-if="securityCenter.isPhoneEnable"
-                            label="手机验证"
+                            :label="$t('m.comm_code_phone')"
                           >
                             <input
                               class="content-input padding-l15 box-sizing"
@@ -362,9 +398,10 @@
                           <!--手机未认证-->
                           <span v-else></span>
                           <!--邮箱已认证-->
+                          <!--邮箱验证-->
                           <el-form-item
                             v-if="securityCenter.isMailEnable"
-                            label="邮箱验证"
+                            :label="$t('m.comm_code_email')"
                           >
                             <input
                               class="content-input padding-l15 box-sizing"
@@ -379,9 +416,10 @@
                           <!--邮箱未认证-->
                           <span v-elsee></span>
                           <!--谷歌已认证-->
+                          <!--谷歌验证-->
                           <el-form-item
                             v-if="securityCenter.isGoogleEnable"
-                            label="谷歌验证"
+                            :label="$t('m.comm_code_google')"
                           >
                             <input
                               class="content-input input-google padding-l15 box-sizing"
@@ -390,7 +428,10 @@
                           </el-form-item>
                           <!--谷歌未认证-->
                           <span v-else></span>
-                          <el-form-item label="交易密码">
+                          <!--交易密码-->
+                          <el-form-item
+                            :label="$t('m.comm_password')"
+                          >
                             <input
                               type="password"
                               class="content-input input-google padding-l15 box-sizing"
@@ -406,17 +447,20 @@
                             type="primary"
                             @click.prevent="submitMentionMoney"
                           >
-                            确 定
+                            <!--确 定-->
+                            {{ $t('M.comm_confirm') }}
                           </el-button>
                         </div>
                       </el-dialog>
+                      <!--设置交易密码-->
                       <el-dialog
-                        title="设置交易密码"
+                        :title="$t('m.comm_set') + $t('m.comm_password')"
                         :visible.sync="dialogVisible"
                         center
                       >
                         <span class="info text-align-c display-inline-block">
-                          您还未设置交易密码请先设置交易密码在进行提币
+                          <!--您还未设置交易密码请先设置交易密码在进行提币-->
+                          {{ $t('m.user_no_transaction_password') }}
                         </span>
                         <span
                           slot="footer"
@@ -427,13 +471,15 @@
                             type="primary"
                             @click.prevent="confirm"
                           >
-                            确 定
+                            <!--确 定-->
+                            {{ $t('m.comm_confirm') }}
                           </button>
                           <button
                             class="btn border-radius4 cursor-pointer"
                             @click.prevent="dialogVisible = false"
                           >
-                            取 消
+                            <!--取 消-->
+                            {{ $t('m.comm_cancel') }}
                           </button>
                         </span>
                       </el-dialog>
@@ -466,7 +512,8 @@ import IconFontCommon from '../../Common/IconFontCommon'
 import CountDownButton from '../../Common/CountDownCommon'
 import VueClipboard from 'vue-clipboard2'
 import {
-  formatNumberInput
+  formatNumberInput,
+  amendPrecision
 } from '../../../utils'
 import { createNamespacedHelpers, mapState } from 'vuex'
 import {
@@ -501,8 +548,8 @@ export default {
       labelPosition: 'top',
       activeNames: ['1'],
       errorMessage: '',
-      showStatusButton: false, // 显示币种
-      hideStatusButton: true, // 隐藏币种// 显示所有/余额切换，
+      showStatusButton: true, // 显示币种
+      hideStatusButton: false, // 隐藏币种// 显示所有/余额切换，
       closePictureSrc: require('../../../assets/user/wrong.png'), // 显示部分
       openPictureSrc: require('../../../assets/user/yes.png'), // 全显示
       searchKeyWord: '', // 搜索关键字
@@ -568,8 +615,6 @@ export default {
     require('../../../../static/css/theme/night/Personal/AccountBalance/AccountAssetsNight.css')
     // 刚进页面时候 个人资产列表展示
     this.getAssetCurrenciesList()
-    // this.getUserRefreshUser()
-    // this.amendPrecision
   },
   mounted () {},
   activited () {},
@@ -595,14 +640,6 @@ export default {
       }
       this.getAssetCurrenciesList(e)
     },
-    // 根据coinid跳转交易信息
-    // tradingId (name, index, activeSymbol) {
-    //   console.log(this.parameterSymbol)
-    //   this.currencyTradingId = name
-    //   this.$store.commit('common/CHANGE_ACTIVE_SYMBOL', {
-    //     activeSymbol
-    //   })
-    // },
     // 跳转当前交易对
     changeActiveSymbol (e) {
       console.log(e)
@@ -692,9 +729,9 @@ export default {
       this.amount = this.$refs.rechargeCount[index].value
       // 输入数量之后显示在到账数量框中显示,在手续费中输入手续费并且以输入数量之后减去的值显示在到账数量
       // 先引入方法 用变量接收 再调用方法 然后传入参数 得到结构 再做逻辑渲染判断
-      this.serviceChargeCount = Math.abs(this.$refs.rechargeCount[index].value - this.$refs.serviceCharge[index].value)
-      // this.amendPrecision(this.$refs.rechargeCount[index].value, this.$refs.serviceCharge[index].value, '-')
-      // console.log(this.amount)
+      this.serviceChargeCount = Math.abs(
+        amendPrecision(this.$refs.rechargeCount[index].value, this.$refs.serviceCharge[index].value, '-')
+      )
     },
     // 显示充值框
     showRechargeBox (id, name, index) {
@@ -715,9 +752,10 @@ export default {
     },
     // 显示提现框
     mentionMoneyButton (id, name, index) {
-      this.rechargeCount = ''
-      this.amount = ''
+      this.$refs.serviceCharge[index].value = ''
+      this.$refs.rechargeCount[index].value = ''
       this.serviceChargeCount = ''
+      console.log()
       this.mentionDialogVisible = true
       this.mentionMoneyAddressId = id
       this.mentionMoneyName = name
@@ -784,15 +822,13 @@ export default {
       })
     },
     // 调取后台接口 搜索关键字模糊查询
-    // statusSearch (ev) {
-    //   if (ev.keyCode == 13) {
-    //     this.getAssetCurrenciesList()
-    //   }
-    // },
+    statusSearch () {
+      this.getAssetCurrenciesList()
+    },
     /**
      * 刚进页面时候 个人资产列表展示
      */
-    async getAssetCurrenciesList (type, item) {
+    async getAssetCurrenciesList (type) {
       let data
       let params = {
         pageNum: this.currentPageForMyEntrust,
@@ -802,10 +838,10 @@ export default {
       }
       switch (type) {
         case 'all':
-          params.selectType = 'all'
+          params.selectType = 'noall'
           break
         case 'noall':
-          params.selectType = 'noall'
+          params.selectType = 'all'
           break
       }
       data = await assetCurrenciesList(params)
@@ -901,8 +937,9 @@ export default {
         })
         this.mentionMoneyConfirm = false
       } else if (!this.service) {
+        // 请输入手续费
         this.$message({
-          message: '请输入手续费',
+          message: this.$t('m.comm_please_enter') + this.$t('m.comm_service_charge'),
           type: 'error'
         })
         this.mentionMoneyConfirm = false
@@ -920,7 +957,7 @@ export default {
       this.stateSubmitAssets()
     },
     // 提交提币接口
-    async stateSubmitAssets () {
+    async stateSubmitAssets (index) {
       let data
       let param = {
         msgCode: this.phoneCode, // 短信验证码
@@ -939,6 +976,9 @@ export default {
         // 提币地址列表查询
         this.getAssetCurrenciesList()
         this.stateEmptyData()
+        this.$refs.serviceCharge[index].value = ''
+        this.$refs.rechargeCount[index].value = ''
+        this.serviceChargeCount = ''
       }
     },
     // 接口请求完成之后清空数据
@@ -960,7 +1000,7 @@ export default {
     //  点击复制
     onCopy (e) {
       // 已拷贝
-      let msg = '已拷贝'
+      let msg = this.$t('m.comm_have_been_copied')
       this.$message({
         type: 'success',
         message: msg
@@ -968,7 +1008,7 @@ export default {
     },
     onError (e) {
       // 拷贝失败，请稍后重试
-      let msg = '拷贝失败，请稍后重试'
+      let msg = this.$t('m.comm_copies_failure')
       this.$message({
         type: 'success',
         message: msg
@@ -1034,13 +1074,13 @@ export default {
         // sellname: "沃尔顿链"
         // sellsymbol: "WTC"
         // tradeId: "491725015746609152"
-        console.log(this.currencyTradingList)
-        console.log(this.area)
-        console.log(this.areaId)
-        console.log(this.id)
-        console.log(this.sellsymbol)
-        console.log(this.tradeId)
-        console.log(this.currencyTradingId)
+        // console.log(this.currencyTradingList)
+        // console.log(this.area)
+        // console.log(this.areaId)
+        // console.log(this.id)
+        // console.log(this.sellsymbol)
+        // console.log(this.tradeId)
+        // console.log(this.currencyTradingId)
       }
     }
   },
@@ -1048,26 +1088,27 @@ export default {
   computed: {
     ...mapState({
       theme: state => state.common.theme,
-      partnerId: state => state.common.partnerId,
+      language: state => state.common.language, // 当前选中语言
+      partnerId: state => state.common.partnerId, // 商户ID
       userInfo: state => state.user.loginStep1Info, // 用户详细信息
       activeSymbol: state => state.common.activeSymbol, // 当前选中交易对
       disabledOfPhoneBtn: state => state.user.disabledOfPhoneBtn,
       disabledOfEmailBtn: state => state.user.disabledOfEmailBtn,
       userCenterActiveName: state => state.personal.userCenterActiveName
-    }),
+    })
     // 前端模糊查询筛选
-    filteredData: function () {
-      var self = this
-      return this.withdrawDepositList.filter((item, index) => {
-        // console.log(item)
-        return (item['coinName'].toLocaleUpperCase()).indexOf(self.searchKeyWord.toLocaleUpperCase()) !== -1
-      })
-    },
-    filteredData1: function () {
-      return this.filteredData.filter(function (item) {
-        return item
-      })
-    }
+    // filteredData: function () {
+    //   var self = this
+    //   return this.withdrawDepositList.filter((item, index) => {
+    //     // console.log(item)
+    //     return (item['coinName'].toLocaleUpperCase()).indexOf(self.searchKeyWord.toLocaleUpperCase()) !== -1
+    //   })
+    // },
+    // filteredData1: function () {
+    //   return this.filteredData.filter(function (item) {
+    //     return item
+    //   })
+    // }
   },
   watch: {
     userCenterActiveName (newVal) {
@@ -1081,7 +1122,7 @@ export default {
 }
 </script>
 <style scoped lang="scss">
-  @import "../../../../static/css/scss/Personal/AccountBalance/AccountAssets";
+  @import "../../../../static/css/scss/Personal/IndexPersonal";
   .account-assets{
     >.account-assets-main {
       >.account-assets-box {

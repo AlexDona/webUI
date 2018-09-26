@@ -63,14 +63,14 @@
               >
                 <dd
                   class="buys-item cursor-pointer"
-                  v-for="(item,index) in buysAndSellsList.buys.list.slice(0,9)"
+                  v-for="(item,index) in buysAndSellsList.sells.list.slice(0,9)"
                   :key="index"
                   :class="{'odd':index%2!==0}"
                   @click="changeActivePriceItem(item)"
                 >
                   <div class="inner">
                   <span
-                    class="price text-align-l buy-bg"
+                    class="price text-align-l sell-bg"
                   >
                     {{item.price}}
                   </span>
@@ -83,7 +83,7 @@
                     <!--宽度条-->
                     <i
                       class="color-buy-bg"
-                      :style="'width:'+ item.amount/buysAndSellsList.buys.highestAmount*100+'%'"
+                      :style="'width:'+ item.amount/buysAndSellsList.sells.highestAmount*100+'%'"
                     >
                     </i>
                   </div>
@@ -109,13 +109,13 @@
               >
                 <dd
                   class="sells-item cursor-pointer"
-                  v-for="(item,index) in buysAndSellsList.sells.list.slice(0,9)"
+                  v-for="(item,index) in buysAndSellsList.buys.list.slice(0,9)"
                   :key="index"
                   :class="{'even':index%2==0}"
                   @click="changeActivePriceItem(item)"
                 >
                   <div class="inner">
-                  <span class="price text-align-l sell-bg">
+                  <span class="price text-align-l buy-bg">
                     {{item.price}}
                   </span>
                     <span class="amount text-align-r">

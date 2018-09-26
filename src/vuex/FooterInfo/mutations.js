@@ -1,6 +1,7 @@
 import {
   CHANGE_FOOTER_ACTIVENAME,
-  CHANGE_PROTOCOL_DATA
+  CHANGE_PROTOCOL_DATA,
+  CHANGE_NEWS_DETAIL_JUMP_ID
 } from './mutations-types.js'
 
 // import {setStore, getStore} from '../utils'
@@ -44,5 +45,8 @@ export default {
     if (rateData) {
       state.serviceProtocolData.rateData = rateData
     }
+  },
+  [CHANGE_NEWS_DETAIL_JUMP_ID] (state, data) {
+    state.newsDetailJumpId = data
   }
 }

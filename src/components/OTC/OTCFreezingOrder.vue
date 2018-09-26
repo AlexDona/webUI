@@ -168,7 +168,7 @@ export default {
 </script>
 <style scoped lang="scss" type="text/scss">
   // @import url(../../../static/css/scss/OTC/OTCFreezingOrder.scss);
-  @import "../../../static/css/scss/OTC/OTCFreezingOrder.scss";
+  @import "../../../static/css/scss/OTC/OTCCenter.scss";
   .otc-freezing-order-box{
     >.freezing-order-content{
       min-height: 472px;

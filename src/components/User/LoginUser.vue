@@ -182,6 +182,7 @@
                   @blur="checkoutInputFormat(3,checkCode)"
                 >
                 <CountDownButton
+                  v-if="!isMobile"
                   class="send-code-btn cursor-pointer"
                   :status="disabledOfPhoneBtn"
                   @run="sendPhoneOrEmailCode('pc',0)"
@@ -207,6 +208,7 @@
                   @blur="checkoutInputFormat(3,checkCode)"
                 >
                 <CountDownButton
+                  v-if="!isMobile"
                   class="send-code-btn cursor-pointer"
                   :status="disabledOfEmailBtn"
                   @run="sendPhoneOrEmailCode('pc',1)"
@@ -330,8 +332,9 @@
                     @blur="checkoutInputFormat(3,checkCode)"
                   >
                   <CountDownButton
+                    v-if="isMobile"
                     class="send-code-btn cursor-pointer"
-                    :status="disabledOfMobilePhoneBtn"
+                    :status="disabledOfPhoneBtn"
                     @run="sendPhoneOrEmailCode('mobile',0)"
                   />
                 </div>
@@ -355,8 +358,9 @@
                     @blur="checkoutInputFormat(3,checkCode)"
                   >
                   <CountDownButton
+                    v-if="isMobile"
                     class="send-code-btn cursor-pointer"
-                    :status="disabledOfMobileEmailBtn"
+                    :status="disabledOfEmailBtn"
                     @run="sendPhoneOrEmailCode('mobile',1)"
                   />
                 </div>
@@ -504,19 +508,17 @@ export default {
   },
   data () {
     return {
-      // username: '',
-      // username: '18625512987',
-      // username: '18625512987',
+      username: '',
       // username: '18625512987',
       // username: '18600929234',
       // username: '17600854297',
-      // username: '18625512985',
+      // username: '13137111901',
       // password: 'a11111111',
       // username: '15638559236',
-      username: '13100000011',
+      // username: '13100000011',
       // username: '13100000012',
       // username: '18625512988',
-      password: 'a1111111',
+      // password: '123456aa',
       userNameErrorMsg: '', // 错误提示
       loadingCircle: {},
       userInputImageCode: '', // 图形验证码(用户输入)
@@ -746,7 +748,7 @@ export default {
 
       let params = {
         country: this.activeCountryCode,
-        type: 'LOGIN_RECORD'
+        type: 'LOGIN_CODE'
       }
       switch (loginType) {
         case 0:
@@ -988,8 +990,6 @@ export default {
       loginType: state => state.user.loginType, // 登录类型
       disabledOfPhoneBtn: state => state.user.disabledOfPhoneBtn,
       disabledOfEmailBtn: state => state.user.disabledOfEmailBtn,
-      disabledOfMobilePhoneBtn: state => state.user.disabledOfMobilePhoneBtn, // 移动端发送验证码
-      disabledOfMobileEmailBtn: state => state.user.disabledOfMobileEmailBtn, // 移动端发送验证码
       routerTo: state => state.common.routerTo // 路由跳转
     })
     // step1 () {
