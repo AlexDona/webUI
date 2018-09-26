@@ -364,7 +364,7 @@ import FooterCommon from '../Common/FooterCommon'
 import IconFontCommon from '../Common/IconFontCommon'
 import {returnAjaxMessage} from '../../utils/commonFunc'
 import {mapState} from 'vuex'
-import {timeFilter, formatNumberInput} from '../../utils'
+import {timeFilter, formatNumberInput, amendPrecision} from '../../utils'
 export default {
   components: {
     NavCommon, //  头部导航
@@ -373,6 +373,8 @@ export default {
   },
   data () {
     return {
+      serviceChargeSELL: 0, // 手续费：卖
+      serviceChargeBUY: 0, // 手续费：买
       // input框输入错误显示红色边框状态
       errorWarningBorder: false,
       // 弹窗显示状态
@@ -516,7 +518,8 @@ export default {
           this.$refs.buyPrice.value = this.$refs.buyCount.value * this.price
           this.$refs.buyPrice.value = Number(this.$refs.buyPrice.value).toFixed(2)
           // 手续费
-          this.serviceCharge = this.$refs.buyCount.value * this.rate
+          // this.serviceCharge = this.$refs.buyCount.value * this.rate
+          this.serviceCharge = amendPrecision(this.$refs.buyCount.value, this.rate, '*')
           this.serviceCharge = Number(this.serviceCharge).toFixed(this.pointLength)
           if (this.$refs.buyCount.value * this.price < this.minCount) {
             this.moneyTips = '单笔最小限额为' + this.minCount
@@ -548,7 +551,8 @@ export default {
           this.$refs.sellPrice.value = this.$refs.sellCount.value * this.price
           this.$refs.sellPrice.value = Number(this.$refs.sellPrice.value).toFixed(2)
           // 手续费
-          this.serviceCharge = this.$refs.sellCount.value * this.rate
+          // this.serviceCharge = this.$refs.sellCount.value * this.rate
+          this.serviceCharge = amendPrecision(this.$refs.sellCount.value, this.rate, '*')
           this.serviceCharge = Number(this.serviceCharge).toFixed(this.pointLength)
           if (this.$refs.sellCount.value * this.price < this.minCount) {
             this.moneyTips = '单笔最小限额为' + this.minCount
@@ -588,7 +592,8 @@ export default {
           this.$refs.buyCount.value = this.$refs.buyPrice.value / this.price
           this.$refs.buyCount.value = Number(this.$refs.buyCount.value).toFixed(this.pointLength)
           // 手续费
-          this.serviceCharge = this.$refs.buyCount.value * this.rate
+          // this.serviceCharge = this.$refs.buyCount.value * this.rate
+          this.serviceCharge = amendPrecision(this.$refs.buyCount.value, this.rate, '*')
           this.serviceCharge = Number(this.serviceCharge).toFixed(this.pointLength)
           if (this.$refs.buyPrice.value < this.minCount) {
             this.moneyTips = '单笔最小限额为' + this.minCount
@@ -614,7 +619,8 @@ export default {
           this.$refs.sellCount.value = this.$refs.sellPrice.value / this.price
           this.$refs.sellCount.value = Number(this.$refs.sellCount.value).toFixed(this.pointLength)
           // 手续费
-          this.serviceCharge = this.$refs.sellCount.value * this.rate
+          // this.serviceCharge = this.$refs.sellCount.value * this.rate
+          this.serviceCharge = amendPrecision(this.$refs.sellCount.value, this.rate, '*')
           this.serviceCharge = Number(this.serviceCharge).toFixed(this.pointLength)
           if (this.$refs.sellPrice.value < this.minCount) {
             this.moneyTips = '单笔最小限额为' + this.minCount

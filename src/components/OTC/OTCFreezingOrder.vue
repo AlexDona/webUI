@@ -67,7 +67,8 @@
             </p>
           </div>
           <div class="info-right">
-            <p class="text-info text-blue">冻结时间</p>
+            <!-- <p class="text-info text-blue">冻结时间</p> -->
+            <p class="text-info text-blue">申诉冻结，等待处理</p>
             <p class="text-info">{{timeFormatting(item.freezeTime)}}</p>
           </div>
           <div class="info-reason">
