@@ -15,8 +15,8 @@ if (process.env.NODE_ENV == 'development') {
   // apiCommonUrl = 'http://192.168.1.72:8062/' // 刘耀
   // apiCommonUrl = 'http://192.168.1.71:8888/' // 亚男
   // apiCommonUrl = 'http://192.168.1.217:8888/' // 爱军
-  apiCommonUrl = 'http://192.168.1.200:8888/' // 本地测试
-  // apiCommonUrl = 'http://api.new.bzu.com/' // 内部测试
+  // apiCommonUrl = 'http://192.168.1.200:8888/' // 本地测试
+  apiCommonUrl = 'http://api.new.bzu.com/' // 内部测试
   // apiCommonUrl = 'http://192.168.1.176:8888/' // 帅飞
   // apiCommonUrl = 'https://rest.fubt.top/'
   // apiCommonUrl = 'http://192.168.1.77:8888' // 张新杰
