@@ -13,10 +13,13 @@
          <div class="nvest-list-body">
           <div class="gobackInvest">
             <IconFontCommon class='blue' iconName="icon-fanhui" style="font-size:12px" />
-            <router-link class="blue" to="/FinanceCenter">返回投资</router-link>
+            <router-link class="blue" :to="!isLogin ? 'login' : '/FinanceCenter'">返回投资</router-link>
           </div>
           <!-- 投资记录 -->
           <el-tabs v-model="activeName">
+            <div v-if = "!isLogin" class = 'financeTsipsBox'>
+              @您还没有登陆,请<a href='/login'>登陆</a>或者<a href = '/Register'>注册</a>之后查看!
+            </div>
             <el-tab-pane label="投资记录" name="1">
               <el-table
                 :data="investList"
@@ -82,6 +85,9 @@
             </el-tab-pane>
             <!-- 收益记录 -->
             <el-tab-pane label="收益记录" name="2">
+               <div v-if = "!isLogin" class = 'financeTsipsBox'>
+                @您还没有登陆,请<a href='/login'>登陆</a>或者<a href = '/Register'>注册</a>之后查看!
+              </div>
               <el-table
                 :data="userInterestRecord"
                 style="width: 100%"
@@ -268,7 +274,8 @@ export default {
   computed: {
     ...mapState({
       theme: state => state.common.theme,
-      partnerId: state => state.common.partnerId
+      partnerId: state => state.common.partnerId,
+      isLogin: state => state.user.isLogin
     }),
     screenWidth () {
       return window.innerWidth / 3
@@ -311,7 +318,19 @@ export default {
              right: 0px;
              z-index: 10;
           }
-
+          .financeTsipsBox{
+            position: absolute;
+            top: 55px;
+            left: 0px;
+            text-align: center;
+            z-index: 10;
+            width: 100%;
+            height: 100%;
+            line-height:200px;
+            >a{
+              color: #338FF5;
+            }
+          }
         }
       }
       }
@@ -326,7 +345,7 @@ export default {
     }
     &.day{
       >.inner-box{
-        background-color: $dayInnerBoxBg;
+        background-color: #fff;
         >div{
           /*background-color: $dayMainBgColor;*/
         }
