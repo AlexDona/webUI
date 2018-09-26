@@ -505,7 +505,7 @@ export default {
 }
 </script>
 <style scoped lang="scss" type="text/scss">
-  @import url(../../../static/css/scss/OTC/OTCCenter.scss);
+  // @import url(../../../static/css/scss/OTC/OTCCenter.scss);
   .otc-merchants-orders-box{
     background-color: #121824;
     >.otc-merchants-orders-content{
