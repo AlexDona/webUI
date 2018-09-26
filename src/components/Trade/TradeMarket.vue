@@ -189,7 +189,8 @@ import {
 import {getPartnerAreaList} from '../../utils/api/trade'
 import {
   returnAjaxMessage,
-  getPartnerListAjax
+  getPartnerListAjax,
+  toggleUserCollection
 } from '../../utils/commonFunc'
 // import {socket} from '../../utils/tradingview/socket'
 import {
@@ -465,7 +466,7 @@ export default {
       })
     },
     // 切换收藏
-    toggleCollect (id, status, row) {
+    async toggleCollect (id, status, row) {
       console.log(id)
       console.log(row)
       status = Boolean(status)
@@ -473,13 +474,19 @@ export default {
       if (status) {
         //  添加收藏
         this.collectList.push(row)
+        if (this.isLogin) {
+          await toggleUserCollection('add', row.tradeId, this)
+        }
       } else {
+        let chooseId
         // 取消收藏
         this.collectList.forEach((item, index) => {
           if (item.id == row.id) {
             this.collectList.splice(index, 1)
+            chooseId = item.tradeId
           }
         })
+        await toggleUserCollection('remove', chooseId, this)
       }
       setStore('collectList', this.collectList)
       this.$store.commit('home/CHANGE_COLLECT_LIST', this.collectList)

@@ -29,9 +29,12 @@ if (process.env.NODE_ENV == 'development') {
 } else if (process.env.NODE_ENV == 'production') {
   // apiCommonUrl = 'https://rest.fubt.top/'
   // apiCommonUrl = 'http://192.168.1.200:8888/' // 本地测试
+  // ----------api
   // apiCommonUrl = 'http://api.new.fubt.com/' // 本地测试
   apiCommonUrl = 'http://api.new.bzu.com/' // 内部测试
+  // ---- socket
   socketUrl = 'ws://ws.bzu.com/market'
+  // socketUrl = 'ws://192.168.1.200:8087/market'
   domain = 'http://new.bzu.com/#/'
 }
 

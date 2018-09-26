@@ -14,7 +14,9 @@ import {
   sendMsgByPhoneOrEmial
 } from '../utils/api/user'
 import {
-  getPartnerList
+  getPartnerList,
+  addUserCollectionAjax,
+  removeCollectionAjax
 } from '../utils/api/home'
 import {
   getCountryList,
@@ -171,6 +173,22 @@ export const reflashUserInfo = async (that) => {
     return false
   } else {
     store.commit('user/SET_STEP1_INFO', data.data.data)
+  }
+}
+
+// 首页、币币交易切换收藏
+export const toggleUserCollection = async (type, tradeId, that) => {
+  const params = {
+    tradeId
+  }
+  let data
+  if (type === 'add') {
+    data = await addUserCollectionAjax(params)
+  } else if (type === 'remove') {
+    data = await removeCollectionAjax(params)
+  }
+  if (!returnAjaxMessage(data, that)) {
+    return false
   }
 }
 
