@@ -271,7 +271,8 @@
                       class="font-size16 wait-pay"
                       iconName="icon-daojishi"
                     />
-                    <span>{{BIHTimeFormatting(cancelOrderTimeArr[index])}}</span>
+                    <span v-if="cancelOrderTimeArr[index]">{{BIHTimeFormatting(cancelOrderTimeArr[index])}}</span>
+                    <span v-else>--</span>
                   </span>
                 </p>
                 <!-- 注意 -->
@@ -477,7 +478,8 @@
                     />
                   </span>
                   <span class="remaining-time">
-                    <span>{{BIHTimeFormatting(accomplishOrderTimeArr[index])}}</span>
+                    <span v-if="accomplishOrderTimeArr[index]">{{BIHTimeFormatting(accomplishOrderTimeArr[index])}}</span>
+                    <span v-else>--</span>
                   </span>
                 </p>
               </div>
@@ -692,13 +694,10 @@ export default {
     }
   },
   created () {
-    // this.cancelUserOtcOrder()
-    // this.completeUserOtcOrder()
     require('../../../static/css/list/OTC/OTCTradingOrder.css')
     require('../../../static/css/theme/day/OTC/OTCTradingOrderDay.css')
     require('../../../static/css/theme/night/OTC/OTCTradingOrderNight.css')
     // 1.0 请求交易中订单列表:只有登录了才调用
-    console.log(this.isLogin)
     if (this.isLogin) {
       this.getOTCTradingOrdersList()
     }
@@ -772,30 +771,6 @@ export default {
         this.getOTCTradingOrdersList()
       }
     },
-    // 1.5 撤销otc用户定单（过期买家未付款）
-    async cancelUserOtcOrder () {
-      const data = await cancelUserOtcOrder()
-      console.log('撤销otc用户定单（过期买家未付款）')
-      console.log(data)
-      if (!(returnAjaxMessage(data, this, 0))) {
-        return false
-      } else {
-        // 返回数据正确的逻辑：重新渲染列表
-        this.getOTCTradingOrdersList()
-      }
-    },
-    // 1.6 成交otc用户定单（过期卖家未收款）
-    async completeUserOtcOrder () {
-      const data = await completeUserOtcOrder()
-      console.log('成交otc用户定单（过期卖家未收款）')
-      console.log(data)
-      if (!(returnAjaxMessage(data, this, 0))) {
-        return false
-      } else {
-        // 返回数据正确的逻辑:重新渲染列表
-        this.getOTCTradingOrdersList()
-      }
-    },
     // 2.0 请求交易中订单列表
     async getOTCTradingOrdersList () {
       this.cancelOrderTimeArr = []
@@ -819,26 +794,25 @@ export default {
         console.log(this.tradingOrderList)
         // 分页
         this.totalPages = data.data.data.pages - 0
-        console.log(this.tradingOrderList)
+        // console.log(this.tradingOrderList)
         // 循环数组
         this.tradingOrderList.forEach((item, index) => {
-          console.log(item)
+          // console.log(item)
           this.buttonStatusArr[index] = false
           this.showOrderAppeal[index] = false
           // 自动取消订单倒计时数组集
           if (item.status === 'PICKED') {
             this.cancelOrderTimeArr[index] = item.cancelRestTime // cancelRestTime毫秒单位
-            this.accomplishOrderTimeArr[index] = 1000000 // completeRestTime毫秒单位
+            this.accomplishOrderTimeArr[index] = 10000000 // completeRestTime毫秒单位
           } else if (item.status === 'PAYED') {
-            this.cancelOrderTimeArr[index] = 1000000 // cancelRestTime毫秒单位
+            this.cancelOrderTimeArr[index] = 10000000 // cancelRestTime毫秒单位
             this.accomplishOrderTimeArr[index] = item.completeRestTime // completeRestTime毫秒单位
           }
           // 自动成交倒计时数组集
         })
-        console.log(this.tradingOrderList.length)
-        // 调用自动取消倒计时方法
+        // console.log(this.tradingOrderList.length)
         if (this.tradingOrderList.length) {
-          console.log(1)
+          // 调用自动取消倒计时方法
           this.cancelSetInter()
           // 调用自动成交倒计时方法
           this.accomplishSetInter()

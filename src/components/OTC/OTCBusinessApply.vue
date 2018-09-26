@@ -483,7 +483,7 @@ export default {
     }
   }
   &.night{
-    background-color: #1D2331;
+    background-color: #121824;
     >.business-apply-content{
       // width: 1150px !important;
       // margin: 70px auto !important;
