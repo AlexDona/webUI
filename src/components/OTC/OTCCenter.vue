@@ -125,7 +125,7 @@
             <el-table
               :data="onlineBuySellTableList"
               style="width: 100%"
-              :empty-text="$t('M.otc_index_Temporary_data')"
+              :empty-text="$t('M.comm_no_data')"
             >
               <!-- 商户 -->
               <el-table-column
@@ -155,7 +155,7 @@
               </el-table-column>
               <!-- 数量 -->
               <el-table-column
-                label="数量"
+                :label="$t('M.comm_count')"
               >
                 <template slot-scope = "s">
                   <div>
@@ -165,7 +165,7 @@
               </el-table-column>
               <!-- 价格 -->
               <el-table-column
-                label="价格"
+                :label="$t('M.otc_index_price')"
               >
                 <template slot-scope = "s">
                   <!-- 此处的单位根据设置中的法币类型来变化：为人民币时候显示CNY，为美元时候显示$ 此处需要从全局拿到设置中的法币类型来渲染页面-->
@@ -175,7 +175,7 @@
               </el-table-column>
               <!-- 支付方式 -->
               <el-table-column
-                label="支付方式"
+                :label="$t('M.otc_index_Payment_method')"
               >
                 <template slot-scope="s">
                   <div>
@@ -213,7 +213,7 @@
               </el-table-column>
               <!-- 限额 -->
               <el-table-column
-                label="限额"
+                :label="$t('M.otc_index_priceLimit')"
               >
                 <template slot-scope = "s">
                   <div>{{s.row.minCount}}~{{s.row.maxCount}}{{activitedCurrencyName}}</div>
@@ -221,7 +221,7 @@
               </el-table-column>
               <!-- 备注 -->
               <el-table-column
-                label="备注"
+                :label="$t('M.comm_remark')"
                 width="100"
               >
                 <template slot-scope = "s">
@@ -237,7 +237,7 @@
               </el-table-column>
               <!-- 操作 -->
               <el-table-column
-                label="操作"
+                :label="$t('M.otc_index_operate')"
               >
                 <template slot-scope="s">
                   <el-button
@@ -247,7 +247,7 @@
                     @click="toOnlineBuy(s.row.id,s.row.coinId,s.row.userId)"
                   >
                   <!-- 购买 -->
-                   {{$t('OTC.otc_index_buy')}}
+                   {{$t('M.otc_index_buy')}}
                   </el-button>
                   <el-button
                     type="success"
@@ -256,7 +256,7 @@
                     @click="toOnlineSell(s.row.id,s.row.coinId,s.row.userId)"
                   >
                     <!-- 出售 -->
-                   {{$t('OTC.otc_index_sell')}}
+                   {{$t('M.otc_index_sell')}}
                   </el-button>
                 </template>
               </el-table-column>
@@ -420,30 +420,30 @@ export default {
       payWayBankinfoList: [
         {
           id: '',
-          shortName: '全部'
+          shortName: this.$t('M.comm_all') // 全部
         },
         {
           id: 'alipay',
-          shortName: '支付宝'
+          shortName: this.$t('M.comm_alipay') // 支付宝
         },
         {
           id: 'weixin',
-          shortName: '微信'
+          shortName: this.$t('M.comm_weixin') // 微信
         },
         {
           id: 'bank',
-          shortName: '银行卡'
+          shortName: this.$t('M.comm_bank') // 银行卡
         },
         {
           id: 'xilian',
-          shortName: '西联汇款'
+          shortName: this.$t('M.comm_xilian') // 西联汇款
         },
         {
           id: 'paypal',
           shortName: 'PAYPAL'
         }
       ],
-      activedPayWayBankinfoItem: '支付方式', // 下拉框中选中的支付方式
+      activedPayWayBankinfoItem: this.$t('M.otc_index_Payment_method'), // 下拉框中选中的支付方式
       checkedPayType: '', // 下拉框支付方式中选中的支付方式查询列表
       // 我要购买出售币种数组
       IWantToBuySellArr: [
