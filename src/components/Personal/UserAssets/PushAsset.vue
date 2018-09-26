@@ -716,7 +716,7 @@ export default {
 }
 </script>
 <style scoped lang="scss">
-  @import "../../../../static/css/scss/Personal/UserAssets/PushAsset";
+  @import "../../../../static/css/scss/Personal/IndexPersonal";
   .push-assets{
     >.push-assets-main{
       >.push-assets-content-box {

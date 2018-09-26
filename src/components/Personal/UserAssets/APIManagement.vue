@@ -96,7 +96,7 @@
             </el-table-column>
             <el-table-column
               label="备注"
-              width="85"
+              width="80"
             >
               <template slot-scope = "s">
                 <div>{{ s.row.remark }}</div>
@@ -801,7 +801,7 @@ export default {
 }
 </script>
 <style scoped lang="scss">
-  @import "../../../../static/css/scss/Personal/UserAssets/APIManagement";
+  @import "../../../../static/css/scss/Personal/IndexPersonal";
   .api-management{
     >.invitation-promotion-main{
       .code-copy{

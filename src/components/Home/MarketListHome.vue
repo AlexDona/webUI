@@ -374,11 +374,15 @@ import {
   setStore,
   keep2Num
 } from '../../utils'
-import {addUserCollectionAjax} from '../../utils/api/home'
+// import {
+//   addUserCollectionAjax,
+//   removeCollectionAjax
+// } from '../../utils/api/home'
 import {
   returnAjaxMessage,
   // splitSocketParams
-  getPartnerListAjax
+  getPartnerListAjax,
+  toggleUserCollection
 } from '../../utils/commonFunc'
 import {mapState, createNamespacedHelpers} from 'vuex'
 const { mapMutations } = createNamespacedHelpers('home')
@@ -430,6 +434,7 @@ export default{
     }
   },
   async created () {
+    // console.log(this.loginStep1Info)
     require('../../../static/css/list/Home/MarketListHome.css')
     require('../../../static/css/theme/day/Home/MarketListHomeDay.css')
     require('../../../static/css/theme/night/Home/MarketListHomeNight.css')
@@ -459,18 +464,6 @@ export default{
     ...mapMutations([
       'CHANGE_COLLECT_LIST'
     ]),
-    // 添加收藏
-    async addUserCollection (tradeId) {
-      const params = {
-        content: tradeId
-      }
-      const data = await addUserCollectionAjax(params)
-      if (!returnAjaxMessage(data, this)) {
-        return false
-      } else {
-        console.log(data)
-      }
-    },
     // 截取2位小数
     keep2Num (number) {
       return keep2Num(number)
@@ -576,6 +569,14 @@ export default{
         'content': `market.ticker.${this.partnerId}.${plateId}.0.i18nCode`,
         'id': `market_001`
       })
+      console.log(this.isLogin)
+      if (this.isLogin) {
+        this.socket.send({
+          'tag': type,
+          'content': `market.optionalarea.${this.partnerId}.${this.userId}.ticker`,
+          'id': `market_002`
+        })
+      }
     },
     // 切换板块
     changeTab () {
@@ -706,16 +707,22 @@ export default{
       if (status) {
         //  添加收藏
         this.collectList.push(row)
+        console.log(this.isLogin)
         if (this.isLogin) {
-          await this.addUserCollection(row.tradeId)
+          await toggleUserCollection('add', row.tradeId, this)
         }
       } else {
+        let chooseId
         // 取消收藏
         this.collectList.forEach((item, index) => {
           if (item.id == row.id) {
             this.collectList.splice(index, 1)
+            chooseId = item.tradeId
           }
         })
+        if (this.isLogin) {
+          await toggleUserCollection('remove', chooseId, this)
+        }
       }
       setStore('collectList', this.collectList)
       this.CHANGE_COLLECT_LIST(this.collectList)
@@ -781,10 +788,13 @@ export default{
       plateList: state => state.common.plateList, // 板块列表
       partnerId: state => state.common.partnerId, // 商户id
       activeSymbol: state => state.common.activeSymbol,
+      isLogin: state => state.user.isLogin,
       activeTradeArea: state => state.common.activeTradeArea,
       currencyRateList: state => state.common.currencyRateList, // 折算货币列表
-      activeConvertCurrencyObj: state => state.common.activeConvertCurrencyObj // 目标货币
-
+      activeConvertCurrencyObj: state => state.common.activeConvertCurrencyObj, // 目标货币
+      loginStep1Info: state => state.user.loginStep1Info,
+      userId: state => state.user.loginStep1Info.userId,
+      userInfo: state => state.user.loginStep1Info.userInfo
     })
   },
   watch: {

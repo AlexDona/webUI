@@ -254,7 +254,6 @@
                       :action="apiCommonUrl+'uploadfile'"
                       :headers="tokenObj"
                       list-type="picture-card"
-                      :show-file-list="false"
                       :on-success="handleSuccessReverseSide"
                       :on-remove="handleRemoveSide"
                       :before-upload="beforeAvatarUpload"
@@ -284,7 +283,6 @@
                       :action="apiCommonUrl+'uploadfile'"
                       :headers="tokenObj"
                       list-type="picture-card"
-                      :show-file-list="false"
                       :on-success="handleSuccessHand"
                       :on-remove="handleRemoveHand"
                       :before-upload="beforeAvatarUpload"
@@ -721,7 +719,7 @@ export default {
 }
 </script>
 <style scoped lang="scss">
-  @import "../../../../static/css/scss/Personal/UserAssets/IdentityAuthentication";
+  @import "../../../../static/css/scss/Personal/IndexPersonal";
 .identity-authentication{
   >.identity-authentication-main{
     .name-authentication-content {

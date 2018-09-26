@@ -604,17 +604,17 @@ export default {
     toggleMethod (method) {
       this.activeMethod = method
       this.activeCodePlaceholder = !this.activeMethod ? '短信验证码' : '邮箱验证码'
+      this.clearFormData()
+    },
+    // 清空表单信息
+    clearFormData () {
+      this.userInputImageCode = ''
+      this.phoneNum = ''
+      this.emailNum = ''
+      this.password = ''
+      this.repeatPassword = ''
+      this.checkCode = ''
     }
-    // async changeLang () {
-    //   let data
-    //   console.log(1)
-    //   data = await changeLang({
-    //     lan: 'en_US'
-    //   })
-    //   console.log(2)
-    //   console.log(data)
-    //   // console.log(data)
-    // }
   },
   filter: {},
   computed: {

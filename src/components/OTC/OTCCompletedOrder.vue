@@ -54,8 +54,24 @@
                   </div>
                   <!-- 右侧 -->
                   <div class="completed-info-right">
-                    <p class="order-info-right">
-                      <span class="confirm-time">确认时间</span>
+                    <p
+                      class="order-info-right"
+                      v-if="props.row.appeal == 'NO' && props.row.confirmTime !== ''"
+                    >
+                      <!-- <span class="confirm-time">确认时间</span> -->
+                      <span class="confirm-time">交易已完成</span>
+                    </p>
+                    <p
+                      class="order-info-right"
+                      v-if="props.row.appeal == 'YES'"
+                    >
+                      <span class="confirm-time">申诉判定，订单完成</span>
+                    </p>
+                    <p
+                      class="order-info-right"
+                      v-if="props.row.appeal == 'NO' && props.row.confirmTime == ''"
+                    >
+                      <span class="confirm-time">超时未确认，订单完成</span>
                     </p>
                     <p class="order-info-right">
                       <span>付款确认时间：</span>
@@ -221,7 +237,7 @@ export default {
 </script>
 <style scoped lang="scss" type="text/scss">
 // @import url(../../../static/css/scss/OTC/OTCCompletedOrder.scss);
-@import "../../../static/css/scss/OTC/OTCCompletedOrder.scss";
+@import "../../../static/css/scss/OTC/OTCCenter.scss";
 .otc-completed-order-box{
   >.completed-order-content{
     min-height: 500px;

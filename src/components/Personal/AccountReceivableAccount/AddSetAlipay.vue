@@ -321,7 +321,7 @@ export default {
 }
 </script>
 <style scoped lang="scss">
-  @import "../../../../static/css/scss/Personal/AccountReceivableAccount/AddSetAlipay.scss";
+  @import "../../../../static/css/scss/Personal/IndexPersonal.scss";
   .add-account {
     >.add-account-main {
       width: 1100px;

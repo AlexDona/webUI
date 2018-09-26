@@ -360,7 +360,7 @@ export default {
 }
 </script>
 <style scoped lang="scss">
-  @import "../../../../static/css/scss/Personal/UserAssets/PersonalCenter";
+  @import "../../../../static/css/scss/Personal/IndexPersonal";
   .personal-center{
     > .personal-center-main {
       width: 1150px;

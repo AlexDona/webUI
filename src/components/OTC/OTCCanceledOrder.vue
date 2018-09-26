@@ -67,12 +67,35 @@
             </p>
           </div>
           <div class="info-right">
-            <p class="text-info text-blue">取消时间</p>
-            <p class="text-info cancel-time">{{timeFormatting(item.cancelTime)}}</p>
+            <!-- <p class="text-info text-blue">超时未支付，订单取消</p> -->
+            <p
+              class="text-info"
+              v-if="item.appeal == 'NO'"
+            >
+              超时未支付，订单取消
+            </p>
+            <p
+              class="text-info"
+              v-if="item.appeal == 'YES'"
+            >
+              申诉判定，订单取消
+            </p>
+            <p
+              class="text-info"
+            >
+              取消时间:{{timeFormatting(item.cancelTime)}}
+            </p>
+            <!-- <p class="text-info cancel-time">{{timeFormatting(item.cancelTime)}}</p> -->
+            <!-- <p class="text-info cancel-time">状态</p> -->
           </div>
         </div>
       </div>
-      <div class="no-data" v-if="!getOTCCanceledOrderList.length">暂无数据</div>
+      <div
+        class="no-data"
+        v-if="!getOTCCanceledOrderList.length"
+      >
+        暂无数据
+      </div>
       <!--分页-->
       <div class="page">
         <el-pagination
@@ -163,7 +186,7 @@ export default {
 }
 </script>
 <style scoped lang="scss" type="text/scss">
-  @import "../../../static/css/scss/OTC/OTCCanceledOrder.scss";
+  @import "../../../static/css/scss/OTC/OTCCenter.scss";
   .otc-canceled-order-box{
     >.canceled-order-content{
       min-height: 500px;

@@ -67,7 +67,8 @@
             </p>
           </div>
           <div class="info-right">
-            <p class="text-info text-blue">冻结时间</p>
+            <!-- <p class="text-info text-blue">冻结时间</p> -->
+            <p class="text-info text-blue">申诉冻结，等待处理</p>
             <p class="text-info">{{timeFormatting(item.freezeTime)}}</p>
           </div>
           <div class="info-reason">
@@ -76,7 +77,12 @@
           </div>
         </div>
       </div>
-      <div class="no-data" v-if="!getOTCFreezingOrderList.length">暂无数据</div>
+      <div
+        class="no-data"
+        v-if="!getOTCFreezingOrderList.length"
+      >
+        暂无数据
+      </div>
       <!--分页-->
       <div class="page">
         <el-pagination
@@ -167,7 +173,7 @@ export default {
 </script>
 <style scoped lang="scss" type="text/scss">
   // @import url(../../../static/css/scss/OTC/OTCFreezingOrder.scss);
-  @import "../../../static/css/scss/OTC/OTCFreezingOrder.scss";
+  @import "../../../static/css/scss/OTC/OTCCenter.scss";
   .otc-freezing-order-box{
     >.freezing-order-content{
       min-height: 472px;

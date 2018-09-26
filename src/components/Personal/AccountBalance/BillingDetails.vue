@@ -410,7 +410,7 @@ export default {
 }
 </script>
 <style scoped lang="scss">
-  @import "../../../../static/css/scss/Personal/AccountBalance/BillingDetails";
+  @import "../../../../static/css/scss/Personal/IndexPersonal";
   .billing-details{
     >.billing-details-main{
       min-height: 500px;

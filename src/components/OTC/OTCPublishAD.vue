@@ -1039,7 +1039,7 @@ export default {
 }
 </script>
 <style scoped lang="scss" type="text/scss">
-  @import url(../../../static/css/scss/OTC/OTCPublishAD.scss);
+  @import url(../../../static/css/scss/OTC/OTCCenter.scss);
 .otc-publish-AD-box{
   background-color: #121824;
   >.otc-publish-AD-content{

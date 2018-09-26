@@ -425,7 +425,7 @@ export default {
 }
 </script>
 <style scoped lang="scss">
-  @import "../../../../static/css/scss/Personal/AccountBalance/WithdrawalAddress";
+  @import "../../../../static/css/scss/Personal/IndexPersonal";
   .withdrawal-address{
     >.withdrawal-address-main{
       border-radius: 5px;

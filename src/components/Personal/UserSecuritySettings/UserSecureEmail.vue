@@ -301,7 +301,7 @@ export default {
 }
 </script>
 <style scoped lang="scss">
-  @import "../../../../static/css/scss/Personal/UserSecuritySettings/UserSecureEmail";
+  @import "../../../../static/css/scss/Personal/IndexPersonal";
   .set-email {
     >.set-email-main {
       width: 1100px;
