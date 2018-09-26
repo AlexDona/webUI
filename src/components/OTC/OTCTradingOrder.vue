@@ -52,7 +52,9 @@
                 <!-- 金额 -->
                 <p class="trade-info">
                   <span>金额：</span>
-                  <span class="money">{{item.symbol}}{{item.payAmount}}</span>
+                  <span class="money">
+                    {{item.symbol}}{{item.payAmount}}
+                  </span>
                 </p>
                 <!-- 单价 -->
                 <p class="trade-info">
@@ -155,7 +157,10 @@
                   </p>
                 </div>
                 <!-- 扫码支付 activeBankCode[index]  :src="item.coinUrl"-->
-                <div class="bank-info-picture display-inline-block" v-if="activeBankType[index] === 'weixin' || activeBankType[index] === 'alipay'">
+                <div
+                  class="bank-info-picture display-inline-block"
+                  v-if="activeBankType[index] === 'weixin' || activeBankType[index] === 'alipay'"
+                >
                   <div class="picture-box">
                     <el-popover
                       placement="bottom"
@@ -208,7 +213,11 @@
                     <span
                       v-if="item.payType === 'xilian'"
                     >
-                      <img src="../../assets/user/xilian.png" alt="" class="xilian">
+                      <img
+                        src="../../assets/user/xilian.png"
+                        alt=""
+                        class="xilian"
+                      >
                       西联汇款已付款
                     </span>
                     <span
@@ -231,7 +240,10 @@
                   </p>
                 </div>
                 <!-- 扫码支付 qrCodeUrl  :src="item.coinUrl"-->
-                <div class="bank-info-picture display-inline-block" v-if="item.payType === 'alipay' || item.payType === 'weixin'">
+                <div
+                  class="bank-info-picture display-inline-block"
+                  v-if="item.payType === 'alipay' || item.payType === 'weixin'"
+                >
                   <div class="picture-box">
                     <el-popover
                       placement="bottom"
@@ -407,7 +419,11 @@
                     <span
                       v-if="item.payType === 'xilian'"
                     >
-                      <img src="../../assets/user/xilian.png" alt="" class="xilian">
+                      <img
+                        src="../../assets/user/xilian.png"
+                        alt=""
+                        class="xilian"
+                      >
                       西联汇款已付款
                     </span>
                     <span
@@ -741,7 +757,7 @@ export default {
           console.log(this.cancelOrderTimeArr[index])
           console.log(typeof (this.cancelOrderTimeArr[index]))
           if (this.cancelOrderTimeArr[index] < 0 || this.cancelOrderTimeArr[index] == 0) {
-            this.cancelUserOtcOrder()
+            this.cancelCompleteUserOtcOrder(1)
           }
         })
       }, 1000)
@@ -755,14 +771,31 @@ export default {
           this.$set(this.accomplishOrderTimeArr, index, this.accomplishOrderTimeArr[index] - 1000)
           console.log(this.accomplishOrderTimeArr[index])
           if (!this.accomplishOrderTimeArr[index] > 0) {
-            this.completeUserOtcOrder()
+            this.cancelCompleteUserOtcOrder(2)
           }
         })
       }, 1000)
     },
+    // 撤销/成交otc用户定单
+    async cancelCompleteUserOtcOrder (val) { // 1 取消 2 完成
+      if (val === 1) {
+        const data = await cancelUserOtcOrder()
+        console.log('撤销otc用户定单（过期买家未付款）')
+      }
+      if (val === 2) {
+        const data = await completeUserOtcOrder()
+        console.log('成交otc用户定单（过期卖家未收款）')
+      }
+      console.log(data)
+      if (!(returnAjaxMessage(data, this, 0))) {
+        return false
+      } else {
+        // 返回数据正确的逻辑：重新渲染列表
+        this.getOTCTradingOrdersList()
+      }
+    },
     // 1.5 撤销otc用户定单（过期买家未付款）
     async cancelUserOtcOrder () {
-      console.log('1111')
       const data = await cancelUserOtcOrder()
       console.log('撤销otc用户定单（过期买家未付款）')
       console.log(data)
@@ -775,7 +808,6 @@ export default {
     },
     // 1.6 成交otc用户定单（过期卖家未收款）
     async completeUserOtcOrder () {
-      console.log('33333')
       const data = await completeUserOtcOrder()
       console.log('成交otc用户定单（过期卖家未收款）')
       console.log(data)
