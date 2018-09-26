@@ -214,24 +214,26 @@
                   </span>
                   <!-- 卖 -->
                   <span class="predict-sum" v-if="this.publishStyle === 'sell'">
-                    {{entrustCountSell * priceSell}} {{CurrencyCoinsName}}
+                    <!-- {{entrustCountSell * priceSell}} {{CurrencyCoinsName}} -->
+                    {{traderSumSELL}} {{CurrencyCoinsName}}
                   </span>
                   <!-- 买 -->
                   <span class="predict-sum" v-if="this.publishStyle === 'buy'">
-                    {{entrustCountBuy * priceBuy}} {{CurrencyCoinsName}}
+                    <!-- {{entrustCountBuy * priceBuy}} {{CurrencyCoinsName}} -->
+                    {{traderSumBUY}} {{CurrencyCoinsName}}
                   </span>
                   <span class="predict-text">
                     手续费：
                   </span>
                   <!-- 卖 -->
                   <span class="predict-sum" v-if="this.publishStyle === 'sell'">
-                    {{entrustCountSell * rate}} {{coinName}}
                     <!-- {{entrustCountSell * rate}} {{coinName}} -->
-                    <!-- {{amendPrecision(entrustCountSell, rate, '*')}} {{coinName}} -->
+                    {{serviceChargeSELL}} {{coinName}}
                   </span>
                   <!-- 买 -->
                   <span class="predict-sum" v-if="this.publishStyle === 'buy'">
-                    {{entrustCountBuy * rate}} {{coinName}}
+                    <!-- {{entrustCountBuy * rate}} {{coinName}} -->
+                    {{serviceChargeBUY}} {{coinName}}
                   </span>
                   <span class="rate-text">
                     ( 费率
@@ -337,6 +339,10 @@ export default {
   },
   data () {
     return {
+      serviceChargeSELL: 0, // 手续费：卖
+      traderSumSELL: 0, // 交易额：卖
+      serviceChargeBUY: 0, // 手续费：买
+      traderSumBUY: 0, // 交易额 :买
       dialogVisible: false, // 交易密码弹窗状态
       publishStyle: '', // 1购买和出售选中类型：挂单类型
       labelPosition: 'top', // 表单label放置的位置
@@ -395,7 +401,6 @@ export default {
     }
   },
   created () {
-    console.log(amendPrecision(3.2222, 2.1, '-'))
     require('../../../static/css/list/OTC/OTCPublishBuyAndSell.css')
     require('../../../static/css/theme/day/OTC/OTCPublishBuyAndSellDay.css')
     require('../../../static/css/theme/night/OTC/OTCPublishBuyAndSellNight.css')
@@ -481,7 +486,7 @@ export default {
         // 币种最高价格
         this.maxPrice = data.data.data.otcCoinQryResponse.maxPrice
         // 币种最低价格
-        this.minPrice = data.data.data.otcCoinQryResponse.minCount
+        this.minPrice = data.data.data.otcCoinQryResponse.minPrice
         // 费率
         if (this.publishStyle === 'sell') {
           this.rate = data.data.data.otcCoinQryResponse.sellRate
@@ -545,6 +550,10 @@ export default {
       this.errorPWd = ''
       this.entrustCountSell = 0
       this.entrustCountBuy = 0
+      this.serviceChargeSELL = 0
+      this.traderSumSELL = 0
+      this.serviceChargeBUY = 0
+      this.traderSumBUY = 0
     },
     // 卖出量和买入量input 获得焦点
     countInputFocus () {
@@ -557,8 +566,18 @@ export default {
       console.log(this[ref])
       // this.entrustCountSell = this.$refs.entrustCountSell.value
       // console.log(this.entrustCountSell)
+      // 精度丢失问题修复
+      // 类型：卖
+      // 手续费
+      this.serviceChargeSELL = amendPrecision(this.$refs.entrustCountSell.value, this.rate, '*').toFixed(this.pointLength)
+      // 交易额
+      this.traderSumSELL = amendPrecision(this.$refs.entrustCountSell.value, this.$refs.priceSell.value, '*').toFixed(2)
+      // 类型：买
+      // 手续费
+      this.serviceChargeBUY = amendPrecision(this.$refs.entrustCountBuy.value, this.rate, '*').toFixed(this.pointLength)
+      // 交易额
+      this.traderSumBUY = amendPrecision(this.$refs.entrustCountBuy.value, this.$refs.priceBuy.value, '*').toFixed(2)
       // 开始input框验证
-      // console.log(amendPrecision(this.$refs.entrustCountSell.value, this.rate, '*'))
       // 限制输入数字和位数
       let target = this.$refs[ref]
       // 卖出量 买入量验证：>0 保留返回的小数位数
