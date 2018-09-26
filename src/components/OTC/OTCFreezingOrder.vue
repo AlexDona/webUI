@@ -77,7 +77,12 @@
           </div>
         </div>
       </div>
-      <div class="no-data" v-if="!getOTCFreezingOrderList.length">暂无数据</div>
+      <div
+        class="no-data"
+        v-if="!getOTCFreezingOrderList.length"
+      >
+        暂无数据
+      </div>
       <!--分页-->
       <div class="page">
         <el-pagination

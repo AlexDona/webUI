@@ -22,7 +22,10 @@
       <div
         class="entrust-table-body"
       >
-        <div class="no-data" v-if="!OTCEntrustOrderList.length">
+        <div
+          class="no-data"
+          v-if="!OTCEntrustOrderList.length"
+        >
           暂无数据
         </div>
         <div
