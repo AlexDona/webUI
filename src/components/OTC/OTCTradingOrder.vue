@@ -3,16 +3,15 @@
    class="otc-trading-order-box otc"
    :class="{'day':theme == 'day','night':theme == 'night' }"
   >
-    <!-- 一、交易中订单 -->
     <div class="otc-trading-order-content">
-      <!-- 订单列表 ：1.0 买单 -->
+      <!-- 一、交易中订单 -->
       <div
         class="order-list"
         v-for="(item, index) in tradingOrderList"
         :key="index"
-        v-if="item.orderType === 'BUY'"
       >
-        <div class="order">
+        <!-- 订单列表 ：1.0 买单 -->
+        <div class="order" v-if="item.orderType === 'BUY'">
           <!-- 1.1 表头 -->
           <div class="order-list-head">
             <!-- 买卖家 -->
@@ -52,9 +51,7 @@
                 <!-- 金额 -->
                 <p class="trade-info">
                   <span>金额：</span>
-                  <span class="money">
-                    {{item.symbol}}{{item.payAmount}}
-                  </span>
+                  <span class="money">{{item.symbol}}{{item.payAmount}}</span>
                 </p>
                 <!-- 单价 -->
                 <p class="trade-info">
@@ -157,10 +154,7 @@
                   </p>
                 </div>
                 <!-- 扫码支付 activeBankCode[index]  :src="item.coinUrl"-->
-                <div
-                  class="bank-info-picture display-inline-block"
-                  v-if="activeBankType[index] === 'weixin' || activeBankType[index] === 'alipay'"
-                >
+                <div class="bank-info-picture display-inline-block" v-if="activeBankType[index] === 'weixin' || activeBankType[index] === 'alipay'">
                   <div class="picture-box">
                     <el-popover
                       placement="bottom"
@@ -213,11 +207,7 @@
                     <span
                       v-if="item.payType === 'xilian'"
                     >
-                      <img
-                        src="../../assets/user/xilian.png"
-                        alt=""
-                        class="xilian"
-                      >
+                      <img src="../../assets/user/xilian.png" alt="" class="xilian">
                       西联汇款已付款
                     </span>
                     <span
@@ -240,10 +230,7 @@
                   </p>
                 </div>
                 <!-- 扫码支付 qrCodeUrl  :src="item.coinUrl"-->
-                <div
-                  class="bank-info-picture display-inline-block"
-                  v-if="item.payType === 'alipay' || item.payType === 'weixin'"
-                >
+                <div class="bank-info-picture display-inline-block" v-if="item.payType === 'alipay' || item.payType === 'weixin'">
                   <div class="picture-box">
                     <el-popover
                       placement="bottom"
@@ -305,18 +292,10 @@
             </div>
           </div>
         </div>
-      </div>
-      <!-- 订单列表 ：2.0 卖单 -->
-      <div
-        class="order-list"
-        v-for="(item, index) in tradingOrderList"
-        :key="index"
-        v-if="item.orderType === 'SELL'"
-      >
-        <!-- 2.01 订单列表 -->
+        <!-- 订单列表 ：2.0 卖单 -->
         <div
           class="order"
-          v-if="!showOrderAppeal[index]"
+          v-if="!showOrderAppeal[index] && item.orderType === 'SELL'"
         >
           <!-- 2.1 表头 -->
           <div class="order-list-head">
@@ -419,11 +398,7 @@
                     <span
                       v-if="item.payType === 'xilian'"
                     >
-                      <img
-                        src="../../assets/user/xilian.png"
-                        alt=""
-                        class="xilian"
-                      >
+                      <img src="../../assets/user/xilian.png" alt="" class="xilian">
                       西联汇款已付款
                     </span>
                     <span
@@ -509,7 +484,7 @@
             </div>
           </div>
         </div>
-        <!-- 2.02 订单申诉 -->
+        <!-- 订单申诉 ：3.0 申诉-->
         <div
           class="appeal"
           v-if="showOrderAppeal[index]"
@@ -563,7 +538,7 @@
         >
         </el-pagination>
       </div>
-      <!-- 3.0 买家点击确认付款按钮 弹出交易密码框 -->
+      <!-- 四 买家点击确认付款按钮 弹出交易密码框 -->
       <div class="password-dialog">
         <el-dialog
           title="交易密码"
@@ -597,7 +572,7 @@
           </span>
         </el-dialog>
       </div>
-      <!-- 4.0 卖家点击确认收款按钮 弹出交易密码框 -->
+      <!-- 五 卖家点击确认收款按钮 弹出交易密码框 -->
       <div class="password-dialog">
         <el-dialog
           title="交易密码"
@@ -631,7 +606,7 @@
           </span>
         </el-dialog>
       </div>
-      <!-- 5.0 点击提交申诉按钮 弹出交易密码框 -->
+      <!-- 六 点击提交申诉按钮 弹出交易密码框 -->
       <div class="password-dialog">
         <el-dialog
           title="交易密码"
@@ -778,12 +753,13 @@ export default {
     },
     // 撤销/成交otc用户定单
     async cancelCompleteUserOtcOrder (val) { // 1 取消 2 完成
+      let data
       if (val === 1) {
-        const data = await cancelUserOtcOrder()
+        data = await cancelUserOtcOrder()
         console.log('撤销otc用户定单（过期买家未付款）')
       }
       if (val === 2) {
-        const data = await completeUserOtcOrder()
+        data = await completeUserOtcOrder()
         console.log('成交otc用户定单（过期卖家未收款）')
       }
       console.log(data)

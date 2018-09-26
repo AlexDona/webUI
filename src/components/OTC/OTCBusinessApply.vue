@@ -1,7 +1,7 @@
 <template>
   <div
-  class="otc-business-apply-box otc"
-  :class="{'day':theme == 'day','night':theme == 'night' }"
+    class="otc-business-apply-box otc"
+    :class="{'day':theme == 'day','night':theme == 'night' }"
   >
     <!-- 1.0 导航 -->
     <NavCommon/>
@@ -302,8 +302,8 @@ export default {
 @import url(../../../static/css/scss/OTC/OTCCenter.scss);
 .otc-business-apply-box{
   >.business-apply-content{
-    width: 1150px;
-    margin: 70px auto;
+    width: 1150px !important;
+    margin: 70px auto !important;
     padding-top: 20px;
     >.privilege{
       >.title{
@@ -470,6 +470,9 @@ export default {
   &.night{
     background-color: #1D2331;
     >.business-apply-content{
+      // width: 1150px !important;
+      // margin: 70px auto !important;
+      // padding-top: 20px;
       >.privilege{
         >.title{
           color: #fff;
