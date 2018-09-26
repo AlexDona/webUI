@@ -73,7 +73,7 @@
                 >
                   <div class="inner">
                     <span class="price sell-bg">
-                      {{item.index}}
+                      买 {{item.index}}
                     </span>
                   <span
                     class="price text-align-l sell-bg"
@@ -122,7 +122,7 @@
                 >
                   <div class="inner">
                     <span class="price buy-bg">
-                      {{item.index}}
+                      卖 {{item.index}}
                     </span>
                     <span class="price text-align-l buy-bg">
                       {{item.price}}
@@ -175,7 +175,7 @@
                 >
                   <div class="inner">
                     <span class="price buy-bg">
-                      {{item.index}}
+                      买 {{item.index}}
                     </span>
                     <span class="price text-align-l buy-bg">
                       {{item.price}}
@@ -215,7 +215,7 @@
                 >
                   <div class="inner">
                     <span class="price sell-bg">
-                      {{item.index}}
+                      卖 {{item.index}}
                     </span>
                     <span class="price text-align-l sell-bg">
                       {{item.price}}
