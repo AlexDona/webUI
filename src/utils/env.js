@@ -10,14 +10,13 @@ let apiCommonUrl = '' // api 接口前缀
 let socketUrl = '' // socket 接口
 let domain = '' // 项目域名
 let routerMode = 'hash'
-
 if (process.env.NODE_ENV == 'development') {
   /* apiCommonUrl --------------------------------------------- */
   // apiCommonUrl = 'http://192.168.1.72:8062/' // 刘耀
   // apiCommonUrl = 'http://192.168.1.71:8888/' // 亚男
   // apiCommonUrl = 'http://192.168.1.217:8888/' // 爱军
-  // apiCommonUrl = 'http://192.168.1.200:8888/' // 本地测试
-  apiCommonUrl = 'http://api.new.bzu.com/' // 内部测试
+  apiCommonUrl = 'http://192.168.1.200:8888/' // 本地测试
+  // apiCommonUrl = 'http://api.new.bzu.com/' // 内部测试
   // apiCommonUrl = 'http://192.168.1.176:8888/' // 帅飞
   // apiCommonUrl = 'https://rest.fubt.top/'
   // apiCommonUrl = 'http://192.168.1.77:8888' // 张新杰
@@ -27,7 +26,7 @@ if (process.env.NODE_ENV == 'development') {
 
   /* socketUrl --------------------------------------------- */
 
-  // socketUrl = 'ws://192.168.1.52:8087/market' // socketUrl
+  socketUrl = 'ws://192.168.1.52:8087/market' // socketUrl
   // socketUrl = 'ws://ws.bzu.com/market'
   /* domain --------------------------------------------- */
   domain = 'http://new.bzu.com/#/'

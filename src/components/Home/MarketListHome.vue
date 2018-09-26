@@ -569,11 +569,14 @@ export default{
         'content': `market.ticker.${this.partnerId}.${plateId}.0.i18nCode`,
         'id': `market_001`
       })
-      this.socket.send({
-        'tag': type,
-        'content': `market.optionalarea.${this.partnerId}.${this.userId}.ticker`,
-        'id': `market_002`
-      })
+      console.log(this.isLogin)
+      if (this.isLogin) {
+        this.socket.send({
+          'tag': type,
+          'content': `market.optionalarea.${this.partnerId}.${this.userId}.ticker`,
+          'id': `market_002`
+        })
+      }
     },
     // 切换板块
     changeTab () {
@@ -717,7 +720,9 @@ export default{
             chooseId = item.tradeId
           }
         })
-        await toggleUserCollection('remove', chooseId, this)
+        if (this.isLogin) {
+          await toggleUserCollection('remove', chooseId, this)
+        }
       }
       setStore('collectList', this.collectList)
       this.CHANGE_COLLECT_LIST(this.collectList)
