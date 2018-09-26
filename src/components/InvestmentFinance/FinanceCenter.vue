@@ -72,7 +72,7 @@
                 @keyup="changeInvestMounte"
                 onkeyup="if(this.value.length==1){this.value=this.value.replace(/[^1-9]/g,'')}else{this.value=this.value.replace(/\D/g,'')}"
                 onafterpaste="if(this.value.length==1){this.value=this.value.replace(/[^1-9]/g,'')}else{this.value=this.value.replace(/\D/g,'')}">
-                <span>{{selecteCoindName}}</span>
+                <strong>{{selecteCoindName}}</strong>
               </div>
             </label>
             <div  class="totalTipsPositon" v-if="isShow">您投资的币种数量已超过该币种的总资产</div>
@@ -81,7 +81,8 @@
                 <el-button
                  plain
                  @click="getInvestEarnings"
-                >立刻投资</el-button>
+                >立刻投资
+                </el-button>
               </div>
             </label>
             <button></button>
@@ -128,7 +129,7 @@
           <el-tabs v-model="activeName" @tab-click="handleClick">
             <el-tab-pane label="投资记录" name="1">
               <div v-if = "!isLogin" class = 'financeTsipsBox'>
-                @您还没有登陆,请<a href='/login'>登陆</a>或者<a href = '/Register'>注册</a>之后查看!
+                @您还没有登陆,请<router-link to='/login'>登陆</router-link>或者<router-link to = '/Register'>注册</router-link>之后查看!
               </div>
               <el-table
                 :data="investList"
@@ -187,7 +188,7 @@
             <!-- 收益记录 -->
             <el-tab-pane label="收益记录" name="2">
               <div v-if = "!isLogin" class = 'financeTsipsBox'>
-                @您还没有登陆,请<a href='/login'>登陆</a>或者<a href = '/Register'>注册</a>之后查看!
+                @您还没有登陆,请<router-link to='/login'>登陆</router-link>或者<router-link to = '/Register'>注册</router-link>之后查看!
               </div>
               <el-table
                 :data="userInterestRecord"
@@ -313,8 +314,6 @@ export default {
     require('../../../static/css/theme/night/InvestmentFinance/FinanceCenterNight.css')
     // 页面创建完成请求币种接口
     this.getFinancialManagementList()
-    // 判断用户是否登录决定是否请求总资产
-    // this.isLoging()
   },
   mounted () {
   },
@@ -329,12 +328,6 @@ export default {
     timeFormatting (data) {
       return timeFilter(data, 'data')
     },
-    // 进页面判断是否登录 登录获取总资产没有登录就跳转登录界面
-    // isLoging () {
-    //   if (this.isLogin) {
-    //     this.getUserCoindTotal()
-    //   }
-    // },
     // 键盘弹起时时触发
     changeInvestMounte (e) {
       if (this.isLogin) {
@@ -440,15 +433,23 @@ export default {
         this.investList = this.isLogin ? getData.userFinancialManagementRecord.list : ''
         // 收益记录列表
         this.userInterestRecord = this.isLogin ? getData.userInterestRecord.list : ''
+        // 每次换一种币种就获取该币种的总资产
         if (this.isLogin) {
           this.getUserCoindTotal()
+          // 走势图x轴赋值
+          this.FINANCE_LINE_RENDER_PRICE_LIST(getData.tickerPriceResult.renderPriceList)
+          // 走势图y轴赋值
+          this.FINANCE_LINE_RENDER_TIME_LIST(getData.tickerPriceResult.renderTimeList)
+        } else {
+          // 走势图x轴赋值
+          this.FINANCE_LINE_RENDER_PRICE_LIST()
+          // 走势图y轴赋值
+          this.FINANCE_LINE_RENDER_TIME_LIST()
         }
-        // 走势图x轴赋值
-        this.FINANCE_LINE_RENDER_PRICE_LIST(getData.tickerPriceResult.renderPriceList)
-        // 走势图y轴赋值
-        this.FINANCE_LINE_RENDER_TIME_LIST(getData.tickerPriceResult.renderTimeList)
         this.$refs.childLineCharts.resetOptions()
         this.$refs.childLineCharts.resetChart(this.options)
+        // 将投资数量输入输入框清空
+        this.investMounte = ''
       }
     },
     // 用户取消投资接口
@@ -599,7 +600,7 @@ export default {
                 line-height: 24px;
                 >input{
                   width: 380px;
-                  color:#fff;
+                  // color:#fff;
                   vertical-align: center;
                 }
               }
@@ -609,9 +610,8 @@ export default {
                   height: 48px;
                   margin-left: 72px;
                   text-align: center;
-                  border: 1px solid #fff;
-                  border-image: -webkit-linear-gradient(top,#2B396E,#2A5082);
-                  background: -webkit-linear-gradient(left,#2B396E,#2A5082);
+                  border: 2px solid -webkit-linear-gradient(135deg,#2B396E,#2A5082);
+                  background: -webkit-linear-gradient(45deg,#2B396E,#2A5082);
                   color:#fff;
                 }
               }

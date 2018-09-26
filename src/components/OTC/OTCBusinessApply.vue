@@ -13,7 +13,8 @@
       <!-- 2.1 商家特权 -->
       <div class="privilege">
         <div class="title font-weight700 font-size24">
-          商家特权
+          <!-- 商家特权 -->
+          {{$t('M.otc_merchant')}}{{$t('M.otc_privilege')}}
         </div>
         <div class="content">
           <div class="common publish-AD">
@@ -22,11 +23,13 @@
               class="location-picture"
             >
             <span class="title display-inline-block font-size18">
-              发布广告
+              <!-- 发布广告 -->
+          {{$t('M.otc_merchant_publishAD')}}
             </span>
             <p class="text font-size14">
-              自由发布定价、浮价广告<br />
-              买卖更灵活、额度更大
+              <!-- 自由发布定价、浮价广告 </br>买卖更灵活、额度更大 -->
+              {{$t('M.otc_merchant_pubshorder')}}<br />
+              {{$t('M.otc_merchant_bigmount')}}
             </p>
           </div>
           <div class="common mark">
@@ -35,12 +38,16 @@
               class="location-picture"
             >
             <span class="title display-inline-block font-size18">
-              独享标志
+              <!-- 独享标志 -->
+              {{$t('M.otc_merchant_singleFag')}}
             </span>
             <p class="text font-size14">
-              商家发布的广告会带有<br />
+              <!-- 商家发布的广告会带有<br />
               专属“商”标志<br />
-              增加交易信任
+              增加交易信任 -->
+               {{$t('M.otc_merchant_tipsLine')}}<br />
+               {{$t('M.otc_merchant_Smark')}}<br />
+               {{$t('M.otc_merchant_plusTrust')}}
             </p>
           </div>
           <div class="common service">
@@ -49,11 +56,14 @@
               class="location-picture"
             >
             <span class="title display-inline-block font-size18">
-              专属客服
+              <!-- 专属客服 -->
+              {{$t('M.otc_merchant_singleSerice')}}
             </span>
             <p class="text font-size14">
-              我们向商家提供7*24小时<br />
-              专属客服服务
+              <!-- 我们向商家提供7*24小时<br />
+              专属客服服务 -->
+              {{$t('M.otc_merchant_we')}}<br />
+              {{$t('M.otc_merchant_singleSeriviceserver')}}
             </p>
           </div>
         </div>
@@ -62,32 +72,36 @@
       <div class="approve">
         <!-- 2.2.1 商家认证 -->
         <div class="title font-weight700 font-size24">
-          商家认证
+          {{$t('M.otc_merchant')}}{{$t('M.otc_approve')}}
         </div>
         <!-- 2.2.2 1234序号部分 -->
         <div class="number">
-          <span class="common apply">商家申请</span>
-          <span class="common send-email">发送邮件</span>
-          <span class="common submit-apply">提交申请</span>
-          <span class="common pass">审核通过</span>
+          <!-- 商家申请 -->
+          <span class="common apply">{{$t('M.otc_merchant')}}{{$t('M.otc_apply')}}</span>
+          <!-- 发送邮件 -->
+          <span class="common send-email">{{$t('M.otc_merchant_sendemail')}}</span>
+          <!-- 提交申请 -->
+          <span class="common submit-apply">{{$t('M.otc_submit')}}{{$t('M.otc_apply')}}</span>
+          <!-- 审核通过 -->
+          <span class="common pass">{{$t('M.otc_merchant_verified')}}</span>
         </div>
         <!-- 2.2.3 具体步骤部分 -->
         <div class="step">
           <div class="content">
-            <h4 class="title">步骤一：准备资料</h4>
-            <p>1.请下载<a :href= 'downLoadUrl' class="businessApplyModel">《商家申请资料模板》</a>，按照要求填写申请资料。</p>
-            <p>2.录制视频资料，要求如下：</p>
-            <p>手持本人身份证正面进行录制，保持录制过程中声音和影像都清晰。</p>
-            <p>录制时要求诵读：本人（姓名），身份证号（身份证号码），我的资金来源合法可靠，自愿交易比特币等数字资产，本人充分了解数字货币及潜在风险，本人具有抗风险的能力并愿意承担一切风险。</p>
-            <p>3.申请资质条件：①申请人需在OTC中成功交易<spn>{{successTimes}}</spn>次。②申请人账户中<span>{{coinName}}</span>数量需≥<span>{{count}}</span></p>
-            <h4 class="title">步骤二：发送申请邮件</h4>
-            <p>请将以上申请资料和视频资料发送邮件至otc@FUBT.top，邮件主题为“申请成为OTC商家”。</p>
-            <h4 class="title">步骤三：提交申请</h4>
-            <p>发送邮件后，请在页面点击“确认申请”按钮，提交申请并同意冻结{{count}} {{coinName}}作为商家保证金。</p>
-            <h4 class="title">步骤四：资料审核</h4>
-            <p>我们将在3个工作日内对您的商家申请资料进行审核。我们会主动与您取得联系，请保持通讯畅通。</p>
-            <h4 class="title tips">请您务必仔细阅读并透彻理解
-              <el-button type="text" @click="businessArgument" class="agree font-size14">《认证商家协议》</el-button>
+            <h4 class="title">{{$t('M.otc_merchant_step1')}}</h4>
+            <p>{{$t('M.otc_merchant_pleaseDowload')}}<a :href= 'downLoadUrl' class="businessApplyModel">《{{$t('M.otc_merchant_applyMaterial')}}》</a>，{{$t('M.otc_merchant_content_one')}}。</p>
+            <p>{{$t('M. otc_merchant_videoKode')}}：</p>
+            <p>{{$t('M.otc_merchant_detailOne')}}</p>
+            <p>{{$t('M.otc_merchant_detailTwo')}}</p>
+            <p>{{$t('M.otc_merchant_applyLimit')}}<spn>{{successTimes}}</spn>{{$t('M.otc_ci')}}。②{{$t('M.otc_merchant_account')}}<span>{{coinName}}</span>{{$t('M.comm_count')}}{{$t('M.otc_xu')}}≥<span>{{count}}</span></p>
+            <h4 class="title">{{$t('M.otc_merchant_step2')}}</h4>
+            <p>{{$t('M.otc_merchant_datailThree')}}otc@FUBT.top，{{$t('M.otc_merchant_datailFour')}}OTC{{$t('M.otc_merchant')}}”。</p>
+            <h4 class="title">{{$t('M.otc_merchant_step3')}}</h4>
+            <p>{{$t('M.otc_merchant_datailFive')}}{{count}} {{coinName}}{{$t('M.otc_merchant_datailSix')}}。</p>
+            <h4 class="title">{{$t('M.otc_merchant_step4')}}</h4>
+            <p>{{$t('M.otc_merchant_datailSeven')}}</p>
+            <h4 class="title tips">{{$t('M.otc_merchant_loveTips')}}
+              <el-button type="text" @click="businessArgument" class="agree font-size14">《{{$t('M.otc_merchant_authentication')}}》</el-button>
             </h4>
           </div>
         </div>
@@ -100,10 +114,10 @@
             >
             </el-checkbox>
           </span>
-          <span>我已阅读并同意</span>
-          <el-button type="text" @click="businessArgument" class="agreement">《认证商家协议》</el-button>
+          <span>{{$t('M.otc_merchant_readAndSure')}}</span>
+          <el-button type="text" @click="businessArgument" class="agreement">《{{$t('M.otc_merchant_authentication')}}》</el-button>
           <el-dialog
-            title="认证商家协议"
+            :title="$t('M.otc_merchant_authentication')"
             :visible.sync="dialogVisible"
             width="50%"
             height="500px"
@@ -117,7 +131,7 @@
             class="button font-size16 cursor-pointer"
             @click="submit"
           >
-            申请成为商家
+            {{$t('M.otc_apply')}}{{$t('M.otc_sure')}}{{$t('M.otc_merchant')}}
           </button>
         </div>
       </div>
@@ -131,8 +145,8 @@
         <img src="../../assets/develop/business-applying.png" alt="">
       </div>
       <div class="text">
-        <p class="tip">您的商家申请已提交，正在审核中</p>
-        <p class="tip">请耐心等候...</p>
+        <p class="tip">{{$t('M.otc_merchant_audit')}}</p>
+        <p class="tip">{{$t('M.otc_merchant_wait')}}...</p>
       </div>
     </div>
     <!-- 2.3商家 申请成功 页面 -->
@@ -144,7 +158,7 @@
         <img src="../../assets/develop/business-apply-success.png" alt="">
       </div>
       <div class="text">
-        <p class="tip">恭喜您已成为认证商家！</p>
+        <p class="tip">{{$t('M.otc_merchant_success')}}</p>
       </div>
     </div>
     <!-- 3.0 底部 -->
@@ -202,14 +216,14 @@ export default {
       if (this.isLogin) {
         if (!this.checked) {
           this.$message({
-            message: '请先同意认证商家协议',
+            message: this.$t('M.otc_firstSure') + this.$t('M.otc_merchant_authentication'),
             type: 'error'
           })
           return false
         }
         this.getOTCBusinessApply()
       } else {
-        this.$message({showClose: true, message: '请先登录!'})
+        this.$message({showClose: true, message: this.$t('M.otc_login_pi') + '!'})
       }
     },
     // 请求申请状态
@@ -274,7 +288,7 @@ export default {
       } else {
         // 返回数据地逻辑
         data.data.data.forEach(item => {
-          if (item.keyword === 'OTC协议') {
+          if (item.keyword === ('OTC' + this.$t('comm_agreement'))) {
             this.argumentContent = item.content
           }
         })

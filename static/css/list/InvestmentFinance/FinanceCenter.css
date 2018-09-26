@@ -69,3 +69,6 @@
 .finance-box .el-table__body-wrapper{
     min-height: 200px;
 }
+.finance-box .el-button{
+    border: none;
+}

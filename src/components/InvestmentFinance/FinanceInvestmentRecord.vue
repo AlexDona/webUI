@@ -18,7 +18,7 @@
           <!-- 投资记录 -->
           <el-tabs v-model="activeName">
             <div v-if = "!isLogin" class = 'financeTsipsBox'>
-              @您还没有登陆,请<a href='/login'>登陆</a>或者<a href = '/Register'>注册</a>之后查看!
+              @您还没有登陆,请<router-link to='/login'>登陆</router-link>或者<router-link to = '/Register'>注册</router-link>之后查看!
             </div>
             <el-tab-pane label="投资记录" name="1">
               <el-table
@@ -86,7 +86,7 @@
             <!-- 收益记录 -->
             <el-tab-pane label="收益记录" name="2">
                <div v-if = "!isLogin" class = 'financeTsipsBox'>
-                @您还没有登陆,请<a href='/login'>登陆</a>或者<a href = '/Register'>注册</a>之后查看!
+                @您还没有登陆,请<router-link to='/login'>登陆</router-link>或者<router-link to = '/Register'>注册</router-link>之后查看!
               </div>
               <el-table
                 :data="userInterestRecord"
