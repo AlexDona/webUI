@@ -11,3 +11,7 @@
 .finance-box.night .el-table__header{
     box-shadow: 4px 0px 4px 4px rgba(25,30,40,1);
 }
+.finance-box.night > .inner-box > .finance-inner > .invest-list > .nvest-list-body .financeTsipsBox{
+    background-color: #121824;
+    color:#617499;
+}

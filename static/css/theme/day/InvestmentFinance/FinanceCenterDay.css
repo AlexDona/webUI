@@ -92,3 +92,6 @@
     padding-top: 50px;
     width: 282px;
 }
+.finance-box.day > .inner-box > .finance-inner > .invest-list > .nvest-list-body .financeTsipsBox{
+    background-color: #fff;
+}
