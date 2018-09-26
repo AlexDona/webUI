@@ -261,7 +261,7 @@ export default {
 }
 </script>
 <style scoped lang="scss">
-  @import "../../../../static/css/scss/Personal/UserSecuritySettings/UserloginPassword";
+  @import "../../../../static/css/scss/Personal/IndexPersonal";
   .login-password {
     >.login-password-main {
       width: 1100px;

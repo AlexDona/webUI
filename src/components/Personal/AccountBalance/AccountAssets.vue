@@ -1122,7 +1122,7 @@ export default {
 }
 </script>
 <style scoped lang="scss">
-  @import "../../../../static/css/scss/Personal/AccountBalance/AccountAssets";
+  @import "../../../../static/css/scss/Personal/IndexPersonal";
   .account-assets{
     >.account-assets-main {
       >.account-assets-box {

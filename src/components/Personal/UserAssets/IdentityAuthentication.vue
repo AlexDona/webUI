@@ -719,7 +719,7 @@ export default {
 }
 </script>
 <style scoped lang="scss">
-  @import "../../../../static/css/scss/Personal/UserAssets/IdentityAuthentication";
+  @import "../../../../static/css/scss/Personal/IndexPersonal";
 .identity-authentication{
   >.identity-authentication-main{
     .name-authentication-content {

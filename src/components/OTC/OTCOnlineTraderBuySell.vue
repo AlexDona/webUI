@@ -777,7 +777,7 @@ export default {
 }
 </script>
 <style scoped lang="scss" type="text/scss">
-@import "../../../static/css/scss/OTC/OTCPublishBuyAndSell.scss";
+@import "../../../static/css/scss/OTC/OTCCenter.scss";
 .otc-online-trader-buy-sell-box{
   // background-color: #1D2331;
   >.online-trader-buy-sell-content{

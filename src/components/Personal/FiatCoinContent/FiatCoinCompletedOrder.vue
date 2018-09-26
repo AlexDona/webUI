@@ -205,7 +205,7 @@ export default {
 }
 </script>
 <style scoped lang="scss" type="text/scss">
-  @import "../../../../static/css/scss/Personal/FiatCoinContent/FiatCoinCompletedOrder.scss";
+  @import "../../../../static/css/scss/Personal/IndexPersonal.scss";
   .fiat-completed-order-box{
     >.completed-order-content{
       .red{

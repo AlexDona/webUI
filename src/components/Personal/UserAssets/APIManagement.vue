@@ -801,7 +801,7 @@ export default {
 }
 </script>
 <style scoped lang="scss">
-  @import "../../../../static/css/scss/Personal/UserAssets/APIManagement";
+  @import "../../../../static/css/scss/Personal/IndexPersonal";
   .api-management{
     >.invitation-promotion-main{
       .code-copy{

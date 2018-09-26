@@ -285,7 +285,7 @@
               </el-button>
               <el-button
                 class="btn"
-                @click.prevent="closeCollectionMode = false"
+                @click.prevent="openCollectionMode = false"
               >
                 取 消
               </el-button>
@@ -757,7 +757,7 @@ export default {
 }
 </script>
 <style scoped lang="scss">
-  @import "../../../../static/css/scss/Personal/UserAssets/AccountCredited";
+  @import "../../../../static/css/scss/Personal/IndexPersonal";
   .credited-credited {
     >.credited-credited-main {
       >.credited-box{

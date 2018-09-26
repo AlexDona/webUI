@@ -140,7 +140,7 @@ export default {
 }
 </script>
 <style scoped lang="scss" type="text/scss">
-  @import "../../../../static/css/scss/Personal/FiatCoinContent/FiatCoinCanceledOrder.scss";
+  @import "../../../../static/css/scss/Personal/IndexPersonal.scss";
   .fiat-canceled-order-box{
     >.canceled-order-content{
       >.canceled-table-head{

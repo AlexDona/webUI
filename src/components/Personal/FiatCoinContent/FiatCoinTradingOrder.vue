@@ -936,7 +936,7 @@ export default {
 }
 </script>
 <style scoped lang="scss" type="text/scss">
-  @import "../../../../static/css/scss/Personal/FiatCoinContent/FiatCoinTradingOrder.scss";
+  @import "../../../../static/css/scss/Personal/IndexPersonal.scss";
   .fiat-trading-order-box{
     >.fiat-trading-order-content{
       .button {

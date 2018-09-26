@@ -475,7 +475,7 @@ export default {
 }
 </script>
 <style scoped lang="scss" type="text/scss">
-  @import url(../../../static/css/scss/OTC/OTCADManage.scss);
+  @import url(../../../static/css/scss/OTC/OTCCenter.scss);
 
   .otc-AD-manage-box {
     background-color: #121824;
