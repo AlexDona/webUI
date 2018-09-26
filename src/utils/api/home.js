@@ -17,4 +17,4 @@ export const getNewsDetail = (params) => get(`newsBulletin/${params}`)
 // 添加收藏
 export const addUserCollectionAjax = (params) => postWithURLencoded('collection', params)
 // 取消收藏
-// export
+export const removeCollectionAjax = (params) => postWithURLencoded('collection/cancel', params)
