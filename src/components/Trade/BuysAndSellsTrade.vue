@@ -60,7 +60,7 @@
               class="middle-box content-box"
               v-if="listOrder==='middle'"
             >
-              <!--买入-->
+              <!--卖出-->
               <dl
                 class="buys-list"
               >
@@ -73,7 +73,7 @@
                 >
                   <div class="inner">
                     <span class="price sell-bg">
-                      买 {{item.index}}
+                      卖 {{item.index}}
                     </span>
                   <span
                     class="price text-align-l sell-bg"
@@ -88,7 +88,7 @@
                   </span>
                     <!--宽度条-->
                     <i
-                      class="color-buy-bg"
+                      class="color-sell-bg"
                       :style="'width:'+ item.amount/buysAndSellsList.sells.highestAmount*100+'%'"
                     >
                     </i>
@@ -109,7 +109,7 @@
                   />
                 </dt>
               </dl>
-              <!--卖出-->
+              <!--买入-->
               <dl
                 class="sells-list"
               >
@@ -122,7 +122,7 @@
                 >
                   <div class="inner">
                     <span class="price buy-bg">
-                      卖 {{item.index}}
+                      买 {{item.index}}
                     </span>
                     <span class="price text-align-l buy-bg">
                       {{item.price}}
@@ -135,7 +135,7 @@
                     </span>
                       <!--宽度条-->
                       <i
-                        class="color-sell-bg"
+                        class="color-buy-bg"
                         :style="'width:'+ item.amount/buysAndSellsList.buys.highestAmount*100+'%'"
                       >
                       </i>

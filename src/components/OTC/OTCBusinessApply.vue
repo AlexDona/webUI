@@ -315,6 +315,7 @@ export default {
 <style scoped lang="scss" type="text/scss">
 @import url(../../../static/css/scss/OTC/OTCCenter.scss);
 .otc-business-apply-box{
+  /*width:100%;*/
   >.business-apply-content{
     width: 1150px;
     margin: 70px auto;

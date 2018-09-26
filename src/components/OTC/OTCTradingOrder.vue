@@ -1,18 +1,17 @@
 <template>
   <div
-   class="otc-trading-order-box otc"
-   :class="{'day':theme == 'day','night':theme == 'night' }"
+    class="otc-trading-order-box otc"
+    :class="{'day':theme == 'day','night':theme == 'night' }"
   >
-    <!-- 一、交易中订单 -->
     <div class="otc-trading-order-content">
-      <!-- 订单列表 ：1.0 买单 -->
+      <!-- 一、交易中订单 -->
       <div
         class="order-list"
         v-for="(item, index) in tradingOrderList"
         :key="index"
-        v-if="item.orderType === 'BUY'"
       >
-        <div class="order">
+        <!-- 订单列表 ：1.0 买单 -->
+        <div class="order" v-if="item.orderType === 'BUY'">
           <!-- 1.1 表头 -->
           <div class="order-list-head">
             <!-- 买卖家 -->
@@ -52,9 +51,7 @@
                 <!-- 金额 -->
                 <p class="trade-info">
                   <span>金额：</span>
-                  <span class="money">
-                    {{item.symbol}}{{item.payAmount}}
-                  </span>
+                  <span class="money">{{item.symbol}}{{item.payAmount}}</span>
                 </p>
                 <!-- 单价 -->
                 <p class="trade-info">
@@ -92,10 +89,10 @@
                       v-model="activePayModeList[index]"
                       @change="changeUserBankInfo(index)"
                     >
-                    <!-- :label="item1.bankType" -->
-                    <!-- :label="$t('m.latestprice')+'(***)'" -->
-                    <!-- :label="$t(`M.${item.i18nName}`)" -->
-                    <!-- :label="language === 'zh_CN'? item1.version : item1.bankType" -->
+                      <!-- :label="item1.bankType" -->
+                      <!-- :label="$t('m.latestprice')+'(***)'" -->
+                      <!-- :label="$t(`M.${item.i18nName}`)" -->
+                      <!-- :label="language === 'zh_CN'? item1.version : item1.bankType" -->
                       <el-option
                         v-for="item1 in item.userBankList"
                         :key="item1.id"
@@ -157,10 +154,7 @@
                   </p>
                 </div>
                 <!-- 扫码支付 activeBankCode[index]  :src="item.coinUrl"-->
-                <div
-                  class="bank-info-picture display-inline-block"
-                  v-if="activeBankType[index] === 'weixin' || activeBankType[index] === 'alipay'"
-                >
+                <div class="bank-info-picture display-inline-block" v-if="activeBankType[index] === 'weixin' || activeBankType[index] === 'alipay'">
                   <div class="picture-box">
                     <el-popover
                       placement="bottom"
@@ -213,11 +207,7 @@
                     <span
                       v-if="item.payType === 'xilian'"
                     >
-                      <img
-                        src="../../assets/user/xilian.png"
-                        alt=""
-                        class="xilian"
-                      >
+                      <img src="../../assets/user/xilian.png" alt="" class="xilian">
                       西联汇款已付款
                     </span>
                     <span
@@ -236,14 +226,11 @@
                   <p class="bankMoneyInfo">
                     <span>
                       账&nbsp;&nbsp;&nbsp;户: </span>
-                      <span>{{item.payAcctount}}</span>
+                    <span>{{item.payAcctount}}</span>
                   </p>
                 </div>
                 <!-- 扫码支付 qrCodeUrl  :src="item.coinUrl"-->
-                <div
-                  class="bank-info-picture display-inline-block"
-                  v-if="item.payType === 'alipay' || item.payType === 'weixin'"
-                >
+                <div class="bank-info-picture display-inline-block" v-if="item.payType === 'alipay' || item.payType === 'weixin'">
                   <div class="picture-box">
                     <el-popover
                       placement="bottom"
@@ -305,18 +292,10 @@
             </div>
           </div>
         </div>
-      </div>
-      <!-- 订单列表 ：2.0 卖单 -->
-      <div
-        class="order-list"
-        v-for="(item, index) in tradingOrderList"
-        :key="index"
-        v-if="item.orderType === 'SELL'"
-      >
-        <!-- 2.01 订单列表 -->
+        <!-- 订单列表 ：2.0 卖单 -->
         <div
           class="order"
-          v-if="!showOrderAppeal[index]"
+          v-if="!showOrderAppeal[index] && item.orderType === 'SELL'"
         >
           <!-- 2.1 表头 -->
           <div class="order-list-head">
@@ -385,7 +364,7 @@
               </div>
               <!-- 付款后 -->
               <div class="middle-content"
-                v-if="item.status == 'PAYED'"
+                   v-if="item.status == 'PAYED'"
               >
                 <div class="trader-info display-inline-block">
                   <p class="bankMoneyInfo">
@@ -419,11 +398,7 @@
                     <span
                       v-if="item.payType === 'xilian'"
                     >
-                      <img
-                        src="../../assets/user/xilian.png"
-                        alt=""
-                        class="xilian"
-                      >
+                      <img src="../../assets/user/xilian.png" alt="" class="xilian">
                       西联汇款已付款
                     </span>
                     <span
@@ -459,13 +434,13 @@
                 v-if="item.status == 'PICKED'"
               >
                 <p class="action-explain">
-                <el-button
-                  type="primary"
-                  size="mini"
-                  @click="gatheringBefore"
-                >
-                  确认收款
-                </el-button>
+                  <el-button
+                    type="primary"
+                    size="mini"
+                    @click="gatheringBefore"
+                  >
+                    确认收款
+                  </el-button>
                 </p>
                 <p class="action-explain">等待买家付款。</p>
               </div>
@@ -509,7 +484,7 @@
             </div>
           </div>
         </div>
-        <!-- 2.02 订单申诉 -->
+        <!-- 订单申诉 ：3.0 申诉-->
         <div
           class="appeal"
           v-if="showOrderAppeal[index]"
@@ -563,7 +538,7 @@
         >
         </el-pagination>
       </div>
-      <!-- 3.0 买家点击确认付款按钮 弹出交易密码框 -->
+      <!-- 四 买家点击确认付款按钮 弹出交易密码框 -->
       <div class="password-dialog">
         <el-dialog
           title="交易密码"
@@ -597,7 +572,7 @@
           </span>
         </el-dialog>
       </div>
-      <!-- 4.0 卖家点击确认收款按钮 弹出交易密码框 -->
+      <!-- 五 卖家点击确认收款按钮 弹出交易密码框 -->
       <div class="password-dialog">
         <el-dialog
           title="交易密码"
@@ -631,7 +606,7 @@
           </span>
         </el-dialog>
       </div>
-      <!-- 5.0 点击提交申诉按钮 弹出交易密码框 -->
+      <!-- 六 点击提交申诉按钮 弹出交易密码框 -->
       <div class="password-dialog">
         <el-dialog
           title="交易密码"
@@ -751,11 +726,13 @@ export default {
     cancelSetInter () {
       clearInterval(this.cancelOrdersTimer)
       this.cancelOrdersTimer = setInterval(() => {
+        console.log(this.cancelOrderTimeArr)
         // 循环自动取消倒计时时间数组
         this.cancelOrderTimeArr.forEach((item, index) => {
+          console.log(item)
           this.$set(this.cancelOrderTimeArr, index, this.cancelOrderTimeArr[index] - 1000)
           console.log(this.cancelOrderTimeArr[index])
-          console.log(typeof (this.cancelOrderTimeArr[index]))
+          // console.log(typeof (this.cancelOrderTimeArr[index]))
           if (this.cancelOrderTimeArr[index] < 0 || this.cancelOrderTimeArr[index] == 0) {
             this.cancelCompleteUserOtcOrder(1)
           }
@@ -770,7 +747,7 @@ export default {
         this.accomplishOrderTimeArr.forEach((item, index) => {
           this.$set(this.accomplishOrderTimeArr, index, this.accomplishOrderTimeArr[index] - 1000)
           console.log(this.accomplishOrderTimeArr[index])
-          if (!this.accomplishOrderTimeArr[index] > 0) {
+          if (!(this.accomplishOrderTimeArr[index] > 0)) {
             this.cancelCompleteUserOtcOrder(2)
           }
         })
@@ -821,6 +798,8 @@ export default {
     },
     // 2.0 请求交易中订单列表
     async getOTCTradingOrdersList () {
+      this.cancelOrderTimeArr = []
+      this.accomplishOrderTimeArr = []
       console.log('22222')
       console.log('当前页：' + this.currentPage)
       const data = await getOTCTradingOrders({
@@ -840,19 +819,33 @@ export default {
         console.log(this.tradingOrderList)
         // 分页
         this.totalPages = data.data.data.pages - 0
+        console.log(this.tradingOrderList)
         // 循环数组
         this.tradingOrderList.forEach((item, index) => {
+          console.log(item)
           this.buttonStatusArr[index] = false
           this.showOrderAppeal[index] = false
           // 自动取消订单倒计时数组集
-          this.cancelOrderTimeArr[index] = item.cancelRestTime // cancelRestTime毫秒单位
+          if (item.status === 'PICKED') {
+            this.cancelOrderTimeArr[index] = item.cancelRestTime // cancelRestTime毫秒单位
+            this.accomplishOrderTimeArr[index] = 1000000 // completeRestTime毫秒单位
+          } else if (item.status === 'PAYED') {
+            this.cancelOrderTimeArr[index] = 1000000 // cancelRestTime毫秒单位
+            this.accomplishOrderTimeArr[index] = item.completeRestTime // completeRestTime毫秒单位
+          }
           // 自动成交倒计时数组集
-          this.accomplishOrderTimeArr[index] = item.completeRestTime // completeRestTime毫秒单位
         })
+        console.log(this.tradingOrderList.length)
         // 调用自动取消倒计时方法
-        this.cancelSetInter()
-        // 调用自动成交倒计时方法
-        this.accomplishSetInter()
+        if (this.tradingOrderList.length) {
+          console.log(1)
+          this.cancelSetInter()
+          // 调用自动成交倒计时方法
+          this.accomplishSetInter()
+        } else {
+          clearInterval(this.cancelOrdersTimer)
+          clearInterval(this.accomplishOrdersTimer)
+        }
       }
     },
     // 3.0 改变交易方式
