@@ -7,7 +7,8 @@
       <span
         class="header-content display-inline-block font-size16 cursor-pointer"
       >
-        充提记录
+        <!--充提记录-->
+        {{ $t('M.user_billing_attention') }}{{ $t('M.comm_record') }}
         <!--@click.prevent.prevent="clickTableCut(1)"-->
       </span>
       <!--<span-->
@@ -20,7 +21,10 @@
     <div class="billing-details-main paddinglr20">
       <div class="billing-details-query">
         <div class="float-left cursor-pointer">
-          <span class="demonstration display-inline-block font-size12">币种</span>
+          <span class="demonstration display-inline-block font-size12">
+            <!--币种-->
+            {{ $t('M.comm_currency') }}
+          </span>
           <el-select
             v-model="currencyListValue"
             clearable
@@ -37,14 +41,17 @@
         </div>
         <!--充提记录-->
         <div class="float-left margin-left50 cursor-pointer">
-          <span class="demonstration font-size12">类型</span>
+          <span class="demonstration font-size12">
+            <!--类型-->
+            {{ $t('M.comm_type') }}
+          </span>
           <el-select
             v-model="currencyTypeValue"
           >
             <el-option
               v-for="item in currencyType"
               :key="item.value"
-              :label="item.label"
+              :label="$t(item.label)"
               :value="item.value"
             >
             </el-option>
@@ -67,12 +74,16 @@
         <!--</div>-->
         <div class="float-left margin-left58 cursor-pointer">
           <div class="block">
-            <span class="demonstration font-size12">日期</span>
+            <span class="demonstration font-size12">
+              <!--日期-->
+              {{ $t('M.comm_data') }}
+            </span>
+            <!--选择日期-->
             <el-date-picker
               v-model="startTime"
               type="date"
               value-format="yyyy-MM-dd"
-              placeholder="选择日期"
+              :placeholder="$t('M.comm_select') + $t('M.comm_data')"
             >
             </el-date-picker>
             &nbsp;&nbsp;-&nbsp;&nbsp;
@@ -80,7 +91,7 @@
               v-model="endTime"
               type="date"
               value-format="yyyy-MM-dd"
-              placeholder="选择日期"
+              :placeholder="$t('M.comm_select') + $t('M.comm_data')"
             >
             </el-date-picker>
           </div>
@@ -89,7 +100,8 @@
           class="search-button float-right border-radius2 text-align-c cursor-pointer font-size12"
           @click.prevent="stateSearchButton"
         >
-          搜索
+          <!--搜索-->
+          {{ $t('M.comm_search') }}
         </div>
       </div>
       <!--充提记录-->
@@ -97,13 +109,15 @@
         v-show="showStatusRecordList"
         class="billing-details-content"
       >
+        <!--暂无记录-->
+        <!--币种 类型 数量 提交时间 更新时间 状态-->
         <el-table
           :data="chargeRecordList"
           style="width: 100%"
-          empty-text="暂无充提记录"
+          :empty-text="$t('M.comm_no_data')"
         >
           <el-table-column
-            label="币种"
+            :label="$t('M.comm_currency')"
             width="100"
           >
             <template slot-scope = "s">
@@ -111,7 +125,7 @@
             </template>
           </el-table-column>
           <el-table-column
-            label="类型"
+            :label="$t('M.comm_type')"
             width="100"
           >
             <template slot-scope = "s">
@@ -119,22 +133,21 @@
             </template>
           </el-table-column>
           <el-table-column
-            label="数量"
+            :label="$t('M.comm_count')"
           >
             <template slot-scope = "s">
               <div>{{ s.row.amount }}</div>
             </template>
           </el-table-column>
           <el-table-column
-            label="提交时间"
+            :label="$t('M.comm_sub_time') + $t('M.comm_time')"
           >
             <template slot-scope = "s">
               <div>{{ s.row.createTime }}</div>
             </template>
           </el-table-column>
           <el-table-column
-            prop="address"
-            label="更新时间"
+            :label="$t('M.comm_update') + $t('M.comm_time')"
           >
             <template slot-scope = "s">
               <div>{{ s.row.updateTime }}</div>
@@ -142,7 +155,7 @@
           </el-table-column>
           <el-table-column
             prop="address"
-            label="状态"
+            :label="$t('M.comm_state')"
           >
             <template slot-scope = "s">
               <div>{{ s.row.statusName }}</div>
@@ -164,42 +177,42 @@
         v-show="hiddenStatusRecordList"
         class="billing-details-content"
       >
+        <!--时间 币种 类型 数量 状态-->
         <el-table
           :data="otherRecordsList"
           style="width: 100%"
-          empty-text="暂无其他记录"
+          :empty-text="$t('M.comm_no_data')"
         >
           <el-table-column
-            label="时间"
+            :label="$t('M.comm_time')"
           >
             <template slot-scope = "s">
               <div>{{ s.row.time }}</div>
             </template>
           </el-table-column>
           <el-table-column
-            label="币种"
+            :label="$t('M.comm_currency')"
           >
             <template slot-scope = "s">
               <div>{{ s.row.coinName }}</div>
             </template>
           </el-table-column>
           <el-table-column
-            label="类型"
+            :label="$t('M.comm_type')"
           >
             <template slot-scope = "s">
               <div>{{ s.row.type }}</div>
             </template>
           </el-table-column>
           <el-table-column
-            label="数量"
+            :label="$t('M.comm_count')"
           >
             <template slot-scope = "s">
               <div>{{ s.row.amount }}</div>
             </template>
           </el-table-column>
           <el-table-column
-            prop="address"
-            label="状态"
+            :label="$t('M.comm_state')"
           >
             <template slot-scope = "s">
               <div>{{ s.row.status }}</div>
@@ -236,49 +249,51 @@ export default {
       currencyList: [], // 币种列表
       // 充提记录类型
       currencyTypeValue: '', // 默认类型
+      // 全部 充币 提币
       currencyType: [
         {
           value: '',
-          label: '全部'
+          label: 'M.all-plate'
         }, {
           value: 'RECHARGE',
-          label: '充币'
+          label: 'M.comm_charge_money'
         }, {
           value: 'WITHDRAW',
-          label: '提币'
+          label: 'M.comm_mention_money'
         }
       ], // 默认类型
       // 其他记录
-      otherRecordsList: [
-        {
-          time: '2016-05-02 10:30:30',
-          coinName: 'BTC',
-          type: '全部',
-          amount: '12312',
-          status: '已完成'
-        }, {
-          time: '2016-05-02 10:30:30',
-          coinName: 'BTC',
-          type: '全部',
-          amount: '12312',
-          status: '已完成'
-        }, {
-          time: '2016-05-02 10:30:30',
-          coinName: 'BTC',
-          type: '全部',
-          amount: '12312',
-          status: '已完成'
-        }, {
-          time: '2016-05-02 10:30:30',
-          coinName: 'BTC',
-          type: '全部',
-          amount: '12312',
-          status: '已完成'
-        }
-      ],
+      // otherRecordsList: [
+      //   {
+      //     time: '2016-05-02 10:30:30',
+      //     coinName: 'BTC',
+      //     type: '全部',
+      //     amount: '12312',
+      //     status: '已完成'
+      //   }, {
+      //     time: '2016-05-02 10:30:30',
+      //     coinName: 'BTC',
+      //     type: '全部',
+      //     amount: '12312',
+      //     status: '已完成'
+      //   }, {
+      //     time: '2016-05-02 10:30:30',
+      //     coinName: 'BTC',
+      //     type: '全部',
+      //     amount: '12312',
+      //     status: '已完成'
+      //   }, {
+      //     time: '2016-05-02 10:30:30',
+      //     coinName: 'BTC',
+      //     type: '全部',
+      //     amount: '12312',
+      //     status: '已完成'
+      //   }
+      // ],
       hiddenStatusRecordList: false, // 其他记录
       // 其他记录类型
       otherRecordsValue: '',
+      // 全部 活动奖励 糖果奖励 系统赠送 邀请奖励
       otherRecordsType: [
         {
           value: '1',

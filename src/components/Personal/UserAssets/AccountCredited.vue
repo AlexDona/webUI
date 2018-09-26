@@ -4,19 +4,32 @@
     :class="{'day':theme == 'day','night':theme == 'night' }"
   >
     <header class="credited-credited-header personal-height40 line-height40 background-color">
-      <span class="padding-left23 header-content font-size16">收款账户</span>
+      <span class="padding-left23 header-content font-size16">
+        <!--收款账户-->
+        {{ $t('M.user_account_credited') }}
+      </span>
     </header>
     <div class="credited-credited-main min-height500 margin-top9">
       <div class="credited-box">
         <p class="content-title font-size12">
-          <span class="title-tips">温馨提示：</span>
+          <!--温馨提示：-->
+          <!--请务必使用您本人的实名账户，被激活的支付方式将在OTC交易时向买方展示，可设置5种但最多激活3种-->
+          <span class="title-tips">
+            {{ $t('M.user_account_warm_prompt') }}
+          </span>
           <span class="tips-content">
-            请务必使用您本人的实名账户，被激活的支付方式将在OTC交易时向买方展示，可设置5种但最多激活3种
+            {{ $t('M.user_account_text') }}
           </span>
         </p>
         <div class="title-status font-size12">
-          <span class="left">收款方式</span>
-          <span class="right text-align-r">操作</span>
+          <!--收款方式-->
+          <span class="left">
+            {{ $t('M.user_account_payment_term') }}
+          </span>
+          <!--操作-->
+          <span class="right text-align-r">
+            {{ $t('M.comm_operation') }}
+          </span>
         </div>
         <div class="payment-content">
           <!--银行卡-->
@@ -28,7 +41,10 @@
                   iconName="icon-yinlian"
                 />
               </span>
-              <span class="payment-card">银行转账</span>
+              <!--银行转账-->
+              <span class="payment-card">
+                {{ $t('M.user_account_bank_transfer') }}
+              </span>
             </p>
             <div
               class="payment-right"
@@ -45,22 +61,21 @@
                 class="switch-img cursor-pointer"
                 :src="openPictureSrc"
               >
-              <!--<router-link to="/AddBankCard">-->
+              <!--设置 修改-->
                 <span
                   v-if="paymentTerm.isBankBind"
                   class="payment-state cursor-pointer"
                   @click.prevent="setShowStatusSecurity('bank')"
                 >
-                    设置
+                  {{ $t('M.comm_set') }}
                 </span>
                 <span
                   v-else
                   class="payment-state cursor-pointer"
                   @click.prevent="setShowStatusSecurity('bank')"
                 >
-                    修改
+                  {{ $t('M.comm_modification') }}
                 </span>
-              <!--</router-link>-->
             </div>
           </div>
           <!--微信-->
@@ -72,7 +87,9 @@
                   iconName="icon-weixin1"
                 />
               </span>
-              <span class="payment-card">微信</span>
+              <span class="payment-card">
+                {{ $t('M.user_account_weChat') }}
+              </span>
             </p>
             <p
               class="payment-right"
@@ -89,22 +106,21 @@
                 class="switch-img cursor-pointer"
                 :src="openPictureSrc"
               >
-              <!--<router-link to="/AddWeChat">-->
+              <!--设置 修改-->
                 <span
                   v-if="paymentTerm.isWeixinBind"
                   class="payment-state cursor-pointer"
                   @click.prevent="setShowStatusSecurity('weChat')"
                 >
-                    设置
+                  {{ $t('M.comm_set') }}
                 </span>
                 <span
                   v-else
                   class="payment-state cursor-pointer"
                   @click.prevent="setShowStatusSecurity('weChat')"
                 >
-                    修改
+                   {{ $t('M.comm_modification') }}
                 </span>
-              <!--</router-link>-->
             </p>
           </div>
           <!--支付宝-->
@@ -116,7 +132,9 @@
                   iconName="icon-zhifufangshi-zhifubao"
                 />
               </span>
-              <span class="payment-card">支付宝</span>
+              <span class="payment-card">
+                {{ $t('M.user_account_alipay') }}
+              </span>
             </p>
             <p
               class="payment-right"
@@ -133,22 +151,20 @@
                 class="switch-img cursor-pointer"
                 :src="openPictureSrc"
               >
-              <!--<router-link to="/AddSetAlipay">-->
                 <span
                   v-if="paymentTerm.isAlipayBind"
                   class="payment-state cursor-pointer"
                   @click.prevent="setShowStatusSecurity('alipay')"
                 >
-                  设置
+                  {{ $t('M.comm_set') }}
                 </span>
                 <span
                   v-else
                   class="payment-state cursor-pointer"
                   @click.prevent="setShowStatusSecurity('alipay')"
                 >
-                  修改
+                  {{ $t('M.comm_modification') }}
                 </span>
-              <!--</router-link>-->
             </p>
           </div>
           <!--PAYPAL-->
@@ -160,7 +176,9 @@
                   iconName="icon-paypal"
                 />
               </span>
-              <span class="payment-card">PAYPAL</span>
+              <span class="payment-card">
+                {{ $t('M.user_account_paypal') }}
+              </span>
             </p>
             <p
               class="payment-right"
@@ -177,22 +195,20 @@
                 class="switch-img cursor-pointer"
                 :src="openPictureSrc"
               >
-              <!--<router-link class="setting-btn" to="/AddSetPaypal">-->
                 <span
                   v-if="paymentTerm.isPaypalBind"
                   class="payment-state cursor-pointer"
                   @click.prevent="setShowStatusSecurity('paypal')"
                 >
-                  设置
+                  {{ $t('M.comm_set') }}
                 </span>
                 <span
                   v-else
                   class="payment-state cursor-pointer"
                   @click.prevent="setShowStatusSecurity('paypal')"
                 >
-                  修改
+                  {{ $t('M.comm_modification') }}
                 </span>
-              <!--</router-link>-->
             </p>
           </div>
           <!--西联汇款-->
@@ -201,7 +217,9 @@
               <span>
                 <img src="../../../assets/user/xilian.png" alt="">
               </span>
-              <span class="payment-card">西联汇款</span>
+              <span class="payment-card">
+                {{ $t('M.user_account_western_union') }}
+              </span>
             </p>
             <p
               class="payment-right"
@@ -218,22 +236,20 @@
                 class="switch-img cursor-pointer"
                 :src="openPictureSrc"
               >
-              <!--<router-link class="setting-btn" to="/AddWesternUnion">-->
                 <span
                   v-if="paymentTerm.isXilianBind"
                   class="payment-state cursor-pointer"
                   @click.prevent="setShowStatusSecurity('westernUnion')"
                 >
-                  设置
+                  {{ $t('M.comm_set') }}
                 </span>
                 <span
                   v-else
                   class="payment-state cursor-pointer"
                   @click.prevent="setShowStatusSecurity('westernUnion')"
                 >
-                  修改
+                  {{ $t('M.comm_modification') }}
                 </span>
-              <!--</router-link>-->
             </p>
           </div>
           <!--开启二次确认弹框-->
@@ -247,47 +263,53 @@
               class="text-info font-size16"
               v-show="closeBankCard"
             >
-              开启银行卡收款方式
+              <!--开启银行卡收款方式-->
+              {{ $t('M.comm_open') }}{{ $t('M.user_account_bank') }}{{ $t('M.user_account_payment_term') }}
             </span>
             <span
               class="text-info font-size16"
               v-show="closeMicroLetter"
             >
-              开启微信收款方式
+              <!--开启微信收款方式-->
+              {{ $t('M.comm_open') }}{{ $t('M.user_account_weChat') }}{{ $t('M.user_account_payment_term') }}
             </span>
             <span
               class="text-info font-size16"
               v-show="closeAlipay"
             >
-              开启支付宝收款方式
+              <!--开启支付宝收款方式-->
+              {{ $t('M.comm_open') }}{{ $t('M.user_account_alipay') }}{{ $t('M.user_account_payment_term') }}
             </span>
             <span
               class="text-info font-size16"
               v-show="closePayapl"
             >
-              开启payapl收款方式
+              <!--开启payapl收款方式-->
+              {{ $t('M.comm_open') }}{{ $t('M.user_account_paypal') }}{{ $t('M.user_account_payment_term') }}
             </span>
             <span
               class="text-info font-size16"
               v-show="closeWesternUnion"
             >
-              开启西联汇款收款方式
+              <!--开启西联汇款收款方式-->
+              {{ $t('M.comm_open') }}{{ $t('M.user_account_western_union') }}{{ $t('M.user_account_payment_term') }}
             </span>
             <span
               slot="footer"
               class="dialog-footer"
             >
+              <!--确 定 取 消-->
               <el-button
                 type="primary"
                 @click.prevent="determineTheOpen"
               >
-                  确 定
+                {{ $t('M.comm_confirm') }}
               </el-button>
               <el-button
                 class="btn"
                 @click.prevent="openCollectionMode = false"
               >
-                取 消
+                {{ $t('M.comm_cancel') }}
               </el-button>
             </span>
           </el-dialog>
@@ -302,47 +324,53 @@
               v-show="closeBankCard"
               class="text-info font-size16"
             >
-              是否确定关闭银行卡收款方式
+              <!--是否确定关闭银行卡收款方式-->
+              {{ $t('M.user_account_whether_not') }}{{ $t('M.comm_confirm') }}{{ $t('M.comm_close') }}{{ $t('M.user_account_bank') }}{{ $t('M.user_account_payment_term') }}
             </span>
             <span
               v-show="closeMicroLetter"
               class="text-info font-size16"
             >
-              是否确定关闭微信收款方式
+              <!--是否确定关闭微信收款方式-->
+              {{ $t('M.user_account_whether_not') }}{{ $t('M.comm_confirm') }}{{ $t('M.comm_close') }}{{ $t('M.user_account_weChat') }}{{ $t('M.user_account_payment_term') }}
             </span>
             <span
               v-show="closeAlipay"
               class="text-info font-size16"
             >
-              是否确定关闭支付宝收款方式
+              <!--是否确定关闭支付宝收款方式-->
+              {{ $t('M.user_account_whether_not') }}{{ $t('M.comm_confirm') }}{{ $t('M.comm_close') }}{{ $t('M.user_account_alipay') }}{{ $t('M.user_account_payment_term') }}
             </span>
             <span
               v-show="closePayapl"
               class="text-info font-size16"
             >
-              是否确定关闭payapl收款方式
+              <!--是否确定关闭payapl收款方式-->
+              {{ $t('M.user_account_whether_not') }}{{ $t('M.comm_confirm') }}{{ $t('M.comm_close') }}{{ $t('M.user_account_paypal') }}{{ $t('M.user_account_payment_term') }}
             </span>
             <span
               v-show="closeWesternUnion"
               class="text-info font-size16"
             >
-              是否确定关闭西联汇款收款方式
+              <!--是否确定关闭西联汇款收款方式-->
+              {{ $t('M.user_account_whether_not') }}{{ $t('M.comm_confirm') }}{{ $t('M.comm_close') }}{{ $t('M.user_account_western_union') }}{{ $t('M.user_account_payment_term') }}
             </span>
             <span
               slot="footer"
               class="dialog-footer"
             >
+               <!--确 定 取 消-->
               <el-button
                 type="primary"
                 @click.prevent="determineTheOpen"
               >
-                  确 定
+                {{ $t('M.comm_confirm') }}
               </el-button>
                <el-button
                  class="btn"
                  @click.prevent="closeCollectionMode = false"
                >
-                取 消
+                {{ $t('M.comm_cancel') }}
               </el-button>
             </span>
           </el-dialog>
@@ -360,7 +388,8 @@
               </div>
             </div>
             <p class="font-size12 warning-text margin-top35 text-align-c">
-              请先完成身份认证并且设置交易密码，再来设置OTC收款账户!
+              <!--请先完成身份认证并且设置交易密码，再来设置OTC收款账户!-->
+              {{ $t('M.user_account_text1') }}
             </p>
             <span
               slot="footer"
@@ -370,7 +399,8 @@
                 type="primary"
                 @click.prevent="authenticationJump"
               >
-                去认证
+                <!--去认证-->
+                {{ $t('M.user_senior_go_certification') }}
               </el-button>
             </span>
           </el-dialog>
@@ -488,14 +518,6 @@ export default {
           break
       }
     },
-    // 判断是否实名认证
-    // setCollectionMode () {
-    //   if (this.userInfoRefresh.realname == '' && this.userInfoRefresh.payPassword == '') {
-    //     this.centerModelWarning = true
-    //   } else {
-    //     this.centerModelWarning = false
-    //   }
-    // },
     // 确认开启关闭
     statusOpenToClose (paymentType, safeState) {
       // 把方法中定义的activeType、state在这里进行赋值 点击哪一个那当前的类型和状态传给后台
@@ -521,8 +543,9 @@ export default {
               this.closeWesternUnion = false
             }
           } else {
+            // 请先设置银行卡
             this.$message({
-              message: '请先设置银行卡',
+              message: this.$t('M.user_account_please_set_up') + this.$t('M.user_account_bank'),
               type: 'error'
             })
             // this.openCollectionMode = false
@@ -546,11 +569,12 @@ export default {
               this.closeWesternUnion = false
             }
           } else {
+            // 请先设置微信
             this.$message({
-              message: '请先设置微信',
+              message: this.$t('M.user_account_please_set_up') + this.$t('M.user_account_weChat'),
               type: 'error'
             })
-            this.openCollectionMode = false
+            // this.openCollectionMode = false
           }
           break
         case 'alipay':
@@ -571,11 +595,12 @@ export default {
               this.closeWesternUnion = false
             }
           } else {
+            // 请先设置支付宝
             this.$message({
-              message: '请先设置支付宝',
+              message: this.$t('M.user_account_please_set_up') + this.$t('M.user_account_alipay'),
               type: 'error'
             })
-            this.openCollectionMode = false
+            // this.openCollectionMode = false
           }
           break
         case 'paypal':
@@ -596,11 +621,12 @@ export default {
               this.closeWesternUnion = false
             }
           } else {
+            // 请先设置PAYPAL
             this.$message({
-              message: '请先设置PAYPAL',
+              message: this.$t('M.user_account_please_set_up') + this.$t('M.user_account_paypal'),
               type: 'error'
             })
-            this.openCollectionMode = false
+            // this.openCollectionMode = false
           }
           break
         case 'western':
@@ -621,8 +647,9 @@ export default {
               this.closeWesternUnion = true
             }
           } else {
+            // 请先设置西联汇款
             this.$message({
-              message: '请先设置西联汇款',
+              message: this.$t('M.user_account_please_set_up') + this.$t('M.user_account_western_union'),
               type: 'error'
             })
             this.openCollectionMode = false

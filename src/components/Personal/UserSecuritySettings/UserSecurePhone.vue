@@ -10,13 +10,13 @@
           v-if="!securityCenter.isPhoneBind"
           class="header-content-left header-content font-size16 font-weight600"
         >
-          修改手机
+          绑定手机
         </span>
         <span
           v-else
           class="header-content-left header-content font-size16 font-weight600"
         >
-          绑定手机
+          修改手机
         </span>
         <span
           class="header-content-right font-size12 cursor-pointer"
@@ -36,7 +36,7 @@
         <div class="phone-content-from">
           <!--绑定手机-->
           <el-form
-            v-if="securityCenter.isPhoneBind"
+            v-if="!securityCenter.isPhoneBind"
             :label-position="labelPosition"
             label-width="120px"
           >
@@ -45,9 +45,9 @@
             >
               <el-select v-model="bindingDataPhone.bindingAreaCodeValue">
                 <el-option
-                  v-for="item in contryAreaList"
-                  :key="item.nationCode"
-                  :label="item.english"
+                  v-for="(item, index) in contryAreaList"
+                  :key="index"
+                  :label="item.nationCode"
                   :value="item.nationCode"
                 >
                 </el-option>
@@ -304,6 +304,7 @@ export default {
     require('../../../../static/css/theme/day/Personal/UserSecuritySettings/UserSecurePhoneDay.css')
     // 黑色主题样式
     require('../../../../static/css/theme/night/Personal/UserSecuritySettings/UserSecurePhoneNight.css')
+    this.getSecurityCenter()
   },
   mounted () {},
   activited () {},

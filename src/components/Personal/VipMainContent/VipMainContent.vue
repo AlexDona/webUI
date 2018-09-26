@@ -368,7 +368,7 @@ export default {
       changeRed1: 0,
       month: '', // 月份
       vipName: '', // vip名称
-      currencyAsset: '' // 币种数量
+      currencyAsset: 0 // 币种数量
     }
   },
   created () {
@@ -574,8 +574,8 @@ export default {
     }
     > .content-main-content {
       .error-msg{
-        height:30px;
-        line-height: 30px;
+        height:25px;
+        line-height: 25px;
         color: rgb(212, 88, 88);
       }
       > .content-main {

@@ -16,7 +16,7 @@
           v-else
           class="header-content-left header-content font-size16 font-weight600"
         >
-          绑定谷歌验证器
+          解绑谷歌验证器
         </span>
         <span
           class="header-content-right font-size12 cursor-pointer"

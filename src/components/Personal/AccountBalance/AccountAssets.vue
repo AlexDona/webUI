@@ -126,7 +126,7 @@
                     <div
                       v-else
                       class="money-color flex1 cursor-pointer"
-                      :title="$t('M.user_suspended')"
+                      :title="$t('M.user_assets_suspended')"
                     >
                       <!--充币-->
                       {{ $t('M.comm_charge_money') }}
@@ -209,9 +209,9 @@
                           <!--禁止充值除 之外的其他资产，任何非 资产充值将不可找回-->
                           <!--往该地址充值，汇款完成，等待网络自动确认（4个确认）后系统自动到账-->
                           <!--为了快速到账，充值时可以适当提高网络手续费-->
-                          <p>* {{ $t('M.user_recharge_hint1') }}{{ chargeMoneyName }}{{ $t('M.user_recharge_hint2') }}{{ chargeMoneyName }}{{ $t('M.user_recharge_hint3') }}</p>
-                          <p>* {{ $t('M.user_recharge_hint4') }}</p>
-                          <p>* {{ $t('M.user_recharge_hint5') }}</p>
+                          <p>* {{ $t('M.user_assets_recharge_hint1') }}{{ chargeMoneyName }}{{ $t('M.user_assets_recharge_hint2') }}{{ chargeMoneyName }}{{ $t('M.user_assets_recharge_hint3') }}</p>
+                          <p>* {{ $t('M.user_assets_recharge_hint4') }}</p>
+                          <p>* {{ $t('M.user_assets_recharge_hint5') }}</p>
                         </div>
                       </div>
                       <div class='recharge-content-right flex1'>
@@ -336,17 +336,17 @@
                         <!--可提现金额≤账户可用资产-未确认的数字资产。-->
                         <p class="currency-rule">
                           <span>{{ chargeMoneyName }}</span>
-                          {{ $t('M.user_withdrawal_hint1') }}：
+                          {{ $t('M.user_assets_withdrawal_hint1') }}：
                         </p>
                         <p class="prompt-message">
-                          * {{ $t('M.user_withdrawal_hint2') }}
+                          * {{ $t('M.user_assets_withdrawal_hint2') }}
                         </p>
                         <p class="prompt-message">
                           * <span>{{ chargeMoneyName }}</span>
-                          {{ $t('M.user_withdrawal_hint3') }}
+                          {{ $t('M.user_assets_withdrawal_hint3') }}
                         </p>
                         <p class="prompt-message">
-                          * {{ $t('M.user_withdrawal_hint4') }}
+                          * {{ $t('M.user_assets_withdrawal_hint4') }}
                         </p>
                         <p class="mention-button">
                           <button
@@ -373,7 +373,7 @@
                       </div>
                       <!--提币-->
                       <el-dialog
-                        :label="$t('m.comm_mention_money')"
+                        :label="$t('M.comm_mention_money')"
                         :visible.sync="mentionMoneyConfirm"
                       >
                         <el-form
@@ -383,7 +383,7 @@
                           <!--手机验证-->
                           <el-form-item
                             v-if="securityCenter.isPhoneEnable"
-                            :label="$t('m.comm_code_phone')"
+                            :label="$t('M.comm_code_phone')"
                           >
                             <input
                               class="content-input padding-l15 box-sizing"
@@ -401,7 +401,7 @@
                           <!--邮箱验证-->
                           <el-form-item
                             v-if="securityCenter.isMailEnable"
-                            :label="$t('m.comm_code_email')"
+                            :label="$t('M.comm_code_email')"
                           >
                             <input
                               class="content-input padding-l15 box-sizing"
@@ -419,7 +419,7 @@
                           <!--谷歌验证-->
                           <el-form-item
                             v-if="securityCenter.isGoogleEnable"
-                            :label="$t('m.comm_code_google')"
+                            :label="$t('M.comm_code_google')"
                           >
                             <input
                               class="content-input input-google padding-l15 box-sizing"
@@ -430,7 +430,7 @@
                           <span v-else></span>
                           <!--交易密码-->
                           <el-form-item
-                            :label="$t('m.comm_password')"
+                            :label="$t('M.comm_password')"
                           >
                             <input
                               type="password"
@@ -460,7 +460,7 @@
                       >
                         <span class="info text-align-c display-inline-block">
                           <!--您还未设置交易密码请先设置交易密码在进行提币-->
-                          {{ $t('m.user_no_transaction_password') }}
+                          {{ $t('m.user_assets_no_transaction_password') }}
                         </span>
                         <span
                           slot="footer"
@@ -931,8 +931,9 @@ export default {
     * */
     moneyConfirmState () {
       if (!this.amount) {
+        // 请输入提币数量
         this.$message({
-          message: '请上输入提币数量',
+          message: this.$t('m.comm_please_enter') + this.$t('m.comm_mention_money') + this.$t('m.comm_count'),
           type: 'error'
         })
         this.mentionMoneyConfirm = false

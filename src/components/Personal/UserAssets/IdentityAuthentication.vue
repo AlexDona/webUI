@@ -4,7 +4,10 @@
     :class="{'day':theme == 'day','night':theme == 'night' }"
   >
     <header class="identity-header-background personal-height40 line-height40">
-      <span class="padding-left23 header-content font-size16">身份认证</span>
+      <span class="padding-left23 header-content font-size16">
+        <!--身份认证-->
+        {{ $t('M.user_identity') }}
+      </span>
     </header>
     <div class="identity-authentication-main margin-top9">
       <!--实名认证-->
@@ -14,27 +17,35 @@
             class="advanced-main-header"
           >
             <div class="header-border display-flex margin20">
-              <span class="font-size16 main-header-title">实名认证</span>
+              <span class="font-size16 main-header-title">
+                <!--实名认证-->
+                {{ $t('M.user_real_name') }}
+              </span>
               <p
                 v-if="userInfo.userInfo.realname === ''"
                 class="authentication-type font-size12"
               >
-                （请如实填写您的身份信息，一经认证不可修改）
+                （{{ $t('M.user_real_info') }}）
               </p>
               <p
                 v-else
                 class="authentication-type-info font-size12 box-sizing"
               >
                 （
-                <span class="authentication-info">您已通过实名认证</span>
+                <span class="authentication-info">
+                  <!--您已通过实名认证-->
+                  {{ $t('M.user_real_already') }} {{ $t('M.user_real_name') }}
+                </span>
                 <span
                   class="type-info"
                 >
-                  姓名：
+                  <!--姓名：-->
+                  {{ $t('M.comm_name') }}：
                   {{ userInfo.userInfo.realname }}
                 </span>、
                 <span class="type-info">
-                  身份证号：
+                  <!--身份证号：-->
+                  {{ $t('M.comm_id_number') }}：
                    {{ userInfo.userInfo.cardNo.substring(0,2)}}
                   ****
                    {{ userInfo.userInfo.cardNo.substring(16,18)}}
@@ -53,7 +64,10 @@
           ref="form"
           label-width="80px"
         >
-          <el-form-item label="地区国家">
+          <!--地区国家 证件类型 真实姓名 证件号码-->
+          <el-form-item
+            :label="$t('M.user_real_region')"
+          >
             <el-select
               v-model="regionValue"
               @change="changeId"
@@ -67,10 +81,13 @@
               </el-option>
             </el-select>
           </el-form-item>
-          <el-form-item label="证件类型">
+          <el-form-item
+            :label="$t('M.user_real_certificate_type')"
+          >
+            <!--请选择证件类型-->
             <el-select
               v-model="documentTypeValue"
-              placeholder="请选择证件类型"
+              :placeholder="$t('M.comm_please_choose') + $t('M.user_real_certificate_type')"
             >
               <el-option
                 v-for="(item, index) in documentTypeList"
@@ -81,7 +98,9 @@
               </el-option>
             </el-select>
           </el-form-item>
-          <el-form-item label="真实姓名">
+          <el-form-item
+            :label="$t('M.user_real_real')"
+          >
             <input
               class="common-input"
               v-model="realName"
@@ -94,7 +113,9 @@
               :isShow="!!errorShowStatusList[0]"
             />
           </el-form-item>
-          <el-form-item label="证件号码">
+          <el-form-item
+            :label="$t('M.comm_credentials_number')"
+          >
             <input
               class="common-input"
               v-model="identificationNumber"
@@ -118,7 +139,8 @@
               type="button"
               @click.prevent="submitRealName"
             >
-              提交认证
+              <!--提交认证-->
+              {{ $t('M.comm_sub_time') }}{{ $t('M.comm_user_identity_attestation') }}
             </button>
           </el-form-item>
         </el-form>
@@ -137,30 +159,37 @@
         <p
           class="header-border paddinglr20"
           @click.prevent="authenticationMethod">
-          <span class="font-size16 main-header-title">高级认证</span>
+          <span class="font-size16 main-header-title">
+            <!--高级认证-->
+            {{ $t('M.user_senior_certification') }}
+          </span>
           <span
             v-if="userInfo.userInfo.advancedAuth === 'notPass' || userInfo.userInfo.advancedAuth === ''"
             class="authentication-type font-size12"
           >
-            （未高级认证）
+            <!--未高级认证-->
+            （{{ $t('M.comm_not') }}{{ $t('M.user_senior_certification') }}）
           </span>
           <span
             v-if="userInfo.userInfo.advancedAuth === 'pass'"
             class="authentication-type font-size12"
           >
-            （已通过实名认证）
+            <!--已通过实名认证-->
+            （{{ $t('M.user_real_already') }}{{ $t('M.user_real_name') }}）
           </span>
           <span
             v-if="userInfo.userInfo.advancedAuth === 'waitVeritfy'"
             class="authentication-type font-size12"
           >
-            （待审核）
+            <!--待审核-->
+            （{{ $t('M.user_senior_audit') }}）
           </span>
           <span
             class="float-right authentication-type font-size12"
             v-if="userInfo.userInfo.advancedAuth === 'notPass' || userInfo.userInfo.advancedAuth === ''"
           >
-            去认证
+            <!--去认证-->
+            {{ $t('M.user_senior_go_certification') }}
           </span>
           <span v-else></span>
         </p>
@@ -170,14 +199,19 @@
           <el-collapse-transition>
             <div class="transition-box">
               <div class="personal-information">
+                <!--国籍 姓名 证件号 证件类型-->
                 <p class="information">
-                  <span class="info-type font-size12">国际：</span>
+                  <span class="info-type font-size12">
+                    {{ $t('M.comm_nationality') }}：
+                  </span>
                   <span class="user-info font-size14">
                     {{ userInfo.userInfo.country }}
                   </span>
                 </p>
                 <p class="information">
-                  <span class="info-type font-size12">姓名：</span>
+                  <span class="info-type font-size12">
+                    {{ $t('M.comm_name') }}：
+                  </span>
                   <!--<span v-if="statusRealNameInformation.realname == null"></span>-->
                   <span
                     class="user-info font-size14"
@@ -186,7 +220,9 @@
                   </span>
                 </p>
                 <p class="information">
-                  <span class="info-type font-size12">证件号：</span>
+                  <span class="info-type font-size12">
+                    {{ $t('M.comm_credentials_number') }}：
+                  </span>
                   <span class="user-info font-size14">
                   <!--  {{ userInfoRefresh.cardNo.substring(0,6)}}
                   ****
@@ -195,25 +231,33 @@
                   </span>
                 </p>
                 <p class="information">
-                  <span class="info-type font-size12">证件类型：</span>
+                  <span class="info-type font-size12">
+                    {{ $t('M.user_real_certificate_type') }}：
+                  </span>
                   <span class="user-info font-size14">
                     {{ statusRealNameInformation.cardType }}
                   </span>
                 </p>
               </div>
               <div class="advanced-prompt font-size12">
+                <!--注意：-->
+                <!--1. 照片文件大小不能超过10M！文件格式须为jpg、bmp、png等！-->
+                <!--2. 请确保照片无水印，无污渍，身份信息清晰，头像完整，非文字反向照片！照片请勿进行PS处理！-->
+                <!--3. 手持身份证照片：需要您本人一只手持您的身份证，另一只手持一张有您手写的fubt.top账号ID的白纸。确保身份证和白纸在您的胸前，不遮挡您的脸部，并且身份证和白纸上的信息清晰可见！-->
+                <!--以下图片仅作为示例，请提交您本人的身份材料照片。照片勿进行PS处理！-->
                 <p class="icon-font-color">
                   <IconFontCommon
                     class="font-size26"
                     iconName="icon-zhuyi"
                   />
-                  <span class="font-size14 vertical-align">注意：</span>
+                  <span class="font-size14 vertical-align">
+                    {{ $t('M.user_senior_text1') }}
+                  </span>
                 </p>
-                <p class="text-hints">1. 照片文件大小不能超过10M！文件格式须为jpg、bmp、png等！</p>
-                <p class="text-hints">2. 请确保照片无水印，无污渍，身份信息清晰，头像完整，非文字反向照片！照片请勿进行PS处理！</p>
-                <p class="text-hints">3. 手持身份证照片：需要您本人一只手持您的身份证，另一只手持一张有您手写的fubt.top账号ID的白纸。确保身份证和白纸
-                  在您的胸前，不遮挡您的脸部，并且身份证和白纸上的信息清晰可见！</p>
-                <p class="text-hints margin-top30">以下图片仅作为示例，请提交您本人的身份材料照片。照片勿进行PS处理！</p>
+                <p class="text-hints">1. {{ $t('M.user_senior_text2') }}</p>
+                <p class="text-hints">2. {{ $t('M.user_senior_text3') }}</p>
+                <p class="text-hints">3. {{ $t('M.user_senior_text4') }}</p>
+                <p class="text-hints margin-top30">{{ $t('M.user_senior_text5') }}</p>
               </div>
               <div class="advanced-upload">
                 <div class="upload">
@@ -244,7 +288,8 @@
                     on-success="handleSuccessFront"
                   >
                     <!--@click.prevent="handleSuccessFront"-->
-                    上传身份证正面
+                    <!--上传身份证正面-->
+                    {{ $t('M.user_senior_upload1') }}
                   </button>
                 </div>
                 <div class="upload">
@@ -273,7 +318,8 @@
                     type="primary"
                     class="upload-submit cursor-pointer font-size12 margin-top30"
                   >
-                    上传身份证反面
+                    <!--上传身份证反面-->
+                    {{ $t('M.user_senior_upload2') }}
                   </button>
                 </div>
                 <div class="upload">
@@ -302,7 +348,8 @@
                     type="primary"
                     class="upload-submit cursor-pointer font-size12 margin-top30"
                   >
-                    上传手持身份证
+                    <!--上传手持身份证-->
+                    {{ $t('M.user_senior_upload3') }}
                   </button>
                 </div>
               </div>
@@ -319,7 +366,8 @@
                   class="submit-information font-size16 cursor-pointer"
                   @click.prevent="stateSubmitSeniorCertification"
                 >
-                  确认提交
+                  <!--确认提交-->
+                  {{ $t('M.comm_confirm') }}{{ $t('M.comm_sub_time') }}
                 </button>
               </div>
             </div>
@@ -334,7 +382,10 @@
               class="font-size60 color-coin"
               iconName="icon-daishenhe"
             />
-            <p class="list-height">待审核...</p>
+            <p class="list-height">
+              <!--待审核...-->
+              {{ $t('M.user_senior_audit') }}...
+            </p>
           </div>
         </div>
         <div
@@ -342,6 +393,11 @@
           v-if="authenticationInfo.userIdentity"
         ></div>
       </div>
+      <!--高级认证-->
+      <!--请准备好您本人身份证使用浏览器扫码进行高级认证如二维码过 期请刷新重试。-->
+      <!--点击刷新-->
+      <!--请在浏览器中打开，并升级浏览器至最新版本,无法通过认证的用户，-->
+      <!--请点击这里-->
       <el-dialog
         title="高级认证"
         :visible.sync="seniorAuthentication"
@@ -352,16 +408,18 @@
         </div>
         <div class="advanced-certification-text">
           <p class="text-tips font-size12">
-            请准备好您本人身份证使用浏览器扫码进行高级认证如二维码过 期请刷新重试。
-            <a class="tips-refresh">点击刷新</a>
+            {{ $t('M.user_senior_hint1') }}
+            <a class="tips-refresh">
+              {{ $t('M.user_senior_hint2') }}
+            </a>
           </p>
           <p class="text-tips font-size12 tips-top">
-            请在浏览器中打开，并升级浏览器至最新版本,无法通过认证的用户，
+            {{ $t('M.user_senior_hint3') }}
             <span
               class="tips-refresh cursor-pointer"
               @click.prevent="authenticationAuthentication"
             >
-              请点击这里
+              {{ $t('M.user_senior_hint4') }}
             </span>
           </p>
         </div>
@@ -476,12 +534,15 @@ export default {
       this.thirdPictureSrcShow = false
     },
     handleRemoveFront () {
+      this.dialogImageFrontUrl = ''
       this.firstPictureSrcShow = true
     },
     handleRemoveSide () {
+      this.dialogImageReverseSideUrl = ''
       this.secondPictureSrcShow = true
     },
     handleRemoveHand () {
+      this.dialogImageHandUrl = ''
       this.thirdPictureSrcShow = true
     },
     beforeAvatarUpload (file) {
@@ -639,24 +700,25 @@ export default {
       this.stateSeniorCertification()
     },
     async stateSeniorCertification () {
-      if (!this.dialogImageFrontUrl) {
+      // 请上传身份证正面 请上传身份证反面 请上传身份证反面
+      if (this.dialogImageFrontUrl === '') {
         this.$message({
-          message: '请上传身份证正面',
+          message: this.$t('M.user_senior_upload1'),
           type: 'error'
         })
-        return
-      } else if (!this.dialogImageReverseSideUrl) {
+        return false
+      } else if (this.dialogImageReverseSideUrl === '') {
         this.$message({
-          message: '请上传身份证反面',
+          message: this.$t('M.user_senior_upload2'),
           type: 'error'
         })
-        return
-      } else if (!this.dialogImageHandUrl) {
+        return false
+      } else if (this.dialogImageHandUrl === '') {
         this.$message({
-          message: '请上传手持身份证',
+          message: this.$t('M.user_senior_upload3'),
           type: 'error'
         })
-        return
+        return false
       } else {
         this.errorMsg = ''
       }

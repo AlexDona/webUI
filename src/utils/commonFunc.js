@@ -11,7 +11,8 @@ import {
 } from '../utils/api/personal'
 
 import {
-  sendMsgByPhoneOrEmial
+  sendMsgByPhoneOrEmial,
+  sendByPhoneOrEmial
 } from '../utils/api/user'
 import {
   getPartnerList,
@@ -97,6 +98,11 @@ export const validateNumForUserInput = (type, targetNum) => {
 // 发送验证码（短信、邮箱）
 export const sendPhoneOrEmailCodeAjax = async (type, params, callback) => {
   const data = await sendMsgByPhoneOrEmial(type, params)
+  callback(data)
+}
+// api 发送验证码（短信、邮箱）
+export const apiSendPhoneOrEmailCodeAjax = async (type, params, callback) => {
+  const data = await sendByPhoneOrEmial(type, params)
   callback(data)
 }
 /**

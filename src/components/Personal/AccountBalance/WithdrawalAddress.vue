@@ -6,13 +6,20 @@
     <div class="withdrawal-address-main">
       <header class="withdrawal-header personal-height40 line-height40 background-color padding-left23 border-radius2">
         <span class="header-content display-inline-block font-size16 cursor-pointer">
-          提币地址
+          <!--提币地址-->
+          {{ $t('M.comm_mention_money') }}{{ $t('M.comm_site') }}
         </span>
       </header>
       <div class="withdrawal-address-content padding-left15">
         <div class="withdrawal-address-box paddinglr20 margin-top30">
-          <el-form ref="form" label-width="70px">
-            <el-form-item label="币种">
+          <el-form
+            ref="form"
+            label-width="70px"
+          >
+            <!--币种 备注 提币地址-->
+            <el-form-item
+              :label="$t('M.comm_currency')"
+            >
               <el-select
                 v-model="currencyValue"
                 @change="changeId"
@@ -26,14 +33,18 @@
                 </el-option>
               </el-select>
             </el-form-item>
-            <el-form-item label="备注">
+            <el-form-item
+              :label="$t('M.comm_remark')"
+            >
               <input
                 class="form-input border-radius4 padding-left15"
                 v-model="mentionRemark"
                 @focus="emptyStatus"
               />
             </el-form-item>
-            <el-form-item label="提币地址">
+            <el-form-item
+              :label="$t('M.comm_mention_money') + $t('M.comm_site')"
+            >
               <input
                 class="form-input border-radius4 padding-left15"
                 v-model="prepaidAddress"
@@ -51,12 +62,14 @@
               class="form-button border-radius4 cursor-pointer"
               @click.prevent="addAddress"
             >
-              增加
+              <!--增加-->
+              {{ $t('M.comm_newly_increased') }}
             </button>
           </el-form>
           <div class="withdrawal-dialog">
+            <!--提币 手机验证 邮箱验证 谷歌验证-->
             <el-dialog
-              title="提币"
+              :title="$t('M.comm_mention_money')"
               :visible.sync="mentionMoneyConfirm"
             >
               <el-form
@@ -65,7 +78,7 @@
                 <!--手机已认证-->
                 <el-form-item
                   v-if="securityCenter.isPhoneEnable"
-                  label="手机验证"
+                  :label="$t('M.comm_code_phone')"
                 >
                   <input
                     class="content-input padding-l15 box-sizing"
@@ -82,7 +95,7 @@
                 <!--邮箱已认证-->
                 <el-form-item
                   v-if="securityCenter.isMailEnable"
-                  label="邮箱验证"
+                  :label="$t('M.comm_code_email')"
                 >
                   <input
                     class="content-input padding-l15 box-sizing"
@@ -99,7 +112,7 @@
                 <!--谷歌已认证-->
                 <el-form-item
                   v-if="securityCenter.isGoogleEnable"
-                  label="谷歌验证"
+                  :label="$t('M.comm_code_google')"
                 >
                   <input
                     class="content-input input-google padding-l15 box-sizing"
@@ -117,7 +130,8 @@
                   type="primary"
                   @click.prevent="submitMentionMoney"
                 >
-                  确 定
+                  <!--确 定-->
+                  {{ $t('M.comm_confirm') }}
                 </el-button>
               </div>
             </el-dialog>
@@ -128,15 +142,17 @@
     <div class="withdrawal-address-main margin-top9">
       <header class="address-list-header background-color border-radius2">
         <span class="header-content display-inline-block font-size16 cursor-pointer">
-          地址列表
+          <!--地址列表-->
+           {{ $t('M.comm_site') }}{{ $t('M.comm_list') }}
         </span>
       </header>
       <el-table
         :data="gainAddressList"
         style="width: 100%"
       >
+        <!--币种 备注 提币地址 操作-->
         <el-table-column
-          label="币种"
+          :label="$t('M.comm_currency')"
           width="180"
         >
           <template slot-scope = "s">
@@ -144,7 +160,7 @@
           </template>
         </el-table-column>
         <el-table-column
-          label="备注"
+          :label="$t('M.comm_remark')"
           width="180"
         >
           <template slot-scope = "s">
@@ -152,7 +168,7 @@
           </template>
         </el-table-column>
         <el-table-column
-          label="提币地址"
+          :label="$t('M.comm_mention_money') + $t('M.comm_site')"
           width="350"
         >
           <template slot-scope = "s">
@@ -160,7 +176,7 @@
           </template>
         </el-table-column>
         <el-table-column
-          label="操作"
+          :label="$t('M.comm_operation')"
         >
           <template slot-scope = "s">
             <div
@@ -248,11 +264,11 @@ export default {
       // }
       if (!this.mentionRemark) {
         // 请输入备注
-        this.errorMsg = '请输入备注'
+        this.errorMsg = this.$t('m.comm_please_enter') + this.$t('m.comm_remark')
         return
       } else if (!this.prepaidAddress) {
         // 提币地址不能为空
-        this.errorMsg = '提币地址不能为空'
+        this.errorMsg = this.$t('m.user_address_empty')
         return
       } else {
         this.errorMsg = ''
@@ -316,9 +332,10 @@ export default {
     cancelId (id) {
       console.log(id)
       this.deleteWithdrawalId = id
-      this.$confirm('确定删除提币地址吗, 是否继续?', {
-        cancelButtonText: '取消',
-        confirmButtonText: '确定'
+      // 确定删除提币地址吗, 是否继续?取消 确定
+      this.$confirm(this.$t('M.user_address_delete_withdrawals'), {
+        cancelButtonText: this.$t('M.comm_cancel'),
+        confirmButtonText: this.$t('M.comm_confirm')
       }).then(() => {
         this.deleteWithdrawal(id)
       }).catch(() => {
@@ -490,6 +507,11 @@ export default {
         }
         >.withdrawal-address-content {
           >.withdrawal-address-box {
+            .error-info {
+              height: 20px;
+              line-height: 20px;
+              color: #d45858;
+            }
             .send-code-btn {
               background-color: #338FF5;
               color: #fff;

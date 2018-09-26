@@ -10,13 +10,15 @@
            v-if="paymentTerm.isAlipayBind"
            class="header-content-left header-content font-size16 font-weight600"
          >
-          设置支付宝账号
+          <!--设置支付宝账号-->
+           {{ $t('m.comm_set') }}{{ $t('m.user_account_number') }}
         </span>
         <span
           v-else
           class="header-content-left header-content font-size16 font-weight600"
         >
-          修改支付宝账号
+          <!--修改支付宝账号-->
+          {{ $t('m.comm_modification') }}{{ $t('m.user_account_number') }}
         </span>
         <span
           class="header-content-right font-size12 cursor-pointer"
@@ -26,27 +28,36 @@
             class="font-size22"
             iconName="icon-fanhui2"
           />
-          返回我的账户
+          <!--返回我的账户-->
+          {{ $t('m.user_account_return') }}
         </span>
       </header>
       <div class="add-account-content">
         <header class="account-content-title">
-          *支付宝上传二维码方法：打开支付宝首页>收钱>保存图片，将存在手机相册的收款码上传即可。
+          <!--*支付宝上传二维码方法：打开支付宝首页>收钱>保存图片，将存在手机相册的收款码上传即可。-->
+          {{ $t('m.user_account_text2') }}
         </header>
         <div class="account-content-from">
           <el-form
             :label-position="labelPosition"
             label-width="120px"
           >
-            <el-form-item label="名 称：">
+            <!--名 称 收  款  类  型 支付宝 支付宝账号 上传收款码 交易密码-->
+            <el-form-item
+              :label="$t('M.user_account_name')"
+            >
               <span class="account-content-type">
                 {{ userInfo.userInfo.realname }}
               </span>
             </el-form-item>
-            <el-form-item label="收  款  类  型：">
+            <el-form-item
+              :label="$t('M.user_account_gathering') + $t('M.comm_type')"
+            >
               <span class="account-content-type">支付宝</span>
             </el-form-item>
-            <el-form-item label="支付宝账号：">
+            <el-form-item
+              :label="$t('M.user_account_alipay') + $t('M.user_account_number')"
+            >
               <input
                 class="account-input border-radius2"
                 v-model="alipayAccount"
@@ -59,7 +70,9 @@
                 :isShow="!!errorShowStatusList[0]"
               />
             </el-form-item>
-            <el-form-item label="上传收款码：">
+            <el-form-item
+              :label="$t('M.user_account_upload_collection')"
+            >
               <div class="account-upload border-radius4">
                 <el-upload
                   :action="apiCommonUrl+'uploadfile'"
@@ -82,7 +95,9 @@
                 </el-upload>
               </div>
             </el-form-item>
-            <el-form-item label="交易密码：">
+            <el-form-item
+              :label="$t('M.comm_password')"
+            >
               <input
                 type="password"
                 class="account-input border-radius2"
@@ -101,14 +116,16 @@
               class="account-button border-radius4"
               @click.prevent="stateSubmitWeChat"
             >
-              确认设置
+              <!--确认设置-->
+              {{ $t('m.comm_affirm') }}{{ $t('m.comm_set') }}
             </button>
             <button
               v-else
               class="account-button border-radius4"
               @click.prevent="stateSubmitWeChat"
             >
-              确认修改
+              <!--确认修改-->
+              {{ $t('m.comm_affirm') }}{{ $t('m.comm_modification') }}
             </button>
           </el-form>
         </div>
@@ -200,7 +217,7 @@ export default {
         case 0:
           console.log(type)
           if (!targetNum) {
-            this.setErrorMsg(0, '请输入支付宝账号')
+            this.setErrorMsg(0, this.$t('M.comm_please_enter') + this.$t('M.user_account_alipay') + this.$t('M.user_account_number'))
             this.$forceUpdate()
             return 0
           } else {
@@ -208,11 +225,11 @@ export default {
             this.$forceUpdate()
             return 1
           }
-        // 请输入支付宝张号
+        // 请输入交易密码
         case 1:
           console.log(type)
           if (!targetNum) {
-            this.setErrorMsg(1, '请输入交易密码')
+            this.setErrorMsg(1, this.$t('M.comm_please_enter') + this.$t('M.comm_password'))
             this.$forceUpdate()
             return 0
           } else {

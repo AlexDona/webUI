@@ -423,7 +423,7 @@
       <el-tabs v-model="securityActiveName">
         <el-tab-pane label="最近登录记录" name="first">
           <el-table
-            :data="logonRecord"
+            :data="securityRecord"
             style="width: 100%">
             <el-table-column
               label="登陆时间"
@@ -457,7 +457,7 @@
         </el-tab-pane>
         <el-tab-pane label="安全设置记录" name="second">
           <el-table
-            :data="securityRecord"
+            :data="logonRecord"
             style="width: 100%">
             <el-table-column
               label="登陆时间"
@@ -467,10 +467,10 @@
               </template>
             </el-table-column>
             <el-table-column
-              label="设备名称"
+              label="设置名称"
             >
               <template slot-scope = "s">
-                <div>{{ s.row.source }}</div>
+                <div>{{ s.row.content }}</div>
               </template>
             </el-table-column>
             <el-table-column

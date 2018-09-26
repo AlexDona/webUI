@@ -147,8 +147,8 @@ export default {
       }
       let params = {
         address: this.emailAccounts, // 邮箱账号
-        // type: 'LOGIN_RECORD', // 类型
-        country: this.activeCountryCode // 邮箱国籍
+        type: 'VERIFICATION_CODE' // 类型
+        // country: this.activeCountryCode // 邮箱国籍
       }
       sendPhoneOrEmailCodeAjax(loginType, params, (data) => {
         console.log(this.disabledOfPhoneBtn)

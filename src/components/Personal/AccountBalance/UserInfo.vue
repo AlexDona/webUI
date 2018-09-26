@@ -16,7 +16,7 @@
             <p class="font-size12">
               <span class="text-color">
                 <!--您好，-->
-                {{ $t('m.comm_hello') }}
+                {{ $t('M.comm_hello') }}
               </span>
               <span class="color">{{ userInfo.userInfo.userName }}</span>
             </p>
@@ -148,20 +148,20 @@
         <div class="asset float-left flex1">
           <p class="asset-text font-size12">
             <!--当前资产总估值-->
-            {{ $t('M.user_current_total') }}
+            {{ $t('M.user_assets_current_total') }}
           </p>
           <p class="asset-info margin-top9">
             <span class="info-color font-size16">{{ totalSumBTC }}</span>
             <span class="info-color font-size12">BTC</span>
             <span class="info-color" v-show="CNYAssets">
               <!--或-->
-               {{ $t('M.user_or') }}
+               {{ $t('M.user_assets_or') }}
               <span class="info-color font-size16">{{ CNYAssets }}</span>
               <span class="info-color font-size12">CNY</span>
             </span>
           </p>
           <p class="asset-color margin-top9 font-size12">
-            （{{ $t('M.user_attention') }}）
+            （{{ $t('M.user_assets_attention') }}）
           </p>
         </div>
       </div>

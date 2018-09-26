@@ -379,7 +379,7 @@ import {
 } from '../../../utils/api/personal'
 import {
   returnAjaxMessage,
-  sendPhoneOrEmailCodeAjax
+  apiSendPhoneOrEmailCodeAjax
 } from '../../../utils/commonFunc'
 import {timeFilter} from '../../../utils/index'
 const { mapMutations } = createNamespacedHelpers('personal')
@@ -441,7 +441,10 @@ export default {
       if (this.disabledOfPhoneBtn || this.disabledOfEmailBtn) {
         return false
       }
-      let params = {}
+      let params = {
+        userId: this.userInfo.userId,
+        partnerId: this.partnerId
+      }
       switch (loginType) {
         case 0:
           params.phone = this.userInfo.userInfo.phone
@@ -450,8 +453,8 @@ export default {
           params.address = this.userInfo.userInfo.email
           break
       }
-      sendPhoneOrEmailCodeAjax(loginType, params, (data) => {
-        console.log(this.disabledOfPhoneBtn)
+      apiSendPhoneOrEmailCodeAjax(loginType, params, (data) => {
+        console.log(this.apiDisabledOfPhoneBtn)
         // 提示信息
         if (!returnAjaxMessage(data, this)) {
           console.log('error')
@@ -785,6 +788,7 @@ export default {
   computed: {
     ...mapState({
       theme: state => state.common.theme,
+      partnerId: state => state.common.partnerId,
       userInfo: state => state.user.loginStep1Info, // 用户详细信息
       disabledOfPhoneBtn: state => state.user.disabledOfPhoneBtn,
       disabledOfEmailBtn: state => state.user.disabledOfEmailBtn,
@@ -818,7 +822,7 @@ export default {
       .error-msg{
         height:30px;
         line-height: 30px;
-        color: rgb(212, 88, 88);
+        color: #d45858;
       }
       .error-msg1{
         padding-left: 0px;

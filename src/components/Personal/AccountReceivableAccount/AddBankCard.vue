@@ -10,13 +10,15 @@
           v-if="paymentTerm.isBankBind"
           class="header-content-left header-content font-size16 font-weight600"
         >
-          设置银行卡
+          <!--设置银行卡-->
+          {{ $t('m.comm_set') }}{{ $t('m.user_account_bank') }}
         </span>
         <span
           v-else
           class="header-content-left header-content font-size16 font-weight600"
         >
-          修改银行卡
+          <!--修改银行卡-->
+          {{ $t('m.comm_modification') }}{{ $t('m.user_account_bank') }}
         </span>
         <span
           class="header-content-right font-size12 cursor-pointer"
@@ -26,7 +28,8 @@
             class="font-size22"
             iconName="icon-fanhui2"
           />
-            返回我的账户
+            <!--返回我的账户-->
+          {{ $t('m.user_account_return') }}
         </span>
       </header>
       <div class="add-bank-content">
@@ -38,12 +41,17 @@
             :label-position="labelPosition"
             label-width="120px"
           >
-            <el-form-item label="名 称：">
+            <!--名 称 银行名称 银行卡号 支行地址-->
+            <el-form-item
+              :label="$t('M.user_account_name')"
+            >
               <span class="bank-content-name">
                 {{ userInfo.userInfo.realname }}
               </span>
             </el-form-item>
-            <el-form-item label="银  行  名  称：">
+            <el-form-item
+              :label="$t('M.user_account_bank_name')"
+            >
               <input
                 class="bank-input border-radius2"
                 v-model="bankName"
@@ -56,7 +64,9 @@
                 :isShow="!!errorShowStatusList[0]"
               />
             </el-form-item>
-            <el-form-item label="银  行  卡  号：">
+            <el-form-item
+              :label="$t('M.user_account_credit_numbers')"
+            >
               <input
                 class="bank-input border-radius2"
                 v-model="bankCard"
@@ -69,7 +79,9 @@
                 :isShow="!!errorShowStatusList[1]"
               />
             </el-form-item>
-            <el-form-item label="支  行  地  址：">
+            <el-form-item
+              :label="$t('M.user_account_branch_address')"
+            >
               <input
                 class="bank-input border-radius2"
                 v-model="branchAddress"
@@ -82,7 +94,9 @@
                 :isShow="!!errorShowStatusList[2]"
               />
             </el-form-item>
-            <el-form-item label="交  易  密  码：">
+            <el-form-item
+              :label="$t('M.comm_password')"
+            >
               <input
                 type="password"
                 class="bank-input border-radius2"
@@ -101,14 +115,16 @@
               class="bank-button border-radius4"
               @click.prevent="statusTetBankCard"
             >
-              确认设置
+              <!--确认设置-->
+              {{ $t('M.comm_affirm') }}{{ $t('M.comm_set') }}
             </button>
             <button
               v-else
               class="bank-button border-radius4"
               @click.prevent="statusTetBankCard"
             >
-              确认修改
+              <!--确认修改-->
+              {{ $t('M.comm_affirm') }}{{ $t('M.comm_modification') }}
             </button>
           </el-form>
         </div>
@@ -235,12 +251,13 @@ export default {
     },
     // 检测输入格式
     checkoutInputFormat (type, targetNum) {
+      // 请输入银行名称 请输入银行名称 请输入支行地址 请输入交易密码
       switch (type) {
         // 银行名称
         case 0:
           console.log(type)
           if (!targetNum) {
-            this.setErrorMsg(0, '请输入银行名称')
+            this.setErrorMsg(0, this.$t('M.comm_please_enter') + this.$t('M.user_account_bank_name'))
             this.$forceUpdate()
             return 0
           } else {
@@ -251,7 +268,7 @@ export default {
         // 银行卡号
         case 1:
           if (!targetNum) {
-            this.setErrorMsg(1, '请输入银行卡号')
+            this.setErrorMsg(1, this.$t('M.comm_please_enter') + this.$t('M.user_account_credit_numbers'))
             this.$forceUpdate()
             return 0
           } else {
@@ -262,7 +279,7 @@ export default {
         // 支行地址
         case 2:
           if (!targetNum) {
-            this.setErrorMsg(2, '请输入支行地址')
+            this.setErrorMsg(2, this.$t('M.comm_please_enter') + this.$t('M.user_account_branch_address'))
             this.$forceUpdate()
             return 0
           } else {
@@ -273,7 +290,7 @@ export default {
         // 交易密码
         case 3:
           if (!targetNum) {
-            this.setErrorMsg(3, '请输入交易密码')
+            this.setErrorMsg(3, this.$t('M.comm_please_enter') + this.$t('M.comm_password'))
             this.$forceUpdate()
             return 0
           } else {
