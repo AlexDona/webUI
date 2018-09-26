@@ -95,3 +95,6 @@
 .finance-box.day > .inner-box > .finance-inner > .invest-list > .nvest-list-body .financeTsipsBox{
     background-color: #fff;
 }
+.finance-box.day > .inner-box > .finance-inner .finance-inner-box > .left .left-body > label > .invest-mounte > input{
+    color:#666;
+}

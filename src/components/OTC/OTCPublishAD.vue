@@ -386,11 +386,11 @@ export default {
       buySellStyle: [ // 1.0 发布广告 买卖 类型数组
         {
           id: 'SELL',
-          name: '出售'
+          name: this.$t('M.comm_offering')
         },
         {
           id: 'BUY',
-          name: '购买'
+          name: this.$t('M.comm_buying')
         }
       ],
       // 2.0 币种名字下拉数组：可用币种
@@ -628,21 +628,23 @@ export default {
       // 非空及数据范围准确性验证
       // 单价
       if (!this.$refs.price.value) {
-        this.errorInfoPrice = '请输入单价'
+        this.errorInfoPrice = this.$t('M.otc_publishAD_pleaseInput') + this.$t('M.otc_index_UnitPrice')
         return false
       } else if (this.$refs.price.value < this.minPrice || this.$refs.price.value > this.maxPrice) {
-        this.errorInfoPrice = '请输入' + this.minPrice + '~' + this.maxPrice + '之间的价格'
+        this.errorInfoPrice = this.$t('M.otc_publishAD_pleaseInput') + this.minPrice + '~' + this.maxPrice + this.$t('M.otc_publishAD_rangePrice')
         return false
       }
       // 交易方式
       if (!this.parameterPayTypes) {
-        this.errorInfoTradeWay = '请选择交易方式'
+        // 请选择交易方式
+        this.errorInfoTradeWay = this.$t('M.otc_publishAD_chouseSellType')
         return false
       }
       // 交易数量
       // console.log(this.$refs.entrustCount.value)
       if (!this.$refs.entrustCount.value || this.$refs.entrustCount.value - 0 === 0) {
-        this.errorInfoEntrustCount = '请输入交易数量'
+        // 请输入交易数量
+        this.errorInfoEntrustCount = this.$t('M.otc_publishAD_pleaseInput') + this.$t('M.otc_publishAD_sellmount')
         return false
       }
       // 单笔最小最大限制
@@ -658,7 +660,8 @@ export default {
     // 6.0 点击密码框中的提交按提交钮发布广告
     async publishADSubmitButton () {
       if (!this.tradePassword) {
-        this.errorInfoPassword = '请输入交易密码'
+        // 请输入交易密码
+        this.errorInfoPassword = this.$t('M.otc_publishAD_pleaseInput') + this.$t('M.otc_publishAD_sellpassword')
         return false
       }
       let param = {
@@ -747,7 +750,7 @@ export default {
       formatNumberInput(target, pointLength)
       if (this.$refs.price.value) {
         if (this.price < this.minPrice || this.price > this.maxPrice) {
-          this.errorInfoPrice = '请输入' + this.minPrice + '~' + this.maxPrice + '之间的价格'
+          this.errorInfoPrice = this.$t('M.otc_publishAD_pleaseInput') + this.minPrice + '~' + this.maxPrice + this.$t('M.otc_publishAD_rangePrice')
           return false
         } else {
           this.errorInfoPrice = ''
@@ -778,14 +781,15 @@ export default {
       formatNumberInput(target, pointLength)
       // 开始校验
       if (this.$refs.minCountValue.value < this.minCount) {
-        this.errorInfoMinCount = '输入值不能小于最小限额'
+        // 输入值不能小于最小限额
+        this.errorInfoMinCount = this.$t('M.otc_publishAD_inputminLimit')
         return false
       } else {
         this.errorInfoMinCount = ''
       }
       // console.log(typeof (this.$refs.maxCountValue.value)) // string
       if (this.$refs.minCountValue.value > this.$refs.maxCountValue.value - 0) {
-        this.errorInfoMinCount = '输入值不能大于最大限额'
+        this.errorInfoMinCount = this.$t('M.otc_publishAD_inputmaxLimit')
         return false
       } else {
         this.errorInfoMinCount = ''
@@ -802,7 +806,8 @@ export default {
       // console.log(this.$refs.maxCountValue.value)
       // 开始校验
       if (this.$refs.maxCountValue.value > this.maxCount) {
-        this.errorInfoMaxCount = '输入值不能大于最大限额'
+        // 输入值不能大于最大限额
+        this.errorInfoMaxCount = this.$t('M.otc_publishAD_inputmaxLimit')
         return false
       } else {
         this.errorInfoMaxCount = ''
@@ -810,7 +815,8 @@ export default {
       // console.log(this.minCountValue)
       // console.log(typeof (this.$refs.minCountValue.value)) // string
       if (this.$refs.maxCountValue.value < this.$refs.minCountValue.value - 0) {
-        this.errorInfoMaxCount = '输入值不能小于最小限额'
+        // 输入值不能小于最小限额
+        this.errorInfoMaxCount = this.$t('M.otc_publishAD_inputminLimit')
         return false
       } else {
         this.errorInfoMaxCount = ''

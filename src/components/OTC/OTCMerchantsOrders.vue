@@ -9,19 +9,21 @@
     <div class="otc-merchants-orders-content">
       <!-- 2.1 大标题商家订单 -->
       <div class="merchants-title font-size20 padding-l15 font-weight700">
-        商家订单
+        <!-- 商家订单 -->
+        {{$t('M.otc_MerchantsOrders')}}
       </div>
       <!-- 2.2 商家订单主体内容 -->
       <div class="merchants-orders-main">
         <!-- 上部分筛选条件 -->
         <div class="orders-main-top">
-          <span class="filtrate-text font-size14">交易类型</span>
+          <!-- 交易类型 -->
+          <span class="filtrate-text font-size14">{{$t('M.otc_type_ransaction')}}</span>
           <span class="style-input">
             <el-select
               v-model="activitedMerchantsOrdersTraderStyleList"
               @change="changeSelectValue('changeMerchantsOrdersTraderStyleList', $event)"
               clearable
-              placeholder="全部"
+              :placeholder="$t('M.comm_all')"
             >
               <el-option
                 v-for="item in merchantsOrdersTraderStyleList"
@@ -32,13 +34,14 @@
               </el-option>
             </el-select>
           </span>
-          <span class="filtrate-text font-size14">币种</span>
+          <!-- 币种 -->
+          <span class="filtrate-text font-size14">{{$t('M.comm_currency')}}</span>
           <span class="status-input">
             <el-select
               v-model="activitedMerchantsOrdersCoin"
               @change="changeSelectValue('changeMerchantsOrdersCoin', $event)"
               clearable
-              placeholder="全部"
+              :placeholder="$t('M.comm_all')"
             >
               <el-option
                 v-for="(item,index) in merchantsOrdersCoinList"
@@ -55,7 +58,7 @@
               v-model="activitedMerchantsOrdersCurrency"
               @change="changeSelectValue('changeMerchantsOrdersCurrency', $event)"
               clearable
-              placeholder="全部"
+              :placeholder="$t('M.comm_all')"
             >
               <el-option
                 v-for="(item,index) in merchantsOrdersCurrencyList"
@@ -66,13 +69,14 @@
               </el-option>
             </el-select>
           </span>
-          <span class="filtrate-text font-size14">状态</span>
+          <!-- 状态 -->
+          <span class="filtrate-text font-size14">{{$t('M.comm_state')}}</span>
           <span class="status-input">
             <el-select
               v-model="activitedMerchantsOrdersStatusList"
               @change="changeSelectValue('changeMerchantsOrdersStatusList', $event)"
               clearable
-              placeholder="全部"
+              :placeholder="$t('M.comm_all')"
             >
               <el-option
                 v-for="item in merchantsOrdersStatusList"
@@ -83,11 +87,11 @@
               </el-option>
             </el-select>
           </span>
-          <span class="filtrate-text font-size14">日期</span>
+          <span class="filtrate-text font-size14">{{$t('M.otc_MerchantsOrders_date')}}</span>
           <span class="date-picker">
             <!--开始日期-->
             <el-date-picker
-              placeholder="选择日期"
+              :placeholder="$t('M.otc_MerchantsOrders_chouse') + $t('M.otc_MerchantsOrders_date')"
               v-model="startTimeValue"
               type="date"
               value-format="yyyy-MM-dd"
@@ -98,7 +102,7 @@
             <span class="date-short-line">-</span>
             <!--结束日期-->
             <el-date-picker
-              placeholder="选择日期"
+              :placeholder="$t('M.otc_MerchantsOrders_chouse') + $t('M.otc_MerchantsOrders_date')"
               v-model="endTimeValue"
               value-format="yyyy-MM-dd"
               type="date"
@@ -108,8 +112,8 @@
             </el-date-picker>
           </span>
           <span class="inquire-button">
-            <el-button type="primary" @click="findFilter">查询</el-button>
-            <el-button type="primary" @click="resetCondition">重置</el-button>
+            <el-button type="primary" @click="findFilter">{{$t('M.otc_inquiries')}}</el-button>
+            <el-button type="primary" @click="resetCondition">{{$t('M.otc_MerchantsOrders_reset')}}</el-button>
           </span>
         </div>
         <!-- 下部分表格内容 -->
@@ -117,11 +121,11 @@
           <el-table
             :data = "merchantsOrdersList"
             style = "width: 100%"
-            empty-text="暂无数据"
+            :empty-text="$t('M.comm_no_data')"
           >
             <!-- 交易日期 -->
             <el-table-column
-              label = "交易日期"
+              :label = "$t('M.otc_transaction_data')"
               width="95"
             >
               <template slot-scope = "scope">
@@ -130,7 +134,7 @@
             </el-table-column>
             <!-- 订单号 -->
             <el-table-column
-              label = "订单号"
+              :label = "$t('M.otc_MerchantsOrders_orderNum')"
               width="130"
             >
               <template slot-scope = "scope">
@@ -139,7 +143,7 @@
             </el-table-column>
             <!-- 币种 -->
             <el-table-column
-              label = "币种"
+              :label = "$t('M.comm_currency')"
               width="85"
             >
               <template slot-scope = "scope">
@@ -148,7 +152,7 @@
             </el-table-column>
             <!-- 交易类型 -->
             <el-table-column
-              label = "交易类型"
+              :label = "$t('M.otc_type_ransaction')"
               width="80"
             >
               <template slot-scope = "scope">
@@ -156,34 +160,36 @@
                   v-if="scope.row.orderType === 'BUY'"
                   :class="{red:scope.row.orderType === 'BUY'}"
                 >
-                  购买
+                <!-- 购买 -->
+                  {{$t('M.comm_buying')}}
                 </div>
                 <div
                   v-if="scope.row.orderType === 'SELL'"
                   :class="{green:scope.row.orderType === 'SELL'}"
                 >
-                  出售
+                  <!-- 出售 -->
+                  {{$t('M.comm_offering')}}
                 </div>
               </template>
             </el-table-column>
             <!-- 订单状态 -->
             <!-- 状态 (未付款 PICKED 已付款 PAYED 已完成 COMPLETED  已取消  CANCELED 冻结中 FROZEN) -->
             <el-table-column
-              label = "订单状态"
+              :label = "$t('M.otc_order_status')"
               width="100"
             >
               <template slot-scope = "scope">
-                <div v-show="scope.row.status === 'PICKED'">未付款</div>
-                <div v-show="scope.row.status === 'PAYED'">已付款</div>
-                <div v-show="scope.row.status === 'COMPLETED'">已完成</div>
-                <div v-show="scope.row.status === 'CANCELED'">已取消</div>
-                <div v-show="scope.row.status === 'FROZEN'">冻结中</div>
+                <div v-show="scope.row.status === 'PICKED'">{{$t('M.otc_enum_status_weifukuan')}}</div>
+                <div v-show="scope.row.status === 'PAYED'">{{$t('M.otc_enum_status_yifukuan')}}</div>
+                <div v-show="scope.row.status === 'COMPLETED'">{{$t('M.otc_enum_status_yiwancheng')}}</div>
+                <div v-show="scope.row.status === 'CANCELED'">{{$t('M.otc_enum_status_yiquxiao')}}</div>
+                <div v-show="scope.row.status === 'FROZEN'">{{$t('M.otc_freezing')}}</div>
                 <!-- <div>{{scope.row.status}}</div> -->
               </template>
             </el-table-column>
             <!-- 货币 -->
             <el-table-column
-              label = "货币"
+              :label = "$t('M.otc_MerchantsOrders_currecy')"
               width="85"
             >
               <template slot-scope = "scope">
@@ -192,7 +198,7 @@
             </el-table-column>
             <!-- 支付方式 -->
             <el-table-column
-              label = "支付方式"
+              :label = "$t('M.otc_index_Payment_method')"
             >
               <template slot-scope = "scope">
                 <!-- <div>{{scope.row.payStyle}}</div> -->
@@ -230,7 +236,7 @@
             </el-table-column>
             <!-- 成交价 -->
             <el-table-column
-              label = "成交价"
+              :label = "$t('M.otc_MerchantsOrders_transaction_price')"
             >
               <template slot-scope = "scope">
                 <div>{{scope.row.price}}</div>
@@ -238,7 +244,7 @@
             </el-table-column>
             <!-- 成交量 -->
             <el-table-column
-              label = "成交量"
+              :label = "$t('M.otc_MerchantsOrders_transaction_mount')"
             >
               <template slot-scope = "scope">
                 <div>{{scope.row.pickCount}}</div>
@@ -246,7 +252,7 @@
             </el-table-column>
             <!-- 总金额 -->
             <el-table-column
-              label = "总金额"
+              :label = "$t('M.otc_canceled_total')"
             >
               <template slot-scope = "scope">
                 <div>{{scope.row.payAmount}}</div>
@@ -254,7 +260,7 @@
             </el-table-column>
             <!-- 对方姓名 -->
             <el-table-column
-              label = "对方姓名"
+              :label = "$t('M.otc_name_other')"
             >
               <template slot-scope = "scope">
                 <div>{{scope.row.otherName}}</div>
@@ -262,11 +268,11 @@
             </el-table-column>
             <!-- 申诉记录 -->
             <el-table-column
-              label = "申诉记录"
+              :label = "$t('M.otc_record_complaint')"
               width="80"
             >
               <template slot-scope = "scope">
-                <div>{{scope.row.appeal == 'YES'? '卖方申诉' : '无'}}</div>
+                <div>{{scope.row.appeal == 'YES'? $t('M.otc_MerchantsOrders_seller_appeal') : $t('M.otc_MerchantsOrders_no')}}</div>
               </template>
             </el-table-column>
           </el-table>
@@ -314,11 +320,11 @@ export default {
       merchantsOrdersTraderStyleList: [
         {
           value: 'BUY',
-          label: '购买'
+          label: this.$t('M.comm_buying')
         },
         {
           value: 'SELL',
-          label: '出售'
+          label: this.$t('M.comm_offering')
         }
       ],
       // 商家订单筛选下拉框 币种
@@ -332,23 +338,23 @@ export default {
       merchantsOrdersStatusList: [
         {
           value: 'PAYED',
-          label: '已付款'
+          label: this.$t('M.otc_enum_status_yifukuan')
         },
         {
           value: 'PICKED',
-          label: '未付款'
+          label: this.$t('M.otc_enum_status_weifukuan')
         },
         {
           value: 'COMPLETED ',
-          label: '已完成'
+          label: this.$t('M.otc_enum_status_yiwancheng')
         },
         {
           value: 'CANCELED',
-          label: '已取消'
+          label: this.$t('M.otc_enum_status_yiquxiao')
         },
         {
           value: 'FROZEN',
-          label: '已冻结'
+          label: this.$t('M.otc_enum_status_yidongjie')
         }
       ],
       startTimeValue: '', // 默认开始时间
