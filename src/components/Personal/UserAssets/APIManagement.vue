@@ -96,7 +96,7 @@
             </el-table-column>
             <el-table-column
               label="备注"
-              width="85"
+              width="80"
             >
               <template slot-scope = "s">
                 <div>{{ s.row.remark }}</div>

@@ -92,7 +92,7 @@
 import HeaderCommon from '../../Common/HeaderCommonForPC'
 import IconFontCommon from '../../Common/IconFontCommon'
 import ErrorBox from '../../User/ErrorBox'
-import {modifyLoginPassword} from '../../../utils/api/personal'
+import {modifyLoginPassword, statusSecurityCenter} from '../../../utils/api/personal'
 import {
   returnAjaxMessage,
   validateNumForUserInput
@@ -139,10 +139,12 @@ export default {
   beforeRouteUpdate () {},
   methods: {
     ...mapMutations([
-      'CHANGE_USER_CENTER_ACTIVE_NAME'
+      'CHANGE_USER_CENTER_ACTIVE_NAME',
+      'CHANGE_REF_SECURITY_CENTER_INFO'
     ]),
     // 点击返回上个页面
     returnSuperior () {
+      this.CHANGE_REF_SECURITY_CENTER_INFO(true)
       this.$router.push({path: '/PersonalCenter'})
       this.CHANGE_USER_CENTER_ACTIVE_NAME('security-center')
       // this.CHANGE_USER_CENTER_ACTIVE_NAME('security-center')

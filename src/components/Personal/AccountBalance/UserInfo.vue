@@ -14,7 +14,10 @@
           </p>
           <div class="text-align-id margin-top16 float-right">
             <p class="font-size12">
-              <span class="text-color">您好，</span>
+              <span class="text-color">
+                <!--您好，-->
+                {{ $t('M.comm_hello') }}
+              </span>
               <span class="color">{{ userInfo.userInfo.userName }}</span>
             </p>
             <span class="display-inline-block margin-top9 text-color">
@@ -106,7 +109,10 @@
             </span>
           </p>
           <div class="info-centre margin-top16">
-            <span class="info-centre-left float-left font-size12">会员等级 -</span>
+            <span class="info-centre-left float-left font-size12">
+              <!--会员等级 - -->
+              {{ $t('M.user_grade_membership') }} -
+            </span>
             <p class="info-picture margin-left10 float-left">
               <img :src="vipShowPictureSrc">
               <span
@@ -140,18 +146,22 @@
           <!--</p>-->
         <!--</div>-->
         <div class="asset float-left flex1">
-          <p class="asset-text font-size12">当前资产总估值</p>
+          <p class="asset-text font-size12">
+            <!--当前资产总估值-->
+            {{ $t('M.user_current_total') }}
+          </p>
           <p class="asset-info margin-top9">
             <span class="info-color font-size16">{{ totalSumBTC }}</span>
             <span class="info-color font-size12">BTC</span>
             <span class="info-color" v-show="CNYAssets">
-              或
+              <!--或-->
+               {{ $t('M.user_or') }}
               <span class="info-color font-size16">{{ CNYAssets }}</span>
               <span class="info-color font-size12">CNY</span>
             </span>
           </p>
           <p class="asset-color margin-top9 font-size12">
-            （注：资产总估仅提供参考，请以单项资金为准）
+            （{{ $t('M.user_attention') }}）
           </p>
         </div>
       </div>
@@ -260,6 +270,7 @@ export default {
   computed: {
     ...mapState({
       theme: state => state.common.theme,
+      language: state => state.common.language, // 当前选中语言
       userInfo: state => state.user.loginStep1Info // 用户详细信息
     }),
     // CNY 资产
