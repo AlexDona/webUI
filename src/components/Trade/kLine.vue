@@ -602,7 +602,7 @@ export default {
     width: 100%;
     height: 445px;
   &.night {
-     background-color: $mainNightBgColor;
+     background-color: $mainContentNightBgColor;
    }
   &.day{
      background-color: #fff;

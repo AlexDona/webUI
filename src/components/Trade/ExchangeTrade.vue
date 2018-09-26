@@ -802,7 +802,7 @@ export default {
       }
     }
     &.night{
-      background-color: $nightMainContentBgColor;
+      background-color: $mainContentNightBgColor;
       color:$nightFontColor;
       >.inner-box{
         >.currency-info{
@@ -839,7 +839,7 @@ export default {
                 /*限价input框*/
                 >input{
                   border-color:#A9BED4;
-                  background-color: $mainNightBgColor;
+                  background-color: $mainContentNightBgColor;
                   color:$nightFontColor;
                 }
                 >.currency{

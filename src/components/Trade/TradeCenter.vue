@@ -89,6 +89,7 @@ export default {
 }
 </script>
 <style scoped lang="scss">
+  @import "../../../static/css/scss/index.scss";
   @import "../../../static/css/scss/Trade/TradeCenter";
   .trade-box{
     min-width:1300px;
@@ -125,9 +126,10 @@ export default {
      }
     &.night{
       >.inner-box{
-        background-color: $nightInnerBoxBg;
+        background-color: $mainNightBgColor;
+        //background-color: red;
         >div{
-          /*<!--background-color: $nightMainTitleBgColor;-->*/
+        //  background-color: $nightMainTitleBgColor;
         }
       }
     }

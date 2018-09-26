@@ -472,7 +472,7 @@ export default {
       > .inner-box {
         > .title {
           color: $nightMainTitleColor;
-          background-color: $nightMainTitleBgColor;
+          background-color: $mainContentNightBgColor;
           box-shadow:2px 0px 3px rgba(27,35,49,1);
           > .text {
             >span{
@@ -491,7 +491,7 @@ export default {
           }
         }
         >.content {
-          background-color: $nightMainContentBgColor;
+          background-color: $mainContentNightBgColor;
           >.inner-box{
             /*表头*/
             >.title-box{
@@ -504,7 +504,7 @@ export default {
               >.buys-list,.sells-list{
                 >dd{
                   &.odd,&.even,&:hover{
-                    background-color: #1c2433;
+                    background-color: #1a1d2f;
                   }
                   >.inner{
                     >span{

@@ -139,7 +139,6 @@ export default {
 </script>
 <style scoped lang="scss">
   @import '../../../static/css/scss/index.scss';
-  @import '../../../static/css/scss/Trade/TradeCenter';
   .middle-header-box{
     margin-bottom:10px;
     /*width:986px;*/
@@ -187,7 +186,7 @@ export default {
       }
     }
     &.night{
-      background-color: $nightMainTitleBgColor;
+      background-color: $mainContentNightBgColor;
       box-shadow:2px 0px 3px rgba(27,35,49,1);
       >.inner-box{
         .item{

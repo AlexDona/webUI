@@ -701,7 +701,7 @@ export default {
         id: e.sellCoinName + e.buyCoinName,
         sellname: '',
         sellsymbol: '',
-        tradeId: e.tradeId
+        tradeId: e.id
       }
       this.$store.commit('trade/SET_JUMP_STATUS', true)
       this.$store.commit('trade/SET_JUMP_SYMBOL', activeSymbol)

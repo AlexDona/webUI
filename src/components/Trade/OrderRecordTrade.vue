@@ -105,7 +105,7 @@ export default {
 }
 </script>
 <style scoped lang="scss">
-  @import '../../../static/css/scss/Trade/TradeCenter.scss';
+  @import '../../../static/css/scss/index.scss';
   .order-record-box{
     >.inner-box{
       >.title{
@@ -128,12 +128,12 @@ export default {
     &.night{
       >.inner-box{
         >.title{
-          color:$nightMainTitleColor;
-          background-color: $nightMainTitleBgColor;
+          color:$mainNightTitleColor;
+          background-color: $mainContentNightBgColor;
           box-shadow:2px 0px 3px rgba(27,35,49,1);
         }
         >.content{
-          background-color: $nightMainContentBgColor;
+          background-color: $mainContentNightBgColor;
         }
       }
     }
@@ -141,11 +141,11 @@ export default {
       >.inner-box{
         >.title{
           color:$dayMainTitleColor;
-          background-color: $dayMainBgColor;
+          background-color: $mainDayBgColor;
           box-shadow:2px 0px 3px rgba(239,239,239,1);
         }
         >.content{
-          background-color: #fff;
+          background-color: $mainDayBgColor;
         }
       }
     }

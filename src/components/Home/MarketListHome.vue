@@ -1022,7 +1022,7 @@ export default{
       }
     }
     &.night{
-      background-color: $nightBgColor;
+      background-color: $mainNightBgColor;
       color:$nightFontColor;
       >.search-box{
 

@@ -569,7 +569,7 @@ export default{
 </script>
 <style scoped lang="scss" type="text/scss">
   @import "../../../static/css/scss/index";
-  @import "../../../static/css/scss/Common/HeaderCommon.scss";
+  /*@import "../../../static/css/scss/Common/HeaderCommon.scss";*/
 .nav-box{
   position: relative;
   top:0;
@@ -586,7 +586,7 @@ export default{
       line-height: 66px;
       display:flex;
       padding:0 30px;
-      background-color: $mainNightBgColor;
+      background-color: $mainContentNightBgColor;
       >.left{
         flex:2;
         position: relative;
@@ -606,7 +606,7 @@ export default{
             >.sub-nav-list{
               height:36px;
               line-height:36px;
-              background-color: #292E42;
+              background-color: $nightSubNavBgColor;
               box-sizing: border-box;
               position: absolute;
               text-align: left;
@@ -616,7 +616,7 @@ export default{
                 width:0;
                 height:0;
                 border:8px solid transparent;
-                border-bottom-color:#292E42;
+                border-bottom-color:$nightSubNavBgColor;
                 top:-16px;
                 left:46px;
               }
@@ -633,7 +633,7 @@ export default{
                 height:100%;
                 padding:0 25px;
                 &:hover{
-                  background-color: #1B2136;
+                  background-color: #21243a;
                 }
                 >a{
                   color:#8494A6;
@@ -644,7 +644,7 @@ export default{
               background-color: #1B2136;
             }
             >a{
-              color:$fontColor;
+              color:$headerNavFontColor;
             }
             >.logo{
               display:inline-block;
@@ -791,7 +791,7 @@ export default{
       }
     }
     >.bottom{
-      background-color: #292e42;
+      background-color: $nightSubNavBgColor;
       /*background-color: #f40;*/
       height:36px;
       position: absolute;

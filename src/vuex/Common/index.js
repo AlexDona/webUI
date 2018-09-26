@@ -12,7 +12,7 @@ const state = {
   language: 'zh_CN',
   activeLanguage: '',
   mainColor: {
-    $mainNightBgColor: '#1e2636',
+    $mainNightBgColor: '#1c1f32',
     $mainDayBgColor: '#fff'
   },
   // 折算货币
