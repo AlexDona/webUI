@@ -64,3 +64,7 @@ export const getFinancialManagement = (params) => get('financialManagement', par
 export const imediateInvestment = (params) => post('financialManagement', params)
 // 投资理财取消投资接口
 export const cancleInvestment = (params) => get(`financialManagement/${params}`)
+// 撤销otc用户定单（过期买家未付款）
+export const cancelUserOtcOrder = (params) => post('otcOrder/cancelUserOtcOrder', params)
+// 成交otc用户定单（过期卖家未收款）
+export const completeUserOtcOrder = (params) => post('otcOrder/completeUserOtcOrder', params)
