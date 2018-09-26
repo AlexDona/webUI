@@ -74,8 +74,9 @@ export default {
     }
   },
   async created () {
-    this.getFootCurrencyInfoList()
-    this.getFootCurrencyInforDetail()
+    await this.getFootCurrencyInfoList()
+    await this.getFootCurrencyInforDetail()
+    await this.changeCurrentCurrency(this.currencyList[0].id)
   },
   mounted () {},
   activited () {},
