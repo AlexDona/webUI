@@ -325,7 +325,7 @@
 </template>
 <!--请严格按照如下书写书序-->
 <script>
-import {getOTCAvailableCurrency, getMerchantAvailablelegalTender, addOTCPutUpOrders, queryUserTradeFeeAndCoinInfo, getOTCCoinInfo} from '../../utils/api/OTC'
+import {addOTCPutUpOrders, getOTCCoinInfo} from '../../utils/api/OTC'
 import NavCommon from '../Common/HeaderCommonForPC'
 import FooterCommon from '../Common/FooterCommon'
 import {returnAjaxMessage} from '../../utils/commonFunc'
@@ -720,75 +720,6 @@ export default {
     chargeMoney () {
       this.$store.commit('personal/CHANGE_USER_CENTER_ACTIVE_NAME', 'assets')
       this.$router.push({path: '/PersonalCenter'})
-    },
-    // ---------------------------------分割线 下不要了---------------------------------------
-    //  5.0 otc可用币种查询-----没有用了
-    async getOTCAvailableCurrencyList () {
-      const data = await getOTCAvailableCurrency({
-        partnerId: this.partnerId
-      })
-      console.log('可用币种')
-      console.log(data)
-      // 提示信息
-      if (!(returnAjaxMessage(data, this, 0))) {
-        return false
-      } else {
-        // 返回数据正确的逻辑
-        this.coinStyleList = data.data.data
-      }
-    },
-    //  5.2 根据可用币种id 查询用户交易币种手续费率以及币种详情-----没有用了
-    async queryUserTradeFeeAndCoinInfo () {
-      const data = await queryUserTradeFeeAndCoinInfo({
-        coinId: this.coinId // 挂单币种id
-      })
-      console.log('用户交易币种手续费率以及币种详情')
-      console.log(data)
-      // 提示信息
-      if (!(returnAjaxMessage(data, this, 0))) {
-        return false
-      } else {
-        // 返回数据正确的逻辑:将返回的数据赋值到页面中
-        // 选中币种名称
-        this.coinName = data.data.data.name
-        // 当前可用
-        this.currentlyAvailable = data.data.data.total
-        // 市价
-        this.marketPrice = data.data.data.marketPrice
-        // 最低价
-        this.minPrice = data.data.data.minPrice
-        // 最高价
-        this.maxPrice = data.data.data.maxPrice
-        // 市价币种名称
-        this.currencyName = data.data.data.currencyName
-        this.pointLength = data.data.data.unit // 每个币种返回的保留小数点位数限制
-        // 费率
-        if (this.publishStyle === 'sell') {
-          this.rate = data.data.data.sellRate
-        }
-        if (this.publishStyle === 'buy') {
-          this.rate = data.data.data.buyRate
-        }
-      }
-    },
-    //  6.0 查询可用法币币种列表-----没有用了
-    async getMerchantAvailablelegalTenderList () {
-      const data = await getMerchantAvailablelegalTender({
-        partnerId: this.partnerId
-      })
-      console.log(data)
-      // 提示信息
-      if (!(returnAjaxMessage(data, this, 0))) {
-        return false
-      } else {
-        // 返回数据正确的逻辑
-        this.hopePaymentCoinStyleList = data.data.data
-        this.hopePaymentCoinStyleList.forEach(item => {
-          if (this.hopePaymentCoinId === item.id) {
-            this.CurrencyCoinsName = item.shortName
-          }
-        })
-      }
     }
   },
   filter: {},

@@ -338,7 +338,7 @@ export default {
         }
       } else {
         this.isShow = false
-        this.$router.push({path: '/login'})
+        // this.$router.push({path: '/login'})
       }
     },
     // 输入金额改变时检测用户输入的币种总金额
@@ -385,6 +385,10 @@ export default {
       } else {
         // 重新掉一次币种接口刷新列表
         this.getFinancialManagementList()
+        this.$message({
+          message: '投资成功',
+          type: 'success'
+        })
       }
     },
     // 投资理财页面币种查询
@@ -436,16 +440,11 @@ export default {
         // 每次换一种币种就获取该币种的总资产
         if (this.isLogin) {
           this.getUserCoindTotal()
-          // 走势图x轴赋值
-          this.FINANCE_LINE_RENDER_PRICE_LIST(getData.tickerPriceResult.renderPriceList)
-          // 走势图y轴赋值
-          this.FINANCE_LINE_RENDER_TIME_LIST(getData.tickerPriceResult.renderTimeList)
-        } else {
-          // 走势图x轴赋值
-          this.FINANCE_LINE_RENDER_PRICE_LIST()
-          // 走势图y轴赋值
-          this.FINANCE_LINE_RENDER_TIME_LIST()
         }
+        // 走势图x轴赋值
+        this.FINANCE_LINE_RENDER_PRICE_LIST(getData.tickerPriceResult.renderPriceList)
+        // 走势图y轴赋值
+        this.FINANCE_LINE_RENDER_TIME_LIST(getData.tickerPriceResult.renderTimeList)
         this.$refs.childLineCharts.resetOptions()
         this.$refs.childLineCharts.resetChart(this.options)
         // 将投资数量输入输入框清空
@@ -600,7 +599,7 @@ export default {
                 line-height: 24px;
                 >input{
                   width: 380px;
-                  // color:#fff;
+                  color:#fff;
                   vertical-align: center;
                 }
               }

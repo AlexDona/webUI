@@ -21,6 +21,7 @@ export const common = {
   'comm_retreat': '退出',
   'comm_hello': '你好，',
   'comm_currency': '币种',
+  'comm_coin': '法币',
   'comm_count': '数量',
   'comm_total_sum': '总',
   'comm_entry': '挂单',
@@ -94,5 +95,9 @@ export const common = {
   'comm_bank': '银行卡',
   'comm_xilian': '西联汇款',
   'comm_agreement': '协议',
-  'comm_and': '与'
+  'comm_and': '与',
+  'comm_offering': '出售',
+  'comm_buying': '购买',
+  'comm_success': '成功',
+  'comm_stock': '笔'
 }

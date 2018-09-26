@@ -9,14 +9,16 @@
     <div class="otc-AD-manage-content">
       <!-- 2.1 大标题广告管理 -->
       <div class="AD-title font-size20 padding-l15 font-weight700">
-        广告管理
+        <!-- 广告管理 -->
+        {{$t('M.otc_adMange')}}
       </div>
       <!-- 2.2 广告管理主体内容 -->
       <div class="AD-manage-main">
         <!-- 上部分筛选条件 -->
         <div class="manage-main-top">
           <span class="filtrate-text font-size14">
-            交易类型
+            <!-- 交易类型 -->
+            {{$t('M.otc_type_ransaction')}}
           </span>
           <span class="style-input">
             <el-select
@@ -33,7 +35,8 @@
               </el-option>
             </el-select>
           </span>
-          <span class="filtrate-text font-size14">交易币种</span>
+          <!-- 交易币种 -->
+          <span class="filtrate-text font-size14">{{$t('M.otc_trade')}}{{$t('M.comm_currency')}}</span>
           <!-- 币种选择 -->
           <span class="market-input">
               <el-select
@@ -50,7 +53,8 @@
                 </el-option>
               </el-select>
           </span>
-          <span class="filtrate-text font-size14">交易法币</span>
+          <!-- 交易法币 -->
+          <span class="filtrate-text font-size14">{{$t('M.otc_trade')}}{{$t('M.comm_coin')}}</span>
           <!-- 法币选择 -->
           <span class="market-input">
               <el-select
@@ -67,7 +71,8 @@
                 </el-option>
               </el-select>
           </span>
-          <span class="filtrate-text font-size14">状态</span>
+          <!-- 状态 -->
+          <span class="filtrate-text font-size14">{{$t('M.comm_state')}}</span>
           <span class="status-input">
             <el-select
               v-model="activitedADManageStatusList"
@@ -84,7 +89,8 @@
             </el-select>
           </span>
           <span class="inquire-button">
-            <el-button type="primary" @click="findFilter">查询</el-button>
+            <!-- 查询 -->
+            <el-button type="primary" @click="findFilter">{{$t('M.comm_query')}}</el-button>
           </span>
           <span
             class="all-unshelve cursor-pointer"
@@ -97,7 +103,8 @@
             <span
               class="unshelve-text"
             >
-              一键下架所有广告
+            <!-- 一件下架所有广告 -->
+            {{$t('M.otc_adMange_advertingAD')}}
             </span>
           </span>
         </div>
@@ -106,11 +113,11 @@
           <el-table
             :data="ADList"
             style="width: 100%"
-            empty-text="暂无数据"
+            :empty-text="$t('M.comm_no_data')"
           >
             <!-- 时间 -->
             <el-table-column
-              label="时间"
+              :label="$t('M.comm_time')"
               width="180"
             >
               <template slot-scope="scope">
@@ -119,7 +126,7 @@
             </el-table-column>
             <!-- 交易类型 -->
             <el-table-column
-              label="交易类型"
+              :label="$t('M.otc_type_ransaction')"
             >
               <template slot-scope="scope">
                 <div
@@ -138,14 +145,14 @@
             </el-table-column>
             <!-- 市场 -->
             <el-table-column
-              label="币种"
+              :label="$t('M.comm_currency')"
             >
               <template slot-scope="scope">
                 <div>{{scope.row.coinName}}</div>
               </template>
             </el-table-column>
             <el-table-column
-              label="法币"
+              :label="$t('M.comm_coin')"
             >
               <template slot-scope="scope">
                 <div>{{scope.row.currencyName}}</div>
@@ -153,7 +160,7 @@
             </el-table-column>
             <!-- 单价 -->
             <el-table-column
-              label="单价"
+              :label="$t('M.otc_index_UnitPrice')"
             >
               <template slot-scope="scope">
                 <div>{{scope.row.price}}</div>
@@ -161,7 +168,7 @@
             </el-table-column>
             <!-- 数量 -->
             <el-table-column
-              label="数量"
+              :label="$t('M.comm_count')"
             >
               <template slot-scope="scope">
                 <div>{{scope.row.entrustCount}}</div>
@@ -169,7 +176,7 @@
             </el-table-column>
             <!-- 剩余数量 -->
             <el-table-column
-              label="剩余数量"
+              :label="$t('M.comm_surplus') + $t('M.comm_count')"
             >
               <template slot-scope="scope">
                 <div>{{scope.row.entrustCount - scope.row.matchCount}}</div>
@@ -177,7 +184,7 @@
             </el-table-column>
             <!-- 已完成数量 -->
             <el-table-column
-              label="已完成数量"
+              :label="$t('M.otc_enum_status_yiwancheng') + $t('M.comm_count')"
             >
               <template slot-scope="scope">
                 <div>{{scope.row.matchCount}}</div>
@@ -185,17 +192,20 @@
             </el-table-column>
             <!-- 状态 -->
             <el-table-column
-              label="状态"
+              :label="$t('M.comm_state')"
             >
               <template slot-scope="scope">
-                <div v-if="scope.row.status === 'ENTRUSTED'">已上架</div>
-                <div v-if="scope.row.status === 'COMPLETED'">已完成</div>
-                <div v-if="scope.row.status === 'CANCELED'">已下架</div>
+                <!-- 已上架 -->
+                <div v-if="scope.row.status === 'ENTRUSTED'">{{$t('M.comm_already')}}{{$t('M.otc_adMange_getting')}}</div>
+                <!-- 已完成 -->
+                <div v-if="scope.row.status === 'COMPLETED'">{{$t('M.otc_enum_status_yiwancheng')}}</div>
+                <!-- 已下架 -->
+                <div v-if="scope.row.status === 'CANCELED'">{{$t('M.comm_already')}}{{$t('M.otc_adMange_adverting')}}</div>
               </template>
             </el-table-column>
             <!-- 操作 -->
             <el-table-column
-              label="操作"
+              :label="$t('M.otc_index_operate')"
             >
               <template slot-scope="scope">
                 <!-- @click = "paymessage(scope.row.fid)"
@@ -205,14 +215,16 @@
                   v-if="scope.row.status === 'ENTRUSTED'"
                   @click="updateADUnshelve(scope.row.id)"
                 >
-                  下架
+                  <!-- 下架 -->
+                  {{$t('M.otc_adMange_adverting')}}
                 </el-button>
                 <el-button
                   type="text"
                   v-if="scope.row.status === 'CANCELED'"
                   @click="modifyAD(scope.row)"
                 >
-                  修改
+                <!-- 修改 -->
+                  {{$t('M.otc_adMange_change')}}
                 </el-button>
               </template>
             </el-table-column>
@@ -260,11 +272,11 @@ export default {
       ADManageTraderStyleList: [
         {
           value: 'BUY',
-          label: '购买'
+          label: this.$t('M.comm_buying')
         },
         {
           value: 'SELL',
-          label: '出售'
+          label: this.$t('M.comm_offering')
         }
       ],
       // 2.0 广告管理筛选下拉框数组--市场
@@ -278,15 +290,15 @@ export default {
       ADManageStatusList: [
         {
           value: 'ENTRUSTED',
-          label: '已上架'
+          label: this.$t('M.comm_already') + this.$t('M.otc_adMange_getting')
         },
         {
           value: 'CANCELED',
-          label: '已下架'
+          label: this.$t('M.otc_enum_status_yiwancheng')
         },
         {
           value: 'COMPLETED',
-          label: '已完成'
+          label: this.$t('M.comm_already') + this.$t('M.otc_adMange_adverting')
         }
       ],
       // 设置默认列表页数
@@ -410,9 +422,9 @@ export default {
     },
     // 点击表格中的下架按钮触发的事件
     updateADUnshelve (id) {
-      this.$confirm('此操作将永久下架该文件, 是否继续?', {
-        confirmButtonText: '确定',
-        cancelButtonText: '取消'
+      this.$confirm(this.$t('M.otc_adMange_tipsContentOne'), {
+        confirmButtonText: this.$t('M.comm_confirm'), // 确定
+        cancelButtonText: this.$t('M.comm_cancel') // 取消
       }).then(() => {
         this.getOTCEntrustingOrdersRevocation(id)
         // this.$message({
@@ -422,7 +434,7 @@ export default {
       }).catch(() => {
         this.$message({
           type: 'success',
-          message: '已取消下架'
+          message: this.$t('M.comm_already') + this.$t('M.comm_cancel') + this.$t('M.otc_adMange_adverting') // 已取消下架
         })
       })
     },
@@ -439,15 +451,15 @@ export default {
         this.getOTCADManageList()
         this.$message({
           type: 'success',
-          message: '下架成功!'
+          message: this.$t('M.otc_adMange_adverting') + this.$t('M.comm_success') + '!' // 下架成功
         })
       }
     },
     // 点击修改按钮钮触发的事件
     modifyAD (item) {
-      this.$confirm('此操作将永久修改该文件, 是否继续?', '提示', {
-        confirmButtonText: '确定',
-        cancelButtonText: '取消',
+      this.$confirm(this.$t('M.otc_adMange_tipsContentTwo'), this.$t('M.otc_prompt'), {
+        confirmButtonText: this.$t('M.comm_confirm'),
+        cancelButtonText: this.$t('M.comm_cancel'),
         type: 'warning'
       }).then(() => {
         // 跳转发布广告页面并携带一条信息的参数
@@ -475,8 +487,7 @@ export default {
 }
 </script>
 <style scoped lang="scss" type="text/scss">
-  @import url(../../../static/css/scss/OTC/OTCCenter.scss);
-
+// @import url(../../../static/css/scss/OTC/OTCCenter.scss);
   .otc-AD-manage-box {
     background-color: #121824;
     > .otc-AD-manage-content {

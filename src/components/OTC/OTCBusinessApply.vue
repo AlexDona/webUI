@@ -315,7 +315,6 @@ export default {
 <style scoped lang="scss" type="text/scss">
 @import url(../../../static/css/scss/OTC/OTCCenter.scss);
 .otc-business-apply-box{
-  /*width:100%;*/
   >.business-apply-content{
     width: 1150px !important;
     margin: 70px auto !important;
@@ -483,11 +482,8 @@ export default {
     }
   }
   &.night{
-    background-color: #1D2331;
+    background-color: #121824;
     >.business-apply-content{
-      // width: 1150px !important;
-      // margin: 70px auto !important;
-      // padding-top: 20px;
       >.privilege{
         >.title{
           color: #fff;
@@ -565,7 +561,7 @@ export default {
     }
   }
   &.day{
-    background-color: #fff;
+    // background-color: #fff;
     >.business-apply-content{
       >.privilege{
         >.title{

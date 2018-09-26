@@ -247,7 +247,7 @@
                     @click="toOnlineBuy(s.row.id,s.row.coinId,s.row.userId)"
                   >
                   <!-- 购买 -->
-                   {{$t('M.otc_index_buy')}}
+                   {{$t('M.comm_buying')}}
                   </el-button>
                   <el-button
                     type="success"
@@ -256,7 +256,7 @@
                     @click="toOnlineSell(s.row.id,s.row.coinId,s.row.userId)"
                   >
                     <!-- 出售 -->
-                   {{$t('M.otc_index_sell')}}
+                   {{$t('M.comm_offering')}}
                   </el-button>
                 </template>
               </el-table-column>
