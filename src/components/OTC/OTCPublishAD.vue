@@ -12,15 +12,17 @@
       <div class="publish-AD-left">
         <!-- 大标题发布广告 -->
         <div class="AD-title font-size20 padding-l15 font-weight700">
-          发布广告
+          {{$t('M.otc_merchant_publishAD')}}
         </div>
         <!-- 大表单 -->
         <div class="AD-big-form">
           <!-- 选择 -->
           <div class="common choice">
             <div class="left display-inline-block">
-              <p class="tips font-size14">选择</p>
-              <p class="warning font-size12">必填</p>
+              <!-- 选择 -->
+              <p class="tips font-size14">{{$t('M.otc_pl')}}</p>
+              <!-- 必填 -->
+              <p class="warning font-size12">{{$t('M.otc_publishAD_nustFill')}}</p>
             </div>
             <div class="right display-inline-block">
               <!-- 买卖类型 -->
@@ -74,20 +76,23 @@
           <!-- 销售价格 -->
           <div class="common sale-price">
             <div class="left display-inline-block">
-                <p class="tips font-size14">销售价格</p>
-                <p class="warning font-size12">必填</p>
+              <!-- 销售价格 -->
+                <p class="tips font-size14">{{$t('M.otc_sell')}}{{$t('M.otc_index_price')}}</p>
+                <!-- 必填 -->
+                <p class="warning font-size12">{{$t('M.otc_publishAD_nustFill')}}</p>
             </div>
             <div class="right display-inline-block">
               <div>
                 <p>
                   <span v-if="activitedBuySellStyle === 'SELL'">
-                    最大可卖出量:
+                    {{$t('M.otc_seller_maximum')}}:
                     <!-- {{total}}{{activeedCoinName}} -->
                     <span class="max-avail-sell">
                       {{total ? total : '--'}}{{activeedCoinName}}
                     </span>
                   </span>
-                  <span>市价:
+                  <!-- 市价 -->
+                  <span>{{$t('M.otc_market_price')}}:
                     <!-- {{marketPrice}}{{activeedCurrencyName}} -->
                     <span class="markder-price">
                       {{marketPrice ? marketPrice : '--'}}{{activeedCurrencyName}}
@@ -95,12 +100,14 @@
                   </span>
                 </p>
               </div>
-              <p>定价设置</p>
+              <!-- 定价设置 -->
+              <p>{{$t('M.otc_publishAD_setPrice')}}</p>
               <div class="input">
+                <!-- 单价 -->
                 <input
                   type="text"
                   class="price-input"
-                  placeholder="单价"
+                  :placeholder="$t('M.otc_index_UnitPrice')"
                   ref="price"
                   @keyup="changePriceValue('price', moneyPointLength)"
                   @input="changePriceValue('price', moneyPointLength)"
@@ -115,36 +122,40 @@
           <!-- 交易方式 -->
           <div class="common trade-way">
             <div class="left display-inline-block">
-                <p class="tips font-size14">交易方式</p>
-                <p class="warning font-size12">必填</p>
+              <!-- 交易方式 -->
+                <p class="tips font-size14">{{$t("M.otc_publishAD_selltype")}}</p>
+                <!-- 必填 -->
+                <p class="warning font-size12">{{$t('M.otc_publishAD_nustFill')}}</p>
             </div>
             <div class="right display-inline-block">
               <el-checkbox-group
                 v-model="activitedPayTypes"
                 @change='changePayTypes'
               >
-                <el-checkbox label="alipay" v-show="payForListArr[0] === '1'">支付宝</el-checkbox>
-                <el-checkbox label="weixin" v-show="payForListArr[1] === '1'">微信</el-checkbox>
-                <el-checkbox label="bank" v-show="payForListArr[2] === '1'">银行卡</el-checkbox>
-                <el-checkbox label="xilian" v-show="payForListArr[3] === '1'">西联汇款</el-checkbox>
+                <el-checkbox label="alipay" v-show="payForListArr[0] === '1'">{{$t('M.comm_alipay')}}</el-checkbox>
+                <el-checkbox label="weixin" v-show="payForListArr[1] === '1'">{{$t('M.comm_weixin')}}</el-checkbox>
+                <el-checkbox label="bank" v-show="payForListArr[2] === '1'">{{$t('M.comm_bank')}}</el-checkbox>
+                <el-checkbox label="xilian" v-show="payForListArr[3] === '1'">{{$t('M.comm_xilian')}}</el-checkbox>
                 <el-checkbox label="paypal" v-show="payForListArr[4] === '1'">PAYPAL</el-checkbox>
               </el-checkbox-group>
               <div class="err">{{errorInfoTradeWay}}</div>
             </div>
           </div>
-          <!-- 数量与限额 -->
           <div class="common sum-limit">
             <div class="left display-inline-block">
-                <p class="tips font-size14">数量与限额</p>
-                <p class="warning font-size12">必填</p>
+                <!-- 数量与限额 -->
+                <p class="tips font-size14">{{$t('M.comm_count')}}{{$t('M.comm_and')}}{{$t('M.otc_publishAD_limitMoney')}}</p>
+                <!--必填  -->
+                <p class="warning font-size12">{{$t('M.otc_publishAD_nustFill')}}</p>
             </div>
             <div class="right display-inline-block">
-              <p>交易数量</p>
+              <!-- 交易数量 -->
+              <p>{{$t('M.otc_publishAD_sellmount')}}</p>
               <div class="input-top">
                 <input
                   type="text"
                   class="input-sum"
-                  placeholder="交易数量"
+                  :placeholder="$t('M.otc_publishAD_sellmount')"
                   ref="entrustCount"
                   @keyup="changeEntrustCountValue('entrustCount', pointLength)"
                   @input="changeEntrustCountValue('entrustCount', pointLength)"
@@ -154,15 +165,17 @@
               </div>
               <div class="err">{{errorInfoEntrustCount}}</div>
               <p class="text">
-                <span class="money-min">单笔最小限额</span>
-                <span class="money-max">单笔最大限额</span>
+                <!-- 单笔最小限额 -->
+                <span class="money-min">{{$t('M.otc_publishAD_minlimitMoney')}}</span>
+                <!-- 单笔最大限额 -->
+                <span class="money-max">{{$t('M.otc_publishAD_maxlimitMoney')}}</span>
               </p>
               <div class="input-bottom">
                 <!-- 单笔最小限额 -->
                 <input
                   type="text"
                   class="input-min"
-                  :placeholder="'单笔最小限额' + this.minCount"
+                  :placeholder="$t('M.otc_publishAD_minlimitMoney') + this.minCount"
                   ref="minCountValue"
                   @keyup="changeMinCountInputValue('minCountValue', moneyPointLength)"
                   @input="changeMinCountInputValue('minCountValue', moneyPointLength)"
@@ -173,7 +186,7 @@
                 <input
                   type="text"
                   class="input-max"
-                  :placeholder="'单笔最大限额' + this.maxCount"
+                  :placeholder="$t('M.otc_publishAD_maxlimitMoney') + this.maxCount"
                   ref="maxCountValue"
                   @keyup="changeMaxCountInputValue('maxCountValue', moneyPointLength)"
                   @input="changeMaxCountInputValue('maxCountValue', moneyPointLength)"
@@ -190,15 +203,17 @@
           <!-- 备注 -->
           <div class="common remark">
             <div class="left display-inline-block">
-                <p class="tips font-size14">备注</p>
-                <p class="warning font-size12">建议填写</p>
+              <!-- 备注 -->
+                <p class="tips font-size14">{{$t('M.comm_remark')}}</p>
+                <!-- 建议填写 -->
+                <p class="warning font-size12">{{$t('M.otc_publishAD_adviceToFill')}}</p>
             </div>
             <div class="right display-inline-block">
               <el-input
                 type="textarea"
                 auto-complete="off"
                 maxlength="20"
-                placeholder="输入留言: 请说明有关于您交易的相关条款或者其它您想让对方获悉得信息，以便对方和您快速交易"
+                :placeholder="$t('M.otc_publishAD_liveMessage')"
                 v-model="remarkText"
               >
               </el-input>
@@ -207,12 +222,15 @@
           <!-- 限制设置 -->
           <div class="common limit-set">
             <div class="left display-inline-block">
-                <p class="tips font-size14">限制设置</p>
-                <p class="warning font-size12">选填</p>
+              <!-- 限制设置 -->
+                <p class="tips font-size14">{{$t('M.otc_publishAD_setLimit')}}</p>
+                <!-- 必选 -->
+                <p class="warning font-size12">{{$t('M.otc_publishAD_nustFill')}}</p>
             </div>
             <div class="right display-inline-block">
               <div>
-                同时处理最大订单数（0=不限制）
+                <!-- 同时处理最大订单数(0=不限制) -->
+                {{$t('M.otc_publishAD_maxOrder')}}（0={{$t('M.otc_publishAD_noLimit')}}）
                 <span class="question-mark cursor-pointer">
                   <el-tooltip
                     class="item"
@@ -220,9 +238,11 @@
                     placement="bottom-start"
                   >
                     <div slot="content">
-                      设置该限制，可以避免大量订单同时涌进，导致处理不过来的情况，比如当您设定为 2 时，最多只会有 2 笔订单可同时向您下单，
+                      <!-- 设置该限制，可以避免大量订单同时涌进，导致处理不过来的情况，比如当您设定为 2 时，最多只会有 2 笔订单可同时向您下单，
                       <br/>
-                      其余卖家会看到「广告主处理订单已达上限，请稍候再试」，待您处理完后才允许下一笔订单进入
+                      其余卖家会看到「广告主处理订单已达上限，请稍候再试」，待您处理完后才允许下一笔订单进入 -->
+                      {{$t('M.otc_publishAD_setDiscript')}}<br/>
+                      {{$t('M.otc_publishAD_setDiscriptTwo')}}
                     </div>
                     <IconFontCommon
                       class="font-size14"
@@ -248,7 +268,7 @@
                 <div class="err">{{errorInfoLimitOrderCount}}</div>
               </div>
               <div>
-                卖家必须成交过几次（0=不限制）
+              {{$t('M.otc_publishAD_sellNeedLimit')}}（0={{$t('M.otc_publishAD_noLimit')}}）
               </div>
               <div>
                 <input
@@ -274,18 +294,20 @@
               class="AD-button font-size14 cursor-pointer"
               @click.prevent="showPasswordDialog"
             >
-              发布广告
+              <!-- 发布广告 -->
+              {{$t('M.otc_merchant_publishAD')}}
             </button>
           </div>
           <!-- 发布广告弹出交易密码框 -->
           <div class="password-dialog">
             <el-dialog
-              title="交易密码"
+              :title="$t('M.otc_publishAD_sellpassword')"
               :visible.sync="dialogVisible"
               top="25vh"
               width="470"
             >
-              <div>请输入交易密码</div>
+            <!-- 请输入交易密码 -->
+              <div>{{$t('M.otc_publishAD_pleaseInput')}}{{$t('M.otc_publishAD_sellpassword')}}</div>
               <div class="input">
                 <input
                   type="password"
@@ -305,7 +327,8 @@
                     type="primary"
                     @click="publishADSubmitButton"
                   >
-                    提 交
+                  <!-- 提交 -->
+                    {{$t('M.comm_sub_time')}}
                   </el-button>
               </span>
             </el-dialog>
@@ -315,24 +338,18 @@
       <!--发布广告右侧提示信息-->
       <div class="publish-AD-right">
         <div class="publish-tips">
-          <div class="title font-size14">发布说明：</div>
+          <div class="title font-size14">{{$t('M.otc_publishAD_publishDis')}}：</div>
           <p class="tip font-size12">
-            ●FUBT.TOP 为了保证用户的交易安全，将采用
-            数字货币托管系统。严禁绕过平台私下交易，
-            违者将自行承担损失，且永久封号；
+            ●FUBT.TOP {{$t('M.otc_publishAD_discriptLineOne')}}
           </p>
           <p class="tip font-size12">
-            ●请在交易说明及交易备注中，详细写下您所希
-            望的交易条件，以及与您交易所需注意的事项，
-            明确的信息将提升您的交易成功机率。
+            ●{{$t('M.otc_publishAD_discriptLineTwo')}}
           </p>
           <p class="tip font-size12">
-            ●请勿在 FUBT.TOP尝试欺诈行为，违者将会导
-            致帐号被冻结，并承担法律责任。
+            ●{{$t('M.otc_publishAD_discriptLineThree')}}
           </p>
           <p class="tip font-size12">
-            ●发布广告后请履行契约精神，恶意抬价或者是
-            反悔，被投诉将冻结账户 3-15 天不等
+            ●{{$t('M.otc_publishAD_discriptLineFour')}}
           </p>
         </div>
       </div>
@@ -345,7 +362,7 @@
 <script>
 // 引入接口
 import {formatNumberInput} from '../../utils'
-import {querySelectedOrdersDetails, getOTCAvailableCurrency, getMerchantAvailablelegalTender, addOTCPutUpOrdersMerchantdedicated, queryUserTradeFeeAndCoinInfo, queryUserPayTypes, getOTCChangeRate, getOTCCoinInfo} from '../../utils/api/OTC'
+import {querySelectedOrdersDetails, addOTCPutUpOrdersMerchantdedicated, getOTCCoinInfo} from '../../utils/api/OTC'
 // 引入组件
 import NavCommon from '../Common/HeaderCommonForPC'
 import FooterCommon from '../Common/FooterCommon'
@@ -369,11 +386,11 @@ export default {
       buySellStyle: [ // 1.0 发布广告 买卖 类型数组
         {
           id: 'SELL',
-          name: '出售'
+          name: this.$t('M.comm_offering')
         },
         {
           id: 'BUY',
-          name: '购买'
+          name: this.$t('M.comm_buying')
         }
       ],
       // 2.0 币种名字下拉数组：可用币种
@@ -611,21 +628,23 @@ export default {
       // 非空及数据范围准确性验证
       // 单价
       if (!this.$refs.price.value) {
-        this.errorInfoPrice = '请输入单价'
+        this.errorInfoPrice = this.$t('M.otc_publishAD_pleaseInput') + this.$t('M.otc_index_UnitPrice')
         return false
       } else if (this.$refs.price.value < this.minPrice || this.$refs.price.value > this.maxPrice) {
-        this.errorInfoPrice = '请输入' + this.minPrice + '~' + this.maxPrice + '之间的价格'
+        this.errorInfoPrice = this.$t('M.otc_publishAD_pleaseInput') + this.minPrice + '~' + this.maxPrice + this.$t('M.otc_publishAD_rangePrice')
         return false
       }
       // 交易方式
       if (!this.parameterPayTypes) {
-        this.errorInfoTradeWay = '请选择交易方式'
+        // 请选择交易方式
+        this.errorInfoTradeWay = this.$t('M.otc_publishAD_chouseSellType')
         return false
       }
       // 交易数量
       // console.log(this.$refs.entrustCount.value)
       if (!this.$refs.entrustCount.value || this.$refs.entrustCount.value - 0 === 0) {
-        this.errorInfoEntrustCount = '请输入交易数量'
+        // 请输入交易数量
+        this.errorInfoEntrustCount = this.$t('M.otc_publishAD_pleaseInput') + this.$t('M.otc_publishAD_sellmount')
         return false
       }
       // 单笔最小最大限制
@@ -641,7 +660,8 @@ export default {
     // 6.0 点击密码框中的提交按提交钮发布广告
     async publishADSubmitButton () {
       if (!this.tradePassword) {
-        this.errorInfoPassword = '请输入交易密码'
+        // 请输入交易密码
+        this.errorInfoPassword = this.$t('M.otc_publishAD_pleaseInput') + this.$t('M.otc_publishAD_sellpassword')
         return false
       }
       let param = {
@@ -730,7 +750,7 @@ export default {
       formatNumberInput(target, pointLength)
       if (this.$refs.price.value) {
         if (this.price < this.minPrice || this.price > this.maxPrice) {
-          this.errorInfoPrice = '请输入' + this.minPrice + '~' + this.maxPrice + '之间的价格'
+          this.errorInfoPrice = this.$t('M.otc_publishAD_pleaseInput') + this.minPrice + '~' + this.maxPrice + this.$t('M.otc_publishAD_rangePrice')
           return false
         } else {
           this.errorInfoPrice = ''
@@ -761,14 +781,15 @@ export default {
       formatNumberInput(target, pointLength)
       // 开始校验
       if (this.$refs.minCountValue.value < this.minCount) {
-        this.errorInfoMinCount = '输入值不能小于最小限额'
+        // 输入值不能小于最小限额
+        this.errorInfoMinCount = this.$t('M.otc_publishAD_inputminLimit')
         return false
       } else {
         this.errorInfoMinCount = ''
       }
       // console.log(typeof (this.$refs.maxCountValue.value)) // string
       if (this.$refs.minCountValue.value > this.$refs.maxCountValue.value - 0) {
-        this.errorInfoMinCount = '输入值不能大于最大限额'
+        this.errorInfoMinCount = this.$t('M.otc_publishAD_inputmaxLimit')
         return false
       } else {
         this.errorInfoMinCount = ''
@@ -785,7 +806,8 @@ export default {
       // console.log(this.$refs.maxCountValue.value)
       // 开始校验
       if (this.$refs.maxCountValue.value > this.maxCount) {
-        this.errorInfoMaxCount = '输入值不能大于最大限额'
+        // 输入值不能大于最大限额
+        this.errorInfoMaxCount = this.$t('M.otc_publishAD_inputmaxLimit')
         return false
       } else {
         this.errorInfoMaxCount = ''
@@ -793,7 +815,8 @@ export default {
       // console.log(this.minCountValue)
       // console.log(typeof (this.$refs.minCountValue.value)) // string
       if (this.$refs.maxCountValue.value < this.$refs.minCountValue.value - 0) {
-        this.errorInfoMaxCount = '输入值不能小于最小限额'
+        // 输入值不能小于最小限额
+        this.errorInfoMaxCount = this.$t('M.otc_publishAD_inputminLimit')
         return false
       } else {
         this.errorInfoMaxCount = ''
@@ -807,7 +830,7 @@ export default {
       // } else {
       //   this.errorInfoMaxCount = ''
       // }
-    },
+    }
     // 校验 同时处理最大订单数（0=不限制）
     // changeLimitOrderCountValue (ref) {
     //   this[ref] = this.$refs[ref].value
@@ -832,171 +855,6 @@ export default {
     //     this.errorInfoSuccessOrderCount = ''
     //   }
     // },
-    // =======================分割线-下面无用了===============================
-    // 刚进页面汇率转换：单笔最小限额
-    async changeRateMinCreated () {
-      console.log('刚开始最小')
-      console.log(this.$refs.minCountValue.value)
-      console.log(this.$refs)
-      console.log(this.minCount)
-      const data = await getOTCChangeRate({
-        selectName: this.activeedCurrencyName, // 选中的otc结算货币名称:也就是选中后的法币币种名称
-        // price: this.$refs.minCountValue.value, // 金额
-        price: this.minCount, // 金额
-        priceName: 'CNY' // 市价对应货币名称：默认进来是人民币
-      })
-      console.log('汇率换算')
-      console.log(data)
-      if (!(returnAjaxMessage(data, this, 0))) {
-        return false
-      } else {
-        // 返回数据正确的逻辑
-        this.$refs.minCountValue.value = data.data.data.exchangePrice
-      }
-    },
-    // 刚进页面汇率转换：单笔最大限额
-    async changeRateMaxCreated () {
-      const data = await getOTCChangeRate({
-        selectName: this.activeedCurrencyName, // 选中的otc结算货币名称:也就是选中后的法币币种名称
-        // price: this.$refs.maxCountValue.value, // 金额
-        price: this.maxCount, // 金额
-        priceName: 'CNY' // 市价对应货币名称：默认进来是人民币
-      })
-      console.log('汇率换算')
-      console.log(data)
-      if (!(returnAjaxMessage(data, this, 0))) {
-        return false
-      } else {
-        // 返回数据正确的逻辑
-        this.$refs.maxCountValue.value = data.data.data.exchangePrice
-      }
-    },
-    // 法币改变时候 汇率换算:单笔最小限额
-    async changeRateMin () {
-      const data = await getOTCChangeRate({
-        selectName: this.transformationNewCurrencyName, // 选中的otc结算货币名称:也就是选中后的法币币种名称
-        price: this.$refs.minCountValue.value, // 金额
-        priceName: this.transformationOldCurrencyName // 市价对应货币名称：也就是选中前的法币的名称
-      })
-      console.log('汇率换算')
-      console.log(data)
-      if (!(returnAjaxMessage(data, this, 0))) {
-        return false
-      } else {
-        // 返回数据正确的逻辑
-        this.$refs.minCountValue.value = data.data.data.exchangePrice
-      }
-    },
-    // 法币改变时候 汇率换算:单笔最大限额
-    async changeRateMax () {
-      const data = await getOTCChangeRate({
-        selectName: this.transformationNewCurrencyName, // 选中的otc结算货币名称:也就是选中后的法币币种名称
-        price: this.$refs.maxCountValue.value, // 金额
-        priceName: this.transformationOldCurrencyName // 市价对应货币名称：也就是选中前的法币的名称
-      })
-      console.log('汇率换算')
-      console.log(data)
-      if (!(returnAjaxMessage(data, this, 0))) {
-        return false
-      } else {
-        // 返回数据正确的逻辑
-        this.$refs.maxCountValue.value = data.data.data.exchangePrice
-      }
-    },
-    //  2.0 otc可用币种查询：
-    async getOTCAvailableCurrencyList () {
-      const data = await getOTCAvailableCurrency({
-        partnerId: this.partnerId
-      })
-      console.log('可用币种列表')
-      console.log(data)
-      if (!(returnAjaxMessage(data, this, 0))) {
-        return false
-      } else {
-        // 返回数据正确的逻辑
-        this.availableCoinList = data.data.data
-        // 刚进页面将第一个币种选中
-        // this.activitedCoinId = this.availableCoinList[0].partnerCoinId
-        this.activitedCoinId = this.availableCoinList[0].coinId
-        this.activeedCoinName = this.availableCoinList[0].name
-        // 刚进页面根据可用币种id 查询用户交易币种手续费率以及币种详情
-        this.queryUserTradeFeeAndCoinInfo()
-        // this.changeRate() // 汇率转换
-      }
-    },
-    //  2.1 查询用户现有支付方式
-    async queryUserPayTypesList () {
-      const data = await queryUserPayTypes({
-        // partnerId: this.partnerId
-      })
-      // console.log('用户现有支付方式')
-      // console.log(data)
-      if (!(returnAjaxMessage(data, this, 0))) {
-        return false
-      } else {
-        // 返回数据正确的逻辑
-        this.payForListArr = data.data.data
-        // console.log(this.payForListArr)
-      }
-    },
-    // 3.01 根据可用币种id 查询用户交易币种手续费率以及币种详情
-    async queryUserTradeFeeAndCoinInfo () {
-      const data = await queryUserTradeFeeAndCoinInfo({
-        coinId: this.activitedCoinId // 挂单id
-      })
-      console.log('用户交易币种手续费率以及币种详情')
-      console.log(data)
-      // 提示信息
-      if (!(returnAjaxMessage(data, this, 0))) {
-        return false
-      } else {
-        // 返回数据正确的逻辑:将返回的数据赋值到页面中
-        // 单笔最小限额（单位：选中法币） 0 - 不限制
-        this.$refs.minCountValue.value = data.data.data.minCount
-        this.minCount = this.$refs.minCountValue.value
-        // this.minCount = data.data.data.minCount
-        // this.$refs.minCountValue.value = this.minCount
-        console.log(this.minCount)
-        console.log(this.$refs.minCountValue.value)
-        // this.$refs.minCountValue.value = data.data.data.minCount
-        // 单笔最大限额（单位：选中法币） 0 - 不限制
-        // this.$refs.maxCountValue.value = data.data.data.maxCount
-        this.maxCount = data.data.data.maxCount
-        this.$refs.maxCountValue.value = this.maxCount
-        // this.$refs.maxCountValue.value = data.data.data.maxCount
-        this.minPrice = data.data.data.minPrice // 最低价
-        this.maxPrice = data.data.data.maxPrice // 最高价
-        this.total = data.data.data.total // 最大可卖出量
-        this.marketPrice = data.data.data.marketPrice // 市场价
-        this.pointLength = data.data.data.unit // 每个币种返回的保留小数点位数限制
-        console.log(this.$refs.minCountValue.value)
-        console.log(this.$refs.maxCountValue.value)
-        console.log('asdfasfdasfdasdf')
-        this.changeRateMinCreated()
-        this.changeRateMaxCreated()
-      }
-      // console.log(typeof (this.$refs.minCountValue.value))
-    },
-    // 4.0 otc可用法币查询
-    async getMerchantAvailablelegalTenderList () {
-      const data = await getMerchantAvailablelegalTender({
-        partnerId: this.partnerId
-      })
-      console.log('可用法币')
-      console.log(data)
-      if (!(returnAjaxMessage(data, this, 0))) {
-        return false
-      } else {
-        // 返回数据正确的逻辑
-        this.availableCurrencyList = data.data.data
-        // 刚进页面将第一个币种选中
-        // this.activitedCurrencyId = this.availableCurrencyList[0].id
-        this.activitedCurrencyId = this.availableCurrencyList[0].coinId
-        this.activeedCurrencyName = this.availableCurrencyList[0].shortName
-        console.log(this.activitedCurrencyId)
-        console.log(this.activeedCurrencyName)
-      }
-    }
   },
   filter: {},
   computed: {
@@ -1022,7 +880,7 @@ export default {
 }
 </script>
 <style scoped lang="scss" type="text/scss">
-  @import url(../../../static/css/scss/OTC/OTCCenter.scss);
+// @import url(../../../static/css/scss/OTC/OTCCenter.scss);
 .otc-publish-AD-box{
   background-color: #121824;
   >.otc-publish-AD-content{

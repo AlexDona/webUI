@@ -29,6 +29,7 @@ export const common = {
   'comm_nationality': '国籍',
   // 列表类型
   'comm_currency': '币种',
+  'comm_coin': '法币',
   'comm_count': '数量',
   'comm_total_sum': '总',
   'comm_entry': '挂单',
@@ -104,5 +105,16 @@ export const common = {
   'comm_user_security_center': '安全中心',
   'comm_user_receiving_set': '收款设置',
   'comm_user_invitation_promote': '邀请推广',
-  'comm_user_api_management': 'API管理'
+  'comm_user_api_management': 'API管理',
+  'comm_all': '全部',
+  'comm_alipay': '支付宝',
+  'comm_weixin': '微信',
+  'comm_bank': '银行卡',
+  'comm_xilian': '西联汇款',
+  'comm_agreement': '协议',
+  'comm_and': '与',
+  'comm_offering': '出售',
+  'comm_buying': '购买',
+  'comm_success': '成功',
+  'comm_stock': '笔'
 }

@@ -43,18 +43,6 @@
                   <div class="top"
                        style="height:15px;line-height: 15px"
                   >
-                    <!--<span-->
-                    <!--v-show="s.row.rose>0"-->
-                    <!--style="color:#D45858;"-->
-                    <!--&gt;-->
-                    <!--{{s.row.price}}-->
-                    <!--</span>-->
-                    <!--<span-->
-                    <!--v-show="s.row.rose<0"-->
-                    <!--style="color:#008069;"-->
-                    <!--&gt;-->
-                    <!--{{s.row.price}}-->
-                    <!--</span>-->
                     {{keep2Num(s.row.boursePrice)}}
                   </div>
                   <!--货币转换-->
@@ -79,18 +67,6 @@
                     <div class="top"
                          style="height:15px;line-height: 15px"
                     >
-                        <!--<span-->
-                          <!--v-show="s.row.rose>0"-->
-                          <!--style="color:#D45858;"-->
-                        <!--&gt;-->
-                          <!--{{s.row.price}}-->
-                        <!--</span>-->
-                      <!--<span-->
-                        <!--v-show="s.row.rose<0"-->
-                        <!--style="color:#008069;"-->
-                      <!--&gt;-->
-                          <!--{{s.row.price}}-->
-                        <!--</span>-->
                       {{keep2Num(s.row.bourseCount)}}
                     </div>
                     <!--货币转换-->
@@ -128,36 +104,6 @@ export default {
     require('../../../static/css/theme/day/Trade/GlobalMarketTradeDay.css')
     require('../../../static/css/theme/night/Trade/GlobalMarketTradeNight.css')
     this.getGlobalMarket()
-    // this.globalMarketList = [
-    //   {
-    //     id: 0,
-    //     bourse: 'Fubt.top', // 交易所
-    //     symbol: 'BTC/USDT', // 交易对
-    //     price: 7718.94, // 交易价
-    //     volume: 561.82 // 成交量
-    //   },
-    //   {
-    //     id: 1,
-    //     bourse: 'bitfinex', // 交易所
-    //     symbol: 'BTC/USD', // 交易对
-    //     price: 7718.94, // 交易价
-    //     volume: 561.82 // 成交量
-    //   },
-    //   {
-    //     id: 2,
-    //     bourse: 'okex', // 交易所
-    //     symbol: 'BTC/USDT', // 交易对
-    //     price: 7718.94, // 交易价
-    //     volume: 561.82 // 成交量
-    //   },
-    //   {
-    //     id: 3,
-    //     bourse: 'huobipro', // 交易所
-    //     symbol: 'BTC/USD', // 交易对
-    //     price: 7718.94, // 交易价
-    //     volume: 561.82 // 成交量
-    //   }
-    // ]
   },
   mounted () {},
   activited () {},
@@ -207,6 +153,7 @@ export default {
 }
 </script>
 <style scoped lang="scss">
+  @import '../../../static/css/scss/index.scss';
   @import '../../../static/css/scss/Trade/TradeCenter.scss';
   .global-market-box{
     >.inner-box{
@@ -230,11 +177,11 @@ export default {
       >.inner-box{
         >.title{
           color:$nightMainTitleColor;
-          background-color: $nightMainTitleBgColor;
+          background-color: $mainContentNightBgColor;
           box-shadow:2px 0px 3px rgba(27,35,49,1);
         }
         >.content{
-          background-color: $nightMainContentBgColor;
+          background-color: $mainContentNightBgColor;
           color:$nightFontColor;
         }
       }

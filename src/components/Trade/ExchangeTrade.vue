@@ -32,7 +32,7 @@
                     可买：
                     <span v-show="!buyUserCoinWallet.total">--</span>
                     <span v-show="buyUserCoinWallet.total">{{limitExchange.userCanBuyCount}}</span>
-                    <span>{{activeSymbol.sellsymbol}}</span>
+                    <span>{{middleTopData.sellsymbol}}</span>
                   </span>
                 </div>
                 <div class="right item">
@@ -47,10 +47,10 @@
                     type="text"
                     placeholder="买入价"
                     :ref="limitBuyPriceInputRef"
-                    @keyup="autoChangeData('limit-buy',limitBuyPriceInputRef,activeSymbol.priceExchange)"
-                    @input="formatInput(limitBuyPriceInputRef,activeSymbol.priceExchange)"
+                    @keyup="autoChangeData('limit-buy',limitBuyPriceInputRef,middleTopData.priceExchange)"
+                    @input="formatInput(limitBuyPriceInputRef,middleTopData.priceExchange)"
                   >
-                  <span class="currency">{{activeSymbol.area}}</span>
+                  <span class="currency">{{middleTopData.area}}</span>
                   <div class="rate-changer"
                        v-show="activeConvertCurrencyObj&&(limitExchange.transformBuyPrice-0)"
                   >
@@ -63,10 +63,10 @@
                     type="text"
                     placeholder="买入量"
                     :ref="limitBuyCountInputRef"
-                    @keyup="autoChangeData('limit-buy',limitBuyCountInputRef,activeSymbol.priceExchange)"
-                    @input="formatInput(limitBuyCountInputRef,activeSymbol.priceExchange)"
+                    @keyup="autoChangeData('limit-buy',limitBuyCountInputRef,middleTopData.priceExchange)"
+                    @input="formatInput(limitBuyCountInputRef,middleTopData.priceExchange)"
                   >
-                  <span class="currency">{{activeSymbol.sellsymbol}}</span>
+                  <span class="currency">{{middleTopData.sellsymbol}}</span>
                 </div>
                 <!--交易密码-->
                 <div class="input">
@@ -85,7 +85,7 @@
                     <span>预计交易额：</span>
                     <!--<span class="buy">{{limitExchange.buyAmount}}</span>-->
                     <span class="buy">{{limitBuyAmount}}</span>
-                    <span>{{activeSymbol.area}}</span>
+                    <span>{{middleTopData.area}}</span>
                   </div>
                 </div>
                 <div class="submit">
@@ -105,7 +105,7 @@
                     可卖：
                     <span v-show="!sellUserCoinWallet.total">--</span>
                     <span v-show="sellUserCoinWallet.total">{{sellUserCoinWallet.total}}</span>
-                    <span>{{activeSymbol.sellsymbol}}</span>
+                    <span>{{middleTopData.sellsymbol}}</span>
                   </span>
                 </div>
                 <div class="right item">
@@ -120,10 +120,10 @@
                     type="text"
                     placeholder="卖出价"
                     :ref="limitSellPriceInputRef"
-                    @keyup="autoChangeData('limit-sell',limitSellPriceInputRef,activeSymbol.priceExchange)"
-                    @input="formatInput(limitSellPriceInputRef,activeSymbol.priceExchange)"
+                    @keyup="autoChangeData('limit-sell',limitSellPriceInputRef,middleTopData.priceExchange)"
+                    @input="formatInput(limitSellPriceInputRef,middleTopData.priceExchange)"
                   >
-                  <span class="currency">{{activeSymbol.area}}</span>
+                  <span class="currency">{{middleTopData.area}}</span>
                   <div
                     class="rate-changer"
                     v-show="activeConvertCurrencyObj&&(limitExchange.transformSellPrice-0)"
@@ -137,10 +137,10 @@
                     type="text"
                     placeholder="卖出量"
                     :ref="limitSellCountInputRef"
-                    @keyup="autoChangeData('limit-sell',limitSellCountInputRef,activeSymbol.priceExchange)"
-                    @input="formatInput(limitSellCountInputRef,activeSymbol.priceExchange)"
+                    @keyup="autoChangeData('limit-sell',limitSellCountInputRef,middleTopData.priceExchange)"
+                    @input="formatInput(limitSellCountInputRef,middleTopData.priceExchange)"
                   >
-                  <span class="currency">{{activeSymbol.sellsymbol}}</span>
+                  <span class="currency">{{middleTopData.sellsymbol}}</span>
                 </div>
                 <!--交易密码-->
                 <div class="input">
@@ -159,7 +159,7 @@
                     <span>预计交易额：</span>
                     <!--<span class="sell">{{limitExchange.sellAmount}}</span>-->
                     <span class="sell">{{limitSellAmount}}</span>
-                    <span>{{activeSymbol.area}}</span>
+                    <span>{{middleTopData.area}}</span>
                   </div>
                 </div>
                 <div class="submit">
@@ -185,7 +185,7 @@
                     可买：
                     <span v-show="!buyUserCoinWallet.total||!middleTopData.price">--</span>
                     <span v-show="buyUserCoinWallet.total&&middleTopData.price">{{(buyUserCoinWallet.total/middleTopData.price).toFixed(middleTopData.priceExchange)}}</span>
-                    <span>{{activeSymbol.sellsymbol}}</span>
+                    <span>{{middleTopData.sellsymbol}}</span>
                   </span>
                 </div>
                 <div class="right item">
@@ -197,7 +197,7 @@
                 <!--市场成交价-->
                 <div class="input">
                   <div class="market-price buy-price">市场成交价</div>
-                  <span class="currency">{{activeSymbol.area}}</span>
+                  <span class="currency">{{middleTopData.area}}</span>
                 </div>
                 <!--买入量-->
                 <div class="input">
@@ -205,10 +205,10 @@
                     type="text"
                     placeholder="买入量"
                     :ref="marketBuyCountInputRef"
-                    @keyup="autoChangeData('market-buy',marketBuyCountInputRef,activeSymbol.priceExchange)"
-                    @input="formatInput(marketBuyCountInputRef,activeSymbol.priceExchange)"
+                    @keyup="autoChangeData('market-buy',marketBuyCountInputRef,middleTopData.priceExchange)"
+                    @input="formatInput(marketBuyCountInputRef,middleTopData.priceExchange)"
                   >
-                  <span class="currency">{{activeSymbol.sellsymbol}}</span>
+                  <span class="currency">{{middleTopData.sellsymbol}}</span>
                 </div>
                 <!--交易密码-->
                 <div class="input">
@@ -226,7 +226,7 @@
                   <div class="item">
                     <span>预计交易额：</span>
                     <span class="buy">0.00</span>
-                    <span>{{activeSymbol.area}}</span>
+                    <span>{{middleTopData.area}}</span>
                   </div>
                 </div>
                 <div class="submit">
@@ -246,7 +246,7 @@
                     可卖：
                     <span v-show="!sellUserCoinWallet.total">--</span>
                     <span v-show="sellUserCoinWallet.total">{{sellUserCoinWallet.total}}</span>
-                    <span>{{activeSymbol.sellsymbol}}</span>
+                    <span>{{middleTopData.sellsymbol}}</span>
                   </span>
                 </div>
                 <div class="right item">
@@ -258,7 +258,7 @@
                 <!--市场成交价-->
                 <div class="input">
                   <div class="market-price sell-price">市场成交价</div>
-                  <span class="currency">{{activeSymbol.area}}</span>
+                  <span class="currency">{{middleTopData.area}}</span>
                 </div>
                 <!--卖出量-->
                 <div class="input">
@@ -266,10 +266,10 @@
                     type="text"
                     placeholder="卖出量"
                     :ref="marketSellCountInputRef"
-                    @keyup="autoChangeData('market-sell',marketSellCountInputRef,activeSymbol.priceExchange)"
-                    @input="formatInput(marketSellCountInputRef,activeSymbol.priceExchange)"
+                    @keyup="autoChangeData('market-sell',marketSellCountInputRef,middleTopData.priceExchange)"
+                    @input="formatInput(marketSellCountInputRef,middleTopData.priceExchange)"
                   >
-                  <span class="currency">{{activeSymbol.sellsymbol}}</span>
+                  <span class="currency">{{middleTopData.sellsymbol}}</span>
                 </div>
                 <!--交易密码-->
                 <div class="input">
@@ -287,7 +287,7 @@
                   <div class="item">
                     <span>预计交易额：</span>
                     <span class="sell">0.00</span>
-                    <span>{{activeSymbol.area}}</span>
+                    <span>{{middleTopData.area}}</span>
                   </div>
                 </div>
                 <div class="submit">
@@ -447,7 +447,8 @@ export default {
     },
     // 数据联动
     autoChangeData (type, ref, pointLength) {
-      this.formatInput(ref, pointLength)
+      console.log(pointLength)
+      console.log(this.formatInput(ref, pointLength))
       // let buyPriceVal = 0
       // let buyCountVal = 0
       switch (type) {
@@ -801,7 +802,7 @@ export default {
       }
     }
     &.night{
-      background-color: $nightMainContentBgColor;
+      background-color: $mainContentNightBgColor;
       color:$nightFontColor;
       >.inner-box{
         >.currency-info{
@@ -838,7 +839,7 @@ export default {
                 /*限价input框*/
                 >input{
                   border-color:#A9BED4;
-                  background-color: $mainNightBgColor;
+                  background-color: $mainContentNightBgColor;
                   color:$nightFontColor;
                 }
                 >.currency{

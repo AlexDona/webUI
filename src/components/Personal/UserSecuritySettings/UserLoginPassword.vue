@@ -92,7 +92,7 @@
 import HeaderCommon from '../../Common/HeaderCommonForPC'
 import IconFontCommon from '../../Common/IconFontCommon'
 import ErrorBox from '../../User/ErrorBox'
-import {modifyLoginPassword, statusSecurityCenter} from '../../../utils/api/personal'
+import {modifyLoginPassword} from '../../../utils/api/personal'
 import {
   returnAjaxMessage,
   validateNumForUserInput

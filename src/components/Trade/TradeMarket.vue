@@ -639,8 +639,7 @@ export default {
 </script>
 <style scoped lang="scss">
   @import '../../../static/css/scss/index.scss';
-  @import '../../../static/css/scss/Trade/TradeCenter.scss';
-
+  /*@import '../../../static/css/scss/Trade/TradeCenter.scss';*/
   .trade-market-box {
     /*width:433px;*/
     > .inner-box {
@@ -781,11 +780,11 @@ export default {
     &.night {
       > .inner-box {
         > .title {
-          color: $nightMainTitleColor;
-          background-color: $nightMainTitleBgColor;
+          color: $mainNightTitleColor;
+          background-color: $mainContentNightBgColor;
         }
         > .content {
-          background-color: $nightMainContentBgColor;
+          background-color: $mainContentNightBgColor;
           > .inner-box {
           }
         }
@@ -795,10 +794,10 @@ export default {
       > .inner-box {
         > .title {
           color: $dayMainTitleColor;
-          background-color: $dayMainBgColor;
+          background-color: $mainDayBgColor;
         }
         > .content {
-          background-color: #fff;
+          background-color: $mainDayBgColor;
           > .inner-box {
           }
         }

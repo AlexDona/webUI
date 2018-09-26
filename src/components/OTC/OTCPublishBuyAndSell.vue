@@ -214,24 +214,26 @@
                   </span>
                   <!-- 卖 -->
                   <span class="predict-sum" v-if="this.publishStyle === 'sell'">
-                    {{entrustCountSell * priceSell}} {{CurrencyCoinsName}}
+                    <!-- {{entrustCountSell * priceSell}} {{CurrencyCoinsName}} -->
+                    {{traderSumSELL}} {{CurrencyCoinsName}}
                   </span>
                   <!-- 买 -->
                   <span class="predict-sum" v-if="this.publishStyle === 'buy'">
-                    {{entrustCountBuy * priceBuy}} {{CurrencyCoinsName}}
+                    <!-- {{entrustCountBuy * priceBuy}} {{CurrencyCoinsName}} -->
+                    {{traderSumBUY}} {{CurrencyCoinsName}}
                   </span>
                   <span class="predict-text">
                     手续费：
                   </span>
                   <!-- 卖 -->
                   <span class="predict-sum" v-if="this.publishStyle === 'sell'">
-                    {{entrustCountSell * rate}} {{coinName}}
                     <!-- {{entrustCountSell * rate}} {{coinName}} -->
-                    <!-- {{amendPrecision(entrustCountSell, rate, '*')}} {{coinName}} -->
+                    {{serviceChargeSELL}} {{coinName}}
                   </span>
                   <!-- 买 -->
                   <span class="predict-sum" v-if="this.publishStyle === 'buy'">
-                    {{entrustCountBuy * rate}} {{coinName}}
+                    <!-- {{entrustCountBuy * rate}} {{coinName}} -->
+                    {{serviceChargeBUY}} {{coinName}}
                   </span>
                   <span class="rate-text">
                     ( 费率
@@ -323,7 +325,7 @@
 </template>
 <!--请严格按照如下书写书序-->
 <script>
-import {getOTCAvailableCurrency, getMerchantAvailablelegalTender, addOTCPutUpOrders, queryUserTradeFeeAndCoinInfo, getOTCCoinInfo} from '../../utils/api/OTC'
+import {addOTCPutUpOrders, getOTCCoinInfo} from '../../utils/api/OTC'
 import NavCommon from '../Common/HeaderCommonForPC'
 import FooterCommon from '../Common/FooterCommon'
 import {returnAjaxMessage} from '../../utils/commonFunc'
@@ -337,6 +339,10 @@ export default {
   },
   data () {
     return {
+      serviceChargeSELL: 0, // 手续费：卖
+      traderSumSELL: 0, // 交易额：卖
+      serviceChargeBUY: 0, // 手续费：买
+      traderSumBUY: 0, // 交易额 :买
       dialogVisible: false, // 交易密码弹窗状态
       publishStyle: '', // 1购买和出售选中类型：挂单类型
       labelPosition: 'top', // 表单label放置的位置
@@ -395,7 +401,6 @@ export default {
     }
   },
   created () {
-    console.log(amendPrecision(3.2222, 2.1, '-'))
     require('../../../static/css/list/OTC/OTCPublishBuyAndSell.css')
     require('../../../static/css/theme/day/OTC/OTCPublishBuyAndSellDay.css')
     require('../../../static/css/theme/night/OTC/OTCPublishBuyAndSellNight.css')
@@ -481,7 +486,7 @@ export default {
         // 币种最高价格
         this.maxPrice = data.data.data.otcCoinQryResponse.maxPrice
         // 币种最低价格
-        this.minPrice = data.data.data.otcCoinQryResponse.minCount
+        this.minPrice = data.data.data.otcCoinQryResponse.minPrice
         // 费率
         if (this.publishStyle === 'sell') {
           this.rate = data.data.data.otcCoinQryResponse.sellRate
@@ -545,6 +550,10 @@ export default {
       this.errorPWd = ''
       this.entrustCountSell = 0
       this.entrustCountBuy = 0
+      this.serviceChargeSELL = 0
+      this.traderSumSELL = 0
+      this.serviceChargeBUY = 0
+      this.traderSumBUY = 0
     },
     // 卖出量和买入量input 获得焦点
     countInputFocus () {
@@ -557,8 +566,18 @@ export default {
       console.log(this[ref])
       // this.entrustCountSell = this.$refs.entrustCountSell.value
       // console.log(this.entrustCountSell)
+      // 精度丢失问题修复
+      // 类型：卖
+      // 手续费
+      this.serviceChargeSELL = amendPrecision(this.$refs.entrustCountSell.value, this.rate, '*').toFixed(this.pointLength)
+      // 交易额
+      this.traderSumSELL = amendPrecision(this.$refs.entrustCountSell.value, this.$refs.priceSell.value, '*').toFixed(2)
+      // 类型：买
+      // 手续费
+      this.serviceChargeBUY = amendPrecision(this.$refs.entrustCountBuy.value, this.rate, '*').toFixed(this.pointLength)
+      // 交易额
+      this.traderSumBUY = amendPrecision(this.$refs.entrustCountBuy.value, this.$refs.priceBuy.value, '*').toFixed(2)
       // 开始input框验证
-      // console.log(amendPrecision(this.$refs.entrustCountSell.value, this.rate, '*'))
       // 限制输入数字和位数
       let target = this.$refs[ref]
       // 卖出量 买入量验证：>0 保留返回的小数位数
@@ -701,75 +720,6 @@ export default {
     chargeMoney () {
       this.$store.commit('personal/CHANGE_USER_CENTER_ACTIVE_NAME', 'assets')
       this.$router.push({path: '/PersonalCenter'})
-    },
-    // ---------------------------------分割线 下不要了---------------------------------------
-    //  5.0 otc可用币种查询-----没有用了
-    async getOTCAvailableCurrencyList () {
-      const data = await getOTCAvailableCurrency({
-        partnerId: this.partnerId
-      })
-      console.log('可用币种')
-      console.log(data)
-      // 提示信息
-      if (!(returnAjaxMessage(data, this, 0))) {
-        return false
-      } else {
-        // 返回数据正确的逻辑
-        this.coinStyleList = data.data.data
-      }
-    },
-    //  5.2 根据可用币种id 查询用户交易币种手续费率以及币种详情-----没有用了
-    async queryUserTradeFeeAndCoinInfo () {
-      const data = await queryUserTradeFeeAndCoinInfo({
-        coinId: this.coinId // 挂单币种id
-      })
-      console.log('用户交易币种手续费率以及币种详情')
-      console.log(data)
-      // 提示信息
-      if (!(returnAjaxMessage(data, this, 0))) {
-        return false
-      } else {
-        // 返回数据正确的逻辑:将返回的数据赋值到页面中
-        // 选中币种名称
-        this.coinName = data.data.data.name
-        // 当前可用
-        this.currentlyAvailable = data.data.data.total
-        // 市价
-        this.marketPrice = data.data.data.marketPrice
-        // 最低价
-        this.minPrice = data.data.data.minPrice
-        // 最高价
-        this.maxPrice = data.data.data.maxPrice
-        // 市价币种名称
-        this.currencyName = data.data.data.currencyName
-        this.pointLength = data.data.data.unit // 每个币种返回的保留小数点位数限制
-        // 费率
-        if (this.publishStyle === 'sell') {
-          this.rate = data.data.data.sellRate
-        }
-        if (this.publishStyle === 'buy') {
-          this.rate = data.data.data.buyRate
-        }
-      }
-    },
-    //  6.0 查询可用法币币种列表-----没有用了
-    async getMerchantAvailablelegalTenderList () {
-      const data = await getMerchantAvailablelegalTender({
-        partnerId: this.partnerId
-      })
-      console.log(data)
-      // 提示信息
-      if (!(returnAjaxMessage(data, this, 0))) {
-        return false
-      } else {
-        // 返回数据正确的逻辑
-        this.hopePaymentCoinStyleList = data.data.data
-        this.hopePaymentCoinStyleList.forEach(item => {
-          if (this.hopePaymentCoinId === item.id) {
-            this.CurrencyCoinsName = item.shortName
-          }
-        })
-      }
     }
   },
   filter: {},

@@ -10,8 +10,8 @@ let apiCommonUrl = '' // api 接口前缀
 let socketUrl = '' // socket 接口
 let domain = '' // 项目域名
 let routerMode = 'hash'
-
 if (process.env.NODE_ENV == 'development') {
+  /* apiCommonUrl --------------------------------------------- */
   // apiCommonUrl = 'http://192.168.1.72:8062/' // 刘耀
   // apiCommonUrl = 'http://192.168.1.71:8888/' // 亚男
   // apiCommonUrl = 'http://192.168.1.217:8888/' // 爱军
@@ -23,18 +23,29 @@ if (process.env.NODE_ENV == 'development') {
   // apiCommonUrl = 'http://192.168.1.52:9000' // 滑浩田
   // apiCommonUrl = 'http://192.168.1.235:8046' // 吕冰洋
   // apiCommonUrl = 'http://192.168.1.252:8103' // 施伯兵
-  socketUrl = 'ws://192.168.1.52:8087/market' // socketUrl
-  // socketUrl = 'ws://ws.bzu.com/market'
+  //
+  // apiCommonUrl = 'http://192.168.1.200:8888/' // 本地测试
+  apiCommonUrl = 'http://api.new.bzu.com/' // 内部测试
+  /* socketUrl --------------------------------------------- */
+
+  // socketUrl = 'ws://192.168.1.52:8087/market' // socketUrl
+  socketUrl = 'ws://ws.bzu.com/market'
+  /* domain --------------------------------------------- */
   domain = 'http://new.bzu.com/#/'
 } else if (process.env.NODE_ENV == 'production') {
+  /* apiCommonUrl --------------------------------------------- */
+
   // apiCommonUrl = 'https://rest.fubt.top/'
   // apiCommonUrl = 'http://192.168.1.200:8888/' // 本地测试
-  // ----------api
   // apiCommonUrl = 'http://api.new.fubt.com/' // 本地测试
   apiCommonUrl = 'http://api.new.bzu.com/' // 内部测试
-  // ---- socket
+
+  /* socketUrl --------------------------------------------- */
+
   socketUrl = 'ws://ws.bzu.com/market'
   // socketUrl = 'ws://192.168.1.200:8087/market'
+
+  /* domain --------------------------------------------- */
   domain = 'http://new.bzu.com/#/'
 }
 

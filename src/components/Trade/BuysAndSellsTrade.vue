@@ -39,6 +39,9 @@
           >
             <dl class="title-box">
               <dt class="header">
+                <span class="buy-and-sell-index">
+                  index
+                </span>
                 <span class="price text-align-l">
                   价格({{activeSymbol.area}})
                 </span>
@@ -57,7 +60,7 @@
               class="middle-box content-box"
               v-if="listOrder==='middle'"
             >
-              <!--买入-->
+              <!--卖出-->
               <dl
                 class="buys-list"
               >
@@ -69,6 +72,9 @@
                   @click="changeActivePriceItem(item)"
                 >
                   <div class="inner">
+                    <span class="price sell-bg">
+                      卖 {{item.index}}
+                    </span>
                   <span
                     class="price text-align-l sell-bg"
                   >
@@ -82,7 +88,7 @@
                   </span>
                     <!--宽度条-->
                     <i
-                      class="color-buy-bg"
+                      class="color-sell-bg"
                       :style="'width:'+ item.amount/buysAndSellsList.sells.highestAmount*100+'%'"
                     >
                     </i>
@@ -103,7 +109,7 @@
                   />
                 </dt>
               </dl>
-              <!--卖出-->
+              <!--买入-->
               <dl
                 class="sells-list"
               >
@@ -115,21 +121,24 @@
                   @click="changeActivePriceItem(item)"
                 >
                   <div class="inner">
-                  <span class="price text-align-l buy-bg">
-                    {{item.price}}
-                  </span>
-                    <span class="amount text-align-r">
-                    {{item.amount}}
-                  </span>
-                    <span class="total text-align-r">
-                    {{item.total}}
-                  </span>
-                    <!--宽度条-->
-                    <i
-                      class="color-sell-bg"
-                      :style="'width:'+ item.amount/buysAndSellsList.buys.highestAmount*100+'%'"
-                    >
-                    </i>
+                    <span class="price buy-bg">
+                      买 {{item.index}}
+                    </span>
+                    <span class="price text-align-l buy-bg">
+                      {{item.price}}
+                    </span>
+                      <span class="amount text-align-r">
+                      {{item.amount}}
+                    </span>
+                      <span class="total text-align-r">
+                      {{item.total}}
+                    </span>
+                      <!--宽度条-->
+                      <i
+                        class="color-buy-bg"
+                        :style="'width:'+ item.amount/buysAndSellsList.buys.highestAmount*100+'%'"
+                      >
+                      </i>
                   </div>
                 </dd>
               </dl>
@@ -165,21 +174,24 @@
                   @click="changeActivePriceItem(item)"
                 >
                   <div class="inner">
-                  <span class="price text-align-l buy-bg">
-                    {{item.price}}
-                  </span>
-                    <span class="amount text-align-r">
-                    {{item.amount}}
-                  </span>
-                    <span class="total text-align-r">
-                    {{item.total}}
-                  </span>
-                    <!--宽度条-->
-                    <i
-                      class="color-buy-bg"
-                      :style="'width:'+ item.amount/buysAndSellsList.buys.highestAmount*100+'%'"
-                    >
-                    </i>
+                    <span class="price buy-bg">
+                      买 {{item.index}}
+                    </span>
+                    <span class="price text-align-l buy-bg">
+                      {{item.price}}
+                    </span>
+                      <span class="amount text-align-r">
+                      {{item.amount}}
+                    </span>
+                      <span class="total text-align-r">
+                      {{item.total}}
+                    </span>
+                      <!--宽度条-->
+                      <i
+                        class="color-buy-bg"
+                        :style="'width:'+ item.amount/buysAndSellsList.buys.highestAmount*100+'%'"
+                      >
+                      </i>
                   </div>
                 </dd>
               </dl>
@@ -190,20 +202,6 @@
               class="mibble-box content-box"
               v-if="listOrder==='sells'"
             >
-              <!--最新价-->
-              <dl class="new-price">
-                <dt class="text-align-c font-size16">
-                  <span>{{buysAndSellsList.latestDone.price}}</span>
-                  <IconFontCommon
-                    v-show="buysAndSellsList.latestDone.rose>0"
-                    iconName="icon-down"
-                  />
-                  <IconFontCommon
-                    v-show="buysAndSellsList.latestDone.rose<0"
-                    iconName="icon-up"
-                  />
-                </dt>
-              </dl>
               <!--卖出-->
               <dl
                 class="sells-list"
@@ -216,24 +214,41 @@
                   @click="changeActivePriceItem(item)"
                 >
                   <div class="inner">
-                  <span class="price text-align-l sell-bg">
-                    {{item.price}}
-                  </span>
-                    <span class="amount text-align-r">
-                    {{item.amount}}
-                  </span>
-                    <span class="total text-align-r">
-                    {{item.total}}
-                  </span>
-                    <!--宽度条-->
-                    <i
-                    class="color-sell-bg"
-                    :style="'width:'+ item.amount/buysAndSellsList.buys.highestAmount*100+'%'"
-                  >
-                  </i>
+                    <span class="price sell-bg">
+                      卖 {{item.index}}
+                    </span>
+                    <span class="price text-align-l sell-bg">
+                      {{item.price}}
+                    </span>
+                      <span class="amount text-align-r">
+                      {{item.amount}}
+                    </span>
+                      <span class="total text-align-r">
+                      {{item.total}}
+                    </span>
+                      <!--宽度条-->
+                      <i
+                      class="color-sell-bg"
+                      :style="'width:'+ item.amount/buysAndSellsList.buys.highestAmount*100+'%'"
+                    >
+                    </i>
                   </div>
                 </dd>
               </dl>
+              <!--最新价-->
+              <dl class="new-price">
+                  <dt class="text-align-c font-size16">
+                    <span>{{buysAndSellsList.latestDone.price}}</span>
+                    <IconFontCommon
+                      v-show="buysAndSellsList.latestDone.rose>0"
+                      iconName="icon-down"
+                    />
+                    <IconFontCommon
+                      v-show="buysAndSellsList.latestDone.rose<0"
+                      iconName="icon-up"
+                    />
+                  </dt>
+                </dl>
             </div>
             <!--</el-collapse-transition>-->
           </div>
@@ -319,7 +334,7 @@ export default {
       this.reflashCount = 0
     },
     buysAndSellsList (newVal) {
-      // console.log(newVal)
+      console.log(newVal)
       if (!this.reflashCount && newVal) {
         this.CHANGE_ACTIVE_PRICE_ITEM(newVal.latestDone.price)
         this.reflashCount++
@@ -389,6 +404,9 @@ export default {
               display:flex;
               >span{
                 flex:1;
+                &.buy-and-sell-index{
+                  color: transparent;
+                }
               }
             }
           }
@@ -454,7 +472,7 @@ export default {
       > .inner-box {
         > .title {
           color: $nightMainTitleColor;
-          background-color: $nightMainTitleBgColor;
+          background-color: $mainContentNightBgColor;
           box-shadow:2px 0px 3px rgba(27,35,49,1);
           > .text {
             >span{
@@ -473,7 +491,7 @@ export default {
           }
         }
         >.content {
-          background-color: $nightMainContentBgColor;
+          background-color: $mainContentNightBgColor;
           >.inner-box{
             /*表头*/
             >.title-box{
@@ -486,7 +504,7 @@ export default {
               >.buys-list,.sells-list{
                 >dd{
                   &.odd,&.even,&:hover{
-                    background-color: #1c2433;
+                    background-color: #1a1d2f;
                   }
                   >.inner{
                     >span{

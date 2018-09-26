@@ -7,7 +7,7 @@
   color:#d8d8d8;
 }
 .trade-box.night .el-table--enable-row-hover .el-table__body tr:hover>td{
-  background-color: #1c2433;
+  background-color: #1a1d2f;
 }
 .trade-box.night .el-table th.is-leaf{
   border-color:#39424d;
@@ -17,7 +17,7 @@
 }
 
 .trade-box.night>.inner-box>.middle .el-tabs__nav-wrap::after{
-  background-color:#293140;
+  background-color:#1c1f32;
 }
 .trade-box.night>.inner-box>.middle .el-tabs__item{
   color:#fff;

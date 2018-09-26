@@ -404,7 +404,6 @@ export default {
 </script>
 <style scoped lang="scss">
   @import '../../../static/css/scss/index.scss';
-  @import '../../../static/css/scss/Trade/TradeCenter';
   .entrust-order-box{
     width:100%;
     >.inner-box{
@@ -511,7 +510,7 @@ export default {
       }
     }
     &.night{
-      background-color: $nightMainContentBgColor;
+      background-color: $mainContentNightBgColor;
       color:$nightFontColor;
       >.inner-box{
         >.view-more{
@@ -579,7 +578,7 @@ export default {
       }
     }
     &.day{
-      background-color: $dayMainBgColor;
+      background-color: $mainDayBgColor;
       color:$dayFontColor;
       >.inner-box{
         >.view-more{
