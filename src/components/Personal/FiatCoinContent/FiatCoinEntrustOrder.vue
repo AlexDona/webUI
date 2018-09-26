@@ -181,7 +181,7 @@ export default {
 }
 </script>
 <style scoped lang="scss" type="text/scss">
-  @import "../../../../static/css/scss/Personal/FiatCoinContent/FiatCoinEntrustOrder.scss";
+  @import "../../../../static/css/scss/Personal/IndexPersonal.scss";
   .fiat-entrust-order-box {
     .fiat-entrust-order-table {
       > .entrust-table-head {

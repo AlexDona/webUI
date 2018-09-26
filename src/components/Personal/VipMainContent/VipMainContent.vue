@@ -562,7 +562,7 @@ export default {
 }
 </script>
 <style scoped lang="scss">
-  @import "../../../../static/css/scss/Personal/VipMainContent/VipMainContent";
+  @import "../../../../static/css/scss/Personal/IndexPersonal";
   .vip-main {
     > .header-content {
       /*height: 600px;*/

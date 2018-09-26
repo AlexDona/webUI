@@ -865,7 +865,7 @@ export default {
 }
 </script>
 <style scoped lang="scss">
-  @import "../../../../static/css/scss/Personal/UserAssets/SecurityCenter";
+  @import "../../../../static/css/scss/Personal/IndexPersonal";
   .security-center{
     >.security-information{
       height: 100px;

@@ -426,7 +426,7 @@ export default {
 }
 </script>
 <style scoped lang="scss">
-  @import "../../../../static/css/scss/Personal/UserAssets/InvitingPromotion";
+  @import "../../../../static/css/scss/Personal/IndexPersonal";
   .invitation-promotion{
     >.invitation-promotion-main{
       .code-copy {

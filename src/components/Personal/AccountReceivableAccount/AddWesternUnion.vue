@@ -281,7 +281,7 @@ export default {
 }
 </script>
 <style scoped lang="scss">
-  @import "../../../../static/css/scss/Personal/AccountReceivableAccount/AddWesternUnion";
+  @import "../../../../static/css/scss/Personal/IndexPersonal";
   .add-western {
     >.add-western-main {
       width: 1100px;

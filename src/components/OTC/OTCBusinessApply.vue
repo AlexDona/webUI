@@ -299,7 +299,7 @@ export default {
 }
 </script>
 <style scoped lang="scss" type="text/scss">
-@import url(../../../static/css/scss/OTC/OTCBusinessApply.scss);
+@import url(../../../static/css/scss/OTC/OTCCenter.scss);
 .otc-business-apply-box{
   >.business-apply-content{
     width: 1150px;

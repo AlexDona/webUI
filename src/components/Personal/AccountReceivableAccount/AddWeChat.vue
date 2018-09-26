@@ -318,7 +318,7 @@ export default {
 }
 </script>
 <style scoped lang="scss">
-  @import "../../../../static/css/scss/Personal/AccountReceivableAccount/AddWeChat";
+  @import "../../../../static/css/scss/Personal/IndexPersonal";
   .add-chat {
     >.add-chat-main {
       width: 1100px;

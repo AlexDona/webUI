@@ -337,7 +337,7 @@ export default {
 }
 </script>
 <style scoped lang="scss">
-  @import "../../../../static/css/scss/Personal/UserSecuritySettings/UserGoogleBinding";
+  @import "../../../../static/css/scss/Personal/IndexPersonal";
   .binding-google {
     >.binding-google-main {
       width: 1100px;

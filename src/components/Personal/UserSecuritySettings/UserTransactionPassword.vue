@@ -584,7 +584,7 @@ export default {
 }
 </script>
 <style scoped lang="scss">
-  @import "../../../../static/css/scss/Personal/UserSecuritySettings/UserTransactionPassword";
+  @import "../../../../static/css/scss/Personal/IndexPersonal";
   .transaction-password {
     >.transaction-password-main {
       width: 1100px;

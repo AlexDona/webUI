@@ -641,7 +641,7 @@ export default {
 }
 </script>
 <style scoped lang="scss">
-  @import "../../../../static/css/scss/Personal/TransactionType/CoinOrders";
+  @import "../../../../static/css/scss/Personal/IndexPersonal";
   .coin-orders{
     .search-condition-box{
       width:100%;

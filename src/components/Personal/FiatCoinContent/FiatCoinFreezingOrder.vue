@@ -138,7 +138,7 @@ export default {
 }
 </script>
 <style scoped lang="scss" type="text/scss">
-  @import "../../../../static/css/scss/Personal/FiatCoinContent/FiatCoinFreezingOrder.scss";
+  @import "../../../../static/css/scss/Personal/IndexPersonal.scss";
   .fiat-freezing-order-box{
     >.freezing-order-content{
       >.freezing-table-head{

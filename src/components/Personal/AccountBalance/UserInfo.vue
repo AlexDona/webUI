@@ -16,7 +16,7 @@
             <p class="font-size12">
               <span class="text-color">
                 <!--您好，-->
-                {{ $t('M.comm_hello') }}
+                {{ $t('m.comm_hello') }}
               </span>
               <span class="color">{{ userInfo.userInfo.userName }}</span>
             </p>
@@ -285,7 +285,7 @@ export default {
 }
 </script>
 <style scoped lang="scss">
-  @import "../../../../static/css/scss/Personal/AccountBalance/UserInfo";
+  @import "../../../../static/css/scss/Personal/IndexPersonal";
   .user-info{
     >.user-info-main{
       height: 130px;

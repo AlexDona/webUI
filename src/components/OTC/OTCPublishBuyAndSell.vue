@@ -783,7 +783,7 @@ export default {
 }
 </script>
 <style scoped lang="scss" type="text/scss">
-  @import url(../../../static/css/scss/OTC/OTCPublishBuyAndSell.scss);
+  @import url(../../../static/css/scss/OTC/OTCCenter.scss);
   .otc-publish-buy-and-sell-box {
     background-color: #1D2331;
     > .publish-buy-and-sell-content {
