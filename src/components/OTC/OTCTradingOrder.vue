@@ -778,12 +778,13 @@ export default {
     },
     // 撤销/成交otc用户定单
     async cancelCompleteUserOtcOrder (val) { // 1 取消 2 完成
+      let data
       if (val === 1) {
-        const data = await cancelUserOtcOrder()
+        data = await cancelUserOtcOrder()
         console.log('撤销otc用户定单（过期买家未付款）')
       }
       if (val === 2) {
-        const data = await completeUserOtcOrder()
+        data = await completeUserOtcOrder()
         console.log('成交otc用户定单（过期卖家未收款）')
       }
       console.log(data)

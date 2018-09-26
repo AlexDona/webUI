@@ -59,9 +59,19 @@ class socket {
       reader.onload = (evt) => {
         let text = pako.inflate(evt.target.result, {to: 'string'})
         let msg = JSON.parse(text)
-        // console.log(msg)
+        console.log(msg)
+        // 心跳包
+        if (msg.type === 2) {
+          console.log(msg)
+          this.send({
+            'tag': 'HEART',
+            'content': msg.data,
+            'id': `market_001`
+          })
+        } else {
+          this.onReceiver({ Event: 'message', Data: msg })
+        }
         // callback(msg)
-        this.onReceiver({ Event: 'message', Data: msg })
       }
     } catch (err) {
       console.error(' >> Data parsing error:', err)
