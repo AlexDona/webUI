@@ -119,5 +119,7 @@ export const common = {
   'comm_offering': '出售',
   'comm_buying': '购买',
   'comm_success': '成功',
-  'comm_stock': '笔'
+  'comm_stock': '笔', // 意思是交易笔数
+  'comm_business_application': '商家申请',
+  'comm_invitation_list':'邀请排行'
 }

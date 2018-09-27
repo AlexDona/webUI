@@ -40,19 +40,34 @@
                 v-show="$route.path.indexOf('OTC') != -1"
                 >
                 <li class="sub-nav-item">
-                  <router-link to="/OTCBusinessApply">商家申请</router-link>
+                  <router-link to="/OTCBusinessApply">
+                    <!--商家申请-->
+                    {{$t('M.comm_business_application')}}
+                  </router-link>
                 </li>
                 <li class="sub-nav-item">
-                  <router-link to="/OTCPublishAD">发布广告</router-link>
+                  <router-link to="/OTCPublishAD">
+                    <!--发布广告-->
+                    {{$t('M.otc_merchant_publishAD')}}
+                  </router-link>
                 </li>
                 <li class="sub-nav-item">
-                  <router-link to="/OTCADManage">广告管理</router-link>
+                  <router-link to="/OTCADManage">
+                    <!--广告管理-->
+                    {{$t('M.otc_adMange')}}
+                  </router-link>
                 </li>
                 <li class="sub-nav-item">
-                  <router-link to="/OTCMerchantsOrders">商家订单</router-link>
+                  <router-link to="/OTCMerchantsOrders">
+                    <!--商家订单-->
+                    {{$t('M.otc_MerchantsOrders')}}
+                  </router-link>
                 </li>
                 <li class="sub-nav-item">
-                  <router-link to="/OTCReportFormStatistics">报表统计</router-link>
+                  <router-link to="/OTCReportFormStatistics">
+                    <!--报表统计-->
+                    {{$t('M.otc_formStatistics')}}
+                  </router-link>
                 </li>
               </ul>
             </li>
@@ -81,11 +96,15 @@
                 <!--</li>-->
                 <li class="sub-nav-item">
                   <router-link to="/CurrencyApplication">
-                    上币申请
+                    <!--上币申请-->
+                    {{$t('M.coin_apply')}}
                   </router-link>
                 </li>
                 <li class="sub-nav-item">
-                  <router-link to="/RankingListOfInvitation">邀请排行</router-link>
+                  <router-link to="/RankingListOfInvitation">
+                    <!--邀请排行-->
+                    {{$t('M.comm_invitation_list')}}
+                  </router-link>
                 </li>
               </ul>
             </li>

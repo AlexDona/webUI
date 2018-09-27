@@ -508,7 +508,8 @@
 import {EMAIL_REG} from '../../utils/regExp' // 正则验证
 import {
   userLoginForStep1,
-  userLoginForStep2
+  userLoginForStep2,
+  getLoginErcode
 } from '../../utils/api/user'
 import {
   assetCurrenciesList
@@ -544,7 +545,7 @@ export default {
   data () {
     return {
       isErcodeTimeOut: false, // 二维码是否过期
-      isErCodeLogin: false, // 是否扫码登录
+      isErCodeLogin: true, // 是否扫码登录
       username: '',
       // username: '18625512987',
       // username: '18600929234',
@@ -612,6 +613,7 @@ export default {
     require('../../../static/css/list/User/Login.css')
     this.ENTER_STEP1()
     this.refreshCode()
+    this.reflashErCode()
     // 清空input框值
     // this.clearInputValue()
   },
@@ -662,10 +664,20 @@ export default {
       'USER_LOGIN'
     ]),
     // 刷新二维码
-    reflashErCode () {},
+    async reflashErCode () {
+      const data = await getLoginErcode()
+      if (!returnAjaxMessage(data, this)) {
+        return false
+      } else {
+        console.log(data)
+      }
+    },
     // 切换登录方式
     toggleLoginType () {
       this.isErCodeLogin = !this.isErCodeLogin
+      if (this.isErCodeLogin) {
+        this.reflashErCode()
+      }
     },
     // 设置错误信息（mobile）
     setMobileErrorMsg (msg) {
