@@ -1,13 +1,13 @@
 export const common = {
-  'home': '首页',
+  'comm_home': '首页',
   // 公共部分
   // 头部
-  'all-plate': '全部',
-  'trade_center': '币币交易',
-  'otc_center': 'OTC交易',
-  'finance_center': '投资理财',
-  'activity_center': '活动中心',
-  'convert_currency': '折算货币',
+  'comm_all-plate': '全部',
+  'comm_trade_center': '币币交易',
+  'comm_otc_center': 'OTC交易',
+  'comm_finance_center': '投资理财',
+  'comm_activity_center': '活动中心',
+  'comm_convert_currency': '折算货币',
   'comm_set': '设置',
   'comm_select': '选择',
   'comm_please_choose': '请选择',

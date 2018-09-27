@@ -14,7 +14,7 @@
       <!--PC端-->
       <div
         class="pc-box"
-        v-show="!isMobile"
+        v-if="!isMobile&&!isErCodeLogin"
       >
         <h1 class="title">欢迎登录</h1>
         <!--正常登录-->
@@ -243,6 +243,36 @@
           </div>
         </el-dialog>
 
+      </div>
+      <!--pc 扫码登录-->
+      <div
+        class="pc-er-code-box"
+        v-if="!isMobile&&isErCodeLogin"
+      >
+        <!-- 遮罩层 -->
+        <div
+          class="mask-box"
+          v-if="isErcodeTimeOut"
+        >
+          <button @click="reflashErCode">
+            <IconFont
+              icon-name="icon-shuaxin"
+              class-name="reflash-icon"
+            />
+            二维码失效，点击刷新
+          </button>
+        </div>
+        <!--切换登录-->
+        <button class="toggle-login-type">
+        </button>
+        <p class="title">扫描安全登录</p>
+        <VueQrcode
+          class="ercode"
+          :value="'123123123123123123131231'"
+          :options="{ size: 174 }"
+        >
+        </VueQrcode>
+        <p class="tips">请使用富比特APP扫码功能，扫码登录</p>
       </div>
       <!--移动端-->
       <div
@@ -494,9 +524,10 @@ import ImageValidate from '../Common/ImageValidateCommon'
 import HeaderCommonForPC from '../Common/HeaderCommonForPC'
 import HeaderCommonForMobile from '../Common/HeaderForMobile'
 import IconFont from '../Common/IconFontCommon'
+import VueClipboard from 'vue-clipboard2'
 import { createNamespacedHelpers, mapState } from 'vuex'
 const { mapMutations } = createNamespacedHelpers('user')
-
+Vue.use(VueClipboard)
 export default {
   components: {
     CountDownButton, // 倒计时组件
@@ -504,10 +535,16 @@ export default {
     HeaderCommonForMobile,
     ImageValidate,
     ErrorBox,
-    IconFont
+    IconFont,
+    // 二维码组件
+    VueQrcode: resolve => {
+      require([('@xkeshi/vue-qrcode')], resolve)
+    }
   },
   data () {
     return {
+      isErcodeTimeOut: false, // 二维码是否过期
+      isErCodeLogin: false, // 是否扫码登录
       username: '',
       // username: '18625512987',
       // username: '18600929234',
@@ -624,6 +661,12 @@ export default {
       'SET_USER_BUTTON_STATUS',
       'USER_LOGIN'
     ]),
+    // 刷新二维码
+    reflashErCode () {},
+    // 切换登录方式
+    toggleLoginType () {
+      this.isErCodeLogin = !this.isErCodeLogin
+    },
     // 设置错误信息（mobile）
     setMobileErrorMsg (msg) {
       this.mobileErrorMsg = msg
@@ -1268,6 +1311,72 @@ export default {
               }
             }
           }
+        }
+      }
+      >.pc-er-code-box{
+        margin:12% 50%;
+        padding:33px 40px;
+        width:370px;
+        height:330px;
+        background:linear-gradient(201deg,rgba(42,88,137,1) 0%,rgba(43,58,111,1) 100%);
+        border-radius:10px;
+        box-shadow:0px 4px 21px 0px rgba(26,42,71,1);
+        position: relative;
+        text-align: center;
+        &:before{
+          content:'';
+          width:70px;
+          height:40px;
+          position: absolute;
+          right:4px;
+          top:18px;
+          z-index: 2;
+          transform: rotateZ(45deg);
+        }
+        >.mask-box{
+          width:100%;
+          height:100%;
+          position: absolute;
+          left:0;
+          top:0;
+          z-index: 3;
+          background:rgba(42,83,133,0.9);
+          >button{
+            >.reflash-icon{
+              display:block;
+              background-color: #fff;
+              border-radius: 50%;
+              width:50px;
+              height:50px;
+              box-sizing: border-box;
+              padding:10px;
+              color:$mainColor;
+              margin:110px auto 22px;
+            }
+            color:#fff;
+          }
+        }
+        /*切换图标*/
+        >.toggle-login-type{
+          position: absolute;
+          right:0;
+          top:0;
+          width:50px;
+          height:50px;
+          background:url(../../assets/develop/pc-login-icon.png) no-repeat center center;
+        }
+        >.title{
+          height:50px;
+          text-align: center;
+          color:rgba(255,255,255,1);
+        }
+        >.tips{
+          color: #fff;
+          height:50px;
+          line-height: 50px;
+        }
+        >.ercode{
+          margin:0 auto;
         }
       }
       >.mobile-box {
