@@ -38,7 +38,7 @@
   color: #617499;
 }
 .otc-box.night .el-table th.is-leaf {
-  border-bottom: 1px solid rgba(97,116,153,0.2);
+  border-bottom: 1px solid rgba(97,116,153,0.05);
 }
 .otc-box.night .otc-center-content .otc-merchant-content .el-table td{
   border-bottom: 1px solid rgba(97,116,153,0.05);
@@ -59,6 +59,10 @@
 .otc-box.night .el-button--danger{
   background-color: #D45858;
   border-color: #D45858;
+}
+.otc-box.night .nvest-list-body .el-table td, .el-table th.is-leaf{
+  border-top: 1px solid rgba(97,116,153,0.2);
+  box-shadow: none;
 }
 .otc-box.night .el-button--success {
   background-color: #008069;

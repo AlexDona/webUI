@@ -9,14 +9,22 @@
     >
       <!-- 表头 -->
       <div class="entrust-table-head">
-        <span class="item first-style">类型</span>
-        <span class="item second-coin">币种</span>
-        <span class="item third-price">价格</span>
-        <span class="item fourth-entrust-count">挂单数量</span>
-        <span class="item fifth-match-count">已匹配数量</span>
-        <span class="item sixth-total-amount">总金额</span>
-        <span class="item senventh-create-time">挂单时间</span>
-        <span class="item eighth-action">操作</span>
+        <!-- 类型 -->
+        <span class="item first-style">{{$t('M.comm_type')}}</span>
+        <!-- 币种 -->
+        <span class="item second-coin">{{$t('M.comm_currency')}}</span>
+        <!-- 价格 -->
+        <span class="item third-price">{{$t('M.otc_index_price')}}</span>
+        <!-- 挂单数量 -->
+        <span class="item fourth-entrust-count">{{$t('M.otc_entrust_number')}}</span>
+        <!-- 已匹配数量 -->
+        <span class="item fifth-match-count">{{$t('M.otc_entrust_matching')}}</span>
+        <!-- 总金额 -->
+        <span class="item sixth-total-amount">{{$t('M.otc_canceled_total')}}</span>
+        <!-- 挂单时间 -->
+        <span class="item senventh-create-time">{{$t('M.otc_entrust_time')}}</span>
+        <!-- 操作 -->
+        <span class="item eighth-action">{{$t('M.otc_index_operate')}}</span>
       </div>
       <!-- 表身体 -->
       <div
@@ -26,7 +34,8 @@
           class="no-data"
           v-if="!OTCEntrustOrderList.length"
         >
-          暂无数据
+          <!-- 暂无数据 -->
+          {{$t('M.comm_no_data')}}
         </div>
         <div
           class="entrust-list-content"
@@ -41,7 +50,8 @@
             v-if="item.entrustType === 'BUY'"
             :class="{ red: item.entrustType === 'BUY' }"
           >
-            买入
+            <!-- 买入 -->
+            {{$t('M.comm_buy')}}
           </span>
           <!-- 卖出 -->
           <span
@@ -49,7 +59,8 @@
             v-if="item.entrustType === 'SELL'"
             :class="{ green: item.entrustType === 'SELL' }"
           >
-            卖出
+            <!-- 卖出 -->
+            {{$t('M.comm_sell')}}
           </span>
           <!-- 2 币种 -->
           <span class="item second-coin">{{item.coinName}}</span>
@@ -69,7 +80,8 @@
               type="text"
               @click="revocationOrder(item.id)"
             >
-              撤单
+              <!-- 撤单 -->
+            {{$t('M.otc_entrust_cancellations')}}
             </el-button>
           </span>
         </div>
@@ -153,9 +165,9 @@ export default {
     // 3.0 点击撤单按钮
     revocationOrder (id) {
       // this.getOTCEntrustingOrdersRevocation(id)
-      this.$confirm('您确定要撤销此单吗, 是否继续?', {
-        cancelButtonText: '取消',
-        confirmButtonText: '确定'
+      this.$confirm(this.$t('M.otc_revoke'), {
+        cancelButtonText: this.$t('M.comm_cancel'),
+        confirmButtonText: this.$t('M.comm_affirm')
       }).then(() => {
         this.getOTCEntrustingOrdersRevocation(id)
       }).catch(() => {

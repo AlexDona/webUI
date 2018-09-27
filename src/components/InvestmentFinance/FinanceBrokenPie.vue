@@ -40,7 +40,7 @@ export default {
             color: '#fff',
             fontSize: 10
           },
-          data: ['投资', '收益']
+          data: ['存币', '收益']
         },
         // 设置颜色
         color: ['#008069', '#B73C36'],
@@ -79,7 +79,7 @@ export default {
               }
             },
             data: [
-              {value: '', name: '投资'},
+              {value: '', name: '存币'},
               {value: '', name: '收益'}
             ]
           }

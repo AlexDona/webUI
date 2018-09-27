@@ -41,8 +41,8 @@ export const returnAjaxMessage = (data, self, noTip) => {
     // 登录失效
     if (meta.code == 401) {
       removeStore('loginStep1Info')
-      // self.$router.push({path: '/'})
-      // store.commit('user/USER_LOGOUT')
+      self.$router.push({path: '/login'})
+      store.commit('user/USER_LOGOUT')
     }
     return 0
   } else {

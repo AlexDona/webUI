@@ -5,6 +5,7 @@ import {home} from './home/zh_CN'
 import {OTC} from './OTC/zh_CN'
 import {personal} from './personal/zh_CN'
 import {trade} from './trade/zh_CN'
+import {finance} from './finance/zh_CN'
 export const M = Object.assign(
   fromApi,
   common,
@@ -12,5 +13,6 @@ export const M = Object.assign(
   home,
   OTC,
   personal,
-  trade
+  trade,
+  finance
 )

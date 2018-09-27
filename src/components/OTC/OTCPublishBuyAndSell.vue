@@ -1,5 +1,8 @@
 <template>
-  <div class="otc-publish-buy-and-sell-box otc">
+  <div
+  class="otc-publish-buy-and-sell-box otc"
+  :class="{'day':theme == 'day','night':theme == 'night' }"
+  >
     <!-- 挂单：商家和普通用户都可以用 -->
     <!-- 1.0 导航 -->
     <NavCommon/>
@@ -16,14 +19,16 @@
               @click="toggleBuySellButton(1)"
               :class="{ green: publishStyle === 'sell' }"
             >
-              出售
+              <!-- 出售 -->
+              {{$t('M.comm_offering')}}
             </button>
             <button
               class="buy-button common-style"
               @click="toggleBuySellButton(2)"
               :class="{ red: publishStyle === 'buy' }"
             >
-              购买
+              <!-- 购买 -->
+              {{$t('M.comm_buying')}}
             </button>
           </div>
           <!-- 发布购买和出售大表单 -->
@@ -32,10 +37,12 @@
               :label-position="labelPosition"
               label-width="80px"
             >
-              <!-- 1.0币种类型 -->
-              <el-form-item label="选择币种类型">
+              <!-- 选择币种类型 -->
+              <el-form-item
+              :label="$t('M.otc_choice_currency') + $t('M.otc_cancelOrder_type')"
+              >
                 <el-select
-                  placeholder="请选择币种类型"
+                  :placeholder="$t('M.comm_please') + $t('M.otc_choice_currency') + $t('M.otc_cancelOrder_type')"
                   v-model="coinId"
                   @change="changeCoinId"
                 >
@@ -51,9 +58,11 @@
                 </el-select>
               </el-form-item>
               <!-- 2.0法币类型 -->
-              <el-form-item label="选择你希望付款的货币类型">
+              <el-form-item
+              :label="$t('M.otc_index_chouseType')"
+              >
                 <el-select
-                  placeholder="选择你希望付款的货币类型"
+                  :placeholder="$t('M.otc_index_chouseType')"
                   v-model="hopePaymentCoinId"
                   @change="changehopePaymentCoinId"
                 >
@@ -70,16 +79,16 @@
               <!-- 3.0你想出售或者购买 -->
               <el-form-item>
                 <div class="want-buy-sell-sum">
-                  你想<span
+                  {{$t('M.otc_index_youWant')}}<span
                   v-show="publishStyle === 'sell'"
-                  >出售</span><span
+                  >{{$t('M.comm_offering')}}</span><span
                   v-show="publishStyle === 'buy'"
-                  >购买</span>多少
+                  >{{$t('M.comm_buying')}}</span>{{$t('M.otc_index_how')}}
                 </div>
                 <!-- 当前可用和市价 -->
                 <div class="want-buy-sell-sum-content">
                   <!-- 当前可用 -->
-                  <span class="want-text" v-show="publishStyle === 'sell'">当前可用：</span>
+                  <span class="want-text" v-show="publishStyle === 'sell'">{{$t('M.otc_index_nowUse')}}：</span>
                   <span
                     class="max-sum"
                     v-show="publishStyle === 'sell'"
@@ -89,7 +98,7 @@
                     {{currentlyAvailable ? currentlyAvailable : '--'}}{{coinName}}
                   </span>
                   <!-- 市价 -->
-                  <span class="want-text">市价：</span>
+                  <span class="want-text">{{$t('M.otc_market_price')}}：</span>
                   <span
                     class="market-price buyOrange"
                   >
@@ -102,7 +111,8 @@
                     v-show="publishStyle === 'sell'"
                     @click="chargeMoney"
                   >
-                    充币
+                    <!-- 充币 -->
+                    {{$t('M.comm_charge_money')}}
                   </el-button>
                 </div>
                 <!-- 卖出量和单价  买入量和单价 -->
@@ -110,7 +120,7 @@
                   <!-- 卖出量 -->
                   <input
                     type="text"
-                    placeholder="卖出量"
+                    :placeholder="$t('M.otc_index_sellOutMount')"
                     class="sell-sum"
                     v-show="publishStyle === 'sell'"
                     ref="entrustCountSell"
@@ -122,7 +132,7 @@
                   <!-- 买入量 -->
                   <input
                     type="text"
-                    placeholder="买入量"
+                    :placeholder="$t('M.otc_index_buyOutMount')"
                     class="sell-sum"
                     v-show="publishStyle === 'buy'"
                     ref="entrustCountBuy"
@@ -135,7 +145,7 @@
                   <!-- 卖出单价 -->
                   <input
                     type="text"
-                    placeholder="卖出单价"
+                    :placeholder="$t('M.comm_sell')+$t('M.otc_index_UnitPrice')"
                     class="sell-sum"
                     v-show="publishStyle === 'sell'"
                     ref="priceSell"
@@ -146,7 +156,7 @@
                   <!-- 买入单价 -->
                   <input
                     type="text"
-                    placeholder="买入单价"
+                    :placeholder="$t('M.comm_buy')+$t('M.otc_index_UnitPrice')"
                     class="sell-sum"
                     v-show="publishStyle === 'buy'"
                     ref="priceBuy"
@@ -165,21 +175,23 @@
                   <span class="errorBuy">{{errorTipsPrice}}</span>
                 </div>
               </el-form-item>
-              <!-- 4.0成交限额 -->
-              <el-form-item label="单笔成交限额">
+              <!-- 4.0单笔成交限额 -->
+              <el-form-item
+              :label="$t('M.otc_index_singleTradeLimit')"
+              >
                 <div class="volume-business">
                   <input
                     type="text"
-                    :placeholder="'单笔最小限额' + this.backReturnCurrentMinCount"
+                    :placeholder="$t('M.otc_publishAD_minlimitMoney') + this.backReturnCurrentMinCount"
                     class="sell-sum"
                     ref="minCount"
                     @keyup="changeInputValue('minCount')"
                   >
                   <span class="monad">{{CurrencyCoinsName}}</span>
-                  <span class="range-line">-</span>
+                  <span class="range-line">—</span>
                   <input
                     type="text"
-                    :placeholder="'单笔最大限额' + this.backReturnCurrentMaxCount"
+                    :placeholder="$t('M.otc_publishAD_maxlimitMoney') + this.backReturnCurrentMaxCount"
                     class="sell-sum max-sell-sum"
                     ref="maxCount"
                     @keyup="changeInputValue('maxCount')"
@@ -195,14 +207,18 @@
                 </div>
               </el-form-item>
               <!-- 5.0备注 -->
-              <el-form-item label="备注">
+              <el-form-item
+              :label="$t('M.comm_remark')"
+              >
                 <div class="remark">
-                  请说明有关于您交易的相关条款或者其它您想让对方获悉得信息，以便对方和您快速交易
+                  <!-- '请说明有关于您交易的相关条款或者其它您想让对方获悉得信息，以便对方和您快速交易', -->
+                  {{$t('M.otc_publishAD_liveMessage')}}
                 </div>
+                <!-- 请输入备注：最多20个字符 -->
                 <el-input
                   type="textarea"
                   auto-complete="off"
-                  placeholder="请输入备注：最多20个字符"
+                  :placeholder="$t('M.otc_index_inputTips')"
                   maxlength="20"
                   v-model="remarkText"
                 >
@@ -210,7 +226,8 @@
                 <!-- 预计交易和手续费 -->
                 <div class="predict">
                   <span class="predict-text">
-                    预计交易额：
+                    <!-- 预计交易额： -->
+                    {{$t('M.otc_expected_value')}}：
                   </span>
                   <!-- 卖 -->
                   <span class="predict-sum" v-if="this.publishStyle === 'sell'">
@@ -223,7 +240,8 @@
                     {{traderSumBUY}} {{CurrencyCoinsName}}
                   </span>
                   <span class="predict-text">
-                    手续费：
+                    <!-- 手续费： -->
+                    {{$t('M.comm_service_charge')}}：
                   </span>
                   <!-- 卖 -->
                   <span class="predict-sum" v-if="this.publishStyle === 'sell'">
@@ -236,7 +254,8 @@
                     {{serviceChargeBUY}} {{coinName}}
                   </span>
                   <span class="rate-text">
-                    ( 费率
+                    <!-- 费率 -->
+                    ( {{$t('M.otc_index_rate')}}
                     <span class="rate">
                       {{rate * 100}}%
                     </span>
@@ -251,20 +270,23 @@
                   v-if="publishStyle === 'sell'"
                   @click.prevent="showPasswordDialog"
                 >
-                  发布出售
+                  <!-- 发布出售 -->
+                  {{$t('M.otc_index_publish')}}{{$t('M.comm_offering')}}
                 </button>
                 <button
                   class="publish-submit-button publish-submit-buy"
                   v-if="publishStyle === 'buy'"
                   @click.prevent="showPasswordDialog"
                 >
-                  发布购买
+                  <!-- 发布购买 -->
+                  {{$t('M.otc_index_publish')}}{{$t('M.comm_buying')}}
                 </button>
               </div>
               <!-- 7.0输入交易密码弹窗 -->
               <div class="password-dialog">
+                <!-- 交易密码 -->
                 <el-dialog
-                  title="交易密码"
+                  :title="$t('M.comm_password')"
                   :visible.sync="dialogVisible"
                   top="25vh"
                   width="470"
@@ -289,7 +311,8 @@
                         type="primary"
                         @click="addOTCPutUpOrdersSubmitButton"
                       >
-                        提 交
+                        <!-- 提 交 -->
+                        {{$t('M.comm_sub_time')}}
                       </el-button>
                   </span>
                 </el-dialog>
@@ -301,19 +324,24 @@
         <div class="publish-content-right">
           <div class="release-notes">
             <p class="release-title release-tips">
-              发布说明：
+              <!-- 发布说明 -->
+             {{$t('M.otc_publishAD_publishDis')}}：
             </p>
             <p class="release-tips">
-              1、发布买卖是免费的；
+              <!-- 1、发布买卖是免费的； -->
+             1、{{$t('M.otc_index_publish')}}{{$t('M.otc_index_buyAndSellFree')}}；
             </p>
             <p class="release-tips">
-              2、您可以在设置种设置您的收款方式；
+              <!-- 2、您可以在设置中设置您的收款方式； -->
+              {{$t('M.otc_index_pubTipsOne')}}
             </p>
             <p class="release-tips">
-              3、交易中请注意判断和防范有欺诈风险的付款方式；
+              <!-- 3、交易中请注意判断和防范有欺诈风险的付款方式； -->
+              {{$t('M.otc_index_pubTipsTwo')}}
             </p>
             <p class="release-tips">
-              4、请避免线下私自交易，FUBT.top无法为您预防风险
+              <!-- 4、请避免线下私自交易，FUBT.top无法为您预防风险 -->
+              {{$t('M.otc_index_pubTipsThree')}}
             </p>
           </div>
         </div>
@@ -586,14 +614,15 @@ export default {
       // 卖出单价、买入单价价格区间控制
       if (this.$refs.priceSell.value) {
         if (this.$refs.priceSell.value < this.minPrice || this.$refs.priceSell.value > this.maxPrice) {
-          this.errorTipsPrice = '请输入' + this.minPrice + '~' + this.maxPrice + '之间的价格'
+        //  请输入.....之间的价格
+          this.errorTipsPrice = this.$t('M.otc_publishAD_pleaseInput') + this.minPrice + '~' + this.maxPrice + this.$t('M.otc_publishAD_rangePrice')
         } else {
           this.errorTipsPrice = ''
         }
       }
       if (this.$refs.priceBuy.value) {
         if (this.$refs.priceBuy.value < this.minPrice || this.$refs.priceBuy.value > this.maxPrice) {
-          this.errorTipsPrice = '请输入' + this.minPrice + '~' + this.maxPrice + '之间的价格'
+          this.errorTipsPrice = this.$t('M.otc_publishAD_pleaseInput') + this.minPrice + '~' + this.maxPrice + this.$t('M.otc_publishAD_rangePrice')
         } else {
           this.errorTipsPrice = ''
         }
@@ -601,13 +630,15 @@ export default {
       // 单笔成交限额验证
       // 最小
       if (this.$refs.minCount.value < this.backReturnCurrentMinCount) {
-        this.errorTipsLimitMin = '输入值不能小于最小限额'
+        // 输入值不能小于最小限额
+        this.errorTipsLimitMin = this.$t('M.otc_publishAD_inputminLimit')
         return false
       } else {
         this.errorTipsLimitMin = ''
       }
       if (this.$refs.minCount.value > this.$refs.maxCount.value - 0) {
-        this.errorTipsLimitMin = '输入值不能大于最大限额'
+        // 输入值不能大于最大限额
+        this.errorTipsLimitMin = this.$t('M.otc_publishAD_inputmaxLimit')
         return false
       } else {
         this.errorTipsLimitMin = ''
@@ -617,13 +648,15 @@ export default {
       }
       // 最大
       if (this.$refs.maxCount.value > this.backReturnCurrentMaxCount) {
-        this.errorTipsLimitMax = '输入值不能大于最大限额'
+        // 输入值不能大于最大限额
+        this.errorTipsLimitMax = this.$t('M.otc_publishAD_inputmaxLimit')
         return false
       } else {
         this.errorTipsLimitMax = ''
       }
       if (this.$refs.maxCount.value < this.$refs.minCount.value - 0) {
-        this.errorTipsLimitMax = '输入值不能小于最小限额'
+        // 输入值不能小于最小限额
+        this.errorTipsLimitMax = this.$t('M.otc_publishAD_inputminLimit')
         return false
       } else {
         this.errorTipsLimitMax = ''
@@ -636,21 +669,25 @@ export default {
     showPasswordDialog () {
       if (this.publishStyle === 'buy') {
         if (!this.entrustCountBuy) {
-          this.errorTipsSum = '请输入买入数量'
+          // 请输入买入数量
+          this.errorTipsSum = this.$t('M.otc_index_inputBuyMount')
           return false
         }
         if (!this.priceBuy) {
-          this.errorTipsPrice = '请输入买入单价'
+          // 请输入买入单价
+          this.errorTipsPrice = this.$t('M.otc_index_inputBuyPrice')
           return false
         }
       }
       if (this.publishStyle === 'sell') {
         if (!this.entrustCountSell) {
-          this.errorTipsSum = '请输入卖出数量'
+          // 请输入卖出数量
+          this.errorTipsSum = this.$t('M.otc_index_inputSellMount')
           return false
         }
         if (!this.priceSell) {
-          this.errorTipsPrice = '请输入卖出单价'
+          // 请输入卖出单价
+          this.errorTipsPrice = this.$t('M.otc_index_inputSellPrice')
           return false
         }
       }
@@ -679,7 +716,8 @@ export default {
     // 9.0 点击输入密码框中的提交按钮
     async addOTCPutUpOrdersSubmitButton () {
       if (!this.tradePassword) {
-        this.errorPWd = '请输入交易密码'
+        // 请输入交易密码
+        this.errorPWd = this.$t('M.comm_please_enter') + this.$t('M.comm_password')
         return false
       }
       let param = {
@@ -726,7 +764,8 @@ export default {
   computed: {
     ...mapState({
       // 商户id
-      partnerId: state => state.common.partnerId
+      partnerId: state => state.common.partnerId,
+      theme: state => state.common.theme
     })
   },
   watch: {}
@@ -738,7 +777,7 @@ export default {
     background-color: #1D2331;
     > .publish-buy-and-sell-content {
       width: 1150px;
-      margin: 70px auto;
+      margin: 107px auto;
       > .publish-content {
         display: flex;
         flex: 3;
@@ -868,12 +907,8 @@ export default {
                 font-size: 12px;
               }
               > .range-line {
-                color: #fff;
-                width: 20px;
-                height: 36px;
-                display: inline-block;
-                text-align: center;
-                vertical-align: top;
+                color: #7d90ac;
+                margin: 0px 10px;
               }
             }
             .limitErrorTips{
