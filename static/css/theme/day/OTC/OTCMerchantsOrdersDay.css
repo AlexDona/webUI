@@ -1,6 +1,3 @@
-.otc-merchants-orders-box.day{
-    background-color: #fff;
-}
 .otc-merchants-orders-box.day .el-input__inner{
     background-color: #fff;
     border: 1px solid #ECF1F8;
@@ -15,19 +12,19 @@
     color:#7D90AC;
 }
 .otc-merchants-orders-box.day .orders-main-bottom .el-table{
-     background-color: #fff;
-     border: 1px solid #ECF1F8;
+    background-color: #fff;
+    border: 1px solid #ECF1F8;
 }
 .otc-merchants-orders-box.day .orders-main-bottom .el-table th{
-     background-color: #fff;
-     box-shadow:none;
+    background-color: #fff;
+    box-shadow:none;
 }
 .otc-merchants-orders-box.day .orders-main-bottom .el-table th{
     border-right: 1px solid 0px;
 }
 .otc-merchants-orders-box.day .orders-main-bottom .el-table th.is-leaf:first-of-type{
-     border-left: 0px solid #ECF1F8;
-     border-radius: 0;
+    border-left: 0px solid #ECF1F8;
+    border-radius: 0;
 }
 .otc-merchants-orders-box.day .orders-main-bottom .el-table th.is-leaf:nth-last-of-type(2){
     border-right: 0px solid #ECF1F8;

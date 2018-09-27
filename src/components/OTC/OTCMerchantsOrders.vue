@@ -1,7 +1,7 @@
 <template>
   <div
-  class="otc-merchants-orders-box otc"
-  :class="{'day':theme == 'day','night':theme == 'night' }"
+    class="otc-merchants-orders-box otc"
+    :class="{'day':theme == 'day','night':theme == 'night' }"
   >
     <!-- 1.0 导航 -->
     <NavCommon/>
@@ -507,7 +507,6 @@ export default {
 <style scoped lang="scss" type="text/scss">
   // @import url(../../../static/css/scss/OTC/OTCCenter.scss);
   .otc-merchants-orders-box{
-    background-color: #121824;
     >.otc-merchants-orders-content{
       width: 1150px;
       min-height: 500px;
@@ -517,8 +516,8 @@ export default {
       >.merchants-title{
         height: 30px;
         line-height: 30px;
-        color: #338FF5;
-        border-left: 3px solid #338FF5;
+        // color: #338FF5;
+        // border-left: 3px solid #338FF5;
         margin-bottom: 30px;
       }
       >.merchants-orders-main{
@@ -527,14 +526,11 @@ export default {
           line-height: 60px;
           margin-bottom: 25px;
           >.filtrate-text{
-            color: #9DA5B3;
-            // margin-right: 10px;
+            // color: #9DA5B3;
           }
           >.style-input{
-            // margin-right: 30px;
           }
           >.status-input{
-            // margin-right: 30px;
           }
           >.date-picker{
             margin-right: 60px;
@@ -543,27 +539,110 @@ export default {
             }
           }
           >.inquire-button{
-            // margin-right: 100px;
           }
           >.all-clear{
-            color: #338FF5;
+            // color: #338FF5;
           }
         }
         >.orders-main-bottom{
           min-height: 440px;
           .red{
-            color: #D45858;
+            // color: #D45858;
           }
           .green{
-            color: #008069;
+            // color: #008069;
           }
           .xilian{
-            vertical-align: middle
+            vertical-align: middle;
           }
         }
         .page{
           text-align: center;
           padding: 10px 0;
+        }
+      }
+    }
+    &.night{
+      background-color: #121824;
+      >.otc-merchants-orders-content{
+        >.merchants-title{
+          color: #338FF5;
+          border-left: 3px solid #338FF5;
+        }
+        >.merchants-orders-main{
+          >.orders-main-top{
+            >.filtrate-text{
+              color: #9DA5B3;
+            }
+            >.style-input{
+            }
+            >.status-input{
+            }
+            >.date-picker{
+              >.date-short-line{
+              }
+            }
+            >.inquire-button{
+            }
+            >.all-clear{
+              color: #338FF5;
+            }
+          }
+          >.orders-main-bottom{
+            min-height: 440px;
+            .red{
+              color: #D45858;
+            }
+            .green{
+              color: #008069;
+            }
+            .xilian{
+            }
+          }
+          .page{
+          }
+        }
+      }
+    }
+    &.day{
+      background-color: #fff;
+      >.otc-merchants-orders-content{
+        >.merchants-title{
+          color: #338FF5;
+          border-left: 3px solid #338FF5;
+        }
+        >.merchants-orders-main{
+          >.orders-main-top{
+            >.filtrate-text{
+              color: #9DA5B3;
+            }
+            >.style-input{
+            }
+            >.status-input{
+            }
+            >.date-picker{
+              >.date-short-line{
+              }
+            }
+            >.inquire-button{
+            }
+            >.all-clear{
+              color: #338FF5;
+            }
+          }
+          >.orders-main-bottom{
+            min-height: 440px;
+            .red{
+              color: #D45858;
+            }
+            .green{
+              color: #008069;
+            }
+            .xilian{
+            }
+          }
+          .page{
+          }
         }
       }
     }

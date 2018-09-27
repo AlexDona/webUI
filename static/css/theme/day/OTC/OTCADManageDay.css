@@ -1,6 +1,3 @@
-.otc-AD-manage-box.day{
-    background: #fff;
-}
 .otc-AD-manage-box.day .el-input__inner{
     background: #fff;
     border: 1px solid rgba(236,241,248,1);
@@ -35,3 +32,6 @@
     border-bottom: 1px solid rgba(236,241,248,1);
     border-top: 0px solid #262F38;
 }
+.otc-AD-manage-box.day .el-table--enable-row-hover .el-table__body tr:hover>td{
+    background-color: #fff;
+  }
