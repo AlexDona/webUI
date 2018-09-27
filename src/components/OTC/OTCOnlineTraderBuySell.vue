@@ -29,21 +29,25 @@
                     <div class="shoper-statistics">
                       <div class="trader-total">
                         <p class="blue">{{successTimes}}</p>
-                        <p class="text">成交次数</p>
+                        <!-- 成交次数 -->
+                        <p class="text">{{$t('M.otc_index_tradeTimes')}}</p>
                       </div>
                       <div class="failed">
                         <p class="blue">{{failTimes}}</p>
-                        <p class="text">失败次数</p>
+                        <!-- 失败次数 -->
+                        <p class="text">{{$t('M.otc_index_failureTimes')}}</p>
                       </div>
                       <div class="freeze">
                         <p class="blue">{{freezeTimes}}</p>
-                        <p class="text">账户冻结次数</p>
+                        <!-- 账户冻结次数 -->
+                        <p class="text">{{$t('M.otc_index_freezeTimes')}}</p>
                       </div>
                     </div>
                 </div>
                 <!-- 左下部分商家备注部分 -->
                 <div class="shoper-remark">
-                  <p class="remark-title">备注：</p>
+                  <!-- 备注： -->
+                  <p class="remark-title">{{$t('M.comm_remark')}}：</p>
                   <p class="remark-content">{{remark}}</p>
                 </div>
             </div>
@@ -55,7 +59,8 @@
                   <!-- 报价 -->
                   <div class="details-row">
                     <span class="details-tip">
-                      报价：
+                      <!-- 报价： -->
+                      {{$t('M.otc_index_givePrice')}}：
                     </span>
                     <span class="details-data">
                       {{price}}{{currencyName}}
@@ -64,7 +69,8 @@
                   <!-- 最小交易量 -->
                   <div class="details-row">
                     <span class="details-tip">
-                      限额：
+                      <!-- 限额： -->
+                      {{$t('M.otc_index_priceLimit')}}：
                     </span>
                     <span class="details-data">
                       {{minCount}}~{{maxCount}}{{currencyName}}
@@ -73,7 +79,8 @@
                   <!-- 剩余数量 -->
                   <div class="details-row">
                     <span class="details-tip">
-                      剩余数量：
+                      <!-- 剩余数量： -->
+                      {{$t('M.otc_index_reduceQuantity')}}：
                     </span>
                     <span class="details-data">
                       {{remainingNum}}{{name}}
@@ -82,7 +89,8 @@
                   <!-- 付款方式 -->
                   <div class="details-row">
                     <span class="details-tip">
-                      付款方式：
+                      <!-- 付款方式： -->
+                       {{$t('M.otc_alipay_type')}}：
                     </span>
                     <!-- 1支付宝 -->
                     <IconFontCommon
@@ -116,10 +124,11 @@
                   <!-- 付款期限 -->
                   <div class="details-row">
                     <span class="details-tip">
-                      付款期限：
+                      <!-- 付款期限： -->
+                      {{$t('M.otc_index_payTimeLimit')}}：
                     </span>
                     <span class="details-data">
-                      {{payTerm/60}}分钟
+                      {{payTerm/60}}{{$t('M.otc_index_minute')}}
                     </span>
                   </div>
                   <!--表单部分-->
@@ -136,13 +145,15 @@
                             class="want-text"
                             v-show="onlineTraderStatus === 'onlineSell'"
                           >
-                              您想出售多少
+                              <!-- 您想出售多少 -->
+                              {{$t('M.otc_index_sellMount')}}
                           </span>
                           <span
                             class="want-text"
                             v-show="onlineTraderStatus === 'onlineBuy'"
                           >
-                              您想购买多少
+                              <!-- 您想购买多少 -->
+                              {{$t('M.otc_index_buyMount')}}
                           </span>
                           <span
                             class="charge-money"
@@ -153,7 +164,8 @@
                               size="mini"
                               @click="chargeMoney"
                             >
-                              充币
+                              <!-- 充币 -->
+                              {{$t('M.comm_charge_money')}}
                             </el-button>
                           </span>
                         </div>
@@ -171,7 +183,7 @@
                           > -->
                           <input
                             type="text"
-                            placeholder="卖出量"
+                            :placeholder="$t('M.otc_index_sellOutMount')"
                             class="sell-sum"
                             :class = "{ red: errorWarningBorder }"
                             v-if="onlineTraderStatus === 'onlineSell'"
@@ -190,7 +202,7 @@
                           > -->
                           <input
                             type="text"
-                            placeholder="买入量"
+                            :placeholder="$t('M.otc_index_buyOutMount')"
                             class="sell-sum"
                             :class = "{ red: errorWarningBorder }"
                             v-if="onlineTraderStatus === 'onlineBuy'"
@@ -216,7 +228,7 @@
                           > -->
                           <input
                             type="text"
-                            placeholder="金额"
+                            :placeholder="$t('M.comm_money')"
                             class="sell-sum"
                             :class = "{ red: errorWarningBorder }"
                             v-if="onlineTraderStatus === 'onlineSell'"
@@ -235,7 +247,7 @@
                           > -->
                           <input
                             type="text"
-                            placeholder="金额"
+                            :placeholder="$t('M.comm_money')"
                             class="sell-sum"
                             :class = "{ red: errorWarningBorder }"
                             v-if="onlineTraderStatus === 'onlineBuy'"
@@ -264,14 +276,16 @@
                             v-if="onlineTraderStatus === 'onlineSell'"
                             @click.prevent="showDialog(onlineTraderStatus)"
                           >
-                            确定出售
+                            <!-- 确定出售 -->
+                            {{$t('M.otc_index_ensureSell')}}
                           </button>
                           <button
                             class="trader-submit-button trader-submit-buy"
                             v-if="onlineTraderStatus === 'onlineBuy'"
                             @click.prevent="showDialog(onlineTraderStatus)"
                           >
-                            确定购买
+                            <!-- 确定购买 -->
+                             {{$t('M.otc_index_ensureBuy')}}
                           </button>
                         </div>
                       </el-form-item>
@@ -279,31 +293,32 @@
                   </div>
                   <!--最下右边手续费-->
                   <div class="service-charge" v-if="onlineTraderStatus === 'onlineBuy'">
-                    <span>手续费：</span>
+                    <span>{{$t('M.comm_service_charge')}}：</span>
                     <span class="service-data">{{serviceCharge}} {{name}}</span>
-                    <span>( 费率 <span class="rate-data">{{rate*100}}%</span> )</span>
+                    <span>( {{$t('M.otc_index_rate')}} <span class="rate-data">{{rate*100}}%</span> )</span>
                   </div>
                   <div class="service-charge-sell" v-if="onlineTraderStatus === 'onlineSell'">
-                    <span>手续费：</span>
+                    <span>{{$t('M.comm_service_charge')}}：</span>
                     <span class="service-data-sell">{{serviceCharge}} {{name}}</span>
-                    <span>( 费率 <span class="rate-data-sell">{{rate*100}}%</span> )</span>
+                    <span>( {{$t('M.otc_index_rate')}} <span class="rate-data-sell">{{rate*100}}%</span> )</span>
                   </div>
                 </div>
                 <!-- 右下交易须知 -->
                 <div class="trading-notes">
                   <div class="notes">
-                    <h4 class="title">*交易须知：</h4>
+                    <!-- 交易须知 -->
+                    <h4 class="title">*{{$t('M.otc_index_tradeKnow')}}：</h4>
                     <p class="tip">
-                        1. 订单匹配后若未按时付款，累积<span class="warning">3次</span>，您的账户将被冻结。
+                        1. {{$t('M.otc_index_tradeKnowDetail1')}}<span class="warning">3{{$t('M.otc_ci')}}</span>，{{$t('M.otc_index_tradeKnowDetail2')}}。
                     </p>
                     <p class="tip">
-                        2. 付款前请仔细覈实对方信息。
+                        2. {{$t('M.otc_index_tradeKnowDetail3')}}。
                     </p>
                     <p class="tip">
-                        3. 交易请勿脱离平台，一旦脱离，您将失去FUBT.top的保护；
+                        3. {{$t('M.otc_index_tradeKnowDetail4')}}；
                     </p>
                     <p class="tip">
-                        4. 遇到纠纷，请保留好包括聊天记录在内的证据，立即联系我们。
+                        4. {{$t('M.otc_index_tradeKnowDetail5')}}
                     </p>
                   </div>
                 </div>
@@ -311,7 +326,7 @@
             <!-- 输入交易密码弹窗 -->
             <div class="password-dialog">
               <el-dialog
-                title="交易密码"
+                :title="$t('M.otc_publishAD_sellpassword')"
                 :visible.sync="dialogVisible"
                 top="25vh"
                 width="470"
@@ -320,7 +335,7 @@
                 <div class="input">
                   <input
                     type="password"
-                    placeholder="交易密码"
+                    :placeholder="$t('M.otc_publishAD_sellpassword')"
                     class="password-input"
                     v-model="tradePassword"
                     @focus="tradePasswordFocus"
@@ -338,14 +353,16 @@
                       v-if="this.onlineTraderStatus === 'onlineBuy'"
                       @click="submitPickOrdersToBuy"
                     >
-                      提交
+                      <!-- 提交 -->
+                      {{$t('M.otc_submit')}}
                     </el-button>
                     <el-button
                       type="primary"
                       v-if="this.onlineTraderStatus === 'onlineSell'"
                       @click="submitPickOrdersToSell"
                     >
-                      提交
+                      <!-- 提交 -->
+                      {{$t('M.otc_submit')}}
                     </el-button>
                 </span>
               </el-dialog>
@@ -479,10 +496,10 @@ export default {
     showDialog (val) {
       if (val === 'onlineBuy') {
         if (!this.$refs.buyCount.value) {
-          this.numberTips = '请输入买入数量'
+          this.numberTips = this.$t('M.otc_index_inputBuyMount')
           return false
         } else if (!this.$refs.buyPrice.value) {
-          this.moneyTips = '请输入金额'
+          this.moneyTips = this.$t('M.otc_index_inputBuyMoney')
           return false
         } else if (this.numberTips || this.moneyTips) {
           return false
@@ -492,10 +509,10 @@ export default {
       }
       if (val === 'onlineSell') {
         if (!this.$refs.sellCount.value) {
-          this.numberTips = '请输入卖出数量'
+          this.numberTips = this.$t('M.otc_index_inputSellMount')
           return false
         } else if (!this.$refs.sellPrice.value) {
-          this.moneyTips = '请输入金额'
+          this.moneyTips = this.$t('M.otc_index_inputBuyMoney')
           return false
         } else if (this.numberTips || this.moneyTips) {
           return false
@@ -522,17 +539,21 @@ export default {
           this.serviceCharge = amendPrecision(this.$refs.buyCount.value, this.rate, '*')
           this.serviceCharge = Number(this.serviceCharge).toFixed(this.pointLength)
           if (this.$refs.buyCount.value * this.price < this.minCount) {
-            this.moneyTips = '单笔最小限额为' + this.minCount
+            // 单笔最小限额为
+            this.moneyTips = this.$t('M.otc_publishAD_minlimitMoney') + this.$t('M.otc_index_wei') + this.minCount
             this.errorWarningBorder = true
             return false
           } else if (this.$refs.buyCount.value * this.price > this.maxCount) {
-            this.moneyTips = '单笔最大限额为' + this.maxCount
-            this.numberTips = '最大剩余数量为' + this.remainingNum
+            // 单笔最大限额为
+            this.moneyTips = this.$t('M.otc_publishAD_maxlimitMoney') + this.$t('M.otc_index_wei') + this.maxCount
+            // 最大剩余数量为
+            this.numberTips = this.$t('M.otc_index_maxRemain') + this.$t('M.otc_index_wei') + this.remainingNum
             this.errorWarningBorder = true
             return false
           } else if (this.$refs.buyCount.value > this.remainingNum) {
-            this.moneyTips = '单笔最大限额为' + this.maxCount
-            this.numberTips = '最大剩余数量为' + this.remainingNum
+            // 单笔最大限额为
+            this.moneyTips = this.$t('M.otc_publishAD_maxlimitMoney') + this.$t('M.otc_index_wei') + this.maxCount
+            this.numberTips = this.$t('M.otc_index_maxRemain') + this.$t('M.otc_index_wei') + this.remainingNum
             this.errorWarningBorder = true
             return false
           } else {
@@ -555,17 +576,17 @@ export default {
           this.serviceCharge = amendPrecision(this.$refs.sellCount.value, this.rate, '*')
           this.serviceCharge = Number(this.serviceCharge).toFixed(this.pointLength)
           if (this.$refs.sellCount.value * this.price < this.minCount) {
-            this.moneyTips = '单笔最小限额为' + this.minCount
+            this.moneyTips = this.$t('M.otc_publishAD_minlimitMoney') + this.$t('M.otc_index_wei') + this.minCount
             this.errorWarningBorder = true
             return false
           } else if (this.$refs.sellCount.value * this.price > this.maxCount) {
-            this.moneyTips = '单笔最大限额为' + this.maxCount
-            this.numberTips = '最大剩余数量为' + this.remainingNum
+            this.moneyTips = this.$t('M.otc_publishAD_maxlimitMoney') + this.$t('M.otc_index_wei') + this.maxCount
+            this.numberTips = this.$t('M.otc_index_maxRemain') + this.$t('M.otc_index_wei') + this.remainingNum
             this.errorWarningBorder = true
             return false
           } else if (this.$refs.sellCount.value > this.remainingNum) {
-            this.moneyTips = '单笔最大限额为' + this.maxCount
-            this.numberTips = '最大剩余数量为' + this.remainingNum
+            this.moneyTips = this.$t('M.otc_publishAD_maxlimitMoney') + this.$t('M.otc_index_wei') + this.maxCount
+            this.numberTips = this.$t('M.otc_index_maxRemain') + this.$t('M.otc_index_wei') + this.remainingNum
             this.errorWarningBorder = true
             return false
           } else {
@@ -596,12 +617,12 @@ export default {
           this.serviceCharge = amendPrecision(this.$refs.buyCount.value, this.rate, '*')
           this.serviceCharge = Number(this.serviceCharge).toFixed(this.pointLength)
           if (this.$refs.buyPrice.value < this.minCount) {
-            this.moneyTips = '单笔最小限额为' + this.minCount
+            this.moneyTips = this.$t('M.otc_publishAD_minlimitMoney') + this.$t('M.otc_index_wei') + this.minCount
             this.errorWarningBorder = true
             return false
           } else if (this.$refs.buyPrice.value > this.maxCount) {
-            this.moneyTips = '单笔最大限额为' + this.maxCount
-            this.numberTips = '最大剩余数量为' + this.remainingNum
+            this.moneyTips = this.$t('M.otc_publishAD_maxlimitMoney') + this.$t('M.otc_index_wei') + this.maxCount
+            this.numberTips = this.$t('M.otc_index_maxRemain') + this.$t('M.otc_index_wei') + this.remainingNum
             this.errorWarningBorder = true
             return false
           } else {
@@ -623,12 +644,12 @@ export default {
           this.serviceCharge = amendPrecision(this.$refs.sellCount.value, this.rate, '*')
           this.serviceCharge = Number(this.serviceCharge).toFixed(this.pointLength)
           if (this.$refs.sellPrice.value < this.minCount) {
-            this.moneyTips = '单笔最小限额为' + this.minCount
+            this.moneyTips = this.$t('M.otc_publishAD_minlimitMoney') + this.$t('M.otc_index_wei') + this.minCount
             this.errorWarningBorder = true
             return false
           } else if (this.$refs.sellPrice.value > this.maxCount) {
-            this.moneyTips = '单笔最大限额为' + this.maxCount
-            this.numberTips = '最大剩余数量为' + this.remainingNum
+            this.moneyTips = this.$t('M.otc_publishAD_maxlimitMoney') + this.$t('M.otc_index_wei') + this.maxCount
+            this.numberTips = this.$t('M.otc_index_maxRemain') + this.$t('M.otc_index_wei') + this.remainingNum
             this.errorWarningBorder = true
             return false
           } else {
@@ -714,7 +735,7 @@ export default {
     // 5.0 点击 确认购买 按钮提交数据
     async submitPickOrdersToBuy () {
       if (!this.tradePassword) {
-        this.tradePasswordTips = '请输入交易密码'
+        this.tradePasswordTips = this.$t('M.otc_publishAD_pleaseInput') + this.$t('M.otc_publishAD_sellpassword')
         return false
       }
       // console.log('购买')
@@ -754,7 +775,7 @@ export default {
     async submitPickOrdersToSell () {
       // console.log('出售')
       if (!this.tradePassword) {
-        this.tradePasswordTips = '请输入交易密码'
+        this.tradePasswordTips = this.$t('M.otc_publishAD_pleaseInput') + this.$t('M.otc_publishAD_sellpassword')
         return false
       }
       const data = await pickOrdersToSell({

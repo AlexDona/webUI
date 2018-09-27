@@ -116,5 +116,8 @@ export const common = {
   'comm_offering': '出售',
   'comm_buying': '购买',
   'comm_success': '成功',
-  'comm_stock': '笔'
+  'comm_stock': '笔',
+  'comm_please': '请',
+  'comm_bill': '账',
+  'comm_house': '户'
 }

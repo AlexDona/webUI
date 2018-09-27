@@ -91,6 +91,7 @@
           <span class="inquire-button">
             <!-- 查询 -->
             <el-button type="primary" @click="findFilter">{{$t('M.comm_query')}}</el-button>
+            <el-button type="primary" @click="resetCondition">{{$t('M.otc_MerchantsOrders_reset')}}</el-button>
           </span>
           <span
             class="all-unshelve cursor-pointer"
@@ -290,15 +291,15 @@ export default {
       ADManageStatusList: [
         {
           value: 'ENTRUSTED',
-          label: this.$t('M.comm_already') + this.$t('M.otc_adMange_getting')
-        },
-        {
-          value: 'CANCELED',
-          label: this.$t('M.otc_enum_status_yiwancheng')
+          label: this.$t('M.comm_already') + this.$t('M.otc_adMange_getting') // 已上架
         },
         {
           value: 'COMPLETED',
-          label: this.$t('M.comm_already') + this.$t('M.otc_adMange_adverting')
+          label: this.$t('M.otc_enum_status_yiwancheng') // 已完成
+        },
+        {
+          value: 'CANCELED',
+          label: this.$t('M.comm_already') + this.$t('M.otc_adMange_adverting') // 已下架
         }
       ],
       // 设置默认列表页数
@@ -335,6 +336,18 @@ export default {
     changeCurrentPage (pageNum) {
       console.log(pageNum)
       this.currentPage = pageNum
+      this.getOTCADManageList()
+    },
+    resetCondition () {
+      // 清空交易类型
+      this.activitedADManageTraderStyleList = ''
+      // 清除选中币种id
+      this.activitedADManageMarketList = ''
+      // 请吃法币币种id
+      this.activitedADManageCurrencyId = ''
+      // 选中状态清空
+      this.activitedADManageStatusList = ''
+      // 重新获取列表
       this.getOTCADManageList()
     },
     // 时间格式化
@@ -518,7 +531,7 @@ export default {
             margin-right: 15px;
           }
           > .status-input {
-            margin-right: 155px;
+            margin-right: 73px;
           }
           > .inquire-button {
             margin-right: 15px;

@@ -172,7 +172,7 @@
               </div>
               <div class="right">
                 <p>
-                  <span>>{{$t('M.comm_buying')}}{{$t('M.comm_count')}}:</span><span class="data">{{ sellDayMap.count }}{{ activitedTraderCoinName }}</span>
+                  <span>{{$t('M.comm_buying')}}{{$t('M.comm_count')}}:</span><span class="data">{{ sellDayMap.count }}{{ activitedTraderCoinName }}</span>
                 </p>
                 <p>
                   <span>{{$t('M.comm_buying')}}{{$t('M.otc_formStatistics_average')}}:</span><span class="data">{{ sellDayMap.average }}{{ activitedtraderCurrencyCoinsName }}</span>
