@@ -27,15 +27,18 @@
           <ul class="newnestPrice">
             <li>
               <p class="newnestPriceColor">{{newnestPrice}}<span>USDT</span></p>
-              最新价钱
+              <!-- 最新价钱 -->
+              {{$t('M.finance_newestPrice')}}
             </li>
             <li>
               <p class="green">{{dayAmountIncrease}}<span>USDT</span></p>
-              当日涨幅
+              <!-- 当日涨幅 -->
+              {{$t('M.finance_date')}}{{$t('M.finance_increase')}}
             </li>
             <li v-if = 'this.historyAmountIncrease'>
               <p class="red">{{historyAmountIncrease}}</p>
-              历史涨幅
+              <!-- 历史涨幅 -->
+              {{$t('M.finance_history')}}{{$t('M.finance_increase')}}
             </li>
           </ul>
       </div>
@@ -45,12 +48,15 @@
       <div class="finance-inner-box">
         <div class="left">
           <div class="nav-header">
-            <div class="invest">投资</div>
-            <div class="balance">可用余额&nbsp;:&emsp; <div>{{isLogin ? availableBalance : '--'}}<span> {{selecteCoindName}}</span></div></div>
+            <!-- 投资 -->
+            <div class="invest">{{$t('M.finance_invest')}}</div>
+            <!-- 可用余额 -->
+            <div class="balance">{{$t('M.finance_useBalance')}}&nbsp;:&emsp; <div>{{isLogin ? availableBalance : '--'}}<span> {{selecteCoindName}}</span></div></div>
           </div>
           <div class="left-body">
             <label for="">
-              投资类型:&nbsp;&nbsp;&nbsp;
+              <!-- 投资类型 -->
+              {{$t('M.finance_invest')}}{{$t('M.comm_type')}}:&nbsp;&nbsp;&nbsp;
               <el-select
               v-model="selectedInvestTypeId"
               @change="electedInvestTypeDisc"
@@ -64,24 +70,29 @@
               </el-select>
             </label>
             <label for="">
-              投资数量:&nbsp;&nbsp;&nbsp;
+              <!-- 投资数量 -->
+              {{$t('M.finance_invest')}}{{$t('M.comm_count')}}:&nbsp;&nbsp;&nbsp;
               <div class='invest-mounte'>
+                <!-- 请输入数量 -->
                 <input
                 v-model="investMounte"
-                placeholder="请输入数量"
+                :placeholder="$t('M.otc_publishAD_pleaseInput') + $t('M.comm_count')"
                 @keyup="changeInvestMounte"
                 onkeyup="if(this.value.length==1){this.value=this.value.replace(/[^1-9]/g,'')}else{this.value=this.value.replace(/\D/g,'')}"
                 onafterpaste="if(this.value.length==1){this.value=this.value.replace(/[^1-9]/g,'')}else{this.value=this.value.replace(/\D/g,'')}">
                 <strong>{{selecteCoindName}}</strong>
               </div>
             </label>
-            <div  class="totalTipsPositon" v-if="isShow">您投资的币种数量已超过该币种的总资产</div>
+            <!-- 您投资的币种数量已超过该币种的总资产 -->
+            <div  class="totalTipsPositon" v-if="isShow">{{$t('M.finance_errorTips')}}</div>
             <label for=" ">
               <div class='submitBtn'>
                 <el-button
                  plain
                  @click="getInvestEarnings"
-                >立刻投资
+                >
+                <!-- 立刻投资 -->
+                {{$t('M.finance_mast')}}{{$t('M.finance_invest')}}
                 </el-button>
               </div>
             </label>
@@ -90,17 +101,20 @@
         </div>
         <div class="right">
           <div class="nav-header">
-            <div class="invest">我的投资</div>
+            <!-- 我的投资 -->
+            <div class="invest">{{$t('M.finance_mine')}}{{$t('M.finance_invest')}}</div>
           </div>
           <div class="pieCharts-box">
               <div class="right-infor">
-              <div>投资估值
+                <!-- 投资估值 -->
+              <div>{{$t('M.finance_invest')}}{{$t('M.finance_estimatedValue')}}
                 <p class="green">
                   <span>{{isLogin ? InvestmentValue : '--'}}</span>
                   USDT
                 </p>
               </div>
-              <div>历史收溢
+              <!-- 历史收益 -->
+              <div>{{$t('M.finance_history')}}{{$t('M.finance_earnings')}}
                 <p class="red2">
                   <span>{{isLogin ? getMoneyValue : '--'}}</span>
                       USDT
@@ -127,101 +141,154 @@
           </div>
           <!-- 投资记录 -->
           <el-tabs v-model="activeName" @tab-click="handleClick">
-            <el-tab-pane label="投资记录" name="1">
+            <!-- 投资记录 -->
+            <el-tab-pane
+            :label="$t('M.finance_invest') + $t('M.finance_recode')"
+            name="1">
+             <!-- @您还没有登陆,请登录或者注册之后查看！ -->
               <div v-if = "!isLogin" class = 'financeTsipsBox'>
-                @您还没有登陆,请<router-link to='/login'>登陆</router-link>或者<router-link to = '/Register'>注册</router-link>之后查看!
+                {{$t('M.finance_loginTips')}}
+                <router-link to='/login'>
+                  {{$t('M.comm_login')}}
+                </router-link>
+                {{$t('M.finance_or')}}
+                <router-link to = '/Register'>
+                  {{$t('M.comm_register_time')}}
+                </router-link>
+                {{$t('M.finance_loginTipsTwo')}}
               </div>
+              <!-- 暂无数据 -->
               <el-table
                 :data="investList"
                 style="width: 100%"
-                empty-text="暂无数据"
+                :empty-text="$t('M.comm_no_data')"
                 >
+                <!-- 投资币种 -->
                 <el-table-column
                   prop="coinShortName"
-                  label="投资币种"
+                  :label="$t('M.finance_invest') + $t('M.comm_currency')"
                   width="100">
                 </el-table-column>
+                <!-- 投资类型 -->
                 <el-table-column
                   prop="typeDescription"
-                  label="投资类型"
+                  :label="$t('M.finance_invest') + $t('M.otc_cancelOrder_type')"
                   width="180">
                 </el-table-column>
+                <!-- 数量 -->
                 <el-table-column
                   prop="number"
                   width="100"
-                  label="数量"
+                  :label="$t('M.comm_count')"
                   >
                 </el-table-column>
+                <!-- 预计收益 -->
                 <el-table-column
                   prop="expectedEarning"
-                  label="预计收益">
+                  :label="$t('M.finance_predict') + $t('M.finance_earnings')"
+                >
                 </el-table-column>
+                <!-- 预计发放时间 -->
                 <el-table-column
                   prop="expectedTime"
                   width="185"
-                  label="预计发放时间">
+                  :label="$t('M.finance_predict') + $t('M.finance_releaseTime')"
+                  >
                 </el-table-column>
+                <!-- 状态 -->
                 <el-table-column
                   prop="state"
                   width="80"
-                  label="状态">
+                  :label="$t('M.comm_state')"
+                  >
                 </el-table-column>
+                <!-- 创建时间 -->
                 <el-table-column
                   prop="createTime"
                   width="150"
-                  label="创建时间">
+                  :label="$t('M.finance_createTime')"
+                  >
                 </el-table-column>
+                <!-- 操作 -->
                 <el-table-column
                   prop="operations"
                   width="80"
-                  label="操作">
+                  :label="$t('M.otc_index_operate')"
+                  >
+                  <!-- 活期 -->
                   <template slot-scope = "data">
                     <div
-                    v-if="data.row.state == '活期'"
+                    v-if="data.row.state == $t('M.finance_huoqi')"
                     class="blue cancelBtn"
                     @click="cancleInvest(data.row.id)"
-                    >取消</div>
+                    >
+                    <!-- 取消 -->
+                    {{$t('M.comm_cancel')}}
+                    </div>
                   </template>
                 </el-table-column>
               </el-table>
             </el-tab-pane>
             <!-- 收益记录 -->
-            <el-tab-pane label="收益记录" name="2">
+            <el-tab-pane
+            :label="$t('M.finance_earnings') + $t('M.finance_recode')"
+            name="2"
+            >
+             <!-- @您还没有登陆,请登录或者注册之后查看！ -->
               <div v-if = "!isLogin" class = 'financeTsipsBox'>
-                @您还没有登陆,请<router-link to='/login'>登陆</router-link>或者<router-link to = '/Register'>注册</router-link>之后查看!
+                {{$t('M.finance_loginTips')}}
+                <router-link to='/login'>
+                  {{$t('M.comm_login')}}
+                </router-link>
+                {{$t('M.finance_or')}}
+                <router-link to = '/Register'>
+                  {{$t('M.comm_register_time')}}
+                </router-link>
+                {{$t('M.finance_loginTipsTwo')}}
               </div>
+              <!-- 暂无数据 -->
               <el-table
                 :data="userInterestRecord"
                 style="width: 100%"
-                empty-text="暂无数据"
+                :empty-text="$t('M.comm_no_data')"
                 >
+                <!-- 投资币种 -->
                 <el-table-column
                   prop="coinShortName"
-                  label="投资币种"
+                  :label="$t('M.finance_invest') + $t('M.comm_currency')"
                   width="150">
                 </el-table-column>
+                <!-- 投资类型 -->
                 <el-table-column
                   prop="description"
-                  label="投资类型">
+                  :label="$t('M.finance_invest') + $t('M.otc_cancelOrder_type')"
+                  >
                 </el-table-column>
+                <!-- 数量 -->
                 <el-table-column
                   prop="number"
                   width="100"
-                  label="数量"
+                  :label="$t('M.comm_count')"
                   >
                 </el-table-column>
+                <!-- 预计收益 -->
                 <el-table-column
                   prop="expected_earning"
-                  label="预计收益">
+                  :label="$t('M.finance_predict') + $t('M.finance_earnings')"
+                  >
                 </el-table-column>
+                <!-- 发放收益 -->
                 <el-table-column
                   prop="interest"
-                  label="发放收益">
+                  :label="$t('M.finance_grant') + $t('M.finance_earnings')"
+                  >
                 </el-table-column>
+                <!-- 预计发放时间 -->
                 <el-table-column
                   prop="createTime"
                   width="150"
-                  label="预计发放时间">
+                  :label="$t('M.finance_predict') + $t('M.finance_releaseTime')"
+                  >
                 </el-table-column>
               </el-table>
             </el-tab-pane>
@@ -363,7 +430,8 @@ export default {
           this.clickImmediateInvestment()
         } else {
           this.$message({
-            message: '投资类型或投资数量不能为空',
+            // 投资类型或投资数量不能为空
+            message: this.$t('M.finance_noemptyTips'),
             type: 'error'
           })
         }
@@ -385,8 +453,9 @@ export default {
       } else {
         // 重新掉一次币种接口刷新列表
         this.getFinancialManagementList()
+        // 投资成功
         this.$message({
-          message: '投资成功',
+          message: this.$t('M.finance_invest') + this.$t('M.comm_success'),
           type: 'success'
         })
       }

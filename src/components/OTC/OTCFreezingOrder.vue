@@ -6,13 +6,20 @@
     <div class="freezing-order-content">
       <!--表头属性-->
       <div class="freezing-table-head">
-        <span class="item">订单号</span>
-        <span class="item">类型</span>
-        <span class="item">币种</span>
-        <span class="item">价格</span>
-        <span class="item">数量</span>
-        <span class="item">总金额</span>
-        <span class="item">下单时间</span>
+        <!-- 订单号 -->
+        <span class="item">{{$t('M.otc_MerchantsOrders_orderNum')}}</span>
+        <!-- 类型 -->
+        <span class="item">{{$t('M.otc_cancelOrder_type')}}</span>
+        <!-- 币种 -->
+        <span class="item">{{$t('M.comm_currency')}}</span>
+        <!-- 价格 -->
+        <span class="item">{{$t('M.otc_index_price')}}</span>
+        <!-- 数量 -->
+        <span class="item">{{$t('M.comm_count')}}</span>
+        <!-- 总金额 -->
+        <span class="item">{{$t('M.otc_canceled_total')}}</span>
+        <!-- 下单时间 -->
+        <span class="item">{{$t('M.otc_stocks_ordertime')}}</span>
       </div>
       <!--表格-->
       <div
@@ -30,7 +37,8 @@
             v-if="item.orderType === 'BUY'"
             :class="{ red: item.orderType === 'BUY' }"
           >
-            买入
+            <!-- 买入 -->
+            {{$t('M.comm_buy')}}
           </span>
           <!-- 类型卖出 -->
           <span
@@ -38,7 +46,8 @@
             v-if="item.orderType === 'SELL'"
             :class="{ green: item.orderType === 'SELL' }"
           >
-            卖出
+            <!-- 卖出 -->
+            {{$t('M.comm_sell')}}
           </span>
           <!-- 币种 -->
           <span class="item">{{item.coinName}}</span>
@@ -54,25 +63,32 @@
         <!--表格下部分-->
         <div class="freezing-info-bottom">
           <div class="info-left">
-            <p class="text-info text-blue">付款信息</p>
-            <p class="text-info">买家已付款，卖家有异议申请冻结订单</p>
+            <!-- 付款信息 -->
+            <p class="text-info text-blue">{{$t('M.otc_index_js2')}}</p>
+            <!-- 买家已付款，卖家有异议申请冻结订单 -->
+            <p class="text-info">{{$t('M.otc_freeze')}}</p>
           </div>
           <div class="info-middle">
-            <p class="text-info text-blue">卖家信息</p>
+            <!-- 卖家信息 -->
+            <p class="text-info text-blue">{{$t('M.otc_stocks_seller')}}</p>
             <p class="text-info">
-              <span>姓名：</span><span>{{item.sellName}}</span>
+              <!-- 姓名 -->
+              <span>{{$t('M.otc_name')}}：</span><span>{{item.sellName}}</span>
             </p>
             <p class="text-info">
-              <span>卖家手机号：</span><span>{{item.sellPhone}}</span>
+              <!-- 卖家手机号 -->
+              <span>{{$t('M.otc_trading_sellphone')}}：</span><span>{{item.sellPhone}}</span>
             </p>
           </div>
           <div class="info-right">
             <!-- <p class="text-info text-blue">冻结时间</p> -->
-            <p class="text-info text-blue">申诉冻结，等待处理</p>
+            <!-- 申诉冻结，等待处理 -->
+            <p class="text-info text-blue">{{$t('M.otc_complaint_frezzing')}}</p>
             <p class="text-info">{{timeFormatting(item.freezeTime)}}</p>
           </div>
           <div class="info-reason">
-            <p class="text-info text-blue">申诉原因</p>
+            <!-- 申诉原因 -->
+            <p class="text-info text-blue">{{$t('M.otc_complaint_appeal_reason')}}</p>
             <p class="text-info">{{item.appealCause}}</p>
           </div>
         </div>
@@ -81,7 +97,8 @@
         class="no-data"
         v-if="!getOTCFreezingOrderList.length"
       >
-        暂无数据
+        <!-- 暂无数据 -->
+        {{$t('M.comm_no_data')}}
       </div>
       <!--分页-->
       <div class="page">
