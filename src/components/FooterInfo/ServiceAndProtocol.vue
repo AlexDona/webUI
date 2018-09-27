@@ -23,13 +23,6 @@
               </div>
             </el-tab-pane>
             <el-tab-pane
-              label="条款说明"
-              name="ClauseExplain">
-              <div class="tab-content">
-                <ClauseExplain/>
-              </div>
-            </el-tab-pane>
-            <el-tab-pane
               label="法律声明"
               name="LegislationExplain"
             >
@@ -83,7 +76,7 @@ import Rate from './Rate'
 import APIDocument from './APIDocument'
 import PrivacyClause from './PrivacyClause'
 import LegislationExplain from './LegislationExplain'
-import ClauseExplain from './ClauseExplain'
+// import ClauseExplain from './ClauseExplain'
 import UserProtocol from './UserProtocol'
 import CurrencyInformation from './CurrencyInformation'
 import HeaderCommon from '../Common/HeaderCommonForPC'
@@ -96,7 +89,7 @@ export default {
     FooterCommon,
     CurrencyInformation,
     UserProtocol,
-    ClauseExplain,
+    // ClauseExplain,
     LegislationExplain,
     PrivacyClause,
     APIDocument,

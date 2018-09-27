@@ -16,6 +16,12 @@
         class="pc-box"
         v-if="!isMobile&&!isErCodeLogin"
       >
+        <!--切换登录-->
+        <button
+          class="toggle-login-type cursor-pointer"
+          @click="toggleLoginType"
+        >
+        </button>
         <h1 class="title">欢迎登录</h1>
         <!--正常登录-->
         <div class="login-box">
@@ -249,6 +255,7 @@
         class="pc-er-code-box"
         v-if="!isMobile&&isErCodeLogin"
       >
+        <h1 class="title">欢迎登录</h1>
         <!-- 遮罩层 -->
         <div
           class="mask-box"
@@ -263,13 +270,15 @@
           </button>
         </div>
         <!--切换登录-->
-        <button class="toggle-login-type">
+        <button
+          class="toggle-login-type cursor-pointer"
+          @click="toggleLoginType"
+        >
         </button>
-        <p class="title">扫描安全登录</p>
+        <p class="inner-title">扫描安全登录</p>
         <VueQrcode
           class="ercode"
-          :value="'123123123123123123131231'"
-          :options="{ size: 174 }"
+          :value="erCodeString"
         >
         </VueQrcode>
         <p class="tips">请使用富比特APP扫码功能，扫码登录</p>
@@ -506,9 +515,11 @@
 </template>
 <script>
 import {EMAIL_REG} from '../../utils/regExp' // 正则验证
+import {loginSocketUrl} from '../../utils/env'
 import {
   userLoginForStep1,
-  userLoginForStep2
+  userLoginForStep2,
+  getLoginErcode
 } from '../../utils/api/user'
 import {
   assetCurrenciesList
@@ -517,6 +528,8 @@ import {
   returnAjaxMessage,
   sendPhoneOrEmailCodeAjax
 } from '../../utils/commonFunc'
+import socket from '../../utils/datafeeds/socket'
+
 // import {getPersonalAssetsList} from '../../kits/globalFunction'
 import CountDownButton from '../Common/CountDownCommon'
 import ErrorBox from './ErrorBox'
@@ -543,8 +556,10 @@ export default {
   },
   data () {
     return {
+      socket: new socket(this.url = loginSocketUrl), // 二维码登录socket
       isErcodeTimeOut: false, // 二维码是否过期
       isErCodeLogin: false, // 是否扫码登录
+      erCodeString: '', // 二维码登录字符串
       username: '',
       // username: '18625512987',
       // username: '18600929234',
@@ -609,9 +624,11 @@ export default {
     }
   },
   created () {
+    console.log(this.socket)
     require('../../../static/css/list/User/Login.css')
     this.ENTER_STEP1()
     this.refreshCode()
+    this.reflashErCode()
     // 清空input框值
     // this.clearInputValue()
   },
@@ -662,10 +679,21 @@ export default {
       'USER_LOGIN'
     ]),
     // 刷新二维码
-    reflashErCode () {},
+    async reflashErCode () {
+      const data = await getLoginErcode()
+      if (!returnAjaxMessage(data, this)) {
+        return false
+      } else {
+        console.log(data)
+        this.erCodeString = data.data.data
+      }
+    },
     // 切换登录方式
     toggleLoginType () {
       this.isErCodeLogin = !this.isErCodeLogin
+      if (this.isErCodeLogin) {
+        this.reflashErCode()
+      }
     },
     // 设置错误信息（mobile）
     setMobileErrorMsg (msg) {
@@ -920,7 +948,7 @@ export default {
           !this.routerTo.startsWith('/ForgetPassword') &&
           !this.routerTo.startsWith('/nofind404')
         ) {
-          this.loadCurrencyList()
+          // this.loadCurrencyList()
           this.$router.push({path: this.routerTo})
         } else {
           this.$router.push({path: '/'})
@@ -1061,16 +1089,7 @@ export default {
       &.pc-bg{
         background:url('../../assets/develop/login-bg.png') 25% center  no-repeat ;
       }
-      >.pc-box {
-        width: 370px;
-        height: 330px;
-        margin:12% 50%;
-        padding:55px 40px;
-        text-align: left;
-        background:linear-gradient(201deg,rgba(42,88,137,1) 0%,rgba(43,58,111,1) 100%);
-        border-radius:10px;
-        box-shadow:0px 4px 21px 0px rgba(26,42,71,1);
-        position: relative;
+      >.pc-er-code-box,>.pc-box{
         >.title{
           position: absolute;
           top:-25%;
@@ -1084,6 +1103,25 @@ export default {
           background:linear-gradient(81deg,rgba(77,122,255,1) 25.4638671875%, rgba(58,184,255,1) 100%);
           -webkit-background-clip:text;
           -webkit-text-fill-color:transparent;
+        }
+      }
+      >.pc-box {
+        width: 370px;
+        height: 330px;
+        margin:12% 50%;
+        padding:55px 40px;
+        text-align: left;
+        background:linear-gradient(201deg,rgba(42,88,137,1) 0%,rgba(43,58,111,1) 100%);
+        border-radius:10px;
+        box-shadow:0px 4px 21px 0px rgba(26,42,71,1);
+        position: relative;
+        >.toggle-login-type{
+          position: absolute;
+          right:0;
+          top:0;
+          width:50px;
+          height:50px;
+          background:url(../../assets/develop/er-code-icon.png) no-repeat center center;
         }
         .step1-btn{
           width:128px;
@@ -1365,7 +1403,7 @@ export default {
           height:50px;
           background:url(../../assets/develop/pc-login-icon.png) no-repeat center center;
         }
-        >.title{
+        >.inner-title{
           height:50px;
           text-align: center;
           color:rgba(255,255,255,1);
@@ -1377,6 +1415,10 @@ export default {
         }
         >.ercode{
           margin:0 auto;
+          box-sizing: border-box;
+          width:174px;
+          height:174px;
+          background-color: #fff;
         }
       }
       >.mobile-box {

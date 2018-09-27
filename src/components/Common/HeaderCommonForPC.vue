@@ -40,19 +40,34 @@
                 v-show="$route.path.indexOf('OTC') != -1"
                 >
                 <li class="sub-nav-item">
-                  <router-link to="/OTCBusinessApply">商家申请</router-link>
+                  <router-link to="/OTCBusinessApply">
+                    <!--商家申请-->
+                    {{$t('M.comm_business_application')}}
+                  </router-link>
                 </li>
                 <li class="sub-nav-item">
-                  <router-link to="/OTCPublishAD">发布广告</router-link>
+                  <router-link to="/OTCPublishAD">
+                    <!--发布广告-->
+                    {{$t('M.otc_merchant_publishAD')}}
+                  </router-link>
                 </li>
                 <li class="sub-nav-item">
-                  <router-link to="/OTCADManage">广告管理</router-link>
+                  <router-link to="/OTCADManage">
+                    <!--广告管理-->
+                    {{$t('M.otc_adMange')}}
+                  </router-link>
                 </li>
                 <li class="sub-nav-item">
-                  <router-link to="/OTCMerchantsOrders">商家订单</router-link>
+                  <router-link to="/OTCMerchantsOrders">
+                    <!--商家订单-->
+                    {{$t('M.otc_MerchantsOrders')}}
+                  </router-link>
                 </li>
                 <li class="sub-nav-item">
-                  <router-link to="/OTCReportFormStatistics">报表统计</router-link>
+                  <router-link to="/OTCReportFormStatistics">
+                    <!--报表统计-->
+                    {{$t('M.otc_formStatistics')}}
+                  </router-link>
                 </li>
               </ul>
             </li>
@@ -81,11 +96,15 @@
                 <!--</li>-->
                 <li class="sub-nav-item">
                   <router-link to="/CurrencyApplication">
-                    上币申请
+                    <!--上币申请-->
+                    {{$t('M.coin_apply')}}
                   </router-link>
                 </li>
                 <li class="sub-nav-item">
-                  <router-link to="/RankingListOfInvitation">邀请排行</router-link>
+                  <router-link to="/RankingListOfInvitation">
+                    <!--邀请排行-->
+                    {{$t('M.comm_invitation_list')}}
+                  </router-link>
                 </li>
               </ul>
             </li>
@@ -179,7 +198,7 @@
                       </li>
                       <li @click="stateReturnSuperior('invite')">
                         <!--邀请推广-->
-                        {{$t('M.comm_user_invitation_promote')}}
+                        {{$t('M.comm_user_invite')}}{{$t('M.comm_user_generalize')}}
                       </li>
                       <li @click="stateReturnSuperior('api')">
                         <!--API管理-->
@@ -241,7 +260,7 @@
       <div class="box">
         <!--设置弹窗-->
         <el-dialog
-          :title="settingBoxTitle"
+          :title="$t(settingBoxTitle)"
           :visible.sync="showSetting"
           width="470px"
           :class="{day:theme=='day',night:theme=='night' }"
@@ -252,9 +271,10 @@
             {{$t('M.comm_convert_currency')}}
           </p>
           <!-- 折算货币选择 -->
+          <!--请选择-->
           <el-select
             v-model="activeConvertCurrency"
-            placeholder="请选择"
+            :placeholder="$t('M.comm_please_choose')"
           >
             <el-option
               v-for="item in convertCurrencyList"
@@ -263,7 +283,10 @@
               :value="item.shortName">
             </el-option>
           </el-select>
-          <p class="title line-height50 font-size14">主题</p>
+          <p class="title line-height50 font-size14">
+            <!--主题-->
+            {{$t('M.comm_theme')}}
+          </p>
           <!-- 主题选择框 -->
           <el-radio-group
             @on-change="changeTheme"
@@ -274,7 +297,7 @@
               :label="item.value"
               border
             >
-              {{item.label}}
+              {{$t(item.label)}}
               <i
                 class="el-icon-check"
                 v-show="activeTheme==item.value"
@@ -290,7 +313,10 @@
               size="large"
               type="primary"
               @click="changeSetting"
-            >确 定</el-button>
+            >
+              <!--确 定-->
+              {{$t('M.comm_confirm')}}
+            </el-button>
           </div>
         </el-dialog>
       </div>
@@ -327,7 +353,7 @@ export default{
       langSelecting: false,
       // 设置弹窗状态
       showSetting: false,
-      settingBoxTitle: '设置',
+      settingBoxTitle: 'M.comm_set', // 设置
       // 折算货币列表
       convertCurrencyList: [
         // {
@@ -350,11 +376,11 @@ export default{
       // 主题列表
       themeList: [
         {
-          label: '黑色',
+          label: 'M.comm_black', // 黑色
           value: 'night'
         },
         {
-          label: '白色',
+          label: 'M.comm_white', // 白色
           value: 'day'
         }
       ],
