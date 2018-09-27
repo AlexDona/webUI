@@ -1,7 +1,7 @@
 <template>
   <div
-  class="otc-report-form-statistics-box otc"
-  :class="{'day':theme == 'day','night':theme == 'night' }"
+    class="otc-report-form-statistics-box otc"
+    :class="{'day':theme == 'day','night':theme == 'night' }"
   >
     <!-- 1.0 导航 -->
     <NavCommon/>
@@ -70,7 +70,7 @@
       <div class="report-form-buy-sell">
         <div class="common buy">
           <div class="head padding-l15 border-radius5">
-         {{$t('M.comm_buying')}}
+            {{$t('M.comm_buying')}}
           </div>
           <div class="body">
             <div class="together border-radius5 day">
@@ -172,7 +172,7 @@
               </div>
               <div class="right">
                 <p>
-                  <span>>{{$t('M.comm_buying')}}{{$t('M.comm_count')}}:</span><span class="data">{{ sellDayMap.count }}{{ activitedTraderCoinName }}</span>
+                  <span>{{$t('M.comm_buying')}}{{$t('M.comm_count')}}:</span><span class="data">{{ sellDayMap.count }}{{ activitedTraderCoinName }}</span>
                 </p>
                 <p>
                   <span>{{$t('M.comm_buying')}}{{$t('M.otc_formStatistics_average')}}:</span><span class="data">{{ sellDayMap.average }}{{ activitedtraderCurrencyCoinsName }}</span>
@@ -646,7 +646,6 @@ export default {
 <style scoped lang="scss" type="text/scss">
 // @import url(../../../static/css/scss/OTC/OTCCenter.scss);
 .otc-report-form-statistics-box{
-  background-color: #121824;
   >.report-form-statistics-content{
     width: 1150px;
     margin: 70px auto;
@@ -655,13 +654,13 @@ export default {
     >.report-form-title{
       height: 30px;
       line-height: 30px;
-      color: #338FF5;
-      border-left: 3px solid #338FF5;
+      // color: #338FF5;
+      // border-left: 3px solid #338FF5;
       margin-bottom: 30px;
     }
     >.report-form-filtrate{
       >.filtrate-text{
-        color: #9DA5B3;
+        // color: #9DA5B3;
         margin-right: 20px;
       }
       >.currency-input{
@@ -671,20 +670,20 @@ export default {
       }
     }
     >.report-form-asset{
-      color: #338FF5;
-      background-color: #1E2636;
+      // color: #338FF5;
+      // background-color: #1E2636;
       margin-top: 20px;
       >.title{
         height: 40px;
         line-height: 40px;
-        border: 1px solid #262F38;
-        box-shadow: 0px 4px 6px #191E28;
+        // border: 1px solid #262F38;
+        // box-shadow: 0px 4px 6px #191E28;
       }
       >.content{
         text-align: center;
         height: 160px;
         line-height: 160px;
-        border: 1px solid #262F38;
+        // border: 1px solid #262F38;
         border-top: 0;
         border-bottom-left-radius: 5px;
         border-bottom-right-radius: 5px;
@@ -695,20 +694,20 @@ export default {
       flex: 2;
       margin-top: 20px;
       >.common{
-        background-color: #1E2636;
+        // background-color: #1E2636;
         >.head{
           width: 570px;
           height: 40px;
-          color: #338FF5;
+          // color: #338FF5;
           line-height: 40px;
-          border: 1px solid #262F38;
-          box-shadow: 0px 4px 6px #191E28;
+          // border: 1px solid #262F38;
+          // box-shadow: 0px 4px 6px #191E28;
         }
         >.body{
           width: 570px;
           height: 420px;
           padding: 20px 18px 0 18px;
-          border: 1px solid #262F38;
+          // border: 1px solid #262F38;
           border-top: 0;
           border-bottom-left-radius: 5px;
           border-bottom-right-radius: 5px;
@@ -718,23 +717,22 @@ export default {
           >.together{
             width: 250px;
             height: 164px;
-            border: 1px solid #262F38;
+            // border: 1px solid #262F38;
             display: flex;
-            /*padding: 10px 5px 0px 5px;*/
             padding-top: 10px;
             >.left{
               flex: 1;
               box-sizing: border-box;
               text-align: center;
               position: relative;
-              color: #D45858;
+              // color: #D45858;
               >.round{
                 box-sizing: border-box;
                 display: inline-block;
                 padding-top: 9px;
                 width: 50px;
                 height: 50px;
-                background-color: #3B3139;
+                // background-color: #3B3139;
                 border-radius: 50px;
                 position: absolute;
                 left: 50%;
@@ -744,11 +742,10 @@ export default {
             }
             >.right{
               flex: 2;
-              // line-height: 2rem;
               line-height: 35px;
-              color: #9DA5B3;
+              // color: #9DA5B3;
               .data{
-                color: #D45858;
+                // color: #D45858;
               }
             }
           }
@@ -763,14 +760,14 @@ export default {
         >.body{
           .together{
             >.left{
-              color: #008069;
+              // color: #008069;
               >.round{
-                background-color: #28403D;
+                // background-color: #28403D;
               }
             }
             >.right{
               .data{
-                color: #008069 !important;
+                // color: #008069 !important;
               }
             }
           }
@@ -785,11 +782,10 @@ export default {
       >.title{
         height: 40px;
         line-height: 40px;
-        color: #338FF5;
-        box-shadow: 0px 4px 6px #191E28;
+        // color: #338FF5;
+        // box-shadow: 0px 4px 6px #191E28;
       }
       >.content{
-        // height: 344px;
         >.date{
           height: 50px;
           line-height: 50px;
@@ -799,7 +795,7 @@ export default {
           justify-content: space-between;
           >.select-date{
             >.text{
-              color: #9DA5B3;
+              // color: #9DA5B3;
               margin-right: 10px;
             }
             >.date-picker{
@@ -809,22 +805,240 @@ export default {
             }
           }
           >.radio-date{
-            color: #46505F;
+            // color: #46505F;
           }
         }
         >.order-table{
           margin-top: 20px;
           padding: 0 55px 0 43px;
           .red{
-            color: #D45858;
+            // color: #D45858;
           }
           .green{
-            color: #008069;
+            // color: #008069;
           }
         }
         .page{
           text-align: center;
           padding: 10px 0;
+        }
+      }
+    }
+  }
+  &.night{
+    background-color: #121824;
+    >.report-form-statistics-content{
+      >.report-form-title{
+        color: #338FF5;
+        border-left: 3px solid #338FF5;
+      }
+      >.report-form-filtrate{
+        >.filtrate-text{
+          color: #9DA5B3;
+        }
+        >.currency-input{
+        }
+        >.legal-tender-input{
+        }
+      }
+      >.report-form-asset{
+        color: #338FF5;
+        background-color: #1E2636;
+        >.title{
+          border: 1px solid #262F38;
+          box-shadow: 0px 4px 6px #191E28;
+        }
+        >.content{
+          border: 1px solid #262F38;
+        }
+      }
+      >.report-form-buy-sell{
+        >.common{
+          background-color: #1E2636;
+          >.head{
+            color: #338FF5;
+            border: 1px solid #262F38;
+            box-shadow: 0px 4px 6px #191E28;
+          }
+          >.body{
+            border: 1px solid #262F38;
+            >.together{
+              border: 1px solid #262F38;
+              >.left{
+                color: #D45858;
+                >.round{
+                  background-color: #3B3139;
+                }
+              }
+              >.right{
+                color: #9DA5B3;
+                .data{
+                  color: #D45858;
+                }
+              }
+            }
+          }
+        }
+        >.buy{
+        }
+        >.sell{
+          flex: 1;
+          >.body{
+            .together{
+              >.left{
+                color: #008069;
+                >.round{
+                  background-color: #28403D;
+                }
+              }
+              >.right{
+                .data{
+                  color: #008069 !important;
+                }
+              }
+            }
+          }
+        }
+      }
+      >.report-form-details{
+        background-color: #1E2636;
+        >.title{
+          color: #338FF5;
+        }
+        >.content{
+          >.date{
+            >.select-date{
+              >.text{
+                color: #9DA5B3;
+              }
+              >.date-picker{
+                >.date-short-line{
+                }
+              }
+            }
+            >.radio-date{
+              color: #46505F;
+            }
+          }
+          >.order-table{
+            .red{
+              color: #D45858;
+            }
+            .green{
+              color: #008069;
+            }
+          }
+          .page{
+          }
+        }
+      }
+    }
+  }
+  &.day{
+    background-color: #fff;
+    >.report-form-statistics-content{
+      >.report-form-title{
+        color: #338FF5;
+        border-left: 3px solid #338FF5;
+      }
+      >.report-form-filtrate{
+        >.filtrate-text{
+          color: #9DA5B3;
+        }
+        >.currency-input{
+        }
+        >.legal-tender-input{
+        }
+      }
+      >.report-form-asset{
+        color: #338FF5;
+        background-color: #1E2636;
+        >.title{
+          border: 1px solid #262F38;
+          box-shadow: 0px 4px 6px #191E28;
+        }
+        >.content{
+          border: 1px solid #262F38;
+        }
+      }
+      >.report-form-buy-sell{
+        >.common{
+          background-color: #1E2636;
+          >.head{
+            color: #338FF5;
+            border: 1px solid #262F38;
+            box-shadow: 0px 4px 6px #191E28;
+          }
+          >.body{
+            border: 1px solid #262F38;
+            >.together{
+              border: 1px solid #262F38;
+              >.left{
+                color: #D45858;
+                >.round{
+                  background-color: #3B3139;
+                }
+              }
+              >.right{
+                color: #9DA5B3;
+                .data{
+                  color: #D45858;
+                }
+              }
+            }
+          }
+        }
+        >.buy{
+        }
+        >.sell{
+          flex: 1;
+          >.body{
+            .together{
+              >.left{
+                color: #008069;
+                >.round{
+                  background-color: #28403D;
+                }
+              }
+              >.right{
+                .data{
+                  color: #008069 !important;
+                }
+              }
+            }
+          }
+        }
+      }
+      >.report-form-details{
+        background-color: #1E2636;
+        >.title{
+          color: #338FF5;
+        }
+        >.content{
+          >.date{
+            >.select-date{
+              >.text{
+                color: #9DA5B3;
+              }
+              >.date-picker{
+                >.date-short-line{
+                }
+              }
+            }
+            >.radio-date{
+              color: #46505F;
+            }
+          }
+          >.order-table{
+            .red{
+              color: #D45858;
+            }
+            .green{
+              color: #008069;
+            }
+          }
+          .page{
+          }
         }
       }
     }

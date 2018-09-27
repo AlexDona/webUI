@@ -1,6 +1,3 @@
-.otc-report-form-statistics-box.day{
-  background-color: #fff;
-}
 .otc-report-form-statistics-box.day .report-form-filtrate .el-input__inner{
   background-color:#fff;
   border:1px solid rgba(236,241,248,1);
@@ -110,3 +107,6 @@
 .otc-report-form-statistics-box.day .nav-box > .inner-box > .top > .left > .nav-list > .nav-item > .sub-nav-list > .sub-nav-item[data-v-346cd49c]:hover > a{
     color: #338FF5;
 }
+.otc-report-form-statistics-box.day .date .radio-date .el-radio__inner::after{
+    background-color: #338FF5;
+  }
