@@ -587,7 +587,7 @@ export default {
     height:100%;
       >.banner-box{
         height: 459px;
-        background: #121824;
+        background: #272b41;
         >img{
           width: 100%;
           height: 100%;
