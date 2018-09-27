@@ -4,26 +4,61 @@
     :class="{'day':theme == 'day','night':theme == 'night' }"
   >
     <header class="security-header security-background personal-height40 line-height40 font-size16 padding-left20">
-      <span class="padding-left15 font-weight600">安全中心</span>
+      <span class="padding-left15 font-weight600">
+        <!--安全中心-->
+        {{ $t('M.comm_user_security_center') }}
+      </span>
     </header>
     <div class="security-information security-background margin-top9 padding20 box-sizing">
       <div class="security-title">
         <div class="display-flex">
           <div class="security-title-info flex1 display-flex font-size14">
           <span class="flex1 security-level">
-            账号安全级别：
-            <span class="level">中</span>
+            <!--账号安全级别：-->
+            {{ $t('M.user_security_level') }}：
+            <span
+              v-if="person == '20'"
+              class="level"
+            >
+              <!--低-->
+              {{ $t('M.user_security_low') }}
+            </span>
+            <span
+              v-if="person == '60'"
+              class="level"
+            >
+              <!--中-->
+              {{ $t('M.user_security_centre') }}
+            </span>
+            <span
+              class="level"
+              v-if="person == '100'"
+            >
+              <!--高-->
+              {{ $t('M.user_security_tall') }}
+            </span>
           </span>
             <span class="flex1">
-               <el-progress :text-inside="false" :stroke-width="5" :percentage="person"></el-progress>
+               <el-progress
+                 :text-inside="false"
+                 :stroke-width="5"
+                 :percentage="person"
+               >
+               </el-progress>
             </span>
-            <span class="flex1 security-verification">建议开启双重验证</span>
+            <span class="flex1 security-verification">
+              <!--建议开启双重验证-->
+              {{ $t('M.user_security_dual') }}
+            </span>
           </div>
           <div class="security-title-info flex1"></div>
         </div>
         <div class="security-title-info margin-top20 font-size12">
           <div class="login-time float-left">
-            <span>上次登录时间：</span>
+            <span>
+              <!--上次登录时间-->
+              {{ $t('M.user_security_last_login_time') }}：
+            </span>
             <span>{{ securityCenter.loginTime }}</span>
           </div>
           <div class="login-ip float-left">
@@ -31,7 +66,10 @@
             <span>{{ securityCenter.ip }}</span>
           </div>
           <div class="login-address">
-            <span>归属：</span>
+            <span>
+              <!--归属-->
+              {{ $t('M.user_security_affiliation') }}：
+            </span>
             <span>{{ securityCenter.ipLocation }}</span>
           </div>
         </div>
@@ -39,7 +77,8 @@
     </div>
     <div class="security-setting security-background margin-top9">
       <header class="security-setting-header line-height50 paddinglr20 font-size16">
-        安全设置
+        <!--安全设置-->
+        {{ $t('M.user_security_safety') }}{{ $t('M.comm_set') }}
       </header>
       <div class="security-setting-box">
         <!--安全邮箱-->
@@ -52,7 +91,10 @@
           </div>
           <div class="security-type-text padding-l15 box-sizing">
             <p>
-              <span class="secure-email font-size14 font-weight600">安全邮箱</span>
+              <span class="secure-email font-size14 font-weight600">
+                <!--安全邮箱-->
+                {{ $t('M.user_security_safety') }}{{ $t('M.user_security_email') }}
+              </span>
               <IconFontCommon
                 v-if="!securityCenter.isMailEnable"
                 class="font-size16"
@@ -60,7 +102,8 @@
               />
             </p>
             <p class="security-info margin-top9 font-size12">
-              用于提币、找回密码、修改安全设置、管理API时进行安全验证。
+              <!--用于提币、找回密码、修改安全设置、管理API时进行安全验证。-->
+              {{ $t('M.user_security_text1') }}
             </p>
           </div>
           <div class="security-status text-align-r">
@@ -69,7 +112,8 @@
               class="security-verify border-radius2 font-size12 cursor-pointer"
             >
               <span @click.prevent="showStatusVerificationClose('email', 'enable')">
-                开启验证
+                <!--开启验证-->
+                {{ $t('M.comm_open') }}{{ $t('M.user_security_verify') }}
               </span>
             </button>
             <button
@@ -79,7 +123,8 @@
               <span
                 @click.prevent="showStatusVerificationClose('email', 'disable')"
               >
-                关闭验证
+                <!--关闭验证-->
+                 {{ $t('M.comm_close') }}{{ $t('M.user_security_verify') }}
               </span>
             </button>
             <button
@@ -87,7 +132,8 @@
               class="security-binding border-radius2 font-size12 cursor-pointer"
               @click.prevent="setShowStatusSecurity('email')"
             >
-              绑定
+              <!--绑定-->
+              {{ $t('M.user_security_binding') }}
             </button>
             <span v-else></span>
           </div>
@@ -102,7 +148,10 @@
           </div>
           <div class="security-type-text padding-l15 box-sizing">
             <p>
-              <span class="secure-email font-size14 font-weight600">安全手机</span>
+              <span class="secure-email font-size14 font-weight600">
+                <!--安全手机-->
+                {{ $t('M.user_security_safety') }}{{ $t('M.user_security_phone') }}
+              </span>
               <IconFontCommon
                 v-if="!securityCenter.isPhoneBind"
                 class="font-size16"
@@ -110,7 +159,8 @@
               />
             </p>
             <p class="security-info margin-top9 font-size12">
-              用于提币、找回密码、修改安全设置、管理API时进行安全验证。
+              <!--用于提币、找回密码、修改安全设置、管理API时进行安全验证。-->
+              {{ $t('M.user_security_text1') }}
             </p>
           </div>
           <div class="security-status text-align-r">
@@ -119,7 +169,8 @@
               class="security-verify border-radius2 font-size12 cursor-pointer"
             >
               <span @click.prevent="showStatusVerificationClose('phone', 'enable')">
-                开启验证
+                <!--开启验证-->
+                {{ $t('M.comm_open') }}{{ $t('M.user_security_verify') }}
               </span>
             </button>
             <button
@@ -129,15 +180,22 @@
               <span
                 @click.prevent="showStatusVerificationClose('phone', 'disable')"
               >
-                关闭验证
+                <!--关闭验证-->
+                {{ $t('M.comm_close') }}{{ $t('M.user_security_verify') }}
               </span>
             </button>
             <button
               class="security-binding border-radius2 font-size12 cursor-pointer"
               @click.prevent="setShowStatusSecurity('phone')"
             >
-              <span v-if="!securityCenter.isPhoneBind">绑定</span>
-              <span v-else>修改</span>
+              <span v-if="!securityCenter.isPhoneBind">
+                <!--绑定-->
+                {{ $t('M.user_security_binding') }}
+              </span>
+              <span v-else>
+                <!--修改-->
+                {{ $t('M.comm_modification') }}
+              </span>
             </button>
           </div>
         </div>
@@ -151,7 +209,10 @@
           </div>
           <div class="security-type-text padding-l15 box-sizing">
             <p>
-              <span class="secure-email font-size14 font-weight600">谷歌验证</span>
+              <span class="secure-email font-size14 font-weight600">
+                <!--谷歌验证-->
+                {{ $t('M.user_security_google') }}{{ $t('M.user_security_verify') }}
+              </span>
               <IconFontCommon
                 v-if="!securityCenter.isGoogleBind"
                 class="font-size16"
@@ -159,7 +220,8 @@
               />
             </p>
             <p class="security-info margin-top9 font-size12">
-              用于提币、找回密码、修改安全设置、管理API时进行安全验证。
+              <!--用于提币、找回密码、修改安全设置、管理API时进行安全验证。-->
+              {{ $t('M.user_security_text1') }}
             </p>
           </div>
           <div class="security-status text-align-r">
@@ -168,7 +230,8 @@
               class="security-verify border-radius2 font-size12 cursor-pointer"
             >
               <span @click.prevent="showStatusVerificationClose('google', 'enable')">
-                开启验证
+                <!--开启验证-->
+                {{ $t('M.comm_open') }}{{ $t('M.user_security_verify') }}
               </span>
             </button>
             <button
@@ -178,15 +241,22 @@
               <span
                 @click.prevent="showStatusVerificationClose('google', 'disable')"
               >
-                关闭验证
+                <!--关闭验证-->
+                 {{ $t('M.comm_close') }}{{ $t('M.user_security_verify') }}
               </span>
             </button>
             <button
               class="security-binding border-radius2 font-size12 cursor-pointer"
               @click.prevent="setShowStatusSecurity('google')"
             >
-              <span v-if="!securityCenter.isGoogleBind">绑定</span>
-              <span v-else>解绑</span>
+              <span v-if="!securityCenter.isGoogleBind">
+                <!--绑定-->
+                {{ $t('M.user_security_binding') }}
+              </span>
+              <span v-else>
+                <!--解绑-->
+                {{ $t('M.user_security_unbundle') }}
+              </span>
             </button>
           </div>
         </div>
@@ -233,10 +303,14 @@
           </div>
           <div class="security-type-text padding-l15 box-sizing">
             <p>
-              <span class="secure-email font-size14 font-weight600">登陆密码</span>
+              <span class="secure-email font-size14 font-weight600">
+                <!--登陆密码-->
+                {{ $t('M.user_security_login') }}{{ $t('M.user_security_password') }}
+              </span>
             </p>
             <p class="security-info margin-top9 font-size12">
-              用于提币、找回密码、修改安全设置、管理API时进行安全验证。
+              <!--用于提币、找回密码、修改安全设置、管理API时进行安全验证。-->
+              {{ $t('M.user_security_text1') }}
             </p>
           </div>
           <div class="security-status text-align-r">
@@ -244,14 +318,17 @@
               class="security-binding border-radius2 font-size12 cursor-pointer"
               @click.prevent="setShowStatusSecurity('login-password')"
             >
-              <span>修改</span>
+              <span>
+                <!--修改-->
+                {{ $t('M.comm_modification') }}
+              </span>
             </button>
           </div>
         </div>
         <!--关闭验证-->
         <div class="close-validation">
           <el-dialog
-            title="关闭验证"
+            :title="$t('M.comm_close') + $t('M.user_security_verify')"
             :visible.sync="closeValidation"
           >
             <el-form
@@ -262,7 +339,7 @@
               <div v-if="!securityCenter.isPhoneEnable"></div>
               <!--绑定手机之后显示-->
               <el-form-item
-                label="手机验证"
+                :label="$t('M.user_security_phone') + $t('M.user_security_verify')"
                 v-else
               >
                 <el-input
@@ -282,7 +359,7 @@
               <div v-if="!securityCenter.isMailEnable"></div>
               <!--绑定邮箱之后显示-->
               <el-form-item
-                label="邮箱验证"
+                :label="$t('M.user_security_email') + $t('M.user_security_verify')"
                 v-else
               >
                 <el-input
@@ -302,11 +379,11 @@
               <div v-if="!securityCenter.isGoogleEnable"></div>
               <!--绑定谷歌之后显示-->
               <el-form-item
-                label="谷歌验证"
+                :label="$t('M.user_security_google') + $t('M.user_security_verify')"
                 v-else
               >
                 <input
-                  class="input border-radius2 padding-l15 box-sizing"
+                  class="input input-google border-radius2 padding-l15 box-sizing"
                   v-model="googleCode"
                   @focus="handleinput1"
                 />
@@ -328,7 +405,8 @@
                 type="primary"
                 @click.prevent="determineTheOpen"
               >
-                确 定
+                <!--确 定-->
+                {{ $t('M.comm_confirm') }}
               </el-button>
             </div>
           </el-dialog>
@@ -336,18 +414,17 @@
         <!--开启验证-->
         <div class="open-validation">
           <el-dialog
-            title="开启验证"
+            :title="$t('M.comm_open') + $t('M.user_security_verify')"
             :visible.sync="openTheValidation"
           >
             <el-form
               label-width="120px"
               :label-position="labelPosition"
             >
-              <!--&lt;!&ndash;没有绑定手机不显示&ndash;&gt;-->
-              <!--<div v-if="!securityCenter.isPhoneEnable"></div>-->
               <!--开启手机-->
+              <!--手机验证-->
               <el-form-item
-                label="手机验证"
+                :title="$t('M.user_security_phone') + $t('M.user_security_verify')"
                 v-show="openPhone"
               >
                 <el-input
@@ -363,11 +440,10 @@
                   </template>
                 </el-input>
               </el-form-item>
-              <!--没有绑定邮箱不显示-->
-              <!--<div v-if="!securityCenter.isMailEnable"></div>-->
               <!--开启邮箱-->
+              <!--邮箱验证-->
               <el-form-item
-                label="邮箱验证"
+                :title="$t('M.user_security_email') + $t('M.user_security_verify')"
                 v-show="openEmail"
               >
                 <el-input
@@ -383,15 +459,14 @@
                   </template>
                 </el-input>
               </el-form-item>
-              <!--没有绑定谷歌不显示-->
-              <!--<div v-if="!securityCenter.isGoogleEnable"></div>-->
               <!--开启谷歌-->
+              <!--谷歌验证-->
               <el-form-item
-                label="谷歌验证"
+                :title="$t('M.user_security_google') + $t('M.user_security_verify')"
                 v-show="openGoogle"
               >
                 <input
-                  class="input border-radius2 padding-l15 box-sizing"
+                  class="input input-google border-radius2 padding-l15 box-sizing"
                   v-model="googleCode"
                   @focus="handleinput"
                 />
@@ -412,7 +487,8 @@
                 ype="primary"
                 @click.prevent="determineTheOpen"
               >
-                确 定
+                <!--确 定-->
+                {{ $t('M.comm_confirm') }}
               </el-button>
             </div>
           </el-dialog>
@@ -420,34 +496,40 @@
       </div>
     </div>
     <div class="security-record security-background margin-top9">
-      <el-tabs v-model="securityActiveName">
-        <el-tab-pane label="最近登录记录" name="first">
+      <el-tabs
+        v-model="securityActiveName"
+      >
+        <!--最近登录记录 登陆时间 登录IP 归属地 来源-->
+        <el-tab-pane
+          :label="$t('M.user_security_recently') + $t('M.user_security_login') + $t('M.comm_record')"
+          name="first"
+        >
           <el-table
             :data="securityRecord"
             style="width: 100%">
             <el-table-column
-              label="登陆时间"
+              :label="$t('M.user_security_login') + $t('M.comm_time')"
             >
               <template slot-scope = "s">
                 <div>{{ timeFormatting(s.row.operateTime) }}</div>
               </template>
             </el-table-column>
             <el-table-column
-              label="登录IP"
+              :label="$t('M.user_security_login') + $t('M.comm_time') + 'IP'"
             >
               <template slot-scope = "s">
                 <div>{{ s.row.ip }}</div>
               </template>
             </el-table-column>
             <el-table-column
-              label="归属地"
+              :label="$t('M.user_security_home_location')"
             >
               <template slot-scope = "s">
                 <div>{{ s.row.operateAddress }}</div>
               </template>
             </el-table-column>
             <el-table-column
-              label="来源"
+              :label="$t('M.user_security_source')"
             >
               <template slot-scope = "s">
                 <div>{{ s.row.source }}</div>
@@ -455,33 +537,37 @@
             </el-table-column>
           </el-table>
         </el-tab-pane>
-        <el-tab-pane label="安全设置记录" name="second">
+        <!--安全设置记录 登陆时间 设置名称 登录IP 归属地-->
+        <el-tab-pane
+          :label="$t('M.user_security_safety') + $t('M.comm_set') + $t('M.comm_record')"
+          name="second"
+        >
           <el-table
             :data="logonRecord"
             style="width: 100%">
             <el-table-column
-              label="登陆时间"
+              :label="$t('M.user_security_login') + $t('M.comm_time')"
             >
               <template slot-scope = "s">
                 <div>{{ timeFormatting(s.row.operateTime) }}</div>
               </template>
             </el-table-column>
             <el-table-column
-              label="设置名称"
+              :label="$t('M.comm_set') + $t('M.user_account_name')"
             >
               <template slot-scope = "s">
                 <div>{{ s.row.content }}</div>
               </template>
             </el-table-column>
             <el-table-column
-              label="登录IP"
+              :label="$t('M.user_security_login') + 'IP'"
             >
               <template slot-scope = "s">
                 <div>{{ s.row.ip }}</div>
               </template>
             </el-table-column>
             <el-table-column
-              label="归属地"
+              :label="$t('M.user_security_home_location')"
             >
               <template slot-scope = "s">
                 <div>{{ s.row.operateAddress }}</div>
@@ -588,14 +674,11 @@ export default {
     },
     // 发送验证码
     sendPhoneOrEmailCode (loginType) {
-      // console.log(this.disabledOfPhoneBtn)
-      // console.log(this.disabledOfEmailBtn)
       if (this.disabledOfPhoneBtn || this.disabledOfEmailBtn) {
         return false
       }
       let params = {
-        // address: this.emailAccounts, // 邮箱账号
-        // country: this.activeCountryCode // 邮箱国籍
+        type: 'VERIFICATION_CODE' // 类型
       }
       switch (loginType) {
         case 0:
@@ -894,6 +977,10 @@ export default {
         }
         .input {
           width: 220px;
+          height: 34px;
+        }
+        .input-google {
+          width: 270px;
           height: 34px;
         }
         .security-type-icon {

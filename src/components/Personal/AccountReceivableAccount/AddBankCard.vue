@@ -11,14 +11,14 @@
           class="header-content-left header-content font-size16 font-weight600"
         >
           <!--设置银行卡-->
-          {{ $t('m.comm_set') }}{{ $t('m.user_account_bank') }}
+          {{ $t('M.comm_set') }}{{ $t('M.user_account_bank') }}
         </span>
         <span
           v-else
           class="header-content-left header-content font-size16 font-weight600"
         >
           <!--修改银行卡-->
-          {{ $t('m.comm_modification') }}{{ $t('m.user_account_bank') }}
+          {{ $t('M.comm_modification') }}{{ $t('M.user_account_bank') }}
         </span>
         <span
           class="header-content-right font-size12 cursor-pointer"
@@ -29,7 +29,7 @@
             iconName="icon-fanhui2"
           />
             <!--返回我的账户-->
-          {{ $t('m.user_account_return') }}
+          {{ $t('M.user_account_return') }}
         </span>
       </header>
       <div class="add-bank-content">

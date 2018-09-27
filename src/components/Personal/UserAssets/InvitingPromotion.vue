@@ -4,18 +4,27 @@
     :class="{'day':theme == 'day','night':theme == 'night' }"
   >
     <header class="invitation-promotion-header personal-height40 line-height40 padding-left20 font-size16 background-color border-radius2">
-      <span class="padding-left23 header-content">邀请推广</span>
+      <span class="padding-left23 header-content">
+        <!--邀请推广-->
+        {{ $t('M.comm_user_invite') }}{{ $t('M.comm_user_generalize') }}
+      </span>
     </header>
     <div class="invitation-promotion-main min-height500 margin-top9">
       <!--推广信息-->
       <div class="extension-info">
         <header class="extension-info-header line-height56 paddinglr20 border-radius2">
-          <span class="font-size16 header-color">推广信息</span>
+          <span class="font-size16 header-color">
+            <!--推广信息-->
+            {{ $t('M.comm_user_invite') }}{{ $t('M.comm_user_generalize') }}
+          </span>
         </header>
         <div class="extension-info-content padding-top0">
           <div class="info-record border-radius2">
             <div class="extension-code">
-              <div class="code-left font-size12">推广码</div>
+              <div class="code-left font-size12">
+                <!--推广码-->
+                {{ $t('M.comm_user_generalize') }}{{ $t('M.user_invite_yard') }}
+              </div>
               <div class="code-right text-align-r">
                 <span
                   class="code-right-rendering text-align-r"
@@ -33,12 +42,16 @@
                     class="font-size12"
                     iconName="icon-fuzhi"
                   />
-                  复制
+                  <!--复制-->
+                  {{ $t('M.comm_copy') }}
                 </span>
               </div>
             </div>
             <div class="extension-link">
-              <div class="link-left">推广链接</div>
+              <div class="link-left">
+                <!--推广链接-->
+                {{ $t('M.comm_user_generalize') }}{{ $t('M.user_invite_link') }}
+              </div>
               <div class="link-right text-align-r">
                 <span
                   class="code-right-rendering"
@@ -55,7 +68,8 @@
                     class="font-size12"
                     iconName="icon-erweima1"
                   />
-                  二维码
+                  <!--二维码-->
+                  {{ $t('M.comm_qr_code') }}
                 </span>
                 <span
                   class="code-copy border-radius5 cursor-pointer"
@@ -67,7 +81,8 @@
                     class="font-size12"
                     iconName="icon-fuzhi"
                   />
-                  复制
+                  <!--复制-->
+                   {{ $t('M.comm_copy') }}
                   <VueQrcode
                     class="ercode"
                     :value="String(link + userInfo.userInfo.showId)"
@@ -89,11 +104,13 @@
                     {{ totalPageMyNumber }}
                   </span>
                   <span class="font-size12">
-                    人
+                    <!--人-->
+                    {{ $t('M.user_invite_people') }}
                   </span>
                 </p>
                 <span class="color-text font-size12 display-inline-block margin-top30">
-                  成功邀请
+                  <!--成功邀请-->
+                  {{ $t('M.user_invite_succeed') }}{{ $t('M.comm_user_invite') }}
                 </span>
               </div>
             </div>
@@ -106,7 +123,8 @@
                   <span>BTC</span>
                 </p>
                 <span class="color-text font-size12 display-inline-block margin-top30">
-                  已获得的佣金预估
+                  <!--已获得的佣金预估-->
+                  {{ $t('M.user_invite_have_obtained') }}
                 </span>
               </div>
             </div>
@@ -116,17 +134,21 @@
       <!--推广统计-->
       <div class="extension-statistics margin-top9 padding-top0">
         <header class="extension-statistics-header line-height56">
-          <span class="font-size16 header-color header-right">推广统计</span>
+          <span class="font-size16 header-color header-right">
+            <!--推广统计-->
+            {{ $t('M.comm_user_generalize') }}{{ $t('M.user_invite_statistics') }}
+          </span>
           <div class="header-right header-select">
+            <!--请选择-->
             <el-select
               v-model="generalizeValue"
-              placeholder="请选择"
+              :placeholder="$t('M.comm_please_choose')"
               @change="changeId"
             >
               <el-option
                 v-for="item in generalizeOptionsList"
                 :key="item.value"
-                :label="item.label"
+                :label="$t(item.label)"
                 :value="item.value"
               >
               </el-option>
@@ -134,27 +156,29 @@
           </div>
         </header>
         <div class="extension-statistics-content">
+          <!--暂无数据-->
           <el-table
             :data="extensionList"
             style="width: 100%"
-            empty-text="暂无数据"
+            :empty-text="$t('M.comm_no_data')"
           >
+            <!--用户UID 登录名 注册时间 姓名 高级认证 直接推荐人UID-->
             <el-table-column
-              label="用户UID"
+              :label="$t('M.user_invite_user_uid')"
             >
               <template slot-scope = "s">
                 <div>{{ s.row.showId }}</div>
               </template>
             </el-table-column>
             <el-table-column
-              label="登录名"
+              :label="$t('M.user_invite_login_name')"
             >
               <template slot-scope = "s">
                 <div>{{ s.row.userName }}</div>
               </template>
             </el-table-column>
             <el-table-column
-              label="注册时间"
+              :label="$t('M.comm_register_time') + $t('M.comm_time')"
               width="180"
             >
               <template slot-scope = "s">
@@ -162,14 +186,14 @@
               </template>
             </el-table-column>
             <el-table-column
-              label="姓名"
+              :label="$t('M.comm_name')"
             >
               <template slot-scope = "s">
                 <div>{{ s.row.realname }}</div>
               </template>
             </el-table-column>
             <el-table-column
-              label="高级认证"
+              :label="$t('M.user_senior_certification')"
             >
               <template slot-scope = "s">
                 <div v-if="advancedAuth === 'waitVeritfy'">
@@ -184,7 +208,7 @@
               </template>
             </el-table-column>
             <el-table-column
-              label="直接推荐人UID"
+              :label="$t('M.user_invite_direct_referrer')"
             >
               <template slot-scope = "s">
                 <div>{{ s.row.inviter }}</div>
@@ -205,37 +229,44 @@
       <!--奖励记录-->
       <div class="award-record margin-top9 padding-top0">
         <header class="award-record-header line-height56">
-          <span class="font-size16 header-color">奖励记录</span>
+          <span class="font-size16 header-color">
+            <!--奖励记录-->
+             {{ $t('M.user_invite_award') }}{{ $t('M.comm_record') }}
+          </span>
         </header>
         <div class="award-record-content">
           <el-table
             :data="awardList"
             style="width: 100%"
-            empty-text="暂无数据"
+            :empty-text="$t('M.comm_no_data')"
           >
+            <!--奖励类型 邀请奖励 币种 数量 时间-->
             <el-table-column
-              label="奖励类型"
+              :label="$t('M.user_invite_award') + $t('M.comm_type')"
             >
               <template slot-scope = "s">
-                <div>邀请奖励</div>
+                <div>
+                  <!--邀请奖励-->
+                  {{ $t('M.comm_user_invite') }}{{ $t('M.user_invite_award') }}
+                </div>
               </template>
             </el-table-column>
             <el-table-column
-              label="币种"
+              :label="$t('M.comm_currency')"
             >
               <template slot-scope = "s">
                 <div>{{ s.row.coinName }}</div>
               </template>
             </el-table-column>
             <el-table-column
-              label="数量"
+              :label="$t('M.comm_count')"
             >
               <template slot-scope = "s">
                 <div>{{ s.row.totalChange }}</div>
               </template>
             </el-table-column>
             <el-table-column
-              label="时间"
+              :label="$t('M.comm_time')"
             >
               <template slot-scope = "s">
                 <div>{{ timeFormatting(s.row.createTime) }}</div>
@@ -280,16 +311,18 @@ export default {
   data () {
     return {
       generalizeValue: 'first',
+      // 直接推广 间接推广
       generalizeOptionsList: [{
         value: 'first',
-        label: '直接推广'
+        label: 'M.user_invite_direct'
       }, {
         value: 'second',
-        label: '间接推广'
+        label: 'M.user_invite_indirect'
       }],
-      waitVeritfy: '待审核',
-      pass: '已通过',
-      notPass: '未通过',
+      // 待审核 已通过 未通过
+      waitVeritfy: 'M.user_invite_audit',
+      pass: 'M.user_invite_already_passed',
+      notPass: 'M.user_invite_not_pass',
       activeName: 'current-entrust',
       currentPageForMyEntrust: 1, // 当前委托页码
       totalPageForMyEntrust: 1, // 当前委托总页数

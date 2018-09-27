@@ -11,14 +11,14 @@
            class="header-content-left header-content font-size16 font-weight600"
          >
           <!--设置支付宝账号-->
-           {{ $t('m.comm_set') }}{{ $t('m.user_account_number') }}
+           {{ $t('M.comm_set') }}{{ $t('M.user_account_number') }}
         </span>
         <span
           v-else
           class="header-content-left header-content font-size16 font-weight600"
         >
           <!--修改支付宝账号-->
-          {{ $t('m.comm_modification') }}{{ $t('m.user_account_number') }}
+          {{ $t('M.comm_modification') }}{{ $t('M.user_account_number') }}
         </span>
         <span
           class="header-content-right font-size12 cursor-pointer"
@@ -29,13 +29,13 @@
             iconName="icon-fanhui2"
           />
           <!--返回我的账户-->
-          {{ $t('m.user_account_return') }}
+          {{ $t('M.user_account_return') }}
         </span>
       </header>
       <div class="add-account-content">
         <header class="account-content-title">
           <!--*支付宝上传二维码方法：打开支付宝首页>收钱>保存图片，将存在手机相册的收款码上传即可。-->
-          {{ $t('m.user_account_text2') }}
+          {{ $t('M.user_account_text2') }}
         </header>
         <div class="account-content-from">
           <el-form
@@ -117,7 +117,7 @@
               @click.prevent="stateSubmitWeChat"
             >
               <!--确认设置-->
-              {{ $t('m.comm_affirm') }}{{ $t('m.comm_set') }}
+              {{ $t('M.comm_affirm') }}{{ $t('M.comm_set') }}
             </button>
             <button
               v-else
@@ -125,7 +125,7 @@
               @click.prevent="stateSubmitWeChat"
             >
               <!--确认修改-->
-              {{ $t('m.comm_affirm') }}{{ $t('m.comm_modification') }}
+              {{ $t('M.comm_affirm') }}{{ $t('M.comm_modification') }}
             </button>
           </el-form>
         </div>

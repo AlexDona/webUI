@@ -7,7 +7,8 @@
     <div class="set-email-main margin25">
       <header class="set-email-header personal-height60 line-height60 line-height70 margin25">
         <span class="header-content-left header-content font-size16 font-weight600">
-          绑定邮箱
+          <!--绑定邮箱-->
+          {{ $t('M.user_security_binding') }}{{ $t('M.user_security_email') }}
         </span>
         <span
           class="header-content-right font-size12 cursor-pointer"
@@ -17,19 +18,24 @@
             class="font-size22"
             iconName="icon-fanhui2"
           />
-          返回安全中心
+          <!--返回安全中心-->
+          {{ $t('M.user_security_return_safety_center') }}
         </span>
       </header>
       <div class="set-email-content">
         <header class="email-content-title">
-          *请确认您的银行卡已开启短信通知功能
+          <!--*请确认您的银行卡已开启短信通知功能-->
+          {{ $t('M.user_security_text0') }}
         </header>
         <div class="email-content-from">
           <el-form
             :label-position="labelPosition"
             label-width="120px"
           >
-            <el-form-item label="邮箱账号：">
+            <!--邮箱账号 验证码-->
+            <el-form-item
+              :label="$t('M.user_security_email') + $t('M.user_account_number') + '：'"
+            >
               <input
                 class="email-input border-radius2 padding-l15 box-sizing"
                 v-model="emailAccounts"
@@ -42,7 +48,9 @@
                 :isShow="!!errorShowStatusList[0]"
               />
             </el-form-item>
-            <el-form-item label="验  证  码：">
+            <el-form-item
+              :label="$t('M.comm_code') + '：'"
+            >
               <el-input
                 v-model="emailCode"
                 @keydown="setErrorMsg(1, '')"
@@ -66,7 +74,8 @@
               class="email-button border-radius4 cursor-pointer"
               @click.prevent="confirmBindingBailSubmit"
             >
-              确认绑定
+              <!--确认绑定-->
+              {{ $t('M.comm_affirm') }}{{ $t('M.user_security_binding') }}
             </button>
           </el-form>
         </div>
@@ -140,8 +149,8 @@ export default {
     },
     // 发送邮箱验证码
     sendPhoneOrEmailCode (loginType) {
-      console.log(this.disabledOfPhoneBtn)
-      console.log(this.disabledOfEmailBtn)
+      // console.log(this.disabledOfPhoneBtn)
+      // console.log(this.disabledOfEmailBtn)
       if (this.disabledOfPhoneBtn || this.disabledOfEmailBtn) {
         return false
       }
@@ -206,18 +215,20 @@ export default {
           console.log(type)
           switch (validateNumForUserInput('email', targetNum)) {
             case 0:
-              console.log(type)
+              // console.log(type)
               this.setErrorMsg(0, '')
               this.$forceUpdate()
               return 1
             case 1:
-              console.log(type)
-              this.setErrorMsg(0, '请输入邮箱地址')
+              // console.log(type)
+              // 请输入邮箱地址
+              this.setErrorMsg(0, this.$t('M.comm_please_enter') + this.$t('M.comm_please_enter') + this.$t('M.comm_site'))
               this.$forceUpdate()
               return 0
             case 2:
-              console.log(type)
-              this.setErrorMsg(0, '请输入正确的邮箱地址')
+              // console.log(type)
+              // 请输入正确的邮箱地址
+              this.setErrorMsg(0, this.$t('M.comm_please_enter') + this.$t('M.user_security_correct') + this.$t('M.user_security_email') + this.$t('M.comm_site'))
               this.$forceUpdate()
               return 0
           }
@@ -225,8 +236,9 @@ export default {
         // 邮箱验证码
         case 1:
           if (!targetNum) {
-            console.log(type)
-            this.setErrorMsg(1, '请输入邮箱验证码')
+            // console.log(type)
+            // 请输入邮箱验证码
+            this.setErrorMsg(1, this.$t('M.comm_please_enter') + this.$t('M.user_security_email') + this.$t('M.comm_code'))
             this.$forceUpdate()
             return 0
           } else {

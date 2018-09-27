@@ -10,6 +10,7 @@
           class="header-content-left header-content font-size16 font-weight600"
         >
           修改登录密码
+          {{ $t('M.comm_modification') }}{{ $t('M.user_security_login') }}{{ $t('M.user_security_password') }}
         </span>
         <span
           class="header-content-right font-size12 cursor-pointer"
@@ -19,19 +20,24 @@
             class="font-size22"
             iconName="icon-fanhui2"
           />
-          返回安全中心
+          <!--返回安全中心-->
+          {{ $t('M.user_security_return_safety_center') }}
         </span>
       </header>
       <div class="login-password-content">
         <header class="login-content-title">
-          *请确认您的银行卡已开启短信通知功能
+          <!--*请确认您的银行卡已开启短信通知功能-->
+          * {{ $t('M.user_security_text0') }}
         </header>
         <div class="login-content-from">
           <el-form
             :label-position="labelPosition"
             label-width="120px"
           >
-            <el-form-item label="原登录密码：">
+            <!--原登录密码 新登录密码 确认登录密码-->
+            <el-form-item
+              :label="$t('M.user_security_login_raw') + $t('M.user_security_login') + $t('M.user_security_password') + '：'"
+            >
               <input
                 type="password"
                 class="login-input border-radius2 padding-l15 box-sizing"
@@ -45,7 +51,9 @@
                 :isShow="!!errorShowStatusList[0]"
               />
             </el-form-item>
-            <el-form-item label="新登录密码：">
+            <el-form-item
+              :label="$t('M.user_security_login_new') + $t('M.user_security_login') + $t('M.user_security_password') + '：'"
+            >
               <input
                 type="password"
                 class="login-input border-radius2 padding-l15 box-sizing"
@@ -59,7 +67,9 @@
                 :isShow="!!errorShowStatusList[1]"
               />
             </el-form-item>
-            <el-form-item label="确认登录密码：">
+            <el-form-item
+              :label="$t('M.comm_affirm') + $t('M.user_security_login') + $t('M.user_security_password') + '：'"
+            >
               <input
                 type="password"
                 class="login-input border-radius2 padding-l15 box-sizing"
@@ -77,7 +87,8 @@
               class="login-button border-radius4 cursor-pointer"
               @click.prevent="getStatusSubmit"
             >
-              确认修改
+              <!--确认修改-->
+              {{ $t('M.comm_affirm') }}{{ $t('M.comm_modification') }}
             </button>
           </el-form>
         </div>
@@ -156,7 +167,7 @@ export default {
         // 原登录密码
         case 0:
           if (!targetNum) {
-            this.setErrorMsg(0, '请输入原登录密码')
+            this.setErrorMsg(0, this.$t('M.comm_please_enter') + this.$t('M.user_security_login_raw') + this.$t('M.user_security_login') + this.$t('M.user_security_password'))
             this.$forceUpdate()
             return 0
           } else {
@@ -172,19 +183,19 @@ export default {
               this.$forceUpdate()
               return 1
             case 1:
-              this.setErrorMsg(1, '请输入密码')
+              this.setErrorMsg(1, this.$t('M.comm_please_enter') + this.$t('M.user_security_password'))
               this.$forceUpdate()
               return 0
             case 2:
-              this.setErrorMsg(1, '请输入 8-20 位字母和数字组合')
+              this.setErrorMsg(1, this.$t('M.user_security_info1'))
               this.$forceUpdate()
               return 0
           }
           break
-        // 确认密码
+        // 确认登录密码
         case 2:
           if (!targetNum) {
-            this.setErrorMsg(2, '请输入确认登录密码')
+            this.setErrorMsg(2, this.$t('M.comm_please_enter') + this.$t('M.comm_affirm') + this.$t('M.user_security_login') + this.$t('M.user_security_password'))
             this.$forceUpdate()
             return 0
           } else if (targetNum === this.newLoginPassword) {
@@ -192,7 +203,7 @@ export default {
             this.$forceUpdate()
             return 1
           } else {
-            this.setErrorMsg(2, '密码不一致，请重新确认')
+            this.setErrorMsg(2, this.$t('M.user_security_info2'))
             this.$forceUpdate()
             return 0
           }
