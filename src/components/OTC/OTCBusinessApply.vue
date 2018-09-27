@@ -561,7 +561,7 @@ export default {
     }
   }
   &.day{
-    // background-color: #fff;
+    background-color: #121824;
     >.business-apply-content{
       >.privilege{
         >.title{
