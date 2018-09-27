@@ -68,7 +68,10 @@
                     {{item.index}}
                   </span>
                 </span>
-                <span class="td">
+                <span
+                  class="td"
+                  v-if="item.userName"
+                >
                   {{phoneNumberFormat(item.userName)}}
                 </span>
                 <span class="td">

@@ -299,7 +299,7 @@ export default {
               >div{
               }
               >.item{
-                background:linear-gradient(0deg,#1f6dae,rgba(0,0,0,0));
+                background:linear-gradient(180deg,rgba(31,144,234,1),rgba(0,0,0,0));
               }
               /*箭头*/
               >.arrow{
