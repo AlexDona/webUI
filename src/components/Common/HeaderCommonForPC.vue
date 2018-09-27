@@ -18,8 +18,8 @@
             </li>
             <li class="nav-item">
               <router-link to="/TradeCenter">
-                <span>币币交易</span>
-                 <!--<span>{{$t('M.commonSuccess')}}</span>-->
+                <!--<span>币币交易</span>-->
+                 <span>{{$t('M.comm_trade_center')}}</span>
               </router-link>
             </li>
             <li
@@ -30,7 +30,8 @@
             <!-- 任付伟改动：这是原来的 -->
             <!-- @mouseleave="toggleShowSubNavBox('otc',0)" -->
               <router-link to="/OTCCenter">
-                <span>OTC交易</span>
+                <!--<span>OTC交易</span>-->
+                <span>{{$t('M.comm_otc_center')}}</span>
               </router-link>
               <!--otc子导航-->
               <!-- yuxia改的子导航显示 -->
@@ -57,7 +58,8 @@
             </li>
             <li class="nav-item">
               <router-link to="/FinanceCenter">
-                <span>投资理财</span>
+                <!--<span>投资理财</span>-->
+                <span>{{$t('M.comm_finance_center')}}</span>
               </router-link>
             </li>
             <li
@@ -66,7 +68,8 @@
               @mouseleave="toggleShowSubNavBox('activity',0)"
             >
               <router-link to="/ActivityCenter">
-                <span>活动中心</span>
+                <!--<span>活动中心</span>-->
+                <span>{{$t('M.comm_activity_center')}}</span>
               </router-link>
               <!--活动中心子导航-->
               <ul
@@ -77,7 +80,9 @@
                   <!--<router-link to="/">新币投票</router-link>-->
                 <!--</li>-->
                 <li class="sub-nav-item">
-                  <router-link to="/CurrencyApplication">上币申请</router-link>
+                  <router-link to="/CurrencyApplication">
+                    上币申请
+                  </router-link>
                 </li>
                 <li class="sub-nav-item">
                   <router-link to="/RankingListOfInvitation">邀请排行</router-link>
@@ -106,7 +111,8 @@
               v-if="!isLogin"
             >
               <router-link to="/login">
-                登录
+                <!--<span>登录</span>-->
+                <span>{{$t('M.comm_login')}}</span>
               </router-link>
             </li>
             <li class="li-split"></li>
@@ -115,7 +121,8 @@
               v-if="!isLogin"
             >
               <router-link to="/Register">
-                <span>注册</span>
+                <!--<span>注册</span>-->
+                <span>{{$t('M.comm_register_time')}}</span>
               </router-link>
             </li>
             <li
@@ -150,14 +157,38 @@
                       </button>
                     </div>
                     <ul class="personal-user">
-                      <li @click="stateReturnSuperior('account-balance')">账户资产</li>
-                      <li @click="stateReturnSuperior('order-management')">订单管理</li>
-                      <li @click="stateReturnSuperior('identity-authentication')">身份认证</li>
-                      <li @click="stateReturnSuperior('security-center')">安全中心</li>
-                      <li @click="stateReturnSuperior('receiving-set')">收款设置</li>
-                      <li @click="stateReturnSuperior('invite')">邀请推广</li>
-                      <li @click="stateReturnSuperior('api')">API管理</li>
-                      <li @click="userLoginOut">退出</li>
+                      <li @click="stateReturnSuperior('account-balance')">
+                        <!--账户资产-->
+                        {{$t('M.comm_user_account_balance')}}
+                      </li>
+                      <li @click="stateReturnSuperior('order-management')">
+                        <!--订单管理-->
+                        {{$t('M.comm_user_order_management')}}
+                      </li>
+                      <li @click="stateReturnSuperior('identity-authentication')">
+                        <!--身份认证-->
+                        {{$t('M.comm_user_identity_authentication')}}
+                      </li>
+                      <li @click="stateReturnSuperior('security-center')">
+                        <!--安全中心-->
+                        {{$t('M.comm_user_security_center')}}
+                      </li>
+                      <li @click="stateReturnSuperior('receiving-set')">
+                        <!--收款设置-->
+                        {{$t('M.comm_user_receiving_set')}}
+                      </li>
+                      <li @click="stateReturnSuperior('invite')">
+                        <!--邀请推广-->
+                        {{$t('M.comm_user_invitation_promote')}}
+                      </li>
+                      <li @click="stateReturnSuperior('api')">
+                        <!--API管理-->
+                        {{$t('M.comm_user_api_management')}}
+                      </li>
+                      <li @click="userLoginOut">
+                        <!--退出-->
+                        {{$t('M.comm_retreat')}}
+                      </li>
                     </ul>
                   </div>
                 </span>
@@ -216,7 +247,10 @@
           :class="{day:theme=='day',night:theme=='night' }"
           class="nav-box-dialog"
         >
-          <p class="title line-height50 font-size14">折算货币</p>
+          <p class="title line-height50 font-size14">
+            <!--折算货币-->
+            {{$t('M.comm_convert_currency')}}
+          </p>
           <!-- 折算货币选择 -->
           <el-select
             v-model="activeConvertCurrency"

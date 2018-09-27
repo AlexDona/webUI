@@ -183,7 +183,8 @@
               @click.prevent="cancelId(s.row.id)"
               :id="s.row.id"
             >
-              {{ operation }}
+              <!--{{ operation }}-->
+              {{ $t(operation) }}
             </div>
           </template>
         </el-table-column>
@@ -212,7 +213,7 @@ import {
 import CountDownButton from '../../Common/CountDownCommon'
 import {
   returnAjaxMessage,
-  sendPhoneOrEmailCodeAjax
+  apiSendPhoneOrEmailCodeAjax
 } from '../../../utils/commonFunc'
 export default {
   components: {
@@ -231,13 +232,16 @@ export default {
       prepaidAddress: '', // 提币地址
       // 地址列表
       gainAddressList: [],
-      operation: '删除',
+      operation: 'M.comm_delete',
       activeName: 'current-entrust',
       currentPageForMyEntrust: 1, // 当前委托页码
       totalPageForMyEntrust: 1, // 当前委托总页数
       dialogVisible: false, // 取消弹窗默认隐藏
       mentionMoneyConfirm: false, // 默认隐藏
-      deleteWithdrawalId: '' // 每行数据ID
+      deleteWithdrawalId: '', // 每行数据ID
+      phoneCode: '', // 手机验证
+      emailCode: '', // 邮箱验证
+      googleCode: '' // 谷歌验证
     }
   },
   created () {
@@ -264,11 +268,11 @@ export default {
       // }
       if (!this.mentionRemark) {
         // 请输入备注
-        this.errorMsg = this.$t('m.comm_please_enter') + this.$t('m.comm_remark')
+        this.errorMsg = this.$t('M.comm_please_enter') + this.$t('M.comm_remark')
         return
       } else if (!this.prepaidAddress) {
         // 提币地址不能为空
-        this.errorMsg = this.$t('m.user_address_empty')
+        this.errorMsg = this.$t('M.user_address_empty')
         return
       } else {
         this.errorMsg = ''
@@ -295,7 +299,10 @@ export default {
       let param = {
         coinId: this.currencyValue, // 币种coinId
         remark: this.mentionRemark, // 备注
-        address: this.prepaidAddress // 充值地址
+        address: this.prepaidAddress, // 充值地址
+        phoneCode: this.phoneCode, // 手机验证
+        emailCode: this.emailCode, // 邮箱验证
+        googleCode: this.googleCode // 谷歌验证
       }
       data = await addNewWithdrawalAddress(param)
       if (!(returnAjaxMessage(data, this, 1))) {
@@ -368,6 +375,8 @@ export default {
         return false
       }
       let params = {
+        userId: this.userInfo.userId,
+        partnerId: this.partnerId
       }
       switch (loginType) {
         case 0:
@@ -377,7 +386,7 @@ export default {
           params.address = this.userInfo.userInfo.email
           break
       }
-      sendPhoneOrEmailCodeAjax(loginType, params, (data) => {
+      apiSendPhoneOrEmailCodeAjax(loginType, params, (data) => {
         console.log(this.disabledOfPhoneBtn)
         // 提示信息
         if (!returnAjaxMessage(data, this)) {
@@ -426,6 +435,7 @@ export default {
   computed: {
     ...mapState({
       theme: state => state.common.theme,
+      partnerId: state => state.common.partnerId,
       userInfo: state => state.user.loginStep1Info, // 用户详细信息
       disabledOfPhoneBtn: state => state.user.disabledOfPhoneBtn,
       disabledOfEmailBtn: state => state.user.disabledOfEmailBtn,
@@ -465,7 +475,7 @@ export default {
           .error-info {
             height: 20px;
             line-height: 20px;
-            color: red;
+            color: #d45858;
           }
           .content-input {
             width: 180px;

@@ -10,13 +10,15 @@
           v-if="paymentTerm.isXilianBind"
           class="header-content-left header-content font-size16 font-weight600"
         >
-          设置西联汇款
+          <!--设置西联汇款-->
+          {{ $t('M.comm_set') }}{{ $t('M.user_account_western_union') }}
         </span>
         <span
           v-else
           class="header-content-left header-content font-size16 font-weight600"
         >
-          修改西联汇款
+          <!--修改西联汇款-->
+          {{ $t('M.comm_modification') }}{{ $t('M.user_account_western_union') }}
         </span>
         <span
           class="header-content-right font-size12 cursor-pointer"
@@ -26,7 +28,8 @@
             class="font-size22"
             iconName="icon-fanhui2"
           />
-          返回我的账户
+          <!--返回我的账户-->
+          {{ $t('M.user_account_return') }}
         </span>
       </header>
       <div class="add-western-content">
@@ -34,20 +37,24 @@
           <!--*西联汇款l上传二维码方法：打开西联汇款首页>收钱>保存图片，将存在手机相册的收款码上传即可。-->
         <!--</header>-->
         <div class="western-content-from">
+          <!--名 称 电汇地址 交易密码-->
           <el-form
             :label-position="labelPosition"
             label-width="120px"
           >
-            <el-form-item label="名 称：">
+            <el-form-item
+              :label="$t('M.user_account_name')"
+            >
               <span class="western-content-name">
                 {{ userInfo.userInfo.realname }}
               </span>
             </el-form-item>
-            <el-form-item label="电汇地址：">
+            <el-form-item
+              :label="$t('M.user_account_wire_transfer') + $t('M.comm_site')"
+            >
               <el-input
                 type="textarea"
                 :autosize="{ minRows: 4, maxRows: 2}"
-                placeholder="请输入内容"
                 v-model="telegraphicTransferAddress"
                 @keydown="setErrorMsg(0, '')"
                 @blur="checkoutInputFormat(0, telegraphicTransferAddress)"
@@ -59,7 +66,9 @@
                 />
               </el-input>
             </el-form-item>
-            <el-form-item label="交易密码：">
+            <el-form-item
+              :label="$t('M.comm_password')"
+            >
               <input
                 type="password"
                 class="western-input border-radius2"
@@ -78,14 +87,16 @@
               class="western-button border-radius4 cursor-pointer"
               @click.prevent="stateSubmitWesternUnion"
             >
-              确认设置
+              <!--确认设置-->
+              {{ $t('M.comm_affirm') }}{{ $t('M.comm_set') }}
             </button>
             <button
               v-else
               class="western-button border-radius4 cursor-pointer"
               @click.prevent="stateSubmitWesternUnion"
             >
-              确认修改
+              <!--确认修改-->
+              {{ $t('M.comm_affirm') }}{{ $t('M.comm_modification') }}
             </button>
           </el-form>
         </div>
@@ -161,11 +172,11 @@ export default {
     checkoutInputFormat (type, targetNum) {
       console.log(type)
       switch (type) {
-        // 请输入支付宝张号
+        // 请输入西联汇款账号
         case 0:
           console.log(type)
           if (!targetNum) {
-            this.setErrorMsg(0, '请输入西联汇款账号')
+            this.setErrorMsg(0, this.$t('M.comm_please_enter') + this.$t('M.user_account_western_union') + this.$t('M.user_account_number'))
             this.$forceUpdate()
             return 0
           } else {
@@ -173,11 +184,11 @@ export default {
             this.$forceUpdate()
             return 1
           }
-        // 请输入支付宝张号
+        // 请输入交易密码
         case 1:
           console.log(type)
           if (!targetNum) {
-            this.setErrorMsg(1, '请输入交易密码')
+            this.setErrorMsg(1, this.$t('M.comm_please_enter') + this.$t('M.comm_password'))
             this.$forceUpdate()
             return 0
           } else {

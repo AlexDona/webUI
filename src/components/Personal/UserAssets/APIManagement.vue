@@ -112,7 +112,7 @@
             </el-table-column>
             <el-table-column
               label="IP地址"
-              width="135"
+              width="140"
             >
               <template slot-scope = "s">
                 <div>{{ s.row.ip }}</div>

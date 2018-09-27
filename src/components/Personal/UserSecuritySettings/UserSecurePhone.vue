@@ -10,13 +10,15 @@
           v-if="!securityCenter.isPhoneBind"
           class="header-content-left header-content font-size16 font-weight600"
         >
-          绑定手机
+          <!--绑定手机-->
+          {{ $t('M.user_security_binding') }}{{ $t('M.user_security_phone') }}
         </span>
         <span
           v-else
           class="header-content-left header-content font-size16 font-weight600"
         >
-          修改手机
+          <!--修改手机-->
+          {{ $t('M.comm_modification') }}{{ $t('M.user_security_phone') }}
         </span>
         <span
           class="header-content-right font-size12 cursor-pointer"
@@ -26,12 +28,14 @@
             class="font-size22"
             iconName="icon-fanhui2"
           />
-          返回安全中心
+          <!--返回安全中心-->
+          {{ $t('M.user_security_return_safety_center') }}
         </span>
       </header>
       <div class="set-phone-content">
         <header class="phone-content-title">
-          *请确认您的银行卡已开启短信通知功能
+          <!--*请确认您的银行卡已开启短信通知功能-->
+          *{{ $t('M.user_security_text0') }}
         </header>
         <div class="phone-content-from">
           <!--绑定手机-->
@@ -40,8 +44,9 @@
             :label-position="labelPosition"
             label-width="120px"
           >
+            <!--手机号码 图片验证码 短信验证码-->
             <el-form-item
-              label="手机号码："
+              :label="$t('M.user_security_phone') + $t('M.user_security_number') + '：'"
             >
               <el-select v-model="bindingDataPhone.bindingAreaCodeValue">
                 <el-option
@@ -66,7 +71,8 @@
               />
             </el-form-item>
             <el-form-item
-              label="图片验证码：">
+              :label="$t('M.user_security_picture') + $t('M.comm_code') + '：'"
+            >
               <!--图片验证码-->
               <input
                 type="text"
@@ -74,7 +80,6 @@
                 v-model="bindingDataPhone.userInputImageCode"
                 @keydown="setErrorMsg(1,'')"
                 @blur="checkoutInputFormat(1, bindingDataPhone.userInputImageCode)"
-                placeholder="验证码"
               >
               <!--获取图片验证码-->
               <span
@@ -96,7 +101,8 @@
               />
             </el-form-item>
             <el-form-item
-              label="短信验证码：">
+              :label="$t('M.comm_note') + $t('M.comm_code') + '：'"
+            >
               <el-input
                 v-model="bindingDataPhone.bindingNewPhoneCode"
                 @keydown="setErrorMsg(2,'')"
@@ -123,7 +129,8 @@
               class="phone-button border-radius4 cursor-pointer"
               @click.prevent="getStatusSubmit"
             >
-              确认绑定
+              <!--确认绑定-->
+              {{ $t('M.comm_affirm') }}{{ $t('M.user_security_binding') }}
             </button>
           </el-form>
           <!--换绑手机-->
@@ -132,12 +139,17 @@
             :label-position="labelPosition"
             label-width="120px"
           >
-            <el-form-item label="姓      名：">
+            <!--姓名 短信验证码 新手机号码 短信验证码 交易密码-->
+            <el-form-item
+              :label="$t('M.comm_name') + '：'"
+            >
               <span class="bank-content-name">
                 {{ userInfo.userInfo.realname }}
               </span>
             </el-form-item>
-            <el-form-item label="短信验证码：">
+            <el-form-item
+              :label="$t('M.comm_note') + $t('M.comm_code') + '：'"
+            >
               <el-input
                 v-model="amendDataPhone.oldPhoneCode"
                 @keydown="tieErrorMsg(0,'')"
@@ -157,7 +169,9 @@
                 :isShow="!!tieErrorShowStatusList[0]"
               />
             </el-form-item>
-            <el-form-item label="新手机号码：">
+            <el-form-item
+              :label="$t('M.user_security_login_new') + $t('M.user_security_phone') + $t('M.comm_mark') + '：'"
+            >
               <el-select
                 v-model="amendDataPhone.areaCodeValue"
               >
@@ -182,7 +196,9 @@
                 :isShow="!!tieErrorShowStatusList[1]"
               />
             </el-form-item>
-            <el-form-item label="短信验证码：">
+            <el-form-item
+              :label="$t('M.comm_note') + $t('M.comm_code') + '：'"
+            >
               <el-input
                 v-model="amendDataPhone.newPhoneCode"
                 @keydown="tieErrorMsg(2,'')"
@@ -202,7 +218,9 @@
                 :isShow="!!tieErrorShowStatusList[2]"
               />
             </el-form-item>
-            <el-form-item label="交  易  密  码：">
+            <el-form-item
+              :label="$t('M.comm_password') + '：'"
+            >
               <input
                 type="password"
                 class="phone-input border-radius2 padding-l15 box-sizing"
@@ -220,7 +238,8 @@
               class="phone-button border-radius4 cursor-pointer"
               @click.prevent="stateTieStatusSubmit"
             >
-              确认换绑
+              <!--确认换绑-->
+              {{ $t('M.comm_affirm') }}{{ $t('M.user_security_in_tie') }}
             </button>
           </el-form>
         </div>
@@ -424,7 +443,8 @@ export default {
         // 手机号
         case 0:
           if (!targetNum) {
-            this.setErrorMsg(0, '请输入手机号')
+            // 请输入手机号
+            this.setErrorMsg(0, this.$t('M.comm_please_enter') + this.$t('M.user_security_phone') + this.$t('M.comm_mark'))
             this.$forceUpdate()
             return 0
           } else {
@@ -435,7 +455,8 @@ export default {
         // 图片验证码
         case 1:
           if (!targetNum) {
-            this.setErrorMsg(1, '请输入图片验证码')
+            // 请输入图片验证码
+            this.setErrorMsg(1, this.$t('M.comm_please_enter') + this.$t('M.user_security_picture') + this.$t('M.comm_code'))
             this.$forceUpdate()
             return 0
           } else if (this.bindingDataPhone.userInputImageCode === this.bindingDataPhone.identifyCode) {
@@ -443,14 +464,16 @@ export default {
             this.$forceUpdate()
             return 1
           } else {
-            this.setErrorMsg(1, '请输入正确的图片验证码')
+            // 请输入正确的图片验证码
+            this.setErrorMsg(1, this.$t('M.comm_please_enter') + this.$t('M.user_security_correct') + this.$t('M.user_security_picture') + this.$t('M.comm_code'))
             this.$forceUpdate()
             return 0
           }
         // 短信验证码
         case 2:
           if (!targetNum) {
-            this.setErrorMsg(2, '请输入短信验证码')
+            // 请输入短信验证码
+            this.setErrorMsg(2, this.$t('M.comm_please_enter') + this.$t('M.comm_note') + this.$t('M.comm_code'))
             this.$forceUpdate()
             return 0
           } else {
@@ -500,7 +523,8 @@ export default {
         // 旧短信验证码
         case 0:
           if (!targetNum) {
-            this.tieErrorMsg(0, '请输入旧手机短信验证码')
+            // 请输入旧手机短信验证码
+            this.tieErrorMsg(0, this.$t('M.comm_please_enter') + this.$t('M.user_security_former') + this.$t('M.user_security_phone') + this.$t('M.comm_code'))
             console.log(this.tieErrorShowStatusList)
             this.$forceUpdate()
             return 0
@@ -512,7 +536,8 @@ export default {
         // 新手机号码
         case 1:
           if (!targetNum) {
-            this.tieErrorMsg(1, '请输入手机号')
+            // 请输入手机号
+            this.tieErrorMsg(1, this.$t('M.comm_please_enter') + this.$t('M.user_security_phone') + this.$t('M.comm_mark'))
             this.$forceUpdate()
             return 0
           } else {
@@ -523,7 +548,8 @@ export default {
         // 新短信验证码
         case 2:
           if (!targetNum) {
-            this.tieErrorMsg(2, '请输入新手机短信验证码')
+            // 请输入新手机短信验证码
+            this.tieErrorMsg(2, this.$t('M.comm_please_enter') + this.$t('M.user_security_login_new') + this.$t('M.user_security_phone') + this.$t('M.comm_note') + this.$t('M.comm_code'))
             this.$forceUpdate()
             return 0
           } else {
@@ -534,6 +560,7 @@ export default {
         // 交易密码
         case 3:
           if (!targetNum) {
+            // 交易密码
             this.tieErrorMsg(3, '交易密码')
             this.$forceUpdate()
             return 0

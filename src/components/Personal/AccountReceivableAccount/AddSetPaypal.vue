@@ -10,13 +10,15 @@
            v-if="paymentTerm.isPaypalBind"
            class="header-content-left header-content font-size16 font-weight600"
          >
-          设置paypal
+          <!--设置paypal-->
+           {{ $t('M.comm_set') }}paypal
         </span>
         <span
           v-else
           class="header-content-left header-content font-size16 font-weight600"
         >
-          修改paypal
+          <!--修改paypal-->
+          {{ $t('M.comm_modification') }}paypal
         </span>
         <span
           class="header-content-right font-size12 cursor-pointer"
@@ -26,7 +28,8 @@
             class="font-size22"
             iconName="icon-fanhui2"
           />
-          返回我的账户
+          <!--返回我的账户-->
+          {{ $t('M.user_account_return') }}
         </span>
       </header>
       <div class="add-payment-content">
@@ -38,16 +41,20 @@
             :label-position="labelPosition"
             label-width="120px"
           >
-            <el-form-item label="名 称：">
+            <!--名 称 paypal账号 请输入内容 交易密码-->
+            <el-form-item
+              :label="$t('M.user_account_name')"
+            >
               <span class="payment-content-name">
                 {{ userInfo.userInfo.realname }}
               </span>
             </el-form-item>
-            <el-form-item label="paypal账号：">
+            <el-form-item
+              :label="$t('M.user_account_paypal') + $t('M.user_account_number')"
+            >
               <el-input
                 type="textarea"
                 :autosize="{ minRows: 4, maxRows: 2}"
-                placeholder="请输入内容"
                 v-model="paypalAccount"
                 @keydown="setErrorMsg(0, '')"
                 @blur="checkoutInputFormat(0, paypalAccount)"
@@ -59,7 +66,9 @@
                 />
               </el-input>
             </el-form-item>
-            <el-form-item label="交易密码：">
+            <el-form-item
+              :label="$t('M.comm_password')"
+            >
               <input
                 type="password"
                 class="payment-input border-radius2"
@@ -78,14 +87,16 @@
               class="payment-button border-radius4 cursor-pointer"
               @click.prevent="stateSubmitPaypal"
             >
-              确认设置
+              <!--确认设置-->
+              {{ $t('M.comm_affirm') }}{{ $t('M.comm_set') }}
             </button>
             <button
               v-else
               class="payment-button border-radius4 cursor-pointer"
               @click.prevent="stateSubmitPaypal"
             >
-              确认修改
+              <!--确认修改-->
+              {{ $t('M.comm_affirm') }}{{ $t('M.comm_modification') }}
             </button>
           </el-form>
         </div>
@@ -161,11 +172,11 @@ export default {
     checkoutInputFormat (type, targetNum) {
       console.log(type)
       switch (type) {
-        // 请输入支付宝张号
+        // 请输入paypal账号
         case 0:
           console.log(type)
           if (!targetNum) {
-            this.setErrorMsg(0, '请输入paypal账号')
+            this.setErrorMsg(0, this.$t('M.comm_please_enter') + this.$t('M.user_account_paypal') + this.$t('M.user_account_number'))
             this.$forceUpdate()
             return 0
           } else {
@@ -173,11 +184,11 @@ export default {
             this.$forceUpdate()
             return 1
           }
-        // 请输入支付宝张号
+        // 请输入交易密码
         case 1:
           console.log(type)
           if (!targetNum) {
-            this.setErrorMsg(1, '请输入交易密码')
+            this.setErrorMsg(1, this.$t('M.comm_please_enter') + this.$t('M.comm_password'))
             this.$forceUpdate()
             return 0
           } else {

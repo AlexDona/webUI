@@ -111,7 +111,7 @@
           <div class="info-centre margin-top16">
             <span class="info-centre-left float-left font-size12">
               <!--会员等级 - -->
-              {{ $t('M.user_grade_membership') }} -
+              {{ $t('M.user_assets_grade_membership') }} -
             </span>
             <p class="info-picture margin-left10 float-left">
               <img :src="vipShowPictureSrc">

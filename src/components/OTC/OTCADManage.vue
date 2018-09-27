@@ -1,7 +1,7 @@
 <template>
   <div
-  class="otc-AD-manage-box otc"
-  :class="{'day':theme == 'day','night':theme == 'night' }"
+    class="otc-AD-manage-box otc"
+    :class="{'day':theme == 'day','night':theme == 'night' }"
   >
     <!-- 1.0 导航 -->
     <NavCommon/>
@@ -502,8 +502,7 @@ export default {
 <style scoped lang="scss" type="text/scss">
 // @import url(../../../static/css/scss/OTC/OTCCenter.scss);
   .otc-AD-manage-box {
-    background-color: #121824;
-    > .otc-AD-manage-content {
+    >.otc-AD-manage-content {
       width: 1150px;
       margin: 70px auto;
       margin-bottom: 10px;
@@ -511,8 +510,8 @@ export default {
       > .AD-title {
         height: 30px;
         line-height: 30px;
-        color: #338FF5;
-        border-left: 3px solid #338FF5;
+        // color: #338FF5;
+        // border-left: 3px solid #338FF5;
         margin-bottom: 30px;
       }
       > .AD-manage-main {
@@ -521,7 +520,7 @@ export default {
           line-height: 60px;
           margin-bottom: 25px;
           > .filtrate-text {
-            color: #9DA5B3;
+            // color: #9DA5B3;
             margin-right: 5px;
           }
           > .style-input {
@@ -537,7 +536,7 @@ export default {
             margin-right: 15px;
           }
           > .all-unshelve {
-            color: #338FF5;
+            // color: #338FF5;
             > .unshelve-text {
             }
           }
@@ -545,15 +544,93 @@ export default {
         > .manage-main-bottom {
          min-height: 450px!important;
           .red {
-            color: #D45858;
+            // color: #D45858;
           }
           .green {
-            color: #008069;
+            // color: #008069;
           }
         }
         .page{
           text-align: center;
           padding: 10px 0;
+        }
+      }
+    }
+    &.night{
+      background-color: #121824;
+      >.otc-AD-manage-content {
+        > .AD-title {
+          color: #338FF5;
+          border-left: 3px solid #338FF5;
+        }
+        > .AD-manage-main {
+          > .manage-main-top {
+            > .filtrate-text {
+              color: #9DA5B3;
+            }
+            > .style-input {
+            }
+            > .market-input {
+            }
+            > .status-input {
+            }
+            > .inquire-button {
+            }
+            > .all-unshelve {
+              color: #338FF5;
+              > .unshelve-text {
+              }
+            }
+          }
+          > .manage-main-bottom {
+            .red {
+              color: #D45858;
+            }
+            .green {
+              color: #008069;
+            }
+          }
+          .page{
+          }
+        }
+      }
+    }
+    &.day{
+      background-color: #ffffff;
+      >.otc-AD-manage-content {
+        > .AD-title {
+          color: #338FF5;
+          border-left: 3px solid #338FF5;
+        }
+        > .AD-manage-main {
+          > .manage-main-top {
+            > .filtrate-text {
+              color: #9DA5B3;
+            }
+            > .style-input {
+            }
+            > .market-input {
+            }
+            > .status-input {
+            }
+            > .inquire-button {
+            }
+            > .all-unshelve {
+              color: #338FF5;
+              > .unshelve-text {
+              }
+            }
+          }
+          > .manage-main-bottom {
+            .red {
+              color: #D45858;
+            }
+            .green {
+              color: #008069;
+            }
+          }
+          .page{
+          }
         }
       }
     }

@@ -307,5 +307,14 @@ export const fromApi = {
   'otc_failure_0080': '该交易币种禁用',
   'otc_failure_0081': '该法币禁用',
   'coin_apply': '上币申请',
-  'session_timeout': '登录过期，请重新登录'
+  'session_timeout': '登录过期，请重新登录',
+  'user-fail-login-disable': '账户被禁用',
+  'account_failure_00122': '手机验证码为空！',
+  'account_failure_00123': '邮箱验证码为空！',
+  'account_failure_00124': '谷歌验证码为空！',
+  'account_failure_00125': '验证码错误！',
+  'user-email-fail-often': '邮件发送频繁，请过120秒后重新发送',
+  'user-country-code-not-empty': '国际代码不能为空',
+  'user-phone-not-empty': '手机号不能为空',
+  'user-sms-verification-code-out': '验证码超时，请重新发送'
 }

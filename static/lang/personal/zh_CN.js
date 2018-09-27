@@ -64,6 +64,9 @@ export const personal = {
   'user_account_please_set_up': '请先设置',
   'user_account_return': '返回我的账户',
   'user_account_name': '名称',
+  'user_account_number': '账号',
+  'user_account_gathering': '收款',
+  'user_account_upload_collection': '上传收款码',
   // 添加银行卡
   'user_account_bank': '银行卡',
   'user_account_bank_name': '银行名称',
@@ -73,27 +76,76 @@ export const personal = {
   'user_account_weChat': '微信',
   // 添加支付宝
   'user_account_alipay': '支付宝',
-  'user_account_number': '账号',
-  'user_account_gathering': '收款',
-  'user_account_upload_collection': '上传收款码',
   // 添加PAYPAL
   'user_account_paypal': 'PAYPAL',
   // 添加西联汇款
-  'user_account_western_union': '西联汇款'
+  'user_account_western_union': '西联汇款',
+  'user_account_wire_transfer': '电汇',
   // 邀请推广
-  // 推广信息
+  'user_invite_info': '信息',
+  'user_invite_yard': '码',
+  'user_invite_link': '链接',
+  'user_invite_people': '人',
+  'user_invite_succeed': '成功',
+  'user_invite_have_obtained': '已获得的佣金预估',
+  'user_invite_statistics': '统计',
+  'user_invite_direct': '直接推广',
+  'user_invite_indirect': '间接推广',
+  'user_invite_audit': '待审核',
+  'user_invite_already_passed': '已通过',
+  'user_invite_not_pass': '未通过',
   // 推广统计列表
+  'user_invite_user_uid': '用户UID',
+  'user_invite_login_name': '登录名',
+  'user_invite_direct_referrer': '直接推荐人UID',
   // 奖励记录列表
+  'user_invite_award': '奖励',
   // 安全中心
+  'user_security_safety': '安全',
+  'user_security_email': '邮箱',
+  'user_security_phone': '手机',
+  'user_security_google': '谷歌',
+  'user_security_password': '密码',
+  'user_security_verify': '验证',
+  'user_security_number': '号码',
+  'user_security_picture': '图片',
   // 安全中心个人信息
+  'user_security_level': '账号安全级别',
+  'user_security_low': '低',
+  'user_security_centre': '中',
+  'user_security_tall': '高',
+  'user_security_dual': '建议开启双重验证',
+  'user_security_last_login_time': '上次登录时间',
+  'user_security_affiliation': '归属',
+  'user_security_binding': '绑定',
+  'user_security_unbundle': '解绑',
+  'user_security_in_tie': '换绑',
+  'user_security_login': '登录',
+  'user_security_text1': '用于提币、找回密码、修改安全设置、管理API时进行安全验证。',
+  'user_security_return_safety_center': '返回安全中心',
+  'user_security_text0': '请确认您的银行卡已开启短信通知功能',
   // 安全设置
+  'user_security_correct': '正确的',
   // 安全邮箱
   // 安全手机
   // 谷歌验证
+  'user_google_text1': '若未安装谷歌验证器请',
+  'user_google_text2': '扫码下载',
+  'user_google_text3': '请扫码或手工输入密钥，将手机上生成的',
+  'user_google_text4': '填到下边输入框。',
+  'user_google_private_key': '私钥',
+  'user_google_account': '账户',
   // 交易密码
   // 登录密码
-  // 最近登录记录
-  // 安全设置记录
+  'user_security_login_raw': '原',
+  'user_security_login_new': '新',
+  'user_security_former': '旧',
+  'user_security_info1': '请输入8-20位字母和数字组合',
+  'user_security_info2': '密码不一致，请重新确认',
+  // 最近登录记录 安全设置记录
+  'user_security_recently': '最近',
+  'user_security_home_location': '归属地',
+  'user_security_source': '来源'
   // API管理
   // 创建API
   // 我的API

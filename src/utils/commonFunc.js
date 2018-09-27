@@ -42,7 +42,7 @@ export const returnAjaxMessage = (data, self, noTip) => {
     if (meta.code == 401) {
       removeStore('loginStep1Info')
       // self.$router.push({path: '/'})
-      // store.commit('user/USER_LOGOUT')
+      store.commit('user/USER_LOGOUT')
     }
     return 0
   } else {

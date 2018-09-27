@@ -1,13 +1,13 @@
 export const common = {
-  'home': '首页',
+  'comm_home': '首页',
   // 公共部分
   // 头部
-  'all-plate': '全部',
-  'trade_center': '币币交易',
-  'otc_center': 'OTC交易',
-  'finance_center': '投资理财',
-  'activity_center': '活动中心',
-  'convert_currency': '折算货币',
+  'comm_all-plate': '全部',
+  'comm_trade_center': '币币交易',
+  'comm_otc_center': 'OTC交易',
+  'comm_finance_center': '投资理财',
+  'comm_activity_center': '活动中心',
+  'comm_convert_currency': '折算货币',
   'comm_set': '设置',
   'comm_select': '选择',
   'comm_please_choose': '请选择',
@@ -87,6 +87,7 @@ export const common = {
   'comm_ask': '卖',
   // 验证类型
   'comm_password': '交易密码',
+  'comm_note': '短信',
   'comm_code': '验证码',
   'comm_code_phone': '手机验证',
   'comm_code_email': '邮箱验证',
@@ -96,6 +97,7 @@ export const common = {
   'comm_close': '关闭',
   // 内容类型
   'comm_have_been_copied': '已拷贝',
+  'comm_qr_code': '二维码',
   'comm_copies_failure': '拷贝失败，请稍后重试',
   'comm_user_asset_information': '我的资产',
   'comm_user_account_balance': '账户资产',
@@ -104,7 +106,8 @@ export const common = {
   'comm_user_identity_attestation': '认证',
   'comm_user_security_center': '安全中心',
   'comm_user_receiving_set': '收款设置',
-  'comm_user_invitation_promote': '邀请推广',
+  'comm_user_invite': '邀请',
+  'comm_user_generalize': '推广',
   'comm_user_api_management': 'API管理',
   'comm_all': '全部',
   'comm_alipay': '支付宝',

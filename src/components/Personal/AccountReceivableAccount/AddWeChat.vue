@@ -10,13 +10,15 @@
           v-if="paymentTerm.isWeixinBind"
           class="header-content-left header-content font-size16 font-weight600"
         >
-          设置微信账号
+          <!--设置微信账号-->
+           {{ $t('M.comm_set') }}{{ $t('M.user_account_weChat') }}{{ $t('M.user_account_number') }}
         </span>
         <span
           v-else
           class="header-content-left header-content font-size16 font-weight600"
         >
-          修改微信账号
+          <!--修改微信账号-->
+           {{ $t('M.comm_modification') }}{{ $t('M.user_account_weChat') }}{{ $t('M.user_account_number') }}
         </span>
         <span
           class="header-content-right font-size12 cursor-pointer"
@@ -26,27 +28,37 @@
             class="font-size22"
             iconName="icon-fanhui2"
           />
-          返回我的账户
+          <!--返回我的账户-->
+          {{ $t('M.user_account_return') }}
         </span>
       </header>
       <div class="add-chat-content">
         <header class="chat-content-title">
-          *微信上传二维码方法：打开微信首页>收钱>保存图片，将存在手机相册的收款码上传即可。
+          <!--*微信上传二维码方法：打开微信首页>收钱>保存图片，将存在手机相册的收款码上传即可。-->
         </header>
         <div class="chat-content-from">
           <el-form
             :label-position="labelPosition"
             label-width="120px"
           >
-            <el-form-item label="名 称：">
+            <!--名 称 收  款  类  型 微信账号 上传收款码 交易密码-->
+            <el-form-item
+              :label="$t('M.user_account_name')"
+            >
               <span class="chat-content-type">
                 {{ userInfo.userInfo.realname }}
               </span>
             </el-form-item>
-            <el-form-item label="收  款  类  型：">
-              <span class="chat-content-type">微信</span>
+            <el-form-item
+              :label="$t('M.user_account_gathering') + $t('M.comm_type')"
+            >
+              <span class="chat-content-type">
+                {{ $t('M.user_account_weChat') }}
+              </span>
             </el-form-item>
-            <el-form-item label="微信账号：">
+            <el-form-item
+              :label="$t('M.user_account_weChat') + $t('M.user_account_number')"
+            >
               <input
                 class="chat-input border-radius2"
                 v-model="cardNo"
@@ -59,7 +71,9 @@
                 :isShow="!!errorShowStatusList[0]"
               />
             </el-form-item>
-            <el-form-item label="上传收款码：">
+            <el-form-item
+              :label="$t('M.user_account_upload_collection')"
+            >
               <div class="chat-upload border-radius4">
                 <el-upload
                   :action="apiCommonUrl+'uploadfile'"
@@ -82,7 +96,9 @@
                 </el-upload>
               </div>
             </el-form-item>
-            <el-form-item label="交易密码：">
+            <el-form-item
+              :label="$t('M.comm_password')"
+            >
               <input
                 type="password"
                 class="chat-input border-radius2"
@@ -101,14 +117,16 @@
               class="chat-button border-radius4 cursor-pointer"
               @click.prevent="stateSubmitWeChat"
             >
-              确认设置
+              <!--确认设置-->
+              {{ $t('M.comm_affirm') }}{{ $t('M.comm_set') }}
             </button>
             <button
               v-else
               class="chat-button border-radius4 cursor-pointer"
               @click.prevent="stateSubmitWeChat"
             >
-              确认修改
+              <!--确认修改-->
+              {{ $t('M.comm_affirm') }}{{ $t('M.comm_modification') }}
             </button>
           </el-form>
         </div>
@@ -194,11 +212,11 @@ export default {
     checkoutInputFormat (type, targetNum) {
       console.log(type)
       switch (type) {
-        // 请输入支付宝张号
+        // 请输入微信账号
         case 0:
           console.log(type)
           if (!targetNum) {
-            this.setErrorMsg(0, '请输入微信账号')
+            this.setErrorMsg(0, this.$t('M.comm_please_enter') + this.$t('M.user_account_weChat') + this.$t('M.user_account_number'))
             this.$forceUpdate()
             return 0
           } else {
@@ -206,10 +224,10 @@ export default {
             this.$forceUpdate()
             return 1
           }
-        // 请输入支付宝张号
+        // 请输入交易密码
         case 1:
           if (!targetNum) {
-            this.setErrorMsg(1, '请输入交易密码')
+            this.setErrorMsg(1, this.$t('M.comm_please_enter') + this.$t('M.comm_password'))
             this.$forceUpdate()
             return 0
           } else {
