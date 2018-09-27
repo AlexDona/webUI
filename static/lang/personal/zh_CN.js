@@ -136,6 +136,10 @@ export const personal = {
   'user_google_private_key': '私钥',
   'user_google_account': '账户',
   // 交易密码
+  'user_transaction_nickname': '昵称',
+  'user_transaction_repetition': '重复',
+  'user_transaction_reset': '重置',
+  'user_transaction_text': '6位纯数字',
   // 登录密码
   'user_security_login_raw': '原',
   'user_security_login_new': '新',
@@ -145,17 +149,46 @@ export const personal = {
   // 最近登录记录 安全设置记录
   'user_security_recently': '最近',
   'user_security_home_location': '归属地',
-  'user_security_source': '来源'
+  'user_security_source': '来源',
   // API管理
   // 创建API
+  'user_api_administration': '管理',
+  'user_api_text1': '本平台为您提供了强大的API，您可以通过 API 使用行情查询、自动交易等服务。通过 API 文档 查看如何使用;',
+  'user_api_text2': '每个用户最多创建5组API Key;',
+  'user_api_text3': '请不要泄露您的API Key，以免造成资产损失。出于安全考虑，建议为API Key绑定IP，每个API Key最多绑定4个IP。 单个地址直接填写，多个IP地址用半角逗号分隔，如：192.168.1.1,192.168.1.2,192.168.1.3。',
+  'user_api_text4': '访问秘钥',
+  'user_api_text5': '仅显示1次，遗失后不可找回，请务必妥善保存',
+  'user_api_text6': '请不要泄露您的Secret Key，避免造成资产损失。',
+  'user_api_text7': '如您忘记了Secret Key，请删除该密钥对并申请新的密钥对。',
   // 我的API
+  'user_api_my': '我的',
+  'user_api_user': '用户',
   // PUSH资产
+  'user_push_user': '用户',
+  'user_push_opposite_side': '对方',
+  'user_push_shift': '转入',
+  'user_push_roll': '转出',
+  'user_push_off_stocks': '已完成',
+  'user_push_unpaid': '待支付',
+  'user_push_canceled': '已取消',
+  'user_push_payment': '付款',
+  'user_push_revocation': '撤销',
   // PUSH记录
-// #####################我的交易#####################
+  // #####################我的交易#####################
   // 币币订单
-  // 当前委托
+  'user_coin': '币币',
+  'user_coin_bring_together': '撮合',
+  'user_coin_appoint_single': '委单',
+  'user_coin_rental': '总额',
+  'user_coin_start_stop': '起止',
+  'user_coin_entrust': '委托',
+  'user_coin_volume': '成交额',
+  // 当前委托Commissioned by the current
+  'user_coin_commissioned_current': '当前委托',
   // 历史委托
+  'user_coin_commissioned_history': '历史委托',
   // 成交明细
+  'user_coin_clinch_deal_detail': '成交明细'
   // 法币订单
   // 交易中的订单
   // 已完成的订单

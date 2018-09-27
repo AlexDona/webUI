@@ -7,14 +7,18 @@
       <div class="push-assets-content">
         <header class="push-header personal-height40 line-height40">
           <span class="push-header-title display-inline-block padding-left23 font-size16 font-weight600">
-            PUSH资产
+            <!--PUSH资产-->
+            PUSH{{ $t('M.comm_property') }}
           </span>
         </header>
       </div>
       <div class="push-assets-content-box padding-left15 margin-top9">
         <div class="push-from-box">
           <el-form label-width="120px">
-            <el-form-item label="资产">
+            <!--资产-->
+            <el-form-item
+              :label="$t('M.comm_property')"
+            >
               <el-select
                 v-model="currencyValue"
                 @change="changeId"
@@ -27,14 +31,20 @@
                 </el-option>
               </el-select>
             </el-form-item>
-            <el-form-item label="余额">
+            <!--余额-->
+            <el-form-item
+              :label="$t('M.comm_balance')"
+            >
               <input
                 disabled
                 class="form-input-common-state border-radius2 padding-l15"
                 v-model="balance"
               />
             </el-form-item>
-            <el-form-item label="买方UID">
+            <!--买方UID-->
+            <el-form-item
+              :label="$t('M.comm_buyer') + 'UID'"
+            >
               <input
                 class="form-input-common border-radius2 padding-l15"
                 v-model="buyUID"
@@ -47,7 +57,10 @@
                 :isShow="!!errorShowStatusList[0]"
               />
             </el-form-item>
-            <el-form-item label="数量">
+            <!--数量-->
+            <el-form-item
+              :label="$t('M.comm_count')"
+            >
               <input
                 class="form-input-common border-radius2 padding-l15"
                 ref="count"
@@ -62,7 +75,10 @@
                 :isShow="!!errorShowStatusList[1]"
               />
             </el-form-item>
-            <el-form-item label="价格">
+            <!--价格-->
+            <el-form-item
+              :label="$t('M.comm_price_metre')"
+            >
               <input
                 class="form-input-common border-radius2 padding-l15"
                 ref="price"
@@ -77,7 +93,10 @@
                 :isShow="!!errorShowStatusList[2]"
               />
             </el-form-item>
-            <el-form-item label="交易密码">
+            <!--交易密码-->
+            <el-form-item
+              :label="$t('M.comm_password')"
+            >
               <input
                 type="password"
                 class="form-input-common border-radius2 padding-l15"
@@ -95,7 +114,8 @@
               class="form-button-common border-radius4 cursor-pointer"
               @click.prevent="getStatusSubmit"
             >
-              提交
+              <!--提交-->
+              {{ $t('M.comm_sub_time') }}
             </button>
           </el-form>
         </div>
@@ -104,16 +124,21 @@
     <div class="push-assets-main margin-top9">
       <div class="award-record margin-top9 padding-top0">
         <header class="award-record-header line-height56">
-          <span class="font-size16 header-color">PUSH记录</span>
+          <span class="font-size16 header-color">
+            <!--PUSH记录-->
+            PUSH{{ $t('M.comm_record') }}
+          </span>
         </header>
         <div class="award-record-content">
+          <!--暂无数据-->
           <el-table
             :data="pushRecordList"
             style="width: 100%"
-            empty-text="暂无数据"
+            :empty-text="$t('M.comm_no_data')"
           >
+            <!--类型-->
             <el-table-column
-              label="类型"
+              :label="$t('M.comm_type')"
             >
               <template slot-scope = "s">
                 <div>{{ s.row.type }}</div>
@@ -129,61 +154,75 @@
                 </div>
               </template>
             </el-table-column>
+            <!--对方UID-->
             <el-table-column
-              label="对方UID"
+              :label="$t('M.user_push_opposite_side') + 'UID'"
             >
               <template slot-scope = "s">
                 <div v-if="userInfo.userInfo.showId !== s.row.showPushId">{{ s.row.showPushId }}</div>
                 <div v-if="userInfo.userInfo.showId == s.row.showPushId">{{ s.row.showUid }}</div>
               </template>
             </el-table-column>
+            <!--资产-->
             <el-table-column
-              label="资产"
+              :label="$t('M.comm_property')"
             >
               <template slot-scope = "s">
                 <div>{{ s.row.coinName }}</div>
               </template>
             </el-table-column>
+            <!--数量-->
             <el-table-column
-              label="数量"
+              :label="$t('M.comm_count')"
             >
               <template slot-scope = "s">
                 <div>{{ s.row.count }}</div>
               </template>
             </el-table-column>
+            <!--价格-->
             <el-table-column
-              :label="'价格 ('+ pushPayCoinName +')'"
+              :label="$t('M.comm_price_metre')+ pushPayCoinName"
             >
               <template slot-scope = "s">
                 <div>{{ s.row.price }}</div>
               </template>
             </el-table-column>
+            <!--金额-->
             <el-table-column
-              label="金额"
+              :label="$t('M.comm_money')"
             >
               <template slot-scope = "s">
                 <div>{{ s.row.amount }}</div>
               </template>
             </el-table-column>
+            <!--时间-->
             <el-table-column
-              label="时间"
+              :label="$t('M.comm_time')"
               width="180px"
             >
               <template slot-scope = "s">
                 <div>{{ timeFormatting(s.row.createTime) }}</div>
               </template>
             </el-table-column>
+            <!--状态-->
             <el-table-column
-              label="状态"
+              :label="$t('M.comm_state')"
             >
               <template slot-scope = "s">
-                <div v-if="s.row.state === 'PUSH_DEAL'">{{ stateOffStocks }}</div>
-                <div v-if="s.row.state === 'PUSH_REGISTER'">{{ stateWaitPayment }}</div>
-                <div v-if="s.row.state === 'PUSH_CANCEL'">{{ stateCancel }}</div>
+                <div v-if="s.row.state === 'PUSH_DEAL'">
+                  {{ $t(stateOffStocks) }}
+                </div>
+                <div v-if="s.row.state === 'PUSH_REGISTER'">
+                  {{ $t(stateWaitPayment) }}
+                </div>
+                <div v-if="s.row.state === 'PUSH_CANCEL'">
+                  {{ $t(stateCancel) }}
+                </div>
               </template>
             </el-table-column>
+            <!--操作-->
             <el-table-column
-              label="操作"
+              :label="$t('M.comm_operation')"
             >
               <template slot-scope = "s">
                 <div
@@ -192,7 +231,7 @@
                   @click.prevent="cancelId(s.row.id)"
                   :id="s.row.id"
                 >
-                  {{ cancel }}
+                  {{ $t(cancel) }}
                 </div>
                 <div
                   v-if="s.row.state == 'PUSH_REGISTER' && userInfo.userInfo.id !== s.row.pushId"
@@ -200,7 +239,7 @@
                   @click.prevent="paymentId(s.row.id)"
                   :id="s.row.id"
                 >
-                  {{ payment }}
+                  {{ $t(payment) }}
                 </div>
               </template>
             </el-table-column>
@@ -215,9 +254,10 @@
           >
           </el-pagination>
           <!--PUSH确认-->
+          <!--付款-->
           <div class="push-affirm">
             <el-dialog
-              title="付款"
+              :title="$t('M.user_push_payment')"
               :visible.sync="paymentVisible"
               center
             >
@@ -227,7 +267,9 @@
                 label-width="100px"
               >
                 <!--PUSH资产-->
-                <el-form-item label="资产">
+                <el-form-item
+                  :label="$t('M.comm_property')"
+                >
                   <input
                     class="form-input-common border-radius2 padding-l15 box-sizing"
                     type="text"
@@ -236,7 +278,9 @@
                   >
                 </el-form-item>
                 <!--PUSH价格-->
-                <el-form-item label="价格">
+                <el-form-item
+                  :label="$t('M.comm_price_metre')"
+                >
                   <input
                     class="form-input-common border-radius2 padding-l15 box-sizing"
                     type="text"
@@ -245,7 +289,9 @@
                   >
                 </el-form-item>
                 <!--PUSH数量-->
-                <el-form-item label="数量">
+                <el-form-item
+                  :label="$t('M.comm_count')"
+                >
                   <input
                     class="form-input-common border-radius2 padding-l15 box-sizing"
                     type="text"
@@ -254,7 +300,9 @@
                   >
                 </el-form-item>
                 <!--付款金额-->
-                <el-form-item label="付款金额">
+                <el-form-item
+                  :label="$t('M.user_push_payment') + $t('M.comm_money')"
+                >
                   <input
                     class="form-input-common border-radius2 padding-l15 box-sizing"
                     type="text"
@@ -271,21 +319,26 @@
                   type="primary"
                   @click.prevent="statusUserInfo"
                 >
-                  确 定
+                  <!--确 定-->
+                  {{ $t('M.comm_confirm') }}
                 </el-button>
               </span>
             </el-dialog>
           </div>
           <!--收货地址-->
           <div class="shipping-address">
+            <!--安全验证-->
             <el-dialog
-              title="收货地址"
+              :title="$t('M.user_security_safety') + $t('M.user_security_verify')"
               :visible.sync="passwordVisible"
             >
               <el-form
                 :label-position="labelPosition"
               >
-                <el-form-item label="交易密码">
+                <!--交易密码-->
+                <el-form-item
+                  :label="$t('M.comm_password')"
+                >
                   <input
                     type="password"
                     class="form-input-common border-radius2 padding-l15 box-sizing"
@@ -310,7 +363,8 @@
                   type="primary"
                   @click.prevent="confirmSubmit"
                 >
-                  确 定
+                  <!--确 定-->
+                  {{ $t('M.comm_confirm') }}
                 </el-button>
               </div>
             </el-dialog>
@@ -366,13 +420,13 @@ export default {
       phoneCode: '', // 手机验证码
       emailCode: '', // 邮箱验证码
       googleCode: '', // 谷歌验证
-      rollIn: '转入', // 转入
-      rollOut: '转出', // 转出
-      stateOffStocks: '已完成',
-      stateWaitPayment: '待支付',
-      stateCancel: '已取消',
-      payment: '付款', // 付款
-      cancel: '撤销', // 取消
+      rollIn: 'M.user_push_shift', // 转入
+      rollOut: 'M.user_push_roll', // 转出
+      stateOffStocks: 'M.user_push_off_stocks', // 已完成
+      stateWaitPayment: 'M.user_push_unpaid', // 待支付
+      stateCancel: 'M.user_push_canceled', // 已取消
+      payment: 'M.user_push_payment', // 付款
+      cancel: 'M.user_push_revocation', // 取消
       pushAsset: '', // PUSH资产信息展示
       pushPrice: '', // PUSH价格信息展示
       pushCount: '', // PUSH数量信息展示
@@ -480,7 +534,8 @@ export default {
         // 买方UID
         case 0:
           if (!targetNum) {
-            this.setErrorMsg(0, '请输入买方UID')
+            // 请输入买方UID
+            this.setErrorMsg(0, this.$t('M.comm_please_enter') + this.$t('M.comm_buyer') + 'UID')
             this.$forceUpdate()
             return 0
           } else {
@@ -491,7 +546,8 @@ export default {
         // 数量
         case 1:
           if (!targetNum) {
-            this.setErrorMsg(1, '请输入数量')
+            // 请输入数量
+            this.setErrorMsg(1, this.$t('M.comm_please_enter') + this.$t('M.comm_count'))
             this.$forceUpdate()
             return 0
           } else {
@@ -502,7 +558,8 @@ export default {
         // 价格
         case 2:
           if (!targetNum) {
-            this.setErrorMsg(2, '请输入价格')
+            // 请输入价格
+            this.setErrorMsg(2, this.$t('M.comm_please_enter') + this.$t('M.comm_price_metre'))
             this.$forceUpdate()
             return 0
           } else {
@@ -513,7 +570,8 @@ export default {
         // 交易密码
         case 3:
           if (!targetNum) {
-            this.setErrorMsg(3, '请输入交易密码密码')
+            // 请输入交易密码
+            this.setErrorMsg(3, this.$t('M.comm_please_enter') + this.$t('M.comm_password'))
             this.$forceUpdate()
             return 0
           } else {
@@ -584,9 +642,12 @@ export default {
     // 点击获取当前取消push id
     cancelId (id) {
       this.pushUID = id
-      this.$confirm('确定删除提币地址吗, 是否继续?', {
-        cancelButtonText: '取消',
-        confirmButtonText: '确定'
+      // 确定删除提币地址吗, 是否继续?
+      this.$confirm(this.$t('M.comm_sure_delete'), {
+        // 取消
+        cancelButtonText: this.$t('M.comm_cancel'),
+        // 确定
+        confirmButtonText: this.$t('M.comm_confirm')
       }).then(() => {
         this.stateRevocationInformation(id)
       }).catch(() => {
@@ -637,7 +698,8 @@ export default {
         // 交易密码
         case 0:
           if (!targetNum) {
-            this.stateErrorMsg(0, '请输入交易密码')
+            // 请输入交易密码
+            this.stateErrorMsg(0, this.$t('M.comm_please_enter') + this.$t('M.comm_password'))
             this.$forceUpdate()
             return 0
           } else {

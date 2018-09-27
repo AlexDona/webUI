@@ -10,13 +10,15 @@
           v-if="!securityCenter.payPassword"
           class="header-content-left header-content font-size16 font-weight600"
         >
-          设置交易密码
+          <!--设置交易密码-->
+          {{ $t('M.comm_set') }}{{ $t('M.comm_password') }}
         </span>
         <span
           v-else
           class="header-content-left header-content font-size16 font-weight600"
         >
-          修改交易密码
+          <!--修改交易密码-->
+          {{ $t('M.comm_modification') }}{{ $t('M.comm_password') }}
         </span>
         <span
           class="header-content-right font-size12 cursor-pointer"
@@ -26,12 +28,14 @@
             class="font-size22"
             iconName="icon-fanhui2"
           />
-          返回安全中心
+          <!--返回安全中心-->
+          {{ $t('M.user_security_return_safety_center') }}
         </span>
       </header>
       <div class="transaction-password-content">
         <header class="transaction-content-title">
-          *请确认您的银行卡已开启短信通知功能
+          <!--*请确认您的银行卡已开启短信通知功能-->
+          *{{ $t('M.user_security_text0') }}
         </header>
         <div class="transaction-content-from">
           <!--设置交易密码-->
@@ -40,7 +44,10 @@
             :label-position="labelPosition"
             label-width="120px"
           >
-            <el-form-item label="昵称：">
+            <!--昵称-->
+            <el-form-item
+              :label="$t('M.user_transaction_nickname') + '：'"
+            >
               <input
                 type="text"
                 class="transaction-input border-radius2 padding-l15 box-sizing"
@@ -54,7 +61,10 @@
                 :isShow="!!errorShowStatusList[0]"
               />
             </el-form-item>
-            <el-form-item label="交易密码：">
+            <!--交易密码-->
+            <el-form-item
+              :label="$t('M.comm_password') + '：'"
+            >
               <input
                 type="password"
                 class="transaction-input border-radius2 padding-l15 box-sizing"
@@ -68,7 +78,10 @@
                 :isShow="!!errorShowStatusList[1]"
               />
             </el-form-item>
-            <el-form-item label="重复交易密码：">
+            <!--重复交易密码-->
+            <el-form-item
+              :label="$t('M.user_transaction_repetition') + $t('M.comm_password') + '：'"
+            >
               <input
                 type="password"
                 class="transaction-input border-radius2 padding-l15 box-sizing"
@@ -86,7 +99,8 @@
               class="transaction-button border-radius4 cursor-pointer"
               @click.prevent="setStatusSubmit"
             >
-              确认设置
+              <!--确认设置-->
+              {{ $t('M.comm_affirm') }}{{ $t('M.comm_set') }}
             </button>
           </el-form>
           <!--重置交易密码-->
@@ -95,7 +109,10 @@
             :label-position="labelPosition"
             label-width="120px"
           >
-            <el-form-item label="交易密码：">
+            <!--交易密码-->
+            <el-form-item
+              :label="$t('M.comm_password') + '：'"
+            >
               <input
                 type="password"
                 class="transaction-input border-radius2 padding-l15 box-sizing"
@@ -109,7 +126,10 @@
                 :isShow="!!tieErrorShowStatusList[0]"
               />
             </el-form-item>
-            <el-form-item label="重复交易密码：">
+            <!--重复交易密码-->
+            <el-form-item
+              :label="$t('M.user_transaction_repetition') + $t('M.comm_password') + '：'"
+            >
               <input
                 type="password"
                 class="transaction-input border-radius2 padding-l15 box-sizing"
@@ -123,8 +143,9 @@
                 :isShow="!!tieErrorShowStatusList[1]"
               />
             </el-form-item>
+            <!--验  证  码-->
             <el-form-item
-              label="验  证  码："
+              :label="$t('M.comm_code') + '：'"
               v-if="securityCenter.isPhoneEnable"
             >
               <el-input
@@ -148,9 +169,10 @@
               />
             </el-form-item>
             <span v-else></span>
+            <!--邮箱验证码-->
             <el-form-item
               v-if="securityCenter.isMailEnable"
-              label="邮箱验证码"
+              :label="$t('M.user_security_email') +$t('M.comm_code') + '：'"
             >
               <el-input
                 v-model="modifyPassword.emailCode"
@@ -172,8 +194,9 @@
               />
             </el-form-item>
             <span v-else></span>
+            <!--谷歌验证码-->
             <el-form-item
-              label="谷歌验证码"
+              :label="$t('M.user_security_google') +$t('M.comm_code') + '：'"
               v-if="securityCenter.isGoogleEnable"
             >
               <input
@@ -194,7 +217,8 @@
               class="transaction-button border-radius4 cursor-pointer"
               @click.prevent.prevent="getUpdatePayPassword"
             >
-              确认重置
+              <!--确认重置-->
+              {{ $t('M.comm_affirm') }}{{ $t('M.user_transaction_reset') }}
             </button>
           </el-form>
         </div>
@@ -344,7 +368,8 @@ export default {
         // 昵称
         case 0:
           if (!targetNum) {
-            this.setErrorMsg(0, '请输入昵称')
+            // 请输入昵称
+            this.setErrorMsg(0, this.$t('M.comm_please_enter') + this.$t('M.user_transaction_nickname'))
             this.$forceUpdate()
             return 0
           } else {
@@ -355,7 +380,8 @@ export default {
         // 交易密码
         case 1:
           if (!targetNum) {
-            this.setErrorMsg(1, '请输入交易密码')
+            // 请输入交易密码
+            this.setErrorMsg(1, this.$t('M.comm_please_enter') + this.$t('M.comm_password'))
             this.$forceUpdate()
             return 0
           } else {
@@ -366,7 +392,8 @@ export default {
         // 重复交易密码
         case 2:
           if (!targetNum) {
-            this.setErrorMsg(2, '请输入确认交易密码')
+            // 请输入确认交易密码
+            this.setErrorMsg(2, this.$t('M.comm_please_enter') + this.$t('M.comm_affirm') + this.$t('M.comm_password'))
             this.$forceUpdate()
             return 0
           } else if (targetNum === this.setPassword.newPassword) {
@@ -374,7 +401,8 @@ export default {
             this.$forceUpdate()
             return 1
           } else {
-            this.setErrorMsg(2, '密码不一致，请重新确认')
+            // 密码不一致，请重新确认
+            this.setErrorMsg(2, this.$t('M.user_security_info2'))
             this.$forceUpdate()
             return 0
           }
@@ -429,7 +457,8 @@ export default {
         // 交易密码
         case 0:
           if (!targetNum) {
-            this.tieErrorMsg(0, '请输入交易密码')
+            // 请输入交易密码
+            this.tieErrorMsg(0, this.$t('M.comm_please_enter') + this.$t('M.comm_password'))
             this.$forceUpdate()
             return 0
           } else if (targetNum) {
@@ -437,14 +466,16 @@ export default {
             this.$forceUpdate()
             return 1
           } else {
-            this.tieErrorMsg(0, '请输入6位纯数字')
+            // 请输入6位纯数字
+            this.tieErrorMsg(0, this.$t('M.comm_please_enter') + this.$t('M.user_transaction_text'))
             this.$forceUpdate()
             return 0
           }
         // 重置交易密码
         case 1:
           if (!targetNum) {
-            this.tieErrorMsg(1, '请输入确认交易密码')
+            // 请输入确认交易密码
+            this.tieErrorMsg(1, this.$t('M.comm_please_enter') + this.$t('M.comm_affirm') + this.$t('M.comm_password'))
             this.$forceUpdate()
             return 0
           } else if (targetNum === this.modifyPassword.transactionPassword) {
@@ -452,14 +483,16 @@ export default {
             this.$forceUpdate()
             return 1
           } else {
-            this.tieErrorMsg(1, '密码不一致，请重新确认')
+            // 密码不一致，请重新确认
+            this.tieErrorMsg(1, this.$t('M.user_security_info2'))
             this.$forceUpdate()
             return 0
           }
         // 短信验证码
         case 2:
           if (!targetNum) {
-            this.tieErrorMsg(2, '请输入短信验证码')
+            // 请输入短信验证码
+            this.tieErrorMsg(2, this.$t('M.comm_please_enter') + this.$t('M.comm_note') + this.$t('M.comm_code'))
             this.$forceUpdate()
             return 0
           } else {
@@ -470,7 +503,8 @@ export default {
         // 邮箱验证码
         case 3:
           if (!targetNum) {
-            this.tieErrorMsg(3, '请输入邮箱验证码')
+            // 请输入邮箱验证码
+            this.tieErrorMsg(3, this.$t('M.comm_please_enter') + this.$t('M.user_security_email') + this.$t('M.comm_code'))
             this.$forceUpdate()
             return 0
           } else {
@@ -481,7 +515,8 @@ export default {
         // 谷歌验证码
         case 4:
           if (!targetNum) {
-            this.tieErrorMsg(4, '请输入谷歌验证码')
+            // 请输入谷歌验证码
+            this.tieErrorMsg(4, this.$t('M.comm_please_enter') + this.$t('M.user_security_google') + this.$t('M.comm_code'))
             this.$forceUpdate()
             return 0
           } else {
