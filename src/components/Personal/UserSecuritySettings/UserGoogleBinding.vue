@@ -10,13 +10,15 @@
           v-if="!securityCenter.isGoogleBind"
           class="header-content-left header-content font-size16 font-weight600"
         >
-          绑定谷歌验证器
+          <!--绑定谷歌验证-->
+          {{ $t('M.user_security_binding') }}{{ $t('M.user_security_google') }}{{ $t('M.user_security_verify') }}
         </span>
         <span
           v-else
           class="header-content-left header-content font-size16 font-weight600"
         >
-          解绑谷歌验证器
+          <!--解绑谷歌验证-->
+          {{ $t('M.user_security_unbundle') }}{{ $t('M.user_security_google') }}{{ $t('M.user_security_verify') }}
         </span>
         <span
           class="header-content-right font-size12 cursor-pointer"
@@ -26,7 +28,8 @@
             class="font-size22"
             iconName="icon-fanhui2"
           />
-          返回安全中心
+          <!--返回安全中心-->
+          {{ $t('M.user_security_return_safety_center') }}
         </span>
       </header>
       <div class="binding-google-content">
@@ -39,8 +42,12 @@
                 </div>
               </div>
               <p class="google-info paddinglr15 margin-top16 font-size12">
-                若未安装谷歌验证器请
-                <span class="google-info-download">扫码下载</span>
+                <!--若未安装谷歌验证器请-->
+                {{ $t('M.user_google_text1') }}
+                <span class="google-info-download">
+                  <!--扫码下载-->
+                  {{ $t('M.user_google_text2') }}
+                </span>
               </p>
             </div>
             <div class="google-validator validator-margin flex1">
@@ -53,9 +60,14 @@
                 </VueQrcode>
               </div>
               <p class="google-info padding-l15 margin-top16 font-size12">
-                请扫码或手工输入密钥，将手机上生成的
-                <span class="google-info-download">扫码下载</span>
-                填到下边输入框。
+                <!--请扫码或手工输入密钥，将手机上生成的-->
+                {{ $t('M.user_google_text3') }}
+                <span class="google-info-download">
+                  <!--扫码下载-->
+                  {{ $t('M.user_google_text2') }}
+                </span>
+                <!--填到下边输入框。-->
+                {{ $t('M.user_google_text4') }}
               </p>
             </div>
           </div>
@@ -64,7 +76,10 @@
               :label-position="labelPosition"
               label-width="120px"
             >
-              <el-form-item label="私      钥：">
+              <!--私钥 谷歌账户 谷歌验证码-->
+              <el-form-item
+                :label="$t('M.user_google_private_key') + '：'"
+              >
                 <span
                   id="text"
                   class="google-content-name"
@@ -81,15 +96,21 @@
                     class="font-size12"
                     iconName="icon-fuzhi"
                   />
-                  复制
+                  <!--复制-->
+                  {{ $t('M.comm_copy') }}
                 </span>
               </el-form-item>
-              <el-form-item label="谷歌账户：" style="display: none">
+              <el-form-item
+                :label="$t('M.user_security_google') + $t('M.user_google_account') + '：'"
+                style="display: none"
+              >
                  <span class="google-content-name">
                   {{ googleUserInformation.googleAccount }}
-                </span>
+                 </span>
               </el-form-item>
-              <el-form-item label="谷歌验证码：">
+              <el-form-item
+                :label="$t('M.user_security_google') + $t('M.user_security_verify') + '：'"
+              >
                 <input
                   type="text"
                   class="google-input border-radius2 padding-l15 box-sizing"
@@ -108,14 +129,16 @@
               class="google-button border-radius4 cursor-pointer"
               @click.prevent="getGoogleStatusSubmit"
             >
-              确认绑定
+              <!--确认绑定-->
+              {{ $t('M.comm_affirm') }}{{ $t('M.user_security_binding') }}
             </button>
             <button
               v-else
               class="google-button border-radius4 cursor-pointer"
               @click.prevent="getGoogleStatusSubmitUnbind"
             >
-              确认解绑
+              <!--确认解绑-->
+              {{ $t('M.comm_affirm') }}{{ $t('M.user_security_unbundle') }}
             </button>
           </div>
         </div>
@@ -203,7 +226,8 @@ export default {
           this.$forceUpdate()
           return 1
         case 1:
-          this.setErrorMsg(0, '请输入谷歌验证码')
+          // 请输入谷歌验证
+          this.setErrorMsg(0, this.$t('M.comm_please_enter') + this.$t('M.user_security_google') + this.$t('M.user_security_verify'))
           this.$forceUpdate()
           return 0
       }
@@ -233,7 +257,7 @@ export default {
     // 确定提交绑定谷歌验证
     getGoogleStatusSubmit () {
       if (!this.googleVerificationCode) {
-        this.errorMsg = '请输入谷歌验证码'
+        this.errorMsg = this.$t('M.comm_please_enter') + this.$t('M.user_security_google') + this.$t('M.user_security_verify')
       } else {
         this.errorMsg = ''
         this.confirmBindingBailPhone()
@@ -258,7 +282,7 @@ export default {
     // 确定解绑谷歌验证
     getGoogleStatusSubmitUnbind () {
       if (!this.googleVerificationCode) {
-        this.errorMsg = '请输入谷歌验证码'
+        this.errorMsg = this.$t('M.comm_please_enter') + this.$t('M.user_security_google') + this.$t('M.user_security_verify')
       } else {
         this.errorMsg = ''
       }
@@ -307,7 +331,7 @@ export default {
     //  点击复制
     onCopy (e) {
       // 已拷贝
-      let msg = '已拷贝'
+      let msg = this.$t('M.comm_have_been_copied')
       this.$message({
         type: 'success',
         message: msg
@@ -315,7 +339,7 @@ export default {
     },
     onError (e) {
       // 拷贝失败，请稍后重试
-      let msg = '拷贝失败，请稍后重试'
+      let msg = this.$t('M.comm_copies_failure')
       this.$message({
         type: 'success',
         message: msg

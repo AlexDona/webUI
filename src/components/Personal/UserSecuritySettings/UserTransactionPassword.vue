@@ -302,7 +302,8 @@ export default {
         return false
       }
       let params = {
-        country: this.activeCountryCode
+        country: this.activeCountryCode,
+        type: 'VERIFICATION_CODE' // 类型
       }
       switch (loginType) {
         case 0:
