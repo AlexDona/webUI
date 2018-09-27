@@ -124,5 +124,8 @@ export const common = {
   'comm_invitation_list': '邀请排行',
   'comm_please': '请',
   'comm_bill': '账',
-  'comm_house': '户'
+  'comm_house': '户',
+  'comm_theme': '主题',
+  'comm_download': '下载',
+  'comm_help_center': '帮助中心'
 }

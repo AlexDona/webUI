@@ -34,13 +34,17 @@
         </div>
         <div class="right">
           <dl class="right-dl">
-            <dt class="title">下载</dt>
+            <dt class="title">
+              <!--下载-->
+              {{$t('M.comm_download')}}
+            </dt>
             <!--<dd class="dd-item">客户端下载</dd>-->
             <dd
               class="dd-item"
             >
               <router-link to="/HelpCenter">
-                帮助中心
+                <!--帮助中心-->
+                {{$t('M.comm_help_center')}}
               </router-link>
             </dd>
             <dd
@@ -66,10 +70,6 @@
           </dl>
           <dl class="right-dl">
             <dt class="title">说明</dt>
-            <dd
-              class="dd-item"
-              @click="jumpToOtherPage('/ServiceAndProtocol','ClauseExplain')"
-            >条款说明</dd>
             <dd
               class="dd-item"
               @click="jumpToOtherPage('/ServiceAndProtocol','UserProtocol')"
