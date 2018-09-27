@@ -353,7 +353,7 @@ export default{
       langSelecting: false,
       // 设置弹窗状态
       showSetting: false,
-      settingBoxTitle: "M.comm_set", // 设置
+      settingBoxTitle: 'M.comm_set', // 设置
       // 折算货币列表
       convertCurrencyList: [
         // {
