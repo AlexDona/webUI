@@ -162,7 +162,7 @@
       </div>
     </div>
     <!-- 3.0 底部 -->
-    <FooterCommon/>
+    <keep-aline><FooterCommon/></keep-aline>
   </div>
 </template>
 <script>

@@ -102,7 +102,7 @@
         </div>
       </div>
     </div>
-    <FooterCommon/>
+    <keep-aline><FooterCommon/></keep-aline>
   </div>
 </template>
 <script>

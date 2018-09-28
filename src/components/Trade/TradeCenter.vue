@@ -21,8 +21,10 @@
         :class="{'day':theme == 'day','night':theme == 'night' }"
       >
         <MiddleHeader />
+        <keep-alive>
         <!--k线-->
-        <KLine class=""/>
+          <KLine class=""/>
+        </keep-alive>
         <!--市价交易、限价交易-->
         <ExchangeBox/>
         <!--深度图-->
@@ -94,7 +96,8 @@ export default {
   .trade-box{
     min-width:1300px;
     width:100%;
-    height:100%;
+    /*height:1500px;*/
+    /*min-height:1500px;*/
      >.inner-box{
        padding:14px 30px;
        display:flex;
