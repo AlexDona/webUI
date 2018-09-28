@@ -22,7 +22,8 @@
           <!--@click="toggleLoginType"-->
         <!--&gt;-->
         <!--</button>-->
-        <h1 class="title">欢迎登录</h1>
+        <!-- 欢迎登录 -->
+        <h1 class="title">{{$t('M.login_welcome')}}{{$t('M.comm_login')}}</h1>
         <!--正常登录-->
         <div class="login-box">
           <div
@@ -30,10 +31,11 @@
           >
             <div class="username input-content">
               <div class="inner-box">
+                <!-- 请输入电话号/邮箱 -->
                 <input
                   type="text"
                   v-model.trim="username"
-                  placeholder="请输入手机号/邮箱"
+                  :placeholder="$t('M.comm_please_enter') + $t('M.login_telNum')+ '/'+ $t('M.comm_emailbox')"
                   @keydown="setErrorMsg(0,'')"
                   @keyup.enter="loginForStep1"
                   @blur="checkoutInputFormat(0,username)"
@@ -51,7 +53,7 @@
                   type="password"
                   autocomplete="off"
                   v-model.trim="password"
-                  placeholder="请输入密码"
+                  :placeholder="$t('M.comm_please_enter') + $t('M.comm_loginpassword')"
                   @keydown="setErrorMsg(1,'')"
                   @keyup.enter="loginForStep1"
                   @blur="checkoutInputFormat(1,password)"
@@ -66,14 +68,16 @@
               <router-link
                 to="/ForgetPassword"
               >
-                忘记密码?
+                <!-- 忘记密码? -->
+                {{$t('M.login_forget')}}{{$t('M.comm_loginpassword')}}?
               </router-link>
               <!-- 忘记密码？ -->
               <router-link
                 class="text-align-r"
                 to="/Register"
               >
-                免费注册
+                <!-- 免费注册 -->
+                {{$t('M.login_free')}}{{$t('M.comm_register_time')}}
               </router-link><!-- 免费注册 -->
             </div>
           </div>
@@ -82,12 +86,13 @@
           class="login-btn cursor-pointer step1-btn"
           @click="loginForStep1"
         >
-          登录
+          <!-- 登录 -->
+          {{$t('M.comm_login')}}
         </button>
         <!--异常登录（短信验证码）-->
         <!--滑块验证 : 验证-->
         <el-dialog
-          title="滑块验证"
+          :title="$t('M.login_slideBlock') + $t('M.login_verify')"
           :close-on-click-modal="false"
           :visible.sync="loginSliderStatus"
           class="slider"
@@ -97,8 +102,8 @@
              <div class="drag_bg border-radius4">
              </div>
              <div class="drag_text border-radius4">
-               <!--{{$t(confirmWords)}}-->
-               请按住滑块，拖动滑块验证
+               <!-- 请按住滑块，拖动滑块验证 -->
+               {{$t('M.login_verifyTips')}}
              </div>
              <div
                @mouseup="mouseupFn($event)"
@@ -114,13 +119,14 @@
         <!--图片验证码验证-->
         <el-dialog
           class="pic image-dialog"
-          title="图片验证码验证"
+          :title="$t('M.login_photo') + $t('M.comm_code') + $t('M.login_verify')"
           :visible.sync="loginImageValidateStatus"
         >
           <div class="pic-verify bdr5">
             <!-- 请在下方输入验证码 -->
             <div class="title">
-              请在下方输入验证码
+              <!-- 请在下方输入验证码 -->
+              {{$t('M.login_downInput')}}{{$t('M.comm_code')}}
             </div>
             <div class="content">
               <div class="inner-box">
@@ -128,7 +134,7 @@
                 <input
                   type="text"
                   class="input image-validate"
-                  placeholder="验证码"
+                  :placeholder="$t('M.comm_code')"
                   v-model="userInputImageCode"
                 >
                 <!--获取图片验证码-->
@@ -154,16 +160,18 @@
                   class="subimt cursor-pointer"
                   @click="checkoutuserInputImageCode"
                 >
-                  提交
+                  <!-- 提交 -->
+                  {{$t('M.comm_sub_time')}}
                 </button>
               </div>
             </div>
           </div>
         </el-dialog>
         <!--短信验证码、邮箱验证码、谷歌验证码 步骤3-->
+        <!-- 安全验证 -->
         <el-dialog
           class="msg-email-google-dialog"
-          title="安全验证"
+          :title="$t('M.login_safe') + $t('M.login_verify')"
           :visible.sync="step3DialogShowStatus"
         >
           <div
@@ -173,16 +181,18 @@
             <div v-if="isBindPhone" class="outer-box">
               <!-- 请输入短信验证码 -->
               <p class="title phone-msg">
-                请输入
+                <!-- 请输入 -->
+                {{$t('M.comm_please_enter')}}
                 {{userInfo.phone}}
-                收到的验证码
+                <!-- 收到的验证码 -->
+                {{$t('M.login_recives')}}{{$t('M.comm_code')}}
               </p>
               <!--短信验证码-->
               <div class="inner-box">
                 <input
                   type="text"
                   class="input phone-validate"
-                  placeholder="短信验证码"
+                  :placeholder="$t('M.comm_note') + $t('M.comm_code')"
                   v-model="step3PhoneMsgCode"
                   @keydown="setErrorMsg(3,'')"
                   @blur="checkoutInputFormat(3,checkCode)"
@@ -199,16 +209,18 @@
             <div v-if="isBindEmail" class="outer-box">
               <!-- 请输入邮箱验证码 -->
               <p class="title email-msg">
-                请输入
+                <!-- 请输入 -->
+                {{$t('M.comm_please_enter')}}
                 {{userInfo.email}}
-                收到的验证码
+                <!-- 收到的验证码 -->
+                {{$t('M.login_recives')}}{{$t('M.comm_code')}}
               </p>
               <!--邮箱验证码-->
               <div class="inner-box">
                 <input
                   type="text"
                   class="input email-validate"
-                  placeholder="邮箱验证码"
+                  :placeholder="$t('M.comm_emailbox') + $t('M.comm_code')"
                   v-model="step3EmailMsgCode"
                   @keydown="setErrorMsg(3,'')"
                   @blur="checkoutInputFormat(3,checkCode)"
@@ -226,7 +238,8 @@
               <!--谷歌验证码: 请输入 谷歌验证器 中的验证码-->
               <!-- 请输入邮箱验证码 -->
               <p class="title google-msg">
-                请输入 谷歌验证器 中的验证码
+                <!-- 请输入 谷歌验证器 中的验证码 -->
+                {{$t('M.comm_please_enter')}} {{$t('M.login_googleVerifier')}} {{$t('M.login_inVerify')}}
               </p>
               <div class="inner-box">
                 <!--谷歌验证码 input-->
@@ -244,7 +257,8 @@
               class="login-btn blue-bg fz16 cursor-pointer"
               @click="loginForStep2"
             >
-              提交
+              <!-- 提交 -->
+              {{$t('M.comm_sub_time')}}
             </button>
           </div>
         </el-dialog>
@@ -255,7 +269,8 @@
         class="pc-er-code-box"
         v-if="!isMobile&&isErCodeLogin"
       >
-        <h1 class="title">欢迎登录</h1>
+      <!-- 欢迎登录 -->
+        <h1 class="title">{{$t('M.login_welcome')}}{{$t('M.comm_login')}}</h1>
         <!-- 遮罩层 -->
         <div
           class="mask-box"
@@ -266,7 +281,8 @@
               icon-name="icon-shuaxin"
               class-name="reflash-icon"
             />
-            二维码失效，点击刷新
+            <!-- 二维码失效，点击刷新 -->
+            {{$t('M.login_erweimaReflesh')}}
           </button>
         </div>
         <!--切换登录-->
@@ -275,13 +291,15 @@
           @click="toggleLoginType"
         >
         </button>
-        <p class="inner-title">扫描安全登录</p>
+        <!-- 扫描安全登录 -->
+        <p class="inner-title">{{$t('M.login_scan')}}{{$t('M.login_safe')}}{{$t('M.comm_login')}}</p>
         <VueQrcode
           class="ercode"
           :value="erCodeString"
         >
         </VueQrcode>
-        <p class="tips">请使用富比特APP扫码功能，扫码登录</p>
+        <!-- 请使用富比特APP扫码功能，扫码登录 -->
+        <p class="tips">{{$t('M.login_scanLogin')}}</p>
       </div>
       <!--移动端-->
       <div
@@ -294,19 +312,21 @@
             class="login-box-step1"
           >
             <div class="input-item">
+              <!-- 请输入邮箱/电话号 -->
               <input
                 type="text"
                 v-model.trim="username"
-                placeholder="请输入邮箱/手机号"
+                :placeholder="$t('M.comm_please_enter') + $t('M.comm_emailbox')+ '/'+ $t('M.login_telNum')"
                 @focus="setMobileErrorMsg('')"
                 @keyup.enter="loginForStep1"
                 @blur="checkoutInputFormat(0,username)"
               />
             </div>
             <div class="input-item">
+              <!-- 请输入密码 -->
               <input
                 type="password"
-                placeholder="请输入密码"
+                :placeholder="$t('M.comm_please_enter') + $t('M.comm_loginpassword')"
                 v-model.trim="password"
                 @focus="setErrorMsg('')"
                 @keyup.enter="loginForStep1"
@@ -318,7 +338,8 @@
                 class="login-btn"
                 @click="loginForStep1"
               >
-                登录
+                <!-- 登录 -->
+                {{$t('M.comm_login')}}
               </button>
             </div>
             <div
@@ -332,21 +353,23 @@
                 class="jump-url"
                 to="/Register"
               >
-                注册
+                <!-- 注册 -->
+                {{$t('M.comm_register_time')}}
               </router-link>
               <!-- 忘记密码？ -->
               <router-link
                 to="/ForgetPassword"
                 class="jump-url text-align-r"
               >
-                忘记密码?
+                <!-- 忘记密码? -->
+                {{$t('M.login_forget')}}{{$t('M.comm_loginpassword')}}?
               </router-link><!-- 免费注册 -->
             </div>
           </div>
           <!--短信验证码、邮箱验证码、谷歌验证码 步骤3-->
           <el-dialog
             class="msg-email-google-dialog mobile"
-            title="安全验证"
+            :title="$t('M.login_safe') + $t('M.login_verify')"
             :visible.sync="step3DialogShowStatus"
           >
             <div
@@ -356,16 +379,19 @@
               <div v-if="isBindPhone" class="outer-box">
                 <!-- 请输入短信验证码 -->
                 <p class="title phone-msg">
-                  请输入
+                  <!-- 请输入 -->
+                  {{$t('M.comm_please_enter')}}
                   {{userInfo.phone}}
-                  收到的验证码
+                  <!-- 收到的验证码 -->
+                  {{$t('M.login_recives')}}{{$t('M.comm_code')}}
                 </p>
                 <!--短信验证码-->
                 <div class="inner-box">
+                  <!-- 短信验证码 -->
                   <input
                     type="text"
                     class="input phone-validate"
-                    placeholder="短信验证码"
+                    :placeholder="$t('M.comm_note') + $t('M.comm_code')"
                     v-model="step3PhoneMsgCode"
                     @keydown="setErrorMsg(3,'')"
                     @blur="checkoutInputFormat(3,checkCode)"
@@ -382,16 +408,18 @@
               <div v-if="isBindEmail" class="outer-box">
                 <!-- 请输入邮箱验证码 -->
                 <p class="title email-msg">
-                  请输入
+                  <!-- 请输入 -->
+                  {{$t('M.comm_please_enter')}}
                   {{userInfo.email}}
-                  收到的验证码
+                  <!-- 收到的验证码 -->
+                   {{$t('M.login_recives')}}{{$t('M.comm_code')}}
                 </p>
                 <!--邮箱验证码-->
                 <div class="inner-box">
                   <input
                     type="text"
                     class="input email-validate"
-                    placeholder="邮箱验证码"
+                    :placeholder="$t('M.comm_emailbox') + $t('M.comm_code')"
                     v-model="step3EmailMsgCode"
                     @keydown="setErrorMsg(3,'')"
                     @blur="checkoutInputFormat(3,checkCode)"
@@ -409,7 +437,8 @@
                 <!--谷歌验证码: 请输入 谷歌验证器 中的验证码-->
                 <!-- 请输入邮箱验证码 -->
                 <p class="title google-msg">
-                  请输入 谷歌验证器 中的验证码
+                  <!-- 请输入 谷歌验证器 中的验证码 -->
+                  {{$t('M.comm_please_enter')}} {{$t('M.login_googleVerifier')}} {{$t('M.login_inVerify')}}
                 </p>
                 <div class="inner-box">
                   <!--谷歌验证码 input-->
@@ -427,7 +456,8 @@
                 class="login-btn blue-bg fz16 cursor-pointer"
                 @click="loginForStep2"
               >
-                提交
+                <!-- 提交 -->
+                {{$t('M.comm_sub_time')}}
               </button>
             </div>
           </el-dialog>
@@ -435,7 +465,7 @@
           <div class="slider">
             <!-- 验证 -->
             <el-dialog
-              title="安全验证"
+              :title="$t('M.login_safe') + $t('M.login_verify')"
               :close-on-click-modal="false"
               :visible.sync="loginSliderStatus"
               class="slider"
@@ -459,21 +489,23 @@
             <el-dialog
               :close-on-click-modal="false"
               class="pic"
-              title="图片验证码验证"
+              :title="$t('M.login_photo') + $t('M.comm_code') + $t('M.login_verify')"
               :visible.sync="loginImageValidateStatus"
             >
               <div class="pic-verify bdr5">
                 <!-- 请在下方输入验证码 -->
                 <div class="title">
-                  请输入验证码
+                  <!-- 请输入验证码 -->
+                  {{$t('M.comm_please_enter')}}{{$t('M.comm_code')}}
                 </div>
                 <div class="content">
                   <div class="inner-box">
                     <!--图片验证码-->
+                    <!-- 请输入内容 -->
                     <input
                       type="text"
                       class="input image-validate"
-                      placeholder="请输入内容"
+                      :placeholder="$t('M.comm_please_enter') + $t('M.login_content')"
                       v-model="userInputImageCode"
                     >
                     <!--获取图片验证码-->
@@ -501,7 +533,8 @@
                       class="submit cursor-pointer"
                       @click="checkoutuserInputImageCode"
                     >
-                      提交
+                      <!-- 提交 -->
+                      {{$t('M.comm_sub_time')}}
                     </button>
                   </div>
                 </div>
@@ -583,8 +616,8 @@ export default {
       countDownOfPhone: 0, // 短信验证码倒计时
       countDownOfEmail: 0, // 邮箱验证码倒计时
       // msgTxt: 'm.resend', // 按钮文字
-      TextOfSendMsgBtnWithPhone: '发送验证码', // 短信验证码按钮文字
-      TextOfSendMsgBtnWithEmail: '发送验证码', // 邮箱验证码按钮文字
+      TextOfSendMsgBtnWithPhone: this.$t('M.login_send') + this.$t('M.comm_code'), // 短信验证码按钮文字
+      TextOfSendMsgBtnWithEmail: this.$t('M.login_send') + this.$t('M.comm_code'), // 邮箱验证码按钮文字
       googleCode: '', // google验证码
       errorShowStatusList: [
         '', // 用户名错误提示
@@ -601,7 +634,7 @@ export default {
       mouseMoveStatus: false, /* 触发拖动状态  判断 */
       maxwidth: 340, /* 拖动最大宽度，依据滑块宽度算出来的 */
       // confirmWords: '请按住滑块，拖动滑块验证', /*滑块文字*/
-      confirmWords: '请按住滑块，拖动滑块验证', /* 滑块文字 */
+      confirmWords: this.$t('M.login_verifyTips'), /* 滑块文字 */
       confirmSuccess: false, /* 验证成功判断 */
       sliderFlag: true, // 滑块调用节流阀
       loginFlag: true, // 登录节流阀
@@ -710,7 +743,7 @@ export default {
         // 用户名验证
         case 0:
           if (!targetNum) {
-            this.setErrorMsg(0, '请输入用户名')
+            this.setErrorMsg(0, this.$t('M.comm_please_enter') + this.$t('M.login_username')) // 请输入用户名
             this.$forceUpdate()
             return 0
           } else {
@@ -722,7 +755,7 @@ export default {
         // 密码验证
         case 1:
           if (!targetNum) {
-            this.setErrorMsg(1, '请输入密码')
+            this.setErrorMsg(1, this.$t('M.comm_please_enter') + this.$t('M.comm_loginpassword')) // 请输入密码
             this.$forceUpdate()
             return 0
           } else {
@@ -876,7 +909,7 @@ export default {
         this.$message({
           type: 'error',
           // message: '请输入图片验证码',
-          message: '请输入图片验证码',
+          message: this.$t('M.comm_please_enter') + this.$t('M.login_photo') + this.$t('M.comm_code'),
           duration: 1000
         })
       } else if (this.userInputImageCode !== this.identifyCode) {
@@ -884,7 +917,7 @@ export default {
         this.$message({
           type: 'error',
           // message: '您输入图片验证码不正确，请核对后重新输入',
-          message: '您输入图片验证码不正确，请核对后重新输入',
+          message: this.$t('M.login_reinput'),
           duration: 1000
         })
       } else {
@@ -907,21 +940,21 @@ export default {
       if (this.isBindGoogle && !this.step3GoogleMsgCode) {
         this.$message({
           type: 'error',
-          message: '请输入谷歌验证码'
+          message: this.$t('M.comm_please_enter') + this.$t('M.login_google') + this.$t('M.comm_code') // 请输入谷歌验证码
         })
         return false
       }
       if (this.isBindEmail && !this.step3EmailMsgCode) {
         this.$message({
           type: 'error',
-          message: '请输入邮箱验证码'
+          message: this.$t('M.comm_please_enter') + this.$t('M.comm_emailbox') + this.$t('M.comm_code') // '请输入邮箱验证码'
         })
         return false
       }
       if (this.isBindPhone && !this.step3PhoneMsgCode) {
         this.$message({
           type: 'error',
-          message: '请输入手机验证码'
+          message: this.$t('M.comm_please_enter') + this.$t('M.login_telphone') + this.$t('M.comm_code') // '请输入手机验证码'
         })
         return false
       }

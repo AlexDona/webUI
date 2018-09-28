@@ -6,6 +6,7 @@ import {OTC} from './OTC/zh_CN'
 import {personal} from './personal/zh_CN'
 import {trade} from './trade/zh_CN'
 import {finance} from './finance/zh_CN'
+import {user} from './user/zh_CN'
 export const M = Object.assign(
   fromApi,
   common,
@@ -14,5 +15,6 @@ export const M = Object.assign(
   OTC,
   personal,
   trade,
-  finance
+  finance,
+  user
 )
