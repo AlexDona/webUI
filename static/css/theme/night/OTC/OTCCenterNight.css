@@ -2,7 +2,7 @@
 /* 1.0 在线购买在线出售 */
 .otc-box.night .otc-online-buy-and-sell-button .el-radio-button__inner{
   color: #D8D8D8;
-  background: #1E2636;
+  background: #1C1F32;
   border: 2px solid #27313A;
 }
 .otc-box.night .otc-online-buy-and-sell-button .el-radio-button.is-active .el-radio-button__inner{
@@ -32,7 +32,8 @@
 /* 增加支付方式和法币类型图标 */
 /* 2.0 商家表格 */
 .otc-box.night .el-table th, .otc-box.night .el-table tr{
-  background-color: #1E2636;
+  /* background-color: #1C1F32; */
+  background-color: #1C1F32;
 }
 .otc-box.night .el-table thead {
   color: #617499;
@@ -69,7 +70,7 @@
   border-color: #008069;
 }
 .otc-box.night .el-table__empty-block{
-  background-color: #1e2636;
+  background-color: #1C1F32;
 }
 .otc-box.night .el-table__empty-text{
   color: rgba(255, 255, 255, 0.8);

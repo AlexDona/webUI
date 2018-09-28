@@ -25,7 +25,7 @@
             </div>
             <!-- 挂单时间 -->
             <div class="deal-time">
-              {{$t('M.otc_entrust_time')}}：{{item.createTime}}
+              {{$t('M.otc_make_a_bargain_time')}}：{{item.createTime}}
             </div>
             <div class="order-list-head-icon buy-icon">
               <!-- <img src="../../assets/develop/buy.png" alt=""> -->
@@ -336,7 +336,7 @@
             </div>
             <!-- 挂单时间 -->
             <div class="deal-time">
-              {{$t('M.otc_entrust_time')}}：{{item.createTime}}
+              {{$t('M.otc_make_a_bargain_time')}}：{{item.createTime}}
             </div>
             <div class="order-list-head-icon sell-icon">
               <!-- <img src="../../assets/develop/sell.png" alt=""> -->
@@ -574,8 +574,10 @@
         </div>
       </div>
       <!-- 二、暂无数据 -->
-      <div class="no-data" v-if="!tradingOrderList.length">
-        <!--暂无数据-->
+      <div
+        class="no-data"
+        v-show="!tradingOrderList.length"
+      >
         {{ $t('M.comm_no_data') }}
       </div>
       <!-- 三、分页-->
@@ -1073,7 +1075,8 @@ export default {
 }
 </script>
 <style scoped lang="scss" type="text/scss">
-@import "../../../static/css/scss/OTC/OTCCenter.scss";
+// @import "../../../static/css/scss/OTC/OTCCenter.scss";
+@import "../../../static/css/scss/index";
 .otc-trading-order-box{
   >.otc-trading-order-content{
     min-height: 472px;
@@ -1286,7 +1289,7 @@ export default {
       color: rgba(255,255,255,0.8);
       line-height: 472px;
       text-align: center;
-      background-color: #1E2636;
+      // background-color: #1E2636;
     }
     .page{
       text-align: center;
@@ -1300,7 +1303,7 @@ export default {
   &.night{
     >.otc-trading-order-content{
       >.order-list{
-        background-color: $mainNightBgColor;
+        background-color: $mainContentNightBgColor;
         border: 1px solid #485776;
         >.order{
           >.order-list-head{
@@ -1427,7 +1430,7 @@ export default {
       }
       >.no-data{
         color: rgba(255,255,255,0.8);
-        background-color: #1E2636;
+        background-color: #1C1F32;
       }
       .page{
       }

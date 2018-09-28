@@ -121,26 +121,20 @@
           </div>
           <!--商户列表表格部分-->
           <div class="otc-merchant-list">
-            <!-- 表格信息 暂时无数据-->
+            <!-- 表格信息 暂时无数据align="center"-->
             <el-table
               :data="onlineBuySellTableList"
               style="width: 100%"
               :empty-text="$t('M.comm_no_data')"
             >
-              <!-- 商户 -->
+              <!-- 名称 -->
               <el-table-column
                 :label="$t('M.otc_index_Merchant')"
+                align="center"
               >
                 <template slot-scope = "s">
                   <div>
                     <!-- 如果是商家用户就显示商家图标 -->
-                    <!-- <img
-                      src="../../assets/develop/shangjia.png"
-                      alt=""
-                      class="shang-icon"
-                      v-if="s.row.userType === 'MERCHANT'"
-                    >
-                    {{s.row.userName}} -->
                     <el-tooltip
                       effect="dark"
                       content="已认证商家"
@@ -262,6 +256,7 @@
               <!-- 操作 -->
               <el-table-column
                 :label="$t('M.otc_index_operate')"
+                align="center"
               >
                 <template slot-scope="s">
                   <el-button
@@ -992,6 +987,7 @@ export default {
         >.otc-merchant-list{
           margin-top: 30px;
           height: 639px;
+          // background-color:$mainContentNightBgColor;
           .remark-tips{
             text-overflow: ellipsis;
             white-space: nowrap;
@@ -1104,6 +1100,7 @@ export default {
           }
           >.otc-merchant-list{
             // height: 480px;
+            background-color:$mainContentNightBgColor;
             .xilian{
             }
             .red{
@@ -1117,8 +1114,10 @@ export default {
           }
           .page{
             text-align: center;
-            margin-top: 10px;
+            margin-top: -10px;
             padding-bottom: 20px;
+            padding-top: 20px;
+            background-color: $mainContentNightBgColor;
           }
         }
       }

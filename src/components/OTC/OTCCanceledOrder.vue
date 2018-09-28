@@ -296,17 +296,17 @@ export default {
     &.night{
       >.canceled-order-content{
         >.canceled-table-head{
-          background-color: #1E2636;
+          background-color: #1C1F32;
           color: #A9BED4;
           border: 1px solid #485776;
           >.item{
           }
         }
         >.canceled-table-body{
-          background-color: #1E2636;
+          background-color: #1C1F32;
           border: 1px solid #485776;
           >.canceled-info-top{
-            background-color: #1E2636;
+            background-color: #1C1F32;
             color: #9DA5B3;
             .red{
               color: #D45858;
@@ -346,7 +346,7 @@ export default {
           }
         }
         >.no-data{
-          background-color: $mainNightBgColor;
+          background-color: $mainContentNightBgColor;
           color: rgba(255, 255, 255, 0.8);
         }
         >.page{

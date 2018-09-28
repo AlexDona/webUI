@@ -198,7 +198,8 @@ export default {
 }
 </script>
 <style scoped lang="scss" type="text/scss">
-  @import "../../../static/css/scss/OTC/OTCCenter.scss";
+  // @import "../../../static/css/scss/OTC/OTCCenter.scss";
+  @import "../../../static/css/scss/index.scss";
   .otc-entrust-order-box {
     height: 500px;
     .otc-entrust-order-table {
@@ -207,7 +208,7 @@ export default {
         width: 1045px;
         height: 35px;
         line-height: 35px;
-        // background-color: #1E2636;
+        // background-color: $mainContentNightBgColor;
         // color: #A9BED4;
         // border: 1px solid #262F38;
         border-radius: 5px;
@@ -248,7 +249,7 @@ export default {
       > .entrust-table-body {
         height: 400px;
         margin-top: 15px;
-        // background-color: #1E2636;
+        // background-color: $mainContentNightBgColor;
         // color: #9DA5B3;
         // border: 1px solid #262F38;
         border-top: none;
@@ -307,7 +308,7 @@ export default {
     &.night{
       .otc-entrust-order-table {
         > .entrust-table-head {
-          background-color: #1E2636;
+          background-color: $mainContentNightBgColor;
           color: #A9BED4;
           border: 1px solid #262F38;
           box-shadow: -2px 3px 5px 1px #191E28;
@@ -331,7 +332,7 @@ export default {
           }
         }
         > .entrust-table-body {
-          background-color: #1E2636;
+          background-color: $mainContentNightBgColor;
           color: #9DA5B3;
           border: 1px solid #262F38;
           > .no-data {
