@@ -52,7 +52,7 @@
               />
             </el-form-item>
             <div
-              class="error-info"
+              class="error-info error-info1"
             >
               <span v-show="errorMsg">
                 {{ errorMsg }}
@@ -115,13 +115,20 @@
                   :label="$t('M.comm_code_google')"
                 >
                   <input
-                    class="content-input input-google padding-l15 box-sizing"
+                    class="content-input content-input1 input-google padding-l15 box-sizing"
                     v-model="googleCode"
                   >
                 </el-form-item>
                 <!--谷歌未认证-->
                 <span v-else></span>
               </el-form>
+              <div
+                class="error-info"
+              >
+                <span v-show="errorMsg1">
+                  {{ errorMsg1 }}
+                </span>
+              </div>
               <div
                 slot="footer"
                 class="dialog-footer"
@@ -224,6 +231,7 @@ export default {
     return {
       labelPosition: 'top',
       errorMsg: '', // 错误信息提示
+      errorMsg1: '', // 错误信息提示
       // 币种列表
       currencyValue: '',
       securityCenter: {}, // 安全状态显示
@@ -263,9 +271,6 @@ export default {
     },
     // 点击显示验证信息
     addAddress () {
-      // if (!this.prepaidAddress) {
-      //   this.errorMsg = '提币地址不能为空'
-      // }
       if (!this.mentionRemark) {
         // 请输入备注
         this.errorMsg = this.$t('M.comm_please_enter') + this.$t('M.comm_remark')
@@ -295,6 +300,14 @@ export default {
     },
     // 新增用户提币地址按钮
     async stateSubmitAddAddress () {
+      if (!this.phoneCode && !this.emailCode && !this.googleCode) {
+        console.log(1)
+        // 请输入验证码
+        this.errorMsg1 = this.$t('M.comm_please_enter') + this.$t('M.user_security_verify')
+        return false
+      } else {
+        this.errorMsg1 = ''
+      }
       let data
       let param = {
         coinId: this.currencyValue, // 币种coinId
@@ -310,6 +323,7 @@ export default {
       } else {
         this.WithdrawalAddressList()
         this.stateEmptyData()
+        this.mentionMoneyConfirm = false
       }
     },
     /**
@@ -477,9 +491,15 @@ export default {
             line-height: 20px;
             color: #d45858;
           }
+          .error-info1 {
+            text-align: left;
+          }
           .content-input {
             width: 180px;
             height: 34px;
+          }
+          .content-input1 {
+            width: 275px;
           }
           .form-input,
           .form-button {

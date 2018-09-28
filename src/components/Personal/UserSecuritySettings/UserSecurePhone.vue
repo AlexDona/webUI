@@ -561,7 +561,7 @@ export default {
         case 3:
           if (!targetNum) {
             // 交易密码
-            this.tieErrorMsg(3, '交易密码')
+            this.tieErrorMsg(3, this.$t('M.comm_password'))
             this.$forceUpdate()
             return 0
           } else {

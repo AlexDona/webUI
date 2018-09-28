@@ -512,6 +512,9 @@ export default {
     await this.getUserRefreshUser()
     this.tokenObj.token = this.userInfo.token
     reflashUserInfo(this)
+    this.dialogImageFrontUrl = ''
+    this.dialogImageReverseSideUrl = ''
+    this.dialogImageHandUrl = ''
   },
   mounted () {},
   activited () {},
