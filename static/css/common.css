@@ -78,8 +78,8 @@
   background: #EAF4FE;
 }
 .night .el-popper[x-placement^=bottom] .popper__arrow::after{
-  border-bottom-color: #fff;
-  /* border-bottom-color: #2A3242; */
+  /* border-bottom-color: #fff; */
+  border-bottom-color: #2A3242;
 }
 /* 修改全局样式 */
 .el-pagination{

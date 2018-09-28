@@ -116,6 +116,7 @@ export const OTC = {
   otc_entrust_number: '挂单数量',
   otc_entrust_matching: '已匹配数量',
   otc_entrust_time: '挂单时间',
+  otc_make_a_bargain_time: '成交时间',
   otc_entrust_cancellations: '撤单',
   otc_entrust_cancellationing: '撤单中',
   otc_overtime: '买家超时未付款，系统自动取消。',

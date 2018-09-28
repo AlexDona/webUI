@@ -264,7 +264,7 @@
                   <!-- 上传身份证正面 -->
                   <div class="default-center">
                     <el-upload
-                      ref='upload'
+                      ref='firstUpload'
                       :action="apiCommonUrl+'uploadfile'"
                       :headers="tokenObj"
                       list-type="picture-card"
@@ -297,12 +297,12 @@
                   <!-- 上传身份证反面 -->
                   <div class="default-center">
                     <el-upload
-                      ref='upload'
+                      ref='secondUpload'
                       :action="apiCommonUrl+'uploadfile'"
                       :headers="tokenObj"
                       list-type="picture-card"
                       :on-success="handleSuccessReverseSide"
-                      :on-remove="handleRemoveSide"
+                      :on-remove="handleRemove('first')"
                       :before-upload="beforeAvatarUpload"
                     >
                       <div
@@ -328,7 +328,7 @@
                   <!-- 上传手持身份证 -->
                   <div class="default-center">
                     <el-upload
-                      ref='upload'
+                      ref='thirdUpload'
                       :action="apiCommonUrl+'uploadfile'"
                       :headers="tokenObj"
                       list-type="picture-card"
@@ -525,21 +525,36 @@ export default {
       'SET_USER_INFO_REFRESH_STATUS'
     ]),
     handleSuccessFront (response) {
+      console.log(response)
       this.dialogImageFrontUrl = response.data.fileUrl
       this.firstPictureSrcShow = false
     },
     handleSuccessReverseSide (response) {
+      console.log(response)
       this.dialogImageReverseSideUrl = response.data.fileUrl
       this.secondPictureSrcShow = false
     },
     handleSuccessHand (response) {
+      console.log(response)
       this.dialogImageHandUrl = response.data.fileUrl
       this.thirdPictureSrcShow = false
     },
-    handleRemoveFront () {
-      this.dialogImageFrontUrl = ''
-      this.firstPictureSrcShow = true
+    handleRemove (val) {
+      if (val == 'first') {
+        this.dialogImageFrontUrl = ''
+        this.firstPictureSrcShow = true
+      } else if (val == 2) {
+        this.dialogImageReverseSideUrl = ''
+        this.secondPictureSrcShow = true
+      } else {
+        this.dialogImageHandUrl = ''
+        this.thirdPictureSrcShow = true
+      }
     },
+    // handleRemoveFront () {
+    //   this.dialogImageFrontUrl = ''
+    //   this.firstPictureSrcShow = true
+    // },
     handleRemoveSide () {
       this.dialogImageReverseSideUrl = ''
       this.secondPictureSrcShow = true
@@ -547,6 +562,7 @@ export default {
     handleRemoveHand () {
       this.dialogImageHandUrl = ''
       this.thirdPictureSrcShow = true
+      console.log(this.thirdPictureSrcShow)
     },
     beforeAvatarUpload (file) {
       console.log(file)
@@ -736,19 +752,30 @@ export default {
       if (!(returnAjaxMessage(data, this, 1))) {
         return false
       } else {
+        console.log(1)
         this.SET_USER_INFO_REFRESH_STATUS(true)
         await this.getUserRefreshUser()
         await this.getRealNameInformation()
         this.authenticationStatusFront = false
         this.stateEmptyData()
-        this.$refs.upload.clearFiles()
+        this.clearUploadRefValue()
       }
+    },
+    clearUploadRefValue () {
+      this.$refs.firstUpload.clearFiles()
+      this.$refs.secondUpload.clearFiles()
+      this.$refs.thirdUpload.clearFiles()
+      this.handleRemoveFront()
+      this.handleRemoveHand()
+      this.handleRemoveSide()
+      // this.$forceUpdate()
     },
     // 接口请求完成之后清空数据
     stateEmptyData () {
       this.dialogImageFrontUrl = ''
       this.dialogImageReverseSideUrl = ''
       this.dialogImageHandUrl = ''
+      // this.$forceUpdate()
     },
     // 检测上传图片大小
     bytesToSize (bytes) {
