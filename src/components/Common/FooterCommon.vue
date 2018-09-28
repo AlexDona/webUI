@@ -50,26 +50,44 @@
             <dd
               class="dd-item"
               @click="jumpToOtherPage('/ServiceAndProtocol','APIDocument')"
-            >API文档</dd>
+            >
+              <!--API文档-->
+              {{$t('M.comm_api_doc')}}
+            </dd>
             <dd
               class="dd-item"
               @click="jumpToOtherPage('/ServiceAndProtocol','CurrencyInformation')"
-            >币种资料</dd>
+            >
+              <!--币种资料-->
+              {{$t('M.comm_currency_info')}}
+            </dd>
           </dl>
           <dl class="right-dl">
-            <dt class="title">关于</dt>
+            <dt class="title">
+              <!--关于-->
+              {{$t('M.comm_about')}}
+            </dt>
             <dd
               class="dd-item"
             >
-              <router-link to="/AboutUs">关于我们</router-link>
+              <router-link to="/AboutUs">
+                <!--关于我们-->
+                {{$t('M.comm_about')}}{{$t('M.comm_us')}}
+              </router-link>
             </dd>
             <dd
               class="dd-item"
               @click="jumpToOtherPage('/NewsAndNoticeList','notice')"
-            >新闻公告</dd>
+            >
+              <!--新闻公告-->
+              {{$t('M.comm_news_and_notice')}}
+            </dd>
           </dl>
           <dl class="right-dl">
-            <dt class="title">说明</dt>
+            <dt class="title">
+              <!--说明-->
+              {{$t('M.comm_description')}}
+            </dt>
             <dd
               class="dd-item"
               @click="jumpToOtherPage('/ServiceAndProtocol','UserProtocol')"
@@ -306,7 +324,7 @@ export default {
           display:inline-block;
           width:1026px;
           >.links-item{
-            width:60px;
+            /*width:60px;*/
             height:20px;
             display:inline-block;
             margin-right:30px;

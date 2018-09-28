@@ -16,6 +16,7 @@
       <div
         class="content-main display-flex"
         v-show="showOpenTheVIPPage"
+        v-if="filteredData[0]"
       >
         <div class="content-module cursor-pointer">
           <p class="content-vip-one text-align-c">
@@ -24,7 +25,9 @@
           <p class="content-discount line-height50 text-align-c font-size16">手续费折扣</p>
           <p class="content-text line-height50 text-align-c font-size18">九折</p>
           <p class="content-discount line-height50 text-align-c font-size16">
-            <span class="content-discount-color">100FUC</span>
+            <span class="content-discount-color">
+              {{filteredData[0].value}}FUC
+            </span>
             <span>/月</span>
           </p>
           <p class="content-button">
@@ -43,7 +46,9 @@
           <p class="content-discount line-height50 text-align-c font-size16">手续费折扣</p>
           <p class="content-text line-height50 text-align-c font-size18">八折</p>
           <p class="content-discount line-height50 text-align-c font-size16">
-            <span>100FUC</span>
+            <span class="content-discount-color">
+              {{filteredData[1].value}}FUC
+            </span>
             <span>/月</span>
           </p>
           <p class="content-button">
@@ -62,7 +67,9 @@
           <p class="content-discount line-height50 text-align-c font-size16">手续费折扣</p>
           <p class="content-text line-height50 text-align-c font-size18">七折</p>
           <p class="content-discount line-height50 text-align-c font-size16">
-            <span>100FUC</span>
+            <span class="content-discount-color">
+              100FUC
+            </span>
             <span>/月</span>
           </p>
           <p class="content-button">
@@ -81,7 +88,9 @@
           <p class="content-discount line-height50 text-align-c font-size16">手续费折扣</p>
           <p class="content-text line-height50 text-align-c font-size18">六折</p>
           <p class="content-discount line-height50 text-align-c font-size16">
-            <span>100FUC</span>
+            <span class="content-discount-color">
+              100FUC
+            </span>
             <span>/月</span>
           </p>
           <p class="content-button">
@@ -100,7 +109,9 @@
           <p class="content-discount line-height50 text-align-c font-size16">手续费折扣</p>
           <p class="content-text line-height50 text-align-c font-size18">五折</p>
           <p class="content-discount line-height50 text-align-c font-size16">
-            <span>100FUC</span>
+            <span class="content-discount-color">
+              100FUC
+            </span>
             <span>/月</span>
           </p>
           <p class="content-button">
@@ -211,7 +222,7 @@
               3个月
             </p>
             <p class="duration-currency font-size18">
-              {{filteredData[0].value}}FUC
+              {{filteredData[1].value}}FUC
             </p>
           </div>
           <div
@@ -223,7 +234,7 @@
               6个月
             </p>
             <p class="duration-currency font-size18">
-              {{filteredData[1].value}}FUC
+              {{filteredData[2].value}}FUC
             </p>
             <p class="duration-through ">
               600FUC
@@ -238,7 +249,7 @@
               12个月
             </p>
             <p class="duration-currency font-size18">
-              {{filteredData[2].value}}FUC
+              {{filteredData[3].value}}FUC
             </p>
             <p class="duration-through">
               1200FUC
@@ -253,7 +264,7 @@
               1个月
             </p>
             <p class="duration-currency font-size18">
-              {{filteredData[3].value}}FUC
+              {{filteredData[0].value}}FUC
             </p>
           </div>
         </div>

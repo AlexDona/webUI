@@ -17,11 +17,11 @@
         v-if="!isMobile&&!isErCodeLogin"
       >
         <!--切换登录-->
-        <button
-          class="toggle-login-type cursor-pointer"
-          @click="toggleLoginType"
-        >
-        </button>
+        <!--<button-->
+          <!--class="toggle-login-type cursor-pointer"-->
+          <!--@click="toggleLoginType"-->
+        <!--&gt;-->
+        <!--</button>-->
         <h1 class="title">欢迎登录</h1>
         <!--正常登录-->
         <div class="login-box">
