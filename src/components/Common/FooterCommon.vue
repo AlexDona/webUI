@@ -119,6 +119,7 @@
             <a
               class="link-item"
               :href="item.link"
+              target="_blank"
             >
               <img
                 :src="item.logo"

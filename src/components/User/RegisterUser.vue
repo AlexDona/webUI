@@ -2,6 +2,7 @@
   <div
     class="register-box user"
     :class="{'day':theme == 'day','night':theme == 'night' }"
+    :style="{'height':windowHeight+'px'}"
   >
     <HeaderCommon/>
     <!--注册页面-->
@@ -261,6 +262,7 @@
     <!--注册成功-->
     <div
       class="inner-box"
+      v-else
     >
       <div class="success-box">
         <p class="title"><span>{{successCountDown}}</span>秒后跳转登录页面...</p>
@@ -623,7 +625,10 @@ export default {
       language: state => state.common.language,
       contryAreaList: state => state.common.contryAreaList
       // activeCountryCodeWithPhone: state => state.user.countryCode // 国籍码
-    })
+    }),
+    windowHeight () {
+      return window.innerHeight
+    }
   },
   watch: {}
 }

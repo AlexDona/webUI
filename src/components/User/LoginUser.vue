@@ -1,5 +1,8 @@
 <template>
-  <div class="login-box user">
+  <div
+    class="login-box user"
+    :style="{'height':windowHeight+'px'}"
+  >
     <HeaderCommonForPC
       v-if="!isMobile"
     />
@@ -1095,7 +1098,10 @@ export default {
       disabledOfPhoneBtn: state => state.user.disabledOfPhoneBtn,
       disabledOfEmailBtn: state => state.user.disabledOfEmailBtn,
       routerTo: state => state.common.routerTo // 路由跳转
-    })
+    }),
+    windowHeight () {
+      return window.innerHeight
+    }
     // step1 () {
     // return this.$store.state.loginStep.step1
     // },

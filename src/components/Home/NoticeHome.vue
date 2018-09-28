@@ -128,6 +128,7 @@ export default {
   },
   watch: {
     language () {
+      console.log(1)
       this.getNewsNoticeList()
     }
   }
