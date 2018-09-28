@@ -4,7 +4,10 @@
     :class="{'day':theme == 'day','night':theme == 'night' }"
   >
     <header class="personal-height background-color line-height40 personal-height40 font-size16">
-      <span class="padding-left15 fiat-color font-weight600">法币订单</span>
+      <span class="padding-left15 fiat-color font-weight600">
+        <!--法币订单-->
+        {{ $t('M.comm_coin') }}{{ $t('M.comm_order') }}
+      </span>
     </header>
     <div class="fiat-main background-color min-height500 margin-top9">
       <el-tabs
@@ -14,13 +17,17 @@
         <!-- 上部分筛选条件 -->
         <div class="orders-main-top">
           <div class="main-top-type trade-type float-left">
-            <span class="filtrate-text font-size14">类型</span>
+            <span class="filtrate-text font-size14">
+              <!--类型-->
+              {{ $t('M.comm_type') }}
+            </span>
             <span class="style-input">
+              <!--全部-->
               <el-select
                 v-model="activitedMerchantsOrdersTraderStyleList"
                 @change="changeMerchantsOrdersTraderStyleList"
                 clearable
-                placeholder="全部"
+                :placeholder="$t('M.comm_all')"
               >
                 <el-option
                   v-for="item in merchantsOrdersTraderStyleList"
@@ -33,13 +40,17 @@
             </span>
           </div>
           <div class="main-top-type trade-type float-left">
-           <span class="filtrate-text font-size14">币种</span>
+           <span class="filtrate-text font-size14">
+             <!--币种-->
+             {{ $t('M.comm_currency') }}
+           </span>
            <span class="status-input">
+             <!--全部-->
            <el-select
              v-model="activitedMerchantsOrdersCoin"
              @change="changeMerchantsOrdersCoin"
              clearable
-             placeholder="全部"
+             :placeholder="$t('M.comm_all')"
            >
              <el-option
                v-for="(item,index) in merchantsOrdersCoinList"
@@ -52,13 +63,17 @@
           </span>
           </div>
           <div class="main-top-type">
-            <span class="filtrate-text font-size14">货币</span>
+            <span class="filtrate-text font-size14">
+              <!--货币-->
+              {{ $t('M.user_coin_currency') }}
+            </span>
             <span class="status-input">
+              <!--全部-->
               <el-select
                 v-model="activitedMerchantsOrdersCurrency"
                 @change="changeMerchantsOrdersCurrency"
                 clearable
-                placeholder="全部"
+                :placeholder="$t('M.comm_all')"
               >
                 <el-option
                   v-for="(item,index) in merchantsOrdersCurrencyList"
@@ -71,11 +86,14 @@
             </span>
            </div>
           <div class="main-top-type trade-data float-left">
-            <span class="filtrate-text font-size14">起止日期</span>
+            <span class="filtrate-text font-size14">
+              <!--起止日期-->
+               {{ $t('M.user_coin_start_stop') }}{{ $t('M.comm_data') }}
+            </span>
             <span class="date-picker">
              <!--开始日期-->
              <el-date-picker
-               placeholder="选择日期"
+               :placeholder="$t('M.comm_begin') + $t('M.comm_data')"
                v-model="startTime"
                type="date"
                value-format="yyyy-MM-dd"
@@ -86,7 +104,7 @@
              <span class="date-short-line">-</span>
               <!--结束日期-->
              <el-date-picker
-               placeholder="选择日期"
+               :placeholder="$t('M.comm_end') + $t('M.comm_data')"
                v-model="endTime"
                value-format="yyyy-MM-dd"
                type="date"
@@ -101,37 +119,45 @@
               <el-button
                 type="primary"
                 @click.prevent="findFilter(activeName)"
-              >查询</el-button>
+              >
+                <!--查询-->
+                {{ $t('M.comm_query') }}
+              </el-button>
               <!--<el-button type="primary" @click.prevent="resetCondition">重置</el-button>-->
             </span>
            </div>
         </div>
+        <!--交易中的订单-->
         <el-tab-pane
-          label="交易中的订单"
+          :label="$t('M.otc_trading')"
           name="TRADING"
         >
           <FiatCoinTradingOrder ref = "tradeOrder"/>
         </el-tab-pane>
+        <!--已完成订单-->
         <el-tab-pane
-          label="已完成订单"
+          :label="$t('M.otc_stocks')"
           name="COMPLETED"
         >
           <FiatCoinCompletedOrder ref = "cancelledOrder"/>
         </el-tab-pane>
+        <!--已取消订单-->
         <el-tab-pane
-          label="已取消订单"
+          :label="$t('M.otc_canceled')"
           name="CANCELED"
         >
           <FiatCoinCanceledOrder ref = "completedOrder"/>
         </el-tab-pane>
+        <!--冻结中订单-->
         <el-tab-pane
-          label="冻结中订单"
+          :label="$t('M.otc_freezingOrder')"
           name="FROZEN"
         >
           <FiatCoinFreezingOrder ref = "pendingOrder"/>
         </el-tab-pane>
+        <!--委托订单-->
         <el-tab-pane
-          label="委托订单"
+          :label="$t('M.user_coin_entrust') + $t('M.comm_order')"
           name="ENTRUSTED"
         >
           <FiatCoinEntrustOrder ref = "entrustOrders"/>
@@ -178,11 +204,11 @@ export default {
       merchantsOrdersTraderStyleList: [
         {
           value: 'BUY',
-          label: '购买'
+          label: 'M.comm_buying' // 购买
         },
         {
           value: 'SELL',
-          label: '出售'
+          label: 'M.comm_offering' // 出售
         }
       ],
       // 商家订单筛选下拉框 币种
@@ -196,23 +222,23 @@ export default {
       merchantsOrdersStatusList: [
         {
           value: 'PAYED',
-          label: '已付款'
+          label: 'M.otc_enum_status_yifukuan' // 已付款
         },
         {
           value: 'PICKED',
-          label: '未付款'
+          label: 'M.otc_enum_status_weifukuan' // 未付款
         },
         {
           value: 'COMPLETED ',
-          label: '已完成'
+          label: 'M.otc_enum_status_yiwancheng' // 已完成
         },
         {
           value: 'CANCELED',
-          label: '已取消'
+          label: 'M.otc_enum_status_yiquxiao' // 已取消
         },
         {
           value: 'FROZEN',
-          label: '已冻结'
+          label: 'M.otc_enum_status_yidongjie' // 已冻结
         }
       ],
       startTime: '', // 默认开始时间

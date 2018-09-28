@@ -397,7 +397,7 @@ export default {
           params.phone = this.userInfo.userInfo.phone
           break
         case 1:
-          params.address = this.userInfo.userInfo.email
+          params.email = this.userInfo.userInfo.email
           break
       }
       apiSendPhoneOrEmailCodeAjax(loginType, params, (data) => {
@@ -482,9 +482,9 @@ export default {
           min-height: 100px;
           .send-code-btn {
             width: 90px;
-            height: 35px;
-            margin-left: -4px;
-            padding: 0;
+            height: 34px;
+            position: absolute;
+            top: 5px;
           }
           .error-info {
             height: 20px;

@@ -356,9 +356,7 @@ export default {
         return false
       }
       let params = {
-      //   phone: this.bindingDataPhone.bindingNewPhoneAccounts, // 手机号
         country: this.bindingDataPhone.bindingAreaCodeValue // 国家编码
-      //   // country: this.activeCountryCode
       }
       if (this.securityCenter.isPhoneBind) {
         switch (loginType) {
@@ -694,6 +692,15 @@ export default {
         >.phone-content-from {
           width: 500px;
           margin-left: 55px;
+          .send-code-btn {
+            width: 90px;
+            height: 36px;
+            position: absolute;
+            top: -1px;
+          }
+          .input {
+            width: 180px;
+          }
           .phone-input {
             width: 220px;
             height: 34px;
@@ -745,6 +752,10 @@ export default {
             color: #3E79D6;
           }
           >.phone-content-from {
+            .send-code-btn {
+              background-color: #338FF5;
+              color: #fff;
+            }
             .bank-content-name {
               color: rgba(255,255,255,0.7);
             }
@@ -802,6 +813,10 @@ export default {
             color: #333;
           }
           >.phone-content-from {
+            .send-code-btn {
+              background-color: #338FF5;
+              color: #fff;
+            }
             .phone-input {
               border:1px solid rgba(236,241,248,1);
               color: #333;

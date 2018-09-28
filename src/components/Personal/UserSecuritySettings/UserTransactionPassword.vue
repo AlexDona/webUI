@@ -651,6 +651,12 @@ export default {
         >.transaction-content-from {
           width: 500px;
           margin-left: 55px;
+          .send-code-btn {
+            width: 90px;
+            height: 36px;
+            position: absolute;
+            top: -1px;
+          }
           .transaction-input {
             width: 220px;
             height: 34px;
@@ -692,6 +698,10 @@ export default {
             color: #3E79D6;
           }
           >.transaction-content-from {
+            .send-code-btn {
+              background-color: #338FF5;
+              color: #fff;
+            }
             .transaction-input {
               border: 1px solid #485776;
               color: #fff;
@@ -739,6 +749,10 @@ export default {
             color: #333;
           }
           >.transaction-content-from {
+            .send-code-btn {
+              background-color: #338FF5;
+              color: #fff;
+            }
             .transaction-input {
               border:1px solid rgba(236,241,248,1);
               color: #333;
