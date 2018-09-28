@@ -25,7 +25,7 @@
             </div>
             <!-- 挂单时间 -->
             <div class="deal-time">
-              {{$t('M.otc_entrust_time')}}：{{item.createTime}}
+              {{$t('M.otc_make_a_bargain_time')}}：{{item.createTime}}
             </div>
             <div class="order-list-head-icon buy-icon">
               <!-- <img src="../../assets/develop/buy.png" alt=""> -->
@@ -336,7 +336,7 @@
             </div>
             <!-- 挂单时间 -->
             <div class="deal-time">
-              {{$t('M.otc_entrust_time')}}：{{item.createTime}}
+              {{$t('M.otc_make_a_bargain_time')}}：{{item.createTime}}
             </div>
             <div class="order-list-head-icon sell-icon">
               <!-- <img src="../../assets/develop/sell.png" alt=""> -->
