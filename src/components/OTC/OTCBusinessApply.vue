@@ -322,6 +322,7 @@ export default {
 @import url(../../../static/css/scss/OTC/OTCCenter.scss);
 @import "../../../static/css/scss/index";
 .otc-business-apply-box{
+  background-color: $mainNightBgColor;
   >.business-apply-content{
     padding-top: 20px;
     >.privilege{
@@ -472,6 +473,7 @@ export default {
     margin: 70px auto;
     padding-top: 20px;
     text-align: center;
+    background-color: $mainNightBgColor;
     >.picture{
 
     }
@@ -572,7 +574,7 @@ export default {
     }
   }
   &.day{
-    background-color: $mainDayBgColor;
+    background-color: $mainNightBgColor;
     >.business-apply-content{
       >.privilege{
         >.title{
