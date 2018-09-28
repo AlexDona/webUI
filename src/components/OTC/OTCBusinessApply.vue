@@ -314,6 +314,7 @@ export default {
 </script>
 <style scoped lang="scss" type="text/scss">
 @import url(../../../static/css/scss/OTC/OTCCenter.scss);
+@import "../../../static/css/scss/index";
 .otc-business-apply-box{
   >.business-apply-content{
     padding-top: 20px;
@@ -486,7 +487,7 @@ export default {
     }
   }
   &.night{
-    background-color: #121824;
+    background-color: $mainNightBgColor;
     >.business-apply-content{
       >.privilege{
         >.title{
@@ -565,7 +566,7 @@ export default {
     }
   }
   &.day{
-    background-color: #fff;
+    background-color: $mainDayBgColor;
     >.business-apply-content{
       >.privilege{
         >.title{

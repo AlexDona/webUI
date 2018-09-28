@@ -37,9 +37,9 @@
 .fiat-completed-order-box.personal.night .el-table__expanded-cell{
   border-bottom:25px solid #1d2331;
 }
-.fiat-completed-order-box.personal.night .el-icon-arrow-right:before {
-  content: " ";
-}
+/*.fiat-completed-order-box.personal.night .el-icon-arrow-right:before {*/
+  /*content: " ";*/
+/*}*/
 .fiat-completed-order-box.personal.night .el-table_2_column_9 .el-table__expand-column .is-leaf{
   border-top-left-radius: 5px;
   border-bottom-left-radius: 5px;

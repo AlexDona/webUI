@@ -54,7 +54,7 @@
       <!-- 2.3 资产配置 -->
       <div class="report-form-asset">
         <div class="title padding-l15 border-radius5">
-        {{$t('M.otc_formStatistics_asset')}}
+          {{$t('M.otc_formStatistics_asset')}}
         </div>
         <div class="content font-size18">
           <!-- 币种总资产 -->
@@ -63,16 +63,22 @@
           <span v-if="totalAssets">≈</span>
           <!-- 法币总资产 -->
           <span v-if="totalAssets">{{totalAssets}}</span>
-          <span v-if="totalAssets">{{activitedtraderCurrencyCoinsName}}</span>
+          <span v-if="totalAssets">
+            {{activitedtraderCurrencyCoinsName}}
+          </span>
         </div>
       </div>
       <!-- 2.4 购买和销售 -->
       <div class="report-form-buy-sell">
+        <!-- 购买 -->
         <div class="common buy">
+          <!-- 头 -->
           <div class="head padding-l15 border-radius5">
             {{$t('M.comm_buying')}}
           </div>
+          <!-- 内容 -->
           <div class="body">
+            <!-- 当日 -->
             <div class="together border-radius5 day">
               <div class="left">
                 <span class="round font-size12">
@@ -81,19 +87,28 @@
               </div>
               <div class="right">
                 <p>
-                  <span>{{$t('M.comm_buying')}}{{$t('M.comm_count')}}:</span><span class="data">{{ buyDayMap.count }}{{ activitedTraderCoinName }}</span>
+                  <span>{{$t('M.comm_buying')}}{{$t('M.comm_count')}}:</span>
+                  <span class="data">
+                    {{ buyDayMap.count }}{{ activitedTraderCoinName }}
+                  </span>
                 </p>
                 <p>
-                  <span>{{$t('M.comm_buying')}}{{$t('M.otc_formStatistics_average')}}:</span><span class="data"> {{ buyDayMap.average }}{{ activitedtraderCurrencyCoinsName }}</span>
+                  <span>{{$t('M.comm_buying')}}{{$t('M.otc_formStatistics_average')}}:</span>
+                  <span class="data">
+                    {{ buyDayMap.average }}{{ activitedtraderCurrencyCoinsName }}
+                  </span>
                 </p>
                 <p>
-                  <span>{{$t('M.otc_formStatistics_amount_paid')}}:</span><span class="data"> {{ buyDayMap.amount }}{{ activitedtraderCurrencyCoinsName }}</span>
+                  <span>{{$t('M.otc_formStatistics_amount_paid')}}:</span>
+                  <span class="data"> {{ buyDayMap.amount }}{{ activitedtraderCurrencyCoinsName }}</span>
                 </p>
                 <p>
-                  <span>{{$t('M.otc_formStatistics_turnover')}}{{$t('M.comm_order')}}:</span><span class="data"> {{ buyDayMap.num }}{{$t('M.comm_stock')}}</span>
+                  <span>{{$t('M.otc_formStatistics_turnover')}}{{$t('M.comm_order')}}:</span>
+                  <span class="data"> {{ buyDayMap.num }}{{$t('M.comm_stock')}}</span>
                 </p>
               </div>
             </div>
+            <!-- 当周 -->
             <div class="together border-radius5 week">
               <div class="left">
                 <span class="round font-size12">
@@ -102,19 +117,24 @@
               </div>
               <div class="right">
                 <p>
-                  <span>{{$t('M.comm_buying')}}{{$t('M.comm_count')}}:</span><span class="data"> {{ buyWeekMap.count }}{{ activitedTraderCoinName }}</span>
+                  <span>{{$t('M.comm_buying')}}{{$t('M.comm_count')}}:</span>
+                  <span class="data"> {{ buyWeekMap.count }}{{ activitedTraderCoinName }}</span>
                 </p>
                 <p>
-                  <span>{{$t('M.comm_buying')}}{{$t('M.otc_formStatistics_average')}}:</span><span class="data">{{ buyWeekMap.average }}{{ activitedtraderCurrencyCoinsName }}</span>
+                  <span>{{$t('M.comm_buying')}}{{$t('M.otc_formStatistics_average')}}:</span>
+                  <span class="data">{{ buyWeekMap.average }}{{ activitedtraderCurrencyCoinsName }}</span>
                 </p>
                 <p>
-                  <span>{{$t('M.otc_formStatistics_amount_paid')}}:</span><span class="data">{{ buyWeekMap.amount }}{{ activitedtraderCurrencyCoinsName }}</span>
+                  <span>{{$t('M.otc_formStatistics_amount_paid')}}:</span>
+                  <span class="data">{{ buyWeekMap.amount }}{{ activitedtraderCurrencyCoinsName }}</span>
                 </p>
                 <p>
-                  <span>{{$t('M.otc_formStatistics_turnover')}}{{$t('M.comm_order')}}:</span><span class="data"> {{ buyWeekMap.num }}{{$t('M.comm_stock')}}</span>
+                  <span>{{$t('M.otc_formStatistics_turnover')}}{{$t('M.comm_order')}}:</span>
+                  <span class="data"> {{ buyWeekMap.num }}{{$t('M.comm_stock')}}</span>
                 </p>
               </div>
             </div>
+            <!-- 当月 -->
             <div class="together border-radius5 month">
               <div class="left">
                 <span class="round font-size12">
@@ -123,19 +143,24 @@
               </div>
               <div class="right">
                 <p>
-                  <span>{{$t('M.comm_buying')}}{{$t('M.comm_count')}}:</span><span class="data">{{ buyMonthMap.count }}{{ activitedTraderCoinName }}</span>
+                  <span>{{$t('M.comm_buying')}}{{$t('M.comm_count')}}:</span>
+                  <span class="data">{{ buyMonthMap.count }}{{ activitedTraderCoinName }}</span>
                 </p>
                 <p>
-                  <span>{{$t('M.comm_buying')}}{{$t('M.otc_formStatistics_average')}}:</span><span class="data"> {{ buyMonthMap.average }}{{ activitedtraderCurrencyCoinsName }}</span>
+                  <span>{{$t('M.comm_buying')}}{{$t('M.otc_formStatistics_average')}}:</span>
+                  <span class="data"> {{ buyMonthMap.average }}{{ activitedtraderCurrencyCoinsName }}</span>
                 </p>
                 <p>
-                  <span>{{$t('M.otc_formStatistics_amount_paid')}}:</span><span class="data"> {{ buyMonthMap.amount }}{{ activitedtraderCurrencyCoinsName }}</span>
+                  <span>{{$t('M.otc_formStatistics_amount_paid')}}:</span>
+                  <span class="data"> {{ buyMonthMap.amount }}{{ activitedtraderCurrencyCoinsName }}</span>
                 </p>
                 <p>
-                  <span>{{$t('M.otc_formStatistics_turnover')}}{{$t('M.comm_order')}}:</span><span class="data"> {{ buyMonthMap.num }}{{$t('M.comm_stock')}}</span>
+                  <span>{{$t('M.otc_formStatistics_turnover')}}{{$t('M.comm_order')}}:</span>
+                  <span class="data"> {{ buyMonthMap.num }}{{$t('M.comm_stock')}}</span>
                 </p>
               </div>
             </div>
+            <!-- 历史 -->
             <div class="together border-radius5 history">
               <div class="left">
                 <span class="round font-size12">
@@ -144,26 +169,34 @@
               </div>
               <div class="right">
                 <p>
-                  <span>{{$t('M.comm_buying')}}{{$t('M.comm_count')}}:</span><span class="data"> {{ buyHistoryMap.count }}{{ activitedTraderCoinName }}</span>
+                  <span>{{$t('M.comm_buying')}}{{$t('M.comm_count')}}:</span>
+                  <span class="data"> {{ buyHistoryMap.count }}{{ activitedTraderCoinName }}</span>
                 </p>
                 <p>
-                  <span>{{$t('M.comm_buying')}}{{$t('M.otc_formStatistics_average')}}:</span><span class="data">{{ buyHistoryMap.average }}{{ activitedtraderCurrencyCoinsName }}</span>
+                  <span>{{$t('M.comm_buying')}}{{$t('M.otc_formStatistics_average')}}:</span>
+                  <span class="data">{{ buyHistoryMap.average }}{{ activitedtraderCurrencyCoinsName }}</span>
                 </p>
                 <p>
-                  <span>{{$t('M.otc_formStatistics_amount_paid')}}:</span><span class="data">{{ buyHistoryMap.amount }}{{ activitedtraderCurrencyCoinsName }}</span>
+                  <span>{{$t('M.otc_formStatistics_amount_paid')}}:</span>
+                  <span class="data">{{ buyHistoryMap.amount }}{{ activitedtraderCurrencyCoinsName }}</span>
                 </p>
                 <p>
-                  <span>{{$t('M.otc_formStatistics_turnover')}}{{$t('M.comm_order')}}:</span><span class="data"> {{ buyHistoryMap.num }}{{$t('M.comm_stock')}}</span>
+                  <span>{{$t('M.otc_formStatistics_turnover')}}{{$t('M.comm_order')}}:</span>
+                  <span class="data"> {{ buyHistoryMap.num }}{{$t('M.comm_stock')}}</span>
                 </p>
               </div>
             </div>
           </div>
         </div>
+        <!-- 销售 -->
         <div class="common sell">
+          <!-- 头 -->
           <div class="head padding-l15 border-radius5">
             {{$t('M.otc_sell')}}
           </div>
+          <!-- 内容 -->
           <div class="body">
+            <!-- 当日 -->
             <div class="together border-radius5 day">
               <div class="left">
                 <span class="round font-size12">
@@ -172,19 +205,24 @@
               </div>
               <div class="right">
                 <p>
-                  <span>{{$t('M.comm_buying')}}{{$t('M.comm_count')}}:</span><span class="data">{{ sellDayMap.count }}{{ activitedTraderCoinName }}</span>
+                  <span>{{$t('M.comm_buying')}}{{$t('M.comm_count')}}:</span>
+                  <span class="data">{{ sellDayMap.count }}{{ activitedTraderCoinName }}</span>
                 </p>
                 <p>
-                  <span>{{$t('M.comm_buying')}}{{$t('M.otc_formStatistics_average')}}:</span><span class="data">{{ sellDayMap.average }}{{ activitedtraderCurrencyCoinsName }}</span>
+                  <span>{{$t('M.comm_buying')}}{{$t('M.otc_formStatistics_average')}}:</span>
+                  <span class="data">{{ sellDayMap.average }}{{ activitedtraderCurrencyCoinsName }}</span>
                 </p>
                 <p>
-                  <span>{{$t('M.otc_formStatistics_amount_paid')}}:</span><span class="data">{{ sellDayMap.amount }}{{ activitedtraderCurrencyCoinsName }}</span>
+                  <span>{{$t('M.otc_formStatistics_amount_paid')}}:</span>
+                  <span class="data">{{ sellDayMap.amount }}{{ activitedtraderCurrencyCoinsName }}</span>
                 </p>
                 <p>
-                  <span>{{$t('M.otc_formStatistics_turnover')}}{{$t('M.comm_order')}}:</span><span class="data">{{ sellDayMap.num }}{{$t('M.comm_stock')}}</span>
+                  <span>{{$t('M.otc_formStatistics_turnover')}}{{$t('M.comm_order')}}:</span>
+                  <span class="data">{{ sellDayMap.num }}{{$t('M.comm_stock')}}</span>
                 </p>
               </div>
             </div>
+            <!-- 当周 -->
             <div class="together border-radius5 week">
               <div class="left">
                 <span class="round font-size12">
@@ -193,19 +231,24 @@
               </div>
               <div class="right">
                 <p>
-                  <span>{{$t('M.comm_buying')}}{{$t('M.comm_count')}}:</span><span class="data"> {{ sellWeekMap.count }}{{ activitedTraderCoinName }}</span>
+                  <span>{{$t('M.comm_buying')}}{{$t('M.comm_count')}}:</span>
+                  <span class="data"> {{ sellWeekMap.count }}{{ activitedTraderCoinName }}</span>
                 </p>
                 <p>
-                  <span>{{$t('M.comm_buying')}}{{$t('M.otc_formStatistics_average')}}:</span><span class="data"> {{ sellWeekMap.average }}{{ activitedtraderCurrencyCoinsName }}</span>
+                  <span>{{$t('M.comm_buying')}}{{$t('M.otc_formStatistics_average')}}:</span>
+                  <span class="data"> {{ sellWeekMap.average }}{{ activitedtraderCurrencyCoinsName }}</span>
                 </p>
                 <p>
-                  <span>{{$t('M.otc_formStatistics_amount_paid')}}:</span><span class="data">{{ sellWeekMap.amount }}{{ activitedtraderCurrencyCoinsName }}</span>
+                  <span>{{$t('M.otc_formStatistics_amount_paid')}}:</span>
+                  <span class="data">{{ sellWeekMap.amount }}{{ activitedtraderCurrencyCoinsName }}</span>
                 </p>
                 <p>
-                  <span>{{$t('M.otc_formStatistics_turnover')}}{{$t('M.comm_order')}}:</span><span class="data">{{ sellWeekMap.num }}{{$t('M.comm_stock')}}</span>
+                  <span>{{$t('M.otc_formStatistics_turnover')}}{{$t('M.comm_order')}}:</span>
+                  <span class="data">{{ sellWeekMap.num }}{{$t('M.comm_stock')}}</span>
                 </p>
               </div>
             </div>
+            <!-- 当月 -->
             <div class="together border-radius5 month">
               <div class="left">
                 <span class="round font-size12">
@@ -214,19 +257,24 @@
               </div>
               <div class="right">
                 <p>
-                  <span>{{$t('M.comm_buying')}}{{$t('M.comm_count')}}:</span><span class="data"> {{ sellMonthMap.count }}{{ activitedTraderCoinName }}</span>
+                  <span>{{$t('M.comm_buying')}}{{$t('M.comm_count')}}:</span>
+                  <span class="data"> {{ sellMonthMap.count }}{{ activitedTraderCoinName }}</span>
                 </p>
                 <p>
-                  <span>{{$t('M.comm_buying')}}{{$t('M.otc_formStatistics_average')}}:</span><span class="data"> {{ sellMonthMap.average }}{{ activitedtraderCurrencyCoinsName }}</span>
+                  <span>{{$t('M.comm_buying')}}{{$t('M.otc_formStatistics_average')}}:</span>
+                  <span class="data"> {{ sellMonthMap.average }}{{ activitedtraderCurrencyCoinsName }}</span>
                 </p>
                 <p>
-                  <span>{{$t('M.otc_formStatistics_amount_paid')}}:</span><span class="data"> {{ sellMonthMap.amount }}{{ activitedtraderCurrencyCoinsName }}</span>
+                  <span>{{$t('M.otc_formStatistics_amount_paid')}}:</span>
+                  <span class="data"> {{ sellMonthMap.amount }}{{ activitedtraderCurrencyCoinsName }}</span>
                 </p>
                 <p>
-                  <span>{{$t('M.otc_formStatistics_turnover')}}{{$t('M.comm_order')}}:</span><span class="data"> {{ sellMonthMap.num }}{{ activitedTraderCoinName }}{{$t('M.comm_stock')}}</span>
+                  <span>{{$t('M.otc_formStatistics_turnover')}}{{$t('M.comm_order')}}:</span>
+                  <span class="data"> {{ sellMonthMap.num }}{{ activitedTraderCoinName }}{{$t('M.comm_stock')}}</span>
                 </p>
               </div>
             </div>
+            <!-- 历史 -->
             <div class="together border-radius5 history">
               <div class="left">
                 <span class="round font-size12">
@@ -235,16 +283,20 @@
               </div>
               <div class="right">
                 <p>
-                  <span>{{$t('M.comm_buying')}}{{$t('M.comm_count')}}:</span><span class="data"> {{ sellHistoryMap.count }}{{ activitedTraderCoinName }}</span>
+                  <span>{{$t('M.comm_buying')}}{{$t('M.comm_count')}}:</span>
+                  <span class="data"> {{ sellHistoryMap.count }}{{ activitedTraderCoinName }}</span>
                 </p>
                 <p>
-                  <span>{{$t('M.comm_buying')}}{{$t('M.otc_formStatistics_average')}}:</span><span class="data"> {{ sellHistoryMap.average }}{{ activitedtraderCurrencyCoinsName }}</span>
+                  <span>{{$t('M.comm_buying')}}{{$t('M.otc_formStatistics_average')}}:</span>
+                  <span class="data"> {{ sellHistoryMap.average }}{{ activitedtraderCurrencyCoinsName }}</span>
                 </p>
                 <p>
-                  <span>{{$t('M.otc_formStatistics_amount_paid')}}:</span><span class="data"> {{ sellHistoryMap.amount }}{{ activitedtraderCurrencyCoinsName }}</span>
+                  <span>{{$t('M.otc_formStatistics_amount_paid')}}:</span>
+                  <span class="data"> {{ sellHistoryMap.amount }}{{ activitedtraderCurrencyCoinsName }}</span>
                 </p>
                 <p>
-                  <span>{{$t('M.otc_formStatistics_turnover')}}{{$t('M.comm_order')}}:</span><span class="data"> {{ sellHistoryMap.num }}{{$t('M.comm_stock')}}</span>
+                  <span>{{$t('M.otc_formStatistics_turnover')}}{{$t('M.comm_order')}}:</span>
+                  <span class="data"> {{ sellHistoryMap.num }}{{$t('M.comm_stock')}}</span>
                 </p>
               </div>
             </div>
@@ -288,11 +340,22 @@
             </div>
             <!-- 右侧单选日期按钮 -->
             <div class="radio-date">
-              <el-radio-group v-model="activedRadioId" @change="radioChouse">
-                <el-radio :label="1">{{$t('M.otc_formStatistics_date')}}</el-radio>
-                <el-radio :label="2">{{$t('M.otc_formStatistics_week')}}</el-radio>
-                <el-radio :label="3">{{$t('M.otc_formStatistics_mouth')}}</el-radio>
-                <el-radio :label="4">{{$t('M.otc_formStatistics_history')}}</el-radio>
+              <el-radio-group
+                v-model="activedRadioId"
+                @change="radioChouse"
+              >
+                <el-radio :label="1">
+                  {{$t('M.otc_formStatistics_date')}}
+                </el-radio>
+                <el-radio :label="2">
+                  {{$t('M.otc_formStatistics_week')}}
+                </el-radio>
+                <el-radio :label="3">
+                  {{$t('M.otc_formStatistics_mouth')}}
+                </el-radio>
+                <el-radio :label="4">
+                  {{$t('M.otc_formStatistics_history')}}
+                </el-radio>
               </el-radio-group>
             </div>
           </div>
@@ -644,7 +707,7 @@ export default {
 }
 </script>
 <style scoped lang="scss" type="text/scss">
-// @import url(../../../static/css/scss/OTC/OTCCenter.scss);
+@import "../../../static/css/scss/index";
 .otc-report-form-statistics-box{
   >.report-form-statistics-content{
     width: 1150px;
@@ -826,7 +889,7 @@ export default {
     }
   }
   &.night{
-    background-color: #121824;
+    background-color: $mainNightBgColor;
     >.report-form-statistics-content{
       >.report-form-title{
         color: #338FF5;
@@ -935,7 +998,7 @@ export default {
     }
   }
   &.day{
-    background-color: #fff;
+    background-color: $mainDayBgColor;
     >.report-form-statistics-content{
       >.report-form-title{
         color: #338FF5;

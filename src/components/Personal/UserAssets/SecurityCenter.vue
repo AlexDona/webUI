@@ -342,18 +342,16 @@
                 :label="$t('M.user_security_phone') + $t('M.user_security_verify')"
                 v-else
               >
-                <el-input
+                <input
+                  class="input padding-l15 box-sizing"
                   v-model="phoneCode"
                   @focus="handleinput1"
                 >
-                  <template slot="append">
-                    <CountDownButton
-                      class="send-code-btn cursor-pointer"
-                      :status="disabledOfPhoneBtn"
-                      @run="sendPhoneOrEmailCode(0)"
-                    />
-                  </template>
-                </el-input>
+                <CountDownButton
+                  class="send-code-btn cursor-pointer"
+                  :status="disabledOfPhoneBtn"
+                  @run="sendPhoneOrEmailCode(0)"
+                />
               </el-form-item>
               <!--没有绑定邮箱不显示-->
               <div v-if="!securityCenter.isMailEnable"></div>
@@ -362,18 +360,16 @@
                 :label="$t('M.user_security_email') + $t('M.user_security_verify')"
                 v-else
               >
-                <el-input
+                <input
+                  class="input padding-l15 box-sizing"
                   v-model="emailCode"
                   @focus="handleinput1"
                 >
-                  <template slot="append">
-                    <CountDownButton
-                      class="send-code-btn cursor-pointer"
-                      :status="disabledOfEmailBtn"
-                      @run="sendPhoneOrEmailCode(1)"
-                    />
-                  </template>
-                </el-input>
+                  <CountDownButton
+                    class="send-code-btn cursor-pointer"
+                    :status="disabledOfEmailBtn"
+                    @run="sendPhoneOrEmailCode(1)"
+                  />
               </el-form-item>
               <!--没有绑定谷歌不显示-->
               <div v-if="!securityCenter.isGoogleEnable"></div>
@@ -424,45 +420,41 @@
               <!--开启手机-->
               <!--手机验证-->
               <el-form-item
-                :title="$t('M.user_security_phone') + $t('M.user_security_verify')"
+                :label="$t('M.user_security_phone') + $t('M.user_security_verify')"
                 v-show="openPhone"
               >
-                <el-input
+                <input
+                  class="input padding-l15 box-sizing"
                   v-model="phoneCode"
                   @focus="handleinput"
                 >
-                  <template slot="append">
-                    <CountDownButton
-                      class="send-code-btn cursor-pointer"
-                      :status="disabledOfPhoneBtn"
-                      @run="sendPhoneOrEmailCode(0)"
-                    />
-                  </template>
-                </el-input>
+                <CountDownButton
+                  class="send-code-btn cursor-pointer"
+                  :status="disabledOfPhoneBtn"
+                  @run="sendPhoneOrEmailCode(0)"
+                />
               </el-form-item>
               <!--开启邮箱-->
               <!--邮箱验证-->
               <el-form-item
-                :title="$t('M.user_security_email') + $t('M.user_security_verify')"
+                :label="$t('M.user_security_email') + $t('M.user_security_verify')"
                 v-show="openEmail"
               >
-                <el-input
+                <input
+                  class="input padding-l15 box-sizing"
                   v-model="emailCode"
                   @focus="handleinput"
                 >
-                  <template slot="append">
-                    <CountDownButton
-                      class="send-code-btn cursor-pointer"
-                      :status="disabledOfEmailBtn"
-                      @run="sendPhoneOrEmailCode(1)"
-                    />
-                  </template>
-                </el-input>
+                  <CountDownButton
+                    class="send-code-btn cursor-pointer"
+                    :status="disabledOfEmailBtn"
+                    @run="sendPhoneOrEmailCode(1)"
+                  />
               </el-form-item>
               <!--开启谷歌-->
               <!--谷歌验证-->
               <el-form-item
-                :title="$t('M.user_security_google') + $t('M.user_security_verify')"
+                :label="$t('M.user_security_google') + $t('M.user_security_verify')"
                 v-show="openGoogle"
               >
                 <input
@@ -718,7 +710,8 @@ export default {
         // 手机验证码
         case 0:
           if (!targetNum) {
-            this.setErrorMsg(0, '请输入手机验证码')
+            // 请输入手机验证码
+            this.setErrorMsg(0, this.$t('M.comm_please_enter') + this.$t('M.user_security_phone') + this.$t('M.comm_code'))
             this.$forceUpdate()
             return 0
           } else {
@@ -729,7 +722,8 @@ export default {
         // 邮箱验证码
         case 1:
           if (!targetNum) {
-            this.setErrorMsg(1, '请输入邮箱验证码')
+            // 请输入邮箱验证码
+            this.setErrorMsg(1, this.$t('M.comm_please_enter') + this.$t('M.user_security_email') + this.$t('M.comm_code'))
             this.$forceUpdate()
             return 0
           } else {
@@ -740,7 +734,8 @@ export default {
         // 谷歌验证码
         case 2:
           if (!targetNum) {
-            this.setErrorMsg(2, '请输入谷歌验证码')
+            // 请输入谷歌验证码
+            this.setErrorMsg(2, this.$t('M.comm_please_enter') + this.$t('M.user_security_google') + this.$t('M.comm_code'))
             this.$forceUpdate()
             return 0
           } else {
@@ -767,8 +762,9 @@ export default {
       switch (paymentType) {
         case 'email':
           if (!this.securityCenter.isMailBind) {
+            // 未绑定邮箱
             this.$message({
-              message: '未绑定邮箱请先绑定邮箱',
+              message: this.$t('M.comm_not') + this.$t('M.user_security_binding') + this.$t('M.user_security_email'),
               type: 'error'
             })
             this.openTheValidation = false
@@ -785,8 +781,9 @@ export default {
           break
         case 'phone':
           if (!this.securityCenter.isPhoneBind) {
+            // 未绑定手机
             this.$message({
-              message: '未绑定手机请先绑定手机',
+              message: this.$t('M.comm_not') + this.$t('M.user_security_binding') + this.$t('M.user_security_phone'),
               type: 'error'
             })
             this.openTheValidation = false
@@ -803,8 +800,9 @@ export default {
           break
         case 'google':
           if (!this.securityCenter.isGoogleBind) {
+            // 未绑定谷歌
             this.$message({
-              message: '未绑定谷歌请先绑定谷歌',
+              message: this.$t('M.comm_not') + this.$t('M.user_security_binding') + this.$t('M.user_security_google'),
               type: 'error'
             })
             this.openTheValidation = false
@@ -833,26 +831,24 @@ export default {
     },
     // 关闭开启手机邮箱谷歌验证
     async confirmTransactionPassword (type, state) {
-      // let goOnStatus = 0
-      // if (type == 'phone') {
-      //   this.checkoutInputFormat(0, this.phoneCode)
-      //   goOnStatus = 1
-      // } else {
-      //   goOnStatus = 0
-      // }
-      // if (type == 'email') {
-      //   this.checkoutInputFormat(1, this.emailCode)
-      //   goOnStatus = 1
-      // } else {
-      //   goOnStatus = 0
-      // }
-      // if (type == 'google') {
-      //   this.checkoutInputFormat(2, this.googleCode)
-      //   goOnStatus = 1
-      // } else {
-      //   goOnStatus = 0
-      // }
-      // if (goOnStatus) {
+      if (state === 'enable') {
+        if (!this.phoneCode && !this.emailCode && !this.googleCode) {
+          // 请输入验证码
+          this.errorMsg = this.$t('M.comm_please_enter') + this.$t('M.user_security_verify')
+          return false
+        } else {
+          this.errorMsg = ''
+        }
+      } else {
+        if (!this.phoneCode && !this.emailCode && !this.googleCode) {
+          // 请输入验证码
+          this.errorMsg1 = this.$t('M.comm_please_enter') + this.$t('M.user_security_verify')
+          return false
+        } else {
+          this.errorMsg1 = ''
+        }
+      }
+
       let data
       let params = {
         email: this.userInfo.userInfo.email, // 邮箱
@@ -904,7 +900,6 @@ export default {
         this.phoneCode = ''
         this.googleCode = ''
       }
-      // }
     },
     /**
      * 安全中心
@@ -967,8 +962,14 @@ export default {
         height: 50px;
       }
       >.security-setting-box {
+        .send-code-btn {
+          width: 91px;
+          height: 34px;
+          position: absolute;
+          top: 4px;
+        }
         .button {
-          width: 270px;
+          width: 271px;
           height: 34px;
           background: linear-gradient(90deg, #2b396e, #2a5082);
           color: #fff;
@@ -976,11 +977,11 @@ export default {
           line-height: 0;
         }
         .input {
-          width: 220px;
+          width: 180px;
           height: 34px;
         }
         .input-google {
-          width: 270px;
+          width: 271px;
           height: 34px;
         }
         .security-type-icon {
@@ -1036,6 +1037,10 @@ export default {
           color: #fff;
         }
         .security-setting-box {
+          .send-code-btn {
+            background-color: #338FF5;
+            color: #fff;
+          }
           .error-msg{
             height:25px;
             line-height: 25px;
@@ -1105,6 +1110,10 @@ export default {
           color: #333;
         }
         .security-setting-box {
+          .send-code-btn {
+            background-color: #338FF5;
+            color: #fff;
+          }
           .input {
             border: 1px solid #485776;
             color: #fff;

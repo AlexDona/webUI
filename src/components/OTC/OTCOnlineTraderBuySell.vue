@@ -112,7 +112,10 @@
                     />
                      <!-- 4西联汇款 -->
                     <span v-if="payTypes[3] == '1'">
-                      <img src="../../assets/user/xilian.png" alt="" class="xilian">
+                      <img
+                        src="../../assets/user/xilian.png"
+                        class="xilian"
+                      >
                     </span>
                     <!--  5PAYPAL -->
                     <IconFontCommon
@@ -805,6 +808,7 @@ export default {
 </script>
 <style scoped lang="scss" type="text/scss">
 @import "../../../static/css/scss/OTC/OTCCenter.scss";
+@import "../../../static/css/scss/index.scss";
 .otc-online-trader-buy-sell-box{
   // background-color: #1D2331;
   >.online-trader-buy-sell-content{
@@ -1045,7 +1049,7 @@ export default {
     }
   }
   &.night{
-    background-color: #121824;
+    background-color: $mainNightBgColor;
     >.online-trader-buy-sell-content{
       >.online-trader{
           >.online-trader-left{
@@ -1185,7 +1189,7 @@ export default {
     }
   }
   &.day{
-    background-color: #fff;
+    background-color: $mainDayBgColor;
     >.online-trader-buy-sell-content{
       >.online-trader{
           >.online-trader-left{

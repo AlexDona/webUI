@@ -132,11 +132,36 @@
                 v-model="activitedPayTypes"
                 @change='changePayTypes'
               >
-                <el-checkbox label="alipay" v-show="payForListArr[0] === '1'">{{$t('M.comm_alipay')}}</el-checkbox>
-                <el-checkbox label="weixin" v-show="payForListArr[1] === '1'">{{$t('M.comm_weixin')}}</el-checkbox>
-                <el-checkbox label="bank" v-show="payForListArr[2] === '1'">{{$t('M.comm_bank')}}</el-checkbox>
-                <el-checkbox label="xilian" v-show="payForListArr[3] === '1'">{{$t('M.comm_xilian')}}</el-checkbox>
-                <el-checkbox label="paypal" v-show="payForListArr[4] === '1'">PAYPAL</el-checkbox>
+                <el-checkbox
+                  label="alipay"
+                  v-show="payForListArr[0] === '1'"
+                >
+                  {{$t('M.comm_alipay')}}
+                </el-checkbox>
+                <el-checkbox
+                  label="weixin"
+                  v-show="payForListArr[1] === '1'"
+                >
+                  {{$t('M.comm_weixin')}}
+                </el-checkbox>
+                <el-checkbox
+                  label="bank"
+                  v-show="payForListArr[2] === '1'"
+                >
+                  {{$t('M.comm_bank')}}
+                </el-checkbox>
+                <el-checkbox
+                  label="xilian"
+                  v-show="payForListArr[3] === '1'"
+                >
+                  {{$t('M.comm_xilian')}}
+                </el-checkbox>
+                <el-checkbox
+                label="paypal"
+                v-show="payForListArr[4] === '1'"
+                >
+                  PAYPAL
+                </el-checkbox>
               </el-checkbox-group>
               <div class="err">{{errorInfoTradeWay}}</div>
             </div>
@@ -144,9 +169,13 @@
           <div class="common sum-limit">
             <div class="left display-inline-block">
                 <!-- 数量与限额 -->
-                <p class="tips font-size14">{{$t('M.comm_count')}}{{$t('M.comm_and')}}{{$t('M.otc_publishAD_limitMoney')}}</p>
+                <p class="tips font-size14">
+                  {{$t('M.comm_count')}}{{$t('M.comm_and')}}{{$t('M.otc_publishAD_limitMoney')}}
+                </p>
                 <!--必填  -->
-                <p class="warning font-size12">{{$t('M.otc_publishAD_nustFill')}}</p>
+                <p class="warning font-size12">
+                  {{$t('M.otc_publishAD_nustFill')}}
+                </p>
             </div>
             <div class="right display-inline-block">
               <!-- 交易数量 -->
@@ -881,9 +910,9 @@ export default {
 }
 </script>
 <style scoped lang="scss" type="text/scss">
-// @import url(../../../static/css/scss/OTC/OTCCenter.scss);
+@import "../../../static/css/scss/index";
 .otc-publish-AD-box{
-  background-color: #121824;
+  background-color: $mainNightBgColor;
   >.otc-publish-AD-content{
     width: 1150px;
     margin: 70px auto;

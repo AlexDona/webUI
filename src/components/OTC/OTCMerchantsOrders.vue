@@ -223,7 +223,10 @@
                   />
                   <!-- 4西联汇款 -->
                   <span v-if="scope.row.payType === 'xilian'">
-                    <img src="../../assets/user/xilian.png" alt="" class="xilian">
+                    <img
+                      src="../../assets/user/xilian.png"
+                      class="xilian"
+                    >
                   </span>
                   <!--  5PAYPAL -->
                   <IconFontCommon
@@ -505,7 +508,7 @@ export default {
 }
 </script>
 <style scoped lang="scss" type="text/scss">
-  // @import url(../../../static/css/scss/OTC/OTCCenter.scss);
+  @import "../../../static/css/scss/index";
   .otc-merchants-orders-box{
     >.otc-merchants-orders-content{
       width: 1150px;
@@ -563,7 +566,7 @@ export default {
       }
     }
     &.night{
-      background-color: #121824;
+      background-color: $mainNightBgColor;
       >.otc-merchants-orders-content{
         >.merchants-title{
           color: #338FF5;
@@ -605,7 +608,7 @@ export default {
       }
     }
     &.day{
-      background-color: #fff;
+      background-color: $mainDayBgColor;
       >.otc-merchants-orders-content{
         >.merchants-title{
           color: #338FF5;

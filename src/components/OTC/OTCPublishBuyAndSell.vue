@@ -39,7 +39,7 @@
             >
               <!-- 选择币种类型 -->
               <el-form-item
-              :label="$t('M.otc_choice_currency') + $t('M.otc_cancelOrder_type')"
+                :label="$t('M.otc_choice_currency') + $t('M.otc_cancelOrder_type')"
               >
                 <el-select
                   :placeholder="$t('M.comm_please') + $t('M.otc_choice_currency') + $t('M.otc_cancelOrder_type')"
@@ -59,7 +59,7 @@
               </el-form-item>
               <!-- 2.0法币类型 -->
               <el-form-item
-              :label="$t('M.otc_index_chouseType')"
+                :label="$t('M.otc_index_chouseType')"
               >
                 <el-select
                   :placeholder="$t('M.otc_index_chouseType')"
@@ -79,16 +79,20 @@
               <!-- 3.0你想出售或者购买 -->
               <el-form-item>
                 <div class="want-buy-sell-sum">
-                  {{$t('M.otc_index_youWant')}}<span
-                  v-show="publishStyle === 'sell'"
-                  >{{$t('M.comm_offering')}}</span><span
-                  v-show="publishStyle === 'buy'"
-                  >{{$t('M.comm_buying')}}</span>{{$t('M.otc_index_how')}}
+                  {{$t('M.otc_index_youWant')}}
+                  <span v-show="publishStyle === 'sell'">{{$t('M.comm_offering')}}</span>
+                  <span v-show="publishStyle === 'buy'">{{$t('M.comm_buying')}}</span>
+                  {{$t('M.otc_index_how')}}
                 </div>
                 <!-- 当前可用和市价 -->
                 <div class="want-buy-sell-sum-content">
                   <!-- 当前可用 -->
-                  <span class="want-text" v-show="publishStyle === 'sell'">{{$t('M.otc_index_nowUse')}}：</span>
+                  <span
+                    class="want-text"
+                    v-show="publishStyle === 'sell'"
+                  >
+                    {{$t('M.otc_index_nowUse')}}：
+                  </span>
                   <span
                     class="max-sum"
                     v-show="publishStyle === 'sell'"
@@ -98,7 +102,9 @@
                     {{currentlyAvailable ? currentlyAvailable : '--'}}{{coinName}}
                   </span>
                   <!-- 市价 -->
-                  <span class="want-text">{{$t('M.otc_market_price')}}：</span>
+                  <span class="want-text">
+                    {{$t('M.otc_market_price')}}：
+                  </span>
                   <span
                     class="market-price buyOrange"
                   >
@@ -177,7 +183,7 @@
               </el-form-item>
               <!-- 4.0单笔成交限额 -->
               <el-form-item
-              :label="$t('M.otc_index_singleTradeLimit')"
+                :label="$t('M.otc_index_singleTradeLimit')"
               >
                 <div class="volume-business">
                   <input
@@ -208,7 +214,7 @@
               </el-form-item>
               <!-- 5.0备注 -->
               <el-form-item
-              :label="$t('M.comm_remark')"
+                :label="$t('M.comm_remark')"
               >
                 <div class="remark">
                   <!-- '请说明有关于您交易的相关条款或者其它您想让对方获悉得信息，以便对方和您快速交易', -->
@@ -773,8 +779,9 @@ export default {
 </script>
 <style scoped lang="scss" type="text/scss">
   @import url(../../../static/css/scss/OTC/OTCCenter.scss);
+  @import "../../../static/css/scss/index";
   .otc-publish-buy-and-sell-box {
-    background-color: #1D2331;
+    background-color: $mainNightBgColor;
     > .publish-buy-and-sell-content {
       width: 1150px;
       margin: 107px auto;
