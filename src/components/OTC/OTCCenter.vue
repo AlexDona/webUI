@@ -132,16 +132,32 @@
                 :label="$t('M.otc_index_Merchant')"
               >
                 <template slot-scope = "s">
-                  <div>
+                  <div class="one">
                     <!-- 如果是商家用户就显示商家图标 -->
-                    <img
+                    <!-- <img
                       src="../../assets/develop/shangjia.png"
                       alt=""
                       class="shang-icon"
                       v-if="s.row.userType === 'MERCHANT'"
                     >
+                    {{s.row.userName}} -->
+                    <el-tooltip
+                      effect="dark"
+                      content="已认证商家"
+                      placement="left"
+                    >
+                      <img
+                        src="../../assets/develop/shangjia.png"
+                        alt=""
+                        class="shang-icon"
+                        v-if="s.row.userType === 'MERCHANT'"
+                      >
+                    </el-tooltip>
                     {{s.row.userName}}
                   </div>
+                  <!-- <el-tooltip class="item" effect="dark" content="Left Center 提示文字" placement="left">
+                    <el-button>左边</el-button>
+                  </el-tooltip> -->
                 </template>
               </el-table-column>
               <!-- 信用 -->
@@ -236,7 +252,7 @@
                   <el-tooltip
                     effect="dark"
                     :content="s.row.remark"
-                    placement="bottom"
+                    placement="bottom-start"
                   >
                     <span class="remark-tips">
                       {{s.row.remark}}
@@ -920,7 +936,8 @@ export default {
         padding-bottom: 20px;
       }
       >.otc-merchant-content{
-        min-height: 564px;
+        // min-height: 564px;
+        // min-height: 724px;
         // background-color: #202A33;
         margin-top: 30px;
         padding: 0 10px;
@@ -975,10 +992,12 @@ export default {
         }
         >.otc-merchant-list{
           margin-top: 30px;
+          // height: 480px;
           .remark-tips{
             text-overflow: ellipsis;
-            white-space: nowrap;overflow:
-            hidden;cursor:pointer;
+            white-space: nowrap;
+            overflow: hidden;
+            cursor: pointer;
           }
           .page{
             text-align: center;
@@ -990,6 +1009,7 @@ export default {
             width: 14px;
             height: 19px;
             vertical-align: top;
+            cursor: pointer;
           }
           .xilian{
             vertical-align: middle;
@@ -1053,7 +1073,6 @@ export default {
     >.otc-center-content{
       >.otc-online-trading{
         >.otc-online-buy-and-sell-button{
-          background-color: $rockBottomNightBgColor;
         }
         >.otc-merchant-content{
           background-color: $mainNightBgColor;
@@ -1085,7 +1104,7 @@ export default {
             }
           }
           >.otc-merchant-list{
-            height: 480px;
+            // height: 480px;
             .xilian{
             }
             .red{
@@ -1158,7 +1177,7 @@ export default {
             }
           }
           >.otc-merchant-list{
-            height: 480px;
+            // height: 480px;
             .xilian{
             }
             .red{
