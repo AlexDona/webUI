@@ -388,7 +388,7 @@
       </div>
     </div>
     <!-- 4.0 底部 -->
-    <FooterCommon/>
+    <keep-aline><FooterCommon/></keep-aline>
   </div>
 </template>
 <!--请严格按照如下书写书序-->

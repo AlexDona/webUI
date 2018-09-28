@@ -5,7 +5,7 @@
   >
     <header class="personal-height background-color personal-height40 line-height40 font-size16">
       <span class="padding-left15 font-weight600 coin-color">
-        币币订单
+        <!--币币订单-->
         {{ $t('M.user_coin') }}{{ $t('M.comm_order') }}
       </span>
     </header>

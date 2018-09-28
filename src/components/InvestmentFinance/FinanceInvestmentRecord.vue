@@ -188,7 +188,7 @@
         </div>
       </div>
     </div>
-    <FooterCommon/>
+    <keep-aline><FooterCommon/></keep-aline>
   </div>
 </template>
 <!--请严格按照如下书写书序-->

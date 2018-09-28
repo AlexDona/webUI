@@ -684,30 +684,40 @@ export default {
             "updateTime":"2018-09-19 17:21:05"
           */
       /*
-          * area: ""
-          high: 0
+          amount24h: 3.376161
+          area: "ETH"
+          areaId: "492663598368161792"
+          countExchange: 6
+          high: 7.1
           hot: false
-          id: ""
-          image: ""
-          low: 0
-          price: 0
-          rose: 0
-          sellname: ""
-          sellsymbol: ""
-          tendency: Array(8)
-          tradeId: ""
-          volume: 0 */
+          id: "btceth"
+          image: "http://fubt-3.oss-cn-hongkong.aliyuncs.com/dae9ad6c-b4e9-47ad-a655-bc24d05d698c"
+          kai: 0.02
+          low: 0.000001
+          plateId: "492663683579641856"
+          price: 0.1
+          priceExchange: 6
+          rose: 4
+          sellname: "比特币"
+          sellsymbol: "BTC"
+          tendency: Array(0)
+          tradeId: "492663376246210560"
+          volume: 116.21105 */
       let activeSymbol = {
+        area: e.buyCoinName,
+        areaId: e.tradeAreaId,
+        countExchange: e.quantityDecimalPlace,
         id: e.sellCoinName + e.buyCoinName,
-        sellname: '',
-        sellsymbol: '',
+        priceExchange: e.priceDecimalPlace,
+        sellname: e.sellCoinName,
+        sellsymbol: e.sellCoinNickname,
         tradeId: e.id
       }
       this.$store.commit('trade/SET_JUMP_STATUS', true)
       this.$store.commit('trade/SET_JUMP_SYMBOL', activeSymbol)
       console.log(this.activeSymbol)
       // 设置当前交易区
-      const id = e.buyCoinId
+      const id = e.tradeAreaId
       const name = e.buyCoinName
       console.log(e)
       this.$store.commit('common/CHANGE_ACTIVE_TRADE_AREA', {

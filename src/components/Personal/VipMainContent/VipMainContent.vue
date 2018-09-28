@@ -16,26 +16,36 @@
       <div
         class="content-main display-flex"
         v-show="showOpenTheVIPPage"
-        v-if="filteredData[0]"
+        v-if="vipPriceInfo1[0]"
       >
         <div class="content-module cursor-pointer">
           <p class="content-vip-one text-align-c">
             VIP1
           </p>
-          <p class="content-discount line-height50 text-align-c font-size16">手续费折扣</p>
-          <p class="content-text line-height50 text-align-c font-size18">九折</p>
+          <p class="content-discount line-height50 text-align-c font-size16">
+            <!--手续费折扣-->
+            {{ $t('M.comm_service_charge') }}{{ $t('M.user_vip_discount') }}
+          </p>
+          <p class="content-text line-height50 text-align-c font-size18">
+            <!--九折-->
+            {{ $t('M.user_vip_nine') }}{{ $t('M.user_vip_break') }}
+          </p>
           <p class="content-discount line-height50 text-align-c font-size16">
             <span class="content-discount-color">
-              {{vipPriceInfo[0].value}}FUC
+              {{vipPriceInfo1[0].value}}{{vipPriceInfo1[0].vipCoinName}}
             </span>
-            <span>/月</span>
+            <span>
+              <!--/月-->
+              /{{ $t('M.user_vip_month') }}
+            </span>
           </p>
           <p class="content-button">
             <button
               class="click-btn cursor-pointer"
               @click.prevent="statusImmediatelyOpened('vip1')"
             >
-              立即开通
+              <!--立即开通-->
+              {{ $t('M.user_vip_immediately_opened') }}
             </button>
           </p>
         </div>
@@ -43,20 +53,30 @@
           <p class="content-vip-one text-align-c">
             VIP2
           </p>
-          <p class="content-discount line-height50 text-align-c font-size16">手续费折扣</p>
-          <p class="content-text line-height50 text-align-c font-size18">八折</p>
+          <p class="content-discount line-height50 text-align-c font-size16">
+            <!--手续费折扣-->
+            {{ $t('M.comm_service_charge') }}{{ $t('M.user_vip_discount') }}
+          </p>
+          <p class="content-text line-height50 text-align-c font-size18">
+            <!--八折-->
+            {{ $t('M.user_vip_eight') }}{{ $t('M.user_vip_break') }}
+          </p>
           <p class="content-discount line-height50 text-align-c font-size16">
             <span class="content-discount-color">
-              {{vipPriceInfo[4].value}}FUC
+              {{vipPriceInfo1[4].value}}{{vipPriceInfo1[4].vipCoinName}}
             </span>
-            <span>/月</span>
+            <span>
+              <!--/月-->
+              /{{ $t('M.user_vip_month') }}
+            </span>
           </p>
           <p class="content-button">
             <button
               class="click-btn cursor-pointer"
               @click.prevent="statusImmediatelyOpened('vip2')"
             >
-              立即开通
+              <!--立即开通-->
+              {{ $t('M.user_vip_immediately_opened') }}
             </button>
           </p>
         </div>
@@ -64,20 +84,30 @@
           <p class="content-vip-one text-align-c">
             VIP3
           </p>
-          <p class="content-discount line-height50 text-align-c font-size16">手续费折扣</p>
-          <p class="content-text line-height50 text-align-c font-size18">七折</p>
+          <p class="content-discount line-height50 text-align-c font-size16">
+            <!--手续费折扣-->
+            {{ $t('M.comm_service_charge') }}{{ $t('M.user_vip_discount') }}
+          </p>
+          <p class="content-text line-height50 text-align-c font-size18">
+            <!--七折-->
+            {{ $t('M.user_vip_seven') }}{{ $t('M.user_vip_break') }}
+          </p>
           <p class="content-discount line-height50 text-align-c font-size16">
             <span class="content-discount-color">
-              {{vipPriceInfo[8].value}}FUC
+              {{vipPriceInfo1[8].value}}{{vipPriceInfo1[8].vipCoinName}}
             </span>
-            <span>/月</span>
+            <span>
+              <!--/月-->
+              /{{ $t('M.user_vip_month') }}
+            </span>
           </p>
           <p class="content-button">
             <button
               class="click-btn cursor-pointer"
               @click.prevent="statusImmediatelyOpened('vip3')"
             >
-              立即开通
+              <!--立即开通-->
+              {{ $t('M.user_vip_immediately_opened') }}
             </button>
           </p>
         </div>
@@ -85,20 +115,30 @@
           <p class="content-vip-one text-align-c">
             VIP4
           </p>
-          <p class="content-discount line-height50 text-align-c font-size16">手续费折扣</p>
-          <p class="content-text line-height50 text-align-c font-size18">六折</p>
+          <p class="content-discount line-height50 text-align-c font-size16">
+            <!--手续费折扣-->
+            {{ $t('M.comm_service_charge') }}{{ $t('M.user_vip_discount') }}
+          </p>
+          <p class="content-text line-height50 text-align-c font-size18">
+            <!--六折-->
+            {{ $t('M.user_vip_six') }}{{ $t('M.user_vip_break') }}
+          </p>
           <p class="content-discount line-height50 text-align-c font-size16">
             <span class="content-discount-color">
-              {{vipPriceInfo[12].value}}FUC
+              {{vipPriceInfo1[12].value}}{{vipPriceInfo1[12].vipCoinName}}
             </span>
-            <span>/月</span>
+            <span>
+              <!--/月-->
+              /{{ $t('M.user_vip_month') }}
+            </span>
           </p>
           <p class="content-button">
             <button
               class="click-btn cursor-pointer"
               @click.prevent="statusImmediatelyOpened('vip4')"
             >
-              立即开通
+              <!--立即开通-->
+              {{ $t('M.user_vip_immediately_opened') }}
             </button>
           </p>
         </div>
@@ -106,20 +146,30 @@
           <p class="content-vip-one text-align-c">
             VIP5
           </p>
-          <p class="content-discount line-height50 text-align-c font-size16">手续费折扣</p>
-          <p class="content-text line-height50 text-align-c font-size18">五折</p>
+          <p class="content-discount line-height50 text-align-c font-size16">
+            <!--手续费折扣-->
+            {{ $t('M.comm_service_charge') }}{{ $t('M.user_vip_discount') }}
+          </p>
+          <p class="content-text line-height50 text-align-c font-size18">
+            <!--五折-->
+            {{ $t('M.user_vip_five') }}{{ $t('M.user_vip_break') }}
+          </p>
           <p class="content-discount line-height50 text-align-c font-size16">
             <span class="content-discount-color">
-              {{vipPriceInfo[16].value}}FUC
+              {{vipPriceInfo1[16].value}}{{vipPriceInfo1[16].vipCoinName}}
             </span>
-            <span>/月</span>
+            <span>
+              <!--/月-->
+              /{{ $t('M.user_vip_month') }}
+            </span>
           </p>
           <p class="content-button">
             <button
               class="click-btn cursor-pointer"
               @click.prevent="statusImmediatelyOpened('vip5')"
             >
-              立即开通
+              <!--立即开通-->
+              {{ $t('M.user_vip_immediately_opened') }}
             </button>
           </p>
         </div>
@@ -130,7 +180,7 @@
           <!--<p class="content-discount line-height50 text-align-c font-size16">手续费折扣</p>-->
           <!--<p class="content-text line-height50 text-align-c font-size18">四折</p>-->
           <!--<p class="content-discount line-height50 text-align-c font-size16">-->
-            <!--<span>{{vipPriceInfo[20].value}}FUC</span>-->
+            <!--<span>{{vipPriceInfo1[20].value}}{{vipPriceInfo1[20].vipCoinName}}</span>-->
             <!--<span>/月</span>-->
           <!--</p>-->
           <!--<p class="content-button">-->
@@ -143,12 +193,16 @@
           <!--</p>-->
         <!--</div>-->
         <p class="content-info-hint text-align-r padding-right23 box-sizing font-size12">
-          <span>还没有FUC?</span>
+          <span>
+            <!--还没有FUC?-->
+            {{ $t('M.user_vip_not_yet') }}
+          </span>
           <span
             class="hint-color cursor-pointer"
             @click.prevent="returnSuperior"
           >
-            立即购买
+            <!--立即购买-->
+            {{ $t('M.user_vip_immediately_buy') }}
           </span>
         </p>
       </div>
@@ -158,46 +212,74 @@
         v-show="vipShowDetailsPage"
       >
         <div class="detail-page-grade display-flex">
-          <div class="page-grade-title font-size14">开通等级</div>
+          <div class="page-grade-title font-size14">
+            <!--开通等级-->
+            {{ $t('M.user_vip_opening_level') }}
+          </div>
           <div
             class="grade cursor-pointer text-align-c"
             @click.prevent="stateOpeningLevel(1)"
             :class="{ blue1:changeRed1 == 1}"
           >
-            <p class="font-size16 grade-color font-weight600">VIP1</p>
-            <p class="font-size12 grade-height">手续费9折</p>
+            <p class="font-size16 grade-color font-weight600">
+              VIP1
+            </p>
+            <p class="font-size12 grade-height">
+              <!--手续费9折-->
+              {{ $t('M.comm_service_charge') }}9{{ $t('M.user_vip_break') }}
+            </p>
           </div>
           <div
             class="grade cursor-pointer text-align-c"
             @click.prevent="stateOpeningLevel(2)"
             :class="{ blue1:changeRed1 == 2}"
           >
-            <p class="font-size16 grade-color font-weight600">VIP2</p>
-            <p class="font-size12 grade-height">手续费8折</p>
+            <p class="font-size16 grade-color font-weight600">
+              VIP2
+            </p>
+            <p class="font-size12 grade-height">
+              <!--手续费8折-->
+              {{ $t('M.comm_service_charge') }}8{{ $t('M.user_vip_break') }}
+            </p>
           </div>
           <div
             class="grade cursor-pointer text-align-c"
             @click.prevent="stateOpeningLevel(3)"
             :class="{ blue1:changeRed1 == 3}"
           >
-            <p class="font-size16 grade-color font-weight600">VIP3</p>
-            <p class="font-size12 grade-height">手续费7折</p>
+            <p class="font-size16 grade-color font-weight600">
+              VIP3
+            </p>
+            <p class="font-size12 grade-height">
+              <!--手续费7折-->
+              {{ $t('M.comm_service_charge') }}7{{ $t('M.user_vip_break') }}
+            </p>
           </div>
           <div
             class="grade cursor-pointer text-align-c"
             @click.prevent="stateOpeningLevel(4)"
             :class="{ blue1:changeRed1 == 4}"
           >
-            <p class="font-size16 grade-color font-weight600">VIP4</p>
-            <p class="font-size12 grade-height">手续费6折</p>
+            <p class="font-size16 grade-color font-weight600">
+              VIP4
+            </p>
+            <p class="font-size12 grade-height">
+              <!--手续费6折-->
+              {{ $t('M.comm_service_charge') }}6{{ $t('M.user_vip_break') }}
+            </p>
           </div>
           <div
             class="grade cursor-pointer text-align-c"
             @click.prevent="stateOpeningLevel(5)"
             :class="{ blue1:changeRed1 == 5}"
           >
-            <p class="font-size16 grade-color font-weight600">VIP5</p>
-            <p class="font-size12 grade-height">手续费5折</p>
+            <p class="font-size16 grade-color font-weight600">
+              VIP5
+            </p>
+            <p class="font-size12 grade-height">
+              <!--手续费5折-->
+              {{ $t('M.comm_service_charge') }}5{{ $t('M.user_vip_break') }}
+            </p>
           </div>
           <!--<div-->
             <!--class="grade cursor-pointer text-align-c"-->
@@ -212,17 +294,21 @@
           class="detail-page-duration display-flex"
           v-if="filteredData[0]"
         >
-          <div class="duration-title font-size14">开通时长</div>
+          <div class="duration-title font-size14">
+            <!--开通时长-->
+            {{ $t('M.user_vip_opening_time') }}
+          </div>
           <div
             class="duration cursor-pointer cursor-pointer text-align-c"
             @click.prevent="changeMonth(3, filteredData[0].id)"
             :class="{ red:changeRed == 3}"
           >
             <p class="duration-month font-size16">
-              3个月
+              <!--3个月-->
+              3{{ $t('M.user_vip_months') }}
             </p>
             <p class="duration-currency font-size18">
-              {{filteredData[1].value}}FUC
+              {{filteredData[1].value}}{{vipPriceInfo1[1].vipCoinName}}
             </p>
           </div>
           <div
@@ -231,10 +317,11 @@
             :class="{ red:changeRed == 6}"
           >
             <p class="duration-month font-size16">
-              6个月
+              <!--6个月-->
+              6{{ $t('M.user_vip_months') }}
             </p>
             <p class="duration-currency font-size18">
-              {{filteredData[2].value}}FUC
+              {{filteredData[2].value}}{{filteredData[2].vipCoinName}}
             </p>
             <p class="duration-through ">
               600FUC
@@ -246,10 +333,11 @@
             :class="{ red:changeRed == 12}"
           >
             <p class="duration-month font-size16">
-              12个月
+              <!--12个月-->
+              12{{ $t('M.user_vip_months') }}
             </p>
             <p class="duration-currency font-size18">
-              {{filteredData[3].value}}FUC
+              {{filteredData[3].value}}{{filteredData[3].vipCoinName}}
             </p>
             <p class="duration-through">
               1200FUC
@@ -264,7 +352,7 @@
               1个月
             </p>
             <p class="duration-currency font-size18">
-              {{filteredData[0].value}}FUC
+              {{filteredData[0].value}}{{filteredData[0].vipCoinName}}
             </p>
           </div>
         </div>
@@ -273,13 +361,16 @@
           <div class="usable">
             <span class="usable-asset font-size16">
               {{ currencyAsset }}
-              <sub class="currency font-size12">FUC</sub>
+              <sub class="currency font-size12">
+                {{filteredData[0].vipCoinName}}
+              </sub>
             </span>
             <span
               class="usable-gain cursor-pointer font-size12 display-inline-block"
               @click.prevent="returnSuperior"
             >
-              立即获取
+              <!--立即获取-->
+              {{ $t('M.user_vip_immediate_access') }}
             </span>
           </div>
         </div>
@@ -288,29 +379,52 @@
             class="page-btn cursor-pointer"
             @click.prevent="confirmSubmit"
           >
-            确定
+            <!--确定-->
+            {{ $t('M.comm_confirm') }}
           </button>
         </div>
       </div>
       <div class="text-below box-sizing font-size12">
-        <p class="font-size14 warm-prompt">温馨提示:</p>
-        <p>
-          <span class="warm-text-color">VIP开通后立即生效，交易结算时自动计算折扣</span>
-          <span class="prompt-color">《折扣说明》</span>
+        <p class="font-size14 warm-prompt">
+          <!--温馨提示:-->
+          {{ $t('M.user_account_warm_prompt') }}:
         </p>
-        <p class="warm-text-color">费率折扣仅对交易手续费生效</p>
-        <p class="warm-text-color">一个月有效期时长为30个自然日</p>
-        <p class="warm-text-color">开通即代表您已同意
-          <span class="prompt-color">《VIP服务协议》</span>
+        <p>
+          <span class="warm-text-color">
+            <!--VIP开通后立即生效，交易结算时自动计算折扣-->
+            {{ $t('M.user_vip_text1') }}
+          </span>
+          <span class="prompt-color">
+            <!--《折扣说明》-->
+            {{ $t('M.user_vip_text2') }}
+          </span>
+        </p>
+        <p class="warm-text-color">
+          <!--费率折扣仅对交易手续费生效-->
+          {{ $t('M.user_vip_text3') }}
+        </p>
+        <p class="warm-text-color">
+          <!--一个月有效期时长为30个自然日-->
+          {{ $t('M.user_vip_text4') }}
+        </p>
+        <p class="warm-text-color">
+          <!--开通即代表您已同意-->
+          {{ $t('M.user_vip_text5') }}
+          <span class="prompt-color">
+            <!--《VIP服务协议》-->
+            {{ $t('M.user_vip_text6') }}
+          </span>
         </p>
       </div>
+      <!--开通VIP-->
       <el-dialog
-        title="开通VIP"
+        :title="$t('M.user_vip_dredge') + 'VIP'"
         :visible.sync="dialogFormVisible"
       >
         <el-form>
+          <!--交易密码-->
           <el-form-item
-            label="交易密码"
+            :label="$t('M.comm_password')"
           >
             <el-input
               type="password"
@@ -335,13 +449,14 @@
             type="primary"
             @click.prevent="dialogFormVisibleButton"
           >
-            确 定
+            <!--确 定-->
+            {{ $t('M.comm_confirm') }}
           </el-button>
         </div>
       </el-dialog>
     </div>
     <!--底部-->
-    <FooterCommon/>
+    <keep-aline><FooterCommon/></keep-aline>
   </div>
 </template>
 <!--请严格按照如下书写书序-->
@@ -357,7 +472,8 @@ import {
   currencyApplicationDownloadUrl
 } from '../../../utils/api/personal'
 import {
-  returnAjaxMessage
+  returnAjaxMessage,
+  reflashUserInfo
 } from '../../../utils/commonFunc'
 // 底部
 const { mapMutations } = createNamespacedHelpers('personal')
@@ -373,7 +489,7 @@ export default {
       showOpenTheVIPPage: true, // 开启vip页面默认
       vipShowDetailsPage: false, // 开启vip详情页面默认
       password: '', // 开启vip详情页面默认
-      vipPriceInfo: [], // vip信息接收
+      vipPriceInfo1: [], // vip信息接收
       dialogFormVisible: false,
       type: 1, // vip类型
       active: 0,
@@ -392,9 +508,11 @@ export default {
     require('../../../../static/css/theme/day/Personal/VipMainContent/VipMainContentDay.css')
     // 黑色主题样式
     require('../../../../static/css/theme/night/Personal/VipMainContent/VipMainContentNight.css')
+    reflashUserInfo(this)
     this.getVipPriceInfo()
     // this.toggleAssetsCurrencyId()
     this.getCurrencyApplicationDownloadUrl()
+    console.log(this.vipPriceInfo1)
   },
   mounted () {},
   activited () {},
@@ -451,7 +569,8 @@ export default {
         // 编辑用户备注
         case 0:
           if (!targetNum) {
-            this.setErrorMsg(0, '请输入交易密码')
+            // 请输入交易密码
+            this.setErrorMsg(0, this.$t('M.comm_please_enter') + this.$t('M.comm_password'))
             this.$forceUpdate()
             return 0
           } else {
@@ -467,8 +586,14 @@ export default {
     },
     // 确定提交
     confirmSubmit () {
-      console.log(1)
-      this.dialogFormVisible = true
+      if (!this.vipName && !this.month) {
+        this.$message({
+          message: this.$t('M.user_vip_please_choose'),
+          type: 'error'
+        })
+      } else {
+        this.dialogFormVisible = true
+      }
     },
     // 选择当前开通月数显示样式
     change (index) {
@@ -527,6 +652,7 @@ export default {
         } else {
           this.dialogFormVisible = false
           this.password = ''
+          this.toggleAssetsCurrencyId()
           console.log(data)
         }
       }
@@ -542,7 +668,8 @@ export default {
         return false
       } else {
         // 返回展示
-        this.vipPriceInfo = data.data.data
+        this.vipPriceInfo1 = data.data.data
+        console.log(this.vipPriceInfo1[0].vipCoinName)
       }
     },
     async getCurrencyApplicationDownloadUrl () {
@@ -579,7 +706,7 @@ export default {
       partnerId: state => state.common.partnerId
     }),
     filteredData () {
-      return this.vipPriceInfo.filter((item) => {
+      return this.vipPriceInfo1.filter((item) => {
         // console.log(item)
         return item.id == this.type
       })

@@ -17,21 +17,26 @@
           <div class="order-list-head">
             <!-- 买卖家 -->
             <div class="buyer-seller">
-              卖家：{{item.sellName}}
+              <!--卖家-->
+              {{$t('M.otc_seller')}}：{{item.sellName}}
             </div>
             <!-- 订单号 -->
             <div class="order-id">
-              订单号：{{item.orderSequence}}
+              <!--订单号-->
+              {{$t('M.otc_MerchantsOrders_orderNum')}}：{{item.orderSequence}}
             </div>
             <!-- 挂单时间 -->
             <div class="deal-time">
-              挂单时间：{{item.createTime}}
+              <!--挂单时间-->
+              {{$t('M.otc_entrust_time')}}：{{item.createTime}}
             </div>
             <div class="order-list-head-icon buy-icon">
               <!-- <img src="../../assets/develop/buy.png" alt=""> -->
             </div>
             <div class="buy-sell-icon">
-              买
+              <!--买-->
+              {{$t('' +
+              'M.comm_bid')}}
             </div>
           </div>
           <!-- 1.2 表身体 -->
@@ -46,26 +51,40 @@
                   width="30"
                   class="logo-icon"
                 >
-                <p class="logo-name">{{item.coinName}}</p>
+                <p class="logo-name">
+                  {{item.coinName}}
+                </p>
               </div>
               <div class="left-info">
                 <!-- 金额 -->
                 <p class="trade-info">
-                  <span>金额：</span>
-                  <span class="money">{{item.symbol}}{{item.payAmount}}</span>
+                  <span>
+                    <!--金额-->
+                    {{$t('M.comm_money')}}：
+                  </span>
+                  <span class="money">
+                    {{item.symbol}}{{item.payAmount}}
+                  </span>
                 </p>
                 <!-- 单价 -->
                 <p class="trade-info">
-                  <span>单价：{{item.price}}</span>
+                  <span>
+                    <!--单价-->
+                    {{$t('M.otc_index_UnitPrice')}}：{{item.price}}
+                  </span>
                   &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                  <span>数量：{{item.pickCount}}</span>
+                  <span>
+                    <!--数量-->
+                    {{$t('M.comm_count')}}：{{item.pickCount}}
+                  </span>
                 </p>
                 <!-- 卖家手机号 -->
                 <!-- 付款前不显示 -->
                 <p
                   class="trade-info"
                 >
-                  卖家手机号：{{item.sellPhone}}
+                  <!--卖家手机号-->
+                  {{$t('M.otc_trading_sellphone')}}：{{item.sellPhone}}
                 </p>
               </div>
             </div>
@@ -84,8 +103,9 @@
                         iconName="icon-qiandai-tianchong"
                       />
                     </div>
+                    <!--选择支付方式-->
                     <el-select
-                      placeholder="选择支付方式"
+                      :placeholder="$t('M.otc_MerchantsOrders_chouse') + $t('M.otc_index_Payment_method')"
                       v-model="activePayModeList[index]"
                       @change="changeUserBankInfo(index)"
                     >
@@ -100,15 +120,23 @@
                   </div>
                   <!-- 收款人 -->
                   <p class="bank-info">
-                    <span>收款人: {{item.sellName}}</span>
+                    <span>
+                      <!--收款人-->
+                      {{$t('M.otc_payee')}}: {{item.sellName}}
+                    </span>
                   </p>
                   <!-- 开户行 -->
                   <p
                     class="bank-info"
                     v-if="activeBankType[index] === 'bank'"
                   >
-                    <span>开户行: </span>
-                    <span>{{activeBankProv[index]}}{{activeBankCity[index]}}{{activeBankArea[index]}}{{activeBankName[index]}}{{activeBankDetailAddress[index]}}</span>
+                    <span>
+                      <!--开户行-->
+                      {{$t('M.otc_opening_bank')}}:
+                    </span>
+                    <span>
+                      {{activeBankProv[index]}}{{activeBankCity[index]}}{{activeBankArea[index]}}{{activeBankName[index]}}{{activeBankDetailAddress[index]}}
+                    </span>
                   </p>
                   <!-- 账户 -->
                   <p
@@ -116,40 +144,55 @@
                     v-if="activeBankType[index] === 'bank'"
                   >
                     <span>
-                      账&nbsp;&nbsp;&nbsp;户: {{activePayModeList[index]}}
+                      <!--账&nbsp;&nbsp;&nbsp;户-->
+                      {{$t('M.co' + 'mm_bill')}}: {{activePayModeList[index]}}
                     </span>
                   </p>
                   <p
                     class="bank-info"
                     v-if="activeBankType[index] === 'alipay'"
                   >
-                    <span>支付宝账户:</span>
+                    <span>
+                      <!--支付宝账户-->
+                      {{$t('M.comm_alipay')}}{{$t('M.user_google_account')}}:
+                    </span>
                     <span>{{activePayModeList[index]}}</span>
                   </p>
                   <p
                     class="bank-info"
                     v-if="activeBankType[index] === 'wx'"
                   >
-                    <span>微信账户:</span>
+                    <span>
+                      <!--微信账户/-->
+                      {{$t('M.comm_weixin')}}{{$t('M.user_google_account')}}:
+                    </span>
                     <span>{{activePayModeList[index]}}</span>
                   </p>
                   <p
                     class="bank-info"
                     v-if="activeBankType[index] === 'paypal'"
                   >
-                    <span>paypal账户:</span>
+                    <span>
+                      <!--paypal账户-->
+                      {{$t('M.user_account_paypal')}}{{$t('M.user_google_account')}}:
+                    </span>
                     <span>{{activePayModeList[index]}}</span>
                   </p>
                   <p
                     class="bank-info"
                     v-if="activeBankType[index] === 'xilian'"
                   >
-                    <span>西联汇款账户:</span>
+                    <span>
+                      <!--西联汇款账户-->
+                      {{$t('M.user_account_western_union')}}{{$t('M.user_google_account')}}::
+                    </span>
                     <span>{{activePayModeList[index]}}</span>
                   </p>
                 </div>
                 <!-- 扫码支付 activeBankCode[index]  :src="item.coinUrl"-->
-                <div class="bank-info-picture display-inline-block" v-if="activeBankType[index] === 'wx' || activeBankType[index] === 'alipay'">
+                <div
+                  class="bank-info-picture display-inline-block"
+                  v-if="activeBankType[index] === 'wx' || activeBankType[index] === 'alipay'">
                   <div class="picture-box">
                     <el-popover
                       placement="bottom"
@@ -161,7 +204,10 @@
                         :src="activeBankCode[index]"
                       >
                       <!-- src="../../assets/develop/weixin.png" -->
-                      <el-button slot="reference">扫码支付</el-button>
+                      <el-button slot="reference">
+                        <!--扫码支付-->
+                        {{$t('M.otc_tradingorder')}}
+                      </el-button>
                     </el-popover>
                   </div>
                 </div>
@@ -180,7 +226,8 @@
                         class="font-size16"
                         iconName="icon-yinhangqia"
                       />
-                      银行卡已付款
+                      <!--银行卡已付款-->
+                      {{$t('M.otc_trading_bankmoney_payment')}}
                     </span>
                     <span
                       v-if="item.payType === 'alipay'"
@@ -189,7 +236,8 @@
                         class="font-size16"
                         iconName="icon-zhifubao1"
                       />
-                      支付宝已付款
+                      <!--支付宝已付款-->
+                      {{$t('M.otc_trading_alipay_payment')}}
                     </span>
                     <span
                       v-if="item.payType === 'wx'"
@@ -198,13 +246,15 @@
                         class="font-size16"
                         iconName="icon-weixin1"
                       />
-                      微信已付款
+                      <!--微信已付款-->
+                      {{$t('M.otc_trading_wechat_payment')}}
                     </span>
                     <span
                       v-if="item.payType === 'xilian'"
                     >
                       <img src="../../../assets/user/xilian.png" alt="" class="xilian">
-                      西联汇款已付款
+                      <!--西联汇款已付款-->
+                       {{$t('M.otc_trading_xilianmoney_payment')}}
                     </span>
                     <span
                       v-if="item.payType === 'paypal'"
@@ -213,20 +263,31 @@
                         class="font-size16"
                         iconName="icon-paypal"
                       />
-                      PAYPAL已付款
+                      <!--PAYPAL已付款-->
+                      {{$t('M.user_account_paypal')}}{{$t('M.otc_enum_status_yifukuan')}}
                     </span>
                   </p>
                   <p class="bankMoneyInfo">
-                    <span>转账金额: </span><span>{{item.symbol}}{{item.payAmount}}</span>
+                    <span>
+                      <!--转账金额-->
+                      {{$t('M.otc_tradingorder_transformAcconu')}}:
+                    </span><span>
+                    {{item.symbol}}{{item.payAmount}}
+                  </span>
                   </p>
                   <p class="bankMoneyInfo">
                     <span>
-                      账&nbsp;&nbsp;&nbsp;户: </span>
+                      <!--账&nbsp;&nbsp;&nbsp;户-->
+                      {{ $t('M.user_account_number') }}:
+                    </span>
                     <span>{{item.payAcctount}}</span>
                   </p>
                 </div>
                 <!-- 扫码支付 qrCodeUrl  :src="item.coinUrl"-->
-                <div class="bank-info-picture display-inline-block" v-if="item.payType === 'alipay' || item.payType === 'wx'">
+                <div
+                  class="bank-info-picture display-inline-block"
+                  v-if="item.payType === 'alipay' || item.payType === 'wx'"
+                >
                   <div class="picture-box">
                     <el-popover
                       placement="bottom"
@@ -238,7 +299,10 @@
                         :src="item.qrCodeUrl"
                       >
                       <!-- src="../../assets/develop/weixin.png" -->
-                      <el-button slot="reference">扫码支付</el-button>
+                      <el-button slot="reference">
+                        <!--扫码支付-->
+                        {{$t('M.otc_tradingorder')}}
+                      </el-button>
                     </el-popover>
                   </div>
                 </div>
@@ -253,13 +317,17 @@
               >
                 <!-- 等待付款确认付款按钮 -->
                 <p class="action-tips">
-                  <span class="wait-pay">等待付款</span>
+                  <span class="wait-pay">
+                    <!--等待付款-->
+                    {{$t('M.otc_waiting_payment')}}
+                  </span>
                   <el-button
                     type="primary"
                     size="mini"
                     @click="comfirmPayMoney(index)"
                   >
-                    确认付款
+                    <!--确认付款-->
+                    {{$t('M.otc_trading_confirmpayment')}}
                   </el-button>
                   <!-- 自动取消倒计时 -->
                   <span class="count-time">
@@ -267,12 +335,15 @@
                       class="font-size16 wait-pay"
                       iconName="icon-daojishi"
                     />
-                    <span>{{BIHTimeFormatting(cancelOrderTimeArr[index])}}</span>
+                    <span>
+                      {{BIHTimeFormatting(cancelOrderTimeArr[index])}}
+                    </span>
                   </span>
                 </p>
                 <!-- 注意 -->
                 <p class="action-tips">
-                  注意！计时结束前未手动转账并点击"确认付款"，您的订单将自动取消，若上述情况累计出现3次，您的账户将被冻结24小时。
+                  <!--注意！计时结束前未手动转账并点击"确认付款"，您的订单将自动取消，若上述情况累计出现3次，您的账户将被冻结24小时。-->
+                  {{$t('M.otc_tradingorder_notice')}}
                 </p>
               </div>
               <!-- 付款后 -->
@@ -280,9 +351,13 @@
                 class="right-content"
                 v-if="item.status == 'PAYED'"
               >
-                <p class="action-tips submitted-confirm-payment">已提交确认付款</p>
+                <p class="action-tips submitted-confirm-payment">
+                  <!--已提交确认付款-->
+                  {{$t('M.otc_confirmed_receipts')}}
+                </p>
                 <p class="action-tips">
-                  注意！请联系卖家确认收款并确认订单，如果卖家{{item.completeTerm/3600}}小时内未确认订单，系统自动成交。
+                  <!--注意！请联系卖家确认收款并确认订单，如果卖家{{item.completeTerm/3600}}小时内未确认订单，系统自动成交。-->
+                  {{$t('M.otc_warm_prompt0')}}{{item.completeTerm/3600}}{{$t('M.otc_warm_prompt00')}}
                 </p>
               </div>
             </div>
@@ -305,21 +380,25 @@
           <div class="order-list-head">
             <!-- 买家 -->
             <div class="buyer-seller">
-              买家：{{item.buyName}}
+              <!--买家-->
+              {{$t('M.otc_buyer')}}：{{item.buyName}}
             </div>
             <!-- 订单号 -->
             <div class="order-id">
-              订单号：{{item.orderSequence}}
+              <!--订单号-->
+              {{$t('M.otc_MerchantsOrders_orderNum')}}：{{item.orderSequence}}
             </div>
             <!-- 挂单时间 -->
             <div class="deal-time">
-              挂单时间：{{item.createTime}}
+              <!--挂单时间-->
+              {{$t('M.otc_entrust_time')}}：{{item.createTime}}
             </div>
             <div class="order-list-head-icon sell-icon">
               <!-- <img src="../../assets/develop/sell.png" alt=""> -->
             </div>
             <div class="buy-sell-icon">
-              卖
+              <!--卖-->
+              {{$t('M.comm_ask')}}
             </div>
           </div>
           <!-- 2.2 表身体 -->
@@ -338,18 +417,30 @@
               <div class="left-info">
                 <!-- 金额 -->
                 <p class="trade-info">
-                  <span>金额：</span>
-                  <span class="money">{{item.symbol}}{{item.payAmount}}</span>
+                  <span>
+                    <!--金额-->
+                    {{$t('M.comm_money')}}：
+                  </span>
+                  <span class="money">
+                    {{item.symbol}}{{item.payAmount}}
+                  </span>
                 </p>
                 <!-- 单价 -->
                 <p class="trade-info">
-                  <span>单价：{{item.price}}</span>
+                  <span>
+                    <!--单价-->
+                    {{$t('M.otc_index_UnitPrice')}}：{{item.price}}
+                  </span>
                   &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                  <span>数量：{{item.pickCount}}</span>
+                  <span>
+                    <!--数量-->
+                    {{$t('M.comm_count')}}：{{item.pickCount}}
+                  </span>
                 </p>
                 <!-- 卖家手机号 -->
                 <p class="trade-info">
-                  买家手机号：{{item.buyPhone}}
+                  <!--买家手机号-->
+                  {{$t('M.otc_trading_sellphone')}}：{{item.buyPhone}}
                 </p>
               </div>
             </div>
@@ -362,7 +453,8 @@
               >
                 <div class="trader-info display-inline-block">
                   <p class="order-cancle-tips">
-                    订单生成后{{item.cancelTerm/60}}分钟内对方未提交付款，订单将自动取消
+                    <!--订单生成后{{item.cancelTerm/60}}分钟内对方未提交付款，订单将自动取消-->
+                    {{$t('M.otc_tradingorder_orderExact')}}{{item.cancelTerm/60}}{{$t('M.otc_tradingorder_autoCancel')}}
                   </p>
                 </div>
               </div>
@@ -379,7 +471,8 @@
                         class="font-size16"
                         iconName="icon-yinhangqia"
                       />
-                      银行卡已付款
+                      <!--银行卡已付款-->
+                      {{$t('M.otc_trading_bankmoney_payment')}}
                     </span>
                     <span
                       v-if="item.payType === 'alipay'"
@@ -388,7 +481,8 @@
                         class="font-size16"
                         iconName="icon-zhifubao1"
                       />
-                      支付宝已付款
+                      <!--支付宝已付款-->
+                      {{$t('M.otc_trading_alipay_payment')}}
                     </span>
                     <span
                       v-if="item.payType === 'wx'"
@@ -397,13 +491,15 @@
                         class="font-size16"
                         iconName="icon-weixin1"
                       />
-                      微信已付款
+                      <!--微信已付款-->
+                      {{$t('M.otc_trading_wechat_payment')}}
                     </span>
                     <span
                       v-if="item.payType === 'xilian'"
                     >
                       <img src="../../../assets/user/xilian.png" alt="" class="xilian">
-                      西联汇款已付款
+                      <!--西联汇款已付款-->
+                      {{$t('M.otc_trading_xilianmoney_payment')}}
                     </span>
                     <span
                       v-if="item.payType === 'paypal'"
@@ -412,7 +508,8 @@
                         class="font-size16"
                         iconName="icon-paypal"
                       />
-                      PAYPAL已付款
+                      <!--PAYPAL已付款-->
+                      PAYPAL{{$t('M.otc_enum_status_yifukuan')}}
                     </span>
                     <!-- <IconFontCommon
                       iconName="icon-yinhangqia"
@@ -420,11 +517,19 @@
                     <span>银行卡已付款22</span> -->
                   </p>
                   <p class="bankMoneyInfo">
-                    <span>转账金额: </span><span>{{item.symbol}}{{item.payAmount}}</span>
+                    <span>
+                      <!--转账金额-->
+                      {{$t('M.otc_tradingorder_transformAcconu')}}:
+                    </span>
+                    <span>
+                      {{item.symbol}}{{item.payAmount}}
+                    </span>
                   </p>
                   <p class="bankMoneyInfo">
                     <span>
-                      账&nbsp;&nbsp;&nbsp;户:</span>
+                      <!--账&nbsp;&nbsp;&nbsp;户-->
+                      {{$t('M.user_account_number')}}::
+                    </span>
                     <span>{{item.payAcctount}}</span>
                   </p>
                 </div>
@@ -442,10 +547,14 @@
                     type="primary"
                     size="mini"
                   >
-                    确认收款
+                    <!--确认收款-->
+                    {{$t('M.otc_trading_collectionconfirmation')}}
                   </el-button>
                 </p>
-                <p class="action-explain">等待买家付款。</p>
+                <p class="action-explain">
+                  <!--等待买家付款-->
+                  {{$t('M.otc_waiting_buyer_payment')}}。
+                </p>
               </div>
               <!-- 付款后 -->
               <div
@@ -458,18 +567,21 @@
                     size="mini"
                     @click="comfirmGatherMoney(item.id)"
                   >
-                    确认收款
+                    <!--确认收款-->
+                    {{$t('M.otc_trading_collectionconfirmation')}}
                   </el-button>
                   <el-button
                     type="primary"
                     size="mini"
                     @click="orderAppeal(item.id, index)"
                   >
-                    订单申诉
+                    <!--订单申诉-->
+                    {{$t('M.otc_complaint')}}
                   </el-button>
                 </p>
                 <p class="action-explain">
-                  买家付款已付款
+                  <!--买家付款已付款-->
+                  {{$t('M.otc_trading_sellermoney')}}
                 </p>
                 <!-- 自动成交倒计时 -->
                 <p class="action-explain count-down-time">
@@ -493,13 +605,19 @@
           v-if="showOrderAppeal[index]"
         >
           <!-- 申诉表头 -->
-          <div class="appeal-head"> 订单申诉</div>
+          <div class="appeal-head">
+            <!--订单申诉-->
+            {{$t('M.otc_complaint')}}
+          </div>
           <!-- 申诉表身体 -->
           <div class="appeal-body">
             <div class="appeal-body-content">
               <!-- 文本域部分 -->
               <div class="appeal-textarea">
-                <span class="appeal-reason">*申诉原因</span>
+                <span class="appeal-reason">
+                  <!--*申诉原因-->
+                  *{{$t('M.otc_complaint_appeal_reason')}}
+                </span>
                 <el-input
                   type="textarea"
                   maxlength="20"
@@ -514,14 +632,16 @@
                   size="mini"
                   @click="sellerAppeal"
                 >
-                  提交申诉
+                  <!--提交申诉-->
+                  {{$t('M.otc_complaint_submit')}}
                 </el-button>
                 <el-button
                   type="primary"
                   size="mini"
                   @click="cancelOrderAppeal(index)"
                 >
-                  取消申诉
+                  <!--取消申诉-->
+                  {{$t('M.otc_complaint_cancel')}}
                 </el-button>
               </div>
             </div>
@@ -529,7 +649,10 @@
         </div>
       </div>
       <!-- 暂无数据 -->
-      <div class="no-data" v-if="!tradingOrderList.length">暂无数据</div>
+      <div class="no-data" v-if="!tradingOrderList.length">
+        <!--暂无数据-->
+        {{ $t('M.comm_no_data') }}
+      </div>
       <!--分页-->
       <el-pagination
         background
@@ -542,13 +665,16 @@
       </el-pagination>
       <!-- 3.0 买家点击确认付款按钮 弹出交易密码框 -->
       <div class="password-dialog">
+        <!--交易密码-->
         <el-dialog
-          title="交易密码"
+          :title="$t('M.comm_password')"
           :visible.sync="dialogVisible1"
           top="25vh"
           width="470"
         >
-          <div>请输入交易密码</div>
+          <!--<div>-->
+            <!--请输入交易密码-->
+          <!--</div>-->
           <div class="input">
             <input
               type="password"
@@ -569,20 +695,24 @@
                 type="primary"
                 @click="submitButton1"
               >
-                提 交
+                <!--提 交-->
+                {{$t('M.comm_sub_time')}}
               </button>
           </span>
         </el-dialog>
       </div>
       <!-- 4.0 卖家点击确认收款按钮 弹出交易密码框 -->
       <div class="password-dialog">
+        <!--交易密码-->
         <el-dialog
-          title="交易密码"
+          :title="$t('M.comm_password')"
           :visible.sync="dialogVisible2"
           top="25vh"
           width="470"
         >
-          <div>请输入交易密码2</div>
+          <!--<div>-->
+            <!--请输入交易密码2-->
+          <!--</div>-->
           <div class="input">
             <input
               type="password"
@@ -592,7 +722,10 @@
           </div>
           <div class="error-info">
             <!-- 错误提示 -->
-            <div class="tips">错误提示</div>
+            <div class="tips">
+              <!--错误提示-->
+              {{errpwd}}
+            </div>
           </div>
           <span
             slot="footer"
@@ -602,20 +735,22 @@
                 type="primary"
                 @click="submitButton2"
               >
-                提 交
+                <!--提 交-->
+                {{$t('M.comm_sub_time')}}
               </button>
           </span>
         </el-dialog>
       </div>
       <!-- 5.0 点击提交申诉按钮 弹出交易密码框 -->
       <div class="password-dialog">
+        <!--交易密码-->
         <el-dialog
-          title="交易密码"
+          :title="$t('M.comm_password')"
           :visible.sync="dialogVisible3"
           top="25vh"
           width="470"
         >
-          <div>请输入交易密码3</div>
+          <!--<div>请输入交易密码3</div>-->
           <div class="input">
             <input
               type="password"
@@ -625,7 +760,7 @@
           </div>
           <div class="error-info">
             <!-- 错误提示 -->
-            <div class="tips">错误提示</div>
+            <div class="tips">{{errpwd}}</div>
           </div>
           <span
             slot="footer"
@@ -635,7 +770,8 @@
                 type="primary"
                 @click="submitsellerAppeal"
               >
-                提 交
+                <!--提 交-->
+                {{$t('M.comm_sub_time')}}
               </button>
           </span>
         </el-dialog>
@@ -782,7 +918,8 @@ export default {
     comfirmPayMoney (index) {
       if (!this.activePayModeList[index]) {
         this.$message({
-          message: '请选择支付方式',
+          // 请选择支付方式
+          message: this.$t('M.comm_please_choose') + this.$t('M.otc_index_Payment_method'),
           type: 'error'
         })
         return false
@@ -799,7 +936,8 @@ export default {
     // 5.0 买家点击确认付款按钮 点击交易密码框中的提交按钮
     async submitButton1 () {
       if (!this.tradePassword) {
-        this.errpwd = '请输入交易密码'
+        // 请输入交易密码
+        this.errpwd = this.$t('M.otc_publishAD_pleaseInput') + this.$t('M.comm_password')
         return false
       } else {
         const data = await buyerPayForOrder({

@@ -49,6 +49,7 @@ export default {
     }
   },
   created () {
+    console.log(1)
     // require('../../../static/charting_library/static/css/t-night.css')
     require('../../../static/css/theme/day/Trade/KlieneDay.css')
     // this.widget = null
@@ -58,7 +59,9 @@ export default {
   mounted () {
     this.initKLine(this.symbol)
   },
-  activited () {},
+  activited () {
+    console.log(2)
+  },
   update () {},
   beforeRouteUpdate () {},
   destroyed () {
@@ -445,7 +448,7 @@ export default {
           }
           break
         case 'BBTICKER':
-          // console.log(data)
+          console.log(data)
           if (data.data) {
             this.socketData.tradeMarketList = data
           }
@@ -471,6 +474,8 @@ export default {
         let newInterval = this.transformInterval(resolution)
         this.getKlineDataBySocket('REQ', this.symbol, newInterval)
         this.getKlineDataBySocket('SUB', this.symbol, newInterval)
+        this.getTradeMarketBySocket('REQ')
+        this.getTradeMarketBySocket('SUB')
         this.getDefaultSymbolBySocket('REQ', this.symbol)
         this.getDefaultSymbolBySocket('SUB', this.symbol)
         this.getDepthDataBySocket('REQ', this.symbol)
@@ -499,12 +504,17 @@ export default {
     },
     // 请求socket
     getKlineDataBySocket (type, symbol, newInterval) {
-      // k线
-      this.socket.send({
-        'tag': type,
-        'content': `market.${symbol}.kline.${newInterval}.step5`,
-        'id': `kline_${symbol}`
-      })
+      console.log(symbol)
+      if (newInterval) {
+        // k线
+        this.socket.send({
+          'tag': type,
+          'content': `market.${symbol}.kline.${newInterval}.step5`,
+          'id': `kline_${symbol}`
+        })
+      } else {
+        setTimeout(this.getKlineDataBySocket(type, symbol, newInterval), 1000)
+      }
     },
     // 获取交易记录socket
     getTradeRecordBySocket (type, symbol) {

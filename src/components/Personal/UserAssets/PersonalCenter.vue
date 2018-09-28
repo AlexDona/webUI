@@ -198,7 +198,7 @@
       </div>
     </div>
     <!--底部-->
-    <FooterCommon/>
+    <keep-aline><FooterCommon/></keep-aline>
   </div>
 </template>
 <!--请严格按照如下书写书序-->
@@ -403,7 +403,7 @@ export default {
         width: 80px;
         height: 35px;
         line-height: 0;
-        color: rgba(255, 255, 255, 0.7);
+        color: #333;
         background-color: transparent;
         border: 1px solid #338FF5;
       }
@@ -444,6 +444,9 @@ export default {
       color:$dayFontColor;
       .asset-info {
         background: #fff;
+      }
+      .warning-text {
+        color: #333;
       }
     }
   }

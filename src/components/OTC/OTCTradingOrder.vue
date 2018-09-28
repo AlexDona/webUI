@@ -574,7 +574,12 @@
         </div>
       </div>
       <!-- 二、暂无数据 -->
-      <div class="no-data" v-show="!tradingOrderList.length">暂无数据</div>
+      <div
+        class="no-data"
+        v-show="!tradingOrderList.length"
+      >
+        {{ $t('M.comm_no_data') }}
+      </div>
       <!-- 三、分页-->
       <div class="page">
         <el-pagination

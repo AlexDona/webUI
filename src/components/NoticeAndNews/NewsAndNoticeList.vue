@@ -111,11 +111,13 @@
         </div>
       </div>
     </div>
+    <keep-aline><FooterCommon/></keep-aline>
   </div>
 </template>
 <!--请严格按照如下书写书序-->
 <script>
 import HeaderCommon from '../Common/HeaderCommonForPC'
+import FooterCommon from '../Common/FooterCommon'
 import {
   getNewsNoticeList,
   getAllNewsTypeList,
@@ -125,7 +127,8 @@ import {returnAjaxMessage} from '../../utils/commonFunc'
 import {mapState} from 'vuex'
 export default {
   components: {
-    HeaderCommon
+    HeaderCommon,
+    FooterCommon
   },
   // props,
   data () {

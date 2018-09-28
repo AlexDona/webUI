@@ -9,21 +9,46 @@
     >
       <!-- 表头 -->
       <div class="entrust-table-head display-flex">
-        <span class="item first-style flex1">类型</span>
-        <span class="item second-coin flex1">币种</span>
-        <span class="item third-price flex1">价格</span>
-        <span class="item fourth-entrust-count flex1">挂单数量</span>
-        <span class="item fifth-match-count flex1">已匹配数量</span>
-        <span class="item sixth-total-amount flex1">总金额</span>
-        <span class="item senventh-create-time">挂单时间</span>
-        <span class="item eighth-action flex1">操作</span>
+        <span class="item first-style flex1">
+          <!--类型-->
+          {{$t('M.comm_type')}}
+        </span>
+        <span class="item second-coin flex1">
+          <!--币种-->
+          {{$t('M.comm_currency')}}
+        </span>
+        <span class="item third-price flex1">
+          <!--价格-->
+          {{$t('M.otc_index_price')}}
+        </span>
+        <span class="item fourth-entrust-count flex1">
+          <!--挂单数量-->
+          {{$t('M.otc_entrust_number')}}
+        </span>
+        <span class="item fifth-match-count flex1">
+          <!--已匹配数量-->
+          {{$t('M.otc_entrust_matching')}}
+        </span>
+        <span class="item sixth-total-amount flex1">
+          <!--总金额-->
+          {{$t('M.otc_canceled_total')}}
+        </span>
+        <span class="item senventh-create-time">
+          <!--挂单时间-->
+          {{$t('M.otc_entrust_time')}}
+        </span>
+        <span class="item eighth-action flex1">
+          <!--操作-->
+          {{$t('M.otc_index_operate')}}
+        </span>
       </div>
       <!-- 表身体 -->
       <div
         class="entrust-table-body"
       >
         <div class="no-data" v-if="!OTCEntrustOrderList.length">
-          暂无数据
+          <!--暂无数据-->
+          {{$t('M.comm_no_data')}}
         </div>
         <div
           class="entrust-list-content display-flex"
@@ -38,7 +63,8 @@
             v-if="item.entrustType === 'BUY'"
             :class="{ red: item.entrustType === 'BUY' }"
           >
-            买入
+            <!--买入-->
+            {{$t('M.comm_buy')}}
           </span>
           <!-- 卖出 -->
           <span
@@ -46,27 +72,41 @@
             v-if="item.entrustType === 'SELL'"
             :class="{ green: item.entrustType === 'SELL' }"
           >
-            卖出
+            <!--卖出-->
+            {{$t('M.comm_sell')}}
           </span>
           <!-- 2 币种 -->
-          <span class="item second-coin flex1">{{item.coinName}}</span>
+          <span class="item second-coin flex1">
+            {{item.coinName}}
+          </span>
           <!-- 3 价格 -->
-          <span class="item third-price flex1">{{item.price}}({{item.currencyName}})</span>
+          <span class="item third-price flex1">
+            {{item.price}}({{item.currencyName}})
+          </span>
           <!-- 4 挂单数量 -->
-          <span class="item fourth-entrust-count flex1">{{item.entrustCount}}({{item.coinName}})</span>
+          <span class="item fourth-entrust-count flex1">
+            {{item.entrustCount}}({{item.coinName}})
+          </span>
           <!-- 5 已匹配数量 -->
-          <span class="item fifth-match-count flex1">{{item.matchCount}}({{item.coinName}})</span>
+          <span class="item fifth-match-count flex1">
+            {{item.matchCount}}({{item.coinName}})
+          </span>
           <!-- 6 总金额 -->
-          <span class="item sixth-total-amount flex1">{{item.totalAmount}}({{item.currencyName}})</span>
+          <span class="item sixth-total-amount flex1">
+            {{item.totalAmount}}({{item.currencyName}})
+          </span>
           <!-- 7 挂单时间 -->
-          <span class="item senventh-create-time1">{{item.createTime}}</span>
+          <span class="item senventh-create-time1">
+            {{item.createTime}}
+          </span>
           <!-- 8 操作 -->
           <span class="item eighth-action flex1">
             <el-button
               type="text"
               @click="revocationOrder(item.id)"
             >
-              撤单
+              <!--撤单-->
+               {{$t('M.otc_entrust_cancellations')}}
             </el-button>
           </span>
         </div>
@@ -135,9 +175,12 @@ export default {
     // 3.0 点击撤单按钮
     revocationOrder (id) {
       // this.getOTCEntrustingOrdersRevocation(id)
-      this.$confirm('您确定要撤销此单吗, 是否继续?', {
-        confirmButtonText: '确定',
-        cancelButtonText: '取消'
+      // 您确定要撤销此单吗, 是否继续?
+      this.$confirm(this.$t('M.otc_revoke'), {
+        // 确定
+        confirmButtonText: this.$t('M.comm_cancel'),
+        // 取消
+        cancelButtonText: this.$t('M.comm_affirm')
       }).then(() => {
         this.getOTCEntrustingOrdersRevocation(id)
       }).catch(() => {

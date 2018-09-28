@@ -253,7 +253,7 @@ export default {
       currencyType: [
         {
           value: '',
-          label: 'M.all-plate'
+          label: 'M.comm_all'
         }, {
           value: 'RECHARGE',
           label: 'M.comm_charge_money'

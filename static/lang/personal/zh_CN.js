@@ -190,10 +190,35 @@ export const personal = {
   // 成交明细
   'user_coin_clinch_deal_detail': '成交明细',
   // 法币订单
-  'user_coin_currency': '货币'
+  'user_coin_currency': '货币',
   // 交易中的订单
   // 已完成的订单
   // 已取消的订单
   // 冻结中的订单
   // 委托订单
+  // VIP
+  'user_vip_please_choose': '请选择开通会员信息',
+  'user_vip_discount': '折扣',
+  'user_vip_immediately_opened': '立即开通',
+  'user_vip_immediately_buy': '立即购买',
+  'user_vip_month': '月',
+  'user_vip_break': '折',
+  'user_vip_nine': '九',
+  'user_vip_eight': '八',
+  'user_vip_seven': '七',
+  'user_vip_six': '六',
+  'user_vip_five': '五',
+  'user_vip_four': '四',
+  'user_vip_not_yet': '还没有FUC?',
+  'user_vip_opening_level': '开通等级',
+  'user_vip_dredge': '开通',
+  'user_vip_opening_time': '开通时长',
+  'user_vip_months': '个月', // 几个月的意思 例 3 个月
+  'user_vip_immediate_access': '立即获取',
+  'user_vip_text1': 'VIP开通后立即生效，交易结算时自动计算折扣',
+  'user_vip_text2': '《折扣说明》',
+  'user_vip_text3': '费率折扣仅对交易手续费生效',
+  'user_vip_text4': '一个月有效期时长为30个自然日',
+  'user_vip_text5': '开通即代表您已同意',
+  'user_vip_text6': '《VIP服务协议》'
 }
