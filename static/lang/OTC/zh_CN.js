@@ -4,7 +4,7 @@ export const OTC = {
   otc_index_wantTo_buy: '我要购买',
   otc_index_wantTo_sell: '我要购买',
   otc_index_currency_type: '货币类型',
-  otc_index_Merchant: '商户',
+  otc_index_Merchant: '名称',
   otc_index_Payment_method: '支付方式',
   otc_index_turnover: '成交率',
   otc_index_operate: '操作',

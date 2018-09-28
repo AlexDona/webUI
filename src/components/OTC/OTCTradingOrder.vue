@@ -220,7 +220,10 @@
                     <span
                       v-if="item.payType === 'xilian'"
                     >
-                      <img src="../../assets/user/xilian.png" alt="" class="xilian">
+                      <img
+                        src="../../assets/user/xilian.png"
+                        class="xilian"
+                      >
                       <!-- 西联汇款已付款 -->
                       {{$t('M.otc_trading_xilianmoney_payment')}}
                     </span>
@@ -427,7 +430,10 @@
                     <span
                       v-if="item.payType === 'xilian'"
                     >
-                      <img src="../../assets/user/xilian.png" alt="" class="xilian">
+                      <img
+                        src="../../assets/user/xilian.png"
+                        class="xilian"
+                      >
                       <!-- 西联汇款已付款 -->
                       {{$t('M.otc_trading_xilianmoney_payment')}}
                     </span>

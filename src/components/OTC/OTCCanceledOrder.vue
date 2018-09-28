@@ -17,7 +17,7 @@
       <!--表格-->
       <div
         class="canceled-table-body"
-        v-for="(item,index) in getOTCCanceledOrderList"
+        v-for="(item,index) in otcCanceledOrderList"
         :key="index"
       >
         <!--表格上部分-->
@@ -95,7 +95,7 @@
       </div>
       <div
         class="no-data"
-        v-if="!getOTCCanceledOrderList.length"
+        v-if="!otcCanceledOrderList.length"
       >
         <!-- 暂无数据 -->
         {{$t('M.comm_no_data')}}
@@ -104,7 +104,7 @@
       <div class="page">
         <el-pagination
           background
-          v-show="getOTCCanceledOrderList.length"
+          v-show="otcCanceledOrderList.length"
           layout="prev, pager, next"
           :page-count="totalPages"
           @current-change="changeCurrentPage"
@@ -130,7 +130,7 @@ export default {
       currentPage: 1, // 当前页码
       totalPages: 1, // 总页数
       // OTC取消订单列表
-      getOTCCanceledOrderList: []
+      otcCanceledOrderList: []
     }
   },
   created () {
@@ -171,11 +171,11 @@ export default {
         return false
       } else {
         // 返回数据正确的逻辑
-        this.getOTCCanceledOrderList = data.data.data.list
+        this.otcCanceledOrderList = data.data.data.list
         // 分页
         this.totalPages = data.data.data.pages - 0
         console.log('取消订单')
-        console.log(this.getOTCCanceledOrderList)
+        console.log(this.otcCanceledOrderList)
       }
     }
   },

@@ -223,7 +223,10 @@
                   />
                   <!-- 4西联汇款 -->
                   <span v-if="scope.row.payType === 'xilian'">
-                    <img src="../../assets/user/xilian.png" alt="" class="xilian">
+                    <img
+                      src="../../assets/user/xilian.png"
+                      class="xilian"
+                    >
                   </span>
                   <!--  5PAYPAL -->
                   <IconFontCommon

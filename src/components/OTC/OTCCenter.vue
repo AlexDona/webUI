@@ -138,7 +138,7 @@
                       src="../../assets/develop/shangjia.png"
                       alt=""
                       class="shang-icon"
-                      v-if="userInfo.type === 'MERCHANT'"
+                      v-if="s.row.userType === 'MERCHANT'"
                     >
                     {{s.row.userName}}
                   </div>
@@ -200,7 +200,10 @@
                     />
                     <!-- 4西联汇款 -->
                     <span v-if="s.row.payTypes[3] == '1'">
-                      <img src="../../assets/user/xilian.png" alt="" class="xilian">
+                      <img
+                        src="../../assets/user/xilian.png"
+                        class="xilian"
+                      >
                     </span>
                     <!--  5PAYPAL -->
                     <IconFontCommon
@@ -230,8 +233,14 @@
                   <!-- 2.0 测试1 -->
                   <!-- <div :title="s.row.remark" style="text-overflow:ellipsis;white-space:nowrap;overflow: hidden;">{{s.row.remark}}</div> -->
                   <!-- 3.0 测试2 -->
-                  <el-tooltip effect="dark" :content="s.row.remark" placement="bottom">
-                    <span style="text-overflow: ellipsis;white-space: nowrap;overflow: hidden;cursor:pointer;">{{s.row.remark}}</span>
+                  <el-tooltip
+                    effect="dark"
+                    :content="s.row.remark"
+                    placement="bottom"
+                  >
+                    <span class="remark-tips">
+                      {{s.row.remark}}
+                    </span>
                   </el-tooltip>
                 </template>
               </el-table-column>
@@ -303,7 +312,7 @@
               <!-- 交易中的订单 -->
               {{$t('M.otc_trading')}}
             </span>
-            <OTCTradingOrder ref = "trading"></OTCTradingOrder>
+            <OTCTradingOrder ref = "trading"/>
           </el-tab-pane>
           <!-- 2.2.2 已完成订单 -->
           <el-tab-pane name = "second">
@@ -318,7 +327,7 @@
               <!-- 已完成订单 -->
               {{$t('M.otc_stocks')}}
             </span>
-            <OTCCompletedOrder ref = "complete"></OTCCompletedOrder>
+            <OTCCompletedOrder ref = "complete"/>
           </el-tab-pane>
           <!-- 2.2.3 已取消订单 -->
           <el-tab-pane name = "third">
@@ -333,7 +342,7 @@
               <!-- 已取消订单 -->
               {{$t('M.otc_canceled')}}
             </span>
-            <OTCCanceledOrder ref = "canceled"></OTCCanceledOrder>
+            <OTCCanceledOrder ref = "canceled"/>
           </el-tab-pane>
           <!-- 2.2.4 冻结中订单 -->
           <el-tab-pane name = "fourth">
@@ -348,7 +357,7 @@
               <!-- 冻结中订单 -->
               {{$t('M.otc_freezing')}}
             </span>
-            <OTCFreezingOrder ref = "freezing"></OTCFreezingOrder>
+            <OTCFreezingOrder ref = "freezing"/>
           </el-tab-pane>
           <!-- 2.2.5 委托订单 -->
           <el-tab-pane name = "fifth">
@@ -363,7 +372,7 @@
               <!-- 委托订单 -->
               {{$t('M.otc_entrust')}}
             </span>
-            <OTCEntrustOrder ref = "entrust"></OTCEntrustOrder>
+            <OTCEntrustOrder ref = "entrust"/>
           </el-tab-pane>
         </el-tabs>
       </div>
@@ -966,6 +975,11 @@ export default {
         }
         >.otc-merchant-list{
           margin-top: 30px;
+          .remark-tips{
+            text-overflow: ellipsis;
+            white-space: nowrap;overflow:
+            hidden;cursor:pointer;
+          }
           .page{
             text-align: center;
             margin-top: 10px;

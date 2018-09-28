@@ -24,7 +24,7 @@
       <!--表格-->
       <div
         class="freezing-table-body"
-        v-for="(item,index) in getOTCFreezingOrderList"
+        v-for="(item,index) in otcFreezingOrderList"
         :key="index"
       >
         <!--表格上部分-->
@@ -95,7 +95,7 @@
       </div>
       <div
         class="no-data"
-        v-if="!getOTCFreezingOrderList.length"
+        v-if="!otcFreezingOrderList.length"
       >
         <!-- 暂无数据 -->
         {{$t('M.comm_no_data')}}
@@ -104,7 +104,7 @@
       <div class="page">
         <el-pagination
           background
-          v-show="getOTCFreezingOrderList.length"
+          v-show="otcFreezingOrderList.length"
           layout="prev, pager, next"
           :page-count="totalPages"
           @current-change="changeCurrentPage"
@@ -130,7 +130,7 @@ export default {
       currentPage: 1, // 当前页码
       totalPages: 1, // 总页数
       // OTC冻结订单列表
-      getOTCFreezingOrderList: []
+      otcFreezingOrderList: []
     }
   },
   created () {
@@ -172,7 +172,7 @@ export default {
         return false
       } else {
         // 返回数据正确的逻辑
-        this.getOTCFreezingOrderList = data.data.data.list
+        this.otcFreezingOrderList = data.data.data.list
         // 分页
         this.totalPages = data.data.data.pages - 0
       }

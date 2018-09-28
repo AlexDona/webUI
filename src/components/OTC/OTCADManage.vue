@@ -54,7 +54,9 @@
               </el-select>
           </span>
           <!-- 交易法币 -->
-          <span class="filtrate-text font-size14">{{$t('M.otc_trade')}}{{$t('M.comm_coin')}}</span>
+          <span class="filtrate-text font-size14">
+            {{$t('M.otc_trade')}}{{$t('M.comm_coin')}}
+          </span>
           <!-- 法币选择 -->
           <span class="market-input">
               <el-select
@@ -72,7 +74,9 @@
               </el-select>
           </span>
           <!-- 状态 -->
-          <span class="filtrate-text font-size14">{{$t('M.comm_state')}}</span>
+          <span class="filtrate-text font-size14">
+            {{$t('M.comm_state')}}
+          </span>
           <span class="status-input">
             <el-select
               v-model="activitedADManageStatusList"
@@ -90,8 +94,18 @@
           </span>
           <span class="inquire-button">
             <!-- 查询 -->
-            <el-button type="primary" @click="findFilter">{{$t('M.comm_query')}}</el-button>
-            <el-button type="primary" @click="resetCondition">{{$t('M.otc_MerchantsOrders_reset')}}</el-button>
+            <el-button
+              type="primary"
+              @click="findFilter"
+            >
+              {{$t('M.comm_query')}}
+            </el-button>
+            <el-button
+              type="primary"
+              @click="resetCondition"
+            >
+              {{$t('M.otc_MerchantsOrders_reset')}}
+            </el-button>
           </span>
           <span
             class="all-unshelve cursor-pointer"
@@ -197,11 +211,17 @@
             >
               <template slot-scope="scope">
                 <!-- 已上架 -->
-                <div v-if="scope.row.status === 'ENTRUSTED'">{{$t('M.comm_already')}}{{$t('M.otc_adMange_getting')}}</div>
+                <div v-if="scope.row.status === 'ENTRUSTED'">
+                  {{$t('M.comm_already')}}{{$t('M.otc_adMange_getting')}}
+                </div>
                 <!-- 已完成 -->
-                <div v-if="scope.row.status === 'COMPLETED'">{{$t('M.otc_enum_status_yiwancheng')}}</div>
+                <div v-if="scope.row.status === 'COMPLETED'">
+                  {{$t('M.otc_enum_status_yiwancheng')}}
+                </div>
                 <!-- 已下架 -->
-                <div v-if="scope.row.status === 'CANCELED'">{{$t('M.comm_already')}}{{$t('M.otc_adMange_adverting')}}</div>
+                <div v-if="scope.row.status === 'CANCELED'">
+                  {{$t('M.comm_already')}}{{$t('M.otc_adMange_adverting')}}
+                </div>
               </template>
             </el-table-column>
             <!-- 操作 -->
