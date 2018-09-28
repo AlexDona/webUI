@@ -16,7 +16,7 @@
       <div
         class="content-main display-flex"
         v-show="showOpenTheVIPPage"
-        v-if="vipPriceInfo1[0]"
+        v-if="vipPriceInfo1"
       >
         <div class="content-module cursor-pointer">
           <p class="content-vip-one text-align-c">
@@ -292,7 +292,7 @@
         </div>
         <div
           class="detail-page-duration display-flex"
-          v-if="filteredData[0]"
+          v-if="filteredData"
         >
           <div class="duration-title font-size14">
             <!--开通时长-->
@@ -501,7 +501,7 @@ export default {
       currencyAsset: 0 // 币种数量
     }
   },
-  created () {
+  async created () {
     // 覆盖Element样式
     require('../../../../static/css/list/Personal/VipMainContent/VipMainContent.css')
     // 白色主题样式
@@ -509,10 +509,10 @@ export default {
     // 黑色主题样式
     require('../../../../static/css/theme/night/Personal/VipMainContent/VipMainContentNight.css')
     reflashUserInfo(this)
-    this.getVipPriceInfo()
+    await this.getVipPriceInfo()
     // this.toggleAssetsCurrencyId()
-    this.getCurrencyApplicationDownloadUrl()
-    console.log(this.vipPriceInfo1)
+    await this.getCurrencyApplicationDownloadUrl()
+    // console.log(this.vipPriceInfo1)
   },
   mounted () {},
   activited () {},
@@ -667,9 +667,12 @@ export default {
       if (!(returnAjaxMessage(data, this, 0))) {
         return false
       } else {
-        // 返回展示
-        this.vipPriceInfo1 = data.data.data
-        console.log(this.vipPriceInfo1[0].vipCoinName)
+        if (data.data.data) {
+          // 返回展示
+          this.vipPriceInfo1 = data.data.data
+          console.log(this.vipPriceInfo1[0].vipCoinName)
+        }
+
       }
     },
     async getCurrencyApplicationDownloadUrl () {
@@ -706,6 +709,7 @@ export default {
       partnerId: state => state.common.partnerId
     }),
     filteredData () {
+      console.log(this.vipPriceInfo1)
       return this.vipPriceInfo1.filter((item) => {
         // console.log(item)
         return item.id == this.type
