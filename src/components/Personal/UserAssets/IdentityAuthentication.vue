@@ -264,6 +264,7 @@
                   <!-- 上传身份证正面 -->
                   <div class="default-center">
                     <el-upload
+                      ref='upload'
                       :action="apiCommonUrl+'uploadfile'"
                       :headers="tokenObj"
                       list-type="picture-card"
@@ -296,6 +297,7 @@
                   <!-- 上传身份证反面 -->
                   <div class="default-center">
                     <el-upload
+                      ref='upload'
                       :action="apiCommonUrl+'uploadfile'"
                       :headers="tokenObj"
                       list-type="picture-card"
@@ -326,6 +328,7 @@
                   <!-- 上传手持身份证 -->
                   <div class="default-center">
                     <el-upload
+                      ref='upload'
                       :action="apiCommonUrl+'uploadfile'"
                       :headers="tokenObj"
                       list-type="picture-card"
@@ -512,9 +515,6 @@ export default {
     await this.getUserRefreshUser()
     this.tokenObj.token = this.userInfo.token
     reflashUserInfo(this)
-    this.dialogImageFrontUrl = ''
-    this.dialogImageReverseSideUrl = ''
-    this.dialogImageHandUrl = ''
   },
   mounted () {},
   activited () {},
@@ -741,6 +741,7 @@ export default {
         await this.getRealNameInformation()
         this.authenticationStatusFront = false
         this.stateEmptyData()
+        this.$refs.upload.clearFiles()
       }
     },
     // 接口请求完成之后清空数据

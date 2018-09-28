@@ -381,6 +381,9 @@ export default {
       this.dialogVisible = false
       this.mentionRemark = ''
       this.prepaidAddress = ''
+      this.phoneCode = ''
+      this.emailCode = ''
+      this.googleCode = ''
     },
     // 分页
     // 发送验证码
@@ -481,10 +484,10 @@ export default {
         >.withdrawal-address-box {
           min-height: 100px;
           .send-code-btn {
-            width: 90px;
+            width: 91px;
             height: 34px;
             position: absolute;
-            top: 5px;
+            top: 4px;
           }
           .error-info {
             height: 20px;
