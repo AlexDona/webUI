@@ -135,5 +135,11 @@ export const common = {
   'comm_house': '户',
   'comm_theme': '主题',
   'comm_download': '下载',
-  'comm_help_center': '帮助中心'
+  'comm_help_center': '帮助中心',
+  'comm_api_doc': 'API文档',
+  'comm_currency_info': '币种资料',
+  'comm_about': '关于',
+  'comm_us': '我们',
+  'comm_news_and_notice': '新闻公告',
+  'comm_description': '说明'
 }

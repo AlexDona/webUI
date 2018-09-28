@@ -158,3 +158,29 @@
 .el-message{
   z-index: 2300 !important;
 }
+/* 任付伟增加开始 */
+/* 商家图标鼠标放上去显示的样式 */
+.night .el-tooltip__popper.is-dark {
+  /* background: #7a98f7;
+  color: #fff; */
+  background: #fff;
+  color: black;
+}
+.night .el-tooltip__popper .popper__arrow {
+  border-left-color: #fff !important;
+}
+.night .el-tooltip__popper .popper__arrow::after {
+  border-left-color: #fff !important;
+}
+/* 商家图标鼠标放上去显示的样式 */
+.day .el-tooltip__popper.is-dark {
+  background: black;
+  color: #FFFFFF;
+}
+.day .el-tooltip__popper .popper__arrow {
+  border-left-color: black !important;
+}
+.day .el-tooltip__popper .popper__arrow::after {
+  border-left-color: black !important;
+}
+/* 任付伟增加结束 */

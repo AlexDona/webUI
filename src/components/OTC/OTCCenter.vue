@@ -132,16 +132,32 @@
                 :label="$t('M.otc_index_Merchant')"
               >
                 <template slot-scope = "s">
-                  <div>
+                  <div class="one">
                     <!-- 如果是商家用户就显示商家图标 -->
-                    <img
+                    <!-- <img
                       src="../../assets/develop/shangjia.png"
                       alt=""
                       class="shang-icon"
-                      v-if="userInfo.type === 'MERCHANT'"
+                      v-if="s.row.userType === 'MERCHANT'"
                     >
+                    {{s.row.userName}} -->
+                    <el-tooltip
+                      effect="dark"
+                      content="已认证商家"
+                      placement="left"
+                    >
+                      <img
+                        src="../../assets/develop/shangjia.png"
+                        alt=""
+                        class="shang-icon"
+                        v-if="s.row.userType === 'MERCHANT'"
+                      >
+                    </el-tooltip>
                     {{s.row.userName}}
                   </div>
+                  <!-- <el-tooltip class="item" effect="dark" content="Left Center 提示文字" placement="left">
+                    <el-button>左边</el-button>
+                  </el-tooltip> -->
                 </template>
               </el-table-column>
               <!-- 信用 -->
@@ -200,7 +216,10 @@
                     />
                     <!-- 4西联汇款 -->
                     <span v-if="s.row.payTypes[3] == '1'">
-                      <img src="../../assets/user/xilian.png" alt="" class="xilian">
+                      <img
+                        src="../../assets/user/xilian.png"
+                        class="xilian"
+                      >
                     </span>
                     <!--  5PAYPAL -->
                     <IconFontCommon
@@ -230,8 +249,14 @@
                   <!-- 2.0 测试1 -->
                   <!-- <div :title="s.row.remark" style="text-overflow:ellipsis;white-space:nowrap;overflow: hidden;">{{s.row.remark}}</div> -->
                   <!-- 3.0 测试2 -->
-                  <el-tooltip effect="dark" :content="s.row.remark" placement="bottom">
-                    <span style="text-overflow: ellipsis;white-space: nowrap;overflow: hidden;cursor:pointer;">{{s.row.remark}}</span>
+                  <el-tooltip
+                    effect="dark"
+                    :content="s.row.remark"
+                    placement="bottom-start"
+                  >
+                    <span class="remark-tips">
+                      {{s.row.remark}}
+                    </span>
                   </el-tooltip>
                 </template>
               </el-table-column>
@@ -303,7 +328,7 @@
               <!-- 交易中的订单 -->
               {{$t('M.otc_trading')}}
             </span>
-            <OTCTradingOrder ref = "trading"></OTCTradingOrder>
+            <OTCTradingOrder ref = "trading"/>
           </el-tab-pane>
           <!-- 2.2.2 已完成订单 -->
           <el-tab-pane name = "second">
@@ -318,7 +343,7 @@
               <!-- 已完成订单 -->
               {{$t('M.otc_stocks')}}
             </span>
-            <OTCCompletedOrder ref = "complete"></OTCCompletedOrder>
+            <OTCCompletedOrder ref = "complete"/>
           </el-tab-pane>
           <!-- 2.2.3 已取消订单 -->
           <el-tab-pane name = "third">
@@ -333,7 +358,7 @@
               <!-- 已取消订单 -->
               {{$t('M.otc_canceled')}}
             </span>
-            <OTCCanceledOrder ref = "canceled"></OTCCanceledOrder>
+            <OTCCanceledOrder ref = "canceled"/>
           </el-tab-pane>
           <!-- 2.2.4 冻结中订单 -->
           <el-tab-pane name = "fourth">
@@ -348,7 +373,7 @@
               <!-- 冻结中订单 -->
               {{$t('M.otc_freezing')}}
             </span>
-            <OTCFreezingOrder ref = "freezing"></OTCFreezingOrder>
+            <OTCFreezingOrder ref = "freezing"/>
           </el-tab-pane>
           <!-- 2.2.5 委托订单 -->
           <el-tab-pane name = "fifth">
@@ -363,7 +388,7 @@
               <!-- 委托订单 -->
               {{$t('M.otc_entrust')}}
             </span>
-            <OTCEntrustOrder ref = "entrust"></OTCEntrustOrder>
+            <OTCEntrustOrder ref = "entrust"/>
           </el-tab-pane>
         </el-tabs>
       </div>
@@ -911,7 +936,8 @@ export default {
         padding-bottom: 20px;
       }
       >.otc-merchant-content{
-        min-height: 564px;
+        // min-height: 564px;
+        // min-height: 724px;
         // background-color: #202A33;
         margin-top: 30px;
         padding: 0 10px;
@@ -966,6 +992,13 @@ export default {
         }
         >.otc-merchant-list{
           margin-top: 30px;
+          // height: 480px;
+          .remark-tips{
+            text-overflow: ellipsis;
+            white-space: nowrap;
+            overflow: hidden;
+            cursor: pointer;
+          }
           .page{
             text-align: center;
             margin-top: 10px;
@@ -976,6 +1009,7 @@ export default {
             width: 14px;
             height: 19px;
             vertical-align: top;
+            cursor: pointer;
           }
           .xilian{
             vertical-align: middle;
@@ -1035,11 +1069,10 @@ export default {
     }
   }
   &.night{
-    background-color: $rockBottomNightBgColor;
+    background-color: $mainNightBgColor;
     >.otc-center-content{
       >.otc-online-trading{
         >.otc-online-buy-and-sell-button{
-          background-color: $rockBottomNightBgColor;
         }
         >.otc-merchant-content{
           background-color: $mainNightBgColor;
@@ -1071,7 +1104,7 @@ export default {
             }
           }
           >.otc-merchant-list{
-            height: 480px;
+            // height: 480px;
             .xilian{
             }
             .red{
@@ -1144,7 +1177,7 @@ export default {
             }
           }
           >.otc-merchant-list{
-            height: 480px;
+            // height: 480px;
             .xilian{
             }
             .red{
