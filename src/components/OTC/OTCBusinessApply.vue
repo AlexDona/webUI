@@ -8,7 +8,7 @@
     <!-- 2.1商家 申请 页面 -->
     <div
       class="business-apply-content"
-      v-if="applyStatus === 1"
+      v-show="applyStatus === 1"
     >
       <!-- 2.1 商家特权 -->
       <div class="privilege">
@@ -139,7 +139,7 @@
     <!-- 2.2商家 申请中 页面 -->
     <div
       class="business-applying-content"
-      v-if="applyStatus === 2"
+      v-show="applyStatus === 2"
     >
       <div class="picture">
         <img src="../../assets/develop/business-applying.png" alt="">
@@ -152,7 +152,7 @@
     <!-- 2.3商家 申请成功 页面 -->
     <div
       class="business-apply-success-content"
-      v-if="applyStatus === 3"
+      v-show="applyStatus === 3"
     >
       <div class="picture">
         <img src="../../assets/develop/business-apply-success.png" alt="">
@@ -184,6 +184,8 @@ export default {
   },
   data () {
     return {
+      // 整页loading
+      loadingCircle: {},
       // 商家申请状态
       applyStatus: 1,
       // 同意协议按钮:默认不勾选
@@ -248,14 +250,18 @@ export default {
     },
     // 首次点击商家申请决定进入哪个界面
     async determineUser () {
-      const data = await firstEnterBusinessApply({
-
+      // 整页loading
+      this.loadingCircle = this.$loading({
+        lock: true,
+        background: 'rgba(0, 0, 0, 0.7)'
       })
+      const data = await firstEnterBusinessApply()
       console.log(data)
       // 提示信息
       if (!(returnAjaxMessage(data, this, 0))) {
         return false
       } else {
+        this.loadingCircle.close()
         let getData = data.data.data
         // 返回数据正确的逻辑
         this.successTimes = getData.successTimes

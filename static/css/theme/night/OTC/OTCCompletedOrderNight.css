@@ -20,7 +20,7 @@
 }
 .otc-completed-order-box.night .completed-order-content .el-table{
   /* background-color: #1D2331; */
-  background-color: #121824;
+  background-color: #272B41;
 }
 .otc-completed-order-box.night .completed-order-content .el-table th.is-leaf{
   border-bottom: 1px solid #262F38;
@@ -35,7 +35,7 @@
   border-collapse: separate !important;
 }
 .otc-completed-order-box.night .completed-order-content .el-table__expanded-cell{
-  border-bottom:25px solid #121824;
+  border-bottom:25px solid #272B41;
 }
 .otc-completed-order-box.night .completed-order-content >.tables .el-icon-arrow-right:before {
   content: " ";

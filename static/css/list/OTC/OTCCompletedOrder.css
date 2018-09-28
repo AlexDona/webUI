@@ -81,5 +81,5 @@
 }
 .otc-completed-order-box .completed-order-content .el-table__empty-block {
   min-height: 432px;
-  background-color: #1E2636;
+  /* background-color: #1E2636; */
 }
