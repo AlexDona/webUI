@@ -248,8 +248,11 @@ export default {
   },
   mounted () {},
   activited () {},
-  update () {},
+  updated () {},
   beforeRouteUpdate () {},
+  aftereRouteUpdate () {
+    window.scrollTo(0, 0)
+  },
   methods: {
     timeFormatting (data) {
       return timeFilter(data, 'data')

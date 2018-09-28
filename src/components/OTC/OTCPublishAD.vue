@@ -881,9 +881,9 @@ export default {
 }
 </script>
 <style scoped lang="scss" type="text/scss">
-// @import url(../../../static/css/scss/OTC/OTCCenter.scss);
+@import "../../../static/css/scss/index";
 .otc-publish-AD-box{
-  background-color: #121824;
+  background-color: $mainNightBgColor;
   >.otc-publish-AD-content{
     width: 1150px;
     margin: 70px auto;

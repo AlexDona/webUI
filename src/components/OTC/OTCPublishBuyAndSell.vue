@@ -773,8 +773,9 @@ export default {
 </script>
 <style scoped lang="scss" type="text/scss">
   @import url(../../../static/css/scss/OTC/OTCCenter.scss);
+  @import "../../../static/css/scss/index";
   .otc-publish-buy-and-sell-box {
-    background-color: #1D2331;
+    background-color: $mainNightBgColor;
     > .publish-buy-and-sell-content {
       width: 1150px;
       margin: 107px auto;

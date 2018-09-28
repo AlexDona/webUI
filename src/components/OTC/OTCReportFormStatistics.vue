@@ -644,7 +644,7 @@ export default {
 }
 </script>
 <style scoped lang="scss" type="text/scss">
-// @import url(../../../static/css/scss/OTC/OTCCenter.scss);
+@import "../../../static/css/scss/index";
 .otc-report-form-statistics-box{
   >.report-form-statistics-content{
     width: 1150px;
@@ -826,7 +826,7 @@ export default {
     }
   }
   &.night{
-    background-color: #121824;
+    background-color: $mainNightBgColor;
     >.report-form-statistics-content{
       >.report-form-title{
         color: #338FF5;
@@ -935,7 +935,7 @@ export default {
     }
   }
   &.day{
-    background-color: #fff;
+    background-color: $mainDayBgColor;
     >.report-form-statistics-content{
       >.report-form-title{
         color: #338FF5;

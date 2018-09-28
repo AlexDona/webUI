@@ -1035,7 +1035,7 @@ export default {
     }
   }
   &.night{
-    background-color: $rockBottomNightBgColor;
+    background-color: $mainNightBgColor;
     >.otc-center-content{
       >.otc-online-trading{
         >.otc-online-buy-and-sell-button{
