@@ -17,14 +17,14 @@
             <!--账号安全级别：-->
             {{ $t('M.user_security_level') }}：
             <span
-              v-if="person == '20'"
+              v-if="person === 40"
               class="level"
             >
               <!--低-->
               {{ $t('M.user_security_low') }}
             </span>
             <span
-              v-if="person == '60'"
+              v-if="person === 80 || person === 60"
               class="level"
             >
               <!--中-->
@@ -32,7 +32,7 @@
             </span>
             <span
               class="level"
-              v-if="person == '100'"
+              v-if="person === 100"
             >
               <!--高-->
               {{ $t('M.user_security_tall') }}
