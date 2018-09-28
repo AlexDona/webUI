@@ -314,14 +314,16 @@ export default {
 </script>
 <style scoped lang="scss" type="text/scss">
 @import url(../../../static/css/scss/OTC/OTCCenter.scss);
+@import "../../../static/css/scss/index";
 .otc-business-apply-box{
   >.business-apply-content{
-    width: 1150px !important;
-    margin: 70px auto !important;
     padding-top: 20px;
     >.privilege{
+    width: 1150px;
+    margin: 70px auto;
+    margin-top:107px;
       >.title{
-        // color: #fff;
+        color: #fff;
         text-align: center;
       }
       >.content{
@@ -377,6 +379,9 @@ export default {
       }
     }
     >.approve{
+      width: 1150px;
+      margin: 70px auto;
+      margin-top:107px;
       >.title{
         // color: #fff;
         text-align: center;
@@ -482,7 +487,7 @@ export default {
     }
   }
   &.night{
-    background-color: #121824;
+    background-color: $mainNightBgColor;
     >.business-apply-content{
       >.privilege{
         >.title{
@@ -561,7 +566,7 @@ export default {
     }
   }
   &.day{
-    background-color: #121824;
+    background-color: $mainDayBgColor;
     >.business-apply-content{
       >.privilege{
         >.title{

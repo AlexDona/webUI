@@ -3,7 +3,7 @@ export const finance = {
   finance_increase: '涨幅',
   finance_date: '当日',
   finance_history: '历史',
-  finance_invest: '投资',
+  finance_invest: '存币',
   finance_useBalance: '可用余额',
   finance_errorTips: '您投资的币种数量已超过该币种的总资产',
   finance_mast: '立刻',

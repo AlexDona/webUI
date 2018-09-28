@@ -134,5 +134,7 @@ export const deleteUserInformation = (params) => deleteMethod('userApi', params)
 export const vipPriceInfo = (params) => get('vip/price', params)
 // 购买vip
 export const buyVipPriceInfo = (params) => postWithURLencoded('vip/buy', params)
+// 购买vip
+export const currencyApplicationDownloadUrl = (params) => get('getCurrencyApplicationDownloadUrl', params)
 // 汇率转换
 export const currencyTransform = (params) => get('exchangeRate/coinPrice', params)

@@ -1,5 +1,8 @@
 <template>
-  <div class="otc-publish-buy-and-sell-box otc">
+  <div
+  class="otc-publish-buy-and-sell-box otc"
+  :class="{'day':theme == 'day','night':theme == 'night' }"
+  >
     <!-- 挂单：商家和普通用户都可以用 -->
     <!-- 1.0 导航 -->
     <NavCommon/>
@@ -191,7 +194,7 @@
                     @keyup="changeInputValue('minCount')"
                   >
                   <span class="monad">{{CurrencyCoinsName}}</span>
-                  <span class="range-line">-</span>
+                  <span class="range-line">—</span>
                   <input
                     type="text"
                     :placeholder="$t('M.otc_publishAD_maxlimitMoney') + this.backReturnCurrentMaxCount"
@@ -767,7 +770,8 @@ export default {
   computed: {
     ...mapState({
       // 商户id
-      partnerId: state => state.common.partnerId
+      partnerId: state => state.common.partnerId,
+      theme: state => state.common.theme
     })
   },
   watch: {}
@@ -775,11 +779,12 @@ export default {
 </script>
 <style scoped lang="scss" type="text/scss">
   @import url(../../../static/css/scss/OTC/OTCCenter.scss);
+  @import "../../../static/css/scss/index";
   .otc-publish-buy-and-sell-box {
-    background-color: #1D2331;
+    background-color: $mainNightBgColor;
     > .publish-buy-and-sell-content {
       width: 1150px;
-      margin: 70px auto;
+      margin: 107px auto;
       > .publish-content {
         display: flex;
         flex: 3;
@@ -909,12 +914,8 @@ export default {
                 font-size: 12px;
               }
               > .range-line {
-                color: #fff;
-                width: 20px;
-                height: 36px;
-                display: inline-block;
-                text-align: center;
-                vertical-align: top;
+                color: #7d90ac;
+                margin: 0px 10px;
               }
             }
             .limitErrorTips{

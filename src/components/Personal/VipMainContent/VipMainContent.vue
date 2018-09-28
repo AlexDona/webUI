@@ -16,6 +16,7 @@
       <div
         class="content-main display-flex"
         v-show="showOpenTheVIPPage"
+        v-if="filteredData[0]"
       >
         <div class="content-module cursor-pointer">
           <p class="content-vip-one text-align-c">
@@ -24,7 +25,9 @@
           <p class="content-discount line-height50 text-align-c font-size16">手续费折扣</p>
           <p class="content-text line-height50 text-align-c font-size18">九折</p>
           <p class="content-discount line-height50 text-align-c font-size16">
-            <span class="content-discount-color">100FUC</span>
+            <span class="content-discount-color">
+              {{filteredData[0].value}}FUC
+            </span>
             <span>/月</span>
           </p>
           <p class="content-button">
@@ -43,7 +46,9 @@
           <p class="content-discount line-height50 text-align-c font-size16">手续费折扣</p>
           <p class="content-text line-height50 text-align-c font-size18">八折</p>
           <p class="content-discount line-height50 text-align-c font-size16">
-            <span>100FUC</span>
+            <span class="content-discount-color">
+              {{filteredData[1].value}}FUC
+            </span>
             <span>/月</span>
           </p>
           <p class="content-button">
@@ -62,7 +67,9 @@
           <p class="content-discount line-height50 text-align-c font-size16">手续费折扣</p>
           <p class="content-text line-height50 text-align-c font-size18">七折</p>
           <p class="content-discount line-height50 text-align-c font-size16">
-            <span>100FUC</span>
+            <span class="content-discount-color">
+              100FUC
+            </span>
             <span>/月</span>
           </p>
           <p class="content-button">
@@ -81,7 +88,9 @@
           <p class="content-discount line-height50 text-align-c font-size16">手续费折扣</p>
           <p class="content-text line-height50 text-align-c font-size18">六折</p>
           <p class="content-discount line-height50 text-align-c font-size16">
-            <span>100FUC</span>
+            <span class="content-discount-color">
+              100FUC
+            </span>
             <span>/月</span>
           </p>
           <p class="content-button">
@@ -100,7 +109,9 @@
           <p class="content-discount line-height50 text-align-c font-size16">手续费折扣</p>
           <p class="content-text line-height50 text-align-c font-size18">五折</p>
           <p class="content-discount line-height50 text-align-c font-size16">
-            <span>100FUC</span>
+            <span class="content-discount-color">
+              100FUC
+            </span>
             <span>/月</span>
           </p>
           <p class="content-button">
@@ -199,6 +210,7 @@
         </div>
         <div
           class="detail-page-duration display-flex"
+          v-if="filteredData[0]"
         >
           <div class="duration-title font-size14">开通时长</div>
           <div
@@ -210,7 +222,7 @@
               3个月
             </p>
             <p class="duration-currency font-size18">
-              {{filteredData[0].value}}FUC
+              {{filteredData[1].value}}FUC
             </p>
           </div>
           <div
@@ -222,7 +234,7 @@
               6个月
             </p>
             <p class="duration-currency font-size18">
-              {{filteredData[1].value}}FUC
+              {{filteredData[2].value}}FUC
             </p>
             <p class="duration-through ">
               600FUC
@@ -237,7 +249,7 @@
               12个月
             </p>
             <p class="duration-currency font-size18">
-              {{filteredData[2].value}}FUC
+              {{filteredData[3].value}}FUC
             </p>
             <p class="duration-through">
               1200FUC
@@ -252,7 +264,7 @@
               1个月
             </p>
             <p class="duration-currency font-size18">
-              {{filteredData[3].value}}FUC
+              {{filteredData[0].value}}FUC
             </p>
           </div>
         </div>
@@ -341,7 +353,8 @@ import { createNamespacedHelpers, mapState } from 'vuex'
 import {
   vipPriceInfo,
   buyVipPriceInfo,
-  getPushTotalByCoinId
+  getPushTotalByCoinId,
+  currencyApplicationDownloadUrl
 } from '../../../utils/api/personal'
 import {
   returnAjaxMessage
@@ -362,12 +375,13 @@ export default {
       password: '', // 开启vip详情页面默认
       vipPriceInfo: [], // vip信息接收
       dialogFormVisible: false,
-      type: '1', // vip类型
+      type: 1, // vip类型
       active: 0,
       changeRed: 0,
       changeRed1: 0,
       month: '', // 月份
       vipName: '', // vip名称
+      configValue: '', // 币种id
       currencyAsset: 0 // 币种数量
     }
   },
@@ -379,7 +393,8 @@ export default {
     // 黑色主题样式
     require('../../../../static/css/theme/night/Personal/VipMainContent/VipMainContentNight.css')
     this.getVipPriceInfo()
-    this.toggleAssetsCurrencyId()
+    // this.toggleAssetsCurrencyId()
+    this.getCurrencyApplicationDownloadUrl()
   },
   mounted () {},
   activited () {},
@@ -530,18 +545,30 @@ export default {
         this.vipPriceInfo = data.data.data
       }
     },
+    async getCurrencyApplicationDownloadUrl () {
+      let data = await currencyApplicationDownloadUrl({
+        key: 'VIP_COIN'
+      })
+      if (!(returnAjaxMessage(data, this, 0))) {
+        return false
+      } else {
+        // 返回展示
+        this.configValue = data.data.data.configValue
+        this.toggleAssetsCurrencyId()
+      }
+    },
     // 根据币种id获取可用余额
     async toggleAssetsCurrencyId () {
       let data
       let param = {
-        coinId: '492286346086318080' // 币种coinId
+        coinId: this.configValue // 币种coinId
       }
       data = await getPushTotalByCoinId(param)
-      console.log(data)
       if (!(returnAjaxMessage(data, this, 0))) {
         return false
       } else {
         this.currencyAsset = data.data.data.total
+        console.log(this.currencyAsset)
       }
     }
   },

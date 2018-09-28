@@ -6,6 +6,7 @@
     <header class="personal-height background-color personal-height40 line-height40 font-size16">
       <span class="padding-left15 font-weight600 coin-color">
         币币订单
+        {{ $t('M.user_coin') }}{{ $t('M.comm_order') }}
       </span>
     </header>
     <div class="min-height500 background-color margin-top9">
@@ -16,20 +17,25 @@
         <!--查询条件-->
         <div class="search-condition-box">
           <div class="symbol-box condition-item">
-            <span class="currency-span">交易对</span>
+            <span class="currency-span">
+              <!--交易对-->
+              {{ $t('M.comm_deal') }}{{ $t('M.comm_pair') }}
+            </span>
             <!--币种-->
+            <!--币种名称-->
             <input
               type="text"
-              placeholder="币种名称"
+              :placeholder="$t('M.comm_currency') + $t('M.user_account_name')"
               class="currency-input"
               v-model="activeSymbol"
             />
             <span class="currency-span">/</span>
             <!--交易区下拉-->
+            <!--请选择-->
             <el-select
               clearable
               v-model="activeExchangeArea"
-              placeholder="请选择"
+              :placeholder="$t('M.comm_please_choose')"
             >
               <el-option
                 v-for="item in entrustSelectList"
@@ -42,11 +48,15 @@
           </div>
           <!--撮合类型-->
           <div class="match-type-box condition-item">
-            <span class="currency-span">撮合类型</span>
+            <span class="currency-span">
+              <!--撮合类型-->
+              {{ $t('M.user_coin_bring_together') }}{{ $t('M.comm_type') }}
+            </span>
+            <!--请选择-->
             <el-select
               clearable
               v-model="activeMatchType"
-              placeholder="请选择"
+              :placeholder="$t('M.comm_please_choose')"
             >
               <el-option
                 v-for="item in matchTypeList"
@@ -59,11 +69,15 @@
           </div>
           <!--方向（买入，卖出）-->
           <div class="trade-type-box condition-item">
-            <span class="currency-span">委单类型</span>
+            <span class="currency-span">
+              <!--委单类型-->
+              {{ $t('M.user_coin_appoint_single') }}{{ $t('M.comm_type') }}
+            </span>
+            <!--请选择-->
             <el-select
               clearable
               v-model="activeType"
-              placeholder="请选择"
+              :placeholder="$t('M.comm_please_choose')"
             >
               <el-option
                 v-for="item in typeList"
@@ -76,20 +90,25 @@
           </div>
           <!--起止时间-->
           <div class="start-end-time-box condition-item">
-            <span class="currency-span">起止时间</span>
+            <span class="currency-span">
+              <!--起止时间-->
+              {{ $t('M.user_coin_start_stop') }}{{ $t('M.comm_data') }}
+            </span>
+            <!--选择日期-->
             <el-date-picker
               clearable
               v-model="startTime"
               type="datetime"
-              placeholder="选择日期"
+              :placeholder="$t('M.comm_select') + $t('M.comm_data')"
             >
             </el-date-picker>
             <span class="middle-line"> - </span>
+            <!--选择日期-->
             <el-date-picker
               clearable
               v-model="endTime"
               type="datetime"
-              placeholder="选择日期"
+              :placeholder="$t('M.comm_select') + $t('M.comm_data')"
             >
             </el-date-picker>
           </div>
@@ -98,12 +117,14 @@
               class="search-btn cursor-pointer"
               @click.prevent="searchWithCondition(activeName)"
             >
-              查询
+              <!--查询-->
+              {{ $t('M.comm_query') }}
             </button>
           </div>
         </div>
+        <!--当前委托-->
         <el-tab-pane
-          label="当前委托"
+          :label="$t('M.user_coin_commissioned_current')"
           name="current-entrust"
         >
           <div class="inner-box">
@@ -112,32 +133,36 @@
               <el-table
                 :data="currentEntrustList"
               >
+                <!--时间-->
                 <el-table-column
-                  label="时间"
+                  :label="$t('M.comm_time')"
                   width="135"
                 >
                   <template slot-scope="s">
                     <span>{{ s.row.createTime }}</span>
                   </template>
                 </el-table-column>
+                <!--交易对-->
                 <el-table-column
-                  label="交易对"
+                  :label="$t('M.comm_deal') + $t('M.comm_pair')"
                   width="80"
                 >
                   <template slot-scope="s">
                     <span>{{ s.row.tradeName }}</span>
                   </template>
                 </el-table-column>
+                <!--撮合类型-->
                 <el-table-column
-                  label="撮合类型"
+                  :label="$t('M.user_coin_bring_together') + $t('M.comm_type')"
                   width="70"
                 >
                   <template slot-scope="s">
                     <span>{{ s.row.matchTypeName }}</span>
                   </template>
                 </el-table-column>
+                <!--委单类型-->
                 <el-table-column
-                  label="委单类型"
+                  :label="$t('M.user_coin_appoint_single') + $t('M.comm_type')"
                   width="70"
                 >
                   <template slot-scope="s">
@@ -145,48 +170,54 @@
                     <span v-show="language === 'zh_CN'">{{s.row.typeName}}</span>
                   </template>
                 </el-table-column>
+                <!--数量-->
                 <el-table-column
-                  label="数量"
+                  :label="$t('M.comm_count')"
                   width="110"
                 >
                   <template slot-scope="s">
                     <span>{{ s.row.count-0 }}</span>
                   </template>
                 </el-table-column>
+                <!--委托总额-->
                 <el-table-column
-                  label="委托总额"
+                  :label="$t('M.user_coin_appoint_single') + $t('M.user_coin_rental')"
                   width="120"
                 >
                   <template slot-scope="s">
                     <span>{{ s.row.amount-0}}</span>
                   </template>
                 </el-table-column>
+                <!--已成交-->
                 <el-table-column
-                  label="已成交"
+                  :label="$t('M.comm_already') + $t('M.comm_make_bargain')"
                   width="120"
                 >
                   <template slot-scope="s">
                     <span>{{s.row.completeCount-0}}</span>
                   </template>
                 </el-table-column>
+                <!--未成交-->
                 <el-table-column
-                  label="未成交"
+                  :label="$t('M.comm_not') + $t('M.comm_make_bargain')"
                   width="120"
                 >
                   <template slot-scope="s">
                     <span>{{ s.row.leftCount-0}}</span>
                   </template>
                 </el-table-column>
+                <!--状态-->
                 <el-table-column
-                  label="状态"
+                  :label="$t('M.comm_state')"
                   width="60"
                 >
                   <template slot-scope="s">
                     <span>{{ s.row.statusName }}</span>
                   </template>
                 </el-table-column>
+                <!--操作-->
                 <el-table-column
-                  label="操作"
+                  :label="$t('M.comm_operation')"
                   width="85"
                 >
                   <template slot-scope="s">
@@ -194,7 +225,8 @@
                       class="cursor-pointer repeal-btn"
                       @click.prevent="repealMyEntrust(s.row.id,s.row.version)"
                     >
-                      撤销
+                      <!--撤销-->
+                      {{ $t('M.user_push_revocation') }}
                     </button>
                   </template>
                 </el-table-column>
@@ -211,39 +243,44 @@
             </div>
           </div>
         </el-tab-pane>
+        <!--历史委托-->
         <el-tab-pane
-          label="历史委托"
+          :label="$t('M.user_coin_commissioned_history')"
           name="history-entrust"
         >
           <el-table
             :data="historyEntrustList"
           >
+            <!--时间-->
             <el-table-column
-              label="时间"
+              :label="$t('M.comm_time')"
               width="135"
             >
               <template slot-scope="s">
                 <span>{{ s.row.createTime }}</span>
               </template>
             </el-table-column>
+            <!--交易对-->
             <el-table-column
-              label="交易对"
+              :label="$t('M.comm_deal') + $t('M.comm_pair')"
               width="80"
             >
               <template slot-scope="s">
                 <span>{{ s.row.tradeName }}</span>
               </template>
             </el-table-column>
+            <!--撮合类型-->
             <el-table-column
-              label="撮合类型"
+              :label="$t('M.user_coin_bring_together') + $t('M.comm_type')"
               width="70"
             >
               <template slot-scope="s">
                 <span>{{ s.row.matchTypeName }}</span>
               </template>
             </el-table-column>
+            <!--委单类型-->
             <el-table-column
-              label="委单类型"
+              :label="$t('M.user_coin_appoint_single') + $t('M.comm_type')"
               width="70"
             >
               <template slot-scope="s">
@@ -251,55 +288,64 @@
                 <span v-show="language === 'zh_CN'">{{s.row.typeName}}</span>
               </template>
             </el-table-column>
+            <!--价格-->
             <el-table-column
-              label="价格"
+              :label="$t('M.comm_price_metre')"
               width="110"
             >
               <template slot-scope="s">
                 <span>{{ s.row.price }}</span>
               </template>
             </el-table-column>
+            <!--委托量-->
             <el-table-column
-              label="委托量"
+              :label="$t('M.user_coin_entrust') + $t('M.comm_quantity')"
               width="120"
             >
               <template slot-scope="s">
                 <span>{{ s.row.count-0}}</span>
               </template>
             </el-table-column>
+            <!--成交量-->
             <el-table-column
-              label="成交量"
+              :label="$t('M.comm_make_bargain') + $t('M.comm_quantity')"
               width="120"
             >
               <template slot-scope="s">
                 <span>{{ s.row.completeCount-0}}</span>
               </template>
             </el-table-column>
+            <!--成交价-->
             <el-table-column
-              label="成交价"
+              :label="$t('M.comm_make_bargain') + $t('M.comm_price')"
               width="120"
             >
               <template slot-scope="s">
                 <span>{{s.row.completeCount-0}}</span>
               </template>
             </el-table-column>
+            <!--状态-->
             <el-table-column
-              label="状态"
+              :label="$t('M.comm_state')"
               width="60"
             >
               <template slot-scope="s">
                 <span>{{ s.row.statusName }}</span>
               </template>
             </el-table-column>
+            <!--操作-->
             <el-table-column
-              label="操作"
+              :label="$t('M.comm_operation')"
               width="85"
             >
               <template slot-scope="s">
                 <button
                   class="cursor-pointer repeal-btn"
                   @click.prevent="repealMyEntrust(s.row.id,s.row.version)"
-                >删除</button>
+                >
+                  <!--删除-->
+                  {{ $t('M.comm_delete') }}
+                </button>
               </template>
             </el-table-column>
           </el-table>
@@ -313,37 +359,42 @@
           >
           </el-pagination>
         </el-tab-pane>
+        <!--成交明细-->
         <el-tab-pane
-          label="成交明细"
+          :label="$t('M.user_coin_clinch_deal_detail')"
           name="make-detail"
         >
           <el-table
             :data="currentMakeDetailList"
           >
+            <!--时间-->
             <el-table-column
-              label="时间"
+              :label="$t('M.comm_time')"
               width="125"
             >
               <template slot-scope="s">
                 <span>{{ s.row.createTime }}</span>
               </template>
             </el-table-column>
+            <!--交易对-->
             <el-table-column
-              label="交易对"
+              :label="$t('M.comm_deal') + $t('M.comm_pair')"
             >
               <template slot-scope="s">
                 <span>{{ s.row.tradeName }}</span>
               </template>
             </el-table-column>
+            <!--撮合类型-->
             <el-table-column
-              label="撮合类型"
+              :label="$t('M.user_coin_bring_together') + $t('M.comm_type')"
             >
               <template slot-scope="s">
                 <span>{{ s.row.matchTypeName }}</span>
               </template>
             </el-table-column>
+            <!--委托类型-->
             <el-table-column
-              label="委托类型"
+              :label="$t('M.user_coin_appoint_single') + $t('M.comm_type')"
               width="110"
             >
               <template slot-scope="s">
@@ -351,29 +402,33 @@
                 <span v-show="language === 'zh_CN'">{{s.row.typeName}}</span>
               </template>
             </el-table-column>
+            <!--价格-->
             <el-table-column
-              label="价格"
+              :label="$t('M.comm_price_metre')"
             >
               <template slot-scope="s">
                 <span>{{ s.row.count-0 }}</span>
               </template>
             </el-table-column>
+            <!--数量-->
             <el-table-column
-              label="数量"
+              :label="$t('M.comm_count')"
             >
               <template slot-scope="s">
                 <span>{{ s.row.count-0 }}</span>
               </template>
             </el-table-column>
+            <!--成交额-->
             <el-table-column
-              label="成交额"
+              :label="$t('M.user_coin_volume')"
             >
               <template slot-scope="s">
                 <span>{{ s.row.amount-0}}</span>
               </template>
             </el-table-column>
+            <!--手续费-->
             <el-table-column
-              label="手续费"
+              :label="$t('M.comm_service_charge')"
             >
               <template slot-scope="s">
                 <span>{{s.row.fees - 0}}</span>
@@ -529,9 +584,12 @@ export default {
         id,
         version
       }
-      this.$confirm('确定撤销订单吗, 是否继续?', {
-        cancelButtonText: '取消',
-        confirmButtonText: '确定'
+      // 确定删除提币地址吗, 是否继续?
+      this.$confirm(this.$t('M.comm_sure_delete'), {
+        // 取消
+        cancelButtonText: this.$t('M.comm_cancel'),
+        // 确定
+        confirmButtonText: this.$t('M.comm_confirm')
       }).then(() => {
         repealMyEntrustCommon(params, (res) => {
           if (!returnAjaxMessage(res, this, 1)) {

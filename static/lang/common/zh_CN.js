@@ -31,6 +31,8 @@ export const common = {
   'comm_currency': '币种',
   'comm_coin': '法币',
   'comm_count': '数量',
+  'comm_balance': '余额',
+  'comm_price_metre': '价格',
   'comm_total_sum': '总',
   'comm_entry': '挂单',
   'comm_matched': '已匹配',
@@ -66,6 +68,7 @@ export const common = {
   'comm_no_data': '暂无数据',
   'comm_add': '添加',
   'comm_newly_increased': '新增',
+  'comm_newly_compile': '编辑',
   'comm_delete': '删除',
   'comm_modification': '修改',
   'comm_copy': '复制',
@@ -95,9 +98,14 @@ export const common = {
   // 动作类型
   'comm_open': '开启',
   'comm_close': '关闭',
+  'comm_start_using': '启用',
+  'comm_forbidden': '禁用',
+  'comm_buyer': '买方',
+  'comm_seller': '卖方',
   // 内容类型
-  'comm_have_been_copied': '已拷贝',
+  'comm_sure_delete': '确定删除API地址吗, 是否继续?',
   'comm_qr_code': '二维码',
+  'comm_have_been_copied': '已拷贝',
   'comm_copies_failure': '拷贝失败，请稍后重试',
   'comm_user_asset_information': '我的资产',
   'comm_user_account_balance': '账户资产',
@@ -124,5 +132,14 @@ export const common = {
   'comm_invitation_list': '邀请排行',
   'comm_please': '请',
   'comm_bill': '账',
-  'comm_house': '户'
+  'comm_house': '户',
+  'comm_theme': '主题',
+  'comm_download': '下载',
+  'comm_help_center': '帮助中心',
+  'comm_api_doc': 'API文档',
+  'comm_currency_info': '币种资料',
+  'comm_about': '关于',
+  'comm_us': '我们',
+  'comm_news_and_notice': '新闻公告',
+  'comm_description': '说明'
 }

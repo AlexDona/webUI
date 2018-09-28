@@ -1,0 +1,52 @@
+.otc-publish-buy-and-sell-box.day{
+    background-color: #fff;
+}
+.otc-publish-buy-and-sell-box.day .el-form--label-top .el-form-item__label,
+.otc-publish-buy-and-sell-box.day .el-textarea__inner::-webkit-input-placeholder,
+.otc-publish-buy-and-sell-box.day > .publish-buy-and-sell-content > .publish-content > .publish-content-left > .buy-sell-submit-form .remark
+{
+    color: #7D90AC;
+}
+.otc-publish-buy-and-sell-box.day .el-textarea__inner{
+    font-size: 12px;
+}
+.otc-publish-buy-and-sell-box.day .buy-sell-submit-form .el-input__inner,
+.otc-publish-buy-and-sell-box.day > .publish-buy-and-sell-content > .publish-content > .publish-content-left > .buy-sell-submit-form .volume-business > .sell-sum,
+.otc-publish-buy-and-sell-box.day > .publish-buy-and-sell-content > .publish-content > .publish-content-left > .buy-sell-submit-form .sell-buy-input > .sell-sum
+{
+    background-color: transparent;
+    border:1px solid rgba(236,241,248,1);
+    background:rgba(255,255,255,1);
+}
+.otc-publish-buy-and-sell-box.day > .publish-buy-and-sell-content > .publish-content > .publish-content-left > .buy-sell-submit-form .sell-buy-input > .sell-sum::-webkit-input-placeholder,
+.otc-publish-buy-and-sell-box.day > .publish-buy-and-sell-content > .publish-content > .publish-content-left > .buy-sell-submit-form .volume-business > .sell-sum::-webkit-input-placeholder
+{
+    color:#BDBDBD;
+}
+.otc-publish-buy-and-sell-box.day > .publish-buy-and-sell-content > .publish-content > .publish-content-left > .buy-sell-submit-form .sell-buy-input > .unit,
+.otc-publish-buy-and-sell-box.day > .publish-buy-and-sell-content > .publish-content > .publish-content-left > .buy-sell-submit-form .volume-business > .monad
+{
+    background-color: #CBDDF4;
+    color: #7EA9E4;
+}
+.otc-publish-buy-and-sell-box.day > .publish-buy-and-sell-content > .publish-content > .publish-content-left > .buy-sell-submit-form .volume-business > .range-line{
+    color: #338FF5;
+}
+.otc-publish-buy-and-sell-box.day .el-textarea__inner{
+    background:rgba(255,255,255,1);
+    border:1px solid rgba(236,241,248,1);
+    border-radius:2px;
+}
+.otc-publish-buy-and-sell-box.day > .publish-buy-and-sell-content > .publish-content > .publish-content-left > .buy-sell-submit-form .predict > .predict-sum,
+.otc-publish-buy-and-sell-box.day > .publish-buy-and-sell-content > .publish-content > .publish-content-left > .buy-sell-submit-form .want-buy-sell-sum-content .buyOrange
+{
+   color:#D45858;
+}
+.otc-publish-buy-and-sell-box.day .el-form-item__label{
+  color: #333;
+}
+.otc-publish-buy-and-sell-box.day .predict .predict-text,
+.otc-publish-buy-and-sell-box.day .predict .rate-text
+{
+color: #333!important;
+}

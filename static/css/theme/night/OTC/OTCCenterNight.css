@@ -61,7 +61,7 @@
   border-color: #D45858;
 }
 .otc-box.night .nvest-list-body .el-table td, .el-table th.is-leaf{
-  border-top: 1px solid rgba(97,116,153,0.2)!important;
+  border-top: 1px solid rgba(97,116,153,0.2);
   box-shadow: none;
 }
 .otc-box.night .el-button--success {

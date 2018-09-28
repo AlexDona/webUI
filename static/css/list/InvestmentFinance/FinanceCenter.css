@@ -1,14 +1,14 @@
 /* 投资理财重置element ui样式 */
 .finance-box .finance-form-header .el-input__inner{
     color:#338FF5;
+    background-color: transparent;
     font-size: 20px;
-    border-radius: none;
     width: 168px;
     height:48px;
-    background:linear-gradient(180deg,rgba(13, 17, 25, 0.5) 0%);
-    background:#152337;
+    background:linear-gradient(180deg,rgba(51,143,245,0.1) 0%);
     border-radius:2px;
     border:1px solid #338FF5;
+    box-shadow:0px 2px 2px rgba(13,17,25,1);
 }
 .finance-box .el-tabs__active-bar{
     background:none!important;
@@ -26,6 +26,7 @@
 }
 .finance-box .el-tabs__item{
     font-size: 22px;
+    color: #617499;
 }
 .finance-box .el-tabs__item.is-active{
     color: #fff;
@@ -46,7 +47,8 @@
 .finance-box .nvest-list-body .el-table{
     font-size: 12px;
     color: #A9BED4;
-    background: transparent;
+    background: #1c1f32;
+    box-shadow:0px 4px 6px rgba(25,30,40,0.5);
 }
 .finance-box .finance-box .nvest-list-body .el-table th.is-leaf:first-of-type{
     border-bottom-left-radius: 4px;
@@ -60,14 +62,18 @@
 .finance-box .nvest-list-body .el-table th{
     color:#617499;
     border-top:1px solid #A9BED4;
-    background:rgba(30,38,54,1);
+    background:#1c1f32;
+    box-shadow:0px 4px 6px rgba(25,30,40,0.5);
 }
 .finance-box .nvest-list-body .el-table--enable-row-hover .el-table__body tr:hover>td{
     background:#1E2636;
 }
 /* 设置全局分页剧中 */
 .finance-box .el-table__body-wrapper{
-    min-height: 200px;
+    min-height: 400px;
+}
+.finance-box .el-table__header{
+  margin-bottom:10px;
 }
 .finance-box .el-button{
     border: none;

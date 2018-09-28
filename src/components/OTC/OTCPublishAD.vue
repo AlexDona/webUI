@@ -211,6 +211,7 @@
                 >
                 <!-- @keyup="changeMinCountInputValue('minCountValue')" -->
                 <span class="unit font-size14">{{activeedCurrencyName}}</span>
+                <span class= "minMaxLink">一</span>
                 <!-- 单笔最大限额 -->
                 <input
                   type="text"
@@ -909,9 +910,9 @@ export default {
 }
 </script>
 <style scoped lang="scss" type="text/scss">
-// @import url(../../../static/css/scss/OTC/OTCCenter.scss);
+@import "../../../static/css/scss/index";
 .otc-publish-AD-box{
-  background-color: #121824;
+  background-color: $mainNightBgColor;
   >.otc-publish-AD-content{
     width: 1150px;
     margin: 70px auto;
@@ -1075,8 +1076,9 @@ export default {
                 border-top-right-radius: 4px;
                 border-bottom-right-radius: 4px;
               }
-              >.input-max{
-                margin-left: 40px;
+              >.minMaxLink{
+                margin: 0px 10px;
+                color:#7d90ac;
               }
             }
           }

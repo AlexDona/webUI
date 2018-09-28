@@ -46,3 +46,8 @@
 .withdrawal-address.personal.night .withdrawal-dialog .el-dialog__header {
   background-color: #20293C;
 }
+.withdrawal-address.personal .withdrawal-dialog .el-button {
+  background: linear-gradient(0deg, #2b396e, #2a5082);
+  color: rgba(255, 255, 255, 0.7);
+  border: 0;
+}

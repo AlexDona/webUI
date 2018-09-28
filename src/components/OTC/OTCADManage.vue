@@ -520,7 +520,7 @@ export default {
 }
 </script>
 <style scoped lang="scss" type="text/scss">
-// @import url(../../../static/css/scss/OTC/OTCCenter.scss);
+  @import "../../../static/css/scss/index";
   .otc-AD-manage-box {
     >.otc-AD-manage-content {
       width: 1150px;
@@ -577,7 +577,7 @@ export default {
       }
     }
     &.night{
-      background-color: #121824;
+      background-color: $mainNightBgColor;
       >.otc-AD-manage-content {
         > .AD-title {
           color: #338FF5;
@@ -616,7 +616,7 @@ export default {
       }
     }
     &.day{
-      background-color: #ffffff;
+      background-color: $mainDayBgColor;
       >.otc-AD-manage-content {
         > .AD-title {
           color: #338FF5;

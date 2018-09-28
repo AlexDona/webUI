@@ -4,20 +4,29 @@
     :class="{'day':theme == 'day','night':theme == 'night' }"
   >
     <header class="api-management-header personal-height40 line-height40 padding-left20 font-size16 background-color">
-      <span class="padding-left23 header-content font-weight600">API管理</span>
+      <span class="padding-left23 header-content font-weight600">
+        <!--API管理-->
+        API{{ $t('M.user_api_administration') }}
+      </span>
     </header>
     <div class="invitation-promotion-main min-height500 margin-top9">
       <!--创建API KEY-->
       <div class="extension-info padding-top0">
         <header class="extension-info-header line-height56">
-          <span class="font-size16 header-color">创建API KEY</span>
+          <span class="font-size16 header-color">
+            <!--创建API KEY-->
+            {{ $t('M.comm_creation') }}API KEY
+          </span>
         </header>
         <div class="extension-info-content display-flex">
           <div class="info-content info-content-left flex1">
             <el-form
               label-width="120px"
             >
-              <el-form-item label="备注：">
+              <!--备注-->
+              <el-form-item
+                :label="$t('M.comm_remark') + '：'"
+              >
                 <input
                   type="text"
                   class="api-input border-radius2 padding-l15 box-sizing"
@@ -26,7 +35,10 @@
                   @blur="checkoutInputFormat(0, remark)"
                 >
               </el-form-item>
-              <el-form-item label="绑定IP地址：">
+              <!--绑定IP地址-->
+              <el-form-item
+                :label="$t('M.user_security_binding')+ 'IP' + $t('M.comm_site') + '：'"
+              >
                 <input
                   type="text"
                   class="api-input border-radius2 padding-l15 box-sizing"
@@ -45,31 +57,38 @@
                 class="api-button border-radius4 cursor-pointer font-size14"
                 @click.prevent="stateEstablishApiButton"
               >
-                创建
+                <!--创建-->
+                {{ $t('M.comm_creation') }}
               </button>
             </el-form>
           </div>
           <div class="info-content info-content-right flex1 font-size12">
-            <p class="font-size14 content-title">提示</p>
+            <p class="font-size14 content-title">
+              <!--温馨提示-->
+              {{ $t('M.user_account_warm_prompt') }}
+            </p>
+            <!--本平台为您提供了强大的API，您可以通过 API 使用行情查询、自动-->
+            <!--交易等服务。通过 API 文档 查看如何使用;-->
+            <!--每个用户最多创建5组API Key;-->
+            <!--请不要泄露您的API Key，以免造成资产损失。出于安全考虑，建议为-->
+            <!--API Key绑定IP，每个API Key最多绑定4个IP。 单个地址直接填写，多-->
+            <!--个IP地址用半角逗号分隔，如：192.168.1.1,192.168.1.2,192.168.1.3。-->
             <div class="content-info">
               <span class="style">● </span>
               <p class="content-text">
-                本平台为您提供了强大的API，您可以通过 API 使用行情查询、自动
-                交易等服务。通过 API 文档 查看如何使用;
+                {{ $t('M.user_api_text1') }}
               </p>
             </div>
             <div class="content-info">
               <span class="style">● </span>
               <p class="content-text">
-                每个用户最多创建5组API Key;
+                {{ $t('M.user_api_text2') }}
               </p>
             </div>
             <div class="content-info">
               <span class="style">● </span>
               <p class="content-text">
-                请不要泄露您的API Key，以免造成资产损失。出于安全考虑，建议为
-                API Key绑定IP，每个API Key最多绑定4个IP。 单个地址直接填写，多
-                个IP地址用半角逗号分隔，如：192.168.1.1,192.168.1.2,192.168.1.3。
+                {{ $t('M.user_api_text3') }}
               </p>
             </div>
           </div>
@@ -78,48 +97,56 @@
       <!--我的 API KEY-->
       <div class="extension-statistics margin-top9 padding-top0">
         <header class="extension-statistics-header line-height56">
-          <span class="font-size16 header-color header-right">我的 API KEY</span>
+          <span class="font-size16 header-color header-right">
+            <!--我的 API KEY-->
+            {{ $t('M.user_api_my') }} API KEY
+          </span>
         </header>
         <div class="extension-statistics-content">
           <el-table
             :data="extensionList"
             style="width: 100%"
-            empty-text="暂无数据"
+            :empty-text="$t('M.comm_no_data')"
           >
+            <!--创建时间-->
             <el-table-column
-              label="创建时间"
+              :label="$t('M.comm_creation') + $t('M.comm_time')"
               width="150"
             >
               <template slot-scope = "s">
                 <div>{{timeFormatting(s.row.createTime) }}</div>
               </template>
             </el-table-column>
+            <!--备注-->
             <el-table-column
-              label="备注"
+              :label="$t('M.comm_remark')"
               width="80"
             >
               <template slot-scope = "s">
                 <div>{{ s.row.remark }}</div>
               </template>
             </el-table-column>
+            <!--API访问秘钥-->
             <el-table-column
-              label="API访问秘钥"
+              :label="'API' + $t('M.user_api_text4')"
               width="370"
             >
               <template slot-scope = "s">
                 <div>{{ s.row.accessKey }}</div>
               </template>
             </el-table-column>
+            <!--IP地址-->
             <el-table-column
-              label="IP地址"
+              :label="'IP' + $t('M.comm_site')"
               width="140"
             >
               <template slot-scope = "s">
                 <div>{{ s.row.ip }}</div>
               </template>
             </el-table-column>
+            <!--状态-->
             <el-table-column
-              label="状态"
+              :label="'IP' + $t('M.comm_state')"
               width="75"
             >
               <template slot-scope = "s">
@@ -127,8 +154,9 @@
                 <div v-if="s.row.status == 'disable'">{{ disable }}</div>
               </template>
             </el-table-column>
+            <!--操作-->
             <el-table-column
-              label="操作"
+              :label="$t('M.comm_operation')"
               width="115"
             >
               <template slot-scope = "s">
@@ -137,14 +165,16 @@
                   @click.prevent="compileApi(s.row.id)"
                   :id="s.row.id"
                 >
-                  编辑
+                  <!--编辑-->
+                  {{ $t('M.comm_newly_compile') }}
                 </div>
                 <div
                   class="compile float-left cursor-pointer"
                   @click.prevent="deleteUser(s.row.id)"
                   :id="s.row.id"
                 >
-                  删除
+                  <!--删除-->
+                  {{ $t('M.comm_delete') }}
                 </div>
               </template>
             </el-table-column>
@@ -153,17 +183,19 @@
       </div>
       <!--验证方式验证-->
       <div class="verification-method">
+        <!--安全验证-->
         <el-dialog
-          title="安全验证"
+          :title="$t('M.user_security_safety') + $t('M.user_security_verify')"
           :visible.sync="APIMoneyConfirm"
         >
           <el-form
             :label-position="labelPosition"
           >
             <!--手机已认证-->
+            <!--手机验证-->
             <el-form-item
               v-if="securityCenter.isPhoneEnable"
-              label="手机验证"
+              :label="$t('M.user_security_phone') + $t('M.user_security_verify')"
             >
               <input
                 class="content-input padding-l15 box-sizing"
@@ -180,9 +212,10 @@
             <!--手机未认证-->
             <span v-else></span>
             <!--邮箱已认证-->
+            <!--邮箱验证-->
             <el-form-item
               v-if="securityCenter.isMailEnable"
-              label="邮箱验证"
+              :label="$t('M.user_security_email') + $t('M.user_security_verify')"
             >
               <input
                 class="content-input padding-l15 box-sizing"
@@ -199,9 +232,10 @@
             <!--邮箱未认证-->
             <span v-elsee></span>
             <!--谷歌已认证-->
+            <!--谷歌验证-->
             <el-form-item
               v-if="securityCenter.isGoogleEnable"
-              label="谷歌验证"
+              :label="$t('M.user_security_google') + $t('M.user_security_verify')"
             >
               <input
                 class="content-input input-google padding-l15 box-sizing"
@@ -228,23 +262,26 @@
               class="primary-button cursor-pointer"
               @click.prevent="stateSubmitDetermineValidation"
             >
-              确 定
+              <!--确 定-->
+              {{ $t('M.comm_confirm') }}
             </button>
           </div>
         </el-dialog>
       </div>
       <!--二次信息确认弹框-->
       <div class="secondary-confirmation">
+        <!--创建成功-->
         <el-dialog
-          title="创建成功"
+          :title="$t('M.comm_creation') + $t('M.user_invite_succeed')"
           :visible.sync="apiSecondaryConfirmation"
         >
           <el-form
             :label-position="labelPosition"
           >
+            <!--API访问秘钥 （Access Key）-->
             <el-form-item
               style="margin-bottom: 0"
-              label="API访问秘钥 （Access Key）"
+              :label="'API' + $t('M.user_api_text4') + '（Access Key）'"
             >
               <input
                 class="content-input input-google padding-l15 box-sizing"
@@ -257,12 +294,14 @@
                 v-clipboard:success="onCopy"
                 v-clipboard:error="onError"
               >
-                |&nbsp;&nbsp;复制
+                <!--|&nbsp;&nbsp;复制-->
+                |&nbsp;&nbsp;{{ $t('M.comm_copy') }}
               </span>
             </el-form-item>
+            <!--API访问秘钥 （Access Key）-->
             <el-form-item
               style="margin-bottom: 0"
-              label="API访问秘钥 （Access Key）"
+              :label="'API' + $t('M.user_api_text4') + '（Access Key）'"
             >
               <input
                 class="content-input input-google padding-l15 box-sizing"
@@ -275,23 +314,37 @@
                 v-clipboard:success="onCopy"
                 v-clipboard:error="onError"
               >
-                |&nbsp;&nbsp;复制
+                <!--|&nbsp;&nbsp;复制-->
+                |&nbsp;&nbsp;{{ $t('M.comm_copy') }}
               </span>
               <p class="font-size12 text-info text-margin ">
-                （仅显示1次，遗失后不可找回，请务必妥善保存）
+                <!--（仅显示1次，遗失后不可找回，请务必妥善保存）-->
+                （{{ $t('M.user_api_text5') }}）
               </p>
             </el-form-item>
             <el-form-item
-              label="绑定IP地址"
+              :label="$t('M.user_security_binding') + 'IP' + $t('M.comm_site')"
             >
               <input
                 class="content-input input-google padding-l15 box-sizing"
                 v-model="ip"
                 disabled
               >
-              <p class="font-size12 text-info text-margin">提示</p>
-              <p class="font-size12 text-info">• 请不要泄露您的Secret Key，避免造成资产损失。</p>
-              <p class="font-size12 text-info text-bottom">• 如您忘记了Secret Key，请删除该密钥对并申请新的密钥对。</p>
+              <!--温馨提示-->
+              <!--请不要泄露您的Secret Key，避免造成资产损失。-->
+              <!--如您忘记了Secret Key，请删除该密钥对并申请新的密钥对。-->
+              <p class="font-size12 text-info text-margin">
+                温馨提示
+                {{ $t('M.user_account_warm_prompt') }}
+              </p>
+              <p class="font-size12 text-info">
+                <!--• 请不要泄露您的Secret Key，避免造成资产损失。-->
+                • {{ $t('M.user_api_text6') }}
+              </p>
+              <p class="font-size12 text-info text-bottom">
+                <!--• 如您忘记了Secret Key，请删除该密钥对并申请新的密钥对。-->
+                • {{ $t('M.user_api_text7') }}
+              </p>
             </el-form-item>
           </el-form>
           <div
@@ -303,23 +356,26 @@
               class="primary-button cursor-pointer"
               @click.prevent="stateSubmitAffirm"
             >
-              确 定
+              <!--确 定-->
+              {{ $t('M.comm_confirm') }}
             </button>
           </div>
         </el-dialog>
       </div>
       <!--编辑api-->
       <div class="editor">
+        <!--编辑API-->
         <el-dialog
-          title="编辑api"
+          :title="$t('M.comm_newly_compile') + 'API'"
           :visible.sync="compileUserApi"
         >
           <el-form
             :label-position="labelPosition"
           >
+            <!--备注-->
             <el-form-item
               style="margin-bottom: 0"
-              label="备注"
+              :label="$t('M.comm_remark')"
             >
               <input
                 class="content-input input-google padding-l15 box-sizing"
@@ -328,8 +384,9 @@
                 @blur="editorInputFormat(0, apiRemark)"
               >
             </el-form-item>
+            <!--绑定IP地址-->
             <el-form-item
-              label="绑定IP地址"
+              :label="$t('M.user_security_binding')+ 'IP' + $t('M.comm_site')"
             >
               <input
                 class="content-input input-google padding-l15 box-sizing"
@@ -354,7 +411,8 @@
               class="primary-button cursor-pointer"
               @click.prevent="stateCompileUserApi"
             >
-              确 定
+              <!--确 定-->
+              {{ $t('M.comm_confirm') }}
             </button>
           </div>
         </el-dialog>
@@ -397,8 +455,8 @@ export default {
       errorEditorMsg: '', // 错误信息
       // errorMsg: '', // 错误信息
       securityCenter: {},
-      enable: '启用',
-      disable: '禁用',
+      enable: 'M.comm_start_using',
+      disable: 'M.comm_forbidden',
       APIMoneyConfirm: false, // 默认API确认弹窗
       phoneCode: '', // 手机验证
       emailCode: '', // 邮箱验证
@@ -483,7 +541,8 @@ export default {
         // 备注
         case 0:
           if (!targetNum) {
-            this.setErrorMsg(0, '请输入备注')
+            // 请输入备注
+            this.setErrorMsg(0, this.$t('M.comm_please_enter') + this.$t('M.comm_remark'))
             this.$forceUpdate()
             return 0
           } else {
@@ -494,7 +553,8 @@ export default {
         // API访问秘钥
         case 1:
           if (!targetNum) {
-            this.setErrorMsg(1, '请输入API访问秘钥')
+            // 请输入API访问秘钥
+            this.setErrorMsg(1, this.$t('M.comm_please_enter') + 'API' + this.$t('M.user_api_text4'))
             this.$forceUpdate()
             return 0
           } else {
@@ -532,7 +592,7 @@ export default {
         // 手机验证
         case 0:
           if (!targetNum) {
-            this.setVerifyErrorMsg(0, '请输入手机验证')
+            this.setVerifyErrorMsg(0, this.$t('M.comm_please_enter') + this.$t('M.user_security_phone') + this.$t('M.user_security_verify'))
             this.$forceUpdate()
             return 0
           } else {
@@ -543,7 +603,7 @@ export default {
         // 邮箱验证
         case 1:
           if (!targetNum) {
-            this.setVerifyErrorMsg(1, '请输入邮箱验证')
+            this.setVerifyErrorMsg(1, this.$t('M.comm_please_enter') + this.$t('M.user_security_email') + this.$t('M.user_security_verify'))
             this.$forceUpdate()
             return 0
           } else {
@@ -554,7 +614,7 @@ export default {
         // 新登录密码
         case 2:
           if (!targetNum) {
-            this.setVerifyErrorMsg(2, '请输入谷歌验证')
+            this.setVerifyErrorMsg(2, this.$t('M.comm_please_enter') + this.$t('M.user_security_google') + this.$t('M.user_security_verify'))
             this.$forceUpdate()
             return 0
           } else {
@@ -624,7 +684,7 @@ export default {
         // 编辑用户备注
         case 0:
           if (!targetNum) {
-            this.setEditorErrorMsg(0, '请输入用户备注')
+            this.setEditorErrorMsg(0, this.$t('M.comm_please_enter') + this.$t('M.user_api_user') + this.$t('M.comm_remark'))
             this.$forceUpdate()
             return 0
           } else {
@@ -635,7 +695,7 @@ export default {
         // 编辑用户ip
         case 1:
           if (!targetNum) {
-            this.setEditorErrorMsg(1, '请输入用户ip')
+            this.setEditorErrorMsg(1, this.$t('M.comm_please_enter') + this.$t('M.user_api_user') + 'IP')
             this.$forceUpdate()
             return 0
           } else {
@@ -689,9 +749,12 @@ export default {
     // 删除
     deleteUser (id) {
       this.userId = id
-      this.$confirm('确定删除API地址吗, 是否继续?', {
-        cancelButtonText: '取消',
-        confirmButtonText: '确定'
+      // 确定删除API地址吗, 是否继续?
+      this.$confirm(this.$t('M.comm_sure_delete'), {
+        // 取消
+        cancelButtonText: this.$t('M.comm_cancel'),
+        // 确定
+        confirmButtonText: this.$t('M.comm_confirm')
       }).then(() => {
         this.deleteUserApi(id)
       }).catch(() => {
@@ -769,7 +832,7 @@ export default {
     //  点击复制
     onCopy (e) {
       // 已拷贝
-      let msg = '已拷贝'
+      let msg = this.$t('M.comm_have_been_copied')
       this.$message({
         type: 'success',
         message: msg
@@ -777,7 +840,7 @@ export default {
     },
     onError (e) {
       // 拷贝失败，请稍后重试
-      let msg = '拷贝失败，请稍后重试'
+      let msg = this.$t('M.comm_copies_failure')
       this.$message({
         type: 'success',
         message: msg
