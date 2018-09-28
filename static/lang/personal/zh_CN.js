@@ -188,8 +188,9 @@ export const personal = {
   // 历史委托
   'user_coin_commissioned_history': '历史委托',
   // 成交明细
-  'user_coin_clinch_deal_detail': '成交明细'
+  'user_coin_clinch_deal_detail': '成交明细',
   // 法币订单
+  'user_coin_currency': '货币'
   // 交易中的订单
   // 已完成的订单
   // 已取消的订单

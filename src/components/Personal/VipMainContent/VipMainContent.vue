@@ -26,7 +26,7 @@
           <p class="content-text line-height50 text-align-c font-size18">九折</p>
           <p class="content-discount line-height50 text-align-c font-size16">
             <span class="content-discount-color">
-              {{filteredData[0].value}}FUC
+              {{vipPriceInfo[0].value}}FUC
             </span>
             <span>/月</span>
           </p>
@@ -47,7 +47,7 @@
           <p class="content-text line-height50 text-align-c font-size18">八折</p>
           <p class="content-discount line-height50 text-align-c font-size16">
             <span class="content-discount-color">
-              {{filteredData[1].value}}FUC
+              {{vipPriceInfo[4].value}}FUC
             </span>
             <span>/月</span>
           </p>
@@ -68,7 +68,7 @@
           <p class="content-text line-height50 text-align-c font-size18">七折</p>
           <p class="content-discount line-height50 text-align-c font-size16">
             <span class="content-discount-color">
-              100FUC
+              {{vipPriceInfo[8].value}}FUC
             </span>
             <span>/月</span>
           </p>
@@ -89,7 +89,7 @@
           <p class="content-text line-height50 text-align-c font-size18">六折</p>
           <p class="content-discount line-height50 text-align-c font-size16">
             <span class="content-discount-color">
-              100FUC
+              {{vipPriceInfo[12].value}}FUC
             </span>
             <span>/月</span>
           </p>
@@ -110,7 +110,7 @@
           <p class="content-text line-height50 text-align-c font-size18">五折</p>
           <p class="content-discount line-height50 text-align-c font-size16">
             <span class="content-discount-color">
-              100FUC
+              {{vipPriceInfo[16].value}}FUC
             </span>
             <span>/月</span>
           </p>
@@ -130,7 +130,7 @@
           <!--<p class="content-discount line-height50 text-align-c font-size16">手续费折扣</p>-->
           <!--<p class="content-text line-height50 text-align-c font-size18">四折</p>-->
           <!--<p class="content-discount line-height50 text-align-c font-size16">-->
-            <!--<span>100FUC</span>-->
+            <!--<span>{{vipPriceInfo[20].value}}FUC</span>-->
             <!--<span>/月</span>-->
           <!--</p>-->
           <!--<p class="content-button">-->

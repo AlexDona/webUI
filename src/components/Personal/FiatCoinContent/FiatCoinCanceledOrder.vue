@@ -6,13 +6,34 @@
     <div class="canceled-order-content">
       <!--&lt;!&ndash;表头属性&ndash;&gt;-->
       <div class="canceled-table-head display-flex">
-        <span class="item flex1">订单号</span>
-        <span class="item flex1">类型</span>
-        <span class="item flex1">币种</span>
-        <span class="item flex1">价格</span>
-        <span class="item flex1">数量</span>
-        <span class="item flex1">总金额</span>
-        <span class="item flex1">下单时间</span>
+        <span class="item flex1">
+          <!--订单号-->
+          {{$t('M.otc_MerchantsOrders_orderNum')}}
+        </span>
+        <span class="item flex1">
+          <!--类型-->
+          {{$t('M.otc_cancelOrder_type')}}
+        </span>
+        <span class="item flex1">
+          <!--币种-->
+          {{$t('M.comm_currency')}}
+        </span>
+        <span class="item flex1">
+          <!--价格-->
+          {{$t('M.otc_index_price')}}
+        </span>
+        <span class="item flex1">
+          <!--数量-->
+          {{$t('M.comm_count')}}
+        </span>
+        <span class="item flex1">
+          <!--总金额-->
+          {{$t('M.otc_canceled_total')}}
+        </span>
+        <span class="item flex1">
+          <!--下单时间-->
+          {{$t('M.otc_stocks_ordertime')}}
+        </span>
       </div>
       <!--表格-->
       <div
@@ -30,7 +51,8 @@
             v-if="item.orderType === 'BUY'"
             :class="{ red: item.orderType === 'BUY' }"
           >
-            买入
+            <!--买入-->
+            {{$t('M.comm_buy')}}
           </span>
           <!-- 类型卖出 -->
           <span
@@ -38,41 +60,79 @@
             v-if="item.orderType === 'SELL'"
             :class="{ green: item.orderType === 'SELL' }"
           >
-            卖出
+            <!--卖出-->
+            {{$t('M.comm_sell')}}
           </span>
           <!-- 币种 -->
-          <span class="item flex1">{{item.coinName}}</span>
+          <span class="item flex1">
+            {{item.coinName}}
+          </span>
           <!-- 价格 -->
-          <span class="item flex1">{{item.price}}({{ item.currencyName }})</span>
+          <span class="item flex1">
+            {{item.price}}({{ item.currencyName }})
+          </span>
           <!-- 数量 -->
-          <span class="item flex1">{{item.pickCount}}({{ item.coinName }})</span>
+          <span class="item flex1">
+            {{item.pickCount}}({{ item.coinName }})
+          </span>
           <!-- 总金额 -->
-          <span class="item flex1">{{(item.price*item.pickCount).toFixed(2)}}({{ item.currencyName }})</span>
+          <span class="item flex1">
+            {{(item.price*item.pickCount).toFixed(2)}}({{ item.currencyName }})
+          </span>
           <!-- 下单时间 -->
-          <span class="item order-time">{{timeFormatting(item.createTime)}}</span>
+          <span class="item order-time">
+            {{timeFormatting(item.createTime)}}
+          </span>
         </div>
         <!--表格下部分-->
         <div class="canceled-info-bottom">
           <div class="info-left">
-            <p class="text-info text-blue">付款信息</p>
-            <p class="text-info">卖家超时未付款，系统自动取消</p>
-          </div>
-          <div class="info-middle">
-            <p class="text-info text-blue">卖家信息</p>
-            <p class="text-info">
-              <span>姓名：</span><span>{{item.sellName}}</span>
+            <p class="text-info text-blue">
+              <!--付款信息-->
+              {{$t('M.otc_index_js2')}}
             </p>
             <p class="text-info">
-              <span>卖家手机号：</span><span>{{item.sellPhone}}</span>
+              <!--卖家超时未付款，系统自动取消-->
+              {{$t('M.otc_overtime')}}
+            </p>
+          </div>
+          <div class="info-middle">
+            <p class="text-info text-blue">
+              <!--卖家信息-->
+              {{$t('M.otc_stocks_seller')}}
+            </p>
+            <p class="text-info">
+              <span>
+                <!--姓名-->
+                {{$t('M.otc_name')}}：
+              </span><span>
+              {{item.sellName}}
+            </span>
+            </p>
+            <p class="text-info">
+              <span>
+                <!--卖家手机号-->
+                {{$t('M.otc_trading_sellphone')}}：
+              </span><span>
+              {{item.sellPhone}}
+            </span>
             </p>
           </div>
           <div class="info-right">
-            <p class="text-info text-blue">取消时间</p>
-            <p class="text-info">{{timeFormatting(item.cancelTime)}}</p>
+            <p class="text-info text-blue">
+              <!--取消时间-->
+              {{$t('M.otc_canceled_cancel')}}
+            </p>
+            <p class="text-info">
+              {{timeFormatting(item.cancelTime)}}
+            </p>
           </div>
         </div>
       </div>
-      <div class="no-data" v-if="!OTCCanceledOrderList.length">暂无数据</div>
+      <div class="no-data" v-if="!OTCCanceledOrderList.length">
+        <!--暂无数据-->
+        {{$t('M.comm_no_data')}}
+      </div>
       <!--分页-->
       <el-pagination
         background

@@ -59,8 +59,8 @@
                 <template slot="append">
                   <CountDownButton
                     class="send-code-btn cursor-pointer"
-                    :status="disabledOfEmailBtn"
-                    @run="sendPhoneOrEmailCode(1)"
+                    :status="disabledOfOldPhoneBtn"
+                    @run="sendPhoneOrEmailCode(0, 1)"
                   />
                 </template>
               </el-input>
@@ -149,8 +149,14 @@ export default {
     },
     // 发送邮箱验证码
     sendPhoneOrEmailCode (loginType) {
-      // console.log(this.disabledOfPhoneBtn)
-      // console.log(this.disabledOfEmailBtn)
+      if (!this.emailAccounts) {
+        this.$message({
+          // 请先输入邮箱账号
+          message: this.$t('M.comm_please_enter') + this.$t('M.user_security_email') + this.$t('M.user_account_number'),
+          type: 'error'
+        })
+        return false
+      }
       if (this.disabledOfPhoneBtn || this.disabledOfEmailBtn) {
         return false
       }
@@ -344,6 +350,15 @@ export default {
         >.email-content-from {
           width: 500px;
           margin-left: 55px;
+          .send-code-btn {
+            width: 90px;
+            height: 36px;
+            position: absolute;
+            top: -1px;
+          }
+          .input {
+            width: 180px;
+          }
           .email-input {
             width: 220px;
             height: 34px;
@@ -385,6 +400,10 @@ export default {
             color: #3E79D6;
           }
           >.email-content-from {
+            .send-code-btn {
+              background-color: #338FF5;
+              color: #fff;
+            }
             .email-input {
               border: 1px solid #485776;
               color: rgba(255,255,255,0.7);
@@ -432,6 +451,10 @@ export default {
             color: #333;
           }
           >.email-content-from {
+            .send-code-btn {
+              background-color: #338FF5;
+              color: #fff;
+            }
             .email-input {
               border:1px solid rgba(236,241,248,1);
               color: #333;

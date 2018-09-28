@@ -60,7 +60,8 @@
 }
 .otc-box .otc-merchant-list .el-table td{
     /* border-bottom: 1px solid rgba(97,116,153,0.05); */
-    padding: 7px 0;
+    /* padding: 7px 0; */
+    padding: 15px 0;
 }
 .otc-box .otc-merchant-list .el-table--enable-row-hover .el-table__body tr:hover>td{
     /* background-color: #1D2331; */
@@ -86,7 +87,7 @@
     border-color: #008069; */
 }
 .otc-box .otc-merchant-list .el-table__empty-block{
-    height: 400px;
+    height: 555px;
 }
 /* 3.0 订单管理左侧tabs切换面板 */
 /* tabs组件出现蓝色边框问题 */

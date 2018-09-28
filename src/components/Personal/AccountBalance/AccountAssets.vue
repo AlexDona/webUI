@@ -788,6 +788,7 @@ export default {
         return false
       }
       let params = {
+        type: 'VERIFICATION_CODE' // 类型
       }
       switch (loginType) {
         case 0:
@@ -1333,9 +1334,9 @@ export default {
                     }
                     .send-code-btn {
                       width: 90px;
-                      height: 35px;
-                      margin-left: -4px;
-                      padding: 0;
+                      height: 34px;
+                      position: absolute;
+                      top: 4px;
                     }
                   }
                 }

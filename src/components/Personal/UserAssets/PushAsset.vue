@@ -145,12 +145,12 @@
                 <div
                   v-if="s.row.pushId !== userInfo.userInfo.id"
                 >
-                  {{ rollIn }}
+                  {{ $t(rollIn) }}
                 </div>
                 <div
                   v-if="s.row.pushId == userInfo.userInfo.id"
                 >
-                  {{ rollOut }}
+                  {{ $t(rollOut) }}
                 </div>
               </template>
             </el-table-column>
