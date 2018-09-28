@@ -132,7 +132,7 @@
                 :label="$t('M.otc_index_Merchant')"
               >
                 <template slot-scope = "s">
-                  <div class="one">
+                  <div>
                     <!-- 如果是商家用户就显示商家图标 -->
                     <!-- <img
                       src="../../assets/develop/shangjia.png"
@@ -148,9 +148,8 @@
                     >
                       <img
                         src="../../assets/develop/shangjia.png"
-                        alt=""
                         class="shang-icon"
-                        v-if="s.row.userType === 'MERCHANT'"
+                        v-show="s.row.userType === 'MERCHANT'"
                       >
                     </el-tooltip>
                     {{s.row.userName}}
@@ -394,7 +393,7 @@
       </div>
     </div>
     <!-- 4.0 底部 -->
-    <FooterCommon/>
+    <keep-aline><FooterCommon/></keep-aline>
   </div>
 </template>
 <!--请严格按照如下书写书序-->
@@ -992,7 +991,7 @@ export default {
         }
         >.otc-merchant-list{
           margin-top: 30px;
-          // height: 480px;
+          height: 639px;
           .remark-tips{
             text-overflow: ellipsis;
             white-space: nowrap;

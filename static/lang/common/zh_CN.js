@@ -141,5 +141,7 @@ export const common = {
   'comm_about': '关于',
   'comm_us': '我们',
   'comm_news_and_notice': '新闻公告',
-  'comm_description': '说明'
+  'comm_description': '说明',
+  'comm_emailbox': '邮箱',
+  'comm_loginpassword': '密码'
 }

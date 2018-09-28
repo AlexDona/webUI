@@ -3,23 +3,23 @@
   <div class="home-box home">
 
     <!--公告-->
-    <keep-alive>
+    <!--<keep-alive>-->
       <NoticeHome/>
-    </keep-alive>
+    <!--</keep-alive>-->
 
     <!--导航-->
     <NavCommon/>
 
     <!--banner-->
-    <keep-alive>
+    <!--<keep-alive>-->
       <BannerHome/>
-    </keep-alive>
+    <!--</keep-alive>-->
 
     <!--交易区-->
     <MarketListHome class="margin-1"/>
 
     <!--底部-->
-    <FooterCommon/>
+    <keep-aline><FooterCommon/></keep-aline>
   </div>
 </template>
 <script>

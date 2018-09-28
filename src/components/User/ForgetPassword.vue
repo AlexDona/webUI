@@ -6,7 +6,8 @@
     <HeaderCommon/>
     <div class="inner-box">
       <div class="title">
-        找回密码
+        <!-- 找回密码 -->
+        {{$t('M.login_findBack')}}{{$t('M.comm_loginpassword')}}
       </div>
       <!--步骤条-->
       <div class="step-box">
@@ -16,7 +17,8 @@
         >
           <div class="line"></div>
           <p class="step-number">1</p>
-          <p class="step-desc">填写账户名</p>
+          <!-- 填写账户名 -->
+          <p class="step-desc">{{$t('M.forgetPassword_inputname')}}</p>
         </div>
         <div
           class="step-item"
@@ -24,7 +26,8 @@
         >
           <div class="line"></div>
           <p class="step-number">2</p>
-          <p class="step-desc">验证身份</p>
+          <!-- 验证身份 -->
+          <p class="step-desc">{{$t('M.login_verify')}}{{$t('M.forgetPassword_rank')}}</p>
         </div>
         <div
           class="step-item"

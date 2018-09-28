@@ -37,10 +37,13 @@ class socket {
     }
   }
   send (data) {
-    // if (this.socket) {
-    //   this.socket.send(JSON.stringify(data))
-    // }
-    this.socket.send(JSON.stringify(data))
+    if (this.socket) {
+      this.socket.send(JSON.stringify(data))
+    } else {
+      this.doOpen()
+      this.socket.send(JSON.stringify(data))
+    }
+    // this.socket.send(JSON.stringify(data))
   }
   emit (data) {
     return new Promise(resolve => {

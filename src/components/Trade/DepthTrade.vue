@@ -446,11 +446,6 @@ export default {
       this.options.tooltip.textStyle.color = this.theme === 'night' ? '#fff' : 'rgb(102,102,102)'
       this.options.tooltip.borderColor = this.theme === 'night' ? this.mainColor.$mainNightBgColor : this.mainColor.$mainDayBgColor
       this.options.backgroundColor = this.theme === 'night' ? this.mainColor.$mainNightBgColor : this.mainColor.$mainDayBgColor
-    },
-    drawLine () {
-      this.depthCharts = echarts.init(document.getElementById('depth'))
-      this.depthCharts.setOption(this.options)
-      window.onresize = this.depthCharts.resize
     }
   },
   filter: {},
