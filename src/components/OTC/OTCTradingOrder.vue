@@ -574,7 +574,7 @@
         </div>
       </div>
       <!-- 二、暂无数据 -->
-      <div class="no-data" v-if="!tradingOrderList.length">暂无数据</div>
+      <div class="no-data" v-show="!tradingOrderList.length">暂无数据</div>
       <!-- 三、分页-->
       <div class="page">
         <el-pagination
@@ -1070,7 +1070,8 @@ export default {
 }
 </script>
 <style scoped lang="scss" type="text/scss">
-@import "../../../static/css/scss/OTC/OTCCenter.scss";
+// @import "../../../static/css/scss/OTC/OTCCenter.scss";
+@import "../../../static/css/scss/index";
 .otc-trading-order-box{
   >.otc-trading-order-content{
     min-height: 472px;
@@ -1283,7 +1284,7 @@ export default {
       color: rgba(255,255,255,0.8);
       line-height: 472px;
       text-align: center;
-      background-color: #1E2636;
+      // background-color: #1E2636;
     }
     .page{
       text-align: center;
@@ -1297,7 +1298,7 @@ export default {
   &.night{
     >.otc-trading-order-content{
       >.order-list{
-        background-color: $mainNightBgColor;
+        background-color: $mainContentNightBgColor;
         border: 1px solid #485776;
         >.order{
           >.order-list-head{
@@ -1424,7 +1425,7 @@ export default {
       }
       >.no-data{
         color: rgba(255,255,255,0.8);
-        background-color: #1E2636;
+        background-color: #1C1F32;
       }
       .page{
       }

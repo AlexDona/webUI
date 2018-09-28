@@ -9,7 +9,7 @@ export const finance = {
   finance_mast: '立刻',
   finance_mine: '我的',
   finance_estimatedValue: '估值',
-  finance_earnings: '收溢',
+  finance_earnings: '收益',
   finance_recode: '记录',
   finance_predict: '预计',
   finance_releaseTime: '发放时间',

@@ -225,7 +225,7 @@ export const OTC = {
   otc_adMange_advertingAD: '一键下架所有广告',
   otc_adMange_getting: '上架',
   otc_adMange_adverting: '下架',
-  otc_adMange_change: '修该',
+  otc_adMange_change: '修改',
   otc_adMange_tipsContentOne: '此操作将永久下架该文件, 是否继续?',
   otc_adMange_tipsContentTwo: '此操作将永久修改该文件, 是否继续?',
   // #######################################商家订单###################################

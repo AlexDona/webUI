@@ -493,7 +493,6 @@ export default {
       this.$confirm(this.$t('M.otc_adMange_tipsContentTwo'), this.$t('M.otc_prompt'), {
         confirmButtonText: this.$t('M.comm_confirm'),
         cancelButtonText: this.$t('M.comm_cancel'),
-        type: 'warning'
       }).then(() => {
         // 跳转发布广告页面并携带一条信息的参数
         this.$router.push({path: '/OTCPublishAD', query: {id: item.id}})

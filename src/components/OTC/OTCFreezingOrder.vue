@@ -191,6 +191,7 @@ export default {
 <style scoped lang="scss" type="text/scss">
   // @import url(../../../static/css/scss/OTC/OTCFreezingOrder.scss);
   @import "../../../static/css/scss/OTC/OTCCenter.scss";
+  @import "../../../static/css/scss/index.scss";
   .otc-freezing-order-box{
     >.freezing-order-content{
       min-height: 472px;
@@ -307,7 +308,7 @@ export default {
     &.night{
       >.freezing-order-content{
       >.freezing-table-head{
-        background-color: #1E2636;
+        background-color: $mainContentNightBgColor;
         color: #A9BED4;
         border: 1px solid #485776;
         // box-shadow: -2px 3px 5px 1px #191E28;
@@ -315,7 +316,7 @@ export default {
         }
       }
       >.freezing-table-body{
-        background-color: #1E2636;
+        background-color: $mainContentNightBgColor;
         border: 1px solid #485776;
         >.freezing-info-top{
           color: #9DA5B3;
@@ -365,7 +366,7 @@ export default {
         }
       }
       >.no-data{
-        background-color: #1E2636;
+        background-color: $mainContentNightBgColor;
         color: rgba(255, 255, 255, 0.8);
       }
     }
