@@ -18,12 +18,18 @@
             class="method-item cursor-pointer"
             :class="{active:!activeMethod}"
             @click="toggleMethod(0)"
-          >手机注册</li>
+          >
+            <!--手机注册-->
+            {{ $t('M.user_security_phone') }}{{ $t('M.comm_register_time') }}
+          </li>
           <li
             class="method-item cursor-pointer"
             :class="{active:activeMethod}"
             @click="toggleMethod(1)"
-          >邮箱注册</li>
+          >
+            <!--邮箱注册-->
+            {{ $t('M.user_security_email') }}{{ $t('M.comm_register_time') }}
+          </li>
         </ul>
         <!--手机号注册-->
         <transition
@@ -62,11 +68,11 @@
                </el-option>
              </el-select>
              <span class="middle-line"></span>
-             <!--手机号-->
+             <!--手机号码-->
              <input
                type="text"
                class="input mobile-phone"
-               placeholder="手机号码"
+               :placeholder="$t('M.user_security_phone') + $t('M.user_security_number')"
                v-model="phoneNum"
                @keydown="setErrorMsg(0,'')"
                @blur="checkUserExistAjax('phone',phoneNum)"
@@ -138,10 +144,11 @@
           <!--邮箱账号-->
           <div class="input">
            <div class="inner-box">
+             <!--邮箱地址-->
              <input
                type="text"
                class="input"
-               placeholder="邮箱地址"
+               :placeholder="$t('M.user_security_email') + $t('M.comm_site')"
                v-model="emailNum"
                @keydown="setErrorMsg(1,'')"
                @blur="checkUserExistAjax('email',emailNum)"
@@ -159,7 +166,7 @@
                 type="text"
                 class="input image-validate"
                 v-model="userInputImageCode"
-                placeholder="验证码"
+                :placeholder="$t('M.comm_code')"
                 @keydown="setErrorMsg(2,'')"
                 @blur="checkoutInputFormat(2,userInputImageCode)"
               >
@@ -184,7 +191,7 @@
               <input
                 type="text"
                 class="input image-validate"
-                :placeholder="activeCodePlaceholder"
+                :placeholder="$t(activeCodePlaceholder)"
                 v-model="checkCode"
                 @keydown="setErrorMsg(3,'')"
                 @blur="checkoutInputFormat(3,checkCode)"
@@ -193,7 +200,7 @@
               <input
                 type="button"
                 :disabled="sendMsgBtnDisabled"
-                :value="sendMsgBtnText"
+                :value="$t(sendMsgBtnText)"
                 class="send-code-btn cursor-pointer"
                 @click="sendPhoneOrEmailCode(activeMethod)"
               >
@@ -205,7 +212,7 @@
              <input
                type="password"
                class="input"
-               placeholder="请输入密码"
+               :placeholder="$t('M.comm_please_enter') + $t('M.user_security_password')"
                v-model="password"
                @keydown="setErrorMsg(4,'')"
                @blur="checkoutInputFormat(4,password)"
@@ -215,10 +222,11 @@
           <div class="input">
            <div class="inner-box">
              <!--确认密码-->
+             <!--请再次输入密码-->
              <input
                type="password"
                class="input"
-               placeholder="请再次输入密码"
+               :placeholder="$t('M.forgetPassword_hint2') + $t('M.user_security_password')"
                @keydown="setErrorMsg(5,'')"
                v-model="repeatPassword"
                @blur="checkoutInputFormat(5,repeatPassword)"
@@ -228,11 +236,12 @@
           <div class="input">
            <div class="inner-box">
              <!--邀请码-->
+             <!--邀请码（没有可不填）-->
              <input
                v-model="inviter"
                type="text"
                class="input "
-               placeholder="邀请码（没有可不填）"
+               :placeholder="$t('M.forgetPassword_hint5')"
              >
            </div>
           </div>
@@ -240,8 +249,14 @@
            <div class="inner-box user-agreement">
              <!--用户协议-->
              <el-checkbox v-model="userAgreementStatus">
-               <span class="">我已阅读并同意</span>
-               <router-link to="/" class="main-color">《用户协议》</router-link>
+               <span class="">
+                 <!--我已阅读并同意-->
+                 {{ $t('M.forgetPassword_hint6') }}
+               </span>
+               <router-link to="/" class="main-color">
+                 <!--《用户协议》-->
+                 {{ $t('M.forgetPassword_hint7') }}
+               </router-link>
              </el-checkbox>
            </div>
           </div>
@@ -255,7 +270,10 @@
           <button
             class="register-btn btn cursor-pointer"
             @click="sendRegister"
-          >注册</button>
+          >
+            <!--注册-->
+            {{ $t('M.comm_register_time') }}
+          </button>
         </div>
       </div>
     </div>
@@ -265,11 +283,18 @@
       v-else
     >
       <div class="success-box">
-        <p class="title"><span>{{successCountDown}}</span>秒后跳转登录页面...</p>
+        <p class="title">
+          <span>{{successCountDown}}</span>
+          <!--秒后跳转登录页面...-->
+          {{ $t('M.forgetPassword_hint8') }}
+        </p>
         <button
           class="cursor-pointer jump-login"
           @click="loginImmediately"
-        >立即登录</button>
+        >
+          <!--立即登录-->
+          {{ $t('M.forgetPassword_text3') }}
+        </button>
       </div>
     </div>
   </div>
@@ -305,7 +330,8 @@ export default {
       // contryAreaList: [], // 国家区域列表
       activeCountryCodeWithPhone: '86',
       activeCountryCodeWithEmail: '86',
-      activeCodePlaceholder: !this.activeMethod ? '短信验证码' : '邮箱验证码',
+      // 短信验证码 邮箱验证码
+      activeCodePlaceholder: !this.activeMethod ? 'M.forgetPassword_hint10' : 'M.forgetPassword_hint11',
       identifyCode: '', // 图片验证码
       userInputImageCode: '', // 用户输入的图片验证码
       phoneNum: '', // 手机号
@@ -316,7 +342,7 @@ export default {
       inviter: '', // 邀请码
       userAgreementStatus: false, // 是否同意协议
       msgCountDown: 60,
-      sendMsgBtnText: '发送验证码',
+      sendMsgBtnText: 'M.forgetPassword_hint12', // 发送验证码
       sendMsgBtnDisabled: false,
       errorMsg: '', // 错误信息
       isRegisterSuccess: false, // 注册成功
@@ -360,7 +386,8 @@ export default {
               this.$forceUpdate()
               return 1
             case 1:
-              this.setErrorMsg(0, '请输入手机号')
+              // 请输入手机号
+              this.setErrorMsg(0, this.$t('M.comm_please_enter') + this.$t('M.user_security_phone'))
               this.$forceUpdate()
               return 0
           }
@@ -373,11 +400,13 @@ export default {
               this.$forceUpdate()
               return 1
             case 1:
-              this.setErrorMsg(1, '请输入邮箱地址')
+              // 请输入邮箱地址
+              this.setErrorMsg(1, this.$t('M.comm_please_enter') + this.$t('M.user_security_email') + this.$t('M.comm_site'))
               this.$forceUpdate()
               return 0
             case 2:
-              this.setErrorMsg(1, '请输入正确的邮箱地址')
+              // 请输入正确的邮箱地址
+              this.setErrorMsg(1, this.$t('M.comm_please_enter') + this.$t('M.user_security_correct') + this.$t('M.user_security_email'))
               this.$forceUpdate()
               return 0
           }
@@ -385,7 +414,8 @@ export default {
         // 图片验证码
         case 2:
           if (!targetNum) {
-            this.setErrorMsg(2, '请输入图片验证码')
+            // 请输入图片验证码
+            this.setErrorMsg(2, this.$t('M.comm_please_enter') + this.$t('M.login_photo') + this.$t('M.comm_code'))
             this.$forceUpdate()
             return 0
           } else if (this.userInputImageCode === this.identifyCode) {
@@ -393,14 +423,16 @@ export default {
             this.$forceUpdate()
             return 1
           } else {
-            this.setErrorMsg(2, '请输入正确的图片验证码')
+            // 请输入正确的图片验证码
+            this.setErrorMsg(2, his.$t('M.comm_please_enter') + this.$t('M.user_security_correct') + this.$t('M.login_photo') + this.$t('M.comm_code'))
             this.$forceUpdate()
             return 0
           }
         // 短信、邮箱验证码
         case 3:
           if (!targetNum) {
-            const str = '请输入' + (!this.activeMethod ? '短信验证码' : '邮箱验证码')
+            // 请输入 短信验证码 邮箱验证码
+            const str = this.$t('M.comm_please_enter') + (!this.activeMethod ? this.$t('M.forgetPassword_hint10') : this.$t('M.forgetPassword_hint11'))
             this.setErrorMsg(3, str)
             this.$forceUpdate()
             return 0
@@ -417,11 +449,13 @@ export default {
               this.$forceUpdate()
               return 1
             case 1:
-              this.setErrorMsg(4, '请输入密码')
+              // 请输入密码
+              this.setErrorMsg(4, this.$t('M.comm_please_enter') + this.$t('M.user_security_password'))
               this.$forceUpdate()
               return 0
             case 2:
-              this.setErrorMsg(4, '请输入 8-20 位字母和数字组合')
+              // 请输入 8-20 位字母和数字组合
+              this.setErrorMsg(4, this.$t('M.comm_please_enter') + this.$t('M.user_security_info1'))
               this.$forceUpdate()
               return 0
           }
@@ -429,7 +463,8 @@ export default {
         // 确认密码
         case 5:
           if (!targetNum) {
-            this.setErrorMsg(5, '请输入确认密码')
+            // 请输入确认密码
+            this.setErrorMsg(5, this.$t('M.comm_please_enter') + this.$t('M.forgetPassword_affirm_password'))
             this.$forceUpdate()
             return 0
           } else if (targetNum === this.password) {
@@ -437,14 +472,16 @@ export default {
             this.$forceUpdate()
             return 1
           } else {
-            this.setErrorMsg(5, '密码不一致，请重新确认')
+            // 密码不一致，请重新确认
+            this.setErrorMsg(5, this.$t('M.user_security_info2'))
             this.$forceUpdate()
             return 0
           }
         // 用户协议
         case 6:
           if (!targetNum) {
-            this.setErrorMsg(6, '请勾选用户协议')
+            // 请勾选用户协议
+            this.setErrorMsg(6, this.$t('M.forgetPassword_hint13'))
             this.$forceUpdate()
             return 0
           } else {
@@ -495,7 +532,8 @@ export default {
         setTimeout(this.msgTimer, 1000)
       } else {
         this.msgCountDown = 0
-        this.sendMsgBtnText = '发送验证码'
+        // 发送验证码
+        this.sendMsgBtnText = this.$t('M.forgetPassword_hint12')
         this.sendMsgBtnDisabled = false
       }
     },
@@ -605,7 +643,8 @@ export default {
     // 切换注册方式
     toggleMethod (method) {
       this.activeMethod = method
-      this.activeCodePlaceholder = !this.activeMethod ? '短信验证码' : '邮箱验证码'
+      // 短信验证码 邮箱验证码
+      this.activeCodePlaceholder = !this.activeMethod ? this.$t('M.forgetPassword_hint10') : this.$t('M.forgetPassword_hint11')
       this.clearFormData()
     },
     // 清空表单信息

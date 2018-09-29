@@ -1020,16 +1020,16 @@ export default {
               border-radius: 4px;
             }
           }
-          > .text-below {
-            > .warm-prompt {
-              color: #fff;
-            }
-            .prompt-color {
-              color: #D45858;
-            }
-            .warm-text-color {
-              color: #9DA5B3;
-            }
+        }
+        > .text-below {
+          > .warm-prompt {
+            color: #fff;
+          }
+          .prompt-color {
+            color: #D45858;
+          }
+          .warm-text-color {
+            color: #9DA5B3;
           }
         }
       }
@@ -1173,16 +1173,16 @@ export default {
               border-radius: 4px;
             }
           }
-          > .text-below {
-            > .warm-prompt {
-              color: #fff;
-            }
-            .prompt-color {
-              color: #D45858;
-            }
-            .warm-text-color {
-              color: #9DA5B3;
-            }
+        }
+        > .text-below {
+          > .warm-prompt {
+            color: #fff;
+          }
+          .prompt-color {
+            color: #D45858;
+          }
+          .warm-text-color {
+            color: #9DA5B3;
           }
         }
       }

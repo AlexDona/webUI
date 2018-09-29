@@ -188,7 +188,7 @@
                 class="phone-input phone-input-left border-radius2 padding-l15 box-sizing"
                 v-model="amendDataPhone.newPhoneAccounts"
                 @keydown="tieErrorMsg(1,'')"
-                @blur="tieCheckoutInputFormat(1, amendDataPhone.newPhoneAccounts)"
+                @blur="checkoutInputFormat(1, amendDataPhone.newPhoneAccounts)"
               >
               <!--错误提示-->
               <ErrorBox
@@ -261,7 +261,6 @@ import ImageValidate from '../../Common/ImageValidateCommon' // 图片验证吗
 import CountDownButton from '../../Common/CountDownCommon'
 import {
   returnAjaxMessage, // 接口返回信息
-  validateNumForUserInput, // 用户输入验证
   sendPhoneOrEmailCodeAjax
 } from '../../../utils/commonFunc'
 import {
@@ -269,7 +268,7 @@ import {
   changeMobilePhone,
   statusSecurityCenter
 } from '../../../utils/api/personal'
-import {checkUserExist} from '../../../utils/api/user'
+// import {checkUserExist} from '../../../utils/api/user'
 const { mapMutations } = createNamespacedHelpers('personal')
 export default {
   components: {
@@ -350,15 +349,14 @@ export default {
     },
     // 发送验证码
     sendPhoneOrEmailCode (loginType, val) {
-      console.log(this.disabledOfPhoneBtn)
-      console.log(this.disabledOfEmailBtn)
       if (this.disabledOfPhoneBtn || this.disabledOfEmailBtn) {
         return false
       }
       let params = {
+        type: 'VERIFICATION_CODE', // 类型
         country: this.bindingDataPhone.bindingAreaCodeValue // 国家编码
       }
-      if (this.securityCenter.isPhoneBind) {
+      if (!this.securityCenter.isPhoneBind) {
         switch (loginType) {
           // 当是绑定手机时给收入新手机号发验证码
           case 0:
@@ -407,33 +405,6 @@ export default {
           }
         }
       })
-    },
-    // 检测用户名是否存在
-    async checkUserExistAjax (type, userName) {
-      if (!validateNumForUserInput(type, userName)) {
-        let params = {
-          userName: userName,
-          regType: type
-        }
-        const data = await checkUserExist(params)
-        if (!returnAjaxMessage(data, this, 1)) {
-          return false
-        }
-      } else {
-        switch (type) {
-          case 'phone':
-            if (this.securityCenter.isPhoneBind) {
-              if (this.checkoutInputFormat(0, userName)) {
-                return false
-              }
-            } else {
-              if (this.checkoutInputFormat(1, userName)) {
-                return false
-              }
-            }
-            break
-        }
-      }
     },
     // 绑定手机检测输入格式
     checkoutInputFormat (type, targetNum) {
@@ -493,8 +464,8 @@ export default {
     async confirmBindingBailPhone () {
       let goOnStatus = 0
       if (
-        this.checkoutInputFormat(0, this.amendDataPhone.newPhoneAccounts) &&
-        this.checkoutInputFormat(1, this.bindingDataPhone.bindingNewPhoneCode)
+        this.checkoutInputFormat(0, this.bindingDataPhone.bindingNewPhoneAccounts) &&
+        this.checkoutInputFormat(2, this.bindingDataPhone.bindingNewPhoneCode)
       ) {
         goOnStatus = 1
       } else {

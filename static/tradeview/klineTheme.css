@@ -6,7 +6,15 @@
 .intervals-container.favored-list-container {
   display: none;
 }
-
+/*.loading-indicator,*/
+.chart-loading-screen
+{
+  background-color: transparent;
+  width:100%;
+  height:100%;
+  z-index: 10;
+  display: none;
+}
 /*day*/
 /*night*/
 
@@ -29,6 +37,8 @@
 
 #loading-indicator {
   background: 0 0;
+  /*background-color: pink;*/
+  display: none;
 }
 
 /*.zhuwenbo-toolbar {*/

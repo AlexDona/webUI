@@ -68,7 +68,6 @@
                   {{ $t('M.comm_total_sum') }}{{ $t('M.comm_count') }}
                 </div>
                 <div
-
                   class="flex1"
                 >
                   {{ $t('M.comm_freeze') }}{{ $t('M.comm_count') }}
@@ -158,7 +157,8 @@
                         class="type-transaction border-radius4"
                         v-show="seen&&index==current"
                       >
-                        <span class="triangle-border display-inline-block"></span>
+                        <span class="triangle-border display-inline-block">
+                        </span>
                         <p
                           class="transaction-list text-align-c"
                           v-for="(item, index) in currencyTradingList"
@@ -207,7 +207,7 @@
                         </div>
                         <div class="recharge-content-title font-size12 margin-top9 float-left">
                           <!--禁止充值除 之外的其他资产，任何非 资产充值将不可找回-->
-                          <!--往该地址充值，汇款完成，等待网络自动确认（4个确认）后系统自动到账-->
+                          <!--往该地址充值，汇款完成，等待网络自动确认（6个确认）后系统自动到账-->
                           <!--为了快速到账，充值时可以适当提高网络手续费-->
                           <p>* {{ $t('M.user_assets_recharge_hint1') }}{{ chargeMoneyName }}{{ $t('M.user_assets_recharge_hint2') }}{{ chargeMoneyName }}{{ $t('M.user_assets_recharge_hint3') }}</p>
                           <p>* {{ $t('M.user_assets_recharge_hint4') }}</p>
@@ -955,7 +955,7 @@ export default {
           type: 'error'
         })
         this.mentionMoneyConfirm = false
-      } else if (this.userInfoRefresh.payPassword == '') {
+      } else if (!this.userInfo.userInfo.payPassword) {
         this.dialogVisible = true
       } else {
         this.mentionMoneyConfirm = true

@@ -161,13 +161,14 @@ export default {
             'header_undo_redo',
             'header_chart_type',
             'header_screenshot',
-            'header_settings'
+            'header_settings',
+            // 'widget_logo',
           ],
           enabled_features: [
             'hide_left_toolbar_by_default' // 隐藏左侧边栏
           ],
           timezone: 'Asia/Shanghai',
-          locale: 'zh',
+          locale: 'en',
           debug: false,
           toolbar_bg: 'transparent', // 工具栏背景色
           studies_overrides: {
@@ -215,7 +216,7 @@ export default {
           const btnList = [
             {
               class: 'resolution_btn',
-              label: '分时',
+              label: this.$t('M.trade_time_share'), // 分时
               resolution: '1',
               chartType: 3
             },
@@ -465,6 +466,7 @@ export default {
     },
     getBars (symbolInfo, resolution, rangeStartDate, rangeEndDate, onLoadedCallback) {
       // console.log(symbolInfo)
+      console.log(this.socket)
       // console.log(' >> :', rangeStartDate, rangeEndDate)
       if (this.interval != resolution) {
         // this.unSubscribe(this.interval)
@@ -498,13 +500,14 @@ export default {
       } else {
         const self = this
         this.getBarTimer = setTimeout(function () {
+          console.log(self.socket)
           self.getBars(symbolInfo, resolution, rangeStartDate, rangeEndDate, onLoadedCallback)
-        }, 10)
+        }, 1)
       }
     },
     // 请求socket
     getKlineDataBySocket (type, symbol, newInterval) {
-      console.log(symbol)
+      // console.log(this.socket.send)
       if (newInterval) {
         // k线
         this.socket.send({
@@ -512,8 +515,6 @@ export default {
           'content': `market.${symbol}.kline.${newInterval}.step5`,
           'id': `kline_${symbol}`
         })
-      } else {
-        setTimeout(this.getKlineDataBySocket(type, symbol, newInterval), 1000)
       }
     },
     // 获取交易记录socket
@@ -536,11 +537,15 @@ export default {
     },
     // 获取默认交易对socket
     getDefaultSymbolBySocket (type, symbol) {
-      this.socket.send({
-        'tag': type,
-        'content': `market.${symbol}.defaultTrade.${this.partnerId}`,
-        'id': `market_001`
-      })
+      // console.log(this.socket.send)
+      // console.log(type, symbol)
+      if (type && symbol) {
+        this.socket.send({
+          'tag': type,
+          'content': `market.${symbol}.defaultTrade.${this.partnerId}`,
+          'id': `market_001`
+        })
+      }
     },
     // 获取币币交易市场 socket
     getTradeMarketBySocket (type, areaId = this.activeTradeArea.id) {
@@ -551,8 +556,6 @@ export default {
           'content': `market.bbticker.${this.partnerId}.${areaId}`,
           'id': `market_001`
         })
-      } else {
-        setTimeout(this.getTradeMarketBySocket(type), 1000)
       }
     }
   },

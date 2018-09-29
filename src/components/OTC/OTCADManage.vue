@@ -2,6 +2,7 @@
   <div
     class="otc-AD-manage-box otc"
     :class="{'day':theme == 'day','night':theme == 'night' }"
+    :style="{'height':windowHeight+'px'}"
   >
     <!-- 1.0 导航 -->
     <NavCommon/>
@@ -265,7 +266,9 @@
       </div>
     </div>
     <!-- 3.0 底部 -->
-    <keep-aline><FooterCommon/></keep-aline>
+    <keep-aline>
+      <FooterCommon class="footer"/>
+    </keep-aline>
   </div>
 </template>
 <!--请严格按照如下书写书序-->
@@ -513,7 +516,10 @@ export default {
     ...mapState({
       partnerId: state => state.common.partnerId,
       theme: state => state.common.theme
-    })
+    }),
+    windowHeight () {
+      return window.innerHeight
+    }
   },
   watch: {}
 }
@@ -521,6 +527,7 @@ export default {
 <style scoped lang="scss" type="text/scss">
   @import "../../../static/css/scss/index";
   .otc-AD-manage-box {
+    position: relative;
     >.otc-AD-manage-content {
       width: 1150px;
       margin: 70px auto;
@@ -652,6 +659,10 @@ export default {
           }
         }
       }
+    }
+    .footer{
+      position: absolute;
+      bottom:0;
     }
   }
 </style>
