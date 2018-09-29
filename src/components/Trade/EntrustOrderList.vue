@@ -7,48 +7,60 @@
       <!--查看更多委单记录-->
       <div class="view-more">
         <a href="#" @click="jumpToPersonal">
-          <span>查看更多</span>
+          <span>
+            <!--查看更多-->
+            {{ $t('M.comm_view_more') }}
+          </span>
           <i class="el-icon-d-arrow-right"></i>
         </a>
       </div>
       <el-tabs
         v-model="activeName"
       >
+        <!--当前委托-->
         <el-tab-pane
-          label="当前委托"
+          :label="$t('M.trade_coin_commissioned_current')"
           name="current-entrust"
         >
           <!--主要内容-->
           <div class="content-box">
             <ul class="thead">
               <li class="th time">
-                委托时间
+                <!--委托时间-->
+                {{ $t('M.trade_coin_entrust') }}{{ $t('M.comm_time') }}
               </li>
               <li class="th type">
-                委托类型
+                <!--委托类型-->
+                {{ $t('M.trade_coin_entrust') }}{{ $t('M.comm_type') }}
               </li>
               <li class="th price">
-                委托量
+                <!--委托量-->
+                {{ $t('M.trade_coin_entrusted_amount') }}
                 <span>（{{activeSymbol.sellsymbol}}）</span>
               </li>
               <li class="th price">
-                委托价
+                <!--委托价-->
+                {{ $t('M.trade_coin_entrusted_price') }}
                 <span>（{{activeSymbol.area}}）</span>
               </li>
               <li class="th price">
-                总金额
+                <!--总金额-->
+                {{ $t('M.comm_total_sum') }}{{ $t('M.comm_money') }}
                 <span>（{{activeSymbol.area}}）</span>
               </li>
               <li class="th price">
-                成交量
+                <!--成交量-->
+                {{ $t('M.comm_make_bargain') }}{{ $t('M.comm_quantity') }}
                 <span>（{{activeSymbol.sellsymbol}}）</span>
               </li>
               <li class="th price">
-                未成交量
+                <!--未成交量-->
+                {{ $t('M.comm_not') }}{{ $t('M.comm_make_bargain') }}{{ $t('M.comm_quantity') }}
                 <span>（{{activeSymbol.sellsymbol}}）</span>
               </li>
               <li class="th">
-                操作
+                <!--操作-->
+                {{ $t('M.comm_operation') }}
               </li>
             </ul>
             <div class="tbody">
@@ -57,7 +69,8 @@
                 class="not-login content"
                 v-if="!isLogin"
               >
-                您还没有登录，请 <router-link to="/Login"> 登录</router-link> 或 <router-link to="/Register">注册</router-link> 后查看
+                <!--您还没有登录，请 登录 或 注册 后查看-->
+                {{ $t('M.trade_coin_text1') }} <router-link to="/Login"> {{ $t('M.comm_login') }}</router-link> {{ $t('M.trade_coin_text2') }} <router-link to="/Register">{{ $t('M.comm_register_time') }}</router-link> {{ $t('M.trade_coin_text3') }}
 
               </div>
               <!--已登录-->
@@ -104,7 +117,10 @@
                     <button
                       class="cursor-pointer"
                       @click="repealMyEntrust(item.id,item.version)"
-                    >撤销</button>
+                    >
+                      <!--撤销-->
+                      {{ $t('M.trade_coin_revocation') }}
+                    </button>
                   </li>
                 </ul>
               </div>
@@ -112,7 +128,10 @@
                 class="content empty"
                 v-else
               >
-                <p>暂无数据</p>
+                <p>
+                  <!--暂无数据-->
+                  {{ $t('M.comm_no_data') }}
+                </p>
               </div>
             </div>
           </div>
@@ -126,33 +145,40 @@
           >
           </el-pagination>
         </el-tab-pane>
+        <!--历史委托-->
         <el-tab-pane
-          label="历史委托"
+          :label="$t('M.trade_coin_history') + $t('M.trade_coin_entrust')"
           name="history-entrust"
         >
           <!--主要内容-->
           <div class="content-box history">
             <ul class="thead">
               <li class="th time">
-                委托时间
+                <!--委托时间-->
+                {{ $t('M.trade_coin_entrust') }}{{ $t('M.comm_time') }}
               </li>
               <li class="th type">
-                委托类型
+                <!--委托类型-->
+                {{ $t('M.trade_coin_entrust') }}{{ $t('M.comm_type') }}
               </li>
               <li class="th price">
-                委托量
+                <!--委托量-->
+                {{ $t('M.trade_coin_entrusted_amount') }}
                 <span>（{{activeSymbol.sellsymbol}}）</span>
               </li>
               <li class="th price">
-                委托价
+                <!--委托价-->
+                {{ $t('M.trade_coin_entrusted_price') }}
                 <span>（{{activeSymbol.area}}）</span>
               </li>
               <li class="th price">
-                总金额
+                <!--总金额-->
+                {{ $t('M.comm_total_sum') }}{{ $t('M.comm_money') }}
                 <span>（{{activeSymbol.area}}）</span>
               </li>
               <li class="th price">
-                成交量
+                <!--成交量-->
+                {{ $t('M.comm_make_bargain') }}{{ $t('M.comm_quantity') }}
                 <span>（{{activeSymbol.sellsymbol}}）</span>
               </li>
             </ul>
@@ -162,7 +188,8 @@
                 class="not-login content"
                 v-if="!isLogin"
               >
-                您还没有登录，请 <router-link to="/Login"> 登录</router-link> 或 <router-link to="/Register">注册</router-link> 后查看
+                <!--您还没有登录，请 登录 或 注册 后查看-->
+                {{ $t('M.trade_coin_text1') }} <router-link to="/Login"> {{ $t('M.comm_login') }}</router-link> {{ $t('M.trade_coin_text2') }} <router-link to="/Register">{{ $t('M.comm_register_time') }}</router-link> {{ $t('M.trade_coin_text3') }}
               </div>
               <!--已登录-->
               <div
@@ -205,7 +232,10 @@
                 class="content empty"
                 v-else
               >
-                <p>暂无数据</p>
+                <p>
+                  <!--暂无数据-->
+                  {{ $t('M.comm_no_data') }}
+                </p>
               </div>
             </div>
           </div>
@@ -292,9 +322,12 @@ export default {
      *撤销委单
      */
     repealMyEntrust (id, version) {
-      this.$confirm('您确定要撤销此单吗, 是否继续?', {
-        confirmButtonText: '确定',
-        cancelButtonText: '取消'
+      // 您确定要撤销此单吗, 是否继续?
+      this.$confirm(this.$t('M.otc_revoke'), {
+        // 确定
+        confirmButtonText: this.$t('M.comm_confirm'),
+        // 取消
+        cancelButtonText: this.$t('M.comm_cancel')
       }).then(() => {
         let params = {
           id,

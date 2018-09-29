@@ -153,13 +153,24 @@
             {{ $t('M.user_assets_current_total') }}
           </p>
           <p class="asset-info margin-top9">
-            <span class="info-color font-size16">{{ totalSumBTC }}</span>
-            <span class="info-color font-size12">BTC</span>
-            <span class="info-color" v-show="CNYAssets">
+            <span class="info-color font-size16">
+              {{ totalSumBTC }}
+            </span>
+            <span class="info-color font-size12">
+              BTC
+            </span>
+            <span
+              class="info-color"
+              v-show="CNYAssets"
+            >
               <!--或-->
                {{ $t('M.user_assets_or') }}
-              <span class="info-color font-size16">{{ CNYAssets }}</span>
-              <span class="info-color font-size12">CNY</span>
+              <span class="info-color font-size16">
+                {{ CNYAssets }}
+              </span>
+              <span class="info-color font-size12">
+                CNY
+              </span>
             </span>
           </p>
           <p class="asset-color margin-top9 font-size12">

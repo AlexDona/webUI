@@ -215,7 +215,7 @@ export default {
           const btnList = [
             {
               class: 'resolution_btn',
-              label: '分时',
+              label: 'M.trade_time_share', // 分时
               resolution: '1',
               chartType: 3
             },

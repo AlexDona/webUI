@@ -12,6 +12,7 @@ export const common = {
   'comm_select': '选择',
   'comm_please_choose': '请选择',
   'comm_please_enter': '请输入',
+  'comm_please_set_up': '请设置',
   'comm_CNY': '人民币',
   'comm_dollar': '美元',
   'comm_black': '黑色',
@@ -34,6 +35,7 @@ export const common = {
   'comm_balance': '余额',
   'comm_price_metre': '价格',
   'comm_total_sum': '总',
+  'comm_aggregate': '总计',
   'comm_entry': '挂单',
   'comm_matched': '已匹配',
   'comm_usable': '可用',
@@ -102,6 +104,7 @@ export const common = {
   'comm_forbidden': '禁用',
   'comm_buyer': '买方',
   'comm_seller': '卖方',
+  'comm_view_more': '查看更多',
   // 内容类型
   'comm_sure_delete': '确定删除API地址吗, 是否继续?',
   'comm_qr_code': '二维码',

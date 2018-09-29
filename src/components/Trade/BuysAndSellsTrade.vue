@@ -12,7 +12,8 @@
           class="text"
           @click="toggleShowContent">
           <span>
-            买卖单
+            <!--买卖单-->
+            {{ $t('M.trade_coin_buying_and_sell') }}
           </span>
         </span>
         <span class="right">
@@ -45,14 +46,17 @@
                   index
                 </span>
                 <span class="price text-align-l">
-                  价格({{activeSymbol.area}})
+                  <!--价格-->
+                  {{ $t('M.comm_price_metre') }}({{activeSymbol.area}})
                 </span>
                 <span class="amount text-align-c">
-                  数量
+                  <!--数量-->
+                  {{ $t('M.comm_count') }}
                   <span class="uppercase">（{{activeSymbol.sellsymbol}}）</span>
                 </span>
                 <span class="total text-align-r">
-                  总计
+                  <!--总计-->
+                  {{ $t('M.comm_aggregate') }}
                   <span class="uppercase">({{activeSymbol.area}})</span>
                 </span>
               </dt>
@@ -75,7 +79,8 @@
                 >
                   <div class="inner">
                     <span class="price sell-bg">
-                      卖 {{item.index}}
+                      <!--卖-->
+                      {{ $t('M.comm_ask') }} {{item.index}}
                     </span>
                   <span
                     class="price text-align-l sell-bg"
@@ -124,7 +129,8 @@
                 >
                   <div class="inner">
                     <span class="price buy-bg">
-                      买 {{item.index}}
+                      <!--买-->
+                      {{ $t('M.comm_bid') }} {{item.index}}
                     </span>
                     <span class="price text-align-l buy-bg">
                       {{item.price}}
@@ -177,7 +183,8 @@
                 >
                   <div class="inner">
                     <span class="price buy-bg">
-                      买 {{item.index}}
+                      <!--买-->
+                      {{ $t('M.comm_bid') }} {{item.index}}
                     </span>
                     <span class="price text-align-l buy-bg">
                       {{item.price}}
@@ -217,7 +224,8 @@
                 >
                   <div class="inner">
                     <span class="price sell-bg">
-                      卖 {{item.index}}
+                      <!--卖-->
+                      {{ $t('M.comm_ask') }} {{item.index}}
                     </span>
                     <span class="price text-align-l sell-bg">
                       {{item.price}}

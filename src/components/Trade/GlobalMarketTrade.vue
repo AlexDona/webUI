@@ -9,7 +9,8 @@
         @click="toggleShowContent"
       >
         <span class="text">
-          全球行情
+          <!--全球行情-->
+          {{ $t('M.trade_global_market') }}
         </span>
       </div>
       <div class="content">
@@ -18,8 +19,9 @@
             <el-table
               :data="globalMarketList"
             >
+              <!--交易所-->
               <el-table-column
-                label="交易所"
+                :label="$t('M.comm_deal') + $t('M.comm_that')"
               >
                 <template slot-scope="s">
                   <span>
@@ -27,8 +29,9 @@
                   </span>
                 </template>
               </el-table-column>
+              <!--交易对-->
               <el-table-column
-                label="交易对"
+                :label="$t('M.comm_deal') + $t('M.comm_pair')"
               >
                 <template slot-scope="s">
                   <span>
@@ -36,8 +39,9 @@
                   </span>
                 </template>
               </el-table-column>
+              <!--交易价-->
               <el-table-column
-                label="交易价"
+                :label="$t('M.comm_deal') + $t('M.comm_price')"
               >
                 <template slot-scope="s">
                   <div class="top"
@@ -54,8 +58,9 @@
                   </div>
                 </template>
               </el-table-column>
+              <!--成交量-->
               <el-table-column
-                :label="`成交量(${activeSymbol.area})`"
+                :label="`$t('M.comm_make_bargain') + $t('M.comm_quantity')(${activeSymbol.area})`"
               >
                 <template slot-scope="s">
                   <div
