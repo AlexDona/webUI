@@ -153,5 +153,7 @@ export const common = {
   'comm_statement': '声明',
   'comm_rate1': '费率',
   'comm_pack_up': '收起',
-  'comm_content': '内容'
+  'comm_content': '内容',
+  'comm_after_get': '后重获取',
+  'comm_get_code': '获取验证码'
 }

@@ -6,7 +6,10 @@
     <HeaderCommon/>
     <div class="content">
       <div class="top">
-        <h1>关于我们</h1>
+        <h1>
+          <!--关于我们-->
+          {{ $t('M.about_us') }}
+        </h1>
         <p>About Us</p>
       </div>
       <div class="content">

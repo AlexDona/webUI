@@ -69,7 +69,7 @@ export default {
   filter: {},
   computed: {
     text: function () {
-      return this.time > 0 ? this.time + 's 后重获取' : '获取验证码'
+      return this.time > 0 ? this.time + 's' + this.$t('M.comm_after_get') : this.$t('M.comm_get_code')
     }
   },
   watch: {

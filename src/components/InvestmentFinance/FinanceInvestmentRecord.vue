@@ -13,7 +13,10 @@
           <div class="nvest-list-body">
             <div class="gobackInvest">
               <IconFontCommon class='blue' iconName="icon-fanhui" style="font-size:12px" />
-              <router-link class="blue" :to="!isLogin ? 'login' : '/FinanceCenter'">返回投资</router-link>
+              <router-link class="blue" :to="!isLogin ? 'login' : '/FinanceCenter'">
+                <!--返回投资-->
+                {{ $t('M.investment_return_investment') }}
+              </router-link>
             </div>
             <!-- 投资记录 -->
             <el-tabs v-model="activeName">

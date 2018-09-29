@@ -17,8 +17,8 @@
           class="cursor-pointer"
           @click="jumpToNewsDetail(item)"
         >
-          <span class="type">【{{item.typeName}}】</span>
-          <span>{{item.title}}</span>
+          <span class="type">【{{ $t(item.typeName) }}】</span>
+          <span>{{ $t(item.title) }}</span>
         </span>
       </div>
     </div>
@@ -59,20 +59,20 @@ export default {
       {
         id: 0, // 跳转id
         type: 0, // 0:新闻 1:公告
-        typeName: '新闻资讯', // type=0:'新闻资讯' type=1:'活动公告'
-        title: 'fuc火热上线' // 标题
+        typeName: 'M.home_market_text1', // type=0:'新闻资讯' type=1:'活动公告'
+        title: 'M.home_market_text3' // 标题 fuc火热上线
       },
       {
         id: 1, // 跳转id
         type: 1, // 0:新闻 1:公告
-        typeName: '活动公告', // type=0:'新闻资讯' type=1:'活动公告'
-        title: 'fuc火热上线1' // 标题
+        typeName: 'M.home_market_text1', // type=0:'新闻资讯' type=1:'活动公告'
+        title: 'M.home_market_text4' // 标题 fuc火热上线1
       },
       {
         id: 2, // 跳转id
         type: 0, // 0:新闻 1:公告
-        typeName: '新闻资讯', // type=0:'新闻资讯' type=1:'活动公告'
-        title: 'fuc火热上线2' // 标题
+        typeName: 'M.home_market_text1', // type=0:'新闻资讯' type=1:'活动公告'
+        title: 'M.home_market_text5' // 标题 fuc火热上线2
       }
     ]
     this.getNewsNoticeList()

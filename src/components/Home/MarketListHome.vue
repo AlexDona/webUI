@@ -54,7 +54,10 @@
                       >
                         <div class="top">
                           <span>{{item.area}}</span>
-                          <span v-show="item.id!==collectAreaId&&item.id!==searchAreaId">交易区</span>
+                          <span v-show="item.id!==collectAreaId&&item.id!==searchAreaId">
+                            <!--交易区-->
+                            {{ $t('M.home_market_trade_sector') }}
+                          </span>
                         </div>
                       </div>
                     </transition>
@@ -70,7 +73,10 @@
                         v-show="!toggleSideList[item.id]"
                       >
                         <div class="top">
-                          <span>最热交易对</span>
+                          <span>
+                            <!--最热交易对-->
+                            {{ $t('M.home_market_hottest_trading') }}
+                          </span>
                         </div>
                         <div class="bottom">
                           <ul class="hot-list">
@@ -120,8 +126,9 @@
                       @row-click="changeActiveSymbol"
                       height="547"
                     >
+                      <!--交易对-->
                       <el-table-column
-                        label="交易对"
+                        :label="$t('M.comm_deal') + $t('M.comm_pair')"
                         width="132px"
                       >
                         <template slot-scope="s">
@@ -159,8 +166,9 @@
                           </div>
                         </template>
                       </el-table-column>
+                      <!--最新价格-->
                       <el-table-column
-                        label="最新价格"
+                        :label="$t('M.home_market_recent_quotation')"
                         width="160px"
                         sortable
                       >
@@ -199,9 +207,10 @@
                           </div>
                         </template>
                       </el-table-column>
+                      <!--最高价-->
                       <el-table-column
                         prop="high"
-                        label="最高价"
+                        :label="$t('M.home_market_ceiling_price')"
                         width="145px"
                         sortable
                       >
@@ -218,9 +227,10 @@
                           </div>
                         </template>
                       </el-table-column>
+                      <!--最低价-->
                       <el-table-column
                         prop="low"
-                        label="最低价"
+                        :label="$t('M.home_market_minimum_price')"
                         width="145px"
                         sortable
                       >
@@ -237,9 +247,10 @@
                           </div>
                         </template>
                       </el-table-column>
+                      <!--24H交易量-->
                       <el-table-column
                         prop="volume"
-                        label="24H交易量"
+                        :label="'24H' + $t('M.home_market_volume')"
                         width="120px"
                         sortable
                       >
@@ -256,9 +267,10 @@
                           </div>
                         </template>
                       </el-table-column>
+                      <!--涨跌-->
                       <el-table-column
                         prop="rose"
-                        label="涨跌"
+                        :label="$t('M.trade_ups_and_downs')"
                         width="80px"
                         sortable
                       >
@@ -270,15 +282,21 @@
                         height:30px;
                         line-height: 30px;
                         margin:10px auto;
-                      ">
-                            <span v-show="s.row.rose>0" style="color:#D45858;">{{s.row.rose}}</span>
-                            <span v-show="s.row.rose<0" style="color:#008069;">{{s.row.rose}}</span>
+                      "
+                          >
+                            <span v-show="s.row.rose>0" style="color:#D45858;">
+                              {{s.row.rose}}
+                            </span>
+                            <span v-show="s.row.rose<0" style="color:#008069;">
+                              {{s.row.rose}}
+                            </span>
                           </div>
                         </template>
                       </el-table-column>
+                      <!--价格趋势(3日)-->
                       <el-table-column
                         prop="tendency"
-                        label="价格趋势(3日)"
+                        :label="$t('M.home_market_price_tendency')"
                         width="120px"
                       >
                         <template slot-scope="s">
@@ -509,12 +527,12 @@ export default{
                   this.marketList = data.data
                   this.marketList.unshift(
                     {
-                      area: '搜索区',
+                      area: '搜索区', // 搜索区
                       id: this.searchAreaId,
                       content: []
                     },
                     {
-                      area: '自选区', // 交易区名称
+                      area: '自选区', // 交易区名称 自选区
                       id: this.collectAreaId,
                       content: []
                     }

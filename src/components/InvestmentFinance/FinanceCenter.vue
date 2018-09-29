@@ -137,7 +137,10 @@
         <!-- 投资记录和收益记录 -->
         <div class="nvest-list-body">
           <div class='showAll'>
-            <router-link class="blue" :to="{path: isLogin ? '/FinanceInvestmentRecord' : '/login', query:{coinId:selectedCoinId,coinName:selecteCoindName}}">查看全部</router-link>
+            <router-link class="blue" :to="{path: isLogin ? '/FinanceInvestmentRecord' : '/login', query:{coinId:selectedCoinId,coinName:selecteCoindName}}">
+              <!--查看全部-->
+              {{ $t('M.investment_look_all') }}
+            </router-link>
           </div>
           <!-- 投资记录 -->
           <el-tabs v-model="activeName" @tab-click="handleClick">
