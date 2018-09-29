@@ -807,7 +807,7 @@ export default {
 }
 </script>
 <style scoped lang="scss" type="text/scss">
-@import "../../../static/css/scss/OTC/OTCCenter.scss";
+// @import "../../../static/css/scss/OTC/OTCCenter.scss";
 @import "../../../static/css/scss/index.scss";
 .otc-online-trader-buy-sell-box{
   // background-color: #1D2331;
@@ -1054,7 +1054,7 @@ export default {
       >.online-trader{
           >.online-trader-left{
               >.shoper-info{
-                  background-color: #1E2636;
+                  background-color: #1C1F32;
                 >.shoper-name{
                   >.shang-icon{
                   }
@@ -1078,7 +1078,7 @@ export default {
                 }
               }
               >.shoper-remark{
-                  background-color: #1E2636;
+                  background-color: #1C1F32;
                 >.remark-title{
                   color: #FFFFFF;
                 }
@@ -1089,7 +1089,7 @@ export default {
           }
           >.online-trader-right{
               >.trader-details{
-                  background-color: #1E2636;
+                  background-color: #1C1F32;
                   >.details-row{
                     >.details-tip{
                       color: #A9BED4;
@@ -1117,7 +1117,7 @@ export default {
                         border: 1px solid red;
                       }
                       >.sell-sum{
-                        background-color: #232F44;
+                        background-color: #2D3651;
                         color: #A9BED4;
                       }
                       >.unit{
