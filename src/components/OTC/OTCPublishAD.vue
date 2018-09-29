@@ -1,7 +1,7 @@
 <template>
   <div
-  class="otc-publish-AD-box otc"
-  :class="{'day':theme == 'day','night':theme == 'night' }"
+    class="otc-publish-AD-box otc"
+    :class="{'day':theme == 'day','night':theme == 'night' }"
   >
     <!-- 商家发布广告挂单 -->
     <!-- 1.0 导航 -->
@@ -912,7 +912,6 @@ export default {
 <style scoped lang="scss" type="text/scss">
 @import "../../../static/css/scss/index";
 .otc-publish-AD-box{
-  background-color: $mainNightBgColor;
   >.otc-publish-AD-content{
     width: 1150px;
     margin: 70px auto;
@@ -924,31 +923,31 @@ export default {
       >.AD-title{
         height: 30px;
         line-height: 30px;
-        color: #338FF5;
-        border-left: 3px solid #338FF5;
+        // color: #338FF5;
+        // border-left: 3px solid #338FF5;
         margin-bottom: 30px;
       }
       >.AD-big-form{
         width: 720px;
         .err{
-          color: red;
+          // color: red;
         }
         >.common{
           box-sizing: border-box;
           padding: 30px 0;
-          border-bottom: 1px solid #39424D;
+          // border-bottom: 1px solid #39424D;
           >.left{
             width: 110px;
             vertical-align: top;
             >.tips{
-              color: #fff;
+              // color: #fff;
             }
             >.warning{
-              color: #3E79D6;
+              // color: #3E79D6;
             }
           }
           >.right{
-            color: #9DA5B3;
+            // color: #9DA5B3;
             font-size: 14px;
           }
         }
@@ -965,7 +964,7 @@ export default {
             }
             >.right-change{
               >.double-sided-arrow{
-                color: #797979;
+                // color: #797979;
                 margin: 0 10px;
               }
             }
@@ -974,20 +973,20 @@ export default {
         >.sale-price{
           >.right{
             .max-avail-sell{
-              color: #30C296;
+              // color: #30C296;
               padding-right: 10px;
             }
             .markder-price{
-              color: #E97345;
+              // color: #E97345;
             }
             >.input{
               margin: 10px 0 5px 0;
               >.price-input{
                 width: 234px;
                 height: 36px;
-                background-color: #232F44;
+                // background-color: #232F44;
                 padding-left: 10px;
-                color: #9DA5B3;
+                // color: #9DA5B3;
                 border-top-left-radius: 4px;
                 border-bottom-left-radius: 4px;
               }
@@ -995,8 +994,8 @@ export default {
                 width: 36px;
                 height: 36px;
                 line-height: 36px;
-                color: #7EA9E4;
-                background-color: #303F59;
+                // color: #7EA9E4;
+                // background-color: #303F59;
                 display: inline-block;
                 vertical-align: top;
                 margin-left: -4px;
@@ -1022,9 +1021,9 @@ export default {
               >.input-sum{
                 width: 198px;
                 height: 36px;
-                background-color: #232F44;
+                // background-color: #232F44;
                 padding-left: 10px;
-                color: #9DA5B3;
+                // color: #9DA5B3;
                 border-top-left-radius: 4px;
                 border-bottom-left-radius: 4px;
               }
@@ -1032,8 +1031,8 @@ export default {
                 width: 60px;
                 height: 36px;
                 line-height: 36px;
-                color: #7EA9E4;
-                background-color: #303F59;
+                // color: #7EA9E4;
+                // background-color: #303F59;
                 display: inline-block;
                 vertical-align: top;
                 margin-left: -4px;
@@ -1057,9 +1056,9 @@ export default {
               >.input-min,.input-max{
                 width: 140px;
                 height: 36px;
-                background-color: #232F44;
+                // background-color: #232F44;
                 padding-left: 10px;
-                color: #9DA5B3;
+                // color: #9DA5B3;
                 border-top-left-radius: 4px;
                 border-bottom-left-radius: 4px;
               }
@@ -1067,8 +1066,8 @@ export default {
                 width: 60px;
                 height: 36px;
                 line-height: 36px;
-                color: #7EA9E4;
-                background-color: #303F59;
+                // color: #7EA9E4;
+                // background-color: #303F59;
                 display: inline-block;
                 vertical-align: top;
                 margin-left: -4px;
@@ -1078,7 +1077,7 @@ export default {
               }
               >.minMaxLink{
                 margin: 0px 10px;
-                color:#7d90ac;
+                // color:#7d90ac;
               }
             }
           }
@@ -1095,11 +1094,11 @@ export default {
             .input-limit{
               width: 258px;
               height: 36px;
-              background-color: #232F44;
+              // background-color: #232F44;
               padding-left: 10px;
               border-radius: 4px;
               margin: 15px 0 5px 0;
-              color: #9DA5B3;
+              // color: #9DA5B3;
             }
           }
         }
@@ -1109,8 +1108,8 @@ export default {
           >.AD-button{
             width: 590px;
             height: 44px;
-            color: #FFFFFF;
-            background:linear-gradient(9deg,rgba(43,57,110,1),rgba(42,80,130,1));
+            // color: #FFFFFF;
+            // background:linear-gradient(9deg,rgba(43,57,110,1),rgba(42,80,130,1));
             border-radius: 4px;
           }
         }
@@ -1122,11 +1121,283 @@ export default {
         width: 250px;
         margin-left: 40px;
         >.title{
-          color: #338FF5;
+          // color: #338FF5;
         }
         >.tip{
-          color: #9DA5B3;
+          // color: #9DA5B3;
           line-height: 20px;
+        }
+      }
+    }
+  }
+  &.night{
+    background-color: $mainNightBgColor;
+    >.otc-publish-AD-content{
+      >.publish-AD-left{
+        >.AD-title{
+          color: #338FF5;
+          border-left: 3px solid #338FF5;
+        }
+        >.AD-big-form{
+          .err{
+            color: red;
+          }
+          >.common{
+            >.left{
+              >.tips{
+                color: #fff;
+              }
+              >.warning{
+                color: #3E79D6;
+              }
+            }
+            >.right{
+              color: #9DA5B3;
+            }
+          }
+          >.choice{
+            >.left{
+              >.tips{
+              }
+              >.warning{
+              }
+            }
+            >.right{
+              >.right-style{
+              }
+              >.right-change{
+                >.double-sided-arrow{
+                  color: #797979;
+                }
+              }
+            }
+          }
+          >.sale-price{
+            >.right{
+              .max-avail-sell{
+                color: #30C296;
+              }
+              .markder-price{
+                color: #E97345;
+              }
+              >.input{
+                >.price-input{
+                  background-color: #1C1F32;
+                  color: #9DA5B3;
+                }
+                >.unit{
+                  color: #7EA9E4;
+                  background-color: #21243B;
+                }
+              }
+            }
+          }
+          >.trade-way{
+            >.right{
+            }
+          }
+          >.sum-limit{
+            >.right{
+              .err-min-count{
+              }
+              >.input-top{
+                >.input-sum{
+                  background-color: #1C1F32;
+                  color: #9DA5B3;
+                }
+                >.unit{
+                  color: #7EA9E4;
+                  background-color: #21243B;
+                }
+              }
+              >.text{
+                >.money-min{
+
+                }
+                >.money-max{
+                }
+              }
+              >.input-bottom{
+                >.input-min,.input-max{
+                  background-color: #1C1F32;
+                  color: #9DA5B3;
+                }
+                >.unit{
+                  color: #7EA9E4;
+                  background-color: #21243B;
+                }
+                >.minMaxLink{
+                  color:#7d90ac;
+                }
+              }
+            }
+          }
+          >.remark{
+            >.right{
+            }
+          }
+          >.limit-set{
+            border-bottom: 0;
+            >.right{
+              .question-mark{
+              }
+              .input-limit{
+                background-color: #1C1F32;
+                color: #9DA5B3;
+              }
+            }
+          }
+          >.button{
+            >.AD-button{
+              color: #FFFFFF;
+              background:linear-gradient(9deg,rgba(43,57,110,1),rgba(42,80,130,1));
+            }
+          }
+        }
+      }
+      >.publish-AD-right{
+        >.publish-tips{
+          >.title{
+            color: #338FF5;
+          }
+          >.tip{
+            color: #9DA5B3;
+          }
+        }
+      }
+    }
+  }
+  &.day{
+    background-color: $mainDayBgColor;
+    >.otc-publish-AD-content{
+      >.publish-AD-left{
+        >.AD-title{
+        }
+        >.AD-big-form{
+          .err{
+            color: red;
+          }
+          >.common{
+            >.left{
+              >.tips{
+                color: #fff;
+              }
+              >.warning{
+                color: #3E79D6;
+              }
+            }
+            >.right{
+              color: #9DA5B3;
+            }
+          }
+          >.choice{
+            >.left{
+              >.tips{
+              }
+              >.warning{
+              }
+            }
+            >.right{
+              >.right-style{
+              }
+              >.right-change{
+                >.double-sided-arrow{
+                  color: #797979;
+                }
+              }
+            }
+          }
+          >.sale-price{
+            >.right{
+              .max-avail-sell{
+                color: #30C296;
+              }
+              .markder-price{
+                color: #E97345;
+              }
+              >.input{
+                >.price-input{
+                  background-color: #232F44;
+                  color: #9DA5B3;
+                }
+                >.unit{
+                  color: #7EA9E4;
+                  background-color: #303F59;
+                }
+              }
+            }
+          }
+          >.trade-way{
+            >.right{
+            }
+          }
+          >.sum-limit{
+            >.right{
+              .err-min-count{
+              }
+              >.input-top{
+                >.input-sum{
+                  background-color: #232F44;
+                  color: #9DA5B3;
+                }
+                >.unit{
+                  color: #7EA9E4;
+                  background-color: #303F59;
+                }
+              }
+              >.text{
+                >.money-min{
+
+                }
+                >.money-max{
+                }
+              }
+              >.input-bottom{
+                >.input-min,.input-max{
+                  background-color: #232F44;
+                  color: #9DA5B3;
+                }
+                >.unit{
+                  color: #7EA9E4;
+                  background-color: #303F59;
+                }
+                >.minMaxLink{
+                  color:#7d90ac;
+                }
+              }
+            }
+          }
+          >.remark{
+            >.right{
+            }
+          }
+          >.limit-set{
+            border-bottom: 0;
+            >.right{
+              .question-mark{
+              }
+              .input-limit{
+                background-color: #232F44;
+                color: #9DA5B3;
+              }
+            }
+          }
+          >.button{
+            >.AD-button{
+              color: #FFFFFF;
+              background:linear-gradient(9deg,rgba(43,57,110,1),rgba(42,80,130,1));
+            }
+          }
+        }
+      }
+      >.publish-AD-right{
+        >.publish-tips{
+          >.title{
+            color: #338FF5;
+          }
+          >.tip{
+            color: #9DA5B3;
+          }
         }
       }
     }

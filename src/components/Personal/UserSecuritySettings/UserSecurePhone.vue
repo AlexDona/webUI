@@ -3,7 +3,7 @@
     class="set-phone personal"
     :class="{'day':theme == 'day','night':theme == 'night' }"
   >
-    <HeaderCommon />
+    <HeaderCommon/>
     <div class="set-phone-main margin25">
       <header class="set-phone-header personal-height60 line-height60 line-height70 margin25">
         <span
@@ -245,7 +245,7 @@
         </div>
       </div>
     </div>
-    <FooterCommon />
+    <keep-aline><FooterCommon/></keep-aline>
   </div>
 </template>
 <!--请严格按照如下书写书序-->
@@ -260,8 +260,7 @@ import { createNamespacedHelpers, mapState } from 'vuex'
 import ImageValidate from '../../Common/ImageValidateCommon' // 图片验证吗
 import CountDownButton from '../../Common/CountDownCommon'
 import {
-  returnAjaxMessage, // 接口返回信息
-  sendPhoneOrEmailCodeAjax
+  returnAjaxMessage // 接口返回信息
 } from '../../../utils/commonFunc'
 import {
   bindPhoneAddress,

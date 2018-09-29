@@ -52,7 +52,6 @@
                     :value="item.coinId"
                     :label="item.name"
                   >
-                  <!-- :value="item.coinId" -->
                     {{ item.name }}
                   </el-option>
                 </el-select>
@@ -80,8 +79,12 @@
               <el-form-item>
                 <div class="want-buy-sell-sum">
                   {{$t('M.otc_index_youWant')}}
-                  <span v-show="publishStyle === 'sell'">{{$t('M.comm_offering')}}</span>
-                  <span v-show="publishStyle === 'buy'">{{$t('M.comm_buying')}}</span>
+                  <span v-show="publishStyle === 'sell'">
+                    {{$t('M.comm_offering')}}
+                  </span>
+                  <span v-show="publishStyle === 'buy'">
+                    {{$t('M.comm_buying')}}
+                  </span>
                   {{$t('M.otc_index_how')}}
                 </div>
                 <!-- 当前可用和市价 -->
@@ -98,7 +101,6 @@
                     v-show="publishStyle === 'sell'"
                     :class="{ sellGreen: publishStyle === 'sell' }"
                   >
-                    <!-- {{currentlyAvailable}}{{coinName}} -->
                     {{currentlyAvailable ? currentlyAvailable : '--'}}{{coinName}}
                   </span>
                   <!-- 市价 -->
@@ -108,7 +110,6 @@
                   <span
                     class="market-price buyOrange"
                   >
-                    <!-- {{marketPrice}}{{CurrencyCoinsName}} -->
                     {{marketPrice ? marketPrice : '--'}}{{CurrencyCoinsName}}
                   </span>
                   <el-button
@@ -134,7 +135,6 @@
                     @input="changeInputValue('entrustCountSell', pointLength)"
                     @focus="countInputFocus"
                   >
-                  <!-- @keyup="changeInputValue('entrustCountSell')" -->
                   <!-- 买入量 -->
                   <input
                     type="text"
@@ -146,7 +146,6 @@
                     @input="changeInputValue('entrustCountBuy', pointLength)"
                     @focus="countInputFocus"
                   >
-                  <!-- @keyup="changeInputValue('entrustCountBuy')" -->
                   <span class="unit">{{coinName}}</span>
                   <!-- 卖出单价 -->
                   <input
@@ -158,7 +157,6 @@
                     @keyup="changeInputValue('priceSell', moneyPointLength)"
                     @input="changeInputValue('priceSell', moneyPointLength)"
                   >
-                  <!-- @keyup="changeInputValue('priceSell')" -->
                   <!-- 买入单价 -->
                   <input
                     type="text"
@@ -438,10 +436,6 @@ export default {
     require('../../../static/css/list/OTC/OTCPublishBuyAndSell.css')
     require('../../../static/css/theme/day/OTC/OTCPublishBuyAndSellDay.css')
     require('../../../static/css/theme/night/OTC/OTCPublishBuyAndSellNight.css')
-    // 1.0 otc可用币种查询
-    // this.getOTCAvailableCurrencyList()
-    // 2.0 查询可用法币币种列表
-    // this.getMerchantAvailablelegalTenderList()
     // 获取URL中买卖类型和可用币种id和可用法币id
     console.log(this.$route.params)
     // console.log(this.$route.params.styleID) // 买卖类型
@@ -456,12 +450,8 @@ export default {
     }
     // 可用币种id
     this.coinId = this.$route.params.partnerCoinId
-    // 根据可用币种id 查询用户交易币种手续费率以及币种详情
-    // this.queryUserTradeFeeAndCoinInfo()
     // 可用法币
     this.hopePaymentCoinId = this.$route.params.currencyID
-    //  2.0 查询可用法币币种列表
-    // this.getMerchantAvailablelegalTenderList()
     // 刚进页面就调此方法请求币种详情来渲染页面
     this.getOTCCoinInfo()
   },
@@ -778,10 +768,9 @@ export default {
 }
 </script>
 <style scoped lang="scss" type="text/scss">
-  @import url(../../../static/css/scss/OTC/OTCCenter.scss);
+  // @import url(../../../static/css/scss/OTC/OTCCenter.scss);
   @import "../../../static/css/scss/index";
   .otc-publish-buy-and-sell-box {
-    background-color: $mainNightBgColor;
     > .publish-buy-and-sell-content {
       width: 1150px;
       margin: 107px auto;
@@ -792,11 +781,11 @@ export default {
           flex: 2;
           > .publish-button {
             > .common-style {
-              color: #8494A6;
+              // color: #8494A6;
               width: 70px;
               height: 36px;
               display: inline-block;
-              border: 1px solid #47525C;
+              // border: 1px solid #47525C;
               cursor: pointer;
             }
             > .sell-button {
@@ -811,45 +800,43 @@ export default {
               border-bottom-right-radius: 4px;
             }
             > .green {
-              background-color: #008069;
-              color: #FFFEFE;
-              border: 1px solid #008069;
+              // background-color: #008069;
+              // color: #FFFEFE;
+              // border: 1px solid #008069;
             }
             > .red {
-              background-color: #D45858;
-              color: #FFFEFE;
-              border: 1px solid #D45858;
+              // background-color: #D45858;
+              // color: #FFFEFE;
+              // border: 1px solid #D45858;
             }
           }
           > .buy-sell-submit-form {
             margin-top: 20px;
             .want-buy-sell-sum {
-              color: #338FF5;
+              // color: #338FF5;
               font-size: 20px;
               padding-top: 20px;
             }
             .want-buy-sell-sum-content {
               .sellGreen {
-                color: #30C296;
+                // color: #30C296;
               }
               .buyOrange {
-                color: #E97345;
+                // color: #E97345;
               }
               > .want-text {
-                color: #9DA5B3;
+                // color: #9DA5B3;
                 font-size: 12px;
               }
               > .max-sum {
-                /*color: #30C296;*/
                 font-size: 12px;
                 margin-right: 20px;
               }
               > .want-text {
-                color: #9DA5B3;
+                // color: #9DA5B3;
                 font-size: 12px;
               }
               > .market-price {
-                /*color: #30C296;*/
                 font-size: 12px;
                 margin-right: 20px;
               }
@@ -859,16 +846,16 @@ export default {
               > .sell-sum {
                 width: 190px;
                 height: 36px;
-                background-color: #333A41;
+                // background-color: #333A41;
                 padding-left: 10px;
-                color: #9DA5B3;
+                // color: #9DA5B3;
               }
               > .unit {
                 width: 70px;
                 height: 36px;
-                color: #338FF5;
+                // color: #338FF5;
                 font-size: 16px;
-                background-color: #414951;
+                // background-color: #414951;
                 display: inline-block;
                 vertical-align: top;
                 margin-left: -4px;
@@ -882,11 +869,10 @@ export default {
                 display: inline-block;
                 width: 320px;
                 font-size: 12px;
-                color: #D45858;
-                // background-color: green;
+                // color: #D45858;
               }
               >.errorBuy{
-                color: #D45858;
+                // color: #D45858;
               }
             }
             .volume-business {
@@ -894,9 +880,9 @@ export default {
               > .sell-sum {
                 width: 130px;
                 height: 36px;
-                background-color: #333A41;
+                // background-color: #333A41;
                 padding-left: 10px;
-                color: #9DA5B3;
+                // color: #9DA5B3;
               }
               > .max-sell-sum {
                 width: 180px;
@@ -904,17 +890,17 @@ export default {
               > .monad {
                 width: 50px;
                 height: 36px;
-                background-color: #414951;
+                // background-color: #414951;
                 display: inline-block;
                 vertical-align: top;
                 margin-left: -4px;
                 line-height: 36px;
                 text-align: center;
-                color: #338FF5;
+                // color: #338FF5;
                 font-size: 12px;
               }
               > .range-line {
-                color: #7d90ac;
+                // color: #7d90ac;
                 margin: 0px 10px;
               }
             }
@@ -923,30 +909,30 @@ export default {
                 display: inline-block;
                 width: 212px;
                 font-size: 12px;
-                color: #D45858;
+                // color: #D45858;
               }
               >.errorLimitMax{
               }
             }
             .remark {
-              color: #9DA5B3;
+              // color: #9DA5B3;
               font-size: 12px;
               margin-top: -10px;
             }
             .predict {
               > .predict-text {
-                color: #9FA7B2;
+                // color: #9FA7B2;
                 font-size: 12px;
               }
               > .predict-sum {
-                color: #30C296;
+                // color: #30C296;
                 font-size: 12px;
               }
               > .rate-text {
-                color: #9FA7B2;
+                // color: #9FA7B2;
                 font-size: 12px;
                 > .rate {
-                  color: #CA5040;
+                  // color: #CA5040;
                   font-size: 12px;
                 }
               }
@@ -955,22 +941,22 @@ export default {
               > .publish-submit-button {
                 width: 589px;
                 height: 42px;
-                color: #FFFFFF;
+                // color: #FFFFFF;
                 font-size: 14px;
                 border-radius: 4px;
                 margin-top: 40px;
                 cursor: pointer;
               }
               > .publish-submit-buy {
-                background-color: #D45858;
+                // background-color: #D45858;
               }
               > .publish-submit-sell {
-                background-color: #008069;
+                // background-color: #008069;
               }
             }
             .password-dialog{
               .tips{
-                color: red;
+                // color: red;
               }
             }
           }
@@ -979,15 +965,286 @@ export default {
           flex: 1;
           > .release-notes {
             width: 216px;
-            color: #8C8E91;
+            // color: #8C8E91;
             font-size: 12px;
             > .release-title {
-              color: #9FA7B2;
+              // color: #9FA7B2;
             }
             > .release-tips {
-              // line-height: 1.5rem;
               line-height: 20px;
               font-size: 14px;
+            }
+          }
+        }
+      }
+    }
+    &.night{
+      background-color: $mainNightBgColor;
+      > .publish-buy-and-sell-content {
+        > .publish-content {
+          > .publish-content-left {
+            > .publish-button {
+              > .common-style {
+                color: #8494A6;
+                border: 1px solid #1C1F32;
+              }
+              > .sell-button {
+              }
+              > .buy-button {
+              }
+              > .green {
+                background-color: #008069;
+                color: #FFFEFE;
+                border: 1px solid #008069;
+              }
+              > .red {
+                background-color: #D45858;
+                color: #FFFEFE;
+                border: 1px solid #D45858;
+              }
+            }
+            > .buy-sell-submit-form {
+              .want-buy-sell-sum {
+                color: #338FF5;
+              }
+              .want-buy-sell-sum-content {
+                .sellGreen {
+                  color: #30C296;
+                }
+                .buyOrange {
+                  color: #E97345;
+                }
+                > .want-text {
+                  color: #9DA5B3;
+                }
+                > .max-sum {
+                }
+                > .want-text {
+                  color: #9DA5B3;
+                }
+                > .market-price {
+                }
+              }
+              .sell-buy-input {
+                > .sell-sum {
+                  background-color: #1C1F32;
+                  color: #9DA5B3;
+                }
+                > .unit {
+                  color: #338FF5;
+                  background-color: #21243B;
+                }
+              }
+              .buySellSumErrorTips{
+                >.errorSell{
+                  color: #D45858;
+                }
+                >.errorBuy{
+                  color: #D45858;
+                }
+              }
+              .volume-business {
+                > .sell-sum {
+                  background-color: #1C1F32;
+                  color: #9DA5B3;
+                }
+                > .max-sell-sum {
+                }
+                > .monad {
+                  background-color: #21243B;
+                  color: #338FF5;
+                }
+                > .range-line {
+                  color: #7d90ac;
+                }
+              }
+              .limitErrorTips{
+                >.errorLimitMin,.errorLimitMax{
+                  color: #D45858;
+                }
+                >.errorLimitMax{
+                }
+              }
+              .remark {
+                color: #9DA5B3;
+              }
+              .predict {
+                > .predict-text {
+                  color: #9FA7B2;
+                }
+                > .predict-sum {
+                  color: #30C296;
+                }
+                > .rate-text {
+                  color: #9FA7B2;
+                  > .rate {
+                    color: #CA5040;
+                  }
+                }
+              }
+              .publish-submit {
+                > .publish-submit-button {
+                  color: #FFFFFF;
+                }
+                > .publish-submit-buy {
+                  background-color: #D45858;
+                }
+                > .publish-submit-sell {
+                  background-color: #008069;
+                }
+              }
+              .password-dialog{
+                .tips{
+                  color: red;
+                }
+              }
+            }
+          }
+          > .publish-content-right {
+            flex: 1;
+            > .release-notes {
+              color: #8C8E91;
+              > .release-title {
+                color: #fff;
+              }
+              > .release-tips {
+              }
+            }
+          }
+        }
+      }
+    }
+    &.day{
+      background-color: $mainDayBgColor;
+      > .publish-buy-and-sell-content {
+        > .publish-content {
+          > .publish-content-left {
+            > .publish-button {
+              > .common-style {
+                color: #8494A6;
+                border: 1px solid #333333;
+              }
+              > .sell-button {
+              }
+              > .buy-button {
+              }
+              > .green {
+                background-color: #008069;
+                color: #FFFEFE;
+                border: 1px solid #008069;
+              }
+              > .red {
+                background-color: #D45858;
+                color: #FFFEFE;
+                border: 1px solid #D45858;
+              }
+            }
+            > .buy-sell-submit-form {
+              .want-buy-sell-sum {
+                color: #338FF5;
+              }
+              .want-buy-sell-sum-content {
+                .sellGreen {
+                  color: #30C296;
+                }
+                .buyOrange {
+                  color: #E97345;
+                }
+                > .want-text {
+                  color: #9DA5B3;
+                }
+                > .max-sum {
+                }
+                > .want-text {
+                  color: #9DA5B3;
+                }
+                > .market-price {
+                }
+              }
+              .sell-buy-input {
+                > .sell-sum {
+                  background-color: #ffffff;
+                  color: #9DA5B3;
+                }
+                > .unit {
+                  color: #338FF5;
+                  background-color: #CBDDF4;
+                }
+              }
+              .buySellSumErrorTips{
+                >.errorSell{
+                  color: #D45858;
+                }
+                >.errorBuy{
+                  color: #D45858;
+                }
+              }
+              .volume-business {
+                > .sell-sum {
+                  background-color: #ffffff;
+                  color: #9DA5B3;
+                }
+                > .max-sell-sum {
+                }
+                > .monad {
+                  background-color: #CBDDF4;
+                  color: #338FF5;
+                }
+                > .range-line {
+                  color: #7d90ac;
+                }
+              }
+              .limitErrorTips{
+                >.errorLimitMin,.errorLimitMax{
+                  color: #D45858;
+                }
+                >.errorLimitMax{
+                }
+              }
+              .remark {
+                color: #9DA5B3;
+              }
+              .predict {
+                > .predict-text {
+                  color: #9FA7B2;
+                }
+                > .predict-sum {
+                  color: #30C296;
+                }
+                > .rate-text {
+                  color: #9FA7B2;
+                  > .rate {
+                    color: #CA5040;
+                  }
+                }
+              }
+              .publish-submit {
+                > .publish-submit-button {
+                  color: #FFFFFF;
+                }
+                > .publish-submit-buy {
+                  background-color: #D45858;
+                }
+                > .publish-submit-sell {
+                  background-color: #008069;
+                }
+              }
+              .password-dialog{
+                .tips{
+                  color: red;
+                }
+              }
+            }
+          }
+          > .publish-content-right {
+            flex: 1;
+            > .release-notes {
+              color: #8C8E91;
+              > .release-title {
+                color: #BB4C4C;
+              }
+              > .release-tips {
+              }
             }
           }
         }

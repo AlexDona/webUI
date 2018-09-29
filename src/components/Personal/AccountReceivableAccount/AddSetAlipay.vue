@@ -3,7 +3,7 @@
     class="add-account personal"
     :class="{'day':theme == 'day','night':theme == 'night' }"
   >
-    <HeaderCommon />
+    <HeaderCommon/>
     <div class="add-account-main margin25">
       <header class="add-account-header personal-height60 line-height60 line-height70 margin25">
          <span
@@ -131,7 +131,7 @@
         </div>
       </div>
     </div>
-    <FooterCommon />
+    <keep-aline><FooterCommon/></keep-aline>
   </div>
 </template>
 <!--请严格按照如下书写书序-->
