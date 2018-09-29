@@ -80,7 +80,7 @@ export default {
         height:250px;
         text-align: center;
         width:100%;
-        background: url(../../assets/develop/about-Us.png) no-repeat center center;
+        background: url(../../assets/develop/about-us.png) no-repeat center center;
         -webkit-background-size: 100% 100%;
         background-size: 100% 100%;
         padding-top:100px;
