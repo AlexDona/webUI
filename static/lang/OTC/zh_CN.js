@@ -211,7 +211,7 @@ export const OTC = {
   otc_publishAD_sellNeedLimit: ' 卖家必须成交过几次',
   otc_publishAD_sellpassword: '交易密码',
   otc_publishAD_pleaseInput: '请输入',
-  otc_publishAD_publishDis: '发布说明',
+  otc_publishAD_publishDis: '*发布说明',
   otc_publishAD_discriptLineOne: '为了保证用户的交易安全，将采用数字货币托管系统。严禁绕过平台私下交易，违者将自行承担损失，且永久封号；',
   otc_publishAD_discriptLineTwo: '请在交易说明及交易备注中，详细写下您所希望的交易条件，以及与您交易所需注意的事项, 明确的信息将提升您的交易成功机率。',
   otc_publishAD_discriptLineThree: '请勿在 FUBT.TOP尝试欺诈行为，违者将会导致帐号被冻结，并承担法律责任。',

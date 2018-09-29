@@ -1,3 +1,60 @@
-.otc-publish-buy-and-sell-box.night{
-    background-color: #1D2331;
+/* otc发布购买和出售样式重置 */
+/* 文本域 */
+.otc-publish-buy-and-sell-box.night .el-textarea__inner{
+    color: #fff;
+    background-color: #1C1F32;
+}
+/* 表单 */
+.otc-publish-buy-and-sell-box.night .el-form--label-top .el-form-item__label{
+    color: #9DA5B3;
+}
+.otc-publish-buy-and-sell-box.night .el-form--label-top .el-form-item{
+}
+.otc-publish-buy-and-sell-box.night .el-form--label-top .el-form-item__content{
+}
+.otc-publish-buy-and-sell-box.night .el-form--label-top .el-button--mini{
+}
+/*select选择框*/
+.otc-publish-buy-and-sell-box.night .buy-sell-submit-form .el-input--suffix .el-input__inner{
+}
+.otc-publish-buy-and-sell-box.night .buy-sell-submit-form .el-input__inner{
+  background-color: #1C1F32;
+}
+.otc-publish-buy-and-sell-box.night .buy-sell-submit-form .el-select-dropdown__list{
+  background-color: #29343F !important;
+}
+.otc-publish-buy-and-sell-box.night .buy-sell-submit-form .el-select-dropdown__item.hover {
+  background-color: #29343F !important;
+  color: #338FF5 !important;
+}
+/* 输入密码弹出框 */
+.otc-publish-buy-and-sell-box.night .password-dialog .el-dialog{
+  background: #28334A;
+}
+.otc-publish-buy-and-sell-box.night .password-dialog .el-dialog__header{
+  background-color:#20293C;
+}
+.otc-publish-buy-and-sell-box.night .password-dialog .el-dialog__title{
+  color: #fff;
+}
+.otc-publish-buy-and-sell-box.night .password-dialog .el-dialog__headerbtn{
+}
+.otc-publish-buy-and-sell-box.night .password-dialog .el-dialog__body{
+  color: #fff;
+}
+.otc-publish-buy-and-sell-box.night .password-dialog .el-dialog__body .input{
+}
+.otc-publish-buy-and-sell-box.night .password-dialog .el-dialog__body .password-input{
+  background-color: #1A2233;
+  color: #fff;
+}
+.otc-publish-buy-and-sell-box.night .password-dialog .el-dialog__body .error-info{
+  color: #fff;
+}
+.otc-publish-buy-and-sell-box.night .password-dialog .el-dialog__footer{
+}
+.otc-publish-buy-and-sell-box.night .password-dialog .el-button{
+}
+.otc-publish-buy-and-sell-box.night .password-dialog .el-button--primary{
+  background:linear-gradient(9deg,rgba(43,57,110,1),rgba(42,80,130,1));
 }
