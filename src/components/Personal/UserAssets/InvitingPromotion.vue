@@ -197,13 +197,13 @@
             >
               <template slot-scope = "s">
                 <div v-if="advancedAuth === 'waitVeritfy'">
-                  {{ waitVeritfy  }}
+                  {{ $t(waitVeritfy)  }}
                 </div>
                 <div v-if="advancedAuth === 'pass'">
-                  {{ pass }}
+                  {{ $t(pass) }}
                 </div>
                 <div v-if="advancedAuth = 'notPass'">
-                  {{ notPass }}
+                  {{ $t(notPass) }}
                 </div>
               </template>
             </el-table-column>

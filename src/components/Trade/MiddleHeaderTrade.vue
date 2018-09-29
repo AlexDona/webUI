@@ -23,7 +23,9 @@
       <!--最新价-->
       <div class="item latest-price">
         <div class="top font-size12">
-          <span>最新价</span>
+          <span>
+            {{ $t('M.trade_latest_price') }}
+          </span>
         </div>
         <div class="bottom">
           <span
@@ -42,7 +44,10 @@
       <!--涨跌-->
       <div class="item">
         <div class="top font-size12">
-          <span>涨跌</span>
+          <span>
+            <!--涨跌-->
+            {{ $t('M.trade_ups_and_downs') }}
+          </span>
         </div>
         <div class="bottom">
           <span
@@ -56,7 +61,10 @@
       </div>
       <div class="item">
         <div class="top font-size12">
-          <span>最高</span>
+          <span>
+            <!--最高-->
+            {{ $t('M.trade_highest') }}
+          </span>
         </div>
         <div class="bottom">
           <span
@@ -70,7 +78,10 @@
       </div>
       <div class="item">
         <div class="top font-size12">
-          <span>最低</span>
+          <span>
+            <!--最低-->
+            {{ $t('M.trade_minimum') }}
+          </span>
         </div>
         <div class="bottom">
           <span
@@ -80,7 +91,10 @@
       </div>
       <div class="item">
         <div class="top font-size12">
-          <span>24hr成交量</span>
+          <span>
+            <!--24hr成交量-->
+            24hr{{ $t('M.comm_make_bargain') }}{{ $t('M.comm_quantity') }}
+          </span>
         </div>
         <div class="bottom">
             <span

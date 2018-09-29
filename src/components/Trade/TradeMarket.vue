@@ -12,7 +12,10 @@
           class="text"
           @click="toggleShowContent"
         >
-          <span>市场</span>
+          <span>
+            <!--市场-->
+            {{ $t('M.trade_market_bazaar') }}
+          </span>
         </span>
         <span class="right">
           <el-input
@@ -48,18 +51,21 @@
                       <span
                         class="title coin-type"
                       >
-                        交易对
+                        <!--交易对-->
+                        {{ $t('M.comm_deal') }}{{ $t('M.comm_pair') }}
                       </span>
                       <span
                         class="title price cursor-pointer"
                       >
+                        <!--最新价-->
                             <span
                               id="new_price"
                               ref="price"
-                              data-text="最新价"
+                              :data-text="$t('M.trade_latest_price')"
                               @click="sortByUser('price')"
                             >
-                              最新价
+                              <!--最新价-->
+                              {{ $t('M.trade_latest_price') }}
                             </span>
                             <i class="sort-box">
                               <i
@@ -80,20 +86,21 @@
                         class="title rose cursor-pointer"
                         @click="sortByUser('rose')"
                       >
-                            涨幅
-                            <i class="sort-box">
-                              <i
-                                class="el-icon-caret-top"
-                                :class="{active:sortBy=='rose-asc'}"
-                                @click="sortByUser('rose-asc')"
-                              ></i>
-                              <i
-                                class="el-icon-caret-bottom"
-                                :class="{active:sortBy=='rose-desc'}"
-                                @click="sortByUser('rose-desc')"
-                              ></i>
-                            </i>
-                          </span>
+                            <!--涨幅-->
+                        {{ $t('M.trade_market_amount_increase') }}
+                        <i class="sort-box">
+                          <i
+                            class="el-icon-caret-top"
+                            :class="{active:sortBy=='rose-asc'}"
+                            @click="sortByUser('rose-asc')"
+                          ></i>
+                          <i
+                            class="el-icon-caret-bottom"
+                            :class="{active:sortBy=='rose-desc'}"
+                            @click="sortByUser('rose-desc')"
+                          ></i>
+                        </i>
+                      </span>
                     </dd>
                   </dl>
                   <div class="coin-list">
@@ -208,7 +215,7 @@ export default {
       tabList: [
         {
           id: 99,
-          name: '自选'
+          name: 'M.trade_market_optional' // 自选
         }
       ], // tab栏个数
       activeName: '', // 当前tabItem

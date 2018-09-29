@@ -12,15 +12,19 @@
           @click="jumpToOtherPage('/ServiceAndProtocol','CurrencyInformation')"
         >
           <i class="el-icon-document"></i>
-          <span>币种资料</span>
+          <span>
+            <!--币种资料-->
+            {{ $t('M.trade_exchange_currency_data') }}
+          </span>
         </span>
       </div>
       <el-tabs
         v-model="activeName"
         @tab-click="toggleMatchType"
       >
+        <!--限价交易-->
         <el-tab-pane
-          label="限价交易"
+          :label="$t('M.trade_exchange_price_deal')"
           name="limit-price"
         >
           <div class="content-box limit">
@@ -29,15 +33,22 @@
                 <div class="left item">
                   <IconFont iconName="icon-qianbao-"/>
                   <span class="margin-left10 buy">
-                    可买：
+                    <!--可买-->
+                    {{ $t('M.trade_exchange_can_buy') }}：
                     <span v-show="!buyUserCoinWallet.total">--</span>
                     <span v-show="buyUserCoinWallet.total">{{limitExchange.userCanBuyCount}}</span>
                     <span>{{middleTopData.sellsymbol}}</span>
                   </span>
                 </div>
                 <div class="right item">
-                  <router-link to="/PersonalCenter">充币</router-link>
-                  <router-link to="/PersonalCenter">提币</router-link>
+                  <router-link to="/PersonalCenter">
+                    <!--充币-->
+                    {{ $t('M.comm_charge_money') }}
+                  </router-link>
+                  <router-link to="/PersonalCenter">
+                    <!--提币-->
+                    {{ $t('M.comm_mention_money') }}：
+                  </router-link>
                 </div>
               </div>
               <div class="content">
@@ -45,7 +56,7 @@
                 <div class="input">
                   <input
                     type="text"
-                    placeholder="买入价"
+                    :placeholder="$t('M.comm_buy') + $t('M.comm_price')"
                     :ref="limitBuyPriceInputRef"
                     @keyup="autoChangeData('limit-buy',limitBuyPriceInputRef,middleTopData.priceExchange)"
                     @input="formatInput(limitBuyPriceInputRef,middleTopData.priceExchange)"
@@ -61,7 +72,7 @@
                 <div class="input">
                   <input
                     type="text"
-                    placeholder="买入量"
+                    :placeholder="$t('M.comm_buy') + $t('M.comm_quantity')"
                     :ref="limitBuyCountInputRef"
                     @keyup="autoChangeData('limit-buy',limitBuyCountInputRef,middleTopData.priceExchange)"
                     @input="formatInput(limitBuyCountInputRef,middleTopData.priceExchange)"
@@ -72,7 +83,7 @@
                 <div class="input">
                   <input
                     type="password"
-                    placeholder="交易密码"
+                    :placeholder="$t('M.comm_password')"
                     v-model="limitExchange.buyPwd"
                   >
                 </div>
@@ -82,7 +93,10 @@
                 <!--预计交易额 手续费-->
                 <div class="volume-rate">
                   <div class="item">
-                    <span>预计交易额：</span>
+                    <span>
+                      <!--预计交易额-->
+                      {{ $t('M.trade_exchange_estimated_turnover') }}：
+                    </span>
                     <!--<span class="buy">{{limitExchange.buyAmount}}</span>-->
                     <span class="buy">{{limitBuyAmount}}</span>
                     <span>{{middleTopData.area}}</span>
@@ -92,7 +106,10 @@
                   <el-button
                     class="submit-btn buy-btn"
                     @click="addEntrust(0,'limit-buy')"
-                  >买入</el-button>
+                  >
+                    <!--买入-->
+                    {{ $t('M.comm_buy') }}：
+                  </el-button>
                 </div>
               </div>
             </div>
@@ -102,15 +119,22 @@
                 <div class="left item">
                   <IconFont iconName="icon-qianbao-"/>
                   <span class="margin-left10 sell">
-                    可卖：
+                    <!--可卖-->
+                    {{ $t('M.trade_exchange_vendibility') }}：
                     <span v-show="!sellUserCoinWallet.total">--</span>
                     <span v-show="sellUserCoinWallet.total">{{sellUserCoinWallet.total}}</span>
                     <span>{{middleTopData.sellsymbol}}</span>
                   </span>
                 </div>
                 <div class="right item">
-                  <router-link to="/PersonalCenter">充币</router-link>
-                  <router-link to="/PersonalCenter">提币</router-link>
+                  <router-link to="/PersonalCenter">
+                    <!--充币-->
+                    {{ $t('M.comm_charge_money') }}
+                  </router-link>
+                  <router-link to="/PersonalCenter">
+                    <!--提币-->
+                    {{ $t('M.comm_mention_money') }}
+                  </router-link>
                 </div>
               </div>
               <div class="content">
@@ -118,7 +142,7 @@
                 <div class="input">
                   <input
                     type="text"
-                    placeholder="卖出价"
+                    :placeholder="$t('M.comm_sell') + $t('M.comm_price')"
                     :ref="limitSellPriceInputRef"
                     @keyup="autoChangeData('limit-sell',limitSellPriceInputRef,middleTopData.priceExchange)"
                     @input="formatInput(limitSellPriceInputRef,middleTopData.priceExchange)"
@@ -135,7 +159,7 @@
                 <div class="input">
                   <input
                     type="text"
-                    placeholder="卖出量"
+                    :placeholder="$t('M.comm_sell') + $t('M.comm_quantity')"
                     :ref="limitSellCountInputRef"
                     @keyup="autoChangeData('limit-sell',limitSellCountInputRef,middleTopData.priceExchange)"
                     @input="formatInput(limitSellCountInputRef,middleTopData.priceExchange)"
@@ -146,7 +170,7 @@
                 <div class="input">
                   <input
                     type="password"
-                    placeholder="交易密码"
+                    :placeholder="$t('M.comm_password')"
                     v-model="limitExchange.sellPwd"
                   >
                 </div>
@@ -156,7 +180,10 @@
                 <!--预计交易额 手续费-->
                 <div class="volume-rate">
                   <div class="item">
-                    <span>预计交易额：</span>
+                    <span>
+                      <!--预计交易额：-->
+                      {{ $t('M.trade_exchange_estimated_turnover') }}：
+                    </span>
                     <!--<span class="sell">{{limitExchange.sellAmount}}</span>-->
                     <span class="sell">{{limitSellAmount}}</span>
                     <span>{{middleTopData.area}}</span>
@@ -166,14 +193,18 @@
                   <el-button
                     class="submit-btn sell-btn"
                     @click="addEntrust(1,'limit-sell')"
-                  >卖出</el-button>
+                  >
+                    <!--卖出-->
+                    {{ $t('M.comm_sell') }}
+                  </el-button>
                 </div>
               </div>
             </div>
           </div>
         </el-tab-pane>
+        <!--市价交易-->
         <el-tab-pane
-          label="市价交易"
+          :label="$t('M.trade_exchange_market')"
           name="market-price"
         >
           <div class=" content-box market">
@@ -182,28 +213,40 @@
                 <div class="left item">
                   <IconFont iconName="icon-qianbao-"/>
                   <span class="margin-left10 buy">
-                    可买：
+                    <!--可买-->
+                    {{ $t('M.trade_exchange_can_buy') }}：
                     <span v-show="!buyUserCoinWallet.total||!middleTopData.price">--</span>
-                    <span v-show="buyUserCoinWallet.total&&middleTopData.price">{{(buyUserCoinWallet.total/middleTopData.price).toFixed(middleTopData.priceExchange)}}</span>
+                    <span v-show="buyUserCoinWallet.total&&middleTopData.price">
+                      {{(buyUserCoinWallet.total/middleTopData.price).toFixed(middleTopData.priceExchange)}}
+                    </span>
                     <span>{{middleTopData.sellsymbol}}</span>
                   </span>
                 </div>
                 <div class="right item">
-                  <router-link to="/PersonalCenter">充币</router-link>
-                  <router-link to="/PersonalCenter">提币</router-link>
+                  <router-link to="/PersonalCenter">
+                    <!--充币-->
+                    {{ $t('M.comm_charge_money') }}
+                  </router-link>
+                  <router-link to="/PersonalCenter">
+                    <!--提币-->
+                    {{ $t('M.comm_mention_money') }}：
+                  </router-link>
                 </div>
               </div>
               <div class="content">
                 <!--市场成交价-->
                 <div class="input">
-                  <div class="market-price buy-price">市场成交价</div>
+                  <div class="market-price buy-price">
+                    <!--市场成交价-->
+                    {{ $t('M.trade_exchange_market_price') }}
+                  </div>
                   <span class="currency">{{middleTopData.area}}</span>
                 </div>
                 <!--买入量-->
                 <div class="input">
                   <input
                     type="text"
-                    placeholder="买入量"
+                    :placeholder="$t('M.comm_buy') + $t('M.comm_quantity')"
                     :ref="marketBuyCountInputRef"
                     @keyup="autoChangeData('market-buy',marketBuyCountInputRef,middleTopData.priceExchange)"
                     @input="formatInput(marketBuyCountInputRef,middleTopData.priceExchange)"
@@ -214,7 +257,7 @@
                 <div class="input">
                   <input
                     type="password"
-                    placeholder="交易密码"
+                    :placeholder="$t('M.comm_password')"
                     v-model="marketExchange.buyPwd"
                   >
                 </div>
@@ -224,7 +267,10 @@
                 <!--预计交易额 手续费-->
                 <div class="volume-rate">
                   <div class="item">
-                    <span>预计交易额：</span>
+                    <span>
+                      <!--预计交易额：-->
+                      {{ $t('M.trade_exchange_estimated_turnover') }}：
+                    </span>
                     <span class="buy">0.00</span>
                     <span>{{middleTopData.area}}</span>
                   </div>
@@ -233,7 +279,10 @@
                   <el-button
                     class="submit-btn buy-btn"
                     @click="addEntrust(0,'market-buy')"
-                  >买入</el-button>
+                  >
+                    <!--买入-->
+                    {{ $t('M.comm_buy') }}
+                  </el-button>
                 </div>
               </div>
             </div>
@@ -243,28 +292,38 @@
                 <div class="left item">
                   <IconFont iconName="icon-qianbao-"/>
                   <span class="margin-left10 sell">
-                    可卖：
+                    <!--可卖-->
+                    {{ $t('M.trade_exchange_vendibility') }}：
                     <span v-show="!sellUserCoinWallet.total">--</span>
                     <span v-show="sellUserCoinWallet.total">{{sellUserCoinWallet.total}}</span>
                     <span>{{middleTopData.sellsymbol}}</span>
                   </span>
                 </div>
                 <div class="right item">
-                  <router-link to="/PersonalCenter">充币</router-link>
-                  <router-link to="/PersonalCenter">提币</router-link>
+                  <router-link to="/PersonalCenter">
+                    <!--充币-->
+                    {{ $t('M.comm_charge_money') }}
+                  </router-link>
+                  <router-link to="/PersonalCenter">
+                    <!--提币-->
+                    {{ $t('M.comm_mention_money') }}
+                  </router-link>
                 </div>
               </div>
               <div class="content">
                 <!--市场成交价-->
                 <div class="input">
-                  <div class="market-price sell-price">市场成交价</div>
+                  <div class="market-price sell-price">
+                    <!--市场成交价-->
+                    {{ $t('M.trade_exchange_market_price') }}
+                  </div>
                   <span class="currency">{{middleTopData.area}}</span>
                 </div>
                 <!--卖出量-->
                 <div class="input">
                   <input
                     type="text"
-                    placeholder="卖出量"
+                    :placeholder="$t('M.comm_sell') + $t('M.comm_quantity')"
                     :ref="marketSellCountInputRef"
                     @keyup="autoChangeData('market-sell',marketSellCountInputRef,middleTopData.priceExchange)"
                     @input="formatInput(marketSellCountInputRef,middleTopData.priceExchange)"
@@ -275,7 +334,7 @@
                 <div class="input">
                   <input
                     type="password"
-                    placeholder="交易密码"
+                    :placeholder="$t('M.comm_password')"
                     v-model="marketExchange.sellPwd"
                   >
                 </div>
@@ -285,7 +344,10 @@
                 <!--预计交易额 手续费-->
                 <div class="volume-rate">
                   <div class="item">
-                    <span>预计交易额：</span>
+                    <span>
+                      <!--预计交易额：-->
+                      {{ $t('M.trade_exchange_estimated_turnover') }}：
+                    </span>
                     <span class="sell">0.00</span>
                     <span>{{middleTopData.area}}</span>
                   </div>
@@ -294,7 +356,10 @@
                   <el-button
                     class="submit-btn sell-btn"
                     @click="addEntrust(1,'market-sell')"
-                  >卖出</el-button>
+                  >
+                    <!--卖出-->
+                    {{ $t('M.comm_sell') }}
+                  </el-button>
                 </div>
               </div>
             </div>
@@ -503,9 +568,10 @@ export default {
         return false
       }
       if (!this.loginStep1Info.userInfo.payPassword) {
+        // 请设置交易密码后操作
         this.$message({
           type: 'error',
-          message: '请设置交易密码后操作！'
+          message: this.$t('M.comm_please_set_up') + this.$t('M.comm_password') + this.$t('M.trade_exchange_after_operation')
         })
         this.$router.push({path: '/TransactionPassword'})
         return false
@@ -541,9 +607,10 @@ export default {
               params.price = this.$refs[this.limitBuyPriceInputRef].value
               params.count = this.$refs[this.limitBuyCountInputRef].value
               if ((this.buyUserCoinWallet.total / params.price) < params.count - 0) {
+                // 可用币种数量不足
                 this.$message({
                   type: 'error',
-                  message: '可用币种数量不足'
+                  message: this.$t('M.trade_exchange_currency_available')
                 })
                 return false
               }
@@ -551,9 +618,10 @@ export default {
             case 'MARKET':
               params.count = this.$refs[this.marketBuyCountInputRef].value
               if ((this.buyUserCoinWallet.total / this.middleTopData.price) < params.count - 0) {
+                // 可用币种数量不足
                 this.$message({
                   type: 'error',
-                  message: '可用币种数量不足'
+                  message: this.$t('M.trade_exchange_currency_available')
                 })
                 return false
               }
@@ -575,9 +643,10 @@ export default {
               break
           }
           if (this.sellUserCoinWallet.total < params.count - 0) {
+            // 可用币种数量不足
             this.$message({
               type: 'error',
-              message: '可用币种数量不足'
+              message: this.$t('M.trade_exchange_currency_available')
             })
             return false
           }

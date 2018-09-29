@@ -10,7 +10,8 @@
           @click="toggleShowContent"
         >
         <span class="text">
-          最近成交
+          <!--最近成交-->
+          {{ $t('M.trade_order_recent_deal') }}
         </span>
         </div>
         <div class="content">
@@ -20,8 +21,9 @@
                 :data="orderRecordList"
                 height="500"
               >
+                <!--时间-->
                 <el-table-column
-                  label="时间"
+                  :label="$t('M.comm_time')"
                 >
                   <template slot-scope="s">
                   <span class="font-size12">
@@ -29,8 +31,9 @@
                   </span>
                   </template>
                 </el-table-column>
+                <!--成交价-->
                 <el-table-column
-                  :label="`成交价(${activeSymbol.area})`"
+                  :label="`$t('M.comm_make_bargain') + $t('M.comm_price')(${activeSymbol.area})`"
                 >
                   <template slot-scope="s">
                     <span
@@ -43,8 +46,9 @@
                     </span>
                   </template>
                 </el-table-column>
+                <!--成交量-->
                 <el-table-column
-                  :label="`成交量(${activeSymbol.sellsymbol})`"
+                  :label="`$t('M.comm_make_bargain') + $t('M.comm_quantity')(${activeSymbol.sellsymbol})`"
                 >
                   <template slot-scope="s">
                       <span class="text-align-r font-size12">

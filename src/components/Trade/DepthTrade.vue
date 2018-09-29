@@ -58,6 +58,8 @@ export default {
           },
           formatter: function (params) {
             // console.log(params)
+            // 委托价
+            // 委托量
             return `
                       委托价：${params[0].data[0].toFixed(4)}<br/>
                       委托量：${params[0].data[1].toFixed(4)}
@@ -80,7 +82,8 @@ export default {
       series: [
         // 买
         {
-          name: '委托量',
+          // 委托量
+          name: 'M.trade_coin_entrusted_amount',
           type: 'line',
           color: 'rgba(212,88,88,0.2)',
           itemStyle: {
@@ -97,7 +100,8 @@ export default {
         },
         // 卖
         {
-          name: '委托量',
+          // 委托量
+          name: 'M.trade_coin_entrusted_amount',
           type: 'line',
           color: 'rgba(0,128,105,0.2)', //
           lineStyle: {
