@@ -456,7 +456,7 @@ export default {
       'TOGGLE_REFRESH_ENTRUST_LIST_STATUS'
     ]),
     // 获取用户对应交易对资产
-    async getUserAssetOfActiveSymbol (price) {
+    async getUserAssetOfActiveSymbol (targetPriceOfBuy, targetPriceOfSell) {
       const params = {
         tradeId: this.activeSymbol.tradeId // 交易对id
       }
@@ -467,8 +467,8 @@ export default {
         console.log(data)
         this.buyUserCoinWallet = data.data.data.buyUserCoinWallet
         this.sellUserCoinWallet = data.data.data.sellUserCoinWallet
-        console.log(price)
-        this.setBuyAndSellPrice(price)
+        // console.log(price)
+        this.setBuyAndSellPrice(targetPriceOfBuy, targetPriceOfSell)
       }
     },
     // 清空交易密码
@@ -666,10 +666,9 @@ export default {
       }
     },
     // 设置买卖价格
-    setBuyAndSellPrice (targetPrice) {
-      console.log(targetPrice)
-      this.$refs[this.limitBuyPriceInputRef].value = targetPrice
-      this.$refs[this.limitSellPriceInputRef].value = targetPrice
+    setBuyAndSellPrice (targetPriceOfBuy, targetPriceOfSell = targetPriceOfBuy) {
+      this.$refs[this.limitBuyPriceInputRef].value = targetPriceOfBuy
+      this.$refs[this.limitSellPriceInputRef].value = targetPriceOfSell
       const newBuyPrice = this.formatInput(this.limitBuyPriceInputRef, this.activeSymbol.priceExchange)
       const newSellPrice = this.formatInput(this.limitSellPriceInputRef, this.activeSymbol.priceExchange)
       this.setTransformPrice('limit-buy', newBuyPrice)
@@ -729,15 +728,17 @@ export default {
     },
     middleTopData (newVal) {
       console.log(newVal)
+      let targetPriceOfBuy = newVal.buyOne
+      let targetPriceOfSell = newVal.sellOne
+      // 首次打开设置价格
       if (!this.reflashCount) {
         if (newVal.price) {
           this.reflashCount++
         }
         if (this.isLogin) {
-          this.getUserAssetOfActiveSymbol(newVal.price)
+          this.getUserAssetOfActiveSymbol(targetPriceOfBuy, targetPriceOfSell)
         } else {
-          let targetPrice = newVal.price != 0 ? newVal.price : newVal.kai
-          this.setBuyAndSellPrice(targetPrice)
+          this.setBuyAndSellPrice(targetPriceOfBuy, targetPriceOfSell)
         }
       }
     }

@@ -38,7 +38,7 @@
               @tab-click="changeTab"
             >
               <el-tab-pane
-                :label="outItem.name"
+                :label="$t(outItem.name)"
                 :name="outItem.id"
                 v-for="(outItem,outIndex) in tabList"
                 :key="outIndex"

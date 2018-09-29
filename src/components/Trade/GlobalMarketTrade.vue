@@ -60,7 +60,7 @@
               </el-table-column>
               <!--成交量-->
               <el-table-column
-                :label="`$t('M.comm_make_bargain') + $t('M.comm_quantity')(${activeSymbol.area})`"
+                :label="$t('M.comm_make_bargain') + $t('M.comm_quantity') + ('('+ activeSymbol.area +')')"
               >
                 <template slot-scope="s">
                   <div
