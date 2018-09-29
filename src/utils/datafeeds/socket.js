@@ -36,15 +36,26 @@ class socket {
       this.onReceiver({ Event: 'close' })
     }
   }
-  send (data) {
-    if (this.socket) {
-      this.socket.send(JSON.stringify(data))
-    } else {
-      this.doOpen()
-      this.socket.send(JSON.stringify(data))
-    }
-    // this.socket.send(JSON.stringify(data))
+  send (data, callback) {
+    this.waitForConnection(() => {
+      if (this.socket) {
+        this.socket.send(JSON.stringify(data))
+      }
+      if (typeof callback !== 'undefined') {
+        callback()
+      }
+    }, 1000)
   }
+  waitForConnection (callback, interval) {
+    if (!this.socket || this.socket.readyState === 1) {
+      callback()
+    } else {
+      setTimeout(() => {
+        this.waitForConnection(callback, interval)
+      }, interval)
+    }
+  }
+
   emit (data) {
     return new Promise(resolve => {
       this.socket.send(JSON.stringify(data))
@@ -85,6 +96,7 @@ class socket {
       'cmd': 'ping',
       'args': [Date.parse(new Date())]
     }
+    console.log(this)
     this.send(data)
   }
   onError (err) {
@@ -92,6 +104,7 @@ class socket {
   }
   onReceiver (data) {
     const callback = this.messageMap[data.Event]
+    // console.log(callback)
     if (callback) callback(data.Data)
   }
   on (name, handler) {

@@ -252,7 +252,7 @@
                         line-height: 30px;
                         margin:10px auto;
                       ">
-                            {{s.row.volume}}
+                            {{s.row.amount24h}}
                           </div>
                         </template>
                       </el-table-column>
