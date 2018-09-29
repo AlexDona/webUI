@@ -146,5 +146,12 @@ export const common = {
   'comm_news_and_notice': '新闻公告',
   'comm_description': '说明',
   'comm_emailbox': '邮箱',
-  'comm_loginpassword': '密码'
+  'comm_loginpassword': '密码',
+  'comm_clause': '条款',
+  'comm_privacy': '隐私',
+  'comm_law': '法律',
+  'comm_statement': '声明',
+  'comm_rate1': '费率',
+  'comm_pack_up': '收起',
+  'comm_content': '内容'
 }

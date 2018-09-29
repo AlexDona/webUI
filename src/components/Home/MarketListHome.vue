@@ -350,10 +350,11 @@
         </el-tabs>
       </template>
       <!--搜索框-->
+      <!--请输入内容-->
       <div class="search-box">
         <el-input
           v-model="searchKeyWord"
-          placeholder="请输入内容"
+          :placeholder="$t('M.comm_please_enter') + $t('M.comm_content')"
           @keyup.native="searchFromMarketList"
         >
           <i slot="suffix" class="el-input__icon el-icon-search"></i>
@@ -408,8 +409,8 @@ export default{
       // 搜索区 id
       searchAreaId: 100,
       // 查看更多按钮文字
-      moreBtnText: '查看更多交易区',
-      itemViewMoreBtnText: '查看更多',
+      moreBtnText: this.$t('M.comm_view_more'),
+      itemViewMoreBtnText: this.$t('M.comm_view_more'),
       // tab-content查看更多状态, 默认为false
       tabContentMoreStatus: false,
       // 自选区 id
@@ -694,8 +695,8 @@ export default{
     },
     // 切换 查看更多按钮文字
     toggleViewMoreBtnText () {
-      this.itemViewMoreBtnText = this.itemAreaMoreStatus ? '收起' : '查看更多'
-      this.moreBtnText = this.tabContentMoreStatus ? '收起' : '查看更多交易区'
+      this.itemViewMoreBtnText = this.itemAreaMoreStatus ? this.$t('M.comm_pack_up') : this.$t('M.comm_view_more')
+      this.moreBtnText = this.tabContentMoreStatus ? this.$t('M.comm_pack_up') : this.$t('M.comm_view_more')
     },
     // 切换收藏
     async toggleCollect (id, status, row) {
@@ -839,7 +840,7 @@ export default{
         top:8px;
         right:0;
         width:250px;
-        height:30px;
+        height:31px;
         overflow: hidden;
         border:1px solid $mainColor;
       }
