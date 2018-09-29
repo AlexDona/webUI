@@ -27,7 +27,9 @@
           <div class="line"></div>
           <p class="step-number">2</p>
           <!-- 验证身份 -->
-          <p class="step-desc">{{$t('M.login_verify')}}{{$t('M.forgetPassword_rank')}}</p>
+          <p class="step-desc">
+            {{$t('M.login_verify')}}{{$t('M.forgetPassword_rank')}}
+          </p>
         </div>
         <div
           class="step-item"
@@ -35,7 +37,10 @@
         >
           <div class="line"></div>
           <p class="step-number">3</p>
-          <p class="step-desc">设置新密码</p>
+          <p class="step-desc">
+            <!--设置新密码-->
+            {{ $t('M.comm_set') }}{{ $t('M.forgetPassword_new_password') }}
+          </p>
         </div>
         <div
           class="step-item"
@@ -43,7 +48,10 @@
         >
           <div class="line"></div>
           <p class="step-number">4</p>
-          <p class="step-desc">完成</p>
+          <p class="step-desc">
+            <!--完成-->
+            {{ $t('M.forgetPassword_achieve') }}
+          </p>
         </div>
       </div>
       <!--操作-->
@@ -55,7 +63,10 @@
         >
           <div class="inner-box">
             <div class="item">
-              <span class="label">账号</span>
+              <span class="label">
+                <!--账号-->
+                 {{ $t('M.user_account_number') }}
+              </span>
               <span class="label-content">
                 <input
                   class="username-input"
@@ -65,7 +76,10 @@
               </span>
             </div>
             <div class="item">
-              <span class="label">验证</span>
+              <span class="label">
+                <!--验证-->
+                {{ $t('M.user_security_verify') }}
+              </span>
               <span class="label-content">
                 <div
                   class="image-validate-box"
@@ -97,7 +111,8 @@
                        v-else
                   >
                   <i class="el-icon-circle-check font-size18"></i>
-                  验证成功
+                  <!--验证成功-->
+                    {{ $t('M.user_security_verify') }}{{ $t('M.comm_success') }}
                 </div>
               </span>
             </div>
@@ -108,7 +123,10 @@
                 <button
                   class="next-btn cursor-pointer"
                   @click="findPasswordStep1"
-                >下一步</button>
+                >
+                  <!--下一步-->
+                  {{ $t('M.forgetPassword_next_step') }}
+                </button>
               </span>
             </div>
           </div>
@@ -123,17 +141,23 @@
               class="item"
               v-if="userInfo.isEnablePhone"
             >
-              <span class="label">验证手机</span>
+              <span class="label">
+                <!--验证手机-->
+                {{ $t('M.user_security_verify') }}{{ $t('M.user_security_phone') }}
+              </span>
               <span class="label-content">
                 <span class="number">{{phoneNumberFormat(userInfo.phone)}}</span>
-                <span class="tips">{{phoneNumTips}}</span>
+                <span class="tips">{{$t(phoneNumTips)}}</span>
               </span>
             </div>
             <div
               class="item"
               v-if="userInfo.isEnablePhone"
             >
-              <span class="label">手机验证码</span>
+              <span class="label">
+                <!--手机验证码-->
+                {{ $t('M.user_security_phone') }}{{ $t('M.comm_code') }}
+              </span>
               <span class="label-content">
                 <input
                   class="username-input validate-code-input"
@@ -152,17 +176,23 @@
               class="item"
               v-if="userInfo.isEnableMail"
             >
-              <span class="label">验证邮箱</span>
+              <span class="label">
+                <!--验证邮箱-->
+                {{ $t('M.user_security_verify') }}{{ $t('M.user_security_email') }}
+              </span>
               <span class="label-content">
                 <span class="number">{{phoneNumberFormat(userInfo.email)}}</span>
-                <span class="tips">{{emailNumTips}}</span>
+                <span class="tips">{{$t(emailNumTips)}}</span>
               </span>
             </div>
             <div
               class="item"
               v-if="userInfo.isEnableMail"
             >
-              <span class="label">邮箱验证码</span>
+              <span class="label">
+                <!--邮箱验证码-->
+                {{ $t('M.user_security_email') }}{{ $t('M.comm_code') }}
+              </span>
               <span class="label-content">
                 <input
                   class="username-input validate-code-input"
@@ -181,7 +211,10 @@
               class="item"
               v-if="userInfo.isEnableGoogle"
             >
-              <span class="label">谷歌验证码</span>
+              <span class="label">
+                <!--谷歌验证码-->
+                 {{ $t('M.user_security_google') }}{{ $t('M.comm_code') }}
+              </span>
               <span class="label-content">
                 <input
                   class="username-input"
@@ -197,7 +230,10 @@
                 <button
                   class="next-btn cursor-pointer"
                   @click="findPasswordStep2"
-                >下一步</button>
+                >
+                  <!--下一步-->
+                  {{ $t('M.forgetPassword_next_step') }}
+                </button>
               </span>
             </div>
           </div>
@@ -209,7 +245,10 @@
         >
           <div class="inner-box">
             <div class="item">
-              <span class="label">新登录密码</span>
+              <span class="label">
+                <!--新登录密码-->
+                {{ $t('M.forgetPassword_new_login') }}
+              </span>
               <span class="label-content">
                 <input
                   class="username-input"
@@ -219,7 +258,10 @@
               </span>
             </div>
             <div class="item">
-              <span class="label">确认密码</span>
+              <span class="label">
+                <!--确认密码-->
+                {{ $t('M.forgetPassword_affirm_password') }}
+              </span>
               <span class="label-content">
                 <input
                   class="username-input"
@@ -235,7 +277,10 @@
                 <button
                   class="next-btn cursor-pointer"
                   @click="findPasswordStep3"
-                >下一步</button>
+                >
+                  <!--下一步-->
+                   {{ $t('M.forgetPassword_next_step') }}
+                </button>
               </span>
             </div>
           </div>
@@ -251,10 +296,17 @@
                 <IconFont class="icon-text" iconName="icon-dui1"/>
               </div>
               <div class="right">
-                <p class="success-msg">新密码设置成功！</p>
+                <p class="success-msg">
+                  <!--新密码设置成功！?-->
+                   {{ $t('M.forgetPassword_text1') }}
+                </p>
                 <p class="success-tips">
-                  请牢记您新设置的密码。
-                  <router-link to="/login">立即登录</router-link>
+                  <!--请牢记您新设置的密码。-->
+                   {{ $t('M.forgetPassword_text2') }}
+                  <router-link to="/login">
+                    <!--立即登录-->
+                     {{ $t('M.forgetPassword_text3') }}
+                  </router-link>
                 </p>
               </div>
             </div>
@@ -312,8 +364,8 @@ export default {
       newPassword: '', // 新登录密码
       confirmPassword: '', // 确认密码
       confirmSuccess: false, // 验证成功判断
-      phoneNumTips: '若该手机号无法使用请联系客服', // 手机号提示信息
-      emailNumTips: '若该邮箱无法使用请联系客服', // 邮箱号提示信息
+      phoneNumTips: 'M.forgetPassword_text4', // 手机号提示信息 若该手机号无法使用请联系客服
+      emailNumTips: 'M.forgetPassword_text5', // 邮箱号提示信息 若该邮箱无法使用请联系客服
       end: ''
     }
   },
@@ -344,29 +396,33 @@ export default {
     // 找回密码步骤3
     async findPasswordStep3 () {
       if (!this.newPassword) {
+        // 请输入新的密码
         this.$message({
           type: 'error',
-          message: '请输入新的密码'
+          message: this.$t('M.comm_please_enter') + this.$t('M.forgetPassword_new_password')
         })
         return false
       } else if (!PWD_REG.test(this.newPassword)) {
+        // 请输入8-20位字母、数字组合
         this.$message({
           type: 'error',
-          message: '请输入8-20位字母、数字组合'
+          message: this.$t('M.comm_please_enter') + this.$t('M.forgetPassword_hint1')
         })
         return false
       }
       if (!this.confirmPassword) {
+        // 请再次输入新的密码
         this.$message({
           type: 'error',
-          message: '请再次输入新的密码'
+          message: this.$t('M.forgetPassword_hint2') + this.$t('M.forgetPassword_new_password')
         })
         return false
       }
       if (this.confirmPassword !== this.newPassword) {
+        // 请输入相同的密码
         this.$message({
           type: 'error',
-          message: '请输入相同的密码'
+          message: this.$t('M.comm_please_enter') + this.$t('M.forgetPassword_hint3')
         })
         return false
       }
@@ -385,24 +441,27 @@ export default {
     // 找回密码步骤2
     async findPasswordStep2 () {
       if (this.userInfo.isEnablePhone && !this.phoneCode) {
+        // 请输入短信验证码
         this.$message({
           type: 'error',
-          message: '请输入短信验证码'
+          message: this.$t('M.comm_please_enter') + this.$t('M.comm_note') + this.$t('M.comm_code')
         })
         return false
       }
 
       if (this.userInfo.isEnableMail && !this.emailCode) {
+        // 请输入邮箱验证码
         this.$message({
           type: 'error',
-          message: '请输入邮箱验证码'
+          message: this.$t('M.comm_please_enter') + this.$t('M.user_security_email') + this.$t('M.comm_code')
         })
         return false
       }
       if (this.userInfo.isEnableGoogle && !this.googleCode) {
+        // 请输入谷歌验证码
         this.$message({
           type: 'error',
-          message: '请输入谷歌验证码'
+          message: this.$t('M.comm_please_enter') + this.$t('M.user_security_google') + this.$t('M.comm_code')
         })
         return false
       }
@@ -430,16 +489,18 @@ export default {
     // 找回密码步骤1
     async findPasswordStep1 () {
       if (!this.username) {
+        // 请输入用户名
         this.$message({
           type: 'error',
-          message: '请输入用户名'
+          message: this.$t('M.comm_please_enter') + this.$t('M.login_username')
         })
         return false
       }
       if (!this.confirmSuccess) {
+        // 请通过图片验证
         this.$message({
           type: 'error',
-          message: '请通过图片验证'
+          message: this.$t('M.forgetPassword_hint4')
         })
         return false
       }

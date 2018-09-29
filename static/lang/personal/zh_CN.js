@@ -9,7 +9,7 @@ export const personal = {
   'user_assets_recharge_hint1': '禁止充值除',
   'user_assets_recharge_hint2': '之外的其他资产，任何非',
   'user_assets_recharge_hint3': '资产充值将不可找回。',
-  'user_assets_recharge_hint4': '往该地址充值，汇款完成，等待网络自动确认（4个确认）后系统自动到账',
+  'user_assets_recharge_hint4': '往该地址充值，汇款完成，等待网络自动确认（6个确认）后系统自动到账',
   'user_assets_recharge_hint5': '为了快速到账，充值时可以适当提高网络手续费',
   'user_assets_withdrawal_hint1': '提现费率规则',
   'user_assets_withdrawal_hint2': '为了用户资金安全，平台可能会电话确认您的提币操作，请注意接听；',

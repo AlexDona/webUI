@@ -7,11 +7,12 @@
     <div class="inner-box">
       <!--搜索区-->
       <div class="search-box">
+        <!--请输入关键字-->
         <input
           type="text"
           class="search-input"
           v-model="searchKeyWord"
-          placeholder="请输入关键字"
+          :placeholder="$t('M.comm_please_enter') + $t('M.news_keyword')"
         />
       </div>
       <!--列表区-->
@@ -41,8 +42,12 @@
                       class="content-item-link"
                     >
                       <div class="left">
-                        <div class="top">{{item.createTime.split('-')[0]+' 年'}}</div>
-                        <div class="bottom">{{item.createTime.split('-')[1]-0+' 月'}}</div>
+                        <div class="top">
+                          {{item.createTime.split('-')[0]+' 年'}}
+                        </div>
+                        <div class="bottom">
+                          {{item.createTime.split('-')[1]-0+' 月'}}
+                        </div>
                       </div>
                       <div class="right">
                         <p class="top">

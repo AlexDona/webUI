@@ -261,7 +261,6 @@ import ImageValidate from '../../Common/ImageValidateCommon' // 图片验证吗
 import CountDownButton from '../../Common/CountDownCommon'
 import {
   returnAjaxMessage, // 接口返回信息
-  validateNumForUserInput, // 用户输入验证
   sendPhoneOrEmailCodeAjax
 } from '../../../utils/commonFunc'
 import {
@@ -269,7 +268,7 @@ import {
   changeMobilePhone,
   statusSecurityCenter
 } from '../../../utils/api/personal'
-import {checkUserExist} from '../../../utils/api/user'
+// import {checkUserExist} from '../../../utils/api/user'
 const { mapMutations } = createNamespacedHelpers('personal')
 export default {
   components: {
