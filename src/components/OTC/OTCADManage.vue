@@ -87,7 +87,7 @@
               <el-option
                 v-for="item in ADManageStatusList"
                 :key="item.value"
-                :label="item.label"
+                :label="$t(item.label)"
                 :value="item.value"
               >
               </el-option>
@@ -316,15 +316,16 @@ export default {
       ADManageStatusList: [
         {
           value: 'ENTRUSTED',
-          label: this.$t('M.comm_already') + this.$t('M.otc_adMange_getting') // 已上架
+          // label: this.$t('M.comm_already') + this.$t('M.otc_adMange_getting') // 已上架
+          label: 'M.otc_adMange_already_getting' // 已上架
         },
         {
           value: 'COMPLETED',
-          label: this.$t('M.otc_enum_status_yiwancheng') // 已完成
+          label: 'M.otc_adMange_already_accomplish' // 已完成
         },
         {
           value: 'CANCELED',
-          label: this.$t('M.comm_already') + this.$t('M.otc_adMange_adverting') // 已下架
+          label: 'M.otc_adMange_already_adverting' // 已下架
         }
       ],
       // 设置默认列表页数

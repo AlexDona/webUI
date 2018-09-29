@@ -69,9 +69,8 @@
                     v-for="(item,index) in hopePaymentCoinStyleList"
                     :key="index"
                     :value="item.id"
-                    :label="item.name"
+                    :label="language === 'zh_CN'? item.name : item.shortName"
                   >
-                    {{ item.name }}
                   </el-option>
                 </el-select>
               </el-form-item>
@@ -759,6 +758,8 @@ export default {
   filter: {},
   computed: {
     ...mapState({
+      // 当前选中语言
+      language: state => state.common.language,
       // 商户id
       partnerId: state => state.common.partnerId,
       theme: state => state.common.theme
