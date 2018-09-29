@@ -161,13 +161,14 @@ export default {
             'header_undo_redo',
             'header_chart_type',
             'header_screenshot',
-            'header_settings'
+            'header_settings',
+            // 'widget_logo',
           ],
           enabled_features: [
             'hide_left_toolbar_by_default' // 隐藏左侧边栏
           ],
           timezone: 'Asia/Shanghai',
-          locale: 'zh',
+          locale: 'en',
           debug: false,
           toolbar_bg: 'transparent', // 工具栏背景色
           studies_overrides: {
@@ -215,7 +216,7 @@ export default {
           const btnList = [
             {
               class: 'resolution_btn',
-              label: 'M.trade_time_share', // 分时
+              label: this.$t('M.trade_time_share'), // 分时
               resolution: '1',
               chartType: 3
             },
