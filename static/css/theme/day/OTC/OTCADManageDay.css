@@ -11,6 +11,9 @@
     border: 1px solid rgba(236,241,248,1);
     border-radius: 5px;
 }
+.otc-AD-manage-box.day .manage-main-bottom .el-table thead{
+    color: #333333;
+  }
 .otc-AD-manage-box.day .manage-main-bottom .el-table th{
     background-color: #fff;
     box-shadow: 0px 0px 0px #191E28;

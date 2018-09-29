@@ -33,7 +33,7 @@
   /* border: 1px solid #435372; */
 }
 .otc-publish-AD-box .trade-way .el-checkbox__inner::after{
-  /* border: 1px solid #1F90EA; */
+  border: 1px solid #1F90EA;
   border-left: 0;
   border-top: 0;
 }

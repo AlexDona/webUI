@@ -57,7 +57,7 @@
                 </el-select>
                 <span class="double-sided-arrow display-inline-block">
                 </span>
-                <!-- 可用法币 -->
+                <!-- 可用法币 :label="language === 'zh_CN'? item.name : item.shortName"-->
                 <el-select
                   v-model="activitedCurrencyId"
                   @change="changeCurrencyId"
@@ -66,9 +66,16 @@
                     v-for="(item,index) in availableCurrencyList"
                     :key="index"
                     :value="item.id"
-                    :label="item.name"
+                    :label="language === 'zh_CN'? item.name : item.shortName"
                   >
                   </el-option>
+                  <!-- <el-option
+                    v-for="(item,index) in availableCurrencyList"
+                    :key="index"
+                    :value="item.id"
+                    :label="item.name"
+                  >
+                  </el-option> -->
                 </el-select>
               </div>
             </div>
@@ -889,6 +896,7 @@ export default {
   filter: {},
   computed: {
     ...mapState({
+      language: state => state.common.language,
       partnerId: state => state.common.partnerId,
       theme: state => state.common.theme
       // userInfo: state => state.user.loginStep1Info.userInfo
@@ -1258,7 +1266,7 @@ export default {
       >.publish-AD-right{
         >.publish-tips{
           >.title{
-            color: #338FF5;
+            color: #FFFFFF;
           }
           >.tip{
             color: #9DA5B3;
@@ -1272,6 +1280,8 @@ export default {
     >.otc-publish-AD-content{
       >.publish-AD-left{
         >.AD-title{
+          color: #338FF5;
+          border-left: 3px solid #338FF5;
         }
         >.AD-big-form{
           .err{
@@ -1287,7 +1297,7 @@ export default {
               }
             }
             >.right{
-              color: #9DA5B3;
+              color: #7D90AC;
             }
           }
           >.choice{
@@ -1318,7 +1328,7 @@ export default {
               >.input{
                 >.price-input{
                   background-color: #232F44;
-                  color: #9DA5B3;
+                  color: #7D90AC;
                 }
                 >.unit{
                   color: #7EA9E4;
@@ -1393,7 +1403,7 @@ export default {
       >.publish-AD-right{
         >.publish-tips{
           >.title{
-            color: #338FF5;
+            color: #D45858;
           }
           >.tip{
             color: #9DA5B3;

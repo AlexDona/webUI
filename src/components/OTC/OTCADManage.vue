@@ -2,8 +2,8 @@
   <div
     class="otc-AD-manage-box otc"
     :class="{'day':theme == 'day','night':theme == 'night' }"
-    :style="{'height':windowHeight+'px'}"
   >
+  <!-- :style="{'height':windowHeight+'px'}" -->
     <!-- 1.0 导航 -->
     <NavCommon/>
     <!-- 2.0 广告管理 -->
@@ -30,7 +30,7 @@
               <el-option
                 v-for="item in ADManageTraderStyleList"
                 :key="item.value"
-                :label="item.label"
+                :label="$t(item.label)"
                 :value="item.value"
               >
               </el-option>
@@ -68,7 +68,7 @@
                 <el-option
                   v-for="(item,index) in ADManageCurrencyId"
                   :key="index"
-                  :label="item.name"
+                  :label="language === 'zh_CN'? item.name : item.shortName"
                   :value="item.id"
                 >
                 </el-option>
@@ -149,13 +149,15 @@
                   v-if="scope.row.entrustType === 'BUY'"
                   :class="{red:scope.row.entrustType === 'BUY'}"
                 >
-                  购买
+                  <!-- 购买 -->
+                  {{$t('M.otc_index_buy')}}
                 </div>
                 <div
                   v-if="scope.row.entrustType === 'SELL'"
                   :class="{green:scope.row.entrustType === 'SELL'}"
                 >
-                  出售
+                  <!-- 出售 -->
+                  {{$t('M.otc_index_sell')}}
                 </div>
               </template>
             </el-table-column>
@@ -296,11 +298,11 @@ export default {
       ADManageTraderStyleList: [
         {
           value: 'BUY',
-          label: this.$t('M.comm_buying')
+          label: 'M.comm_buying'
         },
         {
           value: 'SELL',
-          label: this.$t('M.comm_offering')
+          label: 'M.comm_offering'
         }
       ],
       // 2.0 广告管理筛选下拉框数组--市场
@@ -514,6 +516,7 @@ export default {
   filter: {},
   computed: {
     ...mapState({
+      language: state => state.common.language,
       partnerId: state => state.common.partnerId,
       theme: state => state.common.theme
     }),
@@ -542,7 +545,7 @@ export default {
       }
       > .AD-manage-main {
         > .manage-main-top {
-          height: 60px;
+          min-height: 60px;
           line-height: 60px;
           margin-bottom: 25px;
           > .filtrate-text {
@@ -592,7 +595,7 @@ export default {
         > .AD-manage-main {
           > .manage-main-top {
             > .filtrate-text {
-              color: #9DA5B3;
+              color: #fff;
             }
             > .style-input {
             }
@@ -661,7 +664,7 @@ export default {
       }
     }
     .footer{
-      position: absolute;
+      // position: absolute;
       bottom:0;
     }
   }

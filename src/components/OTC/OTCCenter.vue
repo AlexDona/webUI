@@ -79,9 +79,16 @@
                     v-for="(item,index) in availableCurrencyId"
                     :key="index"
                     :value="item.id"
-                    :label="item.name"
+                    :label="language === 'zh_CN'? item.name : item.shortName"
                   >
                   </el-option>
+                  <!-- <el-option
+                    v-for="(item,index) in availableCurrencyId"
+                    :key="index"
+                    :value="item.id"
+                    :label="item.name"
+                  >
+                  </el-option> -->
                 </el-select>
               </span>
               <!-- 支付方式 -->
@@ -301,7 +308,7 @@
             class="more"
             @click="queryMoreOrder"
           >
-            查询更多
+            {{$t('M.otc_transaction_inquiries_more')}}
           </span>
         <!-- </div> -->
         <el-tabs
