@@ -47,7 +47,7 @@
                   </router-link>
                   <router-link to="/PersonalCenter">
                     <!--提币-->
-                    {{ $t('M.comm_mention_money') }}：
+                    {{ $t('M.comm_mention_money') }}
                   </router-link>
                 </div>
               </div>

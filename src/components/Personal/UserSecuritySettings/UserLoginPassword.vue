@@ -1,7 +1,8 @@
 <template>
   <div
-    class="login-password personal"
+    class="login-password-box personal"
     :class="{'day':theme == 'day','night':theme == 'night' }"
+    :style="{'height':windowHeight+'px'}"
   >
     <HeaderCommon/>
     <div class="login-password-main margin25">
@@ -266,17 +267,23 @@ export default {
     ...mapState({
       theme: state => state.common.theme,
       userInfo: state => state.personal.userInfo
-    })
+    }),
+    windowHeight () {
+      return window.innerHeight
+    }
   },
   watch: {}
 }
 </script>
 <style scoped lang="scss">
   @import "../../../../static/css/scss/Personal/IndexPersonal";
-  .login-password {
+  .login-password-box {
+    width:100%;
+    /*height:100%;*/
     >.login-password-main {
       width: 1100px;
-      min-height: 700px;
+      height:100%;
+      /*min-height: 700px;*/
       margin: 60px auto 100px;
       >.login-password-header {
         display: flex;
