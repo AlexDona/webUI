@@ -136,11 +136,11 @@ export default {
   },
   created () {
     // 覆盖Element样式
-    require('../../../../static/css/list/Personal/UserSecuritySettings/UserloginPassword.css')
+    require('../../../../static/css/list/Personal/UserSecuritySettings/UserLoginPassword.css')
     // 白色主题样式
-    require('../../../../static/css/theme/day/Personal/UserSecuritySettings/UserloginPasswordDay.css')
+    require('../../../../static/css/theme/day/Personal/UserSecuritySettings/UserLoginPasswordDay.css')
     // 黑色主题样式
-    require('../../../../static/css/theme/night/Personal/UserSecuritySettings/UserloginPasswordNight.css')
+    require('../../../../static/css/theme/night/Personal/UserSecuritySettings/UserLoginPasswordNight.css')
     // 获取全局个人信息
     // this.globalUserInformation = this.userInfo.data.user
   },
