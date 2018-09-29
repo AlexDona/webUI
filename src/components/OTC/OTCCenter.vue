@@ -101,7 +101,7 @@
                   iconName="icon-qiandai"
                   class="pay-style-icon"
                 />
-                <el-select
+                <!-- <el-select
                   v-model="value"
                   :placeholder="$t('M.otc_index_Payment_method')"
                   @change="payWayChangeValue"
@@ -113,6 +113,19 @@
                     :label="item.shortName"
                   >
                     {{ item.shortName }}
+                  </el-option>
+                </el-select> -->
+                <el-select
+                  v-model="checkedPayType"
+                  :placeholder="$t('M.otc_index_Payment_method')"
+                  @change="payWayChangeValue"
+                >
+                  <el-option
+                    v-for="(item,index) in payWayBankinfoList"
+                    :key="index"
+                    :value="item.id"
+                    :label="$t(item.shortName)"
+                  >
                   </el-option>
                 </el-select>
               </span>
@@ -446,23 +459,23 @@ export default {
       payWayBankinfoList: [
         {
           id: '',
-          shortName: this.$t('M.comm_all') // 全部
+          shortName: 'M.comm_all' // 全部
         },
         {
           id: 'alipay',
-          shortName: this.$t('M.comm_alipay') // 支付宝
+          shortName: 'M.comm_alipay' // 支付宝
         },
         {
           id: 'weixin',
-          shortName: this.$t('M.comm_weixin') // 微信
+          shortName: 'M.comm_weixin' // 微信
         },
         {
           id: 'bank',
-          shortName: this.$t('M.comm_bank') // 银行卡
+          shortName: 'M.comm_bank' // 银行卡
         },
         {
           id: 'xilian',
-          shortName: this.$t('M.comm_xilian') // 西联汇款
+          shortName: 'M.comm_xilian' // 西联汇款
         },
         {
           id: 'paypal',

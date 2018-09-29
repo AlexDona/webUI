@@ -68,7 +68,7 @@
                 <el-option
                   v-for="(item,index) in ADManageCurrencyId"
                   :key="index"
-                  :label="language === 'zh_CN'? item.name : item.shortName"
+                  :label="language == 'zh_CN'? item.name : item.shortName"
                   :value="item.id"
                 >
                 </el-option>
