@@ -672,7 +672,6 @@ export default {
           this.vipPriceInfo1 = data.data.data
           console.log(this.vipPriceInfo1[0].vipCoinName)
         }
-
       }
     },
     async getCurrencyApplicationDownloadUrl () {
