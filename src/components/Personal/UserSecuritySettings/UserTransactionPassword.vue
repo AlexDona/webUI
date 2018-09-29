@@ -415,7 +415,7 @@ export default {
     // 确定设置交易密码
     async setStatusSubmit () {
       this.checkoutInputFormat()
-      await this.confirmTransactionPassword()
+      // await this.confirmTransactionPassword()
     },
     // 确定设置接口处理
     async confirmTransactionPassword () {
@@ -425,6 +425,8 @@ export default {
         this.checkoutInputFormat(1, this.setPassword.newPassword) &&
         this.checkoutInputFormat(2, this.setPassword.confirmPassword)
       ) {
+        goOnStatus = 0
+      } else if (this.setPassword.newPassword !== this.setPassword.confirmPassword) {
         goOnStatus = 1
       } else {
         goOnStatus = 0
