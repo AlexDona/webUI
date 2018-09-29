@@ -35,7 +35,7 @@
                     v-for="(item,index) in buySellStyle"
                     :key="index"
                     :value="item.id"
-                    :label="item.name"
+                    :label="$t(item.name)"
                   >
                   </el-option>
                 </el-select>
@@ -423,11 +423,11 @@ export default {
       buySellStyle: [ // 1.0 发布广告 买卖 类型数组
         {
           id: 'SELL',
-          name: this.$t('M.comm_offering')
+          name: 'M.comm_offering'
         },
         {
           id: 'BUY',
-          name: this.$t('M.comm_buying')
+          name: 'M.comm_buying'
         }
       ],
       // 2.0 币种名字下拉数组：可用币种
@@ -510,40 +510,8 @@ export default {
       console.log('2：URL中没有id')
       this.getOTCCoinInfo()
     }
-    // 刚进页面就调此方法请求币种详情来渲染页面
-    // this.getOTCCoinInfo()
-    // ====================分割线===================================
-    // 1.0 otc可用币种查询：
-    // this.getOTCAvailableCurrencyList()
-    // 2.0 otc可用法币查询：
-    // this.getMerchantAvailablelegalTenderList()
-    // 3.0 查询用户现有支付方式
-    // this.queryUserPayTypesList()
-    // 4.0 请求挂单详情接口
-    // 根据 从广告管理传过来的URL中的订单id 请求挂单详情数据 再塞到页面中
-    // if (this.$route.query.id && this.payForListArr) {
-    //   console.log('URL有id才出现我')
-    //   this.getOTCSelectedOrdersDetails()
-    // }
-    // 5.0 汇率转换:刚进页面时候(当币种和法币都返回以后调接口)
-    // if (this.availableCoinList && this.availableCurrencyList) {
-    //   console.log('1234')
-    //   this.changeRateMinCreated()
-    //   this.changeRateMaxCreated()
-    // }
   },
   mounted () {
-    // this.getOTCAvailableCurrencyList()
-    // this.getMerchantAvailablelegalTenderList()
-    // this.queryUserPayTypesList()
-    // if (this.$route.query.id && this.payForListArr) {
-    //   this.getOTCSelectedOrdersDetails()
-    // }
-    // if (this.activeedCoinName && this.activeedCurrencyName) {
-    //   console.log('1234')
-    //   console.log(this.$refs)
-    //   console.log(this.activeedCurrencyName)
-    // }
   },
   activited () {},
   update () {},
@@ -901,19 +869,8 @@ export default {
       theme: state => state.common.theme
       // userInfo: state => state.user.loginStep1Info.userInfo
     })
-    // activitedBuySellStyle () {
-    // }
   },
   watch: {
-    // 监控法币change之前之后的法币名称
-    // activeedCurrencyName (transformationNew, transformationOld) { // 新的  旧的
-    //   this.transformationNewCurrencyName = transformationNew
-    //   console.log(this.transformationNewCurrencyName)
-    //   this.transformationOldCurrencyName = transformationOld
-    //   console.log(this.transformationOldCurrencyName)
-    //   this.changeRateMin()
-    //   this.changeRateMax()
-    // }
   }
 }
 </script>
