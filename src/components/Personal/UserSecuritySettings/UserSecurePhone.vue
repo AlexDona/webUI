@@ -260,9 +260,7 @@ import { createNamespacedHelpers, mapState } from 'vuex'
 import ImageValidate from '../../Common/ImageValidateCommon' // 图片验证吗
 import CountDownButton from '../../Common/CountDownCommon'
 import {
-  returnAjaxMessage, // 接口返回信息
-  // validateNumForUserInput, // 用户输入验证
-  sendPhoneOrEmailCodeAjax
+  returnAjaxMessage // 接口返回信息
 } from '../../../utils/commonFunc'
 import {
   bindPhoneAddress,
