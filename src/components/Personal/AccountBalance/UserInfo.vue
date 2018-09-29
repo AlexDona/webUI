@@ -18,7 +18,9 @@
                 <!--您好，-->
                 {{ $t('M.comm_hello') }}
               </span>
-              <span class="color">{{ userInfo.userInfo.userName }}</span>
+              <span class="color">
+                {{ userInfo.userInfo.userName }}
+              </span>
             </p>
             <span class="display-inline-block margin-top9 text-color">
               UID： {{ userInfo.userInfo.showId }}
@@ -119,13 +121,13 @@
                 v-if="!userInfoRefresh"
                 class="info-centre-right font-size12"
               >
-                {{ userInfoRefresh.level }}
+                VIP0
               </span>
               <span
                 v-else
                 class="info-centre-right font-size12"
               >
-                VIP0
+                {{ userInfo.userInfo.level }}
               </span>
             </p>
           </div>
@@ -190,11 +192,9 @@ export default {
     return {
       userInfoRefresh: {}, // 获取全局个人信息
       vipShowPictureSrc: require('../../../assets/user/vip.png'), // VIP图片
-      // userShowVipGrade: 'V1', // 自定义VIP等级
       discountRate: '无', // 自定义折扣率
       totalSumBTC: '', // btc资产
       BTC2CNYRate: '' // 转换汇率
-      // CNYAssets: '0.0000' // bcny资产
     }
   },
   async created () {

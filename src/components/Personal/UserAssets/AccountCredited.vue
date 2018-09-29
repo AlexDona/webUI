@@ -799,7 +799,7 @@ export default {
         >.payment-content {
           .text-info {
             display: inline-block;
-            margin: 45px 0 0px;
+            margin: 30px 0 0px;
           }
           .btn {
             width: 90px;

@@ -68,7 +68,6 @@
                   {{ $t('M.comm_total_sum') }}{{ $t('M.comm_count') }}
                 </div>
                 <div
-
                   class="flex1"
                 >
                   {{ $t('M.comm_freeze') }}{{ $t('M.comm_count') }}
@@ -158,7 +157,8 @@
                         class="type-transaction border-radius4"
                         v-show="seen&&index==current"
                       >
-                        <span class="triangle-border display-inline-block"></span>
+                        <span class="triangle-border display-inline-block">
+                        </span>
                         <p
                           class="transaction-list text-align-c"
                           v-for="(item, index) in currencyTradingList"
@@ -955,7 +955,7 @@ export default {
           type: 'error'
         })
         this.mentionMoneyConfirm = false
-      } else if (this.userInfoRefresh.payPassword == '') {
+      } else if (!this.userInfo.userInfo.payPassword) {
         this.dialogVisible = true
       } else {
         this.mentionMoneyConfirm = true

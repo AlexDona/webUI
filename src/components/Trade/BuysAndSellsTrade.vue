@@ -11,7 +11,9 @@
         <span
           class="text"
           @click="toggleShowContent">
-          <span>买卖单</span>
+          <span>
+            买卖单
+          </span>
         </span>
         <span class="right">
           <button
