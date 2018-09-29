@@ -1,7 +1,19 @@
 export const personal = {
 // #####################账户资产#####################
   // 我的资产
-  // user_asset_information: '',
+  'user_asset_title1': '我的资产',
+  'user_asset_title2': '账单明细',
+  'user_asset_title3': '个人中心',
+  'user_asset_title4': '身份认证',
+  'user_asset_title5': '收款账户',
+  'user_asset_title6': '邀请推广',
+  'user_asset_title7': '安全中心',
+  'user_asset_title8': 'PUSH资产',
+  'user_asset_title9': '我的交易',
+  'user_asset_title10': '币币订单',
+  'user_asset_title11': '法币订单',
+  'user_asset_title12': '请先设置交易密码，再来设置OTC收款账户!',
+  'user_asset_title13': '请先完成身份认证，再来设置OTC收款账户!',
   'user_hidden_assets': '隐藏资产为0的币种',
   'user_asset_valuation': '资产估值',
   'user_assets_suspended': '充值暂停，钱包维护中',
@@ -126,6 +138,8 @@ export const personal = {
   'user_security_text0': '请确认您的银行卡已开启短信通知功能',
   // 安全设置
   'user_security_correct': '正确的',
+  'user_security_text2': '交易密码用于账户交易',
+  'user_security_text3': '建议立即设置',
   // 安全邮箱
   // 安全手机
   // 谷歌验证

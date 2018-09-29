@@ -422,7 +422,8 @@ export default {
       let goOnStatus = 0
       if (
         this.checkoutInputFormat(0, this.setPassword.nickname) &&
-        this.checkoutInputFormat(1, this.setPassword.confirmPassword)
+        this.checkoutInputFormat(1, this.setPassword.newPassword) &&
+        this.checkoutInputFormat(2, this.setPassword.confirmPassword)
       ) {
         goOnStatus = 1
       } else {

@@ -132,6 +132,7 @@
             <div class="result-box">
               <el-table
                 :data="currentEntrustList"
+                :empty-text="$t('M.comm_no_data')"
               >
                 <!--时间-->
                 <el-table-column
@@ -157,7 +158,7 @@
                   width="70"
                 >
                   <template slot-scope="s">
-                    <span>{{ s.row.matchTypeName }}</span>
+                    <span>{{ $t(`M.${s.row.i18nMatchTypeName}`) }}</span>
                   </template>
                 </el-table-column>
                 <!--委单类型-->
@@ -212,7 +213,7 @@
                   width="60"
                 >
                   <template slot-scope="s">
-                    <span>{{ s.row.statusName }}</span>
+                    <span>{{ $t(`M.${s.row.i18nStatusName}`) }}</span>
                   </template>
                 </el-table-column>
                 <!--操作-->
@@ -250,6 +251,7 @@
         >
           <el-table
             :data="historyEntrustList"
+            :empty-text="$t('M.comm_no_data')"
           >
             <!--时间-->
             <el-table-column
@@ -366,6 +368,7 @@
         >
           <el-table
             :data="currentMakeDetailList"
+            :empty-text="$t('M.comm_no_data')"
           >
             <!--时间-->
             <el-table-column

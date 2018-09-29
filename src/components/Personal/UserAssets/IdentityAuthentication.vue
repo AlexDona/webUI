@@ -302,7 +302,7 @@
                       :headers="tokenObj"
                       list-type="picture-card"
                       :on-success="handleSuccessReverseSide"
-                      :on-remove="handleRemove('first')"
+                      :on-remove="handleRemoveSide"
                       :before-upload="beforeAvatarUpload"
                     >
                       <div
@@ -539,22 +539,10 @@ export default {
       this.dialogImageHandUrl = response.data.fileUrl
       this.thirdPictureSrcShow = false
     },
-    handleRemove (val) {
-      if (val == 'first') {
-        this.dialogImageFrontUrl = ''
-        this.firstPictureSrcShow = true
-      } else if (val == 2) {
-        this.dialogImageReverseSideUrl = ''
-        this.secondPictureSrcShow = true
-      } else {
-        this.dialogImageHandUrl = ''
-        this.thirdPictureSrcShow = true
-      }
+    handleRemoveFront () {
+      this.dialogImageFrontUrl = ''
+      this.firstPictureSrcShow = true
     },
-    // handleRemoveFront () {
-    //   this.dialogImageFrontUrl = ''
-    //   this.firstPictureSrcShow = true
-    // },
     handleRemoveSide () {
       this.dialogImageReverseSideUrl = ''
       this.secondPictureSrcShow = true

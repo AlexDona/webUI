@@ -270,7 +270,10 @@
           </div>
           <div class="security-type-text padding-l15 box-sizing">
             <p>
-              <span class="secure-email font-size14 font-weight600">交易密码</span>
+              <span class="secure-email font-size14 font-weight600">
+                <!--交易密码-->
+                {{ $t('M.comm_password') }}
+              </span>
               <IconFontCommon
                 v-if="!securityCenter.payPassword"
                 class="font-size16"
@@ -278,8 +281,12 @@
               />
             </p>
             <p class="security-info-text margin-top9 font-size12">
-              交易密码用于账户交易
-              <span v-if="!securityCenter.payPassword">，建议立即设置</span>
+              <!--交易密码用于账户交易-->
+              {{ $t('M.user_security_text2') }}
+              <span v-if="!securityCenter.payPassword">
+                <!--，建议立即设置-->
+                ，{{ $t('M.user_security_text3') }}
+              </span>
               <span v-else></span>
             </p>
           </div>
@@ -288,8 +295,14 @@
               class="security-binding border-radius2 font-size12 cursor-pointer"
               @click.prevent="setShowStatusSecurity('transaction-password')"
             >
-              <span v-if="!securityCenter.payPassword">设置</span>
-              <span v-else>重置</span>
+              <span v-if="!securityCenter.payPassword">
+                <!--设置-->
+                {{ $t('M.comm_set') }}
+              </span>
+              <span v-else>
+                <!--重置-->
+                {{ $t('M.user_transaction_reset') }}
+              </span>
             </button>
           </div>
         </div>

@@ -14,7 +14,8 @@
         >
           <!--账户资产-->
           <div class="asset-title asset-info">
-            账户资产
+            <!--账户资产-->
+            {{ $t('M.comm_user_account_balance') }}
           </div>
           <el-tab-pane
             disabled
@@ -23,37 +24,39 @@
           </el-tab-pane>
           <!--我的资产-->
           <el-tab-pane
-            label = "我的资产"
+            :label = "$t('M.user_asset_title1')"
             name = "assets"
           >
             <AccountAssets/>
           </el-tab-pane>
           <!--账单明细-->
           <el-tab-pane
-            label = "账单明细"
+            :label = "$t('M.user_asset_title2')"
             name = "billing-details"
           >
             <BillingDetails/>
           </el-tab-pane>
           <!--提币地址-->
           <el-tab-pane
-            label = "提币地址"
+            :label = "$t('M.comm_mention_money') + $t('M.comm_site')"
             name = "mention-address"
           >
             <WithdrawalAddress/>
           </el-tab-pane>
           <!--个人中心-->
           <div class="user-title asset-info">
-            个人中心
+            <!--个人中心-->
+            {{ $t('M.user_asset_title3') }}
           </div>
           <el-tab-pane
-            label = "个人中心"
+            :label = "$t('M.user_asset_title3')"
             disabled
             class="title"
           >
           </el-tab-pane>
+          <!--身份认证-->
           <el-tab-pane
-            label = "身份认证"
+            :label = "$t('M.user_asset_title4')"
             name = "identity-authentication"
           >
             <IdentityAuthentication/>
@@ -61,7 +64,7 @@
 
           <!--收款账户-->
           <el-tab-pane
-            label = "收款账户"
+            :label = "$t('M.user_asset_title5')"
             name = "account-credited"
           >
             <AccountCredited/>
@@ -69,7 +72,7 @@
 
           <!--邀请推广-->
           <el-tab-pane
-            label = "邀请推广"
+            :label = "$t('M.user_asset_title6')"
             name = "invitation-promote"
           >
             <InvitingPromotion/>
@@ -77,43 +80,46 @@
 
           <!--安全中心-->
           <el-tab-pane
-            label = "安全中心"
+            :label = "$t('M.user_asset_title7')"
             name = "security-center"
           >
             <SecurityCenter/>
           </el-tab-pane>
           <!--API管理-->
           <el-tab-pane
-            label = "API管理"
+            :label = "$t('M.comm_user_api_management')"
             name = "api-management"
           >
             <APIManagement/>
           </el-tab-pane>
           <!--PUSH资产-->
           <el-tab-pane
-            label = "PUSH资产"
+            :label = "$t('M.user_asset_title8')"
             name = "push-asset"
           >
             <PushAsset/>
           </el-tab-pane>
           <!--我的交易-->
           <div class="user-order asset-info">
-            我的交易
+            <!--我的交易-->
+            {{ $t('M.user_asset_title9') }}
           </div>
           <el-tab-pane
-            label = "我的交易"
+            :label = "$t('M.user_asset_title9')"
             disabled
           >
             <APIManagement/>
           </el-tab-pane>
+          <!--币币订单-->
           <el-tab-pane
-            label = "币币订单"
+            :label = "$t('M.user_asset_title10')"
             name = "coin-orders"
           >
             <CoinOrders/>
           </el-tab-pane>
+          <!--法币订单-->
           <el-tab-pane
-            label = "法币订单"
+            :label = "$t('M.user_asset_title11')"
             name = "fiat-orders"
           >
             <FiatOrders/>
@@ -135,7 +141,8 @@
             </div>
           </div>
           <p class="font-size12 warning-text margin-top35 text-align-c">
-            请先设置交易密码，再来设置OTC收款账户!
+            <!--请先设置交易密码，再来设置OTC收款账户!-->
+            {{ $t('M.user_asset_title12') }}
           </p>
           <span
             slot="footer"
@@ -147,13 +154,15 @@
           type="primary"
           @click.prevent="confirm(1)"
         >
-          确 定
+          <!--确 定-->
+          {{ $t('M.comm_confirm') }}
         </button>
         <button
           class="btn border-radius4 cursor-pointer"
           @click.prevent="dialogVisible = false"
         >
-          取 消
+          <!--取 消-->
+          {{ $t('M.comm_cancel') }}
         </button>
         </span>
         </el-dialog>
@@ -173,7 +182,8 @@
             </div>
           </div>
           <p class="font-size12 warning-text margin-top35 text-align-c">
-            请先完成身份认证，再来设置OTC收款账户!
+            <!--请先完成身份认证，再来设置OTC收款账户!-->
+            {{ $t('M.user_asset_title13') }}
           </p>
           <span
             slot="footer"
@@ -185,13 +195,15 @@
           type="primary"
           @click.prevent="confirm(2)"
         >
-          确 定
+          <!--确 定-->
+          {{ $t('M.comm_confirm') }}
         </button>
         <button
           class="btn border-radius4 cursor-pointer"
           @click.prevent="dialogVisible1 = false"
         >
-          取 消
+          <!--取 消-->
+          {{ $t('M.comm_cancel') }}
         </button>
         </span>
         </el-dialog>

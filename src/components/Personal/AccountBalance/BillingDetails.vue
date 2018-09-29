@@ -31,6 +31,7 @@
             @change="changeId"
           >
             <el-option
+              :placeholder="$t('M.comm_please_choose')"
               v-for="(item, index) in currencyList"
               :key="index"
               :label="item.name"
@@ -129,7 +130,7 @@
             width="100"
           >
             <template slot-scope = "s">
-              <div>{{ s.row.typeName }}</div>
+              <div>{{ $t(`M.${s.row.i18nTypeName}`)}}</div>
             </template>
           </el-table-column>
           <el-table-column
@@ -158,7 +159,7 @@
             :label="$t('M.comm_state')"
           >
             <template slot-scope = "s">
-              <div>{{ s.row.statusName }}</div>
+              <div>{{ $t(`M.${s.row.i18nStatusName}`)}}</div>
             </template>
           </el-table-column>
         </el-table>

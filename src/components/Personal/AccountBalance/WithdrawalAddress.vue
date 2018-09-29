@@ -25,6 +25,7 @@
                 @change="changeId"
               >
                 <el-option
+                  :placeholder="$t('M.comm_please_choose')"
                   v-for="(item, index) in currencyList"
                   :key="index"
                   :label="item.name"
@@ -156,6 +157,7 @@
       <el-table
         :data="gainAddressList"
         style="width: 100%"
+        :empty-text="$t('M.comm_no_data')"
       >
         <!--币种 备注 提币地址 操作-->
         <el-table-column
