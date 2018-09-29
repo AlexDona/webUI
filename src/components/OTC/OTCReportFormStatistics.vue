@@ -758,6 +758,7 @@ export default {
       margin-top: 20px;
       >.common{
         // background-color: #1E2636;
+        border-radius: 5px;
         >.head{
           width: 570px;
           height: 40px;
@@ -906,27 +907,27 @@ export default {
       }
       >.report-form-asset{
         color: #338FF5;
-        background-color: #1E2636;
+        background-color: #1C1F32;
         >.title{
-          border: 1px solid #262F38;
+          border: 1px solid #1C1F32;
           box-shadow: 0px 4px 6px #191E28;
         }
         >.content{
-          border: 1px solid #262F38;
+          border: 1px solid #1C1F32;
         }
       }
       >.report-form-buy-sell{
         >.common{
-          background-color: #1E2636;
+          background-color: #1C1F32;
           >.head{
             color: #338FF5;
-            border: 1px solid #262F38;
+            // border: 1px solid #23263C;
             box-shadow: 0px 4px 6px #191E28;
           }
           >.body{
-            border: 1px solid #262F38;
+            border: 1px solid #23263C;
             >.together{
-              border: 1px solid #262F38;
+              border: 1px solid #23263C;
               >.left{
                 color: #D45858;
                 >.round{
@@ -964,7 +965,8 @@ export default {
         }
       }
       >.report-form-details{
-        background-color: #1E2636;
+        // background-color: #1E2636;
+        background-color: #1C1F32;
         >.title{
           color: #338FF5;
         }
@@ -1073,7 +1075,7 @@ export default {
         }
       }
       >.report-form-details{
-        background-color: #1E2636;
+        // background-color: #1E2636;
         >.title{
           color: #338FF5;
         }

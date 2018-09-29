@@ -7,7 +7,7 @@
 .otc-merchants-orders-box.night .date-picker .el-date-editor.el-input{
 }
 .otc-merchants-orders-box.night .el-input__inner {
-  background-color: #1E2636;
+  background-color: #1C1F32;
 }
 .otc-merchants-orders-box.night .el-input__icon{
 }
@@ -18,14 +18,14 @@
 .otc-merchants-orders-box.night .orders-main-bottom .el-table__header{
 }
 .otc-merchants-orders-box.night .orders-main-bottom .el-table{
-  background-color: #1E2636;
+  background-color: #1C1F32;
   color: #9DA5B3;
 }
 .otc-merchants-orders-box.night .orders-main-bottom .el-table tr{
-  background-color: #1E2636;
+  background-color: #1C1F32;
 }
 .otc-merchants-orders-box.night .orders-main-bottom .el-table th{
-  background-color: #1E2636;
+  background-color: #1C1F32;
   box-shadow: 4px 4px 6px #191E28;
 }
 .otc-merchants-orders-box.night .orders-main-bottom .el-table td{
@@ -34,13 +34,13 @@
 }
 /* 重置饿了么表格中边框的样式和边框的圆角 开始 */
 .otc-merchants-orders-box.night .orders-main-bottom .el-table .el-table__body tr td:first-of-type  {
-  border-left: 1px solid #262F38;
+  border-left: 1px solid #1C1F32;
 }
 .otc-merchants-orders-box.night .orders-main-bottom .el-table .el-table__body tr td:last-of-type  {
-  border-right: 1px solid #262F38;
+  border-right: 1px solid #1C1F32;
 }
 .otc-merchants-orders-box.night .orders-main-bottom .el-table .el-table__body tr:last-of-type td  {
-  border-bottom: 1px solid #262F38;
+  border-bottom: 1px solid #1C1F32;
 }
 .otc-merchants-orders-box.night .orders-main-bottom .el-table .el-table__body tr:last-of-type td:last-of-type  {
 }
@@ -51,12 +51,12 @@
   background-color: #1E2636;
 }
 .otc-merchants-orders-box.night .orders-main-bottom .el-table th.is-leaf {
-  border-bottom: 1px solid #262F38;
-  border-top: 1px solid #262F38;
+  border-bottom: 1px solid #1C1F32;
+  border-top: 1px solid #1C1F32;
 }
 .otc-merchants-orders-box.night .orders-main-bottom .el-table th.is-leaf:first-of-type{
-  border-left: 1px solid #262F38;
+  border-left: 1px solid #1C1F32;
 }
 .otc-merchants-orders-box.night .orders-main-bottom .el-table th.is-leaf:nth-last-of-type(2){
-  border-right: 1px solid #262F38;
+  border-right: 1px solid #1C1F32;
 }

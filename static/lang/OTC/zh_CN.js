@@ -1,4 +1,6 @@
 export const OTC = {
+  otc_index_buy: '购买',
+  otc_index_sell: '出售',
   otc_index_online_buy: '在线购买',
   otc_index_online_sell: '在线出售',
   otc_index_wantTo_buy: '我要购买',
@@ -125,7 +127,8 @@ export const OTC = {
   otc_order1: '30',
   otc_order2: '分钟内对方未确认付款,',
   otc_order3: '订单将自动取消',
-  otc_transaction_inquiries: '(只显示近三天交易订单) 查询更多 ',
+  otc_transaction_inquiries_more: '查询更多',
+  otc_transaction_inquiries: '(只显示近三天交易订单) 查询更多',
   otc_inquiries: '查询',
   otc_transaction_data: '交易日期',
   otc_type_ransaction: '交易类型',
@@ -229,6 +232,9 @@ export const OTC = {
   otc_adMange_change: '修改',
   otc_adMange_tipsContentOne: '此操作将永久下架该文件, 是否继续?',
   otc_adMange_tipsContentTwo: '此操作将永久修改该文件, 是否继续?',
+  otc_adMange_already_getting: '已上架',
+  otc_adMange_already_adverting: '已下架',
+  otc_adMange_already_accomplish: '已完成',
   // #######################################商家订单###################################
   otc_MerchantsOrders: '商家订单',
   otc_MerchantsOrders_date: '日期',

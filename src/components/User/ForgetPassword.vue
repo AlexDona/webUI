@@ -2,12 +2,13 @@
   <div
     class="froget-password-box"
     :class="{'day':theme == 'day','night':theme == 'night' }"
+    :style="{'height':windowHeight+'px'}"
   >
     <HeaderCommon/>
     <div class="inner-box">
       <div class="title">
         <!-- 找回密码 -->
-        {{$t('M.login_findBack')}}{{$t('M.comm_loginpassword')}}
+        {{$t('M.forgetPassword_findBack')}}{{$t('M.comm_loginpassword')}}
       </div>
       <!--步骤条-->
       <div class="step-box">
@@ -562,7 +563,10 @@ export default {
     ...mapState({
       disabledOfPhoneBtn: state => state.user.disabledOfPhoneBtn,
       disabledOfEmailBtn: state => state.user.disabledOfEmailBtn
-    })
+    }),
+    windowHeight () {
+      return window.innerHeight
+    }
   },
   watch: {
     activeStepNumber (newVal) {
