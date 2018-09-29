@@ -6,11 +6,12 @@
     <HeaderCommon/>
     <div class="inner-box">
       <div class="search-box">
+        <!--请输入关键字-->
         <input
           type="text"
           class="search-input"
           v-model="searchKeyWord"
-          placeholder="请输入关键字"
+          :placeholder="$t('M.comm_please_enter') + $t('M.news_keyword')"
         />
       </div>
       <div class="item-content help">
@@ -39,14 +40,14 @@
                   >
                 -
               </span>
-                  <span class="title-content">{{item.title}}</span>
+                  <span class="title-content">{{ $t(item.title) }}</span>
                 </div>
                 <el-collapse-transition>
                   <div
                     class="content"
                     v-show="helpShowStatusList[index]"
                   >
-                    {{item.content}}
+                    {{ $t(item.content) }}
                   </div>
                 </el-collapse-transition>
               </div>
@@ -76,9 +77,9 @@ export default {
       searchKeyWord: '', // 搜索关键字
       helpFilterList: [
         {
-          title: '帮助title',
-          subTitle: '子帮助主题',
-          content: '帮助内容'
+          title: 'M.about_digital_text1', // 帮助title
+          subTitle: 'M.about_digital_text2', // 子帮助主题
+          content: 'M.about_digital_text3' // 帮助内容
         }
       ],
       helpShowStatusList: []

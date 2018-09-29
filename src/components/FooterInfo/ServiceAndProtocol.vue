@@ -6,7 +6,10 @@
     <HeaderCommon/>
     <div class="content">
       <div class="top">
-        <h1>服务条款</h1>
+        <h1>
+          <!--服务条款-->
+          {{ $t('M.about_digital_terms_hint1') }}
+        </h1>
       </div>
       <div class="content">
         <div class="inner-box">
@@ -14,48 +17,54 @@
             v-model="activeName"
             @tab-click="changeTab"
           >
+            <!--用户协议-->
             <el-tab-pane
-              label="用户协议"
+              :label="$t('M.about_digital_terms_hint2')"
               name="UserProtocol"
             >
               <div class="tab-content">
                 <UserProtocol/>
               </div>
             </el-tab-pane>
+            <!--法律声明-->
             <el-tab-pane
-              label="法律声明"
+              :label="$t('M.about_digital_terms_hint3')"
               name="LegislationExplain"
             >
               <div class="tab-content">
                 <LegislationExplain/>
               </div>
             </el-tab-pane>
+            <!--隐私条款-->
             <el-tab-pane
-              label="隐私条款"
+              :label="$t('M.about_digital_terms_hint4')"
               name="PrivacyClause"
             >
               <div class="tab-content">
                 <PrivacyClause/>
               </div>
             </el-tab-pane>
+            <!--API文档-->
             <el-tab-pane
-              label="API文档"
+              :label="$t('M.about_digital_terms_hint5')"
               name="APIDocument"
             >
               <div class="tab-content">
                 <APIDocument/>
               </div>
             </el-tab-pane>
+            <!--币种资料-->
             <el-tab-pane
-              label="币种资料"
+              :label="$t('M.about_digital_terms_hint6')"
               name="CurrencyInformation"
             >
               <div class="tab-content">
                 <CurrencyInformation/>
               </div>
             </el-tab-pane>
+            <!--费率-->
             <el-tab-pane
-              label="费率"
+              :label="$t('M.comm_rate1')"
               name="Rate"
             >
               <div class="tab-content">
@@ -233,7 +242,7 @@ export default {
         height:250px;
         text-align: center;
         width:100%;
-        background:#121824 url(../../assets/develop/about-Us.png) no-repeat center center;
+        background:#121824 url(../../assets/develop/about-us.png) no-repeat center center;
         -webkit-background-size: 100% 100%;
         background-size: 100% 100%;
         padding-top:100px;

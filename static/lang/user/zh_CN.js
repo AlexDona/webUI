@@ -48,5 +48,7 @@ export const user = {
   forgetPassword_hint12: '发送验证码',
   forgetPassword_hint13: '请勾选用户协议',
   // ##########################新闻公告########################
-  news_keyword: '关键字'
+  news_keyword: '关键字',
+  news_year: '年',
+  news_month: '月'
 }

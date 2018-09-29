@@ -150,8 +150,8 @@
               width="75"
             >
               <template slot-scope = "s">
-                <div v-if="s.row.status == 'enable'">{{ enable }}</div>
-                <div v-if="s.row.status == 'disable'">{{ disable }}</div>
+                <div v-if="s.row.status == 'enable'">{{ $t(enable) }}</div>
+                <div v-if="s.row.status == 'disable'">{{ $t(disable) }}</div>
               </template>
             </el-table-column>
             <!--操作-->

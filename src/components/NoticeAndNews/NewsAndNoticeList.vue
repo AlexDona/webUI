@@ -43,10 +43,12 @@
                     >
                       <div class="left">
                         <div class="top">
-                          {{item.createTime.split('-')[0]+' 年'}}
+                          <!--年-->
+                          {{item.createTime.split('-')[0]+ $t('M.news_year')}}
                         </div>
                         <div class="bottom">
-                          {{item.createTime.split('-')[1]-0+' 月'}}
+                          <!--月-->
+                          {{item.createTime.split('-')[1]-0+ $t('M.news_month')}}
                         </div>
                       </div>
                       <div class="right">

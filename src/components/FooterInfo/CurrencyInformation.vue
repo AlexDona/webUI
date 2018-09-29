@@ -5,7 +5,10 @@
   >
     <div class="inner-box">
       <div class="left">
-        <div class="title">数字资产列表</div>
+        <div class="title">
+          <!--数字资产列表-->
+          {{ $t('M.about_digital_assets_list') }}
+        </div>
         <ul class="list" id="list">
           <li
             class="currency-item cursor-pointer"
