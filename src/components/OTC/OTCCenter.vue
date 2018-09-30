@@ -942,6 +942,7 @@ export default {
     width: 1150px;
     margin: 0 auto;
     margin-top: 107px;
+    margin-bottom: 10px;
     >.otc-online-trading{
       >.otc-online-buy-and-sell-button{
         height: 45px;

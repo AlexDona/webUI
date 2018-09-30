@@ -28,7 +28,7 @@
               <el-option
                 v-for="item in merchantsOrdersTraderStyleList"
                 :key="item.value"
-                :label="item.label"
+                :label="$t(item.label)"
                 :value="item.value"
               >
               </el-option>
@@ -52,7 +52,8 @@
               </el-option>
             </el-select>
           </span>
-          <span class="filtrate-text font-size14">货币</span>
+          <!-- 货币 -->
+          <span class="filtrate-text font-size14">{{$t('M.otc_MerchantsOrders_currecy')}}</span>
           <span class="status-input">
             <el-select
               v-model="activitedMerchantsOrdersCurrency"
@@ -63,7 +64,7 @@
               <el-option
                 v-for="(item,index) in merchantsOrdersCurrencyList"
                 :key="index"
-                :label="item.name"
+                :label="language == 'zh_CN'? item.name : item.shortName"
                 :value="item.id"
               >
               </el-option>
@@ -87,6 +88,7 @@
               </el-option>
             </el-select>
           </span>
+          <!-- 日期 -->
           <span class="filtrate-text font-size14">{{$t('M.otc_MerchantsOrders_date')}}</span>
           <span class="date-picker">
             <!--开始日期-->
@@ -323,11 +325,11 @@ export default {
       merchantsOrdersTraderStyleList: [
         {
           value: 'BUY',
-          label: this.$t('M.comm_buying')
+          label: 'M.comm_buying'
         },
         {
           value: 'SELL',
-          label: this.$t('M.comm_offering')
+          label: 'M.comm_offering'
         }
       ],
       // 商家订单筛选下拉框 币种
@@ -500,6 +502,7 @@ export default {
   filter: {},
   computed: {
     ...mapState({
+      language: state => state.common.language,
       theme: state => state.common.theme,
       partnerId: state => state.common.partnerId
     })
@@ -525,7 +528,7 @@ export default {
       }
       >.merchants-orders-main{
         >.orders-main-top{
-          height: 60px;
+          min-height: 60px;
           line-height: 60px;
           margin-bottom: 25px;
           >.filtrate-text{

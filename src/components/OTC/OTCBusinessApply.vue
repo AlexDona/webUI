@@ -161,6 +161,12 @@
         <p class="tip">{{$t('M.otc_merchant_success')}}</p>
       </div>
     </div>
+    <!-- 2.4切换导航时候数据返回之前显示的缓冲界面 -->
+    <div
+      class="business-apply-blank"
+      v-show="applyStatus === 4"
+    >
+    </div>
     <!-- 3.0 底部 -->
     <keep-aline><FooterCommon/></keep-aline>
   </div>
@@ -185,19 +191,15 @@ export default {
   data () {
     return {
       // 整页loading
-      loadingCircle: {},
-      // 商家申请状态
-      applyStatus: 1,
-      // 同意协议按钮:默认不勾选
-      checked: false,
+      // loadingCircle: {},
+      applyStatus: 1, // 商家申请状态
+      checked: false, // 同意协议按钮:默认不勾选
       successTimes: '0',
       coinName: 'FUC',
       count: '0',
       dialogVisible: false,
-      // 协议文件
-      argumentContent: '',
-      // 商家申请资料地址
-      downLoadUrl: ''
+      argumentContent: '', // 协议文件
+      downLoadUrl: '' // 商家申请资料地址
     }
   },
   created () {
@@ -251,17 +253,17 @@ export default {
     // 首次点击商家申请决定进入哪个界面
     async determineUser () {
       // 整页loading
-      this.loadingCircle = this.$loading({
-        lock: true,
-        background: 'rgba(0, 0, 0, 0.7)'
-      })
+      // this.loadingCircle = this.$loading({
+      //   lock: true,
+      //   background: 'rgba(0, 0, 0, 0.7)'
+      // })
       const data = await firstEnterBusinessApply()
       console.log(data)
       // 提示信息
       if (!(returnAjaxMessage(data, this, 0))) {
         return false
       } else {
-        this.loadingCircle.close()
+        // this.loadingCircle.close()
         let getData = data.data.data
         // 返回数据正确的逻辑
         this.successTimes = getData.successTimes
@@ -275,8 +277,10 @@ export default {
         } else if (getData.status == 2) {
           this.applyStatus = 2
         // 状态 3 表示审核通过
-        } else {
+        } else if (getData.status == 3) {
           this.applyStatus = 3
+        } else {
+          this.applyStatus = 4
         }
       }
     },
@@ -493,6 +497,12 @@ export default {
     >.text{
       margin-top: 10px;
     }
+  }
+  >.business-apply-blank{
+    width: 1150px;
+    height: 600px;
+    // background-color: #272B41;
+    background-color: $mainNightBgColor;
   }
   &.night{
     background-color: $mainNightBgColor;
