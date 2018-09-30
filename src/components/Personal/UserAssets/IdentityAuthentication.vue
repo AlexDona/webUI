@@ -282,12 +282,13 @@
                           :src="firstPictureSrc"
                         >
                       </div>
+                      <button ref="first-submit"></button>
                     </el-upload>
                   </div>
                   <button
                     type="primary"
                     class="upload-submit cursor-pointer font-size12 margin-top30"
-                    on-success="handleSuccessFront"
+                    @click="uploadImg('first-submit')"
                   >
                     <!--@click.prevent="handleSuccessFront"-->
                     <!--上传身份证正面-->
@@ -315,11 +316,13 @@
                           :src="secondPictureSrc"
                         >
                       </div>
+                      <button ref="second-submit"></button>
                     </el-upload>
                   </div>
                   <button
                     type="primary"
                     class="upload-submit cursor-pointer font-size12 margin-top30"
+                    @click="uploadImg('second-submit')"
                   >
                     <!--上传身份证反面-->
                     {{ $t('M.user_senior_upload2') }}
@@ -346,11 +349,13 @@
                           :src="thirdPictureSrc"
                         >
                       </div>
+                      <button ref="third-submit"></button>
                     </el-upload>
                   </div>
                   <button
                     type="primary"
                     class="upload-submit cursor-pointer font-size12 margin-top30"
+                    @click="uploadImg('third-submit')"
                   >
                     <!--上传手持身份证-->
                     {{ $t('M.user_senior_upload3') }}
@@ -525,6 +530,9 @@ export default {
     ...mapMutations([
       'SET_USER_INFO_REFRESH_STATUS'
     ]),
+    uploadImg (ref) {
+      this.$refs[ref].click()
+    },
     handleSuccessFront (response) {
       console.log(response)
       this.dialogImageFrontUrl = response.data.fileUrl
