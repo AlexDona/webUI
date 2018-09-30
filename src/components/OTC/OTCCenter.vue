@@ -158,7 +158,7 @@
                     <el-tooltip
                       effect="dark"
                       content="已认证商家"
-                      placement="left"
+                      placement="bottom-start"
                     >
                       <img
                         src="../../assets/develop/shangjia.png"
@@ -168,8 +168,12 @@
                     </el-tooltip>
                     {{s.row.userName}}
                   </div>
-                  <!-- <el-tooltip class="item" effect="dark" content="Left Center 提示文字" placement="left">
-                    <el-button>左边</el-button>
+                  <!-- <el-tooltip effect="dark" content="已认证商家" placement="left">
+                    <img
+                      src="../../assets/develop/shangjia.png"
+                      class="shang-icon"
+                      v-show="s.row.userType === 'MERCHANT'"
+                    >
                   </el-tooltip> -->
                 </template>
               </el-table-column>
@@ -271,6 +275,15 @@
                       {{s.row.remark}}
                     </span>
                   </el-tooltip>
+                  <!-- <el-tooltip
+                    effect="dark"
+                    :content="s.row.remark"
+                    placement="bottom-start"
+                  >
+                    <span class="remark-tips">
+                      {{s.row.remark}}
+                    </span>
+                  </el-tooltip> -->
                 </template>
               </el-table-column>
               <!-- 操作 -->
@@ -315,7 +328,7 @@
         </div>
       </div>
       <!-- 2.2 订单管理-->
-      <div class="otc-order-manage">
+      <div class="otc-order-manage" id="orderView">
         <!-- 查询更多 -->
           <span
             class="more"
@@ -339,7 +352,7 @@
               <IconFontCommon
                 iconName="icon-shalou"
               />
-              <!-- 交易中的订单 -->
+              <!-- 交易中订单 -->
               {{$t('M.otc_trading')}}
             </span>
             <OTCTradingOrder ref = "trading"/>
@@ -385,7 +398,7 @@
                 iconName="icon-dongjie"
               />
               <!-- 冻结中订单 -->
-              {{$t('M.otc_freezing')}}
+              {{$t('M.otc_freezingOrder')}}
             </span>
             <OTCFreezingOrder ref = "freezing"/>
           </el-tab-pane>
@@ -424,7 +437,6 @@ import OTCFreezingOrder from './OTCFreezingOrder'
 import OTCEntrustOrder from './OTCEntrustOrder'
 import {returnAjaxMessage, reflashUserInfo} from '../../utils/commonFunc'
 import {createNamespacedHelpers, mapState} from 'vuex'
-
 const {mapMutations} = createNamespacedHelpers('OTC')
 export default {
   components: {
@@ -509,7 +521,12 @@ export default {
       reflashUserInfo(this)
     }
   },
-  mounted () {},
+  mounted () {
+    // 如果是从购买和出售下单跳转过来的时候，页面加载打开到锚点位置：anchorStatus在全局先定义false，当用户购买或者出售时候改为true
+    if (this.anchorStatus) {
+      document.getElementById("orderView").scrollIntoView(true) // scrollIntoView(true)参数为true时候才调用此方法
+    }
+  },
   activited () {},
   update () {},
   beforeRouteUpdate () {},
@@ -915,6 +932,7 @@ export default {
   computed: {
     ...mapState({
       theme: state => state.common.theme,
+      anchorStatus: state => state.OTC.anchorStatus, // OTC全局定义的锚点状态 默认为false 
       selectedOTCAvailableCurrencyName: state => state.OTC.selectedOTCAvailableCurrencyName,
       selectedOTCAvailablePartnerCoinId: state => state.OTC.selectedOTCAvailablePartnerCoinId,
       selectedOTCAvailableCurrencyCoinID: state => state.OTC.selectedOTCAvailableCurrencyCoinID,
@@ -1010,8 +1028,10 @@ export default {
           height: 639px;
           // background-color:$mainContentNightBgColor;
           .remark-tips{
-            text-overflow: ellipsis;
-            white-space: nowrap;
+            display: inline-block;
+            width: 100px;
+            text-overflow: ellipsis; // 显示省略符号来代表被修剪的文本。
+            white-space: nowrap; // 文本不会换行，文本会在在同一行上继续，直到遇到 <br> 标签为止。
             overflow: hidden;
             cursor: pointer;
           }
