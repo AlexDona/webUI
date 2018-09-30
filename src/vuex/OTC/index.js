@@ -10,7 +10,9 @@ const state = {
   // OTC改变选中的可用币种id
   selectedOTCAvailableCurrencyCoinID: '',
   // OTC改变选中的可用币种partnerCoinId
-  selectedOTCAvailablePartnerCoinId: ''
+  selectedOTCAvailablePartnerCoinId: '',
+  // OTC交易首页锚点状态
+  anchorStatus: false
 }
 
 export default {

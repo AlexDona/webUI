@@ -77,10 +77,15 @@
 .day .el-popover{
   background: #EAF4FE;
 }
+.night .el-popover {
+  background: #2A3242;
+  border: 1px solid #2A3242;
+}
 .night .el-popper[x-placement^=bottom] .popper__arrow::after{
   /* border-bottom-color: #fff; */
   border-bottom-color: #2A3242;
 }
+/* otc 交易中支付码样式-任付伟添加结束 */
 /* 修改全局样式 */
 .el-pagination{
   margin-top:10px;
@@ -160,6 +165,9 @@
 }
 /* 任付伟增加开始 */
 /* 商家图标鼠标放上去显示的样式 */
+.night .el-tooltip__popper{
+  padding: 7px 10px 7px 10px;
+}
 .night .el-tooltip__popper.is-dark {
   /* background: #7a98f7;
   color: #fff; */
@@ -167,20 +175,27 @@
   color: black;
 }
 .night .el-tooltip__popper .popper__arrow {
-  border-left-color: #fff !important;
+  border-bottom-color: #fff !important;
+  /* border-left-color: #fff !important; */
 }
 .night .el-tooltip__popper .popper__arrow::after {
-  border-left-color: #fff !important;
+  border-bottom-color: #fff !important;
+  /* border-left-color: #fff !important; */
 }
 /* 商家图标鼠标放上去显示的样式 */
+.day .el-tooltip__popper{
+  padding: 7px 10px 7px 10px;
+}
 .day .el-tooltip__popper.is-dark {
   background: black;
   color: #FFFFFF;
 }
 .day .el-tooltip__popper .popper__arrow {
-  border-left-color: black !important;
+  border-bottom-color: black !important;
+  /* border-left-color: black !important; */
 }
 .day .el-tooltip__popper .popper__arrow::after {
-  border-left-color: black !important;
+  border-bottom-color: black !important;
+  /* border-left-color: black !important; */
 }
 /* 任付伟增加结束 */

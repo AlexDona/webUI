@@ -501,7 +501,7 @@ export default {
     },
     // 点击修改按钮钮触发的事件
     modifyAD (item) {
-      this.$confirm(this.$t('M.otc_adMange_tipsContentTwo'), this.$t('M.otc_prompt'), {
+      this.$confirm(this.$t('M.otc_adMange_tipsContentTwo'), {
         confirmButtonText: this.$t('M.comm_confirm'),
         cancelButtonText: this.$t('M.comm_cancel')
       }).then(() => {

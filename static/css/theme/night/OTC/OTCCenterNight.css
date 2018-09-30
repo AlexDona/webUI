@@ -3,18 +3,18 @@
 .otc-box.night .otc-online-buy-and-sell-button .el-radio-button__inner{
   color: #D8D8D8;
   background: #1C1F32;
-  border: 2px solid #27313A;
+  /* border: 1px solid #27313A; */
 }
 .otc-box.night .otc-online-buy-and-sell-button .el-radio-button.is-active .el-radio-button__inner{
   color: #fff;
 }
 .otc-box.night .otc-online-buy-and-sell-button .el-radio-button__orig-radio:checked+.el-radio-button__inner{
   box-shadow: -1px 0 0 0 #008069;
-  border: 2px solid #008069;
+  /* border: 1px solid #008069; */
 }
 .otc-box.night .otc-online-buy-and-sell-button .el-radio-button:first-child.is-active .el-radio-button__inner{
   background-color: #D45858;
-  border: 2px solid #D45858;
+  /* border: 1px solid #D45858; */
 }
 .otc-box.night .otc-online-buy-and-sell-button .el-radio-button:last-child.is-active .el-radio-button__inner{
   background-color: #008069;

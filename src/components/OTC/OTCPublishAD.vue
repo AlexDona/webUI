@@ -286,6 +286,20 @@
                       iconName="icon-wenhao"
                     />
                   </el-tooltip>
+                  <!-- <el-tooltip
+                    class="item"
+                    effect="dark"
+                    placement="bottom-start"
+                  >
+                    <div slot="content">
+                      {{$t('M.otc_publishAD_setDiscript')}}<br/>
+                      {{$t('M.otc_publishAD_setDiscriptTwo')}}
+                    </div>
+                    <IconFontCommon
+                      class="font-size14"
+                      iconName="icon-wenhao"
+                    />
+                  </el-tooltip> -->
                 </span>
               </div>
               <div>
