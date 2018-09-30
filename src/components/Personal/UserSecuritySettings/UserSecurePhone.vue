@@ -33,10 +33,10 @@
         </span>
       </header>
       <div class="set-phone-content">
-        <header class="phone-content-title">
-          <!--*请确认您的银行卡已开启短信通知功能-->
-          *{{ $t('M.user_security_text0') }}
-        </header>
+        <!--<header class="phone-content-title">-->
+          <!--&lt;!&ndash;*请确认您的银行卡已开启短信通知功能&ndash;&gt;-->
+          <!--*{{ $t('M.user_security_text0') }}-->
+        <!--</header>-->
         <div class="phone-content-from">
           <!--绑定手机-->
           <el-form

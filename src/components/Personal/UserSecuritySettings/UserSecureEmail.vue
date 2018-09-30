@@ -59,8 +59,8 @@
                 <template slot="append">
                   <CountDownButton
                     class="send-code-btn cursor-pointer"
-                    :status="disabledOfOldPhoneBtn"
-                    @run="sendPhoneOrEmailCode(0, 1)"
+                    :status="disabledOfEmailBtn"
+                    @run="sendPhoneOrEmailCode(1)"
                   />
                 </template>
               </el-input>
@@ -161,9 +161,16 @@ export default {
         return false
       }
       let params = {
-        address: this.emailAccounts, // 邮箱账号
         type: 'VERIFICATION_CODE' // 类型
         // country: this.activeCountryCode // 邮箱国籍
+      }
+      switch (loginType) {
+        case 0:
+          params.phone = this.userInfo.userInfo.phone
+          break
+        case 1:
+          params.address = this.emailAccounts
+          break
       }
       sendPhoneOrEmailCodeAjax(loginType, params, (data) => {
         console.log(this.disabledOfPhoneBtn)
@@ -309,7 +316,7 @@ export default {
   computed: {
     ...mapState({
       theme: state => state.common.theme,
-      userInfo: state => state.personal.userInfo,
+      userInfo: state => state.user.loginStep1Info, // 用户详细信息
       activeCountryCode: state => state.user.loginStep1Info.countryCode, // 国籍码
       disabledOfPhoneBtn: state => state.user.disabledOfPhoneBtn,
       disabledOfEmailBtn: state => state.user.disabledOfEmailBtn

@@ -118,7 +118,7 @@
             <p class="info-picture margin-left10 float-left">
               <img :src="vipShowPictureSrc">
               <span
-                v-if="!userInfoRefresh"
+                v-if="!userInfo.userInfo.level"
                 class="info-centre-right font-size12"
               >
                 VIP0

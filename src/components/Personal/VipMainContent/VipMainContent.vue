@@ -18,160 +18,270 @@
         v-show="showOpenTheVIPPage"
         v-if="vipPriceInfo1"
       >
-        <div class="content-module cursor-pointer">
-          <p class="content-vip-one text-align-c">
-            VIP1
-          </p>
-          <p class="content-discount line-height50 text-align-c font-size16">
-            <!--手续费折扣-->
-            {{ $t('M.comm_service_charge') }}{{ $t('M.user_vip_discount') }}
-          </p>
-          <p class="content-text line-height50 text-align-c font-size18">
-            <!--九折-->
-            {{ $t('M.user_vip_nine') }}{{ $t('M.user_vip_break') }}
-          </p>
-          <p class="content-discount line-height50 text-align-c font-size16">
+        <div class="content-main-box">
+          <!--<div-->
+            <!--class="content-box"-->
+            <!--v-if="userInfo.userInfo.level == 'VIP1'"-->
+          <!--&gt;-->
+          <!--</div>-->
+          <div
+            class="content-module cursor-pointer"
+            :class="{ active1:activeStatus < 1, disable:activeStatus > 0}"
+          >
+            <p class="content-vip-one text-align-c">
+              VIP1
+            </p>
+            <p class="content-discount line-height50 text-align-c font-size16">
+              <!--手续费折扣-->
+              {{ $t('M.comm_service_charge') }}{{ $t('M.user_vip_discount') }}
+            </p>
+            <p class="content-text line-height50 text-align-c font-size18">
+              <!--九折-->
+              {{ $t('M.user_vip_nine') }}{{ $t('M.user_vip_break') }}
+            </p>
+            <p class="content-discount line-height50 text-align-c font-size16">
             <span class="content-discount-color">
               {{vipPriceInfo1[0].value}}{{vipPriceInfo1[0].vipCoinName}}
             </span>
-            <span>
+              <span>
               <!--/月-->
               /{{ $t('M.user_vip_month') }}
             </span>
-          </p>
-          <p class="content-button">
-            <button
-              class="click-btn cursor-pointer"
-              @click.prevent="statusImmediatelyOpened('vip1')"
-            >
-              <!--立即开通-->
-              {{ $t('M.user_vip_immediately_opened') }}
-            </button>
-          </p>
+            </p>
+            <p class="content-button">
+              <button
+                class="click-btn cursor-pointer"
+                @click.prevent="statusImmediatelyOpened('vip1')"
+                v-if="userInfo.userInfo.level !== 'VIP1'"
+              >
+                <!--立即开通-->
+                <span>
+                  {{ $t('M.user_vip_immediately_opened') }}
+                </span>
+              </button>
+              <button
+                class="click-btn cursor-pointer"
+                v-else
+              >
+                <!--已开通-->
+                <span>
+                  {{ $t('M.user_vip_text7') }}
+                </span>
+              </button>
+            </p>
+          </div>
         </div>
-        <div class="content-module content-border-rl cursor-pointer">
-          <p class="content-vip-one text-align-c">
-            VIP2
-          </p>
-          <p class="content-discount line-height50 text-align-c font-size16">
-            <!--手续费折扣-->
-            {{ $t('M.comm_service_charge') }}{{ $t('M.user_vip_discount') }}
-          </p>
-          <p class="content-text line-height50 text-align-c font-size18">
-            <!--八折-->
-            {{ $t('M.user_vip_eight') }}{{ $t('M.user_vip_break') }}
-          </p>
-          <p class="content-discount line-height50 text-align-c font-size16">
+        <div class="content-main-box">
+          <div
+            class="content-box"
+            v-if="userInfo.userInfo.level == 'VIP2'"
+          >
+          </div>
+          <div
+            class="content-module content-border-rl cursor-pointer"
+            :class="{ active1:activeStatus < 2, disable:activeStatus > 2}"
+          >
+            <p class="content-vip-one text-align-c">
+              VIP2
+            </p>
+            <p class="content-discount line-height50 text-align-c font-size16">
+              <!--手续费折扣-->
+              {{ $t('M.comm_service_charge') }}{{ $t('M.user_vip_discount') }}
+            </p>
+            <p class="content-text line-height50 text-align-c font-size18">
+              <!--八折-->
+              {{ $t('M.user_vip_eight') }}{{ $t('M.user_vip_break') }}
+            </p>
+            <p class="content-discount line-height50 text-align-c font-size16">
             <span class="content-discount-color">
               {{vipPriceInfo1[4].value}}{{vipPriceInfo1[4].vipCoinName}}
             </span>
-            <span>
+              <span>
               <!--/月-->
               /{{ $t('M.user_vip_month') }}
             </span>
-          </p>
-          <p class="content-button">
-            <button
-              class="click-btn cursor-pointer"
-              @click.prevent="statusImmediatelyOpened('vip2')"
-            >
-              <!--立即开通-->
-              {{ $t('M.user_vip_immediately_opened') }}
-            </button>
-          </p>
+            </p>
+            <p class="content-button">
+              <button
+                class="click-btn cursor-pointer"
+                @click.prevent="statusImmediatelyOpened('vip2')"
+                v-if="userInfo.userInfo.level !== 'VIP2'"
+              >
+                <!--立即开通-->
+                <span>
+                  {{ $t('M.user_vip_immediately_opened') }}
+                </span>
+              </button>
+              <button
+                class="click-btn cursor-pointer"
+                v-else
+              >
+                <!--已开通-->
+                <span>
+                  {{ $t('M.user_vip_text7') }}
+                </span>
+              </button>
+            </p>
+          </div>
         </div>
-        <div class="content-module cursor-pointer">
-          <p class="content-vip-one text-align-c">
-            VIP3
-          </p>
-          <p class="content-discount line-height50 text-align-c font-size16">
-            <!--手续费折扣-->
-            {{ $t('M.comm_service_charge') }}{{ $t('M.user_vip_discount') }}
-          </p>
-          <p class="content-text line-height50 text-align-c font-size18">
-            <!--七折-->
-            {{ $t('M.user_vip_seven') }}{{ $t('M.user_vip_break') }}
-          </p>
-          <p class="content-discount line-height50 text-align-c font-size16">
+        <div class="content-main-box">
+           <div
+            class="content-box"
+            v-if="userInfo.userInfo.level == 'VIP3'"
+           >
+           </div>
+          <div
+            class="content-module cursor-pointer"
+            :class="{ active1:activeStatus < 3, disable:activeStatus > 3}"
+          >
+            <p class="content-vip-one text-align-c">
+              VIP3
+            </p>
+            <p class="content-discount line-height50 text-align-c font-size16">
+              <!--手续费折扣-->
+              {{ $t('M.comm_service_charge') }}{{ $t('M.user_vip_discount') }}
+            </p>
+            <p class="content-text line-height50 text-align-c font-size18">
+              <!--七折-->
+              {{ $t('M.user_vip_seven') }}{{ $t('M.user_vip_break') }}
+            </p>
+            <p class="content-discount line-height50 text-align-c font-size16">
             <span class="content-discount-color">
               {{vipPriceInfo1[8].value}}{{vipPriceInfo1[8].vipCoinName}}
             </span>
-            <span>
+              <span>
               <!--/月-->
               /{{ $t('M.user_vip_month') }}
             </span>
-          </p>
-          <p class="content-button">
-            <button
-              class="click-btn cursor-pointer"
-              @click.prevent="statusImmediatelyOpened('vip3')"
-            >
-              <!--立即开通-->
-              {{ $t('M.user_vip_immediately_opened') }}
-            </button>
-          </p>
+            </p>
+            <p class="content-button">
+              <button
+                class="click-btn cursor-pointer"
+                @click.prevent="statusImmediatelyOpened('vip3')"
+                v-if="userInfo.userInfo.level !== 'VIP3'"
+              >
+                <!--立即开通-->
+                <span>
+                  {{ $t('M.user_vip_immediately_opened') }}
+                </span>
+              </button>
+              <button
+                class="click-btn cursor-pointer"
+                v-else
+              >
+                <!--已开通-->
+                <span>
+                  {{ $t('M.user_vip_text7') }}
+                </span>
+              </button>
+            </p>
+          </div>
         </div>
-        <div class="content-module margin-top30 cursor-pointer">
-          <p class="content-vip-one text-align-c">
-            VIP4
-          </p>
-          <p class="content-discount line-height50 text-align-c font-size16">
-            <!--手续费折扣-->
-            {{ $t('M.comm_service_charge') }}{{ $t('M.user_vip_discount') }}
-          </p>
-          <p class="content-text line-height50 text-align-c font-size18">
-            <!--六折-->
-            {{ $t('M.user_vip_six') }}{{ $t('M.user_vip_break') }}
-          </p>
-          <p class="content-discount line-height50 text-align-c font-size16">
+        <div class="content-main-box">
+           <div
+            class="content-box"
+            v-if="userInfo.userInfo.level == 'VIP4'"
+           >
+          </div>
+          <div
+            class="content-module margin-top30 cursor-pointer"
+            :class="{ active1:activeStatus < 4, disable:activeStatus > 4}"
+          >
+            <p class="content-vip-one text-align-c">
+              VIP4
+            </p>
+            <p class="content-discount line-height50 text-align-c font-size16">
+              <!--手续费折扣-->
+              {{ $t('M.comm_service_charge') }}{{ $t('M.user_vip_discount') }}
+            </p>
+            <p class="content-text line-height50 text-align-c font-size18">
+              <!--六折-->
+              {{ $t('M.user_vip_six') }}{{ $t('M.user_vip_break') }}
+            </p>
+            <p class="content-discount line-height50 text-align-c font-size16">
             <span class="content-discount-color">
               {{vipPriceInfo1[12].value}}{{vipPriceInfo1[12].vipCoinName}}
             </span>
-            <span>
+              <span>
               <!--/月-->
               /{{ $t('M.user_vip_month') }}
             </span>
-          </p>
-          <p class="content-button">
-            <button
-              class="click-btn cursor-pointer"
-              @click.prevent="statusImmediatelyOpened('vip4')"
-            >
-              <!--立即开通-->
-              {{ $t('M.user_vip_immediately_opened') }}
-            </button>
-          </p>
+            </p>
+            <p class="content-button">
+              <button
+                class="click-btn cursor-pointer"
+                @click.prevent="statusImmediatelyOpened('vip4')"
+                v-if="userInfo.userInfo.level !== 'VIP4'"
+              >
+                <!--立即开通-->
+                <span>
+                  {{ $t('M.user_vip_immediately_opened') }}
+                </span>
+              </button>
+              <button
+                class="click-btn cursor-pointer"
+                v-else
+              >
+                <!--已开通-->
+                <span>
+                  {{ $t('M.user_vip_text7') }}
+                </span>
+              </button>
+            </p>
+          </div>
         </div>
-        <div class="content-module margin-top30 content-border-rl cursor-pointer">
-          <p class="content-vip-one text-align-c">
-            VIP5
-          </p>
-          <p class="content-discount line-height50 text-align-c font-size16">
-            <!--手续费折扣-->
-            {{ $t('M.comm_service_charge') }}{{ $t('M.user_vip_discount') }}
-          </p>
-          <p class="content-text line-height50 text-align-c font-size18">
-            <!--五折-->
-            {{ $t('M.user_vip_five') }}{{ $t('M.user_vip_break') }}
-          </p>
-          <p class="content-discount line-height50 text-align-c font-size16">
+        <div class="content-main-box">
+           <div
+            class="content-box"
+            v-if="userInfo.userInfo.level == 'VIP5'"
+           >
+           </div>
+          <div
+            class="content-module margin-top30 content-border-rl cursor-pointer"
+            :class="{ active1:activeStatus < 5, disable:activeStatus > 5}"
+          >
+            <p class="content-vip-one text-align-c">
+              VIP5
+            </p>
+            <p class="content-discount line-height50 text-align-c font-size16">
+              <!--手续费折扣-->
+              {{ $t('M.comm_service_charge') }}{{ $t('M.user_vip_discount') }}
+            </p>
+            <p class="content-text line-height50 text-align-c font-size18">
+              <!--五折-->
+              {{ $t('M.user_vip_five') }}{{ $t('M.user_vip_break') }}
+            </p>
+            <p class="content-discount line-height50 text-align-c font-size16">
             <span class="content-discount-color">
               {{vipPriceInfo1[16].value}}{{vipPriceInfo1[16].vipCoinName}}
             </span>
-            <span>
+              <span>
               <!--/月-->
               /{{ $t('M.user_vip_month') }}
             </span>
-          </p>
-          <p class="content-button">
-            <button
-              class="click-btn cursor-pointer"
-              @click.prevent="statusImmediatelyOpened('vip5')"
-            >
-              <!--立即开通-->
-              {{ $t('M.user_vip_immediately_opened') }}
-            </button>
-          </p>
+            </p>
+            <p class="content-button">
+              <button
+                class="click-btn cursor-pointer"
+                @click.prevent="statusImmediatelyOpened('vip5')"
+                v-if="userInfo.userInfo.level !== 'VIP5'"
+              >
+                <!--立即开通-->
+                <span>
+                  {{ $t('M.user_vip_immediately_opened') }}
+                </span>
+              </button>
+              <button
+                class="click-btn cursor-pointer"
+                v-else
+              >
+                <!--已开通-->
+                <span>
+                  {{ $t('M.user_vip_text7') }}
+                </span>
+              </button>
+            </p>
+          </div>
         </div>
         <!--<div class="content-module margin-top30 cursor-pointer">-->
           <!--<p class="content-vip-one text-align-c">-->
@@ -498,7 +608,8 @@ export default {
       month: '', // 月份
       vipName: '', // vip名称
       configValue: '', // 币种id
-      currencyAsset: 0 // 币种数量
+      currencyAsset: 0, // 币种数量
+      activeStatus: 0 // VIP状态
     }
   },
   async created () {
@@ -508,11 +619,12 @@ export default {
     require('../../../../static/css/theme/day/Personal/VipMainContent/VipMainContentDay.css')
     // 黑色主题样式
     require('../../../../static/css/theme/night/Personal/VipMainContent/VipMainContentNight.css')
+    if (this.vipLeavl) {
+      this.activeStatus = this.vipLeavl.split('')[3]
+    }
     reflashUserInfo(this)
     await this.getVipPriceInfo()
-    // this.toggleAssetsCurrencyId()
     await this.getCurrencyApplicationDownloadUrl()
-    // console.log(this.vipPriceInfo1)
   },
   mounted () {},
   activited () {},
@@ -705,7 +817,9 @@ export default {
   computed: {
     ...mapState({
       theme: state => state.common.theme,
-      partnerId: state => state.common.partnerId
+      partnerId: state => state.common.partnerId,
+      userInfo: state => state.user.loginStep1Info, // 用户详细信息
+      vipLeavl: state => state.user.loginStep1Info.userInfo.level
     }),
     filteredData () {
       console.log(this.vipPriceInfo1)
@@ -715,7 +829,11 @@ export default {
       })
     }
   },
-  watch: {}
+  watch: {
+    vipLeavl (newVal) {
+      console.log(newVal)
+    }
+  }
 }
 </script>
 <style scoped lang="scss">
@@ -736,44 +854,59 @@ export default {
         color: rgb(212, 88, 88);
       }
       > .content-main {
+        > .content-info-hint {
+          width: 100%;
+          height: 40px;
+          line-height: 40px;
+        }
         .error-msg{
           height:30px;
           line-height: 30px;
           padding-left: 35px;
           color: rgb(212, 88, 88);
         }
-        width: 756px;
+        width: 765px;
         min-height: 800px;
         margin: 0 auto;
         flex-wrap: wrap;
-        > .content-module {
-          flex-wrap: wrap;
-          width: 250px;
-          height: 380px;
-          > .content-vip-one {
-            height: 112px;
-            line-height: 112px;
-            font-size: 36px;
+        >.content-main-box {
+          position: relative;
+          >.content-box {
+            flex-wrap: wrap;
+            width: 250px;
+            height: 380px;
+            background-color: #1C1F32;
+            position: absolute;
+            top: 0;
+            left: 0;
+            z-index: 10;
+            opacity:0.7;
           }
-          > .content-discount,
-          > .content-text {
-            height: 50px;
-          }
-          > .content-button {
-            height: 115px;
-            text-align: center;
-            > .click-btn {
-              width: 180px;
-              height: 40px;
-              transform: skew(-15deg);
-              margin-top: 35px;
+          > .content-module {
+            flex-wrap: wrap;
+            width: 250px;
+            height: 380px;
+            margin-right: 4px;
+            > .content-vip-one {
+              height: 112px;
+              line-height: 112px;
+              font-size: 36px;
+            }
+            > .content-discount,
+            > .content-text {
+              height: 50px;
+            }
+            > .content-button {
+              height: 115px;
+              text-align: center;
+              > .click-btn {
+                width: 180px;
+                height: 40px;
+                transform: skew(-15deg);
+                margin-top: 35px;
+              }
             }
           }
-        }
-        > .content-info-hint {
-          width: 100%;
-          height: 40px;
-          line-height: 40px;
         }
       }
       > .content-detail-page {
@@ -892,61 +1025,68 @@ export default {
         margin-top: -3px;
         background: rgba(18, 24, 36, 1);
         > .content-main {
-          > .content-module {
-            background-color: #232D39;
-            border: 2px solid #33404B;
-            &:hover {
-              border: 4px solid #338FF5;
-              transform: scale(1.03);
-              box-shadow: 0 0 15px rgba(0, 0, 0, 1);
+          >.content-main-box {
+            > .content-module {
+              background-color: #232D39;
+              border: 2px solid #33404B;
+              &.disable {
+                opacity: 0.5;
+              }
+              &.active1 {
+                &:hover {
+                  border: 4px solid #338FF5;
+                  transform: scale(1.03);
+                  box-shadow: 0 0 15px rgba(0, 0, 0, 1);
+                  > .content-text {
+                    font-weight: 600;
+                    color: rgba(51, 143, 245, 1);
+                  }
+                  > .content-discount {
+                    background-color: #1E2832;
+                    color: rgba(255, 255, 255, 1);
+                    > .content-discount-color {
+                      font-weight: 600;
+                      color: rgba(51, 143, 245, 1);
+                    }
+                  }
+                  > .content-button {
+                    > .click-btn {
+                      background: #338FF5;
+                      color: #fff;
+                    }
+                  }
+                }
+              }
+              > .content-vip-one {
+                color: #fff;
+              }
               > .content-text {
-                font-weight: 600;
-                color: rgba(51, 143, 245, 1);
+                color: rgba(51, 143, 245, 0.6);;
               }
               > .content-discount {
                 background-color: #1E2832;
-                color: rgba(255, 255, 255, 1);
+                color: rgba(255, 255, 255, 0.6);
                 > .content-discount-color {
-                  font-weight: 600;
-                  color: rgba(51, 143, 245, 1);
+                  color: rgba(51, 143, 245, 0.6);
                 }
               }
               > .content-button {
                 > .click-btn {
-                  background: #338FF5;
+                  background: linear-gradient(0deg, rgba(41, 52, 64, 1) 0%, rgba(52, 62, 71, 1) 100%);
                   color: #fff;
                 }
               }
             }
-            > .content-vip-one {
-              color: #fff;
-            }
-            > .content-text {
-              color: rgba(51, 143, 245, 0.6);;
-            }
-            > .content-discount {
-              background-color: #1E2832;
-              color: rgba(255, 255, 255, 0.6);
-              > .content-discount-color {
-                color: rgba(51, 143, 245, 0.6);
-              }
-            }
-            > .content-button {
-              > .click-btn {
-                background: linear-gradient(0deg, rgba(41, 52, 64, 1) 0%, rgba(52, 62, 71, 1) 100%);
-                color: #fff;
+            > .content-info-hint {
+              > .hint-color {
+                color: #338FF5;
               }
             }
           }
-          > .content-info-hint {
-            > .hint-color {
-              color: #338FF5;
-            }
-          }
-          > .content-border-rl {
-            border-right: 0;
-            border-left: 0;
-          }
+          /*> .content-border-rl {*/
+            /*border-right: 0;*/
+            /*border-left: 0;*/
+          /*}*/
         }
         > .content-detail-page {
           > .detail-page-grade {
@@ -1044,49 +1184,51 @@ export default {
         margin-top: -3px;
         background-color: $dayBgColor;
         > .content-main {
-          > .content-module {
-            background-color: #232D39;
-            border: 2px solid #33404B;
-            &:hover {
-              border: 4px solid #338FF5;
-              transform: scale(1.03);
-              box-shadow: 0 0 15px rgba(0, 0, 0, 1);
+          >.content-main-box {
+            > .content-module {
+              background-color: #232D39;
+              border: 2px solid #33404B;
+              &:hover {
+                border: 4px solid #338FF5;
+                transform: scale(1.03);
+                box-shadow: 0 0 15px rgba(0, 0, 0, 1);
+                > .content-text {
+                  font-weight: 600;
+                  color: rgba(51, 143, 245, 1);
+                }
+                > .content-discount {
+                  background-color: #1E2832;
+                  color: rgba(255, 255, 255, 1);
+                  > .content-discount-color {
+                    font-weight: 600;
+                    color: rgba(51, 143, 245, 1);
+                  }
+                }
+                > .content-button {
+                  > .click-btn {
+                    background: #338FF5;
+                    color: #fff;
+                  }
+                }
+              }
+              > .content-vip-one {
+                color: #fff;
+              }
               > .content-text {
-                font-weight: 600;
-                color: rgba(51, 143, 245, 1);
+                color: rgba(51, 143, 245, 0.6);;
               }
               > .content-discount {
                 background-color: #1E2832;
-                color: rgba(255, 255, 255, 1);
+                color: rgba(255, 255, 255, 0.6);
                 > .content-discount-color {
-                  font-weight: 600;
-                  color: rgba(51, 143, 245, 1);
+                  color: rgba(51, 143, 245, 0.6);
                 }
               }
               > .content-button {
                 > .click-btn {
-                  background: #338FF5;
+                  background: linear-gradient(0deg, rgba(41, 52, 64, 1) 0%, rgba(52, 62, 71, 1) 100%);
                   color: #fff;
                 }
-              }
-            }
-            > .content-vip-one {
-              color: #fff;
-            }
-            > .content-text {
-              color: rgba(51, 143, 245, 0.6);;
-            }
-            > .content-discount {
-              background-color: #1E2832;
-              color: rgba(255, 255, 255, 0.6);
-              > .content-discount-color {
-                color: rgba(51, 143, 245, 0.6);
-              }
-            }
-            > .content-button {
-              > .click-btn {
-                background: linear-gradient(0deg, rgba(41, 52, 64, 1) 0%, rgba(52, 62, 71, 1) 100%);
-                color: #fff;
               }
             }
           }
@@ -1095,10 +1237,10 @@ export default {
               color: #338FF5;
             }
           }
-          > .content-border-rl {
-            border-right: 0;
-            border-left: 0;
-          }
+          /*> .content-border-rl {*/
+            /*border-right: 0;*/
+            /*border-left: 0;*/
+          /*}*/
         }
         > .content-detail-page {
           > .detail-page-grade {

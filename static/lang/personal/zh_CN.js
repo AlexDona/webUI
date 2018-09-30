@@ -51,6 +51,8 @@ export const personal = {
   // 高级认证
   'user_senior_certification': '高级认证',
   'user_senior_audit': '待审核',
+  'user_senior_notPass': '抱歉，您的高级认证未通过！',
+  'user_senior_notPass_text1': '驳回原因',
   'user_senior_go_certification': '去认证',
   'user_senior_not_pass': '未通过',
   'user_senior_text1': '注意',
@@ -236,5 +238,6 @@ export const personal = {
   'user_vip_text3': '费率折扣仅对交易手续费生效',
   'user_vip_text4': '一个月有效期时长为30个自然日',
   'user_vip_text5': '开通即代表您已同意',
-  'user_vip_text6': '《VIP服务协议》'
+  'user_vip_text6': '《VIP服务协议》',
+  'user_vip_text7': '已开通'
 }
