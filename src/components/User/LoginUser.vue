@@ -125,6 +125,7 @@
         <!--图片验证码验证-->
         <el-dialog
           class="pic image-dialog"
+          :close-on-click-modal="false"
           :title="$t('M.login_photo') + $t('M.comm_code') + $t('M.login_verify')"
           :visible.sync="loginImageValidateStatus"
         >
@@ -177,6 +178,7 @@
         <!-- 安全验证 -->
         <el-dialog
           class="msg-email-google-dialog"
+          :close-on-click-modal="false"
           :title="$t('M.login_safe') + $t('M.login_verify')"
           :visible.sync="step3DialogShowStatus"
         >
@@ -375,6 +377,7 @@
           <!--短信验证码、邮箱验证码、谷歌验证码 步骤3-->
           <el-dialog
             class="msg-email-google-dialog mobile"
+            :close-on-click-modal="false"
             :title="$t('M.login_safe') + $t('M.login_verify')"
             :visible.sync="step3DialogShowStatus"
           >
@@ -599,17 +602,18 @@ export default {
       isErcodeTimeOut: false, // 二维码是否过期
       isErCodeLogin: false, // 是否扫码登录
       erCodeString: '', // 二维码登录字符串
-      username: '',
+      // username: '',
       // username: '18625512987',
       // username: '18600929234',
       // username: '17600854297',
       // username: '13137111901',
       // password: 'a11111111',
-      // username: '15638559236',
+      username: '15638559236',
       // username: '13100000011',
       // username: '13100000012',
       // username: '18625512988',
       // password: '123456aa',
+      password: 'a1111111',
       userNameErrorMsg: '', // 错误提示
       loadingCircle: {},
       userInputImageCode: '', // 图形验证码(用户输入)

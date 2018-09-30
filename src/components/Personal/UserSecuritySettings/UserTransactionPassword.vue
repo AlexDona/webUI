@@ -215,7 +215,7 @@
             <span v-else></span>
             <button
               class="transaction-button border-radius4 cursor-pointer"
-              @click.prevent.prevent="getUpdatePayPassword"
+              @click.prevent="getUpdatePayPassword"
             >
               <!--确认重置-->
               {{ $t('M.comm_affirm') }}{{ $t('M.user_transaction_reset') }}
@@ -224,7 +224,9 @@
         </div>
       </div>
     </div>
-    <keep-aline><FooterCommon/></keep-aline>
+    <keep-aline>
+      <FooterCommon/>
+    </keep-aline>
   </div>
 </template>
 <!--请严格按照如下书写书序-->
@@ -323,6 +325,12 @@ export default {
     sendPhoneOrEmailCodeWithPush (loginType) {
       console.log(this.disabledOfPhoneBtn)
       console.log(this.disabledOfEmailBtn)
+      if (
+        !this.tieCheckoutInputFormat(0, this.modifyPassword.transactionPassword) ||
+        !this.tieCheckoutInputFormat(1, this.modifyPassword.resetTransactionPassword)
+      ) {
+        return false
+      }
       if (this.disabledOfPhoneBtn || this.disabledOfEmailBtn) {
         return false
       }
@@ -424,21 +432,20 @@ export default {
       if (
         this.checkoutInputFormat(0, this.setPassword.nickname) &&
         this.checkoutInputFormat(1, this.setPassword.newPassword) &&
-        this.checkoutInputFormat(2, this.setPassword.confirmPassword)
+        this.checkoutInputFormat(2, this.setPassword.confirmPassword) &&
+        this.setPassword.confirmPassword === this.setPassword.newPassword
       ) {
-        goOnStatus = 1
-      } else if (this.setPassword.confirmPassword !== this.setPassword.newPassword) {
         goOnStatus = 1
       } else {
         goOnStatus = 0
       }
       if (goOnStatus) {
         let data
-        let param = {
+        let params = {
           nickName: this.setPassword.nickname, // 昵称
           payPassword: this.setPassword.newPassword // 交易密码
         }
-        data = await setTransactionPassword(param)
+        data = await setTransactionPassword(params)
         if (!(returnAjaxMessage(data, this, 1))) {
           return false
         } else {
@@ -537,20 +544,20 @@ export default {
     // 确定重置交易密码
     async getUpdatePayPassword () {
       await this.confirmUpdate()
-      this.tieCheckoutInputFormat()
-      this.$store.commit('common/SET_USER_INFO_REFRESH_STATUS', true)
     },
     // 确定重置接口处理
     async confirmUpdate () {
       let goOnStatus = 0
       if (
         this.tieCheckoutInputFormat(0, this.modifyPassword.transactionPassword) &&
-        this.tieCheckoutInputFormat(1, this.modifyPassword.resetTransactionPassword)
+        this.tieCheckoutInputFormat(1, this.modifyPassword.resetTransactionPassword) &&
+        this.tieCheckoutInputFormat(2, this.modifyPassword.phoneCode)
       ) {
         goOnStatus = 1
       } else {
         goOnStatus = 0
       }
+      console.log(goOnStatus)
       if (goOnStatus) {
         let data
         let param = {
@@ -566,6 +573,7 @@ export default {
           console.log(1)
           this.successJump()
           this.confirmVerifyInformation()
+          this.$store.commit('common/SET_USER_INFO_REFRESH_STATUS', true)
         }
       }
     },
