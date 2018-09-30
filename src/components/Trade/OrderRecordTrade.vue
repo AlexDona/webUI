@@ -33,7 +33,7 @@
                 </el-table-column>
                 <!--成交价-->
                 <el-table-column
-                  :label="$t('M.comm_make_bargain') + $t('M.comm_quantity')+('('+ activeSymbol.area +')')"
+                  :label="$t('M.otc_MerchantsOrders_transaction_price') + ('('+ activeSymbol.area +')')"
                 >
                   <template slot-scope="s">
                     <span

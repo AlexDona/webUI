@@ -1,7 +1,10 @@
 <template>
   <div
     class="login-box user"
-    :style="{'height':windowHeight+'px'}"
+    :style="{
+     'min-height':windowHeight < 800,
+     'height': windowHeight + 'px'
+    }"
   >
     <HeaderCommonForPC
       v-if="!isMobile"
@@ -1123,7 +1126,11 @@ export default {
   @import '../../../static/css/scss/index.scss';
   .login-box.user {
     height:100%;
+    overflow: hidden;
     background:linear-gradient(150deg,rgba(30,38,54,1),rgba(37,75,117,1));
+    &.min-height{
+      min-height:1000px;
+    }
     >.inner-box{
       &.pc-bg{
         background:url('../../assets/develop/login-bg.png') 25% center  no-repeat ;

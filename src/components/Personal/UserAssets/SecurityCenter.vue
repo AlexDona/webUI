@@ -845,23 +845,33 @@ export default {
     // 关闭开启手机邮箱谷歌验证
     async confirmTransactionPassword (type, state) {
       if (state === 'enable') {
-        if (!this.phoneCode && !this.emailCode && !this.googleCode) {
-          // 请输入验证码
-          this.errorMsg = this.$t('M.comm_please_enter') + this.$t('M.user_security_verify')
-          return false
-        } else {
-          this.errorMsg = ''
-        }
-      } else {
-        if (!this.phoneCode && !this.emailCode && !this.googleCode) {
-          // 请输入验证码
+        if (this.securityCenter.isMailEnable && !this.emailCode) {
           this.errorMsg1 = this.$t('M.comm_please_enter') + this.$t('M.user_security_verify')
           return false
-        } else {
-          this.errorMsg1 = ''
+        }
+        if (this.securityCenter.isPhoneEnable && !this.phoneCode) {
+          this.errorMsg1 = this.$t('M.comm_please_enter') + this.$t('M.user_security_verify')
+          return false
+        }
+        if (this.securityCenter.isGoogleEnable && !this.googleCode) {
+          this.errorMsg1 = this.$t('M.comm_please_enter') + this.$t('M.user_security_verify')
+          return false
+        }
+      } else if (state === 'disable') {
+        console.log(1)
+        if (this.securityCenter.isMailEnable && !this.emailCode) {
+          this.errorMsg1 = this.$t('M.comm_please_enter') + this.$t('M.user_security_verify')
+          return false
+        }
+        if (this.securityCenter.isPhoneEnable && !this.phoneCode) {
+          this.errorMsg1 = this.$t('M.comm_please_enter') + this.$t('M.user_security_verify')
+          return false
+        }
+        if (this.securityCenter.isGoogleEnable && !this.googleCode) {
+          this.errorMsg1 = this.$t('M.comm_please_enter') + this.$t('M.user_security_verify')
+          return false
         }
       }
-
       let data
       let params = {
         email: this.userInfo.userInfo.email, // 邮箱

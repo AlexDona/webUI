@@ -52,7 +52,7 @@
                 </span>
                 &nbsp;）
               </p>
-              <i class="el-icon-arrow-down icon-down float-right"></i>
+              <!--<i class="el-icon-arrow-down icon-down float-right"></i>-->
             </div>
           </div>
       </div>
@@ -159,13 +159,14 @@
       >
         <p
           class="header-border paddinglr20"
-          @click.prevent="authenticationMethod">
+          @click.prevent="authenticationMethod"
+        >
           <span class="font-size16 main-header-title">
             <!--高级认证-->
             {{ $t('M.user_senior_certification') }}
           </span>
           <span
-            v-if="userInfo.userInfo.advancedAuth === 'notPass' || userInfo.userInfo.advancedAuth === ''"
+            v-if="userInfo.userInfo.advancedAuth === ''"
             class="authentication-type font-size12"
           >
             <!--未高级认证-->
@@ -398,6 +399,39 @@
           </div>
         </div>
         <div
+          class="wait-veritfy-back wait-no-pass"
+          v-show="authenticationNotPass"
+        >
+          <div
+            class="wait-veritfy text-align-c"
+          >
+            <IconFontCommon
+              class="color-coin-text"
+              iconName="icon-yly_renzhengshibai"
+            />
+            <p class="list-height no-pass">
+              <!--抱歉，您的高级认证未通过！...-->
+              {{ $t('M.user_senior_notPass') }}
+            </p>
+            <p class="list-height font-size12">
+              <!--驳回原因-->
+              {{ $t('M.user_senior_notPass_text1') }}：
+              <span
+                class="no-error"
+              >
+                {{ statusRealNameInformation.reason }}
+              </span>
+            </p>
+            <button
+              class="no-pass-button cursor-pointer"
+              @click.prevent="authenticationNoPass"
+            >
+              <!--提交-->
+              {{ $t('M.comm_sub_time') }}
+            </button>
+          </div>
+        </div>
+        <div
           class="success-after name-authentication-content"
           v-if="authenticationInfo.userIdentity"
         ></div>
@@ -486,6 +520,7 @@ export default {
       authenticationInfo: {}, // 个人信息
       authenticationContentStatus: false, // 高级认证页面
       authenticationStatusFront: false, // 用户高级认证前
+      authenticationNotPass: false, // 用户高级未通过
       // 身份认证默认图片
       firstPictureSrc: require('../../../assets/user/card_negative.png'), // 正面
       firstPictureSrcShow: true,
@@ -521,6 +556,7 @@ export default {
     await this.getUserRefreshUser()
     this.tokenObj.token = this.userInfo.token
     reflashUserInfo(this)
+    this.authenticationIsStatus()
   },
   mounted () {},
   activited () {},
@@ -610,6 +646,7 @@ export default {
         // if (data.data.data.authInfo) {
         this.statusRealNameInformation = data.data.data.authInfo
         // }
+        this.authenticationIsStatus()
       }
     },
     /**
@@ -625,6 +662,7 @@ export default {
         this.$store.commit('user/SET_STEP1_INFO', data.data.data)
         // 返回列表数据
         this.userInfoRefresh = data.data.data.userInfo
+        this.authenticationIsStatus()
       }
     },
     // 检测输入格式
@@ -700,6 +738,16 @@ export default {
       } else if (this.userInfoRefresh.realname == '') {
         this.seniorAuthentication = false
       }
+    },
+    // 高级认证未通过被驳回
+    authenticationIsStatus () {
+      if (this.userInfo.userInfo.advancedAuth === 'notPass') {
+        this.authenticationNotPass = true
+      }
+    },
+    authenticationNoPass () {
+      this.authenticationStatusFront = true
+      this.authenticationNotPass = false
     },
     // 高级认证内容
     authenticationAuthentication () {
@@ -892,6 +940,9 @@ export default {
     }
     .identity-box {
       /*border:1px solid rgba(38,47,56,0.1);*/
+      >.wait-no-pass {
+        padding-top: 50px !important;
+      }
       >.wait-veritfy-back {
         height: 393px;
         padding-top: 130px;
@@ -902,6 +953,12 @@ export default {
           .list-height {
             margin-top: 10px;
             line-height: 25px;
+          }
+          .no-pass-button {
+            width:200px;
+            height:34px;
+            border-radius:4px;
+            margin-top: 20px;
           }
         }
       }
@@ -1025,6 +1082,22 @@ export default {
             >.color-coin {
               color: #338FF5;
             }
+            .list-height {
+              .no-error {
+                color: #6F798A;
+              }
+            }
+            >.color-coin-text {
+              color: #338FF5;
+              font-size: 140px;
+            }
+            >.no-pass {
+              color: #338FF5;
+            }
+            .no-pass-button {
+              background:linear-gradient(90deg,rgba(43,57,110,1) 0%,rgba(42,80,130,1) 100%);
+              color: #fff;
+            }
           }
         }
       }
@@ -1119,6 +1192,15 @@ export default {
           >.wait-veritfy{
             >.color-coin {
               color: #338FF5;
+            }
+            .list-height {
+              .no-error {
+                color: #333;
+              }
+            }
+            .no-pass-button {
+              background:linear-gradient(90deg,rgba(43,57,110,1) 0%,rgba(42,80,130,1) 100%);
+              color: #fff;
             }
           }
         }

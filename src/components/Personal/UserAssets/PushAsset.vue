@@ -469,11 +469,8 @@ export default {
     },
     // 3.修改input value  输入限制
     changeInputValue (ref, pointLength) {
-      if (this.balance < this.count) {
-        this.$message({
-          message: this.$t('M.user_push_count'),
-          type: 'error'
-        })
+      if (this.count > this.balance) {
+        this.$refs.count.value = this.balance
       }
       // 获取ref中input值
       this[ref] = this.$refs[ref].value
@@ -661,12 +658,6 @@ export default {
     },
     // 确定撤销
     async stateRevocationInformation () {
-      if (this.balance < this.count) {
-        this.$message({
-          message: this.$t('M.user_push_count'),
-          type: 'error'
-        })
-      }
       let data
       let param = {
         id: this.pushUID // 列表id

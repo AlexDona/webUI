@@ -219,6 +219,7 @@ export default {
   .slider-box{
     /*height:300px;*/
     /*margin:200px auto;*/
+    overflow: hidden;
     width:100%;
     transition: all 4s;
     position: absolute;

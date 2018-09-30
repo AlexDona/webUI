@@ -267,6 +267,7 @@ export default {
         confirmPassword: '' // 确认交易密码.
       },
       errorShowStatusList: [
+        '', // 昵称
         '', // 交易密码
         '' // 重复交易密码
       ],
@@ -414,8 +415,8 @@ export default {
     },
     // 确定设置交易密码
     async setStatusSubmit () {
-      this.checkoutInputFormat()
-      // await this.confirmTransactionPassword()
+      // this.checkoutInputFormat()
+      await this.confirmTransactionPassword()
     },
     // 确定设置接口处理
     async confirmTransactionPassword () {
@@ -425,8 +426,8 @@ export default {
         this.checkoutInputFormat(1, this.setPassword.newPassword) &&
         this.checkoutInputFormat(2, this.setPassword.confirmPassword)
       ) {
-        goOnStatus = 0
-      } else if (this.setPassword.newPassword !== this.setPassword.confirmPassword) {
+        goOnStatus = 1
+      } else if (this.setPassword.confirmPassword !== this.setPassword.newPassword) {
         goOnStatus = 1
       } else {
         goOnStatus = 0
