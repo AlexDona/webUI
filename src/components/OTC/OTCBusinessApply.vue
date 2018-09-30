@@ -610,7 +610,7 @@ export default {
     }
   }
   &.day{
-    background-color: $mainNightBgColor;
+    background-color: $mainDayBgColor;
     >.business-apply-content{
       >.privilege{
         >.title{

@@ -19,7 +19,7 @@
   background-color: #fff;
 }
 .otc-completed-order-box.day .completed-order-content .el-table__header{
-  margin-bottom: 5px;
+  margin-bottom: 15px;
 }
 .otc-completed-order-box.day .completed-order-content .el-table{
   /* background-color: #1D2331; */
@@ -98,4 +98,5 @@
 .otc-completed-order-box.day .completed-order-content .el-table__empty-block {
   min-height: 432px;
   background-color: #fff;
+  border: 1px solid #ECF1F8;
 }

@@ -1127,9 +1127,11 @@ export default {
                     .sell-buy-input{
                       .red{
                         border: 1px solid red;
+                        border-right: 0;
                       }
                       .coinNameBorder{
                         border: 1px solid red;
+                        border-left: 0;
                       }
                       >.sell-sum{
                         background-color: #2D3651;
