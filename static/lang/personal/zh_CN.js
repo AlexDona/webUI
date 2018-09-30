@@ -52,6 +52,7 @@ export const personal = {
   'user_senior_certification': '高级认证',
   'user_senior_audit': '待审核',
   'user_senior_go_certification': '去认证',
+  'user_senior_not_pass': '未通过',
   'user_senior_text1': '注意',
   'user_senior_text2': '照片文件大小不能超过10M！文件格式须为jpg、bmp、png等！',
   'user_senior_text3': '请确保照片无水印，无污渍，身份信息清晰，头像完整，非文字反向照片！照片请勿进行PS处理！',
@@ -187,6 +188,7 @@ export const personal = {
   'user_push_canceled': '已取消',
   'user_push_payment': '付款',
   'user_push_revocation': '撤销',
+  'user_push_count': 'Push数量不能大于余额',
   // PUSH记录
   // #####################我的交易#####################
   // 币币订单

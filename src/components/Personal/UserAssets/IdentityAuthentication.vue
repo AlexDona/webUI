@@ -120,6 +120,7 @@
               class="common-input"
               v-model="identificationNumber"
               @keydown="setErrorMsg(1, '')"
+              minlength="15"
               @blur="checkoutInputFormat(1, identificationNumber)"
             />
             <!--错误提示-->
@@ -186,10 +187,10 @@
           </span>
           <span
             class="float-right authentication-type font-size12"
-            v-if="userInfo.userInfo.advancedAuth === 'notPass' || userInfo.userInfo.advancedAuth === ''"
+            v-if="userInfo.userInfo.advancedAuth === 'notPass'"
           >
-            <!--去认证-->
-            {{ $t('M.user_senior_go_certification') }}
+            <!--未通过-->
+            {{ $t('M.user_senior_not_pass') }}
           </span>
           <span v-else></span>
         </p>

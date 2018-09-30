@@ -6,7 +6,7 @@
     <!-- 1.0 导航 -->
     <NavCommon/>
     <!-- 2.0 商家订单 -->
-    <div class="otc-merchants-orders-content">
+    <div class="otc-merchants-orders-content" :style="{'min-height':(height-556)+'px'}">
       <!-- 2.1 大标题商家订单 -->
       <div class="merchants-title font-size20 padding-l15 font-weight700">
         <!-- 商家订单 -->
@@ -28,7 +28,7 @@
               <el-option
                 v-for="item in merchantsOrdersTraderStyleList"
                 :key="item.value"
-                :label="item.label"
+                :label="$t(item.label)"
                 :value="item.value"
               >
               </el-option>
@@ -52,7 +52,8 @@
               </el-option>
             </el-select>
           </span>
-          <span class="filtrate-text font-size14">货币</span>
+          <!-- 货币 -->
+          <span class="filtrate-text font-size14">{{$t('M.otc_MerchantsOrders_currecy')}}</span>
           <span class="status-input">
             <el-select
               v-model="activitedMerchantsOrdersCurrency"
@@ -63,7 +64,7 @@
               <el-option
                 v-for="(item,index) in merchantsOrdersCurrencyList"
                 :key="index"
-                :label="item.name"
+                :label="language == 'zh_CN'? item.name : item.shortName"
                 :value="item.id"
               >
               </el-option>
@@ -87,6 +88,7 @@
               </el-option>
             </el-select>
           </span>
+          <!-- 日期 -->
           <span class="filtrate-text font-size14">{{$t('M.otc_MerchantsOrders_date')}}</span>
           <span class="date-picker">
             <!--开始日期-->
@@ -314,6 +316,7 @@ export default {
   },
   data () {
     return {
+      height: '', // 商家订单内容的高度
       // 分页
       pageSize: 10,
       currentPage: 1, // 当前页码
@@ -323,11 +326,11 @@ export default {
       merchantsOrdersTraderStyleList: [
         {
           value: 'BUY',
-          label: this.$t('M.comm_buying')
+          label: 'M.comm_buying'
         },
         {
           value: 'SELL',
-          label: this.$t('M.comm_offering')
+          label: 'M.comm_offering'
         }
       ],
       // 商家订单筛选下拉框 币种
@@ -367,6 +370,10 @@ export default {
     }
   },
   created () {
+    // 动态获取商家订单内容的高度
+    // console.log(document.documentElement.clientHeight)
+    this.height = document.documentElement.clientHeight
+    // console.log(this.height)
     require('../../../static/css/list/OTC/OTCMerchantsOrders.css')
     require('../../../static/css/theme/day/OTC/OTCMerchantsOrdersDay.css')
     require('../../../static/css/theme/night/OTC/OTCMerchantsOrdersNight.css')
@@ -500,6 +507,7 @@ export default {
   filter: {},
   computed: {
     ...mapState({
+      language: state => state.common.language,
       theme: state => state.common.theme,
       partnerId: state => state.common.partnerId
     })
@@ -512,7 +520,7 @@ export default {
   .otc-merchants-orders-box{
     >.otc-merchants-orders-content{
       width: 1150px;
-      min-height: 500px;
+      // min-height: 500px;
       margin: 70px auto;
       margin-bottom: 10px;
       padding-top: 50px;
@@ -525,7 +533,7 @@ export default {
       }
       >.merchants-orders-main{
         >.orders-main-top{
-          height: 60px;
+          min-height: 60px;
           line-height: 60px;
           margin-bottom: 25px;
           >.filtrate-text{
