@@ -610,7 +610,8 @@ export default {
     }
   }
   &.day{
-    background-color: $mainDayBgColor;
+    // background-color: $mainDayBgColor;
+    background-color: $mainNightBgColor;
     >.business-apply-content{
       >.privilege{
         >.title{
@@ -687,6 +688,9 @@ export default {
         }
       }
     }
+    // >.business-applying-content,.business-apply-success-content{
+    //   background-color: $mainDayBgColor;
+    // }
   }
   .businessApplyModel{
     color: #D45858;
