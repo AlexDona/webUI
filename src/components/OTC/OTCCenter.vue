@@ -524,7 +524,7 @@ export default {
   mounted () {
     // 如果是从购买和出售下单跳转过来的时候，页面加载打开到锚点位置：anchorStatus在全局先定义false，当用户购买或者出售时候改为true
     if (this.anchorStatus) {
-      document.getElementById("orderView").scrollIntoView(true) // scrollIntoView(true)参数为true时候才调用此方法
+      document.getElementById('orderView').scrollIntoView(true) // scrollIntoView(true)参数为true时候才调用此方法
     }
   },
   activited () {},
@@ -932,7 +932,7 @@ export default {
   computed: {
     ...mapState({
       theme: state => state.common.theme,
-      anchorStatus: state => state.OTC.anchorStatus, // OTC全局定义的锚点状态 默认为false 
+      anchorStatus: state => state.OTC.anchorStatus, // OTC全局定义的锚点状态 默认为false
       selectedOTCAvailableCurrencyName: state => state.OTC.selectedOTCAvailableCurrencyName,
       selectedOTCAvailablePartnerCoinId: state => state.OTC.selectedOTCAvailablePartnerCoinId,
       selectedOTCAvailableCurrencyCoinID: state => state.OTC.selectedOTCAvailableCurrencyCoinID,

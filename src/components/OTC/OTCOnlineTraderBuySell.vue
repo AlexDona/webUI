@@ -378,6 +378,7 @@
 </template>
 <!--请严格按照如下书写书序-->
 <script>
+import {timeFilter, formatNumberInput, amendPrecision} from '../../utils'
 import {pickOrdersToBuy, pickOrdersToSell, querySelectedOrdersDetails, queryUserTradeFeeAndCoinInfo} from '../../utils/api/OTC'
 import NavCommon from '../Common/HeaderCommonForPC'
 import FooterCommon from '../Common/FooterCommon'
@@ -386,7 +387,6 @@ import {returnAjaxMessage} from '../../utils/commonFunc'
 // import {mapState} from 'vuex'
 import {createNamespacedHelpers, mapState} from 'vuex'
 const {mapMutations} = createNamespacedHelpers('OTC')
-import {timeFilter, formatNumberInput, amendPrecision} from '../../utils'
 export default {
   components: {
     NavCommon, //  头部导航
