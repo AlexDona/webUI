@@ -424,7 +424,6 @@ import OTCFreezingOrder from './OTCFreezingOrder'
 import OTCEntrustOrder from './OTCEntrustOrder'
 import {returnAjaxMessage, reflashUserInfo} from '../../utils/commonFunc'
 import {createNamespacedHelpers, mapState} from 'vuex'
-
 const {mapMutations} = createNamespacedHelpers('OTC')
 export default {
   components: {
@@ -942,6 +941,7 @@ export default {
     width: 1150px;
     margin: 0 auto;
     margin-top: 107px;
+    margin-bottom: 10px;
     >.otc-online-trading{
       >.otc-online-buy-and-sell-button{
         height: 45px;

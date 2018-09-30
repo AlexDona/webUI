@@ -290,7 +290,7 @@ export default {
       }
       >.page{
         text-align: center;
-        padding: 5px 0 15px 0;
+        // padding: 5px 0 15px 0;
       }
     }
     &.night{

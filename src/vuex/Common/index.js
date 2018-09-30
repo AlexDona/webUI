@@ -9,7 +9,7 @@ const state = {
   theme: getStore('theme') || 'night',
   contryAreaList: [], // 国家列表（国家码）
   // 国际化语言
-  language: 'zh_CN',
+  language: getStore('language') || 'zh_CN',
   activeLanguage: '',
   mainColor: {
     $mainNightBgColor: '#1c1f32',

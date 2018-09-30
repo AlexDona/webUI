@@ -330,9 +330,6 @@ import {
   getTransitionCurrencyRate // 获取汇率转换费率
 } from '../../utils/api/header'
 import IconFontCommon from '../Common/IconFontCommon'
-import {
-  setStore
-} from '../../utils'
 // import {getPartnerList} from '../../utils/api/home'
 import {
   returnAjaxMessage,
@@ -559,14 +556,12 @@ export default{
     changeSetting () {
       // 主题设置
       this.CHANGE_THEME(this.activeTheme)
-      setStore('theme', this.activeTheme)
       document.body.classList.remove('day')
       document.body.classList.remove('night')
       document.body.classList.add(this.activeTheme)
       // 汇率转换设置
       this.changeActiveTransitionCurrency()
       this.CHANGE_CONVERT_CURRENCY(this.activeConvertCurrency)
-      setStore('convertCurrency', this.activeConvertCurrency || 'CNY')
       this.toggleShowSettingBox(0)
     },
     // 查询某商户可用法币币种列表

@@ -14,6 +14,7 @@
       </div>
       <!-- 2.2 筛选条件 -->
       <div class="report-form-filtrate">
+        <!-- 交易币种 -->
         <span class="filtrate-text font-size14">
          {{$t('M.otc_trade')}}{{$t('M.comm_currency')}}
         </span>
@@ -28,10 +29,10 @@
               :value="item.coinId"
               :label="item.name"
             >
-              {{ item.name }}
             </el-option>
           </el-select>
         </span>
+        <!-- 交易法币 -->
         <span class="filtrate-text font-size14">
           {{$t('M.otc_trade')}}{{$t('M.comm_coin')}}
         </span>
@@ -44,9 +45,8 @@
               v-for="(item,index) in traderCurrencyCoinsList"
               :key="index"
               :value="item.id"
-              :label="item.name"
+              :label="language == 'zh_CN'? item.name : item.shortName"
             >
-              {{ item.name }}
             </el-option>
           </el-select>
         </span>
@@ -696,6 +696,7 @@ export default {
   filter: {},
   computed: {
     ...mapState({
+      language: state => state.common.language,
       // 商户id
       partnerId: state => state.common.partnerId,
       theme: state => state.common.theme,
