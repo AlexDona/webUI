@@ -16,7 +16,7 @@ import {
   CHANGE_ROUTER_PATH
 } from './mutations-types.js'
 
-// import {setStore} from '../utils'
+import {setStore} from '../../utils'
 
 // import {localapi, proapi} from 'src/config/env'
 
@@ -33,15 +33,18 @@ export default {
   // 切换主题
   [CHANGE_THEME] (state, data) {
     state.theme = data
+    setStore('theme', data)
   },
   // 切换语言
   [CHANGE_LANGUAGE] (state, data) {
     state.activeLanguage = data
     state.language = data.shortName
+    setStore('language', data.shortName)
   },
   // 设置折算货币
   [CHANGE_CONVERT_CURRENCY] (state, data) {
     state.activeConvertCurrency = data
+    setStore('convertCurrency', data || 'CNY')
   },
   // 改变socket刷新状态
   [CHANGE_SOCKET_REFRESH_STATUS] (state, data) {

@@ -7,7 +7,7 @@ function getSize () {
   /* 取到屏幕的宽度 */
   let width = window.innerWidth
   let height = window.innerHeight
-  console.log(width)
+  console.log(height)
   let isPC = IsPC()
   if (width < 1050 || !isPC) {
     store.commit('user/TOGGLE_PC_MOBILE', true)
@@ -21,6 +21,7 @@ function getSize () {
   /* 设置fontsize */
   html.style.fontSize = fontSize + 'px'
   html.style.height = height + 'px'
+  // html.style.width = width + 'px'
 }
 // 检测是否为pc
 function IsPC () {

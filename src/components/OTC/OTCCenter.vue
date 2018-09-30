@@ -424,7 +424,6 @@ import OTCFreezingOrder from './OTCFreezingOrder'
 import OTCEntrustOrder from './OTCEntrustOrder'
 import {returnAjaxMessage, reflashUserInfo} from '../../utils/commonFunc'
 import {createNamespacedHelpers, mapState} from 'vuex'
-
 const {mapMutations} = createNamespacedHelpers('OTC')
 export default {
   components: {

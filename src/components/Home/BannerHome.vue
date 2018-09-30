@@ -35,6 +35,7 @@ export default {
       bannerBackgroundImage: state => state.home.bannerBackgroundImage
     }),
     screenWidth () {
+      console.log(window.innerWidth)
       return window.innerWidth / 3
     }
   },

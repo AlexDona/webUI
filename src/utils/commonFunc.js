@@ -63,6 +63,7 @@ export const returnAjaxMessage = (data, self, noTip) => {
  * @returns {number} 0：正确 1： 未输入 2：不正确
  */
 export const validateNumForUserInput = (type, targetNum) => {
+  console.log(type)
   let returnNum = 0
   let validateType
   switch (type) {
@@ -88,11 +89,22 @@ export const validateNumForUserInput = (type, targetNum) => {
       validateType = GOOGLE_REG
       break
   }
-  if (!targetNum) {
-    returnNum = 1
-  } else if (!validateType.test(targetNum)) {
-    returnNum = 2
+  if (type === 'phone') {
+    if (!targetNum) {
+      returnNum = 1
+    } else {
+      returnNum = 0
+    }
+  } else {
+    if (!targetNum) {
+      returnNum = 1
+    } else if (!validateType.test(targetNum)) {
+      returnNum = 2
+    } else {
+      returnNum = 0
+    }
   }
+  console.log(returnNum)
   return returnNum
 }
 // 发送验证码（短信、邮箱）
