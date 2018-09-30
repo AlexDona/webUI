@@ -138,6 +138,7 @@
     </div>
     <!-- 2.2商家 申请中 页面 -->
     <div
+      :style="{'min-height':(height-616)+'px'}"
       class="business-applying-content"
       v-show="applyStatus === 2"
     >
@@ -151,6 +152,7 @@
     </div>
     <!-- 2.3商家 申请成功 页面 -->
     <div
+      :style="{'min-height':(height-616)+'px'}"
       class="business-apply-success-content"
       v-show="applyStatus === 3"
     >
@@ -168,7 +170,9 @@
     >
     </div>
     <!-- 3.0 底部 -->
-    <keep-aline><FooterCommon/></keep-aline>
+    <keep-aline>
+      <FooterCommon class="footer"/>
+    </keep-aline>
   </div>
 </template>
 <script>
@@ -190,8 +194,10 @@ export default {
   },
   data () {
     return {
+      height: '', // 申请中 申请成功 内容的高度
       // 整页loading
       // loadingCircle: {},
+      // applyStatus: 4, // 商家申请状态
       applyStatus: 1, // 商家申请状态
       checked: false, // 同意协议按钮:默认不勾选
       successTimes: '0',
@@ -203,6 +209,10 @@ export default {
     }
   },
   created () {
+    // 动态获取申请中 申请成功内容的高度
+    // console.log(document.documentElement.clientHeight)
+    this.height = document.documentElement.clientHeight
+    // console.log(this.height)
     require('../../../static/css/list/OTC/OTCBusinessApply.css')
     require('../../../static/css/theme/day/OTC/OTCBusinessApplyDay.css')
     require('../../../static/css/theme/night/OTC/OTCBusinessApplyNight.css')
@@ -257,10 +267,14 @@ export default {
       //   lock: true,
       //   background: 'rgba(0, 0, 0, 0.7)'
       // })
+      // 刚进页面接口请求回来之前先展示缓冲界面
+      this.applyStatus = 4
       const data = await firstEnterBusinessApply()
       console.log(data)
       // 提示信息
       if (!(returnAjaxMessage(data, this, 0))) {
+        // 刚进页面接口请求错误时候显示申请界面
+        this.applyStatus = 1
         return false
       } else {
         // this.loadingCircle.close()
@@ -277,11 +291,21 @@ export default {
         } else if (getData.status == 2) {
           this.applyStatus = 2
         // 状态 3 表示审核通过
-        } else if (getData.status == 3) {
-          this.applyStatus = 3
         } else {
-          this.applyStatus = 4
+          this.applyStatus = 3
         }
+        // // 返回数据的状态 1 表示展示初次进入
+        // if (getData.status == 1) {
+        //   this.applyStatus = 1
+        // // 状态 2 表示审核正在进行中
+        // } else if (getData.status == 2) {
+        //   this.applyStatus = 2
+        // // 状态 3 表示审核通过
+        // } else if (getData.status == 3) {
+        //   this.applyStatus = 3
+        // } else {
+        //   this.applyStatus = 4
+        // }
       }
     },
     // 商家申请界面用户协议
@@ -473,7 +497,8 @@ export default {
   }
   >.business-applying-content,.business-apply-success-content{
     width: 1150px;
-    height: 600px;
+    // height: 718px;
+    // height: 600px;
     margin: 70px auto;
     padding-top: 20px;
     text-align: center;
@@ -500,7 +525,8 @@ export default {
   }
   >.business-apply-blank{
     width: 1150px;
-    height: 600px;
+    height: 918px;
+    // height: 600px;
     // background-color: #272B41;
     background-color: $mainNightBgColor;
   }
@@ -665,5 +691,9 @@ export default {
   .businessApplyModel{
     color: #D45858;
   }
+  // .footer{
+  //   position: absolute;
+  //   bottom:0;
+  // }
 }
 </style>

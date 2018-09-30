@@ -7,7 +7,7 @@
     <!-- 1.0 导航 -->
     <NavCommon/>
     <!-- 2.0 广告管理 -->
-    <div class="otc-AD-manage-content">
+    <div class="otc-AD-manage-content" :style="{'min-height':(height-556)+'px'}">
       <!-- 2.1 大标题广告管理 -->
       <div class="AD-title font-size20 padding-l15 font-weight700">
         <!-- 广告管理 -->
@@ -290,6 +290,7 @@ export default {
   },
   data () {
     return {
+      height: '', // 广告管理内容的高度
       // 分页
       currentPage: 1, // 当前页码
       totalPages: 1, // 总页数
@@ -337,6 +338,10 @@ export default {
     }
   },
   created () {
+    // 动态获取广告管理内容的高度
+    // console.log(document.documentElement.clientHeight)
+    this.height = document.documentElement.clientHeight
+    // console.log(this.height)
     require('../../../static/css/list/OTC/OTCADManage.css')
     require('../../../static/css/theme/day/OTC/OTCADManageDay.css')
     require('../../../static/css/theme/night/OTC/OTCADManageNight.css')
@@ -531,7 +536,7 @@ export default {
 <style scoped lang="scss" type="text/scss">
   @import "../../../static/css/scss/index";
   .otc-AD-manage-box {
-    position: relative;
+    // position: relative;
     >.otc-AD-manage-content {
       width: 1150px;
       margin: 70px auto;
@@ -666,7 +671,7 @@ export default {
     }
     .footer{
       // position: absolute;
-      bottom:0;
+      // bottom:0;
     }
   }
 </style>

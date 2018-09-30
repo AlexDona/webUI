@@ -6,7 +6,7 @@
     <!-- 1.0 导航 -->
     <NavCommon/>
     <!-- 2.0 商家订单 -->
-    <div class="otc-merchants-orders-content">
+    <div class="otc-merchants-orders-content" :style="{'min-height':(height-556)+'px'}">
       <!-- 2.1 大标题商家订单 -->
       <div class="merchants-title font-size20 padding-l15 font-weight700">
         <!-- 商家订单 -->
@@ -316,6 +316,7 @@ export default {
   },
   data () {
     return {
+      height: '', // 商家订单内容的高度
       // 分页
       pageSize: 10,
       currentPage: 1, // 当前页码
@@ -369,6 +370,10 @@ export default {
     }
   },
   created () {
+    // 动态获取商家订单内容的高度
+    // console.log(document.documentElement.clientHeight)
+    this.height = document.documentElement.clientHeight
+    // console.log(this.height)
     require('../../../static/css/list/OTC/OTCMerchantsOrders.css')
     require('../../../static/css/theme/day/OTC/OTCMerchantsOrdersDay.css')
     require('../../../static/css/theme/night/OTC/OTCMerchantsOrdersNight.css')
@@ -515,7 +520,7 @@ export default {
   .otc-merchants-orders-box{
     >.otc-merchants-orders-content{
       width: 1150px;
-      min-height: 500px;
+      // min-height: 500px;
       margin: 70px auto;
       margin-bottom: 10px;
       padding-top: 50px;
