@@ -218,6 +218,7 @@ export const personal = {
   'user_vip_please_choose': '请选择开通会员信息',
   'user_vip_discount': '折扣',
   'user_vip_immediately_opened': '立即开通',
+  'user_vip_look': '查看我的VIP',
   'user_vip_immediately_buy': '立即购买',
   'user_vip_month': '月',
   'user_vip_break': '折',
@@ -239,5 +240,6 @@ export const personal = {
   'user_vip_text4': '一个月有效期时长为30个自然日',
   'user_vip_text5': '开通即代表您已同意',
   'user_vip_text6': '《VIP服务协议》',
-  'user_vip_text7': '已开通'
+  'user_vip_text7': '已开通',
+  'user_vip_text8': 'VIP享手续费、提现优惠'
 }

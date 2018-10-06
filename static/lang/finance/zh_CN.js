@@ -12,6 +12,7 @@ export const finance = {
   finance_earnings: '收益',
   finance_recode: '记录',
   finance_predict: '预计',
+  finance_paid_income: '已发放收益',
   finance_releaseTime: '发放时间',
   finance_createTime: '创建时间',
   finance_huoqi: '活期',

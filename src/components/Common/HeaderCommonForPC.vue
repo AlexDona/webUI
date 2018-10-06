@@ -159,20 +159,25 @@
                   </span>
                   <div class="login-info">
                     <div class="sub-nav-user">
-                      <p class="nav-vip">VIP享手续费、提现优惠</p>
+                      <p class="nav-vip">
+                        <!--VIP享手续费、提现优惠-->
+                        {{$t('M.user_vip_text8')}}
+                      </p>
                       <button
                         v-if="!userInfo.level"
                         class="nav-button"
                         @click="stateOpenVip"
                       >
-                        立即开通
+                        <!--立即开通-->
+                        {{$t('M.user_vip_immediately_opened')}}
                       </button>
                        <button
                          v-else
                          class="nav-button"
                          @click="stateOpenVip"
                        >
-                        查看我的VIP
+                        <!--查看我的VIP-->
+                         {{$t('M.user_vip_look')}}
                       </button>
                     </div>
                     <ul class="personal-user">

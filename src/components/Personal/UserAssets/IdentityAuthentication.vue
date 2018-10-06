@@ -988,7 +988,7 @@ export default {
             }
           }
           .default-picture {
-            width: 100%;
+            /*width: 100%;*/
             height: 113px;
           }
         }
@@ -1044,13 +1044,13 @@ export default {
     background-color: $nightBgColor;
     color:$nightFontColor;
     .identity-header-background{
-      background-color: #1E2636;
+      background-color: $nightMainBgColor;
       .header-content{
         color: #338FF5;
       }
     }
     .identity-authentication-main {
-      background-color: #1E2636;
+      background-color: $nightMainBgColor;
       .false-tips {
         color: #D45858;
       }
@@ -1072,7 +1072,7 @@ export default {
       color: #fff;
     }
     .identity-background{
-      background-color: #1E2636;
+      background-color: $nightMainBgColor;
     }
     >.advanced-certification-main{
       .identity-box {
