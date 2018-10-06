@@ -230,6 +230,7 @@ export const OTC = {
   otc_adMange_getting: '上架',
   otc_adMange_adverting: '下架',
   otc_adMange_change: '修改',
+  // 二次确认弹框提示信息
   otc_adMange_tipsContentOne: '此操作将永久下架该文件, 是否继续?',
   otc_adMange_tipsContentTwo: '此操作将永久修改该文件, 是否继续?',
   otc_adMange_already_getting: '已上架',
