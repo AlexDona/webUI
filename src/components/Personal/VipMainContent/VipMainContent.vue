@@ -305,7 +305,7 @@
         <p class="content-info-hint text-align-r padding-right23 box-sizing font-size12">
           <span>
             <!--还没有FUC?-->
-            {{ $t('M.user_vip_not_yet') }}
+            {{ $t('M.user_vip_not_yet') }}{{vipPriceInfo1[0].vipCoinName}}?
           </span>
           <span
             class="hint-color cursor-pointer"

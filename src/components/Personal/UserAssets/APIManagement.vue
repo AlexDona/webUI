@@ -392,9 +392,9 @@
           </el-form>
           <!--错误提示-->
           <div
-            class = "error-msg font-size12"
+            class="error-msg font-size12"
           >
-            <span v-show = "errorEditorMsg">{{ errorEditorMsg }}</span>
+            <span v-show="errorEditorMsg">{{ errorEditorMsg }}</span>
           </div>
           <div
             slot="footer"

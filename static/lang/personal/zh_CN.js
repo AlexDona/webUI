@@ -228,7 +228,7 @@ export const personal = {
   'user_vip_six': '六',
   'user_vip_five': '五',
   'user_vip_four': '四',
-  'user_vip_not_yet': '还没有FUC?',
+  'user_vip_not_yet': '还没有',
   'user_vip_opening_level': '开通等级',
   'user_vip_dredge': '开通',
   'user_vip_opening_time': '开通时长',
