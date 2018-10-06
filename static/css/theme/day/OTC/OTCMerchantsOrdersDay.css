@@ -8,6 +8,10 @@
 .otc-merchants-orders-box.day .el-input__inner{
     color:#7D90AC!important; 
 }
+/*2.0查询按钮样式*/
+.otc-merchants-orders-box.day .inquire-button .el-button{
+    background:linear-gradient(90deg,rgba(43,57,110,1) 0%,rgba(42,80,130,1) 100%);
+}
 .otc-merchants-orders-box.day .el-input .el-input--suffix > input::-webkit-input-placeholder{
     color:#7D90AC;
 }

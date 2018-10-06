@@ -1,7 +1,7 @@
 <template>
   <div
     class="otc-business-apply-box otc"
-    :class="{'day':theme == 'day','night':theme == 'night' }"
+    :class="{'day':theme == 'day','night':theme == 'night','black':statusBlack == 'successOrApplying' }"
   >
     <!-- 1.0 导航 -->
     <NavCommon/>
@@ -194,6 +194,7 @@ export default {
   },
   data () {
     return {
+      statusBlack: '', // 当为申请中和申请成功的页面时候，只有黑色主题颜色
       height: '', // 申请中 申请成功 内容的高度
       // 整页loading
       // loadingCircle: {},
@@ -289,9 +290,11 @@ export default {
           this.applyStatus = 1
         // 状态 2 表示审核正在进行中
         } else if (getData.status == 2) {
+          this.statusBlack = 'successOrApplying' // 当为申请中和申请成功的页面时候，只有黑色主题颜色
           this.applyStatus = 2
         // 状态 3 表示审核通过
         } else {
+          this.statusBlack = 'successOrApplying' // 当为申请中和申请成功的页面时候，只有黑色主题颜色
           this.applyStatus = 3
         }
         // // 返回数据的状态 1 表示展示初次进入
@@ -350,7 +353,7 @@ export default {
 @import url(../../../static/css/scss/OTC/OTCCenter.scss);
 @import "../../../static/css/scss/index";
 .otc-business-apply-box{
-  background-color: $mainNightBgColor;
+  // background-color: $mainNightBgColor;
   >.business-apply-content{
     padding-top: 20px;
     >.privilege{
@@ -610,8 +613,8 @@ export default {
     }
   }
   &.day{
-    // background-color: $mainDayBgColor;
-    background-color: $mainNightBgColor;
+    background-color: $mainDayBgColor;
+    // background-color: $mainNightBgColor;
     >.business-apply-content{
       >.privilege{
         >.title{
@@ -699,5 +702,9 @@ export default {
   //   position: absolute;
   //   bottom:0;
   // }
+}
+.black.otc-business-apply-box.day{
+  // 当为申请中和申请成功的页面时候，只有黑色主题颜色
+  background-color: $mainNightBgColor;
 }
 </style>

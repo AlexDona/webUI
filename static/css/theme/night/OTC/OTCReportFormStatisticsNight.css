@@ -26,7 +26,7 @@
   border: 1px solid #B3B3B3;
 }
 .otc-report-form-statistics-box.night .date .radio-date .el-radio__input.is-checked+.el-radio__label{
-  color: #46505F;
+  color: #338FF5;
 }
 .otc-report-form-statistics-box.night .date .radio-date .el-radio__inner::after{
   background-color: #338FF5;

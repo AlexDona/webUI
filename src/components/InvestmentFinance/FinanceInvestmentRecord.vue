@@ -19,7 +19,7 @@
               </router-link>
             </div>
             <!-- 投资记录 -->
-            <el-tabs v-model="activeName">
+            <el-tabs v-model="activeName" @tab-click='changeTab'>
             <!-- @您还没有登陆,请登录或者注册之后查看！ -->
                 <div v-if = "!isLogin" class = 'financeTsipsBox'>
                   {{$t('M.finance_loginTips')}}
@@ -72,6 +72,13 @@
                     prop="expectedTime"
                     width="150"
                     :label="$t('M.finance_predict') + $t('M.finance_releaseTime')"
+                  >
+                  </el-table-column>
+                  <!-- 已发放收益-->
+                  <el-table-column
+                    prop="profit"
+                    width="150"
+                    :label="$t('M.finance_paid_income')"
                   >
                   </el-table-column>
                   <!-- 状态 -->
@@ -156,11 +163,11 @@
                     :label="$t('M.comm_count')"
                     >
                   </el-table-column>
-                  <!-- 发放收益 -->
+                  <!-- 预计收益 -->
                   <el-table-column
-                    prop="expected_earning"
-                  :label="$t('M.finance_grant') + $t('M.finance_earnings')"
-                    >
+                    prop="expectedEarning"
+                    :label="$t('M.finance_predict') + $t('M.finance_earnings')"
+                  >
                   </el-table-column>
                   <!-- 发放收益 -->
                   <el-table-column
@@ -168,11 +175,11 @@
                     :label="$t('M.finance_grant') + $t('M.finance_earnings')"
                     >
                   </el-table-column>
-                  <!-- 预计发放时间 -->
+                  <!-- 发放时间 -->
                   <el-table-column
                     prop="createTime"
                     width="150"
-                    :label="$t('M.finance_predict') + $t('M.finance_releaseTime')"
+                    :label="$t('M.finance_releaseTime')"
                     >
                   </el-table-column>
                 </el-table>
@@ -261,6 +268,17 @@ export default {
     timeFormatting (data) {
       return timeFilter(data, 'data')
     },
+    // 切换tab面板
+    changeTab (e) {
+      console.log(e.name)
+      this.activeName = e.name
+      if (this.activeName == '1') {
+        this.getFinancialManagementList(this.investCurrnetPage)
+      }
+      if (this.activeName == '2') {
+        this.getFinancialManagementList(this.interestCurrnetPage)
+      }
+    },
     // 点击投资记录列表下一页查寻
     changeInvestPage (pageNum) {
       console.log(pageNum)
@@ -299,7 +317,7 @@ export default {
           // 从新赋值页码为当前页
           // this.investCurrnetPage = pageNum
         } else if (this.activeName == '2') {
-          // 投资记录列表
+          // 收益记录列表
           this.userInterestRecord = getData.userInterestRecord.list
           // 收益记录总页数
           this.interestTotalPages = getData.userInterestRecord.pages
@@ -324,7 +342,23 @@ export default {
     },
     cancleInvest (id) {
       // 用户点击取消按钮需要请求接口
-      this.clickCancleInvestment(id)
+      // this.clickCancleInvestment(id)
+      // 增加二次确认弹出框-任付伟
+      this.$confirm(this.$t('M.otc_adMange_tipsContentOne'), {
+        confirmButtonText: this.$t('M.comm_confirm'), // 确定
+        cancelButtonText: this.$t('M.comm_cancel') // 取消
+      }).then(() => {
+        this.clickCancleInvestment(id)
+        // this.$message({
+        //   type: 'success',
+        //   message: '下架成功!'
+        // })
+      }).catch(() => {
+        // this.$message({
+        //   type: 'success',
+        //   message: this.$t('M.comm_already') + this.$t('M.comm_cancel') + this.$t('M.otc_adMange_adverting') // 已取消下架
+        // })
+      })
     }
   },
   filter: {},

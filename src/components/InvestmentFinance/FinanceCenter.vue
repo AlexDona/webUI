@@ -194,9 +194,16 @@
                 <!-- 预计发放时间 -->
                 <el-table-column
                   prop="expectedTime"
-                  width="185"
+                  width="150"
                   :label="$t('M.finance_predict') + $t('M.finance_releaseTime')"
                   >
+                </el-table-column>
+                <!-- 已发放收益-->
+                <el-table-column
+                  prop="profit"
+                  width="150"
+                  :label="$t('M.finance_paid_income')"
+                >
                 </el-table-column>
                 <!-- 状态 -->
                 <el-table-column
@@ -217,13 +224,13 @@
                   prop="operations"
                   width="80"
                   :label="$t('M.otc_index_operate')"
-                  >
+                >
                   <!-- 活期 -->
                   <template slot-scope = "data">
                     <div
-                    v-if="data.row.state == $t('M.finance_huoqi')"
-                    class="blue cancelBtn"
-                    @click="cancleInvest(data.row.id)"
+                      v-if="data.row.state == $t('M.finance_huoqi')"
+                      class="blue cancelBtn"
+                      @click="cancleInvest(data.row.id)"
                     >
                     <!-- 取消 -->
                     {{$t('M.comm_cancel')}}
@@ -234,8 +241,8 @@
             </el-tab-pane>
             <!-- 收益记录 -->
             <el-tab-pane
-            :label="$t('M.finance_earnings') + $t('M.finance_recode')"
-            name="2"
+              :label="$t('M.finance_earnings') + $t('M.finance_recode')"
+              name="2"
             >
              <!-- @您还没有登陆,请登录或者注册之后查看！ -->
               <div v-if = "!isLogin" class = 'financeTsipsBox'>
@@ -276,7 +283,7 @@
                 </el-table-column>
                 <!-- 预计收益 -->
                 <el-table-column
-                  prop="expected_earning"
+                  prop="expectedEarning"
                   :label="$t('M.finance_predict') + $t('M.finance_earnings')"
                   >
                 </el-table-column>
@@ -286,11 +293,11 @@
                   :label="$t('M.finance_grant') + $t('M.finance_earnings')"
                   >
                 </el-table-column>
-                <!-- 预计发放时间 -->
+                <!-- 发放时间 -->
                 <el-table-column
                   prop="createTime"
                   width="150"
-                  :label="$t('M.finance_predict') + $t('M.finance_releaseTime')"
+                  :label="$t('M.finance_releaseTime')"
                   >
                 </el-table-column>
               </el-table>
@@ -558,7 +565,23 @@ export default {
     },
     cancleInvest (id) {
       // 用户点击取消按钮需要请求接口
-      this.clickCancleInvestment(id)
+      // this.clickCancleInvestment(id)
+      // 增加二次确认弹出框-任付伟
+      this.$confirm(this.$t('M.otc_adMange_tipsContentOne'), {
+        confirmButtonText: this.$t('M.comm_confirm'), // 确定
+        cancelButtonText: this.$t('M.comm_cancel') // 取消
+      }).then(() => {
+        this.clickCancleInvestment(id)
+        // this.$message({
+        //   type: 'success',
+        //   message: '下架成功!'
+        // })
+      }).catch(() => {
+        // this.$message({
+        //   type: 'success',
+        //   message: this.$t('M.comm_already') + this.$t('M.comm_cancel') + this.$t('M.otc_adMange_adverting') // 已取消下架
+        // })
+      })
     }
   },
   filter: {},

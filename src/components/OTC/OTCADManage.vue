@@ -454,7 +454,16 @@ export default {
       }
     },
     // 一键下架所有广告
-    async cancelAllOnekey () {
+    cancelAllOnekey () {
+      this.$confirm(this.$t('M.otc_adMange_tipsContentOne'), {
+        confirmButtonText: this.$t('M.comm_confirm'), // 确定
+        cancelButtonText: this.$t('M.comm_cancel') // 取消
+      }).then(() => {
+        this.cancelAllOnekeyConfirm()
+      }).catch(() => {
+      })
+    },
+    async cancelAllOnekeyConfirm () {
       const data = await cancelAllOrdersOnekey()
       // 提示信息
       if (!(returnAjaxMessage(data, this, 1))) {
@@ -471,15 +480,7 @@ export default {
         cancelButtonText: this.$t('M.comm_cancel') // 取消
       }).then(() => {
         this.getOTCEntrustingOrdersRevocation(id)
-        // this.$message({
-        //   type: 'success',
-        //   message: '下架成功!'
-        // })
       }).catch(() => {
-        this.$message({
-          type: 'success',
-          message: this.$t('M.comm_already') + this.$t('M.comm_cancel') + this.$t('M.otc_adMange_adverting') // 已取消下架
-        })
       })
     },
     // 点击下架按钮 请求撤单接口
