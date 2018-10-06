@@ -310,7 +310,7 @@ export default {
         > .entrust-table-head {
           background-color: $mainContentNightBgColor;
           color: #A9BED4;
-          border: 1px solid #262F38;
+          border: 1px solid #485776;
           box-shadow: -2px 3px 5px 1px #191E28;
           > .item {
           }
