@@ -275,8 +275,8 @@
                               type="text"
                               class="flex-input border-radius2 padding-l15 box-sizing"
                               ref="serviceCharge"
-                              @keyup="changeInputValue('serviceCharge', index, pointLength)"
-                              @input="changeInputValue('serviceCharge', index, pointLength)"
+                              @keyup="changeInputValue1('serviceCharge', index, pointLength)"
+                              @input="changeInputValue1('serviceCharge', index, pointLength)"
                             >
                             <span
                               class="new-address new-address-currency cursor-pointer"
@@ -727,18 +727,49 @@ export default {
     },
     // 修改input value 输入限制
     changeInputValue (ref, index, pointLength) {
+      // serviceChargeList.minFees
+      // serviceChargeList.maxFees
       // 获取ref中input值
       this[ref] = this.$refs[ref].value
       // 限制数量小数位位数
       let target = this.$refs[ref][index]
       formatNumberInput(target, pointLength)
       // 获取输入数量
-      this.service = this.$refs.serviceCharge[index].value
       this.amount = this.$refs.rechargeCount[index].value
       // 输入数量之后显示在到账数量框中显示,在手续费中输入手续费并且以输入数量之后减去的值显示在到账数量
       this.serviceChargeCount = Math.abs(
         amendPrecision(this.$refs.rechargeCount[index].value, this.$refs.serviceCharge[index].value, '-')
       )
+      if (this.$refs.rechargeCount[index].value > this.withdrawDepositList[index].total) {
+        // 判断输入数量不能大于总数量
+        this.$refs.rechargeCount[index].value = this.withdrawDepositList[index].total
+        console.log(this.amount)
+      }
+    },
+    changeInputValue1 (ref, index, pointLength) {
+      // 获取ref中input值
+      this[ref] = this.$refs[ref].value
+      // 限制数量小数位位数
+      let target = this.$refs[ref][index]
+      formatNumberInput(target, pointLength)
+      // 获取输入手续费
+      this.service = this.$refs.serviceCharge[index].value
+      this.serviceChargeCount = Math.abs(
+        amendPrecision(this.$refs.rechargeCount[index].value, this.$refs.serviceCharge[index].value, '-')
+      )
+      if (this.$refs.serviceCharge[index].value < this.serviceChargeList.minFees) {
+        // 判断输入手续费小于最小提现手续费
+        this.$message({
+          message: this.$t('M.user_assets_withdrawal_hint5'),
+          type: 'error'
+        })
+      } else if (this.$refs.serviceCharge[index].value > this.serviceChargeList.maxFees) {
+        // 判断输入手续费大于于最大提现手续费
+        this.$message({
+          message: this.$t('M.user_assets_withdrawal_hint6'),
+          type: 'error'
+        })
+      }
     },
     // 显示充值框
     showRechargeBox (id, name, index) {
@@ -759,7 +790,6 @@ export default {
     },
     // 显示提现框
     mentionMoneyButton (id, name, index) {
-      this.$refs.serviceCharge[index].value = ''
       this.$refs.rechargeCount[index].value = ''
       this.serviceChargeCount = ''
       console.log()
@@ -914,8 +944,7 @@ export default {
         // 返回列表数据
         this.serviceChargeList = data.data.data
         this.serviceCharge = data.data.data.minFees
-        // this.$refs.serviceCharge[index].value = this.serviceCharge
-        // console.log(this.$refs.serviceCharge[index].value)
+        this.$refs.serviceCharge[index].value = this.serviceCharge
       }
     },
     /**
@@ -938,7 +967,17 @@ export default {
     * 点击提币按钮
     * */
     moneyConfirmState () {
-      if (!this.amount) {
+      // if () {
+      //
+      // }
+      if (!this.mentionAddressValue) {
+        // 请选择提币地址
+        this.$message({
+          message: this.$t('M.comm_please_choose') + this.$t('M.comm_mention_money') + this.$t('M.comm_site'),
+          type: 'error'
+        })
+        this.mentionMoneyConfirm = false
+      } else if (!this.amount) {
         // 请输入提币数量
         this.$message({
           message: this.$t('M.comm_please_enter') + this.$t('M.comm_mention_money') + this.$t('M.comm_count'),

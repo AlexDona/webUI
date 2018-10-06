@@ -27,6 +27,8 @@ export const personal = {
   'user_assets_withdrawal_hint2': '为了用户资金安全，平台可能会电话确认您的提币操作，请注意接听；',
   'user_assets_withdrawal_hint3': '充值经过1个确认后，才允许提现；',
   'user_assets_withdrawal_hint4': '可提现金额≤账户可用资产-未确认的数字资产。',
+  'user_assets_withdrawal_hint5': '手续费小于最小提现手续费，请重新输入',
+  'user_assets_withdrawal_hint6': '手续费大于最大提现手续费，请重新输入',
   'user_assets_no_transaction_password': '您还未设置交易密码请先设置交易密码在进行提币',
   'user_assets_grade_membership': '会员等级',
   'user_assets_or': '或',

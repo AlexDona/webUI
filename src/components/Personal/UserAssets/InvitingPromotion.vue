@@ -196,13 +196,13 @@
               :label="$t('M.user_senior_certification')"
             >
               <template slot-scope = "s">
-                <div v-if="advancedAuth === 'waitVeritfy'">
-                  {{ $t(waitVeritfy)  }}
+                <div v-if="s.row.advancedAuth == 'waitVeritfy'">
+                  {{ $t(waitVeritfy) }}
                 </div>
-                <div v-if="advancedAuth === 'pass'">
+                <div v-if="s.row.advancedAuth == 'pass'">
                   {{ $t(pass) }}
                 </div>
-                <div v-if="advancedAuth = 'notPass'">
+                <div v-if="s.row.advancedAuth == 'notPass'">
                   {{ $t(notPass) }}
                 </div>
               </template>
@@ -383,7 +383,6 @@ export default {
         this.extensionList = data.data.data.list
         this.totalPageForMyEntrust = data.data.data.pages - 0
         this.totalPageMyNumber = data.data.data.total - 0
-        console.log(this.extensionList)
       }
     },
     // 分页

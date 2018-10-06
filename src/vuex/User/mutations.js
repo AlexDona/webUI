@@ -59,8 +59,11 @@ export default {
   [SET_USER_BUTTON_STATUS] (state, data) {
     // console.log(loginType)
     if (!data.loginType) {
-      state.disabledOfPhoneBtn = data.status
-      state.disabledOfOldPhoneBtn = data.status
+      if (!data.type) {
+        state.disabledOfPhoneBtn = data.status
+      } else {
+        state.disabledOfOldPhoneBtn = data.status
+      }
       state.disabledOfMobilePhoneBtn = data.status
     } else {
       state.disabledOfEmailBtn = data.status

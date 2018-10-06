@@ -40,7 +40,13 @@
               <input
                 class="form-input border-radius4 padding-left15"
                 v-model="mentionRemark"
-                @focus="emptyStatus"
+                @keydown="setErrorMsg(0, '')"
+                @blur="checkoutInputFormat(0, mentionRemark)"
+              />
+              <!--错误提示-->
+              <ErrorBox
+                :text="errorShowStatusList[0]"
+                :isShow="!!errorShowStatusList[0]"
               />
             </el-form-item>
             <el-form-item
@@ -49,16 +55,15 @@
               <input
                 class="form-input border-radius4 padding-left15"
                 v-model="prepaidAddress"
-                @focus="emptyStatus"
+                @keydown="setErrorMsg(1, '')"
+                @blur="checkoutInputFormat(1, prepaidAddress)"
+              />
+              <!--错误提示-->
+              <ErrorBox
+                :text="errorShowStatusList[1]"
+                :isShow="!!errorShowStatusList[1]"
               />
             </el-form-item>
-            <div
-              class="error-info error-info1"
-            >
-              <span v-show="errorMsg">
-                {{ errorMsg }}
-              </span>
-            </div>
             <button
               class="form-button border-radius4 cursor-pointer"
               @click.prevent="addAddress"
@@ -219,6 +224,7 @@ import {
   deleteUserWithdrawAddress,
   statusSecurityCenter
 } from '../../../utils/api/personal'
+import ErrorBox from '../../User/ErrorBox'
 import CountDownButton from '../../Common/CountDownCommon'
 import {
   returnAjaxMessage,
@@ -226,13 +232,18 @@ import {
 } from '../../../utils/commonFunc'
 export default {
   components: {
+    ErrorBox, // 错误提示接口
     CountDownButton // 短信倒计时
   },
   // props,
   data () {
     return {
       labelPosition: 'top',
-      errorMsg: '', // 错误信息提示
+      errorShowStatusList: [
+        '', // 备注
+        '' // 提币地址
+      ],
+      // errorMsg: '', // 错误信息提示
       errorMsg1: '', // 错误信息提示
       // 币种列表
       currencyValue: '',
@@ -273,18 +284,18 @@ export default {
     },
     // 点击显示验证信息
     addAddress () {
-      if (!this.mentionRemark) {
-        // 请输入备注
-        this.errorMsg = this.$t('M.comm_please_enter') + this.$t('M.comm_remark')
-        return
-      } else if (!this.prepaidAddress) {
-        // 提币地址不能为空
-        this.errorMsg = this.$t('M.user_address_empty')
-        return
+      let goOnStatus = 0
+      if (
+        this.checkoutInputFormat(0, this.mentionRemark) &&
+        this.checkoutInputFormat(0, this.prepaidAddress)
+      ) {
+        goOnStatus = 1
       } else {
-        this.errorMsg = ''
+        goOnStatus = 0
       }
-      this.getSecurityCenter()
+      if (goOnStatus) {
+        this.getSecurityCenter()
+      }
     },
     // 点击确认
     submitMentionMoney () {
@@ -299,6 +310,39 @@ export default {
           this.stateSubmitAddAddress(e)
         }
       })
+    },
+    checkoutInputFormat (type, targetNum) {
+      console.log(type)
+      switch (type) {
+        // 买方UID
+        case 0:
+          if (!targetNum) {
+            // 请输入备注
+            this.setErrorMsg(0, this.$t('M.comm_please_enter') + this.$t('M.comm_remark'))
+            this.$forceUpdate()
+            return 0
+          } else {
+            this.setErrorMsg(0, '')
+            this.$forceUpdate()
+            return 1
+          }
+        // 数量
+        case 1:
+          if (!targetNum) {
+            // 请输入提币地址
+            this.setErrorMsg(1, this.$t('M.comm_please_enter') + this.$t('M.comm_mention_money') + this.$t('M.comm_site'))
+            this.$forceUpdate()
+            return 0
+          } else {
+            this.setErrorMsg(1, '')
+            this.$forceUpdate()
+            return 1
+          }
+      }
+    },
+    // 设置错误信息
+    setErrorMsg (index, msg) {
+      this.errorShowStatusList[index] = msg
     },
     // 新增用户提币地址按钮
     async stateSubmitAddAddress () {

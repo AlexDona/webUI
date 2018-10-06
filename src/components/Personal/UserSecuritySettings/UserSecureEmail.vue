@@ -207,7 +207,7 @@ export default {
           regType: type
         }
         const data = await checkUserExist(params)
-        if (!returnAjaxMessage(data, this, 1)) {
+        if (!returnAjaxMessage(data, this, 0)) {
           return false
         }
       } else {

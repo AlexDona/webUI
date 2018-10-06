@@ -256,10 +256,15 @@ export default {
     },
     // 确定提交绑定谷歌验证
     getGoogleStatusSubmit () {
-      if (!this.googleVerificationCode) {
-        this.errorMsg = this.$t('M.comm_please_enter') + this.$t('M.user_security_google') + this.$t('M.user_security_verify')
+      let goOnStatus = 0
+      if (
+        this.checkoutInputFormat(0, this.googleVerificationCode)
+      ) {
+        goOnStatus = 1
       } else {
-        this.errorMsg = ''
+        goOnStatus = 0
+      }
+      if (goOnStatus) {
         this.confirmBindingBailPhone()
       }
     },
@@ -281,12 +286,17 @@ export default {
     },
     // 确定解绑谷歌验证
     getGoogleStatusSubmitUnbind () {
-      if (!this.googleVerificationCode) {
-        this.errorMsg = this.$t('M.comm_please_enter') + this.$t('M.user_security_google') + this.$t('M.user_security_verify')
+      let goOnStatus = 0
+      if (
+        this.checkoutInputFormat(0, this.googleVerificationCode)
+      ) {
+        goOnStatus = 1
       } else {
-        this.errorMsg = ''
+        goOnStatus = 0
       }
-      this.confirmBindingUnbind()
+      if (goOnStatus) {
+        this.confirmBindingUnbind()
+      }
     },
     async confirmBindingUnbind () {
       let data

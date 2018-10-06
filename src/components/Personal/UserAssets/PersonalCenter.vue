@@ -415,7 +415,7 @@ export default {
         width: 80px;
         height: 35px;
         line-height: 0;
-        color: #333;
+        color: #fff;
         background-color: transparent;
         border: 1px solid #338FF5;
       }

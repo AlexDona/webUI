@@ -95,6 +95,7 @@ export const common = {
   'comm_note': '短信',
   'comm_code': '验证码',
   'comm_code_phone': '手机验证',
+  'comm_code_phone1': '手机号码',
   'comm_code_email': '邮箱验证',
   'comm_code_google': '谷歌验证',
   // 动作类型
@@ -107,6 +108,7 @@ export const common = {
   'comm_view_more': '查看更多',
   // 内容类型
   'comm_sure_delete': '确定删除API地址吗, 是否继续?',
+  'comm_sure_push': '确定删除PUSH记录吗, 是否继续?',
   'comm_qr_code': '二维码',
   'comm_have_been_copied': '已拷贝',
   'comm_copies_failure': '拷贝失败，请稍后重试',

@@ -6,7 +6,6 @@ import {
 } from '../utils/api/trade'
 import {
   userRefreshUser,
-  statusSecurityCenter,
   getQueryAllOrdersList
 } from '../utils/api/personal'
 
@@ -124,26 +123,12 @@ export const repealMyEntrustCommon = async (params, callback) => {
   const repealData = await repealMyEntrustAjax(params)
   callback(repealData)
 }
-/**
- * 安全中心状态
- */
-export const stateSafeCentral = async (params, callback) => {
-  const repealData = await statusSecurityCenter(params)
-  callback(repealData)
-}
 // /**
 //  * 商家订单列表请求
 //  */
 export const getMerchantsOrdersList = async (params, callback) => {
   const repealData = await getQueryAllOrdersList(params)
   callback(repealData)
-}
-/**
- * 个人资产信息
- */
-export const globalPersonalAssetsInformation = async (params, callback) => {
-  const data = await userRefreshUser(params)
-  callback(data)
 }
 
 // 获取板块信息

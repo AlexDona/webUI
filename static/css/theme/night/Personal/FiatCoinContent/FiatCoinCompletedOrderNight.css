@@ -35,7 +35,7 @@
   border-collapse: separate !important;
 }
 .fiat-completed-order-box.personal.night .el-table__expanded-cell{
-  border-bottom:25px solid #1d2331;
+  border-bottom:25px solid #1C1F32;
 }
 /*.fiat-completed-order-box.personal.night .el-icon-arrow-right:before {*/
   /*content: " ";*/
@@ -45,7 +45,7 @@
   border-bottom-left-radius: 5px;
 }
 .fiat-completed-order-box.personal.night .el-table__expanded-cell:hover{
-  background-color: #1E2636 !important;
+  background-color: #1C1F32 !important;
 }
 .fiat-completed-order-box.personal.night .el-table th.is-leaf:first-of-type{
   border-top-left-radius: 5px;

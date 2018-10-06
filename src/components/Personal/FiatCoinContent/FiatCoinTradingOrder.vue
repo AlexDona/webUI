@@ -1083,7 +1083,6 @@ export default {
         border: 0;
       }
       min-height: 472px;
-      // background-color: #202A33;
       border-radius: 5px;
       >.order-list{
         /*width: 1045px;*/
@@ -1291,24 +1290,25 @@ export default {
         }
       }
       >.no-data{
-        /*width: 1043px;*/
         height: 472px;
         line-height: 472px;
         text-align: center;
-        background-color: $nightMainBgColor;
       }
     }
     &.night{
       background-color: $nightBgColor;
       color:$nightFontColor;
       >.fiat-trading-order-content{
-        background-color: #1E2636;
+        background-color: $nightMainBgColor;
         .button {
           background:linear-gradient(81deg,rgba(43,57,110,1) 0%,rgba(42,80,130,1) 100%);
         }
+        >.no-data{
+          background-color: $nightMainBgColor;
+        }
       }
       >.background-color{
-        background-color: #1E2636;
+        background-color: $nightMainBgColor;
         >.fiat-color{
           color: #338FF5;
         }
@@ -1319,68 +1319,72 @@ export default {
       color:$dayFontColor;
       >.fiat-trading-order-content{
         >.order-list{
-        background-color: #fff;
-        border: 1px solid  rgba(72,87,118,0.1);
-        >.order{
-          >.order-list-head{
-            color: #333;
-            border-bottom: 1px solid rgba(72,87,118,0.1);
-          }
-          >.order-list-body{
-            color:#7D90AC;
-            >.order-list-body-left{
-              border-right: 1px solid rgba(72,87,118,0.1);
+          background-color: #fff;
+          border: 1px solid  rgba(72,87,118,0.1);
+          >.order{
+            >.order-list-head{
+              color: #333;
+              border-bottom: 1px solid rgba(72,87,118,0.1);
             }
-            >.order-list-body-middle{
-              border-right: 1px solid rgba(72,87,118,0.1);;
-              >.middle-content{
-                .trader-info{
-                  >.pay-style{
-                    background: rgba(51,143,245,0.1);
+            >.order-list-body{
+              color:#7D90AC;
+              >.order-list-body-left{
+                border-right: 1px solid rgba(72,87,118,0.1);
+              }
+              >.order-list-body-middle{
+                border-right: 1px solid rgba(72,87,118,0.1);;
+                >.middle-content{
+                  .trader-info{
+                    >.pay-style{
+                      background: rgba(51,143,245,0.1);
+                    }
+                  }
+                }
+              }
+              >.order-list-body-right{
+                >.right-content{
+                  >.action-tips{
+                    .wait-pay{
+                      color: #E8554F;
+                    }
+                  }
+                  >.submitted-confirm-payment{
+                    color: #5E95EC;
+                  }
+                  >.action-explain{
+                    >.remaining-time{
+                      color: #D45858;
+                    }
+                  }
+                  >.count-down-time{
+                    .timeIcon{
+                      color: #D45858;
+                    }
                   }
                 }
               }
             }
-            >.order-list-body-right{
-              >.right-content{
-                >.action-tips{
-                  .wait-pay{
-                    color: #E8554F;
-                  }
-                }
-                >.submitted-confirm-payment{
-                  color: #5E95EC;
-                }
-                >.action-explain{
-                  >.remaining-time{
-                    color: #D45858;
-                  }
-                }
-                >.count-down-time{
-                  .timeIcon{
-                    color: #D45858;
+          }
+          >.appeal{
+            >.appeal-head{
+              color: #FFFFFF;
+              border-bottom: 1px solid #262F38;
+            }
+            >.appeal-body{
+              >.appeal-body-content{
+                >.appeal-textarea{
+                  >.appeal-reason{
+                    color: #338FF5;
                   }
                 }
               }
             }
           }
         }
-        >.appeal{
-          >.appeal-head{
-            color: #FFFFFF;
-            border-bottom: 1px solid #262F38;
-          }
-          >.appeal-body{
-            >.appeal-body-content{
-              >.appeal-textarea{
-                >.appeal-reason{
-                  color: #338FF5;
-                }
-              }
-            }
-          }
+        >.no-data{
+          background-color: #fff;
+          border: 1px solid rgba(38,47,56,0.1);
         }
-      }
       }
     }
   }

@@ -3,14 +3,15 @@
   width: 600px;
 }
 .set-phone.personal .el-input__inner {
+  width: 130px;
   height: 36px;
   border-radius: 2px 0 0px 2px;
 }
 .set-phone.personal .el-input-group {
   width: 131px;
-  height: 36px;
+  /*height: 36px;*/
   border-radius: 4px;
-  margin-right: 85px;
+  margin-right: 0;
 }
 .set-phone.personal .el-input-group__append {
   border-left: 0;

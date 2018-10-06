@@ -646,7 +646,7 @@ export default {
     cancelId (id) {
       this.pushUID = id
       // 确定删除提币地址吗, 是否继续?
-      this.$confirm(this.$t('M.comm_sure_delete'), {
+      this.$confirm(this.$t('M.comm_sure_push'), {
         // 取消
         cancelButtonText: this.$t('M.comm_cancel'),
         // 确定
@@ -694,6 +694,7 @@ export default {
     statusUserInfo () {
       this.paymentVisible = false
       this.passwordVisible = true
+      this.pushPassword = ''
     },
     // 绑定手机检测输入格式
     stateInputFormat (type, targetNum) {

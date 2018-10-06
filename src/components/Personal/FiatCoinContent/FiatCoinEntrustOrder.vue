@@ -178,9 +178,9 @@ export default {
       // 您确定要撤销此单吗, 是否继续?
       this.$confirm(this.$t('M.otc_revoke'), {
         // 确定
-        confirmButtonText: this.$t('M.comm_cancel'),
+        confirmButtonText: this.$t('M.comm_affirm'),
         // 取消
-        cancelButtonText: this.$t('M.comm_affirm')
+        cancelButtonText: this.$t('M.comm_cancel')
       }).then(() => {
         this.getOTCEntrustingOrdersRevocation(id)
       }).catch(() => {
@@ -281,7 +281,7 @@ export default {
           box-shadow: -2px 3px 5px 1px #191E28; text-align: left;
         }
         > .entrust-table-body {
-          background-color: #1E2636;
+          background-color: $nightMainBgColor;
           color: #9DA5B3;
           border: 1px solid #262F38;
           > .entrust-list-content {

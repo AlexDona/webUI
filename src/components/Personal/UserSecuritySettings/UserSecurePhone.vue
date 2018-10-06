@@ -159,7 +159,7 @@
                   <CountDownButton
                     class="send-code-btn cursor-pointer"
                     :status="disabledOfOldPhoneBtn"
-                    @run="sendPhoneOrEmailCode(0, 1)"
+                    @run="sendPhoneOrEmailCode(0, 1, 1)"
                   />
                 </template>
               </el-input>
@@ -208,7 +208,7 @@
                   <CountDownButton
                     class="send-code-btn cursor-pointer"
                     :status="disabledOfPhoneBtn"
-                    @run="sendPhoneOrEmailCode(0, 2)"
+                    @run="sendPhoneOrEmailCode(0, 2, 0)"
                   />
                 </template>
               </el-input>
@@ -260,7 +260,8 @@ import { createNamespacedHelpers, mapState } from 'vuex'
 import ImageValidate from '../../Common/ImageValidateCommon' // 图片验证吗
 import CountDownButton from '../../Common/CountDownCommon'
 import {
-  returnAjaxMessage // 接口返回信息
+  returnAjaxMessage, // 接口返回信息
+  sendPhoneOrEmailCodeAjax
 } from '../../../utils/commonFunc'
 import {
   bindPhoneAddress,
@@ -347,7 +348,7 @@ export default {
       this.bindingDataPhone.identifyCode = this.getRandomNum()
     },
     // 发送验证码
-    sendPhoneOrEmailCode (loginType, val) {
+    sendPhoneOrEmailCode (loginType, val, type) {
       if (this.disabledOfPhoneBtn || this.disabledOfEmailBtn) {
         return false
       }
@@ -356,6 +357,7 @@ export default {
         country: this.bindingDataPhone.bindingAreaCodeValue // 国家编码
       }
       if (!this.securityCenter.isPhoneBind) {
+        console.log(2)
         switch (loginType) {
           // 当是绑定手机时给收入新手机号发验证码
           case 0:
@@ -366,12 +368,23 @@ export default {
             break
         }
       } else {
+        // console.log(1)
+        console.log(loginType)
         switch (loginType) {
           case 0:
             if (val == 1) {
               // 当是换绑手机时给原手机号发验证码
               params.phone = this.userInfo.userInfo.phone
-            } else {
+            }
+            if (val == 2) {
+              if (!this.amendDataPhone.newPhoneAccounts) {
+                this.$message({
+                  // 请先输入手机号
+                  message: this.$t('M.comm_please_enter') + this.$t('M.comm_code_phone1'),
+                  type: 'error'
+                })
+                return false
+              }
               // 当是换绑手机时给收入新手机号发验证码
               params.phone = this.amendDataPhone.newPhoneAccounts
             }
@@ -388,20 +401,11 @@ export default {
           console.log('error')
           return false
         } else {
-          switch (loginType) {
-            case 0:
-              this.$store.commit('user/SET_USER_BUTTON_STATUS', {
-                loginType: 0,
-                status: true
-              })
-              break
-            case 1:
-              this.$store.commit('user/SET_USER_BUTTON_STATUS', {
-                loginType: 1,
-                status: true
-              })
-              break
-          }
+          this.$store.commit('user/SET_USER_BUTTON_STATUS', {
+            loginType: 0,
+            type,
+            status: true
+          })
         }
       })
     },
@@ -664,9 +668,9 @@ export default {
           margin-left: 55px;
           .send-code-btn {
             width: 90px;
-            height: 36px;
+            /*height: 36px;
             position: absolute;
-            top: -1px;
+            top: -1px;*/
           }
           .input {
             width: 180px;
