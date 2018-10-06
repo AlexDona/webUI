@@ -224,12 +224,15 @@ export default {
   beforeRouteUpdate () {},
   methods: {
     async currencyTransform () {
+      console.log(1)
       const params = {
         coinName: 'BTC',
         shortName: 'CNY'
       }
       const data = await currencyTransform(params)
+      console.log(2)
       if (!returnAjaxMessage(data, this)) {
+        console.log(3)
         return false
       } else {
         console.log(data)
