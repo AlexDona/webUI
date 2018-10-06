@@ -7,6 +7,7 @@
     @click.prevent="run"
   >
   <!-- @click.stop.prevent="run" -->
+  <!-- @click.prevent="run" -->
     {{text}}
   </button>
   <!--<button class="sendSmsBtn" :class="disabled?'dissendSmsBtn':''" type="button" v-on:click="run" :disabled="disabled || time > 0">{{ text }}</button>-->

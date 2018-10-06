@@ -453,7 +453,7 @@ export default {
         this.ADManageCurrencyId = data.data.data
       }
     },
-    // 一键下架所有广告
+    // 一键下架所有广告 二次确认弹出框
     cancelAllOnekey () {
       this.$confirm(this.$t('M.otc_adMange_tipsContentOne'), {
         confirmButtonText: this.$t('M.comm_confirm'), // 确定
@@ -463,6 +463,7 @@ export default {
       }).catch(() => {
       })
     },
+    // 一键下架所有广告
     async cancelAllOnekeyConfirm () {
       const data = await cancelAllOrdersOnekey()
       // 提示信息
