@@ -19,7 +19,8 @@
 }
 /*2.0查询按钮样式*/
 .otc-AD-manage-box .inquire-button .el-button{
-  padding: 9px 20px;
+  padding: 10px 16px;
+  border: 0;
 }
 /*4.0广告列表表格样式*/
 .otc-AD-manage-box .manage-main-bottom .el-table__header{

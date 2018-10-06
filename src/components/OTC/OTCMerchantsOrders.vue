@@ -18,7 +18,7 @@
         <div class="orders-main-top">
           <!-- 交易类型 -->
           <span class="filtrate-text font-size14">{{$t('M.otc_type_ransaction')}}</span>
-          <span class="style-input">
+          <span class="status-input">
             <el-select
               v-model="activitedMerchantsOrdersTraderStyleList"
               @change="changeSelectValue('changeMerchantsOrdersTraderStyleList', $event)"
@@ -113,6 +113,7 @@
             >
             </el-date-picker>
           </span>
+          <br>
           <span class="inquire-button">
             <el-button type="primary" @click="findFilter">{{$t('M.otc_inquiries')}}</el-button>
             <el-button type="primary" @click="resetCondition">{{$t('M.otc_MerchantsOrders_reset')}}</el-button>
@@ -537,19 +538,19 @@ export default {
           line-height: 60px;
           margin-bottom: 25px;
           >.filtrate-text{
+            margin-right: 5px;
             // color: #9DA5B3;
           }
-          >.style-input{
-          }
           >.status-input{
+            margin-right: 58px;
           }
           >.date-picker{
-            margin-right: 60px;
             >.date-short-line{
               margin: 0 3px;
             }
           }
           >.inquire-button{
+            float: right;
           }
           >.all-clear{
             // color: #338FF5;
@@ -584,8 +585,6 @@ export default {
           >.orders-main-top{
             >.filtrate-text{
               color: #9DA5B3;
-            }
-            >.style-input{
             }
             >.status-input{
             }
@@ -626,8 +625,6 @@ export default {
           >.orders-main-top{
             >.filtrate-text{
               color: #9DA5B3;
-            }
-            >.style-input{
             }
             >.status-input{
             }

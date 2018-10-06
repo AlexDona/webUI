@@ -3,6 +3,9 @@
   border:1px solid rgba(236,241,248,1);
   border-radius:2px
 }
+.otc-report-form-statistics-box.day .date .radio-date .el-radio__input.is-checked+.el-radio__label{
+    color: #338FF5;
+  }
 .otc-report-form-statistics-box.day > .report-form-statistics-content > .report-form-asset[data-v-e69a84f0]{
   border:1px solid rgba(38,47,56,0.1);
   border-radius: 0px;

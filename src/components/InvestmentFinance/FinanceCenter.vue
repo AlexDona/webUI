@@ -194,9 +194,16 @@
                 <!-- 预计发放时间 -->
                 <el-table-column
                   prop="expectedTime"
-                  width="185"
+                  width="150"
                   :label="$t('M.finance_predict') + $t('M.finance_releaseTime')"
                   >
+                </el-table-column>
+                <!-- 已发放收益-->
+                <el-table-column
+                  prop="profit"
+                  width="150"
+                  :label="$t('M.finance_paid_income')"
+                >
                 </el-table-column>
                 <!-- 状态 -->
                 <el-table-column
@@ -234,8 +241,8 @@
             </el-tab-pane>
             <!-- 收益记录 -->
             <el-tab-pane
-            :label="$t('M.finance_earnings') + $t('M.finance_recode')"
-            name="2"
+              :label="$t('M.finance_earnings') + $t('M.finance_recode')"
+              name="2"
             >
              <!-- @您还没有登陆,请登录或者注册之后查看！ -->
               <div v-if = "!isLogin" class = 'financeTsipsBox'>
@@ -276,7 +283,7 @@
                 </el-table-column>
                 <!-- 预计收益 -->
                 <el-table-column
-                  prop="expected_earning"
+                  prop="expectedEarning"
                   :label="$t('M.finance_predict') + $t('M.finance_earnings')"
                   >
                 </el-table-column>
@@ -286,11 +293,11 @@
                   :label="$t('M.finance_grant') + $t('M.finance_earnings')"
                   >
                 </el-table-column>
-                <!-- 预计发放时间 -->
+                <!-- 发放时间 -->
                 <el-table-column
                   prop="createTime"
                   width="150"
-                  :label="$t('M.finance_predict') + $t('M.finance_releaseTime')"
+                  :label="$t('M.finance_releaseTime')"
                   >
                 </el-table-column>
               </el-table>
