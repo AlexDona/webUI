@@ -704,6 +704,7 @@ export default {
           type: 'error'
         })
       } else {
+        this.password = ''
         this.dialogFormVisible = true
       }
     },
@@ -754,7 +755,7 @@ export default {
       if (goOnStatus) {
         let data
         let params = {
-          payPassword: this.password, // 用户id
+          payPassword: this.password, // 用户password
           vipName: this.vipName,
           month: this.month
         }
@@ -764,6 +765,7 @@ export default {
         } else {
           this.dialogFormVisible = false
           this.password = ''
+          reflashUserInfo(this)
           this.toggleAssetsCurrencyId()
           console.log(data)
         }

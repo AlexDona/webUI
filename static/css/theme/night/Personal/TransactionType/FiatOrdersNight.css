@@ -8,20 +8,20 @@
 }
 .fiat-orders.personal.night .el-tabs__item.is-active {
   color: rgba(0, 121, 254, 1);
-  background: #1E2636;
+  background: #1C1F32;
   border-bottom: 2px solid #338FF5 !important;
 }
 .fiat-orders.personal.night .el-tabs__item:hover {
   border-left: 0 solid transparent;
-  background-color: #1E2636;
+  background-color: #1C1F32;
 }
 .fiat-orders.personal.night .el-input__inner {
-  background-color: #19202E;
+  background-color: #2D3651;
 }
 .fiat-orders.personal.night .el-button {
   color: #fff;
   background:linear-gradient(90deg,rgba(43,57,110,1) 0%,rgba(42,80,130,1) 100%);
 }
 .fiat-orders.personal.night .el-tabs__content {
-  background-color: #1E2636;
+  background-color: #1C1F32;
 }

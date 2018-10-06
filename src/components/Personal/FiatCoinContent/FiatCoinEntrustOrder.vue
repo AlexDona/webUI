@@ -268,14 +268,14 @@ export default {
       background-color: $nightBgColor;
       color:$nightFontColor;
       >.background-color{
-        background-color: #1E2636;
+        background-color: $nightMainBgColor;
         >.fiat-color{
           color: #338FF5;
         }
       }
       >.fiat-entrust-order-table{
         > .entrust-table-head {
-          background-color: #1E2636;
+          background-color: $nightMainBgColor;
           color: #617499;
           border: 1px solid #262F38;
           box-shadow: -2px 3px 5px 1px #191E28; text-align: left;
@@ -291,6 +291,9 @@ export default {
             .green {
               color: #008069;
             }
+          }
+          .no-data {
+            background-color: $nightMainBgColor;
           }
         }
       }

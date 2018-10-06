@@ -365,7 +365,7 @@ export default {
   .binding-google {
     >.binding-google-main {
       width: 1100px;
-      min-height: 700px;
+      min-height: 600px;
       margin: 60px auto 100px;
       >.binding-google-header {
         display: flex;
@@ -445,7 +445,7 @@ export default {
       background-color: $nightBgColor;
       color:$nightFontColor;
       .binding-google-main {
-        background-color: #1E2636;
+        background-color: $nightMainBgColor;
         >.binding-google-header {
           border-bottom: 1px solid #39424D;
           >.header-content-left {

@@ -560,11 +560,11 @@ export default {
       background-color: $nightBgColor;
       color:$nightFontColor;
       >.background-color {
-        background-color: #1E2636;
+        background-color: $nightMainBgColor;
       }
       .invitation-promotion-main{
         >.extension-info{
-          background-color: #1E2636;
+          background-color: $nightMainBgColor;
           >.extension-info-header{
             border-bottom: 1px solid #39424D;
             >.header-color {
@@ -573,7 +573,7 @@ export default {
           }
           >.extension-info-content{
             >.info-record {
-              background:rgba(248,249,252,0.05);
+              background: #283049;
               >.extension-code {
                 border-bottom: 1px solid #364654;
               }
@@ -609,7 +609,7 @@ export default {
           }
         }
         >.extension-statistics {
-          background-color: #1E2636;
+          background-color: $nightMainBgColor;
           >.extension-statistics-header {
             border-bottom: 1px solid #39424D;
             >.header-color {
@@ -618,7 +618,7 @@ export default {
           }
         }
         >.award-record {
-          background-color: #1E2636;
+          background-color: $nightMainBgColor;
           >.award-record-header {
             border-bottom: 1px solid #39424D;
             >.header-color {

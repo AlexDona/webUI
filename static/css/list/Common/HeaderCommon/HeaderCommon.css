@@ -25,8 +25,8 @@
   height:380px;
 }
 .v-modal{
-  position: fixed;
-  z-index: 2000 ;
+  position: relative;
+  z-index: 2000;
 }
 .el-select-dropdown{
   z-index: 2100 !important;

@@ -1092,7 +1092,7 @@ export default {
         margin-bottom: 15px;
         box-sizing: border-box;
         border-radius: 5px;
-        background-color: #1E2636;
+        background-color: $nightMainBgColor;
         border: 1px solid #262F38;
         >.order{
           >.order-list-head{
@@ -1295,6 +1295,7 @@ export default {
         height: 472px;
         line-height: 472px;
         text-align: center;
+        background-color: $nightMainBgColor;
       }
     }
     &.night{

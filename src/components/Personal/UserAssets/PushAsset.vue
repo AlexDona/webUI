@@ -829,9 +829,9 @@ export default {
       >.push-assets-main {
         >.push-assets-content,
         >.push-assets-content-box {
-          background-color: #1E2636;
+          background-color: $nightMainBgColor;
           >.push-header {
-            background-color: #1E2636;
+            background-color: $nightMainBgColor;
             >.push-header-title {
               color: #338FF5;
             }
@@ -855,7 +855,7 @@ export default {
           }
         }
         >.award-record {
-          background-color: #1E2636;
+          background-color: $nightMainBgColor;
           >.award-record-header {
             border-bottom: 1px solid #39424D;
             >.header-color {

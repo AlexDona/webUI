@@ -282,7 +282,7 @@ export default {
     /*height:100%;*/
     >.login-password-main {
       width: 1100px;
-      height:100%;
+      height: 600px;
       /*min-height: 700px;*/
       margin: 60px auto 100px;
       >.login-password-header {
@@ -335,7 +335,7 @@ export default {
       background-color: $nightBgColor;
       color:$nightFontColor;
       .login-password-main {
-        background-color: #1E2636;
+        background-color: $nightMainBgColor;
         >.login-password-header {
           border-bottom: 1px solid #39424D;
           >.header-content-left {

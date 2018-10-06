@@ -215,7 +215,7 @@
                         </div>
                       </div>
                       <div class='recharge-content-right flex1'>
-                        <p class="recharge-content-code margin-top45 float-left">
+                        <p class="recharge-content-code margin-top30 float-left">
                           <VueQrcode
                             class="ercode"
                             :value="chargeMoney"
@@ -460,7 +460,7 @@
                       >
                         <span class="info text-align-c display-inline-block">
                           <!--您还未设置交易密码请先设置交易密码在进行提币-->
-                          {{ $t('m.user_assets_no_transaction_password') }}
+                          {{ $t('M.user_assets_no_transaction_password') }}
                         </span>
                         <span
                           slot="footer"
@@ -472,14 +472,14 @@
                             @click.prevent="confirm"
                           >
                             <!--确 定-->
-                            {{ $t('m.comm_confirm') }}
+                            {{ $t('M.comm_confirm') }}
                           </button>
                           <button
                             class="btn border-radius4 cursor-pointer"
                             @click.prevent="dialogVisible = false"
                           >
                             <!--取 消-->
-                            {{ $t('m.comm_cancel') }}
+                            {{ $t('M.comm_cancel') }}
                           </button>
                         </span>
                       </el-dialog>
@@ -626,7 +626,6 @@ export default {
       'CHANGE_ACTIVE_SYMBOL'
     ]),
     // 切换当前币种
-    // 确认开启关闭
     statusOpenToClose (e) {
       switch (e) {
         case 'all':
@@ -726,7 +725,6 @@ export default {
       })
       this.$router.push({'path': '/TradeCenter'})
     },
-    // 输入限制
     // 修改input value 输入限制
     changeInputValue (ref, index, pointLength) {
       // 获取ref中input值
@@ -738,7 +736,6 @@ export default {
       this.service = this.$refs.serviceCharge[index].value
       this.amount = this.$refs.rechargeCount[index].value
       // 输入数量之后显示在到账数量框中显示,在手续费中输入手续费并且以输入数量之后减去的值显示在到账数量
-      // 先引入方法 用变量接收 再调用方法 然后传入参数 得到结构 再做逻辑渲染判断
       this.serviceChargeCount = Math.abs(
         amendPrecision(this.$refs.rechargeCount[index].value, this.$refs.serviceCharge[index].value, '-')
       )
@@ -944,14 +941,14 @@ export default {
       if (!this.amount) {
         // 请输入提币数量
         this.$message({
-          message: this.$t('m.comm_please_enter') + this.$t('m.comm_mention_money') + this.$t('m.comm_count'),
+          message: this.$t('M.comm_please_enter') + this.$t('M.comm_mention_money') + this.$t('M.comm_count'),
           type: 'error'
         })
         this.mentionMoneyConfirm = false
       } else if (!this.service) {
         // 请输入手续费
         this.$message({
-          message: this.$t('m.comm_please_enter') + this.$t('m.comm_service_charge'),
+          message: this.$t('M.comm_please_enter') + this.$t('M.comm_service_charge'),
           type: 'error'
         })
         this.mentionMoneyConfirm = false
@@ -1012,7 +1009,7 @@ export default {
     //  点击复制
     onCopy (e) {
       // 已拷贝
-      let msg = this.$t('m.comm_have_been_copied')
+      let msg = this.$t('M.comm_have_been_copied')
       this.$message({
         type: 'success',
         message: msg
@@ -1020,7 +1017,7 @@ export default {
     },
     onError (e) {
       // 拷贝失败，请稍后重试
-      let msg = this.$t('m.comm_copies_failure')
+      let msg = this.$t('M.comm_copies_failure')
       this.$message({
         type: 'success',
         message: msg
@@ -1379,7 +1376,7 @@ export default {
       background-color: $nightBgColor;
       color:$nightFontColor;
       .account-assets-box {
-        background-color: #1E2636;
+        background-color: $nightMainBgColor;
         .account-assets-header {
           box-shadow: 0px 2px 13px rgba(24,30,42,1);
           >.header-left {
@@ -1388,7 +1385,7 @@ export default {
           >.header-right {
             >.header-right-right {
               >.header-right-search {
-                background-color: #333F4A;
+                background-color: #2D3651;
                 color: #fff;
               }
             }
@@ -1452,7 +1449,7 @@ export default {
                   }
                   >.input-box {
                     >.hint-input {
-                      background-color: #181E24;
+                      background-color: #2D3651;
                       color: #fff;
                     }
                     >.code-copy {
@@ -1473,7 +1470,7 @@ export default {
                   >.list-left-flex {
                     >.flex-box {
                       >.flex-input {
-                        background-color: #181E24;
+                        background-color: #2D3651;
                         color: #fff;
                       }
                       >.text-input {
@@ -1495,11 +1492,11 @@ export default {
                         color: #83909B;
                       }
                       >.count-flex-input{
-                        background-color: #181E24;
+                        background-color: #2D3651;
                         color: #fff;
                       }
                       >.count-text-input {
-                        background-color: #37424C;
+                        background-color: #20273D;
                         color: #fff;
                       }
                     }

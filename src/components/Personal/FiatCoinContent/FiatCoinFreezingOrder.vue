@@ -281,16 +281,16 @@ export default {
       }
       >.freezing-order-content{
         >.freezing-table-head{
-          background-color: #1E2636;
+          background-color: $nightMainBgColor;
           color: #617499;
           border: 1px solid #262F38;
           box-shadow: -2px 3px 5px 1px #191E28;
         }
         >.freezing-table-body{
-          background-color: #1E2636;
+          background-color: $nightMainBgColor;
           border: 1px solid #262F38;
           >.freezing-info-top{
-            background-color: #1E2636;
+            background-color: $nightMainBgColor;
             color: #617499;
             border-radius: 5px;
             .red{
@@ -321,7 +321,7 @@ export default {
           }
         }
         >.no-data{
-          background-color: #1E2636;
+          background-color: $nightMainBgColor;
         }
       }
     }

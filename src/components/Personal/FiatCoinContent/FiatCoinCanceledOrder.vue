@@ -208,7 +208,7 @@ export default {
         /*width: 1043px;*/
         height: 35px;
         line-height: 35px;
-        background-color: #1E2636;
+        background-color: $nightMainBgColor;
         color: #617499;
         border: 1px solid #262F38;
         border-radius: 5px;
@@ -228,14 +228,14 @@ export default {
         box-sizing: border-box;
         /*width: 1043px;*/
         height: 170px;
-        background-color: #1E2636;
+        background-color: $nightMainBgColor;
         border: 1px solid #262F38;
         border-radius: 5px;
         margin-bottom: 15px;
         >.canceled-info-top{
           height: 40px;
           line-height: 40px;
-          background-color: #1E2636;
+          background-color: $nightMainBgColor;
           color: #617499;
           /*border: 1px solid #262F38;*/
           border-radius: 5px;
@@ -305,14 +305,14 @@ export default {
         height: 432px;
         line-height: 432px;
         text-align: center;
-        background-color: #1E2636;
+        background-color: $nightMainBgColor;
       }
     }
     &.night{
       background-color: $nightBgColor;
       color:$nightFontColor;
       >.background-color{
-        background-color: #1E2636;
+        background-color: $nightMainBgColor;
         >.fiat-color{
           color: #338FF5;
         }
