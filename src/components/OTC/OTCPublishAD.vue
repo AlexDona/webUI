@@ -232,7 +232,7 @@
                 <span class="unit font-size14">{{activeedCurrencyName}}</span>
               </div>
               <div>
-                <span class="err err-min-count">{{errorInfoMinCount}}</span>
+                <span class="err err-min-count"><span>{{errorInfoMinCount}}</span></span>
                 <span class="err">{{errorInfoMaxCount}}</span>
               </div>
             </div>
@@ -992,7 +992,9 @@ export default {
         >.sum-limit{
           >.right{
             .err-min-count{
-              margin-right: 100px;
+              display: inline-block;
+              width: 250px;
+              // margin-right: 100px;
             }
             >.input-top{
               margin-top: 15px;
