@@ -33,9 +33,9 @@
         </span>
       </header>
       <div class="add-chat-content">
-        <header class="chat-content-title">
+        <!--<header class="chat-content-title">-->
           <!--*微信上传二维码方法：打开微信首页>收钱>保存图片，将存在手机相册的收款码上传即可。-->
-        </header>
+        <!--</header>-->
         <div class="chat-content-from">
           <el-form
             :label-position="labelPosition"
@@ -390,7 +390,7 @@ export default {
       background-color: $nightBgColor;
       color:$nightFontColor;
       .add-chat-main {
-        background-color: #1E2636;
+        background-color: $nightMainBgColor;
         >.add-chat-header {
           border-bottom: 1px solid #39424D;
           .header-content {

@@ -407,7 +407,7 @@ export default {
       background-color: $nightBgColor;
       color:$nightFontColor;
       .add-bank-main {
-        background-color: #1E2636;
+        background-color: $nightMainBgColor;
         >.add-bank-header {
           border-bottom: 1px solid #39424D;
           >.header-content-left {

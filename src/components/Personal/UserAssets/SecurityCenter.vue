@@ -349,6 +349,7 @@
               label-width="120px"
             >
               <!--没有绑定手机不显示-->
+              <!--!securityCenter.isPhoneEnable || securityCenter.isGoogleEnable-->
               <div v-if="!securityCenter.isPhoneEnable"></div>
               <!--绑定手机之后显示-->
               <el-form-item
@@ -367,6 +368,7 @@
                 />
               </el-form-item>
               <!--没有绑定邮箱不显示-->
+              <!--!securityCenter.isMailEnable || securityCenter.isGoogleEnable-->
               <div v-if="!securityCenter.isMailEnable"></div>
               <!--绑定邮箱之后显示-->
               <el-form-item
@@ -717,7 +719,7 @@ export default {
         }
       })
     },
-    // 创建api检测输入格式
+    // 检测输入格式
     checkoutInputFormat (type, targetNum) {
       switch (type) {
         // 手机验证码
@@ -766,9 +768,9 @@ export default {
     showStatusVerificationClose (paymentType, safeState) {
       console.log(paymentType)
       console.log(safeState)
-      this.openEmail = ''
-      this.openPhone = ''
-      this.openGoogle = ''
+      this.emailCode = ''
+      this.phoneCode = ''
+      this.googleCode = ''
       // 把方法中定义的activeType、state在这里进行赋值 点击哪一个那当前的类型和状态传给后台
       this.activeType = paymentType
       this.state = safeState
@@ -845,20 +847,15 @@ export default {
     // 关闭开启手机邮箱谷歌验证
     async confirmTransactionPassword (type, state) {
       if (state === 'enable') {
-        if (this.securityCenter.isMailEnable && !this.emailCode) {
-          this.errorMsg1 = this.$t('M.comm_please_enter') + this.$t('M.user_security_verify')
+        if (!this.phoneCode && !this.emailCode && !this.googleCode) {
+          console.log(1)
+          // 请输入验证码
+          this.errorMsg = this.$t('M.comm_please_enter') + this.$t('M.user_security_verify')
           return false
-        }
-        if (this.securityCenter.isPhoneEnable && !this.phoneCode) {
-          this.errorMsg1 = this.$t('M.comm_please_enter') + this.$t('M.user_security_verify')
-          return false
-        }
-        if (this.securityCenter.isGoogleEnable && !this.googleCode) {
-          this.errorMsg1 = this.$t('M.comm_please_enter') + this.$t('M.user_security_verify')
-          return false
+        } else {
+          this.errorMsg = ''
         }
       } else if (state === 'disable') {
-        console.log(1)
         if (this.securityCenter.isMailEnable && !this.emailCode) {
           this.errorMsg1 = this.$t('M.comm_please_enter') + this.$t('M.user_security_verify')
           return false
@@ -1037,7 +1034,7 @@ export default {
       background-color: $nightBgColor;
       color:$nightFontColor;
       >.security-background {
-        background-color: #1E2636;
+        background-color: $nightMainBgColor;
       }
       >.security-header {
         color: #338FF5;

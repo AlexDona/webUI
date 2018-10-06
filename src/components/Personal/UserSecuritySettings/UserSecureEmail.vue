@@ -271,6 +271,14 @@ export default {
     },
     // 确定绑定
     async confirmBindingBail () {
+      if (!this.emailCode) {
+        this.$message({
+          // 请先输入邮箱账号
+          message: this.$t('M.comm_please_enter') + this.$t('M.user_security_email') + this.$t('M.comm_code'),
+          type: 'error'
+        })
+        return false
+      }
       let goOnStatus = 0
       if (
         this.checkoutInputFormat(0, this.emailAccounts) &&
@@ -330,7 +338,7 @@ export default {
   .set-email {
     >.set-email-main {
       width: 1100px;
-      min-height: 700px;
+      min-height: 600px;
       margin: 60px auto 100px;
       >.set-email-header {
         display: flex;
@@ -391,7 +399,7 @@ export default {
       background-color: $nightBgColor;
       color:$nightFontColor;
       .set-email-main {
-        background-color: #1E2636;
+        background-color: $nightMainBgColor;
         >.set-email-header {
           border-bottom: 1px solid #39424D;
           >.header-content-left {

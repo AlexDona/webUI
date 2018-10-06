@@ -75,6 +75,7 @@
                 clearable
                 :placeholder="$t('M.comm_all')"
               >
+                <!--:label="$t(`M.${item.i18nName}`)"-->
                 <el-option
                   v-for="(item,index) in merchantsOrdersCurrencyList"
                   :key="index"
@@ -497,7 +498,7 @@ export default {
     background-color: $nightBgColor;
     color:$nightFontColor;
     >.background-color{
-      background-color: #1E2636;
+      background-color: $nightMainBgColor;
       >.fiat-color{
         color: #338FF5;
       }

@@ -532,10 +532,11 @@ export default {
       background-color: $nightBgColor;
       color:$nightFontColor;
       >.withdrawal-address-main {
-        background-color: #1e2636;
+        background-color: $nightMainBgColor;
         >.withdrawal-header {
-          background-color: #1E2636;
-          box-shadow:2px 0px 3px rgba(24,30,42,1);
+          background-color: $nightMainBgColor;
+          /*box-shadow:2px 0px 3px rgba(24,30,42,1);*/
+          box-shadow:2px 0px 2px rgba(20,23,37,1);
           >.header-content {
             color: rgba(255,255,255,0.7);
           }

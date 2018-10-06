@@ -384,7 +384,7 @@ export default {
       background-color: $nightBgColor;
       color:$nightFontColor;
       >.user-info-main{
-        background-color: #1E2636;
+        background-color: $nightMainBgColor;
         >.user-info-content-box {
           >.user,
           >.info,

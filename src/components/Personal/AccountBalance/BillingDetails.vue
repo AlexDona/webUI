@@ -458,7 +458,7 @@ export default {
       background-color: $nightBgColor;
       color:$nightFontColor;
       >.billing-details-main {
-        background-color: #1e2636;
+        background-color: $nightMainBgColor;
         >.billing-details-query {
           border-bottom: 1px solid #39424D;
           >.search-button {
@@ -468,7 +468,7 @@ export default {
         }
       }
       >.billing-details-header{
-        background-color: #1e2636;
+        background-color: $nightMainBgColor;
         box-shadow: 0px 5px 50px #181e2a;
       }
     }

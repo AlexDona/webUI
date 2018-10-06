@@ -635,7 +635,7 @@ export default {
   .set-phone {
     >.set-phone-main {
       width: 1100px;
-      min-height: 700px;
+      min-height: 600px;
       margin: 60px auto 100px;
       >.set-phone-header {
         display: flex;
@@ -706,7 +706,7 @@ export default {
       background-color: $nightBgColor;
       color:$nightFontColor;
       .set-phone-main {
-        background-color: #1E2636;
+        background-color: $nightMainBgColor;
         >.set-phone-header {
           border-bottom: 1px solid #39424D;
           >.header-content-left {

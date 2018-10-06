@@ -753,7 +753,7 @@ export default {
       background-color: $nightBgColor;
       color:$nightFontColor;
       .background-color {
-        background-color: #1E2636;
+        background-color: $nightMainBgColor;
         >.coin-color{
           color: #338FF5;
         }

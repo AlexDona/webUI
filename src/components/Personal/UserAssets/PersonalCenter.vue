@@ -448,7 +448,7 @@ export default {
       background-color: $nightBgColor;
       color:$nightFontColor;
       .asset-info {
-        background: #1E2636;
+        background: #1C1F32;
       }
     }
     &.day{

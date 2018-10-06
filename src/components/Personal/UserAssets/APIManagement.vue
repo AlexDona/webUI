@@ -200,8 +200,6 @@
               <input
                 class="content-input padding-l15 box-sizing"
                 v-model="phoneCode"
-                @keydown="setVerifyErrorMsg(0,'')"
-                @blur="verifyInputFormat(0, phoneCode)"
               >
               <CountDownButton
                 class="send-code-btn cursor-pointer"
@@ -220,8 +218,6 @@
               <input
                 class="content-input padding-l15 box-sizing"
                 v-model="emailCode"
-                @keydown="setVerifyErrorMsg(1,'')"
-                @blur="verifyInputFormat(1, emailCode)"
               >
               <CountDownButton
                 class="send-code-btn cursor-pointer"
@@ -240,8 +236,6 @@
               <input
                 class="content-input input-google padding-l15 box-sizing"
                 v-model="googleCode"
-                @keydown="setVerifyErrorMsg(2,'')"
-                @blur="verifyInputFormat(2, googleCode)"
               >
             </el-form-item>
             <!--谷歌未认证-->
@@ -550,11 +544,11 @@ export default {
             this.$forceUpdate()
             return 1
           }
-        // API访问秘钥
+        // 绑定IP地址
         case 1:
           if (!targetNum) {
-            // 请输入API访问秘钥
-            this.setErrorMsg(1, this.$t('M.comm_please_enter') + 'API' + this.$t('M.user_api_text4'))
+            // 请输入绑定IP地址
+            this.setErrorMsg(1, this.$t('M.comm_please_enter') + this.$t('M.user_security_binding') + 'IP' + this.$t('M.comm_site'))
             this.$forceUpdate()
             return 0
           } else {
@@ -586,67 +580,21 @@ export default {
       }
       // this.checkoutInputFormat()
     },
-    // 创建api检测输入格式
-    verifyInputFormat (type, targetNum) {
-      switch (type) {
-        // 手机验证
-        case 0:
-          if (!targetNum) {
-            this.setVerifyErrorMsg(0, this.$t('M.comm_please_enter') + this.$t('M.user_security_phone') + this.$t('M.user_security_verify'))
-            this.$forceUpdate()
-            return 0
-          } else {
-            this.setVerifyErrorMsg(0, '')
-            this.$forceUpdate()
-            return 1
-          }
-        // 邮箱验证
-        case 1:
-          if (!targetNum) {
-            this.setVerifyErrorMsg(1, this.$t('M.comm_please_enter') + this.$t('M.user_security_email') + this.$t('M.user_security_verify'))
-            this.$forceUpdate()
-            return 0
-          } else {
-            this.setVerifyErrorMsg(1, '')
-            this.$forceUpdate()
-            return 1
-          }
-        // 新登录密码
-        case 2:
-          if (!targetNum) {
-            this.setVerifyErrorMsg(2, this.$t('M.comm_please_enter') + this.$t('M.user_security_google') + this.$t('M.user_security_verify'))
-            this.$forceUpdate()
-            return 0
-          } else {
-            this.setVerifyErrorMsg(2, '')
-            this.$forceUpdate()
-            return 1
-          }
-      }
-    },
-    // 设置错误信息
-    setVerifyErrorMsg (index, msg) {
-      this.errorVerifyMsg = msg
-    },
-    // 创建之后弹出二次挨批创建信息框
     stateSubmitDetermineValidation () {
-      let goOnStatus = 0
-      if (
-        this.verifyInputFormat(0, this.phoneCode) ||
-        this.verifyInputFormat(1, this.emailCode) ||
-        this.verifyInputFormat(2, this.googleCode)
-      ) {
-        goOnStatus = 1
+      if (!this.phoneCode && !this.emailCode && !this.googleCode) {
+        console.log(1)
+        // 请输入验证码
+        this.errorVerifyMsg = this.$t('M.comm_please_enter') + this.$t('M.comm_code')
+        return false
       } else {
-        goOnStatus = 0
+        this.errorVerifyMsg = ''
       }
-      if (goOnStatus) {
-        // 返回展示
-        this.apiSecondaryConfirmation = true
-        this.APIMoneyConfirm = false
-        //  获取秘钥
-        this.getAccessAecretKey()
-      }
+
+      // 返回展示
+      this.apiSecondaryConfirmation = true
+      this.APIMoneyConfirm = false
+      //  获取秘钥
+      this.getAccessAecretKey()
     },
     // 二次确认框创建挨批完成
     stateSubmitAffirm () {
@@ -675,8 +623,17 @@ export default {
     },
     // 编辑用户api
     compileApi (id) {
+      // this.apiRemark = this.extensionList.
+      // this.ipAddress = data.data.data.ip
       this.compileUserApi = true
       this.userId = id
+      this.extensionList.forEach((item) => {
+        if (item.id == id) {
+          // 用户付款时二次确认信息
+          this.apiRemark = item.remark
+          this.ipAddress = item.ip
+        }
+      })
     },
     // 创建api检测输入格式
     editorInputFormat (type, targetNum) {
@@ -695,7 +652,7 @@ export default {
         // 编辑用户ip
         case 1:
           if (!targetNum) {
-            this.setEditorErrorMsg(1, this.$t('M.comm_please_enter') + this.$t('M.user_api_user') + 'IP')
+            this.setEditorErrorMsg(1, this.$t('M.comm_please_enter') + this.$t('M.comm_newly_compile') + 'IP' + this.$t('M.comm_site'))
             this.$forceUpdate()
             return 0
           } else {
@@ -977,7 +934,7 @@ export default {
       background-color: $nightBgColor;
       color:$nightFontColor;
       >.background-color {
-        background-color: #1E2636;
+        background-color: $nightMainBgColor;
       }
       .invitation-promotion-main{
         .code-copy{
@@ -1005,7 +962,7 @@ export default {
           color: #fff;
         }
         >.extension-info{
-          background-color: #1E2636;
+          background-color: $nightMainBgColor;
           >.extension-info-header{
             border-bottom: 1px solid #39424D;
             >.header-color {
@@ -1035,7 +992,7 @@ export default {
           }
         }
         >.extension-statistics {
-          background-color: #1E2636;
+          background-color: $nightMainBgColor;
           >.extension-statistics-header {
             border-bottom: 1px solid #39424D;
             >.header-color {

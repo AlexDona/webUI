@@ -1,6 +1,6 @@
 /*个人中心（黑色主题）*/
 .withdrawal-address.personal.night .el-input__inner {
-  background-color: #19202E;
+  background-color: #2D3651;
   color: rgba(255,255,255,0.7);
   border: 0;
 }
@@ -8,21 +8,21 @@
   color: rgba(255,255,255,0.7);
 }
 .withdrawal-address.personal.night .el-table {
-  background-color: #1E2636;
+  background-color: #1C1F32;
 }
 .withdrawal-address.personal.night .el-table__header-wrapper {
-  background-color: #1E2636;
+  background-color: #1C1F32;
 }
 .withdrawal-address.personal.night .el-table th.is-leaf {
-  background-color: #1E2636;
+  background-color: #1C1F32;
   border: 0;
 }
 .withdrawal-address.personal.night .el-table td {
-  background-color: #1E2636;
+  background-color: #1C1F32;
   border: 0;
 }
 .withdrawal-address.personal.night .el-table__body tr:hover>td {
-  background-color: #1E2636;
+  background-color: #1C1F32;
 }
 .withdrawal-address.personal.night .el-table th>.cell {
   color: #A9BED4;
