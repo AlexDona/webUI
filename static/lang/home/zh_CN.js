@@ -17,5 +17,5 @@ export const home = {
   'home_market_text5': 'fuc火热上线2',
   // #####################导航######################
   'investment_look_all': '查看全部',
-  'investment_return_investment': '返回投资',
+  'investment_return_investment': '返回投资'
 }
