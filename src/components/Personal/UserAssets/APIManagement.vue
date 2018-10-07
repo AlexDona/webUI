@@ -31,8 +31,7 @@
                   type="text"
                   class="api-input border-radius2 padding-l15 box-sizing"
                   v-model="remark"
-                  @keydown="setErrorMsg(0,'')"
-                  @blur="checkoutInputFormat(0, remark)"
+                  @focus="emptyStatus"
                 >
               </el-form-item>
               <!--绑定IP地址-->
@@ -43,8 +42,7 @@
                   type="text"
                   class="api-input border-radius2 padding-l15 box-sizing"
                   v-model="ipSite"
-                  @keydown="setErrorMsg(1,'')"
-                  @blur="checkoutInputFormat(1, ipSite)"
+                  @focus="emptyStatus"
                 >
               </el-form-item>
               <!--错误提示-->
@@ -111,7 +109,7 @@
             <!--创建时间-->
             <el-table-column
               :label="$t('M.comm_creation') + $t('M.comm_time')"
-              width="150"
+              width="160"
             >
               <template slot-scope = "s">
                 <div>{{timeFormatting(s.row.createTime) }}</div>
@@ -120,7 +118,7 @@
             <!--备注-->
             <el-table-column
               :label="$t('M.comm_remark')"
-              width="80"
+              width="85"
             >
               <template slot-scope = "s">
                 <div>{{ s.row.remark }}</div>
@@ -129,7 +127,7 @@
             <!--API访问秘钥-->
             <el-table-column
               :label="'API' + $t('M.user_api_text4')"
-              width="370"
+              width="355"
             >
               <template slot-scope = "s">
                 <div>{{ s.row.accessKey }}</div>
@@ -200,6 +198,7 @@
               <input
                 class="content-input padding-l15 box-sizing"
                 v-model="phoneCode"
+                @focus="emptyAddStatus"
               >
               <CountDownButton
                 class="send-code-btn cursor-pointer"
@@ -218,6 +217,7 @@
               <input
                 class="content-input padding-l15 box-sizing"
                 v-model="emailCode"
+                @focus="emptyAddStatus"
               >
               <CountDownButton
                 class="send-code-btn cursor-pointer"
@@ -236,6 +236,7 @@
               <input
                 class="content-input input-google padding-l15 box-sizing"
                 v-model="googleCode"
+                @focus="emptyAddStatus"
               >
             </el-form-item>
             <!--谷歌未认证-->
@@ -245,7 +246,9 @@
           <div
             class = "error-msg error-msg1 font-size12"
           >
-            <span v-show = "errorVerifyMsg">{{ errorVerifyMsg }}</span>
+            <span v-show = "errorVerifyMsg">
+              {{ errorVerifyMsg }}
+            </span>
           </div>
           <div
             slot="footer"
@@ -424,7 +427,6 @@ import {
   statusSecurityCenter,
   multipleUserAPIInfo,
   stateCreationApi,
-  securityVerificationOnOff,
   accessAecretKeyInfo,
   modifyUserInformation,
   deleteUserInformation
@@ -476,7 +478,8 @@ export default {
     require('../../../../static/css/theme/day/Personal/UserAssets/APIManagementDay.css')
     // 黑色主题样式
     require('../../../../static/css/theme/night/Personal/UserAssets/APIManagementNight.css')
-    // this.stateCompileApi()
+    this.getSecurityCenter()
+    // this.stateEmptyData()
   },
   mounted () {},
   activited () {},
@@ -506,7 +509,6 @@ export default {
           break
       }
       apiSendPhoneOrEmailCodeAjax(loginType, params, (data) => {
-        console.log(this.apiDisabledOfPhoneBtn)
         // 提示信息
         if (!returnAjaxMessage(data, this)) {
           console.log('error')
@@ -529,56 +531,28 @@ export default {
         }
       })
     },
-    // 创建api检测输入格式
-    checkoutInputFormat (type, targetNum) {
-      switch (type) {
-        // 备注
-        case 0:
-          if (!targetNum) {
-            // 请输入备注
-            this.setErrorMsg(0, this.$t('M.comm_please_enter') + this.$t('M.comm_remark'))
-            this.$forceUpdate()
-            return 0
-          } else {
-            this.setErrorMsg(0, '')
-            this.$forceUpdate()
-            return 1
-          }
-        // 绑定IP地址
-        case 1:
-          if (!targetNum) {
-            // 请输入绑定IP地址
-            this.setErrorMsg(1, this.$t('M.comm_please_enter') + this.$t('M.user_security_binding') + 'IP' + this.$t('M.comm_site'))
-            this.$forceUpdate()
-            return 0
-          } else {
-            this.setErrorMsg(1, '')
-            this.$forceUpdate()
-            return 1
-          }
-      }
+    // 清空添加api内容信息
+    emptyAddStatus () {
+      this.errorVerifyMsg = ''
     },
-    // 设置错误信息
-    setErrorMsg (index, msg) {
-      this.errorMsg = msg
+    // 清空内容信息
+    emptyStatus () {
+      this.errorMsg = ''
     },
     // 点击创建
     stateEstablishApiButton () {
-      let goOnStatus = 0
-      if (
-        this.checkoutInputFormat(0, this.remark) &&
-        this.checkoutInputFormat(1, this.ipSite)
-      ) {
-        goOnStatus = 1
+      if (!this.remark) {
+        this.errorMsg = this.$t('M.comm_please_enter') + this.$t('M.comm_remark')
+        return false
+      } else if (!this.ipSite) {
+        this.errorMsg = this.$t('M.comm_please_enter') + this.$t('M.user_security_binding') + 'IP' + this.$t('M.comm_site')
+        return false
       } else {
-        goOnStatus = 0
+        this.errorMsg = ''
       }
-      if (goOnStatus) {
-        this.APIMoneyConfirm = true
-        this.getSecurityCenter()
-        this.ip = this.ipSite
-      }
-      // this.checkoutInputFormat()
+      this.APIMoneyConfirm = true
+      this.getSecurityCenter()
+      this.ip = this.ipSite
     },
     stateSubmitDetermineValidation () {
       if (!this.phoneCode && !this.emailCode && !this.googleCode) {
@@ -589,8 +563,6 @@ export default {
       } else {
         this.errorVerifyMsg = ''
       }
-
-      // 返回展示
       this.apiSecondaryConfirmation = true
       this.APIMoneyConfirm = false
       //  获取秘钥
@@ -623,8 +595,6 @@ export default {
     },
     // 编辑用户api
     compileApi (id) {
-      // this.apiRemark = this.extensionList.
-      // this.ipAddress = data.data.data.ip
       this.compileUserApi = true
       this.userId = id
       this.extensionList.forEach((item) => {
@@ -709,7 +679,7 @@ export default {
       // 确定删除API地址吗, 是否继续?
       this.$confirm(this.$t('M.comm_sure_delete'), {
         cancelButtonText: this.$t('M.comm_cancel'), // 取消
-        confirmButtonText: this.$t('M.comm_delete') // 删除
+        confirmButtonText: this.$t('M.comm_confirm') // 确定
       }).then(() => {
         this.deleteUserApi(id)
       }).catch(() => {
@@ -727,22 +697,6 @@ export default {
         // 返回展示
         this.getMultipleUserAPIInfo()
         this.dialogVisible = false
-      }
-    },
-    // 邮箱、短信、谷歌验证码验证
-    async multipleValidationMethods () {
-      let data = await securityVerificationOnOff({
-        email: this.userInfo.userInfo.email, // 邮箱
-        phone: this.userInfo.userInfo.phone, // 手机
-        emailCode: this.emailCode, // 邮箱验证
-        phoneCode: this.phoneCode, // 手机验证
-        googleCode: this.googleCode // 谷歌验证
-      })
-      console.log(data)
-      if (!(returnAjaxMessage(data, this, 0))) {
-        return false
-      } else {
-        // // 返回展示
       }
     },
     // 获取多个用户api信息

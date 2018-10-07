@@ -733,7 +733,7 @@ export default {
       color:#338ff5;
     }
     .height500 {
-      height: 577px;
+      height: 545px;
     }
     &.night{
       background-color: $nightBgColor;

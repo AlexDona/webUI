@@ -870,7 +870,7 @@ export default {
         >.award-record {
           background-color: $nightMainBgColor;
           >.award-record-header {
-            border-bottom: 1px solid #39424D;
+            border-bottom: 1px solid #39424D !important;
             >.header-color {
               color: #fff;
             }

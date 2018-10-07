@@ -7,9 +7,9 @@
   border-left:none;
 }
 .coin-orders.personal.night .el-tabs__item:hover{
-  border-left:none;
-  color:#fff;
-  background-color: transparent;
+  border-left:none !important;
+  color:#fff !important;
+  background-color: transparent !important;
 }
 .coin-orders.personal.night .el-table th,
 .coin-orders.personal.night .el-table tr{

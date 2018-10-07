@@ -4,6 +4,8 @@
   padding: 0;
   width: 105px;
   text-align: center;
+  border-left: 4px solid transparent !important;
+  background-color: transparent !important;
 }
 .fiat-orders.personal .el-tabs__item.is-active {
   border-left: 0;

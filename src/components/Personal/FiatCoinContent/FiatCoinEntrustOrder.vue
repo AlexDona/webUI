@@ -283,7 +283,7 @@ export default {
         > .entrust-table-body {
           background-color: $nightMainBgColor;
           color: #9DA5B3;
-          border: 1px solid #262F38;
+          /*border: 1px solid #262F38;*/
           > .entrust-list-content {
             .red {
               color: #D45858;

@@ -250,7 +250,8 @@ export default {
     async stateSeniorCertification () {
       let goOnStatus = 0
       if (
-        this.checkoutInputFormat(0, this.alipayAccount)
+        this.checkoutInputFormat(0, this.alipayAccount) &&
+        this.checkoutInputFormat(1, this.password)
       ) {
         goOnStatus = 1
       } else {

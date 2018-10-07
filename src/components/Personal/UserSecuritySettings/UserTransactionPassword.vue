@@ -567,8 +567,7 @@ export default {
       let goOnStatus = 0
       if (
         this.tieCheckoutInputFormat(0, this.modifyPassword.transactionPassword) &&
-        this.tieCheckoutInputFormat(1, this.modifyPassword.resetTransactionPassword) &&
-        this.tieCheckoutInputFormat(2, this.modifyPassword.phoneCode)
+        this.tieCheckoutInputFormat(1, this.modifyPassword.resetTransactionPassword)
       ) {
         goOnStatus = 1
       } else {
