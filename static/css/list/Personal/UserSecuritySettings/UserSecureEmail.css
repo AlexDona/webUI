@@ -3,6 +3,7 @@
   width: 600px;
 }
 .set-email.personal .el-input__inner {
+  width: 130px;
   height: 36px;
   border-radius: 2px;
 }
@@ -10,7 +11,7 @@
   width: 131px;
   height: 36px;
   border-radius: 4px;
-  margin-right: 85px;
+  margin-right: 0;
 }
 .set-email.personal .el-input-group__append {
   border-left: 0;
