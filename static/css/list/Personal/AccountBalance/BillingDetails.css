@@ -21,3 +21,6 @@
   text-align: center;
   font-size: 12px;
 }
+.billing-details.personal .el-table th.is-leaf {
+  border-top: 0;
+}

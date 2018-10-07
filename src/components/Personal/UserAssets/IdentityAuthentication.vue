@@ -427,7 +427,7 @@
               @click.prevent="authenticationNoPass"
             >
               <!--提交-->
-              {{ $t('M.comm_sub_time') }}
+              {{ $t('M.comm_sub_anew') }}{{ $t('M.comm_sub_time') }}
             </button>
           </div>
         </div>

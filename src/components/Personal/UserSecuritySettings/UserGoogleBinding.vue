@@ -270,6 +270,12 @@ export default {
     },
     // 确定绑定谷歌验证接口
     async confirmBindingBailPhone () {
+      if (this.googleVerificationCode.length > 6) {
+        this.$message({
+          message: this.$t('M.user_security_google') + this.$t('M.comm_code') + this.$t('M.user_security_google1'),
+          type: 'error'
+        })
+      }
       let data
       let param = {
         googleSecret: this.googleTheSecretKey,
@@ -286,6 +292,12 @@ export default {
     },
     // 确定解绑谷歌验证
     getGoogleStatusSubmitUnbind () {
+      if (this.googleVerificationCode.length > 6) {
+        this.$message({
+          message: this.$t('M.user_security_google') + this.$t('M.comm_code') + this.$t('M.user_security_google1'),
+          type: 'error'
+        })
+      }
       let goOnStatus = 0
       if (
         this.checkoutInputFormat(0, this.googleVerificationCode)

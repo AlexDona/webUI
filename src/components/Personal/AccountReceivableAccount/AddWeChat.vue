@@ -249,7 +249,7 @@ export default {
       let goOnStatus = 0
       if (
         this.checkoutInputFormat(0, this.cardNo) &&
-        this.checkoutInputFormat(1, this.cardNo)
+        this.checkoutInputFormat(1, this.password)
       ) {
         goOnStatus = 1
       } else {

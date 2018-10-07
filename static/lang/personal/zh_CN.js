@@ -127,6 +127,7 @@ export const personal = {
   'user_security_verify': '验证',
   'user_security_number': '号码',
   'user_security_picture': '图片',
+  'user_security_google1': '格式错误',
   // 安全中心个人信息
   'user_security_level': '账号安全级别',
   'user_security_low': '低',

@@ -187,6 +187,7 @@
             </el-table-column>
             <el-table-column
               :label="$t('M.comm_name')"
+              width="100"
             >
               <template slot-scope = "s">
                 <div>{{ s.row.realname }}</div>

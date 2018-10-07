@@ -17,6 +17,8 @@
   padding: 0;
   width: 105px;
   text-align: center;
+  border-left: 4px solid transparent !important;
+  background-color: transparent !important;
 }
 .security-center.personal .el-table th>.cell {
   font-size: 12px;

@@ -4,6 +4,8 @@
   padding: 0;
   width: 105px;
   text-align: center;
+  border-left: 4px solid transparent !important;
+  background-color: transparent !important;
 }
 .coin-orders.personal .el-table th>.cell {
   text-align: center;
@@ -54,9 +56,9 @@
 .coin-orders.personal .el-pagination{
   text-align: right;
 }
-/*.coin-orders.personal .el-table th.is-leaf {*/
-  /*border-bottom: none;*/
-/*}*/
+.coin-orders.personal .el-table th.is-leaf {
+  border-top: 0;
+}
 /*.coin-orders.personal*/
 /*.coin-orders.personal*/
 /*.coin-orders.personal*/
