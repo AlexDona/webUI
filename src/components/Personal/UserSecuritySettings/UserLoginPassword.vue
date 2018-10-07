@@ -10,7 +10,7 @@
         <span
           class="header-content-left header-content font-size16 font-weight600"
         >
-          修改登录密码
+          <!--修改登录密码-->
           {{ $t('M.comm_modification') }}{{ $t('M.user_security_login') }}{{ $t('M.user_security_password') }}
         </span>
         <span
@@ -308,7 +308,7 @@ export default {
           margin-bottom: 30px;
         }
         >.login-content-from {
-          width: 500px;
+          width: 600px;
           margin-left: 55px;
           .login-input {
             width: 220px;

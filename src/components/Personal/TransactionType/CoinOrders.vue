@@ -9,7 +9,7 @@
         {{ $t('M.user_coin') }}{{ $t('M.comm_order') }}
       </span>
     </header>
-    <div class="min-height500 background-color margin-top9">
+    <div class="height500 background-color margin-top9">
       <el-tabs
         v-model="activeName"
         @tab-click = "coinMoneyOrders"
@@ -274,7 +274,6 @@
             <!--撮合类型-->
             <el-table-column
               :label="$t('M.user_coin_bring_together') + $t('M.comm_type')"
-              width="70"
             >
               <template slot-scope="s">
                 <span>{{ s.row.matchTypeName }}</span>
@@ -283,7 +282,6 @@
             <!--委单类型-->
             <el-table-column
               :label="$t('M.user_coin_appoint_single') + $t('M.comm_type')"
-              width="70"
             >
               <template slot-scope="s">
                 <span v-show="language !== 'zh_CN'">{{s.row.type}}</span>
@@ -329,25 +327,9 @@
             <!--状态-->
             <el-table-column
               :label="$t('M.comm_state')"
-              width="60"
             >
               <template slot-scope="s">
                 <span>{{ s.row.statusName }}</span>
-              </template>
-            </el-table-column>
-            <!--操作-->
-            <el-table-column
-              :label="$t('M.comm_operation')"
-              width="85"
-            >
-              <template slot-scope="s">
-                <button
-                  class="cursor-pointer repeal-btn"
-                  @click.prevent="repealMyEntrust(s.row.id,s.row.version)"
-                >
-                  <!--删除-->
-                  {{ $t('M.comm_delete') }}
-                </button>
               </template>
             </el-table-column>
           </el-table>
@@ -587,8 +569,8 @@ export default {
         id,
         version
       }
-      // 确定删除提币地址吗, 是否继续?
-      this.$confirm(this.$t('M.comm_sure_delete'), {
+      // 确定撤销委单记录吗, 是否继续?
+      this.$confirm(this.$t('M.user_coin_volume_text'), {
         // 取消
         cancelButtonText: this.$t('M.comm_cancel'),
         // 确定
@@ -748,6 +730,9 @@ export default {
     }
     .repeal-btn{
       color:#338ff5;
+    }
+    .height500 {
+      height: 577px;
     }
     &.night{
       background-color: $nightBgColor;

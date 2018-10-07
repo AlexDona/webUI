@@ -27,7 +27,8 @@
                   v-for="(item, index) in currencyList"
                   :key="index"
                   :label="item.name"
-                  :value="item.coinId">
+                  :value="item.coinId"
+                >
                 </el-option>
               </el-select>
             </el-form-item>
@@ -47,9 +48,11 @@
             >
               <input
                 class="form-input-common border-radius2 padding-l15"
+                type="number"
                 v-model="buyUID"
                 @keydown="setErrorMsg(0, '')"
                 @blur="checkoutInputFormat(0, buyUID)"
+                @keyup="statusPushChange"
               />
               <!--错误提示-->
               <ErrorBox
@@ -478,6 +481,15 @@ export default {
       let target = this.$refs[ref]
       formatNumberInput(target, pointLength)
     },
+    // PUSH UID提示事件
+    statusPushChange () {
+      if (this.buyUID === this.userInfo.userInfo.showId) {
+        this.$message({
+          message: this.$t('M.user_push_forbid'),
+          type: 'error'
+        })
+      }
+    },
     /**
      * push资产
      */
@@ -786,10 +798,10 @@ export default {
   .push-assets{
     >.push-assets-main{
       >.push-assets-content-box {
-        min-height: 570px;
+        min-height: 577px;
         >.push-from-box {
           width: 400px;
-          min-height: 570px;
+          min-height: 577px;
           padding-top: 29px;
           margin: 0 auto;
           .form-input-common,
@@ -818,7 +830,7 @@ export default {
           .error-msg{
             height:30px;
             line-height: 30px;
-            margin-left: 30px;
+            /*margin-left: 30px;*/
             color: rgb(212, 88, 88);
           }
         }

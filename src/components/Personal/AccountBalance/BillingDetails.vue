@@ -429,7 +429,7 @@ export default {
   @import "../../../../static/css/scss/Personal/IndexPersonal";
   .billing-details{
     >.billing-details-main{
-      min-height: 500px;
+      min-height: 585px;
       >.billing-details-query {
         height: 57px;
         line-height: 57px;

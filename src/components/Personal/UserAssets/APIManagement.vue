@@ -923,7 +923,7 @@ export default {
           height: 56px;
         }
         >.extension-statistics-content{
-          min-height: 130px;
+          min-height: 140px;
           .compile{
             width: 40px;
           }

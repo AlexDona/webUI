@@ -239,7 +239,8 @@ import ErrorBox from '../../User/ErrorBox'
 import {
   returnAjaxMessage, // 接口返回信息
   sendPhoneOrEmailCodeAjax,
-  reflashUserInfo
+  reflashUserInfo,
+  validateNumForUserInput
 } from '../../../utils/commonFunc'
 import {
   setTransactionPassword,
@@ -388,16 +389,32 @@ export default {
           }
         // 交易密码
         case 1:
-          if (!targetNum) {
-            // 请输入交易密码
-            this.setErrorMsg(1, this.$t('M.comm_please_enter') + this.$t('M.comm_password'))
-            this.$forceUpdate()
-            return 0
-          } else {
-            this.setErrorMsg(1, '')
-            this.$forceUpdate()
-            return 1
+          // 请输入6位纯数字
+          switch (validateNumForUserInput('tran-password', targetNum)) {
+            case 0:
+              this.setErrorMsg(1, '')
+              this.$forceUpdate()
+              return 1
+            case 1:
+              this.setErrorMsg(1, this.$t('M.comm_please_enter') + this.$t('M.user_security_password'))
+              this.$forceUpdate()
+              return 0
+            case 2:
+              this.setErrorMsg(1, this.$t('M.user_transaction_text'))
+              this.$forceUpdate()
+              return 0
           }
+          break
+          // if (!targetNum) {
+          //   // 请输入交易密码
+          //   this.setErrorMsg(1, this.$t('M.comm_please_enter') + this.$t('M.comm_password'))
+          //   this.$forceUpdate()
+          //   return 0
+          // } else {
+          //   this.setErrorMsg(1, '')
+          //   this.$forceUpdate()
+          //   return 1
+          // }
         // 重复交易密码
         case 2:
           if (!targetNum) {
@@ -456,7 +473,7 @@ export default {
         }
       }
     },
-    // 接口请求完成之后青口数据
+    // 接口请求完成之后清空数据
     stateEmptyData () {
       this.setPassword.nickname = ''
       this.setPassword.newPassword = ''
@@ -467,22 +484,22 @@ export default {
       switch (type) {
         // 交易密码
         case 0:
-          if (!targetNum) {
-            // 请输入交易密码
-            this.tieErrorMsg(0, this.$t('M.comm_please_enter') + this.$t('M.comm_password'))
-            this.$forceUpdate()
-            return 0
-          } else if (targetNum) {
-            this.tieErrorMsg(0, '')
-            this.$forceUpdate()
-            return 1
-          } else {
-            // 请输入6位纯数字
-            this.tieErrorMsg(0, this.$t('M.comm_please_enter') + this.$t('M.user_transaction_text'))
-            this.$forceUpdate()
-            return 0
+          // 请输入6位纯数字
+          switch (validateNumForUserInput('tran-password', targetNum)) {
+            case 0:
+              this.tieErrorMsg(0, '')
+              this.$forceUpdate()
+              return 1
+            case 1:
+              this.tieErrorMsg(0, this.$t('M.comm_please_enter') + this.$t('M.user_security_password'))
+              this.$forceUpdate()
+              return 0
+            case 2:
+              this.tieErrorMsg(0, this.$t('M.user_transaction_text'))
+              this.$forceUpdate()
+              return 0
           }
-        // 重置交易密码
+          break
         case 1:
           if (!targetNum) {
             // 请输入确认交易密码
@@ -573,6 +590,7 @@ export default {
           console.log(1)
           this.successJump()
           this.confirmVerifyInformation()
+          this.stateEmptyData()
           this.$store.commit('common/SET_USER_INFO_REFRESH_STATUS', true)
         }
       }
@@ -665,9 +683,9 @@ export default {
           margin-left: 55px;
           .send-code-btn {
             width: 90px;
-            height: 36px;
+            /*height: 36px;
             position: absolute;
-            top: -1px;
+            top: -1px;*/
           }
           .transaction-input {
             width: 220px;

@@ -251,7 +251,7 @@ export default {
         border-bottom-right-radius: 5px;
         border-bottom-left-radius: 5px;
         > .no-data {
-          line-height: 432px;
+          line-height: 345px;
           text-align: center;
         }
         > .entrust-list-content {

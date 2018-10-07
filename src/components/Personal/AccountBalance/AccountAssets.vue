@@ -254,7 +254,7 @@
                                 v-for="(item, index) in mentionAddressList"
                                 :key="index"
                                 :label="item.address + '—' + item.remark"
-                                :value="item.coinId"
+                                :value="item.id"
                               >
                               </el-option>
                             </el-select>
@@ -387,7 +387,9 @@
                           >
                             <input
                               class="content-input padding-l15 box-sizing"
+                              type="number"
                               v-model="phoneCode"
+                              @focus="emptyStatus"
                             >
                             <CountDownButton
                               class="send-code-btn cursor-pointer"
@@ -405,7 +407,9 @@
                           >
                             <input
                               class="content-input padding-l15 box-sizing"
+                              type="number"
                               v-model="emailCode"
+                              @focus="emptyStatus"
                             >
                             <CountDownButton
                               class="send-code-btn cursor-pointer"
@@ -423,7 +427,9 @@
                           >
                             <input
                               class="content-input input-google padding-l15 box-sizing"
+                              type="number"
                               v-model="googleCode"
+                              @focus="emptyStatus"
                             >
                           </el-form-item>
                           <!--谷歌未认证-->
@@ -439,6 +445,13 @@
                             >
                           </el-form-item>
                         </el-form>
+                        <div
+                          class="error-info"
+                        >
+                          <span v-show="errorMsg">
+                            {{ errorMsg }}
+                          </span>
+                        </div>
                         <div
                           slot="footer"
                           class="dialog-footer"
@@ -548,6 +561,7 @@ export default {
       labelPosition: 'top',
       activeNames: ['1'],
       errorMessage: '',
+      errorMsg: '',
       showStatusButton: true, // 显示币种
       hideStatusButton: false, // 隐藏币种// 显示所有/余额切换，
       closePictureSrc: require('../../../assets/user/wrong.png'), // 显示部分
@@ -819,8 +833,15 @@ export default {
       this.seen = false
       this.current = null
     },
+    // 清空内容信息
+    emptyStatus () {
+      this.errorMsg = ''
+    },
     // 发送验证码
     sendPhoneOrEmailCode (loginType) {
+      console.log(loginType)
+      // console.log(this.disabledOfPhoneBtn)
+      // console.log(this.disabledOfEmailBtn)
       if (this.disabledOfPhoneBtn || this.disabledOfEmailBtn) {
         return false
       }
@@ -836,7 +857,6 @@ export default {
           break
       }
       sendPhoneOrEmailCodeAjax(loginType, params, (data) => {
-        console.log(this.disabledOfPhoneBtn)
         // 提示信息
         if (!returnAjaxMessage(data, this)) {
           console.log('error')
@@ -909,8 +929,9 @@ export default {
     // 资产币种提币地址选择
     changeId (e) {
       this.mentionAddressList.forEach(item => {
+        console.log(item)
         if (e === item.coinId) {
-          this.mentionAddressValue = item.address
+          this.mentionAddressValue = e
         }
       })
     },
@@ -945,6 +966,7 @@ export default {
         this.serviceChargeList = data.data.data
         this.serviceCharge = data.data.data.minFees
         this.$refs.serviceCharge[index].value = this.serviceCharge
+        this.service = this.$refs.serviceCharge[index].value
       }
     },
     /**
@@ -967,9 +989,6 @@ export default {
     * 点击提币按钮
     * */
     moneyConfirmState () {
-      // if () {
-      //
-      // }
       if (!this.mentionAddressValue) {
         // 请选择提币地址
         this.$message({
@@ -1002,6 +1021,14 @@ export default {
       this.$router.push({path: '/TransactionPassword'})
     },
     submitMentionMoney () {
+      if (!this.phoneCode && !this.emailCode && !this.googleCode) {
+        console.log(1)
+        // 请输入验证码
+        this.errorMsg = this.$t('M.comm_please_enter') + this.$t('M.user_security_verify')
+        return false
+      } else {
+        this.errorMsg = ''
+      }
       this.stateSubmitAssets()
     },
     // 提交提币接口
@@ -1174,7 +1201,7 @@ export default {
   .account-assets{
     >.account-assets-main {
       >.account-assets-box {
-        min-height: 300px;
+        min-height: 480px;
         .account-assets-header {
           >.header-flex {
             height: 100%;
@@ -1232,6 +1259,11 @@ export default {
                     height:195px;
                     padding: 20px 6px;
                     z-index: 2;
+                    .error-info {
+                      height: 20px;
+                      line-height: 35px;
+                      color: #d45858;
+                    }
                     .info {
                       color: #fff;
                     }

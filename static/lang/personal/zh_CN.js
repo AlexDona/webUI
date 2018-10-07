@@ -88,6 +88,7 @@ export const personal = {
   'user_account_bank': '银行卡',
   'user_account_bank_name': '银行名称',
   'user_account_credit_numbers': '银行卡号',
+  'user_account_credit_text': '格式不正确，应为16-19位纯数字',
   'user_account_branch_address': '支行地址',
   // 添加微信
   'user_account_weChat': '微信',
@@ -193,6 +194,7 @@ export const personal = {
   'user_push_payment': '付款',
   'user_push_revocation': '撤销',
   'user_push_count': 'Push数量不能大于余额',
+  'user_push_forbid': '禁止自我PUSH',
   // PUSH记录
   // #####################我的交易#####################
   // 币币订单
@@ -203,6 +205,7 @@ export const personal = {
   'user_coin_start_stop': '起止',
   'user_coin_entrust': '委托',
   'user_coin_volume': '成交额',
+  'user_coin_volume_text': '确定撤销委单记录吗, 是否继续?',
   // 当前委托Commissioned by the current
   'user_coin_commissioned_current': '当前委托',
   // 历史委托

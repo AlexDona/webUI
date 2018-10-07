@@ -200,15 +200,12 @@ export default {
     >.freezing-order-content{
       >.freezing-table-head{
         box-sizing: border-box;
-        /*width: 1043px;*/
         height: 35px;
         line-height: 35px;
         border-radius: 5px;
         margin-bottom: 5px;
-        /*box-shadow:底边阴影;*/
         >.item{
           display: inline-block;
-          /*width: 140px;*/
           text-align: center;
         }
         >.order-time {
@@ -217,7 +214,6 @@ export default {
       }
       >.freezing-table-body{
         box-sizing: border-box;
-        /*width: 1043px;*/
         height: 170px;
         border-radius: 5px;
         margin-bottom: 15px;
@@ -264,8 +260,8 @@ export default {
         }
       }
       >.no-data{
-        height: 432px;
-        line-height: 432px;
+        height: 345px;
+        line-height: 345px;
         text-align: center;
         background-color: #1E2636;
       }

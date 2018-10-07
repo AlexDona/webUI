@@ -65,21 +65,12 @@
 .fiat-completed-order-box.personal .el-table--enable-row-transition .el-table__body td:first-of-type.el-table__expanded-cell{
   border-top-left-radius: 0px;
   border-top: 0px solid #262F38;
-  /*border-right: 1px solid #262F38;*/
-  /*border-left: 1px solid #262F38;*/
 }
 .fiat-completed-order-box.personal .el-table--enable-row-transition .el-table__body td:nth-last-of-type(1){
   border-top-right-radius: 5px;
-  /*border-right: 1px solid #262F38*/
 }
 .fiat-completed-order-box.personal .el-table--enable-row-transition .el-table__body td:nth-last-of-type(1).el-table__expanded-cell{
   border-top-right-radius: 0px;
-  /*border-right: 1px solid #262F38;*/
-}
-.fiat-completed-order-box.personal .el-table--enable-row-transition .el-table__body td:first-of-type.el-table__expanded-cell{
-  /*border-bottom-right-radius: 10px;*/
-  /*border-bottom-left-radius: 10px;*/
-
 }
 .fiat-completed-order-box.personal .el-table--enable-row-transition .el-table__body td:first-of-type.el-table__expanded-cell ::after{
   content: '';
