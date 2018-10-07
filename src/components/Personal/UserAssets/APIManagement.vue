@@ -708,10 +708,8 @@ export default {
       this.userId = id
       // 确定删除API地址吗, 是否继续?
       this.$confirm(this.$t('M.comm_sure_delete'), {
-        // 取消
-        cancelButtonText: this.$t('M.comm_cancel'),
-        // 确定
-        confirmButtonText: this.$t('M.comm_confirm')
+        cancelButtonText: this.$t('M.comm_cancel'), // 取消
+        confirmButtonText: this.$t('M.comm_delete') // 删除
       }).then(() => {
         this.deleteUserApi(id)
       }).catch(() => {

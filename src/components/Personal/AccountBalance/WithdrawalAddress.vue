@@ -399,10 +399,10 @@ export default {
     cancelId (id) {
       console.log(id)
       this.deleteWithdrawalId = id
-      // 确定删除提币地址吗, 是否继续?取消 确定
+      // 确定删除提币地址？ 取消  删除
       this.$confirm(this.$t('M.user_address_delete_withdrawals'), {
-        cancelButtonText: this.$t('M.comm_cancel'),
-        confirmButtonText: this.$t('M.comm_confirm')
+        cancelButtonText: this.$t('M.comm_cancel'), // 取消
+        confirmButtonText: this.$t('M.comm_delete') // 删除
       }).then(() => {
         this.deleteWithdrawal(id)
       }).catch(() => {
@@ -415,7 +415,7 @@ export default {
         id: this.deleteWithdrawalId // 列表id
       }
       data = await deleteUserWithdrawAddress(param)
-      if (!(returnAjaxMessage(data, this, 0))) {
+      if (!(returnAjaxMessage(data, this, 1))) {
         return false
       } else {
         this.WithdrawalAddressList()

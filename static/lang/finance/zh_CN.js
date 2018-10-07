@@ -20,5 +20,7 @@ export const finance = {
   finance_noemptyTips: '投资类型或投资数量不能为空',
   finance_loginTips: '@您还没有登陆,请',
   finance_or: '或者',
-  finance_loginTipsTwo: '之后查看!'
+  finance_loginTipsTwo: '之后查看!',
+  // 二次确认弹框提示信息
+  finance_tipsContentOne: '确定取回存币?'
 }

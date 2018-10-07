@@ -39,7 +39,7 @@ export const personal = {
   // 提币地址
   'user_address_empty': '提币地址不能为空',
   // 提币列表
-  'user_address_delete_withdrawals': '确定删除提币地址吗, 是否继续?',
+  'user_address_delete_withdrawals': '确定删除提币地址?',
   // #####################个人中心#####################
   // 身份认证
   'user_identity': '身份认证',

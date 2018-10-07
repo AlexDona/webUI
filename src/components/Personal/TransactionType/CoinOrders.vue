@@ -587,8 +587,8 @@ export default {
         id,
         version
       }
-      // 确定删除提币地址吗, 是否继续?
-      this.$confirm(this.$t('M.comm_sure_delete'), {
+      // 确定撤销委托单？  取消  确定
+      this.$confirm(this.$t('M.otc_revoke'), {
         // 取消
         cancelButtonText: this.$t('M.comm_cancel'),
         // 确定

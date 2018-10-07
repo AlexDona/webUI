@@ -455,8 +455,8 @@ export default {
     },
     // 一键下架所有广告 二次确认弹出框
     cancelAllOnekey () {
-      this.$confirm(this.$t('M.otc_adMange_tipsContentOne'), {
-        confirmButtonText: this.$t('M.comm_confirm'), // 确定
+      this.$confirm(this.$t('M.otc_adMange_tipsContentThree'), {
+        confirmButtonText: this.$t('M.comm_all_sold_out'), // 全部下架
         cancelButtonText: this.$t('M.comm_cancel') // 取消
       }).then(() => {
         this.cancelAllOnekeyConfirm()
@@ -477,14 +477,14 @@ export default {
     // 点击表格中的下架按钮触发的事件
     updateADUnshelve (id) {
       this.$confirm(this.$t('M.otc_adMange_tipsContentOne'), {
-        confirmButtonText: this.$t('M.comm_confirm'), // 确定
+        confirmButtonText: this.$t('M.comm_sold_out'), // 下架
         cancelButtonText: this.$t('M.comm_cancel') // 取消
       }).then(() => {
         this.getOTCEntrustingOrdersRevocation(id)
       }).catch(() => {
       })
     },
-    // 点击下架按钮 请求撤单接口
+    // 点击 下架 按钮请求撤单接口
     async getOTCEntrustingOrdersRevocation (id) {
       let data = await querySelectedOrdersRevocation({
         entrustId: id
@@ -501,11 +501,11 @@ export default {
         })
       }
     },
-    // 点击修改按钮钮触发的事件
+    // 点击 修改 按钮钮触发的事件
     modifyAD (item) {
       this.$confirm(this.$t('M.otc_adMange_tipsContentTwo'), {
-        confirmButtonText: this.$t('M.comm_confirm'),
-        cancelButtonText: this.$t('M.comm_cancel')
+        confirmButtonText: this.$t('M.comm_sold_out'), // 下架
+        cancelButtonText: this.$t('M.comm_cancel') // 取消
       }).then(() => {
         // 跳转发布广告页面并携带一条信息的参数
         this.$router.push({path: '/OTCPublishAD', query: {id: item.id}})
