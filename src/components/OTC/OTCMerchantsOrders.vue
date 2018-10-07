@@ -451,10 +451,28 @@ export default {
         // 初始 日期赋值
         case 'startDate':
           this.startTimeValue = targetValue
+          if (this.endTimeValue) {
+            if (this.startTimeValue > this.endTimeValue) {
+              this.$message({ // message: '开始时间不能大于结束时间',
+                message: this.$t('M.otc_time_limit'),
+                type: 'error'
+              })
+              return false
+            }
+          }
           break
         // 结束 日期赋值
         case 'endDate':
           this.endTimeValue = targetValue
+          if (this.startTimeValue) {
+            if (this.startTimeValue > this.endTimeValue) {
+              this.$message({ // message: '开始时间不能大于结束时间',
+                message: this.$t('M.otc_time_limit'),
+                type: 'error'
+              })
+              return false
+            }
+          }
           break
       }
     },

@@ -192,7 +192,8 @@
               >
                 <template slot-scope = "s">
                   <div>
-                    {{s.row.entrustCount - s.row.matchCount}}{{selectedOTCAvailableCurrencyName}}
+                    <!-- {{s.row.entrustCount- s.row.matchCount}}{{selectedOTCAvailableCurrencyName}} -->
+                    {{getOTCRemainingSum(s.row.entrustCount, s.row.matchCount, '-')}}{{selectedOTCAvailableCurrencyName}}
                   </div>
                 </template>
               </el-table-column>
@@ -426,6 +427,7 @@
 </template>
 <!--请严格按照如下书写书序-->
 <script>
+import {amendPrecision} from '../../utils'
 import {getOTCAvailableCurrency, getOTCPutUpOrders, getMerchantAvailablelegalTender} from '../../utils/api/OTC'
 import IconFontCommon from '../Common/IconFontCommon'
 import NavCommon from '../Common/HeaderCommonForPC'
@@ -536,6 +538,10 @@ export default {
       'CHANGE_OTC_AVAILABLE_CURRENCY_ID',
       'CHANGE_OTC_AVAILABLE_PARTNER_COIN_ID'
     ]),
+    // 解决OTC首页挂单列表剩余数量精度丢失问题
+    getOTCRemainingSum (entrustCount, matchCount, symbol) {
+      return amendPrecision(entrustCount, matchCount, symbol)
+    },
     // 分页
     changeCurrentPage (pageNum) {
       console.log(pageNum)

@@ -220,6 +220,7 @@ export const OTC = {
   'otc_publishAD_rangePrice': '之间的价格',
   'otc_publishAD_inputminLimit': '输入值不能小于最小限额',
   'otc_publishAD_inputmaxLimit': '输入值不能大于最大限额',
+  'otc_publishAD_entrustCountLimit': '最大可卖出量不足',
   // #############广告管理##################
   'otc_adMange': '广告管理',
   'otc_trade': '交易',
@@ -256,6 +257,7 @@ export const OTC = {
   'otc_formStatistics_mouth': '本月',
   'otc_formStatistics_history': '历史',
   'otc_formStatistics_orderDeatil': '订单详情',
+  'otc_time_limit': '开始时间不能大于结束时间',
   // ###############在线购买和出售##############
   'otc_index_tradeTimes': '成交次数',
   'otc_index_failureTimes': '失败次数',
