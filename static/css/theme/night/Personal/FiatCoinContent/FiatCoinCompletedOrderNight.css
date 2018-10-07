@@ -79,7 +79,6 @@
 .el-table--enable-row-transition
 .el-table__body td:nth-last-of-type(1).el-table__expanded-cell{
   border-top-right-radius: 0px;
-  /*border-right: 1px solid #262F38;*/
 }
 .fiat-completed-order-box.personal.night
 .el-table--enable-row-transition
@@ -114,6 +113,6 @@
   background-color: #1C1F32;
 }
 .fiat-completed-order-box.personal.night .el-table__empty-block {
-  min-height: 432px;
+  min-height: 345px;
   background-color: #1C1F32;
 }

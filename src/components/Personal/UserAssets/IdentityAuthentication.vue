@@ -188,10 +188,10 @@
           </span>
           <span
             class="float-right authentication-type font-size12"
-            v-if="userInfo.userInfo.advancedAuth === 'notPass'"
+            v-if="userInfo.userInfo.advancedAuth === ''"
           >
-            <!--未通过-->
-            {{ $t('M.user_senior_not_pass') }}
+            <!--去认证-->
+            {{ $t('M.user_senior_go_certification') }}
           </span>
           <span v-else></span>
         </p>
@@ -733,9 +733,9 @@ export default {
     // 高级认证弹窗
     authenticationMethod () {
       // 判断是否高级认证&&实名认证
-      if (this.userInfoRefresh.realname !== '' && this.userInfoRefresh.advancedAuth === 'notPass') {
+      if (this.userInfoRefresh.realname !== '' && this.userInfo.userInfo.advancedAuth === '') {
         this.seniorAuthentication = true
-      } else if (this.userInfoRefresh.realname == '') {
+      } else if (this.userInfoRefresh.realname !== '') {
         this.seniorAuthentication = false
       }
     },
@@ -944,7 +944,7 @@ export default {
         padding-top: 50px !important;
       }
       >.wait-veritfy-back {
-        height: 393px;
+        height: 400px;
         padding-top: 130px;
         >.wait-veritfy{
           >.color-coin {
@@ -975,7 +975,7 @@ export default {
         .advanced-upload {
           width: 180px;
           float: left;
-          margin: 0 55px;
+          margin: 0 64px;
           text-align: center;
         }
         .upload {

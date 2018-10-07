@@ -1291,8 +1291,8 @@ export default {
         }
       }
       >.no-data{
-        height: 472px;
-        line-height: 472px;
+        height: 385px;
+        line-height: 385px;
         text-align: center;
       }
     }

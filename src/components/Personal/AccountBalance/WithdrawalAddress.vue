@@ -57,7 +57,9 @@
                 v-model="prepaidAddress"
                 @keydown="setErrorMsg(1, '')"
                 @blur="checkoutInputFormat(1, prepaidAddress)"
-              />
+                onkeyup="value=value.replace(/[\W]/g,'') "
+                onbeforepaste="clipboardData.setData('text',clipboardData.getData('text').replace(/[^\d]/g,''))"
+              >
               <!--错误提示-->
               <ErrorBox
                 :text="errorShowStatusList[1]"
@@ -88,7 +90,9 @@
                 >
                   <input
                     class="content-input padding-l15 box-sizing"
+                    type="number"
                     v-model="phoneCode"
+                    @focus="emptyStatus"
                   >
                   <CountDownButton
                     class="send-code-btn cursor-pointer"
@@ -105,7 +109,9 @@
                 >
                   <input
                     class="content-input padding-l15 box-sizing"
+                    type="number"
                     v-model="emailCode"
+                    @focus="emptyStatus"
                   >
                   <CountDownButton
                     class="send-code-btn cursor-pointer"
@@ -122,7 +128,9 @@
                 >
                   <input
                     class="content-input content-input1 input-google padding-l15 box-sizing"
+                    type="number"
                     v-model="googleCode"
+                    @focus="emptyStatus"
                   >
                 </el-form-item>
                 <!--谷歌未认证-->
@@ -280,14 +288,14 @@ export default {
   methods: {
     // 清空内容信息
     emptyStatus () {
-      this.errorMsg = ''
+      this.errorMsg1 = ''
     },
     // 点击显示验证信息
     addAddress () {
       let goOnStatus = 0
       if (
         this.checkoutInputFormat(0, this.mentionRemark) &&
-        this.checkoutInputFormat(0, this.prepaidAddress)
+        this.checkoutInputFormat(1, this.prepaidAddress)
       ) {
         goOnStatus = 1
       } else {
@@ -314,7 +322,6 @@ export default {
     checkoutInputFormat (type, targetNum) {
       console.log(type)
       switch (type) {
-        // 买方UID
         case 0:
           if (!targetNum) {
             // 请输入备注
@@ -326,7 +333,6 @@ export default {
             this.$forceUpdate()
             return 1
           }
-        // 数量
         case 1:
           if (!targetNum) {
             // 请输入提币地址
@@ -347,7 +353,6 @@ export default {
     // 新增用户提币地址按钮
     async stateSubmitAddAddress () {
       if (!this.phoneCode && !this.emailCode && !this.googleCode) {
-        console.log(1)
         // 请输入验证码
         this.errorMsg1 = this.$t('M.comm_please_enter') + this.$t('M.user_security_verify')
         return false

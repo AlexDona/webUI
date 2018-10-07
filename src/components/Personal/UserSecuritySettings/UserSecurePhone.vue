@@ -188,7 +188,7 @@
                 class="phone-input phone-input-left border-radius2 padding-l15 box-sizing"
                 v-model="amendDataPhone.newPhoneAccounts"
                 @keydown="tieErrorMsg(1,'')"
-                @blur="checkoutInputFormat(1, amendDataPhone.newPhoneAccounts)"
+                @blur="checkUserExistAjax('phone', amendDataPhone.newPhoneAccounts)"
               >
               <!--错误提示-->
               <ErrorBox
@@ -261,14 +261,15 @@ import ImageValidate from '../../Common/ImageValidateCommon' // 图片验证吗
 import CountDownButton from '../../Common/CountDownCommon'
 import {
   returnAjaxMessage, // 接口返回信息
-  sendPhoneOrEmailCodeAjax
+  sendPhoneOrEmailCodeAjax,
+  validateNumForUserInput
 } from '../../../utils/commonFunc'
 import {
   bindPhoneAddress,
   changeMobilePhone,
   statusSecurityCenter
 } from '../../../utils/api/personal'
-// import {checkUserExist} from '../../../utils/api/user'
+import {checkUserExist} from '../../../utils/api/user'
 const { mapMutations } = createNamespacedHelpers('personal')
 export default {
   components: {
@@ -489,6 +490,27 @@ export default {
         }
       }
     },
+    // 检测用户名是否存在
+    async checkUserExistAjax (type, userName) {
+      if (!validateNumForUserInput(type, userName)) {
+        let params = {
+          userName: userName,
+          regType: type
+        }
+        const data = await checkUserExist(params)
+        if (!returnAjaxMessage(data, this)) {
+          return false
+        }
+      } else {
+        switch (type) {
+          case 'phone':
+            if (this.tieCheckoutInputFormat(1, userName)) {
+              return false
+            }
+            break
+        }
+      }
+    },
     // 换绑手机检测输入格式
     tieCheckoutInputFormat (type, targetNum) {
       switch (type) {
@@ -497,7 +519,6 @@ export default {
           if (!targetNum) {
             // 请输入旧手机短信验证码
             this.tieErrorMsg(0, this.$t('M.comm_please_enter') + this.$t('M.user_security_former') + this.$t('M.user_security_phone') + this.$t('M.comm_code'))
-            console.log(this.tieErrorShowStatusList)
             this.$forceUpdate()
             return 0
           } else {
@@ -507,16 +528,34 @@ export default {
           }
         // 新手机号码
         case 1:
-          if (!targetNum) {
-            // 请输入手机号
-            this.tieErrorMsg(1, this.$t('M.comm_please_enter') + this.$t('M.user_security_phone') + this.$t('M.comm_mark'))
-            this.$forceUpdate()
-            return 0
-          } else {
-            this.tieErrorMsg(1, '')
-            this.$forceUpdate()
-            return 1
+          switch (validateNumForUserInput('phone', targetNum)) {
+            case 0:
+              this.tieErrorMsg(1, '')
+              this.$forceUpdate()
+              return 1
+            case 1:
+              // console.log(type)
+              // 请输入手机号
+              this.tieErrorMsg(1, this.$t('M.comm_please_enter') + this.$t('M.user_security_phone') + this.$t('M.comm_mark'))
+              this.$forceUpdate()
+              return 0
+            case 2:
+              // 请输入正确的手机号
+              this.tieErrorMsg(1, this.$t('M.comm_please_enter') + this.$t('M.user_security_correct') + this.$t('M.user_security_phone') + this.$t('M.comm_mark'))
+              this.$forceUpdate()
+              return 0
           }
+          break
+          // if (!targetNum) {
+          //   // 请输入手机号
+          //   this.tieErrorMsg('phone', this.$t('M.comm_please_enter') + this.$t('M.user_security_phone') + this.$t('M.comm_mark'))
+          //   this.$forceUpdate()
+          //   return 0
+          // } else {
+          //   this.tieErrorMsg(1, '')
+          //   this.$forceUpdate()
+          //   return 1
+          // }
         // 新短信验证码
         case 2:
           if (!targetNum) {

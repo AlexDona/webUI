@@ -112,7 +112,7 @@
                 :label="$t('M.user_security_google') + $t('M.user_security_verify') + '：'"
               >
                 <input
-                  type="text"
+                  type="number"
                   class="google-input border-radius2 padding-l15 box-sizing"
                   v-model="googleVerificationCode"
                   @keydown="setErrorMsg(0, '')"
@@ -375,7 +375,7 @@ export default {
   .binding-google {
     >.binding-google-main {
       width: 1100px;
-      min-height: 600px;
+      min-height: 700px;
       margin: 60px auto 100px;
       >.binding-google-header {
         display: flex;

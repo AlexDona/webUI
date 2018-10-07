@@ -69,6 +69,7 @@
             >
               <input
                 class="bank-input border-radius2"
+                type="number"
                 v-model="bankCard"
                 @keydown="setErrorMsg(1, '')"
                 @blur="checkoutInputFormat(1, bankCard)"
@@ -141,7 +142,8 @@ import IconFontCommon from '../../Common/IconFontCommon'
 import ErrorBox from '../../User/ErrorBox'
 import CountDownButton from '../../Common/CountDownCommon'
 import {
-  returnAjaxMessage // 接口返回信息
+  returnAjaxMessage, // 接口返回信息
+  validateNumForUserInput
 } from '../../../utils/commonFunc'
 import {
   statusCardSettings,
@@ -267,15 +269,30 @@ export default {
           }
         // 银行卡号
         case 1:
-          if (!targetNum) {
-            this.setErrorMsg(1, this.$t('M.comm_please_enter') + this.$t('M.user_account_credit_numbers'))
-            this.$forceUpdate()
-            return 0
-          } else {
-            this.setErrorMsg(1, '')
-            this.$forceUpdate()
-            return 1
+          switch (validateNumForUserInput('bank-card', targetNum)) {
+            case 0:
+              this.setErrorMsg(1, '')
+              this.$forceUpdate()
+              return 1
+            case 1:
+              this.setErrorMsg(1, this.$t('M.comm_please_enter') + this.$t('M.user_account_credit_numbers'))
+              this.$forceUpdate()
+              return 0
+            case 2:
+              this.setErrorMsg(1, this.$t('M.user_account_credit_text'))
+              this.$forceUpdate()
+              return 0
           }
+          break
+          // if (!targetNum) {
+          //   this.setErrorMsg(1, this.$t('M.comm_please_enter') + this.$t('M.user_account_credit_numbers'))
+          //   this.$forceUpdate()
+          //   return 0
+          // } else {
+          //   this.setErrorMsg(1, '')
+          //   this.$forceUpdate()
+          //   return 1
+          // }
         // 支行地址
         case 2:
           if (!targetNum) {
