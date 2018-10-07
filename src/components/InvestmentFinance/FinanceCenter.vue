@@ -535,7 +535,7 @@ export default {
       const data = await cancleInvestment(id)
       console.log('用户取消按钮')
       console.log(data)
-      if (!(returnAjaxMessage(data, this, 0))) {
+      if (!(returnAjaxMessage(data, this, 1))) {
         return false
       } else {
         // 重新请求币种接口刷新列表
@@ -567,7 +567,7 @@ export default {
       // 用户点击取消按钮需要请求接口
       // this.clickCancleInvestment(id)
       // 增加二次确认弹出框-任付伟
-      this.$confirm(this.$t('M.otc_adMange_tipsContentOne'), {
+      this.$confirm(this.$t('M.finance_tipsContentOne'), {
         confirmButtonText: this.$t('M.comm_confirm'), // 确定
         cancelButtonText: this.$t('M.comm_cancel') // 取消
       }).then(() => {

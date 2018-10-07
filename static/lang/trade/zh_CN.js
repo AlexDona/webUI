@@ -34,5 +34,5 @@ export const trade = {
   // #####################币币交易 行情#####################
   'trade_market_bazaar': '市场',
   'trade_market_amount_increase': '涨幅',
-  'trade_market_optional': '自选',
+  'trade_market_optional': '自选'
 }

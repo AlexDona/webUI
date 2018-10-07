@@ -167,7 +167,7 @@ export default {
       // this.getOTCEntrustingOrdersRevocation(id)
       this.$confirm(this.$t('M.otc_revoke'), {
         cancelButtonText: this.$t('M.comm_cancel'),
-        confirmButtonText: this.$t('M.comm_affirm')
+        confirmButtonText: this.$t('M.comm_confirm')
       }).then(() => {
         this.getOTCEntrustingOrdersRevocation(id)
       }).catch(() => {

@@ -569,8 +569,9 @@ export default {
         id,
         version
       }
-      // 确定撤销委单记录吗, 是否继续?
-      this.$confirm(this.$t('M.user_coin_volume_text'), {
+
+      // 确定撤销委托单？  取消  确定
+      this.$confirm(this.$t('M.otc_revoke'), {
         // 取消
         cancelButtonText: this.$t('M.comm_cancel'),
         // 确定
