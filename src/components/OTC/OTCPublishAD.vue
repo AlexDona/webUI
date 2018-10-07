@@ -91,6 +91,7 @@
             <div class="right display-inline-block">
               <div>
                 <p>
+                  <!-- 最大可卖出量: -->
                   <span v-if="activitedBuySellStyle === 'SELL'">
                     {{$t('M.otc_seller_maximum')}}:
                     <!-- {{total}}{{activeedCoinName}} -->
@@ -108,7 +109,7 @@
                 </p>
               </div>
               <!-- 定价设置 -->
-              <p>{{$t('M.otc_publishAD_setPrice')}}</p>
+              <!-- <p>{{$t('M.otc_publishAD_setPrice')}}</p> -->
               <div class="input">
                 <!-- 单价 -->
                 <input
@@ -617,6 +618,10 @@ export default {
     changeBuySellStyle (e) {
       this.activitedBuySellStyle = e
       console.log(this.activitedBuySellStyle)
+      // 切换买卖类型，如果是买单则清空交易数量错误提示
+      if (this.activitedBuySellStyle == 'BUY') {
+        this.errorInfoEntrustCount = ''
+      }
       // 币种详情
       console.log('币种id：' + this.activitedCoinId)
       console.log('法种id：' + this.activitedCurrencyId)
@@ -666,6 +671,10 @@ export default {
         this.errorInfoEntrustCount = this.$t('M.otc_publishAD_pleaseInput') + this.$t('M.otc_publishAD_sellmount')
         return false
       }
+      // 交易数量 有错误提示
+      if (this.errorInfoEntrustCount) {
+        return false
+      }
       // 单笔最小最大限制
       if (this.errorInfoMinCount) {
         return false
@@ -709,6 +718,9 @@ export default {
         // 返回数据正确的逻辑
         this.dialogVisible = false
         // 清空数据
+        this.clearMainData()
+        // 重新渲染页面
+        this.getOTCCoinInfo()
       }
     },
     // 7.0 交易密码框获得焦点
@@ -733,6 +745,31 @@ export default {
       this.parameterPayTypes = str
       console.log(this.parameterPayTypes)
       this.errorInfoTradeWay = '' // 清空错误提示
+    },
+    // 清空主要数据
+    clearMainData () {
+      // 单价
+      this.$refs.price.value = ''
+      // 单价错误提示
+      this.errorInfoPrice = ''
+      // 交易数量
+      this.$refs.entrustCount.value = ''
+      // 交易数量错误提示
+      this.errorInfoEntrustCount = ''
+      // 支付方式
+      this.activitedPayTypes = []
+      // 支付方式错误提示
+      this.errorInfoTradeWay = ''
+      // 备注
+      this.remarkText = ''
+      // 最大订单数
+      this.limitOrderCount = ''
+      // 成功过几次
+      this.successOrderCount = ''
+      // 交易密码
+      this.tradePassword = ''
+      // 交易密码错误提示
+      this.errorInfoPassword = ''
     },
     // 清空input框数据
     clearInputData () {
@@ -783,11 +820,20 @@ export default {
       this[ref] = this.$refs[ref].value
       // console.log(this[ref])
       // console.log(this.entrustCount)
-      // console.log(this.$refs.entrustCount.value)
+      console.log(this.$refs.entrustCount.value)
       let target = this.$refs[ref]
       formatNumberInput(target, pointLength)
       if (this.$refs.entrustCount.value) {
         this.errorInfoEntrustCount = ''
+      }
+      // 开始校验
+      console.log(this.total)
+      if (this.activitedBuySellStyle == 'SELL') {
+        if (this.$refs.entrustCount.value > this.total) {
+          // this.errorInfoEntrustCount = '最大可卖出量不足'
+          this.errorInfoEntrustCount = this.$t('M.otc_publishAD_entrustCountLimit')
+          return false
+        }
       }
     },
     // 校验单笔最小限额

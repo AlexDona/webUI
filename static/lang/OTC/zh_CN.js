@@ -220,6 +220,7 @@ export const OTC = {
   'otc_publishAD_rangePrice': '之间的价格',
   'otc_publishAD_inputminLimit': '输入值不能小于最小限额',
   'otc_publishAD_inputmaxLimit': '输入值不能大于最大限额',
+  'otc_publishAD_entrustCountLimit': '最大可卖出量不足',
   // #############广告管理##################
   'otc_adMange': '广告管理',
   'otc_trade': '交易',
