@@ -608,14 +608,35 @@ export default {
     startTime (e) {
       this.startTimeValue = e
       this.activedRadioId = ''
+      console.log(e)
+      if (this.endTimeValue) {
+        if (this.startTimeValue > this.endTimeValue) {
+          this.$message({ // message: '开始时间不能大于结束时间',
+            message: this.$t('M.otc_time_limit'),
+            type: 'error'
+          })
+          return false
+        }
+      }
       this.getOTCEntrustingOrdersRevocation()
     },
-    // 结束事件赋值
+    // 结束时间赋值
     endTime (e) {
       this.endTimeValue = e
       this.activedRadioId = ''
+      console.log(e)
+      if (this.startTimeValue) {
+        if (this.startTimeValue > this.endTimeValue) {
+          this.$message({ // message: '开始时间不能大于结束时间',
+            message: this.$t('M.otc_time_limit'),
+            type: 'error'
+          })
+          return false
+        }
+      }
       this.getOTCEntrustingOrdersRevocation()
     },
+    // 右侧单选日期按钮change事件
     radioChouse (e) {
       this.activedRadioId = e
       if (e == '4') {
@@ -1046,7 +1067,7 @@ export default {
                 }
               }
               >.right{
-                color: #9DA5B3;
+                color: #7D90AC;
                 .data{
                   color: #D45858;
                 }

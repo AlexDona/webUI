@@ -257,6 +257,7 @@ export const OTC = {
   'otc_formStatistics_mouth': '本月',
   'otc_formStatistics_history': '历史',
   'otc_formStatistics_orderDeatil': '订单详情',
+  'otc_time_limit': '开始时间不能大于结束时间',
   // ###############在线购买和出售##############
   'otc_index_tradeTimes': '成交次数',
   'otc_index_failureTimes': '失败次数',
