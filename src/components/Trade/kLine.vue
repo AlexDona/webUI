@@ -161,7 +161,7 @@ export default {
             'header_undo_redo',
             'header_chart_type',
             'header_screenshot',
-            'header_settings',
+            'header_settings'
             // 'widget_logo',
           ],
           enabled_features: [

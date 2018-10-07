@@ -96,6 +96,54 @@
                 </el-button>
               </div>
             </label>
+            <el-dialog
+              title="存币详情"
+              :visible.sync="dialogVisible"
+              width="440px"
+              class='dialogStyle'
+              :before-close="handleClose">
+              <el-form :label-position="right" label-width="90px" :model="formLabelAlign">
+                <el-form-item label="存币时长">
+                 {{getDate(0)}} 至 {{getDate(90)}} <span class="blue">(90天)</span>
+                </el-form-item>
+                <el-form-item label="存币数量">
+                  <div class='invest-mounte'>
+                    <el-input v-model="investMounte" class="red"></el-input>
+                    <strong>{{selecteCoindName}}</strong>
+                  </div>
+                </el-form-item>
+                <el-form-item label="利率">
+                   <div class='invest-mounte'>
+                    <el-input v-model="formLabelAlign.rate"></el-input>
+                  </div>
+                </el-form-item>
+                <el-form-item label="预计总收益">
+                  <div class='invest-mounte'>
+                    <el-input v-model="formLabelAlign.totalEarn"></el-input>
+                    <strong>{{selecteCoindName}}</strong>
+                  </div>
+                </el-form-item>
+                <el-form-item label="收益发放">
+                  <div class='invest-mounte'>
+                    <el-input v-model="formLabelAlign.dividend"></el-input>
+                    <span class='dividend-tips' @click="showDividendTime = !showDividendTime">!</span>
+                  </div>
+                </el-form-item>
+              </el-form>
+              <div class="show-dividend-time-list">
+                <el-collapse-transition>
+                  <ul v-show='showDividendTime'>
+                    <li v-for="(item,index) in showDividendTimeList" :key="index">
+                      <span>{{item.time}}</span> <span class="blue">{{item.interest}}</span><span class='blue'>{{selecteCoindName}}</span><span>(利息)</span>
+                    </li>
+                  </ul>
+                </el-collapse-transition>
+              </div>
+              <span slot="footer" class="dialog-footer">
+                <el-button @click="dialogCancel">取 消</el-button>
+                <el-button type="primary" @click="dialogSuer">确 定</el-button>
+              </span>
+            </el-dialog>
             <button></button>
           </div>
         </div>
@@ -365,7 +413,50 @@ export default {
       // 走势图x轴数组
       renderTimeList: '',
       // 走势图y轴数组
-      renderPriceList: ''
+      renderPriceList: '',
+      // 点击立即投资弹窗默认隐藏
+      dialogVisible: false,
+      // 表单对象
+      formLabelAlign: {
+        // 数量
+        amount: '',
+        // 利率
+        rate: '',
+        // 总收益
+        totalEarn: '',
+        // 发放收益
+        dividend: ''
+      },
+      // 收益时间列表隐藏
+      showDividendTime: false,
+      showDividendTimeList: [
+        {
+          time: '2018-10-15',
+          interest: 2
+        },
+        {
+          time: '2018-05-15',
+          interest: 3
+        },
+        {
+          time: '2018-6-15',
+          interest: 3
+        },
+        {
+          time: '2018-05-15',
+          interest: 3
+        },
+        {
+          time: '2018-6-15',
+          interest: 3
+        },
+        {
+          time: '2018-6-15',
+          interest: 3
+        }
+      ],
+      // n天后的时间
+      brforeNtime: ''
     }
   },
   created () {
@@ -392,6 +483,17 @@ export default {
       'FINANCE_LINE_RENDER_TIME_LIST',
       'FINANCE_LINE_RENDER_PRICE_LIST'
     ]),
+    // 将返回来的天数转换成日期
+    getDate (n) {
+      let ss = 24 * 60 * 60 * 1000
+      let timeSteps = new Date().getTime() // 当前时间撮
+      let date1 = new Date(timeSteps - n * ss) // n天前的时间撮
+      let newtime = date1.toLocaleString() // 将n天前的时间撮转换成当前日期
+      let arr = newtime.split(' ') // 将精确到日的日期摘出来
+      let arr1 = arr[0].split('/') // 将日期格式改变
+      let arr2 = arr1[0] + (-arr1[1]) + (-arr1[2])
+      return arr2
+    },
     timeFormatting (data) {
       return timeFilter(data, 'data')
     },
@@ -426,8 +528,8 @@ export default {
     getInvestEarnings () {
       if (this.isLogin) {
         if (this.selectedInvestTypeId && this.investMounte && this.isShow === false) {
-        // 执行投资按钮
-          this.clickImmediateInvestment()
+          // 显示模态框
+          this.dialogVisible = true
         } else {
           this.$message({
             // 投资类型或投资数量不能为空
@@ -439,6 +541,15 @@ export default {
         this.$router.push({path: '/login'})
         return false
       }
+    },
+    // 点击取消按钮模态框关闭
+    dialogCancel () {
+      this.dialogVisible = false
+    },
+    dialogSuer () {
+      this.dialogVisible = false
+      // 执行投资按钮
+      this.clickImmediateInvestment()
     },
     // 添加理财记录
     async clickImmediateInvestment () {
@@ -540,6 +651,8 @@ export default {
           this.selecteCoindName = item.name
         }
       })
+      // 每次切换时都要请求改币种的总数量
+      this.getUserCoindTotal()
       // 改变币种重新请求接口
       this.getFinancialManagementList()
     },
@@ -786,8 +899,52 @@ export default {
       color: #D45858;
     }
  }
+  .dividend-tips{
+    width: 16px;
+    height: 16px;
+    display: inline-block;
+    border-radius: 50%;
+    color: #fff;
+    line-height: 16px;
+    text-align: center;
+    background: #338FF5;
+    cursor: pointer;
+    margin-top:10px ;
+  }
  .el-select-dropdown{
       min-width: 408px!important;
       left:169px!important;
+  }
+  .show-dividend-time-list{
+    >ul{
+      min-width: 300px;
+      overflow: hidden;
+      color: #fff;
+      font-weight: 600;
+      >li{
+        margin:-20px 0px;
+        margin-left:100px;
+        border-left: 4px solid #338FF5;
+        position: relative;
+        padding-left: 5px;
+        line-height: 50px;
+        span:nth-child(1){
+          padding:0px 40px 0px 10px;
+        }
+        span:nth-child(2){
+          padding-right:10px;
+        }
+        &::before{
+          content: '';
+          position: absolute;
+          width: 10px;
+          height: 10px;
+          top:20.5px;
+          left:-7px;
+          background: #338FF5;
+          border-radius: 50%;
+        }
+      }
+    }
   }
 </style>
