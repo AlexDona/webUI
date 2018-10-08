@@ -111,7 +111,7 @@
                   <CountDownButton
                     class="send-code-btn cursor-pointer"
                     :status="disabledOfPhoneBtn"
-                    @run="sendPhoneOrEmailCodeAndCheckUserExit('phone', bindingDataPhone.bindingNewPhoneAccounts,0)"
+                    @run="sendPhoneOrEmailCode(0)"
                   />
                 </template>
                 <!--错误提示-->
@@ -313,7 +313,8 @@ export default {
         '' // 交易密码
       ],
       successCountDown: 1, // 成功倒计时
-      newPhoneIsExistStatus: false // 新手机号是否已注册过
+      newPhoneIsExistStatus: false, // 新手机号是否已注册过
+      emailBindPhoneCount: 0 // 邮箱绑定手机次数
     }
   },
   created () {
@@ -348,24 +349,29 @@ export default {
     refreshCode () {
       this.bindingDataPhone.identifyCode = this.getRandomNum()
     },
-    // 发送验证码并检测手机号是否已存在
-    async sendPhoneOrEmailCodeAndCheckUserExit (type, userName, loginType) {
-      if (!userName) {
+    // 发送验证码
+    async sendPhoneOrEmailCode (loginType, val, type) {
+      if (!type && !val && !this.bindingDataPhone.bindingNewPhoneAccounts) {
+        console.log(this.bindingDataPhone.bindingNewPhoneCode)
+        console.log(1)
         this.$message({
           type: 'error',
           message: this.$t('M.comm_please_enter') + this.$t('M.comm_code_phone1')
         })
         return false
       }
-      let data = await this.checkUserExistAjax(type, userName)
-      if (!data) {
-        return false
+      // 绑定手机号
+      if (!loginType && !val && !type) {
+        if (!this.emailBindPhoneCount) {
+          let data = await this.checkUserExistAjax('phone', this.bindingDataPhone.bindingNewPhoneAccounts)
+          this.emailBindPhoneCount++
+          console.log(data)
+          if (!data) {
+            this.emailBindPhoneCount = 0
+            return false
+          }
+        }
       }
-      await this.sendPhoneOrEmailCode(loginType)
-      // console.log(a)
-    },
-    // 发送验证码
-    async sendPhoneOrEmailCode (loginType, val, type) {
       // type: 0 新手机发验证码，1： 当前手机
       if (!type && this.newPhoneIsExistStatus) {
         this.$message({
@@ -522,13 +528,19 @@ export default {
           regType: type
         }
         const data = await checkUserExist(params)
+        console.log(this.emailBindPhoneCount)
         if (!returnAjaxMessage(data, this)) {
           if (isNewPhone) {
             this.newPhoneIsExistStatus = true
           }
+          this.emailBindPhoneCount = 0
           return 0
+        } else {
+          return 1
         }
       } else {
+        console.log(userName)
+        console.log(type)
         switch (type) {
           case 'phone':
             if (this.tieCheckoutInputFormat(1, userName)) {
@@ -539,7 +551,6 @@ export default {
             }
             break
         }
-        return 1
       }
     },
     // 换绑手机检测输入格式
@@ -577,6 +588,16 @@ export default {
               return 0
           }
           break
+          // if (!targetNum) {
+          //   // 请输入手机号
+          //   this.tieErrorMsg('phone', this.$t('M.comm_please_enter') + this.$t('M.user_security_phone') + this.$t('M.comm_mark'))
+          //   this.$forceUpdate()
+          //   return 0
+          // } else {
+          //   this.tieErrorMsg(1, '')
+          //   this.$forceUpdate()
+          //   return 1
+          // }
         // 新短信验证码
         case 2:
           if (!targetNum) {
