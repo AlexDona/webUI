@@ -57,8 +57,6 @@
                 v-model="prepaidAddress"
                 @keydown="setErrorMsg(1, '')"
                 @blur="checkoutInputFormat(1, prepaidAddress)"
-                onkeyup="value=value.replace(/[\W]/g,'') "
-                onbeforepaste="clipboardData.setData('text',clipboardData.getData('text').replace(/[^\d]/g,''))"
               >
               <!--错误提示-->
               <ErrorBox
@@ -236,7 +234,8 @@ import CountDownButton from '../../Common/CountDownCommon'
 import {
   returnAjaxMessage,
   apiSendPhoneOrEmailCodeAjax,
-  getSecurityCenter
+  getSecurityCenter,
+  validateNumForUserInput
 } from '../../../utils/commonFunc'
 export default {
   components: {
@@ -319,6 +318,10 @@ export default {
         }
       })
     },
+    reg () {
+      let pets = ['http', 'https', 'www']
+      console.log(pets.includes('http'))
+    },
     checkoutInputFormat (type, targetNum) {
       console.log(type)
       switch (type) {
@@ -334,16 +337,33 @@ export default {
             return 1
           }
         case 1:
-          if (!targetNum) {
-            // 请输入提币地址
-            this.setErrorMsg(1, this.$t('M.comm_please_enter') + this.$t('M.comm_mention_money') + this.$t('M.comm_site'))
-            this.$forceUpdate()
-            return 0
-          } else {
-            this.setErrorMsg(1, '')
-            this.$forceUpdate()
-            return 1
+          switch (validateNumForUserInput('withdrawal-address', targetNum)) {
+            case 0:
+              this.setErrorMsg(1, '')
+              this.$forceUpdate()
+              return 1
+            case 1:
+              // 请输入提币地址
+              this.setErrorMsg(1, this.$t('M.comm_please_enter') + this.$t('M.comm_mention_money') + this.$t('M.comm_site'))
+              this.$forceUpdate()
+              return 0
+            case 2:
+              // 非法地址
+              this.setErrorMsg(1, this.$t('M.user_address_withdrawal'))
+              this.$forceUpdate()
+              return 0
           }
+          break
+          // if (!targetNum) {
+          //   // 请输入提币地址
+          //   this.setErrorMsg(1, this.$t('M.comm_please_enter') + this.$t('M.comm_mention_money') + this.$t('M.comm_site'))
+          //   this.$forceUpdate()
+          //   return 0
+          // } else {
+          //   this.setErrorMsg(1, '')
+          //   this.$forceUpdate()
+          //   return 1
+          // }
       }
     },
     // 设置错误信息

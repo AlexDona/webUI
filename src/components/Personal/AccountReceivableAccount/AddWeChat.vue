@@ -257,6 +257,14 @@ export default {
       } else {
         goOnStatus = 0
       }
+      if (!this.dialogImageHandUrl1 && !this.dialogImageHandUrl) {
+        // 请上传微信收款码
+        this.$message({
+          message: this.$t('M.user_account_weChat_pla'),
+          type: 'error'
+        })
+        return false
+      }
       if (goOnStatus) {
         let data
         let param = {
