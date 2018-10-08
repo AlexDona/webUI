@@ -262,12 +262,12 @@ import CountDownButton from '../../Common/CountDownCommon'
 import {
   returnAjaxMessage, // 接口返回信息
   sendPhoneOrEmailCodeAjax,
-  validateNumForUserInput
+  validateNumForUserInput,
+  getSecurityCenter
 } from '../../../utils/commonFunc'
 import {
   bindPhoneAddress,
-  changeMobilePhone,
-  statusSecurityCenter
+  changeMobilePhone
 } from '../../../utils/api/personal'
 import {checkUserExist} from '../../../utils/api/user'
 const { mapMutations } = createNamespacedHelpers('personal')
@@ -646,18 +646,12 @@ export default {
     /**
      * 安全中心
      */
-    async getSecurityCenter () {
-      let data = await statusSecurityCenter({
-        // userId: this.userInfo.userId // 商户id
-        // token: this.userInfo.token // token
+    getSecurityCenter () {
+      getSecurityCenter(this, (data) => {
+        if (data) {
+          this.securityCenter = data.data.data
+        }
       })
-      console.log(data)
-      if (!(returnAjaxMessage(data, this, 0))) {
-        return false
-      } else {
-        // 返回冲提记录列表展示
-        this.securityCenter = data.data.data
-      }
     },
     // 成功自动跳转
     successJump () {

@@ -701,6 +701,10 @@ export default {
           return false
         }
       }
+      // 如果单价错误提示有的话不能进行提交操作
+      if (this.errorTipsPrice) {
+        return false
+      }
       // 单笔最小最大限制
       if (this.errorTipsLimitMin) {
         return false

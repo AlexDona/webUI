@@ -591,7 +591,6 @@
 import CountDownButton from '../../Common/CountDownCommon'
 import IconFontCommon from '../../Common/IconFontCommon'
 import {
-  statusSecurityCenter,
   enableTheClosing
 } from '../../../utils/api/personal'
 import {
@@ -914,13 +913,6 @@ export default {
       if (!(returnAjaxMessage(data, this, 1))) {
         return false
       } else {
-        // getSecurityCenter(params, (data) => {
-        //   if (!(returnAjaxMessage(data, this, 0))) {
-        //     return false
-        //   } else {
-        //     console.log(data)
-        //   }
-        // })
         this.getSecurityCenter()
         // 安全中心状态刷新
         this.openTheValidation = false
@@ -933,21 +925,15 @@ export default {
     /**
      * 安全中心
      */
-    async getSecurityCenter () {
-      let data = await statusSecurityCenter({
-        // token: this.userInfo.token // token
+    getSecurityCenter () {
+      getSecurityCenter(this, (data) => {
+        if (data) {
+          this.securityCenter = data.data.data
+          this.person = data.data.data.person
+          this.logonRecord = data.data.data.setLog
+          this.securityRecord = data.data.data.loginLog
+        }
       })
-      console.log(data)
-      if (!(returnAjaxMessage(data, this, 0))) {
-        return false
-      } else {
-        // 返回展示
-        this.securityCenter = data.data.data
-        this.person = data.data.data.person
-        this.logonRecord = data.data.data.setLog
-        this.securityRecord = data.data.data.loginLog
-        console.log(this.person)
-      }
     }
   },
   filter: {},
@@ -963,9 +949,6 @@ export default {
     })
   },
   watch: {
-    securityCenter (newVal) {
-      console.log(newVal)
-    },
     userCenterActiveName (newVal) {
       if (newVal === 'security-center') {
         this.getSecurityCenter()
