@@ -405,16 +405,6 @@ export default {
               return 0
           }
           break
-          // if (!targetNum) {
-          //   // 请输入交易密码
-          //   this.setErrorMsg(1, this.$t('M.comm_please_enter') + this.$t('M.comm_password'))
-          //   this.$forceUpdate()
-          //   return 0
-          // } else {
-          //   this.setErrorMsg(1, '')
-          //   this.$forceUpdate()
-          //   return 1
-          // }
         // 重复交易密码
         case 2:
           if (!targetNum) {
@@ -560,14 +550,32 @@ export default {
     },
     // 确定重置交易密码
     async getUpdatePayPassword () {
-      await this.confirmUpdate()
+      this.confirmVerifyInformation()
+    },
+    // 手机邮箱谷歌验证
+    async confirmVerifyInformation () {
+      let data
+      let params = {
+        email: this.userInfo.userInfo.email, // 邮箱
+        phone: this.userInfo.userInfo.phone, // 手机
+        emailCode: this.modifyPassword.emailCode, // 邮箱验证
+        phoneCode: this.modifyPassword.phoneCode, // 手机验证
+        googleCode: this.modifyPassword.googleCode // 谷歌验证
+      }
+      data = await securityVerificationOnOff(params)
+      if (!(returnAjaxMessage(data, this, 0))) {
+        return false
+      } else {
+        await this.confirmUpdate()
+      }
     },
     // 确定重置接口处理
     async confirmUpdate () {
       let goOnStatus = 0
       if (
         this.tieCheckoutInputFormat(0, this.modifyPassword.transactionPassword) &&
-        this.tieCheckoutInputFormat(1, this.modifyPassword.resetTransactionPassword)
+        this.tieCheckoutInputFormat(1, this.modifyPassword.resetTransactionPassword) &&
+        this.modifyPassword.transactionPassword === this.modifyPassword.resetTransactionPassword
       ) {
         goOnStatus = 1
       } else {
@@ -575,6 +583,27 @@ export default {
       }
       console.log(goOnStatus)
       if (goOnStatus) {
+        if (this.securityCenter.isMailEnable && !this.modifyPassword.emailCode) {
+          this.$message({
+            type: 'error',
+            message: this.$t('M.comm_please_enter') + this.$t('M.comm_emailbox') + this.$t('M.comm_code') // '请输入邮箱验证码'
+          })
+          return false
+        }
+        if (this.securityCenter.isPhoneEnable && !this.modifyPassword.phoneCode) {
+          this.$message({
+            type: 'error',
+            message: this.$t('M.comm_please_enter') + this.$t('M.login_telphone') + this.$t('M.comm_code') // '请输入手机验证码'
+          })
+          return false
+        }
+        if (this.securityCenter.isGoogleEnable && !this.modifyPassword.googleCode) {
+          this.$message({
+            type: 'error',
+            message: this.$t('M.comm_please_enter') + this.$t('M.login_google') + this.$t('M.comm_code') // 请输入谷歌验证码
+          })
+          return false
+        }
         let data
         let param = {
           payPassword: this.modifyPassword.resetTransactionPassword, // 重置交易密码
@@ -588,27 +617,9 @@ export default {
         } else {
           console.log(1)
           this.successJump()
-          this.confirmVerifyInformation()
           this.stateEmptyData()
           this.$store.commit('common/SET_USER_INFO_REFRESH_STATUS', true)
         }
-      }
-    },
-    // 手机邮箱谷歌验证
-    async confirmVerifyInformation () {
-      let data
-      let params = {
-        email: this.userInfo.userInfo.email, // 邮箱
-        phone: this.userInfo.userInfo.phone, // 手机
-        emailCode: this.emailCode, // 邮箱验证
-        phoneCode: this.phoneCode, // 手机验证
-        googleCode: this.googleCode // 谷歌验证
-      }
-      data = await securityVerificationOnOff(params)
-      if (!(returnAjaxMessage(data, this, 0))) {
-        return false
-      } else {
-        // this.getSecurityCenter()
       }
     },
     async getSecurityCenter () {

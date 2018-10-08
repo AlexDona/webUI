@@ -71,7 +71,7 @@
             </span>
             <!--未绑定绑定手机-->
             <span
-              v-if="!userInfo.userInfo.phone"
+              v-if="userInfo.userInfo.phoneEnable === 'disable' || userInfo.userInfo.phoneEnable === ''"
               class="icon-user-info info-right display-inline-block text-align-c"
             >
               <IconFontCommon
@@ -91,7 +91,7 @@
             </span>
             <!--未绑定谷歌-->
             <span
-              v-if="!userInfo.userInfo.googleSecretKey"
+              v-if="userInfo.userInfo.googleEnable === 'disable' || userInfo.userInfo.googleEnable === ''"
               class="icon-user-info display-inline-block text-align-c"
             >
               <IconFontCommon

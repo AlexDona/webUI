@@ -744,10 +744,11 @@ export default {
       if (this.userInfo.userInfo.advancedAuth === 'notPass') {
         this.authenticationNotPass = true
       }
+      this.authenticationNotPass = false
     },
     authenticationNoPass () {
-      this.authenticationStatusFront = true
       this.authenticationNotPass = false
+      this.authenticationStatusFront = true
     },
     // 高级认证内容
     authenticationAuthentication () {

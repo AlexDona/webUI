@@ -62,7 +62,7 @@
                 class="phone-input phone-input-left border-radius2 padding-l15 box-sizing"
                 v-model="bindingDataPhone.bindingNewPhoneAccounts"
                 @keydown="setErrorMsg(0,'')"
-                @blur="checkoutInputFormat(0, bindingDataPhone.bindingNewPhoneAccounts)"
+                @blur="checkUserExistAjax(0, bindingDataPhone.bindingNewPhoneAccounts)"
               >
               <!--错误提示-->
               <ErrorBox

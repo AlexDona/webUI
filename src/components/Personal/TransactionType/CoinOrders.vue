@@ -159,6 +159,7 @@
                 >
                   <template slot-scope="s">
                     <span>{{ $t(`M.${s.row.i18nMatchTypeName}`) }}</span>
+                    <!--<span>{{ s.row.matchTypeName }}</span>-->
                   </template>
                 </el-table-column>
                 <!--委单类型-->
@@ -276,7 +277,8 @@
               :label="$t('M.user_coin_bring_together') + $t('M.comm_type')"
             >
               <template slot-scope="s">
-                <span>{{ s.row.matchTypeName }}</span>
+                <span>{{ $t(`M.${s.row.i18nMatchTypeName}`) }}</span>
+                <!--<span>{{ s.row.matchTypeName }}</span>-->
               </template>
             </el-table-column>
             <!--委单类型-->
@@ -303,7 +305,7 @@
               width="120"
             >
               <template slot-scope="s">
-                <span>{{ s.row.count-0}}</span>
+                <span>{{ s.row.count }}</span>
               </template>
             </el-table-column>
             <!--成交量-->
@@ -374,7 +376,8 @@
               :label="$t('M.user_coin_bring_together') + $t('M.comm_type')"
             >
               <template slot-scope="s">
-                <span>{{ s.row.matchTypeName }}</span>
+                <span>{{ $t(`M.${s.row.i18nMatchTypeName}`) }}</span>
+                <!--<span>{{ s.row.matchTypeName }}</span>-->
               </template>
             </el-table-column>
             <!--委托类型-->
@@ -416,7 +419,8 @@
               :label="$t('M.comm_service_charge')"
             >
               <template slot-scope="s">
-                <span>{{s.row.fees - 0}}</span>
+                <!--<span>{{ s.row.fees - 0 }}</span>-->
+                <span>{{ parseFloat(filterNumber(s.row.fees)) }}</span>
               </template>
             </el-table-column>
           </el-table>
@@ -449,7 +453,10 @@ import {
   returnAjaxMessage,
   repealMyEntrustCommon
 } from '../../../utils/commonFunc'
-import {timeFilter} from '../../../utils'
+import {
+  timeFilter,
+  scientificToNumber
+} from '../../../utils'
 
 export default {
   components: {},
@@ -521,6 +528,10 @@ export default {
     // 查询列表
     searchWithCondition (entrustType) {
       this.commissionList(entrustType)
+    },
+    // 科学计数法转换
+    filterNumber (num) {
+      return scientificToNumber(num)
     },
     /**
      * 交易区列表查询
