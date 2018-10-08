@@ -424,7 +424,8 @@ export default{
       'CHANGE_CURRENCY_RATE_LIST',
       'SET_COUNTRY_AREA_LIST',
       'USER_INFORMATION_REFRESH',
-      'SET_USER_INFO_REFRESH_STATUS'
+      'SET_USER_INFO_REFRESH_STATUS',
+      'CHANGE_REF_SECURITY_CENTER_INFO'
     ]),
     getCountryList () {
       getCountryListAjax(this, (data) => {
@@ -503,6 +504,7 @@ export default{
             break
           case 'security-center':
             this.setPersonalJump('security-center')
+            this.$store.commit('personal/CHANGE_REF_SECURITY_CENTER_INFO', true)
             break
           case 'receiving-set':
             this.$store.commit('personal/CHANGE_REF_ACCOUNT_CREDITED_STATE', true)

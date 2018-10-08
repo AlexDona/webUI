@@ -274,6 +274,12 @@ export default {
           payPassword: this.password, // 交易密码
           bankType: 'weixin' // type
         }
+        // if (this.paymentTerm.isWeixinBind) {
+        //   param.qrcode = this.dialogImageHandUrl // 二维码
+        // } else {
+        //   // this.dialogImageHandUrl1 = this.dialogImageHandUrl
+        //   param.qrcode = this.dialogImageHandUrl1 // 二维码
+        // }
         data = await statusCardSettings(param)
         console.log(data)
         if (!(returnAjaxMessage(data, this, 1))) {
@@ -281,6 +287,7 @@ export default {
         } else {
           this.successJump()
           this.stateEmptyData()
+          this.paymentMethodInformation()
         }
       }
     },
@@ -305,7 +312,7 @@ export default {
         this.cardNo = data.data.data.cardNo
         this.dialogImageHandUrl1 = data.data.data.qrcode
         this.id = data.data.data.id
-        console.log(this.paymentMethodList)
+        console.log(this.dialogImageHandUrl1)
       }
     },
     // 收款方式
