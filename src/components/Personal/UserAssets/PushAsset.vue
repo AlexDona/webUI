@@ -384,8 +384,7 @@ import {
   getPushTotalByCoinId,
   pushAssetsSubmit,
   revocationPushProperty,
-  pushPropertyTransaction,
-  statusSecurityCenter
+  pushPropertyTransaction
 } from '../../../utils/api/personal'
 import ErrorBox from '../../User/ErrorBox'
 import CountDownButton from '../../Common/CountDownCommon'
@@ -756,17 +755,6 @@ export default {
           this.dialogVisible = false
           this.getPushRecordList()
         }
-      }
-    },
-    // 手机邮箱谷歌状态判断
-    async getSecurityCenter () {
-      let data = await statusSecurityCenter({})
-      console.log(data)
-      if (!(returnAjaxMessage(data, this, 0))) {
-        return false
-      } else {
-        // 返回展示
-        this.SecurityCenter = data.data.data
       }
     }
   },

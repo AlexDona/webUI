@@ -155,13 +155,13 @@ import IconFontCommon from '../../Common/IconFontCommon'
 import ErrorBox from '../../User/ErrorBox'
 import {
   returnAjaxMessage,
-  validateNumForUserInput // 用户输入验证
+  validateNumForUserInput, // 用户输入验证
+  getSecurityCenter
 } from '../../../utils/commonFunc'
 import {
   bindGoogleAddressPage,
   bindGoogleAddress,
-  unbindCheckGoogle,
-  statusSecurityCenter
+  unbindCheckGoogle
 } from '../../../utils/api/personal'
 // 底部
 import FooterCommon from '../../Common/FooterCommon'
@@ -338,17 +338,12 @@ export default {
     /**
      * 安全中心
      */
-    async getSecurityCenter () {
-      let data = await statusSecurityCenter({
-        // token: this.userInfo.token // token
+    getSecurityCenter () {
+      getSecurityCenter(this, (data) => {
+        if (data) {
+          this.securityCenter = data.data.data
+        }
       })
-      console.log(data)
-      if (!(returnAjaxMessage(data, this, 0))) {
-        return false
-      } else {
-        // 返回展示
-        this.securityCenter = data.data.data
-      }
     },
     //  点击复制
     onCopy (e) {
