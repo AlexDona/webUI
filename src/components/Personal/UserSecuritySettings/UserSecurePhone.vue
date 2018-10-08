@@ -62,7 +62,6 @@
                 class="phone-input phone-input-left border-radius2 padding-l15 box-sizing"
                 v-model="bindingDataPhone.bindingNewPhoneAccounts"
                 @keydown="setErrorMsg(0,'')"
-                @blur="checkUserExistAjax('phone', bindingDataPhone.bindingNewPhoneAccounts)"
               >
               <!--错误提示-->
               <ErrorBox
@@ -314,7 +313,8 @@ export default {
         '' // 交易密码
       ],
       successCountDown: 1, // 成功倒计时
-      newPhoneIsExistStatus: false // 新手机号是否已注册过
+      newPhoneIsExistStatus: false, // 新手机号是否已注册过
+      emailBindPhoneCount: 0 // 邮箱绑定手机次数
     }
   },
   created () {
@@ -351,21 +351,32 @@ export default {
     },
     // 发送验证码
     async sendPhoneOrEmailCode (loginType, val, type) {
-      // type: 0 新手机发验证码，1： 当前手机
-      if (!type && this.newPhoneIsExistStatus) {
-        // this.checkUserExistAjax()
-        this.$message({
-          type: 'error',
-          message: this.$t('M.user-fail-reg-phone-exist')
-        })
-        return false
-      }
       if (!type && !val && !this.bindingDataPhone.bindingNewPhoneAccounts) {
         console.log(this.bindingDataPhone.bindingNewPhoneCode)
         console.log(1)
         this.$message({
           type: 'error',
           message: this.$t('M.comm_please_enter') + this.$t('M.comm_code_phone1')
+        })
+        return false
+      }
+      // 绑定手机号
+      if (!loginType && !val && !type) {
+        if (!this.emailBindPhoneCount) {
+          let data = await this.checkUserExistAjax('phone', this.bindingDataPhone.bindingNewPhoneAccounts)
+          this.emailBindPhoneCount++
+          console.log(data)
+          if (!data) {
+            this.emailBindPhoneCount = 0
+            return false
+          }
+        }
+      }
+      // type: 0 新手机发验证码，1： 当前手机
+      if (!type && this.newPhoneIsExistStatus) {
+        this.$message({
+          type: 'error',
+          message: this.$t('M.user-fail-reg-phone-exist')
         })
         return false
       }
@@ -517,13 +528,19 @@ export default {
           regType: type
         }
         const data = await checkUserExist(params)
+        console.log(this.emailBindPhoneCount)
         if (!returnAjaxMessage(data, this)) {
           if (isNewPhone) {
             this.newPhoneIsExistStatus = true
           }
-          return false
+          this.emailBindPhoneCount = 0
+          return 0
+        } else {
+          return 1
         }
       } else {
+        console.log(userName)
+        console.log(type)
         switch (type) {
           case 'phone':
             if (this.tieCheckoutInputFormat(1, userName)) {
@@ -571,6 +588,16 @@ export default {
               return 0
           }
           break
+          // if (!targetNum) {
+          //   // 请输入手机号
+          //   this.tieErrorMsg('phone', this.$t('M.comm_please_enter') + this.$t('M.user_security_phone') + this.$t('M.comm_mark'))
+          //   this.$forceUpdate()
+          //   return 0
+          // } else {
+          //   this.tieErrorMsg(1, '')
+          //   this.$forceUpdate()
+          //   return 1
+          // }
         // 新短信验证码
         case 2:
           if (!targetNum) {
