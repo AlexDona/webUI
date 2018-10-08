@@ -64,6 +64,7 @@ export const returnAjaxMessage = (data, self, noTip) => {
  */
 export const validateNumForUserInput = (type, targetNum) => {
   console.log(type)
+  console.log(targetNum)
   let returnNum = 0
   let validateType
   switch (type) {
