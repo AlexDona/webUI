@@ -487,7 +487,7 @@ export default {
      */
     async getSecurityCenter () {
       let data = await statusSecurityCenter({
-        token: this.userInfo.token // token
+        // token: this.userInfo.token // token
       })
       console.log(data)
       if (!(returnAjaxMessage(data, this, 0))) {
