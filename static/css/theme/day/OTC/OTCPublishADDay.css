@@ -47,3 +47,6 @@
 .otc-publish-AD-box.day > .otc-publish-AD-content > .publish-AD-left > .AD-big-form > .common > .left > .warning[data-v-6b1c45d6]{
   color: #3E79D6;
 }
+.otc-publish-AD-box.day .password-dialog .el-dialog__body .password-input{
+    border: 1px solid #ECF1F8;
+}

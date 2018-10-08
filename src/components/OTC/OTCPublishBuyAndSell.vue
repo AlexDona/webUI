@@ -777,11 +777,11 @@ export default {
   filter: {},
   computed: {
     ...mapState({
+      theme: state => state.common.theme,
       // 当前选中语言
       language: state => state.common.language,
       // 商户id
-      partnerId: state => state.common.partnerId,
-      theme: state => state.common.theme
+      partnerId: state => state.common.partnerId
     })
   },
   watch: {}
