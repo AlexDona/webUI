@@ -72,7 +72,7 @@
               >
                 <dd
                   class="buys-item cursor-pointer"
-                  v-for="(item,index) in buysAndSellsList.sells.list.slice(0,9)"
+                  v-for="(item,index) in buysAndSellsList.sells.list.slice(buysAndSellsList.sells.list.length-9,buysAndSellsList.sells.list.length)"
                   :key="index"
                   :class="{'odd':index%2!==0}"
                   @click="changeActivePriceItem(item)"
