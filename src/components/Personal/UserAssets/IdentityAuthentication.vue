@@ -197,7 +197,7 @@
         </p>
       </div>
       <div class="identity-box">
-        <div v-show="authenticationStatusFront">
+        <div v-if="authenticationStatusFront">
           <el-collapse-transition>
             <div class="transition-box">
               <div class="personal-information">
@@ -398,9 +398,10 @@
             </p>
           </div>
         </div>
+        <!--被驳回-->
         <div
           class="wait-veritfy-back wait-no-pass"
-          v-show="authenticationNotPass"
+          v-if="authenticationNotPass"
         >
           <div
             class="wait-veritfy text-align-c"
@@ -497,7 +498,8 @@ export default {
   data () {
     return {
       tokenObj: {
-        'token': ''
+        'token': '',
+        'x-domain': ''
       },
       regionValue: '', // 国家
       regionList: [], // 国家地区列表
@@ -555,8 +557,10 @@ export default {
     this.SET_USER_INFO_REFRESH_STATUS(true)
     await this.getUserRefreshUser()
     this.tokenObj.token = this.userInfo.token
-    reflashUserInfo(this)
+    this.tokenObj['x-domain'] = window.location.host.split(':')[0]
+    await reflashUserInfo(this)
     this.authenticationIsStatus()
+    console.log(this.authenticationNotPass)
   },
   mounted () {},
   activited () {},
@@ -742,10 +746,14 @@ export default {
     // 高级认证未通过被驳回
     authenticationIsStatus () {
       if (this.userInfo.userInfo.advancedAuth === 'notPass') {
+        console.log(this.userInfo.userInfo)
         this.authenticationNotPass = true
+        this.authenticationStatusFront = false
+      } else {
+        this.authenticationNotPass = false
       }
-      this.authenticationNotPass = false
     },
+    // 重新提交审核
     authenticationNoPass () {
       this.authenticationNotPass = false
       this.authenticationStatusFront = true

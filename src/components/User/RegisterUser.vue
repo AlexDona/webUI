@@ -285,7 +285,7 @@
       v-else
     >
       <div class="success-box">
-        <p class="title">z
+        <p class="title">
           <span>{{successCountDown}}</span>
           <!--秒后跳转登录页面...-->
           {{ $t('M.forgetPassword_hint8') }}
