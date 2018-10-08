@@ -596,7 +596,8 @@ import {
 } from '../../../utils/api/personal'
 import {
   returnAjaxMessage,
-  sendPhoneOrEmailCodeAjax
+  sendPhoneOrEmailCodeAjax,
+  getSecurityCenter
 } from '../../../utils/commonFunc'
 import {timeFilter} from '../../../utils/index'
 import {mapState, createNamespacedHelpers} from 'vuex'
@@ -653,7 +654,8 @@ export default {
   methods: {
     ...mapMutations([
       'SET_USER_BUTTON_STATUS',
-      'CHANGE_REF_SECURITY_CENTER_INFO'
+      'CHANGE_REF_SECURITY_CENTER_INFO',
+      'GET_SECURITY_CENTER'
     ]),
     // 1.时间格式化
     timeFormatting (date) {
@@ -912,6 +914,13 @@ export default {
       if (!(returnAjaxMessage(data, this, 1))) {
         return false
       } else {
+        // getSecurityCenter(params, (data) => {
+        //   if (!(returnAjaxMessage(data, this, 0))) {
+        //     return false
+        //   } else {
+        //     console.log(data)
+        //   }
+        // })
         this.getSecurityCenter()
         // 安全中心状态刷新
         this.openTheValidation = false
@@ -954,6 +963,9 @@ export default {
     })
   },
   watch: {
+    securityCenter (newVal) {
+      console.log(newVal)
+    },
     userCenterActiveName (newVal) {
       if (newVal === 'security-center') {
         this.getSecurityCenter()
