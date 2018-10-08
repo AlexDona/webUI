@@ -62,7 +62,6 @@
                 class="phone-input phone-input-left border-radius2 padding-l15 box-sizing"
                 v-model="bindingDataPhone.bindingNewPhoneAccounts"
                 @keydown="setErrorMsg(0,'')"
-                @blur="checkUserExistAjax('phone', bindingDataPhone.bindingNewPhoneAccounts)"
               >
               <!--错误提示-->
               <ErrorBox
@@ -112,7 +111,7 @@
                   <CountDownButton
                     class="send-code-btn cursor-pointer"
                     :status="disabledOfPhoneBtn"
-                    @run="sendPhoneOrEmailCode(0)"
+                    @run="sendPhoneOrEmailCodeAndCheckUserExit('phone', bindingDataPhone.bindingNewPhoneAccounts,0)"
                   />
                 </template>
                 <!--错误提示-->
@@ -349,23 +348,29 @@ export default {
     refreshCode () {
       this.bindingDataPhone.identifyCode = this.getRandomNum()
     },
+    // 发送验证码并检测手机号是否已存在
+    async sendPhoneOrEmailCodeAndCheckUserExit (type, userName, loginType) {
+      if (!userName) {
+        this.$message({
+          type: 'error',
+          message: this.$t('M.comm_please_enter') + this.$t('M.comm_code_phone1')
+        })
+        return false
+      }
+      let data = await this.checkUserExistAjax(type, userName)
+      if (!data) {
+        return false
+      }
+      await this.sendPhoneOrEmailCode(loginType)
+      // console.log(a)
+    },
     // 发送验证码
     async sendPhoneOrEmailCode (loginType, val, type) {
       // type: 0 新手机发验证码，1： 当前手机
       if (!type && this.newPhoneIsExistStatus) {
-        // this.checkUserExistAjax()
         this.$message({
           type: 'error',
           message: this.$t('M.user-fail-reg-phone-exist')
-        })
-        return false
-      }
-      if (!type && !val && !this.bindingDataPhone.bindingNewPhoneAccounts) {
-        console.log(this.bindingDataPhone.bindingNewPhoneCode)
-        console.log(1)
-        this.$message({
-          type: 'error',
-          message: this.$t('M.comm_please_enter') + this.$t('M.comm_code_phone1')
         })
         return false
       }
@@ -521,7 +526,7 @@ export default {
           if (isNewPhone) {
             this.newPhoneIsExistStatus = true
           }
-          return false
+          return 0
         }
       } else {
         switch (type) {
@@ -534,6 +539,7 @@ export default {
             }
             break
         }
+        return 1
       }
     },
     // 换绑手机检测输入格式
