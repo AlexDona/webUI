@@ -431,7 +431,7 @@ export default {
           }
           break
         case 'DEPTH':
-          // console.log(data)
+          console.log(data)
           if (data.data) {
             this.socketData.depthData = data.data.depthData
             this.socketData.buyAndSellData = data.data.depthRender
