@@ -207,6 +207,14 @@ export default {
       this.stateSeniorCertification()
     },
     async stateSeniorCertification () {
+      if (!this.paypalAccount) {
+        // 请输入paypal账号
+        this.$message({
+          message: this.$t('M.comm_please_enter') + this.$t('M.user_account_paypal') + this.$t('M.user_account_number'),
+          type: 'error'
+        })
+        return false
+      }
       let goOnStatus = 0
       if (
         this.checkoutInputFormat(0, this.paypalAccount) &&
