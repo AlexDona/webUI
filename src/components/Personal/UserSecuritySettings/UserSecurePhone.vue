@@ -546,16 +546,6 @@ export default {
               return 0
           }
           break
-          // if (!targetNum) {
-          //   // 请输入手机号
-          //   this.tieErrorMsg('phone', this.$t('M.comm_please_enter') + this.$t('M.user_security_phone') + this.$t('M.comm_mark'))
-          //   this.$forceUpdate()
-          //   return 0
-          // } else {
-          //   this.tieErrorMsg(1, '')
-          //   this.$forceUpdate()
-          //   return 1
-          // }
         // 新短信验证码
         case 2:
           if (!targetNum) {

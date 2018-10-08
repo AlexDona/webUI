@@ -284,15 +284,6 @@ export default {
               return 0
           }
           break
-          // if (!targetNum) {
-          //   this.setErrorMsg(1, this.$t('M.comm_please_enter') + this.$t('M.user_account_credit_numbers'))
-          //   this.$forceUpdate()
-          //   return 0
-          // } else {
-          //   this.setErrorMsg(1, '')
-          //   this.$forceUpdate()
-          //   return 1
-          // }
         // 支行地址
         case 2:
           if (!targetNum) {

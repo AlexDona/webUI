@@ -197,6 +197,7 @@
             >
               <input
                 class="content-input padding-l15 box-sizing"
+                type="number"
                 v-model="phoneCode"
                 @focus="emptyAddStatus"
               >
@@ -216,6 +217,7 @@
             >
               <input
                 class="content-input padding-l15 box-sizing"
+                type="number"
                 v-model="emailCode"
                 @focus="emptyAddStatus"
               >
@@ -235,6 +237,7 @@
             >
               <input
                 class="content-input input-google padding-l15 box-sizing"
+                type="number"
                 v-model="googleCode"
                 @focus="emptyAddStatus"
               >
@@ -554,6 +557,7 @@ export default {
       this.getSecurityCenter()
       this.ip = this.ipSite
     },
+    // 验证确认按钮
     stateSubmitDetermineValidation () {
       if (!this.phoneCode && !this.emailCode && !this.googleCode) {
         console.log(1)
@@ -567,6 +571,7 @@ export default {
       this.APIMoneyConfirm = false
       //  获取秘钥
       this.getAccessAecretKey()
+      this.stateSubmitAffirm()
     },
     // 二次确认框创建挨批完成
     stateSubmitAffirm () {
@@ -579,7 +584,10 @@ export default {
         remark: this.remark, // 备注
         ip: this.ip, // ip地址
         accessKey: this.accessKey, // token
-        secretKey: this.secretKey // sk私钥
+        secretKey: this.secretKey, // sk私钥
+        phoneCode: this.phoneCode, // 手机验证码
+        emailCode: this.emailCode, // 邮箱验证码
+        googleCode: this.googleCode // 谷歌验证码
       })
       console.log(data)
       if (!(returnAjaxMessage(data, this, 1))) {

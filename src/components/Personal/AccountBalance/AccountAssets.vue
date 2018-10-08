@@ -1030,6 +1030,7 @@ export default {
         this.errorMsg = ''
       }
       this.stateSubmitAssets()
+      this.mentionMoneyConfirm = false
     },
     // 提交提币接口
     async stateSubmitAssets (index) {

@@ -38,6 +38,8 @@ export const personal = {
   'user_billing_attention': '充提',
   // 提币地址
   'user_address_empty': '提币地址不能为空',
+  'user_address_illegal_address': '非法地址',
+  'user_address_withdrawal': '禁止输入中文字符',
   // 提币列表
   'user_address_delete_withdrawals': '确定删除提币地址?',
   // #####################个人中心#####################
@@ -92,8 +94,10 @@ export const personal = {
   'user_account_branch_address': '支行地址',
   // 添加微信
   'user_account_weChat': '微信',
+  'user_account_weChat_pla': '请上传微信收款码',
   // 添加支付宝
   'user_account_alipay': '支付宝',
+  'user_account_alipay_pla': '请上传支付宝收款码',
   // 添加PAYPAL
   'user_account_paypal': 'PAYPAL',
   // 添加西联汇款

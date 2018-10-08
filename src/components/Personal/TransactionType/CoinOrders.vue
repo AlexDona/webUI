@@ -178,7 +178,8 @@
                   width="110"
                 >
                   <template slot-scope="s">
-                    <span>{{ s.row.count-0 }}</span>
+                    <!--<span>{{ s.row.count-0 }}</span>-->
+                    <span>{{ parseFloat(filterNumber(s.row.count)) }}</span>
                   </template>
                 </el-table-column>
                 <!--委托总额-->
@@ -187,7 +188,8 @@
                   width="120"
                 >
                   <template slot-scope="s">
-                    <span>{{ s.row.amount-0}}</span>
+                    <!--<span>{{ s.row.amount-0}}</span>-->
+                    <span>{{ parseFloat(filterNumber(s.row.amount)) }}</span>
                   </template>
                 </el-table-column>
                 <!--已成交-->
@@ -196,7 +198,8 @@
                   width="120"
                 >
                   <template slot-scope="s">
-                    <span>{{s.row.completeCount-0}}</span>
+                    <!--<span>{{s.row.completeCount-0}}</span>-->
+                    <span>{{ parseFloat(filterNumber(s.row.completeCount)) }}</span>
                   </template>
                 </el-table-column>
                 <!--未成交-->
@@ -305,7 +308,8 @@
               width="120"
             >
               <template slot-scope="s">
-                <span>{{ s.row.count }}</span>
+                <!--<span>{{ s.row.count }}</span>-->
+                <span>{{ parseFloat(filterNumber(s.row.count)) }}</span>
               </template>
             </el-table-column>
             <!--成交量-->
@@ -314,7 +318,8 @@
               width="120"
             >
               <template slot-scope="s">
-                <span>{{ s.row.completeCount-0}}</span>
+                <!--<span>{{ s.row.completeCount-0}}</span>-->
+                <span>{{ parseFloat(filterNumber(s.row.completeCount)) }}</span>
               </template>
             </el-table-column>
             <!--成交价-->
@@ -323,7 +328,8 @@
               width="120"
             >
               <template slot-scope="s">
-                <span>{{s.row.completeCount-0}}</span>
+                <!--<span>{{s.row.completeCount-0}}</span>-->
+                <span>{{ parseFloat(filterNumber(s.row.completeCount)) }}</span>
               </template>
             </el-table-column>
             <!--状态-->
@@ -403,7 +409,8 @@
               :label="$t('M.comm_count')"
             >
               <template slot-scope="s">
-                <span>{{ s.row.count-0 }}</span>
+                <!--<span>{{ s.row.count-0 }}</span>-->
+                <span>{{ parseFloat(filterNumber(s.row.count)) }}</span>
               </template>
             </el-table-column>
             <!--成交额-->
@@ -411,7 +418,8 @@
               :label="$t('M.user_coin_volume')"
             >
               <template slot-scope="s">
-                <span>{{ s.row.amount-0}}</span>
+                <!--<span>{{ s.row.amount-0}}</span>-->
+                <span>{{ parseFloat(filterNumber(s.row.amount)) }}</span>
               </template>
             </el-table-column>
             <!--手续费-->

@@ -31,6 +31,14 @@ export const BANK_REG = /^(\d{16}|\d{17}|\d{18}|\d{19})$/
  */
 export const INTEGER_REG = /^[0-9]*$/
 /**
+ *  数字 英文字母组合
+ */
+export const WITHDRAWAL_REG = /^[A-Za-z0-9]+$/
+/**
  * 谷歌
  */
 export const GOOGLE_REG = /^\d{6}$/
+/**
+ *  验证不能为http https
+ */
+export const URL_REG = /^([hH][tT]{2}[pP]:\/\/|[hH][tT]{2}[pP][sS]:\/\/)(([A-Za-z0-9-~]+)\.)+([A-Za-z0-9-~\/])+$/
