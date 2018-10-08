@@ -350,10 +350,10 @@ export default {
       this.bindingDataPhone.identifyCode = this.getRandomNum()
     },
     // 发送验证码
-    sendPhoneOrEmailCode (loginType, val, type) {
+    async sendPhoneOrEmailCode (loginType, val, type) {
       // type: 0 新手机发验证码，1： 当前手机
       if (!type && this.newPhoneIsExistStatus) {
-        console.log(1)
+        // this.checkUserExistAjax()
         this.$message({
           type: 'error',
           message: this.$t('M.user-fail-reg-phone-exist')
@@ -405,7 +405,7 @@ export default {
             break
         }
       }
-      sendPhoneOrEmailCodeAjax(loginType, params, (data) => {
+      await sendPhoneOrEmailCodeAjax(loginType, params, (data) => {
         console.log(this.disabledOfPhoneBtn)
         // 提示信息
         if (!returnAjaxMessage(data, this)) {
