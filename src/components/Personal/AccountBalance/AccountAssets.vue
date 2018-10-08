@@ -371,114 +371,118 @@
                       </span>
                         </p>
                       </div>
-                      <!--提币-->
-                      <el-dialog
-                        :label="$t('M.comm_mention_money')"
-                        :visible.sync="mentionMoneyConfirm"
-                      >
-                        <el-form
-                          :label-position="labelPosition"
-                        >
-                          <!--手机已认证-->
-                          <!--手机验证-->
-                          <el-form-item
-                            v-if="securityCenter.isPhoneEnable"
-                            :label="$t('M.comm_code_phone')"
-                          >
-                            <input
-                              class="content-input padding-l15 box-sizing"
-                              type="number"
-                              v-model="phoneCode"
-                              @focus="emptyStatus"
-                            >
-                            <CountDownButton
-                              class="send-code-btn cursor-pointer"
-                              :status="disabledOfPhoneBtn"
-                              @run="sendPhoneOrEmailCode(0)"
-                            />
-                          </el-form-item>
-                          <!--手机未认证-->
-                          <span v-else></span>
-                          <!--邮箱已认证-->
-                          <!--邮箱验证-->
-                          <el-form-item
-                            v-if="securityCenter.isMailEnable"
-                            :label="$t('M.comm_code_email')"
-                          >
-                            <input
-                              class="content-input padding-l15 box-sizing"
-                              type="number"
-                              v-model="emailCode"
-                              @focus="emptyStatus"
-                            >
-                            <CountDownButton
-                              class="send-code-btn cursor-pointer"
-                              :status="disabledOfEmailBtn"
-                              @run="sendPhoneOrEmailCode(1)"
-                            />
-                          </el-form-item>
-                          <!--邮箱未认证-->
-                          <span v-elsee></span>
-                          <!--谷歌已认证-->
-                          <!--谷歌验证-->
-                          <el-form-item
-                            v-if="securityCenter.isGoogleEnable"
-                            :label="$t('M.comm_code_google')"
-                          >
-                            <input
-                              class="content-input input-google padding-l15 box-sizing"
-                              type="number"
-                              v-model="googleCode"
-                              @focus="emptyStatus"
-                            >
-                          </el-form-item>
-                          <!--谷歌未认证-->
-                          <span v-else></span>
-                          <!--交易密码-->
-                          <el-form-item
-                            :label="$t('M.comm_password')"
-                          >
-                            <input
-                              type="password"
-                              class="content-input input-google padding-l15 box-sizing"
-                              v-model="password"
-                            >
-                          </el-form-item>
-                        </el-form>
-                        <div
-                          class="error-info"
-                        >
+                    </div>
+                  </div>
+                </transition>
+              </div>
+              <!--提币-->
+              <el-dialog
+                :label="$t('M.comm_mention_money')"
+                :visible.sync="mentionMoneyConfirm"
+              >
+                <el-form
+                  :label-position="labelPosition"
+                >
+                  <!--手机已认证-->
+                  <!--手机验证-->
+                  <el-form-item
+                    v-show="securityCenter.isPhoneEnable"
+                    :label="$t('M.comm_code_phone')"
+                  >
+                    <input
+                      class="content-input padding-l15 box-sizing"
+                      type="number"
+                      v-model="phoneCode"
+                      @focus="emptyStatus"
+                    />
+                    <CountDownButton
+                      class="send-code-btn cursor-pointer"
+                      :status="disabledOfPhoneBtn"
+                      @run="sendPhoneOrEmailCode(0)"
+                    />
+                  </el-form-item>
+                  <!--手机未认证-->
+                  <span v-show="!securityCenter.isPhoneEnable"></span>
+                  <!--邮箱已认证-->
+                  <!--邮箱验证-->
+                  <el-form-item
+                    v-show="securityCenter.isMailEnable"
+                    :label="$t('M.comm_code_email')"
+                  >
+                    <input
+                      class="content-input padding-l15 box-sizing"
+                      type="number"
+                      v-model="emailCode"
+                      @focus="emptyStatus"
+                    />
+                    <CountDownButton
+                      class="send-code-btn cursor-pointer"
+                      :status="disabledOfEmailBtn"
+                      @run="sendPhoneOrEmailCode(1)"
+                    />
+                  </el-form-item>
+                  <!--邮箱未认证-->
+                  <span v-show="!securityCenter.isMailEnable"></span>
+                  <!--谷歌已认证-->
+                  <!--谷歌验证-->
+                  <el-form-item
+                    v-show="securityCenter.isGoogleEnable"
+                    :label="$t('M.comm_code_google')"
+                  >
+                    <input
+                      class="content-input input-google padding-l15 box-sizing"
+                      type="number"
+                      v-model="googleCode"
+                      @focus="emptyStatus"
+                    >
+                  </el-form-item>
+                  <!--谷歌未认证-->
+                  <span v-show="!securityCenter.isGoogleEnable"></span>
+                  <!--交易密码-->
+                  <el-form-item
+                    :label="$t('M.comm_password')"
+                  >
+                    <input
+                      type="password"
+                      class="content-input input-google padding-l15 box-sizing"
+                      v-model="password"
+                    >
+                  </el-form-item>
+                </el-form>
+                <div
+                  class="error-info"
+                >
                           <span v-show="errorMsg">
                             {{ errorMsg }}
                           </span>
-                        </div>
-                        <div
-                          slot="footer"
-                          class="dialog-footer"
-                        >
-                          <el-button
-                            type="primary"
-                            @click.prevent="submitMentionMoney"
-                          >
-                            <!--确 定-->
-                            {{ $t('M.comm_confirm') }}
-                          </el-button>
-                        </div>
-                      </el-dialog>
-                      <!--设置交易密码-->
-                      <el-dialog
-                        :title="$t('m.comm_set') + $t('m.comm_password')"
-                        :visible.sync="dialogVisible"
-                        center
-                      >
+                </div>
+                <div
+                  slot="footer"
+                  class="dialog-footer"
+                >
+                  <el-button
+                    type="primary"
+                    @click.prevent="submitMentionMoney"
+                  >
+                    <!--确 定-->
+                    {{ $t('M.comm_confirm') }}
+                  </el-button>
+                </div>
+              </el-dialog>
+              <!--设置交易密码-->
+              <el-dialog
+                :title="$t('m.comm_set') + $t('m.comm_password')"
+                :visible.sync="dialogVisible"
+                center
+              >
                         <span class="info text-align-c display-inline-block">
                           <!--您还未设置交易密码请先设置交易密码在进行提币-->
                           {{ $t('M.user_assets_no_transaction_password') }}
                         </span>
-                        <span
-                          slot="footer"
-                          class="dialog-footer footer"
-                        ><!--确 定 取 消-->
+                <span
+                  slot="footer"
+                  class="dialog-footer footer"
+                ><!--确 定 取 消-->
                           <button
                             class="button-color border-radius4 cursor-pointer"
                             type="primary"
@@ -495,11 +499,7 @@
                             {{ $t('M.comm_cancel') }}
                           </button>
                         </span>
-                      </el-dialog>
-                    </div>
-                  </div>
-                </transition>
-              </div>
+              </el-dialog>
               <!--分页-->
               <el-pagination
                 background
@@ -559,7 +559,6 @@ export default {
   data () {
     return {
       labelPosition: 'top',
-      activeNames: ['1'],
       errorMessage: '',
       errorMsg: '',
       showStatusButton: true, // 显示币种
@@ -862,6 +861,7 @@ export default {
           console.log('error')
           return false
         } else {
+          console.log(loginType)
           switch (loginType) {
             case 0:
               this.$store.commit('user/SET_USER_BUTTON_STATUS', {
@@ -1109,7 +1109,7 @@ export default {
      */
     async getSecurityCenter () {
       let data = await statusSecurityCenter({
-        token: this.userInfo.token // token
+        // token: this.userInfo.token // token
       })
       console.log(data)
       if (!(returnAjaxMessage(data, this, 0))) {
@@ -1415,6 +1415,7 @@ export default {
                       height: 34px;
                       position: absolute;
                       top: 4px;
+                      z-index: 999;
                     }
                   }
                 }

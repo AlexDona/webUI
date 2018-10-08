@@ -760,7 +760,7 @@ export default {
     },
     // 手机邮箱谷歌状态判断
     async getSecurityCenter () {
-      let data = await statusSecurityCenter({ })
+      let data = await statusSecurityCenter({})
       console.log(data)
       if (!(returnAjaxMessage(data, this, 0))) {
         return false

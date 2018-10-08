@@ -30,8 +30,8 @@ if (process.env.NODE_ENV == 'development' || process.env.NODE_ENV == 'testing') 
   /* socketUrl --------------------------------------------- */
 
   // socketUrl = 'ws://192.168.1.52:8087/market' // socketUrl
-  // socketUrl = 'ws://ws.bzu.com/market'
-  socketUrl = 'ws://192.168.1.200:8087/market'
+  socketUrl = 'ws://ws.bzu.com/market'
+  // socketUrl = 'ws://192.168.1.200:8087/market'
 
   loginSocketUrl = 'ws://api.new.bzu.com/qrcodeLogin/'
   /* domain --------------------------------------------- */

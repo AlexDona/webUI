@@ -413,6 +413,7 @@ export default {
   watch: {
     activeName (newVal) {
       console.log(newVal)
+      if (!this.isLogin) return false
       switch (newVal) {
         case 'current-entrust':
           this.getMyCurrentEntrust()

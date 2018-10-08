@@ -671,7 +671,7 @@ export default {
     require('../../../static/css/list/User/Login.css')
     this.ENTER_STEP1()
     this.refreshCode()
-    this.reflashErCode()
+    // this.reflashErCode()
     // 清空input框值
     // this.clearInputValue()
   },
