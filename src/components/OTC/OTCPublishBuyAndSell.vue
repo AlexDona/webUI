@@ -701,6 +701,10 @@ export default {
           return false
         }
       }
+      // 如果单价错误提示有的话不能进行提交操作
+      if (this.errorTipsPrice) {
+        return false
+      }
       // 单笔最小最大限制
       if (this.errorTipsLimitMin) {
         return false
@@ -773,11 +777,11 @@ export default {
   filter: {},
   computed: {
     ...mapState({
+      theme: state => state.common.theme,
       // 当前选中语言
       language: state => state.common.language,
       // 商户id
-      partnerId: state => state.common.partnerId,
-      theme: state => state.common.theme
+      partnerId: state => state.common.partnerId
     })
   },
   watch: {}

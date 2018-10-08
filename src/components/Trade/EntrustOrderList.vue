@@ -94,15 +94,15 @@
                   </li>
                   <!--委托量-->
                   <li class="td price">
-                    {{item.count-0}}
+                    {{scientificToNumber(item.count-0)}}
                   </li>
                   <!--委托价-->
                   <li class="td price">
-                    {{item.price-0}}
+                    {{scientificToNumber(item.price-0)}}
                   </li>
                   <!--总金额-->
                   <li class="td price">
-                    {{item.amount-0}}
+                    {{scientificToNumber(item.amount-0)}}
                   </li>
                   <!--成交量-->
                   <li class="td price">
@@ -110,7 +110,7 @@
                   </li>
                   <!--未成交量-->
                   <li class="td price">
-                    {{item.leftCount-0}}
+                    {{scientificToNumber(item.leftCount-0)}}
                   </li>
                   <!--操作-->
                   <li class="td todos">
@@ -212,19 +212,19 @@
                   </li>
                   <!--委托量-->
                   <li class="td price">
-                    {{item.count-0}}
+                    {{scientificToNumber(item.count-0)}}
                   </li>
                   <!--委托价-->
                   <li class="td price">
-                    {{item.price-0}}
+                    {{scientificToNumber(item.price-0)}}
                   </li>
                   <!--总金额-->
                   <li class="td price">
-                    {{item.amount-0}}
+                    {{scientificToNumber(item.amount-0)}}
                   </li>
                   <!--成交量-->
                   <li class="td price">
-                    {{item.completeCount-0}}
+                    {{scientificToNumber(item.completeCount-0)}}
                   </li>
                 </ul>
               </div>

@@ -251,6 +251,7 @@ export default {
         // 返回数据正确的逻辑
         if (data.data.meta.success == true) {
           this.applyStatus = 2
+          this.statusBlack = 'successOrApplying' // 当为申请中和申请成功的页面时候，只有黑色主题颜色
         } else {
           // 如果失败提示返回的数据
           this.$message({showClose: true, message: data.data.meta.message})

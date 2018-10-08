@@ -372,7 +372,6 @@ export default {
       })
     },
     // 确定设置检测输入格式
-    // 确定设置检测输入格式
     checkoutInputFormat (type, targetNum) {
       switch (type) {
         // 昵称
