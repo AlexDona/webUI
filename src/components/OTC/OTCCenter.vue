@@ -37,7 +37,7 @@
                 v-show="OTCBuySellStyle === 'onlineBuy'"
               >
                 <!-- 我要购买 ： -->
-              {{ $t('M.otc_index_wantTo_buy') }} :
+                {{ $t('M.otc_index_wantTo_buy') }} :
               </span>
               <!-- 我要出售 -->
               <span
@@ -959,7 +959,7 @@ export default {
 }
 </script>
 <style scoped lang="scss" type="text/scss">
-@import "../../../static/css/scss/OTC/OTCCenter.scss";
+// @import "../../../static/css/scss/OTC/OTCCenter.scss";
 @import "../../../static/css/scss/index.scss";
 .otc-box{
   >.otc-center-content{
@@ -979,7 +979,7 @@ export default {
         // min-height: 724px;
         // background-color: #202A33;
         margin-top: 30px;
-        padding: 0 10px;
+        // padding: 0 10px;
         >.otc-filtrate-publish{
           display: flex;
           justify-content: space-between;
@@ -1117,7 +1117,8 @@ export default {
         >.otc-online-buy-and-sell-button{
         }
         >.otc-merchant-content{
-          background-color: $mainNightBgColor;
+          // background-color: $mainNightBgColor;
+          background-color: $mainContentNightBgColor;
           >.otc-filtrate-publish{
             >.otc-filtrate-box{
               >.otc-i-wan{
@@ -1185,14 +1186,14 @@ export default {
     >.otc-center-content{
       >.otc-online-trading{
         >.otc-online-buy-and-sell-button{
-          background-color: $mainDayColor;
+          background-color: $mainDayBgColor;
         }
         >.otc-merchant-content{
           // background-color: #202A33;
           // border:1px solid rgba(39,49,58,0.1);
           // border-top: 0;
           box-shadow:0px 0px 6px rgba(204,222,242,1);
-          background-color: $mainDayColor;
+          background-color: $mainDayBgColor;
           >.otc-filtrate-publish{
             >.otc-filtrate-box{
               >.otc-i-wan{

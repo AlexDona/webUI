@@ -4,7 +4,7 @@ export const OTC = {
   'otc_index_online_buy': '在线购买',
   'otc_index_online_sell': '在线出售',
   'otc_index_wantTo_buy': '我要购买',
-  'otc_index_wantTo_sell': '我要购买',
+  'otc_index_wantTo_sell': '我要出售',
   'otc_index_currency_type': '货币类型',
   'otc_index_Merchant': '名称',
   'otc_index_Payment_method': '支付方式',
