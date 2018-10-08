@@ -106,7 +106,7 @@
                   </li>
                   <!--成交量-->
                   <li class="td price">
-                    {{item.completeCount-0}}
+                    {{scientificToNumber(item.completeCount-0)}}
                   </li>
                   <!--未成交量-->
                   <li class="td price">
@@ -254,7 +254,10 @@
   </div>
 </template>
 <script>
-import {timeFilter} from '../../utils'
+import {
+  timeFilter,
+  scientificToNumber
+} from '../../utils'
 import {
   getMyEntrust,
   getHistoryEntrust
@@ -313,6 +316,9 @@ export default {
     ...mapMutations([
       'TOGGLE_REFRESH_ENTRUST_LIST_STATUS'
     ]),
+    scientificToNumber (num) {
+      return scientificToNumber(num)
+    },
     // 跳转到个人中心
     jumpToPersonal () {
       this.$store.commit('personal/CHANGE_USER_CENTER_ACTIVE_NAME', 'coin-orders')

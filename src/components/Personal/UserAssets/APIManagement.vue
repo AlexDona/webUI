@@ -727,9 +727,7 @@ export default {
      * 安全中心
      */
     async getSecurityCenter () {
-      let data = await statusSecurityCenter({
-        // token: this.userInfo.token // token
-      })
+      let data = await statusSecurityCenter()
       console.log(data)
       if (!(returnAjaxMessage(data, this, 0))) {
         return false
