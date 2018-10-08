@@ -229,14 +229,14 @@ import {mapState} from 'vuex'
 import {
   inquireWithdrawalAddressList,
   addNewWithdrawalAddress,
-  deleteUserWithdrawAddress,
-  statusSecurityCenter
+  deleteUserWithdrawAddress
 } from '../../../utils/api/personal'
 import ErrorBox from '../../User/ErrorBox'
 import CountDownButton from '../../Common/CountDownCommon'
 import {
   returnAjaxMessage,
-  apiSendPhoneOrEmailCodeAjax
+  apiSendPhoneOrEmailCodeAjax,
+  getSecurityCenter
 } from '../../../utils/commonFunc'
 export default {
   components: {
@@ -485,18 +485,13 @@ export default {
     /**
      * 安全中心
      */
-    async getSecurityCenter () {
-      let data = await statusSecurityCenter({
-        // token: this.userInfo.token // token
+    getSecurityCenter () {
+      getSecurityCenter(this, (data) => {
+        if (data) {
+          this.securityCenter = data.data.data
+          this.mentionMoneyConfirm = true
+        }
       })
-      console.log(data)
-      if (!(returnAjaxMessage(data, this, 0))) {
-        return false
-      } else {
-        // 返回展示
-        this.securityCenter = data.data.data
-        this.mentionMoneyConfirm = true
-      }
     }
   },
   filter: {},

@@ -4,8 +4,7 @@ import {
   CHANGE_REF_ACCOUNT_CREDITED_STATE,
   SET_LEGAL_TENDER_LIST,
   SET_LEGAL_TENDER_REFLASH_STATUS,
-  CHANGE_LEGAL_PAGE,
-  GET_SECURITY_CENTER
+  CHANGE_LEGAL_PAGE
 } from './mutations-types.js'
 
 // import {setStore, getStore} from '../utils'

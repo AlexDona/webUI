@@ -424,7 +424,6 @@ import IconFontCommon from '../../Common/IconFontCommon'
 import ErrorBox from '../../User/ErrorBox'
 import { createNamespacedHelpers, mapState } from 'vuex'
 import {
-  statusSecurityCenter,
   multipleUserAPIInfo,
   stateCreationApi,
   accessAecretKeyInfo,
@@ -433,7 +432,8 @@ import {
 } from '../../../utils/api/personal'
 import {
   returnAjaxMessage,
-  apiSendPhoneOrEmailCodeAjax
+  apiSendPhoneOrEmailCodeAjax,
+  getSecurityCenter
 } from '../../../utils/commonFunc'
 import {timeFilter} from '../../../utils/index'
 const { mapMutations } = createNamespacedHelpers('personal')
@@ -478,7 +478,7 @@ export default {
     require('../../../../static/css/theme/day/Personal/UserAssets/APIManagementDay.css')
     // 黑色主题样式
     require('../../../../static/css/theme/night/Personal/UserAssets/APIManagementNight.css')
-    this.getSecurityCenter()
+    // this.getSecurityCenter()
     // this.stateEmptyData()
   },
   mounted () {},
@@ -726,15 +726,12 @@ export default {
     /**
      * 安全中心
      */
-    async getSecurityCenter () {
-      let data = await statusSecurityCenter()
-      console.log(data)
-      if (!(returnAjaxMessage(data, this, 0))) {
-        return false
-      } else {
-        // 返回展示
-        this.securityCenter = data.data.data
-      }
+    getSecurityCenter () {
+      getSecurityCenter(this, (data) => {
+        if (data) {
+          this.securityCenter = data.data.data
+        }
+      })
     },
     //  点击复制
     onCopy (e) {
