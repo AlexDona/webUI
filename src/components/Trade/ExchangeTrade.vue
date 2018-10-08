@@ -577,7 +577,7 @@ export default {
         return false
       }
       let params = {
-        partnerId: this.partnerId,
+        // partnerId: this.partnerId,
         userId: this.loginStep1Info.userId,
         tradeId: this.activeSymbol.tradeId + '',
         type: type ? 'SELL' : 'BUY', // 委单类型

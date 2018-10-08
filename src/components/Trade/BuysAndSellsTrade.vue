@@ -72,7 +72,7 @@
               >
                 <dd
                   class="buys-item cursor-pointer"
-                  v-for="(item,index) in buysAndSellsList.sells.list.slice(buysAndSellsList.sells.list.length-9,buysAndSellsList.sells.list.length)"
+                  v-for="(item,index) in buysAndSellsList.sells.list.slice(buysAndSellsList.sells.list.length-10,buysAndSellsList.sells.list.length)"
                   :key="index"
                   :class="{'odd':index%2!==0}"
                   @click="changeActivePriceItem(item)"
@@ -122,7 +122,7 @@
               >
                 <dd
                   class="sells-item cursor-pointer"
-                  v-for="(item,index) in buysAndSellsList.buys.list.slice(0,9)"
+                  v-for="(item,index) in buysAndSellsList.buys.list.slice(0,10)"
                   :key="index"
                   :class="{'even':index%2==0}"
                   @click="changeActivePriceItem(item)"
@@ -176,7 +176,7 @@
               >
                 <dd
                   class="buys-item cursor-pointer"
-                  v-for="(item,index) in buysAndSellsList.buys.list.slice(0,19)"
+                  v-for="(item,index) in buysAndSellsList.buys.list.slice(0,20)"
                   :key="index"
                   :class="{'odd':index%2!==0}"
                   @click="changeActivePriceItem(item)"
@@ -217,7 +217,7 @@
               >
                 <dd
                   class="sells-item cursor-pointer"
-                  v-for="(item,index) in buysAndSellsList.sells.list.slice(0,19)"
+                  v-for="(item,index) in buysAndSellsList.sells.list.slice(0,20)"
                   :key="index"
                   :class="{'even':index%2==0}"
                   @click="changeActivePriceItem(item)"

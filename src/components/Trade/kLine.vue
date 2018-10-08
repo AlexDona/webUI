@@ -45,7 +45,8 @@ export default {
         }
       }, // K线请求参数
       socketData: {}, // socket 数据
-      resolutions: ['min', 'min5', 'min15', 'min30', 'hour1', 'hour4', 'day', 'week']
+      resolutions: ['min', 'min5', 'min15', 'min30', 'hour1', 'hour4', 'day', 'week'],
+      finalSymbol: {} // 当前交易对
     }
   },
   created () {
@@ -102,18 +103,17 @@ export default {
           areaId: obj.tradeAreaId
         }
         // 是否从其他页面跳转
-        const finalSymbol = this.isJumpToTradeCenter ? this.jumpSymbol : activeSymbol
-        this.CHANGE_ACTIVE_SYMBOL({activeSymbol: finalSymbol})
-        console.log(activeSymbol)
+        this.finalSymbol = this.isJumpToTradeCenter ? this.jumpSymbol : activeSymbol
+        this.CHANGE_ACTIVE_SYMBOL({activeSymbol: this.finalSymbol})
         this.symbol = this.activeSymbol.id
         this.socket.doOpen()
         this.socket.on('open', () => {
           this.getKlineDataBySocket('REQ', this.symbol, 'min')
           this.getKlineDataBySocket('SUB', this.symbol, 'min')
-          this.getTradeMarketBySocket('REQ')
-          this.getTradeMarketBySocket('SUB')
-          this.getDefaultSymbolBySocket('REQ', finalSymbol.id)
-          this.getDefaultSymbolBySocket('SUB', finalSymbol.id)
+          this.getTradeMarketBySocket('REQ', this.finalSymbol.areaId)
+          this.getTradeMarketBySocket('SUB', this.finalSymbol.areaId)
+          this.getDefaultSymbolBySocket('REQ', this.finalSymbol.id)
+          this.getDefaultSymbolBySocket('SUB', this.finalSymbol.id)
           this.getDepthDataBySocket('REQ', this.symbol)
           this.getDepthDataBySocket('SUB', this.symbol)
           this.getTradeRecordBySocket('REQ', this.symbol)
@@ -384,7 +384,7 @@ export default {
       }
     },
     onMessage (data) {
-      // console.log(data)
+      console.log(data)
       switch (data.tradeType) {
         case 'KLINE':
           console.log(data)
@@ -438,7 +438,7 @@ export default {
           }
           break
         case 'TRADE':
-          // console.log(data)
+          console.log(data)
           if (data.data) {
             if (!data.type) {
               this.socketData.tardeRecordList = data.data
@@ -548,7 +548,8 @@ export default {
       }
     },
     // 获取币币交易市场 socket
-    getTradeMarketBySocket (type, areaId = this.activeTradeArea.id) {
+    getTradeMarketBySocket (type, areaId = this.activeSymbol.areaId) {
+      console.log(areaId)
       if (areaId) {
         // 币币交易市场
         this.socket.send({
@@ -605,6 +606,9 @@ export default {
         this.getDepthDataBySocket('CANCEL', oldVal)
         this.getTradeRecordBySocket('CANCEL', oldVal)
       }
+    },
+    activeTradeArea (newVal, oldVal) {
+      console.log(newVal)
     }
   }
 }
