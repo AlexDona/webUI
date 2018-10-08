@@ -1030,7 +1030,6 @@ export default {
         this.errorMsg = ''
       }
       this.stateSubmitAssets()
-      this.mentionMoneyConfirm = false
     },
     // 提交提币接口
     async stateSubmitAssets (index) {
@@ -1055,6 +1054,7 @@ export default {
         this.$refs.serviceCharge[index].value = ''
         this.$refs.rechargeCount[index].value = ''
         this.serviceChargeCount = ''
+        this.mentionMoneyConfirm = false
       }
     },
     // 接口请求完成之后清空数据
