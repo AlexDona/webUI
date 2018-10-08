@@ -162,7 +162,8 @@ export default {
   data () {
     return {
       tokenObj: {
-        'token': ''
+        'token': '',
+        'x-domain': ''
       },
       cardNo: '', // 微信账号
       password: '', // 交易密码
@@ -186,6 +187,7 @@ export default {
     // 黑色主题样式
     require('../../../../static/css/theme/night/Personal/AccountReceivableAccount/AddWeChatNight.css')
     this.tokenObj.token = this.userInfo.token
+    this.tokenObj['x-domain'] = window.location.host.split(':')[0]
     this.getAccountPaymentTerm()
     this.paymentMethodInformation()
   },
