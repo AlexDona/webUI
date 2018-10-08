@@ -6,7 +6,8 @@ import {
 } from '../utils/api/trade'
 import {
   userRefreshUser,
-  getQueryAllOrdersList
+  getQueryAllOrdersList,
+  statusSecurityCenter
 } from '../utils/api/personal'
 
 import {
@@ -181,7 +182,18 @@ export const reflashUserInfo = async (that) => {
     store.commit('user/SET_STEP1_INFO', data.data.data)
   }
 }
-
+/**
+ *  刷新用户安全状态
+ */
+export const getSecurityCenter = async (that, callback) => {
+  console.log(store)
+  const data = await statusSecurityCenter({})
+  if (!(returnAjaxMessage(data, that))) {
+    return false
+  } else {
+    callback(data)
+  }
+}
 // 首页、币币交易切换收藏
 export const toggleUserCollection = async (type, tradeId, that) => {
   const params = {

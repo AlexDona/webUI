@@ -452,9 +452,9 @@
                 <div
                   class="error-info"
                 >
-                          <span v-show="errorMsg">
-                            {{ errorMsg }}
-                          </span>
+                  <span v-show="errorMsg">
+                    {{ errorMsg }}
+                  </span>
                 </div>
                 <div
                   slot="footer"
@@ -475,30 +475,30 @@
                 :visible.sync="dialogVisible"
                 center
               >
-                        <span class="info text-align-c display-inline-block">
-                          <!--您还未设置交易密码请先设置交易密码在进行提币-->
-                          {{ $t('M.user_assets_no_transaction_password') }}
-                        </span>
+                <span class="info text-align-c display-inline-block">
+                  <!--您还未设置交易密码请先设置交易密码在进行提币-->
+                  {{ $t('M.user_assets_no_transaction_password') }}
+                </span>
                 <span
                   slot="footer"
                   class="dialog-footer footer"
                 ><!--确 定 取 消-->
-                          <button
-                            class="button-color border-radius4 cursor-pointer"
-                            type="primary"
-                            @click.prevent="confirm"
-                          >
-                            <!--确 定-->
-                            {{ $t('M.comm_confirm') }}
-                          </button>
-                          <button
-                            class="btn border-radius4 cursor-pointer"
-                            @click.prevent="dialogVisible = false"
-                          >
-                            <!--取 消-->
-                            {{ $t('M.comm_cancel') }}
-                          </button>
-                        </span>
+                  <button
+                    class="button-color border-radius4 cursor-pointer"
+                    type="primary"
+                    @click.prevent="confirm"
+                  >
+                    <!--确 定-->
+                    {{ $t('M.comm_confirm') }}
+                  </button>
+                  <button
+                    class="btn border-radius4 cursor-pointer"
+                    @click.prevent="dialogVisible = false"
+                  >
+                    <!--取 消-->
+                    {{ $t('M.comm_cancel') }}
+                  </button>
+                </span>
               </el-dialog>
               <!--分页-->
               <el-pagination
@@ -1402,23 +1402,23 @@ export default {
                         }
                       }
                     }
-                    .content-input {
-                      width: 180px;
-                      height: 34px;
-                      /*margin-top: 20px;*/
-                    }
-                    .input-google {
-                      width: 270px;
-                    }
-                    .send-code-btn {
-                      width: 90px;
-                      height: 34px;
-                      position: absolute;
-                      top: 4px;
-                      z-index: 999;
-                    }
                   }
                 }
+              }
+              .content-input {
+                width: 180px;
+                height: 34px;
+                /*margin-top: 20px;*/
+              }
+              .input-google {
+                width: 270px;
+              }
+              .send-code-btn {
+                width: 90px;
+                height: 34px;
+                position: absolute;
+                top: 4px;
+                z-index: 999;
               }
             }
           }
@@ -1497,17 +1497,6 @@ export default {
               }
               >.recharge-list {
                 border: 1px solid #338FF5;
-                .content-input {
-                  border: 1px solid #485776;
-                  color: #fff;
-                  &:focus {
-                    border: 1px solid #338FF5;
-                  }
-                }
-                .send-code-btn {
-                  background-color: #338FF5;
-                  color: #fff;
-                }
                 >.triangle {
                   border-right: 1px solid transparent;
                   border-top: 1px solid transparent;
@@ -1595,6 +1584,17 @@ export default {
               }
             }
           }
+          .content-input {
+            border: 1px solid #485776;
+            color: #fff;
+            &:focus {
+              border: 1px solid #338FF5;
+            }
+          }
+          .send-code-btn {
+            background-color: #338FF5;
+            color: #fff;
+          }
         }
       }
     }
@@ -1657,17 +1657,6 @@ export default {
               >.recharge-list {
                 border: 1px solid #338FF5;
                 background: #fff;
-                .content-input {
-                  border: 1px solid #ECF1F8;
-                  color: #333;
-                  &:focus {
-                    border: 1px solid #338FF5;
-                  }
-                }
-                .send-code-btn {
-                  background-color: #338FF5;
-                  color: #fff;
-                }
                 >.triangle {
                   border-right: 1px solid transparent;
                   border-top: 1px solid transparent;
@@ -1758,6 +1747,17 @@ export default {
                 }
               }
             }
+          }
+          .content-input {
+            border: 1px solid #ECF1F8;
+            color: #333;
+            &:focus {
+              border: 1px solid #338FF5;
+            }
+          }
+          .send-code-btn {
+            background-color: #338FF5;
+            color: #fff;
           }
         }
       }
