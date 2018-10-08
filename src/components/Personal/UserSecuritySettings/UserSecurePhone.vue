@@ -188,7 +188,7 @@
                 class="phone-input phone-input-left border-radius2 padding-l15 box-sizing"
                 v-model="amendDataPhone.newPhoneAccounts"
                 @keydown="tieErrorMsg(1,'')"
-                @blur="checkUserExistAjax('phone', amendDataPhone.newPhoneAccounts)"
+                @blur="checkUserExistAjax('phone', amendDataPhone.newPhoneAccounts,'newPhone')"
               >
               <!--错误提示-->
               <ErrorBox
@@ -313,7 +313,8 @@ export default {
         '', // 短信验证码
         '' // 交易密码
       ],
-      successCountDown: 1 // 成功倒计时
+      successCountDown: 1, // 成功倒计时
+      newPhoneIsExistStatus: false // 新手机号是否已注册过
     }
   },
   created () {
@@ -350,6 +351,15 @@ export default {
     },
     // 发送验证码
     sendPhoneOrEmailCode (loginType, val, type) {
+      // type: 0 新手机发验证码，1： 当前手机
+      if (!type && this.newPhoneIsExistStatus) {
+        console.log(1)
+        this.$message({
+          type: 'error',
+          message: this.$t('M.user-fail-reg-phone-exist')
+        })
+        return false
+      }
       if (this.disabledOfPhoneBtn || this.disabledOfEmailBtn) {
         return false
       }
@@ -491,7 +501,7 @@ export default {
       }
     },
     // 检测用户名是否存在
-    async checkUserExistAjax (type, userName) {
+    async checkUserExistAjax (type, userName, isNewPhone) {
       if (!validateNumForUserInput(type, userName)) {
         let params = {
           userName: userName,
@@ -499,6 +509,9 @@ export default {
         }
         const data = await checkUserExist(params)
         if (!returnAjaxMessage(data, this)) {
+          if (isNewPhone) {
+            this.newPhoneIsExistStatus = true
+          }
           return false
         }
       } else {
@@ -506,6 +519,9 @@ export default {
           case 'phone':
             if (this.tieCheckoutInputFormat(1, userName)) {
               return false
+            }
+            if (isNewPhone) {
+              this.newPhoneIsExistStatus = false
             }
             break
         }
