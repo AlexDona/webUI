@@ -360,6 +360,15 @@ export default {
         })
         return false
       }
+      if (!type && !val && !this.bindingDataPhone.bindingNewPhoneAccounts) {
+        console.log(this.bindingDataPhone.bindingNewPhoneCode)
+        console.log(1)
+        this.$message({
+          type: 'error',
+          message: this.$t('M.comm_please_enter') + this.$t('M.comm_code_phone1')
+        })
+        return false
+      }
       if (this.disabledOfPhoneBtn || this.disabledOfEmailBtn) {
         return false
       }
