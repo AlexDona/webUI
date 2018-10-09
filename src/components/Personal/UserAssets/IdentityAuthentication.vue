@@ -258,7 +258,7 @@
                 </p>
                 <p class="text-hints">1. {{ $t('M.user_senior_text2') }}</p>
                 <p class="text-hints">2. {{ $t('M.user_senior_text3') }}</p>
-                <p class="text-hints">3. {{ $t('M.user_senior_text4') }}</p>
+                <p class="text-hints">3. {{ $t('M.user_senior_text4') }}{{mainWebsite}}{{ $t('M.user_senior_text6') }}</p>
                 <p class="text-hints margin-top30">{{ $t('M.user_senior_text5') }}</p>
               </div>
               <div class="advanced-upload">
@@ -843,6 +843,7 @@ export default {
   filter: {},
   computed: {
     ...mapState({
+      mainWebsite: state => state.common.mainWebsite, // 网站主网址
       theme: state => state.common.theme,
       contryAreaList: state => state.common.contryAreaList,
       userInfo: state => state.user.loginStep1Info, // 用户详细信息

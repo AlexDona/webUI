@@ -62,6 +62,7 @@ export const common = {
   'comm_end': '结束',
   'comm_register_time': '注册',
   'comm_sub_time': '提交',
+  'comm_sub_anew': '重新',
   'comm_creation': '创建',
   'comm_update': '更新',
   'comm_place_order': '下单',
