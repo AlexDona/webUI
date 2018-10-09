@@ -18,17 +18,15 @@ export const personal = {
   'user_asset_valuation': '资产估值',
   'user_assets_suspended': '充值暂停，钱包维护中',
   'user_assets_pause_mention': '暂停提币',
-  'user_assets_recharge_hint1': '禁止充值除',
-  'user_assets_recharge_hint2': '之外的其他资产，任何非',
-  'user_assets_recharge_hint3': '资产充值将不可找回。',
+  'user_assets_recharge_hint1': '禁止充值除xxxx之外的其他资产，任何非xxxxxx资产充值将不可找回。',
   'user_assets_recharge_hint4': '往该地址充值，汇款完成，等待网络自动确认（6个确认）后系统自动到账',
   'user_assets_recharge_hint5': '为了快速到账，充值时可以适当提高网络手续费',
   'user_assets_withdrawal_hint1': '提现费率规则',
   'user_assets_withdrawal_hint2': '为了用户资金安全，平台可能会电话确认您的提币操作，请注意接听；',
   'user_assets_withdrawal_hint3': '充值经过1个确认后，才允许提现；',
   'user_assets_withdrawal_hint4': '可提现金额≤账户可用资产-未确认的数字资产。',
-  'user_assets_withdrawal_hint5': '手续费小于最小提现手续费，请重新输入',
-  'user_assets_withdrawal_hint6': '手续费大于最大提现手续费，请重新输入',
+  'user_assets_withdrawal_hint5': '手续费<最小提现手续费，请重新输入',
+  'user_assets_withdrawal_hint6': '手续费>最大提现手续费，请重新输入',
   'user_assets_no_transaction_password': '您还未设置交易密码请先设置交易密码在进行提币',
   'user_assets_grade_membership': '会员等级',
   'user_assets_or': '或',
@@ -38,8 +36,6 @@ export const personal = {
   'user_billing_attention': '充提',
   // 提币地址
   'user_address_empty': '提币地址不能为空',
-  'user_address_illegal_address': '非法地址',
-  'user_address_withdrawal': '禁止输入中文字符',
   // 提币列表
   'user_address_delete_withdrawals': '确定删除提币地址?',
   // #####################个人中心#####################
@@ -90,14 +86,11 @@ export const personal = {
   'user_account_bank': '银行卡',
   'user_account_bank_name': '银行名称',
   'user_account_credit_numbers': '银行卡号',
-  'user_account_credit_text': '格式不正确，应为16-19位纯数字',
   'user_account_branch_address': '支行地址',
   // 添加微信
   'user_account_weChat': '微信',
-  'user_account_weChat_pla': '请上传微信收款码',
   // 添加支付宝
   'user_account_alipay': '支付宝',
-  'user_account_alipay_pla': '请上传支付宝收款码',
   // 添加PAYPAL
   'user_account_paypal': 'PAYPAL',
   // 添加西联汇款
@@ -131,7 +124,6 @@ export const personal = {
   'user_security_verify': '验证',
   'user_security_number': '号码',
   'user_security_picture': '图片',
-  'user_security_google1': '格式错误',
   // 安全中心个人信息
   'user_security_level': '账号安全级别',
   'user_security_low': '低',
@@ -199,7 +191,6 @@ export const personal = {
   'user_push_payment': '付款',
   'user_push_revocation': '撤销',
   'user_push_count': 'Push数量不能大于余额',
-  'user_push_forbid': '禁止自我PUSH',
   // PUSH记录
   // #####################我的交易#####################
   // 币币订单
@@ -210,7 +201,6 @@ export const personal = {
   'user_coin_start_stop': '起止',
   'user_coin_entrust': '委托',
   'user_coin_volume': '成交额',
-  'user_coin_volume_text': '确定撤销委单记录吗, 是否继续?',
   // 当前委托Commissioned by the current
   'user_coin_commissioned_current': '当前委托',
   // 历史委托

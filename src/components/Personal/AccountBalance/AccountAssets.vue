@@ -366,9 +366,9 @@
                           >
                             {{errorMessage}}
                           </div>
-                        <!--提币记录-->
-                            {{ $t('M.comm_mention_money') }}{{ $t('M.comm_record') }}
-                      </span>
+                            <!--提币记录-->
+                                {{ $t('M.comm_mention_money') }}{{ $t('M.comm_record') }}
+                          </span>
                         </p>
                       </div>
                     </div>
@@ -377,6 +377,7 @@
               </div>
               <!--提币-->
               <el-dialog
+                :title="$t('M.comm_mention_money') + $t('M.comm_site')"
                 :label="$t('M.comm_mention_money')"
                 :visible.sync="mentionMoneyConfirm"
               >
@@ -471,7 +472,7 @@
               </el-dialog>
               <!--设置交易密码-->
               <el-dialog
-                :title="$t('m.comm_set') + $t('m.comm_password')"
+                :title="$t('M.comm_set') + $t('M.comm_password')"
                 :visible.sync="dialogVisible"
                 center
               >
@@ -820,6 +821,7 @@ export default {
       this.queryWithdrawalAddressList()
       // 调用手续费信息
       this.getWithdrawalInformation(index)
+      this.getSecurityCenter()
     },
     // 显示交易对跳转币种信息
     enter (id, index) {
@@ -1014,7 +1016,6 @@ export default {
         this.dialogVisible = true
       } else {
         this.mentionMoneyConfirm = true
-        this.getSecurityCenter()
       }
     },
     confirm () {
@@ -1051,10 +1052,10 @@ export default {
         // 提币地址列表查询
         this.getAssetCurrenciesList()
         this.stateEmptyData()
+        this.mentionMoneyConfirm = false
         this.$refs.serviceCharge[index].value = ''
         this.$refs.rechargeCount[index].value = ''
         this.serviceChargeCount = ''
-        this.mentionMoneyConfirm = false
       }
     },
     // 接口请求完成之后清空数据
@@ -1228,6 +1229,11 @@ export default {
           >.content-list {
             >.table-body {
               width: 100%;
+              .error-info {
+                height: 20px;
+                line-height: 35px;
+                color: #d45858;
+              }
               .icon-caret {
                 width: 40px;
                 height: 50px;
@@ -1255,11 +1261,6 @@ export default {
                     height:195px;
                     padding: 20px 6px;
                     z-index: 2;
-                    .error-info {
-                      height: 20px;
-                      line-height: 35px;
-                      color: #d45858;
-                    }
                     .info {
                       color: #fff;
                     }

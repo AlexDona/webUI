@@ -1023,7 +1023,7 @@ export default {
       }
     }
     >.security-record{
-      min-height: 200px;
+      min-height: 510px;
     }
     &.night{
       background-color: $nightBgColor;
@@ -1130,7 +1130,7 @@ export default {
             color: #fff;
           }
           .input {
-            border: 1px solid #485776;
+            border: 1px solid #ecf1f8;
             color: #fff;
             &:focus {
               border: 1px solid #338FF5;

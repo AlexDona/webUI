@@ -734,7 +734,7 @@ export default {
   .set-phone {
     >.set-phone-main {
       width: 1100px;
-      min-height: 600px;
+      min-height: 700px;
       margin: 60px auto 100px;
       >.set-phone-header {
         display: flex;
