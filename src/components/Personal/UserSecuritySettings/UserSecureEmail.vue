@@ -338,7 +338,7 @@ export default {
   .set-email {
     >.set-email-main {
       width: 1100px;
-      min-height: 600px;
+      min-height: 700px;
       margin: 60px auto 100px;
       >.set-email-header {
         display: flex;

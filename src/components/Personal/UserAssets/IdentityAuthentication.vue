@@ -1207,6 +1207,13 @@ export default {
                 color: #333;
               }
             }
+            >.color-coin-text {
+              color: #338FF5;
+              font-size: 140px;
+            }
+            >.no-pass {
+              color: #338FF5;
+            }
             .no-pass-button {
               background:linear-gradient(90deg,rgba(43,57,110,1) 0%,rgba(42,80,130,1) 100%);
               color: #fff;
