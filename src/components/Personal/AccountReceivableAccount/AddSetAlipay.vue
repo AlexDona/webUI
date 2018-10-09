@@ -260,7 +260,7 @@ export default {
         goOnStatus = 0
       }
       if (!this.dialogImageHandUrl1 && !this.dialogImageHandUrl) {
-        // 未绑定请上传支付宝收款码邮箱
+        // 请上传支付宝收款码
         this.$message({
           message: this.$t('M.user_account_alipay_pla'),
           type: 'error'

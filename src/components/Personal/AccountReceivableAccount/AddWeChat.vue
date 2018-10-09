@@ -243,7 +243,7 @@ export default {
     setErrorMsg (index, msg) {
       this.errorShowStatusList[index] = msg
     },
-    // 确认设置我新账号
+    // 确认设置新账号
     stateSubmitWeChat () {
       this.stateSeniorCertification()
     },
@@ -270,15 +270,16 @@ export default {
         let param = {
           token: this.userInfo.token,
           cardNo: this.cardNo, // 微信账号
-          qrcode: this.dialogImageHandUrl, // 二维码
+          // qrcode: '', // 二维码
           payPassword: this.password, // 交易密码
           bankType: 'weixin' // type
         }
-        // if (this.paymentTerm.isWeixinBind) {
-        //   param.qrcode = this.dialogImageHandUrl // 二维码
-        // } else {
-        //   param.qrcode = this.dialogImageHandUrl1 // 二维码
-        // }
+        if (this.paymentTerm.isWeixinBind) {
+          param.qrcode = this.dialogImageHandUrl // 二维码
+        } else {
+          param.qrcode = this.dialogImageHandUrl1 // 二维码
+        }
+        console.log(this.dialogImageHandUrl1)
         data = await statusCardSettings(param)
         console.log(data)
         if (!(returnAjaxMessage(data, this, 1))) {
