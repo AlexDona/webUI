@@ -125,6 +125,8 @@ export default {
       }
     },
     init (options) {
+      // this.datafeeds.resolveSymbol(options.symbol, (data) => {
+      // }, () => {}, 10000)
       if (!this.widget) {
         this.widget = new TvWidget({
           width: '100%',
@@ -176,7 +178,8 @@ export default {
           studies_overrides: {
             'volume.volume.color.0': '#008069', // 成交量 k柱 背景色
             'volume.volume.color.1': '#EC5E5E', // 成交量 k柱 背景色
-            'volume.volume.transparency': 100
+            'volume.volume.transparency': 100,
+            'moving average.precision': 8
           },
           overrides: {
             // 'paneProperties.background': '#10172d', // 背景色
@@ -212,6 +215,7 @@ export default {
           },
           custom_css_url: '../../../../static/tradeview/klineTheme.css'
         })
+        console.log(this.widget)
         this.widget.onChartReady(() => {
           const _self = this
           let chart = _self.widget.chart()
@@ -300,6 +304,7 @@ export default {
     },
     // 修改样式
     applyOverrides: function (overrides) {
+      console.log(this.widget)
       this.widget.applyOverrides(overrides)
     },
     // 切换时间间隔
@@ -467,7 +472,8 @@ export default {
       this.CHANGE_SOCKET_DATA(this.socketData)
     },
     getBars (symbolInfo, resolution, rangeStartDate, rangeEndDate, onLoadedCallback) {
-      // console.log(symbolInfo)
+      console.log(symbolInfo)
+      // symbolInfo.pricescale = 100000
       console.log(this.socket)
       // console.log(' >> :', rangeStartDate, rangeEndDate)
       if (this.interval != resolution) {
