@@ -3,6 +3,7 @@
     class="ranking-list-of-invitation-box"
     :class="{'day':theme == 'day','night':theme == 'night' }"
   >
+    <!-- 邀请排行 -->
     <HeaderCommon/>
     <div class="inner-box">
       <div
