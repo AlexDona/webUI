@@ -392,13 +392,13 @@
         <div class="publish-tips">
           <div class="title font-size14">{{$t('M.otc_publishAD_publishDis')}}：</div>
           <p class="tip font-size12">
-            ●FUBT.TOP {{$t('M.otc_publishAD_discriptLineOne')}}
+            ●{{mainWebsite}} {{$t('M.otc_publishAD_discriptLineOne')}}
           </p>
           <p class="tip font-size12">
             ●{{$t('M.otc_publishAD_discriptLineTwo')}}
           </p>
           <p class="tip font-size12">
-            ●{{$t('M.otc_publishAD_discriptLineThree')}}
+            ●{{$t('M.otc_publishAD_discriptLineThree')}}{{mainWebsite}}{{$t('M.otc_publishAD_discriptLineFive')}}
           </p>
           <p class="tip font-size12">
             ●{{$t('M.otc_publishAD_discriptLineFour')}}
@@ -926,8 +926,8 @@ export default {
     ...mapState({
       language: state => state.common.language,
       partnerId: state => state.common.partnerId,
-      theme: state => state.common.theme
-      // userInfo: state => state.user.loginStep1Info.userInfo
+      theme: state => state.common.theme,
+      mainWebsite: state => state.common.mainWebsite // 网站主网址
     })
   },
   watch: {

@@ -95,7 +95,7 @@
             <p>{{$t('M.otc_merchant_detailTwo')}}</p>
             <p>{{$t('M.otc_merchant_applyLimit')}}<spn>{{successTimes}}</spn>{{$t('M.otc_ci')}}。②{{$t('M.otc_merchant_account')}}<span>{{coinName}}</span>{{$t('M.comm_count')}}{{$t('M.otc_xu')}}≥<span>{{count}}</span></p>
             <h4 class="title">{{$t('M.otc_merchant_step2')}}</h4>
-            <p>{{$t('M.otc_merchant_datailThree')}}otc@FUBT.top，{{$t('M.otc_merchant_datailFour')}}OTC{{$t('M.otc_merchant')}}”。</p>
+            <p>{{$t('M.otc_merchant_datailThree')}}otc@{{mainWebsite}}，{{$t('M.otc_merchant_datailFour')}}OTC{{$t('M.otc_merchant')}}”。</p>
             <h4 class="title">{{$t('M.otc_merchant_step3')}}</h4>
             <p>{{$t('M.otc_merchant_datailFive')}}{{count}} {{coinName}}{{$t('M.otc_merchant_datailSix')}}。</p>
             <h4 class="title">{{$t('M.otc_merchant_step4')}}</h4>
@@ -344,7 +344,8 @@ export default {
       isLogin: state => state.user.isLogin, // 用户登录状态 false 未登录； true 登录
       partnerId: state => state.common.partnerId,
       language: state => state.common.language,
-      theme: state => state.common.theme
+      theme: state => state.common.theme,
+      mainWebsite: state => state.common.mainWebsite // 网站主网址
     })
   },
   watch: {}

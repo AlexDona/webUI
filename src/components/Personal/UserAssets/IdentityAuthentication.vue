@@ -1133,7 +1133,7 @@ export default {
       .info-type {
         color: #617499
       }
-      .user-info {;
+      .user-info {
         color: #fff;
       }
       .advanced-certification-text{
@@ -1245,7 +1245,7 @@ export default {
       .info-type {
         color: #7D90AC;
       }
-      .user-info {;
+      .user-info {
         color: #333;
       }
       .advanced-certification-text{
