@@ -65,7 +65,8 @@
                 class="phone-input phone-input-left border-radius2 padding-l15 box-sizing"
                 v-model="bindingDataPhone.bindingNewPhoneAccounts"
                 @keydown="setErrorMsg(0,'')"
-                @blur="checkUserExistAjax('phone', bindingDataPhone.bindingNewPhoneAccounts)"
+                @focus="resetNewPhoneIsExistStatus"
+                @blur="checkUserExistAjax('phone', bindingDataPhone.bindingNewPhoneAccounts,1)"
               >
               <!--错误提示-->
               <ErrorBox
@@ -518,6 +519,14 @@ export default {
     },
     // 确定绑定
     async confirmBindingBailPhone () {
+      console.log(this.newPhoneIsExistStatus)
+      if (this.newPhoneIsExistStatus) {
+        this.$message({
+          type: 'error',
+          message: this.$t('M.user-fail-reg-phone-exist')
+        })
+        return false
+      }
       let goOnStatus = 0
       if (
         this.checkoutInputFormat(0, this.bindingDataPhone.bindingNewPhoneAccounts) &&
