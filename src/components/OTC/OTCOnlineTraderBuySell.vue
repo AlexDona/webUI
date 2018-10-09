@@ -312,16 +312,16 @@
                     <!-- 交易须知 -->
                     <h4 class="title">*{{$t('M.otc_index_tradeKnow')}}：</h4>
                     <p class="tip">
-                        1. {{$t('M.otc_index_tradeKnowDetail1')}}<span class="warning">3{{$t('M.otc_ci')}}</span>，{{$t('M.otc_index_tradeKnowDetail2')}}。
+                      1. {{$t('M.otc_index_tradeKnowDetail1')}}<span class="warning">3{{$t('M.otc_ci')}}</span>，{{$t('M.otc_index_tradeKnowDetail2')}}。
                     </p>
                     <p class="tip">
-                        2. {{$t('M.otc_index_tradeKnowDetail3')}}。
+                      2. {{$t('M.otc_index_tradeKnowDetail3')}}。
                     </p>
                     <p class="tip">
-                        3. {{$t('M.otc_index_tradeKnowDetail4')}}；
+                      3. {{$t('M.otc_index_tradeKnowDetail4')}}{{mainWebsite}}{{$t('M.otc_index_tradeKnowDetail6')}}；
                     </p>
                     <p class="tip">
-                        4. {{$t('M.otc_index_tradeKnowDetail5')}}
+                      4. {{$t('M.otc_index_tradeKnowDetail5')}}
                     </p>
                   </div>
                 </div>
@@ -814,6 +814,7 @@ export default {
   filter: {},
   computed: {
     ...mapState({
+      mainWebsite: state => state.common.mainWebsite, // 网站主网址
       theme: state => state.common.theme,
       anchorStatus: state => state.OTC.anchorStatus // anchorStatus锚点状态：在全局先定义false，当用户购买或者出售时候改为true
     })

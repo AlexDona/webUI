@@ -344,7 +344,7 @@
             </p>
             <p class="release-tips">
               <!-- 4、请避免线下私自交易，FUBT.top无法为您预防风险 -->
-              {{$t('M.otc_index_pubTipsThree')}}
+              {{$t('M.otc_index_pubTipsThree')}}{{mainWebsite}}{{$t('M.otc_index_pubTipsFour')}}
             </p>
           </div>
         </div>
@@ -777,6 +777,7 @@ export default {
   filter: {},
   computed: {
     ...mapState({
+      mainWebsite: state => state.common.mainWebsite, // 网站主网址
       theme: state => state.common.theme,
       // 当前选中语言
       language: state => state.common.language,

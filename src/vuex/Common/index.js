@@ -6,6 +6,7 @@ import {getStore} from '../../utils'
 // Vue.use(Vuex)
 
 const state = {
+  mainWebsite: 'FUBT.TOP', // 网站主网址
   theme: getStore('theme') || 'night',
   contryAreaList: [], // 国家列表（国家码）
   // 国际化语言
