@@ -27,26 +27,3 @@
 .el-dialog__title{
   color: #338FF5; 
 }
-.otc-business-apply-box .el-dialog::-webkit-scrollbar {
-  width:10px;
-  height:10px;
-}
-.otc-business-apply-box .el-dialog::-webkit-scrollbar-button    {
-  background-color:#292e42;
-}
-.otc-business-apply-box .el-dialog::-webkit-scrollbar-track     {
-  background:#292e42;
-}
-.otc-business-apply-box .el-dialog::-webkit-scrollbar-track-piece {
-  /* background:url(http://www.lyblog.net/wp/wp-content/themes/mine/img/stripes_tiny_08.png); */
-}
-.otc-business-apply-box .el-dialog::-webkit-scrollbar-thumb{
-  background:#1e2636;
-  border-radius:5px;
-}
-.otc-business-apply-box .el-dialog::-webkit-scrollbar-corner {
-  background:#292e42;
-}
-.otc-business-apply-box .el-dialog::-webkit-scrollbar-resizer  {
-  background:#292e42;
-}

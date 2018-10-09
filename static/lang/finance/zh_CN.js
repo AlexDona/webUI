@@ -21,6 +21,13 @@ export const finance = {
   'finance_loginTips': '@您还没有登陆,请',
   'finance_or': '或者',
   'finance_loginTipsTwo': '之后查看!',
+  'finance_interestRate': '利率',
+  'finance_xiAndben': '先息后本',
+  'finance_timeLong': '时长',
+  'finance_leit': '至',
+  'finance_day': '天',
+  'finance_accrual': '利息',
+  'finance_capital': '本金',
   // 二次确认弹框提示信息
   'finance_tipsContentOne': '确定取回存币?'
 }

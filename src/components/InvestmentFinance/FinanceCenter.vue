@@ -103,48 +103,70 @@
               class='dialogStyle'
               :before-close="handleClose">
               <el-form :label-position="right" label-width="90px" :model="formLabelAlign">
-                <el-form-item label="存币时长">
-                  formLabelAlign.
-                 {{getDate(0)}} 至 {{getDate(formLabelAlign.day)}} <span class="blue">({{formLabelAlign.day}}天)</span>
+                <!-- 存币时长 -->
+                <el-form-item
+                :label="$t('M.finance_invest') + $t('M.finance_timeLong')"
+                style="color:#fff;">
+                 {{getDate(-2)}} {{$t('M.finance_leit')}} {{getDate(formLabelAlign.day)}}
+                 <span class="blue">({{formLabelAlign.day}}{{$t('M.finance_day')}})</span>
+                 <!-- {{formLabelAlign.createTime}} 至 {{formLabelAlign.endDate}}<span class="blue">({{formLabelAlign.day}}天)</span> -->
                 </el-form-item>
-                <el-form-item label="存币数量">
+                <!-- 存币数量 -->
+                <el-form-item
+                  :label="$t('M.finance_invest') + $t('M.comm_count')"
+                >
                   <div class='invest-mounte'>
-                    <el-input v-model="investMounte" class="red"></el-input>
+                    <el-input v-model="formLabelAlign.number" class="red"></el-input>
                     <strong>{{selecteCoindName}}</strong>
                   </div>
                 </el-form-item>
-                <el-form-item label="利率">
+                <!-- 利率 -->
+                <el-form-item
+                  :label="$t('M.finance_interestRate')"
+                >
                    <div class='invest-mounte'>
                     <el-input v-model="formLabelAlign.interestRate"></el-input>
                   </div>
                 </el-form-item>
-                <el-form-item label="预计总收益">
+                <!-- 预计总收益 -->
+                <el-form-item
+                  :label="$t('M.finance_predict') + $t('M.comm_total_sum') + $t('M.finance_earnings')"
+                >
                   <div class='invest-mounte'>
                     <el-input v-model="formLabelAlign.expectedEarning"></el-input>
                     <strong>{{selecteCoindName}}</strong>
                   </div>
                 </el-form-item>
-                <el-form-item label="收益发放">
+                <!-- 收益发放 -->
+                <el-form-item
+                :label="$t('M.finance_earnings') + $t('M.finance_grant')"
+                >
                   <div class='invest-mounte'>
-                    <el-input v-model="formLabelAlign.dividend"></el-input>
+                    <!-- 先息后本 -->
+                    <el-input
+                    :value="$t('M.finance_xiAndben')"
+                    ></el-input>
                     <span class='dividend-tips' @click="showDividendTime = !showDividendTime">!</span>
                   </div>
                 </el-form-item>
               </el-form>
               <div class="show-dividend-time-list">
-                <el-collapse-transition>
+                <transition name="el-fade-in-linear">
                   <ul v-show='showDividendTime'>
                     <li v-for="(item,index) in formLabelAlign.jsonTimeline" :key="index">
                       <span>{{item.date}}</span>
                       <span class="blue">{{item.amount}}</span>
-                      <span class='blue'>{{selecteCoindName}}</span><span>({{item.unit.length == 1 ? '利息' : '本金+利息'}})</span>
+                      <span class='blue'>{{selecteCoindName}}</span>
+                      <span>({{formLabelAlign.jsonTimeline[formLabelAlign.jsonTimeline.length-1].length == 1 ? $t('M.finance_accrual') :$t('M.finance_capital') + '+' + $t('M.finance_accrual')}})</span>
                     </li>
                   </ul>
-                </el-collapse-transition>
+                </transition>
               </div>
               <span slot="footer" class="dialog-footer">
-                <el-button @click="dialogCancel">取 消</el-button>
-                <el-button type="primary" @click="dialogSuer">确 定</el-button>
+                <!-- 取消 -->
+                <el-button @click="dialogCancel">{{$t('M.comm_cancel')}}</el-button>
+                <!-- 确定 -->
+                <el-button type="primary" @click="dialogSuer">{{$t('M.comm_affirm')}}</el-button>
               </span>
             </el-dialog>
             <button></button>
@@ -500,7 +522,7 @@ export default {
     getDate (n) {
       let ss = 24 * 60 * 60 * 1000
       let timeSteps = new Date().getTime() // 当前时间撮
-      let date1 = new Date(timeSteps - n * ss) // n天前的时间撮
+      let date1 = new Date(timeSteps + (n + 2) * ss) // n天前的时间撮
       let newtime = date1.toLocaleString() // 将n天前的时间撮转换成当前日期
       let arr = newtime.split(' ') // 将精确到日的日期摘出来
       let arr1 = arr[0].split('/') // 将日期格式改变
@@ -579,11 +601,6 @@ export default {
         return false
       } else {
         this.formLabelAlign = data.data.data
-        // 投资成功
-        this.$message({
-          message: this.$t('M.finance_invest') + this.$t('M.comm_success'),
-          type: 'success'
-        })
       }
     },
     // 添加理财记录
@@ -686,8 +703,6 @@ export default {
           this.selecteCoindName = item.name
         }
       })
-      // 每次切换时都要请求改币种的总数量
-      this.getUserCoindTotal()
       // 改变币种重新请求接口
       this.getFinancialManagementList()
     },
@@ -969,18 +984,18 @@ export default {
   .show-dividend-time-list{
     >ul{
       min-width: 300px;
-      overflow: hidden;
+      margin-left:60px;
       color: #fff;
       font-weight: 600;
+      border-left: 4px solid #338FF5;
       >li{
-        margin:-20px 0px;
-        margin-left:100px;
-        border-left: 4px solid #338FF5;
         position: relative;
         padding-left: 5px;
-        line-height: 50px;
+        font-size: 10px;
+        margin-bottom:20px;
+        line-height: 12px;
         span:nth-child(1){
-          padding:0px 40px 0px 10px;
+          padding:0px 0px 0px 10px;
         }
         span:nth-child(2){
           padding-right:10px;
@@ -988,10 +1003,10 @@ export default {
         &::before{
           content: '';
           position: absolute;
-          width: 10px;
-          height: 10px;
-          top:20.5px;
-          left:-7px;
+          width: 12px;
+          height: 12px;
+          top:0px;
+          left:-8px;
           background: #338FF5;
           border-radius: 50%;
         }

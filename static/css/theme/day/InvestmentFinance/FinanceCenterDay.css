@@ -98,3 +98,6 @@
 .finance-box.day > .inner-box > .finance-inner .finance-inner-box > .left .left-body > label > .invest-mounte > input{
     color:#666;
 }
+.finance-box.day .nvest-list-body .el-table{
+    box-shadow:0px 0px 0px rgba(25,30,40,0.5);
+}
