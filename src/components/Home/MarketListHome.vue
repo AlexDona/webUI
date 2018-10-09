@@ -3,6 +3,7 @@
     class="market-list-box home"
     :class="{'day':theme == 'day','night':theme == 'night' }"
   >
+    <LoadingBox class="loading-box"/>
     <div class="inner-box">
       <!--表头-->
       <template>
@@ -848,6 +849,14 @@ export default{
     width:100%;
     overflow: hidden;
     min-height:876px;
+    >.loading-box{
+      z-index: 999;
+      position: absolute;
+      width:100%;
+      background-color: rgba(255,255,255,0.2);
+      left:0;
+      top:0;
+    }
     /*表头*/
     .inner-box{
       width:1130px;
