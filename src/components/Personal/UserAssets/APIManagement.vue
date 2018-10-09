@@ -812,8 +812,8 @@ export default {
         padding-left: 35px;
       }
       .error-msg{
-        height:30px;
-        line-height: 30px;
+        height:20px;
+        line-height: 20px;
         color: #d45858;
       }
       .error-msg1{
@@ -880,7 +880,7 @@ export default {
             }
             .api-button {
               padding: 10px 96px;
-              margin: 20px 0 0 120px;
+              margin: 8px 0 0 120px;
             }
             .prompt-message {
               height: 20px;
