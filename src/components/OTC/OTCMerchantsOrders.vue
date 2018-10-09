@@ -21,6 +21,7 @@
           <span class="status-input">
             <el-select
               v-model="activitedMerchantsOrdersTraderStyleList"
+              :no-data-text="$t('M.comm_no_data')"
               @change="changeSelectValue('changeMerchantsOrdersTraderStyleList', $event)"
               clearable
               :placeholder="$t('M.comm_all')"
@@ -39,6 +40,7 @@
           <span class="status-input">
             <el-select
               v-model="activitedMerchantsOrdersCoin"
+              :no-data-text="$t('M.comm_no_data')"
               @change="changeSelectValue('changeMerchantsOrdersCoin', $event)"
               clearable
               :placeholder="$t('M.comm_all')"
@@ -57,6 +59,7 @@
           <span class="status-input">
             <el-select
               v-model="activitedMerchantsOrdersCurrency"
+              :no-data-text="$t('M.comm_no_data')"
               @change="changeSelectValue('changeMerchantsOrdersCurrency', $event)"
               clearable
               :placeholder="$t('M.comm_all')"
@@ -75,6 +78,7 @@
           <span class="status-input">
             <el-select
               v-model="activitedMerchantsOrdersStatusList"
+              :no-data-text="$t('M.comm_no_data')"
               @change="changeSelectValue('changeMerchantsOrdersStatusList', $event)"
               clearable
               :placeholder="$t('M.comm_all')"

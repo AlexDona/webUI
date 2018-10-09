@@ -248,6 +248,7 @@
                             </p>
                             <el-select
                               v-model="mentionAddressValue"
+                              :no-data-text="$t('M.comm_no_data')"
                               @change="changeId"
                             >
                               <el-option

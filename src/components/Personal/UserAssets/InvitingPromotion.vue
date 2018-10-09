@@ -142,6 +142,7 @@
             <!--请选择-->
             <el-select
               v-model="generalizeValue"
+              :no-data-text="$t('M.comm_no_data')"
               :placeholder="$t('M.comm_please_choose')"
               @change="changeId"
             >

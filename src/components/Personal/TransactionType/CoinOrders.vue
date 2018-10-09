@@ -36,6 +36,7 @@
               clearable
               v-model="activeExchangeArea"
               :placeholder="$t('M.comm_please_choose')"
+              :no-data-text="$t('M.comm_no_data')"
             >
               <el-option
                 v-for="item in entrustSelectList"
@@ -56,6 +57,7 @@
             <el-select
               clearable
               v-model="activeMatchType"
+              :no-data-text="$t('M.comm_no_data')"
               :placeholder="$t('M.comm_please_choose')"
             >
               <el-option
@@ -78,6 +80,7 @@
               clearable
               v-model="activeType"
               :placeholder="$t('M.comm_please_choose')"
+              :no-data-text="$t('M.comm_no_data')"
             >
               <el-option
                 v-for="item in typeList"

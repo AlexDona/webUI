@@ -25,6 +25,7 @@
               <!--全部-->
               <el-select
                 v-model="activitedMerchantsOrdersTraderStyleList"
+                :no-data-text="$t('M.comm_no_data')"
                 @change="changeMerchantsOrdersTraderStyleList"
                 clearable
                 :placeholder="$t('M.comm_all')"
@@ -48,6 +49,7 @@
              <!--全部-->
            <el-select
              v-model="activitedMerchantsOrdersCoin"
+             :no-data-text="$t('M.comm_no_data')"
              @change="changeMerchantsOrdersCoin"
              clearable
              :placeholder="$t('M.comm_all')"
@@ -71,6 +73,7 @@
               <!--全部-->
               <el-select
                 v-model="activitedMerchantsOrdersCurrency"
+                :no-data-text="$t('M.comm_no_data')"
                 @change="changeMerchantsOrdersCurrency"
                 clearable
                 :placeholder="$t('M.comm_all')"

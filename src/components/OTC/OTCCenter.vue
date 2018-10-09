@@ -74,6 +74,7 @@
                   v-model="activitedCurrencyId"
                   @change="changeCurrencyId"
                   :placeholder="$t('M.otc_index_currency_type')"
+                  :no-data-text="$t('M.comm_no_data')"
                 >
                   <el-option
                     v-for="(item,index) in availableCurrencyId"
@@ -116,6 +117,7 @@
                   </el-option>
                 </el-select> -->
                 <el-select
+                  :no-data-text="$t('M.comm_no_data')"
                   v-model="checkedPayType"
                   :placeholder="$t('M.otc_index_Payment_method')"
                   @change="payWayChangeValue"
@@ -732,16 +734,19 @@ export default {
       } else {
         // 返回数据正确的逻辑
         this.IWantToBuySellArr = data.data.data
-        this.CHANGE_OTC_AVAILABLE_CURRENCY_NAME(this.IWantToBuySellArr[0].name)
-        this.CHANGE_OTC_AVAILABLE_CURRENCY_ID(this.IWantToBuySellArr[0].coinId)
-        this.CHANGE_OTC_AVAILABLE_PARTNER_COIN_ID(this.IWantToBuySellArr[0].partnerCoinId)
-        // console.log(this.selectedOTCAvailableCurrencyName)
-        // console.log(this.selectedOTCAvailableCurrencyCoinID)
-        // 在得到可用币种之后再调用方法根据币种的第一项的币种id来渲染表格数据
-        // 2.0 otc可用法币查询：
-        this.getMerchantAvailablelegalTenderList()
-        // 3.0 otc主页面查询挂单列表:
-        // this.getOTCPutUpOrdersList()
+        console.log(this.IWantToBuySellArr.length)
+        if (this.IWantToBuySellArr.length) {
+          this.CHANGE_OTC_AVAILABLE_CURRENCY_NAME(this.IWantToBuySellArr[0].name)
+          this.CHANGE_OTC_AVAILABLE_CURRENCY_ID(this.IWantToBuySellArr[0].coinId)
+          this.CHANGE_OTC_AVAILABLE_PARTNER_COIN_ID(this.IWantToBuySellArr[0].partnerCoinId)
+          // console.log(this.selectedOTCAvailableCurrencyName)
+          // console.log(this.selectedOTCAvailableCurrencyCoinID)
+          // 在得到可用币种之后再调用方法根据币种的第一项的币种id来渲染表格数据
+          // 2.0 otc可用法币查询：
+          this.getMerchantAvailablelegalTenderList()
+          // 3.0 otc主页面查询挂单列表:
+          // this.getOTCPutUpOrdersList()
+        }
       }
     },
     //  2.0 otc可用法币查询

@@ -21,6 +21,7 @@
         <span class="currency-input">
           <el-select
             v-model="activitedTraderCoinId"
+            :no-data-text="$t('M.comm_no_data')"
             @change="changeCoinId"
           >
             <el-option
@@ -39,6 +40,7 @@
         <span class="legal-tender-input">
           <el-select
             v-model="activitedtraderCurrencyCoinsId"
+            :no-data-text="$t('M.comm_no_data')"
             @change="changeCurrencyCoinsId"
           >
             <el-option
