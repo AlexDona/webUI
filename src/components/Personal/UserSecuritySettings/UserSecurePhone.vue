@@ -109,7 +109,7 @@
               <el-input
                 v-model="bindingDataPhone.bindingNewPhoneCode"
                 @keydown="setErrorMsg(2,'')"
-                @blur="checkoutInputFormat(2, bindingDataPhone.userInputImageCode)"
+                @blur="checkoutInputFormat(2, bindingDataPhone.bindingNewPhoneCode)"
               >
                 <template slot="append">
                   <CountDownButton
@@ -118,12 +118,12 @@
                     @run="sendPhoneOrEmailCode(0)"
                   />
                 </template>
-                <!--错误提示-->
-                <ErrorBox
-                  :text="errorShowStatusList[2]"
-                  :isShow="!!errorShowStatusList[2]"
-                />
               </el-input>
+              <!--错误提示-->
+              <ErrorBox
+                :text="errorShowStatusList[2]"
+                :isShow="!!errorShowStatusList[2]"
+              />
             </el-form-item>
             <div class="prompt-message">
               <div v-show="errorMsg">{{ errorMsg }}</div>
@@ -495,6 +495,7 @@ export default {
           }
         // 短信验证码
         case 2:
+          console.log(targetNum)
           if (!targetNum) {
             // 请输入短信验证码
             this.setErrorMsg(2, this.$t('M.comm_please_enter') + this.$t('M.comm_note') + this.$t('M.comm_code'))
@@ -520,6 +521,7 @@ export default {
       let goOnStatus = 0
       if (
         this.checkoutInputFormat(0, this.bindingDataPhone.bindingNewPhoneAccounts) &&
+        this.checkoutInputFormat(1, this.bindingDataPhone.userInputImageCode) &&
         this.checkoutInputFormat(2, this.bindingDataPhone.bindingNewPhoneCode)
       ) {
         goOnStatus = 1
