@@ -580,6 +580,12 @@ export default {
     },
     // 0.2 点击发布订单按钮跳转到发布订单页面
     toPublishOrder () {
+      // console.log(this.selectedOTCAvailableCurrencyCoinID)
+      // console.log(this.activitedCurrencyId)
+      // 增加没有币种和法币点击按钮不跳转的验证
+      if (this.selectedOTCAvailableCurrencyCoinID == '' && this.activitedCurrencyId == '') {
+        return false
+      }
       // 未登录跳转到登录页面
       if (!this.isLogin) {
         this.$router.push({path: '/login'})
