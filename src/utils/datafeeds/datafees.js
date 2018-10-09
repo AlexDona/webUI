@@ -35,9 +35,14 @@ class datafeeds {
   resolveSymbol (symbolName, onSymbolResolvedCallback, onResolveErrorCallback) {
     return new Promise((resolve, reject) => {
       let symbolInfo = this.defaultSymbol()
+      // 设置价格精度
+      let pricescale = this.self.$store.state.trade.middleTopData.priceExchange
+      pricescale = Math.pow(10, pricescale)
       if (this.self.getSymbol) {
         symbolInfo = Object.assign(this.defaultSymbol(), this.self.getSymbol())
       }
+      symbolInfo.pricescale = pricescale
+      console.log(pricescale)
       resolve(symbolInfo)
     }).then(data => onSymbolResolvedCallback(data)).catch(err => onResolveErrorCallback(err))
   }
@@ -100,13 +105,13 @@ class datafeeds {
       'timezone': 'Asia/Shanghai',
       'minmov': 1,
       'minmov2': 0,
-      'pointvalue': 1,
+      'pointvalue': 4,
       'fractional': false,
       'session': '24x7',
       'has_intraday': true,
       'has_no_volume': false,
       // 'description': 'BTCUSDT',
-      'pricescale': 16, // 小数位
+      'pricescale': 10, // 小数位
       // 'ticker': 'BTCUSDT',
       'supported_resolutions': ['1', '5', '15', '30', '60', '240', '1D', '1W']
     }
