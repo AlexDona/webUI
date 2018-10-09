@@ -398,8 +398,18 @@ export default {
         })
         return false
       }
-      if (this.disabledOfPhoneBtn || this.disabledOfEmailBtn) {
-        return false
+      console.log(type)
+      if (!type) {
+        if (this.disabledOfPhoneBtn || this.disabledOfEmailBtn) {
+          return false
+        }
+      } else {
+        console.log(2)
+        if (this.disabledOfOldPhoneBtn || this.disabledOfEmailBtn) {
+          console.log(this.disabledOfOldPhoneBtn)
+          console.log(this.disabledOfEmailBtn)
+          return false
+        }
       }
       let params = {
         type: 'VERIFICATION_CODE', // 类型
@@ -443,6 +453,7 @@ export default {
         }
       }
       await sendPhoneOrEmailCodeAjax(loginType, params, (data) => {
+        console.log(this.disabledOfPhoneBtn)
         console.log(this.disabledOfPhoneBtn)
         // 提示信息
         if (!returnAjaxMessage(data, this)) {
@@ -668,6 +679,20 @@ export default {
     },
     // 确定换绑手机
     async confirmTiePhone () {
+      if (this.newPhoneIsExistStatus) {
+        this.$message({
+          type: 'error',
+          message: this.$t('M.user-fail-reg-phone-exist')
+        })
+        return false
+      }
+      if (!this.userInfo.payPassword) {
+        this.$message({
+          message: this.$t('M.user_asset_title12'), // 请先设置交易密码，再来设置OTC收款账户!
+          type: 'error'
+        })
+        return false
+      }
       console.log(this.amendDataPhone.newPhoneAccounts)
       let goOnStatus = 0
       if (
@@ -734,7 +759,8 @@ export default {
       contryAreaList: state => state.common.contryAreaList,
       disabledOfOldPhoneBtn: state => state.user.disabledOfOldPhoneBtn,
       disabledOfPhoneBtn: state => state.user.disabledOfPhoneBtn,
-      disabledOfEmailBtn: state => state.user.disabledOfEmailBtn
+      disabledOfEmailBtn: state => state.user.disabledOfEmailBtn,
+
     })
   },
   watch: {
