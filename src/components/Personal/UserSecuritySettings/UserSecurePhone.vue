@@ -152,6 +152,7 @@
               <el-input
                 v-model="amendDataPhone.oldPhoneCode"
                 @keydown="tieErrorMsg(0,'')"
+                @focus="tieErrorMsg(0,'')"
                 @blur="tieCheckoutInputFormat(0, amendDataPhone.oldPhoneCode)"
               >
                 <template slot="append">
@@ -187,6 +188,7 @@
                 class="phone-input phone-input-left border-radius2 padding-l15 box-sizing"
                 v-model="amendDataPhone.newPhoneAccounts"
                 @keydown="tieErrorMsg(1,'')"
+                @focus="resetNewPhoneIsExistStatus"
                 @blur="checkUserExistAjax('phone', amendDataPhone.newPhoneAccounts,'newPhone')"
               >
               <!--错误提示-->
@@ -352,8 +354,6 @@ export default {
     // 发送验证码
     async sendPhoneOrEmailCode (loginType, val, type) {
       if (!type && !val && !this.bindingDataPhone.bindingNewPhoneAccounts) {
-        console.log(this.bindingDataPhone.bindingNewPhoneCode)
-        console.log(1)
         this.$message({
           type: 'error',
           message: this.$t('M.comm_please_enter') + this.$t('M.comm_code_phone1')
@@ -361,9 +361,21 @@ export default {
         return false
       }
       // 绑定手机号
-      if (!loginType && !val && !type) {
+      if ((!loginType && !val && !type)) {
+        console.log(this.bindingDataPhone.bindingNewPhoneCode)
         if (!this.emailBindPhoneCount) {
           let data = await this.checkUserExistAjax('phone', this.bindingDataPhone.bindingNewPhoneAccounts)
+          this.emailBindPhoneCount++
+          console.log(data)
+          if (!data) {
+            this.emailBindPhoneCount = 0
+            return false
+          }
+        }
+      }
+      if ((!loginType && val && !type)) {
+        if (!this.emailBindPhoneCount) {
+          let data = await this.checkUserExistAjax('phone', this.amendDataPhone.newPhoneAccounts)
           this.emailBindPhoneCount++
           console.log(data)
           if (!data) {
@@ -399,7 +411,6 @@ export default {
             break
         }
       } else {
-        // console.log(1)
         console.log(loginType)
         switch (loginType) {
           case 0:
@@ -434,6 +445,11 @@ export default {
         } else {
           this.$store.commit('user/SET_USER_BUTTON_STATUS', {
             loginType: 0,
+            type,
+            status: true
+          })
+          this.$store.commit('user/SET_USER_BUTTON_STATUS', {
+            loginType: 1,
             type,
             status: true
           })
@@ -553,6 +569,9 @@ export default {
         }
       }
     },
+    resetNewPhoneIsExistStatus () {
+      this.newPhoneIsExistStatus = false
+    },
     // 换绑手机检测输入格式
     tieCheckoutInputFormat (type, targetNum) {
       switch (type) {
@@ -633,11 +652,11 @@ export default {
     },
     // 确定换绑手机
     async confirmTiePhone () {
-      console.log(1)
+      console.log(this.amendDataPhone.newPhoneAccounts)
       let goOnStatus = 0
       if (
-        this.tieCheckoutInputFormat(0, this.amendDataPhone.newPhoneAccounts) &&
-        this.tieCheckoutInputFormat(1, this.amendDataPhone.oldPhoneCode) &&
+        this.tieCheckoutInputFormat(1, this.amendDataPhone.newPhoneAccounts) &&
+        this.tieCheckoutInputFormat(0, this.amendDataPhone.oldPhoneCode) &&
         this.tieCheckoutInputFormat(2, this.amendDataPhone.newPhoneCode) &&
         this.tieCheckoutInputFormat(3, this.amendDataPhone.transactionPassword)
       ) {
