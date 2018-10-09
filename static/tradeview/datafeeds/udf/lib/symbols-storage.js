@@ -138,7 +138,6 @@ var SymbolsStorage = /** @class */ (function () {
           minmov: extractField(data, 'minmovement', symbolIndex) || extractField(data, 'minmov', symbolIndex) || 0,
           minmove2: extractField(data, 'minmove2', symbolIndex) || extractField(data, 'minmov2', symbolIndex),
           fractional: extractField(data, 'fractional', symbolIndex),
-          // pricescale: extractField(data, 'pricescale', symbolIndex),
           pricescale: extractField(data, 'pricescale', symbolIndex),
           type: extractField(data, 'type', symbolIndex),
           session: extractField(data, 'session-regular', symbolIndex),
