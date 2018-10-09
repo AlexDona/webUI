@@ -104,7 +104,8 @@
               :before-close="handleClose">
               <el-form :label-position="right" label-width="90px" :model="formLabelAlign">
                 <el-form-item label="存币时长">
-                 {{getDate(0)}} 至 {{getDate(90)}} <span class="blue">(90天)</span>
+                  formLabelAlign.
+                 {{getDate(0)}} 至 {{getDate(formLabelAlign.day)}} <span class="blue">({{formLabelAlign.day}}天)</span>
                 </el-form-item>
                 <el-form-item label="存币数量">
                   <div class='invest-mounte'>
@@ -114,12 +115,12 @@
                 </el-form-item>
                 <el-form-item label="利率">
                    <div class='invest-mounte'>
-                    <el-input v-model="formLabelAlign.rate"></el-input>
+                    <el-input v-model="formLabelAlign.interestRate"></el-input>
                   </div>
                 </el-form-item>
                 <el-form-item label="预计总收益">
                   <div class='invest-mounte'>
-                    <el-input v-model="formLabelAlign.totalEarn"></el-input>
+                    <el-input v-model="formLabelAlign.expectedEarning"></el-input>
                     <strong>{{selecteCoindName}}</strong>
                   </div>
                 </el-form-item>
@@ -133,8 +134,10 @@
               <div class="show-dividend-time-list">
                 <el-collapse-transition>
                   <ul v-show='showDividendTime'>
-                    <li v-for="(item,index) in showDividendTimeList" :key="index">
-                      <span>{{item.time}}</span> <span class="blue">{{item.interest}}</span><span class='blue'>{{selecteCoindName}}</span><span>(利息)</span>
+                    <li v-for="(item,index) in formLabelAlign.jsonTimeline" :key="index">
+                      <span>{{item.date}}</span>
+                      <span class="blue">{{item.amount}}</span>
+                      <span class='blue'>{{selecteCoindName}}</span><span>({{item.unit.length == 1 ? '利息' : '本金+利息'}})</span>
                     </li>
                   </ul>
                 </el-collapse-transition>
@@ -355,7 +358,7 @@ import FooterCommon from '../Common/FooterCommon'
 import FinanceBrokenLine from './FinanceBrokenLine'
 import FinanceBrokenPie from './FinanceBrokenPie'
 import {timeFilter} from '../../utils'
-import {getFinancialManagement, imediateInvestment, cancleInvestment} from '../../utils/api/OTC'
+import {getFinancialManagement, imediateInvestment, cancleInvestment, getFinancialRecord} from '../../utils/api/OTC'
 import {getPushTotalByCoinId} from '../../utils/api/personal'
 import {returnAjaxMessage} from '../../utils/commonFunc'
 import {createNamespacedHelpers, mapState} from 'vuex'
@@ -528,6 +531,8 @@ export default {
     getInvestEarnings () {
       if (this.isLogin) {
         if (this.selectedInvestTypeId && this.investMounte && this.isShow === false) {
+          // 显示理财详情模态框前请求数据渲染模态框
+          this.clickGetInvestEarnings()
           // 显示模态框
           this.dialogVisible = true
         } else {
@@ -546,10 +551,30 @@ export default {
     dialogCancel () {
       this.dialogVisible = false
     },
+    // 点击确定按钮模态框关闭
     dialogSuer () {
       this.dialogVisible = false
       // 执行投资按钮
       this.clickImmediateInvestment()
+    },
+    // 理财记录模态框显示
+    async clickGetInvestEarnings () {
+      const data = await getFinancialRecord({
+        financialManagementId: this.selectedInvestTypeId,
+        number: this.investMounte
+      })
+      console.log('投资理财类型')
+      console.log(data)
+      if (!(returnAjaxMessage(data, this, 0))) {
+        return false
+      } else {
+        this.formLabelAlign = data.data.data
+        // 投资成功
+        this.$message({
+          message: this.$t('M.finance_invest') + this.$t('M.comm_success'),
+          type: 'success'
+        })
+      }
     },
     // 添加理财记录
     async clickImmediateInvestment () {
@@ -576,7 +601,7 @@ export default {
       const data = await getFinancialManagement({
         pageNum: this.currentPage,
         pageSize: this.pageSize,
-        partnerId: this.partnerId,
+        // partnerId: this.partnerId,
         coinId: this.selectedCoinId,
         coinName: this.selecteCoindName
       })
@@ -627,7 +652,7 @@ export default {
         this.FINANCE_LINE_RENDER_TIME_LIST(getData.tickerPriceResult.renderTimeList)
         this.$refs.childLineCharts.resetOptions()
         this.$refs.childLineCharts.resetChart(this.options)
-        // 将投资数量输入输入框清空
+        // 将投资数量输入框清空
         this.investMounte = ''
       }
     },
