@@ -18,6 +18,7 @@ export const OTC = {
   'otc_index_digo_tips_pass': '请前往个人中心完成高级认证！',
   'otc_index_forbided_buyand_sell': '禁止自买自卖！',
   'otc_index_js2': '付款信息',
+  'otc_index_js3': '请设置交易密码',
   // #############取消订单#############
   'otc_cancelOrder_type': '类型',
   'otc_overBuy_cancel': '超时未支付，订单取消',

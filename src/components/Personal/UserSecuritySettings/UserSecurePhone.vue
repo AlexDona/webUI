@@ -686,9 +686,10 @@ export default {
         })
         return false
       }
-      if (!this.userInfo.payPassword) {
+      console.log(this.userInfo)
+      if (!this.userInfo.userInfo.payPassword) {
         this.$message({
-          message: this.$t('M.user_asset_title12'), // 请先设置交易密码，再来设置OTC收款账户!
+          message: this.$t('M.otc_index_js3'), // 请先设置交易密码，再来设置OTC收款账户!
           type: 'error'
         })
         return false
