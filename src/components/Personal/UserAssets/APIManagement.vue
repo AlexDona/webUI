@@ -109,7 +109,7 @@
             <!--创建时间-->
             <el-table-column
               :label="$t('M.comm_creation') + $t('M.comm_time')"
-              width="160"
+              width="150"
             >
               <template slot-scope = "s">
                 <div>{{timeFormatting(s.row.createTime) }}</div>
@@ -118,7 +118,7 @@
             <!--备注-->
             <el-table-column
               :label="$t('M.comm_remark')"
-              width="85"
+              width="90"
             >
               <template slot-scope = "s">
                 <div>{{ s.row.remark }}</div>
@@ -127,7 +127,7 @@
             <!--API访问秘钥-->
             <el-table-column
               :label="'API' + $t('M.user_api_text4')"
-              width="355"
+              width="380"
             >
               <template slot-scope = "s">
                 <div>{{ s.row.accessKey }}</div>
@@ -136,7 +136,7 @@
             <!--IP地址-->
             <el-table-column
               :label="'IP' + $t('M.comm_site')"
-              width="140"
+              width="130"
             >
               <template slot-scope = "s">
                 <div>{{ s.row.ip }}</div>
@@ -145,7 +145,7 @@
             <!--状态-->
             <el-table-column
               :label="'IP' + $t('M.comm_state')"
-              width="75"
+              width="70"
             >
               <template slot-scope = "s">
                 <div v-if="s.row.status == 'enable'">{{ $t(enable) }}</div>
@@ -155,7 +155,7 @@
             <!--操作-->
             <el-table-column
               :label="$t('M.comm_operation')"
-              width="115"
+              width="110"
             >
               <template slot-scope = "s">
                 <div
@@ -595,17 +595,18 @@ export default {
     },
     // 验证确认按钮
     stateSubmitDetermineValidation () {
-      if (!this.phoneCode && !this.emailCode && !this.googleCode) {
-        // 请输入验证码
-        this.errorVerifyMsg = this.$t('M.comm_please_enter') + this.$t('M.comm_code')
+      if (this.securityCenter.isMailEnable && !this.emailCode) {
+        this.errorVerifyMsg = this.$t('M.comm_please_enter') + this.$t('M.user_security_verify')
         return false
-      } else {
-        this.errorVerifyMsg = ''
       }
-      // 默认创建之后弹出二次挨批创建信息框
-      this.apiSecondaryConfirmation = true
-      // 默认API确认弹窗
-      this.APIMoneyConfirm = false
+      if (this.securityCenter.isPhoneEnable && !this.phoneCode) {
+        this.errorVerifyMsg = this.$t('M.comm_please_enter') + this.$t('M.user_security_verify')
+        return false
+      }
+      if (this.securityCenter.isGoogleEnable && !this.googleCode) {
+        this.errorVerifyMsg = this.$t('M.comm_please_enter') + this.$t('M.user_security_verify')
+        return false
+      }
       //  获取秘钥
       this.getAccessAecretKey()
     },
@@ -620,6 +621,10 @@ export default {
       if (!(returnAjaxMessage(data, this, 0))) {
         return false
       } else {
+        // 默认API确认弹窗
+        this.APIMoneyConfirm = false
+        // 默认创建之后弹出二次挨批创建信息框
+        this.apiSecondaryConfirmation = true
         // 对api秘钥进行赋值
         this.accessKey = data.data.data.accessKey
         this.secretKey = data.data.data.secretKey
