@@ -21,6 +21,7 @@
             >
               <el-select
                 v-model="currencyValue"
+                :no-data-text="$t('M.comm_no_data')"
                 @change="changeId"
               >
                 <el-option

@@ -70,6 +70,7 @@
           >
             <el-select
               v-model="regionValue"
+              :no-data-text="$t('M.comm_no_data')"
               @change="changeId"
             >
               <el-option
@@ -87,6 +88,7 @@
             <!--请选择证件类型-->
             <el-select
               v-model="documentTypeValue"
+              :no-data-text="$t('M.comm_no_data')"
               :placeholder="$t('M.comm_please_choose') + $t('M.user_real_certificate_type')"
             >
               <el-option

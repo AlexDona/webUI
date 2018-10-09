@@ -76,3 +76,33 @@
 .security-center.personal .el-dialog__footer {
   text-align: left;
 }
+.security-center.personal .el-table th:nth-child(1)>.cell{
+  padding-left: 20px;
+}
+.security-center.personal .el-table td:nth-child(1) div {
+  padding-left: 10px;
+}
+.security-center.personal .el-table th:nth-child(3)>.cell{
+  text-align: right;
+  padding-right: 45px;
+}
+.security-center.personal .el-table th:nth-child(2)>.cell {
+  text-align: right;
+  padding-right: 75px;
+}
+.security-center.personal .el-table td:nth-child(3) div{
+  text-align: right;
+  padding-right: 13px;
+}
+.security-center.personal .el-table td:nth-child(2) div {
+  text-align: right;
+  padding-right: 35px;
+}
+.security-center.personal .el-table th:nth-child(4)>.cell {
+  text-align: right;
+  padding-right: 25px;
+}
+.security-center.personal .el-table td:nth-child(4) div{
+  text-align: right;
+  padding-right: 13px;
+}

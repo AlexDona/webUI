@@ -48,6 +48,7 @@
              <!--国籍选择-->
              <el-select
                v-model="activeCountryCodeWithPhone"
+               :no-data-text="$t('M.comm_no_data')"
                class="phone-select"
              >
                <el-option
@@ -97,31 +98,33 @@
               <div class="inner-box">
                 <!--中文国籍选择-->
                 <el-select
-                class="email-select"
-                v-model="activeCountryCodeWithEmail"
-                v-show="language=='zh_CN'"
-              >
-                <el-option
-                  v-for="item in contryAreaList"
-                  :key="item.nationCode"
-                  :label="item.chinese"
-                  :value="item.nationCode"
+                  class="email-select"
+                  :no-data-text="$t('M.comm_no_data')"
+                  v-model="activeCountryCodeWithEmail"
+                  v-show="language=='zh_CN'"
                 >
+                  <el-option
+                    v-for="item in contryAreaList"
+                    :key="item.nationCode"
+                    :label="item.chinese"
+                    :value="item.nationCode"
+                  >
                     <span style="float: left">
                       <span>
                         {{ item.chinese }}
                       </span>
                     </span>
-                  <span style="
+                    <span style="
                       float: right;
                       color: #8492a6;
                       font-size: 13px"
-                  >{{ item.nationCode }}</span>
-                </el-option>
-              </el-select>
+                    >{{ item.nationCode }}</span>
+                  </el-option>
+                </el-select>
                 <!--非中文国籍选择-->
                 <el-select
                   class="email-select"
+                  :no-data-text="$t('M.comm_no_data')"
                   v-model="activeCountryCodeWithEmail"
                   v-show="language!=='zh_CN'"
                 >

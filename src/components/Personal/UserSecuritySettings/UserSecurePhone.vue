@@ -48,7 +48,10 @@
             <el-form-item
               :label="$t('M.user_security_phone') + $t('M.user_security_number') + '：'"
             >
-              <el-select v-model="bindingDataPhone.bindingAreaCodeValue">
+              <el-select
+                v-model="bindingDataPhone.bindingAreaCodeValue"
+                :no-data-text="$t('M.comm_no_data')"
+              >
                 <el-option
                   v-for="(item, index) in contryAreaList"
                   :key="index"
@@ -175,6 +178,7 @@
             >
               <el-select
                 v-model="amendDataPhone.areaCodeValue"
+                :no-data-text="$t('M.comm_no_data')"
               >
                 <el-option
                   v-for="(item, index) in contryAreaList"
