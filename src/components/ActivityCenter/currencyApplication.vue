@@ -3,6 +3,7 @@
     class="currency-application-box"
     :class="{'day':theme == 'day','night':theme == 'night' }"
   >
+    <!-- 上币申请 -->
     <HeaderCommon/>
     <div class="inner-box">
       <div class="top">

@@ -208,7 +208,7 @@ export default {
       this.$router.push({path: '/PersonalCenter'})
     },
     handleSuccessHand (response, file, fileList) {
-      this.dialogImageHandUrl = response.data.fileUrl
+      this.dialogImageHandUrl1 = response.data.fileUrl
       console.log(response, file, fileList)
     },
     // 检测输入格式
@@ -259,10 +259,10 @@ export default {
       } else {
         goOnStatus = 0
       }
-      if (!this.dialogImageHandUrl1 && !this.dialogImageHandUrl) {
-        // 请上传支付宝收款码
+      console.log(this.dialogImageHandUrl1)
+      if (this.dialogImageHandUrl1 == '') {
         this.$message({
-          message: this.$t('M.user_account_alipay_pla'),
+          message: this.$t('M.user_account_weChat_pla'),
           type: 'error'
         })
         return false
@@ -272,11 +272,12 @@ export default {
         let param = {
           token: this.userInfo.token,
           cardNo: this.alipayAccount, // 支付宝账号
-          qrcode: this.dialogImageHandUrl, // 二维码
+          qrcode: this.dialogImageHandUrl1, // 二维码
           payPassword: this.password, // 交易密码
           bankType: 'alipay', // type
           id: this.id
         }
+        console.log(this.dialogImageHandUrl1)
         data = await statusCardSettings(param)
         console.log(data)
         if (!(returnAjaxMessage(data, this, 1))) {
@@ -304,10 +305,18 @@ export default {
         return false
       } else {
         // 返回状态展示
-        this.paymentMethodList = data.data.data
-        this.alipayAccount = data.data.data.cardNo
-        this.dialogImageHandUrl1 = data.data.data.qrcode
-        this.id = data.data.data.id
+        if (data.data.data) {
+          this.paymentMethodList = data.data.data
+        }
+        if (data.data.data.cardNo) {
+          this.alipayAccount = data.data.data.cardNo
+        }
+        if (data.data.data.qrcode) {
+          this.dialogImageHandUrl1 = data.data.data.qrcode
+        }
+        if (data.data.data.id) {
+          this.id = data.data.data.id
+        }
         console.log(this.dialogImageHandUrl1)
       }
     },
