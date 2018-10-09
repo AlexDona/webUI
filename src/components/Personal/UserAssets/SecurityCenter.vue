@@ -660,6 +660,19 @@ export default {
     timeFormatting (date) {
       return timeFilter(date, 'normal')
     },
+    /**
+     * 安全中心
+     */
+    getSecurityCenter () {
+      getSecurityCenter(this, (data) => {
+        if (data) {
+          this.securityCenter = data.data.data
+          this.person = data.data.data.person
+          this.logonRecord = data.data.data.setLog
+          this.securityRecord = data.data.data.loginLog
+        }
+      })
+    },
     // 路由跳转对应组件
     setShowStatusSecurity (val) {
       switch (val) {
@@ -839,12 +852,6 @@ export default {
     determineTheOpen () {
       this.confirmTransactionPassword(this.activeType, this.state)
     },
-    handleinput () {
-      this.errorMsg = ''
-    },
-    handleinput1 () {
-      this.errorMsg1 = ''
-    },
     // 关闭开启手机邮箱谷歌验证
     async confirmTransactionPassword (type, state) {
       if (state === 'enable') {
@@ -922,18 +929,11 @@ export default {
         this.googleCode = ''
       }
     },
-    /**
-     * 安全中心
-     */
-    getSecurityCenter () {
-      getSecurityCenter(this, (data) => {
-        if (data) {
-          this.securityCenter = data.data.data
-          this.person = data.data.data.person
-          this.logonRecord = data.data.data.setLog
-          this.securityRecord = data.data.data.loginLog
-        }
-      })
+    handleinput () {
+      this.errorMsg = ''
+    },
+    handleinput1 () {
+      this.errorMsg1 = ''
     }
   },
   filter: {},
