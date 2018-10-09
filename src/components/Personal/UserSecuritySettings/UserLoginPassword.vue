@@ -282,8 +282,8 @@ export default {
     /*height:100%;*/
     >.login-password-main {
       width: 1100px;
-      height: 600px;
-      /*min-height: 700px;*/
+      /*height: 600px;*/
+      min-height: 700px;
       margin: 60px auto 100px;
       >.login-password-header {
         display: flex;

@@ -277,7 +277,6 @@ export default {
         // if (this.paymentTerm.isWeixinBind) {
         //   param.qrcode = this.dialogImageHandUrl // 二维码
         // } else {
-        //   // this.dialogImageHandUrl1 = this.dialogImageHandUrl
         //   param.qrcode = this.dialogImageHandUrl1 // 二维码
         // }
         data = await statusCardSettings(param)
@@ -287,7 +286,6 @@ export default {
         } else {
           this.successJump()
           this.stateEmptyData()
-          this.paymentMethodInformation()
         }
       }
     },

@@ -353,14 +353,14 @@
                       <button ref="third-submit"></button>
                     </el-upload>
                   </div>
-                  <button
+                  <buttonSecurePhone
                     type="primary"
                     class="upload-submit cursor-pointer font-size12 margin-top30"
                     @click="uploadImg('third-submit')"
                   >
                     <!--上传手持身份证-->
                     {{ $t('M.user_senior_upload3') }}
-                  </button>
+                  </buttonSecurePhone>
                 </div>
               </div>
               <div class="upload-button">
@@ -1206,6 +1206,13 @@ export default {
               .no-error {
                 color: #333;
               }
+            }
+            >.color-coin-text {
+              color: #338FF5;
+              font-size: 140px;
+            }
+            >.no-pass {
+              color: #338FF5;
             }
             .no-pass-button {
               background:linear-gradient(90deg,rgba(43,57,110,1) 0%,rgba(42,80,130,1) 100%);
