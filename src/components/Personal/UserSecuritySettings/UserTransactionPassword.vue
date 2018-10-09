@@ -33,10 +33,10 @@
         </span>
       </header>
       <div class="transaction-password-content">
-        <header class="transaction-content-title">
-          <!--*请确认您的银行卡已开启短信通知功能-->
-          *{{ $t('M.user_security_text0') }}
-        </header>
+        <!--<header class="transaction-content-title">-->
+          <!--&lt;!&ndash;*请确认您的银行卡已开启短信通知功能&ndash;&gt;-->
+          <!--*{{ $t('M.user_security_text0') }}-->
+        <!--</header>-->
         <div class="transaction-content-from">
           <!--设置交易密码-->
           <el-form

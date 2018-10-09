@@ -467,7 +467,7 @@ export default {
       ipSite: '', // 备注
       ip: '', // 绑定IP地址
       extensionList: [],
-      compileUserApi: false, // 编辑用户api
+      compileUserApi: false, // 编辑用户api弹窗
       userId: '', // 编辑用户api
       apiRemark: '', // 编辑用户备注
       ipAddress: '', // 编辑用户ip
@@ -501,25 +501,57 @@ export default {
       if (!(returnAjaxMessage(data, this, 0))) {
         return false
       } else {
-        // 返回展示
+        // 返回展示渲染挨批列表
         this.extensionList = data.data.data
-        console.log(this.extensionList)
+        // console.log(this.extensionList)
       }
     },
     // 点击创建
     stateEstablishApiButton () {
       if (!this.remark) {
+        // 请输入备注
         this.errorMsg = this.$t('M.comm_please_enter') + this.$t('M.comm_remark')
         return false
       } else if (!this.ipSite) {
+        // 请输入IP地址
         this.errorMsg = this.$t('M.comm_please_enter') + this.$t('M.user_security_binding') + 'IP' + this.$t('M.comm_site')
         return false
       } else {
         this.errorMsg = ''
       }
+      // 默认API确认弹窗
       this.APIMoneyConfirm = true
+      // 调用安全方式接口
       this.getSecurityCenter()
+      // 赋值创建IP修改时的带回
       this.ip = this.ipSite
+    },
+    // 创建api检测输入格式
+    editorInputFormat (type, targetNum) {
+      switch (type) {
+        // 编辑用户备注
+        case 0:
+          if (!targetNum) {
+            this.setEditorErrorMsg(0, this.$t('M.comm_please_enter') + this.$t('M.user_api_user') + this.$t('M.comm_remark'))
+            this.$forceUpdate()
+            return 0
+          } else {
+            this.setEditorErrorMsg(0, '')
+            this.$forceUpdate()
+            return 1
+          }
+        // 编辑用户ip
+        case 1:
+          if (!targetNum) {
+            this.setEditorErrorMsg(1, this.$t('M.comm_please_enter') + this.$t('M.comm_newly_compile') + 'IP' + this.$t('M.comm_site'))
+            this.$forceUpdate()
+            return 0
+          } else {
+            this.setEditorErrorMsg(1, '')
+            this.$forceUpdate()
+            return 1
+          }
+      }
     },
     // 发送验证码
     sendPhoneOrEmailCode (loginType) {
@@ -561,21 +593,50 @@ export default {
         }
       })
     },
+    // 验证确认按钮
+    stateSubmitDetermineValidation () {
+      if (!this.phoneCode && !this.emailCode && !this.googleCode) {
+        // 请输入验证码
+        this.errorVerifyMsg = this.$t('M.comm_please_enter') + this.$t('M.comm_code')
+        return false
+      } else {
+        this.errorVerifyMsg = ''
+      }
+      // 默认创建之后弹出二次挨批创建信息框
+      this.apiSecondaryConfirmation = true
+      // 默认API确认弹窗
+      this.APIMoneyConfirm = false
+      //  获取秘钥
+      this.getAccessAecretKey()
+    },
+    //  获取秘钥
+    async getAccessAecretKey () {
+      let data = await accessAecretKeyInfo({
+        phoneCode: this.phoneCode, // 手机验证码
+        emailCode: this.emailCode, // 邮箱验证码
+        googleCode: this.googleCode // 谷歌验证码
+      })
+      console.log(data)
+      if (!(returnAjaxMessage(data, this, 0))) {
+        return false
+      } else {
+        // 对api秘钥进行赋值
+        this.accessKey = data.data.data.accessKey
+        this.secretKey = data.data.data.secretKey
+      }
+    },
     // 二次确认框创建api完成
     stateSubmitAffirm () {
       // 创建api
       this.statusCreationApi()
     },
-    // 创建api
+    // 调用创建api接口并向后台传参
     async statusCreationApi () {
       let data = await stateCreationApi({
         remark: this.remark, // 备注
         ip: this.ip, // ip地址
         accessKey: this.accessKey, // token
-        secretKey: this.secretKey, // sk私钥
-        phoneCode: this.phoneCode, // 手机验证码
-        emailCode: this.emailCode, // 邮箱验证码
-        googleCode: this.googleCode // 谷歌验证码
+        secretKey: this.secretKey // sk私钥
       })
       console.log(data)
       if (!(returnAjaxMessage(data, this, 1))) {
@@ -583,22 +644,13 @@ export default {
       } else {
         // 返回展示
         console.log(data)
+        // 默认创建之后弹出二次挨批创建信息框 关闭
         this.apiSecondaryConfirmation = false
+        // 调用查询接口重新渲染
         this.getMultipleUserAPIInfo()
+        // 清空备注和IP
         this.remark = ''
         this.ipSite = ''
-      }
-    },
-    //  获取秘钥
-    async getAccessAecretKey () {
-      let data = await accessAecretKeyInfo({})
-      console.log(data)
-      if (!(returnAjaxMessage(data, this, 0))) {
-        return false
-      } else {
-        // 返回展示
-        this.accessKey = data.data.data.accessKey
-        this.secretKey = data.data.data.secretKey
       }
     },
     // 清空添加api内容信息
@@ -608,22 +660,6 @@ export default {
     // 清空内容信息
     emptyStatus () {
       this.errorMsg = ''
-    },
-    // 验证确认按钮
-    stateSubmitDetermineValidation () {
-      if (!this.phoneCode && !this.emailCode && !this.googleCode) {
-        console.log(1)
-        // 请输入验证码
-        this.errorVerifyMsg = this.$t('M.comm_please_enter') + this.$t('M.comm_code')
-        return false
-      } else {
-        this.errorVerifyMsg = ''
-      }
-      this.apiSecondaryConfirmation = true
-      this.APIMoneyConfirm = false
-      //  获取秘钥
-      this.getAccessAecretKey()
-      this.stateSubmitAffirm()
     },
     // 编辑用户api 每一行ID
     compileApi (id) {
@@ -637,33 +673,6 @@ export default {
         }
       })
     },
-    // 创建api检测输入格式
-    editorInputFormat (type, targetNum) {
-      switch (type) {
-        // 编辑用户备注
-        case 0:
-          if (!targetNum) {
-            this.setEditorErrorMsg(0, this.$t('M.comm_please_enter') + this.$t('M.user_api_user') + this.$t('M.comm_remark'))
-            this.$forceUpdate()
-            return 0
-          } else {
-            this.setEditorErrorMsg(0, '')
-            this.$forceUpdate()
-            return 1
-          }
-        // 编辑用户ip
-        case 1:
-          if (!targetNum) {
-            this.setEditorErrorMsg(1, this.$t('M.comm_please_enter') + this.$t('M.comm_newly_compile') + 'IP' + this.$t('M.comm_site'))
-            this.$forceUpdate()
-            return 0
-          } else {
-            this.setEditorErrorMsg(1, '')
-            this.$forceUpdate()
-            return 1
-          }
-      }
-    },
     // 设置错误信息
     setEditorErrorMsg (index, msg) {
       this.errorEditorMsg = msg
@@ -674,6 +683,7 @@ export default {
     },
     //  编辑用户api接口
     async stateCompileApi () {
+      // 判断是否满足验证条件
       let goOnStatus = 0
       if (
         this.editorInputFormat(0, this.apiRemark) &&
@@ -685,7 +695,7 @@ export default {
       }
       if (goOnStatus) {
         let data = await modifyUserInformation({
-          id: this.userId,
+          id: this.userId, // 用户userId
           remark: this.apiRemark, // 编辑用户备注
           ip: this.ipAddress // 编辑用户ip
         })
@@ -693,9 +703,11 @@ export default {
         if (!(returnAjaxMessage(data, this, 1))) {
           return false
         } else {
-          // 返回展示
+          // 调用查询接口编辑完成之后重新赋值渲染
           this.getMultipleUserAPIInfo()
+          // 清空数据
           this.stateEmptyData()
+          // 编辑用户api弹窗 关闭
           this.compileUserApi = false
         }
       }
