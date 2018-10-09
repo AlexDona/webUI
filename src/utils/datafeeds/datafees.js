@@ -37,6 +37,13 @@ class datafeeds {
       let symbolInfo = this.defaultSymbol()
       // 设置价格精度
       let pricescale = this.self.$store.state.trade.middleTopData.priceExchange
+      console.log(pricescale)
+      // let pricescale = this.self.$store.state.common.activeSymbol.priceExchange
+      if (!pricescale) {
+        setTimeout(() => {
+          this.self.resolveSymbol(symbolName, onSymbolResolvedCallback, onResolveErrorCallback)
+        }, 1000)
+      }
       pricescale = Math.pow(10, pricescale)
       if (this.self.getSymbol) {
         symbolInfo = Object.assign(this.defaultSymbol(), this.self.getSymbol())
@@ -111,7 +118,7 @@ class datafeeds {
       'has_intraday': true,
       'has_no_volume': false,
       // 'description': 'BTCUSDT',
-      'pricescale': 10, // 小数位
+      'pricescale': 1, // 小数位
       // 'ticker': 'BTCUSDT',
       'supported_resolutions': ['1', '5', '15', '30', '60', '240', '1D', '1W']
     }
