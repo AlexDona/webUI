@@ -91,6 +91,7 @@
                     <!-- 选择支付方式 -->
                     <el-select
                       :placeholder="$t('M.otc_MerchantsOrders_chouse') + $t('M.otc_index_Payment_method')"
+                      :no-data-text="$t('M.comm_no_data')"
                       v-model="activePayModeList[index]"
                       @change="changeUserBankInfo(index)"
                     >

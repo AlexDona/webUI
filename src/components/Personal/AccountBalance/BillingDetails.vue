@@ -27,6 +27,7 @@
           </span>
           <el-select
             v-model="currencyListValue"
+            :no-data-text="$t('M.comm_no_data')"
             clearable
             @change="changeId"
           >
@@ -48,6 +49,7 @@
           </span>
           <el-select
             v-model="currencyTypeValue"
+            :no-data-text="$t('M.comm_no_data')"
           >
             <el-option
               v-for="item in currencyType"

@@ -125,8 +125,6 @@ export default {
       }
     },
     init (options) {
-      // this.datafeeds.resolveSymbol(options.symbol, (data) => {
-      // }, () => {}, 10000)
       if (!this.widget) {
         this.widget = new TvWidget({
           width: '100%',

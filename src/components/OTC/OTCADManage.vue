@@ -23,6 +23,7 @@
           </span>
           <span class="style-input">
             <el-select
+              :no-data-text="$t('M.comm_no_data')"
               v-model="activitedADManageTraderStyleList"
               @change="changeSelectValue('changeADManageTraderStyleList', $event)"
               clearable
@@ -41,6 +42,7 @@
           <!-- 币种选择 -->
           <span class="market-input">
               <el-select
+                :no-data-text="$t('M.comm_no_data')"
                 v-model="activitedADManageMarketList"
                 @change="changeSelectValue('changeADManageMarketList', $event)"
                 clearable
@@ -61,6 +63,7 @@
           <!-- 法币选择 -->
           <span class="market-input">
               <el-select
+                :no-data-text="$t('M.comm_no_data')"
                 v-model="activitedADManageCurrencyId"
                 @change="changeSelectValue('changeADManageCurrencyId', $event)"
                 clearable
@@ -80,6 +83,7 @@
           </span>
           <span class="status-input">
             <el-select
+              :no-data-text="$t('M.comm_no_data')"
               v-model="activitedADManageStatusList"
               @change="changeSelectValue('changeADManageStatusList', $event)"
               clearable

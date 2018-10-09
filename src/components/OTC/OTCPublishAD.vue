@@ -29,6 +29,7 @@
               <div class="right-style display-inline-block">
                 <el-select
                   v-model="activitedBuySellStyle"
+                  :no-data-text="$t('M.comm_no_data')"
                   @change="changeBuySellStyle"
                 >
                   <el-option
@@ -44,6 +45,7 @@
                 <!-- 可用币种 -->
                 <el-select
                   v-model="activitedCoinId"
+                  :no-data-text="$t('M.comm_no_data')"
                   @change="changeAvailableCoinId"
                 >
                   <el-option
@@ -60,6 +62,7 @@
                 <!-- 可用法币 :label="language === 'zh_CN'? item.name : item.shortName"-->
                 <el-select
                   v-model="activitedCurrencyId"
+                  :no-data-text="$t('M.comm_no_data')"
                   @change="changeCurrencyId"
                 >
                   <el-option

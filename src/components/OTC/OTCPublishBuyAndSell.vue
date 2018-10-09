@@ -43,6 +43,7 @@
               >
                 <el-select
                   :placeholder="$t('M.comm_please') + $t('M.otc_choice_currency') + $t('M.otc_cancelOrder_type')"
+                  :no-data-text="$t('M.comm_no_data')"
                   v-model="coinId"
                   @change="changeCoinId"
                 >
@@ -62,6 +63,7 @@
               >
                 <el-select
                   :placeholder="$t('M.otc_index_chouseType')"
+                  :no-data-text="$t('M.comm_no_data')"
                   v-model="hopePaymentCoinId"
                   @change="changehopePaymentCoinId"
                 >

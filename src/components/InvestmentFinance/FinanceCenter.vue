@@ -14,6 +14,7 @@
         <div class="container">
          <div class="finance-form-header">
           <el-select
+            :no-data-text="$t('M.comm_no_data')"
             v-model="selectedCoinId"
             @change="changeTraderCoin"
           >
@@ -58,8 +59,9 @@
               <!-- 投资类型 -->
               {{$t('M.finance_invest')}}{{$t('M.comm_type')}}:&nbsp;&nbsp;&nbsp;
               <el-select
-              v-model="selectedInvestTypeId"
-              @change="electedInvestTypeDisc"
+                :no-data-text="$t('M.comm_no_data')"
+                v-model="selectedInvestTypeId"
+                @change="electedInvestTypeDisc"
               >
                 <el-option
                   v-for="(item,index) in investTypeList"

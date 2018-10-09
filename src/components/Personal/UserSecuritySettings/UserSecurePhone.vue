@@ -48,7 +48,10 @@
             <el-form-item
               :label="$t('M.user_security_phone') + $t('M.user_security_number') + '：'"
             >
-              <el-select v-model="bindingDataPhone.bindingAreaCodeValue">
+              <el-select
+                v-model="bindingDataPhone.bindingAreaCodeValue"
+                :no-data-text="$t('M.comm_no_data')"
+              >
                 <el-option
                   v-for="(item, index) in contryAreaList"
                   :key="index"
@@ -62,7 +65,8 @@
                 class="phone-input phone-input-left border-radius2 padding-l15 box-sizing"
                 v-model="bindingDataPhone.bindingNewPhoneAccounts"
                 @keydown="setErrorMsg(0,'')"
-                @blur="checkUserExistAjax('phone', bindingDataPhone.bindingNewPhoneAccounts)"
+                @focus="resetNewPhoneIsExistStatus"
+                @blur="checkUserExistAjax('phone', bindingDataPhone.bindingNewPhoneAccounts,1)"
               >
               <!--错误提示-->
               <ErrorBox
@@ -106,7 +110,7 @@
               <el-input
                 v-model="bindingDataPhone.bindingNewPhoneCode"
                 @keydown="setErrorMsg(2,'')"
-                @blur="checkoutInputFormat(2, bindingDataPhone.userInputImageCode)"
+                @blur="checkoutInputFormat(2, bindingDataPhone.bindingNewPhoneCode)"
               >
                 <template slot="append">
                   <CountDownButton
@@ -115,12 +119,12 @@
                     @run="sendPhoneOrEmailCode(0)"
                   />
                 </template>
-                <!--错误提示-->
-                <ErrorBox
-                  :text="errorShowStatusList[2]"
-                  :isShow="!!errorShowStatusList[2]"
-                />
               </el-input>
+              <!--错误提示-->
+              <ErrorBox
+                :text="errorShowStatusList[2]"
+                :isShow="!!errorShowStatusList[2]"
+              />
             </el-form-item>
             <div class="prompt-message">
               <div v-show="errorMsg">{{ errorMsg }}</div>
@@ -175,6 +179,7 @@
             >
               <el-select
                 v-model="amendDataPhone.areaCodeValue"
+                :no-data-text="$t('M.comm_no_data')"
               >
                 <el-option
                   v-for="(item, index) in contryAreaList"
@@ -491,6 +496,7 @@ export default {
           }
         // 短信验证码
         case 2:
+          console.log(targetNum)
           if (!targetNum) {
             // 请输入短信验证码
             this.setErrorMsg(2, this.$t('M.comm_please_enter') + this.$t('M.comm_note') + this.$t('M.comm_code'))
@@ -513,9 +519,18 @@ export default {
     },
     // 确定绑定
     async confirmBindingBailPhone () {
+      console.log(this.newPhoneIsExistStatus)
+      if (this.newPhoneIsExistStatus) {
+        this.$message({
+          type: 'error',
+          message: this.$t('M.user-fail-reg-phone-exist')
+        })
+        return false
+      }
       let goOnStatus = 0
       if (
         this.checkoutInputFormat(0, this.bindingDataPhone.bindingNewPhoneAccounts) &&
+        this.checkoutInputFormat(1, this.bindingDataPhone.userInputImageCode) &&
         this.checkoutInputFormat(2, this.bindingDataPhone.bindingNewPhoneCode)
       ) {
         goOnStatus = 1
