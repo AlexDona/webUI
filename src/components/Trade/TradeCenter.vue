@@ -5,9 +5,9 @@
     :class="{'day':theme == 'day','night':theme == 'night' }"
   >
     <HeaderCommon/>
-    <div class="inner-box">
+    <div class="inner-box clearfloat">
       <!--左侧-->
-      <div class="left">
+      <div class="left float-left">
         <!--全球行情-->
         <GlobalMarket class="margin-bottom10"/>
         <!--买卖单-->
@@ -17,7 +17,7 @@
       </div>
       <!--中间-->
       <div
-        class="middle"
+        class="middle float-left"
         :class="{'day':theme == 'day','night':theme == 'night' }"
       >
         <MiddleHeader />
@@ -34,7 +34,7 @@
         <EntrustOrder/>
       </div>
       <!--右侧-->
-      <div class="right">
+      <div class="right float-left">
         <!--市场-->
         <TradeMarketList/>
       </div>
@@ -99,8 +99,9 @@ export default {
     /*height:1500px;*/
     /*min-height:1500px;*/
      >.inner-box{
-       padding:14px 30px;
-       display:flex;
+       padding:14px 10px;
+       display:block;
+       box-sizing: border-box;
        width:100%;
        >div{
          margin-right:8px;
@@ -109,20 +110,22 @@ export default {
          }
        }
        >.left{
-         min-width:450px;
-         width:25%;
+         /*min-width:400px;*/
+         /*max-width:450px;*/
+         /*width:25%;*/
          /*flex:1;*/
          /*width:450px;*/
+         width:24%
        }
        >.middle{
-         width:50%;
-         min-width:950px;
+         width:52%;
+         /*min-width:950px;*/
          /*flex:2;*/
          /*width:1010px;*/
        }
        >.right{
-         min-width:450px;
-         width:25%;
+         /*min-width:450px;*/
+         width:22%;
          /*flex:1;*/
          /*width:438px;*/
        }

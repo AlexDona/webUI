@@ -13,51 +13,6 @@
       <!--注册登录-->
       <div class="right login">
         <ul class="ul-list">
-          <li
-            class="li-item"
-            v-if="isLogin"
-          >
-              <span>
-                <span
-                  class="login cursor-pointer"
-                  v-if="isLogin"
-                >
-                  <!--用户名-->
-                  <span class="username">
-                    {{userInfo.userName}}
-                  </span>
-                  <div class="login-info">
-                    <div class="sub-nav-user">
-                      <p class="nav-vip">VIP享手续费、提现优惠</p>
-                      <button
-                        v-if="!userInfo.level"
-                        class="nav-button"
-                        @click="stateOpenVip"
-                      >
-                        立即开通
-                      </button>
-                       <button
-                         v-else
-                         class="nav-button"
-                         @click="stateOpenVip"
-                       >
-                        查看我的VIP
-                      </button>
-                    </div>
-                    <ul class="personal-user">
-                      <li @click="stateReturnSuperior('account-balance')">账户资产</li>
-                      <li @click="stateReturnSuperior('order-management')">订单管理</li>
-                      <li @click="stateReturnSuperior('identity-authentication')">身份认证</li>
-                      <li @click="stateReturnSuperior('security-center')">安全中心</li>
-                      <li @click="stateReturnSuperior('receiving-set')">收款设置</li>
-                      <li @click="stateReturnSuperior('invite')">邀请推广</li>
-                      <li @click="stateReturnSuperior('api')">API管理</li>
-                      <li @click="userLoginOut">退出</li>
-                    </ul>
-                  </div>
-                </span>
-              </span>
-          </li>
           <!--切换语言-->
           <li class="li-item">
             <dl

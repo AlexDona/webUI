@@ -784,12 +784,12 @@ export default {
     cancelSetInter () {
       clearInterval(this.cancelOrdersTimer)
       this.cancelOrdersTimer = setInterval(() => {
-        console.log(this.cancelOrderTimeArr)
+        // console.log(this.cancelOrderTimeArr)
         // 循环自动取消倒计时时间数组
         this.cancelOrderTimeArr.forEach((item, index) => {
-          console.log(item)
+          // console.log(item)
           this.$set(this.cancelOrderTimeArr, index, this.cancelOrderTimeArr[index] - 1000)
-          console.log(this.cancelOrderTimeArr[index])
+          // console.log(this.cancelOrderTimeArr[index])
           // console.log(typeof (this.cancelOrderTimeArr[index]))
           if (this.cancelOrderTimeArr[index] < 0 || this.cancelOrderTimeArr[index] == 0) {
             this.cancelCompleteUserOtcOrder(1)
@@ -804,7 +804,7 @@ export default {
         // 循环自动成交倒计时数组
         this.accomplishOrderTimeArr.forEach((item, index) => {
           this.$set(this.accomplishOrderTimeArr, index, this.accomplishOrderTimeArr[index] - 1000)
-          console.log(this.accomplishOrderTimeArr[index])
+          // console.log(this.accomplishOrderTimeArr[index])
           if (!(this.accomplishOrderTimeArr[index] > 0)) {
             this.cancelCompleteUserOtcOrder(2)
           }

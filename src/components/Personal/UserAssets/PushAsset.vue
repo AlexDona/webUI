@@ -27,7 +27,8 @@
                   v-for="(item, index) in currencyList"
                   :key="index"
                   :label="item.name"
-                  :value="item.coinId">
+                  :value="item.coinId"
+                >
                 </el-option>
               </el-select>
             </el-form-item>
@@ -47,9 +48,11 @@
             >
               <input
                 class="form-input-common border-radius2 padding-l15"
+                type="number"
                 v-model="buyUID"
                 @keydown="setErrorMsg(0, '')"
                 @blur="checkoutInputFormat(0, buyUID)"
+                @keyup="statusPushChange"
               />
               <!--错误提示-->
               <ErrorBox
@@ -381,8 +384,7 @@ import {
   getPushTotalByCoinId,
   pushAssetsSubmit,
   revocationPushProperty,
-  pushPropertyTransaction,
-  statusSecurityCenter
+  pushPropertyTransaction
 } from '../../../utils/api/personal'
 import ErrorBox from '../../User/ErrorBox'
 import CountDownButton from '../../Common/CountDownCommon'
@@ -469,11 +471,23 @@ export default {
     },
     // 3.修改input value  输入限制
     changeInputValue (ref, pointLength) {
+      if (this.count > this.balance) {
+        this.$refs.count.value = this.balance
+      }
       // 获取ref中input值
       this[ref] = this.$refs[ref].value
       // 限制数量小数位位数
       let target = this.$refs[ref]
       formatNumberInput(target, pointLength)
+    },
+    // PUSH UID提示事件
+    statusPushChange () {
+      if (this.buyUID === this.userInfo.userInfo.showId) {
+        this.$message({
+          message: this.$t('M.user_push_forbid'),
+          type: 'error'
+        })
+      }
     },
     /**
      * push资产
@@ -643,7 +657,7 @@ export default {
     cancelId (id) {
       this.pushUID = id
       // 确定删除提币地址吗, 是否继续?
-      this.$confirm(this.$t('M.comm_sure_delete'), {
+      this.$confirm(this.$t('M.comm_sure_push'), {
         // 取消
         cancelButtonText: this.$t('M.comm_cancel'),
         // 确定
@@ -691,6 +705,7 @@ export default {
     statusUserInfo () {
       this.paymentVisible = false
       this.passwordVisible = true
+      this.pushPassword = ''
     },
     // 绑定手机检测输入格式
     stateInputFormat (type, targetNum) {
@@ -741,17 +756,6 @@ export default {
           this.getPushRecordList()
         }
       }
-    },
-    // 手机邮箱谷歌状态判断
-    async getSecurityCenter () {
-      let data = await statusSecurityCenter({ })
-      console.log(data)
-      if (!(returnAjaxMessage(data, this, 0))) {
-        return false
-      } else {
-        // 返回展示
-        this.SecurityCenter = data.data.data
-      }
     }
   },
   filter: {},
@@ -782,10 +786,10 @@ export default {
   .push-assets{
     >.push-assets-main{
       >.push-assets-content-box {
-        min-height: 570px;
+        min-height: 577px;
         >.push-from-box {
           width: 400px;
-          min-height: 570px;
+          min-height: 577px;
           padding-top: 29px;
           margin: 0 auto;
           .form-input-common,
@@ -814,7 +818,7 @@ export default {
           .error-msg{
             height:30px;
             line-height: 30px;
-            margin-left: 30px;
+            /*margin-left: 30px;*/
             color: rgb(212, 88, 88);
           }
         }
@@ -826,9 +830,9 @@ export default {
       >.push-assets-main {
         >.push-assets-content,
         >.push-assets-content-box {
-          background-color: #1E2636;
+          background-color: $nightMainBgColor;
           >.push-header {
-            background-color: #1E2636;
+            background-color: $nightMainBgColor;
             >.push-header-title {
               color: #338FF5;
             }
@@ -852,9 +856,9 @@ export default {
           }
         }
         >.award-record {
-          background-color: #1E2636;
+          background-color: $nightMainBgColor;
           >.award-record-header {
-            border-bottom: 1px solid #39424D;
+            border-bottom: 1px solid #39424D !important;
             >.header-color {
               color: #fff;
             }

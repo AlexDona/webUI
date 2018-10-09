@@ -433,6 +433,7 @@ export default {
       >.no-data{
         background-color: #fff;
         color: #333333;
+        border: 1px solid #ECF1F8;
       }
     }
     }

@@ -1,8 +1,12 @@
 <template>
   <div
     class="register-box user"
-    :class="{'day':theme == 'day','night':theme == 'night' }"
-    :style="{'height':windowHeight+'px'}"
+    :class="{
+      'day':theme == 'day',
+      'night':theme == 'night',
+      'min-height':windowHeight < 800
+      }"
+    :style="{height: windowHeight + 'px'}"
   >
     <HeaderCommon/>
     <!--注册页面-->
@@ -197,13 +201,11 @@
                 @blur="checkoutInputFormat(3,checkCode)"
               >
               <span class="middle-line"></span>
-              <input
-                type="button"
-                :disabled="sendMsgBtnDisabled"
-                :value="$t(sendMsgBtnText)"
+              <CountDownButton
+                :status="!activeMethod?disabledOfPhoneBtn:disabledOfEmailBtn"
                 class="send-code-btn cursor-pointer"
-                @click="sendPhoneOrEmailCode(activeMethod)"
-              >
+                @run="sendPhoneOrEmailCode(activeMethod)"
+              />
             </div>
           </div>
           <div class="input">
@@ -303,7 +305,7 @@
 import ImageValidate from '../Common/ImageValidateCommon'
 import HeaderCommon from '../Common/HeaderCommonForPC'
 import ErrorBox from './ErrorBox'
-import {mapState} from 'vuex'
+import CountDownButton from '../Common/CountDownCommon'
 // import {EMAIL_REG, PHONE_REG, PWD_REG} from '../../utils/regExp' // 正则验证
 import {
   // sendMsgByPhoneOrEmial,
@@ -316,12 +318,14 @@ import {
   sendPhoneOrEmailCodeAjax
   // getCountryListAjax
 } from '../../utils/commonFunc'
-
+import {createNamespacedHelpers, mapState} from 'vuex'
+const {mapMutations} = createNamespacedHelpers('user')
 export default {
   components: {
     ErrorBox,
     HeaderCommon,
-    ImageValidate
+    ImageValidate,
+    CountDownButton
   },
   // props,
   data () {
@@ -367,6 +371,9 @@ export default {
   update () {},
   beforeRouteUpdate () {},
   methods: {
+    ...mapMutations([
+      'SET_USER_BUTTON_STATUS'
+    ]),
     getCountryList () {
       getCountryListAjax(this, (data) => {
         console.log(data)
@@ -376,10 +383,11 @@ export default {
     },
     // 检测输入格式
     checkoutInputFormat (type, targetNum) {
-      console.log(type)
+      // console.log(type)
       switch (type) {
         // 手机号
         case 0:
+          console.log(validateNumForUserInput('phone', targetNum))
           switch (validateNumForUserInput('phone', targetNum)) {
             case 0:
               this.setErrorMsg(0, '')
@@ -539,12 +547,19 @@ export default {
     },
     // 发送验证码（短信、邮箱）
     sendPhoneOrEmailCode (type) {
+      // console.log(type)
+      if (this.disabledOfPhoneBtn || this.disabledOfEmailBtn) {
+        return false
+      }
       let params = {
         type: 'REGISTER'
       }
       switch (type) {
         case 0:
+          console.log(this.phoneNum)
+          console.log(this.checkoutInputFormat(type, this.phoneNum))
           if (!this.checkoutInputFormat(type, this.phoneNum)) {
+            console.log(100)
             return false
           }
           params.phone = this.phoneNum
@@ -558,14 +573,29 @@ export default {
           params.country = this.activeCountryCodeWithEmail
           break
       }
+      console.log(params)
       sendPhoneOrEmailCodeAjax(type, params, (data) => {
         // 提示信息
         if (!returnAjaxMessage(data, this)) {
           return false
         } else {
-          this.msgCountDown = 60
-          this.sendMsgBtnDisabled = true
-          this.msgTimer()
+          switch (type) {
+            case 0:
+              this.SET_USER_BUTTON_STATUS({
+                loginType: 0,
+                status: true
+              })
+              break
+            case 1:
+              this.SET_USER_BUTTON_STATUS({
+                loginType: 1,
+                status: true
+              })
+              break
+          }
+          // this.msgCountDown = 60
+          // this.sendMsgBtnDisabled = true
+          // this.msgTimer()
         }
       })
     },
@@ -662,14 +692,21 @@ export default {
     ...mapState({
       theme: state => state.common.theme,
       language: state => state.common.language,
-      contryAreaList: state => state.common.contryAreaList
+      contryAreaList: state => state.common.contryAreaList,
+      disabledOfPhoneBtn: state => state.user.disabledOfPhoneBtn,
+      disabledOfEmailBtn: state => state.user.disabledOfEmailBtn
       // activeCountryCodeWithPhone: state => state.user.countryCode // 国籍码
     }),
     windowHeight () {
+      console.log(window.innerHeight)
       return window.innerHeight
     }
   },
-  watch: {}
+  watch: {
+    disabledOfPhoneBtn (newVal) {
+      console.log(newVal)
+    }
+  }
 }
 </script>
 <style scoped lang="scss">
@@ -679,6 +716,9 @@ export default {
     height:100%;
     overflow: hidden;
     background:linear-gradient(150deg,rgba(30,38,54,1),rgba(37,75,117,1));
+    &.min-height{
+      min-height:1000px;
+    }
     >.inner-box{
       width:100%;
       height:100%;
@@ -715,7 +755,7 @@ export default {
             >.inner-box{
               height:40px;
               width:290px;
-              padding:0 20px;
+              padding:0 5px 0 20px;
               margin-bottom:15px;
               display: inline-block;
               vertical-align: middle;
@@ -735,7 +775,7 @@ export default {
                 height:100%;
                 color:#fff;
                 &.image-validate{
-                  width:164px;
+                  width:154px;
                   vertical-align: top;
                 }
                 &.mobile-phone{
@@ -755,7 +795,7 @@ export default {
                 height:40px;
                 line-height: 40px;
                 text-align: center;
-                width:66px;
+                /*width:66px;*/
               }
             }
             /*>.err-box{
@@ -802,7 +842,7 @@ export default {
           /*注册按钮*/
           >.btn{
             line-height:40px;
-            margin:0 auto;
+            margin:20px auto 0;
             display:block;
             font-size: 14px;
             width:128px;

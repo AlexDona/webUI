@@ -71,7 +71,7 @@
             </span>
             <!--未绑定绑定手机-->
             <span
-              v-if="!userInfo.userInfo.phone"
+              v-if="userInfo.userInfo.phoneEnable === 'disable' || userInfo.userInfo.phoneEnable === ''"
               class="icon-user-info info-right display-inline-block text-align-c"
             >
               <IconFontCommon
@@ -91,7 +91,7 @@
             </span>
             <!--未绑定谷歌-->
             <span
-              v-if="!userInfo.userInfo.googleSecretKey"
+              v-if="userInfo.userInfo.googleEnable === 'disable' || userInfo.userInfo.googleEnable === ''"
               class="icon-user-info display-inline-block text-align-c"
             >
               <IconFontCommon
@@ -118,7 +118,7 @@
             <p class="info-picture margin-left10 float-left">
               <img :src="vipShowPictureSrc">
               <span
-                v-if="!userInfoRefresh"
+                v-if="!userInfo.userInfo.level"
                 class="info-centre-right font-size12"
               >
                 VIP0
@@ -224,12 +224,15 @@ export default {
   beforeRouteUpdate () {},
   methods: {
     async currencyTransform () {
+      console.log(1)
       const params = {
         coinName: 'BTC',
         shortName: 'CNY'
       }
       const data = await currencyTransform(params)
+      console.log(2)
       if (!returnAjaxMessage(data, this)) {
+        console.log(3)
         return false
       } else {
         console.log(data)
@@ -384,7 +387,7 @@ export default {
       background-color: $nightBgColor;
       color:$nightFontColor;
       >.user-info-main{
-        background-color: #1E2636;
+        background-color: $nightMainBgColor;
         >.user-info-content-box {
           >.user,
           >.info,

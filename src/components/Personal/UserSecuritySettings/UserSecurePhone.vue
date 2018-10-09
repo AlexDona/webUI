@@ -3,7 +3,7 @@
     class="set-phone personal"
     :class="{'day':theme == 'day','night':theme == 'night' }"
   >
-    <HeaderCommon />
+    <HeaderCommon/>
     <div class="set-phone-main margin25">
       <header class="set-phone-header personal-height60 line-height60 line-height70 margin25">
         <span
@@ -33,10 +33,10 @@
         </span>
       </header>
       <div class="set-phone-content">
-        <header class="phone-content-title">
-          <!--*请确认您的银行卡已开启短信通知功能-->
-          *{{ $t('M.user_security_text0') }}
-        </header>
+        <!--<header class="phone-content-title">-->
+          <!--&lt;!&ndash;*请确认您的银行卡已开启短信通知功能&ndash;&gt;-->
+          <!--*{{ $t('M.user_security_text0') }}-->
+        <!--</header>-->
         <div class="phone-content-from">
           <!--绑定手机-->
           <el-form
@@ -62,7 +62,7 @@
                 class="phone-input phone-input-left border-radius2 padding-l15 box-sizing"
                 v-model="bindingDataPhone.bindingNewPhoneAccounts"
                 @keydown="setErrorMsg(0,'')"
-                @blur="checkoutInputFormat(0, bindingDataPhone.bindingNewPhoneAccounts)"
+                @blur="checkUserExistAjax('phone', bindingDataPhone.bindingNewPhoneAccounts)"
               >
               <!--错误提示-->
               <ErrorBox
@@ -159,7 +159,7 @@
                   <CountDownButton
                     class="send-code-btn cursor-pointer"
                     :status="disabledOfOldPhoneBtn"
-                    @run="sendPhoneOrEmailCode(0, 1)"
+                    @run="sendPhoneOrEmailCode(0, 1, 1)"
                   />
                 </template>
               </el-input>
@@ -188,7 +188,7 @@
                 class="phone-input phone-input-left border-radius2 padding-l15 box-sizing"
                 v-model="amendDataPhone.newPhoneAccounts"
                 @keydown="tieErrorMsg(1,'')"
-                @blur="checkoutInputFormat(1, amendDataPhone.newPhoneAccounts)"
+                @blur="checkUserExistAjax('phone', amendDataPhone.newPhoneAccounts,'newPhone')"
               >
               <!--错误提示-->
               <ErrorBox
@@ -208,7 +208,7 @@
                   <CountDownButton
                     class="send-code-btn cursor-pointer"
                     :status="disabledOfPhoneBtn"
-                    @run="sendPhoneOrEmailCode(0, 2)"
+                    @run="sendPhoneOrEmailCode(0, 2, 0)"
                   />
                 </template>
               </el-input>
@@ -245,7 +245,7 @@
         </div>
       </div>
     </div>
-    <FooterCommon />
+    <keep-aline><FooterCommon/></keep-aline>
   </div>
 </template>
 <!--请严格按照如下书写书序-->
@@ -261,14 +261,15 @@ import ImageValidate from '../../Common/ImageValidateCommon' // 图片验证吗
 import CountDownButton from '../../Common/CountDownCommon'
 import {
   returnAjaxMessage, // 接口返回信息
-  sendPhoneOrEmailCodeAjax
+  sendPhoneOrEmailCodeAjax,
+  validateNumForUserInput,
+  getSecurityCenter
 } from '../../../utils/commonFunc'
 import {
   bindPhoneAddress,
-  changeMobilePhone,
-  statusSecurityCenter
+  changeMobilePhone
 } from '../../../utils/api/personal'
-// import {checkUserExist} from '../../../utils/api/user'
+import {checkUserExist} from '../../../utils/api/user'
 const { mapMutations } = createNamespacedHelpers('personal')
 export default {
   components: {
@@ -312,7 +313,9 @@ export default {
         '', // 短信验证码
         '' // 交易密码
       ],
-      successCountDown: 1 // 成功倒计时
+      successCountDown: 1, // 成功倒计时
+      newPhoneIsExistStatus: false, // 新手机号是否已注册过
+      emailBindPhoneCount: 0 // 邮箱绑定手机次数
     }
   },
   created () {
@@ -348,7 +351,36 @@ export default {
       this.bindingDataPhone.identifyCode = this.getRandomNum()
     },
     // 发送验证码
-    sendPhoneOrEmailCode (loginType, val) {
+    async sendPhoneOrEmailCode (loginType, val, type) {
+      if (!type && !val && !this.bindingDataPhone.bindingNewPhoneAccounts) {
+        console.log(this.bindingDataPhone.bindingNewPhoneCode)
+        console.log(1)
+        this.$message({
+          type: 'error',
+          message: this.$t('M.comm_please_enter') + this.$t('M.comm_code_phone1')
+        })
+        return false
+      }
+      // 绑定手机号
+      if (!loginType && !val && !type) {
+        if (!this.emailBindPhoneCount) {
+          let data = await this.checkUserExistAjax('phone', this.bindingDataPhone.bindingNewPhoneAccounts)
+          this.emailBindPhoneCount++
+          console.log(data)
+          if (!data) {
+            this.emailBindPhoneCount = 0
+            return false
+          }
+        }
+      }
+      // type: 0 新手机发验证码，1： 当前手机
+      if (!type && this.newPhoneIsExistStatus) {
+        this.$message({
+          type: 'error',
+          message: this.$t('M.user-fail-reg-phone-exist')
+        })
+        return false
+      }
       if (this.disabledOfPhoneBtn || this.disabledOfEmailBtn) {
         return false
       }
@@ -357,6 +389,7 @@ export default {
         country: this.bindingDataPhone.bindingAreaCodeValue // 国家编码
       }
       if (!this.securityCenter.isPhoneBind) {
+        console.log(2)
         switch (loginType) {
           // 当是绑定手机时给收入新手机号发验证码
           case 0:
@@ -367,12 +400,23 @@ export default {
             break
         }
       } else {
+        // console.log(1)
+        console.log(loginType)
         switch (loginType) {
           case 0:
             if (val == 1) {
               // 当是换绑手机时给原手机号发验证码
               params.phone = this.userInfo.userInfo.phone
-            } else {
+            }
+            if (val == 2) {
+              if (!this.amendDataPhone.newPhoneAccounts) {
+                this.$message({
+                  // 请先输入手机号
+                  message: this.$t('M.comm_please_enter') + this.$t('M.comm_code_phone1'),
+                  type: 'error'
+                })
+                return false
+              }
               // 当是换绑手机时给收入新手机号发验证码
               params.phone = this.amendDataPhone.newPhoneAccounts
             }
@@ -382,27 +426,18 @@ export default {
             break
         }
       }
-      sendPhoneOrEmailCodeAjax(loginType, params, (data) => {
+      await sendPhoneOrEmailCodeAjax(loginType, params, (data) => {
         console.log(this.disabledOfPhoneBtn)
         // 提示信息
         if (!returnAjaxMessage(data, this)) {
           console.log('error')
           return false
         } else {
-          switch (loginType) {
-            case 0:
-              this.$store.commit('user/SET_USER_BUTTON_STATUS', {
-                loginType: 0,
-                status: true
-              })
-              break
-            case 1:
-              this.$store.commit('user/SET_USER_BUTTON_STATUS', {
-                loginType: 1,
-                status: true
-              })
-              break
-          }
+          this.$store.commit('user/SET_USER_BUTTON_STATUS', {
+            loginType: 0,
+            type,
+            status: true
+          })
         }
       })
     },
@@ -486,6 +521,39 @@ export default {
         }
       }
     },
+    // 检测用户名是否存在
+    async checkUserExistAjax (type, userName, isNewPhone) {
+      if (!validateNumForUserInput(type, userName)) {
+        let params = {
+          userName: userName,
+          regType: type
+        }
+        const data = await checkUserExist(params)
+        console.log(this.emailBindPhoneCount)
+        if (!returnAjaxMessage(data, this)) {
+          if (isNewPhone) {
+            this.newPhoneIsExistStatus = true
+          }
+          this.emailBindPhoneCount = 0
+          return 0
+        } else {
+          return 1
+        }
+      } else {
+        console.log(userName)
+        console.log(type)
+        switch (type) {
+          case 'phone':
+            if (this.tieCheckoutInputFormat(1, userName)) {
+              return false
+            }
+            if (isNewPhone) {
+              this.newPhoneIsExistStatus = false
+            }
+            break
+        }
+      }
+    },
     // 换绑手机检测输入格式
     tieCheckoutInputFormat (type, targetNum) {
       switch (type) {
@@ -494,7 +562,6 @@ export default {
           if (!targetNum) {
             // 请输入旧手机短信验证码
             this.tieErrorMsg(0, this.$t('M.comm_please_enter') + this.$t('M.user_security_former') + this.$t('M.user_security_phone') + this.$t('M.comm_code'))
-            console.log(this.tieErrorShowStatusList)
             this.$forceUpdate()
             return 0
           } else {
@@ -504,16 +571,34 @@ export default {
           }
         // 新手机号码
         case 1:
-          if (!targetNum) {
-            // 请输入手机号
-            this.tieErrorMsg(1, this.$t('M.comm_please_enter') + this.$t('M.user_security_phone') + this.$t('M.comm_mark'))
-            this.$forceUpdate()
-            return 0
-          } else {
-            this.tieErrorMsg(1, '')
-            this.$forceUpdate()
-            return 1
+          switch (validateNumForUserInput('phone', targetNum)) {
+            case 0:
+              this.tieErrorMsg(1, '')
+              this.$forceUpdate()
+              return 1
+            case 1:
+              // console.log(type)
+              // 请输入手机号
+              this.tieErrorMsg(1, this.$t('M.comm_please_enter') + this.$t('M.user_security_phone') + this.$t('M.comm_mark'))
+              this.$forceUpdate()
+              return 0
+            case 2:
+              // 请输入正确的手机号
+              this.tieErrorMsg(1, this.$t('M.comm_please_enter') + this.$t('M.user_security_correct') + this.$t('M.user_security_phone') + this.$t('M.comm_mark'))
+              this.$forceUpdate()
+              return 0
           }
+          break
+          // if (!targetNum) {
+          //   // 请输入手机号
+          //   this.tieErrorMsg('phone', this.$t('M.comm_please_enter') + this.$t('M.user_security_phone') + this.$t('M.comm_mark'))
+          //   this.$forceUpdate()
+          //   return 0
+          // } else {
+          //   this.tieErrorMsg(1, '')
+          //   this.$forceUpdate()
+          //   return 1
+          // }
         // 新短信验证码
         case 2:
           if (!targetNum) {
@@ -588,18 +673,12 @@ export default {
     /**
      * 安全中心
      */
-    async getSecurityCenter () {
-      let data = await statusSecurityCenter({
-        // userId: this.userInfo.userId // 商户id
-        token: this.userInfo.token // token
+    getSecurityCenter () {
+      getSecurityCenter(this, (data) => {
+        if (data) {
+          this.securityCenter = data.data.data
+        }
       })
-      console.log(data)
-      if (!(returnAjaxMessage(data, this, 0))) {
-        return false
-      } else {
-        // 返回冲提记录列表展示
-        this.securityCenter = data.data.data
-      }
     },
     // 成功自动跳转
     successJump () {
@@ -636,7 +715,7 @@ export default {
   .set-phone {
     >.set-phone-main {
       width: 1100px;
-      min-height: 700px;
+      min-height: 600px;
       margin: 60px auto 100px;
       >.set-phone-header {
         display: flex;
@@ -665,9 +744,9 @@ export default {
           margin-left: 55px;
           .send-code-btn {
             width: 90px;
-            height: 36px;
+            /*height: 36px;
             position: absolute;
-            top: -1px;
+            top: -1px;*/
           }
           .input {
             width: 180px;
@@ -707,7 +786,7 @@ export default {
       background-color: $nightBgColor;
       color:$nightFontColor;
       .set-phone-main {
-        background-color: #1E2636;
+        background-color: $nightMainBgColor;
         >.set-phone-header {
           border-bottom: 1px solid #39424D;
           >.header-content-left {

@@ -31,6 +31,7 @@
             @change="changeId"
           >
             <el-option
+              :placeholder="$t('M.comm_please_choose')"
               v-for="(item, index) in currencyList"
               :key="index"
               :label="item.name"
@@ -129,7 +130,7 @@
             width="100"
           >
             <template slot-scope = "s">
-              <div>{{ s.row.typeName }}</div>
+              <div>{{ $t(`M.${s.row.i18nTypeName}`)}}</div>
             </template>
           </el-table-column>
           <el-table-column
@@ -158,7 +159,7 @@
             :label="$t('M.comm_state')"
           >
             <template slot-scope = "s">
-              <div>{{ s.row.statusName }}</div>
+              <div>{{ $t(`M.${s.row.i18nStatusName}`)}}</div>
             </template>
           </el-table-column>
         </el-table>
@@ -428,7 +429,7 @@ export default {
   @import "../../../../static/css/scss/Personal/IndexPersonal";
   .billing-details{
     >.billing-details-main{
-      min-height: 500px;
+      min-height: 585px;
       >.billing-details-query {
         height: 57px;
         line-height: 57px;
@@ -457,7 +458,7 @@ export default {
       background-color: $nightBgColor;
       color:$nightFontColor;
       >.billing-details-main {
-        background-color: #1e2636;
+        background-color: $nightMainBgColor;
         >.billing-details-query {
           border-bottom: 1px solid #39424D;
           >.search-button {
@@ -467,7 +468,7 @@ export default {
         }
       }
       >.billing-details-header{
-        background-color: #1e2636;
+        background-color: $nightMainBgColor;
         box-shadow: 0px 5px 50px #181e2a;
       }
     }

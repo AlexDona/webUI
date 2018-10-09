@@ -3,7 +3,7 @@
     class="add-payment personal"
     :class="{'day':theme == 'day','night':theme == 'night' }"
   >
-    <HeaderCommon />
+    <HeaderCommon/>
     <div class="add-payment-main margin25">
       <header class="add-payment-header personal-height60 line-height60 line-height70 margin25">
          <span
@@ -102,7 +102,7 @@
         </div>
       </div>
     </div>
-    <FooterCommon />
+    <keep-aline><FooterCommon/></keep-aline>
   </div>
 </template>
 <!--请严格按照如下书写书序-->
@@ -207,6 +207,14 @@ export default {
       this.stateSeniorCertification()
     },
     async stateSeniorCertification () {
+      if (!this.paypalAccount) {
+        // 请输入paypal账号
+        this.$message({
+          message: this.$t('M.comm_please_enter') + this.$t('M.user_account_paypal') + this.$t('M.user_account_number'),
+          type: 'error'
+        })
+        return false
+      }
       let goOnStatus = 0
       if (
         this.checkoutInputFormat(0, this.paypalAccount) &&
@@ -344,7 +352,7 @@ export default {
       background-color: $nightBgColor;
       color:$nightFontColor;
       .add-payment-main {
-        background-color: #1E2636;
+        background-color: $nightMainBgColor;
         >.add-payment-header {
           border-bottom: 1px solid #39424D;
           >.header-content-left {

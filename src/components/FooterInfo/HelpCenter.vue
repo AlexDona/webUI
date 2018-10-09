@@ -6,11 +6,12 @@
     <HeaderCommon/>
     <div class="inner-box">
       <div class="search-box">
+        <!--请输入关键字-->
         <input
           type="text"
           class="search-input"
           v-model="searchKeyWord"
-          placeholder="请输入关键字"
+          :placeholder="$t('M.comm_please_enter') + $t('M.news_keyword')"
         />
       </div>
       <div class="item-content help">
@@ -30,58 +31,77 @@
                 v-show="!helpShowStatusList[index]"
                 @click="toggleShowHelpItem(index,1)"
               >
-                +
+                <IconFont
+                  icon-name="icon-jia1"
+                  class="icon-font"
+                />
               </span>
                   <span
                     class="icon-box cursor-pointer"
                     v-show="helpShowStatusList[index]"
                     @click="toggleShowHelpItem(index,0)"
                   >
-                -
+                <IconFont
+                  icon-name="icon-jian"
+                  class="icon-font"
+                />
               </span>
-                  <span class="title-content">{{item.title}}</span>
+                  <span class="title-content">
+                    {{item.keyword}}
+                  </span>
                 </div>
                 <el-collapse-transition>
                   <div
                     class="content"
                     v-show="helpShowStatusList[index]"
+                    v-html="item.content"
                   >
-                    {{item.content}}
                   </div>
                 </el-collapse-transition>
               </div>
             </li>
           </ul>
+          <!--分页-->
+          <div class="page">
+            <el-pagination
+              background
+              v-show="helpFilterList.length"
+              layout="prev, pager, next"
+              :page-count="totalPages"
+              @current-change="changeCurrentPage"
+            >
+            </el-pagination>
         </div>
       </div>
     </div>
     <keep-aline><FooterCommon/></keep-aline>
   </div>
+  </div>
 </template>
 <script>
 import HeaderCommon from '../Common/HeaderCommonForPC'
 import FooterCommon from '../Common/FooterCommon'
+import IconFont from '../Common/IconFontCommon'
 import {mapState} from 'vuex'
-import {getNewsNoticeList} from '../../utils/api/home'
+import {getServiceProtocoDataAjaxByPageNum} from '../../utils/api/header'
 import {returnAjaxMessage} from '../../utils/commonFunc'
 
 export default {
   components: {
     HeaderCommon,
-    FooterCommon
+    FooterCommon,
+    IconFont
   },
   // props,
   data () {
     return {
       searchKeyWord: '', // 搜索关键字
-      helpFilterList: [
-        {
-          title: '帮助title',
-          subTitle: '子帮助主题',
-          content: '帮助内容'
-        }
-      ],
-      helpShowStatusList: []
+      helpList: [],
+      // helpFilterList: [],
+      helpShowStatusList: [],
+      pageNum: 1,
+      pageSize: 10,
+      totalPages: 0 // 总页数
     }
   },
   created () {
@@ -92,19 +112,31 @@ export default {
   update () {},
   beforeRouteUpdate () {},
   methods: {
+    // 分页
+    changeCurrentPage (pageNum) {
+      console.log(pageNum)
+      this.pageNum = pageNum
+      this.getHelpList()
+    },
     async getHelpList () {
       const params = {
         partnerId: this.partnerId,
-        pageNum: 1,
-        pageSize: 5,
+        pageNum: this.pageNum,
+        pageSize: this.pageSize,
         language: this.language,
-        newsTypeId: 2
+        termsTypeIds: 10
       }
-      const data = await getNewsNoticeList(params)
+      const data = await getServiceProtocoDataAjaxByPageNum(params)
       if (!returnAjaxMessage(data, this)) {
         return false
       } else {
         console.log(data)
+        this.helpList = data.data.data.list
+        this.pageNum = data.data.data.pageNum
+        this.totalPages = data.data.data.pages
+        this.helpList.forEach(() => {
+          this.helpShowStatusList.push(false)
+        })
       }
     },
     // 切换显示状态
@@ -118,12 +150,25 @@ export default {
       partnerId: state => state.common.partnerId,
       language: state => state.common.language,
       theme: state => state.common.theme
-    })
+    }),
+    helpFilterList () {
+      return this.helpList.filter((item) => {
+        return (
+          item['keyword'].indexOf(this.searchKeyWord) !== -1 ||
+          item['content'].indexOf(this.searchKeyWord) !== -1
+        )
+      })
+    }
   },
-  watch: {}
+  watch: {
+    language () {
+      console.log(this.language)
+    }
+  }
 }
 </script>
 <style scoped lang="scss" type="text/scss">
+ @import '../../../static/css/scss/index.scss';
   .help-box{
     >.inner-box{
       >.search-box{
@@ -149,18 +194,18 @@ export default {
         width:100%;
         height:1200px;
         overflow: hidden;
-        background-color: #121824;
         >.inner-box{
           width:1100px;
           margin: 50px auto;
-          background-color: #1e2636;
           height:1100px;
           padding: 45px 90px;
+          position: relative;
           >.content-list{
             >.content-item{
+              margin:10px 0;
               >.content-item-link{
                 width:100%;
-                height:40px;
+                /*height:40px;*/
                 >.title{
                   text-align: left;
                   height:40px;
@@ -169,67 +214,70 @@ export default {
                     height:40px;
                     width:40px;
                     font-size: 40px;
-                    line-height: 40px;
+                    line-height: 33px;
                     text-align: center;
                     vertical-align: top;
+                    background-color: $mainColor;
+                    >.icon-font{
+                      font-size: 20px;
+                      line-height: 40px;
+                      color:$mainDayBgColor;
+                    }
                   }
                   >.title-content{
                     height:40px;
                     display:inline-block;
                     line-height: 40px;
                     margin-left:10px;
-                    color:#fff;
                   }
                 }
                 >.content{
                   text-align: left;
                   padding:10px 50px;
+                  max-height:600px;
+                  overflow-y:auto;
                 }
               }
             }
+          }
+          /*分页*/
+          >.page{
+            position: absolute;
+            bottom:10px;
+            left:50%;
+            transform: translate(-50%,0);
           }
         }
       }
     }
     &.night{
-      .item-content{
-        >.content-list{
-          >.content-item{
-            >.content-item-link{
-              >.left,>.right{
-              }
-              >.left{
-                >.top{
-                }
-                >.bottom{
-                }
-              }
-              >.right{
-                >.top{
-                  color:#fff;
-                }
-                >.middle{
-                }
-                >.bottom{
-                }
-              }
-            }
+      >.inner-box{
+        >.search-box{
+          >.search-input{
           }
         }
-        &.help{
-          >.content-list{
-            >.content-item{
-              >.content-item-link{
-                background-color: #293140;
-                >.title{
-                  >.icon-box{
-                    background-color: #338FF5;
-                    color:#1E2636;
+        >.item-content{
+          background-color: $mainNightBgColor;
+          >.inner-box{
+            background-color: $mainContentNightBgColor;
+            >.content-list{
+              >.content-item{
+                >.content-item-link{
+                  >.title{
+                    background-color: #262A41;
+                    >.icon-box{
+                      background-color: $mainColor;
+                      >.icon-font{
+                        color:$mainDayBgColor;
+                      }
+                    }
+                    >.title-content{
+                      color:$mainDayBgColor;
+                    }
                   }
-                  >.title-content{
+                  >.content{
+                    color:$headerNavFontColor;
                   }
-                }
-                >.content{
                 }
               }
             }
@@ -238,46 +286,35 @@ export default {
       }
     }
     &.day{
-      .item-content{
-        >.content-list{
-          >.content-item{
-            >.content-item-link{
-              >.left,>.right{
-              }
-              >.left{
-                >.top{
-                }
-                >.bottom{
-                }
-              }
-              >.right{
-                >.top{
-                  color:#338FF5;
-                }
-                >.middle{
-                  color:#666;
-                }
-                >.bottom{
-                  color:#666;
-                }
-              }
-            }
+      >.inner-box{
+        >.search-box{
+          >.search-input{
           }
         }
-        &.help{
-          >.content-list{
-            >.content-item{
-              >.content-item-link{
-                background-color: #293140;
-                >.title{
-                  >.icon-box{
-                    background-color: #338FF5;
-                    color:#1E2636;
+        >.item-content{
+          background-color: $mainDayBgColor;
+          >.inner-box{
+            background-color: $mainDayBgColor;
+            border:1px solid rgba(234,235,236,1);
+            >.content-list{
+              >.content-item{
+                >.content-item-link{
+                  >.title{
+                    background:rgba(239,245,252,1);
+                    color:$mainColor;
+                    >.icon-box{
+                      color:$mainColor;
+                      >.icon-font{
+                        color:$mainDayBgColor;
+                      }
+                    }
+                    >.title-content{
+                      color:$mainColor;
+                    }
                   }
-                  >.title-content{
+                  >.content{
+                    color:#666;
                   }
-                }
-                >.content{
                 }
               }
             }

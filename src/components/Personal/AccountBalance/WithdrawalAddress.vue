@@ -25,6 +25,7 @@
                 @change="changeId"
               >
                 <el-option
+                  :placeholder="$t('M.comm_please_choose')"
                   v-for="(item, index) in currencyList"
                   :key="index"
                   :label="item.name"
@@ -39,7 +40,13 @@
               <input
                 class="form-input border-radius4 padding-left15"
                 v-model="mentionRemark"
-                @focus="emptyStatus"
+                @keydown="setErrorMsg(0, '')"
+                @blur="checkoutInputFormat(0, mentionRemark)"
+              />
+              <!--错误提示-->
+              <ErrorBox
+                :text="errorShowStatusList[0]"
+                :isShow="!!errorShowStatusList[0]"
               />
             </el-form-item>
             <el-form-item
@@ -48,16 +55,15 @@
               <input
                 class="form-input border-radius4 padding-left15"
                 v-model="prepaidAddress"
-                @focus="emptyStatus"
+                @keydown="setErrorMsg(1, '')"
+                @blur="checkoutInputFormat(1, prepaidAddress)"
+              >
+              <!--错误提示-->
+              <ErrorBox
+                :text="errorShowStatusList[1]"
+                :isShow="!!errorShowStatusList[1]"
               />
             </el-form-item>
-            <div
-              class="error-info error-info1"
-            >
-              <span v-show="errorMsg">
-                {{ errorMsg }}
-              </span>
-            </div>
             <button
               class="form-button border-radius4 cursor-pointer"
               @click.prevent="addAddress"
@@ -82,7 +88,9 @@
                 >
                   <input
                     class="content-input padding-l15 box-sizing"
+                    type="number"
                     v-model="phoneCode"
+                    @focus="emptyStatus"
                   >
                   <CountDownButton
                     class="send-code-btn cursor-pointer"
@@ -99,7 +107,9 @@
                 >
                   <input
                     class="content-input padding-l15 box-sizing"
+                    type="number"
                     v-model="emailCode"
+                    @focus="emptyStatus"
                   >
                   <CountDownButton
                     class="send-code-btn cursor-pointer"
@@ -116,7 +126,9 @@
                 >
                   <input
                     class="content-input content-input1 input-google padding-l15 box-sizing"
+                    type="number"
                     v-model="googleCode"
+                    @focus="emptyStatus"
                   >
                 </el-form-item>
                 <!--谷歌未认证-->
@@ -156,6 +168,7 @@
       <el-table
         :data="gainAddressList"
         style="width: 100%"
+        :empty-text="$t('M.comm_no_data')"
       >
         <!--币种 备注 提币地址 操作-->
         <el-table-column
@@ -214,23 +227,30 @@ import {mapState} from 'vuex'
 import {
   inquireWithdrawalAddressList,
   addNewWithdrawalAddress,
-  deleteUserWithdrawAddress,
-  statusSecurityCenter
+  deleteUserWithdrawAddress
 } from '../../../utils/api/personal'
+import ErrorBox from '../../User/ErrorBox'
 import CountDownButton from '../../Common/CountDownCommon'
 import {
   returnAjaxMessage,
-  apiSendPhoneOrEmailCodeAjax
+  apiSendPhoneOrEmailCodeAjax,
+  getSecurityCenter,
+  validateNumForUserInput
 } from '../../../utils/commonFunc'
 export default {
   components: {
+    ErrorBox, // 错误提示接口
     CountDownButton // 短信倒计时
   },
   // props,
   data () {
     return {
       labelPosition: 'top',
-      errorMsg: '', // 错误信息提示
+      errorShowStatusList: [
+        '', // 备注
+        '' // 提币地址
+      ],
+      // errorMsg: '', // 错误信息提示
       errorMsg1: '', // 错误信息提示
       // 币种列表
       currencyValue: '',
@@ -267,22 +287,22 @@ export default {
   methods: {
     // 清空内容信息
     emptyStatus () {
-      this.errorMsg = ''
+      this.errorMsg1 = ''
     },
     // 点击显示验证信息
     addAddress () {
-      if (!this.mentionRemark) {
-        // 请输入备注
-        this.errorMsg = this.$t('M.comm_please_enter') + this.$t('M.comm_remark')
-        return
-      } else if (!this.prepaidAddress) {
-        // 提币地址不能为空
-        this.errorMsg = this.$t('M.user_address_empty')
-        return
+      let goOnStatus = 0
+      if (
+        this.checkoutInputFormat(0, this.mentionRemark) &&
+        this.checkoutInputFormat(1, this.prepaidAddress)
+      ) {
+        goOnStatus = 1
       } else {
-        this.errorMsg = ''
+        goOnStatus = 0
       }
-      this.getSecurityCenter()
+      if (goOnStatus) {
+        this.getSecurityCenter()
+      }
     },
     // 点击确认
     submitMentionMoney () {
@@ -298,10 +318,61 @@ export default {
         }
       })
     },
+    reg () {
+      let pets = ['http', 'https', 'www']
+      console.log(pets.includes('http'))
+    },
+    checkoutInputFormat (type, targetNum) {
+      console.log(type)
+      switch (type) {
+        case 0:
+          if (!targetNum) {
+            // 请输入备注
+            this.setErrorMsg(0, this.$t('M.comm_please_enter') + this.$t('M.comm_remark'))
+            this.$forceUpdate()
+            return 0
+          } else {
+            this.setErrorMsg(0, '')
+            this.$forceUpdate()
+            return 1
+          }
+        case 1:
+          switch (validateNumForUserInput('withdrawal-address', targetNum)) {
+            case 0:
+              this.setErrorMsg(1, '')
+              this.$forceUpdate()
+              return 1
+            case 1:
+              // 请输入提币地址
+              this.setErrorMsg(1, this.$t('M.comm_please_enter') + this.$t('M.comm_mention_money') + this.$t('M.comm_site'))
+              this.$forceUpdate()
+              return 0
+            case 2:
+              // 非法地址
+              this.setErrorMsg(1, this.$t('M.user_address_withdrawal'))
+              this.$forceUpdate()
+              return 0
+          }
+          break
+          // if (!targetNum) {
+          //   // 请输入提币地址
+          //   this.setErrorMsg(1, this.$t('M.comm_please_enter') + this.$t('M.comm_mention_money') + this.$t('M.comm_site'))
+          //   this.$forceUpdate()
+          //   return 0
+          // } else {
+          //   this.setErrorMsg(1, '')
+          //   this.$forceUpdate()
+          //   return 1
+          // }
+      }
+    },
+    // 设置错误信息
+    setErrorMsg (index, msg) {
+      this.errorShowStatusList[index] = msg
+    },
     // 新增用户提币地址按钮
     async stateSubmitAddAddress () {
       if (!this.phoneCode && !this.emailCode && !this.googleCode) {
-        console.log(1)
         // 请输入验证码
         this.errorMsg1 = this.$t('M.comm_please_enter') + this.$t('M.user_security_verify')
         return false
@@ -353,10 +424,10 @@ export default {
     cancelId (id) {
       console.log(id)
       this.deleteWithdrawalId = id
-      // 确定删除提币地址吗, 是否继续?取消 确定
+      // 确定删除提币地址？ 取消  删除
       this.$confirm(this.$t('M.user_address_delete_withdrawals'), {
-        cancelButtonText: this.$t('M.comm_cancel'),
-        confirmButtonText: this.$t('M.comm_confirm')
+        cancelButtonText: this.$t('M.comm_cancel'), // 取消
+        confirmButtonText: this.$t('M.comm_delete') // 删除
       }).then(() => {
         this.deleteWithdrawal(id)
       }).catch(() => {
@@ -369,7 +440,7 @@ export default {
         id: this.deleteWithdrawalId // 列表id
       }
       data = await deleteUserWithdrawAddress(param)
-      if (!(returnAjaxMessage(data, this, 0))) {
+      if (!(returnAjaxMessage(data, this, 1))) {
         return false
       } else {
         this.WithdrawalAddressList()
@@ -434,18 +505,13 @@ export default {
     /**
      * 安全中心
      */
-    async getSecurityCenter () {
-      let data = await statusSecurityCenter({
-        token: this.userInfo.token // token
+    getSecurityCenter () {
+      getSecurityCenter(this, (data) => {
+        if (data) {
+          this.securityCenter = data.data.data
+          this.mentionMoneyConfirm = true
+        }
       })
-      console.log(data)
-      if (!(returnAjaxMessage(data, this, 0))) {
-        return false
-      } else {
-        // 返回展示
-        this.securityCenter = data.data.data
-        this.mentionMoneyConfirm = true
-      }
     }
   },
   filter: {},
@@ -530,10 +596,11 @@ export default {
       background-color: $nightBgColor;
       color:$nightFontColor;
       >.withdrawal-address-main {
-        background-color: #1e2636;
+        background-color: $nightMainBgColor;
         >.withdrawal-header {
-          background-color: #1E2636;
-          box-shadow:2px 0px 3px rgba(24,30,42,1);
+          background-color: $nightMainBgColor;
+          /*box-shadow:2px 0px 3px rgba(24,30,42,1);*/
+          box-shadow:2px 0px 2px rgba(20,23,37,1);
           >.header-content {
             color: rgba(255,255,255,0.7);
           }

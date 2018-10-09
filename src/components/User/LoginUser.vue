@@ -1,7 +1,10 @@
 <template>
   <div
     class="login-box user"
-    :style="{'height':windowHeight+'px'}"
+    :style="{
+     'min-height':windowHeight < 800,
+     'height': windowHeight + 'px'
+    }"
   >
     <HeaderCommonForPC
       v-if="!isMobile"
@@ -122,6 +125,7 @@
         <!--图片验证码验证-->
         <el-dialog
           class="pic image-dialog"
+          :close-on-click-modal="false"
           :title="$t('M.login_photo') + $t('M.comm_code') + $t('M.login_verify')"
           :visible.sync="loginImageValidateStatus"
         >
@@ -174,6 +178,7 @@
         <!-- 安全验证 -->
         <el-dialog
           class="msg-email-google-dialog"
+          :close-on-click-modal="false"
           :title="$t('M.login_safe') + $t('M.login_verify')"
           :visible.sync="step3DialogShowStatus"
         >
@@ -372,6 +377,7 @@
           <!--短信验证码、邮箱验证码、谷歌验证码 步骤3-->
           <el-dialog
             class="msg-email-google-dialog mobile"
+            :close-on-click-modal="false"
             :title="$t('M.login_safe') + $t('M.login_verify')"
             :visible.sync="step3DialogShowStatus"
           >
@@ -596,17 +602,18 @@ export default {
       isErcodeTimeOut: false, // 二维码是否过期
       isErCodeLogin: false, // 是否扫码登录
       erCodeString: '', // 二维码登录字符串
-      username: '',
+      // username: '',
       // username: '18625512987',
       // username: '18600929234',
       // username: '17600854297',
       // username: '13137111901',
       // password: 'a11111111',
-      // username: '15638559236',
+      username: '15638559236',
       // username: '13100000011',
       // username: '13100000012',
       // username: '18625512988',
       // password: '123456aa',
+      password: 'a1111111',
       userNameErrorMsg: '', // 错误提示
       loadingCircle: {},
       userInputImageCode: '', // 图形验证码(用户输入)
@@ -664,7 +671,7 @@ export default {
     require('../../../static/css/list/User/Login.css')
     this.ENTER_STEP1()
     this.refreshCode()
-    this.reflashErCode()
+    // this.reflashErCode()
     // 清空input框值
     // this.clearInputValue()
   },
@@ -1123,7 +1130,11 @@ export default {
   @import '../../../static/css/scss/index.scss';
   .login-box.user {
     height:100%;
+    overflow: hidden;
     background:linear-gradient(150deg,rgba(30,38,54,1),rgba(37,75,117,1));
+    &.min-height{
+      min-height:1000px;
+    }
     >.inner-box{
       &.pc-bg{
         background:url('../../assets/develop/login-bg.png') 25% center  no-repeat ;

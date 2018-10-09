@@ -52,7 +52,7 @@
                 </span>
                 &nbsp;）
               </p>
-              <i class="el-icon-arrow-down icon-down float-right"></i>
+              <!--<i class="el-icon-arrow-down icon-down float-right"></i>-->
             </div>
           </div>
       </div>
@@ -120,6 +120,7 @@
               class="common-input"
               v-model="identificationNumber"
               @keydown="setErrorMsg(1, '')"
+              minlength="15"
               @blur="checkoutInputFormat(1, identificationNumber)"
             />
             <!--错误提示-->
@@ -158,13 +159,14 @@
       >
         <p
           class="header-border paddinglr20"
-          @click.prevent="authenticationMethod">
+          @click.prevent="authenticationMethod"
+        >
           <span class="font-size16 main-header-title">
             <!--高级认证-->
             {{ $t('M.user_senior_certification') }}
           </span>
           <span
-            v-if="userInfo.userInfo.advancedAuth === 'notPass' || userInfo.userInfo.advancedAuth === ''"
+            v-if="userInfo.userInfo.advancedAuth === ''"
             class="authentication-type font-size12"
           >
             <!--未高级认证-->
@@ -186,7 +188,7 @@
           </span>
           <span
             class="float-right authentication-type font-size12"
-            v-if="userInfo.userInfo.advancedAuth === 'notPass' || userInfo.userInfo.advancedAuth === ''"
+            v-if="userInfo.userInfo.advancedAuth === ''"
           >
             <!--去认证-->
             {{ $t('M.user_senior_go_certification') }}
@@ -195,7 +197,7 @@
         </p>
       </div>
       <div class="identity-box">
-        <div v-show="authenticationStatusFront">
+        <div v-if="authenticationStatusFront">
           <el-collapse-transition>
             <div class="transition-box">
               <div class="personal-information">
@@ -281,12 +283,13 @@
                           :src="firstPictureSrc"
                         >
                       </div>
+                      <button ref="first-submit"></button>
                     </el-upload>
                   </div>
                   <button
                     type="primary"
                     class="upload-submit cursor-pointer font-size12 margin-top30"
-                    on-success="handleSuccessFront"
+                    @click="uploadImg('first-submit')"
                   >
                     <!--@click.prevent="handleSuccessFront"-->
                     <!--上传身份证正面-->
@@ -302,7 +305,7 @@
                       :headers="tokenObj"
                       list-type="picture-card"
                       :on-success="handleSuccessReverseSide"
-                      :on-remove="handleRemove('first')"
+                      :on-remove="handleRemoveSide"
                       :before-upload="beforeAvatarUpload"
                     >
                       <div
@@ -314,11 +317,13 @@
                           :src="secondPictureSrc"
                         >
                       </div>
+                      <button ref="second-submit"></button>
                     </el-upload>
                   </div>
                   <button
                     type="primary"
                     class="upload-submit cursor-pointer font-size12 margin-top30"
+                    @click="uploadImg('second-submit')"
                   >
                     <!--上传身份证反面-->
                     {{ $t('M.user_senior_upload2') }}
@@ -345,11 +350,13 @@
                           :src="thirdPictureSrc"
                         >
                       </div>
+                      <button ref="third-submit"></button>
                     </el-upload>
                   </div>
                   <button
                     type="primary"
                     class="upload-submit cursor-pointer font-size12 margin-top30"
+                    @click="uploadImg('third-submit')"
                   >
                     <!--上传手持身份证-->
                     {{ $t('M.user_senior_upload3') }}
@@ -389,6 +396,40 @@
               <!--待审核...-->
               {{ $t('M.user_senior_audit') }}...
             </p>
+          </div>
+        </div>
+        <!--被驳回-->
+        <div
+          class="wait-veritfy-back wait-no-pass"
+          v-if="authenticationNotPass"
+        >
+          <div
+            class="wait-veritfy text-align-c"
+          >
+            <IconFontCommon
+              class="color-coin-text"
+              iconName="icon-yly_renzhengshibai"
+            />
+            <p class="list-height no-pass">
+              <!--抱歉，您的高级认证未通过！...-->
+              {{ $t('M.user_senior_notPass') }}
+            </p>
+            <p class="list-height font-size12">
+              <!--驳回原因-->
+              {{ $t('M.user_senior_notPass_text1') }}：
+              <span
+                class="no-error"
+              >
+                {{ statusRealNameInformation.reason }}
+              </span>
+            </p>
+            <button
+              class="no-pass-button cursor-pointer"
+              @click.prevent="authenticationNoPass"
+            >
+              <!--提交-->
+              {{ $t('M.comm_sub_anew') }}{{ $t('M.comm_sub_time') }}
+            </button>
           </div>
         </div>
         <div
@@ -457,7 +498,8 @@ export default {
   data () {
     return {
       tokenObj: {
-        'token': ''
+        'token': '',
+        'x-domain': ''
       },
       regionValue: '', // 国家
       regionList: [], // 国家地区列表
@@ -480,6 +522,7 @@ export default {
       authenticationInfo: {}, // 个人信息
       authenticationContentStatus: false, // 高级认证页面
       authenticationStatusFront: false, // 用户高级认证前
+      authenticationNotPass: false, // 用户高级未通过
       // 身份认证默认图片
       firstPictureSrc: require('../../../assets/user/card_negative.png'), // 正面
       firstPictureSrcShow: true,
@@ -514,7 +557,10 @@ export default {
     this.SET_USER_INFO_REFRESH_STATUS(true)
     await this.getUserRefreshUser()
     this.tokenObj.token = this.userInfo.token
-    reflashUserInfo(this)
+    this.tokenObj['x-domain'] = window.location.host.split(':')[0]
+    await reflashUserInfo(this)
+    this.authenticationIsStatus()
+    console.log(this.authenticationNotPass)
   },
   mounted () {},
   activited () {},
@@ -524,6 +570,9 @@ export default {
     ...mapMutations([
       'SET_USER_INFO_REFRESH_STATUS'
     ]),
+    uploadImg (ref) {
+      this.$refs[ref].click()
+    },
     handleSuccessFront (response) {
       console.log(response)
       this.dialogImageFrontUrl = response.data.fileUrl
@@ -539,22 +588,10 @@ export default {
       this.dialogImageHandUrl = response.data.fileUrl
       this.thirdPictureSrcShow = false
     },
-    handleRemove (val) {
-      if (val == 'first') {
-        this.dialogImageFrontUrl = ''
-        this.firstPictureSrcShow = true
-      } else if (val == 2) {
-        this.dialogImageReverseSideUrl = ''
-        this.secondPictureSrcShow = true
-      } else {
-        this.dialogImageHandUrl = ''
-        this.thirdPictureSrcShow = true
-      }
+    handleRemoveFront () {
+      this.dialogImageFrontUrl = ''
+      this.firstPictureSrcShow = true
     },
-    // handleRemoveFront () {
-    //   this.dialogImageFrontUrl = ''
-    //   this.firstPictureSrcShow = true
-    // },
     handleRemoveSide () {
       this.dialogImageReverseSideUrl = ''
       this.secondPictureSrcShow = true
@@ -613,6 +650,7 @@ export default {
         // if (data.data.data.authInfo) {
         this.statusRealNameInformation = data.data.data.authInfo
         // }
+        this.authenticationIsStatus()
       }
     },
     /**
@@ -628,6 +666,7 @@ export default {
         this.$store.commit('user/SET_STEP1_INFO', data.data.data)
         // 返回列表数据
         this.userInfoRefresh = data.data.data.userInfo
+        this.authenticationIsStatus()
       }
     },
     // 检测输入格式
@@ -698,11 +737,26 @@ export default {
     // 高级认证弹窗
     authenticationMethod () {
       // 判断是否高级认证&&实名认证
-      if (this.userInfoRefresh.realname !== '' && this.userInfoRefresh.advancedAuth === 'notPass') {
+      if (this.userInfoRefresh.realname !== '' && this.userInfo.userInfo.advancedAuth === '') {
         this.seniorAuthentication = true
-      } else if (this.userInfoRefresh.realname == '') {
+      } else if (this.userInfoRefresh.realname !== '') {
         this.seniorAuthentication = false
       }
+    },
+    // 高级认证未通过被驳回
+    authenticationIsStatus () {
+      if (this.userInfo.userInfo.advancedAuth === 'notPass') {
+        console.log(this.userInfo.userInfo)
+        this.authenticationNotPass = true
+        this.authenticationStatusFront = false
+      } else {
+        this.authenticationNotPass = false
+      }
+    },
+    // 重新提交审核
+    authenticationNoPass () {
+      this.authenticationNotPass = false
+      this.authenticationStatusFront = true
     },
     // 高级认证内容
     authenticationAuthentication () {
@@ -895,8 +949,11 @@ export default {
     }
     .identity-box {
       /*border:1px solid rgba(38,47,56,0.1);*/
+      >.wait-no-pass {
+        padding-top: 50px !important;
+      }
       >.wait-veritfy-back {
-        height: 393px;
+        height: 400px;
         padding-top: 130px;
         >.wait-veritfy{
           >.color-coin {
@@ -905,6 +962,12 @@ export default {
           .list-height {
             margin-top: 10px;
             line-height: 25px;
+          }
+          .no-pass-button {
+            width:200px;
+            height:34px;
+            border-radius:4px;
+            margin-top: 20px;
           }
         }
       }
@@ -921,7 +984,7 @@ export default {
         .advanced-upload {
           width: 180px;
           float: left;
-          margin: 0 55px;
+          margin: 0 64px;
           text-align: center;
         }
         .upload {
@@ -934,7 +997,7 @@ export default {
             }
           }
           .default-picture {
-            width: 100%;
+            /*width: 100%;*/
             height: 113px;
           }
         }
@@ -990,13 +1053,13 @@ export default {
     background-color: $nightBgColor;
     color:$nightFontColor;
     .identity-header-background{
-      background-color: #1E2636;
+      background-color: $nightMainBgColor;
       .header-content{
         color: #338FF5;
       }
     }
     .identity-authentication-main {
-      background-color: #1E2636;
+      background-color: $nightMainBgColor;
       .false-tips {
         color: #D45858;
       }
@@ -1018,7 +1081,7 @@ export default {
       color: #fff;
     }
     .identity-background{
-      background-color: #1E2636;
+      background-color: $nightMainBgColor;
     }
     >.advanced-certification-main{
       .identity-box {
@@ -1027,6 +1090,22 @@ export default {
           >.wait-veritfy{
             >.color-coin {
               color: #338FF5;
+            }
+            .list-height {
+              .no-error {
+                color: #6F798A;
+              }
+            }
+            >.color-coin-text {
+              color: #338FF5;
+              font-size: 140px;
+            }
+            >.no-pass {
+              color: #338FF5;
+            }
+            .no-pass-button {
+              background:linear-gradient(90deg,rgba(43,57,110,1) 0%,rgba(42,80,130,1) 100%);
+              color: #fff;
             }
           }
         }
@@ -1122,6 +1201,15 @@ export default {
           >.wait-veritfy{
             >.color-coin {
               color: #338FF5;
+            }
+            .list-height {
+              .no-error {
+                color: #333;
+              }
+            }
+            .no-pass-button {
+              background:linear-gradient(90deg,rgba(43,57,110,1) 0%,rgba(42,80,130,1) 100%);
+              color: #fff;
             }
           }
         }

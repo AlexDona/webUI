@@ -35,7 +35,7 @@
                     v-for="(item,index) in buySellStyle"
                     :key="index"
                     :value="item.id"
-                    :label="item.name"
+                    :label="$t(item.name)"
                   >
                   </el-option>
                 </el-select>
@@ -57,7 +57,7 @@
                 </el-select>
                 <span class="double-sided-arrow display-inline-block">
                 </span>
-                <!-- 可用法币 -->
+                <!-- 可用法币 :label="language === 'zh_CN'? item.name : item.shortName"-->
                 <el-select
                   v-model="activitedCurrencyId"
                   @change="changeCurrencyId"
@@ -66,9 +66,16 @@
                     v-for="(item,index) in availableCurrencyList"
                     :key="index"
                     :value="item.id"
-                    :label="item.name"
+                    :label="language === 'zh_CN'? item.name : item.shortName"
                   >
                   </el-option>
+                  <!-- <el-option
+                    v-for="(item,index) in availableCurrencyList"
+                    :key="index"
+                    :value="item.id"
+                    :label="item.name"
+                  >
+                  </el-option> -->
                 </el-select>
               </div>
             </div>
@@ -84,6 +91,7 @@
             <div class="right display-inline-block">
               <div>
                 <p>
+                  <!-- 最大可卖出量: -->
                   <span v-if="activitedBuySellStyle === 'SELL'">
                     {{$t('M.otc_seller_maximum')}}:
                     <!-- {{total}}{{activeedCoinName}} -->
@@ -101,7 +109,7 @@
                 </p>
               </div>
               <!-- 定价设置 -->
-              <p>{{$t('M.otc_publishAD_setPrice')}}</p>
+              <!-- <p>{{$t('M.otc_publishAD_setPrice')}}</p> -->
               <div class="input">
                 <!-- 单价 -->
                 <input
@@ -225,7 +233,7 @@
                 <span class="unit font-size14">{{activeedCurrencyName}}</span>
               </div>
               <div>
-                <span class="err err-min-count">{{errorInfoMinCount}}</span>
+                <span class="err err-min-count"><span>{{errorInfoMinCount}}</span></span>
                 <span class="err">{{errorInfoMaxCount}}</span>
               </div>
             </div>
@@ -279,6 +287,20 @@
                       iconName="icon-wenhao"
                     />
                   </el-tooltip>
+                  <!-- <el-tooltip
+                    class="item"
+                    effect="dark"
+                    placement="bottom-start"
+                  >
+                    <div slot="content">
+                      {{$t('M.otc_publishAD_setDiscript')}}<br/>
+                      {{$t('M.otc_publishAD_setDiscriptTwo')}}
+                    </div>
+                    <IconFontCommon
+                      class="font-size14"
+                      iconName="icon-wenhao"
+                    />
+                  </el-tooltip> -->
                 </span>
               </div>
               <div>
@@ -416,11 +438,11 @@ export default {
       buySellStyle: [ // 1.0 发布广告 买卖 类型数组
         {
           id: 'SELL',
-          name: this.$t('M.comm_offering')
+          name: 'M.comm_offering'
         },
         {
           id: 'BUY',
-          name: this.$t('M.comm_buying')
+          name: 'M.comm_buying'
         }
       ],
       // 2.0 币种名字下拉数组：可用币种
@@ -503,40 +525,8 @@ export default {
       console.log('2：URL中没有id')
       this.getOTCCoinInfo()
     }
-    // 刚进页面就调此方法请求币种详情来渲染页面
-    // this.getOTCCoinInfo()
-    // ====================分割线===================================
-    // 1.0 otc可用币种查询：
-    // this.getOTCAvailableCurrencyList()
-    // 2.0 otc可用法币查询：
-    // this.getMerchantAvailablelegalTenderList()
-    // 3.0 查询用户现有支付方式
-    // this.queryUserPayTypesList()
-    // 4.0 请求挂单详情接口
-    // 根据 从广告管理传过来的URL中的订单id 请求挂单详情数据 再塞到页面中
-    // if (this.$route.query.id && this.payForListArr) {
-    //   console.log('URL有id才出现我')
-    //   this.getOTCSelectedOrdersDetails()
-    // }
-    // 5.0 汇率转换:刚进页面时候(当币种和法币都返回以后调接口)
-    // if (this.availableCoinList && this.availableCurrencyList) {
-    //   console.log('1234')
-    //   this.changeRateMinCreated()
-    //   this.changeRateMaxCreated()
-    // }
   },
   mounted () {
-    // this.getOTCAvailableCurrencyList()
-    // this.getMerchantAvailablelegalTenderList()
-    // this.queryUserPayTypesList()
-    // if (this.$route.query.id && this.payForListArr) {
-    //   this.getOTCSelectedOrdersDetails()
-    // }
-    // if (this.activeedCoinName && this.activeedCurrencyName) {
-    //   console.log('1234')
-    //   console.log(this.$refs)
-    //   console.log(this.activeedCurrencyName)
-    // }
   },
   activited () {},
   update () {},
@@ -628,6 +618,10 @@ export default {
     changeBuySellStyle (e) {
       this.activitedBuySellStyle = e
       console.log(this.activitedBuySellStyle)
+      // 切换买卖类型，如果是买单则清空交易数量错误提示
+      if (this.activitedBuySellStyle == 'BUY') {
+        this.errorInfoEntrustCount = ''
+      }
       // 币种详情
       console.log('币种id：' + this.activitedCoinId)
       console.log('法种id：' + this.activitedCurrencyId)
@@ -677,6 +671,10 @@ export default {
         this.errorInfoEntrustCount = this.$t('M.otc_publishAD_pleaseInput') + this.$t('M.otc_publishAD_sellmount')
         return false
       }
+      // 交易数量 有错误提示
+      if (this.errorInfoEntrustCount) {
+        return false
+      }
       // 单笔最小最大限制
       if (this.errorInfoMinCount) {
         return false
@@ -720,6 +718,9 @@ export default {
         // 返回数据正确的逻辑
         this.dialogVisible = false
         // 清空数据
+        this.clearMainData()
+        // 重新渲染页面
+        this.getOTCCoinInfo()
       }
     },
     // 7.0 交易密码框获得焦点
@@ -744,6 +745,31 @@ export default {
       this.parameterPayTypes = str
       console.log(this.parameterPayTypes)
       this.errorInfoTradeWay = '' // 清空错误提示
+    },
+    // 清空主要数据
+    clearMainData () {
+      // 单价
+      this.$refs.price.value = ''
+      // 单价错误提示
+      this.errorInfoPrice = ''
+      // 交易数量
+      this.$refs.entrustCount.value = ''
+      // 交易数量错误提示
+      this.errorInfoEntrustCount = ''
+      // 支付方式
+      this.activitedPayTypes = []
+      // 支付方式错误提示
+      this.errorInfoTradeWay = ''
+      // 备注
+      this.remarkText = ''
+      // 最大订单数
+      this.limitOrderCount = ''
+      // 成功过几次
+      this.successOrderCount = ''
+      // 交易密码
+      this.tradePassword = ''
+      // 交易密码错误提示
+      this.errorInfoPassword = ''
     },
     // 清空input框数据
     clearInputData () {
@@ -794,11 +820,20 @@ export default {
       this[ref] = this.$refs[ref].value
       // console.log(this[ref])
       // console.log(this.entrustCount)
-      // console.log(this.$refs.entrustCount.value)
+      console.log(this.$refs.entrustCount.value)
       let target = this.$refs[ref]
       formatNumberInput(target, pointLength)
       if (this.$refs.entrustCount.value) {
         this.errorInfoEntrustCount = ''
+      }
+      // 开始校验
+      console.log(this.total)
+      if (this.activitedBuySellStyle == 'SELL') {
+        if (this.$refs.entrustCount.value > this.total) {
+          // this.errorInfoEntrustCount = '最大可卖出量不足'
+          this.errorInfoEntrustCount = this.$t('M.otc_publishAD_entrustCountLimit')
+          return false
+        }
       }
     },
     // 校验单笔最小限额
@@ -889,23 +924,13 @@ export default {
   filter: {},
   computed: {
     ...mapState({
+      language: state => state.common.language,
       partnerId: state => state.common.partnerId,
       theme: state => state.common.theme
       // userInfo: state => state.user.loginStep1Info.userInfo
     })
-    // activitedBuySellStyle () {
-    // }
   },
   watch: {
-    // 监控法币change之前之后的法币名称
-    // activeedCurrencyName (transformationNew, transformationOld) { // 新的  旧的
-    //   this.transformationNewCurrencyName = transformationNew
-    //   console.log(this.transformationNewCurrencyName)
-    //   this.transformationOldCurrencyName = transformationOld
-    //   console.log(this.transformationOldCurrencyName)
-    //   this.changeRateMin()
-    //   this.changeRateMax()
-    // }
   }
 }
 </script>
@@ -1013,7 +1038,9 @@ export default {
         >.sum-limit{
           >.right{
             .err-min-count{
-              margin-right: 100px;
+              display: inline-block;
+              width: 250px;
+              // margin-right: 100px;
             }
             >.input-top{
               margin-top: 15px;
@@ -1258,7 +1285,7 @@ export default {
       >.publish-AD-right{
         >.publish-tips{
           >.title{
-            color: #338FF5;
+            color: #FFFFFF;
           }
           >.tip{
             color: #9DA5B3;
@@ -1272,6 +1299,8 @@ export default {
     >.otc-publish-AD-content{
       >.publish-AD-left{
         >.AD-title{
+          color: #338FF5;
+          border-left: 3px solid #338FF5;
         }
         >.AD-big-form{
           .err{
@@ -1287,7 +1316,7 @@ export default {
               }
             }
             >.right{
-              color: #9DA5B3;
+              color: #7D90AC;
             }
           }
           >.choice{
@@ -1318,7 +1347,7 @@ export default {
               >.input{
                 >.price-input{
                   background-color: #232F44;
-                  color: #9DA5B3;
+                  color: #7D90AC;
                 }
                 >.unit{
                   color: #7EA9E4;
@@ -1393,7 +1422,7 @@ export default {
       >.publish-AD-right{
         >.publish-tips{
           >.title{
-            color: #338FF5;
+            color: #D45858;
           }
           >.tip{
             color: #9DA5B3;

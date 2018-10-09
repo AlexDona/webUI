@@ -471,7 +471,7 @@ export default {
   },
   watch: {
     depthData (newVal) {
-      console.log(newVal)
+      // console.log(newVal)
       // this.options.series[0].data = newVal.buy
       // this.options.series[1].data = newVal.sell
       // this.depthCharts.setOption(this.options)
@@ -488,8 +488,8 @@ export default {
       }
     },
     theme () {
-      this.resetOptions()
-      this.resetChart(this.options)
+      // this.resetOptions()
+      // this.resetChart(this.options)
     },
     buy (newVal) {
       console.log(newVal)

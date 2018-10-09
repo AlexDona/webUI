@@ -3,7 +3,7 @@
     class="add-bank personal"
     :class="{'day':theme == 'day','night':theme == 'night' }"
   >
-    <HeaderCommon />
+    <HeaderCommon/>
     <div class="add-bank-main margin25">
       <header class="add-bank-header personal-height60 line-height60 line-height70 margin25">
         <span
@@ -69,6 +69,7 @@
             >
               <input
                 class="bank-input border-radius2"
+                type="number"
                 v-model="bankCard"
                 @keydown="setErrorMsg(1, '')"
                 @blur="checkoutInputFormat(1, bankCard)"
@@ -130,7 +131,7 @@
         </div>
       </div>
     </div>
-    <FooterCommon />
+    <keep-aline><FooterCommon/></keep-aline>
   </div>
 </template>
 <!--请严格按照如下书写书序-->
@@ -141,7 +142,8 @@ import IconFontCommon from '../../Common/IconFontCommon'
 import ErrorBox from '../../User/ErrorBox'
 import CountDownButton from '../../Common/CountDownCommon'
 import {
-  returnAjaxMessage // 接口返回信息
+  returnAjaxMessage, // 接口返回信息
+  validateNumForUserInput
 } from '../../../utils/commonFunc'
 import {
   statusCardSettings,
@@ -267,15 +269,21 @@ export default {
           }
         // 银行卡号
         case 1:
-          if (!targetNum) {
-            this.setErrorMsg(1, this.$t('M.comm_please_enter') + this.$t('M.user_account_credit_numbers'))
-            this.$forceUpdate()
-            return 0
-          } else {
-            this.setErrorMsg(1, '')
-            this.$forceUpdate()
-            return 1
+          switch (validateNumForUserInput('bank-card', targetNum)) {
+            case 0:
+              this.setErrorMsg(1, '')
+              this.$forceUpdate()
+              return 1
+            case 1:
+              this.setErrorMsg(1, this.$t('M.comm_please_enter') + this.$t('M.user_account_credit_numbers'))
+              this.$forceUpdate()
+              return 0
+            case 2:
+              this.setErrorMsg(1, this.$t('M.user_account_credit_text'))
+              this.$forceUpdate()
+              return 0
           }
+          break
         // 支行地址
         case 2:
           if (!targetNum) {
@@ -407,7 +415,7 @@ export default {
       background-color: $nightBgColor;
       color:$nightFontColor;
       .add-bank-main {
-        background-color: #1E2636;
+        background-color: $nightMainBgColor;
         >.add-bank-header {
           border-bottom: 1px solid #39424D;
           >.header-content-left {

@@ -3,7 +3,7 @@
     class="add-chat personal"
     :class="{'day':theme == 'day','night':theme == 'night' }"
   >
-    <HeaderCommon />
+    <HeaderCommon/>
     <div class="add-chat-main margin25">
       <header class="add-chat-header personal-height60 line-height60 line-height70 margin25">
         <span
@@ -33,9 +33,9 @@
         </span>
       </header>
       <div class="add-chat-content">
-        <header class="chat-content-title">
+        <!--<header class="chat-content-title">-->
           <!--*微信上传二维码方法：打开微信首页>收钱>保存图片，将存在手机相册的收款码上传即可。-->
-        </header>
+        <!--</header>-->
         <div class="chat-content-from">
           <el-form
             :label-position="labelPosition"
@@ -132,7 +132,7 @@
         </div>
       </div>
     </div>
-    <FooterCommon />
+    <keep-aline><FooterCommon/></keep-aline>
   </div>
 </template>
 <!--请严格按照如下书写书序-->
@@ -162,7 +162,8 @@ export default {
   data () {
     return {
       tokenObj: {
-        'token': ''
+        'token': '',
+        'x-domain': ''
       },
       cardNo: '', // 微信账号
       password: '', // 交易密码
@@ -186,6 +187,7 @@ export default {
     // 黑色主题样式
     require('../../../../static/css/theme/night/Personal/AccountReceivableAccount/AddWeChatNight.css')
     this.tokenObj.token = this.userInfo.token
+    this.tokenObj['x-domain'] = window.location.host.split(':')[0]
     this.getAccountPaymentTerm()
     this.paymentMethodInformation()
   },
@@ -249,11 +251,19 @@ export default {
       let goOnStatus = 0
       if (
         this.checkoutInputFormat(0, this.cardNo) &&
-        this.checkoutInputFormat(1, this.cardNo)
+        this.checkoutInputFormat(1, this.password)
       ) {
         goOnStatus = 1
       } else {
         goOnStatus = 0
+      }
+      if (!this.dialogImageHandUrl1 && !this.dialogImageHandUrl) {
+        // 请上传微信收款码
+        this.$message({
+          message: this.$t('M.user_account_weChat_pla'),
+          type: 'error'
+        })
+        return false
       }
       if (goOnStatus) {
         let data
@@ -264,6 +274,12 @@ export default {
           payPassword: this.password, // 交易密码
           bankType: 'weixin' // type
         }
+        // if (this.paymentTerm.isWeixinBind) {
+        //   param.qrcode = this.dialogImageHandUrl // 二维码
+        // } else {
+        //   // this.dialogImageHandUrl1 = this.dialogImageHandUrl
+        //   param.qrcode = this.dialogImageHandUrl1 // 二维码
+        // }
         data = await statusCardSettings(param)
         console.log(data)
         if (!(returnAjaxMessage(data, this, 1))) {
@@ -271,6 +287,7 @@ export default {
         } else {
           this.successJump()
           this.stateEmptyData()
+          this.paymentMethodInformation()
         }
       }
     },
@@ -295,7 +312,7 @@ export default {
         this.cardNo = data.data.data.cardNo
         this.dialogImageHandUrl1 = data.data.data.qrcode
         this.id = data.data.data.id
-        console.log(this.paymentMethodList)
+        console.log(this.dialogImageHandUrl1)
       }
     },
     // 收款方式
@@ -390,7 +407,7 @@ export default {
       background-color: $nightBgColor;
       color:$nightFontColor;
       .add-chat-main {
-        background-color: #1E2636;
+        background-color: $nightMainBgColor;
         >.add-chat-header {
           border-bottom: 1px solid #39424D;
           .header-content {

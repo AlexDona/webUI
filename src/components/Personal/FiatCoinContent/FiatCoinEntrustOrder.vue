@@ -175,12 +175,12 @@ export default {
     // 3.0 点击撤单按钮
     revocationOrder (id) {
       // this.getOTCEntrustingOrdersRevocation(id)
-      // 您确定要撤销此单吗, 是否继续?
+      // 确定撤销委单？  取消  确定
       this.$confirm(this.$t('M.otc_revoke'), {
         // 确定
-        confirmButtonText: this.$t('M.comm_cancel'),
+        confirmButtonText: this.$t('M.comm_confirm'),
         // 取消
-        cancelButtonText: this.$t('M.comm_affirm')
+        cancelButtonText: this.$t('M.comm_cancel')
       }).then(() => {
         this.getOTCEntrustingOrdersRevocation(id)
       }).catch(() => {
@@ -251,7 +251,7 @@ export default {
         border-bottom-right-radius: 5px;
         border-bottom-left-radius: 5px;
         > .no-data {
-          line-height: 432px;
+          line-height: 345px;
           text-align: center;
         }
         > .entrust-list-content {
@@ -268,22 +268,22 @@ export default {
       background-color: $nightBgColor;
       color:$nightFontColor;
       >.background-color{
-        background-color: #1E2636;
+        background-color: $nightMainBgColor;
         >.fiat-color{
           color: #338FF5;
         }
       }
       >.fiat-entrust-order-table{
         > .entrust-table-head {
-          background-color: #1E2636;
+          background-color: $nightMainBgColor;
           color: #617499;
           border: 1px solid #262F38;
           box-shadow: -2px 3px 5px 1px #191E28; text-align: left;
         }
         > .entrust-table-body {
-          background-color: #1E2636;
+          background-color: $nightMainBgColor;
           color: #9DA5B3;
-          border: 1px solid #262F38;
+          /*border: 1px solid #262F38;*/
           > .entrust-list-content {
             .red {
               color: #D45858;
@@ -291,6 +291,9 @@ export default {
             .green {
               color: #008069;
             }
+          }
+          .no-data {
+            background-color: $nightMainBgColor;
           }
         }
       }

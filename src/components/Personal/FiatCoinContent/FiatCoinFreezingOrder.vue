@@ -200,15 +200,12 @@ export default {
     >.freezing-order-content{
       >.freezing-table-head{
         box-sizing: border-box;
-        /*width: 1043px;*/
         height: 35px;
         line-height: 35px;
         border-radius: 5px;
         margin-bottom: 5px;
-        /*box-shadow:底边阴影;*/
         >.item{
           display: inline-block;
-          /*width: 140px;*/
           text-align: center;
         }
         >.order-time {
@@ -217,7 +214,6 @@ export default {
       }
       >.freezing-table-body{
         box-sizing: border-box;
-        /*width: 1043px;*/
         height: 170px;
         border-radius: 5px;
         margin-bottom: 15px;
@@ -264,8 +260,8 @@ export default {
         }
       }
       >.no-data{
-        height: 432px;
-        line-height: 432px;
+        height: 345px;
+        line-height: 345px;
         text-align: center;
         background-color: #1E2636;
       }
@@ -281,16 +277,16 @@ export default {
       }
       >.freezing-order-content{
         >.freezing-table-head{
-          background-color: #1E2636;
+          background-color: $nightMainBgColor;
           color: #617499;
           border: 1px solid #262F38;
           box-shadow: -2px 3px 5px 1px #191E28;
         }
         >.freezing-table-body{
-          background-color: #1E2636;
+          background-color: $nightMainBgColor;
           border: 1px solid #262F38;
           >.freezing-info-top{
-            background-color: #1E2636;
+            background-color: $nightMainBgColor;
             color: #617499;
             border-radius: 5px;
             .red{
@@ -321,7 +317,7 @@ export default {
           }
         }
         >.no-data{
-          background-color: #1E2636;
+          background-color: $nightMainBgColor;
         }
       }
     }

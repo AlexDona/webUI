@@ -215,7 +215,7 @@
                         </div>
                       </div>
                       <div class='recharge-content-right flex1'>
-                        <p class="recharge-content-code margin-top45 float-left">
+                        <p class="recharge-content-code margin-top30 float-left">
                           <VueQrcode
                             class="ercode"
                             :value="chargeMoney"
@@ -254,7 +254,7 @@
                                 v-for="(item, index) in mentionAddressList"
                                 :key="index"
                                 :label="item.address + '—' + item.remark"
-                                :value="item.coinId"
+                                :value="item.id"
                               >
                               </el-option>
                             </el-select>
@@ -275,8 +275,8 @@
                               type="text"
                               class="flex-input border-radius2 padding-l15 box-sizing"
                               ref="serviceCharge"
-                              @keyup="changeInputValue('serviceCharge', index, pointLength)"
-                              @input="changeInputValue('serviceCharge', index, pointLength)"
+                              @keyup="changeInputValue1('serviceCharge', index, pointLength)"
+                              @input="changeInputValue1('serviceCharge', index, pointLength)"
                             >
                             <span
                               class="new-address new-address-currency cursor-pointer"
@@ -371,122 +371,135 @@
                       </span>
                         </p>
                       </div>
-                      <!--提币-->
-                      <el-dialog
-                        :label="$t('M.comm_mention_money')"
-                        :visible.sync="mentionMoneyConfirm"
-                      >
-                        <el-form
-                          :label-position="labelPosition"
-                        >
-                          <!--手机已认证-->
-                          <!--手机验证-->
-                          <el-form-item
-                            v-if="securityCenter.isPhoneEnable"
-                            :label="$t('M.comm_code_phone')"
-                          >
-                            <input
-                              class="content-input padding-l15 box-sizing"
-                              v-model="phoneCode"
-                            >
-                            <CountDownButton
-                              class="send-code-btn cursor-pointer"
-                              :status="disabledOfPhoneBtn"
-                              @run="sendPhoneOrEmailCode(0)"
-                            />
-                          </el-form-item>
-                          <!--手机未认证-->
-                          <span v-else></span>
-                          <!--邮箱已认证-->
-                          <!--邮箱验证-->
-                          <el-form-item
-                            v-if="securityCenter.isMailEnable"
-                            :label="$t('M.comm_code_email')"
-                          >
-                            <input
-                              class="content-input padding-l15 box-sizing"
-                              v-model="emailCode"
-                            >
-                            <CountDownButton
-                              class="send-code-btn cursor-pointer"
-                              :status="disabledOfEmailBtn"
-                              @run="sendPhoneOrEmailCode(1)"
-                            />
-                          </el-form-item>
-                          <!--邮箱未认证-->
-                          <span v-elsee></span>
-                          <!--谷歌已认证-->
-                          <!--谷歌验证-->
-                          <el-form-item
-                            v-if="securityCenter.isGoogleEnable"
-                            :label="$t('M.comm_code_google')"
-                          >
-                            <input
-                              class="content-input input-google padding-l15 box-sizing"
-                              v-model="googleCode"
-                            >
-                          </el-form-item>
-                          <!--谷歌未认证-->
-                          <span v-else></span>
-                          <!--交易密码-->
-                          <el-form-item
-                            :label="$t('M.comm_password')"
-                          >
-                            <input
-                              type="password"
-                              class="content-input input-google padding-l15 box-sizing"
-                              v-model="password"
-                            >
-                          </el-form-item>
-                        </el-form>
-                        <div
-                          slot="footer"
-                          class="dialog-footer"
-                        >
-                          <el-button
-                            type="primary"
-                            @click.prevent="submitMentionMoney"
-                          >
-                            <!--确 定-->
-                            {{ $t('M.comm_confirm') }}
-                          </el-button>
-                        </div>
-                      </el-dialog>
-                      <!--设置交易密码-->
-                      <el-dialog
-                        :title="$t('m.comm_set') + $t('m.comm_password')"
-                        :visible.sync="dialogVisible"
-                        center
-                      >
-                        <span class="info text-align-c display-inline-block">
-                          <!--您还未设置交易密码请先设置交易密码在进行提币-->
-                          {{ $t('m.user_assets_no_transaction_password') }}
-                        </span>
-                        <span
-                          slot="footer"
-                          class="dialog-footer footer"
-                        ><!--确 定 取 消-->
-                          <button
-                            class="button-color border-radius4 cursor-pointer"
-                            type="primary"
-                            @click.prevent="confirm"
-                          >
-                            <!--确 定-->
-                            {{ $t('m.comm_confirm') }}
-                          </button>
-                          <button
-                            class="btn border-radius4 cursor-pointer"
-                            @click.prevent="dialogVisible = false"
-                          >
-                            <!--取 消-->
-                            {{ $t('m.comm_cancel') }}
-                          </button>
-                        </span>
-                      </el-dialog>
                     </div>
                   </div>
                 </transition>
               </div>
+              <!--提币-->
+              <el-dialog
+                :label="$t('M.comm_mention_money')"
+                :visible.sync="mentionMoneyConfirm"
+              >
+                <el-form
+                  :label-position="labelPosition"
+                >
+                  <!--手机已认证-->
+                  <!--手机验证-->
+                  <el-form-item
+                    v-show="securityCenter.isPhoneEnable"
+                    :label="$t('M.comm_code_phone')"
+                  >
+                    <input
+                      class="content-input padding-l15 box-sizing"
+                      type="number"
+                      v-model="phoneCode"
+                      @focus="emptyStatus"
+                    />
+                    <CountDownButton
+                      class="send-code-btn cursor-pointer"
+                      :status="disabledOfPhoneBtn"
+                      @run="sendPhoneOrEmailCode(0)"
+                    />
+                  </el-form-item>
+                  <!--手机未认证-->
+                  <span v-show="!securityCenter.isPhoneEnable"></span>
+                  <!--邮箱已认证-->
+                  <!--邮箱验证-->
+                  <el-form-item
+                    v-show="securityCenter.isMailEnable"
+                    :label="$t('M.comm_code_email')"
+                  >
+                    <input
+                      class="content-input padding-l15 box-sizing"
+                      type="number"
+                      v-model="emailCode"
+                      @focus="emptyStatus"
+                    />
+                    <CountDownButton
+                      class="send-code-btn cursor-pointer"
+                      :status="disabledOfEmailBtn"
+                      @run="sendPhoneOrEmailCode(1)"
+                    />
+                  </el-form-item>
+                  <!--邮箱未认证-->
+                  <span v-show="!securityCenter.isMailEnable"></span>
+                  <!--谷歌已认证-->
+                  <!--谷歌验证-->
+                  <el-form-item
+                    v-show="securityCenter.isGoogleEnable"
+                    :label="$t('M.comm_code_google')"
+                  >
+                    <input
+                      class="content-input input-google padding-l15 box-sizing"
+                      type="number"
+                      v-model="googleCode"
+                      @focus="emptyStatus"
+                    >
+                  </el-form-item>
+                  <!--谷歌未认证-->
+                  <span v-show="!securityCenter.isGoogleEnable"></span>
+                  <!--交易密码-->
+                  <el-form-item
+                    :label="$t('M.comm_password')"
+                  >
+                    <input
+                      type="password"
+                      class="content-input input-google padding-l15 box-sizing"
+                      v-model="password"
+                    >
+                  </el-form-item>
+                </el-form>
+                <div
+                  class="error-info"
+                >
+                  <span v-show="errorMsg">
+                    {{ errorMsg }}
+                  </span>
+                </div>
+                <div
+                  slot="footer"
+                  class="dialog-footer"
+                >
+                  <el-button
+                    type="primary"
+                    @click.prevent="submitMentionMoney"
+                  >
+                    <!--确 定-->
+                    {{ $t('M.comm_confirm') }}
+                  </el-button>
+                </div>
+              </el-dialog>
+              <!--设置交易密码-->
+              <el-dialog
+                :title="$t('m.comm_set') + $t('m.comm_password')"
+                :visible.sync="dialogVisible"
+                center
+              >
+                <span class="info text-align-c display-inline-block">
+                  <!--您还未设置交易密码请先设置交易密码在进行提币-->
+                  {{ $t('M.user_assets_no_transaction_password') }}
+                </span>
+                <span
+                  slot="footer"
+                  class="dialog-footer footer"
+                ><!--确 定 取 消-->
+                  <button
+                    class="button-color border-radius4 cursor-pointer"
+                    type="primary"
+                    @click.prevent="confirm"
+                  >
+                    <!--确 定-->
+                    {{ $t('M.comm_confirm') }}
+                  </button>
+                  <button
+                    class="btn border-radius4 cursor-pointer"
+                    @click.prevent="dialogVisible = false"
+                  >
+                    <!--取 消-->
+                    {{ $t('M.comm_cancel') }}
+                  </button>
+                </span>
+              </el-dialog>
               <!--分页-->
               <el-pagination
                 background
@@ -521,14 +534,14 @@ import {
   inquireRechargeAddressList,
   statusSubmitWithdrawButton,
   withdrawalInformation,
-  statusSecurityCenter,
   queryTransactionInformation,
   inquireWithdrawalAddressId,
   userRefreshUser
 } from '../../../utils/api/personal'
 import {
   returnAjaxMessage,
-  sendPhoneOrEmailCodeAjax
+  sendPhoneOrEmailCodeAjax,
+  getSecurityCenter
 } from '../../../utils/commonFunc'
 const { mapMutations } = createNamespacedHelpers('personal')
 Vue.use(VueClipboard)
@@ -546,8 +559,8 @@ export default {
   data () {
     return {
       labelPosition: 'top',
-      activeNames: ['1'],
       errorMessage: '',
+      errorMsg: '',
       showStatusButton: true, // 显示币种
       hideStatusButton: false, // 隐藏币种// 显示所有/余额切换，
       closePictureSrc: require('../../../assets/user/wrong.png'), // 显示部分
@@ -626,7 +639,6 @@ export default {
       'CHANGE_ACTIVE_SYMBOL'
     ]),
     // 切换当前币种
-    // 确认开启关闭
     statusOpenToClose (e) {
       switch (e) {
         case 'all':
@@ -726,22 +738,51 @@ export default {
       })
       this.$router.push({'path': '/TradeCenter'})
     },
-    // 输入限制
     // 修改input value 输入限制
     changeInputValue (ref, index, pointLength) {
+      // serviceChargeList.minFees
+      // serviceChargeList.maxFees
       // 获取ref中input值
       this[ref] = this.$refs[ref].value
       // 限制数量小数位位数
       let target = this.$refs[ref][index]
       formatNumberInput(target, pointLength)
       // 获取输入数量
-      this.service = this.$refs.serviceCharge[index].value
       this.amount = this.$refs.rechargeCount[index].value
       // 输入数量之后显示在到账数量框中显示,在手续费中输入手续费并且以输入数量之后减去的值显示在到账数量
-      // 先引入方法 用变量接收 再调用方法 然后传入参数 得到结构 再做逻辑渲染判断
       this.serviceChargeCount = Math.abs(
         amendPrecision(this.$refs.rechargeCount[index].value, this.$refs.serviceCharge[index].value, '-')
       )
+      if (this.$refs.rechargeCount[index].value > this.withdrawDepositList[index].total) {
+        // 判断输入数量不能大于总数量
+        this.$refs.rechargeCount[index].value = this.withdrawDepositList[index].total
+        console.log(this.amount)
+      }
+    },
+    changeInputValue1 (ref, index, pointLength) {
+      // 获取ref中input值
+      this[ref] = this.$refs[ref].value
+      // 限制数量小数位位数
+      let target = this.$refs[ref][index]
+      formatNumberInput(target, pointLength)
+      // 获取输入手续费
+      this.service = this.$refs.serviceCharge[index].value
+      this.serviceChargeCount = Math.abs(
+        amendPrecision(this.$refs.rechargeCount[index].value, this.$refs.serviceCharge[index].value, '-')
+      )
+      if (this.$refs.serviceCharge[index].value < this.serviceChargeList.minFees) {
+        // 判断输入手续费小于最小提现手续费
+        this.$message({
+          message: this.$t('M.user_assets_withdrawal_hint5'),
+          type: 'error'
+        })
+      } else if (this.$refs.serviceCharge[index].value > this.serviceChargeList.maxFees) {
+        // 判断输入手续费大于于最大提现手续费
+        this.$message({
+          message: this.$t('M.user_assets_withdrawal_hint6'),
+          type: 'error'
+        })
+      }
     },
     // 显示充值框
     showRechargeBox (id, name, index) {
@@ -762,7 +803,6 @@ export default {
     },
     // 显示提现框
     mentionMoneyButton (id, name, index) {
-      this.$refs.serviceCharge[index].value = ''
       this.$refs.rechargeCount[index].value = ''
       this.serviceChargeCount = ''
       console.log()
@@ -792,8 +832,15 @@ export default {
       this.seen = false
       this.current = null
     },
+    // 清空内容信息
+    emptyStatus () {
+      this.errorMsg = ''
+    },
     // 发送验证码
     sendPhoneOrEmailCode (loginType) {
+      console.log(loginType)
+      // console.log(this.disabledOfPhoneBtn)
+      // console.log(this.disabledOfEmailBtn)
       if (this.disabledOfPhoneBtn || this.disabledOfEmailBtn) {
         return false
       }
@@ -809,12 +856,12 @@ export default {
           break
       }
       sendPhoneOrEmailCodeAjax(loginType, params, (data) => {
-        console.log(this.disabledOfPhoneBtn)
         // 提示信息
         if (!returnAjaxMessage(data, this)) {
           console.log('error')
           return false
         } else {
+          console.log(loginType)
           switch (loginType) {
             case 0:
               this.$store.commit('user/SET_USER_BUTTON_STATUS', {
@@ -882,8 +929,9 @@ export default {
     // 资产币种提币地址选择
     changeId (e) {
       this.mentionAddressList.forEach(item => {
+        console.log(item)
         if (e === item.coinId) {
-          this.mentionAddressValue = item.address
+          this.mentionAddressValue = e
         }
       })
     },
@@ -917,8 +965,8 @@ export default {
         // 返回列表数据
         this.serviceChargeList = data.data.data
         this.serviceCharge = data.data.data.minFees
-        // this.$refs.serviceCharge[index].value = this.serviceCharge
-        // console.log(this.$refs.serviceCharge[index].value)
+        this.$refs.serviceCharge[index].value = this.serviceCharge
+        this.service = this.$refs.serviceCharge[index].value
       }
     },
     /**
@@ -941,17 +989,24 @@ export default {
     * 点击提币按钮
     * */
     moneyConfirmState () {
-      if (!this.amount) {
+      if (!this.mentionAddressValue) {
+        // 请选择提币地址
+        this.$message({
+          message: this.$t('M.comm_please_choose') + this.$t('M.comm_mention_money') + this.$t('M.comm_site'),
+          type: 'error'
+        })
+        this.mentionMoneyConfirm = false
+      } else if (!this.amount) {
         // 请输入提币数量
         this.$message({
-          message: this.$t('m.comm_please_enter') + this.$t('m.comm_mention_money') + this.$t('m.comm_count'),
+          message: this.$t('M.comm_please_enter') + this.$t('M.comm_mention_money') + this.$t('M.comm_count'),
           type: 'error'
         })
         this.mentionMoneyConfirm = false
       } else if (!this.service) {
         // 请输入手续费
         this.$message({
-          message: this.$t('m.comm_please_enter') + this.$t('m.comm_service_charge'),
+          message: this.$t('M.comm_please_enter') + this.$t('M.comm_service_charge'),
           type: 'error'
         })
         this.mentionMoneyConfirm = false
@@ -966,6 +1021,14 @@ export default {
       this.$router.push({path: '/TransactionPassword'})
     },
     submitMentionMoney () {
+      if (!this.phoneCode && !this.emailCode && !this.googleCode) {
+        console.log(1)
+        // 请输入验证码
+        this.errorMsg = this.$t('M.comm_please_enter') + this.$t('M.user_security_verify')
+        return false
+      } else {
+        this.errorMsg = ''
+      }
       this.stateSubmitAssets()
     },
     // 提交提币接口
@@ -991,6 +1054,7 @@ export default {
         this.$refs.serviceCharge[index].value = ''
         this.$refs.rechargeCount[index].value = ''
         this.serviceChargeCount = ''
+        this.mentionMoneyConfirm = false
       }
     },
     // 接口请求完成之后清空数据
@@ -1012,7 +1076,7 @@ export default {
     //  点击复制
     onCopy (e) {
       // 已拷贝
-      let msg = this.$t('m.comm_have_been_copied')
+      let msg = this.$t('M.comm_have_been_copied')
       this.$message({
         type: 'success',
         message: msg
@@ -1020,7 +1084,7 @@ export default {
     },
     onError (e) {
       // 拷贝失败，请稍后重试
-      let msg = this.$t('m.comm_copies_failure')
+      let msg = this.$t('M.comm_copies_failure')
       this.$message({
         type: 'success',
         message: msg
@@ -1044,17 +1108,12 @@ export default {
     /**
      * 安全中心
      */
-    async getSecurityCenter () {
-      let data = await statusSecurityCenter({
-        token: this.userInfo.token // token
+    getSecurityCenter () {
+      getSecurityCenter(this, (data) => {
+        if (data) {
+          this.securityCenter = data.data.data
+        }
       })
-      console.log(data)
-      if (!(returnAjaxMessage(data, this, 0))) {
-        return false
-      } else {
-        // 返回展示
-        this.securityCenter = data.data.data
-      }
     },
     /**
      * 根据coinid查询交易信息
@@ -1138,7 +1197,7 @@ export default {
   .account-assets{
     >.account-assets-main {
       >.account-assets-box {
-        min-height: 300px;
+        min-height: 480px;
         .account-assets-header {
           >.header-flex {
             height: 100%;
@@ -1196,6 +1255,11 @@ export default {
                     height:195px;
                     padding: 20px 6px;
                     z-index: 2;
+                    .error-info {
+                      height: 20px;
+                      line-height: 35px;
+                      color: #d45858;
+                    }
                     .info {
                       color: #fff;
                     }
@@ -1334,22 +1398,23 @@ export default {
                         }
                       }
                     }
-                    .content-input {
-                      width: 180px;
-                      height: 34px;
-                      /*margin-top: 20px;*/
-                    }
-                    .input-google {
-                      width: 270px;
-                    }
-                    .send-code-btn {
-                      width: 90px;
-                      height: 34px;
-                      position: absolute;
-                      top: 4px;
-                    }
                   }
                 }
+              }
+              .content-input {
+                width: 180px;
+                height: 34px;
+                /*margin-top: 20px;*/
+              }
+              .input-google {
+                width: 270px;
+              }
+              .send-code-btn {
+                width: 90px;
+                height: 34px;
+                position: absolute;
+                top: 4px;
+                z-index: 999;
               }
             }
           }
@@ -1379,7 +1444,7 @@ export default {
       background-color: $nightBgColor;
       color:$nightFontColor;
       .account-assets-box {
-        background-color: #1E2636;
+        background-color: $nightMainBgColor;
         .account-assets-header {
           box-shadow: 0px 2px 13px rgba(24,30,42,1);
           >.header-left {
@@ -1388,7 +1453,7 @@ export default {
           >.header-right {
             >.header-right-right {
               >.header-right-search {
-                background-color: #333F4A;
+                background-color: #2D3651;
                 color: #fff;
               }
             }
@@ -1428,17 +1493,6 @@ export default {
               }
               >.recharge-list {
                 border: 1px solid #338FF5;
-                .content-input {
-                  border: 1px solid #485776;
-                  color: #fff;
-                  &:focus {
-                    border: 1px solid #338FF5;
-                  }
-                }
-                .send-code-btn {
-                  background-color: #338FF5;
-                  color: #fff;
-                }
                 >.triangle {
                   border-right: 1px solid transparent;
                   border-top: 1px solid transparent;
@@ -1452,7 +1506,7 @@ export default {
                   }
                   >.input-box {
                     >.hint-input {
-                      background-color: #181E24;
+                      background-color: #2D3651;
                       color: #fff;
                     }
                     >.code-copy {
@@ -1473,7 +1527,7 @@ export default {
                   >.list-left-flex {
                     >.flex-box {
                       >.flex-input {
-                        background-color: #181E24;
+                        background-color: #2D3651;
                         color: #fff;
                       }
                       >.text-input {
@@ -1495,11 +1549,11 @@ export default {
                         color: #83909B;
                       }
                       >.count-flex-input{
-                        background-color: #181E24;
+                        background-color: #2D3651;
                         color: #fff;
                       }
                       >.count-text-input {
-                        background-color: #37424C;
+                        background-color: #20273D;
                         color: #fff;
                       }
                     }
@@ -1525,6 +1579,17 @@ export default {
                 }
               }
             }
+          }
+          .content-input {
+            border: 1px solid #485776;
+            color: #fff;
+            &:focus {
+              border: 1px solid #338FF5;
+            }
+          }
+          .send-code-btn {
+            background-color: #338FF5;
+            color: #fff;
           }
         }
       }
@@ -1588,17 +1653,6 @@ export default {
               >.recharge-list {
                 border: 1px solid #338FF5;
                 background: #fff;
-                .content-input {
-                  border: 1px solid #ECF1F8;
-                  color: #333;
-                  &:focus {
-                    border: 1px solid #338FF5;
-                  }
-                }
-                .send-code-btn {
-                  background-color: #338FF5;
-                  color: #fff;
-                }
                 >.triangle {
                   border-right: 1px solid transparent;
                   border-top: 1px solid transparent;
@@ -1689,6 +1743,17 @@ export default {
                 }
               }
             }
+          }
+          .content-input {
+            border: 1px solid #ECF1F8;
+            color: #333;
+            &:focus {
+              border: 1px solid #338FF5;
+            }
+          }
+          .send-code-btn {
+            background-color: #338FF5;
+            color: #fff;
           }
         }
       }

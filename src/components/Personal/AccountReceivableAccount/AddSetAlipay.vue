@@ -3,7 +3,7 @@
     class="add-account personal"
     :class="{'day':theme == 'day','night':theme == 'night' }"
   >
-    <HeaderCommon />
+    <HeaderCommon/>
     <div class="add-account-main margin25">
       <header class="add-account-header personal-height60 line-height60 line-height70 margin25">
          <span
@@ -131,7 +131,7 @@
         </div>
       </div>
     </div>
-    <FooterCommon />
+    <keep-aline><FooterCommon/></keep-aline>
   </div>
 </template>
 <!--请严格按照如下书写书序-->
@@ -162,7 +162,8 @@ export default {
   data () {
     return {
       tokenObj: {
-        'token': ''
+        'token': '',
+        'x-domain': ''
       },
       alipayAccount: '', // 支付宝账号
       password: '', // 交易密码
@@ -186,6 +187,7 @@ export default {
     // 黑色主题样式
     require('../../../../static/css/theme/night/Personal/AccountReceivableAccount/AddSetAlipayNight.css')
     this.tokenObj.token = this.userInfo.token
+    this.tokenObj['x-domain'] = window.location.host.split(':')[0]
     console.log(this.userInfo)
     this.getAccountPaymentTerm()
     this.paymentMethodInformation()
@@ -250,11 +252,20 @@ export default {
     async stateSeniorCertification () {
       let goOnStatus = 0
       if (
-        this.checkoutInputFormat(0, this.alipayAccount)
+        this.checkoutInputFormat(0, this.alipayAccount) &&
+        this.checkoutInputFormat(1, this.password)
       ) {
         goOnStatus = 1
       } else {
         goOnStatus = 0
+      }
+      if (!this.dialogImageHandUrl1 && !this.dialogImageHandUrl) {
+        // 未绑定请上传支付宝收款码邮箱
+        this.$message({
+          message: this.$t('M.user_account_alipay_pla'),
+          type: 'error'
+        })
+        return false
       }
       if (goOnStatus) {
         let data
@@ -391,7 +402,7 @@ export default {
       background-color: $nightBgColor;
       color:$nightFontColor;
       .add-account-main {
-        background-color: #1E2636;
+        background-color: $nightMainBgColor;
         >.add-account-header {
           border-bottom: 1px solid #39424D;
           >.header-content-left {

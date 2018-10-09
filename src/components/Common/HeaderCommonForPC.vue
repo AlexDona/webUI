@@ -159,20 +159,25 @@
                   </span>
                   <div class="login-info">
                     <div class="sub-nav-user">
-                      <p class="nav-vip">VIP享手续费、提现优惠</p>
+                      <p class="nav-vip">
+                        <!--VIP享手续费、提现优惠-->
+                        {{$t('M.user_vip_text8')}}
+                      </p>
                       <button
                         v-if="!userInfo.level"
                         class="nav-button"
                         @click="stateOpenVip"
                       >
-                        立即开通
+                        <!--立即开通-->
+                        {{$t('M.user_vip_immediately_opened')}}
                       </button>
                        <button
                          v-else
                          class="nav-button"
                          @click="stateOpenVip"
                        >
-                        查看我的VIP
+                        <!--查看我的VIP-->
+                         {{$t('M.user_vip_look')}}
                       </button>
                     </div>
                     <ul class="personal-user">
@@ -330,9 +335,6 @@ import {
   getTransitionCurrencyRate // 获取汇率转换费率
 } from '../../utils/api/header'
 import IconFontCommon from '../Common/IconFontCommon'
-import {
-  setStore
-} from '../../utils'
 // import {getPartnerList} from '../../utils/api/home'
 import {
   returnAjaxMessage,
@@ -422,7 +424,8 @@ export default{
       'CHANGE_CURRENCY_RATE_LIST',
       'SET_COUNTRY_AREA_LIST',
       'USER_INFORMATION_REFRESH',
-      'SET_USER_INFO_REFRESH_STATUS'
+      'SET_USER_INFO_REFRESH_STATUS',
+      'CHANGE_REF_SECURITY_CENTER_INFO'
     ]),
     getCountryList () {
       getCountryListAjax(this, (data) => {
@@ -501,6 +504,7 @@ export default{
             break
           case 'security-center':
             this.setPersonalJump('security-center')
+            this.$store.commit('personal/CHANGE_REF_SECURITY_CENTER_INFO', true)
             break
           case 'receiving-set':
             this.$store.commit('personal/CHANGE_REF_ACCOUNT_CREDITED_STATE', true)
@@ -559,14 +563,12 @@ export default{
     changeSetting () {
       // 主题设置
       this.CHANGE_THEME(this.activeTheme)
-      setStore('theme', this.activeTheme)
       document.body.classList.remove('day')
       document.body.classList.remove('night')
       document.body.classList.add(this.activeTheme)
       // 汇率转换设置
       this.changeActiveTransitionCurrency()
       this.CHANGE_CONVERT_CURRENCY(this.activeConvertCurrency)
-      setStore('convertCurrency', this.activeConvertCurrency || 'CNY')
       this.toggleShowSettingBox(0)
     },
     // 查询某商户可用法币币种列表

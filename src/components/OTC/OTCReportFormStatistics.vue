@@ -14,6 +14,7 @@
       </div>
       <!-- 2.2 筛选条件 -->
       <div class="report-form-filtrate">
+        <!-- 交易币种 -->
         <span class="filtrate-text font-size14">
          {{$t('M.otc_trade')}}{{$t('M.comm_currency')}}
         </span>
@@ -28,10 +29,10 @@
               :value="item.coinId"
               :label="item.name"
             >
-              {{ item.name }}
             </el-option>
           </el-select>
         </span>
+        <!-- 交易法币 -->
         <span class="filtrate-text font-size14">
           {{$t('M.otc_trade')}}{{$t('M.comm_coin')}}
         </span>
@@ -44,9 +45,8 @@
               v-for="(item,index) in traderCurrencyCoinsList"
               :key="index"
               :value="item.id"
-              :label="item.name"
+              :label="language == 'zh_CN'? item.name : item.shortName"
             >
-              {{ item.name }}
             </el-option>
           </el-select>
         </span>
@@ -608,14 +608,35 @@ export default {
     startTime (e) {
       this.startTimeValue = e
       this.activedRadioId = ''
+      console.log(e)
+      if (this.endTimeValue) {
+        if (this.startTimeValue > this.endTimeValue) {
+          this.$message({ // message: '开始时间不能大于结束时间',
+            message: this.$t('M.otc_time_limit'),
+            type: 'error'
+          })
+          return false
+        }
+      }
       this.getOTCEntrustingOrdersRevocation()
     },
-    // 结束事件赋值
+    // 结束时间赋值
     endTime (e) {
       this.endTimeValue = e
       this.activedRadioId = ''
+      console.log(e)
+      if (this.startTimeValue) {
+        if (this.startTimeValue > this.endTimeValue) {
+          this.$message({ // message: '开始时间不能大于结束时间',
+            message: this.$t('M.otc_time_limit'),
+            type: 'error'
+          })
+          return false
+        }
+      }
       this.getOTCEntrustingOrdersRevocation()
     },
+    // 右侧单选日期按钮change事件
     radioChouse (e) {
       this.activedRadioId = e
       if (e == '4') {
@@ -696,6 +717,7 @@ export default {
   filter: {},
   computed: {
     ...mapState({
+      language: state => state.common.language,
       // 商户id
       partnerId: state => state.common.partnerId,
       theme: state => state.common.theme,
@@ -758,6 +780,7 @@ export default {
       margin-top: 20px;
       >.common{
         // background-color: #1E2636;
+        border-radius: 5px;
         >.head{
           width: 570px;
           height: 40px;
@@ -906,27 +929,27 @@ export default {
       }
       >.report-form-asset{
         color: #338FF5;
-        background-color: #1E2636;
+        background-color: #1C1F32;
         >.title{
-          border: 1px solid #262F38;
+          border: 1px solid #1C1F32;
           box-shadow: 0px 4px 6px #191E28;
         }
         >.content{
-          border: 1px solid #262F38;
+          border: 1px solid #1C1F32;
         }
       }
       >.report-form-buy-sell{
         >.common{
-          background-color: #1E2636;
+          background-color: #1C1F32;
           >.head{
             color: #338FF5;
-            border: 1px solid #262F38;
+            // border: 1px solid #23263C;
             box-shadow: 0px 4px 6px #191E28;
           }
           >.body{
-            border: 1px solid #262F38;
+            border: 1px solid #23263C;
             >.together{
-              border: 1px solid #262F38;
+              border: 1px solid #23263C;
               >.left{
                 color: #D45858;
                 >.round{
@@ -964,7 +987,8 @@ export default {
         }
       }
       >.report-form-details{
-        background-color: #1E2636;
+        // background-color: #1E2636;
+        background-color: #1C1F32;
         >.title{
           color: #338FF5;
         }
@@ -1043,7 +1067,7 @@ export default {
                 }
               }
               >.right{
-                color: #9DA5B3;
+                color: #7D90AC;
                 .data{
                   color: #D45858;
                 }
@@ -1073,7 +1097,7 @@ export default {
         }
       }
       >.report-form-details{
-        background-color: #1E2636;
+        // background-color: #1E2636;
         >.title{
           color: #338FF5;
         }

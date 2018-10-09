@@ -47,7 +47,7 @@
                   </router-link>
                   <router-link to="/PersonalCenter">
                     <!--提币-->
-                    {{ $t('M.comm_mention_money') }}：
+                    {{ $t('M.comm_mention_money') }}
                   </router-link>
                 </div>
               </div>
@@ -108,7 +108,7 @@
                     @click="addEntrust(0,'limit-buy')"
                   >
                     <!--买入-->
-                    {{ $t('M.comm_buy') }}：
+                    {{ $t('M.comm_buy') }}
                   </el-button>
                 </div>
               </div>
@@ -229,7 +229,7 @@
                   </router-link>
                   <router-link to="/PersonalCenter">
                     <!--提币-->
-                    {{ $t('M.comm_mention_money') }}：
+                    {{ $t('M.comm_mention_money') }}
                   </router-link>
                 </div>
               </div>
@@ -577,7 +577,7 @@ export default {
         return false
       }
       let params = {
-        partnerId: this.partnerId,
+        // partnerId: this.partnerId,
         userId: this.loginStep1Info.userId,
         tradeId: this.activeSymbol.tradeId + '',
         type: type ? 'SELL' : 'BUY', // 委单类型

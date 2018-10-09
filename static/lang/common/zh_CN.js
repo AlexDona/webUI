@@ -18,6 +18,8 @@ export const common = {
   'comm_black': '黑色',
   'comm_white': '白色',
   'comm_confirm': '确定',
+  'comm_sold_out': '下架',
+  'comm_all_sold_out': '全部下架',
   'comm_affirm': '确认',
   'comm_cancel': '取消',
   'comm_login': '登录',
@@ -60,6 +62,7 @@ export const common = {
   'comm_end': '结束',
   'comm_register_time': '注册',
   'comm_sub_time': '提交',
+  'comm_sub_anew': '重新',
   'comm_creation': '创建',
   'comm_update': '更新',
   'comm_place_order': '下单',
@@ -95,6 +98,7 @@ export const common = {
   'comm_note': '短信',
   'comm_code': '验证码',
   'comm_code_phone': '手机验证',
+  'comm_code_phone1': '手机号码',
   'comm_code_email': '邮箱验证',
   'comm_code_google': '谷歌验证',
   // 动作类型
@@ -106,7 +110,8 @@ export const common = {
   'comm_seller': '卖方',
   'comm_view_more': '查看更多',
   // 内容类型
-  'comm_sure_delete': '确定删除API地址吗, 是否继续?',
+  'comm_sure_delete': '确定删除API地址?',
+  'comm_sure_push': '确定撤销PUSH记录?',
   'comm_qr_code': '二维码',
   'comm_have_been_copied': '已拷贝',
   'comm_copies_failure': '拷贝失败，请稍后重试',
@@ -146,5 +151,14 @@ export const common = {
   'comm_news_and_notice': '新闻公告',
   'comm_description': '说明',
   'comm_emailbox': '邮箱',
-  'comm_loginpassword': '密码'
+  'comm_loginpassword': '密码',
+  'comm_clause': '条款',
+  'comm_privacy': '隐私',
+  'comm_law': '法律',
+  'comm_statement': '声明',
+  'comm_rate1': '费率',
+  'comm_pack_up': '收起',
+  'comm_content': '内容',
+  'comm_after_get': '后重获取',
+  'comm_get_code': '获取验证码'
 }

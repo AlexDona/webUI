@@ -94,23 +94,23 @@
                   </li>
                   <!--委托量-->
                   <li class="td price">
-                    {{item.count-0}}
+                    {{scientificToNumber(item.count-0)}}
                   </li>
                   <!--委托价-->
                   <li class="td price">
-                    {{item.price-0}}
+                    {{scientificToNumber(item.price-0)}}
                   </li>
                   <!--总金额-->
                   <li class="td price">
-                    {{item.amount-0}}
+                    {{scientificToNumber(item.amount-0)}}
                   </li>
                   <!--成交量-->
                   <li class="td price">
-                    {{item.completeCount-0}}
+                    {{scientificToNumber(item.completeCount-0)}}
                   </li>
                   <!--未成交量-->
                   <li class="td price">
-                    {{item.leftCount-0}}
+                    {{scientificToNumber(item.leftCount-0)}}
                   </li>
                   <!--操作-->
                   <li class="td todos">
@@ -212,19 +212,19 @@
                   </li>
                   <!--委托量-->
                   <li class="td price">
-                    {{item.count-0}}
+                    {{scientificToNumber(item.count-0)}}
                   </li>
                   <!--委托价-->
                   <li class="td price">
-                    {{item.price-0}}
+                    {{scientificToNumber(item.price-0)}}
                   </li>
                   <!--总金额-->
                   <li class="td price">
-                    {{item.amount-0}}
+                    {{scientificToNumber(item.amount-0)}}
                   </li>
                   <!--成交量-->
                   <li class="td price">
-                    {{item.completeCount-0}}
+                    {{scientificToNumber(item.completeCount-0)}}
                   </li>
                 </ul>
               </div>
@@ -254,7 +254,10 @@
   </div>
 </template>
 <script>
-import {timeFilter} from '../../utils'
+import {
+  timeFilter,
+  scientificToNumber
+} from '../../utils'
 import {
   getMyEntrust,
   getHistoryEntrust
@@ -313,6 +316,9 @@ export default {
     ...mapMutations([
       'TOGGLE_REFRESH_ENTRUST_LIST_STATUS'
     ]),
+    scientificToNumber (num) {
+      return scientificToNumber(num)
+    },
     // 跳转到个人中心
     jumpToPersonal () {
       this.$store.commit('personal/CHANGE_USER_CENTER_ACTIVE_NAME', 'coin-orders')
@@ -413,6 +419,7 @@ export default {
   watch: {
     activeName (newVal) {
       console.log(newVal)
+      if (!this.isLogin) return false
       switch (newVal) {
         case 'current-entrust':
           this.getMyCurrentEntrust()

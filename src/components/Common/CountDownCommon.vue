@@ -4,11 +4,10 @@
     :class="className"
     :disabled="disabled"
     :status="status"
-    @click="run"
+    @click.prevent="run"
   >
     {{text}}
   </button>
-  <!--<button class="sendSmsBtn" :class="disabled?'dissendSmsBtn':''" type="button" v-on:click="run" :disabled="disabled || time > 0">{{ text }}</button>-->
 </template>
 <!--请严格按照如下书写书序-->
 <script>
@@ -28,7 +27,8 @@ export default {
   data () {
     return {
       time: 0,
-      disabled: false
+      disabled: false,
+      text: this.$t('M.comm_get_code')
     }
   },
   created () {},
@@ -45,7 +45,6 @@ export default {
     },
     start () {
       this.time = this.second
-      // console.log(this.disabled)
       this.disabled = true
       this.timer()
       this.SET_USER_BUTTON_STATUS({
@@ -68,9 +67,9 @@ export default {
   },
   filter: {},
   computed: {
-    text: function () {
-      return this.time > 0 ? this.time + 's 后重获取' : '获取验证码'
-    }
+    // text () {
+    //   return this.time > 0 ? this.time + 's' + this.$t('M.comm_after_get') : this.$t('M.comm_get_code')
+    // }
   },
   watch: {
     status (newVal) {
@@ -79,6 +78,17 @@ export default {
         this.$emit('run')
         this.start()
       }
+    },
+    text (newVal, oldVal) {
+      console.log(newVal)
+    },
+    time (newVal, oldVal) {
+      if (newVal > 0) {
+        this.text = this.time + 's' + this.$t('M.comm_after_get')
+      } else {
+        this.text = this.$t('M.comm_get_code')
+      }
+      this.$forceUpdate()
     }
   }
 }

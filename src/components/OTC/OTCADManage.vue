@@ -2,12 +2,12 @@
   <div
     class="otc-AD-manage-box otc"
     :class="{'day':theme == 'day','night':theme == 'night' }"
-    :style="{'height':windowHeight+'px'}"
   >
+  <!-- :style="{'height':windowHeight+'px'}" -->
     <!-- 1.0 导航 -->
     <NavCommon/>
     <!-- 2.0 广告管理 -->
-    <div class="otc-AD-manage-content">
+    <div class="otc-AD-manage-content" :style="{'min-height':(height-556)+'px'}">
       <!-- 2.1 大标题广告管理 -->
       <div class="AD-title font-size20 padding-l15 font-weight700">
         <!-- 广告管理 -->
@@ -30,7 +30,7 @@
               <el-option
                 v-for="item in ADManageTraderStyleList"
                 :key="item.value"
-                :label="item.label"
+                :label="$t(item.label)"
                 :value="item.value"
               >
               </el-option>
@@ -68,7 +68,7 @@
                 <el-option
                   v-for="(item,index) in ADManageCurrencyId"
                   :key="index"
-                  :label="item.name"
+                  :label="language == 'zh_CN'? item.name : item.shortName"
                   :value="item.id"
                 >
                 </el-option>
@@ -87,7 +87,7 @@
               <el-option
                 v-for="item in ADManageStatusList"
                 :key="item.value"
-                :label="item.label"
+                :label="$t(item.label)"
                 :value="item.value"
               >
               </el-option>
@@ -149,13 +149,15 @@
                   v-if="scope.row.entrustType === 'BUY'"
                   :class="{red:scope.row.entrustType === 'BUY'}"
                 >
-                  购买
+                  <!-- 购买 -->
+                  {{$t('M.otc_index_buy')}}
                 </div>
                 <div
                   v-if="scope.row.entrustType === 'SELL'"
                   :class="{green:scope.row.entrustType === 'SELL'}"
                 >
-                  出售
+                  <!-- 出售 -->
+                  {{$t('M.otc_index_sell')}}
                 </div>
               </template>
             </el-table-column>
@@ -288,6 +290,7 @@ export default {
   },
   data () {
     return {
+      height: '', // 广告管理内容的高度
       // 分页
       currentPage: 1, // 当前页码
       totalPages: 1, // 总页数
@@ -296,11 +299,11 @@ export default {
       ADManageTraderStyleList: [
         {
           value: 'BUY',
-          label: this.$t('M.comm_buying')
+          label: 'M.comm_buying'
         },
         {
           value: 'SELL',
-          label: this.$t('M.comm_offering')
+          label: 'M.comm_offering'
         }
       ],
       // 2.0 广告管理筛选下拉框数组--市场
@@ -314,15 +317,16 @@ export default {
       ADManageStatusList: [
         {
           value: 'ENTRUSTED',
-          label: this.$t('M.comm_already') + this.$t('M.otc_adMange_getting') // 已上架
+          // label: this.$t('M.comm_already') + this.$t('M.otc_adMange_getting') // 已上架
+          label: 'M.otc_adMange_already_getting' // 已上架
         },
         {
           value: 'COMPLETED',
-          label: this.$t('M.otc_enum_status_yiwancheng') // 已完成
+          label: 'M.otc_adMange_already_accomplish' // 已完成
         },
         {
           value: 'CANCELED',
-          label: this.$t('M.comm_already') + this.$t('M.otc_adMange_adverting') // 已下架
+          label: 'M.otc_adMange_already_adverting' // 已下架
         }
       ],
       // 设置默认列表页数
@@ -334,6 +338,10 @@ export default {
     }
   },
   created () {
+    // 动态获取广告管理内容的高度
+    // console.log(document.documentElement.clientHeight)
+    this.height = document.documentElement.clientHeight
+    // console.log(this.height)
     require('../../../static/css/list/OTC/OTCADManage.css')
     require('../../../static/css/theme/day/OTC/OTCADManageDay.css')
     require('../../../static/css/theme/night/OTC/OTCADManageNight.css')
@@ -445,8 +453,18 @@ export default {
         this.ADManageCurrencyId = data.data.data
       }
     },
+    // 一键下架所有广告 二次确认弹出框
+    cancelAllOnekey () {
+      this.$confirm(this.$t('M.otc_adMange_tipsContentThree'), {
+        confirmButtonText: this.$t('M.comm_all_sold_out'), // 全部下架
+        cancelButtonText: this.$t('M.comm_cancel') // 取消
+      }).then(() => {
+        this.cancelAllOnekeyConfirm()
+      }).catch(() => {
+      })
+    },
     // 一键下架所有广告
-    async cancelAllOnekey () {
+    async cancelAllOnekeyConfirm () {
       const data = await cancelAllOrdersOnekey()
       // 提示信息
       if (!(returnAjaxMessage(data, this, 1))) {
@@ -459,22 +477,14 @@ export default {
     // 点击表格中的下架按钮触发的事件
     updateADUnshelve (id) {
       this.$confirm(this.$t('M.otc_adMange_tipsContentOne'), {
-        confirmButtonText: this.$t('M.comm_confirm'), // 确定
+        confirmButtonText: this.$t('M.comm_sold_out'), // 下架
         cancelButtonText: this.$t('M.comm_cancel') // 取消
       }).then(() => {
         this.getOTCEntrustingOrdersRevocation(id)
-        // this.$message({
-        //   type: 'success',
-        //   message: '下架成功!'
-        // })
       }).catch(() => {
-        this.$message({
-          type: 'success',
-          message: this.$t('M.comm_already') + this.$t('M.comm_cancel') + this.$t('M.otc_adMange_adverting') // 已取消下架
-        })
       })
     },
-    // 点击下架按钮 请求撤单接口
+    // 点击 下架 按钮请求撤单接口
     async getOTCEntrustingOrdersRevocation (id) {
       let data = await querySelectedOrdersRevocation({
         entrustId: id
@@ -491,11 +501,11 @@ export default {
         })
       }
     },
-    // 点击修改按钮钮触发的事件
+    // 点击 修改 按钮钮触发的事件
     modifyAD (item) {
-      this.$confirm(this.$t('M.otc_adMange_tipsContentTwo'), this.$t('M.otc_prompt'), {
-        confirmButtonText: this.$t('M.comm_confirm'),
-        cancelButtonText: this.$t('M.comm_cancel')
+      this.$confirm(this.$t('M.otc_adMange_tipsContentTwo'), {
+        confirmButtonText: this.$t('M.comm_sold_out'), // 下架
+        cancelButtonText: this.$t('M.comm_cancel') // 取消
       }).then(() => {
         // 跳转发布广告页面并携带一条信息的参数
         this.$router.push({path: '/OTCPublishAD', query: {id: item.id}})
@@ -514,6 +524,7 @@ export default {
   filter: {},
   computed: {
     ...mapState({
+      language: state => state.common.language,
       partnerId: state => state.common.partnerId,
       theme: state => state.common.theme
     }),
@@ -527,7 +538,7 @@ export default {
 <style scoped lang="scss" type="text/scss">
   @import "../../../static/css/scss/index";
   .otc-AD-manage-box {
-    position: relative;
+    // position: relative;
     >.otc-AD-manage-content {
       width: 1150px;
       margin: 70px auto;
@@ -542,7 +553,7 @@ export default {
       }
       > .AD-manage-main {
         > .manage-main-top {
-          height: 60px;
+          min-height: 60px;
           line-height: 60px;
           margin-bottom: 25px;
           > .filtrate-text {
@@ -592,7 +603,7 @@ export default {
         > .AD-manage-main {
           > .manage-main-top {
             > .filtrate-text {
-              color: #9DA5B3;
+              color: #fff;
             }
             > .style-input {
             }
@@ -661,8 +672,8 @@ export default {
       }
     }
     .footer{
-      position: absolute;
-      bottom:0;
+      // position: absolute;
+      // bottom:0;
     }
   }
 </style>

@@ -9,7 +9,7 @@
         {{ $t('M.user_coin') }}{{ $t('M.comm_order') }}
       </span>
     </header>
-    <div class="min-height500 background-color margin-top9">
+    <div class="height500 background-color margin-top9">
       <el-tabs
         v-model="activeName"
         @tab-click = "coinMoneyOrders"
@@ -132,6 +132,7 @@
             <div class="result-box">
               <el-table
                 :data="currentEntrustList"
+                :empty-text="$t('M.comm_no_data')"
               >
                 <!--时间-->
                 <el-table-column
@@ -157,7 +158,8 @@
                   width="70"
                 >
                   <template slot-scope="s">
-                    <span>{{ s.row.matchTypeName }}</span>
+                    <span>{{ $t(`M.${s.row.i18nMatchTypeName}`) }}</span>
+                    <!--<span>{{ s.row.matchTypeName }}</span>-->
                   </template>
                 </el-table-column>
                 <!--委单类型-->
@@ -176,7 +178,8 @@
                   width="110"
                 >
                   <template slot-scope="s">
-                    <span>{{ s.row.count-0 }}</span>
+                    <!--<span>{{ s.row.count-0 }}</span>-->
+                    <span>{{ parseFloat(filterNumber(s.row.count)) }}</span>
                   </template>
                 </el-table-column>
                 <!--委托总额-->
@@ -185,7 +188,8 @@
                   width="120"
                 >
                   <template slot-scope="s">
-                    <span>{{ s.row.amount-0}}</span>
+                    <!--<span>{{ s.row.amount-0}}</span>-->
+                    <span>{{ parseFloat(filterNumber(s.row.amount)) }}</span>
                   </template>
                 </el-table-column>
                 <!--已成交-->
@@ -194,7 +198,8 @@
                   width="120"
                 >
                   <template slot-scope="s">
-                    <span>{{s.row.completeCount-0}}</span>
+                    <!--<span>{{s.row.completeCount-0}}</span>-->
+                    <span>{{ parseFloat(filterNumber(s.row.completeCount)) }}</span>
                   </template>
                 </el-table-column>
                 <!--未成交-->
@@ -212,7 +217,7 @@
                   width="60"
                 >
                   <template slot-scope="s">
-                    <span>{{ s.row.statusName }}</span>
+                    <span>{{ $t(`M.${s.row.i18nStatusName}`) }}</span>
                   </template>
                 </el-table-column>
                 <!--操作-->
@@ -250,6 +255,7 @@
         >
           <el-table
             :data="historyEntrustList"
+            :empty-text="$t('M.comm_no_data')"
           >
             <!--时间-->
             <el-table-column
@@ -272,16 +278,15 @@
             <!--撮合类型-->
             <el-table-column
               :label="$t('M.user_coin_bring_together') + $t('M.comm_type')"
-              width="70"
             >
               <template slot-scope="s">
-                <span>{{ s.row.matchTypeName }}</span>
+                <span>{{ $t(`M.${s.row.i18nMatchTypeName}`) }}</span>
+                <!--<span>{{ s.row.matchTypeName }}</span>-->
               </template>
             </el-table-column>
             <!--委单类型-->
             <el-table-column
               :label="$t('M.user_coin_appoint_single') + $t('M.comm_type')"
-              width="70"
             >
               <template slot-scope="s">
                 <span v-show="language !== 'zh_CN'">{{s.row.type}}</span>
@@ -303,7 +308,8 @@
               width="120"
             >
               <template slot-scope="s">
-                <span>{{ s.row.count-0}}</span>
+                <!--<span>{{ s.row.count }}</span>-->
+                <span>{{ parseFloat(filterNumber(s.row.count)) }}</span>
               </template>
             </el-table-column>
             <!--成交量-->
@@ -312,7 +318,8 @@
               width="120"
             >
               <template slot-scope="s">
-                <span>{{ s.row.completeCount-0}}</span>
+                <!--<span>{{ s.row.completeCount-0}}</span>-->
+                <span>{{ parseFloat(filterNumber(s.row.completeCount)) }}</span>
               </template>
             </el-table-column>
             <!--成交价-->
@@ -321,31 +328,16 @@
               width="120"
             >
               <template slot-scope="s">
-                <span>{{s.row.completeCount-0}}</span>
+                <!--<span>{{s.row.completeCount-0}}</span>-->
+                <span>{{ parseFloat(filterNumber(s.row.completeCount)) }}</span>
               </template>
             </el-table-column>
             <!--状态-->
             <el-table-column
               :label="$t('M.comm_state')"
-              width="60"
             >
               <template slot-scope="s">
                 <span>{{ s.row.statusName }}</span>
-              </template>
-            </el-table-column>
-            <!--操作-->
-            <el-table-column
-              :label="$t('M.comm_operation')"
-              width="85"
-            >
-              <template slot-scope="s">
-                <button
-                  class="cursor-pointer repeal-btn"
-                  @click.prevent="repealMyEntrust(s.row.id,s.row.version)"
-                >
-                  <!--删除-->
-                  {{ $t('M.comm_delete') }}
-                </button>
               </template>
             </el-table-column>
           </el-table>
@@ -366,6 +358,7 @@
         >
           <el-table
             :data="currentMakeDetailList"
+            :empty-text="$t('M.comm_no_data')"
           >
             <!--时间-->
             <el-table-column
@@ -389,7 +382,8 @@
               :label="$t('M.user_coin_bring_together') + $t('M.comm_type')"
             >
               <template slot-scope="s">
-                <span>{{ s.row.matchTypeName }}</span>
+                <span>{{ $t(`M.${s.row.i18nMatchTypeName}`) }}</span>
+                <!--<span>{{ s.row.matchTypeName }}</span>-->
               </template>
             </el-table-column>
             <!--委托类型-->
@@ -415,7 +409,8 @@
               :label="$t('M.comm_count')"
             >
               <template slot-scope="s">
-                <span>{{ s.row.count-0 }}</span>
+                <!--<span>{{ s.row.count-0 }}</span>-->
+                <span>{{ parseFloat(filterNumber(s.row.count)) }}</span>
               </template>
             </el-table-column>
             <!--成交额-->
@@ -423,7 +418,8 @@
               :label="$t('M.user_coin_volume')"
             >
               <template slot-scope="s">
-                <span>{{ s.row.amount-0}}</span>
+                <!--<span>{{ s.row.amount-0}}</span>-->
+                <span>{{ parseFloat(filterNumber(s.row.amount)) }}</span>
               </template>
             </el-table-column>
             <!--手续费-->
@@ -431,7 +427,8 @@
               :label="$t('M.comm_service_charge')"
             >
               <template slot-scope="s">
-                <span>{{s.row.fees - 0}}</span>
+                <!--<span>{{ s.row.fees - 0 }}</span>-->
+                <span>{{ parseFloat(filterNumber(s.row.fees)) }}</span>
               </template>
             </el-table-column>
           </el-table>
@@ -464,7 +461,10 @@ import {
   returnAjaxMessage,
   repealMyEntrustCommon
 } from '../../../utils/commonFunc'
-import {timeFilter} from '../../../utils'
+import {
+  timeFilter,
+  scientificToNumber
+} from '../../../utils'
 
 export default {
   components: {},
@@ -537,6 +537,10 @@ export default {
     searchWithCondition (entrustType) {
       this.commissionList(entrustType)
     },
+    // 科学计数法转换
+    filterNumber (num) {
+      return scientificToNumber(num)
+    },
     /**
      * 交易区列表查询
      */
@@ -584,8 +588,9 @@ export default {
         id,
         version
       }
-      // 确定删除提币地址吗, 是否继续?
-      this.$confirm(this.$t('M.comm_sure_delete'), {
+
+      // 确定撤销委托单？  取消  确定
+      this.$confirm(this.$t('M.otc_revoke'), {
         // 取消
         cancelButtonText: this.$t('M.comm_cancel'),
         // 确定
@@ -746,11 +751,14 @@ export default {
     .repeal-btn{
       color:#338ff5;
     }
+    .height500 {
+      height: 545px;
+    }
     &.night{
       background-color: $nightBgColor;
       color:$nightFontColor;
       .background-color {
-        background-color: #1E2636;
+        background-color: $nightMainBgColor;
         >.coin-color{
           color: #338FF5;
         }

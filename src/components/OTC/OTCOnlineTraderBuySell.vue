@@ -378,13 +378,15 @@
 </template>
 <!--请严格按照如下书写书序-->
 <script>
+import {timeFilter, formatNumberInput, amendPrecision} from '../../utils'
 import {pickOrdersToBuy, pickOrdersToSell, querySelectedOrdersDetails, queryUserTradeFeeAndCoinInfo} from '../../utils/api/OTC'
 import NavCommon from '../Common/HeaderCommonForPC'
 import FooterCommon from '../Common/FooterCommon'
 import IconFontCommon from '../Common/IconFontCommon'
 import {returnAjaxMessage} from '../../utils/commonFunc'
-import {mapState} from 'vuex'
-import {timeFilter, formatNumberInput, amendPrecision} from '../../utils'
+// import {mapState} from 'vuex'
+import {createNamespacedHelpers, mapState} from 'vuex'
+const {mapMutations} = createNamespacedHelpers('OTC')
 export default {
   components: {
     NavCommon, //  头部导航
@@ -481,6 +483,10 @@ export default {
   update () {},
   beforeRouteUpdate () {},
   methods: {
+    ...mapMutations([
+      // 改变全局锚点状态方法
+      'CHANGE_OTC_ANCHOR_STATUS'
+    ]),
     // 10.0 充币按钮跳转
     chargeMoney () {
       this.$store.commit('personal/CHANGE_USER_CENTER_ACTIVE_NAME', 'assets')
@@ -756,6 +762,10 @@ export default {
         this.clearInput(this.onlineTraderStatus)
         this.querySelectedOrdersDetails()
         this.queryUserTradeFeeAndCoinInfo()
+        // 改变全局锚点状态
+        this.CHANGE_OTC_ANCHOR_STATUS(true)
+        // 跳转到首页的交易中订单区
+        this.$router.push({path: '/OTCCenter'})
       }
     },
     // 交易密码框获得焦点事件
@@ -794,13 +804,18 @@ export default {
         this.clearInput(this.onlineTraderStatus) // 清空数据
         this.querySelectedOrdersDetails()
         this.queryUserTradeFeeAndCoinInfo()
+        // 改变全局锚点状态
+        this.CHANGE_OTC_ANCHOR_STATUS(true)
+        // 跳转到首页的交易中订单区
+        this.$router.push({path: '/OTCCenter'})
       }
     }
   },
   filter: {},
   computed: {
     ...mapState({
-      theme: state => state.common.theme
+      theme: state => state.common.theme,
+      anchorStatus: state => state.OTC.anchorStatus // anchorStatus锚点状态：在全局先定义false，当用户购买或者出售时候改为true
     })
   },
   watch: {}
@@ -1112,9 +1127,11 @@ export default {
                     .sell-buy-input{
                       .red{
                         border: 1px solid red;
+                        border-right: 0;
                       }
                       .coinNameBorder{
                         border: 1px solid red;
+                        border-left: 0;
                       }
                       >.sell-sum{
                         background-color: #2D3651;

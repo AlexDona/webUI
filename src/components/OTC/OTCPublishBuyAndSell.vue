@@ -69,9 +69,8 @@
                     v-for="(item,index) in hopePaymentCoinStyleList"
                     :key="index"
                     :value="item.id"
-                    :label="item.name"
+                    :label="language === 'zh_CN'? item.name : item.shortName"
                   >
-                    {{ item.name }}
                   </el-option>
                 </el-select>
               </el-form-item>
@@ -525,6 +524,8 @@ export default {
       // console.log(e)
       this.coinId = e
       console.log(this.coinId)
+      // this.clearErrInfo() // 清空错误信息
+      this.clearInputData()
       // 币种详情
       this.getOTCCoinInfo()
     },
@@ -533,6 +534,8 @@ export default {
       // console.log(e)
       this.hopePaymentCoinId = e
       console.log(this.hopePaymentCoinId)
+      // this.clearErrInfo() // 清空错误信息
+      this.clearInputData()
       // 币种详情
       this.getOTCCoinInfo()
     },
@@ -578,6 +581,17 @@ export default {
       this.traderSumSELL = 0
       this.serviceChargeBUY = 0
       this.traderSumBUY = 0
+      this.errorTipsSum = ''
+      this.errorTipsPrice = ''
+      this.errorTipsLimitMin = ''
+      this.errorTipsLimitMax = ''
+    },
+    // 清空错误信息
+    clearErrInfo () {
+      this.errorTipsSum = ''
+      this.errorTipsPrice = ''
+      this.errorTipsLimitMin = ''
+      this.errorTipsLimitMax = ''
     },
     // 卖出量和买入量input 获得焦点
     countInputFocus () {
@@ -687,6 +701,10 @@ export default {
           return false
         }
       }
+      // 如果单价错误提示有的话不能进行提交操作
+      if (this.errorTipsPrice) {
+        return false
+      }
       // 单笔最小最大限制
       if (this.errorTipsLimitMin) {
         return false
@@ -759,9 +777,11 @@ export default {
   filter: {},
   computed: {
     ...mapState({
+      theme: state => state.common.theme,
+      // 当前选中语言
+      language: state => state.common.language,
       // 商户id
-      partnerId: state => state.common.partnerId,
-      theme: state => state.common.theme
+      partnerId: state => state.common.partnerId
     })
   },
   watch: {}

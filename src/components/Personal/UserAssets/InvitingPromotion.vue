@@ -187,6 +187,7 @@
             </el-table-column>
             <el-table-column
               :label="$t('M.comm_name')"
+              width="100"
             >
               <template slot-scope = "s">
                 <div>{{ s.row.realname }}</div>
@@ -196,13 +197,13 @@
               :label="$t('M.user_senior_certification')"
             >
               <template slot-scope = "s">
-                <div v-if="advancedAuth === 'waitVeritfy'">
-                  {{ $t(waitVeritfy)  }}
+                <div v-if="s.row.advancedAuth == 'waitVeritfy'">
+                  {{ $t(waitVeritfy) }}
                 </div>
-                <div v-if="advancedAuth === 'pass'">
+                <div v-if="s.row.advancedAuth == 'pass'">
                   {{ $t(pass) }}
                 </div>
-                <div v-if="advancedAuth = 'notPass'">
+                <div v-if="s.row.advancedAuth == 'notPass'">
                   {{ $t(notPass) }}
                 </div>
               </template>
@@ -383,7 +384,6 @@ export default {
         this.extensionList = data.data.data.list
         this.totalPageForMyEntrust = data.data.data.pages - 0
         this.totalPageMyNumber = data.data.data.total - 0
-        console.log(this.extensionList)
       }
     },
     // 分页
@@ -560,11 +560,11 @@ export default {
       background-color: $nightBgColor;
       color:$nightFontColor;
       >.background-color {
-        background-color: #1E2636;
+        background-color: $nightMainBgColor;
       }
       .invitation-promotion-main{
         >.extension-info{
-          background-color: #1E2636;
+          background-color: $nightMainBgColor;
           >.extension-info-header{
             border-bottom: 1px solid #39424D;
             >.header-color {
@@ -573,7 +573,7 @@ export default {
           }
           >.extension-info-content{
             >.info-record {
-              background:rgba(248,249,252,0.05);
+              background: #283049;
               >.extension-code {
                 border-bottom: 1px solid #364654;
               }
@@ -609,7 +609,7 @@ export default {
           }
         }
         >.extension-statistics {
-          background-color: #1E2636;
+          background-color: $nightMainBgColor;
           >.extension-statistics-header {
             border-bottom: 1px solid #39424D;
             >.header-color {
@@ -618,7 +618,7 @@ export default {
           }
         }
         >.award-record {
-          background-color: #1E2636;
+          background-color: $nightMainBgColor;
           >.award-record-header {
             border-bottom: 1px solid #39424D;
             >.header-color {

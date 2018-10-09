@@ -1,15 +1,16 @@
 <template>
   <div
-    class="login-password personal"
+    class="login-password-box personal"
     :class="{'day':theme == 'day','night':theme == 'night' }"
+    :style="{'height':windowHeight+'px'}"
   >
-    <HeaderCommon />
+    <HeaderCommon/>
     <div class="login-password-main margin25">
       <header class="login-password-header personal-height60 line-height60 line-height70 margin25">
         <span
           class="header-content-left header-content font-size16 font-weight600"
         >
-          修改登录密码
+          <!--修改登录密码-->
           {{ $t('M.comm_modification') }}{{ $t('M.user_security_login') }}{{ $t('M.user_security_password') }}
         </span>
         <span
@@ -94,7 +95,7 @@
         </div>
       </div>
     </div>
-    <FooterCommon />
+    <keep-aline><FooterCommon/></keep-aline>
   </div>
 </template>
 <!--请严格按照如下书写书序-->
@@ -136,11 +137,11 @@ export default {
   },
   created () {
     // 覆盖Element样式
-    require('../../../../static/css/list/Personal/UserSecuritySettings/UserloginPassword.css')
+    require('../../../../static/css/list/Personal/UserSecuritySettings/UserLoginPassword.css')
     // 白色主题样式
-    require('../../../../static/css/theme/day/Personal/UserSecuritySettings/UserloginPasswordDay.css')
+    require('../../../../static/css/theme/day/Personal/UserSecuritySettings/UserLoginPasswordDay.css')
     // 黑色主题样式
-    require('../../../../static/css/theme/night/Personal/UserSecuritySettings/UserloginPasswordNight.css')
+    require('../../../../static/css/theme/night/Personal/UserSecuritySettings/UserLoginPasswordNight.css')
     // 获取全局个人信息
     // this.globalUserInformation = this.userInfo.data.user
   },
@@ -266,17 +267,23 @@ export default {
     ...mapState({
       theme: state => state.common.theme,
       userInfo: state => state.personal.userInfo
-    })
+    }),
+    windowHeight () {
+      return window.innerHeight
+    }
   },
   watch: {}
 }
 </script>
 <style scoped lang="scss">
   @import "../../../../static/css/scss/Personal/IndexPersonal";
-  .login-password {
+  .login-password-box {
+    width:100%;
+    /*height:100%;*/
     >.login-password-main {
       width: 1100px;
-      min-height: 700px;
+      height: 600px;
+      /*min-height: 700px;*/
       margin: 60px auto 100px;
       >.login-password-header {
         display: flex;
@@ -301,7 +308,7 @@ export default {
           margin-bottom: 30px;
         }
         >.login-content-from {
-          width: 500px;
+          width: 600px;
           margin-left: 55px;
           .login-input {
             width: 220px;
@@ -328,7 +335,7 @@ export default {
       background-color: $nightBgColor;
       color:$nightFontColor;
       .login-password-main {
-        background-color: #1E2636;
+        background-color: $nightMainBgColor;
         >.login-password-header {
           border-bottom: 1px solid #39424D;
           >.header-content-left {

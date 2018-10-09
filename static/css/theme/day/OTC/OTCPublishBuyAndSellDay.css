@@ -45,5 +45,8 @@
 .otc-publish-buy-and-sell-box.day .predict .predict-text,
 .otc-publish-buy-and-sell-box.day .predict .rate-text
 {
-color: #333!important;
+    color: #333!important;
+}
+.otc-publish-buy-and-sell-box.day .password-dialog .el-dialog__body .password-input{
+    border: 1px solid #ECF1F8;
 }

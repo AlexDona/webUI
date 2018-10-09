@@ -167,7 +167,7 @@ export default {
       // this.getOTCEntrustingOrdersRevocation(id)
       this.$confirm(this.$t('M.otc_revoke'), {
         cancelButtonText: this.$t('M.comm_cancel'),
-        confirmButtonText: this.$t('M.comm_affirm')
+        confirmButtonText: this.$t('M.comm_confirm')
       }).then(() => {
         this.getOTCEntrustingOrdersRevocation(id)
       }).catch(() => {
@@ -310,7 +310,7 @@ export default {
         > .entrust-table-head {
           background-color: $mainContentNightBgColor;
           color: #A9BED4;
-          border: 1px solid #262F38;
+          border: 1px solid #485776;
           box-shadow: -2px 3px 5px 1px #191E28;
           > .item {
           }

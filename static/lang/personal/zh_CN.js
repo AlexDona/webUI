@@ -1,7 +1,19 @@
 export const personal = {
-// #####################账户资产#####################
+  // #####################账户资产#####################
   // 我的资产
-  // user_asset_information: '',
+  'user_asset_title1': '我的资产',
+  'user_asset_title2': '账单明细',
+  'user_asset_title3': '个人中心',
+  'user_asset_title4': '身份认证',
+  'user_asset_title5': '收款账户',
+  'user_asset_title6': '邀请推广',
+  'user_asset_title7': '安全中心',
+  'user_asset_title8': 'PUSH资产',
+  'user_asset_title9': '我的交易',
+  'user_asset_title10': '币币订单',
+  'user_asset_title11': '法币订单',
+  'user_asset_title12': '请先设置交易密码，再来设置OTC收款账户!',
+  'user_asset_title13': '请先完成身份认证，再来设置OTC收款账户!',
   'user_hidden_assets': '隐藏资产为0的币种',
   'user_asset_valuation': '资产估值',
   'user_assets_suspended': '充值暂停，钱包维护中',
@@ -15,6 +27,8 @@ export const personal = {
   'user_assets_withdrawal_hint2': '为了用户资金安全，平台可能会电话确认您的提币操作，请注意接听；',
   'user_assets_withdrawal_hint3': '充值经过1个确认后，才允许提现；',
   'user_assets_withdrawal_hint4': '可提现金额≤账户可用资产-未确认的数字资产。',
+  'user_assets_withdrawal_hint5': '手续费小于最小提现手续费，请重新输入',
+  'user_assets_withdrawal_hint6': '手续费大于最大提现手续费，请重新输入',
   'user_assets_no_transaction_password': '您还未设置交易密码请先设置交易密码在进行提币',
   'user_assets_grade_membership': '会员等级',
   'user_assets_or': '或',
@@ -24,8 +38,10 @@ export const personal = {
   'user_billing_attention': '充提',
   // 提币地址
   'user_address_empty': '提币地址不能为空',
+  'user_address_illegal_address': '非法地址',
+  'user_address_withdrawal': '禁止输入中文字符',
   // 提币列表
-  'user_address_delete_withdrawals': '确定删除提币地址吗, 是否继续?',
+  'user_address_delete_withdrawals': '确定删除提币地址?',
   // #####################个人中心#####################
   // 身份认证
   'user_identity': '身份认证',
@@ -39,7 +55,10 @@ export const personal = {
   // 高级认证
   'user_senior_certification': '高级认证',
   'user_senior_audit': '待审核',
+  'user_senior_notPass': '抱歉，您的高级认证未通过！',
+  'user_senior_notPass_text1': '驳回原因',
   'user_senior_go_certification': '去认证',
+  'user_senior_not_pass': '未通过',
   'user_senior_text1': '注意',
   'user_senior_text2': '照片文件大小不能超过10M！文件格式须为jpg、bmp、png等！',
   'user_senior_text3': '请确保照片无水印，无污渍，身份信息清晰，头像完整，非文字反向照片！照片请勿进行PS处理！',
@@ -71,11 +90,14 @@ export const personal = {
   'user_account_bank': '银行卡',
   'user_account_bank_name': '银行名称',
   'user_account_credit_numbers': '银行卡号',
+  'user_account_credit_text': '格式不正确，应为16-19位纯数字',
   'user_account_branch_address': '支行地址',
   // 添加微信
   'user_account_weChat': '微信',
+  'user_account_weChat_pla': '请上传微信收款码',
   // 添加支付宝
   'user_account_alipay': '支付宝',
+  'user_account_alipay_pla': '请上传支付宝收款码',
   // 添加PAYPAL
   'user_account_paypal': 'PAYPAL',
   // 添加西联汇款
@@ -109,6 +131,7 @@ export const personal = {
   'user_security_verify': '验证',
   'user_security_number': '号码',
   'user_security_picture': '图片',
+  'user_security_google1': '格式错误',
   // 安全中心个人信息
   'user_security_level': '账号安全级别',
   'user_security_low': '低',
@@ -126,6 +149,8 @@ export const personal = {
   'user_security_text0': '请确认您的银行卡已开启短信通知功能',
   // 安全设置
   'user_security_correct': '正确的',
+  'user_security_text2': '交易密码用于账户交易',
+  'user_security_text3': '建议立即设置',
   // 安全邮箱
   // 安全手机
   // 谷歌验证
@@ -173,6 +198,8 @@ export const personal = {
   'user_push_canceled': '已取消',
   'user_push_payment': '付款',
   'user_push_revocation': '撤销',
+  'user_push_count': 'Push数量不能大于余额',
+  'user_push_forbid': '禁止自我PUSH',
   // PUSH记录
   // #####################我的交易#####################
   // 币币订单
@@ -183,6 +210,7 @@ export const personal = {
   'user_coin_start_stop': '起止',
   'user_coin_entrust': '委托',
   'user_coin_volume': '成交额',
+  'user_coin_volume_text': '确定撤销委单记录吗, 是否继续?',
   // 当前委托Commissioned by the current
   'user_coin_commissioned_current': '当前委托',
   // 历史委托
@@ -200,6 +228,7 @@ export const personal = {
   'user_vip_please_choose': '请选择开通会员信息',
   'user_vip_discount': '折扣',
   'user_vip_immediately_opened': '立即开通',
+  'user_vip_look': '查看我的VIP',
   'user_vip_immediately_buy': '立即购买',
   'user_vip_month': '月',
   'user_vip_break': '折',
@@ -209,7 +238,7 @@ export const personal = {
   'user_vip_six': '六',
   'user_vip_five': '五',
   'user_vip_four': '四',
-  'user_vip_not_yet': '还没有FUC?',
+  'user_vip_not_yet': '还没有',
   'user_vip_opening_level': '开通等级',
   'user_vip_dredge': '开通',
   'user_vip_opening_time': '开通时长',
@@ -220,5 +249,7 @@ export const personal = {
   'user_vip_text3': '费率折扣仅对交易手续费生效',
   'user_vip_text4': '一个月有效期时长为30个自然日',
   'user_vip_text5': '开通即代表您已同意',
-  'user_vip_text6': '《VIP服务协议》'
+  'user_vip_text6': '《VIP服务协议》',
+  'user_vip_text7': '已开通',
+  'user_vip_text8': 'VIP享手续费、提现优惠'
 }

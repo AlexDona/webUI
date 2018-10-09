@@ -91,19 +91,31 @@
             <dd
               class="dd-item"
               @click="jumpToOtherPage('/ServiceAndProtocol','UserProtocol')"
-            >用户协议</dd>
+            >
+              <!--用户协议-->
+              {{$t('M.user_api_user')}}{{$t('M.comm_agreement')}}
+            </dd>
             <dd
               class="dd-item"
               @click="jumpToOtherPage('/ServiceAndProtocol','PrivacyClause')"
-            >隐私条款</dd>
+            >
+              <!--隐私条款-->
+              {{$t('M.comm_privacy')}}{{$t('M.comm_clause')}}
+            </dd>
             <dd
               class="dd-item"
               @click="jumpToOtherPage('/ServiceAndProtocol','LegislationExplain')"
-            >法律声明</dd>
+            >
+              <!--法律声明-->
+              {{$t('M.comm_law')}}{{$t('M.comm_statement')}}
+            </dd>
             <dd
               class="dd-item"
               @click="jumpToOtherPage('/ServiceAndProtocol','Rate')"
-            >费率</dd>
+            >
+              <!--费率-->
+              {{$t('M.comm_rate1')}}
+            </dd>
           </dl>
         </div>
       </div>
@@ -224,7 +236,11 @@ export default {
       language: state => state.common.language
     })
   },
-  watch: {}
+  watch: {
+    language () {
+      this.getFooterInfo()
+    }
+  }
 }
 </script>
 <style scoped lang="scss">

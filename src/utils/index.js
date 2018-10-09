@@ -211,7 +211,6 @@ export function amendPrecision (num1, num2, symbol) {
       return scientificToNumber((newNum1 * Math.pow(10, maxPointLength))) / (newNum2 * Math.pow(10, maxPointLength))
   }
 }
-
 /**
  * 科学计数法
  * @param number

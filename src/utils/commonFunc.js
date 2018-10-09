@@ -6,8 +6,8 @@ import {
 } from '../utils/api/trade'
 import {
   userRefreshUser,
-  statusSecurityCenter,
-  getQueryAllOrdersList
+  getQueryAllOrdersList,
+  statusSecurityCenter
 } from '../utils/api/personal'
 
 import {
@@ -25,7 +25,7 @@ import {
 } from '../utils/api/header'
 import store from '../vuex'
 import {removeStore} from './index'
-import {PHONE_REG, EMAIL_REG, ID_REG, PWD_REG, ALIPAY_REG, BANK_REG, GOOGLE_REG} from './regExp'
+import {PHONE_REG, EMAIL_REG, ID_REG, PWD_REG, ALIPAY_REG, BANK_REG, GOOGLE_REG, TPED_REG, URL_REG, WITHDRAWAL_REG} from './regExp'
 // 请求接口后正确或者错误的提示提示信息：
 // 如果返回 错误 了就提示错误并不能继续往下进行；
 // 如果返回了 正确 的数据：不需要正确的提示noTip传0；需要正确的提示noTip传1；
@@ -63,6 +63,8 @@ export const returnAjaxMessage = (data, self, noTip) => {
  * @returns {number} 0：正确 1： 未输入 2：不正确
  */
 export const validateNumForUserInput = (type, targetNum) => {
+  console.log(type)
+  console.log(targetNum)
   let returnNum = 0
   let validateType
   switch (type) {
@@ -87,12 +89,32 @@ export const validateNumForUserInput = (type, targetNum) => {
     case 'google':
       validateType = GOOGLE_REG
       break
+    case 'tran-password':
+      validateType = TPED_REG
+      break
+    case 'url-address':
+      validateType = URL_REG
+      break
+    case 'withdrawal-address':
+      validateType = WITHDRAWAL_REG
+      break
   }
-  if (!targetNum) {
-    returnNum = 1
-  } else if (!validateType.test(targetNum)) {
-    returnNum = 2
+  if (type === 'phone') {
+    if (!targetNum) {
+      returnNum = 1
+    } else {
+      returnNum = 0
+    }
+  } else {
+    if (!targetNum) {
+      returnNum = 1
+    } else if (!validateType.test(targetNum)) {
+      returnNum = 2
+    } else {
+      returnNum = 0
+    }
   }
+  console.log(returnNum)
   return returnNum
 }
 // 发送验证码（短信、邮箱）
@@ -112,26 +134,12 @@ export const repealMyEntrustCommon = async (params, callback) => {
   const repealData = await repealMyEntrustAjax(params)
   callback(repealData)
 }
-/**
- * 安全中心状态
- */
-export const stateSafeCentral = async (params, callback) => {
-  const repealData = await statusSecurityCenter(params)
-  callback(repealData)
-}
 // /**
 //  * 商家订单列表请求
 //  */
 export const getMerchantsOrdersList = async (params, callback) => {
   const repealData = await getQueryAllOrdersList(params)
   callback(repealData)
-}
-/**
- * 个人资产信息
- */
-export const globalPersonalAssetsInformation = async (params, callback) => {
-  const data = await userRefreshUser(params)
-  callback(data)
 }
 
 // 获取板块信息
@@ -181,7 +189,18 @@ export const reflashUserInfo = async (that) => {
     store.commit('user/SET_STEP1_INFO', data.data.data)
   }
 }
-
+/**
+ *  刷新用户安全状态
+ */
+export const getSecurityCenter = async (that, callback) => {
+  console.log(store)
+  const data = await statusSecurityCenter({})
+  if (!(returnAjaxMessage(data, that))) {
+    return false
+  } else {
+    callback(data)
+  }
+}
 // 首页、币币交易切换收藏
 export const toggleUserCollection = async (type, tradeId, that) => {
   const params = {

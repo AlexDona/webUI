@@ -66,8 +66,7 @@
                     </p>
                   </div>
                   <!-- 中间 -->
-                  <div class="completed-info-midd
-                  le">
+                  <div class="completed-info-middle">
                     <p class="order-info-middle">
                       <span class="buyer-seller-info">
                         <!--卖家信息-->
@@ -276,34 +275,21 @@ export default {
         display: flex;
         flex: 7;
         color: #9DA5B3;
-        &::after{
-          /*content: '';*/
-          /*width: 5px;*/
-          /*height: 5px;*/
-          /*position: absolute;*/
-          /*right: 0;*/
-          /*top: 0px;*/
-          /*bottom: 0px;*/
-          /*background-color: red;*/
-        }
         >.completed-info-left{
           flex: 2;
           border-right: 1px solid #262F38;
           >.order-info-left{
-            // margin-left: 50px;
-            // line-height: 1.5rem;
             line-height: 20px;
             >.pay-info{
               color: #5E95EC;
             }
           }
         }
-        >.completed-info-middle{
+        .completed-info-middle{
           flex: 2;
           border-right: 1px solid #262F38;
-          >.order-info-middle{
+          .order-info-middle{
             margin-left: 50px;
-            // line-height: 1.5rem;
             line-height: 20px;
             >.buyer-seller-info{
               color: #5E95EC;
@@ -327,7 +313,7 @@ export default {
       background-color: $nightBgColor;
       color:$nightFontColor;
       >.background-color{
-        background-color: #1E2636;
+        background-color: $nightMainBgColor;
         >.fiat-color{
           color: #338FF5;
         }

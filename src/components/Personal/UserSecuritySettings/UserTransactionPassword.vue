@@ -3,7 +3,7 @@
     class="transaction-password personal"
     :class="{'day':theme == 'day','night':theme == 'night' }"
   >
-    <HeaderCommon />
+    <HeaderCommon/>
     <div class="transaction-password-main margin25">
       <header class="transaction-password-header personal-height60 line-height60 line-height70 margin25">
         <span
@@ -215,7 +215,7 @@
             <span v-else></span>
             <button
               class="transaction-button border-radius4 cursor-pointer"
-              @click.prevent.prevent="getUpdatePayPassword"
+              @click.prevent="getUpdatePayPassword"
             >
               <!--确认重置-->
               {{ $t('M.comm_affirm') }}{{ $t('M.user_transaction_reset') }}
@@ -224,7 +224,9 @@
         </div>
       </div>
     </div>
-    <FooterCommon />
+    <keep-aline>
+      <FooterCommon/>
+    </keep-aline>
   </div>
 </template>
 <!--请严格按照如下书写书序-->
@@ -237,13 +239,14 @@ import ErrorBox from '../../User/ErrorBox'
 import {
   returnAjaxMessage, // 接口返回信息
   sendPhoneOrEmailCodeAjax,
-  reflashUserInfo
+  reflashUserInfo,
+  validateNumForUserInput,
+  getSecurityCenter
 } from '../../../utils/commonFunc'
 import {
   setTransactionPassword,
   resetUpdatePayPassword,
-  securityVerificationOnOff,
-  statusSecurityCenter
+  securityVerificationOnOff
 } from '../../../utils/api/personal'
 // 底部
 import FooterCommon from '../../Common/FooterCommon'
@@ -267,6 +270,7 @@ export default {
         confirmPassword: '' // 确认交易密码.
       },
       errorShowStatusList: [
+        '', // 昵称
         '', // 交易密码
         '' // 重复交易密码
       ],
@@ -322,6 +326,12 @@ export default {
     sendPhoneOrEmailCodeWithPush (loginType) {
       console.log(this.disabledOfPhoneBtn)
       console.log(this.disabledOfEmailBtn)
+      if (
+        !this.tieCheckoutInputFormat(0, this.modifyPassword.transactionPassword) ||
+        !this.tieCheckoutInputFormat(1, this.modifyPassword.resetTransactionPassword)
+      ) {
+        return false
+      }
       if (this.disabledOfPhoneBtn || this.disabledOfEmailBtn) {
         return false
       }
@@ -362,7 +372,6 @@ export default {
       })
     },
     // 确定设置检测输入格式
-    // 确定设置检测输入格式
     checkoutInputFormat (type, targetNum) {
       switch (type) {
         // 昵称
@@ -379,16 +388,22 @@ export default {
           }
         // 交易密码
         case 1:
-          if (!targetNum) {
-            // 请输入交易密码
-            this.setErrorMsg(1, this.$t('M.comm_please_enter') + this.$t('M.comm_password'))
-            this.$forceUpdate()
-            return 0
-          } else {
-            this.setErrorMsg(1, '')
-            this.$forceUpdate()
-            return 1
+          // 请输入6位纯数字
+          switch (validateNumForUserInput('tran-password', targetNum)) {
+            case 0:
+              this.setErrorMsg(1, '')
+              this.$forceUpdate()
+              return 1
+            case 1:
+              this.setErrorMsg(1, this.$t('M.comm_please_enter') + this.$t('M.user_security_password'))
+              this.$forceUpdate()
+              return 0
+            case 2:
+              this.setErrorMsg(1, this.$t('M.user_transaction_text'))
+              this.$forceUpdate()
+              return 0
           }
+          break
         // 重复交易密码
         case 2:
           if (!targetNum) {
@@ -414,7 +429,7 @@ export default {
     },
     // 确定设置交易密码
     async setStatusSubmit () {
-      this.checkoutInputFormat()
+      // this.checkoutInputFormat()
       await this.confirmTransactionPassword()
     },
     // 确定设置接口处理
@@ -422,7 +437,9 @@ export default {
       let goOnStatus = 0
       if (
         this.checkoutInputFormat(0, this.setPassword.nickname) &&
-        this.checkoutInputFormat(1, this.setPassword.confirmPassword)
+        this.checkoutInputFormat(1, this.setPassword.newPassword) &&
+        this.checkoutInputFormat(2, this.setPassword.confirmPassword) &&
+        this.setPassword.confirmPassword === this.setPassword.newPassword
       ) {
         goOnStatus = 1
       } else {
@@ -430,11 +447,11 @@ export default {
       }
       if (goOnStatus) {
         let data
-        let param = {
+        let params = {
           nickName: this.setPassword.nickname, // 昵称
           payPassword: this.setPassword.newPassword // 交易密码
         }
-        data = await setTransactionPassword(param)
+        data = await setTransactionPassword(params)
         if (!(returnAjaxMessage(data, this, 1))) {
           return false
         } else {
@@ -445,7 +462,7 @@ export default {
         }
       }
     },
-    // 接口请求完成之后青口数据
+    // 接口请求完成之后清空数据
     stateEmptyData () {
       this.setPassword.nickname = ''
       this.setPassword.newPassword = ''
@@ -456,22 +473,22 @@ export default {
       switch (type) {
         // 交易密码
         case 0:
-          if (!targetNum) {
-            // 请输入交易密码
-            this.tieErrorMsg(0, this.$t('M.comm_please_enter') + this.$t('M.comm_password'))
-            this.$forceUpdate()
-            return 0
-          } else if (targetNum) {
-            this.tieErrorMsg(0, '')
-            this.$forceUpdate()
-            return 1
-          } else {
-            // 请输入6位纯数字
-            this.tieErrorMsg(0, this.$t('M.comm_please_enter') + this.$t('M.user_transaction_text'))
-            this.$forceUpdate()
-            return 0
+          // 请输入6位纯数字
+          switch (validateNumForUserInput('tran-password', targetNum)) {
+            case 0:
+              this.tieErrorMsg(0, '')
+              this.$forceUpdate()
+              return 1
+            case 1:
+              this.tieErrorMsg(0, this.$t('M.comm_please_enter') + this.$t('M.user_security_password'))
+              this.$forceUpdate()
+              return 0
+            case 2:
+              this.tieErrorMsg(0, this.$t('M.user_transaction_text'))
+              this.$forceUpdate()
+              return 0
           }
-        // 重置交易密码
+          break
         case 1:
           if (!targetNum) {
             // 请输入确认交易密码
@@ -532,22 +549,60 @@ export default {
     },
     // 确定重置交易密码
     async getUpdatePayPassword () {
-      await this.confirmUpdate()
-      this.tieCheckoutInputFormat()
-      this.$store.commit('common/SET_USER_INFO_REFRESH_STATUS', true)
+      this.confirmVerifyInformation()
+    },
+    // 手机邮箱谷歌验证
+    async confirmVerifyInformation () {
+      let data
+      let params = {
+        email: this.userInfo.userInfo.email, // 邮箱
+        phone: this.userInfo.userInfo.phone, // 手机
+        emailCode: this.modifyPassword.emailCode, // 邮箱验证
+        phoneCode: this.modifyPassword.phoneCode, // 手机验证
+        googleCode: this.modifyPassword.googleCode // 谷歌验证
+      }
+      data = await securityVerificationOnOff(params)
+      if (!(returnAjaxMessage(data, this, 0))) {
+        return false
+      } else {
+        await this.confirmUpdate()
+      }
     },
     // 确定重置接口处理
     async confirmUpdate () {
       let goOnStatus = 0
       if (
         this.tieCheckoutInputFormat(0, this.modifyPassword.transactionPassword) &&
-        this.tieCheckoutInputFormat(1, this.modifyPassword.resetTransactionPassword)
+        this.tieCheckoutInputFormat(1, this.modifyPassword.resetTransactionPassword) &&
+        this.modifyPassword.transactionPassword === this.modifyPassword.resetTransactionPassword
       ) {
         goOnStatus = 1
       } else {
         goOnStatus = 0
       }
+      console.log(goOnStatus)
       if (goOnStatus) {
+        if (this.securityCenter.isMailEnable && !this.modifyPassword.emailCode) {
+          this.$message({
+            type: 'error',
+            message: this.$t('M.comm_please_enter') + this.$t('M.comm_emailbox') + this.$t('M.comm_code') // '请输入邮箱验证码'
+          })
+          return false
+        }
+        if (this.securityCenter.isPhoneEnable && !this.modifyPassword.phoneCode) {
+          this.$message({
+            type: 'error',
+            message: this.$t('M.comm_please_enter') + this.$t('M.login_telphone') + this.$t('M.comm_code') // '请输入手机验证码'
+          })
+          return false
+        }
+        if (this.securityCenter.isGoogleEnable && !this.modifyPassword.googleCode) {
+          this.$message({
+            type: 'error',
+            message: this.$t('M.comm_please_enter') + this.$t('M.login_google') + this.$t('M.comm_code') // 请输入谷歌验证码
+          })
+          return false
+        }
         let data
         let param = {
           payPassword: this.modifyPassword.resetTransactionPassword, // 重置交易密码
@@ -561,38 +616,20 @@ export default {
         } else {
           console.log(1)
           this.successJump()
-          this.confirmVerifyInformation()
+          this.stateEmptyData()
+          this.$store.commit('common/SET_USER_INFO_REFRESH_STATUS', true)
         }
       }
     },
-    // 手机邮箱谷歌验证
-    async confirmVerifyInformation () {
-      let data
-      let params = {
-        email: this.userInfo.userInfo.email, // 邮箱
-        phone: this.userInfo.userInfo.phone, // 手机
-        emailCode: this.emailCode, // 邮箱验证
-        phoneCode: this.phoneCode, // 手机验证
-        googleCode: this.googleCode // 谷歌验证
-      }
-      data = await securityVerificationOnOff(params)
-      if (!(returnAjaxMessage(data, this, 0))) {
-        return false
-      } else {
-        // this.getSecurityCenter()
-      }
-    },
-    async getSecurityCenter () {
-      let data = await statusSecurityCenter({
-        token: this.userInfo.userInfo.token // token
+    /**
+     * 安全中心
+     */
+    getSecurityCenter () {
+      getSecurityCenter(this, (data) => {
+        if (data) {
+          this.securityCenter = data.data.data
+        }
       })
-      console.log(data)
-      if (!(returnAjaxMessage(data, this, 0))) {
-        return false
-      } else {
-        // 返回展示
-        this.securityCenter = data.data.data
-      }
     },
     // 谷歌绑定成功自动跳转
     successJump () {
@@ -624,7 +661,7 @@ export default {
   .transaction-password {
     >.transaction-password-main {
       width: 1100px;
-      min-height: 700px;
+      min-height: 600px;
       margin: 60px auto 100px;
       >.transaction-password-header {
         display: flex;
@@ -653,9 +690,9 @@ export default {
           margin-left: 55px;
           .send-code-btn {
             width: 90px;
-            height: 36px;
+            /*height: 36px;
             position: absolute;
-            top: -1px;
+            top: -1px;*/
           }
           .transaction-input {
             width: 220px;
@@ -682,7 +719,7 @@ export default {
       background-color: $nightBgColor;
       color:$nightFontColor;
       .transaction-password-main {
-        background-color: #1E2636;
+        background-color: $nightMainBgColor;
         >.transaction-password-header {
           border-bottom: 1px solid #39424D;
           >.header-content-left {

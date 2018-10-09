@@ -26,7 +26,7 @@
 }
 .v-modal{
   position: relative;
-  z-index: 2000 ;
+  z-index: 2000;
 }
 .el-select-dropdown{
   z-index: 2100 !important;

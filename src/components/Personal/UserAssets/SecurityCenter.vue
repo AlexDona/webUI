@@ -270,7 +270,10 @@
           </div>
           <div class="security-type-text padding-l15 box-sizing">
             <p>
-              <span class="secure-email font-size14 font-weight600">交易密码</span>
+              <span class="secure-email font-size14 font-weight600">
+                <!--交易密码-->
+                {{ $t('M.comm_password') }}
+              </span>
               <IconFontCommon
                 v-if="!securityCenter.payPassword"
                 class="font-size16"
@@ -278,8 +281,12 @@
               />
             </p>
             <p class="security-info-text margin-top9 font-size12">
-              交易密码用于账户交易
-              <span v-if="!securityCenter.payPassword">，建议立即设置</span>
+              <!--交易密码用于账户交易-->
+              {{ $t('M.user_security_text2') }}
+              <span v-if="!securityCenter.payPassword">
+                <!--，建议立即设置-->
+                ，{{ $t('M.user_security_text3') }}
+              </span>
               <span v-else></span>
             </p>
           </div>
@@ -288,8 +295,14 @@
               class="security-binding border-radius2 font-size12 cursor-pointer"
               @click.prevent="setShowStatusSecurity('transaction-password')"
             >
-              <span v-if="!securityCenter.payPassword">设置</span>
-              <span v-else>重置</span>
+              <span v-if="!securityCenter.payPassword">
+                <!--设置-->
+                {{ $t('M.comm_set') }}
+              </span>
+              <span v-else>
+                <!--重置-->
+                {{ $t('M.user_transaction_reset') }}
+              </span>
             </button>
           </div>
         </div>
@@ -336,6 +349,7 @@
               label-width="120px"
             >
               <!--没有绑定手机不显示-->
+              <!--!securityCenter.isPhoneEnable || securityCenter.isGoogleEnable-->
               <div v-if="!securityCenter.isPhoneEnable"></div>
               <!--绑定手机之后显示-->
               <el-form-item
@@ -354,6 +368,7 @@
                 />
               </el-form-item>
               <!--没有绑定邮箱不显示-->
+              <!--!securityCenter.isMailEnable || securityCenter.isGoogleEnable-->
               <div v-if="!securityCenter.isMailEnable"></div>
               <!--绑定邮箱之后显示-->
               <el-form-item
@@ -576,12 +591,12 @@
 import CountDownButton from '../../Common/CountDownCommon'
 import IconFontCommon from '../../Common/IconFontCommon'
 import {
-  statusSecurityCenter,
   enableTheClosing
 } from '../../../utils/api/personal'
 import {
   returnAjaxMessage,
-  sendPhoneOrEmailCodeAjax
+  sendPhoneOrEmailCodeAjax,
+  getSecurityCenter
 } from '../../../utils/commonFunc'
 import {timeFilter} from '../../../utils/index'
 import {mapState, createNamespacedHelpers} from 'vuex'
@@ -638,7 +653,8 @@ export default {
   methods: {
     ...mapMutations([
       'SET_USER_BUTTON_STATUS',
-      'CHANGE_REF_SECURITY_CENTER_INFO'
+      'CHANGE_REF_SECURITY_CENTER_INFO',
+      'GET_SECURITY_CENTER'
     ]),
     // 1.时间格式化
     timeFormatting (date) {
@@ -704,7 +720,7 @@ export default {
         }
       })
     },
-    // 创建api检测输入格式
+    // 检测输入格式
     checkoutInputFormat (type, targetNum) {
       switch (type) {
         // 手机验证码
@@ -753,9 +769,9 @@ export default {
     showStatusVerificationClose (paymentType, safeState) {
       console.log(paymentType)
       console.log(safeState)
-      this.openEmail = ''
-      this.openPhone = ''
-      this.openGoogle = ''
+      this.emailCode = ''
+      this.phoneCode = ''
+      this.googleCode = ''
       // 把方法中定义的activeType、state在这里进行赋值 点击哪一个那当前的类型和状态传给后台
       this.activeType = paymentType
       this.state = safeState
@@ -833,22 +849,27 @@ export default {
     async confirmTransactionPassword (type, state) {
       if (state === 'enable') {
         if (!this.phoneCode && !this.emailCode && !this.googleCode) {
+          console.log(1)
           // 请输入验证码
           this.errorMsg = this.$t('M.comm_please_enter') + this.$t('M.user_security_verify')
           return false
         } else {
           this.errorMsg = ''
         }
-      } else {
-        if (!this.phoneCode && !this.emailCode && !this.googleCode) {
-          // 请输入验证码
+      } else if (state === 'disable') {
+        if (this.securityCenter.isMailEnable && !this.emailCode) {
           this.errorMsg1 = this.$t('M.comm_please_enter') + this.$t('M.user_security_verify')
           return false
-        } else {
-          this.errorMsg1 = ''
+        }
+        if (this.securityCenter.isPhoneEnable && !this.phoneCode) {
+          this.errorMsg1 = this.$t('M.comm_please_enter') + this.$t('M.user_security_verify')
+          return false
+        }
+        if (this.securityCenter.isGoogleEnable && !this.googleCode) {
+          this.errorMsg1 = this.$t('M.comm_please_enter') + this.$t('M.user_security_verify')
+          return false
         }
       }
-
       let data
       let params = {
         email: this.userInfo.userInfo.email, // 邮箱
@@ -904,21 +925,15 @@ export default {
     /**
      * 安全中心
      */
-    async getSecurityCenter () {
-      let data = await statusSecurityCenter({
-        token: this.userInfo.token // token
+    getSecurityCenter () {
+      getSecurityCenter(this, (data) => {
+        if (data) {
+          this.securityCenter = data.data.data
+          this.person = data.data.data.person
+          this.logonRecord = data.data.data.setLog
+          this.securityRecord = data.data.data.loginLog
+        }
       })
-      console.log(data)
-      if (!(returnAjaxMessage(data, this, 0))) {
-        return false
-      } else {
-        // 返回展示
-        this.securityCenter = data.data.data
-        this.person = data.data.data.person
-        this.logonRecord = data.data.data.setLog
-        this.securityRecord = data.data.data.loginLog
-        console.log(this.person)
-      }
     }
   },
   filter: {},
@@ -1014,7 +1029,7 @@ export default {
       background-color: $nightBgColor;
       color:$nightFontColor;
       >.security-background {
-        background-color: #1E2636;
+        background-color: $nightMainBgColor;
       }
       >.security-header {
         color: #338FF5;

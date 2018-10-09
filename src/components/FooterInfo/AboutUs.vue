@@ -6,7 +6,10 @@
     <HeaderCommon/>
     <div class="content">
       <div class="top">
-        <h1>关于我们</h1>
+        <h1>
+          <!--关于我们-->
+          {{ $t('M.about_us') }}
+        </h1>
         <p>About Us</p>
       </div>
       <div class="content">
@@ -80,7 +83,7 @@ export default {
         height:250px;
         text-align: center;
         width:100%;
-        background: url(../../assets/develop/about-Us.png) no-repeat center center;
+        background: url(../../assets/develop/about-us.png) no-repeat center center;
         -webkit-background-size: 100% 100%;
         background-size: 100% 100%;
         padding-top:100px;

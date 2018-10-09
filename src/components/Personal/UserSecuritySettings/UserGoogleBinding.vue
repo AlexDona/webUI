@@ -3,7 +3,7 @@
     class="binding-google personal"
     :class="{'day':theme == 'day','night':theme == 'night' }"
   >
-    <HeaderCommon />
+    <HeaderCommon/>
     <div class="binding-google-main margin25">
       <header class="binding-google-header personal-height60 line-height60 line-height70 margin25">
         <span
@@ -112,7 +112,7 @@
                 :label="$t('M.user_security_google') + $t('M.user_security_verify') + '：'"
               >
                 <input
-                  type="text"
+                  type="number"
                   class="google-input border-radius2 padding-l15 box-sizing"
                   v-model="googleVerificationCode"
                   @keydown="setErrorMsg(0, '')"
@@ -144,7 +144,7 @@
         </div>
       </div>
     </div>
-    <FooterCommon />
+    <keep-aline><FooterCommon/></keep-aline>
   </div>
 </template>
 <!--请严格按照如下书写书序-->
@@ -155,13 +155,13 @@ import IconFontCommon from '../../Common/IconFontCommon'
 import ErrorBox from '../../User/ErrorBox'
 import {
   returnAjaxMessage,
-  validateNumForUserInput // 用户输入验证
+  validateNumForUserInput, // 用户输入验证
+  getSecurityCenter
 } from '../../../utils/commonFunc'
 import {
   bindGoogleAddressPage,
   bindGoogleAddress,
-  unbindCheckGoogle,
-  statusSecurityCenter
+  unbindCheckGoogle
 } from '../../../utils/api/personal'
 // 底部
 import FooterCommon from '../../Common/FooterCommon'
@@ -256,15 +256,26 @@ export default {
     },
     // 确定提交绑定谷歌验证
     getGoogleStatusSubmit () {
-      if (!this.googleVerificationCode) {
-        this.errorMsg = this.$t('M.comm_please_enter') + this.$t('M.user_security_google') + this.$t('M.user_security_verify')
+      let goOnStatus = 0
+      if (
+        this.checkoutInputFormat(0, this.googleVerificationCode)
+      ) {
+        goOnStatus = 1
       } else {
-        this.errorMsg = ''
+        goOnStatus = 0
+      }
+      if (goOnStatus) {
         this.confirmBindingBailPhone()
       }
     },
     // 确定绑定谷歌验证接口
     async confirmBindingBailPhone () {
+      if (this.googleVerificationCode.length > 6) {
+        this.$message({
+          message: this.$t('M.user_security_google') + this.$t('M.comm_code') + this.$t('M.user_security_google1'),
+          type: 'error'
+        })
+      }
       let data
       let param = {
         googleSecret: this.googleTheSecretKey,
@@ -281,12 +292,23 @@ export default {
     },
     // 确定解绑谷歌验证
     getGoogleStatusSubmitUnbind () {
-      if (!this.googleVerificationCode) {
-        this.errorMsg = this.$t('M.comm_please_enter') + this.$t('M.user_security_google') + this.$t('M.user_security_verify')
-      } else {
-        this.errorMsg = ''
+      if (this.googleVerificationCode.length > 6) {
+        this.$message({
+          message: this.$t('M.user_security_google') + this.$t('M.comm_code') + this.$t('M.user_security_google1'),
+          type: 'error'
+        })
       }
-      this.confirmBindingUnbind()
+      let goOnStatus = 0
+      if (
+        this.checkoutInputFormat(0, this.googleVerificationCode)
+      ) {
+        goOnStatus = 1
+      } else {
+        goOnStatus = 0
+      }
+      if (goOnStatus) {
+        this.confirmBindingUnbind()
+      }
     },
     async confirmBindingUnbind () {
       let data
@@ -316,17 +338,12 @@ export default {
     /**
      * 安全中心
      */
-    async getSecurityCenter () {
-      let data = await statusSecurityCenter({
-        token: this.userInfo.token // token
+    getSecurityCenter () {
+      getSecurityCenter(this, (data) => {
+        if (data) {
+          this.securityCenter = data.data.data
+        }
       })
-      console.log(data)
-      if (!(returnAjaxMessage(data, this, 0))) {
-        return false
-      } else {
-        // 返回展示
-        this.securityCenter = data.data.data
-      }
     },
     //  点击复制
     onCopy (e) {
@@ -445,7 +462,7 @@ export default {
       background-color: $nightBgColor;
       color:$nightFontColor;
       .binding-google-main {
-        background-color: #1E2636;
+        background-color: $nightMainBgColor;
         >.binding-google-header {
           border-bottom: 1px solid #39424D;
           >.header-content-left {

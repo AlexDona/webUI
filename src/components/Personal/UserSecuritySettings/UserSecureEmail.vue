@@ -3,7 +3,7 @@
     class="set-email personal"
     :class="{'day':theme == 'day','night':theme == 'night' }"
   >
-    <HeaderCommon />
+    <HeaderCommon/>
     <div class="set-email-main margin25">
       <header class="set-email-header personal-height60 line-height60 line-height70 margin25">
         <span class="header-content-left header-content font-size16 font-weight600">
@@ -59,8 +59,8 @@
                 <template slot="append">
                   <CountDownButton
                     class="send-code-btn cursor-pointer"
-                    :status="disabledOfOldPhoneBtn"
-                    @run="sendPhoneOrEmailCode(0, 1)"
+                    :status="disabledOfEmailBtn"
+                    @run="sendPhoneOrEmailCode(1)"
                   />
                 </template>
               </el-input>
@@ -81,7 +81,7 @@
         </div>
       </div>
     </div>
-    <FooterCommon />
+    <keep-aline><FooterCommon/></keep-aline>
   </div>
 </template>
 <!--请严格按照如下书写书序-->
@@ -161,9 +161,16 @@ export default {
         return false
       }
       let params = {
-        address: this.emailAccounts, // 邮箱账号
         type: 'VERIFICATION_CODE' // 类型
         // country: this.activeCountryCode // 邮箱国籍
+      }
+      switch (loginType) {
+        case 0:
+          params.phone = this.userInfo.userInfo.phone
+          break
+        case 1:
+          params.address = this.emailAccounts
+          break
       }
       sendPhoneOrEmailCodeAjax(loginType, params, (data) => {
         console.log(this.disabledOfPhoneBtn)
@@ -200,7 +207,7 @@ export default {
           regType: type
         }
         const data = await checkUserExist(params)
-        if (!returnAjaxMessage(data, this, 1)) {
+        if (!returnAjaxMessage(data, this, 0)) {
           return false
         }
       } else {
@@ -264,6 +271,14 @@ export default {
     },
     // 确定绑定
     async confirmBindingBail () {
+      if (!this.emailCode) {
+        this.$message({
+          // 请先输入邮箱账号
+          message: this.$t('M.comm_please_enter') + this.$t('M.user_security_email') + this.$t('M.comm_code'),
+          type: 'error'
+        })
+        return false
+      }
       let goOnStatus = 0
       if (
         this.checkoutInputFormat(0, this.emailAccounts) &&
@@ -309,7 +324,7 @@ export default {
   computed: {
     ...mapState({
       theme: state => state.common.theme,
-      userInfo: state => state.personal.userInfo,
+      userInfo: state => state.user.loginStep1Info, // 用户详细信息
       activeCountryCode: state => state.user.loginStep1Info.countryCode, // 国籍码
       disabledOfPhoneBtn: state => state.user.disabledOfPhoneBtn,
       disabledOfEmailBtn: state => state.user.disabledOfEmailBtn
@@ -323,7 +338,7 @@ export default {
   .set-email {
     >.set-email-main {
       width: 1100px;
-      min-height: 700px;
+      min-height: 600px;
       margin: 60px auto 100px;
       >.set-email-header {
         display: flex;
@@ -352,9 +367,9 @@ export default {
           margin-left: 55px;
           .send-code-btn {
             width: 90px;
-            height: 36px;
+            /*height: 36px;
             position: absolute;
-            top: -1px;
+            top: -1px;*/
           }
           .input {
             width: 180px;
@@ -384,7 +399,7 @@ export default {
       background-color: $nightBgColor;
       color:$nightFontColor;
       .set-email-main {
-        background-color: #1E2636;
+        background-color: $nightMainBgColor;
         >.set-email-header {
           border-bottom: 1px solid #39424D;
           >.header-content-left {

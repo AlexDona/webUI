@@ -13,7 +13,7 @@
   background-color: #29343F;
 }
 .fiat-canceled-order-box.personal.night .el-table__expanded-cell:hover {
-  background-color: #1E2636;
+  background-color: #1C1F32;
 }
 .fiat-canceled-order-box.personal.night .el-select-dropdown__item.hover{
   background-color: #29343F;
@@ -31,7 +31,7 @@
 }
 
 .fiat-canceled-order-box.personal.night .el-textarea__inner{
-  background-color: #1E2636;
+  background-color: #1C1F32;
   border: 1px solid #7587A5;
   resize: none;
 }
@@ -70,5 +70,5 @@
   background:linear-gradient(9deg,rgba(43,57,110,1),rgba(42,80,130,1));
 }
 .fiat-canceled-order-box.personal.night .el-table tr {
-  background-color: #1E2636;
+  background-color: #1C1F32;
 }

@@ -5,14 +5,14 @@
   >
     <!-- 交易中订单 -->
     <div class="fiat-trading-order-content">
-      <!-- 订单列表 ：1.0 买单 -->
+      <!-- 一、交易中订单 -->
       <div
         class="order-list"
         v-for="(item, index) in tradingOrderList"
         :key="index"
-        v-if="item.orderType === 'BUY'"
       >
-        <div class="order">
+        <!-- 订单列表 ：1.0 买单 -->
+        <div class="order" v-if="item.orderType === 'BUY'">
           <!-- 1.1 表头 -->
           <div class="order-list-head">
             <!-- 买卖家 -->
@@ -363,18 +363,10 @@
             </div>
           </div>
         </div>
-      </div>
-      <!-- 订单列表 ：2.0 卖单 -->
-      <div
-        class="order-list"
-        v-for="(item, index) in tradingOrderList"
-        :key="index"
-        v-if="item.orderType === 'SELL'"
-      >
-        <!-- 2.01 订单列表 -->
+        <!-- 订单列表 ：2.0 卖单 -->
         <div
           class="order"
-          v-if="!showOrderAppeal[index]"
+          v-if="!showOrderAppeal[index] && item.orderType === 'SELL'"
         >
           <!-- 2.1 表头 -->
           <div class="order-list-head">
@@ -546,6 +538,7 @@
                   <el-button
                     type="primary"
                     size="mini"
+                    @click="gatheringBefore"
                   >
                     <!--确认收款-->
                     {{$t('M.otc_trading_collectionconfirmation')}}
@@ -599,7 +592,7 @@
             </div>
           </div>
         </div>
-        <!-- 2.02 订单申诉 -->
+        <!-- 订单申诉 ：3.0 申诉-->
         <div
           class="appeal"
           v-if="showOrderAppeal[index]"
@@ -648,12 +641,12 @@
           </div>
         </div>
       </div>
-      <!-- 暂无数据 -->
+      <!-- 二、暂无数据 -->
       <div class="no-data" v-if="!tradingOrderList.length">
         <!--暂无数据-->
         {{ $t('M.comm_no_data') }}
       </div>
-      <!--分页-->
+      <!-- 三、分页-->
       <el-pagination
         background
         v-show="tradingOrderList.length"
@@ -663,7 +656,7 @@
         @current-change="changeCurrentPage"
       >
       </el-pagination>
-      <!-- 3.0 买家点击确认付款按钮 弹出交易密码框 -->
+      <!-- 四 买家点击确认付款按钮 弹出交易密码框 -->
       <div class="password-dialog">
         <!--交易密码-->
         <el-dialog
@@ -701,7 +694,7 @@
           </span>
         </el-dialog>
       </div>
-      <!-- 4.0 卖家点击确认收款按钮 弹出交易密码框 -->
+      <!-- 五 卖家点击确认收款按钮 弹出交易密码框 -->
       <div class="password-dialog">
         <!--交易密码-->
         <el-dialog
@@ -741,7 +734,7 @@
           </span>
         </el-dialog>
       </div>
-      <!-- 5.0 点击提交申诉按钮 弹出交易密码框 -->
+      <!-- 六 点击提交申诉按钮 弹出交易密码框 -->
       <div class="password-dialog">
         <!--交易密码-->
         <el-dialog
@@ -963,6 +956,14 @@ export default {
         }
       }
     },
+    // 6.0 卖家在买家付款前点击确认收款按钮的提示事件
+    gatheringBefore () {
+      this.$message({
+        // 请等待买家付款
+        message: this.$t('M.comm_please') + this.$t('M.otc_waiting_buyer_payment') + '。',
+        type: 'error'
+      })
+    },
     // 交易密码框错误提示
     // tradePasswordLeave (e) {
     //  console.log(e)
@@ -1083,7 +1084,6 @@ export default {
         border: 0;
       }
       min-height: 472px;
-      // background-color: #202A33;
       border-radius: 5px;
       >.order-list{
         /*width: 1045px;*/
@@ -1092,7 +1092,7 @@ export default {
         margin-bottom: 15px;
         box-sizing: border-box;
         border-radius: 5px;
-        background-color: #1E2636;
+        background-color: $nightMainBgColor;
         border: 1px solid #262F38;
         >.order{
           >.order-list-head{
@@ -1291,9 +1291,8 @@ export default {
         }
       }
       >.no-data{
-        /*width: 1043px;*/
-        height: 472px;
-        line-height: 472px;
+        height: 385px;
+        line-height: 385px;
         text-align: center;
       }
     }
@@ -1301,13 +1300,16 @@ export default {
       background-color: $nightBgColor;
       color:$nightFontColor;
       >.fiat-trading-order-content{
-        background-color: #1E2636;
+       /* background-color: $nightMainBgColor;*/
         .button {
           background:linear-gradient(81deg,rgba(43,57,110,1) 0%,rgba(42,80,130,1) 100%);
         }
+        >.no-data{
+          background-color: $nightMainBgColor;
+        }
       }
       >.background-color{
-        background-color: #1E2636;
+        background-color: $nightMainBgColor;
         >.fiat-color{
           color: #338FF5;
         }
@@ -1318,68 +1320,72 @@ export default {
       color:$dayFontColor;
       >.fiat-trading-order-content{
         >.order-list{
-        background-color: #fff;
-        border: 1px solid  rgba(72,87,118,0.1);
-        >.order{
-          >.order-list-head{
-            color: #333;
-            border-bottom: 1px solid rgba(72,87,118,0.1);
-          }
-          >.order-list-body{
-            color:#7D90AC;
-            >.order-list-body-left{
-              border-right: 1px solid rgba(72,87,118,0.1);
+          background-color: #fff;
+          border: 1px solid  rgba(72,87,118,0.1);
+          >.order{
+            >.order-list-head{
+              color: #333;
+              border-bottom: 1px solid rgba(72,87,118,0.1);
             }
-            >.order-list-body-middle{
-              border-right: 1px solid rgba(72,87,118,0.1);;
-              >.middle-content{
-                .trader-info{
-                  >.pay-style{
-                    background: rgba(51,143,245,0.1);
+            >.order-list-body{
+              color:#7D90AC;
+              >.order-list-body-left{
+                border-right: 1px solid rgba(72,87,118,0.1);
+              }
+              >.order-list-body-middle{
+                border-right: 1px solid rgba(72,87,118,0.1);;
+                >.middle-content{
+                  .trader-info{
+                    >.pay-style{
+                      background: rgba(51,143,245,0.1);
+                    }
+                  }
+                }
+              }
+              >.order-list-body-right{
+                >.right-content{
+                  >.action-tips{
+                    .wait-pay{
+                      color: #E8554F;
+                    }
+                  }
+                  >.submitted-confirm-payment{
+                    color: #5E95EC;
+                  }
+                  >.action-explain{
+                    >.remaining-time{
+                      color: #D45858;
+                    }
+                  }
+                  >.count-down-time{
+                    .timeIcon{
+                      color: #D45858;
+                    }
                   }
                 }
               }
             }
-            >.order-list-body-right{
-              >.right-content{
-                >.action-tips{
-                  .wait-pay{
-                    color: #E8554F;
-                  }
-                }
-                >.submitted-confirm-payment{
-                  color: #5E95EC;
-                }
-                >.action-explain{
-                  >.remaining-time{
-                    color: #D45858;
-                  }
-                }
-                >.count-down-time{
-                  .timeIcon{
-                    color: #D45858;
+          }
+          >.appeal{
+            >.appeal-head{
+              color: #FFFFFF;
+              border-bottom: 1px solid #262F38;
+            }
+            >.appeal-body{
+              >.appeal-body-content{
+                >.appeal-textarea{
+                  >.appeal-reason{
+                    color: #338FF5;
                   }
                 }
               }
             }
           }
         }
-        >.appeal{
-          >.appeal-head{
-            color: #FFFFFF;
-            border-bottom: 1px solid #262F38;
-          }
-          >.appeal-body{
-            >.appeal-body-content{
-              >.appeal-textarea{
-                >.appeal-reason{
-                  color: #338FF5;
-                }
-              }
-            }
-          }
+        >.no-data{
+          background-color: #fff;
+          border: 1px solid rgba(38,47,56,0.1);
         }
-      }
       }
     }
   }

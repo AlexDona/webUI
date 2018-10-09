@@ -17,6 +17,7 @@ util.ajax.interceptors.request.use((config) => {
   // 商户id
   config.headers['partnerId'] = '474629374641963008'
   config.headers['partnerNo'] = '100001'
+  config.headers['x-domain'] = window.location.host.split(':')[0]
   if (store.state.user.loginStep1Info.token) {
     let userToken = store.state.user.loginStep1Info.token
     config.headers['token'] = userToken

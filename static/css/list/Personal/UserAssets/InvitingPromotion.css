@@ -10,6 +10,10 @@
 .invitation-promotion.personal .el-scrollbar{
   width: 120px;
 }
-.invitation-promotion.personal.night .el-table .cell {
+.invitation-promotion.personal .el-table .cell {
   font-size: 12px;
+}
+.invitation-promotion.personal .el-table .cell,
+.invitation-promotion.personal .el-table th div {
+  padding-left: 18px;
 }
