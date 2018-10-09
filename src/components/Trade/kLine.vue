@@ -84,6 +84,8 @@ export default {
       this.options.paneProperties.background = this.theme === 'night' ? this.mainColor.$mainNightBgColor : this.mainColor.$mainDayBgColor
       this.options.paneProperties.vertGridPropertiesColor = this.theme === 'night' ? 'rgba(57,66,77,.2)' : 'rgba(57,66,77,.05)'
       this.options.interval = '1'
+      this.options.language = this.language
+      console.log(this.language)
       this.init(this.options)
       this.getBars()
     },
@@ -168,7 +170,7 @@ export default {
             'hide_left_toolbar_by_default' // 隐藏左侧边栏
           ],
           timezone: 'Asia/Shanghai',
-          locale: 'en',
+          locale: options.language,
           debug: false,
           toolbar_bg: 'transparent', // 工具栏背景色
           studies_overrides: {
@@ -287,10 +289,10 @@ export default {
               })
               .append(item.label)
           })
-          // this.widget.chart().createStudy('Moving Average', false, true, [5, 'close', 0], null, {'Plot.color': '#7D53A8'})
-          // this.widget.chart().createStudy('Moving Average', false, true, [10, 'close', 0], null, {'Plot.color': '#7699C2'})
-          // this.widget.chart().createStudy('Moving Average', false, true, [30, 'close', 0], null, {'Plot.color': '#A0D75B'})
-          // this.widget.chart().createStudy('MA Cross', false, false, [30, 120])
+          this.widget.chart().createStudy('Moving Average', false, true, [5, 'close', 0], null, {'Plot.color': '#7b53a7'})
+          this.widget.chart().createStudy('Moving Average', false, true, [10, 'close', 0], null, {'Plot.color': '#6b89ae'})
+          this.widget.chart().createStudy('Moving Average', false, true, [30, 'close', 0], null, {'Plot.color': '#55ae63'})
+          this.widget.chart().createStudy('Moving Average', false, true, [60, 'close', 0], null, {'Plot.color': '#89226e'})
         })
         this.symbol = options.symbol
         this.interval = options.interval
@@ -564,6 +566,7 @@ export default {
   computed: {
     ...mapState({
       theme: state => state.common.theme,
+      language: state => state.common.language,
       activeSymbol: state => state.common.activeSymbol,
       activeSymbolId: state => state.common.activeSymbol.id,
       activeTradeArea: state => state.common.activeTradeArea,
@@ -582,6 +585,9 @@ export default {
         'paneProperties.vertGridProperties.color': this.theme === 'night' ? 'rgba(57,66,77,.2)' : 'rgba(57,66,77,.05)', // 行分割线
         'paneProperties.horzGridProperties.color': this.theme === 'night' ? 'rgba(57,66,77,.2)' : 'rgba(57,66,77,.05)' // 列分割线
       })
+    },
+    language () {
+      this.initKLine(this.activeSymbolId)
     },
     activeSymbolId (newVal) {
       this.initKLine(newVal)
