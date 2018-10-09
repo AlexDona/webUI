@@ -51,3 +51,6 @@
 .push-assets.personal.night .el-dialog__title {
   color: #fff;
 }
+.push-assets.personal.night .el-table th.is-leaf {
+  border-top: 0;
+}

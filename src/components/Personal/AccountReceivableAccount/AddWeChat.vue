@@ -243,7 +243,7 @@ export default {
     setErrorMsg (index, msg) {
       this.errorShowStatusList[index] = msg
     },
-    // 确认设置我新账号
+    // 确认设置新账号
     stateSubmitWeChat () {
       this.stateSeniorCertification()
     },
