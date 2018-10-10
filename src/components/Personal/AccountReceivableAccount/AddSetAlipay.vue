@@ -42,7 +42,7 @@
             :label-position="labelPosition"
             label-width="120px"
           >
-            <!--名 称 收  款  类  型 支付宝 支付宝账号 上传收款码 交易密码-->
+            <!--名 称-->
             <el-form-item
               :label="$t('M.user_account_name')"
             >
@@ -50,11 +50,13 @@
                 {{ userInfo.userInfo.realname }}
               </span>
             </el-form-item>
+            <!--收  款  类  型-->
             <el-form-item
               :label="$t('M.user_account_gathering') + $t('M.comm_type')"
             >
               <span class="account-content-type">支付宝</span>
             </el-form-item>
+            <!--支付宝账号-->
             <el-form-item
               :label="$t('M.user_account_alipay') + $t('M.user_account_number')"
             >
@@ -70,6 +72,7 @@
                 :isShow="!!errorShowStatusList[0]"
               />
             </el-form-item>
+            <!--上传收款码-->
             <el-form-item
               :label="$t('M.user_account_upload_collection')"
             >
@@ -95,6 +98,7 @@
                 </el-upload>
               </div>
             </el-form-item>
+            <!--交易密码-->
             <el-form-item
               :label="$t('M.comm_password')"
             >

@@ -41,7 +41,7 @@
             :label-position="labelPosition"
             label-width="120px"
           >
-            <!--名 称 收  款  类  型 微信账号 上传收款码 交易密码-->
+            <!--名 称-->
             <el-form-item
               :label="$t('M.user_account_name')"
             >
@@ -49,6 +49,7 @@
                 {{ userInfo.userInfo.realname }}
               </span>
             </el-form-item>
+            <!--收  款  类  型-->
             <el-form-item
               :label="$t('M.user_account_gathering') + $t('M.comm_type')"
             >
@@ -56,6 +57,7 @@
                 {{ $t('M.user_account_weChat') }}
               </span>
             </el-form-item>
+            <!--微信账号-->
             <el-form-item
               :label="$t('M.user_account_weChat') + $t('M.user_account_number')"
             >

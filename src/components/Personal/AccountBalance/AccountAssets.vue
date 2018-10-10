@@ -1060,8 +1060,9 @@ export default {
         return false
       } else {
         this.errorMsg = ''
+        this.stateSubmitAssets()
+        this.mentionMoneyConfirm = false
       }
-      this.stateSubmitAssets()
     },
     // 提交提币接口
     async stateSubmitAssets (index) {
@@ -1092,7 +1093,6 @@ export default {
         // 提币地址列表查询
         this.getAssetCurrenciesList()
         this.stateEmptyData()
-        this.mentionMoneyConfirm = false
       }
     },
     // 接口请求完成之后清空数据

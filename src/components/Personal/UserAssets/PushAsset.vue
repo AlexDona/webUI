@@ -140,6 +140,7 @@
             style="width: 100%"
             :empty-text="$t('M.comm_no_data')"
             v-loading="loading"
+            element-loading-background="rgba(0, 0, 0, 0.6)"
           >
             <!--类型-->
             <el-table-column

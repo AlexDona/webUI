@@ -41,7 +41,7 @@
             :label-position="labelPosition"
             label-width="120px"
           >
-            <!--名 称 paypal账号 请输入内容 交易密码-->
+            <!--名 称-->
             <el-form-item
               :label="$t('M.user_account_name')"
             >
@@ -49,6 +49,7 @@
                 {{ userInfo.userInfo.realname }}
               </span>
             </el-form-item>
+            <!--paypal账号-->
             <el-form-item
               :label="$t('M.user_account_paypal') + $t('M.user_account_number')"
             >
@@ -66,6 +67,7 @@
                 />
               </el-input>
             </el-form-item>
+            <!--交易密码-->
             <el-form-item
               :label="$t('M.comm_password')"
             >

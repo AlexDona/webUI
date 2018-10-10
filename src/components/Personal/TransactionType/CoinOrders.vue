@@ -137,6 +137,7 @@
                 :data="currentEntrustList"
                 :empty-text="$t('M.comm_no_data')"
                 v-loading="loading"
+                element-loading-background="rgba(0, 0, 0, 0.6)"
               >
                 <!--时间-->
                 <el-table-column
@@ -261,6 +262,7 @@
             :data="historyEntrustList"
             :empty-text="$t('M.comm_no_data')"
             v-loading="loading"
+            element-loading-background="rgba(0, 0, 0, 0.6)"
           >
             <!--时间-->
             <el-table-column
@@ -365,6 +367,7 @@
             :data="currentMakeDetailList"
             :empty-text="$t('M.comm_no_data')"
             v-loading="loading"
+            element-loading-background="rgba(0, 0, 0, 0.6)"
           >
             <!--时间-->
             <el-table-column

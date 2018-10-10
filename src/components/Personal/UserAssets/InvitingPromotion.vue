@@ -163,6 +163,7 @@
             style="width: 100%"
             :empty-text="$t('M.comm_no_data')"
             v-loading="loading"
+            element-loading-background="rgba(0, 0, 0, 0.6)"
           >
             <!--用户UID 登录名 注册时间 姓名 高级认证 直接推荐人UID-->
             <el-table-column
@@ -243,6 +244,7 @@
             style="width: 100%"
             :empty-text="$t('M.comm_no_data')"
             v-loading="loading"
+            element-loading-background="rgba(0, 0, 0, 0.6)"
           >
             <!--奖励类型 邀请奖励 币种 数量 时间-->
             <el-table-column

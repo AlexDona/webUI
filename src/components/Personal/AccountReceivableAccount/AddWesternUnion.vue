@@ -37,7 +37,7 @@
           <!--*西联汇款l上传二维码方法：打开西联汇款首页>收钱>保存图片，将存在手机相册的收款码上传即可。-->
         <!--</header>-->
         <div class="western-content-from">
-          <!--名 称 电汇地址 交易密码-->
+          <!--名 称-->
           <el-form
             :label-position="labelPosition"
             label-width="120px"
@@ -49,6 +49,7 @@
                 {{ userInfo.userInfo.realname }}
               </span>
             </el-form-item>
+            <!--电汇地址-->
             <el-form-item
               :label="$t('M.user_account_wire_transfer') + $t('M.comm_site')"
             >
@@ -66,6 +67,7 @@
                 />
               </el-input>
             </el-form-item>
+            <!--交易密码-->
             <el-form-item
               :label="$t('M.comm_password')"
             >

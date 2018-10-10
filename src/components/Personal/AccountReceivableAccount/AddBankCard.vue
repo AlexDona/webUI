@@ -41,7 +41,7 @@
             :label-position="labelPosition"
             label-width="120px"
           >
-            <!--名 称 银行名称 银行卡号 支行地址-->
+            <!--名 称-->
             <el-form-item
               :label="$t('M.user_account_name')"
             >
@@ -49,6 +49,7 @@
                 {{ userInfo.userInfo.realname }}
               </span>
             </el-form-item>
+            <!--银行名称-->
             <el-form-item
               :label="$t('M.user_account_bank_name')"
             >
@@ -64,6 +65,7 @@
                 :isShow="!!errorShowStatusList[0]"
               />
             </el-form-item>
+            <!--银行卡号-->
             <el-form-item
               :label="$t('M.user_account_credit_numbers')"
             >
@@ -80,6 +82,7 @@
                 :isShow="!!errorShowStatusList[1]"
               />
             </el-form-item>
+            <!--支行地址-->
             <el-form-item
               :label="$t('M.user_account_branch_address')"
             >
