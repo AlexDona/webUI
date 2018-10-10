@@ -561,6 +561,7 @@ export default {
     },
     // 点击立刻投资按钮执行
     getInvestEarnings () {
+      console.log(111)
       if (this.isLogin) {
         if (this.selectedInvestTypeId && this.investMounte && this.isShow === false) {
           // 显示理财详情模态框前请求数据渲染模态框
