@@ -1,13 +1,17 @@
 <template>
   <div
-  class="otc-publish-buy-and-sell-box otc"
-  :class="{'day':theme == 'day','night':theme == 'night' }"
+    class="otc-publish-buy-and-sell-box otc"
+    :class="{'day':theme == 'day','night':theme == 'night' }"
   >
     <!-- 挂单：商家和普通用户都可以用 -->
     <!-- 1.0 导航 -->
     <NavCommon/>
     <!-- 2.0发布购买和出售 -->
-    <div class="publish-buy-and-sell-content">
+    <div
+      class="publish-buy-and-sell-content"
+      v-loading.fullscreen.lock="fullscreenLoading"
+      element-loading-background="rgba(0, 0, 0, 0.6)"
+    >
       <!-- 发布订单内容部分分为左右两个部分 -->
       <div class="publish-content">
         <!-- 左边部分:发布订单买卖部分 -->
@@ -372,6 +376,7 @@ export default {
   },
   data () {
     return {
+      fullscreenLoading: true,
       serviceChargeSELL: 0, // 手续费：卖
       traderSumSELL: 0, // 交易额：卖
       serviceChargeBUY: 0, // 手续费：买
@@ -469,6 +474,7 @@ export default {
     ]),
     // 1.0 币种详情 : 商家和普通用户挂单页面请求币种详情渲染页面
     async getOTCCoinInfo () {
+      this.fullscreenLoading = true
       const data = await getOTCCoinInfo({
         currencyId: this.hopePaymentCoinId, // 法币id
         coinId: this.coinId // 交易币种id
@@ -480,6 +486,7 @@ export default {
         return false
       } else {
         // 返回数据正确的逻辑
+        this.fullscreenLoading = false
         // 1.0 可用币种列表
         this.coinStyleList = data.data.data.coinlist
         this.coinStyleList.forEach(item => {

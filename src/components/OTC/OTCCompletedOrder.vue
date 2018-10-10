@@ -9,6 +9,8 @@
           :data="completedOrdersList"
           :default-expand-all="true"
           :empty-text="$t('M.comm_no_data')"
+          v-loading="loading"
+          element-loading-background="rgba(0, 0, 0, 0.6)"
         >
           <div>
             <el-table-column type="expand">
@@ -192,6 +194,7 @@ export default {
   // props,
   data () {
     return {
+      loading: true,
       // 分页
       pageSize: 5,
       currentPage: 1, // 当前页码
@@ -225,6 +228,7 @@ export default {
     },
     // 2.0 请求已完成订单列表
     async getOTCCompletedOrdersList () {
+      this.loading = true
       const data = await getOTCCompletedOrders({
         status: 'COMPLETED', // 状态 (交易中 TRADING 已完成 COMPLETED  已取消  CANCELED 冻结中 FROZEN)
         pageNum: this.currentPage,
@@ -235,6 +239,7 @@ export default {
         return false
       } else {
         // 返回数据正确的逻辑
+        this.loading = false
         this.completedOrdersList = data.data.data.list
         // 分页
         this.totalPages = data.data.data.pages - 0
