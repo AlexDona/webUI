@@ -41,7 +41,7 @@
             :label-position="labelPosition"
             label-width="120px"
           >
-            <!--名 称 银行名称 银行卡号 支行地址-->
+            <!--名 称-->
             <el-form-item
               :label="$t('M.user_account_name')"
             >
@@ -49,6 +49,7 @@
                 {{ userInfo.userInfo.realname }}
               </span>
             </el-form-item>
+            <!--银行名称-->
             <el-form-item
               :label="$t('M.user_account_bank_name')"
             >
@@ -64,6 +65,7 @@
                 :isShow="!!errorShowStatusList[0]"
               />
             </el-form-item>
+            <!--银行卡号-->
             <el-form-item
               :label="$t('M.user_account_credit_numbers')"
             >
@@ -80,6 +82,7 @@
                 :isShow="!!errorShowStatusList[1]"
               />
             </el-form-item>
+            <!--支行地址-->
             <el-form-item
               :label="$t('M.user_account_branch_address')"
             >
@@ -143,11 +146,11 @@ import ErrorBox from '../../User/ErrorBox'
 import CountDownButton from '../../Common/CountDownCommon'
 import {
   returnAjaxMessage, // 接口返回信息
-  validateNumForUserInput
+  validateNumForUserInput,
+  getAccountPaymentTerm
 } from '../../../utils/commonFunc'
 import {
   statusCardSettings,
-  accountPaymentTerm,
   modificationAccountPaymentTerm
 } from '../../../utils/api/personal'
 // 底部
@@ -178,7 +181,8 @@ export default {
         '', // 银行名称
         '', // 支行地址
         '' // 交易密码
-      ]
+      ],
+      loadingCircle: {} // 整页loading
     }
   },
   created () {
@@ -210,7 +214,7 @@ export default {
     statusTetBankCard () {
       this.confirmTiePhone()
     },
-    // 确定设置
+    // 确定设置按钮
     async confirmTiePhone () {
       let goOnStatus = 0
       if (
@@ -235,10 +239,19 @@ export default {
           bankType: 'bank', // type
           id: this.id
         }
+        // 整页loading
+        this.loadingCircle = this.$loading({
+          lock: true,
+          background: 'rgba(0, 0, 0, 0.6)'
+        })
         data = await statusCardSettings(params)
         if (!(returnAjaxMessage(data, this, 1))) {
+          // 接口失败清除loading
+          this.loadingCircle.close()
           return false
         } else {
+          // 接口成功清除loading
+          this.loadingCircle.close()
           this.successJump()
           this.stateEmptyData()
           console.log(data)
@@ -319,28 +332,41 @@ export default {
         userId: this.userInfo.userId,
         type: 'bank'
       }
+      // 整页loading
+      this.loadingCircle = this.$loading({
+        lock: true,
+        background: 'rgba(0, 0, 0, 0.6)'
+      })
       data = await modificationAccountPaymentTerm(params)
       if (!(returnAjaxMessage(data, this, 0))) {
+        // 接口失败清除loading
+        this.loadingCircle.close()
         return false
       } else {
+        // 接口成功清除loading
+        this.loadingCircle.close()
         // 返回状态展示
         this.paymentMethodList = data.data.data
+        // 修改时带回银行卡名称
         this.bankName = data.data.data.bankName
+        // 修改时带回银行卡号
         this.bankCard = data.data.data.cardNo
+        // 修改时带回银行卡地址
         this.branchAddress = data.data.data.address
         this.id = data.data.data.id
         console.log(this.paymentMethodList)
       }
     },
-    // 收款方式
-    async getAccountPaymentTerm () {
-      let data = await accountPaymentTerm()
-      if (!(returnAjaxMessage(data, this, 0))) {
-        return false
-      } else {
-        // 返回状态展示
-        this.paymentTerm = data.data.data
-      }
+    /**
+     * 收款方式
+     */
+    getAccountPaymentTerm () {
+      getAccountPaymentTerm(this, (data) => {
+        if (data) {
+          // 返回状态展示
+          this.paymentTerm = data.data.data
+        }
+      })
     },
     // 成功自动跳转
     successJump () {

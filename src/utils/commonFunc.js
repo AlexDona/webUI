@@ -7,7 +7,9 @@ import {
 import {
   userRefreshUser,
   getQueryAllOrdersList,
-  statusSecurityCenter
+  statusSecurityCenter,
+  accountPaymentTerm,
+  modificationAccountPaymentTerm
 } from '../utils/api/personal'
 
 import {
@@ -134,9 +136,9 @@ export const repealMyEntrustCommon = async (params, callback) => {
   const repealData = await repealMyEntrustAjax(params)
   callback(repealData)
 }
-// /**
-//  * 商家订单列表请求
-//  */
+/**
+* 商家订单列表请求
+*/
 export const getMerchantsOrdersList = async (params, callback) => {
   const repealData = await getQueryAllOrdersList(params)
   callback(repealData)
@@ -201,6 +203,18 @@ export const getSecurityCenter = async (that, callback) => {
     callback(data)
   }
 }
+/**
+ *  刷新收款方式状态
+ */
+export const getAccountPaymentTerm = async (that, callback) => {
+  console.log(store)
+  const data = await accountPaymentTerm({})
+  if (!(returnAjaxMessage(data, that))) {
+    return false
+  } else {
+    callback(data)
+  }
+}
 // 首页、币币交易切换收藏
 export const toggleUserCollection = async (type, tradeId, that) => {
   const params = {
@@ -215,6 +229,15 @@ export const toggleUserCollection = async (type, tradeId, that) => {
   if (!returnAjaxMessage(data, that)) {
     return false
   }
+}
+
+// 协议跳转
+export const jumpToOtherPageForFooter = (router, activeName, that) => {
+  that.$store.commit('CHANGE_FOOTER_ACTIVENAME', {
+    activeName,
+    type: router
+  })
+  that.$router.push({path: router})
 }
 
 // eslint-disable-next-line

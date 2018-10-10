@@ -322,6 +322,7 @@ export default {
       ],
       successCountDown: 1, // 成功倒计时
       newPhoneIsExistStatus: false, // 新手机号是否已注册过
+      loadingCircle: {}, // 整页loading
       emailBindPhoneCount: 0 // 邮箱绑定手机次数
     }
   },
@@ -554,10 +555,19 @@ export default {
           phone: this.bindingDataPhone.bindingNewPhoneAccounts, // 手机号
           code: this.bindingDataPhone.bindingNewPhoneCode // 手机验证码
         }
+        // 整页loading
+        this.loadingCircle = this.$loading({
+          lock: true,
+          background: 'rgba(0, 0, 0, 0.6)'
+        })
         data = await bindPhoneAddress(param)
         if (!(returnAjaxMessage(data, this, 1))) {
+          // 接口失败清除loading
+          this.loadingCircle.close()
           return false
         } else {
+          // 接口成功清除loading
+          this.loadingCircle.close()
           this.successJump()
           console.log(data)
         }
@@ -634,16 +644,6 @@ export default {
               return 0
           }
           break
-          // if (!targetNum) {
-          //   // 请输入手机号
-          //   this.tieErrorMsg('phone', this.$t('M.comm_please_enter') + this.$t('M.user_security_phone') + this.$t('M.comm_mark'))
-          //   this.$forceUpdate()
-          //   return 0
-          // } else {
-          //   this.tieErrorMsg(1, '')
-          //   this.$forceUpdate()
-          //   return 1
-          // }
         // 新短信验证码
         case 2:
           if (!targetNum) {
@@ -680,6 +680,7 @@ export default {
     // 确定换绑手机
     async confirmTiePhone () {
       if (this.newPhoneIsExistStatus) {
+        // 手机号已被注册
         this.$message({
           type: 'error',
           message: this.$t('M.user-fail-reg-phone-exist')
@@ -714,10 +715,19 @@ export default {
           newCode: this.amendDataPhone.newPhoneCode, // 新手机验证码
           payPassword: this.amendDataPhone.transactionPassword // 交易密码
         }
+        // 整页loading
+        this.loadingCircle = this.$loading({
+          lock: true,
+          background: 'rgba(0, 0, 0, 0.6)'
+        })
         data = await changeMobilePhone(param)
         if (!(returnAjaxMessage(data, this, 1))) {
+          // 接口失败清除loading
+          this.loadingCircle.close()
           return false
         } else {
+          // 接口成功清除loading
+          this.loadingCircle.close()
           this.stateEmptyData()
           this.successJump()
         }

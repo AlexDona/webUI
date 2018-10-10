@@ -105,6 +105,8 @@
             :data="extensionList"
             style="width: 100%"
             :empty-text="$t('M.comm_no_data')"
+            v-loading="loading"
+            element-loading-background="rgba(0, 0, 0, 0.6)"
           >
             <!--创建时间-->
             <el-table-column
@@ -471,7 +473,9 @@ export default {
       userId: '', // 编辑用户api
       apiRemark: '', // 编辑用户备注
       ipAddress: '', // 编辑用户ip
-      dialogVisible: false
+      dialogVisible: false,
+      loadingCircle: {}, // 整页loading
+      loading: true // 局部列表loading
     }
   },
   created () {
@@ -499,8 +503,12 @@ export default {
       let data = await multipleUserAPIInfo({})
       console.log(data)
       if (!(returnAjaxMessage(data, this, 0))) {
+        // 接口失败清除局部loading
+        this.loading = false
         return false
       } else {
+        // 接口成功清除局部loading
+        this.loading = false
         // 返回展示渲染挨批列表
         this.extensionList = data.data.data
         // console.log(this.extensionList)
@@ -519,8 +527,6 @@ export default {
       } else {
         this.errorMsg = ''
       }
-      // 默认API确认弹窗
-      this.APIMoneyConfirm = true
       // 调用安全方式接口
       this.getSecurityCenter()
       // 赋值创建IP修改时的带回
@@ -617,10 +623,19 @@ export default {
         emailCode: this.emailCode, // 邮箱验证码
         googleCode: this.googleCode // 谷歌验证码
       })
+      // 整页loading
+      this.loadingCircle = this.$loading({
+        lock: true,
+        background: 'rgba(0, 0, 0, 0.6)'
+      })
       console.log(data)
       if (!(returnAjaxMessage(data, this, 0))) {
+        // 接口失败清除loading
+        this.loadingCircle.close()
         return false
       } else {
+        // 接口成功清除loading
+        this.loadingCircle.close()
         // 默认API确认弹窗
         this.APIMoneyConfirm = false
         // 默认创建之后弹出二次挨批创建信息框
@@ -643,10 +658,19 @@ export default {
         accessKey: this.accessKey, // token
         secretKey: this.secretKey // sk私钥
       })
+      // 整页loading
+      this.loadingCircle = this.$loading({
+        lock: true,
+        background: 'rgba(0, 0, 0, 0.6)'
+      })
       console.log(data)
       if (!(returnAjaxMessage(data, this, 1))) {
+        // 接口失败清除loading
+        this.loadingCircle.close()
         return false
       } else {
+        // 接口成功清除loading
+        this.loadingCircle.close()
         // 返回展示
         console.log(data)
         // 默认创建之后弹出二次挨批创建信息框 关闭
@@ -704,10 +728,19 @@ export default {
           remark: this.apiRemark, // 编辑用户备注
           ip: this.ipAddress // 编辑用户ip
         })
+        // 整页loading
+        this.loadingCircle = this.$loading({
+          lock: true,
+          background: 'rgba(0, 0, 0, 0.6)'
+        })
         console.log(data)
         if (!(returnAjaxMessage(data, this, 1))) {
+          // 接口失败清除loading
+          this.loadingCircle.close()
           return false
         } else {
+          // 接口成功清除loading
+          this.loadingCircle.close()
           // 调用查询接口编辑完成之后重新赋值渲染
           this.getMultipleUserAPIInfo()
           // 清空数据
@@ -739,10 +772,19 @@ export default {
       let data = await deleteUserInformation({
         id: this.userId
       })
+      // 整页loading
+      this.loadingCircle = this.$loading({
+        lock: true,
+        background: 'rgba(0, 0, 0, 0.6)'
+      })
       console.log(data)
       if (!(returnAjaxMessage(data, this, 0))) {
+        // 接口失败清除loading
+        this.loadingCircle.close()
         return false
       } else {
+        // 接口成功清除loading
+        this.loadingCircle.close()
         // 返回展示
         this.getMultipleUserAPIInfo()
         this.dialogVisible = false
@@ -752,9 +794,20 @@ export default {
      * 安全中心
      */
     getSecurityCenter () {
+      // 整页loading
+      this.loadingCircle = this.$loading({
+        lock: true,
+        background: 'rgba(0, 0, 0, 0.6)'
+      })
       getSecurityCenter(this, (data) => {
+        // 接口成功清除loading
+        this.loadingCircle.close()
         if (data) {
+          // 接口成功清除loading
+          this.loadingCircle.close()
           this.securityCenter = data.data.data
+          // 默认API确认弹窗
+          this.APIMoneyConfirm = true
         }
       })
     },
