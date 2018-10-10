@@ -258,10 +258,13 @@
                  <!--我已阅读并同意-->
                  {{ $t('M.forgetPassword_hint6') }}
                </span>
-               <router-link to="/" class="main-color">
+               <a
+                 class="main-color"
+                 @click.prevent="jumpToOtherPage('/ServiceAndProtocol','UserProtocol')"
+               >
                  <!--《用户协议》-->
                  {{ $t('M.forgetPassword_hint7') }}
-               </router-link>
+               </a>
              </el-checkbox>
            </div>
           </div>
@@ -318,7 +321,8 @@ import {
 import {
   returnAjaxMessage, // 接口返回信息
   validateNumForUserInput, // 用户输入验证
-  sendPhoneOrEmailCodeAjax
+  sendPhoneOrEmailCodeAjax,
+  jumpToOtherPageForFooter
   // getCountryListAjax
 } from '../../utils/commonFunc'
 import {createNamespacedHelpers, mapState} from 'vuex'
@@ -377,6 +381,9 @@ export default {
     ...mapMutations([
       'SET_USER_BUTTON_STATUS'
     ]),
+    jumpToOtherPage (router, activeName) {
+      jumpToOtherPageForFooter(router, activeName, this)
+    },
     getCountryList () {
       getCountryListAjax(this, (data) => {
         console.log(data)

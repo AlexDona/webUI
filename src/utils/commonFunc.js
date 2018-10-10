@@ -134,9 +134,9 @@ export const repealMyEntrustCommon = async (params, callback) => {
   const repealData = await repealMyEntrustAjax(params)
   callback(repealData)
 }
-// /**
-//  * 商家订单列表请求
-//  */
+/**
+* 商家订单列表请求
+*/
 export const getMerchantsOrdersList = async (params, callback) => {
   const repealData = await getQueryAllOrdersList(params)
   callback(repealData)
@@ -215,6 +215,15 @@ export const toggleUserCollection = async (type, tradeId, that) => {
   if (!returnAjaxMessage(data, that)) {
     return false
   }
+}
+
+// 协议跳转
+export const jumpToOtherPageForFooter = (router, activeName, that) => {
+  that.$store.commit('CHANGE_FOOTER_ACTIVENAME', {
+    activeName,
+    type: router
+  })
+  that.$router.push({path: router})
 }
 
 // eslint-disable-next-line
