@@ -2,6 +2,8 @@
   <div
     class="identity-authentication personal"
     :class="{'day':theme == 'day','night':theme == 'night' }"
+    v-loading.fullscreen.lock="fullscreenLoading"
+    element-loading-background="rgba(0, 0, 0, 0.6)"
   >
     <header class="identity-header-background personal-height40 line-height40">
       <span class="padding-left23 header-content font-size16">
@@ -445,7 +447,7 @@
       <!--请在浏览器中打开，并升级浏览器至最新版本,无法通过认证的用户，-->
       <!--请点击这里-->
       <el-dialog
-        title="高级认证"
+        :title="$t('M.user_senior_certification')"
         :visible.sync="seniorAuthentication"
         name="1"
         center>
@@ -547,7 +549,7 @@ export default {
         '', // 真实姓名
         '' // 证件号码
       ],
-      loadingCircle: {} // 整页loading
+      fullscreenLoading: false // 整页loading
     }
   },
   async created () {
@@ -638,19 +640,10 @@ export default {
     },
     async getCountryListings () {
       let data = await queryCountryList()
-      // 整页loading
-      this.loadingCircle = this.$loading({
-        lock: true,
-        background: 'rgba(0, 0, 0, 0.7)'
-      })
       console.log(data)
       if (!(returnAjaxMessage(data, this, 0))) {
-        // 接口失败清除loading
-        this.loadingCircle.close()
         return false
       } else {
-        // 接口成功清除loading
-        this.loadingCircle.close()
         // 返回列表数据
         this.regionList = data.data.data
         this.regionValue = data.data.data[0].id
@@ -663,18 +656,15 @@ export default {
     async getRealNameInformation () {
       let data = await realNameInformation()
       // 整页loading
-      this.loadingCircle = this.$loading({
-        lock: true,
-        background: 'rgba(0, 0, 0, 0.7)'
-      })
+      this.fullscreenLoading = true
       console.log(data)
       if (!(returnAjaxMessage(data, this, 0))) {
         // 接口失败清除loading
-        this.loadingCircle.close()
+        this.fullscreenLoading = false
         return false
       } else {
         // 接口成功清除loading
-        this.loadingCircle.close()
+        this.fullscreenLoading = false
         // 返回列表数据
         this.realNameInformationObj = data.data.data
         // if (data.data.data.authInfo) {
@@ -690,9 +680,15 @@ export default {
       let data = await userRefreshUser({
         token: this.userInfo.token
       })
+      // 整页loading
+      this.fullscreenLoading = true
       if (!(returnAjaxMessage(data, this, 0))) {
+        // 接口失败清除loading
+        this.fullscreenLoading = false
         return false
       } else {
+        // 接口成功清除loading
+        this.fullscreenLoading = false
         this.$store.commit('user/SET_STEP1_INFO', data.data.data)
         // 返回列表数据
         this.userInfoRefresh = data.data.data.userInfo
@@ -755,18 +751,15 @@ export default {
           cardNo: this.identificationNumber // 证件号码
         }
         // 整页loading
-        this.loadingCircle = this.$loading({
-          lock: true,
-          background: 'rgba(0, 0, 0, 0.7)'
-        })
+        this.fullscreenLoading = true
         data = await submitRealNameAuthentication(param)
         if (!(returnAjaxMessage(data, this, 1))) {
           // 接口失败清除loading
-          this.loadingCircle.close()
+          this.fullscreenLoading = false
           return false
         } else {
           // 接口成功清除loading
-          this.loadingCircle.close()
+          this.fullscreenLoading = false
           await this.getUserRefreshUser()
           await this.getRealNameInformation()
           console.log(data)
@@ -843,19 +836,16 @@ export default {
         idcardHand: this.dialogImageHandUrl // 上传手持身份证
       }
       // 整页loading
-      this.loadingCircle = this.$loading({
-        lock: true,
-        background: 'rgba(0, 0, 0, 0.7)'
-      })
+      this.fullscreenLoading = true
       data = await submitSeniorCertification(param)
       console.log(data)
       if (!(returnAjaxMessage(data, this, 1))) {
         // 接口失败清除loading
-        this.loadingCircle.close()
+        this.fullscreenLoading = false
         return false
       } else {
         // 接口成功清除loading
-        this.loadingCircle.close()
+        this.fullscreenLoading = false
         console.log(1)
         this.SET_USER_INFO_REFRESH_STATUS(true)
         await this.getUserRefreshUser()

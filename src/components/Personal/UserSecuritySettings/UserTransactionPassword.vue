@@ -2,6 +2,8 @@
   <div
     class="transaction-password personal"
     :class="{'day':theme == 'day','night':theme == 'night' }"
+    v-loading.fullscreen.lock="fullscreenLoading"
+    element-loading-background="rgba(0, 0, 0, 0.6)"
   >
     <HeaderCommon/>
     <div class="transaction-password-main margin25">
@@ -290,7 +292,7 @@ export default {
         '', // 邮箱验证码
         '' // 谷歌验证码
       ],
-      loadingCircle: {}, // 整页loading
+      fullscreenLoading: false, // 整页loading
       successCountDown: 1 // 成功倒计时
     }
   },
@@ -453,18 +455,15 @@ export default {
           payPassword: this.setPassword.newPassword // 交易密码
         }
         // 整页loading
-        this.loadingCircle = this.$loading({
-          lock: true,
-          background: 'rgba(0, 0, 0, 0.6)'
-        })
+        this.fullscreenLoading = true
         data = await setTransactionPassword(params)
         if (!(returnAjaxMessage(data, this, 1))) {
           // 接口失败清除loading
-          this.loadingCircle.close()
+          this.fullscreenLoading = false
           return false
         } else {
           // 接口成功清除loading
-          this.loadingCircle.close()
+          this.fullscreenLoading = false
           console.log(data)
           this.stateEmptyData()
           this.$store.commit('common/SET_USER_INFO_REFRESH_STATUS', true)
@@ -572,18 +571,15 @@ export default {
         googleCode: this.modifyPassword.googleCode // 谷歌验证
       }
       // 整页loading
-      this.loadingCircle = this.$loading({
-        lock: true,
-        background: 'rgba(0, 0, 0, 0.6)'
-      })
+      this.fullscreenLoading = true
       data = await securityVerificationOnOff(params)
       if (!(returnAjaxMessage(data, this, 0))) {
         // 接口失败清除loading
-        this.loadingCircle.close()
+        this.fullscreenLoading = false
         return false
       } else {
         // 接口成功清除loading
-        this.loadingCircle.close()
+        this.fullscreenLoading = false
         await this.confirmUpdate()
       }
     },
@@ -630,18 +626,15 @@ export default {
           googleCode: this.modifyPassword.googleCode // 谷歌验证码
         }
         // 整页loading
-        this.loadingCircle = this.$loading({
-          lock: true,
-          background: 'rgba(0, 0, 0, 0.6)'
-        })
+        this.fullscreenLoading = true
         data = await resetUpdatePayPassword(param)
         if (!(returnAjaxMessage(data, this, 1))) {
           // 接口失败清除loading
-          this.loadingCircle.close()
+          this.fullscreenLoading = false
           return false
         } else {
           // 接口成功清除loading
-          this.loadingCircle.close()
+          this.fullscreenLoading = false
           console.log(1)
           this.successJump()
           this.stateEmptyData()

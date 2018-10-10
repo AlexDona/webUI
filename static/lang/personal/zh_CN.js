@@ -32,6 +32,7 @@ export const personal = {
   'user_assets_or': '或',
   'user_assets_current_total': '当前资产总估值',
   'user_assets_attention': '注：资产总估仅提供参考，请以单项资金为准',
+  'user_address_withdrawal': '非法地址',
   // 账单明细
   'user_billing_attention': '充提',
   // 提币地址
