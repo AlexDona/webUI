@@ -956,6 +956,7 @@ export default {
         this.errpwd = this.$t('M.otc_publishAD_pleaseInput') + this.$t('M.otc_publishAD_sellpassword')
         return false
       } else {
+        this.loading = true
         const data = await buyerPayForOrder({
           orderId: this.activedTradingOrderId, // 订单id
           payId: this.activitedPayStyleId, // 支付账户id
@@ -966,6 +967,7 @@ export default {
         if (!(returnAjaxMessage(data, this, 1))) {
           return false
         } else {
+          this.loading = false
           this.dialogVisibleConfirmPayment = false
           this.errpwd = ''
           this.tradePassword = ''
@@ -988,6 +990,7 @@ export default {
         this.errpwd = this.$t('M.otc_publishAD_pleaseInput') + this.$t('M.otc_publishAD_sellpassword')
         return false
       }
+      this.loading = true
       const data = await sellerConfirmGetMoney({
         orderId: this.activedTradingOrderId, // 订单id
         tradePassword: this.tradePassword // 交易密码
@@ -997,6 +1000,7 @@ export default {
       if (!(returnAjaxMessage(data, this, 1))) {
         return false
       } else {
+        this.loading = false
         this.dialogVisibleConfirmReceipt = false
         this.errpwd = ''
         this.tradePassword = ''
@@ -1035,6 +1039,7 @@ export default {
         this.errpwd = this.$t('M.otc_publishAD_pleaseInput') + this.$t('M.otc_publishAD_sellpassword')
         return false
       }
+      this.loading = true
       const data = await sellerSendAppeal({
         orderId: this.activedTradingOrderId, // 订单id
         reason: this.appealTextareaValue, // 申诉原因
@@ -1045,6 +1050,7 @@ export default {
       if (!(returnAjaxMessage(data, this, 1))) {
         return false
       } else {
+        this.loading = false
         this.dialogVisibleSubmitComplaint = false
         this.errpwd = '' // 清空密码错提示
         this.tradePassword = '' // 清空密码框

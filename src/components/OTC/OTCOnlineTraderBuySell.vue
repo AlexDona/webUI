@@ -726,6 +726,7 @@ export default {
     },
     // 4.0 查询用户交易币种手续费率以及币种详情
     async queryUserTradeFeeAndCoinInfo () {
+      this.fullscreenLoading = true
       const data = await queryUserTradeFeeAndCoinInfo({
         coinId: this.partnerCoinId // 商户币种id
       })
@@ -754,6 +755,7 @@ export default {
         this.tradePasswordTips = this.$t('M.otc_publishAD_pleaseInput') + this.$t('M.otc_publishAD_sellpassword')
         return false
       }
+      this.fullscreenLoading = true
       // console.log('购买')
       const data = await pickOrdersToBuy({
         entrustId: this.id, // 挂单id
@@ -767,7 +769,7 @@ export default {
         // 返回数据正确的逻辑
         this.dialogVisible = false
         this.clearInput(this.onlineTraderStatus)
-        this.fullscreenLoading = true
+        this.fullscreenLoading = false
         this.querySelectedOrdersDetails()
         this.queryUserTradeFeeAndCoinInfo()
         // 改变全局锚点状态
@@ -799,6 +801,7 @@ export default {
         this.tradePasswordTips = this.$t('M.otc_publishAD_pleaseInput') + this.$t('M.otc_publishAD_sellpassword')
         return false
       }
+      this.fullscreenLoading = true
       const data = await pickOrdersToSell({
         entrustId: this.id, // 挂单id
         sellCount: this.$refs.sellCount.value, // 卖出数量
@@ -808,9 +811,9 @@ export default {
         return false
       } else {
         // 返回数据正确的逻辑
+        this.fullscreenLoading = false
         this.dialogVisible = false // 关闭弹窗框
         this.clearInput(this.onlineTraderStatus) // 清空数据
-        this.fullscreenLoading = true
         this.querySelectedOrdersDetails()
         this.queryUserTradeFeeAndCoinInfo()
         // 改变全局锚点状态
