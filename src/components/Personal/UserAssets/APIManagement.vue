@@ -2,6 +2,8 @@
   <div
     class="api-management personal"
     :class="{'day':theme == 'day','night':theme == 'night' }"
+    v-loading.fullscreen.lock="fullscreenLoading"
+    element-loading-background="rgba(0, 0, 0, 0.6)"
   >
     <header class="api-management-header personal-height40 line-height40 padding-left20 font-size16 background-color">
       <span class="padding-left23 header-content font-weight600">
@@ -474,7 +476,7 @@ export default {
       apiRemark: '', // 编辑用户备注
       ipAddress: '', // 编辑用户ip
       dialogVisible: false,
-      loadingCircle: {}, // 整页loading
+      fullscreenLoading: false, // 整页loading
       loading: true // 局部列表loading
     }
   },
@@ -624,18 +626,15 @@ export default {
         googleCode: this.googleCode // 谷歌验证码
       })
       // 整页loading
-      this.loadingCircle = this.$loading({
-        lock: true,
-        background: 'rgba(0, 0, 0, 0.6)'
-      })
+      this.fullscreenLoading = true
       console.log(data)
       if (!(returnAjaxMessage(data, this, 0))) {
         // 接口失败清除loading
-        this.loadingCircle.close()
+        this.fullscreenLoading = false
         return false
       } else {
         // 接口成功清除loading
-        this.loadingCircle.close()
+        this.fullscreenLoading = false
         // 默认API确认弹窗
         this.APIMoneyConfirm = false
         // 默认创建之后弹出二次挨批创建信息框
@@ -659,18 +658,15 @@ export default {
         secretKey: this.secretKey // sk私钥
       })
       // 整页loading
-      this.loadingCircle = this.$loading({
-        lock: true,
-        background: 'rgba(0, 0, 0, 0.6)'
-      })
+      this.fullscreenLoading = true
       console.log(data)
       if (!(returnAjaxMessage(data, this, 1))) {
         // 接口失败清除loading
-        this.loadingCircle.close()
+        this.fullscreenLoading = false
         return false
       } else {
         // 接口成功清除loading
-        this.loadingCircle.close()
+        this.fullscreenLoading = false
         // 返回展示
         console.log(data)
         // 默认创建之后弹出二次挨批创建信息框 关闭
@@ -729,18 +725,15 @@ export default {
           ip: this.ipAddress // 编辑用户ip
         })
         // 整页loading
-        this.loadingCircle = this.$loading({
-          lock: true,
-          background: 'rgba(0, 0, 0, 0.6)'
-        })
+        this.fullscreenLoading = true
         console.log(data)
         if (!(returnAjaxMessage(data, this, 1))) {
           // 接口失败清除loading
-          this.loadingCircle.close()
+          this.fullscreenLoading = false
           return false
         } else {
           // 接口成功清除loading
-          this.loadingCircle.close()
+          this.fullscreenLoading = false
           // 调用查询接口编辑完成之后重新赋值渲染
           this.getMultipleUserAPIInfo()
           // 清空数据
@@ -773,18 +766,15 @@ export default {
         id: this.userId
       })
       // 整页loading
-      this.loadingCircle = this.$loading({
-        lock: true,
-        background: 'rgba(0, 0, 0, 0.6)'
-      })
+      this.fullscreenLoading = true
       console.log(data)
       if (!(returnAjaxMessage(data, this, 0))) {
         // 接口失败清除loading
-        this.loadingCircle.close()
+        this.fullscreenLoading = false
         return false
       } else {
         // 接口成功清除loading
-        this.loadingCircle.close()
+        this.fullscreenLoading = false
         // 返回展示
         this.getMultipleUserAPIInfo()
         this.dialogVisible = false
@@ -795,16 +785,13 @@ export default {
      */
     getSecurityCenter () {
       // 整页loading
-      this.loadingCircle = this.$loading({
-        lock: true,
-        background: 'rgba(0, 0, 0, 0.6)'
-      })
+      this.fullscreenLoading = true
       getSecurityCenter(this, (data) => {
         // 接口成功清除loading
-        this.loadingCircle.close()
+        this.fullscreenLoading = false
         if (data) {
           // 接口成功清除loading
-          this.loadingCircle.close()
+          this.fullscreenLoading = false
           this.securityCenter = data.data.data
           // 默认API确认弹窗
           this.APIMoneyConfirm = true

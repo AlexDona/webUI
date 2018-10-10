@@ -2,8 +2,12 @@
   <div
     class="withdrawal-address personal"
     :class="{'day':theme == 'day','night':theme == 'night' }"
+    v-loading.fullscreen.lock="fullscreenLoading"
+    element-loading-background="rgba(0, 0, 0, 0.6)"
   >
-    <div class="withdrawal-address-main">
+    <div
+      class="withdrawal-address-main"
+    >
       <header class="withdrawal-header personal-height40 line-height40 background-color padding-left23 border-radius2">
         <span class="header-content display-inline-block font-size16 cursor-pointer">
           <!--提币地址-->
@@ -277,7 +281,8 @@ export default {
       phoneCode: '', // 手机验证
       emailCode: '', // 邮箱验证
       googleCode: '', // 谷歌验证
-      loadingCircle: {}, // 整页loading
+      // loadingCircle: {}, // 整页loading
+      fullscreenLoading: false,
       loading: true // 局部列表loading
     }
   },
@@ -374,18 +379,15 @@ export default {
         address: this.prepaidAddress // 充值地址
       }
       // 整页loading
-      this.loadingCircle = this.$loading({
-        lock: true,
-        background: 'rgba(0, 0, 0, 0.6)'
-      })
+      this.fullscreenLoading = true
       data = await checkCurrencyAddress(param)
       if (!(returnAjaxMessage(data, this, 0))) {
         // 接口失败清除loading
-        this.loadingCircle.close()
+        this.fullscreenLoading = false
         return false
       } else {
         // 接口成功清除loading
-        this.loadingCircle.close()
+        this.fullscreenLoading = false
         // 验证通过调用验证方式接口
         this.getSecurityCenter()
       }
@@ -424,18 +426,15 @@ export default {
         googleCode: this.googleCode // 谷歌验证
       }
       // 整页loading
-      this.loadingCircle = this.$loading({
-        lock: true,
-        background: 'rgba(0, 0, 0, 0.6)'
-      })
+      this.fullscreenLoading = true
       data = await addNewWithdrawalAddress(param)
       if (!(returnAjaxMessage(data, this, 1))) {
         // 接口失败清除loading
-        this.loadingCircle.close()
+        this.fullscreenLoading = false
         return false
       } else {
         // 接口成功清除loading
-        this.loadingCircle.close()
+        this.fullscreenLoading = false
         this.WithdrawalAddressList()
         this.stateEmptyData()
         this.mentionMoneyConfirm = false

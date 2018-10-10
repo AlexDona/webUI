@@ -3,6 +3,8 @@
     class="login-password-box personal"
     :class="{'day':theme == 'day','night':theme == 'night' }"
     :style="{'height':windowHeight+'px'}"
+    v-loading.fullscreen.lock="fullscreenLoading"
+    element-loading-background="rgba(0, 0, 0, 0.6)"
   >
     <HeaderCommon/>
     <div class="login-password-main margin25">
@@ -132,7 +134,7 @@ export default {
         '', // 新登录密码
         '' // 确认登录密码
       ],
-      loadingCircle: {}, // 整页loading
+      fullscreenLoading: false, // 整页loading
       securityCenter: {}
     }
   },
@@ -239,18 +241,15 @@ export default {
           newPassword: this.newLoginPassword // 新登录密码
         }
         // 整页loading
-        this.loadingCircle = this.$loading({
-          lock: true,
-          background: 'rgba(0, 0, 0, 0.6)'
-        })
+        this.fullscreenLoading = true
         data = await modifyLoginPassword(param)
         if (!(returnAjaxMessage(data, this, 1))) {
           // 接口失败清除loading
-          this.loadingCircle.close()
+          this.fullscreenLoading = false
           return false
         } else {
           // 接口成功清除loading
-          this.loadingCircle.close()
+          this.fullscreenLoading = false
           this.stateEmptyData()
           this.successJump()
         }

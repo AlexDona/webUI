@@ -2,9 +2,13 @@
   <div
     class="add-account personal"
     :class="{'day':theme == 'day','night':theme == 'night' }"
+    v-loading.fullscreen.lock="fullscreenLoading"
+    element-loading-background="rgba(0, 0, 0, 0.6)"
   >
     <HeaderCommon/>
-    <div class="add-account-main margin25">
+    <div
+      class="add-account-main margin25"
+    >
       <header class="add-account-header personal-height60 line-height60 line-height70 margin25">
          <span
            v-if="paymentTerm.isAlipayBind"
@@ -183,7 +187,8 @@ export default {
         '', // 支付宝账号
         '' // 交易密码
       ],
-      loadingCircle: {} // 整页loading
+      // loadingCircle: {} // 整页loading
+      fullscreenLoading: false // 整页loading
     }
   },
   created () {
@@ -286,20 +291,17 @@ export default {
           id: this.id
         }
         // 整页loading
-        this.loadingCircle = this.$loading({
-          lock: true,
-          background: 'rgba(0, 0, 0, 0.6)'
-        })
+        this.fullscreenLoading = true
         console.log(this.dialogImageHandUrl1)
         data = await statusCardSettings(param)
         console.log(data)
         if (!(returnAjaxMessage(data, this, 1))) {
           // 接口失败清除loading
-          this.loadingCircle.close()
+          this.fullscreenLoading = false
           return false
         } else {
           // 接口成功清除loading
-          this.loadingCircle.close()
+          this.fullscreenLoading = false
           this.successJump()
           this.stateEmptyData()
         }
@@ -318,18 +320,15 @@ export default {
         type: 'alipay'
       }
       // 整页loading
-      this.loadingCircle = this.$loading({
-        lock: true,
-        background: 'rgba(0, 0, 0, 0.6)'
-      })
+      this.fullscreenLoading = true
       data = await modificationAccountPaymentTerm(params)
       if (!(returnAjaxMessage(data, this, 0))) {
         // 接口失败清除loading
-        this.loadingCircle.close()
+        this.fullscreenLoading = false
         return false
       } else {
         // 接口成功清除loading
-        this.loadingCircle.close()
+        this.fullscreenLoading = false
         // 返回状态展示
         if (data.data.data) {
           this.paymentMethodList = data.data.data
