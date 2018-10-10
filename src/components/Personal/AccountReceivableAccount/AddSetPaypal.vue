@@ -137,6 +137,7 @@ export default {
       paymentTerm: {},
       successCountDown: 1, // 成功倒计时
       paymentMethodList: {},
+      loadingCircle: {}, // 整页loading
       errorShowStatusList: [
         '', // paypal账号
         '' // 交易密码
@@ -232,11 +233,20 @@ export default {
           bankType: 'paypal', // type
           id: this.id
         }
+        // 整页loading
+        this.loadingCircle = this.$loading({
+          lock: true,
+          background: 'rgba(0, 0, 0, 0.6)'
+        })
         data = await statusCardSettings(param)
         console.log(data)
         if (!(returnAjaxMessage(data, this, 1))) {
+          // 接口失败清除loading
+          this.loadingCircle.close()
           return false
         } else {
+          // 接口成功清除loading
+          this.loadingCircle.close()
           this.successJump()
           this.stateEmptyData()
         }
@@ -254,10 +264,19 @@ export default {
         userId: this.userInfo.userId,
         type: 'paypal'
       }
+      // 整页loading
+      this.loadingCircle = this.$loading({
+        lock: true,
+        background: 'rgba(0, 0, 0, 0.6)'
+      })
       data = await modificationAccountPaymentTerm(params)
       if (!(returnAjaxMessage(data, this, 0))) {
+        // 接口失败清除loading
+        this.loadingCircle.close()
         return false
       } else {
+        // 接口成功清除loading
+        this.loadingCircle.close()
         // 返回状态展示
         this.paymentMethodList = data.data.data
         this.paypalAccount = data.data.data.cardNo

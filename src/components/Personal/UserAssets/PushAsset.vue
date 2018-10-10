@@ -139,6 +139,7 @@
             :data="pushRecordList"
             style="width: 100%"
             :empty-text="$t('M.comm_no_data')"
+            v-loading="loading"
           >
             <!--类型-->
             <el-table-column
@@ -447,7 +448,9 @@ export default {
       totalPageForMyEntrust: 1, // 当前委托总页数
       SecurityCenter: {},
       pointLength: 4, // 保留小数位后四位
-      errorMsg: '' // 错误提示
+      errorMsg: '', // 错误提示
+      loadingCircle: {}, // 整页loading
+      loading: true // 局部列表loading
     }
   },
   created () {
@@ -502,8 +505,12 @@ export default {
       })
       console.log(data)
       if (!(returnAjaxMessage(data, this, 0))) {
+        // 接口失败清除局部loading
+        this.loading = false
         return false
       } else {
+        // 接口成功清除局部loading
+        this.loading = false
         // 返回push记录数据
         this.pushRecordList = data.data.data.userPushVOPageInfo.list
         this.totalPageForMyEntrust = data.data.data.userPushVOPageInfo.pages - 0
@@ -627,10 +634,19 @@ export default {
           price: this.price, // push价格
           password: this.transactionPassword // 交易密码
         }
+        // 整页loading
+        this.loadingCircle = this.$loading({
+          lock: true,
+          background: 'rgba(0, 0, 0, 0.7)'
+        })
         data = await pushAssetsSubmit(param)
         if (!(returnAjaxMessage(data, this, 1))) {
+          // 接口失败清除loading
+          this.loadingCircle.close()
           return false
         } else {
+          // 接口成功清除loading
+          this.loadingCircle.close()
           this.passwordVisible = false
           // push列表展示
           this.getPushRecordList()

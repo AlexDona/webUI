@@ -52,7 +52,11 @@
         </div>
         <div class="account-assets-content">
           <!--账户资产币种列表-->
-          <div class="content-list">
+          <div
+            class="content-list"
+            v-loading="loading"
+            element-loading-background="rgba(0, 0, 0, 0.6)"
+          >
             <div class="table-body text-align-l line-height50">
               <!-- 表头 -->
               <div class="table-title-th display-flex margin20 font-size12">
@@ -141,7 +145,7 @@
                     <div
                       v-else
                       class="money-color flex1 cursor-pointer"
-                      :title="$t('M.user_pause_mention')"
+                      :title="$t('M.user_assets_pause_mention')"
                     >
                       <!--提币-->
                       {{ $t('M.comm_mention_money') }}
@@ -376,7 +380,7 @@
                   </div>
                 </transition>
               </div>
-              <!--提币-->
+              <!--提币验证-->
               <el-dialog
                 :title="$t('M.comm_mention_money') + $t('M.comm_site')"
                 :label="$t('M.comm_mention_money')"
@@ -537,8 +541,7 @@ import {
   statusSubmitWithdrawButton,
   withdrawalInformation,
   queryTransactionInformation,
-  inquireWithdrawalAddressId,
-  userRefreshUser
+  inquireWithdrawalAddressId
 } from '../../../utils/api/personal'
 import {
   returnAjaxMessage,
@@ -560,9 +563,9 @@ export default {
   // props,
   data () {
     return {
-      labelPosition: 'top',
-      errorMessage: '',
-      errorMsg: '',
+      labelPosition: 'top', // form表单label方向
+      errorMessage: '', // 提币input错误提示
+      errorMsg: '', // 提币验证错误提示
       showStatusButton: true, // 显示币种
       hideStatusButton: false, // 隐藏币种// 显示所有/余额切换，
       closePictureSrc: require('../../../assets/user/wrong.png'), // 显示部分
@@ -577,11 +580,11 @@ export default {
       serviceChargeList: {}, // 手续费区间
       rechargeCount: '', // 提币数量
       serviceChargeCount: '', // 自定义到账数量
-      seen: false,
+      seen: false, // 跳转交易对默认不显示
       current: 0,
-      dialogVisible: false,
-      currencyTradingList: [],
-      stateIsShowId: false,
+      dialogVisible: false, // 新用户未设置交易密码提示框默认false
+      currencyTradingList: [], // 根据coinid查询交易对信息
+      // stateIsShowId: false,
       activeName: 'current-entrust',
       currentPageForMyEntrust: 1, // 当前委托页码
       totalPageForMyEntrust: 1, // 当前委托总页数
@@ -590,7 +593,7 @@ export default {
       chargeMoneyAddressId: '', // 每行数据ID
       chargeMoneyName: '', // 每行数据币种名称
       // 提币
-      securityCenter: {},
+      securityCenter: {}, // 安全中心状态获取
       mentionDialogVisible: false, // 默认隐藏
       mentionMoneyAddressId: '', // 每行数据ID
       mentionMoneyName: '', // 每行数据币种名称
@@ -604,21 +607,22 @@ export default {
       googleCode: '', // 谷歌验证
       password: '', // 交易密码
       // 提币地址列表
-      mentionAddressList: [],
+      mentionAddressList: [], // 查询提币地址列表
       activeCurrency: {}, // 当前选中币种
       totalSumBTC: '', // 资产总估值BTC
       isRecharge: '', // 是否允许充币
       isWithdraw: '', // 是否允许提币
-      end: '', // 站位
       activeType: '', // 显示类型
       tradingOnId: '', // 根据coinido跳转到对应交易信息
       currencyTradingId: '', // 根据coinido跳转到对应交易信息
       area: '', // 交易区名称
       areaId: '', // 交易区id
       id: '', // 币种Id
-      sellname: '',
-      sellsymbol: '',
-      userInfoRefresh: {}
+      sellname: '', // 币种名称
+      sellsymbol: '', // 交易对名称
+      loadingCircle: {}, // 整页loading
+      loading: true,
+      end: '' // 站位
     }
   },
   created () {
@@ -742,8 +746,6 @@ export default {
     },
     // 修改input value 输入限制
     changeInputValue (ref, index, pointLength) {
-      // serviceChargeList.minFees
-      // serviceChargeList.maxFees
       // 获取ref中input值
       this[ref] = this.$refs[ref].value
       // 限制数量小数位位数
@@ -907,8 +909,12 @@ export default {
       }
       data = await assetCurrenciesList(params)
       if (!(returnAjaxMessage(data, this, 0))) {
+        // 接口失败清除loading
+        this.loading = false
         return false
       } else {
+        // 接口成功清除loading
+        this.loading = false
         this.withdrawDepositList.push({
           allIsShow: false,
           rechargeIsShow: false,
@@ -926,9 +932,6 @@ export default {
       this.currentPageForMyEntrust = pageNum
       this.getAssetCurrenciesList()
     },
-    /**
-     *  刚进页面时候 提币地址列表查询
-     */
     // 资产币种提币地址选择
     changeId (e) {
       this.mentionAddressList.forEach(item => {
@@ -938,15 +941,24 @@ export default {
         }
       })
     },
-    // 查询提币地址列表查询
+    // 根据币种id查询提币地址
     async queryWithdrawalAddressList (index) {
       let data = await inquireWithdrawalAddressId({
         coinId: this.mentionMoneyAddressId
       })
+      // 整页loading
+      this.loadingCircle = this.$loading({
+        lock: true,
+        background: 'rgba(0, 0, 0, 0.6)'
+      })
       // console.log(data)
       if (!(returnAjaxMessage(data, this, 0))) {
+        // 接口失败清除loading
+        this.loadingCircle.close()
         return false
       } else {
+        // 接口成功清除loading
+        this.loadingCircle.close()
         // 返回列表数据userWithdrawAddressDtoList
         this.mentionAddressList = data.data.data.userWithdrawAddressDtoList
         if (!data.data.data.userWithdrawAddressDtoList[0].address) {
@@ -955,16 +967,25 @@ export default {
       }
     },
     /**
-     *  点击提币按钮时 获取提币信息
+     *  点击提币按钮时 获取提币信息（最大最小手续费）
      */
     async getWithdrawalInformation (index) {
       let data = await withdrawalInformation({
         coinId: this.mentionMoneyAddressId
       })
+      // 整页loading
+      this.loadingCircle = this.$loading({
+        lock: true,
+        background: 'rgba(0, 0, 0, 0.6)'
+      })
       console.log(data)
       if (!(returnAjaxMessage(data, this, 0))) {
+        // 接口失败清除loading
+        this.loadingCircle.close()
         return false
       } else {
+        // 接口成功清除loading
+        this.loadingCircle.close()
         // 返回列表数据
         this.serviceChargeList = data.data.data
         this.serviceCharge = data.data.data.minFees
@@ -979,10 +1000,19 @@ export default {
       let data = await inquireRechargeAddressList({
         coinId: this.chargeMoneyAddressId
       })
+      // 整页loading
+      this.loadingCircle = this.$loading({
+        lock: true,
+        background: 'rgba(0, 0, 0, 0.6)'
+      })
       console.log(data)
       if (!(returnAjaxMessage(data, this, 0))) {
+        // 接口失败清除loading
+        this.loadingCircle.close()
         return false
       } else {
+        // 接口成功清除loading
+        this.loadingCircle.close()
         // 返回列表数据
         this.chargeMoney = data.data.data.userRechargeAddress.address
         console.log(this.chargeMoney)
@@ -1046,17 +1076,23 @@ export default {
         amount: this.amount, // 提币数量
         payCode: this.password // 交易密码
       }
+      // 整页loading
+      this.loadingCircle = this.$loading({
+        lock: true,
+        background: 'rgba(0, 0, 0, 0.6)'
+      })
       data = await statusSubmitWithdrawButton(param)
       if (!(returnAjaxMessage(data, this, 1))) {
+        // 接口失败清除loading
+        this.loadingCircle.close()
         return false
       } else {
+        // 接口成功清除loading
+        this.loadingCircle.close()
         // 提币地址列表查询
         this.getAssetCurrenciesList()
         this.stateEmptyData()
         this.mentionMoneyConfirm = false
-        this.$refs.serviceCharge[index].value = ''
-        this.$refs.rechargeCount[index].value = ''
-        this.serviceChargeCount = ''
       }
     },
     // 接口请求完成之后清空数据
@@ -1065,6 +1101,9 @@ export default {
       this.emailCode = '' // 邮箱验证码
       this.googleCode = '' // 谷歌验证码
       this.payPassword = ''
+      this.$refs.serviceCharge[index].value = ''
+      this.$refs.rechargeCount[index].value = ''
+      this.serviceChargeCount = ''
     },
     // 点击跳转账单明细
     stateRechargeRecord () {
@@ -1091,21 +1130,6 @@ export default {
         type: 'success',
         message: msg
       })
-    },
-    /**
-     *  刷新用户信息
-     */
-    async getUserRefreshUser () {
-      let data = await userRefreshUser({
-        token: this.userInfo.token
-      })
-      console.log(data)
-      if (!(returnAjaxMessage(data, this, 0))) {
-        return false
-      } else {
-        // 返回列表数据
-        this.userInfoRefresh = data.data.data.userInfo
-      }
     },
     /**
      * 安全中心
@@ -1169,26 +1193,12 @@ export default {
       disabledOfEmailBtn: state => state.user.disabledOfEmailBtn,
       userCenterActiveName: state => state.personal.userCenterActiveName
     })
-    // 前端模糊查询筛选
-    // filteredData: function () {
-    //   var self = this
-    //   return this.withdrawDepositList.filter((item, index) => {
-    //     // console.log(item)
-    //     return (item['coinName'].toLocaleUpperCase()).indexOf(self.searchKeyWord.toLocaleUpperCase()) !== -1
-    //   })
-    // },
-    // filteredData1: function () {
-    //   return this.filteredData.filter(function (item) {
-    //     return item
-    //   })
-    // }
   },
   watch: {
     userCenterActiveName (newVal) {
       if (newVal === 'assets') {
         console.log(newVal)
         this.getAssetCurrenciesList()
-        this.getUserRefreshUser()
       }
     }
   }
@@ -1235,6 +1245,19 @@ export default {
                 line-height: 35px;
                 color: #d45858;
               }
+              .button-color {
+                width: 80px;
+                height: 35px;
+                border: 0;
+                line-height: 0;
+                margin-left: 50px;
+                margin-right: 15px;
+              }
+              .btn{
+                width: 80px;
+                height: 35px;
+                line-height: 0;
+              }
               .icon-caret {
                 width: 40px;
                 height: 50px;
@@ -1262,27 +1285,6 @@ export default {
                     height:195px;
                     padding: 20px 6px;
                     z-index: 2;
-                    .info {
-                      color: #fff;
-                    }
-                    .button-color {
-                      width: 80px;
-                      height: 35px;
-                      border: 0;
-                      line-height: 0;
-                      margin-left: 50px;
-                      margin-right: 15px;
-                      color: rgba(255,255,255,0.7);
-                      background: linear-gradient(81deg,rgba(43,57,110,1) 0%,rgba(42,80,130,1) 100%);
-                    }
-                    .btn{
-                      width: 80px;
-                      height: 35px;
-                      line-height: 0;
-                      color: rgba(255, 255, 255, 0.7);
-                      background-color: transparent;
-                      border: 1px solid #338FF5;
-                    }
                     >.triangle {
                       position: absolute;
                       top: -7px;
@@ -1466,6 +1468,17 @@ export default {
             border-bottom: 1px solid #39424D;
             color: #A9BED4;
           }
+          .info {
+            color: #fff;
+          }
+          .button-color {
+            color: rgba(255,255,255,0.7);
+            background: linear-gradient(81deg,rgba(43,57,110,1) 0%,rgba(42,80,130,1) 100%);
+          }
+          .btn{
+            background-color: transparent;
+            border: 1px solid #338FF5;
+          }
           >.table-tr {
             >.table-box {
               >.table-td {
@@ -1624,6 +1637,18 @@ export default {
           >.table-title-th {
             border-bottom: 1px solid rgba(57,66,77,0.1);
             color: #333333;
+          }
+          .info {
+            color: #333;
+          }
+          .button-color {
+            color: rgba(255,255,255,0.7);
+            background: linear-gradient(81deg,rgba(43,57,110,1) 0%,rgba(42,80,130,1) 100%);
+          }
+          .btn{
+            color: #333;
+            background-color: transparent;
+            border: 1px solid #338FF5;
           }
           >.table-tr {
             >.table-box {

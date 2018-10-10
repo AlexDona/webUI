@@ -42,7 +42,8 @@
   line-height: 30px;
 }
 .account-assets.personal .el-dialog__body {
-  padding: 0px 25px;
+  padding: 25px 34px 0px;
+  line-height: 25px;
 }
 .account-assets.personal .el-form-item {
   margin-bottom: 0px;

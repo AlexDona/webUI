@@ -132,6 +132,7 @@ export default {
         '', // 新登录密码
         '' // 确认登录密码
       ],
+      loadingCircle: {}, // 整页loading
       securityCenter: {}
     }
   },
@@ -237,10 +238,19 @@ export default {
           oldPassword: this.originalLoginPassword, // 旧登录密码
           newPassword: this.newLoginPassword // 新登录密码
         }
+        // 整页loading
+        this.loadingCircle = this.$loading({
+          lock: true,
+          background: 'rgba(0, 0, 0, 0.6)'
+        })
         data = await modifyLoginPassword(param)
         if (!(returnAjaxMessage(data, this, 1))) {
+          // 接口失败清除loading
+          this.loadingCircle.close()
           return false
         } else {
+          // 接口成功清除loading
+          this.loadingCircle.close()
           this.stateEmptyData()
           this.successJump()
         }

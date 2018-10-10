@@ -455,7 +455,8 @@ export default {
       closePayapl: false, // 默认关闭paypal
       closeWesternUnion: false, // 默认关闭西联汇款
       activeType: '', // 当前值
-      state: '' // 开启关闭
+      state: '', // 开启关闭
+      loadingCircle: {} // 整页loading
     }
   },
   created () {
@@ -710,10 +711,19 @@ export default {
           }
           break
       }
+      // 整页loading
+      this.loadingCircle = this.$loading({
+        lock: true,
+        background: 'rgba(0, 0, 0, 0.7)'
+      })
       data = await openAndCloseModeSetting(params)
       if (!(returnAjaxMessage(data, this, 0))) {
+        // 接口失败清除loading
+        this.loadingCircle.close()
         return false
       } else {
+        // 接口成功清除loading
+        this.loadingCircle.close()
         // 安全中心状态刷新
         this.getAccountPaymentTerm()
         this.openCollectionMode = false // 开启收款方式
@@ -722,10 +732,19 @@ export default {
     },
     // 收款方式
     async getAccountPaymentTerm () {
+      // 整页loading
+      this.loadingCircle = this.$loading({
+        lock: true,
+        background: 'rgba(0, 0, 0, 0.7)'
+      })
       let data = await accountPaymentTerm()
       if (!(returnAjaxMessage(data, this, 0))) {
+        // 接口失败清除loading
+        this.loadingCircle.close()
         return false
       } else {
+        // 接口成功清除loading
+        this.loadingCircle.close()
         // 返回状态展示
         this.paymentTerm = data.data.data
         console.log(data)

@@ -546,7 +546,8 @@ export default {
       errorShowStatusList: [
         '', // 真实姓名
         '' // 证件号码
-      ]
+      ],
+      loadingCircle: {} // 整页loading
     }
   },
   async created () {
@@ -628,10 +629,19 @@ export default {
     },
     async getCountryListings () {
       let data = await queryCountryList()
+      // 整页loading
+      this.loadingCircle = this.$loading({
+        lock: true,
+        background: 'rgba(0, 0, 0, 0.7)'
+      })
       console.log(data)
       if (!(returnAjaxMessage(data, this, 0))) {
+        // 接口失败清除loading
+        this.loadingCircle.close()
         return false
       } else {
+        // 接口成功清除loading
+        this.loadingCircle.close()
         // 返回列表数据
         this.regionList = data.data.data
         this.regionValue = data.data.data[0].id
@@ -643,10 +653,19 @@ export default {
     */
     async getRealNameInformation () {
       let data = await realNameInformation()
+      // 整页loading
+      this.loadingCircle = this.$loading({
+        lock: true,
+        background: 'rgba(0, 0, 0, 0.7)'
+      })
       console.log(data)
       if (!(returnAjaxMessage(data, this, 0))) {
+        // 接口失败清除loading
+        this.loadingCircle.close()
         return false
       } else {
+        // 接口成功清除loading
+        this.loadingCircle.close()
         // 返回列表数据
         this.realNameInformationObj = data.data.data
         // if (data.data.data.authInfo) {
@@ -726,10 +745,19 @@ export default {
           realname: this.realName, // 真实姓名
           cardNo: this.identificationNumber // 证件号码
         }
+        // 整页loading
+        this.loadingCircle = this.$loading({
+          lock: true,
+          background: 'rgba(0, 0, 0, 0.7)'
+        })
         data = await submitRealNameAuthentication(param)
         if (!(returnAjaxMessage(data, this, 1))) {
+          // 接口失败清除loading
+          this.loadingCircle.close()
           return false
         } else {
+          // 接口成功清除loading
+          this.loadingCircle.close()
           await this.getUserRefreshUser()
           await this.getRealNameInformation()
           console.log(data)
@@ -803,11 +831,20 @@ export default {
         idcardBack: this.dialogImageReverseSideUrl, // 上传身份证反面
         idcardHand: this.dialogImageHandUrl // 上传手持身份证
       }
+      // 整页loading
+      this.loadingCircle = this.$loading({
+        lock: true,
+        background: 'rgba(0, 0, 0, 0.7)'
+      })
       data = await submitSeniorCertification(param)
       console.log(data)
       if (!(returnAjaxMessage(data, this, 1))) {
+        // 接口失败清除loading
+        this.loadingCircle.close()
         return false
       } else {
+        // 接口成功清除loading
+        this.loadingCircle.close()
         console.log(1)
         this.SET_USER_INFO_REFRESH_STATUS(true)
         await this.getUserRefreshUser()

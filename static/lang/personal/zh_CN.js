@@ -140,6 +140,7 @@ export const personal = {
   'user_security_in_tie': '换绑',
   'user_security_login': '登录',
   'user_security_text1': '用于提币、找回密码、修改安全设置、管理API时进行安全验证。',
+  'user_security_text4': '至少保留一种验证方式',
   'user_security_return_safety_center': '返回安全中心',
   'user_security_text0': '请确认您的银行卡已开启短信通知功能',
   // 安全设置

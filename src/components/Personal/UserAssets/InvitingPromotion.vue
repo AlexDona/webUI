@@ -162,6 +162,7 @@
             :data="extensionList"
             style="width: 100%"
             :empty-text="$t('M.comm_no_data')"
+            v-loading="loading"
           >
             <!--用户UID 登录名 注册时间 姓名 高级认证 直接推荐人UID-->
             <el-table-column
@@ -241,6 +242,7 @@
             :data="awardList"
             style="width: 100%"
             :empty-text="$t('M.comm_no_data')"
+            v-loading="loading"
           >
             <!--奖励类型 邀请奖励 币种 数量 时间-->
             <el-table-column
@@ -312,7 +314,7 @@ export default {
   },
   data () {
     return {
-      generalizeValue: 'first',
+      generalizeValue: 'first', // 默认显示第一个
       // 直接推广 间接推广
       generalizeOptionsList: [{
         value: 'first',
@@ -339,7 +341,9 @@ export default {
       currentPageMyEntrust: 1, // 当前委托页码
       totalPageMyEntrust: 1, // 当前委托总页数
       // 奖励记录
-      awardList: []
+      awardList: [],
+      loadingCircle: {}, // 整页loading
+      loading: true // 局部列表loading
     }
   },
   created () {
@@ -379,8 +383,12 @@ export default {
       })
       console.log(data)
       if (!(returnAjaxMessage(data, this, 0))) {
+        // 接口失败清除局部loading
+        this.loading = false
         return false
       } else {
+        // 接口成功清除局部loading
+        this.loading = false
         // 返回展示
         this.extensionList = data.data.data.list
         this.totalPageForMyEntrust = data.data.data.pages - 0
@@ -401,8 +409,12 @@ export default {
       })
       console.log(data)
       if (!(returnAjaxMessage(data, this, 0))) {
+        // 接口失败清除局部loading
+        this.loading = false
         return false
       } else {
+        // 接口失败清除局部loading
+        this.loading = false
         // 返回展示
         this.awardList = data.data.data.list
         this.totalPageMyEntrust = data.data.data.pages - 0

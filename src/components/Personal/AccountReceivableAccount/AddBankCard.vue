@@ -178,7 +178,8 @@ export default {
         '', // 银行名称
         '', // 支行地址
         '' // 交易密码
-      ]
+      ],
+      loadingCircle: {} // 整页loading
     }
   },
   created () {
@@ -235,10 +236,19 @@ export default {
           bankType: 'bank', // type
           id: this.id
         }
+        // 整页loading
+        this.loadingCircle = this.$loading({
+          lock: true,
+          background: 'rgba(0, 0, 0, 0.6)'
+        })
         data = await statusCardSettings(params)
         if (!(returnAjaxMessage(data, this, 1))) {
+          // 接口失败清除loading
+          this.loadingCircle.close()
           return false
         } else {
+          // 接口成功清除loading
+          this.loadingCircle.close()
           this.successJump()
           this.stateEmptyData()
           console.log(data)
@@ -319,10 +329,19 @@ export default {
         userId: this.userInfo.userId,
         type: 'bank'
       }
+      // 整页loading
+      this.loadingCircle = this.$loading({
+        lock: true,
+        background: 'rgba(0, 0, 0, 0.6)'
+      })
       data = await modificationAccountPaymentTerm(params)
       if (!(returnAjaxMessage(data, this, 0))) {
+        // 接口失败清除loading
+        this.loadingCircle.close()
         return false
       } else {
+        // 接口成功清除loading
+        this.loadingCircle.close()
         // 返回状态展示
         this.paymentMethodList = data.data.data
         this.bankName = data.data.data.bankName
@@ -335,9 +354,18 @@ export default {
     // 收款方式
     async getAccountPaymentTerm () {
       let data = await accountPaymentTerm()
+      // 整页loading
+      // this.loadingCircle = this.$loading({
+      //   lock: true,
+      //   background: 'rgba(0, 0, 0, 0.6)'
+      // })
       if (!(returnAjaxMessage(data, this, 0))) {
+        // 接口失败清除loading
+        // this.loadingCircle.close()
         return false
       } else {
+        // 接口成功清除loading
+        // this.loadingCircle.close()
         // 返回状态展示
         this.paymentTerm = data.data.data
       }
