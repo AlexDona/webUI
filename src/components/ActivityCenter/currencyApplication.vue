@@ -10,8 +10,13 @@
         <h1 class="title">上币申请</h1>
       </div>
       <div class="bottom">
-        <div class="content">
-          <div class="top">
+        <div
+          class="content"
+        >
+          <div
+            class="top"
+            v-html="contentHTML"
+          >
             <div class="item">
               <p class="title">申请</p>
               <p class="content">提交申请资料到平台</p>
@@ -37,57 +42,57 @@
             </div>
           </div>
           <div class="bottom">
-            <div class="item">
-              <p class="title">
-                上线币种说明
-              </p>
-              <p class="content">
-                为了保护投资者的利益，香港FUBT会对资产评估，所有上线交易的品种需要满足如下条件，包含但不限于：
-              </p>
-              <p class="content">
-                强有力的团队或社区维护；
-              </p>
-              <p class="content">
-                有实际技术支撑或有实际应用的项目；
-              </p>
-                项目无政策风险并且达到专业和合规要求；
-              <p class="content">
-                能真实及时披露项目信息包含项目白皮书，定期发展及进度报告；
-              </p>
-              <p class="content">
-                交易平台关于上线币种交易的其他要求。
-              </p>
-            </div>
-            <div class="item">
-              <p class="title">
-                下线币种说明
-              </p>
-              <p class="content">
-                为保护投资者利益，香港FUBT保留项目下线或继续支持项目在平台上交易的权利，项目方如果触发如下条件，我们会公告通知交易下线，包含但不限于：
-              </p>
-              <p class="content">
-                项目团队解散；
-              </p>
-              <p class="content">
-                由于战略调整和发展需要，项目运营团队主动要求下线；
-              </p>
-              <p class="content">
-                严重的技术或安全问题没有及时得到解决；
-              </p>
-              <p class="content">
-                在连续30个交易日，每日交易额小于10万美金；
-              </p>
-              <p class="content">
-                信息披露出现重大偏差；
-              </p>
-              <p class="content">
-                不满足继续交易的其他事项。
-              </p>
-              <p class="content">
-                香港FUBT会对决定下线的项目提前5天发出下线公告，用户有30天的期限从钱包中移出资产。
-              </p>
-            </div>
-            <p class="email-download">数字资产上线合作，请下载填写申请信息并邮箱至 <span class="target-email">XINBI@FUBT.TOP</span>审核。</p>
+            <!--<div class="item">-->
+              <!--<p class="title">-->
+                <!--上线币种说明-->
+              <!--</p>-->
+              <!--<p class="content">-->
+                <!--为了保护投资者的利益，香港FUBT会对资产评估，所有上线交易的品种需要满足如下条件，包含但不限于：-->
+              <!--</p>-->
+              <!--<p class="content">-->
+                <!--强有力的团队或社区维护；-->
+              <!--</p>-->
+              <!--<p class="content">-->
+                <!--有实际技术支撑或有实际应用的项目；-->
+              <!--</p>-->
+                <!--项目无政策风险并且达到专业和合规要求；-->
+              <!--<p class="content">-->
+                <!--能真实及时披露项目信息包含项目白皮书，定期发展及进度报告；-->
+              <!--</p>-->
+              <!--<p class="content">-->
+                <!--交易平台关于上线币种交易的其他要求。-->
+              <!--</p>-->
+            <!--</div>-->
+            <!--<div class="item">-->
+              <!--<p class="title">-->
+                <!--下线币种说明-->
+              <!--</p>-->
+              <!--<p class="content">-->
+                <!--为保护投资者利益，香港FUBT保留项目下线或继续支持项目在平台上交易的权利，项目方如果触发如下条件，我们会公告通知交易下线，包含但不限于：-->
+              <!--</p>-->
+              <!--<p class="content">-->
+                <!--项目团队解散；-->
+              <!--</p>-->
+              <!--<p class="content">-->
+                <!--由于战略调整和发展需要，项目运营团队主动要求下线；-->
+              <!--</p>-->
+              <!--<p class="content">-->
+                <!--严重的技术或安全问题没有及时得到解决；-->
+              <!--</p>-->
+              <!--<p class="content">-->
+                <!--在连续30个交易日，每日交易额小于10万美金；-->
+              <!--</p>-->
+              <!--<p class="content">-->
+                <!--信息披露出现重大偏差；-->
+              <!--</p>-->
+              <!--<p class="content">-->
+                <!--不满足继续交易的其他事项。-->
+              <!--</p>-->
+              <!--<p class="content">-->
+                <!--香港FUBT会对决定下线的项目提前5天发出下线公告，用户有30天的期限从钱包中移出资产。-->
+              <!--</p>-->
+            <!--</div>-->
+            <!--<p class="email-download">数字资产上线合作，请下载填写申请信息并邮箱至 <span class="target-email">XINBI@FUBT.TOP</span>审核。</p>-->
             <div class="download-box">
               <!--<button-->
                 <!--class="download-btn cursor-pointer"-->
@@ -127,6 +132,7 @@ export default {
   // props,
   data () {
     return {
+      contentHTML: '', // 上币申请内容
       termsTypeIds: 6, // 上币申请类型id
       downloadUrl: '' // 下载地址
     }
@@ -134,7 +140,7 @@ export default {
   created () {
     this.getDownUrl()
     // 上币申请动态文案
-    // this.getServiceProtocolData()
+    this.getServiceProtocolData()
   },
   mounted () {},
   activited () {},
@@ -149,6 +155,7 @@ export default {
       }
       getServiceProtocolData(this, params, (data) => {
         console.log(data)
+        this.contentHTML = data.data.data[0].content
       })
     },
     // 获取资产列表下载地址
@@ -207,8 +214,8 @@ export default {
           top:-164px;
           transform: translate(-50%,0);
           >.top{
-            padding:56px 0 0 0;
-            text-align: center;
+            padding:56px;
+            /*text-align: center;*/
             >div{
               display:inline-block;
             }

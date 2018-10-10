@@ -234,7 +234,7 @@ export default {
           width: 150px;
         }
         > .fifth-match-count {
-          width: 150px;
+          width: 130px;
         }
         > .sixth-total-amount {
           width: 150px;
@@ -243,7 +243,7 @@ export default {
           width: 120px;
         }
         > .eighth-action {
-          width: 70px;
+          width: 90px;
         }
       }
       > .entrust-table-body {

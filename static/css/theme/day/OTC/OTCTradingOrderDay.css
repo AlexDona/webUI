@@ -66,20 +66,20 @@
   border-color: #66b1ff;
   color: #fff;
 }
-/* 输入密码弹出框 */
+/* 5.0 输入密码弹出框 */
 .otc-trading-order-box.day .password-dialog .el-dialog{
 border-radius: 4px;
 width: 350px;
 height: 207px;
-background: #28334A;
+background: #fff;
 }
 .otc-trading-order-box.day .password-dialog .el-dialog__header{
-background-color:#20293C;
+background-color:#fff;
 padding: 10px 20px 10px;
 border-radius: 4px;
 }
 .otc-trading-order-box.day .password-dialog .el-dialog__title{
-color: #fff;
+color: #338FF5;
 font-size: 14px;
 }
 .otc-trading-order-box.day .password-dialog .el-dialog__headerbtn{
@@ -98,14 +98,13 @@ margin-top: 13px;
 display: inline-block;
 width: 280px;
 height: 36px;
-background-color: #1A2233;
 border-radius: 4px;
-color: #fff;
 font-size: 14px;
 padding-left: 10px;
+border: 1px solid #ECF1F8;
 }
 .otc-trading-order-box.day .password-dialog .el-dialog__body .error-info{
-color: #fff;
+/* color: #fff; */
 font-size: 12px;
 height: 20px;
 padding-top: 5px;

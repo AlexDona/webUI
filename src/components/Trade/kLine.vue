@@ -598,9 +598,10 @@ export default {
     },
     // 切换tab栏重新订阅
     activeTabId (newVal, oldVal) {
+      console.log(newVal)
       this.getTradeMarketBySocket('CANCEL', oldVal)
-      this.getTradeMarketBySocket('REQ')
-      this.getTradeMarketBySocket('SUB')
+      this.getTradeMarketBySocket('REQ', newVal)
+      this.getTradeMarketBySocket('SUB', newVal)
     },
     symbol (newVal, oldVal) {
       console.log(newVal, oldVal)

@@ -612,6 +612,7 @@ export default {
       // console.log(newVal)
     },
     tradeMarketList (newVal) {
+      console.log(newVal)
       const data = newVal
       if (data) {
         switch (data.type) {

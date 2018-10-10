@@ -112,7 +112,7 @@ class datafeeds {
       'has_intraday': true,
       'has_no_volume': false,
       // 'description': 'BTCUSDT',
-      'pricescale': 10000, // 小数位
+      'pricescale': 100, // 小数位
       // 'ticker': 'BTCUSDT',
       'supported_resolutions': ['1', '5', '15', '30', '60', '240', '1D', '1W']
     }
