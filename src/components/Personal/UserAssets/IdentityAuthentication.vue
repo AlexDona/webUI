@@ -573,37 +573,45 @@ export default {
     ...mapMutations([
       'SET_USER_INFO_REFRESH_STATUS'
     ]),
+    // 隐藏上传按钮
     uploadImg (ref) {
       this.$refs[ref].click()
     },
+    // 上传身份证正面
     handleSuccessFront (response) {
       console.log(response)
       this.dialogImageFrontUrl = response.data.fileUrl
       this.firstPictureSrcShow = false
     },
+    // 上传身份证反面
     handleSuccessReverseSide (response) {
       console.log(response)
       this.dialogImageReverseSideUrl = response.data.fileUrl
       this.secondPictureSrcShow = false
     },
+    // 上传手持身份证
     handleSuccessHand (response) {
       console.log(response)
       this.dialogImageHandUrl = response.data.fileUrl
       this.thirdPictureSrcShow = false
     },
+    // 删除身份证正面
     handleRemoveFront () {
       this.dialogImageFrontUrl = ''
       this.firstPictureSrcShow = true
     },
+    // 删除身份证反面
     handleRemoveSide () {
       this.dialogImageReverseSideUrl = ''
       this.secondPictureSrcShow = true
     },
+    // 删除手持身份证
     handleRemoveHand () {
       this.dialogImageHandUrl = ''
       this.thirdPictureSrcShow = true
       console.log(this.thirdPictureSrcShow)
     },
+    // 判断图片大小限制
     beforeAvatarUpload (file) {
       console.log(file)
       // const isJPG = file.type === 'image/jpeg'
@@ -613,7 +621,8 @@ export default {
       // }
       if (isLt10M > 102400000) {
         console.log(isLt10M)
-        this.$message.error('上传头像图片大小不能超过 10M!')
+        // 上传头像图片大小不能超过 10M!
+        this.$message.error(this.$t('M.user_senior_hint5'))
         return false
       }
     },
@@ -694,11 +703,11 @@ export default {
     checkoutInputFormat (type, targetNum) {
       console.log(type)
       switch (type) {
-        // 真实姓名
+        // 请输入真实姓名
         case 0:
           console.log(type)
           if (!targetNum) {
-            this.setErrorMsg(0, '请输入真实姓名')
+            this.setErrorMsg(0, this.$t('M.comm_please_enter') + this.$t('M.user_real_real'))
             this.$forceUpdate()
             return 0
           } else {
@@ -706,10 +715,10 @@ export default {
             this.$forceUpdate()
             return 1
           }
-        // 证件号码
+        // 请输入证件号码
         case 1:
           if (!targetNum) {
-            this.setErrorMsg(1, '请输入证件号码')
+            this.setErrorMsg(1, this.$t('M.comm_please_enter') + this.$t('M.user_real_certificate_cone'))
             this.$forceUpdate()
             return 0
           } else {
@@ -803,20 +812,22 @@ export default {
       this.stateSeniorCertification()
     },
     async stateSeniorCertification () {
-      // 请上传身份证正面 请上传身份证反面 请上传身份证反面
       if (this.dialogImageFrontUrl === '') {
+        // 请上传身份证正面
         this.$message({
           message: this.$t('M.user_senior_upload1'),
           type: 'error'
         })
         return false
       } else if (this.dialogImageReverseSideUrl === '') {
+        // 请上传身份证反面
         this.$message({
           message: this.$t('M.user_senior_upload2'),
           type: 'error'
         })
         return false
       } else if (this.dialogImageHandUrl === '') {
+        // 请上传身份证反面
         this.$message({
           message: this.$t('M.user_senior_upload3'),
           type: 'error'

@@ -282,6 +282,7 @@ export default {
         this.loadingCircle.close()
         // 返回状态展示
         this.paymentMethodList = data.data.data
+        // 修改时带回西联汇款账号
         this.telegraphicTransferAddress = data.data.data.address
         this.id = data.data.data.id
         console.log(this.paymentMethodList)

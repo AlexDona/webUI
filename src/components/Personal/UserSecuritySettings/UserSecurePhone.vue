@@ -680,6 +680,7 @@ export default {
     // 确定换绑手机
     async confirmTiePhone () {
       if (this.newPhoneIsExistStatus) {
+        // 手机号已被注册
         this.$message({
           type: 'error',
           message: this.$t('M.user-fail-reg-phone-exist')

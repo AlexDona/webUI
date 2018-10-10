@@ -214,7 +214,7 @@ export default {
     statusTetBankCard () {
       this.confirmTiePhone()
     },
-    // 确定设置
+    // 确定设置按钮
     async confirmTiePhone () {
       let goOnStatus = 0
       if (
@@ -347,8 +347,11 @@ export default {
         this.loadingCircle.close()
         // 返回状态展示
         this.paymentMethodList = data.data.data
+        // 修改时带回银行卡名称
         this.bankName = data.data.data.bankName
+        // 修改时带回银行卡号
         this.bankCard = data.data.data.cardNo
+        // 修改时带回银行卡地址
         this.branchAddress = data.data.data.address
         this.id = data.data.data.id
         console.log(this.paymentMethodList)

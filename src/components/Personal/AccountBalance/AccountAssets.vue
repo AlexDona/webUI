@@ -60,29 +60,33 @@
             <div class="table-body text-align-l line-height50">
               <!-- 表头 -->
               <div class="table-title-th display-flex margin20 font-size12">
-                <!--币种  总数量  冻结数量  可用数量  资产估值(BTC)  操作-->
+                <!--币种-->
                 <div
                   class="flex1"
                 >
                   {{ $t('M.comm_currency') }}
                 </div>
+                <!--总数量-->
                 <div
                   class="flex1"
                 >
                   {{ $t('M.comm_total_sum') }}{{ $t('M.comm_count') }}
                 </div>
+                <!--冻结数量-->
                 <div
                   class="flex1"
                 >
                   {{ $t('M.comm_freeze') }}{{ $t('M.comm_count') }}
                 </div>
+                <!--可用数量-->
                 <div
                   class="flex1"
                 >
                   {{ $t('M.comm_usable') }}{{ $t('M.comm_count') }}
                 </div>
+                <!--资产估值(BTC)-->
                 <div
-                  class="flex1"
+                  class="flex1 flex-asset"
                 >
                   {{ $t('M.user_asset_valuation') }}(BTC)
                   <div class="icon-caret">
@@ -90,6 +94,7 @@
                     <i class="el-icon-caret-top caret-text1 cursor-pointer"></i>
                   </div>
                 </div>
+                <!--操作-->
                 <div
                   class="flex1 text-align-c"
                 >
@@ -336,20 +341,20 @@
                       </div>
                       <div class="text-info flex1 font-size12">
                         <!--提现费率规则：-->
-                        <!--为了用户资金安全，平台可能会电话确认您的提币操作，请注意接听；-->
-                        <!--充值经过1个确认后，才允许提现；-->
-                        <!--可提现金额≤账户可用资产-未确认的数字资产。-->
                         <p class="currency-rule">
                           <span>{{ chargeMoneyName }}</span>
                           {{ $t('M.user_assets_withdrawal_hint1') }}：
                         </p>
+                        <!--为了用户资金安全，平台可能会电话确认您的提币操作，请注意接听；-->
                         <p class="prompt-message">
                           * {{ $t('M.user_assets_withdrawal_hint2') }}
                         </p>
+                        <!--充值经过1个确认后，才允许提现；-->
                         <p class="prompt-message">
                           * <span>{{ chargeMoneyName }}</span>
                           {{ $t('M.user_assets_withdrawal_hint3') }}
                         </p>
+                        <!--可提现金额≤账户可用资产-未确认的数字资产。-->
                         <p class="prompt-message">
                           * {{ $t('M.user_assets_withdrawal_hint4') }}
                         </p>
@@ -383,7 +388,6 @@
               <!--提币验证-->
               <el-dialog
                 :title="$t('M.comm_mention_money') + $t('M.comm_site')"
-                :label="$t('M.comm_mention_money')"
                 :visible.sync="mentionMoneyConfirm"
               >
                 <el-form
@@ -408,7 +412,11 @@
                     />
                   </el-form-item>
                   <!--手机未认证-->
-                  <span v-show="!securityCenter.isPhoneEnable"></span>
+                  <span
+                    v-show="!securityCenter.isPhoneEnable"
+                  >
+
+                  </span>
                   <!--邮箱已认证-->
                   <!--邮箱验证-->
                   <el-form-item
@@ -428,7 +436,10 @@
                     />
                   </el-form-item>
                   <!--邮箱未认证-->
-                  <span v-show="!securityCenter.isMailEnable"></span>
+                  <span
+                    v-show="!securityCenter.isMailEnable"
+                  >
+                  </span>
                   <!--谷歌已认证-->
                   <!--谷歌验证-->
                   <el-form-item
@@ -443,7 +454,10 @@
                     >
                   </el-form-item>
                   <!--谷歌未认证-->
-                  <span v-show="!securityCenter.isGoogleEnable"></span>
+                  <span
+                    v-show="!securityCenter.isGoogleEnable"
+                  >
+                  </span>
                   <!--交易密码-->
                   <el-form-item
                     :label="$t('M.comm_password')"
@@ -621,7 +635,7 @@ export default {
       sellname: '', // 币种名称
       sellsymbol: '', // 交易对名称
       loadingCircle: {}, // 整页loading
-      loading: true,
+      loading: true, // 页面列表局部loading
       end: '' // 站位
     }
   },
@@ -790,16 +804,22 @@ export default {
     },
     // 显示充值框
     showRechargeBox (id, name, index) {
+      // 显示充值框
       this.chargeDialogVisible = true
+      // 每行数据ID
       this.chargeMoneyAddressId = id
+      // 每行数据币种名称
       this.chargeMoneyName = name
+      // 循环列表 隐藏充值或提现框
       this.withdrawDepositList.forEach((item) => {
         item.rechargeIsShow = false
         item.withdrawDepositIsShow = false
       })
       if (!this.withdrawDepositList[index].rechargeIsShow) {
+        // 显示充值框
         this.withdrawDepositList[index].rechargeIsShow = true
       } else {
+        // 隐藏充值框
         this.withdrawDepositList[index].withdrawDepositIsShow = false
       }
       // 调用充币地址方法
@@ -807,18 +827,26 @@ export default {
     },
     // 显示提现框
     mentionMoneyButton (id, name, index) {
+      // 点击提现清空数量数据
       this.$refs.rechargeCount[index].value = ''
       this.serviceChargeCount = ''
       console.log()
+      // 显示充值框
       this.mentionDialogVisible = true
+      // 每行数据ID
       this.mentionMoneyAddressId = id
+      // 每行数据币种名
       this.mentionMoneyName = name
+      // 隐藏验证弹窗
       this.mentionMoneyConfirm = false
+      // 循环列表 隐藏充值或提现框
       this.withdrawDepositList.forEach((item) => {
         item.rechargeIsShow = false
         item.withdrawDepositIsShow = false
       })
+      // 显示提现框
       this.withdrawDepositList[index].withdrawDepositIsShow = true
+      // 隐藏充值弹窗
       this.withdrawDepositList[index].rechargeIsShow = false
       // 调用充币地址方法
       this.queryWithdrawalAddressList()
@@ -1135,8 +1163,17 @@ export default {
      * 安全中心
      */
     getSecurityCenter () {
+      // 整页loading
+      this.loadingCircle = this.$loading({
+        lock: true,
+        background: 'rgba(0, 0, 0, 0.6)'
+      })
       getSecurityCenter(this, (data) => {
+        // 接口失败清除loading
+        this.loadingCircle.close()
         if (data) {
+          // 接口成功清除loading
+          this.loadingCircle.close()
           this.securityCenter = data.data.data
         }
       })
@@ -1258,11 +1295,14 @@ export default {
                 height: 35px;
                 line-height: 0;
               }
-              .icon-caret {
-                width: 40px;
-                height: 50px;
-                float: right;
+              .flex-asset {
                 position: relative;
+                text-align: center;
+              }
+              .icon-caret {
+                position: absolute;
+                top: 0;
+                right: 40px;
                 .caret-text {
                   position: absolute;
                   top: 23px;

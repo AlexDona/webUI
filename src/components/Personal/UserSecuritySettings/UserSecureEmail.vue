@@ -267,10 +267,11 @@ export default {
     setErrorMsg (index, msg) {
       this.errorShowStatusList[index] = msg
     },
+    // 确定绑定按钮
     confirmBindingBailSubmit () {
       this.confirmBindingBail()
     },
-    // 确定绑定
+    // 确定绑定接口
     async confirmBindingBail () {
       if (!this.emailCode) {
         this.$message({

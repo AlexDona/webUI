@@ -190,7 +190,7 @@ export default {
       googleUserInformation: {}, // 谷歌验证信息
       successCountDown: 1, // 成功倒计时
       loadingCircle: {}, // 整页loading
-      errorShowStatusList: ''
+      errorShowStatusList: '' // 设置错误信息
     }
   },
   created () {
@@ -260,6 +260,7 @@ export default {
         this.googleUserInformation = data.data.data
         this.googleAccount = data.data.data.googleAccount
         this.googleTheSecretKey = data.data.data.googleSecret
+        // URI 进行编码
         this.googleTheSecretUrl = encodeURI(data.data.data.url)
         console.log(this.googleTheSecretUrl)
       }
@@ -288,7 +289,7 @@ export default {
       }
       let data
       let param = {
-        googleSecret: this.googleTheSecretKey,
+        googleSecret: this.googleTheSecretKey, // 谷歌秘钥
         googleAccount: this.googleAccount, // 谷歌账户
         code: this.googleVerificationCode // 谷歌验证码
       }

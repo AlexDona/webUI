@@ -165,8 +165,16 @@
               :label="$t('M.user_push_opposite_side') + 'UID'"
             >
               <template slot-scope = "s">
-                <div v-if="userInfo.userInfo.showId !== s.row.showPushId">{{ s.row.showPushId }}</div>
-                <div v-if="userInfo.userInfo.showId == s.row.showPushId">{{ s.row.showUid }}</div>
+                <div
+                  v-if="userInfo.userInfo.showId !== s.row.showPushId"
+                >
+                  {{ s.row.showPushId }}
+                </div>
+                <div
+                  v-if="userInfo.userInfo.showId == s.row.showPushId"
+                >
+                  {{ s.row.showUid }}
+                </div>
               </template>
             </el-table-column>
             <!--资产-->
@@ -187,7 +195,7 @@
             </el-table-column>
             <!--价格-->
             <el-table-column
-              :label="$t('M.comm_price_metre')+ pushPayCoinName"
+              :label="$t('M.comm_price_metre') + pushPayCoinName"
             >
               <template slot-scope = "s">
                 <div>{{ s.row.price }}</div>
@@ -216,12 +224,15 @@
             >
               <template slot-scope = "s">
                 <div v-if="s.row.state === 'PUSH_DEAL'">
+                  <!--已完成-->
                   {{ $t(stateOffStocks) }}
                 </div>
                 <div v-if="s.row.state === 'PUSH_REGISTER'">
+                  <!--待支付-->
                   {{ $t(stateWaitPayment) }}
                 </div>
                 <div v-if="s.row.state === 'PUSH_CANCEL'">
+                  <!--已取消-->
                   {{ $t(stateCancel) }}
                 </div>
               </template>
@@ -237,6 +248,7 @@
                   @click.prevent="cancelId(s.row.id)"
                   :id="s.row.id"
                 >
+                  <!--取消-->
                   {{ $t(cancel) }}
                 </div>
                 <div
@@ -245,6 +257,7 @@
                   @click.prevent="paymentId(s.row.id)"
                   :id="s.row.id"
                 >
+                  <!--付款-->
                   {{ $t(payment) }}
                 </div>
               </template>
@@ -443,11 +456,9 @@ export default {
       pushUID: '', // 每行数据ID
       pushPayCoinName: '', // 币种名称
       pushPassword: '',
-      // push列表记录
-      pushRecordList: [],
+      pushRecordList: [], // push列表记录
       currentPageForMyEntrust: 1, // 当前委托页码
       totalPageForMyEntrust: 1, // 当前委托总页数
-      SecurityCenter: {},
       pointLength: 4, // 保留小数位后四位
       errorMsg: '', // 错误提示
       loadingCircle: {}, // 整页loading
@@ -750,6 +761,7 @@ export default {
     confirmSubmit () {
       this.statePushPropertyTransaction()
     },
+    // 确定付款接口
     async statePushPropertyTransaction () {
       let goOnStatus = 0
       if (
@@ -771,6 +783,7 @@ export default {
         } else {
           this.passwordVisible = false
           this.dialogVisible = false
+          // 付款成功刷新列表
           this.getPushRecordList()
         }
       }

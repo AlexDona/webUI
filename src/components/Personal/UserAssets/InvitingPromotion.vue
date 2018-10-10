@@ -118,7 +118,8 @@
               <div class="promotion-info">
                 <p class="info-right">
                   <span class="info-left-color font-size30">
-                    0.00000
+                    <!--0.00000-->
+                    {{ BTCAssets }}
                   </span>
                   <span>BTC</span>
                 </p>
@@ -300,7 +301,8 @@ import IconFontCommon from '../../Common/IconFontCommon'
 import VueClipboard from 'vue-clipboard2'
 import {
   userPromotionList,
-  recommendUserPromotionList
+  recommendUserPromotionList,
+  currencyTransform
 } from '../../../utils/api/personal'
 import {domain} from '../../../utils/env'
 import {returnAjaxMessage} from '../../../utils/commonFunc'
@@ -344,7 +346,9 @@ export default {
       totalPageMyEntrust: 1, // 当前委托总页数
       // 奖励记录
       awardList: [],
-      loadingCircle: {}, // 整页loading
+      loadingCircle: {}, // 整页loading.
+      totalSumBTC: '', // btc资产
+      BTC2CNYRate: '', // 转换汇率
       loading: true // 局部列表loading
     }
   },
@@ -365,12 +369,32 @@ export default {
     timeFormatting (date) {
       return timeFilter(date, 'normal')
     },
+    // 汇率转换 已获得的佣金预估
+    async currencyTransform () {
+      console.log(1)
+      const params = {
+        coinName: 'HF',
+        shortName: 'BTC'
+      }
+      const data = await currencyTransform(params)
+      console.log(2)
+      if (!returnAjaxMessage(data, this)) {
+        console.log(3)
+        return false
+      } else {
+        console.log(data)
+        if (data.data.data.coinPrice) {
+          this.BTC2CNYRate = data.data.data.coinPrice
+        }
+      }
+    },
     // 类型筛选（直接 间接）
     changeId (e) {
       console.log(e)
       this.generalizeOptionsList.forEach(item => {
         if (e === item.value) {
           this.generalizeValue = e
+          // this.loading = true
           this.getUserPromotionList()
           console.log(this.generalizeValue)
         }
@@ -461,7 +485,11 @@ export default {
       theme: state => state.common.theme,
       userInfo: state => state.user.loginStep1Info, // 用户详细信息
       userCenterActiveName: state => state.personal.userCenterActiveName
-    })
+    }),
+    // BTC 已获得的佣金预估
+    BTCAssets () {
+      return (this.BTC2CNYRate - 0) * (this.totalSumBTC - 0)
+    }
   },
   watch: {
     userCenterActiveName (newVal) {

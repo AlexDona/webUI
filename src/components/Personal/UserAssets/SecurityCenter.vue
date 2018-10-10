@@ -972,6 +972,7 @@ export default {
         this.googleCode = ''
       }
     },
+    // 获取焦点清空数据
     handleinput () {
       this.errorMsg = ''
     },

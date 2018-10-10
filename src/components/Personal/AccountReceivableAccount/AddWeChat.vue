@@ -174,7 +174,7 @@ export default {
       dialogImageHandUrl: '', // 图片url
       dialogImageHandUrl1: '', // 图片url
       id: '', // ID
-      paymentTerm: {},
+      paymentTerm: {}, // 收款方式
       successCountDown: 1, // 成功倒计时
       paymentMethodList: {},
       loadingCircle: {}, // 整页loading
@@ -248,10 +248,11 @@ export default {
     setErrorMsg (index, msg) {
       this.errorShowStatusList[index] = msg
     },
-    // 确认设置新账号
+    // 确认设置按钮
     stateSubmitWeChat () {
       this.stateSeniorCertification()
     },
+    // 确认设置接口
     async stateSeniorCertification () {
       let goOnStatus = 0
       if (
@@ -329,9 +330,11 @@ export default {
           this.paymentMethodList = data.data.data
         }
         if (data.data.data.cardNo) {
+          // 修改时带回微信号
           this.cardNo = data.data.data.cardNo
         }
         if (data.data.data.qrcode) {
+          // 修改时带回微信收款码
           this.dialogImageHandUrl1 = data.data.data.qrcode
         }
         if (data.data.data.id) {

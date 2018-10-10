@@ -340,16 +340,6 @@ export default {
               return 0
           }
           break
-        // if (!targetNum) {
-        //   // 请输入提币地址
-        //   this.setErrorMsg(1, this.$t('M.comm_please_enter') + this.$t('M.comm_mention_money') + this.$t('M.comm_site'))
-        //   this.$forceUpdate()
-        //   return 0
-        // } else {
-        //   this.setErrorMsg(1, '')
-        //   this.$forceUpdate()
-        //   return 1
-        // }
       }
     },
     // 设置错误信息
@@ -372,6 +362,7 @@ export default {
         goOnStatus = 0
       }
       if (goOnStatus) {
+        // 验证通过调用新增提币地址接口
         this.gitCheckCurrencyAddress()
       }
     },
@@ -395,6 +386,7 @@ export default {
       } else {
         // 接口成功清除loading
         this.loadingCircle.close()
+        // 验证通过调用验证方式接口
         this.getSecurityCenter()
       }
     },
@@ -409,11 +401,11 @@ export default {
         }
       })
     },
-    // 点击确认
+    // 点击新增用户提币地址确认按钮
     submitMentionMoney () {
       this.stateSubmitAddAddress()
     },
-    // 新增用户提币地址按钮
+    // 新增用户提币地址接口
     async stateSubmitAddAddress () {
       if (!this.phoneCode && !this.emailCode && !this.googleCode) {
         // 请输入验证码
@@ -454,8 +446,8 @@ export default {
      */
     async WithdrawalAddressList () {
       let params = {
-        pageNum: this.currentPageForMyEntrust,
-        pageSize: this.pageSize
+        pageNum: this.currentPageForMyEntrust, // 页码
+        pageSize: this.pageSize // 页数
       }
       let data = await inquireWithdrawalAddressList(params)
       // console.log(data)
@@ -468,8 +460,11 @@ export default {
         this.loading = false
         // 返回列表数据
         this.currencyList = data.data.data.canWithdrawPartnerCoinList
+        // 对币种名称进行赋值
         this.currencyValue = data.data.data.canWithdrawPartnerCoinList[0].name
+        // 对ID名称进行赋值
         this.currencyValue = data.data.data.canWithdrawPartnerCoinList[0].coinId
+        // 对币种名称列表进行赋值
         this.gainAddressList = data.data.data.UserWithdrawAddressPage.list
         this.totalPageForMyEntrust = data.data.data.UserWithdrawAddressPage.pages - 0
         console.log(this.currencyList)

@@ -625,9 +625,9 @@ export default {
         let data
         let param = {
           payPassword: this.modifyPassword.resetTransactionPassword, // 重置交易密码
-          phoneCode: this.modifyPassword.phoneCode,
-          emailCode: this.modifyPassword.emailCode,
-          googleCode: this.modifyPassword.googleCode
+          phoneCode: this.modifyPassword.phoneCode, // 手机验证码
+          emailCode: this.modifyPassword.emailCode, // 邮箱验证码
+          googleCode: this.modifyPassword.googleCode // 谷歌验证码
         }
         // 整页loading
         this.loadingCircle = this.$loading({

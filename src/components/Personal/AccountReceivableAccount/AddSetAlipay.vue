@@ -268,6 +268,7 @@ export default {
       }
       console.log(this.dialogImageHandUrl1)
       if (this.dialogImageHandUrl1 == '') {
+        // 请上传微信收款码
         this.$message({
           message: this.$t('M.user_account_weChat_pla'),
           type: 'error'
@@ -334,12 +335,15 @@ export default {
           this.paymentMethodList = data.data.data
         }
         if (data.data.data.cardNo) {
+          // 修改时带回支付宝号
           this.alipayAccount = data.data.data.cardNo
         }
         if (data.data.data.qrcode) {
+          // 修改时带回支付宝收款码
           this.dialogImageHandUrl1 = data.data.data.qrcode
         }
         if (data.data.data.id) {
+          // 修改时带回类id
           this.id = data.data.data.id
         }
         console.log(this.dialogImageHandUrl1)
