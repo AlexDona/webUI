@@ -8,8 +8,8 @@ import {
   userRefreshUser,
   getQueryAllOrdersList,
   statusSecurityCenter,
-  accountPaymentTerm,
-  modificationAccountPaymentTerm
+  accountPaymentTerm
+  // modificationAccountPaymentTerm
 } from '../utils/api/personal'
 
 import {
