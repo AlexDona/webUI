@@ -760,8 +760,7 @@ export default {
       contryAreaList: state => state.common.contryAreaList,
       disabledOfOldPhoneBtn: state => state.user.disabledOfOldPhoneBtn,
       disabledOfPhoneBtn: state => state.user.disabledOfPhoneBtn,
-      disabledOfEmailBtn: state => state.user.disabledOfEmailBtn,
-
+      disabledOfEmailBtn: state => state.user.disabledOfEmailBtn
     })
   },
   watch: {
