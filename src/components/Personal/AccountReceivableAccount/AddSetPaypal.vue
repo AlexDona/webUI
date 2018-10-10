@@ -113,11 +113,13 @@
 import HeaderCommon from '../../Common/HeaderCommonForPC'
 import IconFontCommon from '../../Common/IconFontCommon'
 import ErrorBox from '../../User/ErrorBox'
-import {returnAjaxMessage} from '../../../utils/commonFunc'
+import {
+  returnAjaxMessage,
+  getAccountPaymentTerm
+} from '../../../utils/commonFunc'
 import {
   statusCardSettings,
-  modificationAccountPaymentTerm,
-  accountPaymentTerm
+  modificationAccountPaymentTerm
 } from '../../../utils/api/personal'
 // 底部
 import FooterCommon from '../../Common/FooterCommon'
@@ -286,16 +288,16 @@ export default {
         console.log(this.paymentMethodList)
       }
     },
-    // 收款方式
-    async getAccountPaymentTerm () {
-      let data = await accountPaymentTerm()
-      if (!(returnAjaxMessage(data, this, 0))) {
-        return false
-      } else {
-        // 返回状态展示
-        this.paymentTerm = data.data.data
-        console.log(this.paymentTerm)
-      }
+    /**
+     * 收款方式
+     */
+    getAccountPaymentTerm () {
+      getAccountPaymentTerm(this, (data) => {
+        if (data) {
+          // 返回状态展示
+          this.paymentTerm = data.data.data
+        }
+      })
     },
     // 成功自动跳转
     successJump () {

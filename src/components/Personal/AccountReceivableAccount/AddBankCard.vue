@@ -146,11 +146,11 @@ import ErrorBox from '../../User/ErrorBox'
 import CountDownButton from '../../Common/CountDownCommon'
 import {
   returnAjaxMessage, // 接口返回信息
-  validateNumForUserInput
+  validateNumForUserInput,
+  getAccountPaymentTerm
 } from '../../../utils/commonFunc'
 import {
   statusCardSettings,
-  accountPaymentTerm,
   modificationAccountPaymentTerm
 } from '../../../utils/api/personal'
 // 底部
@@ -354,24 +354,16 @@ export default {
         console.log(this.paymentMethodList)
       }
     },
-    // 收款方式
-    async getAccountPaymentTerm () {
-      let data = await accountPaymentTerm()
-      // 整页loading
-      // this.loadingCircle = this.$loading({
-      //   lock: true,
-      //   background: 'rgba(0, 0, 0, 0.6)'
-      // })
-      if (!(returnAjaxMessage(data, this, 0))) {
-        // 接口失败清除loading
-        // this.loadingCircle.close()
-        return false
-      } else {
-        // 接口成功清除loading
-        // this.loadingCircle.close()
-        // 返回状态展示
-        this.paymentTerm = data.data.data
-      }
+    /**
+     * 收款方式
+     */
+    getAccountPaymentTerm () {
+      getAccountPaymentTerm(this, (data) => {
+        if (data) {
+          // 返回状态展示
+          this.paymentTerm = data.data.data
+        }
+      })
     },
     // 成功自动跳转
     successJump () {
