@@ -5,7 +5,7 @@ export const common = {
   'comm_all-plate': '全部',
   'comm_trade_center': '币币交易',
   'comm_otc_center': 'OTC交易',
-  'comm_finance_center': '投资理财',
+  'comm_finance_center': '存币收益',
   'comm_activity_center': '活动中心',
   'comm_convert_currency': '折算货币',
   'comm_set': '设置',

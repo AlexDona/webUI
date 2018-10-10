@@ -48,7 +48,10 @@
             <el-form-item
               :label="$t('M.user_security_phone') + $t('M.user_security_number') + '：'"
             >
-              <el-select v-model="bindingDataPhone.bindingAreaCodeValue">
+              <el-select
+                v-model="bindingDataPhone.bindingAreaCodeValue"
+                :no-data-text="$t('M.comm_no_data')"
+              >
                 <el-option
                   v-for="(item, index) in contryAreaList"
                   :key="index"
@@ -62,7 +65,8 @@
                 class="phone-input phone-input-left border-radius2 padding-l15 box-sizing"
                 v-model="bindingDataPhone.bindingNewPhoneAccounts"
                 @keydown="setErrorMsg(0,'')"
-                @blur="checkUserExistAjax('phone', bindingDataPhone.bindingNewPhoneAccounts)"
+                @focus="resetNewPhoneIsExistStatus"
+                @blur="checkUserExistAjax('phone', bindingDataPhone.bindingNewPhoneAccounts,1)"
               >
               <!--错误提示-->
               <ErrorBox
@@ -106,7 +110,7 @@
               <el-input
                 v-model="bindingDataPhone.bindingNewPhoneCode"
                 @keydown="setErrorMsg(2,'')"
-                @blur="checkoutInputFormat(2, bindingDataPhone.userInputImageCode)"
+                @blur="checkoutInputFormat(2, bindingDataPhone.bindingNewPhoneCode)"
               >
                 <template slot="append">
                   <CountDownButton
@@ -115,12 +119,12 @@
                     @run="sendPhoneOrEmailCode(0)"
                   />
                 </template>
-                <!--错误提示-->
-                <ErrorBox
-                  :text="errorShowStatusList[2]"
-                  :isShow="!!errorShowStatusList[2]"
-                />
               </el-input>
+              <!--错误提示-->
+              <ErrorBox
+                :text="errorShowStatusList[2]"
+                :isShow="!!errorShowStatusList[2]"
+              />
             </el-form-item>
             <div class="prompt-message">
               <div v-show="errorMsg">{{ errorMsg }}</div>
@@ -153,6 +157,7 @@
               <el-input
                 v-model="amendDataPhone.oldPhoneCode"
                 @keydown="tieErrorMsg(0,'')"
+                @focus="tieErrorMsg(0,'')"
                 @blur="tieCheckoutInputFormat(0, amendDataPhone.oldPhoneCode)"
               >
                 <template slot="append">
@@ -174,6 +179,7 @@
             >
               <el-select
                 v-model="amendDataPhone.areaCodeValue"
+                :no-data-text="$t('M.comm_no_data')"
               >
                 <el-option
                   v-for="(item, index) in contryAreaList"
@@ -188,6 +194,7 @@
                 class="phone-input phone-input-left border-radius2 padding-l15 box-sizing"
                 v-model="amendDataPhone.newPhoneAccounts"
                 @keydown="tieErrorMsg(1,'')"
+                @focus="resetNewPhoneIsExistStatus"
                 @blur="checkUserExistAjax('phone', amendDataPhone.newPhoneAccounts,'newPhone')"
               >
               <!--错误提示-->
@@ -315,6 +322,7 @@ export default {
       ],
       successCountDown: 1, // 成功倒计时
       newPhoneIsExistStatus: false, // 新手机号是否已注册过
+      loadingCircle: {}, // 整页loading
       emailBindPhoneCount: 0 // 邮箱绑定手机次数
     }
   },
@@ -353,8 +361,6 @@ export default {
     // 发送验证码
     async sendPhoneOrEmailCode (loginType, val, type) {
       if (!type && !val && !this.bindingDataPhone.bindingNewPhoneAccounts) {
-        console.log(this.bindingDataPhone.bindingNewPhoneCode)
-        console.log(1)
         this.$message({
           type: 'error',
           message: this.$t('M.comm_please_enter') + this.$t('M.comm_code_phone1')
@@ -362,9 +368,21 @@ export default {
         return false
       }
       // 绑定手机号
-      if (!loginType && !val && !type) {
+      if ((!loginType && !val && !type)) {
+        console.log(this.bindingDataPhone.bindingNewPhoneCode)
         if (!this.emailBindPhoneCount) {
           let data = await this.checkUserExistAjax('phone', this.bindingDataPhone.bindingNewPhoneAccounts)
+          this.emailBindPhoneCount++
+          console.log(data)
+          if (!data) {
+            this.emailBindPhoneCount = 0
+            return false
+          }
+        }
+      }
+      if ((!loginType && val && !type)) {
+        if (!this.emailBindPhoneCount) {
+          let data = await this.checkUserExistAjax('phone', this.amendDataPhone.newPhoneAccounts)
           this.emailBindPhoneCount++
           console.log(data)
           if (!data) {
@@ -381,8 +399,18 @@ export default {
         })
         return false
       }
-      if (this.disabledOfPhoneBtn || this.disabledOfEmailBtn) {
-        return false
+      console.log(type)
+      if (!type) {
+        if (this.disabledOfPhoneBtn || this.disabledOfEmailBtn) {
+          return false
+        }
+      } else {
+        console.log(2)
+        if (this.disabledOfOldPhoneBtn || this.disabledOfEmailBtn) {
+          console.log(this.disabledOfOldPhoneBtn)
+          console.log(this.disabledOfEmailBtn)
+          return false
+        }
       }
       let params = {
         type: 'VERIFICATION_CODE', // 类型
@@ -400,7 +428,6 @@ export default {
             break
         }
       } else {
-        // console.log(1)
         console.log(loginType)
         switch (loginType) {
           case 0:
@@ -428,6 +455,7 @@ export default {
       }
       await sendPhoneOrEmailCodeAjax(loginType, params, (data) => {
         console.log(this.disabledOfPhoneBtn)
+        console.log(this.disabledOfPhoneBtn)
         // 提示信息
         if (!returnAjaxMessage(data, this)) {
           console.log('error')
@@ -435,6 +463,11 @@ export default {
         } else {
           this.$store.commit('user/SET_USER_BUTTON_STATUS', {
             loginType: 0,
+            type,
+            status: true
+          })
+          this.$store.commit('user/SET_USER_BUTTON_STATUS', {
+            loginType: 1,
             type,
             status: true
           })
@@ -475,6 +508,7 @@ export default {
           }
         // 短信验证码
         case 2:
+          console.log(targetNum)
           if (!targetNum) {
             // 请输入短信验证码
             this.setErrorMsg(2, this.$t('M.comm_please_enter') + this.$t('M.comm_note') + this.$t('M.comm_code'))
@@ -497,9 +531,18 @@ export default {
     },
     // 确定绑定
     async confirmBindingBailPhone () {
+      console.log(this.newPhoneIsExistStatus)
+      if (this.newPhoneIsExistStatus) {
+        this.$message({
+          type: 'error',
+          message: this.$t('M.user-fail-reg-phone-exist')
+        })
+        return false
+      }
       let goOnStatus = 0
       if (
         this.checkoutInputFormat(0, this.bindingDataPhone.bindingNewPhoneAccounts) &&
+        this.checkoutInputFormat(1, this.bindingDataPhone.userInputImageCode) &&
         this.checkoutInputFormat(2, this.bindingDataPhone.bindingNewPhoneCode)
       ) {
         goOnStatus = 1
@@ -512,10 +555,19 @@ export default {
           phone: this.bindingDataPhone.bindingNewPhoneAccounts, // 手机号
           code: this.bindingDataPhone.bindingNewPhoneCode // 手机验证码
         }
+        // 整页loading
+        this.loadingCircle = this.$loading({
+          lock: true,
+          background: 'rgba(0, 0, 0, 0.6)'
+        })
         data = await bindPhoneAddress(param)
         if (!(returnAjaxMessage(data, this, 1))) {
+          // 接口失败清除loading
+          this.loadingCircle.close()
           return false
         } else {
+          // 接口成功清除loading
+          this.loadingCircle.close()
           this.successJump()
           console.log(data)
         }
@@ -554,6 +606,9 @@ export default {
         }
       }
     },
+    resetNewPhoneIsExistStatus () {
+      this.newPhoneIsExistStatus = false
+    },
     // 换绑手机检测输入格式
     tieCheckoutInputFormat (type, targetNum) {
       switch (type) {
@@ -589,16 +644,6 @@ export default {
               return 0
           }
           break
-          // if (!targetNum) {
-          //   // 请输入手机号
-          //   this.tieErrorMsg('phone', this.$t('M.comm_please_enter') + this.$t('M.user_security_phone') + this.$t('M.comm_mark'))
-          //   this.$forceUpdate()
-          //   return 0
-          // } else {
-          //   this.tieErrorMsg(1, '')
-          //   this.$forceUpdate()
-          //   return 1
-          // }
         // 新短信验证码
         case 2:
           if (!targetNum) {
@@ -634,11 +679,27 @@ export default {
     },
     // 确定换绑手机
     async confirmTiePhone () {
-      console.log(1)
+      if (this.newPhoneIsExistStatus) {
+        // 手机号已被注册
+        this.$message({
+          type: 'error',
+          message: this.$t('M.user-fail-reg-phone-exist')
+        })
+        return false
+      }
+      console.log(this.userInfo)
+      if (!this.userInfo.userInfo.payPassword) {
+        this.$message({
+          message: this.$t('M.otc_index_js3'), // 请先设置交易密码，再来设置OTC收款账户!
+          type: 'error'
+        })
+        return false
+      }
+      console.log(this.amendDataPhone.newPhoneAccounts)
       let goOnStatus = 0
       if (
-        this.tieCheckoutInputFormat(0, this.amendDataPhone.newPhoneAccounts) &&
-        this.tieCheckoutInputFormat(1, this.amendDataPhone.oldPhoneCode) &&
+        this.tieCheckoutInputFormat(1, this.amendDataPhone.newPhoneAccounts) &&
+        this.tieCheckoutInputFormat(0, this.amendDataPhone.oldPhoneCode) &&
         this.tieCheckoutInputFormat(2, this.amendDataPhone.newPhoneCode) &&
         this.tieCheckoutInputFormat(3, this.amendDataPhone.transactionPassword)
       ) {
@@ -654,10 +715,19 @@ export default {
           newCode: this.amendDataPhone.newPhoneCode, // 新手机验证码
           payPassword: this.amendDataPhone.transactionPassword // 交易密码
         }
+        // 整页loading
+        this.loadingCircle = this.$loading({
+          lock: true,
+          background: 'rgba(0, 0, 0, 0.6)'
+        })
         data = await changeMobilePhone(param)
         if (!(returnAjaxMessage(data, this, 1))) {
+          // 接口失败清除loading
+          this.loadingCircle.close()
           return false
         } else {
+          // 接口成功清除loading
+          this.loadingCircle.close()
           this.stateEmptyData()
           this.successJump()
         }
@@ -715,7 +785,7 @@ export default {
   .set-phone {
     >.set-phone-main {
       width: 1100px;
-      min-height: 600px;
+      min-height: 700px;
       margin: 60px auto 100px;
       >.set-phone-header {
         display: flex;

@@ -116,6 +116,7 @@ export default {
       emailAccounts: '', // 邮箱账号
       emailCode: '', // 邮箱验证码
       successCountDown: 1, // 成功倒计时
+      loadingCircle: {}, // 整页loading
       errorShowStatusList: [
         '', // 邮箱账号
         '' // 验证码
@@ -266,10 +267,11 @@ export default {
     setErrorMsg (index, msg) {
       this.errorShowStatusList[index] = msg
     },
+    // 确定绑定按钮
     confirmBindingBailSubmit () {
       this.confirmBindingBail()
     },
-    // 确定绑定
+    // 确定绑定接口
     async confirmBindingBail () {
       if (!this.emailCode) {
         this.$message({
@@ -294,10 +296,19 @@ export default {
           email: this.emailAccounts, // 邮箱账号
           code: this.emailCode // 邮箱验证码
         }
+        // 整页loading
+        this.loadingCircle = this.$loading({
+          lock: true,
+          background: 'rgba(0, 0, 0, 0.6)'
+        })
         data = await bindEmailAddress(param)
         if (!(returnAjaxMessage(data, this, 1))) {
+          // 接口失败清除loading
+          this.loadingCircle.close()
           return false
         } else {
+          // 接口成功清除loading
+          this.loadingCircle.close()
           this.stateEmptyData()
           this.successJump()
         }
@@ -338,7 +349,7 @@ export default {
   .set-email {
     >.set-email-main {
       width: 1100px;
-      min-height: 600px;
+      min-height: 700px;
       margin: 60px auto 100px;
       >.set-email-header {
         display: flex;

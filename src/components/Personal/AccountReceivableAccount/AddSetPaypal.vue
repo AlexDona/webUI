@@ -41,7 +41,7 @@
             :label-position="labelPosition"
             label-width="120px"
           >
-            <!--名 称 paypal账号 请输入内容 交易密码-->
+            <!--名 称-->
             <el-form-item
               :label="$t('M.user_account_name')"
             >
@@ -49,6 +49,7 @@
                 {{ userInfo.userInfo.realname }}
               </span>
             </el-form-item>
+            <!--paypal账号-->
             <el-form-item
               :label="$t('M.user_account_paypal') + $t('M.user_account_number')"
             >
@@ -66,6 +67,7 @@
                 />
               </el-input>
             </el-form-item>
+            <!--交易密码-->
             <el-form-item
               :label="$t('M.comm_password')"
             >
@@ -111,11 +113,13 @@
 import HeaderCommon from '../../Common/HeaderCommonForPC'
 import IconFontCommon from '../../Common/IconFontCommon'
 import ErrorBox from '../../User/ErrorBox'
-import {returnAjaxMessage} from '../../../utils/commonFunc'
+import {
+  returnAjaxMessage,
+  getAccountPaymentTerm
+} from '../../../utils/commonFunc'
 import {
   statusCardSettings,
-  modificationAccountPaymentTerm,
-  accountPaymentTerm
+  modificationAccountPaymentTerm
 } from '../../../utils/api/personal'
 // 底部
 import FooterCommon from '../../Common/FooterCommon'
@@ -137,6 +141,7 @@ export default {
       paymentTerm: {},
       successCountDown: 1, // 成功倒计时
       paymentMethodList: {},
+      loadingCircle: {}, // 整页loading
       errorShowStatusList: [
         '', // paypal账号
         '' // 交易密码
@@ -232,11 +237,20 @@ export default {
           bankType: 'paypal', // type
           id: this.id
         }
+        // 整页loading
+        this.loadingCircle = this.$loading({
+          lock: true,
+          background: 'rgba(0, 0, 0, 0.6)'
+        })
         data = await statusCardSettings(param)
         console.log(data)
         if (!(returnAjaxMessage(data, this, 1))) {
+          // 接口失败清除loading
+          this.loadingCircle.close()
           return false
         } else {
+          // 接口成功清除loading
+          this.loadingCircle.close()
           this.successJump()
           this.stateEmptyData()
         }
@@ -254,27 +268,37 @@ export default {
         userId: this.userInfo.userId,
         type: 'paypal'
       }
+      // 整页loading
+      this.loadingCircle = this.$loading({
+        lock: true,
+        background: 'rgba(0, 0, 0, 0.6)'
+      })
       data = await modificationAccountPaymentTerm(params)
       if (!(returnAjaxMessage(data, this, 0))) {
+        // 接口失败清除loading
+        this.loadingCircle.close()
         return false
       } else {
+        // 接口成功清除loading
+        this.loadingCircle.close()
         // 返回状态展示
         this.paymentMethodList = data.data.data
+        // 修改时带回paypal账号
         this.paypalAccount = data.data.data.cardNo
         this.id = data.data.data.id
         console.log(this.paymentMethodList)
       }
     },
-    // 收款方式
-    async getAccountPaymentTerm () {
-      let data = await accountPaymentTerm()
-      if (!(returnAjaxMessage(data, this, 0))) {
-        return false
-      } else {
-        // 返回状态展示
-        this.paymentTerm = data.data.data
-        console.log(this.paymentTerm)
-      }
+    /**
+     * 收款方式
+     */
+    getAccountPaymentTerm () {
+      getAccountPaymentTerm(this, (data) => {
+        if (data) {
+          // 返回状态展示
+          this.paymentTerm = data.data.data
+        }
+      })
     },
     // 成功自动跳转
     successJump () {

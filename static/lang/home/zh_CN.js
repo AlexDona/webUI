@@ -11,5 +11,5 @@ export const home = {
   'home_market_district': '自选区',
   // #####################导航######################
   'investment_look_all': '查看全部',
-  'investment_return_investment': '返回投资'
+  'investment_return_investment': '返回'
 }

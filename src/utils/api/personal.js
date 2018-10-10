@@ -18,6 +18,8 @@ export const getMerchantCurrencyList = (params) => get('queryPartnerCoinList', p
 export const statusSubmitWithdrawButton = (params) => post('addWithdraw', params)
 // 新增用户提币地址
 export const addNewWithdrawalAddress = (params) => post('personal/addWithdrawAddress', params)
+// 验证提币地址是否正确
+export const checkCurrencyAddress = (params) => get('personal/validateAddress', params)
 // 提币地址删除
 export const deleteUserWithdrawAddress = (params) => put('personal/deleteUserWithdrawAddress', params)
 // 查询充币地址

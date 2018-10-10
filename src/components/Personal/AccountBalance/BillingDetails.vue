@@ -27,6 +27,7 @@
           </span>
           <el-select
             v-model="currencyListValue"
+            :no-data-text="$t('M.comm_no_data')"
             clearable
             @change="changeId"
           >
@@ -48,6 +49,7 @@
           </span>
           <el-select
             v-model="currencyTypeValue"
+            :no-data-text="$t('M.comm_no_data')"
           >
             <el-option
               v-for="item in currencyType"
@@ -111,12 +113,14 @@
         class="billing-details-content"
       >
         <!--暂无记录-->
-        <!--币种 类型 数量 提交时间 更新时间 状态-->
         <el-table
           :data="chargeRecordList"
           style="width: 100%"
           :empty-text="$t('M.comm_no_data')"
+          v-loading="loading"
+          element-loading-background="rgba(0, 0, 0, 0.6)"
         >
+          <!--币种-->
           <el-table-column
             :label="$t('M.comm_currency')"
             width="100"
@@ -125,6 +129,7 @@
               <div>{{ s.row.coinName }}</div>
             </template>
           </el-table-column>
+          <!--类型-->
           <el-table-column
             :label="$t('M.comm_type')"
             width="100"
@@ -133,6 +138,7 @@
               <div>{{ $t(`M.${s.row.i18nTypeName}`)}}</div>
             </template>
           </el-table-column>
+          <!--数量-->
           <el-table-column
             :label="$t('M.comm_count')"
           >
@@ -140,6 +146,7 @@
               <div>{{ s.row.amount }}</div>
             </template>
           </el-table-column>
+          <!--提交时间-->
           <el-table-column
             :label="$t('M.comm_sub_time') + $t('M.comm_time')"
           >
@@ -147,6 +154,7 @@
               <div>{{ s.row.createTime }}</div>
             </template>
           </el-table-column>
+          <!--更新时间-->
           <el-table-column
             :label="$t('M.comm_update') + $t('M.comm_time')"
           >
@@ -154,6 +162,7 @@
               <div>{{ s.row.updateTime }}</div>
             </template>
           </el-table-column>
+          <!--状态-->
           <el-table-column
             prop="address"
             :label="$t('M.comm_state')"
@@ -178,12 +187,13 @@
         v-show="hiddenStatusRecordList"
         class="billing-details-content"
       >
-        <!--时间 币种 类型 数量 状态-->
         <el-table
           :data="otherRecordsList"
           style="width: 100%"
           :empty-text="$t('M.comm_no_data')"
+          v-loading="loading"
         >
+          <!--时间-->
           <el-table-column
             :label="$t('M.comm_time')"
           >
@@ -191,6 +201,7 @@
               <div>{{ s.row.time }}</div>
             </template>
           </el-table-column>
+          <!--币种-->
           <el-table-column
             :label="$t('M.comm_currency')"
           >
@@ -198,6 +209,7 @@
               <div>{{ s.row.coinName }}</div>
             </template>
           </el-table-column>
+          <!--类型-->
           <el-table-column
             :label="$t('M.comm_type')"
           >
@@ -205,6 +217,7 @@
               <div>{{ s.row.type }}</div>
             </template>
           </el-table-column>
+          <!--数量-->
           <el-table-column
             :label="$t('M.comm_count')"
           >
@@ -212,6 +225,7 @@
               <div>{{ s.row.amount }}</div>
             </template>
           </el-table-column>
+          <!--状态-->
           <el-table-column
             :label="$t('M.comm_state')"
           >
@@ -237,9 +251,8 @@ export default {
   // props,
   data () {
     return {
-      // 充提记录
-      showStatusRecordList: true, // 充提记录
-      chargeRecordList: [],
+      showStatusRecordList: true, // 充提记录默认显示
+      chargeRecordList: [], // 充提记录列表
       activeName: 'current-entrust',
       currentPageForMyEntrust: 1, // 当前委托页码
       totalPageForMyEntrust: 1, // 当前委托总页数
@@ -313,7 +326,8 @@ export default {
           label: '邀请奖励'
         }
       ],
-      otherRecordTypes: false
+      otherRecordTypes: false,
+      loading: true
     }
   },
   created () {
@@ -342,8 +356,23 @@ export default {
         this.hiddenStatusRecordList = true
       }
     },
+    // 获取商户币种列表
+    async inquireCurrencyList () {
+      let data
+      let param = {
+        partnerId: this.partnerId // 商户id
+      }
+      data = await getMerchantCurrencyList(param)
+      if (!(returnAjaxMessage(data, this, 0))) {
+        return false
+      } else {
+        this.currencyList = data.data.data
+        console.log(this.currencyList)
+      }
+    },
     // 搜索按钮
     stateSearchButton () {
+      this.loading = true
       this.getChargeMentionList()
     },
     /**
@@ -359,10 +388,13 @@ export default {
         startTime: this.startTime, // 开始起止时间
         endTime: this.endTime // 结束起止时间
       })
-      // console.log(data)
       if (!(returnAjaxMessage(data, this, 0))) {
+        // 接口失败清除loading
+        this.loading = false
         return false
       } else {
+        // 接口成功清除loading
+        this.loading = false
         // 返回冲提记录列表展示
         this.chargeRecordList = data.data.data.list
         this.totalPageForMyEntrust = data.data.data.pages - 0
@@ -378,27 +410,6 @@ export default {
           this.inquireCurrencyList(e)
         }
       })
-      // this.currencyList.forEach(item => {
-      //   if (id === item.coinId) {
-      //     this.currencyListValue = id
-      //     this.inquireCurrencyList(id)
-      //     console.log(id)
-      //   }
-      // })
-    },
-    // 获取商户币种列表
-    async inquireCurrencyList () {
-      let data
-      let param = {
-        partnerId: this.partnerId // 商户id
-      }
-      data = await getMerchantCurrencyList(param)
-      if (!(returnAjaxMessage(data, this, 0))) {
-        return false
-      } else {
-        this.currencyList = data.data.data
-        console.log(this.currencyList)
-      }
     },
     // 分页
     changeCurrentPage (pageNum) {

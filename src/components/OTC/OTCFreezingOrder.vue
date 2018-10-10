@@ -3,7 +3,11 @@
     class="otc-freezing-order-box otc"
     :class="{'day':theme == 'day','night':theme == 'night' }"
   >
-    <div class="freezing-order-content">
+    <div
+      class="freezing-order-content"
+      v-loading="loading"
+      element-loading-background="rgba(0, 0, 0, 0.6)"
+    >
       <!--表头属性-->
       <div class="freezing-table-head">
         <!-- 订单号 -->
@@ -125,6 +129,7 @@ export default {
   // props,
   data () {
     return {
+      loading: true,
       // 分页
       pageSize: 5,
       currentPage: 1, // 当前页码
@@ -160,6 +165,7 @@ export default {
     },
     // 2.0 请求冻结中订单列表
     async getOTCFrezzingOrdersList () {
+      this.loading = true
       const data = await getOTCFrezzingOrders({
         status: 'FROZEN', // 状态 (交易中 TRADING 已完成 COMPLETED  已取消  CANCELED 冻结中 FROZEN)
         pageNum: this.currentPage,
@@ -172,6 +178,7 @@ export default {
         return false
       } else {
         // 返回数据正确的逻辑
+        this.loading = false
         this.otcFreezingOrderList = data.data.data.list
         // 分页
         this.totalPages = data.data.data.pages - 0

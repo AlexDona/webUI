@@ -105,11 +105,13 @@
             :data="extensionList"
             style="width: 100%"
             :empty-text="$t('M.comm_no_data')"
+            v-loading="loading"
+            element-loading-background="rgba(0, 0, 0, 0.6)"
           >
             <!--创建时间-->
             <el-table-column
               :label="$t('M.comm_creation') + $t('M.comm_time')"
-              width="160"
+              width="150"
             >
               <template slot-scope = "s">
                 <div>{{timeFormatting(s.row.createTime) }}</div>
@@ -118,7 +120,7 @@
             <!--备注-->
             <el-table-column
               :label="$t('M.comm_remark')"
-              width="85"
+              width="90"
             >
               <template slot-scope = "s">
                 <div>{{ s.row.remark }}</div>
@@ -127,7 +129,7 @@
             <!--API访问秘钥-->
             <el-table-column
               :label="'API' + $t('M.user_api_text4')"
-              width="355"
+              width="380"
             >
               <template slot-scope = "s">
                 <div>{{ s.row.accessKey }}</div>
@@ -136,7 +138,7 @@
             <!--IP地址-->
             <el-table-column
               :label="'IP' + $t('M.comm_site')"
-              width="140"
+              width="130"
             >
               <template slot-scope = "s">
                 <div>{{ s.row.ip }}</div>
@@ -145,7 +147,7 @@
             <!--状态-->
             <el-table-column
               :label="'IP' + $t('M.comm_state')"
-              width="75"
+              width="70"
             >
               <template slot-scope = "s">
                 <div v-if="s.row.status == 'enable'">{{ $t(enable) }}</div>
@@ -155,7 +157,7 @@
             <!--操作-->
             <el-table-column
               :label="$t('M.comm_operation')"
-              width="115"
+              width="110"
             >
               <template slot-scope = "s">
                 <div
@@ -467,11 +469,13 @@ export default {
       ipSite: '', // 备注
       ip: '', // 绑定IP地址
       extensionList: [],
-      compileUserApi: false, // 编辑用户api
+      compileUserApi: false, // 编辑用户api弹窗
       userId: '', // 编辑用户api
       apiRemark: '', // 编辑用户备注
       ipAddress: '', // 编辑用户ip
-      dialogVisible: false
+      dialogVisible: false,
+      loadingCircle: {}, // 整页loading
+      loading: true // 局部列表loading
     }
   },
   created () {
@@ -493,6 +497,67 @@ export default {
     // 时间格式化
     timeFormatting (date) {
       return timeFilter(date, 'normal')
+    },
+    // 获取多个用户api信息
+    async getMultipleUserAPIInfo () {
+      let data = await multipleUserAPIInfo({})
+      console.log(data)
+      if (!(returnAjaxMessage(data, this, 0))) {
+        // 接口失败清除局部loading
+        this.loading = false
+        return false
+      } else {
+        // 接口成功清除局部loading
+        this.loading = false
+        // 返回展示渲染挨批列表
+        this.extensionList = data.data.data
+        // console.log(this.extensionList)
+      }
+    },
+    // 点击创建
+    stateEstablishApiButton () {
+      if (!this.remark) {
+        // 请输入备注
+        this.errorMsg = this.$t('M.comm_please_enter') + this.$t('M.comm_remark')
+        return false
+      } else if (!this.ipSite) {
+        // 请输入IP地址
+        this.errorMsg = this.$t('M.comm_please_enter') + this.$t('M.user_security_binding') + 'IP' + this.$t('M.comm_site')
+        return false
+      } else {
+        this.errorMsg = ''
+      }
+      // 调用安全方式接口
+      this.getSecurityCenter()
+      // 赋值创建IP修改时的带回
+      this.ip = this.ipSite
+    },
+    // 创建api检测输入格式
+    editorInputFormat (type, targetNum) {
+      switch (type) {
+        // 编辑用户备注
+        case 0:
+          if (!targetNum) {
+            this.setEditorErrorMsg(0, this.$t('M.comm_please_enter') + this.$t('M.user_api_user') + this.$t('M.comm_remark'))
+            this.$forceUpdate()
+            return 0
+          } else {
+            this.setEditorErrorMsg(0, '')
+            this.$forceUpdate()
+            return 1
+          }
+        // 编辑用户ip
+        case 1:
+          if (!targetNum) {
+            this.setEditorErrorMsg(1, this.$t('M.comm_please_enter') + this.$t('M.comm_newly_compile') + 'IP' + this.$t('M.comm_site'))
+            this.$forceUpdate()
+            return 0
+          } else {
+            this.setEditorErrorMsg(1, '')
+            this.$forceUpdate()
+            return 1
+          }
+      }
     },
     // 发送验证码
     sendPhoneOrEmailCode (loginType) {
@@ -534,6 +599,89 @@ export default {
         }
       })
     },
+    // 验证确认按钮
+    stateSubmitDetermineValidation () {
+      if (this.securityCenter.isMailEnable && !this.emailCode) {
+        this.errorVerifyMsg = this.$t('M.comm_please_enter') + this.$t('M.user_security_verify')
+        return false
+      }
+      if (this.securityCenter.isPhoneEnable && !this.phoneCode) {
+        this.errorVerifyMsg = this.$t('M.comm_please_enter') + this.$t('M.user_security_verify')
+        return false
+      }
+      if (this.securityCenter.isGoogleEnable && !this.googleCode) {
+        this.errorVerifyMsg = this.$t('M.comm_please_enter') + this.$t('M.user_security_verify')
+        return false
+      }
+      //  获取秘钥
+      this.getAccessAecretKey()
+    },
+    //  获取秘钥
+    async getAccessAecretKey () {
+      let data = await accessAecretKeyInfo({
+        phoneCode: this.phoneCode, // 手机验证码
+        emailCode: this.emailCode, // 邮箱验证码
+        googleCode: this.googleCode // 谷歌验证码
+      })
+      // 整页loading
+      this.loadingCircle = this.$loading({
+        lock: true,
+        background: 'rgba(0, 0, 0, 0.6)'
+      })
+      console.log(data)
+      if (!(returnAjaxMessage(data, this, 0))) {
+        // 接口失败清除loading
+        this.loadingCircle.close()
+        return false
+      } else {
+        // 接口成功清除loading
+        this.loadingCircle.close()
+        // 默认API确认弹窗
+        this.APIMoneyConfirm = false
+        // 默认创建之后弹出二次挨批创建信息框
+        this.apiSecondaryConfirmation = true
+        // 对api秘钥进行赋值
+        this.accessKey = data.data.data.accessKey
+        this.secretKey = data.data.data.secretKey
+      }
+    },
+    // 二次确认框创建api完成
+    stateSubmitAffirm () {
+      // 创建api
+      this.statusCreationApi()
+    },
+    // 调用创建api接口并向后台传参
+    async statusCreationApi () {
+      let data = await stateCreationApi({
+        remark: this.remark, // 备注
+        ip: this.ip, // ip地址
+        accessKey: this.accessKey, // token
+        secretKey: this.secretKey // sk私钥
+      })
+      // 整页loading
+      this.loadingCircle = this.$loading({
+        lock: true,
+        background: 'rgba(0, 0, 0, 0.6)'
+      })
+      console.log(data)
+      if (!(returnAjaxMessage(data, this, 1))) {
+        // 接口失败清除loading
+        this.loadingCircle.close()
+        return false
+      } else {
+        // 接口成功清除loading
+        this.loadingCircle.close()
+        // 返回展示
+        console.log(data)
+        // 默认创建之后弹出二次挨批创建信息框 关闭
+        this.apiSecondaryConfirmation = false
+        // 调用查询接口重新渲染
+        this.getMultipleUserAPIInfo()
+        // 清空备注和IP
+        this.remark = ''
+        this.ipSite = ''
+      }
+    },
     // 清空添加api内容信息
     emptyAddStatus () {
       this.errorVerifyMsg = ''
@@ -542,66 +690,7 @@ export default {
     emptyStatus () {
       this.errorMsg = ''
     },
-    // 点击创建
-    stateEstablishApiButton () {
-      if (!this.remark) {
-        this.errorMsg = this.$t('M.comm_please_enter') + this.$t('M.comm_remark')
-        return false
-      } else if (!this.ipSite) {
-        this.errorMsg = this.$t('M.comm_please_enter') + this.$t('M.user_security_binding') + 'IP' + this.$t('M.comm_site')
-        return false
-      } else {
-        this.errorMsg = ''
-      }
-      this.APIMoneyConfirm = true
-      this.getSecurityCenter()
-      this.ip = this.ipSite
-    },
-    // 验证确认按钮
-    stateSubmitDetermineValidation () {
-      if (!this.phoneCode && !this.emailCode && !this.googleCode) {
-        console.log(1)
-        // 请输入验证码
-        this.errorVerifyMsg = this.$t('M.comm_please_enter') + this.$t('M.comm_code')
-        return false
-      } else {
-        this.errorVerifyMsg = ''
-      }
-      this.apiSecondaryConfirmation = true
-      this.APIMoneyConfirm = false
-      //  获取秘钥
-      this.getAccessAecretKey()
-      this.stateSubmitAffirm()
-    },
-    // 二次确认框创建挨批完成
-    stateSubmitAffirm () {
-      // 创建api
-      this.statusCreationApi()
-    },
-    // 创建api
-    async statusCreationApi () {
-      let data = await stateCreationApi({
-        remark: this.remark, // 备注
-        ip: this.ip, // ip地址
-        accessKey: this.accessKey, // token
-        secretKey: this.secretKey, // sk私钥
-        phoneCode: this.phoneCode, // 手机验证码
-        emailCode: this.emailCode, // 邮箱验证码
-        googleCode: this.googleCode // 谷歌验证码
-      })
-      console.log(data)
-      if (!(returnAjaxMessage(data, this, 1))) {
-        return false
-      } else {
-        // 返回展示
-        console.log(data)
-        this.apiSecondaryConfirmation = false
-        this.getMultipleUserAPIInfo()
-        this.remark = ''
-        this.ipSite = ''
-      }
-    },
-    // 编辑用户api
+    // 编辑用户api 每一行ID
     compileApi (id) {
       this.compileUserApi = true
       this.userId = id
@@ -613,33 +702,6 @@ export default {
         }
       })
     },
-    // 创建api检测输入格式
-    editorInputFormat (type, targetNum) {
-      switch (type) {
-        // 编辑用户备注
-        case 0:
-          if (!targetNum) {
-            this.setEditorErrorMsg(0, this.$t('M.comm_please_enter') + this.$t('M.user_api_user') + this.$t('M.comm_remark'))
-            this.$forceUpdate()
-            return 0
-          } else {
-            this.setEditorErrorMsg(0, '')
-            this.$forceUpdate()
-            return 1
-          }
-        // 编辑用户ip
-        case 1:
-          if (!targetNum) {
-            this.setEditorErrorMsg(1, this.$t('M.comm_please_enter') + this.$t('M.comm_newly_compile') + 'IP' + this.$t('M.comm_site'))
-            this.$forceUpdate()
-            return 0
-          } else {
-            this.setEditorErrorMsg(1, '')
-            this.$forceUpdate()
-            return 1
-          }
-      }
-    },
     // 设置错误信息
     setEditorErrorMsg (index, msg) {
       this.errorEditorMsg = msg
@@ -650,6 +712,7 @@ export default {
     },
     //  编辑用户api接口
     async stateCompileApi () {
+      // 判断是否满足验证条件
       let goOnStatus = 0
       if (
         this.editorInputFormat(0, this.apiRemark) &&
@@ -661,17 +724,28 @@ export default {
       }
       if (goOnStatus) {
         let data = await modifyUserInformation({
-          id: this.userId,
+          id: this.userId, // 用户userId
           remark: this.apiRemark, // 编辑用户备注
           ip: this.ipAddress // 编辑用户ip
         })
+        // 整页loading
+        this.loadingCircle = this.$loading({
+          lock: true,
+          background: 'rgba(0, 0, 0, 0.6)'
+        })
         console.log(data)
         if (!(returnAjaxMessage(data, this, 1))) {
+          // 接口失败清除loading
+          this.loadingCircle.close()
           return false
         } else {
-          // 返回展示
+          // 接口成功清除loading
+          this.loadingCircle.close()
+          // 调用查询接口编辑完成之后重新赋值渲染
           this.getMultipleUserAPIInfo()
+          // 清空数据
           this.stateEmptyData()
+          // 编辑用户api弹窗 关闭
           this.compileUserApi = false
         }
       }
@@ -693,51 +767,47 @@ export default {
       }).catch(() => {
       })
     },
-    //  获取秘钥
+    //  删除记录
     async deleteUserApi () {
       let data = await deleteUserInformation({
         id: this.userId
       })
+      // 整页loading
+      this.loadingCircle = this.$loading({
+        lock: true,
+        background: 'rgba(0, 0, 0, 0.6)'
+      })
       console.log(data)
       if (!(returnAjaxMessage(data, this, 0))) {
+        // 接口失败清除loading
+        this.loadingCircle.close()
         return false
       } else {
+        // 接口成功清除loading
+        this.loadingCircle.close()
         // 返回展示
         this.getMultipleUserAPIInfo()
         this.dialogVisible = false
-      }
-    },
-    // 获取多个用户api信息
-    async getMultipleUserAPIInfo () {
-      let data = await multipleUserAPIInfo({})
-      console.log(data)
-      if (!(returnAjaxMessage(data, this, 0))) {
-        return false
-      } else {
-        // 返回展示
-        this.extensionList = data.data.data
-        console.log(this.extensionList)
-      }
-    },
-    //  获取秘钥
-    async getAccessAecretKey () {
-      let data = await accessAecretKeyInfo({})
-      console.log(data)
-      if (!(returnAjaxMessage(data, this, 0))) {
-        return false
-      } else {
-        // 返回展示
-        this.accessKey = data.data.data.accessKey
-        this.secretKey = data.data.data.secretKey
       }
     },
     /**
      * 安全中心
      */
     getSecurityCenter () {
+      // 整页loading
+      this.loadingCircle = this.$loading({
+        lock: true,
+        background: 'rgba(0, 0, 0, 0.6)'
+      })
       getSecurityCenter(this, (data) => {
+        // 接口成功清除loading
+        this.loadingCircle.close()
         if (data) {
+          // 接口成功清除loading
+          this.loadingCircle.close()
           this.securityCenter = data.data.data
+          // 默认API确认弹窗
+          this.APIMoneyConfirm = true
         }
       })
     },
@@ -795,8 +865,8 @@ export default {
         padding-left: 35px;
       }
       .error-msg{
-        height:30px;
-        line-height: 30px;
+        height:20px;
+        line-height: 20px;
         color: #d45858;
       }
       .error-msg1{
@@ -863,7 +933,7 @@ export default {
             }
             .api-button {
               padding: 10px 96px;
-              margin: 20px 0 0 120px;
+              margin: 8px 0 0 120px;
             }
             .prompt-message {
               height: 20px;
@@ -977,6 +1047,10 @@ export default {
           color: #338FF5;
           background-color: #fff;
         }
+        .send-code-btn {
+          background-color: #338FF5;
+          color: #fff;
+        }
         .primary-button {
           background: linear-gradient(81deg,rgba(43,57,110,1) 0%,rgba(42,80,130,1) 100%);
           color: #fff;
@@ -1000,10 +1074,6 @@ export default {
             }
           }
           >.extension-info-content{
-            .send-code-btn {
-              background-color: #338FF5;
-              color: #fff;
-            }
             .api-input {
               border:1px solid rgba(236,241,248,1);
               color: #333;

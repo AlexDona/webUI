@@ -118,7 +118,8 @@
               <div class="promotion-info">
                 <p class="info-right">
                   <span class="info-left-color font-size30">
-                    0.00000
+                    <!--0.00000-->
+                    {{ BTCAssets }}
                   </span>
                   <span>BTC</span>
                 </p>
@@ -142,6 +143,7 @@
             <!--请选择-->
             <el-select
               v-model="generalizeValue"
+              :no-data-text="$t('M.comm_no_data')"
               :placeholder="$t('M.comm_please_choose')"
               @change="changeId"
             >
@@ -161,6 +163,8 @@
             :data="extensionList"
             style="width: 100%"
             :empty-text="$t('M.comm_no_data')"
+            v-loading="loading"
+            element-loading-background="rgba(0, 0, 0, 0.6)"
           >
             <!--用户UID 登录名 注册时间 姓名 高级认证 直接推荐人UID-->
             <el-table-column
@@ -240,6 +244,8 @@
             :data="awardList"
             style="width: 100%"
             :empty-text="$t('M.comm_no_data')"
+            v-loading="loading"
+            element-loading-background="rgba(0, 0, 0, 0.6)"
           >
             <!--奖励类型 邀请奖励 币种 数量 时间-->
             <el-table-column
@@ -295,7 +301,8 @@ import IconFontCommon from '../../Common/IconFontCommon'
 import VueClipboard from 'vue-clipboard2'
 import {
   userPromotionList,
-  recommendUserPromotionList
+  recommendUserPromotionList,
+  currencyTransform
 } from '../../../utils/api/personal'
 import {domain} from '../../../utils/env'
 import {returnAjaxMessage} from '../../../utils/commonFunc'
@@ -311,7 +318,7 @@ export default {
   },
   data () {
     return {
-      generalizeValue: 'first',
+      generalizeValue: 'first', // 默认显示第一个
       // 直接推广 间接推广
       generalizeOptionsList: [{
         value: 'first',
@@ -338,7 +345,11 @@ export default {
       currentPageMyEntrust: 1, // 当前委托页码
       totalPageMyEntrust: 1, // 当前委托总页数
       // 奖励记录
-      awardList: []
+      awardList: [],
+      loadingCircle: {}, // 整页loading.
+      totalSumBTC: '', // btc资产
+      BTC2CNYRate: '', // 转换汇率
+      loading: true // 局部列表loading
     }
   },
   created () {
@@ -358,12 +369,32 @@ export default {
     timeFormatting (date) {
       return timeFilter(date, 'normal')
     },
+    // 汇率转换 已获得的佣金预估
+    async currencyTransform () {
+      console.log(1)
+      const params = {
+        coinName: 'HF',
+        shortName: 'BTC'
+      }
+      const data = await currencyTransform(params)
+      console.log(2)
+      if (!returnAjaxMessage(data, this)) {
+        console.log(3)
+        return false
+      } else {
+        console.log(data)
+        if (data.data.data.coinPrice) {
+          this.BTC2CNYRate = data.data.data.coinPrice
+        }
+      }
+    },
     // 类型筛选（直接 间接）
     changeId (e) {
       console.log(e)
       this.generalizeOptionsList.forEach(item => {
         if (e === item.value) {
           this.generalizeValue = e
+          // this.loading = true
           this.getUserPromotionList()
           console.log(this.generalizeValue)
         }
@@ -378,8 +409,12 @@ export default {
       })
       console.log(data)
       if (!(returnAjaxMessage(data, this, 0))) {
+        // 接口失败清除局部loading
+        this.loading = false
         return false
       } else {
+        // 接口成功清除局部loading
+        this.loading = false
         // 返回展示
         this.extensionList = data.data.data.list
         this.totalPageForMyEntrust = data.data.data.pages - 0
@@ -400,8 +435,12 @@ export default {
       })
       console.log(data)
       if (!(returnAjaxMessage(data, this, 0))) {
+        // 接口失败清除局部loading
+        this.loading = false
         return false
       } else {
+        // 接口失败清除局部loading
+        this.loading = false
         // 返回展示
         this.awardList = data.data.data.list
         this.totalPageMyEntrust = data.data.data.pages - 0
@@ -446,7 +485,11 @@ export default {
       theme: state => state.common.theme,
       userInfo: state => state.user.loginStep1Info, // 用户详细信息
       userCenterActiveName: state => state.personal.userCenterActiveName
-    })
+    }),
+    // BTC 已获得的佣金预估
+    BTCAssets () {
+      return (this.BTC2CNYRate - 0) * (this.totalSumBTC - 0)
+    }
   },
   watch: {
     userCenterActiveName (newVal) {

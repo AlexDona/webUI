@@ -36,6 +36,7 @@
               clearable
               v-model="activeExchangeArea"
               :placeholder="$t('M.comm_please_choose')"
+              :no-data-text="$t('M.comm_no_data')"
             >
               <el-option
                 v-for="item in entrustSelectList"
@@ -56,6 +57,7 @@
             <el-select
               clearable
               v-model="activeMatchType"
+              :no-data-text="$t('M.comm_no_data')"
               :placeholder="$t('M.comm_please_choose')"
             >
               <el-option
@@ -78,6 +80,7 @@
               clearable
               v-model="activeType"
               :placeholder="$t('M.comm_please_choose')"
+              :no-data-text="$t('M.comm_no_data')"
             >
               <el-option
                 v-for="item in typeList"
@@ -133,6 +136,8 @@
               <el-table
                 :data="currentEntrustList"
                 :empty-text="$t('M.comm_no_data')"
+                v-loading="loading"
+                element-loading-background="rgba(0, 0, 0, 0.6)"
               >
                 <!--时间-->
                 <el-table-column
@@ -256,6 +261,8 @@
           <el-table
             :data="historyEntrustList"
             :empty-text="$t('M.comm_no_data')"
+            v-loading="loading"
+            element-loading-background="rgba(0, 0, 0, 0.6)"
           >
             <!--时间-->
             <el-table-column
@@ -359,6 +366,8 @@
           <el-table
             :data="currentMakeDetailList"
             :empty-text="$t('M.comm_no_data')"
+            v-loading="loading"
+            element-loading-background="rgba(0, 0, 0, 0.6)"
           >
             <!--时间-->
             <el-table-column
@@ -511,6 +520,7 @@ export default {
       activeType: '', // 当前选中方向
       cancellationOfOrder: false, // 撤销当前委单
       cancelHistoricalOrder: false, // 删除历史订单
+      loading: true, // 局部列表loading
       end: '' // 占位
     }
   },
@@ -531,10 +541,12 @@ export default {
   methods: {
     coinMoneyOrders (tab) {
       console.log(tab.name)
+      this.loading = true
       this.commissionList(tab.name)
     },
     // 查询列表
     searchWithCondition (entrustType) {
+      this.loading = true
       this.commissionList(entrustType)
     },
     // 科学计数法转换
@@ -550,8 +562,12 @@ export default {
       }
       const data = await getEntrustSelectBox(params)
       if (!returnAjaxMessage(data, this, 0)) {
+        // 接口失败清除局部loading
+        this.loading = false
         return false
       } else {
+        // 接口成功清除局部loading
+        this.loading = false
         // console.log(data)
         this.entrustSelectList = data.data.data.coinList
         this.typeList = data.data.data.typeList
@@ -567,14 +583,17 @@ export default {
       console.log(pageNum)
       switch (entrustType) {
         case 'current-entrust':
+          this.loading = true
           this.currentPageForMyEntrust = pageNum
           this.commissionList(entrustType)
           break
         case 'history-entrust':
+          this.loading = true
           this.currentPageForHistoryEntrust = pageNum
           this.commissionList(entrustType)
           break
         case 'make-detail':
+          this.loading = true
           this.currentPageMakeDetailEntrust = pageNum
           this.commissionList(entrustType)
       }
@@ -633,8 +652,12 @@ export default {
           data = await getMyEntrust(params)
           console.log(data)
           if (!returnAjaxMessage(data, this, 0)) {
+            // 接口失败清除局部loading
+            this.loading = false
             return false
           } else {
+            // 接口成功清除局部loading
+            this.loading = false
             if (data.data.data.list) {
               this.currentEntrustList = data.data.data.list
               this.totalPageForMyEntrust = data.data.data.pages - 0
@@ -646,8 +669,12 @@ export default {
           data1 = await getHistoryEntrust(params)
           console.log(data1)
           if (!returnAjaxMessage(data1, this, 0)) {
+            // 接口失败清除局部loading
+            this.loading = false
             return false
           } else {
+            // 接口成功清除局部loading
+            this.loading = false
             if (data1.data.data.list) {
               this.historyEntrustList = data1.data.data.list
               this.totalPageForHistoryEntrust = data1.data.data.pages - 0
@@ -659,8 +686,12 @@ export default {
           data2 = await getMakeDetail(params)
           console.log(data2)
           if (!returnAjaxMessage(data2, this, 0)) {
+            // 接口失败清除局部loading
+            this.loading = false
             return false
           } else {
+            // 接口成功清除局部loading
+            this.loading = false
             if (data2.data.data.list) {
               this.currentMakeDetailList = data2.data.data.list
               this.totalPageForMakeDetailEntrust = data2.data.data.pages - 0

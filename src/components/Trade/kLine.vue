@@ -84,6 +84,8 @@ export default {
       this.options.paneProperties.background = this.theme === 'night' ? this.mainColor.$mainNightBgColor : this.mainColor.$mainDayBgColor
       this.options.paneProperties.vertGridPropertiesColor = this.theme === 'night' ? 'rgba(57,66,77,.2)' : 'rgba(57,66,77,.05)'
       this.options.interval = '1'
+      this.options.language = this.language
+      console.log(this.language)
       this.init(this.options)
       this.getBars()
     },
@@ -168,13 +170,14 @@ export default {
             'hide_left_toolbar_by_default' // 隐藏左侧边栏
           ],
           timezone: 'Asia/Shanghai',
-          locale: 'en',
+          locale: options.language,
           debug: false,
           toolbar_bg: 'transparent', // 工具栏背景色
           studies_overrides: {
             'volume.volume.color.0': '#008069', // 成交量 k柱 背景色
             'volume.volume.color.1': '#EC5E5E', // 成交量 k柱 背景色
-            'volume.volume.transparency': 100
+            'volume.volume.transparency': 100,
+            'moving average.precision': 8
           },
           overrides: {
             // 'paneProperties.background': '#10172d', // 背景色
@@ -210,6 +213,7 @@ export default {
           },
           custom_css_url: '../../../../static/tradeview/klineTheme.css'
         })
+        console.log(this.widget)
         this.widget.onChartReady(() => {
           const _self = this
           let chart = _self.widget.chart()
@@ -287,10 +291,10 @@ export default {
               })
               .append(item.label)
           })
-          // this.widget.chart().createStudy('Moving Average', false, true, [5, 'close', 0], null, {'Plot.color': '#7D53A8'})
-          // this.widget.chart().createStudy('Moving Average', false, true, [10, 'close', 0], null, {'Plot.color': '#7699C2'})
-          // this.widget.chart().createStudy('Moving Average', false, true, [30, 'close', 0], null, {'Plot.color': '#A0D75B'})
-          // this.widget.chart().createStudy('MA Cross', false, false, [30, 120])
+          this.widget.chart().createStudy('Moving Average', false, true, [5, 'close', 0], null, {'Plot.color': '#7b53a7'})
+          this.widget.chart().createStudy('Moving Average', false, true, [10, 'close', 0], null, {'Plot.color': '#6b89ae'})
+          this.widget.chart().createStudy('Moving Average', false, true, [30, 'close', 0], null, {'Plot.color': '#55ae63'})
+          this.widget.chart().createStudy('Moving Average', false, true, [60, 'close', 0], null, {'Plot.color': '#89226e'})
         })
         this.symbol = options.symbol
         this.interval = options.interval
@@ -298,6 +302,7 @@ export default {
     },
     // 修改样式
     applyOverrides: function (overrides) {
+      console.log(this.widget)
       this.widget.applyOverrides(overrides)
     },
     // 切换时间间隔
@@ -465,7 +470,8 @@ export default {
       this.CHANGE_SOCKET_DATA(this.socketData)
     },
     getBars (symbolInfo, resolution, rangeStartDate, rangeEndDate, onLoadedCallback) {
-      // console.log(symbolInfo)
+      console.log(symbolInfo)
+      // symbolInfo.pricescale = 100000
       console.log(this.socket)
       // console.log(' >> :', rangeStartDate, rangeEndDate)
       if (this.interval != resolution) {
@@ -564,6 +570,7 @@ export default {
   computed: {
     ...mapState({
       theme: state => state.common.theme,
+      language: state => state.common.language,
       activeSymbol: state => state.common.activeSymbol,
       activeSymbolId: state => state.common.activeSymbol.id,
       activeTradeArea: state => state.common.activeTradeArea,
@@ -583,14 +590,18 @@ export default {
         'paneProperties.horzGridProperties.color': this.theme === 'night' ? 'rgba(57,66,77,.2)' : 'rgba(57,66,77,.05)' // 列分割线
       })
     },
+    language () {
+      this.initKLine(this.activeSymbolId)
+    },
     activeSymbolId (newVal) {
       this.initKLine(newVal)
     },
     // 切换tab栏重新订阅
     activeTabId (newVal, oldVal) {
+      console.log(newVal)
       this.getTradeMarketBySocket('CANCEL', oldVal)
-      this.getTradeMarketBySocket('REQ')
-      this.getTradeMarketBySocket('SUB')
+      this.getTradeMarketBySocket('REQ', newVal)
+      this.getTradeMarketBySocket('SUB', newVal)
     },
     symbol (newVal, oldVal) {
       console.log(newVal, oldVal)

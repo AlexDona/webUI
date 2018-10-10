@@ -7,7 +7,11 @@
     <!-- 1.0 导航 -->
     <NavCommon/>
     <!-- 2.0 OTC发布广告内容 -->
-    <div class="otc-publish-AD-content">
+    <div
+      class="otc-publish-AD-content"
+      v-loading.fullscreen.lock="fullscreenLoading"
+      element-loading-background="rgba(0, 0, 0, 0.6)"
+    >
       <!--发布广告左侧主体内容-->
       <div class="publish-AD-left">
         <!-- 大标题发布广告 -->
@@ -29,6 +33,7 @@
               <div class="right-style display-inline-block">
                 <el-select
                   v-model="activitedBuySellStyle"
+                  :no-data-text="$t('M.comm_no_data')"
                   @change="changeBuySellStyle"
                 >
                   <el-option
@@ -44,6 +49,7 @@
                 <!-- 可用币种 -->
                 <el-select
                   v-model="activitedCoinId"
+                  :no-data-text="$t('M.comm_no_data')"
                   @change="changeAvailableCoinId"
                 >
                   <el-option
@@ -60,6 +66,7 @@
                 <!-- 可用法币 :label="language === 'zh_CN'? item.name : item.shortName"-->
                 <el-select
                   v-model="activitedCurrencyId"
+                  :no-data-text="$t('M.comm_no_data')"
                   @change="changeCurrencyId"
                 >
                   <el-option
@@ -392,13 +399,13 @@
         <div class="publish-tips">
           <div class="title font-size14">{{$t('M.otc_publishAD_publishDis')}}：</div>
           <p class="tip font-size12">
-            ●FUBT.TOP {{$t('M.otc_publishAD_discriptLineOne')}}
+            ●{{mainWebsite}} {{$t('M.otc_publishAD_discriptLineOne')}}
           </p>
           <p class="tip font-size12">
             ●{{$t('M.otc_publishAD_discriptLineTwo')}}
           </p>
           <p class="tip font-size12">
-            ●{{$t('M.otc_publishAD_discriptLineThree')}}
+            ●{{$t('M.otc_publishAD_discriptLineThree')}}{{mainWebsite}}{{$t('M.otc_publishAD_discriptLineFive')}}
           </p>
           <p class="tip font-size12">
             ●{{$t('M.otc_publishAD_discriptLineFour')}}
@@ -432,6 +439,7 @@ export default {
   },
   data () {
     return {
+      fullscreenLoading: true,
       dialogVisible: false, // 弹窗状态
       // 选择模块下拉列表循环数组
       activitedBuySellStyle: 'SELL', // 选中的发布广告 买卖 类型
@@ -560,11 +568,13 @@ export default {
         // 币种单笔最小限额
         // this.minCount = data.data.data.minCount
         // this.$refs.minCountValue.value = this.minCount
+        this.fullscreenLoading = true
         this.getOTCCoinInfo()
       }
     },
     // 1.0 币种详情 : 商家和普通用户挂单页面请求币种详情渲染页面
     async getOTCCoinInfo () {
+      // this.fullscreenLoading = true
       const data = await getOTCCoinInfo({
         currencyId: this.activitedCurrencyId, // 法币id
         coinId: this.activitedCoinId // 币种id
@@ -575,6 +585,7 @@ export default {
         return false
       } else {
         // 返回数据正确的逻辑
+        this.fullscreenLoading = false
         // 1.0 可用币种列表
         this.availableCoinList = data.data.data.coinlist
         this.availableCoinList.forEach(item => {
@@ -635,6 +646,7 @@ export default {
       // 币种详情
       console.log('币种id：' + this.activitedCoinId)
       console.log('法种id：' + this.activitedCurrencyId)
+      this.fullscreenLoading = true
       this.getOTCCoinInfo()
     },
     // 4.0 改变可用法币的币种id
@@ -645,6 +657,7 @@ export default {
       // 币种详情
       console.log('币种id：' + this.activitedCoinId)
       console.log('法种id：' + this.activitedCurrencyId)
+      this.fullscreenLoading = true
       this.getOTCCoinInfo()
     },
     // 5.0 点击发布广告弹出输入交易密码框
@@ -720,6 +733,7 @@ export default {
         // 清空数据
         this.clearMainData()
         // 重新渲染页面
+        this.fullscreenLoading = true
         this.getOTCCoinInfo()
       }
     },
@@ -926,8 +940,8 @@ export default {
     ...mapState({
       language: state => state.common.language,
       partnerId: state => state.common.partnerId,
-      theme: state => state.common.theme
-      // userInfo: state => state.user.loginStep1Info.userInfo
+      theme: state => state.common.theme,
+      mainWebsite: state => state.common.mainWebsite // 网站主网址
     })
   },
   watch: {

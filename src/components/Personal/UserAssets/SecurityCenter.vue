@@ -630,7 +630,8 @@ export default {
       state: '', // 开启关闭
       errorMsg: '', // 关闭错误提示
       errorMsg1: '', // 开启错误提示
-      person: ''
+      person: '',
+      loadingCircle: {} // 整页loading
     }
   },
   created () {
@@ -659,6 +660,28 @@ export default {
     // 1.时间格式化
     timeFormatting (date) {
       return timeFilter(date, 'normal')
+    },
+    /**
+     * 安全中心
+     */
+    getSecurityCenter () {
+      // 整页loading
+      this.loadingCircle = this.$loading({
+        lock: true,
+        background: 'rgba(0, 0, 0, 0.7)'
+      })
+      getSecurityCenter(this, (data) => {
+        // 接口失败清除loading
+        this.loadingCircle.close()
+        if (data) {
+          // 接口成功清除loading
+          this.loadingCircle.close()
+          this.securityCenter = data.data.data
+          this.person = data.data.data.person
+          this.logonRecord = data.data.data.setLog
+          this.securityRecord = data.data.data.loginLog
+        }
+      })
     },
     // 路由跳转对应组件
     setShowStatusSecurity (val) {
@@ -791,7 +814,15 @@ export default {
               this.openGoogle = false
               this.openTheValidation = true
             } else {
-              this.closeValidation = true
+              if (this.securityCenter.enableCount === 1) {
+                // 至少保留一种验证方式
+                this.$message({
+                  message: this.$t('M.user_security_text4'),
+                  type: 'error'
+                })
+              } else {
+                this.closeValidation = true
+              }
             }
           }
           break
@@ -810,7 +841,15 @@ export default {
               this.openGoogle = false
               this.openTheValidation = true
             } else {
-              this.closeValidation = true
+              if (this.securityCenter.enableCount === 1) {
+                // 至少保留一种验证方式
+                this.$message({
+                  message: this.$t('M.user_security_text4'),
+                  type: 'error'
+                })
+              } else {
+                this.closeValidation = true
+              }
             }
           }
           break
@@ -829,7 +868,15 @@ export default {
               this.openGoogle = true
               this.openTheValidation = true
             } else {
-              this.closeValidation = true
+              if (this.securityCenter.enableCount === 1) {
+                // 至少保留一种验证方式
+                this.$message({
+                  message: this.$t('M.user_security_text4'),
+                  type: 'error'
+                })
+              } else {
+                this.closeValidation = true
+              }
             }
           }
           break
@@ -838,12 +885,6 @@ export default {
     // 确认关闭开启
     determineTheOpen () {
       this.confirmTransactionPassword(this.activeType, this.state)
-    },
-    handleinput () {
-      this.errorMsg = ''
-    },
-    handleinput1 () {
-      this.errorMsg1 = ''
     },
     // 关闭开启手机邮箱谷歌验证
     async confirmTransactionPassword (type, state) {
@@ -870,6 +911,11 @@ export default {
           return false
         }
       }
+      // 整页loading
+      this.loadingCircle = this.$loading({
+        lock: true,
+        background: 'rgba(0, 0, 0, 0.7)'
+      })
       let data
       let params = {
         email: this.userInfo.userInfo.email, // 邮箱
@@ -911,8 +957,12 @@ export default {
       }
       data = await enableTheClosing(params)
       if (!(returnAjaxMessage(data, this, 1))) {
+        // 接口失败清除loading
+        this.loadingCircle.close()
         return false
       } else {
+        // 接口成功清除loading
+        this.loadingCircle.close()
         this.getSecurityCenter()
         // 安全中心状态刷新
         this.openTheValidation = false
@@ -922,18 +972,12 @@ export default {
         this.googleCode = ''
       }
     },
-    /**
-     * 安全中心
-     */
-    getSecurityCenter () {
-      getSecurityCenter(this, (data) => {
-        if (data) {
-          this.securityCenter = data.data.data
-          this.person = data.data.data.person
-          this.logonRecord = data.data.data.setLog
-          this.securityRecord = data.data.data.loginLog
-        }
-      })
+    // 获取焦点清空数据
+    handleinput () {
+      this.errorMsg = ''
+    },
+    handleinput1 () {
+      this.errorMsg1 = ''
     }
   },
   filter: {},
@@ -1023,7 +1067,7 @@ export default {
       }
     }
     >.security-record{
-      min-height: 200px;
+      min-height: 510px;
     }
     &.night{
       background-color: $nightBgColor;
@@ -1130,7 +1174,7 @@ export default {
             color: #fff;
           }
           .input {
-            border: 1px solid #485776;
+            border: 1px solid #ecf1f8;
             color: #fff;
             &:focus {
               border: 1px solid #338FF5;

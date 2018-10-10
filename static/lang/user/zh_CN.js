@@ -15,7 +15,7 @@ export const user = {
   'login_inVerify': '中的验证码',
   'login_erweimaReflesh': '二维码失效，点击刷新',
   'login_scan': '扫描',
-  'login_scanLogin': '请使用富比特APP扫码功能，扫码登录',
+  'login_scanLogin': '请使用APP扫码功能，扫码登录',
   'login_content': '内容',
   'login_send': '发送',
   'login_username': '用户名',

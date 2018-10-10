@@ -21,6 +21,7 @@
         <span class="currency-input">
           <el-select
             v-model="activitedTraderCoinId"
+            :no-data-text="$t('M.comm_no_data')"
             @change="changeCoinId"
           >
             <el-option
@@ -39,6 +40,7 @@
         <span class="legal-tender-input">
           <el-select
             v-model="activitedtraderCurrencyCoinsId"
+            :no-data-text="$t('M.comm_no_data')"
             @change="changeCurrencyCoinsId"
           >
             <el-option
@@ -52,11 +54,17 @@
         </span>
       </div>
       <!-- 2.3 资产配置 -->
-      <div class="report-form-asset">
+      <div
+        class="report-form-asset"
+        v-loading="formStatisticsLoading"
+        element-loading-background="rgba(0, 0, 0, 0.6)"
+      >
         <div class="title padding-l15 border-radius5">
           {{$t('M.otc_formStatistics_asset')}}
         </div>
-        <div class="content font-size18">
+        <div
+          class="content font-size18"
+        >
           <!-- 币种总资产 -->
           <span>{{total}}</span>
           <span>{{activitedTraderCoinName}}</span>
@@ -69,7 +77,11 @@
         </div>
       </div>
       <!-- 2.4 购买和销售 -->
-      <div class="report-form-buy-sell">
+      <div
+        class="report-form-buy-sell"
+        v-loading="formStatisticsLoading"
+        element-loading-background="rgba(0, 0, 0, 0.6)"
+      >
         <!-- 购买 -->
         <div class="common buy">
           <!-- 头 -->
@@ -365,6 +377,8 @@
               :data = "orderInfoList"
               style = "width: 100%"
               :empty-text="$t('M.comm_no_data')"
+              v-loading="orderDetailsLoading"
+              element-loading-background="rgba(0, 0, 0, 0.6)"
             >
               <!-- 交易日期 -->
               <el-table-column
@@ -472,6 +486,8 @@ export default {
   },
   data () {
     return {
+      formStatisticsLoading: true,
+      orderDetailsLoading: true,
       // 分页
       pageSize: 10,
       currentPage: 1, // 当前页码
@@ -527,6 +543,7 @@ export default {
     changeCurrentPage (pageNum) {
       console.log(pageNum)
       this.currentPage = pageNum
+      this.orderDetailsLoading = true
       this.getOTCEntrustingOrdersRevocation()
     },
     // 1.0 时间格式化
@@ -560,6 +577,8 @@ export default {
     },
     //  2.1 改变可用币种类型
     changeCoinId (e) {
+      this.formStatisticsLoading = true
+      this.orderDetailsLoading = true
       this.activitedTraderCoinId = e
       this.traderCoinList.forEach(item => {
         if (e === item.coinId) {
@@ -601,7 +620,9 @@ export default {
           this.activitedtraderCurrencyCoinsName = item.shortName
         }
       })
+      this.formStatisticsLoading = true
       this.getOTCReportFormStatistics()
+      this.orderDetailsLoading = true
       this.getOTCEntrustingOrdersRevocation()
     },
     // 开始时间赋值
@@ -618,6 +639,7 @@ export default {
           return false
         }
       }
+      this.orderDetailsLoading = true
       this.getOTCEntrustingOrdersRevocation()
     },
     // 结束时间赋值
@@ -634,6 +656,7 @@ export default {
           return false
         }
       }
+      this.orderDetailsLoading = true
       this.getOTCEntrustingOrdersRevocation()
     },
     // 右侧单选日期按钮change事件
@@ -643,6 +666,7 @@ export default {
         this.startTimeValue = ''
         this.endTimeValue = ''
       }
+      this.orderDetailsLoading = true
       this.getOTCEntrustingOrdersRevocation()
     },
     // 报表统计的主页面
@@ -659,6 +683,7 @@ export default {
       if (!(returnAjaxMessage(data, this, 0))) {
         return false
       } else {
+        this.formStatisticsLoading = false
         let getData = data.data.data
         // 返回数据正确的逻辑
         // 法币总资产
@@ -708,6 +733,7 @@ export default {
         return false
       } else {
         // 返回数据正确的逻辑 重新渲染列表
+        this.orderDetailsLoading = false
         this.orderInfoList = data.data.data.list
         // 分页
         this.totalPages = data.data.data.pages - 0

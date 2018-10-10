@@ -21,6 +21,7 @@
             >
               <el-select
                 v-model="currencyValue"
+                :no-data-text="$t('M.comm_no_data')"
                 @change="changeId"
               >
                 <el-option
@@ -138,6 +139,8 @@
             :data="pushRecordList"
             style="width: 100%"
             :empty-text="$t('M.comm_no_data')"
+            v-loading="loading"
+            element-loading-background="rgba(0, 0, 0, 0.6)"
           >
             <!--类型-->
             <el-table-column
@@ -162,8 +165,16 @@
               :label="$t('M.user_push_opposite_side') + 'UID'"
             >
               <template slot-scope = "s">
-                <div v-if="userInfo.userInfo.showId !== s.row.showPushId">{{ s.row.showPushId }}</div>
-                <div v-if="userInfo.userInfo.showId == s.row.showPushId">{{ s.row.showUid }}</div>
+                <div
+                  v-if="userInfo.userInfo.showId !== s.row.showPushId"
+                >
+                  {{ s.row.showPushId }}
+                </div>
+                <div
+                  v-if="userInfo.userInfo.showId == s.row.showPushId"
+                >
+                  {{ s.row.showUid }}
+                </div>
               </template>
             </el-table-column>
             <!--资产-->
@@ -184,7 +195,7 @@
             </el-table-column>
             <!--价格-->
             <el-table-column
-              :label="$t('M.comm_price_metre')+ pushPayCoinName"
+              :label="$t('M.comm_price_metre') + pushPayCoinName"
             >
               <template slot-scope = "s">
                 <div>{{ s.row.price }}</div>
@@ -213,12 +224,15 @@
             >
               <template slot-scope = "s">
                 <div v-if="s.row.state === 'PUSH_DEAL'">
+                  <!--已完成-->
                   {{ $t(stateOffStocks) }}
                 </div>
                 <div v-if="s.row.state === 'PUSH_REGISTER'">
+                  <!--待支付-->
                   {{ $t(stateWaitPayment) }}
                 </div>
                 <div v-if="s.row.state === 'PUSH_CANCEL'">
+                  <!--已取消-->
                   {{ $t(stateCancel) }}
                 </div>
               </template>
@@ -234,6 +248,7 @@
                   @click.prevent="cancelId(s.row.id)"
                   :id="s.row.id"
                 >
+                  <!--取消-->
                   {{ $t(cancel) }}
                 </div>
                 <div
@@ -242,6 +257,7 @@
                   @click.prevent="paymentId(s.row.id)"
                   :id="s.row.id"
                 >
+                  <!--付款-->
                   {{ $t(payment) }}
                 </div>
               </template>
@@ -440,13 +456,13 @@ export default {
       pushUID: '', // 每行数据ID
       pushPayCoinName: '', // 币种名称
       pushPassword: '',
-      // push列表记录
-      pushRecordList: [],
+      pushRecordList: [], // push列表记录
       currentPageForMyEntrust: 1, // 当前委托页码
       totalPageForMyEntrust: 1, // 当前委托总页数
-      SecurityCenter: {},
       pointLength: 4, // 保留小数位后四位
-      errorMsg: '' // 错误提示
+      errorMsg: '', // 错误提示
+      loadingCircle: {}, // 整页loading
+      loading: true // 局部列表loading
     }
   },
   created () {
@@ -501,8 +517,12 @@ export default {
       })
       console.log(data)
       if (!(returnAjaxMessage(data, this, 0))) {
+        // 接口失败清除局部loading
+        this.loading = false
         return false
       } else {
+        // 接口成功清除局部loading
+        this.loading = false
         // 返回push记录数据
         this.pushRecordList = data.data.data.userPushVOPageInfo.list
         this.totalPageForMyEntrust = data.data.data.userPushVOPageInfo.pages - 0
@@ -626,10 +646,19 @@ export default {
           price: this.price, // push价格
           password: this.transactionPassword // 交易密码
         }
+        // 整页loading
+        this.loadingCircle = this.$loading({
+          lock: true,
+          background: 'rgba(0, 0, 0, 0.7)'
+        })
         data = await pushAssetsSubmit(param)
         if (!(returnAjaxMessage(data, this, 1))) {
+          // 接口失败清除loading
+          this.loadingCircle.close()
           return false
         } else {
+          // 接口成功清除loading
+          this.loadingCircle.close()
           this.passwordVisible = false
           // push列表展示
           this.getPushRecordList()
@@ -732,6 +761,7 @@ export default {
     confirmSubmit () {
       this.statePushPropertyTransaction()
     },
+    // 确定付款接口
     async statePushPropertyTransaction () {
       let goOnStatus = 0
       if (
@@ -753,6 +783,7 @@ export default {
         } else {
           this.passwordVisible = false
           this.dialogVisible = false
+          // 付款成功刷新列表
           this.getPushRecordList()
         }
       }

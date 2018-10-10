@@ -41,7 +41,7 @@
             :label-position="labelPosition"
             label-width="120px"
           >
-            <!--名 称 收  款  类  型 微信账号 上传收款码 交易密码-->
+            <!--名 称-->
             <el-form-item
               :label="$t('M.user_account_name')"
             >
@@ -49,6 +49,7 @@
                 {{ userInfo.userInfo.realname }}
               </span>
             </el-form-item>
+            <!--收  款  类  型-->
             <el-form-item
               :label="$t('M.user_account_gathering') + $t('M.comm_type')"
             >
@@ -56,6 +57,7 @@
                 {{ $t('M.user_account_weChat') }}
               </span>
             </el-form-item>
+            <!--微信账号-->
             <el-form-item
               :label="$t('M.user_account_weChat') + $t('M.user_account_number')"
             >
@@ -141,11 +143,13 @@
 import HeaderCommon from '../../Common/HeaderCommonForPC'
 import IconFontCommon from '../../Common/IconFontCommon'
 import ErrorBox from '../../User/ErrorBox'
-import {returnAjaxMessage} from '../../../utils/commonFunc'
+import {
+  returnAjaxMessage,
+  getAccountPaymentTerm
+} from '../../../utils/commonFunc'
 import {
   statusCardSettings,
-  modificationAccountPaymentTerm,
-  accountPaymentTerm
+  modificationAccountPaymentTerm
 } from '../../../utils/api/personal'
 import {apiCommonUrl} from '../../../utils/env'
 // 底部
@@ -170,9 +174,10 @@ export default {
       dialogImageHandUrl: '', // 图片url
       dialogImageHandUrl1: '', // 图片url
       id: '', // ID
-      paymentTerm: {},
+      paymentTerm: {}, // 收款方式
       successCountDown: 1, // 成功倒计时
       paymentMethodList: {},
+      loadingCircle: {}, // 整页loading
       errorShowStatusList: [
         '', // 微信账号
         '' // 交易密码
@@ -207,7 +212,7 @@ export default {
       this.$router.push({path: '/PersonalCenter'})
     },
     handleSuccessHand (response, file, fileList) {
-      this.dialogImageHandUrl = response.data.fileUrl
+      this.dialogImageHandUrl1 = response.data.fileUrl
       console.log(response, file, fileList)
     },
     // 检测输入格式
@@ -243,10 +248,11 @@ export default {
     setErrorMsg (index, msg) {
       this.errorShowStatusList[index] = msg
     },
-    // 确认设置我新账号
+    // 确认设置按钮
     stateSubmitWeChat () {
       this.stateSeniorCertification()
     },
+    // 确认设置接口
     async stateSeniorCertification () {
       let goOnStatus = 0
       if (
@@ -257,8 +263,8 @@ export default {
       } else {
         goOnStatus = 0
       }
-      if (!this.dialogImageHandUrl1 && !this.dialogImageHandUrl) {
-        // 请上传微信收款码
+      console.log(this.dialogImageHandUrl1)
+      if (this.dialogImageHandUrl1 == '') {
         this.$message({
           message: this.$t('M.user_account_weChat_pla'),
           type: 'error'
@@ -270,24 +276,27 @@ export default {
         let param = {
           token: this.userInfo.token,
           cardNo: this.cardNo, // 微信账号
-          qrcode: this.dialogImageHandUrl, // 二维码
+          qrcode: this.dialogImageHandUrl1, // 二维码
           payPassword: this.password, // 交易密码
           bankType: 'weixin' // type
         }
-        // if (this.paymentTerm.isWeixinBind) {
-        //   param.qrcode = this.dialogImageHandUrl // 二维码
-        // } else {
-        //   // this.dialogImageHandUrl1 = this.dialogImageHandUrl
-        //   param.qrcode = this.dialogImageHandUrl1 // 二维码
-        // }
+        // 整页loading
+        this.loadingCircle = this.$loading({
+          lock: true,
+          background: 'rgba(0, 0, 0, 0.6)'
+        })
+        console.log(this.dialogImageHandUrl1)
         data = await statusCardSettings(param)
         console.log(data)
         if (!(returnAjaxMessage(data, this, 1))) {
+          // 接口失败清除loading
+          this.loadingCircle.close()
           return false
         } else {
+          // 接口成功清除loading
+          this.loadingCircle.close()
           this.successJump()
           this.stateEmptyData()
-          this.paymentMethodInformation()
         }
       }
     },
@@ -303,28 +312,47 @@ export default {
         userId: this.userInfo.userId,
         type: 'weixin'
       }
+      // 整页loading
+      this.loadingCircle = this.$loading({
+        lock: true,
+        background: 'rgba(0, 0, 0, 0.6)'
+      })
       data = await modificationAccountPaymentTerm(params)
       if (!(returnAjaxMessage(data, this, 0))) {
+        // 接口失败清除loading
+        this.loadingCircle.close()
         return false
       } else {
+        // 接口成功清除loading
+        this.loadingCircle.close()
         // 返回状态展示
-        this.paymentMethodList = data.data.data
-        this.cardNo = data.data.data.cardNo
-        this.dialogImageHandUrl1 = data.data.data.qrcode
-        this.id = data.data.data.id
+        if (data.data.data) {
+          this.paymentMethodList = data.data.data
+        }
+        if (data.data.data.cardNo) {
+          // 修改时带回微信号
+          this.cardNo = data.data.data.cardNo
+        }
+        if (data.data.data.qrcode) {
+          // 修改时带回微信收款码
+          this.dialogImageHandUrl1 = data.data.data.qrcode
+        }
+        if (data.data.data.id) {
+          this.id = data.data.data.id
+        }
         console.log(this.dialogImageHandUrl1)
       }
     },
-    // 收款方式
-    async getAccountPaymentTerm () {
-      let data = await accountPaymentTerm()
-      if (!(returnAjaxMessage(data, this, 0))) {
-        return false
-      } else {
-        // 返回状态展示
-        this.paymentTerm = data.data.data
-        console.log(this.paymentTerm)
-      }
+    /**
+     * 收款方式
+     */
+    getAccountPaymentTerm () {
+      getAccountPaymentTerm(this, (data) => {
+        if (data) {
+          // 返回状态展示
+          this.paymentTerm = data.data.data
+        }
+      })
     },
     // 成功自动跳转
     successJump () {

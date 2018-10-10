@@ -278,6 +278,7 @@
           <!-- 折算货币选择 -->
           <!--请选择-->
           <el-select
+            :no-data-text="$t('M.comm_no_data')"
             v-model="activeConvertCurrency"
             :placeholder="$t('M.comm_please_choose')"
           >

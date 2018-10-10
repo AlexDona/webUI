@@ -148,7 +148,10 @@ import {
   getFooterInfo1,
   getFooterInfo2
 } from '../../utils/api/header'
-import {returnAjaxMessage} from '../../utils/commonFunc'
+import {
+  returnAjaxMessage,
+  jumpToOtherPageForFooter
+} from '../../utils/commonFunc'
 import Iconfont from '../Common/IconFontCommon'
 import {createNamespacedHelpers, mapState} from 'vuex'
 const {mapMutations} = createNamespacedHelpers('footerInfo')
@@ -198,11 +201,7 @@ export default {
       'CHANGE_FOOTER_ACTIVENAME'
     ]),
     jumpToOtherPage (router, activeName) {
-      this.CHANGE_FOOTER_ACTIVENAME({
-        activeName,
-        type: router
-      })
-      this.$router.push({path: router})
+      jumpToOtherPageForFooter(router, activeName, this)
     },
     async getFooterInfo () {
       const params = {
@@ -223,8 +222,6 @@ export default {
         this.shareList[3].ercodeSrc = this.footerInfo1.qq
         this.shareList[4].ercodeSrc = this.footerInfo1.telegraph_group
         this.footerInfo2 = data2.data.data
-        //   console.log(this.footerInfo2)
-        // console.log(this.footerInfo2)
         this.linkList = this.footerInfo2.blogrollList
       }
     }

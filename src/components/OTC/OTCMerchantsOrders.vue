@@ -21,6 +21,7 @@
           <span class="status-input">
             <el-select
               v-model="activitedMerchantsOrdersTraderStyleList"
+              :no-data-text="$t('M.comm_no_data')"
               @change="changeSelectValue('changeMerchantsOrdersTraderStyleList', $event)"
               clearable
               :placeholder="$t('M.comm_all')"
@@ -39,6 +40,7 @@
           <span class="status-input">
             <el-select
               v-model="activitedMerchantsOrdersCoin"
+              :no-data-text="$t('M.comm_no_data')"
               @change="changeSelectValue('changeMerchantsOrdersCoin', $event)"
               clearable
               :placeholder="$t('M.comm_all')"
@@ -57,6 +59,7 @@
           <span class="status-input">
             <el-select
               v-model="activitedMerchantsOrdersCurrency"
+              :no-data-text="$t('M.comm_no_data')"
               @change="changeSelectValue('changeMerchantsOrdersCurrency', $event)"
               clearable
               :placeholder="$t('M.comm_all')"
@@ -75,6 +78,7 @@
           <span class="status-input">
             <el-select
               v-model="activitedMerchantsOrdersStatusList"
+              :no-data-text="$t('M.comm_no_data')"
               @change="changeSelectValue('changeMerchantsOrdersStatusList', $event)"
               clearable
               :placeholder="$t('M.comm_all')"
@@ -125,6 +129,8 @@
             :data = "merchantsOrdersList"
             style = "width: 100%"
             :empty-text="$t('M.comm_no_data')"
+            v-loading="loading"
+            element-loading-background="rgba(0, 0, 0, 0.6)"
           >
             <!-- 交易日期 -->
             <el-table-column
@@ -317,6 +323,7 @@ export default {
   },
   data () {
     return {
+      loading: true,
       height: '', // 商家订单内容的高度
       // 分页
       pageSize: 10,
@@ -378,12 +385,12 @@ export default {
     require('../../../static/css/list/OTC/OTCMerchantsOrders.css')
     require('../../../static/css/theme/day/OTC/OTCMerchantsOrdersDay.css')
     require('../../../static/css/theme/night/OTC/OTCMerchantsOrdersNight.css')
-    // 加载列表
-    this.getOTCEntrustingOrdersRevocation()
     // 1.0 otc可用币种查询：
     this.getOTCAvailableCurrencyList()
     // 2.0 otc可用法币查询：
     this.getMerchantAvailablelegalTenderList()
+    // 3.0 加载列表
+    this.getOTCEntrustingOrdersRevocation()
   },
   mounted () {},
   activited () {},
@@ -394,6 +401,7 @@ export default {
     changeCurrentPage (pageNum) {
       console.log(pageNum)
       this.currentPage = pageNum
+      this.loading = true
       this.getOTCEntrustingOrdersRevocation()
     },
     // 时间格式化
@@ -478,6 +486,7 @@ export default {
     },
     // 点击查询按钮
     findFilter () {
+      this.loading = true
       this.getOTCEntrustingOrdersRevocation()
     },
     // 重置
@@ -488,6 +497,7 @@ export default {
       this.activitedMerchantsOrdersStatusList = ''
       this.startTimeValue = ''
       this.endTimeValue = ''
+      this.loading = true
       this.getOTCEntrustingOrdersRevocation()
     },
     // 页面加载时请求接口渲染列表
@@ -516,6 +526,7 @@ export default {
       if (!(returnAjaxMessage(data, this, 0))) {
         return false
       } else {
+        this.loading = false
         // 返回数据正确的逻辑 重新渲染列表
         this.merchantsOrdersList = data.data.data.list
         // 分页

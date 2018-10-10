@@ -23,6 +23,7 @@
           </span>
           <span class="style-input">
             <el-select
+              :no-data-text="$t('M.comm_no_data')"
               v-model="activitedADManageTraderStyleList"
               @change="changeSelectValue('changeADManageTraderStyleList', $event)"
               clearable
@@ -41,6 +42,7 @@
           <!-- 币种选择 -->
           <span class="market-input">
               <el-select
+                :no-data-text="$t('M.comm_no_data')"
                 v-model="activitedADManageMarketList"
                 @change="changeSelectValue('changeADManageMarketList', $event)"
                 clearable
@@ -61,6 +63,7 @@
           <!-- 法币选择 -->
           <span class="market-input">
               <el-select
+                :no-data-text="$t('M.comm_no_data')"
                 v-model="activitedADManageCurrencyId"
                 @change="changeSelectValue('changeADManageCurrencyId', $event)"
                 clearable
@@ -80,6 +83,7 @@
           </span>
           <span class="status-input">
             <el-select
+              :no-data-text="$t('M.comm_no_data')"
               v-model="activitedADManageStatusList"
               @change="changeSelectValue('changeADManageStatusList', $event)"
               clearable
@@ -101,6 +105,7 @@
             >
               {{$t('M.comm_query')}}
             </el-button>
+            <!-- 重置 -->
             <el-button
               type="primary"
               @click="resetCondition"
@@ -125,7 +130,11 @@
           </span>
         </div>
         <!-- 下部分表格内容 -->
-        <div class="manage-main-bottom">
+        <div
+          class="manage-main-bottom"
+          v-loading="loading"
+          element-loading-background="rgba(0, 0, 0, 0.6)"
+        >
           <el-table
             :data="ADList"
             style="width: 100%"
@@ -290,6 +299,7 @@ export default {
   },
   data () {
     return {
+      loading: true,
       height: '', // 广告管理内容的高度
       // 分页
       currentPage: 1, // 当前页码
@@ -347,12 +357,12 @@ export default {
     require('../../../static/css/theme/night/OTC/OTCADManageNight.css')
     // 从全局获得商户id
     console.log(this.partnerId)
-    // 获取otc广告管理列表
-    this.getOTCADManageList()
     // 1.0 otc可用币种查询：
     this.getOTCAvailableCurrencyList()
     // 2.0 otc可用法币查询：
     this.getMerchantAvailablelegalTenderList()
+    // 3.0 获取otc广告管理列表
+    this.getOTCADManageList()
   },
   mounted () {
   },
@@ -367,6 +377,7 @@ export default {
     changeCurrentPage (pageNum) {
       console.log(pageNum)
       this.currentPage = pageNum
+      this.loading = true
       this.getOTCADManageList()
     },
     resetCondition () {
@@ -379,6 +390,7 @@ export default {
       // 选中状态清空
       this.activitedADManageStatusList = ''
       // 重新获取列表
+      this.loading = true
       this.getOTCADManageList()
     },
     // 时间格式化
@@ -400,6 +412,7 @@ export default {
         return false
       } else {
         // 返回数据正确的逻辑 渲染列表
+        this.loading = false
         this.ADList = data.data.data.list
         // 分页
         this.totalPages = data.data.data.pages - 0
@@ -459,6 +472,7 @@ export default {
         confirmButtonText: this.$t('M.comm_all_sold_out'), // 全部下架
         cancelButtonText: this.$t('M.comm_cancel') // 取消
       }).then(() => {
+        this.loading = true
         this.cancelAllOnekeyConfirm()
       }).catch(() => {
       })
@@ -471,6 +485,7 @@ export default {
         return false
       } else {
         // 返回数据正确的逻辑
+        this.loading = false
         this.getOTCADManageList()
       }
     },
@@ -480,6 +495,7 @@ export default {
         confirmButtonText: this.$t('M.comm_sold_out'), // 下架
         cancelButtonText: this.$t('M.comm_cancel') // 取消
       }).then(() => {
+        this.loading = true
         this.getOTCEntrustingOrdersRevocation(id)
       }).catch(() => {
       })
@@ -518,6 +534,7 @@ export default {
     },
     // 点击查询按钮 重新请求列表数据
     findFilter () {
+      this.loading = true
       this.getOTCADManageList()
     }
   },

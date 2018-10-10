@@ -1,9 +1,25 @@
 <template>
-  <div class="depth-box trade">
+  <div
+    class="depth-box trade"
+    :class="{'day':theme == 'day','night':theme == 'night' }"
+  >
     <div
-      class="depth"
-      id="depth"
-    ></div>
+      class="title font-size16 cursor-pointer"
+      @click="toggleShowContent"
+    >
+        <span class="text">
+          <!--深度-->
+          <!--{{ $t('M.trade_global_market') }}-->
+          深度图
+        </span>
+    </div>
+    <el-collapse-transition>
+      <div
+        class="depth"
+        id="depth"
+        v-show="contentShowStatus"
+      ></div>
+    </el-collapse-transition>
   </div>
 </template>
 <script>
@@ -16,6 +32,7 @@ export default {
   // props,
   data () {
     return {
+      contentShowStatus: true,
       buys: [],
       sells: [],
       depthCharts: '',
@@ -434,6 +451,11 @@ export default {
   update () {},
   beforeRouteUpdate () {},
   methods: {
+    // 切换内容显示隐藏
+    toggleShowContent () {
+      this.contentShowStatus = !this.contentShowStatus
+      console.log(this.contentShowStatus)
+    },
     // 重新绘制图标
     resetChart (params) {
       this.depthCharts = echarts.init(document.getElementById('depth'))
@@ -488,8 +510,8 @@ export default {
       }
     },
     theme () {
-      // this.resetOptions()
-      // this.resetChart(this.options)
+      this.resetOptions()
+      this.resetChart(this.options)
     },
     buy (newVal) {
       console.log(newVal)
@@ -511,11 +533,42 @@ export default {
 }
 </script>
 <style scoped lang="scss">
+  @import '../../../static/css/scss/index.scss';
+  @import '../../../static/css/scss/Trade/TradeCenter.scss';
   .depth-box{
     margin:10px auto;
+    >.title{
+      padding:0 20px;
+      box-sizing: border-box;
+      height:34px;
+      line-height: 34px;
+      /*font-weight: 700;*/
+      margin-bottom:4px;
+      >.text{
+        display:inline-block;
+        text-indent: 4px;
+        height:100%;
+        border-bottom:2px solid $mainColor;
+        color:$mainColor;
+      }
+    }
     >.depth{
       width:100%;
       height:445px;
+    }
+    &.night{
+      >.title{
+        color:$nightMainTitleColor;
+        background-color: $mainContentNightBgColor;
+        box-shadow:2px 0px 3px rgba(27,35,49,1);
+      }
+    }
+    &.day{
+      >.title{
+        color:$dayMainTitleColor;
+        background-color: $dayMainBgColor;
+        box-shadow:2px 0px 3px rgba(239,239,239,1);
+      }
     }
   }
 </style>

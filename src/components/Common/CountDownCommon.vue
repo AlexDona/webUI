@@ -52,6 +52,11 @@ export default {
         status: false
       })
       this.SET_USER_BUTTON_STATUS({
+        loginType: 0,
+        type: 1,
+        status: false
+      })
+      this.SET_USER_BUTTON_STATUS({
         loginType: 1,
         status: false
       })

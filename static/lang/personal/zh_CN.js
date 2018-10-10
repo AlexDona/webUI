@@ -18,17 +18,15 @@ export const personal = {
   'user_asset_valuation': '资产估值',
   'user_assets_suspended': '充值暂停，钱包维护中',
   'user_assets_pause_mention': '暂停提币',
-  'user_assets_recharge_hint1': '禁止充值除',
-  'user_assets_recharge_hint2': '之外的其他资产，任何非',
-  'user_assets_recharge_hint3': '资产充值将不可找回。',
+  'user_assets_recharge_hint1': '禁止充值除{}之外的其他资产，任何非{}资产充值将不可找回。',
   'user_assets_recharge_hint4': '往该地址充值，汇款完成，等待网络自动确认（6个确认）后系统自动到账',
   'user_assets_recharge_hint5': '为了快速到账，充值时可以适当提高网络手续费',
   'user_assets_withdrawal_hint1': '提现费率规则',
   'user_assets_withdrawal_hint2': '为了用户资金安全，平台可能会电话确认您的提币操作，请注意接听；',
   'user_assets_withdrawal_hint3': '充值经过1个确认后，才允许提现；',
   'user_assets_withdrawal_hint4': '可提现金额≤账户可用资产-未确认的数字资产。',
-  'user_assets_withdrawal_hint5': '手续费小于最小提现手续费，请重新输入',
-  'user_assets_withdrawal_hint6': '手续费大于最大提现手续费，请重新输入',
+  'user_assets_withdrawal_hint5': '手续费<最小提现手续费，请重新输入',
+  'user_assets_withdrawal_hint6': '手续费>最大提现手续费，请重新输入',
   'user_assets_no_transaction_password': '您还未设置交易密码请先设置交易密码在进行提币',
   'user_assets_grade_membership': '会员等级',
   'user_assets_or': '或',
@@ -38,8 +36,6 @@ export const personal = {
   'user_billing_attention': '充提',
   // 提币地址
   'user_address_empty': '提币地址不能为空',
-  'user_address_illegal_address': '非法地址',
-  'user_address_withdrawal': '禁止输入中文字符',
   // 提币列表
   'user_address_delete_withdrawals': '确定删除提币地址?',
   // #####################个人中心#####################
@@ -51,6 +47,7 @@ export const personal = {
   'user_real_already': '您已通过',
   'user_real_region': '地区国家',
   'user_real_certificate_type': '证件类型',
+  'user_real_certificate_cone': '证件号码',
   'user_real_real': '真实姓名',
   // 高级认证
   'user_senior_certification': '高级认证',
@@ -62,7 +59,8 @@ export const personal = {
   'user_senior_text1': '注意',
   'user_senior_text2': '照片文件大小不能超过10M！文件格式须为jpg、bmp、png等！',
   'user_senior_text3': '请确保照片无水印，无污渍，身份信息清晰，头像完整，非文字反向照片！照片请勿进行PS处理！',
-  'user_senior_text4': '手持身份证照片：需要您本人一只手持您的身份证，另一只手持一张有您手写的fubt.top账号ID的白纸。确保身份证和白纸在您的胸前，不遮挡您的脸部，并且身份证和白纸上的信息清晰可见！',
+  'user_senior_text4': '手持身份证照片：需要您本人一只手持您的身份证，另一只手持一张有您手写的',
+  'user_senior_text6': '账号ID的白纸。确保身份证和白纸在您的胸前，不遮挡您的脸部，并且身份证和白纸上的信息清晰可见！',
   'user_senior_text5': '以下图片仅作为示例，请提交您本人的身份材料照片。照片勿进行PS处理！',
   'user_senior_upload1': '上传身份证正面',
   'user_senior_upload2': '上传身份证反面',
@@ -71,6 +69,7 @@ export const personal = {
   'user_senior_hint2': '点击刷新',
   'user_senior_hint3': '请在浏览器中打开，并升级浏览器至最新版本,无法通过认证的用户，',
   'user_senior_hint4': '请点击这里',
+  'user_senior_hint5': '上传头像图片大小不能超过 10M!',
   // 收款账户
   'user_account_credited': '收款账户',
   'user_account_warm_prompt': '温馨提示',
@@ -90,7 +89,6 @@ export const personal = {
   'user_account_bank': '银行卡',
   'user_account_bank_name': '银行名称',
   'user_account_credit_numbers': '银行卡号',
-  'user_account_credit_text': '格式不正确，应为16-19位纯数字',
   'user_account_branch_address': '支行地址',
   // 添加微信
   'user_account_weChat': '微信',
@@ -131,7 +129,6 @@ export const personal = {
   'user_security_verify': '验证',
   'user_security_number': '号码',
   'user_security_picture': '图片',
-  'user_security_google1': '格式错误',
   // 安全中心个人信息
   'user_security_level': '账号安全级别',
   'user_security_low': '低',
@@ -145,6 +142,7 @@ export const personal = {
   'user_security_in_tie': '换绑',
   'user_security_login': '登录',
   'user_security_text1': '用于提币、找回密码、修改安全设置、管理API时进行安全验证。',
+  'user_security_text4': '至少保留一种验证方式',
   'user_security_return_safety_center': '返回安全中心',
   'user_security_text0': '请确认您的银行卡已开启短信通知功能',
   // 安全设置
@@ -160,6 +158,7 @@ export const personal = {
   'user_google_text4': '填到下边输入框。',
   'user_google_private_key': '私钥',
   'user_google_account': '账户',
+  'user_security_google1': '格式错误',
   // 交易密码
   'user_transaction_nickname': '昵称',
   'user_transaction_repetition': '重复',
@@ -199,7 +198,6 @@ export const personal = {
   'user_push_payment': '付款',
   'user_push_revocation': '撤销',
   'user_push_count': 'Push数量不能大于余额',
-  'user_push_forbid': '禁止自我PUSH',
   // PUSH记录
   // #####################我的交易#####################
   // 币币订单
@@ -210,7 +208,6 @@ export const personal = {
   'user_coin_start_stop': '起止',
   'user_coin_entrust': '委托',
   'user_coin_volume': '成交额',
-  'user_coin_volume_text': '确定撤销委单记录吗, 是否继续?',
   // 当前委托Commissioned by the current
   'user_coin_commissioned_current': '当前委托',
   // 历史委托

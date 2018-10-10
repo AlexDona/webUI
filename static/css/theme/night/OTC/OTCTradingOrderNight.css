@@ -62,7 +62,7 @@
   border-color: #66b1ff;
   color: #fff;
 }
-/* 输入密码弹出框 */
+/* 5.0 输入密码弹出框 */
 .otc-trading-order-box.night .password-dialog .el-dialog{
 border-radius: 4px;
 width: 350px;
@@ -101,7 +101,7 @@ font-size: 14px;
 padding-left: 10px;
 }
 .otc-trading-order-box.night .password-dialog .el-dialog__body .error-info{
-color: #fff;
+/* color: #fff; */
 font-size: 12px;
 height: 20px;
 padding-top: 5px;

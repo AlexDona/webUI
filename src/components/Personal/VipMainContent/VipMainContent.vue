@@ -609,7 +609,8 @@ export default {
       vipName: '', // vip名称
       configValue: '', // 币种id
       currencyAsset: 0, // 币种数量
-      activeStatus: 0 // VIP状态
+      activeStatus: 0, // VIP状态
+      loadingCircle: {}, // 整页loading
     }
   },
   async created () {
@@ -759,10 +760,19 @@ export default {
           vipName: this.vipName,
           month: this.month
         }
+        // 整页loading
+        this.loadingCircle = this.$loading({
+          lock: true,
+          background: 'rgba(0, 0, 0, 0.6)'
+        })
         data = await buyVipPriceInfo(params)
         if (!(returnAjaxMessage(data, this, 1))) {
+          // 接口失败清除loading
+          this.loadingCircle.close()
           return false
         } else {
+          // 接口成功清除loading
+          this.loadingCircle.close()
           this.dialogFormVisible = false
           this.password = ''
           reflashUserInfo(this)
@@ -778,9 +788,18 @@ export default {
     async getVipPriceInfo () {
       let data = await vipPriceInfo({})
       console.log(data)
+      // 整页loading
+      this.loadingCircle = this.$loading({
+        lock: true,
+        background: 'rgba(0, 0, 0, 0.6)'
+      })
       if (!(returnAjaxMessage(data, this, 0))) {
+        // 接口失败清除loading
+        this.loadingCircle.close()
         return false
       } else {
+        // 接口成功清除loading
+        this.loadingCircle.close()
         if (data.data.data) {
           // 返回展示
           this.vipPriceInfo1 = data.data.data
@@ -806,10 +825,19 @@ export default {
       let param = {
         coinId: this.configValue // 币种coinId
       }
+      // 整页loading
+      this.loadingCircle = this.$loading({
+        lock: true,
+        background: 'rgba(0, 0, 0, 0.6)'
+      })
       data = await getPushTotalByCoinId(param)
       if (!(returnAjaxMessage(data, this, 0))) {
+        // 接口失败清除loading
+        this.loadingCircle.close()
         return false
       } else {
+        // 接口成功清除loading
+        this.loadingCircle.close()
         this.currencyAsset = data.data.data.total
         console.log(this.currencyAsset)
       }

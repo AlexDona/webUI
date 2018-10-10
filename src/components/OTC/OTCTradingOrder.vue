@@ -3,7 +3,11 @@
     class="otc-trading-order-box otc"
     :class="{'day':theme == 'day','night':theme == 'night' }"
   >
-    <div class="otc-trading-order-content">
+    <div
+      class="otc-trading-order-content"
+      v-loading="loading"
+      element-loading-background="rgba(0, 0, 0, 0.6)"
+    >
       <!-- 一、交易中订单 -->
       <div
         class="order-list"
@@ -91,6 +95,7 @@
                     <!-- 选择支付方式 -->
                     <el-select
                       :placeholder="$t('M.otc_MerchantsOrders_chouse') + $t('M.otc_index_Payment_method')"
+                      :no-data-text="$t('M.comm_no_data')"
                       v-model="activePayModeList[index]"
                       @change="changeUserBankInfo(index)"
                     >
@@ -718,6 +723,7 @@ export default {
   // props,
   data () {
     return {
+      loading: true,
       // 分页
       currentPage: 1, // 当前页码
       totalPages: 1, // 总页数
@@ -832,6 +838,7 @@ export default {
     },
     // 2.0 请求交易中订单列表
     async getOTCTradingOrdersList () {
+      this.loading = true
       this.cancelOrderTimeArr = []
       this.accomplishOrderTimeArr = []
       console.log('22222')
@@ -848,6 +855,7 @@ export default {
         return false
       } else {
         // 返回数据正确的逻辑
+        this.loading = false
         this.tradingOrderList = data.data.data.list
         console.log('交易中订单')
         console.log(this.tradingOrderList)
@@ -1133,7 +1141,7 @@ export default {
         }
         >.order-list-body{
           // color: #9DA5B3;
-          padding: 15px 20px 15px 20px;
+          padding: 20px 20px 15px 20px;
           display: flex;
           flex: 7;
           >.order-list-body-left{
