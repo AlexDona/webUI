@@ -527,8 +527,6 @@ export default {
       } else {
         this.errorMsg = ''
       }
-      // 默认API确认弹窗
-      this.APIMoneyConfirm = true
       // 调用安全方式接口
       this.getSecurityCenter()
       // 赋值创建IP修改时的带回
@@ -796,9 +794,20 @@ export default {
      * 安全中心
      */
     getSecurityCenter () {
+      // 整页loading
+      this.loadingCircle = this.$loading({
+        lock: true,
+        background: 'rgba(0, 0, 0, 0.6)'
+      })
       getSecurityCenter(this, (data) => {
+        // 接口成功清除loading
+        this.loadingCircle.close()
         if (data) {
+          // 接口成功清除loading
+          this.loadingCircle.close()
           this.securityCenter = data.data.data
+          // 默认API确认弹窗
+          this.APIMoneyConfirm = true
         }
       })
     },

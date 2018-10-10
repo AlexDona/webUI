@@ -665,8 +665,17 @@ export default {
      * 安全中心
      */
     getSecurityCenter () {
+      // 整页loading
+      this.loadingCircle = this.$loading({
+        lock: true,
+        background: 'rgba(0, 0, 0, 0.7)'
+      })
       getSecurityCenter(this, (data) => {
+        // 接口失败清除loading
+        this.loadingCircle.close()
         if (data) {
+          // 接口成功清除loading
+          this.loadingCircle.close()
           this.securityCenter = data.data.data
           this.person = data.data.data.person
           this.logonRecord = data.data.data.setLog
