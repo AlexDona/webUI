@@ -142,7 +142,11 @@
             </div>
           </div>
           <!--商户列表表格部分-->
-          <div class="otc-merchant-list">
+          <div
+            class="otc-merchant-list"
+            v-loading="loading"
+            element-loading-background="rgba(0, 0, 0, 0.6)"
+          >
             <!-- 表格信息 暂时无数据align="center"-->
             <el-table
               :data="onlineBuySellTableList"
@@ -457,6 +461,7 @@ export default {
   // props,
   data () {
     return {
+      loading: true,
       // 分页
       currentPage: 1, // 当前页码
       totalPages: 1, // 总页数
@@ -769,6 +774,7 @@ export default {
     },
     //  3.0 刚进页面时候 otc主页面查询挂单列表
     async getOTCPutUpOrdersList () {
+      this.loading = true
       console.log('当前页：' + this.currentPage)
       let param = {
         pageNum: this.currentPage,
@@ -792,6 +798,7 @@ export default {
         return false
       } else {
         // 返回数据正确的逻辑
+        this.loading = false
         this.onlineBuySellTableList = data.data.data.list
         // 分页
         this.totalPages = data.data.data.pages - 0
@@ -812,6 +819,7 @@ export default {
     },
     //  5.0 切换我要购买和出售时候调取接口获得数据渲染列表
     async getSelectCurrencyNametOTCPutUpOrdersList () {
+      this.loading = true
       let param = {
         pageNum: this.currentPage,
         payType: this.checkedPayType, // 按照选中的支付方式查询列表
@@ -833,6 +841,7 @@ export default {
         return false
       } else {
         // 返回数据正确的逻辑
+        this.loading = false
         this.onlineBuySellTableList = data.data.data.list
         // 分页
         this.totalPages = data.data.data.pages - 0
@@ -841,6 +850,7 @@ export default {
     //  6.0 切换在线购买和在线售出状态并调接口渲染列表
     async toggleBuyOrSellStyle (e) {
       this.OTCBuySellStyle = e
+      this.loading = true
       console.log(this.OTCBuySellStyle)
       let param = {
         pageNum: this.currentPage,
@@ -863,6 +873,7 @@ export default {
         return false
       } else {
         // 返回数据正确的逻辑
+        this.loading = false
         this.onlineBuySellTableList = data.data.data.list
         // 分页
         this.totalPages = data.data.data.pages - 0
@@ -883,6 +894,7 @@ export default {
     },
     //  8.0 改变可用法币的下拉框的选中值，调主页面查询otc挂单列表接口
     async getChangeCurrencyIdOTCPutUpOrdersList () {
+      this.loading = true
       let param = {
         pageNum: this.currentPage,
         payType: this.checkedPayType, // 按照选中的支付方式查询列表
@@ -904,6 +916,7 @@ export default {
         return false
       } else {
         // 返回数据正确的逻辑
+        this.loading = false
         this.onlineBuySellTableList = data.data.data.list
         // 分页
         this.totalPages = data.data.data.pages - 0
@@ -918,6 +931,7 @@ export default {
     },
     // 10.0 改变支付方式下拉框的选中值，调主页面查询otc挂单列表接口
     async getChangePayWayOTCPutUpOrdersList () {
+      this.loading = true
       let param = {
         pageNum: this.currentPage,
         payType: this.checkedPayType, // 按照选中的支付方式查询列表
@@ -939,6 +953,7 @@ export default {
         return false
       } else {
         // 返回数据正确的逻辑
+        this.loading = false
         this.onlineBuySellTableList = data.data.data.list
         // 分页
         this.totalPages = data.data.data.pages - 0

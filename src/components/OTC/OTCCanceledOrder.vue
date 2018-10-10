@@ -3,7 +3,11 @@
     class="otc-canceled-order-box otc"
     :class="{'day':theme == 'day','night':theme == 'night' }"
   >
-    <div class="canceled-order-content">
+    <div
+      class="canceled-order-content"
+      v-loading="loading"
+      element-loading-background="rgba(0, 0, 0, 0.6)"
+    >
       <!--表头属性-->
       <div class="canceled-table-head">
         <span class="item">{{$t('M.otc_MerchantsOrders_orderNum')}}</span>
@@ -125,6 +129,7 @@ export default {
   // props,
   data () {
     return {
+      loading: true,
       // 分页
       pageSize: 5,
       currentPage: 1, // 当前页码
@@ -159,6 +164,7 @@ export default {
     },
     // 2.0 请求已取消订单列表
     async getOTCCanceledOrdersList () {
+      this.loading = true
       const data = await getOTCCanceledOrders({
         status: 'CANCELED', // 状态 (交易中 TRADING 已完成 COMPLETED  已取消  CANCELED 冻结中 FROZEN)
         pageNum: this.currentPage,
@@ -171,6 +177,7 @@ export default {
         return false
       } else {
         // 返回数据正确的逻辑
+        this.loading = false
         this.otcCanceledOrderList = data.data.data.list
         // 分页
         this.totalPages = data.data.data.pages - 0

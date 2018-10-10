@@ -7,6 +7,8 @@
     <NavCommon/>
     <!-- 2.1商家 申请 页面 -->
     <div
+      v-loading.fullscreen.lock="fullscreenLoading"
+      element-loading-background="rgba(0, 0, 0, 0.6)"
       class="business-apply-content"
       v-show="applyStatus === 1"
     >
@@ -138,6 +140,8 @@
     </div>
     <!-- 2.2商家 申请中 页面 -->
     <div
+      v-loading.fullscreen.lock="fullscreenLoading"
+      element-loading-background="rgba(0, 0, 0, 0.6)"
       :style="{'min-height':(height-616)+'px'}"
       class="business-applying-content"
       v-show="applyStatus === 2"
@@ -152,6 +156,8 @@
     </div>
     <!-- 2.3商家 申请成功 页面 -->
     <div
+      v-loading.fullscreen.lock="fullscreenLoading"
+      element-loading-background="rgba(0, 0, 0, 0.6)"
       :style="{'min-height':(height-616)+'px'}"
       class="business-apply-success-content"
       v-show="applyStatus === 3"
@@ -167,6 +173,8 @@
     <div
       class="business-apply-blank"
       v-show="applyStatus === 4"
+      v-loading.fullscreen.lock="fullscreenLoading"
+      element-loading-background="rgba(0, 0, 0, 0.6)"
     >
     </div>
     <!-- 3.0 底部 -->
@@ -194,6 +202,7 @@ export default {
   },
   data () {
     return {
+      fullscreenLoading: true,
       statusBlack: '', // 当为申请中和申请成功的页面时候，只有黑色主题颜色
       height: '', // 申请中 申请成功 内容的高度
       // 整页loading
@@ -243,12 +252,14 @@ export default {
     },
     // 请求申请状态
     async getOTCBusinessApply () {
+      this.fullscreenLoading = true
       const data = await businessApply()
       // 提示信息
       if (!(returnAjaxMessage(data, this))) {
         return false
       } else {
         // 返回数据正确的逻辑
+        this.fullscreenLoading = false
         if (data.data.meta.success == true) {
           this.applyStatus = 2
           this.statusBlack = 'successOrApplying' // 当为申请中和申请成功的页面时候，只有黑色主题颜色
@@ -269,6 +280,7 @@ export default {
       //   lock: true,
       //   background: 'rgba(0, 0, 0, 0.7)'
       // })
+      this.fullscreenLoading = true
       // 刚进页面接口请求回来之前先展示缓冲界面
       this.applyStatus = 4
       const data = await firstEnterBusinessApply()
@@ -279,6 +291,7 @@ export default {
         this.applyStatus = 1
         return false
       } else {
+        this.fullscreenLoading = false
         // this.loadingCircle.close()
         let getData = data.data.data
         // 返回数据正确的逻辑
@@ -529,9 +542,8 @@ export default {
     }
   }
   >.business-apply-blank{
-    width: 1150px;
+    width: 100%;
     height: 918px;
-    // height: 600px;
     // background-color: #272B41;
     background-color: $mainNightBgColor;
   }
