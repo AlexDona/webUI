@@ -483,6 +483,7 @@ export default {
       console.log(data)
       // 提示信息
       if (!(returnAjaxMessage(data, this, 0))) {
+        this.fullscreenLoading = false
         return false
       } else {
         // 返回数据正确的逻辑
