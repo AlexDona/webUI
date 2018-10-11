@@ -80,7 +80,7 @@
   color: #4F85DA;
 }
 .otc-box.day .is-disabled{
-  background-color: rgba(29, 35, 49, 1);
+  /* background-color: rgba(29, 35, 49, 1); */
 }
 /*鼠标点击*/
 .otc-box.day .el-tabs__item.is-active{

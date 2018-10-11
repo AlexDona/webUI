@@ -15,11 +15,11 @@
             v-model="OTCBuySellStyle"
             @change="toggleBuyOrSellStyle"
           >
-            <el-radio-button label="onlineBuy">
+            <el-radio-button label="onlineBuy" :disabled="isDisabledRadio">
               <!-- 在线购买 -->
               {{ $t('M.otc_index_online_buy') }}
             </el-radio-button>
-            <el-radio-button label="onlineSell">
+            <el-radio-button label="onlineSell" :disabled="isDisabledRadio">
               <!-- 在线出售 -->
               {{ $t('M.otc_index_online_sell') }}
             </el-radio-button>
@@ -352,7 +352,7 @@
           v-model = "activeName"
         >
           <!-- 2.2.1 交易中的订单 -->
-          <el-tab-pane name = "first">
+          <el-tab-pane name = "first" :disabled="isdisabled">
             <span slot="label">
               <i
                 class="el-icon-caret-right otc-tab-pane-arrow-right"
@@ -367,7 +367,7 @@
             <OTCTradingOrder ref = "trading"/>
           </el-tab-pane>
           <!-- 2.2.2 已完成订单 -->
-          <el-tab-pane name = "second">
+          <el-tab-pane name = "second" :disabled="isdisabled">
             <span slot="label">
               <i
                 class="el-icon-caret-right otc-tab-pane-arrow-right"
@@ -382,7 +382,7 @@
             <OTCCompletedOrder ref = "complete"/>
           </el-tab-pane>
           <!-- 2.2.3 已取消订单 -->
-          <el-tab-pane name = "third">
+          <el-tab-pane name = "third" :disabled="isdisabled">
             <span slot="label">
               <i
                 class="el-icon-caret-right otc-tab-pane-arrow-right"
@@ -397,7 +397,7 @@
             <OTCCanceledOrder ref = "canceled"/>
           </el-tab-pane>
           <!-- 2.2.4 冻结中订单 -->
-          <el-tab-pane name = "fourth">
+          <el-tab-pane name = "fourth" :disabled="isdisabled">
             <span slot="label">
               <i
                 class="el-icon-caret-right otc-tab-pane-arrow-right"
@@ -412,7 +412,7 @@
             <OTCFreezingOrder ref = "freezing"/>
           </el-tab-pane>
           <!-- 2.2.5 委托订单 -->
-          <el-tab-pane name = "fifth">
+          <el-tab-pane name = "fifth" :disabled="isdisabled">
             <span slot="label">
               <i
                 class="el-icon-caret-right otc-tab-pane-arrow-right"
@@ -462,6 +462,8 @@ export default {
   // props,
   data () {
     return {
+      isdisabled: false, // 订单tabs面板切换禁用状态
+      isDisabledRadio: false, // 在线购买和在线出售按钮禁用状态
       loading: true, // loading加载
       // 分页
       currentPage: 1, // 当前页码
@@ -557,6 +559,11 @@ export default {
     },
     // 0.1 切换各订单状态tab面板
     toggleTabPane (tab, event) {
+      // 防止频繁切换点击按钮 通过禁用按钮，0.5秒后可以点击
+      this.isdisabled = true
+      setTimeout(() => {
+        this.isdisabled = false
+      }, 500)
       console.log(this.activeName)
       console.log(this.isLogin)
       // 未登录跳转到登录页面去
@@ -850,8 +857,12 @@ export default {
     }, */
     //  6.0 切换在线购买和在线售出状态并调接口渲染列表
     async toggleBuyOrSellStyle (e) {
+      // 防止频繁切换点击按钮 通过禁用按钮，0.5秒后可以点击
+      // this.isDisabledRadio = true
+      // setTimeout(() => {
+      //   this.isDisabledRadio = false
+      // }, 500)
       this.OTCBuySellStyle = e
-      // this.loading = true
       console.log(this.OTCBuySellStyle)
       this.getOTCPutUpOrdersList() // otc主页面查询挂单列表
       /* let param = {
@@ -934,7 +945,7 @@ export default {
       // 调主页面查询otc挂单列表接口按照支付方式查询列表
       // this.getChangePayWayOTCPutUpOrdersList()
       this.getOTCPutUpOrdersList() // otc主页面查询挂单列表
-    },
+    }
     // 10.0 改变支付方式下拉框的选中值，调主页面查询otc挂单列表接口
     /* async getChangePayWayOTCPutUpOrdersList () {
       this.loading = true
