@@ -379,7 +379,7 @@
                 </p>
                 <!-- 卖家手机号 -->
                 <p class="trade-info">
-                  {{$t('M.otc_trading_sellphone')}}：{{item.buyPhone}}
+                  {{$t('M.otc_trading_buyphone')}}：{{item.buyPhone}}
                 </p>
               </div>
             </div>

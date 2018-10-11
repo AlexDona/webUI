@@ -475,8 +475,7 @@ export default {
       OTCBuySellStyle: 'onlineBuy', //  在线购买和在线出售选中类型
       selectCurrencyNameStatus: 0, //  选中我要购买或者出售的币种名称
       // 在线购买和在线出售表格列表
-      onlineBuySellTableList: [
-      ],
+      onlineBuySellTableList: [],
       // 支付方式下拉框数据
       payWayBankinfoList: [
         {
@@ -669,51 +668,50 @@ export default {
       }
     },
     // 0.4 点击出售按钮跳转到在线出售页面
-    // toOnlineSell (id, coinId, userId) {
-    //   if (!this.isLogin) {
-    //     this.$router.push({path: '/login'})
-    //   } else {
-    //     // 刷新用户信息
-    //     reflashUserInfo(this)
-    //     // 未设置交易密码、未实名认证，未高级认证，不能进行交易
-    //     if (!this.userInfo.payPassword) {
-    //       this.$message({
-    //         message: this.$t('M.otc_index_js'), // 去个人中心设置交易密码
-    //         type: 'error'
-    //       })
-    //       return false
-    //     } else if (!this.userInfo.realname) {
-    //       this.$message({
-    //         message: this.$t('M.otc_index_digo_tips'), // 去个人中心完成实名认证
-    //         type: 'error'
-    //       })
-    //       return false
-    //     } else if (!(this.userInfo.advancedAuth === 'pass')) {
-    //       this.$message({
-    //         message: this.$t('M.otc_index_digo_tips_pass'), // 去个人中心完成高级认证
-    //         type: 'error'
-    //       })
-    //       return false
-    //     } else {
-    //       if (userId === this.userInfo.id) {
-    //         this.$message({
-    //           message: this.$t('M.otc_index_forbided_buyand_sell'), // 禁止自买自卖
-    //           type: 'error'
-    //         })
-    //         return false
-    //       } else {
-    //         // console.log("卖")
-    //         // console.log(id) // 挂单id
-    //         // console.log(coinId) // 币种id
-    //         this.$router.push({path: '/OTCOnlineTraderBuySell/' + this.OTCBuySellStyle + '/' + id + '/' + coinId})
-    //       }
-    //     }
-    //   }
-    // },
+    /* toOnlineSell (id, coinId, userId) {
+      if (!this.isLogin) {
+        this.$router.push({path: '/login'})
+      } else {
+        // 刷新用户信息
+        reflashUserInfo(this)
+        // 未设置交易密码、未实名认证，未高级认证，不能进行交易
+        if (!this.userInfo.payPassword) {
+          this.$message({
+            message: this.$t('M.otc_index_js'), // 去个人中心设置交易密码
+            type: 'error'
+          })
+          return false
+        } else if (!this.userInfo.realname) {
+          this.$message({
+            message: this.$t('M.otc_index_digo_tips'), // 去个人中心完成实名认证
+            type: 'error'
+          })
+          return false
+        } else if (!(this.userInfo.advancedAuth === 'pass')) {
+          this.$message({
+            message: this.$t('M.otc_index_digo_tips_pass'), // 去个人中心完成高级认证
+            type: 'error'
+          })
+          return false
+        } else {
+          if (userId === this.userInfo.id) {
+            this.$message({
+              message: this.$t('M.otc_index_forbided_buyand_sell'), // 禁止自买自卖
+              type: 'error'
+            })
+            return false
+          } else {
+            // console.log("卖")
+            // console.log(id) // 挂单id
+            // console.log(coinId) // 币种id
+            this.$router.push({path: '/OTCOnlineTraderBuySell/' + this.OTCBuySellStyle + '/' + id + '/' + coinId})
+          }
+        }
+      }
+    }, */
     // 0.5 查询更多订单按钮点击事件
     queryMoreOrder () {
-      // 未登录跳转登录页
-      if (!this.isLogin) {
+      if (!this.isLogin) { // 未登录跳转登录页
         this.$router.push({path: '/login'})
       } else {
         // 登录后：商家用户跳转到商家订单；普通用户跳转到个人中心中的法币订单
@@ -759,7 +757,7 @@ export default {
       const data = await getMerchantAvailablelegalTender({
         partnerId: this.partnerId
       })
-      console.log('otc法币查询')
+      console.log('otc法币查询列表')
       console.log(data)
       if (!(returnAjaxMessage(data, this, 0))) {
         return false
@@ -775,7 +773,7 @@ export default {
     //  3.0 刚进页面时候 otc主页面查询挂单列表
     async getOTCPutUpOrdersList () {
       this.loading = true
-      console.log('当前页：' + this.currentPage)
+      // console.log('当前页：' + this.currentPage)
       let param = {
         pageNum: this.currentPage,
         payType: this.checkedPayType, // 按照选中的支付方式查询列表
@@ -816,10 +814,11 @@ export default {
       console.log('币种id：' + this.selectedOTCAvailableCurrencyCoinID)
       // console.log(this.selectedOTCAvailablePartnerCoinId)
       // 请求接口数据渲染表格
-      this.getSelectCurrencyNametOTCPutUpOrdersList()
+      // this.getSelectCurrencyNametOTCPutUpOrdersList()
+      this.getOTCPutUpOrdersList() // otc主页面查询挂单列表
     },
     //  5.0 切换我要购买和出售时候调取接口获得数据渲染列表
-    async getSelectCurrencyNametOTCPutUpOrdersList () {
+    /* async getSelectCurrencyNametOTCPutUpOrdersList () {
       this.loading = true
       let param = {
         pageNum: this.currentPage,
@@ -848,13 +847,14 @@ export default {
         // 分页
         this.totalPages = data.data.data.pages - 0
       }
-    },
+    }, */
     //  6.0 切换在线购买和在线售出状态并调接口渲染列表
     async toggleBuyOrSellStyle (e) {
       this.OTCBuySellStyle = e
-      this.loading = true
+      // this.loading = true
       console.log(this.OTCBuySellStyle)
-      let param = {
+      this.getOTCPutUpOrdersList() // otc主页面查询挂单列表
+      /* let param = {
         pageNum: this.currentPage,
         payType: this.checkedPayType, // 按照选中的支付方式查询列表
         partnerId: this.partnerId, // 商户id
@@ -880,7 +880,7 @@ export default {
         this.onlineBuySellTableList = data.data.data.list
         // 分页
         this.totalPages = data.data.data.pages - 0
-      }
+      } */
     },
     //  7.0 改变可用法币的币种id
     changeCurrencyId (e) {
@@ -893,10 +893,11 @@ export default {
         }
       })
       // 调主页面查询otc挂单列表接口按照法币方式查询
-      this.getChangeCurrencyIdOTCPutUpOrdersList()
+      // this.getChangeCurrencyIdOTCPutUpOrdersList()
+      this.getOTCPutUpOrdersList() // otc主页面查询挂单列表
     },
     //  8.0 改变可用法币的下拉框的选中值，调主页面查询otc挂单列表接口
-    async getChangeCurrencyIdOTCPutUpOrdersList () {
+    /* async getChangeCurrencyIdOTCPutUpOrdersList () {
       this.loading = true
       let param = {
         pageNum: this.currentPage,
@@ -925,16 +926,17 @@ export default {
         // 分页
         this.totalPages = data.data.data.pages - 0
       }
-    },
+    }, */
     // 9.0 改变支付方式下拉框的选中值
     payWayChangeValue (e) {
       this.checkedPayType = e
       console.log(this.checkedPayType) //  选中的支付方式的id
       // 调主页面查询otc挂单列表接口按照支付方式查询列表
-      this.getChangePayWayOTCPutUpOrdersList()
+      // this.getChangePayWayOTCPutUpOrdersList()
+      this.getOTCPutUpOrdersList() // otc主页面查询挂单列表
     },
     // 10.0 改变支付方式下拉框的选中值，调主页面查询otc挂单列表接口
-    async getChangePayWayOTCPutUpOrdersList () {
+    /* async getChangePayWayOTCPutUpOrdersList () {
       this.loading = true
       let param = {
         pageNum: this.currentPage,
@@ -963,7 +965,7 @@ export default {
         // 分页
         this.totalPages = data.data.data.pages - 0
       }
-    }
+    } */
   },
   filter: {},
   computed: {
@@ -973,7 +975,7 @@ export default {
       selectedOTCAvailableCurrencyName: state => state.OTC.selectedOTCAvailableCurrencyName,
       selectedOTCAvailablePartnerCoinId: state => state.OTC.selectedOTCAvailablePartnerCoinId,
       selectedOTCAvailableCurrencyCoinID: state => state.OTC.selectedOTCAvailableCurrencyCoinID,
-      partnerId: state => state.common.partnerId,
+      partnerId: state => state.common.partnerId, // 商户id
       // 当前选中语言
       language: state => state.common.language,
       activeLanguage: state => state.common.activeLanguage,
