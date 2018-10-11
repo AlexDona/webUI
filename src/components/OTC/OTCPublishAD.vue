@@ -582,6 +582,7 @@ export default {
       console.log('币种详情')
       console.log(data)
       if (!(returnAjaxMessage(data, this, 0))) {
+        this.fullscreenLoading = false
         return false
       } else {
         // 返回数据正确的逻辑

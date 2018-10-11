@@ -524,6 +524,7 @@ export default {
       console.log('商家订单列表')
       console.log(data)
       if (!(returnAjaxMessage(data, this, 0))) {
+        this.loading = false
         return false
       } else {
         this.loading = false

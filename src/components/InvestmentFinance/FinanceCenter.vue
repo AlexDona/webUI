@@ -9,7 +9,11 @@
     <div class="banner-box">
       <img src="../../assets/finance/banner.png" alt="">
     </div>
-    <div class="inner-box">
+    <div
+      class="inner-box"
+      v-loading.fullscreen.lock="fullscreenLoading"
+      element-loading-background="rgba(0,0,0,0.6)"
+      >
       <div class="finance-inner">
         <div class="container">
          <div class="finance-form-header">
@@ -108,7 +112,7 @@
                 <!-- 存币时长 -->
                 <el-form-item
                 :label="$t('M.finance_invest') + $t('M.finance_timeLong')"
-                style="color:#fff;">
+                class='saveTime'>
                  {{getDate(-2)}} {{$t('M.finance_leit')}} {{getDate(formLabelAlign.day)}}
                  <span class="blue">({{formLabelAlign.day}}{{$t('M.finance_day')}})</span>
                  <!-- {{formLabelAlign.createTime}} 至 {{formLabelAlign.endDate}}<span class="blue">({{formLabelAlign.day}}天)</span> -->
@@ -406,6 +410,7 @@ export default {
   },
   data () {
     return {
+      fullscreenLoading: true,
       // 选中币种的id
       selectedCoinId: '',
       // 选中币种的名称
@@ -497,10 +502,6 @@ export default {
     }
   },
   created () {
-    // this.InvestmentValue = '3'
-    // setTimeout(()=>{
-    // this.InvestmentValue = '4'
-    // },1000)
     // 对element ui样式重置
     require('../../../static/css/list/InvestmentFinance/FinanceCenter.css')
     // 白样式
@@ -628,6 +629,7 @@ export default {
     },
     // 投资理财页面币种查询
     async getFinancialManagementList () {
+      this.fullscreenLoading = true
       const data = await getFinancialManagement({
         pageNum: this.currentPage,
         pageSize: this.pageSize,
@@ -638,8 +640,10 @@ export default {
       console.log('投资理财页面查询')
       console.log(data)
       if (!(returnAjaxMessage(data, this, 0))) {
+        this.fullscreenLoading = false
         return false
       } else {
+        this.fullscreenLoading = false
         let getData = data.data.data
         // 设置可用币种数组
         this.traderCoinList = getData.idNameDtoList
@@ -949,6 +953,9 @@ export default {
     }
     .red2{
       color:#B73C36;
+    }
+    .saveTime{
+      color: #fff;
     }
     .nav-header{
       color:#fff;
