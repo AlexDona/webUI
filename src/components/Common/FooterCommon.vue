@@ -233,7 +233,7 @@ export default {
         this.linkList = this.footerInfo2.blogrollList
         // favicon 添加
         this.addFavicon(
-          this.footerInfo1.headTitleLogo,
+          this.footerInfo1.headTitleLogo.url,
           this.footerInfo1.title.content
         )
         this.$store.commit('common/SET_LOGO_URL', {
