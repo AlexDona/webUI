@@ -9,7 +9,11 @@
     <div class="banner-box">
       <img src="../../assets/finance/banner.png" alt="">
     </div>
-    <div class="inner-box">
+    <div
+      class="inner-box"
+      v-loading.fullscreen.lock="fullscreenLoading"
+      element-loading-background="rgba(0,0,0,0.6)"
+      >
       <div class="finance-inner">
         <div class="container">
          <div class="finance-form-header">
@@ -98,6 +102,79 @@
                 </el-button>
               </div>
             </label>
+            <el-dialog
+              title="存币详情"
+              :visible.sync="dialogVisible"
+              width="440px"
+              class='dialogStyle'
+              :before-close="handleClose">
+              <el-form :label-position="right" label-width="90px" :model="formLabelAlign">
+                <!-- 存币时长 -->
+                <el-form-item
+                :label="$t('M.finance_invest') + $t('M.finance_timeLong')"
+                class='saveTime'>
+                 {{getDate(-2)}} {{$t('M.finance_leit')}} {{getDate(formLabelAlign.day)}}
+                 <span class="blue">({{formLabelAlign.day}}{{$t('M.finance_day')}})</span>
+                 <!-- {{formLabelAlign.createTime}} 至 {{formLabelAlign.endDate}}<span class="blue">({{formLabelAlign.day}}天)</span> -->
+                </el-form-item>
+                <!-- 存币数量 -->
+                <el-form-item
+                  :label="$t('M.finance_invest') + $t('M.comm_count')"
+                >
+                  <div class='invest-mounte'>
+                    <el-input v-model="formLabelAlign.number" class="red"></el-input>
+                    <strong>{{selecteCoindName}}</strong>
+                  </div>
+                </el-form-item>
+                <!-- 利率 -->
+                <el-form-item
+                  :label="$t('M.finance_interestRate')"
+                >
+                   <div class='invest-mounte'>
+                    <el-input v-model="formLabelAlign.interestRate"></el-input>
+                  </div>
+                </el-form-item>
+                <!-- 预计总收益 -->
+                <el-form-item
+                  :label="$t('M.finance_predict') + $t('M.comm_total_sum') + $t('M.finance_earnings')"
+                >
+                  <div class='invest-mounte'>
+                    <el-input v-model="formLabelAlign.expectedEarning"></el-input>
+                    <strong>{{selecteCoindName}}</strong>
+                  </div>
+                </el-form-item>
+                <!-- 收益发放 -->
+                <el-form-item
+                :label="$t('M.finance_earnings') + $t('M.finance_grant')"
+                >
+                  <div class='invest-mounte'>
+                    <!-- 先息后本 -->
+                    <el-input
+                    :value="$t('M.finance_xiAndben')"
+                    ></el-input>
+                    <span class='dividend-tips' @click="showDividendTime = !showDividendTime">!</span>
+                  </div>
+                </el-form-item>
+              </el-form>
+              <div class="show-dividend-time-list">
+                <transition name="el-fade-in-linear">
+                  <ul v-show='showDividendTime'>
+                    <li v-for="(item,index) in formLabelAlign.jsonTimeline" :key="index">
+                      <span>{{item.date}}</span>
+                      <span class="blue">{{item.amount}}</span>
+                      <span class='blue'>{{selecteCoindName}}</span>
+                      <span>({{formLabelAlign.jsonTimeline[formLabelAlign.jsonTimeline.length-1].length == 1 ? $t('M.finance_accrual') :$t('M.finance_capital') + '+' + $t('M.finance_accrual')}})</span>
+                    </li>
+                  </ul>
+                </transition>
+              </div>
+              <span slot="footer" class="dialog-footer">
+                <!-- 取消 -->
+                <el-button @click="dialogCancel">{{$t('M.comm_cancel')}}</el-button>
+                <!-- 确定 -->
+                <el-button type="primary" @click="dialogSuer">{{$t('M.comm_affirm')}}</el-button>
+              </span>
+            </el-dialog>
             <button></button>
           </div>
         </div>
@@ -319,7 +396,7 @@ import FooterCommon from '../Common/FooterCommon'
 import FinanceBrokenLine from './FinanceBrokenLine'
 import FinanceBrokenPie from './FinanceBrokenPie'
 import {timeFilter} from '../../utils'
-import {getFinancialManagement, imediateInvestment, cancleInvestment} from '../../utils/api/OTC'
+import {getFinancialManagement, imediateInvestment, cancleInvestment, getFinancialRecord} from '../../utils/api/OTC'
 import {getPushTotalByCoinId} from '../../utils/api/personal'
 import {returnAjaxMessage} from '../../utils/commonFunc'
 import {createNamespacedHelpers, mapState} from 'vuex'
@@ -333,6 +410,7 @@ export default {
   },
   data () {
     return {
+      fullscreenLoading: true,
       // 选中币种的id
       selectedCoinId: '',
       // 选中币种的名称
@@ -377,14 +455,53 @@ export default {
       // 走势图x轴数组
       renderTimeList: '',
       // 走势图y轴数组
-      renderPriceList: ''
+      renderPriceList: '',
+      // 点击立即投资弹窗默认隐藏
+      dialogVisible: false,
+      // 表单对象
+      formLabelAlign: {
+        // 数量
+        amount: '',
+        // 利率
+        rate: '',
+        // 总收益
+        totalEarn: '',
+        // 发放收益
+        dividend: ''
+      },
+      // 收益时间列表隐藏
+      showDividendTime: false,
+      showDividendTimeList: [
+        {
+          time: '2018-10-15',
+          interest: 2
+        },
+        {
+          time: '2018-05-15',
+          interest: 3
+        },
+        {
+          time: '2018-6-15',
+          interest: 3
+        },
+        {
+          time: '2018-05-15',
+          interest: 3
+        },
+        {
+          time: '2018-6-15',
+          interest: 3
+        },
+        {
+          time: '2018-6-15',
+          interest: 3
+        }
+      ],
+      // n天后的时间
+      brforeNtime: ''
     }
   },
   created () {
-    // this.InvestmentValue = '3'
-    // setTimeout(()=>{
-    // this.InvestmentValue = '4'
-    // },1000)
     // 对element ui样式重置
     require('../../../static/css/list/InvestmentFinance/FinanceCenter.css')
     // 白样式
@@ -404,6 +521,17 @@ export default {
       'FINANCE_LINE_RENDER_TIME_LIST',
       'FINANCE_LINE_RENDER_PRICE_LIST'
     ]),
+    // 将返回来的天数转换成日期
+    getDate (n) {
+      let ss = 24 * 60 * 60 * 1000
+      let timeSteps = new Date().getTime() // 当前时间撮
+      let date1 = new Date(timeSteps + (n + 2) * ss) // n天前的时间撮
+      let newtime = date1.toLocaleString() // 将n天前的时间撮转换成当前日期
+      let arr = newtime.split(' ') // 将精确到日的日期摘出来
+      let arr1 = arr[0].split('/') // 将日期格式改变
+      let arr2 = arr1[0] + (-arr1[1]) + (-arr1[2])
+      return arr2
+    },
     timeFormatting (data) {
       return timeFilter(data, 'data')
     },
@@ -436,10 +564,13 @@ export default {
     },
     // 点击立刻投资按钮执行
     getInvestEarnings () {
+      // console.log(111.00)
       if (this.isLogin) {
         if (this.selectedInvestTypeId && this.investMounte && this.isShow === false) {
-        // 执行投资按钮
-          this.clickImmediateInvestment()
+          // 显示理财详情模态框前请求数据渲染模态框
+          this.clickGetInvestEarnings()
+          // 显示模态框
+          this.dialogVisible = true
         } else {
           this.$message({
             // 投资类型或投资数量不能为空
@@ -450,6 +581,30 @@ export default {
       } else {
         this.$router.push({path: '/login'})
         return false
+      }
+    },
+    // 点击取消按钮模态框关闭
+    dialogCancel () {
+      this.dialogVisible = false
+    },
+    // 点击确定按钮模态框关闭
+    dialogSuer () {
+      this.dialogVisible = false
+      // 执行投资按钮
+      this.clickImmediateInvestment()
+    },
+    // 理财记录模态框显示
+    async clickGetInvestEarnings () {
+      const data = await getFinancialRecord({
+        financialManagementId: this.selectedInvestTypeId,
+        number: this.investMounte
+      })
+      console.log('投资理财类型')
+      console.log(data)
+      if (!(returnAjaxMessage(data, this, 0))) {
+        return false
+      } else {
+        this.formLabelAlign = data.data.data
       }
     },
     // 添加理财记录
@@ -474,18 +629,21 @@ export default {
     },
     // 投资理财页面币种查询
     async getFinancialManagementList () {
+      this.fullscreenLoading = true
       const data = await getFinancialManagement({
         pageNum: this.currentPage,
         pageSize: this.pageSize,
-        partnerId: this.partnerId,
+        // partnerId: this.partnerId,
         coinId: this.selectedCoinId,
         coinName: this.selecteCoindName
       })
       console.log('投资理财页面查询')
       console.log(data)
       if (!(returnAjaxMessage(data, this, 0))) {
+        this.fullscreenLoading = false
         return false
       } else {
+        this.fullscreenLoading = false
         let getData = data.data.data
         // 设置可用币种数组
         this.traderCoinList = getData.idNameDtoList
@@ -528,7 +686,7 @@ export default {
         this.FINANCE_LINE_RENDER_TIME_LIST(getData.tickerPriceResult.renderTimeList)
         this.$refs.childLineCharts.resetOptions()
         this.$refs.childLineCharts.resetChart(this.options)
-        // 将投资数量输入输入框清空
+        // 将投资数量输入框清空
         this.investMounte = ''
       }
     },
@@ -796,6 +954,9 @@ export default {
     .red2{
       color:#B73C36;
     }
+    .saveTime{
+      color: #fff;
+    }
     .nav-header{
       color:#fff;
       font-size: 12px;
@@ -814,8 +975,52 @@ export default {
       color: #D45858;
     }
  }
+  .dividend-tips{
+    width: 16px;
+    height: 16px;
+    display: inline-block;
+    border-radius: 50%;
+    color: #fff;
+    line-height: 16px;
+    text-align: center;
+    background: #338FF5;
+    cursor: pointer;
+    margin-top:10px ;
+  }
  .el-select-dropdown{
       min-width: 408px!important;
       left:169px!important;
+  }
+  .show-dividend-time-list{
+    >ul{
+      min-width: 300px;
+      margin-left:60px;
+      color: #fff;
+      font-weight: 600;
+      border-left: 4px solid #338FF5;
+      >li{
+        position: relative;
+        padding-left: 5px;
+        font-size: 10px;
+        margin-bottom:20px;
+        line-height: 12px;
+        span:nth-child(1){
+          padding:0px 0px 0px 10px;
+        }
+        span:nth-child(2){
+          padding-right:10px;
+        }
+        &::before{
+          content: '';
+          position: absolute;
+          width: 12px;
+          height: 12px;
+          top:0px;
+          left:-8px;
+          background: #338FF5;
+          border-radius: 50%;
+        }
+      }
+    }
   }
 </style>

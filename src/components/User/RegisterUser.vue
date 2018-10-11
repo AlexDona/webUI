@@ -7,6 +7,8 @@
       'min-height':windowHeight < 800
       }"
     :style="{height: windowHeight + 'px'}"
+    v-loading.fullscreen.lock="fullscreenLoading"
+    element-loading-background="rgba(0, 0, 0, 0.6)"
   >
     <HeaderCommon/>
     <!--注册页面-->
@@ -337,6 +339,7 @@ export default {
   // props,
   data () {
     return {
+      fullscreenLoading: false, // 整页loading
       activeMethod: 0, // 当前注册方式： 0： 手机注册 : 1 邮箱注册
       // contryAreaList: [], // 国家区域列表
       activeCountryCodeWithPhone: '86',
@@ -653,12 +656,15 @@ export default {
           regType: regType,
           country: countryCode
         }
+        this.fullscreenLoading = true // loading
         try {
           const data = await sendRegisterUser(params)
           console.log(data)
           if (!returnAjaxMessage(data, this, 0)) {
+            this.fullscreenLoading = false // loading
             return false
           } else {
+            this.fullscreenLoading = false // loading
             this.isRegisterSuccess = true
             this.successJump()
           }

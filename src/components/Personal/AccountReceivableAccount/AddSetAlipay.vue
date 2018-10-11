@@ -2,9 +2,13 @@
   <div
     class="add-account personal"
     :class="{'day':theme == 'day','night':theme == 'night' }"
+    v-loading.fullscreen.lock="fullscreenLoading"
+    element-loading-background="rgba(0, 0, 0, 0.6)"
   >
     <HeaderCommon/>
-    <div class="add-account-main margin25">
+    <div
+      class="add-account-main margin25"
+    >
       <header class="add-account-header personal-height60 line-height60 line-height70 margin25">
          <span
            v-if="paymentTerm.isAlipayBind"
@@ -42,7 +46,7 @@
             :label-position="labelPosition"
             label-width="120px"
           >
-            <!--名 称 收  款  类  型 支付宝 支付宝账号 上传收款码 交易密码-->
+            <!--名 称-->
             <el-form-item
               :label="$t('M.user_account_name')"
             >
@@ -50,11 +54,13 @@
                 {{ userInfo.userInfo.realname }}
               </span>
             </el-form-item>
+            <!--收  款  类  型-->
             <el-form-item
               :label="$t('M.user_account_gathering') + $t('M.comm_type')"
             >
               <span class="account-content-type">支付宝</span>
             </el-form-item>
+            <!--支付宝账号-->
             <el-form-item
               :label="$t('M.user_account_alipay') + $t('M.user_account_number')"
             >
@@ -70,6 +76,7 @@
                 :isShow="!!errorShowStatusList[0]"
               />
             </el-form-item>
+            <!--上传收款码-->
             <el-form-item
               :label="$t('M.user_account_upload_collection')"
             >
@@ -95,6 +102,7 @@
                 </el-upload>
               </div>
             </el-form-item>
+            <!--交易密码-->
             <el-form-item
               :label="$t('M.comm_password')"
             >
@@ -140,11 +148,13 @@
 import HeaderCommon from '../../Common/HeaderCommonForPC'
 import IconFontCommon from '../../Common/IconFontCommon'
 import ErrorBox from '../../User/ErrorBox'
-import {returnAjaxMessage} from '../../../utils/commonFunc'
+import {
+  returnAjaxMessage,
+  getAccountPaymentTerm
+} from '../../../utils/commonFunc'
 import {
   statusCardSettings,
-  modificationAccountPaymentTerm,
-  accountPaymentTerm
+  modificationAccountPaymentTerm
 } from '../../../utils/api/personal'
 
 import {apiCommonUrl} from '../../../utils/env'
@@ -176,7 +186,9 @@ export default {
       errorShowStatusList: [
         '', // 支付宝账号
         '' // 交易密码
-      ]
+      ],
+      // loadingCircle: {} // 整页loading
+      fullscreenLoading: false // 整页loading
     }
   },
   created () {
@@ -261,6 +273,7 @@ export default {
       }
       console.log(this.dialogImageHandUrl1)
       if (this.dialogImageHandUrl1 == '') {
+        // 请上传微信收款码
         this.$message({
           message: this.$t('M.user_account_weChat_pla'),
           type: 'error'
@@ -277,12 +290,18 @@ export default {
           bankType: 'alipay', // type
           id: this.id
         }
+        // 整页loading
+        this.fullscreenLoading = true
         console.log(this.dialogImageHandUrl1)
         data = await statusCardSettings(param)
         console.log(data)
         if (!(returnAjaxMessage(data, this, 1))) {
+          // 接口失败清除loading
+          this.fullscreenLoading = false
           return false
         } else {
+          // 接口成功清除loading
+          this.fullscreenLoading = false
           this.successJump()
           this.stateEmptyData()
         }
@@ -300,36 +319,45 @@ export default {
         userId: this.userInfo.userId,
         type: 'alipay'
       }
+      // 整页loading
+      this.fullscreenLoading = true
       data = await modificationAccountPaymentTerm(params)
       if (!(returnAjaxMessage(data, this, 0))) {
+        // 接口失败清除loading
+        this.fullscreenLoading = false
         return false
       } else {
+        // 接口成功清除loading
+        this.fullscreenLoading = false
         // 返回状态展示
         if (data.data.data) {
           this.paymentMethodList = data.data.data
         }
         if (data.data.data.cardNo) {
+          // 修改时带回支付宝号
           this.alipayAccount = data.data.data.cardNo
         }
         if (data.data.data.qrcode) {
+          // 修改时带回支付宝收款码
           this.dialogImageHandUrl1 = data.data.data.qrcode
         }
         if (data.data.data.id) {
+          // 修改时带回类id
           this.id = data.data.data.id
         }
         console.log(this.dialogImageHandUrl1)
       }
     },
-    // 收款方式
-    async getAccountPaymentTerm () {
-      let data = await accountPaymentTerm()
-      if (!(returnAjaxMessage(data, this, 0))) {
-        return false
-      } else {
-        // 返回状态展示
-        this.paymentTerm = data.data.data
-        console.log(this.paymentTerm)
-      }
+    /**
+     * 收款方式
+     */
+    getAccountPaymentTerm () {
+      getAccountPaymentTerm(this, (data) => {
+        if (data) {
+          // 返回状态展示
+          this.paymentTerm = data.data.data
+        }
+      })
     },
     // 成功自动跳转
     successJump () {

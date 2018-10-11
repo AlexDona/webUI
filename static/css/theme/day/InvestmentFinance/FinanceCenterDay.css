@@ -98,3 +98,32 @@
 .finance-box.day > .inner-box > .finance-inner .finance-inner-box > .left .left-body > label > .invest-mounte > input{
     color:#666;
 }
+.finance-box.day .nvest-list-body .el-table{
+    box-shadow:0px 0px 0px rgba(25,30,40,0.5);
+}
+.finance-box.day .el-dialog,
+.finance-box.day .finance-inner-box .dialogStyle .invest-mounte 
+{
+    background: #fff;
+}
+.finance-box.day .el-dialog__header{
+    background: #EAF4FE;
+    box-shadow:0px 1px 2px 0px rgba(29,33,49,0.1);
+}
+.finance-box.day .el-dialog__title,
+.finance-box.day .el-dialog__headerbtn .el-dialog__close 
+{
+    color: #333;
+}
+.finance-box.day .finance-inner-box .dialogStyle .invest-mounte{
+    border:1px solid rgba(236,241,248,1);
+}
+.finance-box.day .finance-inner-box .dialogStyle .el-button{
+    color: #338FF5;
+}
+.finance-box.day .finance-inner-box .dialogStyle .el-button--primary{
+   color:#fff;
+}
+.finance-box.day .finance-inner-box .dialogStyle .saveTime{
+    color: #333;
+  }

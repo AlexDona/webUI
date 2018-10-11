@@ -32,6 +32,7 @@ export const personal = {
   'user_assets_or': '或',
   'user_assets_current_total': '当前资产总估值',
   'user_assets_attention': '注：资产总估仅提供参考，请以单项资金为准',
+  'user_address_withdrawal': '非法地址',
   // 账单明细
   'user_billing_attention': '充提',
   // 提币地址
@@ -47,6 +48,7 @@ export const personal = {
   'user_real_already': '您已通过',
   'user_real_region': '地区国家',
   'user_real_certificate_type': '证件类型',
+  'user_real_certificate_cone': '证件号码',
   'user_real_real': '真实姓名',
   // 高级认证
   'user_senior_certification': '高级认证',
@@ -68,6 +70,7 @@ export const personal = {
   'user_senior_hint2': '点击刷新',
   'user_senior_hint3': '请在浏览器中打开，并升级浏览器至最新版本,无法通过认证的用户，',
   'user_senior_hint4': '请点击这里',
+  'user_senior_hint5': '上传头像图片大小不能超过 10M!',
   // 收款账户
   'user_account_credited': '收款账户',
   'user_account_warm_prompt': '温馨提示',
@@ -140,6 +143,7 @@ export const personal = {
   'user_security_in_tie': '换绑',
   'user_security_login': '登录',
   'user_security_text1': '用于提币、找回密码、修改安全设置、管理API时进行安全验证。',
+  'user_security_text4': '至少保留一种验证方式',
   'user_security_return_safety_center': '返回安全中心',
   'user_security_text0': '请确认您的银行卡已开启短信通知功能',
   // 安全设置
@@ -155,6 +159,7 @@ export const personal = {
   'user_google_text4': '填到下边输入框。',
   'user_google_private_key': '私钥',
   'user_google_account': '账户',
+  'user_security_google1': '格式错误',
   // 交易密码
   'user_transaction_nickname': '昵称',
   'user_transaction_repetition': '重复',

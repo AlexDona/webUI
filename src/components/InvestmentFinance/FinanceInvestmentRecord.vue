@@ -41,7 +41,9 @@
                   :data="investList"
                   style="width: 100%"
                   :empty-text="$t('M.comm_no_data')"
-                  >
+                  v-loading="loading"
+                  element-loading-background="rgba(0, 0, 0, 0.6)"
+                >
                   <!-- 投资币种 -->
                   <el-table-column
                     prop="coinShortName"
@@ -124,8 +126,9 @@
               </el-tab-pane>
               <!-- 收益记录 -->
               <el-tab-pane
-              :label="$t('M.finance_earnings') + $t('M.finance_recode')"
-              name="2">
+                :label="$t('M.finance_earnings') + $t('M.finance_recode')"
+                name="2"
+              >
                 <!-- @您还没有登陆,请登录或者注册之后查看！ -->
                 <div v-if = "!isLogin" class = 'financeTsipsBox'>
                   {{$t('M.finance_loginTips')}}
@@ -143,6 +146,8 @@
                   :data="userInterestRecord"
                   style="width: 100%"
                   :empty-text="$t('M.comm_no_data')"
+                  v-loading="loading"
+                  element-loading-background="rgba(0, 0, 0, 0.6)"
                   >
                   <!-- 投资币种 -->
                   <el-table-column
@@ -222,6 +227,7 @@ export default {
   },
   data () {
     return {
+      loading: true,
       // 设置投资记录当前页码
       investCurrnetPage: '1',
       // 设置投资记录总页数
@@ -294,6 +300,7 @@ export default {
       this.getFinancialManagementList(this.interestCurrnetPage)
     },
     async getFinancialManagementList (pageNum) {
+      this.loading = true
       const data = await getFinancialManagement({
         pageNum: pageNum,
         pageSize: 10,
@@ -304,8 +311,10 @@ export default {
       console.log('投资理财页面查询')
       console.log(data)
       if (!(returnAjaxMessage(data, this, 0))) {
+        this.loading = false
         return false
       } else {
+        this.loading = false
         let getData = data.data.data
         if (this.activeName == '1') {
           // 投资记录列表赋值

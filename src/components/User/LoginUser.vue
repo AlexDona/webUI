@@ -5,6 +5,8 @@
      'min-height':windowHeight < 800,
      'height': windowHeight + 'px'
     }"
+    v-loading.fullscreen.lock="fullscreenLoading"
+    element-loading-background="rgba(0, 0, 0, 0.6)"
   >
     <HeaderCommonForPC
       v-if="!isMobile"
@@ -105,18 +107,18 @@
         >
          <div class="drag-box border-radius4">
            <div class="drag cp border-radius4">
-             <div class="drag_bg border-radius4">
-             </div>
-             <div class="drag_text border-radius4">
-               <!-- 请按住滑块，拖动滑块验证 -->
-               {{$t('M.login_verifyTips')}}
-             </div>
-             <div
-               @mouseup="mouseupFn($event)"
-               @mousedown="mousedownFn($event)"
-               class="handler handler_bg"
-             >
-               <!--<IconFont class="icon-text" iconName="icon-icon-right"/>-->
+              <div class="drag_bg border-radius4">
+              </div>
+              <div class="drag_text border-radius4">
+                <!-- 请按住滑块，拖动滑块验证 -->
+                {{$t('M.login_verifyTips')}}
+              </div>
+              <div
+                @mouseup="mouseupFn($event)"
+                @mousedown="mousedownFn($event)"
+                class="handler handler_bg"
+              >
+                <!--<IconFont class="icon-text" iconName="icon-icon-right"/>-->
              </div>
            </div>
          </div>
@@ -598,6 +600,7 @@ export default {
   },
   data () {
     return {
+      fullscreenLoading: false,
       socket: new socket(this.url = loginSocketUrl), // 二维码登录socket
       isErcodeTimeOut: false, // 二维码是否过期
       isErCodeLogin: false, // 是否扫码登录
@@ -968,7 +971,6 @@ export default {
         })
         return false
       }
-
       let params = {
         token: this.token,
         phone: this.userInfo.phone,
@@ -977,10 +979,13 @@ export default {
         emailCode: this.step3EmailMsgCode,
         googleCode: this.step3GoogleMsgCode
       }
+      this.fullscreenLoading = true
       const data = await userLoginForStep2(params)
       if (!returnAjaxMessage(data, this, 1)) {
+        this.fullscreenLoading = false
         return false
       } else {
+        this.fullscreenLoading = false
         this.clearInputValue()
         this.step3DialogShowStatus = false
         this.USER_LOGIN(data.data.data)

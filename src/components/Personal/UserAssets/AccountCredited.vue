@@ -2,6 +2,8 @@
   <div
     class="credited-credited personal"
     :class="{'day':theme == 'day','night':theme == 'night' }"
+    v-loading.fullscreen.lock="fullscreenLoading"
+    element-loading-background="rgba(0, 0, 0, 0.6)"
   >
     <header class="credited-credited-header personal-height40 line-height40 background-color">
       <span class="padding-left23 header-content font-size16">
@@ -455,7 +457,8 @@ export default {
       closePayapl: false, // 默认关闭paypal
       closeWesternUnion: false, // 默认关闭西联汇款
       activeType: '', // 当前值
-      state: '' // 开启关闭
+      state: '', // 开启关闭
+      fullscreenLoading: false // 整页loading
     }
   },
   created () {
@@ -710,10 +713,19 @@ export default {
           }
           break
       }
+      // 整页loading
+      this.loadingCircle = this.$loading({
+        lock: true,
+        background: 'rgba(0, 0, 0, 0.7)'
+      })
       data = await openAndCloseModeSetting(params)
       if (!(returnAjaxMessage(data, this, 0))) {
+        // 接口失败清除loading
+        this.loadingCircle.close()
         return false
       } else {
+        // 接口成功清除loading
+        this.loadingCircle.close()
         // 安全中心状态刷新
         this.getAccountPaymentTerm()
         this.openCollectionMode = false // 开启收款方式
@@ -722,10 +734,16 @@ export default {
     },
     // 收款方式
     async getAccountPaymentTerm () {
+      // 整页loading
+      this.fullscreenLoading = true
       let data = await accountPaymentTerm()
       if (!(returnAjaxMessage(data, this, 0))) {
+        // 接口失败清除loading
+        this.fullscreenLoading = false
         return false
       } else {
+        // 接口成功清除loading
+        this.fullscreenLoading = false
         // 返回状态展示
         this.paymentTerm = data.data.data
         console.log(data)

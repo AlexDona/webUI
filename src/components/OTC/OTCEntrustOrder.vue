@@ -6,6 +6,8 @@
     <!-- 委托订单表格 -->
     <div
       class="otc-entrust-order-table"
+      v-loading="loading"
+      element-loading-background="rgba(0, 0, 0, 0.6)"
     >
       <!-- 表头 -->
       <div class="entrust-table-head">
@@ -111,6 +113,7 @@ export default {
   // props,
   data () {
     return {
+      loading: true,
       // 分页
       pageSize: 10,
       currentPage: 1, // 当前页码
@@ -149,18 +152,24 @@ export default {
     },
     // 2.0 请求委托中订单列表
     async getOTCEntrustingOrdersList () {
-      let data
-      data = await getOTCEntrustingOrders({
+      this.loading = true
+      const data = await getOTCEntrustingOrders({
         status: 'ENTRUSTED', // 状态（ENTRUSTED 挂单中 HISTORY 历史挂单）
         pageNum: this.currentPage,
         pageSize: this.pageSize
       })
       // console.log(data)
       // 提示信息
-      returnAjaxMessage(data, this, 0)
-      this.OTCEntrustOrderList = data.data.data.list
-      // 分页
-      this.totalPages = data.data.data.pages - 0
+      if (!(returnAjaxMessage(data, this, 0))) {
+        this.loading = false
+        return false
+      } else {
+        // 返回数据正确的逻辑
+        this.loading = false
+        this.OTCEntrustOrderList = data.data.data.list
+        // 分页
+        this.totalPages = data.data.data.pages - 0
+      }
     },
     // 3.0 点击撤单按钮
     revocationOrder (id) {

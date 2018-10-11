@@ -405,3 +405,7 @@ input[type="number"] {
   scrollbar-track-color: #666; /**//*立体滚动条背景颜色*/
   scrollbar-base-color: #f8f8f8; /**//*滚动条的基本颜色*/
 }
+/* loading遮罩圆圈的颜色重置为网站主题色 */
+.el-loading-spinner .path{
+  stroke: #338FF5 !important;
+}

@@ -2,6 +2,8 @@
   <div
     class="transaction-password personal"
     :class="{'day':theme == 'day','night':theme == 'night' }"
+    v-loading.fullscreen.lock="fullscreenLoading"
+    element-loading-background="rgba(0, 0, 0, 0.6)"
   >
     <HeaderCommon/>
     <div class="transaction-password-main margin25">
@@ -290,6 +292,7 @@ export default {
         '', // 邮箱验证码
         '' // 谷歌验证码
       ],
+      fullscreenLoading: false, // 整页loading
       successCountDown: 1 // 成功倒计时
     }
   },
@@ -451,10 +454,16 @@ export default {
           nickName: this.setPassword.nickname, // 昵称
           payPassword: this.setPassword.newPassword // 交易密码
         }
+        // 整页loading
+        this.fullscreenLoading = true
         data = await setTransactionPassword(params)
         if (!(returnAjaxMessage(data, this, 1))) {
+          // 接口失败清除loading
+          this.fullscreenLoading = false
           return false
         } else {
+          // 接口成功清除loading
+          this.fullscreenLoading = false
           console.log(data)
           this.stateEmptyData()
           this.$store.commit('common/SET_USER_INFO_REFRESH_STATUS', true)
@@ -561,10 +570,16 @@ export default {
         phoneCode: this.modifyPassword.phoneCode, // 手机验证
         googleCode: this.modifyPassword.googleCode // 谷歌验证
       }
+      // 整页loading
+      this.fullscreenLoading = true
       data = await securityVerificationOnOff(params)
       if (!(returnAjaxMessage(data, this, 0))) {
+        // 接口失败清除loading
+        this.fullscreenLoading = false
         return false
       } else {
+        // 接口成功清除loading
+        this.fullscreenLoading = false
         await this.confirmUpdate()
       }
     },
@@ -606,14 +621,20 @@ export default {
         let data
         let param = {
           payPassword: this.modifyPassword.resetTransactionPassword, // 重置交易密码
-          phoneCode: this.modifyPassword.phoneCode,
-          emailCode: this.modifyPassword.emailCode,
-          googleCode: this.modifyPassword.googleCode
+          phoneCode: this.modifyPassword.phoneCode, // 手机验证码
+          emailCode: this.modifyPassword.emailCode, // 邮箱验证码
+          googleCode: this.modifyPassword.googleCode // 谷歌验证码
         }
+        // 整页loading
+        this.fullscreenLoading = true
         data = await resetUpdatePayPassword(param)
         if (!(returnAjaxMessage(data, this, 1))) {
+          // 接口失败清除loading
+          this.fullscreenLoading = false
           return false
         } else {
+          // 接口成功清除loading
+          this.fullscreenLoading = false
           console.log(1)
           this.successJump()
           this.stateEmptyData()

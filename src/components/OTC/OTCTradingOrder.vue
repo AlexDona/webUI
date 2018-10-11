@@ -3,7 +3,11 @@
     class="otc-trading-order-box otc"
     :class="{'day':theme == 'day','night':theme == 'night' }"
   >
-    <div class="otc-trading-order-content">
+    <div
+      class="otc-trading-order-content"
+      v-loading="loading"
+      element-loading-background="rgba(0, 0, 0, 0.6)"
+    >
       <!-- 一、交易中订单 -->
       <div
         class="order-list"
@@ -719,6 +723,7 @@ export default {
   // props,
   data () {
     return {
+      loading: true,
       // 分页
       currentPage: 1, // 当前页码
       totalPages: 1, // 总页数
@@ -833,6 +838,7 @@ export default {
     },
     // 2.0 请求交易中订单列表
     async getOTCTradingOrdersList () {
+      this.loading = true
       this.cancelOrderTimeArr = []
       this.accomplishOrderTimeArr = []
       console.log('22222')
@@ -846,9 +852,11 @@ export default {
       console.log(data)
       // 提示信息
       if (!(returnAjaxMessage(data, this, 0))) {
+        this.loading = false
         return false
       } else {
         // 返回数据正确的逻辑
+        this.loading = false
         this.tradingOrderList = data.data.data.list
         console.log('交易中订单')
         console.log(this.tradingOrderList)
@@ -949,6 +957,7 @@ export default {
         this.errpwd = this.$t('M.otc_publishAD_pleaseInput') + this.$t('M.otc_publishAD_sellpassword')
         return false
       } else {
+        this.loading = true
         const data = await buyerPayForOrder({
           orderId: this.activedTradingOrderId, // 订单id
           payId: this.activitedPayStyleId, // 支付账户id
@@ -957,8 +966,10 @@ export default {
         console.log(data)
         // 提示信息
         if (!(returnAjaxMessage(data, this, 1))) {
+          this.loading = false
           return false
         } else {
+          this.loading = false
           this.dialogVisibleConfirmPayment = false
           this.errpwd = ''
           this.tradePassword = ''
@@ -981,6 +992,7 @@ export default {
         this.errpwd = this.$t('M.otc_publishAD_pleaseInput') + this.$t('M.otc_publishAD_sellpassword')
         return false
       }
+      this.loading = true
       const data = await sellerConfirmGetMoney({
         orderId: this.activedTradingOrderId, // 订单id
         tradePassword: this.tradePassword // 交易密码
@@ -988,8 +1000,10 @@ export default {
       console.log(data)
       // 提示信息
       if (!(returnAjaxMessage(data, this, 1))) {
+        this.loading = false
         return false
       } else {
+        this.loading = false
         this.dialogVisibleConfirmReceipt = false
         this.errpwd = ''
         this.tradePassword = ''
@@ -1028,6 +1042,7 @@ export default {
         this.errpwd = this.$t('M.otc_publishAD_pleaseInput') + this.$t('M.otc_publishAD_sellpassword')
         return false
       }
+      this.loading = true
       const data = await sellerSendAppeal({
         orderId: this.activedTradingOrderId, // 订单id
         reason: this.appealTextareaValue, // 申诉原因
@@ -1036,8 +1051,10 @@ export default {
       console.log(data)
       // 提示信息
       if (!(returnAjaxMessage(data, this, 1))) {
+        this.loading = false
         return false
       } else {
+        this.loading = false
         this.dialogVisibleSubmitComplaint = false
         this.errpwd = '' // 清空密码错提示
         this.tradePassword = '' // 清空密码框

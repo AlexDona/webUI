@@ -2,9 +2,13 @@
   <div
     class="add-western personal"
     :class="{'day':theme == 'day','night':theme == 'night' }"
+    v-loading.fullscreen.lock="fullscreenLoading"
+    element-loading-background="rgba(0, 0, 0, 0.6)"
   >
     <HeaderCommon/>
-    <div class="add-western-main margin25">
+    <div
+      class="add-western-main margin25"
+    >
       <header class="add-western-header personal-height60 line-height60 line-height70 margin25">
         <span
           v-if="paymentTerm.isXilianBind"
@@ -37,7 +41,7 @@
           <!--*西联汇款l上传二维码方法：打开西联汇款首页>收钱>保存图片，将存在手机相册的收款码上传即可。-->
         <!--</header>-->
         <div class="western-content-from">
-          <!--名 称 电汇地址 交易密码-->
+          <!--名 称-->
           <el-form
             :label-position="labelPosition"
             label-width="120px"
@@ -49,6 +53,7 @@
                 {{ userInfo.userInfo.realname }}
               </span>
             </el-form-item>
+            <!--电汇地址-->
             <el-form-item
               :label="$t('M.user_account_wire_transfer') + $t('M.comm_site')"
             >
@@ -66,6 +71,7 @@
                 />
               </el-input>
             </el-form-item>
+            <!--交易密码-->
             <el-form-item
               :label="$t('M.comm_password')"
             >
@@ -111,11 +117,13 @@
 import HeaderCommon from '../../Common/HeaderCommonForPC'
 import IconFontCommon from '../../Common/IconFontCommon'
 import ErrorBox from '../../User/ErrorBox'
-import {returnAjaxMessage} from '../../../utils/commonFunc'
+import {
+  returnAjaxMessage,
+  getAccountPaymentTerm
+} from '../../../utils/commonFunc'
 import {
   statusCardSettings,
-  modificationAccountPaymentTerm,
-  accountPaymentTerm
+  modificationAccountPaymentTerm
 } from '../../../utils/api/personal'
 // 底部
 import FooterCommon from '../../Common/FooterCommon'
@@ -137,6 +145,7 @@ export default {
       paymentTerm: {},
       successCountDown: 1, // 成功倒计时
       paymentMethodList: {},
+      fullscreenLoading: false, // 整页loading
       errorShowStatusList: [
         '', // 西联汇款账号
         '' // 交易密码
@@ -232,11 +241,17 @@ export default {
           bankType: 'xilian', // type
           id: this.id
         }
+        // 整页loading
+        this.fullscreenLoading = true
         data = await statusCardSettings(param)
         console.log(data)
         if (!(returnAjaxMessage(data, this, 1))) {
+          // 接口失败清除loading
+          this.fullscreenLoading = false
           return false
         } else {
+          // 接口成功清除loading
+          this.fullscreenLoading = false
           this.successJump()
           this.stateEmptyData()
         }
@@ -247,34 +262,40 @@ export default {
       this.telegraphicTransferAddress = ''
       this.transactionPassword = ''
     },
-    // 获取支付方式信息
     async paymentMethodInformation () {
       let data
       let params = {
         userId: this.userInfo.userId,
         type: 'xilian'
       }
+      // 整页loading
+      this.fullscreenLoading = true
       data = await modificationAccountPaymentTerm(params)
       if (!(returnAjaxMessage(data, this, 0))) {
+        // 接口失败清除loading
+        this.fullscreenLoading = false
         return false
       } else {
+        // 接口成功清除loading
+        this.fullscreenLoading = false
         // 返回状态展示
         this.paymentMethodList = data.data.data
+        // 修改时带回西联汇款账号
         this.telegraphicTransferAddress = data.data.data.address
         this.id = data.data.data.id
         console.log(this.paymentMethodList)
       }
     },
-    // 收款方式
-    async getAccountPaymentTerm () {
-      let data = await accountPaymentTerm()
-      if (!(returnAjaxMessage(data, this, 0))) {
-        return false
-      } else {
-        // 返回状态展示
-        this.paymentTerm = data.data.data
-        console.log(this.paymentTerm)
-      }
+    /**
+     * 收款方式
+     */
+    getAccountPaymentTerm () {
+      getAccountPaymentTerm(this, (data) => {
+        if (data) {
+          // 返回状态展示
+          this.paymentTerm = data.data.data
+        }
+      })
     },
     // 成功自动跳转
     successJump () {

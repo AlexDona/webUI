@@ -2,9 +2,13 @@
   <div
     class="add-chat personal"
     :class="{'day':theme == 'day','night':theme == 'night' }"
+    v-loading.fullscreen.lock="fullscreenLoading"
+    element-loading-background="rgba(0, 0, 0, 0.6)"
   >
     <HeaderCommon/>
-    <div class="add-chat-main margin25">
+    <div
+      class="add-chat-main margin25"
+    >
       <header class="add-chat-header personal-height60 line-height60 line-height70 margin25">
         <span
           v-if="paymentTerm.isWeixinBind"
@@ -41,7 +45,7 @@
             :label-position="labelPosition"
             label-width="120px"
           >
-            <!--名 称 收  款  类  型 微信账号 上传收款码 交易密码-->
+            <!--名 称-->
             <el-form-item
               :label="$t('M.user_account_name')"
             >
@@ -49,6 +53,7 @@
                 {{ userInfo.userInfo.realname }}
               </span>
             </el-form-item>
+            <!--收  款  类  型-->
             <el-form-item
               :label="$t('M.user_account_gathering') + $t('M.comm_type')"
             >
@@ -56,6 +61,7 @@
                 {{ $t('M.user_account_weChat') }}
               </span>
             </el-form-item>
+            <!--微信账号-->
             <el-form-item
               :label="$t('M.user_account_weChat') + $t('M.user_account_number')"
             >
@@ -141,11 +147,13 @@
 import HeaderCommon from '../../Common/HeaderCommonForPC'
 import IconFontCommon from '../../Common/IconFontCommon'
 import ErrorBox from '../../User/ErrorBox'
-import {returnAjaxMessage} from '../../../utils/commonFunc'
+import {
+  returnAjaxMessage,
+  getAccountPaymentTerm
+} from '../../../utils/commonFunc'
 import {
   statusCardSettings,
-  modificationAccountPaymentTerm,
-  accountPaymentTerm
+  modificationAccountPaymentTerm
 } from '../../../utils/api/personal'
 import {apiCommonUrl} from '../../../utils/env'
 // 底部
@@ -170,9 +178,10 @@ export default {
       dialogImageHandUrl: '', // 图片url
       dialogImageHandUrl1: '', // 图片url
       id: '', // ID
-      paymentTerm: {},
+      paymentTerm: {}, // 收款方式
       successCountDown: 1, // 成功倒计时
       paymentMethodList: {},
+      fullscreenLoading: false, // 整页loading
       errorShowStatusList: [
         '', // 微信账号
         '' // 交易密码
@@ -243,10 +252,11 @@ export default {
     setErrorMsg (index, msg) {
       this.errorShowStatusList[index] = msg
     },
-    // 确认设置新账号
+    // 确认设置按钮
     stateSubmitWeChat () {
       this.stateSeniorCertification()
     },
+    // 确认设置接口
     async stateSeniorCertification () {
       let goOnStatus = 0
       if (
@@ -274,12 +284,18 @@ export default {
           payPassword: this.password, // 交易密码
           bankType: 'weixin' // type
         }
+        // 整页loading
+        this.fullscreenLoading = true
         console.log(this.dialogImageHandUrl1)
         data = await statusCardSettings(param)
         console.log(data)
         if (!(returnAjaxMessage(data, this, 1))) {
+          // 接口失败清除loading
+          this.fullscreenLoading = false
           return false
         } else {
+          // 接口成功清除loading
+          this.fullscreenLoading = false
           this.successJump()
           this.stateEmptyData()
         }
@@ -297,18 +313,26 @@ export default {
         userId: this.userInfo.userId,
         type: 'weixin'
       }
+      // 整页loading
+      this.fullscreenLoading = true
       data = await modificationAccountPaymentTerm(params)
       if (!(returnAjaxMessage(data, this, 0))) {
+        // 接口失败清除loading
+        this.fullscreenLoading = false
         return false
       } else {
+        // 接口成功清除loading
+        this.fullscreenLoading = false
         // 返回状态展示
         if (data.data.data) {
           this.paymentMethodList = data.data.data
         }
         if (data.data.data.cardNo) {
+          // 修改时带回微信号
           this.cardNo = data.data.data.cardNo
         }
         if (data.data.data.qrcode) {
+          // 修改时带回微信收款码
           this.dialogImageHandUrl1 = data.data.data.qrcode
         }
         if (data.data.data.id) {
@@ -317,16 +341,16 @@ export default {
         console.log(this.dialogImageHandUrl1)
       }
     },
-    // 收款方式
-    async getAccountPaymentTerm () {
-      let data = await accountPaymentTerm()
-      if (!(returnAjaxMessage(data, this, 0))) {
-        return false
-      } else {
-        // 返回状态展示
-        this.paymentTerm = data.data.data
-        console.log(this.paymentTerm)
-      }
+    /**
+     * 收款方式
+     */
+    getAccountPaymentTerm () {
+      getAccountPaymentTerm(this, (data) => {
+        if (data) {
+          // 返回状态展示
+          this.paymentTerm = data.data.data
+        }
+      })
     },
     // 成功自动跳转
     successJump () {

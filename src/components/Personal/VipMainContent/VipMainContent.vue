@@ -2,6 +2,8 @@
   <div
     class="vip-main personal"
     :class="{'day':theme == 'day','night':theme == 'night' }"
+    v-loading.fullscreen.lock="fullscreenLoading"
+    element-loading-background="rgba(0, 0, 0, 0.6)"
   >
     <!--头部-->
     <HeaderCommon/>
@@ -413,6 +415,11 @@
             @click.prevent="changeMonth(3, filteredData[0].id)"
             :class="{ red:changeRed == 3}"
           >
+            <span
+              class="triangle-style font-size12 text-align-c"
+            >
+              推荐
+            </span>
             <p class="duration-month font-size16">
               <!--3个月-->
               3{{ $t('M.user_vip_months') }}
@@ -434,7 +441,8 @@
               {{filteredData[2].value}}{{filteredData[2].vipCoinName}}
             </p>
             <p class="duration-through ">
-              600FUC
+              <!--600FUC-->
+              {{filteredData[2].value}}{{filteredData[2].vipCoinName}}
             </p>
           </div>
           <div
@@ -450,7 +458,8 @@
               {{filteredData[3].value}}{{filteredData[3].vipCoinName}}
             </p>
             <p class="duration-through">
-              1200FUC
+              <!--1200FUC-->
+              {{filteredData[3].value}}{{filteredData[3].vipCoinName}}
             </p>
           </div>
           <div
@@ -609,7 +618,9 @@ export default {
       vipName: '', // vip名称
       configValue: '', // 币种id
       currencyAsset: 0, // 币种数量
-      activeStatus: 0 // VIP状态
+      activeStatus: 0, // VIP状态
+      loadingCircle: {}, // 整页loading
+      fullscreenLoading: false // 整页loading
     }
   },
   async created () {
@@ -759,10 +770,16 @@ export default {
           vipName: this.vipName,
           month: this.month
         }
+        // 整页loading
+        this.fullscreenLoading = true
         data = await buyVipPriceInfo(params)
         if (!(returnAjaxMessage(data, this, 1))) {
+          // 接口失败清除loading
+          this.fullscreenLoading = false
           return false
         } else {
+          // 接口成功清除loading
+          this.fullscreenLoading = false
           this.dialogFormVisible = false
           this.password = ''
           reflashUserInfo(this)
@@ -778,9 +795,15 @@ export default {
     async getVipPriceInfo () {
       let data = await vipPriceInfo({})
       console.log(data)
+      // 整页loading
+      this.fullscreenLoading = true
       if (!(returnAjaxMessage(data, this, 0))) {
+        // 接口失败清除loading
+        this.fullscreenLoading = false
         return false
       } else {
+        // 接口成功清除loading
+        this.fullscreenLoading = false
         if (data.data.data) {
           // 返回展示
           this.vipPriceInfo1 = data.data.data
@@ -806,10 +829,16 @@ export default {
       let param = {
         coinId: this.configValue // 币种coinId
       }
+      // 整页loading
+      this.fullscreenLoading = true
       data = await getPushTotalByCoinId(param)
       if (!(returnAjaxMessage(data, this, 0))) {
+        // 接口失败清除loading
+        this.fullscreenLoading = false
         return false
       } else {
+        // 接口成功清除loading
+        this.fullscreenLoading = false
         this.currencyAsset = data.data.data.total
         console.log(this.currencyAsset)
       }
@@ -957,6 +986,19 @@ export default {
             }
           }
           > .duration {
+            position: relative;
+            .triangle-style {
+              position: absolute;
+              top: 0;
+              right: 0;
+              width: 40px;
+              height: 24px;
+              line-height: 24px;
+              color: #fff;
+              border-top-left-radius: 15px;
+              border-bottom-left-radius: 15px;
+              background-color: #338FF5;
+            }
             &:hover {
               background-color: transparent !important;
               border: 1px solid #338FF5 !important;

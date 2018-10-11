@@ -7,7 +7,9 @@ import {
 import {
   userRefreshUser,
   getQueryAllOrdersList,
-  statusSecurityCenter
+  statusSecurityCenter,
+  accountPaymentTerm
+  // modificationAccountPaymentTerm
 } from '../utils/api/personal'
 
 import {
@@ -195,6 +197,18 @@ export const reflashUserInfo = async (that) => {
 export const getSecurityCenter = async (that, callback) => {
   console.log(store)
   const data = await statusSecurityCenter({})
+  if (!(returnAjaxMessage(data, that))) {
+    return false
+  } else {
+    callback(data)
+  }
+}
+/**
+ *  刷新收款方式状态
+ */
+export const getAccountPaymentTerm = async (that, callback) => {
+  console.log(store)
+  const data = await accountPaymentTerm({})
   if (!(returnAjaxMessage(data, that))) {
     return false
   } else {

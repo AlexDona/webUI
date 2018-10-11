@@ -399,7 +399,6 @@ export default {
         color: #fff;
       }
       .info {
-        color: #fff;
         padding-left: 83px;
       }
       .button-color {
@@ -408,16 +407,11 @@ export default {
         border: 0;
         line-height: 0;
         margin-right: 15px;
-        color: rgba(255,255,255,0.7);
-        background: linear-gradient(81deg,rgba(43,57,110,1) 0%,rgba(42,80,130,1) 100%);
       }
       .btn{
         width: 80px;
         height: 35px;
         line-height: 0;
-        color: #fff;
-        background-color: transparent;
-        border: 1px solid #338FF5;
       }
       > .personal-center-content{
         width: 1150px;
@@ -450,6 +444,18 @@ export default {
       .asset-info {
         background: #1C1F32;
       }
+      .info {
+        color: #fff;
+      }
+      .button-color {
+        color: rgba(255,255,255,0.7);
+        background: linear-gradient(81deg,rgba(43,57,110,1) 0%,rgba(42,80,130,1) 100%);
+      }
+      .btn{
+        color: #fff;
+        background-color: transparent;
+        border: 1px solid #338FF5;
+      }
     }
     &.day{
       background-color: $dayBgColor;
@@ -459,6 +465,18 @@ export default {
       }
       .warning-text {
         color: #333;
+      }
+      .info {
+        color: #333;
+      }
+      .button-color {
+        color: rgba(255,255,255,0.7);
+        background: linear-gradient(81deg,rgba(43,57,110,1) 0%,rgba(42,80,130,1) 100%);
+      }
+      .btn{
+        color: #333;
+        background-color: transparent;
+        border: 1px solid #338FF5;
       }
     }
   }

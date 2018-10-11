@@ -2,6 +2,8 @@
   <div
     class="identity-authentication personal"
     :class="{'day':theme == 'day','night':theme == 'night' }"
+    v-loading.fullscreen.lock="fullscreenLoading"
+    element-loading-background="rgba(0, 0, 0, 0.6)"
   >
     <header class="identity-header-background personal-height40 line-height40">
       <span class="padding-left23 header-content font-size16">
@@ -445,7 +447,7 @@
       <!--请在浏览器中打开，并升级浏览器至最新版本,无法通过认证的用户，-->
       <!--请点击这里-->
       <el-dialog
-        title="高级认证"
+        :title="$t('M.user_senior_certification')"
         :visible.sync="seniorAuthentication"
         name="1"
         center>
@@ -546,7 +548,8 @@ export default {
       errorShowStatusList: [
         '', // 真实姓名
         '' // 证件号码
-      ]
+      ],
+      fullscreenLoading: false // 整页loading
     }
   },
   async created () {
@@ -572,37 +575,45 @@ export default {
     ...mapMutations([
       'SET_USER_INFO_REFRESH_STATUS'
     ]),
+    // 隐藏上传按钮
     uploadImg (ref) {
       this.$refs[ref].click()
     },
+    // 上传身份证正面
     handleSuccessFront (response) {
       console.log(response)
       this.dialogImageFrontUrl = response.data.fileUrl
       this.firstPictureSrcShow = false
     },
+    // 上传身份证反面
     handleSuccessReverseSide (response) {
       console.log(response)
       this.dialogImageReverseSideUrl = response.data.fileUrl
       this.secondPictureSrcShow = false
     },
+    // 上传手持身份证
     handleSuccessHand (response) {
       console.log(response)
       this.dialogImageHandUrl = response.data.fileUrl
       this.thirdPictureSrcShow = false
     },
+    // 删除身份证正面
     handleRemoveFront () {
       this.dialogImageFrontUrl = ''
       this.firstPictureSrcShow = true
     },
+    // 删除身份证反面
     handleRemoveSide () {
       this.dialogImageReverseSideUrl = ''
       this.secondPictureSrcShow = true
     },
+    // 删除手持身份证
     handleRemoveHand () {
       this.dialogImageHandUrl = ''
       this.thirdPictureSrcShow = true
       console.log(this.thirdPictureSrcShow)
     },
+    // 判断图片大小限制
     beforeAvatarUpload (file) {
       console.log(file)
       // const isJPG = file.type === 'image/jpeg'
@@ -612,7 +623,8 @@ export default {
       // }
       if (isLt10M > 102400000) {
         console.log(isLt10M)
-        this.$message.error('上传头像图片大小不能超过 10M!')
+        // 上传头像图片大小不能超过 10M!
+        this.$message.error(this.$t('M.user_senior_hint5'))
         return false
       }
     },
@@ -643,10 +655,16 @@ export default {
     */
     async getRealNameInformation () {
       let data = await realNameInformation()
+      // 整页loading
+      this.fullscreenLoading = true
       console.log(data)
       if (!(returnAjaxMessage(data, this, 0))) {
+        // 接口失败清除loading
+        this.fullscreenLoading = false
         return false
       } else {
+        // 接口成功清除loading
+        this.fullscreenLoading = false
         // 返回列表数据
         this.realNameInformationObj = data.data.data
         // if (data.data.data.authInfo) {
@@ -662,9 +680,15 @@ export default {
       let data = await userRefreshUser({
         token: this.userInfo.token
       })
+      // 整页loading
+      this.fullscreenLoading = true
       if (!(returnAjaxMessage(data, this, 0))) {
+        // 接口失败清除loading
+        this.fullscreenLoading = false
         return false
       } else {
+        // 接口成功清除loading
+        this.fullscreenLoading = false
         this.$store.commit('user/SET_STEP1_INFO', data.data.data)
         // 返回列表数据
         this.userInfoRefresh = data.data.data.userInfo
@@ -675,11 +699,11 @@ export default {
     checkoutInputFormat (type, targetNum) {
       console.log(type)
       switch (type) {
-        // 真实姓名
+        // 请输入真实姓名
         case 0:
           console.log(type)
           if (!targetNum) {
-            this.setErrorMsg(0, '请输入真实姓名')
+            this.setErrorMsg(0, this.$t('M.comm_please_enter') + this.$t('M.user_real_real'))
             this.$forceUpdate()
             return 0
           } else {
@@ -687,10 +711,10 @@ export default {
             this.$forceUpdate()
             return 1
           }
-        // 证件号码
+        // 请输入证件号码
         case 1:
           if (!targetNum) {
-            this.setErrorMsg(1, '请输入证件号码')
+            this.setErrorMsg(1, this.$t('M.comm_please_enter') + this.$t('M.user_real_certificate_cone'))
             this.$forceUpdate()
             return 0
           } else {
@@ -726,10 +750,16 @@ export default {
           realname: this.realName, // 真实姓名
           cardNo: this.identificationNumber // 证件号码
         }
+        // 整页loading
+        this.fullscreenLoading = true
         data = await submitRealNameAuthentication(param)
         if (!(returnAjaxMessage(data, this, 1))) {
+          // 接口失败清除loading
+          this.fullscreenLoading = false
           return false
         } else {
+          // 接口成功清除loading
+          this.fullscreenLoading = false
           await this.getUserRefreshUser()
           await this.getRealNameInformation()
           console.log(data)
@@ -775,20 +805,22 @@ export default {
       this.stateSeniorCertification()
     },
     async stateSeniorCertification () {
-      // 请上传身份证正面 请上传身份证反面 请上传身份证反面
       if (this.dialogImageFrontUrl === '') {
+        // 请上传身份证正面
         this.$message({
           message: this.$t('M.user_senior_upload1'),
           type: 'error'
         })
         return false
       } else if (this.dialogImageReverseSideUrl === '') {
+        // 请上传身份证反面
         this.$message({
           message: this.$t('M.user_senior_upload2'),
           type: 'error'
         })
         return false
       } else if (this.dialogImageHandUrl === '') {
+        // 请上传身份证反面
         this.$message({
           message: this.$t('M.user_senior_upload3'),
           type: 'error'
@@ -803,11 +835,17 @@ export default {
         idcardBack: this.dialogImageReverseSideUrl, // 上传身份证反面
         idcardHand: this.dialogImageHandUrl // 上传手持身份证
       }
+      // 整页loading
+      this.fullscreenLoading = true
       data = await submitSeniorCertification(param)
       console.log(data)
       if (!(returnAjaxMessage(data, this, 1))) {
+        // 接口失败清除loading
+        this.fullscreenLoading = false
         return false
       } else {
+        // 接口成功清除loading
+        this.fullscreenLoading = false
         console.log(1)
         this.SET_USER_INFO_REFRESH_STATUS(true)
         await this.getUserRefreshUser()

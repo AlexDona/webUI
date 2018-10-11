@@ -2,8 +2,12 @@
   <div
     class="withdrawal-address personal"
     :class="{'day':theme == 'day','night':theme == 'night' }"
+    v-loading.fullscreen.lock="fullscreenLoading"
+    element-loading-background="rgba(0, 0, 0, 0.6)"
   >
-    <div class="withdrawal-address-main">
+    <div
+      class="withdrawal-address-main"
+    >
       <header class="withdrawal-header personal-height40 line-height40 background-color padding-left23 border-radius2">
         <span class="header-content display-inline-block font-size16 cursor-pointer">
           <!--提币地址-->
@@ -170,8 +174,10 @@
         :data="gainAddressList"
         style="width: 100%"
         :empty-text="$t('M.comm_no_data')"
+        v-loading="loading"
+        element-loading-background="rgba(0, 0, 0, 0.6)"
       >
-        <!--币种 备注 提币地址 操作-->
+        <!--币种-->
         <el-table-column
           :label="$t('M.comm_currency')"
           width="180"
@@ -180,6 +186,7 @@
             <div>{{ s.row.coinName }}</div>
           </template>
         </el-table-column>
+        <!--备注-->
         <el-table-column
           :label="$t('M.comm_remark')"
           width="180"
@@ -188,6 +195,7 @@
             <div>{{ s.row.remark }}</div>
           </template>
         </el-table-column>
+        <!--提币地址-->
         <el-table-column
           :label="$t('M.comm_mention_money') + $t('M.comm_site')"
           width="350"
@@ -196,6 +204,7 @@
             <div>{{ s.row.address }}</div>
           </template>
         </el-table-column>
+        <!--操作-->
         <el-table-column
           :label="$t('M.comm_operation')"
         >
@@ -228,7 +237,8 @@ import {mapState} from 'vuex'
 import {
   inquireWithdrawalAddressList,
   addNewWithdrawalAddress,
-  deleteUserWithdrawAddress
+  deleteUserWithdrawAddress,
+  checkCurrencyAddress
 } from '../../../utils/api/personal'
 import ErrorBox from '../../User/ErrorBox'
 import CountDownButton from '../../Common/CountDownCommon'
@@ -270,7 +280,10 @@ export default {
       deleteWithdrawalId: '', // 每行数据ID
       phoneCode: '', // 手机验证
       emailCode: '', // 邮箱验证
-      googleCode: '' // 谷歌验证
+      googleCode: '', // 谷歌验证
+      // loadingCircle: {}, // 整页loading
+      fullscreenLoading: false,
+      loading: true // 局部列表loading
     }
   },
   created () {
@@ -286,29 +299,6 @@ export default {
   update () {},
   beforeRouteUpdate () {},
   methods: {
-    // 清空内容信息
-    emptyStatus () {
-      this.errorMsg1 = ''
-    },
-    // 点击显示验证信息
-    addAddress () {
-      let goOnStatus = 0
-      if (
-        this.checkoutInputFormat(0, this.mentionRemark) &&
-        this.checkoutInputFormat(1, this.prepaidAddress)
-      ) {
-        goOnStatus = 1
-      } else {
-        goOnStatus = 0
-      }
-      if (goOnStatus) {
-        this.getSecurityCenter()
-      }
-    },
-    // 点击确认
-    submitMentionMoney () {
-      this.stateSubmitAddAddress()
-    },
     // 资产币种下拉
     changeId (e) {
       this.currencyList.forEach(item => {
@@ -355,23 +345,69 @@ export default {
               return 0
           }
           break
-          // if (!targetNum) {
-          //   // 请输入提币地址
-          //   this.setErrorMsg(1, this.$t('M.comm_please_enter') + this.$t('M.comm_mention_money') + this.$t('M.comm_site'))
-          //   this.$forceUpdate()
-          //   return 0
-          // } else {
-          //   this.setErrorMsg(1, '')
-          //   this.$forceUpdate()
-          //   return 1
-          // }
       }
     },
     // 设置错误信息
     setErrorMsg (index, msg) {
       this.errorShowStatusList[index] = msg
     },
-    // 新增用户提币地址按钮
+    // 清空内容信息
+    emptyStatus () {
+      this.errorMsg1 = ''
+    },
+    // 点击显示验证信息
+    addAddress () {
+      let goOnStatus = 0
+      if (
+        this.checkoutInputFormat(0, this.mentionRemark) &&
+        this.checkoutInputFormat(1, this.prepaidAddress)
+      ) {
+        goOnStatus = 1
+      } else {
+        goOnStatus = 0
+      }
+      if (goOnStatus) {
+        // 验证通过调用新增提币地址接口
+        this.gitCheckCurrencyAddress()
+      }
+    },
+    // 新增用户提币地址校验
+    async gitCheckCurrencyAddress () {
+      let data
+      let param = {
+        coinId: this.currencyValue, // 币种coinId
+        address: this.prepaidAddress // 充值地址
+      }
+      // 整页loading
+      this.fullscreenLoading = true
+      data = await checkCurrencyAddress(param)
+      if (!(returnAjaxMessage(data, this, 0))) {
+        // 接口失败清除loading
+        this.fullscreenLoading = false
+        return false
+      } else {
+        // 接口成功清除loading
+        this.fullscreenLoading = false
+        // 验证通过调用验证方式接口
+        this.getSecurityCenter()
+      }
+    },
+    /**
+     * 安全中心
+     */
+    getSecurityCenter () {
+      getSecurityCenter(this, (data) => {
+        if (data) {
+          this.securityCenter = data.data.data
+          this.mentionMoneyConfirm = true
+        }
+      })
+    },
+    // 点击新增用户提币地址确认按钮
+    submitMentionMoney () {
+      this.stateSubmitAddAddress()
+    },
+    // 新增用户提币地址接口
     async stateSubmitAddAddress () {
       if (!this.phoneCode && !this.emailCode && !this.googleCode) {
         // 请输入验证码
@@ -389,10 +425,16 @@ export default {
         emailCode: this.emailCode, // 邮箱验证
         googleCode: this.googleCode // 谷歌验证
       }
+      // 整页loading
+      this.fullscreenLoading = true
       data = await addNewWithdrawalAddress(param)
       if (!(returnAjaxMessage(data, this, 1))) {
+        // 接口失败清除loading
+        this.fullscreenLoading = false
         return false
       } else {
+        // 接口成功清除loading
+        this.fullscreenLoading = false
         this.WithdrawalAddressList()
         this.stateEmptyData()
         this.mentionMoneyConfirm = false
@@ -403,18 +445,25 @@ export default {
      */
     async WithdrawalAddressList () {
       let params = {
-        pageNum: this.currentPageForMyEntrust,
-        pageSize: this.pageSize
+        pageNum: this.currentPageForMyEntrust, // 页码
+        pageSize: this.pageSize // 页数
       }
       let data = await inquireWithdrawalAddressList(params)
       // console.log(data)
       if (!(returnAjaxMessage(data, this, 0))) {
+        // 接口失败清除局部loading
+        this.loading = false
         return false
       } else {
+        // 接口成功清除局部loading
+        this.loading = false
         // 返回列表数据
         this.currencyList = data.data.data.canWithdrawPartnerCoinList
+        // 对币种名称进行赋值
         this.currencyValue = data.data.data.canWithdrawPartnerCoinList[0].name
+        // 对ID名称进行赋值
         this.currencyValue = data.data.data.canWithdrawPartnerCoinList[0].coinId
+        // 对币种名称列表进行赋值
         this.gainAddressList = data.data.data.UserWithdrawAddressPage.list
         this.totalPageForMyEntrust = data.data.data.UserWithdrawAddressPage.pages - 0
         console.log(this.currencyList)
@@ -442,8 +491,12 @@ export default {
       }
       data = await deleteUserWithdrawAddress(param)
       if (!(returnAjaxMessage(data, this, 1))) {
+        // 接口失败清除局部loading
+        this.loading = false
         return false
       } else {
+        // 接口成功清除局部loading
+        this.loading = false
         this.WithdrawalAddressList()
         this.stateEmptyData()
       }
@@ -457,7 +510,6 @@ export default {
       this.emailCode = ''
       this.googleCode = ''
     },
-    // 分页
     // 发送验证码
     sendPhoneOrEmailCode (loginType) {
       if (this.disabledOfPhoneBtn || this.disabledOfEmailBtn) {
@@ -502,17 +554,6 @@ export default {
     changeCurrentPage (pageNum) {
       this.currentPageForMyEntrust = pageNum
       this.WithdrawalAddressList()
-    },
-    /**
-     * 安全中心
-     */
-    getSecurityCenter () {
-      getSecurityCenter(this, (data) => {
-        if (data) {
-          this.securityCenter = data.data.data
-          this.mentionMoneyConfirm = true
-        }
-      })
     }
   },
   filter: {},
