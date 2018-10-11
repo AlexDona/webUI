@@ -560,6 +560,7 @@ export default {
       let params = {
         partnerId: this.partnerId
       }
+      this.loading = true
       const data = await getEntrustSelectBox(params)
       if (!returnAjaxMessage(data, this, 0)) {
         // 接口失败清除局部loading

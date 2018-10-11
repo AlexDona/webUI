@@ -442,10 +442,6 @@
         ></div>
       </div>
       <!--高级认证-->
-      <!--请准备好您本人身份证使用浏览器扫码进行高级认证如二维码过 期请刷新重试。-->
-      <!--点击刷新-->
-      <!--请在浏览器中打开，并升级浏览器至最新版本,无法通过认证的用户，-->
-      <!--请点击这里-->
       <el-dialog
         :title="$t('M.user_senior_certification')"
         :visible.sync="seniorAuthentication"
@@ -456,17 +452,21 @@
         </div>
         <div class="advanced-certification-text">
           <p class="text-tips font-size12">
+            <!--请准备好您本人身份证使用浏览器扫码进行高级认证如二维码过 期请刷新重试。-->
             {{ $t('M.user_senior_hint1') }}
             <a class="tips-refresh">
+              <!--点击刷新-->
               {{ $t('M.user_senior_hint2') }}
             </a>
           </p>
           <p class="text-tips font-size12 tips-top">
+            <!--请在浏览器中打开，并升级浏览器至最新版本,无法通过认证的用户，-->
             {{ $t('M.user_senior_hint3') }}
             <span
               class="tips-refresh cursor-pointer"
               @click.prevent="authenticationAuthentication"
             >
+              <!--请点击这里-->
               {{ $t('M.user_senior_hint4') }}
             </span>
           </p>

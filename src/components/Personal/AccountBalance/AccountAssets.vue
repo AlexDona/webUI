@@ -25,13 +25,13 @@
                   <p class="float-right header-right-show margin-left10">
                     <img
                       v-show="showStatusButton"
-                      @click.prevent="statusOpenToClose('all')"
+                      @click.prevent="statusOpenToCloseCurrency('all')"
                       class="switch-img"
                       :src="closePictureSrc"
                     >
                     <img
                       v-show="hideStatusButton"
-                      @click.prevent="statusOpenToClose('noall')"
+                      @click.prevent="statusOpenToCloseCurrency('noall')"
                       class="switch-img"
                       :src="openPictureSrc"
                     >
@@ -289,8 +289,8 @@
                               type="text"
                               class="flex-input border-radius2 padding-l15 box-sizing"
                               ref="serviceCharge"
-                              @keyup="changeInputValue1('serviceCharge', index, pointLength)"
-                              @input="changeInputValue1('serviceCharge', index, pointLength)"
+                              @keyup="changeInputValue('serviceCharge', index, pointLength, 'serviceType')"
+                              @input="changeInputValue('serviceCharge', index, pointLength, 'serviceType')"
                             >
                             <span
                               class="new-address new-address-currency cursor-pointer"
@@ -314,8 +314,8 @@
                               type="text"
                               class="count-flex-input border-radius2 paddinglr15 box-sizing text-align-r"
                               ref="rechargeCount"
-                              @keyup="changeInputValue('rechargeCount', index, pointLength)"
-                              @input="changeInputValue('rechargeCount', index, pointLength)"
+                              @keyup="changeInputValue('rechargeCount', index, pointLength, 'rechargeType')"
+                              @input="changeInputValue('rechargeCount', index, pointLength, 'rechargeType')"
                             >
                             <p class="count-flex-text text-align-r">
                               <span>
@@ -589,10 +589,7 @@ export default {
       closePictureSrc: require('../../../assets/user/wrong.png'), // 显示部分
       openPictureSrc: require('../../../assets/user/yes.png'), // 全显示
       searchKeyWord: '', // 搜索关键字
-      searchList: [], // 搜索列表
-      withdrawDepositList: [],
-      activeCoinId: '', // 提现币种id
-      rechargeIsShowList: false, // 充币内容
+      withdrawDepositList: [], // 我的资产全部币种列表
       chargeMoney: '', // 根据充币地址生成二维码条件
       serviceCharge: '', // 自定义手续费
       serviceChargeList: {}, // 手续费区间
@@ -602,20 +599,20 @@ export default {
       current: 0,
       dialogVisible: false, // 新用户未设置交易密码提示框默认false
       currencyTradingList: [], // 根据coinid查询交易对信息
-      // stateIsShowId: false,
       activeName: 'current-entrust',
       currentPageForMyEntrust: 1, // 当前委托页码
       totalPageForMyEntrust: 1, // 当前委托总页数
       // 充值
-      chargeDialogVisible: false, // 默认隐藏
+      chargeDialogVisible: false, // 默认隐藏充值框
       chargeMoneyAddressId: '', // 每行数据ID
       chargeMoneyName: '', // 每行数据币种名称
       // 提币
       securityCenter: {}, // 安全中心状态获取
-      mentionDialogVisible: false, // 默认隐藏
+      mentionDialogVisible: false, // 默认隐藏提币框
       mentionMoneyAddressId: '', // 每行数据ID
       mentionMoneyName: '', // 每行数据币种名称
       mentionAddressValue: '', // 每行数据提币地址
+      statusAddressValue: '', // 每行数据提币地址
       amount: '', // 数量
       service: '', // 手续费
       pointLength: 4, // 小数为限制
@@ -638,8 +635,7 @@ export default {
       id: '', // 币种Id
       sellname: '', // 币种名称
       sellsymbol: '', // 交易对名称
-      // loadingCircle: {}, // 整页loading
-      fullscreenLoading: false,
+      fullscreenLoading: false, // 整页loading
       loading: true, // 页面列表局部loading
       end: '' // 站位
     }
@@ -663,8 +659,8 @@ export default {
       'CHANGE_USER_CENTER_ACTIVE_NAME',
       'CHANGE_ACTIVE_SYMBOL'
     ]),
-    // 切换当前币种
-    statusOpenToClose (e) {
+    // 切换当前显示币种 状态（全部币种 币种为零隐藏）Toggle current currency status
+    statusOpenToCloseCurrency (e) {
       switch (e) {
         case 'all':
           this.showStatusButton = false
@@ -764,50 +760,44 @@ export default {
       this.$router.push({'path': '/TradeCenter'})
     },
     // 修改input value 输入限制
-    changeInputValue (ref, index, pointLength) {
+    changeInputValue (ref, index, pointLength, val) {
       // 获取ref中input值
       this[ref] = this.$refs[ref].value
       // 限制数量小数位位数
       let target = this.$refs[ref][index]
       formatNumberInput(target, pointLength)
-      // 获取输入数量
-      this.amount = this.$refs.rechargeCount[index].value
-      // 输入数量之后显示在到账数量框中显示,在手续费中输入手续费并且以输入数量之后减去的值显示在到账数量
       this.serviceChargeCount = Math.abs(
         amendPrecision(this.$refs.rechargeCount[index].value, this.$refs.serviceCharge[index].value, '-')
       )
-      if (this.$refs.rechargeCount[index].value > this.withdrawDepositList[index].total) {
-        // 判断输入数量不能大于总数量
-        this.$refs.rechargeCount[index].value = this.withdrawDepositList[index].total
-        console.log(this.amount)
+      // 判断是输入时凉还是手续费 判断错误提示
+      if (val === 'rechargeType') {
+        // 获取输入数量
+        this.amount = this.$refs.rechargeCount[index].value
+        // 输入数量之后显示在到账数量框中显示,在手续费中输入手续费并且以输入数量之后减去的值显示在到账数量
+        if (this.$refs.rechargeCount[index].value > this.withdrawDepositList[index].total) {
+          // 判断输入数量不能大于总数量
+          this.$refs.rechargeCount[index].value = this.withdrawDepositList[index].total
+          console.log(this.amount)
+        }
+      } else if (val === 'serviceType') {
+        // 获取输入手续费
+        this.service = this.$refs.serviceCharge[index].value
+        if (this.$refs.serviceCharge[index].value < this.serviceChargeList.minFees) {
+          // 判断输入手续费小于最小提现手续费
+          this.$message({
+            message: this.$t('M.user_assets_withdrawal_hint5'),
+            type: 'error'
+          })
+        } else if (this.$refs.serviceCharge[index].value > this.serviceChargeList.maxFees) {
+          // 判断输入手续费大于于最大提现手续费
+          this.$message({
+            message: this.$t('M.user_assets_withdrawal_hint6'),
+            type: 'error'
+          })
+        }
       }
     },
-    changeInputValue1 (ref, index, pointLength) {
-      // 获取ref中input值
-      this[ref] = this.$refs[ref].value
-      // 限制数量小数位位数
-      let target = this.$refs[ref][index]
-      formatNumberInput(target, pointLength)
-      // 获取输入手续费
-      this.service = this.$refs.serviceCharge[index].value
-      this.serviceChargeCount = Math.abs(
-        amendPrecision(this.$refs.rechargeCount[index].value, this.$refs.serviceCharge[index].value, '-')
-      )
-      if (this.$refs.serviceCharge[index].value < this.serviceChargeList.minFees) {
-        // 判断输入手续费小于最小提现手续费
-        this.$message({
-          message: this.$t('M.user_assets_withdrawal_hint5'),
-          type: 'error'
-        })
-      } else if (this.$refs.serviceCharge[index].value > this.serviceChargeList.maxFees) {
-        // 判断输入手续费大于于最大提现手续费
-        this.$message({
-          message: this.$t('M.user_assets_withdrawal_hint6'),
-          type: 'error'
-        })
-      }
-    },
-    // 显示充值框
+    // 点击充币按钮显示充币内容（带回币种id 币种名称 当前index）
     showRechargeBox (id, name, index) {
       // 显示充值框
       this.chargeDialogVisible = true
@@ -830,7 +820,7 @@ export default {
       // 调用充币地址方法
       this.fillingCurrencyAddress()
     },
-    // 显示提现框
+    // 点击提现按钮显示充币内容（带回币种id 币种名称 当前index）
     mentionMoneyButton (id, name, index) {
       // 点击提现清空数量数据
       this.$refs.rechargeCount[index].value = ''
@@ -967,13 +957,28 @@ export default {
     },
     // 资产币种提币地址选择
     changeId (e) {
+      console.log(e)
       this.mentionAddressList.forEach(item => {
-        console.log(item)
-        if (e === item.coinId) {
+        if (e === item.id) {
+          this.statusAddressValue = item.address
           this.mentionAddressValue = e
+          console.log(this.mentionAddressValue)
         }
       })
     },
+    // changeId (e) {
+    //   console.log(e)
+    //   this.mentionAddressValue = e.address
+    //   console.log(this.mentionAddressValue)
+    //   // this.mentionAddressList.forEach(item => {
+    //   //   console.log(item)
+    //   //   if (e == item.address) {
+    //   //     console.log(item.address)
+    //   //     this.mentionAddressValue = e
+    //   //     console.log(this.mentionAddressValue)
+    //   //   }
+    //   // })
+    // },
     // 根据币种id查询提币地址
     async queryWithdrawalAddressList (index) {
       let data = await inquireWithdrawalAddressId({
@@ -1094,7 +1099,7 @@ export default {
         emailCode: this.emailCode, // 邮箱验证码
         googleCode: this.googleCode, // 谷歌验证码
         coinId: this.mentionMoneyAddressId, // 币种ID
-        withdrawAddress: this.mentionAddressValue, // 提币地址
+        withdrawAddress: this.statusAddressValue, // 提币地址
         networkFees: this.service, // 手续费
         amount: this.amount, // 提币数量
         payCode: this.password // 交易密码
@@ -1116,11 +1121,11 @@ export default {
       }
     },
     // 接口请求完成之后清空数据
-    stateEmptyData () {
+    stateEmptyData (index) {
       this.phoneCode = '' // 短信验证码
       this.emailCode = '' // 邮箱验证码
       this.googleCode = '' // 谷歌验证码
-      this.payPassword = ''
+      this.password = ''
       this.$refs.serviceCharge[index].value = ''
       this.$refs.rechargeCount[index].value = ''
       this.serviceChargeCount = ''
