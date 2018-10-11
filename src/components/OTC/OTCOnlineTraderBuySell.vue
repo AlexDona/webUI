@@ -70,7 +70,7 @@
                     {{price}}{{currencyName}}
                   </span>
                 </div>
-                <!-- 最小交易量 -->
+                <!-- 限额 -->
                 <div class="details-row">
                   <span class="details-tip">
                     <!-- 限额： -->
@@ -716,7 +716,8 @@ export default {
         this.price = data.data.data.price // 报价
         this.payTypes = data.data.data.payTypes // 付款方式
         this.payTerm = data.data.data.payTerm // 付款期限
-        this.remainingNum = data.data.data.entrustCount - data.data.data.matchCount // 剩余数量
+        // this.remainingNum = data.data.data.entrustCount - data.data.data.matchCount // 剩余数量
+        this.remainingNum = amendPrecision(data.data.data.entrustCount, data.data.data.matchCount, '-') // 剩余数量：修复精度丢失
         this.maxCount = data.data.data.maxCount // 单笔最大限额
         this.minCount = data.data.data.minCount // 单笔最小限额
         this.userType = data.data.data.userType // 挂单人类型（COMMON普通用户 ，MERCHANT商家）

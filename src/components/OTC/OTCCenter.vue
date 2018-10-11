@@ -303,17 +303,19 @@
                     type="danger"
                     size="mini"
                     v-if="OTCBuySellStyle === 'onlineBuy'"
-                    @click="toOnlineBuy(s.row.id,s.row.coinId,s.row.userId)"
+                    @click="toOnlineBuyOrSell(s.row.id,s.row.coinId,s.row.userId)"
                   >
-                  <!-- 购买 -->
-                   {{$t('M.comm_buying')}}
+                    <!-- @click="toOnlineBuy(s.row.id,s.row.coinId,s.row.userId)" -->
+                    <!-- 购买 -->
+                    {{$t('M.comm_buying')}}
                   </el-button>
                   <el-button
                     type="success"
                     size="mini"
                     v-if="OTCBuySellStyle === 'onlineSell'"
-                    @click="toOnlineSell(s.row.id,s.row.coinId,s.row.userId)"
+                    @click="toOnlineBuyOrSell(s.row.id,s.row.coinId,s.row.userId)"
                   >
+                    <!-- @click="toOnlineSell(s.row.id,s.row.coinId,s.row.userId)" -->
                     <!-- 出售 -->
                    {{$t('M.comm_offering')}}
                   </el-button>
@@ -456,12 +458,11 @@ export default {
     OTCFreezingOrder, //  冻结中订单
     OTCEntrustOrder, //  委托订单
     IconFontCommon //  字体图标
-    // OTCPublishBuyAndSell // 发布购买和卖出组件
   },
   // props,
   data () {
     return {
-      loading: true,
+      loading: true, // loading加载
       // 分页
       currentPage: 1, // 当前页码
       totalPages: 1, // 总页数
@@ -521,13 +522,13 @@ export default {
     // console.log(this.partnerId)
     // console.log(this.userInfo)
     // 2.0 otc可用法币查询：
-    // this.getMerchantAvailablelegalTenderList()AD
+    // this.getMerchantAvailablelegalTenderList()
+    // 3.0 用户登录了刷新用户个人信息
     console.log('是否登录' + this.isLogin)
     console.log('用户信息')
     console.log(this.userInfo)
     if (this.isLogin) {
-      // 刷新用户信息
-      reflashUserInfo(this)
+      reflashUserInfo(this) // 刷新用户信息
     }
   },
   mounted () {
@@ -549,13 +550,13 @@ export default {
     getOTCRemainingSum (entrustCount, matchCount, symbol) {
       return amendPrecision(entrustCount, matchCount, symbol)
     },
-    // 分页
+    // 分页:改变页面刷新挂单列表
     changeCurrentPage (pageNum) {
       console.log(pageNum)
       this.currentPage = pageNum
-      this.getOTCPutUpOrdersList()
+      this.getOTCPutUpOrdersList() // otc主页面查询挂单列表
     },
-    // 0.1 切换tab面板
+    // 0.1 切换各订单状态tab面板
     toggleTabPane (tab, event) {
       console.log(this.activeName)
       console.log(this.isLogin)
@@ -597,8 +598,7 @@ export default {
       if (!this.isLogin) {
         this.$router.push({path: '/login'})
       } else {
-        // 刷新用户信息
-        reflashUserInfo(this)
+        reflashUserInfo(this) // 刷新用户信息
         // 未设置交易密码、未实名认证，未高级认证，不能进行交易
         if (!this.userInfo.payPassword) {
           this.$message({
@@ -626,8 +626,8 @@ export default {
         }
       }
     },
-    // 0.3 点击购买按钮跳转到在线购买页面
-    toOnlineBuy (id, coinId, userId) {
+    // 0.3 点击 购买 或者 出售 按钮跳转到在线购买或者出售页面
+    toOnlineBuyOrSell (id, coinId, userId) {
       if (!this.isLogin) {
         this.$router.push({path: '/login'})
       } else {
@@ -669,47 +669,47 @@ export default {
       }
     },
     // 0.4 点击出售按钮跳转到在线出售页面
-    toOnlineSell (id, coinId, userId) {
-      if (!this.isLogin) {
-        this.$router.push({path: '/login'})
-      } else {
-        // 刷新用户信息
-        reflashUserInfo(this)
-        // 未设置交易密码、未实名认证，未高级认证，不能进行交易
-        if (!this.userInfo.payPassword) {
-          this.$message({
-            message: this.$t('M.otc_index_js'), // 去个人中心设置交易密码
-            type: 'error'
-          })
-          return false
-        } else if (!this.userInfo.realname) {
-          this.$message({
-            message: this.$t('M.otc_index_digo_tips'), // 去个人中心完成实名认证
-            type: 'error'
-          })
-          return false
-        } else if (!(this.userInfo.advancedAuth === 'pass')) {
-          this.$message({
-            message: this.$t('M.otc_index_digo_tips_pass'), // 去个人中心完成高级认证
-            type: 'error'
-          })
-          return false
-        } else {
-          if (userId === this.userInfo.id) {
-            this.$message({
-              message: this.$t('M.otc_index_forbided_buyand_sell'), // 禁止自买自卖
-              type: 'error'
-            })
-            return false
-          } else {
-            // console.log("卖")
-            // console.log(id) // 挂单id
-            // console.log(coinId) // 币种id
-            this.$router.push({path: '/OTCOnlineTraderBuySell/' + this.OTCBuySellStyle + '/' + id + '/' + coinId})
-          }
-        }
-      }
-    },
+    // toOnlineSell (id, coinId, userId) {
+    //   if (!this.isLogin) {
+    //     this.$router.push({path: '/login'})
+    //   } else {
+    //     // 刷新用户信息
+    //     reflashUserInfo(this)
+    //     // 未设置交易密码、未实名认证，未高级认证，不能进行交易
+    //     if (!this.userInfo.payPassword) {
+    //       this.$message({
+    //         message: this.$t('M.otc_index_js'), // 去个人中心设置交易密码
+    //         type: 'error'
+    //       })
+    //       return false
+    //     } else if (!this.userInfo.realname) {
+    //       this.$message({
+    //         message: this.$t('M.otc_index_digo_tips'), // 去个人中心完成实名认证
+    //         type: 'error'
+    //       })
+    //       return false
+    //     } else if (!(this.userInfo.advancedAuth === 'pass')) {
+    //       this.$message({
+    //         message: this.$t('M.otc_index_digo_tips_pass'), // 去个人中心完成高级认证
+    //         type: 'error'
+    //       })
+    //       return false
+    //     } else {
+    //       if (userId === this.userInfo.id) {
+    //         this.$message({
+    //           message: this.$t('M.otc_index_forbided_buyand_sell'), // 禁止自买自卖
+    //           type: 'error'
+    //         })
+    //         return false
+    //       } else {
+    //         // console.log("卖")
+    //         // console.log(id) // 挂单id
+    //         // console.log(coinId) // 币种id
+    //         this.$router.push({path: '/OTCOnlineTraderBuySell/' + this.OTCBuySellStyle + '/' + id + '/' + coinId})
+    //       }
+    //     }
+    //   }
+    // },
     // 0.5 查询更多订单按钮点击事件
     queryMoreOrder () {
       // 未登录跳转登录页
