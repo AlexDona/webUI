@@ -619,6 +619,7 @@ export default {
       configValue: '', // 币种id
       currencyAsset: 0, // 币种数量
       activeStatus: 0, // VIP状态
+      loadingCircle: {}, // 整页loading
       fullscreenLoading: false // 整页loading
     }
   },

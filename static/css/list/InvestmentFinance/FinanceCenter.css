@@ -93,7 +93,7 @@
 .finance-box .el-dialog__headerbtn .el-dialog__close{
     color: #fff;
 }
-.finance-box .el-dialog__body{
+.finance-box .dialogStyle .el-dialog__body{
     height: 380px;
     overflow:auto;
 }
