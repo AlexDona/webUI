@@ -13,7 +13,10 @@
                 to="/"
                 class="logo"
               >
-                <img class="img" :src="logoSrc" alt="">
+                <img
+                  class="img"
+                 :src="logoSrc"
+                >
               </router-link>
             </li>
             <li class="nav-item">

@@ -14,3 +14,4 @@ export const USER_ASSETS_LIST = 'USER_ASSETS_LIST' // 我的资产列表
 export const SET_COUNTRY_AREA_LIST = 'SET_COUNTRY_AREA_LIST' // 国家列表
 export const USER_INFORMATION_REFRESH = 'USER_INFORMATION_REFRESH' // 用户信息刷新
 export const SET_USER_INFO_REFRESH_STATUS = 'SET_USER_INFO_REFRESH_STATUS' // 用户信息刷新状态
+export const SET_LOGO_URL = 'SET_LOGO_URL' // 设置公共logo
