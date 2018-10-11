@@ -256,6 +256,7 @@ export default {
       const data = await businessApply()
       // 提示信息
       if (!(returnAjaxMessage(data, this))) {
+        this.fullscreenLoading = false
         return false
       } else {
         // 返回数据正确的逻辑
@@ -289,6 +290,7 @@ export default {
       if (!(returnAjaxMessage(data, this, 0))) {
         // 刚进页面接口请求错误时候显示申请界面
         this.applyStatus = 1
+        this.fullscreenLoading = false
         return false
       } else {
         this.fullscreenLoading = false

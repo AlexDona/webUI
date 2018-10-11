@@ -409,6 +409,7 @@ export default {
       })
       console.log(data)
       if (!(returnAjaxMessage(data, this, 0))) {
+        this.loading = false
         return false
       } else {
         // 返回数据正确的逻辑 渲染列表
@@ -482,6 +483,7 @@ export default {
       const data = await cancelAllOrdersOnekey()
       // 提示信息
       if (!(returnAjaxMessage(data, this, 1))) {
+        this.loading = false
         return false
       } else {
         // 返回数据正确的逻辑
