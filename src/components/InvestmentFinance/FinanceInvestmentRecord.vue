@@ -311,6 +311,7 @@ export default {
       console.log('投资理财页面查询')
       console.log(data)
       if (!(returnAjaxMessage(data, this, 0))) {
+        this.loading = false
         return false
       } else {
         this.loading = false
