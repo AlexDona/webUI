@@ -923,6 +923,9 @@ export default {
               line-height: 112px;
               font-size: 36px;
             }
+            > .content-discount {
+              margin: 0 3px;
+            }
             > .content-discount,
             > .content-text {
               height: 50px;
@@ -1063,15 +1066,15 @@ export default {
       background-color: $nightBgColor;
       color: $nightFontColor;
       > .header-content {
-        background-color: #121824;
+        background-color: #272B41;
       }
       > .content-main-content {
         margin-top: -3px;
-        background: rgba(18, 24, 36, 1);
+        background: #272B41;
         > .content-main {
           >.content-main-box {
             > .content-module {
-              background-color: #232D39;
+              background-color: #1C1F32;
               border: 2px solid #33404B;
               &.disable {
                 opacity: 0.5;
@@ -1086,7 +1089,7 @@ export default {
                     color: rgba(51, 143, 245, 1);
                   }
                   > .content-discount {
-                    background-color: #1E2832;
+                    background-color: #2D3651;
                     color: rgba(255, 255, 255, 1);
                     > .content-discount-color {
                       font-weight: 600;
@@ -1108,7 +1111,7 @@ export default {
                 color: rgba(51, 143, 245, 0.6);;
               }
               > .content-discount {
-                background-color: #1E2832;
+                background-color: #2D3651;
                 color: rgba(255, 255, 255, 0.6);
                 > .content-discount-color {
                   color: rgba(51, 143, 245, 0.6);
@@ -1116,7 +1119,7 @@ export default {
               }
               > .content-button {
                 > .click-btn {
-                  background: linear-gradient(0deg, rgba(41, 52, 64, 1) 0%, rgba(52, 62, 71, 1) 100%);
+                  background:linear-gradient(0deg,rgba(26,29,47,1) 0%,rgba(45,54,81,1) 100%);
                   color: #fff;
                 }
               }
@@ -1241,7 +1244,7 @@ export default {
                   color: rgba(51, 143, 245, 1);
                 }
                 > .content-discount {
-                  background-color: #1E2832;
+                  background-color: #2D3651;
                   color: rgba(255, 255, 255, 1);
                   > .content-discount-color {
                     font-weight: 600;
@@ -1262,7 +1265,7 @@ export default {
                 color: rgba(51, 143, 245, 0.6);;
               }
               > .content-discount {
-                background-color: #1E2832;
+                background-color: #2D3651;
                 color: rgba(255, 255, 255, 0.6);
                 > .content-discount-color {
                   color: rgba(51, 143, 245, 0.6);

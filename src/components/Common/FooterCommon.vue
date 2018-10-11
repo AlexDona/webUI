@@ -203,6 +203,16 @@ export default {
     jumpToOtherPage (router, activeName) {
       jumpToOtherPageForFooter(router, activeName, this)
     },
+    // 动态添加favicon
+    addFavicon (href, title) {
+      // 动态生成favicon
+      let link = document.querySelector("link[rel*='icon']") || document.createElement('link')
+      link.type = 'image/x-icon'
+      link.rel = 'shortcut icon'
+      link.href = href
+      document.getElementsByTagName('head')[0].appendChild(link)
+      document.querySelector('title').innerText = title
+    },
     async getFooterInfo () {
       const params = {
         partnerId: this.partnerId,
@@ -210,8 +220,6 @@ export default {
       }
       const data1 = await getFooterInfo1(params)
       const data2 = await getFooterInfo2(params)
-      console.log(data1)
-      console.log(data2)
       if (!returnAjaxMessage(data1, this) && !returnAjaxMessage(data2, this)) {
         return false
       } else {
@@ -223,6 +231,14 @@ export default {
         this.shareList[4].ercodeSrc = this.footerInfo1.telegraph_group
         this.footerInfo2 = data2.data.data
         this.linkList = this.footerInfo2.blogrollList
+        // favicon 添加
+        this.addFavicon(
+          this.footerInfo1.headTitleLogo.url,
+          this.footerInfo1.title.content
+        )
+        this.$store.commit('common/SET_LOGO_URL', {
+          logoSrc: this.footerInfo1.headLogo.url
+        })
       }
     }
   },
@@ -230,7 +246,8 @@ export default {
   computed: {
     ...mapState({
       partnerId: state => state.common.partnerId,
-      language: state => state.common.language
+      language: state => state.common.language,
+      logoSrc: state => state.common.logoSrc
     })
   },
   watch: {
