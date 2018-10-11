@@ -2,6 +2,8 @@
   <div
     class="binding-google personal"
     :class="{'day':theme == 'day','night':theme == 'night' }"
+    v-loading.fullscreen.lock="fullscreenLoading"
+    element-loading-background="rgba(0, 0, 0, 0.6)"
   >
     <HeaderCommon/>
     <div class="binding-google-main margin25">
@@ -189,7 +191,7 @@ export default {
       googleVerificationCode: '', // 谷歌验证码
       googleUserInformation: {}, // 谷歌验证信息
       successCountDown: 1, // 成功倒计时
-      loadingCircle: {}, // 整页loading
+      fullscreenLoading: false, // 整页loading
       errorShowStatusList: '' // 设置错误信息
     }
   },
@@ -244,19 +246,16 @@ export default {
       let data
       let param = {}
       // 整页loading
-      this.loadingCircle = this.$loading({
-        lock: true,
-        background: 'rgba(0, 0, 0, 0.6)'
-      })
+      this.fullscreenLoading = true
       data = await bindGoogleAddressPage(param)
       console.log(data)
       if (!(returnAjaxMessage(data, this, 0))) {
         // 接口失败清除loading
-        this.loadingCircle.close()
+        this.fullscreenLoading = false
         return false
       } else {
         // 接口成功清除loading
-        this.loadingCircle.close()
+        this.fullscreenLoading = false
         this.googleUserInformation = data.data.data
         this.googleAccount = data.data.data.googleAccount
         this.googleTheSecretKey = data.data.data.googleSecret
@@ -294,18 +293,15 @@ export default {
         code: this.googleVerificationCode // 谷歌验证码
       }
       // 整页loading
-      this.loadingCircle = this.$loading({
-        lock: true,
-        background: 'rgba(0, 0, 0, 0.6)'
-      })
+      this.fullscreenLoading = true
       data = await bindGoogleAddress(param)
       if (!(returnAjaxMessage(data, this, 1))) {
         // 接口失败清除loading
-        this.loadingCircle.close()
+        this.fullscreenLoading = false
         return false
       } else {
         // 接口成功清除loading
-        this.loadingCircle.close()
+        this.fullscreenLoading = false
         this.successJump()
         console.log(data)
       }
@@ -336,18 +332,15 @@ export default {
         code: this.googleVerificationCode // 谷歌验证码
       }
       // 整页loading
-      this.loadingCircle = this.$loading({
-        lock: true,
-        background: 'rgba(0, 0, 0, 0.6)'
-      })
+      this.fullscreenLoading = true
       data = await unbindCheckGoogle(param)
       if (!(returnAjaxMessage(data, this, 1))) {
         // 接口失败清除loading
-        this.loadingCircle.close()
+        this.fullscreenLoading = false
         return false
       } else {
         // 接口成功清除loading
-        this.loadingCircle.close()
+        this.fullscreenLoading = false
         console.log(data)
         this.successJump()
         this.googleVerificationCode = ''

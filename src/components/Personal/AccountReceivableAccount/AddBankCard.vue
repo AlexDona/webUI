@@ -2,9 +2,13 @@
   <div
     class="add-bank personal"
     :class="{'day':theme == 'day','night':theme == 'night' }"
+    v-loading.fullscreen.lock="fullscreenLoading"
+    element-loading-background="rgba(0, 0, 0, 0.6)"
   >
     <HeaderCommon/>
-    <div class="add-bank-main margin25">
+    <div
+      class="add-bank-main margin25"
+    >
       <header class="add-bank-header personal-height60 line-height60 line-height70 margin25">
         <span
           v-if="paymentTerm.isBankBind"
@@ -240,18 +244,15 @@ export default {
           id: this.id
         }
         // 整页loading
-        this.loadingCircle = this.$loading({
-          lock: true,
-          background: 'rgba(0, 0, 0, 0.6)'
-        })
+        this.fullscreenLoading = true
         data = await statusCardSettings(params)
         if (!(returnAjaxMessage(data, this, 1))) {
           // 接口失败清除loading
-          this.loadingCircle.close()
+          this.fullscreenLoading = false
           return false
         } else {
           // 接口成功清除loading
-          this.loadingCircle.close()
+          this.fullscreenLoading = false
           this.successJump()
           this.stateEmptyData()
           console.log(data)
@@ -333,18 +334,15 @@ export default {
         type: 'bank'
       }
       // 整页loading
-      this.loadingCircle = this.$loading({
-        lock: true,
-        background: 'rgba(0, 0, 0, 0.6)'
-      })
+      this.fullscreenLoading = true
       data = await modificationAccountPaymentTerm(params)
       if (!(returnAjaxMessage(data, this, 0))) {
         // 接口失败清除loading
-        this.loadingCircle.close()
+        this.fullscreenLoading = false
         return false
       } else {
         // 接口成功清除loading
-        this.loadingCircle.close()
+        this.fullscreenLoading = false
         // 返回状态展示
         this.paymentMethodList = data.data.data
         // 修改时带回银行卡名称

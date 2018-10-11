@@ -2,6 +2,8 @@
   <div
     class="push-assets personal"
     :class="{'day':theme == 'day','night':theme == 'night' }"
+    v-loading.fullscreen.lock="fullscreenLoading"
+    element-loading-background="rgba(0, 0, 0, 0.6)"
   >
     <div class="push-assets-main">
       <div class="push-assets-content">
@@ -461,7 +463,7 @@ export default {
       totalPageForMyEntrust: 1, // 当前委托总页数
       pointLength: 4, // 保留小数位后四位
       errorMsg: '', // 错误提示
-      loadingCircle: {}, // 整页loading
+      fullscreenLoading: false, // 整页loading
       loading: true // 局部列表loading
     }
   },
@@ -647,18 +649,15 @@ export default {
           password: this.transactionPassword // 交易密码
         }
         // 整页loading
-        this.loadingCircle = this.$loading({
-          lock: true,
-          background: 'rgba(0, 0, 0, 0.7)'
-        })
+        this.fullscreenLoading = true
         data = await pushAssetsSubmit(param)
         if (!(returnAjaxMessage(data, this, 1))) {
           // 接口失败清除loading
-          this.loadingCircle.close()
+          this.fullscreenLoading = false
           return false
         } else {
           // 接口成功清除loading
-          this.loadingCircle.close()
+          this.fullscreenLoading = false
           this.passwordVisible = false
           // push列表展示
           this.getPushRecordList()

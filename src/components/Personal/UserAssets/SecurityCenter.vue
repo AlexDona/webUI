@@ -2,6 +2,8 @@
   <div
     class="security-center personal"
     :class="{'day':theme == 'day','night':theme == 'night' }"
+    v-loading.fullscreen.lock="fullscreenLoading"
+    element-loading-background="rgba(0, 0, 0, 0.6)"
   >
     <header class="security-header security-background personal-height40 line-height40 font-size16 padding-left20">
       <span class="padding-left15 font-weight600">
@@ -631,7 +633,7 @@ export default {
       errorMsg: '', // 关闭错误提示
       errorMsg1: '', // 开启错误提示
       person: '',
-      loadingCircle: {} // 整页loading
+      fullscreenLoading: false // 整页loading
     }
   },
   created () {
@@ -666,16 +668,13 @@ export default {
      */
     getSecurityCenter () {
       // 整页loading
-      this.loadingCircle = this.$loading({
-        lock: true,
-        background: 'rgba(0, 0, 0, 0.7)'
-      })
+      this.fullscreenLoading = true
       getSecurityCenter(this, (data) => {
         // 接口失败清除loading
-        this.loadingCircle.close()
+        this.fullscreenLoading = false
         if (data) {
           // 接口成功清除loading
-          this.loadingCircle.close()
+          this.fullscreenLoading = false
           this.securityCenter = data.data.data
           this.person = data.data.data.person
           this.logonRecord = data.data.data.setLog

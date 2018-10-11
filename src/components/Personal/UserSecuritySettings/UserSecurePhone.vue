@@ -2,6 +2,8 @@
   <div
     class="set-phone personal"
     :class="{'day':theme == 'day','night':theme == 'night' }"
+    v-loading.fullscreen.lock="fullscreenLoading"
+    element-loading-background="rgba(0, 0, 0, 0.6)"
   >
     <HeaderCommon/>
     <div class="set-phone-main margin25">
@@ -322,7 +324,7 @@ export default {
       ],
       successCountDown: 1, // 成功倒计时
       newPhoneIsExistStatus: false, // 新手机号是否已注册过
-      loadingCircle: {}, // 整页loading
+      fullscreenLoading: false, // 整页loading
       emailBindPhoneCount: 0 // 邮箱绑定手机次数
     }
   },
@@ -556,18 +558,15 @@ export default {
           code: this.bindingDataPhone.bindingNewPhoneCode // 手机验证码
         }
         // 整页loading
-        this.loadingCircle = this.$loading({
-          lock: true,
-          background: 'rgba(0, 0, 0, 0.6)'
-        })
+        this.fullscreenLoading = true
         data = await bindPhoneAddress(param)
         if (!(returnAjaxMessage(data, this, 1))) {
           // 接口失败清除loading
-          this.loadingCircle.close()
+          this.fullscreenLoading = false
           return false
         } else {
           // 接口成功清除loading
-          this.loadingCircle.close()
+          this.fullscreenLoading = false
           this.successJump()
           console.log(data)
         }
@@ -716,18 +715,15 @@ export default {
           payPassword: this.amendDataPhone.transactionPassword // 交易密码
         }
         // 整页loading
-        this.loadingCircle = this.$loading({
-          lock: true,
-          background: 'rgba(0, 0, 0, 0.6)'
-        })
+        this.fullscreenLoading = true
         data = await changeMobilePhone(param)
         if (!(returnAjaxMessage(data, this, 1))) {
           // 接口失败清除loading
-          this.loadingCircle.close()
+          this.fullscreenLoading = false
           return false
         } else {
           // 接口成功清除loading
-          this.loadingCircle.close()
+          this.fullscreenLoading = false
           this.stateEmptyData()
           this.successJump()
         }

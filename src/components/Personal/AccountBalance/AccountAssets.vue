@@ -3,7 +3,11 @@
     class="account-assets personal"
     :class="{'day':theme == 'day','night':theme == 'night' }"
   >
-    <div class="account-assets-main">
+    <div
+      class="account-assets-main"
+      v-loading.fullscreen.lock="fullscreenLoading"
+      element-loading-background="rgba(0, 0, 0, 0.6)"
+    >
       <!-- 用户信息-->
       <UserInfo />
       <div class="account-assets-box margin-top16">
@@ -634,7 +638,8 @@ export default {
       id: '', // 币种Id
       sellname: '', // 币种名称
       sellsymbol: '', // 交易对名称
-      loadingCircle: {}, // 整页loading
+      // loadingCircle: {}, // 整页loading
+      fullscreenLoading: false,
       loading: true, // 页面列表局部loading
       end: '' // 站位
     }
@@ -974,19 +979,15 @@ export default {
       let data = await inquireWithdrawalAddressId({
         coinId: this.mentionMoneyAddressId
       })
-      // 整页loading
-      this.loadingCircle = this.$loading({
-        lock: true,
-        background: 'rgba(0, 0, 0, 0.6)'
-      })
+      this.fullscreenLoading = true
       // console.log(data)
       if (!(returnAjaxMessage(data, this, 0))) {
         // 接口失败清除loading
-        this.loadingCircle.close()
+        this.fullscreenLoading = false
         return false
       } else {
         // 接口成功清除loading
-        this.loadingCircle.close()
+        this.fullscreenLoading = false
         // 返回列表数据userWithdrawAddressDtoList
         this.mentionAddressList = data.data.data.userWithdrawAddressDtoList
         if (!data.data.data.userWithdrawAddressDtoList[0].address) {
@@ -1002,18 +1003,15 @@ export default {
         coinId: this.mentionMoneyAddressId
       })
       // 整页loading
-      this.loadingCircle = this.$loading({
-        lock: true,
-        background: 'rgba(0, 0, 0, 0.6)'
-      })
+      this.fullscreenLoading = true
       console.log(data)
       if (!(returnAjaxMessage(data, this, 0))) {
         // 接口失败清除loading
-        this.loadingCircle.close()
+        this.fullscreenLoading = false
         return false
       } else {
         // 接口成功清除loading
-        this.loadingCircle.close()
+        this.fullscreenLoading = false
         // 返回列表数据
         this.serviceChargeList = data.data.data
         this.serviceCharge = data.data.data.minFees
@@ -1029,18 +1027,15 @@ export default {
         coinId: this.chargeMoneyAddressId
       })
       // 整页loading
-      this.loadingCircle = this.$loading({
-        lock: true,
-        background: 'rgba(0, 0, 0, 0.6)'
-      })
+      this.fullscreenLoading = true
       console.log(data)
       if (!(returnAjaxMessage(data, this, 0))) {
         // 接口失败清除loading
-        this.loadingCircle.close()
+        this.fullscreenLoading = false
         return false
       } else {
         // 接口成功清除loading
-        this.loadingCircle.close()
+        this.fullscreenLoading = false
         // 返回列表数据
         this.chargeMoney = data.data.data.userRechargeAddress.address
         console.log(this.chargeMoney)
@@ -1089,7 +1084,6 @@ export default {
       } else {
         this.errorMsg = ''
         this.stateSubmitAssets()
-        this.mentionMoneyConfirm = false
       }
     },
     // 提交提币接口
@@ -1106,18 +1100,16 @@ export default {
         payCode: this.password // 交易密码
       }
       // 整页loading
-      this.loadingCircle = this.$loading({
-        lock: true,
-        background: 'rgba(0, 0, 0, 0.6)'
-      })
+      this.fullscreenLoading = true
       data = await statusSubmitWithdrawButton(param)
       if (!(returnAjaxMessage(data, this, 1))) {
         // 接口失败清除loading
-        this.loadingCircle.close()
+        this.fullscreenLoading = false
         return false
       } else {
         // 接口成功清除loading
-        this.loadingCircle.close()
+        this.fullscreenLoading = false
+        this.mentionMoneyConfirm = false
         // 提币地址列表查询
         this.getAssetCurrenciesList()
         this.stateEmptyData()
@@ -1164,16 +1156,13 @@ export default {
      */
     getSecurityCenter () {
       // 整页loading
-      this.loadingCircle = this.$loading({
-        lock: true,
-        background: 'rgba(0, 0, 0, 0.6)'
-      })
+      this.fullscreenLoading = true
       getSecurityCenter(this, (data) => {
         // 接口失败清除loading
-        this.loadingCircle.close()
+        this.fullscreenLoading = false
         if (data) {
           // 接口成功清除loading
-          this.loadingCircle.close()
+          this.fullscreenLoading = false
           this.securityCenter = data.data.data
         }
       })

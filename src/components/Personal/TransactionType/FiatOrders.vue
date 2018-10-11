@@ -135,6 +135,8 @@
         <el-tab-pane
           :label="$t('M.otc_trading')"
           name="TRADING"
+          v-loading="fullscreenLoading"
+          element-loading-background="rgba(0, 0, 0, 0.6)"
         >
           <FiatCoinTradingOrder ref = "tradeOrder"/>
         </el-tab-pane>
@@ -142,6 +144,8 @@
         <el-tab-pane
           :label="$t('M.otc_stocks')"
           name="COMPLETED"
+          v-loading="fullscreenLoading"
+          element-loading-background="rgba(0, 0, 0, 0.6)"
         >
           <FiatCoinCompletedOrder ref = "cancelledOrder"/>
         </el-tab-pane>
@@ -149,6 +153,8 @@
         <el-tab-pane
           :label="$t('M.otc_canceled')"
           name="CANCELED"
+          v-loading="fullscreenLoading"
+          element-loading-background="rgba(0, 0, 0, 0.6)"
         >
           <FiatCoinCanceledOrder ref = "completedOrder"/>
         </el-tab-pane>
@@ -156,6 +162,8 @@
         <el-tab-pane
           :label="$t('M.otc_freezingOrder')"
           name="FROZEN"
+          v-loading="fullscreenLoading"
+          element-loading-background="rgba(0, 0, 0, 0.6)"
         >
           <FiatCoinFreezingOrder ref = "pendingOrder"/>
         </el-tab-pane>
@@ -163,6 +171,8 @@
         <el-tab-pane
           :label="$t('M.user_coin_entrust') + $t('M.comm_order')"
           name="ENTRUSTED"
+          v-loading="fullscreenLoading"
+          element-loading-background="rgba(0, 0, 0, 0.6)"
         >
           <FiatCoinEntrustOrder ref = "entrustOrders"/>
         </el-tab-pane>
@@ -248,7 +258,8 @@ export default {
       startTime: '', // 默认开始时间
       endTime: '', // 默认结束时间
       // 商家订单列表
-      merchantsOrdersList: []
+      merchantsOrdersList: [],
+      fullscreenLoading: true
     }
   },
   created () {
@@ -369,6 +380,8 @@ export default {
     },
     // 页面加载时请求接口渲染列表
     async getOTCEntrustingOrdersRevocation (activeName) {
+      // 局部loading
+      this.fullscreenLoading = true
       let params = {
         // 币种
         coinId: this.activitedMerchantsOrdersCoin,
@@ -388,8 +401,12 @@ export default {
       if (activeName == 'ENTRUSTED') {
         const data = await getOTCEntrustingOrders(params)
         if (!returnAjaxMessage(data, this)) {
+          // 接口失败清除loading
+          this.fullscreenLoading = false
           return false
         } else {
+          // 接口成功清除loading
+          this.fullscreenLoading = false
           // 返回数据正确的逻辑 重新渲染列表
           this.SET_LEGAL_TENDER_LIST({
             type: activeName,
@@ -404,8 +421,12 @@ export default {
       } else {
         getMerchantsOrdersList(params, (data) => {
           if (!(returnAjaxMessage(data, this, 0))) {
+            // 接口失败清除loading
+            this.fullscreenLoading = false
             return false
           } else {
+            // 接口成功清除loading
+            this.fullscreenLoading = false
             // 返回数据正确的逻辑 重新渲染列表
             this.SET_LEGAL_TENDER_LIST({
               type: activeName,
