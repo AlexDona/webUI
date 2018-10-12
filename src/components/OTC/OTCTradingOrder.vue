@@ -723,7 +723,7 @@ export default {
   // props,
   data () {
     return {
-      loading: true,
+      loading: false,
       // 分页
       currentPage: 1, // 当前页码
       totalPages: 1, // 总页数
@@ -901,6 +901,7 @@ export default {
           this.activeBankFidList[index] = item.id
           console.log('选中的支付方式id')
           console.log(this.activeBankFidList[index])
+          console.log('账号')
           console.log(this.activePayModeList[index])
           this.activitedPayStyleId = this.activeBankFidList[index]
           // 省
@@ -918,6 +919,7 @@ export default {
           console.log(this.activeBankType[index])
           // 支付码
           this.activeBankCode[index] = item.qrcode
+          console.log('支付码')
           console.log(this.activeBankCode[index])
         }
         this.buttonStatusArr[index] = true

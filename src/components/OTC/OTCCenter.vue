@@ -570,26 +570,27 @@ export default {
       if (!this.isLogin) {
         this.$router.push({path: '/login'})
         return false
-      }
-      if (this.activeName === 'first') {
-        console.log('调交易中订单')
-        this.$refs.trading.getOTCTradingOrdersList() // 调用子组件交易中订单的方法
-      }
-      if (this.activeName === 'second') {
-        console.log('调已完成订单')
-        this.$refs.complete.getOTCCompletedOrdersList() // 调用子组件已完成订单的方法
-      }
-      if (this.activeName === 'third') {
-        console.log('调已取消订单')
-        this.$refs.canceled.getOTCCanceledOrdersList() // 调用子组件已取消订单的方法
-      }
-      if (this.activeName === 'fourth') {
-        console.log('调冻结中订单')
-        this.$refs.freezing.getOTCFrezzingOrdersList() // 调用子组件冻结中订单的方法
-      }
-      if (this.activeName === 'fifth') {
-        console.log('调委托订单')
-        this.$refs.entrust.getOTCEntrustingOrdersList() // 调用子组件委托订单的方法
+      } else {
+        if (this.activeName === 'first') {
+          console.log('调交易中订单')
+          this.$refs.trading.getOTCTradingOrdersList() // 调用子组件交易中订单的方法
+        }
+        if (this.activeName === 'second') {
+          console.log('调已完成订单')
+          this.$refs.complete.getOTCCompletedOrdersList() // 调用子组件已完成订单的方法
+        }
+        if (this.activeName === 'third') {
+          console.log('调已取消订单')
+          this.$refs.canceled.getOTCCanceledOrdersList() // 调用子组件已取消订单的方法
+        }
+        if (this.activeName === 'fourth') {
+          console.log('调冻结中订单')
+          this.$refs.freezing.getOTCFrezzingOrdersList() // 调用子组件冻结中订单的方法
+        }
+        if (this.activeName === 'fifth') {
+          console.log('调委托订单')
+          this.$refs.entrust.getOTCEntrustingOrdersList() // 调用子组件委托订单的方法
+        }
       }
     },
     // 0.2 点击发布订单按钮跳转到发布订单页面
@@ -1049,6 +1050,7 @@ export default {
           >.otc-publish-box{
             >.pay-style{
               position: relative;
+              margin-right: 5px;
               >.pay-style-icon{
                 width: 14px;
                 height: 14px;
@@ -1061,6 +1063,7 @@ export default {
             }
             >.currency-style{
               position: relative;
+              margin-right: 5px;
               >.currency-style-icon{
                 // color: #fff;
                 width: 14px;
@@ -1103,10 +1106,8 @@ export default {
           .red{
             // color: #D45858;
           }
-          // 测试
           position: relative;
           >.pay-way{
-            // 测试
             display: inline-block;
             top: 10px;
             left: 616px;
@@ -1114,7 +1115,6 @@ export default {
             z-index: 1;
           }
           >.shade-pay-way{
-            // 测试
             // color: #617499;
             display: inline-block;
             top: 15px;
