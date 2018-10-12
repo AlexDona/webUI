@@ -124,6 +124,11 @@
             </p>
             <p class="text-info">{{timeFormatting(item.freezeTime)}}</p>
           </div>
+          <div class="info-reason">
+            <!-- 申诉原因 -->
+            <p class="text-info text-blue">{{$t('M.otc_complaint_appeal_reason')}}</p>
+            <p class="text-info">{{item.appealCause}}</p>
+          </div>
         </div>
       </div>
       <!--分页-->
@@ -232,17 +237,17 @@ export default {
         >.freezing-info-bottom{
           box-sizing: border-box;
           display: flex;
-          flex: 7;
+          flex: 4;
           padding: 30px 30px 0 30px;
           >.info-left{
-            flex: 2;
+            flex: 1;
             box-sizing: border-box;
             >.text-info{
               line-height: 20px;
             }
           }
           >.info-middle{
-            flex: 2;
+            flex: 1;
             box-sizing: border-box;
             margin-left: 30px;
             >.text-info{
@@ -250,11 +255,23 @@ export default {
             }
           }
           >.info-right{
-            flex: 3;
+            flex: 1;
+            box-sizing: border-box;
+            // border-right: 1px solid #262F38;
+            margin-left: 30px;
+            >.text-info{
+              line-height: 20px;
+            }
+          }
+          >.info-reason{
+            flex: 1;
             box-sizing: border-box;
             margin-left: 30px;
             >.text-info{
               line-height: 20px;
+            }
+            >.text-blue{
+              // color: #5E95EC;
             }
           }
         }
@@ -310,6 +327,14 @@ export default {
               }
             }
             >.info-right{
+              border-right: 1px solid #262F38;
+              >.text-blue{
+                color: #5E95EC;
+              }
+            }
+            >.info-reason{
+              >.text-info{
+              }
               >.text-blue{
                 color: #5E95EC;
               }
@@ -363,6 +388,14 @@ export default {
               }
             }
             >.info-right{
+              border-right: 1px solid rgba(38,47,56,0.1);
+              >.text-blue{
+                color: #5E95EC;
+              }
+            }
+            >.info-reason{
+              >.text-info{
+              }
               >.text-blue{
                 color: #5E95EC;
               }
