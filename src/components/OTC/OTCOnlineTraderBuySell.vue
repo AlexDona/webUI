@@ -141,9 +141,9 @@
                 <!--表单部分-->
                 <div class="form">
                   <el-form
-                      :label-position="labelPosition"
-                      label-width="80px"
-                      :model="formLabelAlign"
+                    :label-position="labelPosition"
+                    label-width="80px"
+                    :model="formLabelAlign"
                   >
                     <el-form-item>
                       <!-- 标题 -->
@@ -355,6 +355,7 @@
               <span
                 slot="footer"
                 class="dialog-footer">
+                  <!-- 在线购买提交 -->
                   <el-button
                     type="primary"
                     v-if="this.onlineTraderStatus === 'onlineBuy'"
@@ -363,6 +364,7 @@
                     <!-- 提交 -->
                     {{$t('M.otc_submit')}}
                   </el-button>
+                  <!-- 在线出售提交 -->
                   <el-button
                     type="primary"
                     v-if="this.onlineTraderStatus === 'onlineSell'"

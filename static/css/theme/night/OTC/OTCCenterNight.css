@@ -24,6 +24,7 @@
 /* input框 */
 .otc-box.night .otc-publish-box .el-input__inner{
   background-color: #19202E;
+  border: 1px solid #7D90AC;
 }
 /* 3.0 发布订单按钮样式大小*/
 .otc-box.night .otc-publish-box .el-button{
@@ -83,7 +84,7 @@
   color: #4F85DA;
 }
 .otc-box.night .is-disabled{
-  background-color: rgba(29, 35, 49, 1);
+  /* background-color: rgba(29, 35, 49, 1); */
 }
 /*鼠标点击*/
 .otc-box.night .el-tabs__item.is-active{

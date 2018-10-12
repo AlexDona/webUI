@@ -346,10 +346,9 @@ export default {
       totalPageMyEntrust: 1, // 当前委托总页数
       // 奖励记录
       awardList: [],
-      loadingCircle: {}, // 整页loading.
       totalSumBTC: '', // btc资产
       BTC2CNYRate: '', // 转换汇率
-      loading: true // 局部列表loading
+      loading: false // 局部列表loading
     }
   },
   created () {
@@ -402,6 +401,7 @@ export default {
     },
     // 直接推广 间接推广列表
     async getUserPromotionList () {
+      this.loading = true
       let data = await userPromotionList({
         type: this.generalizeValue, // 筛选类型
         currentPage: this.currentPageForMyEntrust, // 分页
@@ -432,6 +432,7 @@ export default {
     },
     // 推荐用户币种列表
     async getRecommendUserPromotion () {
+      this.loading = true
       let data = await recommendUserPromotionList({
         pageNumber: this.currentPageMyEntrust, // 页码
         // type: this.generalizeValue, // 页码

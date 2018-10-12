@@ -15,11 +15,11 @@
             v-model="OTCBuySellStyle"
             @change="toggleBuyOrSellStyle"
           >
-            <el-radio-button label="onlineBuy">
+            <el-radio-button label="onlineBuy" :disabled="isDisabledRadio">
               <!-- 在线购买 -->
               {{ $t('M.otc_index_online_buy') }}
             </el-radio-button>
-            <el-radio-button label="onlineSell">
+            <el-radio-button label="onlineSell" :disabled="isDisabledRadio">
               <!-- 在线出售 -->
               {{ $t('M.otc_index_online_sell') }}
             </el-radio-button>
@@ -352,7 +352,7 @@
           v-model = "activeName"
         >
           <!-- 2.2.1 交易中的订单 -->
-          <el-tab-pane name = "first">
+          <el-tab-pane name = "first" :disabled="isdisabled">
             <span slot="label">
               <i
                 class="el-icon-caret-right otc-tab-pane-arrow-right"
@@ -367,7 +367,7 @@
             <OTCTradingOrder ref = "trading"/>
           </el-tab-pane>
           <!-- 2.2.2 已完成订单 -->
-          <el-tab-pane name = "second">
+          <el-tab-pane name = "second" :disabled="isdisabled">
             <span slot="label">
               <i
                 class="el-icon-caret-right otc-tab-pane-arrow-right"
@@ -382,7 +382,7 @@
             <OTCCompletedOrder ref = "complete"/>
           </el-tab-pane>
           <!-- 2.2.3 已取消订单 -->
-          <el-tab-pane name = "third">
+          <el-tab-pane name = "third" :disabled="isdisabled">
             <span slot="label">
               <i
                 class="el-icon-caret-right otc-tab-pane-arrow-right"
@@ -397,7 +397,7 @@
             <OTCCanceledOrder ref = "canceled"/>
           </el-tab-pane>
           <!-- 2.2.4 冻结中订单 -->
-          <el-tab-pane name = "fourth">
+          <el-tab-pane name = "fourth" :disabled="isdisabled">
             <span slot="label">
               <i
                 class="el-icon-caret-right otc-tab-pane-arrow-right"
@@ -412,7 +412,7 @@
             <OTCFreezingOrder ref = "freezing"/>
           </el-tab-pane>
           <!-- 2.2.5 委托订单 -->
-          <el-tab-pane name = "fifth">
+          <el-tab-pane name = "fifth" :disabled="isdisabled">
             <span slot="label">
               <i
                 class="el-icon-caret-right otc-tab-pane-arrow-right"
@@ -462,6 +462,8 @@ export default {
   // props,
   data () {
     return {
+      isdisabled: false, // 订单tabs面板切换禁用状态
+      isDisabledRadio: false, // 在线购买和在线出售按钮禁用状态
       loading: true, // loading加载
       // 分页
       currentPage: 1, // 当前页码
@@ -475,8 +477,7 @@ export default {
       OTCBuySellStyle: 'onlineBuy', //  在线购买和在线出售选中类型
       selectCurrencyNameStatus: 0, //  选中我要购买或者出售的币种名称
       // 在线购买和在线出售表格列表
-      onlineBuySellTableList: [
-      ],
+      onlineBuySellTableList: [],
       // 支付方式下拉框数据
       payWayBankinfoList: [
         {
@@ -558,32 +559,38 @@ export default {
     },
     // 0.1 切换各订单状态tab面板
     toggleTabPane (tab, event) {
+      // 防止频繁切换点击按钮 通过禁用按钮，0.5秒后可以点击
+      this.isdisabled = true
+      setTimeout(() => {
+        this.isdisabled = false
+      }, 500)
       console.log(this.activeName)
       console.log(this.isLogin)
       // 未登录跳转到登录页面去
       if (!this.isLogin) {
         this.$router.push({path: '/login'})
         return false
-      }
-      if (this.activeName === 'first') {
-        console.log('调交易中订单')
-        this.$refs.trading.getOTCTradingOrdersList() // 调用子组件交易中订单的方法
-      }
-      if (this.activeName === 'second') {
-        console.log('调已完成订单')
-        this.$refs.complete.getOTCCompletedOrdersList() // 调用子组件已完成订单的方法
-      }
-      if (this.activeName === 'third') {
-        console.log('调已取消订单')
-        this.$refs.canceled.getOTCCanceledOrdersList() // 调用子组件已取消订单的方法
-      }
-      if (this.activeName === 'fourth') {
-        console.log('调冻结中订单')
-        this.$refs.freezing.getOTCFrezzingOrdersList() // 调用子组件冻结中订单的方法
-      }
-      if (this.activeName === 'fifth') {
-        console.log('调委托订单')
-        this.$refs.entrust.getOTCEntrustingOrdersList() // 调用子组件委托订单的方法
+      } else {
+        if (this.activeName === 'first') {
+          console.log('调交易中订单')
+          this.$refs.trading.getOTCTradingOrdersList() // 调用子组件交易中订单的方法
+        }
+        if (this.activeName === 'second') {
+          console.log('调已完成订单')
+          this.$refs.complete.getOTCCompletedOrdersList() // 调用子组件已完成订单的方法
+        }
+        if (this.activeName === 'third') {
+          console.log('调已取消订单')
+          this.$refs.canceled.getOTCCanceledOrdersList() // 调用子组件已取消订单的方法
+        }
+        if (this.activeName === 'fourth') {
+          console.log('调冻结中订单')
+          this.$refs.freezing.getOTCFrezzingOrdersList() // 调用子组件冻结中订单的方法
+        }
+        if (this.activeName === 'fifth') {
+          console.log('调委托订单')
+          this.$refs.entrust.getOTCEntrustingOrdersList() // 调用子组件委托订单的方法
+        }
       }
     },
     // 0.2 点击发布订单按钮跳转到发布订单页面
@@ -669,51 +676,50 @@ export default {
       }
     },
     // 0.4 点击出售按钮跳转到在线出售页面
-    // toOnlineSell (id, coinId, userId) {
-    //   if (!this.isLogin) {
-    //     this.$router.push({path: '/login'})
-    //   } else {
-    //     // 刷新用户信息
-    //     reflashUserInfo(this)
-    //     // 未设置交易密码、未实名认证，未高级认证，不能进行交易
-    //     if (!this.userInfo.payPassword) {
-    //       this.$message({
-    //         message: this.$t('M.otc_index_js'), // 去个人中心设置交易密码
-    //         type: 'error'
-    //       })
-    //       return false
-    //     } else if (!this.userInfo.realname) {
-    //       this.$message({
-    //         message: this.$t('M.otc_index_digo_tips'), // 去个人中心完成实名认证
-    //         type: 'error'
-    //       })
-    //       return false
-    //     } else if (!(this.userInfo.advancedAuth === 'pass')) {
-    //       this.$message({
-    //         message: this.$t('M.otc_index_digo_tips_pass'), // 去个人中心完成高级认证
-    //         type: 'error'
-    //       })
-    //       return false
-    //     } else {
-    //       if (userId === this.userInfo.id) {
-    //         this.$message({
-    //           message: this.$t('M.otc_index_forbided_buyand_sell'), // 禁止自买自卖
-    //           type: 'error'
-    //         })
-    //         return false
-    //       } else {
-    //         // console.log("卖")
-    //         // console.log(id) // 挂单id
-    //         // console.log(coinId) // 币种id
-    //         this.$router.push({path: '/OTCOnlineTraderBuySell/' + this.OTCBuySellStyle + '/' + id + '/' + coinId})
-    //       }
-    //     }
-    //   }
-    // },
+    /* toOnlineSell (id, coinId, userId) {
+      if (!this.isLogin) {
+        this.$router.push({path: '/login'})
+      } else {
+        // 刷新用户信息
+        reflashUserInfo(this)
+        // 未设置交易密码、未实名认证，未高级认证，不能进行交易
+        if (!this.userInfo.payPassword) {
+          this.$message({
+            message: this.$t('M.otc_index_js'), // 去个人中心设置交易密码
+            type: 'error'
+          })
+          return false
+        } else if (!this.userInfo.realname) {
+          this.$message({
+            message: this.$t('M.otc_index_digo_tips'), // 去个人中心完成实名认证
+            type: 'error'
+          })
+          return false
+        } else if (!(this.userInfo.advancedAuth === 'pass')) {
+          this.$message({
+            message: this.$t('M.otc_index_digo_tips_pass'), // 去个人中心完成高级认证
+            type: 'error'
+          })
+          return false
+        } else {
+          if (userId === this.userInfo.id) {
+            this.$message({
+              message: this.$t('M.otc_index_forbided_buyand_sell'), // 禁止自买自卖
+              type: 'error'
+            })
+            return false
+          } else {
+            // console.log("卖")
+            // console.log(id) // 挂单id
+            // console.log(coinId) // 币种id
+            this.$router.push({path: '/OTCOnlineTraderBuySell/' + this.OTCBuySellStyle + '/' + id + '/' + coinId})
+          }
+        }
+      }
+    }, */
     // 0.5 查询更多订单按钮点击事件
     queryMoreOrder () {
-      // 未登录跳转登录页
-      if (!this.isLogin) {
+      if (!this.isLogin) { // 未登录跳转登录页
         this.$router.push({path: '/login'})
       } else {
         // 登录后：商家用户跳转到商家订单；普通用户跳转到个人中心中的法币订单
@@ -759,7 +765,7 @@ export default {
       const data = await getMerchantAvailablelegalTender({
         partnerId: this.partnerId
       })
-      console.log('otc法币查询')
+      console.log('otc法币查询列表')
       console.log(data)
       if (!(returnAjaxMessage(data, this, 0))) {
         return false
@@ -775,7 +781,7 @@ export default {
     //  3.0 刚进页面时候 otc主页面查询挂单列表
     async getOTCPutUpOrdersList () {
       this.loading = true
-      console.log('当前页：' + this.currentPage)
+      // console.log('当前页：' + this.currentPage)
       let param = {
         pageNum: this.currentPage,
         payType: this.checkedPayType, // 按照选中的支付方式查询列表
@@ -816,10 +822,11 @@ export default {
       console.log('币种id：' + this.selectedOTCAvailableCurrencyCoinID)
       // console.log(this.selectedOTCAvailablePartnerCoinId)
       // 请求接口数据渲染表格
-      this.getSelectCurrencyNametOTCPutUpOrdersList()
+      // this.getSelectCurrencyNametOTCPutUpOrdersList()
+      this.getOTCPutUpOrdersList() // otc主页面查询挂单列表
     },
     //  5.0 切换我要购买和出售时候调取接口获得数据渲染列表
-    async getSelectCurrencyNametOTCPutUpOrdersList () {
+    /* async getSelectCurrencyNametOTCPutUpOrdersList () {
       this.loading = true
       let param = {
         pageNum: this.currentPage,
@@ -848,13 +855,18 @@ export default {
         // 分页
         this.totalPages = data.data.data.pages - 0
       }
-    },
+    }, */
     //  6.0 切换在线购买和在线售出状态并调接口渲染列表
     async toggleBuyOrSellStyle (e) {
+      // 防止频繁切换点击按钮 通过禁用按钮，0.5秒后可以点击
+      // this.isDisabledRadio = true
+      // setTimeout(() => {
+      //   this.isDisabledRadio = false
+      // }, 500)
       this.OTCBuySellStyle = e
-      this.loading = true
       console.log(this.OTCBuySellStyle)
-      let param = {
+      this.getOTCPutUpOrdersList() // otc主页面查询挂单列表
+      /* let param = {
         pageNum: this.currentPage,
         payType: this.checkedPayType, // 按照选中的支付方式查询列表
         partnerId: this.partnerId, // 商户id
@@ -880,7 +892,7 @@ export default {
         this.onlineBuySellTableList = data.data.data.list
         // 分页
         this.totalPages = data.data.data.pages - 0
-      }
+      } */
     },
     //  7.0 改变可用法币的币种id
     changeCurrencyId (e) {
@@ -893,10 +905,11 @@ export default {
         }
       })
       // 调主页面查询otc挂单列表接口按照法币方式查询
-      this.getChangeCurrencyIdOTCPutUpOrdersList()
+      // this.getChangeCurrencyIdOTCPutUpOrdersList()
+      this.getOTCPutUpOrdersList() // otc主页面查询挂单列表
     },
     //  8.0 改变可用法币的下拉框的选中值，调主页面查询otc挂单列表接口
-    async getChangeCurrencyIdOTCPutUpOrdersList () {
+    /* async getChangeCurrencyIdOTCPutUpOrdersList () {
       this.loading = true
       let param = {
         pageNum: this.currentPage,
@@ -925,16 +938,17 @@ export default {
         // 分页
         this.totalPages = data.data.data.pages - 0
       }
-    },
+    }, */
     // 9.0 改变支付方式下拉框的选中值
     payWayChangeValue (e) {
       this.checkedPayType = e
       console.log(this.checkedPayType) //  选中的支付方式的id
       // 调主页面查询otc挂单列表接口按照支付方式查询列表
-      this.getChangePayWayOTCPutUpOrdersList()
-    },
+      // this.getChangePayWayOTCPutUpOrdersList()
+      this.getOTCPutUpOrdersList() // otc主页面查询挂单列表
+    }
     // 10.0 改变支付方式下拉框的选中值，调主页面查询otc挂单列表接口
-    async getChangePayWayOTCPutUpOrdersList () {
+    /* async getChangePayWayOTCPutUpOrdersList () {
       this.loading = true
       let param = {
         pageNum: this.currentPage,
@@ -963,7 +977,7 @@ export default {
         // 分页
         this.totalPages = data.data.data.pages - 0
       }
-    }
+    } */
   },
   filter: {},
   computed: {
@@ -973,7 +987,7 @@ export default {
       selectedOTCAvailableCurrencyName: state => state.OTC.selectedOTCAvailableCurrencyName,
       selectedOTCAvailablePartnerCoinId: state => state.OTC.selectedOTCAvailablePartnerCoinId,
       selectedOTCAvailableCurrencyCoinID: state => state.OTC.selectedOTCAvailableCurrencyCoinID,
-      partnerId: state => state.common.partnerId,
+      partnerId: state => state.common.partnerId, // 商户id
       // 当前选中语言
       language: state => state.common.language,
       activeLanguage: state => state.common.activeLanguage,
@@ -1036,6 +1050,7 @@ export default {
           >.otc-publish-box{
             >.pay-style{
               position: relative;
+              margin-right: 5px;
               >.pay-style-icon{
                 width: 14px;
                 height: 14px;
@@ -1048,6 +1063,7 @@ export default {
             }
             >.currency-style{
               position: relative;
+              margin-right: 5px;
               >.currency-style-icon{
                 // color: #fff;
                 width: 14px;
@@ -1090,10 +1106,8 @@ export default {
           .red{
             // color: #D45858;
           }
-          // 测试
           position: relative;
           >.pay-way{
-            // 测试
             display: inline-block;
             top: 10px;
             left: 616px;
@@ -1101,7 +1115,6 @@ export default {
             z-index: 1;
           }
           >.shade-pay-way{
-            // 测试
             // color: #617499;
             display: inline-block;
             top: 15px;
