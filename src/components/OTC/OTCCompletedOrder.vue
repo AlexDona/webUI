@@ -20,7 +20,9 @@
                   <div class="completed-info-left">
                     <!-- 付款信息 -->
                     <p class="order-info-left">
-                      <span class="pay-info">{{$t('M.otc_index_js2')}}</span>
+                      <span class="pay-info">
+                        {{$t('M.otc_index_js2')}}
+                      </span>
                     </p>
                     <!-- 姓名 -->
                     <p class="order-info-left">
@@ -32,11 +34,21 @@
                     <p class="order-info-left">
                       <span>{{$t('M.otc_alipay_type')}}：</span>
                       <!-- 判断付款方式 -->
-                      <span v-if="props.row.payType === 'alipay'">{{$t('M.comm_alipay')}}</span>
-                      <span v-if="props.row.payType === 'bank'">{{$t('M.comm_bank')}}</span>
-                      <span v-if="props.row.payType === 'xilian'">{{$t('M.comm_xilian')}}</span>
-                      <span v-if="props.row.payType === 'paypal'">PAYPAL</span>
-                      <span v-if="props.row.payType === 'weixin'">{{$t('M.comm_weixin')}}</span>
+                      <span v-if="props.row.payType === 'alipay'">
+                        {{$t('M.comm_alipay')}}
+                      </span>
+                      <span v-if="props.row.payType === 'bank'">
+                        {{$t('M.comm_bank')}}
+                      </span>
+                      <span v-if="props.row.payType === 'xilian'">
+                        {{$t('M.comm_xilian')}}
+                      </span>
+                      <span v-if="props.row.payType === 'paypal'">
+                        PAYPAL
+                      </span>
+                      <span v-if="props.row.payType === 'weixin'">
+                        {{$t('M.comm_weixin')}}
+                      </span>
                       <!-- <span>{{props.row.payType}}</span> -->
                     </p>
                     <!-- 付款账号 -->

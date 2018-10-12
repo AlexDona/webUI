@@ -17,6 +17,7 @@
                 <div class="completed-info">
                   <!-- 左侧 -->
                   <div class="completed-info-left">
+                    <!-- 付款信息 -->
                     <p class="order-info-left">
                       <span class="pay-info">
                         <!--付款信息-->
@@ -24,11 +25,13 @@
                       </span>
                     </p>
                     <p class="order-info-left">
+                      <!-- 姓名 ：展示的是卖家的名字-->
                       <span>
                         <!--姓名-->
                         {{$t('M.otc_name')}}：
                       </span>
-                      <span>{{props.row.buyName}}</span>
+                      <!-- <span>{{props.row.buyName}}</span> -->
+                      <span>{{props.row.sellName}}</span>
                     </p>
                     <p class="order-info-left">
                       <span>
@@ -57,35 +60,96 @@
                       </span>
                       <!-- <span>{{props.row.payType}}</span> -->
                     </p>
+                    <!-- 付款账号 -->
                     <p class="order-info-left">
-                      <span>
-                        <!--银行卡账号-->
+                      <!--银行卡账号-->
+                      <!-- <span>
                         {{$t('M.otc_bank_num')}}：
                       </span>
+                      <span>{{props.row.payAcctount}}</span> -->
+                      <!-- 支付宝账号 -->
+                      <span v-if="props.row.payType === 'alipay'">
+                        {{$t('M.user_account_alipay')}}{{$t('M.user_account_number')}}：
+                      </span>
+                      <!-- 银行卡账号 -->
+                      <span v-if="props.row.payType === 'bank'">
+                        {{$t('M.otc_bank_num')}}：
+                      </span>
+                      <!-- 西联汇款账号 -->
+                      <span v-if="props.row.payType === 'xilian'">
+                        {{$t('M.user_account_western_union')}}{{$t('M.user_account_number')}}：
+                      </span>
+                      <!-- PAYPAL账号 -->
+                      <span v-if="props.row.payType === 'paypal'">
+                        PAYPAL{{$t('M.user_account_number')}}：
+                      </span>
+                      <!-- 微信账号 -->
+                      <span v-if="props.row.payType === 'weixin'">
+                        {{$t('M.user_account_weChat')}}{{$t('M.user_account_number')}}：
+                      </span>
+                      <!-- <span>{{$t('M.otc_bank_num')}}：</span> -->
                       <span>{{props.row.payAcctount}}</span>
                     </p>
                   </div>
                   <!-- 中间 -->
                   <div class="completed-info-middle">
                     <p class="order-info-middle">
-                      <span class="buyer-seller-info">
+                      <!-- <span class="buyer-seller-info"> -->
                         <!--卖家信息-->
+                        <!-- {{$t('M.otc_stocks_seller')}} -->
+                      <!-- </span> -->
+                      <!-- 买单显示：卖家信息 -->
+                      <span
+                        class="buyer-seller-info"
+                        v-if="props.row.orderType === 'BUY'"
+                      >
                         {{$t('M.otc_stocks_seller')}}
                       </span>
-                    </p>
-                    <p class="order-info-middle">
-                      <span>
-                        <!--姓名-->
-                        {{$t('M.otc_name')}}：
+                      <!-- 卖单显示：买家信息 -->
+                      <span
+                        class="buyer-seller-info"
+                        v-if="props.row.orderType === 'SELL'"
+                      >
+                        {{$t('M.otc_stocks_buyinfo')}}
                       </span>
-                      <span>{{props.row.sellName}}</span>
                     </p>
                     <p class="order-info-middle">
-                      <span>
+                      <!-- <span> -->
+                        <!--姓名-->
+                        <!-- {{$t('M.otc_name')}}： -->
+                      <!-- </span> -->
+                      <!-- <span>{{props.row.sellName}}</span> -->
+                      <!-- 姓名 -->
+                      <span>{{$t('M.otc_name')}}：</span>
+                      <!-- 买单显示：卖家姓名 -->
+                      <span v-if="props.row.orderType === 'BUY'">
+                        {{props.row.sellName}}
+                      </span>
+                      <!-- 卖单显示：买家姓名 -->
+                      <span v-if="props.row.orderType === 'SELL'">
+                        {{props.row.buyName}}
+                      </span>
+                    </p>
+                    <p class="order-info-middle">
+                      <!-- <span> -->
                         <!--卖家手机号-->
+                        <!-- {{$t('M.otc_trading_sellphone')}}： -->
+                      <!-- </span> -->
+                      <!-- <span>{{props.row.sellPhone}}</span> -->
+                      <!-- 买单显示：卖家手机号 -->
+                      <span v-if="props.row.orderType === 'BUY'">
                         {{$t('M.otc_trading_sellphone')}}：
                       </span>
-                      <span>{{props.row.sellPhone}}</span>
+                      <span v-if="props.row.orderType === 'BUY'">
+                        {{props.row.sellPhone}}
+                      </span>
+                      <!-- 卖单显示：买家手机号 -->
+                      <span v-if="props.row.orderType === 'SELL'">
+                        {{$t('M.otc_trading_buyphone')}}：
+                      </span>
+                      <span v-if="props.row.orderType === 'SELL'">
+                        {{props.row.buyPhone}}
+                      </span>
                     </p>
                   </div>
                   <!-- 右侧 -->

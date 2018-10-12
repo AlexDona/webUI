@@ -244,7 +244,7 @@
                       {{$t('M.otc_trading_alipay_payment')}}
                     </span>
                     <span
-                      v-if="item.payType === 'wx'"
+                      v-if="item.payType === 'weixin'"
                     >
                       <IconFontCommon
                         class="font-size16"
@@ -290,7 +290,7 @@
                 <!-- 扫码支付 qrCodeUrl  :src="item.coinUrl"-->
                 <div
                   class="bank-info-picture display-inline-block"
-                  v-if="item.payType === 'alipay' || item.payType === 'wx'"
+                  v-if="item.payType === 'alipay' || item.payType === 'weixin'"
                 >
                   <div class="picture-box">
                     <el-popover
@@ -436,7 +436,8 @@
                 <!-- 卖家手机号 -->
                 <p class="trade-info">
                   <!--买家手机号-->
-                  {{$t('M.otc_trading_sellphone')}}：{{item.buyPhone}}
+                  <!-- {{$t('M.otc_trading_sellphone')}}：{{item.buyPhone}} -->
+                  {{$t('M.otc_trading_buyphone')}}：{{item.buyPhone}}
                 </p>
               </div>
             </div>
@@ -456,7 +457,7 @@
               </div>
               <!-- 付款后 -->
               <div class="middle-content"
-                   v-if="item.status == 'PAYED'"
+                v-if="item.status == 'PAYED'"
               >
                 <div class="trader-info display-inline-block">
                   <p class="bankMoneyInfo">
@@ -481,7 +482,7 @@
                       {{$t('M.otc_trading_alipay_payment')}}
                     </span>
                     <span
-                      v-if="item.payType === 'wx'"
+                      v-if="item.payType === 'weixin'"
                     >
                       <IconFontCommon
                         class="font-size16"
@@ -524,7 +525,7 @@
                   <p class="bankMoneyInfo">
                     <span>
                       <!--账&nbsp;&nbsp;&nbsp;户-->
-                      {{$t('M.user_account_number')}}::
+                      {{$t('M.user_account_number')}}:
                     </span>
                     <span>{{item.payAcctount}}</span>
                   </p>
@@ -826,8 +827,8 @@ export default {
       cancelOrderTimeArr: [], // 自动取消订单倒计时数组集
       accomplishOrderTimeArr: [], // 自动成交倒计时数组集
       errpwd: '', // 交易密码错提示
-      accomplishTimer: null,
-      cancelTimer: null
+      accomplishTimer: null, // 自动成交倒计时
+      cancelTimer: null // 自动取消订单倒计时
       // pageSize:
     }
   },
