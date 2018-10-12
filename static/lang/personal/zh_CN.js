@@ -66,9 +66,9 @@ export const personal = {
   'user_senior_upload1': '上传身份证正面',
   'user_senior_upload2': '上传身份证反面',
   'user_senior_upload3': '上传手持身份证',
-  'user_senior_hint1': '请准备好您本人身份证使用浏览器扫码进行高级认证如二维码过 期请刷新重试。',
-  'user_senior_hint2': '点击刷新',
-  'user_senior_hint3': '请在浏览器中打开，并升级浏览器至最新版本,无法通过认证的用户，',
+  'user_senior_hint1': '请准备好您本人身份证使用浏览器或APP扫码进行高级认证',
+  // 'user_senior_hint2': '点击刷新',
+  'user_senior_hint3': '若无法通过手机认证的用户，',
   'user_senior_hint4': '请点击这里',
   'user_senior_hint5': '上传头像图片大小不能超过 10M!',
   // 收款账户

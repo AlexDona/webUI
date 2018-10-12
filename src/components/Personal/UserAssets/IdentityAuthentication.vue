@@ -448,22 +448,27 @@
         name="1"
         center>
         <div class="advanced-certification-content">
-          <img src="../../../assets/user/er.png" alt="">
+          <VueQrcode
+            class="ercode"
+            :value="String('http://192.168.1.87/isAppOverPage.html')"
+            :options="{ size: 140 }"
+          >
+          </VueQrcode>
         </div>
         <div class="advanced-certification-text">
           <p class="text-tips font-size12">
-            <!--请准备好您本人身份证使用浏览器扫码进行高级认证如二维码过 期请刷新重试。-->
+            <!--请准备好您本人身份证使用浏览器或APP扫码进行高级认证。-->
             {{ $t('M.user_senior_hint1') }}
-            <a class="tips-refresh">
-              <!--点击刷新-->
-              {{ $t('M.user_senior_hint2') }}
-            </a>
+            <!--<a class="tips-refresh">-->
+              <!--&lt;!&ndash;点击刷新&ndash;&gt;-->
+              <!--&lt;!&ndash;{{ $t('M.user_senior_hint2') }}&ndash;&gt;-->
+            <!--</a>-->
           </p>
           <p class="text-tips font-size12 tips-top">
-            <!--请在浏览器中打开，并升级浏览器至最新版本,无法通过认证的用户，-->
+            <!--若无法通过手机认证的用户，-->
             {{ $t('M.user_senior_hint3') }}
             <span
-              class="tips-refresh cursor-pointer"
+              class="tips-refresh cursor-pointer font-size14"
               @click.prevent="authenticationAuthentication"
             >
               <!--请点击这里-->
@@ -496,7 +501,11 @@ const {mapMutations} = createNamespacedHelpers('common')
 export default {
   components: {
     ErrorBox, // 错误提示接口
-    IconFontCommon // 字体图标
+    IconFontCommon, // 字体图标
+    // 二维码组件
+    VueQrcode: resolve => {
+      require([('@xkeshi/vue-qrcode')], resolve)
+    }
   },
   // props,
   data () {
@@ -883,10 +892,10 @@ export default {
   filter: {},
   computed: {
     ...mapState({
-      mainWebsite: state => state.common.mainWebsite, // 网站主网址
       theme: state => state.common.theme,
-      contryAreaList: state => state.common.contryAreaList,
       userInfo: state => state.user.loginStep1Info, // 用户详细信息
+      mainWebsite: state => state.common.mainWebsite, // 网站主网址
+      contryAreaList: state => state.common.contryAreaList,
       userCenterActiveName: state => state.personal.userCenterActiveName
     }),
     apiCommonUrl () {

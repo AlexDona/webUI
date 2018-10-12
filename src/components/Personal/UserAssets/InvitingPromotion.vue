@@ -374,7 +374,7 @@ export default {
       console.log(1)
       const params = {
         coinName: 'HF',
-        shortName: 'BTC'
+        shortName: 'CNY'
       }
       const data = await currencyTransform(params)
       console.log(2)
@@ -416,9 +416,13 @@ export default {
         // 接口成功清除局部loading
         this.loading = false
         // 返回展示
-        this.extensionList = data.data.data.list
-        this.totalPageForMyEntrust = data.data.data.pages - 0
-        this.totalPageMyNumber = data.data.data.total - 0
+        this.extensionList = data.data.data.page.list
+        console.log(this.extensionList)
+        this.totalPageForMyEntrust = data.data.data.page.pages - 0
+        this.totalPageMyNumber = data.data.data.page.total - 0
+        // 已获得的佣金预估
+        this.totalSumBTC = data.data.data.coinName
+        console.log(this.totalSumBTC)
       }
     },
     // 分页
