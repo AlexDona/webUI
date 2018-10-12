@@ -99,23 +99,6 @@
                       v-model="activePayModeList[index]"
                       @change="changeUserBankInfo(index)"
                     >
-                    <!-- 测试 -->
-                    <!-- <el-select
-                      :placeholder="$t('M.otc_MerchantsOrders_chouse') + $t('M.otc_index_Payment_method')"
-                      :no-data-text="$t('M.comm_no_data')"
-                      v-model="activePayModeListID"
-                      @change="changeUserBankInfo(index)"
-                    > -->
-                    <!-- 测试 -->
-                      <!-- 测试 -->
-                      <!-- <el-option
-                        v-for="item1 in item.userBankList"
-                        :key="item1.id"
-                        :label="language === 'zh_CN'? item1.bankName : item1.bankType"
-                        :value="item1.id"
-                      >
-                      </el-option> -->
-                      <!-- 测试 -->
                       <el-option
                         v-for="item1 in item.userBankList"
                         :key="item1.id"
@@ -736,9 +719,6 @@ export default {
   // props,
   data () {
     return {
-      // 测试
-      activePayModeListID: '', // 选中的支付方式id
-      // 测试
       loading: false,
       // 分页
       currentPage: 1, // 当前页码
@@ -751,8 +731,8 @@ export default {
       activitedPayStyleId: '', //  选中的支付方式id-往后台传送的参数
       // 交易中订单列表
       tradingOrderList: [],
-      // 选中的订单id
-      activedTradingOrderId: '',
+      activePayModeListID: '', // 选中的支付方式id
+      activedTradingOrderId: '', // 选中的订单id
       activedPayAccountArr: [], // 当前选中的订单中付款方式中的付款账号 ：为了解决支付宝和微信账号一样做的bug修复
       // 支付方式
       activePayModeList: [], // 当前选中支付方式中的哪一个 -->为了解决支付宝和微信账号一样做的bug修复// 当年选中的支付方式的id
@@ -909,26 +889,16 @@ export default {
     },
     // 3.0 改变交易方式
     changeUserBankInfo (index) {
-      // console.log(this.activePayModeList[index]) // 就回退到这吧
       console.log('第' + index + '条数据')
       console.log('选中的订单id')
       console.log(this.tradingOrderList[index].id)
       this.activedTradingOrderId = this.tradingOrderList[index].id
       this.tradingOrderList[index].userBankList.forEach((item) => {
         if (item.id == this.activePayModeList[index]) {
-        // 测试
-        // if (item.id == this.activePayModeListID) {
-        // 测试
           this.activedPayAccountArr[index] = item.cardNo
           console.log('选中的付款账号：' + this.activedPayAccountArr[index])
-          // 测试
-          // this.activePayModeList[index] = item.cardNo
-          // 测试
           this.activeBankFidList[index] = item.id
-          console.log('选中的支付方式id')
-          console.log(this.activeBankFidList[index])
-          // console.log('账号')
-          // console.log(this.activePayModeList[index])
+          console.log('选中的支付方式id' + this.activeBankFidList[index])
           this.activitedPayStyleId = this.activeBankFidList[index]
           // 省
           this.activeBankProv[index] = item.prov
@@ -942,8 +912,7 @@ export default {
           this.activeBankDetailAddress[index] = item.address
           // 支付类型
           this.activeBankType[index] = item.bankType
-          console.log('支付类型')
-          console.log(this.activeBankType[index])
+          console.log('支付类型：' + this.activeBankType[index])
           // 支付码
           this.activeBankCode[index] = item.qrcode
           console.log('支付码')
