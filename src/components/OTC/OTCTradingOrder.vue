@@ -151,6 +151,7 @@
                     class="bank-info"
                     v-if="activeBankType[index] === 'paypal'"
                   >
+                    <!-- paypal -->
                     <span>paypal{{$t('M.comm_bill')}}{{$t('M.comm_house')}}:</span>
                     <span>{{activedPayAccountArr[index]}}</span>
                   </p>
@@ -164,7 +165,10 @@
                   </p>
                 </div>
                 <!-- 扫码支付 activeBankCode[index]  :src="item.coinUrl"-->
-                <div class="bank-info-picture display-inline-block" v-if="activeBankType[index] === 'weixin' || activeBankType[index] === 'alipay'">
+                <div
+                  class="bank-info-picture display-inline-block"
+                  v-if="activeBankType[index] === 'weixin' || activeBankType[index] === 'alipay'"
+                >
                   <div class="picture-box">
                     <el-popover
                       placement="bottom"
@@ -735,7 +739,7 @@ export default {
       activedTradingOrderId: '', // 选中的订单id
       activedPayAccountArr: [], // 当前选中的订单中付款方式中的付款账号 ：为了解决支付宝和微信账号一样做的bug修复
       // 支付方式
-      activePayModeList: [], // 当前选中支付方式中的哪一个 -->为了解决支付宝和微信账号一样做的bug修复// 当年选中的支付方式的id
+      activePayModeList: [], // 当前选中支付方式中的哪一个 -->为了解决支付宝和微信账号一样做的bug修复// 当前选中的支付方式的id
       activeBankFidList: [], // 当前选中支付方式的id
       activeBankProv: [], // 当前选中支付银行所在省
       activeBankCity: [], // 当前选中支付银行所在市
