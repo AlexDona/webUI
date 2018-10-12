@@ -545,6 +545,15 @@
               </template>
             </el-table-column>
           </el-table>
+          <!--分页-->
+          <el-pagination
+            background
+            v-show="securityRecord.length"
+            layout="prev, pager, next"
+            :page-count="totalPageMySetLogPage"
+            @current-change="changeCurrentPageSetLog"
+          >
+          </el-pagination>
         </el-tab-pane>
         <!--安全设置记录 登陆时间 设置名称 登录IP 归属地-->
         <el-tab-pane
@@ -583,6 +592,15 @@
               </template>
             </el-table-column>
           </el-table>
+          <!--分页-->
+          <el-pagination
+            background
+            v-show="logonRecord.length"
+            layout="prev, pager, next"
+            :page-count="totalPageMyLoginLogPage"
+            @current-change="changeCurrentPageLoginLog"
+          >
+          </el-pagination>
         </el-tab-pane>
       </el-tabs>
     </div>
@@ -618,6 +636,11 @@ export default {
       // 安全设置记录
       securityRecord: [],
       getStatusUserInfo: {}, // 个人信息
+      activeAwardList: 'set-log',
+      setLogPage: 1, // 当前委托页码
+      totalPageMySetLogPage: 1, // 当前委托总页数
+      loginLogPage: 1, // 当前委托页码
+      totalPageMyLoginLogPage: 1, // 当前委托总页数
       closeValidation: false, // 关闭验证弹窗
       openTheValidation: false, // 开启验证弹窗
       openSwitch: false, // 弹出层状态 开启 关闭
@@ -677,10 +700,22 @@ export default {
           this.fullscreenLoading = false
           this.securityCenter = data.data.data
           this.person = data.data.data.person
-          this.logonRecord = data.data.data.setLog
-          this.securityRecord = data.data.data.loginLog
+          this.logonRecord = data.data.data.setLog.list
+          this.totalPageMySetLogPage = data.data.data.setLog.pages - 0
+          this.securityRecord = data.data.data.loginLog.list
+          this.totalPageMyLoginLogPage = data.data.data.loginLog.pages - 0
         }
       })
+    },
+    // 分页
+    changeCurrentPageSetLog (pageNum) {
+      this.setLogPage = pageNum
+      this.getSecurityCenter()
+    },
+    // 分页
+    changeCurrentPageLoginLog (pageNum) {
+      this.loginLogPage = pageNum
+      this.getSecurityCenter()
     },
     // 路由跳转对应组件
     setShowStatusSecurity (val) {
