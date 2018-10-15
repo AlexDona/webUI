@@ -40,6 +40,7 @@ export const returnAjaxMessage = (data, self, noTip) => {
       // duration: 5000000,
       message: !meta.params ? self.$t(`M.${meta.i18n_code}`) : self.$t(`M.${meta.i18n_code}`).format(meta.params)
     })
+    console.log(self.$t(`M.${meta.i18n_code}`).format(meta.params))
     // 登录失效
     if (meta.code == 401) {
       removeStore('loginStep1Info')
@@ -253,10 +254,11 @@ String.prototype.format = function (args) {
   })
   result = newArr
   if (arguments.length > 0) {
-    if (arguments.length == 1 && typeof (args) == 'object') {
+    if (arguments.length == 1 && !Array.isArray(args)) {
       for (var key in args) {
         if (args[key] != undefined) {
           let reg = new RegExp('({' + key + '})', 'g')
+          console.log(reg)
           result = result.replace(reg, args[key])
         }
       }
