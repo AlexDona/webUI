@@ -27,7 +27,7 @@
                 >
                   <template slot-scope="s">
                   <span class="font-size12">
-                    {{timeFilters(s.row.time)}}
+                    {{timeFilters(s.row.time-0)}}
                   </span>
                   </template>
                 </el-table-column>
@@ -72,6 +72,7 @@ export default {
   // props,
   data () {
     return {
+      reflashCount: 0,
       contentShowStatus: true
       // orderRecordList: []
     }
@@ -97,13 +98,21 @@ export default {
   computed: {
     ...mapState({
       theme: state => state.common.theme,
-      orderRecordList: state => state.common.socketData.tardeRecordList,
+      orderRecordListByAjax: state => state.common.klineAjaxData.tardeRecordList,
+      orderRecordListBySocket: state => state.common.socketData.tardeRecordList,
       activeSymbol: state => state.common.activeSymbol
-    })
+    }),
+    orderRecordList () {
+      return !this.reflashCount ? this.orderRecordListByAjax : this.orderRecordListBySocket
+    }
   },
   watch: {
     orderRecordList (newVal) {
-      // console.log(newVal)
+    },
+    orderRecordListByAjax (newVal) {
+      if (!this.reflashCount && newVal) {
+        this.reflashCount++
+      }
     }
   }
 }

@@ -66,6 +66,16 @@ export const postWithURLencoded = (url, params) => {
     }
   })
 }
+export const postWithFormData = (url, params) => {
+  return util.ajax({
+    method: 'post',
+    url,
+    data: params,
+    headers: {
+      'Content-Type': 'application/form-data'
+    }
+  })
+}
 export const get = (url, params) => {
   return util.ajax({
     method: 'get',

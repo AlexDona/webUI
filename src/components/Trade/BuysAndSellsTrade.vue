@@ -333,22 +333,29 @@ export default {
     ...mapState({
       theme: state => state.common.theme,
       socketData: state => state.common.socketData,
-      depthData: state => state.common.socketData.depthData,
-      buysAndSellsList: state => state.common.socketData.buyAndSellData,
+      depthData: state => state.common.klineAjaxData.depthData,
+      buysAndSellsListByAjax: state => state.common.klineAjaxData.buyAndSellData,
+      buysAndSellsListBySocket: state => state.common.socketData.buyAndSellData,
       activeSymbol: state => state.common.activeSymbol,
       activeSymbolId: state => state.common.activeSymbol.id
-    })
+    }),
+    buysAndSellsList () {
+      return !this.reflashCount ? this.buysAndSellsListByAjax : this.buysAndSellsListBySocket
+      // return this.buysAndSellsListByAjax
+    }
   },
   watch: {
     activeSymbolId (newVal) {
       this.reflashCount = 0
     },
-    buysAndSellsList (newVal) {
-      console.log(newVal)
-      if (!this.reflashCount && newVal) {
+    buysAndSellsListByAjax (newVal) {
+      // this.buysAndSellsListByAjax = this.buysAndSellsList
+      if (!this.reflashCount && newVal && this.buysAndSellsListBySocket.buys) {
         this.CHANGE_ACTIVE_PRICE_ITEM(newVal.latestDone.price)
         this.reflashCount++
       }
+    },
+    buysAndSellsListBySocket (newVal) {
     }
   }
 }

@@ -1,10 +1,10 @@
 import {
   CHANGE_BANNER_BACKGROUND,
-  CHANGE_COLLECT_LIST,
-  CHANGE_COLLECT_STATUS_LIST,
-  CHANGE_BANNER_ACTIVE
+  CHANGE_BANNER_ACTIVE,
+  CHANGE_COLLECT_SYMBOL,
+  CHANGE_SYMBOL_MAP
 } from './mutations-types.js'
-
+import Vue from 'vue'
 // import {setStore, getStore} from '../utils'
 
 // import {localapi, proapi} from 'src/config/env'
@@ -16,10 +16,21 @@ export default {
   [CHANGE_BANNER_BACKGROUND] (state, data = '') {
     state.bannerBackgroundImage = data
   },
-  [CHANGE_COLLECT_LIST] (state, data) {
-    state.globalCollectList = data
+  // 设置收藏标记
+  [CHANGE_COLLECT_SYMBOL] (state, {
+    type,
+    collectSymbol
+  }) {
+    if (type === 'add') {
+      Vue.set(state.collectSymbol, collectSymbol, collectSymbol)
+    } else if (type === 'cancel') {
+      Vue.delete(state.collectSymbol, collectSymbol)
+    } else if (type === 'reset') {
+      state.collectSymbol = collectSymbol
+    }
   },
-  [CHANGE_COLLECT_STATUS_LIST] (state, data) {
-    state.globalCollectStatusList = data
+  // 设置交易对map映射
+  [CHANGE_SYMBOL_MAP] (state, {key, val}) {
+    state.symbolMap.set(key, val)
   }
 }

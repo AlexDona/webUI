@@ -100,7 +100,7 @@
             <span
               class="font-size14 theme-color"
             >
-              {{middleTopData.volume}}
+              {{middleTopData.vol24hour}}
             </span>
         </div>
       </div>
