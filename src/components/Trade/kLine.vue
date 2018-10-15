@@ -126,8 +126,7 @@ export default {
         this.socket.on('open', () => {
           this.getKlineDataBySocket('REQ', this.symbol, 'min')
           this.getKlineDataBySocket('SUB', this.symbol, 'min')
-          this.getTradeMarketBySocket('SUB')
-          //   this.getBuyAndSellBySocket('REQ', this.symbol)
+          this.getTradeMarketBySocket('SUB', this.activeTabSymbolStr)
           this.getBuyAndSellBySocket('SUB', this.symbol)
           this.getDepthDataBySocket('SUB', this.symbol)
           this.getTradeRecordBySocket('SUB', this.symbol)
@@ -168,7 +167,7 @@ export default {
         this.finalSymbol = this.isJumpToTradeCenter ? this.jumpSymbol : activeSymbol
         this.CHANGE_ACTIVE_SYMBOL({activeSymbol: this.finalSymbol})
         this.symbol = this.activeSymbol.id
-        this.getActiveSymbolData(this.symbol)
+        // this.getActiveSymbolData(this.symbol)
       }
     },
     init (options) {
@@ -500,12 +499,6 @@ export default {
         case 'TRADE':
           if (data.data) {
             this.socketData.tardeRecordList = data.data
-            // if (!data.type) {
-            //
-            // } else {
-            //   this.socketData.tardeRecordList.pop()
-            //   this.socketData.tardeRecordList.unshift(data.data[0])
-            // }
           }
           break
         case 'TICKER':
@@ -532,9 +525,7 @@ export default {
         let newInterval = this.transformInterval(resolution)
         this.getKlineDataBySocket('REQ', this.symbol, newInterval)
         this.getKlineDataBySocket('SUB', this.symbol, newInterval)
-        // this.getTradeMarketBySocket('REQ')
         this.getTradeMarketBySocket('SUB', this.activeTabSymbolStr)
-        // this.getBuyAndSellBySocket('REQ', this.symbol)
         this.getBuyAndSellBySocket('SUB', this.symbol)
         this.getDepthDataBySocket('SUB', this.symbol)
         this.getTradeRecordBySocket('SUB', this.symbol)
@@ -648,6 +639,7 @@ export default {
     },
     // 切换tab栏重新订阅
     activeTabSymbolStr (newVal, oldVal) {
+      console.log(newVal)
       if (oldVal) {
         this.getTradeMarketBySocket('CANCEL', oldVal)
       }
@@ -667,6 +659,9 @@ export default {
         this.getDepthDataBySocket('CANCEL', oldVal)
         this.getTradeRecordBySocket('CANCEL', oldVal)
       }
+    },
+    activeTradeArea (newVal, oldVal) {
+      console.log(newVal)
     }
   }
 }

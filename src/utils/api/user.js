@@ -1,4 +1,7 @@
-import {postWithURLencoded, get} from './axios'
+import {
+  postWithURLencoded,
+  get,
+  postWithFormData} from './axios'
 /**
  * User
  */
