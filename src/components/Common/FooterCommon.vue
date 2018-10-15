@@ -4,16 +4,21 @@
       <!--顶部-->
       <div
         class="top"
-       v-if="footerInfo1.logo"
       >
-        <div class="left">
+        <div
+          class="left"
+        >
           <!--logo-->
           <div class="logo"
+             v-if="footerInfo1.logo"
           >
             <img :src="footerInfo1.logo.url">
           </div>
           <!--简介-->
-          <div class="introduction font-size12">
+          <div
+            class="introduction font-size12"
+            v-if="footerInfo1.logo"
+          >
             {{footerInfo1.logo.content}}
           </div>
           <!--分享-->

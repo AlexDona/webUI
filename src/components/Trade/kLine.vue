@@ -105,6 +105,7 @@ export default {
           tradeList, // 交易记录
           tickerList // 行情交易区列表
         } = activeSymbolData
+        console.log(activeSymbolData)
         depthList.depthData.sells.list.reverse()
         // 默认交易对 数据
         this.$store.commit('trade/SET_MIDDLE_TOP_DATA', defaultTrade.content[0])
