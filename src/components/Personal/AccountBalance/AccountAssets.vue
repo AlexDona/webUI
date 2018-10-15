@@ -220,10 +220,10 @@
                         </div>
                         <div class="recharge-content-title font-size12 margin-top9 float-left">
                           <!--禁止充值除 之外的其他资产，任何非 资产充值将不可找回-->
-                          <!--往该地址充值，汇款完成，等待网络自动确认（6个确认）后系统自动到账-->
-                          <!--为了快速到账，充值时可以适当提高网络手续费-->
                           <p>* {{ $t('M.user_assets_recharge_hint1').format(chargeMoneyName) }}</p>
+                          <!--往该地址充值，汇款完成，等待网络自动确认（6个确认）后系统自动到账-->
                           <p>* {{ $t('M.user_assets_recharge_hint4') }}</p>
+                          <!--为了快速到账，充值时可以适当提高网络手续费-->
                           <p>* {{ $t('M.user_assets_recharge_hint5') }}</p>
                         </div>
                       </div>
@@ -267,13 +267,13 @@
                               <el-option
                                 v-for="(item, index) in mentionAddressList"
                                 :key="index"
-                                :label="item.address + '—' + item.remark"
+                                :label="item.address + ' ' + item.remark"
                                 :value="item.id"
                               >
                               </el-option>
                             </el-select>
                             <span
-                              class="new-address cursor-pointer"
+                              class="new-address cursor-pointer address-bg"
                               @click.prevent="stateMentionAddress"
                             >
                               <!--新增-->
@@ -613,6 +613,7 @@ export default {
       mentionMoneyName: '', // 每行数据币种名称
       mentionAddressValue: '', // 每行数据提币地址
       statusAddressValue: '', // 每行数据提币地址
+      remark: '', // 每行数据提币地址备注
       amount: '', // 数量
       service: '', // 手续费
       pointLength: 4, // 小数为限制
@@ -637,7 +638,7 @@ export default {
       sellsymbol: '', // 交易对名称
       fullscreenLoading: false, // 整页loading
       loading: true, // 页面列表局部loading
-      end: '' // 站位
+      end: '' // 占位
     }
   },
   created () {
@@ -961,6 +962,7 @@ export default {
       this.mentionAddressList.forEach(item => {
         if (e === item.id) {
           this.statusAddressValue = item.address
+          this.remark = item.remark
           this.mentionAddressValue = e
           console.log(this.mentionAddressValue)
         }
@@ -995,9 +997,10 @@ export default {
         this.fullscreenLoading = false
         // 返回列表数据userWithdrawAddressDtoList
         this.mentionAddressList = data.data.data.userWithdrawAddressDtoList
-        if (!data.data.data.userWithdrawAddressDtoList[0].address) {
+        if (!data.data.data.userWithdrawAddressDtoList) {
           this.mentionAddressValue = data.data.data.userWithdrawAddressDtoList[0].address
         }
+        console.log(this.mentionAddressList)
       }
     },
     /**
@@ -1100,6 +1103,7 @@ export default {
         googleCode: this.googleCode, // 谷歌验证码
         coinId: this.mentionMoneyAddressId, // 币种ID
         withdrawAddress: this.statusAddressValue, // 提币地址
+        remark: this.remark, // 提币地址
         networkFees: this.service, // 手续费
         amount: this.amount, // 提币数量
         payCode: this.password // 交易密码
@@ -1394,9 +1398,13 @@ export default {
                             height: 34px;
                           }
                           >.new-address {
+                            height: 34px;
+                            width: 35px;
                             position: absolute;
-                            top: 30px;
-                            right: 15px;
+                            top: 38px;
+                            right: 1px;
+                            line-height: 34px;
+                            text-align: center;
                           }
                           >.new-address-currency {
                             top: 40px;
@@ -1587,6 +1595,9 @@ export default {
                       >.new-address {
                         color: #338FF5;
                       }
+                      >.address-bg {
+                        background-color: #2D3651;
+                      }
                     }
                   }
                   >.count-box {
@@ -1760,6 +1771,9 @@ export default {
                       >.left-flex-hint,
                       >.new-address {
                         color: #338FF5;
+                      }
+                      >.address-bg {
+                        background-color: #fff;
                       }
                     }
                   }

@@ -393,6 +393,7 @@ export default {
       this.generalizeOptionsList.forEach(item => {
         if (e === item.value) {
           this.generalizeValue = e
+          this.loading = true
           // this.loading = true
           this.getUserPromotionList()
           console.log(this.generalizeValue)
@@ -401,7 +402,6 @@ export default {
     },
     // 直接推广 间接推广列表
     async getUserPromotionList () {
-      this.loading = true
       let data = await userPromotionList({
         type: this.generalizeValue, // 筛选类型
         currentPage: this.currentPageForMyEntrust, // 分页

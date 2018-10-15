@@ -37,7 +37,7 @@
             :label-position="labelPosition"
             label-width="120px"
           >
-            <!--原登录密码 新登录密码 确认登录密码-->
+            <!--原登录密码-->
             <el-form-item
               :label="$t('M.user_security_login_raw') + $t('M.user_security_login') + $t('M.user_security_password') + '：'"
             >
@@ -54,6 +54,7 @@
                 :isShow="!!errorShowStatusList[0]"
               />
             </el-form-item>
+            <!--新登录密码-->
             <el-form-item
               :label="$t('M.user_security_login_new') + $t('M.user_security_login') + $t('M.user_security_password') + '：'"
             >
@@ -70,6 +71,7 @@
                 :isShow="!!errorShowStatusList[1]"
               />
             </el-form-item>
+            <!--确认登录密码-->
             <el-form-item
               :label="$t('M.comm_affirm') + $t('M.user_security_login') + $t('M.user_security_password') + '：'"
             >

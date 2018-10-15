@@ -78,7 +78,7 @@
               :label-position="labelPosition"
               label-width="120px"
             >
-              <!--私钥 谷歌账户 谷歌验证码-->
+              <!--私钥-->
               <el-form-item
                 :label="$t('M.user_google_private_key') + '：'"
               >
@@ -102,6 +102,7 @@
                   {{ $t('M.comm_copy') }}
                 </span>
               </el-form-item>
+              <!--谷歌账户-->
               <el-form-item
                 :label="$t('M.user_security_google') + $t('M.user_google_account') + '：'"
                 style="display: none"
@@ -110,6 +111,7 @@
                   {{ googleUserInformation.googleAccount }}
                  </span>
               </el-form-item>
+              <!--谷歌验证码-->
               <el-form-item
                 :label="$t('M.user_security_google') + $t('M.user_security_verify') + '：'"
               >

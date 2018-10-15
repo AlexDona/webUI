@@ -18,3 +18,7 @@ export const getNewsDetail = (params) => get(`newsBulletin/${params}`)
 export const addUserCollectionAjax = (params) => postWithURLencoded('collection', params)
 // 取消收藏
 export const removeCollectionAjax = (params) => postWithURLencoded('collection/cancel', params)
+// 收藏列表
+export const getCollectionListAjax = () => get('collection')
+// 首页行情
+export const getHomeMarketByAjax = (params) => get('market/homeMarket', params)

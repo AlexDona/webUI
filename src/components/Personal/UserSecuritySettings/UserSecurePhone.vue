@@ -46,7 +46,7 @@
             :label-position="labelPosition"
             label-width="120px"
           >
-            <!--手机号码 图片验证码 短信验证码-->
+            <!--手机号码-->
             <el-form-item
               :label="$t('M.user_security_phone') + $t('M.user_security_number') + '：'"
             >
@@ -76,6 +76,7 @@
                 :isShow="!!errorShowStatusList[0]"
               />
             </el-form-item>
+            <!--图片验证码-->
             <el-form-item
               :label="$t('M.user_security_picture') + $t('M.comm_code') + '：'"
             >
@@ -106,6 +107,7 @@
                 :isShow="!!errorShowStatusList[1]"
               />
             </el-form-item>
+            <!--短信验证码-->
             <el-form-item
               :label="$t('M.comm_note') + $t('M.comm_code') + '：'"
             >
@@ -145,7 +147,7 @@
             :label-position="labelPosition"
             label-width="120px"
           >
-            <!--姓名 短信验证码 新手机号码 短信验证码 交易密码-->
+            <!--姓名-->
             <el-form-item
               :label="$t('M.comm_name') + '：'"
             >
@@ -153,6 +155,7 @@
                 {{ userInfo.userInfo.realname }}
               </span>
             </el-form-item>
+            <!--短信验证码-->
             <el-form-item
               :label="$t('M.comm_note') + $t('M.comm_code') + '：'"
             >
@@ -176,6 +179,7 @@
                 :isShow="!!tieErrorShowStatusList[0]"
               />
             </el-form-item>
+            <!--新手机号码-->
             <el-form-item
               :label="$t('M.user_security_login_new') + $t('M.user_security_phone') + $t('M.comm_mark') + '：'"
             >
@@ -205,6 +209,7 @@
                 :isShow="!!tieErrorShowStatusList[1]"
               />
             </el-form-item>
+            <!--短信验证码-->
             <el-form-item
               :label="$t('M.comm_note') + $t('M.comm_code') + '：'"
             >
@@ -227,6 +232,7 @@
                 :isShow="!!tieErrorShowStatusList[2]"
               />
             </el-form-item>
+            <!--交易密码-->
             <el-form-item
               :label="$t('M.comm_password') + '：'"
             >

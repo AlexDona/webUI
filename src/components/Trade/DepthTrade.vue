@@ -472,31 +472,8 @@ export default {
       this.options.tooltip.textStyle.color = this.theme === 'night' ? '#fff' : 'rgb(102,102,102)'
       this.options.tooltip.borderColor = this.theme === 'night' ? this.mainColor.$mainNightBgColor : this.mainColor.$mainDayBgColor
       this.options.backgroundColor = this.theme === 'night' ? this.mainColor.$mainNightBgColor : this.mainColor.$mainDayBgColor
-    }
-  },
-  filter: {},
-  computed: {
-    ...mapState({
-      socketData: state => state.common.socketData,
-      depthData: state => state.common.socketData.depthData,
-      theme: state => state.common.theme,
-      mainColor: state => state.common.mainColor
-      // buy: state => state.common.socketData.depthData.buy,
-      // sell: state => state.common.socketData.depthData.sell
-    })
-    // buys () {
-    //   return this.depthData.buy
-    // },
-    // sells () {
-    //   return this.depthData.sell
-    // }
-  },
-  watch: {
-    depthData (newVal) {
-      // console.log(newVal)
-      // this.options.series[0].data = newVal.buy
-      // this.options.series[1].data = newVal.sell
-      // this.depthCharts.setOption(this.options)
+    },
+    setWatchData (newVal) {
       if (newVal) {
         if (newVal.buy) {
           this.series[0].data = newVal.buy
@@ -508,6 +485,37 @@ export default {
         this.resetOptions()
         this.resetChart(this.options)
       }
+    }
+  },
+  filter: {},
+  computed: {
+    ...mapState({
+      socketData: state => state.common.socketData,
+      depthDataByAjax: state => state.common.klineAjaxData.depthData,
+      depthDataBySocket: state => state.common.socketData.depthData,
+      theme: state => state.common.theme,
+      mainColor: state => state.common.mainColor
+
+      // buy: state => state.common.socketData.depthData.buy,
+      // sell: state => state.common.socketData.depthData.sell
+    })
+    // buys () {
+    //   return this.depthData.buy
+    // },
+    // sells () {
+    //   return this.depthData.sell
+    // }
+  },
+  watch: {
+    depthDataByAjax (newVal) {
+      // this.options.series[0].data = newVal.buy
+      // this.options.series[1].data = newVal.sell
+      // this.depthCharts.setOption(this.options)
+      this.setWatchData(newVal)
+    },
+    depthDataBySocket (newVal) {
+      console.log(newVal)
+      this.setWatchData(newVal)
     },
     theme () {
       this.resetOptions()

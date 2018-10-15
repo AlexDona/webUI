@@ -21,7 +21,6 @@
           <el-input
             class="search-box"
             suffix-icon="el-icon-search"
-            @keyup.native="filterSearchMarket"
             v-model="searchKeyWord"
           ></el-input>
         </span>
@@ -38,148 +37,38 @@
               @tab-click="changeTab"
             >
               <el-tab-pane
-                :label="$t(outItem.name)"
-                :name="outItem.id"
-                v-for="(outItem,outIndex) in tabList"
+                :label="collectArea.area"
+                :name="collectArea.area"
+              >
+                <TradeMarketTableItem
+                  :sortBy="sortBy"
+                  :plateList="searchFilterCollectArea.plateList"
+                  :collectSymbol="collectSymbol"
+                  :activeName="activeName"
+                  :collectArea="collectArea"
+                  :list="[collectArea]"
+                  @toggleCollect="toggleCollect"
+                  @sortByUser="sortByUser"
+                  @changeActiveSymbol="changeActiveSymbol"
+                />
+              </el-tab-pane>
+              <el-tab-pane
+                :label="$t(outItem.area)"
+                :name="outItem.area"
+                v-for="(outItem,outIndex) in searchFilterMarketList"
                 :key="outIndex"
               >
-                <div class="coin-table font-size12">
-                  <!--表格头部-->
-                  <dl class="coin-thead">
-                    <dt></dt>
-                    <dd class="coin-unit">
-                      <span
-                        class="title coin-type"
-                      >
-                        <!--交易对-->
-                        {{ $t('M.comm_deal') }}{{ $t('M.comm_pair') }}
-                      </span>
-                      <span
-                        class="title price cursor-pointer"
-                      >
-                        <!--最新价-->
-                            <span
-                              id="new_price"
-                              ref="price"
-                              :data-text="$t('M.trade_latest_price')"
-                              @click="sortByUser('price')"
-                            >
-                              <!--最新价-->
-                              {{ $t('M.trade_latest_price') }}
-                            </span>
-                            <i class="sort-box">
-                              <i
-                                class="el-icon-caret-top"
-                                ref="priceAscBtn"
-                                :class="{active:sortBy=='price-asc'}"
-                                @click="sortByUser('price-asc')"
-                              ></i>
-                              <i
-                                class="el-icon-caret-bottom"
-                                ref="priceDescBtn"
-                                :class="{active:sortBy=='price-desc'}"
-                                @click="sortByUser('price-desc')"
-                              ></i>
-                            </i>
-                          </span>
-                      <span
-                        class="title rose cursor-pointer"
-                        @click="sortByUser('rose')"
-                      >
-                            <!--涨幅-->
-                        {{ $t('M.trade_market_amount_increase') }}
-                        <i class="sort-box">
-                          <i
-                            class="el-icon-caret-top"
-                            :class="{active:sortBy=='rose-asc'}"
-                            @click="sortByUser('rose-asc')"
-                          ></i>
-                          <i
-                            class="el-icon-caret-bottom"
-                            :class="{active:sortBy=='rose-desc'}"
-                            @click="sortByUser('rose-desc')"
-                          ></i>
-                        </i>
-                      </span>
-                    </dd>
-                  </dl>
-                  <div class="coin-list">
-                    <div
-                      class="market-cate-wrap"
-                      v-for="(item,index) in searchFilterMarketList"
-                      :key="index"
-                    >
-                      <div
-                        class="market-category"
-                      >
-                        {{item.plateName}}
-                      </div>
-                    <dl
-                      class="coin-item "
-                    >
-                      <dt></dt>
-                      <dd
-                        class="coin-item cursor-pointer"
-                        v-for="(innerItem,innerIndex) in item.content"
-                        :key="innerIndex"
-                        @click=changeActiveSymbol(innerItem)
-                      >
-                        <span>
-                          <!--收藏按钮-->
-                          <!--自选区-->
-                          <span v-show="activeName==tabList[0].id">
-                            <i
-                              class="el-icon-star-on cursor-pointer collected font-size16"
-                              @click="toggleCollect(innerItem.id,0,innerItem)"
-                            ></i>
-                          </span>
-                          <!--非自选区-->
-                          <span v-show="activeName!=tabList[0].id">
-                            <i
-                              class="el-icon-star-off cursor-pointer font-size16"
-                              v-show="!collectStatusList[innerItem.id]"
-                              @click="toggleCollect(innerItem.id,1,innerItem)"
-                            ></i>
-                            <i
-                              class="el-icon-star-on cursor-pointer collected font-size16"
-                              v-show="collectStatusList[innerItem.id]"
-                              @click="toggleCollect(innerItem.id,0,innerItem)"
-                            ></i>
-                          </span>
-                          <span class="base-currency">{{innerItem.sellsymbol}}</span>
-                          <!--币中文名-->
-                          <span
-                            class="currency-chn-name"
-                            v-show="language === 'zh_CN'"
-                          >{{innerItem.sellname}}</span>
-                          <span
-                            class="area"
-                            v-show="language !== 'zh_CN'"
-                          >/ {{innerItem.area}}</span>
-                        </span>
-                        <span
-                          class="price text-align-r"
-                          :class="{
-                            'up':innerItem.rose>0,
-                            'down':innerItem.rose<0
-                          }"
-                        >
-                          {{innerItem.price}}
-                        </span>
-                        <span
-                          class="rose text-align-r"
-                          :class="{
-                            'up':innerItem.rose>0,
-                            'down':innerItem.rose<0
-                          }"
-                        >
-                            {{innerItem.rose}}
-                          </span>
-                      </dd>
-                    </dl>
-                    </div>
-                  </div>
-                </div>
+                <TradeMarketTableItem
+                  :sortBy="sortBy"
+                  :plateList="outItem.plateList"
+                  :collectSymbol="collectSymbol"
+                  :activeName="activeName"
+                  :collectArea="collectArea"
+                  @toggleCollect="toggleCollect"
+                  :list="filterMarketList"
+                  @sortByUser="sortByUser"
+                  @changeActiveSymbol="changeActiveSymbol"
+                />
               </el-tab-pane>
             </el-tabs>
           </div>
@@ -193,24 +82,47 @@ import {
   getStore,
   setStore
 } from '../../utils'
-import {getPartnerAreaList} from '../../utils/api/trade'
+import {
+  // getPartnerAreaList,
+  getTradeMarketDataAjax
+} from '../../utils/api/trade'
 import {
   returnAjaxMessage,
-  getPartnerListAjax,
-  toggleUserCollection
+  // getPartnerListAjax,
+  toggleUserCollection,
+  getCollectionList,
+  setSocketData
 } from '../../utils/commonFunc'
 // import {socket} from '../../utils/tradingview/socket'
 import {
   mapState,
   createNamespacedHelpers
 } from 'vuex'
-const { mapMutations } = createNamespacedHelpers('common')
+import TradeMarketTableItem from './TradeMarketTableItem'
+const { mapMutations } = createNamespacedHelpers('home')
 export default {
   components: {
+    TradeMarketTableItem
   },
   // props,
   data () {
     return {
+      newTradeMarketList: [], // 行情数据
+      collectArea: {
+        area: '自选', // 交易区名称 自选区
+        areaId: 2,
+        plateList: []
+      },
+      collectAreaFilter: {
+        area: '自选', // 交易区名称 自选区
+        areaId: 2,
+        plateList: []
+      }, // 筛选列表
+      symbolPlateSet: new Set(), // 交易区板块set
+      collectPlateList: [], // 收藏板块列表
+      collectPlateFilterList: [], // 收藏筛选板块列表
+      activeIndex: '0', // 当前tabIndex
+      // ----------------
       contentShowStatus: true, // 显示隐藏控制
       tabList: [
         {
@@ -218,7 +130,7 @@ export default {
           name: 'M.trade_market_optional' // 自选
         }
       ], // tab栏个数
-      activeName: '', // 当前tabItem
+      activeName: '自选', // 当前tabItem
       sortBy: '', // 排序依据: price-asc price-desc rose-asc rose-desc
       marketList: [], // 行情数据
       filterMarketList: [], // 过滤行情数据
@@ -226,10 +138,6 @@ export default {
       collectAreaId: '', // 自选区id
       collectList: [], // 收藏列表
       collectStatusList: {}, // 收藏状态
-      // BTC 交易区模拟数据
-      BTCMarketList: [],
-      // ETH 交易区模拟数据
-      ETHMarketList: [],
       searchKeyWord: '', // 搜索关键字
       plateList: [], // 板块列表
       socketCount: 0, // socket计数
@@ -240,17 +148,9 @@ export default {
     require('../../../static/css/list/Trade/TradeMarket.css')
     require('../../../static/css/theme/day/Trade/TradeMarketDay.css')
     require('../../../static/css/theme/night/Trade/TradeMarketNight.css')
+    this.getTradeMarketData()
   },
   mounted () {
-    // 获取交易区信息
-    this.getTradeAreaList()
-    // 获取板块
-    this.getPartnerList()
-    this.collectList = JSON.parse(getStore('collectList')) || []
-    // console.log(this.collectList)
-    this.resetCollectList()
-    this.filterMarketList = this.marketList
-    // this.setFilterMarketList(this.activeName, this.BTCMarketList)
   },
   activited () {
   },
@@ -260,94 +160,96 @@ export default {
   },
   methods: {
     ...mapMutations([
-      // 'CHANGE_COLLECT_LIST'
-      'CHANGE_ACTIVE_SYMBOL'
+      'CHANGE_COLLECT_LIST',
+      'CHANGE_COLLECT_SYMBOL',
+      'CHANGE_SYMBOL_MAP'
     ]),
+    // 获取用户收藏列表
+    async getCollectionList (collectSymbol) {
+      await getCollectionList(this, data => {
+        _.forEach(data.data.data, (item) => {
+          collectSymbol[item.content] = item.content
+        })
+      })
+    },
+    // 设置收藏
+    setCollectData (collectSymbol, plateList) {
+      this.CHANGE_COLLECT_SYMBOL({
+        type: 'reset',
+        collectSymbol
+      })
+      let [...newPlateList] = this.collectPlateList
+      _.forEach(plateList, (plateItem, plateIndex) => {
+        _.forEach(plateItem.content, contentItem => {
+          _.forEach(collectSymbol, collectSymbolItem => {
+            if (collectSymbolItem === contentItem.id) {
+              newPlateList[plateIndex].content.push(contentItem)
+            }
+          })
+        })
+      })
+      this.$set(this.collectArea, 'plateList', newPlateList)
+    },
+    // 获取交易区信息
+    async getTradeMarketData () {
+      let params = {
+        partnerId: this.partnerId,
+        i18n: this.language
+      }
+      const data = await getTradeMarketDataAjax(params)
+      if (!returnAjaxMessage(data, this)) {
+        return false
+      } else {
+        let [...tickerList] = data.data.data.tickerList
+        // let plateItemMap = new Map()
+        let plateList = []
+        // 板块筛选
+        _.forEach(tickerList, (tickerItem) => {
+          _.forEach(tickerItem.plateList, (plateItem, plateIndex) => {
+            let targetString = JSON.stringify({
+              content: [],
+              plateId: plateItem.plateId,
+              plateName: plateItem.plateName
+            })
+            plateList[plateIndex] = JSON.parse(targetString)
+            this.collectPlateList[plateIndex] = JSON.parse(targetString)
+            this.collectPlateFilterList[plateIndex] = JSON.parse(targetString)
+          })
+        })
+        // 生成symbolMap
+        _.forEach(tickerList, (tickerItem) => {
+          _.forEach(tickerItem.plateList, (plateItem, plateIndex) => {
+            _.forEach(plateItem.content, (contentItem) => {
+              this.$store.commit('home/CHANGE_SYMBOL_MAP', {
+                key: contentItem.id,
+                val: contentItem
+              })
+              plateList[plateIndex].content.push(contentItem)
+            })
+          })
+        })
+        let collectSymbol = {}
+        if (!this.isLogin) {
+          collectSymbol = JSON.parse(getStore('collectSymbol')) || {}
+        } else {
+          await this.getCollectionList(collectSymbol)
+        }
+        this.setCollectData(collectSymbol, plateList)
+        this.newTradeMarketList = tickerList
+        this.filterMarketList = this.newTradeMarketList
+      }
+    },
     // 设置 当前交易区
-    changeActiveSymbol (activeSymbol, previousSymbol) {
-      console.log(activeSymbol)
-      // console.log('active----------------->', activeSymbol)
-      // console.log(activeSymbol.tradeId)
-      // console.log(this.activeTabId)
-      // console.log('previous--------------->', this.previousSymbol.id)
-      // this.$store.commit('common/CHANGE_ACTIVE_SYMBOL', activeSymbol)
+    changeActiveSymbol (data) {
+      let {activeSymbol, previousSymbol} = data
       this.$store.commit('common/CHANGE_ACTIVE_SYMBOL', {
         activeSymbol,
         previousSymbol
       })
     },
-    // 获取板块列表
-    getPartnerList () {
-      const params = {
-        partnerId: this.partnerId,
-        i18n: this.language
-      }
-      getPartnerListAjax(params, (data) => {
-        if (!returnAjaxMessage(data, this, 0)) {
-          return false
-        } else {
-          this.plateList = data.data.data
-        }
-      })
-    },
-    // 重新订阅请求socket
-    resetSocketMarket (areaId) {
-      socket.subscribeKline({
-        type: 'trade_market', // 请求类型
-        areaId,
-        symbol: this.activeSymbol.id,
-        interval: 'min'
-      }, (data) => {
-        console.log(data)
-        // 币币交易
-        if (data.tradeType == 'BBTICKER') {
-          switch (data.type) {
-            // 请求socket
-            case 0:
-              if (data.data) {
-                // console.log(data.data[0])
-                this.marketList = data.data
-                this.collectList = JSON.parse(getStore('collectList')) || []
-                this.resetCollectList()
-                this.filterMarketList = this.marketList
-                this.setFilterMarketList(this.activeName, this.marketList)
-              }
-              break
-            // 订阅socket
-            case 1:
-              this.setTradeAreaSubscribeData(data)
-              break
-          }
-        }
-      })
-    },
-    // 获取交易区列表
-    async getTradeAreaList () {
-      let params = {
-        partnerId: this.partnerId
-      }
-      const data = await getPartnerAreaList(params)
-      if (!returnAjaxMessage(data, this)) {
-        return false
-      } else {
-        console.log(this.activeSymbol)
-        const list = this.tabList.concat(data.data.data)
-        this.tabList = list
-        console.log(this.tabList)
-        this.tabList.forEach((item, index) => {
-          if (item.id == this.activeSymbol.areaId) {
-            this.activeName = this.tabList[index].id
-            this.$store.commit('common/CHANGE_ACTIVE_TRADE_AREA', this.tabList[index])
-            this.$store.commit('trade/CHANGE_ACTIVE_TAB_ID', this.activeName)
-            return false
-          }
-        })
-        // this.changeActiveSymbol({id: 'btmbtc'})
-        // this.resetSocketMarket(this.activeName)
-      }
-    },
     // 排序
-    sortByUser (sortMethod) {
+    sortByUser (data) {
+      let {sortMethod, list} = data
       switch (sortMethod) {
         case 'price':
           if (this.sortBy === 'rose-asc' || this.sortBy === 'rose-desc' || !this.sortBy) {
@@ -359,10 +261,10 @@ export default {
           }
           switch (this.sortBy) {
             case 'price-asc':
-              this.sortList('price', this.filterMarketList, 'asc')
+              this.sortList('last', list, 'asc')
               break
             case 'price-desc':
-              this.sortList('price', this.filterMarketList, 'desc')
+              this.sortList('last', list, 'desc')
               break
           }
           break
@@ -374,162 +276,123 @@ export default {
           } else if (this.sortBy === 'rose-desc') {
             this.sortBy = 'rose-asc'
           }
-
-          console.log(this.sortBy)
           switch (this.sortBy) {
             case 'rose-asc':
-              this.sortList('rose', this.filterMarketList, 'asc')
+              this.sortList('chg', list, 'asc')
               break
             case 'rose-desc':
-              this.sortList('rose', this.filterMarketList, 'desc')
+              this.sortList('chg', list, 'desc')
               break
           }
           break
         case 'price-asc':
           this.sortBy = 'price-asc'
-          this.sortList('price', this.filterMarketList, 'desc')
+          this.sortList('last', list, 'desc')
           break
         case 'price-desc':
           this.sortBy = 'price-desc'
-          this.sortList('price', this.filterMarketList, 'asc')
+          this.sortList('last', list, 'asc')
           break
         case 'rose-asc':
           this.sortBy = 'rose-desc'
-          this.sortList('rose', this.filterMarketList, 'desc')
+          this.sortList('chg', list, 'desc')
           break
         case 'rose-desc':
           this.sortBy = 'rose-asc'
-          this.sortList('rose', this.filterMarketList, 'asc')
+          this.sortList('chg', list, 'asc')
           break
+      }
+    },
+    // 冒泡排序
+    sortBybubble (content, column, methods) {
+      let status
+      for (let i = 0; i < content.length; i++) {
+        for (let j = 0; j < content.length - i - 1; j++) {
+          switch (methods) {
+            case 'asc':
+              status = content[j][column] > content[j + 1][column]
+              break
+            case 'desc':
+              status = content[j][column] < content[j + 1][column]
+              break
+          }
+          if (status) {
+            let swap = content[j]
+            content[j] = content[j + 1]
+            content[j + 1] = swap
+          }
+        }
       }
     },
     // 排序方法
     sortList (column, arr, methods) {
-      if (methods == 'asc') {
-        arr.forEach((item) => {
-          // 升序
-          for (let i = 0; i < item.content.length; i++) {
-            for (let j = 0; j < item.content.length - i - 1; j++) {
-              if (item.content[j][column] > item.content[j + 1][column]) {
-                let swap = item.content[j]
-                item.content[j] = item.content[j + 1]
-                item.content[j + 1] = swap
-              }
-            }
-          }
+      _.forEach(arr, item => {
+        _.forEach(item.plateList, plateItem => {
+          this.sortBybubble(plateItem.content, column, methods)
         })
-      } else if (methods == 'desc') {
-        // 降序
-        arr.forEach((item) => {
-          for (let i = 0; i < item.content.length; i++) {
-            for (let j = 0; j < item.content.length - i - 1; j++) {
-              if (item.content[j][column] < item.content[j + 1][column]) {
-                let swap = item.content[j]
-                item.content[j] = item.content[j + 1]
-                item.content[j + 1] = swap
-              }
-            }
-          }
-        })
-      }
-      console.log(this.activeName)
-      this.setFilterMarketList(this.activeName, arr)
+      })
+      arr.length === 1 ? this.collectArea = arr[0] : this.filterMarketList = arr
       // 触发computed
       this.searchKeyWord = 'a'
       this.searchKeyWord = ''
     },
-    // 搜索过滤
-    filterSearchMarket () {
-      console.log(this.activeName)
-    },
-    // 设置filterMarketList
-    setFilterMarketList (tabName, list) {
-      // 自选区
-      if (tabName == this.tabList[0].id) {
-        console.log(this.filterMarketList)
-        this.resetList(this.filterMarketList)
-        this.plateList.forEach((item, index) => {
-          this.collectList.forEach((innerItem, innerIndex) => {
-            if (item.id == innerItem.plateId) {
-              this.filterMarketList[index].content.push(innerItem)
-            }
-          })
-        })
-      } else {
-        // 非自选区
-        list.forEach((item, index) => {
-          if (this.filterMarketList[index].plateId == item.plateId) {
-            this.$set(this.filterMarketList[index], 'content', item.content)
-          }
-        })
-        this.resetCollectList()
-      }
-    },
     // 初始化自选区
     resetCollectList () {
       this.collectList.forEach((item) => {
-        // console.log(item)
         this.collectStatusList[item.id] = true
       })
     },
     // 切换收藏
-    async toggleCollect (id, status, row) {
-      console.log(id)
-      console.log(row)
+    async toggleCollect (data) {
+      let {
+        id,
+        status,
+        row,
+        plateIndex
+      } = data
       status = Boolean(status)
       this.$set(this.collectStatusList, id, status)
       if (status) {
         //  添加收藏
-        this.collectList.push(row)
+        this.CHANGE_COLLECT_SYMBOL({
+          type: 'add',
+          collectSymbol: id
+        })
+        this.collectArea.plateList[plateIndex].content.push(row)
         if (this.isLogin) {
           await toggleUserCollection('add', row.tradeId, this)
         }
       } else {
-        let chooseId
-        // 取消收藏
-        this.collectList.forEach((item, index) => {
-          if (item.id == row.id) {
-            this.collectList.splice(index, 1)
-            chooseId = item.tradeId
-          }
+        this.CHANGE_COLLECT_SYMBOL({
+          type: 'cancel',
+          collectSymbol: id
         })
-        await toggleUserCollection('remove', chooseId, this)
+        let newList = this.collectArea.plateList[plateIndex].content.filter(item => item.id !== id)
+        this.$set(this.collectArea.plateList[plateIndex], 'content', newList)
+        this.collectPlateList = this.collectArea.plateList
+        // 取消收藏
+        if (this.isLogin) {
+          await toggleUserCollection('remove', id, this)
+        }
       }
-      setStore('collectList', this.collectList)
-      this.$store.commit('home/CHANGE_COLLECT_LIST', this.collectList)
-      setStore('collectStatusList', this.collectStatusList)
-      if (this.activeName == this.tabList[0].id) {
-        this.resetList(this.filterMarketList)
-        this.setFilterMarketList(this.activeName, this.collectList)
+      if (!this.isLogin) {
+        setStore('collectSymbol', this.collectSymbol)
       }
     },
     // 重置marketLIst
     resetList (list) {
-      list.forEach((item) => {
-        item.content = []
+      _.forEach(list, item => {
+        _.forEach(item.plateList, plateItem => {
+          plateItem.content = []
+        })
       })
     },
     // 切换tab
     changeTab (e) {
-      // console.log(e)
-      this.$store.commit('trade/CHANGE_ACTIVE_TAB_ID', this.activeName)
-      // 自选区
-      if (this.activeName == this.tabList[0].id) {
-        this.filterMarketList = []
-        this.plateList.forEach((item, index) => {
-          this.filterMarketList.push({
-            plateId: item.id,
-            plateName: item.i18nName,
-            content: []
-          })
-        })
-        this.setFilterMarketList(this.activeName, this.collectList)
-      } else {
-        // 接口请求不同交易区数据
-        this.$store.commit('common/CHANGE_ACTIVE_TRADE_AREA', this.tabList[e.index])
-        // console.log(this.activeTradeArea)
-        // this.resetSocketMarket(this.activeName)
-      }
+      let {
+        index
+      } = e
+      this.activeIndex = index - 0 + 1
     },
     // 切换内容显示隐藏
     toggleShowContent () {
@@ -564,83 +427,150 @@ export default {
           }
         })
       }
+    },
+    // 搜索遍历方法
+    setSearchFilterList (type, originalList, {newArr, index}, newCollectArea) {
+      _.forEach(originalList, (plateItem, plateIndex) => {
+        _.forEach(plateItem.content, contentItem => {
+          if (
+            contentItem['sellsymbol'].toLocaleUpperCase().indexOf(this.searchKeyWord.toLocaleUpperCase()) !== -1 ||
+            (contentItem['sellname']).indexOf(this.searchKeyWord) !== -1
+          ) {
+            type ? newArr[index].plateList[plateIndex].content.push(contentItem) : newCollectArea.plateList[plateIndex].content.push(contentItem)
+          }
+        })
+      })
+    },
+    // 设置当前交易区交易对字符串
+    setActiveTabSymbolStr () {
+      let activeTabSymbolStr = ''
+      switch (this.activeIndex) {
+        // 自选区
+        case '0':
+          _.forEach(this.collectArea.plateList, (plateItem) => {
+            _.forEach(plateItem.content, (contentItem) => {
+              activeTabSymbolStr += `${contentItem.id}@`
+            })
+          })
+          break
+        // 非自选区
+        default:
+          _.forEach(this.filterMarketList[this.activeIndex - 2].plateList, (plateItem) => {
+            _.forEach(plateItem.content, (contentItem) => {
+              activeTabSymbolStr += `${contentItem.id}@`
+            })
+          })
+          break
+      }
+      activeTabSymbolStr = `${this.middleTopData.id}@` + activeTabSymbolStr.slice(0, activeTabSymbolStr.length - 1)
+      this.$store.commit('trade/CHANGE_ACTIVE_TAB_ID', {
+        activeTabSymbolStr
+      })
     }
   },
   filter: {},
   computed: {
     ...mapState({
+      middleTopData: state => state.trade.middleTopData,
+      isLogin: state => state.user.isLogin,
       theme: state => state.common.theme,
+      symbolMap: state => state.home.symbolMap, // 交易对map
       language: state => state.common.language,
-      globalCollectList: state => state.home.globalCollectList,
-      globalCollectStatusList: state => state.home.globalCollectStatusList,
       partnerId: state => state.common.partnerId, // 商户id
       activeTradeArea: state => state.common.activeTradeArea,
       activeSymbol: state => state.common.activeSymbol, // 当前选中交易对
       previousSymbol: state => state.common.previousSymbol,
       activeTabId: state => state.trade.activeTabId,
       activeSymbolId: state => state.common.activeSymbol.id,
-      tradeMarketList: state => state.common.socketData.tradeMarketList // k线页面获取到的交易区信息
+      collectSymbol: state => state.home.collectSymbol, // 收藏标记
+      tradeMarkeContentItem: state => state.common.socketData.tradeMarkeContentItem
+      // tradeMarketList: state => state.common.socketData.tradeMarketList // k线页面获取到的交易区信息
     }),
-
+    tradeMarketList () {
+      return this.newTradeMarketList
+    },
     // 搜索关键字过滤列表过滤
     searchFilterMarketList () {
-      let newArr = []
-      this.filterMarketList.forEach((item, index) => {
-        newArr[index] = {
-          plateId: '',
-          plateName: '',
-          content: []
-        }
-      })
-      this.filterMarketList.forEach((item, index) => {
-        newArr[index]['plateId'] = item.plateId
-        newArr[index].plateName = item.plateName
-        item.content.forEach((innerItem) => {
-          if (
-            innerItem['sellsymbol'].toLocaleUpperCase().indexOf(this.searchKeyWord.toLocaleUpperCase()) !== -1 ||
-            (innerItem['sellname']).indexOf(this.searchKeyWord) !== -1
-          ) {
-            newArr[index].content.push(innerItem)
-          }
-        })
+      let newArr = JSON.parse(JSON.stringify(this.filterMarketList))
+      this.resetList(newArr)
+      _.forEach(this.filterMarketList, (item, index) => {
+        this.setSearchFilterList(1, item.plateList, {newArr, index}, [])
       })
       return newArr
+    },
+    // 自选区搜索
+    searchFilterCollectArea () {
+      let newCollectArea = JSON.parse(JSON.stringify(this.collectArea))
+      _.forEach(newCollectArea.plateList, plateItem => {
+        plateItem.content = []
+      })
+      this.setSearchFilterList(0, this.collectArea.plateList, [], newCollectArea)
+      return newCollectArea
     }
   },
   watch: {
-    activeName (newVal) {
-      // console.log(newVal)
-    },
-    tradeMarketList (newVal) {
-      console.log(newVal)
-      const data = newVal
-      if (data) {
-        switch (data.type) {
-          case 0:
-            this.marketList = data.data
-            // console.log(this.marketList)
-            this.marketList.forEach((item) => {
-              // console.log(item)
-              item.content.forEach((innerItem) => {
-                if (innerItem.id.toLocaleUpperCase() == this.activeSymbolId.toLocaleUpperCase()) {
-                  this.CHANGE_ACTIVE_SYMBOL(innerItem)
-                  // console.log(innerItem.id)
-                  // console.log(this.activeSymbolId)
-                  return false
-                }
-              })
+    // socket 更新数据
+    tradeMarkeContentItem (newVal) {
+      if (newVal) {
+        // 当前交易对
+        if (newVal.tradeId == this.middleTopData.tradeId) {
+          let oldMiddleData = this.middleTopData
+          let newMiddleDataList = []
+          setSocketData(
+            oldMiddleData,
+            newVal,
+            newMiddleDataList,
+            0,
+            this
+          )
+          this.$store.commit('trade/SET_MIDDLE_TOP_DATA', newMiddleDataList[0])
+        }
+        // 非自选区
+        if (this.activeIndex != 1) {
+          _.forEach(this.filterMarketList[this.activeIndex - 2].plateList, plateItem => {
+            _.forEach(plateItem.content, (contentItem, contentIndex) => {
+              let newContent = contentItem
+              if (contentItem.tradeId === newVal.tradeId) {
+                setSocketData(
+                  newContent,
+                  newVal,
+                  plateItem.content,
+                  contentIndex,
+                  this
+                )
+                return false
+              }
             })
-            this.collectList = JSON.parse(getStore('collectList')) || []
-            this.resetCollectList()
-            this.filterMarketList = this.marketList
-            this.setFilterMarketList(this.activeName, this.marketList)
-            break
-          case 1:
-            // console.log(newVal)
-            this.setTradeAreaSubscribeData(newVal)
-            break
+          })
+        } else {
+          _.forEach(this.collectArea.plateList, (plateItem) => {
+            _.forEach(plateItem.content, (contentItem, contentIndex) => {
+              let newContent = contentItem
+              if (contentItem.tradeId === newVal.tradeId) {
+                setSocketData(
+                  newContent,
+                  newVal,
+                  plateItem,
+                  contentIndex,
+                  this
+                )
+              }
+            })
+          })
         }
       }
+    },
+    middleTopData (newVal) {
+      _.forEach(this.filterMarketList, (item, index) => {
+        if (item.area == newVal.area) {
+          this.activeIndex = index + 2
+          return false
+        }
+      })
+      this.activeName = newVal.area
+    },
+    activeName (newVal, oldVal) {
+      this.setActiveTabSymbolStr()
     }
   }
 }
@@ -696,92 +626,7 @@ export default {
       /*表格内容*/
       > .content {
         > .inner-box {
-          .coin-table{
-            padding:0 5px;
-            >.coin-thead{
-              height:30px;
-              line-height:30px;
-              >.coin-unit{
-                display:flex;
-                /*表头*/
-                >.title{
-                  flex:1;
-                  &:nth-of-type(1){
-                    margin-left:20px;
-                  }
-                  &.price{
-                    text-align: center;
-                  }
-                  &.rose{
-                    text-align: right;
-                    margin-right:20px;
-                  }
-                  .sort-box{
-                    position: relative;
-                    >i{
-                      position: absolute;
-                      left:0;
-                      &.active{
-                        color:$mainColor;
-                      }
-                      &.el-icon-caret-top{
-                        top:-2px;
-                      }
-                      &.el-icon-caret-bottom{
-                        bottom:-2px;
-                      }
-                    }
-                  }
-                }
-              }
-            }
-            /*币种列表*/
-            >.coin-list{
-              >.market-cate-wrap{
-                /*板块头部*/
-                >.market-category{
-                  height: 40px;
-                  margin: 0 16px;
-                  padding-left: 10px;
-                  line-height: 40px;
-                  position: relative;
-                  &:before{
-                    content:'';
-                    position: absolute;
-                    width:2px;
-                    height:14px;
-                    background-color: $mainColor;
-                    left:0;
-                    top:50%;
-                    transform: translateY(-50%);
-                  }
-                }
-                >.coin-item{
-                  >.coin-item{
-                    /*margin-left: 16px;*/
-                    padding: 0 0 0 10px;
-                    /*border-bottom: 1px solid;*/
-                    height: 25px;
-                    line-height: 25px;
-                    display:flex;
-                    >span{
-                      flex:1;
-                      display: inline-block;
-                      &.price{
-                        margin-right:18%;
-                      }
-                      &.up{
-                        color: $upColor;
-                      }
-                      &.down{
-                        color:$downColor;
-                      }
-                    }
-                  }
-                }
-              }
-            }
-          }
+
         }
       }
     }

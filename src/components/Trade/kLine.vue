@@ -10,8 +10,19 @@
 import { widget as TvWidget } from '../../../static/tradeview/charting_library/charting_library.min.js'
 import socket from '../../utils/datafeeds/socket'
 import datafeeds from '../../utils/datafeeds/datafees'
-import {getDefaultSymbol} from '../../utils/api/trade'
-import {returnAjaxMessage} from '../../utils/commonFunc'
+import {
+  getDefaultSymbol,
+  getActiveSymbolDataAjax
+  // getTradeMarketDataAjax
+} from '../../utils/api/trade'
+// import {
+//   getCollectionListAjax
+// } from '../../utils/api/home'
+import {
+  returnAjaxMessage
+  // getCollectionList
+} from '../../utils/commonFunc'
+// import {getStore} from '../../utils'
 import { createNamespacedHelpers, mapState } from 'vuex'
 const { mapMutations } = createNamespacedHelpers('common')
 export default {
@@ -45,8 +56,8 @@ export default {
         }
       }, // K线请求参数
       socketData: {}, // socket 数据
-      resolutions: ['min', 'min5', 'min15', 'min30', 'hour1', 'hour4', 'day', 'week'],
-      finalSymbol: {} // 当前交易对
+      ajaxData: {}, // 接口请求数据
+      resolutions: ['min', 'min5', 'min15', 'min30', 'hour1', 'hour4', 'day', 'week']
     }
   },
   created () {
@@ -73,8 +84,57 @@ export default {
   methods: {
     ...mapMutations([
       'CHANGE_ACTIVE_SYMBOL',
-      'CHANGE_SOCKET_DATA'
+      'CHANGE_SOCKET_AND_AJAX_DATA'
     ]),
+    // 获取当前交易对socket数据
+    async getActiveSymbolData (tradeName) {
+      let params = {
+        partnerId: this.partnerId,
+        i18n: this.language
+      }
+      params.tradeName = tradeName
+      const data = await getActiveSymbolDataAjax(params)
+
+      if (!returnAjaxMessage(data, this)) {
+        return false
+      } else {
+        let activeSymbolData = data.data.data
+        let {
+          defaultTrade, // 默认交易对
+          depthList, // 买卖单、深度
+          tradeList, // 交易记录
+          tickerList // 行情交易区列表
+        } = activeSymbolData
+        console.log(activeSymbolData)
+        depthList.depthData.sells.list.reverse()
+        // 默认交易对 数据
+        this.$store.commit('trade/SET_MIDDLE_TOP_DATA', defaultTrade.content[0])
+        // 买卖单
+        this.ajaxData.buyAndSellData = depthList.depthData
+        // 交易记录
+        this.ajaxData.tardeRecordList = tradeList
+        // 深度图
+        this.ajaxData.depthData = depthList.depthResult
+
+        // 行情交易区列表
+        this.ajaxData.tradeMarketList = tickerList
+
+        this.CHANGE_SOCKET_AND_AJAX_DATA({
+          ajaxData: this.ajaxData,
+          type: 'ajax'
+        })
+        this.socket.doOpen()
+        this.socket.on('open', () => {
+          this.getKlineDataBySocket('REQ', this.symbol, 'min')
+          this.getKlineDataBySocket('SUB', this.symbol, 'min')
+          this.getTradeMarketBySocket('SUB', this.activeTabSymbolStr)
+          this.getBuyAndSellBySocket('SUB', this.symbol)
+          this.getDepthDataBySocket('SUB', this.symbol)
+          this.getTradeRecordBySocket('SUB', this.symbol)
+          this.socket.on('message', this.onMessage)
+        })
+      }
+    },
     // k线初始化
     initKLine (symbol) {
       this.widget = null
@@ -97,7 +157,7 @@ export default {
       } else {
         const obj = data.data.data
         const activeSymbol = {
-          id: obj.sellCoinName + obj.buyCoinName,
+          id: (obj.sellCoinName + obj.buyCoinName).toLowerCase(),
           tradeId: obj.id,
           sellsymbol: obj.sellCoinName, // 币种简称
           sellname: obj.buyCoinName, // 币种全程
@@ -108,20 +168,7 @@ export default {
         this.finalSymbol = this.isJumpToTradeCenter ? this.jumpSymbol : activeSymbol
         this.CHANGE_ACTIVE_SYMBOL({activeSymbol: this.finalSymbol})
         this.symbol = this.activeSymbol.id
-        this.socket.doOpen()
-        this.socket.on('open', () => {
-          this.getKlineDataBySocket('REQ', this.symbol, 'min')
-          this.getKlineDataBySocket('SUB', this.symbol, 'min')
-          this.getTradeMarketBySocket('REQ', this.finalSymbol.areaId)
-          this.getTradeMarketBySocket('SUB', this.finalSymbol.areaId)
-          this.getDefaultSymbolBySocket('REQ', this.finalSymbol.id)
-          this.getDefaultSymbolBySocket('SUB', this.finalSymbol.id)
-          this.getDepthDataBySocket('REQ', this.symbol)
-          this.getDepthDataBySocket('SUB', this.symbol)
-          this.getTradeRecordBySocket('REQ', this.symbol)
-          this.getTradeRecordBySocket('SUB', this.symbol)
-          this.socket.on('message', this.onMessage)
-        })
+        // this.getActiveSymbolData(this.symbol)
       }
     },
     init (options) {
@@ -435,39 +482,36 @@ export default {
             }
           }
           break
+        // 买卖单
         case 'DEPTH':
           console.log(data)
           if (data.data) {
-            this.socketData.depthData = data.data.depthData
-            this.socketData.buyAndSellData = data.data.depthRender
+            let newData = data.data
+            newData.sells.list.reverse()
+            this.socketData.buyAndSellData = newData
+          }
+          break
+        // 深度图
+        case 'DEPTHRENDER':
+          if (data.data) {
+            this.socketData.depthData = data.data
           }
           break
         case 'TRADE':
-          console.log(data)
           if (data.data) {
-            if (!data.type) {
-              this.socketData.tardeRecordList = data.data
-            } else {
-              this.socketData.tardeRecordList.pop()
-              this.socketData.tardeRecordList.unshift(data.data[0])
-            }
+            this.socketData.tardeRecordList = data.data
           }
           break
-        case 'BBTICKER':
-          console.log(data)
+        case 'TICKER':
           if (data.data) {
-            this.socketData.tradeMarketList = data
-          }
-          break
-        case 'DEFAULTTRADE':
-          console.log(data)
-          if (data.data) {
-            this.$store.commit('trade/SET_MIDDLE_TOP_DATA', data.data[0].content[0])
-            // this.CHANGE_ACTIVE_SYMBOL({activeSymbol: data.data[0].content[0]})
+            this.socketData.tradeMarkeContentItem = data.data
           }
           break
       }
-      this.CHANGE_SOCKET_DATA(this.socketData)
+      this.CHANGE_SOCKET_AND_AJAX_DATA({
+        'socketData': this.socketData,
+        'type': 'socket'
+      })
     },
     getBars (symbolInfo, resolution, rangeStartDate, rangeEndDate, onLoadedCallback) {
       console.log(symbolInfo)
@@ -482,13 +526,9 @@ export default {
         let newInterval = this.transformInterval(resolution)
         this.getKlineDataBySocket('REQ', this.symbol, newInterval)
         this.getKlineDataBySocket('SUB', this.symbol, newInterval)
-        this.getTradeMarketBySocket('REQ')
-        this.getTradeMarketBySocket('SUB')
-        this.getDefaultSymbolBySocket('REQ', this.symbol)
-        this.getDefaultSymbolBySocket('SUB', this.symbol)
-        this.getDepthDataBySocket('REQ', this.symbol)
+        this.getTradeMarketBySocket('SUB', this.activeTabSymbolStr)
+        this.getBuyAndSellBySocket('SUB', this.symbol)
         this.getDepthDataBySocket('SUB', this.symbol)
-        this.getTradeRecordBySocket('REQ', this.symbol)
         this.getTradeRecordBySocket('SUB', this.symbol)
       }
       const ticker = `${this.symbol}-${this.interval}`
@@ -532,49 +572,53 @@ export default {
         'id': `trade_${symbol}`
       })
     },
-    // 获取深度socekt
-    getDepthDataBySocket (type, symbol) {
-      // 深度
+    // 获取买卖单
+    getBuyAndSellBySocket (type, symbol) {
+      // 买卖单
       this.socket.send({
         'tag': type,
         'content': `market.${symbol}.depth.step1`,
         'id': `depth_${symbol}`
       })
     },
+    // 深度图
+    getDepthDataBySocket (type, symbol) {
+      this.socket.send({
+        'tag': type,
+        'content': `market.${symbol}.depthrender`,
+        'id': `market_001`
+      })
+    },
     // 获取默认交易对socket
     getDefaultSymbolBySocket (type, symbol) {
-      // console.log(this.socket.send)
-      // console.log(type, symbol)
       if (type && symbol) {
         this.socket.send({
           'tag': type,
-          'content': `market.${symbol}.defaultTrade.${this.partnerId}`,
+          'content': `market.${symbol}.${this.partnerId}`,
           'id': `market_001`
         })
       }
     },
     // 获取币币交易市场 socket
-    getTradeMarketBySocket (type, areaId = this.activeSymbol.areaId) {
-      console.log(areaId)
-      if (areaId) {
-        // 币币交易市场
-        this.socket.send({
-          'tag': type,
-          'content': `market.bbticker.${this.partnerId}.${areaId}`,
-          'id': `market_001`
-        })
-      }
+    getTradeMarketBySocket (type, params) {
+      // 币币交易市场
+      this.socket.send({
+        'tag': type,
+        'content': `market.${params}.ticker`,
+        'id': `market_001`
+      })
     }
   },
   filter: {},
   computed: {
     ...mapState({
+      symbolMap: state => state.home.symbolMap, // 交易对map
       theme: state => state.common.theme,
       language: state => state.common.language,
       activeSymbol: state => state.common.activeSymbol,
       activeSymbolId: state => state.common.activeSymbol.id,
       activeTradeArea: state => state.common.activeTradeArea,
-      activeTabId: state => state.trade.activeTabId,
+      activeTabSymbolStr: state => state.trade.activeTabSymbolStr,
       mainColor: state => state.common.mainColor,
       isJumpToTradeCenter: state => state.trade.isJumpToTradeCenter,
       jumpSymbol: state => state.trade.jumpSymbol,
@@ -590,22 +634,21 @@ export default {
         'paneProperties.horzGridProperties.color': this.theme === 'night' ? 'rgba(57,66,77,.2)' : 'rgba(57,66,77,.05)' // 列分割线
       })
     },
-    language () {
-      this.initKLine(this.activeSymbolId)
-    },
-    activeSymbolId (newVal) {
+    activeSymbolId (newVal, oldVal) {
+      // this.getActiveSymbolData(newVal)
       this.initKLine(newVal)
     },
     // 切换tab栏重新订阅
-    activeTabId (newVal, oldVal) {
+    activeTabSymbolStr (newVal, oldVal) {
       console.log(newVal)
-      this.getTradeMarketBySocket('CANCEL', oldVal)
-      this.getTradeMarketBySocket('REQ', newVal)
+      if (oldVal) {
+        this.getTradeMarketBySocket('CANCEL', oldVal)
+      }
       this.getTradeMarketBySocket('SUB', newVal)
     },
     symbol (newVal, oldVal) {
-      console.log(newVal, oldVal)
-      console.log(this.options.interval)
+      this.getActiveSymbolData(newVal)
+
       this.getKlineDataBySocket('REQ', newVal, 'min')
       this.getKlineDataBySocket('SUB', newVal, 'min')
       if (oldVal) {
@@ -613,7 +656,7 @@ export default {
         this.resolutions.forEach((item) => {
           this.getKlineDataBySocket('CANCEL', oldVal, item)
         })
-        this.getDefaultSymbolBySocket('CANCEL', oldVal)
+        this.getBuyAndSellBySocket('CANCEL', oldVal)
         this.getDepthDataBySocket('CANCEL', oldVal)
         this.getTradeRecordBySocket('CANCEL', oldVal)
       }

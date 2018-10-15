@@ -9,7 +9,7 @@
         {{ $t('M.comm_coin') }}{{ $t('M.comm_order') }}
       </span>
     </header>
-    <div class="fiat-main background-color min-height500 margin-top9">
+    <div class="fiat-main min-height500 margin-top9">
       <el-tabs
         v-model="activeName"
         :tab-position = "tabPosition"
@@ -487,8 +487,7 @@ export default {
 .fiat-orders {
   .fiat-main {
     .orders-main-top{
-      height: 100px;
-      margin-bottom: 25px;
+      height: 125px;
       padding: 0 25px;
       .trade-type {
         width: 250px;
@@ -531,6 +530,11 @@ export default {
         color: #338FF5;
       }
     }
+    .fiat-main {
+      .orders-main-top{
+        background-color: #1C1F32;
+      }
+    }
   }
   &.day{
     background-color: $dayBgColor;
@@ -544,6 +548,9 @@ export default {
     >div{
       border:1px solid #ECF1F8;
     }
+    /*.orders-main-top{*/
+      /*background-color: #fff;*/
+    /*}*/
   }
 }
 </style>

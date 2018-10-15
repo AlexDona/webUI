@@ -16,8 +16,11 @@ export default {
   [TOGGLE_REFRESH_ENTRUST_LIST_STATUS] (state, data) {
     state.refreshEntrustStatus = data
   },
-  [CHANGE_ACTIVE_TAB_ID] (state, data) {
-    state.activeTabId = data
+  [CHANGE_ACTIVE_TAB_ID] (state, {
+    activeTabSymbolStr
+  }) {
+    // state.activeTabId = activeTabId
+    state.activeTabSymbolStr = activeTabSymbolStr
   },
   [CHANGE_ACTIVE_PRICE_ITEM] (state, data) {
     state.activePriceItem = data

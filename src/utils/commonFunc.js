@@ -19,7 +19,8 @@ import {
 import {
   getPartnerList,
   addUserCollectionAjax,
-  removeCollectionAjax
+  removeCollectionAjax,
+  getCollectionListAjax
 } from '../utils/api/home'
 import {
   getCountryList,
@@ -40,6 +41,7 @@ export const returnAjaxMessage = (data, self, noTip) => {
       // duration: 5000000,
       message: !meta.params ? self.$t(`M.${meta.i18n_code}`) : self.$t(`M.${meta.i18n_code}`).format(meta.params)
     })
+    // console.log(self.$t(`M.${meta.i18n_code}`).format(meta.params))
     // 登录失效
     if (meta.code == 401) {
       removeStore('loginStep1Info')
@@ -137,11 +139,25 @@ export const repealMyEntrustCommon = async (params, callback) => {
   callback(repealData)
 }
 /**
-* 商家订单列表请求
-*/
+ * 安全中心状态
+ */
+export const stateSafeCentral = async (params, callback) => {
+  const repealData = await statusSecurityCenter(params)
+  callback(repealData)
+}
+// /**
+//  * 商家订单列表请求
+//  */
 export const getMerchantsOrdersList = async (params, callback) => {
   const repealData = await getQueryAllOrdersList(params)
   callback(repealData)
+}
+/**
+ * 个人资产信息
+ */
+export const globalPersonalAssetsInformation = async (params, callback) => {
+  const data = await userRefreshUser(params)
+  callback(data)
 }
 
 // 获取板块信息
@@ -231,6 +247,15 @@ export const toggleUserCollection = async (type, tradeId, that) => {
   }
 }
 
+// 获取用户收藏列表
+export const getCollectionList = async (that, callback) => {
+  const data = await getCollectionListAjax()
+  if (!returnAjaxMessage(data, that)) {
+    return false
+  } else {
+    callback(data)
+  }
+}
 // 协议跳转
 export const jumpToOtherPageForFooter = (router, activeName, that) => {
   that.$store.commit('CHANGE_FOOTER_ACTIVENAME', {
@@ -240,23 +265,41 @@ export const jumpToOtherPageForFooter = (router, activeName, that) => {
   that.$router.push({path: router})
 }
 
+// 首页、币币交易页面socket数据替换
+// socket数据替换
+export const setSocketData = (oldContent, newContent, targetList, targetIndex, that) => {
+  oldContent.buy = newContent.buy
+  oldContent.chg = newContent.chg // 涨幅
+  oldContent.high = newContent.high
+  oldContent.kai = newContent.kai
+  oldContent.last = newContent.last // 最新价
+  oldContent.low = newContent.low
+  oldContent.sell = newContent.sell
+  oldContent.triduumSampling = newContent.triduumSampling // 趋势
+  oldContent.vol = newContent.vol
+  oldContent.vol24hour = newContent.vol24hour
+  that.$set(targetList, targetIndex, oldContent)
+}
 // eslint-disable-next-line
 String.prototype.format = function (args) {
   var result = this
   const arr = result.split('')
   let newArr = ''
-  arr.forEach((item) => {
-    newArr += item
-    if (item == '{') {
-      newArr += '0'
-    }
-  })
+  if (args.length) {
+    _.forEach(arr, item => {
+      newArr += item
+      if (item === '{') {
+        newArr += '0'
+      }
+    })
+  }
   result = newArr
   if (arguments.length > 0) {
-    if (arguments.length == 1 && typeof (args) == 'object') {
+    if (arguments.length == 1 && !Array.isArray(args)) {
       for (var key in args) {
         if (args[key] != undefined) {
           let reg = new RegExp('({' + key + '})', 'g')
+          console.log(reg)
           result = result.replace(reg, args[key])
         }
       }

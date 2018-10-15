@@ -34,7 +34,7 @@
             :label-position="labelPosition"
             label-width="120px"
           >
-            <!--邮箱账号 验证码-->
+            <!--邮箱账号-->
             <el-form-item
               :label="$t('M.user_security_email') + $t('M.user_account_number') + '：'"
             >
@@ -50,6 +50,7 @@
                 :isShow="!!errorShowStatusList[0]"
               />
             </el-form-item>
+            <!--验证码-->
             <el-form-item
               :label="$t('M.comm_code') + '：'"
             >
