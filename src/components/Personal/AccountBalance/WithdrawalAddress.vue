@@ -20,7 +20,7 @@
             ref="form"
             label-width="70px"
           >
-            <!--币种 备注 提币地址-->
+            <!--币种-->
             <el-form-item
               :label="$t('M.comm_currency')"
             >
@@ -39,6 +39,7 @@
                 </el-option>
               </el-select>
             </el-form-item>
+            <!--备注-->
             <el-form-item
               :label="$t('M.comm_remark')"
             >
@@ -54,6 +55,7 @@
                 :isShow="!!errorShowStatusList[0]"
               />
             </el-form-item>
+            <!--提币地址-->
             <el-form-item
               :label="$t('M.comm_mention_money') + $t('M.comm_site')"
             >

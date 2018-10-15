@@ -51,19 +51,21 @@
             <div
               class="payment-right"
             >
+              <!--关闭-->
               <img
                 v-if="paymentTerm.isBnakEnable === 'disable'"
                 @click.prevent="statusOpenToClose('bank', 'enable')"
                 class="switch-img cursor-pointer"
                 :src="closePictureSrc"
               >
+              <!--开启-->
               <img
                 v-else
                 @click.prevent="statusOpenToClose('bank', 'disable')"
                 class="switch-img cursor-pointer"
                 :src="openPictureSrc"
               >
-              <!--设置 修改-->
+              <!--设置-->
                 <span
                   v-if="paymentTerm.isBankBind"
                   class="payment-state cursor-pointer"
@@ -71,6 +73,7 @@
                 >
                   {{ $t('M.comm_set') }}
                 </span>
+              <!--修改-->
                 <span
                   v-else
                   class="payment-state cursor-pointer"
@@ -96,19 +99,21 @@
             <p
               class="payment-right"
             >
+              <!--关闭-->
               <img
                 v-if="paymentTerm.isWeixinEnable === 'disable'"
                 @click.prevent="statusOpenToClose('chat', 'enable')"
                 class="switch-img cursor-pointer"
                 :src="closePictureSrc"
               >
+              <!--开启-->
               <img
                 v-else
                 @click.prevent="statusOpenToClose('chat', 'disable')"
                 class="switch-img cursor-pointer"
                 :src="openPictureSrc"
               >
-              <!--设置 修改-->
+              <!--设置-->
                 <span
                   v-if="paymentTerm.isWeixinBind"
                   class="payment-state cursor-pointer"
@@ -116,6 +121,7 @@
                 >
                   {{ $t('M.comm_set') }}
                 </span>
+              <!--修改-->
                 <span
                   v-else
                   class="payment-state cursor-pointer"
@@ -141,18 +147,21 @@
             <p
               class="payment-right"
             >
+              <!--关闭-->
               <img
                 v-if="paymentTerm.isAlipayEnable === 'disable'"
                 @click.prevent="statusOpenToClose('alipay', 'enable')"
                 class="switch-img cursor-pointer"
                 :src="closePictureSrc"
               >
+              <!--开启-->
               <img
                 v-else
                 @click.prevent="statusOpenToClose('alipay', 'disable')"
                 class="switch-img cursor-pointer"
                 :src="openPictureSrc"
               >
+              <!--设置-->
                 <span
                   v-if="paymentTerm.isAlipayBind"
                   class="payment-state cursor-pointer"
@@ -160,6 +169,7 @@
                 >
                   {{ $t('M.comm_set') }}
                 </span>
+              <!--修改-->
                 <span
                   v-else
                   class="payment-state cursor-pointer"
@@ -185,18 +195,21 @@
             <p
               class="payment-right"
             >
+              <!--关闭-->
               <img
                 v-if="paymentTerm.isPaypalEnable === 'disable'"
                 @click.prevent="statusOpenToClose('paypal', 'enable')"
                 class="switch-img cursor-pointer"
                 :src="closePictureSrc"
               >
+              <!--开启-->
               <img
                 v-else
                 @click.prevent="statusOpenToClose('paypal', 'disable')"
                 class="switch-img cursor-pointer"
                 :src="openPictureSrc"
               >
+              <!--设置-->
                 <span
                   v-if="paymentTerm.isPaypalBind"
                   class="payment-state cursor-pointer"
@@ -204,6 +217,7 @@
                 >
                   {{ $t('M.comm_set') }}
                 </span>
+              <!--修改-->
                 <span
                   v-else
                   class="payment-state cursor-pointer"
@@ -226,18 +240,21 @@
             <p
               class="payment-right"
             >
+              <!--关闭-->
               <img
                 v-if="paymentTerm.isXilianEnable === 'disable'"
                 @click.prevent="statusOpenToClose('western', 'enable')"
                 class="switch-img cursor-pointer"
                 :src="closePictureSrc"
               >
+              <!--开启-->
               <img
                 v-else
                 @click.prevent="statusOpenToClose('western', 'disable')"
                 class="switch-img cursor-pointer"
                 :src="openPictureSrc"
               >
+              <!--设置-->
                 <span
                   v-if="paymentTerm.isXilianBind"
                   class="payment-state cursor-pointer"
@@ -245,6 +262,7 @@
                 >
                   {{ $t('M.comm_set') }}
                 </span>
+              <!--修改-->
                 <span
                   v-else
                   class="payment-state cursor-pointer"

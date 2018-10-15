@@ -220,10 +220,10 @@
                         </div>
                         <div class="recharge-content-title font-size12 margin-top9 float-left">
                           <!--禁止充值除 之外的其他资产，任何非 资产充值将不可找回-->
-                          <!--往该地址充值，汇款完成，等待网络自动确认（6个确认）后系统自动到账-->
-                          <!--为了快速到账，充值时可以适当提高网络手续费-->
                           <p>* {{ $t('M.user_assets_recharge_hint1').format(chargeMoneyName) }}</p>
+                          <!--往该地址充值，汇款完成，等待网络自动确认（6个确认）后系统自动到账-->
                           <p>* {{ $t('M.user_assets_recharge_hint4') }}</p>
+                          <!--为了快速到账，充值时可以适当提高网络手续费-->
                           <p>* {{ $t('M.user_assets_recharge_hint5') }}</p>
                         </div>
                       </div>

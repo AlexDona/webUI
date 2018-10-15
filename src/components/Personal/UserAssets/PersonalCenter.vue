@@ -129,7 +129,7 @@
       <!--设置交易密码前弹框提示-->
       <div class="warning">
         <el-dialog
-          :visible.sync="dialogVisible"
+          :visible.sync="setPwdDialogVisible"
           center
         >
           <div class="dialog-warning">
@@ -159,7 +159,7 @@
         </button>
         <button
           class="btn border-radius4 cursor-pointer"
-          @click.prevent="dialogVisible = false"
+          @click.prevent="setPwdDialogVisible = false"
         >
           <!--取 消-->
           {{ $t('M.comm_cancel') }}
@@ -170,7 +170,7 @@
       <!--未实名认证前弹框提示-->
       <div class="warning">
         <el-dialog
-          :visible.sync="dialogVisible1"
+          :visible.sync="notVerifynotVerifyDialogVisible"
           center
         >
           <div class="dialog-warning">
@@ -200,7 +200,7 @@
         </button>
         <button
           class="btn border-radius4 cursor-pointer"
-          @click.prevent="dialogVisible1 = false"
+          @click.prevent="notVerifyDialogVisible = false"
         >
           <!--取 消-->
           {{ $t('M.comm_cancel') }}
@@ -272,8 +272,9 @@ export default {
   data () {
     return {
       tabPosition: 'left', // 导航位置方向
-      dialogVisible: false,
-      dialogVisible1: false
+      setPwdDialogVisible: false,
+      notVerifyDialogVisible: false
+      // isDisabled: false
     }
   },
   async created () {
@@ -285,10 +286,10 @@ export default {
     require('../../../../static/css/theme/night/Personal/UserAssets/PersonalCenterNight.css')
     await this.getUserRefreshUser()
     if (!this.realname && this.userCenterActiveName === 'account-credited') {
-      this.dialogVisible1 = true
+      this.notVerifyDialogVisible = true
     }
     if (!this.payPassword && this.userCenterActiveName === 'account-credited') {
-      this.dialogVisible = true
+      this.setPwdDialogVisible = true
     }
   },
   mounted () {},
@@ -301,18 +302,23 @@ export default {
     ]),
     // tab面板切换
     async statusSwitchPanel (tab) {
+      // // 防止频繁切换点击按钮 通过禁用按钮，0.5秒后可以点击
+      // this.isdisabled = true
+      // setTimeout(() => {
+      //   this.isdisabled = false
+      // }, 500)
       this.CHANGE_USER_CENTER_ACTIVE_NAME(tab.name)
       if (tab.name === 'account-credited') {
         await this.getUserRefreshUser()
         if (!this.payPassword) {
-          this.dialogVisible = true
+          this.setPwdDialogVisible = true
           return false
         }
         if (!this.realname) {
-          this.dialogVisible1 = true
+          this.notVerifyDialogVisible = true
           return false
         } else {
-          this.dialogVisible1 = false
+          this.notVerifyDialogVisible = false
         }
       }
     },
@@ -324,7 +330,7 @@ export default {
         this.CHANGE_USER_CENTER_ACTIVE_NAME('identity-authentication')
 
         this.$router.push({path: '/PersonalCenter'})
-        this.dialogVisible1 = false
+        this.notVerifyDialogVisible = false
       }
     },
     /**
@@ -341,7 +347,7 @@ export default {
         this.$store.commit('user/SET_STEP1_INFO', data.data.data)
         // 返回列表数据
         if (!this.payPassword) {
-          this.dialogVisible = true
+          this.setPwdDialogVisible = true
         }
       }
     }
@@ -360,12 +366,12 @@ export default {
   watch: {
     payPassword (newVal) {
       if (!newVal) {
-        this.dialogVisible = true
+        this.setPwdDialogVisible = true
       }
     },
     realname (newVal) {
       if (!newVal) {
-        this.dialogVisible1 = true
+        this.notVerifyDialogVisible = true
       }
     }
   }

@@ -508,7 +508,7 @@
       <el-tabs
         v-model="securityActiveName"
       >
-        <!--最近登录记录 登陆时间 登录IP 归属地 来源-->
+        <!--最近登录记录-->
         <el-tab-pane
           :label="$t('M.user_security_recently') + $t('M.user_security_login') + $t('M.comm_record')"
           name="first"
@@ -516,6 +516,7 @@
           <el-table
             :data="securityRecord"
             style="width: 100%">
+            <!--登陆时间-->
             <el-table-column
               :label="$t('M.user_security_login') + $t('M.comm_time')"
             >
@@ -523,6 +524,7 @@
                 <div>{{ timeFormatting(s.row.operateTime) }}</div>
               </template>
             </el-table-column>
+            <!--登录IP-->
             <el-table-column
               :label="$t('M.user_security_login') + $t('M.comm_time') + 'IP'"
             >
@@ -530,6 +532,7 @@
                 <div>{{ s.row.ip }}</div>
               </template>
             </el-table-column>
+            <!--归属地-->
             <el-table-column
               :label="$t('M.user_security_home_location')"
             >
@@ -537,6 +540,7 @@
                 <div>{{ s.row.operateAddress }}</div>
               </template>
             </el-table-column>
+            <!--来源-->
             <el-table-column
               :label="$t('M.user_security_source')"
             >
@@ -555,7 +559,7 @@
           >
           </el-pagination>
         </el-tab-pane>
-        <!--安全设置记录 登陆时间 设置名称 登录IP 归属地-->
+        <!--安全设置记录-->
         <el-tab-pane
           :label="$t('M.user_security_safety') + $t('M.comm_set') + $t('M.comm_record')"
           name="second"
@@ -563,6 +567,7 @@
           <el-table
             :data="logonRecord"
             style="width: 100%">
+            <!--登陆时间-->
             <el-table-column
               :label="$t('M.user_security_login') + $t('M.comm_time')"
             >
@@ -570,6 +575,7 @@
                 <div>{{ timeFormatting(s.row.operateTime) }}</div>
               </template>
             </el-table-column>
+            <!--设置名称-->
             <el-table-column
               :label="$t('M.comm_set') + $t('M.user_account_name')"
             >
@@ -577,6 +583,7 @@
                 <div>{{ s.row.content }}</div>
               </template>
             </el-table-column>
+            <!--登录IP-->
             <el-table-column
               :label="$t('M.user_security_login') + 'IP'"
             >
@@ -584,6 +591,7 @@
                 <div>{{ s.row.ip }}</div>
               </template>
             </el-table-column>
+            <!--归属地-->
             <el-table-column
               :label="$t('M.user_security_home_location')"
             >
@@ -636,7 +644,6 @@ export default {
       // 安全设置记录
       securityRecord: [],
       getStatusUserInfo: {}, // 个人信息
-      activeAwardList: 'set-log',
       setLogPage: 1, // 当前委托页码
       totalPageMySetLogPage: 1, // 当前委托总页数
       loginLogPage: 1, // 当前委托页码
@@ -700,19 +707,21 @@ export default {
           this.fullscreenLoading = false
           this.securityCenter = data.data.data
           this.person = data.data.data.person
+          // 登陆记录分页
           this.logonRecord = data.data.data.setLog.list
           this.totalPageMySetLogPage = data.data.data.setLog.pages - 0
+          // 安全设置分页
           this.securityRecord = data.data.data.loginLog.list
           this.totalPageMyLoginLogPage = data.data.data.loginLog.pages - 0
         }
       })
     },
-    // 分页
+    // 登陆记录分页
     changeCurrentPageSetLog (pageNum) {
       this.setLogPage = pageNum
       this.getSecurityCenter()
     },
-    // 分页
+    // 安全设置分页
     changeCurrentPageLoginLog (pageNum) {
       this.loginLogPage = pageNum
       this.getSecurityCenter()
@@ -743,7 +752,7 @@ export default {
         return false
       }
       let params = {
-        type: 'VERIFICATION_CODE' // 类型
+        type: 'VERIFICATION_CODE' // 通用类型
       }
       switch (loginType) {
         case 0:
