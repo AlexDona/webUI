@@ -219,8 +219,10 @@
                           </span>
                         </div>
                         <div class="recharge-content-title font-size12 margin-top9 float-left">
+                          <!--转账时请务必备注（否则后果自负）：UID-->
+                          <p>* {{ $t('M.user_assets_recharge_hint0').format([chargeMoneyName,chargeMoneyName]) }}</p>
                           <!--禁止充值除 之外的其他资产，任何非 资产充值将不可找回-->
-                          <p>* {{ $t('M.user_assets_recharge_hint1').format(chargeMoneyName) }}</p>
+                          <p>* {{ $t('M.user_assets_recharge_hint1').format([chargeMoneyName,chargeMoneyName]) }}</p>
                           <!--往该地址充值，汇款完成，等待网络自动确认（6个确认）后系统自动到账-->
                           <p>* {{ $t('M.user_assets_recharge_hint4') }}</p>
                           <!--为了快速到账，充值时可以适当提高网络手续费-->
@@ -228,7 +230,7 @@
                         </div>
                       </div>
                       <div class='recharge-content-right flex1'>
-                        <p class="recharge-content-code margin-top30 float-left">
+                        <p class="recharge-content-code margin-top20 float-left">
                           <VueQrcode
                             class="ercode"
                             :value="chargeMoney"
@@ -246,7 +248,9 @@
                       </div>
                     </div>
                     <!--提币内容-->
+                    <!--普通币种提币显示框-->
                     <div
+                      v-if="!needTag"
                       class="recharge-list recharge-list-mention display-flex"
                       v-show="withdrawDepositList[index].withdrawDepositIsShow"
                     >
@@ -263,6 +267,9 @@
                               v-model="mentionAddressValue"
                               :no-data-text="$t('M.comm_no_data')"
                               @change="changeId"
+                              filterable
+                              allow-create
+                              default-first-option
                             >
                               <el-option
                                 v-for="(item, index) in mentionAddressList"
@@ -384,6 +391,164 @@
                                 {{ $t('M.comm_mention_money') }}{{ $t('M.comm_record') }}
                           </span>
                         </p>
+                      </div>
+                    </div>
+                    <!--公信宝类币种提笔显示框-->
+                    <div
+                      v-else
+                      class="recharge-list recharge-list-mention list-mention-treasure"
+                      v-show="withdrawDepositList[index].provideWithdrawDepositIsShow"
+                    >
+                      <p class="triangle triangle-one"></p>
+                      <div class="mention">
+                        <p class="mention-treasure">
+                          <!--地址标签-->
+                          {{ $t('M.user_address_labels') }}
+                          <!--（填写错误可能导致资产损失，请仔细核对）-->
+                          <span class="treasure-info font-size12">({{ $t('M.user_address_labels_prompt') }})</span>
+                        </p>
+                        <input
+                          type="text"
+                          class="input-mention border-radius2 paddinglr15 box-sizing"
+                          v-model="remark"
+                        >
+                      </div>
+                      <div class="recharge-list-left display-flex">
+                        <div class="list-left-flex flex1 font-size12">
+                          <div class="flex-box padding-top10">
+                            <p class="left-flex-hint">
+                              {{ chargeMoneyName }}asdfasdfasdfasdfasdfasdfasdfasd
+                              <!--提币地址-->
+                              {{ $t('M.comm_mention_money') }}{{ $t('M.comm_site') }}
+                            </p>
+                            <el-select
+                              v-model="mentionAddressValue"
+                              :no-data-text="$t('M.comm_no_data')"
+                              @change="changeId"
+                              filterable
+                              allow-create
+                              default-first-option
+                            >
+                              <el-option
+                                v-for="(item, index) in mentionAddressList"
+                                :key="index"
+                                :label="item.address + ' ' + item.remark"
+                                :value="item.id"
+                              >
+                              </el-option>
+                            </el-select>
+                            <span
+                              class="new-address cursor-pointer address-bg"
+                              @click.prevent="stateMentionAddress"
+                            >
+                              <!--新增-->
+                              {{ $t('M.comm_newly_increased') }}
+                            </span>
+                          </div>
+                          <div class="flex-box padding-top20">
+                            <p class="left-flex-hint">
+                              <!--手续费-->
+                              {{ $t('M.comm_service_charge') }}
+                            </p>
+                            <input
+                              type="text"
+                              class="flex-input border-radius2 padding-l15 box-sizing"
+                              ref="serviceCharge"
+                              @keyup="changeInputValue('serviceCharge', index, pointLength, 'serviceType')"
+                              @input="changeInputValue('serviceCharge', index, pointLength, 'serviceType')"
+                            >
+                            <span
+                              class="new-address new-address-currency cursor-pointer"
+                            >
+                              {{ chargeMoneyName }}
+                            </span>
+                            <span class="service-charge display-inline-block text-align-r">
+                              {{serviceChargeList.minFees}}
+                              -
+                              {{serviceChargeList.maxFees}}
+                            </span>
+                          </div>
+                        </div>
+                        <div class="count-box flex1 font-size12">
+                          <div class="count-flex-box padding-top10">
+                            <p class="content-flex-hint">
+                              <!--数量-->
+                              {{ $t('M.comm_count') }}
+                            </p>
+                            <input
+                              type="text"
+                              class="count-flex-input border-radius2 paddinglr15 box-sizing text-align-r"
+                              ref="rechargeCount"
+                              @keyup="changeInputValue('rechargeCount', index, pointLength, 'rechargeType')"
+                              @input="changeInputValue('rechargeCount', index, pointLength, 'rechargeType')"
+                            >
+                            <p class="count-flex-text text-align-r">
+                              <span>
+                                <!--限额：-->
+                                {{ $t('M.comm_limit') }}：
+                              </span>
+                              <span>
+                                {{serviceChargeList.minWithdraw}}
+                                -
+                                {{serviceChargeList.maxWithdraw}}
+                              </span>
+                            </p>
+                          </div>
+                          <div class="count-flex-box padding-top20">
+                            <p class="content-flex-hint">
+                              <!--到账数量-->
+                              {{ $t('M.comm_account') }}{{ $t('M.comm_count') }}
+                            </p>
+                            <input
+                              type="text"
+                              disabled
+                              class="count-text-input border-radius2 paddinglr15 box-sizing text-align-r"
+                              v-model="serviceChargeCount"
+                            >
+                          </div>
+                        </div>
+                        <div class="text-info-mention flex1 font-size12">
+                          <!--提现费率规则：-->
+                          <p class="currency-rule">
+                            <span>{{ chargeMoneyName }}</span>
+                            {{ $t('M.user_assets_withdrawal_hint1') }}：
+                          </p>
+                          <!--为了用户资金安全，平台可能会电话确认您的提币操作，请注意接听；-->
+                          <p class="prompt-message">
+                            * {{ $t('M.user_assets_withdrawal_hint2') }}
+                          </p>
+                          <!--充值经过1个确认后，才允许提现；-->
+                          <p class="prompt-message">
+                            * <span>{{ chargeMoneyName }}</span>
+                            {{ $t('M.user_assets_withdrawal_hint3') }}
+                          </p>
+                          <!--可提现金额≤账户可用资产-未确认的数字资产。-->
+                          <p class="prompt-message">
+                            * {{ $t('M.user_assets_withdrawal_hint4') }}
+                          </p>
+                          <p class="mention-button">
+                            <button
+                              class="font-size12 submit-but border-radius4 cursor-pointer"
+                              @click.prevent="moneyConfirmState"
+                            >
+                              <!--提币-->
+                              {{ $t('M.comm_mention_money') }}
+                            </button>
+                            <span
+                              class="float-right cursor-pointer"
+                              @click.prevent="stateRechargeRecord"
+                            >
+                          <div
+                            class="false-tips fz14 ml100 mt0 mb20 pl10 tl"
+                            v-show="errorMessage"
+                          >
+                            {{errorMessage}}
+                          </div>
+                              <!--提币记录-->
+                                {{ $t('M.comm_mention_money') }}{{ $t('M.comm_record') }}
+                          </span>
+                          </p>
+                        </div>
                       </div>
                     </div>
                   </div>
@@ -559,7 +724,8 @@ import {
   statusSubmitWithdrawButton,
   withdrawalInformation,
   queryTransactionInformation,
-  inquireWithdrawalAddressId
+  inquireWithdrawalAddressId,
+  checkCurrencyAddress
 } from '../../../utils/api/personal'
 import {
   returnAjaxMessage,
@@ -631,6 +797,7 @@ export default {
       activeType: '', // 显示类型
       tradingOnId: '', // 根据coinido跳转到对应交易信息
       currencyTradingId: '', // 根据coinido跳转到对应交易信息
+      needTag: '', // 区别是否为公信宝累的币种 true为
       area: '', // 交易区名称
       areaId: '', // 交易区id
       id: '', // 币种Id
@@ -770,17 +937,27 @@ export default {
       this.serviceChargeCount = Math.abs(
         amendPrecision(this.$refs.rechargeCount[index].value, this.$refs.serviceCharge[index].value, '-')
       )
-      // 判断是输入时凉还是手续费 判断错误提示
+      // 判断是输入时还是手续费 判断错误提示
       if (val === 'rechargeType') {
+        console.log(1)
         // 获取输入数量
         this.amount = this.$refs.rechargeCount[index].value
+        console.log(this.amount)
+        console.log(this.$refs.rechargeCount[index].value)
         // 输入数量之后显示在到账数量框中显示,在手续费中输入手续费并且以输入数量之后减去的值显示在到账数量
         if (this.$refs.rechargeCount[index].value > this.withdrawDepositList[index].total) {
           // 判断输入数量不能大于总数量
           this.$refs.rechargeCount[index].value = this.withdrawDepositList[index].total
           console.log(this.amount)
+        } else if (this.$refs.rechargeCount[index].value <= this.$refs.serviceCharge[index].value) {
+          // 判断输入数量必须大于手续费
+          this.$message({
+            message: this.$t('M.user_assets_withdrawal_hint7'),
+            type: 'error'
+          })
         }
       } else if (val === 'serviceType') {
+        console.log(2)
         // 获取输入手续费
         this.service = this.$refs.serviceCharge[index].value
         if (this.$refs.serviceCharge[index].value < this.serviceChargeList.minFees) {
@@ -806,17 +983,26 @@ export default {
       this.chargeMoneyAddressId = id
       // 每行数据币种名称
       this.chargeMoneyName = name
+      console.log(this.chargeMoneyName)
       // 循环列表 隐藏充值或提现框
       this.withdrawDepositList.forEach((item) => {
         item.rechargeIsShow = false
+        // 普通币种提币默认显示框
         item.withdrawDepositIsShow = false
+        // 公信宝类币种提币默认显示框
+        item.provideWithdrawDepositIsShow = false
       })
       if (!this.withdrawDepositList[index].rechargeIsShow) {
         // 显示充值框
         this.withdrawDepositList[index].rechargeIsShow = true
       } else {
-        // 隐藏充值框
-        this.withdrawDepositList[index].withdrawDepositIsShow = false
+        if (!this.needTag) {
+          // 隐藏普通币种提现框
+          this.withdrawDepositList[index].withdrawDepositIsShow = false
+        } else {
+          // 隐藏公信宝类币种提现框
+          this.withdrawDepositList[index].provideWithdrawDepositIsShow = false
+        }
       }
       // 调用充币地址方法
       this.fillingCurrencyAddress()
@@ -826,7 +1012,7 @@ export default {
       // 点击提现清空数量数据
       this.$refs.rechargeCount[index].value = ''
       this.serviceChargeCount = ''
-      console.log()
+      this.mentionAddressValue = ''
       // 显示充值框
       this.mentionDialogVisible = true
       // 每行数据ID
@@ -838,10 +1024,18 @@ export default {
       // 循环列表 隐藏充值或提现框
       this.withdrawDepositList.forEach((item) => {
         item.rechargeIsShow = false
+        // 普通币种提币默认显示框
         item.withdrawDepositIsShow = false
+        // 公信宝类币种提币默认显示框
+        item.provideWithdrawDepositIsShow = false
       })
-      // 显示提现框
-      this.withdrawDepositList[index].withdrawDepositIsShow = true
+      if (!this.needTag) {
+        // 隐藏普通币种提现框
+        this.withdrawDepositList[index].withdrawDepositIsShow = true
+      } else {
+        // 隐藏公信宝类币种提现框
+        this.withdrawDepositList[index].provideWithdrawDepositIsShow = true
+      }
       // 隐藏充值弹窗
       this.withdrawDepositList[index].rechargeIsShow = false
       // 调用充币地址方法
@@ -849,6 +1043,27 @@ export default {
       // 调用手续费信息
       this.getWithdrawalInformation(index)
       this.getSecurityCenter()
+    },
+    // 新增用户提币地址校验
+    async gitCheckCurrencyAddress () {
+      let data
+      let param = {
+        coinId: this.mentionMoneyAddressId, // 币种coinId
+        address: this.prepaidAddress // 充值地址
+      }
+      // 整页loading
+      this.fullscreenLoading = true
+      data = await checkCurrencyAddress(param)
+      if (!(returnAjaxMessage(data, this, 0))) {
+        // 接口失败清除loading
+        this.fullscreenLoading = false
+        return false
+      } else {
+        // 接口成功清除loading
+        this.fullscreenLoading = false
+        // 验证通过调用验证方式接口
+        this.getSecurityCenter()
+      }
     },
     // 显示交易对跳转币种信息
     enter (id, index) {
@@ -942,7 +1157,8 @@ export default {
         this.withdrawDepositList.push({
           allIsShow: false,
           rechargeIsShow: false,
-          withdrawDepositIsShow: false
+          withdrawDepositIsShow: false,
+          provideWithdrawDepositIsShow: false
         })
         // 返回数据
         this.totalSumBTC = data.data.data.totalSum
@@ -958,36 +1174,24 @@ export default {
     },
     // 资产币种提币地址选择
     changeId (e) {
-      console.log(e)
       this.mentionAddressList.forEach(item => {
         if (e === item.id) {
           this.statusAddressValue = item.address
+          console.log(this.statusAddressValue)
           this.remark = item.remark
           this.mentionAddressValue = e
           console.log(this.mentionAddressValue)
+          console.log(this.statusAddressValue)
         }
       })
     },
-    // changeId (e) {
-    //   console.log(e)
-    //   this.mentionAddressValue = e.address
-    //   console.log(this.mentionAddressValue)
-    //   // this.mentionAddressList.forEach(item => {
-    //   //   console.log(item)
-    //   //   if (e == item.address) {
-    //   //     console.log(item.address)
-    //   //     this.mentionAddressValue = e
-    //   //     console.log(this.mentionAddressValue)
-    //   //   }
-    //   // })
-    // },
     // 根据币种id查询提币地址
     async queryWithdrawalAddressList (index) {
       let data = await inquireWithdrawalAddressId({
         coinId: this.mentionMoneyAddressId
       })
       this.fullscreenLoading = true
-      // console.log(data)
+      console.log(data)
       if (!(returnAjaxMessage(data, this, 0))) {
         // 接口失败清除loading
         this.fullscreenLoading = false
@@ -995,12 +1199,16 @@ export default {
       } else {
         // 接口成功清除loading
         this.fullscreenLoading = false
+        console.log(data.data.data.needTag)
+        console.log(data.data.data.vo.userWithdrawAddressDtoList)
+        // 对币种类型进行赋值 true公信宝类 false普通币种
+        this.needTag = data.data.data.needTag
         // 返回列表数据userWithdrawAddressDtoList
-        this.mentionAddressList = data.data.data.userWithdrawAddressDtoList
-        if (!data.data.data.userWithdrawAddressDtoList) {
-          this.mentionAddressValue = data.data.data.userWithdrawAddressDtoList[0].address
+        this.mentionAddressList = data.data.data.vo.userWithdrawAddressDtoList
+        if (!data.data.data.vo.userWithdrawAddressDtoList) {
+          this.mentionAddressValue = data.data.data.vo.userWithdrawAddressDtoList[0].address
         }
-        console.log(this.mentionAddressList)
+        console.log(data.data.data.vo)
       }
     },
     /**
@@ -1102,11 +1310,17 @@ export default {
         emailCode: this.emailCode, // 邮箱验证码
         googleCode: this.googleCode, // 谷歌验证码
         coinId: this.mentionMoneyAddressId, // 币种ID
-        withdrawAddress: this.statusAddressValue, // 提币地址
         remark: this.remark, // 提币地址
         networkFees: this.service, // 手续费
         amount: this.amount, // 提币数量
         payCode: this.password // 交易密码
+      }
+      // 判断是普通币种提币还是公信宝提币
+      if (!this.needTag) {
+        param.withdrawAddress = this.statusAddressValue // 提币地址
+      } else {
+        this.statusAddressValue = this.mentionAddressValue
+        param.withdrawAddress = this.statusAddressValue // 提币地址
       }
       // 整页loading
       this.fullscreenLoading = true
@@ -1133,6 +1347,7 @@ export default {
       this.$refs.serviceCharge[index].value = ''
       this.$refs.rechargeCount[index].value = ''
       this.serviceChargeCount = ''
+      this.mentionAddressValue = ''
     },
     // 点击跳转账单明细
     stateRechargeRecord () {
@@ -1318,9 +1533,12 @@ export default {
                   >.recharge-list-mention {
                     height:225px !important;
                   }
+                  >.list-mention-treasure {
+                    height:295px !important;
+                  }
                   >.recharge-list {
                     position: relative;
-                    height:195px;
+                    height:205px;
                     padding: 20px 6px;
                     z-index: 2;
                     >.triangle {
@@ -1338,8 +1556,26 @@ export default {
                     >.triangle-one {
                       right: 50px;
                     }
+                    >.mention {
+                      width: 100%;
+                      padding: 5px 0 0;
+                      >.mention-treasure {
+                        height: 20px;
+                        line-height: 20px;
+                        color: #338FF5;
+                        >.treasure-info {
+                          color: #D45858;
+                        }
+                      }
+                      >.input-mention {
+                        height: 34px;
+                        width: 640px;
+                        color: #fff;
+                        background-color: #2D3651;
+                      }
+                    }
                     >.recharge-content {
-                      padding: 20px 20px;
+                      padding: 0 20px;
                       flex: 2;
                       >.recharge-content-hint {
                         line-height: 20px;
@@ -1407,7 +1643,7 @@ export default {
                             text-align: center;
                           }
                           >.new-address-currency {
-                            top: 40px;
+                            top: 49px;
                           }
                         }
                       }
@@ -1424,7 +1660,23 @@ export default {
                           /*}*/
                           >.count-flex-input,
                           >.count-text-input {
-                            width: 250px;
+                            width: 275px;
+                            height: 34px;
+                          }
+                        }
+                      }
+                      >.text-info-mention {
+                        padding-left: 15px;
+                        position: relative;
+                        top: -45px;
+                        >.currency-rule,
+                        >.prompt-message {
+                          line-height: 25px;
+                        }
+                        >.mention-button {
+                          margin-top: 41px;
+                          >.submit-but {
+                            width: 80px;
                             height: 34px;
                           }
                         }
@@ -1438,6 +1690,7 @@ export default {
                         line-height: 20px;
                       }
                       >.mention-button {
+                        margin-top: 8px;
                         >.submit-but {
                           width: 80px;
                           height: 34px;
@@ -1618,6 +1871,20 @@ export default {
                       }
                     }
                   }
+                  >.text-info-mention {
+                    >.currency-rule {
+                      color: #D45858;
+                    }
+                    >.prompt-message {
+                      color: #58616A;
+                    }
+                    >.mention-button {
+                      >.submit-but {
+                        background:linear-gradient(0deg,rgba(43,57,110,1),rgba(42,80,130,1));
+                        color: #fff;
+                      }
+                    }
+                  }
                 }
                 >.text-info {
                   >.currency-rule {
@@ -1794,6 +2061,20 @@ export default {
                         background:rgba(51,143,245,0.1);
                         color: #333;
                         border: 1px solid rgba(38,47,56,0.1);
+                      }
+                    }
+                  }
+                  >.text-info-mention {
+                    >.currency-rule {
+                      color: #D45858;
+                    }
+                    >.prompt-message {
+                      color: #58616A;
+                    }
+                    >.mention-button {
+                      >.submit-but {
+                        background:linear-gradient(0deg,rgba(43,57,110,1),rgba(42,80,130,1));
+                        color: #fff;
                       }
                     }
                   }

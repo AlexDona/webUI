@@ -783,7 +783,9 @@ import {
   // getQueryAllOrdersList,
   buyerPayForOrder,
   sellerConfirmGetMoney,
-  sellerSendAppeal
+  sellerSendAppeal,
+  cancelUserOtcOrder,
+  completeUserOtcOrder
 } from '../../../utils/api/personal'
 import {timeFilter, formatSeconds} from '../../../utils'
 import IconFontCommon from '../../Common/IconFontCommon'
@@ -827,8 +829,8 @@ export default {
       cancelOrderTimeArr: [], // 自动取消订单倒计时数组集
       accomplishOrderTimeArr: [], // 自动成交倒计时数组集
       errpwd: '', // 交易密码错提示
-      accomplishTimer: null, // 自动成交倒计时
-      cancelTimer: null // 自动取消订单倒计时
+      cancelOrdersTimer: null, // 自动取消订单倒计时
+      accomplishOrdersTimer: null // 自动成交倒计时
       // pageSize:
     }
   },
@@ -862,23 +864,61 @@ export default {
     },
     // 自动取消订单倒计时
     cancelSetInter () {
-      clearInterval(this.cancelTimer)
-      this.cancelTimer = setInterval(() => {
+      clearInterval(this.cancelOrdersTimer)
+      this.cancelOrdersTimer = setInterval(() => {
+        // console.log(this.cancelOrderTimeArr)
         // 循环自动取消倒计时时间数组
         this.cancelOrderTimeArr.forEach((item, index) => {
+          // console.log(item)
           this.$set(this.cancelOrderTimeArr, index, this.cancelOrderTimeArr[index] - 1000)
+          // console.log(this.cancelOrderTimeArr[index])
+          // console.log(typeof (this.cancelOrderTimeArr[index]))
+          // 任增加
+          if (this.cancelOrderTimeArr[index] < 0 || this.cancelOrderTimeArr[index] == 0) {
+            this.cancelCompleteUserOtcOrder(1)
+          }
         })
       }, 1000)
     },
     // 自动成交倒计时
     accomplishSetInter () {
-      clearInterval(this.accomplishTimer)
-      this.accomplishTimer = setInterval(() => {
+      clearInterval(this.accomplishOrdersTimer)
+      this.accomplishOrdersTimer = setInterval(() => {
         // 循环自动成交倒计时数组
         this.accomplishOrderTimeArr.forEach((item, index) => {
           this.$set(this.accomplishOrderTimeArr, index, this.accomplishOrderTimeArr[index] - 1000)
+          // console.log(this.accomplishOrderTimeArr[index])
+          // 任增加
+          if (!(this.accomplishOrderTimeArr[index] > 0)) {
+            this.cancelCompleteUserOtcOrder(2)
+          }
         })
       }, 1000)
+    },
+    // 任增加自动取消倒计时和自动成交倒计时接口
+    // 撤销/成交otc用户定单
+    async cancelCompleteUserOtcOrder (val) { // 1 取消 2 完成
+      console.log('自动取消倒计时和自动成交倒计时接口')
+      let data
+      if (val === 1) {
+        data = await cancelUserOtcOrder()
+        console.log('撤销otc用户定单（过期买家未付款）')
+      }
+      if (val === 2) {
+        data = await completeUserOtcOrder()
+        console.log('成交otc用户定单（过期卖家未收款）')
+      }
+      console.log(data)
+      if (!(returnAjaxMessage(data, this, 0))) {
+        return false
+      } else {
+        // 返回数据正确的逻辑：重新渲染列表
+        // this.getOTCTradingOrdersList()
+        // this.getOTCEntrustingOrdersRevocation(TRADING)
+        // 测试
+        // 子组件中触发父组件方法ee并传值cc12345
+        // this.$emit('getOTCEntrustingOrdersRevocation', 'TRADING')
+      }
     },
     // 3.0 改变交易方式
     changeUserBankInfo (index) {
@@ -1089,7 +1129,15 @@ export default {
     },
     legalTradePageTotals (newVal) {
       console.log(newVal)
+    },
+    activeName () {
+      this.getOTCEntrustingOrdersRevocation(this.activeName)
     }
+  },
+  destroyed () {
+    // 离开本组件清除定时器
+    clearInterval(this.cancelOrdersTimer)
+    clearInterval(this.accomplishOrdersTimer)
   }
 }
 </script>

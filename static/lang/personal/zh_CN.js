@@ -18,6 +18,7 @@ export const personal = {
   'user_asset_valuation': '资产估值',
   'user_assets_suspended': '充值暂停，钱包维护中',
   'user_assets_pause_mention': '暂停提币',
+  'user_assets_recharge_hint0': '转账时请务必备注（否则后果自负）：UID',
   'user_assets_recharge_hint1': '禁止充值除{}之外的其他资产，任何非{}资产充值将不可找回。',
   'user_assets_recharge_hint4': '往该地址充值，汇款完成，等待网络自动确认（6个确认）后系统自动到账',
   'user_assets_recharge_hint5': '为了快速到账，充值时可以适当提高网络手续费',
@@ -27,6 +28,7 @@ export const personal = {
   'user_assets_withdrawal_hint4': '可提现金额≤账户可用资产-未确认的数字资产。',
   'user_assets_withdrawal_hint5': '手续费小于最小提现手续费，请重新输入',
   'user_assets_withdrawal_hint6': '手续费大于最大提现手续费，请重新输入',
+  'user_assets_withdrawal_hint7': '输入数量必须大于手续费，请重新输入',
   'user_assets_no_transaction_password': '您还未设置交易密码请先设置交易密码在进行提币',
   'user_assets_grade_membership': '会员等级',
   'user_assets_or': '或',
@@ -37,6 +39,8 @@ export const personal = {
   'user_billing_attention': '充提',
   // 提币地址
   'user_address_empty': '提币地址不能为空',
+  'user_address_labels': '地址标签',
+  'user_address_labels_prompt': '填写错误可能导致资产损失，请仔细核对',
   // 提币列表
   'user_address_delete_withdrawals': '确定删除提币地址?',
   // #####################个人中心#####################

@@ -272,6 +272,7 @@ export default {
     console.log(this.userInfo.userInfo.partnerId)
     this.getOTCAvailableCurrencyList()
     this.getMerchantAvailablelegalTenderList()
+    // this.getOTCEntrustingOrdersRevocation('')
     // console.log(this.USER_ASSETS_LIST)
   },
   mounted () {},
@@ -472,7 +473,7 @@ export default {
     },
     userCenterActiveName (newVal) {
       if (newVal === 'fiat-orders') {
-        this.getOTCEntrustingOrdersRevocation()
+        this.getOTCEntrustingOrdersRevocation(this.activeName)
       }
     }
   }
