@@ -99,15 +99,11 @@
                       v-model="activePayModeList[index]"
                       @change="changeUserBankInfo(index)"
                     >
-                      <!-- :label="item1.bankType" -->
-                      <!-- :label="$t('m.latestprice')+'(***)'" -->
-                      <!-- :label="$t(`M.${item.i18nName}`)" -->
-                      <!-- :label="language === 'zh_CN'? item1.version : item1.bankType" -->
                       <el-option
                         v-for="item1 in item.userBankList"
                         :key="item1.id"
                         :label="language === 'zh_CN'? item1.bankName : item1.bankType"
-                        :value="item1.cardNo"
+                        :value="item1.id"
                       >
                       </el-option>
                     </el-select>
@@ -132,7 +128,7 @@
                     v-if="activeBankType[index] === 'bank'"
                   >
                     <span>
-                      {{$t('M.comm_bill')}}&nbsp;&nbsp;&nbsp;{{$t('M.comm_house')}}: {{activePayModeList[index]}}
+                      {{$t('M.comm_bill')}}&nbsp;&nbsp;&nbsp;{{$t('M.comm_house')}}: {{activedPayAccountArr[index]}}
                     </span>
                   </p>
                   <p
@@ -141,7 +137,7 @@
                   >
                   <!-- 支付宝账户 -->
                     <span>{{$t('M.comm_alipay')}}{{$t('M.comm_bill')}}{{$t('M.comm_house')}}:</span>
-                    <span>{{activePayModeList[index]}}</span>
+                    <span>{{activedPayAccountArr[index]}}</span>
                   </p>
                   <p
                     class="bank-info"
@@ -149,14 +145,15 @@
                   >
                   <!-- 微信账户 -->
                     <span>{{$t('M.comm_weixin')}}{{$t('M.comm_bill')}}{{$t('M.comm_house')}}:</span>
-                    <span>{{activePayModeList[index]}}</span>
+                    <span>{{activedPayAccountArr[index]}}</span>
                   </p>
                   <p
                     class="bank-info"
                     v-if="activeBankType[index] === 'paypal'"
                   >
+                    <!-- paypal -->
                     <span>paypal{{$t('M.comm_bill')}}{{$t('M.comm_house')}}:</span>
-                    <span>{{activePayModeList[index]}}</span>
+                    <span>{{activedPayAccountArr[index]}}</span>
                   </p>
                   <p
                     class="bank-info"
@@ -164,11 +161,14 @@
                   >
                   <!-- 西联汇款账户 -->
                     <span>{{$t('M.comm_xilian')}}{{$t('M.comm_bill')}}{{$t('M.comm_house')}}:</span>
-                    <span>{{activePayModeList[index]}}</span>
+                    <span>{{activedPayAccountArr[index]}}</span>
                   </p>
                 </div>
                 <!-- 扫码支付 activeBankCode[index]  :src="item.coinUrl"-->
-                <div class="bank-info-picture display-inline-block" v-if="activeBankType[index] === 'weixin' || activeBankType[index] === 'alipay'">
+                <div
+                  class="bank-info-picture display-inline-block"
+                  v-if="activeBankType[index] === 'weixin' || activeBankType[index] === 'alipay'"
+                >
                   <div class="picture-box">
                     <el-popover
                       placement="bottom"
@@ -735,10 +735,11 @@ export default {
       activitedPayStyleId: '', //  选中的支付方式id-往后台传送的参数
       // 交易中订单列表
       tradingOrderList: [],
-      // 选中的订单id
-      activedTradingOrderId: '',
-      // ren测试支付方式
-      activePayModeList: [], // 当前选中支付方式中的哪一个
+      activePayModeListID: '', // 选中的支付方式id
+      activedTradingOrderId: '', // 选中的订单id
+      activedPayAccountArr: [], // 当前选中的订单中付款方式中的付款账号 ：为了解决支付宝和微信账号一样做的bug修复
+      // 支付方式
+      activePayModeList: [], // 当前选中支付方式中的哪一个 -->为了解决支付宝和微信账号一样做的bug修复// 当前选中的支付方式的id
       activeBankFidList: [], // 当前选中支付方式的id
       activeBankProv: [], // 当前选中支付银行所在省
       activeBankCity: [], // 当前选中支付银行所在市
@@ -892,17 +893,16 @@ export default {
     },
     // 3.0 改变交易方式
     changeUserBankInfo (index) {
-      console.log(index)
-      console.log('选中订单的订单号')
+      console.log('第' + index + '条数据')
+      console.log('选中的订单id')
       console.log(this.tradingOrderList[index].id)
       this.activedTradingOrderId = this.tradingOrderList[index].id
       this.tradingOrderList[index].userBankList.forEach((item) => {
-        if (item.cardNo == this.activePayModeList[index]) {
+        if (item.id == this.activePayModeList[index]) {
+          this.activedPayAccountArr[index] = item.cardNo
+          console.log('选中的付款账号：' + this.activedPayAccountArr[index])
           this.activeBankFidList[index] = item.id
-          console.log('选中的支付方式id')
-          console.log(this.activeBankFidList[index])
-          console.log('账号')
-          console.log(this.activePayModeList[index])
+          console.log('选中的支付方式id' + this.activeBankFidList[index])
           this.activitedPayStyleId = this.activeBankFidList[index]
           // 省
           this.activeBankProv[index] = item.prov
@@ -916,7 +916,7 @@ export default {
           this.activeBankDetailAddress[index] = item.address
           // 支付类型
           this.activeBankType[index] = item.bankType
-          console.log(this.activeBankType[index])
+          console.log('支付类型：' + this.activeBankType[index])
           // 支付码
           this.activeBankCode[index] = item.qrcode
           console.log('支付码')
