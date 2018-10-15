@@ -105,7 +105,6 @@ export default {
           tradeList, // 交易记录
           tickerList // 行情交易区列表
         } = activeSymbolData
-        console.log(activeSymbolData)
         depthList.depthData.sells.list.reverse()
         // 默认交易对 数据
         this.$store.commit('trade/SET_MIDDLE_TOP_DATA', defaultTrade.content[0])
@@ -168,7 +167,7 @@ export default {
         this.finalSymbol = this.isJumpToTradeCenter ? this.jumpSymbol : activeSymbol
         this.CHANGE_ACTIVE_SYMBOL({activeSymbol: this.finalSymbol})
         this.symbol = this.activeSymbol.id
-        // this.getActiveSymbolData(this.symbol)
+        this.getActiveSymbolData(this.symbol)
       }
     },
     init (options) {
@@ -369,11 +368,12 @@ export default {
     },
     unSubscribe (interval) {
       let newInterval = this.transformInterval(interval)
-      this.socket.send({
-        'tag': 'CANCEL',
-        'content': `market.${this.symbol}.kline.${newInterval}.step5`,
-        'id': `kline_${this.symbol}`
-      })
+      // this.socket.send({
+      //   'tag': 'CANCEL',
+      //   'content': `market.${this.symbol}.kline.${newInterval}.step5`,
+      //   'id': `kline_${this.symbol}`
+      // })
+      this.getKlineDataBySocket('CANCEL', this.symbol, newInterval)
       if (interval < 60) {
 
         // this.sendMessage({ cmd: 'unsub', args: [`candle.M${interval}.${this.symbol.toLowerCase()}`, 1440, parseInt(Date.now() / 1000)] })
@@ -462,7 +462,6 @@ export default {
           if (data.type) {
             // console.log(' >> sub:', data.type)
             let newData = data.data[0]
-            this.datafeeds.barsUpdater.updateData()
             const ticker = `${this.symbol}-${this.interval}`
             console.log(this.interval)
             const barsData = {
@@ -479,7 +478,9 @@ export default {
             console.log(barsData.time - this.lastTime)
             if (barsData.time >= this.lastTime && this.cacheData[ticker] && this.cacheData[ticker].length) {
               this.cacheData[ticker][this.cacheData[ticker].length - 1] = barsData
+              // this.cacheData[ticker].push(barsData)
             }
+            this.datafeeds.barsUpdater.updateData()
           }
           break
         // 买卖单
@@ -519,7 +520,7 @@ export default {
       console.log(this.socket)
       // console.log(' >> :', rangeStartDate, rangeEndDate)
       if (this.interval != resolution) {
-        // this.unSubscribe(this.interval)
+        this.unSubscribe(this.interval)
         this.interval = resolution
         this.options.interval = resolution
         // this.interval = 'min15'
