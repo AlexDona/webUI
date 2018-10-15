@@ -82,7 +82,7 @@ export default {
           }
         },
         series: [{
-          data: ['30', '80'],
+          data: [],
           type: 'line',
           smooth: 'none',
           symbol: 'none',
@@ -107,8 +107,7 @@ export default {
           }
         }]
       },
-      arrTime: [],
-      arrPrice: []
+      arrTime: []
     }
   },
   created () {},
@@ -127,11 +126,11 @@ export default {
     timeFormatting (data) {
       return timeFilter(data, 'date')
     },
-    // drawLine () {
-    //   this.financeCharts = echarts.init(document.getElementById('finance'))
-    //   this.financeCharts.setOption(this.options, true)
-    //   window.onresize = this.financeCharts.resize
-    // },
+    drawLine () {
+      this.financeCharts = echarts.init(document.getElementById('finance'))
+      this.financeCharts.setOption(this.options, true)
+      window.onresize = this.financeCharts.resize
+    },
     // 重新绘制图表
     resetChart (params) {
       this.financeCharts = echarts.init(document.getElementById('finance'))
@@ -182,10 +181,14 @@ export default {
       this.options.xAxis.data = this.financeLineRenderTimeList.reverse().map(item => {
         return this.timeFormatting(+item)
       })
+      // this.options.xAxis.data = [1539568380000, 1539481980000, 1539395580000, 1539309180000, 1539222780000, 1539136380000, 1539049980000, 1538963580000].reverse().map(item => {
+      //   return this.timeFormatting(+item)
+      // })
       // 监听y轴数组的变化
       // this.$set(this.options.series, 'data', this.financeLineRenderPriceList.reverse())
       // 将时间数组倒序
       this.options.series[0].data = this.financeLineRenderPriceList.reverse()
+      // this.options.series[0].data = [3.115034, 3.111440, 3.115882, 3.115517, 2.114978, 3.115790, 3.115637, 3.113829].reverse()
       // 将价钱数组从小到打排序
       this.arrTime = this.financeLineRenderPriceList.sort((a, b) => a - b)
       // y轴最小值是数组的最小项
