@@ -12,7 +12,7 @@
           <div class="logo"
              v-if="footerInfo1.logo"
           >
-            <img :src="footerInfo1.logo.url">
+            <img :src="footerInfo1.logo">
           </div>
           <!--简介-->
           <div
@@ -229,6 +229,7 @@ export default {
         return false
       } else {
         this.footerInfo1 = data1.data.data
+        console.log(this.footerInfo1)
         this.shareList[0].ercodeSrc = this.footerInfo1.twitter
         this.shareList[1].ercodeSrc = this.footerInfo1.facebook
         this.shareList[2].ercodeSrc = this.footerInfo1.weixin
@@ -238,11 +239,11 @@ export default {
         this.linkList = this.footerInfo2.blogrollList
         // favicon 添加
         this.addFavicon(
-          this.footerInfo1.headTitleLogo.url,
-          this.footerInfo1.title.content
+          this.footerInfo1.headTitleLogo,
+          this.footerInfo1.title
         )
         this.$store.commit('common/SET_LOGO_URL', {
-          logoSrc: this.footerInfo1.headLogo.url
+          logoSrc: this.footerInfo1.headLogo
         })
       }
     }

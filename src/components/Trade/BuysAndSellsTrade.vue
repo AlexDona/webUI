@@ -340,22 +340,27 @@ export default {
       activeSymbolId: state => state.common.activeSymbol.id
     }),
     buysAndSellsList () {
+      console.log(this.reflashCount)
       return !this.reflashCount ? this.buysAndSellsListByAjax : this.buysAndSellsListBySocket
       // return this.buysAndSellsListByAjax
     }
   },
   watch: {
     activeSymbolId (newVal) {
+      console.log(newVal)
       this.reflashCount = 0
     },
     buysAndSellsListByAjax (newVal) {
+      console.log(this.reflashCount)
       // this.buysAndSellsListByAjax = this.buysAndSellsList
-      if (!this.reflashCount && newVal && this.buysAndSellsListBySocket.buys) {
+    },
+    buysAndSellsListBySocket (newVal) {
+      console.log(newVal)
+      if (!this.reflashCount && newVal) {
+        console.log(newVal)
         this.CHANGE_ACTIVE_PRICE_ITEM(newVal.latestDone.price)
         this.reflashCount++
       }
-    },
-    buysAndSellsListBySocket (newVal) {
     }
   }
 }

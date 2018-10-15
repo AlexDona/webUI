@@ -109,15 +109,15 @@ export default {
   watch: {
     orderRecordListBySocket (newVal) {
       console.log(newVal)
+      if (!this.reflashCount && newVal) {
+        this.reflashCount++
+      }
     },
     orderRecordList (newVal) {
     },
     orderRecordListByAjax (newVal) {
       console.log(newVal)
       console.log(this.orderRecordListBySocket)
-      if (!this.reflashCount && newVal && this.orderRecordListBySocket.length) {
-        this.reflashCount++
-      }
     }
   }
 }
