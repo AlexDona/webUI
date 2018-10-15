@@ -884,6 +884,8 @@ export default {
       // console.log(this[ref])
       // console.log(this.maxCountValue)
       // console.log(this.$refs.maxCountValue.value)
+      let target = this.$refs[ref]
+      formatNumberInput(target, pointLength)
       // 开始校验
       if (this.$refs.maxCountValue.value > this.maxCount) {
         // 输入值不能大于最大限额
@@ -904,12 +906,6 @@ export default {
       if (this.$refs.maxCountValue.value > this.$refs.minCountValue.value - 0) {
         this.errorInfoMinCount = ''
       }
-      // if (!(this.maxCountValue > this.minCountValue && this.maxCountValue <= this.maxCount)) {
-      //   this.errorInfoMaxCount = '输入有误max'
-      //   return false
-      // } else {
-      //   this.errorInfoMaxCount = ''
-      // }
     }
     // 校验 同时处理最大订单数（0=不限制）
     // changeLimitOrderCountValue (ref) {
