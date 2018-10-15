@@ -19,7 +19,8 @@ import {
 import {
   getPartnerList,
   addUserCollectionAjax,
-  removeCollectionAjax
+  removeCollectionAjax,
+  getCollectionListAjax
 } from '../utils/api/home'
 import {
   getCountryList,

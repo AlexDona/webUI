@@ -31,14 +31,14 @@
           <span
             class="font-size14"
             :class="{
-              'up':middleTopData.rose>0,
-              'down':middleTopData.rose<0
+              'up':middleTopData.chg>0,
+              'down':middleTopData.chg<0
             }"
-          >{{middleTopData.price}}</span>
+          >{{middleTopData.last}}</span>
           <span
             class="font-size12 theme-color"
-            v-show="middleTopData.price&&activeConvertCurrencyObj.symbol&&currencyRateList[middleTopData.area]"
-          >≈ {{activeConvertCurrencyObj.symbol}}{{keep2Num((currencyRateList[middleTopData.area]-0)*(middleTopData.price-0))}}</span>
+            v-show="middleTopData.last&&activeConvertCurrencyObj.symbol&&currencyRateList[middleTopData.area]"
+          >≈ {{activeConvertCurrencyObj.symbol}}{{keep2Num((currencyRateList[middleTopData.area]-0)*(middleTopData.last-0))}}</span>
         </div>
       </div>
       <!--涨跌-->
@@ -53,10 +53,10 @@
           <span
             class="font-size14"
             :class="{
-              'up':middleTopData.rose>0,
-              'down':middleTopData.rose<0
+              'up':middleTopData.chg>0,
+              'down':middleTopData.chg<0
             }"
-          >{{middleTopData.rose}}</span>
+          >{{middleTopData.chg}}</span>
         </div>
       </div>
       <div class="item">
@@ -70,8 +70,8 @@
           <span
             class="font-size14"
             :class="{
-              'up':middleTopData.rose>0,
-              'down':middleTopData.rose<0
+              'up':middleTopData.chg>0,
+              'down':middleTopData.chg<0
             }"
           >{{middleTopData.high}}</span>
         </div>
@@ -139,6 +139,9 @@ export default {
     })
   },
   watch: {
+    middleTopData (newVal) {
+      console.log(newVal)
+    },
     activeSymbol (newVal) {
       console.log(newVal)
     },
