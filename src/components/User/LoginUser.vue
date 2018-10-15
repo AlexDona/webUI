@@ -812,10 +812,9 @@ export default {
         this.hiddenUsername = str.substring(0, 3) + '****' + str.substring(7)
       }
       // 调用第一接口
-      let params = {
-        userName: this.username,
-        password: this.password
-      }
+      let params = new FormData()
+      params.append('userName', this.username)
+      params.append('password', this.password)
       const data = await userLoginForStep1(params)
       if (!returnAjaxMessage(data, this, 0)) {
         return false
