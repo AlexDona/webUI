@@ -33,9 +33,9 @@
 .fiat-orders.personal .el-table .cell {
   text-align: center;
 }
-.fiat-orders.personal .el-tabs__header {
-  padding: 0 25px;
-}
+/*.fiat-orders.personal .el-tabs__header {*/
+  /*padding: 0 25px;*/
+/*}*/
 .fiat-orders.personal .el-button {
   width: 60px;
   height: 34px;
