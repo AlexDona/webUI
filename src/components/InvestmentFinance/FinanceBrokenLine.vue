@@ -211,7 +211,7 @@ export default {
       this.resetOptions()
       this.resetChart(this.options)
     },
-    status () {
+    status (newVal) {
       this.resetOptions()
       this.resetChart(this.options)
     }

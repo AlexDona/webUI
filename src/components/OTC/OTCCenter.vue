@@ -997,8 +997,8 @@ export default {
   },
   watch: {
     activeLanguage (newVal) {
-      console.log('当前选中语言')
-      console.log(newVal)
+      // console.log('当前选中语言')
+      // console.log(newVal)
     }
   }
 }

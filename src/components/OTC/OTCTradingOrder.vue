@@ -818,7 +818,7 @@ export default {
         })
       }, 1000)
     },
-    // 撤销/成交otc用户定单
+    // 1.5 撤销/成交otc用户定单
     async cancelCompleteUserOtcOrder (val) { // 1 取消 2 完成
       let data
       if (val === 1) {
@@ -840,9 +840,9 @@ export default {
     // 2.0 请求交易中订单列表
     async getOTCTradingOrdersList () {
       this.loading = true
+      this.activePayModeList = [] // 清空支付方式数组：防止换页码之后之前选中的在此页面付款方式也被选中的问题
       this.cancelOrderTimeArr = []
       this.accomplishOrderTimeArr = []
-      console.log('22222')
       console.log('当前页：' + this.currentPage)
       const data = await getOTCTradingOrders({
         status: 'TRADING', // 状态 (交易中 TRADING )
@@ -859,8 +859,8 @@ export default {
         // 返回数据正确的逻辑
         this.loading = false
         this.tradingOrderList = data.data.data.list
-        console.log('交易中订单')
-        console.log(this.tradingOrderList)
+        // console.log('交易中订单')
+        // console.log(this.tradingOrderList)
         // 分页
         this.totalPages = data.data.data.pages - 0
         // console.log(this.tradingOrderList)
@@ -896,6 +896,7 @@ export default {
       console.log('第' + index + '条数据')
       console.log('选中的订单id')
       console.log(this.tradingOrderList[index].id)
+      console.log(this.activePayModeList[index])
       this.activedTradingOrderId = this.tradingOrderList[index].id
       this.tradingOrderList[index].userBankList.forEach((item) => {
         if (item.id == this.activePayModeList[index]) {
@@ -1079,8 +1080,8 @@ export default {
   },
   watch: {
     activeLanguage (newVal) {
-      console.log('当前选中语言')
-      console.log(newVal)
+      // console.log('当前选中语言')
+      // console.log(newVal)
     },
     language (newVal) {
       console.log('language')

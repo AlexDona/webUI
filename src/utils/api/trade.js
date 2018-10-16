@@ -21,3 +21,9 @@ export const getPartnerAreaList = (params) => get('queryPartnerArea', params)
 export const getDefaultSymbol = () => get('trade/default')
 // 获取用户默认交易对资产
 export const getUserAssetOfActiveSymbol = (params) => get('push/getTotalByTradeId', params)
+// 获取当前交易对信息
+export const getActiveSymbolDataAjax = (params) => get('market/bbMarket/market', params)
+// 获取币币交易市场
+export const getTradeMarketDataAjax = (params) => get('market/bbMarket/ticker', params)
+// 获取K线接口
+export const getKlineDataAjax = (params) => get('market/kline', params)

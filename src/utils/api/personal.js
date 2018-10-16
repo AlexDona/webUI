@@ -116,6 +116,11 @@ export const buyerPayForOrder = (params) => postWithURLencoded('otcOrder/payForO
 export const sellerConfirmGetMoney = (params) => postWithURLencoded('otcOrder/confirmReceiveForOrder', params)
 // 个人中心交易中订单， 个人中心卖家申诉
 export const sellerSendAppeal = (params) => postWithURLencoded('otcAppeal/applyOtcAppeal', params)
+// 任增加自动成交倒计时接口和自动取消倒计时接口
+// 撤销otc用户定单（过期买家未付款）
+export const cancelUserOtcOrder = (params) => post('otcOrder/cancelUserOtcOrder', params)
+// 成交otc用户定单（过期卖家未收款）
+export const completeUserOtcOrder = (params) => post('otcOrder/completeUserOtcOrder', params)
 /**
  * API
  * */

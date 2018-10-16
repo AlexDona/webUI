@@ -67,6 +67,7 @@ export const common = {
   'comm_update': '更新',
   'comm_place_order': '下单',
   'comm_remark': '备注',
+  'comm_address_labels': '地址标签',
   'comm_site': '地址',
   'comm_list': '列表',
   'comm_operation': '操作',

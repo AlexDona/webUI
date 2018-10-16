@@ -3,7 +3,7 @@ import {
   CHANGE_LANGUAGE,
   CHANGE_CONVERT_CURRENCY,
   CHANGE_SOCKET_REFRESH_STATUS,
-  CHANGE_SOCKET_DATA,
+  CHANGE_SOCKET_AND_AJAX_DATA,
   CHANGE_ACTIVE_SYMBOL,
   CHANGE_ACTIVE_TRADE_AREA,
   CHANGE_PALTE_LIST,
@@ -13,6 +13,7 @@ import {
   USER_INFORMATION_REFRESH,
   SET_USER_INFO_REFRESH_STATUS,
   SET_LOGO_URL,
+  SET_FOOTER_INFO,
   // eslint-disable-next-line
   CHANGE_ROUTER_PATH
 } from './mutations-types.js'
@@ -22,6 +23,15 @@ import {setStore} from '../../utils'
 // import {localapi, proapi} from 'src/config/env'
 
 export default {
+  // 公共部分
+  // 首页
+  // 币币交易
+  // OTC交易
+  // 投资理财
+  // 活动中心
+  // 个人中心
+  // 注册登录
+
   // 切换主题
   [CHANGE_THEME] (state, data) {
     state.theme = data
@@ -43,11 +53,25 @@ export default {
     state.reqRefreshStatus = data
   },
   // 改变socket 数据
-  [CHANGE_SOCKET_DATA] (state, data) {
-    state.socketData.depthData = data.depthData
-    state.socketData.buyAndSellData = data.buyAndSellData
-    state.socketData.tardeRecordList = data.tardeRecordList
-    state.socketData.tradeMarketList = data.tradeMarketList
+  [CHANGE_SOCKET_AND_AJAX_DATA] (state, {
+    socketData,
+    ajaxData,
+    type
+  }) {
+    switch (type) {
+      case 'ajax':
+        state.klineAjaxData.depthData = ajaxData.depthData
+        state.klineAjaxData.buyAndSellData = ajaxData.buyAndSellData
+        state.klineAjaxData.tardeRecordList = ajaxData.tardeRecordList
+        state.klineAjaxData.tradeMarketList = ajaxData.tradeMarketList
+        break
+      case 'socket':
+        state.socketData.depthData = socketData.depthData
+        state.socketData.buyAndSellData = socketData.buyAndSellData
+        state.socketData.tardeRecordList = socketData.tardeRecordList
+        state.socketData.tradeMarkeContentItem = socketData.tradeMarkeContentItem
+        break
+    }
   },
   // 更改当前选中交易对
   [CHANGE_ACTIVE_SYMBOL] (state, {activeSymbol, previousSymbol}) {
@@ -89,5 +113,8 @@ export default {
   },
   [SET_LOGO_URL] (state, {logoSrc}) {
     state.logoSrc = logoSrc
+  },
+  [SET_FOOTER_INFO] (state, data) {
+    state.footerInfo = data
   }
 }

@@ -655,8 +655,8 @@ export default {
 
         // let getData = Object.assign({}, data.data.data)
         let getData = data.data.data
-        // // 设置可用币种数组
         // let getData = JSON.parse(JSON.stringify(data.data.data))
+        // 设置可用币种数组
         this.traderCoinList = getData.idNameDtoList
         this.traderCoinList.forEach(item => {
           if (getData.idNameDtoList.id == item.id) {

@@ -41,12 +41,18 @@ const state = {
   },
   activeTradeArea: {}, // 当前选中交易区
   reqRefreshStatus: true, // socket刷新
+  klineAjaxData: {
+    depthData: {},
+    buyAndSellData: {},
+    tardeRecordList: [], // 交易记录
+    tradeMarketList: [] // 交易区列表
+  },
   // socket 数据
   socketData: {
     depthData: {},
     buyAndSellData: {},
     tardeRecordList: [], // 交易记录
-    tradeMarketList: [] // 交易区列表
+    tradeMarkeContentItem: {} // 交易区单项
   },
   // 公用 板块
   plateList: [], // 板块列表
@@ -57,6 +63,7 @@ const state = {
   userInfoRefreshStatus: false, // 用户信息接口刷新状态
   // logoSrc: require('../../assets/develop/logo.png'),
   logoSrc: '',
+  footerInfo: {},
   end: ''// 占位
 }
 

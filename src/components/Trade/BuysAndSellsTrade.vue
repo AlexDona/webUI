@@ -333,19 +333,31 @@ export default {
     ...mapState({
       theme: state => state.common.theme,
       socketData: state => state.common.socketData,
-      depthData: state => state.common.socketData.depthData,
-      buysAndSellsList: state => state.common.socketData.buyAndSellData,
+      depthData: state => state.common.klineAjaxData.depthData,
+      buysAndSellsListByAjax: state => state.common.klineAjaxData.buyAndSellData,
+      buysAndSellsListBySocket: state => state.common.socketData.buyAndSellData,
       activeSymbol: state => state.common.activeSymbol,
       activeSymbolId: state => state.common.activeSymbol.id
-    })
+    }),
+    buysAndSellsList () {
+      console.log(this.reflashCount)
+      return !this.reflashCount ? this.buysAndSellsListByAjax : this.buysAndSellsListBySocket
+      // return this.buysAndSellsListByAjax
+    }
   },
   watch: {
     activeSymbolId (newVal) {
+      console.log(newVal)
       this.reflashCount = 0
     },
-    buysAndSellsList (newVal) {
+    buysAndSellsListByAjax (newVal) {
+      console.log(this.reflashCount)
+      // this.buysAndSellsListByAjax = this.buysAndSellsList
+    },
+    buysAndSellsListBySocket (newVal) {
       console.log(newVal)
       if (!this.reflashCount && newVal) {
+        console.log(newVal)
         this.CHANGE_ACTIVE_PRICE_ITEM(newVal.latestDone.price)
         this.reflashCount++
       }

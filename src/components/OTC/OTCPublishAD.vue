@@ -723,6 +723,7 @@ export default {
         payTypes: this.parameterPayTypes, // 支付方式（用，隔开的名字）
         tradePassword: this.tradePassword // 交易密码
       }
+      this.fullscreenLoading = true
       const data = await addOTCPutUpOrdersMerchantdedicated(param)
       console.log(data)
       // 提示信息
@@ -730,6 +731,7 @@ export default {
         return false
       } else {
         // 返回数据正确的逻辑
+        this.fullscreenLoading = false
         this.dialogVisible = false
         // 清空数据
         this.clearMainData()
@@ -884,6 +886,8 @@ export default {
       // console.log(this[ref])
       // console.log(this.maxCountValue)
       // console.log(this.$refs.maxCountValue.value)
+      let target = this.$refs[ref]
+      formatNumberInput(target, pointLength)
       // 开始校验
       if (this.$refs.maxCountValue.value > this.maxCount) {
         // 输入值不能大于最大限额
@@ -904,12 +908,6 @@ export default {
       if (this.$refs.maxCountValue.value > this.$refs.minCountValue.value - 0) {
         this.errorInfoMinCount = ''
       }
-      // if (!(this.maxCountValue > this.minCountValue && this.maxCountValue <= this.maxCount)) {
-      //   this.errorInfoMaxCount = '输入有误max'
-      //   return false
-      // } else {
-      //   this.errorInfoMaxCount = ''
-      // }
     }
     // 校验 同时处理最大订单数（0=不限制）
     // changeLimitOrderCountValue (ref) {

@@ -10,7 +10,8 @@ import store from '../../vuex'
 let util = {}
 util.ajax = axios.create({
   baseURL: apiCommonUrl,
-  timeout: 30000
+  timeout: 30000,
+  withCredentials: true
 })
 
 util.ajax.interceptors.request.use((config) => {
@@ -63,6 +64,16 @@ export const postWithURLencoded = (url, params) => {
     params,
     headers: {
       'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8'
+    }
+  })
+}
+export const postWithFormData = (url, params) => {
+  return util.ajax({
+    method: 'post',
+    url,
+    data: params,
+    headers: {
+      'Content-Type': 'application/form-data'
     }
   })
 }
