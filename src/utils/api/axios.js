@@ -10,7 +10,8 @@ import store from '../../vuex'
 let util = {}
 util.ajax = axios.create({
   baseURL: apiCommonUrl,
-  timeout: 30000
+  timeout: 30000,
+  withCredentials: true
 })
 
 util.ajax.interceptors.request.use((config) => {

@@ -80,7 +80,8 @@
 <script>
 import {
   getStore,
-  setStore
+  setStore,
+  unzip
 } from '../../utils'
 import {
   // getPartnerAreaList,
@@ -197,11 +198,15 @@ export default {
         i18n: this.language
       }
       const data = await getTradeMarketDataAjax(params)
+      console.log(data)
       if (!returnAjaxMessage(data, this)) {
         return false
       } else {
-        let [...tickerList] = data.data.data.tickerList
+        const objData = JSON.parse(unzip(data.data.data.obj))
+        console.log(objData)
+        let [...tickerList] = objData.tickerList
         // let plateItemMap = new Map()
+        console.log(tickerList)
         let plateList = []
         // 板块筛选
         _.forEach(tickerList, (tickerItem) => {

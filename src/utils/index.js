@@ -1,7 +1,7 @@
 /**
  * 通用全局方法
  * */
-
+const pako = require('pako')
 /**
  * 存储localStorage
  */
@@ -255,4 +255,22 @@ export function scientificToNumber (number) {
       return '0.' + zero + arr[1].replace('.', '')
     }
   }
+}
+
+/**
+ * gzip解压缩
+ * @param b64Data
+ * @returns {string}
+ */
+export function unzip (b64Data) {
+  var strData = atob(b64Data)
+  // Convert binary string to character-number array
+  var charData = strData.split('').map(function (x) { return x.charCodeAt(0) })
+  // Turn number array into byte-array
+  var binData = new Uint8Array(charData)
+  // // unzip
+  var data = pako.inflate(binData)
+  // Convert gunzipped byteArray back to ascii string:
+  strData = String.fromCharCode.apply(null, new Uint16Array(data))
+  return decodeURIComponent(strData)
 }

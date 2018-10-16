@@ -117,7 +117,8 @@ import VueDND from 'awe-dnd'
 import {
   getStore,
   setStore,
-  keep2Num
+  keep2Num,
+  unzip
 } from '../../utils'
 // import {
 //   addUserCollectionAjax,
@@ -356,10 +357,14 @@ export default{
         i18n: this.language
       }
       const data = await getHomeMarketByAjax(params)
+      console.log(data)
       if (!returnAjaxMessage(data, this)) {
         return false
       } else {
-        this.newMarketList = data.data.data
+        let objData = data.data.data.obj
+        this.newMarketList = JSON.parse(unzip(objData))
+        console.log(this.newMarketList)
+
         this.ergodicNewMarketList((item) => {
           this.CHANGE_SYMBOL_MAP({
             key: item.id,

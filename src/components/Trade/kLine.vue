@@ -22,7 +22,9 @@ import {
   returnAjaxMessage
   // getCollectionList
 } from '../../utils/commonFunc'
-// import {getStore} from '../../utils'
+import {
+  unzip
+} from '../../utils'
 import { createNamespacedHelpers, mapState } from 'vuex'
 const { mapMutations } = createNamespacedHelpers('common')
 export default {
@@ -98,7 +100,8 @@ export default {
       if (!returnAjaxMessage(data, this)) {
         return false
       } else {
-        let activeSymbolData = data.data.data
+        let activeSymbolData = data.data.data.obj
+        activeSymbolData = JSON.parse(unzip(activeSymbolData))
         let {
           defaultTrade, // 默认交易对
           depthList, // 买卖单、深度

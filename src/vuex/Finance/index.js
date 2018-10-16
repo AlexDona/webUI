@@ -9,7 +9,8 @@ const state = {
   // 设置父组件向线性图上传x轴数据
   financeLineRenderTimeList: [],
   // 设置父组件向线性图上传y轴数据
-  financeLineRenderPriceList: []
+  financeLineRenderPriceList: [],
+  status: 1
 }
 
 export default {

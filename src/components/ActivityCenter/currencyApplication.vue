@@ -43,15 +43,15 @@
           </div>
           <div class="bottom">
             <div class="download-box">
-              <!--<button-->
-                <!--class="download-btn cursor-pointer"-->
-                <!--@click="downloadPreviewTable"-->
-              <!--&gt;预览下载</button>-->
-              <a
+              <button
                 class="download-btn cursor-pointer"
-                :href="downloadUrl"
-                v-if="downloadUrl"
-              >预览下载</a>
+                @click="downloadPreviewTable"
+              >预览下载</button>
+              <!--<a-->
+                <!--class="download-btn cursor-pointer"-->
+                <!--:href="downloadUrl"-->
+                <!--v-if="downloadUrl"-->
+              <!--&gt;预览下载</a>-->
             </div>
           </div>
         </div>
@@ -61,7 +61,10 @@
   </div>
 </template>
 <script>
-import {getCurrencyApplicationDownloadUrl} from '../../utils/api/activityCenter'
+import {
+  getCurrencyApplicationDownloadUrl
+  // downloadFile
+} from '../../utils/api/activityCenter'
 import {
   returnAjaxMessage,
   getServiceProtocolData
@@ -83,7 +86,8 @@ export default {
     return {
       contentHTML: '', // 上币申请内容
       termsTypeIds: 6, // 上币申请类型id
-      downloadUrl: '' // 下载地址
+      downloadUrl: '', // 下载地址
+      fileName: ''
     }
   },
   created () {
@@ -119,11 +123,20 @@ export default {
       } else {
         console.log(data)
         this.downloadUrl = data.data.data.url
+        this.fileName = data.data.data.name
       }
     },
     // 下载资产预览表
     downloadPreviewTable () {
-
+      fetch(this.downloadUrl).then(res => res.blob().then(blob => {
+        let a = document.createElement('a')
+        let url = window.URL.createObjectURL(blob)
+        let filename = this.fileName
+        a.href = url
+        a.download = filename
+        a.click()
+        window.URL.revokeObjectURL(url)
+      }))
     }
   },
   filter: {},
