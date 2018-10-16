@@ -154,27 +154,60 @@
                   </div>
                   <!-- 右侧 -->
                   <div class="completed-info-right">
-                    <p class="order-info-right">
+                    <!--确认时间-->
+                    <!-- <p class="order-info-right">
                       <span class="confirm-time">
-                        <!--确认时间-->
                         {{$t('M.otc_trade_complate')}}
                       </span>
-                    </p>
-                    <p class="order-info-right">
+                    </p> -->
+                    <!--付款确认时间-->
+                    <!-- <p class="order-info-right">
                       <span>
-                        <!--付款确认时间-->
                         {{$t('M.otc_time_payment')}}：
                       </span>
                       <span>{{props.row.payTime}}</span>
-                    </p>
-                    <p class="order-info-right">
+                    </p> -->
+                    <!--收款确认时间-->
+                    <!-- <p class="order-info-right">
                       <span>
-                        <!--收款确认时间-->
                         {{$t('M.otc_time_collection')}}：
                       </span>
                       <span>
                         {{props.row.confirmTime ? props.row.confirmTime : props.row.completeTime}}
                       </span>
+                    </p> -->
+                    <!-- 任修复 -->
+                    <p
+                      class="order-info-right"
+                      v-if="props.row.appeal == 'NO' && props.row.confirmTime !== ''"
+                    >
+                      <!-- <span class="confirm-time">确认时间</span> -->
+                      <!-- 交易已完成 -->
+                      <span class="confirm-time">{{$t('M.otc_trade_complate')}}</span>
+                    </p>
+                    <p
+                      class="order-info-right"
+                      v-if="props.row.appeal == 'YES'"
+                    >
+                    <!-- 申诉判定，订单完成 -->
+                      <span class="confirm-time">{{$t('M.otc_decide_complate')}}</span>
+                    </p>
+                    <p
+                      class="order-info-right"
+                      v-if="props.row.appeal == 'NO' && props.row.confirmTime == ''"
+                    >
+                    <!-- 申诉判定，订单完成 -->
+                      <span class="confirm-time">{{$t('M.otc_tradeOver_complate')}}</span>
+                    </p>
+                    <p class="order-info-right">
+                      <!-- 付款确认时间： -->
+                      <span>{{$t('M.otc_time_payment')}}：</span>
+                      <span>{{props.row.payTime}}</span>
+                    </p>
+                    <p class="order-info-right">
+                      <!-- 收款确认时间： -->
+                      <span>{{$t('M.otc_time_collection')}}：</span>
+                      <span>{{props.row.confirmTime ? props.row.confirmTime : props.row.completeTime}}</span>
                     </p>
                   </div>
                 </div>

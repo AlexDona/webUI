@@ -118,16 +118,23 @@
             </p>
           </div>
           <div class="info-right">
+            <!-- 申诉冻结，等待处理 -->
             <p class="text-info text-blue">
-              <!--冻结时间-->
               {{$t('M.otc_complaint_frezzing')}}
             </p>
-            <p class="text-info">{{timeFormatting(item.freezeTime)}}</p>
+            <!--冻结时间-->
+            <p class="text-info">
+              {{timeFormatting(item.freezeTime)}}
+            </p>
           </div>
           <div class="info-reason">
             <!-- 申诉原因 -->
-            <p class="text-info text-blue">{{$t('M.otc_complaint_appeal_reason')}}</p>
-            <p class="text-info">{{item.appealCause}}</p>
+            <p class="text-info text-blue">
+              {{$t('M.otc_complaint_appeal_reason')}}
+            </p>
+            <p class="text-info">
+              {{item.appealCause}}
+            </p>
           </div>
         </div>
       </div>
