@@ -130,7 +130,7 @@
         <ul class="links-list">
           <li
             class="links-item"
-            v-for="(item,index) in linkList"
+            v-for="(item,index) in footerInfo2.blogrollList"
             :key="index"
           >
             <a
@@ -150,11 +150,7 @@
 </template>
 <script>
 import {
-  getFooterInfo1,
-  getFooterInfo2
-} from '../../utils/api/header'
-import {
-  returnAjaxMessage,
+  // returnAjaxMessage,
   jumpToOtherPageForFooter
 } from '../../utils/commonFunc'
 import Iconfont from '../Common/IconFontCommon'
@@ -195,7 +191,6 @@ export default {
     }
   },
   created () {
-    this.getFooterInfo()
   },
   mounted () {},
   activited () {},
@@ -207,45 +202,6 @@ export default {
     ]),
     jumpToOtherPage (router, activeName) {
       jumpToOtherPageForFooter(router, activeName, this)
-    },
-    // 动态添加favicon
-    addFavicon (href, title) {
-      // 动态生成favicon
-      let link = document.querySelector("link[rel*='icon']") || document.createElement('link')
-      link.type = 'image/x-icon'
-      link.rel = 'shortcut icon'
-      link.href = href
-      document.getElementsByTagName('head')[0].appendChild(link)
-      document.querySelector('title').innerText = title
-    },
-    async getFooterInfo () {
-      const params = {
-        partnerId: this.partnerId,
-        language: this.language
-      }
-      const data1 = await getFooterInfo1(params)
-      const data2 = await getFooterInfo2(params)
-      if (!returnAjaxMessage(data1, this) && !returnAjaxMessage(data2, this)) {
-        return false
-      } else {
-        this.footerInfo1 = data1.data.data
-        console.log(this.footerInfo1)
-        this.shareList[0].ercodeSrc = this.footerInfo1.twitter
-        this.shareList[1].ercodeSrc = this.footerInfo1.facebook
-        this.shareList[2].ercodeSrc = this.footerInfo1.weixin
-        this.shareList[3].ercodeSrc = this.footerInfo1.qq
-        this.shareList[4].ercodeSrc = this.footerInfo1.telegraph_group
-        this.footerInfo2 = data2.data.data
-        this.linkList = this.footerInfo2.blogrollList
-        // favicon 添加
-        this.addFavicon(
-          this.footerInfo1.headTitleLogo,
-          this.footerInfo1.title
-        )
-        this.$store.commit('common/SET_LOGO_URL', {
-          logoSrc: this.footerInfo1.headLogo
-        })
-      }
     }
   },
   filter: {},
@@ -253,12 +209,22 @@ export default {
     ...mapState({
       partnerId: state => state.common.partnerId,
       language: state => state.common.language,
-      logoSrc: state => state.common.logoSrc
+      logoSrc: state => state.common.logoSrc,
+      footerInfo: state => state.common.footerInfo
     })
   },
   watch: {
-    language () {
-      this.getFooterInfo()
+    footerInfo (newVal) {
+      console.log(newVal)
+      if (newVal) {
+        this.footerInfo1 = newVal.footerInfo1
+        this.footerInfo2 = newVal.footerInfo2
+        this.shareList[0].ercodeSrc = this.footerInfo1.twitter
+        this.shareList[1].ercodeSrc = this.footerInfo1.facebook
+        this.shareList[2].ercodeSrc = this.footerInfo1.weixin
+        this.shareList[3].ercodeSrc = this.footerInfo1.qq
+        this.shareList[4].ercodeSrc = this.footerInfo1.telegraph_group
+      }
     }
   }
 }

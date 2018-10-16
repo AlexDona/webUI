@@ -63,6 +63,7 @@ const state = {
   userInfoRefreshStatus: false, // 用户信息接口刷新状态
   // logoSrc: require('../../assets/develop/logo.png'),
   logoSrc: '',
+  footerInfo: {},
   end: ''// 占位
 }
 

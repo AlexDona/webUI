@@ -336,7 +336,9 @@
 import {getMerchantAvailablelegalTender} from '../../utils/api/OTC'
 import {
   getLanguageList,
-  getTransitionCurrencyRate // 获取汇率转换费率
+  getTransitionCurrencyRate, // 获取汇率转换费率
+  getFooterInfo1,
+  getFooterInfo2
 } from '../../utils/api/header'
 import IconFontCommon from '../Common/IconFontCommon'
 // import {getPartnerList} from '../../utils/api/home'
@@ -402,6 +404,7 @@ export default{
   async created () {
     require('../../../static/css/theme/day/Common/HeaderCommonDay.css')
     // 获取 语言列表:任付伟先注释此方法防止每次刷新报错-有需要请放开
+    await this.getFooterInfo()
     this.getLanguageList()
     // console.log(this.theme)
     this.activeTheme = this.theme
@@ -429,7 +432,8 @@ export default{
       'SET_COUNTRY_AREA_LIST',
       'USER_INFORMATION_REFRESH',
       'SET_USER_INFO_REFRESH_STATUS',
-      'CHANGE_REF_SECURITY_CENTER_INFO'
+      'CHANGE_REF_SECURITY_CENTER_INFO',
+      'SET_FOOTER_INFO'
     ]),
     getCountryList () {
       getCountryListAjax(this, (data) => {
@@ -594,8 +598,44 @@ export default{
       this.convertCurrencyList = data.data.data
       this.changeActiveTransitionCurrency()
       // setStore('convertCurrencyList', this.convertCurrencyList)
+    },
+    // 获取底部信息
+    async getFooterInfo () {
+      const params = {
+        partnerId: this.partnerId,
+        language: this.language
+      }
+      const data1 = await getFooterInfo1(params)
+      const data2 = await getFooterInfo2(params)
+      if (!returnAjaxMessage(data1, this) && !returnAjaxMessage(data2, this)) {
+        return false
+      } else {
+        let footerInfo1 = data1.data.data
+        let footerInfo2 = data2.data.data
+        this.SET_FOOTER_INFO({
+          footerInfo1,
+          footerInfo2
+        })
+        // favicon 添加
+        this.addFavicon(
+          footerInfo1.headTitleLogo,
+          footerInfo1.title
+        )
+        this.$store.commit('common/SET_LOGO_URL', {
+          logoSrc: footerInfo1.headLogo
+        })
+      }
+    },
+    // 动态添加favicon
+    addFavicon (href, title) {
+      // 动态生成favicon
+      let link = document.querySelector("link[rel*='icon']") || document.createElement('link')
+      link.type = 'image/x-icon'
+      link.rel = 'shortcut icon'
+      link.href = href
+      document.getElementsByTagName('head')[0].appendChild(link)
+      document.querySelector('title').innerText = title
     }
-
   },
   computed: {
     ...mapState({
@@ -608,7 +648,8 @@ export default{
       activeLanguage: state => state.common.activeLanguage,
       withdrawDepositList: state => state.common.withdrawDepositList,
       userInfoRefreshStatus: state => state.common.userInfoRefreshStatus,
-      logoSrc: state => state.common.logoSrc
+      logoSrc: state => state.common.logoSrc,
+      footerInfo: state => state.common.footerInfo
     })
   },
   watch: {

@@ -13,6 +13,7 @@ import {
   USER_INFORMATION_REFRESH,
   SET_USER_INFO_REFRESH_STATUS,
   SET_LOGO_URL,
+  SET_FOOTER_INFO,
   // eslint-disable-next-line
   CHANGE_ROUTER_PATH
 } from './mutations-types.js'
@@ -112,5 +113,8 @@ export default {
   },
   [SET_LOGO_URL] (state, {logoSrc}) {
     state.logoSrc = logoSrc
+  },
+  [SET_FOOTER_INFO] (state, data) {
+    state.footerInfo = data
   }
 }
