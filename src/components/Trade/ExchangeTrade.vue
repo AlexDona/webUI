@@ -727,9 +727,8 @@ export default {
       }
     },
     middleTopData (newVal) {
-      console.log(newVal)
-      let targetPriceOfBuy = newVal.buyOne
-      let targetPriceOfSell = newVal.sellOne
+      let targetPriceOfBuy = newVal.buy
+      let targetPriceOfSell = newVal.sell
       // 首次打开设置价格
       if (!this.reflashCount) {
         if (newVal.price) {

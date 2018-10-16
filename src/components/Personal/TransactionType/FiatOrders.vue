@@ -138,7 +138,10 @@
           v-loading="fullscreenLoading"
           element-loading-background="rgba(0, 0, 0, 0.6)"
         >
-          <FiatCoinTradingOrder ref = "tradeOrder"/>
+          <FiatCoinTradingOrder
+            ref = "tradeOrder"
+            @fatherMethod="getOTCEntrustingOrdersRevocation"
+          />
         </el-tab-pane>
         <!--已完成订单-->
         <el-tab-pane
@@ -281,13 +284,13 @@ export default {
   beforeRouteUpdate () {},
   methods: {
     ...mapMutations([
-      'CHANGE_OTC_AVAILABLE_CURRENCY_NAME',
-      'CHANGE_OTC_AVAILABLE_CURRENCY_ID',
-      'CHANGE_OTC_AVAILABLE_PARTNER_COIN_ID',
-      'USER_ASSETS_LIST',
+      // 'CHANGE_OTC_AVAILABLE_CURRENCY_NAME',
+      // 'CHANGE_OTC_AVAILABLE_CURRENCY_ID',
+      // 'CHANGE_OTC_AVAILABLE_PARTNER_COIN_ID',
+      // 'USER_ASSETS_LIST',
       'SET_LEGAL_TENDER_LIST',
-      'CHANGE_LEGAL_PAGE',
-      'SET_LEGAL_TENDER_REFLASH_STATUS'
+      'CHANGE_LEGAL_PAGE'
+      // 'SET_LEGAL_TENDER_REFLASH_STATUS'
     ]),
     // 时间格式化
     timeFormatting (date) {
@@ -381,6 +384,7 @@ export default {
     },
     // 页面加载时请求接口渲染列表
     async getOTCEntrustingOrdersRevocation (activeName) {
+      console.log(activeName)
       // 局部loading
       this.fullscreenLoading = true
       let params = {

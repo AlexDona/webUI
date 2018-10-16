@@ -122,7 +122,7 @@
                   :label="$t('M.finance_invest') + $t('M.comm_count')"
                 >
                   <div class='invest-mounte'>
-                    <el-input v-model="formLabelAlign.number" class="red"></el-input>
+                    <el-input v-model="formLabelAlign.number" class="red" @change="changeAlignNumber"></el-input>
                     <strong>{{selecteCoindName}}</strong>
                   </div>
                 </el-form-item>
@@ -131,7 +131,7 @@
                   :label="$t('M.finance_interestRate')"
                 >
                    <div class='invest-mounte'>
-                    <el-input v-model="formLabelAlign.interestRate"></el-input>
+                    <el-input v-model="formLabelAlign.interestRate" disabled></el-input>
                   </div>
                 </el-form-item>
                 <!-- 预计总收益 -->
@@ -139,7 +139,7 @@
                   :label="$t('M.finance_predict') + $t('M.comm_total_sum') + $t('M.finance_earnings')"
                 >
                   <div class='invest-mounte'>
-                    <el-input v-model="formLabelAlign.expectedEarning"></el-input>
+                    <el-input v-model="formLabelAlign.expectedEarning" disabled></el-input>
                     <strong>{{selecteCoindName}}</strong>
                   </div>
                 </el-form-item>
@@ -151,6 +151,7 @@
                     <!-- 先息后本 -->
                     <el-input
                     :value="$t('M.finance_xiAndben')"
+                    disabled
                     ></el-input>
                     <span class='dividend-tips' @click="showDividendTime = !showDividendTime">!</span>
                   </div>
@@ -592,6 +593,11 @@ export default {
       this.dialogVisible = false
       // 执行投资按钮
       this.clickImmediateInvestment()
+    },
+    // 模态框数字发生变化时需要执行的方法
+    changeAlignNumber (e) {
+      this.investMounte = e
+      this.clickGetInvestEarnings()
     },
     // 理财记录模态框显示
     async clickGetInvestEarnings () {

@@ -818,7 +818,7 @@ export default {
         })
       }, 1000)
     },
-    // 撤销/成交otc用户定单
+    // 1.5 撤销/成交otc用户定单
     async cancelCompleteUserOtcOrder (val) { // 1 取消 2 完成
       let data
       if (val === 1) {

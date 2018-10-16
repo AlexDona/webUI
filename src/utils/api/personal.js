@@ -121,7 +121,6 @@ export const sellerSendAppeal = (params) => postWithURLencoded('otcAppeal/applyO
 export const cancelUserOtcOrder = (params) => post('otcOrder/cancelUserOtcOrder', params)
 // 成交otc用户定单（过期卖家未收款）
 export const completeUserOtcOrder = (params) => post('otcOrder/completeUserOtcOrder', params)
-
 /**
  * API
  * */

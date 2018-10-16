@@ -56,24 +56,24 @@ export default {
   },
   created () {
     this.noticeList = [
-      {
-        id: 0, // 跳转id
-        type: 0, // 0:新闻 1:公告
-        typeName: 'M.home_market_text1', // type=0:'新闻资讯' type=1:'活动公告'
-        title: 'M.home_market_text3' // 标题 fuc火热上线
-      },
-      {
-        id: 1, // 跳转id
-        type: 1, // 0:新闻 1:公告
-        typeName: 'M.home_market_text1', // type=0:'新闻资讯' type=1:'活动公告'
-        title: 'M.home_market_text4' // 标题 fuc火热上线1
-      },
-      {
-        id: 2, // 跳转id
-        type: 0, // 0:新闻 1:公告
-        typeName: 'M.home_market_text1', // type=0:'新闻资讯' type=1:'活动公告'
-        title: 'M.home_market_text5' // 标题 fuc火热上线2
-      }
+      // {
+      //   id: 0, // 跳转id
+      //   type: 0, // 0:新闻 1:公告
+      //   typeName: 'M.home_market_text1', // type=0:'新闻资讯' type=1:'活动公告'
+      //   title: 'M.home_market_text3' // 标题 fuc火热上线
+      // },
+      // {
+      //   id: 1, // 跳转id
+      //   type: 1, // 0:新闻 1:公告
+      //   typeName: 'M.home_market_text1', // type=0:'新闻资讯' type=1:'活动公告'
+      //   title: 'M.home_market_text4' // 标题 fuc火热上线1
+      // },
+      // {
+      //   id: 2, // 跳转id
+      //   type: 0, // 0:新闻 1:公告
+      //   typeName: 'M.home_market_text1', // type=0:'新闻资讯' type=1:'活动公告'
+      //   title: 'M.home_market_text5' // 标题 fuc火热上线2
+      // }
     ]
     this.getNewsNoticeList()
     this.timer = setInterval(this.autoPlay, 3000)
@@ -87,7 +87,6 @@ export default {
       'CHANGE_NEWS_DETAIL_JUMP_ID'
     ]),
     jumpToNewsDetail (e) {
-      console.log(e)
       this.CHANGE_NEWS_DETAIL_JUMP_ID(e.id)
       this.$router.push({'path': '/NewsAndNoticeList'})
     },
@@ -101,9 +100,7 @@ export default {
       if (!returnAjaxMessage(data, this)) {
         return false
       } else {
-        console.log(data)
         this.noticeList = data.data.data
-        console.log(this.noticeList)
       }
     },
     // 关闭组件
@@ -128,7 +125,6 @@ export default {
   },
   watch: {
     language () {
-      console.log(1)
       this.getNewsNoticeList()
     }
   }
