@@ -506,109 +506,118 @@
     </div>
     <div class="security-record security-background margin-top9">
       <el-tabs
-        v-model="securityActiveName"
+        v-model="activeName"
+        @tab-click = "coinMoneyOrders"
       >
         <!--最近登录记录-->
         <el-tab-pane
           :label="$t('M.user_security_recently') + $t('M.user_security_login') + $t('M.comm_record')"
-          name="first"
+          name="logon-record"
         >
-          <el-table
-            :data="securityRecord"
-            style="width: 100%">
-            <!--登陆时间-->
-            <el-table-column
-              :label="$t('M.user_security_login') + $t('M.comm_time')"
+          <div class="tab-list">
+            <el-table
+              :data="logonRecord"
+              style="width: 100%">
+              <!--登陆时间-->
+              <el-table-column
+                :label="$t('M.user_security_login') + $t('M.comm_time')"
+              >
+                <template slot-scope = "s">
+                  <div>{{ timeFormatting(s.row.operateTime) }}</div>
+                </template>
+              </el-table-column>
+              <!--登录IP-->
+              <el-table-column
+                :label="$t('M.user_security_login') + $t('M.comm_time') + 'IP'"
+              >
+                <template slot-scope = "s">
+                  <div>{{ s.row.ip }}</div>
+                </template>
+              </el-table-column>
+              <!--归属地-->
+              <el-table-column
+                :label="$t('M.user_security_home_location')"
+              >
+                <template slot-scope = "s">
+                  <div>{{ s.row.operateAddress }}</div>
+                </template>
+              </el-table-column>
+              <!--来源-->
+              <el-table-column
+                :label="$t('M.user_security_source')"
+              >
+                <template slot-scope = "s">
+                  <div>{{ s.row.source }}</div>
+                </template>
+              </el-table-column>
+            </el-table>
+          </div>
+          <div class="paging">
+            <!--分页-->
+            <el-pagination
+              background
+              v-show="activeName === 'logon-record' && logonRecord.length"
+              layout="prev, pager, next"
+              :page-count="totalPageMyLogonRecordPage"
+              @current-change="changeCurrentPage('logon-record',$event)"
             >
-              <template slot-scope = "s">
-                <div>{{ timeFormatting(s.row.operateTime) }}</div>
-              </template>
-            </el-table-column>
-            <!--登录IP-->
-            <el-table-column
-              :label="$t('M.user_security_login') + $t('M.comm_time') + 'IP'"
-            >
-              <template slot-scope = "s">
-                <div>{{ s.row.ip }}</div>
-              </template>
-            </el-table-column>
-            <!--归属地-->
-            <el-table-column
-              :label="$t('M.user_security_home_location')"
-            >
-              <template slot-scope = "s">
-                <div>{{ s.row.operateAddress }}</div>
-              </template>
-            </el-table-column>
-            <!--来源-->
-            <el-table-column
-              :label="$t('M.user_security_source')"
-            >
-              <template slot-scope = "s">
-                <div>{{ s.row.source }}</div>
-              </template>
-            </el-table-column>
-          </el-table>
-          <!--分页-->
-          <el-pagination
-            background
-            v-show="securityRecord.length"
-            layout="prev, pager, next"
-            :page-count="totalPageMySetLogPage"
-            @current-change="changeCurrentPageSetLog"
-          >
-          </el-pagination>
+            </el-pagination>
+          </div>
         </el-tab-pane>
         <!--安全设置记录-->
         <el-tab-pane
           :label="$t('M.user_security_safety') + $t('M.comm_set') + $t('M.comm_record')"
-          name="second"
+          name="security-record"
         >
-          <el-table
-            :data="logonRecord"
-            style="width: 100%">
-            <!--登陆时间-->
-            <el-table-column
-              :label="$t('M.user_security_login') + $t('M.comm_time')"
+          <div class="tab-list">
+            <el-table
+              :data="securityRecord"
+              style="width: 100%">
+              <!--登陆时间-->
+              <el-table-column
+                :label="$t('M.user_security_login') + $t('M.comm_time')"
+              >
+                <template slot-scope = "s">
+                  <div>{{ timeFormatting(s.row.operateTime) }}</div>
+                </template>
+              </el-table-column>
+              <!--设置名称-->
+              <el-table-column
+                :label="$t('M.comm_set') + $t('M.user_account_name')"
+              >
+                <template slot-scope = "s">
+                  <div>{{ s.row.content }}</div>
+                </template>
+              </el-table-column>
+              <!--登录IP-->
+              <el-table-column
+                :label="$t('M.user_security_login') + 'IP'"
+              >
+                <template slot-scope = "s">
+                  <div>{{ s.row.ip }}</div>
+                </template>
+              </el-table-column>
+              <!--归属地-->
+              <el-table-column
+                :label="$t('M.user_security_home_location')"
+              >
+                <template slot-scope = "s">
+                  <div>{{ s.row.operateAddress }}</div>
+                </template>
+              </el-table-column>
+            </el-table>
+          </div>
+          <div class="paging">
+            <!--分页-->
+            <el-pagination
+              background
+              v-show="activeName === 'security-record' && securityRecord.length"
+              layout="prev, pager, next"
+              :page-count="totalPageMySecurityRecordPage"
+              @current-change="changeCurrentPage('security-record',$event)"
             >
-              <template slot-scope = "s">
-                <div>{{ timeFormatting(s.row.operateTime) }}</div>
-              </template>
-            </el-table-column>
-            <!--设置名称-->
-            <el-table-column
-              :label="$t('M.comm_set') + $t('M.user_account_name')"
-            >
-              <template slot-scope = "s">
-                <div>{{ s.row.content }}</div>
-              </template>
-            </el-table-column>
-            <!--登录IP-->
-            <el-table-column
-              :label="$t('M.user_security_login') + 'IP'"
-            >
-              <template slot-scope = "s">
-                <div>{{ s.row.ip }}</div>
-              </template>
-            </el-table-column>
-            <!--归属地-->
-            <el-table-column
-              :label="$t('M.user_security_home_location')"
-            >
-              <template slot-scope = "s">
-                <div>{{ s.row.operateAddress }}</div>
-              </template>
-            </el-table-column>
-          </el-table>
-          <!--分页-->
-          <el-pagination
-            background
-            v-show="logonRecord.length"
-            layout="prev, pager, next"
-            :page-count="totalPageMyLoginLogPage"
-            @current-change="changeCurrentPageLoginLog"
-          >
-          </el-pagination>
+            </el-pagination>
+          </div>
         </el-tab-pane>
       </el-tabs>
     </div>
@@ -638,16 +647,16 @@ export default {
   data () {
     return {
       labelPosition: 'top',
-      securityActiveName: 'first', // 默认显示第一个
-      // 最近登录记录
-      logonRecord: [],
-      // 安全设置记录
-      securityRecord: [],
+      activeName: 'logon-record', // 默认显示第一个
       getStatusUserInfo: {}, // 个人信息
-      setLogPage: 1, // 当前委托页码
-      totalPageMySetLogPage: 1, // 当前委托总页数
-      loginLogPage: 1, // 当前委托页码
-      totalPageMyLoginLogPage: 1, // 当前委托总页数
+      // 登录记录
+      logonRecord: [],
+      logonRecordPage: 1, // 当前委托页码
+      totalPageMyLogonRecordPage: 1, // 当前委托总页数
+      // 安全设置
+      securityRecord: [],
+      securityRecordPage: 1, // 当前委托页码
+      totalPageMySecurityRecordPage: 1, // 当前委托总页数
       closeValidation: false, // 关闭验证弹窗
       openTheValidation: false, // 开启验证弹窗
       openSwitch: false, // 弹出层状态 开启 关闭
@@ -678,6 +687,7 @@ export default {
       this.getSecurityCenter()
       this.CHANGE_REF_SECURITY_CENTER_INFO(false)
     }
+    this.getSecurityCenter('logon-record')
   },
   mounted () {},
   activited () {},
@@ -693,13 +703,29 @@ export default {
     timeFormatting (date) {
       return timeFilter(date, 'normal')
     },
+    coinMoneyOrders (tab) {
+      console.log(tab.name)
+      this.getSecurityCenter(tab.name)
+    },
     /**
      * 安全中心
      */
-    getSecurityCenter () {
+    getSecurityCenter (entrustType) {
+      const params = {
+        pageNumber: this.logonRecordPage, // 页码
+        pageSize: this.pageSize // 页数
+      }
+      switch (entrustType) {
+        case 'logon-record':
+          params.pageNumber = this.logonRecordPage // 页码
+          break
+        case 'security-record':
+          params.pageNumber = this.securityRecordPage // 页码
+          break
+      }
       // 整页loading
       this.fullscreenLoading = true
-      getSecurityCenter(this, (data) => {
+      getSecurityCenter(this, params, (data) => {
         // 接口失败清除loading
         this.fullscreenLoading = false
         if (data) {
@@ -707,24 +733,40 @@ export default {
           this.fullscreenLoading = false
           this.securityCenter = data.data.data
           this.person = data.data.data.person
-          // 登陆记录分页
-          this.logonRecord = data.data.data.setLog.list
-          this.totalPageMySetLogPage = data.data.data.setLog.pages - 0
-          // 安全设置分页
-          this.securityRecord = data.data.data.loginLog.list
-          this.totalPageMyLoginLogPage = data.data.data.loginLog.pages - 0
+          switch (entrustType) {
+            case 'logon-record':
+              // 登陆记录列表
+              this.logonRecord = data.data.data.loginLog.list
+              // 登陆记录分页
+              this.totalPageMyLogonRecordPage = data.data.data.loginLog.pages - 0
+              break
+            case 'security-record':
+              // 安全设置列表
+              this.securityRecord = data.data.data.setLog.list
+              // 安全设置分页
+              this.totalPageMySecurityRecordPage = data.data.data.setLog.pages - 0
+              break
+          }
         }
       })
     },
-    // 登陆记录分页
-    changeCurrentPageSetLog (pageNum) {
-      this.setLogPage = pageNum
-      this.getSecurityCenter()
-    },
-    // 安全设置分页
-    changeCurrentPageLoginLog (pageNum) {
-      this.loginLogPage = pageNum
-      this.getSecurityCenter()
+    // 分页
+    changeCurrentPage (entrustType, pageNum) {
+      console.log(pageNum)
+      switch (entrustType) {
+        // 登陆记录分页
+        case 'logon-record':
+          this.loading = true
+          this.logonRecordPage = pageNum
+          this.getSecurityCenter(entrustType)
+          break
+        // 安全设置分页
+        case 'security-record':
+          this.loading = true
+          this.securityRecordPage = pageNum
+          this.getSecurityCenter(entrustType)
+          break
+      }
     },
     // 路由跳转对应组件
     setShowStatusSecurity (val) {
@@ -1111,6 +1153,9 @@ export default {
     }
     >.security-record{
       min-height: 510px;
+      .tab-list {
+        height: 450px;
+      }
     }
     &.night{
       background-color: $nightBgColor;

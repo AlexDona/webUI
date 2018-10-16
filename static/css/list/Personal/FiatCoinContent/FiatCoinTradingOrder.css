@@ -2,7 +2,7 @@
 /* 1.0付款方式下拉框 */
 .fiat-trading-order-box.personal .el-input--suffix .el-input__inner{
   height: 26px;
-  width: 170px;
+  width: 150px;
 }
 .fiat-trading-order-box.personal .el-input__inner{
   border:none;
@@ -84,4 +84,7 @@
 }
 .fiat-trading-order-box.personal .password-dialog .el-button--primary{
   background:linear-gradient(9deg,rgba(43,57,110,1),rgba(42,80,130,1));
+}
+.fiat-trading-order-box.personal .bank-info-picture .el-button {
+  float: right;
 }

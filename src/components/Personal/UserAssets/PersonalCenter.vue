@@ -308,6 +308,7 @@ export default {
       //   this.isdisabled = false
       // }, 500)
       this.CHANGE_USER_CENTER_ACTIVE_NAME(tab.name)
+      console.log(tab.name)
       if (tab.name === 'account-credited') {
         await this.getUserRefreshUser()
         if (!this.payPassword) {

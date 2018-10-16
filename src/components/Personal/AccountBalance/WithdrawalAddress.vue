@@ -172,55 +172,59 @@
            {{ $t('M.comm_site') }}{{ $t('M.comm_list') }}
         </span>
       </header>
-      <el-table
-        :data="gainAddressList"
-        style="width: 100%"
-        :empty-text="$t('M.comm_no_data')"
-        v-loading="loading"
-        element-loading-background="rgba(0, 0, 0, 0.6)"
-      >
-        <!--币种-->
-        <el-table-column
-          :label="$t('M.comm_currency')"
-          width="180"
+      <div class="tab-list">
+        <el-table
+          :data="gainAddressList"
+          style="width: 100%"
+          :empty-text="$t('M.comm_no_data')"
+          v-loading="loading"
+          element-loading-background="rgba(0, 0, 0, 0.6)"
         >
-          <template slot-scope = "s">
-            <div>{{ s.row.coinName }}</div>
-          </template>
-        </el-table-column>
-        <!--备注-->
-        <el-table-column
-          :label="$t('M.comm_remark')"
-          width="180"
-        >
-          <template slot-scope = "s">
-            <div>{{ s.row.remark }}</div>
-          </template>
-        </el-table-column>
-        <!--提币地址-->
-        <el-table-column
-          :label="$t('M.comm_mention_money') + $t('M.comm_site')"
-          width="350"
-        >
-          <template slot-scope = "s">
-            <div>{{ s.row.address }}</div>
-          </template>
-        </el-table-column>
-        <!--操作-->
-        <el-table-column
-          :label="$t('M.comm_operation')"
-        >
-          <template slot-scope = "s">
-            <div
-              @click.prevent="cancelId(s.row.id)"
-              :id="s.row.id"
-            >
-              <!--{{ operation }}-->
-              {{ $t(operation) }}
-            </div>
-          </template>
-        </el-table-column>
-      </el-table>
+          <!--币种-->
+          <el-table-column
+            :label="$t('M.comm_currency')"
+            width="180"
+          >
+            <template slot-scope = "s">
+              <div>{{ s.row.coinName }}</div>
+            </template>
+          </el-table-column>
+          <!--备注-->
+          <el-table-column
+            :label="$t('M.comm_remark')"
+            width="180"
+          >
+            <template slot-scope = "s">
+              <div>{{ s.row.remark }}</div>
+            </template>
+          </el-table-column>
+          <!--提币地址-->
+          <el-table-column
+            :label="$t('M.comm_mention_money') + $t('M.comm_site')"
+            width="350"
+          >
+            <template slot-scope = "s">
+              <div>{{ s.row.address }}</div>
+            </template>
+          </el-table-column>
+          <!--操作-->
+          <el-table-column
+            :label="$t('M.comm_operation')"
+          >
+            <template slot-scope = "s">
+              <div
+                @click.prevent="cancelId(s.row.id)"
+                :id="s.row.id"
+              >
+                <!--{{ operation }}-->
+                {{ $t(operation) }}
+              </div>
+            </template>
+          </el-table-column>
+        </el-table>
+      </div>
+    </div>
+    <div class="paging">
       <!--分页-->
       <el-pagination
         background
@@ -584,6 +588,9 @@ export default {
     >.withdrawal-address-main{
       border-radius: 5px;
       min-height: 390px;
+      /*.tab-list {*/
+        /*height: 520px;*/
+      /*}*/
       >.withdrawal-header {
         margin-bottom: 2px;
         >.header-content {

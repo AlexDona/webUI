@@ -210,9 +210,9 @@ export const reflashUserInfo = async (that) => {
 /**
  *  刷新用户安全状态
  */
-export const getSecurityCenter = async (that, callback) => {
+export const getSecurityCenter = async (that, params, callback) => {
   console.log(store)
-  const data = await statusSecurityCenter({})
+  const data = await statusSecurityCenter(params)
   if (!(returnAjaxMessage(data, that))) {
     return false
   } else {

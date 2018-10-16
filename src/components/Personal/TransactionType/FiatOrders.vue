@@ -342,6 +342,7 @@ export default {
     },
     // 点击查询按钮
     findFilter (activeName) {
+      // console.log(activeName)
       this.CHANGE_LEGAL_PAGE({
         legalTradePageNum: 1
       })
