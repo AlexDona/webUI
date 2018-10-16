@@ -924,6 +924,7 @@ export default {
     // 2.0 请求交易中订单列表
     async getOTCTradingOrdersList () {
       // this.loading = true
+      this.activePayModeList = [] // 清空支付方式数组：防止换页码之后之前选中的在此页面付款方式也被选中的问题
       this.cancelOrderTimeArr = []
       this.accomplishOrderTimeArr = []
       // console.log('当前页：' + this.currentPage)

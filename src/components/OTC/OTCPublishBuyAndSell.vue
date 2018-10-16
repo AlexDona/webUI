@@ -763,6 +763,7 @@ export default {
         param.entrustCount = this.entrustCountSell // 挂单数量
         param.price = this.priceSell // 单价
       }
+      this.fullscreenLoading = true
       const data = await addOTCPutUpOrders(param)
       console.log(data)
       // 提示信息
@@ -770,6 +771,7 @@ export default {
         return false
       } else {
         // 返回数据正确的逻辑
+        this.fullscreenLoading = false
         // 关闭交易密码框
         this.dialogVisible = false
         // 清空表单数据

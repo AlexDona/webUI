@@ -651,6 +651,7 @@ export default {
       } else {
         this.fullscreenLoading = false
         let getData = data.data.data
+        // let getData = JSON.parse(JSON.stringify(data.data.data))
         // 设置可用币种数组
         this.traderCoinList = getData.idNameDtoList
         this.traderCoinList.forEach(item => {
