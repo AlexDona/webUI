@@ -898,25 +898,27 @@ export default {
         })
       }, 1000)
     },
-    // 1.5 自动取消倒计时和自动成交倒计时接口
+    // 任增加自动取消倒计时和自动成交倒计时接口
     // 撤销/成交otc用户定单
     async cancelCompleteUserOtcOrder (val) { // 1 取消 2 完成
-      // console.log('自动取消倒计时和自动成交倒计时接口')
+      console.log('自动取消倒计时和自动成交倒计时接口')
       let data
       if (val === 1) {
         data = await cancelUserOtcOrder()
-        // console.log('撤销otc用户定单（过期买家未付款）')
+        console.log('撤销otc用户定单（过期买家未付款）')
       }
       if (val === 2) {
         data = await completeUserOtcOrder()
-        // console.log('成交otc用户定单（过期卖家未收款）')
-      }
-      console.log(data)
-      if (!(returnAjaxMessage(data, this, 0))) {
-        return false
-      } else {
-        // 返回数据正确的逻辑：重新渲染列表
-        this.getOTCTradingOrdersList()
+        console.log('成交otc用户定单（过期卖家未收款）')
+        // 1.5 自动取消倒计时和自动成交倒计时接口
+        // 撤销/成交otc用户定单
+        console.log(data)
+        if (!(returnAjaxMessage(data, this, 0))) {
+          return false
+        } else {
+          // 返回数据正确的逻辑：重新渲染列表
+          this.getOTCTradingOrdersList()
+        }
       }
     },
     // 2.0 请求交易中订单列表

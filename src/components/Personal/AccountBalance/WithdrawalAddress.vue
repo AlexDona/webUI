@@ -479,7 +479,7 @@ export default {
       // 确定删除提币地址？ 取消  删除
       this.$confirm(this.$t('M.user_address_delete_withdrawals'), {
         cancelButtonText: this.$t('M.comm_cancel'), // 取消
-        confirmButtonText: this.$t('M.comm_delete') // 删除
+        confirmButtonText: this.$t('M.comm_confirm') // 确定
       }).then(() => {
         this.deleteWithdrawal(id)
       }).catch(() => {

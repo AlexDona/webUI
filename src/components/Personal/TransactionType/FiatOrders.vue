@@ -275,6 +275,7 @@ export default {
     console.log(this.userInfo.userInfo.partnerId)
     this.getOTCAvailableCurrencyList()
     this.getMerchantAvailablelegalTenderList()
+    // this.getOTCEntrustingOrdersRevocation('')
     // console.log(this.USER_ASSETS_LIST)
   },
   mounted () {},
