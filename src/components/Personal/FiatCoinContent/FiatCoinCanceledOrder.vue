@@ -119,12 +119,31 @@
             </p>
           </div>
           <div class="info-right">
-            <p class="text-info text-blue">
-              <!--取消时间-->
+            <!--取消时间-->
+            <!-- <p class="text-info text-blue">
               {{$t('M.otc_canceled_cancel')}}
             </p>
             <p class="text-info">
               {{timeFormatting(item.cancelTime)}}
+            </p> -->
+            <p
+              class="text-info"
+              v-if="item.appeal == 'NO'"
+            >
+             <!-- 超时未支付，订单取消 -->
+              {{$t('M.otc_overBuy_cancel')}}
+            </p>
+            <p
+              class="text-info"
+              v-if="item.appeal == 'YES'"
+            >
+              <!-- 申诉判定，订单取消 -->
+              {{$t('M.otc_shesu_cancel')}}
+            </p>
+            <p
+              class="text-info"
+            >
+              {{$t('M.otc_canceled_cancel')}}:{{timeFormatting(item.cancelTime)}}
             </p>
           </div>
         </div>
@@ -261,7 +280,7 @@ export default {
             margin-left: 30px;
             >.text-info{
               line-height: 20px;
-            }color: #5E95EC;
+            }
             }
           }
         }
