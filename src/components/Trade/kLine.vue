@@ -22,7 +22,9 @@ import {
   returnAjaxMessage
   // getCollectionList
 } from '../../utils/commonFunc'
-// import {getStore} from '../../utils'
+import {
+  unzip
+} from '../../utils'
 import { createNamespacedHelpers, mapState } from 'vuex'
 const { mapMutations } = createNamespacedHelpers('common')
 export default {
@@ -69,7 +71,7 @@ export default {
     this.getDefaultSymbol()
   },
   mounted () {
-    this.initKLine(this.symbol)
+    // this.initKLine(this.symbol)
   },
   activited () {
     console.log(2)
@@ -98,7 +100,8 @@ export default {
       if (!returnAjaxMessage(data, this)) {
         return false
       } else {
-        let activeSymbolData = data.data.data
+        let activeSymbolData = data.data.data.obj
+        activeSymbolData = JSON.parse(unzip(activeSymbolData))
         let {
           defaultTrade, // 默认交易对
           depthList, // 买卖单、深度
@@ -637,7 +640,7 @@ export default {
     },
     activeSymbolId (newVal, oldVal) {
       // this.getActiveSymbolData(newVal)
-      this.initKLine(newVal)
+      // this.initKLine(newVal)
     },
     // 切换tab栏重新订阅
     activeTabSymbolStr (newVal, oldVal) {
