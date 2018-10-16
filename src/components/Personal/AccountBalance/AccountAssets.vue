@@ -689,18 +689,20 @@
                   </button>
                 </span>
               </el-dialog>
-              <!--分页-->
-              <el-pagination
-                background
-                v-show="activeName === 'current-entrust' && withdrawDepositList.length"
-                layout="prev, pager, next"
-                :page-count="totalPageForMyEntrust"
-                @current-change="changeCurrentPage"
-              >
-              </el-pagination>
             </div>
           </div>
         </div>
+      </div>
+      <div class="paging">
+        <!--分页-->
+        <el-pagination
+          background
+          v-show="activeName === 'current-entrust' && withdrawDepositList.length"
+          layout="prev, pager, next"
+          :page-count="totalPageForMyEntrust"
+          @current-change="changeCurrentPage"
+        >
+        </el-pagination>
       </div>
     </div>
   </div>
@@ -1160,7 +1162,9 @@ export default {
       this.mentionAddressList.forEach(item => {
         if (e === item.id) {
           console.log(this.statusAddressValue)
+          // 普通币种公信宝类币种地址标签
           this.remark = item.remark
+          // 提币地址id
           this.mentionAddressValue = e
           console.log(this.mentionAddressValue)
           console.log(this.statusAddressValue)
@@ -1185,13 +1189,13 @@ export default {
         // 接口成功清除loading
         this.fullscreenLoading = false
         console.log(data.data.data.needTag)
-        console.log(data.data.data.vo.userWithdrawAddressDtoList)
+        console.log(data.data.data.userWithdrawAddressListVO.userWithdrawAddressDtoList)
         // 对币种类型进行赋值 true公信宝类 false普通币种
         this.needTag = data.data.data.needTag
-        // 返回列表数据userWithdrawAddressDtoList
-        this.mentionAddressList = data.data.data.vo.userWithdrawAddressDtoList
-        if (!data.data.data.vo.userWithdrawAddressDtoList) {
-          this.mentionAddressValue = data.data.data.vo.userWithdrawAddressDtoList[0].address
+        // 返回列表数据并渲染币种列表
+        this.mentionAddressList = data.data.data.userWithdrawAddressListVO.userWithdrawAddressDtoList
+        if (!data.data.data.userWithdrawAddressListVO.userWithdrawAddressDtoList) {
+          this.mentionAddressValue = data.data.data.userWithdrawAddressListVO.userWithdrawAddressDtoList[0].address
         }
         console.log(data.data.data.vo)
       }

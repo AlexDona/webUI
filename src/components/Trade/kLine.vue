@@ -71,7 +71,7 @@ export default {
     this.getDefaultSymbol()
   },
   mounted () {
-    // this.initKLine(this.symbol)
+    this.initKLine(this.symbol)
   },
   activited () {
     console.log(2)
@@ -640,7 +640,7 @@ export default {
     },
     activeSymbolId (newVal, oldVal) {
       // this.getActiveSymbolData(newVal)
-      // this.initKLine(newVal)
+      this.initKLine(newVal)
     },
     // 切换tab栏重新订阅
     activeTabSymbolStr (newVal, oldVal) {
