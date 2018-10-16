@@ -117,8 +117,6 @@ export default {
   },
   activited () {},
   update () {
-    this.resetOptions()
-    this.resetChart(this.options)
   },
   beforeRouteUpdate () {},
   methods: {
@@ -178,17 +176,15 @@ export default {
       // 设置x轴的文字颜色
       this.options.xAxis.axisLabel.textStyle.color = this.theme === 'night' ? '#4E5C77' : '#4E5C77'
       // 监听x轴数组的变化
-      this.options.xAxis.data = this.financeLineRenderTimeList.reverse().map(item => {
+      let [...financeLineRenderTimeList] = this.financeLineRenderTimeList
+      this.options.xAxis.data = financeLineRenderTimeList.map(item => {
         return this.timeFormatting(+item)
       })
-      // this.options.xAxis.data = [1539568380000, 1539481980000, 1539395580000, 1539309180000, 1539222780000, 1539136380000, 1539049980000, 1538963580000].reverse().map(item => {
-      //   return this.timeFormatting(+item)
-      // })
       // 监听y轴数组的变化
       // this.$set(this.options.series, 'data', this.financeLineRenderPriceList.reverse())
       // 将时间数组倒序
-      this.options.series[0].data = this.financeLineRenderPriceList.reverse()
-      // this.options.series[0].data = [3.115034, 3.111440, 3.115882, 3.115517, 2.114978, 3.115790, 3.115637, 3.113829].reverse()
+      let [...financeLineRenderPriceList] = this.financeLineRenderPriceList
+      this.options.series[0].data = financeLineRenderPriceList
       // 将价钱数组从小到打排序
       this.arrTime = this.financeLineRenderPriceList.sort((a, b) => a - b)
       // y轴最小值是数组的最小项
@@ -196,7 +192,6 @@ export default {
       // y轴最大值是数组的最大值
       this.options.yAxis.max = this.arrTime[this.arrTime.length - 1]
       console.log(this.options)
-      console.log(this.financeLineRenderPriceList.reverse())
     }
   },
   filter: {},
@@ -206,7 +201,9 @@ export default {
       // 从全局获取时间数组
       financeLineRenderTimeList: state => state.finance.financeLineRenderTimeList,
       // 冲全局获取价钱数组
-      financeLineRenderPriceList: state => state.finance.financeLineRenderPriceList
+      financeLineRenderPriceList: state => state.finance.financeLineRenderPriceList,
+      // 监听全部status的变化，
+      status: state => state.finance.status
     })
   },
   watch: {
@@ -214,23 +211,9 @@ export default {
       this.resetOptions()
       this.resetChart(this.options)
     },
-    // 监听时间轴数组的变化
-    financeLineRenderTimeList (newVal, oldVal) {
-      for (let i = 0; i < newVal.lenght; i++) {
-        if (newVal[i] != oldVal[i]) {
-          this.resetOptions()
-          this.resetChart(this.options)
-        }
-      }
-    },
-    // 监听价钱轴数组的变化
-    financeLineRenderPriceList (newVal, oldVal) {
-      for (let i = 0; i < newVal.lenght; i++) {
-        if (newVal[i] != oldVal[i]) {
-          this.resetOptions()
-          this.resetChart(this.options)
-        }
-      }
+    status () {
+      this.resetOptions()
+      this.resetChart(this.options)
     }
   }
 }

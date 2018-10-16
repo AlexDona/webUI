@@ -122,7 +122,7 @@
                   :label="$t('M.finance_invest') + $t('M.comm_count')"
                 >
                   <div class='invest-mounte'>
-                    <el-input v-model="formLabelAlign.number" class="red" @change="changeAlignNumber"></el-input>
+                    <el-input v-model="formLabelAlign.number" class="red" @input="changeAlignNumber"></el-input>
                     <strong>{{selecteCoindName}}</strong>
                   </div>
                 </el-form-item>
@@ -520,7 +520,8 @@ export default {
   methods: {
     ...mapMutations([
       'FINANCE_LINE_RENDER_TIME_LIST',
-      'FINANCE_LINE_RENDER_PRICE_LIST'
+      'FINANCE_LINE_RENDER_PRICE_LIST',
+      'FINANCE_LINE_STATUS'
     ]),
     // 将返回来的天数转换成日期
     getDate (n) {
@@ -649,9 +650,13 @@ export default {
         this.fullscreenLoading = false
         return false
       } else {
+        console.log(data)
         this.fullscreenLoading = false
+
+        // let getData = Object.assign({}, data.data.data)
         let getData = data.data.data
-        // 设置可用币种数组
+        // // 设置可用币种数组
+        // let getData = JSON.parse(JSON.stringify(data.data.data))
         this.traderCoinList = getData.idNameDtoList
         this.traderCoinList.forEach(item => {
           if (getData.idNameDtoList.id == item.id) {
@@ -690,8 +695,8 @@ export default {
         this.FINANCE_LINE_RENDER_PRICE_LIST(getData.tickerPriceResult.renderPriceList)
         // 走势图y轴赋值
         this.FINANCE_LINE_RENDER_TIME_LIST(getData.tickerPriceResult.renderTimeList)
-        this.$refs.childLineCharts.resetOptions()
-        this.$refs.childLineCharts.resetChart(this.options)
+        // 设置状态只要发生请求就让状态改变
+        this.FINANCE_LINE_STATUS(1)
         // 将投资数量输入框清空
         this.investMounte = ''
       }
@@ -757,7 +762,8 @@ export default {
       isLogin: state => state.user.isLogin,
       partnerId: state => state.common.partnerId,
       financeLineRenderTimeList: state => state.finance.financeLineRenderTimeList,
-      financeLineRenderPriceList: state => state.finance.financeLineRenderPriceList
+      financeLineRenderPriceList: state => state.finance.financeLineRenderPriceList,
+      status: state => state.finance.status
     }),
     screenWidth () {
       return window.innerWidth / 3
@@ -767,6 +773,9 @@ export default {
     InvestmentValue (newVal, oldVal) {
       console.log(newVal, oldVal)
     }
+  },
+  destroyed () {
+    this.$store.status = 0
   }
 }
 </script>
