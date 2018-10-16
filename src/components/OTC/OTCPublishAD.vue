@@ -723,6 +723,7 @@ export default {
         payTypes: this.parameterPayTypes, // 支付方式（用，隔开的名字）
         tradePassword: this.tradePassword // 交易密码
       }
+      this.fullscreenLoading = true
       const data = await addOTCPutUpOrdersMerchantdedicated(param)
       console.log(data)
       // 提示信息
@@ -730,6 +731,7 @@ export default {
         return false
       } else {
         // 返回数据正确的逻辑
+        this.fullscreenLoading = false
         this.dialogVisible = false
         // 清空数据
         this.clearMainData()
