@@ -71,3 +71,7 @@
   text-align: left;
   padding: 0px 27px 25px;
 }
+.security-center.personal .el-table {
+  margin-left: 2px;
+  width: 968px !important;
+}

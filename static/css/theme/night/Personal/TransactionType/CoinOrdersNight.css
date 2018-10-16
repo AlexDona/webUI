@@ -41,3 +41,6 @@
   background-color: transparent;
 }
 
+.coin-orders.personal.night .el-table__body-wrapper {
+  background-color: #1C1F32;
+}

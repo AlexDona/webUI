@@ -88,3 +88,6 @@
 .api-management.personal .el-form-item {
   margin-bottom: 15px;
 }
+.api-management.personal .el-table__empty-block{
+  width: 100% !important;
+}

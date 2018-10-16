@@ -265,15 +265,6 @@
               </template>
             </el-table-column>
           </el-table>
-          <!--分页-->
-          <el-pagination
-            background
-            v-show="pushRecordList.length"
-            layout="prev, pager, next"
-            :page-count="totalPageForMyEntrust"
-            @current-change="changeCurrentPage"
-          >
-          </el-pagination>
           <!--PUSH确认-->
           <!--付款-->
           <div class="push-affirm">
@@ -391,6 +382,17 @@
             </el-dialog>
           </div>
         </div>
+      </div>
+      <div class="paging">
+        <!--分页-->
+        <el-pagination
+          background
+          v-show="pushRecordList.length"
+          layout="prev, pager, next"
+          :page-count="totalPageForMyEntrust"
+          @current-change="changeCurrentPage"
+        >
+        </el-pagination>
       </div>
     </div>
   </div>

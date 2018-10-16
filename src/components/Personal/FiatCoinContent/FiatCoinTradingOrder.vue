@@ -1343,6 +1343,7 @@ export default {
                 >.bank-info-picture{
                   vertical-align: top;
                   padding-left: 10px;
+                  width: 70px;
                   >.picture-box{
                   }
                 }

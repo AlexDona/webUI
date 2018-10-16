@@ -18,7 +18,7 @@
         <!--其他记录-->
       <!--</span>-->
     </header>
-    <div class="billing-details-main paddinglr20">
+    <div class="billing-details-main paddinglr20 margin-top9">
       <div class="billing-details-query">
         <div class="float-left cursor-pointer">
           <span class="demonstration display-inline-block font-size12">
@@ -112,75 +112,68 @@
         v-show="showStatusRecordList"
         class="billing-details-content"
       >
-        <!--暂无记录-->
-        <el-table
-          :data="chargeRecordList"
-          style="width: 100%"
-          :empty-text="$t('M.comm_no_data')"
-          v-loading="loading"
-          element-loading-background="rgba(0, 0, 0, 0.6)"
-        >
-          <!--币种-->
-          <el-table-column
-            :label="$t('M.comm_currency')"
-            width="100"
+        <div class="tab-list">
+          <!--暂无记录-->
+          <el-table
+            :data="chargeRecordList"
+            style="width: 100%"
+            :empty-text="$t('M.comm_no_data')"
+            v-loading="loading"
+            element-loading-background="rgba(0, 0, 0, 0.6)"
           >
-            <template slot-scope = "s">
-              <div>{{ s.row.coinName }}</div>
-            </template>
-          </el-table-column>
-          <!--类型-->
-          <el-table-column
-            :label="$t('M.comm_type')"
-            width="100"
-          >
-            <template slot-scope = "s">
-              <div>{{ $t(`M.${s.row.i18nTypeName}`)}}</div>
-            </template>
-          </el-table-column>
-          <!--数量-->
-          <el-table-column
-            :label="$t('M.comm_count')"
-          >
-            <template slot-scope = "s">
-              <div>{{ s.row.amount }}</div>
-            </template>
-          </el-table-column>
-          <!--提交时间-->
-          <el-table-column
-            :label="$t('M.comm_sub_time') + $t('M.comm_time')"
-          >
-            <template slot-scope = "s">
-              <div>{{ s.row.createTime }}</div>
-            </template>
-          </el-table-column>
-          <!--更新时间-->
-          <el-table-column
-            :label="$t('M.comm_update') + $t('M.comm_time')"
-          >
-            <template slot-scope = "s">
-              <div>{{ s.row.updateTime }}</div>
-            </template>
-          </el-table-column>
-          <!--状态-->
-          <el-table-column
-            prop="address"
-            :label="$t('M.comm_state')"
-          >
-            <template slot-scope = "s">
-              <div>{{ $t(`M.${s.row.i18nStatusName}`)}}</div>
-            </template>
-          </el-table-column>
-        </el-table>
-        <!--分页-->
-        <el-pagination
-          background
-          v-show="activeName === 'current-entrust' && chargeRecordList.length"
-          layout="prev, pager, next"
-          :page-count="totalPageForMyEntrust"
-          @current-change="changeCurrentPage"
-        >
-        </el-pagination>
+            <!--币种-->
+            <el-table-column
+              :label="$t('M.comm_currency')"
+              width="100"
+            >
+              <template slot-scope = "s">
+                <div>{{ s.row.coinName }}</div>
+              </template>
+            </el-table-column>
+            <!--类型-->
+            <el-table-column
+              :label="$t('M.comm_type')"
+              width="100"
+            >
+              <template slot-scope = "s">
+                <div>{{ $t(`M.${s.row.i18nTypeName}`)}}</div>
+              </template>
+            </el-table-column>
+            <!--数量-->
+            <el-table-column
+              :label="$t('M.comm_count')"
+            >
+              <template slot-scope = "s">
+                <div>{{ s.row.amount }}</div>
+              </template>
+            </el-table-column>
+            <!--提交时间-->
+            <el-table-column
+              :label="$t('M.comm_sub_time') + $t('M.comm_time')"
+            >
+              <template slot-scope = "s">
+                <div>{{ s.row.createTime }}</div>
+              </template>
+            </el-table-column>
+            <!--更新时间-->
+            <el-table-column
+              :label="$t('M.comm_update') + $t('M.comm_time')"
+            >
+              <template slot-scope = "s">
+                <div>{{ s.row.updateTime }}</div>
+              </template>
+            </el-table-column>
+            <!--状态-->
+            <el-table-column
+              prop="address"
+              :label="$t('M.comm_state')"
+            >
+              <template slot-scope = "s">
+                <div>{{ $t(`M.${s.row.i18nStatusName}`)}}</div>
+              </template>
+            </el-table-column>
+          </el-table>
+        </div>
       </div>
       <!--其他记录-->
       <div
@@ -235,6 +228,17 @@
           </el-table-column>
         </el-table>
       </div>
+    </div>
+    <div class="paging">
+      <!--分页-->
+      <el-pagination
+        background
+        v-show="activeName === 'current-entrust' && chargeRecordList.length"
+        layout="prev, pager, next"
+        :page-count="totalPageForMyEntrust"
+        @current-change="changeCurrentPage"
+      >
+      </el-pagination>
     </div>
   </div>
 </template>
@@ -441,6 +445,11 @@ export default {
   .billing-details{
     >.billing-details-main{
       min-height: 585px;
+      .billing-details-content {
+        >.tab-list {
+          height: 520px;
+        }
+      }
       >.billing-details-query {
         height: 57px;
         line-height: 57px;
@@ -488,6 +497,7 @@ export default {
       color:$dayFontColor;
       >.billing-details-main {
         background-color: $dayBgColor;
+        border: 1px solid #ecf1f8;
         >.billing-details-query {
           border-bottom: 1px solid rgba(57,66,77,0.1);
           >.search-button {

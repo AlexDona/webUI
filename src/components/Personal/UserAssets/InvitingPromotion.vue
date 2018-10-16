@@ -701,7 +701,7 @@ export default {
             >.info-record {
               background: #F3F8FF;
               >.extension-code {
-                border-bottom: 1px solid #364654;
+                border-bottom: 1px solid #ecf1f8;
                 >.extension-code,
                 >.extension-link{
                   >.code-left,
