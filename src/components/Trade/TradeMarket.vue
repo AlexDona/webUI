@@ -80,7 +80,8 @@
 <script>
 import {
   getStore,
-  setStore
+  setStore,
+  unzip
 } from '../../utils'
 import {
   // getPartnerAreaList,
@@ -200,7 +201,8 @@ export default {
       if (!returnAjaxMessage(data, this)) {
         return false
       } else {
-        let [...tickerList] = data.data.data.tickerList
+        const objData = JSON.parse(unzip(data.data.data.obj))
+        let [...tickerList] = objData.tickerList
         // let plateItemMap = new Map()
         let plateList = []
         // 板块筛选
