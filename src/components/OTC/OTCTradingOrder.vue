@@ -1163,11 +1163,12 @@ export default {
             >.logo{
               display: inline-block;
               margin-right: 20px;
+              text-align: center;
               >.logo-icon{
 
               }
               >.logo-name{
-                margin-top: 10px;
+                margin-top: 4px;
               }
             }
             >.left-info{
@@ -1249,7 +1250,7 @@ export default {
               }
               >.action-explain{
                 margin-left: 20px;
-                line-height: 20px;
+                line-height: 24px;
                 >.remaining-time{
                   // color: #D45858;
                 }

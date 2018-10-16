@@ -49,18 +49,18 @@
       </div>
       <FinanceBrokenLine ref="childLineCharts"/>
       </div>
-      <!-- 投资 -->
+      <!-- 存币 -->
       <div class="finance-inner-box">
         <div class="left">
           <div class="nav-header">
-            <!-- 投资 -->
+            <!-- 存币 -->
             <div class="invest">{{$t('M.finance_invest')}}</div>
             <!-- 可用余额 -->
             <div class="balance">{{$t('M.finance_useBalance')}}&nbsp;:&emsp; <div>{{isLogin ? availableBalance : '--'}}<span> {{selecteCoindName}}</span></div></div>
           </div>
           <div class="left-body">
             <label for="">
-              <!-- 投资类型 -->
+              <!-- 存币类型 -->
               {{$t('M.finance_invest')}}{{$t('M.comm_type')}}:&nbsp;&nbsp;&nbsp;
               <el-select
                 :no-data-text="$t('M.comm_no_data')"
@@ -71,25 +71,27 @@
                   v-for="(item,index) in investTypeList"
                   :key="index"
                   :label="item.typeDescription"
-                  :value="item.id">
+                  :value="item.id"
+                >
                 </el-option>
               </el-select>
             </label>
             <label for="">
-              <!-- 投资数量 -->
+              <!-- 存币数量 -->
               {{$t('M.finance_invest')}}{{$t('M.comm_count')}}:&nbsp;&nbsp;&nbsp;
               <div class='invest-mounte'>
                 <!-- 请输入数量 -->
                 <input
-                v-model="investMounte"
-                :placeholder="$t('M.otc_publishAD_pleaseInput') + $t('M.comm_count')"
-                @keyup="changeInvestMounte"
-                onkeyup="if(this.value.length==1){this.value=this.value.replace(/[^1-9]/g,'')}else{this.value=this.value.replace(/\D/g,'')}"
-                onafterpaste="if(this.value.length==1){this.value=this.value.replace(/[^1-9]/g,'')}else{this.value=this.value.replace(/\D/g,'')}">
+                  v-model="investMounte"
+                  :placeholder="$t('M.otc_publishAD_pleaseInput') + $t('M.comm_count')"
+                  @keyup="changeInvestMounte"
+                  onkeyup="if(this.value.length==1){this.value=this.value.replace(/[^1-9]/g,'')}else{this.value=this.value.replace(/\D/g,'')}"
+                  onafterpaste="if(this.value.length==1){this.value=this.value.replace(/[^1-9]/g,'')}else{this.value=this.value.replace(/\D/g,'')}"
+                >
                 <strong>{{selecteCoindName}}</strong>
               </div>
             </label>
-            <!-- 您投资的币种数量已超过该币种的总资产 -->
+            <!-- 您存币的币种数量已超过该币种的总资产 -->
             <div  class="totalTipsPositon" v-if="isShow">{{$t('M.finance_errorTips')}}</div>
             <label for=" ">
               <div class='submitBtn'>
@@ -97,7 +99,7 @@
                  plain
                  @click="getInvestEarnings"
                 >
-                <!-- 立刻投资 -->
+                <!-- 立刻存币 -->
                 {{$t('M.finance_mast')}}{{$t('M.finance_invest')}}
                 </el-button>
               </div>
@@ -181,12 +183,12 @@
         </div>
         <div class="right">
           <div class="nav-header">
-            <!-- 我的投资 -->
+            <!-- 我的存币 -->
             <div class="invest">{{$t('M.finance_mine')}}{{$t('M.finance_invest')}}</div>
           </div>
           <div class="pieCharts-box">
               <div class="right-infor">
-                <!-- 投资估值 -->
+                <!-- 存币估值 -->
               <div>{{$t('M.finance_invest')}}{{$t('M.finance_estimatedValue')}}
                 <p class="green">
                   <span>{{isLogin ? InvestmentValue : '--'}}</span>
@@ -212,9 +214,9 @@
       </div>
       <div class="invest-list">
         <!-- <div class="invest-list-header">
-          <div class='invest'>投资记录</div>
+          <div class='invest'>存币记录</div>
         </div> -->
-        <!-- 投资记录和收益记录 -->
+        <!-- 存币记录和收益记录 -->
         <div class="nvest-list-body">
           <div class='showAll'>
             <router-link class="blue" :to="{path: isLogin ? '/FinanceInvestmentRecord' : '/login', query:{coinId:selectedCoinId,coinName:selecteCoindName}}">
@@ -222,9 +224,9 @@
               {{ $t('M.investment_look_all') }}
             </router-link>
           </div>
-          <!-- 投资记录 -->
+          <!-- 存币记录 -->
           <el-tabs v-model="activeName" @tab-click="handleClick">
-            <!-- 投资记录 -->
+            <!-- 存币记录 -->
             <el-tab-pane
             :label="$t('M.finance_invest') + $t('M.finance_recode')"
             name="1">
@@ -246,13 +248,13 @@
                 style="width: 100%"
                 :empty-text="$t('M.comm_no_data')"
                 >
-                <!-- 投资币种 -->
+                <!-- 存币币种 -->
                 <el-table-column
                   prop="coinShortName"
                   :label="$t('M.finance_invest') + $t('M.comm_currency')"
                   width="100">
                 </el-table-column>
-                <!-- 投资类型 -->
+                <!-- 存币类型 -->
                 <el-table-column
                   prop="typeDescription"
                   :label="$t('M.finance_invest') + $t('M.otc_cancelOrder_type')"
@@ -342,13 +344,13 @@
                 style="width: 100%"
                 :empty-text="$t('M.comm_no_data')"
                 >
-                <!-- 投资币种 -->
+                <!-- 存币币种 -->
                 <el-table-column
                   prop="coinShortName"
                   :label="$t('M.finance_invest') + $t('M.comm_currency')"
                   width="150">
                 </el-table-column>
-                <!-- 投资类型 -->
+                <!-- 存币类型 -->
                 <el-table-column
                   prop="description"
                   :label="$t('M.finance_invest') + $t('M.otc_cancelOrder_type')"
@@ -418,16 +420,16 @@ export default {
       selecteCoindName: '',
       // 币种数组
       traderCoinList: [],
-      // 投资数量
+      // 存币数量
       investMounte: '',
-      // 投资类型
+      // 存币类型
       selectedInvestTypeId: '',
       selectedInvestTypeDiscri: '',
-      // 投资类型列表
+      // 存币类型列表
       investTypeList: [],
-      // 默认显示投资记录
+      // 默认显示存币记录
       activeName: '1',
-      // 投资列表
+      // 存币列表
       investList: [],
       // 收益列表
       userInterestRecord: [],
@@ -445,9 +447,9 @@ export default {
       historyAmountIncrease: '',
       // 可用余额
       availableBalance: '',
-      // 是否立刻投资显示立即投资错误提示
+      // 是否立刻存币显示立即存币错误提示
       isShow: false,
-      // 投资估值
+      // 存币估值
       InvestmentValue: 0,
       // 历史收益值
       getMoneyValue: 0,
@@ -457,7 +459,7 @@ export default {
       renderTimeList: '',
       // 走势图y轴数组
       renderPriceList: '',
-      // 点击立即投资弹窗默认隐藏
+      // 点击立即存币弹窗默认隐藏
       dialogVisible: false,
       // 表单对象
       formLabelAlign: {
@@ -564,7 +566,7 @@ export default {
         this.userCoindTotal = data.data.data.total
       }
     },
-    // 点击立刻投资按钮执行
+    // 点击立刻存币按钮执行
     getInvestEarnings () {
       // console.log(111.00)
       if (this.isLogin) {
@@ -575,7 +577,7 @@ export default {
           this.dialogVisible = true
         } else {
           this.$message({
-            // 投资类型或投资数量不能为空
+            // 存币类型或存币数量不能为空
             message: this.$t('M.finance_noemptyTips'),
             type: 'error'
           })
@@ -592,7 +594,7 @@ export default {
     // 点击确定按钮模态框关闭
     dialogSuer () {
       this.dialogVisible = false
-      // 执行投资按钮
+      // 执行存币按钮
       this.clickImmediateInvestment()
     },
     // 模态框数字发生变化时需要执行的方法
@@ -606,7 +608,7 @@ export default {
         financialManagementId: this.selectedInvestTypeId,
         number: this.investMounte
       })
-      console.log('投资理财类型')
+      console.log('存币理财类型')
       console.log(data)
       if (!(returnAjaxMessage(data, this, 0))) {
         return false
@@ -620,21 +622,21 @@ export default {
         financialManagementId: this.selectedInvestTypeId,
         number: this.investMounte
       })
-      console.log('投资理财类型')
+      console.log('存币理财类型')
       console.log(data)
       if (!(returnAjaxMessage(data, this, 0))) {
         return false
       } else {
         // 重新掉一次币种接口刷新列表
         this.getFinancialManagementList()
-        // 投资成功
+        // 存币成功
         this.$message({
           message: this.$t('M.finance_invest') + this.$t('M.comm_success'),
           type: 'success'
         })
       }
     },
-    // 投资理财页面币种查询
+    // 存币理财页面币种查询
     async getFinancialManagementList () {
       this.fullscreenLoading = true
       const data = await getFinancialManagement({
@@ -644,7 +646,7 @@ export default {
         coinId: this.selectedCoinId,
         coinName: this.selecteCoindName
       })
-      console.log('投资理财页面查询')
+      console.log('存币理财页面查询')
       console.log(data)
       if (!(returnAjaxMessage(data, this, 0))) {
         this.fullscreenLoading = false
@@ -652,7 +654,6 @@ export default {
       } else {
         console.log(data)
         this.fullscreenLoading = false
-
         // let getData = Object.assign({}, data.data.data)
         let getData = data.data.data
         // let getData = JSON.parse(JSON.stringify(data.data.data))
@@ -675,15 +676,17 @@ export default {
         this.historyAmountIncrease = getData.tickerPriceResult.historyAmountIncrease
         // 理财类型数组
         this.investTypeList = getData.managementList
-        // 设置投资类型默认值
+        console.log(11111111111111111111111111)
+        console.log(this.investTypeList)
+        // 设置存币类型默认值
         this.selectedInvestTypeId = getData.managementList[0] ? getData.managementList[0].id : ''
         // 设置可用余额
         this.availableBalance = getData.userTotal
-        // 投资估计值
+        // 存币估计值
         this.InvestmentValue = getData.userNumber
         // 历史收益
         this.getMoneyValue = getData.userInterest
-        // 投资记录列表赋值
+        // 存币记录列表赋值
         this.investList = this.isLogin ? getData.userFinancialManagementRecord.list : ''
         // 收益记录列表
         this.userInterestRecord = this.isLogin ? getData.userInterestRecord.list : ''
@@ -697,11 +700,11 @@ export default {
         this.FINANCE_LINE_RENDER_TIME_LIST(getData.tickerPriceResult.renderTimeList)
         // 设置状态只要发生请求就让状态改变
         this.FINANCE_LINE_STATUS(1)
-        // 将投资数量输入框清空
+        // 将存币数量输入框清空
         this.investMounte = ''
       }
     },
-    // 用户取消投资接口
+    // 用户取消存币接口
     async clickCancleInvestment (id) {
       const data = await cancleInvestment(id)
       console.log('用户取消按钮')
