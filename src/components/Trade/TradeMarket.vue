@@ -336,7 +336,7 @@ export default {
           this.sortBybubble(plateItem.content, column, methods)
         })
       })
-      arr.length === 1 ? this.collectArea = arr[0] : this.filterMarketList = arr
+      arr[0].areaId === this.collectArea.areaId ? this.collectArea = arr[0] : this.filterMarketList = arr
       // 触发computed
       this.searchKeyWord = 'a'
       this.searchKeyWord = ''
