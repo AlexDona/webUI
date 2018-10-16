@@ -417,7 +417,7 @@
                         <div class="list-left-flex flex1 font-size12">
                           <div class="flex-box padding-top10">
                             <p class="left-flex-hint">
-                              {{ chargeMoneyName }}asdfasdfasdfasdfasdfasdfasdfasd
+                              {{ chargeMoneyName }}
                               <!--提币地址-->
                               {{ $t('M.comm_mention_money') }}{{ $t('M.comm_site') }}
                             </p>
@@ -996,7 +996,7 @@ export default {
         // 显示充值框
         this.withdrawDepositList[index].rechargeIsShow = true
       } else {
-        if (!this.needTag) {
+        if (this.needTag) {
           // 隐藏普通币种提现框
           this.withdrawDepositList[index].withdrawDepositIsShow = false
         } else {
@@ -1009,10 +1009,14 @@ export default {
     },
     // 点击提现按钮显示充币内容（带回币种id 币种名称 当前index）
     mentionMoneyButton (id, name, index) {
-      // 点击提现清空数量数据
+      // 提币数量
       this.$refs.rechargeCount[index].value = ''
+      // 到账数量
       this.serviceChargeCount = ''
+      // 提币地址
       this.mentionAddressValue = ''
+      // 地址标签
+      this.remark = ''
       // 显示充值框
       this.mentionDialogVisible = true
       // 每行数据ID
@@ -1043,27 +1047,6 @@ export default {
       // 调用手续费信息
       this.getWithdrawalInformation(index)
       this.getSecurityCenter()
-    },
-    // 新增用户提币地址校验
-    async gitCheckCurrencyAddress () {
-      let data
-      let param = {
-        coinId: this.mentionMoneyAddressId, // 币种coinId
-        address: this.prepaidAddress // 充值地址
-      }
-      // 整页loading
-      this.fullscreenLoading = true
-      data = await checkCurrencyAddress(param)
-      if (!(returnAjaxMessage(data, this, 0))) {
-        // 接口失败清除loading
-        this.fullscreenLoading = false
-        return false
-      } else {
-        // 接口成功清除loading
-        this.fullscreenLoading = false
-        // 验证通过调用验证方式接口
-        this.getSecurityCenter()
-      }
     },
     // 显示交易对跳转币种信息
     enter (id, index) {
@@ -1176,14 +1159,16 @@ export default {
     changeId (e) {
       this.mentionAddressList.forEach(item => {
         if (e === item.id) {
-          this.statusAddressValue = item.address
           console.log(this.statusAddressValue)
           this.remark = item.remark
           this.mentionAddressValue = e
           console.log(this.mentionAddressValue)
           console.log(this.statusAddressValue)
         }
+        this.statusAddressValue = item.address
+        this.mentionAddressValue = this.statusAddressValue
       })
+      this.gitCheckCurrencyAddress()
     },
     // 根据币种id查询提币地址
     async queryWithdrawalAddressList (index) {
@@ -1209,6 +1194,28 @@ export default {
           this.mentionAddressValue = data.data.data.vo.userWithdrawAddressDtoList[0].address
         }
         console.log(data.data.data.vo)
+      }
+    },
+    // select框自定义提币地址校验地址
+    // 新增用户提币地址校验
+    async gitCheckCurrencyAddress () {
+      let data
+      let param = {
+        coinId: this.mentionMoneyAddressId, // 币种coinId
+        address: this.mentionAddressValue
+      }
+      // 整页loading
+      this.fullscreenLoading = true
+      data = await checkCurrencyAddress(param)
+      if (!(returnAjaxMessage(data, this, 0))) {
+        // 接口失败清除loading
+        this.fullscreenLoading = false
+        return false
+      } else {
+        // 接口成功清除loading
+        this.fullscreenLoading = false
+        // 验证通过调用验证方式接口
+        this.getSecurityCenter()
       }
     },
     /**
@@ -1258,34 +1265,45 @@ export default {
       }
     },
     /**
-    * 点击提币按钮
+    * 点击提币按钮 验证
     * */
     moneyConfirmState () {
-      if (!this.mentionAddressValue) {
-        // 请选择提币地址
-        this.$message({
-          message: this.$t('M.comm_please_choose') + this.$t('M.comm_mention_money') + this.$t('M.comm_site'),
-          type: 'error'
-        })
-        this.mentionMoneyConfirm = false
-      } else if (!this.amount) {
-        // 请输入提币数量
-        this.$message({
-          message: this.$t('M.comm_please_enter') + this.$t('M.comm_mention_money') + this.$t('M.comm_count'),
-          type: 'error'
-        })
-        this.mentionMoneyConfirm = false
-      } else if (!this.service) {
-        // 请输入手续费
-        this.$message({
-          message: this.$t('M.comm_please_enter') + this.$t('M.comm_service_charge'),
-          type: 'error'
-        })
-        this.mentionMoneyConfirm = false
-      } else if (!this.userInfo.userInfo.payPassword) {
-        this.dialogVisible = true
+      if (this.needTag) {
+        if (!this.remark) {
+          // 请输入备注
+          this.$message({
+            message: this.$t('M.comm_please_enter') + this.$t('M.comm_address_labels'),
+            type: 'error'
+          })
+          this.mentionMoneyConfirm = false
+        }
       } else {
-        this.mentionMoneyConfirm = true
+        if (!this.mentionAddressValue) {
+          // 请选择提币地址
+          this.$message({
+            message: this.$t('M.comm_please_choose') + this.$t('M.comm_mention_money') + this.$t('M.comm_site'),
+            type: 'error'
+          })
+          this.mentionMoneyConfirm = false
+        } else if (!this.amount) {
+          // 请输入提币数量
+          this.$message({
+            message: this.$t('M.comm_please_enter') + this.$t('M.comm_mention_money') + this.$t('M.comm_count'),
+            type: 'error'
+          })
+          this.mentionMoneyConfirm = false
+        } else if (!this.service) {
+          // 请输入手续费
+          this.$message({
+            message: this.$t('M.comm_please_enter') + this.$t('M.comm_service_charge'),
+            type: 'error'
+          })
+          this.mentionMoneyConfirm = false
+        } else if (!this.userInfo.userInfo.payPassword) {
+          this.dialogVisible = true
+        } else {
+          this.mentionMoneyConfirm = true
+        }
       }
     },
     confirm () {
@@ -1310,17 +1328,11 @@ export default {
         emailCode: this.emailCode, // 邮箱验证码
         googleCode: this.googleCode, // 谷歌验证码
         coinId: this.mentionMoneyAddressId, // 币种ID
+        withdrawAddress: this.mentionAddressValue,
         remark: this.remark, // 提币地址
         networkFees: this.service, // 手续费
         amount: this.amount, // 提币数量
         payCode: this.password // 交易密码
-      }
-      // 判断是普通币种提币还是公信宝提币
-      if (!this.needTag) {
-        param.withdrawAddress = this.statusAddressValue // 提币地址
-      } else {
-        this.statusAddressValue = this.mentionAddressValue
-        param.withdrawAddress = this.statusAddressValue // 提币地址
       }
       // 整页loading
       this.fullscreenLoading = true
@@ -1338,7 +1350,7 @@ export default {
         this.stateEmptyData()
       }
     },
-    // 接口请求完成之后清空数据
+    // 接口请求完成之后普通币种清空数据
     stateEmptyData (index) {
       this.phoneCode = '' // 短信验证码
       this.emailCode = '' // 邮箱验证码
@@ -1554,7 +1566,7 @@ export default {
                       -o-transform:rotate(135deg);
                     }
                     >.triangle-one {
-                      right: 50px;
+                      right: 55px;
                     }
                     >.mention {
                       width: 100%;
@@ -1808,7 +1820,7 @@ export default {
                   border-top: 1px solid transparent;
                   border-left: 1px solid #338FF5;
                   border-bottom: 1px solid #338FF5;
-                  background-color: #1E2636;
+                  background-color: #1C1F32;
                 }
                 >.recharge-content {
                   >.recharge-content-hint {
