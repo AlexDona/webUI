@@ -1060,8 +1060,8 @@ export default {
         $('.handler').css({'left': 0})
         $('.drag_bg').css({'width': 0})
         /*
-           * 是否需要图片验证码验证（条件：3次登录失败）
-           * */
+         * 是否需要图片验证码验证（条件：3次登录失败）
+         **/
         // console.log(this.cacheOfuserInfo)
         if (this.failureNum > 3) {
           // 多次错误登录
@@ -1069,7 +1069,7 @@ export default {
           // 显示图片验证码
           this.userInputImageCode = ''
           this.loginImageValidateStatus = true
-        } else if (!this.firstLogin || !this.loginIpEquals) {
+        } else if (this.firstLogin || !this.loginIpEquals) {
           // 登录第三步(第一次登录、异常ip)
           this.step3DialogShowStatus = true
           this.autoSendValidateCode()
@@ -1078,7 +1078,6 @@ export default {
         }
       } // 验证成功函数
     },
-
     /*
     * 移动端拖动事件
     * */
