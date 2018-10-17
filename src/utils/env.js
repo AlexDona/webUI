@@ -18,20 +18,20 @@ if (process.env.NODE_ENV == 'development' || process.env.NODE_ENV == 'testing') 
   // apiCommonUrl = 'http://192.168.1.217:8888/' // 爱军
 
   // apiCommonUrl = 'http://192.168.1.200:8888/' // 本地测试
-  // apiCommonUrl = 'http://192.168.1.52:8888/' // 本地测试
-  apiCommonUrl = 'http://api.new.bzu.com/' // 内部测试
+  apiCommonUrl = 'http://192.168.1.52:8888/' // 本地测试
+  // apiCommonUrl = 'http://api.new.bzu.com/' // 内部测试
 
   // apiCommonUrl = 'http://192.168.1.176:8888/' // 帅飞
   // apiCommonUrl = 'https://rest.fubt.top/'
   // apiCommonUrl = 'http://192.168.1.77:8888' // 张新杰
-  // apiCommonUrl = 'http://192.168.1.52:9000' // 滑浩田
+  // apiCommonUrl = 'http://192.168.1.52:8888' // 滑浩田
   // apiCommonUrl = 'http://192.168.1.235:8046' // 吕冰洋
   // apiCommonUrl = 'http://192.168.1.252:8103' // 施伯兵
 
   /* socketUrl --------------------------------------------- */
 
-  // socketUrl = 'ws://192.168.1.52:8087/market' // socketUrl
-  socketUrl = 'ws://ws.bzu.com/market'
+  socketUrl = 'ws://192.168.1.52:8087/market' // socketUrl
+  // socketUrl = 'ws://ws.bzu.com/market'
   // socketUrl = 'ws://192.168.1.200:8087/market'
 
   loginSocketUrl = 'ws://api.new.bzu.com/qrcodeLogin/'
@@ -43,7 +43,7 @@ if (process.env.NODE_ENV == 'development' || process.env.NODE_ENV == 'testing') 
   // apiCommonUrl = 'https://rest.fubt.top/'
   // apiCommonUrl = 'http://192.168.1.200:8888/' // 本地测试
   // apiCommonUrl = 'http://api.new.fubt.com/' // 本地测试
-  apiCommonUrl = 'http://api.new.bzu.com/' // 内部测试
+  apiCommonUrl = 'https://api.new.bzu.com/' // 内部测试
 
   /* socketUrl --------------------------------------------- */
 

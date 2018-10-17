@@ -247,6 +247,7 @@ export default {
     // 设置 当前交易区
     changeActiveSymbol (data) {
       let {activeSymbol, previousSymbol} = data
+      console.log(activeSymbol)
       this.$store.commit('common/CHANGE_ACTIVE_SYMBOL', {
         activeSymbol,
         previousSymbol

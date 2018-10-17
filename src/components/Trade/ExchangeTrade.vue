@@ -215,9 +215,9 @@
                   <span class="margin-left10 buy">
                     <!--可买-->
                     {{ $t('M.trade_exchange_can_buy') }}：
-                    <span v-show="!buyUserCoinWallet.total||!middleTopData.price">--</span>
-                    <span v-show="buyUserCoinWallet.total&&middleTopData.price">
-                      {{(buyUserCoinWallet.total/middleTopData.price).toFixed(middleTopData.priceExchange)}}
+                    <span v-show="!buyUserCoinWallet.total||!middleTopData.last">--</span>
+                    <span v-show="buyUserCoinWallet.total&&middleTopData.last">
+                      {{(buyUserCoinWallet.total/middleTopData.last).toFixed(middleTopData.priceExchange)}}
                     </span>
                     <span>{{middleTopData.sellsymbol}}</span>
                   </span>
@@ -617,7 +617,7 @@ export default {
               break
             case 'MARKET':
               params.count = this.$refs[this.marketBuyCountInputRef].value
-              if ((this.buyUserCoinWallet.total / this.middleTopData.price) < params.count - 0) {
+              if ((this.buyUserCoinWallet.total / this.middleTopData.last) < params.count - 0) {
                 // 可用币种数量不足
                 this.$message({
                   type: 'error',
@@ -704,20 +704,11 @@ export default {
     limitSellAmount () {
       return this.keep2Num(this.limitExchange.sellPrice * this.limitExchange.sellCount)
     }
-    // marketBuyAmount () {
-    //   return this.keep2Num(this.middleTopData.price * this.marketExchange.buyCount)
-    // },
-    // marketSellAmount () {
-    //   return this.keep2Num(this.middleTopData.price * this.marketExchange.sellCount)
-    // }
-    // limitExchange[buyAmount] () {
-    //   console.log(this.limitExchange.buyPrice * this.limitExchange.buyCount)
-    //   return this.limitExchange.buyPrice * this.limitExchange.buyCount
-    // }
   },
   watch: {
     activeSymbol (newVal) {
       console.log(newVal)
+      this.reflashCount = 0
     },
     // 用户手动设置价格
     activePriceItem (newVal) {
@@ -727,11 +718,12 @@ export default {
       }
     },
     middleTopData (newVal) {
-      let targetPriceOfBuy = newVal.buy
-      let targetPriceOfSell = newVal.sell
+      console.log(newVal)
+      let targetPriceOfBuy = newVal.buy || newVal.kai
+      let targetPriceOfSell = newVal.sell || newVal.kai
       // 首次打开设置价格
       if (!this.reflashCount) {
-        if (newVal.price) {
+        if (newVal.last) {
           this.reflashCount++
         }
         if (this.isLogin) {

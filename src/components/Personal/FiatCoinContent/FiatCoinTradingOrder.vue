@@ -1168,6 +1168,24 @@ export default {
     tradingOrderList (newVal) {
       this.timerLogicMethod()
     },
+    // tradingOrderList (newVal) {
+    //   console.log(newVal)
+    // if (newVal) {
+    //   // 循环数组
+    //   newVal.forEach((item, index) => {
+    //     this.buttonStatusArr[index] = false
+    //     this.showOrderAppeal[index] = false
+    //     // 自动取消订单倒计时数组集
+    //     this.cancelOrderTimeArr[index] = item.cancelRestTime // cancelRestTime毫秒单位
+    //     // 自动成交倒计时数组集
+    //     this.accomplishOrderTimeArr[index] = item.completeRestTime // completeRestTime毫秒单位
+    //   })
+    //   // 调用自动取消倒计时方法
+    //   this.cancelSetInter()
+    //   // 调用自动成交倒计时方法
+    //   this.accomplishSetInter()
+    // }
+    // },
     legalTradePageTotals (newVal) {
       console.log(newVal)
     },
