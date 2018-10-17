@@ -103,19 +103,7 @@
                 </dd>
               </dl>
               <!--最新价-->
-              <dl class="new-price">
-                <dt class="text-align-c font-size16">
-                  <span>{{buysAndSellsList.latestDone.price}}</span>
-                  <IconFontCommon
-                    v-show="buysAndSellsList.latestDone.rose>0"
-                    iconName="icon-down"
-                  />
-                  <IconFontCommon
-                    v-show="buysAndSellsList.latestDone.rose<0"
-                    iconName="icon-up"
-                  />
-                </dt>
-              </dl>
+              <TradeNewPrice/>
               <!--买入-->
               <dl
                 class="sells-list"
@@ -157,19 +145,7 @@
               v-if="listOrder==='buys'"
             >
               <!--最新价-->
-              <dl class="new-price">
-                <dt class="text-align-c font-size16">
-                  <span>{{buysAndSellsList.latestDone.price}}</span>
-                  <IconFontCommon
-                    v-show="buysAndSellsList.latestDone.rose>0"
-                    iconName="icon-down"
-                  />
-                  <IconFontCommon
-                    v-show="buysAndSellsList.latestDone.rose<0"
-                    iconName="icon-up"
-                  />
-                </dt>
-              </dl>
+              <TradeNewPrice/>
               <!--买入-->
               <dl
                 class="buys-list"
@@ -246,19 +222,7 @@
                 </dd>
               </dl>
               <!--最新价-->
-              <dl class="new-price">
-                  <dt class="text-align-c font-size16">
-                    <span>{{buysAndSellsList.latestDone.price}}</span>
-                    <IconFontCommon
-                      v-show="buysAndSellsList.latestDone.rose>0"
-                      iconName="icon-down"
-                    />
-                    <IconFontCommon
-                      v-show="buysAndSellsList.latestDone.rose<0"
-                      iconName="icon-up"
-                    />
-                  </dt>
-                </dl>
+              <TradeNewPrice/>
             </div>
             <!--</el-collapse-transition>-->
           </div>
@@ -268,7 +232,7 @@
   </div>
 </template>
 <script>
-import IconFontCommon from '../Common/IconFontCommon'
+import TradeNewPrice from './TradeNewPrice'
 import {
   createNamespacedHelpers,
   mapState
@@ -276,7 +240,7 @@ import {
 const { mapMutations } = createNamespacedHelpers('trade')
 export default {
   components: {
-    IconFontCommon
+    TradeNewPrice
   },
   // props,
   data () {
@@ -333,6 +297,7 @@ export default {
     ...mapState({
       theme: state => state.common.theme,
       socketData: state => state.common.socketData,
+      middleTopData: state => state.trade.middleTopData,
       depthData: state => state.common.klineAjaxData.depthData,
       buysAndSellsListByAjax: state => state.common.klineAjaxData.buyAndSellData,
       buysAndSellsListBySocket: state => state.common.socketData.buyAndSellData,
@@ -346,6 +311,9 @@ export default {
     }
   },
   watch: {
+    middleTopData (newVal) {
+      console.log(newVal)
+    },
     activeSymbolId (newVal) {
       console.log(newVal)
       this.reflashCount = 0
