@@ -1432,6 +1432,7 @@ export default {
        /* background-color: $nightMainBgColor;*/
         .button {
           background:linear-gradient(81deg,rgba(43,57,110,1) 0%,rgba(42,80,130,1) 100%);
+          color: #fff;
         }
         >.no-data{
           background-color: $nightMainBgColor;
@@ -1448,6 +1449,10 @@ export default {
       background-color: $dayBgColor;
       color:$dayFontColor;
       >.fiat-trading-order-content{
+        .button {
+          background:linear-gradient(81deg,rgba(43,57,110,1) 0%,rgba(42,80,130,1) 100%);
+          color: #333;
+        }
         >.order-list{
           background-color: #fff;
           border: 1px solid  rgba(72,87,118,0.1);

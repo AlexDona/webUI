@@ -815,11 +815,19 @@ export default {
       let data = await currencyApplicationDownloadUrl({
         key: 'VIP_COIN'
       })
+      console.log(data)
+      // 整页loading
+      this.fullscreenLoading = true
       if (!(returnAjaxMessage(data, this, 0))) {
+        // 接口失败清除loading
+        this.fullscreenLoading = false
         return false
       } else {
+        // 接口成功清除loading
+        this.fullscreenLoading = false
         // 返回展示
         this.configValue = data.data.data.configValue
+        console.log(data.data.data.configValue)
         this.toggleAssetsCurrencyId()
       }
     },
@@ -832,6 +840,7 @@ export default {
       // 整页loading
       this.fullscreenLoading = true
       data = await getPushTotalByCoinId(param)
+      console.log(data)
       if (!(returnAjaxMessage(data, this, 0))) {
         // 接口失败清除loading
         this.fullscreenLoading = false
