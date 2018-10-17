@@ -4,7 +4,7 @@
     :class="{'day':theme == 'day','night':theme == 'night' }"
   >
   <!-- 导航 -->
-    <HeaderCommon/>
+    <keep-aline><HeaderCommon/></keep-aline>
     <!-- banner -->
     <div class="banner-box">
       <img src="../../assets/finance/banner.png" alt="">

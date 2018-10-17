@@ -5,7 +5,7 @@
     v-loading.fullscreen.lock="fullscreenLoading"
     element-loading-background="rgba(0, 0, 0, 0.6)"
   >
-    <HeaderCommon/>
+    <keep-aline><HeaderCommon/></keep-aline>
     <div class="binding-google-main margin25">
       <header class="binding-google-header personal-height60 line-height60 line-height70 margin25">
         <span

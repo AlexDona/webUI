@@ -4,7 +4,7 @@
     :class="{'day':theme == 'day','night':theme == 'night' }"
   >
     <!--头部-->
-    <HeaderCommon/>
+    <keep-aline><HeaderCommon/></keep-aline>
     <div class="personal-center-main">
       <div class="personal-center-content clearfix">
         <el-tabs

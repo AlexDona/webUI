@@ -6,7 +6,7 @@
     element-loading-background="rgba(0, 0, 0, 0.6)"
   >
     <!--头部-->
-    <HeaderCommon/>
+    <keep-aline><HeaderCommon/></keep-aline>
     <div class="header-content">
       <img
         class="images"

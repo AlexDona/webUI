@@ -5,7 +5,7 @@
     v-loading.fullscreen.lock="fullscreenLoading"
     element-loading-background="rgba(0, 0, 0, 0.6)"
   >
-    <HeaderCommon/>
+    <keep-aline><HeaderCommon/></keep-aline>
     <div class="set-email-main margin25">
       <header class="set-email-header personal-height60 line-height60 line-height70 margin25">
         <span class="header-content-left header-content font-size16 font-weight600">

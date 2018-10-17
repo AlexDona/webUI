@@ -4,7 +4,7 @@
     :class="{'day':theme == 'day','night':theme == 'night' }"
     :style="{'height':windowHeight+'px'}"
   >
-    <HeaderCommon/>
+    <keep-aline><HeaderCommon/></keep-aline>
     <div class="inner-box">
       <div class="title">
         <!-- 找回密码 -->

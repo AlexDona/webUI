@@ -4,7 +4,7 @@
     class="trade-box trade"
     :class="{'day':theme == 'day','night':theme == 'night' }"
   >
-    <HeaderCommon/>
+    <keep-aline><HeaderCommon/></keep-aline>
     <div class="inner-box clearfloat">
       <!--左侧-->
       <div class="left float-left">

@@ -4,7 +4,9 @@
     :class="{'day':theme == 'day','night':theme == 'night' }"
   >
     <!-- 邀请排行 -->
-    <HeaderCommon/>
+    <keep-aline>
+      <HeaderCommon/>
+    </keep-aline>
     <div class="inner-box">
       <div
         class="top"

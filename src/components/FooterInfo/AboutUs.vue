@@ -3,7 +3,7 @@
     class="about-us-box"
     :class="{'day':theme == 'day','night':theme == 'night' }"
   >
-    <HeaderCommon/>
+    <keep-aline><HeaderCommon/></keep-aline>
     <div class="content">
       <div class="top">
         <h1>

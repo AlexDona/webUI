@@ -19,7 +19,7 @@
             class="introduction font-size12"
             v-if="footerInfo1.logo"
           >
-            {{footerInfo1.logo.content}}
+            {{footerInfo1.content}}
           </div>
           <!--分享-->
           <ul class="share-box">

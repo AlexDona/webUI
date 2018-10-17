@@ -25,11 +25,11 @@
         v-if="!isMobile&&!isErCodeLogin"
       >
         <!--切换登录-->
-        <!--<button-->
-          <!--class="toggle-login-type cursor-pointer"-->
-          <!--@click="toggleLoginType"-->
-        <!--&gt;-->
-        <!--</button>-->
+        <button
+          class="toggle-login-type cursor-pointer"
+          @click="toggleLoginType"
+        >
+        </button>
         <!-- 欢迎登录 -->
         <h1 class="title">{{$t('M.login_welcome')}}{{$t('M.comm_login')}}</h1>
         <!--正常登录-->
@@ -615,18 +615,19 @@ export default {
       isErcodeTimeOut: false, // 二维码是否过期
       isErCodeLogin: false, // 是否扫码登录
       erCodeString: '', // 二维码登录字符串
-      // username: '',
+      username: '',
       // username: '18625512987',
       // username: '18600929234',
       // username: '17600854297',
       // username: '13137111901',
       // password: 'a11111111',
-      username: '15638559236',
+      // username: '15638559236',
       // username: '13100000011',
       // username: '13100000012',
       // username: '18625512988',
       // password: '123456aa',
-      password: 'a1111111',
+      // password: 'a1111111',
+      password: '',
       userNameErrorMsg: '', // 错误提示
       loadingCircle: {},
       userInputImageCode: '', // 图形验证码(用户输入)
@@ -684,7 +685,7 @@ export default {
     require('../../../static/css/list/User/Login.css')
     this.ENTER_STEP1()
     this.refreshCode()
-    // this.reflashErCode()
+    this.reflashErCode()
     // 清空input框值
     // this.clearInputValue()
   },
@@ -713,9 +714,6 @@ export default {
       // this.onmousemove = null;
       // this.onmouseup = null;
     })
-    $('body').on('dblclick', (e) => {
-
-    })
   },
   activated () {
     // 清空input框值
@@ -742,6 +740,10 @@ export default {
       } else {
         console.log(data)
         this.erCodeString = data.data.data
+        this.socket.doOpen()
+        this.socket.on('open', () => {
+
+        })
       }
     },
     // 切换登录方式

@@ -3,7 +3,7 @@
     class="demo-box"
     :class="{'day':theme == 'day','night':theme == 'night' }"
   >
-    <HeaderCommon/>
+    <keep-aline><HeaderCommon/></keep-aline>
     <div class="inner-box"></div>
     <keep-aline><FooterCommon/></keep-aline>
   </div>
