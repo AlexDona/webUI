@@ -83,7 +83,7 @@
                 <el-option
                   v-for="(item,index) in merchantsOrdersCurrencyList"
                   :key="index"
-                  :label="item.name"
+                  :label="language === 'zh_CN'? item.name : item.shortName"
                   :value="item.id"
                 >
                 </el-option>
@@ -463,6 +463,8 @@ export default {
   filter: {},
   computed: {
     ...mapState({
+      // 当前选中语言
+      language: state => state.common.language,
       theme: state => state.common.theme,
       withdrawDepositList: state => state.common.withdrawDepositList,
       legalTradePageNum: state => state.personal.legalTradePageNum,
