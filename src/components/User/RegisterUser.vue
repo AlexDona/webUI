@@ -82,7 +82,6 @@
                :placeholder="$t('M.user_security_phone') + $t('M.user_security_number')"
                v-model="phoneNum"
                @keydown="setErrorMsg(0,'')"
-               @blur="checkUserExistAjax('phone',phoneNum)"
              >
            </div>
           </div>
@@ -160,7 +159,6 @@
                :placeholder="$t('M.user_security_email') + $t('M.comm_site')"
                v-model="emailNum"
                @keydown="setErrorMsg(1,'')"
-               @blur="checkUserExistAjax('email',emailNum)"
              >
            </div>
           </div>
@@ -741,7 +739,7 @@ export default {
       try {
         const data = await sendRegisterUser(params)
         console.log(data)
-        if (!returnAjaxMessage(data, this, 0)) {
+        if (!returnAjaxMessage(data, this, 1)) {
           this.fullscreenLoading = false // loading
           return false
         } else {
@@ -812,8 +810,9 @@ export default {
         this.mouseMoveStatus = false
         $('.handler').css({'left': 0})
         $('.drag_bg').css({'width': 0})
-        // let type = ''
-        await this.checkUserExistAjax()
+        let type = !this.activeMethod ? 'phone' : 'email'
+        let userName = !this.activeMethod ? this.phoneNum : this.emailNum
+        await this.checkUserExistAjax(type, userName)
         await this.sendRegister(params)
         /*
            * 是否需要图片验证码验证（条件：3次登录失败）
