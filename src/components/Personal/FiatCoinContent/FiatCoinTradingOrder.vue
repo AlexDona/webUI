@@ -35,8 +35,7 @@
             </div>
             <div class="buy-sell-icon">
               <!--买-->
-              {{$t('' +
-              'M.comm_bid')}}
+              {{$t('' + 'M.comm_bid')}}
             </div>
           </div>
           <!-- 1.2 表身体 -->

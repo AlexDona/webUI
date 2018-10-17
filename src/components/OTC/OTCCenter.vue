@@ -464,7 +464,7 @@ export default {
     return {
       isdisabled: false, // 订单tabs面板切换禁用状态
       isDisabledRadio: false, // 在线购买和在线出售按钮禁用状态
-      loading: true, // loading加载
+      loading: false, // loading加载
       // 分页
       currentPage: 1, // 当前页码
       totalPages: 1, // 总页数
