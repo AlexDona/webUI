@@ -611,7 +611,7 @@ export default {
   data () {
     return {
       fullscreenLoading: false,
-      socket: new socket(this.url = loginSocketUrl), // 二维码登录socket
+      socket: '', // 二维码登录socket
       isErcodeTimeOut: false, // 二维码是否过期
       isErCodeLogin: false, // 是否扫码登录
       erCodeString: '', // 二维码登录字符串
@@ -740,9 +740,14 @@ export default {
       } else {
         console.log(data)
         this.erCodeString = data.data.data
+        console.log(this.erCodeString)
+        this.socket = new socket(this.url = loginSocketUrl + this.erCodeString)
         this.socket.doOpen()
         this.socket.on('open', () => {
-
+          this.socket.send('123123123')
+          this.socket.on('message', (data) => {
+            console.log(data)
+          })
         })
       }
     },

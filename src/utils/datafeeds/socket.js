@@ -66,7 +66,7 @@ class socket {
   }
   onMessage (message) {
     try {
-      // console.log(message)
+      console.log(message)
       let blob = message
       let reader = new FileReader()
       reader.readAsBinaryString(blob)
