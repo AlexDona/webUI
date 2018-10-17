@@ -188,7 +188,7 @@
             class="inner-box"
           >
             <!--已绑定手机号-->
-            <div v-if="isBindPhone" class="outer-box">
+            <div v-if="isBindPhone&&!isBindGoogle" class="outer-box">
               <!-- 请输入短信验证码 -->
               <p class="title phone-msg">
                 <!-- 请输入 -->
@@ -205,6 +205,7 @@
                   :placeholder="$t('M.comm_note') + $t('M.comm_code')"
                   v-model="step3PhoneMsgCode"
                   @keydown="setErrorMsg(3,'')"
+                  @keyup="step3AutoLogin(step3PhoneMsgCode)"
                   @blur="checkoutInputFormat(3,checkCode)"
                 >
                 <CountDownButton
@@ -216,7 +217,7 @@
               </div>
             </div>
             <!--已绑定邮箱-->
-            <div v-if="isBindEmail" class="outer-box">
+            <div v-if="isBindEmail&&!isBindPhone&&!isBindGoogle" class="outer-box">
               <!-- 请输入邮箱验证码 -->
               <p class="title email-msg">
                 <!-- 请输入 -->
@@ -233,6 +234,7 @@
                   :placeholder="$t('M.comm_emailbox') + $t('M.comm_code')"
                   v-model="step3EmailMsgCode"
                   @keydown="setErrorMsg(3,'')"
+                  @keyup="step3AutoLogin(step3EmailMsgCode)"
                   @blur="checkoutInputFormat(3,checkCode)"
                 >
                 <CountDownButton
@@ -258,7 +260,7 @@
                   class="input"
                   v-model="step3GoogleMsgCode"
                   @keyup.enter="loginForStep2"
-                  @keyup="googleAutoLogin"
+                  @keyup="step3AutoLogin(step3GoogleMsgCode)"
                 >
               </div>
             </div>
@@ -387,7 +389,10 @@
               class="inner-box"
             >
               <!--已绑定手机号-->
-              <div v-if="isBindPhone" class="outer-box">
+              <div
+                v-if="isBindPhone&&!isBindGoogle"
+                class="outer-box"
+              >
                 <!-- 请输入短信验证码 -->
                 <p class="title phone-msg">
                   <!-- 请输入 -->
@@ -405,6 +410,7 @@
                     :placeholder="$t('M.comm_note') + $t('M.comm_code')"
                     v-model="step3PhoneMsgCode"
                     @keydown="setErrorMsg(3,'')"
+                    @keyup="step3AutoLogin(step3PhoneMsgCode)"
                     @blur="checkoutInputFormat(3,checkCode)"
                   >
                   <CountDownButton
@@ -416,7 +422,10 @@
                 </div>
               </div>
               <!--已绑定邮箱-->
-              <div v-if="isBindEmail" class="outer-box">
+              <div
+                v-if="isBindEmail&&!isBindPhone&&!isBindGoogle"
+                class="outer-box"
+              >
                 <!-- 请输入邮箱验证码 -->
                 <p class="title email-msg">
                   <!-- 请输入 -->
@@ -432,6 +441,7 @@
                     class="input email-validate"
                     :placeholder="$t('M.comm_emailbox') + $t('M.comm_code')"
                     v-model="step3EmailMsgCode"
+                    @keyup="step3AutoLogin(step3EmailMsgCode)"
                     @keydown="setErrorMsg(3,'')"
                     @blur="checkoutInputFormat(3,checkCode)"
                   >
@@ -458,7 +468,7 @@
                     class="input"
                     v-model="step3GoogleMsgCode"
                     @keyup.enter="loginForStep2"
-                    @keyup="googleAutoLogin"
+                    @keyup="step3AutoLogin(step3GoogleMsgCode)"
                   >
                 </div>
               </div>
@@ -934,15 +944,22 @@ export default {
         })
       } else {
         this.sliderFlag = true
-        /*
-          * 判断是否需要短信验证或邮箱验证码验证(条件：(异地ip登录||多次登录失败)&&未绑定谷歌验证器)
-          * */
-        if (this.failureNum > 3) {
+        // 判断是否需要短信验证或邮箱验证码验证(条件：(异地ip登录||多次登录失败)&&未绑定谷歌验证器)
+        if (!this.firstLogin || !this.loginIpEquals) {
           this.loginImageValidateStatus = false
           this.ENTER_STEP3()
           this.step3DialogShowStatus = true
+          this.autoSendValidateCode()
         }
       }
+    },
+    // 自动获取验证码
+    autoSendValidateCode () {
+      // console.log(this.isMobile)
+      // console.log(this.isBindPhone)
+      let sendType = this.isMobile ? 'mobile' : 'pc'
+      let loginType = this.isBindPhone ? 0 : 1
+      this.sendPhoneOrEmailCode(sendType, loginType)
     },
     /**
       * 需要输入验证码登录
@@ -956,14 +973,14 @@ export default {
         })
         return false
       }
-      if (this.isBindEmail && !this.step3EmailMsgCode) {
+      if (this.isBindEmail && !this.step3EmailMsgCode && !this.isBindPhone) {
         this.$message({
           type: 'error',
           message: this.$t('M.comm_please_enter') + this.$t('M.comm_emailbox') + this.$t('M.comm_code') // '请输入邮箱验证码'
         })
         return false
       }
-      if (this.isBindPhone && !this.step3PhoneMsgCode) {
+      if (this.isBindPhone && !this.step3PhoneMsgCode && !this.isBindGoogle) {
         this.$message({
           type: 'error',
           message: this.$t('M.comm_please_enter') + this.$t('M.login_telphone') + this.$t('M.comm_code') // '请输入手机验证码'
@@ -1004,11 +1021,11 @@ export default {
       console.log(data)
     },
     /**
-      * 谷歌验证码自动提交登录
+      * 验证码自动提交登录
       */
-    googleAutoLogin () {
-      if (this.googleCode.length > 6 || this.googleCode.length == 6) {
-        // this.loginWithCode(this.loginType, this.googleCode)
+    step3AutoLogin (targetNum) {
+      if (targetNum.length > 6 || targetNum.length == 6) {
+        this.loginForStep2()
       }
     },
 
@@ -1052,9 +1069,12 @@ export default {
           // 显示图片验证码
           this.userInputImageCode = ''
           this.loginImageValidateStatus = true
-        } else {
-          // 登录第三步
+        } else if (!this.firstLogin || !this.loginIpEquals) {
+          // 登录第三步(第一次登录、异常ip)
           this.step3DialogShowStatus = true
+          this.autoSendValidateCode()
+        } else {
+          this.loginForStep2()
         }
       } // 验证成功函数
     },
@@ -1103,11 +1123,15 @@ export default {
       isBindGoogle: state => state.user.loginStep1Info.isEnableGoogle, // 已绑定谷歌
       isBindEmail: state => state.user.loginStep1Info.isEnableMail, // 已绑定邮箱
       isBindPhone: state => state.user.loginStep1Info.isEnablePhone, // 已绑定手机号
+      firstLogin: state => state.user.loginStep1Info.firstLogin, // 是否第一次登录
+      loginIpEquals: state => state.user.loginStep1Info.loginIpEquals, // 是否异常ip登录
       token: state => state.user.loginStep1Info.token, // 用户token
       userInfo: state => state.user.loginStep1Info, // 用户详细信息
       loginType: state => state.user.loginType, // 登录类型
       disabledOfPhoneBtn: state => state.user.disabledOfPhoneBtn,
       disabledOfEmailBtn: state => state.user.disabledOfEmailBtn,
+      disabledOfMobilePhoneBtn: state => state.user.disabledOfMobilePhoneBtn,
+      disabledOfMobileEmailBtn: state => state.user.disabledOfMobileEmailBtn,
       routerTo: state => state.common.routerTo // 路由跳转
     }),
     windowHeight () {

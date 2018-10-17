@@ -39,7 +39,7 @@ export const returnAjaxMessage = (data, self, noTip) => {
     self.$message({
       type: 'error',
       // duration: 5000000,
-      message: !meta.params ? self.$t(`M.${meta.i18n_code}`) : self.$t(`M.${meta.i18n_code}`).format(meta.params)
+      message: (!meta.params || !meta.params.length) ? self.$t(`M.${meta.i18n_code}`) : self.$t(`M.${meta.i18n_code}`).format(meta.params)
     })
     // console.log(self.$t(`M.${meta.i18n_code}`).format(meta.params))
     // 登录失效
