@@ -19,7 +19,7 @@ if (process.env.NODE_ENV == 'development' || process.env.NODE_ENV == 'testing') 
 
   // apiCommonUrl = 'http://192.168.1.200:8888/' // 本地测试
   // apiCommonUrl = 'http://192.168.1.52:8888/' // 本地测试
-  // apiCommonUrl = 'http://api.new.bzu.com/' // 内部测试
+  apiCommonUrl = 'http://api.new.bzu.com/' // 内部测试
 
   // apiCommonUrl = 'http://192.168.1.176:8888/' // 帅飞
   // apiCommonUrl = 'https://rest.fubt.top/'
