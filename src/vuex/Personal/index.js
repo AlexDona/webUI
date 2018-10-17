@@ -5,6 +5,7 @@ import actions from './action'
 // Vue.use(Vuex)
 
 const state = {
+  reRenderTradingListStatus: false, // 重新渲染交易中订单列表状态
   // 交易中的订单
   legalTraderTradingList: [],
   legalTraderTradingReflashStatus: false, // 刷新状态

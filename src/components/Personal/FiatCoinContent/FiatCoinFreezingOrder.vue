@@ -184,7 +184,7 @@ export default {
     ]),
     // 分页
     changeCurrentPage (e) {
-      changeCurrentPageForLegalTrader(e, 'TRADING', this)
+      changeCurrentPageForLegalTrader(e, 'FROZEN', this)
     },
     // 时间格式化
     timeFormatting (date) {
@@ -326,6 +326,9 @@ export default {
             color: #9DA5B3;
             >.info-left{
               border-right: 1px solid #262F38;
+              >.text-blue{
+                color: #5E95EC;
+              }
             }
             >.info-middle{
               border-right: 1px solid #262F38;

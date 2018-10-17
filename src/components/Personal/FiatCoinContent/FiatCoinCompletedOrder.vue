@@ -354,6 +354,9 @@ export default {
   watch: {
     legalTraderCompletedList (newVal) {
       console.log(newVal)
+    },
+    legalTradePageTotals () {
+      console.log(this.legalTradePageTotals)
     }
   }
 }
