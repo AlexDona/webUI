@@ -482,7 +482,7 @@ export default{
       } else {
         this.languageList = data.data.data
         console.log(this.languageList)
-        let localLanguage = getStore('language')
+        let localLanguage = getStore('language') || 'zh_CN'
         _.forEach(this.languageList, item => {
           if (item.shortName === localLanguage) {
             this.CHANGE_LANGUAGE(item)
