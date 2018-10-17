@@ -515,6 +515,7 @@ export default {
           }
           break
         case 'TICKER':
+          console.log(data)
           if (data.data) {
             this.socketData.tradeMarkeContentItem = data.data
           }

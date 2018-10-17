@@ -7,7 +7,7 @@ export const fromApi = {
   'account_failure_0042': '该事务执行异常！',
   'user-fail-realname-authed': '用户已实名认证过',
   'account_failure_0041': '平台可用增加失败！',
-  'user-fail-login-password': '用户名或密码错误',
+  'user-fail-login-password': '用户名或密码错误,剩余重试次数{}',
   'account_failure_0044': '该事务已执行成功！',
   'account_failure_0043': '该事务已执行失败！',
   'account_failure_0046': '处理成功！',
