@@ -178,7 +178,7 @@ export default{
       marketList: [],
       // 前两项行情数据
       filterMarketList: [],
-      moreBtnShowStatus: false, // 查看更多按钮显示状态
+      moreBtnShowStatus: true, // 查看更多按钮显示状态
       // 切换正反面显示列表
       toggleSideList: [],
       socket: new socket(),
