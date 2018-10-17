@@ -340,6 +340,9 @@ import {
   getFooterInfo1,
   getFooterInfo2
 } from '../../utils/api/header'
+import {
+  getStore
+} from '../../utils'
 import IconFontCommon from '../Common/IconFontCommon'
 // import {getPartnerList} from '../../utils/api/home'
 import {
@@ -405,7 +408,7 @@ export default{
     require('../../../static/css/theme/day/Common/HeaderCommonDay.css')
     // 获取 语言列表:任付伟先注释此方法防止每次刷新报错-有需要请放开
     await this.getFooterInfo()
-    this.getLanguageList()
+    await this.getLanguageList()
     // console.log(this.theme)
     this.activeTheme = this.theme
     // 查询某商户可用法币币种列表
@@ -478,9 +481,16 @@ export default{
         return false
       } else {
         this.languageList = data.data.data
-        this.CHANGE_LANGUAGE(this.languageList[0])
+        console.log(this.languageList)
+        let localLanguage = getStore('language')
+        _.forEach(this.languageList, item => {
+          if (item.shortName === localLanguage) {
+            this.CHANGE_LANGUAGE(item)
+            return false
+          }
+        })
         // console.log(this.languageList[0])
-        // console.log(this.activeLanguage)
+        console.log(this.activeLanguage)
       }
     },
     // 获取板块列表

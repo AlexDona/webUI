@@ -638,6 +638,9 @@ export default {
         'paneProperties.horzGridProperties.color': this.theme === 'night' ? 'rgba(57,66,77,.2)' : 'rgba(57,66,77,.05)' // 列分割线
       })
     },
+    language () {
+      this.initKLine(this.symbol)
+    },
     activeSymbolId (newVal, oldVal) {
       // this.getActiveSymbolData(newVal)
       this.initKLine(newVal)

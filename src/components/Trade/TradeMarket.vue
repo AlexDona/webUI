@@ -336,7 +336,7 @@ export default {
           this.sortBybubble(plateItem.content, column, methods)
         })
       })
-      arr.length === 1 ? this.collectArea = arr[0] : this.filterMarketList = arr
+      arr[0].areaId === this.collectArea.areaId ? this.collectArea = arr[0] : this.filterMarketList = arr
       // 触发computed
       this.searchKeyWord = 'a'
       this.searchKeyWord = ''
@@ -449,9 +449,10 @@ export default {
     // 设置当前交易区交易对字符串
     setActiveTabSymbolStr () {
       let activeTabSymbolStr = ''
+      console.log(this.activeIndex)
       switch (this.activeIndex) {
         // 自选区
-        case '0':
+        case 1:
           _.forEach(this.collectArea.plateList, (plateItem) => {
             _.forEach(plateItem.content, (contentItem) => {
               activeTabSymbolStr += `${contentItem.id}@`
