@@ -784,7 +784,7 @@ export default {
      * 安全中心
      */
     getSecurityCenter () {
-      getSecurityCenter(this, (data) => {
+      getSecurityCenter(this, {}, data => {
         if (data) {
           this.securityCenter = data.data.data
           // 默认API确认弹窗
