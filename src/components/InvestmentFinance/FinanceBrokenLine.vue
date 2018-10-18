@@ -1,6 +1,10 @@
 <template>
   <div class="financeline-box">
-    <div id="finance" class="finance-line"></div>
+    <div
+      id="finance"
+      class="finance-line"
+    >
+    </div>
   </div>
 </template>
 <!--请严格按照如下书写书序-->
