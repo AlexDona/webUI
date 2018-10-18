@@ -1,6 +1,10 @@
 <template>
   <div class="financePie-box">
-    <div id="financePie" class="financePie"></div>
+    <div
+      id="financePie"
+      class="financePie"
+    >
+    </div>
   </div>
 </template>
 <!--请严格按照如下书写书序-->
