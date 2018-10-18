@@ -785,13 +785,8 @@ export default {
      */
     getSecurityCenter () {
       // 整页loading
-      this.fullscreenLoading = true
       getSecurityCenter(this, (data) => {
-        // 接口成功清除loading
-        this.fullscreenLoading = false
         if (data) {
-          // 接口成功清除loading
-          this.fullscreenLoading = false
           this.securityCenter = data.data.data
           // 默认API确认弹窗
           this.APIMoneyConfirm = true

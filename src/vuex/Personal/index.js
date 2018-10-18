@@ -30,7 +30,9 @@ const state = {
   refsAccountCenterStatus: false,
   legalTradePageSize: 5, // 每页数据量
   legalTradePageNum: 1, // 开始页码
-  legalTradePageTotals: 0 // 总页数
+  legalTradePageTotals: 0, // 总页数
+  // 法币订单状态变化
+  legalTraderOrderStatus: false
 }
 
 export default {

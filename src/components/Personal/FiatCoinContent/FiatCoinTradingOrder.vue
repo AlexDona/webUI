@@ -8,7 +8,7 @@
       <!-- 一、交易中订单 -->
       <div
         class="order-list"
-        v-for="(item, index) in tradingOrderList"
+        v-for="(item, index) in legalTraderTradingList"
         :key="index"
       >
         <!-- 订单列表 ：1.0 买单 -->
@@ -651,14 +651,14 @@
         </div>
       </div>
       <!-- 二、暂无数据 -->
-      <div class="no-data" v-if="!tradingOrderList.length">
+      <div class="no-data" v-if="!legalTraderTradingList.length">
         <!--暂无数据-->
         {{ $t('M.comm_no_data') }}
       </div>
       <!-- 三、分页-->
       <el-pagination
         background
-        v-show="tradingOrderList.length"
+        v-show="legalTraderTradingList.length"
         layout="prev, pager, next"
         :current-page="legalTradePageNum"
         :page-count="legalTradePageTotals"
@@ -813,7 +813,7 @@ export default {
       appealTextareaValue: '', // 订单申诉原因文本域内容
       activitedPayStyle: '', //  选中的支付方式
       activitedPayStyleId: '', //  选中的支付方式id-往后台传送的参数
-      tradingOrderList: [], // 交易中订单列表
+      // legalTraderTradingList: [], // 交易中订单列表
       activedTradingOrderId: '', // 选中的订单id
       activedPayAccountArr: [], // 当前选中的订单中付款方式中的付款账号 ：为了解决支付宝和微信账号一样做的bug修复
       // 支付方式
@@ -942,14 +942,14 @@ export default {
       } else {
         // 返回数据正确的逻辑
         // this.loading = false
-        this.tradingOrderList = data.data.data.list
+        this.legalTraderTradingList = data.data.data.list
         console.log('交易中订单')
-        console.log(this.tradingOrderList)
+        console.log(this.legalTraderTradingList)
         // 分页
         // this.totalPages = data.data.data.pages - 0
-        // console.log(this.tradingOrderList)
+        // console.log(this.legalTraderTradingList)
         // 循环数组
-        this.tradingOrderList.forEach((item, index) => {
+        this.legalTraderTradingList.forEach((item, index) => {
           // console.log(item)
           this.buttonStatusArr[index] = false
           this.showOrderAppeal[index] = false
@@ -963,8 +963,8 @@ export default {
           }
           // 自动成交倒计时数组集
         })
-        // console.log(this.tradingOrderList.length)
-        if (this.tradingOrderList.length) {
+        // console.log(this.legalTraderTradingList.length)
+        if (this.legalTraderTradingList.length) {
           // 调用自动取消倒计时方法
           this.cancelSetInter()
           // 调用自动成交倒计时方法
@@ -980,9 +980,9 @@ export default {
       console.log('第' + index + '条数据')
       console.log(index)
       console.log('选中订单的订单号')
-      console.log(this.tradingOrderList[index].id)
-      this.activedTradingOrderId = this.tradingOrderList[index].id
-      this.tradingOrderList[index].userBankList.forEach((item) => {
+      console.log(this.legalTraderTradingList[index].id)
+      this.activedTradingOrderId = this.legalTraderTradingList[index].id
+      this.legalTraderTradingList[index].userBankList.forEach((item) => {
         if (item.id == this.activePayModeList[index]) {
           this.activedPayAccountArr[index] = item.cardNo
           console.log('选中的付款账号：' + this.activedPayAccountArr[index])
@@ -1157,7 +1157,7 @@ export default {
       legalTradePageTotals: state => state.personal.legalTradePageTotals,
       legalTradePageNum: state => state.personal.legalTradePageNum
     })
-    // tradingOrderList () {
+    // legalTraderTradingList () {
     //   return this.legalTraderTradingList
     // }
   },
@@ -1170,24 +1170,10 @@ export default {
       console.log('language')
       console.log(newVal)
     },
-    // tradingOrderList (newVal) {
-    //   console.log(newVal)
-      // if (newVal) {
-      //   // 循环数组
-      //   newVal.forEach((item, index) => {
-      //     this.buttonStatusArr[index] = false
-      //     this.showOrderAppeal[index] = false
-      //     // 自动取消订单倒计时数组集
-      //     this.cancelOrderTimeArr[index] = item.cancelRestTime // cancelRestTime毫秒单位
-      //     // 自动成交倒计时数组集
-      //     this.accomplishOrderTimeArr[index] = item.completeRestTime // completeRestTime毫秒单位
-      //   })
-      //   // 调用自动取消倒计时方法
-      //   this.cancelSetInter()
-      //   // 调用自动成交倒计时方法
-      //   this.accomplishSetInter()
-      // }
-    // },
+    legalTraderTradingList (newVal) {
+      console.log(newVal)
+      this.getOTCTradingOrdersList
+    },
     legalTradePageTotals (newVal) {
       console.log(newVal)
     },
