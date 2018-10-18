@@ -331,7 +331,22 @@
           class="scan-success"
           v-else
         >
-          123
+          <IconFont
+            icon-name="icon-cellphoneiphone"
+            class-name="icon-cellphoneiphone"
+          />
+          <IconFont
+            icon-name="icon-chenggong"
+            class-name="icon-chenggong"
+          />
+          <div class="tips">
+            <p>扫描成功！</p>
+            <p>请在手机上确认登录</p>
+          </div>
+          <button
+            class="back-to-scan cursor-pointer"
+            @click="backToScan"
+          >返回二维码登录</button>
         </div>
       </div>
       <!--移动端-->
@@ -735,8 +750,6 @@ export default {
       }
       $('body').off('mousemove')
       $('body').off('mouseup')
-      // this.onmousemove = null;
-      // this.onmouseup = null;
     })
   },
   activated () {
@@ -756,6 +769,11 @@ export default {
       'SET_USER_BUTTON_STATUS',
       'USER_LOGIN'
     ]),
+    // 返回登录
+    backToScan () {
+      this.isScanSuccess = false
+      this.refreshCode()
+    },
     // 刷新二维码
     async reflashErCode () {
       // this.isScanSuccess = true
@@ -782,7 +800,11 @@ export default {
             }
           }, 1000)
           this.socket.on('message', (data) => {
-            console.log(data)
+            let socketData = data
+            if (socketData.scan) {
+              console.log(socketData)
+              this.isScanSuccess = true
+            }
           })
         })
       }
@@ -1547,6 +1569,34 @@ export default {
             height:174px;
             background-color: #fff;
             padding:5px;
+          }
+        }
+        >.scan-success{
+          position: relative;
+          >.icon-cellphoneiphone{
+            font-size: 156px;
+            color:#26416e;
+          }
+          >.icon-chenggong{
+            position: absolute;
+            left:49%;
+            top:28%;
+            transform: translate(-50%,-50%);
+            font-size: 26px;
+            color:#008069;
+          }
+          >.tips{
+            >p{
+              font-size: 12px;
+              line-height: 20px;
+            }
+            margin-top:20px;
+            color:#fff;
+          }
+          >.back-to-scan{
+            margin-top:20px;
+            font-size: 12px;
+            color:$mainColor;
           }
         }
       }
