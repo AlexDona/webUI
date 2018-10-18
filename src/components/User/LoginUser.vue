@@ -949,7 +949,9 @@ export default {
           this.loginImageValidateStatus = false
           this.ENTER_STEP3()
           this.step3DialogShowStatus = true
-          this.autoSendValidateCode()
+          if (!this.isBindGoogle) {
+            this.autoSendValidateCode()
+          }
         }
       }
     },
@@ -1074,7 +1076,9 @@ export default {
         } else if (this.firstLogin || !this.loginIpEquals) {
           // 登录第三步(第一次登录、异常ip)
           this.step3DialogShowStatus = true
-          this.autoSendValidateCode()
+          if (!this.isBindGoogle) {
+            this.autoSendValidateCode()
+          }
         } else {
           this.loginForStep2()
         }
