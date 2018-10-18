@@ -10,12 +10,19 @@
     >
       <!--表头属性-->
       <div class="canceled-table-head">
+        <!-- 订单号 -->
         <span class="item">{{$t('M.otc_MerchantsOrders_orderNum')}}</span>
+        <!-- 类型 -->
         <span class="item">{{$t('M.otc_cancelOrder_type')}}</span>
+        <!-- 币种 -->
         <span class="item">{{$t('M.comm_currency')}}</span>
+        <!-- 价格 -->
         <span class="item">{{$t('M.otc_index_price')}}</span>
+        <!-- 数量 -->
         <span class="item">{{$t('M.comm_count')}}</span>
+        <!-- 总金额 -->
         <span class="item">{{$t('M.otc_canceled_total')}}</span>
+        <!-- 下单时间 -->
         <span class="item">{{$t('M.otc_stocks_ordertime')}}</span>
       </div>
       <!--表格-->
@@ -27,34 +34,46 @@
         <!--表格上部分-->
         <div class="canceled-info-top">
           <!-- 订单号 -->
-          <span class="item">{{item.orderSequence}}</span>
-          <!-- 类型 买入 -->
+          <span class="item">
+            {{item.orderSequence}}
+          </span>
+          <!-- 类型 买入卖出 -->
           <span
             class="item"
             v-if="item.orderType === 'BUY'"
             :class="{ red: item.orderType === 'BUY' }"
           >
           <!-- 买入 -->
-           {{$t('M.comm_buy')}}
+            {{$t('M.comm_buy')}}
           </span>
-          <!-- 类型卖出 -->
+          <!-- 卖出 -->
           <span
             class="item"
             v-if="item.orderType === 'SELL'"
             :class="{ green: item.orderType === 'SELL' }"
           >
-           {{$t('M.comm_sell')}}
+            {{$t('M.comm_sell')}}
           </span>
           <!-- 币种 -->
-          <span class="item">{{item.coinName}}</span>
+          <span class="item">
+            {{item.coinName}}
+          </span>
           <!-- 价格 -->
-          <span class="item">{{item.price}}({{ item.currencyName }})</span>
+          <span class="item">
+            {{item.price}}({{item.currencyName}})
+          </span>
           <!-- 数量 -->
-          <span class="item">{{item.pickCount}}({{ item.coinName }})</span>
+          <span class="item">
+            {{item.pickCount}}({{item.coinName}})
+          </span>
           <!-- 总金额 -->
-          <span class="item">{{(item.price*item.pickCount).toFixed(2)}}({{ item.currencyName }})</span>
+          <span class="item">
+            {{(item.price*item.pickCount).toFixed(2)}}({{item.currencyName}})
+          </span>
           <!-- 下单时间 -->
-          <span class="item">{{timeFormatting(item.createTime)}}</span>
+          <span class="item">
+            {{timeFormatting(item.createTime)}}
+          </span>
         </div>
         <!--表格下部分-->
         <div class="canceled-info-bottom">
@@ -87,9 +106,7 @@
               <!-- 申诉判定，订单取消 -->
               {{$t('M.otc_shesu_cancel')}}
             </p>
-            <p
-              class="text-info"
-            >
+            <p class="text-info">
               {{$t('M.otc_canceled_cancel')}}:{{timeFormatting(item.cancelTime)}}
             </p>
             <!-- <p class="text-info cancel-time">{{timeFormatting(item.cancelTime)}}</p> -->
@@ -131,11 +148,10 @@ export default {
     return {
       loading: true,
       // 分页
-      pageSize: 5,
+      pageSize: 5, // 当前页显示几条数据
       currentPage: 1, // 当前页码
       totalPages: 1, // 总页数
-      // OTC取消订单列表
-      otcCanceledOrderList: []
+      otcCanceledOrderList: [] // OTC取消订单列表
     }
   },
   created () {
@@ -152,17 +168,17 @@ export default {
   update () {},
   beforeRouteUpdate () {},
   methods: {
-    // 分页
+    // 1.0 分页
     changeCurrentPage (pageNum) {
       console.log(pageNum)
       this.currentPage = pageNum
       this.getOTCCanceledOrdersList()
     },
-    // 1.0 时间格式化
+    // 2.0 时间格式化
     timeFormatting (date) {
       return timeFilter(date, 'normal')
     },
-    // 2.0 请求已取消订单列表
+    // 3.0 请求已取消订单列表
     async getOTCCanceledOrdersList () {
       this.loading = true
       const data = await getOTCCanceledOrders({

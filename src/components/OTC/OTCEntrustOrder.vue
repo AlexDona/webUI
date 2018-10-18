@@ -12,21 +12,37 @@
       <!-- 表头 -->
       <div class="entrust-table-head">
         <!-- 类型 -->
-        <span class="item first-style">{{$t('M.comm_type')}}</span>
+        <span class="item first-style">
+          {{$t('M.comm_type')}}
+        </span>
         <!-- 币种 -->
-        <span class="item second-coin">{{$t('M.comm_currency')}}</span>
+        <span class="item second-coin">
+          {{$t('M.comm_currency')}}
+        </span>
         <!-- 价格 -->
-        <span class="item third-price">{{$t('M.otc_index_price')}}</span>
+        <span class="item third-price">
+          {{$t('M.otc_index_price')}}
+        </span>
         <!-- 挂单数量 -->
-        <span class="item fourth-entrust-count">{{$t('M.otc_entrust_number')}}</span>
+        <span class="item fourth-entrust-count">
+          {{$t('M.otc_entrust_number')}}
+        </span>
         <!-- 已匹配数量 -->
-        <span class="item fifth-match-count">{{$t('M.otc_entrust_matching')}}</span>
+        <span class="item fifth-match-count">
+          {{$t('M.otc_entrust_matching')}}
+        </span>
         <!-- 总金额 -->
-        <span class="item sixth-total-amount">{{$t('M.otc_canceled_total')}}</span>
+        <span class="item sixth-total-amount">
+          {{$t('M.otc_canceled_total')}}
+        </span>
         <!-- 挂单时间 -->
-        <span class="item senventh-create-time">{{$t('M.otc_entrust_time')}}</span>
+        <span class="item senventh-create-time">
+          {{$t('M.otc_entrust_time')}}
+        </span>
         <!-- 操作 -->
-        <span class="item eighth-action">{{$t('M.otc_index_operate')}}</span>
+        <span class="item eighth-action">
+          {{$t('M.otc_index_operate')}}
+        </span>
       </div>
       <!-- 表身体 -->
       <div
@@ -65,17 +81,29 @@
             {{$t('M.comm_sell')}}
           </span>
           <!-- 2 币种 -->
-          <span class="item second-coin">{{item.coinName}}</span>
+          <span class="item second-coin">
+            {{item.coinName}}
+          </span>
           <!-- 3 价格 -->
-          <span class="item third-price">{{item.price}}({{item.currencyName}})</span>
+          <span class="item third-price">
+            {{item.price}}({{item.currencyName}})
+          </span>
           <!-- 4 挂单数量 -->
-          <span class="item fourth-entrust-count">{{item.entrustCount}}({{item.coinName}})</span>
+          <span class="item fourth-entrust-count">
+            {{item.entrustCount}}({{item.coinName}})
+          </span>
           <!-- 5 已匹配数量 -->
-          <span class="item fifth-match-count">{{item.matchCount}}({{item.coinName}})</span>
+          <span class="item fifth-match-count">
+            {{item.matchCount}}({{item.coinName}})
+          </span>
           <!-- 6 总金额 -->
-          <span class="item sixth-total-amount">{{item.totalAmount}}({{item.currencyName}})</span>
+          <span class="item sixth-total-amount">
+            {{item.totalAmount}}({{item.currencyName}})
+          </span>
           <!-- 7 挂单时间 -->
-          <span class="item senventh-create-time">{{item.createTime}}</span>
+          <span class="item senventh-create-time">
+            {{item.createTime}}
+          </span>
           <!-- 8 操作 -->
           <span class="item eighth-action">
             <el-button
@@ -113,13 +141,12 @@ export default {
   // props,
   data () {
     return {
-      loading: true,
+      loading: true, // loading加载
       // 分页
-      pageSize: 10,
+      pageSize: 10, // 每页展示的条数
       currentPage: 1, // 当前页码
       totalPages: 1, // 总页数
-      // OTC委托订单列表
-      OTCEntrustOrderList: []
+      OTCEntrustOrderList: [] // OTC委托订单列表
     }
   },
   created () {
@@ -140,17 +167,17 @@ export default {
   beforeRouteUpdate () {
   },
   methods: {
-    // 分页
+    // 1.0 分页
     changeCurrentPage (pageNum) {
       console.log(pageNum)
       this.currentPage = pageNum
       this.getOTCEntrustingOrdersList()
     },
-    // 1.0 时间格式化
+    // 2.0 时间格式化
     timeFormatting (date) {
       return timeFilter(date, 'date')
     },
-    // 2.0 请求委托中订单列表
+    // 3.0 请求委托中订单列表
     async getOTCEntrustingOrdersList () {
       this.loading = true
       const data = await getOTCEntrustingOrders({
@@ -171,7 +198,7 @@ export default {
         this.totalPages = data.data.data.pages - 0
       }
     },
-    // 3.0 点击撤单按钮
+    // 4.0 点击撤单按钮
     revocationOrder (id) {
       // this.getOTCEntrustingOrdersRevocation(id)
       this.$confirm(this.$t('M.otc_revoke'), {
@@ -182,7 +209,7 @@ export default {
       }).catch(() => {
       })
     },
-    // 4.0 提交撤单
+    // 5.0 提交撤单
     async getOTCEntrustingOrdersRevocation (id) {
       let data = await querySelectedOrdersRevocation({
         entrustId: id

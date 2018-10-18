@@ -4,7 +4,7 @@
     :class="{'day':theme == 'day','night':theme == 'night' }"
   >
   <!-- :style="{'height':windowHeight+'px'}" -->
-    <!-- 1.0 导航 -->
+    <!-- 1.0 导航组件 -->
     <NavCommon/>
     <!-- 2.0 广告管理 -->
     <div class="otc-AD-manage-content" :style="{'min-height':(height-556)+'px'}">
@@ -38,23 +38,25 @@
             </el-select>
           </span>
           <!-- 交易币种 -->
-          <span class="filtrate-text font-size14">{{$t('M.otc_trade')}}{{$t('M.comm_currency')}}</span>
+          <span class="filtrate-text font-size14">
+            {{$t('M.otc_trade')}}{{$t('M.comm_currency')}}
+          </span>
           <!-- 币种选择 -->
           <span class="market-input">
-              <el-select
-                :no-data-text="$t('M.comm_no_data')"
-                v-model="activitedADManageMarketList"
-                @change="changeSelectValue('changeADManageMarketList', $event)"
-                clearable
+            <el-select
+              :no-data-text="$t('M.comm_no_data')"
+              v-model="activitedADManageMarketList"
+              @change="changeSelectValue('changeADManageMarketList', $event)"
+              clearable
+            >
+              <el-option
+                v-for="(item,index) in ADManageMarketList"
+                :key="index"
+                :label="item.name"
+                :value="item.coinId"
               >
-                <el-option
-                  v-for="(item,index) in ADManageMarketList"
-                  :key="index"
-                  :label="item.name"
-                  :value="item.coinId"
-                >
-                </el-option>
-              </el-select>
+              </el-option>
+            </el-select>
           </span>
           <!-- 交易法币 -->
           <span class="filtrate-text font-size14">
@@ -62,20 +64,20 @@
           </span>
           <!-- 法币选择 -->
           <span class="market-input">
-              <el-select
-                :no-data-text="$t('M.comm_no_data')"
-                v-model="activitedADManageCurrencyId"
-                @change="changeSelectValue('changeADManageCurrencyId', $event)"
-                clearable
+            <el-select
+              :no-data-text="$t('M.comm_no_data')"
+              v-model="activitedADManageCurrencyId"
+              @change="changeSelectValue('changeADManageCurrencyId', $event)"
+              clearable
+            >
+              <el-option
+                v-for="(item,index) in ADManageCurrencyId"
+                :key="index"
+                :label="language == 'zh_CN'? item.name : item.shortName"
+                :value="item.id"
               >
-                <el-option
-                  v-for="(item,index) in ADManageCurrencyId"
-                  :key="index"
-                  :label="language == 'zh_CN'? item.name : item.shortName"
-                  :value="item.id"
-                >
-                </el-option>
-              </el-select>
+              </el-option>
+            </el-select>
           </span>
           <!-- 状态 -->
           <span class="filtrate-text font-size14">
@@ -241,8 +243,6 @@
               :label="$t('M.otc_index_operate')"
             >
               <template slot-scope="scope">
-                <!-- @click = "paymessage(scope.row.fid)"
-                :id = "scope.row.fid"  -->
                 <el-button
                   type="text"
                   v-if="scope.row.status === 'ENTRUSTED'"
@@ -284,7 +284,13 @@
 </template>
 <!--请严格按照如下书写书序-->
 <script>
-import {cancelAllOrdersOnekey, getOTCAvailableCurrency, getMerchantAvailablelegalTender, getOTCADManageApplyList, querySelectedOrdersRevocation} from '../../utils/api/OTC'
+import {
+  cancelAllOrdersOnekey,
+  getOTCAvailableCurrency,
+  getMerchantAvailablelegalTender,
+  getOTCADManageApplyList,
+  querySelectedOrdersRevocation
+} from '../../utils/api/OTC'
 import NavCommon from '../Common/HeaderCommonForPC'
 import FooterCommon from '../Common/FooterCommon'
 import IconFontCommon from '../Common/IconFontCommon'
@@ -299,7 +305,7 @@ export default {
   },
   data () {
     return {
-      loading: true,
+      loading: true, // loading加载
       height: '', // 广告管理内容的高度
       // 分页
       currentPage: 1, // 当前页码
@@ -339,12 +345,9 @@ export default {
           label: 'M.otc_adMange_already_adverting' // 已下架
         }
       ],
-      // 设置默认列表页数
-      pageNum: 0,
-      // 设置列表当前页数
-      pageSize: 10,
-      // 广告列表
-      ADList: []
+      pageNum: 0, // 设置默认列表页数
+      pageSize: 10, // 设置列表当前页数
+      ADList: [] // 广告列表
     }
   },
   created () {
@@ -356,7 +359,7 @@ export default {
     require('../../../static/css/theme/day/OTC/OTCADManageDay.css')
     require('../../../static/css/theme/night/OTC/OTCADManageNight.css')
     // 从全局获得商户id
-    console.log(this.partnerId)
+    // console.log(this.partnerId)
     // 1.0 otc可用币种查询：
     this.getOTCAvailableCurrencyList()
     // 2.0 otc可用法币查询：
@@ -373,13 +376,14 @@ export default {
   beforeRouteUpdate () {
   },
   methods: {
-    // 分页
+    // 1.0 分页
     changeCurrentPage (pageNum) {
       console.log(pageNum)
       this.currentPage = pageNum
       this.loading = true
       this.getOTCADManageList()
     },
+    // 2.0 清空数据
     resetCondition () {
       // 清空交易类型
       this.activitedADManageTraderStyleList = ''
@@ -393,11 +397,11 @@ export default {
       this.loading = true
       this.getOTCADManageList()
     },
-    // 时间格式化
+    // 3.0 时间格式化
     timeFormatting (date) {
       return timeFilter(date, 'normal')
     },
-    // 获取广告管理列表
+    // 4.0 获取广告管理列表
     async getOTCADManageList () {
       const data = await getOTCADManageApplyList({
         entrustType: this.activitedADManageTraderStyleList ? this.activitedADManageTraderStyleList : '',
@@ -407,6 +411,7 @@ export default {
         pageNum: this.currentPage,
         pageSize: this.pageSize
       })
+      console.log('获取广告管理列表')
       console.log(data)
       if (!(returnAjaxMessage(data, this, 0))) {
         this.loading = false
@@ -419,6 +424,7 @@ export default {
         this.totalPages = data.data.data.pages - 0
       }
     },
+    // 5.0
     changeSelectValue (type, targetValue) {
       switch (type) {
         // 交易类型选中赋值
@@ -439,7 +445,7 @@ export default {
           break
       }
     },
-    // 币种查询
+    // 6.0 币种查询
     async getOTCAvailableCurrencyList () {
       const data = await getOTCAvailableCurrency({
         partnerId: this.partnerId
@@ -453,7 +459,7 @@ export default {
         this.ADManageMarketList = data.data.data
       }
     },
-    // 可用法币查询
+    // 7.0 可用法币查询
     async getMerchantAvailablelegalTenderList () {
       const data = await getMerchantAvailablelegalTender({
         partnerId: this.partnerId
@@ -467,7 +473,7 @@ export default {
         this.ADManageCurrencyId = data.data.data
       }
     },
-    // 一键下架所有广告 二次确认弹出框
+    // 8.0 一键下架所有广告 二次确认弹出框
     cancelAllOnekey () {
       this.$confirm(this.$t('M.otc_adMange_tipsContentThree'), {
         confirmButtonText: this.$t('M.comm_all_sold_out'), // 全部下架
@@ -478,7 +484,7 @@ export default {
       }).catch(() => {
       })
     },
-    // 一键下架所有广告
+    // 9.0 一键下架所有广告
     async cancelAllOnekeyConfirm () {
       const data = await cancelAllOrdersOnekey()
       // 提示信息
@@ -491,7 +497,7 @@ export default {
         this.getOTCADManageList()
       }
     },
-    // 点击表格中的下架按钮触发的事件
+    // 10.0 点击表格中的下架按钮触发的事件
     updateADUnshelve (id) {
       this.$confirm(this.$t('M.otc_adMange_tipsContentOne'), {
         confirmButtonText: this.$t('M.comm_sold_out'), // 下架
@@ -502,7 +508,7 @@ export default {
       }).catch(() => {
       })
     },
-    // 点击 下架 按钮请求撤单接口
+    // 11.0 点击 下架 按钮请求撤单接口
     async getOTCEntrustingOrdersRevocation (id) {
       let data = await querySelectedOrdersRevocation({
         entrustId: id
@@ -519,7 +525,7 @@ export default {
         })
       }
     },
-    // 点击 修改 按钮钮触发的事件
+    // 12.0 点击 修改 按钮钮触发的事件
     modifyAD (item) {
       this.$confirm(this.$t('M.otc_adMange_tipsContentTwo'), {
         confirmButtonText: this.$t('M.comm_sold_out'), // 下架
@@ -534,7 +540,7 @@ export default {
         // })
       })
     },
-    // 点击查询按钮 重新请求列表数据
+    // 13.0 点击查询按钮 重新请求列表数据
     findFilter () {
       this.loading = true
       this.getOTCADManageList()
@@ -543,9 +549,9 @@ export default {
   filter: {},
   computed: {
     ...mapState({
-      language: state => state.common.language,
-      partnerId: state => state.common.partnerId,
-      theme: state => state.common.theme
+      language: state => state.common.language, // 当前选中语言
+      partnerId: state => state.common.partnerId, // 商户id
+      theme: state => state.common.theme // 主题颜色
     }),
     windowHeight () {
       return window.innerHeight

@@ -486,8 +486,8 @@ export default {
   },
   data () {
     return {
-      formStatisticsLoading: true,
-      orderDetailsLoading: true,
+      formStatisticsLoading: false,
+      orderDetailsLoading: false,
       // 分页
       pageSize: 10,
       currentPage: 1, // 当前页码
@@ -671,6 +671,7 @@ export default {
     },
     // 报表统计的主页面
     async getOTCReportFormStatistics () {
+      this.formStatisticsLoading = true
       let data = await getOTCReportFormStatisticsData({
         // 币种
         coinId: this.activitedTraderCoinId,
@@ -681,6 +682,7 @@ export default {
       console.log('资产信息')
       console.log(data)
       if (!(returnAjaxMessage(data, this, 0))) {
+        this.formStatisticsLoading = false
         return false
       } else {
         this.formStatisticsLoading = false
@@ -710,6 +712,7 @@ export default {
     },
     // 页面加载时请求接口渲染订单详情列表
     async getOTCEntrustingOrdersRevocation () {
+      this.orderDetailsLoading = true
       let data = await getOTCMerchantsOrdersList({
         // 当前页数
         pageNum: this.currentPage,
@@ -730,6 +733,7 @@ export default {
       console.log('报表列表')
       console.log(data)
       if (!(returnAjaxMessage(data, this, 0))) {
+        this.orderDetailsLoading = false
         return false
       } else {
         // 返回数据正确的逻辑 重新渲染列表

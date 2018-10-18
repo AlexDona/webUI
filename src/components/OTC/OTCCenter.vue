@@ -83,39 +83,14 @@
                     :label="language === 'zh_CN'? item.name : item.shortName"
                   >
                   </el-option>
-                  <!-- <el-option
-                    v-for="(item,index) in availableCurrencyId"
-                    :key="index"
-                    :value="item.id"
-                    :label="item.name"
-                  >
-                  </el-option> -->
                 </el-select>
               </span>
               <!-- 支付方式 -->
               <span class="pay-style">
-                <!-- <IconFontCommon
-                  iconName="icon-qiandai-tianchong"
-                  class="pay-style-icon"
-                /> -->
                 <IconFontCommon
                   iconName="icon-qiandai"
                   class="pay-style-icon"
                 />
-                <!-- <el-select
-                  v-model="value"
-                  :placeholder="$t('M.otc_index_Payment_method')"
-                  @change="payWayChangeValue"
-                >
-                  <el-option
-                    v-for="(item,index) in payWayBankinfoList"
-                    :key="index"
-                    :value="item.id"
-                    :label="item.shortName"
-                  >
-                    {{ item.shortName }}
-                  </el-option>
-                </el-select> -->
                 <el-select
                   :no-data-text="$t('M.comm_no_data')"
                   v-model="checkedPayType"
@@ -147,7 +122,7 @@
             v-loading="loading"
             element-loading-background="rgba(0, 0, 0, 0.6)"
           >
-            <!-- 表格信息 暂时无数据align="center"-->
+            <!-- 表格信息 暂时无数据-->
             <el-table
               :data="onlineBuySellTableList"
               style="width: 100%"
@@ -160,7 +135,7 @@
               >
                 <template slot-scope = "s">
                   <div>
-                    <!-- 如果是商家用户就显示商家图标 -->
+                    <!-- 如果是商家用户就显示商家图标MERCHANT -->
                     <el-tooltip
                       effect="dark"
                       content="已认证商家"
@@ -174,13 +149,6 @@
                     </el-tooltip>
                     {{s.row.userName}}
                   </div>
-                  <!-- <el-tooltip effect="dark" content="已认证商家" placement="left">
-                    <img
-                      src="../../assets/develop/shangjia.png"
-                      class="shang-icon"
-                      v-show="s.row.userType === 'MERCHANT'"
-                    >
-                  </el-tooltip> -->
                 </template>
               </el-table-column>
               <!-- 信用 -->
@@ -199,7 +167,10 @@
                 <template slot-scope = "s">
                   <div>
                     <!-- {{s.row.entrustCount- s.row.matchCount}}{{selectedOTCAvailableCurrencyName}} -->
-                    {{getOTCRemainingSum(s.row.entrustCount, s.row.matchCount, '-')}}{{selectedOTCAvailableCurrencyName}}
+                    <!-- 防止丢失精度 -->
+                    <!-- {{getOTCRemainingSum(s.row.entrustCount, s.row.matchCount, '-')}}{{selectedOTCAvailableCurrencyName}} -->
+                    <!-- 后台添加了剩余数量字段remainCount -->
+                    {{s.row.remainCount}}{{selectedOTCAvailableCurrencyName}}
                   </div>
                 </template>
               </el-table-column>
@@ -210,7 +181,6 @@
                 <template slot-scope = "s">
                   <!-- 此处的单位根据设置中的法币类型来变化：为人民币时候显示CNY，为美元时候显示$ 此处需要从全局拿到设置中的法币类型来渲染页面-->
                   <div class="red">{{s.row.price}}{{activitedCurrencyName}}</div>
-                  <!-- <div>{{s.row.price}}$</div> -->
                 </template>
               </el-table-column>
               <!-- 支付方式 -->
@@ -219,7 +189,6 @@
               >
                 <template slot-scope="s">
                   <div>
-                    <!-- {{scope.row.payType}} -->
                     <!-- 1支付宝 -->
                     <IconFontCommon
                       class="font-size16"
@@ -268,11 +237,6 @@
                 width="100"
               >
                 <template slot-scope = "s">
-                  <!-- 1.0 原来的 -->
-                  <!-- <div>{{s.row.remark}}</div> -->
-                  <!-- 2.0 测试1 -->
-                  <!-- <div :title="s.row.remark" style="text-overflow:ellipsis;white-space:nowrap;overflow: hidden;">{{s.row.remark}}</div> -->
-                  <!-- 3.0 测试2 -->
                   <el-tooltip
                     effect="dark"
                     :content="s.row.remark"
@@ -282,15 +246,6 @@
                       {{s.row.remark}}
                     </span>
                   </el-tooltip>
-                  <!-- <el-tooltip
-                    effect="dark"
-                    :content="s.row.remark"
-                    placement="bottom-start"
-                  >
-                    <span class="remark-tips">
-                      {{s.row.remark}}
-                    </span>
-                  </el-tooltip> -->
                 </template>
               </el-table-column>
               <!-- 操作 -->
@@ -345,7 +300,6 @@
           >
             {{$t('M.otc_transaction_inquiries_more')}}
           </span>
-        <!-- </div> -->
         <el-tabs
           :tab-position = "tabPosition"
           @tab-click = "toggleTabPane"
@@ -459,7 +413,6 @@ export default {
     OTCEntrustOrder, //  委托订单
     IconFontCommon //  字体图标
   },
-  // props,
   data () {
     return {
       isdisabled: false, // 订单tabs面板切换禁用状态
@@ -468,7 +421,7 @@ export default {
       // 分页
       currentPage: 1, // 当前页码
       totalPages: 1, // 总页数
-      // 3.0 可用法币币种数组
+      // 可用法币币种数组
       activitedCurrencyId: '', // 选中的可用法币id
       activitedCurrencyName: '', // 选中的可用法币name
       availableCurrencyId: [],
@@ -476,8 +429,7 @@ export default {
       tabPosition: 'left', //  订单管理面板标签方向状态
       OTCBuySellStyle: 'onlineBuy', //  在线购买和在线出售选中类型
       selectCurrencyNameStatus: 0, //  选中我要购买或者出售的币种名称
-      // 在线购买和在线出售表格列表
-      onlineBuySellTableList: [],
+      onlineBuySellTableList: [], // 在线购买和在线出售表格列表
       // 支付方式下拉框数据
       payWayBankinfoList: [
         {
@@ -507,9 +459,7 @@ export default {
       ],
       activedPayWayBankinfoItem: this.$t('M.otc_index_Payment_method'), // 下拉框中选中的支付方式
       checkedPayType: '', // 下拉框支付方式中选中的支付方式查询列表
-      // 我要购买出售币种数组
-      IWantToBuySellArr: [
-      ]
+      IWantToBuySellArr: [] // 我要购买出售币种数组
     }
   },
   created () {
@@ -547,16 +497,6 @@ export default {
       'CHANGE_OTC_AVAILABLE_CURRENCY_ID',
       'CHANGE_OTC_AVAILABLE_PARTNER_COIN_ID'
     ]),
-    // 解决OTC首页挂单列表剩余数量精度丢失问题
-    getOTCRemainingSum (entrustCount, matchCount, symbol) {
-      return amendPrecision(entrustCount, matchCount, symbol)
-    },
-    // 分页:改变页面刷新挂单列表
-    changeCurrentPage (pageNum) {
-      console.log(pageNum)
-      this.currentPage = pageNum
-      this.getOTCPutUpOrdersList() // otc主页面查询挂单列表
-    },
     // 0.1 切换各订单状态tab面板
     toggleTabPane (tab, event) {
       // 防止频繁切换点击按钮 通过禁用按钮，0.5秒后可以点击
@@ -732,6 +672,16 @@ export default {
         }
       }
     },
+    // 0.6 解决OTC首页挂单列表剩余数量精度丢失问题
+    getOTCRemainingSum (entrustCount, matchCount, symbol) {
+      return amendPrecision(entrustCount, matchCount, symbol)
+    },
+    // 0.7 分页:改变页面刷新挂单列表
+    changeCurrentPage (pageNum) {
+      console.log(pageNum)
+      this.currentPage = pageNum
+      this.getOTCPutUpOrdersList() // otc主页面查询挂单列表
+    },
     //  1.0 otc可用币种查询：我要购买/我要出售的币种列表
     async getOTCAvailableCurrencyList () {
       const data = await getOTCAvailableCurrency({
@@ -786,7 +736,6 @@ export default {
         pageNum: this.currentPage,
         payType: this.checkedPayType, // 按照选中的支付方式查询列表
         partnerId: this.partnerId, // 商户id
-        // 刚进页面默认显示可用币种的第一个
         coinId: this.selectedOTCAvailableCurrencyCoinID, // 币种id
         currencyId: this.activitedCurrencyId // 法币id
       }
@@ -988,8 +937,7 @@ export default {
       selectedOTCAvailablePartnerCoinId: state => state.OTC.selectedOTCAvailablePartnerCoinId,
       selectedOTCAvailableCurrencyCoinID: state => state.OTC.selectedOTCAvailableCurrencyCoinID,
       partnerId: state => state.common.partnerId, // 商户id
-      // 当前选中语言
-      language: state => state.common.language,
+      language: state => state.common.language, // 当前选中语言
       activeLanguage: state => state.common.activeLanguage,
       userInfo: state => state.user.loginStep1Info.userInfo, // 用户详细信息
       isLogin: state => state.user.isLogin // 用户登录状态 false 未登录； true 登录
@@ -997,8 +945,8 @@ export default {
   },
   watch: {
     activeLanguage (newVal) {
-      // console.log('当前选中语言')
-      // console.log(newVal)
+      console.log('当前选中语言')
+      console.log(newVal)
     }
   }
 }
