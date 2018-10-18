@@ -946,7 +946,7 @@ export default {
       } else {
         this.sliderFlag = true
         // 判断是否需要短信验证或邮箱验证码验证(条件：(异地ip登录||多次登录失败)&&未绑定谷歌验证器)
-        if (!this.firstLogin || !this.loginIpEquals) {
+        if (!this.firstLogin || !this.loginIpEquals || this.isBindGoogle) {
           this.loginImageValidateStatus = false
           this.ENTER_STEP3()
           this.step3DialogShowStatus = true
@@ -1074,7 +1074,7 @@ export default {
           // 显示图片验证码
           this.userInputImageCode = ''
           this.loginImageValidateStatus = true
-        } else if (this.firstLogin || !this.loginIpEquals) {
+        } else if (this.firstLogin || !this.loginIpEquals || this.isBindGoogle) {
           // 登录第三步(第一次登录、异常ip)
           this.step3DialogShowStatus = true
           if (!this.isBindGoogle) {
