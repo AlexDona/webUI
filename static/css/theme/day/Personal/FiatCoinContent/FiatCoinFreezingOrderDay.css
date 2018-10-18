@@ -14,7 +14,7 @@
     color: #909399;
 }
 .fiat-freezing-order-box.personal.day > .freezing-order-content > .freezing-table-head > .item{
-    border-right:1px solid #ECF1F8;
+    /* border-right:1px solid #ECF1F8; */
 }
 .fiat-freezing-order-box.personal.day .el-table td {
   border-bottom: 1px solid rgba(38,47,56,0.1);

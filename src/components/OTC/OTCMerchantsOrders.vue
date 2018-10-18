@@ -6,7 +6,10 @@
     <!-- 1.0 导航 -->
     <NavCommon/>
     <!-- 2.0 商家订单 -->
-    <div class="otc-merchants-orders-content" :style="{'min-height':(height-556)+'px'}">
+    <div
+      class="otc-merchants-orders-content"
+      :style="{'min-height':(height-556)+'px'}"
+    >
       <!-- 2.1 大标题商家订单 -->
       <div class="merchants-title font-size20 padding-l15 font-weight700">
         <!-- 商家订单 -->
@@ -17,7 +20,9 @@
         <!-- 上部分筛选条件 -->
         <div class="orders-main-top">
           <!-- 交易类型 -->
-          <span class="filtrate-text font-size14">{{$t('M.otc_type_ransaction')}}</span>
+          <span class="filtrate-text font-size14">
+            {{$t('M.otc_type_ransaction')}}
+          </span>
           <span class="status-input">
             <el-select
               v-model="activitedMerchantsOrdersTraderStyleList"
@@ -36,7 +41,9 @@
             </el-select>
           </span>
           <!-- 币种 -->
-          <span class="filtrate-text font-size14">{{$t('M.comm_currency')}}</span>
+          <span class="filtrate-text font-size14">
+            {{$t('M.comm_currency')}}
+          </span>
           <span class="status-input">
             <el-select
               v-model="activitedMerchantsOrdersCoin"
@@ -55,7 +62,9 @@
             </el-select>
           </span>
           <!-- 货币 -->
-          <span class="filtrate-text font-size14">{{$t('M.otc_MerchantsOrders_currecy')}}</span>
+          <span class="filtrate-text font-size14">
+            {{$t('M.otc_MerchantsOrders_currecy')}}
+          </span>
           <span class="status-input">
             <el-select
               v-model="activitedMerchantsOrdersCurrency"
@@ -74,7 +83,9 @@
             </el-select>
           </span>
           <!-- 状态 -->
-          <span class="filtrate-text font-size14">{{$t('M.comm_state')}}</span>
+          <span class="filtrate-text font-size14">
+            {{$t('M.comm_state')}}
+          </span>
           <span class="status-input">
             <el-select
               v-model="activitedMerchantsOrdersStatusList"
@@ -93,7 +104,9 @@
             </el-select>
           </span>
           <!-- 日期 -->
-          <span class="filtrate-text font-size14">{{$t('M.otc_MerchantsOrders_date')}}</span>
+          <span class="filtrate-text font-size14">
+            {{$t('M.otc_MerchantsOrders_date')}}
+          </span>
           <span class="date-picker">
             <!--开始日期-->
             <el-date-picker
@@ -119,8 +132,20 @@
           </span>
           <br>
           <span class="inquire-button">
-            <el-button type="primary" @click="findFilter">{{$t('M.otc_inquiries')}}</el-button>
-            <el-button type="primary" @click="resetCondition">{{$t('M.otc_MerchantsOrders_reset')}}</el-button>
+            <!-- 查询 -->
+            <el-button
+              type="primary"
+              @click="findFilter"
+            >
+              {{$t('M.otc_inquiries')}}
+            </el-button>
+            <!-- 重置 -->
+            <el-button
+              type="primary"
+              @click="resetCondition"
+            >
+              {{$t('M.otc_MerchantsOrders_reset')}}
+            </el-button>
           </span>
         </div>
         <!-- 下部分表格内容 -->
@@ -188,12 +213,21 @@
               width="100"
             >
               <template slot-scope = "scope">
-                <div v-show="scope.row.status === 'PICKED'">{{$t('M.otc_enum_status_weifukuan')}}</div>
-                <div v-show="scope.row.status === 'PAYED'">{{$t('M.otc_enum_status_yifukuan')}}</div>
-                <div v-show="scope.row.status === 'COMPLETED'">{{$t('M.otc_enum_status_yiwancheng')}}</div>
-                <div v-show="scope.row.status === 'CANCELED'">{{$t('M.otc_enum_status_yiquxiao')}}</div>
-                <div v-show="scope.row.status === 'FROZEN'">{{$t('M.otc_freezing')}}</div>
-                <!-- <div>{{scope.row.status}}</div> -->
+                <div v-show="scope.row.status === 'PICKED'">
+                  {{$t('M.otc_enum_status_weifukuan')}}
+                </div>
+                <div v-show="scope.row.status === 'PAYED'">
+                  {{$t('M.otc_enum_status_yifukuan')}}
+                </div>
+                <div v-show="scope.row.status === 'COMPLETED'">
+                  {{$t('M.otc_enum_status_yiwancheng')}}
+                </div>
+                <div v-show="scope.row.status === 'CANCELED'">
+                  {{$t('M.otc_enum_status_yiquxiao')}}
+                </div>
+                <div v-show="scope.row.status === 'FROZEN'">
+                  {{$t('M.otc_freezing')}}
+                </div>
               </template>
             </el-table-column>
             <!-- 货币 -->
@@ -210,7 +244,6 @@
               :label = "$t('M.otc_index_Payment_method')"
             >
               <template slot-scope = "scope">
-                <!-- <div>{{scope.row.payStyle}}</div> -->
                 <div>
                   <!-- 支付宝 -->
                   <IconFontCommon
@@ -303,7 +336,9 @@
       </div>
     </div>
     <!-- 3.0 底部 -->
-    <keep-aline><FooterCommon/></keep-aline>
+    <keep-aline>
+      <FooterCommon/>
+    </keep-aline>
   </div>
 </template>
 <!--请严格按照如下书写书序-->
@@ -323,10 +358,10 @@ export default {
   },
   data () {
     return {
-      loading: true,
+      loading: true, // loading加载
       height: '', // 商家订单内容的高度
       // 分页
-      pageSize: 10,
+      pageSize: 10, // 每页显示的条数
       currentPage: 1, // 当前页码
       totalPages: 1, // 总页数
       // 1.0 商家订单筛选下拉框数组--交易类型
@@ -373,8 +408,7 @@ export default {
       ],
       startTimeValue: '', // 默认开始时间
       endTimeValue: '', // 默认结束时间
-      // 商家订单列表
-      merchantsOrdersList: []
+      merchantsOrdersList: [] // 商家订单列表
     }
   },
   created () {
@@ -397,18 +431,18 @@ export default {
   update () {},
   beforeRouteUpdate () {},
   methods: {
-    // 分页
+    // 1分页
     changeCurrentPage (pageNum) {
       console.log(pageNum)
       this.currentPage = pageNum
       this.loading = true
       this.getOTCEntrustingOrdersRevocation()
     },
-    // 时间格式化
+    // 2时间格式化
     timeFormatting (date) {
       return timeFilter(date, 'date')
     },
-    // 页面加载时 可用币种查询
+    // 3页面加载时 可用币种查询
     async getOTCAvailableCurrencyList () {
       const data = await getOTCAvailableCurrency({
         partnerId: this.partnerId
@@ -422,7 +456,7 @@ export default {
         this.merchantsOrdersCoinList = data.data.data
       }
     },
-    // 页面加载时 可用法币查询
+    // 4页面加载时 可用法币查询
     async getMerchantAvailablelegalTenderList () {
       const data = await getMerchantAvailablelegalTender({
         partnerId: this.partnerId
@@ -436,7 +470,7 @@ export default {
         this.merchantsOrdersCurrencyList = data.data.data
       }
     },
-    // change事件改变时赋值
+    // 5change事件改变时赋值
     changeSelectValue (type, targetValue) {
       console.log('11111', type, targetValue)
       switch (type) {
@@ -484,12 +518,12 @@ export default {
           break
       }
     },
-    // 点击查询按钮
+    // 6点击查询按钮
     findFilter () {
       this.loading = true
       this.getOTCEntrustingOrdersRevocation()
     },
-    // 重置
+    // 7重置
     resetCondition () {
       this.activitedMerchantsOrdersTraderStyleList = ''
       this.activitedMerchantsOrdersCoin = ''
@@ -500,7 +534,7 @@ export default {
       this.loading = true
       this.getOTCEntrustingOrdersRevocation()
     },
-    // 页面加载时请求接口渲染列表
+    // 8页面加载时请求接口渲染列表
     async getOTCEntrustingOrdersRevocation () {
       let data = await getOTCMerchantsOrdersList({
         // 当前页数
