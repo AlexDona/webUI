@@ -615,18 +615,19 @@ export default {
       isErcodeTimeOut: false, // 二维码是否过期
       isErCodeLogin: false, // 是否扫码登录
       erCodeString: '', // 二维码登录字符串
-      // username: '',
+      username: '',
       // username: '18625512987',
       // username: '18600929234',
       // username: '17600854297',
       // username: '13137111901',
       // password: 'a11111111',
-      username: '15638559236',
+      // username: '15638559236',
       // username: '13100000011',
       // username: '13100000012',
       // username: '18625512988',
       // password: '123456aa',
-      password: 'a1111111',
+      // password: 'a1111111',
+      password: '',
       userNameErrorMsg: '', // 错误提示
       loadingCircle: {},
       userInputImageCode: '', // 图形验证码(用户输入)

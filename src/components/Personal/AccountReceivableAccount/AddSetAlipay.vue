@@ -199,7 +199,9 @@ export default {
     // 黑色主题样式
     require('../../../../static/css/theme/night/Personal/AccountReceivableAccount/AddSetAlipayNight.css')
     this.tokenObj.token = this.userInfo.token
-    this.tokenObj['x-domain'] = window.location.host.split(':')[0]
+    let xDomain = window.location.host.split(':')[0]
+    xDomain = xDomain.startsWith('www') ? xDomain.slice(4) : xDomain
+    this.tokenObj['x-domain'] = xDomain
     console.log(this.userInfo)
     this.getAccountPaymentTerm()
     this.paymentMethodInformation()

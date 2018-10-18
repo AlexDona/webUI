@@ -203,7 +203,7 @@
                 >
                   <!--委托时间-->
                   <li class="td time">
-                    {{item.createTime}}
+                    {{item.completeTime}}
                   </li>
                   <!--委托类型-->
                   <li class="td type">

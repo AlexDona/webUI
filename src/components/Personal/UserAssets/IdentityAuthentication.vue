@@ -571,7 +571,9 @@ export default {
     this.SET_USER_INFO_REFRESH_STATUS(true)
     await this.getUserRefreshUser()
     this.tokenObj.token = this.userInfo.token
-    this.tokenObj['x-domain'] = window.location.host.split(':')[0]
+    let xDomain = window.location.host.split(':')[0]
+    xDomain = xDomain.startsWith('www') ? xDomain.slice(4) : xDomain
+    this.tokenObj['x-domain'] = xDomain
     await reflashUserInfo(this)
     this.authenticationIsStatus()
     console.log(this.authenticationNotPass)
