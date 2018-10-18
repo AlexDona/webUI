@@ -983,7 +983,8 @@ export default {
           color: #333;
         }
         .btn {
-          color: #fff;
+          // color: #fff;
+          color: #333;
           background-color: transparent;
           border: 1px solid #338FF5;
         }

@@ -282,7 +282,7 @@
                 </p>
                 <p>
                   <span>{{$t('M.otc_formStatistics_turnover')}}{{$t('M.comm_order')}}:</span>
-                  <span class="data"> {{ sellMonthMap.num }}{{ activitedTraderCoinName }}{{$t('M.comm_stock')}}</span>
+                  <span class="data"> {{ sellMonthMap.num }}{{$t('M.comm_stock')}}</span>
                 </p>
               </div>
             </div>
