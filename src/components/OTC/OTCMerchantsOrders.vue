@@ -336,9 +336,9 @@
       </div>
     </div>
     <!-- 3.0 底部 -->
-    <keep-aline>
+    <keep-alive>
       <FooterCommon/>
-    </keep-aline>
+    </keep-alive>
   </div>
 </template>
 <!--请严格按照如下书写书序-->

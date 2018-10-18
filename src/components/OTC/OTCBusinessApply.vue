@@ -197,9 +197,9 @@
     >
     </div>
     <!-- 3.0 底部 -->
-    <keep-aline>
+    <keep-alive>
       <FooterCommon class="footer"/>
-    </keep-aline>
+    </keep-alive>
   </div>
 </template>
 <script>

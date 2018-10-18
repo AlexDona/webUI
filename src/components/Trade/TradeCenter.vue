@@ -4,7 +4,9 @@
     class="trade-box trade"
     :class="{'day':theme == 'day','night':theme == 'night' }"
   >
-    <HeaderCommon/>
+    <keep-alive>
+      <HeaderCommon/>
+    </keep-alive>
     <div class="inner-box clearfloat">
       <!--左侧-->
       <div class="left float-left">
@@ -39,6 +41,9 @@
         <TradeMarketList/>
       </div>
     </div>
+    <keep-alive>
+      <FooterCommon/>
+    </keep-alive>
   </div>
 </template>
 <script>
@@ -52,6 +57,7 @@ import OrderRecord from './OrderRecordTrade'
 import KLine from './kLine'
 import MiddleHeader from './MiddleHeaderTrade'
 import Depth from './DepthTrade'
+import FooterCommon from '../Common/FooterCommon'
 import {mapState} from 'vuex'
 
 export default {
@@ -65,7 +71,8 @@ export default {
     OrderRecord, // 成交记录
     BuysAndSells, // 买卖单
     GlobalMarket,
-    HeaderCommon
+    HeaderCommon,
+    FooterCommon
   },
   // props,
   data () {

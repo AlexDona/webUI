@@ -35,7 +35,7 @@
               >
                 <template slot-scope="s">
                   <span>
-                    {{s.row.bourseTrade}}
+                    {{s.row.bourseTrade.split('_').join('/')}}
                   </span>
                 </template>
               </el-table-column>

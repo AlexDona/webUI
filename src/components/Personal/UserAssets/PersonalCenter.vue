@@ -3,8 +3,10 @@
     class="personal-center personal"
     :class="{'day':theme == 'day','night':theme == 'night' }"
   >
-    <!--头部-->
-    <HeaderCommon/>
+    <keep-alive>
+      <!--头部-->
+      <HeaderCommon/>
+    </keep-alive>
     <div class="personal-center-main">
       <div class="personal-center-content clearfix">
         <el-tabs
@@ -210,7 +212,7 @@
       </div>
     </div>
     <!--底部-->
-    <keep-aline><FooterCommon/></keep-aline>
+    <keep-alive><FooterCommon/></keep-alive>
   </div>
 </template>
 <!--请严格按照如下书写书序-->

@@ -8,12 +8,15 @@
     v-loading.fullscreen.lock="fullscreenLoading"
     element-loading-background="rgba(0, 0, 0, 0.6)"
   >
+    <keep-alive>
     <HeaderCommonForPC
       v-if="!isMobile"
     />
     <HeaderCommonForMobile
       v-if="isMobile"
     />
+    </keep-alive>
+
     <div
       class="inner-box"
       :class="{'pc-bg': !isMobile}"
@@ -958,8 +961,6 @@ export default {
     },
     // 自动获取验证码
     autoSendValidateCode () {
-      // console.log(this.isMobile)
-      // console.log(this.isBindPhone)
       let sendType = this.isMobile ? 'mobile' : 'pc'
       let loginType = this.isBindPhone ? 0 : 1
       this.sendPhoneOrEmailCode(sendType, loginType)

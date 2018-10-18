@@ -3,7 +3,9 @@
     class="activity-center-box"
     :class="{'day':theme == 'day','night':theme == 'night' }"
   >
-    <HeaderCommon/>
+    <keep-alive>
+      <HeaderCommon/>
+    </keep-alive>
     活动中心
   </div>
 </template>

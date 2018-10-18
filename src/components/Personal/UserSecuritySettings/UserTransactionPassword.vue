@@ -5,7 +5,9 @@
     v-loading.fullscreen.lock="fullscreenLoading"
     element-loading-background="rgba(0, 0, 0, 0.6)"
   >
-    <HeaderCommon/>
+    <keep-alive>
+      <HeaderCommon/>
+    </keep-alive>
     <div class="transaction-password-main margin25">
       <header class="transaction-password-header personal-height60 line-height60 line-height70 margin25">
         <span
@@ -226,9 +228,9 @@
         </div>
       </div>
     </div>
-    <keep-aline>
+    <keep-alive>
       <FooterCommon/>
-    </keep-aline>
+    </keep-alive>
   </div>
 </template>
 <!--请严格按照如下书写书序-->

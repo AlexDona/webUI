@@ -19,9 +19,9 @@
     <MarketListHome class="margin-1"/>
 
     <!--底部-->
-    <keep-aline>
+    <keep-alive>
       <FooterCommon/>
-    </keep-aline>
+    </keep-alive>
   </div>
 </template>
 <script>
