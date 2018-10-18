@@ -4,6 +4,7 @@
     :class="{'day':theme == 'day','night':theme == 'night' }"
   >
     <div class="completed-order-content">
+      <!-- 表格 -->
       <div class="tables">
         <el-table
           :data="completedOrdersList"
@@ -262,10 +263,10 @@ export default {
     return {
       loading: true,
       // 分页
-      pageSize: 5,
+      pageSize: 5, // 每页展示的条数
       currentPage: 1, // 当前页码
       totalPages: 1, // 总页数
-      completedOrdersList: []
+      completedOrdersList: [] // 完成订单列表
     }
   },
   created () {

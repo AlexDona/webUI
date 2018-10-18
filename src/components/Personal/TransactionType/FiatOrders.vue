@@ -13,6 +13,7 @@
       <el-tabs
         v-model="activeName"
         :tab-position = "tabPosition"
+        @tab-click = "toggleTabPane"
       >
         <!-- 上部分筛选条件 -->
         <div class="orders-main-top">
@@ -82,7 +83,7 @@
                 <el-option
                   v-for="(item,index) in merchantsOrdersCurrencyList"
                   :key="index"
-                  :label="item.name"
+                  :label="language === 'zh_CN'? item.name : item.shortName"
                   :value="item.id"
                 >
                 </el-option>
@@ -292,9 +293,16 @@ export default {
       // 'CHANGE_OTC_AVAILABLE_PARTNER_COIN_ID',
       // 'USER_ASSETS_LIST',
       'SET_LEGAL_TENDER_LIST',
-      'CHANGE_LEGAL_PAGE'
+      'CHANGE_LEGAL_PAGE',
       // 'SET_LEGAL_TENDER_REFLASH_STATUS'
+      'CHANGE_RE_RENDER_TRADING_LIST_STATUS' // 更改重新渲染交易中订单列表状态
     ]),
+    // 切换tab时将全局当前页码改为1加载第一页的数据
+    toggleTabPane () {
+      this.CHANGE_LEGAL_PAGE({
+        legalTradePageNum: 1
+      })
+    },
     // 时间格式化
     timeFormatting (date) {
       return timeFilter(date, 'date')
@@ -424,6 +432,7 @@ export default {
           console.log(data)
           this.CHANGE_LEGAL_PAGE({
             legalTradePageNum: data.data.data.pageNum,
+            // legalTradePageTotals: data.data.data.total
             legalTradePageTotals: data.data.data.pages
           })
         }
@@ -441,10 +450,13 @@ export default {
               type: activeName,
               data: data.data.data.list
             })
+            // 刷新列表之后将重新渲染交易中订单列表状态改为false
+            this.CHANGE_RE_RENDER_TRADING_LIST_STATUS(false)
             console.log(data)
             this.CHANGE_LEGAL_PAGE({
               legalTradePageNum: data.data.data.pageNum,
               legalTradePageTotals: data.data.data.pages
+              // legalTradePageTotals: data.data.data.total
             })
           }
         })
@@ -454,6 +466,8 @@ export default {
   filter: {},
   computed: {
     ...mapState({
+      // 当前选中语言
+      language: state => state.common.language,
       theme: state => state.common.theme,
       withdrawDepositList: state => state.common.withdrawDepositList,
       legalTradePageNum: state => state.personal.legalTradePageNum,
@@ -461,8 +475,9 @@ export default {
       legalTraderCompletedReflashStatus: state => state.personal.legalTraderCompletedReflashStatus,
       legalTraderEntrustReflashStatus: state => state.personal.legalTraderEntrustReflashStatus,
       userInfo: state => state.user.loginStep1Info, // 用户详细信息
-      userCenterActiveName: state => state.personal.userCenterActiveName
+      userCenterActiveName: state => state.personal.userCenterActiveName,
       // fiatMoneyOrdersName: state => state.personal.fiatMoneyOrdersName
+      reRenderTradingListStatus: state => state.personal.reRenderTradingListStatus // 从全局获得的重新渲染交易中订单列表状态
     })
   },
   watch: {
@@ -481,6 +496,14 @@ export default {
     },
     userCenterActiveName (newVal) {
       if (newVal === 'fiat-orders') {
+        this.getOTCEntrustingOrdersRevocation(this.activeName)
+      }
+    },
+    //  监控重新渲染交易中订单列表状态:当为true时调用重新刷新列表方法
+    reRenderTradingListStatus () {
+      console.log('重新渲染交易中订单列表状态')
+      console.log(this.reRenderTradingListStatus)
+      if (this.reRenderTradingListStatus) {
         this.getOTCEntrustingOrdersRevocation(this.activeName)
       }
     }

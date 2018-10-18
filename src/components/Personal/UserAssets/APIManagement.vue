@@ -784,7 +784,6 @@ export default {
      * 安全中心
      */
     getSecurityCenter () {
-      // 整页loading
       getSecurityCenter(this, (data) => {
         if (data) {
           this.securityCenter = data.data.data

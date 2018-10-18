@@ -8,7 +8,7 @@
       <!-- 一、交易中订单 -->
       <div
         class="order-list"
-        v-for="(item, index) in legalTraderTradingList"
+        v-for="(item, index) in tradingOrderList"
         :key="index"
       >
         <!-- 订单列表 ：1.0 买单 -->
@@ -35,8 +35,7 @@
             </div>
             <div class="buy-sell-icon">
               <!--买-->
-              {{$t('' +
-              'M.comm_bid')}}
+              {{$t('' + 'M.comm_bid')}}
             </div>
           </div>
           <!-- 1.2 表身体 -->
@@ -149,7 +148,8 @@
                   >
                     <span>
                       <!--账&nbsp;&nbsp;&nbsp;户-->
-                      {{$t('M.co' + 'mm_bill')}}: {{activedPayAccountArr[index]}}
+                      <!-- {{$t('M.co' + 'mm_bill')}}: {{activedPayAccountArr[index]}} -->
+                      {{$t('M.user_google_account')}}:{{activedPayAccountArr[index]}}
                     </span>
                   </p>
                   <p
@@ -651,14 +651,14 @@
         </div>
       </div>
       <!-- 二、暂无数据 -->
-      <div class="no-data" v-if="!legalTraderTradingList.length">
+      <div class="no-data" v-if="!tradingOrderList.length">
         <!--暂无数据-->
         {{ $t('M.comm_no_data') }}
       </div>
       <!-- 三、分页-->
       <el-pagination
         background
-        v-show="legalTraderTradingList.length"
+        v-show="tradingOrderList.length"
         layout="prev, pager, next"
         :current-page="legalTradePageNum"
         :page-count="legalTradePageTotals"
@@ -789,8 +789,7 @@ import {
   sellerConfirmGetMoney,
   sellerSendAppeal,
   cancelUserOtcOrder,
-  completeUserOtcOrder,
-  getQueryAllOrdersList
+  completeUserOtcOrder
 } from '../../../utils/api/personal'
 import {timeFilter, formatSeconds} from '../../../utils'
 import IconFontCommon from '../../Common/IconFontCommon'
@@ -813,7 +812,7 @@ export default {
       appealTextareaValue: '', // 订单申诉原因文本域内容
       activitedPayStyle: '', //  选中的支付方式
       activitedPayStyleId: '', //  选中的支付方式id-往后台传送的参数
-      // legalTraderTradingList: [], // 交易中订单列表
+      // tradingOrderList: [], // 交易中订单列表
       activedTradingOrderId: '', // 选中的订单id
       activedPayAccountArr: [], // 当前选中的订单中付款方式中的付款账号 ：为了解决支付宝和微信账号一样做的bug修复
       // 支付方式
@@ -842,7 +841,7 @@ export default {
     require('../../../../static/css/theme/day/Personal/FiatCoinContent/FiatCoinTradingOrderDay.css')
     require('../../../../static/css/theme/night/Personal/FiatCoinContent/FiatCoinTradingOrderNight.css')
     // 1.0 请求交易中订单列表
-    this.getOTCTradingOrdersList()
+    // this.getOTCTradingOrdersList()
   },
   mounted () {},
   activited () {},
@@ -850,11 +849,13 @@ export default {
   beforeRouteUpdate () {},
   methods: {
     ...mapMutations([
-      // 'SET_LEGAL_TENDER_REFLASH_STATUS'
-      // 'CHANGE_LEGAL_PAGE'
+      'SET_LEGAL_TENDER_REFLASH_STATUS',
+      'CHANGE_LEGAL_PAGE',
+      'CHANGE_RE_RENDER_TRADING_LIST_STATUS' // 更改重新渲染交易中订单列表状态
     ]),
     // 1.0 分页
     changeCurrentPage (e) {
+      console.log('当前页' + e)
       changeCurrentPageForLegalTrader(e, 'TRADING', this)
     },
     // 1.1 时间格式化
@@ -898,81 +899,59 @@ export default {
         })
       }, 1000)
     },
-    // 任增加自动取消倒计时和自动成交倒计时接口
+    // 1.5 任增加自动取消倒计时和自动成交倒计时接口
     // 撤销/成交otc用户定单
     async cancelCompleteUserOtcOrder (val) { // 1 取消 2 完成
-      console.log('自动取消倒计时和自动成交倒计时接口')
       let data
       if (val === 1) {
         data = await cancelUserOtcOrder()
-        console.log('撤销otc用户定单（过期买家未付款）')
-      }
-      if (val === 2) {
-        data = await completeUserOtcOrder()
-        console.log('成交otc用户定单（过期卖家未收款）')
-        // 1.5 自动取消倒计时和自动成交倒计时接口
-        // 撤销/成交otc用户定单
-        console.log(data)
+        console.log('撤销（过期 买家 未付款）')
         if (!(returnAjaxMessage(data, this, 0))) {
           return false
         } else {
           // 返回数据正确的逻辑：重新渲染列表
-          this.getOTCTradingOrdersList()
+          // this.getOTCTradingOrdersList()
+          this.CHANGE_RE_RENDER_TRADING_LIST_STATUS(true)
+        }
+      }
+      if (val === 2) {
+        data = await completeUserOtcOrder()
+        console.log('成交（过期 卖家 未收款）')
+        // console.log(data)
+        if (!(returnAjaxMessage(data, this, 0))) {
+          return false
+        } else {
+          // 返回数据正确的逻辑：重新渲染列表
+          // this.getOTCTradingOrdersList()
+          this.CHANGE_RE_RENDER_TRADING_LIST_STATUS(true)
         }
       }
     },
-    // 2.0 请求交易中订单列表
-    async getOTCTradingOrdersList () {
-      // this.loading = true
+    // 2.0 倒计时逻辑方法 timerLogicMethod
+    timerLogicMethod () {
       this.activePayModeList = [] // 清空支付方式数组：防止换页码之后之前选中的在此页面付款方式也被选中的问题
       this.cancelOrderTimeArr = []
       this.accomplishOrderTimeArr = []
-      // console.log('当前页：' + this.currentPage)
-      const data = await getQueryAllOrdersList({
-        status: 'TRADING' // 状态 (交易中 TRADING )
-        // pageNum: this.currentPage,
-        // pageSize: this.pageSize
-      })
-      console.log('交易中订单列表')
-      console.log(data)
-      // 提示信息
-      if (!(returnAjaxMessage(data, this, 0))) {
-        // this.loading = false
-        return false
-      } else {
-        // 返回数据正确的逻辑
-        // this.loading = false
-        this.legalTraderTradingList = data.data.data.list
-        console.log('交易中订单')
-        console.log(this.legalTraderTradingList)
-        // 分页
-        // this.totalPages = data.data.data.pages - 0
-        // console.log(this.legalTraderTradingList)
-        // 循环数组
-        this.legalTraderTradingList.forEach((item, index) => {
-          // console.log(item)
-          this.buttonStatusArr[index] = false
-          this.showOrderAppeal[index] = false
-          // 自动取消订单倒计时数组集
-          if (item.status === 'PICKED') {
-            this.cancelOrderTimeArr[index] = item.cancelRestTime // cancelRestTime毫秒单位
-            this.accomplishOrderTimeArr[index] = 10000000 // completeRestTime毫秒单位
-          } else if (item.status === 'PAYED') {
-            this.cancelOrderTimeArr[index] = 10000000 // cancelRestTime毫秒单位
-            this.accomplishOrderTimeArr[index] = item.completeRestTime // completeRestTime毫秒单位
-          }
+      // 循环数组
+      this.tradingOrderList.forEach((item, index) => {
+        this.buttonStatusArr[index] = false
+        this.showOrderAppeal[index] = false
+        // 自动取消订单倒计时数组集
+        if (item.status === 'PICKED') {
+          this.cancelOrderTimeArr[index] = item.cancelRestTime // cancelRestTime毫秒单位
+          this.accomplishOrderTimeArr[index] = 10000000 // completeRestTime毫秒单位
+        } else if (item.status === 'PAYED') {
           // 自动成交倒计时数组集
-        })
-        // console.log(this.legalTraderTradingList.length)
-        if (this.legalTraderTradingList.length) {
-          // 调用自动取消倒计时方法
-          this.cancelSetInter()
-          // 调用自动成交倒计时方法
-          this.accomplishSetInter()
-        } else {
-          clearInterval(this.cancelOrdersTimer)
-          clearInterval(this.accomplishOrdersTimer)
+          this.cancelOrderTimeArr[index] = 10000000 // cancelRestTime毫秒单位
+          this.accomplishOrderTimeArr[index] = item.completeRestTime // completeRestTime毫秒单位
         }
+      })
+      if (this.tradingOrderList.length) {
+        this.cancelSetInter() // 调用自动取消倒计时方法
+        this.accomplishSetInter() // 调用自动成交倒计时方法
+      } else {
+        clearInterval(this.cancelOrdersTimer)
+        clearInterval(this.accomplishOrdersTimer)
       }
     },
     // 3.0 改变交易方式
@@ -980,9 +959,9 @@ export default {
       console.log('第' + index + '条数据')
       console.log(index)
       console.log('选中订单的订单号')
-      console.log(this.legalTraderTradingList[index].id)
-      this.activedTradingOrderId = this.legalTraderTradingList[index].id
-      this.legalTraderTradingList[index].userBankList.forEach((item) => {
+      console.log(this.tradingOrderList[index].id)
+      this.activedTradingOrderId = this.tradingOrderList[index].id
+      this.tradingOrderList[index].userBankList.forEach((item) => {
         if (item.id == this.activePayModeList[index]) {
           this.activedPayAccountArr[index] = item.cardNo
           console.log('选中的付款账号：' + this.activedPayAccountArr[index])
@@ -1057,7 +1036,8 @@ export default {
           //   status: true
           // })
           // 2再次调用接口刷新列表
-          this.getOTCTradingOrdersList()
+          // this.getOTCTradingOrdersList()
+          this.CHANGE_RE_RENDER_TRADING_LIST_STATUS(true)
         }
       }
     },
@@ -1103,7 +1083,8 @@ export default {
         //   status: true
         // })
         // 2再次调用接口刷新列表
-        this.getOTCTradingOrdersList()
+        // this.getOTCTradingOrdersList()
+        this.CHANGE_RE_RENDER_TRADING_LIST_STATUS(true)
       }
     },
     // 10.0 点击订单申诉弹窗申诉框
@@ -1121,6 +1102,14 @@ export default {
     },
     // 12.0 卖家提交申诉按钮弹出交易密码框
     sellerAppeal () {
+      if (!this.appealTextareaValue) {
+        this.$message({
+          // 请输入申诉原因
+          message: this.$t('M.otc_publishAD_pleaseInput') + this.$t('M.otc_complaint_appeal_reason'),
+          type: 'error'
+        })
+        return false
+      }
       this.dialogVisible3 = true
     },
     // 13.0 卖家提交申诉按钮
@@ -1141,7 +1130,8 @@ export default {
         //   status: true
         // })
         // 2再次调用接口刷新列表
-        this.getOTCTradingOrdersList()
+        // this.getOTCTradingOrdersList()
+        this.CHANGE_RE_RENDER_TRADING_LIST_STATUS(true)
       }
     }
   },
@@ -1152,12 +1142,15 @@ export default {
       language: state => state.common.language,
       activeLanguage: state => state.common.activeLanguage,
       theme: state => state.common.theme,
-      legalTraderTradingList: state => state.personal.legalTraderTradingList,
+      // legalTraderTradingList: state => state.personal.legalTraderTradingList, // 从全局获得的交易中订单列表
+      tradingOrderList: state => state.personal.legalTraderTradingList, // 从全局获得的交易中订单列表tradingOrderList
       legalTraderTradingReflashStatus: state => state.personal.legalTraderTradingReflashStatus,
       legalTradePageTotals: state => state.personal.legalTradePageTotals,
-      legalTradePageNum: state => state.personal.legalTradePageNum
+      legalTradePageNum: state => state.personal.legalTradePageNum,
+      reRenderTradingListStatus: state => state.personal.reRenderTradingListStatus // 从全局获得的重新渲染交易中订单列表状态
     })
-    // legalTraderTradingList () {
+    // 从全局获得的交易中订单列表
+    // tradingOrderList () {
     //   return this.legalTraderTradingList
     // }
   },
@@ -1170,10 +1163,28 @@ export default {
       console.log('language')
       console.log(newVal)
     },
-    legalTraderTradingList (newVal) {
-      console.log(newVal)
-      this.getOTCTradingOrdersList
+    // 监控交易中订单列表并调用倒计时逻辑方法
+    tradingOrderList (newVal) {
+      this.timerLogicMethod()
     },
+    // tradingOrderList (newVal) {
+    //   console.log(newVal)
+    // if (newVal) {
+    //   // 循环数组
+    //   newVal.forEach((item, index) => {
+    //     this.buttonStatusArr[index] = false
+    //     this.showOrderAppeal[index] = false
+    //     // 自动取消订单倒计时数组集
+    //     this.cancelOrderTimeArr[index] = item.cancelRestTime // cancelRestTime毫秒单位
+    //     // 自动成交倒计时数组集
+    //     this.accomplishOrderTimeArr[index] = item.completeRestTime // completeRestTime毫秒单位
+    //   })
+    //   // 调用自动取消倒计时方法
+    //   this.cancelSetInter()
+    //   // 调用自动成交倒计时方法
+    //   this.accomplishSetInter()
+    // }
+    // },
     legalTradePageTotals (newVal) {
       console.log(newVal)
     },
@@ -1260,10 +1271,11 @@ export default {
               >.logo{
                 display: inline-block;
                 margin-right: 20px;
+                text-align: center;
                 >.logo-icon{
                 }
                 >.logo-name{
-                  margin-top: 10px;
+                  margin-top: 5px;
                 }
               }
               >.left-info{

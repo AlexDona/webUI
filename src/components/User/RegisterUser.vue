@@ -39,7 +39,7 @@
         </ul>
         <!--手机号注册-->
         <transition
-          enter-active-class = "animated fadeIn"
+          enter-active-class="animated fadeIn"
         >
           <div
           class="inner-content mobile"
@@ -82,7 +82,6 @@
                :placeholder="$t('M.user_security_phone') + $t('M.user_security_number')"
                v-model="phoneNum"
                @keydown="setErrorMsg(0,'')"
-               @blur="checkUserExistAjax('phone',phoneNum)"
              >
            </div>
           </div>
@@ -160,7 +159,6 @@
                :placeholder="$t('M.user_security_email') + $t('M.comm_site')"
                v-model="emailNum"
                @keydown="setErrorMsg(1,'')"
-               @blur="checkUserExistAjax('email',emailNum)"
              >
            </div>
           </div>
@@ -168,32 +166,6 @@
         </transition>
         <!--公共部分-->
         <div class="inner-content common">
-          <div class="input">
-            <div class="inner-box">
-              <!--图片验证码-->
-              <input
-                type="text"
-                class="input image-validate"
-                v-model="userInputImageCode"
-                :placeholder="$t('M.comm_code')"
-                @keydown="setErrorMsg(2,'')"
-                @blur="checkoutInputFormat(2,userInputImageCode)"
-              >
-              <!--获取图片验证码-->
-              <span
-                @click="refreshCode"
-                class="cursor-pointer"
-              >
-              <ImageValidate
-                id="register"
-                :content-width="80"
-                :content-height="40"
-                :identifyCode="identifyCode"
-                class="display-inline-block"
-              />
-            </span>
-            </div>
-          </div>
           <div class="input">
             <div class="inner-box">
               <!--邮箱、手机验证码-->
@@ -277,15 +249,44 @@
           >
             {{ errorMsg }}
           </div>
-          <button
+          <!--<button-->
+            <!--class="register-btn btn cursor-pointer"-->
+            <!--@click="sendRegister"-->
+          <!--&gt;-->
+            <button
             class="register-btn btn cursor-pointer"
-            @click="sendRegister"
+            @click="showSliderBox"
           >
             <!--注册-->
             {{ $t('M.comm_register_time') }}
           </button>
         </div>
       </div>
+      <!--滑块验证 : 验证-->
+      <el-dialog
+        :title="$t('M.login_slideBlock') + $t('M.login_verify')"
+        :close-on-click-modal="false"
+        :visible.sync="registerSliderStatus"
+        class="slider"
+      >
+        <div class="drag-box border-radius4">
+          <div class="drag cp border-radius4">
+            <div class="drag_bg border-radius4">
+            </div>
+            <div class="drag_text border-radius4">
+              <!-- 请按住滑块，拖动滑块验证 -->
+              {{$t('M.login_verifyTips')}}
+            </div>
+            <div
+              @mouseup="mouseupFn($event)"
+              @mousedown="mousedownFn($event)"
+              class="handler handler_bg"
+            >
+              <!--<IconFont class="icon-text" iconName="icon-icon-right"/>-->
+            </div>
+          </div>
+        </div>
+      </el-dialog>
     </div>
     <!--注册成功-->
     <div
@@ -314,9 +315,7 @@ import ImageValidate from '../Common/ImageValidateCommon'
 import HeaderCommon from '../Common/HeaderCommonForPC'
 import ErrorBox from './ErrorBox'
 import CountDownButton from '../Common/CountDownCommon'
-// import {EMAIL_REG, PHONE_REG, PWD_REG} from '../../utils/regExp' // 正则验证
 import {
-  // sendMsgByPhoneOrEmial,
   sendRegisterUser,
   checkUserExist
 } from '../../utils/api/user'
@@ -361,6 +360,20 @@ export default {
       errorMsg: '', // 错误信息
       isRegisterSuccess: false, // 注册成功
       successCountDown: 3, // 成功倒计时
+      registerSliderStatus: false, // 滑块验证显示状态
+      /**
+       * 滑块验证
+       *
+       */
+      beginClientX: 0, /* 距离屏幕左端距离 */
+      mouseMoveStatus: false, /* 触发拖动状态  判断 */
+      maxwidth: 340, /* 拖动最大宽度，依据滑块宽度算出来的 */
+      // confirmWords: '请按住滑块，拖动滑块验证', /*滑块文字*/
+      confirmWords: this.$t('M.login_verifyTips'), /* 滑块文字 */
+      confirmSuccess: false, /* 验证成功判断 */
+      sliderFlag: true, // 滑块调用节流阀
+      loginFlag: true, // 登录节流阀
+      dragStatus: true, // 拖动标记
       end: '' // 占位
     }
   },
@@ -376,6 +389,30 @@ export default {
     // this.getCountryList()
   },
   mounted () {
+    $('body').on('mousemove', (e) => { // 拖动，这里需要用箭头函数，不然this的指向不会是vue对象
+      if (this.mouseMoveStata) {
+        var width = e.clientX - this.beginClientX
+        if (width > 0 && width <= this.maxwidth) {
+          $('.handler').css({'left': width})
+          $('.drag_bg').css({'width': width})
+        } else if (width > this.maxwidth) {
+          this.successFunction()
+        }
+      }
+    })
+    $('body').on('mouseup', (e) => { // 鼠标放开
+      console.log('mouseup')
+      this.mouseMoveStata = false
+      var width = e.clientX - this.beginClientX
+      if (width < this.maxwidth) {
+        $('.handler').animate({'left': 0}, 500)
+        $('.drag_bg').animate({'width': 0}, 500)
+      }
+      $('body').off('mousemove')
+      $('body').off('mouseup')
+    })
+    $('body').on('dblclick', (e) => {
+    })
   },
   activited () {},
   update () {},
@@ -432,23 +469,6 @@ export default {
               return 0
           }
           break
-        // 图片验证码
-        case 2:
-          if (!targetNum) {
-            // 请输入图片验证码
-            this.setErrorMsg(2, this.$t('M.comm_please_enter') + this.$t('M.login_photo') + this.$t('M.comm_code'))
-            this.$forceUpdate()
-            return 0
-          } else if (this.userInputImageCode === this.identifyCode) {
-            this.setErrorMsg(2, '')
-            this.$forceUpdate()
-            return 1
-          } else {
-            // 请输入正确的图片验证码
-            this.setErrorMsg(2, his.$t('M.comm_please_enter') + this.$t('M.user_security_correct') + this.$t('M.login_photo') + this.$t('M.comm_code'))
-            this.$forceUpdate()
-            return 0
-          }
         // 短信、邮箱验证码
         case 3:
           if (!targetNum) {
@@ -545,19 +565,6 @@ export default {
         }
       }
     },
-    // 手机
-    msgTimer () {
-      if (this.msgCountDown > 0) {
-        this.msgCountDown--
-        this.sendMsgBtnText = this.msgCountDown + ' s'
-        setTimeout(this.msgTimer, 1000)
-      } else {
-        this.msgCountDown = 0
-        // 发送验证码
-        this.sendMsgBtnText = this.$t('M.forgetPassword_hint12')
-        this.sendMsgBtnDisabled = false
-      }
-    },
     // 发送验证码（短信、邮箱）
     sendPhoneOrEmailCode (type) {
       // console.log(type)
@@ -606,9 +613,6 @@ export default {
               })
               break
           }
-          // this.msgCountDown = 60
-          // this.sendMsgBtnDisabled = true
-          // this.msgTimer()
         }
       })
     },
@@ -620,21 +624,24 @@ export default {
     refreshCode () {
       this.identifyCode = this.getRandomNum()
     },
-    // 发送注册申请
-    async sendRegister () {
+    // 滑块验证
+    showSliderBox () {
       const regType = this.activeMethod ? 'email' : 'phone'
       let goOnStatus = 0
       if (regType === 'phone') {
         if (this.checkoutInputFormat(0, this.phoneNum)) {
           goOnStatus = 1
+        } else {
+          return false
         }
       } else {
         if (this.checkoutInputFormat(1, this.emailNum)) {
           goOnStatus = 1
+        } else {
+          return false
         }
       }
       if (
-        this.checkoutInputFormat(2, this.userInputImageCode) &&
         this.checkoutInputFormat(3, this.checkCode) &&
         this.checkoutInputFormat(4, this.password) &&
         this.checkoutInputFormat(5, this.repeatPassword) &&
@@ -656,21 +663,48 @@ export default {
           regType: regType,
           country: countryCode
         }
-        this.fullscreenLoading = true // loading
-        try {
-          const data = await sendRegisterUser(params)
-          console.log(data)
-          if (!returnAjaxMessage(data, this, 0)) {
-            this.fullscreenLoading = false // loading
-            return false
-          } else {
-            this.fullscreenLoading = false // loading
-            this.isRegisterSuccess = true
-            this.successJump()
+        // 显示滑块验证
+        this.sliderFlag = true
+        this.registerSliderStatus = true
+        $('body').on('mousedown', (e) => {
+        })
+        $('body').on('mousemove', (e) => { // 拖动，这里需要用箭头函数，不然this的指向不会是vue对象
+          if (this.mouseMoveStatus) {
+            var width = e.clientX - this.beginClientX
+            if (width > 0 && width <= this.maxwidth) {
+              $('.handler').css({'left': width})
+              $('.drag_bg').css({'width': width})
+            } else if (width > this.maxwidth) {
+              this.successFunction(params)
+            }
           }
-        } catch (err) {
-          console.log(err)
+        })
+        $('body').on('mouseup', (e) => { // 鼠标放开
+          this.mouseMoveStatus = false
+          var width = e.clientX - this.beginClientX
+          if (width < this.maxwidth) {
+            $('.handler').animate({'left': 0}, 500)
+            $('.drag_bg').animate({'width': 0}, 500)
+          }
+        })
+      }
+    },
+    // 发送注册申请
+    async sendRegister (params) {
+      this.fullscreenLoading = true // loading
+      try {
+        const data = await sendRegisterUser(params)
+        console.log(data)
+        if (!returnAjaxMessage(data, this, 1)) {
+          this.fullscreenLoading = false // loading
+          return false
+        } else {
+          this.fullscreenLoading = false // loading
+          this.isRegisterSuccess = true
+          this.successJump()
         }
+      } catch (err) {
+        console.log(err)
       }
     },
     // 登录成功自动跳转
@@ -701,6 +735,59 @@ export default {
       this.password = ''
       this.repeatPassword = ''
       this.checkCode = ''
+    },
+    /**
+     * 滑块验证
+     */
+    mouseupFn (e) {
+      console.log('mouseup')
+      // this.dragStatus = true;
+    },
+    mousedownFn: function (e) {
+      // if (this.dragStatus) {
+      this.dragStatus = false
+      this.mouseMoveStatus = true
+      this.beginClientX = e.clientX
+      // console.log('mousedown')
+      // }
+    },
+    // 按下滑块函数
+    async successFunction (params) {
+      // console.log('success0')
+      if (this.sliderFlag) {
+        // console.log('success1')
+        this.sliderFlag = false// 调用函数节流阀
+        $('.handler').css({'left': this.maxwidth})
+        $('.drag_bg').css({'width': this.maxwidth})
+        $('body').unbind('mousemove')
+        $('body').unbind('mouseup')
+        this.confirmSuccess = true
+        this.registerSliderStatus = false
+        this.mouseMoveStatus = false
+        $('.handler').css({'left': 0})
+        $('.drag_bg').css({'width': 0})
+        let type = !this.activeMethod ? 'phone' : 'email'
+        let userName = !this.activeMethod ? this.phoneNum : this.emailNum
+        await this.checkUserExistAjax(type, userName)
+        await this.sendRegister(params)
+        /*
+           * 是否需要图片验证码验证（条件：3次登录失败）
+           * */
+        // console.log(this.cacheOfuserInfo)
+        // if (this.failureNum > 3) {
+        //   // 多次错误登录
+        //   // console.log('需要图片验证码');
+        //   // 显示图片验证码
+        //   this.userInputImageCode = ''
+        //   this.loginImageValidateStatus = true
+        // } else if (!this.firstLogin || !this.loginIpEquals) {
+        //   // 登录第三步(第一次登录、异常ip)
+        //   this.step3DialogShowStatus = true
+        //   this.autoSendValidateCode()
+        // } else {
+        //   // this.loginForStep2()
+        // }
+      } // 验证成功函数
     }
   },
   filter: {},
@@ -867,6 +954,65 @@ export default {
             border-radius:20px;
             box-shadow:2px 2px 8px 0px rgba(26,42,71,1);
             color:#fff;
+          }
+        }
+      }
+      /*滑块*/
+      .drag-box{
+        width:410px;
+        overflow: hidden;
+        >.drag{
+          position: relative;
+          background-color: #1e2235;
+          width: 410px;
+          height: 50px;
+          line-height: 50px;
+          text-align: center;
+          border: 1px solid #4e5b85;
+          cursor: pointer;
+          >.drag_bg{
+            background-color: #1f2943;
+            height: 48px;
+          }
+          >.drag_text{
+            font-size: 16px;
+            position: absolute;
+            top: 0px;
+            width: 410px;
+            -moz-user-select: none;
+            -webkit-user-select: none;
+            user-select: none;
+            -o-user-select: none;
+            -ms-user-select: none;
+            background: -webkit-gradient(linear, left top, right top, color-stop(0, #61688a), color-stop(.4, #61688a), color-stop(.5, #fff), color-stop(.6, #61688a), color-stop(1, #61688a));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            -webkit-animation: slidetounlock 3s infinite;
+            -webkit-text-size-adjust: none;
+          }
+
+          @keyframes slidetounlock {
+            0% {
+              background-position: -200px 0;
+            }
+            100% {
+              background-position: 200px 0;
+            }
+          }
+          >.handler_bg{
+            border-radius: 0px 3px 3px 0px;
+            background: #485776 url(../../assets/develop/arrow-bg.png) no-repeat center center;
+            position: absolute;
+            top: 0px;
+            left: 0px;
+            width: 70px;
+            height: 48px;
+            /* border: 1px solid #ccc; */
+            cursor: move;
+            .icon-text{
+              color:rgba(222,225,234,1);
+              font-size: 14px;
+            }
           }
         }
       }

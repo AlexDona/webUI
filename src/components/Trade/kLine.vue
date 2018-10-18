@@ -90,6 +90,7 @@ export default {
     ]),
     // 获取当前交易对socket数据
     async getActiveSymbolData (tradeName) {
+      console.log(tradeName)
       let params = {
         partnerId: this.partnerId,
         i18n: this.language
@@ -102,13 +103,17 @@ export default {
       } else {
         let activeSymbolData = data.data.data.obj
         activeSymbolData = JSON.parse(unzip(activeSymbolData))
+        console.log(activeSymbolData)
         let {
           defaultTrade, // 默认交易对
           depthList, // 买卖单、深度
           tradeList, // 交易记录
           tickerList // 行情交易区列表
         } = activeSymbolData
-        depthList.depthData.sells.list.reverse()
+        console.log(depthList)
+        if (depthList.depthData.sells.list) {
+          depthList.depthData.sells.list.reverse()
+        }
         // 默认交易对 数据
         this.$store.commit('trade/SET_MIDDLE_TOP_DATA', defaultTrade.content[0])
         // 买卖单
@@ -170,6 +175,7 @@ export default {
         this.finalSymbol = this.isJumpToTradeCenter ? this.jumpSymbol : activeSymbol
         this.CHANGE_ACTIVE_SYMBOL({activeSymbol: this.finalSymbol})
         this.symbol = this.activeSymbol.id
+        console.log(this.symbol)
         this.getActiveSymbolData(this.symbol)
       }
     },
@@ -491,7 +497,9 @@ export default {
           console.log(data)
           if (data.data) {
             let newData = data.data
-            newData.sells.list.reverse()
+            if (newData.sells.list) {
+              newData.sells.list.reverse()
+            }
             this.socketData.buyAndSellData = newData
           }
           break
@@ -507,6 +515,7 @@ export default {
           }
           break
         case 'TICKER':
+          console.log(data)
           if (data.data) {
             this.socketData.tradeMarkeContentItem = data.data
           }

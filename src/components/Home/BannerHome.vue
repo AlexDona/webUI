@@ -2,7 +2,7 @@
   <div
     class="banner-box home"
     :style="{
-      // background:`url(${require(../../)}) no-repeat center center/100% 100%`,
+      background:`url(${bannerBackgroundImage}) no-repeat center center/100% 100%`,
       width:screenWidth*3+'px',
       height:screenWidth/1.19+'px'
     }"
@@ -39,7 +39,11 @@ export default {
       return window.innerWidth / 3
     }
   },
-  watch: {}
+  watch: {
+    bannerBackgroundImage (newVal) {
+      console.log(newVal)
+    }
+  }
 }
 </script>
 <style scoped lang="scss">
