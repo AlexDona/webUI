@@ -306,6 +306,10 @@
           @click="toggleLoginType"
         >
         </button>
+        <div
+          class="scan-box"
+          v-if="!isScanSuccess"
+        >
         <!-- 扫描安全登录 -->
         <p class="inner-title">{{$t('M.login_scan')}}{{$t('M.login_safe')}}{{$t('M.comm_login')}}</p>
         <span
@@ -321,6 +325,14 @@
 
         <!-- 请使用富比特APP扫码功能，扫码登录 -->
         <p class="tips">{{$t('M.login_scanLogin')}}</p>
+        </div>
+        <!-- 扫码成功-->
+        <div
+          class="scan-success"
+          v-else
+        >
+          123
+        </div>
       </div>
       <!--移动端-->
       <div
@@ -622,6 +634,7 @@ export default {
       fullscreenLoading: false,
       socket: '', // 二维码登录socket
       isErcodeTimeOut: false, // 二维码是否过期
+      isScanSuccess: false, // 扫码是否成功
       ercodeTimerCount: 60, // 二维码失效倒计时
       ercodeTimer: null, // 二维码定时器
       isErCodeLogin: false, // 是否扫码登录
@@ -745,18 +758,20 @@ export default {
     ]),
     // 刷新二维码
     async reflashErCode () {
+      // this.isScanSuccess = true
       const data = await getLoginErcode()
       if (!returnAjaxMessage(data, this)) {
         return false
       } else {
         this.isErcodeTimeOut = false
         console.log(data)
-        this.erCodeString = data.data.data
+        this.erCodeString = data.data.data.qrcode
         console.log(this.erCodeString)
         this.socket = new socket(this.url = loginSocketUrl + this.erCodeString)
         this.socket.doOpen()
         this.socket.on('open', () => {
           clearInterval(this.ercodeTimer)
+          this.socket.send(this.erCodeString)
           this.ercodeTimerCount = 60
           this.ercodeTimer = setInterval(() => {
             if (this.ercodeTimerCount > 0) {
@@ -1514,22 +1529,25 @@ export default {
           height:50px;
           background:url(../../assets/develop/pc-login-icon.png) no-repeat center center;
         }
-        >.inner-title{
-          height:50px;
-          text-align: center;
-          color:rgba(255,255,255,1);
-        }
-        >.tips{
-          color: #fff;
-          height:50px;
-          line-height: 50px;
-        }
-        .ercode{
-          margin:0 auto;
-          box-sizing: border-box;
-          width:174px;
-          height:174px;
-          background-color: #fff;
+        >.scan-box{
+          >.inner-title{
+            height:50px;
+            text-align: center;
+            color:rgba(255,255,255,1);
+          }
+          >.tips{
+            color: #fff;
+            height:50px;
+            line-height: 50px;
+          }
+          .ercode{
+            margin:0 auto;
+            box-sizing: border-box;
+            width:174px;
+            height:174px;
+            background-color: #fff;
+            padding:5px;
+          }
         }
       }
       >.mobile-box {
