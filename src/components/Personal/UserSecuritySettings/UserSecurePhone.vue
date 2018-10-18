@@ -747,7 +747,7 @@ export default {
      */
     getSecurityCenter () {
       // 整页loading
-      this.fullscreenLoading = true
+      // this.fullscreenLoading = true
       getSecurityCenter(this, (data) => {
         if (data) {
           // 接口成功清除loading
