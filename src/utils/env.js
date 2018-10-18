@@ -52,7 +52,7 @@ if (process.env.NODE_ENV == 'development') {
 
   /* socketUrl --------------------------------------------- */
 
-  socketUrl = 'ws://ws.bzu.com/market'
+  socketUrl = 'wss://ws.bzu.com/market'
   loginSocketUrl = 'ws://api.new.bzu.com/qrcodeLogin/'
   // socketUrl = 'ws://192.168.1.200:8087/market'
 
