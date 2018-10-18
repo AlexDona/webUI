@@ -72,6 +72,7 @@ class socket {
       reader.readAsBinaryString(blob)
       reader.onload = (evt) => {
         let text = pako.inflate(evt.target.result, {to: 'string'})
+        console.log(text)
         let msg = JSON.parse(text)
         console.log(msg)
         // 心跳包

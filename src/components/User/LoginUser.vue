@@ -288,7 +288,10 @@
           class="mask-box"
           v-if="isErcodeTimeOut"
         >
-          <button @click="reflashErCode">
+          <button
+            @click="reflashErCode"
+            class="cursor-pointer"
+          >
             <IconFont
               icon-name="icon-shuaxin"
               class-name="reflash-icon"
@@ -305,11 +308,17 @@
         </button>
         <!-- 扫描安全登录 -->
         <p class="inner-title">{{$t('M.login_scan')}}{{$t('M.login_safe')}}{{$t('M.comm_login')}}</p>
-        <VueQrcode
-          class="ercode"
-          :value="erCodeString"
+        <span
+          @click="reflashErCode"
+          class="cursor-pointer"
         >
+          <VueQrcode
+            class="ercode"
+            :value="erCodeString"
+          >
         </VueQrcode>
+        </span>
+
         <!-- 请使用富比特APP扫码功能，扫码登录 -->
         <p class="tips">{{$t('M.login_scanLogin')}}</p>
       </div>
@@ -613,6 +622,8 @@ export default {
       fullscreenLoading: false,
       socket: '', // 二维码登录socket
       isErcodeTimeOut: false, // 二维码是否过期
+      ercodeTimerCount: 60, // 二维码失效倒计时
+      ercodeTimer: null, // 二维码定时器
       isErCodeLogin: false, // 是否扫码登录
       erCodeString: '', // 二维码登录字符串
       username: '',
@@ -685,7 +696,7 @@ export default {
     require('../../../static/css/list/User/Login.css')
     this.ENTER_STEP1()
     this.refreshCode()
-    this.reflashErCode()
+    // this.reflashErCode()
     // 清空input框值
     // this.clearInputValue()
   },
@@ -738,13 +749,23 @@ export default {
       if (!returnAjaxMessage(data, this)) {
         return false
       } else {
+        this.isErcodeTimeOut = false
         console.log(data)
         this.erCodeString = data.data.data
         console.log(this.erCodeString)
         this.socket = new socket(this.url = loginSocketUrl + this.erCodeString)
         this.socket.doOpen()
         this.socket.on('open', () => {
-          this.socket.send('123123123')
+          clearInterval(this.ercodeTimer)
+          this.ercodeTimerCount = 60
+          this.ercodeTimer = setInterval(() => {
+            if (this.ercodeTimerCount > 0) {
+              this.ercodeTimerCount--
+            } else {
+              clearInterval(this.ercodeTimer)
+              this.isErcodeTimeOut = true
+            }
+          }, 1000)
           this.socket.on('message', (data) => {
             console.log(data)
           })
@@ -1503,7 +1524,7 @@ export default {
           height:50px;
           line-height: 50px;
         }
-        >.ercode{
+        .ercode{
           margin:0 auto;
           box-sizing: border-box;
           width:174px;

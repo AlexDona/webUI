@@ -50,7 +50,9 @@ export default {
     // 请求轮播图数据
     await this.getBanner()
   },
-  mounted () {},
+  mounted () {
+    // console.log(this.$refs)
+  },
   activited () {},
   update () {},
   beforeRouteUpdate () {},
@@ -76,10 +78,11 @@ export default {
     renderSlider () {
       let sliderList = []
       this.sliderListAjax.forEach((item) => {
+        let that = this
         sliderList.push({
           style: {
-            width: '230px',
-            height: '120px',
+            width: '2.3rem',
+            height: '1.2rem',
             borderRadius: '4px',
             margin: '20px',
             cursor: 'pointer',
@@ -95,6 +98,7 @@ export default {
               }
             },
             mounted () {
+              console.log(that)
             },
             methods: {
               ...mapMutations([
@@ -116,6 +120,13 @@ export default {
                 bannerActive: state => state.home.bannerActive,
                 bannerDefaultBackground: state => state.home.bannerDefaultBackground
               })
+            },
+            watch: {
+              bannerActive (newVal) {
+                console.log(newVal)
+                console.log(this.$refs)
+                newVal ? that.$refs.slider.$emit('autoplayStop') : that.$refs.slider.$emit('autoplayStart', 4000)
+              }
             },
             template: `<router-link
                        style="width: 100%;height:100%"
@@ -146,10 +157,6 @@ export default {
   watch: {
     language () {
       this.getBanner()
-    },
-    'bannerActive' (now) {
-      // 开启暂停轮播
-      now ? this.$refs.slider.$emit('autoplayStop') : this.$refs.slider.$emit('autoplayStart', 4000)
     }
   }
 }
@@ -168,7 +175,7 @@ export default {
     }
     /*opacity:.8;*/
     .inner-box{
-      width:1040px;
+      width:10rem;
       height:270px;
     }
   }
