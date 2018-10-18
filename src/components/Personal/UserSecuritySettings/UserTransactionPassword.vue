@@ -646,7 +646,7 @@ export default {
      * 安全中心
      */
     getSecurityCenter () {
-      getSecurityCenter(this, (data) => {
+      getSecurityCenter(this, {}, data => {
         if (data) {
           // 接口成功清除loading
           // this.fullscreenLoading = false
