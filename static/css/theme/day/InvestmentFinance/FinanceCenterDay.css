@@ -18,7 +18,8 @@
     color: #666;
     background: transparent;
 }
-.finance-box.day .nvest-list-body .el-table td, .el-table th.is-leaf{
+.finance-box.day .nvest-list-body .el-table td,
+.finance-box.day .nvest-list-body .el-table th.is-leaf{
     border-top: 1px solid #fff;
     box-shadow: none;
 }

@@ -168,32 +168,6 @@
         <div class="inner-content common">
           <div class="input">
             <div class="inner-box">
-              <!--图片验证码-->
-              <input
-                type="text"
-                class="input image-validate"
-                v-model="userInputImageCode"
-                :placeholder="$t('M.comm_code')"
-                @keydown="setErrorMsg(2,'')"
-                @blur="checkoutInputFormat(2,userInputImageCode)"
-              >
-              <!--获取图片验证码-->
-              <span
-                @click="refreshCode"
-                class="cursor-pointer"
-              >
-              <ImageValidate
-                id="register"
-                :content-width="80"
-                :content-height="40"
-                :identifyCode="identifyCode"
-                class="display-inline-block"
-              />
-            </span>
-            </div>
-          </div>
-          <div class="input">
-            <div class="inner-box">
               <!--邮箱、手机验证码-->
               <input
                 type="text"
@@ -495,23 +469,6 @@ export default {
               return 0
           }
           break
-        // 图片验证码
-        case 2:
-          if (!targetNum) {
-            // 请输入图片验证码
-            this.setErrorMsg(2, this.$t('M.comm_please_enter') + this.$t('M.login_photo') + this.$t('M.comm_code'))
-            this.$forceUpdate()
-            return 0
-          } else if (this.userInputImageCode === this.identifyCode) {
-            this.setErrorMsg(2, '')
-            this.$forceUpdate()
-            return 1
-          } else {
-            // 请输入正确的图片验证码
-            this.setErrorMsg(2, this.$t('M.comm_please_enter') + this.$t('M.user_security_correct') + this.$t('M.login_photo') + this.$t('M.comm_code'))
-            this.$forceUpdate()
-            return 0
-          }
         // 短信、邮箱验证码
         case 3:
           if (!targetNum) {
@@ -685,7 +642,6 @@ export default {
         }
       }
       if (
-        this.checkoutInputFormat(2, this.userInputImageCode) &&
         this.checkoutInputFormat(3, this.checkCode) &&
         this.checkoutInputFormat(4, this.password) &&
         this.checkoutInputFormat(5, this.repeatPassword) &&

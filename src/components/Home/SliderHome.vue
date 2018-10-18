@@ -90,7 +90,8 @@ export default {
             data () {
               return {
                 miniImg: item.url,
-                background: `${require('../../assets/develop/banner-bg.png')}`
+                // background: `${require('../../assets/develop/banner-bg.png')}`
+                background: item.bigUrl
               }
             },
             mounted () {
