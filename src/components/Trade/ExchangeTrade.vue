@@ -458,7 +458,7 @@ export default {
     // 获取用户对应交易对资产
     async getUserAssetOfActiveSymbol (targetPriceOfBuy, targetPriceOfSell) {
       const params = {
-        tradeId: this.activeSymbol.tradeId // 交易对id
+        tradeId: this.middleTopData.partnerTradeId // 交易对id
       }
       const data = await getUserAssetOfActiveSymbol(params)
       if (!returnAjaxMessage(data, this)) {
@@ -576,10 +576,11 @@ export default {
         this.$router.push({path: '/TransactionPassword'})
         return false
       }
+      console.log(this.middleTopData)
       let params = {
         // partnerId: this.partnerId,
         userId: this.loginStep1Info.userId,
-        tradeId: this.activeSymbol.tradeId + '',
+        tradeId: this.middleTopData.partnerTradeId + '',
         type: type ? 'SELL' : 'BUY', // 委单类型
         matchType: this.matchType, // 撮合类型
         source: 'Web' // 来源

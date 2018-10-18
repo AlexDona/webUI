@@ -965,27 +965,29 @@ export default {
       * 需要输入验证码登录
       */
     async loginForStep2 () {
-      // 谷歌验证
-      if (this.isBindGoogle && !this.step3GoogleMsgCode) {
-        this.$message({
-          type: 'error',
-          message: this.$t('M.comm_please_enter') + this.$t('M.login_google') + this.$t('M.comm_code') // 请输入谷歌验证码
-        })
-        return false
-      }
-      if (this.isBindEmail && !this.step3EmailMsgCode && !this.isBindPhone) {
-        this.$message({
-          type: 'error',
-          message: this.$t('M.comm_please_enter') + this.$t('M.comm_emailbox') + this.$t('M.comm_code') // '请输入邮箱验证码'
-        })
-        return false
-      }
-      if (this.isBindPhone && !this.step3PhoneMsgCode && !this.isBindGoogle) {
-        this.$message({
-          type: 'error',
-          message: this.$t('M.comm_please_enter') + this.$t('M.login_telphone') + this.$t('M.comm_code') // '请输入手机验证码'
-        })
-        return false
+      if (!this.loginIpEquals && this.firstLogin) {
+        // 谷歌验证
+        if (this.isBindGoogle && !this.step3GoogleMsgCode) {
+          this.$message({
+            type: 'error',
+            message: this.$t('M.comm_please_enter') + this.$t('M.login_google') + this.$t('M.comm_code') // 请输入谷歌验证码
+          })
+          return false
+        }
+        if (this.isBindEmail && !this.step3EmailMsgCode) {
+          this.$message({
+            type: 'error',
+            message: this.$t('M.comm_please_enter') + this.$t('M.comm_emailbox') + this.$t('M.comm_code') // '请输入邮箱验证码'
+          })
+          return false
+        }
+        if (this.isBindPhone && !this.step3PhoneMsgCode) {
+          this.$message({
+            type: 'error',
+            message: this.$t('M.comm_please_enter') + this.$t('M.login_telphone') + this.$t('M.comm_code') // '请输入手机验证码'
+          })
+          return false
+        }
       }
       let params = {
         token: this.token,
@@ -1117,7 +1119,7 @@ export default {
       step2: state => state.user.loginStep.step2,
       step3: state => state.user.loginStep.step3,
       isMobile: state => state.user.isMobile,
-      failureNum: state => state.user.loginStep1Info.failureNum, // 失败次数
+      failureNum: state => state.user.loginStep1Info.failNum, // 失败次数
       activeCountryCode: state => state.user.loginStep1Info.countryCode, // 国籍码
       isBindGoogle: state => state.user.loginStep1Info.isEnableGoogle, // 已绑定谷歌
       isBindEmail: state => state.user.loginStep1Info.isEnableMail, // 已绑定邮箱
