@@ -299,6 +299,7 @@
 /*}*/
 .chart-page .chart-container{
   border:none;
+  background: transparent;
 }
 .header-chart-panel .button{
   border:none;
