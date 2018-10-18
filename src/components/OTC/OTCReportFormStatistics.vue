@@ -16,7 +16,7 @@
       <div class="report-form-filtrate">
         <!-- 交易币种 -->
         <span class="filtrate-text font-size14">
-         {{$t('M.otc_trade')}}{{$t('M.comm_currency')}}
+          {{$t('M.otc_trade')}}{{$t('M.comm_currency')}}
         </span>
         <span class="currency-input">
           <el-select
@@ -94,7 +94,9 @@
             <div class="together border-radius5 day">
               <div class="left">
                 <span class="round font-size12">
-                  {{$t('M.otc_formStatistics_date')}}<br />{{$t('M.otc_trade')}}
+                  {{$t('M.otc_formStatistics_date')}}
+                  <br />
+                  {{$t('M.otc_trade')}}
                 </span>
               </div>
               <div class="right">
@@ -105,17 +107,23 @@
                   </span>
                 </p>
                 <p>
-                  <span>{{$t('M.comm_buying')}}{{$t('M.otc_formStatistics_average')}}:</span>
+                  <span>
+                    {{$t('M.comm_buying')}}{{$t('M.otc_formStatistics_average')}}:
+                  </span>
                   <span class="data">
                     {{ buyDayMap.average }}{{ activitedtraderCurrencyCoinsName }}
                   </span>
                 </p>
                 <p>
                   <span>{{$t('M.otc_formStatistics_amount_paid')}}:</span>
-                  <span class="data"> {{ buyDayMap.amount }}{{ activitedtraderCurrencyCoinsName }}</span>
+                  <span class="data">
+                    {{ buyDayMap.amount }}{{ activitedtraderCurrencyCoinsName }}
+                  </span>
                 </p>
                 <p>
-                  <span>{{$t('M.otc_formStatistics_turnover')}}{{$t('M.comm_order')}}:</span>
+                  <span>
+                    {{$t('M.otc_formStatistics_turnover')}}{{$t('M.comm_order')}}:
+                  </span>
                   <span class="data"> {{ buyDayMap.num }}{{$t('M.comm_stock')}}</span>
                 </p>
               </div>
@@ -212,7 +220,9 @@
             <div class="together border-radius5 day">
               <div class="left">
                 <span class="round font-size12">
-                  {{$t('M.otc_formStatistics_date')}}<br />{{$t('M.comm_deal')}}
+                  {{$t('M.otc_formStatistics_date')}}
+                  <br />
+                  {{$t('M.comm_deal')}}
                 </span>
               </div>
               <div class="right">
@@ -386,7 +396,7 @@
                 width="180"
               >
                 <template slot-scope = "scope">
-                    <div>{{timeFormatting(scope.row.createTime)}}</div>
+                  <div>{{timeFormatting(scope.row.createTime)}}</div>
                 </template>
               </el-table-column>
               <!-- 订单号 -->

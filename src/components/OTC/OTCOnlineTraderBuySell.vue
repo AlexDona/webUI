@@ -26,24 +26,26 @@
                       class="shang-icon"
                       v-if="this.userType === 'MERCHANT'"
                     >
-                    <!-- 诚信商贸 -->
-                    <span class="name">{{userName}}</span>
+                    <!-- 商户名称 -->
+                    <span class="name">
+                      {{userName}}
+                    </span>
                   </div>
                   <!-- 商家交易统计 -->
                   <div class="shoper-statistics">
+                    <!-- 成交次数 -->
                     <div class="trader-total">
                       <p class="blue">{{successTimes}}</p>
-                      <!-- 成交次数 -->
                       <p class="text">{{$t('M.otc_index_tradeTimes')}}</p>
                     </div>
+                    <!-- 失败次数 -->
                     <div class="failed">
                       <p class="blue">{{failTimes}}</p>
-                      <!-- 失败次数 -->
                       <p class="text">{{$t('M.otc_index_failureTimes')}}</p>
                     </div>
+                    <!-- 账户冻结次数 -->
                     <div class="freeze">
                       <p class="blue">{{freezeTimes}}</p>
-                      <!-- 账户冻结次数 -->
                       <p class="text">{{$t('M.otc_index_freezeTimes')}}</p>
                     </div>
                   </div>
@@ -152,15 +154,15 @@
                           class="want-text"
                           v-show="onlineTraderStatus === 'onlineSell'"
                         >
-                            <!-- 您想出售多少 -->
-                            {{$t('M.otc_index_sellMount')}}
+                          <!-- 您想出售多少 -->
+                          {{$t('M.otc_index_sellMount')}}
                         </span>
                         <span
                           class="want-text"
                           v-show="onlineTraderStatus === 'onlineBuy'"
                         >
-                            <!-- 您想购买多少 -->
-                            {{$t('M.otc_index_buyMount')}}
+                          <!-- 您想购买多少 -->
+                          {{$t('M.otc_index_buyMount')}}
                         </span>
                         <span
                           class="charge-money"
@@ -180,14 +182,6 @@
                       <div class="sell-buy-input">
                         <!-- 1.0 数量部分 -->
                         <!--出售-->
-                        <!-- <input
-                          type="text"
-                          placeholder="卖出量"
-                          class="sell-sum"
-                          v-if="onlineTraderStatus === 'onlineSell'"
-                          ref="sellCount"
-                          @keyup="calculatePriceValue('sellCount')"
-                        > -->
                         <input
                           type="text"
                           :placeholder="$t('M.otc_index_sellOutMount')"
@@ -199,14 +193,6 @@
                           @input="calculatePriceValue('sellCount', pointLength)"
                         >
                         <!--购买-->
-                        <!-- <input
-                          type="text"
-                          placeholder="买入量"
-                          class="sell-sum"
-                          v-if="onlineTraderStatus === 'onlineBuy'"
-                          ref="buyCount"
-                          @keyup="calculatePriceValue('buyCount')"
-                        > -->
                         <input
                           type="text"
                           :placeholder="$t('M.otc_index_buyOutMount')"
@@ -225,14 +211,6 @@
                         </span>
                         <!-- 2.0 金额部分 -->
                         <!--出售-->
-                        <!-- <input
-                          type="text"
-                          placeholder="金额"
-                          class="sell-sum"
-                          v-if="onlineTraderStatus === 'onlineSell'"
-                          ref="sellPrice"
-                          @keyup="calculateCountValue('sellPrice')"
-                        > -->
                         <input
                           type="text"
                           :placeholder="$t('M.comm_money')"
@@ -244,14 +222,6 @@
                           @input="calculateCountValue('sellPrice', moneyPointLength)"
                         >
                         <!--购买-->
-                        <!-- <input
-                          type="text"
-                          placeholder="金额"
-                          class="sell-sum"
-                          v-if="onlineTraderStatus === 'onlineBuy'"
-                          ref="buyPrice"
-                          @keyup="calculateCountValue('buyPrice')"
-                        > -->
                         <input
                           type="text"
                           :placeholder="$t('M.comm_money')"
@@ -292,19 +262,25 @@
                           @click.prevent="showDialog(onlineTraderStatus)"
                         >
                           <!-- 确定购买 -->
-                            {{$t('M.otc_index_ensureBuy')}}
+                          {{$t('M.otc_index_ensureBuy')}}
                         </button>
                       </div>
                     </el-form-item>
                   </el-form>
                 </div>
                 <!--最下右边手续费-->
-                <div class="service-charge" v-if="onlineTraderStatus === 'onlineBuy'">
+                <div
+                  class="service-charge"
+                  v-if="onlineTraderStatus === 'onlineBuy'"
+                >
                   <span>{{$t('M.comm_service_charge')}}：</span>
                   <span class="service-data">{{serviceCharge}} {{name}}</span>
                   <span>( {{$t('M.otc_index_rate')}} <span class="rate-data">{{rate*100}}%</span> )</span>
                 </div>
-                <div class="service-charge-sell" v-if="onlineTraderStatus === 'onlineSell'">
+                <div
+                  class="service-charge-sell"
+                  v-if="onlineTraderStatus === 'onlineSell'"
+                >
                   <span>{{$t('M.comm_service_charge')}}：</span>
                   <span class="service-data-sell">{{serviceCharge}} {{name}}</span>
                   <span>( {{$t('M.otc_index_rate')}} <span class="rate-data-sell">{{rate*100}}%</span> )</span>
@@ -379,13 +355,20 @@
       </div>
     </div>
     <!-- 3.0 底部 -->
-    <keep-aline><FooterCommon/></keep-aline>
+    <keep-aline>
+      <FooterCommon/>
+    </keep-aline>
   </div>
 </template>
 <!--请严格按照如下书写书序-->
 <script>
 import {timeFilter, formatNumberInput, amendPrecision} from '../../utils'
-import {pickOrdersToBuy, pickOrdersToSell, querySelectedOrdersDetails, queryUserTradeFeeAndCoinInfo} from '../../utils/api/OTC'
+import {
+  pickOrdersToBuy,
+  pickOrdersToSell,
+  querySelectedOrdersDetails,
+  queryUserTradeFeeAndCoinInfo
+} from '../../utils/api/OTC'
 import NavCommon from '../Common/HeaderCommonForPC'
 import FooterCommon from '../Common/FooterCommon'
 import IconFontCommon from '../Common/IconFontCommon'
@@ -494,12 +477,12 @@ export default {
       // 改变全局锚点状态方法
       'CHANGE_OTC_ANCHOR_STATUS'
     ]),
-    // 10.0 充币按钮跳转
+    // 0.0 充币按钮跳转
     chargeMoney () {
       this.$store.commit('personal/CHANGE_USER_CENTER_ACTIVE_NAME', 'assets')
       this.$router.push({path: '/PersonalCenter'})
     },
-    // 输入限制
+    // 0.1 输入限制
     formatInput (ref, pointLength) {
       let target = this.$refs[ref]
       formatNumberInput(target, pointLength)
@@ -686,19 +669,7 @@ export default {
       // 4.输入数量 ：数量 * 价格 > 单笔最大限额 金额提示“单笔最大限额为100”，数量提示“最大剩余数量为：剩余数量”
       // 5.输入数量 > 剩余数量 金额提示“单笔最大限额为100”，数量提示“最大剩余数量为：剩余数量”
     },
-    // 5.0 修改input value
-    // changeInputValue (ref) {
-    //   this[ref] = this.$refs[ref].value
-    //   console.log(this[ref])
-    //   // 手续费
-    //   if (this.onlineTraderStatus === 'onlineBuy') {
-    //     this.serviceCharge = this.$refs.buyCount.value * this.rate
-    //   }
-    //   if (this.onlineTraderStatus === 'onlineSell') {
-    //     this.serviceCharge = this.$refs.sellCount.value * this.rate
-    //   }
-    // },
-    // 6.0 查询otc挂单详情-商家和普通用户通用
+    // 5.0 查询otc挂单详情-商家和普通用户通用
     async querySelectedOrdersDetails () {
       const data = await querySelectedOrdersDetails({
         entrustId: this.id // 挂单id
@@ -718,7 +689,7 @@ export default {
         this.price = data.data.data.price // 报价
         this.payTypes = data.data.data.payTypes // 付款方式
         this.payTerm = data.data.data.payTerm // 付款期限
-        // this.remainingNum = data.data.data.entrustCount - data.data.data.matchCount // 剩余数量
+        // this.remainingNum = data.data.data.remainCount // 剩余数量：后台增加了剩余数量字段
         this.remainingNum = amendPrecision(data.data.data.entrustCount, data.data.data.matchCount, '-') // 剩余数量：修复精度丢失
         this.maxCount = data.data.data.maxCount // 单笔最大限额
         this.minCount = data.data.data.minCount // 单笔最小限额
@@ -727,7 +698,7 @@ export default {
         this.queryUserTradeFeeAndCoinInfo()
       }
     },
-    // 4.0 查询用户交易币种手续费率以及币种详情
+    // 6.0 查询用户交易币种手续费率以及币种详情
     async queryUserTradeFeeAndCoinInfo () {
       this.fullscreenLoading = true
       const data = await queryUserTradeFeeAndCoinInfo({
@@ -753,7 +724,7 @@ export default {
         }
       }
     },
-    // 5.0 点击 确认购买 按钮提交数据
+    // 7.0 点击 确认购买 按钮提交数据
     async submitPickOrdersToBuy () {
       if (!this.tradePassword) {
         this.tradePasswordTips = this.$t('M.otc_publishAD_pleaseInput') + this.$t('M.otc_publishAD_sellpassword')
@@ -783,11 +754,11 @@ export default {
         this.$router.push({path: '/OTCCenter'})
       }
     },
-    // 交易密码框获得焦点事件
+    // 8交易密码框获得焦点事件
     tradePasswordFocus () {
       this.tradePasswordTips = ''
     },
-    // 清空数量和金额和交易密码
+    // 9清空数量和金额和交易密码
     clearInput (val) {
       if (val === 'onlineBuy') {
         this.$refs.buyCount.value = ''
@@ -799,7 +770,7 @@ export default {
       }
       this.tradePassword = ''
     },
-    // 6.0 点击 确认出售 按钮提交数据
+    // 10.0 点击 确认出售 按钮提交数据
     async submitPickOrdersToSell () {
       // console.log('出售')
       if (!this.tradePassword) {
