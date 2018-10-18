@@ -208,7 +208,8 @@
               :label="$t('M.comm_surplus') + $t('M.comm_count')"
             >
               <template slot-scope="scope">
-                <div>{{scope.row.entrustCount - scope.row.matchCount}}</div>
+                <!-- <div>{{scope.row.entrustCount - scope.row.matchCount}}</div> -->
+                <div>{{scope.row.remainCount}}</div>
               </template>
             </el-table-column>
             <!-- 已完成数量 -->
