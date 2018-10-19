@@ -177,7 +177,7 @@ export default {
     /*opacity:.8;*/
     .inner-box{
       width:10rem;
-      height:2.7rem;
+      height:2.2rem;
     }
   }
 </style>

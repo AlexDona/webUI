@@ -229,8 +229,8 @@ export default {
           debug: false,
           toolbar_bg: 'transparent', // 工具栏背景色
           studies_overrides: {
-            'volume.volume.color.0': '#008069', // 成交量 k柱 背景色
-            'volume.volume.color.1': '#EC5E5E', // 成交量 k柱 背景色
+            'volume.volume.color.0': '#EC5E5E', // 成交量 k柱 背景色
+            'volume.volume.color.1': '#008069', // 成交量 k柱 背景色
             'volume.volume.transparency': 100,
             'moving average.precision': 8
           },
@@ -244,13 +244,13 @@ export default {
             // "scalesProperties.backgroundColor": "#ff00ff",
             'scalesProperties.lineColor': '#61688a', // 右侧边框颜色
             'scalesProperties.textColor': '#61688a', // 左上角文字颜色
-            'mainSeriesProperties.candleStyle.upColor': '#008069', // k 柱颜色
-            'mainSeriesProperties.candleStyle.downColor': '#d45858', // k 柱颜色
-            'mainSeriesProperties.candleStyle.borderUpColor': '#008069', // k 柱边框颜色
-            'mainSeriesProperties.candleStyle.borderDownColor': '#d45858', // k 柱边框颜色
+            'mainSeriesProperties.candleStyle.upColor': '#d45858', // k 柱颜色
+            'mainSeriesProperties.candleStyle.downColor': '#008069', // k 柱颜色
+            'mainSeriesProperties.candleStyle.borderUpColor': '#d45858', // k 柱边框颜色
+            'mainSeriesProperties.candleStyle.borderDownColor': '#008069', // k 柱边框颜色
             // "mainSeriesProperties.candleStyle.wickColor": "#737375",
-            'mainSeriesProperties.candleStyle.wickUpColor': '#008069', // 上涨 蜡烛线颜色
-            'mainSeriesProperties.candleStyle.wickDownColor': '#d45858', // 下降 蜡烛线颜色
+            'mainSeriesProperties.candleStyle.wickUpColor': '#d45858', // 上涨 蜡烛线颜色
+            'mainSeriesProperties.candleStyle.wickDownColor': '#008069', // 下降 蜡烛线颜色
             // "mainSeriesProperties.hollowCandleStyle.borderColor": "#000",
             // "mainSeriesProperties.hollowCandleStyle.borderUpColor": "#ff00ff",
             // "mainSeriesProperties.haStyle.borderUpColor": "#00f",
@@ -323,12 +323,13 @@ export default {
           chart.onIntervalChanged().subscribe(null, function (interval, obj) {
             _self.widget.changingInterval = false
           })
-          btnList.forEach(function (item) {
+          btnList.forEach(function (item, index) {
             let button = _self.widget.createButton({
               align: 'left'
             })
             item.resolution === _self.widget._options.interval && _self.updateSelectedIntervalButton(button)
-            button.attr('class', 'button ' + item.class)
+            const selected = index == 1 ? ' selected' : ''
+            button.attr('class', 'button ' + item.class + selected)
               .attr('data-chart-type', item.chartType === undefined ? 1 : item.chartType)
               .on('click', function (e) {
                 if (!_self.widget.changingInterval && !button.hasClass('selected')) {

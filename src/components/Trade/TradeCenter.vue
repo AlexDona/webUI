@@ -29,11 +29,11 @@
         </keep-alive>
         <!--市价交易、限价交易-->
         <ExchangeBox/>
-        <!--深度图-->
-        <Depth/>
         <!--交易-->
         <!-- 委单列表 -->
         <EntrustOrder/>
+        <!--深度图-->
+        <Depth/>
       </div>
       <!--右侧-->
       <div class="right float-left">

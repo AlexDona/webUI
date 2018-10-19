@@ -406,6 +406,8 @@ export default {
             }
           }
           >.content-box{
+            height:518px;
+            /*background-color: pink;*/
             >.buys-list,.sells-list{
               font-size: 12px;
               padding:0 4px;
