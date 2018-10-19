@@ -489,6 +489,7 @@ export default {
     require('../../../../static/css/theme/night/Personal/UserAssets/APIManagementNight.css')
     // this.getSecurityCenter()
     // this.stateEmptyData()
+    this.getMultipleUserAPIInfo()
   },
   mounted () {},
   activited () {},
@@ -502,7 +503,9 @@ export default {
     },
     // 获取多个用户api信息
     async getMultipleUserAPIInfo () {
+      this.loading = true
       let data = await multipleUserAPIInfo({})
+      console.log('获取多个用户api信息')
       console.log(data)
       if (!(returnAjaxMessage(data, this, 0))) {
         // 接口失败清除局部loading
@@ -823,6 +826,7 @@ export default {
   },
   watch: {
     userCenterActiveName (newVal) {
+      console.log(newVal)
       if (newVal === 'api-management') {
         this.getMultipleUserAPIInfo()
       }
