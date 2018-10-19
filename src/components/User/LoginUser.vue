@@ -769,6 +769,22 @@ export default {
       'SET_USER_BUTTON_STATUS',
       'USER_LOGIN'
     ]),
+    // 登录成功操作
+    userLoginSuccess (data) {
+      this.USER_LOGIN(data)
+      console.log(this.routerTo)
+      if (this.routerTo &&
+        !this.routerTo.startsWith('/Register') &&
+        !this.routerTo.startsWith('/login') &&
+        !this.routerTo.startsWith('/ForgetPassword') &&
+        !this.routerTo.startsWith('/nofind404')
+      ) {
+        // this.loadCurrencyList()
+        this.$router.push({path: this.routerTo})
+      } else {
+        this.$router.push({path: '/'})
+      }
+    },
     // 返回登录
     backToScan () {
       this.isScanSuccess = false
@@ -801,9 +817,14 @@ export default {
           }, 1000)
           this.socket.on('message', (data) => {
             let socketData = data
+            // 用户已扫码
             if (socketData.scan) {
               console.log(socketData)
               this.isScanSuccess = true
+            }
+            // 登录成功
+            if (socketData.data && socketData.data.userInfo) {
+              this.userLoginSuccess(socketData.data)
             }
           })
         })
@@ -1073,19 +1094,7 @@ export default {
         this.fullscreenLoading = false
         this.clearInputValue()
         this.step3DialogShowStatus = false
-        this.USER_LOGIN(data.data.data)
-        console.log(this.routerTo)
-        if (this.routerTo &&
-          !this.routerTo.startsWith('/Register') &&
-          !this.routerTo.startsWith('/login') &&
-          !this.routerTo.startsWith('/ForgetPassword') &&
-          !this.routerTo.startsWith('/nofind404')
-        ) {
-          // this.loadCurrencyList()
-          this.$router.push({path: this.routerTo})
-        } else {
-          this.$router.push({path: '/'})
-        }
+        this.userLoginSuccess(data.data.data)
       }
       console.log(data)
     },
