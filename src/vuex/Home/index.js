@@ -7,9 +7,10 @@ import actions from './action'
 
 const state = {
   // 首页 banner 图背景
-  bannerBackgroundImage: 'http://fubt-3.oss-cn-hongkong.aliyuncs.com/5dd01753-6e61-4cf0-b24b-3e49c1343de2',
+  // bannerBackgroundImage: 'http://fubt-3.oss-cn-hongkong.aliyuncs.com/5dd01753-6e61-4cf0-b24b-3e49c1343de2',
+  bannerBackgroundImage: '',
   // 首页banner 默认 背景图
-  bannerDefaultBackground: 'http://fubt-3.oss-cn-hongkong.aliyuncs.com/5dd01753-6e61-4cf0-b24b-3e49c1343de2',
+  bannerDefaultBackground: '',
   // 首页banner激活
   bannerActive: false,
   collectSymbol: {}, // 收藏交易对列表

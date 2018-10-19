@@ -3,7 +3,7 @@
     class="news-and-notice-box"
     :class="{'day':theme == 'day','night':theme == 'night' }"
   >
-    <HeaderCommon/>
+    <keep-aline><HeaderCommon/></keep-aline>
     <div class="inner-box">
       <!--搜索区-->
       <div class="search-box">

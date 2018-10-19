@@ -50,7 +50,9 @@ export default {
     // 请求轮播图数据
     await this.getBanner()
   },
-  mounted () {},
+  mounted () {
+    // console.log(this.$refs)
+  },
   activited () {},
   update () {},
   beforeRouteUpdate () {},
@@ -76,10 +78,11 @@ export default {
     renderSlider () {
       let sliderList = []
       this.sliderListAjax.forEach((item) => {
+        let that = this
         sliderList.push({
           style: {
-            width: '230px',
-            height: '120px',
+            width: '2.3rem',
+            height: '1.2rem',
             borderRadius: '4px',
             margin: '20px',
             cursor: 'pointer',
@@ -95,6 +98,7 @@ export default {
               }
             },
             mounted () {
+              console.log(that)
             },
             methods: {
               ...mapMutations([
@@ -104,6 +108,7 @@ export default {
               mouseOver (e) {
                 const URL = e.target.attributes.background.value
                 this.CHANGE_BANNER_ACTIVE(true)
+                console.log(URL)
                 this.CHANGE_BANNER_BACKGROUND(URL)
               },
               mouseLeave () {
@@ -117,18 +122,25 @@ export default {
                 bannerDefaultBackground: state => state.home.bannerDefaultBackground
               })
             },
+            watch: {
+              bannerActive (newVal) {
+                console.log(newVal)
+                console.log(this.$refs)
+                newVal ? that.$refs.slider.$emit('autoplayStop') : that.$refs.slider.$emit('autoplayStart', 4000)
+              }
+            },
             template: `<router-link
-                       style="width: 100%;height:100%"
-                       to="/home/${item.id}"
-                     >
-                       <img
-                        style="width: 100%;height:100%"
-                        :src="miniImg"
-                        :background="background"
-                        @mouseenter="mouseOver"
-                        @mouseleave="mouseLeave"
-                       />
-                     </router-link>`
+                     style="width: 100%;height:100%"
+                     to="/home/${item.id}"
+                   >
+                     <img
+                      style="width: 100%;height:100%"
+                      :src="miniImg"
+                      :background="background"
+                      @mouseenter="mouseOver"
+                      @mouseleave="mouseLeave"
+                     />
+                   </router-link>`
           }
         })
       })
@@ -146,10 +158,6 @@ export default {
   watch: {
     language () {
       this.getBanner()
-    },
-    'bannerActive' (now) {
-      // 开启暂停轮播
-      now ? this.$refs.slider.$emit('autoplayStop') : this.$refs.slider.$emit('autoplayStart', 4000)
     }
   }
 }
@@ -162,14 +170,14 @@ export default {
     width:100%;
     transition: all 4s;
     position: absolute;
-    bottom:40px;
+    bottom:.2rem;
     &.active{
       opacity:.2;
     }
     /*opacity:.8;*/
     .inner-box{
-      width:1040px;
-      height:270px;
+      width:10rem;
+      height:2.2rem;
     }
   }
 </style>

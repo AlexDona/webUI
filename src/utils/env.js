@@ -34,7 +34,8 @@ if (process.env.NODE_ENV == 'development') {
   socketUrl = 'wss://ws.bzu.com/market'
   // socketUrl = 'ws://192.168.1.200:8087/market'
 
-  loginSocketUrl = 'ws://api.new.bzu.com/qrcodeLogin/'
+  // loginSocketUrl = 'ws://api.new.bzu.com/qrcodeLogin/'
+  loginSocketUrl = 'ws://192.168.1.217:8888/qrcodeLogin/'
   /* domain --------------------------------------------- */
   domain = apiCommonUrl + '#/'
 } else if (process.env.NODE_ENV == 'testing') {

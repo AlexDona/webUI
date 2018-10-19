@@ -4,7 +4,9 @@
     :class="{'day':theme == 'day','night':theme == 'night' }"
   >
     <!-- 上币申请 -->
-    <HeaderCommon/>
+    <keep-aline>
+      <HeaderCommon/>
+    </keep-aline>
     <div class="inner-box">
       <div class="top">
         <h1 class="title">上币申请</h1>

@@ -18,6 +18,7 @@
           <div v-show="contentShowStatus">
             <el-table
               :data="globalMarketList"
+              height="300"
             >
               <!--交易所-->
               <el-table-column

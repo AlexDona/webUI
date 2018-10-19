@@ -33,7 +33,7 @@
       </div>
       <div
         class="content"
-        v-if="buysAndSellsList&&buysAndSellsList.buys.list.length"
+        v-if="buysAndSellsList&&buysAndSellsList.buys.list"
       >
         <el-collapse-transition>
           <div
@@ -64,7 +64,7 @@
             <!--buys、sells-->
             <div
               class="middle-box content-box"
-              v-if="listOrder==='middle'"
+              v-if="listOrder==='middle'&&buysAndSellsList.sells.list"
             >
               <!--卖出-->
               <dl
@@ -142,7 +142,7 @@
             <!--buys-->
             <div
               class="mibble-box content-box"
-              v-if="listOrder==='buys'"
+              v-if="listOrder==='buys'&&buysAndSellsList.buys.list"
             >
               <!--最新价-->
               <TradeNewPrice/>
@@ -185,7 +185,7 @@
             <!--<el-collapse-transition>-->
               <div
               class="mibble-box content-box"
-              v-if="listOrder==='sells'"
+              v-if="listOrder==='sells'&&buysAndSellsList.sells.list"
             >
               <!--卖出-->
               <dl
@@ -258,6 +258,7 @@ export default {
   created () {
   },
   mounted () {
+    console.log(this.buysAndSellsList)
   },
   activited () {
   },
@@ -318,7 +319,11 @@ export default {
       console.log(newVal)
       this.reflashCount = 0
     },
+    buysAndSellsList (newVal) {
+      console.log(newVal)
+    },
     buysAndSellsListByAjax (newVal) {
+      console.log(newVal)
       console.log(this.reflashCount)
       // this.buysAndSellsListByAjax = this.buysAndSellsList
     },
@@ -401,6 +406,8 @@ export default {
             }
           }
           >.content-box{
+            height:518px;
+            /*background-color: pink;*/
             >.buys-list,.sells-list{
               font-size: 12px;
               padding:0 4px;

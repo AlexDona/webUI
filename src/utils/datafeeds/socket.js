@@ -66,12 +66,13 @@ class socket {
   }
   onMessage (message) {
     try {
-      // console.log(message)
+      console.log(message)
       let blob = message
       let reader = new FileReader()
       reader.readAsBinaryString(blob)
       reader.onload = (evt) => {
         let text = pako.inflate(evt.target.result, {to: 'string'})
+        console.log(text)
         let msg = JSON.parse(text)
         console.log(msg)
         // 心跳包

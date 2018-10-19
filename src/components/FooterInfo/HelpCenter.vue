@@ -3,7 +3,7 @@
     class="help-box"
     :class="{'day':theme == 'day','night':theme == 'night' }"
   >
-    <HeaderCommon/>
+    <keep-aline><HeaderCommon/></keep-aline>
     <div class="inner-box">
       <div class="search-box">
         <!--请输入关键字-->

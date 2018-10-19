@@ -28,11 +28,11 @@
         v-if="!isMobile&&!isErCodeLogin"
       >
         <!--切换登录-->
-        <!--<button-->
-          <!--class="toggle-login-type cursor-pointer"-->
-          <!--@click="toggleLoginType"-->
-        <!--&gt;-->
-        <!--</button>-->
+        <button
+          class="toggle-login-type cursor-pointer"
+          @click="toggleLoginType"
+        >
+        </button>
         <!-- 欢迎登录 -->
         <h1 class="title">{{$t('M.login_welcome')}}{{$t('M.comm_login')}}</h1>
         <!--正常登录-->
@@ -291,7 +291,10 @@
           class="mask-box"
           v-if="isErcodeTimeOut"
         >
-          <button @click="reflashErCode">
+          <button
+            @click="reflashErCode"
+            class="cursor-pointer"
+          >
             <IconFont
               icon-name="icon-shuaxin"
               class-name="reflash-icon"
@@ -306,15 +309,48 @@
           @click="toggleLoginType"
         >
         </button>
+        <div
+          class="scan-box"
+          v-if="!isScanSuccess"
+        >
         <!-- 扫描安全登录 -->
         <p class="inner-title">{{$t('M.login_scan')}}{{$t('M.login_safe')}}{{$t('M.comm_login')}}</p>
-        <VueQrcode
-          class="ercode"
-          :value="erCodeString"
+        <span
+          @click="reflashErCode"
+          class="cursor-pointer"
         >
+          <VueQrcode
+            class="ercode"
+            :value="erCodeString"
+          >
         </VueQrcode>
+        </span>
+
         <!-- 请使用富比特APP扫码功能，扫码登录 -->
         <p class="tips">{{$t('M.login_scanLogin')}}</p>
+        </div>
+        <!-- 扫码成功-->
+        <div
+          class="scan-success"
+          v-else
+        >
+          <IconFont
+            icon-name="icon-cellphoneiphone"
+            class-name="icon-cellphoneiphone"
+          />
+          <IconFont
+            icon-name="icon-chenggong"
+            class-name="icon-chenggong"
+          />
+          <div class="tips">
+            <p>扫描成功！</p>
+            <p>请在手机上确认登录</p>
+          </div>
+          <button
+            class="back-to-scan cursor-pointer"
+            @click="backToScan"
+          >返回二维码登录</button>
+        </div>
       </div>
       <!--移动端-->
       <div
@@ -614,8 +650,11 @@ export default {
   data () {
     return {
       fullscreenLoading: false,
-      socket: new socket(this.url = loginSocketUrl), // 二维码登录socket
+      socket: '', // 二维码登录socket
       isErcodeTimeOut: false, // 二维码是否过期
+      isScanSuccess: false, // 扫码是否成功
+      ercodeTimerCount: 60, // 二维码失效倒计时
+      ercodeTimer: null, // 二维码定时器
       isErCodeLogin: false, // 是否扫码登录
       erCodeString: '', // 二维码登录字符串
       username: '',
@@ -714,11 +753,6 @@ export default {
       }
       $('body').off('mousemove')
       $('body').off('mouseup')
-      // this.onmousemove = null;
-      // this.onmouseup = null;
-    })
-    $('body').on('dblclick', (e) => {
-
     })
   },
   activated () {
@@ -738,14 +772,65 @@ export default {
       'SET_USER_BUTTON_STATUS',
       'USER_LOGIN'
     ]),
+    // 登录成功操作
+    userLoginSuccess (data) {
+      this.USER_LOGIN(data)
+      console.log(this.routerTo)
+      if (this.routerTo &&
+        !this.routerTo.startsWith('/Register') &&
+        !this.routerTo.startsWith('/login') &&
+        !this.routerTo.startsWith('/ForgetPassword') &&
+        !this.routerTo.startsWith('/nofind404')
+      ) {
+        // this.loadCurrencyList()
+        this.$router.push({path: this.routerTo})
+      } else {
+        this.$router.push({path: '/'})
+      }
+    },
+    // 返回登录
+    backToScan () {
+      this.isScanSuccess = false
+      this.refreshCode()
+    },
     // 刷新二维码
     async reflashErCode () {
+      // this.isScanSuccess = true
       const data = await getLoginErcode()
       if (!returnAjaxMessage(data, this)) {
         return false
       } else {
+        this.isErcodeTimeOut = false
         console.log(data)
-        this.erCodeString = data.data.data
+        this.erCodeString = data.data.data.qrcode
+        console.log(this.erCodeString)
+        this.socket = new socket(this.url = loginSocketUrl + this.erCodeString)
+        this.socket.doOpen()
+        this.socket.on('open', () => {
+          clearInterval(this.ercodeTimer)
+          this.socket.send(this.erCodeString)
+          this.ercodeTimerCount = 60
+          this.ercodeTimer = setInterval(() => {
+            if (this.ercodeTimerCount > 0) {
+              this.ercodeTimerCount--
+            } else {
+              clearInterval(this.ercodeTimer)
+              this.isErcodeTimeOut = true
+            }
+          }, 1000)
+          this.socket.on('message', (data) => {
+            let socketData = data
+            // 用户已扫码
+            if (socketData.scan) {
+              console.log(socketData)
+              this.isScanSuccess = true
+            }
+            // 登录成功
+            if (socketData.data && socketData.data.userInfo) {
+              this.userLoginSuccess(socketData.data)
+            }
+          })
+        })
       }
     },
     // 切换登录方式
@@ -1010,19 +1095,7 @@ export default {
         this.fullscreenLoading = false
         this.clearInputValue()
         this.step3DialogShowStatus = false
-        this.USER_LOGIN(data.data.data)
-        console.log(this.routerTo)
-        if (this.routerTo &&
-          !this.routerTo.startsWith('/Register') &&
-          !this.routerTo.startsWith('/login') &&
-          !this.routerTo.startsWith('/ForgetPassword') &&
-          !this.routerTo.startsWith('/nofind404')
-        ) {
-          // this.loadCurrencyList()
-          this.$router.push({path: this.routerTo})
-        } else {
-          this.$router.push({path: '/'})
-        }
+        this.userLoginSuccess(data.data.data)
       }
       console.log(data)
     },
@@ -1488,22 +1561,53 @@ export default {
           height:50px;
           background:url(../../assets/develop/pc-login-icon.png) no-repeat center center;
         }
-        >.inner-title{
-          height:50px;
-          text-align: center;
-          color:rgba(255,255,255,1);
+        >.scan-box{
+          >.inner-title{
+            height:50px;
+            text-align: center;
+            color:rgba(255,255,255,1);
+          }
+          >.tips{
+            color: #fff;
+            height:50px;
+            line-height: 50px;
+          }
+          .ercode{
+            margin:0 auto;
+            box-sizing: border-box;
+            width:174px;
+            height:174px;
+            background-color: #fff;
+            padding:5px;
+          }
         }
-        >.tips{
-          color: #fff;
-          height:50px;
-          line-height: 50px;
-        }
-        >.ercode{
-          margin:0 auto;
-          box-sizing: border-box;
-          width:174px;
-          height:174px;
-          background-color: #fff;
+        >.scan-success{
+          position: relative;
+          >.icon-cellphoneiphone{
+            font-size: 156px;
+            color:#26416e;
+          }
+          >.icon-chenggong{
+            position: absolute;
+            left:49%;
+            top:28%;
+            transform: translate(-50%,-50%);
+            font-size: 26px;
+            color:#008069;
+          }
+          >.tips{
+            >p{
+              font-size: 12px;
+              line-height: 20px;
+            }
+            margin-top:20px;
+            color:#fff;
+          }
+          >.back-to-scan{
+            margin-top:20px;
+            font-size: 12px;
+            color:$mainColor;
+          }
         }
       }
       >.mobile-box {

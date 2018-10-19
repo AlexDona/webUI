@@ -3,7 +3,9 @@
     class="demo-box"
     :class="{'day':theme == 'day','night':theme == 'night' }"
   >
-    <keep-alive><HeaderCommon/></keep-alive>
+    <keep-alive>
+      <HeaderCommon/>
+    </keep-alive>
     <div class="inner-box"></div>
     <keep-alive><FooterCommon/></keep-alive>
   </div>
