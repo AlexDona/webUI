@@ -12,8 +12,15 @@
         <div class="invest-list">
           <div class="nvest-list-body">
             <div class="gobackInvest">
-              <IconFontCommon class='blue' iconName="icon-fanhui" style="font-size:12px" />
-              <router-link class="blue" :to="!isLogin ? 'login' : '/FinanceCenter'">
+              <IconFontCommon
+                class='blue'
+                iconName="icon-fanhui"
+                style="font-size:12px"
+              />
+              <router-link
+                class="blue"
+                :to="!isLogin ? 'login' : '/FinanceCenter'"
+              >
                 <!--返回投资-->
                 {{ $t('M.investment_return_investment') }}
               </router-link>
@@ -21,7 +28,10 @@
             <!-- 投资记录 -->
             <el-tabs v-model="activeName" @tab-click='changeTab'>
             <!-- @您还没有登陆,请登录或者注册之后查看！ -->
-                <div v-if = "!isLogin" class = 'financeTsipsBox'>
+                <div
+                  v-if = "!isLogin"
+                  class = 'financeTsipsBox'
+                >
                   {{$t('M.finance_loginTips')}}
                   <router-link to='/login'>
                     {{$t('M.comm_login')}}
@@ -61,13 +71,13 @@
                     prop="number"
                     width="100"
                     :label="$t('M.comm_count')"
-                    >
+                  >
                   </el-table-column>
                   <!-- 预计收益 -->
                   <el-table-column
                     prop="expectedEarning"
                     :label="$t('M.finance_predict') + $t('M.finance_earnings')"
-                    >
+                  >
                   </el-table-column>
                   <!-- 预计发放时间 -->
                   <el-table-column
@@ -94,34 +104,35 @@
                     prop="createTime"
                     width="150"
                     :label="$t('M.finance_createTime')"
-                    >
+                  >
                   </el-table-column>
                   <!-- 操作 -->
                   <el-table-column
                     width="80"
                     prop="operations"
                     :label="$t('M.otc_index_operate')"
-                    >
+                  >
                     <template slot-scope = "data">
                       <div
-                      v-if="data.row.state == $t('M.finance_huoqi')"
-                      class="blue cancelBtn"
-                      @click="cancleInvest(data.row.id)"
+                        v-if="data.row.state == $t('M.finance_huoqi')"
+                        class="blue cancelBtn"
+                        @click="cancleInvest(data.row.id)"
                       >
-                      <!-- 取消 -->
-                      {{$t('M.comm_cancel')}}
+                        <!-- 取消 -->
+                        {{$t('M.comm_cancel')}}
                       </div>
                     </template>
                   </el-table-column>
                 </el-table>
                 <el-pagination
-                    background
-                    v-if="investTotal > 10 && this.activeName == '1'"
-                    layout="prev, pager, next"
-                    page-size='10'
-                    @current-change='changeInvestPage'
-                    :current-page = 'investCurrnetPage'
-                    :page-count.sync = 'investTotalPages'>
+                  background
+                  v-if="investTotal > 10 && this.activeName == '1'"
+                  layout="prev, pager, next"
+                  page-size='10'
+                  @current-change='changeInvestPage'
+                  :current-page = 'investCurrnetPage'
+                  :page-count.sync = 'investTotalPages'
+                >
                 </el-pagination>
               </el-tab-pane>
               <!-- 收益记录 -->
@@ -130,7 +141,10 @@
                 name="2"
               >
                 <!-- @您还没有登陆,请登录或者注册之后查看！ -->
-                <div v-if = "!isLogin" class = 'financeTsipsBox'>
+                <div
+                  v-if = "!isLogin"
+                  class = 'financeTsipsBox'
+                >
                   {{$t('M.finance_loginTips')}}
                   <router-link to='/login'>
                     {{$t('M.comm_login')}}
@@ -148,12 +162,13 @@
                   :empty-text="$t('M.comm_no_data')"
                   v-loading="loading"
                   element-loading-background="rgba(0, 0, 0, 0.6)"
-                  >
+                >
                   <!-- 投资币种 -->
                   <el-table-column
                     prop="coinShortName"
                     :label="$t('M.finance_invest') + $t('M.comm_currency')"
-                    width="150">
+                    width="150"
+                  >
                   </el-table-column>
                   <!-- 投资类型 -->
                   <el-table-column
@@ -166,7 +181,7 @@
                     prop="number"
                     width="100"
                     :label="$t('M.comm_count')"
-                    >
+                  >
                   </el-table-column>
                   <!-- 预计收益 -->
                   <el-table-column
@@ -178,32 +193,34 @@
                   <el-table-column
                     prop="interest"
                     :label="$t('M.finance_grant') + $t('M.finance_earnings')"
-                    >
+                  >
                   </el-table-column>
                   <!-- 发放时间 -->
                   <el-table-column
                     prop="createTime"
                     width="150"
                     :label="$t('M.finance_releaseTime')"
-                    >
+                  >
                   </el-table-column>
                 </el-table>
               </el-tab-pane>
               <el-pagination
-                  background
-                  v-if="interestTotal > 10 && this.activeName == '2'"
-                  layout="prev, pager, next"
-                  @current-change='changeInterestPage'
-                  :current-page.sync = 'interestCurrnetPage'
-                  :page-count='interestTotalPages'
-                  >
+                background
+                v-if="interestTotal > 10 && this.activeName == '2'"
+                layout="prev, pager, next"
+                @current-change='changeInterestPage'
+                :current-page.sync = 'interestCurrnetPage'
+                :page-count='interestTotalPages'
+              >
               </el-pagination>
             </el-tabs>
           </div>
         </div>
       </div>
     </div>
-    <keep-aline><FooterCommon/></keep-aline>
+    <keep-alive>
+      <FooterCommon/>
+    </keep-alive>
   </div>
 </template>
 <!--请严格按照如下书写书序-->

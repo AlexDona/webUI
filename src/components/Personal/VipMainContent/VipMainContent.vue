@@ -6,7 +6,9 @@
     element-loading-background="rgba(0, 0, 0, 0.6)"
   >
     <!--头部-->
-    <keep-aline><HeaderCommon/></keep-aline>
+    <keep-alive>
+      <HeaderCommon/>
+    </keep-alive>
     <div class="header-content">
       <img
         class="images"
@@ -186,7 +188,7 @@
            >
           </div>
           <div
-            class="content-module margin-top30 cursor-pointer"
+            class="content-module cursor-pointer"
             :class="{ active1:activeStatus < 4, disable:activeStatus > 4}"
           >
             <p class="content-vip-one text-align-c">
@@ -239,7 +241,7 @@
            >
            </div>
           <div
-            class="content-module margin-top30 content-border-rl cursor-pointer"
+            class="content-module content-border-rl cursor-pointer"
             :class="{ active1:activeStatus < 5, disable:activeStatus > 5}"
           >
             <p class="content-vip-one text-align-c">
@@ -304,7 +306,7 @@
             <!--</button>-->
           <!--</p>-->
         <!--</div>-->
-        <p class="content-info-hint text-align-r padding-right23 box-sizing font-size12">
+        <p class="content-info-hint padding-right23 box-sizing font-size12">
           <span>
             <!--还没有FUC?-->
             {{ $t('M.user_vip_not_yet') }}{{vipPriceInfo1[0].vipCoinName}}?
@@ -575,7 +577,7 @@
       </el-dialog>
     </div>
     <!--底部-->
-    <keep-aline><FooterCommon/></keep-aline>
+    <keep-alive><FooterCommon/></keep-alive>
   </div>
 </template>
 <!--请严格按照如下书写书序-->
@@ -905,8 +907,8 @@ export default {
           padding-left: 35px;
           color: rgb(212, 88, 88);
         }
-        width: 765px;
-        min-height: 800px;
+        width: 1300px;
+        min-height: 300px;
         margin: 0 auto;
         flex-wrap: wrap;
         >.content-main-box {
@@ -914,7 +916,7 @@ export default {
           >.content-box {
             flex-wrap: wrap;
             width: 250px;
-            height: 380px;
+            /*height: 380px;*/
             background-color: #1C1F32;
             position: absolute;
             top: 0;
@@ -1061,7 +1063,7 @@ export default {
         }
       }
       > .text-below {
-        width: 756px;
+        width: 1300px;
         height: 350px;
         margin: 0 auto;
         padding-top: 80px;
@@ -1081,6 +1083,11 @@ export default {
         margin-top: -3px;
         background: #272B41;
         > .content-main {
+          .content-info-hint {
+            .hint-color {
+              color: #338FF5;
+            }
+          }
           >.content-main-box {
             > .content-module {
               background-color: #1C1F32;
@@ -1131,11 +1138,6 @@ export default {
                   background:linear-gradient(0deg,rgba(26,29,47,1) 0%,rgba(45,54,81,1) 100%);
                   color: #fff;
                 }
-              }
-            }
-            > .content-info-hint {
-              > .hint-color {
-                color: #338FF5;
               }
             }
           }
@@ -1240,6 +1242,11 @@ export default {
         margin-top: -3px;
         background-color: $dayBgColor;
         > .content-main {
+          .content-info-hint {
+            .hint-color {
+              color: #338FF5;
+            }
+          }
           >.content-main-box {
             > .content-module {
               background-color: #232D39;
@@ -1286,11 +1293,6 @@ export default {
                   color: #fff;
                 }
               }
-            }
-          }
-          > .content-info-hint {
-            > .hint-color {
-              color: #338FF5;
             }
           }
           /*> .content-border-rl {*/

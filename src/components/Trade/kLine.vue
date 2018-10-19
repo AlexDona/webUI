@@ -97,7 +97,7 @@ export default {
       }
       params.tradeName = tradeName
       const data = await getActiveSymbolDataAjax(params)
-
+      console.log(data)
       if (!returnAjaxMessage(data, this)) {
         return false
       } else {

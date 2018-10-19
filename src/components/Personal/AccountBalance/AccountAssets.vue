@@ -1395,9 +1395,7 @@ export default {
      * 安全中心
      */
     getSecurityCenter () {
-      // 整页loading
-      this.fullscreenLoading = true
-      getSecurityCenter(this, (data) => {
+      getSecurityCenter(this, {}, data => {
         // 接口失败清除loading
         this.fullscreenLoading = false
         if (data) {

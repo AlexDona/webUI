@@ -4,10 +4,12 @@
     :class="{'day':theme == 'day','night':theme == 'night' }"
   >
   <!-- 导航 -->
-    <keep-aline><HeaderCommon/></keep-aline>
+    <keep-alive>
+      <HeaderCommon/>
+    </keep-alive>
     <!-- banner -->
     <div class="banner-box">
-      <img src="../../assets/finance/banner.png" alt="">
+      <img src="../../assets/finance/banner.png">
     </div>
     <div
       class="inner-box"
@@ -31,16 +33,20 @@
           </el-select>
           <ul class="newnestPrice">
             <li>
-              <p class="newnestPriceColor">{{newnestPrice}}<span>USDT</span></p>
+              <p class="newnestPriceColor">
+                {{newnestPrice}}<span>USDT</span>
+              </p>
               <!-- 最新价钱 -->
               {{$t('M.finance_newestPrice')}}
             </li>
             <li>
-              <p class="green">{{dayAmountIncrease}}<span>USDT</span></p>
+              <p class="green">
+                {{dayAmountIncrease}}<span>USDT</span>
+              </p>
               <!-- 当日涨幅 -->
               {{$t('M.finance_date')}}{{$t('M.finance_increase')}}
             </li>
-            <li v-if = 'this.historyAmountIncrease'>
+            <li v-if='this.historyAmountIncrease'>
               <p class="red">{{historyAmountIncrease}}</p>
               <!-- 历史涨幅 -->
               {{$t('M.finance_history')}}{{$t('M.finance_increase')}}
@@ -56,7 +62,12 @@
             <!-- 存币 -->
             <div class="invest">{{$t('M.finance_invest')}}</div>
             <!-- 可用余额 -->
-            <div class="balance">{{$t('M.finance_useBalance')}}&nbsp;:&emsp; <div>{{isLogin ? availableBalance : '--'}}<span> {{selecteCoindName}}</span></div></div>
+            <div class="balance">
+              {{$t('M.finance_useBalance')}}&nbsp;:&emsp;
+              <div>{{isLogin ? availableBalance : '--'}}
+                <span> {{selecteCoindName}}</span>
+              </div>
+            </div>
           </div>
           <div class="left-body">
             <label for="">
@@ -92,7 +103,12 @@
               </div>
             </label>
             <!-- 您存币的币种数量已超过该币种的总资产 -->
-            <div  class="totalTipsPositon" v-if="isShow">{{$t('M.finance_errorTips')}}</div>
+            <div
+              class="totalTipsPositon"
+              v-if="isShow"
+            >
+              {{$t('M.finance_errorTips')}}
+            </div>
             <label for=" ">
               <div class='submitBtn'>
                 <el-button
@@ -109,22 +125,33 @@
               :visible.sync="dialogVisible"
               width="440px"
               class='dialogStyle'
-              :before-close="handleClose">
-              <el-form :label-position="right" label-width="90px" :model="formLabelAlign">
+              :before-close="handleClose"
+            >
+              <el-form
+                :label-position="right"
+                label-width="90px"
+                :model="formLabelAlign"
+              >
                 <!-- 存币时长 -->
                 <el-form-item
-                :label="$t('M.finance_invest') + $t('M.finance_timeLong')"
-                class='saveTime'>
-                 {{getDate(-2)}} {{$t('M.finance_leit')}} {{getDate(formLabelAlign.day)}}
-                 <span class="blue">({{formLabelAlign.day}}{{$t('M.finance_day')}})</span>
-                 <!-- {{formLabelAlign.createTime}} 至 {{formLabelAlign.endDate}}<span class="blue">({{formLabelAlign.day}}天)</span> -->
+                  :label="$t('M.finance_invest') + $t('M.finance_timeLong')"
+                  class='saveTime'
+                >
+                  {{getDate(-2)}} {{$t('M.finance_leit')}} {{getDate(formLabelAlign.day)}}
+                  <span class="blue">({{formLabelAlign.day}}{{$t('M.finance_day')}})</span>
+                  <!-- {{formLabelAlign.createTime}} 至 {{formLabelAlign.endDate}}<span class="blue">({{formLabelAlign.day}}天)</span> -->
                 </el-form-item>
                 <!-- 存币数量 -->
                 <el-form-item
                   :label="$t('M.finance_invest') + $t('M.comm_count')"
                 >
                   <div class='invest-mounte'>
-                    <el-input v-model="formLabelAlign.number" class="red" @input="changeAlignNumber"></el-input>
+                    <el-input
+                      v-model="formLabelAlign.number"
+                      class="red"
+                      @input="changeAlignNumber"
+                    >
+                    </el-input>
                     <strong>{{selecteCoindName}}</strong>
                   </div>
                 </el-form-item>
@@ -133,7 +160,11 @@
                   :label="$t('M.finance_interestRate')"
                 >
                    <div class='invest-mounte'>
-                    <el-input v-model="formLabelAlign.interestRate" disabled></el-input>
+                    <el-input
+                      v-model="formLabelAlign.interestRate"
+                      disabled
+                    >
+                    </el-input>
                   </div>
                 </el-form-item>
                 <!-- 预计总收益 -->
@@ -141,7 +172,11 @@
                   :label="$t('M.finance_predict') + $t('M.comm_total_sum') + $t('M.finance_earnings')"
                 >
                   <div class='invest-mounte'>
-                    <el-input v-model="formLabelAlign.expectedEarning" disabled></el-input>
+                    <el-input
+                      v-model="formLabelAlign.expectedEarning"
+                      disabled
+                    >
+                    </el-input>
                     <strong>{{selecteCoindName}}</strong>
                   </div>
                 </el-form-item>
@@ -152,30 +187,51 @@
                   <div class='invest-mounte'>
                     <!-- 先息后本 -->
                     <el-input
-                    :value="$t('M.finance_xiAndben')"
-                    disabled
-                    ></el-input>
-                    <span class='dividend-tips' @click="showDividendTime = !showDividendTime">!</span>
+                      :value="$t('M.finance_xiAndben')"
+                      disabled
+                    >
+                    </el-input>
+                    <span
+                      class='dividend-tips'
+                      @click="showDividendTime = !showDividendTime"
+                    >
+                    !
+                    </span>
                   </div>
                 </el-form-item>
               </el-form>
               <div class="show-dividend-time-list">
                 <transition name="el-fade-in-linear">
                   <ul v-show='showDividendTime'>
-                    <li v-for="(item,index) in formLabelAlign.jsonTimeline" :key="index">
+                    <li
+                      v-for="(item,index) in formLabelAlign.jsonTimeline"
+                      :key="index"
+                    >
                       <span>{{item.date}}</span>
                       <span class="blue">{{item.amount}}</span>
                       <span class='blue'>{{selecteCoindName}}</span>
-                      <span>({{formLabelAlign.jsonTimeline[formLabelAlign.jsonTimeline.length-1].length == 1 ? $t('M.finance_accrual') :$t('M.finance_capital') + '+' + $t('M.finance_accrual')}})</span>
+                      <span>
+                        ({{formLabelAlign.jsonTimeline[formLabelAlign.jsonTimeline.length-1].length == 1 ? $t('M.finance_accrual') :$t('M.finance_capital') + '+' + $t('M.finance_accrual')}})
+                      </span>
                     </li>
                   </ul>
                 </transition>
               </div>
-              <span slot="footer" class="dialog-footer">
+              <span
+                slot="footer"
+                class="dialog-footer"
+              >
                 <!-- 取消 -->
-                <el-button @click="dialogCancel">{{$t('M.comm_cancel')}}</el-button>
+                <el-button @click="dialogCancel">
+                  {{$t('M.comm_cancel')}}
+                </el-button>
                 <!-- 确定 -->
-                <el-button type="primary" @click="dialogSuer">{{$t('M.comm_affirm')}}</el-button>
+                <el-button
+                  type="primary"
+                  @click="dialogSuer"
+                >
+                  {{$t('M.comm_affirm')}}
+                </el-button>
               </span>
             </el-dialog>
             <button></button>
@@ -184,29 +240,33 @@
         <div class="right">
           <div class="nav-header">
             <!-- 我的存币 -->
-            <div class="invest">{{$t('M.finance_mine')}}{{$t('M.finance_invest')}}</div>
+            <div class="invest">
+              {{$t('M.finance_mine')}}{{$t('M.finance_invest')}}
+            </div>
           </div>
           <div class="pieCharts-box">
               <div class="right-infor">
                 <!-- 存币估值 -->
-              <div>{{$t('M.finance_invest')}}{{$t('M.finance_estimatedValue')}}
+              <div>
+                {{$t('M.finance_invest')}}{{$t('M.finance_estimatedValue')}}
                 <p class="green">
                   <span>{{isLogin ? InvestmentValue : '--'}}</span>
                   USDT
                 </p>
               </div>
               <!-- 历史收益 -->
-              <div>{{$t('M.finance_history')}}{{$t('M.finance_earnings')}}
+              <div>
+                {{$t('M.finance_history')}}{{$t('M.finance_earnings')}}
                 <p class="red2">
                   <span>{{isLogin ? getMoneyValue : '--'}}</span>
-                      USDT
+                  USDT
                 </p>
               </div>
           </div>
           <div class="pieCharts">
             <FinanceBrokenPie
-            :investment-value = 'InvestmentValue'
-            :get-money-value = 'getMoneyValue'
+              :investment-value = 'InvestmentValue'
+              :get-money-value = 'getMoneyValue'
             />
           </div>
         </div>
@@ -219,19 +279,29 @@
         <!-- 存币记录和收益记录 -->
         <div class="nvest-list-body">
           <div class='showAll'>
-            <router-link class="blue" :to="{path: isLogin ? '/FinanceInvestmentRecord' : '/login', query:{coinId:selectedCoinId,coinName:selecteCoindName}}">
+            <router-link
+              class="blue"
+              :to="{path: isLogin ? '/FinanceInvestmentRecord' : '/login', query:{coinId:selectedCoinId,coinName:selecteCoindName}}"
+            >
               <!--查看全部-->
               {{ $t('M.investment_look_all') }}
             </router-link>
           </div>
           <!-- 存币记录 -->
-          <el-tabs v-model="activeName" @tab-click="handleClick">
+          <el-tabs
+            v-model="activeName"
+            @tab-click="handleClick"
+          >
             <!-- 存币记录 -->
             <el-tab-pane
-            :label="$t('M.finance_invest') + $t('M.finance_recode')"
-            name="1">
+              :label="$t('M.finance_invest') + $t('M.finance_recode')"
+              name="1"
+            >
              <!-- @您还没有登陆,请登录或者注册之后查看！ -->
-              <div v-if = "!isLogin" class = 'financeTsipsBox'>
+              <div
+                v-if = "!isLogin"
+                class = 'financeTsipsBox'
+              >
                 {{$t('M.finance_loginTips')}}
                 <router-link to='/login'>
                   {{$t('M.comm_login')}}
@@ -247,12 +317,13 @@
                 :data="investList"
                 style="width: 100%"
                 :empty-text="$t('M.comm_no_data')"
-                >
+              >
                 <!-- 存币币种 -->
                 <el-table-column
                   prop="coinShortName"
                   :label="$t('M.finance_invest') + $t('M.comm_currency')"
-                  width="100">
+                  width="100"
+                >
                 </el-table-column>
                 <!-- 存币类型 -->
                 <el-table-column
@@ -265,7 +336,7 @@
                   prop="number"
                   width="100"
                   :label="$t('M.comm_count')"
-                  >
+                >
                 </el-table-column>
                 <!-- 预计收益 -->
                 <el-table-column
@@ -278,7 +349,7 @@
                   prop="expectedTime"
                   width="150"
                   :label="$t('M.finance_predict') + $t('M.finance_releaseTime')"
-                  >
+                >
                 </el-table-column>
                 <!-- 已发放收益-->
                 <el-table-column
@@ -292,14 +363,14 @@
                   prop="state"
                   width="80"
                   :label="$t('M.comm_state')"
-                  >
+                >
                 </el-table-column>
                 <!-- 创建时间 -->
                 <el-table-column
                   prop="createTime"
                   width="150"
                   :label="$t('M.finance_createTime')"
-                  >
+                >
                 </el-table-column>
                 <!-- 操作 -->
                 <el-table-column
@@ -314,8 +385,8 @@
                       class="blue cancelBtn"
                       @click="cancleInvest(data.row.id)"
                     >
-                    <!-- 取消 -->
-                    {{$t('M.comm_cancel')}}
+                      <!-- 取消 -->
+                      {{$t('M.comm_cancel')}}
                     </div>
                   </template>
                 </el-table-column>
@@ -327,7 +398,10 @@
               name="2"
             >
              <!-- @您还没有登陆,请登录或者注册之后查看！ -->
-              <div v-if = "!isLogin" class = 'financeTsipsBox'>
+              <div
+                v-if = "!isLogin"
+                class = 'financeTsipsBox'
+              >
                 {{$t('M.finance_loginTips')}}
                 <router-link to='/login'>
                   {{$t('M.comm_login')}}
@@ -343,7 +417,7 @@
                 :data="userInterestRecord"
                 style="width: 100%"
                 :empty-text="$t('M.comm_no_data')"
-                >
+              >
                 <!-- 存币币种 -->
                 <el-table-column
                   prop="coinShortName"
@@ -361,26 +435,26 @@
                   prop="number"
                   width="100"
                   :label="$t('M.comm_count')"
-                  >
+                >
                 </el-table-column>
                 <!-- 预计收益 -->
                 <el-table-column
                   prop="expectedEarning"
                   :label="$t('M.finance_predict') + $t('M.finance_earnings')"
-                  >
+                >
                 </el-table-column>
                 <!-- 发放收益 -->
                 <el-table-column
                   prop="interest"
                   :label="$t('M.finance_grant') + $t('M.finance_earnings')"
-                  >
+                >
                 </el-table-column>
                 <!-- 发放时间 -->
                 <el-table-column
                   prop="createTime"
                   width="150"
                   :label="$t('M.finance_releaseTime')"
-                  >
+                >
                 </el-table-column>
               </el-table>
             </el-tab-pane>
@@ -389,7 +463,9 @@
       </div>
       </div>
     </div>
-    <keep-aline><FooterCommon/></keep-aline>
+    <keep-alive>
+      <FooterCommon/>
+    </keep-alive>
   </div>
 </template>
 <!--请严格按照如下书写书序-->
@@ -399,7 +475,12 @@ import FooterCommon from '../Common/FooterCommon'
 import FinanceBrokenLine from './FinanceBrokenLine'
 import FinanceBrokenPie from './FinanceBrokenPie'
 import {timeFilter} from '../../utils'
-import {getFinancialManagement, imediateInvestment, cancleInvestment, getFinancialRecord} from '../../utils/api/OTC'
+import {
+  getFinancialManagement,
+  imediateInvestment,
+  cancleInvestment,
+  getFinancialRecord
+} from '../../utils/api/OTC'
 import {getPushTotalByCoinId} from '../../utils/api/personal'
 import {returnAjaxMessage} from '../../utils/commonFunc'
 import {createNamespacedHelpers, mapState} from 'vuex'

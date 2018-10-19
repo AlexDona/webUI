@@ -2,7 +2,7 @@
   <div
     class="banner-box home"
     :style="{
-      background:`url(${bannerBackgroundImage}) no-repeat center center/100% 100%`,
+      background:bannerBackgroundImage,
       width:screenWidth*3+'px',
       height:screenWidth/1.19+'px'
     }"

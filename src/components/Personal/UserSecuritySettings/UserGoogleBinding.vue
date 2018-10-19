@@ -5,7 +5,9 @@
     v-loading.fullscreen.lock="fullscreenLoading"
     element-loading-background="rgba(0, 0, 0, 0.6)"
   >
-    <keep-aline><HeaderCommon/></keep-aline>
+    <keep-alive>
+      <HeaderCommon/>
+    </keep-alive>
     <div class="binding-google-main margin25">
       <header class="binding-google-header personal-height60 line-height60 line-height70 margin25">
         <span
@@ -148,7 +150,7 @@
         </div>
       </div>
     </div>
-    <keep-aline><FooterCommon/></keep-aline>
+    <keep-alive><FooterCommon/></keep-alive>
   </div>
 </template>
 <!--请严格按照如下书写书序-->
@@ -364,8 +366,8 @@ export default {
      */
     getSecurityCenter () {
       // 整页loading
-      this.fullscreenLoading = true
-      getSecurityCenter(this, (data) => {
+      // this.fullscreenLoading = true
+      getSecurityCenter(this, {}, data => {
         if (data) {
           // 接口成功清除loading
           this.fullscreenLoading = false

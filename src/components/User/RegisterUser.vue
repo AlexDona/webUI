@@ -10,7 +10,9 @@
     v-loading.fullscreen.lock="fullscreenLoading"
     element-loading-background="rgba(0, 0, 0, 0.6)"
   >
-    <keep-aline><HeaderCommon/></keep-aline>
+    <keep-alive>
+      <HeaderCommon/>
+    </keep-alive>
     <!--注册页面-->
     <div
       class="inner-box"

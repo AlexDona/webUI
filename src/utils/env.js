@@ -11,7 +11,7 @@ let socketUrl = '' // socket 接口
 let loginSocketUrl = '' // 扫码登录socket
 let domain = '' // 项目域名
 let routerMode = 'hash'
-if (process.env.NODE_ENV == 'development' || process.env.NODE_ENV == 'testing') {
+if (process.env.NODE_ENV == 'development') {
   /* apiCommonUrl --------------------------------------------- */
   // apiCommonUrl = 'http://192.168.1.72:8062/' // 刘耀
   // apiCommonUrl = 'http://192.168.1.71:8888/' // 亚男
@@ -38,6 +38,11 @@ if (process.env.NODE_ENV == 'development' || process.env.NODE_ENV == 'testing') 
   loginSocketUrl = 'ws://192.168.1.217:8888/qrcodeLogin/'
   /* domain --------------------------------------------- */
   domain = apiCommonUrl + '#/'
+} else if (process.env.NODE_ENV == 'testing') {
+  apiCommonUrl = 'http://192.168.1.200:8888/' // 本地测试
+  socketUrl = 'ws://192.168.1.200:8087/market'
+  loginSocketUrl = 'ws://api.new.bzu.com/qrcodeLogin/'
+  domain = apiCommonUrl + '#/'
 } else if (process.env.NODE_ENV == 'production') {
   /* apiCommonUrl --------------------------------------------- */
 
@@ -48,7 +53,7 @@ if (process.env.NODE_ENV == 'development' || process.env.NODE_ENV == 'testing') 
 
   /* socketUrl --------------------------------------------- */
 
-  socketUrl = 'ws://ws.bzu.com/market'
+  socketUrl = 'wss://ws.bzu.com/market'
   loginSocketUrl = 'ws://api.new.bzu.com/qrcodeLogin/'
   // socketUrl = 'ws://192.168.1.200:8087/market'
 

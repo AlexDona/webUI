@@ -108,6 +108,7 @@ export default {
               mouseOver (e) {
                 const URL = e.target.attributes.background.value
                 this.CHANGE_BANNER_ACTIVE(true)
+                console.log(URL)
                 this.CHANGE_BANNER_BACKGROUND(URL)
               },
               mouseLeave () {
@@ -129,17 +130,17 @@ export default {
               }
             },
             template: `<router-link
-                       style="width: 100%;height:100%"
-                       to="/home/${item.id}"
-                     >
-                       <img
-                        style="width: 100%;height:100%"
-                        :src="miniImg"
-                        :background="background"
-                        @mouseenter="mouseOver"
-                        @mouseleave="mouseLeave"
-                       />
-                     </router-link>`
+                     style="width: 100%;height:100%"
+                     to="/home/${item.id}"
+                   >
+                     <img
+                      style="width: 100%;height:100%"
+                      :src="miniImg"
+                      :background="background"
+                      @mouseenter="mouseOver"
+                      @mouseleave="mouseLeave"
+                     />
+                   </router-link>`
           }
         })
       })
@@ -169,14 +170,14 @@ export default {
     width:100%;
     transition: all 4s;
     position: absolute;
-    bottom:40px;
+    bottom:.2rem;
     &.active{
       opacity:.2;
     }
     /*opacity:.8;*/
     .inner-box{
       width:10rem;
-      height:270px;
+      height:2.7rem;
     }
   }
 </style>

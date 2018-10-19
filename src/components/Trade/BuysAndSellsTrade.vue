@@ -33,7 +33,7 @@
       </div>
       <div
         class="content"
-        v-if="buysAndSellsList"
+        v-if="buysAndSellsList&&buysAndSellsList.buys.list"
       >
         <el-collapse-transition>
           <div

@@ -18,6 +18,7 @@
           <div v-show="contentShowStatus">
             <el-table
               :data="globalMarketList"
+              height="300"
             >
               <!--交易所-->
               <el-table-column
@@ -35,7 +36,7 @@
               >
                 <template slot-scope="s">
                   <span>
-                    {{s.row.bourseTrade}}
+                    {{s.row.bourseTrade.split('_').join('/')}}
                   </span>
                 </template>
               </el-table-column>

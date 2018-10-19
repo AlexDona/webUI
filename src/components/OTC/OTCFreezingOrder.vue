@@ -11,19 +11,33 @@
       <!--表头属性-->
       <div class="freezing-table-head">
         <!-- 订单号 -->
-        <span class="item">{{$t('M.otc_MerchantsOrders_orderNum')}}</span>
+        <span class="item">
+          {{$t('M.otc_MerchantsOrders_orderNum')}}
+        </span>
         <!-- 类型 -->
-        <span class="item">{{$t('M.otc_cancelOrder_type')}}</span>
+        <span class="item">
+          {{$t('M.otc_cancelOrder_type')}}
+        </span>
         <!-- 币种 -->
-        <span class="item">{{$t('M.comm_currency')}}</span>
+        <span class="item">
+          {{$t('M.comm_currency')}}
+        </span>
         <!-- 价格 -->
-        <span class="item">{{$t('M.otc_index_price')}}</span>
+        <span class="item">
+          {{$t('M.otc_index_price')}}
+        </span>
         <!-- 数量 -->
-        <span class="item">{{$t('M.comm_count')}}</span>
+        <span class="item">
+          {{$t('M.comm_count')}}
+        </span>
         <!-- 总金额 -->
-        <span class="item">{{$t('M.otc_canceled_total')}}</span>
+        <span class="item">
+          {{$t('M.otc_canceled_total')}}
+        </span>
         <!-- 下单时间 -->
-        <span class="item">{{$t('M.otc_stocks_ordertime')}}</span>
+        <span class="item">
+          {{$t('M.otc_stocks_ordertime')}}
+        </span>
       </div>
       <!--表格-->
       <div
@@ -34,7 +48,9 @@
         <!--表格上部分-->
         <div class="freezing-info-top">
           <!-- 订单号 -->
-          <span class="item">{{item.orderSequence}}</span>
+          <span class="item">
+            {{item.orderSequence}}
+          </span>
           <!-- 类型 买入 -->
           <span
             class="item"
@@ -54,15 +70,25 @@
             {{$t('M.comm_sell')}}
           </span>
           <!-- 币种 -->
-          <span class="item">{{item.coinName}}</span>
+          <span class="item">
+            {{item.coinName}}
+          </span>
           <!-- 价格 -->
-          <span class="item">{{item.price}}({{ item.currencyName }})</span>
+          <span class="item">
+            {{item.price}}({{item.currencyName}})
+          </span>
           <!-- 数量 -->
-          <span class="item">{{item.pickCount}}({{ item.coinName }})</span>
+          <span class="item">
+            {{item.pickCount}}({{item.coinName}})
+          </span>
           <!-- 总金额 -->
-          <span class="item">{{(item.price*item.pickCount).toFixed(2)}}({{ item.currencyName }})</span>
+          <span class="item">
+            {{(item.price*item.pickCount).toFixed(2)}}({{item.currencyName}})
+          </span>
           <!-- 下单时间 -->
-          <span class="item">{{timeFormatting(item.createTime)}}</span>
+          <span class="item">
+            {{timeFormatting(item.createTime)}}
+          </span>
         </div>
         <!--表格下部分-->
         <div class="freezing-info-bottom">
@@ -138,13 +164,12 @@ export default {
   // props,
   data () {
     return {
-      loading: true,
+      loading: true, // loading 加载
       // 分页
-      pageSize: 5,
+      pageSize: 5, // 每页展示的条数
       currentPage: 1, // 当前页码
       totalPages: 1, // 总页数
-      // OTC冻结订单列表
-      otcFreezingOrderList: []
+      otcFreezingOrderList: [] // OTC冻结订单列表
     }
   },
   created () {
@@ -161,18 +186,18 @@ export default {
   update () {},
   beforeRouteUpdate () {},
   methods: {
-    // 分页
+    // 1.0 分页
     changeCurrentPage (pageNum) {
       console.log(pageNum)
       this.currentPage = pageNum
       this.getOTCFrezzingOrdersList()
     },
-    // 时间格式化
+    // 2.0 时间格式化
     timeFormatting (date) {
       return timeFilter(date, 'normal')
       // return timeFilter(date, 'BIH')
     },
-    // 2.0 请求冻结中订单列表
+    // 3.0 请求冻结中订单列表
     async getOTCFrezzingOrdersList () {
       this.loading = true
       const data = await getOTCFrezzingOrders({

@@ -5,7 +5,9 @@
     v-loading.fullscreen.lock="fullscreenLoading"
     element-loading-background="rgba(0, 0, 0, 0.6)"
   >
-    <keep-aline><HeaderCommon/></keep-aline>
+    <keep-alive>
+      <HeaderCommon/>
+    </keep-alive>
     <div
       class="add-chat-main margin25"
     >
@@ -138,7 +140,7 @@
         </div>
       </div>
     </div>
-    <keep-aline><FooterCommon/></keep-aline>
+    <keep-alive><FooterCommon/></keep-alive>
   </div>
 </template>
 <!--请严格按照如下书写书序-->
@@ -196,7 +198,9 @@ export default {
     // 黑色主题样式
     require('../../../../static/css/theme/night/Personal/AccountReceivableAccount/AddWeChatNight.css')
     this.tokenObj.token = this.userInfo.token
-    this.tokenObj['x-domain'] = window.location.host.split(':')[0]
+    let xDomain = window.location.host.split(':')[0]
+    xDomain = xDomain.startsWith('www') ? xDomain.slice(4) : xDomain
+    this.tokenObj['x-domain'] = xDomain
     this.getAccountPaymentTerm()
     this.paymentMethodInformation()
   },

@@ -24,9 +24,13 @@
           <div class="common choice">
             <div class="left display-inline-block">
               <!-- 选择 -->
-              <p class="tips font-size14">{{$t('M.otc_pl')}}</p>
+              <p class="tips font-size14">
+                {{$t('M.otc_pl')}}
+              </p>
               <!-- 必填 -->
-              <p class="warning font-size12">{{$t('M.otc_publishAD_nustFill')}}</p>
+              <p class="warning font-size12">
+                {{$t('M.otc_publishAD_nustFill')}}
+              </p>
             </div>
             <div class="right display-inline-block">
               <!-- 买卖类型 -->
@@ -76,13 +80,6 @@
                     :label="language === 'zh_CN'? item.name : item.shortName"
                   >
                   </el-option>
-                  <!-- <el-option
-                    v-for="(item,index) in availableCurrencyList"
-                    :key="index"
-                    :value="item.id"
-                    :label="item.name"
-                  >
-                  </el-option> -->
                 </el-select>
               </div>
             </div>
@@ -91,9 +88,13 @@
           <div class="common sale-price">
             <div class="left display-inline-block">
               <!-- 销售价格 -->
-                <p class="tips font-size14">{{$t('M.otc_sell')}}{{$t('M.otc_index_price')}}</p>
+                <p class="tips font-size14">
+                  {{$t('M.otc_sell')}}{{$t('M.otc_index_price')}}
+                </p>
                 <!-- 必填 -->
-                <p class="warning font-size12">{{$t('M.otc_publishAD_nustFill')}}</p>
+                <p class="warning font-size12">
+                  {{$t('M.otc_publishAD_nustFill')}}
+                </p>
             </div>
             <div class="right display-inline-block">
               <div>
@@ -101,14 +102,12 @@
                   <!-- 最大可卖出量: -->
                   <span v-if="activitedBuySellStyle === 'SELL'">
                     {{$t('M.otc_seller_maximum')}}:
-                    <!-- {{total}}{{activeedCoinName}} -->
                     <span class="max-avail-sell">
                       {{total ? total : '--'}}{{activeedCoinName}}
                     </span>
                   </span>
                   <!-- 市价 -->
                   <span>{{$t('M.otc_market_price')}}:
-                    <!-- {{marketPrice}}{{activeedCurrencyName}} -->
                     <span class="markder-price">
                       {{marketPrice ? marketPrice : '--'}}{{activeedCurrencyName}}
                     </span>
@@ -116,7 +115,6 @@
                 </p>
               </div>
               <!-- 定价设置 -->
-              <!-- <p>{{$t('M.otc_publishAD_setPrice')}}</p> -->
               <div class="input">
                 <!-- 单价 -->
                 <input
@@ -127,7 +125,6 @@
                   @keyup="changePriceValue('price', moneyPointLength)"
                   @input="changePriceValue('price', moneyPointLength)"
                 >
-                <!-- @keyup="changePriceValue('price')" -->
                 <span class="unit font-size12">{{activeedCurrencyName}}</span>
               </div>
               <!-- 单价错误提示 -->
@@ -138,46 +135,56 @@
           <div class="common trade-way">
             <div class="left display-inline-block">
               <!-- 交易方式 -->
-                <p class="tips font-size14">{{$t("M.otc_publishAD_selltype")}}</p>
+                <p class="tips font-size14">
+                  {{$t("M.otc_publishAD_selltype")}}
+                </p>
                 <!-- 必填 -->
-                <p class="warning font-size12">{{$t('M.otc_publishAD_nustFill')}}</p>
+                <p class="warning font-size12">
+                  {{$t('M.otc_publishAD_nustFill')}}
+                </p>
             </div>
             <div class="right display-inline-block">
               <el-checkbox-group
                 v-model="activitedPayTypes"
                 @change='changePayTypes'
               >
+                <!-- 支付宝 -->
                 <el-checkbox
                   label="alipay"
                   v-show="payForListArr[0] === '1'"
                 >
                   {{$t('M.comm_alipay')}}
                 </el-checkbox>
+                <!-- 微信 -->
                 <el-checkbox
                   label="weixin"
                   v-show="payForListArr[1] === '1'"
                 >
                   {{$t('M.comm_weixin')}}
                 </el-checkbox>
+                <!-- 银行卡 -->
                 <el-checkbox
                   label="bank"
                   v-show="payForListArr[2] === '1'"
                 >
                   {{$t('M.comm_bank')}}
                 </el-checkbox>
+                <!-- 西联 -->
                 <el-checkbox
                   label="xilian"
                   v-show="payForListArr[3] === '1'"
                 >
                   {{$t('M.comm_xilian')}}
                 </el-checkbox>
+                <!-- PAYPAL -->
                 <el-checkbox
-                label="paypal"
-                v-show="payForListArr[4] === '1'"
+                  label="paypal"
+                  v-show="payForListArr[4] === '1'"
                 >
                   PAYPAL
                 </el-checkbox>
               </el-checkbox-group>
+              <!-- 错误提示信息 -->
               <div class="err">{{errorInfoTradeWay}}</div>
             </div>
           </div>
@@ -204,15 +211,20 @@
                   @keyup="changeEntrustCountValue('entrustCount', pointLength)"
                   @input="changeEntrustCountValue('entrustCount', pointLength)"
                 >
-                <!-- @keyup="changeEntrustCountValue('entrustCount')" -->
-                <span class="unit font-size14">{{activeedCoinName}}</span>
+                <span class="unit font-size14">
+                  {{activeedCoinName}}
+                </span>
               </div>
               <div class="err">{{errorInfoEntrustCount}}</div>
               <p class="text">
                 <!-- 单笔最小限额 -->
-                <span class="money-min">{{$t('M.otc_publishAD_minlimitMoney')}}</span>
+                <span class="money-min">
+                  {{$t('M.otc_publishAD_minlimitMoney')}}
+                </span>
                 <!-- 单笔最大限额 -->
-                <span class="money-max">{{$t('M.otc_publishAD_maxlimitMoney')}}</span>
+                <span class="money-max">
+                  {{$t('M.otc_publishAD_maxlimitMoney')}}
+                </span>
               </p>
               <div class="input-bottom">
                 <!-- 单笔最小限额 -->
@@ -224,8 +236,9 @@
                   @keyup="changeMinCountInputValue('minCountValue', moneyPointLength)"
                   @input="changeMinCountInputValue('minCountValue', moneyPointLength)"
                 >
-                <!-- @keyup="changeMinCountInputValue('minCountValue')" -->
-                <span class="unit font-size14">{{activeedCurrencyName}}</span>
+                <span class="unit font-size14">
+                  {{activeedCurrencyName}}
+                </span>
                 <span class= "minMaxLink">一</span>
                 <!-- 单笔最大限额 -->
                 <input
@@ -236,11 +249,12 @@
                   @keyup="changeMaxCountInputValue('maxCountValue', moneyPointLength)"
                   @input="changeMaxCountInputValue('maxCountValue', moneyPointLength)"
                 >
-                <!-- @keyup="changeMaxCountInputValue('maxCountValue')" -->
                 <span class="unit font-size14">{{activeedCurrencyName}}</span>
               </div>
               <div>
-                <span class="err err-min-count"><span>{{errorInfoMinCount}}</span></span>
+                <span class="err err-min-count">
+                  <span>{{errorInfoMinCount}}</span>
+                </span>
                 <span class="err">{{errorInfoMaxCount}}</span>
               </div>
             </div>
@@ -249,9 +263,13 @@
           <div class="common remark">
             <div class="left display-inline-block">
               <!-- 备注 -->
-                <p class="tips font-size14">{{$t('M.comm_remark')}}</p>
+                <p class="tips font-size14">
+                  {{$t('M.comm_remark')}}
+                </p>
                 <!-- 建议填写 -->
-                <p class="warning font-size12">{{$t('M.otc_publishAD_adviceToFill')}}</p>
+                <p class="warning font-size12">
+                  {{$t('M.otc_publishAD_adviceToFill')}}
+                </p>
             </div>
             <div class="right display-inline-block">
               <el-input
@@ -294,20 +312,6 @@
                       iconName="icon-wenhao"
                     />
                   </el-tooltip>
-                  <!-- <el-tooltip
-                    class="item"
-                    effect="dark"
-                    placement="bottom-start"
-                  >
-                    <div slot="content">
-                      {{$t('M.otc_publishAD_setDiscript')}}<br/>
-                      {{$t('M.otc_publishAD_setDiscriptTwo')}}
-                    </div>
-                    <IconFontCommon
-                      class="font-size14"
-                      iconName="icon-wenhao"
-                    />
-                  </el-tooltip> -->
                 </span>
               </div>
               <div>
@@ -317,12 +321,6 @@
                   onkeyup="this.value=this.value.replace(/\D/g,'')"
                   onafterpaste="this.value=this.value.replace(/\D/g,'')"
                 >
-                <!-- <input
-                  type="text"
-                  class="input-limit"
-                  ref="limitOrderCount"
-                  @keyup="changeLimitOrderCountValue('limitOrderCount')"
-                > -->
                 <!-- 错误提示 -->
                 <div class="err">{{errorInfoLimitOrderCount}}</div>
               </div>
@@ -336,12 +334,6 @@
                   onkeyup="this.value=this.value.replace(/\D/g,'')"
                   onafterpaste="this.value=this.value.replace(/\D/g,'')"
                 >
-                <!-- <input
-                  type="text"
-                  class="input-limit"
-                  ref="successOrderCount"
-                  @keyup="changeSuccessOrderCountValue('successOrderCount')"
-                > -->
                 <!-- 错误提示 -->
                 <div class="err">{{errorInfoSuccessOrderCount}}</div>
               </div>
@@ -366,7 +358,9 @@
               width="470"
             >
             <!-- 请输入交易密码 -->
-              <div>{{$t('M.otc_publishAD_pleaseInput')}}{{$t('M.otc_publishAD_sellpassword')}}</div>
+              <div>
+                {{$t('M.otc_publishAD_pleaseInput')}}{{$t('M.otc_publishAD_sellpassword')}}
+              </div>
               <div class="input">
                 <input
                   type="password"
@@ -397,7 +391,9 @@
       <!--发布广告右侧提示信息-->
       <div class="publish-AD-right">
         <div class="publish-tips">
-          <div class="title font-size14">{{$t('M.otc_publishAD_publishDis')}}：</div>
+          <div class="title font-size14">
+            {{$t('M.otc_publishAD_publishDis')}}：
+          </div>
           <p class="tip font-size12">
             ●{{mainWebsite}} {{$t('M.otc_publishAD_discriptLineOne')}}
           </p>
@@ -414,14 +410,18 @@
       </div>
     </div>
     <!-- 3.0 底部 -->
-    <keep-aline><FooterCommon/></keep-aline>
+    <keep-alive><FooterCommon/></keep-alive>
   </div>
 </template>
 <!--请严格按照如下书写书序-->
 <script>
 // 引入接口
 import {formatNumberInput} from '../../utils'
-import {querySelectedOrdersDetails, addOTCPutUpOrdersMerchantdedicated, getOTCCoinInfo} from '../../utils/api/OTC'
+import {
+  querySelectedOrdersDetails,
+  addOTCPutUpOrdersMerchantdedicated,
+  getOTCCoinInfo
+} from '../../utils/api/OTC'
 // 引入组件
 import NavCommon from '../Common/HeaderCommonForPC'
 import FooterCommon from '../Common/FooterCommon'
@@ -542,7 +542,7 @@ export default {
   methods: {
     ...mapMutations([
     ]),
-    // 广告管理跳转过来 请求详情接口
+    // 0.0 广告管理跳转过来 请求详情接口
     async getOTCSelectedOrdersDetails () {
       const data = await querySelectedOrdersDetails({
         entrustId: this.messageId

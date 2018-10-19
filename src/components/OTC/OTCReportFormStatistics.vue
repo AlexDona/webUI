@@ -16,7 +16,7 @@
       <div class="report-form-filtrate">
         <!-- 交易币种 -->
         <span class="filtrate-text font-size14">
-         {{$t('M.otc_trade')}}{{$t('M.comm_currency')}}
+          {{$t('M.otc_trade')}}{{$t('M.comm_currency')}}
         </span>
         <span class="currency-input">
           <el-select
@@ -94,7 +94,9 @@
             <div class="together border-radius5 day">
               <div class="left">
                 <span class="round font-size12">
-                  {{$t('M.otc_formStatistics_date')}}<br />{{$t('M.otc_trade')}}
+                  {{$t('M.otc_formStatistics_date')}}
+                  <br />
+                  {{$t('M.otc_trade')}}
                 </span>
               </div>
               <div class="right">
@@ -105,17 +107,23 @@
                   </span>
                 </p>
                 <p>
-                  <span>{{$t('M.comm_buying')}}{{$t('M.otc_formStatistics_average')}}:</span>
+                  <span>
+                    {{$t('M.comm_buying')}}{{$t('M.otc_formStatistics_average')}}:
+                  </span>
                   <span class="data">
                     {{ buyDayMap.average }}{{ activitedtraderCurrencyCoinsName }}
                   </span>
                 </p>
                 <p>
                   <span>{{$t('M.otc_formStatistics_amount_paid')}}:</span>
-                  <span class="data"> {{ buyDayMap.amount }}{{ activitedtraderCurrencyCoinsName }}</span>
+                  <span class="data">
+                    {{ buyDayMap.amount }}{{ activitedtraderCurrencyCoinsName }}
+                  </span>
                 </p>
                 <p>
-                  <span>{{$t('M.otc_formStatistics_turnover')}}{{$t('M.comm_order')}}:</span>
+                  <span>
+                    {{$t('M.otc_formStatistics_turnover')}}{{$t('M.comm_order')}}:
+                  </span>
                   <span class="data"> {{ buyDayMap.num }}{{$t('M.comm_stock')}}</span>
                 </p>
               </div>
@@ -212,7 +220,9 @@
             <div class="together border-radius5 day">
               <div class="left">
                 <span class="round font-size12">
-                  {{$t('M.otc_formStatistics_date')}}<br />{{$t('M.comm_deal')}}
+                  {{$t('M.otc_formStatistics_date')}}
+                  <br />
+                  {{$t('M.comm_deal')}}
                 </span>
               </div>
               <div class="right">
@@ -282,7 +292,7 @@
                 </p>
                 <p>
                   <span>{{$t('M.otc_formStatistics_turnover')}}{{$t('M.comm_order')}}:</span>
-                  <span class="data"> {{ sellMonthMap.num }}{{ activitedTraderCoinName }}{{$t('M.comm_stock')}}</span>
+                  <span class="data"> {{ sellMonthMap.num }}{{$t('M.comm_stock')}}</span>
                 </p>
               </div>
             </div>
@@ -386,7 +396,7 @@
                 width="180"
               >
                 <template slot-scope = "scope">
-                    <div>{{timeFormatting(scope.row.createTime)}}</div>
+                  <div>{{timeFormatting(scope.row.createTime)}}</div>
                 </template>
               </el-table-column>
               <!-- 订单号 -->
@@ -465,7 +475,7 @@
       </div>
     </div>
     <!-- 3.0 底部 -->
-    <keep-aline><FooterCommon/></keep-aline>
+    <keep-alive><FooterCommon/></keep-alive>
   </div>
 </template>
 <!--请严格按照如下书写书序-->
@@ -486,8 +496,8 @@ export default {
   },
   data () {
     return {
-      formStatisticsLoading: true,
-      orderDetailsLoading: true,
+      formStatisticsLoading: false,
+      orderDetailsLoading: false,
       // 分页
       pageSize: 10,
       currentPage: 1, // 当前页码
@@ -671,6 +681,7 @@ export default {
     },
     // 报表统计的主页面
     async getOTCReportFormStatistics () {
+      this.formStatisticsLoading = true
       let data = await getOTCReportFormStatisticsData({
         // 币种
         coinId: this.activitedTraderCoinId,
@@ -681,6 +692,7 @@ export default {
       console.log('资产信息')
       console.log(data)
       if (!(returnAjaxMessage(data, this, 0))) {
+        this.formStatisticsLoading = false
         return false
       } else {
         this.formStatisticsLoading = false
@@ -710,6 +722,7 @@ export default {
     },
     // 页面加载时请求接口渲染订单详情列表
     async getOTCEntrustingOrdersRevocation () {
+      this.orderDetailsLoading = true
       let data = await getOTCMerchantsOrdersList({
         // 当前页数
         pageNum: this.currentPage,
@@ -730,6 +743,7 @@ export default {
       console.log('报表列表')
       console.log(data)
       if (!(returnAjaxMessage(data, this, 0))) {
+        this.orderDetailsLoading = false
         return false
       } else {
         // 返回数据正确的逻辑 重新渲染列表

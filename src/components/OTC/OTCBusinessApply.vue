@@ -44,12 +44,10 @@
               {{$t('M.otc_merchant_singleFag')}}
             </span>
             <p class="text font-size14">
-              <!-- 商家发布的广告会带有<br />
-              专属“商”标志<br />
-              增加交易信任 -->
-               {{$t('M.otc_merchant_tipsLine')}}<br />
-               {{$t('M.otc_merchant_Smark')}}<br />
-               {{$t('M.otc_merchant_plusTrust')}}
+              <!-- 商家发布的广告会带有<br />专属“商”标志<br />增加交易信任 -->
+              {{$t('M.otc_merchant_tipsLine')}}<br />
+              {{$t('M.otc_merchant_Smark')}}<br />
+              {{$t('M.otc_merchant_plusTrust')}}
             </p>
           </div>
           <div class="common service">
@@ -62,8 +60,7 @@
               {{$t('M.otc_merchant_singleSerice')}}
             </span>
             <p class="text font-size14">
-              <!-- 我们向商家提供7*24小时<br />
-              专属客服服务 -->
+              <!-- 我们向商家提供7*24小时<br />专属客服服务 -->
               {{$t('M.otc_merchant_we')}}<br />
               {{$t('M.otc_merchant_singleSeriviceserver')}}
             </p>
@@ -79,13 +76,21 @@
         <!-- 2.2.2 1234序号部分 -->
         <div class="number">
           <!-- 商家申请 -->
-          <span class="common apply">{{$t('M.otc_merchant')}}{{$t('M.otc_apply')}}</span>
+          <span class="common apply">
+            {{$t('M.otc_merchant')}}{{$t('M.otc_apply')}}
+          </span>
           <!-- 发送邮件 -->
-          <span class="common send-email">{{$t('M.otc_merchant_sendemail')}}</span>
+          <span class="common send-email">
+            {{$t('M.otc_merchant_sendemail')}}
+          </span>
           <!-- 提交申请 -->
-          <span class="common submit-apply">{{$t('M.otc_submit')}}{{$t('M.otc_apply')}}</span>
+          <span class="common submit-apply">
+            {{$t('M.otc_submit')}}{{$t('M.otc_apply')}}
+          </span>
           <!-- 审核通过 -->
-          <span class="common pass">{{$t('M.otc_merchant_verified')}}</span>
+          <span class="common pass">
+            {{$t('M.otc_merchant_verified')}}
+          </span>
         </div>
         <!-- 2.2.3 具体步骤部分 -->
         <div class="step">
@@ -102,8 +107,15 @@
             <p>{{$t('M.otc_merchant_datailFive')}}{{count}} {{coinName}}{{$t('M.otc_merchant_datailSix')}}。</p>
             <h4 class="title">{{$t('M.otc_merchant_step4')}}</h4>
             <p>{{$t('M.otc_merchant_datailSeven')}}</p>
-            <h4 class="title tips">{{$t('M.otc_merchant_loveTips')}}
-              <el-button type="text" @click="businessArgument" class="agree font-size14">《{{$t('M.otc_merchant_authentication')}}》</el-button>
+            <h4 class="title tips">
+              {{$t('M.otc_merchant_loveTips')}}
+              <el-button
+                type="text"
+                @click="businessArgument"
+                class="agree font-size14"
+              >
+                《{{$t('M.otc_merchant_authentication')}}》
+              </el-button>
             </h4>
           </div>
         </div>
@@ -117,13 +129,20 @@
             </el-checkbox>
           </span>
           <span>{{$t('M.otc_merchant_readAndSure')}}</span>
-          <el-button type="text" @click="businessArgument" class="agreement">《{{$t('M.otc_merchant_authentication')}}》</el-button>
+          <el-button
+            type="text"
+            @click="businessArgument"
+            class="agreement"
+          >
+            《{{$t('M.otc_merchant_authentication')}}》
+          </el-button>
           <el-dialog
             :title="$t('M.otc_merchant_authentication')"
             :visible.sync="dialogVisible"
             width="50%"
             height="500px"
-            :before-close="handleClose">
+            :before-close="handleClose"
+          >
             <div v-html = "argumentContent"></div>
           </el-dialog>
         </div>
@@ -163,7 +182,7 @@
       v-show="applyStatus === 3"
     >
       <div class="picture">
-        <img src="../../assets/develop/business-apply-success.png" alt="">
+        <img src="../../assets/develop/business-apply-success.png">
       </div>
       <div class="text">
         <p class="tip">{{$t('M.otc_merchant_success')}}</p>
@@ -178,9 +197,9 @@
     >
     </div>
     <!-- 3.0 底部 -->
-    <keep-aline>
+    <keep-alive>
       <FooterCommon class="footer"/>
-    </keep-aline>
+    </keep-alive>
   </div>
 </template>
 <script>
@@ -202,18 +221,15 @@ export default {
   },
   data () {
     return {
-      fullscreenLoading: true,
+      fullscreenLoading: true, // 整页loading
       statusBlack: '', // 当为申请中和申请成功的页面时候，只有黑色主题颜色
       height: '', // 申请中 申请成功 内容的高度
-      // 整页loading
-      // loadingCircle: {},
-      // applyStatus: 4, // 商家申请状态
       applyStatus: 1, // 商家申请状态
       checked: false, // 同意协议按钮:默认不勾选
       successTimes: '0',
       coinName: 'FUC',
       count: '0',
-      dialogVisible: false,
+      dialogVisible: false, // 弹出框状态
       argumentContent: '', // 协议文件
       downLoadUrl: '' // 商家申请资料地址
     }
@@ -276,11 +292,6 @@ export default {
     },
     // 首次点击商家申请决定进入哪个界面
     async determineUser () {
-      // 整页loading
-      // this.loadingCircle = this.$loading({
-      //   lock: true,
-      //   background: 'rgba(0, 0, 0, 0.7)'
-      // })
       this.fullscreenLoading = true
       // 刚进页面接口请求回来之前先展示缓冲界面
       this.applyStatus = 4

@@ -8,12 +8,15 @@
     v-loading.fullscreen.lock="fullscreenLoading"
     element-loading-background="rgba(0, 0, 0, 0.6)"
   >
+    <keep-alive>
     <HeaderCommonForPC
       v-if="!isMobile"
     />
     <HeaderCommonForMobile
       v-if="isMobile"
     />
+    </keep-alive>
+
     <div
       class="inner-box"
       :class="{'pc-bg': !isMobile}"
@@ -1031,7 +1034,7 @@ export default {
       } else {
         this.sliderFlag = true
         // 判断是否需要短信验证或邮箱验证码验证(条件：(异地ip登录||多次登录失败)&&未绑定谷歌验证器)
-        if (!this.firstLogin || !this.loginIpEquals) {
+        if (!this.firstLogin || !this.loginIpEquals || this.isBindGoogle) {
           this.loginImageValidateStatus = false
           this.ENTER_STEP3()
           this.step3DialogShowStatus = true
@@ -1043,8 +1046,6 @@ export default {
     },
     // 自动获取验证码
     autoSendValidateCode () {
-      // console.log(this.isMobile)
-      // console.log(this.isBindPhone)
       let sendType = this.isMobile ? 'mobile' : 'pc'
       let loginType = this.isBindPhone ? 0 : 1
       this.sendPhoneOrEmailCode(sendType, loginType)
@@ -1147,7 +1148,7 @@ export default {
           // 显示图片验证码
           this.userInputImageCode = ''
           this.loginImageValidateStatus = true
-        } else if (this.firstLogin || !this.loginIpEquals) {
+        } else if (this.firstLogin || !this.loginIpEquals || this.isBindGoogle) {
           // 登录第三步(第一次登录、异常ip)
           this.step3DialogShowStatus = true
           if (!this.isBindGoogle) {

@@ -1,5 +1,6 @@
 .fiat-completed-order-box.personal.day .el-table th.is-leaf{
-    border-right: 1px solid #ECF1F8;
+    /* border-right: 1px solid #ECF1F8; */
+    border-right: 1px solid #fff;
 }
 .fiat-completed-order-box.personal.day .el-table th{
     background: #fff;
@@ -21,7 +22,7 @@
 }
 .fiat-completed-order-box.personal.day .el-table th.is-leaf{
     border-bottom: 1px solid #ECF1F8;
-    border-top: 1px solid #ECF1F8;
+    /* border-top: 1px solid #ECF1F8; */
 }
 .fiat-completed-order-box.personal.day .el-table__expanded-cell {
   background-color: #fff;

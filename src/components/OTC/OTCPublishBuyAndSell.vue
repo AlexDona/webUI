@@ -172,7 +172,6 @@
                     @keyup="changeInputValue('priceBuy', moneyPointLength)"
                     @input="changeInputValue('priceBuy', moneyPointLength)"
                   >
-                  <!-- @keyup="changeInputValue('priceBuy')" -->
                   <span class="unit">{{CurrencyCoinsName}}</span>
                 </div>
                 <!-- 错误提示信息 -->
@@ -239,12 +238,18 @@
                     {{$t('M.otc_expected_value')}}：
                   </span>
                   <!-- 卖 -->
-                  <span class="predict-sum" v-if="this.publishStyle === 'sell'">
+                  <span
+                    class="predict-sum"
+                    v-if="this.publishStyle === 'sell'"
+                  >
                     <!-- {{entrustCountSell * priceSell}} {{CurrencyCoinsName}} -->
                     {{traderSumSELL}} {{CurrencyCoinsName}}
                   </span>
                   <!-- 买 -->
-                  <span class="predict-sum" v-if="this.publishStyle === 'buy'">
+                  <span
+                    class="predict-sum"
+                    v-if="this.publishStyle === 'buy'"
+                  >
                     <!-- {{entrustCountBuy * priceBuy}} {{CurrencyCoinsName}} -->
                     {{traderSumBUY}} {{CurrencyCoinsName}}
                   </span>
@@ -253,12 +258,18 @@
                     {{$t('M.comm_service_charge')}}：
                   </span>
                   <!-- 卖 -->
-                  <span class="predict-sum" v-if="this.publishStyle === 'sell'">
+                  <span
+                    class="predict-sum"
+                    v-if="this.publishStyle === 'sell'"
+                  >
                     <!-- {{entrustCountSell * rate}} {{coinName}} -->
                     {{serviceChargeSELL}} {{coinName}}
                   </span>
                   <!-- 买 -->
-                  <span class="predict-sum" v-if="this.publishStyle === 'buy'">
+                  <span
+                    class="predict-sum"
+                    v-if="this.publishStyle === 'buy'"
+                  >
                     <!-- {{entrustCountBuy * rate}} {{coinName}} -->
                     {{serviceChargeBUY}} {{coinName}}
                   </span>
@@ -338,7 +349,7 @@
             </p>
             <p class="release-tips">
               <!-- 1、发布买卖是免费的； -->
-             1、{{$t('M.otc_index_publish')}}{{$t('M.otc_index_buyAndSellFree')}}；
+              1、{{$t('M.otc_index_publish')}}{{$t('M.otc_index_buyAndSellFree')}}；
             </p>
             <p class="release-tips">
               <!-- 2、您可以在设置中设置您的收款方式； -->
@@ -357,7 +368,7 @@
       </div>
     </div>
     <!-- 3.0 底部 -->
-    <keep-aline><FooterCommon/></keep-aline>
+    <keep-alive><FooterCommon/></keep-alive>
   </div>
 </template>
 <!--请严格按照如下书写书序-->
@@ -768,6 +779,7 @@ export default {
       console.log(data)
       // 提示信息
       if (!(returnAjaxMessage(data, this, 1))) {
+        this.fullscreenLoading = false
         return false
       } else {
         // 返回数据正确的逻辑
