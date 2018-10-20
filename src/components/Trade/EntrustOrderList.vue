@@ -456,6 +456,7 @@ export default {
     width:100%;
     height:416px;
     background: red;
+    font-size: 12px;
     >.inner-box{
       position: relative;
       >.view-more{
@@ -479,18 +480,19 @@ export default {
         &.history{
           >.thead{
             width:100%;
+            font-size: 12px;
             >.th{
               &.time{
-                width:16%;
+                width:17%;
               }
               &.price{
-                width: 15%;
+                width: 17%;
               }
               &.count{
                 width:13%;
               }
               &.direction{
-                width:10%;
+                width:8%;
               }
               &.status{
                 width: 8%;
@@ -501,8 +503,10 @@ export default {
             >.content{
               >.tr{
                 >.td{
+                  font-size: 12px;
                   &.time{
-                    width:16%;
+                    width:17%;
+                    font-size: 12px;
                   }
                   &.price{
                     width: 15%;
@@ -511,7 +515,7 @@ export default {
                     width:13%;
                   }
                   &.direction{
-                    width:10%;
+                    width:8%;
                   }
                   &.status{
                     width: 8%;
@@ -527,11 +531,12 @@ export default {
           line-height:30px;
           >.th{
             display:inline-block;
+            font-size: 12px;
             &.time{
-              width:16%;
+              width:17%;
             }
             &.direction{
-              width:10%;
+              width:8%;
             }
             &.price{
               width:13%;
@@ -540,7 +545,7 @@ export default {
               width:13%;
             }
             &.entrust{
-              width:16%;
+              width:17%;
             }
             &.already{
               width:10%;
@@ -574,15 +579,16 @@ export default {
               font-size: 14px;
               border-bottom:1px solid red;
               >.td{
+                font-size: 12px;
                 display:inline-block;
                 &.time{
-                  width:16%;
+                  width:17%;
                 }
                 &.direction{
-                  width:10%;
+                  width:8%;
                 }
                 &.price{
-                  width:13%;
+                  width:14%;
                 }
                 &.count{
                   width:13%;

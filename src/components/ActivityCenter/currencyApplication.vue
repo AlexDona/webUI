@@ -167,6 +167,10 @@ export default {
         background: url('../../assets/develop/applyfor.png') no-repeat center center;
         -webkit-background-size: 100% 100%;
         background-size: 100% 100%;
+        >.title{
+          font-size: 36px;
+          font-weight: 500;
+        }
       }
       >.bottom{
         position: relative;
