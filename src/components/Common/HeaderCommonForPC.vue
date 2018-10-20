@@ -335,20 +335,20 @@
 <script>
 import {getMerchantAvailablelegalTender} from '../../utils/api/OTC'
 import {
-  getLanguageList,
-  getTransitionCurrencyRate, // 获取汇率转换费率
-  getFooterInfo1,
-  getFooterInfo2
+  getLanguageList
 } from '../../utils/api/header'
 import {
   getStore
 } from '../../utils'
+import {userLoginOut} from '../../utils/api/user'
 import IconFontCommon from '../Common/IconFontCommon'
 // import {getPartnerList} from '../../utils/api/home'
 import {
   returnAjaxMessage,
   getCountryListAjax,
-  reflashUserInfo
+  reflashUserInfo,
+  getTransitionCurrencyRate,
+  getFooterInfo
 } from '../../utils/commonFunc'
 import { createNamespacedHelpers, mapState } from 'vuex'
 const { mapMutations } = createNamespacedHelpers('common')
@@ -408,13 +408,12 @@ export default{
     require('../../../static/css/theme/day/Common/HeaderCommonDay.css')
     // 获取 语言列表:任付伟先注释此方法防止每次刷新报错-有需要请放开
     await this.getLanguageList()
-    await this.getFooterInfo()
+    await getFooterInfo(this.language, this)
     // console.log(this.theme)
     this.activeTheme = this.theme
     // 查询某商户可用法币币种列表
     // 折算货币s
     await this.getMerchantAvailablelegalTenderList()
-    await this.getTransitionCurrencyRate()
     await this.getCountryList()
     if (this.isLogin) {
       await reflashUserInfo(this)
@@ -447,7 +446,7 @@ export default{
       })
     },
     // 更改当前选中汇率转换货币
-    changeActiveTransitionCurrency () {
+    async changeActiveTransitionCurrency () {
       const params = {
         partnerId: this.partnerId,
         shortName: this.activeConvertCurrency || 'CNY'
@@ -459,20 +458,7 @@ export default{
           return false
         }
       })
-      this.getTransitionCurrencyRate(params)
-    },
-    // 获取目标汇率
-    async getTransitionCurrencyRate (params) {
-      const data = await getTransitionCurrencyRate(params)
-      console.log(data)
-      if (!returnAjaxMessage(data, this, 0)) {
-        return false
-      } else {
-        this.CHANGE_CURRENCY_RATE_LIST({
-          currencyRateList: data.data.data,
-          activeConvertCurrencyObj: this.activeConvertCurrencyObj
-        })
-      }
+      await getTransitionCurrencyRate(params, this, this.activeConvertCurrencyObj)
     },
     // 获取国家列表
     async getLanguageList () {
@@ -541,10 +527,14 @@ export default{
       }
     },
     // 用户登出
-    userLoginOut () {
-      console.log('logout')
-      this.$store.commit('user/USER_LOGOUT')
-      this.$router.push({path: '/'})
+    async userLoginOut () {
+      const data = await userLoginOut()
+      if (!returnAjaxMessage(data, this)) {
+        return false
+      } else {
+        this.$store.commit('user/USER_LOGOUT')
+        this.$router.push({path: '/'})
+      }
     },
     // 显示状态切换（子导航）
     toggleShowSubNavBox (item, status) {
@@ -578,14 +568,14 @@ export default{
       console.log(e)
     },
     // 更改设置
-    changeSetting () {
+    async changeSetting () {
       // 主题设置
       this.CHANGE_THEME(this.activeTheme)
       document.body.classList.remove('day')
       document.body.classList.remove('night')
       document.body.classList.add(this.activeTheme)
       // 汇率转换设置
-      this.changeActiveTransitionCurrency()
+      await this.changeActiveTransitionCurrency()
       this.CHANGE_CONVERT_CURRENCY(this.activeConvertCurrency)
       this.toggleShowSettingBox(0)
     },
@@ -606,45 +596,8 @@ export default{
       }
       // 返回数据正确的逻辑
       this.convertCurrencyList = data.data.data
-      this.changeActiveTransitionCurrency()
+      await this.changeActiveTransitionCurrency()
       // setStore('convertCurrencyList', this.convertCurrencyList)
-    },
-    // 获取底部信息
-    async getFooterInfo () {
-      const params = {
-        partnerId: this.partnerId,
-        language: this.language
-      }
-      const data1 = await getFooterInfo1(params)
-      const data2 = await getFooterInfo2(params)
-      if (!returnAjaxMessage(data1, this) && !returnAjaxMessage(data2, this)) {
-        return false
-      } else {
-        let footerInfo1 = data1.data.data
-        let footerInfo2 = data2.data.data
-        this.SET_FOOTER_INFO({
-          footerInfo1,
-          footerInfo2
-        })
-        // favicon 添加
-        this.addFavicon(
-          footerInfo1.headTitleLogo,
-          footerInfo1.title
-        )
-        this.$store.commit('common/SET_LOGO_URL', {
-          logoSrc: footerInfo1.headLogo
-        })
-      }
-    },
-    // 动态添加favicon
-    addFavicon (href, title) {
-      // 动态生成favicon
-      let link = document.querySelector("link[rel*='icon']") || document.createElement('link')
-      link.type = 'image/x-icon'
-      link.rel = 'shortcut icon'
-      link.href = href
-      document.getElementsByTagName('head')[0].appendChild(link)
-      document.querySelector('title').innerText = title
     }
   },
   computed: {

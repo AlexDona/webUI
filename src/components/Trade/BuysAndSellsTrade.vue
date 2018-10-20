@@ -44,17 +44,14 @@
               <dt class="header">
                 <span class="buy-and-sell-index">
                   index
-                </span>
-                <span class="price text-align-l">
+                </span><span class="price text-align-l">
                   <!--价格-->
                   {{ $t('M.comm_price_metre') }}({{activeSymbol.area}})
-                </span>
-                <span class="amount text-align-c">
+                </span><span class="amount text-align-c">
                   <!--数量-->
                   {{ $t('M.comm_count') }}
                   <span class="uppercase">（{{activeSymbol.sellsymbol}}）</span>
-                </span>
-                <span class="total text-align-r">
+                </span><span class="total text-align-r">
                   <!--总计-->
                   {{ $t('M.comm_aggregate') }}
                   <span class="uppercase">({{activeSymbol.area}})</span>
@@ -72,7 +69,7 @@
               >
                 <dd
                   class="buys-item cursor-pointer"
-                  v-for="(item,index) in buysAndSellsList.sells.list.slice(buysAndSellsList.sells.list.length-10,buysAndSellsList.sells.list.length)"
+                  v-for="(item,index) in buysAndSellsList.sells.list.length>10?buysAndSellsList.sells.list.slice(buysAndSellsList.sells.list.length-10,buysAndSellsList.sells.list.length):buysAndSellsList.sells.list"
                   :key="index"
                   :class="{'odd':index%2!==0}"
                   @click="changeActivePriceItem(item)"
@@ -81,20 +78,15 @@
                     <span class="price sell-bg">
                       <!--卖-->
                       {{ $t('M.comm_ask') }} {{item.index}}
-                    </span>
-                  <span
+                    </span><span
                     class="price text-align-l sell-bg"
                   >
                     {{item.price}}
-                  </span>
-                    <span class="amount text-align-r">
+                  </span><span class="amount text-align-r">
                     {{item.amount}}
-                  </span>
-                    <span class="total text-align-r">
+                  </span><span class="total text-align-r">
                     {{item.total}}
-                  </span>
-                    <!--宽度条-->
-                    <i
+                  </span><!--宽度条--><i
                       class="color-sell-bg"
                       :style="'width:'+ item.amount/buysAndSellsList.sells.highestAmount*100+'%'"
                     >
@@ -119,18 +111,13 @@
                     <span class="price buy-bg">
                       <!--买-->
                       {{ $t('M.comm_bid') }} {{item.index}}
-                    </span>
-                    <span class="price text-align-l buy-bg">
+                    </span><span class="price text-align-l buy-bg">
                       {{item.price}}
-                    </span>
-                      <span class="amount text-align-r">
+                    </span><span class="amount text-align-r">
                       {{item.amount}}
-                    </span>
-                      <span class="total text-align-r">
+                    </span><span class="total text-align-r">
                       {{item.total}}
-                    </span>
-                      <!--宽度条-->
-                      <i
+                    </span><!--宽度条--><i
                         class="color-buy-bg"
                         :style="'width:'+ item.amount/buysAndSellsList.buys.highestAmount*100+'%'"
                       >
@@ -161,18 +148,13 @@
                     <span class="price buy-bg">
                       <!--买-->
                       {{ $t('M.comm_bid') }} {{item.index}}
-                    </span>
-                    <span class="price text-align-l buy-bg">
+                    </span><span class="price text-align-l buy-bg">
                       {{item.price}}
-                    </span>
-                      <span class="amount text-align-r">
+                    </span><span class="amount text-align-r">
                       {{item.amount}}
-                    </span>
-                      <span class="total text-align-r">
+                    </span><span class="total text-align-r">
                       {{item.total}}
-                    </span>
-                      <!--宽度条-->
-                      <i
+                    </span><!--宽度条--><i
                         class="color-buy-bg"
                         :style="'width:'+ item.amount/buysAndSellsList.buys.highestAmount*100+'%'"
                       >
@@ -202,18 +184,13 @@
                     <span class="price sell-bg">
                       <!--卖-->
                       {{ $t('M.comm_ask') }} {{item.index}}
-                    </span>
-                    <span class="price text-align-l sell-bg">
+                    </span><span class="price text-align-l sell-bg">
                       {{item.price}}
-                    </span>
-                      <span class="amount text-align-r">
+                    </span><span class="amount text-align-r">
                       {{item.amount}}
-                    </span>
-                      <span class="total text-align-r">
+                    </span><span class="total text-align-r">
                       {{item.total}}
-                    </span>
-                      <!--宽度条-->
-                      <i
+                    </span><!--宽度条--><i
                       class="color-sell-bg"
                       :style="'width:'+ item.amount/buysAndSellsList.buys.highestAmount*100+'%'"
                     >
@@ -347,9 +324,10 @@ export default {
       > .title {
         height: 34px;
         line-height: 34px;
-        margin-bottom: 4px;
+        margin-bottom: 1px;
         box-shadow: 0 2px 6px rgba(0,0,0,.1);
         display: flex;
+        padding:0 20px;
         > .text {
           flex:1;
           /*font-weight: 700;*/
@@ -390,15 +368,24 @@ export default {
         >.inner-box{
           /*表头*/
           >.title-box{
-            height:36px;
-            line-height:36px;
-            padding:0 4px;
+            height:30px;
+            line-height:30px;
+            padding:0 20px;
             position: relative;
             z-index: 2;
             .header{
-              display:flex;
+              /*display:flex;*/
               >span{
-                flex:1;
+                /*flex:1;*/
+                width:29%;
+                &:nth-of-type(1){
+                  width:13%;
+                  text-align: left;
+                }
+                text-align: right;
+                /*border:1px solid red;*/
+                display:inline-block;
+                box-sizing: border-box;
                 &.buy-and-sell-index{
                   color: transparent;
                 }
@@ -406,16 +393,16 @@ export default {
             }
           }
           >.content-box{
-            height:518px;
+            height:651px;
             /*background-color: pink;*/
             >.buys-list,.sells-list{
               font-size: 12px;
-              padding:0 4px;
+              /*padding:0 20px;*/
               >dd{
-                height: 24px;
-                line-height: 24px;
+                height: 30px;
+                line-height: 30px;
                 >.inner{
-                  display: flex;
+                  padding:0 20px;
                   position: relative;
                   z-index: 1;
                   >.buy-bg{
@@ -425,17 +412,25 @@ export default {
                     color:$downColor;
                   }
                   >span{
-                    flex:1;
+                    width:29%;
+                    &:nth-of-type(1){
+                      width:13%;
+                      text-align: left;
+                    }
+                    text-align: right;
+                    /*border:1px solid red;*/
+                    display:inline-block;
+                    box-sizing: border-box;
                   }
                   >.amount{
-                    padding-right:18%;
+                    /*padding-right:18%;*/
                   }
                   >.color-buy-bg,>.color-sell-bg{
                     max-width:100%;
                     position: absolute;
                     right:0;
                     top:1px;
-                    height:22px;
+                    height:30px;
                     z-index: 0;
                     opacity: .1;
                   }
@@ -450,8 +445,8 @@ export default {
             }
             /*最新价*/
             .new-price{
-              height:38px;
-              line-height:38px;
+              height:50px;
+              line-height:50px;
             }
             /*买入表*/
             >.buys-list{

@@ -157,10 +157,11 @@ export default {
 <style scoped lang="scss">
   @import '../../../static/css/scss/index.scss';
   .middle-header-box{
-    margin-bottom:10px;
+    margin-bottom:1px;
     /*width:986px;*/
     height:60px;
     line-height:60px;
+    box-shadow:0px 0px 0px rgba(239,239,239,1);
     >.inner-box{
       display:flex;
       height:100%;

@@ -11,7 +11,7 @@ import {
 // 获取语言列表
 export const getLanguageList = () => get('lan/selectList')
 // 获取货币转换汇率价格
-export const getTransitionCurrencyRate = (params) => get('exchangeRate/tradeAreaPrice', params)
+export const getTransitionCurrencyRateAjax = (params) => get('exchangeRate/tradeAreaPrice', params)
 // 获取国家列表
 export const getCountryList = () => get('country/selectList')
 // 底部信息(1)

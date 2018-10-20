@@ -92,7 +92,9 @@ export default {
   },
   [CHANGE_CURRENCY_RATE_LIST] (state, data) {
     state.currencyRateList = data.currencyRateList
-    state.activeConvertCurrencyObj = data.activeConvertCurrencyObj
+    if (data.activeConvertCurrencyObj) {
+      state.activeConvertCurrencyObj = data.activeConvertCurrencyObj
+    }
   },
   // 登录后路由跳转
   CHANGE_ROUTER_PATH (state, path) {

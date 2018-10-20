@@ -4,6 +4,7 @@
   height:20px;
   background:transparent;
   border-radius:2px;
+  border:1px solid #A9BED4;
 }
 /*搜索框图标位置*/
 .trade-market-box .el-input__suffix{

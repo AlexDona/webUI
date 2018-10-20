@@ -50,6 +50,8 @@ export const sendRegisterUser = (params) => postWithURLencoded('user/reg', param
 export const userLoginForStep1 = (params) => postWithFormData('user/userLoginForStep1', params)
 // 用户登录第二步
 export const userLoginForStep2 = (params) => postWithURLencoded('user/userLoginForStep2', params)
+// 退出登录
+export const userLoginOut = () => postWithURLencoded('user/logout')
 // 找回密码步骤1
 export const findPasswordStep1 = (params) => postWithURLencoded('user/forgetPassword1', params)
 // 找回密码步骤2

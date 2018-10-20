@@ -1,10 +1,17 @@
 .order-record-box .el-table th,
 .order-record-box .el-table__header-wrapper{
-  height:24px;
+  height:26px;
   line-height: 24px;
+}
+.order-record-box .el-table .cell{
+  height:22px;
+  padding:0 20px;
 }
 .order-record-box .el-table td{
   padding:0;
+}
+.order-record-box .el-table th{
+  border-bottom:1px solid rgba(50,55,87,1);
 }
 .order-record-box .el-table th:nth-of-type(2)>.cell{
   text-align: center;

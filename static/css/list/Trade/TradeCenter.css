@@ -32,3 +32,25 @@
 .middle .el-tabs__header{
   box-shadow: 0 2px 6px rgba(0,0,0,.1);
 }
+@media screen and (max-width: 1920px) {
+  .el-table .cell{
+    font-size: 12px;
+  }
+}
+.trade-box .el-pagination{
+  text-align: right;
+  position: relative;
+  bottom:0;
+}
+.trade-box .el-pagination button,
+.trade-box .el-pager li
+{
+  width:16px;
+  height:16px;
+  line-height:16px;
+  font-size: 12px;
+}
+.trade-box .el-tabs__header{
+  margin-bottom:5px;
+}
+

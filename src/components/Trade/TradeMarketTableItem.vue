@@ -1,5 +1,8 @@
 <template>
-  <div class="coin-table font-size12">
+  <div
+    class="coin-table font-size12"
+    :class="{'day':theme == 'day','night':theme == 'night' }"
+  >
     <!--表格头部-->
     <dl class="coin-thead">
       <dt></dt>
@@ -81,22 +84,34 @@
               <!--自选区-->
               <span v-show="activeName==collectArea.areaId">
                 <i
-                  class="el-icon-star-on cursor-pointer collected font-size16"
-                  @click="toggleCollect(innerItem.id,0,innerItem,index,innerIndex)"
-                ></i>
+                  class="click-button cursor-pointer"
+                  @click.stop="toggleCollect(innerItem.id,0,innerItem,index,innerIndex)"
+                >
+                  <i
+                    class="el-icon-star-on  collected font-size16"
+                  ></i>
+                </i>
               </span>
               <!--非自选区-->
               <span v-show="activeName!=collectArea.areaId">
                 <i
-                  class="el-icon-star-off cursor-pointer font-size16"
+                  class="click-button cursor-pointer"
                   v-show="!collectSymbol[innerItem.id]"
-                  @click="toggleCollect(innerItem.id,1,innerItem,index)"
-                ></i>
+                  @click.stop="toggleCollect(innerItem.id,1,innerItem,index)"
+                >
+                  <i
+                    class="el-icon-star-off  font-size16"
+                  ></i>
+                </i>
                 <i
-                  class="el-icon-star-on cursor-pointer collected font-size16"
+                  class="click-button cursor-pointer"
                   v-show="collectSymbol[innerItem.id]"
-                  @click="toggleCollect(innerItem.id,0,innerItem,index)"
-                ></i>
+                  @click.stop="toggleCollect(innerItem.id,0,innerItem,index)"
+                >
+                  <i
+                    class="el-icon-star-on  collected font-size16"
+                  ></i>
+                </i>
               </span>
               <span class="base-currency">{{innerItem.sellsymbol}}</span>
               <!--币中文名-->
@@ -187,6 +202,7 @@ export default {
   filter: {},
   computed: {
     ...mapState({
+      theme: state => state.common.theme,
       language: state => state.common.language // 语言
     })
   },
@@ -196,7 +212,7 @@ export default {
 <style scoped lang="scss" type="text/scss">
   @import '../../../static/css/scss/index.scss';
   .coin-table{
-    padding:0 5px;
+    /*padding:0 5px;*/
     >.coin-thead{
       height:30px;
       line-height:30px;
@@ -209,7 +225,14 @@ export default {
             margin-left:20px;
           }
           &.price{
-            text-align: center;
+            text-align: right;
+            margin-right:12%;
+          }
+          @media screen and (max-width: 1920px) {
+            &.price{
+              text-align: right;
+              margin-right:5%;
+            }
           }
           &.rose{
             text-align: right;
@@ -241,7 +264,8 @@ export default {
         >.market-category{
           height: 40px;
           margin: 0 16px;
-          padding-left: 10px;
+          /*padding-left: 10px;*/
+          padding: 0 20px;
           line-height: 40px;
           position: relative;
           &:before{
@@ -258,22 +282,153 @@ export default {
         >.coin-item{
           >.coin-item{
             /*margin-left: 16px;*/
-            padding: 0 0 0 10px;
+            padding: 0 20px;
             /*border-bottom: 1px solid;*/
             height: 25px;
             line-height: 25px;
             display:flex;
+            .click-button{
+              width:18px;
+              height:25px;
+              display: inline-block;
+            }
+            &:hover{
+              background-color: pink;
+            }
             >span{
               flex:1;
               display: inline-block;
               &.price{
-                margin-right:18%;
+                margin-right:12%;
+              }
+              @media screen and (max-width: 1920px) {
+                &.price{
+                  margin-right:2%;
+                }
               }
               &.up{
                 color: $upColor;
               }
               &.down{
                 color:$downColor;
+              }
+            }
+          }
+        }
+      }
+    }
+    &.night{
+      >.coin-thead{
+        >.coin-unit{
+          display:flex;
+          /*表头*/
+          >.title{
+            &:nth-of-type(1){
+            }
+            &.price{
+            }
+            @media screen and (max-width: 1920px) {
+              &.price{
+              }
+            }
+            &.rose{
+            }
+            .sort-box{
+              >i{
+                &.active{
+                }
+                &.el-icon-caret-top{
+                }
+                &.el-icon-caret-bottom{
+                }
+              }
+            }
+          }
+        }
+      }
+      /*币种列表*/
+      >.coin-list{
+        >.market-cate-wrap{
+          /*板块头部*/
+          >.market-category{
+            &:before{
+            }
+          }
+          >.coin-item{
+            >.coin-item{
+              &:hover{
+                background-color: #1a1d2f;
+              }
+              >span{
+                &.price{
+                }
+                @media screen and (max-width: 1920px) {
+                  &.price{
+                  }
+                }
+                &.up{
+                }
+                &.down{
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+    &.day{
+      >.coin-thead{
+        >.coin-unit{
+          display:flex;
+          /*表头*/
+          >.title{
+            &:nth-of-type(1){
+            }
+            &.price{
+            }
+            @media screen and (max-width: 1920px) {
+              &.price{
+              }
+            }
+            &.rose{
+            }
+            .sort-box{
+              >i{
+                &.active{
+                }
+                &.el-icon-caret-top{
+                }
+                &.el-icon-caret-bottom{
+                }
+              }
+            }
+          }
+        }
+      }
+      /*币种列表*/
+      >.coin-list{
+        >.market-cate-wrap{
+          /*板块头部*/
+          >.market-category{
+            &:before{
+            }
+          }
+          >.coin-item{
+            >.coin-item{
+              &:hover{
+                background-color: #eaf2fa;
+              }
+              >span{
+                &.price{
+                }
+                @media screen and (max-width: 1920px) {
+                  &.price{
+                  }
+                }
+                &.up{
+                }
+                &.down{
+                }
               }
             }
           }

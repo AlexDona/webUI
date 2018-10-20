@@ -5,10 +5,15 @@
   >
     <div class="inner-box">
       <div class="left">
+        <router-link
+          to="/"
+          class="logo"
+        >
         <img
           class="img"
           :src="logoSrc"
         >
+        </router-link>
       </div>
       <!--注册登录-->
       <div class="right login">
@@ -54,13 +59,12 @@
 import {
   returnAjaxMessage,
   getCountryListAjax,
-  reflashUserInfo
+  reflashUserInfo,
+  getFooterInfo
 } from '../../utils/commonFunc'
 import {
-  getLanguageList,
-  getTransitionCurrencyRate // 获取汇率转换费率
+  getLanguageList
 } from '../../utils/api/header'
-import {getMerchantAvailablelegalTender} from '../../utils/api/OTC'
 import { createNamespacedHelpers, mapState } from 'vuex'
 const { mapMutations } = createNamespacedHelpers('common')
 export default {
@@ -77,13 +81,11 @@ export default {
   async created () {
     require('../../../static/css/theme/day/Common/HeaderCommonDay.css')
     // 获取 语言列表:任付伟先注释此方法防止每次刷新报错-有需要请放开
+    await getFooterInfo(this.language, this)
     this.getLanguageList()
     // console.log(this.theme)
     this.activeTheme = this.theme
     // 查询某商户可用法币币种列表
-    // 折算货币s
-    await this.getMerchantAvailablelegalTenderList()
-    await this.getTransitionCurrencyRate()
     await this.getCountryList()
     if (this.isLogin) {
       await reflashUserInfo(this)
@@ -107,7 +109,8 @@ export default {
       'CHANGE_CURRENCY_RATE_LIST',
       'SET_COUNTRY_AREA_LIST',
       'USER_INFORMATION_REFRESH',
-      'SET_USER_INFO_REFRESH_STATUS'
+      'SET_USER_INFO_REFRESH_STATUS',
+      'SET_FOOTER_INFO'
     ]),
     getCountryList () {
       getCountryListAjax(this, (data) => {
@@ -116,38 +119,6 @@ export default {
         this.SET_COUNTRY_AREA_LIST(data.data.data)
         // console.log(this.contryAreaList)
       })
-    },
-    // 获取目标汇率
-    async getTransitionCurrencyRate (params) {
-      const data = await getTransitionCurrencyRate(params)
-      console.log(data)
-      if (!returnAjaxMessage(data, this, 0)) {
-        return false
-      } else {
-        this.CHANGE_CURRENCY_RATE_LIST({
-          currencyRateList: data.data.data,
-          activeConvertCurrencyObj: this.activeConvertCurrencyObj
-        })
-      }
-    },
-    // 查询某商户可用法币币种列表
-    async getMerchantAvailablelegalTenderList () {
-      let data = await getMerchantAvailablelegalTender({
-        partnerId: this.partnerId
-      })
-      console.log(data)
-      if (data.data.meta.code !== 200) {
-        this.$message({
-          message: data.data.meta.message,
-          type: 'error',
-          center: true
-        })
-        return false
-      }
-      // 返回数据正确的逻辑
-      this.convertCurrencyList = data.data.data
-      this.changeActiveTransitionCurrency()
-      // setStore('convertCurrencyList', this.convertCurrencyList)
     },
     // 获取国家列表
     async getLanguageList () {
@@ -177,7 +148,8 @@ export default {
   computed: {
     ...mapState({
       logoSrc: state => state.common.logoSrc,
-      activeLanguage: state => state.common.activeLanguage
+      activeLanguage: state => state.common.activeLanguage,
+      language: state => state.common.language // 语言
     })
   },
   watch: {}
@@ -196,9 +168,11 @@ export default {
       >.left{
         height:60px;
         margin-top:30px;
-        >.img{
-          height:60px;
-          vertical-align: top;
+        >a{
+          >.img{
+            height:60px;
+            vertical-align: top;
+          }
         }
       }
       >.right{

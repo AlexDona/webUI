@@ -19,7 +19,7 @@
             <div v-show="contentShowStatus">
               <el-table
                 :data="orderRecordList"
-                height="500"
+                height="474"
               >
                 <!--时间-->
                 <el-table-column
@@ -116,8 +116,8 @@ export default {
     orderRecordList (newVal) {
     },
     orderRecordListByAjax (newVal) {
-      console.log(newVal)
-      console.log(this.orderRecordListBySocket)
+      // console.log(newVal)
+      // console.log(this.orderRecordListBySocket)
     }
   }
 }
@@ -130,8 +130,9 @@ export default {
         height:34px;
         line-height: 34px;
         /*font-weight: 700;*/
-        margin-bottom:4px;
+        margin-bottom:1px;
         box-shadow:0 2px 6px rgba(0,0,0,.1);
+        padding:0 20px;
         >.text{
           display:inline-block;
           text-indent: 4px;

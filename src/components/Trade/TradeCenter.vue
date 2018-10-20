@@ -22,10 +22,10 @@
         class="middle float-left"
         :class="{'day':theme == 'day','night':theme == 'night' }"
       >
-        <MiddleHeader />
+        <MiddleHeader/>
         <keep-alive>
         <!--k线-->
-          <KLine class=""/>
+          <KLine/>
         </keep-alive>
         <!--市价交易、限价交易-->
         <ExchangeBox/>
@@ -101,17 +101,20 @@ export default {
   @import "../../../static/css/scss/index.scss";
   @import "../../../static/css/scss/Trade/TradeCenter";
   .trade-box{
-    min-width:1300px;
+    min-width:1366px;
     width:100%;
+    box-sizing: border-box;
     /*height:1500px;*/
     /*min-height:1500px;*/
      >.inner-box{
-       padding:14px 10px;
+       padding:14px 1.5625%;
        display:block;
        box-sizing: border-box;
        width:100%;
+       margin:0 auto;
+       /*min-width:1330px;*/
        >div{
-         margin-right:8px;
+         margin-right:0.4166666666%;
          &:last-of-type{
            margin-right:0;
          }
@@ -122,17 +125,20 @@ export default {
          /*width:25%;*/
          /*flex:1;*/
          /*width:450px;*/
-         width:24%
+         width:22.909561217%;
+         font-size: 12px;
        }
        >.middle{
-         width:52%;
+         width:53.260869565%;
          /*min-width:950px;*/
          /*flex:2;*/
          /*width:1010px;*/
+         /*min-width:704px;*/
        }
        >.right{
          /*min-width:450px;*/
-         width:22%;
+         width:22.909561217%;
+         /*min-width: 305px;*/
          /*flex:1;*/
          /*width:438px;*/
        }

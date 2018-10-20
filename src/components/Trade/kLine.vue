@@ -217,8 +217,8 @@ export default {
             'timeframes_toolbar', // 底部栏时间
             'header_undo_redo',
             'header_chart_type',
-            'header_screenshot',
-            'header_settings'
+            'header_screenshot'
+            // 'header_settings'
             // 'widget_logo',
           ],
           enabled_features: [
@@ -506,6 +506,7 @@ export default {
           break
         // 深度图
         case 'DEPTHRENDER':
+          console.log(data)
           if (data.data) {
             this.socketData.depthData = data.data
           }
@@ -688,7 +689,7 @@ export default {
   @import '../../../static/css/scss/index';
   #tv_chart_container {
     width: 100%;
-    height: 445px;
+    height: 355px;
   &.night {
      background-color: $mainContentNightBgColor;
    }

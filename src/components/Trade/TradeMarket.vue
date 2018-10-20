@@ -25,55 +25,57 @@
           ></el-input>
         </span>
       </div>
-      <div class="content">
-        <el-collapse-transition>
+      <el-collapse-transition>
+        <div
+          class="content"
+          v-show="contentShowStatus"
+        >
           <div
-            v-show="contentShowStatus"
-            class="inner-box"
-          >
-            <!--tab 切换-->
-            <el-tabs
-              v-model="activeName"
-              @tab-click="changeTab"
+              class="inner-box"
             >
-              <el-tab-pane
-                :label="collectArea.area"
-                :name="collectArea.area"
+              <!--tab 切换-->
+              <el-tabs
+                v-model="activeName"
+                @tab-click="changeTab"
               >
-                <TradeMarketTableItem
-                  :sortBy="sortBy"
-                  :plateList="searchFilterCollectArea.plateList"
-                  :collectSymbol="collectSymbol"
-                  :activeName="activeName"
-                  :collectArea="collectArea"
-                  :list="[collectArea]"
-                  @toggleCollect="toggleCollect"
-                  @sortByUser="sortByUser"
-                  @changeActiveSymbol="changeActiveSymbol"
-                />
-              </el-tab-pane>
-              <el-tab-pane
-                :label="$t(outItem.area)"
-                :name="outItem.area"
-                v-for="(outItem,outIndex) in searchFilterMarketList"
-                :key="outIndex"
-              >
-                <TradeMarketTableItem
-                  :sortBy="sortBy"
-                  :plateList="outItem.plateList"
-                  :collectSymbol="collectSymbol"
-                  :activeName="activeName"
-                  :collectArea="collectArea"
-                  @toggleCollect="toggleCollect"
-                  :list="filterMarketList"
-                  @sortByUser="sortByUser"
-                  @changeActiveSymbol="changeActiveSymbol"
-                />
-              </el-tab-pane>
-            </el-tabs>
-          </div>
-        </el-collapse-transition>
-      </div>
+                <el-tab-pane
+                  :label="collectArea.area"
+                  :name="collectArea.area"
+                >
+                  <TradeMarketTableItem
+                    :sortBy="sortBy"
+                    :plateList="searchFilterCollectArea.plateList"
+                    :collectSymbol="collectSymbol"
+                    :activeName="activeName"
+                    :collectArea="collectArea"
+                    :list="[collectArea]"
+                    @toggleCollect="toggleCollect"
+                    @sortByUser="sortByUser"
+                    @changeActiveSymbol="changeActiveSymbol"
+                  />
+                </el-tab-pane>
+                <el-tab-pane
+                  :label="$t(outItem.area)"
+                  :name="outItem.area"
+                  v-for="(outItem,outIndex) in searchFilterMarketList"
+                  :key="outIndex"
+                >
+                  <TradeMarketTableItem
+                    :sortBy="sortBy"
+                    :plateList="outItem.plateList"
+                    :collectSymbol="collectSymbol"
+                    :activeName="activeName"
+                    :collectArea="collectArea"
+                    @toggleCollect="toggleCollect"
+                    :list="filterMarketList"
+                    @sortByUser="sortByUser"
+                    @changeActiveSymbol="changeActiveSymbol"
+                  />
+                </el-tab-pane>
+              </el-tabs>
+            </div>
+        </div>
+      </el-collapse-transition>
     </div>
   </div>
 </template>
@@ -462,6 +464,7 @@ export default {
           break
         // 非自选区
         default:
+          console.log(this.filterMarketList)
           _.forEach(this.filterMarketList[this.activeIndex - 2].plateList, (plateItem) => {
             _.forEach(plateItem.content, (contentItem) => {
               activeTabSymbolStr += `${contentItem.id}@`
@@ -589,9 +592,10 @@ export default {
     /*width:433px;*/
     > .inner-box {
       > .title {
+        padding: 0 20px;
         height: 34px;
         line-height: 34px;
-        margin-bottom: 4px;
+        margin-bottom: 1px;
         box-shadow: 0 2px 6px rgba(0,0,0,.1);
         display: flex;
         > .text {
@@ -632,6 +636,7 @@ export default {
       }
       /*表格内容*/
       > .content {
+        height:1484px;
         > .inner-box {
 
         }

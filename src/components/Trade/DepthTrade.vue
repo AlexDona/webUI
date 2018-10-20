@@ -45,7 +45,9 @@ export default {
         },
         grid: {
           left: '4%',
-          top: '30px'
+          top: '30px',
+          right: '6%',
+          bottom: '14%'
         },
         tooltip: {
           trigger: 'axis',
@@ -551,7 +553,7 @@ export default {
       height:34px;
       line-height: 34px;
       /*font-weight: 700;*/
-      margin-bottom:4px;
+      margin-bottom:1px;
       >.text{
         display:inline-block;
         text-indent: 4px;
@@ -562,7 +564,7 @@ export default {
     }
     >.depth{
       width:100%;
-      height:445px;
+      height:208px;
     }
     &.night{
       >.title{

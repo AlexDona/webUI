@@ -24,7 +24,10 @@ import {
 } from '../utils/api/home'
 import {
   getCountryList,
-  getServiceProtocoDataAjax
+  getServiceProtocoDataAjax,
+  getTransitionCurrencyRateAjax,
+  getFooterInfo1,
+  getFooterInfo2
 } from '../utils/api/header'
 import store from '../vuex'
 import {removeStore} from './index'
@@ -279,6 +282,56 @@ export const setSocketData = (oldContent, newContent, targetList, targetIndex, t
   oldContent.vol = newContent.vol
   oldContent.vol24hour = newContent.vol24hour
   that.$set(targetList, targetIndex, oldContent)
+}
+// 首页获取目标汇率
+// 获取目标汇率
+export const getTransitionCurrencyRate = async (params, that, activeConvertCurrencyObj) => {
+  const data = await getTransitionCurrencyRateAjax(params)
+  console.log(data)
+  if (!returnAjaxMessage(data, that)) {
+    return false
+  } else {
+    that.CHANGE_CURRENCY_RATE_LIST({
+      currencyRateList: data.data.data,
+      activeConvertCurrencyObj: activeConvertCurrencyObj
+    })
+  }
+}
+// 获取底部信息
+export const getFooterInfo = async (language, that) => {
+  const params = {
+    language
+  }
+  const data1 = await getFooterInfo1(params)
+  const data2 = await getFooterInfo2(params)
+  if (!returnAjaxMessage(data1, that) && !returnAjaxMessage(data2, that)) {
+    return false
+  } else {
+    let footerInfo1 = data1.data.data
+    let footerInfo2 = data2.data.data
+    that.SET_FOOTER_INFO({
+      footerInfo1,
+      footerInfo2
+    })
+    // favicon 添加
+    addFavicon(
+      footerInfo1.headTitleLogo,
+      footerInfo1.title
+    )
+    that.$store.commit('common/SET_LOGO_URL', {
+      logoSrc: footerInfo1.headLogo
+    })
+  }
+}
+// 动态添加favicon
+export const addFavicon = (href, title) => {
+  // 动态生成favicon
+  let link = document.querySelector("link[rel*='icon']") || document.createElement('link')
+  link.type = 'image/x-icon'
+  link.rel = 'shortcut icon'
+  link.href = href
+  document.getElementsByTagName('head')[0].appendChild(link)
+  document.querySelector('title').innerText = title
 }
 // eslint-disable-next-line
 String.prototype.format = function (args) {

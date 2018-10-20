@@ -65,7 +65,7 @@
                   <div class="rate-changer"
                        v-show="activeConvertCurrencyObj&&(limitExchange.transformBuyPrice-0)"
                   >
-                    ≈ {{activeConvertCurrencyObj.symbol}}{{limitExchange.transformBuyPrice}}
+                    ≈ {{limitExchange.transformBuyPrice}} {{activeConvertCurrencyObj.shortName}}
                   </div>
                 </div>
                 <!--买入量-->
@@ -152,7 +152,7 @@
                     class="rate-changer"
                     v-show="activeConvertCurrencyObj&&(limitExchange.transformSellPrice-0)"
                   >
-                    ≈ {{activeConvertCurrencyObj.symbol}}{{limitExchange.transformSellPrice}}
+                    ≈ {{limitExchange.transformSellPrice}} {{activeConvertCurrencyObj.shortName}}
                   </div>
                 </div>
                 <!--卖出量-->
@@ -495,6 +495,7 @@ export default {
     setTransformPrice (type, targetNum) {
       switch (type) {
         case 'limit-buy':
+          console.log(this.currencyRateList[this.activeSymbol.area])
           this.limitExchange.transformBuyPrice = this.keep2Num(this.currencyRateList[this.activeSymbol.area] * targetNum)
           console.log(targetNum)
           console.log(this.currencyRateList)
@@ -512,10 +513,6 @@ export default {
     },
     // 数据联动
     autoChangeData (type, ref, pointLength) {
-      console.log(pointLength)
-      console.log(this.formatInput(ref, pointLength))
-      // let buyPriceVal = 0
-      // let buyCountVal = 0
       switch (type) {
         // 限价买
         case 'limit-buy':
@@ -559,7 +556,8 @@ export default {
     // 输入限制
     formatInput (ref, pointLength) {
       let target = this.$refs[ref]
-      return formatNumberInput(target, pointLength)
+      console.log(formatNumberInput(target, pointLength))
+      return formatNumberInput(target, pointLength) - 0
     },
     // 新增委单
     async addEntrust (type, exhcangeType) {
@@ -662,19 +660,20 @@ export default {
       } else {
         this.TOGGLE_REFRESH_ENTRUST_LIST_STATUS(true)
         // 刷新用户资产
-        this.getUserAssetOfActiveSymbol()
+        await this.getUserAssetOfActiveSymbol()
         this.removePwd()
       }
     },
     // 设置买卖价格
     setBuyAndSellPrice (targetPriceOfBuy, targetPriceOfSell = targetPriceOfBuy) {
+      console.log(1)
       this.$refs[this.limitBuyPriceInputRef].value = targetPriceOfBuy
       this.$refs[this.limitSellPriceInputRef].value = targetPriceOfSell
-      const newBuyPrice = this.formatInput(this.limitBuyPriceInputRef, this.activeSymbol.priceExchange)
-      const newSellPrice = this.formatInput(this.limitSellPriceInputRef, this.activeSymbol.priceExchange)
+      const newBuyPrice = this.formatInput(this.limitBuyPriceInputRef, this.activeSymbol.priceExchange) - 0
+      const newSellPrice = this.formatInput(this.limitSellPriceInputRef, this.activeSymbol.priceExchange) - 0
+      console.log(newBuyPrice)
       this.setTransformPrice('limit-buy', newBuyPrice)
       this.setTransformPrice('limit-sell', newSellPrice)
-      console.log(newBuyPrice)
       // this.setSimulationData(this.sellUserCoinWallet.total, newBuyPrice - 0 , this.limitExchange.userCanBuyCount)
       console.log(this.sellUserCoinWallet.total)
       if (newBuyPrice - 0) {
@@ -707,6 +706,12 @@ export default {
     }
   },
   watch: {
+    currencyRateList (newVal) {
+      console.log(newVal)
+    },
+    activeConvertCurrencyObj (newVal) {
+      console.log(newVal)
+    },
     activeSymbol (newVal) {
       console.log(newVal)
       this.reflashCount = 0
@@ -730,6 +735,7 @@ export default {
         if (this.isLogin) {
           this.getUserAssetOfActiveSymbol(targetPriceOfBuy, targetPriceOfSell)
         } else {
+          console.log('zzz')
           this.setBuyAndSellPrice(targetPriceOfBuy, targetPriceOfSell)
         }
       }

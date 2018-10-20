@@ -161,5 +161,7 @@ export const common = {
   'comm_pack_up': '收起',
   'comm_content': '内容',
   'comm_after_get': '后重获取',
-  'comm_get_code': '获取验证码'
+  'comm_get_code': '获取验证码',
+  'common_direction': '方向',
+  'common_average_price': '成交均价'
 }
