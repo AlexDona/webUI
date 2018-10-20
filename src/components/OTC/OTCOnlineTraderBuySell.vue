@@ -1116,11 +1116,11 @@ export default {
                     }
                     .sell-buy-input{
                       .red{
-                        border: 1px solid red;
+                        border: 1px solid #D45858;
                         border-right: 0;
                       }
                       .coinNameBorder{
-                        border: 1px solid red;
+                        border: 1px solid #D45858;
                         border-left: 0;
                       }
                       >.sell-sum{
@@ -1134,10 +1134,10 @@ export default {
                     }
                     .errorInfo{
                       >.number{
-                        color: red;
+                        color: #D45858;
                       }
                       >.money{
-                        color: red;
+                        color: #D45858;
                       }
                     }
                     .trader-submit{
@@ -1188,7 +1188,7 @@ export default {
           >.password-dialog{
             .error-info{
               >.tips{
-                color: red;
+                color: #D45858;
               }
             }
           }
@@ -1258,10 +1258,10 @@ export default {
                     }
                     .sell-buy-input{
                       .red{
-                        border: 1px solid red;
+                        border: 1px solid #D45858;
                       }
                       .coinNameBorder{
-                        border: 1px solid red;
+                        border: 1px solid #D45858;
                       }
                       >.sell-sum{
                         background-color: #FFFFFF;
@@ -1276,10 +1276,10 @@ export default {
                     }
                     .errorInfo{
                       >.number{
-                        color: red;
+                        color: #D45858;
                       }
                       >.money{
-                        color: red;
+                        color: #D45858;
                       }
                     }
                     .trader-submit{
@@ -1330,7 +1330,7 @@ export default {
           >.password-dialog{
             .error-info{
               >.tips{
-                color: red;
+                color: #D45858;
               }
             }
           }

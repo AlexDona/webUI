@@ -48,7 +48,9 @@
               <button
                 class="download-btn cursor-pointer"
                 @click="downloadPreviewTable"
-              >预览下载</button>
+              >
+                预览下载
+              </button>
               <!--<a-->
                 <!--class="download-btn cursor-pointer"-->
                 <!--:href="downloadUrl"-->

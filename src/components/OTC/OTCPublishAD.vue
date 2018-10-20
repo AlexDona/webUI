@@ -120,12 +120,18 @@
                 <input
                   type="text"
                   class="price-input"
+                  :class="{ redBorderRightNone: priceErrorTipsBorder }"
                   :placeholder="$t('M.otc_index_UnitPrice')"
                   ref="price"
                   @keyup="changePriceValue('price', moneyPointLength)"
                   @input="changePriceValue('price', moneyPointLength)"
                 >
-                <span class="unit font-size12">{{activeedCurrencyName}}</span>
+                <span
+                  class="unit font-size12"
+                  :class="{ redBorderLeftNone: priceErrorTipsBorder }"
+                >
+                  {{activeedCurrencyName}}
+                </span>
               </div>
               <!-- 单价错误提示 -->
               <div class="err">{{errorInfoPrice}}</div>
@@ -188,6 +194,7 @@
               <div class="err">{{errorInfoTradeWay}}</div>
             </div>
           </div>
+          <!-- 数量与限额 -->
           <div class="common sum-limit">
             <div class="left display-inline-block">
                 <!-- 数量与限额 -->
@@ -206,16 +213,24 @@
                 <input
                   type="text"
                   class="input-sum"
+                  :class="{ redBorderRightNone: entrustCountErrorTipsBorder }"
                   :placeholder="$t('M.otc_publishAD_sellmount')"
                   ref="entrustCount"
                   @keyup="changeEntrustCountValue('entrustCount', pointLength)"
                   @input="changeEntrustCountValue('entrustCount', pointLength)"
                 >
-                <span class="unit font-size14">
+                <span
+                  class="unit font-size14"
+                  :class="{ redBorderLeftNone: entrustCountErrorTipsBorder }"
+                >
                   {{activeedCoinName}}
                 </span>
               </div>
-              <div class="err">{{errorInfoEntrustCount}}</div>
+              <div
+                class="err"
+              >
+                {{errorInfoEntrustCount}}
+              </div>
               <p class="text">
                 <!-- 单笔最小限额 -->
                 <span class="money-min">
@@ -231,12 +246,16 @@
                 <input
                   type="text"
                   class="input-min"
+                  :class="{ redBorderRightNone: minCountErrorTipsBorder }"
                   :placeholder="$t('M.otc_publishAD_minlimitMoney') + this.minCount"
                   ref="minCountValue"
                   @keyup="changeMinCountInputValue('minCountValue', moneyPointLength)"
                   @input="changeMinCountInputValue('minCountValue', moneyPointLength)"
                 >
-                <span class="unit font-size14">
+                <span
+                  class="unit font-size14"
+                  :class="{ redBorderLeftNone: minCountErrorTipsBorder }"
+                >
                   {{activeedCurrencyName}}
                 </span>
                 <span class= "minMaxLink">一</span>
@@ -244,12 +263,18 @@
                 <input
                   type="text"
                   class="input-max"
+                  :class="{ redBorderRightNone: maxCountErrorTipsBorder }"
                   :placeholder="$t('M.otc_publishAD_maxlimitMoney') + this.maxCount"
                   ref="maxCountValue"
                   @keyup="changeMaxCountInputValue('maxCountValue', moneyPointLength)"
                   @input="changeMaxCountInputValue('maxCountValue', moneyPointLength)"
                 >
-                <span class="unit font-size14">{{activeedCurrencyName}}</span>
+                <span
+                  class="unit font-size14"
+                  :class="{ redBorderLeftNone: maxCountErrorTipsBorder }"
+                >
+                  {{activeedCurrencyName}}
+                </span>
               </div>
               <div>
                 <span class="err err-min-count">
@@ -517,7 +542,11 @@ export default {
       // 广告管理传过来的id
       messageId: this.$route.query.id,
       pointLength: 4, // 当前币种返回的保留小数点位数限制
-      moneyPointLength: 2 // 当前金额小数点限制位数
+      moneyPointLength: 2, // 当前金额小数点限制位数
+      priceErrorTipsBorder: false, // 价格错误提示框
+      entrustCountErrorTipsBorder: false, // 交易数量错误提示框
+      minCountErrorTipsBorder: false, // 单笔最小限额错误提示框
+      maxCountErrorTipsBorder: false // 单笔最大限额错误提示框
     }
   },
   created () {
@@ -633,6 +662,7 @@ export default {
       // 切换买卖类型，如果是买单则清空交易数量错误提示
       if (this.activitedBuySellStyle == 'BUY') {
         this.errorInfoEntrustCount = ''
+        this.entrustCountErrorTipsBorder = false
       }
       // 币种详情
       console.log('币种id：' + this.activitedCoinId)
@@ -667,9 +697,11 @@ export default {
       // 单价
       if (!this.$refs.price.value) {
         this.errorInfoPrice = this.$t('M.otc_publishAD_pleaseInput') + this.$t('M.otc_index_UnitPrice')
+        this.priceErrorTipsBorder = true
         return false
       } else if (this.$refs.price.value < this.minPrice || this.$refs.price.value > this.maxPrice) {
         this.errorInfoPrice = this.$t('M.otc_publishAD_pleaseInput') + this.minPrice + '~' + this.maxPrice + this.$t('M.otc_publishAD_rangePrice')
+        this.priceErrorTipsBorder = true
         return false
       }
       // 交易方式
@@ -683,6 +715,7 @@ export default {
       if (!this.$refs.entrustCount.value || this.$refs.entrustCount.value - 0 === 0) {
         // 请输入交易数量
         this.errorInfoEntrustCount = this.$t('M.otc_publishAD_pleaseInput') + this.$t('M.otc_publishAD_sellmount')
+        this.entrustCountErrorTipsBorder = true
         return false
       }
       // 交易数量 有错误提示
@@ -824,12 +857,15 @@ export default {
       if (this.$refs.price.value) {
         if (this.price < this.minPrice || this.price > this.maxPrice) {
           this.errorInfoPrice = this.$t('M.otc_publishAD_pleaseInput') + this.minPrice + '~' + this.maxPrice + this.$t('M.otc_publishAD_rangePrice')
+          this.priceErrorTipsBorder = true
           return false
         } else {
           this.errorInfoPrice = ''
+          this.priceErrorTipsBorder = false
         }
       } else {
         this.errorInfoPrice = ''
+        this.priceErrorTipsBorder = false
       }
     },
     // 校验用户输入的 交易数量：键盘弹起事件
@@ -842,6 +878,7 @@ export default {
       formatNumberInput(target, pointLength)
       if (this.$refs.entrustCount.value) {
         this.errorInfoEntrustCount = ''
+        this.entrustCountErrorTipsBorder = false
       }
       // 开始校验
       console.log(this.total)
@@ -849,6 +886,7 @@ export default {
         if (this.$refs.entrustCount.value > this.total) {
           // this.errorInfoEntrustCount = '最大可卖出量不足'
           this.errorInfoEntrustCount = this.$t('M.otc_publishAD_entrustCountLimit')
+          this.entrustCountErrorTipsBorder = true
           return false
         }
       }
@@ -865,19 +903,24 @@ export default {
       if (this.$refs.minCountValue.value < this.minCount) {
         // 输入值不能小于最小限额
         this.errorInfoMinCount = this.$t('M.otc_publishAD_inputminLimit')
+        this.minCountErrorTipsBorder = true
         return false
       } else {
         this.errorInfoMinCount = ''
+        this.minCountErrorTipsBorder = false
       }
       // console.log(typeof (this.$refs.maxCountValue.value)) // string
       if (this.$refs.minCountValue.value > this.$refs.maxCountValue.value - 0) {
         this.errorInfoMinCount = this.$t('M.otc_publishAD_inputmaxLimit')
+        this.minCountErrorTipsBorder = true
         return false
       } else {
         this.errorInfoMinCount = ''
+        this.minCountErrorTipsBorder = false
       }
       if (this.$refs.minCountValue.value < this.$refs.maxCountValue.value - 0) {
         this.errorInfoMaxCount = ''
+        this.maxCountErrorTipsBorder = false
       }
     },
     // 校验单笔最大限额
@@ -892,21 +935,26 @@ export default {
       if (this.$refs.maxCountValue.value > this.maxCount) {
         // 输入值不能大于最大限额
         this.errorInfoMaxCount = this.$t('M.otc_publishAD_inputmaxLimit')
+        this.maxCountErrorTipsBorder = true
         return false
       } else {
         this.errorInfoMaxCount = ''
+        this.maxCountErrorTipsBorder = false
       }
       // console.log(this.minCountValue)
       // console.log(typeof (this.$refs.minCountValue.value)) // string
       if (this.$refs.maxCountValue.value < this.$refs.minCountValue.value - 0) {
         // 输入值不能小于最小限额
         this.errorInfoMaxCount = this.$t('M.otc_publishAD_inputminLimit')
+        this.maxCountErrorTipsBorder = true
         return false
       } else {
         this.errorInfoMaxCount = ''
+        this.maxCountErrorTipsBorder = false
       }
       if (this.$refs.maxCountValue.value > this.$refs.minCountValue.value - 0) {
         this.errorInfoMinCount = ''
+        this.minCountErrorTipsBorder = false
       }
     }
     // 校验 同时处理最大订单数（0=不限制）
@@ -950,6 +998,14 @@ export default {
 <style scoped lang="scss" type="text/scss">
 @import "../../../static/css/scss/index";
 .otc-publish-AD-box{
+  .redBorderRightNone{
+    border: 1px solid #D45858 !important;
+    border-right: 0 !important;
+  }
+  .redBorderLeftNone{
+    border: 1px solid #D45858 !important;
+    border-left: 0 !important;
+  }
   >.otc-publish-AD-content{
     width: 1150px;
     margin: 70px auto;
@@ -1029,14 +1085,14 @@ export default {
                 border-bottom-left-radius: 4px;
               }
               >.unit{
-                width: 36px;
+                width: 58px;
                 height: 36px;
                 line-height: 36px;
                 // color: #7EA9E4;
                 // background-color: #303F59;
                 display: inline-block;
                 vertical-align: top;
-                margin-left: -4px;
+                margin-left: -5px;
                 text-align: center;
                 border-top-right-radius: 4px;
                 border-bottom-right-radius: 4px;
@@ -1075,7 +1131,7 @@ export default {
                 // background-color: #303F59;
                 display: inline-block;
                 vertical-align: top;
-                margin-left: -4px;
+                margin-left: -5px;
                 text-align: center;
                 border-top-right-radius: 4px;
                 border-bottom-right-radius: 4px;
@@ -1110,7 +1166,7 @@ export default {
                 // background-color: #303F59;
                 display: inline-block;
                 vertical-align: top;
-                margin-left: -4px;
+                margin-left: -5px;
                 text-align: center;
                 border-top-right-radius: 4px;
                 border-bottom-right-radius: 4px;
@@ -1180,7 +1236,7 @@ export default {
         }
         >.AD-big-form{
           .err{
-            color: red;
+            color: #D45858;
           }
           >.common{
             >.left{
@@ -1317,7 +1373,7 @@ export default {
         }
         >.AD-big-form{
           .err{
-            color: red;
+            color: #D45858;
           }
           >.common{
             >.left{
@@ -1365,6 +1421,7 @@ export default {
                 >.unit{
                   color: #7EA9E4;
                   background-color: #303F59;
+                  border: 1px solid #CBDDF4;
                 }
               }
             }
@@ -1385,6 +1442,7 @@ export default {
                 >.unit{
                   color: #7EA9E4;
                   background-color: #303F59;
+                  border: 1px solid #CBDDF4;
                 }
               }
               >.text{
@@ -1402,6 +1460,7 @@ export default {
                 >.unit{
                   color: #7EA9E4;
                   background-color: #303F59;
+                  border: 1px solid #CBDDF4;
                 }
                 >.minMaxLink{
                   color:#7d90ac;

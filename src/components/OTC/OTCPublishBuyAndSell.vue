@@ -134,6 +134,7 @@
                     type="text"
                     :placeholder="$t('M.otc_index_sellOutMount')"
                     class="sell-sum"
+                    :class="{ redBorderRightNone: entrustCountErrorTipsBorder }"
                     v-show="publishStyle === 'sell'"
                     ref="entrustCountSell"
                     @keyup="changeInputValue('entrustCountSell', pointLength)"
@@ -145,18 +146,25 @@
                     type="text"
                     :placeholder="$t('M.otc_index_buyOutMount')"
                     class="sell-sum"
+                    :class="{ redBorderRightNone: entrustCountErrorTipsBorder }"
                     v-show="publishStyle === 'buy'"
                     ref="entrustCountBuy"
                     @keyup="changeInputValue('entrustCountBuy', pointLength)"
                     @input="changeInputValue('entrustCountBuy', pointLength)"
                     @focus="countInputFocus"
                   >
-                  <span class="unit">{{coinName}}</span>
+                  <span
+                    class="unit"
+                    :class="{ redBorderLeftNone: entrustCountBuySellErrorTipsBorder }"
+                  >
+                    {{coinName}}
+                  </span>
                   <!-- 卖出单价 -->
                   <input
                     type="text"
                     :placeholder="$t('M.comm_sell')+$t('M.otc_index_UnitPrice')"
                     class="sell-sum"
+                    :class="{ redBorderRightNone: priceErrorTipsBorder }"
                     v-show="publishStyle === 'sell'"
                     ref="priceSell"
                     @keyup="changeInputValue('priceSell', moneyPointLength)"
@@ -167,12 +175,18 @@
                     type="text"
                     :placeholder="$t('M.comm_buy')+$t('M.otc_index_UnitPrice')"
                     class="sell-sum"
+                    :class="{ redBorderRightNone: priceErrorTipsBorder }"
                     v-show="publishStyle === 'buy'"
                     ref="priceBuy"
                     @keyup="changeInputValue('priceBuy', moneyPointLength)"
                     @input="changeInputValue('priceBuy', moneyPointLength)"
                   >
-                  <span class="unit">{{CurrencyCoinsName}}</span>
+                  <span
+                    class="unit"
+                    :class="{ redBorderLeftNone: priceBuySellErrorTipsBorder }"
+                  >
+                    {{CurrencyCoinsName}}
+                  </span>
                 </div>
                 <!-- 错误提示信息 -->
                 <div class="buySellSumErrorTips">
@@ -188,30 +202,52 @@
                 :label="$t('M.otc_index_singleTradeLimit')"
               >
                 <div class="volume-business">
+                  <!-- 单笔最小限额 -->
                   <input
                     type="text"
                     :placeholder="$t('M.otc_publishAD_minlimitMoney') + this.backReturnCurrentMinCount"
                     class="sell-sum"
+                    :class="{ redBorderRightNone: minCountErrorTipsBorder }"
                     ref="minCount"
                     @keyup="changeInputValue('minCount')"
                   >
-                  <span class="monad">{{CurrencyCoinsName}}</span>
+                  <span
+                    class="monad"
+                    :class="{ redBorderLeftNone: minCountErrorTipsBorder }"
+                  >
+                    {{CurrencyCoinsName}}
+                  </span>
                   <span class="range-line">—</span>
+                  <!-- 单笔最大限额 -->
                   <input
                     type="text"
                     :placeholder="$t('M.otc_publishAD_maxlimitMoney') + this.backReturnCurrentMaxCount"
                     class="sell-sum max-sell-sum"
+                    :class="{ redBorderRightNone: maxCountErrorTipsBorder }"
                     ref="maxCount"
                     @keyup="changeInputValue('maxCount')"
                   >
-                  <span class="monad">{{CurrencyCoinsName}}</span>
+                  <span
+                    class="monad"
+                    :class="{ redBorderLeftNone: maxCountErrorTipsBorder }"
+                  >
+                    {{CurrencyCoinsName}}
+                  </span>
                 </div>
                 <!-- 错误提示信息 -->
                 <div class="limitErrorTips">
                   <!-- 单笔最小的提示 -->
-                  <span class="errorLimitMin">{{errorTipsLimitMin}}</span>
+                  <span
+                    class="errorLimitMin"
+                  >
+                    {{errorTipsLimitMin}}
+                  </span>
                   <!-- 单笔最大的提示 -->
-                  <span class="errorLimitMax">{{errorTipsLimitMax}}</span>
+                  <span
+                    class="errorLimitMax"
+                  >
+                    {{errorTipsLimitMax}}
+                  </span>
                 </div>
               </el-form-item>
               <!-- 5.0备注 -->
@@ -446,7 +482,13 @@ export default {
       // 交易密码错误提示
       errorPWd: '',
       pointLength: 4, // 当前币种返回的保留小数点位数限制
-      moneyPointLength: 2 // 当前金额小数点限制位数
+      moneyPointLength: 2, // 当前金额小数点限制位数
+      entrustCountErrorTipsBorder: false, // 买入量卖出量错误提示框
+      entrustCountBuySellErrorTipsBorder: false, // 买入量卖出量单位错误提示框
+      priceErrorTipsBorder: false, // 买入单价卖出单价错误提示框
+      priceBuySellErrorTipsBorder: false, // 买入单价卖出单价单位错误提示框
+      minCountErrorTipsBorder: false, // 单笔最小限额错误提示框
+      maxCountErrorTipsBorder: false // 单笔最大限额错误提示框
     }
   },
   created () {
@@ -603,20 +645,34 @@ export default {
       this.serviceChargeBUY = 0
       this.traderSumBUY = 0
       this.errorTipsSum = ''
+      this.entrustCountErrorTipsBorder = false
+      this.entrustCountBuySellErrorTipsBorder = false
       this.errorTipsPrice = ''
+      this.priceErrorTipsBorder = false
+      this.priceBuySellErrorTipsBorder = false
       this.errorTipsLimitMin = ''
+      this.minCountErrorTipsBorder = false
       this.errorTipsLimitMax = ''
+      this.maxCountErrorTipsBorder = false
     },
     // 清空错误信息
     clearErrInfo () {
       this.errorTipsSum = ''
+      this.entrustCountErrorTipsBorder = false
+      this.entrustCountBuySellErrorTipsBorder = false
       this.errorTipsPrice = ''
+      this.priceErrorTipsBorder = false
+      this.priceBuySellErrorTipsBorder = false
       this.errorTipsLimitMin = ''
+      this.minCountErrorTipsBorder = false
       this.errorTipsLimitMax = ''
+      this.maxCountErrorTipsBorder = false
     },
     // 卖出量和买入量input 获得焦点
     countInputFocus () {
       this.errorTipsSum = ''
+      this.entrustCountErrorTipsBorder = false
+      this.entrustCountBuySellErrorTipsBorder = false
     },
     //  8.0 修改input value
     changeInputValue (ref, pointLength) {
@@ -636,26 +692,53 @@ export default {
       this.serviceChargeBUY = amendPrecision(this.$refs.entrustCountBuy.value, this.rate, '*').toFixed(this.pointLength)
       // 交易额
       this.traderSumBUY = amendPrecision(this.$refs.entrustCountBuy.value, this.$refs.priceBuy.value, '*').toFixed(2)
-      // 开始input框验证
-      // 限制输入数字和位数
       let target = this.$refs[ref]
-      // 卖出量 买入量验证：>0 保留返回的小数位数
-      // 卖出单价 买入单价验证：>0 保留2个小数位数
+      // 限制输入数字和位数
       formatNumberInput(target, pointLength)
+      // 开始input框验证
+      // 买入量和卖出量的验证
+      if (this.$refs.entrustCountSell.value) {
+        this.errorTipsSum = ''
+        this.entrustCountErrorTipsBorder = false
+        this.entrustCountBuySellErrorTipsBorder = false
+      }
+      if (this.$refs.entrustCountBuy.value) {
+        this.errorTipsSum = ''
+        this.entrustCountErrorTipsBorder = false
+        this.entrustCountBuySellErrorTipsBorder = false
+      }
+      // 输入的数量能大于最大可卖出量校验
+      if (this.publishStyle == 'sell') {
+        if (this.$refs.entrustCountSell.value > this.currentlyAvailable) {
+          // this.errorTipsSum = '当前可用 + 资产不足'
+          this.errorTipsSum = this.$t('M.otc_index_nowUse') + this.$t('M.user-fail-assetnotenough-error')
+          this.entrustCountErrorTipsBorder = true
+          this.entrustCountBuySellErrorTipsBorder = true
+          return false
+        }
+      }
       // 卖出单价、买入单价价格区间控制
       if (this.$refs.priceSell.value) {
         if (this.$refs.priceSell.value < this.minPrice || this.$refs.priceSell.value > this.maxPrice) {
         //  请输入.....之间的价格
           this.errorTipsPrice = this.$t('M.otc_publishAD_pleaseInput') + this.minPrice + '~' + this.maxPrice + this.$t('M.otc_publishAD_rangePrice')
+          this.priceErrorTipsBorder = true
+          this.priceBuySellErrorTipsBorder = true
         } else {
           this.errorTipsPrice = ''
+          this.priceErrorTipsBorder = false
+          this.priceBuySellErrorTipsBorder = false
         }
       }
       if (this.$refs.priceBuy.value) {
         if (this.$refs.priceBuy.value < this.minPrice || this.$refs.priceBuy.value > this.maxPrice) {
           this.errorTipsPrice = this.$t('M.otc_publishAD_pleaseInput') + this.minPrice + '~' + this.maxPrice + this.$t('M.otc_publishAD_rangePrice')
+          this.priceErrorTipsBorder = true
+          this.priceBuySellErrorTipsBorder = true
         } else {
           this.errorTipsPrice = ''
+          this.priceErrorTipsBorder = false
+          this.priceBuySellErrorTipsBorder = false
         }
       }
       // 单笔成交限额验证
@@ -663,37 +746,47 @@ export default {
       if (this.$refs.minCount.value < this.backReturnCurrentMinCount) {
         // 输入值不能小于最小限额
         this.errorTipsLimitMin = this.$t('M.otc_publishAD_inputminLimit')
+        this.minCountErrorTipsBorder = true
         return false
       } else {
         this.errorTipsLimitMin = ''
+        this.minCountErrorTipsBorder = false
       }
       if (this.$refs.minCount.value > this.$refs.maxCount.value - 0) {
         // 输入值不能大于最大限额
         this.errorTipsLimitMin = this.$t('M.otc_publishAD_inputmaxLimit')
+        this.minCountErrorTipsBorder = true
         return false
       } else {
         this.errorTipsLimitMin = ''
+        this.minCountErrorTipsBorder = false
       }
       if (this.$refs.minCount.value < this.$refs.maxCount.value - 0) {
         this.errorTipsLimitMax = ''
+        this.maxCountErrorTipsBorder = false
       }
       // 最大
       if (this.$refs.maxCount.value > this.backReturnCurrentMaxCount) {
         // 输入值不能大于最大限额
         this.errorTipsLimitMax = this.$t('M.otc_publishAD_inputmaxLimit')
+        this.maxCountErrorTipsBorder = true
         return false
       } else {
         this.errorTipsLimitMax = ''
+        this.maxCountErrorTipsBorder = false
       }
       if (this.$refs.maxCount.value < this.$refs.minCount.value - 0) {
         // 输入值不能小于最小限额
         this.errorTipsLimitMax = this.$t('M.otc_publishAD_inputminLimit')
+        this.maxCountErrorTipsBorder = true
         return false
       } else {
         this.errorTipsLimitMax = ''
+        this.maxCountErrorTipsBorder = false
       }
       if (this.$refs.maxCount.value > this.$refs.minCount.value - 0) {
         this.errorTipsLimitMin = ''
+        this.minCountErrorTipsBorder = false
       }
     },
     //  8.0 点击发布出售或者发布购买弹出输入交易密码框
@@ -702,11 +795,15 @@ export default {
         if (!this.entrustCountBuy) {
           // 请输入买入数量
           this.errorTipsSum = this.$t('M.otc_index_inputBuyMount')
+          this.entrustCountBuySellErrorTipsBorder = true
+          this.entrustCountErrorTipsBorder = true
           return false
         }
         if (!this.priceBuy) {
           // 请输入买入单价
           this.errorTipsPrice = this.$t('M.otc_index_inputBuyPrice')
+          this.priceErrorTipsBorder = true
+          this.priceBuySellErrorTipsBorder = true
           return false
         }
       }
@@ -714,11 +811,18 @@ export default {
         if (!this.entrustCountSell) {
           // 请输入卖出数量
           this.errorTipsSum = this.$t('M.otc_index_inputSellMount')
+          this.entrustCountErrorTipsBorder = true
+          this.entrustCountBuySellErrorTipsBorder = true
+          return false
+        }
+        if (this.errorTipsSum) {
           return false
         }
         if (!this.priceSell) {
           // 请输入卖出单价
           this.errorTipsPrice = this.$t('M.otc_index_inputSellPrice')
+          this.priceErrorTipsBorder = true
+          this.priceBuySellErrorTipsBorder = true
           return false
         }
       }
@@ -816,6 +920,14 @@ export default {
   // @import url(../../../static/css/scss/OTC/OTCCenter.scss);
   @import "../../../static/css/scss/index";
   .otc-publish-buy-and-sell-box {
+    .redBorderRightNone{
+      border: 1px solid #D45858 !important;
+      border-right: 0 !important;
+    }
+    .redBorderLeftNone{
+      border: 1px solid #D45858 !important;
+      border-left: 0 !important;
+    }
     > .publish-buy-and-sell-content {
       width: 1150px;
       margin: 107px auto;
@@ -1214,6 +1326,7 @@ export default {
                 > .unit {
                   color: #338FF5;
                   background-color: #CBDDF4;
+                  border: 1px solid #CBDDF4;
                 }
               }
               .buySellSumErrorTips{
@@ -1234,6 +1347,7 @@ export default {
                 > .monad {
                   background-color: #CBDDF4;
                   color: #338FF5;
+                  border: 1px solid #CBDDF4;
                 }
                 > .range-line {
                   color: #7d90ac;
