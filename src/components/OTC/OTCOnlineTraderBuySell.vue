@@ -269,21 +269,39 @@
                   </el-form>
                 </div>
                 <!--最下右边手续费-->
+                <!-- 买 -->
                 <div
                   class="service-charge"
                   v-if="onlineTraderStatus === 'onlineBuy'"
                 >
-                  <span>{{$t('M.comm_service_charge')}}：</span>
-                  <span class="service-data">{{serviceCharge}} {{name}}</span>
-                  <span>( {{$t('M.otc_index_rate')}} <span class="rate-data">{{rate*100}}%</span> )</span>
+                  <!-- 手续费 -->
+                  <span>
+                    {{$t('M.comm_service_charge')}}：
+                  </span>
+                  <span class="service-data">
+                    {{serviceCharge}} {{name}}
+                  </span>
+                  <!-- 费率 -->
+                  <span>
+                    ( {{$t('M.otc_index_rate')}} <span class="rate-data">{{rate*100}}%</span> )
+                  </span>
                 </div>
+                <!-- 卖 -->
                 <div
                   class="service-charge-sell"
                   v-if="onlineTraderStatus === 'onlineSell'"
                 >
-                  <span>{{$t('M.comm_service_charge')}}：</span>
-                  <span class="service-data-sell">{{serviceCharge}} {{name}}</span>
-                  <span>( {{$t('M.otc_index_rate')}} <span class="rate-data-sell">{{rate*100}}%</span> )</span>
+                  <!-- 手续费 -->
+                  <span>
+                    {{$t('M.comm_service_charge')}}：
+                  </span>
+                  <span class="service-data-sell">
+                    {{serviceCharge}} {{name}}
+                  </span>
+                  <!-- 费率 -->
+                  <span>
+                    ( {{$t('M.otc_index_rate')}} <span class="rate-data-sell">{{rate*100}}%</span> )
+                  </span>
                 </div>
               </div>
               <!-- 右下交易须知 -->
@@ -385,8 +403,8 @@ export default {
   data () {
     return {
       fullscreenLoading: true,
-      serviceChargeSELL: 0, // 手续费：卖
-      serviceChargeBUY: 0, // 手续费：买
+      // serviceChargeSELL: 0, // 手续费：卖
+      // serviceChargeBUY: 0, // 手续费：买
       // input框输入错误显示红色边框状态
       errorWarningBorder: false,
       // 弹窗显示状态
@@ -537,6 +555,8 @@ export default {
           // this.serviceCharge = this.$refs.buyCount.value * this.rate
           this.serviceCharge = amendPrecision(this.$refs.buyCount.value, this.rate, '*')
           this.serviceCharge = Number(this.serviceCharge).toFixed(this.pointLength)
+          // 去掉数字后面多余的0
+          this.serviceCharge = parseFloat(this.serviceCharge)
           if (this.$refs.buyCount.value * this.price < this.minCount) {
             // 单笔最小限额为
             this.moneyTips = this.$t('M.otc_publishAD_minlimitMoney') + this.$t('M.otc_index_wei') + this.minCount
@@ -574,6 +594,8 @@ export default {
           // this.serviceCharge = this.$refs.sellCount.value * this.rate
           this.serviceCharge = amendPrecision(this.$refs.sellCount.value, this.rate, '*')
           this.serviceCharge = Number(this.serviceCharge).toFixed(this.pointLength)
+          // 去掉数字后面多余的0
+          this.serviceCharge = parseFloat(this.serviceCharge)
           if (this.$refs.sellCount.value * this.price < this.minCount) {
             this.moneyTips = this.$t('M.otc_publishAD_minlimitMoney') + this.$t('M.otc_index_wei') + this.minCount
             this.errorWarningBorder = true
@@ -615,6 +637,8 @@ export default {
           // this.serviceCharge = this.$refs.buyCount.value * this.rate
           this.serviceCharge = amendPrecision(this.$refs.buyCount.value, this.rate, '*')
           this.serviceCharge = Number(this.serviceCharge).toFixed(this.pointLength)
+          // 去掉后面多余的0
+          this.serviceCharge = parseFloat(this.serviceCharge)
           if (this.$refs.buyPrice.value < this.minCount) {
             this.moneyTips = this.$t('M.otc_publishAD_minlimitMoney') + this.$t('M.otc_index_wei') + this.minCount
             this.errorWarningBorder = true
@@ -642,6 +666,8 @@ export default {
           // this.serviceCharge = this.$refs.sellCount.value * this.rate
           this.serviceCharge = amendPrecision(this.$refs.sellCount.value, this.rate, '*')
           this.serviceCharge = Number(this.serviceCharge).toFixed(this.pointLength)
+          // 去掉数字后面多余的0
+          this.serviceCharge = parseFloat(this.serviceCharge)
           if (this.$refs.sellPrice.value < this.minCount) {
             this.moneyTips = this.$t('M.otc_publishAD_minlimitMoney') + this.$t('M.otc_index_wei') + this.minCount
             this.errorWarningBorder = true
