@@ -1357,7 +1357,7 @@ export default {
             color: #FFFFFF;
           }
           >.tip{
-            color: #9DA5B3;
+            color: #7D90AC;
           }
         }
       }
@@ -1497,7 +1497,7 @@ export default {
             color: #D45858;
           }
           >.tip{
-            color: #9DA5B3;
+            color: #7D90AC;
           }
         }
       }
