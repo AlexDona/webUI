@@ -83,8 +83,8 @@
 .fiat-completed-order-box.personal.night
 .el-table--enable-row-transition
 .el-table__body td:first-of-type.el-table__expanded-cell{
-  border-bottom-right-radius: 7px;
-  border-bottom-left-radius: 7px;
+  /* border-bottom-right-radius: 7px; */
+  /* border-bottom-left-radius: 7px; */
 
 }
 .fiat-completed-order-box.personal.night
