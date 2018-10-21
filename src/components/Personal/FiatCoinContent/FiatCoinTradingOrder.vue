@@ -99,7 +99,8 @@
                   <div class="pay-style">
                     <div class="qiandai-icon">
                       <IconFontCommon
-                        iconName="icon-qiandai-tianchong"
+                        iconName="icon-qiandai"
+                        class="pay-style-icon"
                       />
                     </div>
                     <!--选择支付方式-->
@@ -687,7 +688,9 @@
           </div>
           <div class="error-info">
             <!-- 错误提示 -->
-            <div class="tips">{{errpwd}}</div>
+            <div class="tips">
+              {{errpwd}}
+            </div>
           </div>
           <span
             slot="footer"
@@ -1030,6 +1033,8 @@ export default {
           // 付款成功后逻辑
           // 1关闭交易密码框
           this.dialogVisible1 = false
+          this.errpwd = '' // 清空密码错提示
+          this.tradePassword = '' // 清空密码框
           // 2再次调用接口刷新列表
           // this.SET_LEGAL_TENDER_REFLASH_STATUS({
           //   type: 'TRADING',
@@ -1077,6 +1082,8 @@ export default {
         // 付款成功后逻辑
         // 1关闭交易密码框
         this.dialogVisible2 = false
+        this.errpwd = '' // 清空密码错提示
+        this.tradePassword = '' // 清空密码框
         // 2再次调用接口刷新列表
         // this.SET_LEGAL_TENDER_REFLASH_STATUS({
         //   type: 'TRADING',
@@ -1125,6 +1132,8 @@ export default {
         return false
       } else {
         this.dialogVisible3 = false
+        this.errpwd = '' // 清空密码错提示
+        this.tradePassword = '' // 清空密码框
         // this.SET_LEGAL_TENDER_REFLASH_STATUS({
         //   type: 'TRADING',
         //   status: true
@@ -1207,6 +1216,7 @@ export default {
         width: 290px;
         padding: 8px 20px;
         border: 0;
+        border-radius: 5px;
       }
       min-height: 472px;
       border-radius: 5px;
@@ -1422,6 +1432,11 @@ export default {
         line-height: 385px;
         text-align: center;
       }
+      >.password-dialog{
+        .tips{
+          color: red;
+        }
+      }
     }
     &.night{
       background-color: $nightBgColor;
@@ -1431,6 +1446,25 @@ export default {
         .button {
           background:linear-gradient(81deg,rgba(43,57,110,1) 0%,rgba(42,80,130,1) 100%);
           color: #fff;
+        }
+        >.order-list{
+          >.order{
+            >.order-list-body{
+              >.order-list-body-middle{
+                >.middle-content{
+                  .trader-info{
+                    >.pay-style{
+                      >.qiandai-icon{
+                        >.icon{
+                          color: #fff;
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
         }
         >.no-data{
           background-color: $nightMainBgColor;
@@ -1449,7 +1483,8 @@ export default {
       >.fiat-trading-order-content{
         .button {
           background:linear-gradient(81deg,rgba(43,57,110,1) 0%,rgba(42,80,130,1) 100%);
-          color: #333;
+          // color: #333;
+          color: #fff;
         }
         >.order-list{
           background-color: #fff;
@@ -1470,6 +1505,11 @@ export default {
                   .trader-info{
                     >.pay-style{
                       background: rgba(51,143,245,0.1);
+                      >.qiandai-icon{
+                        >.icon{
+                          color: #338FF5;
+                        }
+                      }
                     }
                   }
                 }
@@ -1500,8 +1540,10 @@ export default {
           }
           >.appeal{
             >.appeal-head{
-              color: #FFFFFF;
-              border-bottom: 1px solid #262F38;
+              // color: #FFFFFF;
+              color: #333;
+              border-bottom: 1px solid rgba(72, 87, 118, 0.1);
+              background-color: #E7E8E9;
             }
             >.appeal-body{
               >.appeal-body-content{
