@@ -1264,7 +1264,7 @@ export default {
           > .publish-content-right {
             flex: 1;
             > .release-notes {
-              color: #8C8E91;
+              color: #A9BED4;
               > .release-title {
                 color: #fff;
               }
@@ -1402,7 +1402,7 @@ export default {
           > .publish-content-right {
             flex: 1;
             > .release-notes {
-              color: #8C8E91;
+              color: #7D90AC;
               > .release-title {
                 color: #BB4C4C;
               }
