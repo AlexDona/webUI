@@ -387,6 +387,7 @@ export default {
               >span{
                 /*flex:1;*/
                 width:29%;
+                white-space:nowrap;
                 &:nth-of-type(1){
                   width:13%;
                   text-align: left;

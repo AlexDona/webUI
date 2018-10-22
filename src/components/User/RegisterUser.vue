@@ -103,14 +103,14 @@
                 <el-select
                   class="email-select"
                   :no-data-text="$t('M.comm_no_data')"
-                  v-model="activeCountryCodeWithEmail"
+                  v-model="activeCountryAbbreviationWithEmail"
                   v-show="language=='zh_CN'"
                 >
                   <el-option
                     v-for="item in contryAreaList"
                     :key="item.nationCode"
                     :label="item.chinese"
-                    :value="item.nationCode"
+                    :value="item.abbreviation"
                   >
                     <span style="float: left">
                       <span>
@@ -128,14 +128,14 @@
                 <el-select
                   class="email-select"
                   :no-data-text="$t('M.comm_no_data')"
-                  v-model="activeCountryCodeWithEmail"
+                  v-model="activeCountryAbbreviationWithEmail"
                   v-show="language!=='zh_CN'"
                 >
                   <el-option
                     v-for="item in contryAreaList"
                     :key="item.nationCode"
                     :label="item.english"
-                    :value="item.nationCode"
+                    :value="item.abbreviation"
                   >
                     <span style="float: left">
                       <span>
@@ -345,6 +345,7 @@ export default {
       // contryAreaList: [], // 国家区域列表
       activeCountryCodeWithPhone: '86',
       activeCountryCodeWithEmail: '86',
+      activeCountryAbbreviationWithEmail: '', // 当前国家简称
       // 短信验证码 邮箱验证码
       activeCodePlaceholder: !this.activeMethod ? 'M.forgetPassword_hint10' : 'M.forgetPassword_hint11',
       identifyCode: '', // 图片验证码
@@ -570,6 +571,8 @@ export default {
     // 发送验证码（短信、邮箱）
     sendPhoneOrEmailCode (type) {
       // console.log(type)
+      console.log(this.activeCountryAbbreviationWithEmail)
+      this.activeCountryCodeWithEmail = _.filter(this.contryAreaList, {abbreviation: this.activeCountryAbbreviationWithEmail})[0].nationCode
       if (this.disabledOfPhoneBtn || this.disabledOfEmailBtn) {
         return false
       }

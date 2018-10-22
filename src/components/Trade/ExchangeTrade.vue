@@ -776,6 +776,7 @@ export default {
           flex:1;
           >.header{
             display:flex;
+            white-space:nowrap;
             >.item{
               flex:1;
               >.buy{

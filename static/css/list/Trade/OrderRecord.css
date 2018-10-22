@@ -5,7 +5,17 @@
 }
 .order-record-box .el-table .cell{
   height:22px;
-  padding:0 19%;
+  white-space:nowrap;
+}
+@media screen and (max-width: 1920px) {
+  .order-record-box .el-table .cell{
+    padding:0 6%;
+  }
+}
+@media screen and (min-width: 1920px) {
+  .order-record-box .el-table .cell{
+    padding:0 14%;
+  }
 }
 .order-record-box .el-table td{
   padding:0;
