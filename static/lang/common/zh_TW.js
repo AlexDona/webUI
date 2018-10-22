@@ -168,5 +168,7 @@ export const common = {
   'common_exchange': '交易所',
   'common_counterparty': '交易對',
   'common_transaction_price': '交易價',
-  'common_trading_volume': '成交量'
+  'common_trading_volume': '成交量',
+  'common_depth_map': '深度圖',
+  'common_friendly_link': '友情鏈接'
 }
