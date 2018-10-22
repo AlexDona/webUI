@@ -255,6 +255,7 @@ export const OTC = {
   'otc_formStatistics_date': '当日',
   'otc_formStatistics_average': '均价',
   'otc_formStatistics_amount_paid': '支出金额',
+  'otc_formStatistics_income_money': '收入金额',
   'otc_formStatistics_turnover': '成交',
   'otc_formStatistics_week': '本周',
   'otc_formStatistics_mouth': '本月',

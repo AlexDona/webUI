@@ -1355,6 +1355,7 @@ export default {
         >.publish-tips{
           >.title{
             color: #FFFFFF;
+            margin-bottom: 5px;
           }
           >.tip{
             color: #7D90AC;

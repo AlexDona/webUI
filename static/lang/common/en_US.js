@@ -34,7 +34,7 @@ export const common = {
   // 'comm_currency': 'Authentication type',
   'comm_currency': 'Currency type',
   'comm_coin': 'Action type',
-  'comm_count': 'Content type',
+  'comm_count': 'Sum',
   'comm_balance': 'Balance',
   'comm_price_metre': 'price',
   'comm_total_sum': 'total',
