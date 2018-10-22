@@ -132,7 +132,7 @@ export default {
         /*font-weight: 700;*/
         margin-bottom:1px;
         box-shadow:0 2px 6px rgba(0,0,0,.1);
-        padding:0 20px;
+        padding:0 4.5%;
         >.text{
           display:inline-block;
           text-indent: 4px;

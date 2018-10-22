@@ -600,6 +600,7 @@ export default{
       // setStore('convertCurrencyList', this.convertCurrencyList)
     },
     setNewTitle () {
+      console.log(this.title)
       if (this.title) {
         let newTitle = `${this.middleTopData.last} ${this.middleTopData.sellsymbol}/${this.middleTopData.area} ${this.title}`
         document.querySelector('title').innerText = newTitle
@@ -626,6 +627,9 @@ export default{
     })
   },
   watch: {
+    title (newVal) {
+      console.log(newVal)
+    },
     middleTopData (newVal) {
       console.log(newVal)
       console.log(this.title)

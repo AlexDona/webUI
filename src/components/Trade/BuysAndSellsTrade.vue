@@ -336,7 +336,7 @@ export default {
         margin-bottom: 1px;
         box-shadow: 0 2px 6px rgba(0,0,0,.1);
         display: flex;
-        padding:0 20px;
+        padding:0 4.5%;
         > .text {
           flex:1;
           /*font-weight: 700;*/
@@ -379,7 +379,7 @@ export default {
           >.title-box{
             height:30px;
             line-height:30px;
-            padding:0 20px;
+            padding:0 4.5%;
             position: relative;
             z-index: 2;
             .header{
@@ -411,7 +411,7 @@ export default {
                 height: 30px;
                 line-height: 30px;
                 >.inner{
-                  padding:0 20px;
+                  padding:0 4.5%;
                   position: relative;
                   z-index: 1;
                   >.buy-bg{

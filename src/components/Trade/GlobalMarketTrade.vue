@@ -22,7 +22,7 @@
             <div class="table-box">
               <div class="thead">
                 <div class="tr">
-                  <div class="th">交易所</div><div class="th">交易对</div><div class="th">交易价</div><div class="th">成交量（{{activeSymbol.sellsymbol}}）</div>
+                  <div class="th width20">交易所</div><div class="th">交易对</div><div class="th">交易价</div><div class="th count">成交量({{activeSymbol.sellsymbol}})</div>
                 </div>
               </div>
               <div class="tbody">
@@ -31,7 +31,7 @@
                   v-for="(item,index) in globalMarketList"
                   :key="index"
                 >
-                  <div class="td">
+                  <div class="td width20">
                     {{item.bourseName}}
                   </div><div class="td">
                     {{item.bourseTrade.split('_').join('/')}}
@@ -41,25 +41,20 @@
                       </div>
                       <!--货币转换-->
                       <div class="bottom"
-                      style="height:15px;line-height: 15px"
                       v-show="currencyRateList[activeSymbol.area]"
                       >
-                      ≈ {{(currencyRateList[activeSymbol.area]-0)*item.boursePrice}}{{activeConvertCurrencyObj.shortName}}
+                      ≈ {{keep2Num((currencyRateList[activeSymbol.area]-0)*item.boursePrice)}}
                       </div>
-                  </div><div class="td">
-                    <div>
+                  </div><div class="td count">
                       <div class="top"
-                      style="height:15px;line-height: 15px"
                       >
                       {{keep2Num(item.bourseCount)}}
                       </div>
                       <!--货币转换-->
                       <div
                         class="bottom"
-                        style="height:15px;line-height: 15px"
                       >
-                        ≈ {{(currencyRateList[item.bourseTrade.split('_')[1]]-0)*item.bourseCount}} {{activeConvertCurrencyObj.shortName}}
-                      </div>
+                        ≈ {{keep2Num((currencyRateList[item.bourseTrade.split('_')[1]]-0)*item.bourseCount)}}
                       </div>
                   </div>
                 </div>
@@ -155,7 +150,7 @@ export default {
         line-height: 34px;
         /*font-weight: 700;*/
         margin-bottom:1px;
-        padding:0 20px;
+        padding:0 4.5%;
         >.text{
           display:inline-block;
           text-indent: 4px;
@@ -173,15 +168,21 @@ export default {
             height:38px;
             width:100%;
             /*background-color: yellow;*/
-            padding:0 20px;
+            padding:0 4.5%;
             box-sizing: border-box;
             border-bottom:1px solid rgba(57,66,77,.2);
             >.tr{
               width:100%;
               >.th{
-                width:25%;
+                width:23%;
                 display:inline-block;
                 line-height: 38px;
+                &.width20{
+                  width:20%;
+                }
+                &.count{
+                  width:33%
+                }
               }
             }
           }
@@ -189,13 +190,29 @@ export default {
             height:200px;
             /*background-color: pink;*/
             overflow-y: auto;
-            padding:0 20px;
+            padding:0 4.5%;
             box-sizing: border-box;
             >.tr{
               height:50px;
               >.td{
                 display: inline-block;
-                width:25%;
+                width:22%;
+                height: 100%;
+                /*background: blue;*/
+                vertical-align: middle;
+                line-height: 50px;
+                &.width20{
+                  width:20%;
+                }
+                &.count{
+                  width:33%
+                }
+                >.top{
+                  margin-top:5px;
+                }
+                >.top,>.bottom{
+                  line-height: 20px;
+                }
               }
             }
           }
