@@ -25,7 +25,7 @@
     /* border-top: 1px solid #ECF1F8; */
 }
 .fiat-completed-order-box.personal.day .el-table__expanded-cell {
-  background-color: #fff;
+    background-color: #fff;
 }
 .fiat-completed-order-box.personal.day .el-table__expanded-cell:hover{
   background-color: #fff !important;
@@ -34,7 +34,7 @@
   border-bottom: 1px solid rgba(38,47,56,0.1);
 }
 .fiat-completed-order-box.personal.day .el-table--enable-row-transition .el-table__body td {
-  border-top: 1px solid rgba(38,47,56,0.1);
+  /* border-top: 1px solid rgba(38,47,56,0.1); */
 }
 .fiat-completed-order-box.personal .el-table--enable-row-hover .el-table__body tr:hover>td {
   background-color: #fff;

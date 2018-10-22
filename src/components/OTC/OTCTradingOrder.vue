@@ -1485,10 +1485,10 @@ export default {
       .page{
       }
       >.password-dialog{
-      .tips{
-        color: red;
+        .tips{
+          color: red;
+        }
       }
-    }
     }
   }
   &.day{

@@ -85,7 +85,7 @@
   border-bottom: 1px solid #262F38;
 }
 .fiat-completed-order-box.personal .el-table--enable-row-transition .el-table__body td{
-  border-top: 1px solid #262F38;
+  /* border-top: 1px solid #262F38; */
 }
 .fiat-completed-order-box.personal .el-table td {
   /* border-bottom: 1px solid red; */

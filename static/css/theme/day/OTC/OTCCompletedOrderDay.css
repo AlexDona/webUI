@@ -61,6 +61,7 @@
 }
 .otc-completed-order-box.day .completed-order-content .el-table--enable-row-transition .el-table__body td:first-of-type{
   border-top-left-radius: 5px;
+  border-left: 1px solid #ECF1F8;
 }
 .otc-completed-order-box.day .completed-order-content .el-table--enable-row-transition .el-table__body td:first-of-type.el-table__expanded-cell{
   border-top-left-radius: 0px;
@@ -69,6 +70,7 @@
 }
 .otc-completed-order-box.day .completed-order-content .el-table--enable-row-transition .el-table__body td:nth-last-of-type(1){
   border-top-right-radius: 5px;
+  border-right: 1px solid #ECF1F8;
 }
 .otc-completed-order-box.day .completed-order-content .el-table--enable-row-transition .el-table__body td:nth-last-of-type(1).el-table__expanded-cell{
   border-top-right-radius: 0px;
@@ -76,7 +78,7 @@
 .otc-completed-order-box.day .completed-order-content .el-table--enable-row-transition .el-table__body td:first-of-type.el-table__expanded-cell ::after{
   content: '';
   width: 1045px;
-  height: 20px;
+  /* height: 20px; */
   position: absolute;
   left: 0;
   bottom: -10px;

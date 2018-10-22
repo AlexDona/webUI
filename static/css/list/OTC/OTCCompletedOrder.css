@@ -64,7 +64,7 @@
 .otc-completed-order-box .completed-order-content .el-table--enable-row-transition .el-table__body td:first-of-type.el-table__expanded-cell ::after{
   content: '';
   width: 1045px;
-  height: 20px;
+  /* height: 20px; */
   position: absolute;
   left: 0;
   bottom: -10px;

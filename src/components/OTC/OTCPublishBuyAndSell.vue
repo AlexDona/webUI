@@ -678,18 +678,22 @@ export default {
     changeInputValue (ref, pointLength) {
       this[ref] = this.$refs[ref].value
       // console.dir(this.$refs[ref])
-      console.log(this[ref])
+      // console.log(this[ref])
       // this.entrustCountSell = this.$refs.entrustCountSell.value
       // console.log(this.entrustCountSell)
       // 精度丢失问题修复
       // 类型：卖
       // 手续费
-      this.serviceChargeSELL = amendPrecision(this.$refs.entrustCountSell.value, this.rate, '*').toFixed(this.pointLength)
+      // this.serviceChargeSELL = amendPrecision(this.$refs.entrustCountSell.value, this.rate, '*').toFixed(this.pointLength)
+      // 去掉数字后面多余的0
+      this.serviceChargeSELL = parseFloat(amendPrecision(this.$refs.entrustCountSell.value, this.rate, '*').toFixed(this.pointLength))
       // 交易额
       this.traderSumSELL = amendPrecision(this.$refs.entrustCountSell.value, this.$refs.priceSell.value, '*').toFixed(2)
       // 类型：买
       // 手续费
-      this.serviceChargeBUY = amendPrecision(this.$refs.entrustCountBuy.value, this.rate, '*').toFixed(this.pointLength)
+      // this.serviceChargeBUY = amendPrecision(this.$refs.entrustCountBuy.value, this.rate, '*').toFixed(this.pointLength)
+      // 去掉数字后面多余的0
+      this.serviceChargeBUY = parseFloat(amendPrecision(this.$refs.entrustCountBuy.value, this.rate, '*').toFixed(this.pointLength))
       // 交易额
       this.traderSumBUY = amendPrecision(this.$refs.entrustCountBuy.value, this.$refs.priceBuy.value, '*').toFixed(2)
       let target = this.$refs[ref]
@@ -1260,7 +1264,7 @@ export default {
           > .publish-content-right {
             flex: 1;
             > .release-notes {
-              color: #8C8E91;
+              color: #A9BED4;
               > .release-title {
                 color: #fff;
               }
@@ -1398,7 +1402,7 @@ export default {
           > .publish-content-right {
             flex: 1;
             > .release-notes {
-              color: #8C8E91;
+              color: #7D90AC;
               > .release-title {
                 color: #BB4C4C;
               }
