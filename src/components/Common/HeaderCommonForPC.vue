@@ -615,6 +615,7 @@ export default{
       language: state => state.common.language,
       isLogin: state => state.user.isLogin,
       middleTopData: state => state.trade.middleTopData, // 当前交易对数据
+      middleTopDataPrice: state => state.trade.middleTopData.last, // 当前交易对数据
       loginStep1Info: state => state.user.loginStep1Info,
       userInfo: state => state.user.loginStep1Info.userInfo,
       partnerId: state => state.common.partnerId, // 商户id
@@ -630,7 +631,7 @@ export default{
     title (newVal) {
       console.log(newVal)
     },
-    middleTopData (newVal) {
+    middleTopDataPrice (newVal) {
       console.log(newVal)
       console.log(this.title)
       this.setNewTitle()
