@@ -605,6 +605,7 @@ export default{
       theme: state => state.common.theme,
       language: state => state.common.language,
       isLogin: state => state.user.isLogin,
+      middleTopData: state => state.trade.middleTopData, // 当前交易对数据
       loginStep1Info: state => state.user.loginStep1Info,
       userInfo: state => state.user.loginStep1Info.userInfo,
       partnerId: state => state.common.partnerId, // 商户id
@@ -612,10 +613,19 @@ export default{
       withdrawDepositList: state => state.common.withdrawDepositList,
       userInfoRefreshStatus: state => state.common.userInfoRefreshStatus,
       logoSrc: state => state.common.logoSrc,
-      footerInfo: state => state.common.footerInfo
+      footerInfo: state => state.common.footerInfo,
+      title: state => state.common.title // 网站title
     })
   },
   watch: {
+    middleTopData (newVal) {
+      console.log(newVal)
+      console.log(this.title)
+      if (this.title) {
+        let newTitle = `${newVal.last} ${newVal.sellsymbol}/${newVal.area} ${this.title}`
+        document.querySelector('title').innerText = newTitle
+      }
+    },
     activeLanguage (newVal) {
       console.log(newVal)
     },

@@ -319,7 +319,8 @@ export const getFooterInfo = async (language, that) => {
       footerInfo1.title
     )
     that.$store.commit('common/SET_LOGO_URL', {
-      logoSrc: footerInfo1.headLogo
+      logoSrc: footerInfo1.headLogo,
+      title: footerInfo1.title
     })
   }
 }
