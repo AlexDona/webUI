@@ -464,7 +464,7 @@ export default {
   },
   data () {
     return {
-      fullscreenLoading: true,
+      fullscreenLoading: false,
       dialogVisible: false, // 弹窗状态
       // 选择模块下拉列表循环数组
       activitedBuySellStyle: 'SELL', // 选中的发布广告 买卖 类型
@@ -578,9 +578,12 @@ export default {
       })
       console.log('挂单详情')
       console.log(data)
+      this.fullscreenLoading = true
       if (!(returnAjaxMessage(data, this, 0))) {
+        this.fullscreenLoading = false
         return false
       } else {
+        this.fullscreenLoading = false
         this.activitedCoinId = data.data.data.coinId // 可用币种id
         this.activitedCurrencyId = data.data.data.currencyId // 法币id
         this.activitedBuySellStyle = data.data.data.entrustType // 挂单类型
@@ -597,13 +600,12 @@ export default {
         // 币种单笔最小限额
         // this.minCount = data.data.data.minCount
         // this.$refs.minCountValue.value = this.minCount
-        this.fullscreenLoading = true
         this.getOTCCoinInfo()
       }
     },
     // 1.0 币种详情 : 商家和普通用户挂单页面请求币种详情渲染页面
     async getOTCCoinInfo () {
-      // this.fullscreenLoading = true
+      this.fullscreenLoading = true
       const data = await getOTCCoinInfo({
         currencyId: this.activitedCurrencyId, // 法币id
         coinId: this.activitedCoinId // 币种id
@@ -677,7 +679,6 @@ export default {
       // 币种详情
       console.log('币种id：' + this.activitedCoinId)
       console.log('法种id：' + this.activitedCurrencyId)
-      this.fullscreenLoading = true
       this.getOTCCoinInfo()
     },
     // 4.0 改变可用法币的币种id
@@ -688,7 +689,6 @@ export default {
       // 币种详情
       console.log('币种id：' + this.activitedCoinId)
       console.log('法种id：' + this.activitedCurrencyId)
-      this.fullscreenLoading = true
       this.getOTCCoinInfo()
     },
     // 5.0 点击发布广告弹出输入交易密码框
@@ -761,6 +761,7 @@ export default {
       console.log(data)
       // 提示信息
       if (!(returnAjaxMessage(data, this, 1))) {
+        this.fullscreenLoading = false
         return false
       } else {
         // 返回数据正确的逻辑
@@ -769,7 +770,6 @@ export default {
         // 清空数据
         this.clearMainData()
         // 重新渲染页面
-        this.fullscreenLoading = true
         this.getOTCCoinInfo()
       }
     },
