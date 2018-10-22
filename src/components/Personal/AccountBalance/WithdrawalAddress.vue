@@ -517,7 +517,7 @@ export default {
       this.googleCode = ''
     },
     // 发送验证码
-    sendPhoneOrEmailCode (loginType) {
+    async sendPhoneOrEmailCode (loginType) {
       if (this.disabledOfPhoneBtn || this.disabledOfEmailBtn) {
         return false
       }
@@ -533,7 +533,7 @@ export default {
           params.email = this.userInfo.userInfo.email
           break
       }
-      apiSendPhoneOrEmailCodeAjax(loginType, params, (data) => {
+      await apiSendPhoneOrEmailCodeAjax(loginType, params, (data) => {
         console.log(this.disabledOfPhoneBtn)
         // 提示信息
         if (!returnAjaxMessage(data, this)) {
