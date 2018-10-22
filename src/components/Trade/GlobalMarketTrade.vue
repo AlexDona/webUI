@@ -21,8 +21,9 @@
           <div>
             <div class="table-box">
               <div class="thead">
+                <!-- 交易所 交易对 交易价 成交量 -->
                 <div class="tr">
-                  <div class="th">交易所</div><div class="th symbol">交易对</div><div class="th price">交易价</div><div class="th count">成交量({{activeSymbol.sellsymbol}})</div>
+                  <div class="th width20">{{ $t('M.common_exchange') }}</div><div class="th">{{ $t('M.common_counterparty') }}</div><div class="th">{{ $t('M.common_transaction_price') }}</div><div class="th count">{{ $t('M.common_trading_volume') }}({{activeSymbol.sellsymbol}})</div>
                 </div>
               </div>
               <div

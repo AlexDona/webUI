@@ -27,6 +27,7 @@
           </span>
           <el-select
             v-model="currencyListValue"
+            :placeholder="$t('M.comm_please_choose')"
             :no-data-text="$t('M.comm_no_data')"
             clearable
             @change="changeId"

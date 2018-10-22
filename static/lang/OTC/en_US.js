@@ -313,7 +313,7 @@ export const OTC = {
   'otc_index_inputBuyPrice': 'Please enter the purchase price',
   'otc_index_inputSellPrice': 'Please enter the selling unit price',
   // #################交易中列表############List in transaction
-  'otc_tradingorder': 'Scan code payment',
+  'otc_tradingorder': 'Scan code pay',
   'otc_tradingorder_transformAcconu': 'transfer amount',
   'otc_tradingorder_notice': 'note! If you do not manually transfer the account before the end of the time and click "Confirm Payment", your order will be cancelled automatically. If the above situation occurs 3 times, your account will be frozen, please contact customer service.',
   'otc_tradingorder_autoCancel': 'If the other party does not submit the payment within the minute, the order will be cancelled automatically.',

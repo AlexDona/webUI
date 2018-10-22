@@ -160,5 +160,10 @@ export const common = {
   'comm_pack_up': '접기',
   'comm_content': '콘텐츠',
   'comm_after_get': '검색',
-  'comm_get_code': '인증 코드 받기'
+  'comm_get_code': '인증 코드 받기',
+  // 全球行情任增加
+  'common_exchange': '交易所',
+  'common_counterparty': '交易对',
+  'common_transaction_price': '交易价',
+  'common_trading_volume': '成交量'
 }

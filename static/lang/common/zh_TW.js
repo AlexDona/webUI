@@ -163,5 +163,10 @@ export const common = {
   'comm_after_get': '後重獲取',
   'comm_get_code': '獲取驗證碼',
   'common_direction': '方向',
-  'common_average_price': '成交均價'
+  'common_average_price': '成交均價',
+  // 全球行情任增加
+  'common_exchange': '交易所',
+  'common_counterparty': '交易對',
+  'common_transaction_price': '交易價',
+  'common_trading_volume': '成交量'
 }

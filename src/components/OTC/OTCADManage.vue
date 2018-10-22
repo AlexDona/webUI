@@ -23,6 +23,7 @@
           </span>
           <span class="style-input">
             <el-select
+              :placeholder="$t('M.comm_please_choose')"
               :no-data-text="$t('M.comm_no_data')"
               v-model="activitedADManageTraderStyleList"
               @change="changeSelectValue('changeADManageTraderStyleList', $event)"
@@ -45,6 +46,7 @@
           <span class="market-input">
             <el-select
               :no-data-text="$t('M.comm_no_data')"
+              :placeholder="$t('M.comm_please_choose')"
               v-model="activitedADManageMarketList"
               @change="changeSelectValue('changeADManageMarketList', $event)"
               clearable
@@ -66,6 +68,7 @@
           <span class="market-input">
             <el-select
               :no-data-text="$t('M.comm_no_data')"
+              :placeholder="$t('M.comm_please_choose')"
               v-model="activitedADManageCurrencyId"
               @change="changeSelectValue('changeADManageCurrencyId', $event)"
               clearable
@@ -86,6 +89,7 @@
           <span class="status-input">
             <el-select
               :no-data-text="$t('M.comm_no_data')"
+              :placeholder="$t('M.comm_please_choose')"
               v-model="activitedADManageStatusList"
               @change="changeSelectValue('changeADManageStatusList', $event)"
               clearable
