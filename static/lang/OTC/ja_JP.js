@@ -254,6 +254,7 @@ export const OTC = {
   'otc_formStatistics_date': '同じ日',
   'otc_formStatistics_average': '平均価格',
   'otc_formStatistics_amount_paid': '支出額',
+  'otc_formStatistics_income_money': '収入額',
   'otc_formStatistics_turnover': '取引',
   'otc_formStatistics_week': '今週',
   'otc_formStatistics_mouth': '今月',

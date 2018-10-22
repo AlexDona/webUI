@@ -254,6 +254,7 @@ export const OTC = {
   'otc_formStatistics_date': '당일',
   'otc_formStatistics_average': '평균 가격',
   'otc_formStatistics_amount_paid': '지출액',
+  'otc_formStatistics_income_money': '수입 금액',
   'otc_formStatistics_turnover': '거래',
   'otc_formStatistics_week': '이번 주',
   'otc_formStatistics_mouth': '이번 달',
