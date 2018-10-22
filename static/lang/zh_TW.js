@@ -1,4 +1,4 @@
-import {fromApi} from './fromApi/zh_CN'
+import {fromApi} from './fromApi/zh_TW'
 import {common} from './common/zh_TW'
 import {footerInfo} from './footerInfo/zh_TW'
 import {home} from './home/zh_TW'

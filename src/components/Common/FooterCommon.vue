@@ -10,7 +10,7 @@
         >
           <!--logo-->
           <div class="logo"
-             v-if="footerInfo1.logo"
+            v-if="footerInfo1.logo"
           >
             <img :src="footerInfo1.logo">
           </div>
@@ -126,7 +126,8 @@
       </div>
       <!--底部友情链接-->
       <div class="bottom">
-        <span class="title">友情链接</span>
+        <!-- 友情链接 -->
+        <span class="title">{{$t('M.common_friendly_link')}}</span>
         <ul class="links-list">
           <li
             class="links-item"

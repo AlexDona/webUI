@@ -161,5 +161,10 @@ export const common = {
   'comm_pack_up': 'Collapse',
   'comm_content': 'content',
   'comm_after_get': 'Retrieve',
-  'comm_get_code': 'get verification code'
+  'comm_get_code': 'get verification code',
+  // 全球行情任增加
+  'common_exchange': 'exchange',
+  'common_counterparty': 'counterparty',
+  'common_transaction_price': 'transaction price',
+  'common_trading_volume': 'trading volume'
 }

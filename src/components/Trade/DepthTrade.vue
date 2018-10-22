@@ -9,8 +9,8 @@
     >
         <span class="text">
           <!--深度-->
-          <!--{{ $t('M.trade_global_market') }}-->
-          深度图
+          {{ $t('M.common_depth_map') }}
+          <!-- 深度图 -->
         </span>
     </div>
     <el-collapse-transition>
