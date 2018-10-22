@@ -488,7 +488,6 @@ export default {
             console.log(barsData.time - this.lastTime)
             if (barsData.time >= this.lastTime && this.cacheData[ticker] && this.cacheData[ticker].length) {
               this.cacheData[ticker][this.cacheData[ticker].length - 1] = barsData
-              // this.cacheData[ticker].push(barsData)
             }
             this.datafeeds.barsUpdater.updateData()
           }
@@ -498,10 +497,11 @@ export default {
           console.log(data)
           if (data.data) {
             let newData = data.data
-            if (newData.sells.list) {
+            console.log(newData)
+            if (newData.sells && newData.sells.list) {
               newData.sells.list.reverse()
+              this.socketData.buyAndSellData = newData
             }
-            this.socketData.buyAndSellData = newData
           }
           break
         // 深度图
@@ -523,6 +523,7 @@ export default {
           }
           break
       }
+      console.log(this.socketData)
       this.CHANGE_SOCKET_AND_AJAX_DATA({
         'socketData': this.socketData,
         'type': 'socket'

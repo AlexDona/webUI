@@ -23,15 +23,6 @@ import {setStore} from '../../utils'
 // import {localapi, proapi} from 'src/config/env'
 
 export default {
-  // 公共部分
-  // 首页
-  // 币币交易
-  // OTC交易
-  // 投资理财
-  // 活动中心
-  // 个人中心
-  // 注册登录
-
   // 切换主题
   [CHANGE_THEME] (state, data) {
     state.theme = data
@@ -58,16 +49,26 @@ export default {
     ajaxData,
     type
   }) {
+    console.log(ajaxData)
+    console.log(type, ajaxData, socketData)
     switch (type) {
       case 'ajax':
-        state.klineAjaxData.depthData = ajaxData.depthData
-        state.klineAjaxData.buyAndSellData = ajaxData.buyAndSellData
+        if (ajaxData.depthData) {
+          state.klineAjaxData.depthData = ajaxData.depthData
+        }
+        if (ajaxData.buyAndSellData) {
+          state.klineAjaxData.buyAndSellData = ajaxData.buyAndSellData
+        }
         state.klineAjaxData.tardeRecordList = ajaxData.tardeRecordList
         state.klineAjaxData.tradeMarketList = ajaxData.tradeMarketList
         break
       case 'socket':
-        state.socketData.depthData = socketData.depthData
-        state.socketData.buyAndSellData = socketData.buyAndSellData
+        if (socketData.depthData) {
+          state.socketData.depthData = socketData.depthData
+        }
+        if (socketData.buyAndSellData) {
+          state.socketData.buyAndSellData = socketData.buyAndSellData
+        }
         state.socketData.tardeRecordList = socketData.tardeRecordList
         state.socketData.tradeMarkeContentItem = socketData.tradeMarkeContentItem
         break
@@ -113,8 +114,9 @@ export default {
   [SET_USER_INFO_REFRESH_STATUS] (state, data) {
     state.userInfoRefreshStatus = data
   },
-  [SET_LOGO_URL] (state, {logoSrc}) {
+  [SET_LOGO_URL] (state, {logoSrc, title}) {
     state.logoSrc = logoSrc
+    state.title = title
   },
   [SET_FOOTER_INFO] (state, data) {
     state.footerInfo = data

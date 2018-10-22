@@ -210,9 +210,7 @@ export default {
           box-shadow:2px 0px 3px rgba(27,35,49,1);
         }
         >.content{
-          background: url(../../assets/develop/global-black.bg.png) no-repeat center center;
-          -webkit-background-size: 100% 100%;
-          background-size: 100% 100%;
+          background-color: $mainContentNightBgColor;
           color:$nightFontColor;
         }
       }
@@ -225,9 +223,7 @@ export default {
           box-shadow:2px 0px 3px rgba(239,239,239,1);
         }
         >.content{
-          background: url(../../assets/develop/global-write.bg.png) no-repeat center center;
-          -webkit-background-size: 100% 100%;
-          background-size: 100% 100%;
+          background-color: #fff;
           color:$dayFontColor;
         }
       }

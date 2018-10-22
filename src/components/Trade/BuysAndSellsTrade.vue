@@ -4,7 +4,9 @@
     class="buys-and-sells-box trade"
     :class="{'day':theme == 'day','night':theme == 'night' }"
   >
-    <div class="inner-box">
+    <div
+      class="inner-box"
+    >
       <div
         class="title font-size16 cursor-pointer"
       >
@@ -228,14 +230,13 @@ export default {
       buysAndsells: {},
       reflashCount: 0, // 买卖单数据刷新次数
       // 显示顺序(buys,middle,sells)
-      listOrder: 'middle', // 切换显示顺序
-      buysAndSellsFilterList: []
+      listOrder: 'middle' // 切换显示顺序
     }
   },
   created () {
   },
   mounted () {
-    console.log(this.buysAndSellsList)
+    // console.log(this.buysAndSellsList)
   },
   activited () {
   },
@@ -276,6 +277,7 @@ export default {
       theme: state => state.common.theme,
       socketData: state => state.common.socketData,
       middleTopData: state => state.trade.middleTopData,
+      klineAjaxData: state => state.common.klineAjaxData,
       depthData: state => state.common.klineAjaxData.depthData,
       buysAndSellsListByAjax: state => state.common.klineAjaxData.buyAndSellData,
       buysAndSellsListBySocket: state => state.common.socketData.buyAndSellData,
@@ -283,12 +285,19 @@ export default {
       activeSymbolId: state => state.common.activeSymbol.id
     }),
     buysAndSellsList () {
-      console.log(this.reflashCount)
+      console.log(this.buysAndSellsListByAjax)
+      console.log(this.buysAndSellsListBySocket)
       return !this.reflashCount ? this.buysAndSellsListByAjax : this.buysAndSellsListBySocket
       // return this.buysAndSellsListByAjax
     }
   },
   watch: {
+    klineAjaxData (newVal) {
+      console.log(newVal)
+    },
+    socketData (newVal) {
+      console.log(newVal)
+    },
     middleTopData (newVal) {
       console.log(newVal)
     },

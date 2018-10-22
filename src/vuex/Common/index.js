@@ -6,6 +6,7 @@ import {getStore} from '../../utils'
 // Vue.use(Vuex)
 
 const state = {
+  title: '', // 网站title
   mainWebsite: 'FUBT.TOP', // 网站主网址
   theme: getStore('theme') || 'night',
   contryAreaList: [], // 国家列表（国家码）
@@ -43,14 +44,40 @@ const state = {
   reqRefreshStatus: true, // socket刷新
   klineAjaxData: {
     depthData: {},
-    buyAndSellData: {},
+    buyAndSellData: {
+      buys: {
+        list: [],
+        highestAmount: ''
+      },
+      latestDone: {
+        price: '',
+        rose: ''
+      },
+      sells: {
+        list: [],
+        highestAmount: ''
+      }
+    },
     tardeRecordList: [], // 交易记录
     tradeMarketList: [] // 交易区列表
   },
   // socket 数据
   socketData: {
     depthData: {},
-    buyAndSellData: {},
+    buyAndSellData: {
+      buys: {
+        list: [],
+        highestAmount: ''
+      },
+      latestDone: {
+        price: '',
+        rose: ''
+      },
+      sells: {
+        list: [],
+        highestAmount: ''
+      }
+    },
     tardeRecordList: [], // 交易记录
     tradeMarkeContentItem: {} // 交易区单项
   },
