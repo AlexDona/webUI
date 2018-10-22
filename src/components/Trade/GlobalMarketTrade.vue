@@ -26,36 +26,44 @@
                   <div class="th width20">{{ $t('M.common_exchange') }}</div><div class="th">{{ $t('M.common_counterparty') }}</div><div class="th">{{ $t('M.common_transaction_price') }}</div><div class="th count">{{ $t('M.common_trading_volume') }}({{activeSymbol.sellsymbol}})</div>
                 </div>
               </div>
-              <div class="tbody">
+              <div
+                class="tbody"
+              >
                 <div
                   class="tr"
                   v-for="(item,index) in globalMarketList"
                   :key="index"
                 >
-                  <div class="td width20">
+                  <div class="td">
                     {{item.bourseName}}
-                  </div><div class="td">
+                  </div><div class="td symbol">
                     {{item.bourseTrade.split('_').join('/')}}
-                  </div><div class="td">
+                  </div><div class="td price">
                     <div class="top">
                       {{keep2Num(item.boursePrice)}}
-                      </div>
-                      <!--货币转换-->
-                      <div class="bottom"
-                      v-show="currencyRateList[activeSymbol.area]"
-                      >
-                      ≈ {{keep2Num((currencyRateList[activeSymbol.area]-0)*item.boursePrice)}}
-                      </div>
+                    </div>
+                    <!--货币转换-->
+                    <div
+                      class="bottom"
+                      v-if="currencyRateList[activeSymbol.area]"
+                      :class="{
+                        'up':middleTopData.chg>0,
+                        'down':middleTopData.chg<0
+                      }"
+                    >
+                      {{keep2Num((currencyRateList[activeSymbol.area]-0)*item.boursePrice)-0}}
+                    </div>
                   </div><div class="td count">
                       <div class="top"
                       >
-                      {{keep2Num(item.bourseCount)}}
+                      {{formatCount(keep2Num(item.bourseCount))}}
                       </div>
                       <!--货币转换-->
                       <div
                         class="bottom"
+                        v-if="currencyRateList[activeSymbol.area]"
                       >
-                        ≈ {{keep2Num((currencyRateList[item.bourseTrade.split('_')[1]]-0)*item.bourseCount)}}
+                        {{formatCount(keep2Num((currencyRateList[item.bourseTrade.split('_')[1]]-0)*item.bourseCount))}}
                       </div>
                   </div>
                 </div>
@@ -94,6 +102,26 @@ export default {
   update () {},
   beforeRouteUpdate () {},
   methods: {
+    // 成交量格式化
+    formatCount (targetNum) {
+      let newNum = targetNum - 0
+      switch (this.language) {
+        case 'zh_CN':
+          if (newNum > 100000000) {
+            newNum = this.keep2Num(newNum / 100000000) + '亿'
+          } else if (newNum > 10000) {
+            newNum = this.keep2Num(newNum / 10000) + '万'
+          }
+          return newNum
+        default :
+          if (newNum > 1000000) {
+            newNum = this.keep2Num(newNum / 1000000) + 'M'
+          } else if (newNum > 1000) {
+            newNum = this.keep2Num(newNum / 1000) + 'K'
+          }
+          return newNum
+      }
+    },
     keep2Num (targetNum) {
       return keep2Num(targetNum)
     },
@@ -111,13 +139,14 @@ export default {
     // 切换内容显示隐藏
     toggleShowContent () {
       this.contentShowStatus = !this.contentShowStatus
-      console.log(this.contentShowStatus)
     }
   },
   filter: {},
   computed: {
     ...mapState({
       theme: state => state.common.theme,
+      language: state => state.common.language,
+      middleTopData: state => state.trade.middleTopData,
       activeSymbol: state => state.common.activeSymbol,
       activeSymbolId: state => state.common.activeSymbol.id,
       activeConvertCurrencyObj: state => state.common.activeConvertCurrencyObj, // 目标货币
@@ -126,6 +155,9 @@ export default {
     })
   },
   watch: {
+    middleTopData (newVal) {
+      console.log(newVal)
+    },
     currencyRateList (newVal) {
       console.log(newVal)
     },
@@ -175,14 +207,20 @@ export default {
             >.tr{
               width:100%;
               >.th{
-                width:23%;
+                width:16%;
                 display:inline-block;
                 line-height: 38px;
-                &.width20{
-                  width:20%;
+                &.symbol{
+                  width:26%;
+                  text-align: right;
+                }
+                &.price{
+                  width:26%;
+                  text-align: right;
                 }
                 &.count{
-                  width:33%
+                  width: 31%;
+                  text-align: right;
                 }
               }
             }
@@ -197,19 +235,32 @@ export default {
               height:50px;
               >.td{
                 display: inline-block;
-                width:22%;
+                width:16%;
                 height: 100%;
+                white-space:nowrap;
                 /*background: blue;*/
                 vertical-align: middle;
                 line-height: 50px;
-                &.width20{
-                  width:20%;
+                &.symbol{
+                  width:26%;
+                  text-align: right;
+                }
+                &.price{
+                  width:26%;
+                  text-align: right;
                 }
                 &.count{
-                  width:33%
+                  width:31%;
+                  text-align: right;
                 }
                 >.top{
                   margin-top:5px;
+                }
+                >.up{
+                  color:$upColor;
+                }
+                >.down{
+                  color:$downColor;
                 }
                 >.top,>.bottom{
                   line-height: 20px;

@@ -482,6 +482,7 @@ export default {
             width:100%;
             font-size: 12px;
             >.th{
+              white-space:nowrap;
               &.time{
                 width:17%;
               }
@@ -495,7 +496,7 @@ export default {
                 width:8%;
               }
               &.status{
-                width: 8%;
+                width: 7%;
               }
             }
           }
@@ -503,6 +504,7 @@ export default {
             >.content{
               >.tr{
                 >.td{
+                  white-space:nowrap;
                   font-size: 12px;
                   &.time{
                     width:17%;
@@ -518,7 +520,7 @@ export default {
                     width:8%;
                   }
                   &.status{
-                    width: 8%;
+                    width: 7%;
                   }
                 }
               }
@@ -532,6 +534,7 @@ export default {
           >.th{
             display:inline-block;
             font-size: 12px;
+            white-space:nowrap;
             &.time{
               width:17%;
             }
@@ -551,7 +554,7 @@ export default {
               width:10%;
             }
             &.type{
-              /*width:8%;*/
+              width:7%;
             }
           }
         }
@@ -600,7 +603,7 @@ export default {
                   width:10%;
                 }
                 &.type{
-                  /*width:8%;*/
+                  width:7%;
                 }
                 &.todos{
                   >button{

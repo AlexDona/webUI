@@ -182,7 +182,7 @@ export function phoneNumberFormat (phoneNum) {
  * @returns {*}
  */
 export function keep2Num (number) {
-  return number.toFixed(2)
+  return number.toFixed(2) - 0
 }
 
 /**

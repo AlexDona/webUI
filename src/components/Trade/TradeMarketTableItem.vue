@@ -357,6 +357,7 @@ export default {
             }
           }
           >.coin-item{
+            white-space:nowrap;
             >.coin-item{
               &:hover{
                 background-color: #1a1d2f;
