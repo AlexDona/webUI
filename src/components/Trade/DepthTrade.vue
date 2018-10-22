@@ -548,7 +548,7 @@ export default {
   .depth-box{
     margin:10px auto;
     >.title{
-      padding:0 20px;
+      padding:0 2.1%;
       box-sizing: border-box;
       height:34px;
       line-height: 34px;

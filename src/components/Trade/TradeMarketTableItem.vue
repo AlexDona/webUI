@@ -265,7 +265,8 @@ export default {
           height: 40px;
           margin: 0 16px;
           /*padding-left: 10px;*/
-          padding: 0 20px;
+          /*padding: 0 20px;*/
+          padding:0 4.5%;
           line-height: 40px;
           position: relative;
           &:before{
@@ -282,7 +283,8 @@ export default {
         >.coin-item{
           >.coin-item{
             /*margin-left: 16px;*/
-            padding: 0 20px;
+            /*padding: 0 20px;*/
+            padding:0 4.5%;
             /*border-bottom: 1px solid;*/
             height: 25px;
             line-height: 25px;

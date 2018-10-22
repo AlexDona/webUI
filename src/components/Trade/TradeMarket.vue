@@ -592,7 +592,7 @@ export default {
     /*width:433px;*/
     > .inner-box {
       > .title {
-        padding: 0 20px;
+        padding: 0 4.5%;
         height: 34px;
         line-height: 34px;
         margin-bottom: 1px;

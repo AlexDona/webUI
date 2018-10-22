@@ -767,7 +767,7 @@ export default {
         }
       }
       .content-box{
-        padding:22px 28px;
+        padding:22px 2.8%;
         display:flex;
         position: relative;
         width:100%;
