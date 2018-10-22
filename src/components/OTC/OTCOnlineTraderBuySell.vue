@@ -937,7 +937,7 @@ export default {
                   >.details-tip{
                     // color: #9DA5B3;
                     font-size: 12px;
-                    width: 75px;
+                    // width: 75px;
                     display: inline-block;
                   }
                   >.details-data{

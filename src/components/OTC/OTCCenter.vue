@@ -1082,11 +1082,14 @@ export default {
       >.more{
         position: absolute;
         top: 440px;
-        left: 15px;
+        // left: 15px;
         font-size: 14px;
         // color: #338FF5;
         // text-decoration: underline !important;
         cursor: pointer;
+        width: 90px;
+        display: inline-block;
+        text-align: center;
       }
       .otc-tab-pane-arrow-right{
         position: absolute;

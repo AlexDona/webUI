@@ -220,6 +220,7 @@
               {{ scope.row.pickCount }}({{ scope.row.coinName }})
             </template>
           </el-table-column>
+          <!-- 总金额 -->
           <el-table-column
             :label="$t('M.otc_canceled_total')"
           >
@@ -227,6 +228,7 @@
               {{ (scope.row.price*scope.row.pickCount).toFixed(2)}}({{ scope.row.currencyName }})
             </template>
           </el-table-column>
+          <!-- 下单时间 -->
           <el-table-column
             :label="$t('M.otc_stocks_ordertime')"
           >
