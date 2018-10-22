@@ -659,8 +659,6 @@ export default {
         return false
       } else {
         this.TOGGLE_REFRESH_ENTRUST_LIST_STATUS(true)
-        // 刷新用户资产
-        await this.getUserAssetOfActiveSymbol()
         this.removePwd()
       }
     },
@@ -706,6 +704,11 @@ export default {
     }
   },
   watch: {
+    async refreshEntrustStatus (newVal) {
+      if (newVal) {
+        await this.getUserAssetOfActiveSymbol()
+      }
+    },
     currencyRateList (newVal) {
       console.log(newVal)
     },
@@ -724,7 +727,7 @@ export default {
         this.setBuyAndSellPrice(newVal)
       }
     },
-    middleTopData (newVal) {
+    async middleTopData (newVal) {
       console.log(newVal)
       let targetPriceOfBuy = newVal.buy || newVal.kai
       let targetPriceOfSell = newVal.sell || newVal.kai
@@ -734,7 +737,7 @@ export default {
           this.reflashCount++
         }
         if (this.isLogin) {
-          this.getUserAssetOfActiveSymbol(targetPriceOfBuy, targetPriceOfSell)
+          await this.getUserAssetOfActiveSymbol(targetPriceOfBuy, targetPriceOfSell)
         } else {
           console.log('zzz')
           this.setBuyAndSellPrice(targetPriceOfBuy, targetPriceOfSell)

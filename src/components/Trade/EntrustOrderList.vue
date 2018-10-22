@@ -351,17 +351,11 @@ export default {
           if (!returnAjaxMessage(res, this, 1)) {
             return false
           } else {
-            this.getMyCurrentEntrust()
+            this.TOGGLE_REFRESH_ENTRUST_LIST_STATUS(true)
           }
         })
       }).catch(() => {
       })
-      // console.log(id)
-      // console.log(version)
-
-      // const repealData =  repealMyEntrust(params)
-      // returnAjaxMessage(repealData, this, 1)
-      // this.getMyCurrentEntrust()
     },
     /**
       * 切换页码

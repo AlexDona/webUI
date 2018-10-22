@@ -378,19 +378,8 @@ export default {
     },
     unSubscribe (interval) {
       let newInterval = this.transformInterval(interval)
-      // this.socket.send({
-      //   'tag': 'CANCEL',
-      //   'content': `market.${this.symbol}.kline.${newInterval}.step5`,
-      //   'id': `kline_${this.symbol}`
-      // })
-      this.getKlineDataBySocket('CANCEL', this.symbol, newInterval)
-      if (interval < 60) {
-
-        // this.sendMessage({ cmd: 'unsub', args: [`candle.M${interval}.${this.symbol.toLowerCase()}`, 1440, parseInt(Date.now() / 1000)] })
-      } else if (interval >= 60) {
-        // this.sendMessage({ cmd: 'unsub', args: [`candle.H${interval / 60}.${this.symbol.toLowerCase()}`, 1440, parseInt(Date.now() / 1000)] })
-      } else {
-        // this.sendMessage({ cmd: 'unsub', args: [`candle.D1.${this.symbol.toLowerCase()}`, 207, parseInt(Date.now() / 1000)] })
+      if (newInterval) {
+        this.getKlineDataBySocket('CANCEL', this.symbol, newInterval)
       }
     },
     // 时间区间格式转换
@@ -425,18 +414,6 @@ export default {
       return newInterval
     },
     subscribe () {
-      // this.sendMessage( {
-      //   'tag': 'REQ',
-      //   'content': `market.${this.symbol}.kline.${this.resolution}.step5`,
-      //   'id': `kline_${this.symbol}`
-      // })
-      // this.interval = 'min5'
-      // this.sendMessage({
-      //   'tag': 'SUB',
-      //   'content': `market.${this.symbol}.kline.${this.interval}.step5`,
-      //   'id': `kline_${this.symbol}14`
-      // })
-
       if (this.interval < 60) {
         // this.sendMessage({ cmd: 'sub', args: [`candle.M${this.interval}.${this.symbol.toLowerCase()}`] })
       } else if (this.interval >= 60) {
@@ -530,22 +507,17 @@ export default {
       })
     },
     getBars (symbolInfo, resolution, rangeStartDate, rangeEndDate, onLoadedCallback) {
-      console.log(symbolInfo)
+      console.log(this.interval)
       // symbolInfo.pricescale = 100000
-      console.log(this.socket)
+      console.log(resolution)
       // console.log(' >> :', rangeStartDate, rangeEndDate)
-      if (this.interval != resolution) {
+      if (resolution && this.interval && (this.interval != resolution)) {
         this.unSubscribe(this.interval)
         this.interval = resolution
         this.options.interval = resolution
         // this.interval = 'min15'
         let newInterval = this.transformInterval(resolution)
-        this.getKlineDataBySocket('REQ', this.symbol, newInterval)
-        this.getKlineDataBySocket('SUB', this.symbol, newInterval)
-        this.getTradeMarketBySocket('SUB', this.activeTabSymbolStr)
-        this.getBuyAndSellBySocket('SUB', this.symbol)
-        this.getDepthDataBySocket('SUB', this.symbol)
-        this.getTradeRecordBySocket('SUB', this.symbol)
+        this.subscribeSocketData(this.symbol, newInterval)
       }
       const ticker = `${this.symbol}-${this.interval}`
       if (this.cacheData[ticker] && this.cacheData[ticker].length) {
@@ -623,6 +595,15 @@ export default {
         'content': `market.${params}.ticker`,
         'id': `market_001`
       })
+    },
+    // 订阅消息
+    subscribeSocketData (symbol, interval = 'min') {
+      this.getKlineDataBySocket('REQ', symbol, interval)
+      this.getKlineDataBySocket('SUB', symbol, interval)
+      this.getTradeMarketBySocket('SUB', this.activeTabSymbolStr)
+      this.getBuyAndSellBySocket('SUB', symbol)
+      this.getDepthDataBySocket('SUB', symbol)
+      this.getTradeRecordBySocket('SUB', symbol)
     }
   },
   filter: {},
@@ -654,7 +635,6 @@ export default {
       this.initKLine(this.symbol)
     },
     activeSymbolId (newVal, oldVal) {
-      // this.getActiveSymbolData(newVal)
       this.initKLine(newVal)
     },
     // 切换tab栏重新订阅
@@ -665,20 +645,22 @@ export default {
       }
       this.getTradeMarketBySocket('SUB', newVal)
     },
+    resolutions (newVal, oldVal) {
+      console.log(newVal)
+      console.log(oldVal)
+    },
     symbol (newVal, oldVal) {
-      this.getActiveSymbolData(newVal)
-
-      this.getKlineDataBySocket('REQ', newVal, 'min')
-      this.getKlineDataBySocket('SUB', newVal, 'min')
       if (oldVal) {
         console.log(oldVal)
         this.resolutions.forEach((item) => {
-          this.getKlineDataBySocket('CANCEL', oldVal, item)
+          this.getKlineDataBySocket('CANCEL', oldVal, this.transformInterval(item))
         })
         this.getBuyAndSellBySocket('CANCEL', oldVal)
         this.getDepthDataBySocket('CANCEL', oldVal)
         this.getTradeRecordBySocket('CANCEL', oldVal)
       }
+      this.getActiveSymbolData(newVal)
+      this.subscribeSocketData(newVal)
     },
     activeTradeArea (newVal, oldVal) {
       console.log(newVal)
