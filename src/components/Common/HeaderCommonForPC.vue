@@ -598,6 +598,14 @@ export default{
       this.convertCurrencyList = data.data.data
       await this.changeActiveTransitionCurrency()
       // setStore('convertCurrencyList', this.convertCurrencyList)
+    },
+    setNewTitle () {
+      if (this.title) {
+        let newTitle = `${this.middleTopData.last} ${this.middleTopData.sellsymbol}/${this.middleTopData.area} ${this.title}`
+        document.querySelector('title').innerText = newTitle
+      } else {
+        setTimeout(this.setNewTitle, 1000)
+      }
     }
   },
   computed: {
@@ -621,10 +629,7 @@ export default{
     middleTopData (newVal) {
       console.log(newVal)
       console.log(this.title)
-      if (this.title) {
-        let newTitle = `${newVal.last} ${newVal.sellsymbol}/${newVal.area} ${this.title}`
-        document.querySelector('title').innerText = newTitle
-      }
+      this.setNewTitle()
     },
     activeLanguage (newVal) {
       console.log(newVal)

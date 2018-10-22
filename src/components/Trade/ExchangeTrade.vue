@@ -711,6 +711,7 @@ export default {
     },
     activeConvertCurrencyObj (newVal) {
       console.log(newVal)
+      this.setBuyAndSellPrice(this.middleTopData.buy, this.middleTopData.sell)
     },
     activeSymbol (newVal) {
       console.log(newVal)
