@@ -15,7 +15,7 @@
       class="inner-box"
       v-loading.fullscreen.lock="fullscreenLoading"
       element-loading-background="rgba(0,0,0,0.6)"
-      >
+    >
       <div class="finance-inner">
         <div class="container">
          <div class="finance-form-header">
@@ -494,7 +494,7 @@ export default {
   },
   data () {
     return {
-      fullscreenLoading: true,
+      fullscreenLoading: false,
       // 选中币种的id
       selectedCoinId: '',
       // 选中币种的名称
@@ -708,7 +708,7 @@ export default {
       if (!(returnAjaxMessage(data, this, 0))) {
         return false
       } else {
-        // 重新掉一次币种接口刷新列表
+        // 重新调一次币种接口刷新列表
         this.getFinancialManagementList()
         // 存币成功
         this.$message({

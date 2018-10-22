@@ -1,0 +1,26 @@
+export const finance = {
+  'finance_newestPrice': 'Latest price',
+  'finance_increase': 'Gain',
+  'finance_date': 'Same day',
+  'finance_history': 'history',
+  'finance_invest': 'Deposit',
+  'finance_useBalance': 'Available Balance',
+  'finance_errorTips': 'The number of deposits is greater than the available assets',
+  'finance_mast': 'Immediately',
+  'finance_mine': 'mine',
+  'finance_estimatedValue': 'Valuation',
+  'finance_earnings': 'income',
+  'finance_recode': 'recording',
+  'finance_predict': 'Expected',
+  'finance_paid_income': 'Earned income',
+  'finance_releaseTime': 'Release time',
+  'finance_createTime': 'Creation time',
+  'finance_huoqi': 'current',
+  'finance_grant': 'Issue',
+  'finance_noemptyTips': 'The type of deposit or the amount of deposit cannot be empty',
+  'finance_loginTips': '@You have not logged in yet, please',
+  'finance_or': 'or',
+  'finance_loginTipsTwo': 'Then check it out!',
+  // 二次确认弹框提示信息Secondary confirmation bullet message
+  'finance_tipsContentOne': 'Determine to retrieve the deposit?'
+}
