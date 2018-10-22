@@ -58,16 +58,26 @@ export default {
     ajaxData,
     type
   }) {
+    console.log(ajaxData)
+    console.log(type, ajaxData, socketData)
     switch (type) {
       case 'ajax':
-        state.klineAjaxData.depthData = ajaxData.depthData
-        state.klineAjaxData.buyAndSellData = ajaxData.buyAndSellData
+        if (ajaxData.depthData) {
+          state.klineAjaxData.depthData = ajaxData.depthData
+        }
+        if (ajaxData.buyAndSellData) {
+          state.klineAjaxData.buyAndSellData = ajaxData.buyAndSellData
+        }
         state.klineAjaxData.tardeRecordList = ajaxData.tardeRecordList
         state.klineAjaxData.tradeMarketList = ajaxData.tradeMarketList
         break
       case 'socket':
-        state.socketData.depthData = socketData.depthData
-        state.socketData.buyAndSellData = socketData.buyAndSellData
+        if (socketData.depthData) {
+          state.socketData.depthData = socketData.depthData
+        }
+        if (socketData.buyAndSellData) {
+          state.socketData.buyAndSellData = socketData.buyAndSellData
+        }
         state.socketData.tardeRecordList = socketData.tardeRecordList
         state.socketData.tradeMarkeContentItem = socketData.tradeMarkeContentItem
         break
