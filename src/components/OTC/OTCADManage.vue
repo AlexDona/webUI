@@ -126,7 +126,7 @@
             <span
               class="unshelve-text"
             >
-            <!-- 一件下架所有广告 -->
+            <!-- 一键下架所有广告 -->
             {{$t('M.otc_adMange_advertingAD')}}
             </span>
           </span>

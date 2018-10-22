@@ -222,6 +222,7 @@ export const OTC = {
   'otc_publishAD_rangePrice': '사이 가격',
   'otc_publishAD_inputminLimit': '입력 값은 최소 한도보다 작을 수 없습니다.',
   'otc_publishAD_inputmaxLimit': '입력 값은 최대 한도를 초과 할 수 없습니다.',
+  'otc_publishAD_entrustCountLimit': '최대 매출 량이 부족하다.',
   // #############广告管理##################''광고 관리'
   'otc_adMange': '광고 관리',
   'otc_trade': '거래',

@@ -222,6 +222,7 @@ export const OTC = {
   'otc_publishAD_rangePrice': '間の価格',
   'otc_publishAD_inputminLimit': '入力値は最小値を下回ることはできません',
   'otc_publishAD_inputmaxLimit': '入力値は最大値を超えることはできません',
+  'otc_publishAD_entrustCountLimit': '最大販売量が不足している。',
   // #############広告管理##################
   'otc_adMange': '広告管理',
   'otc_trade': '取引',
