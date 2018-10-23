@@ -153,6 +153,7 @@ export default {
         }
         >.content{
           background-color: $mainContentNightBgColor;
+
         }
       }
     }

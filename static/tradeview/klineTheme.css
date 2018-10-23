@@ -312,7 +312,7 @@
 }
 .header-chart-panel .button:hover,.header-chart-panel .button.selected{
   /*background-color: pink;*/
-  background-color:#eaeaea;
+  background:rgba(61,80,90,1);
   color:#338FF5 !important;
   cursor: pointer;
 }
