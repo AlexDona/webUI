@@ -163,6 +163,7 @@ export const OTC = {
   'otc_merchant_singleSeriviceserver': '독점적 인 고객 서비스',
   'otc_approve': '인증',
   'otc_apply': '신청',
+  'otc_merchant_apply': '판매자신청',
   'otc_merchant_sendemail': '메일 보내기',
   'otc_merchant_verified': '승인 됨',
   'otc_submit': '제출',
