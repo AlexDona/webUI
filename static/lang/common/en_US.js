@@ -162,6 +162,8 @@ export const common = {
   'comm_content': 'content',
   'comm_after_get': 'Retrieve',
   'comm_get_code': 'get verification code',
+  'common_direction': '方向',
+  'common_average_price': '成交均价',
   // 全球行情任增加
   'common_exchange': 'Exchange',
   'common_counterparty': 'Counterparty',
