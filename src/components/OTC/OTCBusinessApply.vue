@@ -77,7 +77,8 @@
         <div class="number">
           <!-- 商家申请 -->
           <span class="common apply">
-            {{$t('M.otc_merchant')}}{{$t('M.otc_apply')}}
+            <!-- {{$t('M.otc_merchant')}}{{$t('M.otc_apply')}} -->
+            {{$t('M.otc_merchant_apply')}}
           </span>
           <!-- 发送邮件 -->
           <span class="common send-email">
@@ -96,7 +97,7 @@
         <div class="step">
           <div class="content">
             <h4 class="title">{{$t('M.otc_merchant_step1')}}</h4>
-            <!-- 测试 -->
+            <!-- 商家申请资料模板下载 -->
             <p>
               {{$t('M.otc_merchant_pleaseDowload')}}
               <span
@@ -107,7 +108,6 @@
               </span>
               ，{{$t('M.otc_merchant_content_one')}}。
             </p>
-            <!-- 测试 -->
             <!-- <p>{{$t('M.otc_merchant_pleaseDowload')}}<a :href= 'downLoadUrl' download="商家认证申请表 Merchant certification application form" class="businessApplyModel">《{{$t('M.otc_merchant_applyMaterial')}}》</a>，{{$t('M.otc_merchant_content_one')}}。</p> -->
             <p>{{$t('M. otc_merchant_videoKode')}}：</p>
             <p>{{$t('M.otc_merchant_detailOne')}}</p>
@@ -262,6 +262,7 @@ export default {
   update () {},
   beforeRouteUpdate () {},
   methods: {
+    // ...mapMutations([]),
     // 下载商家申请资料模板
     downloadApplicationForm () {
       console.log(this.downLoadUrl)
@@ -276,7 +277,6 @@ export default {
         window.URL.revokeObjectURL(url)
       }))
     },
-    // ...mapMutations([]),
     // 点击申请商家用户按钮发送请求
     submit () {
       // 点击按钮时判断商家是否登录
@@ -487,21 +487,34 @@ export default {
         line-height: 58px;
         background: url(../../assets/develop/step.png) no-repeat center;
         margin-top: 70px;
+        position: relative;
         >.common{
           // color: #fff;
-          font-size: 18px;
+          font-size: 16px;
         }
         >.apply{
-          padding-left: 195px;
+          // padding-left: 195px;
+          position: absolute;
+          left: 185px;
+          top: 0;
         }
         >.send-email{
-          padding-left: 170px;
+          // padding-left: 170px;
+          position: absolute;
+          left: 430px;
+          top: 0;
         }
         >.submit-apply{
-          padding-left: 170px;
+          // padding-left: 170px;
+          position: absolute;
+          left: 680px;
+          top: 0;
         }
         >.pass{
-          padding-left: 172px;
+          // padding-left: 172px;
+          position: absolute;
+          left: 930px;
+          top: 0;
         }
       }
       >.step{
@@ -516,7 +529,7 @@ export default {
         >.content{
           width: 620px;
           >p{
-            line-height: 30px;
+            line-height: 28px;
           }
           >.title{
             // color: #fff;
