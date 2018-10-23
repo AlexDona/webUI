@@ -366,19 +366,7 @@ export default{
       showSetting: false,
       settingBoxTitle: 'M.comm_set', // 设置
       // 折算货币列表
-      convertCurrencyList: [
-        // {
-        //   createTime: '2018-08-06 11:01:13',
-        //   id: '123',
-        //   name: 'CNY',
-        //   partnerId: '474629374641963008',
-        //   shortName: '人民币',
-        //   status: 'ENABLE',
-        //   symbol: '￥',
-        //   updateTime: '2018-08-06 11:01:16',
-        //   version: 1
-        // }
-      ],
+      convertCurrencyList: [],
       // 语言列表
       languageList: [],
       // 当前折算货币
@@ -448,7 +436,6 @@ export default{
     // 更改当前选中汇率转换货币
     async changeActiveTransitionCurrency () {
       const params = {
-        partnerId: this.partnerId,
         shortName: this.activeConvertCurrency || 'CNY'
       }
       this.convertCurrencyList.forEach((item) => {
@@ -582,9 +569,7 @@ export default{
     // 查询某商户可用法币币种列表
     async getMerchantAvailablelegalTenderList () {
       let data
-      data = await getMerchantAvailablelegalTender({
-        partnerId: this.partnerId
-      })
+      data = await getMerchantAvailablelegalTender({})
       console.log(data)
       if (data.data.meta.code !== 200) {
         this.$message({
@@ -618,7 +603,6 @@ export default{
       middleTopDataPrice: state => state.trade.middleTopData.last, // 当前交易对数据
       loginStep1Info: state => state.user.loginStep1Info,
       userInfo: state => state.user.loginStep1Info.userInfo,
-      partnerId: state => state.common.partnerId, // 商户id
       activeLanguage: state => state.common.activeLanguage,
       withdrawDepositList: state => state.common.withdrawDepositList,
       userInfoRefreshStatus: state => state.common.userInfoRefreshStatus,

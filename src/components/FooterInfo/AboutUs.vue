@@ -51,8 +51,7 @@ export default {
   methods: {
     async getAboutUsData () {
       const params = {
-        language: this.language,
-        partnerId: this.partnerId
+        language: this.language
       }
       const data = await getAboutUsDataAjax(params)
       if (!returnAjaxMessage(data, this)) {
@@ -66,7 +65,6 @@ export default {
   computed: {
     ...mapState({
       theme: state => state.common.theme,
-      partnerId: state => state.common.partnerId,
       language: state => state.common.language
     })
   },

@@ -120,7 +120,6 @@ export default {
     },
     async getHelpList () {
       const params = {
-        partnerId: this.partnerId,
         pageNum: this.pageNum,
         pageSize: this.pageSize,
         language: this.language,
@@ -147,7 +146,6 @@ export default {
   filter: {},
   computed: {
     ...mapState({
-      partnerId: state => state.common.partnerId,
       language: state => state.common.language,
       theme: state => state.common.theme
     }),

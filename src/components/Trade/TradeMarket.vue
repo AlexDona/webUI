@@ -196,7 +196,6 @@ export default {
     // 获取交易区信息
     async getTradeMarketData () {
       let params = {
-        partnerId: this.partnerId,
         i18n: this.language
       }
       const data = await getTradeMarketDataAjax(params)
@@ -486,7 +485,6 @@ export default {
       theme: state => state.common.theme,
       symbolMap: state => state.home.symbolMap, // 交易对map
       language: state => state.common.language,
-      partnerId: state => state.common.partnerId, // 商户id
       activeTradeArea: state => state.common.activeTradeArea,
       activeSymbol: state => state.common.activeSymbol, // 当前选中交易对
       previousSymbol: state => state.common.previousSymbol,

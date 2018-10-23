@@ -276,7 +276,6 @@ export default {
     require('../../../../static/css/theme/day/Personal/TransactionType/FiatOrdersDay.css')
     // 黑色主题样式
     require('../../../../static/css/theme/night/Personal/TransactionType/FiatOrdersNight.css')
-    console.log(this.userInfo.userInfo.partnerId)
     await this.getOTCAvailableCurrencyList()
     await this.getMerchantAvailablelegalTenderList()
     // this.getOTCEntrustingOrdersRevocation('')
@@ -310,7 +309,6 @@ export default {
     // 页面加载时 可用币种查询
     async getOTCAvailableCurrencyList () {
       const data = await getOTCAvailableCurrency({
-        partnerId: this.userInfo.userInfo.partnerId
       })
       console.log('可用币种列表')
       console.log(data)
@@ -324,7 +322,6 @@ export default {
     // 页面加载时 可用法币查询
     async getMerchantAvailablelegalTenderList () {
       const data = await getMerchantAvailablelegalTender({
-        partnerId: this.userInfo.userInfo.partnerId
       })
       console.log('可用法币')
       console.log(data)

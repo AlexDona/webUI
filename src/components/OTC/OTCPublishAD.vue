@@ -553,7 +553,6 @@ export default {
     require('../../../static/css/list/OTC/OTCPublishAD.css')
     require('../../../static/css/theme/day/OTC/OTCPublishADDay.css')
     require('../../../static/css/theme/night/OTC/OTCPublishADNight.css')
-    // console.log('从全局获得商户id：' + this.partnerId)
     console.log('从广告管理传过来的URL中的订单id:' + this.$route.query.id)
     if (this.$route.query.id) {
       console.log('1:url中有id')
@@ -986,7 +985,6 @@ export default {
   computed: {
     ...mapState({
       language: state => state.common.language,
-      partnerId: state => state.common.partnerId,
       theme: state => state.common.theme,
       mainWebsite: state => state.common.mainWebsite // 网站主网址
     })

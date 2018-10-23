@@ -365,7 +365,6 @@ export default {
     async inquireCurrencyList () {
       let data
       let param = {
-        partnerId: this.partnerId // 商户id
       }
       data = await getMerchantCurrencyList(param)
       if (!(returnAjaxMessage(data, this, 0))) {
@@ -426,7 +425,6 @@ export default {
   computed: {
     ...mapState({
       theme: state => state.common.theme,
-      partnerId: state => state.common.partnerId, // 商户id
       userInfo: state => state.user.loginStep1Info, // 用户详细信息
       userCenterActiveName: state => state.personal.userCenterActiveName
     })

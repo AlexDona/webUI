@@ -15,9 +15,6 @@ util.ajax = axios.create({
 })
 
 util.ajax.interceptors.request.use((config) => {
-  // 商户id
-  config.headers['partnerId'] = '474629374641963008'
-  config.headers['partnerNo'] = '100001'
   let xDomain = window.location.host.split(':')[0]
   xDomain = xDomain.startsWith('www') ? xDomain.slice(4) : xDomain
   config.headers['x-domain'] = xDomain

@@ -106,7 +106,6 @@ export default {
   methods: {
     getServiceProtocolData () {
       const params = {
-        partnerId: this.partnerId,
         termsTypeIds: this.termsTypeIds, // 用户协议代号
         language: this.language
       }
@@ -147,8 +146,7 @@ export default {
   computed: {
     ...mapState({
       theme: state => state.common.theme,
-      language: state => state.common.language,
-      partnerId: state => state.common.partnerId
+      language: state => state.common.language
     })
   },
   watch: {}

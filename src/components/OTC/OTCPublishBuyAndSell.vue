@@ -912,9 +912,7 @@ export default {
       mainWebsite: state => state.common.mainWebsite, // 网站主网址
       theme: state => state.common.theme,
       // 当前选中语言
-      language: state => state.common.language,
-      // 商户id
-      partnerId: state => state.common.partnerId
+      language: state => state.common.language
     })
   },
   watch: {}

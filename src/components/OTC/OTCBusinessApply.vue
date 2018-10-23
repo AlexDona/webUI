@@ -369,7 +369,6 @@ export default {
     // 商家申请界面用户协议
     async argumentBusinessApplyRequest () {
       const data = await argumentBusinessApply({
-        partnerId: this.partnerId,
         termsTypeids: 9,
         language: this.language
       })
@@ -396,7 +395,6 @@ export default {
     ...mapState({
       userInfo: state => state.user.loginStep1Info.userInfo, // 用户详细信息
       isLogin: state => state.user.isLogin, // 用户登录状态 false 未登录； true 登录
-      partnerId: state => state.common.partnerId,
       language: state => state.common.language,
       theme: state => state.common.theme,
       mainWebsite: state => state.common.mainWebsite // 网站主网址

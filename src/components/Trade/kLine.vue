@@ -92,7 +92,6 @@ export default {
     async getActiveSymbolData (tradeName) {
       console.log(tradeName)
       let params = {
-        partnerId: this.partnerId,
         i18n: this.language
       }
       params.tradeName = tradeName
@@ -577,16 +576,6 @@ export default {
         'id': `market_001`
       })
     },
-    // 获取默认交易对socket
-    getDefaultSymbolBySocket (type, symbol) {
-      if (type && symbol) {
-        this.socket.send({
-          'tag': type,
-          'content': `market.${symbol}.${this.partnerId}`,
-          'id': `market_001`
-        })
-      }
-    },
     // 获取币币交易市场 socket
     getTradeMarketBySocket (type, params) {
       // 币币交易市场
@@ -618,8 +607,7 @@ export default {
       activeTabSymbolStr: state => state.trade.activeTabSymbolStr,
       mainColor: state => state.common.mainColor,
       isJumpToTradeCenter: state => state.trade.isJumpToTradeCenter,
-      jumpSymbol: state => state.trade.jumpSymbol,
-      partnerId: state => state.common.partnerId // 商户id
+      jumpSymbol: state => state.trade.jumpSymbol
     })
   },
   watch: {

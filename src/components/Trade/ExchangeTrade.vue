@@ -576,7 +576,6 @@ export default {
       }
       console.log(this.middleTopData)
       let params = {
-        // partnerId: this.partnerId,
         userId: this.loginStep1Info.userId,
         tradeId: this.middleTopData.partnerTradeId + '',
         type: type ? 'SELL' : 'BUY', // 委单类型
@@ -685,7 +684,6 @@ export default {
     ...mapState({
       theme: state => state.common.theme,
       refreshEntrustStatus: state => state.trade.refreshEntrustStatus,
-      partnerId: state => state.common.partnerId,
       loginStep1Info: state => state.user.loginStep1Info,
       activeSymbol: state => state.common.activeSymbol,
       isLogin: state => state.user.isLogin,

@@ -60,7 +60,6 @@ export default {
     // 获取轮播图
     async getBanner () {
       const params = {
-        partnerId: this.partnerId,
         language: this.language
       }
       const data = await getBanner(params)
@@ -151,7 +150,6 @@ export default {
   computed: {
     ...mapState({
       // 'bannerActive',
-      partnerId: state => state.common.partnerId,
       language: state => state.common.language
     })
   },
