@@ -6,12 +6,12 @@ export const personal = {
   'user_asset_title3': 'Personal center',
   'user_asset_title4': 'Authentication',
   'user_asset_title5': 'Accounts receivable',
-  'user_asset_title6': 'Invitation to promote',
+  'user_asset_title6': 'Invitation promote',
   'user_asset_title7': 'Security center',
   'user_asset_title8': 'PUSH assets',
-  'user_asset_title9': 'My transaction',
+  'user_asset_title9': 'My trade',
   'user_asset_title10': 'Coin order',
-  'user_asset_title11': 'French currency order',
+  'user_asset_title11': ' legal tender order',
   'user_asset_title12': 'Please set the transaction password first, then set up the OTC collection account!',
   'user_asset_title13': 'Please complete the identity authentication before setting up the OTC collection account!',
   'user_hidden_assets': 'Hidden asset with a currency of 0',
@@ -28,7 +28,7 @@ export const personal = {
   'user_assets_withdrawal_hint4': 'Cash withdrawal amount ≤ account available assets - unconfirmed digital assets.',
   'user_assets_withdrawal_hint5': 'Handling fee <minimum withdrawal fee, please re-enter',
   'user_assets_withdrawal_hint6': 'Fees>Maximum withdrawal fee, please re-enter',
-  'user_assets_no_transaction_password': 'You have not set a transaction password, please set the transaction password first.',
+  'user_assets_no_transaction_password': 'You have not set transaction password, please set the transaction password.',
   'user_assets_grade_membership': 'membership level',
   'user_assets_or': 'or',
   'user_assets_current_total': 'Current asset valuation',
@@ -38,7 +38,7 @@ export const personal = {
   // 提币地址Coin address
   'user_address_empty': 'The coin address cannot be empty',
   // 提币列表Coin list
-  'user_address_delete_withdrawals': 'Are you sure you want to delete the coin address?',
+  'user_address_delete_withdrawals': 'Are you sure delete the coin address?',
   // #####################个人中心#####################Personal center
   // 身份认证Authentication
   'user_identity': 'Authentication',
@@ -53,9 +53,9 @@ export const personal = {
   'user_senior_certification': 'Advanced certification',
   'user_senior_audit': 'Pending review',
   'user_senior_notPass': 'Sorry, your advanced certification has not passed!',
-  'user_senior_notPass_text1': 'Reason for rejection',
+  'user_senior_notPass_text1': 'Rejection Reason',
   'user_senior_go_certification': 'Go to certification',
-  'user_senior_not_pass': 'Did not pass',
+  'user_senior_not_pass': 'not pass',
   'user_senior_text1': 'note',
   'user_senior_text2': `Photo file size can't exceed 10M! The file format must be jpg, bmp, png, etc.!`,
   'user_senior_text3': 'Please make sure the photo has no watermark, no stains, clear identity information, complete avatar, non-text reverse photo! Do not use PS for photo processing!',
@@ -112,7 +112,7 @@ export const personal = {
   'user_invite_indirect': 'Indirect promotion',
   'user_invite_audit': 'Pending review',
   'user_invite_already_passed': 'passed',
-  'user_invite_not_pass': 'Did not pass',
+  'user_invite_not_pass': 'not pass',
   // 推广统计列表Promotion statistics list
   'user_invite_user_uid': 'User UID',
   'user_invite_login_name': 'log-in name',
@@ -203,12 +203,12 @@ export const personal = {
   'user_coin_appoint_single': 'Bill',
   'user_coin_rental': 'lump sum',
   'user_coin_start_stop': 'Start and stop',
-  'user_coin_entrust': 'Commission',
+  'user_coin_entrust': 'entrust',
   'user_coin_volume': 'Turnover',
   // 当前委托Commissioned by the current Current commission
-  'user_coin_commissioned_current': 'Current commission',
+  'user_coin_commissioned_current': 'Current entrust',
   // 历史委托Historical commission
-  'user_coin_commissioned_history': 'Historical commission',
+  'user_coin_commissioned_history': 'history entrust',
   // 成交明细Transaction details
   'user_coin_clinch_deal_detail': 'Transaction details',
   // 法币订单French currency order

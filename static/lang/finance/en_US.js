@@ -1,11 +1,11 @@
 export const finance = {
-  'finance_newestPrice': 'Latest price',
-  'finance_increase': 'Gain',
-  'finance_date': 'Same day',
+  'finance_newestPrice': 'Latest',
+  'finance_increase': 'Change',
+  'finance_date': 'Today',
   'finance_history': 'history',
   'finance_invest': 'Deposit',
-  'finance_useBalance': 'Available Balance',
-  'finance_errorTips': 'The number of deposits is greater than the available assets',
+  'finance_useBalance': 'Balance',
+  'finance_errorTips': 'Deposits greater than assets',
   'finance_mast': 'Immediately',
   'finance_mine': 'mine',
   'finance_estimatedValue': 'Valuation',
@@ -17,10 +17,17 @@ export const finance = {
   'finance_createTime': 'Creation time',
   'finance_huoqi': 'current',
   'finance_grant': 'Issue',
-  'finance_noemptyTips': 'The type of deposit or the amount of deposit cannot be empty',
-  'finance_loginTips': '@You have not logged in yet, please',
+  'finance_noemptyTips': 'Deposit type and amount cannot be empty',
+  'finance_loginTips': '@Not logged in yet',
   'finance_or': 'or',
-  'finance_loginTipsTwo': 'Then check it out!',
-  // 二次确认弹框提示信息Secondary confirmation bullet message
+  'finance_loginTipsTwo': 'Check later!',
+  'finance_interestRate': 'rate',
+  'finance_xiAndben': 'Interest before cost',
+  'finance_timeLong': 'timeLong',
+  'finance_leit': 'to',
+  'finance_day': 'day',
+  'finance_accrual': 'Interest',
+  'finance_capital': 'Capital',
+  // 二次确认弹框提示信息Secondary confirmation
   'finance_tipsContentOne': 'Determine to retrieve the deposit?'
 }
