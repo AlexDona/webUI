@@ -1,7 +1,12 @@
 <template>
   <dl class="new-price">
     <dt class="text-align-c font-size16">
-      <span>{{middleTopData.last}}</span>
+      <span
+        :class="{
+          up:middleTopData.chg>0,
+          down:middleTopData.chg<0
+        }"
+      >{{middleTopData.last}}</span>
       <IconFontCommon
         v-show="middleTopData.chg<0"
         iconName="icon-down"
@@ -46,5 +51,17 @@ export default {
 }
 </script>
 <style scoped lang="scss" type="text/scss">
-
+  @import "../../../static/css/scss/index";
+  .new-price{
+    >dt{
+      >span{
+        &.up{
+          color:$upColor;
+        }
+        &.down{
+          color:$downColor;
+        }
+      }
+    }
+  }
 </style>

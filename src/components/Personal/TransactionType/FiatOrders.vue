@@ -266,10 +266,10 @@ export default {
       endTime: '', // 默认结束时间
       // 商家订单列表
       merchantsOrdersList: [],
-      fullscreenLoading: true
+      fullscreenLoading: false
     }
   },
-  created () {
+  async created () {
     // 覆盖Element样式
     require('../../../../static/css/list/Personal/TransactionType/FiatOrders.css')
     // 白色主题样式
@@ -277,8 +277,8 @@ export default {
     // 黑色主题样式
     require('../../../../static/css/theme/night/Personal/TransactionType/FiatOrdersNight.css')
     console.log(this.userInfo.userInfo.partnerId)
-    this.getOTCAvailableCurrencyList()
-    this.getMerchantAvailablelegalTenderList()
+    await this.getOTCAvailableCurrencyList()
+    await this.getMerchantAvailablelegalTenderList()
     // this.getOTCEntrustingOrdersRevocation('')
     // console.log(this.USER_ASSETS_LIST)
   },
