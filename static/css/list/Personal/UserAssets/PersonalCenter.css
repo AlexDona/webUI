@@ -35,7 +35,7 @@ personal-center.personal .el-tabs__nav{
   width: 970px;
   overflow: unset;
   position: relative;
-  overflow: hidden;
+  /*overflow: hidden;*/
 }
 .personal-center.personal .el-tabs--left {
   overflow: unset;
