@@ -1,12 +1,12 @@
 export const trade = {
   // #####################币币交易-买卖单#####################''Currency transactions - sales orders'
   'trade_coin_buying_and_sell': 'Purchase order',
-  'trade_coin_entrusted_price': 'Commission price',
-  'trade_coin_entrusted_amount': 'Amount of commission',
+  'trade_coin_entrusted_price': 'Entrust price',
+  'trade_coin_entrusted_amount': 'Amount of entrust',
   // #####################查看更多委单记录#####################''View more order records'
-  'trade_coin_commissioned_current': 'Current commission',
-  'trade_coin_entrust': 'Commission',
-  'trade_coin_text1': 'You are not logged in yet, please',
+  'trade_coin_commissioned_current': 'Current entrust',
+  'trade_coin_entrust': 'entrust',
+  'trade_coin_text1': 'You are not logged, please',
   'trade_coin_text2': 'or',
   'trade_coin_text3': 'After viewing',
   'trade_coin_revocation': 'Cancel',
@@ -15,7 +15,7 @@ export const trade = {
   'trade_exchange_currency_data': 'Currency information',
   'trade_exchange_price_deal': 'Limit trading',
   'trade_exchange_can_buy': 'Can buy',
-  'trade_exchange_vendibility': 'Available for sale',
+  'trade_exchange_vendibility': 'Can sale',
   'trade_exchange_estimated_turnover': 'Estimated transaction amount',
   'trade_exchange_market': 'Market transaction',
   'trade_exchange_market_price': 'Market transaction price',
@@ -26,7 +26,7 @@ export const trade = {
   // K线''K line'
   'trade_time_share': 'Time sharing',
   'trade_latest_price': 'Latest price',
-  'trade_ups_and_downs': 'Ups and downs',
+  'trade_ups_and_downs': 'Ups downs',
   'trade_highest': 'highest',
   'trade_minimum': 'lowest',
   // 最近成交记录''Recent transaction record'

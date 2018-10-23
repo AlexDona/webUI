@@ -94,7 +94,7 @@
         <!--交易对-->
         <el-table-column
           :label="$t('M.comm_deal') + $t('M.comm_pair')"
-          width="132px"
+          width="120px"
         >
           <template slot-scope="s">
             <div style="padding-left:14px;display:flex;width: 132px !important;box-sizing: border-box;">
@@ -135,7 +135,7 @@
         <el-table-column
           prop="last"
           :label="$t('M.home_market_recent_quotation')"
-          width="160px"
+          width="130px"
           sortable
         >
           <template slot-scope="s">
@@ -145,6 +145,7 @@
                       width:160px;
                       height:30px;
                       margin:10px auto;
+                      padding-top: 8px;
                   ">
               <div class="top"
                    style="height:15px;line-height: 15px"
@@ -177,7 +178,7 @@
         <el-table-column
           prop="high"
           :label="$t('M.home_market_ceiling_price')"
-          width="145px"
+          width="130px"
           sortable
         >
           <template slot-scope="s">
@@ -197,7 +198,7 @@
         <el-table-column
           prop="low"
           :label="$t('M.home_market_minimum_price')"
-          width="145px"
+          width="130px"
           sortable
         >
           <template slot-scope="s">
@@ -217,9 +218,10 @@
         <el-table-column
           prop="volume"
           :label="'24H' + $t('M.home_market_volume')"
-          width="120px"
+          width="150px"
           sortable
         >
+        
           <template slot-scope="s">
             <div
               style="
@@ -237,7 +239,7 @@
         <el-table-column
           prop="rose"
           :label="$t('M.trade_ups_and_downs')"
-          width="80px"
+          width="110px"
           sortable
         >
           <template slot-scope="s">
@@ -274,7 +276,7 @@
         <el-table-column
           prop="tendency"
           :label="$t('M.home_market_price_tendency')"
-          width="120px"
+          width="140px"
         >
           <template slot-scope="s">
             <EchartsLineCommon
@@ -286,7 +288,7 @@
         <el-table-column
           prop="collect"
           label=" "
-          width="36px"
+          width="20px"
         >
           <template slot-scope="s">
             <!--非自选区-->
