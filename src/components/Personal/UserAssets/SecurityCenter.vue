@@ -675,7 +675,7 @@ export default {
       fullscreenLoading: false // 整页loading
     }
   },
-  created () {
+  async created () {
     // 覆盖Element样式
     require('../../../../static/css/list/Personal/UserAssets/SecurityCenter.css')
     // 白色主题样式
@@ -684,10 +684,10 @@ export default {
     require('../../../../static/css/theme/night/Personal/UserAssets/SecurityCenterNight.css')
     // 调用安全中心登陆记录 安全设置记录 邮箱 手机 谷歌 交易密码 状态
     if (this.refSecurityCenterStatus) {
-      this.getSecurityCenter()
+      await this.getSecurityCenter()
       this.CHANGE_REF_SECURITY_CENTER_INFO(false)
     }
-    this.getSecurityCenter('logon-record')
+    await this.getSecurityCenter('logon-record')
   },
   mounted () {},
   activited () {},
@@ -710,7 +710,7 @@ export default {
     /**
      * 安全中心
      */
-    getSecurityCenter (entrustType) {
+    async getSecurityCenter (entrustType) {
       const params = {
         pageNumber: this.logonRecordPage, // 页码
         pageSize: this.pageSize // 页数
@@ -725,7 +725,7 @@ export default {
       }
       // 整页loading
       // this.fullscreenLoading = true
-      getSecurityCenter(this, params, (data) => {
+      await getSecurityCenter(this, params, (data) => {
         // 接口失败清除loading
         this.fullscreenLoading = false
         if (data) {
@@ -751,20 +751,20 @@ export default {
       })
     },
     // 分页
-    changeCurrentPage (entrustType, pageNum) {
+    async changeCurrentPage (entrustType, pageNum) {
       console.log(pageNum)
       switch (entrustType) {
         // 登陆记录分页
         case 'logon-record':
           this.loading = true
           this.logonRecordPage = pageNum
-          this.getSecurityCenter(entrustType)
+          await this.getSecurityCenter(entrustType)
           break
         // 安全设置分页
         case 'security-record':
           this.loading = true
           this.securityRecordPage = pageNum
-          this.getSecurityCenter(entrustType)
+          await this.getSecurityCenter(entrustType)
           break
       }
     },
@@ -789,7 +789,9 @@ export default {
       }
     },
     // 发送验证码
-    sendPhoneOrEmailCode (loginType) {
+    async sendPhoneOrEmailCode (loginType) {
+      console.log(this.disabledOfPhoneBtn)
+      console.log(this.disabledOfEmailBtn)
       if (this.disabledOfPhoneBtn || this.disabledOfEmailBtn) {
         return false
       }
@@ -804,8 +806,7 @@ export default {
           params.address = this.userInfo.userInfo.email
           break
       }
-      sendPhoneOrEmailCodeAjax(loginType, params, (data) => {
-        console.log(this.disabledOfPhoneBtn)
+      await sendPhoneOrEmailCodeAjax(loginType, params, (data) => {
         // 提示信息
         if (!returnAjaxMessage(data, this)) {
           console.log('error')
@@ -1048,7 +1049,7 @@ export default {
       } else {
         // 接口成功清除loading
         this.loadingCircle.close()
-        this.getSecurityCenter()
+        await this.getSecurityCenter()
         // 安全中心状态刷新
         this.openTheValidation = false
         this.closeValidation = false

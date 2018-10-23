@@ -395,14 +395,14 @@ export default {
         // 接口成功清除loading
         this.fullscreenLoading = false
         // 验证通过调用验证方式接口
-        this.getSecurityCenter()
+        await this.getSecurityCenter()
       }
     },
     /**
      * 安全中心
      */
-    getSecurityCenter () {
-      getSecurityCenter(this, {}, data => {
+    async getSecurityCenter () {
+      await getSecurityCenter(this, {}, data => {
         if (data) {
           this.securityCenter = data.data.data
           this.mentionMoneyConfirm = true
@@ -534,7 +534,6 @@ export default {
           break
       }
       await apiSendPhoneOrEmailCodeAjax(loginType, params, (data) => {
-        console.log(this.disabledOfPhoneBtn)
         // 提示信息
         if (!returnAjaxMessage(data, this)) {
           console.log('error')
@@ -554,6 +553,8 @@ export default {
               })
               break
           }
+          console.log(this.disabledOfPhoneBtn)
+          console.log(this.disabledOfEmailBtn)
         }
       })
     },

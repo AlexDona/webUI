@@ -520,7 +520,7 @@ export default {
       }
     },
     // 发送验证码
-    sendPhoneOrEmailCode (msgType) {
+    async sendPhoneOrEmailCode (msgType) {
       if (this.disabledOfPhoneBtn || this.disabledOfEmailBtn) {
         return false
       }
@@ -536,7 +536,7 @@ export default {
           params.address = this.userInfo.email
           break
       }
-      sendPhoneOrEmailCodeAjax(msgType, params, (data) => {
+      await sendPhoneOrEmailCodeAjax(msgType, params, (data) => {
         // 提示信息
         if (!returnAjaxMessage(data, this)) {
           console.log('error')
