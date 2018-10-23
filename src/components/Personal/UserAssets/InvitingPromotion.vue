@@ -439,7 +439,7 @@ export default {
         pageSize: this.pageSize // 条数
       })
       console.log(data)
-      if (!(returnAjaxMessage(data, this, 0))) {
+      if (!returnAjaxMessage(data, this)) {
         // 接口失败清除局部loading
         this.loading = false
         return false
