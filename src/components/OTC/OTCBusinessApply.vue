@@ -96,7 +96,19 @@
         <div class="step">
           <div class="content">
             <h4 class="title">{{$t('M.otc_merchant_step1')}}</h4>
-            <p>{{$t('M.otc_merchant_pleaseDowload')}}<a :href= 'downLoadUrl' download="商家认证申请表 Merchant certification application form" class="businessApplyModel">《{{$t('M.otc_merchant_applyMaterial')}}》</a>，{{$t('M.otc_merchant_content_one')}}。</p>
+            <!-- 测试 -->
+            <p>
+              {{$t('M.otc_merchant_pleaseDowload')}}
+              <span
+                class="businessApplyModel"
+                @click="downloadApplicationForm"
+              >
+                《{{$t('M.otc_merchant_applyMaterial')}}》
+              </span>
+              ，{{$t('M.otc_merchant_content_one')}}。
+            </p>
+            <!-- 测试 -->
+            <!-- <p>{{$t('M.otc_merchant_pleaseDowload')}}<a :href= 'downLoadUrl' download="商家认证申请表 Merchant certification application form" class="businessApplyModel">《{{$t('M.otc_merchant_applyMaterial')}}》</a>，{{$t('M.otc_merchant_content_one')}}。</p> -->
             <p>{{$t('M. otc_merchant_videoKode')}}：</p>
             <p>{{$t('M.otc_merchant_detailOne')}}</p>
             <p>{{$t('M.otc_merchant_detailTwo')}}</p>
@@ -231,6 +243,7 @@ export default {
       count: '0',
       dialogVisible: false, // 弹出框状态
       argumentContent: '', // 协议文件
+      fileName: '商家认证申请表 Merchant certification application form', // 下载文件名字
       downLoadUrl: '' // 商家申请资料地址
     }
   },
@@ -249,6 +262,20 @@ export default {
   update () {},
   beforeRouteUpdate () {},
   methods: {
+    // 下载商家申请资料模板
+    downloadApplicationForm () {
+      console.log(this.downLoadUrl)
+      console.log(this.fileName)
+      fetch(this.downLoadUrl).then(res => res.blob().then(blob => {
+        let a = document.createElement('a')
+        let url = window.URL.createObjectURL(blob)
+        let filename = this.fileName
+        a.href = url
+        a.download = filename
+        a.click()
+        window.URL.revokeObjectURL(url)
+      }))
+    },
     // ...mapMutations([]),
     // 点击申请商家用户按钮发送请求
     submit () {
@@ -725,6 +752,7 @@ export default {
   }
   .businessApplyModel{
     color: #D45858;
+    cursor: pointer;
   }
   // .footer{
   //   position: absolute;
