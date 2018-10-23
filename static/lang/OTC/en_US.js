@@ -156,7 +156,7 @@ export const OTC = {
   'otc_complaint_frezzing': 'The complaint is frozen, waiting to be processed',
   // #########商家申请##################Merchant application
   'otc_merchant': 'Merchant',
-  'otc_privilege': 'privilege',
+  'otc_privilege': 'Privilege',
   // 'otc_merchant_publishAD': 'Place an ad',
   'otc_merchant_publishAD': 'Publish AD',
   'otc_merchant_pubshorder': 'Freely publish pricing, floating price advertising',
