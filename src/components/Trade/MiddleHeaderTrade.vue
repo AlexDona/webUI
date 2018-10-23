@@ -204,6 +204,7 @@ export default {
       }
     }
     &.night{
+      color:#A9BED4;
       background-color: $mainContentNightBgColor;
       box-shadow:2px 0px 3px rgba(27,35,49,1);
       >.inner-box{

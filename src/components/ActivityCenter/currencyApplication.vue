@@ -94,22 +94,22 @@ export default {
       fileName: ''
     }
   },
-  created () {
-    this.getDownUrl()
+  async created () {
+    await this.getDownUrl()
     // 上币申请动态文案
-    this.getServiceProtocolData()
+    await this.getServiceProtocolData()
   },
   mounted () {},
   activited () {},
   update () {},
   beforeRouteUpdate () {},
   methods: {
-    getServiceProtocolData () {
+    async getServiceProtocolData () {
       const params = {
         termsTypeIds: this.termsTypeIds, // 用户协议代号
         language: this.language
       }
-      getServiceProtocolData(this, params, (data) => {
+      await getServiceProtocolData(this, params, (data) => {
         console.log(data)
         this.contentHTML = data.data.data[0].content
       })

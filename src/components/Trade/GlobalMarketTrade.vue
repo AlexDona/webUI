@@ -23,7 +23,7 @@
               <div class="thead">
                 <!-- 交易所 交易对 交易价 成交量 -->
                 <div class="tr">
-                  <div class="th width20">{{ $t('M.common_exchange') }}</div><div class="th">{{ $t('M.common_counterparty') }}</div><div class="th">{{ $t('M.common_transaction_price') }}</div><div class="th count">{{ $t('M.common_trading_volume') }}({{activeSymbol.sellsymbol}})</div>
+                  <div class="th width20">{{ $t('M.common_exchange') }}</div><div class="th symbol">{{ $t('M.common_counterparty') }}</div><div class="th price">{{ $t('M.common_transaction_price') }}</div><div class="th count">{{ $t('M.common_trading_volume') }}({{activeSymbol.sellsymbol}})</div>
                 </div>
               </div>
               <div
@@ -41,8 +41,7 @@
                   </div><div class="td price">
                     <div class="top">
                       {{keep2Num(item.boursePrice)}}
-                    </div>
-                    <!--货币转换-->
+                    </div><!--货币转换-->
                     <div
                       class="bottom"
                       v-if="currencyRateList[activeSymbol.area]"
@@ -274,13 +273,16 @@ export default {
     &.night{
       >.inner-box{
         >.title{
-          color:$nightMainTitleColor;
+          color:$mainNightTitleColor;
           background-color: $mainContentNightBgColor;
           box-shadow:2px 0px 3px rgba(27,35,49,1);
         }
         >.content{
           background-color: $mainContentNightBgColor;
           color:$nightFontColor;
+          .thead{
+            color:$mainNightTitleColor;
+          }
         }
       }
     }

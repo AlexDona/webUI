@@ -471,9 +471,9 @@ export default {
       }
     }
     &.night {
+      color: $nightFontColor;
       > .inner-box {
         > .title {
-          color: $nightMainTitleColor;
           background-color: $mainContentNightBgColor;
           box-shadow:2px 0px 3px rgba(27,35,49,1);
           > .text {
@@ -498,6 +498,7 @@ export default {
             /*表头*/
             >.title-box{
               .header{
+                color:$mainNightTitleColor;
                 >span{
                 }
               }

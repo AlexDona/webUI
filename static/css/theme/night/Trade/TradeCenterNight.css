@@ -1,10 +1,10 @@
 /*币币交易通用night样式*/
 .trade-box.night .el-table{
-  color:#9c9c9c;
+  color:#E4EAF4;
 }
 /*表格表头*/
 .trade-box.night .el-table th>.cell{
-  color:#d8d8d8;
+  color:#A9BED4;
 }
 .trade-box.night .el-table--enable-row-hover .el-table__body tr:hover>td{
   background-color: #1a1d2f;

@@ -221,6 +221,7 @@ export default {
         /*表头*/
         >.title{
           flex:1;
+          color:$mainNightTitleColor;
           &:nth-of-type(1){
             margin-left:20px;
           }
@@ -269,6 +270,7 @@ export default {
           padding:0 4.5%;
           line-height: 40px;
           position: relative;
+          color:$mainColor;
           &:before{
             content:'';
             position: absolute;
@@ -300,6 +302,9 @@ export default {
             >span{
               flex:1;
               display: inline-block;
+              /*>.base-currency{*/
+                /**/
+              /*}*/
               &.price{
                 margin-right:12%;
               }
@@ -307,12 +312,6 @@ export default {
                 &.price{
                   margin-right:2%;
                 }
-              }
-              &.up{
-                color: $upColor;
-              }
-              &.down{
-                color:$downColor;
               }
             }
           }
@@ -359,19 +358,31 @@ export default {
           >.coin-item{
             white-space:nowrap;
             >.coin-item{
+              .click-button{
+                color:$nightFontColor;
+              }
               &:hover{
                 background-color: #1a1d2f;
               }
               >span{
-                &.price{
+                >.base-currency{
+                  color:$nightFontColor;
+                }
+                >.currency-chn-name{
+                  color:#b0b2b6;
+                }
+                &.price,&.rose{
+                  color:$nightFontColor;
                 }
                 @media screen and (max-width: 1920px) {
                   &.price{
                   }
                 }
                 &.up{
+                  color: $upColor;
                 }
                 &.down{
+                  color:$downColor;
                 }
               }
             }
@@ -422,6 +433,9 @@ export default {
                 background-color: #eaf2fa;
               }
               >span{
+                >.currency-chn-name{
+                  color:#b0b2b6;
+                }
                 &.price{
                 }
                 @media screen and (max-width: 1920px) {
@@ -429,8 +443,10 @@ export default {
                   }
                 }
                 &.up{
+                  color: $upColor;
                 }
                 &.down{
+                  color:$downColor;
                 }
               }
             }
