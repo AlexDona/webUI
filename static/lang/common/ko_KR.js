@@ -162,10 +162,10 @@ export const common = {
   'comm_after_get': '검색',
   'comm_get_code': '인증 코드 받기',
   // 全球行情任增加
-  'common_exchange': '交易所',
-  'common_counterparty': '交易对',
-  'common_transaction_price': '交易价',
-  'common_trading_volume': '成交量',
-  'common_depth_map': '深度图',
-  'common_friendly_link': '友情链接'
+  'common_exchange': '교환',
+  'common_counterparty': '거래 쌍',
+  'common_transaction_price': '거래 가격',
+  'common_trading_volume': '볼륨',
+  'common_depth_map': '깊이지도',
+  'common_friendly_link': '친숙한 링크'
 }

@@ -156,7 +156,7 @@ export const OTC = {
   'otc_complaint_frezzing': 'The complaint is frozen, waiting to be processed',
   // #########商家申请##################Merchant application
   'otc_merchant': 'Merchant',
-  'otc_privilege': 'privilege',
+  'otc_privilege': 'Privilege',
   // 'otc_merchant_publishAD': 'Place an ad',
   'otc_merchant_publishAD': 'Publish AD',
   'otc_merchant_pubshorder': 'Freely publish pricing, floating price advertising',
@@ -218,7 +218,7 @@ export const OTC = {
   'otc_publishAD_setDiscriptTwo': 'The rest of the sellers will see "Advertisers have reached the maximum order, please try again later", and the next order will be allowed to enter after you have finished processing.',
   'otc_publishAD_sellNeedLimit': ' The seller must have sold several times',
   'otc_publishAD_sellpassword': 'transaction password',
-  'otc_publishAD_pleaseInput': 'please enter',
+  'otc_publishAD_pleaseInput': 'please enter ',
   'otc_publishAD_publishDis': '* Release Notes',
   'otc_publishAD_discriptLineOne': 'In order to ensure the security of users transactions, a digital currency hosting system will be adopted. It is strictly forbidden to bypass the platform for private transactions, and the offender will bear the loss and the permanent title;',
   'otc_publishAD_discriptLineTwo': 'Please write down the trading conditions you want and the matters you need to pay attention to in the trade description and trade notes. The clear information will increase your chances of success.',

@@ -162,10 +162,10 @@ export const common = {
   'comm_after_get': '取得',
   'comm_get_code': '確認コードを取得する',
   // 全球行情任增加
-  'common_exchange': '交易所',
-  'common_counterparty': '交易对',
-  'common_transaction_price': '交易价',
-  'common_trading_volume': '成交量',
-  'common_depth_map': '深度图',
-  'common_friendly_link': '友情链接'
+  'common_exchange': '取引所',
+  'common_counterparty': '取引き',
+  'common_transaction_price': '取引価格',
+  'common_trading_volume': '出来高',
+  'common_depth_map': '深さ図',
+  'common_friendly_link': 'ホットリンク'
 }
