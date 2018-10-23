@@ -165,7 +165,7 @@ export const OTC = {
   'otc_apply': '申请',
   'otc_merchant_sendemail': '发送邮件',
   'otc_merchant_verified': '审核通过',
-  'otc_submit': '提 交',
+  'otc_submit': '提交',
   'otc_merchant_step1': '步骤一：准备资料',
   'otc_merchant_step2': '步骤二：发送申请邮件',
   'otc_merchant_step3': '步骤三：提交申请',

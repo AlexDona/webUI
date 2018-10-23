@@ -96,7 +96,7 @@
         <div class="step">
           <div class="content">
             <h4 class="title">{{$t('M.otc_merchant_step1')}}</h4>
-            <p>{{$t('M.otc_merchant_pleaseDowload')}}<a :href= 'downLoadUrl' class="businessApplyModel">《{{$t('M.otc_merchant_applyMaterial')}}》</a>，{{$t('M.otc_merchant_content_one')}}。</p>
+            <p>{{$t('M.otc_merchant_pleaseDowload')}}<a :href= 'downLoadUrl' download="商家认证申请表 Merchant certification application form" class="businessApplyModel">《{{$t('M.otc_merchant_applyMaterial')}}》</a>，{{$t('M.otc_merchant_content_one')}}。</p>
             <p>{{$t('M. otc_merchant_videoKode')}}：</p>
             <p>{{$t('M.otc_merchant_detailOne')}}</p>
             <p>{{$t('M.otc_merchant_detailTwo')}}</p>
@@ -296,6 +296,7 @@ export default {
       // 刚进页面接口请求回来之前先展示缓冲界面
       this.applyStatus = 4
       const data = await firstEnterBusinessApply()
+      console.log(' 首次点击商家申请请求数据')
       console.log(data)
       // 提示信息
       if (!(returnAjaxMessage(data, this, 0))) {

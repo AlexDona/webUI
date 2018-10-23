@@ -163,10 +163,10 @@ export const common = {
   'comm_after_get': 'Retrieve',
   'comm_get_code': 'get verification code',
   // 全球行情任增加
-  'common_exchange': '交易所',
-  'common_counterparty': '交易对',
-  'common_transaction_price': '交易价',
-  'common_trading_volume': '成交量',
-  'common_depth_map': '深度图',
-  'common_friendly_link': '友情链接'
+  'common_exchange': 'Exchange',
+  'common_counterparty': 'Counterparty',
+  'common_transaction_price': 'Trading Price',
+  'common_trading_volume': 'Trading Volume',
+  'common_depth_map': 'Depth Map',
+  'common_friendly_link': 'Friendly Link'
 }
