@@ -353,7 +353,6 @@ export default{
     // 首次链接接口获取行情数据
     async getHomeMarketByAjax () {
       const params = {
-        partnerId: this.partnerId,
         i18n: this.language
       }
       const data = await getHomeMarketByAjax(params)
@@ -508,7 +507,6 @@ export default{
       theme: state => state.common.theme,
       language: state => state.common.language, // 语言
       plateList: state => state.common.plateList, // 板块列表
-      partnerId: state => state.common.partnerId, // 商户id
       activeSymbol: state => state.common.activeSymbol,
       isLogin: state => state.user.isLogin,
       activeTradeArea: state => state.common.activeTradeArea,

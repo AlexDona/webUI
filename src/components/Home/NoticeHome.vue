@@ -93,7 +93,6 @@ export default {
     // 获取新闻公告列表
     async getNewsNoticeList () {
       const params = {
-        partnerId: this.partnerId,
         language: this.language
       }
       const data = await getAllNewsNoticeListForHomePage(params)
@@ -119,7 +118,6 @@ export default {
   filter: {},
   computed: {
     ...mapState({
-      partnerId: state => state.common.partnerId,
       language: state => state.common.language
     })
   },

@@ -196,7 +196,6 @@ export default {
     // 获取全部type类型的前5条数据
     async getAllTypeListNewsList () {
       let params = {
-        partnerId: this.partnerId,
         pageNum: 1,
         pageSize: 5,
         language: this.language
@@ -235,7 +234,6 @@ export default {
     // 获取所有新闻类型
     async getAllNewsTypeList () {
       const params = {
-        partnerId: this.partnerId
       }
       const data = await getAllNewsTypeList(params)
       if (!returnAjaxMessage(data, this)) {
@@ -249,7 +247,6 @@ export default {
     // 获取新闻公告列表
     async getNewsNoticeList () {
       const params = {
-        partnerId: this.partnerId,
         pageNum: this.pageNum,
         pageSize: this.pageSize,
         language: this.language,
@@ -270,7 +267,6 @@ export default {
   filter: {},
   computed: {
     ...mapState({
-      partnerId: state => state.common.partnerId,
       language: state => state.common.language,
       theme: state => state.common.theme,
       newsDetailJumpId: state => state.footerInfo.newsDetailJumpId

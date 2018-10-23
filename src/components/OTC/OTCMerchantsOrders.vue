@@ -445,7 +445,6 @@ export default {
     // 3页面加载时 可用币种查询
     async getOTCAvailableCurrencyList () {
       const data = await getOTCAvailableCurrency({
-        partnerId: this.partnerId
       })
       console.log('可用币种列表')
       console.log(data)
@@ -459,7 +458,6 @@ export default {
     // 4页面加载时 可用法币查询
     async getMerchantAvailablelegalTenderList () {
       const data = await getMerchantAvailablelegalTender({
-        partnerId: this.partnerId
       })
       console.log('可用法币')
       console.log(data)
@@ -573,8 +571,7 @@ export default {
   computed: {
     ...mapState({
       language: state => state.common.language,
-      theme: state => state.common.theme,
-      partnerId: state => state.common.partnerId
+      theme: state => state.common.theme
     })
   },
   watch: {}

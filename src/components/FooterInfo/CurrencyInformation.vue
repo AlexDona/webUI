@@ -69,7 +69,6 @@ export default {
         // logo: 'http://fubt-3.oss-cn-hongkong.aliyuncs.com/3829bdfa-390b-46f7-b6cc-b201883ca93e',
         // modifier: '申',
         // name: 'BTC',
-        // partnerId: '474629374641963008',
         // shortName: '比特币',
         // updateTime: '2018-09-18 10:12:17',
         // version: 1
@@ -89,8 +88,7 @@ export default {
     // 数字资产列表
     async getFootCurrencyInfoList () {
       const data = await getCurrencyInfoList({
-        language: this.language,
-        partnerId: this.partnerId
+        language: this.language
       })
       console.log(data)
       if (!returnAjaxMessage(data, this)) {
@@ -121,7 +119,6 @@ export default {
   computed: {
     ...mapState({
       theme: state => state.common.theme,
-      partnerId: state => state.common.partnerId,
       language: state => state.common.language
     })
   },

@@ -558,7 +558,6 @@ export default {
      */
     async getEntrustSelectBox () {
       let params = {
-        partnerId: this.partnerId
       }
       this.loading = true
       const data = await getEntrustSelectBox(params)
@@ -707,7 +706,6 @@ export default {
     ...mapState({
       theme: state => state.common.theme,
       language: state => state.common.language,
-      partnerId: state => state.common.partnerId,
       userInfo: state => state.user.loginStep1Info,
       userCenterActiveName: state => state.personal.userCenterActiveName
     })

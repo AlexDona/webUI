@@ -723,7 +723,6 @@ export default {
       const data = await getFinancialManagement({
         pageNum: this.currentPage,
         pageSize: this.pageSize,
-        // partnerId: this.partnerId,
         coinId: this.selectedCoinId,
         coinName: this.selecteCoindName
       })
@@ -844,7 +843,6 @@ export default {
     ...mapState({
       theme: state => state.common.theme,
       isLogin: state => state.user.isLogin,
-      partnerId: state => state.common.partnerId,
       financeLineRenderTimeList: state => state.finance.financeLineRenderTimeList,
       financeLineRenderPriceList: state => state.finance.financeLineRenderPriceList,
       status: state => state.finance.status

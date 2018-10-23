@@ -470,7 +470,6 @@ export default {
     this.getOTCAvailableCurrencyList()
     // console.log(this.selectedOTCAvailableCurrencyName)
     // console.log(this.selectedOTCAvailableCurrencyCoinID)
-    // console.log(this.partnerId)
     // console.log(this.userInfo)
     // 2.0 otc可用法币查询：
     // this.getMerchantAvailablelegalTenderList()
@@ -685,7 +684,6 @@ export default {
     //  1.0 otc可用币种查询：我要购买/我要出售的币种列表
     async getOTCAvailableCurrencyList () {
       const data = await getOTCAvailableCurrency({
-        partnerId: this.partnerId // 商户id
       })
       console.log('otc可用币种查询')
       console.log(data)
@@ -713,7 +711,6 @@ export default {
     //  2.0 otc可用法币查询
     async getMerchantAvailablelegalTenderList () {
       const data = await getMerchantAvailablelegalTender({
-        partnerId: this.partnerId
       })
       console.log('otc法币查询列表')
       console.log(data)
@@ -735,7 +732,6 @@ export default {
       let param = {
         pageNum: this.currentPage,
         payType: this.checkedPayType, // 按照选中的支付方式查询列表
-        partnerId: this.partnerId, // 商户id
         coinId: this.selectedOTCAvailableCurrencyCoinID, // 币种id
         currencyId: this.activitedCurrencyId // 法币id
       }
@@ -780,7 +776,6 @@ export default {
       let param = {
         pageNum: this.currentPage,
         payType: this.checkedPayType, // 按照选中的支付方式查询列表
-        partnerId: this.partnerId, // 商户id
         coinId: this.selectedOTCAvailableCurrencyCoinID, // 币种id
         currencyId: this.activitedCurrencyId // 法币id
       }
@@ -818,7 +813,6 @@ export default {
       /* let param = {
         pageNum: this.currentPage,
         payType: this.checkedPayType, // 按照选中的支付方式查询列表
-        partnerId: this.partnerId, // 商户id
         coinId: this.selectedOTCAvailableCurrencyCoinID, // 币种id
         currencyId: this.activitedCurrencyId // 法币id
       }
@@ -863,7 +857,6 @@ export default {
       let param = {
         pageNum: this.currentPage,
         payType: this.checkedPayType, // 按照选中的支付方式查询列表
-        partnerId: this.partnerId, // 商户id
         coinId: this.selectedOTCAvailableCurrencyCoinID, // 币种id
         currencyId: this.activitedCurrencyId // 法币id
       }
@@ -902,7 +895,6 @@ export default {
       let param = {
         pageNum: this.currentPage,
         payType: this.checkedPayType, // 按照选中的支付方式查询列表
-        partnerId: this.partnerId, // 商户id
         coinId: this.selectedOTCAvailableCurrencyCoinID, // 币种id
         currencyId: this.activitedCurrencyId // 法币id
       }
@@ -936,7 +928,6 @@ export default {
       selectedOTCAvailableCurrencyName: state => state.OTC.selectedOTCAvailableCurrencyName,
       selectedOTCAvailablePartnerCoinId: state => state.OTC.selectedOTCAvailablePartnerCoinId,
       selectedOTCAvailableCurrencyCoinID: state => state.OTC.selectedOTCAvailableCurrencyCoinID,
-      partnerId: state => state.common.partnerId, // 商户id
       language: state => state.common.language, // 当前选中语言
       activeLanguage: state => state.common.activeLanguage,
       userInfo: state => state.user.loginStep1Info.userInfo, // 用户详细信息

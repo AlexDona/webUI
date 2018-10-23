@@ -44,7 +44,6 @@ export default {
   computed: {
     ...mapState({
       theme: state => state.common.theme,
-      partnerId: state => state.common.partnerId,
       userProtocolData: state => state.footerInfo.serviceProtocolData.userProtocolData
     })
   },

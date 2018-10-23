@@ -208,7 +208,6 @@ export default {
   filter: {},
   computed: {
     ...mapState({
-      partnerId: state => state.common.partnerId,
       language: state => state.common.language,
       logoSrc: state => state.common.logoSrc,
       footerInfo: state => state.common.footerInfo

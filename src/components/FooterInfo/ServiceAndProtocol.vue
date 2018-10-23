@@ -153,7 +153,6 @@ export default {
     },
     getServiceProtocolData () {
       const params = {
-        partnerId: this.partnerId,
         termsTypeIds: this.termsTypeIds, // 用户协议代号
         language: this.language
       }
@@ -168,7 +167,6 @@ export default {
           // keyword: "条款说明",
           // language: "zh_CN",
           // modifier: "申",
-          // partnerId: "474629374641963008",
           // termsTypeId: "8",
           // termsTypeName: "条款说明",
           // updateTime: "2018-09-18 15:36:49",
@@ -214,7 +212,6 @@ export default {
     ...mapState({
       theme: state => state.common.theme,
       language: state => state.common.language,
-      partnerId: state => state.common.partnerId,
       serviceActiveName: state => state.footerInfo.serviceActiveName
     })
     // activeName () {

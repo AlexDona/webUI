@@ -1450,7 +1450,6 @@ export default {
     ...mapState({
       theme: state => state.common.theme,
       language: state => state.common.language, // 当前选中语言
-      partnerId: state => state.common.partnerId, // 商户ID
       userInfo: state => state.user.loginStep1Info, // 用户详细信息
       activeSymbol: state => state.common.activeSymbol, // 当前选中交易对
       disabledOfPhoneBtn: state => state.user.disabledOfPhoneBtn,

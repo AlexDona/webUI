@@ -363,8 +363,6 @@ export default {
     require('../../../static/css/list/OTC/OTCADManage.css')
     require('../../../static/css/theme/day/OTC/OTCADManageDay.css')
     require('../../../static/css/theme/night/OTC/OTCADManageNight.css')
-    // 从全局获得商户id
-    // console.log(this.partnerId)
     // 1.0 otc可用币种查询：
     this.getOTCAvailableCurrencyList()
     // 2.0 otc可用法币查询：
@@ -452,9 +450,7 @@ export default {
     },
     // 6.0 币种查询
     async getOTCAvailableCurrencyList () {
-      const data = await getOTCAvailableCurrency({
-        partnerId: this.partnerId
-      })
+      const data = await getOTCAvailableCurrency({})
       console.log('可用币种列表')
       console.log(data)
       if (!(returnAjaxMessage(data, this, 0))) {
@@ -466,9 +462,7 @@ export default {
     },
     // 7.0 可用法币查询
     async getMerchantAvailablelegalTenderList () {
-      const data = await getMerchantAvailablelegalTender({
-        partnerId: this.partnerId
-      })
+      const data = await getMerchantAvailablelegalTender({})
       console.log('可用法币')
       console.log(data)
       if (!(returnAjaxMessage(data, this, 0))) {
@@ -555,7 +549,6 @@ export default {
   computed: {
     ...mapState({
       language: state => state.common.language, // 当前选中语言
-      partnerId: state => state.common.partnerId, // 商户id
       theme: state => state.common.theme // 主题颜色
     }),
     windowHeight () {

@@ -522,8 +522,7 @@ export default {
         return false
       }
       let params = {
-        userId: this.userInfo.userId,
-        partnerId: this.partnerId
+        userId: this.userInfo.userId
       }
       switch (loginType) {
         case 0:
@@ -567,7 +566,6 @@ export default {
   computed: {
     ...mapState({
       theme: state => state.common.theme,
-      partnerId: state => state.common.partnerId,
       userInfo: state => state.user.loginStep1Info, // 用户详细信息
       disabledOfPhoneBtn: state => state.user.disabledOfPhoneBtn,
       disabledOfEmailBtn: state => state.user.disabledOfEmailBtn,

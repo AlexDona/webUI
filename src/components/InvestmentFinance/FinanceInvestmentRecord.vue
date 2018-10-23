@@ -321,7 +321,6 @@ export default {
       const data = await getFinancialManagement({
         pageNum: pageNum,
         pageSize: 10,
-        partnerId: this.partnerId,
         coinId: this.coinId,
         coinName: this.coinName
       })
@@ -391,7 +390,6 @@ export default {
   computed: {
     ...mapState({
       theme: state => state.common.theme,
-      partnerId: state => state.common.partnerId,
       isLogin: state => state.user.isLogin
     }),
     screenWidth () {

@@ -83,7 +83,6 @@ const state = {
   },
   // 公用 板块
   plateList: [], // 板块列表
-  partnerId: '474629374641963008', // 商户id
   routerTo: '', // 路由跳转
   withdrawDepositList: [], // 我的资产列表信息数据
   userRefreshUserList: [], // 刷新用户信息
