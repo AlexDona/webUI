@@ -139,6 +139,9 @@ export default {
     },
     // 切换显示状态
     toggleShowHelpItem (index, status) {
+      _.forEach(this.helpShowStatusList, (helpItem, helpIndex) => {
+        this.$set(this.helpShowStatusList, helpIndex, false)
+      })
       this.$set(this.helpShowStatusList, index, status)
     }
   },
