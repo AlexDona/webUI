@@ -39,29 +39,31 @@ import {PHONE_REG, EMAIL_REG, ID_REG, PWD_REG, ALIPAY_REG, BANK_REG, GOOGLE_REG,
 // 使用方法：returnAjaxMessage(data, this, 0) 或者 returnAjaxMessage(data, this, 1)
 export const returnAjaxMessage = (data, self, noTip) => {
   const meta = data.data.meta
-  if (meta.code !== 200) {
-    self.$message({
-      type: 'error',
-      // duration: 5000000,
-      message: (!meta.params || !meta.params.length) ? self.$t(`M.${meta.i18n_code}`) : self.$t(`M.${meta.i18n_code}`).format(meta.params)
-    })
-    // console.log(self.$t(`M.${meta.i18n_code}`).format(meta.params))
-    // 登录失效
-    if (meta.code == 401) {
-      removeStore('loginStep1Info')
-      self.$router.push({path: '/login'})
-      store.commit('user/USER_LOGOUT')
-    }
-    return 0
-  } else {
-    if (noTip) {
+  if (meta) {
+    if (meta.code !== 200) {
       self.$message({
-        type: 'success',
+        type: 'error',
         // duration: 5000000,
-        message: self.$t(`M.${meta.i18n_code}`)
+        message: (!meta.params || !meta.params.length) ? self.$t(`M.${meta.i18n_code}`) : self.$t(`M.${meta.i18n_code}`).format(meta.params)
       })
+      // console.log(self.$t(`M.${meta.i18n_code}`).format(meta.params))
+      // 登录失效
+      if (meta.code == 401) {
+        removeStore('loginStep1Info')
+        self.$router.push({path: '/login'})
+        store.commit('user/USER_LOGOUT')
+      }
+      return 0
+    } else {
+      if (noTip) {
+        self.$message({
+          type: 'success',
+          // duration: 5000000,
+          message: self.$t(`M.${meta.i18n_code}`)
+        })
+      }
+      return 1
     }
-    return 1
   }
 }
 /**

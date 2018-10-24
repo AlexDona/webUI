@@ -15,7 +15,8 @@
       <div class="security-title">
         <div class="display-flex">
           <div class="security-title-info flex1 display-flex font-size14">
-          <span class="flex1 security-level">
+          <!-- <span class="flex1 security-level"> -->
+          <span class="security-level">
             <!--账号安全级别：-->
             {{ $t('M.user_security_level') }}：
             <span
@@ -40,7 +41,8 @@
               {{ $t('M.user_security_tall') }}
             </span>
           </span>
-            <span class="flex1">
+            <!-- <span class="flex1"> -->
+            <span>
                <el-progress
                  :text-inside="false"
                  :stroke-width="5"
@@ -48,12 +50,14 @@
                >
                </el-progress>
             </span>
-            <span class="flex1 security-verification">
+            <!-- <span class="flex1 security-verification"> -->
+            <span class="security-verification">
               <!--建议开启双重验证-->
               {{ $t('M.user_security_dual') }}
             </span>
           </div>
-          <div class="security-title-info flex1"></div>
+          <!-- <div class="security-title-info flex1"></div> -->
+          <div class="security-title-info"></div>
         </div>
         <div class="security-title-info margin-top20 font-size12">
           <div class="login-time float-left">
@@ -115,7 +119,7 @@
             >
               <span @click.prevent="showStatusVerificationClose('email', 'enable')">
                 <!--开启验证-->
-                {{ $t('M.comm_open') }}{{ $t('M.user_security_verify') }}
+                {{$t('M.comm_open')}}{{ $t('M.user_security_verify') }}
               </span>
             </button>
             <button
@@ -1143,7 +1147,7 @@ export default {
           padding-top: 6px;
           >.security-verify,
           >.security-binding {
-            width: 70px;
+            min-width: 70px;
             height: 30px;
           }
           >.security-binding {
@@ -1173,6 +1177,7 @@ export default {
           color: #A9BED4;
           >.level {
             color: #F64D4D;
+            margin-right: 5px;
           }
         }
         >.security-verification {
@@ -1246,6 +1251,7 @@ export default {
           color: #333;
           >.level {
             color: #F64D4D;
+            margin-right: 5px;
           }
         }
         >.security-verification {

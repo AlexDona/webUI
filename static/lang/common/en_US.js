@@ -17,7 +17,7 @@ export const common = {
   'comm_dollar': 'Dollar',
   'comm_black': 'Black',
   'comm_white': 'White',
-  'comm_confirm': 'Confirmation',
+  'comm_confirm': 'Confirm',
   'comm_all_sold_out': 'All sold out',
   'comm_affirm': 'Confirm',
   'comm_cancel': 'Cancel',

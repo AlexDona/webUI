@@ -1523,7 +1523,8 @@ export default {
               }
               .flex-asset {
                 position: relative;
-                text-align: center;
+                // text-align: center;
+                text-align: left;
               }
               .icon-caret {
                 position: absolute;

@@ -173,7 +173,7 @@
         </el-tab-pane>
         <!--委托订单-->
         <el-tab-pane
-          :label="$t('M.user_coin_entrust') + $t('M.comm_order')"
+          :label="$t('M.otc_entrust')"
           name="ENTRUSTED"
           v-loading="fullscreenLoading"
           element-loading-background="rgba(0, 0, 0, 0.6)"
