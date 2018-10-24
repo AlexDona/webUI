@@ -16,7 +16,7 @@
       <div class="report-form-filtrate">
         <!-- 交易币种 -->
         <span class="filtrate-text font-size14">
-          {{$t('M.otc_trade')}}{{$t('M.comm_currency')}}
+          {{$t('M.otc_trade')}}{{$t('M.otc_AD_token')}}
         </span>
         <span class="currency-input">
           <el-select

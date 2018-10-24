@@ -1,4 +1,8 @@
 export const OTC = {
+  'otc_AD_trade_currency': '액션 유형',
+  'otc_AD_trade_token': '인증 유형',
+  'otc_AD_token': '인증 유형',
+  'otc_Merchants_Orders_market': '인증 유형',
   'otc_index_buy': '구매',
   'otc_index_sell': '판매용',
   'otc_index_online_buy': '온라인 구매',

@@ -91,9 +91,9 @@
         @row-click="changeActiveSymbol"
         height="547"
       >
-        <!--交易对-->
+        <!--交易对:label="$t('M.comm_deal') + $t('M.comm_pair')"-->
         <el-table-column
-          :label="$t('M.comm_deal') + $t('M.comm_pair')"
+          :label="$t('M.comm_deal_pair')"
           width="120px"
         >
           <template slot-scope="s">

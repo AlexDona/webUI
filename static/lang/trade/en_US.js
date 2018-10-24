@@ -2,7 +2,7 @@ export const trade = {
   // #####################币币交易-买卖单#####################''Currency transactions - sales orders'
   'trade_coin_buying_and_sell': 'Purchase order',
   'trade_coin_entrusted_price': 'Entrust price',
-  'trade_coin_entrusted_amount': 'Amount of entrust',
+  'trade_coin_entrusted_amount': 'Entrust Amount',
   // #####################查看更多委单记录#####################''View more order records'
   'trade_coin_commissioned_current': 'Current entrust',
   'trade_coin_entrust': 'entrust',
@@ -26,7 +26,7 @@ export const trade = {
   // K线''K line'
   'trade_time_share': 'Time sharing',
   'trade_latest_price': 'Latest price',
-  'trade_ups_and_downs': 'Ups downs',
+  'trade_ups_and_downs': 'Change',
   'trade_highest': 'highest',
   'trade_minimum': 'lowest',
   // 最近成交记录''Recent transaction record'

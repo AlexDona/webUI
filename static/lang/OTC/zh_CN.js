@@ -1,4 +1,8 @@
 export const OTC = {
+  'otc_AD_trade_currency': '交易法币',
+  'otc_AD_trade_token': '交易币种',
+  'otc_AD_token': '币种',
+  'otc_Merchants_Orders_market': '币种',
   'otc_index_buy': '购买',
   'otc_index_sell': '出售',
   'otc_index_online_buy': '在线购买',
