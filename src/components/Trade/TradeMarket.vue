@@ -112,15 +112,10 @@ export default {
     return {
       newTradeMarketList: [], // 行情数据
       collectArea: {
-        area: '自选', // 交易区名称 自选区
+        area: this.$t('M.trade_market_optional'), // 交易区名称 自选区
         areaId: 2,
         plateList: []
       },
-      collectAreaFilter: {
-        area: '自选', // 交易区名称 自选区
-        areaId: 2,
-        plateList: []
-      }, // 筛选列表
       symbolPlateSet: new Set(), // 交易区板块set
       collectPlateList: [], // 收藏板块列表
       collectPlateFilterList: [], // 收藏筛选板块列表
@@ -130,10 +125,10 @@ export default {
       tabList: [
         {
           id: 99,
-          name: 'M.trade_market_optional' // 自选
+          name: this.$t('M.trade_market_optional') // 自选
         }
       ], // tab栏个数
-      activeName: '自选', // 当前tabItem
+      activeName: this.$t('M.trade_market_optional'), // 当前tabItem
       sortBy: '', // 排序依据: price-asc price-desc rose-asc rose-desc
       marketList: [], // 行情数据
       filterMarketList: [], // 过滤行情数据

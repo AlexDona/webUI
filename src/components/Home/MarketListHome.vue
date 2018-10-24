@@ -187,12 +187,12 @@ export default{
       toggleSideListOfCollectArea: [], // 自选区正反面列表
       toggleSideListOfSearchArea: [], // 搜索区正反面列表
       collectArea: {
-        area: '自选区', // 交易区名称 自选区
+        area: this.$t('M.home_market_district'), // 交易区名称 自选区
         id: 2,
         content: []
       },
       searchArea: {
-        area: '搜索区', // 搜索区
+        area: this.$t('M.home_market_field_search'), // 搜索区
         id: 3,
         content: []
       },

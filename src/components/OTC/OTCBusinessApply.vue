@@ -150,7 +150,6 @@
             :title="$t('M.otc_merchant_authentication')"
             :visible.sync="dialogVisible"
             width="50%"
-            height="500px"
             :before-close="handleClose"
           >
             <div v-html="argumentContent"></div>
@@ -593,6 +592,7 @@ export default {
   }
   &.night{
     background-color: $mainNightBgColor;
+    overflow: hidden;
     >.business-apply-content{
       overflow: hidden;
       >.privilege{
@@ -672,6 +672,7 @@ export default {
     }
   }
   &.day{
+    overflow: hidden;
     background-color: $mainDayBgColor;
     // background-color: $mainNightBgColor;
     >.business-apply-content{

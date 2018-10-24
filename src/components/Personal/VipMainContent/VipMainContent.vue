@@ -511,7 +511,9 @@
             <!--VIP开通后立即生效，交易结算时自动计算折扣-->
             {{ $t('M.user_vip_text1') }}
           </span>
-          <span class="prompt-color">
+          <span
+            class="prompt-color cursor-pointer"
+          >
             <!--《折扣说明》-->
             {{ $t('M.user_vip_text2') }}
           </span>
@@ -533,6 +535,15 @@
           </span>
         </p>
       </div>
+      <!--折扣说明-->
+      <el-dialog
+        class="discounts-instruction-dialog"
+        :title="$t('M.user_vip_text2')"
+        :visible.sync="discountsInstructionStatus"
+        width="50%"
+      >
+        <div v-html="discountsInstructionContent"></div>
+      </el-dialog>
       <!--开通VIP-->
       <el-dialog
         :title="$t('M.user_vip_dredge') + 'VIP'"
@@ -588,7 +599,8 @@ import {
 } from '../../../utils/api/personal'
 import {
   returnAjaxMessage,
-  reflashUserInfo
+  reflashUserInfo,
+  getServiceProtocolData
 } from '../../../utils/commonFunc'
 // 底部
 const { mapMutations } = createNamespacedHelpers('personal')
@@ -616,6 +628,8 @@ export default {
       currencyAsset: 0, // 币种数量
       activeStatus: 0, // VIP状态
       loadingCircle: {}, // 整页loading
+      discountsInstructionStatus: true, // 折扣说明弹窗显示状态
+      discountsInstructionContent: '', // 折扣说明内容
       fullscreenLoading: false // 整页loading
     }
   },
@@ -629,6 +643,7 @@ export default {
     if (this.vipLeavl) {
       this.activeStatus = this.vipLeavl.split('')[3]
     }
+    this.getServiceProtocolData()
     reflashUserInfo(this)
     await this.getVipPriceInfo()
     await this.getCurrencyApplicationDownloadUrl()
@@ -641,6 +656,15 @@ export default {
   methods: {
     ...mapMutations([
     ]),
+    async getServiceProtocolData () {
+      const params = {
+        termsTypeIds: '11,12', // 用户协议代号
+        language: this.language
+      }
+      await getServiceProtocolData(this, params, (data) => {
+        console.log(data)
+      })
+    },
     // 点击返回上个页面
     returnSuperior () {
       this.$router.push({path: '/PersonalCenter'})
@@ -853,6 +877,7 @@ export default {
   computed: {
     ...mapState({
       theme: state => state.common.theme,
+      language: state => state.common.language,
       userInfo: state => state.user.loginStep1Info, // 用户详细信息
       vipLeavl: state => state.user.loginStep1Info.userInfo.level
     }),

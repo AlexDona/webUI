@@ -12,7 +12,7 @@
   border-top: 0;
 }
 .otc-business-apply-box .el-dialog{
- height: 500px;
+ height: 800px;
  overflow: auto;
  background: #121824;
  line-height: 30px;
@@ -25,5 +25,5 @@
   color: #8494A6;
 }
 .el-dialog__title{
-  color: #338FF5; 
+  color: #338FF5;
 }

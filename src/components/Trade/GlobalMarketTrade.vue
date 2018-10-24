@@ -60,7 +60,7 @@
                       <!--货币转换-->
                       <div
                         class="bottom"
-                        v-if="currencyRateList[activeSymbol.area]"
+                        v-if="currencyRateList[activeSymbol.area]&&item.bourseCount"
                       >
                         {{formatCount(keep2Num((currencyRateList[item.bourseTrade.split('_')[1]]-0)*item.bourseCount))}}
                       </div>
@@ -103,7 +103,9 @@ export default {
   methods: {
     // 成交量格式化
     formatCount (targetNum) {
+      console.log(targetNum)
       let newNum = targetNum - 0
+      console.log(newNum)
       switch (this.language) {
         case 'zh_CN':
           if (newNum > 100000000) {
@@ -149,7 +151,6 @@ export default {
       activeSymbol: state => state.common.activeSymbol,
       activeSymbolId: state => state.common.activeSymbol.id,
       activeConvertCurrencyObj: state => state.common.activeConvertCurrencyObj, // 目标货币
-
       currencyRateList: state => state.common.currencyRateList // 折算货币列表
     })
   },
