@@ -261,7 +261,7 @@
                 <!--2. 请确保照片无水印，无污渍，身份信息清晰，头像完整，非文字反向照片！照片请勿进行PS处理！-->
                 <p class="text-hints">2. {{ $t('M.user_senior_text3') }}</p>
                 <!--3. 手持身份证照片：需要您本人一只手持您的身份证，另一只手持一张有您手写的fubt.top账号ID的白纸。确保身份证和白纸在您的胸前，不遮挡您的脸部，并且身份证和白纸上的信息清晰可见！-->
-                <p class="text-hints">3. {{ $t('M.user_senior_text4') }}{{mainWebsite}}{{ $t('M.user_senior_text6') }}</p>
+                <p class="text-hints">3. {{ $t('M.user_senior_text4') }}{{configInfo.otcAd}}{{ $t('M.user_senior_text6') }}</p>
                 <!--以下图片仅作为示例，请提交您本人的身份材料照片。照片勿进行PS处理！-->
                 <p class="text-hints margin-top30">{{ $t('M.user_senior_text5') }}</p>
               </div>
@@ -896,7 +896,7 @@ export default {
     ...mapState({
       theme: state => state.common.theme,
       userInfo: state => state.user.loginStep1Info, // 用户详细信息
-      mainWebsite: state => state.common.mainWebsite, // 网站主网址
+      configInfo: state => state.common.footerInfo.configInfo,
       contryAreaList: state => state.common.contryAreaList,
       userCenterActiveName: state => state.personal.userCenterActiveName
     }),

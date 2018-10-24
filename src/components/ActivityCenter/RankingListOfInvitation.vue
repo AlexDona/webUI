@@ -21,17 +21,17 @@
             >
               {{timeFilter(date)}}
             </h1>
-            <p>1.邀请奖励FBT统计起始时间为2018-05-20 10:18，在此之前已邀请 注册的无累计FBT至此活动；</p>
+            <p>1.邀请奖励{{configInfo.inviterPage}}统计起始时间为2018-05-20 10:18，在此之前已邀请 注册的无累计{{configInfo.inviterPage}}至此活动；</p>
 
             <p>2.登录平台账户—财务中心—推广注册链接—复制专属推广链接；</p>
 
-            <p>3.假设新用户A通过您的推广链接注册完成实名认证，即成为您的直接下级，系统会在您的账户增加10FBT；新用户B通过新用户A的推广链接，即成为您的间接下级，间接下级不享受赠送FBT；</p>
+            <p>3.假设新用户A通过您的推广链接注册完成实名认证，即成为您的直接下级，系统会在您的账户增加10{{configInfo.inviterPage}}；新用户B通过新用户A的推广链接，即成为您的间接下级，间接下级不享受赠送{{configInfo.inviterPage}}；</p>
 
             <p>4.为维护正常推广者权益，如发现有作弊者，经分析属实，将强制取消奖励，平台有权对推广虚假用户骗取奖励行为进行判定；</p>
 
-            <p>5.邀请的新用户注册通过实名认证，系统则自动累计FBT；</p>
+            <p>5.邀请的新用户注册通过实名认证，系统则自动累计{{configInfo.inviterPage}}；</p>
 
-            <p>6.活动奖励FBT币均为官方第一、第二期新币投票所得FBT币；</p>
+            <p>6.活动奖励{{configInfo.inviterPage}}币均为官方第一、第二期新币投票所得{{configInfo.inviterPage}}币；</p>
 
             <p>7.邀请注册详细数据用户可进入财务中心—代理下级查询，近期官网将展示邀请排行榜，排名按照积分排序，公平公正公开；</p>
 
@@ -186,7 +186,8 @@ export default {
   filter: {},
   computed: {
     ...mapState({
-      theme: state => state.common.theme
+      theme: state => state.common.theme,
+      configInfo: state => state.common.footerInfo.configInfo
     }),
     screenWidth () {
       return window.innerWidth / 3

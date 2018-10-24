@@ -16,3 +16,4 @@ export const USER_INFORMATION_REFRESH = 'USER_INFORMATION_REFRESH' // 用户信�
 export const SET_USER_INFO_REFRESH_STATUS = 'SET_USER_INFO_REFRESH_STATUS' // 用户信息刷新状态
 export const SET_LOGO_URL = 'SET_LOGO_URL' // 设置公共logo
 export const SET_FOOTER_INFO = 'SET_FOOTER_INFO' // 设置尾部信息
+export const SET_COUNT_DOWN_RESET_STATUS = 'SET_COUNT_DOWN_RESET_STATUS' // 设置倒计时重置状态

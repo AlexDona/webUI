@@ -28,7 +28,7 @@
               v-for="(item,index) in shareList"
               :key="index"
             >
-              <a href="#" class="mini-icon">
+              <a :href="item.ercodeSrc" class="mini-icon">
                 <Iconfont
                   :icon-name="item.iconName"
                   class-name="icon-text"

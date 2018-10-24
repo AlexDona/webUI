@@ -28,3 +28,5 @@ export const getServiceProtocoDataAjax = (params) => get('cms/terms/selectAll', 
 export const getServiceProtocoDataAjaxByPageNum = (params) => get('cms/terms/pageQuery', params)
 // 获取关于我们信息
 export const getAboutUsDataAjax = (params) => get('cms/aboutUs/selectAll', params)
+// 获取网站配置信息
+export const getConfigAjax = () => get('config')

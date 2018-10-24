@@ -335,7 +335,8 @@
 <script>
 import {getMerchantAvailablelegalTender} from '../../utils/api/OTC'
 import {
-  getLanguageList
+  getLanguageList,
+  getConfigAjax
 } from '../../utils/api/header'
 import {
   getStore
@@ -612,6 +613,9 @@ export default{
     })
   },
   watch: {
+    footerInfo (newVal) {
+      console.log(newVal)
+    },
     language () {
       getFooterInfo(this.language, this)
     },

@@ -77,6 +77,13 @@ export default {
     // }
   },
   watch: {
+    countDownResetStatus (newVal) {
+      if (newVal) {
+        console.log(1)
+        this.time = 0
+        this.$store.commit('common/SET_COUNT_DOWN_RESET_STATUS', false)
+      }
+    },
     status (newVal) {
       console.log(newVal)
       if (newVal) {
