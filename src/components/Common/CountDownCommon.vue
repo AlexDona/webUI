@@ -11,7 +11,7 @@
 </template>
 <!--请严格按照如下书写书序-->
 <script>
-import { createNamespacedHelpers } from 'vuex'
+import { createNamespacedHelpers, mapState } from 'vuex'
 const { mapMutations } = createNamespacedHelpers('user')
 export default {
   components: {},
@@ -72,17 +72,20 @@ export default {
   },
   filter: {},
   computed: {
+    ...mapState({
+      countDownResetStatus: state => state.common.countDownResetStatus
+    })
     // text () {
     //   return this.time > 0 ? this.time + 's' + this.$t('M.comm_after_get') : this.$t('M.comm_get_code')
     // }
   },
   watch: {
     countDownResetStatus (newVal) {
-      if (newVal) {
-        console.log(1)
-        this.time = 0
-        this.$store.commit('common/SET_COUNT_DOWN_RESET_STATUS', false)
-      }
+      console.log(newVal)
+      console.log(this.time)
+      clearInterval(this.timer)
+      this.time = 0
+      this.$store.commit('common/SET_COUNT_DOWN_RESET_STATUS', false)
     },
     status (newVal) {
       console.log(newVal)
@@ -92,7 +95,7 @@ export default {
       }
     },
     text (newVal, oldVal) {
-      console.log(newVal)
+      // console.log(newVal)
     },
     time (newVal, oldVal) {
       if (newVal > 0) {

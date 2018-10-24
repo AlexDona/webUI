@@ -513,6 +513,7 @@
           </span>
           <span
             class="prompt-color cursor-pointer"
+            @click="changeServiceAgreement(0)"
           >
             <!--《折扣说明》-->
             {{ $t('M.user_vip_text2') }}
@@ -529,9 +530,12 @@
         <p class="warm-text-color">
           <!--开通即代表您已同意-->
           {{ $t('M.user_vip_text5') }}
-          <span class="prompt-color">
+          <span
+            class="prompt-color cursor-pointer"
+            @click="changeServiceAgreement(1)"
+          >
             <!--《VIP服务协议》-->
-            {{ $t('M.user_vip_text6') }}
+            《{{ $t('M.user_vip_text6') }}》
           </span>
         </p>
       </div>
@@ -540,6 +544,15 @@
         class="discounts-instruction-dialog"
         :title="$t('M.user_vip_text2')"
         :visible.sync="discountsInstructionStatus"
+        width="50%"
+      >
+        <div v-html="discountsInstructionContent"></div>
+      </el-dialog>
+      <!--vip服务协议-->
+      <el-dialog
+        class="discounts-instruction-dialog"
+        :title="$t('M.user_vip_text6')"
+        :visible.sync="serviceAgreementStatus"
         width="50%"
       >
         <div v-html="discountsInstructionContent"></div>
@@ -628,7 +641,8 @@ export default {
       currencyAsset: 0, // 币种数量
       activeStatus: 0, // VIP状态
       loadingCircle: {}, // 整页loading
-      discountsInstructionStatus: true, // 折扣说明弹窗显示状态
+      discountsInstructionStatus: false, // 折扣说明弹窗显示状态
+      serviceAgreementStatus: false,
       discountsInstructionContent: '', // 折扣说明内容
       fullscreenLoading: false // 整页loading
     }
@@ -656,6 +670,16 @@ export default {
   methods: {
     ...mapMutations([
     ]),
+    changeServiceAgreement (type) {
+      switch (type) {
+        case 0:
+          this.discountsInstructionStatus = true
+          break
+        case 1:
+          this.serviceAgreementStatus = true
+          break
+      }
+    },
     async getServiceProtocolData () {
       const params = {
         termsTypeIds: '11,12', // 用户协议代号

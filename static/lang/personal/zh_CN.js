@@ -247,11 +247,11 @@ export const personal = {
   'user_vip_months': '个月', // 几个月的意思 例 3 个月
   'user_vip_immediate_access': '立即获取',
   'user_vip_text1': 'VIP开通后立即生效，交易结算时自动计算折扣',
-  'user_vip_text2': '《折扣说明》',
+  'user_vip_text2': '折扣说明',
   'user_vip_text3': '费率折扣仅对交易手续费生效',
   'user_vip_text4': '一个月有效期时长为30个自然日',
   'user_vip_text5': '开通即代表您已同意',
-  'user_vip_text6': '《VIP服务协议》',
+  'user_vip_text6': 'VIP服务协议',
   'user_vip_text7': '已开通',
   'user_vip_text8': 'VIP享手续费、提现优惠'
 }

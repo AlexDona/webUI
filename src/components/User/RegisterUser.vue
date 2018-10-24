@@ -808,7 +808,9 @@ export default {
     }
   },
   watch: {
-    activeMethod () {
+    activeMethod (newVal) {
+      console.log(newVal)
+      console.log(1)
       this.$store.commit('common/SET_COUNT_DOWN_RESET_STATUS', true)
     },
     disabledOfPhoneBtn (newVal) {

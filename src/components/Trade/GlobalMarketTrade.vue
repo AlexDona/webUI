@@ -50,7 +50,7 @@
                         'down':middleTopData.chg<0
                       }"
                     >
-                      {{keep2Num((currencyRateList[activeSymbol.area]-0)*item.boursePrice)-0}}
+                      {{activeConvertCurrencyObj.symbol}}{{keep2Num((currencyRateList[activeSymbol.area]-0)*item.boursePrice)-0}}
                     </div>
                   </div><div class="td count">
                       <div class="top"
@@ -62,7 +62,7 @@
                         class="bottom"
                         v-if="currencyRateList[activeSymbol.area]&&item.bourseCount"
                       >
-                        {{formatCount(keep2Num((currencyRateList[item.bourseTrade.split('_')[1]]-0)*item.bourseCount))}}
+                        {{activeConvertCurrencyObj.symbol}}{{formatCount(keep2Num((currencyRateList[item.bourseTrade.split('_')[1]]-0)*item.bourseCount))}}
                       </div>
                   </div>
                 </div>

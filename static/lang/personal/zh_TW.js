@@ -247,11 +247,11 @@ export const personal = {
   'user_vip_months': '個月', // 幾個月的意思 例 3 個月
   'user_vip_immediate_access': '立即獲取',
   'user_vip_text1': 'VIP開通後立即生效，交易結算時自動計算折扣',
-  'user_vip_text2': '《折扣說明》',
+  'user_vip_text2': '折扣說明',
   'user_vip_text3': '費率折扣僅對交易手續費生效',
   'user_vip_text4': '壹個月有效期時長為30個自然日',
   'user_vip_text5': '開通即代表您已同意',
-  'user_vip_text6': '《VIP服務協議》',
+  'user_vip_text6': 'VIP服務協議',
   'user_vip_text7': '已開通',
   'user_vip_text8': 'VIP享手續費、提現優惠'
 }
