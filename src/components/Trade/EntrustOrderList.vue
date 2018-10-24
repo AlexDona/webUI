@@ -478,10 +478,10 @@ export default {
             >.th{
               white-space:nowrap;
               &.time{
-                width:17%;
+                width:16%;
               }
               &.price{
-                width: 17%;
+                width: 15%;
               }
               &.count{
                 width:13%;
@@ -501,7 +501,7 @@ export default {
                   white-space:nowrap;
                   font-size: 12px;
                   &.time{
-                    width:17%;
+                    width:16%;
                     font-size: 12px;
                   }
                   &.price{
