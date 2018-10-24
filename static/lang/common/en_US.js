@@ -48,7 +48,7 @@ export const common = {
   'comm_order': 'Order',
   'comm_mark': 'Number',
   'comm_price': 'Price',
-  'comm_quantity': 'Aamount',
+  'comm_quantity': 'Amount',
   'comm_type': 'Type',
   'comm_money': 'Amount',
   'comm_property': 'Assets',

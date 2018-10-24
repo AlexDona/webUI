@@ -34,7 +34,7 @@
                   <IconFont iconName="icon-qianbao-"/>
                   <span class="margin-left10 buy">
                     <!--可买-->
-                    {{ $t('M.trade_exchange_can_buy') }}：
+                    {{$t('M.trade_exchange_can_buy')}}:
                     <span v-show="!buyUserCoinWallet.total">--</span>
                     <span v-show="buyUserCoinWallet.total">{{limitExchange.userCanBuyCount}}</span>
                     <span>{{middleTopData.sellsymbol}}</span>
@@ -120,7 +120,7 @@
                   <IconFont iconName="icon-qianbao-"/>
                   <span class="margin-left10 sell">
                     <!--可卖-->
-                    {{ $t('M.trade_exchange_vendibility') }}：
+                    {{$t('M.trade_exchange_vendibility')}}:
                     <span v-show="!sellUserCoinWallet.total">--</span>
                     <span v-show="sellUserCoinWallet.total">{{sellUserCoinWallet.total}}</span>
                     <span>{{middleTopData.sellsymbol}}</span>
@@ -207,14 +207,14 @@
           :label="$t('M.trade_exchange_market')"
           name="market-price"
         >
-          <div class=" content-box market">
+          <div class="content-box market">
             <div class="inner-box left">
               <div class="header">
                 <div class="left item">
                   <IconFont iconName="icon-qianbao-"/>
                   <span class="margin-left10 buy">
                     <!--可买-->
-                    {{ $t('M.trade_exchange_can_buy') }}：
+                    {{$t('M.trade_exchange_can_buy')}}:
                     <span v-show="!buyUserCoinWallet.total||!middleTopData.last">--</span>
                     <span v-show="buyUserCoinWallet.total&&middleTopData.last">
                       {{(buyUserCoinWallet.total/middleTopData.last).toFixed(middleTopData.priceExchange)}}
@@ -293,7 +293,7 @@
                   <IconFont iconName="icon-qianbao-"/>
                   <span class="margin-left10 sell">
                     <!--可卖-->
-                    {{ $t('M.trade_exchange_vendibility') }}：
+                    {{$t('M.trade_exchange_vendibility')}}:
                     <span v-show="!sellUserCoinWallet.total">--</span>
                     <span v-show="sellUserCoinWallet.total">{{sellUserCoinWallet.total}}</span>
                     <span>{{middleTopData.sellsymbol}}</span>
@@ -787,7 +787,7 @@ export default {
                 color:$downColor;
               }
               >a{
-                padding-left:30px;
+                padding-left:20px;
               }
             }
             >.left{
