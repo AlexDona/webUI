@@ -367,5 +367,6 @@ export const fromApi = {
   'recharge_withdraw_failure_0038': '外部提币异常',
   'recharge_withdraw_failure_0037': '提币备注不能为空',
   'MAIL_TO_ADDRESS_NOT_FOUND': '当前邮件地址不存在，请检查过后再次发送',
-  'otc_failure_0086': '商户设置的商家申请冻结币种信息有误，请联系客服'
+  'otc_failure_0086': '商户设置的商家申请冻结币种信息有误，请联系客服',
+  'SMS_BAD_ARGUMENT_FORMAT': '手机格式不正确'
 }
