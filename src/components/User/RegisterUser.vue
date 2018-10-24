@@ -322,7 +322,6 @@ import {
   validateNumForUserInput, // 用户输入验证
   sendPhoneOrEmailCodeAjax,
   jumpToOtherPageForFooter
-  // getCountryListAjax
 } from '../../utils/commonFunc'
 import {createNamespacedHelpers, mapState} from 'vuex'
 const {mapMutations} = createNamespacedHelpers('user')
@@ -340,7 +339,7 @@ export default {
       // contryAreaList: [], // 国家区域列表
       activeCountryCodeWithPhone: '86',
       activeCountryCodeWithEmail: '86',
-      activeCountryAbbreviationWithEmail: '', // 当前国家简称
+      activeCountryAbbreviationWithEmail: 'CHN', // 当前国家简称
       // 短信验证码 邮箱验证码
       activeCodePlaceholder: !this.activeMethod ? 'M.forgetPassword_hint10' : 'M.forgetPassword_hint11',
       identifyCode: '', // 图片验证码
@@ -384,7 +383,6 @@ export default {
       this.inviter = params
     }
     this.refreshCode()
-    // this.getCountryList()
   },
   mounted () {
     $('body').on('mousemove', (e) => { // 拖动，这里需要用箭头函数，不然this的指向不会是vue对象
@@ -421,13 +419,6 @@ export default {
     ]),
     jumpToOtherPage (router, activeName) {
       jumpToOtherPageForFooter(router, activeName, this)
-    },
-    getCountryList () {
-      getCountryListAjax(this, (data) => {
-        console.log(data)
-        this.contryAreaList = data.data.data
-        console.log(this.contryAreaList)
-      })
     },
     // 检测输入格式
     checkoutInputFormat (type, targetNum) {
@@ -565,9 +556,8 @@ export default {
     },
     // 发送验证码（短信、邮箱）
     sendPhoneOrEmailCode (type) {
-      // console.log(type)
-      console.log(this.activeCountryAbbreviationWithEmail)
       this.activeCountryCodeWithEmail = _.filter(this.contryAreaList, {abbreviation: this.activeCountryAbbreviationWithEmail})[0].nationCode
+      // console.log(this.activeCountryCodeWithEmail)
       if (this.disabledOfPhoneBtn || this.disabledOfEmailBtn) {
         return false
       }

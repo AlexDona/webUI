@@ -153,7 +153,7 @@
             height="500px"
             :before-close="handleClose"
           >
-            <div v-html = "argumentContent"></div>
+            <div v-html="argumentContent"></div>
           </el-dialog>
         </div>
         <!-- 2.2.5 申请为商家按钮部分 -->
