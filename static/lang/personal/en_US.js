@@ -245,5 +245,5 @@ export const personal = {
   'user_vip_text5': 'Opening means that you have agreed',
   'user_vip_text6': 'VIP Service Agreement',
   'user_vip_text7': 'already opened',
-  'user_vip_text8': 'VIP access fee, cash discount'
+  'user_vip_text8': 'VIP Discount'
 }

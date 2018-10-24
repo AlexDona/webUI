@@ -30,8 +30,6 @@
               @mouseenter="toggleShowSubNavBox('otc',1)"
               @mouseleave="toggleShowSubNavBox('otc',0)"
             >
-            <!-- 任付伟改动：这是原来的 -->
-            <!-- @mouseleave="toggleShowSubNavBox('otc',0)" -->
               <router-link to="/OTCCenter">
                 <!--<span>OTC交易</span>-->
                 <span>{{$t('M.comm_otc_center')}}</span>
@@ -335,8 +333,8 @@
 <script>
 import {getMerchantAvailablelegalTender} from '../../utils/api/OTC'
 import {
-  getLanguageList,
-  getConfigAjax
+  getLanguageList
+  // getConfigAjax
 } from '../../utils/api/header'
 import {
   getStore

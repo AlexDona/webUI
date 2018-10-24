@@ -1011,10 +1011,11 @@ export default {
                 // background-color: #414951;
                 display: inline-block;
                 vertical-align: top;
-                margin-left: -4px;
                 line-height: 36px;
                 text-align: center;
-                margin-right: 50px;
+                // margin-left: -4px;
+                // margin-right: 50px;
+                margin: 0 50px 0 -4px;
               }
             }
             .buySellSumErrorTips{
