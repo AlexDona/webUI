@@ -3,8 +3,6 @@
     class="otc-business-apply-box otc"
     :class="{'day':theme == 'day','night':theme == 'night','black':statusBlack == 'successOrApplying' }"
   >
-    <!-- 1.0 导航 -->
-    <NavCommon/>
     <!-- 2.1商家 申请 页面 -->
     <div
       v-loading.fullscreen.lock="fullscreenLoading"
@@ -155,7 +153,7 @@
             height="500px"
             :before-close="handleClose"
           >
-            <div v-html = "argumentContent"></div>
+            <div v-html="argumentContent"></div>
           </el-dialog>
         </div>
         <!-- 2.2.5 申请为商家按钮部分 -->
@@ -208,15 +206,9 @@
       element-loading-background="rgba(0, 0, 0, 0.6)"
     >
     </div>
-    <!-- 3.0 底部 -->
-    <keep-alive>
-      <FooterCommon class="footer"/>
-    </keep-alive>
   </div>
 </template>
 <script>
-import NavCommon from '../Common/HeaderCommonForPC'
-import FooterCommon from '../Common/FooterCommon'
 import IconFontCommon from '../Common/IconFontCommon'
 import {businessApply, firstEnterBusinessApply, argumentBusinessApply} from '../../utils/api/OTC'
 import {returnAjaxMessage} from '../../utils/commonFunc'
@@ -227,8 +219,6 @@ import {
 // const {mapMutations} = createNamespacedHelpers('OTC')
 export default {
   components: {
-    NavCommon, //  头部导航
-    FooterCommon, //  底部
     IconFontCommon //  字体图标
   },
   data () {
@@ -407,12 +397,13 @@ export default {
 @import url(../../../static/css/scss/OTC/OTCCenter.scss);
 @import "../../../static/css/scss/index";
 .otc-business-apply-box{
+  overflow: hidden;
   // background-color: $mainNightBgColor;
   >.business-apply-content{
     padding-top: 20px;
     >.privilege{
     width: 1150px;
-    margin: 70px auto;
+    margin: 70px auto 0px;
     margin-top:107px;
       >.title{
         color: #fff;
@@ -602,6 +593,7 @@ export default {
   &.night{
     background-color: $mainNightBgColor;
     >.business-apply-content{
+      overflow: hidden;
       >.privilege{
         >.title{
           color: #fff;

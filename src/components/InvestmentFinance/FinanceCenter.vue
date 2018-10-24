@@ -3,10 +3,6 @@
     class="finance-box"
     :class="{'day':theme == 'day','night':theme == 'night' }"
   >
-  <!-- 导航 -->
-    <keep-alive>
-      <HeaderCommon/>
-    </keep-alive>
     <!-- banner -->
     <div class="banner-box">
       <img src="../../assets/finance/banner.png">
@@ -463,9 +459,6 @@
       </div>
       </div>
     </div>
-    <keep-alive>
-      <FooterCommon/>
-    </keep-alive>
   </div>
 </template>
 <!--请严格按照如下书写书序-->

@@ -4,8 +4,6 @@
     :class="{'day':theme == 'day','night':theme == 'night' }"
   >
     <!-- otc在线交易 摘单 页面 -->
-    <!-- 1.0 导航 -->
-    <NavCommon/>
     <!-- 2.0 otc在线交易买卖 -->
     <div
       class="online-trader-buy-sell-content"
@@ -372,10 +370,6 @@
           </div>
       </div>
     </div>
-    <!-- 3.0 底部 -->
-    <keep-alive>
-      <FooterCommon/>
-    </keep-alive>
   </div>
 </template>
 <!--请严格按照如下书写书序-->
@@ -387,8 +381,6 @@ import {
   querySelectedOrdersDetails,
   queryUserTradeFeeAndCoinInfo
 } from '../../utils/api/OTC'
-import NavCommon from '../Common/HeaderCommonForPC'
-import FooterCommon from '../Common/FooterCommon'
 import IconFontCommon from '../Common/IconFontCommon'
 import {returnAjaxMessage} from '../../utils/commonFunc'
 // import {mapState} from 'vuex'
@@ -396,8 +388,6 @@ import {createNamespacedHelpers, mapState} from 'vuex'
 const {mapMutations} = createNamespacedHelpers('OTC')
 export default {
   components: {
-    NavCommon, //  头部导航
-    FooterCommon, //  底部
     IconFontCommon //  字体图标组件
   },
   data () {

@@ -4,9 +4,6 @@
     :class="{'day':theme == 'day','night':theme == 'night' }"
     :style="{'height':windowHeight+'px'}"
   >
-    <keep-alive>
-      <HeaderCommon/>
-    </keep-alive>
     <div class="inner-box">
       <div class="title">
         <!-- 找回密码 -->
@@ -323,7 +320,6 @@
 <script>
 import IconFont from '../Common/IconFontCommon'
 import CountDownButton from '../Common/CountDownCommon'
-import HeaderCommon from '../Common/HeaderCommonForPC'
 import {
   findPasswordStep1,
   findPasswordStep2,
@@ -341,7 +337,6 @@ const { mapMutations } = createNamespacedHelpers('user')
 export default {
   components: {
     IconFont,
-    HeaderCommon,
     CountDownButton,
     ImageValidate
   },
@@ -580,6 +575,7 @@ export default {
 <style scoped lang="scss">
   @import '../../../static/css/scss/index';
   .froget-password-box{
+    overflow: hidden;
     background:linear-gradient(150deg,rgba(30,38,54,1),rgba(37,75,117,1));
     height:100%;
     >.inner-box{

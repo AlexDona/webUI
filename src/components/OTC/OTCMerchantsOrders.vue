@@ -3,8 +3,6 @@
     class="otc-merchants-orders-box otc"
     :class="{'day':theme == 'day','night':theme == 'night' }"
   >
-    <!-- 1.0 导航 -->
-    <NavCommon/>
     <!-- 2.0 商家订单 -->
     <div
       class="otc-merchants-orders-content"
@@ -330,15 +328,10 @@
         </div>
       </div>
     </div>
-    <!-- 3.0 底部 -->
-    <keep-alive>
-      <FooterCommon/>
-    </keep-alive>
   </div>
 </template>
 <!--请严格按照如下书写书序-->
 <script>
-import NavCommon from '../Common/HeaderCommonForPC'
 import FooterCommon from '../Common/FooterCommon'
 import IconFontCommon from '../Common/IconFontCommon'
 import {timeFilter} from '../../utils'
@@ -347,7 +340,6 @@ import {returnAjaxMessage} from '../../utils/commonFunc'
 import {mapState} from 'vuex'
 export default {
   components: {
-    NavCommon, //  头部导航
     FooterCommon, //  底部
     IconFontCommon //  字体图标
   },
@@ -575,17 +567,14 @@ export default {
 <style scoped lang="scss" type="text/scss">
   @import "../../../static/css/scss/index";
   .otc-merchants-orders-box{
+    overflow: hidden;
     >.otc-merchants-orders-content{
       width: 1150px;
-      // min-height: 500px;
-      margin: 70px auto;
-      margin-bottom: 10px;
+      margin: 70px auto 10px;
       padding-top: 50px;
       >.merchants-title{
         height: 30px;
         line-height: 30px;
-        // color: #338FF5;
-        // border-left: 3px solid #338FF5;
         margin-bottom: 30px;
       }
       >.merchants-orders-main{

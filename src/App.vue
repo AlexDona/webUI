@@ -1,20 +1,45 @@
 <template>
   <div id="app" class="body-container">
+    <NoticeHome
+      v-if="needNotice"
+    />
+    <keep-alive>
+      <HeaderCommon
+        v-if="needHeader"
+      />
+    </keep-alive>
     <router-view/>
+    <FooterCommon
+      v-if="needFooter"
+    />
   </div>
 </template>
-
 <script>
 import {getStore} from './utils'
-import {mapState, createNamespacedHelpers} from 'vuex'
+import {
+  mapState,
+  createNamespacedHelpers
+} from 'vuex'
+import NoticeHome from './components/Home/NoticeHome'
+import HeaderCommon from './components/Common/HeaderCommonForPC'
+import HeaderCommonForMobile from './components/Common/HeaderForMobile'
+import FooterCommon from './components/Common/FooterCommon'
 const { mapMutations } = createNamespacedHelpers('common')
-// import {testAjax} from './utils/api/apiDoc'
 
 export default {
   name: 'App',
-  components: {},
+  components: {
+    HeaderCommon,
+    NoticeHome,
+    FooterCommon,
+    HeaderCommonForMobile
+  },
   data () {
-    return {}
+    return {
+      needHeader: true,
+      needFooter: true,
+      needNotice: true
+    }
   },
   async created () {
     // console.log(this.isLogin)
@@ -49,12 +74,16 @@ export default {
     ...mapState({
       theme: state => state.common.theme,
       isLogin: state => state.user.isLogin,
-      userInfo: state => state.user.loginStep1Info,
-      isMobile: state => state.user.isMobile
+      isMobile: state => state.user.isMobile,
+      userInfo: state => state.user.loginStep1Info
     })
   },
   watch: {
     '$route' (to, from) {
+      console.log(to)
+      this.needNotice = to.path === '/' ? 1 : 0
+      this.needHeader = to.path !== '/login' ? 1 : 0
+      this.needFooter = (to.path === '/login' || to.path === '/Register') ? 0 : 1
       switch (to.path) {
         case '/Register':
           this.setBodyClassName(true, 'register')

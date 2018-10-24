@@ -3,7 +3,7 @@
     class="service-protocol-box"
     :class="{'day':theme == 'day','night':theme == 'night' }"
   >
-    <keep-aline><HeaderCommon/></keep-aline>
+    <!--<keep-aline><HeaderCommon/></keep-aline>-->
     <div class="content">
       <div class="top">
         <h1>
@@ -75,7 +75,6 @@
         </div>
       </div>
     </div>
-    <keep-alive><FooterCommon/></keep-alive>
   </div>
 </template>
 <!--请严格按照如下书写书序-->

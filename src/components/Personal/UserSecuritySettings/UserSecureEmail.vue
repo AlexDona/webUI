@@ -5,9 +5,6 @@
     v-loading.fullscreen.lock="fullscreenLoading"
     element-loading-background="rgba(0, 0, 0, 0.6)"
   >
-    <keep-alive>
-      <HeaderCommon/>
-    </keep-alive>
     <div class="set-email-main margin25">
       <header class="set-email-header personal-height60 line-height60 line-height70 margin25">
         <span class="header-content-left header-content font-size16 font-weight600">
@@ -86,7 +83,6 @@
         </div>
       </div>
     </div>
-    <keep-alive><FooterCommon/></keep-alive>
   </div>
 </template>
 <!--请严格按照如下书写书序-->

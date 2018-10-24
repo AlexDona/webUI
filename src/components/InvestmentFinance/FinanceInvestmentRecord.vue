@@ -4,7 +4,6 @@
     :class="{'day':theme == 'day','night':theme == 'night' }"
   >
   <!-- 导航 -->
-    <keep-aline><HeaderCommon/></keep-aline>
     <!-- banner -->
     <div class="inner-box">
       <div class="finance-inner">
@@ -218,9 +217,6 @@
         </div>
       </div>
     </div>
-    <keep-alive>
-      <FooterCommon/>
-    </keep-alive>
   </div>
 </template>
 <!--请严格按照如下书写书序-->

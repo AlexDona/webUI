@@ -5,9 +5,6 @@
     v-loading.fullscreen.lock="fullscreenLoading"
     element-loading-background="rgba(0, 0, 0, 0.6)"
   >
-    <keep-alive>
-      <HeaderCommon/>
-    </keep-alive>
     <div
       class="add-payment-main margin25"
     >
@@ -110,7 +107,6 @@
         </div>
       </div>
     </div>
-    <keep-alive><FooterCommon/></keep-alive>
   </div>
 </template>
 <!--请严格按照如下书写书序-->

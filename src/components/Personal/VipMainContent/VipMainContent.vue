@@ -5,10 +5,6 @@
     v-loading.fullscreen.lock="fullscreenLoading"
     element-loading-background="rgba(0, 0, 0, 0.6)"
   >
-    <!--头部-->
-    <keep-alive>
-      <HeaderCommon/>
-    </keep-alive>
     <div class="header-content">
       <img
         class="images"
@@ -576,8 +572,6 @@
         </div>
       </el-dialog>
     </div>
-    <!--底部-->
-    <keep-alive><FooterCommon/></keep-alive>
   </div>
 </template>
 <!--请严格按照如下书写书序-->

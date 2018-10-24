@@ -3,8 +3,6 @@
     class="otc-box otc"
     :class="{'day':theme == 'day','night':theme == 'night' }"
   >
-    <!-- 1.0 导航 -->
-    <NavCommon/>
     <!--2.0 在线交易和订单管理-->
     <div class="otc-center-content">
       <!-- 2.1 在线交易-->
@@ -383,8 +381,6 @@
         </el-tabs>
       </div>
     </div>
-    <!-- 4.0 底部 -->
-    <keep-alive><FooterCommon/></keep-alive>
   </div>
 </template>
 <!--请严格按照如下书写书序-->
@@ -392,8 +388,6 @@
 import {amendPrecision} from '../../utils'
 import {getOTCAvailableCurrency, getOTCPutUpOrders, getMerchantAvailablelegalTender} from '../../utils/api/OTC'
 import IconFontCommon from '../Common/IconFontCommon'
-import NavCommon from '../Common/HeaderCommonForPC'
-import FooterCommon from '../Common/FooterCommon'
 import OTCTradingOrder from './OTCTradingOrder'
 import OTCCompletedOrder from './OTCCompletedOrder'
 import OTCCanceledOrder from './OTCCanceledOrder'
@@ -404,8 +398,6 @@ import {createNamespacedHelpers, mapState} from 'vuex'
 const {mapMutations} = createNamespacedHelpers('OTC')
 export default {
   components: {
-    NavCommon, //  头部导航
-    FooterCommon, //  底部
     OTCTradingOrder, //  交易中订单
     OTCCompletedOrder, //  已完成订单
     OTCCanceledOrder, //  已取消订单
@@ -948,9 +940,7 @@ export default {
 .otc-box{
   >.otc-center-content{
     width: 1150px;
-    margin: 0 auto;
-    margin-top: 107px;
-    margin-bottom: 10px;
+    margin: 36px auto 0px;
     >.otc-online-trading{
       >.otc-online-buy-and-sell-button{
         height: 45px;

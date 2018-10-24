@@ -3,10 +3,6 @@
     class="personal-center personal"
     :class="{'day':theme == 'day','night':theme == 'night' }"
   >
-    <keep-alive>
-      <!--头部-->
-      <HeaderCommon/>
-    </keep-alive>
     <div class="personal-center-main">
       <div class="personal-center-content clearfix">
         <el-tabs
@@ -211,8 +207,6 @@
         </el-dialog>
       </div>
     </div>
-    <!--底部-->
-    <keep-alive><FooterCommon/></keep-alive>
   </div>
 </template>
 <!--请严格按照如下书写书序-->
@@ -383,6 +377,7 @@ export default {
 <style scoped lang="scss">
   @import "../../../../static/css/scss/Personal/IndexPersonal";
   .personal-center{
+    overflow: hidden;
     > .personal-center-main {
       width: 1150px;
       min-height: 1350px;

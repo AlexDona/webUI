@@ -3,23 +3,15 @@
     class="demo-box"
     :class="{'day':theme == 'day','night':theme == 'night' }"
   >
-    <keep-alive>
-      <HeaderCommon/>
-    </keep-alive>
     <div class="inner-box"></div>
-    <keep-alive><FooterCommon/></keep-alive>
   </div>
 </template>
 <!--请严格按照如下书写书序-->
 <script>
-import HeaderCommon from '../Common/HeaderCommon'
-import FooterCommon from '../Common/FooterCommon'
 import {mapState} from 'vuex'
 // import {returnAjaxMessage} from '../../utils/commonFunc'
 export default {
   components: {
-    HeaderCommon,
-    FooterCommon
   },
   // props,
   data () {
