@@ -290,7 +290,10 @@
         </div>
       </div>
       <!-- 2.2 订单管理-->
-      <div class="otc-order-manage" id="orderView">
+      <div
+        class="otc-order-manage"
+        id="orderView"
+      >
         <!-- 查询更多 -->
           <span
             class="more"
@@ -304,7 +307,10 @@
           v-model = "activeName"
         >
           <!-- 2.2.1 交易中的订单 -->
-          <el-tab-pane name = "first" :disabled="isdisabled">
+          <el-tab-pane
+            name = "first"
+            :disabled="isdisabled"
+          >
             <span slot="label">
               <i
                 class="el-icon-caret-right otc-tab-pane-arrow-right"
@@ -319,11 +325,15 @@
             <OTCTradingOrder ref = "trading"/>
           </el-tab-pane>
           <!-- 2.2.2 已完成订单 -->
-          <el-tab-pane name = "second" :disabled="isdisabled">
+          <el-tab-pane
+            name = "second"
+            :disabled="isdisabled"
+          >
             <span slot="label">
               <i
                 class="el-icon-caret-right otc-tab-pane-arrow-right"
-                v-show="activeName === 'second'">
+                v-show="activeName === 'second'"
+              >
               </i>
               <IconFontCommon
                 iconName="icon-msnui-task-complete"
@@ -334,11 +344,15 @@
             <OTCCompletedOrder ref = "complete"/>
           </el-tab-pane>
           <!-- 2.2.3 已取消订单 -->
-          <el-tab-pane name = "third" :disabled="isdisabled">
+          <el-tab-pane
+            name = "third"
+            :disabled="isdisabled"
+          >
             <span slot="label">
               <i
                 class="el-icon-caret-right otc-tab-pane-arrow-right"
-                v-show="activeName === 'third'">
+                v-show="activeName === 'third'"
+              >
               </i>
               <IconFontCommon
                 iconName="icon-cancel_order"
@@ -349,11 +363,15 @@
             <OTCCanceledOrder ref = "canceled"/>
           </el-tab-pane>
           <!-- 2.2.4 冻结中订单 -->
-          <el-tab-pane name = "fourth" :disabled="isdisabled">
+          <el-tab-pane
+            name = "fourth"
+            :disabled="isdisabled"
+          >
             <span slot="label">
               <i
                 class="el-icon-caret-right otc-tab-pane-arrow-right"
-                v-show="activeName === 'fourth'">
+                v-show="activeName === 'fourth'"
+              >
               </i>
               <IconFontCommon
                 iconName="icon-dongjie"
@@ -364,7 +382,10 @@
             <OTCFreezingOrder ref = "freezing"/>
           </el-tab-pane>
           <!-- 2.2.5 委托订单 -->
-          <el-tab-pane name = "fifth" :disabled="isdisabled">
+          <el-tab-pane
+            name = "fifth"
+            :disabled="isdisabled"
+          >
             <span slot="label">
               <i
                 class="el-icon-caret-right otc-tab-pane-arrow-right"

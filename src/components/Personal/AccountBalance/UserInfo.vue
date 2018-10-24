@@ -372,7 +372,7 @@ export default {
           /*width: 350px;*/
           >.asset-text {
             padding: 0 20px;
-            margin-top: 23px;
+            margin-top: 8px;
           }
           >.asset-info {
             padding: 0 20px;

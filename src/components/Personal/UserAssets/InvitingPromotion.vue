@@ -167,6 +167,7 @@
             element-loading-background="rgba(0, 0, 0, 0.6)"
           >
             <!--用户UID 登录名 注册时间 姓名 高级认证 直接推荐人UID-->
+            <!-- 用户UID -->
             <el-table-column
               :label="$t('M.user_invite_user_uid')"
             >
@@ -174,6 +175,7 @@
                 <div>{{ s.row.showId }}</div>
               </template>
             </el-table-column>
+            <!-- 登录名 -->
             <el-table-column
               :label="$t('M.user_invite_login_name')"
             >
@@ -181,6 +183,7 @@
                 <div>{{ s.row.userName }}</div>
               </template>
             </el-table-column>
+            <!-- 注册时间 -->
             <el-table-column
               :label="$t('M.comm_register_time') + $t('M.comm_time')"
               width="180"
@@ -189,6 +192,7 @@
                 <div>{{ timeFormatting(s.row.regTime) }}</div>
               </template>
             </el-table-column>
+            <!-- 姓名 -->
             <el-table-column
               :label="$t('M.comm_name')"
               width="100"
@@ -197,6 +201,7 @@
                 <div>{{ s.row.realname }}</div>
               </template>
             </el-table-column>
+            <!-- 高级认证 -->
             <el-table-column
               :label="$t('M.user_senior_certification')"
             >
@@ -212,6 +217,7 @@
                 </div>
               </template>
             </el-table-column>
+            <!-- 直接推荐人UID -->
             <el-table-column
               :label="$t('M.user_invite_direct_referrer')"
             >
@@ -236,7 +242,7 @@
         <header class="award-record-header line-height56">
           <span class="font-size16 header-color">
             <!--奖励记录-->
-             {{ $t('M.user_invite_award') }}{{ $t('M.comm_record') }}
+            {{ $t('M.user_invite_award') }}{{ $t('M.comm_record') }}
           </span>
         </header>
         <div class="award-record-content">
@@ -403,6 +409,7 @@ export default {
     },
     // 直接推广 间接推广列表
     async getUserPromotionList () {
+      this.loading = true
       let data = await userPromotionList({
         type: this.generalizeValue, // 筛选类型
         currentPage: this.currentPageForMyEntrust, // 分页
@@ -557,7 +564,7 @@ export default {
                 >.code-copy {
                   text-align: center;
                   display: inline-block;
-                  width: 70px;
+                  width: 75px;
                   height: 26px;
                   line-height: 26px;
                   position: relative;

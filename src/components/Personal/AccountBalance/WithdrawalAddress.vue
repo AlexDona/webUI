@@ -627,7 +627,9 @@ export default {
             box-sizing: border-box;
           }
           .form-button {
-            margin: 10px 0 0 70px;
+            // margin: 10px 0 0 70px;
+            // 任增加
+            margin: 10px 0 0 120px;
           }
         }
       }

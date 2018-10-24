@@ -164,7 +164,8 @@
             </el-table-column>
             <!--对方UID-->
             <el-table-column
-              :label="$t('M.user_push_opposite_side') + 'UID'"
+              :label="$t('M.user_push_opposite_side') + ' UID'"
+              width="100"
             >
               <template slot-scope = "s">
                 <div

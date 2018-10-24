@@ -466,7 +466,7 @@
             :class="{ red:changeRed == 1}"
           >
             <p class="duration-month font-size16">
-              1个月
+              1{{ $t('M.user_vip_months') }}
             </p>
             <p class="duration-currency font-size18">
               {{filteredData[0].value}}{{filteredData[0].vipCoinName}}

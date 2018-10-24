@@ -1256,8 +1256,10 @@ export default {
         >.title{
           position: absolute;
           top:-25%;
-          left:36%;
-          width:104px;
+          // left:36%;
+          // width:104px;
+          left:24%;
+          // width:104px;
           height:35px;
           font-size:26px;
           font-family:MicrosoftYaHei;
@@ -1463,7 +1465,6 @@ export default {
             background-color: #1e2235;
             width: 410px;
             height: 50px;
-            line-height: 50px;
             text-align: center;
             border: 1px solid #4e5b85;
             cursor: pointer;
@@ -1575,7 +1576,8 @@ export default {
           >.tips{
             color: #fff;
             height:50px;
-            line-height: 50px;
+            // line-height: 50px;
+            margin-top: 10px; // 任增加
           }
           .ercode{
             margin:0 auto;

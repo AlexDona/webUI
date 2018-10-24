@@ -44,7 +44,7 @@
           <!--名 称-->
           <el-form
             :label-position="labelPosition"
-            label-width="120px"
+            label-width="160px"
           >
             <el-form-item
               :label="$t('M.user_account_name')"
@@ -55,7 +55,7 @@
             </el-form-item>
             <!--电汇地址-->
             <el-form-item
-              :label="$t('M.user_account_wire_transfer') + $t('M.comm_site')"
+              :label="$t('M.user_account_wire_transfer') + ' ' + $t('M.comm_site')"
             >
               <el-input
                 type="textarea"

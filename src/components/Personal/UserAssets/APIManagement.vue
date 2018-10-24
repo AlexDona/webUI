@@ -140,7 +140,7 @@
             <!--IP地址-->
             <el-table-column
               :label="'IP' + $t('M.comm_site')"
-              width="130"
+              width="120"
             >
               <template slot-scope = "s">
                 <div>{{ s.row.ip }}</div>
@@ -149,7 +149,7 @@
             <!--状态-->
             <el-table-column
               :label="'IP' + $t('M.comm_state')"
-              width="70"
+              width="80"
             >
               <template slot-scope = "s">
                 <div v-if="s.row.status == 'enable'">{{ $t(enable) }}</div>
@@ -933,7 +933,11 @@ export default {
         >.extension-statistics-content{
           min-height: 140px;
           .compile{
-            width: 40px;
+            // width: 40px;
+            // width: 70px;
+            &:first-child{
+              margin-right: 5px;
+            }
           }
         }
       }

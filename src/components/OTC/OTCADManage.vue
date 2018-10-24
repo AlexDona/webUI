@@ -249,20 +249,20 @@
               :label="$t('M.otc_index_operate')"
             >
               <template slot-scope="scope">
+                <!-- 下架 -->
                 <el-button
                   type="text"
                   v-if="scope.row.status === 'ENTRUSTED'"
                   @click="updateADUnshelve(scope.row.id)"
                 >
-                  <!-- 下架 -->
                   {{$t('M.otc_adMange_adverting')}}
                 </el-button>
+                <!-- 修改 -->
                 <el-button
                   type="text"
                   v-if="scope.row.status === 'CANCELED'"
-                  @click="modifyAD(scope.row)"
+                  @click="modifyAD(scope.row.id)"
                 >
-                <!-- 修改 -->
                   {{$t('M.otc_adMange_change')}}
                 </el-button>
               </template>
@@ -518,13 +518,13 @@ export default {
       }
     },
     // 12.0 点击 修改 按钮钮触发的事件
-    modifyAD (item) {
+    modifyAD (id) {
       this.$confirm(this.$t('M.otc_adMange_tipsContentTwo'), {
         confirmButtonText: this.$t('M.comm_sold_out'), // 下架
         cancelButtonText: this.$t('M.comm_cancel') // 取消
       }).then(() => {
         // 跳转发布广告页面并携带一条信息的参数
-        this.$router.push({path: '/OTCPublishAD', query: {id: item.id}})
+        this.$router.push({path: '/OTCPublishAD', query: {id: id}})
       }).catch(() => {
         // this.$message({
         //   type: 'success',

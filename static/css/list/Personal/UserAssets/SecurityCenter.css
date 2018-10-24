@@ -73,6 +73,10 @@
 .security-center.personal .el-form--label-top .el-form-item__label {
   padding: 0;
 }
+/* 任增加 */
+.security-center.personal .el-tabs--top .el-tabs__item.is-top:nth-child(2) {
+  margin-right: 20px;
+}
 .security-center.personal .el-dialog__footer {
   text-align: left;
 }

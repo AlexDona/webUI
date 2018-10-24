@@ -106,7 +106,7 @@
               @click="revocationOrder(item.id)"
             >
               <!--撤单-->
-               {{$t('M.otc_entrust_cancellations')}}
+              {{$t('M.otc_entrust_cancellations')}}
             </el-button>
           </span>
         </div>

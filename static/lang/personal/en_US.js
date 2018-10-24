@@ -10,11 +10,11 @@ export const personal = {
   'user_asset_title7': 'Security center',
   'user_asset_title8': 'PUSH assets',
   'user_asset_title9': 'My trade',
-  'user_asset_title10': 'Coin order',
+  'user_asset_title10': 'Coin Order',
   'user_asset_title11': ' legal tender order',
   'user_asset_title12': 'Please set the transaction password first, then set up the OTC collection account!',
   'user_asset_title13': 'Please complete the identity authentication before setting up the OTC collection account!',
-  'user_hidden_assets': 'Hidden asset with a currency of 0',
+  'user_hidden_assets': 'Hidden zero',
   'user_asset_valuation': 'Asset valuation',
   'user_assets_suspended': 'Recharge pause, wallet maintenance',
   'user_assets_pause_mention': 'Suspend the coin',
@@ -81,7 +81,7 @@ export const personal = {
   'user_account_please_set_up': 'Please set first',
   'user_account_return': 'Return to my account',
   'user_account_name': 'name',
-  'user_account_number': 'account number',
+  'user_account_number': 'account',
   'user_account_gathering': 'Receipt',
   'user_account_upload_collection': 'Upload receipt code',
   // 添加银行卡
@@ -116,7 +116,7 @@ export const personal = {
   // 推广统计列表Promotion statistics list
   'user_invite_user_uid': 'User UID',
   'user_invite_login_name': 'log-in name',
-  'user_invite_direct_referrer': 'Direct recommendation UID',
+  'user_invite_direct_referrer': 'Direct referrer UID',
   // 奖励记录列表List of reward records
   'user_invite_award': 'reward',
   // 安全中心Security center
@@ -186,7 +186,7 @@ export const personal = {
   'user_api_user': 'user',
   // PUSH资产PUSH assets
   'user_push_user': 'user',
-  'user_push_opposite_side': 'other side',
+  'user_push_opposite_side': 'Adverse',
   'user_push_shift': 'Transfer',
   'user_push_roll': 'Transfer out',
   'user_push_off_stocks': 'completed',
@@ -203,12 +203,12 @@ export const personal = {
   'user_coin_appoint_single': 'Bill',
   'user_coin_rental': 'lump sum',
   'user_coin_start_stop': 'Start and stop',
-  'user_coin_entrust': 'entrust',
+  'user_coin_entrust': 'Entrust',
   'user_coin_volume': 'Turnover',
   // 当前委托Commissioned by the current Current commission
   'user_coin_commissioned_current': 'Current entrust',
   // 历史委托Historical commission
-  'user_coin_commissioned_history': 'history entrust',
+  'user_coin_commissioned_history': 'History Entrust',
   // 成交明细Transaction details
   'user_coin_clinch_deal_detail': 'Transaction details',
   // 法币订单French currency order
@@ -236,7 +236,7 @@ export const personal = {
   'user_vip_opening_level': 'Opening level',
   'user_vip_dredge': 'Open',
   'user_vip_opening_time': 'Opening time',
-  'user_vip_months': 'Month, months, meaning, example, 3 months', // 几个月的意思 例 3 个月
+  'user_vip_months': 'Month', // 几个月的意思 例 3 个月
   'user_vip_immediate_access': 'Get it now',
   'user_vip_text1': 'Effective immediately after the VIP is opened, the discount is automatically calculated when the transaction is settled.',
   'user_vip_text2': 'Discount Description',

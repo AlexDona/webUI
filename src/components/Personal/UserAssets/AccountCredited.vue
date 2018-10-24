@@ -861,7 +861,7 @@ export default {
               position: relative;
               >.switch-img {
                 position: absolute;
-                right: 40px;
+                right: 48px;
                 top: 0px;
               }
             }
