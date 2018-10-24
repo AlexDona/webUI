@@ -1465,6 +1465,7 @@ export default {
             background-color: #1e2235;
             width: 410px;
             height: 50px;
+            line-height: 50px;
             text-align: center;
             border: 1px solid #4e5b85;
             cursor: pointer;
