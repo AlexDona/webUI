@@ -36,12 +36,13 @@ export default {
   },
   data () {
     return {
-      needHeader: true,
-      needFooter: true,
-      needNotice: true
+      needHeader: false,
+      needFooter: false,
+      needNotice: false
     }
   },
   async created () {
+    console.log(this.footerInfo)
     // console.log(this.isLogin)
     require('../static/css/common.css')
     require('../static/css/list/Common/HeaderCommon/HeaderCommon.css')

@@ -497,6 +497,9 @@ export default {
     }
   },
   watch: {
+    ercodeIsShowId (newVal) {
+      console.log(newVal)
+    },
     userCenterActiveName (newVal) {
       if (newVal === 'invitation-promote') {
         this.getUserPromotionList()
