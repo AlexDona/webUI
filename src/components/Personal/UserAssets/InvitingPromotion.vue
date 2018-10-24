@@ -366,7 +366,9 @@ export default {
     // 黑色主题样式
     require('../../../../static/css/theme/night/Personal/UserAssets/InvitingPromotionNight.css')
   },
-  mounted () {},
+  mounted () {
+    this.getInverData()
+  },
   activited () {},
   update () {},
   beforeRouteUpdate () {},
@@ -492,6 +494,12 @@ export default {
         // 隐藏二维码
         this.ercodeIsShowId = false
       }
+    },
+    async getInverData () {
+      this.loading = true
+      console.log('invitation-promote')
+      await this.getUserPromotionList()
+      await this.getRecommendUserPromotion()
     }
   },
   filter: {},
@@ -513,14 +521,11 @@ export default {
     ercodeIsShowId (newVal) {
       console.log(newVal)
     },
-    async userCenterActiveName (newVal) {
+    userCenterActiveName (newVal) {
       console.log(newVal)
       console.log('invitation-promote')
       if (newVal === 'invitation-promote') {
-        this.loading = true
-        console.log('invitation-promote')
-        await this.getUserPromotionList()
-        await this.getRecommendUserPromotion()
+        this.getInverData()
       }
     }
   }
