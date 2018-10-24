@@ -20,7 +20,6 @@
 import Slider from 'vue-concise-slider'// 引入slider组件
 import {getBanner} from '../../utils/api/home'
 import {returnAjaxMessage} from '../../utils/commonFunc'
-// import lrz from 'lrz'
 import {mapState, createNamespacedHelpers} from 'vuex'
 const { mapMutations } = createNamespacedHelpers('home')
 export default {
@@ -128,9 +127,9 @@ export default {
                 newVal ? that.$refs.slider.$emit('autoplayStop') : that.$refs.slider.$emit('autoplayStart', 4000)
               }
             },
-            template: `<router-link
-                     style="width: 100%;height:100%"
-                     to="/home/${item.id}"
+            template: `<a
+                         style="width: 100%;height:100%"
+                         href="${item.redirectUrl}"
                    >
                      <img
                       style="width: 100%;height:100%"
@@ -139,7 +138,7 @@ export default {
                       @mouseenter="mouseOver"
                       @mouseleave="mouseLeave"
                      />
-                   </router-link>`
+                   </a>`
           }
         })
       })
