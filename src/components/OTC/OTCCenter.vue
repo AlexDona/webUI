@@ -1139,8 +1139,9 @@ export default {
           .page{
             text-align: center;
             margin-top: -10px;
-            padding-bottom: 20px;
-            padding-top: 20px;
+            // padding-bottom: 20px;
+            // padding-top: 20px;
+            padding: 20px 0 20px 0;
             background-color: $mainContentNightBgColor;
           }
         }

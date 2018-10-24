@@ -558,8 +558,7 @@ export default {
     // position: relative;
     >.otc-AD-manage-content {
       width: 1150px;
-      margin: 70px auto;
-      margin-bottom: 10px;
+      margin: 70px auto 10px auto;
       padding-top: 50px;
       > .AD-title {
         height: 30px;

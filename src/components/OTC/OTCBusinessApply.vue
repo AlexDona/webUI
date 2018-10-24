@@ -511,8 +511,9 @@ export default {
         height: 650px;
         margin-top: 70px;
         background: url(../../assets/develop/business-apply-bgm.png) no-repeat center;
-        padding-left: 238px;
-        padding-top: 40px;
+        // padding-left: 238px;
+        // padding-top: 40px;
+        padding: 40px 0 0 238px;
         // color: #8F9CA6;
         font-size: 14px;
         >.content{

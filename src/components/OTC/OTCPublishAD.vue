@@ -1103,8 +1103,9 @@ export default {
               // margin-right: 100px;
             }
             >.input-top{
-              margin-top: 15px;
-              margin-bottom: 5px;
+              // margin-top: 15px;
+              // margin-bottom: 5px;
+              margin: 15px 0 5px 0;
               >.input-sum{
                 width: 198px;
                 height: 36px;
@@ -1138,8 +1139,9 @@ export default {
               }
             }
             >.input-bottom{
-              margin-top: 10px;
-              margin-bottom: 5px;
+              // margin-top: 10px;
+              // margin-bottom: 5px;
+              margin: 10px 0 5px 0;
               >.input-min,.input-max{
                 width: 140px;
                 height: 36px;
