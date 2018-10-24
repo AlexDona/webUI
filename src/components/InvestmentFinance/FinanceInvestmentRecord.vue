@@ -57,7 +57,8 @@
                   <el-table-column
                     prop="coinShortName"
                     :label="$t('M.finance_invest') + $t('M.comm_currency')"
-                    width="100">
+                    width="110"
+                  >
                   </el-table-column>
                   <!-- 投资类型 -->
                   <el-table-column
