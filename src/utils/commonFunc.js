@@ -27,7 +27,8 @@ import {
   getServiceProtocoDataAjax,
   getTransitionCurrencyRateAjax,
   getFooterInfo1,
-  getFooterInfo2
+  getFooterInfo2,
+  getConfigAjax
 } from '../utils/api/header'
 import store from '../vuex'
 import {removeStore} from './index'
@@ -304,14 +305,22 @@ export const getFooterInfo = async (language, that) => {
   }
   const data1 = await getFooterInfo1(params)
   const data2 = await getFooterInfo2(params)
-  if (!returnAjaxMessage(data1, that) && !returnAjaxMessage(data2, that)) {
+  const data3 = await getConfigAjax()
+
+  if (
+    !returnAjaxMessage(data1, that) &&
+    !returnAjaxMessage(data2, that) &&
+    !returnAjaxMessage(data3, that)
+  ) {
     return false
   } else {
     let footerInfo1 = data1.data.data
     let footerInfo2 = data2.data.data
+    let configInfo = data3.data.data
     that.SET_FOOTER_INFO({
       footerInfo1,
-      footerInfo2
+      footerInfo2,
+      configInfo
     })
     // favicon 添加
     addFavicon(

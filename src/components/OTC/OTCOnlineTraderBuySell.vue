@@ -314,7 +314,7 @@
                     2. {{$t('M.otc_index_tradeKnowDetail3')}}。
                   </p>
                   <p class="tip">
-                    3. {{$t('M.otc_index_tradeKnowDetail4')}}{{mainWebsite}}{{$t('M.otc_index_tradeKnowDetail6')}}；
+                    3. {{$t('M.otc_index_tradeKnowDetail4')}}{{configInfo.otcAd}}{{$t('M.otc_index_tradeKnowDetail6')}}；
                   </p>
                   <p class="tip">
                     4. {{$t('M.otc_index_tradeKnowDetail5')}}
@@ -819,8 +819,8 @@ export default {
   filter: {},
   computed: {
     ...mapState({
-      mainWebsite: state => state.common.mainWebsite, // 网站主网址
       theme: state => state.common.theme,
+      configInfo: state => state.common.footerInfo.configInfo,
       anchorStatus: state => state.OTC.anchorStatus // anchorStatus锚点状态：在全局先定义false，当用户购买或者出售时候改为true
     })
   },

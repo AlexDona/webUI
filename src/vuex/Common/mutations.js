@@ -14,6 +14,7 @@ import {
   SET_USER_INFO_REFRESH_STATUS,
   SET_LOGO_URL,
   SET_FOOTER_INFO,
+  SET_COUNT_DOWN_RESET_STATUS,
   // eslint-disable-next-line
   CHANGE_ROUTER_PATH
 } from './mutations-types.js'
@@ -23,6 +24,9 @@ import {setStore} from '../../utils'
 // import {localapi, proapi} from 'src/config/env'
 
 export default {
+  [SET_COUNT_DOWN_RESET_STATUS] (state, data) {
+    state.countDownResetStatus = data
+  },
   // 切换主题
   [CHANGE_THEME] (state, data) {
     state.theme = data

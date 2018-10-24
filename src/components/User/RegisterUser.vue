@@ -178,7 +178,14 @@
               >
               <span class="middle-line"></span>
               <CountDownButton
-                :status="!activeMethod?disabledOfPhoneBtn:disabledOfEmailBtn"
+                v-if="!activeMethod"
+                :status="disabledOfPhoneBtn"
+                class="send-code-btn cursor-pointer"
+                @run="sendPhoneOrEmailCode(activeMethod)"
+              />
+              <CountDownButton
+                v-else
+                :status="disabledOfEmailBtn"
                 class="send-code-btn cursor-pointer"
                 @run="sendPhoneOrEmailCode(activeMethod)"
               />
@@ -796,6 +803,9 @@ export default {
     }
   },
   watch: {
+    activeMethod () {
+      this.$store.commit('common/SET_COUNT_DOWN_RESET_STATUS', true)
+    },
     disabledOfPhoneBtn (newVal) {
       console.log(newVal)
     }

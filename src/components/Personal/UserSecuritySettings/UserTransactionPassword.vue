@@ -678,6 +678,7 @@ export default {
 <style scoped lang="scss">
   @import "../../../../static/css/scss/Personal/IndexPersonal";
   .transaction-password {
+    overflow: hidden;
     >.transaction-password-main {
       width: 1100px;
       min-height: 700px;

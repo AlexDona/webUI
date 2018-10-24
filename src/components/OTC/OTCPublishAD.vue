@@ -418,13 +418,13 @@
             {{$t('M.otc_publishAD_publishDis')}}：
           </div>
           <p class="tip font-size12">
-            ●{{mainWebsite}} {{$t('M.otc_publishAD_discriptLineOne')}}
+            ●{{configInfo.otcAd}} {{$t('M.otc_publishAD_discriptLineOne')}}
           </p>
           <p class="tip font-size12">
             ●{{$t('M.otc_publishAD_discriptLineTwo')}}
           </p>
           <p class="tip font-size12">
-            ●{{$t('M.otc_publishAD_discriptLineThree')}}{{mainWebsite}}{{$t('M.otc_publishAD_discriptLineFive')}}
+            ●{{$t('M.otc_publishAD_discriptLineThree')}}{{configInfo.otcAd}}{{$t('M.otc_publishAD_discriptLineFive')}}
           </p>
           <p class="tip font-size12">
             ●{{$t('M.otc_publishAD_discriptLineFour')}}
@@ -978,7 +978,7 @@ export default {
     ...mapState({
       language: state => state.common.language,
       theme: state => state.common.theme,
-      mainWebsite: state => state.common.mainWebsite // 网站主网址
+      configInfo: state => state.common.footerInfo.configInfo
     })
   },
   watch: {
