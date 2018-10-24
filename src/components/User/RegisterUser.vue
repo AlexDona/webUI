@@ -10,9 +10,6 @@
     v-loading.fullscreen.lock="fullscreenLoading"
     element-loading-background="rgba(0, 0, 0, 0.6)"
   >
-    <keep-alive>
-      <HeaderCommon/>
-    </keep-alive>
     <!--注册页面-->
     <div
       class="inner-box"
@@ -314,7 +311,6 @@
 </template>
 <script>
 import ImageValidate from '../Common/ImageValidateCommon'
-import HeaderCommon from '../Common/HeaderCommonForPC'
 import ErrorBox from './ErrorBox'
 import CountDownButton from '../Common/CountDownCommon'
 import {
@@ -333,7 +329,6 @@ const {mapMutations} = createNamespacedHelpers('user')
 export default {
   components: {
     ErrorBox,
-    HeaderCommon,
     ImageValidate,
     CountDownButton
   },

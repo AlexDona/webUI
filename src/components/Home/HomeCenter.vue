@@ -2,14 +2,6 @@
   <!--首页盒子-->
   <div class="home-box home">
 
-    <!--公告-->
-    <keep-alive>
-      <NoticeHome/>
-    </keep-alive>
-
-    <!--导航-->
-    <NavCommon/>
-
     <!--banner-->
     <keep-alive>
       <BannerHome/>
@@ -19,23 +11,16 @@
     <MarketListHome class="margin-1"/>
 
     <!--底部-->
-    <keep-alive>
-      <FooterCommon/>
-    </keep-alive>
   </div>
 </template>
 <script>
 import NoticeHome from './NoticeHome'
-import NavCommon from '../Common/HeaderCommonForPC'
 import BannerHome from './BannerHome'
-import FooterCommon from '../Common/FooterCommon'
 import MarketListHome from './MarketListHome'
 export default {
   components: {
     NoticeHome,
-    NavCommon,
     BannerHome,
-    FooterCommon,
     MarketListHome
   },
   data () {

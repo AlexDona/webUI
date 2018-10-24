@@ -221,7 +221,6 @@
           width="150px"
           sortable
         >
-        
           <template slot-scope="s">
             <div
               style="

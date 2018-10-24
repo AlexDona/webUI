@@ -4,8 +4,6 @@
     :class="{'day':theme == 'day','night':theme == 'night' }"
   >
     <!-- 挂单：商家和普通用户都可以用 -->
-    <!-- 1.0 导航 -->
-    <NavCommon/>
     <!-- 2.0发布购买和出售 -->
     <div
       class="publish-buy-and-sell-content"
@@ -403,14 +401,11 @@
         </div>
       </div>
     </div>
-    <!-- 3.0 底部 -->
-    <keep-alive><FooterCommon/></keep-alive>
   </div>
 </template>
 <!--请严格按照如下书写书序-->
 <script>
 import {addOTCPutUpOrders, getOTCCoinInfo} from '../../utils/api/OTC'
-import NavCommon from '../Common/HeaderCommonForPC'
 import FooterCommon from '../Common/FooterCommon'
 import {returnAjaxMessage} from '../../utils/commonFunc'
 import {createNamespacedHelpers, mapState} from 'vuex'
@@ -418,7 +413,6 @@ import {timeFilter, formatNumberInput, amendPrecision} from '../../utils'
 const {mapMutations} = createNamespacedHelpers('OTC')
 export default {
   components: {
-    NavCommon, //  头部导航
     FooterCommon //  底部
   },
   data () {

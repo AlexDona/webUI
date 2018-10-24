@@ -6,9 +6,6 @@
     v-loading.fullscreen.lock="fullscreenLoading"
     element-loading-background="rgba(0, 0, 0, 0.6)"
   >
-    <keep-alive>
-      <HeaderCommon/>
-    </keep-alive>
     <div class="login-password-main margin25">
       <header class="login-password-header personal-height60 line-height60 line-height70 margin25">
         <span
@@ -101,7 +98,6 @@
         </div>
       </div>
     </div>
-    <keep-alive><FooterCommon/></keep-alive>
   </div>
 </template>
 <!--请严格按照如下书写书序-->

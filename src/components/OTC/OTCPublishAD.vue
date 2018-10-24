@@ -4,8 +4,6 @@
     :class="{'day':theme == 'day','night':theme == 'night' }"
   >
     <!-- 商家发布广告挂单 -->
-    <!-- 1.0 导航 -->
-    <NavCommon/>
     <!-- 2.0 OTC发布广告内容 -->
     <div
       class="otc-publish-AD-content"
@@ -434,8 +432,6 @@
         </div>
       </div>
     </div>
-    <!-- 3.0 底部 -->
-    <keep-alive><FooterCommon/></keep-alive>
   </div>
 </template>
 <!--请严格按照如下书写书序-->
@@ -448,8 +444,6 @@ import {
   getOTCCoinInfo
 } from '../../utils/api/OTC'
 // 引入组件
-import NavCommon from '../Common/HeaderCommonForPC'
-import FooterCommon from '../Common/FooterCommon'
 import IconFontCommon from '../Common/IconFontCommon'
 // 引入提示信息
 import {returnAjaxMessage} from '../../utils/commonFunc'
@@ -458,8 +452,6 @@ import {createNamespacedHelpers, mapState} from 'vuex'
 const {mapMutations} = createNamespacedHelpers('OTC')
 export default {
   components: {
-    NavCommon, //  头部导航
-    FooterCommon, //  底部
     IconFontCommon //  字体图标
   },
   data () {
@@ -996,6 +988,7 @@ export default {
 <style scoped lang="scss" type="text/scss">
 @import "../../../static/css/scss/index";
 .otc-publish-AD-box{
+  overflow: hidden;
   .redBorderRightNone{
     border: 1px solid #D45858 !important;
     border-right: 0 !important;

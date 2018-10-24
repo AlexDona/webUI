@@ -3,8 +3,6 @@
     class="otc-report-form-statistics-box otc"
     :class="{'day':theme == 'day','night':theme == 'night' }"
   >
-    <!-- 1.0 导航 -->
-    <NavCommon/>
     <!-- 2.0 -->
     <div class="report-form-statistics-content">
       <!-- 2.1 报表统计标题 -->
@@ -475,15 +473,11 @@
         </div>
       </div>
     </div>
-    <!-- 3.0 底部 -->
-    <keep-alive><FooterCommon/></keep-alive>
   </div>
 </template>
 <!--请严格按照如下书写书序-->
 <script>
 import {getOTCAvailableCurrency, getMerchantAvailablelegalTender, getOTCMerchantsOrdersList, getOTCReportFormStatisticsData} from '../../utils/api/OTC'
-import NavCommon from '../Common/HeaderCommonForPC'
-import FooterCommon from '../Common/FooterCommon'
 import IconFontCommon from '../Common/IconFontCommon'
 import {timeFilter} from '../../utils'
 import {createNamespacedHelpers, mapState} from 'vuex'
@@ -491,8 +485,6 @@ import {returnAjaxMessage} from '../../utils/commonFunc'
 const {mapMutations} = createNamespacedHelpers('OTC')
 export default {
   components: {
-    NavCommon, //  头部导航
-    FooterCommon, //  底部
     IconFontCommon //  字体图标
   },
   data () {
@@ -768,11 +760,11 @@ export default {
 <style scoped lang="scss" type="text/scss">
 @import "../../../static/css/scss/index";
 .otc-report-form-statistics-box{
+  overflow: hidden;
   >.report-form-statistics-content{
     width: 1150px;
-    margin: 70px auto;
+    margin: 70px auto 10px;
     padding-top: 50px;
-    margin-bottom: 10px;
     >.report-form-title{
       height: 30px;
       line-height: 30px;

@@ -4,9 +4,6 @@
     :class="{'day':theme == 'day','night':theme == 'night' }"
   >
     <!-- 邀请排行 -->
-    <keep-alive>
-      <HeaderCommon/>
-    </keep-alive>
     <div class="inner-box">
       <div
         class="top"
@@ -92,7 +89,6 @@
         </div>
       </div>
     </div>
-    <keep-alive><FooterCommon/></keep-alive>
   </div>
 </template>
 <script>
