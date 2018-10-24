@@ -282,7 +282,7 @@
               :label="$t('M.comm_time')"
             >
               <template slot-scope = "s">
-                <div>{{ timeFormatting(s.row.createTime) }}</div>
+                <div>{{ s.row.operateTime }}</div>
               </template>
             </el-table-column>
           </el-table>
