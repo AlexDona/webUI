@@ -40,7 +40,7 @@
           </span>
           <!-- 币种 -->
           <span class="filtrate-text font-size14">
-            {{$t('M.comm_currency')}}
+            {{$t('M.otc_AD_token')}}
           </span>
           <span class="status-input">
             <el-select
@@ -158,7 +158,6 @@
             <!-- 交易日期 -->
             <el-table-column
               :label = "$t('M.otc_transaction_data')"
-              width="95"
             >
               <template slot-scope = "scope">
                 <div>{{timeFormatting(scope.row.createTime)}}</div>
@@ -175,8 +174,7 @@
             </el-table-column>
             <!-- 币种 -->
             <el-table-column
-              :label = "$t('M.comm_currency')"
-              width="85"
+              :label = "$t('M.otc_Merchants_Orders_market')"
             >
               <template slot-scope = "scope">
                 <div>{{scope.row.coinName}}</div>
@@ -185,7 +183,6 @@
             <!-- 交易类型 -->
             <el-table-column
               :label = "$t('M.otc_type_ransaction')"
-              width="80"
             >
               <template slot-scope = "scope">
                 <div
@@ -208,7 +205,6 @@
             <!-- 状态 (未付款 PICKED 已付款 PAYED 已完成 COMPLETED  已取消  CANCELED 冻结中 FROZEN) -->
             <el-table-column
               :label = "$t('M.otc_order_status')"
-              width="100"
             >
               <template slot-scope = "scope">
                 <div v-show="scope.row.status === 'PICKED'">
@@ -231,7 +227,6 @@
             <!-- 货币 -->
             <el-table-column
               :label = "$t('M.otc_MerchantsOrders_currecy')"
-              width="85"
             >
               <template slot-scope = "scope">
                 <div>{{scope.row.currencyName}}</div>
@@ -240,6 +235,7 @@
             <!-- 支付方式 -->
             <el-table-column
               :label = "$t('M.otc_index_Payment_method')"
+              width="106"
             >
               <template slot-scope = "scope">
                 <div>
@@ -312,7 +308,6 @@
             <!-- 申诉记录 -->
             <el-table-column
               :label = "$t('M.otc_record_complaint')"
-              width="80"
             >
               <template slot-scope = "scope">
                 <div>{{scope.row.appeal == 'YES'? $t('M.otc_MerchantsOrders_seller_appeal') : $t('M.otc_MerchantsOrders_no')}}</div>
@@ -592,7 +587,7 @@ export default {
             // color: #9DA5B3;
           }
           >.status-input{
-            margin-right: 58px;
+            margin-right: 50px;
           }
           >.date-picker{
             >.date-short-line{

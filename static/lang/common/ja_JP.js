@@ -87,6 +87,7 @@ export const common = {
   'comm_limit': '制限',
   'comm_record': 'レコード',
   'comm_deal': '取引',
+  'comm_deal_pair': '取引右',
   'comm_that': '場所',
   'comm_pair': '右',
   'comm_buy': '購入する',

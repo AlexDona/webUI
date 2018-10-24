@@ -88,6 +88,7 @@ export const common = {
   'comm_limit': '限额',
   'comm_record': '记录',
   'comm_deal': '交易',
+  'comm_deal_pair': '交易对',
   'comm_that': '所',
   'comm_pair': '对',
   'comm_buy': '买入',

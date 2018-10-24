@@ -1,4 +1,8 @@
 export const OTC = {
+  'otc_AD_trade_currency': 'アクションタイプ',
+  'otc_AD_trade_token': '認証タイプ',
+  'otc_AD_token': '認証タイプ',
+  'otc_Merchants_Orders_market': '認証タイプ',
   'otc_index_buy': '購入',
   'otc_index_sell': '販売のため',
   'otc_index_online_buy': 'オンラインで購入する',

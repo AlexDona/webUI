@@ -15,8 +15,8 @@
       <div class="AD-manage-main">
         <!-- 上部分筛选条件 -->
         <div class="manage-main-top">
+          <!-- 交易类型 -->
           <span class="filtrate-text font-size14">
-            <!-- 交易类型 -->
             {{$t('M.otc_type_ransaction')}}
           </span>
           <span class="style-input">
@@ -38,9 +38,9 @@
           </span>
           <!-- 交易币种 -->
           <span class="filtrate-text font-size14">
-            {{$t('M.otc_trade')}}{{$t('M.comm_currency')}}
+            <!-- {{$t('M.otc_trade')}}{{$t('M.comm_currency')}} -->
+            {{$t('M.otc_AD_trade_token')}}
           </span>
-          <!-- 币种选择 -->
           <span class="market-input">
             <el-select
               :no-data-text="$t('M.comm_no_data')"
@@ -60,9 +60,9 @@
           </span>
           <!-- 交易法币 -->
           <span class="filtrate-text font-size14">
-            {{$t('M.otc_trade')}}{{$t('M.comm_coin')}}
+            <!-- {{$t('M.otc_trade')}}{{$t('M.comm_coin')}} -->
+            {{$t('M.otc_AD_trade_currency')}}
           </span>
-          <!-- 法币选择 -->
           <span class="market-input">
             <el-select
               :no-data-text="$t('M.comm_no_data')"
@@ -101,6 +101,7 @@
               </el-option>
             </el-select>
           </span>
+          <!-- 按钮 -->
           <span class="inquire-button">
             <!-- 查询 -->
             <el-button
@@ -117,6 +118,7 @@
               {{$t('M.otc_MerchantsOrders_reset')}}
             </el-button>
           </span>
+          <!-- 一键下架所有广告 -->
           <span
             class="all-unshelve cursor-pointer"
             @click="cancelAllOnekey"
@@ -128,7 +130,6 @@
             <span
               class="unshelve-text"
             >
-            <!-- 一键下架所有广告 -->
             {{$t('M.otc_adMange_advertingAD')}}
             </span>
           </span>
@@ -174,14 +175,15 @@
                 </div>
               </template>
             </el-table-column>
-            <!-- 市场 -->
+            <!-- 币种 -->
             <el-table-column
-              :label="$t('M.comm_currency')"
+              :label="$t('M.otc_AD_token')"
             >
               <template slot-scope="scope">
                 <div>{{scope.row.coinName}}</div>
               </template>
             </el-table-column>
+            <!-- 法币 -->
             <el-table-column
               :label="$t('M.comm_coin')"
             >
@@ -217,6 +219,7 @@
             <!-- 已完成数量 -->
             <el-table-column
               :label="$t('M.otc_enum_status_yiwancheng') + $t('M.comm_count')"
+              width="120px"
             >
               <template slot-scope="scope">
                 <div>{{scope.row.matchCount}}</div>
