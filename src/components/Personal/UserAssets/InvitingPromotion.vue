@@ -355,7 +355,7 @@ export default {
       totalSumBTC: '', // btc资产
       BTC2CNYRate: '', // 转换汇率
       coinName: '',
-      loading: true // 局部列表loading
+      loading: false // 局部列表loading
     }
   },
   created () {
@@ -409,7 +409,7 @@ export default {
     },
     // 直接推广 间接推广列表
     async getUserPromotionList () {
-      this.loading = true
+      // this.loading = true
       let data = await userPromotionList({
         type: this.generalizeValue, // 筛选类型
         currentPage: this.currentPageForMyEntrust, // 分页
@@ -514,7 +514,11 @@ export default {
       console.log(newVal)
     },
     async userCenterActiveName (newVal) {
+      console.log(newVal)
+      console.log('invitation-promote')
       if (newVal === 'invitation-promote') {
+        this.loading = true
+        console.log('invitation-promote')
         await this.getUserPromotionList()
         await this.getRecommendUserPromotion()
       }

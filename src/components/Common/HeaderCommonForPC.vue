@@ -469,6 +469,7 @@ export default{
     // 设置个人中心跳转
     setPersonalJump (target) {
       this.$store.commit('personal/CHANGE_USER_CENTER_ACTIVE_NAME', target)
+      console.log(this.userCenterActiveName)
     },
     // 开启vip
     stateOpenVip () {
@@ -607,6 +608,7 @@ export default{
       userInfoRefreshStatus: state => state.common.userInfoRefreshStatus,
       logoSrc: state => state.common.logoSrc,
       footerInfo: state => state.common.footerInfo,
+      userCenterActiveName: state => state.personal.userCenterActiveName,
       title: state => state.common.title // 网站title
     })
   },
