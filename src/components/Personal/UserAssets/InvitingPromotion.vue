@@ -262,14 +262,14 @@
               :label="$t('M.comm_currency')"
             >
               <template slot-scope = "s">
-                <div>{{ s.row.coinName }}</div>
+                <div>{{ coinName }}</div>
               </template>
             </el-table-column>
             <el-table-column
               :label="$t('M.comm_count')"
             >
               <template slot-scope = "s">
-                <div>{{ s.row.totalChange }}</div>
+                <div>{{ s.row.content-0 }}</div>
               </template>
             </el-table-column>
             <el-table-column
@@ -348,7 +348,8 @@ export default {
       awardList: [],
       totalSumBTC: '', // btc资产
       BTC2CNYRate: '', // 转换汇率
-      loading: false // 局部列表loading
+      coinName: '',
+      loading: true // 局部列表loading
     }
   },
   created () {
@@ -393,7 +394,7 @@ export default {
       this.generalizeOptionsList.forEach(item => {
         if (e === item.value) {
           this.generalizeValue = e
-          this.loading = true
+          // this.loading = true
           // this.loading = true
           this.getUserPromotionList()
           console.log(this.generalizeValue)
@@ -432,10 +433,9 @@ export default {
     },
     // 推荐用户币种列表
     async getRecommendUserPromotion () {
-      this.loading = true
+      // this.loading = true
       let data = await recommendUserPromotionList({
         pageNumber: this.currentPageMyEntrust, // 页码
-        // type: this.generalizeValue, // 页码
         pageSize: this.pageSize // 条数
       })
       console.log(data)
@@ -446,16 +446,19 @@ export default {
       } else {
         // 接口失败清除局部loading
         this.loading = false
+        // console.log(data.data.data)
         // 返回展示
-        this.awardList = data.data.data.list
+        this.awardList = data.data.data.data.list
+        this.coinName = data.data.data.coinName
+        console.log(this.coinName)
         this.totalPageMyEntrust = data.data.data.pages - 0
         console.log(this.awardList)
       }
     },
     // 分页
-    changeCurrentPageAward (pageNum) {
+    async changeCurrentPageAward (pageNum) {
       this.currentPageMyEntrust = pageNum
-      this.getRecommendUserPromotion()
+      await this.getRecommendUserPromotion()
     },
     //  点击复制
     onCopy (e) {
@@ -497,13 +500,16 @@ export default {
     }
   },
   watch: {
+    loading (newVal) {
+      console.log(newVal)
+    },
     ercodeIsShowId (newVal) {
       console.log(newVal)
     },
-    userCenterActiveName (newVal) {
+    async userCenterActiveName (newVal) {
       if (newVal === 'invitation-promote') {
-        this.getUserPromotionList()
-        this.getRecommendUserPromotion()
+        await this.getUserPromotionList()
+        await this.getRecommendUserPromotion()
       }
     }
   }
