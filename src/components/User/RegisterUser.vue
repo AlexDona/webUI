@@ -382,6 +382,9 @@ export default {
     }
   },
   created () {
+    if (this.isLogin) {
+      this.USER_LOGOUT()
+    }
     require('../../../static/css/list/User/Register.css')
     // changeLang({'lan': 'zh_CN'})
     let params = this.$route.query.showId
@@ -422,7 +425,8 @@ export default {
   beforeRouteUpdate () {},
   methods: {
     ...mapMutations([
-      'SET_USER_BUTTON_STATUS'
+      'SET_USER_BUTTON_STATUS',
+      'USER_LOGOUT'
     ]),
     jumpToOtherPage (router, activeName) {
       jumpToOtherPageForFooter(router, activeName, this)
@@ -791,6 +795,7 @@ export default {
   computed: {
     ...mapState({
       theme: state => state.common.theme,
+      isLogin: state => state.user.isLogin,
       language: state => state.common.language,
       contryAreaList: state => state.common.contryAreaList,
       disabledOfPhoneBtn: state => state.user.disabledOfPhoneBtn,

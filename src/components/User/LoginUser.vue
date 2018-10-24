@@ -28,11 +28,11 @@
         v-if="!isMobile&&!isErCodeLogin"
       >
         <!--切换登录-->
-        <button
-          class="toggle-login-type cursor-pointer"
-          @click="toggleLoginType"
-        >
-        </button>
+        <!--<button-->
+          <!--class="toggle-login-type cursor-pointer"-->
+          <!--@click="toggleLoginType"-->
+        <!--&gt;-->
+        <!--</button>-->
         <!-- 欢迎登录 -->
         <h1 class="title">{{$t('M.login_welcome')}}{{$t('M.comm_login')}}</h1>
         <!--正常登录-->
@@ -723,7 +723,11 @@ export default {
     }
   },
   created () {
-    console.log(this.socket)
+    // console.log(this.isLogin)
+    // console.log(this.socket)
+    if (this.isLogin) {
+      this.$router.push({path: '/'})
+    }
     require('../../../static/css/list/User/Login.css')
     this.ENTER_STEP1()
     this.refreshCode()
@@ -1197,6 +1201,7 @@ export default {
       step1: state => state.user.loginStep.step1,
       step2: state => state.user.loginStep.step2,
       step3: state => state.user.loginStep.step3,
+      isLogin: state => state.user.isLogin,
       isMobile: state => state.user.isMobile,
       failureNum: state => state.user.loginStep1Info.failNum, // 失败次数
       activeCountryCode: state => state.user.loginStep1Info.countryCode, // 国籍码
