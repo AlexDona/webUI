@@ -167,7 +167,7 @@
               <div
                 class="bottom"
                 style="height:15px;line-height: 15px"
-                v-show="currencyRateList[s.row.area]&&activeConvertCurrencyObj.symbol"
+                v-show="currencyRateList[s.row.area]&&activeConvertCurrencyObj"
               >
                 ≈ {{activeConvertCurrencyObj.symbol}}{{keep2Num((currencyRateList[s.row.area]-0)*(s.row.last-0))}}
               </div>
@@ -427,6 +427,12 @@ export default {
     })
   },
   watch: {
+    currencyRateList (newVal) {
+      console.log(newVal)
+    },
+    activeConvertCurrencyObj (newVal) {
+      console.log(newVal)
+    },
     item (newVal) {
       console.log(newVal)
     }

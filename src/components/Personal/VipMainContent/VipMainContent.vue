@@ -877,6 +877,7 @@ export default {
   computed: {
     ...mapState({
       theme: state => state.common.theme,
+      language: state => state.common.language,
       userInfo: state => state.user.loginStep1Info, // 用户详细信息
       vipLeavl: state => state.user.loginStep1Info.userInfo.level
     }),
