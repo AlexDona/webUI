@@ -26,8 +26,8 @@ export default {
         xAxis: {
           type: 'category',
           boundaryGap: ['1%'],
-          show: false,
-          data: [2.35, 1.23, 1.89, 1.24, 2.1, 1.59, 0.1, 2.35, 1.23]
+          show: false
+          // data: [2.35, 1.23, 1.89, 1.24, 2.1, 1.59, 0.1, 2.35, 1.23]
         },
         yAxis: {
           type: 'value',

@@ -612,6 +612,9 @@ export default{
     })
   },
   watch: {
+    language () {
+      getFooterInfo(this.language, this)
+    },
     title (newVal) {
       console.log(newVal)
     },
