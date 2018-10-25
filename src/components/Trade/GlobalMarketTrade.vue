@@ -50,7 +50,7 @@
                         'down':middleTopData.chg<0
                       }"
                     >
-                      {{activeConvertCurrencyObj.symbol}}{{keep2Num((currencyRateList[activeSymbol.area]-0)*item.boursePrice)-0}}
+                      ≈{{activeConvertCurrencyObj.symbol}}{{keep2Num((currencyRateList[activeSymbol.area]-0)*item.boursePrice)-0}}
                     </div>
                   </div><div class="td count">
                       <div class="top"
@@ -62,7 +62,7 @@
                         class="bottom"
                         v-if="currencyRateList[activeSymbol.area]&&item.bourseCount"
                       >
-                        {{activeConvertCurrencyObj.symbol}}{{formatCount(keep2Num((currencyRateList[item.bourseTrade.split('_')[1]]-0)*item.bourseCount))}}
+                        ≈{{activeConvertCurrencyObj.symbol}}{{formatCount(keep2Num((currencyRateList[item.bourseTrade.split('_')[1]]-0)*item.bourseCount))}}
                       </div>
                   </div>
                 </div>
@@ -103,9 +103,7 @@ export default {
   methods: {
     // 成交量格式化
     formatCount (targetNum) {
-      console.log(targetNum)
       let newNum = targetNum - 0
-      console.log(newNum)
       switch (this.language) {
         case 'zh_CN':
           if (newNum > 100000000) {
@@ -156,19 +154,15 @@ export default {
   },
   watch: {
     middleTopData (newVal) {
-      console.log(newVal)
     },
     currencyRateList (newVal) {
-      console.log(newVal)
     },
     activeSymbolId (newVal) {
-      console.log(newVal)
       if (newVal) {
         this.getGlobalMarket()
       }
     },
     globalMarketList (newVal) {
-      console.log(newVal)
     }
   }
 }

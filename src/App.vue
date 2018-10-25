@@ -94,7 +94,6 @@ export default {
     userInfo (newVal) {
     },
     isMobile (newVal) {
-      console.log(newVal)
       this.setBodyClassName(newVal, 'mobile')
     }
   }

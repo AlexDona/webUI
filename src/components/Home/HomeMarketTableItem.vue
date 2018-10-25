@@ -427,13 +427,10 @@ export default {
   },
   watch: {
     currencyRateList (newVal) {
-      console.log(newVal)
     },
     activeConvertCurrencyObj (newVal) {
-      console.log(newVal)
     },
     item (newVal) {
-      console.log(newVal)
     }
   }
 }

@@ -21,21 +21,33 @@
             >
               {{timeFilter(date)}}
             </h1>
-            <p>1.邀请奖励{{configInfo.inviterPage}}统计起始时间为2018-05-20 10:18，在此之前已邀请 注册的无累计{{configInfo.inviterPage}}至此活动；</p>
+            <div
+              class="chinese"
+              v-if="language=='zh_CN'"
+            >
+              <p>1.邀请奖励{{configInfo.inviterPage}}统计起始时间为2018-05-20 10:18，在此之前已邀请 注册的无累计{{configInfo.inviterPage}}至此活动；</p>
+              <p>2.登录平台账户—财务中心—推广注册链接—复制专属推广链接；</p>
+              <p>3.假设新用户A通过您的推广链接注册完成实名认证，即成为您的直接下级，系统会在您的账户增加10{{configInfo.inviterPage}}；新用户B通过新用户A的推广链接，即成为您的间接下级，间接下级不享受赠送{{configInfo.inviterPage}}；</p>
+              <p>4.为维护正常推广者权益，如发现有作弊者，经分析属实，将强制取消奖励，平台有权对推广虚假用户骗取奖励行为进行判定；</p>
+              <p>5.邀请的新用户注册通过实名认证，系统则自动累计{{configInfo.inviterPage}}；</p>
+              <p>6.活动奖励{{configInfo.inviterPage}}币均为官方第一、第二期新币投票所得{{configInfo.inviterPage}}币；</p>
+              <p>7.邀请注册详细数据用户可进入财务中心—代理下级查询，近期官网将展示邀请排行榜，排名按照积分排序，公平公正公开；</p>
+              <p>8.数据每隔5分钟刷新1次</p>
+            </div>
+            <div
+              class="english"
+              v-else
+            >
+              <p>1. The invitation to reward {{configInfo.inviterPage}} statistics start time is 2018-05-20 10:18, before this has been invitation  to register no cumulative {{configInfo.inviterPage}} to this event;</p>
+              <p>2. Login in the platform account - Finance Center - Promotion of registration link - copy exclusive promotion link;</p>
+              <p>3. Assume that the new user A completes the real-name authentication through your promotion registration link , he will be your direct subordinate, thesystem will add 10{{configInfo.inviterPage}} to your account; the new user B will become your indirect subordinate through the promotion link of the new user A. Indirect subordinates do not enjoy the gift of {{configInfo.inviterPage}};</p>
+              <p>4. In order to maintain the rights of normal promoters, if there is a cheater, the analysis is true, the reward will be forcibly cancelled, and the platform has the right to judge the fraudulent behavior of promoting false users;</p>
+              <p>5. The new user registration is approved by real-name authentication, and the system automatically accumulates {{configInfo.inviterPage}};</p>
+              <p>6. The activity reward {{configInfo.inviterPage}} coins are the official first and second voting got {{configInfo.inviterPage}} coins;</p>
+              <p>7. Invite registered detailed data users can enter the financial center to  - agent lower level query, the official website will display the invitation list, the ranking is ranked according to points, fair and open;</p>
+              <p>8. Data is refreshed once every 5 minutes.</p>
+            </div>
 
-            <p>2.登录平台账户—财务中心—推广注册链接—复制专属推广链接；</p>
-
-            <p>3.假设新用户A通过您的推广链接注册完成实名认证，即成为您的直接下级，系统会在您的账户增加10{{configInfo.inviterPage}}；新用户B通过新用户A的推广链接，即成为您的间接下级，间接下级不享受赠送{{configInfo.inviterPage}}；</p>
-
-            <p>4.为维护正常推广者权益，如发现有作弊者，经分析属实，将强制取消奖励，平台有权对推广虚假用户骗取奖励行为进行判定；</p>
-
-            <p>5.邀请的新用户注册通过实名认证，系统则自动累计{{configInfo.inviterPage}}；</p>
-
-            <p>6.活动奖励{{configInfo.inviterPage}}币均为官方第一、第二期新币投票所得{{configInfo.inviterPage}}币；</p>
-
-            <p>7.邀请注册详细数据用户可进入财务中心—代理下级查询，近期官网将展示邀请排行榜，排名按照积分排序，公平公正公开；</p>
-
-            <p>8.数据每隔5分钟刷新1次</p>
           </div>
           <div class="middle-line"></div>
           <div class="main-content">
@@ -187,6 +199,7 @@ export default {
   computed: {
     ...mapState({
       theme: state => state.common.theme,
+      language: state => state.common.language,
       configInfo: state => state.common.footerInfo.configInfo
     }),
     screenWidth () {
@@ -209,7 +222,7 @@ export default {
       }
       >.content{
         background-color: #121824;
-        height:1500px;
+        height:1750px;
         margin-top:-1px;
         >.inner-box{
           margin: 0 auto;
@@ -227,7 +240,10 @@ export default {
             margin: -15px auto;
             padding:10px 50px 50px;
             color:#fff;
-            >p{
+            >.english{
+              font-size: 18px;
+            }
+            p{
               line-height: 30px;
             }
             >.time{

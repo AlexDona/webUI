@@ -65,7 +65,7 @@
                   <div class="rate-changer"
                        v-show="activeConvertCurrencyObj&&(limitExchange.transformBuyPrice-0)"
                   >
-                    ≈ {{limitExchange.transformBuyPrice}} {{activeConvertCurrencyObj.shortName}}
+                    ≈{{activeConvertCurrencyObj.symbol}}{{limitExchange.transformBuyPrice}}
                   </div>
                 </div>
                 <!--买入量-->
@@ -152,7 +152,7 @@
                     class="rate-changer"
                     v-show="activeConvertCurrencyObj&&(limitExchange.transformSellPrice-0)"
                   >
-                    ≈ {{limitExchange.transformSellPrice}} {{activeConvertCurrencyObj.shortName}}
+                    ≈{{activeConvertCurrencyObj.symbol}}{{limitExchange.transformSellPrice}}
                   </div>
                 </div>
                 <!--卖出量-->
