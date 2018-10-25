@@ -10,7 +10,7 @@ const HtmlWebpackPlugin = require('html-webpack-plugin')
 const ExtractTextPlugin = require('extract-text-webpack-plugin')
 const OptimizeCSSPlugin = require('optimize-css-assets-webpack-plugin')
 const UglifyJsPlugin = require('uglifyjs-webpack-plugin')
-const PrerenderSPAPlugin = require('prerender-spa-plugin')
+// const PrerenderSPAPlugin = require('prerender-spa-plugin')
 // const env = process.env.NODE_ENV === 'testing'
 //   ? require('../config/test.env')
 //   : require('../config/prod.env')
@@ -125,18 +125,18 @@ const webpackConfig = merge(baseWebpackConfig, {
         to: config.build.assetsSubDirectory,
         ignore: ['.*']
       }
-    ]),
-    new PrerenderSPAPlugin({
-      staticDir: config.build.assetsRoot,
-      routes: [ '/', '/Contacts' ], // 需要预渲染的路由（视你的项目而定）
-      minify: {
-        collapseBooleanAttributes: true,
-        collapseWhitespace: true,
-        decodeEntities: true,
-        keepClosingSlash: true,
-        sortAttributes: true
-      }
-    })
+    ])
+    // new PrerenderSPAPlugin({
+    //   staticDir: config.build.assetsRoot,
+    //   routes: [ '/', '/Contacts' ], // 需要预渲染的路由（视你的项目而定）
+    //   minify: {
+    //     collapseBooleanAttributes: true,
+    //     collapseWhitespace: true,
+    //     decodeEntities: true,
+    //     keepClosingSlash: true,
+    //     sortAttributes: true
+    //   }
+    // })
   ]
 })
 
