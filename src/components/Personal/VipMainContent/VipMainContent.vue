@@ -644,6 +644,7 @@ export default {
       discountsInstructionStatus: false, // 折扣说明弹窗显示状态
       serviceAgreementStatus: false,
       discountsInstructionContent: '', // 折扣说明内容
+      serviceAgreementContent: '', // vip服务条款
       fullscreenLoading: false // 整页loading
     }
   },
@@ -680,13 +681,16 @@ export default {
           break
       }
     },
+    // vip 服务协议
     async getServiceProtocolData () {
       const params = {
         termsTypeIds: '11,12', // 用户协议代号
         language: this.language
       }
       await getServiceProtocolData(this, params, (data) => {
-        console.log(data)
+        console.log(data.data.data)
+        this.serviceAgreementContent = data.data.data[0].content
+        this.discountsInstructionContent = data.data.data[1].content
       })
     },
     // 点击返回上个页面
@@ -871,7 +875,6 @@ export default {
         this.fullscreenLoading = false
         // 返回展示
         this.configValue = data.data.data.configValue
-        console.log(data.data.data.configValue)
         this.toggleAssetsCurrencyId()
       }
     },

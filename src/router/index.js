@@ -86,6 +86,7 @@ const HelpCenter = r => require.ensure([], () => r(require('@/components/FooterI
 const AboutUs = r => require.ensure([], () => r(require('@/components/FooterInfo/AboutUs')), 'about-us')
 const ServiceAndProtocol = r => require.ensure([], () => r(require('@/components/FooterInfo/ServiceAndProtocol')), 'service-protocol')
 const router = new Router({
+  mode: 'history',
   routes: [
     {
       // 首页
