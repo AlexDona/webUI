@@ -546,7 +546,10 @@
         :visible.sync="discountsInstructionStatus"
         width="50%"
       >
-        <div v-html="discountsInstructionContent"></div>
+        <div
+          v-html="discountsInstructionContent"
+          class="html-content"
+        ></div>
       </el-dialog>
       <!--vip服务协议-->
       <el-dialog
@@ -555,7 +558,10 @@
         :visible.sync="serviceAgreementStatus"
         width="50%"
       >
-        <div v-html="discountsInstructionContent"></div>
+        <div
+          v-html="serviceAgreementContent"
+          class="html-content"
+        ></div>
       </el-dialog>
       <!--开通VIP-->
       <el-dialog
@@ -1127,6 +1133,9 @@ export default {
       > .content-main-content {
         margin-top: -3px;
         background: #272B41;
+        .html-content{
+          color:$nightFontColor;
+        }
         > .content-main {
           .content-info-hint {
             .hint-color {
@@ -1282,6 +1291,7 @@ export default {
       color: $dayFontColor;
       > .content-main-content {
         background-color: $dayBgColor;
+        color:$dayFontColor;
       }
       > .content-main-content {
         margin-top: -3px;

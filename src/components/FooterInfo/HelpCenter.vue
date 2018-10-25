@@ -276,7 +276,7 @@ export default {
                     }
                   }
                   >.content{
-                    color:$headerNavFontColor;
+                    color:$nightFontColor;
                   }
                 }
               }

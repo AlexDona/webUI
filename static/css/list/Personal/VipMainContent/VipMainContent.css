@@ -41,6 +41,7 @@
 }
 .vip-main.personal>.content-main-content .discounts-instruction-dialog>.el-dialog{
   height:800px;
+  overflow: auto;
 }
 .vip-main.personal>.content-main-content .discounts-instruction-dialog .el-dialog__header{
   text-align: center;

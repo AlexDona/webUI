@@ -31,7 +31,7 @@ let vm = new Vue({
   store,
   i18n,
   render: h => h(App)
-})
+}).$mount('#app', true)
 Vue.use({
   vm
 })
