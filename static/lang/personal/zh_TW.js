@@ -18,7 +18,7 @@ export const personal = {
   'user_asset_valuation': '資產估值',
   'user_assets_suspended': '充值暫停，錢包維護中',
   'user_assets_pause_mention': '暫停提幣',
-  'user_assets_recharge_hint0': '轉賬時請務必備註（否則後果自負）：UID',
+  'user_assets_recharge_hint0': '轉賬時請務必備註（否則後果自負）：',
   'user_assets_recharge_hint1': '禁止充值除{}之外的其他資產，任何非{}資產充值將不可找回。',
   'user_assets_recharge_hint4': '往該地址充值，匯款完成，等待網絡自動確認（6個確認）後系統自動到賬',
   'user_assets_recharge_hint5': '為了快速到賬，充值時可以適當提高網絡手續費',
