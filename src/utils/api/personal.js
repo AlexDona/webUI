@@ -145,3 +145,5 @@ export const buyVipPriceInfo = (params) => postWithURLencoded('vip/buy', params)
 export const currencyApplicationDownloadUrl = (params) => get('getCurrencyApplicationDownloadUrl', params)
 // 汇率转换
 export const currencyTransform = (params) => get('exchangeRate/coinPrice', params)
+// 当前币种是否需要提示
+export const checkoutNeedTips = (params) => get('personal/getTag', params)

@@ -220,7 +220,7 @@
                         </div>
                         <div class="recharge-content-title font-size12 margin-top9 float-left">
                           <!--转账时请务必备注（否则后果自负）：UID-->
-                          <!--<p>* {{ $t('M.user_assets_recharge_hint0').format([chargeMoneyName,chargeMoneyName]) }}</p>-->
+                          <p v-if="isNeedTag">* {{ $t('M.user_assets_recharge_hint0').format([chargeMoneyName,chargeMoneyName]) }}{{uid}}</p>
                           <!--禁止充值除 之外的其他资产，任何非 资产充值将不可找回-->
                           <p>* {{ $t('M.user_assets_recharge_hint1').format([chargeMoneyName]) }}</p>
                           <!--往该地址充值，汇款完成，等待网络自动确认（6个确认）后系统自动到账-->
@@ -727,7 +727,8 @@ import {
   withdrawalInformation,
   queryTransactionInformation,
   inquireWithdrawalAddressId,
-  checkCurrencyAddress
+  checkCurrencyAddress,
+  checkoutNeedTips
 } from '../../../utils/api/personal'
 import {
   returnAjaxMessage,
@@ -806,6 +807,7 @@ export default {
       sellname: '', // 币种名称
       sellsymbol: '', // 交易对名称
       fullscreenLoading: false, // 整页loading
+      isNeedTag: false, // 是否需要转账提示标签
       loading: true, // 页面列表局部loading
       end: '' // 占位
     }
@@ -829,6 +831,17 @@ export default {
       'CHANGE_USER_CENTER_ACTIVE_NAME',
       'CHANGE_ACTIVE_SYMBOL'
     ]),
+    async checkoutNeedTips (coinId) {
+      const params = {
+        coinId
+      }
+      const data = await checkoutNeedTips(params)
+      if (!returnAjaxMessage(data, this)) {
+        return false
+      } else {
+        this.isNeedTag = data.data.data
+      }
+    },
     // 切换当前显示币种 状态（全部币种 币种为零隐藏）Toggle current currency status
     statusOpenToCloseCurrency (e) {
       switch (e) {
@@ -978,7 +991,8 @@ export default {
       }
     },
     // 点击充币按钮显示充币内容（带回币种id 币种名称 当前index）
-    showRechargeBox (id, name, index) {
+    async showRechargeBox (id, name, index) {
+      await this.checkoutNeedTips(id)
       // 显示充值框
       this.chargeDialogVisible = true
       // 每行数据ID
@@ -1011,6 +1025,7 @@ export default {
     },
     // 点击提现按钮显示充币内容（带回币种id 币种名称 当前index）
     mentionMoneyButton (id, name, index) {
+      console.log(1)
       // 提币数量
       this.$refs.rechargeCount[index].value = ''
       // 到账数量
@@ -1451,6 +1466,7 @@ export default {
       theme: state => state.common.theme,
       language: state => state.common.language, // 当前选中语言
       userInfo: state => state.user.loginStep1Info, // 用户详细信息
+      uid: state => state.user.loginStep1Info.userInfo.showId,
       activeSymbol: state => state.common.activeSymbol, // 当前选中交易对
       disabledOfPhoneBtn: state => state.user.disabledOfPhoneBtn,
       disabledOfEmailBtn: state => state.user.disabledOfEmailBtn,
