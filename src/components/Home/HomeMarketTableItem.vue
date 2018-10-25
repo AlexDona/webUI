@@ -141,12 +141,11 @@
           <template slot-scope="s">
             <div
               style="
-                      padding-left:10px;
-                      width:160px;
-                      height:30px;
-                      margin:10px auto;
-                      padding-top: 8px;
-                  ">
+                    padding-left:10px;
+                    width:160px;
+                    height:30px;
+                    margin:10px auto;
+                ">
               <div class="top"
                    style="height:15px;line-height: 15px"
               >

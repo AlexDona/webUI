@@ -287,6 +287,7 @@ export default {
 <style scoped lang="scss">
   @import "../../../../static/css/scss/Personal/IndexPersonal";
   .login-password-box {
+    overflow: hidden;
     width:100%;
     /*height:100%;*/
     >.login-password-main {

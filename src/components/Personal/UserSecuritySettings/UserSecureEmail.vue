@@ -345,6 +345,7 @@ export default {
 <style scoped lang="scss">
   @import "../../../../static/css/scss/Personal/IndexPersonal";
   .set-email {
+    overflow: hidden;
     >.set-email-main {
       width: 1100px;
       min-height: 700px;

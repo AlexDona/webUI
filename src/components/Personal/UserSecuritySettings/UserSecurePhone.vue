@@ -787,6 +787,7 @@ export default {
 <style scoped lang="scss">
   @import "../../../../static/css/scss/Personal/IndexPersonal";
   .set-phone {
+    overflow: hidden;
     >.set-phone-main {
       width: 1100px;
       min-height: 700px;

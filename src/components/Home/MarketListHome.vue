@@ -283,20 +283,23 @@ export default{
       }
 
       this.socket.on('message', (data) => {
+        console.log(data.data)
         if (data.type == 1) {
           const newData = data.data
           // 非自选区
-          _.forEach(this.newMarketList[this.activeIndex].tradeAreaList, item => {
+          _.forEach(this.newMarketList[this.activeIndex].tradeAreaList, (item, index) => {
+            console.log(item)
             _.forEach(item.content, (innerItem, innerIndex) => {
               let newContent = innerItem
               if (innerItem.tradeId === newData.tradeId) {
                 setSocketData(
                   newContent,
                   newData,
-                  item.content,
+                  this.newMarketList[this.activeIndex].tradeAreaList[index].content,
                   innerIndex,
                   this
                 )
+                this.getFilterMarketList()
                 return false
               }
             })

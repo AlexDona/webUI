@@ -381,6 +381,7 @@ export default {
 <style scoped lang="scss">
   @import "../../../../static/css/scss/Personal/IndexPersonal";
   .add-chat {
+    overflow: hidden;
     >.add-chat-main {
       width: 1100px;
       height: 700px;
