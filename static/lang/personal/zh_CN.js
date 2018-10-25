@@ -173,7 +173,7 @@ export const personal = {
   'user_security_login_raw': '原',
   'user_security_login_new': '新',
   'user_security_former': '旧',
-  'user_security_info1': '请输入8-20位字母和数字组合',
+  'user_security_info1': '密码请输入8-20位字母和数字组合',
   'user_security_info2': '密码不一致，请重新确认',
   // 最近登录记录 安全设置记录
   'user_security_recently': '最近',

@@ -496,7 +496,7 @@ export default {
               return 0
             case 2:
               // 请输入 8-20 位字母和数字组合
-              this.setErrorMsg(4, this.$t('M.comm_please_enter') + this.$t('M.user_security_info1'))
+              this.setErrorMsg(4, this.$t('M.user_security_info1'))
               this.$forceUpdate()
               return 0
           }
