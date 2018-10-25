@@ -88,6 +88,54 @@ export default {
       'CHANGE_ACTIVE_SYMBOL',
       'CHANGE_SOCKET_AND_AJAX_DATA'
     ]),
+    resetKlineAjaxAndSocketData () {
+      let klineAjaxData = {
+        depthData: {},
+        buyAndSellData: {
+          buys: {
+            list: [],
+            highestAmount: ''
+          },
+          latestDone: {
+            price: '',
+            rose: ''
+          },
+          sells: {
+            list: [],
+            highestAmount: ''
+          }
+        },
+        tardeRecordList: [], // 交易记录
+        tradeMarketList: [] // 交易区列表
+      }
+      let socketData = {
+        depthData: {},
+        buyAndSellData: {
+          buys: {
+            list: [],
+            highestAmount: ''
+          },
+          latestDone: {
+            price: '',
+            rose: ''
+          },
+          sells: {
+            list: [],
+            highestAmount: ''
+          }
+        },
+        tardeRecordList: [], // 交易记录
+        tradeMarkeContentItem: {} // 交易区单项
+      }
+      this.CHANGE_SOCKET_AND_AJAX_DATA({
+        ajaxData: klineAjaxData,
+        type: 'ajax'
+      })
+      this.CHANGE_SOCKET_AND_AJAX_DATA({
+        ajaxData: socketData,
+        type: 'socket'
+      })
+    },
     // 获取当前交易对socket数据
     async getActiveSymbolData (tradeName) {
       console.log(tradeName)
@@ -143,6 +191,7 @@ export default {
     },
     // k线初始化
     initKLine (symbol) {
+      // this.resetKlineAjaxAndSocketData()
       this.widget = null
       this.socket.on('message', this.onMessage)
       this.options.symbol = symbol

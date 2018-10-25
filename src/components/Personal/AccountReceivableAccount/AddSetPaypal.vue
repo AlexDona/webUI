@@ -323,6 +323,7 @@ export default {
 <style scoped lang="scss">
   @import "../../../../static/css/scss/Personal/IndexPersonal";
   .add-payment {
+    overflow: hidden;
     >.add-payment-main {
       width: 1100px;
       height: 700px;

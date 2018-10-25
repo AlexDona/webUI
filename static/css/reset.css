@@ -430,3 +430,6 @@ body.day{
 .el-loading-spinner .path{
   stroke: #338FF5 !important;
 }
+.slider-pagination-bullets{
+  bottom:-2px !important;
+}
