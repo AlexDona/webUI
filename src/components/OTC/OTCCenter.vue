@@ -967,7 +967,7 @@ export default {
         height: 45px;
         line-height: 45px;
         text-align: center;
-        padding-bottom: 20px;
+        padding: 50px 0 30px;
       }
       >.otc-merchant-content{
         // min-height: 564px;
