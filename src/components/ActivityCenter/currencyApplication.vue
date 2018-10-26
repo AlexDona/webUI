@@ -9,7 +9,8 @@
     <!--</keep-aline>-->
     <div class="inner-box">
       <div class="top">
-        <h1 class="title">上币申请</h1>
+        <!-- 上币申请 -->
+        <h1 class="title">{{ $t('M.coin_apply') }}</h1>
       </div>
       <div class="bottom">
         <div

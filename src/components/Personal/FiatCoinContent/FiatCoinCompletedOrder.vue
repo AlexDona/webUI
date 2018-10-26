@@ -13,7 +13,7 @@
         >
           <div>
             <el-table-column type="expand">
-              <template slot-scope="props">
+              <template slot-scope="s">
                 <div class="completed-info">
                   <!-- 左侧 -->
                   <div class="completed-info-left">
@@ -30,8 +30,8 @@
                         <!--姓名-->
                         {{$t('M.otc_name')}}：
                       </span>
-                      <!-- <span>{{props.row.buyName}}</span> -->
-                      <span>{{props.row.sellName}}</span>
+                      <!-- <span>{{s.row.buyName}}</span> -->
+                      <span>{{s.row.sellName}}</span>
                     </p>
                     <p class="order-info-left">
                       <span>
@@ -39,26 +39,26 @@
                         {{$t('M.otc_alipay_type')}}：
                       </span>
                       <!-- 判断付款方式 -->
-                      <span v-if="props.row.payType === 'alipay'">
+                      <span v-if="s.row.payType === 'alipay'">
                         <!--支付宝-->
                         {{$t('M.comm_alipay')}}
                       </span>
-                      <span v-if="props.row.payType === 'bank'">
+                      <span v-if="s.row.payType === 'bank'">
                         <!--银行卡-->
                         {{$t('M.comm_bank')}}
                       </span>
-                      <span v-if="props.row.payType === 'xilian'">
+                      <span v-if="s.row.payType === 'xilian'">
                         <!--西联汇款-->
                         {{$t('M.comm_xilian')}}
                       </span>
-                      <span v-if="props.row.payType === 'paypal'">
+                      <span v-if="s.row.payType === 'paypal'">
                         PAYPAL
                       </span>
-                      <span v-if="props.row.payType === 'weixin'">
+                      <span v-if="s.row.payType === 'weixin'">
                         <!--微信-->
                         {{$t('M.comm_weixin')}}
                       </span>
-                      <!-- <span>{{props.row.payType}}</span> -->
+                      <!-- <span>{{s.row.payType}}</span> -->
                     </p>
                     <!-- 付款账号 -->
                     <p class="order-info-left">
@@ -66,29 +66,29 @@
                       <!-- <span>
                         {{$t('M.otc_bank_num')}}：
                       </span>
-                      <span>{{props.row.payAcctount}}</span> -->
+                      <span>{{s.row.payAcctount}}</span> -->
                       <!-- 支付宝账号 -->
-                      <span v-if="props.row.payType === 'alipay'">
+                      <span v-if="s.row.payType === 'alipay'">
                         {{$t('M.user_account_alipay')}}{{$t('M.user_account_number')}}：
                       </span>
                       <!-- 银行卡账号 -->
-                      <span v-if="props.row.payType === 'bank'">
+                      <span v-if="s.row.payType === 'bank'">
                         {{$t('M.otc_bank_num')}}：
                       </span>
                       <!-- 西联汇款账号 -->
-                      <span v-if="props.row.payType === 'xilian'">
+                      <span v-if="s.row.payType === 'xilian'">
                         {{$t('M.user_account_western_union')}}{{$t('M.user_account_number')}}：
                       </span>
                       <!-- PAYPAL账号 -->
-                      <span v-if="props.row.payType === 'paypal'">
+                      <span v-if="s.row.payType === 'paypal'">
                         PAYPAL{{$t('M.user_account_number')}}：
                       </span>
                       <!-- 微信账号 -->
-                      <span v-if="props.row.payType === 'weixin'">
+                      <span v-if="s.row.payType === 'weixin'">
                         {{$t('M.user_account_weChat')}}{{$t('M.user_account_number')}}：
                       </span>
                       <!-- <span>{{$t('M.otc_bank_num')}}：</span> -->
-                      <span>{{props.row.payAcctount}}</span>
+                      <span>{{s.row.payAcctount}}</span>
                     </p>
                   </div>
                   <!-- 中间 -->
@@ -101,14 +101,14 @@
                       <!-- 买单显示：卖家信息 -->
                       <span
                         class="buyer-seller-info"
-                        v-if="props.row.orderType === 'BUY'"
+                        v-if="s.row.orderType === 'BUY'"
                       >
                         {{$t('M.otc_stocks_seller')}}
                       </span>
                       <!-- 卖单显示：买家信息 -->
                       <span
                         class="buyer-seller-info"
-                        v-if="props.row.orderType === 'SELL'"
+                        v-if="s.row.orderType === 'SELL'"
                       >
                         {{$t('M.otc_stocks_buyinfo')}}
                       </span>
@@ -118,16 +118,16 @@
                         <!--姓名-->
                         <!-- {{$t('M.otc_name')}}： -->
                       <!-- </span> -->
-                      <!-- <span>{{props.row.sellName}}</span> -->
+                      <!-- <span>{{s.row.sellName}}</span> -->
                       <!-- 姓名 -->
                       <span>{{$t('M.otc_name')}}：</span>
                       <!-- 买单显示：卖家姓名 -->
-                      <span v-if="props.row.orderType === 'BUY'">
-                        {{props.row.sellName}}
+                      <span v-if="s.row.orderType === 'BUY'">
+                        {{s.row.sellName}}
                       </span>
                       <!-- 卖单显示：买家姓名 -->
-                      <span v-if="props.row.orderType === 'SELL'">
-                        {{props.row.buyName}}
+                      <span v-if="s.row.orderType === 'SELL'">
+                        {{s.row.buyName}}
                       </span>
                     </p>
                     <p class="order-info-middle">
@@ -135,20 +135,20 @@
                         <!--卖家手机号-->
                         <!-- {{$t('M.otc_trading_sellphone')}}： -->
                       <!-- </span> -->
-                      <!-- <span>{{props.row.sellPhone}}</span> -->
+                      <!-- <span>{{s.row.sellPhone}}</span> -->
                       <!-- 买单显示：卖家手机号 -->
-                      <span v-if="props.row.orderType === 'BUY'">
+                      <span v-if="s.row.orderType === 'BUY'">
                         {{$t('M.otc_trading_sellphone')}}：
                       </span>
-                      <span v-if="props.row.orderType === 'BUY'">
-                        {{props.row.sellPhone}}
+                      <span v-if="s.row.orderType === 'BUY'">
+                        {{s.row.sellPhone}}
                       </span>
                       <!-- 卖单显示：买家手机号 -->
-                      <span v-if="props.row.orderType === 'SELL'">
+                      <span v-if="s.row.orderType === 'SELL'">
                         {{$t('M.otc_trading_buyphone')}}：
                       </span>
-                      <span v-if="props.row.orderType === 'SELL'">
-                        {{props.row.buyPhone}}
+                      <span v-if="s.row.orderType === 'SELL'">
+                        {{s.row.buyPhone}}
                       </span>
                     </p>
                   </div>
@@ -165,7 +165,7 @@
                       <span>
                         {{$t('M.otc_time_payment')}}：
                       </span>
-                      <span>{{props.row.payTime}}</span>
+                      <span>{{s.row.payTime}}</span>
                     </p> -->
                     <!--收款确认时间-->
                     <!-- <p class="order-info-right">
@@ -173,13 +173,13 @@
                         {{$t('M.otc_time_collection')}}：
                       </span>
                       <span>
-                        {{props.row.confirmTime ? props.row.confirmTime : props.row.completeTime}}
+                        {{s.row.confirmTime ? s.row.confirmTime : s.row.completeTime}}
                       </span>
                     </p> -->
                     <!-- 任修复 -->
                     <p
                       class="order-info-right"
-                      v-if="props.row.appeal == 'NO' && props.row.confirmTime !== ''"
+                      v-if="s.row.appeal == 'NO' && s.row.confirmTime !== ''"
                     >
                       <!-- <span class="confirm-time">确认时间</span> -->
                       <!-- 交易已完成 -->
@@ -187,14 +187,14 @@
                     </p>
                     <p
                       class="order-info-right"
-                      v-if="props.row.appeal == 'YES'"
+                      v-if="s.row.appeal == 'YES'"
                     >
                     <!-- 申诉判定，订单完成 -->
                       <span class="confirm-time">{{$t('M.otc_decide_complate')}}</span>
                     </p>
                     <p
                       class="order-info-right"
-                      v-if="props.row.appeal == 'NO' && props.row.confirmTime == ''"
+                      v-if="s.row.appeal == 'NO' && s.row.confirmTime == ''"
                     >
                     <!-- 申诉判定，订单完成 -->
                       <span class="confirm-time">{{$t('M.otc_tradeOver_complate')}}</span>
@@ -202,12 +202,12 @@
                     <p class="order-info-right">
                       <!-- 付款确认时间： -->
                       <span>{{$t('M.otc_time_payment')}}：</span>
-                      <span>{{props.row.payTime}}</span>
+                      <span>{{s.row.payTime}}</span>
                     </p>
                     <p class="order-info-right">
                       <!-- 收款确认时间： -->
                       <span>{{$t('M.otc_time_collection')}}：</span>
-                      <span>{{props.row.confirmTime ? props.row.confirmTime : props.row.completeTime}}</span>
+                      <span>{{s.row.confirmTime ? s.row.confirmTime : s.row.completeTime}}</span>
                     </p>
                   </div>
                 </div>
@@ -219,25 +219,25 @@
             :label="$t('M.otc_MerchantsOrders_orderNum')"
             width="150px"
           >
-            <template slot-scope="scope">
-              {{scope.row.orderSequence}}
+            <template slot-scope="s">
+              {{s.row.orderSequence}}
             </template>
           </el-table-column>
           <!--类型-->
           <el-table-column
             :label="$t('M.comm_type')"
           >
-            <template slot-scope="scope">
+            <template slot-scope="s">
             <span
-              v-if="scope.row.orderType === 'BUY'"
-              :class="{ red: scope.row.orderType === 'BUY' }"
+              v-if="s.row.orderType === 'BUY'"
+              :class="{ red: s.row.orderType === 'BUY' }"
             >
               <!--买入-->
               {{$t('M.comm_buy')}}
             </span>
               <span
-                v-if="scope.row.orderType === 'SELL'"
-                :class="{ green: scope.row.orderType === 'SELL' }"
+                v-if="s.row.orderType === 'SELL'"
+                :class="{ green: s.row.orderType === 'SELL' }"
               >
               <!--卖出-->
                 {{$t('M.comm_sell')}}
@@ -248,32 +248,32 @@
           <el-table-column
             :label="$t('M.comm_currency')"
           >
-            <template slot-scope="scope">
-              {{ scope.row.coinName }}
+            <template slot-scope="s">
+              {{ s.row.coinName }}
             </template>
           </el-table-column>
           <!--价格-->
           <el-table-column
             :label="$t('M.comm_price_metre')"
           >
-            <template slot-scope="scope">
-              {{ scope.row.price }}({{ scope.row.currencyName }})
+            <template slot-scope="s">
+              {{ s.row.price }}({{ s.row.currencyName }})
             </template>
           </el-table-column>
           <!--数量-->
           <el-table-column
             :label="$t('M.comm_count')"
           >
-            <template slot-scope="scope">
-              {{ scope.row.pickCount }}({{ scope.row.coinName }})
+            <template slot-scope="s">
+              {{ s.row.pickCount }}({{ s.row.coinName }})
             </template>
           </el-table-column>
           <!--总金额-->
           <el-table-column
             :label="$t('M.comm_total_sum') + $t('M.comm_money')"
           >
-            <template slot-scope="scope">
-              {{ (scope.row.price*scope.row.pickCount).toFixed(2)}}({{ scope.row.currencyName }})
+            <template slot-scope="s">
+              {{ (s.row.price*s.row.pickCount).toFixed(2)}}({{ s.row.currencyName }})
             </template>
           </el-table-column>
           <!--下单时间-->
@@ -281,8 +281,8 @@
             :label="$t('M.otc_stocks_ordertime')"
             width="160px"
           >
-            <template slot-scope="scope">
-              {{timeFormatting(scope.row.createTime)}}
+            <template slot-scope="s">
+              {{timeFormatting(s.row.createTime)}}
             </template>
           </el-table-column>
         </el-table>

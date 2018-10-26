@@ -394,32 +394,32 @@
                 :label = "$t('M.otc_transaction_data')"
                 width="180"
               >
-                <template slot-scope = "scope">
-                  <div>{{timeFormatting(scope.row.createTime)}}</div>
+                <template slot-scope = "s">
+                  <div>{{timeFormatting(s.row.createTime)}}</div>
                 </template>
               </el-table-column>
               <!-- 订单号 -->
               <el-table-column
                 :label = "$t('M.otc_MerchantsOrders_orderNum')"
               >
-                <template slot-scope = "scope">
-                  <div>{{scope.row.orderSequence}}</div>
+                <template slot-scope = "s">
+                  <div>{{s.row.orderSequence}}</div>
                 </template>
               </el-table-column>
               <!-- 交易类型 -->
               <el-table-column
                 :label = "$t('M.otc_type_ransaction')"
               >
-                <template slot-scope = "scope">
+                <template slot-scope = "s">
                   <div
-                    v-if="scope.row.orderType === 'BUY'"
-                    :class="{red:scope.row.orderType === 'BUY'}"
+                    v-if="s.row.orderType === 'BUY'"
+                    :class="{red:s.row.orderType === 'BUY'}"
                   >
                     {{$t('M.comm_buying')}}
                   </div>
                   <div
-                    v-if="scope.row.orderType === 'SELL'"
-                    :class="{green:scope.row.orderType === 'SELL'}"
+                    v-if="s.row.orderType === 'SELL'"
+                    :class="{green:s.row.orderType === 'SELL'}"
                   >
                     {{$t('M.comm_offering')}}
                   </div>
@@ -429,32 +429,32 @@
               <el-table-column
                 :label = "$t('M.otc_type_capital')"
               >
-                <template slot-scope = "scope">
-                  <div>{{scope.row.currencyName}}</div>
+                <template slot-scope = "s">
+                  <div>{{s.row.currencyName}}</div>
                 </template>
               </el-table-column>
               <!-- 数量 -->
               <el-table-column
                 :label = "$t('M.comm_count')"
               >
-                <template slot-scope = "scope">
-                  <div>{{scope.row.pickCount}}</div>
+                <template slot-scope = "s">
+                  <div>{{s.row.pickCount}}</div>
                 </template>
               </el-table-column>
               <!-- 单价 -->
               <el-table-column
                 :label = "$t('M.otc_index_UnitPrice')"
               >
-                <template slot-scope = "scope">
-                  <div>{{scope.row.price}}</div>
+                <template slot-scope = "s">
+                  <div>{{s.row.price}}</div>
                 </template>
               </el-table-column>
               <!-- 总金额 -->
               <el-table-column
                 :label = "$t('M.otc_canceled_total ')"
               >
-                <template slot-scope = "scope">
-                  <div>{{scope.row.payAmount}}</div>
+                <template slot-scope = "s">
+                  <div>{{s.row.payAmount}}</div>
                 </template>
               </el-table-column>
             </el-table>

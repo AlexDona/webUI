@@ -402,8 +402,9 @@ export default {
     padding-top: 20px;
     >.privilege{
     width: 1150px;
-    margin: 70px auto 0px;
-    margin-top:107px;
+    // margin: 70px auto 0px;
+    // margin-top:107px;
+    margin: 107px auto 0px;
       >.title{
         color: #fff;
         text-align: center;
