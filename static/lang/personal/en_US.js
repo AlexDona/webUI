@@ -122,7 +122,7 @@ export const personal = {
   // 安全中心Security center
   'user_security_safety': 'Safety',
   'user_security_email': 'mailbox',
-  'user_security_phone': 'Mobile phone',
+  'user_security_phone': 'Phone',
   'user_security_google': 'Google',
   'user_security_password': 'password',
   'user_security_verify': 'verification',
@@ -163,7 +163,7 @@ export const personal = {
   'user_transaction_text': '6-bit pure number',
   // 登录密码login password
   'user_security_login_raw': 'original',
-  'user_security_login_new': 'new',
+  'user_security_login_new': 'New',
   'user_security_former': 'old',
   'user_security_info1': 'Please enter a combination of 8-20 letters and numbers',
   'user_security_info2': 'The passwords are inconsistent, please reconfirm',

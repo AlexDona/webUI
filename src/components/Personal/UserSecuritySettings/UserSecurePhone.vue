@@ -818,7 +818,7 @@ export default {
           width: 500px;
           margin-left: 55px;
           .send-code-btn {
-            width: 90px;
+            min-width: 90px;
             /*height: 36px;
             position: absolute;
             top: -1px;*/
@@ -848,7 +848,7 @@ export default {
           }
           .phone-button {
             padding: 10px 85px;
-            margin: 30px 0 50px 120px;
+            margin: 30px 0 50px 160px;
           }
           .prompt-message {
             height: 20px;
