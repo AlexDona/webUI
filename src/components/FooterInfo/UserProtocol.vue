@@ -49,7 +49,7 @@ export default {
   },
   watch: {
     userProtocolData (newVal) {
-      console.log(newVal)
+      // console.log(newVal)
     }
   }
 }

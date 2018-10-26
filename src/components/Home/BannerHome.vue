@@ -22,7 +22,7 @@ export default {
     }
   },
   created () {
-    console.log(this.screenWidth)
+    // console.log(this.screenWidth)
   },
   mounted () {},
   activited () {},
@@ -35,13 +35,13 @@ export default {
       bannerBackgroundImage: state => state.home.bannerBackgroundImage
     }),
     screenWidth () {
-      console.log(window.innerWidth)
+      // console.log(window.innerWidth)
       return window.innerWidth / 3
     }
   },
   watch: {
     bannerBackgroundImage (newVal) {
-      console.log(newVal)
+      // console.log(newVal)
     }
   }
 }

@@ -219,10 +219,10 @@ export default {
   },
   watch: {
     serviceActiveName (newVal) {
-      console.log(newVal)
+      // console.log(newVal)
     },
     activeName (newVal) {
-      console.log(newVal)
+      // console.log(newVal)
     }
   }
 }

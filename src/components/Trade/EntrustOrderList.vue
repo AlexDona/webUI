@@ -420,7 +420,7 @@ export default {
   },
   watch: {
     activeName (newVal) {
-      console.log(newVal)
+      // console.log(newVal)
       if (!this.isLogin) return false
       switch (newVal) {
         case 'current-entrust':
@@ -439,7 +439,7 @@ export default {
       }
     },
     historyEntrustList (newVal) {
-      console.log(newVal)
+      // console.log(newVal)
     }
   }
 }

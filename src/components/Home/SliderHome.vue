@@ -46,9 +46,6 @@ export default {
   },
   async created () {
     require('../../../static/css/list/Home/SliderHome.css')
-
-    // 请求轮播图数据
-    await this.getBanner()
   },
   mounted () {
     // console.log(this.$refs)
@@ -164,8 +161,9 @@ export default {
     })
   },
   watch: {
-    language () {
-      this.getBanner()
+    language: {
+      handler: 'getBanner',
+      immediate: true
     }
   }
 }

@@ -457,7 +457,7 @@ export default {
     // 在线买卖的类型 购买（onlineBuy）和 出售（onlineSell)
     // id：挂单id
     // partnerCoinId：商户币种id
-    console.log(this.$route.params)
+    // console.log(this.$route.params)
     // console.log(this.$route.params.styleId)
     // console.log(this.$route.params.id)
     // console.log(this.$route.params.partnerCoinId)

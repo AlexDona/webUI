@@ -510,13 +510,9 @@ export default {
   },
   watch: {
     depthDataByAjax (newVal) {
-      // this.options.series[0].data = newVal.buy
-      // this.options.series[1].data = newVal.sell
-      // this.depthCharts.setOption(this.options)
       this.setWatchData(newVal)
     },
     depthDataBySocket (newVal) {
-      console.log(newVal)
       this.setWatchData(newVal)
     },
     theme () {
@@ -524,21 +520,7 @@ export default {
       this.resetChart(this.options)
     },
     buy (newVal) {
-      console.log(newVal)
     }
-    // buy (newVal) {
-    //   // console.log(newVal)
-    //   // this.buys = newVal
-    //
-    //   // this.options.series[0].data = newVal
-    //   // this.depthCharts.setOption(this.options)
-    // },
-    // sell (newVal) {
-    //   // console.log(newVal)
-    //   // this.sells = newVal
-    //   this.options.series[1].data = newVal
-    //   this.depthCharts.setOption(this.options)
-    // }
   }
 }
 </script>

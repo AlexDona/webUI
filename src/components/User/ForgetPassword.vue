@@ -567,7 +567,7 @@ export default {
   },
   watch: {
     activeStepNumber (newVal) {
-      console.log(newVal)
+      // console.log(newVal)
     }
   }
 }
