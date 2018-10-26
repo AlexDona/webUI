@@ -108,7 +108,7 @@ export default {
   },
   watch: {
     orderRecordListBySocket (newVal) {
-      console.log(newVal)
+      // console.log(newVal)
       if (!this.reflashCount && newVal) {
         this.reflashCount++
       }

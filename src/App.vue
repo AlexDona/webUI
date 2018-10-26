@@ -42,8 +42,6 @@ export default {
     }
   },
   async created () {
-    console.log(this.footerInfo)
-    // console.log(this.isLogin)
     require('../static/css/common.css')
     require('../static/css/list/Common/HeaderCommon/HeaderCommon.css')
     require('../static/css/theme/night/Common/HeaderCommonNight.css')

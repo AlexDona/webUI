@@ -278,8 +278,6 @@ export default {
     require('../../../../static/css/theme/night/Personal/TransactionType/FiatOrdersNight.css')
     await this.getOTCAvailableCurrencyList()
     await this.getMerchantAvailablelegalTenderList()
-    // this.getOTCEntrustingOrdersRevocation('')
-    // console.log(this.USER_ASSETS_LIST)
   },
   mounted () {},
   activited () {},
@@ -488,7 +486,6 @@ export default {
       this.getOTCEntrustingOrdersRevocation(this.activeName)
     },
     legalTraderEntrustReflashStatus (newVal) {
-      console.log(newVal)
       this.getOTCEntrustingOrdersRevocation(this.activeName)
     },
     userCenterActiveName (newVal) {

@@ -75,7 +75,6 @@ export default {
       //   title: 'M.home_market_text5' // 标题 fuc火热上线2
       // }
     ]
-    this.getNewsNoticeList()
     this.timer = setInterval(this.autoPlay, 3000)
   },
   mounted () {},
@@ -122,8 +121,9 @@ export default {
     })
   },
   watch: {
-    language () {
-      this.getNewsNoticeList()
+    language: {
+      handler: 'getNewsNoticeList',
+      immediate: true
     }
   }
 }

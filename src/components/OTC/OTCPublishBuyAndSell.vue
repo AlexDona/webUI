@@ -490,7 +490,7 @@ export default {
     require('../../../static/css/theme/day/OTC/OTCPublishBuyAndSellDay.css')
     require('../../../static/css/theme/night/OTC/OTCPublishBuyAndSellNight.css')
     // 获取URL中买卖类型和可用币种id和可用法币id
-    console.log(this.$route.params)
+    // console.log(this.$route.params)
     // console.log(this.$route.params.styleID) // 买卖类型
     // console.log(this.$route.params.partnerCoinId) // 可用币种id
     // console.log(this.$route.params.currencyID) // 法币id
@@ -916,6 +916,7 @@ export default {
   // @import url(../../../static/css/scss/OTC/OTCCenter.scss);
   @import "../../../static/css/scss/index";
   .otc-publish-buy-and-sell-box {
+    overflow: hidden;
     .redBorderRightNone{
       border: 1px solid #D45858 !important;
       border-right: 0 !important;

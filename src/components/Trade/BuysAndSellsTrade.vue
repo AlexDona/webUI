@@ -293,30 +293,30 @@ export default {
   },
   watch: {
     klineAjaxData (newVal) {
-      console.log(newVal)
+      // console.log(newVal)
     },
     socketData (newVal) {
-      console.log(newVal)
+      // console.log(newVal)
     },
     middleTopData (newVal) {
-      console.log(newVal)
+      // console.log(newVal)
     },
     activeSymbolId (newVal) {
-      console.log(newVal)
+      // console.log(newVal)
       this.reflashCount = 0
     },
     buysAndSellsList (newVal) {
-      console.log(newVal)
+      // console.log(newVal)
     },
     buysAndSellsListByAjax (newVal) {
-      console.log(newVal)
-      console.log(this.reflashCount)
+      // console.log(newVal)
+      // console.log(this.reflashCount)
       // this.buysAndSellsListByAjax = this.buysAndSellsList
     },
     buysAndSellsListBySocket (newVal) {
-      console.log(newVal)
+      // console.log(newVal)
       if (!this.reflashCount && newVal) {
-        console.log(newVal)
+        // console.log(newVal)
         this.CHANGE_ACTIVE_PRICE_ITEM(newVal.latestDone.price)
         this.reflashCount++
       }

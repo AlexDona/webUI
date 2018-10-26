@@ -157,10 +157,13 @@ export default {
     },
     currencyRateList (newVal) {
     },
-    activeSymbolId (newVal) {
-      if (newVal) {
-        this.getGlobalMarket()
-      }
+    activeSymbolId: {
+      handler (newVal) {
+        if (newVal) {
+          this.getGlobalMarket()
+        }
+      },
+      immediate: true
     },
     globalMarketList (newVal) {
     }

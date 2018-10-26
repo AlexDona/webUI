@@ -205,9 +205,6 @@ export default{
     require('../../../static/css/list/Home/MarketListHome.css')
     require('../../../static/css/theme/day/Home/MarketListHomeDay.css')
     require('../../../static/css/theme/night/Home/MarketListHomeNight.css')
-    // 原逻辑 开始
-    // this.getPartnerList()
-    this.getHomeMarketByAjax()
   },
   mounted () {
     // 搜索区、自选区禁止拖拽
@@ -547,8 +544,9 @@ export default{
       })
       this.concatSocketParamsStr(this.activeIndex)
     },
-    language () {
-      this.getHomeMarketByAjax()
+    language: {
+      handler: 'getHomeMarketByAjax',
+      immediate: true
     },
     socketParamsStr (newVal, oldVal) {
       if (oldVal) {

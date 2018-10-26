@@ -162,7 +162,7 @@ export default {
   },
   watch: {
     language () {
-      console.log(this.language)
+      // console.log(this.language)
     }
   }
 }
