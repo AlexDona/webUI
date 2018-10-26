@@ -415,9 +415,10 @@ export default {
       } else {
         // 返回数据正确的逻辑 渲染列表
         this.loading = false
-        this.ADList = data.data.data.list
+        let ADData = data.data.data
+        this.ADList = ADData.list
         // 分页
-        this.totalPages = data.data.data.pages - 0
+        this.totalPages = ADData.pages - 0
       }
     },
     // 5.0
@@ -526,10 +527,6 @@ export default {
         // 跳转发布广告页面并携带一条信息的参数
         this.$router.push({path: '/OTCPublishAD', query: {id: id}})
       }).catch(() => {
-        // this.$message({
-        //   type: 'success',
-        //   message: '已取消修改'
-        // })
       })
     },
     // 13.0 点击查询按钮 重新请求列表数据

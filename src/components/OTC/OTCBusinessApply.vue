@@ -254,8 +254,8 @@ export default {
     // ...mapMutations([]),
     // 下载商家申请资料模板
     downloadApplicationForm () {
-      console.log(this.downLoadUrl)
-      console.log(this.fileName)
+      // console.log(this.downLoadUrl)
+      // console.log(this.fileName)
       fetch(this.downLoadUrl).then(res => res.blob().then(blob => {
         let a = document.createElement('a')
         let url = window.URL.createObjectURL(blob)
@@ -341,18 +341,6 @@ export default {
           this.statusBlack = 'successOrApplying' // 当为申请中和申请成功的页面时候，只有黑色主题颜色
           this.applyStatus = 3
         }
-        // // 返回数据的状态 1 表示展示初次进入
-        // if (getData.status == 1) {
-        //   this.applyStatus = 1
-        // // 状态 2 表示审核正在进行中
-        // } else if (getData.status == 2) {
-        //   this.applyStatus = 2
-        // // 状态 3 表示审核通过
-        // } else if (getData.status == 3) {
-        //   this.applyStatus = 3
-        // } else {
-        //   this.applyStatus = 4
-        // }
       }
     },
     // 商家申请界面用户协议
@@ -382,7 +370,7 @@ export default {
   filter: {},
   computed: {
     ...mapState({
-      userInfo: state => state.user.loginStep1Info.userInfo, // 用户详细信息
+      // userInfo: state => state.user.loginStep1Info.userInfo, // 用户详细信息
       isLogin: state => state.user.isLogin, // 用户登录状态 false 未登录； true 登录
       language: state => state.common.language,
       theme: state => state.common.theme,
