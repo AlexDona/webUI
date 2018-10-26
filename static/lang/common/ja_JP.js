@@ -95,7 +95,7 @@ export const common = {
   'comm_bid': '購入する',
   'comm_ask': '売る',
   // 認証タイプ
-  'comm_password': 'トランザクションパスワード',
+  'comm_password': 'パスワード',
   'comm_note': 'SMS',
   'comm_code': '確認コード',
   'comm_code_phone': 'モバイル確認',
@@ -161,7 +161,7 @@ export const common = {
   'comm_pack_up': '折りたたむ',
   'comm_content': 'コンテンツ',
   'comm_after_get': '取得',
-  'comm_get_code': '確認コードを取得する',
+  'comm_get_code': 'コードを取得',
   // 全球行情任增加
   'common_exchange': '取引所',
   'common_counterparty': '取引き',

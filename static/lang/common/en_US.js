@@ -93,7 +93,7 @@ export const common = {
   'comm_bid': 'buy',
   'comm_ask': 'Sell',
   // 验证类型Authentication type
-  'comm_password': 'password',
+  'comm_password': 'Password',
   'comm_note': 'SMS',
   'comm_code': 'Verification code',
   'comm_code_phone': 'Phone verification',
@@ -159,7 +159,8 @@ export const common = {
   'comm_pack_up': 'Collapse',
   'comm_content': 'content',
   'comm_after_get': 'Retrieve',
-  'comm_get_code': 'verification code',
+  // 'comm_get_code': 'verification code',
+  'comm_get_code': 'Get Code',
   'common_direction': 'direction',
   'common_average_price': 'average',
   // 全球行情任增加

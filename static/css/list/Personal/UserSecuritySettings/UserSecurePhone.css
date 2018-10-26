@@ -1,6 +1,6 @@
 /* 覆盖Element样式*/
 .set-phone.personal .el-form-item__content {
-  width: 600px;
+  width: 650px;
 }
 .set-phone.personal .el-input__inner {
   width: 130px;
