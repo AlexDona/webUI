@@ -62,11 +62,13 @@ export default {
       resolutions: ['min', 'min5', 'min15', 'min30', 'hour1', 'hour4', 'day', 'week']
     }
   },
+  beforeCreate () {
+  },
   created () {
-    console.log(1)
     // require('../../../static/charting_library/static/css/t-night.css')
     require('../../../static/css/theme/day/Trade/KlieneDay.css')
     // this.widget = null
+    this.socket.doOpen()
     // 获取默认交易对
     this.getDefaultSymbol()
   },
@@ -74,12 +76,10 @@ export default {
     this.initKLine(this.symbol)
   },
   activited () {
-    console.log(2)
   },
   update () {},
   beforeRouteUpdate () {},
   destroyed () {
-    console.log('destroy')
     this.socket.destroy()
     this.widget = null
   },
@@ -88,76 +88,24 @@ export default {
       'CHANGE_ACTIVE_SYMBOL',
       'CHANGE_SOCKET_AND_AJAX_DATA'
     ]),
-    resetKlineAjaxAndSocketData () {
-      let klineAjaxData = {
-        depthData: {},
-        buyAndSellData: {
-          buys: {
-            list: [],
-            highestAmount: ''
-          },
-          latestDone: {
-            price: '',
-            rose: ''
-          },
-          sells: {
-            list: [],
-            highestAmount: ''
-          }
-        },
-        tardeRecordList: [], // 交易记录
-        tradeMarketList: [] // 交易区列表
-      }
-      let socketData = {
-        depthData: {},
-        buyAndSellData: {
-          buys: {
-            list: [],
-            highestAmount: ''
-          },
-          latestDone: {
-            price: '',
-            rose: ''
-          },
-          sells: {
-            list: [],
-            highestAmount: ''
-          }
-        },
-        tardeRecordList: [], // 交易记录
-        tradeMarkeContentItem: {} // 交易区单项
-      }
-      this.CHANGE_SOCKET_AND_AJAX_DATA({
-        ajaxData: klineAjaxData,
-        type: 'ajax'
-      })
-      this.CHANGE_SOCKET_AND_AJAX_DATA({
-        ajaxData: socketData,
-        type: 'socket'
-      })
-    },
     // 获取当前交易对socket数据
     async getActiveSymbolData (tradeName) {
-      console.log(tradeName)
       let params = {
         i18n: this.language
       }
       params.tradeName = tradeName
       const data = await getActiveSymbolDataAjax(params)
-      console.log(data)
       if (!returnAjaxMessage(data, this)) {
         return false
       } else {
         let activeSymbolData = data.data.data.obj
         activeSymbolData = JSON.parse(unzip(activeSymbolData))
-        console.log(activeSymbolData)
         let {
           defaultTrade, // 默认交易对
           depthList, // 买卖单、深度
           tradeList, // 交易记录
           tickerList // 行情交易区列表
         } = activeSymbolData
-        console.log(depthList)
         if (depthList.depthData.sells.list) {
           depthList.depthData.sells.list.reverse()
         }
@@ -177,16 +125,15 @@ export default {
           ajaxData: this.ajaxData,
           type: 'ajax'
         })
-        this.socket.doOpen()
-        this.socket.on('open', () => {
-          this.getKlineDataBySocket('REQ', this.symbol, 'min')
-          this.getKlineDataBySocket('SUB', this.symbol, 'min')
-          this.getTradeMarketBySocket('SUB', this.activeTabSymbolStr)
-          this.getBuyAndSellBySocket('SUB', this.symbol)
-          this.getDepthDataBySocket('SUB', this.symbol)
-          this.getTradeRecordBySocket('SUB', this.symbol)
-          this.socket.on('message', this.onMessage)
-        })
+        // this.socket.on('open', () => {
+        this.getKlineDataBySocket('REQ', this.symbol, 'min')
+        this.getKlineDataBySocket('SUB', this.symbol, 'min')
+        this.getTradeMarketBySocket('SUB', this.activeTabSymbolStr)
+        this.getBuyAndSellBySocket('SUB', this.symbol)
+        this.getDepthDataBySocket('SUB', this.symbol)
+        this.getTradeRecordBySocket('SUB', this.symbol)
+        this.socket.on('message', this.onMessage)
+        // })
       }
     },
     // k线初始化
@@ -200,7 +147,6 @@ export default {
       this.options.paneProperties.vertGridPropertiesColor = this.theme === 'night' ? 'rgba(57,66,77,.2)' : 'rgba(57,66,77,.05)'
       this.options.interval = '1'
       this.options.language = this.language
-      console.log(this.language)
       this.init(this.options)
       this.getBars()
     },
@@ -223,7 +169,7 @@ export default {
         this.finalSymbol = this.isJumpToTradeCenter ? this.jumpSymbol : activeSymbol
         this.CHANGE_ACTIVE_SYMBOL({activeSymbol: this.finalSymbol})
         this.symbol = this.activeSymbol.id
-        console.log(this.symbol)
+        // console.log(this.symbol)
         this.getActiveSymbolData(this.symbol)
       }
     },
@@ -316,7 +262,6 @@ export default {
           },
           custom_css_url: '../../../../static/tradeview/klineTheme.css'
         })
-        console.log(this.widget)
         this.widget.onChartReady(() => {
           const _self = this
           let chart = _self.widget.chart()
@@ -406,7 +351,6 @@ export default {
     },
     // 修改样式
     applyOverrides: function (overrides) {
-      console.log(this.widget)
       this.widget.applyOverrides(overrides)
     },
     // 切换时间间隔
@@ -471,10 +415,10 @@ export default {
       }
     },
     onMessage (data) {
-      console.log(data)
+      // console.log(data)
       switch (data.tradeType) {
         case 'KLINE':
-          console.log(data)
+          // console.log(data)
           if (data.data && data.data.length && !data.type) {
             const list = []
             const ticker = `${this.symbol}-${this.interval}`
@@ -498,7 +442,7 @@ export default {
             // console.log(' >> sub:', data.type)
             let newData = data.data[0]
             const ticker = `${this.symbol}-${this.interval}`
-            console.log(this.interval)
+            // console.log(this.interval)
             const barsData = {
               time: newData.time,
               // time: this.lastTime,
@@ -508,9 +452,9 @@ export default {
               close: newData.close,
               volume: newData.volume
             }
-            console.log(barsData.time)
-            console.log(this.lastTime)
-            console.log(barsData.time - this.lastTime)
+            // console.log(barsData.time)
+            // console.log(this.lastTime)
+            // console.log(barsData.time - this.lastTime)
             if (barsData.time >= this.lastTime && this.cacheData[ticker] && this.cacheData[ticker].length) {
               this.cacheData[ticker][this.cacheData[ticker].length - 1] = barsData
             }
@@ -519,7 +463,7 @@ export default {
           break
         // 买卖单
         case 'DEPTH':
-          console.log(data)
+          // console.log(data)
           if (data.data) {
             let newData = data.data
             console.log(newData)
@@ -531,7 +475,7 @@ export default {
           break
         // 深度图
         case 'DEPTHRENDER':
-          console.log(data)
+          // console.log(data)
           if (data.data) {
             this.socketData.depthData = data.data
           }
@@ -542,22 +486,20 @@ export default {
           }
           break
         case 'TICKER':
-          console.log(data)
+          // console.log(data)
           if (data.data) {
             this.socketData.tradeMarkeContentItem = data.data
           }
           break
       }
-      console.log(this.socketData)
+      // console.log(this.socketData)
       this.CHANGE_SOCKET_AND_AJAX_DATA({
         'socketData': this.socketData,
         'type': 'socket'
       })
     },
     getBars (symbolInfo, resolution, rangeStartDate, rangeEndDate, onLoadedCallback) {
-      console.log(this.interval)
       // symbolInfo.pricescale = 100000
-      console.log(resolution)
       // console.log(' >> :', rangeStartDate, rangeEndDate)
       if (resolution && this.interval && (this.interval != resolution)) {
         this.unSubscribe(this.interval)
@@ -582,7 +524,6 @@ export default {
       } else {
         const self = this
         this.getBarTimer = setTimeout(function () {
-          console.log(self.socket)
           self.getBars(symbolInfo, resolution, rangeStartDate, rangeEndDate, onLoadedCallback)
         }, 1)
       }
@@ -676,19 +617,15 @@ export default {
     },
     // 切换tab栏重新订阅
     activeTabSymbolStr (newVal, oldVal) {
-      console.log(newVal)
       if (oldVal) {
         this.getTradeMarketBySocket('CANCEL', oldVal)
       }
       this.getTradeMarketBySocket('SUB', newVal)
     },
     resolutions (newVal, oldVal) {
-      console.log(newVal)
-      console.log(oldVal)
     },
     symbol (newVal, oldVal) {
       if (oldVal) {
-        console.log(oldVal)
         this.resolutions.forEach((item) => {
           this.getKlineDataBySocket('CANCEL', oldVal, this.transformInterval(item))
         })
@@ -700,7 +637,6 @@ export default {
       this.subscribeSocketData(newVal)
     },
     activeTradeArea (newVal, oldVal) {
-      console.log(newVal)
     }
   }
 }

@@ -74,7 +74,7 @@ class socket {
         let text = pako.inflate(evt.target.result, {to: 'string'})
         // console.log(text)
         let msg = JSON.parse(text)
-        console.log(msg)
+        // console.log(msg)
         // 心跳包
         if (msg.type === 2) {
           console.log(msg)

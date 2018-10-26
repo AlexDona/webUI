@@ -12,6 +12,7 @@
       :pages="pages"
       :sliderinit="sliderinit"
       class="inner-box"
+      @slide='slide'
     >
     </Slider>
   </div>
@@ -37,7 +38,7 @@ export default {
         thresholdDistance: 100, // 滑动距离阈值判定
         thresholdTime: 300, // 滑动时间阈值判定
         loop: true, // 无限循环
-        autoplay: 4000, // 自动播放:时间[ms]
+        autoplay: 3000, // 自动播放:时间[ms]
         infinite: 8
       },
       sliderListAjax: []
@@ -56,6 +57,10 @@ export default {
   update () {},
   beforeRouteUpdate () {},
   methods: {
+    ...mapMutations([
+      'CHANGE_BANNER_ACTIVE',
+      'CHANGE_BANNER_BACKGROUND'
+    ]),
     // 获取轮播图
     async getBanner () {
       const params = {
@@ -73,7 +78,13 @@ export default {
         this.renderSlider()
       }
     },
+    slide (data) {
+      console.log(data.currentPage)
+      console.log(this.sliderListAjax)
+      this.CHANGE_BANNER_BACKGROUND(this.sliderListAjax[data.currentPage - 1].bigUrl)
+    },
     renderSlider () {
+      this.CHANGE_BANNER_BACKGROUND(this.sliderListAjax[0].bigUrl)
       let sliderList = []
       this.sliderListAjax.forEach((item) => {
         let that = this
@@ -107,11 +118,11 @@ export default {
                 const URL = e.target.attributes.background.value
                 this.CHANGE_BANNER_ACTIVE(true)
                 console.log(URL)
-                this.CHANGE_BANNER_BACKGROUND(URL)
+                // this.CHANGE_BANNER_BACKGROUND(URL)
               },
               mouseLeave () {
                 this.CHANGE_BANNER_ACTIVE(false)
-                this.CHANGE_BANNER_BACKGROUND(this.bannerDefaultBackground)
+                // this.CHANGE_BANNER_BACKGROUND(this.bannerDefaultBackground)
               }
             },
             computed: {
