@@ -418,7 +418,7 @@ export default {
       // console.log(data)
       switch (data.tradeType) {
         case 'KLINE':
-          // console.log(data)
+          console.log(data.data[0])
           if (data.data && data.data.length && !data.type) {
             const list = []
             const ticker = `${this.symbol}-${this.interval}`
@@ -463,7 +463,7 @@ export default {
           break
         // 买卖单
         case 'DEPTH':
-          // console.log(data)
+          console.log(data)
           if (data.data) {
             let newData = data.data
             console.log(newData)

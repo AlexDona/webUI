@@ -118,6 +118,7 @@ export default {
       emailCode: '', // 邮箱验证码
       successCountDown: 1, // 成功倒计时
       fullscreenLoading: false, // 整页loading
+      isEmailExist: true, // 邮箱是否存在
       errorShowStatusList: [
         '', // 邮箱账号
         '' // 验证码
@@ -151,12 +152,24 @@ export default {
     },
     // 发送邮箱验证码
     sendPhoneOrEmailCode (loginType) {
-      if (!this.emailAccounts) {
+      if (this.isEmailExist && this.emailAccounts) {
         this.$message({
-          // 请先输入邮箱账号
-          message: this.$t('M.comm_please_enter') + this.$t('M.user_security_email') + this.$t('M.user_account_number'),
-          type: 'error'
+          type: 'error',
+          message: this.$t('M.user-fail-reg-mail-exist')
         })
+        return false
+      }
+      // if (!this.emailAccounts) {
+      //   this.$message({
+      //     // 请先输入邮箱账号
+      //     message: this.$t('M.comm_please_enter') + this.$t('M.user_security_email') + this.$t('M.user_account_number'),
+      //     type: 'error'
+      //   })
+      //   return false
+      // }
+      // let a = validateNumForUserInput('email', this.emailAccounts)
+      // console.log(a)
+      if (!this.checkoutInputFormat(0, this.emailAccounts)) {
         return false
       }
       if (this.disabledOfPhoneBtn || this.disabledOfEmailBtn) {
@@ -210,11 +223,13 @@ export default {
         }
         const data = await checkUserExist(params)
         if (!returnAjaxMessage(data, this, 0)) {
+          this.isEmailExist = true
           return false
         }
       } else {
         switch (type) {
           case 'email':
+            this.isEmailExist = false
             if (this.checkoutInputFormat(0, userName)) {
               return false
             }
@@ -274,18 +289,27 @@ export default {
     },
     // 确定绑定接口
     async confirmBindingBail () {
-      if (!this.emailCode) {
+      this.checkUserExistAjax('email', this.emailAccounts)
+      // if (!this.emailCode) {
+      //   this.$message({
+      //     // 请先输入邮箱账号
+      //     message: this.$t('M.comm_please_enter') + this.$t('M.user_security_email') + this.$t('M.comm_code'),
+      //     type: 'error'
+      //   })
+      //   return false
+      // }
+      if (this.isEmailExist) {
         this.$message({
-          // 请先输入邮箱账号
-          message: this.$t('M.comm_please_enter') + this.$t('M.user_security_email') + this.$t('M.comm_code'),
-          type: 'error'
+          type: 'error',
+          message: this.$t('M.user-fail-reg-mail-exist')
         })
         return false
       }
       let goOnStatus = 0
       if (
         this.checkoutInputFormat(0, this.emailAccounts) &&
-        this.checkoutInputFormat(1, this.emailCode)
+        this.checkoutInputFormat(1, this.emailCode) &&
+        !this.isEmailExist
       ) {
         goOnStatus = 1
       } else {
