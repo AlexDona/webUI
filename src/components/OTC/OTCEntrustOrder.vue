@@ -193,21 +193,20 @@ export default {
       } else {
         // 返回数据正确的逻辑
         this.loading = false
-        this.OTCEntrustOrderList = data.data.data.list
+        let OTCEntrustOrderListData = data.data.data
+        this.OTCEntrustOrderList = OTCEntrustOrderListData.list
         // 分页
-        this.totalPages = data.data.data.pages - 0
+        this.totalPages = OTCEntrustOrderListData.pages - 0
       }
     },
     // 4.0 点击撤单按钮
     revocationOrder (id) {
-      // this.getOTCEntrustingOrdersRevocation(id)
       this.$confirm(this.$t('M.otc_revoke'), {
         cancelButtonText: this.$t('M.comm_cancel'),
         confirmButtonText: this.$t('M.comm_confirm')
       }).then(() => {
         this.getOTCEntrustingOrdersRevocation(id)
-      }).catch(() => {
-      })
+      }).catch(() => {})
     },
     // 5.0 提交撤单
     async getOTCEntrustingOrdersRevocation (id) {

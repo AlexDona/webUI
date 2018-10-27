@@ -35,19 +35,19 @@
                     <p class="order-info-left">
                       <span>{{$t('M.otc_alipay_type')}}：</span>
                       <!-- 判断付款方式 -->
-                      <span v-if="s.row.payType === 'alipay'">
+                      <span v-show="s.row.payType === 'alipay'">
                         {{$t('M.comm_alipay')}}
                       </span>
-                      <span v-if="s.row.payType === 'bank'">
+                      <span v-show="s.row.payType === 'bank'">
                         {{$t('M.comm_bank')}}
                       </span>
-                      <span v-if="s.row.payType === 'xilian'">
+                      <span v-show="s.row.payType === 'xilian'">
                         {{$t('M.comm_xilian')}}
                       </span>
-                      <span v-if="s.row.payType === 'paypal'">
+                      <span v-show="s.row.payType === 'paypal'">
                         PAYPAL
                       </span>
-                      <span v-if="s.row.payType === 'weixin'">
+                      <span v-show="s.row.payType === 'weixin'">
                         {{$t('M.comm_weixin')}}
                       </span>
                       <!-- <span>{{s.row.payType}}</span> -->
@@ -74,7 +74,6 @@
                       <span v-if="s.row.payType === 'weixin'">
                         {{$t('M.user_account_weChat')}}{{$t('M.user_account_number')}}：
                       </span>
-                      <!-- <span>{{$t('M.otc_bank_num')}}：</span> -->
                       <span>{{s.row.payAcctount}}</span>
                     </p>
                   </div>
@@ -147,7 +146,9 @@
                       v-if="s.row.appeal == 'NO' && s.row.confirmTime == ''"
                     >
                     <!-- 申诉判定，订单完成 -->
-                      <span class="confirm-time">{{$t('M.otc_tradeOver_complate')}}</span>
+                      <span class="confirm-time">
+                        {{$t('M.otc_tradeOver_complate')}}
+                      </span>
                     </p>
                     <p class="order-info-right">
                       <!-- 付款确认时间： -->
@@ -260,7 +261,6 @@ import {returnAjaxMessage} from '../../utils/commonFunc'
 import {mapState} from 'vuex'
 export default {
   components: {},
-  // props,
   data () {
     return {
       loading: true,
@@ -310,9 +310,10 @@ export default {
       } else {
         // 返回数据正确的逻辑
         this.loading = false
-        this.completedOrdersList = data.data.data.list
+        let completedOrdersListData = data.data.data
+        this.completedOrdersList = completedOrdersListData.list
         // 分页
-        this.totalPages = data.data.data.pages - 0
+        this.totalPages = completedOrdersListData.pages - 0
       }
     }
   },
@@ -327,7 +328,6 @@ export default {
 }
 </script>
 <style scoped lang="scss" type="text/scss">
-// @import url(../../../static/css/scss/OTC/OTCCompletedOrder.scss);
 @import "../../../static/css/scss/OTC/OTCCenter.scss";
 .otc-completed-order-box{
   >.completed-order-content{

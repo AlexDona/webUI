@@ -252,12 +252,14 @@
                   </p>
                   <p class="bankMoneyInfo">
                     <!-- 转账金额 -->
-                    <span>{{$t('M.otc_tradingorder_transformAcconu')}}: </span><span>{{item.symbol}}{{item.payAmount}}</span>
+                    <span>{{$t('M.otc_tradingorder_transformAcconu')}}:</span>
+                    <span>{{item.symbol}}{{item.payAmount}}</span>
                   </p>
                   <p class="bankMoneyInfo">
                     <span>
                       <!-- 账户 -->
-                      {{$t('M.comm_bill')}}&nbsp;&nbsp;&nbsp;{{$t('M.comm_house')}}: </span>
+                      {{$t('M.comm_bill')}}&nbsp;&nbsp;&nbsp;{{$t('M.comm_house')}}:
+                    </span>
                     <span>{{item.payAcctount}}</span>
                   </p>
                 </div>
@@ -887,11 +889,12 @@ export default {
       } else {
         // 返回数据正确的逻辑
         this.loading = false
-        this.tradingOrderList = data.data.data.list
+        let detailsData = data.data.data
+        this.tradingOrderList = detailsData.list
         // console.log('交易中订单')
         // console.log(this.tradingOrderList)
         // 分页
-        this.totalPages = data.data.data.pages - 0
+        this.totalPages = detailsData.pages - 0
         // console.log(this.tradingOrderList)
         // 循环数组
         this.tradingOrderList.forEach((item, index) => {
@@ -1107,14 +1110,14 @@ export default {
     })
   },
   watch: {
-    activeLanguage (newVal) {
-      // console.log('当前选中语言')
-      // console.log(newVal)
-    },
-    language (newVal) {
-      // console.log('language')
-      // console.log(newVal)
-    }
+    // activeLanguage (newVal) {
+    //   console.log('当前选中语言')
+    //   console.log(newVal)
+    // },
+    // language (newVal) {
+    //   console.log('language')
+    //   console.log(newVal)
+    // }
   },
   destroyed () {
     // 离开本组件清除定时器
@@ -1217,8 +1220,6 @@ export default {
               .trader-info{
                 width: 190px;
                 >.pay-style{
-                  // margin-left: 20px;
-                  // margin-bottom: 8px;
                   margin: 0 0 8px 20px;
                   position: relative;
                   >.qiandai-icon{
@@ -1264,8 +1265,6 @@ export default {
             flex: 3;
             >.right-content{
               >.action-tips{
-                // margin-left: 20px;
-                // margin-bottom: 10px;
                 margin: 0 0 10px 20px;
                 .wait-pay{
                   // color: #E8554F;
@@ -1312,8 +1311,6 @@ export default {
             display: flex;
             flex: 3;
             >.appeal-textarea{
-              // margin-top: 15px;
-              // margin-left: 20px;
               margin: 15px 0 0 20px;
               flex: 2;
               display: flex;

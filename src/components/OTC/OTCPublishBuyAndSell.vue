@@ -417,7 +417,7 @@ export default {
   },
   data () {
     return {
-      fullscreenLoading: true,
+      fullscreenLoading: true, // 整页loading
       serviceChargeSELL: 0, // 手续费：卖
       traderSumSELL: 0, // 交易额：卖
       serviceChargeBUY: 0, // 手续费：买
@@ -535,44 +535,45 @@ export default {
       } else {
         // 返回数据正确的逻辑
         this.fullscreenLoading = false
+        let detailsData = data.data.data
         // 1.0 可用币种列表
-        this.coinStyleList = data.data.data.coinlist
+        this.coinStyleList = detailsData.coinlist
         this.coinStyleList.forEach(item => {
           if (this.coinId === item.coinId) {
             this.coinName = item.name
           }
         })
         // 2.0 法币种列表
-        this.hopePaymentCoinStyleList = data.data.data.currencyList
+        this.hopePaymentCoinStyleList = detailsData.currencyList
         this.hopePaymentCoinStyleList.forEach(item => {
           if (this.hopePaymentCoinId === item.id) {
             this.CurrencyCoinsName = item.shortName
           }
         })
         // 当前可用total
-        this.currentlyAvailable = data.data.data.otcCoinQryResponse.total
+        this.currentlyAvailable = detailsData.otcCoinQryResponse.total
         // 市价marketPrice
-        this.marketPrice = data.data.data.otcCoinQryResponse.marketPrice
+        this.marketPrice = detailsData.otcCoinQryResponse.marketPrice
         // 币种 最大 交易限额maxCount
-        // this.$refs.maxCount.value = data.data.data.otcCoinQryResponse.maxCount
-        this.backReturnCurrentMaxCount = data.data.data.otcCoinQryResponse.maxCount
+        // this.$refs.maxCount.value = detailsData.otcCoinQryResponse.maxCount
+        this.backReturnCurrentMaxCount = detailsData.otcCoinQryResponse.maxCount
         this.$refs.maxCount.value = this.backReturnCurrentMaxCount
         // 币种 最小 交易限额minCount
-        // this.$refs.minCount.value = data.data.data.otcCoinQryResponse.minCount
-        this.backReturnCurrentMinCount = data.data.data.otcCoinQryResponse.minCount
+        // this.$refs.minCount.value = detailsData.otcCoinQryResponse.minCount
+        this.backReturnCurrentMinCount = detailsData.otcCoinQryResponse.minCount
         this.$refs.minCount.value = this.backReturnCurrentMinCount
         // 交易数量最小小数位
-        this.pointLength = data.data.data.otcCoinQryResponse.unit
+        this.pointLength = detailsData.otcCoinQryResponse.unit
         // 币种最高价格
-        this.maxPrice = data.data.data.otcCoinQryResponse.maxPrice
+        this.maxPrice = detailsData.otcCoinQryResponse.maxPrice
         // 币种最低价格
-        this.minPrice = data.data.data.otcCoinQryResponse.minPrice
+        this.minPrice = detailsData.otcCoinQryResponse.minPrice
         // 费率
         if (this.publishStyle === 'sell') {
-          this.rate = data.data.data.otcCoinQryResponse.sellRate
+          this.rate = detailsData.otcCoinQryResponse.sellRate
         }
         if (this.publishStyle === 'buy') {
-          this.rate = data.data.data.otcCoinQryResponse.buyRate
+          this.rate = detailsData.otcCoinQryResponse.buyRate
         }
       }
     },
@@ -835,15 +836,6 @@ export default {
       if (this.errorTipsLimitMax) {
         return false
       }
-      // =============
-      // if (!this.$refs.minCount.value) {
-      //   this.errorTipsLimitMin = '请输入单笔最小限额'
-      //   return false
-      // }
-      // if (!this.$refs.maxCount.value) {
-      //   this.errorTipsLimitMax = '请输入单笔最大限额'
-      //   return false
-      // }
       this.dialogVisible = true
     },
     // 交易密码框获得焦点清空错误提示信息
@@ -913,7 +905,6 @@ export default {
 }
 </script>
 <style scoped lang="scss" type="text/scss">
-  // @import url(../../../static/css/scss/OTC/OTCCenter.scss);
   @import "../../../static/css/scss/index";
   .otc-publish-buy-and-sell-box {
     overflow: hidden;
@@ -1015,8 +1006,6 @@ export default {
                 vertical-align: top;
                 line-height: 36px;
                 text-align: center;
-                // margin-left: -4px;
-                // margin-right: 50px;
                 margin: 0 50px 0 -4px;
               }
             }

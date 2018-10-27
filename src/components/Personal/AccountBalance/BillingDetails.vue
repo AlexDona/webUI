@@ -386,7 +386,9 @@ export default {
       let data = await statusRushedToRecordList({
         currentPage: this.currentPageForMyEntrust, // 当前委托页码
         pageSize: this.pageSize, // 每页显示条数
-        userId: this.userInfo.userInfo.userId, // 用户ID
+        // userId: this.userInfo.userInfo.userId, // 用户ID
+        // 任改动
+        userId: this.userInfo.userId, // 用户ID
         coinId: this.currencyListValue, // 币种ID
         type: this.currencyTypeValue, // 类型（RECHARGE:充值 WITHDRAW:提现）
         startTime: this.startTime, // 开始起止时间
@@ -400,8 +402,9 @@ export default {
         // 接口成功清除loading
         this.loading = false
         // 返回冲提记录列表展示
-        this.chargeRecordList = data.data.data.list
-        this.totalPageForMyEntrust = data.data.data.pages - 0
+        let detailData = data.data.data
+        this.chargeRecordList = detailData.list
+        this.totalPageForMyEntrust = detailData.pages - 0
         console.log(this.chargeRecordList)
       }
     },
@@ -425,7 +428,9 @@ export default {
   computed: {
     ...mapState({
       theme: state => state.common.theme,
-      userInfo: state => state.user.loginStep1Info, // 用户详细信息
+      // userInfo: state => state.user.loginStep1Info, // 用户详细信息
+      // 任改动
+      userInfo: state => state.user.loginStep1Info.userInfo, // 用户详细信息
       userCenterActiveName: state => state.personal.userCenterActiveName
     })
   },
@@ -435,6 +440,11 @@ export default {
         this.getChargeMentionList()
         this.inquireCurrencyList()
       }
+    },
+    // 任改动
+    userInfo (val) {
+      // console.log(11111111122222222222222)
+      // console.log(val)
     }
   }
 }

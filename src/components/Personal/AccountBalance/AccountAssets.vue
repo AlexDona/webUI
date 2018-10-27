@@ -388,7 +388,7 @@
                             {{errorMessage}}
                           </div>
                             <!--提币记录-->
-                                {{ $t('M.comm_mention_money') }}{{ $t('M.comm_record') }}
+                              {{ $t('M.comm_mention_money') }}{{ $t('M.comm_record') }}
                           </span>
                         </p>
                       </div>
@@ -1161,9 +1161,10 @@ export default {
           provideWithdrawDepositIsShow: false
         })
         // 返回数据
-        this.totalSumBTC = data.data.data.totalSum
-        this.withdrawDepositList = data.data.data.userCoinWalletVOPageInfo.list
-        this.totalPageForMyEntrust = data.data.data.userCoinWalletVOPageInfo.pages - 0
+        let detailData = data.data.data
+        this.totalSumBTC = detailData.totalSum
+        this.withdrawDepositList = detailData.userCoinWalletVOPageInfo.list
+        this.totalPageForMyEntrust = detailData.userCoinWalletVOPageInfo.pages - 0
         // console.log(this.withdrawDepositList)
       }
     },
@@ -1201,18 +1202,19 @@ export default {
         this.fullscreenLoading = false
         return false
       } else {
+        let withdrawalAddressData = data.data.data
         // 接口成功清除loading
         this.fullscreenLoading = false
-        console.log(data.data.data.needTag)
-        console.log(data.data.data.userWithdrawAddressListVO.userWithdrawAddressDtoList)
+        console.log(withdrawalAddressData.needTag)
+        console.log(withdrawalAddressData.userWithdrawAddressListVO.userWithdrawAddressDtoList)
         // 对币种类型进行赋值 true公信宝类 false普通币种
-        this.needTag = data.data.data.needTag
+        this.needTag = withdrawalAddressData.needTag
         // 返回列表数据并渲染币种列表
-        this.mentionAddressList = data.data.data.userWithdrawAddressListVO.userWithdrawAddressDtoList
-        if (!data.data.data.userWithdrawAddressListVO.userWithdrawAddressDtoList) {
-          this.mentionAddressValue = data.data.data.userWithdrawAddressListVO.userWithdrawAddressDtoList[0].address
+        this.mentionAddressList = withdrawalAddressData.userWithdrawAddressListVO.userWithdrawAddressDtoList
+        if (!withdrawalAddressData.userWithdrawAddressListVO.userWithdrawAddressDtoList) {
+          this.mentionAddressValue = withdrawalAddressData.userWithdrawAddressListVO.userWithdrawAddressDtoList[0].address
         }
-        console.log(data.data.data.vo)
+        console.log(withdrawalAddressData.vo)
       }
     },
     // select框自定义提币地址校验地址
@@ -1529,8 +1531,9 @@ export default {
                 height: 35px;
                 border: 0;
                 line-height: 0;
-                margin-left: 50px;
-                margin-right: 15px;
+                // margin-left: 50px;
+                // margin-right: 15px;
+                margin: 0 15px 0 50px;
               }
               .btn{
                 width: 80px;
@@ -1713,8 +1716,9 @@ export default {
                       }
                     }
                     >.text-info {
-                      padding-left: 15px;
-                      padding-top: 20px;
+                      // padding-left: 15px;
+                      // padding-top: 20px;
+                      padding: 20px 0 0 15px;
                       >.currency-rule,
                       >.prompt-message {
                         line-height: 20px;
