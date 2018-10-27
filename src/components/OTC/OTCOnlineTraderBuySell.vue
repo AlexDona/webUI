@@ -834,10 +834,8 @@ export default {
   // background-color: #1D2331;
   >.online-trader-buy-sell-content{
     width: 1150px;
-    // margin: 0 auto;
-    // margin-top: 50px;
-    // margin-bottom: 150px;
-    margin: 50px auto 150px auto;
+    margin: 0 auto;
+    padding: 100px 0 70px;
     >.online-trader{
         display: flex;
         flex: 10;

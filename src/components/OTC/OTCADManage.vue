@@ -150,25 +150,25 @@
               :label="$t('M.comm_time')"
               width="180"
             >
-              <template slot-scope="scope">
-                <div>{{timeFormatting(scope.row.createTime)}}</div>
+              <template slot-scope="s">
+                <div>{{timeFormatting(s.row.createTime)}}</div>
               </template>
             </el-table-column>
             <!-- 交易类型 -->
             <el-table-column
               :label="$t('M.otc_type_ransaction')"
             >
-              <template slot-scope="scope">
+              <template slot-scope="s">
                 <div
-                  v-if="scope.row.entrustType === 'BUY'"
-                  :class="{red:scope.row.entrustType === 'BUY'}"
+                  v-if="s.row.entrustType === 'BUY'"
+                  :class="{red:s.row.entrustType === 'BUY'}"
                 >
                   <!-- 购买 -->
                   {{$t('M.otc_index_buy')}}
                 </div>
                 <div
-                  v-if="scope.row.entrustType === 'SELL'"
-                  :class="{green:scope.row.entrustType === 'SELL'}"
+                  v-if="s.row.entrustType === 'SELL'"
+                  :class="{green:s.row.entrustType === 'SELL'}"
                 >
                   <!-- 出售 -->
                   {{$t('M.otc_index_sell')}}
@@ -179,41 +179,41 @@
             <el-table-column
               :label="$t('M.otc_AD_token')"
             >
-              <template slot-scope="scope">
-                <div>{{scope.row.coinName}}</div>
+              <template slot-scope="s">
+                <div>{{s.row.coinName}}</div>
               </template>
             </el-table-column>
             <!-- 法币 -->
             <el-table-column
               :label="$t('M.comm_coin')"
             >
-              <template slot-scope="scope">
-                <div>{{scope.row.currencyName}}</div>
+              <template slot-scope="s">
+                <div>{{s.row.currencyName}}</div>
               </template>
             </el-table-column>
             <!-- 单价 -->
             <el-table-column
               :label="$t('M.otc_index_UnitPrice')"
             >
-              <template slot-scope="scope">
-                <div>{{scope.row.price}}</div>
+              <template slot-scope="s">
+                <div>{{s.row.price}}</div>
               </template>
             </el-table-column>
             <!-- 数量 -->
             <el-table-column
               :label="$t('M.comm_count')"
             >
-              <template slot-scope="scope">
-                <div>{{scope.row.entrustCount}}</div>
+              <template slot-scope="s">
+                <div>{{s.row.entrustCount}}</div>
               </template>
             </el-table-column>
             <!-- 剩余数量 -->
             <el-table-column
               :label="$t('M.comm_surplus') + $t('M.comm_count')"
             >
-              <template slot-scope="scope">
-                <!-- <div>{{scope.row.entrustCount - scope.row.matchCount}}</div> -->
-                <div>{{scope.row.remainCount}}</div>
+              <template slot-scope="s">
+                <!-- <div>{{s.row.entrustCount - s.row.matchCount}}</div> -->
+                <div>{{s.row.remainCount}}</div>
               </template>
             </el-table-column>
             <!-- 已完成数量 -->
@@ -221,25 +221,25 @@
               :label="$t('M.otc_enum_status_yiwancheng') + $t('M.comm_count')"
               width="120px"
             >
-              <template slot-scope="scope">
-                <div>{{scope.row.matchCount}}</div>
+              <template slot-scope="s">
+                <div>{{s.row.matchCount}}</div>
               </template>
             </el-table-column>
             <!-- 状态 -->
             <el-table-column
               :label="$t('M.comm_state')"
             >
-              <template slot-scope="scope">
+              <template slot-scope="s">
                 <!-- 已上架 -->
-                <div v-if="scope.row.status === 'ENTRUSTED'">
+                <div v-if="s.row.status === 'ENTRUSTED'">
                   {{$t('M.comm_already')}}{{$t('M.otc_adMange_getting')}}
                 </div>
                 <!-- 已完成 -->
-                <div v-if="scope.row.status === 'COMPLETED'">
+                <div v-if="s.row.status === 'COMPLETED'">
                   {{$t('M.otc_enum_status_yiwancheng')}}
                 </div>
                 <!-- 已下架 -->
-                <div v-if="scope.row.status === 'CANCELED'">
+                <div v-if="s.row.status === 'CANCELED'">
                   {{$t('M.comm_already')}}{{$t('M.otc_adMange_adverting')}}
                 </div>
               </template>
@@ -248,20 +248,20 @@
             <el-table-column
               :label="$t('M.otc_index_operate')"
             >
-              <template slot-scope="scope">
+              <template slot-scope="s">
                 <!-- 下架 -->
                 <el-button
                   type="text"
-                  v-if="scope.row.status === 'ENTRUSTED'"
-                  @click="updateADUnshelve(scope.row.id)"
+                  v-if="s.row.status === 'ENTRUSTED'"
+                  @click="updateADUnshelve(s.row.id)"
                 >
                   {{$t('M.otc_adMange_adverting')}}
                 </el-button>
                 <!-- 修改 -->
                 <el-button
                   type="text"
-                  v-if="scope.row.status === 'CANCELED'"
-                  @click="modifyAD(scope.row.id)"
+                  v-if="s.row.status === 'CANCELED'"
+                  @click="modifyAD(s.row.id)"
                 >
                   {{$t('M.otc_adMange_change')}}
                 </el-button>
@@ -415,9 +415,10 @@ export default {
       } else {
         // 返回数据正确的逻辑 渲染列表
         this.loading = false
-        this.ADList = data.data.data.list
+        let ADData = data.data.data
+        this.ADList = ADData.list
         // 分页
-        this.totalPages = data.data.data.pages - 0
+        this.totalPages = ADData.pages - 0
       }
     },
     // 5.0
@@ -526,10 +527,6 @@ export default {
         // 跳转发布广告页面并携带一条信息的参数
         this.$router.push({path: '/OTCPublishAD', query: {id: id}})
       }).catch(() => {
-        // this.$message({
-        //   type: 'success',
-        //   message: '已取消修改'
-        // })
       })
     },
     // 13.0 点击查询按钮 重新请求列表数据

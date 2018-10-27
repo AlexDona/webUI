@@ -112,11 +112,11 @@
                     prop="operations"
                     :label="$t('M.otc_index_operate')"
                   >
-                    <template slot-scope = "data">
+                    <template slot-scope = "s">
                       <div
-                        v-if="data.row.state == $t('M.finance_huoqi')"
+                        v-if="s.row.state == $t('M.finance_huoqi')"
                         class="blue cancelBtn"
-                        @click="cancleInvest(data.row.id)"
+                        @click="cancleInvest(s.row.id)"
                       >
                         <!-- 取消 -->
                         {{$t('M.comm_cancel')}}

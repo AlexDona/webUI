@@ -170,7 +170,7 @@ export default {
   methods: {
     // 1.0 分页
     changeCurrentPage (pageNum) {
-      console.log(pageNum)
+      // console.log(pageNum)
       this.currentPage = pageNum
       this.getOTCCanceledOrdersList()
     },
@@ -195,9 +195,10 @@ export default {
       } else {
         // 返回数据正确的逻辑
         this.loading = false
-        this.otcCanceledOrderList = data.data.data.list
+        let canceledOrderData = data.data.data
+        this.otcCanceledOrderList = canceledOrderData.list
         // 分页
-        this.totalPages = data.data.data.pages - 0
+        this.totalPages = canceledOrderData.pages - 0
         console.log('取消订单')
         console.log(this.otcCanceledOrderList)
       }

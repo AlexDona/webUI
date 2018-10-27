@@ -159,8 +159,8 @@
             <el-table-column
               :label = "$t('M.otc_transaction_data')"
             >
-              <template slot-scope = "scope">
-                <div>{{timeFormatting(scope.row.createTime)}}</div>
+              <template slot-scope = "s">
+                <div>{{timeFormatting(s.row.createTime)}}</div>
               </template>
             </el-table-column>
             <!-- 订单号 -->
@@ -168,33 +168,33 @@
               :label = "$t('M.otc_MerchantsOrders_orderNum')"
               width="130"
             >
-              <template slot-scope = "scope">
-                <div>{{scope.row.orderSequence}}</div>
+              <template slot-scope = "s">
+                <div>{{s.row.orderSequence}}</div>
               </template>
             </el-table-column>
             <!-- 币种 -->
             <el-table-column
               :label = "$t('M.otc_Merchants_Orders_market')"
             >
-              <template slot-scope = "scope">
-                <div>{{scope.row.coinName}}</div>
+              <template slot-scope = "s">
+                <div>{{s.row.coinName}}</div>
               </template>
             </el-table-column>
             <!-- 交易类型 -->
             <el-table-column
               :label = "$t('M.otc_type_ransaction')"
             >
-              <template slot-scope = "scope">
+              <template slot-scope = "s">
                 <div
-                  v-if="scope.row.orderType === 'BUY'"
-                  :class="{red:scope.row.orderType === 'BUY'}"
+                  v-if="s.row.orderType === 'BUY'"
+                  :class="{red:s.row.orderType === 'BUY'}"
                 >
                 <!-- 购买 -->
                   {{$t('M.comm_buying')}}
                 </div>
                 <div
-                  v-if="scope.row.orderType === 'SELL'"
-                  :class="{green:scope.row.orderType === 'SELL'}"
+                  v-if="s.row.orderType === 'SELL'"
+                  :class="{green:s.row.orderType === 'SELL'}"
                 >
                   <!-- 出售 -->
                   {{$t('M.comm_offering')}}
@@ -206,20 +206,20 @@
             <el-table-column
               :label = "$t('M.otc_order_status')"
             >
-              <template slot-scope = "scope">
-                <div v-show="scope.row.status === 'PICKED'">
+              <template slot-scope = "s">
+                <div v-show="s.row.status === 'PICKED'">
                   {{$t('M.otc_enum_status_weifukuan')}}
                 </div>
-                <div v-show="scope.row.status === 'PAYED'">
+                <div v-show="s.row.status === 'PAYED'">
                   {{$t('M.otc_enum_status_yifukuan')}}
                 </div>
-                <div v-show="scope.row.status === 'COMPLETED'">
+                <div v-show="s.row.status === 'COMPLETED'">
                   {{$t('M.otc_enum_status_yiwancheng')}}
                 </div>
-                <div v-show="scope.row.status === 'CANCELED'">
+                <div v-show="s.row.status === 'CANCELED'">
                   {{$t('M.otc_enum_status_yiquxiao')}}
                 </div>
-                <div v-show="scope.row.status === 'FROZEN'">
+                <div v-show="s.row.status === 'FROZEN'">
                   {{$t('M.otc_freezing')}}
                 </div>
               </template>
@@ -228,8 +228,8 @@
             <el-table-column
               :label = "$t('M.otc_MerchantsOrders_currecy')"
             >
-              <template slot-scope = "scope">
-                <div>{{scope.row.currencyName}}</div>
+              <template slot-scope = "s">
+                <div>{{s.row.currencyName}}</div>
               </template>
             </el-table-column>
             <!-- 支付方式 -->
@@ -237,28 +237,28 @@
               :label = "$t('M.otc_index_Payment_method')"
               width="106"
             >
-              <template slot-scope = "scope">
+              <template slot-scope = "s">
                 <div>
                   <!-- 支付宝 -->
                   <IconFontCommon
                     class="font-size16"
                     iconName="icon-zhifubao1"
-                    v-if="scope.row.payType === 'alipay'"
+                    v-if="s.row.payType === 'alipay'"
                   />
                   <!-- 微信 -->
                   <IconFontCommon
                     class="font-size16"
                     iconName="icon-weixin1"
-                    v-if="scope.row.payType === 'weixin'"
+                    v-if="s.row.payType === 'weixin'"
                   />
                   <!-- 银行卡 -->
                   <IconFontCommon
                     class="font-size16"
                     iconName="icon-yinhangqia"
-                    v-if="scope.row.payType === 'bank'"
+                    v-if="s.row.payType === 'bank'"
                   />
                   <!-- 4西联汇款 -->
-                  <span v-if="scope.row.payType === 'xilian'">
+                  <span v-if="s.row.payType === 'xilian'">
                     <img
                       src="../../assets/user/xilian.png"
                       class="xilian"
@@ -268,7 +268,7 @@
                   <IconFontCommon
                     class="font-size16"
                     iconName="icon-paypal"
-                    v-if="scope.row.payType === 'paypal'"
+                    v-if="s.row.payType === 'paypal'"
                   />
                 </div>
               </template>
@@ -277,40 +277,40 @@
             <el-table-column
               :label = "$t('M.otc_MerchantsOrders_transaction_price')"
             >
-              <template slot-scope = "scope">
-                <div>{{scope.row.price}}</div>
+              <template slot-scope = "s">
+                <div>{{s.row.price}}</div>
               </template>
             </el-table-column>
             <!-- 成交量 -->
             <el-table-column
               :label = "$t('M.otc_MerchantsOrders_transaction_mount')"
             >
-              <template slot-scope = "scope">
-                <div>{{scope.row.pickCount}}</div>
+              <template slot-scope = "s">
+                <div>{{s.row.pickCount}}</div>
               </template>
             </el-table-column>
             <!-- 总金额 -->
             <el-table-column
               :label = "$t('M.otc_canceled_total')"
             >
-              <template slot-scope = "scope">
-                <div>{{scope.row.payAmount}}</div>
+              <template slot-scope = "s">
+                <div>{{s.row.payAmount}}</div>
               </template>
             </el-table-column>
             <!-- 对方姓名 -->
             <el-table-column
               :label = "$t('M.otc_name_other')"
             >
-              <template slot-scope = "scope">
-                <div>{{scope.row.otherName}}</div>
+              <template slot-scope = "s">
+                <div>{{s.row.otherName}}</div>
               </template>
             </el-table-column>
             <!-- 申诉记录 -->
             <el-table-column
               :label = "$t('M.otc_record_complaint')"
             >
-              <template slot-scope = "scope">
-                <div>{{scope.row.appeal == 'YES'? $t('M.otc_MerchantsOrders_seller_appeal') : $t('M.otc_MerchantsOrders_no')}}</div>
+              <template slot-scope = "s">
+                <div>{{s.row.appeal == 'YES'? $t('M.otc_MerchantsOrders_seller_appeal') : $t('M.otc_MerchantsOrders_no')}}</div>
               </template>
             </el-table-column>
           </el-table>

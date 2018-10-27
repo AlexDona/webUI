@@ -927,7 +927,8 @@ export default {
     }
     > .publish-buy-and-sell-content {
       width: 1150px;
-      margin: 107px auto;
+      margin: 0 auto;
+      padding: 90px 0 50px;
       > .publish-content {
         display: flex;
         flex: 3;
