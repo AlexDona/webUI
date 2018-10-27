@@ -19,19 +19,25 @@
                 {{ $t('M.comm_hello') }}
               </span>
               <span class="color">
-                {{ userInfo.userInfo.userName }}
+                <!-- {{ userInfo.userInfo.userName }} -->
+                {{ innerUserInfo.userName }}
               </span>
             </p>
             <span class="display-inline-block margin-top9 text-color">
-              UID： {{ userInfo.userInfo.showId }}
+              <!-- UID： {{ userInfo.userInfo.showId }} -->
+              UID： {{ innerUserInfo.showId }}
             </span>
           </div>
         </div>
         <div class="info float-left flex1">
           <p class="info-top">
             <!--未实名-->
-            <span
+            <!-- <span
               v-if="!userInfo.userInfo.realname"
+              class="icon-user-info info-right display-inline-block text-align-c"
+            > -->
+            <span
+              v-if="!innerUserInfo.realname"
               class="icon-user-info info-right display-inline-block text-align-c"
             >
               <IconFontCommon
@@ -50,8 +56,12 @@
               />
             </span>
             <!--未绑定邮箱-->
-            <span
+            <!-- <span
               v-if="!userInfo.userInfo.email"
+              class="icon-user-info info-right display-inline-block text-align-c"
+            > -->
+            <span
+              v-if="!innerUserInfo.email"
               class="icon-user-info info-right display-inline-block text-align-c"
             >
               <IconFontCommon
@@ -70,8 +80,12 @@
               />
             </span>
             <!--未绑定绑定手机-->
-            <span
+            <!-- <span
               v-if="userInfo.userInfo.phoneEnable === 'disable' || userInfo.userInfo.phoneEnable === ''"
+              class="icon-user-info info-right display-inline-block text-align-c"
+            > -->
+            <span
+              v-if="innerUserInfo.phoneEnable === 'disable' || innerUserInfo.phoneEnable === ''"
               class="icon-user-info info-right display-inline-block text-align-c"
             >
               <IconFontCommon
@@ -90,8 +104,12 @@
               />
             </span>
             <!--未绑定谷歌-->
-            <span
+            <!-- <span
               v-if="userInfo.userInfo.googleEnable === 'disable' || userInfo.userInfo.googleEnable === ''"
+              class="icon-user-info display-inline-block text-align-c"
+            > -->
+            <span
+              v-if="innerUserInfo.googleEnable === 'disable' || innerUserInfo.googleEnable === ''"
               class="icon-user-info display-inline-block text-align-c"
             >
               <IconFontCommon
@@ -117,8 +135,12 @@
             </span>
             <p class="info-picture margin-left10 float-left">
               <img :src="vipShowPictureSrc">
-              <span
+              <!-- <span
                 v-if="!userInfo.userInfo.level"
+                class="info-centre-right font-size12"
+              > -->
+              <span
+                v-if="!innerUserInfo.level"
                 class="info-centre-right font-size12"
               >
                 VIP0
@@ -127,7 +149,8 @@
                 v-else
                 class="info-centre-right font-size12"
               >
-                {{ userInfo.userInfo.level }}
+                <!-- {{ userInfo.userInfo.level }} -->
+                {{ innerUserInfo.level }}
               </span>
             </p>
           </div>
@@ -285,7 +308,9 @@ export default {
     ...mapState({
       theme: state => state.common.theme,
       language: state => state.common.language, // 当前选中语言
-      userInfo: state => state.user.loginStep1Info // 用户详细信息
+      userInfo: state => state.user.loginStep1Info, // 用户详细信息
+      // 任改动
+      innerUserInfo: state => state.user.loginStep1Info.userInfo // 内存用户详细信息
     }),
     // CNY 资产
     CNYAssets () {
@@ -294,6 +319,11 @@ export default {
   },
   watch: {
     totalSumBTC () {
+    },
+    // 任改动
+    userInfo (val) {
+      console.log(88888888)
+      console.log(val)
     }
   }
 }
