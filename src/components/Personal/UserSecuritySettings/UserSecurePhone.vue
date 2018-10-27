@@ -62,7 +62,7 @@
                 </el-option>
               </el-select>
               <input
-                type="text"
+                type="number"
                 class="phone-input phone-input-left border-radius2 padding-l15 box-sizing"
                 v-model="bindingDataPhone.bindingNewPhoneAccounts"
                 @keydown="setErrorMsg(0,'')"

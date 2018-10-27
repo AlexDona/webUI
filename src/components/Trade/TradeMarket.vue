@@ -470,6 +470,7 @@ export default {
       this.$store.commit('trade/CHANGE_ACTIVE_TAB_ID', {
         activeTabSymbolStr
       })
+      console.log(this.activeTabSymbolStr)
     }
   },
   filter: {},
@@ -486,7 +487,8 @@ export default {
       activeTabId: state => state.trade.activeTabId,
       activeSymbolId: state => state.common.activeSymbol.id,
       collectSymbol: state => state.home.collectSymbol, // 收藏标记
-      tradeMarkeContentItem: state => state.common.socketData.tradeMarkeContentItem
+      tradeMarkeContentItem: state => state.common.socketData.tradeMarkeContentItem,
+      activeTabSymbolStr: state => state.trade.activeTabSymbolStr
       // tradeMarketList: state => state.common.socketData.tradeMarketList // k线页面获取到的交易区信息
     }),
     tradeMarketList () {
@@ -512,6 +514,9 @@ export default {
     }
   },
   watch: {
+    activeTabSymbolStr (newVal) {
+      console.log(newVal)
+    },
     // socket 更新数据
     tradeMarkeContentItem (newVal) {
       if (newVal) {
