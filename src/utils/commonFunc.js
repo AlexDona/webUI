@@ -109,21 +109,15 @@ export const validateNumForUserInput = (type, targetNum) => {
       validateType = WITHDRAWAL_REG
       break
   }
-  if (type === 'phone') {
-    if (!targetNum) {
-      returnNum = 1
-    } else {
-      returnNum = 0
-    }
+
+  if (!targetNum) {
+    returnNum = 1
+  } else if (!validateType.test(targetNum)) {
+    returnNum = 2
   } else {
-    if (!targetNum) {
-      returnNum = 1
-    } else if (!validateType.test(targetNum)) {
-      returnNum = 2
-    } else {
-      returnNum = 0
-    }
+    returnNum = 0
   }
+
   console.log(returnNum)
   return returnNum
 }
