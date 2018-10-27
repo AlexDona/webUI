@@ -243,22 +243,22 @@
                   <IconFontCommon
                     class="font-size16"
                     iconName="icon-zhifubao1"
-                    v-if="s.row.payType === 'alipay'"
+                    v-show="s.row.payType === 'alipay'"
                   />
                   <!-- 微信 -->
                   <IconFontCommon
                     class="font-size16"
                     iconName="icon-weixin1"
-                    v-if="s.row.payType === 'weixin'"
+                    v-show="s.row.payType === 'weixin'"
                   />
                   <!-- 银行卡 -->
                   <IconFontCommon
                     class="font-size16"
                     iconName="icon-yinhangqia"
-                    v-if="s.row.payType === 'bank'"
+                    v-show="s.row.payType === 'bank'"
                   />
                   <!-- 4西联汇款 -->
-                  <span v-if="s.row.payType === 'xilian'">
+                  <span v-show="s.row.payType === 'xilian'">
                     <img
                       src="../../assets/user/xilian.png"
                       class="xilian"
@@ -268,7 +268,7 @@
                   <IconFontCommon
                     class="font-size16"
                     iconName="icon-paypal"
-                    v-if="s.row.payType === 'paypal'"
+                    v-show="s.row.payType === 'paypal'"
                   />
                 </div>
               </template>
@@ -310,7 +310,9 @@
               :label = "$t('M.otc_record_complaint')"
             >
               <template slot-scope = "s">
-                <div>{{s.row.appeal == 'YES'? $t('M.otc_MerchantsOrders_seller_appeal') : $t('M.otc_MerchantsOrders_no')}}</div>
+                <div>
+                  {{s.row.appeal == 'YES'? $t('M.otc_MerchantsOrders_seller_appeal') : $t('M.otc_MerchantsOrders_no')}}
+                </div>
               </template>
             </el-table-column>
           </el-table>
@@ -335,7 +337,11 @@
 import FooterCommon from '../Common/FooterCommon'
 import IconFontCommon from '../Common/IconFontCommon'
 import {timeFilter} from '../../utils'
-import {getOTCAvailableCurrency, getMerchantAvailablelegalTender, getOTCMerchantsOrdersList} from '../../utils/api/OTC'
+import {
+  getOTCAvailableCurrency,
+  getMerchantAvailablelegalTender,
+  getOTCMerchantsOrdersList
+} from '../../utils/api/OTC'
 import {returnAjaxMessage} from '../../utils/commonFunc'
 import {mapState} from 'vuex'
 export default {
@@ -455,7 +461,7 @@ export default {
         this.merchantsOrdersCurrencyList = data.data.data
       }
     },
-    // 5change事件改变时赋值
+    // 5 change事件改变时赋值
     changeSelectValue (type, targetValue) {
       console.log('11111', type, targetValue)
       switch (type) {
@@ -548,9 +554,10 @@ export default {
       } else {
         this.loading = false
         // 返回数据正确的逻辑 重新渲染列表
-        this.merchantsOrdersList = data.data.data.list
+        let merchantsOrdersListData = data.data.data
+        this.merchantsOrdersList = merchantsOrdersListData.list
         // 分页
-        this.totalPages = data.data.data.pages - 0
+        this.totalPages = merchantsOrdersListData.pages - 0
       }
     }
   },

@@ -547,10 +547,10 @@ export default {
     require('../../../static/css/theme/night/OTC/OTCPublishADNight.css')
     console.log('从广告管理传过来的URL中的订单id:' + this.$route.query.id)
     if (this.$route.query.id) {
-      console.log('1:url中有id')
+      // console.log('1:url中有id')
       this.getOTCSelectedOrdersDetails()
     } else {
-      console.log('2：URL中没有id')
+      // console.log('2：URL中没有id')
       this.getOTCCoinInfo()
     }
   },
@@ -575,21 +575,22 @@ export default {
         return false
       } else {
         this.fullscreenLoading = false
-        this.activitedCoinId = data.data.data.coinId // 可用币种id
-        this.activitedCurrencyId = data.data.data.currencyId // 法币id
-        this.activitedBuySellStyle = data.data.data.entrustType // 挂单类型
-        this.limitOrderCount = data.data.data.limitOrderCount // 同时处理最大订单数
-        this.successOrderCount = data.data.data.successOrderCount // 卖家必须成交过几次
-        this.$refs.entrustCount.value = data.data.data.entrustCount // 挂单数量
-        // this.$refs.price.value = data.data.data.price // 单价
-        this.price = data.data.data.price // 单价
+        let detailsData = data.data.data
+        this.activitedCoinId = detailsData.coinId // 可用币种id
+        this.activitedCurrencyId = detailsData.currencyId // 法币id
+        this.activitedBuySellStyle = detailsData.entrustType // 挂单类型
+        this.limitOrderCount = detailsData.limitOrderCount // 同时处理最大订单数
+        this.successOrderCount = detailsData.successOrderCount // 卖家必须成交过几次
+        this.$refs.entrustCount.value = detailsData.entrustCount // 挂单数量
+        // this.$refs.price.value = detailsData.price // 单价
+        this.price = detailsData.price // 单价
         this.$refs.price.value = this.price // 单价
         // 下面两个如果有id的话从挂单详情中渲染数据
         // 币种单笔最大限额
-        // this.maxCount = data.data.data.maxCount
+        // this.maxCount = detailsData.maxCount
         // this.$refs.maxCountValue.value = this.maxCount
         // 币种单笔最小限额
-        // this.minCount = data.data.data.minCount
+        // this.minCount = detailsData.minCount
         // this.$refs.minCountValue.value = this.minCount
         this.getOTCCoinInfo()
       }
@@ -610,40 +611,41 @@ export default {
         // 返回数据正确的逻辑
         this.fullscreenLoading = false
         // 1.0 可用币种列表
-        this.availableCoinList = data.data.data.coinlist
+        let availableCoinListData = data.data.data
+        this.availableCoinList = availableCoinListData.coinlist
         this.availableCoinList.forEach(item => {
-          if (data.data.data.otcCoinQryResponse.coinId === item.coinId) {
+          if (availableCoinListData.otcCoinQryResponse.coinId === item.coinId) {
             this.activitedCoinId = item.coinId
           }
         })
-        this.activeedCoinName = data.data.data.otcCoinQryResponse.name
+        this.activeedCoinName = availableCoinListData.otcCoinQryResponse.name
         // 2.0 法币种列表
-        this.availableCurrencyList = data.data.data.currencyList
+        this.availableCurrencyList = availableCoinListData.currencyList
         this.availableCurrencyList.forEach(item => {
-          if (data.data.data.otcCoinQryResponse.currencyName === item.shortName) {
+          if (availableCoinListData.otcCoinQryResponse.currencyName === item.shortName) {
             this.activitedCurrencyId = item.id
           }
         })
-        this.activeedCurrencyName = data.data.data.otcCoinQryResponse.currencyName
+        this.activeedCurrencyName = availableCoinListData.otcCoinQryResponse.currencyName
         // 3.0 交易支付方式
-        this.payForListArr = data.data.data.userbankFlag
+        this.payForListArr = availableCoinListData.userbankFlag
         // 最大可卖出量:可用资产
-        this.total = data.data.data.otcCoinQryResponse.total
+        this.total = availableCoinListData.otcCoinQryResponse.total
         // 市价
-        this.marketPrice = data.data.data.otcCoinQryResponse.marketPrice
+        this.marketPrice = availableCoinListData.otcCoinQryResponse.marketPrice
         // 最低价
-        this.minPrice = data.data.data.otcCoinQryResponse.minPrice
+        this.minPrice = availableCoinListData.otcCoinQryResponse.minPrice
         // 最高价
-        this.maxPrice = data.data.data.otcCoinQryResponse.maxPrice
+        this.maxPrice = availableCoinListData.otcCoinQryResponse.maxPrice
         // 当前币种返回的保留小数点位数限制
-        this.pointLength = data.data.data.otcCoinQryResponse.unit
+        this.pointLength = availableCoinListData.otcCoinQryResponse.unit
         // 下面这两个字段当URL中没id时候才用这个渲染页面
         // if (!this.$route.query.id) {
         // 币种单笔最大限额
-        this.maxCount = data.data.data.otcCoinQryResponse.maxCount
+        this.maxCount = availableCoinListData.otcCoinQryResponse.maxCount
         this.$refs.maxCountValue.value = this.maxCount
         // 币种单笔最小限额
-        this.minCount = data.data.data.otcCoinQryResponse.minCount
+        this.minCount = availableCoinListData.otcCoinQryResponse.minCount
         this.$refs.minCountValue.value = this.minCount
         // }
       }
@@ -1139,8 +1141,6 @@ export default {
               }
             }
             >.input-bottom{
-              // margin-top: 10px;
-              // margin-bottom: 5px;
               margin: 10px 0 5px 0;
               >.input-min,.input-max{
                 width: 140px;

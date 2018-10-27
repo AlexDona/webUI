@@ -22,7 +22,7 @@
                       src="../../assets/develop/shangjia.png"
                       alt=""
                       class="shang-icon"
-                      v-if="this.userType === 'MERCHANT'"
+                      v-show="this.userType === 'MERCHANT'"
                     >
                     <!-- 商户名称 -->
                     <span class="name">
@@ -100,22 +100,22 @@
                   <IconFontCommon
                     class="font-size16"
                     iconName="icon-zhifubao1"
-                    v-if="payTypes[0] === '1'"
+                    v-show="payTypes[0] === '1'"
                   />
                   <!-- 2微信 -->
                   <IconFontCommon
                     class="font-size16"
                     iconName="icon-weixin1"
-                    v-if="payTypes[1] === '1'"
+                    v-show="payTypes[1] === '1'"
                   />
                   <!-- 3银行卡 -->
                   <IconFontCommon
                     class="font-size16"
                     iconName="icon-yinhangqia"
-                    v-if="payTypes[2] === '1'"
+                    v-show="payTypes[2] === '1'"
                   />
                     <!-- 4西联汇款 -->
-                  <span v-if="payTypes[3] == '1'">
+                  <span v-show="payTypes[3] == '1'">
                     <img
                       src="../../assets/user/xilian.png"
                       class="xilian"
@@ -125,7 +125,7 @@
                   <IconFontCommon
                     class="font-size16"
                     iconName="icon-paypal"
-                    v-if="payTypes[4] === '1'"
+                    v-show="payTypes[4] === '1'"
                   />
                 </div>
                 <!-- 付款期限 -->
@@ -697,20 +697,21 @@ export default {
         return false
       } else {
         // 返回数据正确的逻辑:将返回的数据赋值到页面中
-        this.userName = data.data.data.userName // 挂单人姓名
-        this.successTimes = data.data.data.successTimes // 成交次数
-        this.failTimes = data.data.data.failTimes // 失败次数
-        this.freezeTimes = data.data.data.freezeTimes // 冻结次数
-        this.remark = data.data.data.remark // 备注
-        this.price = data.data.data.price // 报价
-        this.payTypes = data.data.data.payTypes // 付款方式
-        this.payTerm = data.data.data.payTerm // 付款期限
-        // this.remainingNum = data.data.data.remainCount // 剩余数量：后台增加了剩余数量字段
-        this.remainingNum = amendPrecision(data.data.data.entrustCount, data.data.data.matchCount, '-') // 剩余数量：修复精度丢失
-        this.maxCount = data.data.data.maxCount // 单笔最大限额
-        this.minCount = data.data.data.minCount // 单笔最小限额
-        this.userType = data.data.data.userType // 挂单人类型（COMMON普通用户 ，MERCHANT商家）
-        this.currencyName = data.data.data.currencyName // 当前摘单的法币币种
+        let detailsData = data.data.data
+        this.userName = detailsData.userName // 挂单人姓名
+        this.successTimes = detailsData.successTimes // 成交次数
+        this.failTimes = detailsData.failTimes // 失败次数
+        this.freezeTimes = detailsData.freezeTimes // 冻结次数
+        this.remark = detailsData.remark // 备注
+        this.price = detailsData.price // 报价
+        this.payTypes = detailsData.payTypes // 付款方式
+        this.payTerm = detailsData.payTerm // 付款期限
+        // this.remainingNum = detailsData.remainCount // 剩余数量：后台增加了剩余数量字段
+        this.remainingNum = amendPrecision(detailsData.entrustCount, detailsData.matchCount, '-') // 剩余数量：修复精度丢失
+        this.maxCount = detailsData.maxCount // 单笔最大限额
+        this.minCount = detailsData.minCount // 单笔最小限额
+        this.userType = detailsData.userType // 挂单人类型（COMMON普通用户 ，MERCHANT商家）
+        this.currencyName = detailsData.currencyName // 当前摘单的法币币种
         this.queryUserTradeFeeAndCoinInfo()
       }
     },
@@ -950,7 +951,6 @@ export default {
                     }
                   }
                   .sell-buy-input{
-                    // padding: 10px 0 10px 0;
                     padding: 10px 0 0 0;
                     .red{
                       // border: 1px solid red;
@@ -977,10 +977,11 @@ export default {
                       // background-color: #414951;
                       display: inline-block;
                       vertical-align: middle;
-                      margin-left: -4px;
                       line-height: 36px;
                       text-align: center;
-                      margin-right: 50px;
+                      // margin-left: -4px;
+                      // margin-right: 50px;
+                      margin: 0 50px 0 -4px;
                     }
                   }
                   .errorInfo{

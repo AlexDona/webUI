@@ -544,7 +544,7 @@ export default {
     ]),
     // 分页
     changeCurrentPage (pageNum) {
-      console.log(pageNum)
+      // console.log(pageNum)
       this.currentPage = pageNum
       this.orderDetailsLoading = true
       this.getOTCEntrustingOrdersRevocation()
@@ -749,9 +749,8 @@ export default {
   computed: {
     ...mapState({
       language: state => state.common.language,
-      theme: state => state.common.theme,
-      // 测试拿到userinfo
-      userInfo: state => state.personal.userInfo
+      theme: state => state.common.theme
+      // userInfo: state => state.personal.userInfo
     })
   },
   watch: {}

@@ -100,14 +100,17 @@
           </div>
           <div class="info-middle">
             <!-- 卖家信息 -->
-            <p class="text-info text-blue">{{$t('M.otc_stocks_seller')}}</p>
+            <p class="text-info text-blue">
+              {{$t('M.otc_stocks_seller')}}
+            </p>
             <p class="text-info">
               <!-- 姓名 -->
               <span>{{$t('M.otc_name')}}：</span><span>{{item.sellName}}</span>
             </p>
             <p class="text-info">
               <!-- 卖家手机号 -->
-              <span>{{$t('M.otc_trading_sellphone')}}：</span><span>{{item.sellPhone}}</span>
+              <span>{{$t('M.otc_trading_sellphone')}}：</span>
+              <span>{{item.sellPhone}}</span>
             </p>
           </div>
           <div class="info-right">
@@ -195,7 +198,6 @@ export default {
     // 2.0 时间格式化
     timeFormatting (date) {
       return timeFilter(date, 'normal')
-      // return timeFilter(date, 'BIH')
     },
     // 3.0 请求冻结中订单列表
     async getOTCFrezzingOrdersList () {
@@ -214,9 +216,10 @@ export default {
       } else {
         // 返回数据正确的逻辑
         this.loading = false
-        this.otcFreezingOrderList = data.data.data.list
+        let otcFreezingOrderListData = data.data.data
+        this.otcFreezingOrderList = otcFreezingOrderListData.list
         // 分页
-        this.totalPages = data.data.data.pages - 0
+        this.totalPages = otcFreezingOrderListData.pages - 0
       }
     }
   },
@@ -231,7 +234,6 @@ export default {
 }
 </script>
 <style scoped lang="scss" type="text/scss">
-  // @import url(../../../static/css/scss/OTC/OTCFreezingOrder.scss);
   @import "../../../static/css/scss/OTC/OTCCenter.scss";
   @import "../../../static/css/scss/index.scss";
   .otc-freezing-order-box{

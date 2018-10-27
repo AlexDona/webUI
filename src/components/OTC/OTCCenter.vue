@@ -13,11 +13,17 @@
             v-model="OTCBuySellStyle"
             @change="toggleBuyOrSellStyle"
           >
-            <el-radio-button label="onlineBuy" :disabled="isDisabledRadio">
+            <el-radio-button
+              label="onlineBuy"
+              :disabled="isDisabledRadio"
+            >
               <!-- 在线购买 -->
               {{ $t('M.otc_index_online_buy') }}
             </el-radio-button>
-            <el-radio-button label="onlineSell" :disabled="isDisabledRadio">
+            <el-radio-button
+              label="onlineSell"
+              :disabled="isDisabledRadio"
+            >
               <!-- 在线出售 -->
               {{ $t('M.otc_index_online_sell') }}
             </el-radio-button>
@@ -154,8 +160,12 @@
                 :label="$t('M.otc_index_turnover')"
               >
                 <template slot-scope = "s">
-                  <div v-if="s.row.successOrderTimes === 0 || s.row.tradeTimes === 0">0%</div>
-                  <div v-else>{{((s.row.successOrderTimes/(s.row.tradeTimes)) * 100).toFixed(2)}}%</div>
+                  <div v-if="s.row.successOrderTimes === 0 || s.row.tradeTimes === 0">
+                    0%
+                  </div>
+                  <div v-else>
+                    {{((s.row.successOrderTimes/(s.row.tradeTimes)) * 100).toFixed(2)}}%
+                  </div>
                 </template>
               </el-table-column>
               <!-- 数量 -->
@@ -164,10 +174,9 @@
               >
                 <template slot-scope = "s">
                   <div>
-                    <!-- {{s.row.entrustCount- s.row.matchCount}}{{selectedOTCAvailableCurrencyName}} -->
-                    <!-- 防止丢失精度 -->
+                    <!-- 防止丢失精度方法一 -->
                     <!-- {{getOTCRemainingSum(s.row.entrustCount, s.row.matchCount, '-')}}{{selectedOTCAvailableCurrencyName}} -->
-                    <!-- 后台添加了剩余数量字段remainCount -->
+                    <!-- 后台添加了剩余数量字段remainCount 方法二-->
                     {{s.row.remainCount}}{{selectedOTCAvailableCurrencyName}}
                   </div>
                 </template>
@@ -178,7 +187,9 @@
               >
                 <template slot-scope = "s">
                   <!-- 此处的单位根据设置中的法币类型来变化：为人民币时候显示CNY，为美元时候显示$ 此处需要从全局拿到设置中的法币类型来渲染页面-->
-                  <div class="red">{{s.row.price}}{{activitedCurrencyName}}</div>
+                  <div class="red">
+                    {{s.row.price}}{{activitedCurrencyName}}
+                  </div>
                 </template>
               </el-table-column>
               <!-- 支付方式 -->
@@ -226,7 +237,9 @@
                 :label="$t('M.otc_index_priceLimit')"
               >
                 <template slot-scope = "s">
-                  <div>{{s.row.minCount}}~{{s.row.maxCount}}{{activitedCurrencyName}}</div>
+                  <div>
+                    {{s.row.minCount}}~{{s.row.maxCount}}{{activitedCurrencyName}}
+                  </div>
                 </template>
               </el-table-column>
               <!-- 备注 -->
@@ -258,7 +271,6 @@
                     v-if="OTCBuySellStyle === 'onlineBuy'"
                     @click="toOnlineBuyOrSell(s.row.id,s.row.coinId,s.row.userId)"
                   >
-                    <!-- @click="toOnlineBuy(s.row.id,s.row.coinId,s.row.userId)" -->
                     <!-- 购买 -->
                     {{$t('M.comm_buying')}}
                   </el-button>
@@ -268,7 +280,6 @@
                     v-if="OTCBuySellStyle === 'onlineSell'"
                     @click="toOnlineBuyOrSell(s.row.id,s.row.coinId,s.row.userId)"
                   >
-                    <!-- @click="toOnlineSell(s.row.id,s.row.coinId,s.row.userId)" -->
                     <!-- 出售 -->
                    {{$t('M.comm_offering')}}
                   </el-button>
@@ -314,7 +325,8 @@
             <span slot="label">
               <i
                 class="el-icon-caret-right otc-tab-pane-arrow-right"
-                v-show="activeName === 'first'">
+                v-show="activeName === 'first'"
+              >
               </i>
               <IconFontCommon
                 iconName="icon-shalou"
@@ -407,7 +419,11 @@
 <!--请严格按照如下书写书序-->
 <script>
 import {amendPrecision} from '../../utils'
-import {getOTCAvailableCurrency, getOTCPutUpOrders, getMerchantAvailablelegalTender} from '../../utils/api/OTC'
+import {
+  getOTCAvailableCurrency,
+  getOTCPutUpOrders,
+  getMerchantAvailablelegalTender
+} from '../../utils/api/OTC'
 import IconFontCommon from '../Common/IconFontCommon'
 import OTCTradingOrder from './OTCTradingOrder'
 import OTCCompletedOrder from './OTCCompletedOrder'
@@ -516,8 +532,8 @@ export default {
       setTimeout(() => {
         this.isdisabled = false
       }, 500)
-      console.log(this.activeName)
-      console.log(this.isLogin)
+      // console.log(this.activeName)
+      // console.log(this.isLogin)
       // 未登录跳转到登录页面去
       if (!this.isLogin) {
         this.$router.push({path: '/login'})
@@ -696,8 +712,7 @@ export default {
     },
     //  1.0 otc可用币种查询：我要购买/我要出售的币种列表
     async getOTCAvailableCurrencyList () {
-      const data = await getOTCAvailableCurrency({
-      })
+      const data = await getOTCAvailableCurrency({})
       console.log('otc可用币种查询')
       console.log(data)
       // 提示信息
@@ -706,7 +721,7 @@ export default {
       } else {
         // 返回数据正确的逻辑
         this.IWantToBuySellArr = data.data.data
-        console.log(this.IWantToBuySellArr.length)
+        // console.log(this.IWantToBuySellArr.length)
         if (this.IWantToBuySellArr.length) {
           this.CHANGE_OTC_AVAILABLE_CURRENCY_NAME(this.IWantToBuySellArr[0].name)
           this.CHANGE_OTC_AVAILABLE_CURRENCY_ID(this.IWantToBuySellArr[0].coinId)
@@ -723,8 +738,7 @@ export default {
     },
     //  2.0 otc可用法币查询
     async getMerchantAvailablelegalTenderList () {
-      const data = await getMerchantAvailablelegalTender({
-      })
+      const data = await getMerchantAvailablelegalTender({})
       console.log('otc法币查询列表')
       console.log(data)
       if (!(returnAjaxMessage(data, this, 0))) {
@@ -764,9 +778,10 @@ export default {
       } else {
         // 返回数据正确的逻辑
         this.loading = false
-        this.onlineBuySellTableList = data.data.data.list
+        let orderListData = data.data.data
+        this.onlineBuySellTableList = orderListData.list
         // 分页
-        this.totalPages = data.data.data.pages - 0
+        this.totalPages = orderListData.pages - 0
       }
     },
     //  4.0 选中我想购买和出售币种名称
@@ -942,16 +957,16 @@ export default {
       selectedOTCAvailablePartnerCoinId: state => state.OTC.selectedOTCAvailablePartnerCoinId,
       selectedOTCAvailableCurrencyCoinID: state => state.OTC.selectedOTCAvailableCurrencyCoinID,
       language: state => state.common.language, // 当前选中语言
-      activeLanguage: state => state.common.activeLanguage,
+      // activeLanguage: state => state.common.activeLanguage,
       userInfo: state => state.user.loginStep1Info.userInfo, // 用户详细信息
       isLogin: state => state.user.isLogin // 用户登录状态 false 未登录； true 登录
     })
   },
   watch: {
-    activeLanguage (newVal) {
-      // console.log('当前选中语言')
-      // console.log(newVal)
-    }
+    // activeLanguage (newVal) {
+    //   console.log('当前选中语言')
+    //   console.log(newVal)
+    // }
   }
 }
 </script>
@@ -970,11 +985,8 @@ export default {
         padding: 50px 0 30px;
       }
       >.otc-merchant-content{
-        // min-height: 564px;
-        // min-height: 724px;
         // background-color: #202A33;
         margin-top: 30px;
-        // padding: 0 10px;
         >.otc-filtrate-publish{
           display: flex;
           justify-content: space-between;
@@ -1160,8 +1172,6 @@ export default {
           .page{
             text-align: center;
             margin-top: -10px;
-            // padding-bottom: 20px;
-            // padding-top: 20px;
             padding: 20px 0 20px 0;
             background-color: $mainContentNightBgColor;
           }
