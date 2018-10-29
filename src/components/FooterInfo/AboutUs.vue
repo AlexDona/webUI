@@ -3,7 +3,6 @@
     class="about-us-box"
     :class="{'day':theme == 'day','night':theme == 'night' }"
   >
-    <keep-aline><HeaderCommon/></keep-aline>
     <div class="content">
       <div class="top">
         <h1>
@@ -26,13 +25,9 @@
 <script>
 import {getAboutUsDataAjax} from '../../utils/api/header'
 import {returnAjaxMessage} from '../../utils/commonFunc'
-import HeaderCommon from '../Common/HeaderCommonForPC'
-import FooterCommon from '../Common/FooterCommon'
 import {mapState} from 'vuex'
 export default {
   components: {
-    HeaderCommon,
-    FooterCommon
   },
   // props,
   data () {

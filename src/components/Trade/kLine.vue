@@ -418,7 +418,7 @@ export default {
       // console.log(data)
       switch (data.tradeType) {
         case 'KLINE':
-          console.log(data.data[0])
+          console.log(data)
           if (data.data && data.data.length && !data.type) {
             const list = []
             const ticker = `${this.symbol}-${this.interval}`
@@ -435,6 +435,7 @@ export default {
             }, this)
             this.cacheData[ticker] = list
             this.lastTime = list[list.length - 1].time
+            console.log(this.cacheData)
             this.subscribe()
           }
           // if (!data.type && data.type.indexOf(this.symbol.toLowerCase()) !== -1) {

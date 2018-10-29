@@ -546,7 +546,7 @@ export default {
     }
     >.depth{
       width:100%;
-      height:208px;
+      height:308px;
     }
     &.night{
       >.title{

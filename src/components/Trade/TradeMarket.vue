@@ -634,7 +634,7 @@ export default {
       }
       /*表格内容*/
       > .content {
-        height:1484px;
+        height:1584px;
         > .inner-box {
 
         }
