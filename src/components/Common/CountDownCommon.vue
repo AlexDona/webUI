@@ -6,7 +6,7 @@
     :status="status"
     @click.prevent="run"
   >
-    {{text}}
+    {{$t(text)}}
   </button>
 </template>
 <!--请严格按照如下书写书序-->
@@ -28,7 +28,7 @@ export default {
     return {
       time: 0,
       disabled: false,
-      text: this.$t('M.comm_get_code')
+      text: 'M.comm_get_code'
     }
   },
   created () {},
