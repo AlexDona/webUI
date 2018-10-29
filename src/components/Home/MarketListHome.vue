@@ -97,7 +97,7 @@
       <div class="search-box">
         <el-input
           v-model="searchKeyWord"
-          :placeholder="$t('M.comm_please_enter') + $t('M.comm_content')"
+          :placeholder="$t('M.comm_search')"
           @keyup.native="searchFromMarketList"
         >
           <i slot="suffix" class="el-input__icon el-icon-search"></i>

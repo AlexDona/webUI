@@ -52,6 +52,8 @@ export const common = {
   'comm_mark': '번호',
   'comm_price': '가격',
   'comm_quantity': '금액',
+  'comm_trading_volume1': '거래금액',
+  'comm_trading_volume2': '거래금액',
   'comm_type': '종류',
   'comm_money': '금액',
   'comm_property': '자산',
@@ -161,7 +163,7 @@ export const common = {
   'comm_pack_up': '접기',
   'comm_content': '콘텐츠',
   'comm_after_get': '검색',
-  'comm_get_code': '인증 코드 받기',
+  'comm_get_code': '검증을 받다',
   // 全球行情任增加
   'common_exchange': '교환',
   'common_counterparty': '거래 쌍',

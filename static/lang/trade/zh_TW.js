@@ -6,11 +6,13 @@ export const trade = {
   // #####################查看更多委單記錄#####################
   'trade_coin_commissioned_current': '當前委托',
   'trade_coin_entrust': '委托',
+  'trade_coin_entrust_money1': '委托金額',
   'trade_coin_text1': '您還沒有登錄，請',
   'trade_coin_text2': '或',
   'trade_coin_text3': '後查看',
   'trade_coin_revocation': '撤銷',
   'trade_coin_history': '歷史',
+  'trade_coin_history_entrust1': '歷史委托',
   // #####################限價交易、市價交易#####################
   'trade_exchange_currency_data': '幣種資料',
   'trade_exchange_price_deal': '限價交易',

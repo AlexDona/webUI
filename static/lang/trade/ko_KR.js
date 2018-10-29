@@ -6,11 +6,13 @@ export const trade = {
   // #####################查看更多委单记录#####################''더 많은 주문 기록보기'
   'trade_coin_commissioned_current': '현재위원회',
   'trade_coin_entrust': '위원회',
+  'trade_coin_entrust_money1': '위탁 금액',
   'trade_coin_text1': '아직 로그인하지 않았습니다. 제발',
   'trade_coin_text2': '또는',
   'trade_coin_text3': '보기 후에',
   'trade_coin_revocation': '취소',
   'trade_coin_history': '역사',
+  'trade_coin_history_entrust1': '역사위원회',
   // #####################限价交易、市价交易#####################''제한 거래, 시장 가격 거래'
   'trade_exchange_currency_data': '통화 정보',
   'trade_exchange_price_deal': '제한 거래',

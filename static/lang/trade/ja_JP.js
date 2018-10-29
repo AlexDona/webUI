@@ -6,11 +6,13 @@ export const trade = {
   // #####################もっと注文記録を見る#####################
   'trade_coin_commissioned_current': '現在の手数料',
   'trade_coin_entrust': '手数料',
+  'trade_coin_entrust_money1': '手数料額',
   'trade_coin_text1': 'あなたはまだログインしていません。',
   'trade_coin_text2': 'または',
   'trade_coin_text3': '閲覧後',
   'trade_coin_revocation': 'キャンセル',
   'trade_coin_history': '歴史',
+  'trade_coin_history_entrust1': '歴史手数料',
   // #####################リミット取引、市場価格取引#####################
   'trade_exchange_currency_data': '通貨情報',
   'trade_exchange_price_deal': 'リミット取引',

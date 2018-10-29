@@ -45,16 +45,16 @@
               </li>
               <li class="th entrust">
                 <!--委托金额-->
-                {{ $t('M.trade_coin_entrust') }}{{ $t('M.otc_rental') }}
+                {{ $t('M.trade_coin_entrust_money1') }}
                 <span>（{{activeSymbol.area}}）</span>
               </li>
               <li class="th already">
-                <!--已成交量-->
+                <!--已成交-->
                 {{$t('M.comm_already')}}{{ $t('M.comm_make_bargain') }}
                 <!--<span>（{{activeSymbol.sellsymbol}}）</span>-->
               </li>
               <li class="th already">
-                <!--未成交量-->
+                <!--未成交-->
                 {{ $t('M.comm_not') }}{{ $t('M.comm_make_bargain') }}
                 <!--<span>（{{activeSymbol.sellsymbol}}）</span>-->
               </li>
@@ -147,7 +147,7 @@
         </el-tab-pane>
         <!--历史委托-->
         <el-tab-pane
-          :label="$t('M.trade_coin_history') + $t('M.trade_coin_entrust')"
+          :label="$t('M.trade_coin_history_entrust1')"
           name="history-entrust"
         >
           <!--主要内容-->

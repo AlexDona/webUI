@@ -183,7 +183,7 @@ export const personal = {
   'user_api_text7': 'If you have forgotten the Secret Key, delete the key pair and request a new key pair.',
   // 我的APIMy API
   'user_api_my': 'mine',
-  'user_api_user': 'user',
+  'user_api_user': 'User',
   // PUSH资产PUSH assets
   'user_push_user': 'user',
   'user_push_opposite_side': 'Adverse',
@@ -221,7 +221,7 @@ export const personal = {
   // VIPVIP
   'user_vip_please_choose': 'Please choose to open member information',
   'user_vip_discount': 'discount',
-  'user_vip_immediately_opened': 'Open immediately',
+  'user_vip_immediately_opened': 'Open Now',
   'user_vip_look': 'View my VIP',
   'user_vip_immediately_buy': 'Buy now',
   'user_vip_month': 'month',

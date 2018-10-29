@@ -1165,7 +1165,8 @@ export default {
         this.totalSumBTC = detailData.totalSum
         this.withdrawDepositList = detailData.userCoinWalletVOPageInfo.list
         this.totalPageForMyEntrust = detailData.userCoinWalletVOPageInfo.pages - 0
-        // console.log(this.withdrawDepositList)
+        console.log('我的资产币种列表')
+        console.log(this.withdrawDepositList)
       }
     },
     // 分页
