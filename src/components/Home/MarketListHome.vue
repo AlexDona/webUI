@@ -85,7 +85,7 @@
                   round
                   @click="toggleTabContentHeightStatus"
                 >
-                  {{moreBtnText}}
+                  {{$t(moreBtnText)}}
                 </el-button>
               </div>
             </div>
@@ -160,7 +160,7 @@ export default{
       // 搜索区 id
       searchAreaId: 3,
       // 查看更多按钮文字
-      moreBtnText: this.$t('M.comm_view_more'),
+      moreBtnText: 'M.comm_view_more',
       // tab-content查看更多状态, 默认为false
       tabContentMoreStatus: false,
       // 自选区 id
@@ -452,7 +452,7 @@ export default{
     },
     // 切换 查看更多按钮文字
     toggleViewMoreBtnText () {
-      this.moreBtnText = this.tabContentMoreStatus ? this.$t('M.comm_pack_up') : this.$t('M.comm_view_more')
+      this.moreBtnText = this.tabContentMoreStatus ? 'M.comm_pack_up' : 'M.comm_view_more'
     },
     // 切换收藏
     async toggleCollect (data) {
