@@ -52,6 +52,8 @@ export const common = {
   'comm_mark': '번호',
   'comm_price': '가격',
   'comm_quantity': '금액',
+  'comm_trading_volume1': '거래금액',
+  'comm_trading_volume2': '거래금액',
   'comm_type': '종류',
   'comm_money': '금액',
   'comm_property': '자산',

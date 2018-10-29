@@ -14,35 +14,38 @@
           {{ $t('M.comm_deal') }}{{ $t('M.comm_pair') }}
         </span>
         <span
-        class="title price cursor-pointer"
+          class="title price cursor-pointer"
         >
           <!--最新价-->
-              <span
-                :data-text="$t('M.trade_latest_price')"
-                @click="sortByUser('price',list)"
-              >
-                <!--最新价-->
-                {{ $t('M.trade_latest_price') }}
-              </span>
-              <i class="sort-box">
-                <i
-                  class="el-icon-caret-top"
-                  :class="{active:sortBy=='price-asc'}"
-                  @click="sortByUser('price-asc',list)"
-                ></i>
-                <i
-                  class="el-icon-caret-bottom"
-                  :class="{active:sortBy=='price-desc'}"
-                  @click="sortByUser('price-desc',list)"
-                ></i>
-              </i>
+            <span
+              :data-text="$t('M.trade_latest_price')"
+              @click="sortByUser('price',list)"
+            >
+              <!--最新价-->
+              {{ $t('M.trade_latest_price') }}
             </span>
-              <span
-              class="title rose cursor-pointer"
-              @click="sortByUser('rose',list)"
+            <i class="sort-box">
+              <i
+                class="el-icon-caret-top"
+                :class="{active:sortBy=='price-asc'}"
+                @click="sortByUser('price-asc',list)"
               >
-              <!--涨幅-->
-          {{ $t('M.trade_market_amount_increase') }}
+              </i>
+              <i
+                class="el-icon-caret-bottom"
+                :class="{active:sortBy=='price-desc'}"
+                @click="sortByUser('price-desc',list)"
+              >
+              </i>
+            </i>
+        </span>
+        <span
+          class="title rose cursor-pointer"
+          @click="sortByUser('rose',list)"
+        >
+          <!--涨幅-->
+          <!-- {{ $t('M.trade_market_amount_increase') }} -->
+          {{ $t('M.trade_ups_and_downs') }}
           <i class="sort-box">
             <i
               class="el-icon-caret-top"

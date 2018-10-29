@@ -3,7 +3,7 @@ export const home = {
   // 'home_market_trade_sector': 'Trading area',
   'home_market_trade_sector': ' Market',
   'home_market_hottest_trading': 'Hottest transaction pair',
-  'home_market_recent_quotation': 'last',
+  'home_market_recent_quotation': 'Last',
   'home_market_ceiling_price': 'High',
   'home_market_minimum_price': 'Low',
   // 'home_market_volume': 'Trading volume',

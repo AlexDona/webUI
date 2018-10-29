@@ -77,7 +77,8 @@
             >
               <router-link to="/AboutUs">
                 <!--关于我们-->
-                {{$t('M.comm_about')}}{{$t('M.comm_us')}}
+                <!-- {{$t('M.comm_about')}}{{$t('M.comm_us')}}FUBT Group -->
+                {{$t('M.comm_us')}}
               </router-link>
             </dd>
             <dd

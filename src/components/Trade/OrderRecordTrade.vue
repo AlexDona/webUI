@@ -48,7 +48,7 @@
                 </el-table-column>
                 <!--成交量-->
                 <el-table-column
-                  :label="$t('M.comm_make_bargain') + $t('M.comm_quantity')+('('+activeSymbol.sellsymbol+')')"
+                  :label="$t('M.comm_trading_volume1') +('('+activeSymbol.sellsymbol+')')"
                 >
                   <template slot-scope="s">
                       <span class="text-align-r font-size12">
