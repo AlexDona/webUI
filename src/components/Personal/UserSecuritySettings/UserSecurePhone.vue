@@ -372,6 +372,12 @@ export default {
           message: this.$t('M.comm_please_enter') + this.$t('M.comm_code_phone1')
         })
         return false
+      } else if (!type && !val && this.bindingDataPhone.bindingNewPhoneAccounts) {
+        console.log(1)
+        console.log(this.checkoutInputFormat(0, this.bindingDataPhone.bindingNewPhoneAccounts))
+        if (!this.checkoutInputFormat(0, this.bindingDataPhone.bindingNewPhoneAccounts)) {
+          return false
+        }
       }
       // 绑定手机号
       if ((!loginType && !val && !type)) {
@@ -485,16 +491,23 @@ export default {
       switch (type) {
         // 手机号
         case 0:
-          if (!targetNum) {
-            // 请输入手机号
-            this.setErrorMsg(0, this.$t('M.comm_please_enter') + this.$t('M.user_security_phone') + this.$t('M.comm_mark'))
-            this.$forceUpdate()
-            return 0
-          } else {
-            this.setErrorMsg(0, '')
-            this.$forceUpdate()
-            return 1
+          console.log(validateNumForUserInput('phone', targetNum))
+          switch (validateNumForUserInput('phone', targetNum)) {
+            case 0:
+              this.setErrorMsg(0, '')
+              this.$forceUpdate()
+              return 1
+            case 1:
+              // 请输入手机号
+              this.setErrorMsg(0, this.$t('M.comm_please_enter') + this.$t('M.user_security_phone') + this.$t('M.comm_mark'))
+              this.$forceUpdate()
+              return 0
+            case 2:
+              this.setErrorMsg(0, '您输入的手机号格式不正确')
+              this.$forceUpdate()
+              return 0
           }
+          break
         // 图片验证码
         case 1:
           if (!targetNum) {
@@ -578,6 +591,7 @@ export default {
     },
     // 检测用户名是否存在
     async checkUserExistAjax (type, userName, isNewPhone) {
+      console.log(userName)
       if (!validateNumForUserInput(type, userName)) {
         let params = {
           userName: userName,

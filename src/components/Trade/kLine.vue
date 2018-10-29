@@ -486,7 +486,7 @@ export default {
           }
           break
         case 'TICKER':
-          // console.log(data)
+          console.log(data)
           if (data.data) {
             this.socketData.tradeMarkeContentItem = data.data
           }
@@ -530,7 +530,7 @@ export default {
     },
     // 请求socket
     getKlineDataBySocket (type, symbol, newInterval) {
-      // console.log(this.socket.send)
+      console.log(newInterval)
       if (newInterval) {
         // k线
         this.socket.send({
@@ -620,6 +620,7 @@ export default {
       if (oldVal) {
         this.getTradeMarketBySocket('CANCEL', oldVal)
       }
+      console.log(newVal)
       this.getTradeMarketBySocket('SUB', newVal)
     },
     resolutions (newVal, oldVal) {
@@ -627,7 +628,8 @@ export default {
     symbol (newVal, oldVal) {
       if (oldVal) {
         this.resolutions.forEach((item) => {
-          this.getKlineDataBySocket('CANCEL', oldVal, this.transformInterval(item))
+          console.log(item)
+          this.getKlineDataBySocket('CANCEL', oldVal, item)
         })
         this.getBuyAndSellBySocket('CANCEL', oldVal)
         this.getDepthDataBySocket('CANCEL', oldVal)
