@@ -135,7 +135,7 @@
                     v-if="activeBankType[index] === 'bank'"
                   >
                     <span>
-                      {{$t('M.comm_bill')}}&nbsp;&nbsp;&nbsp;{{$t('M.comm_house')}}: {{activedPayAccountArr[index]}}
+                      {{$t('M.comm_bill')}}{{$t('M.comm_house')}}: {{activedPayAccountArr[index]}}
                     </span>
                   </p>
                   <p
@@ -258,7 +258,7 @@
                   <p class="bankMoneyInfo">
                     <span>
                       <!-- 账户 -->
-                      {{$t('M.comm_bill')}}&nbsp;&nbsp;&nbsp;{{$t('M.comm_house')}}:
+                      {{$t('M.comm_bill')}}{{$t('M.comm_house')}}:
                     </span>
                     <span>{{item.payAcctount}}</span>
                   </p>

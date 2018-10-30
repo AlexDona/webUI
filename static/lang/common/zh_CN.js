@@ -43,6 +43,7 @@ export const common = {
   'comm_usable': '可用',
   'comm_freeze': '冻结',
   'comm_surplus': '剩余',
+  'comm_balance_completed1': '剩余数量',
   'comm_account': '到账',
   'comm_not': '未',
   'comm_already': '已',

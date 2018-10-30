@@ -693,7 +693,7 @@ export default {
         this.priceErrorTipsBorder = true
         return false
       } else if (this.$refs.price.value < this.minPrice || this.$refs.price.value > this.maxPrice) {
-        this.errorInfoPrice = this.$t('M.otc_publishAD_pleaseInput') + this.minPrice + '~' + this.maxPrice + this.$t('M.otc_publishAD_rangePrice')
+        this.errorInfoPrice = this.$t('M.otc_publishAD_pleaseInput') + this.minPrice + '~' + this.maxPrice
         this.priceErrorTipsBorder = true
         return false
       }
@@ -849,7 +849,7 @@ export default {
       formatNumberInput(target, pointLength)
       if (this.$refs.price.value) {
         if (this.price < this.minPrice || this.price > this.maxPrice) {
-          this.errorInfoPrice = this.$t('M.otc_publishAD_pleaseInput') + this.minPrice + '~' + this.maxPrice + this.$t('M.otc_publishAD_rangePrice')
+          this.errorInfoPrice = this.$t('M.otc_publishAD_pleaseInput') + this.minPrice + '~' + this.maxPrice
           this.priceErrorTipsBorder = true
           return false
         } else {

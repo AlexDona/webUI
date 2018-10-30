@@ -4,6 +4,7 @@ export const finance = {
   'finance_date': '當日',
   'finance_history': '歷史',
   'finance_invest': '存幣',
+  'finance_invest_coin1': '存幣幣種',
   'finance_useBalance': '可用余額',
   'finance_errorTips': '存幣種數量大於可用資產',
   'finance_mast': '立刻',

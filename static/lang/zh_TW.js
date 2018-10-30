@@ -7,6 +7,7 @@ import {personal} from './personal/zh_TW'
 import {trade} from './trade/zh_TW'
 import {finance} from './finance/zh_TW'
 import {user} from './user/zh_TW'
+import {actionCenter} from './actionCenter/zh_TW'
 export const M = Object.assign(
   {},
   fromApi,
@@ -17,5 +18,6 @@ export const M = Object.assign(
   personal,
   trade,
   finance,
-  user
+  user,
+  actionCenter
 )

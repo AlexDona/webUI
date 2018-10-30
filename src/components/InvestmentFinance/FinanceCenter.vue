@@ -68,7 +68,7 @@
           <div class="left-body">
             <label for="">
               <!-- 存币类型 -->
-              {{$t('M.finance_invest')}}{{$t('M.comm_type')}}:&nbsp;&nbsp;&nbsp;
+              {{$t('M.finance_invest')}}{{$t('M.comm_type')}}:&nbsp;
               <el-select
                 :no-data-text="$t('M.comm_no_data')"
                 v-model="selectedInvestTypeId"
@@ -85,7 +85,7 @@
             </label>
             <label for="">
               <!-- 存币数量 -->
-              {{$t('M.finance_invest')}}{{$t('M.comm_count')}}:&nbsp;&nbsp;&nbsp;
+              {{$t('M.finance_invest')}}{{$t('M.comm_count')}}:&nbsp;
               <div class='invest-mounte'>
                 <!-- 请输入数量 -->
                 <input
@@ -317,7 +317,7 @@
                 <!-- 存币币种 -->
                 <el-table-column
                   prop="coinShortName"
-                  :label="$t('M.finance_invest') + $t('M.comm_currency')"
+                  :label="$t('M.finance_invest_coin1')"
                   width="100"
                 >
                 </el-table-column>
@@ -417,7 +417,7 @@
                 <!-- 存币币种 -->
                 <el-table-column
                   prop="coinShortName"
-                  :label="$t('M.finance_invest') + $t('M.comm_currency')"
+                  :label="$t('M.finance_invest_coin1')"
                   width="150">
                 </el-table-column>
                 <!-- 存币类型 -->
@@ -907,7 +907,7 @@ export default {
         display: flex;
         justify-content: space-between;
         >.left{
-          width: 482px;
+          width: 516px;
           color:#A9BED4;
           >.nav-header{
             >.balance{

@@ -4,6 +4,7 @@ export const finance = {
   'finance_date': '同じ日',
   'finance_history': '歴史',
   'finance_invest': 'デポジット',
+  'finance_invest_coin1': '預金通貨',
   'finance_useBalance': '利用可能な残高',
   'finance_errorTips': '預金の数が利用可能な資産よりも大きい',
   'finance_mast': '直ちに',

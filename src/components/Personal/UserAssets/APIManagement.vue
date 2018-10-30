@@ -574,10 +574,10 @@ export default {
       }
       switch (loginType) {
         case 0:
-          params.phone = this.userInfo.userInfo.phone
+          params.phone = this.innerUserInfo.phone
           break
         case 1:
-          params.email = this.userInfo.userInfo.email
+          params.email = this.innerUserInfo.email
           break
       }
       apiSendPhoneOrEmailCodeAjax(loginType, params, (data) => {
@@ -642,8 +642,9 @@ export default {
         // 默认创建之后弹出二次挨批创建信息框
         this.apiSecondaryConfirmation = true
         // 对api秘钥进行赋值
-        this.accessKey = data.data.data.accessKey
-        this.secretKey = data.data.data.secretKey
+        let detailData = data.data.data
+        this.accessKey = detailData.accessKey
+        this.secretKey = detailData.secretKey
       }
     },
     // 二次确认框创建api完成
@@ -817,6 +818,7 @@ export default {
     ...mapState({
       theme: state => state.common.theme,
       userInfo: state => state.user.loginStep1Info, // 用户详细信息
+      innerUserInfo: state => state.user.loginStep1Info.userInfo, // 内层用户详细信息
       disabledOfPhoneBtn: state => state.user.disabledOfPhoneBtn,
       disabledOfEmailBtn: state => state.user.disabledOfEmailBtn,
       userCenterActiveName: state => state.personal.userCenterActiveName

@@ -209,7 +209,7 @@
             </el-table-column>
             <!-- 剩余数量 -->
             <el-table-column
-              :label="$t('M.comm_surplus') + $t('M.comm_count')"
+              :label="$t('M.comm_balance_completed1')"
             >
               <template slot-scope="s">
                 <!-- <div>{{s.row.entrustCount - s.row.matchCount}}</div> -->
@@ -218,7 +218,7 @@
             </el-table-column>
             <!-- 已完成数量 -->
             <el-table-column
-              :label="$t('M.otc_enum_status_yiwancheng') + $t('M.comm_count')"
+              :label="$t('M.otc_enum_status_yiwancheng_sum')"
               width="120px"
             >
               <template slot-scope="s">
@@ -232,15 +232,15 @@
               <template slot-scope="s">
                 <!-- 已上架 -->
                 <div v-if="s.row.status === 'ENTRUSTED'">
-                  {{$t('M.comm_already')}}{{$t('M.otc_adMange_getting')}}
+                  {{$t('M.otc_adMange_already_getting')}}
                 </div>
                 <!-- 已完成 -->
                 <div v-if="s.row.status === 'COMPLETED'">
-                  {{$t('M.otc_enum_status_yiwancheng')}}
+                  {{$t('M.otc_adMange_already_accomplish')}}
                 </div>
                 <!-- 已下架 -->
                 <div v-if="s.row.status === 'CANCELED'">
-                  {{$t('M.comm_already')}}{{$t('M.otc_adMange_adverting')}}
+                  {{$t('M.otc_adMange_already_adverting')}}
                 </div>
               </template>
             </el-table-column>

@@ -36,6 +36,7 @@ export const OTC = {
   'otc_enum_status_weifukuan': '지불되지 않은',
   'otc_enum_status_yifukuan': '유료',
   'otc_enum_status_yiwancheng': '완료 됨',
+  'otc_enum_status_yiwancheng_sum': '완료된 번호',
   'otc_enum_status_yiquxiao': '취소됨',
   'otc_enum_status_yidongjie': '냉동',
   // ##########C2C简体中文#############','C2C 중국어 간체'

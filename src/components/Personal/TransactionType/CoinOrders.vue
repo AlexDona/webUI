@@ -569,9 +569,10 @@ export default {
         // 接口成功清除局部loading
         this.loading = false
         // console.log(data)
-        this.entrustSelectList = data.data.data.coinList
-        this.typeList = data.data.data.typeList
-        this.matchTypeList = data.data.data.matchTypeList
+        let detailData = data.data.data
+        this.entrustSelectList = detailData.coinList
+        this.typeList = detailData.typeList
+        this.matchTypeList = detailData.matchTypeList
         console.log(this.matchTypeList)
       }
     },

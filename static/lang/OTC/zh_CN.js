@@ -36,6 +36,7 @@ export const OTC = {
   'otc_enum_status_weifukuan': '未付款',
   'otc_enum_status_yifukuan': '已付款',
   'otc_enum_status_yiwancheng': '已完成',
+  'otc_enum_status_yiwancheng_sum': '已完成数量',
   'otc_enum_status_yiquxiao': '已取消',
   'otc_enum_status_yidongjie': '已冻结',
   // ##########C2C简体中文#############',
