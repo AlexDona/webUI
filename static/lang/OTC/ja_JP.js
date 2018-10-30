@@ -167,6 +167,7 @@ export const OTC = {
   'otc_merchant_singleSeriviceserver': '独占的な顧客サービス',
   'otc_approve': '認証',
   'otc_apply': '適用',
+  'otc_apply_become_shopper': ' 商人になるために申し込む',
   'otc_merchant_apply': '商人適用',
   'otc_merchant_sendemail': 'メールを送る',
   'otc_merchant_verified': '承認済み',

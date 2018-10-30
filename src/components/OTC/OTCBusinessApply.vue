@@ -161,7 +161,7 @@
             class="button font-size16 cursor-pointer"
             @click="submit"
           >
-            {{$t('M.otc_apply')}}{{$t('M.otc_sure')}}{{$t('M.otc_merchant')}}
+            {{$t('M.otc_apply_become_shopper')}}
           </button>
         </div>
       </div>

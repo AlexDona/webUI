@@ -50,7 +50,7 @@
               :label="$t('M.user_account_name')"
             >
               <span class="account-content-type">
-                {{ userInfo.userInfo.realname }}
+                {{ innerUserInfo.realname }}
               </span>
             </el-form-item>
             <!--收  款  类  型-->
@@ -329,21 +329,22 @@ export default {
       } else {
         // 接口成功清除loading
         this.fullscreenLoading = false
+        let detailData = data.data.data
         // 返回状态展示
-        if (data.data.data) {
-          this.paymentMethodList = data.data.data
+        if (detailData) {
+          this.paymentMethodList = detailData
         }
-        if (data.data.data.cardNo) {
+        if (detailData.cardNo) {
           // 修改时带回支付宝号
-          this.alipayAccount = data.data.data.cardNo
+          this.alipayAccount = detailData.cardNo
         }
-        if (data.data.data.qrcode) {
+        if (detailData.qrcode) {
           // 修改时带回支付宝收款码
-          this.dialogImageHandUrl1 = data.data.data.qrcode
+          this.dialogImageHandUrl1 = detailData.qrcode
         }
-        if (data.data.data.id) {
+        if (detailData.id) {
           // 修改时带回类id
-          this.id = data.data.data.id
+          this.id = detailData.id
         }
         console.log(this.dialogImageHandUrl1)
       }
@@ -376,6 +377,7 @@ export default {
     ...mapState({
       theme: state => state.common.theme,
       userInfo: state => state.user.loginStep1Info, // 用户详细信息
+      innerUserInfo: state => state.user.loginStep1Info.userInfo, // 内层用户详细信息
       refAccountCenterStatus: state => state.personal.refAccountCenterStatus
     }),
     apiCommonUrl () {

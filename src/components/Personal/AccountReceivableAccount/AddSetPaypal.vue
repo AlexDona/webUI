@@ -49,7 +49,7 @@
               :label="$t('M.user_account_name')"
             >
               <span class="payment-content-name">
-                {{ userInfo.userInfo.realname }}
+                {{ innerUserInfo.realname }}
               </span>
             </el-form-item>
             <!--paypal账号-->
@@ -279,10 +279,11 @@ export default {
         // 接口成功清除loading
         this.fullscreenLoading = false
         // 返回状态展示
-        this.paymentMethodList = data.data.data
+        let detailData = data.data.data
+        this.paymentMethodList = detailData
         // 修改时带回paypal账号
-        this.paypalAccount = data.data.data.cardNo
-        this.id = data.data.data.id
+        this.paypalAccount = detailData.cardNo
+        this.id = detailData.id
         console.log(this.paymentMethodList)
       }
     },
@@ -314,6 +315,7 @@ export default {
     ...mapState({
       theme: state => state.common.theme,
       userInfo: state => state.user.loginStep1Info, // 用户详细信息
+      innerUserInfo: state => state.user.loginStep1Info.userInfo, // 内层用户详细信息
       refAccountCenterStatus: state => state.personal.refAccountCenterStatus
     })
   },

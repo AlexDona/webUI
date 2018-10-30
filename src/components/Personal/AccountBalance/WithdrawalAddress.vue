@@ -169,7 +169,7 @@
       <header class="address-list-header background-color border-radius2">
         <span class="header-content display-inline-block font-size16 cursor-pointer">
           <!--地址列表-->
-           {{ $t('M.comm_site') }}{{ $t('M.comm_list') }}
+            {{ $t('M.comm_site') }}{{ $t('M.comm_list') }}
         </span>
       </header>
       <div class="tab-list">
@@ -464,14 +464,15 @@ export default {
         // 接口成功清除局部loading
         this.loading = false
         // 返回列表数据
-        this.currencyList = data.data.data.canWithdrawPartnerCoinList
+        let detailData = data.data.data
+        this.currencyList = detailData.canWithdrawPartnerCoinList
         // 对币种名称进行赋值
-        this.currencyValue = data.data.data.canWithdrawPartnerCoinList[0].name
+        this.currencyValue = detailData.canWithdrawPartnerCoinList[0].name
         // 对ID名称进行赋值
-        this.currencyValue = data.data.data.canWithdrawPartnerCoinList[0].coinId
+        this.currencyValue = detailData.canWithdrawPartnerCoinList[0].coinId
         // 对币种名称列表进行赋值
-        this.gainAddressList = data.data.data.UserWithdrawAddressPage.list
-        this.totalPageForMyEntrust = data.data.data.UserWithdrawAddressPage.pages - 0
+        this.gainAddressList = detailData.UserWithdrawAddressPage.list
+        this.totalPageForMyEntrust = detailData.UserWithdrawAddressPage.pages - 0
         console.log(this.currencyList)
         console.log(this.gainAddressList)
       }
@@ -526,10 +527,12 @@ export default {
       }
       switch (loginType) {
         case 0:
-          params.phone = this.userInfo.userInfo.phone
+          // params.phone = this.userInfo.userInfo.phone
+          params.phone = this.innerUserInfo.phone
           break
         case 1:
-          params.email = this.userInfo.userInfo.email
+          // params.email = this.userInfo.userInfo.email
+          params.email = this.innerUserInfo.email
           break
       }
       await apiSendPhoneOrEmailCodeAjax(loginType, params, (data) => {
@@ -567,6 +570,7 @@ export default {
     ...mapState({
       theme: state => state.common.theme,
       userInfo: state => state.user.loginStep1Info, // 用户详细信息
+      innerUserInfo: state => state.user.loginStep1Info.userInfo, // 内层用户详细信息
       disabledOfPhoneBtn: state => state.user.disabledOfPhoneBtn,
       disabledOfEmailBtn: state => state.user.disabledOfEmailBtn,
       userCenterActiveName: state => state.personal.userCenterActiveName

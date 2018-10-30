@@ -1310,8 +1310,9 @@ export default {
                   width: 190px;
                   // flex: 1;
                   >.pay-style{
-                    margin-left: 20px;
-                    margin-bottom: 8px;
+                    // margin-left: 20px;
+                    // margin-bottom: 8px;
+                    margin: 0 0 8px 20px;
                     position: relative;
                     width: 150px;
                     height: 23px;;
@@ -1362,8 +1363,9 @@ export default {
               flex: 3;
               >.right-content{
                 >.action-tips{
-                  margin-left: 20px;
-                  margin-bottom: 10px;
+                  // margin-left: 20px;
+                  // margin-bottom: 10px;
+                  margin: 0 0 10px 20px;
                   .wait-pay{
                     color: #E8554F;
                     margin-right: 10px;
@@ -1409,8 +1411,9 @@ export default {
               display: flex;
               flex: 3;
               >.appeal-textarea{
-                margin-top: 15px;
-                margin-left: 20px;
+                // margin-top: 15px;
+                // margin-left: 20px;
+                margin: 15px 0 0 20px;
                 flex: 2;
                 display: flex;
                 justify-content: flex-start;

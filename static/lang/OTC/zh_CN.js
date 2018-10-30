@@ -167,6 +167,7 @@ export const OTC = {
   'otc_merchant_singleSeriviceserver': '专属客服服务',
   'otc_approve': '认证',
   'otc_apply': '申请',
+  'otc_apply_become_shopper': ' 申请成为商家',
   'otc_merchant_apply': '商家申请',
   'otc_merchant_sendemail': '发送邮件',
   'otc_merchant_verified': '审核通过',
