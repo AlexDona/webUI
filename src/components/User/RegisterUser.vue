@@ -348,7 +348,6 @@ export default {
       activeCountryCodeWithEmail: '86',
       activeCountryAbbreviationWithEmail: 'CHN', // 当前国家简称
       // 短信验证码 邮箱验证码
-      activeCodePlaceholder: !this.activeMethod ? 'M.forgetPassword_hint10' : 'M.forgetPassword_hint11',
       identifyCode: '', // 图片验证码
       userInputImageCode: '', // 用户输入的图片验证码
       phoneNum: '', // 手机号
@@ -802,6 +801,9 @@ export default {
       disabledOfEmailBtn: state => state.user.disabledOfEmailBtn
       // activeCountryCodeWithPhone: state => state.user.countryCode // 国籍码
     }),
+    activeCodePlaceholder () {
+      return !this.activeMethod ? 'M.forgetPassword_hint10' : 'M.forgetPassword_hint11'
+    },
     windowHeight () {
       console.log(window.innerHeight)
       return window.innerHeight
@@ -812,6 +814,7 @@ export default {
       // console.log(newVal)
       // console.log(1)
       this.$store.commit('common/SET_COUNT_DOWN_RESET_STATUS', true)
+      this.forceUpdate()
     },
     disabledOfPhoneBtn (newVal) {
       // console.log(newVal)

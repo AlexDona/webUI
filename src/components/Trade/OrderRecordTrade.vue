@@ -19,7 +19,7 @@
             <div v-show="contentShowStatus">
               <el-table
                 :data="orderRecordList"
-                height="474"
+                height="574"
               >
                 <!--时间-->
                 <el-table-column

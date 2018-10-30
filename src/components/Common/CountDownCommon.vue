@@ -27,8 +27,8 @@ export default {
   data () {
     return {
       time: 0,
-      disabled: false,
-      text: 'M.comm_get_code'
+      disabled: false
+      // text: 'M.comm_get_code'
     }
   },
   created () {},
@@ -74,10 +74,10 @@ export default {
   computed: {
     ...mapState({
       countDownResetStatus: state => state.common.countDownResetStatus
-    })
-    // text () {
-    //   return this.time > 0 ? this.time + 's' + this.$t('M.comm_after_get') : this.$t('M.comm_get_code')
-    // }
+    }),
+    text () {
+      return this.time > 0 ? this.time + 's' + this.$t('M.comm_after_get') : this.$t('M.comm_get_code')
+    }
   },
   watch: {
     countDownResetStatus (newVal) {
@@ -96,15 +96,15 @@ export default {
     },
     text (newVal, oldVal) {
       // console.log(newVal)
-    },
-    time (newVal, oldVal) {
-      if (newVal > 0) {
-        this.text = this.time + 's' + this.$t('M.comm_after_get')
-      } else {
-        this.text = this.$t('M.comm_get_code')
-      }
-      this.$forceUpdate()
     }
+    // time (newVal, oldVal) {
+    //   if (newVal > 0) {
+    //     this.text = this.time + 's' + this.$t('M.comm_after_get')
+    //   } else {
+    //     this.text = this.$t('M.comm_get_code')
+    //   }
+    //   this.$forceUpdate()
+    // }
   }
 }
 </script>
