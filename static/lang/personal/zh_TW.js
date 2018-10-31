@@ -23,6 +23,11 @@ export const personal = {
   'user_assets_recharge_hint4': '往該地址充值，匯款完成，等待網絡自動確認（6個確認）後系統自動到賬',
   'user_assets_recharge_hint5': '為了快速到賬，充值時可以適當提高網絡手續費',
   'user_assets_withdrawal_hint1': '提現費率規則',
+  'user_assets_sum1': '總數量',
+  'user_assets_sum2': '凍結數量',
+  'user_assets_sum3': '可用數量',
+  'user_assets_sum4': '資產估值',
+  'user_assets_Transaction_History': '充提記錄',
   'user_assets_withdrawal_hint2': '為了用戶資金安全，平臺可能會電話確認您的提幣操作，請註意接聽；',
   'user_assets_withdrawal_hint3': '充值經過1個確認後，才允許提現；',
   'user_assets_withdrawal_hint4': '可提現金額≤賬戶可用資產-未確認的數字資產。',
@@ -154,6 +159,13 @@ export const personal = {
   'user_security_correct': '正確的',
   'user_security_text2': '交易密碼用於賬戶交易',
   'user_security_text3': '建議立即設置',
+  'user_security_on': '開啟驗證',
+  'user_security_off': '關閉驗證',
+  'user_security_set_type': '設置名稱',
+  'user_security_set_trade_pwd1': '設置交易密碼',
+  'user_security_set_reset_pwd2': '重置交易密碼',
+  'user_security_Login_History': '最近登錄記錄',
+  'user_security_Setting_History': '安全設置記錄',
   // 安全郵箱
   // 安全手機
   // 谷歌驗證
@@ -203,6 +215,7 @@ export const personal = {
   'user_push_payment': '付款',
   'user_push_revocation': '撤銷',
   'user_push_count': 'Push數量不能大於余額',
+  'user_push_forbid': '禁止自我PUSH',
   // PUSH記錄
   // #####################我的交易#####################
   // 幣幣訂單
@@ -253,5 +266,6 @@ export const personal = {
   'user_vip_text5': '開通即代表您已同意',
   'user_vip_text6': 'VIP服務協議',
   'user_vip_text7': '已開通',
-  'user_vip_text8': 'VIP享手續費、提現優惠'
+  'user_vip_text8': 'VIP享手續費、提現優惠',
+  'user_vip_fee_discount': '手續費折扣'
 }

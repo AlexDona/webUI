@@ -22,6 +22,11 @@ export const personal = {
   'user_assets_recharge_hint4': '이 주소로 재충전하면 송금이 완료되고 네트워크에서 자동으로 확인을 기다린 후 시스템이 자동으로 도착합니다 (6 번 확인).',
   'user_assets_recharge_hint5': '빨리 도착하려면 재충전 할 때 네트워크 요금을 높여야합니다.',
   'user_assets_withdrawal_hint1': '철회 율 규칙',
+  'user_assets_sum1': '총 수량',
+  'user_assets_sum2': '고정 수',
+  'user_assets_sum3': '사용 가능한 양',
+  'user_assets_sum4': '자산 평가',
+  'user_assets_Transaction_History': '충전 기록',
   'user_assets_withdrawal_hint2': '사용자의 자금을 확보하기 위해 플랫폼에서 동전 처리 작업을 전화로 확인할 수 있습니다. 답변에주의하십시오.',
   'user_assets_withdrawal_hint3': '재충전을 확인한 후 철회가 허용됩니다.',
   'user_assets_withdrawal_hint4': '현금 인출 액 ≤ 계좌 가용 자산 - 미확인 디지털 자산.',
@@ -146,6 +151,13 @@ export const personal = {
   'user_security_correct': '수정',
   'user_security_text2': '계정 거래를위한 거래 비밀번호',
   'user_security_text3': '지금 설정하는 것이 좋습니다.',
+  'user_security_on': '확인 사용',
+  'user_security_off': '닫기 확인',
+  'user_security_set_type': '이름 설정',
+  'user_security_set_trade_pwd1': '거래 암호 설정',
+  'user_security_set_reset_pwd2': '트랜잭션 비밀번호 재설정',
+  'user_security_Login_History': '최근 로그인 기록',
+  'user_security_Setting_History': '보안 설정 기록',
   // 安全邮箱''보안 사서함'
   // 安全手机''보안 전화'
   // 谷歌验证''Google 확인'
@@ -194,6 +206,7 @@ export const personal = {
   'user_push_payment': '지불',
   'user_push_revocation': '취소',
   'user_push_count': '푸시 횟수는 잔액보다 클 수 없습니다.',
+  'user_push_forbid': '자기 밀어 넣기 금지',
   // PUSH记录''푸시 기록'
   // #####################我的交易#####################''내 거래'
   // 币币订单''코인 주문'
@@ -244,5 +257,6 @@ export const personal = {
   'user_vip_text5': '오프닝이란 당신이 동의 한 것을 의미합니다.',
   'user_vip_text6': 'VIP 서비스 계약',
   'user_vip_text7': '열린',
-  'user_vip_text8': 'VIP 출입 수수료, 현금 할인'
+  'user_vip_text8': 'VIP 출입 수수료, 현금 할인',
+  'user_vip_fee_discount': '수수료 할인'
 }

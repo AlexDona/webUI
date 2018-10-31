@@ -8,7 +8,7 @@
         class="header-content display-inline-block font-size16 cursor-pointer"
       >
         <!--充提记录-->
-        {{ $t('M.user_billing_attention') }}{{ $t('M.comm_record') }}
+        {{ $t('M.user_assets_Transaction_History') }}
         <!--@click.prevent.prevent="clickTableCut(1)"-->
       </span>
       <!--<span-->
@@ -480,7 +480,7 @@ export default {
     >.billing-details-header {
       margin-bottom: 2px;
       >.header-content {
-        width: 100px;
+        width: 300px;
       }
     }
     &.night{

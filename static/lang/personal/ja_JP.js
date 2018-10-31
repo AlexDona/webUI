@@ -22,6 +22,11 @@ export const personal = {
   'user_assets_recharge_hint4': 'この住所に再送金すると、送金が完了し、ネットワークが自動的に確認するのを待ってからシステムが自動的に到着します（6件の確認）。',
   'user_assets_recharge_hint5': '迅速に到着するには、充電時にネットワーク料金を増やすことができます。',
   'user_assets_withdrawal_hint1': '引き出し率ルール',
+  'user_assets_sum1': '総量',
+  'user_assets_sum2': 'フリーズの数',
+  'user_assets_sum3': '利用可能な量',
+  'user_assets_sum4': '資産評価',
+  'user_assets_Transaction_History': '充電記録',
   'user_assets_withdrawal_hint2': 'ユーザーの資金を確保するために、プラットフォームはコインハンドリング作業を電話で確認する場合がありますので、その答えに注意してください。',
   'user_assets_withdrawal_hint3': '再充電が1で確認された後、引き出しが許可されます。',
   'user_assets_withdrawal_hint4': '現金引き出し額≤使用可能資産 - 未確認のデジタル資産。',
@@ -146,6 +151,13 @@ export const personal = {
   'user_security_correct': '修正する',
   'user_security_text2': '口座取引の取引パスワード',
   'user_security_text3': '今すぐ設定することをお勧めします',
+  'user_security_on': '確認をオンにする',
+  'user_security_off': 'クローズ検証',
+  'user_security_set_type': '名前の設定',
+  'user_security_set_trade_pwd1': '取引パスワードを設定する',
+  'user_security_set_reset_pwd2': 'トランザクションパスワードをリセットする',
+  'user_security_Login_History': '最近のログイン記録',
+  'user_security_Setting_History': 'セキュリティ設定の記録',
   // セキュリティボックス
   // セキュリティ電話
   // Googleの認証
@@ -194,6 +206,7 @@ export const personal = {
   'user_push_payment': 'お支払い',
   'user_push_revocation': 'キャンセル',
   'user_push_count': 'プッシュの数は天びんの数より大きくすることはできません',
+  'user_push_forbid': '自己PUSHを禁止する',
   // PUSHレコード
   // #####################私の取引#####################
   // トークン注文
@@ -244,5 +257,6 @@ export const personal = {
   'user_vip_text5': 'オープニングはあなたが同意したことを意味します',
   'user_vip_text6': 'VIPサービス契約',
   'user_vip_text7': '開かれた',
-  'user_vip_text8': 'VIPアクセス料金、現金割引'
+  'user_vip_text8': 'VIPアクセス料金、現金割引',
+  'user_vip_fee_discount': '手数料割引'
 }

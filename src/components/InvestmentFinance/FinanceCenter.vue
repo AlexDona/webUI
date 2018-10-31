@@ -16,6 +16,7 @@
         <div class="container">
          <div class="finance-form-header">
           <el-select
+            :placeholder="$t('M.comm_please_choose')"
             :no-data-text="$t('M.comm_no_data')"
             v-model="selectedCoinId"
             @change="changeTraderCoin"
@@ -70,6 +71,7 @@
               <!-- 存币类型 -->
               {{$t('M.finance_invest')}}{{$t('M.comm_type')}}:&nbsp;
               <el-select
+                :placeholder="$t('M.comm_please_choose')"
                 :no-data-text="$t('M.comm_no_data')"
                 v-model="selectedInvestTypeId"
                 @change="electedInvestTypeDisc"
