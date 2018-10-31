@@ -1322,6 +1322,7 @@ export default {
         padding: 0 1rem;
         box-sizing: border-box;
         width:100%;
+        height:100%;
         /*邀请头部*/
         >.invitation-box{
           width:100%;
@@ -1374,7 +1375,7 @@ export default {
               background-color: #28446e;
               height:3rem;
               width:100%;
-              padding:0 5px 0 20px;
+              padding:0 5px 0 1rem;
               margin-bottom:.4rem;
               display: inline-block;
               vertical-align: middle;
