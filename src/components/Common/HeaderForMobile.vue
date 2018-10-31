@@ -219,6 +219,7 @@ export default {
                 padding: 10px 12px;
                 display: inline-block;
                 width:100%;
+                font-size: 0.5rem;
                 >.icon{
                   margin-right:5px;
                 }
@@ -230,6 +231,7 @@ export default {
               >.lang-list{
                 background-color: #2A3242;
                 position: absolute;
+                width:3rem;
                 z-index: 2;
                 left:0;
                 top:90px;
@@ -237,10 +239,12 @@ export default {
                   transition: all 1s;
                   color:#fff;
                   display:block;
-                  height:50px;
-                  line-height:50px;
+                  height:1rem;
+                  line-height:1rem;
                   text-align: left;
-                  padding:0 20px 0 10px;
+                  font-size: 0.5rem;
+                  padding:0 0.5rem;
+                  box-sizing: border-box;
                   &:hover{
                     background-color: $mainColor;
                   }
