@@ -820,7 +820,8 @@ export default {
         >.body{
           width: 570px;
           height: 420px;
-          padding: 20px 18px 0 18px;
+          // padding: 20px 18px 0 18px;
+          padding: 7px 5px 0 5px;
           // border: 1px solid #262F38;
           border-top: 0;
           border-bottom-left-radius: 5px;
@@ -829,11 +830,14 @@ export default {
           flex-wrap: wrap;
           justify-content: space-between;
           >.together{
-            width: 250px;
-            height: 164px;
+            // width: 250px;
+            width: 275px;
+            // height: 164px;
+            height: 197px;
             // border: 1px solid #262F38;
             display: flex;
-            padding-top: 10px;
+            // padding-top: 10px;
+            padding-top: 30px;
             >.left{
               flex: 1;
               box-sizing: border-box;
@@ -855,7 +859,8 @@ export default {
               }
             }
             >.right{
-              flex: 2;
+              // flex: 2;
+              flex: 3;
               line-height: 35px;
               // color: #9DA5B3;
               .data{

@@ -11,6 +11,7 @@ export const finance = {
   'finance_mine': '私',
   'finance_estimatedValue': '評価',
   'finance_earnings': '収入',
+  'finance_earnings_value': '所得の価値',
   'finance_recode': 'レコード',
   'finance_predict': '期待される',
   'finance_paid_income': '収入',

@@ -431,7 +431,7 @@ export default {
         this.totalPageForMyEntrust = data.data.data.page.pages - 0
         this.totalPageMyNumber = data.data.data.page.total - 0
         // 已获得的佣金预估
-        this.totalSumBTC = data.data.data.coinName
+        this.totalSumBTC = data.data.data.account
         console.log(this.totalSumBTC)
       }
     },

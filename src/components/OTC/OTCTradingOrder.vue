@@ -1217,8 +1217,10 @@ export default {
             flex: 2;
             // border-right: 1px solid #262F38;
             >.middle-content{
+              display: flex; // 任新增
               .trader-info{
                 width: 190px;
+                flex: 2; // 任新增
                 >.pay-style{
                   margin: 0 0 8px 20px;
                   position: relative;
@@ -1254,6 +1256,7 @@ export default {
                 }
               }
               >.bank-info-picture{
+                flex: 1; // 任新增
                 vertical-align: top;
                 padding-left: 10px;
                 >.picture-box{

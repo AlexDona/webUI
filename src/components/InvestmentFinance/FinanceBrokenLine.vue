@@ -79,10 +79,7 @@ export default {
           },
           formatter: function (params) {
             // console.log(params)
-            return `
-                      时间：${params[0].axisValue}<br/>
-                      收益值：${params[0].data}
-                      `
+            return `时间：${params[0].axisValue}<br/>收益值：${params[0].data}`
           }
         },
         series: [{
@@ -145,6 +142,10 @@ export default {
     },
     // 监听主题变化options之后重绘列表
     resetOptions () {
+      // 任增加图示国际化
+      this.options.tooltip.formatter = (params) => {
+        return `${this.$t('M.comm_time')}：${params[0].axisValue}<br/>${this.$t('M.finance_earnings_value')}：${params[0].data}`
+      }
       // 设置监听颜色改变
       this.options.xAxis.axisLabel.textStyle.color = this.theme === 'night' ? '#404d64' : '#ccc'
       // 设置x轴线颜色

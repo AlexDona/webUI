@@ -11,6 +11,7 @@ export const finance = {
   'finance_mine': '我的',
   'finance_estimatedValue': '估值',
   'finance_earnings': '收益',
+  'finance_earnings_value': '收益值',
   'finance_recode': '记录',
   'finance_predict': '预计',
   'finance_paid_income': '已发放收益',

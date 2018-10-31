@@ -505,6 +505,7 @@ export default {
     statusPushChange () {
       if (this.buyUID === this.userInfo.userInfo.showId) {
         this.$message({
+          // 禁止自我PUSH
           message: this.$t('M.user_push_forbid'),
           type: 'error'
         })

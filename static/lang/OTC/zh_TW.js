@@ -230,6 +230,8 @@ export const OTC = {
   'otc_publishAD_inputminLimit': '輸入值不能小於最小限額',
   'otc_publishAD_inputmaxLimit': '輸入值不能大於最大限額',
   'otc_publishAD_entrustCountLimit': '最大可賣出量不足',
+  'otc_publishAD_blur_tips1_min': '請輸入單筆最小限額',
+  'otc_publishAD_blur_tips2_max': '請輸入單筆最大限額',
   // #############廣告管理##################
   'otc_adMange': '廣告管理',
   'otc_trade': '交易',

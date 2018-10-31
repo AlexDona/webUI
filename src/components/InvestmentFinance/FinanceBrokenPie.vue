@@ -122,15 +122,25 @@ export default {
       this.options.legend.textStyle.color = this.theme === 'night' ? '#fff' : '#666'
       this.options.series[0].data[0].value = this.investmentValue
       this.options.series[0].data[1].value = this.getMoneyValue
+      // 任增加国际化翻译
+      this.options.legend.data[0] = this.$t('M.finance_invest')
+      this.options.legend.data[1] = this.$t('M.finance_earnings')
+      this.options.series[0].data[0].name = this.$t('M.finance_invest')
+      this.options.series[0].data[1].name = this.$t('M.finance_earnings')
     }
   },
   filter: {},
   computed: {
     ...mapState({
-      theme: state => state.common.theme
+      theme: state => state.common.theme,
+      language: state => state.common.language // 当前选中语言
     })
   },
   watch: {
+    language () {
+      this.resetOptions()
+      this.resetChart(this.options)
+    },
     theme () {
       this.resetOptions()
       this.resetChart(this.options)
