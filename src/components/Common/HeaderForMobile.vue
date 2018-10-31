@@ -63,6 +63,9 @@ import {
   getFooterInfo
 } from '../../utils/commonFunc'
 import {
+  getStore
+} from '../../utils'
+import {
   getLanguageList
 } from '../../utils/api/header'
 import { createNamespacedHelpers, mapState } from 'vuex'
@@ -127,9 +130,13 @@ export default {
         return false
       } else {
         this.languageList = data.data.data
-        this.CHANGE_LANGUAGE(this.languageList[0])
-        // console.log(this.languageList[0])
-        // console.log(this.activeLanguage)
+        let localLanguage = getStore('language') || 'zh_CN'
+        _.forEach(this.languageList, item => {
+          if (item.shortName === localLanguage) {
+            this.CHANGE_LANGUAGE(item)
+            return false
+          }
+        })
       }
     },
     // 显示状态切换 （语言）

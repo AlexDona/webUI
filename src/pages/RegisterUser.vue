@@ -1446,7 +1446,7 @@ export default {
           >.register-btn{
             width:100%;
             height:3rem;
-            margin:2rem auto 0;
+            margin:2rem auto 2rem;
             padding:0 5px 0 20px;
             display:block;
             font-size: 1rem;
