@@ -312,7 +312,7 @@ export const fromApi = {
   'user-fail-bank-count-error': 'Open up to 3 payment methods',
   'otc_failure_0080': 'The transaction currency is disabled',
   'otc_failure_0081': 'The currency is disabled',
-  'coin_apply': 'Coin Application',
+  'coin_apply': 'Token Listing',
   'session_timeout': 'Login expired, please log in again',
   'user-fail-login-disable': 'Account is disabled',
   'user-email-fail-often': 'Mail is sent frequently, please resend after 120 seconds',

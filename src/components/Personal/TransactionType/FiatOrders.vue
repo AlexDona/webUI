@@ -419,16 +419,17 @@ export default {
         } else {
           // 接口成功清除loading
           this.fullscreenLoading = false
+          let OTCEntrustingOrdersData = data.data.data
           // 返回数据正确的逻辑 重新渲染列表
           this.SET_LEGAL_TENDER_LIST({
             type: activeName,
-            data: data.data.data.list
+            data: OTCEntrustingOrdersData.list
           })
           console.log(data)
           this.CHANGE_LEGAL_PAGE({
-            legalTradePageNum: data.data.data.pageNum,
-            // legalTradePageTotals: data.data.data.total
-            legalTradePageTotals: data.data.data.pages
+            legalTradePageNum: OTCEntrustingOrdersData.pageNum,
+            // legalTradePageTotals: OTCEntrustingOrdersData.total
+            legalTradePageTotals: OTCEntrustingOrdersData.pages
           })
         }
       } else {
@@ -440,18 +441,19 @@ export default {
           } else {
             // 接口成功清除loading
             this.fullscreenLoading = false
+            let merchantsOrdersListData = data.data.data
             // 返回数据正确的逻辑 重新渲染列表
             this.SET_LEGAL_TENDER_LIST({
               type: activeName,
-              data: data.data.data.list
+              data: merchantsOrdersListData.list
             })
             // 刷新列表之后将重新渲染交易中订单列表状态改为false
             this.CHANGE_RE_RENDER_TRADING_LIST_STATUS(false)
             console.log(data)
             this.CHANGE_LEGAL_PAGE({
-              legalTradePageNum: data.data.data.pageNum,
-              legalTradePageTotals: data.data.data.pages
-              // legalTradePageTotals: data.data.data.total
+              legalTradePageNum: merchantsOrdersListData.pageNum,
+              legalTradePageTotals: merchantsOrdersListData.pages
+              // legalTradePageTotals: merchantsOrdersListData.total
             })
           }
         })

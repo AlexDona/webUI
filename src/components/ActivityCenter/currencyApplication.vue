@@ -50,7 +50,8 @@
                 class="download-btn cursor-pointer"
                 @click="downloadPreviewTable"
               >
-                预览下载
+                <!-- 预览下载 -->
+                {{$t('M.actionCenter_download')}}
               </button>
               <!--<a-->
                 <!--class="download-btn cursor-pointer"-->
@@ -111,7 +112,11 @@ export default {
       }
       await getServiceProtocolData(this, params, (data) => {
         console.log(data)
-        this.contentHTML = data.data.data[0].content
+        if (data.data.data.length) {
+          this.contentHTML = data.data.data[0].content
+        } else {
+          this.contentHTML = ''
+        }
       })
     },
     // 获取资产列表下载地址
@@ -149,7 +154,13 @@ export default {
       language: state => state.common.language
     })
   },
-  watch: {}
+  watch: {
+    async language () {
+      await this.getDownUrl()
+      // 上币申请动态文案
+      await this.getServiceProtocolData()
+    }
+  }
 }
 </script>
 <style scoped lang="scss" type="text/scss">

@@ -43,6 +43,7 @@ export const common = {
   'comm_usable': '利用可能',
   'comm_freeze': 'フリーズ',
   'comm_surplus': '残っている',
+  'comm_balance_completed1': '残っているコンテンツタイプ',
   'comm_account': '到着',
   'comm_not': 'ない',
   'comm_already': '持っている',

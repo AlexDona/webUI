@@ -4,6 +4,7 @@ export const finance = {
   'finance_date': '당일',
   'finance_history': '역사',
   'finance_invest': '보증금',
+  'finance_invest_coin1': '예금 통화',
   'finance_useBalance': '사용 가능한 잔액',
   'finance_errorTips': '예금의 수는 사용 가능한 자산보다 큽니다.',
   'finance_mast': '즉시',

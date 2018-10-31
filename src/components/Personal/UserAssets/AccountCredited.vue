@@ -517,7 +517,7 @@ export default {
     setShowStatusSecurity (val) {
       console.log(this.userInfo)
       // 判断是否实名认证
-      if (!this.userInfo.userInfo.realname || !this.userInfo.userInfo.payPassword) {
+      if (!this.realUserInfo.realname || !this.realUserInfo.payPassword) {
         this.centerModelWarning = true
         return false
       }
@@ -797,20 +797,6 @@ export default {
       if (newVal === 'account-credited') {
         await this.getUserRefreshUser()
         await this.getAccountPaymentTerm()
-        // if (!this.userInfo.userInfo.payPassword) {
-        //   this.getAccountPaymentTerm()
-        //   return false
-        // }
-        // if (!this.userInfo.userInfo.realname) {
-        //   this.getAccountPaymentTerm()
-        //   return false
-        // } else {
-        //   this.getAccountPaymentTerm()
-        // }
-        // if (this.userInfo.userInfo.payPassword && this.userInfo.userInfo.realname) {
-        //   // 收款方式状态查询
-        //   this.getAccountPaymentTerm()
-        // }
       }
     },
     paymentTerm (newVal) {

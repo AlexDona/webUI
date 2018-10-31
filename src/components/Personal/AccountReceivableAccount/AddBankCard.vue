@@ -49,7 +49,8 @@
               :label="$t('M.user_account_name')"
             >
               <span class="bank-content-name">
-                {{ userInfo.userInfo.realname }}
+                <!-- {{ userInfo.userInfo.realname }} -->
+                {{ innerUserInfo.realname }}
               </span>
             </el-form-item>
             <!--银行名称-->
@@ -233,7 +234,8 @@ export default {
         let data
         let params = {
           token: this.userInfo.token,
-          realname: this.userInfo.userInfo.realname, // 真实姓名
+          // realname: this.userInfo.userInfo.realname, // 真实姓名
+          realname: this.innerUserInfo.realname, // 真实姓名
           bankName: this.bankName, // 银行卡名称
           cardNo: this.bankCard, // 银行卡号
           address: this.branchAddress, // 开户地址
@@ -341,15 +343,16 @@ export default {
       } else {
         // 接口成功清除loading
         this.fullscreenLoading = false
+        let detailData = data.data.data
         // 返回状态展示
-        this.paymentMethodList = data.data.data
+        this.paymentMethodList = detailData
         // 修改时带回银行卡名称
-        this.bankName = data.data.data.bankName
+        this.bankName = detailData.bankName
         // 修改时带回银行卡号
-        this.bankCard = data.data.data.cardNo
+        this.bankCard = detailData.cardNo
         // 修改时带回银行卡地址
-        this.branchAddress = data.data.data.address
-        this.id = data.data.data.id
+        this.branchAddress = detailData.address
+        this.id = detailData.id
         console.log(this.paymentMethodList)
       }
     },
@@ -381,6 +384,7 @@ export default {
     ...mapState({
       theme: state => state.common.theme,
       userInfo: state => state.user.loginStep1Info, // 用户详细信息
+      innerUserInfo: state => state.user.loginStep1Info.userInfo, // 内层用户详细信息
       // 手机验证码
       disabledOfPhoneBtn: state => state.user.disabledOfPhoneBtn,
       disabledOfEmailBtn: state => state.user.disabledOfEmailBtn,

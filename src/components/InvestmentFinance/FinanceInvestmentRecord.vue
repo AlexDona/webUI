@@ -7,7 +7,7 @@
     <!-- banner -->
     <div class="inner-box">
       <div class="finance-inner">
-        <!-- 投资 -->
+        <!-- 存币 -->
         <div class="invest-list">
           <div class="nvest-list-body">
             <div class="gobackInvest">
@@ -20,11 +20,11 @@
                 class="blue"
                 :to="!isLogin ? 'login' : '/FinanceCenter'"
               >
-                <!--返回投资-->
+                <!--返回存币-->
                 {{ $t('M.investment_return_investment') }}
               </router-link>
             </div>
-            <!-- 投资记录 -->
+            <!-- 存币记录 -->
             <el-tabs v-model="activeName" @tab-click='changeTab'>
             <!-- @您还没有登陆,请登录或者注册之后查看！ -->
                 <div
@@ -53,14 +53,14 @@
                   v-loading="loading"
                   element-loading-background="rgba(0, 0, 0, 0.6)"
                 >
-                  <!-- 投资币种 -->
+                  <!-- 存币币种 -->
                   <el-table-column
                     prop="coinShortName"
-                    :label="$t('M.finance_invest') + $t('M.comm_currency')"
+                    :label="$t('M.finance_invest_coin1')"
                     width="110"
                   >
                   </el-table-column>
-                  <!-- 投资类型 -->
+                  <!-- 存币类型 -->
                   <el-table-column
                     prop="typeDescription"
                     :label="$t('M.finance_invest') + $t('M.otc_cancelOrder_type')"
@@ -163,14 +163,14 @@
                   v-loading="loading"
                   element-loading-background="rgba(0, 0, 0, 0.6)"
                 >
-                  <!-- 投资币种 -->
+                  <!-- 存币币种 -->
                   <el-table-column
                     prop="coinShortName"
-                    :label="$t('M.finance_invest') + $t('M.comm_currency')"
+                    :label="$t('M.finance_invest_coin1')"
                     width="150"
                   >
                   </el-table-column>
-                  <!-- 投资类型 -->
+                  <!-- 存币类型 -->
                   <el-table-column
                     prop="description"
                     :label="$t('M.finance_invest') + $t('M.otc_cancelOrder_type')"
@@ -242,11 +242,11 @@ export default {
   data () {
     return {
       loading: true,
-      // 设置投资记录当前页码
+      // 设置存币记录当前页码
       investCurrnetPage: '1',
-      // 设置投资记录总页数
+      // 设置存币记录总页数
       investTotalPages: '',
-      // 设置投资记录总条数
+      // 设置存币记录总条数
       investTotal: '',
       // 设置收益列表当前页码
       interestCurrnetPage: '1',
@@ -254,7 +254,7 @@ export default {
       interestTotalPages: '1',
       // 设置收益列表总条数
       interestTotal: '',
-      // 默认显示投资列表
+      // 默认显示存币列表
       activeName: '1',
       investList: [],
       // 收益列表
@@ -299,7 +299,7 @@ export default {
         this.getFinancialManagementList(this.interestCurrnetPage)
       }
     },
-    // 点击投资记录列表下一页查寻
+    // 点击存币记录列表下一页查寻
     changeInvestPage (pageNum) {
       console.log(pageNum)
       this.investCurrnetPage = pageNum
@@ -321,7 +321,7 @@ export default {
         coinId: this.coinId,
         coinName: this.coinName
       })
-      console.log('投资理财页面查询')
+      console.log('存币理财页面查询')
       console.log(data)
       if (!(returnAjaxMessage(data, this, 0))) {
         this.loading = false
@@ -330,11 +330,11 @@ export default {
         this.loading = false
         let getData = data.data.data
         if (this.activeName == '1') {
-          // 投资记录列表赋值
+          // 存币记录列表赋值
           this.investList = getData.userFinancialManagementRecord.list
-          // 投资记录总页数
+          // 存币记录总页数
           this.investTotalPages = getData.userFinancialManagementRecord.pages
-          // 投资记录总条数
+          // 存币记录总条数
           this.investTotal = getData.userFinancialManagementRecord.total
           // 从新赋值页码为当前页
           // this.investCurrnetPage = pageNum

@@ -51,23 +51,31 @@
           </div>
           <div class="middle-line"></div>
           <div class="main-content">
-            <div class="title">注册邀请排行榜</div>
+            <div class="title">
+              <!-- 注册邀请排行榜 -->
+              {{$t('M.actionCenter_rege')}}
+            </div>
             <ul class="table">
               <li class="th">
                 <span class="td">
-                  排名
+                  <!-- 排名 -->
+                  {{$t('M.actionCenter_Rank')}}
                 </span>
                 <span class="td">
-                  用户
+                  <!-- 用户 -->
+                  {{$t('M.actionCenter_User')}}
                 </span>
                 <span class="td">
-                  直接推荐
+                  <!-- 直接推荐 -->
+                  {{$t('M.actionCenter_Direct_recommend')}}
                 </span>
                 <span class="td">
-                  间接推荐
+                  <!-- 间接推荐 -->
+                  {{$t('M.actionCenter_Indirect_recommend')}}
                 </span>
                 <span class="td">
-                  邀请奖励
+                  <!-- 邀请奖励 -->
+                  {{$t('M.actionCenter_Invite_rewards')}}
                 </span>
               </li>
               <li

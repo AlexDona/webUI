@@ -720,7 +720,7 @@ export default {
       if (this.$refs.priceSell.value) {
         if (this.$refs.priceSell.value < this.minPrice || this.$refs.priceSell.value > this.maxPrice) {
         //  请输入.....之间的价格
-          this.errorTipsPrice = this.$t('M.otc_publishAD_pleaseInput') + this.minPrice + '~' + this.maxPrice + this.$t('M.otc_publishAD_rangePrice')
+          this.errorTipsPrice = this.$t('M.otc_publishAD_pleaseInput') + this.minPrice + '~' + this.maxPrice
           this.priceErrorTipsBorder = true
           this.priceBuySellErrorTipsBorder = true
         } else {
@@ -731,7 +731,7 @@ export default {
       }
       if (this.$refs.priceBuy.value) {
         if (this.$refs.priceBuy.value < this.minPrice || this.$refs.priceBuy.value > this.maxPrice) {
-          this.errorTipsPrice = this.$t('M.otc_publishAD_pleaseInput') + this.minPrice + '~' + this.maxPrice + this.$t('M.otc_publishAD_rangePrice')
+          this.errorTipsPrice = this.$t('M.otc_publishAD_pleaseInput') + this.minPrice + '~' + this.maxPrice
           this.priceErrorTipsBorder = true
           this.priceBuySellErrorTipsBorder = true
         } else {

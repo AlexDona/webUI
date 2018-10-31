@@ -13,6 +13,6 @@ export const home = {
   'home_market_field_search': 'Search area',
   'home_market_district': 'Self-selected area',
   // #####################导航######################navigation
-  'investment_look_all': 'view all',
-  'investment_return_investment': 'return'
+  'investment_look_all': 'View all',
+  'investment_return_investment': 'Return'
 }
