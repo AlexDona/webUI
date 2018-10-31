@@ -237,15 +237,14 @@
                     class="lang-list"
                     v-show="langSelecting"
                   >
-                    <a
+                    <button
                       class="lang-item"
-                      href="#"
                       @click="changeLanguage(item)"
                       v-for="(item,index) in languageList"
                       :key="index"
                     >
                       {{item.name}}
-                    </a>
+                    </button>
                   </dd>
                 </el-collapse-transition>
               </dl>

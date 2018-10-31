@@ -355,7 +355,7 @@
                 <span class="middle-line"></span>
                 <!--手机号码-->
                 <input
-                  type="text"
+                  type="number"
                   class="input mobile-phone"
                   :placeholder="$t('M.user_security_phone') + $t('M.user_security_number')"
                   v-model="phoneNum"
@@ -1387,10 +1387,10 @@ export default {
                 padding:0;
                 height:20px;
                 margin-bottom:0;
-                font-size: 1rem;
+                font-size: 0.8rem;
               }
               >.input{
-                font-size: 1rem;
+                font-size: 0.8rem;
                 &::-webkit-input-placeholder{
                   color:#8B9197;
                 }
@@ -1398,7 +1398,7 @@ export default {
                 height:100%;
                 color:#fff;
                 &.image-validate{
-                  width:60%;
+                  width:56%;
                   vertical-align: top;
                 }
                 &.mobile-phone{
@@ -1418,7 +1418,7 @@ export default {
                 height:3rem;
                 line-height: 3rem;
                 text-align: center;
-                font-size: 1rem;
+                font-size: 0.8rem;
                 /*width:66px;*/
               }
             }
@@ -1427,7 +1427,7 @@ export default {
             height:2.8rem;
             line-height: 5rem;
             margin-left: 30px;
-            font-size: 1rem;
+            font-size: 0.8rem;
             color: rgb(212, 88, 88);
           }
           /*注册，忘记密码*/

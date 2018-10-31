@@ -132,7 +132,7 @@
   /*display: block;*/
 }
 .register.mobile .el-checkbox__label{
-  font-size: 1rem;
+  font-size: .8rem;
   vertical-align: middle;
 }
 .register.mobile .el-checkbox__inner{

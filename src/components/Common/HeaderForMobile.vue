@@ -36,15 +36,14 @@
                   class="lang-list"
                   v-show="langSelecting"
                 >
-                  <a
+                  <button
                     class="lang-item"
-                    href="#"
                     @click="changeLanguage(item)"
                     v-for="(item,index) in languageList"
                     :key="index"
                   >
                     {{item.name}}
-                  </a>
+                  </button>
                 </dd>
               </el-collapse-transition>
             </dl>
@@ -89,7 +88,7 @@ export default {
     // console.log(this.theme)
     this.activeTheme = this.theme
     // 查询某商户可用法币币种列表
-    await this.getCountryList()
+    // await this.getCountryList()
     if (this.isLogin) {
       await reflashUserInfo(this)
     }
