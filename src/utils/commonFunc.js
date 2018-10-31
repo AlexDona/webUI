@@ -37,10 +37,10 @@ import {PHONE_REG, EMAIL_REG, ID_REG, PWD_REG, ALIPAY_REG, BANK_REG, GOOGLE_REG,
 // 如果返回 错误 了就提示错误并不能继续往下进行；
 // 如果返回了 正确 的数据：不需要正确的提示noTip传0；需要正确的提示noTip传1；
 // 使用方法：returnAjaxMessage(data, this, 0) 或者 returnAjaxMessage(data, this, 1)
-export const returnAjaxMessage = (data, self, noTip) => {
+export const returnAjaxMessage = (data, self, noTip, errorTip) => {
   const meta = data.data.meta
   if (meta) {
-    if (meta.code !== 200) {
+    if (!meta.success && !errorTip) {
       self.$message({
         type: 'error',
         // duration: 5000000,
@@ -58,7 +58,6 @@ export const returnAjaxMessage = (data, self, noTip) => {
       if (noTip) {
         self.$message({
           type: 'success',
-          // duration: 5000000,
           message: self.$t(`M.${meta.i18n_code}`)
         })
       }

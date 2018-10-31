@@ -418,7 +418,8 @@ export default {
       // console.log(data)
       switch (data.tradeType) {
         case 'KLINE':
-          console.log(data)
+          // console.log(data)
+          console.log(data.data[0])
           if (data.data && data.data.length && !data.type) {
             const list = []
             const ticker = `${this.symbol}-${this.interval}`

@@ -129,7 +129,7 @@ export default {
       let params = `${this.activeSymbol.sellsymbol}_${this.activeSymbol.area}`.toUpperCase()
 
       const data = await getGLobalMarket(params)
-      if (!returnAjaxMessage(data, this, 0)) {
+      if (!returnAjaxMessage(data, this, 0, 1)) {
         return false
       } else {
         this.globalMarketList = data.data.data

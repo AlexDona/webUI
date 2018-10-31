@@ -80,11 +80,12 @@ export default {
   watch: {
     '$route' (to, from) {
       console.log(to)
-      this.needNotice = to.path === '/' ? 1 : 0
-      this.needHeader = to.path !== '/login' ? 1 : 0
-      this.needFooter = (to.path === '/login' || to.path === '/Register') ? 0 : 1
-      switch (to.path) {
-        case '/Register':
+      let path = to.path
+      this.needNotice = path === '/' ? 1 : 0
+      this.needHeader = (path !== '/login' && path !== '/register' && path !== '/downloadApp') ? 1 : 0
+      this.needFooter = (path === '/login' || path === '/register' || path === '/downloadApp') ? 0 : 1
+      switch (path) {
+        case '/register':
           this.setBodyClassName(true, 'register')
           break
       }

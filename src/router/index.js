@@ -8,7 +8,7 @@ Vue.use(Router)
  * Common
  */
 
-const HomeCenter = r => require.ensure([], () => r(require('@/components/Home/HomeCenter')), 'home-center')
+const HomeCenter = r => require.ensure([], () => r(require('@/pages/HomeCenter')), 'home-center')
 /**
  * Personal
  */
@@ -57,15 +57,15 @@ const FinanceInvestmentRecord = r => require.ensure([], () => r(require('@/compo
  * User
  */
 // 登录
-const Login = r => require.ensure([], () => r(require('@/components/User/LoginUser')), 'login')
+const Login = r => require.ensure([], () => r(require('@/pages/loginUser')), 'login')
 // 注册
-const Register = r => require.ensure([], () => r(require('@/components/User/RegisterUser')), 'login')
+const Register = r => require.ensure([], () => r(require('@/pages/RegisterUser')), 'register')
 const ForgetPassword = r => require.ensure([], () => r(require('@/components/User/ForgetPassword')), 'forget-password')
 /**
  * TradeCenter
  */
 // 币币交易
-const TradeCenter = r => require.ensure([], () => r(require('@/components/Trade/TradeCenter')), 'trade-center')
+const TradeCenter = r => require.ensure([], () => r(require('@/pages/TradeCenter')), 'trade-center')
 
 /**
  * ActivityCenter
@@ -85,6 +85,10 @@ const HelpCenter = r => require.ensure([], () => r(require('@/components/FooterI
 // aboutUs
 const AboutUs = r => require.ensure([], () => r(require('@/components/FooterInfo/AboutUs')), 'about-us')
 const ServiceAndProtocol = r => require.ensure([], () => r(require('@/components/FooterInfo/ServiceAndProtocol')), 'service-protocol')
+/**
+ * appDownload
+ */
+const DownloadApp = r => require.ensure([], () => r(require('@/pages/DownloadApp')), 'download-app')
 const router = new Router({
   // mode: 'history',
   routes: [
@@ -296,7 +300,7 @@ const router = new Router({
     },
     // 注册
     {
-      path: '/Register',
+      path: '/register',
       // name: 'Register',
       component: Register
     },
@@ -337,12 +341,16 @@ const router = new Router({
     {
       path: '/ServiceAndProtocol',
       component: ServiceAndProtocol
+    },
+    {
+      path: '/downloadApp',
+      component: DownloadApp
     }
   ]
 })
 
 router.beforeEach((to, from, next) => {
-  if (to.path !== '/login' || to.path !== '/Register') {
+  if (to.path !== '/login' || to.path !== '/register') {
     console.log(store.state.common.routerTo)
     store.commit('common/CHANGE_ROUTER_PATH', to.path)
     console.log(store.state.common.routerTo)

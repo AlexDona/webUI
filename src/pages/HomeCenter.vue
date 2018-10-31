@@ -14,9 +14,9 @@
   </div>
 </template>
 <script>
-import NoticeHome from './NoticeHome'
-import BannerHome from './BannerHome'
-import MarketListHome from './MarketListHome'
+import NoticeHome from '../components/Home/NoticeHome'
+import BannerHome from '../components/Home/BannerHome'
+import MarketListHome from '../components/Home/MarketListHome'
 export default {
   components: {
     NoticeHome,
