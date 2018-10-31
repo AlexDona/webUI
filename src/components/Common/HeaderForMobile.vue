@@ -81,8 +81,8 @@ export default {
   async created () {
     require('../../../static/css/theme/day/Common/HeaderCommonDay.css')
     // 获取 语言列表:任付伟先注释此方法防止每次刷新报错-有需要请放开
+    await this.getLanguageList()
     await getFooterInfo(this.language, this)
-    this.getLanguageList()
     // console.log(this.theme)
     this.activeTheme = this.theme
     // 查询某商户可用法币币种列表
