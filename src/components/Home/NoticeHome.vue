@@ -75,7 +75,7 @@ export default {
       //   title: 'M.home_market_text5' // 标题 fuc火热上线2
       // }
     ]
-    this.timer = setInterval(this.autoPlay, 3000)
+    this.timer = setInterval(this.autoPlay, 4000)
   },
   mounted () {},
   activited () {},
@@ -150,11 +150,15 @@ export default {
         margin-top: -30px;
       }
       >.item{
+        text-align: center;
+        color:#fff;
+
         >a{
           >.type {
             color:$mainColor;
           }
-          color:#8B8E92;
+          /*color:#8B8E92;*/
+          color:#fff;
         }
       }
     }

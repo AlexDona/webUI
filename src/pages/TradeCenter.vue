@@ -41,17 +41,17 @@
   </div>
 </template>
 <script>
-import EntrustOrder from './EntrustOrderList'
-import ExchangeBox from './ExchangeTrade'
-import TradeMarketList from './TradeMarket'
-import HeaderCommon from '../Common/HeaderCommonForPC'
-import GlobalMarket from './GlobalMarketTrade'
-import BuysAndSells from './BuysAndSellsTrade'
-import OrderRecord from './OrderRecordTrade'
-import KLine from './kLine'
-import MiddleHeader from './MiddleHeaderTrade'
-import Depth from './DepthTrade'
-import FooterCommon from '../Common/FooterCommon'
+import EntrustOrder from '../components/Trade/EntrustOrderList'
+import ExchangeBox from '../components/Trade/ExchangeTrade'
+import TradeMarketList from '../components/Trade/TradeMarket'
+import HeaderCommon from '../components/Common/HeaderCommonForPC'
+import GlobalMarket from '../components/Trade/GlobalMarketTrade'
+import BuysAndSells from '../components/Trade/BuysAndSellsTrade'
+import OrderRecord from '../components/Trade/OrderRecordTrade'
+import KLine from '../components/Trade/kLine'
+import MiddleHeader from '../components/Trade/MiddleHeaderTrade'
+import Depth from '../components/Trade/DepthTrade'
+import FooterCommon from '../components/Common/FooterCommon'
 import {mapState} from 'vuex'
 
 export default {
@@ -73,9 +73,9 @@ export default {
     return {}
   },
   created () {
-    require('../../../static/css/list/Trade/TradeCenter.css')
-    require('../../../static/css/theme/day/Trade/TraderCenterDay.css')
-    require('../../../static/css/theme/night/Trade/TradeCenterNight.css')
+    require('../../static/css/list/Trade/TradeCenter.css')
+    require('../../static/css/theme/day/Trade/TraderCenterDay.css')
+    require('../../static/css/theme/night/Trade/TradeCenterNight.css')
   },
   mounted () {},
   activited () {},
@@ -92,8 +92,8 @@ export default {
 }
 </script>
 <style scoped lang="scss">
-  @import "../../../static/css/scss/index.scss";
-  @import "../../../static/css/scss/Trade/TradeCenter";
+  @import "../../static/css/scss/index";
+  @import "../../static/css/scss/Trade/TradeCenter";
   .trade-box{
     min-width:1366px;
     width:100%;

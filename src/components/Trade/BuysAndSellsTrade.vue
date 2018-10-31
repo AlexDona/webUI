@@ -61,73 +61,76 @@
               </dt>
             </dl>
             <!--buys、sells-->
-            <div
-              class="middle-box content-box"
-              v-if="listOrder==='middle'&&buysAndSellsList.sells.list"
-            >
-              <!--卖出-->
-              <dl
-                class="buys-list"
-              >
-                <dd
-                  class="buys-item cursor-pointer"
-                  v-for="(item,index) in buysAndSellsList.sells.list.length>10?buysAndSellsList.sells.list.slice(buysAndSellsList.sells.list.length-10,buysAndSellsList.sells.list.length):buysAndSellsList.sells.list"
-                  :key="index"
-                  :class="{'odd':index%2!==0}"
-                  @click="changeActivePriceItem(item)"
+              <div class="outer-box">
+                <div
+                  ref="buy-box"
+                  class="middle-box content-box"
+                  v-if="listOrder==='middle'&&buysAndSellsList.sells.list"
                 >
-                  <div class="inner">
-                    <span class="price sell-bg">
-                      <!--卖-->
-                      {{ $t('M.comm_ask') }} {{item.index}}
-                    </span><span
-                    class="price text-align-l sell-bg"
+                  <!--卖出-->
+                  <dl
+                    class="buys-list"
                   >
-                    {{item.price}}
-                  </span><span class="amount text-align-r">
-                    {{item.amount}}
-                  </span><span class="total text-align-r">
-                    {{item.total}}
-                  </span><!--宽度条--><i
-                      class="color-sell-bg"
-                      :style="'width:'+ item.amount/buysAndSellsList.sells.highestAmount*100+'%'"
+                    <dd
+                      class="buys-item cursor-pointer"
+                      v-for="(item,index) in buysAndSellsList.sells.list"
+                      :key="index"
+                      :class="{'odd':index%2!==0}"
+                      @click="changeActivePriceItem(item)"
                     >
-                    </i>
-                  </div>
-                </dd>
-              </dl>
-              <!--最新价-->
-              <TradeNewPrice/>
-              <!--买入-->
-              <dl
-                class="sells-list"
-              >
-                <dd
-                  class="sells-item cursor-pointer"
-                  v-for="(item,index) in buysAndSellsList.buys.list.slice(0,10)"
-                  :key="index"
-                  :class="{'even':index%2==0}"
-                  @click="changeActivePriceItem(item)"
-                >
-                  <div class="inner">
-                    <span class="price buy-bg">
-                      <!--买-->
-                      {{ $t('M.comm_bid') }} {{item.index}}
-                    </span><span class="price text-align-l buy-bg">
-                      {{item.price}}
-                    </span><span class="amount text-align-r">
-                      {{item.amount}}
-                    </span><span class="total text-align-r">
-                      {{item.total}}
-                    </span><!--宽度条--><i
-                        class="color-buy-bg"
-                        :style="'width:'+ item.amount/buysAndSellsList.buys.highestAmount*100+'%'"
+                      <div class="inner">
+                        <span class="price sell-bg">
+                          <!--卖-->
+                          {{ $t('M.comm_ask') }} {{item.index}}
+                        </span><span
+                        class="price text-align-l sell-bg"
                       >
-                      </i>
-                  </div>
-                </dd>
-              </dl>
-            </div>
+                        {{item.price}}
+                      </span><span class="amount text-align-r">
+                        {{item.amount}}
+                      </span><span class="total text-align-r">
+                        {{item.total}}
+                      </span><!--宽度条--><i
+                          class="color-sell-bg"
+                          :style="'width:'+ item.amount/buysAndSellsList.sells.highestAmount*100+'%'"
+                        >
+                        </i>
+                      </div>
+                    </dd>
+                  </dl>
+                  <!--最新价-->
+                  <TradeNewPrice/>
+                  <!--买入-->
+                  <dl
+                  class="sells-list"
+                >
+                  <dd
+                    class="sells-item cursor-pointer"
+                    v-for="(item,index) in buysAndSellsList.buys.list"
+                    :key="index"
+                    :class="{'even':index%2==0}"
+                    @click="changeActivePriceItem(item)"
+                  >
+                    <div class="inner">
+                      <span class="price buy-bg">
+                        <!--买-->
+                        {{ $t('M.comm_bid') }} {{item.index}}
+                      </span><span class="price text-align-l buy-bg">
+                        {{item.price}}
+                      </span><span class="amount text-align-r">
+                        {{item.amount}}
+                      </span><span class="total text-align-r">
+                        {{item.total}}
+                      </span><!--宽度条--><i
+                          class="color-buy-bg"
+                          :style="'width:'+ item.amount/buysAndSellsList.buys.highestAmount*100+'%'"
+                        >
+                        </i>
+                    </div>
+                  </dd>
+                </dl>
+                </div>
+              </div>
             <!--buys-->
             <div
               class="mibble-box content-box"
@@ -248,6 +251,16 @@ export default {
     ...mapMutations([
       'CHANGE_ACTIVE_PRICE_ITEM'
     ]),
+    beforeEnterUp (el) {
+      el.style = 'margin-top:5px'
+    },
+    enterUp (el, done) {
+      el.offsetWidth
+      el.style.marginTop = '-5px'
+      el.style.opacity = '0'
+      done()
+    },
+    afterEnterUp (el) {},
     // 选中某一个买卖单价格
     changeActivePriceItem (item) {
       this.CHANGE_ACTIVE_PRICE_ITEM(item.price)
@@ -258,17 +271,23 @@ export default {
     },
     // 切换显示顺序
     changeListOrder (firstName) {
+      // console.log(this.$refs['buy-box'].style.marginTop = '200px')
+      let targetMarginTop = 0
       switch (firstName) {
         case 'middle':
-          this.listOrder = 'middle'
-          break
-        case 'buys':
-          this.listOrder = 'buys'
+          // this.listOrder = 'middle'
+          targetMarginTop = -300
           break
         case 'sells':
-          this.listOrder = 'sells'
+          // this.listOrder = 'buys'
+          targetMarginTop = 0
+          break
+        case 'buys':
+          // this.listOrder = 'sells'
+          targetMarginTop = -600
           break
       }
+      this.$refs['buy-box'].style.marginTop = `${targetMarginTop}px`
     }
   },
   filter: {},
@@ -402,68 +421,75 @@ export default {
               }
             }
           }
-          >.content-box{
+          >.outer-box{
+            overflow: hidden;
             height:651px;
-            /*background-color: pink;*/
-            >.buys-list,.sells-list{
-              font-size: 12px;
-              /*padding:0 20px;*/
-              >dd{
-                height: 30px;
-                line-height: 30px;
-                >.inner{
-                  padding:0 4.5%;
-                  position: relative;
-                  z-index: 1;
-                  >.buy-bg{
-                    color:$upColor;
-                  }
-                  >.sell-bg{
-                    color:$downColor;
-                  }
-                  >span{
-                    width:29%;
-                    &:nth-of-type(1){
-                      width:13%;
-                      text-align: left;
+            >.content-box{
+              height:651px;
+              /*background-color: pink;*/
+              transition: all 0.5s;
+              margin-top:-300px;
+              >.buys-list,.sells-list{
+                font-size: 12px;
+                /*padding:0 20px;*/
+                >dd{
+                  height: 30px;
+                  line-height: 30px;
+                  >.inner{
+                    padding:0 4.5%;
+                    position: relative;
+                    z-index: 1;
+                    >.buy-bg{
+                      color:$upColor;
                     }
-                    text-align: right;
-                    /*border:1px solid red;*/
-                    display:inline-block;
-                    box-sizing: border-box;
-                  }
-                  >.amount{
-                    /*padding-right:18%;*/
-                  }
-                  >.color-buy-bg,>.color-sell-bg{
-                    max-width:100%;
-                    position: absolute;
-                    right:0;
-                    top:1px;
-                    height:30px;
-                    z-index: 0;
-                    opacity: .1;
-                  }
-                  >.color-buy-bg{
-                    background-color:rgba(212,88,88,0.7);
-                  }
-                  >.color-sell-bg{
-                    background-color:rgba(0,128,105,0.7);
+                    >.sell-bg{
+                      color:$downColor;
+                    }
+                    >span{
+                      width:29%;
+                      &:nth-of-type(1){
+                        width:13%;
+                        text-align: left;
+                      }
+                      text-align: right;
+                      /*border:1px solid red;*/
+                      display:inline-block;
+                      box-sizing: border-box;
+                    }
+                    >.amount{
+                      /*padding-right:18%;*/
+                    }
+                    >.color-buy-bg,>.color-sell-bg{
+                      max-width:100%;
+                      position: absolute;
+                      right:0;
+                      top:1px;
+                      height:30px;
+                      z-index: 0;
+                      opacity: 0.5;
+                      transition: all 1.5s;
+                    }
+                    >.color-buy-bg{
+                      background-color:rgba(212,88,88,0.4);
+                    }
+                    >.color-sell-bg{
+                      background-color:rgba(0,128,105,0.4);
+                    }
                   }
                 }
               }
-            }
-            /*最新价*/
-            .new-price{
-              height:50px;
-              line-height:50px;
-            }
-            /*买入表*/
-            >.buys-list{
-              &.height22{
-                overflow: hidden;
+              /*最新价*/
+              .new-price{
+                height:50px;
+                line-height:50px;
               }
-              >.buys-item{
+              /*买入表*/
+              >.buys-list{
+                &.height22{
+                  overflow: hidden;
+                }
+                >.buys-item{
+                }
               }
             }
           }
@@ -503,34 +529,39 @@ export default {
                 }
               }
             }
-            >.content-box{
-              >.buys-list,.sells-list{
-                >dd{
-                  &.odd,&.even,&:hover{
-                    background-color: #1a1d2f;
-                  }
-                  >.inner{
-                    >span{
+            >.outer-box{
+              >.content-box{
+                >.buys-list,.sells-list{
+                  >dd{
+                    &.odd,&.even{
+                      background-color: #1a1d2f;
                     }
-                    >.amount{
+                    &:hover{
+                      background-color:rgba(255, 255, 255, 0.2);
                     }
-                    >.color-buy-bg,>.color-sell-bg{
-                    }
-                    >.color-buy-bg{
-                    }
-                    >.color-sell-bg{
+                    >.inner{
+                      >span{
+                      }
+                      >.amount{
+                      }
+                      >.color-buy-bg,>.color-sell-bg{
+                      }
+                      >.color-buy-bg{
+                      }
+                      >.color-sell-bg{
+                      }
                     }
                   }
                 }
-              }
-              /*最新价*/
-              .new-price{
-              }
-              /*买入表*/
-              >.buys-list{
-                &.height22{
+                /*最新价*/
+                .new-price{
                 }
-                >.buys-item{
+                /*买入表*/
+                >.buys-list{
+                  &.height22{
+                  }
+                  >.buys-item{
+                  }
                 }
               }
             }
@@ -570,36 +601,38 @@ export default {
                 }
               }
             }
-            >.content-box{
-              >.buys-list,.sells-list{
-                >dd{
-                  &.odd,&.even,&:hover{
-                    background-color: #f2f2f2;
-                  }
-                  >.inner{
-                    >span{
+            >.outer-box {
+              >.content-box{
+                >.buys-list,.sells-list{
+                  >dd{
+                    &.odd,&.even,&:hover{
+                      background-color: #f2f2f2;
                     }
-                    >.amount{
-                    }
-                    >.color-buy-bg,>.color-sell-bg{
-                    }
-                    >.color-buy-bg{
-                      background-color:rgba(212,88,88,0.8);
-                    }
-                    >.color-sell-bg{
-                      background-color:rgba(0,128,105,0.8);
+                    >.inner{
+                      >span{
+                      }
+                      >.amount{
+                      }
+                      >.color-buy-bg,>.color-sell-bg{
+                      }
+                      >.color-buy-bg{
+                        background-color:rgba(212,88,88,0.8);
+                      }
+                      >.color-sell-bg{
+                        background-color:rgba(0,128,105,0.8);
+                      }
                     }
                   }
                 }
-              }
-              /*最新价*/
-              .new-price{
-              }
-              /*买入表*/
-              >.buys-list{
-                &.height22{
+                /*最新价*/
+                .new-price{
                 }
-                >.buys-item{
+                /*买入表*/
+                >.buys-list{
+                  &.height22{
+                  }
+                  >.buys-item{
+                  }
                 }
               }
             }

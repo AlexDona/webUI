@@ -140,7 +140,7 @@
               class="li-item"
               v-if="!isLogin"
             >
-              <router-link to="/Register">
+              <router-link to="/register">
                 <!--<span>注册</span>-->
                 <span>{{$t('M.comm_register_time')}}</span>
               </router-link>
