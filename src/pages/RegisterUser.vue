@@ -1194,7 +1194,7 @@ export default {
   .register-box{
     width:100%;
     height:100%;
-    overflow: hidden;
+    overflow-y: auto;
     background:linear-gradient(150deg,rgba(30,38,54,1),rgba(37,75,117,1));
     &.min-height{
       min-height:1000px;
