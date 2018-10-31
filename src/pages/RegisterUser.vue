@@ -600,7 +600,7 @@
     <!--普通注册成功-->
     <div
       class="inner-box"
-      v-else
+      v-if="isRegisterSuccess&&!isMobile"
     >
       <div
         class="success-box"
@@ -629,7 +629,7 @@
     <!-- 邀请注册成功 -->
     <div
       class="invitation-success"
-      v-if="isRegisterSuccess"
+      v-if="isRegisterSuccess && isMobile"
     >
       <el-dialog
         :close-on-click-modal="false"
@@ -639,7 +639,12 @@
       >
         <p class="main-tips">注册成功！</p>
         <p class="sub-tips">奖励已发送到我的账户</p>
-        <button class="confirm-btn">我知道了 <span>({{successCountDown}})</span></button>
+        <button
+          class="confirm-btn"
+          @click="jumpToDownAppPage"
+        >
+          我知道了 <span>({{successCountDown}})</span>
+        </button>
       </el-dialog>
     </div>
   </div>
@@ -693,8 +698,8 @@ export default {
       sendMsgBtnText: 'M.forgetPassword_hint12', // 发送验证码
       sendMsgBtnDisabled: false,
       errorMsg: '', // 错误信息
-      isRegisterSuccess: true, // 注册成功
-      successCountDown: 30000, // 成功倒计时
+      isRegisterSuccess: false, // 注册成功
+      successCountDown: 3, // 成功倒计时
       registerSliderStatus: false, // 滑块验证显示状态
       /**
        * 滑块验证
@@ -769,6 +774,9 @@ export default {
       'SET_USER_BUTTON_STATUS',
       'USER_LOGOUT'
     ]),
+    jumpToDownAppPage () {
+      this.$router.push({'path': '/downloadApp'})
+    },
     jumpToOtherPage (router, activeName) {
       jumpToOtherPageForFooter(router, activeName, this)
     },
@@ -778,7 +786,7 @@ export default {
       switch (type) {
         // 手机号
         case 0:
-          console.log(validateNumForUserInput('phone', targetNum))
+          // console.log(validateNumForUserInput('phone', targetNum))
           switch (validateNumForUserInput('phone', targetNum)) {
             case 0:
               this.setErrorMsg('')

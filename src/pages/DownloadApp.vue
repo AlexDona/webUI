@@ -3,7 +3,11 @@
     class="download-box"
   >
     <div class="inner-box">
-      <div class="logo"></div>
+      <div class="logo">
+        <img
+          :src="logoSrc"
+        >
+      </div>
       <div class="content">
         <img
           :src="zh_CNSrc"
@@ -35,7 +39,9 @@ export default {
     }
   },
   created () {},
-  mounted () {},
+  mounted () {
+    console.log(this.logoSrc)
+  },
   activited () {},
   update () {},
   beforeRouteUpdate () {},
@@ -44,7 +50,7 @@ export default {
   computed: {
     ...mapState({
       language: state => state.common.language,
-      footerInfo: state => state.common.footerInfo
+      logoSrc: state => state.common.logoSrc
     })
   },
   watch: {
@@ -58,7 +64,7 @@ export default {
   .download-box{
     width:100%;
     height:100%;
-    background-color: pink;
+    background:linear-gradient(150deg, #1e2636, #254b75);
     >.inner-box{
       width:100%;
       height:100%;
@@ -66,10 +72,11 @@ export default {
       >.logo{
         width:3rem;
         height:3rem;
-        background-color: blue;
         border-radius:10px;
         margin:3rem auto;
-        -webkit-box-reflect: below 0px -webkit-gradient(linear, left top, left bottom, from(transparent), to(rgba(250, 250, 250, 0.1)));
+        >img{
+          -webkit-box-reflect: below 0px -webkit-gradient(linear, left top, left bottom, from(transparent), to(rgba(250, 250, 250, 0.1)));
+        }
       }
       >.content{
         width:100%;
