@@ -22,12 +22,11 @@
     <div
       class="inner-box"
       :class="{'pc-bg': !isMobile}"
-      v-if="!isRegisterSuccess"
     >
       <!--注册(pc端)-->
       <div
         class="main-box pc-box"
-        v-if="!isMobile"
+        v-if="!isMobile&&!isRegisterSuccess"
       >
         <!--切换注册方式-->
         <ul class="methods-list">
@@ -284,7 +283,7 @@
       <!--注册（移动端）-->
       <div
         class="mobile-box"
-        v-else
+        v-if="isMobile"
       >
         <!--邀请头部(用户邀请链接的时候有)-->
         <div
@@ -638,7 +637,12 @@
         class="invitation-success-dialog"
       >
         <p class="main-tips">注册成功！</p>
-        <p class="sub-tips">奖励已发送到我的账户</p>
+        <p
+          class="sub-tips"
+          v-if="inviter"
+        >
+          奖励已发送到我的账户
+        </p>
         <button
           class="confirm-btn"
           @click="jumpToDownAppPage"
@@ -725,6 +729,7 @@ export default {
       moveX: 0, // 移动的坐标
       mobileMaxwidth: 800, // 移动端拖动最大宽度
       invitationRegisterSuccess: true, // 邀请注册成功
+      registerParams: {}, // 注册参数
       end: '' // 占位
     }
   },
@@ -750,7 +755,7 @@ export default {
           $('.handler').css({'left': width})
           $('.drag_bg').css({'width': width})
         } else if (width > this.maxwidth) {
-          this.successFunction()
+          this.successFunction(this.registerParams)
         }
       }
     })
@@ -775,7 +780,11 @@ export default {
       'USER_LOGOUT'
     ]),
     jumpToDownAppPage () {
-      this.$router.push({'path': '/downloadApp'})
+      if (this.inviter) {
+        this.$router.push({'path': '/downloadApp'})
+      } else {
+        this.$router.push({'path': '/login'})
+      }
     },
     jumpToOtherPage (router, activeName) {
       jumpToOtherPageForFooter(router, activeName, this)
@@ -1005,7 +1014,7 @@ export default {
       if (goOnStatus) {
         let userName = this.activeMethod ? this.emailNum : this.phoneNum
         let countryCode = this.activeMethod ? this.activeCountryCodeWithEmail : this.activeCountryCodeWithPhone
-        let params = {
+        this.registerParams = {
           userName: userName,
           password: this.password,
           checkCode: this.checkCode,
@@ -1025,7 +1034,7 @@ export default {
               $('.handler').css({'left': width})
               $('.drag_bg').css({'width': width})
             } else if (width > this.maxwidth) {
-              this.successFunction(params)
+              this.successFunction(this.registerParams)
             }
           }
         })
@@ -1045,7 +1054,7 @@ export default {
       try {
         const data = await sendRegisterUser(params)
         console.log(data)
-        if (!returnAjaxMessage(data, this, 1)) {
+        if (!returnAjaxMessage(data, this, 0)) {
           this.fullscreenLoading = false // loading
           return false
         } else {
@@ -1120,7 +1129,7 @@ export default {
       if (targetLeft < this.mobileMaxwidth && targetLeft >= 0) {
         $(e.target).css({'left': left + 'px'})
       } else {
-        this.successFunction()
+        this.successFunction(this.registerParams)
       }
     },
     handleTouchEnd (e) {
@@ -1363,10 +1372,10 @@ export default {
             width:100%;
             >.inner-box{
               background-color: #28446e;
-              height:1.24rem;
+              height:3rem;
               width:100%;
               padding:0 5px 0 20px;
-              margin-bottom:15px;
+              margin-bottom:.4rem;
               display: inline-block;
               vertical-align: middle;
               /*background:rgba(32,55,90,1);*/
@@ -1377,10 +1386,10 @@ export default {
                 padding:0;
                 height:20px;
                 margin-bottom:0;
-                font-size: .4rem;
+                font-size: 1rem;
               }
               >.input{
-                font-size: .4rem;
+                font-size: 1rem;
                 &::-webkit-input-placeholder{
                   color:#8B9197;
                 }
@@ -1388,11 +1397,11 @@ export default {
                 height:100%;
                 color:#fff;
                 &.image-validate{
-                  width:80%;
+                  width:60%;
                   vertical-align: top;
                 }
                 &.mobile-phone{
-                  width:80%;
+                  width:70%;
                 }
               }
               >.middle-line{
@@ -1405,41 +1414,19 @@ export default {
               }
               >.send-code-btn{
                 color:$mainColor;
-                height:40px;
-                line-height: 40px;
+                height:3rem;
+                line-height: 3rem;
                 text-align: center;
-                font-size: .4rem;
+                font-size: 1rem;
                 /*width:66px;*/
               }
             }
-            /*>.err-box{
-              height:40px;
-              overflow: hidden;
-              border:1px solid transparent;
-              >.triangle{
-                vertical-align: middle;
-                display: inline-block;
-                border:10px solid transparent;
-                border-top-color:red;
-                transform:rotate(90deg);
-                margin-right:-5px;
-              }
-              >span{
-                display:inline-block;
-                height:40px;
-                line-height:40px;
-                background-color: green;
-                color:red;
-                padding:0 20px 0 30px;
-                border-radius: 10px;
-              }
-            }*/
           }
           >.error-msg{
-            height:.8rem;
-            line-height: 0.8rem;
+            height:2.8rem;
+            line-height: 5rem;
             margin-left: 30px;
-            font-size: .4rem;
+            font-size: 1rem;
             color: rgb(212, 88, 88);
           }
           /*注册，忘记密码*/
@@ -1457,11 +1444,11 @@ export default {
           /*注册按钮*/
           >.register-btn{
             width:100%;
-            height:1.24rem;
-            margin:20px auto 0;
+            height:3rem;
+            margin:2rem auto 0;
             padding:0 5px 0 20px;
             display:block;
-            font-size: .4rem;
+            font-size: 1rem;
             background:linear-gradient(81deg,rgba(61,152,249,1) 0%,rgba(71,135,255,1) 100%);
             border-radius:20px;
             box-shadow:2px 2px 8px 0px rgba(26,42,71,1);
