@@ -57,7 +57,7 @@ const FinanceInvestmentRecord = r => require.ensure([], () => r(require('@/compo
  * User
  */
 // 登录
-const Login = r => require.ensure([], () => r(require('@/pages/loginUser')), 'login')
+const Login = r => require.ensure([], () => r(require('@/pages/LoginUser')), 'login')
 // 注册
 const Register = r => require.ensure([], () => r(require('@/pages/RegisterUser')), 'register')
 const ForgetPassword = r => require.ensure([], () => r(require('@/components/User/ForgetPassword')), 'forget-password')
