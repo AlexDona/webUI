@@ -28,10 +28,14 @@ import {
   getTransitionCurrencyRateAjax,
   getFooterInfo1,
   getFooterInfo2,
-  getConfigAjax
+  getConfigAjax,
+  getLanguageList
 } from '../utils/api/header'
 import store from '../vuex'
-import {removeStore} from './index'
+import {
+  removeStore,
+  getStore
+} from './index'
 import {PHONE_REG, EMAIL_REG, ID_REG, PWD_REG, ALIPAY_REG, BANK_REG, GOOGLE_REG, TPED_REG, URL_REG, WITHDRAWAL_REG} from './regExp'
 // 请求接口后正确或者错误的提示提示信息：
 // 如果返回 错误 了就提示错误并不能继续往下进行；
@@ -175,12 +179,12 @@ export const changeCurrentPageForLegalTrader = (currentPage, type, that) => {
     status: true
   })
 }
-export const getCountryListAjax = async (that, callback) => {
+export const getCountryListAjax = async (that) => {
   const data = await getCountryList()
   if (!returnAjaxMessage(data, that)) {
     return false
   } else {
-    callback(data)
+    that.SET_COUNTRY_AREA_LIST(data.data.data)
   }
 }
 // 服务条款接口
@@ -290,6 +294,21 @@ export const getTransitionCurrencyRate = async (params, that, activeConvertCurre
     that.CHANGE_CURRENCY_RATE_LIST({
       currencyRateList: data.data.data,
       activeConvertCurrencyObj: activeConvertCurrencyObj
+    })
+  }
+}
+export const getLanguageListAjax = async (that) => {
+  const data = await getLanguageList()
+  if (!returnAjaxMessage(data, that)) {
+    return false
+  } else {
+    that.languageList = data.data.data
+    let localLanguage = getStore('language') || store.state.common.defaultLanguage
+    _.forEach(that.languageList, item => {
+      if (item.shortName === localLanguage) {
+        that.CHANGE_LANGUAGE(item)
+        return false
+      }
     })
   }
 }

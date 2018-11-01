@@ -2,43 +2,126 @@
   <div
     class="invitation-register-box"
   >
-    <HeaderCommonForMobile/>
+    <div class="logo">
+      <img :src="logoSrc">
+    </div>
     <div class="inner-box">
-
+      <p>您的好友{{inviter}}</p>
+      <p class="strong">邀请您注册 <span class="yellow">{{'FUBT'}}</span></p>
+      <div class="bg">
+        <img src="../assets/develop/register-big-url.png">
+      </div>
+      <router-link
+        :to="`/register?showId=${$route.query.showId}`"
+        class="register-btn"
+      >立即注册领取</router-link>
     </div>
   </div>
 </template>
 <!--请严格按照如下书写书序-->
 <script>
-import {mapState} from 'vuex'
+import {
+  getFooterInfo,
+  getLanguageListAjax
+} from '../utils/commonFunc'
 import HeaderCommonForMobile from '../components/Common/HeaderForMobile'
+import {createNamespacedHelpers, mapState} from 'vuex'
+const {mapMutations} = createNamespacedHelpers('common')
 export default {
   components: {
     HeaderCommonForMobile
   },
   // props,
   data () {
-    return {}
+    return {
+      inviter: '18625512982'
+    }
   },
-  created () {},
+  async created () {
+    await getLanguageListAjax(this)
+    await getFooterInfo(this.language, this)
+  },
   mounted () {},
   activited () {},
   update () {},
   beforeRouteUpdate () {},
-  methods: {},
+  methods: {
+    ...mapMutations([
+      'CHANGE_LANGUAGE',
+      'SET_FOOTER_INFO'
+    ])
+  },
   filter: {},
   computed: {
     ...mapState({
-      isMobile: state => state.user.isMobile
+      isMobile: state => state.user.isMobile,
+      logoSrc: state => state.common.logoSrc,
+      configInfo: state => state.common.footerInfo.configInfo,
+      language: state => state.common.language
     })
   },
-  watch: {}
+  watch: {
+    async language () {
+      await getFooterInfo(this.language, this)
+    },
+    configInfo (newVal) {
+      console.log(newVal)
+    }
+  }
 }
 </script>
 <style scoped lang="scss" type="text/scss">
   .invitation-register-box{
-    background: linear-gradient(81deg,rgba(43,57,110,1) 0%,rgba(42,80,130,1) 100%);
+    background: linear-gradient(150deg,rgba(30,38,54,1),rgba(37,75,117,1));
     height:100%;
     width:100%;
+    overflow:hidden;
+    >.logo{
+      height:120px;
+      line-height: 120px;
+      padding:0 20px;
+      box-sizing: border-box;
+      >img{
+        height:100px;
+        display: inline-block;
+        margin-top:10px;
+      }
+    }
+    >.inner-box{
+      width:100%;
+      height:100%;
+      color:#fff;
+      font-size: .8rem;
+      text-align: center;
+      padding:2rem;
+      /*background-color: pink;*/
+      .strong{
+        font-weight: 700;
+        font-size: 1.2rem;
+        line-height: 2.4rem;
+        >.yellow{
+          color:#ffec2d;
+        }
+      }
+      >.bg{
+        /*background-color: pink;*/
+        height:18rem;
+        >img{
+          margin: 2rem auto;
+          width:80%;
+        }
+      }
+      >.register-btn{
+        width:10rem;
+        height:3rem;
+        font-size: 1.2rem;
+        line-height: 3rem;
+        background:linear-gradient(81deg,rgba(61,152,249,1) 0%,rgba(71,135,255,1) 100%);
+        box-shadow:0px 3px 8px 0px rgba(26,42,71,1);
+        border-radius:10px;
+        color:#fff;
+        display: inline-block;
+      }
+    }
   }
 </style>

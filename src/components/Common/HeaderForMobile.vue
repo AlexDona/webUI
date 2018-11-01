@@ -56,17 +56,11 @@
 <!--请严格按照如下书写书序-->
 <script>
 import {
-  returnAjaxMessage,
   getCountryListAjax,
   reflashUserInfo,
-  getFooterInfo
+  getFooterInfo,
+  getLanguageListAjax
 } from '../../utils/commonFunc'
-import {
-  getStore
-} from '../../utils'
-import {
-  getLanguageList
-} from '../../utils/api/header'
 import { createNamespacedHelpers, mapState } from 'vuex'
 const { mapMutations } = createNamespacedHelpers('common')
 export default {
@@ -83,12 +77,11 @@ export default {
   async created () {
     require('../../../static/css/theme/day/Common/HeaderCommonDay.css')
     // 获取 语言列表:任付伟先注释此方法防止每次刷新报错-有需要请放开
-    await this.getLanguageList()
+    await getLanguageListAjax(this)
     await getFooterInfo(this.language, this)
-    // console.log(this.theme)
     this.activeTheme = this.theme
     // 查询某商户可用法币币种列表
-    await this.getCountryList()
+    await getCountryListAjax(this)
     if (this.isLogin) {
       await reflashUserInfo(this)
     }
@@ -114,30 +107,6 @@ export default {
       'SET_USER_INFO_REFRESH_STATUS',
       'SET_FOOTER_INFO'
     ]),
-    getCountryList () {
-      getCountryListAjax(this, (data) => {
-        console.log(data)
-        // this.contryAreaList = data.data.data
-        this.SET_COUNTRY_AREA_LIST(data.data.data)
-        // console.log(this.contryAreaList)
-      })
-    },
-    // 获取国家列表
-    async getLanguageList () {
-      const data = await getLanguageList()
-      if (!returnAjaxMessage(data, this)) {
-        return false
-      } else {
-        this.languageList = data.data.data
-        let localLanguage = getStore('language') || this.defaultLanguage
-        _.forEach(this.languageList, item => {
-          if (item.shortName === localLanguage) {
-            this.CHANGE_LANGUAGE(item)
-            return false
-          }
-        })
-      }
-    },
     // 显示状态切换 （语言）
     toggleShowLanguageBox (status) {
       this.langSelecting = Boolean(status)

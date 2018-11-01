@@ -86,14 +86,14 @@ export default {
         path !== '/login' &&
         path !== '/register' &&
         path !== '/downloadApp' &&
-        path !== '/invitationRegister'
+        path !== '/InvitationRegister'
       ) ? 1 : 0
       // this.needHeader = !this.isMobile ? 1 : 0
       this.needFooter = (
         path === '/login' ||
         path === '/register' ||
         path === '/downloadApp' ||
-        path !== '/invitationRegister'
+        path === '/InvitationRegister'
       ) ? 0 : 1
       switch (path) {
         case '/register':

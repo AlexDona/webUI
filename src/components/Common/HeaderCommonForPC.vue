@@ -331,22 +331,15 @@
 </template>
 <script>
 import {getMerchantAvailablelegalTender} from '../../utils/api/OTC'
-import {
-  getLanguageList
-  // getConfigAjax
-} from '../../utils/api/header'
-import {
-  getStore
-} from '../../utils'
 import {userLoginOut} from '../../utils/api/user'
 import IconFontCommon from '../Common/IconFontCommon'
-// import {getPartnerList} from '../../utils/api/home'
 import {
   returnAjaxMessage,
   getCountryListAjax,
   reflashUserInfo,
   getTransitionCurrencyRate,
-  getFooterInfo
+  getFooterInfo,
+  getLanguageListAjax
 } from '../../utils/commonFunc'
 import { createNamespacedHelpers, mapState } from 'vuex'
 const { mapMutations } = createNamespacedHelpers('common')
@@ -393,8 +386,8 @@ export default{
   async created () {
     require('../../../static/css/theme/day/Common/HeaderCommonDay.css')
     // 获取 语言列表:任付伟先注释此方法防止每次刷新报错-有需要请放开
-    await this.getLanguageList()
-    await this.getCountryList()
+    await getLanguageListAjax(this)
+    await getCountryListAjax(this)
     await getFooterInfo(this.language, this)
     // console.log(this.theme)
     this.activeTheme = this.theme
@@ -423,14 +416,6 @@ export default{
       'CHANGE_REF_SECURITY_CENTER_INFO',
       'SET_FOOTER_INFO'
     ]),
-    getCountryList () {
-      getCountryListAjax(this, (data) => {
-        console.log(data)
-        // this.contryAreaList = data.data.data
-        this.SET_COUNTRY_AREA_LIST(data.data.data)
-        // console.log(this.contryAreaList)
-      })
-    },
     // 更改当前选中汇率转换货币
     async changeActiveTransitionCurrency () {
       const params = {
@@ -445,26 +430,6 @@ export default{
       })
       await getTransitionCurrencyRate(params, this, this.activeConvertCurrencyObj)
     },
-    // 获取国家列表
-    async getLanguageList () {
-      const data = await getLanguageList()
-      if (!returnAjaxMessage(data, this)) {
-        return false
-      } else {
-        this.languageList = data.data.data
-        console.log(this.languageList)
-        let localLanguage = getStore('language') || this.defaultLanguage
-        _.forEach(this.languageList, item => {
-          if (item.shortName === localLanguage) {
-            this.CHANGE_LANGUAGE(item)
-            console.log(this.activeLanguage)
-            return false
-          }
-        })
-        // console.log(this.languageList[0])
-      }
-    },
-    // 获取板块列表
     // 设置个人中心跳转
     setPersonalJump (target) {
       this.$store.commit('personal/CHANGE_USER_CENTER_ACTIVE_NAME', target)
@@ -616,8 +581,8 @@ export default{
     footerInfo (newVal) {
       console.log(newVal)
     },
-    language () {
-      getFooterInfo(this.language, this)
+    async language () {
+      await getFooterInfo(this.language, this)
     },
     title (newVal) {
       console.log(newVal)
