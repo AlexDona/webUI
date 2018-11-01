@@ -129,7 +129,7 @@ export default {
         return false
       } else {
         this.languageList = data.data.data
-        let localLanguage = getStore('language') || 'zh_CN'
+        let localLanguage = getStore('language') || this.defaultLanguage
         _.forEach(this.languageList, item => {
           if (item.shortName === localLanguage) {
             this.CHANGE_LANGUAGE(item)
@@ -155,7 +155,8 @@ export default {
     ...mapState({
       logoSrc: state => state.common.logoSrc,
       activeLanguage: state => state.common.activeLanguage,
-      language: state => state.common.language // 语言
+      language: state => state.common.language, // 语言
+      defaultLanguage: state => state.common.defaultLanguage // 语言
     })
   },
   watch: {}

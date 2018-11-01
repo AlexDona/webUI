@@ -10,8 +10,9 @@ const state = {
   countDownResetStatus: false, // 倒计时重置状态
   theme: getStore('theme') || 'night',
   contryAreaList: [], // 国家列表（国家码）
+  defaultLanguage: 'zh_TW',
   // 国际化语言
-  language: getStore('language') || 'zh_CN',
+  language: getStore('language') || this.defaultLanguage,
   activeLanguage: '',
   mainColor: {
     $mainNightBgColor: '#1c1f32',

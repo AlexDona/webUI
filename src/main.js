@@ -9,11 +9,12 @@ import 'babel-polyfill'
 import store from './vuex'
 import '../static/js/rem'
 
+console.log(store)
 // import '../static/css/scss/index.scss'
 
 // 多语言
 const i18n = new VueI18n({
-  locale: getStore('language') || 'zh_CN', // 语言标识
+  locale: getStore('language') || store.state.common.defaultLanguage, // 语言标识
   messages: {
     'zh_CN': require('../static/lang/zh_CN'),
     'en_US': require('../static/lang/en_US'),
