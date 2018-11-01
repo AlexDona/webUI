@@ -263,7 +263,7 @@
 </template>
 <script>
 import {
-  timeFilter,
+  // timeFilter,
   scientificToNumber
 } from '../../utils'
 import {

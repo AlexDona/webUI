@@ -21,6 +21,11 @@ export const user = {
   'login_username': '用户名',
   'login_reinput': '您输入图片验证码不正确，请核对后重新输入',
   'login_telphone': '手机',
+  'login_tips1': '请输入电话号/邮箱',
+  'login_tips2': '请输入密码',
+  'login_tips3': '忘记密码',
+  'login_tips4': '免费注册',
+  'login_tips5': '请输入用户名',
   // #############忘记密码#############
   'forgetPassword_findBack': '找回',
   'forgetPassword_inputname': '填写账户名',

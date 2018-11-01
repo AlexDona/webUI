@@ -210,6 +210,13 @@ export const personal = {
   // PUSHレコード
   // #####################私の取引#####################
   // トークン注文
+  'user_coin_order1': '現在の手数料',
+  'user_coin_order2': '歴史委員会',
+  'user_coin_order3': '取引の詳細',
+  'user_coin_order4': '開始日と終了日',
+  'user_coin_order5': '注文総額',
+  'user_coin_order6': '完了しました',
+  'user_coin_order7': 'コイン受注',
   'user_coin': 'コイン',
   'user_coin_bring_together': 'マッチ',
   'user_coin_appoint_single': 'ビル',

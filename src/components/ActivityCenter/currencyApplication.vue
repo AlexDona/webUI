@@ -16,33 +16,65 @@
         <div
           class="content"
         >
-          <div
+          <!-- <div
             class="top"
             v-html="contentHTML"
+          > -->
+          <div
+            class="top"
           >
             <div class="item">
-              <p class="title">申请</p>
-              <p class="content">提交申请资料到平台</p>
+              <p class="title">
+                <!-- 申请 -->
+                {{$t('M.actionCenter_Token_step1')}}
+              </p>
+              <p class="content">
+                <!-- 提交申请资料到平台 -->
+                {{$t('M.actionCenter_Token_step2')}}
+              </p>
               <span class="index">1</span>
             </div>
             <div class="arrow"></div>
             <div class="item">
-              <p class="title">审核</p>
-              <p class="content">平台审核资料信息</p>
+              <p class="title">
+                <!-- 审核 -->
+                {{$t('M.actionCenter_Token_step3')}}
+              </p>
+              <p class="content">
+                <!-- 平台审核资料信息 -->
+                {{$t('M.actionCenter_Token_step4')}}
+              </p>
               <span class="index">2</span>
             </div>
             <div class="arrow reverse"></div>
             <div class="item">
-              <p class="title">投票</p>
-              <p class="content">新币登录投票</p>
+              <p class="title">
+                <!-- 投票 -->
+                {{$t('M.actionCenter_Token_step5')}}
+              </p>
+              <p class="content">
+                <!-- 新币登录投票 -->
+                {{$t('M.actionCenter_Token_step6')}}
+              </p>
               <span class="index">3</span>
             </div>
             <div class="arrow"></div>
             <div class="item">
-              <p class="title">上线</p>
-              <p class="content">上线交易区</p>
+              <p class="title">
+                <!-- 上线 -->
+                {{$t('M.actionCenter_Token_step7')}}
+              </p>
+              <p class="content">
+                <!-- 上线交易区 -->
+                {{$t('M.actionCenter_Token_step8')}}
+              </p>
               <span class="index">4</span>
             </div>
+          </div>
+          <div
+            v-html="contentHTML"
+            class="return_content"
+          >
           </div>
           <div class="bottom">
             <div class="download-box">
@@ -194,7 +226,7 @@ export default {
           transform: translate(-50%,0);
           >.top{
             padding:56px;
-            /*text-align: center;*/
+            text-align: center;
             >div{
               display:inline-block;
             }
@@ -233,6 +265,9 @@ export default {
               width:46px;
               height:100px;
             }
+          }
+          >.return_content{
+            padding-left: 50px;
           }
           >.bottom{
             padding:50px 40px;

@@ -46,7 +46,7 @@
                 <input
                   type="text"
                   v-model.trim="username"
-                  :placeholder="$t('M.comm_please_enter') + $t('M.login_telNum')+ '/'+ $t('M.comm_emailbox')"
+                  :placeholder="$t('M.login_tips1')"
                   @keydown="setErrorMsg(0,'')"
                   @keyup.enter="loginForStep1"
                   @blur="checkoutInputFormat(0,username)"
@@ -64,7 +64,7 @@
                   type="password"
                   autocomplete="off"
                   v-model.trim="password"
-                  :placeholder="$t('M.comm_please_enter') + $t('M.comm_loginpassword')"
+                  :placeholder="$t('M.login_tips2')"
                   @keydown="setErrorMsg(1,'')"
                   @keyup.enter="loginForStep1"
                   @blur="checkoutInputFormat(1,password)"
@@ -80,7 +80,7 @@
                 to="/ForgetPassword"
               >
                 <!-- 忘记密码? -->
-                {{$t('M.login_forget')}}{{$t('M.comm_loginpassword')}}?
+                {{$t('M.login_tips3')}}?
               </router-link>
               <!-- 忘记密码？ -->
               <router-link
@@ -88,8 +88,9 @@
                 to="/register"
               >
                 <!-- 免费注册 -->
-                {{$t('M.login_free')}}{{$t('M.comm_register_time')}}
-              </router-link><!-- 免费注册 -->
+                <!-- {{$t('M.login_free')}}{{$t('M.comm_register_time')}} -->
+                {{$t('M.login_tips4')}}
+              </router-link>
             </div>
           </div>
         </div>
@@ -852,7 +853,7 @@ export default {
         // 用户名验证
         case 0:
           if (!targetNum) {
-            this.setErrorMsg(0, this.$t('M.comm_please_enter') + this.$t('M.login_username')) // 请输入用户名
+            this.setErrorMsg(0, this.$t('M.login_tips5')) // 请输入用户名
             this.$forceUpdate()
             return 0
           } else {

@@ -47,7 +47,7 @@
             </el-form-item>
             <!--买方UID-->
             <el-form-item
-              :label="$t('M.comm_buyer') + 'UID'"
+              :label="$t('M.comm_buyer') + ' UID'"
             >
               <input
                 class="form-input-common border-radius2 padding-l15"

@@ -21,6 +21,12 @@ export const user = {
   'login_username': 'ユーザー名',
   'login_reinput': '入力した画像確認コードが間違っています。確認して再入力してください',
   'login_telphone': '携帯電話',
+  'login_tips1': '電話番号/メールアドレスを入力してください',
+  'login_tips2': 'パスワードを入力してください',
+  'login_tips3': 'パスワードを忘れた',
+  'login_tips4': '無料登録',
+  'login_tips5': 'ユーザー名を入力してください',
+  'login_tips6': '滑块验证',
   // #############パスワードを忘れた#############
   'forgetPassword_findBack': '取得',
   'forgetPassword_inputname': 'アカウント名を入力してください',

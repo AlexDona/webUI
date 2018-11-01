@@ -18,6 +18,7 @@
 }
 .push-assets.personal .el-form-item__label {
   color: #a9bed4;
+  width: 124px !important;
 }
 .push-assets.personal .el-table th>.cell {
   text-align: center;

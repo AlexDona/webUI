@@ -79,7 +79,7 @@
                 <el-option
                   v-for="(item,index) in investTypeList"
                   :key="index"
-                  :label="item.typeDescription"
+                  :label="language === 'zh_CN' || language === 'zh_TW'? item.typeDescription : item.typeDescription"
                   :value="item.id"
                 >
                 <!-- 任增加存币类型国际化 -->
@@ -329,7 +329,7 @@
                 <!-- 任增加存币类型国际化 -->
                 <!-- :prop="language === 'zh_CN' || language === 'zh_TW'? typeDescription : typeEnglishDescription" -->
                 <el-table-column
-                  prop="typeDescription"
+                  :prop="language === 'zh_CN' || language === 'zh_TW'? typeDescription : typeDescription"
                   :label="$t('M.finance_invest') + $t('M.otc_cancelOrder_type')"
                   width="180">
                 </el-table-column>
@@ -812,13 +812,13 @@ export default {
       this.selectedInvestTypeId = e
       this.traderCoinList.forEach(item => {
         if (item.id == e) {
-          this.selectedInvestTypeDiscri = item.typeDescription
+          // this.selectedInvestTypeDiscri = item.typeDescription
           // 任增加存币类型国际化
-          // if (this.language === 'zh_TW' || this.language === 'zh_CN') {
-          //   this.selectedInvestTypeDiscri = item.typeDescription
-          // } else {
-          //   this.selectedInvestTypeDiscri = item.typeEnglishDescription
-          // }
+          if (this.language === 'zh_TW' || this.language === 'zh_CN') {
+            this.selectedInvestTypeDiscri = item.typeDescription
+          } else {
+            this.selectedInvestTypeDiscri = item.typeDescription
+          }
         }
       })
     },

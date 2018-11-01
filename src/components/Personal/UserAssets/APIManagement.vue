@@ -139,7 +139,7 @@
             </el-table-column>
             <!--IP地址-->
             <el-table-column
-              :label="'IP' + $t('M.comm_site')"
+              :label="'IP ' + $t('M.comm_site')"
               width="120"
             >
               <template slot-scope = "s">
@@ -148,7 +148,7 @@
             </el-table-column>
             <!--状态-->
             <el-table-column
-              :label="'IP' + $t('M.comm_state')"
+              :label="'IP ' + $t('M.comm_state')"
               width="80"
             >
               <template slot-scope = "s">
@@ -338,7 +338,7 @@
               <!--请不要泄露您的Secret Key，避免造成资产损失。-->
               <!--如您忘记了Secret Key，请删除该密钥对并申请新的密钥对。-->
               <p class="font-size12 text-info text-margin">
-                温馨提示
+                <!-- 温馨提示 -->
                 {{ $t('M.user_account_warm_prompt') }}
               </p>
               <p class="font-size12 text-info">
@@ -370,7 +370,7 @@
       <div class="editor">
         <!--编辑API-->
         <el-dialog
-          :title="$t('M.comm_newly_compile') + 'API'"
+          :title="$t('M.comm_newly_compile') + ' API'"
           :visible.sync="compileUserApi"
         >
           <el-form
