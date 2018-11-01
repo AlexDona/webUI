@@ -12,6 +12,9 @@ let loginSocketUrl = '' // 扫码登录socket
 let domain = window.location.href.split('/')// 项目域名
 domain.pop()
 domain = domain.join('/')
+if (!domain.endsWith('#')) {
+  domain += '#'
+}
 console.log(domain)
 let routerMode = 'hash'
 if (process.env.NODE_ENV == 'development') {
