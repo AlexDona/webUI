@@ -82,6 +82,8 @@
                   :label="item.typeDescription"
                   :value="item.id"
                 >
+                <!-- 任增加存币类型国际化 -->
+                <!-- :label="language === 'zh_CN' || language === 'zh_TW'? item.typeDescription : item.typeEnglishDescription" -->
                 </el-option>
               </el-select>
             </label>
@@ -324,6 +326,8 @@
                 >
                 </el-table-column>
                 <!-- 存币类型 -->
+                <!-- 任增加存币类型国际化 -->
+                <!-- :prop="language === 'zh_CN' || language === 'zh_TW'? typeDescription : typeEnglishDescription" -->
                 <el-table-column
                   prop="typeDescription"
                   :label="$t('M.finance_invest') + $t('M.otc_cancelOrder_type')"
@@ -809,6 +813,12 @@ export default {
       this.traderCoinList.forEach(item => {
         if (item.id == e) {
           this.selectedInvestTypeDiscri = item.typeDescription
+          // 任增加存币类型国际化
+          // if (this.language === 'zh_TW' || this.language === 'zh_CN') {
+          //   this.selectedInvestTypeDiscri = item.typeDescription
+          // } else {
+          //   this.selectedInvestTypeDiscri = item.typeEnglishDescription
+          // }
         }
       })
     },
@@ -840,7 +850,8 @@ export default {
       isLogin: state => state.user.isLogin,
       financeLineRenderTimeList: state => state.finance.financeLineRenderTimeList,
       financeLineRenderPriceList: state => state.finance.financeLineRenderPriceList,
-      status: state => state.finance.status
+      status: state => state.finance.status,
+      language: state => state.common.language // 当前选中语言
     }),
     screenWidth () {
       return window.innerWidth / 3
@@ -849,6 +860,10 @@ export default {
   watch: {
     InvestmentValue (newVal, oldVal) {
       console.log(newVal, oldVal)
+    },
+    language (newVal) {
+      console.log('当前选中语言')
+      console.log(newVal)
     }
   },
   destroyed () {

@@ -34,6 +34,7 @@
               <!-- 买卖类型 -->
               <div class="right-style display-inline-block">
                 <el-select
+                  :placeholder="$t('M.comm_please_choose')"
                   v-model="activitedBuySellStyle"
                   :no-data-text="$t('M.comm_no_data')"
                   @change="changeBuySellStyle"
@@ -51,6 +52,7 @@
                 <!-- 可用币种 -->
                 <el-select
                   v-model="activitedCoinId"
+                  :placeholder="$t('M.comm_please_choose')"
                   :no-data-text="$t('M.comm_no_data')"
                   @change="changeAvailableCoinId"
                 >
@@ -68,6 +70,7 @@
                 <!-- 可用法币 :label="language === 'zh_CN'? item.name : item.shortName"-->
                 <el-select
                   v-model="activitedCurrencyId"
+                  :placeholder="$t('M.comm_please_choose')"
                   :no-data-text="$t('M.comm_no_data')"
                   @change="changeCurrencyId"
                 >

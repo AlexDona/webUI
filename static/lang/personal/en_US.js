@@ -126,7 +126,7 @@ export const personal = {
   'user_invite_award': 'Rewards',
   // 安全中心Security center
   'user_security_safety': 'Safety ',
-  'user_security_email': 'mailbox',
+  'user_security_email': 'Mailbox',
   'user_security_phone': 'Phone',
   'user_security_google': 'Google ',
   'user_security_password': ' password',

@@ -223,6 +223,10 @@ export default {
     },
     activeName (newVal) {
       // console.log(newVal)
+    },
+    // 任增加：改变语言重新请求对应语言的国际化内容
+    language (newVal) {
+      this.getServiceProtocolData()
     }
   }
 }
@@ -230,7 +234,7 @@ export default {
 <style scoped lang="scss" type="text/scss">
   .service-protocol-box{
     width:100%;
-    height:100%;
+    // height:100%;
     >.content{
       overflow: visible;
       width:100%;
