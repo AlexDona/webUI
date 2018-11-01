@@ -17,7 +17,6 @@ import {
   sendByPhoneOrEmial
 } from '../utils/api/user'
 import {
-  getPartnerList,
   addUserCollectionAjax,
   removeCollectionAjax,
   getCollectionListAjax
@@ -53,9 +52,9 @@ export const returnAjaxMessage = (data, self, noTip, errorTip) => {
       // console.log(self.$t(`M.${meta.i18n_code}`).format(meta.params))
       // 登录失效
       if (meta.code == 401) {
-        removeStore('loginStep1Info')
-        self.$router.push({path: '/login'})
-        store.commit('user/USER_LOGOUT')
+        // removeStore('loginStep1Info')
+        // self.$router.push({path: '/login'})
+        // store.commit('user/USER_LOGOUT')
       }
       return 0
     } else {
@@ -141,32 +140,13 @@ export const repealMyEntrustCommon = async (params, callback) => {
   const repealData = await repealMyEntrustAjax(params)
   callback(repealData)
 }
-/**
- * 安全中心状态
- */
-export const stateSafeCentral = async (params, callback) => {
-  const repealData = await statusSecurityCenter(params)
-  callback(repealData)
-}
+
 // /**
 //  * 商家订单列表请求
 //  */
 export const getMerchantsOrdersList = async (params, callback) => {
   const repealData = await getQueryAllOrdersList(params)
   callback(repealData)
-}
-/**
- * 个人资产信息
- */
-export const globalPersonalAssetsInformation = async (params, callback) => {
-  const data = await userRefreshUser(params)
-  callback(data)
-}
-
-// 获取板块信息
-export const getPartnerListAjax = async (params, callback) => {
-  const data = await getPartnerList(params)
-  callback(data)
 }
 
 // 法币交易分页切换

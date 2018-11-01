@@ -342,7 +342,7 @@ export default {
       totalPageForMyEntrust: 1, // 当前委托总页数
       totalPageMyNumber: '', // 条数
       text: 'SADFASD',
-      link: `${domain}register?showId=`,
+      link: `${domain}/register?showId=`,
       ercodeIsShowId: false, // 二维码显示状态
       qrcode: '123456',
       // 推广统计

@@ -1330,7 +1330,6 @@ export default {
         >.invitation-box{
           width:100%;
           height:6.6rem;
-          background: radial-gradient(225.6px at 428px 241px, #3a77c4 11%, transparent);
           display: flex;
           >.left{
             flex:1;

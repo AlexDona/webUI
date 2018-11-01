@@ -6,8 +6,8 @@
       <img :src="logoSrc">
     </div>
     <div class="inner-box">
-      <p>您的好友{{inviter}}</p>
-      <p class="strong">邀请您注册 <span class="yellow">{{'FUBT'}}</span></p>
+      <p>您的好友{{phoneNumberFormat(inviter)}}</p>
+      <p class="strong">邀请您注册 <span class="yellow">{{configInfo.otcAd}}</span></p>
       <div class="bg">
         <img src="../assets/develop/register-big-url.png">
       </div>
@@ -22,8 +22,15 @@
 <script>
 import {
   getFooterInfo,
-  getLanguageListAjax
+  getLanguageListAjax,
+  returnAjaxMessage
 } from '../utils/commonFunc'
+import {
+  findUserInfoByShowId
+} from '../utils/api/home'
+import {
+  phoneNumberFormat
+} from '../utils'
 import HeaderCommonForMobile from '../components/Common/HeaderForMobile'
 import {createNamespacedHelpers, mapState} from 'vuex'
 const {mapMutations} = createNamespacedHelpers('common')
@@ -34,12 +41,13 @@ export default {
   // props,
   data () {
     return {
-      inviter: '18625512982'
+      inviter: ''
     }
   },
   async created () {
     await getLanguageListAjax(this)
     await getFooterInfo(this.language, this)
+    await this.findUserInfoByShowId()
   },
   mounted () {},
   activited () {},
@@ -49,7 +57,22 @@ export default {
     ...mapMutations([
       'CHANGE_LANGUAGE',
       'SET_FOOTER_INFO'
-    ])
+    ]),
+    phoneNumberFormat (target) {
+      return phoneNumberFormat(target)
+    },
+    async findUserInfoByShowId () {
+      const params = {
+        showId: this.$route.query.showId
+      }
+      const data = await findUserInfoByShowId(params)
+      if (!returnAjaxMessage(data, this)) {
+        return false
+      } else {
+        console.log(data)
+        this.inviter = data.data.data.userName
+      }
+    }
   },
   filter: {},
   computed: {
