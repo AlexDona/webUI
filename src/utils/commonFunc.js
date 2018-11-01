@@ -13,7 +13,7 @@ import {
 } from '../utils/api/personal'
 
 import {
-  sendMsgByPhoneOrEmial,
+  // sendMsgByPhoneOrEmial,
   sendByPhoneOrEmial
 } from '../utils/api/user'
 import {
