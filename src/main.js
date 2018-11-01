@@ -9,6 +9,9 @@ import 'babel-polyfill'
 import store from './vuex'
 import '../static/js/rem'
 
+import vwebp from 'vue-webp2'
+Vue.use(vwebp)
+
 console.log(store)
 // import '../static/css/scss/index.scss'
 

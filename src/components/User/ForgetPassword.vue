@@ -328,7 +328,7 @@ import {
 import {phoneNumberFormat} from '../../utils'
 import {
   returnAjaxMessage,
-  sendPhoneOrEmailCodeAjax
+  apiSendPhoneOrEmailCodeAjax
 } from '../../utils/commonFunc'
 import {PWD_REG} from '../../utils/regExp'
 import ImageValidate from '../Common/ImageValidateCommon'
@@ -531,7 +531,7 @@ export default {
           params.address = this.userInfo.email
           break
       }
-      await sendPhoneOrEmailCodeAjax(msgType, params, (data) => {
+      await apiSendPhoneOrEmailCodeAjax(msgType, params, (data) => {
         // 提示信息
         if (!returnAjaxMessage(data, this)) {
           console.log('error')

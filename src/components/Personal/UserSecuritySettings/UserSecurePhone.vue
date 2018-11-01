@@ -274,7 +274,7 @@ import ImageValidate from '../../Common/ImageValidateCommon' // 图片验证吗
 import CountDownButton from '../../Common/CountDownCommon'
 import {
   returnAjaxMessage, // 接口返回信息
-  sendPhoneOrEmailCodeAjax,
+  apiSendPhoneOrEmailCodeAjax,
   validateNumForUserInput,
   getSecurityCenter
 } from '../../../utils/commonFunc'
@@ -465,7 +465,7 @@ export default {
             break
         }
       }
-      await sendPhoneOrEmailCodeAjax(loginType, params, (data) => {
+      await apiSendPhoneOrEmailCodeAjax(loginType, params, (data) => {
         console.log(this.disabledOfPhoneBtn)
         console.log(this.disabledOfPhoneBtn)
         // 提示信息

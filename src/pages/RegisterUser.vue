@@ -23,6 +23,8 @@
       class="inner-box"
       :class="{'pc-bg': !isMobile}"
     >
+      <!--<img v-webp="'../assets/develop/about-us.png',webp:'../assets/webp/banner1.webp'" />-->
+
       <!--注册(pc端)-->
       <div
         class="main-box pc-box"
@@ -585,7 +587,7 @@
           :visible.sync="registerSliderStatus"
           class="slider"
         >
-          <div class="drag-box cp bdr5">
+          <div class="drag cp bdr5">
             <div class="drag_bg bdr5"></div>
             <div class="drag_text bdr5">{{$t(confirmWords)}}</div>
             <div
@@ -669,7 +671,7 @@ import {
 import {
   returnAjaxMessage, // 接口返回信息
   validateNumForUserInput, // 用户输入验证
-  sendPhoneOrEmailCodeAjax,
+  apiSendPhoneOrEmailCodeAjax,
   jumpToOtherPageForFooter
 } from '../utils/commonFunc'
 import {createNamespacedHelpers, mapState} from 'vuex'
@@ -956,7 +958,7 @@ export default {
           break
       }
       console.log(params)
-      sendPhoneOrEmailCodeAjax(type, params, (data) => {
+      apiSendPhoneOrEmailCodeAjax(type, params, (data) => {
         // 提示信息
         if (!returnAjaxMessage(data, this)) {
           return false

@@ -367,6 +367,7 @@ export default {
     require('../../../../static/css/theme/night/Personal/UserAssets/InvitingPromotionNight.css')
   },
   mounted () {
+    console.log(domain)
     this.getInverData()
   },
   activited () {},

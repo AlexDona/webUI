@@ -613,7 +613,7 @@ import {
 // } from '../utils/api/personal'
 import {
   returnAjaxMessage,
-  sendPhoneOrEmailCodeAjax
+  apiSendPhoneOrEmailCodeAjax
 } from '../utils/commonFunc'
 import socket from '../utils/datafeeds/socket'
 
@@ -959,7 +959,7 @@ export default {
           params.address = this.userInfo.email
           break
       }
-      sendPhoneOrEmailCodeAjax(loginType, params, (data) => {
+      apiSendPhoneOrEmailCodeAjax(loginType, params, (data) => {
         // 提示信息
         if (!returnAjaxMessage(data, this)) {
           console.log('error')

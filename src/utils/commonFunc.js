@@ -52,9 +52,9 @@ export const returnAjaxMessage = (data, self, noTip, errorTip) => {
       // console.log(self.$t(`M.${meta.i18n_code}`).format(meta.params))
       // 登录失效
       if (meta.code == 401) {
-        // removeStore('loginStep1Info')
-        // self.$router.push({path: '/login'})
-        // store.commit('user/USER_LOGOUT')
+        removeStore('loginStep1Info')
+        self.$router.push({path: '/login'})
+        store.commit('user/USER_LOGOUT')
       }
       return 0
     } else {
@@ -122,11 +122,6 @@ export const validateNumForUserInput = (type, targetNum) => {
 
   console.log(returnNum)
   return returnNum
-}
-// 发送验证码（短信、邮箱）
-export const sendPhoneOrEmailCodeAjax = async (type, params, callback) => {
-  const data = await sendMsgByPhoneOrEmial(type, params)
-  callback(data)
 }
 // api 发送验证码（短信、邮箱）
 export const apiSendPhoneOrEmailCodeAjax = async (type, params, callback) => {
