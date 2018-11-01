@@ -574,7 +574,10 @@
         </div>
       </el-dialog>
       <!--滑块验证（移动端）-->
-      <div class="slider">
+      <div
+        class="slider"
+        v-if="isMobile"
+      >
         <!-- 验证 -->
         <el-dialog
           :title="$t('M.login_slideBlock') + $t('M.login_verify')"
@@ -582,7 +585,7 @@
           :visible.sync="registerSliderStatus"
           class="slider"
         >
-          <div class="drag cp bdr5">
+          <div class="drag-box cp bdr5">
             <div class="drag_bg bdr5"></div>
             <div class="drag_text bdr5">{{$t(confirmWords)}}</div>
             <div

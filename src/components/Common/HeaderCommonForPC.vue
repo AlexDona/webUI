@@ -453,7 +453,7 @@ export default{
       } else {
         this.languageList = data.data.data
         console.log(this.languageList)
-        let localLanguage = getStore('language') || 'zh_CN'
+        let localLanguage = getStore('language') || this.defaultLanguage
         _.forEach(this.languageList, item => {
           if (item.shortName === localLanguage) {
             this.CHANGE_LANGUAGE(item)
@@ -597,6 +597,7 @@ export default{
     ...mapState({
       theme: state => state.common.theme,
       language: state => state.common.language,
+      defaultLanguage: state => state.common.defaultLanguage,
       isLogin: state => state.user.isLogin,
       middleTopData: state => state.trade.middleTopData, // 当前交易对数据
       middleTopDataPrice: state => state.trade.middleTopData.last, // 当前交易对数据
