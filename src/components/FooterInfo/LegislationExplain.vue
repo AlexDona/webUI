@@ -6,7 +6,7 @@
     <div class="content">
       <div class="content">
         <div class="inner-box">
-          <h2>{{legislationExplainData.termsTypeName}}</h2>
+          <!-- <h2>{{legislationExplainData.termsTypeName}}</h2> -->
           <div
             class="content"
             v-html="legislationExplainData.content"

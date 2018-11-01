@@ -6,7 +6,7 @@
     <div class="content">
       <div class="content">
         <div class="inner-box">
-          <h2>{{userProtocolData.termsTypeName}}</h2>
+          <!-- <h2>{{userProtocolData.termsTypeName}}</h2> -->
           <div
             class="content"
             v-html="userProtocolData.content"

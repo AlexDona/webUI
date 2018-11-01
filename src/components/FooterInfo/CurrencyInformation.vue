@@ -78,7 +78,9 @@ export default {
   async created () {
     await this.getFootCurrencyInfoList()
     await this.getFootCurrencyInforDetail()
-    await this.changeCurrentCurrency(this.currencyList[0].id)
+    if (this.currencyList.length) {
+      await this.changeCurrentCurrency(this.currencyList[0].id)
+    }
   },
   mounted () {},
   activited () {},
@@ -95,8 +97,11 @@ export default {
         return false
       } else {
         this.currencyList = data.data.data
-        this.currencyId = this.currencyList[0].id
-        console.log(this.currencyList)
+        console.log(this.currencyList.length)
+        if (this.currencyList.length) {
+          this.currencyId = this.currencyList[0].id
+          console.log(this.currencyList)
+        }
       }
     },
     changeCurrentCurrency (id) {
