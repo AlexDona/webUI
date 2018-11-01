@@ -12,7 +12,7 @@ const HomeCenter = r => require.ensure([], () => r(require('@/pages/HomeCenter')
 /**
  * Personal
  */
-const PersonalCenter = r => require.ensure([], () => r(require('@/components/Personal/UserAssets/PersonalCenter')), 'user-center')
+const PersonalCenter = r => require.ensure([], () => r(require('@/pages/PersonalCenter')), 'user-center')
 // 银行卡设置
 const AddBankCard = r => require.ensure([], () => r(require('@/components/Personal/AccountReceivableAccount/AddBankCard')), 'add-bank')
 // 微信设置
