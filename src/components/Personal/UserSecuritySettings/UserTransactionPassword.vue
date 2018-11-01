@@ -236,7 +236,7 @@ import CountDownButton from '../../Common/CountDownCommon'
 import ErrorBox from '../../User/ErrorBox'
 import {
   returnAjaxMessage, // 接口返回信息
-  sendPhoneOrEmailCodeAjax,
+  apiSendPhoneOrEmailCodeAjax,
   reflashUserInfo,
   validateNumForUserInput,
   getSecurityCenter
@@ -346,7 +346,7 @@ export default {
           params.address = this.userInfo.userInfo.email
           break
       }
-      sendPhoneOrEmailCodeAjax(loginType, params, (data) => {
+      apiSendPhoneOrEmailCodeAjax(loginType, params, (data) => {
         console.log(this.disabledOfPhoneBtn)
         // 提示信息
         if (!returnAjaxMessage(data, this)) {

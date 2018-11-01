@@ -23,7 +23,8 @@
     "vue": "^2.5.2",
     "vue-concise-slider": "^2.4.8",
     "vue-router": "^3.0.1",
-    "vue-slider-component": "^2.7.6"
+    "vue-slider-component": "^2.7.6",
+    "vue-webp2": "^1.0.0"
   },
   "devDependencies": {
     "autoprefixer": "^7.1.2",

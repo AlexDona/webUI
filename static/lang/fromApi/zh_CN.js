@@ -306,7 +306,6 @@ export const fromApi = {
   'user-fail-bank-count-error': '最多开启3种支付方式',
   'otc_failure_0080': '该交易币种禁用',
   'otc_failure_0081': '该法币禁用',
-  'coin_apply': '上币申请表 （FUBT Token Listing Form）',
   'session_timeout': '登录过期，请重新登录',
   'user-fail-login-disable': '账户被禁用',
   'user-email-fail-often': '邮件发送频繁，请过120秒后重新发送',
