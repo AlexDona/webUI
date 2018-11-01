@@ -103,41 +103,47 @@
 }
 /*注册移动端*/
 .register-box .mobile-box .el-input__inner{
-  font-size: .4rem;
+  font-size: 1rem;
 }
 .register-box .mobile-box .el-select .el-input .el-select__caret{
-  font-size: .3rem;
+  display: none;
 }
 .register.mobile .el-scrollbar{
-  width:7rem;
+  width:10rem;
   height:10rem;
 }
 .register.mobile .el-select-dropdown__item{
-  height:1.2rem;
-  font-size: .4rem !important;
+  height:2rem;
+  font-size: .8rem !important;
 }
 .register.mobile .el-select-dropdown__item span{
-  line-height:1.2rem !important;
-  font-size: .4rem !important;
+  line-height:2rem !important;
+  font-size: .8rem !important;
 }
 .register.mobile .el-select-dropdown__wrap{
-  min-height:7rem;
+  min-height:10rem;
 }
 .register.mobile .el-input__inner{
-  min-width:120px;
+  min-width:180px;
+  height:3rem;
+  line-height: 3rem;
+}
+.register.mobile .el-input__suffix-inner{
+  /*display: block;*/
 }
 .register.mobile .el-checkbox__label{
-  font-size: .4rem;
+  font-size: .8rem;
   vertical-align: middle;
 }
 .register.mobile .el-checkbox__inner{
-  width:20px;
-  height:20px;
+  width:.6rem;
+  height:.6rem;
   vertical-align: top;
 }
 .register.mobile .el-checkbox__inner::after{
   width:4px;
-  left:6px;
+  left:20px;
+  height:30px;
 }
 .register.mobile .el-dialog{
   margin-top: 0 !important;

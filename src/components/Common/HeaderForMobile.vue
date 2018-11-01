@@ -36,15 +36,14 @@
                   class="lang-list"
                   v-show="langSelecting"
                 >
-                  <a
+                  <button
                     class="lang-item"
-                    href="#"
                     @click="changeLanguage(item)"
                     v-for="(item,index) in languageList"
                     :key="index"
                   >
                     {{item.name}}
-                  </a>
+                  </button>
                 </dd>
               </el-collapse-transition>
             </dl>
@@ -62,6 +61,9 @@ import {
   reflashUserInfo,
   getFooterInfo
 } from '../../utils/commonFunc'
+import {
+  getStore
+} from '../../utils'
 import {
   getLanguageList
 } from '../../utils/api/header'
@@ -81,12 +83,12 @@ export default {
   async created () {
     require('../../../static/css/theme/day/Common/HeaderCommonDay.css')
     // 获取 语言列表:任付伟先注释此方法防止每次刷新报错-有需要请放开
+    await this.getLanguageList()
     await getFooterInfo(this.language, this)
-    this.getLanguageList()
     // console.log(this.theme)
     this.activeTheme = this.theme
     // 查询某商户可用法币币种列表
-    await this.getCountryList()
+    // await this.getCountryList()
     if (this.isLogin) {
       await reflashUserInfo(this)
     }
@@ -127,9 +129,13 @@ export default {
         return false
       } else {
         this.languageList = data.data.data
-        this.CHANGE_LANGUAGE(this.languageList[0])
-        // console.log(this.languageList[0])
-        // console.log(this.activeLanguage)
+        let localLanguage = getStore('language') || 'zh_CN'
+        _.forEach(this.languageList, item => {
+          if (item.shortName === localLanguage) {
+            this.CHANGE_LANGUAGE(item)
+            return false
+          }
+        })
       }
     },
     // 显示状态切换 （语言）
@@ -213,6 +219,7 @@ export default {
                 padding: 10px 12px;
                 display: inline-block;
                 width:100%;
+                font-size: 0.5rem;
                 >.icon{
                   margin-right:5px;
                 }
@@ -224,6 +231,7 @@ export default {
               >.lang-list{
                 background-color: #2A3242;
                 position: absolute;
+                width:3rem;
                 z-index: 2;
                 left:0;
                 top:90px;
@@ -231,10 +239,12 @@ export default {
                   transition: all 1s;
                   color:#fff;
                   display:block;
-                  height:50px;
-                  line-height:50px;
+                  height:1rem;
+                  line-height:1rem;
                   text-align: left;
-                  padding:0 20px 0 10px;
+                  font-size: 0.5rem;
+                  padding:0 0.5rem;
+                  box-sizing: border-box;
                   &:hover{
                     background-color: $mainColor;
                   }

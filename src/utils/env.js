@@ -31,13 +31,13 @@ if (process.env.NODE_ENV == 'development') {
   /* socketUrl --------------------------------------------- */
 
   // socketUrl = 'ws://192.168.1.52:8087/market' // socketUrl
-  // socketUrl = 'wss://ws.bzu.com/market'
-  socketUrl = 'ws://192.168.1.200:8087/market'
+  socketUrl = 'wss://ws.bzu.com/market'
+  // socketUrl = 'ws://192.168.1.200:8087/market'
 
   // loginSocketUrl = 'ws://api.new.bzu.com/qrcodeLogin/'
   loginSocketUrl = 'ws://192.168.1.217:8888/qrcodeLogin/'
   /* domain --------------------------------------------- */
-  domain = apiCommonUrl + '#/'
+  domain = 'http://new.bzu.com/#/'
 } else if (process.env.NODE_ENV == 'testing') {
   apiCommonUrl = 'http://192.168.1.200:8888/' // 本地测试
   socketUrl = 'ws://192.168.1.200:8087/market'
