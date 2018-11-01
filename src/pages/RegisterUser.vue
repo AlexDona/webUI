@@ -671,7 +671,7 @@ import {
 import {
   returnAjaxMessage, // 接口返回信息
   validateNumForUserInput, // 用户输入验证
-  apiSendPhoneOrEmailCodeAjax,
+  sendPhoneOrEmailCodeAjax,
   jumpToOtherPageForFooter
 } from '../utils/commonFunc'
 import {createNamespacedHelpers, mapState} from 'vuex'
@@ -707,7 +707,7 @@ export default {
       sendMsgBtnText: 'M.forgetPassword_hint12', // 发送验证码
       sendMsgBtnDisabled: false,
       errorMsg: '', // 错误信息
-      isRegisterSuccess: false, // 注册成功
+      isRegisterSuccess: true, // 注册成功
       successCountDown: 3, // 成功倒计时
       registerSliderStatus: false, // 滑块验证显示状态
       /**
@@ -947,18 +947,18 @@ export default {
             return false
           }
           params.phone = this.phoneNum
-          params.country = this.activeCountryCodeWithPhone
+          params.nationCode = this.activeCountryCodeWithPhone
           break
         case 1:
           if (!this.checkoutInputFormat(type, this.emailNum)) {
             return false
           }
           params.address = this.emailNum
-          params.country = this.activeCountryCodeWithEmail
+          params.nationCode = this.activeCountryCodeWithEmail
           break
       }
       console.log(params)
-      apiSendPhoneOrEmailCodeAjax(type, params, (data) => {
+      sendPhoneOrEmailCodeAjax(type, params, (data) => {
         // 提示信息
         if (!returnAjaxMessage(data, this)) {
           return false
@@ -1025,7 +1025,7 @@ export default {
           checkCode: this.checkCode,
           inviter: this.inviter,
           regType: regType,
-          country: countryCode
+          nationCode: countryCode
         }
         // 显示滑块验证
         this.sliderFlag = true
@@ -1075,7 +1075,7 @@ export default {
     successJump () {
       setInterval(() => {
         if (this.successCountDown === 0) {
-          this.$router.push({'path': '/login'})
+          this.jumpToDownAppPage()
         }
         this.successCountDown--
       }, 1000)
@@ -1185,6 +1185,9 @@ export default {
     }
   },
   watch: {
+    isMobile (newVal) {
+      console.log(newVal)
+    },
     activeMethod (newVal) {
       this.$store.commit('common/SET_COUNT_DOWN_RESET_STATUS', true)
     },

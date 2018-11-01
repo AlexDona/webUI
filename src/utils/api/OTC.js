@@ -50,12 +50,8 @@ export const argumentBusinessApply = (params) => get('cms/terms/selectAll', para
 export const getOTCADManageApplyList = (params) => get('otcEntrust/selectMerchEntrustsPage', params)
 // 商家订单列表请求
 export const getOTCMerchantsOrdersList = (params) => get('otcOrder/selectMerchOrdersPage', params)
-// 查询用户现有支付方式
-export const queryUserPayTypes = (params) => get('otcCOin/getUserPayTypes', params)
 // 报表统计
 export const getOTCReportFormStatisticsData = (params) => get('otcOrder/selectMerchStatics', params)
-//  汇率转换
-export const getOTCChangeRate = (params) => get('otcCOin/changeRate', params)
 //  币种详情：商家和普通用户挂单页面请求币种详情渲染页面
 export const getOTCCoinInfo = (params) => get('otcCOin/getCoinInfo', params)
 // 投资理财请求数据

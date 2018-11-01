@@ -236,7 +236,7 @@ import CountDownButton from '../../Common/CountDownCommon'
 import ErrorBox from '../../User/ErrorBox'
 import {
   returnAjaxMessage, // 接口返回信息
-  apiSendPhoneOrEmailCodeAjax,
+  sendPhoneOrEmailCodeAjax,
   reflashUserInfo,
   validateNumForUserInput,
   getSecurityCenter
@@ -323,8 +323,6 @@ export default {
      * 发送短信验证码或邮箱验证码
      */
     sendPhoneOrEmailCodeWithPush (loginType) {
-      console.log(this.disabledOfPhoneBtn)
-      console.log(this.disabledOfEmailBtn)
       if (
         !this.tieCheckoutInputFormat(0, this.modifyPassword.transactionPassword) ||
         !this.tieCheckoutInputFormat(1, this.modifyPassword.resetTransactionPassword)
@@ -335,7 +333,7 @@ export default {
         return false
       }
       let params = {
-        country: this.activeCountryCode,
+        nationCode: this.activeCountryCode,
         type: 'VERIFICATION_CODE' // 类型
       }
       switch (loginType) {
@@ -346,7 +344,7 @@ export default {
           params.address = this.userInfo.userInfo.email
           break
       }
-      apiSendPhoneOrEmailCodeAjax(loginType, params, (data) => {
+      sendPhoneOrEmailCodeAjax(loginType, params, (data) => {
         console.log(this.disabledOfPhoneBtn)
         // 提示信息
         if (!returnAjaxMessage(data, this)) {

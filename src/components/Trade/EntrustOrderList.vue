@@ -228,7 +228,7 @@
                   </li>
                   <!--成交均价-->
                   <li class="td price">
-                    {{scientificToNumber(item.amount-0)}}
+                    {{scientificToNumber(item.completePrice-0)}}
                   </li>
                   <!--状态-->
                   <li class="td status">
@@ -309,12 +309,8 @@ export default {
     //   }
     // ]
     // this.historyEntrustList = []
-    if (this.isLogin) {
-      // 获取我的当前委托
-      this.getMyCurrentEntrust()
-      // 获取历史委托
-      this.getHistoryEntrust()
-    }
+    console.log(this.activeSymbol)
+    this.getEntrustData()
   },
   mounted () {},
   activited () {},
@@ -324,6 +320,14 @@ export default {
     ...mapMutations([
       'TOGGLE_REFRESH_ENTRUST_LIST_STATUS'
     ]),
+    getEntrustData () {
+      if (this.isLogin) {
+        // 获取我的当前委托
+        this.getMyCurrentEntrust()
+        // 获取历史委托
+        this.getHistoryEntrust()
+      }
+    },
     scientificToNumber (num) {
       return scientificToNumber(num)
     },
@@ -377,7 +381,8 @@ export default {
       let params = {
         userId: this.userInfo.userId,
         currentPage: this.currentPageForHistoryEntrust,
-        pageSize: this.pageSize
+        pageSize: this.pageSize,
+        tradeId: this.middleTopData.partnerTradeId
       }
       const data = await getHistoryEntrust(params)
       if (!returnAjaxMessage(data, this, 0)) {
@@ -392,7 +397,8 @@ export default {
       let params = {
         userId: this.userInfo.userId,
         currentPage: this.currentPageForMyEntrust,
-        pageSize: this.pageSize
+        pageSize: this.pageSize,
+        tradeId: this.middleTopData.partnerTradeId
       }
       const data = await getMyEntrust(params)
       if (!returnAjaxMessage(data, this, 0)) {
@@ -401,10 +407,6 @@ export default {
         this.currentEntrustList = data.data.data.list || []
         this.totalPageForMyEntrust = data.data.data.pages - 0
       }
-    },
-    // 时间格式化
-    timeFormat (date) {
-      return timeFilter(date, 'normal')
     }
   },
   filter: {},
@@ -415,7 +417,8 @@ export default {
       isLogin: state => state.user.isLogin,
       refreshEntrustStatus: state => state.trade.refreshEntrustStatus,
       userInfo: state => state.user.loginStep1Info,
-      activeSymbol: state => state.common.activeSymbol
+      activeSymbol: state => state.common.activeSymbol,
+      middleTopData: state => state.trade.middleTopData
     })
   },
   watch: {
@@ -440,6 +443,9 @@ export default {
     },
     historyEntrustList (newVal) {
       // console.log(newVal)
+    },
+    middleTopData (newVal) {
+      this.getEntrustData()
     }
   }
 }

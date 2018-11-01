@@ -274,7 +274,7 @@ import ImageValidate from '../../Common/ImageValidateCommon' // 图片验证吗
 import CountDownButton from '../../Common/CountDownCommon'
 import {
   returnAjaxMessage, // 接口返回信息
-  apiSendPhoneOrEmailCodeAjax,
+  sendPhoneOrEmailCodeAjax,
   validateNumForUserInput,
   getSecurityCenter
 } from '../../../utils/commonFunc'
@@ -426,7 +426,7 @@ export default {
       }
       let params = {
         type: 'VERIFICATION_CODE', // 类型
-        country: this.bindingDataPhone.bindingAreaCodeValue // 国家编码
+        nationCode: this.bindingDataPhone.bindingAreaCodeValue // 国家编码
       }
       if (!this.securityCenter.isPhoneBind) {
         console.log(2)
@@ -465,7 +465,7 @@ export default {
             break
         }
       }
-      await apiSendPhoneOrEmailCodeAjax(loginType, params, (data) => {
+      await sendPhoneOrEmailCodeAjax(loginType, params, (data) => {
         console.log(this.disabledOfPhoneBtn)
         console.log(this.disabledOfPhoneBtn)
         // 提示信息

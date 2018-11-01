@@ -756,7 +756,7 @@ export default {
       if (goOnStatus) {
         let data
         let param = {
-          country: this.regionValue, // 国籍
+          nationCode: this.regionValue, // 国籍
           cardType: this.documentTypeValue, // 证件类型
           realname: this.realName, // 真实姓名
           cardNo: this.identificationNumber // 证件号码

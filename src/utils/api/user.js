@@ -18,21 +18,6 @@ export const sendMsgByPhoneOrEmial = (type, params) => {
   switch (type) {
     // 短信验证码
     case 0:
-      result = postWithURLencoded('user/sendSms', params)
-      break
-    // 邮箱验证码
-    case 1:
-      result = postWithURLencoded('user/sendMail', params)
-      break
-  }
-  return result
-}
-// api
-export const sendByPhoneOrEmial = (type, params) => {
-  let result
-  switch (type) {
-    // 短信验证码
-    case 0:
       result = get('sendSms', params)
       break
     // 邮箱验证码

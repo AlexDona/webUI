@@ -328,7 +328,7 @@ import {
 import {phoneNumberFormat} from '../../utils'
 import {
   returnAjaxMessage,
-  apiSendPhoneOrEmailCodeAjax
+  sendPhoneOrEmailCodeAjax
 } from '../../utils/commonFunc'
 import {PWD_REG} from '../../utils/regExp'
 import ImageValidate from '../Common/ImageValidateCommon'
@@ -520,7 +520,7 @@ export default {
         return false
       }
       let params = {
-        country: this.userInfo.countryCode,
+        nationCode: this.userInfo.countryCode,
         type: 'RETRIEVE_PASS'
       }
       switch (msgType) {
@@ -531,7 +531,7 @@ export default {
           params.address = this.userInfo.email
           break
       }
-      await apiSendPhoneOrEmailCodeAjax(msgType, params, (data) => {
+      await sendPhoneOrEmailCodeAjax(msgType, params, (data) => {
         // 提示信息
         if (!returnAjaxMessage(data, this)) {
           console.log('error')
