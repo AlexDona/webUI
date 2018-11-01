@@ -82,8 +82,19 @@ export default {
       console.log(to)
       let path = to.path
       this.needNotice = path === '/' ? 1 : 0
-      this.needHeader = (path !== '/login' && path !== '/register' && path !== '/downloadApp') ? 1 : 0
-      this.needFooter = (path === '/login' || path === '/register' || path === '/downloadApp') ? 0 : 1
+      this.needHeader = (
+        path !== '/login' &&
+        path !== '/register' &&
+        path !== '/downloadApp' &&
+        path !== '/invitationRegister'
+      ) ? 1 : 0
+      // this.needHeader = !this.isMobile ? 1 : 0
+      this.needFooter = (
+        path === '/login' ||
+        path === '/register' ||
+        path === '/downloadApp' ||
+        path !== '/invitationRegister'
+      ) ? 0 : 1
       switch (path) {
         case '/register':
           this.setBodyClassName(true, 'register')

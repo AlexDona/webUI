@@ -109,7 +109,7 @@
   display: none;
 }
 .register.mobile .el-scrollbar{
-  width:10rem;
+  width:15rem;
   height:10rem;
 }
 .register.mobile .el-select-dropdown__item{

@@ -205,6 +205,10 @@ export default{
     require('../../../static/css/list/Home/MarketListHome.css')
     require('../../../static/css/theme/day/Home/MarketListHomeDay.css')
     require('../../../static/css/theme/night/Home/MarketListHomeNight.css')
+    console.log(this.language)
+    if (this.language) {
+      await this.getHomeMarketByAjax()
+    }
   },
   mounted () {
     // 搜索区、自选区禁止拖拽
@@ -544,9 +548,11 @@ export default{
       })
       this.concatSocketParamsStr(this.activeIndex)
     },
-    language: {
-      handler: 'getHomeMarketByAjax',
-      immediate: true
+    async language (newVal) {
+      console.log(newVal)
+      if (newVal) {
+        await this.getHomeMarketByAjax()
+      }
     },
     socketParamsStr (newVal, oldVal) {
       if (oldVal) {

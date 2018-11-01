@@ -54,7 +54,10 @@ export default {
       closeStatus: false // 是否关闭
     }
   },
-  created () {
+  async created () {
+    if (this.language) {
+      await this.getNewsNoticeList()
+    }
     this.noticeList = [
       // {
       //   id: 0, // 跳转id
@@ -121,9 +124,10 @@ export default {
     })
   },
   watch: {
-    language: {
-      handler: 'getNewsNoticeList',
-      immediate: true
+    async language (newVal) {
+      if (newVal) {
+        await this.getNewsNoticeList()
+      }
     }
   }
 }

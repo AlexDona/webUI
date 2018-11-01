@@ -88,7 +88,7 @@ export default {
     // console.log(this.theme)
     this.activeTheme = this.theme
     // 查询某商户可用法币币种列表
-    // await this.getCountryList()
+    await this.getCountryList()
     if (this.isLogin) {
       await reflashUserInfo(this)
     }

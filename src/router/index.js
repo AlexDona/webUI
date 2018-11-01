@@ -60,6 +60,7 @@ const FinanceInvestmentRecord = r => require.ensure([], () => r(require('@/compo
 const Login = r => require.ensure([], () => r(require('@/pages/LoginUser')), 'login')
 // 注册
 const Register = r => require.ensure([], () => r(require('@/pages/RegisterUser')), 'register')
+const InvitationRegister = r => require.ensure([], () => r(require('@/pages/InvitationRegister')), 'invitationRegister')
 const ForgetPassword = r => require.ensure([], () => r(require('@/components/User/ForgetPassword')), 'forget-password')
 /**
  * TradeCenter
@@ -303,6 +304,10 @@ const router = new Router({
       path: '/register',
       // name: 'Register',
       component: Register
+    },
+    {
+      path: '/invitationRegister',
+      component: InvitationRegister
     },
     // 忘记密码
     {
