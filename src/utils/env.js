@@ -15,7 +15,9 @@ domain = domain.join('/')
 if (!domain.endsWith('#')) {
   domain += '#'
 }
-console.log(domain)
+let xDomain = window.location.host.split(':')[0]
+xDomain = xDomain.startsWith('www') ? xDomain.slice(4) : xDomain
+
 let routerMode = 'hash'
 if (process.env.NODE_ENV == 'development') {
   /* apiCommonUrl --------------------------------------------- */
@@ -53,12 +55,12 @@ if (process.env.NODE_ENV == 'development') {
   // apiCommonUrl = 'https://rest.fubt.top/'
   // apiCommonUrl = 'http://192.168.1.200:8888/' // 本地测试
   // apiCommonUrl = 'http://api.new.fubt.com/' // 本地测试
-  apiCommonUrl = 'https://api.new.bzu.com/' // 内部测试
+  apiCommonUrl = `https://api.${xDomain}/` // 内部测试
 
   /* socketUrl --------------------------------------------- */
 
   socketUrl = 'wss://ws.bzu.com/market'
-  loginSocketUrl = 'ws://api.new.bzu.com/qrcodeLogin/'
+  loginSocketUrl = `ws://api.${xDomain}/qrcodeLogin/`
   // socketUrl = 'ws://192.168.1.200:8087/market'
 
   /* domain --------------------------------------------- */

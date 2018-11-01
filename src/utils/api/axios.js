@@ -7,6 +7,7 @@ import store from '../../vuex'
 // import router from '../../router/index'
 // import {getStoreWithJson} from '../index'
 // import Vue from 'vue'
+let countOf401 = 0
 let util = {}
 util.ajax = axios.create({
   baseURL: apiCommonUrl,
@@ -15,6 +16,10 @@ util.ajax = axios.create({
 })
 
 util.ajax.interceptors.request.use((config) => {
+  if (countOf401) {
+    countOf401 = 0
+    return false
+  }
   let xDomain = window.location.host.split(':')[0]
   xDomain = xDomain.startsWith('www') ? xDomain.slice(4) : xDomain
   config.headers['x-domain'] = xDomain
@@ -29,6 +34,10 @@ util.ajax.interceptors.request.use((config) => {
 
 util.ajax.interceptors.response.use(
   response => {
+    console.log(response)
+    if (response.data.meta.code == 401) {
+      countOf401++
+    }
     return response
   },
   error => {

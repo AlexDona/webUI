@@ -1,6 +1,7 @@
 import mutations from './mutations'
 import actions from './action'
 import {getStore} from '../../utils'
+import getters from './getters'
 // import getters from './getters'
 
 // Vue.use(Vuex)
@@ -97,7 +98,7 @@ const state = {
 export default {
   namespaced: true,
   state,
-  // getters,
+  getters,
   actions,
   mutations
 }

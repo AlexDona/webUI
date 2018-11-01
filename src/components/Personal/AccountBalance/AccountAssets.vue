@@ -732,7 +732,7 @@ import {
 } from '../../../utils/api/personal'
 import {
   returnAjaxMessage,
-  apiSendPhoneOrEmailCodeAjax,
+  sendPhoneOrEmailCodeAjax,
   getSecurityCenter
 } from '../../../utils/commonFunc'
 const { mapMutations } = createNamespacedHelpers('personal')
@@ -1099,7 +1099,7 @@ export default {
           params.address = this.userInfo.userInfo.email
           break
       }
-      apiSendPhoneOrEmailCodeAjax(loginType, params, (data) => {
+      sendPhoneOrEmailCodeAjax(loginType, params, (data) => {
         // 提示信息
         if (!returnAjaxMessage(data, this)) {
           console.log('error')

@@ -13,8 +13,8 @@ import {
 } from '../utils/api/personal'
 
 import {
-  // sendMsgByPhoneOrEmial,
-  sendByPhoneOrEmial
+  sendMsgByPhoneOrEmial
+  // sendByPhoneOrEmial
 } from '../utils/api/user'
 import {
   addUserCollectionAjax,
@@ -124,8 +124,8 @@ export const validateNumForUserInput = (type, targetNum) => {
   return returnNum
 }
 // api 发送验证码（短信、邮箱）
-export const apiSendPhoneOrEmailCodeAjax = async (type, params, callback) => {
-  const data = await sendByPhoneOrEmial(type, params)
+export const sendPhoneOrEmailCodeAjax = async (type, params, callback) => {
+  const data = await sendMsgByPhoneOrEmial(type, params)
   callback(data)
 }
 /**

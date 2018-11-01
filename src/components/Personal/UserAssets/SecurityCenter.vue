@@ -636,7 +636,7 @@ import {
 } from '../../../utils/api/personal'
 import {
   returnAjaxMessage,
-  apiSendPhoneOrEmailCodeAjax,
+  sendPhoneOrEmailCodeAjax,
   getSecurityCenter
 } from '../../../utils/commonFunc'
 import {timeFilter} from '../../../utils/index'
@@ -812,7 +812,7 @@ export default {
           params.address = this.userInfo.userInfo.email
           break
       }
-      await apiSendPhoneOrEmailCodeAjax(loginType, params, (data) => {
+      await sendPhoneOrEmailCodeAjax(loginType, params, (data) => {
         // 提示信息
         if (!returnAjaxMessage(data, this)) {
           console.log('error')

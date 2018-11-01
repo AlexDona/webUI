@@ -336,7 +336,7 @@
             >
               <template slot-scope="s">
                 <!--<span>{{s.row.completeCount-0}}</span>-->
-                <span>{{ parseFloat(filterNumber(s.row.completeCount)) }}</span>
+                <span>{{ parseFloat(filterNumber(s.row.completePrice)) }}</span>
               </template>
             </el-table-column>
             <!--状态-->

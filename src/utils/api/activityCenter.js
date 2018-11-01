@@ -8,5 +8,3 @@ import {
 export const getRankingList = () => get('user/inviters')
 // 获取资产列表下载地址
 export const getCurrencyApplicationDownloadUrl = (params) => get('getCurrencyApplicationDownloadUrl', params)
-// 下载文件
-export const downloadFile = url => get(url)

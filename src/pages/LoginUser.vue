@@ -614,7 +614,7 @@ import {
 // } from '../utils/api/personal'
 import {
   returnAjaxMessage,
-  apiSendPhoneOrEmailCodeAjax
+  sendPhoneOrEmailCodeAjax
 } from '../utils/commonFunc'
 import socket from '../utils/datafeeds/socket'
 
@@ -949,7 +949,7 @@ export default {
       }
 
       let params = {
-        country: this.activeCountryCode,
+        nationCode: this.activeCountryCode,
         type: 'LOGIN_CODE'
       }
       switch (loginType) {
@@ -960,7 +960,7 @@ export default {
           params.address = this.userInfo.email
           break
       }
-      apiSendPhoneOrEmailCodeAjax(loginType, params, (data) => {
+      sendPhoneOrEmailCodeAjax(loginType, params, (data) => {
         // 提示信息
         if (!returnAjaxMessage(data, this)) {
           console.log('error')
