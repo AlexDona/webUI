@@ -22,6 +22,7 @@
     <div
       class="inner-box"
       :class="{'pc-bg': !isMobile}"
+      v-if="!isRegisterSuccess"
     >
       <!--<img v-webp="'../assets/develop/about-us.png',webp:'../assets/webp/banner1.webp'" />-->
 
