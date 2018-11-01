@@ -21,6 +21,12 @@ export const user = {
   'login_username': '사용자 이름',
   'login_reinput': '입력 한 이미지 인증 코드가 잘못되었습니다. 확인한 후 다시 입력하십시오.',
   'login_telphone': '휴대 전화',
+  'login_tips1': '전화 번호 / 이메일 주소를 입력하십시오.',
+  'login_tips2': '비밀번호를 입력하십시오.',
+  'login_tips3': '비밀 번호를 잊어 버렸습니다.',
+  'login_tips4': '무료 등록',
+  'login_tips5': '사용자 이름을 입력하십시오.',
+  'login_tips6': '滑块验证',
   // #############忘记密码#############''비밀 번호를 잊어 버렸습니다.'
   'forgetPassword_findBack': '검색',
   'forgetPassword_inputname': '계정 이름을 입력하십시오.',

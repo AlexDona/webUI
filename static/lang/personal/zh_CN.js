@@ -219,6 +219,13 @@ export const personal = {
   // PUSH记录
   // #####################我的交易#####################
   // 币币订单
+  'user_coin_order1': '当前委托',
+  'user_coin_order2': '历史委托',
+  'user_coin_order3': '成交明细',
+  'user_coin_order4': '起止日期',
+  'user_coin_order5': '委单总额',
+  'user_coin_order6': '已成交',
+  'user_coin_order7': '币币订单',
   'user_coin': '币币',
   'user_coin_bring_together': '撮合',
   'user_coin_appoint_single': '委单',

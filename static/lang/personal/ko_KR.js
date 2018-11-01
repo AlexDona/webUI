@@ -210,6 +210,13 @@ export const personal = {
   // PUSH记录''푸시 기록'
   // #####################我的交易#####################''내 거래'
   // 币币订单''코인 주문'
+  'user_coin_order1': '현재위원회',
+  'user_coin_order2': '역사적 커미션',
+  'user_coin_order3': '거래 세부 정보',
+  'user_coin_order4': '시작일과 종료일',
+  'user_coin_order5': '주문 총액',
+  'user_coin_order6': '완료 됨',
+  'user_coin_order7': '코인 주문',
   'user_coin': '동전',
   'user_coin_bring_together': '경기',
   'user_coin_appoint_single': '빌',

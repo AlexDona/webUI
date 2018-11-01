@@ -15,7 +15,7 @@
         </span>
         <span class="item second-coin flex1">
           <!--币种-->
-          {{$t('M.comm_currency')}}
+          {{$t('M.otc_AD_token')}}
         </span>
         <span class="item third-price flex1">
           <!--价格-->

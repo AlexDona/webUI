@@ -36,6 +36,10 @@
               </a>
             </li>
           </ul>
+          <!-- 版权 -->
+          <div class="copyright">
+            <span class="copyright-content">©2013-2018 Fubt Global</span>
+          </div>
         </div>
         <div class="right">
           <dl class="right-dl">
@@ -183,7 +187,8 @@ export default {
           ercodeSrc: ''
         },
         {
-          iconName: 'icon-telegram',
+          // iconName: 'icon-telegram',
+          iconName: 'icon-dianbao-',
           ercodeSrc: ''
         }
       ],
@@ -233,18 +238,20 @@ export default {
 <style scoped lang="scss">
   .footer-box{
     width:100%;
-    height:410px;
+    // height:410px;
+    height:330px;
     background-color: #1c2237;
     color:#838dae;
     >.inner-box{
-      width:1130px;
-      height:300px;
-      margin:0 auto;
-      padding:50px 0;
+      width: 1130px;
+      height: 300px;
+      margin: 0 auto;
+      padding: 30px 0;
       >.top{
         display:flex;
+        margin-bottom: 10px;
         >div{
-          height:200px;
+          // height:200px;
         }
         >.left{
           flex:1;
@@ -254,11 +261,11 @@ export default {
             }
           }
           .introduction{
-            margin-top:20px;
+            margin-top:10px;
           }
           /**/
           >.share-box{
-            margin-top:20px;
+            margin-top:26px;
             >.share-item{
               position: relative;
               width:20px;
@@ -292,6 +299,13 @@ export default {
               }
             }
           }
+          >.copyright{
+            margin-top: 10px;
+            >.copyright-content{
+              color: #CECECE;
+              font-size: 12px;
+            }
+          }
         }
         >.right{
           flex:1;
@@ -316,7 +330,7 @@ export default {
       }
       >.bottom{
         border-top:1px solid rgba(67,74,95,0.5);
-        padding-top:40px;
+        padding-top:30px;
         width:100%;
         >.title{
           display:inline-block;

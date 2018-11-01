@@ -6,7 +6,7 @@
     <header class="personal-height background-color personal-height40 line-height40 font-size16">
       <span class="padding-left15 font-weight600 coin-color">
         <!--币币订单-->
-        {{ $t('M.user_coin') }}{{ $t('M.comm_order') }}
+        {{ $t('M.user_coin_order7') }}
       </span>
     </header>
     <div class="height500 background-color margin-top9">
@@ -95,7 +95,7 @@
           <div class="start-end-time-box condition-item">
             <span class="currency-span">
               <!--起止时间-->
-              {{ $t('M.user_coin_start_stop') }}{{ $t('M.comm_data') }}
+              {{ $t('M.user_coin_order4') }}
             </span>
             <!--选择日期-->
             <el-date-picker
@@ -127,7 +127,7 @@
         </div>
         <!--当前委托-->
         <el-tab-pane
-          :label="$t('M.user_coin_commissioned_current')"
+          :label="$t('M.user_coin_order1')"
           name="current-entrust"
         >
           <div class="inner-box">
@@ -189,7 +189,7 @@
                 </el-table-column>
                 <!--委托总额-->
                 <el-table-column
-                  :label="$t('M.user_coin_appoint_single') + $t('M.user_coin_rental')"
+                  :label="$t('M.user_coin_order5')"
                   width="120"
                 >
                   <template slot-scope="s">
@@ -199,7 +199,7 @@
                 </el-table-column>
                 <!--已成交-->
                 <el-table-column
-                  :label="$t('M.comm_already') + $t('M.comm_make_bargain')"
+                  :label="$t('M.user_coin_order6')"
                   width="120"
                 >
                   <template slot-scope="s">
@@ -255,7 +255,7 @@
         </el-tab-pane>
         <!--历史委托-->
         <el-tab-pane
-          :label="$t('M.user_coin_commissioned_history')"
+          :label="$t('M.user_coin_order2')"
           name="history-entrust"
         >
           <el-table
@@ -360,7 +360,7 @@
         </el-tab-pane>
         <!--成交明细-->
         <el-tab-pane
-          :label="$t('M.user_coin_clinch_deal_detail')"
+          :label="$t('M.user_coin_order3')"
           name="make-detail"
         >
           <el-table

@@ -44,7 +44,7 @@
           <div class="main-top-type trade-type float-left">
            <span class="filtrate-text font-size14">
              <!--币种-->
-             {{ $t('M.comm_currency') }}
+             {{ $t('M.otc_AD_token') }}
            </span>
            <span class="status-input">
              <!--全部-->
@@ -93,7 +93,7 @@
           <div class="main-top-type trade-data float-left">
             <span class="filtrate-text font-size14">
               <!--起止日期-->
-               {{ $t('M.user_coin_start_stop') }}{{ $t('M.comm_data') }}
+               {{ $t('M.user_coin_order4') }}
             </span>
             <span class="date-picker">
              <!--开始日期-->

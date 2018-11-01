@@ -141,7 +141,7 @@ export const personal = {
   'user_security_dual': 'It is recommended to enable double verification',
   'user_security_last_login_time': 'Last Login Time',
   'user_security_affiliation': 'Attribution',
-  'user_security_binding': 'Binding',
+  'user_security_binding': 'Binding ',
   'user_security_unbundle': 'Untied',
   'user_security_in_tie': 'Change tie',
   'user_security_login': 'Login ',
@@ -185,16 +185,16 @@ export const personal = {
   'user_security_source': 'Source',
   // API管理API management
   // 创建APICreate API
-  'user_api_administration': 'management',
+  'user_api_administration': ' Management',
   'user_api_text1': 'This platform provides you with a powerful API that allows you to use quotes, automated trading and more. See how to use it through the API documentation;',
   'user_api_text2': 'Create up to 5 sets of API Keys per user;',
   'user_api_text3': 'Please do not reveal your API Key to avoid loss of assets. For security reasons, it is recommended to bind IP to the API Key. Each API Key is bound to a maximum of 4 IPs. A single address is directly filled in. Multiple IP addresses are separated by commas, such as 192.168.1.1, 192.168.1.2, and 192.168.1.3.',
-  'user_api_text4': 'Access key',
+  'user_api_text4': ' Access Key',
   'user_api_text5': 'Displayed only once, cannot be retrieved after being lost, please be sure to save it properly',
   'user_api_text6': 'Please do not reveal your Secret Key to avoid asset loss.',
   'user_api_text7': 'If you have forgotten the Secret Key, delete the key pair and request a new key pair.',
   // 我的APIMy API
-  'user_api_my': 'mine',
+  'user_api_my': 'My',
   'user_api_user': 'User',
   // PUSH资产PUSH assets
   'user_push_user': 'user',
@@ -211,6 +211,13 @@ export const personal = {
   // PUSH记录PUSH record
   // #####################我的交易#####################My transaction
   // 币币订单Coin order
+  'user_coin_order1': 'Open order',
+  'user_coin_order2': 'History order',
+  'user_coin_order3': 'Details',
+  'user_coin_order4': 'Start end date',
+  'user_coin_order5': 'Total',
+  'user_coin_order6': 'Traded',
+  'user_coin_order7': 'Exchange Order',
   'user_coin': 'Coin',
   'user_coin_bring_together': 'Match',
   'user_coin_appoint_single': 'Bill',

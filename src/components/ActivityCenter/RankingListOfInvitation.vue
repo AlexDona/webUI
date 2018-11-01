@@ -23,7 +23,7 @@
             </h1>
             <div
               class="chinese"
-              v-if="language=='zh_CN'"
+              v-if="language=='zh_CN' || language=='zh_TW'"
             >
               <p>1.邀请奖励{{configInfo.inviterPage}}统计起始时间为2018-05-20 10:18，在此之前已邀请 注册的无累计{{configInfo.inviterPage}}至此活动；</p>
               <p>2.登录平台账户—财务中心—推广注册链接—复制专属推广链接；</p>
