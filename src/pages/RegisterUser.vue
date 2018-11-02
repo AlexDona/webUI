@@ -955,7 +955,7 @@ export default {
           if (!this.checkoutInputFormat(type, this.emailNum)) {
             return false
           }
-          params.address = this.emailNum
+          params.email = this.emailNum
           params.abbreviation = this.activeCountryCodeWithEmail
           break
       }
