@@ -92,7 +92,7 @@ export const personal = {
   'user_account_whether_close1': '是否确定关闭银行卡收款方式',
   'user_account_whether_close2': '是否确定关闭微信收款方式',
   'user_account_whether_close3': '是否确定关闭支付宝收款方式',
-  'user_account_whether_close4': '是否确定关闭PAYPAY收款方式',
+  'user_account_whether_close4': '是否确定关闭PAYPAL收款方式',
   'user_account_whether_close5': '是否确定关闭西联汇款收款方式',
   'user_account_please_set_up': '请先设置',
   'user_account_return': '返回我的账户',
