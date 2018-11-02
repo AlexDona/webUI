@@ -122,13 +122,7 @@ export default {
       activeIndex: '0', // 当前tabIndex
       // ----------------
       contentShowStatus: true, // 显示隐藏控制
-      tabList: [
-        {
-          id: 99,
-          name: this.$t('M.trade_market_optional') // 自选
-        }
-      ], // tab栏个数
-      activeName: this.$t('M.trade_market_optional'), // 当前tabItem
+      activeName: 'M.trade_market_optional', // 当前tabItem
       sortBy: '', // 排序依据: price-asc price-desc rose-asc rose-desc
       marketList: [], // 行情数据
       filterMarketList: [], // 过滤行情数据
@@ -400,36 +394,6 @@ export default {
     toggleShowContent () {
       this.contentShowStatus = !this.contentShowStatus
     },
-    // 设置交易区 订阅数据
-    setTradeAreaSubscribeData (data) {
-      const newData = data.data[0].content[0]
-      if (this.activeSymbol.id == newData.id) {
-        this.changeActiveSymbol(newData)
-      }
-      if (this.activeName != this.tabList[0].id) {
-        this.marketList.forEach((item, index) => {
-          if (item.plateId === data.data[0].plateId) {
-            item.content.forEach((innerItem, innerIndex) => {
-              if (innerItem.id == newData.id) {
-                this.$set(this.marketList[index].content, innerIndex, newData)
-                this.filterMarketList = this.marketList
-                return false
-              }
-            })
-          }
-        })
-      } else {
-        this.filterMarketList.forEach((item, index) => {
-          if (item.plateId == newData.plateId) {
-            item.content.forEach((innerItem, innerIndex) => {
-              if (innerItem.id == newData.id) {
-                this.$set(this.filterMarketList[index].content, innerIndex, newData)
-              }
-            })
-          }
-        })
-      }
-    },
     // 搜索遍历方法
     setSearchFilterList (type, originalList, {newArr, index}, newCollectArea) {
       _.forEach(originalList, (plateItem, plateIndex) => {
@@ -514,6 +478,9 @@ export default {
     }
   },
   watch: {
+    language (newVal) {
+      this.getTradeMarketData()
+    },
     activeTabSymbolStr (newVal) {
       console.log(newVal)
     },

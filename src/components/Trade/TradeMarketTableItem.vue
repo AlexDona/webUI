@@ -170,9 +170,6 @@ export default {
     return {}
   },
   created () {
-    // this.sort()
-    // console.log(this.area)
-    // console.log(this.plateId)
   },
   mounted () {
   },
@@ -209,7 +206,11 @@ export default {
       language: state => state.common.language // 语言
     })
   },
-  watch: {}
+  watch: {
+    language () {
+      this.$forceUpdate()
+    }
+  }
 }
 </script>
 <style scoped lang="scss" type="text/scss">

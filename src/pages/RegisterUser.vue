@@ -938,7 +938,6 @@ export default {
         return false
       }
       let params = {
-        type: 'REGISTER'
       }
       switch (type) {
         case 0:
