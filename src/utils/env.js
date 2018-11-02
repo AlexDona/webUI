@@ -44,14 +44,14 @@ if (process.env.NODE_ENV == 'development') {
   loginSocketUrl = 'ws://192.168.1.217:8888/qrcodeLogin/'
   /* domain --------------------------------------------- */
 } else if (process.env.NODE_ENV == 'testing') {
-  apiCommonUrl = 'http://192.168.1.200:8888/' // 本地测试
-  socketUrl = 'ws://192.168.1.200:8087/market'
+  apiCommonUrl = 'http://192.168.1.210:8888/' // 本地测试
+  socketUrl = 'ws://192.168.1.210:8087/market'
   loginSocketUrl = 'ws://api.new.bzu.com/qrcodeLogin/'
 } else if (process.env.NODE_ENV == 'production') {
   /* apiCommonUrl --------------------------------------------- */
 
   // apiCommonUrl = 'https://rest.fubt.top/'
-  // apiCommonUrl = 'http://192.168.1.200:8888/' // 本地测试
+  // apiCommonUrl = 'http://192.168.1.210:8888/' // 本地测试
   // apiCommonUrl = 'http://api.new.fubt.com/' // 本地测试
   apiCommonUrl = 'https://api.new.bzu.com/' // 内部测试
 
