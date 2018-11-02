@@ -38,7 +38,7 @@
           </ul>
           <!-- 版权 -->
           <div class="copyright">
-            <span class="copyright-content">©2013-2018 Fubt Global</span>
+            <span class="copyright-content">©2013-2018 {{configInfo.otcAd}} Global</span>
           </div>
         </div>
         <div class="right">
@@ -216,7 +216,9 @@ export default {
     ...mapState({
       language: state => state.common.language,
       logoSrc: state => state.common.logoSrc,
-      footerInfo: state => state.common.footerInfo
+      footerInfo: state => state.common.footerInfo,
+      // 公司名称fubt fbt fuc、邮箱等信息
+      configInfo: state => state.common.footerInfo.configInfo
     })
   },
   watch: {
@@ -225,6 +227,7 @@ export default {
       if (newVal) {
         this.footerInfo1 = newVal.footerInfo1
         this.footerInfo2 = newVal.footerInfo2
+        console.log(this.footerInfo2)
         this.shareList[0].ercodeSrc = this.footerInfo1.twitter
         this.shareList[1].ercodeSrc = this.footerInfo1.facebook
         this.shareList[2].ercodeSrc = this.footerInfo1.weixin
@@ -239,14 +242,14 @@ export default {
   .footer-box{
     width:100%;
     // height:410px;
-    height:330px;
+    // height:330px;
     background-color: #1c2237;
     color:#838dae;
     >.inner-box{
       width: 1130px;
-      height: 300px;
+      // height: 300px;
       margin: 0 auto;
-      padding: 30px 0;
+      padding: 20px 0;
       >.top{
         display:flex;
         margin-bottom: 10px;
@@ -330,12 +333,12 @@ export default {
       }
       >.bottom{
         border-top:1px solid rgba(67,74,95,0.5);
-        padding-top:30px;
+        padding-top:15px;
         width:100%;
         >.title{
           display:inline-block;
           width:100px;
-          height:100px;
+          // height:100px;
           vertical-align: top;
         }
         >.links-list{
