@@ -164,6 +164,7 @@ export const common = {
   'comm_pack_up': '折りたたむ',
   'comm_content': 'コンテンツ',
   'comm_after_get': '取得',
+  'common_direction': '方向',
   'comm_get_code': 'コードを取得',
   // 全球行情任增加
   'common_exchange': '取引所',

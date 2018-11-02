@@ -83,6 +83,11 @@ export const personal = {
   'user_account_payment_term': 'payment method',
   'user_account_bank_transfer': 'Bank Transfer',
   'user_account_whether_not': 'whether',
+  'user_account_whether_close1': 'Sure to close Bankcard payment?',
+  'user_account_whether_close2': 'Sure to close Wechat payment?',
+  'user_account_whether_close3': 'Sure to close Alipay payment?',
+  'user_account_whether_close4': 'Sure to close PAYPAY payment?',
+  'user_account_whether_close5': 'Sure to close Western Union payment?',
   'user_account_please_set_up': 'Please set first',
   'user_account_return': 'Return to my account',
   'user_account_name': 'name',
@@ -131,8 +136,8 @@ export const personal = {
   'user_security_google': 'Google ',
   'user_security_password': ' password',
   'user_security_verify': 'verification',
-  'user_security_number': 'number',
-  'user_security_picture': 'image',
+  'user_security_number': ' number',
+  'user_security_picture': 'Picture ',
   // 安全中心个人信息Security Center Personal Information
   'user_security_level': 'Account security level',
   'user_security_low': 'low',
@@ -146,6 +151,7 @@ export const personal = {
   'user_security_in_tie': 'Change tie',
   'user_security_login': 'Login ',
   'user_security_text1': 'Used for withdraw, retrieving passwords, modif settings, and manage APIs.',
+  'user_security_text4': 'Keep at least one verification method',
   'user_security_return_safety_center': 'Return to the security center',
   'user_security_text0': 'Please confirm that your bank card has SMS notifications enabled.',
   // 安全设置
@@ -162,10 +168,10 @@ export const personal = {
   // 安全邮箱safe mailbox
   // 安全手机Secure phone
   // 谷歌验证Google verification
-  'user_google_text1': 'If Google Authenticator is not installed, please',
+  'user_google_text1': 'Install Google Authenticator on your smartphone',
   'user_google_text2': 'Scan code download',
-  'user_google_text3': 'Please scan the code or manually enter the key to generate it on your phone.',
-  'user_google_text4': 'Fill in the input box below.',
+  'user_google_text3': 'Scan the above barcode',
+  'user_google_text4': 'Enter following "provided key".',
   'user_google_private_key': 'Private key',
   'user_google_account': 'Account',
   // 交易密码transaction password
@@ -174,7 +180,7 @@ export const personal = {
   'user_transaction_reset': 'Reset',
   'user_transaction_text': '6-bit pure number',
   // 登录密码login password
-  'user_security_login_raw': 'original',
+  'user_security_login_raw': 'Old ',
   'user_security_login_new': 'New',
   'user_security_former': 'old',
   'user_security_info1': 'Please enter a combination of 8-20 letters and numbers',
