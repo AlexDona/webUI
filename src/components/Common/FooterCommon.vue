@@ -38,7 +38,10 @@
           </ul>
           <!-- 版权 -->
           <div class="copyright">
-            <span class="copyright-content">©2013-2018 {{configInfo.otcAd}} Global</span>
+            <span
+              class="copyright-content"
+              v-if="configInfo"
+            >©2013-2018 {{configInfo.otcAd}} Global</span>
           </div>
         </div>
         <div class="right">

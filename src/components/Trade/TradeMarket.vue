@@ -140,7 +140,9 @@ export default {
     require('../../../static/css/list/Trade/TradeMarket.css')
     require('../../../static/css/theme/day/Trade/TradeMarketDay.css')
     require('../../../static/css/theme/night/Trade/TradeMarketNight.css')
-    this.getTradeMarketData()
+    if (this.language) {
+      this.getTradeMarketData()
+    }
   },
   mounted () {
   },
@@ -414,6 +416,7 @@ export default {
       switch (this.activeIndex) {
         // 自选区
         case 1:
+          console.log(this.collectArea)
           _.forEach(this.collectArea.plateList, (plateItem) => {
             _.forEach(plateItem.content, (contentItem) => {
               activeTabSymbolStr += `${contentItem.id}@`
@@ -422,12 +425,14 @@ export default {
           break
         // 非自选区
         default:
-          console.log(this.filterMarketList)
-          _.forEach(this.filterMarketList[this.activeIndex - 2].plateList, (plateItem) => {
-            _.forEach(plateItem.content, (contentItem) => {
-              activeTabSymbolStr += `${contentItem.id}@`
+          console.log(this.filterMarketList[this.activeIndex - 2])
+          if (this.filterMarketList[this.activeIndex - 2]) {
+            _.forEach(this.filterMarketList[this.activeIndex - 2].plateList, (plateItem) => {
+              _.forEach(plateItem.content, (contentItem) => {
+                activeTabSymbolStr += `${contentItem.id}@`
+              })
             })
-          })
+          }
           break
       }
       activeTabSymbolStr = `${this.middleTopData.id}@` + activeTabSymbolStr.slice(0, activeTabSymbolStr.length - 1)
@@ -502,21 +507,23 @@ export default {
         }
         // 非自选区
         if (this.activeIndex != 1) {
-          _.forEach(this.filterMarketList[this.activeIndex - 2].plateList, plateItem => {
-            _.forEach(plateItem.content, (contentItem, contentIndex) => {
-              let newContent = contentItem
-              if (contentItem.tradeId === newVal.tradeId) {
-                setSocketData(
-                  newContent,
-                  newVal,
-                  plateItem.content,
-                  contentIndex,
-                  this
-                )
-                return false
-              }
+          if (this.filterMarketList[this.activeIndex - 2]) {
+            _.forEach(this.filterMarketList[this.activeIndex - 2].plateList, plateItem => {
+              _.forEach(plateItem.content, (contentItem, contentIndex) => {
+                let newContent = contentItem
+                if (contentItem.tradeId === newVal.tradeId) {
+                  setSocketData(
+                    newContent,
+                    newVal,
+                    plateItem.content,
+                    contentIndex,
+                    this
+                  )
+                  return false
+                }
+              })
             })
-          })
+          }
         } else {
           _.forEach(this.collectArea.plateList, (plateItem) => {
             _.forEach(plateItem.content, (contentItem, contentIndex) => {
