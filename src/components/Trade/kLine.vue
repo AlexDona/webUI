@@ -1,8 +1,19 @@
 <template>
   <div
-    id="tv_chart_container"
-    :class="{'day':theme == 'day','night':theme == 'night' }"
+    class="kline-container"
   >
+    <div
+      id="tv_chart_container"
+      v-show="!fullscreenLoading"
+      :class="{'day':theme == 'day','night':theme == 'night' }"
+    >
+    </div>
+    <div
+      class="loading-box"
+      v-loading.lock="fullscreenLoading"
+      element-loading-background="rgba(0, 0, 0, 0.6)"
+      v-show="fullscreenLoading"
+    ></div>
   </div>
 </template>
 
@@ -59,7 +70,8 @@ export default {
       }, // K线请求参数
       socketData: {}, // socket 数据
       ajaxData: {}, // 接口请求数据
-      resolutions: ['min', 'min5', 'min15', 'min30', 'hour1', 'hour4', 'day', 'week']
+      resolutions: ['min', 'min5', 'min15', 'min30', 'hour1', 'hour4', 'day', 'week'],
+      fullscreenLoading: true
     }
   },
   beforeCreate () {
@@ -499,6 +511,9 @@ export default {
         'socketData': this.socketData,
         'type': 'socket'
       })
+      setTimeout(() => {
+        this.fullscreenLoading = false
+      }, 1)
     },
     getBars (symbolInfo, resolution, rangeStartDate, rangeEndDate, onLoadedCallback) {
       // symbolInfo.pricescale = 100000
@@ -647,14 +662,23 @@ export default {
 </script>
 <style scoped lang="scss">
   @import '../../../static/css/scss/index';
-  #tv_chart_container {
-    width: 100%;
-    height: 355px;
-  &.night {
-     background-color: $mainContentNightBgColor;
-   }
-  &.day{
-     background-color: #fff;
-   }
+  .kline-container{
+    width:100%;
+    height:355px;
+    #tv_chart_container {
+      width: 100%;
+      height: 355px;
+      &.night {
+        background-color: $mainContentNightBgColor;
+      }
+      &.day{
+        background-color: #fff;
+      }
+    }
+    .loading-box{
+      width:100%;
+      height:355px;
+    }
   }
+
 </style>
