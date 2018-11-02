@@ -1026,7 +1026,7 @@ export default {
           checkCode: this.checkCode,
           inviter: this.inviter,
           regType: regType,
-          nationCode: countryCode
+          country: countryCode
         }
         // 显示滑块验证
         this.sliderFlag = true
