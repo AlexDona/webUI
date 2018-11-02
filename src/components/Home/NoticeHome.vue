@@ -55,9 +55,6 @@ export default {
     }
   },
   async created () {
-    if (this.language) {
-      await this.getNewsNoticeList()
-    }
     this.noticeList = [
       // {
       //   id: 0, // 跳转id
@@ -78,7 +75,10 @@ export default {
       //   title: 'M.home_market_text5' // 标题 fuc火热上线2
       // }
     ]
-    this.timer = setInterval(this.autoPlay, 4000)
+    if (this.language) {
+      await this.getNewsNoticeList()
+      this.timer = setInterval(this.autoPlay, 4000)
+    }
   },
   mounted () {},
   activited () {},

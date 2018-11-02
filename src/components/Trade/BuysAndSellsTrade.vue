@@ -131,82 +131,6 @@
                 </dl>
                 </div>
               </div>
-            <!--buys-->
-            <div
-              class="mibble-box content-box"
-              v-if="listOrder==='buys'&&buysAndSellsList.buys.list"
-            >
-              <!--最新价-->
-              <TradeNewPrice/>
-              <!--买入-->
-              <dl
-                class="buys-list"
-              >
-                <dd
-                  class="buys-item cursor-pointer"
-                  v-for="(item,index) in buysAndSellsList.buys.list.slice(0,20)"
-                  :key="index"
-                  :class="{'odd':index%2!==0}"
-                  @click="changeActivePriceItem(item)"
-                >
-                  <div class="inner">
-                    <span class="price buy-bg">
-                      <!--买-->
-                      {{ $t('M.comm_bid') }} {{item.index}}
-                    </span><span class="price text-align-l buy-bg">
-                      {{item.price}}
-                    </span><span class="amount text-align-r">
-                      {{item.amount}}
-                    </span><span class="total text-align-r">
-                      {{item.total}}
-                    </span><!--宽度条--><i
-                        class="color-buy-bg"
-                        :style="'width:'+ item.amount/buysAndSellsList.buys.highestAmount*100+'%'"
-                      >
-                      </i>
-                  </div>
-                </dd>
-              </dl>
-            </div>
-            <!--sells-->
-            <!--<el-collapse-transition>-->
-              <div
-              class="mibble-box content-box"
-              v-if="listOrder==='sells'&&buysAndSellsList.sells.list"
-            >
-              <!--卖出-->
-              <dl
-                class="sells-list"
-              >
-                <dd
-                  class="sells-item cursor-pointer"
-                  v-for="(item,index) in buysAndSellsList.sells.list.slice(0,20)"
-                  :key="index"
-                  :class="{'even':index%2==0}"
-                  @click="changeActivePriceItem(item)"
-                >
-                  <div class="inner">
-                    <span class="price sell-bg">
-                      <!--卖-->
-                      {{ $t('M.comm_ask') }} {{item.index}}
-                    </span><span class="price text-align-l sell-bg">
-                      {{item.price}}
-                    </span><span class="amount text-align-r">
-                      {{item.amount}}
-                    </span><span class="total text-align-r">
-                      {{item.total}}
-                    </span><!--宽度条--><i
-                      class="color-sell-bg"
-                      :style="'width:'+ item.amount/buysAndSellsList.buys.highestAmount*100+'%'"
-                    >
-                    </i>
-                  </div>
-                </dd>
-              </dl>
-              <!--最新价-->
-              <TradeNewPrice/>
-            </div>
-            <!--</el-collapse-transition>-->
           </div>
         </el-collapse-transition>
       </div>
@@ -410,6 +334,7 @@ export default {
                 &:nth-of-type(1){
                   width:13%;
                   text-align: left;
+                  white-space:nowrap;
                 }
                 text-align: right;
                 /*border:1px solid red;*/
@@ -449,6 +374,7 @@ export default {
                       width:29%;
                       &:nth-of-type(1){
                         width:13%;
+                        white-space:nowrap;
                         text-align: left;
                       }
                       text-align: right;

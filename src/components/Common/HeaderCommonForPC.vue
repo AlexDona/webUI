@@ -828,6 +828,7 @@ export default{
                   text-align: left;
                   padding:0 20px 0 10px;
                   cursor: pointer;
+                  width:100%;
                   &:hover{
                     background-color: $mainColor;
                   }

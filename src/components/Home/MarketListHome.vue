@@ -112,8 +112,6 @@ import EchartsLineCommon from '../Common/EchartsLineCommon'
 import IconFontCommon from '../Common/IconFontCommon'
 import HomeMarketTableItem from '../Home/HomeMarketTableItem'
 import socket from '../../utils/datafeeds/socket'
-// 文件拖动
-import VueDND from 'awe-dnd'
 import {
   getStore,
   setStore,
@@ -137,7 +135,6 @@ import {
 } from '../../utils/api/home'
 import {mapState, createNamespacedHelpers} from 'vuex'
 const { mapMutations } = createNamespacedHelpers('home')
-Vue.use(VueDND)
 export default{
   components: {
     IconFontCommon,

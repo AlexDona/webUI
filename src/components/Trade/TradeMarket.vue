@@ -484,8 +484,9 @@ export default {
   },
   watch: {
     language (newVal) {
-      this.getTradeMarketData()
+      this.collectArea.area = this.$t('M.trade_market_optional')
       this.activeName = this.$t('M.trade_market_optional')
+      this.getTradeMarketData()
     },
     activeTabSymbolStr (newVal) {
       console.log(newVal)

@@ -503,6 +503,7 @@ export default {
           >.tbody{
             >.content{
               >.tr{
+                white-space:nowrap;
                 >.td{
                   white-space:nowrap;
                   font-size: 12px;
@@ -577,10 +578,10 @@ export default {
               }
             }
             >.tr{
+              white-space:nowrap;
               height:30px;
               line-height:30px;
               font-size: 14px;
-              border-bottom:1px solid red;
               >.td{
                 font-size: 12px;
                 display:inline-block;

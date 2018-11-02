@@ -14,7 +14,8 @@ export default {
     state.bannerActive = data
   },
   [CHANGE_BANNER_BACKGROUND] (state, data = '') {
-    state.bannerBackgroundImage = data ? `url(${data}) no-repeat center center/100% 100%` : 'linear-gradient(#1d3863,#251f3d)'
+    // state.bannerBackgroundImage = data ? `url(${data}) no-repeat center center/100% 100%` : 'linear-gradient(#1d3863,#251f3d)'
+    state.bannerBackgroundImage = data
   },
   // 设置收藏标记
   [CHANGE_COLLECT_SYMBOL] (state, {
