@@ -1,12 +1,14 @@
 <template>
   <div
     class="banner-box home"
-    :style="{
-      background:bannerBackgroundImage,
-      width:screenWidth*3+'px',
-      height:screenWidth/1.19+'px'
-    }"
   >
+    <img
+      v-lazy="bannerBackgroundImage"
+      :style="{
+        width:screenWidth*3+'px',
+        height:screenWidth/1.19+'px'
+      }"
+    >
     <SliderHome/>
   </div>
 </template>
@@ -41,7 +43,7 @@ export default {
   },
   watch: {
     bannerBackgroundImage (newVal) {
-      // console.log(newVal)
+      console.log(newVal)
     }
   }
 }
@@ -50,10 +52,13 @@ export default {
   .banner-box{
     width:100%;
     background:linear-gradient(#1d3863,#251f3d);
-    -webkit-background-size: 100% 100%;
     background-size: 100% 100%;
     overflow: hidden;
     transition: all 1s;
     position: relative;
+    >img{
+      /*width:100%;*/
+      /*height:100%;*/
+    }
   }
 </style>

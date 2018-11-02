@@ -611,10 +611,11 @@
         class="success-box"
       >
         <div class="img">
-          <IconFontCommon
-            class="icon-color"
-            iconName="icon-dui1"
-          />
+          <!--<IconFontCommon-->
+            <!--class="icon-color"-->
+            <!--iconName="icon-dui1"-->
+          <!--/>-->
+          <img src="../assets/develop/register-success.png">
           <p>注册成功</p>
         </div>
         <p class="title">
@@ -1295,7 +1296,7 @@ export default {
           }
           >.error-msg{
             height:30px;
-            line-height: 30px;
+            line-height: 50px;
             margin-left: 30px;
             color: rgb(212, 88, 88);
           }
@@ -1537,6 +1538,10 @@ export default {
           border-radius: 50%;
           margin:0 auto 30px;
           color:#fff;
+          >img{
+            margin-top:20px;
+            width:50%;
+          }
           >.icon-color{
             font-size: 100px;
           }

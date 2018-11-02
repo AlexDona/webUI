@@ -8,11 +8,13 @@ import {getStore} from './utils'
 import 'babel-polyfill'
 import store from './vuex'
 import '../static/js/rem'
+// 图片懒加载
+import VueLazyLoad from 'vue-lazyload'
 
-import vwebp from 'vue-webp2'
-Vue.use(vwebp)
+Vue.use(VueLazyLoad, {
+  loading: require('./assets/develop/loading.svg')
+})
 
-console.log(store)
 // import '../static/css/scss/index.scss'
 
 // 多语言

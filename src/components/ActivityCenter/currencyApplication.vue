@@ -205,7 +205,7 @@ export default {
         font-size:30px;
         font-weight:bold;
         color:rgba(255,255,255,1);
-        background: url('../../assets/develop/applyfor.png') no-repeat center center;
+        background:transparent url('../../assets/develop/applyfor.png') no-repeat center center;
         -webkit-background-size: 100% 100%;
         background-size: 100% 100%;
         >.title{

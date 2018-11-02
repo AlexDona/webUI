@@ -1,5 +1,8 @@
 <template>
-  <div class="footer-box common">
+  <div
+    class="footer-box common"
+    v-show="isloading"
+  >
     <div class="inner-box">
       <!--顶部-->
       <div
@@ -197,7 +200,8 @@ export default {
       ],
       footerInfo1: {},
       footerInfo2: {},
-      linkList: [] // 友情链接
+      linkList: [], // 友情链接
+      isloading: false
     }
   },
   created () {
@@ -228,6 +232,7 @@ export default {
     footerInfo (newVal) {
       console.log(newVal)
       if (newVal) {
+        this.isloading = true
         this.footerInfo1 = newVal.footerInfo1
         this.footerInfo2 = newVal.footerInfo2
         console.log(this.footerInfo2)
