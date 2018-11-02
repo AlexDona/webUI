@@ -872,7 +872,7 @@ export default {
     },
     async getCurrencyApplicationDownloadUrl () {
       let data = await currencyApplicationDownloadUrl({
-        key: 'VIP_COIN'
+        key: 'VIP_COIN_NAME'
       })
       console.log(data)
       // 整页loading

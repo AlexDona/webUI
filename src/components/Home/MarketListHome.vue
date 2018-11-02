@@ -206,6 +206,7 @@ export default{
     require('../../../static/css/theme/day/Home/MarketListHomeDay.css')
     require('../../../static/css/theme/night/Home/MarketListHomeNight.css')
     console.log(this.language)
+    console.log(this.$route.path)
     if (this.language) {
       await this.getHomeMarketByAjax()
     }
@@ -224,6 +225,10 @@ export default{
   beforeRouteUpdate () {},
   destroyed () {
     this.socket.destroy()
+  },
+  beforeRouteEnter (to, from, next) {
+    console.log(to)
+    next()
   },
   methods: {
     ...mapMutations([
@@ -524,6 +529,9 @@ export default{
     })
   },
   watch: {
+    '$route' (to, from) {
+      console.log(to)
+    },
     filterMarketList (newVal) {
       // 查看更多按钮显示状态判断
       for (let i = 2; i < newVal.length; i++) {

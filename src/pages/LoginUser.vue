@@ -949,14 +949,15 @@ export default {
       }
 
       let params = {
-        nationCode: this.activeCountryCode
+        // nationCode: this.activeCountryCode
+        userId: this.userInfo.userId
       }
       switch (loginType) {
         case 0:
           params.phone = this.userInfo.phone
           break
         case 1:
-          params.address = this.userInfo.email
+          params.email = this.userInfo.email
           break
       }
       sendPhoneOrEmailCodeAjax(loginType, params, (data) => {
