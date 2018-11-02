@@ -122,7 +122,7 @@ export default {
       activeIndex: '0', // 当前tabIndex
       // ----------------
       contentShowStatus: true, // 显示隐藏控制
-      activeName: 'M.trade_market_optional', // 当前tabItem
+      activeName: this.$t('M.trade_market_optional'), // 当前tabItem
       sortBy: '', // 排序依据: price-asc price-desc rose-asc rose-desc
       marketList: [], // 行情数据
       filterMarketList: [], // 过滤行情数据
@@ -485,6 +485,7 @@ export default {
   watch: {
     language (newVal) {
       this.getTradeMarketData()
+      this.activeName = this.$t('M.trade_market_optional')
     },
     activeTabSymbolStr (newVal) {
       console.log(newVal)

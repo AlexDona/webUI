@@ -931,7 +931,8 @@ export default {
     },
     // 发送验证码（短信、邮箱）
     sendPhoneOrEmailCode (type) {
-      this.activeCountryCodeWithEmail = _.filter(this.contryAreaList, {abbreviation: this.activeCountryAbbreviationWithEmail})[0].abbreviation
+      let activeAbbreviation = _.filter(this.contryAreaList, {abbreviation: this.activeCountryAbbreviationWithEmail})[0].abbreviation
+      this.activeCountryCodeWithEmail = _.filter(this.contryAreaList, {abbreviation: this.activeCountryAbbreviationWithEmail})[0].nationCode
       console.log(_.filter(this.contryAreaList, {abbreviation: this.activeCountryAbbreviationWithEmail})[0])
       // console.log(this.activeCountryCodeWithEmail)
       if (this.disabledOfPhoneBtn || this.disabledOfEmailBtn) {
@@ -955,7 +956,7 @@ export default {
             return false
           }
           params.email = this.emailNum
-          params.abbreviation = this.activeCountryCodeWithEmail
+          params.abbreviation = activeAbbreviation
           break
       }
       console.log(params)
