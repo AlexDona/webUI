@@ -385,7 +385,7 @@ export default{
   },
   async created () {
     require('../../../static/css/theme/day/Common/HeaderCommonDay.css')
-    // 获取 语言列表:任付伟先注释此方法防止每次刷新报错-有需要请放开
+    // 获取 语言列表
     await getLanguageListAjax(this)
     await getCountryListAjax(this)
     await getFooterInfo(this.language, this)
@@ -796,6 +796,7 @@ export default{
               transition: all 1s;
               position: relative;
               text-align: left;
+              cursor: pointer;
               /*当前语言 dt*/
               >.lang-selected{
                 box-sizing: border-box;
@@ -826,6 +827,7 @@ export default{
                   line-height:30px;
                   text-align: left;
                   padding:0 20px 0 10px;
+                  cursor: pointer;
                   &:hover{
                     background-color: $mainColor;
                   }

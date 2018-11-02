@@ -170,7 +170,7 @@
     <div
       v-loading.fullscreen.lock="fullscreenLoading"
       element-loading-background="rgba(0, 0, 0, 0.6)"
-      :style="{'min-height':(height-616)+'px'}"
+      :style="{'min-height':(height-305)+'px'}"
       class="business-applying-content"
       v-show="applyStatus === 2"
     >
@@ -186,7 +186,7 @@
     <div
       v-loading.fullscreen.lock="fullscreenLoading"
       element-loading-background="rgba(0, 0, 0, 0.6)"
-      :style="{'min-height':(height-616)+'px'}"
+      :style="{'min-height':(height-305)+'px'}"
       class="business-apply-success-content"
       v-show="applyStatus === 3"
     >
@@ -240,7 +240,7 @@ export default {
     // 动态获取申请中 申请成功内容的高度
     // console.log(document.documentElement.clientHeight)
     this.height = document.documentElement.clientHeight
-    // console.log(this.height)
+    console.log(this.height)
     require('../../../static/css/list/OTC/OTCBusinessApply.css')
     require('../../../static/css/theme/day/OTC/OTCBusinessApplyDay.css')
     require('../../../static/css/theme/night/OTC/OTCBusinessApplyNight.css')
@@ -358,6 +358,7 @@ export default {
         data.data.data.forEach(item => {
           if (item.keyword === 'OTC' + this.$t('M.comm_agreement')) {
             this.argumentContent = item.content
+            console.log(item)
           }
         })
       }

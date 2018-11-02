@@ -5,7 +5,7 @@
   >
   <!-- :style="{'height':windowHeight+'px'}" -->
     <!-- 2.0 广告管理 -->
-    <div class="otc-AD-manage-content" :style="{'min-height':(height-556)+'px'}">
+    <div class="otc-AD-manage-content" :style="{'min-height':(height-305)+'px'}">
       <!-- 2.1 大标题广告管理 -->
       <div class="AD-title font-size20 padding-l15 font-weight700">
         <!-- 广告管理 -->

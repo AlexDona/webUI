@@ -303,6 +303,9 @@ export const getFooterInfo = async (language, that) => {
   ) {
     return false
   } else {
+    console.log(data1)
+    console.log(data2)
+    console.log(data3) // 包含公司名称、邮箱等信息
     let footerInfo1 = data1.data.data
     let footerInfo2 = data2.data.data
     let configInfo = data3.data.data

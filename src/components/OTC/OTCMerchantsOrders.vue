@@ -6,7 +6,7 @@
     <!-- 2.0 商家订单 -->
     <div
       class="otc-merchants-orders-content"
-      :style="{'min-height':(height-556)+'px'}"
+      :style="{'min-height':(height-305)+'px'}"
     >
       <!-- 2.1 大标题商家订单 -->
       <div class="merchants-title font-size20 padding-l15 font-weight700">
