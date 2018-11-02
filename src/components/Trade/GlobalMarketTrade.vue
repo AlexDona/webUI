@@ -60,6 +60,10 @@
                       <!--货币转换-->
                       <div
                         class="bottom"
+                        :class="{
+                        'up':middleTopData.chg>0,
+                        'down':middleTopData.chg<0
+                      }"
                         v-if="currencyRateList[activeSymbol.area]&&item.bourseCount"
                       >
                         ≈{{activeConvertCurrencyObj.symbol}}{{formatCount(keep2Num((currencyRateList[item.bourseTrade.split('_')[1]]-0)*item.bourseCount))}}
