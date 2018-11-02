@@ -69,7 +69,7 @@
           <div class="left-body">
             <label for="">
               <!-- 存币类型 -->
-              {{$t('M.finance_invest')}}{{$t('M.comm_type')}}:&nbsp;
+              <span class="label-title">{{$t('M.finance_invest')}}{{$t('M.comm_type')}}:&nbsp;</span>
               <el-select
                 :placeholder="$t('M.comm_please_choose')"
                 :no-data-text="$t('M.comm_no_data')"
@@ -79,8 +79,9 @@
                 <el-option
                   v-for="(item,index) in investTypeList"
                   :key="index"
-                  :label="language === 'zh_CN' || language === 'zh_TW'? item.typeDescription : item.typeDescription"
+                  :label="language === 'zh_CN' || language === 'zh_TW'? item.typeDescription : item.typeEnglishDescription"
                   :value="item.id"
+                  v-if="item.state === 'ENABLED'"
                 >
                 <!-- 任增加存币类型国际化 -->
                 <!-- :label="language === 'zh_CN' || language === 'zh_TW'? item.typeDescription : item.typeEnglishDescription" -->
@@ -89,7 +90,7 @@
             </label>
             <label for="">
               <!-- 存币数量 -->
-              {{$t('M.finance_invest')}}{{$t('M.comm_count')}}:&nbsp;
+              <span class="label-title">{{$t('M.finance_invest')}}{{$t('M.comm_count')}}:&nbsp;</span>
               <div class='invest-mounte'>
                 <!-- 请输入数量 -->
                 <input
@@ -159,7 +160,7 @@
                 <el-form-item
                   :label="$t('M.finance_interestRate')"
                 >
-                   <div class='invest-mounte'>
+                  <div class='invest-mounte'>
                     <el-input
                       v-model="formLabelAlign.interestRate"
                       disabled
@@ -329,7 +330,7 @@
                 <!-- 任增加存币类型国际化 -->
                 <!-- :prop="language === 'zh_CN' || language === 'zh_TW'? typeDescription : typeEnglishDescription" -->
                 <el-table-column
-                  :prop="language === 'zh_CN' || language === 'zh_TW'? typeDescription : typeDescription"
+                  :prop="language === 'zh_CN' || language === 'zh_TW'? typeDescription : typeEnglishDescription"
                   :label="$t('M.finance_invest') + $t('M.otc_cancelOrder_type')"
                   width="180">
                 </el-table-column>
@@ -817,7 +818,7 @@ export default {
           if (this.language === 'zh_TW' || this.language === 'zh_CN') {
             this.selectedInvestTypeDiscri = item.typeDescription
           } else {
-            this.selectedInvestTypeDiscri = item.typeDescription
+            this.selectedInvestTypeDiscri = item.typeEnglishDescription
           }
         }
       })
@@ -949,6 +950,10 @@ export default {
               margin:44px 0px;
               display: flex;
               line-height: 50px;
+              >.label-title{
+                display: inline-block;
+                width: 120px;
+              }
               >.invest-mounte{
                 display: flex;
                 justify-content: space-between;
@@ -968,7 +973,8 @@ export default {
                 >button{
                   width: 407px;
                   height: 48px;
-                  margin-left: 72px;
+                  // margin-left: 72px;
+                  margin-left: 110px;
                   text-align: center;
                   border: 2px solid -webkit-linear-gradient(135deg,#2B396E,#2A5082);
                   background: -webkit-linear-gradient(45deg,#2B396E,#2A5082);

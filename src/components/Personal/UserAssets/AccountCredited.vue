@@ -345,35 +345,35 @@
               class="text-info font-size16"
             >
               <!--是否确定关闭银行卡收款方式-->
-              {{ $t('M.user_account_whether_not') }}{{ $t('M.comm_confirm') }}{{ $t('M.comm_close') }}{{ $t('M.user_account_bank') }}{{ $t('M.user_account_payment_term') }}
+              {{ $t('M.user_account_whether_close1') }}
             </span>
             <span
               v-show="closeMicroLetter"
               class="text-info font-size16"
             >
               <!--是否确定关闭微信收款方式-->
-              {{ $t('M.user_account_whether_not') }}{{ $t('M.comm_confirm') }}{{ $t('M.comm_close') }}{{ $t('M.user_account_weChat') }}{{ $t('M.user_account_payment_term') }}
+              {{ $t('M.user_account_whether_close2') }}
             </span>
             <span
               v-show="closeAlipay"
               class="text-info font-size16"
             >
               <!--是否确定关闭支付宝收款方式-->
-              {{ $t('M.user_account_whether_not') }}{{ $t('M.comm_confirm') }}{{ $t('M.comm_close') }}{{ $t('M.user_account_alipay') }}{{ $t('M.user_account_payment_term') }}
+              {{ $t('M.user_account_whether_close3') }}
             </span>
             <span
               v-show="closePayapl"
               class="text-info font-size16"
             >
               <!--是否确定关闭payapl收款方式-->
-              {{ $t('M.user_account_whether_not') }}{{ $t('M.comm_confirm') }}{{ $t('M.comm_close') }}{{ $t('M.user_account_paypal') }}{{ $t('M.user_account_payment_term') }}
+              {{ $t('M.user_account_whether_close4') }}
             </span>
             <span
               v-show="closeWesternUnion"
               class="text-info font-size16"
             >
               <!--是否确定关闭西联汇款收款方式-->
-              {{ $t('M.user_account_whether_not') }}{{ $t('M.comm_confirm') }}{{ $t('M.comm_close') }}{{ $t('M.user_account_western_union') }}{{ $t('M.user_account_payment_term') }}
+              {{ $t('M.user_account_whether_close5') }}
             </span>
             <span
               slot="footer"

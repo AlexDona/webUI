@@ -699,7 +699,7 @@ export default {
         language: this.language
       }
       await getServiceProtocolData(this, params, (data) => {
-        console.log(data.data.data)
+        console.log(data)
         this.serviceAgreementContent = data.data.data[0].content
         this.discountsInstructionContent = data.data.data[1].content
       })
