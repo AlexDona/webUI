@@ -8,7 +8,10 @@
         v-if="needHeader"
       />
     </keep-alive>
-    <router-view/>
+    <keep-alive>
+      <router-view/>
+    </keep-alive>
+      <router-view/>
     <FooterCommon
     />
     <!-- <FooterCommon

@@ -1,19 +1,8 @@
 <template>
   <div
-    class="kline-container"
+    id="tv_chart_container"
+    :class="{'day':theme == 'day','night':theme == 'night' }"
   >
-    <div
-      id="tv_chart_container"
-      v-show="!fullscreenLoading"
-      :class="{'day':theme == 'day','night':theme == 'night' }"
-    >
-    </div>
-    <div
-      class="loading-box"
-      v-loading.lock="fullscreenLoading"
-      element-loading-background="rgba(0, 0, 0, 0.6)"
-      v-show="fullscreenLoading"
-    ></div>
   </div>
 </template>
 
@@ -70,8 +59,7 @@ export default {
       }, // K线请求参数
       socketData: {}, // socket 数据
       ajaxData: {}, // 接口请求数据
-      resolutions: ['min', 'min5', 'min15', 'min30', 'hour1', 'hour4', 'day', 'week'],
-      fullscreenLoading: true
+      resolutions: ['min', 'min5', 'min15', 'min30', 'hour1', 'hour4', 'day', 'week']
     }
   },
   beforeCreate () {
@@ -137,19 +125,22 @@ export default {
           ajaxData: this.ajaxData,
           type: 'ajax'
         })
-        // this.socket.on('open', () => {
-        this.getKlineDataBySocket('REQ', this.symbol, 'min')
-        this.getKlineDataBySocket('SUB', this.symbol, 'min')
-        this.getTradeMarketBySocket('SUB', this.activeTabSymbolStr)
-        this.getBuyAndSellBySocket('SUB', this.symbol)
-        this.getDepthDataBySocket('SUB', this.symbol)
-        this.getTradeRecordBySocket('SUB', this.symbol)
-        this.socket.on('message', this.onMessage)
-        // })
+        this.socket.on('open', () => {
+          this.getKlineDataBySocket('REQ', this.symbol, 'min')
+          this.getKlineDataBySocket('SUB', this.symbol, 'min')
+          this.getTradeMarketBySocket('SUB', this.activeTabSymbolStr)
+          this.getBuyAndSellBySocket('SUB', this.symbol)
+          this.getDepthDataBySocket('SUB', this.symbol)
+          this.getTradeRecordBySocket('SUB', this.symbol)
+          this.socket.on('message', this.onMessage)
+        })
       }
     },
     // k线初始化
     initKLine (symbol) {
+      // this.loadingCount = 0
+      // this.fullscreenLoading = true
+      // console.log(this.fullscreenLoading)
       // this.resetKlineAjaxAndSocketData()
       this.widget = null
       this.socket.on('message', this.onMessage)
@@ -430,8 +421,7 @@ export default {
       // console.log(data)
       switch (data.tradeType) {
         case 'KLINE':
-          // console.log(data)
-          console.log(data.data[0])
+          console.log(data)
           if (data.data && data.data.length && !data.type) {
             const list = []
             const ticker = `${this.symbol}-${this.interval}`
@@ -511,9 +501,6 @@ export default {
         'socketData': this.socketData,
         'type': 'socket'
       })
-      setTimeout(() => {
-        this.fullscreenLoading = false
-      }, 1)
     },
     getBars (symbolInfo, resolution, rangeStartDate, rangeEndDate, onLoadedCallback) {
       // symbolInfo.pricescale = 100000
@@ -662,23 +649,14 @@ export default {
 </script>
 <style scoped lang="scss">
   @import '../../../static/css/scss/index';
-  .kline-container{
-    width:100%;
-    height:355px;
-    #tv_chart_container {
-      width: 100%;
-      height: 355px;
-      &.night {
-        background-color: $mainContentNightBgColor;
-      }
-      &.day{
-        background-color: #fff;
-      }
-    }
-    .loading-box{
-      width:100%;
-      height:355px;
-    }
+  #tv_chart_container {
+    width: 100%;
+    height: 355px;
+  &.night {
+     background-color: $mainContentNightBgColor;
+   }
+  &.day{
+     background-color: #fff;
+   }
   }
-
 </style>
