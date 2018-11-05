@@ -306,7 +306,7 @@
               width="110"
             >
               <template slot-scope="s">
-                <span>{{ s.row.price }}</span>
+                <span>{{ s.row.price-0 }}</span>
               </template>
             </el-table-column>
             <!--委托量-->
@@ -410,7 +410,7 @@
               :label="$t('M.comm_price_metre')"
             >
               <template slot-scope="s">
-                <span>{{ s.row.count-0 }}</span>
+                <span>{{ s.row.price-0 }}</span>
               </template>
             </el-table-column>
             <!--数量-->

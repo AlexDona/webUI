@@ -356,6 +356,7 @@ export default {
               >.buys-list,.sells-list{
                 font-size: 12px;
                 /*padding:0 20px;*/
+                height:600px;
                 >dd{
                   height: 30px;
                   line-height: 30px;
