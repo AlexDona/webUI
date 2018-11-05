@@ -9,11 +9,9 @@
       />
     </keep-alive>
       <router-view/>
-    <FooterCommon
-    />
-    <!-- <FooterCommon
+     <FooterCommon
       v-if="needFooter"
-    /> -->
+    />
   </div>
 </template>
 <script>

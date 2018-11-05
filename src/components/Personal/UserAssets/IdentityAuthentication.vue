@@ -485,7 +485,6 @@
 import ErrorBox from '../../User/ErrorBox'
 import IconFontCommon from '../../Common/IconFontCommon'
 import {
-  queryCountryList,
   submitRealNameAuthentication,
   submitSeniorCertification,
   realNameInformation,
@@ -493,7 +492,8 @@ import {
 } from '../../../utils/api/personal'
 import {
   returnAjaxMessage,
-  reflashUserInfo
+  reflashUserInfo,
+  getCountryListAjax
 } from '../../../utils/commonFunc'
 import {apiCommonUrl} from '../../../utils/env'
 import {createNamespacedHelpers, mapState} from 'vuex'
@@ -648,18 +648,6 @@ export default {
           this.regionValue = e
         }
       })
-    },
-    async getCountryListings () {
-      let data = await queryCountryList()
-      console.log(data)
-      if (!(returnAjaxMessage(data, this, 0))) {
-        return false
-      } else {
-        // 返回列表数据
-        this.regionList = data.data.data
-        this.regionValue = data.data.data[0].id
-        this.regionValue = data.data.data[0].chinese
-      }
     },
     /**
     *  刚进页面时候 获取用户实名信息
@@ -911,7 +899,12 @@ export default {
         this.SET_USER_INFO_REFRESH_STATUS(true)
         this.getUserRefreshUser()
         // 国家列表展示
-        this.getCountryListings()
+        getCountryListAjax(this, (data) => {
+          // 返回列表数据
+          this.regionList = data.data.data
+          this.regionValue = data.data.data[0].id
+          this.regionValue = data.data.data[0].chinese
+        })
       }
     }
   }

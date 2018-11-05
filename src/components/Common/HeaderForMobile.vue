@@ -80,7 +80,6 @@ export default {
     await getLanguageListAjax(this)
     await getFooterInfo(this.language, this)
     this.activeTheme = this.theme
-    // 查询某商户可用法币币种列表
     await getCountryListAjax(this)
     if (this.isLogin) {
       await reflashUserInfo(this)

@@ -1089,7 +1089,7 @@ export default {
         return false
       }
       let params = {
-        type: 'VERIFICATION_CODE' // 类型
+        userId: this.userInfo.userId
       }
       switch (loginType) {
         case 0:

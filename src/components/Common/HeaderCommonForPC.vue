@@ -341,6 +341,10 @@ import {
   getFooterInfo,
   getLanguageListAjax
 } from '../../utils/commonFunc'
+import {
+  getStore,
+  setStore
+} from '../../utils'
 import { createNamespacedHelpers, mapState } from 'vuex'
 const { mapMutations } = createNamespacedHelpers('common')
 // const { mapMutationsForUser } = createNamespacedHelpers('user')
@@ -419,11 +423,12 @@ export default{
     // 更改当前选中汇率转换货币
     async changeActiveTransitionCurrency () {
       const params = {
-        shortName: this.activeConvertCurrency || 'CNY'
+        shortName: this.activeConvertCurrency || getStore('convertCurrency')
       }
       this.convertCurrencyList.forEach((item) => {
         if (item.shortName === params.shortName) {
           console.log(item.shortName)
+          setStore('convertCurrency', item.shortName)
           this.activeConvertCurrencyObj = item
           return false
         }
