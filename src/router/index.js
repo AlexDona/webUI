@@ -90,6 +90,8 @@ const ServiceAndProtocol = r => require.ensure([], () => r(require('@/components
  * appDownload
  */
 const DownloadApp = r => require.ensure([], () => r(require('@/pages/DownloadApp')), 'download-app')
+
+const errorFor404And500 = r => require.ensure([], () => r(require('@/pages/ErrorFor500And404')), 'error')
 const router = new Router({
   // mode: 'history',
   routes: [
@@ -350,6 +352,14 @@ const router = new Router({
     {
       path: '/downloadApp',
       component: DownloadApp
+    },
+    {
+      path: '/500',
+      component: errorFor404And500
+    },
+    {
+      path: '*',
+      component: errorFor404And500
     }
   ]
 })

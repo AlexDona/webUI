@@ -53,10 +53,15 @@ export const returnAjaxMessage = (data, self, noTip, errorTip) => {
       })
       // console.log(self.$t(`M.${meta.i18n_code}`).format(meta.params))
       // 登录失效
-      if (meta.code == 401) {
-        removeStore('loginStep1Info')
-        self.$router.push({path: '/login'})
-        store.commit('user/USER_LOGOUT')
+      switch (meta.code) {
+        case 401:
+          removeStore('loginStep1Info')
+          self.$router.push({path: '/login'})
+          store.commit('user/USER_LOGOUT')
+          break
+        case 500:
+          self.$router.push({path: '/500'})
+          break
       }
       return 0
     } else {
@@ -161,9 +166,6 @@ export const getCountryListAjax = async (that, callback) => {
   let localCountry = getStoreWithJson('countryList')
   let saveTimeStamp = getStore('timeStamp')
   let nowTimeStamp = new Date().getTime()
-  // console.log(saveTimeStamp)
-  // console.log(nowTimeStamp)
-  // console.log(nowTimeStamp - saveTimeStamp)
   let diffTime = Math.abs(nowTimeStamp - saveTimeStamp)
   let data
   if (localCountry && diffTime < 86400000) {
