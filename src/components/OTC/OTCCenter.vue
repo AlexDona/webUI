@@ -155,7 +155,7 @@
                   </div>
                 </template>
               </el-table-column>
-              <!-- 信用 -->
+              <!-- 成交率 -->
               <el-table-column
                 :label="$t('M.otc_index_turnover')"
               >

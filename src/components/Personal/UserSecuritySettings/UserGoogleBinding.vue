@@ -36,13 +36,29 @@
       <div class="binding-google-content">
         <div class="google-content-from min-height500">
           <div class="google-images-show display-flex">
-            <div class="google-validator flex1">
+            <!-- 谷歌验证码 原来的 -->
+            <!-- <div class="google-validator flex1">
               <div class="google-images img-background">
                 <div class="img-box">
                   <img :src="googleImages">
                 </div>
               </div>
               <p class="google-info paddinglr15 margin-top16 font-size12">
+                {{ $t('M.user_google_text1') }}
+                <span class="google-info-download">
+                  {{ $t('M.user_google_text2') }}
+                </span>
+              </p>
+            </div> -->
+            <!-- 左边 -->
+            <div class="google-validator flex1">
+              <div class="google-images img-background">
+                <div class="img-box">
+                  <img :src="googleImagesIOS">
+                </div>
+                <div class="text-align-c color-black margin-top2">IOS</div>
+              </div>
+              <p class="google-info paddinglr13 margin-top16 font-size12">
                 <!--若未安装谷歌验证器请-->
                 {{ $t('M.user_google_text1') }}
                 <span class="google-info-download">
@@ -51,6 +67,24 @@
                 </span>
               </p>
             </div>
+            <!-- 中间 -->
+            <div class="google-validator flex1" style="margin-left:20px;">
+              <div class="google-images img-background">
+                <div class="img-box">
+                  <img :src="googleImagesAndroid">
+                </div>
+                <div class="text-align-c color-black margin-top2">Android</div>
+              </div>
+              <p class="google-info paddinglr13 margin-top16 font-size12">
+                <!--若未安装谷歌验证器请-->
+                {{ $t('M.user_google_text1') }}
+                <span class="google-info-download">
+                  <!--扫码下载-->
+                  {{ $t('M.user_google_text2') }}
+                </span>
+              </p>
+            </div>
+            <!-- 右边 -->
             <div class="google-validator validator-margin flex1">
               <div class="google-images google-images1 img-background1">
                 <VueQrcode
@@ -182,7 +216,9 @@ export default {
   },
   data () {
     return {
-      googleImages: require('../../../assets/user/goolevalidatepig.png'), // 谷歌验证码
+      // googleImages: require('../../../assets/user/goolevalidatepig.png'), // 谷歌验证码
+      googleImagesAndroid: require('../../../assets/user/goole_Android.png'), // 谷歌验证码-安卓
+      googleImagesIOS: require('../../../assets/user/goole_IOS.png'), // 谷歌验证码-IOS
       securityCenter: {}, // 个人信息
       errorMsg: '', // 错误信息提示
       googleAccount: '', // 谷歌账号
@@ -450,7 +486,8 @@ export default {
               }
             }
             >.validator-margin {
-              margin-left: 97px;
+              // margin-left: 97px;
+              margin-left: 50px;
             }
           }
           >.google-info-show {
