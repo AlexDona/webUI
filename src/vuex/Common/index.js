@@ -1,6 +1,7 @@
 import mutations from './mutations'
 import actions from './action'
 import {getStore} from '../../utils'
+import getters from './getters'
 // import getters from './getters'
 
 // Vue.use(Vuex)
@@ -10,8 +11,9 @@ const state = {
   countDownResetStatus: false, // 倒计时重置状态
   theme: getStore('theme') || 'night',
   contryAreaList: [], // 国家列表（国家码）
+  defaultLanguage: 'zh_TW',
   // 国际化语言
-  language: getStore('language') || 'zh_CN',
+  language: getStore('language') || this.defaultLanguage,
   activeLanguage: '',
   mainColor: {
     $mainNightBgColor: '#1c1f32',
@@ -96,7 +98,7 @@ const state = {
 export default {
   namespaced: true,
   state,
-  // getters,
+  getters,
   actions,
   mutations
 }

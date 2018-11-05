@@ -71,3 +71,6 @@
 .withdrawal-address.personal .withdrawal-dialog .el-dialog__footer {
   text-align: center;
 }
+.withdrawal-address.personal .withdrawal-address-content .withdrawal-address-box .el-form .el-form-item .el-form-item__label {
+  width: 120px !important;
+}

@@ -306,6 +306,7 @@ export const fromApi = {
   'user-fail-bank-count-error': '最多开启3种支付方式',
   'otc_failure_0080': '该交易币种禁用',
   'otc_failure_0081': '该法币禁用',
+  'coin_apply': '上币申请',
   'session_timeout': '登录过期，请重新登录',
   'user-fail-login-disable': '账户被禁用',
   'user-email-fail-often': '邮件发送频繁，请过120秒后重新发送',
@@ -327,7 +328,6 @@ export const fromApi = {
   'market_failure_00010': '请求参数错误',
   'market_failure_00009': '获取深度数据失败',
   'market_failure_00008': '获取K线数据失败',
-  'coin_apply': '上币申请',
   'SMS_30_OUT_RESTRICTED': '验证码发送频繁,每30秒只能发送一条。',
   'user-fail-email-code': '邮件验证码错误',
   'user-fail-sms-code': '短信验证码错误',
@@ -368,5 +368,6 @@ export const fromApi = {
   'recharge_withdraw_failure_0037': '提币备注不能为空',
   'MAIL_TO_ADDRESS_NOT_FOUND': '当前邮件地址不存在，请检查过后再次发送',
   'otc_failure_0086': '商户设置的商家申请冻结币种信息有误，请联系客服',
-  'SMS_BAD_ARGUMENT_FORMAT': '手机格式不正确'
+  'SMS_BAD_ARGUMENT_FORMAT': '手机格式不正确。',
+  'SMS_FAILURE': '发送失败'
 }

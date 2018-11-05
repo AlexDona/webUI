@@ -200,7 +200,7 @@ export default {
     let xDomain = window.location.host.split(':')[0]
     xDomain = xDomain.startsWith('www') ? xDomain.slice(4) : xDomain
     this.tokenObj['x-domain'] = xDomain
-    console.log(this.userInfo)
+    console.log(xDomain)
     this.getAccountPaymentTerm()
     this.paymentMethodInformation()
   },

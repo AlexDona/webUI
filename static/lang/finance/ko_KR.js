@@ -11,6 +11,7 @@ export const finance = {
   'finance_mine': '내',
   'finance_estimatedValue': '평가',
   'finance_earnings': '소득',
+  'finance_earnings_value': '소득 가치',
   'finance_recode': '기록',
   'finance_predict': '예상 된',
   'finance_paid_income': '근로 소득',

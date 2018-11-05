@@ -97,14 +97,6 @@ export default {
     text (newVal, oldVal) {
       // console.log(newVal)
     }
-    // time (newVal, oldVal) {
-    //   if (newVal > 0) {
-    //     this.text = this.time + 's' + this.$t('M.comm_after_get')
-    //   } else {
-    //     this.text = this.$t('M.comm_get_code')
-    //   }
-    //   this.$forceUpdate()
-    // }
   }
 }
 </script>

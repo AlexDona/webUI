@@ -11,6 +11,7 @@ export const finance = {
   'finance_mine': 'My ',
   'finance_estimatedValue': 'Valuation',
   'finance_earnings': ' Income',
+  'finance_earnings_value': 'Profit',
   'finance_recode': ' Record',
   // 'finance_predict': 'Expected',
   'finance_predict': '',

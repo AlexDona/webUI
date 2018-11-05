@@ -426,7 +426,7 @@ export default {
       }
       let params = {
         type: 'VERIFICATION_CODE', // 类型
-        country: this.bindingDataPhone.bindingAreaCodeValue // 国家编码
+        nationCode: this.bindingDataPhone.bindingAreaCodeValue // 国家编码
       }
       if (!this.securityCenter.isPhoneBind) {
         console.log(2)

@@ -38,7 +38,7 @@
           >
             <!--原登录密码-->
             <el-form-item
-              :label="$t('M.user_security_login_raw') + $t('M.user_security_login') + $t('M.user_security_password') + '：'"
+              :label="$t('M.user_security_login_raw') + $t('M.user_security_password') + '：'"
             >
               <input
                 type="password"
@@ -55,7 +55,7 @@
             </el-form-item>
             <!--新登录密码-->
             <el-form-item
-              :label="$t('M.user_security_login_new') + $t('M.user_security_login') + $t('M.user_security_password') + '：'"
+              :label="$t('M.user_security_login_new') + $t('M.user_security_password') + '：'"
             >
               <input
                 type="password"
@@ -72,7 +72,7 @@
             </el-form-item>
             <!--确认登录密码-->
             <el-form-item
-              :label="$t('M.comm_affirm') + $t('M.user_security_login') + $t('M.user_security_password') + '：'"
+              :label="$t('M.comm_affirm') + $t('M.user_security_password') + '：'"
             >
               <input
                 type="password"
@@ -332,7 +332,7 @@ export default {
           }
           .login-button {
             padding: 10px 85px;
-            margin: 30px 0 50px 120px;
+            margin: 30px 0 50px 167px;
           }
           .prompt-message {
             height: 20px;

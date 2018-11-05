@@ -10,5 +10,5 @@ export const footerInfo = {
   'about_digital_terms_hint3': 'Legal Notices',
   'about_digital_terms_hint4': 'Privacy Policy',
   'about_digital_terms_hint5': 'API doc.',
-  'about_digital_terms_hint6': 'information'
+  'about_digital_terms_hint6': 'Information'
 }

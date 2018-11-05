@@ -122,12 +122,6 @@ export default {
       activeIndex: '0', // 当前tabIndex
       // ----------------
       contentShowStatus: true, // 显示隐藏控制
-      tabList: [
-        {
-          id: 99,
-          name: this.$t('M.trade_market_optional') // 自选
-        }
-      ], // tab栏个数
       activeName: this.$t('M.trade_market_optional'), // 当前tabItem
       sortBy: '', // 排序依据: price-asc price-desc rose-asc rose-desc
       marketList: [], // 行情数据
@@ -146,7 +140,9 @@ export default {
     require('../../../static/css/list/Trade/TradeMarket.css')
     require('../../../static/css/theme/day/Trade/TradeMarketDay.css')
     require('../../../static/css/theme/night/Trade/TradeMarketNight.css')
-    this.getTradeMarketData()
+    if (this.language) {
+      this.getTradeMarketData()
+    }
   },
   mounted () {
   },
@@ -400,36 +396,6 @@ export default {
     toggleShowContent () {
       this.contentShowStatus = !this.contentShowStatus
     },
-    // 设置交易区 订阅数据
-    setTradeAreaSubscribeData (data) {
-      const newData = data.data[0].content[0]
-      if (this.activeSymbol.id == newData.id) {
-        this.changeActiveSymbol(newData)
-      }
-      if (this.activeName != this.tabList[0].id) {
-        this.marketList.forEach((item, index) => {
-          if (item.plateId === data.data[0].plateId) {
-            item.content.forEach((innerItem, innerIndex) => {
-              if (innerItem.id == newData.id) {
-                this.$set(this.marketList[index].content, innerIndex, newData)
-                this.filterMarketList = this.marketList
-                return false
-              }
-            })
-          }
-        })
-      } else {
-        this.filterMarketList.forEach((item, index) => {
-          if (item.plateId == newData.plateId) {
-            item.content.forEach((innerItem, innerIndex) => {
-              if (innerItem.id == newData.id) {
-                this.$set(this.filterMarketList[index].content, innerIndex, newData)
-              }
-            })
-          }
-        })
-      }
-    },
     // 搜索遍历方法
     setSearchFilterList (type, originalList, {newArr, index}, newCollectArea) {
       _.forEach(originalList, (plateItem, plateIndex) => {
@@ -450,6 +416,7 @@ export default {
       switch (this.activeIndex) {
         // 自选区
         case 1:
+          console.log(this.collectArea)
           _.forEach(this.collectArea.plateList, (plateItem) => {
             _.forEach(plateItem.content, (contentItem) => {
               activeTabSymbolStr += `${contentItem.id}@`
@@ -458,12 +425,14 @@ export default {
           break
         // 非自选区
         default:
-          console.log(this.filterMarketList)
-          _.forEach(this.filterMarketList[this.activeIndex - 2].plateList, (plateItem) => {
-            _.forEach(plateItem.content, (contentItem) => {
-              activeTabSymbolStr += `${contentItem.id}@`
+          console.log(this.filterMarketList[this.activeIndex - 2])
+          if (this.filterMarketList[this.activeIndex - 2]) {
+            _.forEach(this.filterMarketList[this.activeIndex - 2].plateList, (plateItem) => {
+              _.forEach(plateItem.content, (contentItem) => {
+                activeTabSymbolStr += `${contentItem.id}@`
+              })
             })
-          })
+          }
           break
       }
       activeTabSymbolStr = `${this.middleTopData.id}@` + activeTabSymbolStr.slice(0, activeTabSymbolStr.length - 1)
@@ -514,6 +483,11 @@ export default {
     }
   },
   watch: {
+    language (newVal) {
+      this.collectArea.area = this.$t('M.trade_market_optional')
+      this.activeName = this.$t('M.trade_market_optional')
+      this.getTradeMarketData()
+    },
     activeTabSymbolStr (newVal) {
       console.log(newVal)
     },
@@ -535,21 +509,23 @@ export default {
         }
         // 非自选区
         if (this.activeIndex != 1) {
-          _.forEach(this.filterMarketList[this.activeIndex - 2].plateList, plateItem => {
-            _.forEach(plateItem.content, (contentItem, contentIndex) => {
-              let newContent = contentItem
-              if (contentItem.tradeId === newVal.tradeId) {
-                setSocketData(
-                  newContent,
-                  newVal,
-                  plateItem.content,
-                  contentIndex,
-                  this
-                )
-                return false
-              }
+          if (this.filterMarketList[this.activeIndex - 2]) {
+            _.forEach(this.filterMarketList[this.activeIndex - 2].plateList, plateItem => {
+              _.forEach(plateItem.content, (contentItem, contentIndex) => {
+                let newContent = contentItem
+                if (contentItem.tradeId === newVal.tradeId) {
+                  setSocketData(
+                    newContent,
+                    newVal,
+                    plateItem.content,
+                    contentIndex,
+                    this
+                  )
+                  return false
+                }
+              })
             })
-          })
+          }
         } else {
           _.forEach(this.collectArea.plateList, (plateItem) => {
             _.forEach(plateItem.content, (contentItem, contentIndex) => {

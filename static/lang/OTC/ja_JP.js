@@ -230,6 +230,8 @@ export const OTC = {
   'otc_publishAD_inputminLimit': '入力値は最小値を下回ることはできません',
   'otc_publishAD_inputmaxLimit': '入力値は最大値を超えることはできません',
   'otc_publishAD_entrustCountLimit': '最大販売量が不足している。',
+  'otc_publishAD_blur_tips1_min': '1つの最小値を入力してください',
+  'otc_publishAD_blur_tips2_max': '1つの上限を入力してください',
   // #############広告管理##################
   'otc_adMange': '広告管理',
   'otc_trade': '取引',

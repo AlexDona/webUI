@@ -112,8 +112,6 @@ import EchartsLineCommon from '../Common/EchartsLineCommon'
 import IconFontCommon from '../Common/IconFontCommon'
 import HomeMarketTableItem from '../Home/HomeMarketTableItem'
 import socket from '../../utils/datafeeds/socket'
-// 文件拖动
-import VueDND from 'awe-dnd'
 import {
   getStore,
   setStore,
@@ -137,7 +135,6 @@ import {
 } from '../../utils/api/home'
 import {mapState, createNamespacedHelpers} from 'vuex'
 const { mapMutations } = createNamespacedHelpers('home')
-Vue.use(VueDND)
 export default{
   components: {
     IconFontCommon,
@@ -205,6 +202,11 @@ export default{
     require('../../../static/css/list/Home/MarketListHome.css')
     require('../../../static/css/theme/day/Home/MarketListHomeDay.css')
     require('../../../static/css/theme/night/Home/MarketListHomeNight.css')
+    console.log(this.language)
+    console.log(this.$route.path)
+    if (this.language) {
+      await this.getHomeMarketByAjax()
+    }
   },
   mounted () {
     // 搜索区、自选区禁止拖拽
@@ -220,6 +222,10 @@ export default{
   beforeRouteUpdate () {},
   destroyed () {
     this.socket.destroy()
+  },
+  beforeRouteEnter (to, from, next) {
+    console.log(to)
+    next()
   },
   methods: {
     ...mapMutations([
@@ -520,6 +526,9 @@ export default{
     })
   },
   watch: {
+    '$route' (to, from) {
+      console.log(to)
+    },
     filterMarketList (newVal) {
       // 查看更多按钮显示状态判断
       for (let i = 2; i < newVal.length; i++) {
@@ -544,9 +553,11 @@ export default{
       })
       this.concatSocketParamsStr(this.activeIndex)
     },
-    language: {
-      handler: 'getHomeMarketByAjax',
-      immediate: true
+    async language (newVal) {
+      console.log(newVal)
+      if (newVal) {
+        await this.getHomeMarketByAjax()
+      }
     },
     socketParamsStr (newVal, oldVal) {
       if (oldVal) {

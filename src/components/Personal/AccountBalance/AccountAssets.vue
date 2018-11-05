@@ -74,25 +74,25 @@
                 <div
                   class="flex1"
                 >
-                  {{ $t('M.comm_total_sum') }}{{ $t('M.comm_count') }}
+                  {{ $t('M.user_assets_sum1') }}
                 </div>
                 <!--冻结数量-->
                 <div
                   class="flex1"
                 >
-                  {{ $t('M.comm_freeze') }}{{ $t('M.comm_count') }}
+                  {{ $t('M.user_assets_sum2') }}
                 </div>
                 <!--可用数量-->
                 <div
                   class="flex1"
                 >
-                  {{ $t('M.comm_usable') }}{{ $t('M.comm_count') }}
+                  {{ $t('M.user_assets_sum3') }}
                 </div>
                 <!--资产估值(BTC)-->
                 <div
                   class="flex1 flex-asset"
                 >
-                  {{ $t('M.user_asset_valuation') }}(BTC)
+                  {{ $t('M.user_assets_sum4') }}(BTC)
                   <div class="icon-caret">
                     <i class="el-icon-caret-bottom caret-text cursor-pointer"></i>
                     <i class="el-icon-caret-top caret-text1 cursor-pointer"></i>
@@ -1089,7 +1089,7 @@ export default {
         return false
       }
       let params = {
-        type: 'VERIFICATION_CODE' // 类型
+        userId: this.userInfo.userId
       }
       switch (loginType) {
         case 0:

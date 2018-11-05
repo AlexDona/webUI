@@ -140,7 +140,7 @@
               class="li-item"
               v-if="!isLogin"
             >
-              <router-link to="/Register">
+              <router-link to="/register">
                 <!--<span>注册</span>-->
                 <span>{{$t('M.comm_register_time')}}</span>
               </router-link>
@@ -237,15 +237,14 @@
                     class="lang-list"
                     v-show="langSelecting"
                   >
-                    <a
+                    <button
                       class="lang-item"
-                      href="#"
                       @click="changeLanguage(item)"
                       v-for="(item,index) in languageList"
                       :key="index"
                     >
                       {{item.name}}
-                    </a>
+                    </button>
                   </dd>
                 </el-collapse-transition>
               </dl>
@@ -332,23 +331,20 @@
 </template>
 <script>
 import {getMerchantAvailablelegalTender} from '../../utils/api/OTC'
-import {
-  getLanguageList
-  // getConfigAjax
-} from '../../utils/api/header'
-import {
-  getStore
-} from '../../utils'
 import {userLoginOut} from '../../utils/api/user'
 import IconFontCommon from '../Common/IconFontCommon'
-// import {getPartnerList} from '../../utils/api/home'
 import {
   returnAjaxMessage,
   getCountryListAjax,
   reflashUserInfo,
   getTransitionCurrencyRate,
-  getFooterInfo
+  getFooterInfo,
+  getLanguageListAjax
 } from '../../utils/commonFunc'
+import {
+  getStore,
+  setStore
+} from '../../utils'
 import { createNamespacedHelpers, mapState } from 'vuex'
 const { mapMutations } = createNamespacedHelpers('common')
 // const { mapMutationsForUser } = createNamespacedHelpers('user')
@@ -393,9 +389,9 @@ export default{
   },
   async created () {
     require('../../../static/css/theme/day/Common/HeaderCommonDay.css')
-    // 获取 语言列表:任付伟先注释此方法防止每次刷新报错-有需要请放开
-    await this.getLanguageList()
-    await this.getCountryList()
+    // 获取 语言列表
+    await getLanguageListAjax(this)
+    await getCountryListAjax(this)
     await getFooterInfo(this.language, this)
     // console.log(this.theme)
     this.activeTheme = this.theme
@@ -424,48 +420,21 @@ export default{
       'CHANGE_REF_SECURITY_CENTER_INFO',
       'SET_FOOTER_INFO'
     ]),
-    getCountryList () {
-      getCountryListAjax(this, (data) => {
-        console.log(data)
-        // this.contryAreaList = data.data.data
-        this.SET_COUNTRY_AREA_LIST(data.data.data)
-        // console.log(this.contryAreaList)
-      })
-    },
     // 更改当前选中汇率转换货币
     async changeActiveTransitionCurrency () {
       const params = {
-        shortName: this.activeConvertCurrency || 'CNY'
+        shortName: this.activeConvertCurrency || getStore('convertCurrency')
       }
       this.convertCurrencyList.forEach((item) => {
         if (item.shortName === params.shortName) {
           console.log(item.shortName)
+          setStore('convertCurrency', item.shortName)
           this.activeConvertCurrencyObj = item
           return false
         }
       })
       await getTransitionCurrencyRate(params, this, this.activeConvertCurrencyObj)
     },
-    // 获取国家列表
-    async getLanguageList () {
-      const data = await getLanguageList()
-      if (!returnAjaxMessage(data, this)) {
-        return false
-      } else {
-        this.languageList = data.data.data
-        console.log(this.languageList)
-        let localLanguage = getStore('language') || 'zh_CN'
-        _.forEach(this.languageList, item => {
-          if (item.shortName === localLanguage) {
-            this.CHANGE_LANGUAGE(item)
-            console.log(this.activeLanguage)
-            return false
-          }
-        })
-        // console.log(this.languageList[0])
-      }
-    },
-    // 获取板块列表
     // 设置个人中心跳转
     setPersonalJump (target) {
       this.$store.commit('personal/CHANGE_USER_CENTER_ACTIVE_NAME', target)
@@ -598,6 +567,7 @@ export default{
     ...mapState({
       theme: state => state.common.theme,
       language: state => state.common.language,
+      defaultLanguage: state => state.common.defaultLanguage,
       isLogin: state => state.user.isLogin,
       middleTopData: state => state.trade.middleTopData, // 当前交易对数据
       middleTopDataPrice: state => state.trade.middleTopData.last, // 当前交易对数据
@@ -616,8 +586,8 @@ export default{
     footerInfo (newVal) {
       console.log(newVal)
     },
-    language () {
-      getFooterInfo(this.language, this)
+    async language () {
+      await getFooterInfo(this.language, this)
     },
     title (newVal) {
       console.log(newVal)
@@ -831,6 +801,7 @@ export default{
               transition: all 1s;
               position: relative;
               text-align: left;
+              cursor: pointer;
               /*当前语言 dt*/
               >.lang-selected{
                 box-sizing: border-box;
@@ -861,6 +832,8 @@ export default{
                   line-height:30px;
                   text-align: left;
                   padding:0 20px 0 10px;
+                  cursor: pointer;
+                  width:100%;
                   &:hover{
                     background-color: $mainColor;
                   }

@@ -848,7 +848,7 @@ export default {
                 box-sizing: border-box;
                 // background-color: #202A33;
                 border-radius: 5px;
-                padding: 40px 40px 0 40px;
+                padding: 40px 35px 0 35px;
               >.shoper-name{
                 height: 20px;
                 line-height: 20px;

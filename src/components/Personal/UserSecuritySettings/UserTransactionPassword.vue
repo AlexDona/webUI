@@ -323,8 +323,6 @@ export default {
      * 发送短信验证码或邮箱验证码
      */
     sendPhoneOrEmailCodeWithPush (loginType) {
-      console.log(this.disabledOfPhoneBtn)
-      console.log(this.disabledOfEmailBtn)
       if (
         !this.tieCheckoutInputFormat(0, this.modifyPassword.transactionPassword) ||
         !this.tieCheckoutInputFormat(1, this.modifyPassword.resetTransactionPassword)
@@ -335,7 +333,7 @@ export default {
         return false
       }
       let params = {
-        country: this.activeCountryCode,
+        nationCode: this.activeCountryCode,
         type: 'VERIFICATION_CODE' // 类型
       }
       switch (loginType) {

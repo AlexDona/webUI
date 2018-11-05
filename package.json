@@ -16,16 +16,16 @@
     "build--prod": "cross-env NODE_ENV=production env_config=prod node build/build.js"
   },
   "dependencies": {
-    "@xkeshi/vue-qrcode": "^1.0.0",
-    "awe-dnd": "^0.3.1",
     "element-ui": "^2.4.5",
-    "lrz": "^4.9.40",
     "vue": "^2.5.2",
-    "vue-concise-slider": "^2.4.8",
-    "vue-router": "^3.0.1",
-    "vue-slider-component": "^2.7.6"
+    "vue-router": "^3.0.1"
   },
   "devDependencies": {
+    "vue-slider-component": "^2.7.6",
+    "vue-concise-slider": "^2.4.8",
+    "@xkeshi/vue-qrcode": "^1.0.0",
+    "lrz": "^4.9.40",
+    "vue-lazyload": "^1.2.6",
     "autoprefixer": "^7.1.2",
     "babel-core": "^6.22.1",
     "babel-eslint": "^8.2.1",
@@ -71,7 +71,7 @@
     "mocha": "^3.2.0",
     "nightwatch": "^0.9.12",
     "node-notifier": "^5.1.2",
-    "node-sass": "^4.9.2",
+    "node-sass": "^4.9.4",
     "optimize-css-assets-webpack-plugin": "^3.2.0",
     "ora": "^1.2.0",
     "phantomjs-prebuilt": "^2.1.14",

@@ -20,7 +20,7 @@ export const fromApi = {
   'otc_failure_0043': 'No type',
   'otc_failure_0044': 'Prohibit self-buy and sell',
   'otc_failure_0045': 'The picker does not have a payment, and the picking fails',
-  'user-fail-assetnotenough-error': 'Insufficient assets',
+  'user-fail-assetnotenough-error': ' Insufficient assets',
   'entrust_failure_0011': 'Password wrong',
   'entrust_failure_0010': 'Password cannot empty',
   'entrust_failure_0013': 'Amount cannot be empty',

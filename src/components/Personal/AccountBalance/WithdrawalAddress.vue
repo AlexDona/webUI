@@ -250,7 +250,7 @@ import ErrorBox from '../../User/ErrorBox'
 import CountDownButton from '../../Common/CountDownCommon'
 import {
   returnAjaxMessage,
-  apiSendPhoneOrEmailCodeAjax,
+  sendPhoneOrEmailCodeAjax,
   getSecurityCenter,
   validateNumForUserInput
 } from '../../../utils/commonFunc'
@@ -535,7 +535,7 @@ export default {
           params.email = this.innerUserInfo.email
           break
       }
-      await apiSendPhoneOrEmailCodeAjax(loginType, params, (data) => {
+      await sendPhoneOrEmailCodeAjax(loginType, params, (data) => {
         // 提示信息
         if (!returnAjaxMessage(data, this)) {
           console.log('error')
@@ -633,7 +633,7 @@ export default {
           .form-button {
             // margin: 10px 0 0 70px;
             // 任增加
-            margin: 10px 0 0 120px;
+            margin: 10px 0 0 140px;
           }
         }
       }

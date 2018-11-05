@@ -34,6 +34,7 @@
               <!-- 买卖类型 -->
               <div class="right-style display-inline-block">
                 <el-select
+                  :placeholder="$t('M.comm_please_choose')"
                   v-model="activitedBuySellStyle"
                   :no-data-text="$t('M.comm_no_data')"
                   @change="changeBuySellStyle"
@@ -51,6 +52,7 @@
                 <!-- 可用币种 -->
                 <el-select
                   v-model="activitedCoinId"
+                  :placeholder="$t('M.comm_please_choose')"
                   :no-data-text="$t('M.comm_no_data')"
                   @change="changeAvailableCoinId"
                 >
@@ -68,6 +70,7 @@
                 <!-- 可用法币 :label="language === 'zh_CN'? item.name : item.shortName"-->
                 <el-select
                   v-model="activitedCurrencyId"
+                  :placeholder="$t('M.comm_please_choose')"
                   :no-data-text="$t('M.comm_no_data')"
                   @change="changeCurrencyId"
                 >
@@ -249,6 +252,7 @@
                   ref="minCountValue"
                   @keyup="changeMinCountInputValue('minCountValue', moneyPointLength)"
                   @input="changeMinCountInputValue('minCountValue', moneyPointLength)"
+                  @blur.prevent="minBulr"
                 >
                 <span
                   class="unit font-size14"
@@ -266,6 +270,7 @@
                   ref="maxCountValue"
                   @keyup="changeMaxCountInputValue('maxCountValue', moneyPointLength)"
                   @input="changeMaxCountInputValue('maxCountValue', moneyPointLength)"
+                  @blur.prevent="maxBulr"
                 >
                 <span
                   class="unit font-size14"
@@ -914,6 +919,20 @@ export default {
       if (this.$refs.minCountValue.value < this.$refs.maxCountValue.value - 0) {
         this.errorInfoMaxCount = ''
         this.maxCountErrorTipsBorder = false
+      }
+    },
+    // 单笔最大限额失去焦点事件：提示输入值
+    maxBulr () {
+      if (!this.$refs.maxCountValue.value) {
+        // this.errorInfoMaxCount = '请输入单笔最大限额'
+        this.errorInfoMaxCount = this.$t('M.otc_publishAD_blur_tips2_max')
+      }
+    },
+    // 单笔最小限额失去焦点事件：提示输入值
+    minBulr () {
+      if (!this.$refs.minCountValue.value) {
+        // this.errorInfoMinCount = '请输入单笔最小限额'
+        this.errorInfoMinCount = this.$t('M.otc_publishAD_blur_tips1_min')
       }
     },
     // 校验单笔最大限额

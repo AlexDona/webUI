@@ -212,36 +212,36 @@
 <!--请严格按照如下书写书序-->
 <script>
 // 头部
-import HeaderCommon from '../../Common/HeaderCommonForPC'
+import HeaderCommon from '../components/Common/HeaderCommonForPC'
 // 账户资产
-import AccountAssets from '../AccountBalance/AccountAssets'
+import AccountAssets from '../components/Personal/AccountBalance/AccountAssets'
 // 账单明细
-import BillingDetails from '../AccountBalance/BillingDetails'
+import BillingDetails from '../components/Personal/AccountBalance/BillingDetails'
 // 提币地址
-import WithdrawalAddress from '../AccountBalance/WithdrawalAddress'
+import WithdrawalAddress from '../components/Personal/AccountBalance/WithdrawalAddress'
 // 身份认证
-import IdentityAuthentication from '../UserAssets/IdentityAuthentication'
+import IdentityAuthentication from '../components/Personal/UserAssets/IdentityAuthentication'
 // 收款账户
-import AccountCredited from '../UserAssets/AccountCredited'
+import AccountCredited from '../components/Personal/UserAssets/AccountCredited'
 // 邀请推广
-import InvitingPromotion from '../UserAssets/InvitingPromotion'
+import InvitingPromotion from '../components/Personal/UserAssets/InvitingPromotion'
 // 安全中心
-import SecurityCenter from '../UserAssets/SecurityCenter'
+import SecurityCenter from '../components/Personal/UserAssets/SecurityCenter'
 // API管理
-import APIManagement from '../UserAssets/APIManagement'
+import APIManagement from '../components/Personal/UserAssets/APIManagement'
 // push资产
-import PushAsset from '../UserAssets/PushAsset'
+import PushAsset from '../components/Personal/UserAssets/PushAsset'
 // 币币订单
-import CoinOrders from '../TransactionType/CoinOrders'
+import CoinOrders from '../components/Personal/TransactionType/CoinOrders'
 // 法币订单
-import FiatOrders from '../TransactionType/FiatOrders'
+import FiatOrders from '../components/Personal/TransactionType/FiatOrders'
 // 底部
-import FooterCommon from '../../Common/FooterCommon'
+import FooterCommon from '../components/Common/FooterCommon'
 import {
   userRefreshUser
-} from '../../../utils/api/personal'
-import IconFontCommon from '../../Common/IconFontCommon'
-import {returnAjaxMessage} from '../../../utils/commonFunc'
+} from '../utils/api/personal'
+import IconFontCommon from '../components/Common/IconFontCommon'
+import {returnAjaxMessage} from '../utils/commonFunc'
 import { createNamespacedHelpers, mapState } from 'vuex'
 const { mapMutations } = createNamespacedHelpers('personal')
 export default {
@@ -275,11 +275,11 @@ export default {
   },
   async created () {
     // 覆盖Element样式
-    require('../../../../static/css/list/Personal/UserAssets/PersonalCenter.css')
+    require('../../static/css/list/Personal/UserAssets/PersonalCenter.css')
     // 白色主题样式
-    require('../../../../static/css/theme/day/Personal/UserAssets/PersonalCenterDay.css')
+    require('../../static/css/theme/day/Personal/UserAssets/PersonalCenterDay.css')
     // 黑色主题样式
-    require('../../../../static/css/theme/night/Personal/UserAssets/PersonalCenterNight.css')
+    require('../../static/css/theme/night/Personal/UserAssets/PersonalCenterNight.css')
     await this.getUserRefreshUser()
     if (!this.realname && this.userCenterActiveName === 'account-credited') {
       this.notVerifyDialogVisible = true
@@ -375,7 +375,7 @@ export default {
 }
 </script>
 <style scoped lang="scss">
-  @import "../../../../static/css/scss/Personal/IndexPersonal";
+  @import "../../static/css/scss/Personal/IndexPersonal";
   .personal-center{
     overflow: hidden;
     > .personal-center-main {

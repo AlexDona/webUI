@@ -170,9 +170,6 @@ export default {
     return {}
   },
   created () {
-    // this.sort()
-    // console.log(this.area)
-    // console.log(this.plateId)
   },
   mounted () {
   },
@@ -209,7 +206,11 @@ export default {
       language: state => state.common.language // 语言
     })
   },
-  watch: {}
+  watch: {
+    language () {
+      this.$forceUpdate()
+    }
+  }
 }
 </script>
 <style scoped lang="scss" type="text/scss">
@@ -291,12 +292,12 @@ export default {
             /*padding: 0 20px;*/
             padding:0 4.5%;
             /*border-bottom: 1px solid;*/
-            height: 25px;
-            line-height: 25px;
+            height: 30px;
+            line-height: 30px;
             display:flex;
             .click-button{
               width:18px;
-              height:25px;
+              height:30px;
               display: inline-block;
             }
             &:hover{
@@ -365,7 +366,7 @@ export default {
                 color:$nightFontColor;
               }
               &:hover{
-                background-color: #1a1d2f;
+                background-color: rgba(255, 255, 255, 0.2);
               }
               >span{
                 >.base-currency{

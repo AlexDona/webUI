@@ -119,7 +119,7 @@
             >
               <span @click.prevent="showStatusVerificationClose('email', 'enable')">
                 <!--开启验证-->
-                {{$t('M.comm_open')}}{{ $t('M.user_security_verify') }}
+                {{$t('M.user_security_on')}}
               </span>
             </button>
             <button
@@ -130,7 +130,7 @@
                 @click.prevent="showStatusVerificationClose('email', 'disable')"
               >
                 <!--关闭验证-->
-                 {{ $t('M.comm_close') }}{{ $t('M.user_security_verify') }}
+                  {{ $t('M.user_security_off') }}
               </span>
             </button>
             <button
@@ -176,7 +176,7 @@
             >
               <span @click.prevent="showStatusVerificationClose('phone', 'enable')">
                 <!--开启验证-->
-                {{ $t('M.comm_open') }}{{ $t('M.user_security_verify') }}
+                {{ $t('M.user_security_on') }}
               </span>
             </button>
             <button
@@ -187,7 +187,7 @@
                 @click.prevent="showStatusVerificationClose('phone', 'disable')"
               >
                 <!--关闭验证-->
-                {{ $t('M.comm_close') }}{{ $t('M.user_security_verify') }}
+                {{ $t('M.user_security_off') }}
               </span>
             </button>
             <button
@@ -237,7 +237,7 @@
             >
               <span @click.prevent="showStatusVerificationClose('google', 'enable')">
                 <!--开启验证-->
-                {{ $t('M.comm_open') }}{{ $t('M.user_security_verify') }}
+                {{ $t('M.user_security_on') }}
               </span>
             </button>
             <button
@@ -248,7 +248,7 @@
                 @click.prevent="showStatusVerificationClose('google', 'disable')"
               >
                 <!--关闭验证-->
-                 {{ $t('M.comm_close') }}{{ $t('M.user_security_verify') }}
+                 {{ $t('M.user_security_off') }}
               </span>
             </button>
             <button
@@ -515,7 +515,7 @@
       >
         <!--最近登录记录-->
         <el-tab-pane
-          :label="$t('M.user_security_recently') + $t('M.user_security_login') + $t('M.comm_record')"
+          :label="$t('M.user_security_Login_History')"
           name="logon-record"
         >
           <div class="tab-list">
@@ -532,7 +532,7 @@
               </el-table-column>
               <!--登录IP-->
               <el-table-column
-                :label="$t('M.user_security_login') + $t('M.comm_time') + 'IP'"
+                :label="$t('M.user_security_login') + 'IP'"
               >
                 <template slot-scope = "s">
                   <div>{{ s.row.ip }}</div>
@@ -570,7 +570,7 @@
         </el-tab-pane>
         <!--安全设置记录-->
         <el-tab-pane
-          :label="$t('M.user_security_safety') + $t('M.comm_set') + $t('M.comm_record')"
+          :label="$t('M.user_security_Setting_History')"
           name="security-record"
         >
           <div class="tab-list">
@@ -587,7 +587,7 @@
               </el-table-column>
               <!--设置名称-->
               <el-table-column
-                :label="$t('M.comm_set') + $t('M.user_account_name')"
+                :label="$t('M.user_security_set_type')"
               >
                 <template slot-scope = "s">
                   <div>{{ s.row.content }}</div>
@@ -747,6 +747,8 @@ export default {
             case 'security-record':
               // 安全设置列表
               this.securityRecord = data.data.data.setLog.list
+              console.log('安全设置列表')
+              console.log(this.securityRecord)
               // 安全设置分页
               this.totalPageMySecurityRecordPage = data.data.data.setLog.pages - 0
               break

@@ -15,8 +15,6 @@ export const repealMyEntrustAjax = (params) => put('cancelEntrust', params)
 // 全球行情
 // params 格式： ETH_BTC
 export const getGLobalMarket = (params) => get(`market3rd/${params}`)
-// 交易区信息
-export const getPartnerAreaList = (params) => get('queryPartnerArea', params)
 // 默认交易对
 export const getDefaultSymbol = () => get('trade/default')
 // 获取用户默认交易对资产

@@ -16,7 +16,7 @@ export const trade = {
   'trade_coin_history_entrust1': 'Order History',
   // #####################限价交易、市价交易#####################''Limit trading, market price trading'
   'trade_exchange_currency_data': 'Currency information',
-  'trade_exchange_price_deal': 'Limit order',
+  'trade_exchange_price_deal': 'Limit',
   'trade_exchange_can_buy': 'Obtainable',
   'trade_exchange_vendibility': 'Obtainable',
   'trade_exchange_estimated_turnover': 'Total Amount',

@@ -190,6 +190,7 @@ export default {
           }
         }
         >.bottom{
+          white-space:nowrap;
           >span{
             margin-right:10px;
             display: inline-block;

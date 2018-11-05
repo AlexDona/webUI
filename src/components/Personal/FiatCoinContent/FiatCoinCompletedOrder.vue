@@ -246,7 +246,7 @@
           </el-table-column>
           <!--币种-->
           <el-table-column
-            :label="$t('M.comm_currency')"
+            :label="$t('M.otc_AD_token')"
           >
             <template slot-scope="s">
               {{ s.row.coinName }}

@@ -24,7 +24,7 @@
 .withdrawal-address.personal.day .el-form-item__label {
   color: #7D90AC;
   /* 任增加 */
-  margin-right: 50px;
+  margin-right: 20px;
   padding: 0 0;
 }
 .withdrawal-address.personal .el-input__inner {

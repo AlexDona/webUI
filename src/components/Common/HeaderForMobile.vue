@@ -36,15 +36,14 @@
                   class="lang-list"
                   v-show="langSelecting"
                 >
-                  <a
+                  <button
                     class="lang-item"
-                    href="#"
                     @click="changeLanguage(item)"
                     v-for="(item,index) in languageList"
                     :key="index"
                   >
                     {{item.name}}
-                  </a>
+                  </button>
                 </dd>
               </el-collapse-transition>
             </dl>
@@ -57,14 +56,11 @@
 <!--请严格按照如下书写书序-->
 <script>
 import {
-  returnAjaxMessage,
   getCountryListAjax,
   reflashUserInfo,
-  getFooterInfo
+  getFooterInfo,
+  getLanguageListAjax
 } from '../../utils/commonFunc'
-import {
-  getLanguageList
-} from '../../utils/api/header'
 import { createNamespacedHelpers, mapState } from 'vuex'
 const { mapMutations } = createNamespacedHelpers('common')
 export default {
@@ -81,12 +77,10 @@ export default {
   async created () {
     require('../../../static/css/theme/day/Common/HeaderCommonDay.css')
     // 获取 语言列表:任付伟先注释此方法防止每次刷新报错-有需要请放开
+    await getLanguageListAjax(this)
     await getFooterInfo(this.language, this)
-    this.getLanguageList()
-    // console.log(this.theme)
     this.activeTheme = this.theme
-    // 查询某商户可用法币币种列表
-    await this.getCountryList()
+    await getCountryListAjax(this)
     if (this.isLogin) {
       await reflashUserInfo(this)
     }
@@ -112,26 +106,6 @@ export default {
       'SET_USER_INFO_REFRESH_STATUS',
       'SET_FOOTER_INFO'
     ]),
-    getCountryList () {
-      getCountryListAjax(this, (data) => {
-        console.log(data)
-        // this.contryAreaList = data.data.data
-        this.SET_COUNTRY_AREA_LIST(data.data.data)
-        // console.log(this.contryAreaList)
-      })
-    },
-    // 获取国家列表
-    async getLanguageList () {
-      const data = await getLanguageList()
-      if (!returnAjaxMessage(data, this)) {
-        return false
-      } else {
-        this.languageList = data.data.data
-        this.CHANGE_LANGUAGE(this.languageList[0])
-        // console.log(this.languageList[0])
-        // console.log(this.activeLanguage)
-      }
-    },
     // 显示状态切换 （语言）
     toggleShowLanguageBox (status) {
       this.langSelecting = Boolean(status)
@@ -149,7 +123,8 @@ export default {
     ...mapState({
       logoSrc: state => state.common.logoSrc,
       activeLanguage: state => state.common.activeLanguage,
-      language: state => state.common.language // 语言
+      language: state => state.common.language, // 语言
+      defaultLanguage: state => state.common.defaultLanguage // 语言
     })
   },
   watch: {}
@@ -213,6 +188,7 @@ export default {
                 padding: 10px 12px;
                 display: inline-block;
                 width:100%;
+                font-size: 0.5rem;
                 >.icon{
                   margin-right:5px;
                 }
@@ -224,6 +200,7 @@ export default {
               >.lang-list{
                 background-color: #2A3242;
                 position: absolute;
+                width:3rem;
                 z-index: 2;
                 left:0;
                 top:90px;
@@ -231,10 +208,12 @@ export default {
                   transition: all 1s;
                   color:#fff;
                   display:block;
-                  height:50px;
-                  line-height:50px;
+                  height:1rem;
+                  line-height:1rem;
                   text-align: left;
-                  padding:0 20px 0 10px;
+                  font-size: 0.5rem;
+                  padding:0 0.5rem;
+                  box-sizing: border-box;
                   &:hover{
                     background-color: $mainColor;
                   }

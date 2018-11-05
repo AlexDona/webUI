@@ -47,7 +47,7 @@
             </el-form-item>
             <!--买方UID-->
             <el-form-item
-              :label="$t('M.comm_buyer') + 'UID'"
+              :label="$t('M.comm_buyer') + ' UID'"
             >
               <input
                 class="form-input-common border-radius2 padding-l15"
@@ -505,6 +505,7 @@ export default {
     statusPushChange () {
       if (this.buyUID === this.userInfo.userInfo.showId) {
         this.$message({
+          // 禁止自我PUSH
           message: this.$t('M.user_push_forbid'),
           type: 'error'
         })

@@ -6,7 +6,7 @@
     <div class="content">
       <div class="content">
         <div class="inner-box">
-          <h2>{{privacyClauseData.termsTypeName}}</h2>
+          <!-- <h2>{{privacyClauseData.termsTypeName}}</h2> -->
           <div
             class="content"
             v-html="privacyClauseData.content"
@@ -39,10 +39,13 @@ export default {
     ...mapState({
       theme: state => state.common.theme,
       privacyClauseData: state => state.footerInfo.serviceProtocolData.privacyClauseData
-
     })
   },
-  watch: {}
+  watch: {
+    privacyClauseData (val) {
+      console.log(val)
+    }
+  }
 }
 </script>
 <style scoped lang="scss" type="text/scss">

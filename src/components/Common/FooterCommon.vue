@@ -1,5 +1,8 @@
 <template>
-  <div class="footer-box common">
+  <div
+    class="footer-box common"
+    v-show="isloading"
+  >
     <div class="inner-box">
       <!--顶部-->
       <div
@@ -36,6 +39,13 @@
               </a>
             </li>
           </ul>
+          <!-- 版权 -->
+          <div class="copyright">
+            <span
+              class="copyright-content"
+              v-if="configInfo"
+            >©2013-2018 {{configInfo.otcAd}} Global</span>
+          </div>
         </div>
         <div class="right">
           <dl class="right-dl">
@@ -183,13 +193,15 @@ export default {
           ercodeSrc: ''
         },
         {
-          iconName: 'icon-telegram',
+          // iconName: 'icon-telegram',
+          iconName: 'icon-dianbao-',
           ercodeSrc: ''
         }
       ],
       footerInfo1: {},
       footerInfo2: {},
-      linkList: [] // 友情链接
+      linkList: [], // 友情链接
+      isloading: false
     }
   },
   created () {
@@ -211,15 +223,19 @@ export default {
     ...mapState({
       language: state => state.common.language,
       logoSrc: state => state.common.logoSrc,
-      footerInfo: state => state.common.footerInfo
+      footerInfo: state => state.common.footerInfo,
+      // 公司名称fubt fbt fuc、邮箱等信息
+      configInfo: state => state.common.footerInfo.configInfo
     })
   },
   watch: {
     footerInfo (newVal) {
       console.log(newVal)
       if (newVal) {
+        this.isloading = true
         this.footerInfo1 = newVal.footerInfo1
         this.footerInfo2 = newVal.footerInfo2
+        console.log(this.footerInfo2)
         this.shareList[0].ercodeSrc = this.footerInfo1.twitter
         this.shareList[1].ercodeSrc = this.footerInfo1.facebook
         this.shareList[2].ercodeSrc = this.footerInfo1.weixin
@@ -233,18 +249,20 @@ export default {
 <style scoped lang="scss">
   .footer-box{
     width:100%;
-    height:410px;
+    // height:410px;
+    // height:330px;
     background-color: #1c2237;
     color:#838dae;
     >.inner-box{
-      width:1130px;
-      height:300px;
-      margin:0 auto;
-      padding:50px 0;
+      width: 1130px;
+      // height: 300px;
+      margin: 0 auto;
+      padding: 20px 0;
       >.top{
         display:flex;
+        margin-bottom: 10px;
         >div{
-          height:200px;
+          // height:200px;
         }
         >.left{
           flex:1;
@@ -254,11 +272,11 @@ export default {
             }
           }
           .introduction{
-            margin-top:20px;
+            margin-top:10px;
           }
           /**/
           >.share-box{
-            margin-top:20px;
+            margin-top:26px;
             >.share-item{
               position: relative;
               width:20px;
@@ -292,6 +310,13 @@ export default {
               }
             }
           }
+          >.copyright{
+            margin-top: 10px;
+            >.copyright-content{
+              color: #CECECE;
+              font-size: 12px;
+            }
+          }
         }
         >.right{
           flex:1;
@@ -316,12 +341,12 @@ export default {
       }
       >.bottom{
         border-top:1px solid rgba(67,74,95,0.5);
-        padding-top:40px;
+        padding-top:15px;
         width:100%;
         >.title{
           display:inline-block;
           width:100px;
-          height:100px;
+          // height:100px;
           vertical-align: top;
         }
         >.links-list{

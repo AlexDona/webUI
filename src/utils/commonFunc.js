@@ -13,11 +13,10 @@ import {
 } from '../utils/api/personal'
 
 import {
-  sendMsgByPhoneOrEmial,
-  sendByPhoneOrEmial
+  sendMsgByPhoneOrEmial
+  // sendByPhoneOrEmial
 } from '../utils/api/user'
 import {
-  getPartnerList,
   addUserCollectionAjax,
   removeCollectionAjax,
   getCollectionListAjax
@@ -28,37 +27,46 @@ import {
   getTransitionCurrencyRateAjax,
   getFooterInfo1,
   getFooterInfo2,
-  getConfigAjax
+  getConfigAjax,
+  getLanguageList
 } from '../utils/api/header'
 import store from '../vuex'
-import {removeStore} from './index'
+import {
+  removeStore,
+  getStore,
+  setStore,
+  getStoreWithJson
+} from './index'
 import {PHONE_REG, EMAIL_REG, ID_REG, PWD_REG, ALIPAY_REG, BANK_REG, GOOGLE_REG, TPED_REG, URL_REG, WITHDRAWAL_REG} from './regExp'
 // 请求接口后正确或者错误的提示提示信息：
 // 如果返回 错误 了就提示错误并不能继续往下进行；
 // 如果返回了 正确 的数据：不需要正确的提示noTip传0；需要正确的提示noTip传1；
 // 使用方法：returnAjaxMessage(data, this, 0) 或者 returnAjaxMessage(data, this, 1)
-export const returnAjaxMessage = (data, self, noTip) => {
+export const returnAjaxMessage = (data, self, noTip, errorTip) => {
   const meta = data.data.meta
   if (meta) {
-    if (meta.code !== 200) {
+    if (!meta.success && !errorTip) {
       self.$message({
         type: 'error',
         // duration: 5000000,
         message: (!meta.params || !meta.params.length) ? self.$t(`M.${meta.i18n_code}`) : self.$t(`M.${meta.i18n_code}`).format(meta.params)
       })
-      // console.log(self.$t(`M.${meta.i18n_code}`).format(meta.params))
       // 登录失效
-      if (meta.code == 401) {
-        removeStore('loginStep1Info')
-        self.$router.push({path: '/login'})
-        store.commit('user/USER_LOGOUT')
+      switch (meta.code) {
+        case 401:
+          removeStore('loginStep1Info')
+          // self.$router.push({path: '/login'})
+          // store.commit('user/USER_LOGOUT')
+          break
+        case 500:
+          self.$router.push({path: '/500'})
+          break
       }
       return 0
     } else {
       if (noTip) {
         self.$message({
           type: 'success',
-          // duration: 5000000,
           message: self.$t(`M.${meta.i18n_code}`)
         })
       }
@@ -121,14 +129,9 @@ export const validateNumForUserInput = (type, targetNum) => {
   console.log(returnNum)
   return returnNum
 }
-// 发送验证码（短信、邮箱）
+// api 发送验证码（短信、邮箱）
 export const sendPhoneOrEmailCodeAjax = async (type, params, callback) => {
   const data = await sendMsgByPhoneOrEmial(type, params)
-  callback(data)
-}
-// api 发送验证码（短信、邮箱）
-export const apiSendPhoneOrEmailCodeAjax = async (type, params, callback) => {
-  const data = await sendByPhoneOrEmial(type, params)
   callback(data)
 }
 /**
@@ -138,32 +141,13 @@ export const repealMyEntrustCommon = async (params, callback) => {
   const repealData = await repealMyEntrustAjax(params)
   callback(repealData)
 }
-/**
- * 安全中心状态
- */
-export const stateSafeCentral = async (params, callback) => {
-  const repealData = await statusSecurityCenter(params)
-  callback(repealData)
-}
+
 // /**
 //  * 商家订单列表请求
 //  */
 export const getMerchantsOrdersList = async (params, callback) => {
   const repealData = await getQueryAllOrdersList(params)
   callback(repealData)
-}
-/**
- * 个人资产信息
- */
-export const globalPersonalAssetsInformation = async (params, callback) => {
-  const data = await userRefreshUser(params)
-  callback(data)
-}
-
-// 获取板块信息
-export const getPartnerListAjax = async (params, callback) => {
-  const data = await getPartnerList(params)
-  callback(data)
 }
 
 // 法币交易分页切换
@@ -176,12 +160,29 @@ export const changeCurrentPageForLegalTrader = (currentPage, type, that) => {
     status: true
   })
 }
+// 获取国家列表
 export const getCountryListAjax = async (that, callback) => {
-  const data = await getCountryList()
-  if (!returnAjaxMessage(data, that)) {
+  let localCountry = getStoreWithJson('countryList')
+  let saveTimeStamp = getStore('timeStamp')
+  let nowTimeStamp = new Date().getTime()
+  let diffTime = Math.abs(nowTimeStamp - saveTimeStamp)
+  let data
+  if (localCountry && diffTime < 86400000) {
+    data = localCountry
+    that.SET_COUNTRY_AREA_LIST(data)
     return false
   } else {
-    callback(data)
+    data = await getCountryList()
+    if (!returnAjaxMessage(data, that)) {
+      return false
+    } else {
+      that.SET_COUNTRY_AREA_LIST(data.data.data)
+      setStore('countryList', data.data.data)
+      setStore('timeStamp', new Date().getTime())
+      if (callback) {
+        callback(data)
+      }
+    }
   }
 }
 // 服务条款接口
@@ -258,11 +259,11 @@ export const getCollectionList = async (that, callback) => {
 }
 // 协议跳转
 export const jumpToOtherPageForFooter = (router, activeName, that) => {
-  that.$store.commit('CHANGE_FOOTER_ACTIVENAME', {
+  that.$router.push({path: router})
+  that.$store.commit('footerInfo/CHANGE_FOOTER_ACTIVENAME', {
     activeName,
     type: router
   })
-  that.$router.push({path: router})
 }
 
 // 首页、币币交易页面socket数据替换
@@ -294,6 +295,21 @@ export const getTransitionCurrencyRate = async (params, that, activeConvertCurre
     })
   }
 }
+export const getLanguageListAjax = async (that) => {
+  const data = await getLanguageList()
+  if (!returnAjaxMessage(data, that)) {
+    return false
+  } else {
+    that.languageList = data.data.data
+    let localLanguage = getStore('language') || store.state.common.defaultLanguage
+    _.forEach(that.languageList, item => {
+      if (item.shortName === localLanguage) {
+        that.CHANGE_LANGUAGE(item)
+        return false
+      }
+    })
+  }
+}
 // 获取底部信息
 export const getFooterInfo = async (language, that) => {
   const params = {
@@ -310,6 +326,9 @@ export const getFooterInfo = async (language, that) => {
   ) {
     return false
   } else {
+    console.log(data1)
+    console.log(data2)
+    console.log(data3) // 包含公司名称、邮箱等信息
     let footerInfo1 = data1.data.data
     let footerInfo2 = data2.data.data
     let configInfo = data3.data.data

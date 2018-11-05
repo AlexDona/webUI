@@ -520,7 +520,7 @@ export default {
         return false
       }
       let params = {
-        country: this.userInfo.countryCode,
+        nationCode: this.userInfo.countryCode,
         type: 'RETRIEVE_PASS'
       }
       switch (msgType) {

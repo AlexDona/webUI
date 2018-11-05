@@ -6,7 +6,7 @@
     <div class="content">
       <div class="content">
         <div class="inner-box">
-          <h2>{{APIDocumentData.termsTypeName}}</h2>
+          <!-- <h2>{{APIDocumentData.termsTypeName}}</h2> -->
           <div
             class="content"
             v-html="APIDocumentData.content"
@@ -55,7 +55,7 @@ export default {
         overflow: hidden;
         >.inner-box{
           margin:0px auto;
-          height:1100px;
+          height:800px;
           width:1100px;
           padding:50px;
         }

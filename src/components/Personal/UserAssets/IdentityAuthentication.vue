@@ -485,7 +485,6 @@
 import ErrorBox from '../../User/ErrorBox'
 import IconFontCommon from '../../Common/IconFontCommon'
 import {
-  queryCountryList,
   submitRealNameAuthentication,
   submitSeniorCertification,
   realNameInformation,
@@ -493,7 +492,8 @@ import {
 } from '../../../utils/api/personal'
 import {
   returnAjaxMessage,
-  reflashUserInfo
+  reflashUserInfo,
+  getCountryListAjax
 } from '../../../utils/commonFunc'
 import {apiCommonUrl} from '../../../utils/env'
 import {createNamespacedHelpers, mapState} from 'vuex'
@@ -649,18 +649,6 @@ export default {
         }
       })
     },
-    async getCountryListings () {
-      let data = await queryCountryList()
-      console.log(data)
-      if (!(returnAjaxMessage(data, this, 0))) {
-        return false
-      } else {
-        // 返回列表数据
-        this.regionList = data.data.data
-        this.regionValue = data.data.data[0].id
-        this.regionValue = data.data.data[0].chinese
-      }
-    },
     /**
     *  刚进页面时候 获取用户实名信息
     */
@@ -756,7 +744,7 @@ export default {
       if (goOnStatus) {
         let data
         let param = {
-          country: this.regionValue, // 国籍
+          nationCode: this.regionValue, // 国籍
           cardType: this.documentTypeValue, // 证件类型
           realname: this.realName, // 真实姓名
           cardNo: this.identificationNumber // 证件号码
@@ -911,7 +899,12 @@ export default {
         this.SET_USER_INFO_REFRESH_STATUS(true)
         this.getUserRefreshUser()
         // 国家列表展示
-        this.getCountryListings()
+        getCountryListAjax(this, (data) => {
+          // 返回列表数据
+          this.regionList = data.data.data
+          this.regionValue = data.data.data[0].id
+          this.regionValue = data.data.data[0].chinese
+        })
       }
     }
   }

@@ -9,12 +9,12 @@
     element-loading-background="rgba(0, 0, 0, 0.6)"
   >
     <keep-alive>
-    <HeaderCommonForPC
-      v-if="!isMobile"
-    />
-    <HeaderCommonForMobile
-      v-if="isMobile"
-    />
+      <HeaderCommonForPC
+        v-if="!isMobile"
+      />
+      <HeaderCommonForMobile
+        v-else
+      />
     </keep-alive>
 
     <div
@@ -46,7 +46,7 @@
                 <input
                   type="text"
                   v-model.trim="username"
-                  :placeholder="$t('M.comm_please_enter') + $t('M.login_telNum')+ '/'+ $t('M.comm_emailbox')"
+                  :placeholder="$t('M.login_tips1')"
                   @keydown="setErrorMsg(0,'')"
                   @keyup.enter="loginForStep1"
                   @blur="checkoutInputFormat(0,username)"
@@ -64,7 +64,7 @@
                   type="password"
                   autocomplete="off"
                   v-model.trim="password"
-                  :placeholder="$t('M.comm_please_enter') + $t('M.comm_loginpassword')"
+                  :placeholder="$t('M.login_tips2')"
                   @keydown="setErrorMsg(1,'')"
                   @keyup.enter="loginForStep1"
                   @blur="checkoutInputFormat(1,password)"
@@ -80,16 +80,17 @@
                 to="/ForgetPassword"
               >
                 <!-- 忘记密码? -->
-                {{$t('M.login_forget')}}{{$t('M.comm_loginpassword')}}?
+                {{$t('M.login_tips3')}}?
               </router-link>
               <!-- 忘记密码？ -->
               <router-link
                 class="text-align-r"
-                to="/Register"
+                to="/register"
               >
                 <!-- 免费注册 -->
-                {{$t('M.login_free')}}{{$t('M.comm_register_time')}}
-              </router-link><!-- 免费注册 -->
+                <!-- {{$t('M.login_free')}}{{$t('M.comm_register_time')}} -->
+                {{$t('M.login_tips4')}}
+              </router-link>
             </div>
           </div>
         </div>
@@ -163,10 +164,6 @@
                   />
                 </span>
               </div>
-              <!--<ErrorBox-->
-                <!--:text="errorShowStatusList[2]"-->
-                <!--:isShow="!!errorShowStatusList[2]"-->
-              <!--/>-->
               <div class="inner-box submit-box">
                 <button
                   class="subimt cursor-pointer"
@@ -277,7 +274,6 @@
             </button>
           </div>
         </el-dialog>
-
       </div>
       <!--pc 扫码登录-->
       <div
@@ -402,7 +398,7 @@
             <div class="todos">
               <router-link
                 class="jump-url"
-                to="/Register"
+                to="/register"
               >
                 <!-- 注册 -->
                 {{$t('M.comm_register_time')}}
@@ -539,7 +535,6 @@
                   @touchend="handleTouchEnd"
                   class="handler handler_bg"
                 >
-                  <!--<IconFont class="icon-text" iconName="icon-icon-right"/>-->
                 </div>
               </div>
             </el-dialog>
@@ -607,29 +602,29 @@
   </div>
 </template>
 <script>
-import {EMAIL_REG} from '../../utils/regExp' // 正则验证
-import {loginSocketUrl} from '../../utils/env'
+import {EMAIL_REG} from '../utils/regExp' // 正则验证
+import {loginSocketUrl} from '../utils/env'
 import {
   userLoginForStep1,
   userLoginForStep2,
   getLoginErcode
-} from '../../utils/api/user'
-import {
-  assetCurrenciesList
-} from '../../utils/api/personal'
+} from '../utils/api/user'
+// import {
+//   assetCurrenciesList
+// } from '../utils/api/personal'
 import {
   returnAjaxMessage,
   sendPhoneOrEmailCodeAjax
-} from '../../utils/commonFunc'
-import socket from '../../utils/datafeeds/socket'
+} from '../utils/commonFunc'
+import socket from '../utils/datafeeds/socket'
 
 // import {getPersonalAssetsList} from '../../kits/globalFunction'
-import CountDownButton from '../Common/CountDownCommon'
-import ErrorBox from './ErrorBox'
-import ImageValidate from '../Common/ImageValidateCommon'
-import HeaderCommonForPC from '../Common/HeaderCommonForPC'
-import HeaderCommonForMobile from '../Common/HeaderForMobile'
-import IconFont from '../Common/IconFontCommon'
+import CountDownButton from '../components/Common/CountDownCommon'
+import ErrorBox from '../components/User/ErrorBox'
+import ImageValidate from '../components/Common/ImageValidateCommon'
+import HeaderCommonForPC from '../components/Common/HeaderCommonForPC'
+import HeaderCommonForMobile from '../components/Common/HeaderForMobile'
+import IconFont from '../components/Common/IconFontCommon'
 import VueClipboard from 'vue-clipboard2'
 import { createNamespacedHelpers, mapState } from 'vuex'
 const { mapMutations } = createNamespacedHelpers('user')
@@ -718,7 +713,6 @@ export default {
       loginSliderStatus: false, // 登录页面滑块显示隐藏状态
       loginImageValidateStatus: false, // 登录页面图片验证码显示隐藏状态
       step3DialogShowStatus: false, // 步骤3 登录状态
-      cacheOfuserInfo: null, // 用户信息缓存
       mobileErrorMsg: '' // 移动端错误信息
     }
   },
@@ -728,7 +722,7 @@ export default {
     if (this.isLogin) {
       this.$router.push({path: '/'})
     }
-    require('../../../static/css/list/User/Login.css')
+    require('../../static/css/list/User/Login.css')
     this.ENTER_STEP1()
     this.refreshCode()
     // this.reflashErCode()
@@ -781,7 +775,7 @@ export default {
       this.USER_LOGIN(data)
       console.log(this.routerTo)
       if (this.routerTo &&
-        !this.routerTo.startsWith('/Register') &&
+        !this.routerTo.startsWith('/register') &&
         !this.routerTo.startsWith('/login') &&
         !this.routerTo.startsWith('/ForgetPassword') &&
         !this.routerTo.startsWith('/nofind404')
@@ -859,7 +853,7 @@ export default {
         // 用户名验证
         case 0:
           if (!targetNum) {
-            this.setErrorMsg(0, this.$t('M.comm_please_enter') + this.$t('M.login_username')) // 请输入用户名
+            this.setErrorMsg(0, this.$t('M.login_tips5')) // 请输入用户名
             this.$forceUpdate()
             return 0
           } else {
@@ -882,16 +876,6 @@ export default {
           }
       }
     },
-    // 隐藏滑块验证
-    handleClose (done) {
-      done()
-    },
-    // 清空错误信息
-    clearuserNameErrorMsg (index) {
-      // this.userNameErrorMsg = ''
-      this.errorShowStatusList[index].status = 0
-    },
-
     /**
       * 登录第一步
       */
@@ -923,7 +907,6 @@ export default {
         return false
       } else {
         this.SET_STEP1_INFO(data.data.data)
-        // this.cacheOfuserInfo = data.data.data
         // 发送验证码
         // 显示滑块验证
         this.sliderFlag = true
@@ -966,15 +949,15 @@ export default {
       }
 
       let params = {
-        country: this.activeCountryCode,
-        type: 'LOGIN_CODE'
+        // nationCode: this.activeCountryCode
+        userId: this.userInfo.userId
       }
       switch (loginType) {
         case 0:
           params.phone = this.userInfo.phone
           break
         case 1:
-          params.address = this.userInfo.email
+          params.email = this.userInfo.email
           break
       }
       sendPhoneOrEmailCodeAjax(loginType, params, (data) => {
@@ -999,15 +982,6 @@ export default {
           }
         }
       })
-    },
-    // 加载个人资产
-    async loadCurrencyList () {
-      const data = await assetCurrenciesList()
-      if (!returnAjaxMessage(data, this)) {
-        return false
-      } else {
-        console.log(data)
-      }
     },
     // 4位随机数
     getRandomNum () {
@@ -1145,7 +1119,6 @@ export default {
         /*
          * 是否需要图片验证码验证（条件：3次登录失败）
          **/
-        // console.log(this.cacheOfuserInfo)
         if (this.failureNum > 3) {
           // 多次错误登录
           // console.log('需要图片验证码');
@@ -1240,7 +1213,7 @@ export default {
 }
 </script>
 <style scoped lang="scss">
-  @import '../../../static/css/scss/index.scss';
+  @import '../../static/css/scss/index.scss';
   .login-box.user {
     height:100%;
     overflow: hidden;
@@ -1250,7 +1223,7 @@ export default {
     }
     >.inner-box{
       &.pc-bg{
-        background:url('../../assets/develop/login-bg.png') 25% center  no-repeat ;
+        background:url('../assets/develop/login-bg.png') 25% center  no-repeat ;
       }
       >.pc-er-code-box,>.pc-box{
         >.title{
@@ -1286,7 +1259,7 @@ export default {
           top:0;
           width:50px;
           height:50px;
-          background:url(../../assets/develop/er-code-icon.png) no-repeat center center;
+          background:url(../assets/develop/er-code-icon.png) no-repeat center center;
         }
         .step1-btn{
           width:128px;
@@ -1500,7 +1473,7 @@ export default {
             }
             >.handler_bg{
               border-radius: 0px 3px 3px 0px;
-              background: #485776 url(../../assets/develop/arrow-bg.png) no-repeat center center;
+              background: #485776 url(../assets/develop/arrow-bg.png) no-repeat center center;
               position: absolute;
               top: 0px;
               left: 0px;
@@ -1566,7 +1539,7 @@ export default {
           top:0;
           width:50px;
           height:50px;
-          background:url(../../assets/develop/pc-login-icon.png) no-repeat center center;
+          background:url(../assets/develop/pc-login-icon.png) no-repeat center center;
         }
         >.scan-box{
           >.inner-title{
@@ -1629,7 +1602,7 @@ export default {
           >.login-box-step1 {
             width: 100%;
             >.input-item{
-              height:4rem;
+              height:3rem;
               width:100%;
               margin-bottom:3rem;
               &.login-btn{
@@ -1638,10 +1611,10 @@ export default {
               >input,>button{
                 box-sizing: border-box;
                 width:100%;
-                height:4rem;
-                background:rgba(40,68,110,1);
+                height:3rem;
+                background:#28446e;
                 border-radius:0.4rem;
-                font-size: 1.2rem;
+                font-size: 1rem;
                 padding:0 40px;
                 color:#fff;
               }

@@ -103,20 +103,30 @@ export default {
       activeSymbol: state => state.common.activeSymbol
     }),
     orderRecordList () {
-      return !this.reflashCount ? this.orderRecordListByAjax : this.orderRecordListBySocket
+      return (this.reflashCount < 2) ? this.orderRecordListByAjax : this.orderRecordListBySocket
     }
   },
   watch: {
+    reflashCount (newVal, oldVal) {
+      console.log(newVal)
+    },
+    activeSymbol (newVal, oldVal) {
+      console.log(newVal.id)
+      this.reflashCount = 0
+    },
     orderRecordListBySocket (newVal) {
-      // console.log(newVal)
-      if (!this.reflashCount && newVal) {
+      if (newVal) {
+        console.log(this.reflashCount)
+        console.log(newVal)
         this.reflashCount++
       }
     },
     orderRecordList (newVal) {
+      console.log(this.reflashCount)
+      console.log(newVal)
     },
     orderRecordListByAjax (newVal) {
-      // console.log(newVal)
+      console.log(newVal)
       // console.log(this.orderRecordListBySocket)
     }
   }

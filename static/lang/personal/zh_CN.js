@@ -23,6 +23,11 @@ export const personal = {
   'user_assets_recharge_hint4': '往该地址充值，汇款完成，等待网络自动确认（6个确认）后系统自动到账',
   'user_assets_recharge_hint5': '为了快速到账，充值时可以适当提高网络手续费',
   'user_assets_withdrawal_hint1': '提现费率规则',
+  'user_assets_sum1': '总数量',
+  'user_assets_sum2': '冻结数量',
+  'user_assets_sum3': '可用数量',
+  'user_assets_sum4': '资产估值',
+  'user_assets_Transaction_History': '充提记录',
   'user_assets_withdrawal_hint2': '为了用户资金安全，平台可能会电话确认您的提币操作，请注意接听；',
   'user_assets_withdrawal_hint3': '充值经过1个确认后，才允许提现；',
   'user_assets_withdrawal_hint4': '可提现金额 ≤ 账户可用资产 - 未确认的数字资产。',
@@ -84,6 +89,11 @@ export const personal = {
   'user_account_payment_term': '收款方式',
   'user_account_bank_transfer': '银行转账',
   'user_account_whether_not': '是否',
+  'user_account_whether_close1': '是否确定关闭银行卡收款方式',
+  'user_account_whether_close2': '是否确定关闭微信收款方式',
+  'user_account_whether_close3': '是否确定关闭支付宝收款方式',
+  'user_account_whether_close4': '是否确定关闭PAYPAL收款方式',
+  'user_account_whether_close5': '是否确定关闭西联汇款收款方式',
   'user_account_please_set_up': '请先设置',
   'user_account_return': '返回我的账户',
   'user_account_name': '名称',
@@ -154,6 +164,13 @@ export const personal = {
   'user_security_correct': '正确的',
   'user_security_text2': '交易密码用于账户交易',
   'user_security_text3': '建议立即设置',
+  'user_security_on': '开启验证',
+  'user_security_off': '关闭验证',
+  'user_security_set_type': '设置名称',
+  'user_security_set_trade_pwd1': '设置交易密码',
+  'user_security_set_reset_pwd2': '重置交易密码',
+  'user_security_Login_History': '最近登录记录',
+  'user_security_Setting_History': '安全设置记录',
   // 安全邮箱
   // 安全手机
   // 谷歌验证
@@ -203,9 +220,17 @@ export const personal = {
   'user_push_payment': '付款',
   'user_push_revocation': '撤销',
   'user_push_count': 'Push数量不能大于余额',
+  'user_push_forbid': '禁止自我PUSH',
   // PUSH记录
   // #####################我的交易#####################
   // 币币订单
+  'user_coin_order1': '当前委托',
+  'user_coin_order2': '历史委托',
+  'user_coin_order3': '成交明细',
+  'user_coin_order4': '起止日期',
+  'user_coin_order5': '委单总额',
+  'user_coin_order6': '已成交',
+  'user_coin_order7': '币币订单',
   'user_coin': '币币',
   'user_coin_bring_together': '撮合',
   'user_coin_appoint_single': '委单',
@@ -253,5 +278,6 @@ export const personal = {
   'user_vip_text5': '开通即代表您已同意',
   'user_vip_text6': 'VIP服务协议',
   'user_vip_text7': '已开通',
-  'user_vip_text8': 'VIP享手续费、提现优惠'
+  'user_vip_text8': 'VIP享手续费、提现优惠',
+  'user_vip_fee_discount': '手续费折扣'
 }

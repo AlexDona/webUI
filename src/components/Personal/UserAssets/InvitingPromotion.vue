@@ -342,7 +342,7 @@ export default {
       totalPageForMyEntrust: 1, // 当前委托总页数
       totalPageMyNumber: '', // 条数
       text: 'SADFASD',
-      link: `${domain}Register?showId=`,
+      link: `${domain}/register?showId=`,
       ercodeIsShowId: false, // 二维码显示状态
       qrcode: '123456',
       // 推广统计
@@ -367,6 +367,7 @@ export default {
     require('../../../../static/css/theme/night/Personal/UserAssets/InvitingPromotionNight.css')
   },
   mounted () {
+    console.log(domain)
     this.getInverData()
   },
   activited () {},
@@ -431,7 +432,7 @@ export default {
         this.totalPageForMyEntrust = data.data.data.page.pages - 0
         this.totalPageMyNumber = data.data.data.page.total - 0
         // 已获得的佣金预估
-        this.totalSumBTC = data.data.data.coinName
+        this.totalSumBTC = data.data.data.account
         console.log(this.totalSumBTC)
       }
     },

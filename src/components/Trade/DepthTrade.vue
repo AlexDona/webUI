@@ -102,7 +102,7 @@ export default {
         // 买
         {
           // 委托量
-          name: 'M.trade_coin_entrusted_amount',
+          name: this.$t('M.trade_coin_entrusted_amount'),
           type: 'line',
           color: 'rgba(212,88,88,0.2)',
           itemStyle: {
@@ -120,7 +120,7 @@ export default {
         // 卖
         {
           // 委托量
-          name: 'M.trade_coin_entrusted_amount',
+          name: this.$t('M.trade_coin_entrusted_amount'),
           type: 'line',
           color: 'rgba(0,128,105,0.2)', //
           lineStyle: {

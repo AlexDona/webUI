@@ -33,7 +33,8 @@
             </p>
             <p class="content-discount line-height50 text-align-c font-size16">
               <!--手续费折扣-->
-              {{ $t('M.comm_service_charge') }}{{ $t('M.user_vip_discount') }}
+              <!-- {{ $t('M.comm_service_charge') }}{{ $t('M.user_vip_discount') }} -->
+              {{ $t('M.user_vip_fee_discount') }}
             </p>
             <p class="content-text line-height50 text-align-c font-size18">
               <!--九折-->
@@ -86,7 +87,8 @@
             </p>
             <p class="content-discount line-height50 text-align-c font-size16">
               <!--手续费折扣-->
-              {{ $t('M.comm_service_charge') }}{{ $t('M.user_vip_discount') }}
+              <!-- {{ $t('M.comm_service_charge') }}{{ $t('M.user_vip_discount') }} -->
+              {{ $t('M.user_vip_fee_discount') }}
             </p>
             <p class="content-text line-height50 text-align-c font-size18">
               <!--八折-->
@@ -139,7 +141,8 @@
             </p>
             <p class="content-discount line-height50 text-align-c font-size16">
               <!--手续费折扣-->
-              {{ $t('M.comm_service_charge') }}{{ $t('M.user_vip_discount') }}
+              <!-- {{ $t('M.comm_service_charge') }}{{ $t('M.user_vip_discount') }} -->
+              {{ $t('M.user_vip_fee_discount') }}
             </p>
             <p class="content-text line-height50 text-align-c font-size18">
               <!--七折-->
@@ -192,7 +195,8 @@
             </p>
             <p class="content-discount line-height50 text-align-c font-size16">
               <!--手续费折扣-->
-              {{ $t('M.comm_service_charge') }}{{ $t('M.user_vip_discount') }}
+              <!-- {{ $t('M.comm_service_charge') }}{{ $t('M.user_vip_discount') }} -->
+              {{ $t('M.user_vip_fee_discount') }}
             </p>
             <p class="content-text line-height50 text-align-c font-size18">
               <!--六折-->
@@ -245,7 +249,8 @@
             </p>
             <p class="content-discount line-height50 text-align-c font-size16">
               <!--手续费折扣-->
-              {{ $t('M.comm_service_charge') }}{{ $t('M.user_vip_discount') }}
+              <!-- {{ $t('M.comm_service_charge') }}{{ $t('M.user_vip_discount') }} -->
+              {{ $t('M.user_vip_fee_discount') }}
             </p>
             <p class="content-text line-height50 text-align-c font-size18">
               <!--五折-->
@@ -694,7 +699,7 @@ export default {
         language: this.language
       }
       await getServiceProtocolData(this, params, (data) => {
-        console.log(data.data.data)
+        console.log(data)
         this.serviceAgreementContent = data.data.data[0].content
         this.discountsInstructionContent = data.data.data[1].content
       })
@@ -867,7 +872,7 @@ export default {
     },
     async getCurrencyApplicationDownloadUrl () {
       let data = await currencyApplicationDownloadUrl({
-        key: 'VIP_COIN'
+        key: 'VIP_COIN_NAME'
       })
       console.log(data)
       // 整页loading

@@ -2,8 +2,6 @@ import {get, postWithURLencoded} from './axios'
 /**
  * 首页
  */
-// 板块列表
-export const getPartnerList = (params) => get('queryPartnerForm', params)
 // 获取轮播图
 export const getBanner = (params) => get('banner/', params)
 // 获取所有新闻类型
@@ -22,3 +20,5 @@ export const removeCollectionAjax = (params) => postWithURLencoded('collection/c
 export const getCollectionListAjax = () => get('collection')
 // 首页行情
 export const getHomeMarketByAjax = (params) => get('market/homeMarket', params)
+// 通过邀请ID获取用户信息
+export const findUserInfoByShowId = (params) => get('user/findByShowId', params)

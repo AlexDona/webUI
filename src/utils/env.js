@@ -9,7 +9,13 @@
 let apiCommonUrl = '' // api 接口前缀
 let socketUrl = '' // socket 接口
 let loginSocketUrl = '' // 扫码登录socket
-let domain = '' // 项目域名
+let domain = window.location.href.split('/')// 项目域名
+domain.pop()
+domain = domain.join('/')
+if (!domain.endsWith('#')) {
+  domain += '#'
+}
+console.log(domain)
 let routerMode = 'hash'
 if (process.env.NODE_ENV == 'development') {
   /* apiCommonUrl --------------------------------------------- */
@@ -17,8 +23,8 @@ if (process.env.NODE_ENV == 'development') {
   // apiCommonUrl = 'http://192.168.1.71:8888/' // 亚男
   // apiCommonUrl = 'http://192.168.1.217:8888/' // 爱军
 
-  // apiCommonUrl = 'http://192.168.1.200:8888/' // 本地测试
-  apiCommonUrl = 'http://api.new.bzu.com/' // 内部测试
+  // apiCommonUrl = 'http://api.new.bzu.com/' // 内部测试
+  apiCommonUrl = 'http://192.168.1.200:8888/' // 本地测试
   // apiCommonUrl = 'http://192.168.1.52:8888/' // 本地测试
 
   // apiCommonUrl = 'http://192.168.1.176:8888/' // 帅飞
@@ -28,21 +34,23 @@ if (process.env.NODE_ENV == 'development') {
   // apiCommonUrl = 'http://192.168.1.235:8046' // 吕冰洋
   // apiCommonUrl = 'http://192.168.1.252:8103' // 施伯兵
 
+  // apiCommonUrl = 'http://api.new.bzu.com/' // 正式测试
+  // apiCommonUrl = 'http://192.168.1.200:8888/' // 本地测试
+  // apiCommonUrl = 'http://192.168.1.52:8888/' // 本地测试
+
   /* socketUrl --------------------------------------------- */
 
-  // socketUrl = 'ws://192.168.1.52:8087/market' // socketUrl
   // socketUrl = 'wss://ws.bzu.com/market'
   socketUrl = 'ws://192.168.1.200:8087/market'
+  // socketUrl = 'ws://192.168.1.52:8087/market' // socketUrl
 
   // loginSocketUrl = 'ws://api.new.bzu.com/qrcodeLogin/'
   loginSocketUrl = 'ws://192.168.1.217:8888/qrcodeLogin/'
   /* domain --------------------------------------------- */
-  domain = apiCommonUrl + '#/'
 } else if (process.env.NODE_ENV == 'testing') {
   apiCommonUrl = 'http://192.168.1.200:8888/' // 本地测试
   socketUrl = 'ws://192.168.1.200:8087/market'
   loginSocketUrl = 'ws://api.new.bzu.com/qrcodeLogin/'
-  domain = apiCommonUrl + '#/'
 } else if (process.env.NODE_ENV == 'production') {
   /* apiCommonUrl --------------------------------------------- */
 
@@ -58,7 +66,6 @@ if (process.env.NODE_ENV == 'development') {
   // socketUrl = 'ws://192.168.1.200:8087/market'
 
   /* domain --------------------------------------------- */
-  domain = 'http://new.bzu.com/#/'
 }
 
 export {
