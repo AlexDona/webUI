@@ -107,6 +107,10 @@ export default {
     }
   },
   watch: {
+    activeSymbol (newVal, oldVal) {
+      console.log(newVal)
+      this.reflashCount = 0
+    },
     orderRecordListBySocket (newVal) {
       // console.log(newVal)
       if (!this.reflashCount && newVal) {

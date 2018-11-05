@@ -228,10 +228,9 @@ export default {
       activeSymbolId: state => state.common.activeSymbol.id
     }),
     buysAndSellsList () {
-      console.log(this.buysAndSellsListByAjax)
-      console.log(this.buysAndSellsListBySocket)
+      // console.log(this.buysAndSellsListByAjax)
+      // console.log(this.buysAndSellsListBySocket)
       return !this.reflashCount ? this.buysAndSellsListByAjax : this.buysAndSellsListBySocket
-      // return this.buysAndSellsListByAjax
     }
   },
   watch: {
