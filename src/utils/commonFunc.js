@@ -161,24 +161,26 @@ export const getCountryListAjax = async (that, callback) => {
   let localCountry = getStoreWithJson('countryList')
   let saveTimeStamp = getStore('timeStamp')
   let nowTimeStamp = new Date().getTime()
-  console.log(saveTimeStamp)
-  console.log(nowTimeStamp)
-  console.log(nowTimeStamp - saveTimeStamp)
+  // console.log(saveTimeStamp)
+  // console.log(nowTimeStamp)
+  // console.log(nowTimeStamp - saveTimeStamp)
+  let diffTime = Math.abs(nowTimeStamp - saveTimeStamp)
   let data
-  if (localCountry) {
+  if (localCountry && diffTime < 86400000) {
     data = localCountry
     that.SET_COUNTRY_AREA_LIST(data)
     return false
-  }
-  data = await getCountryList()
-  if (!returnAjaxMessage(data, that)) {
-    return false
   } else {
-    that.SET_COUNTRY_AREA_LIST(data.data.data)
-    setStore('countryList', data.data.data)
-    setStore('timeStamp', new Date().getTime())
-    if (callback) {
-      callback(data)
+    data = await getCountryList()
+    if (!returnAjaxMessage(data, that)) {
+      return false
+    } else {
+      that.SET_COUNTRY_AREA_LIST(data.data.data)
+      setStore('countryList', data.data.data)
+      setStore('timeStamp', new Date().getTime())
+      if (callback) {
+        callback(data)
+      }
     }
   }
 }
