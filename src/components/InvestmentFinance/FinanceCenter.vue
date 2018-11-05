@@ -81,7 +81,6 @@
                   :key="index"
                   :label="language === 'zh_CN' || language === 'zh_TW'? item.typeDescription : item.typeEnglishDescription"
                   :value="item.id"
-                  v-if="item.state === 'ENABLED'"
                 >
                 <!-- 任增加存币类型国际化 -->
                 <!-- :label="language === 'zh_CN' || language === 'zh_TW'? item.typeDescription : item.typeEnglishDescription" -->
@@ -494,6 +493,7 @@ export default {
   },
   data () {
     return {
+      newArrinvestTypeList: [],
       fullscreenLoading: false,
       // 选中币种的id
       selectedCoinId: '',
@@ -719,6 +719,10 @@ export default {
     },
     // 存币理财页面币种查询
     async getFinancialManagementList () {
+      // 任重写
+      this.newArrinvestTypeList = []
+      this.investTypeList = []
+      this.selectedInvestTypeId = ''
       this.fullscreenLoading = true
       const data = await getFinancialManagement({
         pageNum: this.currentPage,
@@ -759,7 +763,16 @@ export default {
         console.log(11111111111111111111111111)
         console.log(this.investTypeList)
         // 设置存币类型默认值
-        this.selectedInvestTypeId = getData.managementList[0] ? getData.managementList[0].id : ''
+        // 任重写
+        if (getData.managementList.length) {
+          getData.managementList.forEach((item, index) => {
+            if (item.state === 'ENABLED') {
+              this.newArrinvestTypeList.push(item)
+            }
+          })
+          this.investTypeList = this.newArrinvestTypeList
+          this.selectedInvestTypeId = this.investTypeList[0].id
+        }
         // 设置可用余额
         this.availableBalance = getData.userTotal
         // 存币估计值

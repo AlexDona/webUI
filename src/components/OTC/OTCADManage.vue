@@ -521,7 +521,7 @@ export default {
     // 12.0 点击 修改 按钮钮触发的事件
     modifyAD (id) {
       this.$confirm(this.$t('M.otc_adMange_tipsContentTwo'), {
-        confirmButtonText: this.$t('M.comm_sold_out'), // 下架
+        confirmButtonText: this.$t('M.comm_confirm'), // 确定
         cancelButtonText: this.$t('M.comm_cancel') // 取消
       }).then(() => {
         // 跳转发布广告页面并携带一条信息的参数

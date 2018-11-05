@@ -85,7 +85,7 @@ export const personal = {
   'user_account_whether_close1': 'Bankcardのお支払い方法を閉じる決めますか',
   'user_account_whether_close2': 'Wechatのお支払い方法を閉じる決めますか',
   'user_account_whether_close3': 'Alipayのお支払い方法を閉じる決めますか',
-  'user_account_whether_close4': 'PAYPAYのお支払い方法を閉じる決めますか',
+  'user_account_whether_close4': 'PAYPALのお支払い方法を閉じる決めますか',
   'user_account_whether_close5': 'Western Unionのお支払い方法を閉じる決めますか',
   'user_account_please_set_up': '最初に設定してください',
   'user_account_return': '私のアカウントに戻る',

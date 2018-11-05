@@ -85,7 +85,7 @@ export const personal = {
   'user_account_whether_close1': '은행 카드 결제 수단을 닫으시겠습니까?',
   'user_account_whether_close2': 'WeChat 결제 수단을 닫으시겠습니까?',
   'user_account_whether_close3': 'Alipay를 종료 하시겠습니까?',
-  'user_account_whether_close4': 'PAYPAY 결제 수단을 닫으시겠습니까?',
+  'user_account_whether_close4': 'PAYPAL 결제 수단을 닫으시겠습니까?',
   'user_account_whether_close5': 'Western Union 송금 방법을 닫으시겠습니까?',
   'user_account_please_set_up': '먼저 설정하십시오.',
   'user_account_return': '내 계정으로 돌아 가기',

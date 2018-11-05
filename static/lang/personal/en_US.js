@@ -86,7 +86,7 @@ export const personal = {
   'user_account_whether_close1': 'Sure to close Bankcard payment?',
   'user_account_whether_close2': 'Sure to close Wechat payment?',
   'user_account_whether_close3': 'Sure to close Alipay payment?',
-  'user_account_whether_close4': 'Sure to close PAYPAY payment?',
+  'user_account_whether_close4': 'Sure to close PAYPAL payment?',
   'user_account_whether_close5': 'Sure to close Western Union payment?',
   'user_account_please_set_up': 'Please set first',
   'user_account_return': 'Return to my account',
