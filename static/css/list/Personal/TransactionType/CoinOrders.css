@@ -41,7 +41,7 @@
 }
 .coin-orders.personal .el-table{
   font-size: 12px;
-  margin-left: 2px;
+  /*margin-left: 2px;*/
   width: 970px !important;
 }
 .coin-orders.personal .el-table .cell {
