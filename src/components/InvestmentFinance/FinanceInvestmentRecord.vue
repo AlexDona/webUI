@@ -24,23 +24,26 @@
                 {{ $t('M.investment_return_investment') }}
               </router-link>
             </div>
-            <!-- 存币记录 -->
-            <el-tabs v-model="activeName" @tab-click='changeTab'>
-            <!-- @您还没有登陆,请登录或者注册之后查看！ -->
-                <div
-                  v-if = "!isLogin"
-                  class = 'financeTsipsBox'
-                >
-                  {{$t('M.finance_loginTips')}}
-                  <router-link to='/login'>
-                    {{$t('M.comm_login')}}
-                  </router-link>
-                  {{$t('M.finance_or')}}
-                  <router-link to = '/register'>
-                    {{$t('M.comm_register_time')}}
-                  </router-link>
-                  {{$t('M.finance_loginTipsTwo')}}
-                </div>
+            <el-tabs
+              v-model="activeName"
+              @tab-click='changeTab'
+            >
+              <!-- @您还没有登陆,请登录或者注册之后查看！ -->
+              <div
+                v-if = "!isLogin"
+                class = 'financeTsipsBox'
+              >
+                {{$t('M.finance_loginTips')}}
+                <router-link to='/login'>
+                  {{$t('M.comm_login')}}
+                </router-link>
+                {{$t('M.finance_or')}}
+                <router-link to = '/register'>
+                  {{$t('M.comm_register_time')}}
+                </router-link>
+                {{$t('M.finance_loginTipsTwo')}}
+              </div>
+              <!-- 存币记录 -->
               <el-tab-pane
                 :label="$t('M.finance_invest') + $t('M.finance_recode')"
                 name="1"
@@ -60,11 +63,14 @@
                     width="110"
                   >
                   </el-table-column>
-                  <!-- 存币类型 -->
+                  <!-- 存币类型 prop="typeDescription" :prop="language === 'zh_CN' || language === 'zh_TW'? typeDescription : typeEnglishDescription"-->
                   <el-table-column
-                    prop="typeDescription"
                     :label="$t('M.finance_invest') + $t('M.otc_cancelOrder_type')"
-                    >
+                  >
+                    <template slot-scope="s">
+                      <div v-if="language === 'zh_CN' || language === 'zh_TW'">{{s.row.typeDescription}}</div>
+                      <div v-else>{{s.row.typeEnglishDescription}}</div>
+                    </template>
                   </el-table-column>
                   <!-- 数量 -->
                   <el-table-column
@@ -93,11 +99,53 @@
                     :label="$t('M.finance_paid_income')"
                   >
                   </el-table-column>
-                  <!-- 状态 -->
+                  <!-- 状态 prop="state" width="80"-->
                   <el-table-column
-                    prop="state"
-                    width="80"
-                    :label="$t('M.comm_state')">
+                    :label="$t('M.comm_state')"
+                  >
+                    <template slot-scope="s">
+                      <!-- <div>{{s.row.state}}</div> -->
+                      <div v-show="s.row.state === 'FREEZE'">
+                        <span v-if="language === 'zh_CN' || language === 'zh_TW'">冻结</span>
+                        <span v-else>Freeze</span>
+                      </div>
+                      <div v-show="s.row.state === 'CURRENT'">
+                        <span v-if="language === 'zh_CN' || language === 'zh_TW'">活期</span>
+                        <span v-else>Current</span>
+                      </div>
+                      <div v-show="s.row.state === 'REGULARMONTHLYRETURN'">
+                        <span v-if="language === 'zh_CN' || language === 'zh_TW'">定期月返</span>
+                        <span v-else>Regular monthly return</span>
+                      </div>
+                      <div v-show="s.row.state === 'PERIODICAL'">
+                        <span v-if="language === 'zh_CN' || language === 'zh_TW'">定期</span>
+                        <span v-else>Regular</span>
+                      </div>
+                      <div v-show="s.row.state === 'IS_DISTRIBUTE'">
+                        <span v-if="language === 'zh_CN' || language === 'zh_TW'">发放收益</span>
+                        <span v-else>Distribute</span>
+                      </div>
+                      <div v-show="s.row.state === 'UNDISTRIBUTE'">
+                        <span v-if="language === 'zh_CN' || language === 'zh_TW'">未发放收益</span>
+                        <span v-else>Undistribute</span>
+                      </div>
+                      <div v-show="s.row.state === 'FINISHED'">
+                        <span v-if="language === 'zh_CN' || language === 'zh_TW'">已完成</span>
+                        <span v-else>Finished</span>
+                      </div>
+                      <div v-show="s.row.state === 'CANCEL'">
+                        <span v-if="language === 'zh_CN' || language === 'zh_TW'">已取消</span>
+                        <span v-else>Cancel</span>
+                      </div>
+                      <div v-show="s.row.state === 'AUTHENTICATION'">
+                        <span v-if="language === 'zh_CN' || language === 'zh_TW'">已认证</span>
+                        <span v-else>Authentication</span>
+                      </div>
+                      <div v-show="s.row.state === 'UNAUTHENTICATION'">
+                        <span v-if="language === 'zh_CN' || language === 'zh_TW'">未认证</span>
+                        <span v-else>Unauthentication</span>
+                      </div>
+                    </template>
                   </el-table-column>
                   <!-- 创建时间 -->
                   <el-table-column
@@ -170,11 +218,14 @@
                     width="150"
                   >
                   </el-table-column>
-                  <!-- 存币类型 -->
+                  <!-- 存币类型 prop="description" :prop="language === 'zh_CN' || language === 'zh_TW'? typeDescription : typeEnglishDescription"-->
                   <el-table-column
-                    prop="description"
                     :label="$t('M.finance_invest') + $t('M.otc_cancelOrder_type')"
                   >
+                    <template slot-scope="s">
+                      <div v-if="language === 'zh_CN' || language === 'zh_TW'">{{s.row.typeDescription}}</div>
+                      <div v-else>{{s.row.typeEnglishDescription}}</div>
+                    </template>
                   </el-table-column>
                   <!-- 数量 -->
                   <el-table-column
@@ -204,6 +255,7 @@
                   </el-table-column>
                 </el-table>
               </el-tab-pane>
+              <!-- 分页 -->
               <el-pagination
                 background
                 v-if="interestTotal > 10 && this.activeName == '2'"
@@ -387,13 +439,20 @@ export default {
   computed: {
     ...mapState({
       theme: state => state.common.theme,
-      isLogin: state => state.user.isLogin
+      isLogin: state => state.user.isLogin,
+      language: state => state.common.language // 当前选中语言
     }),
     screenWidth () {
       return window.innerWidth / 3
     }
   },
-  watch: {}
+  watch: {
+    language (newVal) {
+      console.log('当前选中语言')
+      console.log(newVal)
+      this.getFinancialManagementList()
+    }
+  }
 }
 </script>
 <style scoped lang="scss">
