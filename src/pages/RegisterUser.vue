@@ -725,7 +725,7 @@ export default {
       sliderFlag: true, // 滑块调用节流阀
       loginFlag: true, // 登录节流阀
       dragStatus: true, // 拖动标记
-      inviterDisabled: '', // 注册邀请码提示框禁用状态
+      inviterDisabled: false, // 注册邀请码提示框禁用状态
       /**
        * 移动端拖动
        */

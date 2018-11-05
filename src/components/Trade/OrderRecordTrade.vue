@@ -98,8 +98,8 @@ export default {
   computed: {
     ...mapState({
       theme: state => state.common.theme,
-      orderRecordListByAjax: state => state.common.klineAjaxData.tardeRecordList,
-      orderRecordListBySocket: state => state.common.socketData.tardeRecordList,
+      orderRecordListByAjax: state => state.common.klineAjaxData.tardeRecordList || [],
+      orderRecordListBySocket: state => state.common.socketData.tardeRecordList || [],
       activeSymbol: state => state.common.activeSymbol
     }),
     orderRecordList () {
