@@ -98,17 +98,17 @@ export default {
   computed: {
     ...mapState({
       theme: state => state.common.theme,
-      orderRecordListByAjax: state => state.common.klineAjaxData.tardeRecordList ,
+      orderRecordListByAjax: state => state.common.klineAjaxData.tardeRecordList,
       orderRecordListBySocket: state => state.common.socketData.tardeRecordList,
       activeSymbol: state => state.common.activeSymbol
     }),
     orderRecordList () {
-      return (this.reflashCount < 2 )? this.orderRecordListByAjax : this.orderRecordListBySocket
+      return (this.reflashCount < 2) ? this.orderRecordListByAjax : this.orderRecordListBySocket
     }
   },
   watch: {
-    reflashCount(newVal, oldVal){
-      console.log(newVal);
+    reflashCount (newVal, oldVal) {
+      console.log(newVal)
     },
     activeSymbol (newVal, oldVal) {
       console.log(newVal.id)
@@ -116,14 +116,14 @@ export default {
     },
     orderRecordListBySocket (newVal) {
       if (newVal) {
-        console.log(this.reflashCount);
+        console.log(this.reflashCount)
         console.log(newVal)
         this.reflashCount++
       }
     },
     orderRecordList (newVal) {
-      console.log(this.reflashCount);
-      console.log(newVal);
+      console.log(this.reflashCount)
+      console.log(newVal)
     },
     orderRecordListByAjax (newVal) {
       console.log(newVal)
