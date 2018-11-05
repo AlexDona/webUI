@@ -15,9 +15,9 @@ util.ajax = axios.create({
 })
 
 util.ajax.interceptors.request.use((config) => {
-  let xDomain = window.location.host.split(':')[0]
-  xDomain = xDomain.startsWith('www') ? xDomain.slice(4) : xDomain
-  config.headers['x-domain'] = xDomain
+  // let xDomain = window.location.host.split(':')[0]
+  // xDomain = xDomain.startsWith('www') ? xDomain.slice(4) : xDomain
+  config.headers['x-domain'] = 'new.bzu.com'
   if (store.state.user.loginStep1Info.token) {
     let userToken = store.state.user.loginStep1Info.token
     config.headers['token'] = userToken

@@ -838,6 +838,8 @@ export default {
       isLogin: state => state.user.isLogin,
       financeLineRenderTimeList: state => state.finance.financeLineRenderTimeList,
       financeLineRenderPriceList: state => state.finance.financeLineRenderPriceList,
+      // 获取当前语言
+      language: state => state.common.language,
       status: state => state.finance.status
     }),
     screenWidth () {
