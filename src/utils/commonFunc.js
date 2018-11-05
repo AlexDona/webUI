@@ -33,7 +33,9 @@ import {
 import store from '../vuex'
 import {
   removeStore,
-  getStore
+  getStore,
+  setStore,
+  getStoreWithJson
 } from './index'
 import {PHONE_REG, EMAIL_REG, ID_REG, PWD_REG, ALIPAY_REG, BANK_REG, GOOGLE_REG, TPED_REG, URL_REG, WITHDRAWAL_REG} from './regExp'
 // 请求接口后正确或者错误的提示提示信息：
@@ -51,10 +53,15 @@ export const returnAjaxMessage = (data, self, noTip, errorTip) => {
       })
       // console.log(self.$t(`M.${meta.i18n_code}`).format(meta.params))
       // 登录失效
-      if (meta.code == 401) {
-        removeStore('loginStep1Info')
-        self.$router.push({path: '/login'})
-        store.commit('user/USER_LOGOUT')
+      switch (meta.code) {
+        case 401:
+          removeStore('loginStep1Info')
+          self.$router.push({path: '/login'})
+          store.commit('user/USER_LOGOUT')
+          break
+        case 500:
+          self.$router.push({path: '/500'})
+          break
       }
       return 0
     } else {
@@ -154,12 +161,29 @@ export const changeCurrentPageForLegalTrader = (currentPage, type, that) => {
     status: true
   })
 }
-export const getCountryListAjax = async (that) => {
-  const data = await getCountryList()
-  if (!returnAjaxMessage(data, that)) {
+// 获取国家列表
+export const getCountryListAjax = async (that, callback) => {
+  let localCountry = getStoreWithJson('countryList')
+  let saveTimeStamp = getStore('timeStamp')
+  let nowTimeStamp = new Date().getTime()
+  let diffTime = Math.abs(nowTimeStamp - saveTimeStamp)
+  let data
+  if (localCountry && diffTime < 86400000) {
+    data = localCountry
+    that.SET_COUNTRY_AREA_LIST(data)
     return false
   } else {
-    that.SET_COUNTRY_AREA_LIST(data.data.data)
+    data = await getCountryList()
+    if (!returnAjaxMessage(data, that)) {
+      return false
+    } else {
+      that.SET_COUNTRY_AREA_LIST(data.data.data)
+      setStore('countryList', data.data.data)
+      setStore('timeStamp', new Date().getTime())
+      if (callback) {
+        callback(data)
+      }
+    }
   }
 }
 // 服务条款接口
