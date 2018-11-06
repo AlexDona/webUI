@@ -301,7 +301,7 @@ export const OTC = {
   'otc_index_tradeKnowDetail2': 'Your account will be frozen',
   'otc_index_tradeKnowDetail3': 'Please check the other party is information carefully before paying.',
   'otc_index_tradeKnowDetail4': 'Do not leave the trading platform, once you leave, you will lose',
-  'otc_index_tradeKnowDetail6': 'protection of',
+  'otc_index_tradeKnowDetail6': 'protection of.',
   'otc_index_tradeKnowDetail5': 'In the event of a dispute, please keep the evidence including the chat history and contact us immediately.',
   'otc_index_inputBuyMount': 'Please enter the buy amount',
   'otc_index_inputSellMount': 'Please enter the sell amount',

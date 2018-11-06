@@ -55,5 +55,20 @@ export const user = {
   // ###############新聞公告##############
   'news_keyword': '關鍵字',
   'news_year': '年',
-  'news_month': '月'
+  'news_month': '月',
+  // ###############邀請註冊##############
+  'invitation_register_return_home': '返回首頁',
+  'invitation_register_server_err': '非常抱歉 服務器出錯了',
+  'invitation_register_your_friends': '您的好友',
+  'invitation_register_please_you_register': '邀請您註冊',
+  'invitation_register_immediately_register_get': '立即註冊領取',
+  'invitation_register_now_register': '現在註冊即送好禮',
+  'invitation_register_safety': '安全便捷的比特幣交易平臺',
+  'invitation_register_Registration_Successful': '註冊成功',
+  'invitation_register_awarding': '獎勵已發送到我的賬戶',
+  'invitation_register_i_know': '我知道了',
+  'user_login_scan_success': '掃描成功！',
+  'user_login_phone_confirm_login': '請在手機上確認登錄',
+  'user_login_return_QR': '返回二維碼登錄',
+  'user_down_install': '立即安裝'
 }

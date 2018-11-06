@@ -290,7 +290,7 @@ export const OTC = {
   'otc_index_tradeKnowDetail2': '귀하의 계정은 정지 될 것입니다.',
   'otc_index_tradeKnowDetail3': '지불하기 전에 상대방의 정보를주의 깊게 확인하십시오.',
   'otc_index_tradeKnowDetail4': '거래 플랫폼을 떠나지 말고 떠나면 잃을 것입니다.',
-  'otc_index_tradeKnowDetail6': '보호',
+  'otc_index_tradeKnowDetail6': '보호.',
   'otc_index_tradeKnowDetail5': '분쟁 발생시 채팅 기록을 포함한 증거를 보관하고 즉시 저희에게 연락하십시오.',
   'otc_index_inputBuyMount': '구매 횟수를 입력하십시오.',
   'otc_index_inputSellMount': '판매 수량을 입력하십시오.',

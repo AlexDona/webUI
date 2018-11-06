@@ -311,10 +311,10 @@
                     1. {{$t('M.otc_index_tradeKnowDetail1')}}<span class="warning">3{{$t('M.otc_ci')}}</span>，{{$t('M.otc_index_tradeKnowDetail2')}}。
                   </p>
                   <p class="tip">
-                    2. {{$t('M.otc_index_tradeKnowDetail3')}}。
+                    2. {{$t('M.otc_index_tradeKnowDetail3')}}
                   </p>
                   <p class="tip">
-                    3. {{$t('M.otc_index_tradeKnowDetail4')}}{{configInfo.otcAd}}{{$t('M.otc_index_tradeKnowDetail6')}}；
+                    3. {{$t('M.otc_index_tradeKnowDetail4')}}{{configInfo.otcAd}}{{$t('M.otc_index_tradeKnowDetail6')}}
                   </p>
                   <p class="tip">
                     4. {{$t('M.otc_index_tradeKnowDetail5')}}

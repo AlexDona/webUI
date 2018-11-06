@@ -6,15 +6,20 @@
       <img :src="logoSrc">
     </div>
     <div class="inner-box">
-      <p>您的好友{{phoneNumberFormat(inviter)}}</p>
-      <p class="strong">邀请您注册 <span class="yellow">{{configInfo.otcAd}}</span></p>
+      <!-- 您的好友 -->
+      <p>{{$t('M.invitation_register_your_friends')}}{{phoneNumberFormat(inviter)}}</p>
+      <!-- 邀请您注册 -->
+      <p class="strong"> {{$t('M.invitation_register_please_you_register')}}<span class="yellow">{{configInfo.otcAd}}</span></p>
       <div class="bg">
         <img src="../assets/develop/register-big-url.png">
       </div>
       <router-link
         :to="`/register?showId=${$route.query.showId}`"
         class="register-btn"
-      >立即注册领取</router-link>
+      >
+        <!-- 立即注册领取 -->
+        {{$t('M.invitation_register_immediately_register_get')}}
+      </router-link>
     </div>
   </div>
 </template>

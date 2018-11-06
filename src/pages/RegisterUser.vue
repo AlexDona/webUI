@@ -295,8 +295,10 @@
         >
           <div class="left"></div>
           <div class="right">
-            <p class="main-text">现在注册即送好礼</p>
-            <p class="sub-text">FUBT 安全便捷的比特币交易平台</p>
+            <!-- 现在注册即送好礼 -->
+            <p class="main-text">{{ $t('M.invitation_register_now_register') }}</p>
+            <!-- FUBT 安全便捷的比特币交易平台 -->
+            <p class="sub-text">{{configInfo.otcAd}} {{ $t('M.invitation_register_safety') }}</p>
           </div>
         </div>
         <!--切换注册方式-->
@@ -616,7 +618,8 @@
             <!--iconName="icon-dui1"-->
           <!--/>-->
           <img src="../assets/develop/register-success.png">
-          <p>注册成功</p>
+          <!-- 注册成功 -->
+          <p>{{$t('M.invitation_register_Registration_Successful')}}</p>
         </div>
         <p class="title">
           <span>{{successCountDown}}</span>
@@ -643,18 +646,21 @@
         :show-close="false"
         class="invitation-success-dialog"
       >
-        <p class="main-tips">注册成功！</p>
+        <!-- 注册成功！ -->
+        <p class="main-tips">{{$t('M.invitation_register_Registration_Successful')}}</p>
         <p
           class="sub-tips"
           v-if="inviter"
         >
-          奖励已发送到我的账户
+          <!-- 奖励已发送到我的账户 -->
+          {{$t('M.invitation_register_awarding')}}
         </p>
         <button
           class="confirm-btn"
           @click="jumpToDownAppPage"
         >
-          我知道了 <span>({{successCountDown}})</span>
+          <!-- 我知道了 -->
+          {{$t('M.invitation_register_i_know')}} <span>({{successCountDown}})</span>
         </button>
       </el-dialog>
     </div>
@@ -1176,7 +1182,8 @@ export default {
       language: state => state.common.language,
       contryAreaList: state => state.common.contryAreaList,
       disabledOfPhoneBtn: state => state.user.disabledOfPhoneBtn,
-      disabledOfEmailBtn: state => state.user.disabledOfEmailBtn
+      disabledOfEmailBtn: state => state.user.disabledOfEmailBtn,
+      configInfo: state => state.common.footerInfo.configInfo
       // activeCountryCodeWithPhone: state => state.user.countryCode // 国籍码
     }),
     activeCodePlaceholder () {

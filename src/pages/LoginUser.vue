@@ -339,13 +339,22 @@
             class-name="icon-chenggong"
           />
           <div class="tips">
-            <p>扫描成功！</p>
-            <p>请在手机上确认登录</p>
+            <p>
+              <!-- 扫描成功！ -->
+              {{$t('M.user_login_scan_success')}}
+            </p>
+            <p>
+              <!-- 请在手机上确认登录 -->
+              {{$t('M.user_login_phone_confirm_login')}}
+            </p>
           </div>
           <button
             class="back-to-scan cursor-pointer"
             @click="backToScan"
-          >返回二维码登录</button>
+          >
+            <!-- 返回二维码登录 -->
+            {{$t('M.user_login_return_QR')}}
+          </button>
         </div>
       </div>
       <!--移动端-->

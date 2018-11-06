@@ -162,7 +162,7 @@
                   >
                     <template slot-scope = "s">
                       <div
-                        v-if="s.row.state == $t('M.finance_huoqi')"
+                        v-if="s.row.state == 'CURRENT'"
                         class="blue cancelBtn"
                         @click="cancleInvest(s.row.id)"
                       >

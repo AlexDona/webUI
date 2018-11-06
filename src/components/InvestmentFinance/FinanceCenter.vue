@@ -321,7 +321,6 @@
                 <el-table-column
                   prop="coinShortName"
                   :label="$t('M.finance_invest_coin1')"
-                  width="100"
                 >
                 </el-table-column>
                 <!-- 存币类型 -->
@@ -329,7 +328,6 @@
                 <!-- :prop="language === 'zh_CN' || language === 'zh_TW'? typeDescription : typeEnglishDescription" -->
                 <el-table-column
                   :label="$t('M.finance_invest') + $t('M.otc_cancelOrder_type')"
-                  width="180"
                 >
                   <template slot-scope="s">
                     <div v-if="language === 'zh_CN' || language === 'zh_TW'">{{s.row.typeDescription}}</div>
@@ -339,7 +337,6 @@
                 <!-- 数量 -->
                 <el-table-column
                   prop="number"
-                  width="100"
                   :label="$t('M.comm_count')"
                 >
                 </el-table-column>
@@ -352,19 +349,19 @@
                 <!-- 预计发放时间 -->
                 <el-table-column
                   prop="expectedTime"
-                  width="150"
+                  width="135"
                   :label="$t('M.finance_predict') + $t('M.finance_releaseTime')"
                 >
                 </el-table-column>
                 <!-- 已发放收益-->
                 <el-table-column
                   prop="profit"
-                  width="150"
                   :label="$t('M.finance_paid_income')"
                 >
                 </el-table-column>
                 <!-- 状态 prop="state" width="80"-->
                 <el-table-column
+                  width="144"
                   :label="$t('M.comm_state')"
                 >
                   <template slot-scope="s">
@@ -414,7 +411,7 @@
                 <!-- 创建时间 -->
                 <el-table-column
                   prop="createTime"
-                  width="150"
+                  width="135"
                   :label="$t('M.finance_createTime')"
                 >
                 </el-table-column>
@@ -427,7 +424,7 @@
                   <!-- 活期 -->
                   <template slot-scope = "s">
                     <div
-                      v-if="s.row.state == $t('M.finance_huoqi')"
+                      v-if="s.row.state == 'CURRENT'"
                       class="blue cancelBtn"
                       @click="cancleInvest(s.row.id)"
                     >
