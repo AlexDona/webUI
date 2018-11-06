@@ -22,7 +22,7 @@
 <script>
 import {
   getFooterInfo,
-  getLanguageListAjax,
+  // getLanguageListAjax,
   returnAjaxMessage
 } from '../utils/commonFunc'
 import {
@@ -45,8 +45,10 @@ export default {
     }
   },
   async created () {
-    await getLanguageListAjax(this)
-    await getFooterInfo(this.language, this)
+    console.log()
+    // await getLanguageListAjax(this)
+    let language = this.$route.query.lang || this.defaultLanguage
+    await getFooterInfo(language, this)
     await this.findUserInfoByShowId()
   },
   mounted () {},
@@ -80,7 +82,8 @@ export default {
       isMobile: state => state.user.isMobile,
       logoSrc: state => state.common.logoSrc,
       configInfo: state => state.common.footerInfo.configInfo,
-      language: state => state.common.language
+      language: state => state.common.language,
+      defaultLanguage: state => state.common.defaultLanguage
     })
   },
   watch: {
@@ -116,7 +119,7 @@ export default {
       color:#fff;
       font-size: .8rem;
       text-align: center;
-      padding:2rem;
+      padding:4rem;
       /*background-color: pink;*/
       .strong{
         font-weight: 700;
