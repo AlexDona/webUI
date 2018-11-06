@@ -15,6 +15,9 @@
 .register-box .el-checkbox__input.is-checked+.el-checkbox__label{
   color:#338ff5;
 }
+.register-box .el-checkbox__input.is-checked+.el-checkbox__label span{
+  color:#8B9197;
+}
 .register-box .el-checkbox__inner{
   background-color:transparent;
 }
@@ -125,8 +128,8 @@
 }
 .register.mobile .el-input__inner{
   min-width:180px;
-  height:3rem;
-  line-height: 3rem;
+  height:2.882rem;
+  line-height:2.882rem;
 }
 .register.mobile .el-input__suffix-inner{
   /*display: block;*/
@@ -141,9 +144,9 @@
   vertical-align: top;
 }
 .register.mobile .el-checkbox__inner::after{
-  width:4px;
-  left:20px;
-  height:30px;
+  width: 15px;
+  left: 10px;
+  height: 23px;
 }
 .register.mobile .el-dialog{
   margin-top: 0 !important;

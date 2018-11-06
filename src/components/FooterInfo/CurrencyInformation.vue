@@ -111,12 +111,15 @@ export default {
     },
     // 币种详情
     async getFootCurrencyInforDetail () {
-      const data = await getCurrencyDetails(this.currencyId)
-      if (!(returnAjaxMessage(data, this, 0))) {
-        return false
-      } else {
-        this.currencyInfo = data.data.data
-        console.log(this.currencyDetails)
+      console.log(this.currencyId)
+      if (this.currencyId) {
+        const data = await getCurrencyDetails(this.currencyId)
+        if (!(returnAjaxMessage(data, this, 0))) {
+          return false
+        } else {
+          this.currencyInfo = data.data.data
+          console.log(this.currencyDetails)
+        }
       }
     }
   },
@@ -127,7 +130,11 @@ export default {
       language: state => state.common.language
     })
   },
-  watch: {}
+  watch: {
+    currencyId (newVal) {
+      console.log(newVal)
+    }
+  }
 }
 </script>
 <style scoped lang="scss" type="text/scss">

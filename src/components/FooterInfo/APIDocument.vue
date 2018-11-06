@@ -55,7 +55,7 @@ export default {
         overflow: hidden;
         >.inner-box{
           margin:0px auto;
-          height:1100px;
+          height:800px;
           width:1100px;
           padding:50px;
         }

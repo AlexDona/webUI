@@ -175,16 +175,6 @@ export default {
     ...mapMutations([
       'CHANGE_ACTIVE_PRICE_ITEM'
     ]),
-    beforeEnterUp (el) {
-      el.style = 'margin-top:5px'
-    },
-    enterUp (el, done) {
-      el.offsetWidth
-      el.style.marginTop = '-5px'
-      el.style.opacity = '0'
-      done()
-    },
-    afterEnterUp (el) {},
     // 选中某一个买卖单价格
     changeActivePriceItem (item) {
       this.CHANGE_ACTIVE_PRICE_ITEM(item.price)
@@ -356,6 +346,7 @@ export default {
               >.buys-list,.sells-list{
                 font-size: 12px;
                 /*padding:0 20px;*/
+                height:600px;
                 >dd{
                   height: 30px;
                   line-height: 30px;

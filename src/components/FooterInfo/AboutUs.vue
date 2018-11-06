@@ -76,8 +76,7 @@ export default {
         text-align: center;
         width:100%;
         background: url(../../assets/develop/about-us.png) no-repeat center center;
-        -webkit-background-size: 100% 100%;
-        background-size: 100% 100%;
+        background-size: 102%;
         padding-top:100px;
         >h1{
           font-size: 36px;

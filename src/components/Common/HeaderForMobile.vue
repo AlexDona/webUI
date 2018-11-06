@@ -24,6 +24,7 @@
               class="lang-box"
               @mouseenter="toggleShowLanguageBox(1)"
               @mouseleave="toggleShowLanguageBox(0)"
+              @click="toggleShowLanguageBox(1)"
             >
               <dt
                 class="lang-selected"
@@ -38,7 +39,7 @@
                 >
                   <button
                     class="lang-item"
-                    @click="changeLanguage(item)"
+                    @click.stop="changeLanguage(item)"
                     v-for="(item,index) in languageList"
                     :key="index"
                   >
@@ -116,6 +117,7 @@ export default {
       this.CHANGE_LANGUAGE(e)
       this.$i18n.locale = e.shortName
       console.log(this.activeLanguage)
+      this.toggleShowLanguageBox(0)
     }
   },
   filter: {},
@@ -135,17 +137,17 @@ export default {
   @import "../../../static/css/scss/Common/HeaderCommon.scss";
   .mobile-header-box{
     >.inner-box{
-      height:120px;
+      height:160px;
       width:100%;
-      line-height: 120px;
+      line-height: 160px;
       display: flex;
-      padding:0 20px;
+      padding:0 1rem;
       >.left{
-        height:60px;
-        margin-top:30px;
+        height:80px;
+        margin-top:40px;
         >a{
           >.img{
-            height:60px;
+            height:80px;
             vertical-align: top;
           }
         }
@@ -188,7 +190,7 @@ export default {
                 padding: 10px 12px;
                 display: inline-block;
                 width:100%;
-                font-size: 0.5rem;
+                font-size: 0.86453968rem;
                 >.icon{
                   margin-right:5px;
                 }
@@ -200,19 +202,20 @@ export default {
               >.lang-list{
                 background-color: #2A3242;
                 position: absolute;
-                width:3rem;
+                width:5rem;
                 z-index: 2;
                 left:0;
-                top:90px;
+                top:120px;
                 >.lang-item{
                   transition: all 1s;
                   color:#fff;
                   display:block;
-                  height:1rem;
-                  line-height:1rem;
+                  height:1.5rem;
+                  line-height:1.5rem;
                   text-align: left;
-                  font-size: 0.5rem;
+                  font-size: 0.72044974rem;
                   padding:0 0.5rem;
+                  width:100%;
                   box-sizing: border-box;
                   &:hover{
                     background-color: $mainColor;

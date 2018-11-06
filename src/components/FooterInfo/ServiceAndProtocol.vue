@@ -212,7 +212,10 @@ export default {
       theme: state => state.common.theme,
       language: state => state.common.language,
       serviceActiveName: state => state.footerInfo.serviceActiveName
-    })
+    }),
+    windowHeight () {
+      return window.innerHeight
+    }
     // activeName () {
     //   return this.serviceActiveName
     // }
@@ -238,6 +241,7 @@ export default {
     >.content{
       overflow: visible;
       width:100%;
+      height:100%;
       >.top{
         height:250px;
         text-align: center;
@@ -257,6 +261,7 @@ export default {
         }
       }
       >.content{
+        height:100%;
         /*overflow: hidden;*/
         >.inner-box{
           box-sizing: border-box;

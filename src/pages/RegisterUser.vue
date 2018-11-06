@@ -1191,7 +1191,7 @@ export default {
     },
     windowHeight () {
       console.log(window.innerHeight)
-      return window.innerHeight
+      return window.innerHeight + 300
     }
   },
   watch: {
@@ -1336,7 +1336,7 @@ export default {
       }
       /*移动端*/
       >.mobile-box{
-        font-size: 0.8rem;
+        font-size: 0.86453968rem;
         padding: 0 1rem;
         box-sizing: border-box;
         width:100%;
@@ -1359,12 +1359,14 @@ export default {
             padding-left:1rem;
             >.main-text{
               margin-top:1.8rem;
-              font-size: .68rem;
+              font-size: 1.2rem;
+              /*font-size: 0.86453968rem;*/
               font-weight: 500;
             }
             >.sub-text{
-              font-size: 0.5rem;
-              line-height: 1.5rem;
+              /*font-size: 0.86453968rem;*/
+              font-size: 0.64840476rem;
+              line-height: 1rem;
             }
           }
         }
@@ -1378,10 +1380,9 @@ export default {
             line-height:1.5rem;
             text-align: center;
             color:#c3c3c3;
-            font-size: .5rem;
+            font-size: 0.86453968rem;
             &.active{
               color:$mainColor;
-              font-size: .8rem;
             }
           }
         }
@@ -1390,7 +1391,7 @@ export default {
             width:100%;
             >.inner-box{
               background-color: #28446e;
-              height:3rem;
+              height:2.882rem;
               width:100%;
               padding:0 5px 0 1rem;
               margin-bottom:.4rem;
@@ -1404,10 +1405,10 @@ export default {
                 padding:0;
                 height:20px;
                 margin-bottom:0;
-                font-size: 0.8rem;
+                font-size: 0.86453968rem;
               }
               >.input{
-                font-size: 0.8rem;
+                font-size: 0.86453968rem;
                 &::-webkit-input-placeholder{
                   color:#8B9197;
                 }
@@ -1415,7 +1416,7 @@ export default {
                 height:100%;
                 color:#fff;
                 &.image-validate{
-                  width:56%;
+                  width:54%;
                   vertical-align: top;
                 }
                 &.mobile-phone{
@@ -1432,10 +1433,10 @@ export default {
               }
               >.send-code-btn{
                 color:$mainColor;
-                height:3rem;
-                line-height: 3rem;
+                height:2.882rem;
+                line-height: 2.882rem;
                 text-align: center;
-                font-size: 0.8rem;
+                font-size: 0.86453968rem;
                 /*width:66px;*/
               }
             }
@@ -1444,7 +1445,7 @@ export default {
             height:2.8rem;
             line-height: 5rem;
             margin-left: 30px;
-            font-size: 0.8rem;
+            font-size: 0.86453968rem;
             color: rgb(212, 88, 88);
           }
           /*注册，忘记密码*/
@@ -1462,11 +1463,11 @@ export default {
           /*注册按钮*/
           >.register-btn{
             width:100%;
-            height:3rem;
+            height:2.882rem;
             margin:2rem auto 2rem;
             padding:0 5px 0 20px;
             display:block;
-            font-size: 1rem;
+            font-size: 0.86453968rem;
             background:linear-gradient(81deg,rgba(61,152,249,1) 0%,rgba(71,135,255,1) 100%);
             border-radius:20px;
             box-shadow:2px 2px 8px 0px rgba(26,42,71,1);
@@ -1577,12 +1578,12 @@ export default {
     }
     >.invitation-success{
       .main-tips{
-        font-size: .5rem;
+        font-size: 0.86453968rem;
         margin-bottom:.4rem;
         color:#fff;
       }
       .sub-tips{
-        font-size: .4rem;
+        font-size: 0.86453968rem;
         color:#fff;
         margin-bottom:.4rem;
       }
@@ -1592,7 +1593,7 @@ export default {
         color:#fff;
         background:$mainColor;
         border-radius:5px;
-        font-size: .4rem;
+        font-size: 0.86453968rem;
         >span{
           font-size: .3rem;
         }

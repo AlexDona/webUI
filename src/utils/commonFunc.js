@@ -51,16 +51,15 @@ export const returnAjaxMessage = (data, self, noTip, errorTip) => {
         // duration: 5000000,
         message: (!meta.params || !meta.params.length) ? self.$t(`M.${meta.i18n_code}`) : self.$t(`M.${meta.i18n_code}`).format(meta.params)
       })
-      // console.log(self.$t(`M.${meta.i18n_code}`).format(meta.params))
       // 登录失效
       switch (meta.code) {
         case 401:
           removeStore('loginStep1Info')
-          self.$router.push({path: '/login'})
-          store.commit('user/USER_LOGOUT')
+          // self.$router.push({path: '/login'})
+          // store.commit('user/USER_LOGOUT')
           break
         case 500:
-          self.$router.push({path: '/500'})
+          // self.$router.push({path: '/500'})
           break
       }
       return 0
@@ -260,11 +259,11 @@ export const getCollectionList = async (that, callback) => {
 }
 // 协议跳转
 export const jumpToOtherPageForFooter = (router, activeName, that) => {
-  that.$store.commit('CHANGE_FOOTER_ACTIVENAME', {
+  that.$router.push({path: router})
+  that.$store.commit('footerInfo/CHANGE_FOOTER_ACTIVENAME', {
     activeName,
     type: router
   })
-  that.$router.push({path: router})
 }
 
 // 首页、币币交易页面socket数据替换
