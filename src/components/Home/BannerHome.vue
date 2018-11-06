@@ -3,7 +3,7 @@
     class="banner-box home"
   >
     <img
-      v-lazy="bannerBackgroundImage"
+      :src="bannerBackgroundImage"
       :style="{
         width:screenWidth*3+'px',
         height:screenWidth/1.19+'px'

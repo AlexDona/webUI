@@ -22,6 +22,12 @@ import { widget as TvWidget } from '../../../static/tradeview/charting_library/c
 import socket from '../../utils/datafeeds/socket'
 import datafeeds from '../../utils/datafeeds/datafees'
 import {
+  overrides,
+  disabledFeatures,
+  studiesOverrides,
+  kLineBtnList
+} from '../../../static/js/klineOptions'
+import {
   getDefaultSymbol,
   getActiveSymbolDataAjax
   // getTradeMarketDataAjax
@@ -201,37 +207,7 @@ export default {
           container_id: 'tv_chart_container',
           datafeed: this.datafeeds,
           library_path: '/static/tradeview/charting_library/',
-          disabled_features: [
-            'header_symbol_search',
-            'use_localstorage_for_settings',
-            'header_symbol_search', // 禁止头部搜索
-            'header_interval_dialog_button',
-            'show_interval_dialog_on_key_press',
-            'symbol_search_hot_key',
-            'study_dialog_search_control',
-            'display_market_status',
-            'header_compare',
-            'edit_buttons_in_legend',
-            'symbol_info',
-            'border_around_the_chart',
-            'main_series_scale_menu',
-            'star_some_intervals_by_default',
-            'datasource_copypaste',
-            'right_bar_stays_on_scroll',
-            'context_menus',
-            'go_to_date',
-            'compare_symbol',
-            'border_around_the_chart',
-            'timezone_menu',
-            'volume_force_overlay', // 成交量上移
-            'move_logo_to_main_pane', //
-            'timeframes_toolbar', // 底部栏时间
-            'header_undo_redo',
-            'header_chart_type',
-            'header_screenshot'
-            // 'header_settings'
-            // 'widget_logo',
-          ],
+          disabled_features: disabledFeatures,
           enabled_features: [
             'hide_left_toolbar_by_default' // 隐藏左侧边栏
           ],
@@ -239,97 +215,24 @@ export default {
           locale: options.language,
           debug: false,
           toolbar_bg: 'transparent', // 工具栏背景色
-          studies_overrides: {
-            'volume.volume.color.0': '#EC5E5E', // 成交量 k柱 背景色
-            'volume.volume.color.1': '#008069', // 成交量 k柱 背景色
-            'volume.volume.transparency': 100,
-            'moving average.precision': 8
-          },
-          overrides: {
+          studies_overrides: studiesOverrides,
+          overrides: Object.assign({}, overrides, {
             // 'paneProperties.background': '#10172d', // 背景色
             'paneProperties.background': options.paneProperties.background, // 背景色
             'paneProperties.vertGridProperties.color': options.paneProperties.vertGridPropertiesColor, // 列分割线
-            'paneProperties.horzGridProperties.color': options.paneProperties.vertGridPropertiesColor, // 行分割线
-            'symbolWatermarkProperties.transparency': 90,
-            // "scalesProperties.textColor": "#AAA",
-            // "scalesProperties.backgroundColor": "#ff00ff",
-            'scalesProperties.lineColor': '#61688a', // 右侧边框颜色
-            'scalesProperties.textColor': '#61688a', // 左上角文字颜色
-            'mainSeriesProperties.candleStyle.upColor': '#d45858', // k 柱颜色
-            'mainSeriesProperties.candleStyle.downColor': '#008069', // k 柱颜色
-            'mainSeriesProperties.candleStyle.borderUpColor': '#d45858', // k 柱边框颜色
-            'mainSeriesProperties.candleStyle.borderDownColor': '#008069', // k 柱边框颜色
-            // "mainSeriesProperties.candleStyle.wickColor": "#737375",
-            'mainSeriesProperties.candleStyle.wickUpColor': '#d45858', // 上涨 蜡烛线颜色
-            'mainSeriesProperties.candleStyle.wickDownColor': '#008069', // 下降 蜡烛线颜色
-            // "mainSeriesProperties.hollowCandleStyle.borderColor": "#000",
-            // "mainSeriesProperties.hollowCandleStyle.borderUpColor": "#ff00ff",
-            // "mainSeriesProperties.haStyle.borderUpColor": "#00f",
-            // "mainSeriesProperties.areaStyle.color1": "#0f0",
-            // "mainSeriesProperties.areaStyle.color2": "yellow",
-            // 'paneProperties.legendProperties.showStudyTitles': false,
-            'mainSeriesProperties.areaStyle.color1': '#0cbef3',
-            'mainSeriesProperties.areaStyle.color2': '#0098c4',
-            'mainSeriesProperties.areaStyle.linecolor': '#4e5b85',
-            'mainSeriesProperties.areaStyle.linestyle': 0,
-            'mainSeriesProperties.areaStyle.linewidth': 1,
-            'mainSeriesProperties.areaStyle.priceSource': 'close',
-            'mainSeriesProperties.areaStyle.transparency': 80,
-            'paneProperties.legendProperties.showLegend': false // 默认收起
-          },
+            'paneProperties.horzGridProperties.color': options.paneProperties.vertGridPropertiesColor // 行分割线
+          }),
           custom_css_url: '../../../../static/tradeview/klineTheme.css'
         })
         this.widget.onChartReady(() => {
           const _self = this
           let chart = _self.widget.chart()
-          const btnList = [
-            {
-              class: 'resolution_btn',
-              label: this.$t('M.trade_time_share'), // 分时
-              resolution: '1',
-              chartType: 3
-            },
-            {
-              class: 'resolution_btn',
-              label: '1min',
-              resolution: '1'
-            },
-            {
-              class: 'resolution_btn',
-              label: '5min',
-              resolution: '5'
-            },
-            {
-              class: 'resolution_btn',
-              label: '15min',
-              resolution: '15'
-            },
-            {
-              class: 'resolution_btn',
-              label: '30min',
-              resolution: '30'
-            },
-            {
-              class: 'resolution_btn',
-              label: '1hour',
-              resolution: '60'
-            },
-            {
-              class: 'resolution_btn',
-              label: '4hour',
-              resolution: '240'
-            },
-            {
-              class: 'resolution_btn',
-              label: '1day',
-              resolution: '1D'
-            },
-            {
-              class: 'resolution_btn',
-              label: '1week',
-              resolution: '1W'
-            }
-          ]
+          const btnList = [{
+            class: 'resolution_btn',
+            label: this.$t('M.trade_time_share'), // 分时
+            resolution: '1',
+            chartType: 3
+          }].concat(kLineBtnList)
           chart.onIntervalChanged().subscribe(null, function (interval, obj) {
             _self.widget.changingInterval = false
           })
@@ -429,15 +332,6 @@ export default {
       }
       return newInterval
     },
-    subscribe () {
-      if (this.interval < 60) {
-        // this.sendMessage({ cmd: 'sub', args: [`candle.M${this.interval}.${this.symbol.toLowerCase()}`] })
-      } else if (this.interval >= 60) {
-        // this.sendMessage({ cmd: 'sub', args: [`candle.H${this.interval / 60}.${this.symbol.toLowerCase()}`] })
-      } else {
-        // this.sendMessage({ cmd: 'sub', args: [`candle.D1.${this.symbol.toLowerCase()}`] })
-      }
-    },
     onMessage (data) {
       // console.log(data)
       switch (data.tradeType) {
@@ -460,7 +354,6 @@ export default {
             this.cacheData[ticker] = list
             this.lastTime = list[list.length - 1].time
             console.log(this.cacheData)
-            this.subscribe()
           }
           // if (!data.type && data.type.indexOf(this.symbol.toLowerCase()) !== -1) {
           if (data.type) {

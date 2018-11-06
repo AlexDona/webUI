@@ -58,7 +58,6 @@ export default {
   },
   activited () {},
   update () {},
-  beforeRouteUpdate () {},
   methods: {
     ...mapMutations([
       'CHANGE_THEME',

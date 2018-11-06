@@ -12,7 +12,7 @@
           @tab-click="changeTab"
         >
           <el-tab-pane
-            :label="outItem.plateName"
+            :label="outItem.plateName.replace('+',' ')"
             :name="outItem.plateId"
             v-for="(outItem,outIndex) in filterMarketList"
             :key="outIndex"
@@ -554,7 +554,8 @@ export default{
       this.concatSocketParamsStr(this.activeIndex)
     },
     async language (newVal) {
-      console.log(newVal)
+      this.collectArea.area = this.$t('M.home_market_district')
+      this.searchArea.area = this.$t('M.home_market_field_search')
       if (newVal) {
         await this.getHomeMarketByAjax()
       }

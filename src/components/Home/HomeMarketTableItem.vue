@@ -47,8 +47,8 @@
             <ul class="hot-list">
               <li
                 class="hot-item"
-                v-for="(innerItem,innerIndex) in item.content"
-                :key="innerIndex"
+                v-for="(innerItem) in item.content"
+                :key="innerItem"
               >
                 <!--<router-link-->
                   <!--to="/"-->

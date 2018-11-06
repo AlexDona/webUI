@@ -198,6 +198,7 @@ export const personal = {
   'user_api_text5': '一度しか表示されず、紛失した後は検索できませんので、正しく保存してください',
   'user_api_text6': '資産の損失を避けるために秘密鍵を明らかにしないでください。',
   'user_api_text7': '秘密鍵を忘れてしまった場合は、鍵ペアを削除して新しい鍵ペアを要求してください。',
+  'user_api_text8': '秘密鍵',
   // 私のAPI
   'user_api_my': '私',
   'user_api_user': 'ユーザー',

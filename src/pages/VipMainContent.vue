@@ -615,20 +615,20 @@
 <!--请严格按照如下书写书序-->
 <script>
 // 头部
-import HeaderCommon from '../../Common/HeaderCommonForPC'
-import FooterCommon from '../../Common/FooterCommon'
+import HeaderCommon from '../components/Common/HeaderCommonForPC'
+import FooterCommon from '../components/Common/FooterCommon'
 import { createNamespacedHelpers, mapState } from 'vuex'
 import {
   vipPriceInfo,
   buyVipPriceInfo,
   getPushTotalByCoinId,
   currencyApplicationDownloadUrl
-} from '../../../utils/api/personal'
+} from '../utils/api/personal'
 import {
   returnAjaxMessage,
   reflashUserInfo,
   getServiceProtocolData
-} from '../../../utils/commonFunc'
+} from '../utils/commonFunc'
 // 底部
 const { mapMutations } = createNamespacedHelpers('personal')
 export default {
@@ -638,7 +638,7 @@ export default {
   },
   data () {
     return {
-      vipPictureBanner: require('../../../assets/user/VIPbanner.png'), // vip banner
+      vipPictureBanner: require('../assets/user/VIPbanner.png'), // vip banner
       errorEditorMsg: '',
       showOpenTheVIPPage: true, // 开启vip页面默认
       vipShowDetailsPage: false, // 开启vip详情页面默认
@@ -651,7 +651,7 @@ export default {
       changeRed1: 0,
       month: '', // 月份
       vipName: '', // vip名称
-      configValue: '', // 币种id
+      coinId: '', // 币种id
       currencyAsset: 0, // 币种数量
       activeStatus: 0, // VIP状态
       loadingCircle: {}, // 整页loading
@@ -664,11 +664,11 @@ export default {
   },
   async created () {
     // 覆盖Element样式
-    require('../../../../static/css/list/Personal/VipMainContent/VipMainContent.css')
+    require('../../static/css/list/Personal/VipMainContent/VipMainContent.css')
     // 白色主题样式
-    require('../../../../static/css/theme/day/Personal/VipMainContent/VipMainContentDay.css')
+    require('../../static/css/theme/day/Personal/VipMainContent/VipMainContentDay.css')
     // 黑色主题样式
-    require('../../../../static/css/theme/night/Personal/VipMainContent/VipMainContentNight.css')
+    require('../../static/css/theme/night/Personal/VipMainContent/VipMainContentNight.css')
     if (this.vipLeavl) {
       this.activeStatus = this.vipLeavl.split('')[3]
     }
@@ -880,7 +880,7 @@ export default {
       console.log(data)
       // 整页loading
       this.fullscreenLoading = true
-      if (!(returnAjaxMessage(data, this, 0))) {
+      if (!(returnAjaxMessage(data, this))) {
         // 接口失败清除loading
         this.fullscreenLoading = false
         return false
@@ -888,7 +888,7 @@ export default {
         // 接口成功清除loading
         this.fullscreenLoading = false
         // 返回展示
-        this.configValue = data.data.data.configValue
+        this.coinId = data.data.data.coinId
         this.toggleAssetsCurrencyId()
       }
     },
@@ -896,7 +896,7 @@ export default {
     async toggleAssetsCurrencyId () {
       let data
       let param = {
-        coinId: this.configValue // 币种coinId
+        coinId: this.coinId // 币种coinId
       }
       // 整页loading
       this.fullscreenLoading = true
@@ -938,7 +938,7 @@ export default {
 }
 </script>
 <style scoped lang="scss">
-  @import "../../../../static/css/scss/Personal/IndexPersonal";
+  @import "../../static/css/scss/Personal/IndexPersonal";
   .vip-main {
     > .header-content {
       /*height: 600px;*/

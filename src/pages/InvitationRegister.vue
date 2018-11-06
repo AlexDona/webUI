@@ -63,7 +63,6 @@ export default {
   mounted () {},
   activited () {},
   update () {},
-  beforeRouteUpdate () {},
   methods: {
     ...mapMutations([
       'CHANGE_LANGUAGE',

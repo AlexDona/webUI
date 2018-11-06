@@ -203,6 +203,7 @@ export const personal = {
   'user_api_text2': '每个用户最多创建5组API Key;',
   'user_api_text3': '请不要泄露您的API Key，以免造成资产损失。出于安全考虑，建议为API Key绑定IP，每个API Key最多绑定4个IP。 单个地址直接填写，多个IP地址用半角逗号分隔，如：192.168.1.1,192.168.1.2,192.168.1.3。',
   'user_api_text4': '访问秘钥',
+  'user_api_text8': '私有秘钥',
   'user_api_text5': '仅显示1次，遗失后不可找回，请务必妥善保存',
   'user_api_text6': '请不要泄露您的Secret Key，避免造成资产损失。',
   'user_api_text7': '如您忘记了Secret Key，请删除该密钥对并申请新的密钥对。',
