@@ -295,13 +295,13 @@ export const getTransitionCurrencyRate = async (params, that, activeConvertCurre
     })
   }
 }
-export const getLanguageListAjax = async (that) => {
+export const getLanguageListAjax = async (that, language) => {
   const data = await getLanguageList()
   if (!returnAjaxMessage(data, that)) {
     return false
   } else {
     that.languageList = data.data.data
-    let localLanguage = getStore('language') || store.state.common.defaultLanguage
+    let localLanguage = language || getStore('language') || store.state.common.defaultLanguage
     _.forEach(that.languageList, item => {
       if (item.shortName === localLanguage) {
         that.CHANGE_LANGUAGE(item)

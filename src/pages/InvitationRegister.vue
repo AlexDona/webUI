@@ -9,7 +9,10 @@
       <!-- 您的好友 -->
       <p>{{$t('M.invitation_register_your_friends')}}{{phoneNumberFormat(inviter)}}</p>
       <!-- 邀请您注册 -->
-      <p class="strong"> {{$t('M.invitation_register_please_you_register')}}<span class="yellow">{{configInfo.otcAd}}</span></p>
+      <p class="strong"> {{$t('M.invitation_register_please_you_register')}} <span
+        class="yellow"
+        v-if="configInfo"
+      >{{configInfo.otcAd}}</span></p>
       <div class="bg">
         <img src="../assets/develop/register-big-url.png">
       </div>
@@ -27,7 +30,7 @@
 <script>
 import {
   getFooterInfo,
-  // getLanguageListAjax,
+  getLanguageListAjax,
   returnAjaxMessage
 } from '../utils/commonFunc'
 import {
@@ -51,8 +54,9 @@ export default {
   },
   async created () {
     console.log()
-    // await getLanguageListAjax(this)
     let language = this.$route.query.lang || this.defaultLanguage
+    await getLanguageListAjax(this, language)
+    // this.CHANGE_LANGUAGE(language)
     await getFooterInfo(language, this)
     await this.findUserInfoByShowId()
   },
@@ -124,12 +128,13 @@ export default {
       color:#fff;
       font-size: .8rem;
       text-align: center;
-      padding:4rem;
+      padding:4rem 2rem;
       /*background-color: pink;*/
       .strong{
         font-weight: 700;
         font-size: 1.2rem;
         line-height: 2.4rem;
+        white-space:nowrap;
         >.yellow{
           color:#ffec2d;
         }
@@ -143,7 +148,8 @@ export default {
         }
       }
       >.register-btn{
-        width:10rem;
+        /*width:10rem;*/
+        padding:0 .5rem;
         height:3rem;
         font-size: 1.2rem;
         line-height: 3rem;

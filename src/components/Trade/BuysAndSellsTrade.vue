@@ -65,16 +65,22 @@
                 <div
                   ref="buy-box"
                   class="middle-box content-box"
-                  v-if="listOrder==='middle'&&buysAndSellsList.sells.list"
+                  v-if="buysAndSellsList.sells.list"
                 >
                   <!--卖出-->
                   <dl
                     class="buys-list"
                   >
                     <dd
+                      :style="{
+                        height:(20-buysAndSellsList.sells.list.length)*30+'px'
+                      }"
+                      v-if="listOrder==='middle'"
+                    ></dd>
+                    <dd
                       class="buys-item cursor-pointer"
                       v-for="(item,index) in buysAndSellsList.sells.list"
-                      :key="index"
+                      :key="item"
                       :class="{'odd':index%2!==0}"
                       @click="changeActivePriceItem(item)"
                     >
@@ -107,7 +113,7 @@
                   <dd
                     class="sells-item cursor-pointer"
                     v-for="(item,index) in buysAndSellsList.buys.list"
-                    :key="index"
+                    :key="item"
                     :class="{'even':index%2==0}"
                     @click="changeActivePriceItem(item)"
                   >
@@ -189,15 +195,15 @@ export default {
       let targetMarginTop = 0
       switch (firstName) {
         case 'middle':
-          // this.listOrder = 'middle'
+          this.listOrder = 'middle'
           targetMarginTop = -300
           break
         case 'sells':
-          // this.listOrder = 'buys'
+          this.listOrder = 'buys'
           targetMarginTop = 0
           break
         case 'buys':
-          // this.listOrder = 'sells'
+          this.listOrder = 'sells'
           targetMarginTop = -600
           break
       }
