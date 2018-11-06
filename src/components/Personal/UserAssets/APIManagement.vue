@@ -676,10 +676,16 @@ export default {
         this.apiSecondaryConfirmation = false
         // 调用查询接口重新渲染
         this.getMultipleUserAPIInfo()
-        // 清空备注和IP
-        this.remark = ''
-        this.ipSite = ''
+        this.clearUserInputMsg()
       }
+    },
+    clearUserInputMsg () {
+      // 清空备注和IP
+      this.remark = ''
+      this.ipSite = ''
+      this.phoneCode = ''
+      this.emailCode = ''
+      this.googleCode = ''
     },
     // 清空添加api内容信息
     emptyAddStatus () {

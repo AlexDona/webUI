@@ -280,6 +280,7 @@ export default {
           custom_css_url: '../../../../static/tradeview/klineTheme.css'
         })
         this.widget.onChartReady(() => {
+          console.dir($('.group.space-single'))
           const _self = this
           let chart = _self.widget.chart()
           const btnList = [
@@ -334,6 +335,7 @@ export default {
             _self.widget.changingInterval = false
           })
           btnList.forEach(function (item, index) {
+            console.log(item)
             let button = _self.widget.createButton({
               align: 'left'
             })

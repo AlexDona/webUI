@@ -29,7 +29,7 @@
         </div>
         <div class="bottom">
           <span
-            class="font-size14"
+            class="font-size14 font-weight700"
             :class="{
               'up':middleTopData.chg>0,
               'down':middleTopData.chg<0
