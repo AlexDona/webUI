@@ -35,3 +35,6 @@
 .set-phone.personal .el-input-group__append {
   padding: 0;
 }
+.set-phone.personal .el-form-item__label {
+  width: 180px !important;
+}

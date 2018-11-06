@@ -366,8 +366,9 @@ export default {
             line-height: 100px;
           }
           .western-button {
-            padding: 10px 93px;
-            margin: 30px 0 50px 120px;
+            margin: 30px 0 50px 160px;
+            width: 230px;
+            padding: 10px 0;
           }
         }
       }

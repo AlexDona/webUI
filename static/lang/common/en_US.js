@@ -106,7 +106,7 @@ export const common = {
   'comm_code_email': 'E-mail verification',
   'comm_code_google': 'Google verification',
   // 动作类型Action type
-  'comm_open': 'Open',
+  'comm_open': 'Open ',
   'comm_close': 'close',
   'comm_start_using': 'start',
   'comm_forbidden': 'forbidden',

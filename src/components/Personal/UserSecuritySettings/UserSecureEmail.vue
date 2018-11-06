@@ -397,7 +397,7 @@ export default {
           margin-bottom: 30px;
         }
         >.email-content-from {
-          width: 500px;
+          width: 700px;
           margin-left: 55px;
           .send-code-btn {
             width: 90px;
@@ -419,8 +419,9 @@ export default {
             line-height: 100px;
           }
           .email-button {
-            padding: 10px 85px;
-            margin: 30px 0 50px 120px;
+            margin: 30px 0 50px 158px;
+            padding: 10px 0;
+            width: 220px;
           }
           .prompt-message {
             height: 20px;

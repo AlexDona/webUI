@@ -2,7 +2,8 @@
 .vip-main.personal .el-dialog{
   border-radius: 10px;
   width: 310px;
-  top: 15%;
+  /* top: 15%; */
+  top: 5%;
 }
 .vip-main.personal .el-dialog__header {
   border-radius: 5px 5px 0 0;
