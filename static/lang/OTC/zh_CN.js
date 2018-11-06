@@ -291,7 +291,7 @@ export const OTC = {
   'otc_index_tradeKnowDetail2': '您的账户将被冻结',
   'otc_index_tradeKnowDetail3': '付款前请仔细核实对方信息。',
   'otc_index_tradeKnowDetail4': '交易请勿脱离平台，一旦脱离，您将失去',
-  'otc_index_tradeKnowDetail6': '的保护',
+  'otc_index_tradeKnowDetail6': '的保护。',
   'otc_index_tradeKnowDetail5': '遇到纠纷，请保留好包括聊天记录在内的证据，立即联系我们。',
   'otc_index_inputBuyMount': '请输入买入数量',
   'otc_index_inputSellMount': '请输入卖出数量',

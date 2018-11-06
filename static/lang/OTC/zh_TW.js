@@ -290,7 +290,7 @@ export const OTC = {
   'otc_index_tradeKnowDetail2': '您的賬戶將被凍結',
   'otc_index_tradeKnowDetail3': '付款前請仔細核實對方信息。',
   'otc_index_tradeKnowDetail4': '交易請勿脫離平臺，壹旦脫離，您將失去',
-  'otc_index_tradeKnowDetail6': '的保護',
+  'otc_index_tradeKnowDetail6': '的保護。',
   'otc_index_tradeKnowDetail5': '遇到糾紛，請保留好包括聊天記錄在內的證據，立即聯系我們。',
   'otc_index_inputBuyMount': '請輸入買入數量',
   'otc_index_inputSellMount': '請輸入賣出數量',

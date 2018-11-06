@@ -18,7 +18,8 @@
           v-else
         >
         <button class="download-btn">
-          立即安装
+          <!-- 立即安装 -->
+          {{$t('M.user_down_install')}}
         </button>
       </div>
     </div>

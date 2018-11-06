@@ -56,5 +56,20 @@ export const user = {
   // ###############新闻公告##############''뉴스 발표'
   'news_keyword': '키워드',
   'news_year': '년',
-  'news_month': '달'
+  'news_month': '달',
+  // ###############邀请注册##############
+  'invitation_register_return_home': '홈페이지로 돌아 가기',
+  'invitation_register_server_err': '죄송합니다. 서버가 고장났습니다.',
+  'invitation_register_your_friends': '너의 친구',
+  'invitation_register_please_you_register': '등록을 요청하십시오.',
+  'invitation_register_immediately_register_get': '수신하려면 지금 등록하십시오.',
+  'invitation_register_now_register': '선물 등록',
+  'invitation_register_safety': '안전하고 편리한 비트 코 거래 플랫폼',
+  'invitation_register_Registration_Successful': '등기!',
+  'invitation_register_awarding': '리워드가 내 계정으로 전송되었습니다.',
+  'invitation_register_i_know': '내가 참조',
+  'user_login_scan_success': '스캔이 성공했습니다!',
+  'user_login_phone_confirm_login': '휴대 전화로 로그인을 확인하십시오.',
+  'user_login_return_QR': 'QR 코드 로그인으로 돌아 가기',
+  'user_down_install': '설치'
 }

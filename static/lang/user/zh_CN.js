@@ -55,5 +55,20 @@ export const user = {
   // ###############新闻公告##############
   'news_keyword': '关键字',
   'news_year': '年',
-  'news_month': '月'
+  'news_month': '月',
+  // ###############邀请注册##############
+  'invitation_register_return_home': '返回首页',
+  'invitation_register_server_err': '非常抱歉 服务器出错了',
+  'invitation_register_your_friends': '您的好友',
+  'invitation_register_please_you_register': '邀请您注册',
+  'invitation_register_immediately_register_get': '立即注册领取',
+  'invitation_register_now_register': '现在注册即送好礼',
+  'invitation_register_safety': '安全便捷的比特币交易平台',
+  'invitation_register_Registration_Successful': '注册成功!',
+  'invitation_register_awarding': '奖励已发送到我的账户',
+  'invitation_register_i_know': '我知道了',
+  'user_login_scan_success': '扫描成功！',
+  'user_login_phone_confirm_login': '请在手机上确认登录',
+  'user_login_return_QR': '返回二维码登录',
+  'user_down_install': '立即安装'
 }

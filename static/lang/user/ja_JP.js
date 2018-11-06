@@ -56,5 +56,20 @@ export const user = {
   // ###############ニュース発表##############
   'news_keyword': 'キーワード',
   'news_year': '年',
-  'news_month': '月'
+  'news_month': '月',
+  // ###############邀请注册##############
+  'invitation_register_return_home': 'トップページに戻る',
+  'invitation_register_server_err': '残念ですが、サーバーが故障がある。',
+  'invitation_register_your_friends': 'あなたの友人',
+  'invitation_register_please_you_register': '登録を招き',
+  'invitation_register_immediately_register_get': '受信登録する',
+  'invitation_register_now_register': '登録はプレゼントがある',
+  'invitation_register_safety': '安全で便利なビットコイン取引プラットフォーム',
+  'invitation_register_Registration_Successful': '登録済み！',
+  'invitation_register_awarding': 'プレゼントが口座に送られました',
+  'invitation_register_i_know': 'わかりました',
+  'user_login_scan_success': 'スキャン成功！',
+  'user_login_phone_confirm_login': '携帯電話でログインを確認',
+  'user_login_return_QR': 'QRコードに戻るログイン',
+  'user_down_install': '今すぐインストール'
 }

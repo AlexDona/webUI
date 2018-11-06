@@ -16,7 +16,8 @@
           to="/"
           class="back-to-home"
         >
-          返回首页
+          <!-- 返回首页 -->
+          {{$t('M.invitation_register_return_home')}}
         </router-link>
       </div>
       <div
@@ -24,12 +25,16 @@
         v-else
       >
         <img src="../assets/develop/500.png">
-        <p>非常抱歉 服务器出错了</p>
+        <p>
+          <!-- 非常抱歉 服务器出错了 -->
+          {{$t('M.invitation_register_server_err')}}
+        </p>
         <router-link
           to="/"
           class="back-to-home"
         >
-          返回首页
+          <!-- 返回首页 -->
+          {{$t('M.invitation_register_return_home')}}
         </router-link>
       </div>
     </div>

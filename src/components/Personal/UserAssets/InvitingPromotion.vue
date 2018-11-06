@@ -506,6 +506,7 @@ export default {
   filter: {},
   computed: {
     ...mapState({
+      language: state => state.common.language, // 当前选中语言
       theme: state => state.common.theme,
       userInfo: state => state.user.loginStep1Info, // 用户详细信息
       userCenterActiveName: state => state.personal.userCenterActiveName
@@ -528,6 +529,10 @@ export default {
       if (newVal === 'invitation-promote') {
         this.getInverData()
       }
+    },
+    language (newVal) {
+      console.log('当前选中语言')
+      console.log(newVal)
     }
   }
 }

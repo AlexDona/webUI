@@ -290,7 +290,7 @@ export const OTC = {
   'otc_index_tradeKnowDetail2': 'あなたのアカウントはフリーズされます',
   'otc_index_tradeKnowDetail3': 'お支払いの前に、相手の情報を慎重に確認してください。',
   'otc_index_tradeKnowDetail4': '取引プラットフォームから離れることはありません。一度離れると失われます。',
-  'otc_index_tradeKnowDetail6': '保護',
+  'otc_index_tradeKnowDetail6': '保護。',
   'otc_index_tradeKnowDetail5': '紛争が発生した場合は、チャットの履歴を含むエビデンスを保管し、すぐにGoogleまでご連絡ください。',
   'otc_index_inputBuyMount': '購入数を入力してください',
   'otc_index_inputSellMount': '販売数量を入力してください',
