@@ -36,7 +36,7 @@ const LoginPassword = r => require.ensure([], () => r(require('@/components/Pers
 /**
  * VIP
  */
-const VipMainContent = r => require.ensure([], () => r(require('@/components/Personal/VipMainContent/VipMainContent')), 'vip-main')
+const VipMainContent = r => require.ensure([], () => r(require('@/pages/VipMainContent')), 'vip-main')
 /**
  * OTC
  */
