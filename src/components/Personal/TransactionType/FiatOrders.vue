@@ -93,30 +93,30 @@
           <div class="main-top-type trade-data float-left">
             <span class="filtrate-text font-size14">
               <!--起止日期-->
-               {{ $t('M.user_coin_order4') }}
+                {{ $t('M.user_coin_order4') }}
             </span>
             <span class="date-picker">
-             <!--开始日期-->
-             <el-date-picker
-               :placeholder="$t('M.comm_begin') + $t('M.comm_data')"
-               v-model="startTime"
-               type="date"
-               value-format="yyyy-MM-dd"
-               @change="startDate"
-               clearable
-             >
-             </el-date-picker>
-             <span class="date-short-line">-</span>
+              <!--开始日期-->
+              <el-date-picker
+                :placeholder="$t('M.comm_begin') + $t('M.comm_data')"
+                v-model="startTime"
+                type="date"
+                value-format="yyyy-MM-dd"
+                @change="startDate"
+                clearable
+              >
+              </el-date-picker>
+              <span class="date-short-line">-</span>
               <!--结束日期-->
-             <el-date-picker
-               :placeholder="$t('M.comm_end') + $t('M.comm_data')"
-               v-model="endTime"
-               value-format="yyyy-MM-dd"
-               type="date"
-               @change="endDate"
-               clearable
-             >
-             </el-date-picker>
+              <el-date-picker
+                :placeholder="$t('M.comm_end') + $t('M.comm_data')"
+                v-model="endTime"
+                value-format="yyyy-MM-dd"
+                type="date"
+                @change="endDate"
+                clearable
+              >
+              </el-date-picker>
             </span>
           </div>
           <div class="main-top-type float-left">

@@ -61,7 +61,7 @@ export const user = {
   'invitation_register_server_err': 'Sorry that the server is out of order.',
   'invitation_register_your_friends': 'Your friend',
   'invitation_register_please_you_register': 'Invite you to register',
-  'invitation_register_immediately_register_get': 'Register now and receive',
+  'invitation_register_immediately_register_get': 'Register and receive',
   'invitation_register_now_register': 'Register for gifts',
   'invitation_register_safety': 'secure and convenient bitcoin trading platform',
   'invitation_register_Registration_Successful': 'Registered!',
