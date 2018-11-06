@@ -2,9 +2,6 @@
   <div
     class="service-protocol-box"
     :class="{'day':theme == 'day','night':theme == 'night' }"
-    :style="{
-      height:windowHeight+'px'
-    }"
   >
     <!--<keep-aline><HeaderCommon/></keep-aline>-->
     <div class="content">
