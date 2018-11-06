@@ -75,26 +75,35 @@ export default {
             //   formatter: '委托价:{value} ',
             // }
           },
-          formatter: function (params) {
-            // console.log(params)
+          formatter: (params) => {
+            console.log(this)
             // 委托价
             // 委托量
             return `
-                      委托价：${params[0].data[0].toFixed(4)}<br/>
-                      委托量：${params[0].data[1].toFixed(4)}
+                      ${this.$t('M.trade_coin_entrusted_price')}：${params[0].data[0].toFixed(4)}<br/>
+                      ${this.$t('M.trade_coin_entrusted_amount')}：${params[0].data[1].toFixed(4)}
                       `
           }
         },
         xAxis: {
           type: 'category',
-          boundaryGap: false
+          boundaryGap: false,
+          axisLine: {
+            lineStyle: {
+              color: '#61688a'
+            }
+          }
         },
         yAxis: {
           position: 'right',
           splitLine: {
             show: false
+          },
+          axisLine: {
+            lineStyle: {
+              color: '#61688a'
+            }
           }
-
         },
         animation: false
       },

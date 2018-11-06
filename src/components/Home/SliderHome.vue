@@ -76,8 +76,8 @@ export default {
       }
     },
     slide (data) {
-      console.log(data.currentPage)
-      console.log(this.sliderListAjax)
+      // console.log(data.currentPage)
+      // console.log(this.sliderListAjax[data.currentPage - 1].bigUrl)
       this.CHANGE_BANNER_BACKGROUND(this.sliderListAjax[data.currentPage - 1].bigUrl)
     },
     renderSlider () {

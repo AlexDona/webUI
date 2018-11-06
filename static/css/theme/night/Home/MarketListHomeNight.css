@@ -51,15 +51,16 @@
 }
 /*滚动条*/
 .market-list-box.home.night .el-table--scrollable-y .el-table__body-wrapper::-webkit-scrollbar {
-  width: 4px;
+  width: 3px;
 }
 /*滚动条*/
 .market-list-box.home.night .el-table--scrollable-y .el-table__body-wrapper::-webkit-scrollbar-track-piece {
-  background-color: #338ff5;
+  background-color: #4A5662;
 }
 /*滚动条背景*/
 .market-list-box.home.night .el-table--scrollable-y .el-table__body-wrapper::-webkit-scrollbar-thumb {
-  background-color: #4A5662;
+  background-color: #338ff5;
+
 }
 .market-list-box.home.night .el-table--scrollable-y .el-table__body-wrapper::-webkit-scrollbar-button {
   background-color: #fff;

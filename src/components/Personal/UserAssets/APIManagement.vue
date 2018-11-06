@@ -305,7 +305,7 @@
             <!--API访问秘钥 （Access Key）-->
             <el-form-item
               style="margin-bottom: 0"
-              :label="'API' + $t('M.user_api_text4') + '（Access Key）'"
+              :label="'API' + $t('M.user_api_text8') + '（Secret Key）'"
             >
               <input
                 class="content-input input-google padding-l15 box-sizing"
@@ -835,6 +835,21 @@ export default {
       console.log(newVal)
       if (newVal === 'api-management') {
         this.getMultipleUserAPIInfo()
+      }
+    },
+    APIMoneyConfirm (newVal) {
+      if (!newVal) {
+        this.clearUserInputMsg()
+      }
+    },
+    apiSecondaryConfirmation (newVal) {
+      if (!newVal) {
+        this.clearUserInputMsg()
+      }
+    },
+    compileUserApi (newVal) {
+      if (!newVal) {
+        this.clearUserInputMsg()
       }
     }
   }

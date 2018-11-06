@@ -9,6 +9,9 @@
     <!--</keep-aline>-->
     <div class="inner-box">
       <div class="top">
+        <img
+          src="../../assets/develop/applyfor.png"
+        >
         <!-- 上币申请 -->
         <h1 class="title">{{ $t('M.coin_apply') }}</h1>
       </div>
@@ -205,12 +208,14 @@ export default {
         font-size:30px;
         font-weight:bold;
         color:rgba(255,255,255,1);
-        background:transparent url('../../assets/develop/applyfor.png') no-repeat center center;
-        -webkit-background-size: 100% 100%;
-        background-size: 100% 100%;
+        position: relative;
         >.title{
           font-size: 36px;
           font-weight: 500;
+          position: absolute;
+          top:0;
+          left:50%;
+          transform: translate(-50%,0);
         }
       }
       >.bottom{

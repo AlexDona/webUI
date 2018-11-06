@@ -198,6 +198,7 @@ export const personal = {
   'user_api_text5': '한 번만 표시되고 분실 후에는 검색 할 수 없으므로 제대로 저장하십시오.',
   'user_api_text6': '자산 손실을 피하기 위해 비밀 키를 공개하지 마십시오.',
   'user_api_text7': '비밀 키를 잊은 경우 키 쌍을 삭제하고 새 키 쌍을 요청하십시오.',
+  'user_api_text8': '불법의 자물쇠',
   // 我的API''내 API'
   'user_api_my': '내',
   'user_api_user': '사용자',

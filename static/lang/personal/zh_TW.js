@@ -206,6 +206,7 @@ export const personal = {
   'user_api_text5': '僅顯示1次，遺失後不可找回，請務必妥善保存',
   'user_api_text6': '請不要泄露您的Secret Key，避免造成資產損失。',
   'user_api_text7': '如您忘記了Secret Key，請刪除該密鑰對並申請新的密鑰對。',
+  'user_api_text8': '私有秘鑰',
   // 我的API
   'user_api_my': '我的',
   'user_api_user': '用戶',
