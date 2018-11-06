@@ -14,7 +14,7 @@
            class="header-content-left header-content font-size16 font-weight600"
          >
           <!--设置paypal-->
-           {{ $t('M.comm_set') }}paypal
+            {{ $t('M.comm_set') }} paypal
         </span>
         <span
           v-else
@@ -42,7 +42,7 @@
         <div class="payment-content-from">
           <el-form
             :label-position="labelPosition"
-            label-width="120px"
+            label-width="190px"
           >
             <!--名 称-->
             <el-form-item
@@ -352,7 +352,7 @@ export default {
           margin-bottom: 30px;
         }
         >.payment-content-from {
-          width: 500px;
+          width: 800px;
           margin-left: 55px;
           .payment-input {
             width: 220px;
@@ -366,8 +366,10 @@ export default {
             line-height: 100px;
           }
           .payment-button {
-            padding: 10px 93px;
-            margin: 30px 0 50px 120px;
+            padding: 10px 0;
+            width: 235px;
+            text-align: center;
+            margin: 30px 0 50px 188px;
           }
         }
       }

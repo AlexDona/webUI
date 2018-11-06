@@ -6,10 +6,13 @@
 }
 .vip-main.personal .el-dialog__header {
   border-radius: 5px 5px 0 0;
-  height: 50px;
-  line-height: 30px;
-  padding: 10px 20px 10px;
+  /* height: 50px; */
+  /* line-height: 30px; */
+  padding: 20px 20px 0px;
   background-color: #20293C;
+}
+.vip-main.personal .el-dialog__body .ql-editor {
+  padding-top: 0px;
 }
 .vip-main.personal .el-dialog__title {
   color: #fff;
@@ -18,7 +21,7 @@
   margin-bottom: 0;
 }
 .vip-main.personal .el-dialog__body {
-  padding: 10px 20px;
+  padding: 0px 20px 10px;
 }
 .vip-main.personal .el-form-item__label {
   color: #fff;

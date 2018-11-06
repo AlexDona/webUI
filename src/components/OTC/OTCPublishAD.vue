@@ -302,11 +302,12 @@
             <div class="right display-inline-block">
               <el-input
                 type="textarea"
+                maxlength="40"
                 auto-complete="off"
-                maxlength="20"
                 :placeholder="$t('M.otc_publishAD_liveMessage')"
                 v-model="remarkText"
               >
+                <!-- maxlength="20" -->
               </el-input>
             </div>
           </div>

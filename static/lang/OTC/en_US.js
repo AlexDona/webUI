@@ -250,8 +250,8 @@ export const OTC = {
   'otc_adMange_adverting': 'Unpublish',
   'otc_adMange_change': 'Modify',
   // 二次确认弹框提示信息
-  'otc_adMange_tipsContentOne': 'Are you sure you want to remove this ad?',
-  'otc_adMange_tipsContentTwo': 'Are you sure you want to edit this ad?',
+  'otc_adMange_tipsContentOne': 'Are you sure you want to remove this AD?',
+  'otc_adMange_tipsContentTwo': 'Are you sure you want to edit this AD?',
   'otc_adMange_tipsContentThree': 'This action will remove all ads, will continue?',
   'otc_adMange_already_getting': 'Published',
   'otc_adMange_already_adverting': 'Sold out',

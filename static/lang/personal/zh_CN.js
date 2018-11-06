@@ -279,5 +279,6 @@ export const personal = {
   'user_vip_text6': 'VIP服务协议',
   'user_vip_text7': '已开通',
   'user_vip_text8': 'VIP享手续费、提现优惠',
-  'user_vip_fee_discount': '手续费折扣'
+  'user_vip_fee_discount': '手续费折扣',
+  'user_vip_recommend': '推荐'
 }

@@ -17,8 +17,8 @@
 /* 文本域 */
 .otc-publish-AD-box .el-textarea__inner{
   resize: none;
-  width: 600px;
-  height: 160px;
+  width: 580px;
+  height: 100px;
   font-size: 14px;
   /* color: #9DA5B3; */
   /* background-color: #232F44; */

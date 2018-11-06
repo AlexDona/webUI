@@ -272,5 +272,6 @@ export const personal = {
   'user_vip_text6': 'VIP Service Agreement',
   'user_vip_text7': 'Already Opened',
   'user_vip_text8': 'VIP Discount',
-  'user_vip_fee_discount': 'Fee discount'
+  'user_vip_fee_discount': 'Fee discount',
+  'user_vip_recommend': 'Recommend'
 }

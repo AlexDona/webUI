@@ -19,7 +19,7 @@ export const common = {
   'comm_white': 'White',
   'comm_confirm': 'Confirm',
   'comm_all_sold_out': 'All sold out',
-  'comm_affirm': 'Confirm',
+  'comm_affirm': 'Confirm ',
   'comm_cancel': 'Cancel',
   'comm_login': ' Login',
   'comm_retreat': 'Logout',

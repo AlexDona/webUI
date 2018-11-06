@@ -271,5 +271,6 @@ export const personal = {
   'user_vip_text6': 'VIPサービス契約',
   'user_vip_text7': '開かれた',
   'user_vip_text8': 'VIPアクセス料金、現金割引',
-  'user_vip_fee_discount': '手数料割引'
+  'user_vip_fee_discount': '手数料割引',
+  'user_vip_recommend': '推薦'
 }

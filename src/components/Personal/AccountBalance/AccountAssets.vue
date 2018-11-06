@@ -1623,15 +1623,15 @@ export default {
                         }
                         >.code-copy {
                           width: 89px;
-                          height: 34px;
+                          height: 32px;
                           border-radius: 0 2px 2px 0;
-                          line-height: 34px;
+                          line-height: 32px;
                         }
                       }
 
                       >.recharge-content-title {
                         width: 450px;
-                        line-height: 25px;
+                        line-height: 18px;
                       }
                     }
                     >.recharge-content-right {
@@ -1722,7 +1722,8 @@ export default {
                       padding: 20px 0 0 15px;
                       >.currency-rule,
                       >.prompt-message {
-                        line-height: 20px;
+                        // line-height: 20px;
+                        line-height: 16px;
                       }
                       >.mention-button {
                         margin-top: 8px;
