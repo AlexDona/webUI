@@ -59,7 +59,7 @@ export const returnAjaxMessage = (data, self, noTip, errorTip) => {
           // store.commit('user/USER_LOGOUT')
           break
         case 500:
-          self.$router.push({path: '/500'})
+          // self.$router.push({path: '/500'})
           break
       }
       return 0

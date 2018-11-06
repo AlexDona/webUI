@@ -911,14 +911,9 @@ export default {
       isLogin: state => state.user.isLogin,
       financeLineRenderTimeList: state => state.finance.financeLineRenderTimeList,
       financeLineRenderPriceList: state => state.finance.financeLineRenderPriceList,
-<<<<<<< HEAD
       // 获取当前语言
       language: state => state.common.language,
       status: state => state.finance.status
-=======
-      status: state => state.finance.status,
-      language: state => state.common.language // 当前选中语言
->>>>>>> a8fc4242419a496e28d1dc086c4a795000ff40ab
     }),
     screenWidth () {
       return window.innerWidth / 3
