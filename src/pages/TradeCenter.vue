@@ -20,10 +20,11 @@
         :class="{'day':theme == 'day','night':theme == 'night' }"
       >
         <MiddleHeader/>
-        <keep-alive>
+        <!--<keep-alive>-->
         <!--k线-->
-          <KLine/>
-        </keep-alive>
+          <KLine
+          />
+        <!--</keep-alive>-->
         <!--市价交易、限价交易-->
         <ExchangeBox/>
         <!--交易-->
@@ -70,7 +71,9 @@ export default {
   },
   // props,
   data () {
-    return {}
+    return {
+
+    }
   },
   created () {
     require('../../static/css/list/Trade/TradeCenter.css')

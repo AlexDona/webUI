@@ -4,16 +4,16 @@
   >
     <div
       id="tv_chart_container"
-      v-show="!fullscreenLoading"
       :class="{'day':theme == 'day','night':theme == 'night' }"
     >
     </div>
     <div
       class="loading-box"
+      v-if="fullscreenLoading"
       v-loading.lock="fullscreenLoading"
-      element-loading-background="rgba(0, 0, 0, 0.6)"
-      v-show="fullscreenLoading"
-    ></div>
+      element-loading-background="rgba(0, 0, 0, 0.9)"
+    >
+    </div>
   </div>
 </template>
 
@@ -614,6 +614,7 @@ export default {
   .kline-container{
     width:100%;
     height:355px;
+    position: relative;
     #tv_chart_container {
       width: 100%;
       height: 355px;
@@ -627,6 +628,8 @@ export default {
     .loading-box{
       width:100%;
       height:355px;
+      position: absolute;
+      top:0;
     }
   }
 </style>
