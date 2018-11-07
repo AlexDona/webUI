@@ -120,13 +120,15 @@ export default {
       if (!returnAjaxMessage(data, this)) {
         return false
       } else {
+        console.log(new Date().getTime(), 'getData')
         console.log(data)
         let klineData = data.data.data.obj
         klineData = JSON.parse(unzip(klineData))
+        console.log(new Date().getTime(), 'unzip completed')
         console.log(klineData)
         let list = []
         const ticker = `${this.symbol}-${this.interval}`
-        console.log(ticker)
+        console.log(new Date().getTime())
         // for (let i = klineData.length - 1; i >= 0; i -= 1) {
         //   list[i].time = klineData[i].time - 0
         //   list[i].open = klineData[i].open
