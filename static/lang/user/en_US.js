@@ -37,7 +37,7 @@ export const user = {
   'forgetPassword_affirm_password': 'confirm password',
   'forgetPassword_text1': 'The new password is set successfully!',
   'forgetPassword_text2': 'Please remember your newly set password.',
-  'forgetPassword_text3': 'log in immediately',
+  'forgetPassword_text3': 'login immediately',
   'forgetPassword_text4': 'If the mobile number cannot be used, please contact customer service.',
   'forgetPassword_text5': 'If the mailbox is not available, please contact customer service.',
   'forgetPassword_hint1': '8-20 letters, numbers combination',
