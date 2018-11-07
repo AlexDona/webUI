@@ -230,16 +230,16 @@ export default {
         this.finalSymbol = this.isJumpToTradeCenter ? this.jumpSymbol : activeSymbol
         this.CHANGE_ACTIVE_SYMBOL({activeSymbol: this.finalSymbol})
         this.symbol = this.activeSymbol.id
-        // await this.getKlineByAjax(this.symbol, 'min')
-        this.socket.on('open', () => {
-          this.getKlineDataBySocket('REQ', this.symbol, 'min')
-          this.getKlineDataBySocket('SUB', this.symbol, 'min')
-          this.getTradeMarketBySocket('SUB', this.activeTabSymbolStr)
-          this.getBuyAndSellBySocket('SUB', this.symbol)
-          this.getDepthDataBySocket('SUB', this.symbol)
-          this.getTradeRecordBySocket('SUB', this.symbol)
-          this.socket.on('message', this.onMessage)
-        })
+        await this.getKlineByAjax(this.symbol, 'min')
+        // this.socket.on('open', () => {
+        //   this.getKlineDataBySocket('REQ', this.symbol, 'min')
+        //   this.getKlineDataBySocket('SUB', this.symbol, 'min')
+        //   this.getTradeMarketBySocket('SUB', this.activeTabSymbolStr)
+        //   this.getBuyAndSellBySocket('SUB', this.symbol)
+        //   this.getDepthDataBySocket('SUB', this.symbol)
+        //   this.getTradeRecordBySocket('SUB', this.symbol)
+        //   this.socket.on('message', this.onMessage)
+        // })
         // console.log(this.symbol)
         await this.getActiveSymbolData(this.symbol)
       }
@@ -275,8 +275,6 @@ export default {
         this.widget.onChartReady(() => {
           const _self = this
           let chart = _self.widget.chart()
-          // console.log(document.getElementById('tv_chart_container'))
-          // document.getElementById('tv_chart_container').childNodes[0].setAttribute('style', 'display:block;width:100%;height:100%;')
           const btnList = [{
             class: 'resolution_btn',
             label: this.$t('M.trade_time_share'), // 分时
@@ -542,10 +540,10 @@ export default {
       })
     },
     // 订阅消息
-    subscribeSocketData (symbol, interval = 'min') {
-      this.getKlineDataBySocket('REQ', symbol, interval)
+    async subscribeSocketData (symbol, interval = 'min') {
+      // this.getKlineDataBySocket('REQ', symbol, interval)
       console.log(new Date().getTime(), 'getTime start to get Data')
-      // await this.getKlineByAjax(symbol, interval)
+      await this.getKlineByAjax(symbol, interval)
       this.getKlineDataBySocket('SUB', symbol, interval)
       this.getTradeMarketBySocket('SUB', this.activeTabSymbolStr)
       this.getBuyAndSellBySocket('SUB', symbol)
