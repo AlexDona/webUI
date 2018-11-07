@@ -78,7 +78,7 @@ export default {
       socketData: {}, // socket 数据
       ajaxData: {}, // 接口请求数据
       resolutions: ['min', 'min5', 'min15', 'min30', 'hour1', 'hour4', 'day', 'week'],
-      fullscreenLoading: true,
+      fullscreenLoading: false,
       loadingCount: 0 // loading 次数
     }
   },
@@ -207,6 +207,7 @@ export default {
       this.options.interval = '1'
       this.options.language = this.language
       this.init(this.options)
+      this.widget.chart().activeChart().resetData()
       this.getBars()
     },
     // 获取初始交易对
@@ -264,6 +265,8 @@ export default {
         this.widget.onChartReady(() => {
           const _self = this
           let chart = _self.widget.chart()
+          // console.log(document.getElementById('tv_chart_container'))
+          // document.getElementById('tv_chart_container').childNodes[0].setAttribute('style', 'display:block;width:100%;height:100%;')
           const btnList = [{
             class: 'resolution_btn',
             label: this.$t('M.trade_time_share'), // 分时
@@ -309,7 +312,7 @@ export default {
             this.fullscreenLoading = false
             this.loadingCount++
             console.log(this.fullscreenLoading)
-          }, 100)
+          }, 1)
         }
       }
     },
