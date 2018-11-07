@@ -120,10 +120,10 @@ export default {
       if (!returnAjaxMessage(data, this)) {
         return false
       } else {
-        console.log(data)
+        console.log(new Date().getTime(), 'getData')
         let klineData = data.data.data.obj
         klineData = JSON.parse(unzip(klineData))
-        console.log(klineData)
+        console.log(new Date().getTime(), 'unzip Data')
         let list = []
         const ticker = `${this.symbol}-${this.interval}`
         console.log(ticker)
@@ -146,6 +146,7 @@ export default {
             volume: element.volume
           })
         })
+        console.log(new Date().getTime(), 'push Data to cache')
         this.cacheData[ticker] = list
         // console.log(list);
         this.lastTime = list[list.length - 1].time
@@ -542,6 +543,7 @@ export default {
     // 订阅消息
     subscribeSocketData (symbol, interval = 'min') {
       // this.getKlineDataBySocket('REQ', symbol, interval)
+      console.log(new Date().getTime(), 'start to get Data')
       this.getKlineByAjax(symbol, interval)
       this.getKlineDataBySocket('SUB', symbol, interval)
       this.getTradeMarketBySocket('SUB', this.activeTabSymbolStr)
