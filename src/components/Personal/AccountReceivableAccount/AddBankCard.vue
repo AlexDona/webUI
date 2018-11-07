@@ -240,7 +240,7 @@ export default {
           cardNo: this.bankCard, // 银行卡号
           address: this.branchAddress, // 开户地址
           payPassword: this.password, // 交易密码
-          bankType: 'bank', // type
+          bankType: 'Bankcard', // type
           id: this.id
         }
         // 整页loading
@@ -331,7 +331,7 @@ export default {
       let data
       let params = {
         userId: this.userInfo.userId,
-        type: 'bank'
+        type: 'Bankcard'
       }
       // 整页loading
       this.fullscreenLoading = true
