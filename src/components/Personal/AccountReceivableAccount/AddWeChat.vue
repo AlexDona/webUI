@@ -282,7 +282,7 @@ export default {
           cardNo: this.cardNo, // 微信账号
           qrcode: this.dialogImageHandUrl1, // 二维码
           payPassword: this.password, // 交易密码
-          bankType: 'weixin' // type
+          bankType: 'Wechat' // type
         }
         // 整页loading
         this.fullscreenLoading = true
@@ -311,7 +311,7 @@ export default {
       let data
       let params = {
         userId: this.userInfo.userId,
-        type: 'weixin'
+        type: 'Wechat'
       }
       // 整页loading
       this.fullscreenLoading = true
