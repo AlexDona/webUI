@@ -280,5 +280,6 @@ export const personal = {
   'user_vip_text6': 'VIP服務協議',
   'user_vip_text7': '已開通',
   'user_vip_text8': 'VIP享手續費、提現優惠',
-  'user_vip_fee_discount': '手續費折扣'
+  'user_vip_fee_discount': '手續費折扣',
+  'user_vip_recommend': '推薦'
 }

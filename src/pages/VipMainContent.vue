@@ -425,7 +425,8 @@
             <span
               class="triangle-style font-size12 text-align-c"
             >
-              推荐
+              <!-- 推荐 -->
+              {{ $t('M.user_vip_recommend') }}
             </span>
             <p class="duration-month font-size16">
               <!--3个月-->
@@ -558,7 +559,8 @@
         <div
           v-html="discountsInstructionContent"
           class="html-content"
-        ></div>
+        >
+        </div>
       </el-dialog>
       <!--vip服务协议-->
       <el-dialog
@@ -570,7 +572,8 @@
         <div
           v-html="serviceAgreementContent"
           class="html-content"
-        ></div>
+        >
+        </div>
       </el-dialog>
       <!--开通VIP-->
       <el-dialog
@@ -1071,7 +1074,8 @@ export default {
               position: absolute;
               top: 0;
               right: 0;
-              width: 40px;
+              min-width: 40px;
+              padding: 0 2px;
               height: 24px;
               line-height: 24px;
               color: #fff;

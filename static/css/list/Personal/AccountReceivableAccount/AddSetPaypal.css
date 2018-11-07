@@ -2,6 +2,7 @@
 .add-payment.personal .el-textarea__inner{
   width: 237px;
   height: 90px;
+  resize: none;
 }
 .add-payment.personal .el-form-item__content {
   width: 600px;

@@ -272,5 +272,6 @@ export const personal = {
   'user_vip_text6': 'VIP 서비스 계약',
   'user_vip_text7': '열린',
   'user_vip_text8': 'VIP 출입 수수료, 현금 할인',
-  'user_vip_fee_discount': '수수료 할인'
+  'user_vip_fee_discount': '수수료 할인',
+  'user_vip_recommend': '추천'
 }

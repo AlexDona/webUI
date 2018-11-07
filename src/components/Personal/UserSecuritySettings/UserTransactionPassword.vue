@@ -697,7 +697,7 @@ export default {
       }
       >.transaction-password-content {
         min-height: 300px;
-        margin: 16px 25px;
+        margin: 16px 0px;
         >.transaction-content-title {
           height: 32px;
           line-height: 32px;
@@ -723,8 +723,9 @@ export default {
             line-height: 100px;
           }
           .transaction-button {
-            padding: 10px 85px;
-            margin: 30px 0 50px 120px;
+            margin: 30px 0 50px 180px;
+            padding: 10px 0;
+            width: 215px;
           }
           .prompt-message {
             height: 20px;

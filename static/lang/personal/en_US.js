@@ -80,7 +80,7 @@ export const personal = {
   'user_account_text': ' Please be sure to use your real-name account. The activated payment method will be displayed to the buyer during the OTC transaction. You can set 5 types but activate up to 3 types.',
   'user_account_text1': 'Please complete the authentication and set the transaction password before setting up the OTC collection account!',
   'user_account_text2': 'Alipay upload QR code method: Open Alipay Home > Collect Money > Save Image, upload the receipt code of the mobile phone album.',
-  'user_account_payment_term': 'payment method',
+  'user_account_payment_term': ' payment method',
   'user_account_bank_transfer': 'Bank Transfer',
   'user_account_whether_not': 'whether',
   'user_account_whether_close1': 'Sure to close Bankcard payment?',
@@ -88,7 +88,7 @@ export const personal = {
   'user_account_whether_close3': 'Sure to close Alipay payment?',
   'user_account_whether_close4': 'Sure to close PAYPAL payment?',
   'user_account_whether_close5': 'Sure to close Western Union payment?',
-  'user_account_please_set_up': 'Please set first',
+  'user_account_please_set_up': 'Please set first ',
   'user_account_return': 'Return to my account',
   'user_account_name': 'name',
   'user_account_number': ' account',
@@ -272,5 +272,6 @@ export const personal = {
   'user_vip_text6': 'VIP Service Agreement',
   'user_vip_text7': 'Already Opened',
   'user_vip_text8': 'VIP Discount',
-  'user_vip_fee_discount': 'Fee discount'
+  'user_vip_fee_discount': 'Fee discount',
+  'user_vip_recommend': 'Recommend'
 }

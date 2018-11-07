@@ -319,7 +319,7 @@ export default {
         }
         >.login-content-from {
           width: 600px;
-          margin-left: 55px;
+          // margin-left: 55px;
           .login-input {
             width: 220px;
             height: 34px;
@@ -331,8 +331,9 @@ export default {
             line-height: 100px;
           }
           .login-button {
-            padding: 10px 85px;
-            margin: 30px 0 50px 167px;
+            padding: 10px 0px;
+            margin: 30px 0 50px 170px;
+            width: 220px;
           }
           .prompt-message {
             height: 20px;

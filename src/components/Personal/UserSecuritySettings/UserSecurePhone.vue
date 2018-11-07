@@ -829,7 +829,7 @@ export default {
           margin-bottom: 40px;
         }
         >.phone-content-from {
-          width: 500px;
+          width: 700px;
           margin-left: 55px;
           .send-code-btn {
             min-width: 90px;
@@ -861,8 +861,9 @@ export default {
             line-height: 100px;
           }
           .phone-button {
-            padding: 10px 85px;
-            margin: 30px 0 50px 160px;
+            margin: 30px 0 50px 177px;
+            padding: 10px 0;
+            width: 220px;
           }
           .prompt-message {
             height: 20px;

@@ -465,7 +465,7 @@ export default {
         min-height: 300px;
         margin: 40px 25px;
         >.google-content-from {
-          width: 400px;
+          width: 500px;
           margin-left: 30px;
           >.google-images-show {
             >.google-validator {
@@ -491,6 +491,7 @@ export default {
             }
           }
           >.google-info-show {
+            margin-top: 20px;
             .code-copy {
               text-align: center;
               display: inline-block;
@@ -511,8 +512,9 @@ export default {
               height: 34px;
             }
             .google-button {
-              padding: 10px 85px;
-              margin: 30px 0 50px 120px;
+              margin: 30px 0 50px 160px;
+              padding: 10px 0;
+              width: 220px;
             }
             .prompt-message {
               height: 20px;

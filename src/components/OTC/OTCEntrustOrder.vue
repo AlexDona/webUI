@@ -237,6 +237,7 @@ export default {
   @import "../../../static/css/scss/index.scss";
   .otc-entrust-order-box {
     height: 500px;
+    margin-bottom: 10px;
     .otc-entrust-order-table {
       > .entrust-table-head {
         box-sizing: border-box;

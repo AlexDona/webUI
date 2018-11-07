@@ -40,14 +40,14 @@
             </li>
           </ul>
           <!-- 版权 -->
-          <!-- <div class="copyright">
+          <div class="copyright">
             <span
               class="copyright-content"
               v-if="configInfo"
             >
-              ©2013-2018 {{configInfo.otcAd}} Global
+              {{configInfo.copyright}}
             </span>
-          </div> -->
+          </div>
         </div>
         <div class="right">
           <dl class="right-dl">
