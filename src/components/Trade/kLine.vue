@@ -191,15 +191,6 @@ export default {
           ajaxData: this.ajaxData,
           type: 'ajax'
         })
-        // this.socket.on('open', () => {
-        //   this.getKlineDataBySocket('REQ', this.symbol, 'min')
-        //   this.getKlineDataBySocket('SUB', this.symbol, 'min')
-        //   this.getTradeMarketBySocket('SUB', this.activeTabSymbolStr)
-        //   this.getBuyAndSellBySocket('SUB', this.symbol)
-        //   this.getDepthDataBySocket('SUB', this.symbol)
-        //   this.getTradeRecordBySocket('SUB', this.symbol)
-        //   this.socket.on('message', this.onMessage)
-        // })
       }
     },
     // k线初始化
@@ -240,6 +231,15 @@ export default {
         this.CHANGE_ACTIVE_SYMBOL({activeSymbol: this.finalSymbol})
         this.symbol = this.activeSymbol.id
         // await this.getKlineByAjax(this.symbol, 'min')
+        this.socket.on('open', () => {
+          this.getKlineDataBySocket('REQ', this.symbol, 'min')
+          this.getKlineDataBySocket('SUB', this.symbol, 'min')
+          this.getTradeMarketBySocket('SUB', this.activeTabSymbolStr)
+          this.getBuyAndSellBySocket('SUB', this.symbol)
+          this.getDepthDataBySocket('SUB', this.symbol)
+          this.getTradeRecordBySocket('SUB', this.symbol)
+          this.socket.on('message', this.onMessage)
+        })
         // console.log(this.symbol)
         await this.getActiveSymbolData(this.symbol)
       }
@@ -464,7 +464,7 @@ export default {
         'type': 'socket'
       })
     },
-    async getBars (symbolInfo, resolution, rangeStartDate, rangeEndDate, onLoadedCallback) {
+    getBars (symbolInfo, resolution, rangeStartDate, rangeEndDate, onLoadedCallback) {
       // symbolInfo.pricescale = 100000
       // console.log(' >> :', rangeStartDate, rangeEndDate)
       if (resolution && this.interval && (this.interval != resolution)) {
@@ -473,7 +473,7 @@ export default {
         this.options.interval = resolution
         // this.interval = 'min15'
         let newInterval = this.transformInterval(resolution)
-        await this.subscribeSocketData(this.symbol, newInterval)
+        this.subscribeSocketData(this.symbol, newInterval)
       }
       const ticker = `${this.symbol}-${this.interval}`
       if (this.cacheData[ticker] && this.cacheData[ticker].length) {
@@ -542,10 +542,10 @@ export default {
       })
     },
     // 订阅消息
-    async subscribeSocketData (symbol, interval = 'min') {
-      // this.getKlineDataBySocket('REQ', symbol, interval)
+    subscribeSocketData (symbol, interval = 'min') {
+      this.getKlineDataBySocket('REQ', symbol, interval)
       console.log(new Date().getTime(), 'getTime start to get Data')
-      await this.getKlineByAjax(symbol, interval)
+      // await this.getKlineByAjax(symbol, interval)
       this.getKlineDataBySocket('SUB', symbol, interval)
       this.getTradeMarketBySocket('SUB', this.activeTabSymbolStr)
       this.getBuyAndSellBySocket('SUB', symbol)
@@ -581,7 +581,6 @@ export default {
       this.initKLine(this.symbol)
     },
     async activeSymbolId (newVal, oldVal) {
-      // await this.getKlineByAjax(this.symbol, 'min')
       this.initKLine(newVal)
     },
     // 切换tab栏重新订阅
@@ -594,7 +593,7 @@ export default {
     },
     resolutions (newVal, oldVal) {
     },
-    async symbol (newVal, oldVal) {
+    symbol (newVal, oldVal) {
       if (oldVal) {
         this.resolutions.forEach((item) => {
           console.log(item)
@@ -604,8 +603,8 @@ export default {
         this.getDepthDataBySocket('CANCEL', oldVal)
         this.getTradeRecordBySocket('CANCEL', oldVal)
       }
-      await this.subscribeSocketData(newVal)
       this.getActiveSymbolData(newVal)
+      this.subscribeSocketData(newVal)
     },
     activeTradeArea (newVal, oldVal) {
     }
