@@ -127,6 +127,14 @@ export default {
         let list = []
         const ticker = `${this.symbol}-${this.interval}`
         console.log(ticker)
+        // for (let i = klineData.length - 1; i >= 0; i -= 1) {
+        //   list[i].time = klineData[i].time - 0
+        //   list[i].open = klineData[i].open
+        //   list[i].high = klineData[i].high
+        //   list[i].low = klineData[i].low
+        //   list[i].close = klineData[i].close
+        //   list[i].volume = klineData[i].volume
+        // }
         klineData.forEach(function (element) {
           list.push({
             // time: this.interval !== 'D' || this.interval !== '1D' ? element.id * 1000 : element.id,
@@ -229,7 +237,7 @@ export default {
         this.finalSymbol = this.isJumpToTradeCenter ? this.jumpSymbol : activeSymbol
         this.CHANGE_ACTIVE_SYMBOL({activeSymbol: this.finalSymbol})
         this.symbol = this.activeSymbol.id
-        await this.getKlineByAjax(this.symbol, 'min')
+        // await this.getKlineByAjax(this.symbol, 'min')
         // console.log(this.symbol)
         await this.getActiveSymbolData(this.symbol)
       }
@@ -569,7 +577,8 @@ export default {
     language () {
       this.initKLine(this.symbol)
     },
-    activeSymbolId (newVal, oldVal) {
+    async activeSymbolId (newVal, oldVal) {
+      // await this.getKlineByAjax(this.symbol, 'min')
       this.initKLine(newVal)
     },
     // 切换tab栏重新订阅
