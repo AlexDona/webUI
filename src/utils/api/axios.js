@@ -4,7 +4,7 @@
 import {apiCommonUrl} from '../env'
 import axios from 'axios'
 import store from '../../vuex'
-// import router from '../../router/index'
+import router from '../../router/index'
 // import {getStoreWithJson} from '../index'
 // import Vue from 'vue'
 let countOf401 = 0
@@ -38,6 +38,7 @@ util.ajax.interceptors.response.use(
     console.log(response)
     if (response.data.meta.code == 401) {
       countOf401++
+      console.log(router)
     }
     return response
   },

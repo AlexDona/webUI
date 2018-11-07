@@ -9,9 +9,11 @@
       />
     </keep-alive>
       <router-view/>
-     <FooterCommon
-      v-if="needFooter"
-    />
+    <keep-alive>
+      <FooterCommon
+        v-if="needFooter"
+      />
+    </keep-alive>
   </div>
 </template>
 <script>
@@ -78,7 +80,7 @@ export default {
   },
   watch: {
     '$route' (to, from) {
-      console.log(to)
+      console.log(to.path)
       let path = to.path
       this.needNotice = path === '/' ? 1 : 0
       this.needHeader = (
@@ -87,7 +89,6 @@ export default {
         path !== '/downloadApp' &&
         path !== '/InvitationRegister'
       ) ? 1 : 0
-      // this.needHeader = !this.isMobile ? 1 : 0
       this.needFooter = (
         path === '/login' ||
         path === '/register' ||
@@ -99,6 +100,9 @@ export default {
           this.setBodyClassName(true, 'register')
           break
       }
+    },
+    needFooter (newVal) {
+      console.log(newVal)
     },
     userInfo (newVal) {
     },
