@@ -159,11 +159,11 @@
                 </el-form-item>
                 <!-- 利率 -->
                 <el-form-item
-                  :label="$t('M.finance_interestRate')"
+                  :label="$t('M.news_year') + $t('M.finance_interestRate') + '(%)'"
                 >
                   <div class='invest-mounte'>
                     <el-input
-                      v-model="formLabelAlign.interestRate"
+                      v-model="interestRateValue"
                       disabled
                     >
                     </el-input>
@@ -213,7 +213,9 @@
                       <span class="blue">{{item.amount}}</span>
                       <span class='blue'>{{selecteCoindName}}</span>
                       <span>
-                        ({{formLabelAlign.jsonTimeline[formLabelAlign.jsonTimeline.length-1].length == 1 ? $t('M.finance_accrual') :$t('M.finance_capital') + '+' + $t('M.finance_accrual')}})
+                        <!-- ({{formLabelAlign.jsonTimeline[formLabelAlign.jsonTimeline.length-1].length == 1 ? $t('M.finance_capital') + '+' + $t('M.finance_accrual') : $t('M.finance_accrual')}}) -->
+                        <!-- ({{formLabelAlign.jsonTimeline[formLabelAlign.jsonTimeline.length-1]}}) -->
+                        ({{index == formLabelAlign.jsonTimeline.length - 1 ? $t('M.finance_capital') + '+' + $t('M.finance_accrual') : $t('M.finance_accrual')}})
                       </span>
                     </li>
                   </ul>
@@ -626,7 +628,8 @@ export default {
         }
       ],
       // n天后的时间
-      brforeNtime: ''
+      brforeNtime: '',
+      interestRateValue: '' // 年利率
     }
   },
   created () {
@@ -739,6 +742,7 @@ export default {
         return false
       } else {
         this.formLabelAlign = data.data.data
+        this.interestRateValue = (this.formLabelAlign.interestRate - 0) * 100
       }
     },
     // 添加理财记录
