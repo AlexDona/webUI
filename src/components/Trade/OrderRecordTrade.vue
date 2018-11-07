@@ -122,11 +122,11 @@ export default {
       }
     },
     orderRecordList (newVal) {
-      console.log(this.reflashCount)
-      console.log(newVal)
+      // console.log(this.reflashCount)
+      // console.log(newVal)
     },
     orderRecordListByAjax (newVal) {
-      console.log(newVal)
+      // console.log(newVal)
       // console.log(this.orderRecordListBySocket)
     }
   }

@@ -11,6 +11,10 @@
         :src="vipPictureBanner"
       >
     </div>
+    <div
+      class="loading-box"
+      v-if="fullscreenLoading"
+    ></div>
     <div class="content-main-content">
       <!--开通vip页面-->
       <div
@@ -656,7 +660,7 @@ export default {
       serviceAgreementStatus: false,
       discountsInstructionContent: '', // 折扣说明内容
       serviceAgreementContent: '', // vip服务条款
-      fullscreenLoading: false // 整页loading
+      fullscreenLoading: true // 整页loading
     }
   },
   async created () {
@@ -945,7 +949,13 @@ export default {
         width: 100%;
       }
     }
+    >.loading-box{
+      height:800px;
+      width:100%;
+      background-color: pink;
+    }
     > .content-main-content {
+      height:100%;
       .error-msg{
         height:25px;
         line-height: 25px;

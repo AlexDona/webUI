@@ -179,24 +179,23 @@ export default {
     return {
       shareList: [
         {
-          iconName: 'icon-twitter',
+          iconName: 'icon-twitter_F',
           ercodeSrc: ''
         },
         {
-          iconName: 'icon-facebook',
+          iconName: 'icon-facebookfacebook52',
           ercodeSrc: ''
         },
         {
-          iconName: 'icon-weixin2',
+          iconName: 'icon-weixin-copy',
           ercodeSrc: ''
         },
         {
-          iconName: 'icon-icon',
+          iconName: 'icon-qq',
           ercodeSrc: ''
         },
         {
-          // iconName: 'icon-telegram',
-          iconName: 'icon-dianbao-',
+          iconName: 'icon-telegram1',
           ercodeSrc: ''
         }
       ],
@@ -290,12 +289,11 @@ export default {
                 width:22px;
                 height:22px;
                 line-height:22px;
-                background-color: #CFCFCF;
+                /*background-color: #CFCFCF;*/
                 border-radius: 50%;
                 text-align: center;
                 .icon-text{
-                  font-size: 16px;
-                  color:#1e2636;
+                  font-size: 22px;
                 }
               }
               >.hidden-box{

@@ -104,7 +104,7 @@ export default {
               }
             },
             mounted () {
-              console.log(that)
+              // console.log(that)
             },
             methods: {
               ...mapMutations([
@@ -130,8 +130,8 @@ export default {
             },
             watch: {
               bannerActive (newVal) {
-                console.log(newVal)
-                console.log(this.$refs)
+                // console.log(newVal)
+                // console.log(this.$refs)
                 newVal ? that.$refs.slider.$emit('autoplayStop') : that.$refs.slider.$emit('autoplayStart', 4000)
               }
             },

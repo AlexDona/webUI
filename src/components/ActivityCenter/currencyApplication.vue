@@ -209,6 +209,10 @@ export default {
         font-weight:bold;
         color:rgba(255,255,255,1);
         position: relative;
+        overflow: hidden;
+        >img{
+          width:100%;
+        }
         >.title{
           font-size: 36px;
           font-weight: 500;

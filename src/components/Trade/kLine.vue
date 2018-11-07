@@ -29,8 +29,9 @@ import {
 } from '../../../static/js/klineOptions'
 import {
   getDefaultSymbol,
-  getActiveSymbolDataAjax
-  // getTradeMarketDataAjax
+  getActiveSymbolDataAjax,
+  // getTradeMarketDataAjax,
+  getKlineDataAjax
 } from '../../utils/api/trade'
 // import {
 //   getCollectionListAjax
@@ -108,6 +109,41 @@ export default {
       'CHANGE_ACTIVE_SYMBOL',
       'CHANGE_SOCKET_AND_AJAX_DATA'
     ]),
+    // 接口获取K线数据
+    async getKlineByAjax (tradeName, KlineType, KlineStep = 'STEP5') {
+      const params = {
+        tradeName,
+        KlineType,
+        KlineStep
+      }
+      const data = await getKlineDataAjax(params)
+      if (!returnAjaxMessage(data, this)) {
+        return false
+      } else {
+        console.log(data)
+        let klineData = data.data.data.obj
+        klineData = JSON.parse(unzip(klineData))
+        console.log(klineData)
+        const list = []
+        const ticker = `${this.symbol}-${this.interval}`
+        console.log(ticker)
+        klineData.forEach(function (element) {
+          list.push({
+            // time: this.interval !== 'D' || this.interval !== '1D' ? element.id * 1000 : element.id,
+            time: element.time - 0,
+            open: element.open,
+            high: element.high,
+            low: element.low,
+            close: element.close,
+            volume: element.volume
+          })
+        }, this)
+        this.cacheData[ticker] = list
+        // console.log(list);
+        this.lastTime = list[list.length - 1].time
+        // this.onMessage(klineData)
+      }
+    },
     // 获取当前交易对socket数据
     async getActiveSymbolData (tradeName) {
       let params = {
@@ -145,15 +181,16 @@ export default {
           ajaxData: this.ajaxData,
           type: 'ajax'
         })
-        this.socket.on('open', () => {
-          this.getKlineDataBySocket('REQ', this.symbol, 'min')
-          this.getKlineDataBySocket('SUB', this.symbol, 'min')
-          this.getTradeMarketBySocket('SUB', this.activeTabSymbolStr)
-          this.getBuyAndSellBySocket('SUB', this.symbol)
-          this.getDepthDataBySocket('SUB', this.symbol)
-          this.getTradeRecordBySocket('SUB', this.symbol)
-          this.socket.on('message', this.onMessage)
-        })
+        this.getKlineByAjax(this.symbol, 'min')
+        // this.socket.on('open', () => {
+        //   this.getKlineDataBySocket('REQ', this.symbol, 'min')
+        //   this.getKlineDataBySocket('SUB', this.symbol, 'min')
+        //   this.getTradeMarketBySocket('SUB', this.activeTabSymbolStr)
+        //   this.getBuyAndSellBySocket('SUB', this.symbol)
+        //   this.getDepthDataBySocket('SUB', this.symbol)
+        //   this.getTradeRecordBySocket('SUB', this.symbol)
+        //   this.socket.on('message', this.onMessage)
+        // })
       }
     },
     // k线初始化
@@ -333,7 +370,7 @@ export default {
       return newInterval
     },
     onMessage (data) {
-      // console.log(data)
+      console.log(data)
       switch (data.tradeType) {
         case 'KLINE':
           console.log(data)
@@ -359,6 +396,7 @@ export default {
           if (data.type) {
             // console.log(' >> sub:', data.type)
             let newData = data.data[0]
+            console.log(newData.close)
             const ticker = `${this.symbol}-${this.interval}`
             // console.log(this.interval)
             const barsData = {
@@ -370,12 +408,9 @@ export default {
               close: newData.close,
               volume: newData.volume
             }
-            // console.log(barsData.time)
-            // console.log(this.lastTime)
-            // console.log(barsData.time - this.lastTime)
-            if (barsData.time >= this.lastTime && this.cacheData[ticker] && this.cacheData[ticker].length) {
-              this.cacheData[ticker][this.cacheData[ticker].length - 1] = barsData
-            }
+            // if (barsData.time >= this.lastTime && this.cacheData[ticker] && this.cacheData[ticker].length) {
+            this.cacheData[ticker][this.cacheData[ticker].length - 1] = barsData
+            // }
             this.datafeeds.barsUpdater.updateData()
           }
           break
@@ -495,7 +530,8 @@ export default {
     },
     // 订阅消息
     subscribeSocketData (symbol, interval = 'min') {
-      this.getKlineDataBySocket('REQ', symbol, interval)
+      // this.getKlineDataBySocket('REQ', symbol, interval)
+      this.getKlineByAjax(symbol, interval)
       this.getKlineDataBySocket('SUB', symbol, interval)
       this.getTradeMarketBySocket('SUB', this.activeTabSymbolStr)
       this.getBuyAndSellBySocket('SUB', symbol)
