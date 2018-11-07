@@ -137,10 +137,11 @@ export default {
             close: element.close,
             volume: element.volume
           })
-        }, this)
+        })
         this.cacheData[ticker] = list
         // console.log(list);
         this.lastTime = list[list.length - 1].time
+        // this.initKLine(this.symbol)
         // this.onMessage(klineData)
       }
     },
@@ -207,7 +208,6 @@ export default {
       this.options.interval = '1'
       this.options.language = this.language
       this.init(this.options)
-      this.widget.chart().activeChart().resetData()
       this.getBars()
     },
     // 获取初始交易对
