@@ -78,7 +78,7 @@ export default {
       socketData: {}, // socket 数据
       ajaxData: {}, // 接口请求数据
       resolutions: ['min', 'min5', 'min15', 'min30', 'hour1', 'hour4', 'day', 'week'],
-      fullscreenLoading: false,
+      fullscreenLoading: true,
       loadingCount: 0 // loading 次数
     }
   },
@@ -315,13 +315,6 @@ export default {
         })
         this.symbol = options.symbol
         this.interval = options.interval
-        if (!this.loadingCount) {
-          setTimeout(() => {
-            this.fullscreenLoading = false
-            this.loadingCount++
-            console.log(this.fullscreenLoading)
-          }, 1)
-        }
       }
     },
     // 修改样式
@@ -603,6 +596,13 @@ export default {
       }
       this.getActiveSymbolData(newVal)
       this.subscribeSocketData(newVal)
+      if (!this.loadingCount) {
+        setTimeout(() => {
+          this.fullscreenLoading = false
+          this.loadingCount++
+          console.log(this.fullscreenLoading)
+        }, 200)
+      }
     },
     activeTradeArea (newVal, oldVal) {
     }
