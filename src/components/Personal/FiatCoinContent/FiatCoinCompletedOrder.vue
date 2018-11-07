@@ -39,22 +39,22 @@
                         {{$t('M.otc_alipay_type')}}：
                       </span>
                       <!-- 判断付款方式 -->
-                      <span v-if="s.row.payType === 'Alipay'">
+                      <span v-if="s.row.payType === 'alipay'">
                         <!--支付宝-->
                         {{$t('M.comm_alipay')}}
                       </span>
-                      <span v-if="s.row.payType === 'Bankcard'">
+                      <span v-if="s.row.payType === 'bank'">
                         <!--银行卡-->
                         {{$t('M.comm_bank')}}
                       </span>
-                      <span v-if="s.row.payType === 'WestUnion'">
+                      <span v-if="s.row.payType === 'xilian'">
                         <!--西联汇款-->
                         {{$t('M.comm_xilian')}}
                       </span>
-                      <span v-if="s.row.payType === 'PAYPAL'">
+                      <span v-if="s.row.payType === 'paypal'">
                         PAYPAL
                       </span>
-                      <span v-if="s.row.payType === 'Wechat'">
+                      <span v-if="s.row.payType === 'weixin'">
                         <!--微信-->
                         {{$t('M.comm_weixin')}}
                       </span>
@@ -68,23 +68,23 @@
                       </span>
                       <span>{{s.row.payAcctount}}</span> -->
                       <!-- 支付宝账号 -->
-                      <span v-if="s.row.payType === 'Alipay'">
+                      <span v-if="s.row.payType === 'alipay'">
                         {{$t('M.user_account_alipay')}}{{$t('M.user_account_number')}}：
                       </span>
                       <!-- 银行卡账号 -->
-                      <span v-if="s.row.payType === 'Bankcard'">
+                      <span v-if="s.row.payType === 'bank'">
                         {{$t('M.otc_bank_num')}}：
                       </span>
                       <!-- 西联汇款账号 -->
-                      <span v-if="s.row.payType === 'WestUnion'">
+                      <span v-if="s.row.payType === 'xilian'">
                         {{$t('M.user_account_western_union')}}{{$t('M.user_account_number')}}：
                       </span>
                       <!-- PAYPAL账号 -->
-                      <span v-if="s.row.payType === 'PAYPAL'">
+                      <span v-if="s.row.payType === 'paypal'">
                         PAYPAL{{$t('M.user_account_number')}}：
                       </span>
                       <!-- 微信账号 -->
-                      <span v-if="s.row.payType === 'Wechat'">
+                      <span v-if="s.row.payType === 'weixin'">
                         {{$t('M.user_account_weChat')}}{{$t('M.user_account_number')}}：
                       </span>
                       <!-- <span>{{$t('M.otc_bank_num')}}：</span> -->

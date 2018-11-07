@@ -139,7 +139,7 @@ export default {
     return {
       telegraphicTransferAddress: '', // 电汇地址
       transactionPassword: '', // 交易密码
-      // bankType: 'xilian', // type类型
+      bankType: 'xilian', // type类型
       id: '', // ID
       paymentTerm: {},
       successCountDown: 1, // 成功倒计时
@@ -237,7 +237,7 @@ export default {
         let param = {
           address: this.telegraphicTransferAddress, // 西联汇款账号
           payPassword: this.transactionPassword, // 交易密码
-          bankType: 'WestUnion', // type
+          bankType: 'xilian', // type
           id: this.id
         }
         // 整页loading
@@ -265,7 +265,7 @@ export default {
       let data
       let params = {
         userId: this.userInfo.userId,
-        type: 'WestUnion'
+        type: 'xilian'
       }
       // 整页loading
       this.fullscreenLoading = true

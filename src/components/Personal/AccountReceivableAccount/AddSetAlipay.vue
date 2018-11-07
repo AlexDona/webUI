@@ -287,7 +287,7 @@ export default {
           cardNo: this.alipayAccount, // 支付宝账号
           qrcode: this.dialogImageHandUrl1, // 二维码
           payPassword: this.password, // 交易密码
-          bankType: 'Alipay', // type
+          bankType: 'alipay', // type
           id: this.id
         }
         // 整页loading
@@ -317,7 +317,7 @@ export default {
       let data
       let params = {
         userId: this.userInfo.userId,
-        type: 'Alipay'
+        type: 'alipay'
       }
       // 整页loading
       this.fullscreenLoading = true
