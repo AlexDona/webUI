@@ -691,7 +691,7 @@ export default {
       }
       switch (type) {
         case 'bank':
-          params.type = 'Bankcard'
+          params.type = 'bank'
           if (state === 'enable') {
             params.status = 'enable'
           } else {
@@ -699,7 +699,7 @@ export default {
           }
           break
         case 'chat':
-          params.type = 'Wechat'
+          params.type = 'weixin'
           if (state === 'enable') {
             params.status = 'enable'
           } else {
@@ -707,7 +707,7 @@ export default {
           }
           break
         case 'alipay':
-          params.type = 'Alipay'
+          params.type = 'alipay'
           if (state === 'enable') {
             params.status = 'enable'
           } else {
@@ -715,7 +715,7 @@ export default {
           }
           break
         case 'paypal':
-          params.type = 'PAYPAL'
+          params.type = 'paypal'
           if (state === 'enable') {
             params.status = 'enable'
           } else {
@@ -723,7 +723,7 @@ export default {
           }
           break
         case 'western':
-          params.type = 'WestUnion'
+          params.type = 'xilian'
           if (state === 'enable') {
             params.status = 'enable'
           } else {

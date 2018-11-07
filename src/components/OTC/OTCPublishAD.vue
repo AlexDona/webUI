@@ -157,35 +157,35 @@
               >
                 <!-- 支付宝 -->
                 <el-checkbox
-                  label="Alipay"
+                  label="alipay"
                   v-show="payForListArr[0] === '1'"
                 >
                   {{$t('M.comm_alipay')}}
                 </el-checkbox>
                 <!-- 微信 -->
                 <el-checkbox
-                  label="Wechat"
+                  label="weixin"
                   v-show="payForListArr[1] === '1'"
                 >
                   {{$t('M.comm_weixin')}}
                 </el-checkbox>
                 <!-- 银行卡 -->
                 <el-checkbox
-                  label="Bankcard"
+                  label="bank"
                   v-show="payForListArr[2] === '1'"
                 >
                   {{$t('M.comm_bank')}}
                 </el-checkbox>
                 <!-- 西联 -->
                 <el-checkbox
-                  label="WestUnion"
+                  label="xilian"
                   v-show="payForListArr[3] === '1'"
                 >
                   {{$t('M.comm_xilian')}}
                 </el-checkbox>
                 <!-- PAYPAL -->
                 <el-checkbox
-                  label="PAYPAL"
+                  label="paypal"
                   v-show="payForListArr[4] === '1'"
                 >
                   PAYPAL

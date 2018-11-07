@@ -122,7 +122,7 @@
                   <!-- 开户行 :显示省，市，地址-->
                   <p
                     class="bank-info"
-                    v-if="activeBankType[index] === 'Bankcard'"
+                    v-if="activeBankType[index] === 'bank'"
                   >
                   <!-- 开户行 -->
                     <span>{{$t('M.otc_opening_bank')}}: </span>
@@ -132,7 +132,7 @@
                   <!-- 账户 -->
                   <p
                     class="bank-info"
-                    v-if="activeBankType[index] === 'Bankcard'"
+                    v-if="activeBankType[index] === 'bank'"
                   >
                     <span>
                       {{$t('M.comm_bill')}}{{$t('M.comm_house')}}: {{activedPayAccountArr[index]}}
@@ -140,7 +140,7 @@
                   </p>
                   <p
                     class="bank-info"
-                    v-if="activeBankType[index] === 'Alipay'"
+                    v-if="activeBankType[index] === 'alipay'"
                   >
                   <!-- 支付宝账户 -->
                     <span>{{$t('M.comm_alipay')}}{{$t('M.comm_bill')}}{{$t('M.comm_house')}}:</span>
@@ -148,7 +148,7 @@
                   </p>
                   <p
                     class="bank-info"
-                    v-if="activeBankType[index] === 'Wechat'"
+                    v-if="activeBankType[index] === 'weixin'"
                   >
                   <!-- 微信账户 -->
                     <span>{{$t('M.comm_weixin')}}{{$t('M.comm_bill')}}{{$t('M.comm_house')}}:</span>
@@ -156,15 +156,15 @@
                   </p>
                   <p
                     class="bank-info"
-                    v-if="activeBankType[index] === 'PAYPAL'"
+                    v-if="activeBankType[index] === 'paypal'"
                   >
                     <!-- paypal -->
-                    <span>PAYPAL{{$t('M.comm_bill')}}{{$t('M.comm_house')}}:</span>
+                    <span>paypal{{$t('M.comm_bill')}}{{$t('M.comm_house')}}:</span>
                     <span>{{activedPayAccountArr[index]}}</span>
                   </p>
                   <p
                     class="bank-info"
-                    v-if="activeBankType[index] === 'WestUnion'"
+                    v-if="activeBankType[index] === 'xilian'"
                   >
                   <!-- 西联汇款账户 -->
                     <span>{{$t('M.comm_xilian')}}{{$t('M.comm_bill')}}{{$t('M.comm_house')}}:</span>
@@ -174,7 +174,7 @@
                 <!-- 扫码支付 activeBankCode[index]  :src="item.coinUrl"-->
                 <div
                   class="bank-info-picture display-inline-block"
-                  v-if="activeBankType[index] === 'Wechat' || activeBankType[index] === 'Alipay'"
+                  v-if="activeBankType[index] === 'weixin' || activeBankType[index] === 'alipay'"
                 >
                   <div class="picture-box">
                     <el-popover
@@ -200,7 +200,7 @@
                 <div class="trader-info display-inline-block">
                   <p class="bankMoneyInfo">
                     <span
-                      v-if="item.payType === 'Bankcard'"
+                      v-if="item.payType === 'bank'"
                     >
                       <IconFontCommon
                         class="font-size16"
@@ -210,7 +210,7 @@
                       {{$t('M.otc_trading_bankmoney_payment')}}
                     </span>
                     <span
-                      v-if="item.payType === 'Alipay'"
+                      v-if="item.payType === 'alipay'"
                     >
                       <IconFontCommon
                         class="font-size16"
@@ -220,7 +220,7 @@
                       {{$t('M.otc_trading_alipay_payment')}}
                     </span>
                     <span
-                      v-if="item.payType === 'Wechat'"
+                      v-if="item.payType === 'weixin'"
                     >
                       <IconFontCommon
                         class="font-size16"
@@ -230,7 +230,7 @@
                       {{$t('M.otc_trading_wechat_payment')}}
                     </span>
                     <span
-                      v-if="item.payType === 'WestUnion'"
+                      v-if="item.payType === 'xilian'"
                     >
                       <img
                         src="../../assets/user/xilian.png"
@@ -240,7 +240,7 @@
                       {{$t('M.otc_trading_xilianmoney_payment')}}
                     </span>
                     <span
-                      v-if="item.payType === 'PAYPAL'"
+                      v-if="item.payType === 'paypal'"
                     >
                       <IconFontCommon
                         class="font-size16"
@@ -266,7 +266,7 @@
                 <!-- 扫码支付 qrCodeUrl  :src="item.coinUrl"-->
                 <div
                   class="bank-info-picture display-inline-block"
-                  v-if="item.payType === 'Alipay' || item.payType === 'Wechat'"
+                  v-if="item.payType === 'alipay' || item.payType === 'weixin'"
                 >
                   <div class="picture-box">
                     <el-popover
@@ -423,7 +423,7 @@
                 <div class="trader-info display-inline-block">
                   <p class="bankMoneyInfo">
                     <span
-                      v-if="item.payType === 'Bankcard'"
+                      v-if="item.payType === 'bank'"
                     >
                       <IconFontCommon
                         class="font-size16"
@@ -433,7 +433,7 @@
                       {{$t('M.otc_trading_bankmoney_payment')}}
                     </span>
                     <span
-                      v-if="item.payType === 'Alipay'"
+                      v-if="item.payType === 'alipay'"
                     >
                       <IconFontCommon
                         class="font-size16"
@@ -443,7 +443,7 @@
                       {{$t('M.otc_trading_alipay_payment')}}
                     </span>
                     <span
-                      v-if="item.payType === 'Wechat'"
+                      v-if="item.payType === 'weixin'"
                     >
                       <IconFontCommon
                         class="font-size16"
@@ -453,7 +453,7 @@
                       {{$t('M.otc_trading_wechat_payment')}}
                     </span>
                     <span
-                      v-if="item.payType === 'WestUnion'"
+                      v-if="item.payType === 'xilian'"
                     >
                       <img
                         src="../../assets/user/xilian.png"
@@ -463,7 +463,7 @@
                       {{$t('M.otc_trading_xilianmoney_payment')}}
                     </span>
                     <span
-                      v-if="item.payType === 'PAYPAL'"
+                      v-if="item.payType === 'paypal'"
                     >
                       <IconFontCommon
                         class="font-size16"

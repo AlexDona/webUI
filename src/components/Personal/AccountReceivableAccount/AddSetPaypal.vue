@@ -14,14 +14,14 @@
            class="header-content-left header-content font-size16 font-weight600"
          >
           <!--设置paypal-->
-            {{ $t('M.comm_set') }} PAYPAL
+            {{ $t('M.comm_set') }} paypal
         </span>
         <span
           v-else
           class="header-content-left header-content font-size16 font-weight600"
         >
           <!--修改paypal-->
-          {{ $t('M.comm_modification') }}PAYPAL
+          {{ $t('M.comm_modification') }}paypal
         </span>
         <span
           class="header-content-right font-size12 cursor-pointer"
@@ -138,7 +138,7 @@ export default {
     return {
       paypalAccount: '', // paypal账号
       transactionPassword: '', // 交易密码
-      // bankType: 'paypal', // 类型
+      bankType: 'paypal', // 类型
       id: '', // ID
       paymentTerm: {},
       successCountDown: 1, // 成功倒计时
@@ -237,7 +237,7 @@ export default {
         let param = {
           cardNo: this.paypalAccount, // paypal账号
           payPassword: this.transactionPassword, // 交易密码
-          bankType: 'PAYPAL', // type
+          bankType: 'paypal', // type
           id: this.id
         }
         // 整页loading
@@ -266,7 +266,7 @@ export default {
       let data
       let params = {
         userId: this.userInfo.userId,
-        type: 'PAYPAL'
+        type: 'paypal'
       }
       // 整页loading
       this.fullscreenLoading = true

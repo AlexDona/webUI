@@ -466,23 +466,23 @@ export default {
           shortName: 'M.comm_all' // 全部
         },
         {
-          id: 'Alipay',
+          id: 'alipay',
           shortName: 'M.comm_alipay' // 支付宝
         },
         {
-          id: 'Wechat',
+          id: 'weixin',
           shortName: 'M.comm_weixin' // 微信
         },
         {
-          id: 'Bankcard',
+          id: 'bank',
           shortName: 'M.comm_bank' // 银行卡
         },
         {
-          id: 'WestUnion',
+          id: 'xilian',
           shortName: 'M.comm_xilian' // 西联汇款
         },
         {
-          id: 'PAYPAL',
+          id: 'paypal',
           shortName: 'PAYPAL'
         }
       ],

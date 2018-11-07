@@ -243,22 +243,22 @@
                   <IconFontCommon
                     class="font-size16"
                     iconName="icon-zhifubao1"
-                    v-show="s.row.payType === 'Alipay'"
+                    v-show="s.row.payType === 'alipay'"
                   />
                   <!-- 微信 -->
                   <IconFontCommon
                     class="font-size16"
                     iconName="icon-weixin1"
-                    v-show="s.row.payType === 'Wechat'"
+                    v-show="s.row.payType === 'weixin'"
                   />
                   <!-- 银行卡 -->
                   <IconFontCommon
                     class="font-size16"
                     iconName="icon-yinhangqia"
-                    v-show="s.row.payType === 'Bankcard'"
+                    v-show="s.row.payType === 'bank'"
                   />
                   <!-- 4西联汇款 -->
-                  <span v-show="s.row.payType === 'WestUnion'">
+                  <span v-show="s.row.payType === 'xilian'">
                     <img
                       src="../../assets/user/xilian.png"
                       class="xilian"
@@ -268,7 +268,7 @@
                   <IconFontCommon
                     class="font-size16"
                     iconName="icon-paypal"
-                    v-show="s.row.payType === 'PAYPAL'"
+                    v-show="s.row.payType === 'paypal'"
                   />
                 </div>
               </template>
