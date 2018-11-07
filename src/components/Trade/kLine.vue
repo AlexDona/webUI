@@ -124,7 +124,7 @@ export default {
         let klineData = data.data.data.obj
         klineData = JSON.parse(unzip(klineData))
         console.log(klineData)
-        const list = []
+        let list = []
         const ticker = `${this.symbol}-${this.interval}`
         console.log(ticker)
         klineData.forEach(function (element) {
@@ -181,7 +181,6 @@ export default {
           ajaxData: this.ajaxData,
           type: 'ajax'
         })
-        this.getKlineByAjax(this.symbol, 'min')
         // this.socket.on('open', () => {
         //   this.getKlineDataBySocket('REQ', this.symbol, 'min')
         //   this.getKlineDataBySocket('SUB', this.symbol, 'min')
@@ -229,8 +228,9 @@ export default {
         this.finalSymbol = this.isJumpToTradeCenter ? this.jumpSymbol : activeSymbol
         this.CHANGE_ACTIVE_SYMBOL({activeSymbol: this.finalSymbol})
         this.symbol = this.activeSymbol.id
+        await this.getKlineByAjax(this.symbol, 'min')
         // console.log(this.symbol)
-        this.getActiveSymbolData(this.symbol)
+        await this.getActiveSymbolData(this.symbol)
       }
     },
     init (options) {
