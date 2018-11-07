@@ -11,7 +11,7 @@
       class="loading-box"
       v-if="fullscreenLoading"
       v-loading.lock="fullscreenLoading"
-      element-loading-background="rgba(0, 0, 0, 0.9)"
+      element-loading-background="#1c1f32"
     >
     </div>
   </div>
@@ -78,7 +78,7 @@ export default {
       socketData: {}, // socket 数据
       ajaxData: {}, // 接口请求数据
       resolutions: ['min', 'min5', 'min15', 'min30', 'hour1', 'hour4', 'day', 'week'],
-      fullscreenLoading: false,
+      fullscreenLoading: true,
       loadingCount: 0 // loading 次数
     }
   },
@@ -315,13 +315,7 @@ export default {
         })
         this.symbol = options.symbol
         this.interval = options.interval
-        if (!this.loadingCount) {
-          setTimeout(() => {
-            this.fullscreenLoading = false
-            this.loadingCount++
-            console.log(this.fullscreenLoading)
-          }, 1)
-        }
+
       }
     },
     // 修改样式
@@ -603,6 +597,13 @@ export default {
       }
       this.getActiveSymbolData(newVal)
       this.subscribeSocketData(newVal)
+      if (!this.loadingCount) {
+        setTimeout(() => {
+          this.fullscreenLoading = false
+          this.loadingCount++
+          console.log(this.fullscreenLoading)
+        }, 500)
+      }
     },
     activeTradeArea (newVal, oldVal) {
     }
@@ -612,6 +613,7 @@ export default {
 <style scoped lang="scss">
   @import '../../../static/css/scss/index';
   .kline-container{
+    overflow: hidden;
     width:100%;
     height:355px;
     position: relative;
@@ -626,10 +628,12 @@ export default {
       }
     }
     .loading-box{
-      width:100%;
+      width:101%;
       height:355px;
       position: absolute;
       top:0;
+      right:0;
+      z-index: 5;
     }
   }
 </style>
