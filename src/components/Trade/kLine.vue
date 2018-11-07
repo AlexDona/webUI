@@ -120,10 +120,10 @@ export default {
       if (!returnAjaxMessage(data, this)) {
         return false
       } else {
-        console.log(new Date().getTime(), 'getData')
+        console.log(new Date().getTime(), 'getTime getData')
         let klineData = data.data.data.obj
         klineData = JSON.parse(unzip(klineData))
-        console.log(new Date().getTime(), 'unzip Data')
+        console.log(new Date().getTime(), 'getTime unzip Data')
         let list = []
         const ticker = `${this.symbol}-${this.interval}`
         console.log(ticker)
@@ -146,7 +146,7 @@ export default {
             volume: element.volume
           })
         })
-        console.log(new Date().getTime(), 'push Data to cache')
+        console.log(new Date().getTime(), 'getTime push Data to cache')
         this.cacheData[ticker] = list
         // console.log(list);
         this.lastTime = list[list.length - 1].time
@@ -218,6 +218,7 @@ export default {
       this.options.language = this.language
       this.init(this.options)
       this.getBars()
+      console.log(new Date().getTime(), 'getTime initComplate')
     },
     // 获取初始交易对
     async getDefaultSymbol () {
@@ -463,7 +464,7 @@ export default {
         'type': 'socket'
       })
     },
-    getBars (symbolInfo, resolution, rangeStartDate, rangeEndDate, onLoadedCallback) {
+    async getBars (symbolInfo, resolution, rangeStartDate, rangeEndDate, onLoadedCallback) {
       // symbolInfo.pricescale = 100000
       // console.log(' >> :', rangeStartDate, rangeEndDate)
       if (resolution && this.interval && (this.interval != resolution)) {
@@ -472,7 +473,7 @@ export default {
         this.options.interval = resolution
         // this.interval = 'min15'
         let newInterval = this.transformInterval(resolution)
-        this.subscribeSocketData(this.symbol, newInterval)
+        await this.subscribeSocketData(this.symbol, newInterval)
       }
       const ticker = `${this.symbol}-${this.interval}`
       if (this.cacheData[ticker] && this.cacheData[ticker].length) {
@@ -541,10 +542,10 @@ export default {
       })
     },
     // 订阅消息
-    subscribeSocketData (symbol, interval = 'min') {
+    async subscribeSocketData (symbol, interval = 'min') {
       // this.getKlineDataBySocket('REQ', symbol, interval)
-      console.log(new Date().getTime(), 'start to get Data')
-      this.getKlineByAjax(symbol, interval)
+      console.log(new Date().getTime(), 'getTime start to get Data')
+      await this.getKlineByAjax(symbol, interval)
       this.getKlineDataBySocket('SUB', symbol, interval)
       this.getTradeMarketBySocket('SUB', this.activeTabSymbolStr)
       this.getBuyAndSellBySocket('SUB', symbol)
@@ -593,7 +594,7 @@ export default {
     },
     resolutions (newVal, oldVal) {
     },
-    symbol (newVal, oldVal) {
+    async symbol (newVal, oldVal) {
       if (oldVal) {
         this.resolutions.forEach((item) => {
           console.log(item)
@@ -603,8 +604,8 @@ export default {
         this.getDepthDataBySocket('CANCEL', oldVal)
         this.getTradeRecordBySocket('CANCEL', oldVal)
       }
+      await this.subscribeSocketData(newVal)
       this.getActiveSymbolData(newVal)
-      this.subscribeSocketData(newVal)
     },
     activeTradeArea (newVal, oldVal) {
     }
