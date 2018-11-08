@@ -77,10 +77,79 @@
         </div>
         <!--表格下部分-->
         <div class="canceled-info-bottom">
+          <!-- 左侧 -->
           <div class="info-left">
+            <!-- 付款信息 -->
             <p class="text-info text-blue">{{$t('M.otc_index_js2')}}</p>
-            <p class="text-info">{{$t('M.otc_overtime')}}</p>
+            <!-- 买家未付款的 买家超时未付款，系统自动取消-->
+            <p
+              class="text-info"
+              v-show="item.appeal == 'NO'"
+            >
+              {{$t('M.otc_overtime')}}
+            </p>
+            <!-- 申诉判定，订单取消的 展示姓名，付款方式，银行卡号-->
+            <!-- 姓名 -->
+            <p
+              class="text-info"
+              v-show="item.appeal == 'YES'"
+            >
+              <!-- 姓名 ：展示的是卖家的名字-->
+              <span>{{$t('M.otc_name')}}：</span>
+              <span>{{item.sellName}}</span>
+            </p>
+            <!-- 付款方式 -->
+            <p
+              class="text-info"
+              v-show="item.appeal == 'YES'"
+            >
+              <span>{{$t('M.otc_alipay_type')}}：</span>
+              <!-- 判断付款方式 -->
+              <span v-show="item.payType === 'Alipay'">
+                {{$t('M.comm_alipay')}}
+              </span>
+              <span v-show="item.payType === 'Bankcard'">
+                {{$t('M.comm_bank')}}
+              </span>
+              <span v-show="item.payType === 'WestUnion'">
+                {{$t('M.comm_xilian')}}
+              </span>
+              <span v-show="item.payType === 'PAYPAL'">
+                PAYPAL
+              </span>
+              <span v-show="item.payType === 'Wechat'">
+                {{$t('M.comm_weixin')}}
+              </span>
+            </p>
+            <!-- 付款账号 -->
+            <p
+              class="text-info"
+              v-show="item.appeal == 'YES'"
+            >
+              <!-- 支付宝账号 -->
+              <span v-if="item.payType === 'Alipay'">
+                {{$t('M.user_account_alipay')}}{{$t('M.user_account_number')}}：
+              </span>
+              <!-- 银行卡账号 -->
+              <span v-if="item.payType === 'Bankcard'">
+                {{$t('M.otc_bank_num')}}：
+              </span>
+              <!-- 西联汇款账号 -->
+              <span v-if="item.payType === 'WestUnion'">
+                {{$t('M.user_account_western_union')}}{{$t('M.user_account_number')}}：
+              </span>
+              <!-- PAYPAL账号 -->
+              <span v-if="item.payType === 'PAYPAL'">
+                PAYPAL{{$t('M.user_account_number')}}：
+              </span>
+              <!-- 微信账号 -->
+              <span v-if="item.payType === 'Wechat'">
+                {{$t('M.user_account_weChat')}}{{$t('M.user_account_number')}}：
+              </span>
+              <span>{{item.payAcctount}}</span>
+            </p>
           </div>
+          <!-- 中间 -->
           <div class="info-middle">
             <p class="text-info text-blue">{{$t('M.otc_stocks_seller')}}</p>
             <p class="text-info">
@@ -90,6 +159,7 @@
               <span>{{$t('M.otc_trading_sellphone')}}：</span><span>{{item.sellPhone}}</span>
             </p>
           </div>
+          <!-- 右边 -->
           <div class="info-right">
             <!-- <p class="text-info text-blue">超时未支付，订单取消</p> -->
             <p
@@ -268,7 +338,7 @@ export default {
           // border-top: 1px solid #262F38;
           display: flex;
           flex: 7;
-          padding: 30px 30px 0 30px;
+          padding: 15px 30px 0 30px;
           // color: #9DA5B3;
           >.info-left{
             flex: 2;

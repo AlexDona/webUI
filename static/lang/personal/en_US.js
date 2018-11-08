@@ -52,8 +52,8 @@ export const personal = {
   'user_real_info': 'Please fill in your identity information truthfully and cannot be modified once certified.',
   'user_real_already': 'You have passed',
   'user_real_region': 'Regional country',
-  'user_real_certificate_type': 'type of certificate',
-  'user_real_real': 'actual name',
+  'user_real_certificate_type': 'Type of certificate',
+  'user_real_real': 'Actual name',
   // 高级认证Advanced certification
   'user_senior_certification': 'Advanced certification',
   'user_senior_audit': 'Pending review',
@@ -135,7 +135,7 @@ export const personal = {
   'user_security_phone': 'Phone',
   'user_security_google': 'Google ',
   'user_security_password': ' password',
-  'user_security_verify': 'verification',
+  'user_security_verify': ' verification',
   'user_security_number': ' number',
   'user_security_picture': 'Picture ',
   // 安全中心个人信息Security Center Personal Information

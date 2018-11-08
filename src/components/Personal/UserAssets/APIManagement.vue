@@ -876,7 +876,7 @@ export default {
         margin-bottom: 10px;
       }
       .text-info {
-        height: 20px;
+        // height: 20px;
         line-height: 20px;
       }
       .primary-button {
@@ -898,7 +898,7 @@ export default {
         >.extension-info-content {
           >.info-content {
             height: 250px;
-            padding-top: 40px;
+            padding-top: 20px;
             .api-input {
               width: 220px;
               height: 34px;
@@ -919,8 +919,9 @@ export default {
               }
             }
             .api-button {
-              padding: 10px 96px;
-              margin: 8px 0 0 120px;
+              padding: 10px 0;
+              width: 220px;
+              margin-left: 140px;
             }
             .prompt-message {
               height: 20px;

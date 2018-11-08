@@ -1547,7 +1547,7 @@ export default {
           color:rgba(51,143,245,1);
         }
         >.jump-login{
-          width:150px;
+          min-width:150px;
           height:40px;
           font-size: 18px;
           background:rgba(51,143,245,.5);

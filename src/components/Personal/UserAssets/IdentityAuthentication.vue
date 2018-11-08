@@ -64,31 +64,41 @@
       >
         <el-form
           ref="form"
-          label-width="80px"
+          label-width="140px"
         >
-          <!--地区国家 证件类型 真实姓名 证件号码-->
+          <!--地区国家 -->
           <el-form-item
             :label="$t('M.user_real_region')"
           >
             <el-select
+              :placeholder="$t('M.comm_please_choose')"
               v-model="regionValue"
               :no-data-text="$t('M.comm_no_data')"
               @change="changeId"
             >
-              <el-option
+              <!-- <el-option
                 v-for="(item, index) in contryAreaList"
                 :key="index"
                 :label="item.chinese"
                 :value="item.chinese"
               >
+              </el-option> -->
+              <el-option
+                v-for="(item, index) in contryAreaList"
+                :key="index"
+                :label="language === 'zh_CN' || language === 'zh_TW'? item.chinese : item.english"
+                :value="item.chinese"
+              >
               </el-option>
             </el-select>
           </el-form-item>
+          <!-- 证件类型 -->
           <el-form-item
             :label="$t('M.user_real_certificate_type')"
           >
             <!--请选择证件类型-->
             <el-select
+              @change="changedocumentTypeValue"
               v-model="documentTypeValue"
               :no-data-text="$t('M.comm_no_data')"
               :placeholder="$t('M.comm_please_choose') + $t('M.user_real_certificate_type')"
@@ -96,12 +106,20 @@
               <el-option
                 v-for="(item, index) in documentTypeList"
                 :key="index"
-                :label="item.certificateName"
+                :label="language === 'zh_CN' || language === 'zh_TW'? item.certificateName : item.english"
                 :value="item.certificateName"
               >
               </el-option>
+              <!-- <el-option
+                v-for="(item, index) in documentTypeList"
+                :key="index"
+                :label="item.certificateName"
+                :value="item.certificateName"
+              >
+              </el-option> -->
             </el-select>
           </el-form-item>
+          <!-- 真实姓名 -->
           <el-form-item
             :label="$t('M.user_real_real')"
           >
@@ -117,6 +135,7 @@
               :isShow="!!errorShowStatusList[0]"
             />
           </el-form-item>
+          <!-- 证件号码 -->
           <el-form-item
             :label="$t('M.comm_credentials_number')"
           >
@@ -517,14 +536,17 @@ export default {
       regionValue: '', // 国家
       regionList: [], // 国家地区列表
       documentTypeValue: '身份证', // 证件
+      // shortName: 'M.comm_all' // 全部
       documentTypeList: [
         {
           certificateId: 1,
-          certificateName: '身份证'
+          certificateName: '身份证',
+          english: 'ID'
         },
         {
           certificateId: 2,
-          certificateName: '护照'
+          certificateName: '护照',
+          english: 'Passport'
         }
       ], // 证件类型列表
       waitVeritfy: false, // 待审核
@@ -586,6 +608,10 @@ export default {
     ...mapMutations([
       'SET_USER_INFO_REFRESH_STATUS'
     ]),
+    // 改变证件类型
+    changedocumentTypeValue (e) {
+      console.log(e)
+    },
     // 隐藏上传按钮
     uploadImg (ref) {
       this.$refs[ref].click()
@@ -643,9 +669,11 @@ export default {
      * 刚进页面时候 国家列表展示
      */
     changeId (e) {
+      console.log(e)
       this.regionList.forEach(item => {
         if (e === item.id) {
           this.regionValue = e
+          console.log(this.regionValue)
         }
       })
     },
@@ -882,6 +910,7 @@ export default {
   filter: {},
   computed: {
     ...mapState({
+      language: state => state.common.language,
       theme: state => state.common.theme,
       userInfo: state => state.user.loginStep1Info, // 用户详细信息
       configInfo: state => state.common.footerInfo.configInfo,
@@ -906,6 +935,9 @@ export default {
           this.regionValue = data.data.data[0].chinese
         })
       }
+    },
+    contryAreaList (newVal) {
+      console.log(newVal)
     }
   }
 }
@@ -915,7 +947,7 @@ export default {
 .identity-authentication{
   >.identity-authentication-main{
     .name-authentication-content {
-      width: 350px;
+      width: 500px;
       padding-top: 28px;
       margin: 0 auto;
       padding-bottom: 25px;
