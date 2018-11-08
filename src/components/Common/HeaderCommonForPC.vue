@@ -11,7 +11,7 @@
         class="top"
         :style="{
           padding: $route.path==='/'? topPadding : '0 30px',
-          backgroundColor: topBackgroundColor
+          backgroundColor: $route.path==='/'? topBackgroundColor : $mainNightBgColor
         }"
       >
         <!--导航-->
@@ -725,9 +725,15 @@ export default{
             }
             &:hover{
               background-color: #1B2136;
+              >a{
+                color:$mainColor;
+              }
             }
             >a{
               color:$headerNavFontColor;
+              display: inline-block;
+              width: 100%;
+              height: 100%;
             }
             >.logo{
               display:inline-block;
