@@ -4,6 +4,9 @@
     :class="{'day':theme == 'day','night':theme == 'night' }"
     v-loading.fullscreen.lock="fullscreenLoading"
     element-loading-background="rgba(0, 0, 0, 0.6)"
+    :style="{
+      height: windowHeight+'px'
+    }"
   >
     <div class="binding-google-main margin25">
       <header class="binding-google-header personal-height60 line-height60 line-height70 margin25">
@@ -428,7 +431,10 @@ export default {
     ...mapState({
       theme: state => state.common.theme,
       userInfo: state => state.user.loginStep1Info // 用户详细信息
-    })
+    }),
+    windowHeight () {
+      return window.innerHeight
+    }
   },
   watch: {
     googleTheSecretUrl (newVal) {
