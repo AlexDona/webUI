@@ -2,6 +2,9 @@
   <div
     class="otc-online-trader-buy-sell-box otc"
     :class="{'day':theme == 'day','night':theme == 'night' }"
+    :style="{
+      height: windowHeight+'px'
+    }"
   >
     <!-- otc在线交易 摘单 页面 -->
     <!-- 2.0 otc在线交易买卖 -->
@@ -823,7 +826,10 @@ export default {
       theme: state => state.common.theme,
       configInfo: state => state.common.footerInfo.configInfo,
       anchorStatus: state => state.OTC.anchorStatus // anchorStatus锚点状态：在全局先定义false，当用户购买或者出售时候改为true
-    })
+    }),
+    windowHeight () {
+      return window.innerHeight
+    }
   },
   watch: {}
 }
