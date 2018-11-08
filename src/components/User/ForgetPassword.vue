@@ -515,44 +515,22 @@ export default {
       }
     },
     // 发送验证码
-    async sendPhoneOrEmailCode (msgType) {
+    sendPhoneOrEmailCode (msgType) {
       if (this.disabledOfPhoneBtn || this.disabledOfEmailBtn) {
         return false
       }
       let params = {
-        nationCode: this.userInfo.countryCode,
-        type: 'RETRIEVE_PASS'
+        nationCode: this.userInfo.countryCode
       }
       switch (msgType) {
         case 0:
           params.phone = this.userInfo.phone
           break
         case 1:
-          params.address = this.userInfo.email
+          params.email = this.userInfo.email
           break
       }
-      await sendPhoneOrEmailCodeAjax(msgType, params, (data) => {
-        // 提示信息
-        if (!returnAjaxMessage(data, this)) {
-          console.log('error')
-          return false
-        } else {
-          switch (msgType) {
-            case 0:
-              this.SET_USER_BUTTON_STATUS({
-                loginType: 0,
-                status: true
-              })
-              break
-            case 1:
-              this.SET_USER_BUTTON_STATUS({
-                loginType: 1,
-                status: true
-              })
-              break
-          }
-        }
-      })
+      sendPhoneOrEmailCodeAjax(msgType, params, this)
     }
   },
   filter: {},

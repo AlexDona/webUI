@@ -165,6 +165,7 @@ export default {
       } else {
         let activeSymbolData = data.data.data.obj
         activeSymbolData = JSON.parse(unzip(activeSymbolData))
+        console.log(activeSymbolData)
         let {
           defaultTrade, // 默认交易对
           depthList, // 买卖单、深度
@@ -315,7 +316,6 @@ export default {
         })
         this.symbol = options.symbol
         this.interval = options.interval
-
       }
     },
     // 修改样式
@@ -433,7 +433,7 @@ export default {
           break
         // 深度图
         case 'DEPTHRENDER':
-          // console.log(data)
+          console.log(data)
           if (data.data) {
             this.socketData.depthData = data.data
           }

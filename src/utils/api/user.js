@@ -15,6 +15,7 @@ import {
  */
 export const sendMsgByPhoneOrEmial = (type, params) => {
   let result
+  console.log(type)
   switch (type) {
     // 短信验证码
     case 0:

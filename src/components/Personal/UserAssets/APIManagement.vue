@@ -443,7 +443,7 @@ import {
   getSecurityCenter
 } from '../../../utils/commonFunc'
 import {timeFilter} from '../../../utils/index'
-const { mapMutations } = createNamespacedHelpers('personal')
+const { mapMutations } = createNamespacedHelpers('user')
 export default {
   components: {
     IconFontCommon, // 字体图标
@@ -496,7 +496,9 @@ export default {
   update () {},
   beforeRouteUpdate () {},
   methods: {
-    ...mapMutations([]),
+    ...mapMutations([
+      'SET_USER_BUTTON_STATUS'
+    ]),
     // 时间格式化
     timeFormatting (date) {
       return timeFilter(date, 'normal')
@@ -580,28 +582,7 @@ export default {
           params.email = this.innerUserInfo.email
           break
       }
-      sendPhoneOrEmailCodeAjax(loginType, params, (data) => {
-        // 提示信息
-        if (!returnAjaxMessage(data, this)) {
-          console.log('error')
-          return false
-        } else {
-          switch (loginType) {
-            case 0:
-              this.$store.commit('user/SET_USER_BUTTON_STATUS', {
-                loginType: 0,
-                status: true
-              })
-              break
-            case 1:
-              this.$store.commit('user/SET_USER_BUTTON_STATUS', {
-                loginType: 1,
-                status: true
-              })
-              break
-          }
-        }
-      })
+      sendPhoneOrEmailCodeAjax(loginType, params, this)
     },
     // 验证确认按钮
     stateSubmitDetermineValidation () {

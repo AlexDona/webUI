@@ -240,7 +240,7 @@
                         </p>
                         <p
                           class="code-list text-align-r float-right cursor-pointer font-size12"
-                          @click.prevent="stateRechargeRecord"
+                          @click.prevent="jumpToOtherTab('billing-details')"
                         >
                           <!--充值记录-->
                           {{ $t('M.comm_charge_recharge') }}{{ $t('M.comm_record') }}
@@ -281,7 +281,7 @@
                             </el-select>
                             <span
                               class="new-address cursor-pointer address-bg"
-                              @click.prevent="stateMentionAddress"
+                              @click.prevent="jumpToOtherTab('mention-address')"
                             >
                               <!--新增-->
                               {{ $t('M.comm_newly_increased') }}
@@ -379,7 +379,7 @@
                           </button>
                           <span
                             class="float-right cursor-pointer"
-                            @click.prevent="stateRechargeRecord"
+                            @click.prevent="jumpToOtherTab('billing-details')"
                           >
                           <div
                             class="false-tips fz14 ml100 mt0 mb20 pl10 tl"
@@ -439,7 +439,7 @@
                             </el-select>
                             <span
                               class="new-address cursor-pointer address-bg"
-                              @click.prevent="stateMentionAddress"
+                              @click.prevent="jumpToOtherTab('mention-address')"
                             >
                               <!--新增-->
                               {{ $t('M.comm_newly_increased') }}
@@ -536,7 +536,7 @@
                             </button>
                             <span
                               class="float-right cursor-pointer"
-                              @click.prevent="stateRechargeRecord"
+                              @click.prevent="jumpToOtherTab('billing-details')"
                             >
                           <div
                             class="false-tips fz14 ml100 mt0 mb20 pl10 tl"
@@ -735,7 +735,7 @@ import {
   sendPhoneOrEmailCodeAjax,
   getSecurityCenter
 } from '../../../utils/commonFunc'
-const { mapMutations } = createNamespacedHelpers('personal')
+const { mapMutations } = createNamespacedHelpers('user')
 Vue.use(VueClipboard)
 export default {
   components: {
@@ -828,8 +828,7 @@ export default {
   beforeRouteUpdate () {},
   methods: {
     ...mapMutations([
-      'CHANGE_USER_CENTER_ACTIVE_NAME',
-      'CHANGE_ACTIVE_SYMBOL'
+      'SET_USER_BUTTON_STATUS'
     ]),
     async checkoutNeedTips (coinId) {
       const params = {
@@ -1096,32 +1095,10 @@ export default {
           params.phone = this.userInfo.userInfo.phone
           break
         case 1:
-          params.address = this.userInfo.userInfo.email
+          params.email = this.userInfo.userInfo.email
           break
       }
-      sendPhoneOrEmailCodeAjax(loginType, params, (data) => {
-        // 提示信息
-        if (!returnAjaxMessage(data, this)) {
-          console.log('error')
-          return false
-        } else {
-          console.log(loginType)
-          switch (loginType) {
-            case 0:
-              this.$store.commit('user/SET_USER_BUTTON_STATUS', {
-                loginType: 0,
-                status: true
-              })
-              break
-            case 1:
-              this.$store.commit('user/SET_USER_BUTTON_STATUS', {
-                loginType: 1,
-                status: true
-              })
-              break
-          }
-        }
-      })
+      sendPhoneOrEmailCodeAjax(loginType, params, this)
     },
     // 调取后台接口 搜索关键字模糊查询
     statusSearch () {
@@ -1383,14 +1360,8 @@ export default {
       this.serviceChargeCount = ''
       this.mentionAddressValue = ''
     },
-    // 点击跳转账单明细
-    stateRechargeRecord () {
-      console.log('1')
-      this.CHANGE_USER_CENTER_ACTIVE_NAME('billing-details')
-    },
-    // 点击跳转提币地址
-    stateMentionAddress () {
-      this.CHANGE_USER_CENTER_ACTIVE_NAME('mention-address')
+    jumpToOtherTab (target) {
+      this.$store.commit('personal/CHANGE_USER_CENTER_ACTIVE_NAME', target)
     },
     //  点击复制
     onCopy (e) {

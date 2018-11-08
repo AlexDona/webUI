@@ -102,7 +102,7 @@ import {checkUserExist} from '../../../utils/api/user'
 // 底部
 import FooterCommon from '../../Common/FooterCommon'
 import { createNamespacedHelpers, mapState } from 'vuex'
-const { mapMutations } = createNamespacedHelpers('personal')
+const { mapMutations } = createNamespacedHelpers('user')
 export default {
   components: {
     HeaderCommon, // 头部
@@ -141,13 +141,12 @@ export default {
   beforeRouteUpdate () {},
   methods: {
     ...mapMutations([
-      'CHANGE_USER_CENTER_ACTIVE_NAME',
-      'CHANGE_REF_SECURITY_CENTER_INFO'
+      'SET_USER_BUTTON_STATUS'
     ]),
     // 点击返回上个页面
     returnSuperior () {
-      this.CHANGE_REF_SECURITY_CENTER_INFO(true)
-      this.CHANGE_USER_CENTER_ACTIVE_NAME('security-center')
+      this.$store.commit('personal/CHANGE_REF_SECURITY_CENTER_INFO', true)
+      this.$store.commit('personal/CHANGE_USER_CENTER_ACTIVE_NAME', 'security-center')
       this.$router.push({path: '/PersonalCenter'})
     },
     // 发送邮箱验证码
@@ -176,40 +175,19 @@ export default {
         return false
       }
       let params = {
-        type: 'VERIFICATION_CODE' // 类型
+        // type: 'VERIFICATION_CODE' // 类型
         // country: this.activeCountryCode // 邮箱国籍
+        userId: this.userInfo.userId
       }
       switch (loginType) {
         case 0:
-          params.phone = this.userInfo.userInfo.phone
+          params.phone = this.userInfoDetail.phone
           break
         case 1:
-          params.address = this.emailAccounts
+          params.email = this.emailAccounts
           break
       }
-      sendPhoneOrEmailCodeAjax(loginType, params, (data) => {
-        console.log(this.disabledOfPhoneBtn)
-        // 提示信息
-        if (!returnAjaxMessage(data, this)) {
-          console.log('error')
-          return false
-        } else {
-          switch (loginType) {
-            case 0:
-              this.$store.commit('user/SET_USER_BUTTON_STATUS', {
-                loginType: 0,
-                status: true
-              })
-              break
-            case 1:
-              this.$store.commit('user/SET_USER_BUTTON_STATUS', {
-                loginType: 1,
-                status: true
-              })
-              break
-          }
-        }
-      })
+      sendPhoneOrEmailCodeAjax(loginType, params, this)
     },
     /**
      * 确认绑定邮箱
@@ -345,9 +323,7 @@ export default {
     successJump () {
       setInterval(() => {
         if (this.successCountDown === 0) {
-          this.CHANGE_REF_SECURITY_CENTER_INFO(true)
-          this.CHANGE_USER_CENTER_ACTIVE_NAME('security-center')
-          this.$router.push({path: '/PersonalCenter'})
+          this.returnSuperior()
         }
         this.successCountDown--
       }, 1000)
@@ -358,6 +334,7 @@ export default {
     ...mapState({
       theme: state => state.common.theme,
       userInfo: state => state.user.loginStep1Info, // 用户详细信息
+      userInfoDetail: state => state.user.loginStep1Info.userInfo,
       activeCountryCode: state => state.user.loginStep1Info.countryCode, // 国籍码
       disabledOfPhoneBtn: state => state.user.disabledOfPhoneBtn,
       disabledOfEmailBtn: state => state.user.disabledOfEmailBtn

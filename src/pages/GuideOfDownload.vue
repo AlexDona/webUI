@@ -1,6 +1,6 @@
 <template>
   <div
-    class="demo-box"
+    class="download-box"
     :class="{'day':theme == 'day','night':theme == 'night' }"
   >
     <div class="inner-box"></div>
@@ -8,7 +8,7 @@
 </template>
 <!--请严格按照如下书写书序-->
 <script>
-import {mapState} from 'vuex'
+// import {mapState} from 'vuex'
 // import {returnAjaxMessage} from '../../utils/commonFunc'
 export default {
   components: {

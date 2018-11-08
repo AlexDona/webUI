@@ -641,7 +641,7 @@ import {
 } from '../../../utils/commonFunc'
 import {timeFilter} from '../../../utils/index'
 import {mapState, createNamespacedHelpers} from 'vuex'
-const { mapMutations } = createNamespacedHelpers('personal')
+const { mapMutations } = createNamespacedHelpers('user')
 export default {
   components: {
     IconFontCommon, // 字体图标
@@ -689,7 +689,7 @@ export default {
     // 调用安全中心登陆记录 安全设置记录 邮箱 手机 谷歌 交易密码 状态
     if (this.refSecurityCenterStatus) {
       await this.getSecurityCenter()
-      this.CHANGE_REF_SECURITY_CENTER_INFO(false)
+      this.$store.commit('personal/CHANGE_REF_SECURITY_CENTER_INFO', false)
     }
     await this.getSecurityCenter('logon-record')
   },
@@ -699,9 +699,7 @@ export default {
   beforeRouteUpdate () {},
   methods: {
     ...mapMutations([
-      'SET_USER_BUTTON_STATUS',
-      'CHANGE_REF_SECURITY_CENTER_INFO',
-      'GET_SECURITY_CENTER'
+      'SET_USER_BUTTON_STATUS'
     ]),
     // 1.时间格式化
     timeFormatting (date) {
@@ -795,45 +793,25 @@ export default {
       }
     },
     // 发送验证码
-    async sendPhoneOrEmailCode (loginType) {
+    sendPhoneOrEmailCode (loginType) {
       console.log(this.disabledOfPhoneBtn)
       console.log(this.disabledOfEmailBtn)
       if (this.disabledOfPhoneBtn || this.disabledOfEmailBtn) {
         return false
       }
+      console.log(this.userInfo)
       let params = {
-        type: 'VERIFICATION_CODE' // 通用类型
+        userId: this.userInfo.userId
       }
       switch (loginType) {
         case 0:
           params.phone = this.userInfo.userInfo.phone
           break
         case 1:
-          params.address = this.userInfo.userInfo.email
+          params.email = this.userInfo.userInfo.email
           break
       }
-      await sendPhoneOrEmailCodeAjax(loginType, params, (data) => {
-        // 提示信息
-        if (!returnAjaxMessage(data, this)) {
-          console.log('error')
-          return false
-        } else {
-          switch (loginType) {
-            case 0:
-              this.$store.commit('user/SET_USER_BUTTON_STATUS', {
-                loginType: 0,
-                status: true
-              })
-              break
-            case 1:
-              this.$store.commit('user/SET_USER_BUTTON_STATUS', {
-                loginType: 1,
-                status: true
-              })
-              break
-          }
-        }
-      })
+      sendPhoneOrEmailCodeAjax(loginType, params, this)
     },
     // 检测输入格式
     checkoutInputFormat (type, targetNum) {

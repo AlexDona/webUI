@@ -151,7 +151,7 @@
               :label="$t('M.comm_name') + '：'"
             >
               <span class="bank-content-name">
-                {{ userInfo.userInfo.realname }}
+                {{ userInfoDetail.realname }}
               </span>
             </el-form-item>
             <!--短信验证码-->
@@ -283,7 +283,7 @@ import {
   changeMobilePhone
 } from '../../../utils/api/personal'
 import {checkUserExist} from '../../../utils/api/user'
-const { mapMutations } = createNamespacedHelpers('personal')
+const { mapMutations } = createNamespacedHelpers('user')
 export default {
   components: {
     HeaderCommon, // 头部
@@ -347,13 +347,12 @@ export default {
   beforeRouteUpdate () {},
   methods: {
     ...mapMutations([
-      'CHANGE_USER_CENTER_ACTIVE_NAME',
-      'CHANGE_REF_SECURITY_CENTER_INFO'
+      'SET_USER_BUTTON_STATUS'
     ]),
     // 点击返回上个页面
     returnSuperior () {
-      this.CHANGE_REF_SECURITY_CENTER_INFO(true)
-      this.CHANGE_USER_CENTER_ACTIVE_NAME('security-center')
+      this.$store.commit('personal/CHANGE_REF_SECURITY_CENTER_INFO', true)
+      this.$store.commit('personal/CHANGE_USER_CENTER_ACTIVE_NAME', 'security-center')
       this.$router.push({path: '/PersonalCenter'})
     },
     // 4位随机数
@@ -425,8 +424,7 @@ export default {
         }
       }
       let params = {
-        type: 'VERIFICATION_CODE', // 类型
-        nationCode: this.bindingDataPhone.bindingAreaCodeValue // 国家编码
+        userId: this.userInfo.userId
       }
       if (!this.securityCenter.isPhoneBind) {
         console.log(2)
@@ -436,7 +434,7 @@ export default {
             params.phone = this.bindingDataPhone.bindingNewPhoneAccounts
             break
           case 1:
-            params.address = this.userInfo.userInfo.email
+            params.email = this.userInfoDetail.email
             break
         }
       } else {
@@ -445,7 +443,7 @@ export default {
           case 0:
             if (val == 1) {
               // 当是换绑手机时给原手机号发验证码
-              params.phone = this.userInfo.userInfo.phone
+              params.phone = this.userInfoDetail.phone
             }
             if (val == 2) {
               if (!this.amendDataPhone.newPhoneAccounts) {
@@ -461,30 +459,11 @@ export default {
             }
             break
           case 1:
-            params.address = this.userInfo.userInfo.email
+            params.email = this.userInfoDetail.email
             break
         }
       }
-      await sendPhoneOrEmailCodeAjax(loginType, params, (data) => {
-        console.log(this.disabledOfPhoneBtn)
-        console.log(this.disabledOfPhoneBtn)
-        // 提示信息
-        if (!returnAjaxMessage(data, this)) {
-          console.log('error')
-          return false
-        } else {
-          this.$store.commit('user/SET_USER_BUTTON_STATUS', {
-            loginType: 0,
-            type,
-            status: true
-          })
-          this.$store.commit('user/SET_USER_BUTTON_STATUS', {
-            loginType: 1,
-            type,
-            status: true
-          })
-        }
-      })
+      sendPhoneOrEmailCodeAjax(loginType, params, this)
     },
     // 绑定手机检测输入格式
     checkoutInputFormat (type, targetNum) {
@@ -705,7 +684,7 @@ export default {
         return false
       }
       console.log(this.userInfo)
-      if (!this.userInfo.userInfo.payPassword) {
+      if (!this.userInfoDetail.payPassword) {
         this.$message({
           message: this.$t('M.otc_index_js3'), // 请先设置交易密码，再来设置OTC收款账户!
           type: 'error'
@@ -772,9 +751,7 @@ export default {
     successJump () {
       setInterval(() => {
         if (this.successCountDown === 0) {
-          this.CHANGE_REF_SECURITY_CENTER_INFO(true)
-          this.CHANGE_USER_CENTER_ACTIVE_NAME('security-center')
-          this.$router.push({path: '/PersonalCenter'})
+          this.returnSuperior()
         }
         this.successCountDown--
       }, 1000)
@@ -785,6 +762,7 @@ export default {
     ...mapState({
       theme: state => state.common.theme,
       userInfo: state => state.user.loginStep1Info, // 用户详细信息
+      userInfoDetail: state => state.user.loginStep1Info.userInfo,
       contryAreaList: state => state.common.contryAreaList,
       disabledOfOldPhoneBtn: state => state.user.disabledOfOldPhoneBtn,
       disabledOfPhoneBtn: state => state.user.disabledOfPhoneBtn,

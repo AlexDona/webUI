@@ -239,7 +239,7 @@
 </template>
 <!--请严格按照如下书写书序-->
 <script>
-import {mapState} from 'vuex'
+
 import {
   inquireWithdrawalAddressList,
   addNewWithdrawalAddress,
@@ -254,6 +254,8 @@ import {
   getSecurityCenter,
   validateNumForUserInput
 } from '../../../utils/commonFunc'
+import {mapState, createNamespaceHelpers} from 'vuex'
+const {mapMutations} = createNamespaceHelpers('user')
 export default {
   components: {
     ErrorBox, // 错误提示接口
@@ -305,6 +307,9 @@ export default {
   update () {},
   beforeRouteUpdate () {},
   methods: {
+    ...mapMutations([
+      'SET_USER_BUTTON_STATUS'
+    ]),
     // 资产币种下拉
     changeId (e) {
       this.currencyList.forEach(item => {
@@ -535,30 +540,7 @@ export default {
           params.email = this.innerUserInfo.email
           break
       }
-      await sendPhoneOrEmailCodeAjax(loginType, params, (data) => {
-        // 提示信息
-        if (!returnAjaxMessage(data, this)) {
-          console.log('error')
-          return false
-        } else {
-          switch (loginType) {
-            case 0:
-              this.$store.commit('user/SET_USER_BUTTON_STATUS', {
-                loginType: 0,
-                status: true
-              })
-              break
-            case 1:
-              this.$store.commit('user/SET_USER_BUTTON_STATUS', {
-                loginType: 1,
-                status: true
-              })
-              break
-          }
-          console.log(this.disabledOfPhoneBtn)
-          console.log(this.disabledOfEmailBtn)
-        }
-      })
+      sendPhoneOrEmailCodeAjax(loginType, params, this)
     },
     changeCurrentPage (pageNum) {
       this.currentPageForMyEntrust = pageNum
