@@ -2,6 +2,7 @@
   <div
     class="footer-box common"
     v-show="isloading"
+    ref="footer"
   >
     <div class="inner-box">
       <!--顶部-->
@@ -207,7 +208,8 @@ export default {
   },
   created () {
   },
-  mounted () {},
+  mounted () {
+  },
   activited () {},
   update () {},
   beforeRouteUpdate () {},

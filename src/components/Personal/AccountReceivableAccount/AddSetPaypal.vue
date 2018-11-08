@@ -4,6 +4,9 @@
     :class="{'day':theme == 'day','night':theme == 'night' }"
     v-loading.fullscreen.lock="fullscreenLoading"
     element-loading-background="rgba(0, 0, 0, 0.6)"
+    :style="{
+      height: windowHeight+'px'
+    }"
   >
     <div
       class="add-payment-main margin25"
@@ -317,7 +320,10 @@ export default {
       userInfo: state => state.user.loginStep1Info, // 用户详细信息
       innerUserInfo: state => state.user.loginStep1Info.userInfo, // 内层用户详细信息
       refAccountCenterStatus: state => state.personal.refAccountCenterStatus
-    })
+    }),
+    windowHeight () {
+      return window.innerHeight
+    }
   },
   watch: {}
 }

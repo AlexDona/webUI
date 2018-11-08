@@ -130,7 +130,7 @@ export const validateNumForUserInput = (type, targetNum) => {
   return returnNum
 }
 // api 发送验证码（短信、邮箱）
-export const sendPhoneOrEmailCodeAjax = async (type, params, that, callback) => {
+export const sendPhoneOrEmailCodeAjax = async (type, params, that, isNewPhone = 0, callback) => {
   const data = await sendMsgByPhoneOrEmial(type, params)
   if (!returnAjaxMessage(data, that)) {
     return false
@@ -139,12 +139,14 @@ export const sendPhoneOrEmailCodeAjax = async (type, params, that, callback) => 
       case 0:
         store.commit('user/SET_USER_BUTTON_STATUS', {
           loginType: 0,
+          type: isNewPhone,
           status: true
         })
         break
       case 1:
         store.commit('user/SET_USER_BUTTON_STATUS', {
           loginType: 1,
+          type: isNewPhone,
           status: true
         })
         break

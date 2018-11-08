@@ -1218,7 +1218,7 @@ export default {
           top:-25%;
           // left:36%;
           // width:104px;
-          left:24%;
+          left:36%;
           // width:104px;
           height:35px;
           font-size:26px;

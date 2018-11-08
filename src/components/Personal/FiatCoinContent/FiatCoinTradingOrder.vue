@@ -1218,7 +1218,7 @@ export default {
         border: 0;
         border-radius: 5px;
       }
-      min-height: 472px;
+      min-height: 386px;
       border-radius: 5px;
       >.order-list{
         /*width: 1045px;*/

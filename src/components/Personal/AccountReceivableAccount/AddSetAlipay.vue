@@ -4,6 +4,9 @@
     :class="{'day':theme == 'day','night':theme == 'night' }"
     v-loading.fullscreen.lock="fullscreenLoading"
     element-loading-background="rgba(0, 0, 0, 0.6)"
+    :style="{
+      height: windowHeight+'px'
+    }"
   >
     <div
       class="add-account-main margin25"
@@ -380,6 +383,9 @@ export default {
       innerUserInfo: state => state.user.loginStep1Info.userInfo, // 内层用户详细信息
       refAccountCenterStatus: state => state.personal.refAccountCenterStatus
     }),
+    windowHeight () {
+      return window.innerHeight
+    },
     apiCommonUrl () {
       return apiCommonUrl
     }

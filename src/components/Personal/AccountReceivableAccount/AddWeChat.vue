@@ -4,6 +4,9 @@
     :class="{'day':theme == 'day','night':theme == 'night' }"
     v-loading.fullscreen.lock="fullscreenLoading"
     element-loading-background="rgba(0, 0, 0, 0.6)"
+    :style="{
+      height: windowHeight+'px'
+    }"
   >
     <div
       class="add-chat-main margin25"
@@ -375,6 +378,9 @@ export default {
     }),
     apiCommonUrl () {
       return apiCommonUrl
+    },
+    windowHeight () {
+      return window.innerHeight
     }
   },
   watch: {}

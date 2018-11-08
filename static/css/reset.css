@@ -92,7 +92,9 @@ caption, th {
 q:before, q:after, blockquote:before, blockquote:after {
   content: "";
 }
-
+textarea{
+  resize: none !important;
+}
 button,input{
   outline:none;
   border:none;
