@@ -91,3 +91,7 @@
 .api-management.personal .el-table__empty-block{
   width: 100% !important;
 }
+/* 备注绑定IP部分样式修复 */
+.api-management.personal .invitation-promotion-main .extension-info .extension-info-content .info-content .el-form .el-form-item .el-form-item__label{
+  width: 140px !important;
+}

@@ -238,7 +238,8 @@
               >
                 <template slot-scope = "s">
                   <div>
-                    {{s.row.minCount}}~{{s.row.maxCount}}{{activitedCurrencyName}}
+                    <!-- {{s.row.minCount}}~{{s.row.maxCount}}{{activitedCurrencyName}} -->
+                    {{ filterNumber(s.row.minCount) }}~{{ filterNumber(s.row.maxCount) }}{{activitedCurrencyName}}
                   </div>
                 </template>
               </el-table-column>
@@ -418,7 +419,10 @@
 </template>
 <!--请严格按照如下书写书序-->
 <script>
-import {amendPrecision} from '../../utils'
+import {
+  amendPrecision,
+  scientificToNumber
+} from '../../utils'
 import {
   getOTCAvailableCurrency,
   getOTCPutUpOrders,
@@ -525,6 +529,11 @@ export default {
       'CHANGE_OTC_AVAILABLE_CURRENCY_ID',
       'CHANGE_OTC_AVAILABLE_PARTNER_COIN_ID'
     ]),
+    // 科学计数法转换
+    filterNumber (num) {
+      console.log(scientificToNumber(num))
+      return scientificToNumber(num)
+    },
     // 0.1 切换各订单状态tab面板
     toggleTabPane (tab, event) {
       // 防止频繁切换点击按钮 通过禁用按钮，0.5秒后可以点击

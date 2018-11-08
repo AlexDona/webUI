@@ -315,7 +315,6 @@ export default {
         })
         this.symbol = options.symbol
         this.interval = options.interval
-
       }
     },
     // 修改样式

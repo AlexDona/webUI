@@ -1817,6 +1817,9 @@ export default {
                 .money-color {
                   color: #9DA5B3;
                 }
+                .table-charge-money,.table-mention-money,.money-color{
+                  margin-right: 10px;
+                }
                 >.table-charge-money,
                 >.table-mention-money,
                 >.table-deal {
