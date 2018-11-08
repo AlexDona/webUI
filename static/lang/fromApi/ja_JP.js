@@ -345,5 +345,6 @@ export const fromApi = {
   'otc_failure_0083': 'Otcは現在、取引通貨を設定していません',
   'otc_failure_0084': 'Otcは現在取引通貨を設定していません',
   'user-fail-sms-code-old': '旧携帯電話番号SMS認証コードエラー',
-  'user-fail-sms-code-new': '新しい携帯電話番号SMS認証コードエラー'
+  'user-fail-sms-code-new': '新しい携帯電話番号SMS認証コードエラー',
+  'otc_failure_0087': '問い合わせがない通貨レート'
 }
