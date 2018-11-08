@@ -369,5 +369,6 @@ export const fromApi = {
   'MAIL_TO_ADDRESS_NOT_FOUND': '当前邮件地址不存在，请检查过后再次发送',
   'otc_failure_0086': '商户设置的商家申请冻结币种信息有误，请联系客服',
   'SMS_BAD_ARGUMENT_FORMAT': '手机格式不正确。',
-  'SMS_FAILURE': '发送失败'
+  'SMS_FAILURE': '发送失败',
+  'otc_failure_0087': '查询不到该法币汇率'
 }

@@ -345,5 +345,6 @@ export const fromApi = {
   'otc_failure_0083': 'otc當前未設置交易法幣',
   'otc_failure_0084': 'otc當前未設置交易幣種',
   'user-fail-sms-code-old': '舊手機號短信驗證碼錯誤',
-  'user-fail-sms-code-new': '新手機號短信驗證碼錯誤'
+  'user-fail-sms-code-new': '新手機號短信驗證碼錯誤',
+  'otc_failure_0087': '查詢不到該法幣匯率'
 }

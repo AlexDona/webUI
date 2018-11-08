@@ -351,5 +351,6 @@ export const fromApi = {
   'otc_failure_0083': 'OTC currently does not set trading currency',
   'otc_failure_0084': 'OTC currently does not set withdraw currency',
   'user-fail-sms-code-old': 'Old mobile phone SMS verification code error',
-  'user-fail-sms-code-new': 'New mobile phone SMS verification code error'
+  'user-fail-sms-code-new': 'New mobile phone SMS verification code error',
+  'otc_failure_0087': 'Cannot find the currency exchange rate'
 }

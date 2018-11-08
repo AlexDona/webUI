@@ -345,5 +345,6 @@ export const fromApi = {
   'otc_failure_0083': 'Otc는 현재 거래 통화를 설정하지 않습니다.',
   'otc_failure_0084': 'Otc는 현재 거래 통화를 설정하지 않습니다.',
   'user-fail-sms-code-old': '이전 휴대 전화 번호 SMS 인증 코드 오류',
-  'user-fail-sms-code-new': '새 휴대 전화 번호 SMS 인증 코드 오류'
+  'user-fail-sms-code-new': '새 휴대 전화 번호 SMS 인증 코드 오류',
+  'otc_failure_0087': '이 법률 화폐의 환율을 조회 할 수 없다.'
 }
