@@ -200,6 +200,7 @@ export default {
 </script>
 <style scoped lang="scss" type="text/scss">
   .currency-application-box{
+    margin-top:66px;
     >.inner-box{
       >.top{
         height:344px;
@@ -211,7 +212,7 @@ export default {
         position: relative;
         overflow: hidden;
         >img{
-          width:100%;
+          /*width:100%;*/
         }
         >.title{
           font-size: 36px;

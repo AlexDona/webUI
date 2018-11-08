@@ -819,14 +819,10 @@ export default {
       }
     },
     APIMoneyConfirm (newVal) {
-      if (!newVal) {
-        this.clearUserInputMsg()
-      }
+
     },
     apiSecondaryConfirmation (newVal) {
-      if (!newVal) {
-        this.clearUserInputMsg()
-      }
+
     },
     compileUserApi (newVal) {
       if (!newVal) {

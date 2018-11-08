@@ -983,6 +983,7 @@ export default {
 // @import "../../../static/css/scss/OTC/OTCCenter.scss";
 @import "../../../static/css/scss/index.scss";
 .otc-box{
+  margin-top:66px;
   >.otc-center-content{
     width: 1150px;
     margin: 36px auto 0px;

@@ -1202,6 +1202,7 @@ export default {
 <style scoped lang="scss">
   @import '../../static/css/scss/index.scss';
   .login-box.user {
+    margin-top:66px;
     height:100%;
     overflow: hidden;
     background:linear-gradient(150deg,rgba(30,38,54,1),rgba(37,75,117,1));

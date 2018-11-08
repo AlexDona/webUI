@@ -220,8 +220,10 @@ export default {
 </script>
 <style scoped lang="scss" type="text/scss">
   .ranking-list-of-invitation-box{
+    margin-top:66px;
     >.inner-box{
       width:100%;
+      overflow: hidden;
       .top{
         width:100%;
         background: url(../../assets/develop/yaoqing.png) no-repeat center center;
