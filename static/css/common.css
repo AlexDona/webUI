@@ -14,6 +14,7 @@
 {
   min-width: 0;
   box-shadow: 0px 1px 1px 0px rgba(19,24,30,1);
+  color:#fff;
 }
 .day .el-pagination.is-background .btn-next,
 .day .el-pagination.is-background .btn-prev
@@ -53,6 +54,9 @@
 
 .night .el-pagination.is-background .el-pager li:not(.disabled).active{
   background-color: #338FF5 !important;
+}
+.el-pagination.is-background .btn-next.disabled, .el-pagination.is-background .btn-next:disabled, .el-pagination.is-background .btn-prev.disabled, .el-pagination.is-background .btn-prev:disabled, .el-pagination.is-background .el-pager li.disabled{
+  color:#606266;
 }
 /*日期组件*/
 .night .el-picker-panel{
