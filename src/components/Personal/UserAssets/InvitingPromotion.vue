@@ -307,7 +307,7 @@ import IconFontCommon from '../../Common/IconFontCommon'
 import VueClipboard from 'vue-clipboard2'
 import {
   userPromotionList,
-  recommendUserPromotionList,
+  getRecommendUserPromotionList,
   currencyTransform
 } from '../../../utils/api/personal'
 import {domain} from '../../../utils/env'
@@ -444,7 +444,7 @@ export default {
     // 推荐用户币种列表
     async getRecommendUserPromotion () {
       // this.loading = true
-      let data = await recommendUserPromotionList({
+      let data = await getRecommendUserPromotionList({
         pageNumber: this.currentPageMyEntrust, // 页码
         pageSize: this.pageSize // 条数
       })
@@ -456,13 +456,11 @@ export default {
       } else {
         // 接口失败清除局部loading
         this.loading = false
-        // console.log(data.data.data)
+        let responseData = data.data.data
         // 返回展示
-        this.awardList = data.data.data.data.list
-        this.coinName = data.data.data.coinName
-        console.log(this.coinName)
-        this.totalPageMyEntrust = data.data.data.pages - 0
-        console.log(this.awardList)
+        this.awardList = responseData.data.list
+        this.coinName = responseData.coinName
+        this.totalPageMyEntrust = responseData.data.pages - 0
       }
     },
     // 分页

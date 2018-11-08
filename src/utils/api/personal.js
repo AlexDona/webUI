@@ -87,7 +87,7 @@ export const pushPropertyTransaction = (params) => put('push/pushPay', params)
 // 直接推广 间接推广列表
 export const userPromotionList = (params) => get('user/center/inviter', params)
 // 推荐用户币种列表
-export const recommendUserPromotionList = (params) => get('user/center/inviterCoin', params)
+export const getRecommendUserPromotionList = (params) => get('user/center/inviterCoin', params)
 /**
  * 收款方式
  * */

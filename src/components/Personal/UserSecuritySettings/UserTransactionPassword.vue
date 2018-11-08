@@ -249,7 +249,7 @@ import {
 // 底部
 import FooterCommon from '../../Common/FooterCommon'
 import { createNamespacedHelpers, mapState } from 'vuex'
-const { mapMutations } = createNamespacedHelpers('personal')
+const { mapMutations } = createNamespacedHelpers('user')
 export default {
   components: {
     HeaderCommon, // 头部
@@ -310,13 +310,12 @@ export default {
   beforeRouteUpdate () {},
   methods: {
     ...mapMutations([
-      'CHANGE_USER_CENTER_ACTIVE_NAME',
-      'CHANGE_REF_SECURITY_CENTER_INFO'
+      'SET_USER_BUTTON_STATUS'
     ]),
     // 点击返回上个页面
     returnSuperior () {
-      this.CHANGE_REF_SECURITY_CENTER_INFO(true)
-      this.CHANGE_USER_CENTER_ACTIVE_NAME('security-center')
+      this.$store.commit('personal/CHANGE_REF_SECURITY_CENTER_INFO', true)
+      this.$store.commit('personal/CHANGE_USER_CENTER_ACTIVE_NAME', 'security-center')
       this.$router.push({path: '/PersonalCenter'})
     },
     /**
@@ -333,40 +332,18 @@ export default {
         return false
       }
       let params = {
-        nationCode: this.activeCountryCode,
-        type: 'VERIFICATION_CODE' // 类型
+        // nationCode: this.activeCountryCode,
+        userId: this.userInfo.userId
       }
       switch (loginType) {
         case 0:
-          params.phone = this.userInfo.userInfo.phone
+          params.phone = this.userInfoDetail.phone
           break
         case 1:
-          params.address = this.userInfo.userInfo.email
+          params.email = this.userInfoDetail.email
           break
       }
-      sendPhoneOrEmailCodeAjax(loginType, params, (data) => {
-        console.log(this.disabledOfPhoneBtn)
-        // 提示信息
-        if (!returnAjaxMessage(data, this)) {
-          console.log('error')
-          return false
-        } else {
-          switch (loginType) {
-            case 0:
-              this.$store.commit('user/SET_USER_BUTTON_STATUS', {
-                loginType: 0,
-                status: true
-              })
-              break
-            case 1:
-              this.$store.commit('user/SET_USER_BUTTON_STATUS', {
-                loginType: 1,
-                status: true
-              })
-              break
-          }
-        }
-      })
+      sendPhoneOrEmailCodeAjax(loginType, params, this)
     },
     // 确定设置检测输入格式
     checkoutInputFormat (type, targetNum) {
@@ -558,8 +535,8 @@ export default {
     async confirmVerifyInformation () {
       let data
       let params = {
-        email: this.userInfo.userInfo.email, // 邮箱
-        phone: this.userInfo.userInfo.phone, // 手机
+        email: this.userInfoDetail.email, // 邮箱
+        phone: this.userInfoDetail.phone, // 手机
         emailCode: this.modifyPassword.emailCode, // 邮箱验证
         phoneCode: this.modifyPassword.phoneCode, // 手机验证
         googleCode: this.modifyPassword.googleCode // 谷歌验证
@@ -652,9 +629,7 @@ export default {
     successJump () {
       setInterval(() => {
         if (this.successCountDown === 0) {
-          this.CHANGE_REF_SECURITY_CENTER_INFO(true)
-          this.$router.push({path: '/PersonalCenter'})
-          this.CHANGE_USER_CENTER_ACTIVE_NAME('security-center')
+          this.returnSuperior()
         }
         this.successCountDown--
       }, 1000)
@@ -665,6 +640,7 @@ export default {
     ...mapState({
       theme: state => state.common.theme,
       userInfo: state => state.user.loginStep1Info, // 用户详细信息
+      userInfoDetail: state => state.user.loginStep1Info.userInfo,
       disabledOfPhoneBtn: state => state.user.disabledOfPhoneBtn,
       disabledOfEmailBtn: state => state.user.disabledOfEmailBtn,
       refSecurityCenterStatus: state => state.personal.refSecurityCenterStatus

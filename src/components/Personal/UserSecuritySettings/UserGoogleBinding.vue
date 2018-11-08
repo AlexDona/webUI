@@ -386,9 +386,7 @@ export default {
     successJump () {
       setInterval(() => {
         if (this.successCountDown === 0) {
-          this.CHANGE_REF_SECURITY_CENTER_INFO(true)
-          this.CHANGE_USER_CENTER_ACTIVE_NAME('security-center')
-          this.$router.push({path: '/PersonalCenter'})
+          this.returnSuperior()
         }
         this.successCountDown--
       }, 1000)

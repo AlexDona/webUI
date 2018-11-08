@@ -80,7 +80,7 @@
                     <dd
                       class="buys-item cursor-pointer"
                       v-for="(item,index) in buysAndSellsList.sells.list"
-                      :key="item"
+                      :key="index"
                       :class="{'odd':index%2!==0}"
                       @click="changeActivePriceItem(item)"
                     >
@@ -113,7 +113,7 @@
                   <dd
                     class="sells-item cursor-pointer"
                     v-for="(item,index) in buysAndSellsList.buys.list"
-                    :key="item"
+                    :key="index"
                     :class="{'even':index%2==0}"
                     @click="changeActivePriceItem(item)"
                   >

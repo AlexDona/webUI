@@ -1,7 +1,10 @@
 /**
  *请求封装
  */
-import {apiCommonUrl} from '../env'
+import {
+  apiCommonUrl,
+  xDomain
+} from '../env'
 import axios from 'axios'
 import store from '../../vuex'
 import router from '../../router/index'
@@ -20,10 +23,8 @@ util.ajax.interceptors.request.use((config) => {
     countOf401 = 0
     return false
   }
-  let xDomain = window.location.host.split(':')[0]
-  xDomain = xDomain.startsWith('www') ? xDomain.slice(4) : xDomain
+
   config.headers['x-domain'] = xDomain
-  // config.headers['x-domain'] = 'new.test.com'
   if (store.state.user.loginStep1Info.token) {
     let userToken = store.state.user.loginStep1Info.token
     config.headers['token'] = userToken

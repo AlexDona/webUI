@@ -59,7 +59,7 @@ export const returnAjaxMessage = (data, self, noTip, errorTip) => {
           store.commit('user/USER_LOGOUT')
           break
         case 500:
-          self.$router.push({path: '/500'})
+          // self.$router.push({path: '/500'})
           break
       }
       return 0
@@ -130,16 +130,40 @@ export const validateNumForUserInput = (type, targetNum) => {
   return returnNum
 }
 // api 发送验证码（短信、邮箱）
-export const sendPhoneOrEmailCodeAjax = async (type, params, callback) => {
+export const sendPhoneOrEmailCodeAjax = async (type, params, that, callback) => {
   const data = await sendMsgByPhoneOrEmial(type, params)
-  callback(data)
+  if (!returnAjaxMessage(data, that)) {
+    return false
+  } else {
+    switch (type) {
+      case 0:
+        store.commit('user/SET_USER_BUTTON_STATUS', {
+          loginType: 0,
+          status: true
+        })
+        break
+      case 1:
+        store.commit('user/SET_USER_BUTTON_STATUS', {
+          loginType: 1,
+          status: true
+        })
+        break
+    }
+    if (callback) {
+      callback(data)
+    }
+  }
 }
 /**
  * 撤销委单
  */
-export const repealMyEntrustCommon = async (params, callback) => {
-  const repealData = await repealMyEntrustAjax(params)
-  callback(repealData)
+export const repealMyEntrustCommon = async (params, that, callback) => {
+  const data = await repealMyEntrustAjax(params)
+  if (!returnAjaxMessage(data, that, 1)) {
+    return false
+  } else {
+    callback(data)
+  }
 }
 
 // /**
@@ -302,8 +326,10 @@ export const getLanguageListAjax = async (that, language) => {
   } else {
     that.languageList = data.data.data
     let localLanguage = language || getStore('language') || store.state.common.defaultLanguage
+    console.log(localLanguage)
     _.forEach(that.languageList, item => {
       if (item.shortName === localLanguage) {
+        console.log(item)
         that.CHANGE_LANGUAGE(item)
         return false
       }

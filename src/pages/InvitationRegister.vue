@@ -7,9 +7,9 @@
     </div>
     <div class="inner-box">
       <!-- 您的好友 -->
-      <p>{{$t('M.invitation_register_your_friends')}}{{phoneNumberFormat(inviter)}}</p>
+      <p>{{i18nText1}}{{phoneNumberFormat(inviter)}}</p>
       <!-- 邀请您注册 -->
-      <p class="strong"> {{$t('M.invitation_register_please_you_register')}} <span
+      <p class="strong"> {{this.$t('M.invitation_register_please_you_register')}} <span
         class="yellow"
         v-if="configInfo"
       >{{configInfo.otcAd}}</span></p>
@@ -21,7 +21,7 @@
         class="register-btn"
       >
         <!-- 立即注册领取 -->
-        {{$t('M.invitation_register_immediately_register_get')}}
+        {{this.$t('M.invitation_register_immediately_register_get')}}
       </router-link>
     </div>
   </div>
@@ -37,7 +37,8 @@ import {
   findUserInfoByShowId
 } from '../utils/api/home'
 import {
-  phoneNumberFormat
+  phoneNumberFormat,
+  removeStore
 } from '../utils'
 import HeaderCommonForMobile from '../components/Common/HeaderForMobile'
 import {createNamespacedHelpers, mapState} from 'vuex'
@@ -49,20 +50,29 @@ export default {
   // props,
   data () {
     return {
-      inviter: ''
+      i18nText1: this.$t('M.invitation_register_your_friends'),
+      inviter: '',
+      showId: '',
+      queryLanguage: '' // 参数语言
     }
   },
   async created () {
-    console.log()
-    let language = this.$route.query.lang || this.defaultLanguage
-    await getLanguageListAjax(this, language)
+    console.log('created')
+    this.queryLanguage = this.$route.query.lang
+    console.log(this.queryLanguage)
+    await getLanguageListAjax(this, this.queryLanguage)
     // this.CHANGE_LANGUAGE(language)
-    await getFooterInfo(language, this)
+    await getFooterInfo(this.queryLanguage, this)
     await this.findUserInfoByShowId()
   },
   mounted () {},
-  activited () {},
+  activited () {
+    console.log(2)
+  },
   update () {},
+  destroyed () {
+    removeStore('language')
+  },
   methods: {
     ...mapMutations([
       'CHANGE_LANGUAGE',
@@ -95,9 +105,17 @@ export default {
     })
   },
   watch: {
-    async language () {
-      await getFooterInfo(this.language, this)
+    async '$route.query.lang' (newVal) {
+      // window.location.reload()
+      console.log(newVal)
+      await getLanguageListAjax(this, newVal)
+      console.log(this.language)
+      this.i18nText1 = this.$t('M.invitation_register_your_friends')
+      window.location.reload()
     },
+    // async language () {
+    //   await getFooterInfo(this.language, this)
+    // },
     configInfo (newVal) {
       console.log(newVal)
     }

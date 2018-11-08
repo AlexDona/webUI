@@ -958,7 +958,6 @@ export default {
       }
 
       let params = {
-        // nationCode: this.activeCountryCode
         userId: this.userInfo.userId
       }
       switch (loginType) {
@@ -969,28 +968,7 @@ export default {
           params.email = this.userInfo.email
           break
       }
-      sendPhoneOrEmailCodeAjax(loginType, params, (data) => {
-        // 提示信息
-        if (!returnAjaxMessage(data, this)) {
-          console.log('error')
-          return false
-        } else {
-          switch (loginType) {
-            case 0:
-              this.SET_USER_BUTTON_STATUS({
-                loginType: 0,
-                status: true
-              })
-              break
-            case 1:
-              this.SET_USER_BUTTON_STATUS({
-                loginType: 1,
-                status: true
-              })
-              break
-          }
-        }
-      })
+      sendPhoneOrEmailCodeAjax(loginType, params, this)
     },
     // 4位随机数
     getRandomNum () {

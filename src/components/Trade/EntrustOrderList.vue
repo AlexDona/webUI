@@ -351,12 +351,8 @@ export default {
           id,
           version
         }
-        repealMyEntrustCommon(params, (res) => {
-          if (!returnAjaxMessage(res, this, 1)) {
-            return false
-          } else {
-            this.TOGGLE_REFRESH_ENTRUST_LIST_STATUS(true)
-          }
+        repealMyEntrustCommon(params, this, () => {
+          this.TOGGLE_REFRESH_ENTRUST_LIST_STATUS(true)
         })
       }).catch(() => {
       })

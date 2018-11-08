@@ -967,27 +967,7 @@ export default {
           break
       }
       console.log(params)
-      sendPhoneOrEmailCodeAjax(type, params, (data) => {
-        // 提示信息
-        if (!returnAjaxMessage(data, this)) {
-          return false
-        } else {
-          switch (type) {
-            case 0:
-              this.SET_USER_BUTTON_STATUS({
-                loginType: 0,
-                status: true
-              })
-              break
-            case 1:
-              this.SET_USER_BUTTON_STATUS({
-                loginType: 1,
-                status: true
-              })
-              break
-          }
-        }
-      })
+      sendPhoneOrEmailCodeAjax(type, params, this)
     },
     // 4位随机数
     getRandomNum () {
@@ -1199,6 +1179,7 @@ export default {
       console.log(newVal)
     },
     activeMethod (newVal) {
+      // console.log(this['common/SET_COUNT_DOWN_RESET_STATUS'])
       this.$store.commit('common/SET_COUNT_DOWN_RESET_STATUS', true)
     },
     disabledOfPhoneBtn (newVal) {
