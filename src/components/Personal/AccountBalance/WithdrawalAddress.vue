@@ -254,8 +254,8 @@ import {
   getSecurityCenter,
   validateNumForUserInput
 } from '../../../utils/commonFunc'
-import {mapState, createNamespaceHelpers} from 'vuex'
-const {mapMutations} = createNamespaceHelpers('user')
+import {mapState, createNamespacedHelpers} from 'vuex'
+const {mapMutations} = createNamespacedHelpers('user')
 export default {
   components: {
     ErrorBox, // 错误提示接口

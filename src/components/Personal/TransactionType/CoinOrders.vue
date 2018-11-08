@@ -616,12 +616,8 @@ export default {
         // 确定
         confirmButtonText: this.$t('M.comm_confirm')
       }).then(() => {
-        repealMyEntrustCommon(params, (res) => {
-          if (!returnAjaxMessage(res, this, 1)) {
-            return false
-          } else {
-            this.commissionList()
-          }
+        repealMyEntrustCommon(params, this, () => {
+          this.commissionList()
         })
       }).catch(() => {
       })

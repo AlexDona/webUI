@@ -677,7 +677,7 @@ export default {
       this.activeStatus = this.vipLeavl.split('')[3]
     }
     this.getServiceProtocolData()
-    reflashUserInfo(this)
+    await reflashUserInfo(this)
     await this.getVipPriceInfo()
     await this.getCurrencyApplicationDownloadUrl()
   },

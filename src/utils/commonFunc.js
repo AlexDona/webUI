@@ -137,13 +137,13 @@ export const sendPhoneOrEmailCodeAjax = async (type, params, that, callback) => 
   } else {
     switch (type) {
       case 0:
-        that.SET_USER_BUTTON_STATUS({
+        store.commit('user/SET_USER_BUTTON_STATUS', {
           loginType: 0,
           status: true
         })
         break
       case 1:
-        that.SET_USER_BUTTON_STATUS({
+        store.commit('user/SET_USER_BUTTON_STATUS', {
           loginType: 1,
           status: true
         })
@@ -157,9 +157,13 @@ export const sendPhoneOrEmailCodeAjax = async (type, params, that, callback) => 
 /**
  * 撤销委单
  */
-export const repealMyEntrustCommon = async (params, callback) => {
-  const repealData = await repealMyEntrustAjax(params)
-  callback(repealData)
+export const repealMyEntrustCommon = async (params, that, callback) => {
+  const data = await repealMyEntrustAjax(params)
+  if (!returnAjaxMessage(data, that, 1)) {
+    return false
+  } else {
+    callback(data)
+  }
 }
 
 // /**
