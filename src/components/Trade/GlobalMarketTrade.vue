@@ -66,7 +66,7 @@
                       }"
                         v-if="currencyRateList[activeSymbol.area]&&item.bourseCount"
                       >
-                        ≈{{activeConvertCurrencyObj.symbol}}{{formatCount(keep2Num((currencyRateList[item.bourseTrade.split('_')[1]]-0)*item.bourseCount))}}
+                        ≈{{activeConvertCurrencyObj.symbol}}{{formatCount(keep2Num((currencyRateList[item.bourseTrade.split('_')[0]]-0)*item.bourseCount))}}
                       </div>
                   </div>
                 </div>
@@ -160,6 +160,7 @@ export default {
     middleTopData (newVal) {
     },
     currencyRateList (newVal) {
+      console.log(newVal)
     },
     activeSymbolId: {
       handler (newVal) {
@@ -170,6 +171,7 @@ export default {
       immediate: true
     },
     globalMarketList (newVal) {
+      console.log(newVal)
     }
   }
 }

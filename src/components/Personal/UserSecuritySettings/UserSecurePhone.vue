@@ -463,7 +463,7 @@ export default {
             break
         }
       }
-      sendPhoneOrEmailCodeAjax(loginType, params, this)
+      await sendPhoneOrEmailCodeAjax(loginType, params, this, type)
     },
     // 绑定手机检测输入格式
     checkoutInputFormat (type, targetNum) {
