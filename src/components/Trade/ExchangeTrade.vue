@@ -597,6 +597,9 @@ export default {
           break
       }
       this.removePwd()
+      if (!params.payPwd) {
+        return false
+      }
       // 限价单添加价格
       switch (type) {
         // 买单

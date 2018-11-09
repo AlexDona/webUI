@@ -746,14 +746,12 @@ export default {
       end: '' // 占位
     }
   },
-  created () {
+  async created () {
     if (this.isLogin) {
       this.USER_LOGOUT()
     }
     require('../../static/css/list/User/Register.css')
-    // changeLang({'lan': 'zh_CN'})
     let params = this.$route.query.showId
-    console.log(params)
     if (params) {
       this.inviter = params
       this.inviterDisabled = true
@@ -794,7 +792,7 @@ export default {
     ]),
     jumpToDownAppPage () {
       if (this.inviter) {
-        this.$router.push({'path': '/downloadApp'})
+        this.$router.push({'path': `/downloadApp?language=${this.language}`})
       } else {
         this.$router.push({'path': '/login'})
       }

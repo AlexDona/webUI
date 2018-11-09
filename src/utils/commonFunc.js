@@ -332,7 +332,7 @@ export const getLanguageListAjax = async (that, language) => {
     _.forEach(that.languageList, item => {
       if (item.shortName === localLanguage) {
         console.log(item)
-        that.CHANGE_LANGUAGE(item)
+        store.commit('common/CHANGE_LANGUAGE', item)
         return false
       }
     })

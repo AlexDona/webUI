@@ -1,13 +1,20 @@
 <template>
   <div
     class="invitation-register-box"
+    v-loading.fullscreen.lock="fullscreenLoading"
+    element-loading-background="rgba(0, 0, 0, 0.6)"
   >
+    <HeaderCommonForMobile
+      :style="{
+        display: 'none'
+      }"
+    />
     <div class="logo">
       <img :src="logoSrc">
     </div>
     <div class="inner-box">
       <!-- 您的好友 -->
-      <p>{{i18nText1}}{{phoneNumberFormat(inviter)}}</p>
+      <p>{{$t('M.invitation_register_your_friends')}}{{phoneNumberFormat(inviter)}}</p>
       <!-- 邀请您注册 -->
       <p class="strong"> {{this.$t('M.invitation_register_please_you_register')}} <span
         class="yellow"
@@ -21,7 +28,7 @@
         class="register-btn"
       >
         <!-- 立即注册领取 -->
-        {{this.$t('M.invitation_register_immediately_register_get')}}
+        {{$t('M.invitation_register_immediately_register_get')}}
       </router-link>
     </div>
   </div>
@@ -30,18 +37,17 @@
 <script>
 import {
   getFooterInfo,
-  getLanguageListAjax,
   returnAjaxMessage
 } from '../utils/commonFunc'
 import {
   findUserInfoByShowId
 } from '../utils/api/home'
 import {
-  phoneNumberFormat,
-  removeStore
+  phoneNumberFormat
 } from '../utils'
 import HeaderCommonForMobile from '../components/Common/HeaderForMobile'
 import {createNamespacedHelpers, mapState} from 'vuex'
+
 const {mapMutations} = createNamespacedHelpers('common')
 export default {
   components: {
@@ -50,19 +56,17 @@ export default {
   // props,
   data () {
     return {
-      i18nText1: this.$t('M.invitation_register_your_friends'),
       inviter: '',
       showId: '',
+      fullscreenLoading: true,
       queryLanguage: '' // 参数语言
     }
   },
   async created () {
     console.log('created')
-    this.queryLanguage = this.$route.query.lang
-    console.log(this.queryLanguage)
-    await getLanguageListAjax(this, this.queryLanguage)
+    // await getLanguageListAjax(this, this.language)
     // this.CHANGE_LANGUAGE(language)
-    await getFooterInfo(this.queryLanguage, this)
+    await getFooterInfo(this.language, this)
     await this.findUserInfoByShowId()
   },
   mounted () {},
@@ -71,7 +75,7 @@ export default {
   },
   update () {},
   destroyed () {
-    removeStore('language')
+    // removeStore('language')
   },
   methods: {
     ...mapMutations([
@@ -91,6 +95,7 @@ export default {
       } else {
         console.log(data)
         this.inviter = data.data.data.userName
+        this.fullscreenLoading = false
       }
     }
   },
@@ -99,20 +104,18 @@ export default {
     ...mapState({
       isMobile: state => state.user.isMobile,
       logoSrc: state => state.common.logoSrc,
-      configInfo: state => state.common.footerInfo.configInfo,
-      language: state => state.common.language,
-      defaultLanguage: state => state.common.defaultLanguage
-    })
+      configInfo: state => state.common.footerInfo.configInfo
+      // language: state => state.common.language,
+    }),
+    language () {
+      return this.$route.query.language
+    },
+    isChineseLanguage () {
+      return this.language === 'zh_CN' ||
+        this.language === 'zh_TW'
+    }
   },
   watch: {
-    async '$route.query.lang' (newVal) {
-      // window.location.reload()
-      console.log(newVal)
-      await getLanguageListAjax(this, newVal)
-      console.log(this.language)
-      this.i18nText1 = this.$t('M.invitation_register_your_friends')
-      window.location.reload()
-    },
     // async language () {
     //   await getFooterInfo(this.language, this)
     // },

@@ -173,8 +173,9 @@ export default {
               height:170px;
               border-radius: 10px;
               >.ercode{
-                width:100%;
-                height:100%;
+                margin-top:5px;
+                width:160px;
+                height:160px;
               }
             }
             >.scan-btn{
