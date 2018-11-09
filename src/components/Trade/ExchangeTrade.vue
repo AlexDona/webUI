@@ -596,6 +596,7 @@ export default {
           params.payPwd = this.marketExchange.sellPwd
           break
       }
+      this.removePwd()
       // 限价单添加价格
       switch (type) {
         // 买单
@@ -658,7 +659,6 @@ export default {
         return false
       } else {
         this.TOGGLE_REFRESH_ENTRUST_LIST_STATUS(true)
-        this.removePwd()
       }
     },
     // 设置买卖价格
