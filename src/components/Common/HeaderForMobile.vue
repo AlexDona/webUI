@@ -72,16 +72,26 @@ export default {
     return {
       // 语言选择中
       langSelecting: false,
-      activeTheme: ''
+      activeTheme: '',
+      languageList: []
     }
   },
   async created () {
     require('../../../static/css/theme/day/Common/HeaderCommonDay.css')
     // 获取 语言列表:任付伟先注释此方法防止每次刷新报错-有需要请放开
     await getLanguageListAjax(this)
-    await getFooterInfo(this.language, this)
+    if (this.routeLanguage) {
+      _.forEach(this.languageList, item => {
+        console.log(item)
+        if (this.routeLanguage === item.shortName) {
+          this.changeLanguage(item)
+        }
+      })
+    }
+    getFooterInfo(this.language, this)
     this.activeTheme = this.theme
-    await getCountryListAjax(this)
+    getCountryListAjax(this)
+    console.log(this.$route.query)
     if (this.isLogin) {
       await reflashUserInfo(this)
     }
@@ -127,7 +137,10 @@ export default {
       activeLanguage: state => state.common.activeLanguage,
       language: state => state.common.language, // 语言
       defaultLanguage: state => state.common.defaultLanguage // 语言
-    })
+    }),
+    routeLanguage () {
+      return this.$route.query.language
+    }
   },
   watch: {}
 }

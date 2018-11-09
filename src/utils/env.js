@@ -37,11 +37,11 @@ if (process.env.NODE_ENV == 'development') {
   // socketUrl = 'ws://192.168.1.52:8087/market' // 滑浩田
 
   // loginSocketUrl = 'ws://api.new.bzu.com/qrcodeLogin/'
-  loginSocketUrl = 'ws://192.168.1.217:8888/qrcodeLogin/'
+  loginSocketUrl = 'ws://192.168.1.200:8888/qrcodeLogin/'
 } else if (process.env.NODE_ENV == 'testing') {
   apiCommonUrl = 'http://192.168.1.200:8888/' // 本地测试
   socketUrl = 'ws://192.168.1.200:8087/market'
-  loginSocketUrl = 'ws://api.new.bzu.com/qrcodeLogin/'
+  loginSocketUrl = 'ws://192.168.1.200:8888/qrcodeLogin/'
 } else if (process.env.NODE_ENV == 'production') {
   apiCommonUrl = 'https://api.new.bzu.com/' // 内部测试
   socketUrl = 'wss://ws.bzu.com/market'

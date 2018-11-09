@@ -34,7 +34,7 @@ export default {
           type: 'value',
           min: 'dataMin',
           max: 'dataMax',
-          // boundaryGap: ['30%', '100%'],
+          boundaryGap: ['-30%', '100%'],
           // boundaryGap: false,
           show: false
         },
@@ -44,12 +44,21 @@ export default {
             smooth: 0.3,
             lineStyle: {
               normal: {
-                width: 1.5
+                width: 1
               }
             },
             color: ['#338ff5'],
             data: this.data,
-            symbolSize: 0
+            symbolSize: 0,
+            areaStyle: {
+              color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [{
+                offset: 0,
+                color: 'rgb(48,95,167)'
+              }, {
+                offset: 1,
+                color: 'rgb(29,56,98)'
+              }])
+            }
           }
         ],
         animation: false

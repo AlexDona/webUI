@@ -1,6 +1,9 @@
 <template>
   <div
     class="download-box"
+    :style="{
+      height:windowHeight+'px'
+    }"
   >
     <div class="inner-box">
       <div class="logo">
@@ -11,15 +14,25 @@
       <div class="content">
         <img
           :src="zh_CNSrc"
-          v-if="language=='zh_CN'"
+          v-if="isChineseLanguage"
         >
         <img
           :src="en_USSrc"
           v-else
         >
-        <button class="download-btn">
+        <button
+          class="download-btn"
+          v-if="isChineseLanguage"
+        >
           <!-- 立即安装 -->
-          {{$t('M.user_down_install')}}
+          立即安装
+        </button>
+        <button
+          class="download-btn"
+          v-else
+        >
+          <!-- 立即安装 -->
+          Install
         </button>
       </div>
     </div>
@@ -27,8 +40,10 @@
 </template>
 <!--请严格按照如下书写书序-->
 <script>
-import {mapState} from 'vuex'
-// import {returnAjaxMessage} from '../../utils/commonFunc'
+import {getFooterInfo} from '../utils/commonFunc'
+import {mapState, createNamespacedHelpers} from 'vuex'
+const {mapMutations} = createNamespacedHelpers('common')
+
 export default {
   components: {
   },
@@ -39,20 +54,34 @@ export default {
       en_USSrc: require('../assets/develop/download-bg-en.png')
     }
   },
-  created () {},
+  created () {
+    getFooterInfo(this.language, this)
+  },
   mounted () {
-    console.log(this.logoSrc)
   },
   activited () {},
   update () {},
   beforeRouteUpdate () {},
-  methods: {},
+  methods: {
+    ...mapMutations([
+      'SET_FOOTER_INFO'
+    ])
+  },
   filter: {},
   computed: {
     ...mapState({
-      language: state => state.common.language,
       logoSrc: state => state.common.logoSrc
-    })
+    }),
+    windowHeight () {
+      return window.innerHeight
+    },
+    isChineseLanguage () {
+      return this.language === 'zh_CN' ||
+        this.language === 'zh_TW'
+    },
+    language () {
+      return this.$route.query.language
+    }
   },
   watch: {
     footerInfo (newVal) {
@@ -64,7 +93,6 @@ export default {
 <style scoped lang="scss" type="text/scss">
   .download-box{
     width:100%;
-    height:100%;
     background:linear-gradient(150deg, #1e2636, #254b75);
     >.inner-box{
       width:100%;

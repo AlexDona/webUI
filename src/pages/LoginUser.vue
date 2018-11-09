@@ -28,11 +28,11 @@
         v-if="!isMobile&&!isErCodeLogin"
       >
         <!--切换登录-->
-        <!--<button-->
-          <!--class="toggle-login-type cursor-pointer"-->
-          <!--@click="toggleLoginType"-->
-        <!--&gt;-->
-        <!--</button>-->
+        <button
+          class="toggle-login-type cursor-pointer"
+          @click="toggleLoginType"
+        >
+        </button>
         <!-- 欢迎登录 -->
         <h1 class="title">{{$t('M.login_welcome')}}{{$t('M.comm_login')}}</h1>
         <!--正常登录-->
@@ -318,8 +318,7 @@
           <VueQrcode
             class="ercode"
             :value="erCodeString"
-          >
-        </VueQrcode>
+          />
         </span>
 
         <!-- 请使用富比特APP扫码功能，扫码登录 -->
@@ -612,7 +611,10 @@
 </template>
 <script>
 import {EMAIL_REG} from '../utils/regExp' // 正则验证
-import {loginSocketUrl} from '../utils/env'
+import {
+  loginSocketUrl
+  // xDomain
+} from '../utils/env'
 import {
   userLoginForStep1,
   userLoginForStep2,
@@ -814,6 +816,7 @@ export default {
         this.socket = new socket(this.url = loginSocketUrl + this.erCodeString)
         this.socket.doOpen()
         this.socket.on('open', () => {
+          // this.socket.send(xDomain)
           clearInterval(this.ercodeTimer)
           this.socket.send(this.erCodeString)
           this.ercodeTimerCount = 60
@@ -1646,7 +1649,6 @@ export default {
                   border-radius: 4px;
                   border: 1px solid #485776;
                   /* border-right-color: transparent; */
-                  -webkit-box-sizing: border-box;
                   box-sizing: border-box;
                   display: inline-block;
                   padding: 0;
@@ -1668,7 +1670,6 @@ export default {
                     height: 100%;
                     vertical-align: top;
                     padding: 0 40px;
-                    -webkit-box-sizing: border-box;
                     box-sizing: border-box;
                     color: #fff;
                     font-size: 0.7rem;
