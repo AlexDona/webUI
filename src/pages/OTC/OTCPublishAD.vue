@@ -453,7 +453,7 @@ import {
   getOTCCoinInfo
 } from '../../utils/api/OTC'
 // 引入组件
-import IconFontCommon from '../Common/IconFontCommon'
+import IconFontCommon from '../../components/Common/IconFontCommon'
 // 引入提示信息
 import {returnAjaxMessage} from '../../utils/commonFunc'
 // 引入全局变量和方法

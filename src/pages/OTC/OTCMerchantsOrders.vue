@@ -334,8 +334,7 @@
 </template>
 <!--请严格按照如下书写书序-->
 <script>
-import FooterCommon from '../Common/FooterCommon'
-import IconFontCommon from '../Common/IconFontCommon'
+import IconFontCommon from '../../components/Common/IconFontCommon'
 import {timeFilter} from '../../utils'
 import {
   getOTCAvailableCurrency,
@@ -346,7 +345,6 @@ import {returnAjaxMessage} from '../../utils/commonFunc'
 import {mapState} from 'vuex'
 export default {
   components: {
-    FooterCommon, //  底部
     IconFontCommon //  字体图标
   },
   data () {

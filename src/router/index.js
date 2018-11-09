@@ -40,14 +40,14 @@ const VipMainContent = r => require.ensure([], () => r(require('@/pages/VipMainC
 /**
  * OTC
  */
-const OTCCenter = r => require.ensure([], () => r(require('@/components/OTC/OTCCenter')), 'otc-center')
+const OTCCenter = r => require.ensure([], () => r(require('@/pages/OTC/OTCCenter')), 'otc-center')
 const OTCPublishBuyAndSell = r => require.ensure([], () => r(require('@/components/OTC/OTCPublishBuyAndSell')), 'otc-publish-buy-and-sell')
 const OTCOnlineTraderBuySell = r => require.ensure([], () => r(require('@/components/OTC/OTCOnlineTraderBuySell')), 'otc-online-trader-buy-sell')
-const OTCPublishAD = r => require.ensure([], () => r(require('@/components/OTC/OTCPublishAD')), 'otc-publish-AD')
-const OTCADManage = r => require.ensure([], () => r(require('@/components/OTC/OTCADManage')), 'otc-AD-manage')
-const OTCMerchantsOrders = r => require.ensure([], () => r(require('@/components/OTC/OTCMerchantsOrders')), 'otc-merchants-orders')
-const OTCReportFormStatistics = r => require.ensure([], () => r(require('@/components/OTC/OTCReportFormStatistics')), 'otc-report-form-statistics')
-const OTCBusinessApply = r => require.ensure([], () => r(require('@/components/OTC/OTCBusinessApply')), 'otc-business-apply')
+const OTCPublishAD = r => require.ensure([], () => r(require('@/pages/OTC/OTCPublishAD')), 'otc-publish-AD')
+const OTCADManage = r => require.ensure([], () => r(require('@/pages/OTC/OTCADManage')), 'otc-AD-manage')
+const OTCMerchantsOrders = r => require.ensure([], () => r(require('@/pages/OTC/OTCMerchantsOrders')), 'otc-merchants-orders')
+const OTCReportFormStatistics = r => require.ensure([], () => r(require('@/pages/OTC/OTCReportFormStatistics')), 'otc-report-form-statistics')
+const OTCBusinessApply = r => require.ensure([], () => r(require('@/pages/OTC/OTCBusinessApply')), 'otc-business-apply')
 /**
  * 投资理财
  */

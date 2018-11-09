@@ -428,12 +428,14 @@ import {
   getOTCPutUpOrders,
   getMerchantAvailablelegalTender
 } from '../../utils/api/OTC'
-import IconFontCommon from '../Common/IconFontCommon'
-import OTCTradingOrder from './OTCTradingOrder'
-import OTCCompletedOrder from './OTCCompletedOrder'
-import OTCCanceledOrder from './OTCCanceledOrder'
-import OTCFreezingOrder from './OTCFreezingOrder'
-import OTCEntrustOrder from './OTCEntrustOrder'
+// import IconFontCommon from '../Common/IconFontCommon'
+import IconFontCommon from '../../components/Common/IconFontCommon'
+// import OTCTradingOrder from './OTCTradingOrder'
+import OTCTradingOrder from '../../components/OTC/OTCTradingOrder'
+import OTCCompletedOrder from '../../components/OTC/OTCCompletedOrder'
+import OTCCanceledOrder from '../../components/OTC/OTCCanceledOrder'
+import OTCFreezingOrder from '../../components/OTC/OTCFreezingOrder'
+import OTCEntrustOrder from '../../components/OTC/OTCEntrustOrder'
 import {returnAjaxMessage, reflashUserInfo} from '../../utils/commonFunc'
 import {createNamespacedHelpers, mapState} from 'vuex'
 const {mapMutations} = createNamespacedHelpers('OTC')

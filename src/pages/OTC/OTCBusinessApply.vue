@@ -208,14 +208,10 @@
   </div>
 </template>
 <script>
-import IconFontCommon from '../Common/IconFontCommon'
+import IconFontCommon from '../../components/Common/IconFontCommon'
 import {businessApply, firstEnterBusinessApply, argumentBusinessApply} from '../../utils/api/OTC'
 import {returnAjaxMessage} from '../../utils/commonFunc'
-import {
-  // createNamespacedHelpers,
-  mapState
-} from 'vuex'
-// const {mapMutations} = createNamespacedHelpers('OTC')
+import {mapState} from 'vuex'
 export default {
   components: {
     IconFontCommon //  字体图标
