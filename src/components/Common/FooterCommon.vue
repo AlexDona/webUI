@@ -56,7 +56,9 @@
               <!--下载-->
               {{$t('M.comm_download')}}
             </dt>
-            <!--<dd class="dd-item">客户端下载</dd>-->
+            <dd class="dd-item">
+              <router-link to="/guideOfDownload">客户端下载</router-link>
+            </dd>
             <dd
               class="dd-item"
             >

@@ -1,6 +1,9 @@
 <template>
   <div
     class="download-box"
+    :style="{
+      height:windowHeight+'px'
+    }"
   >
     <div class="inner-box">
       <div class="logo">
@@ -52,7 +55,10 @@ export default {
     ...mapState({
       language: state => state.common.language,
       logoSrc: state => state.common.logoSrc
-    })
+    }),
+    windowHeight () {
+      return window.innerHeight
+    }
   },
   watch: {
     footerInfo (newVal) {
@@ -64,7 +70,6 @@ export default {
 <style scoped lang="scss" type="text/scss">
   .download-box{
     width:100%;
-    height:100%;
     background:linear-gradient(150deg, #1e2636, #254b75);
     >.inner-box{
       width:100%;

@@ -318,8 +318,7 @@
           <VueQrcode
             class="ercode"
             :value="erCodeString"
-          >
-        </VueQrcode>
+          />
         </span>
 
         <!-- 请使用富比特APP扫码功能，扫码登录 -->
@@ -1646,7 +1645,6 @@ export default {
                   border-radius: 4px;
                   border: 1px solid #485776;
                   /* border-right-color: transparent; */
-                  -webkit-box-sizing: border-box;
                   box-sizing: border-box;
                   display: inline-block;
                   padding: 0;
@@ -1668,7 +1666,6 @@ export default {
                     height: 100%;
                     vertical-align: top;
                     padding: 0 40px;
-                    -webkit-box-sizing: border-box;
                     box-sizing: border-box;
                     color: #fff;
                     font-size: 0.7rem;
