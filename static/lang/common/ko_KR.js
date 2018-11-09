@@ -172,5 +172,9 @@ export const common = {
   'common_transaction_price': '거래 가격',
   'common_trading_volume': '볼륨',
   'common_depth_map': '깊이지도',
-  'common_friendly_link': '친숙한 링크'
+  'common_friendly_link': '친숙한 링크',
+  // 底部增加
+  'common_footer_user_agreement': '사용자 협의',
+  'common_footer_privacy_policy': '비밀 조항',
+  'common_footer_legal_notice': '법률 성명'
 }

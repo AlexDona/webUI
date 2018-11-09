@@ -45,7 +45,7 @@
   border: 0;
 }
 .credited-credited.personal .el-button:first-child {
-  width: 90px;
+  /* width: 90px; */
   height: 35px;
   line-height: 0;
 }

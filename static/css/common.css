@@ -63,6 +63,21 @@
   background-color: #2a3242;
   border:none;
 }
+.night .el-picker-panel .el-input__inner{
+  background-color: #2a3242;
+  border: 1px solid #39424D;
+}
+.night .el-picker-panel .el-picker-panel__footer{
+  background-color: #2a3242;
+  border-top: 1px solid #39424D;
+}
+.night .el-picker-panel .el-picker-panel__footer .el-button:nth-child(2){
+  background: linear-gradient(90deg, #2b396e 0%, #2a5082 100%);
+  border: 0;
+}
+.night .el-date-table th,.night .el-date-picker__time-header{
+  border-bottom: solid 1px #39424D;
+}
 .night .el-popper[x-placement^=bottom] .popper__arrow::after{
   /*border-bottom-color: #2a3242;*/
   border-bottom-color: transparent;

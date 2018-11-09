@@ -11,7 +11,8 @@
           class="title coin-type"
         >
           <!--交易对-->
-          {{ $t('M.comm_deal') }}{{ $t('M.comm_pair') }}
+          <!-- {{ $t('M.comm_deal') }}{{ $t('M.comm_pair') }} -->
+          {{ $t('M.common_counterparty') }}
         </span>
         <span
           class="title price cursor-pointer"

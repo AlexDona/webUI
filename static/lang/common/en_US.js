@@ -17,7 +17,7 @@ export const common = {
   'comm_dollar': 'Dollar',
   'comm_black': 'Black',
   'comm_white': 'White',
-  'comm_confirm': 'Confirm',
+  'comm_confirm': 'Confirm ',
   'comm_all_sold_out': 'All sold out',
   'comm_affirm': 'Confirm ',
   'comm_cancel': 'Cancel',
@@ -180,5 +180,9 @@ export const common = {
   // 'comm_currency': 'Authentication type',
   'comm_currency': 'Currency',
   // 'comm_count': 'Sum'
-  'comm_count': 'Amount'
+  'comm_count': 'Amount',
+  // 底部增加
+  'common_footer_user_agreement': 'User Agreement',
+  'common_footer_privacy_policy': 'Privacy Terms',
+  'common_footer_legal_notice': 'Legal Statement'
 }

@@ -458,6 +458,29 @@ export default {
           }
         })
       }
+    },
+    // 时间选择器change事件：
+    startDate () {
+      if (this.endTime) {
+        if (this.startTime > this.endTime) {
+          this.$message({ // message: '开始时间不能大于结束时间',
+            message: this.$t('M.otc_time_limit'),
+            type: 'error'
+          })
+          return false
+        }
+      }
+    },
+    endDate () {
+      if (this.startTime) {
+        if (this.startTime > this.endTime) {
+          this.$message({ // message: '开始时间不能大于结束时间',
+            message: this.$t('M.otc_time_limit'),
+            type: 'error'
+          })
+          return false
+        }
+      }
     }
   },
   filter: {},

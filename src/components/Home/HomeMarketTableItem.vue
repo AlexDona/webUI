@@ -476,7 +476,7 @@ export default {
         }
         >.top{
           margin-top:30px;
-          font-size: 30px;
+          font-size: 24px;
           color:#fff;
           padding:20px 0;
           background: url(../../assets/develop/market-list-border.png) no-repeat center bottom;
