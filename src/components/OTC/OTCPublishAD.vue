@@ -443,7 +443,10 @@
 <!--请严格按照如下书写书序-->
 <script>
 // 引入接口
-import {formatNumberInput} from '../../utils'
+import {
+  formatNumberInput
+  // cutOutPointLength
+} from '../../utils'
 import {
   querySelectedOrdersDetails,
   addOTCPutUpOrdersMerchantdedicated,

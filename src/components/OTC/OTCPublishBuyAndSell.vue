@@ -207,7 +207,8 @@
                     class="sell-sum"
                     :class="{ redBorderRightNone: minCountErrorTipsBorder }"
                     ref="minCount"
-                    @keyup="changeInputValue('minCount')"
+                    @keyup="changeInputValue('minCount', moneyPointLength)"
+                    @input="changeInputValue('minCount', moneyPointLength)"
                   >
                   <span
                     class="monad"
@@ -223,7 +224,8 @@
                     class="sell-sum max-sell-sum"
                     :class="{ redBorderRightNone: maxCountErrorTipsBorder }"
                     ref="maxCount"
-                    @keyup="changeInputValue('maxCount')"
+                    @keyup="changeInputValue('maxCount', moneyPointLength)"
+                    @input="changeInputValue('maxCount', moneyPointLength)"
                   >
                   <span
                     class="monad"
@@ -409,7 +411,7 @@ import {addOTCPutUpOrders, getOTCCoinInfo} from '../../utils/api/OTC'
 import FooterCommon from '../Common/FooterCommon'
 import {returnAjaxMessage} from '../../utils/commonFunc'
 import {createNamespacedHelpers, mapState} from 'vuex'
-import {timeFilter, formatNumberInput, amendPrecision} from '../../utils'
+import {timeFilter, formatNumberInput, amendPrecision, cutOutPointLength} from '../../utils'
 const {mapMutations} = createNamespacedHelpers('OTC')
 export default {
   components: {
@@ -679,18 +681,26 @@ export default {
       // 精度丢失问题修复
       // 类型：卖
       // 手续费
-      // this.serviceChargeSELL = amendPrecision(this.$refs.entrustCountSell.value, this.rate, '*').toFixed(this.pointLength)
-      // 去掉数字后面多余的0
-      this.serviceChargeSELL = parseFloat(amendPrecision(this.$refs.entrustCountSell.value, this.rate, '*').toFixed(this.pointLength))
+      // this.serviceChargeSELL = parseFloat(amendPrecision(this.$refs.entrustCountSell.value, this.rate, '*').toFixed(this.pointLength))
+      // 修复截取小数点后几位
+      this.serviceChargeSELL = amendPrecision(this.$refs.entrustCountSell.value, this.rate, '*')
+      this.serviceChargeSELL = cutOutPointLength(this.serviceChargeSELL, this.pointLength)
       // 交易额
-      this.traderSumSELL = amendPrecision(this.$refs.entrustCountSell.value, this.$refs.priceSell.value, '*').toFixed(2)
+      // this.traderSumSELL = amendPrecision(this.$refs.entrustCountSell.value, this.$refs.priceSell.value, '*').toFixed(2)
+      // 修复截取小数点后几位
+      this.traderSumSELL = amendPrecision(this.$refs.entrustCountSell.value, this.$refs.priceSell.value, '*')
+      this.traderSumSELL = cutOutPointLength(this.traderSumSELL, 2)
       // 类型：买
       // 手续费
-      // this.serviceChargeBUY = amendPrecision(this.$refs.entrustCountBuy.value, this.rate, '*').toFixed(this.pointLength)
-      // 去掉数字后面多余的0
-      this.serviceChargeBUY = parseFloat(amendPrecision(this.$refs.entrustCountBuy.value, this.rate, '*').toFixed(this.pointLength))
+      // this.serviceChargeBUY = parseFloat(amendPrecision(this.$refs.entrustCountBuy.value, this.rate, '*').toFixed(this.pointLength))
+      // 修复截取小数点后几位
+      this.serviceChargeBUY = amendPrecision(this.$refs.entrustCountBuy.value, this.rate, '*')
+      this.serviceChargeBUY = cutOutPointLength(this.serviceChargeBUY, this.pointLength)
       // 交易额
-      this.traderSumBUY = amendPrecision(this.$refs.entrustCountBuy.value, this.$refs.priceBuy.value, '*').toFixed(2)
+      // this.traderSumBUY = amendPrecision(this.$refs.entrustCountBuy.value, this.$refs.priceBuy.value, '*').toFixed(2)
+      // 修复截取小数点后几位
+      this.traderSumBUY = amendPrecision(this.$refs.entrustCountBuy.value, this.$refs.priceBuy.value, '*')
+      this.traderSumBUY = cutOutPointLength(this.traderSumBUY, 2)
       let target = this.$refs[ref]
       // 限制输入数字和位数
       formatNumberInput(target, pointLength)

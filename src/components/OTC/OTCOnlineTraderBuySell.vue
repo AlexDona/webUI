@@ -374,7 +374,7 @@
 </template>
 <!--请严格按照如下书写书序-->
 <script>
-import {timeFilter, formatNumberInput, amendPrecision} from '../../utils'
+import {timeFilter, formatNumberInput, amendPrecision, cutOutPointLength} from '../../utils'
 import {
   pickOrdersToBuy,
   pickOrdersToSell,
@@ -540,13 +540,15 @@ export default {
       if (this.onlineTraderStatus === 'onlineBuy') {
         if (this.$refs.buyCount.value) {
           this.$refs.buyPrice.value = this.$refs.buyCount.value * this.price
-          this.$refs.buyPrice.value = Number(this.$refs.buyPrice.value).toFixed(2)
+          // this.$refs.buyPrice.value = Number(this.$refs.buyPrice.value).toFixed(2)
+          // 修复截取小数点后几位
+          this.$refs.buyPrice.value = cutOutPointLength(this.$refs.buyPrice.value, 2)
           // 手续费
-          // this.serviceCharge = this.$refs.buyCount.value * this.rate
           this.serviceCharge = amendPrecision(this.$refs.buyCount.value, this.rate, '*')
-          this.serviceCharge = Number(this.serviceCharge).toFixed(this.pointLength)
-          // 去掉数字后面多余的0
-          this.serviceCharge = parseFloat(this.serviceCharge)
+          // this.serviceCharge = Number(this.serviceCharge).toFixed(this.pointLength)
+          // this.serviceCharge = parseFloat(this.serviceCharge) // 去掉数字后面多余的0
+          // 修复截取小数点后几位
+          this.serviceCharge = cutOutPointLength(this.serviceCharge, this.pointLength)
           if (this.$refs.buyCount.value * this.price < this.minCount) {
             // 单笔最小限额为
             this.moneyTips = this.$t('M.otc_publishAD_minlimitMoney') + this.$t('M.otc_index_wei') + this.minCount
@@ -579,13 +581,15 @@ export default {
       if (this.onlineTraderStatus === 'onlineSell') {
         if (this.$refs.sellCount.value) {
           this.$refs.sellPrice.value = this.$refs.sellCount.value * this.price
-          this.$refs.sellPrice.value = Number(this.$refs.sellPrice.value).toFixed(2)
+          // this.$refs.sellPrice.value = Number(this.$refs.sellPrice.value).toFixed(2)
+          // 修复截取小数点后几位
+          this.$refs.sellPrice.value = cutOutPointLength(this.$refs.sellPrice.value, 2)
           // 手续费
-          // this.serviceCharge = this.$refs.sellCount.value * this.rate
           this.serviceCharge = amendPrecision(this.$refs.sellCount.value, this.rate, '*')
-          this.serviceCharge = Number(this.serviceCharge).toFixed(this.pointLength)
-          // 去掉数字后面多余的0
-          this.serviceCharge = parseFloat(this.serviceCharge)
+          // this.serviceCharge = Number(this.serviceCharge).toFixed(this.pointLength)
+          // this.serviceCharge = parseFloat(this.serviceCharge) // 去掉数字后面多余的0
+          // 修复截取小数点后几位
+          this.serviceCharge = cutOutPointLength(this.serviceCharge, this.pointLength)
           if (this.$refs.sellCount.value * this.price < this.minCount) {
             this.moneyTips = this.$t('M.otc_publishAD_minlimitMoney') + this.$t('M.otc_index_wei') + this.minCount
             this.errorWarningBorder = true
@@ -622,13 +626,15 @@ export default {
       if (this.onlineTraderStatus === 'onlineBuy') {
         if (this.$refs.buyPrice.value) {
           this.$refs.buyCount.value = this.$refs.buyPrice.value / this.price
-          this.$refs.buyCount.value = Number(this.$refs.buyCount.value).toFixed(this.pointLength)
+          // this.$refs.buyCount.value = Number(this.$refs.buyCount.value).toFixed(this.pointLength)
+          // 修复截取小数点后几位
+          this.$refs.buyCount.value = cutOutPointLength(this.$refs.buyCount.value, this.pointLength)
           // 手续费
-          // this.serviceCharge = this.$refs.buyCount.value * this.rate
           this.serviceCharge = amendPrecision(this.$refs.buyCount.value, this.rate, '*')
-          this.serviceCharge = Number(this.serviceCharge).toFixed(this.pointLength)
-          // 去掉后面多余的0
-          this.serviceCharge = parseFloat(this.serviceCharge)
+          // this.serviceCharge = Number(this.serviceCharge).toFixed(this.pointLength)
+          // this.serviceCharge = parseFloat(this.serviceCharge) // 去掉后面多余的0
+          // 修复截取小数点后几位
+          this.serviceCharge = cutOutPointLength(this.serviceCharge, this.pointLength)
           if (this.$refs.buyPrice.value < this.minCount) {
             this.moneyTips = this.$t('M.otc_publishAD_minlimitMoney') + this.$t('M.otc_index_wei') + this.minCount
             this.errorWarningBorder = true
@@ -651,13 +657,15 @@ export default {
       if (this.onlineTraderStatus === 'onlineSell') {
         if (this.$refs.sellPrice.value) {
           this.$refs.sellCount.value = this.$refs.sellPrice.value / this.price
-          this.$refs.sellCount.value = Number(this.$refs.sellCount.value).toFixed(this.pointLength)
+          // this.$refs.sellCount.value = Number(this.$refs.sellCount.value).toFixed(this.pointLength)
+          // 修复截取小数点后几位
+          this.$refs.sellCount.value = cutOutPointLength(this.$refs.sellCount.value, this.pointLength)
           // 手续费
-          // this.serviceCharge = this.$refs.sellCount.value * this.rate
           this.serviceCharge = amendPrecision(this.$refs.sellCount.value, this.rate, '*')
-          this.serviceCharge = Number(this.serviceCharge).toFixed(this.pointLength)
-          // 去掉数字后面多余的0
-          this.serviceCharge = parseFloat(this.serviceCharge)
+          // this.serviceCharge = Number(this.serviceCharge).toFixed(this.pointLength)
+          // this.serviceCharge = parseFloat(this.serviceCharge) // 去掉数字后面多余的0
+          // 修复截取小数点后几位
+          this.serviceCharge = cutOutPointLength(this.serviceCharge, this.pointLength)
           if (this.$refs.sellPrice.value < this.minCount) {
             this.moneyTips = this.$t('M.otc_publishAD_minlimitMoney') + this.$t('M.otc_index_wei') + this.minCount
             this.errorWarningBorder = true

@@ -274,3 +274,24 @@ export function unzip (b64Data) {
   strData = String.fromCharCode.apply(null, new Uint16Array(data))
   return decodeURIComponent(strData)
 }
+
+/**
+ * 截取小数点后几位 不是四舍五入
+ * @num 要截取的数字
+ * @pointLength 小数点后需要截取的位数
+ */
+export function cutOutPointLength (num, pointLength) {
+  let result
+  let str = num + ''
+  let arr = str.split('.')
+  // console.log(arr)
+  if (arr.length == 1) {
+    result = arr[0]
+  } else {
+    let value = arr[1].slice(0, pointLength)
+    result = arr[0] + '.' + value
+  }
+  return result
+  // console.log(result)
+  // console.log(typeof result)
+}
