@@ -298,7 +298,10 @@
             <!-- 现在注册即送好礼 -->
             <p class="main-text">{{ $t('M.invitation_register_now_register') }}</p>
             <!-- FUBT 安全便捷的比特币交易平台 -->
-            <p class="sub-text">{{configInfo.otcAd}} {{ $t('M.invitation_register_safety') }}</p>
+            <p
+              class="sub-text"
+              v-if="configInfo"
+            >{{configInfo.otcAd}} {{ $t('M.invitation_register_safety') }}</p>
           </div>
         </div>
         <!--切换注册方式-->
