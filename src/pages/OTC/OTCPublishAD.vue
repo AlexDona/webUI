@@ -443,14 +443,17 @@
 <!--请严格按照如下书写书序-->
 <script>
 // 引入接口
-import {formatNumberInput} from '../../utils'
+import {
+  formatNumberInput
+  // cutOutPointLength
+} from '../../utils'
 import {
   querySelectedOrdersDetails,
   addOTCPutUpOrdersMerchantdedicated,
   getOTCCoinInfo
 } from '../../utils/api/OTC'
 // 引入组件
-import IconFontCommon from '../Common/IconFontCommon'
+import IconFontCommon from '../../components/Common/IconFontCommon'
 // 引入提示信息
 import {returnAjaxMessage} from '../../utils/commonFunc'
 // 引入全局变量和方法

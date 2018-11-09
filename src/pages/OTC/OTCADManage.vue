@@ -293,7 +293,7 @@ import {
   getOTCADManageApplyList,
   querySelectedOrdersRevocation
 } from '../../utils/api/OTC'
-import IconFontCommon from '../Common/IconFontCommon'
+import IconFontCommon from '../../components/Common/IconFontCommon'
 import {timeFilter} from '../../utils'
 import {returnAjaxMessage} from '../../utils/commonFunc'
 import {mapState} from 'vuex'
