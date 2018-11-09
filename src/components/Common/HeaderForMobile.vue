@@ -88,9 +88,9 @@ export default {
         }
       })
     }
-    await getFooterInfo(this.language, this)
+    getFooterInfo(this.language, this)
     this.activeTheme = this.theme
-    await getCountryListAjax(this)
+    getCountryListAjax(this)
     console.log(this.$route.query)
     if (this.isLogin) {
       await reflashUserInfo(this)
