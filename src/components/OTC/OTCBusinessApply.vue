@@ -385,6 +385,7 @@ export default {
 @import url(../../../static/css/scss/OTC/OTCCenter.scss);
 @import "../../../static/css/scss/index";
 .otc-business-apply-box{
+  margin-top:66px;
   overflow: hidden;
   // background-color: $mainNightBgColor;
   >.business-apply-content{

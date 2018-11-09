@@ -1191,6 +1191,7 @@ export default {
 <style scoped lang="scss">
   @import '../../static/css/scss/index';
   .register-box{
+    margin-top:66px;
     width:100%;
     height:100%;
     overflow-y: auto;

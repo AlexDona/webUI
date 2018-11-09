@@ -403,6 +403,7 @@ export default {
 <style scoped lang="scss">
   @import "../../../../static/css/scss/Personal/IndexPersonal.scss";
   .add-bank {
+    margin-top:66px;
     overflow: hidden;
     >.add-bank-main {
       width: 1100px;

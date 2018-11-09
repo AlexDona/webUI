@@ -446,6 +446,7 @@ export default {
 <style scoped lang="scss">
   @import "../../../../static/css/scss/Personal/IndexPersonal";
   .binding-google {
+    margin-top:66px;
     overflow: hidden;
     >.binding-google-main {
       width: 1100px;

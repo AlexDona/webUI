@@ -1013,6 +1013,7 @@ export default {
 <style scoped lang="scss" type="text/scss">
 @import "../../../static/css/scss/index";
 .otc-publish-AD-box{
+  margin-top:66px;
   overflow: hidden;
   .redBorderRightNone{
     border: 1px solid #D45858 !important;

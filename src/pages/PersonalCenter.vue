@@ -377,6 +377,7 @@ export default {
 <style scoped lang="scss">
   @import "../../static/css/scss/Personal/IndexPersonal";
   .personal-center{
+    margin-top:66px;
     overflow: hidden;
     > .personal-center-main {
       width: 1150px;

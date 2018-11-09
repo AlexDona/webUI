@@ -396,6 +396,7 @@ export default {
 <style scoped lang="scss">
   @import "../../../../static/css/scss/Personal/IndexPersonal.scss";
   .add-account {
+    margin-top:66px;
     overflow: hidden;
     >.add-account-main {
       width: 1100px;

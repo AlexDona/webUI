@@ -944,6 +944,7 @@ export default {
 <style scoped lang="scss">
   @import "../../static/css/scss/Personal/IndexPersonal";
   .vip-main {
+    margin-top:66px;
     > .header-content {
       /*height: 600px;*/
       width: 100%;

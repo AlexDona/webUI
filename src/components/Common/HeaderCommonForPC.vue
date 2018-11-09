@@ -2,9 +2,18 @@
   <div
     class="nav-box common"
     :class="{'day':theme == 'day','night':theme == 'night' }"
+    :style="{
+      top:$route.path==='/'?styleTop+'px': 0
+    }"
   >
     <div class="inner-box">
-      <div class="top">
+      <div
+        class="top"
+        :style="{
+          padding: $route.path==='/'? topPadding : '0 30px',
+          backgroundColor: $route.path==='/'? topBackgroundColor : $mainNightBgColor
+        }"
+      >
         <!--导航-->
         <div class="left nav">
           <ul class="nav-list">
@@ -384,7 +393,10 @@ export default{
       // 任付伟大改动的：otc 子导航显示状态默认先显示，为了方便点击
       otcSubNavStatus: true,
       // 活动中心子导航显示状态
-      activityCenterSubNavStatus: false
+      activityCenterSubNavStatus: false,
+      styleTop: 30,
+      topPadding: '0 30px',
+      topBackgroundColor: 'rgba(0,0,0,0.7)'
     }
   },
   async created () {
@@ -401,6 +413,9 @@ export default{
     if (this.isLogin) {
       await reflashUserInfo(this)
     }
+  },
+  mounted () {
+    window.addEventListener('scroll', this.handleScroll)
   },
   methods: {
     ...mapMutations([
@@ -420,6 +435,19 @@ export default{
       'CHANGE_REF_SECURITY_CENTER_INFO',
       'SET_FOOTER_INFO'
     ]),
+    handleScroll () {
+      var scrollTop = window.pageYOffset || document.documentElement.scrollTop || document.body.scrollTop
+      console.log(scrollTop)
+      if (scrollTop > 0) {
+        this.styleTop = 0
+        this.topPadding = '0 10%'
+        this.topBackgroundColor = this.$mainNightBgColor
+      } else {
+        this.styleTop = 30
+        this.topPadding = '0 30px'
+        this.topBackgroundColor = 'rgba(0,0,0,.5)'
+      }
+    },
     // 更改当前选中汇率转换货币
     async changeActiveTransitionCurrency () {
       const params = {
@@ -579,7 +607,8 @@ export default{
       logoSrc: state => state.common.logoSrc,
       footerInfo: state => state.common.footerInfo,
       userCenterActiveName: state => state.personal.userCenterActiveName,
-      title: state => state.common.title // 网站title
+      title: state => state.common.title, // 网站title
+      $mainNightBgColor: state => state.common.mainColor.$mainNightBgColor
     })
   },
   watch: {
@@ -625,22 +654,21 @@ export default{
   @import "../../../static/css/scss/index";
   /*@import "../../../static/css/scss/Common/HeaderCommon.scss";*/
 .nav-box{
-  position: relative;
-  top:0;
+  position: fixed;
   z-index: 2008;
   width:100%;
   min-width:1100px;
   /*height:102px;*/
   box-sizing: border-box;
   /*top:30px;*/
+  transition: all .5s;
   >.inner-box{
     height:100%;
     >.top{
       height:66px;
       line-height: 66px;
       display:flex;
-      padding:0 30px;
-      background-color: $mainContentNightBgColor;
+      transition: all 0.5s;
       >.left{
         flex:2;
         position: relative;
@@ -653,6 +681,7 @@ export default{
             padding:0 25px;
             height:100%;
             vertical-align: top;
+            transition: all .5s;
             &:first-of-type{
               padding-left:0;
             }
@@ -696,9 +725,15 @@ export default{
             }
             &:hover{
               background-color: #1B2136;
+              >a{
+                color:$mainColor;
+              }
             }
             >a{
               color:$headerNavFontColor;
+              display: inline-block;
+              width: 100%;
+              height: 100%;
             }
             >.logo{
               display:inline-block;

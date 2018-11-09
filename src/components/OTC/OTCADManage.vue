@@ -551,6 +551,7 @@ export default {
 <style scoped lang="scss" type="text/scss">
   @import "../../../static/css/scss/index";
   .otc-AD-manage-box {
+    margin-top:66px;
     overflow: hidden;
     // position: relative;
     >.otc-AD-manage-content {

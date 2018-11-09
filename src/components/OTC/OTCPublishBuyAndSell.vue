@@ -2,6 +2,9 @@
   <div
     class="otc-publish-buy-and-sell-box otc"
     :class="{'day':theme == 'day','night':theme == 'night' }"
+    :style="{
+      height: windowHeight+'px'
+    }"
   >
     <!-- 挂单：商家和普通用户都可以用 -->
     <!-- 2.0发布购买和出售 -->
@@ -909,7 +912,10 @@ export default {
       theme: state => state.common.theme,
       // 当前选中语言
       language: state => state.common.language
-    })
+    }),
+    windowHeight () {
+      return window.innerHeight
+    }
   },
   watch: {}
 }
@@ -917,6 +923,7 @@ export default {
 <style scoped lang="scss" type="text/scss">
   @import "../../../static/css/scss/index";
   .otc-publish-buy-and-sell-box {
+    margin-top:66px;
     overflow: hidden;
     .redBorderRightNone{
       border: 1px solid #D45858 !important;

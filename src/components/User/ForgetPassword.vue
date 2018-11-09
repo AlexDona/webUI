@@ -553,6 +553,7 @@ export default {
 <style scoped lang="scss">
   @import '../../../static/css/scss/index';
   .froget-password-box{
+    margin-top:66px;
     overflow: hidden;
     background:linear-gradient(150deg,rgba(30,38,54,1),rgba(37,75,117,1));
     height:100%;

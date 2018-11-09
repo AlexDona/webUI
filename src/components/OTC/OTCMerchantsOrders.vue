@@ -574,6 +574,7 @@ export default {
 <style scoped lang="scss" type="text/scss">
   @import "../../../static/css/scss/index";
   .otc-merchants-orders-box{
+    margin-top:66px;
     overflow: hidden;
     >.otc-merchants-orders-content{
       width: 1150px;

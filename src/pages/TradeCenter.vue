@@ -98,6 +98,7 @@ export default {
   @import "../../static/css/scss/index";
   @import "../../static/css/scss/Trade/TradeCenter";
   .trade-box{
+    margin-top:66px;
     min-width:1366px;
     width:100%;
     box-sizing: border-box;

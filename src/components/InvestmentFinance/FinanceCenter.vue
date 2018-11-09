@@ -939,6 +939,7 @@ export default {
  // 公共scss样式
   @import "../../../static/css/scss/InvestmentFinance/FinanceCenter";
   .finance-box{
+    margin-top:66px;
     min-width:1300px;
     width:100%;
       >.banner-box{
