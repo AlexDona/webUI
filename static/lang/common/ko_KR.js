@@ -165,6 +165,7 @@ export const common = {
   'comm_content': '콘텐츠',
   'comm_after_get': '검색',
   'common_direction': '방향',
+  'common_average_price': '평균 거래 가격',
   'comm_get_code': '검증을 받다',
   // 全球行情任增加
   'common_exchange': '교환',

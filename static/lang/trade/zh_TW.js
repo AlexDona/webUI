@@ -3,6 +3,7 @@ export const trade = {
   'trade_coin_buying_and_sell': '買賣單',
   'trade_coin_entrusted_price': '委托價',
   'trade_coin_entrusted_amount': '委托量',
+  'trade_coin_has_traded_amount': '已成交量',
   // #####################查看更多委單記錄#####################
   'trade_coin_commissioned_current': '當前委托',
   'trade_coin_entrust': '委托',

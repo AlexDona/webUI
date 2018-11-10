@@ -69,7 +69,7 @@ export const common = {
   'comm_creation': '作成する',
   'comm_update': '更新',
   'comm_place_order': '注文',
-  'comm_remark': '備考',
+  'comm_remark': 'リマーク',
   'comm_site': '住所',
   'comm_list': 'リスト',
   'comm_operation': '操作',
@@ -140,7 +140,7 @@ export const common = {
   'comm_buying': '購入',
   'comm_success': '成功',
   'comm_stock': '次', // 取引回数の意味です。
-  'comm_business_application': 'マーチャントアプリケーション',
+  'comm_business_application': '商家申請',
   'comm_invitation_list': '招待ランキング',
   'comm_please': 'してください',
   'comm_bill': 'アカウント',
@@ -164,7 +164,8 @@ export const common = {
   'comm_pack_up': '折りたたむ',
   'comm_content': 'コンテンツ',
   'comm_after_get': '取得',
-  'common_direction': '方向',
+  'common_direction': 'タイプ',
+  'common_average_price': '完成',
   'comm_get_code': 'コードを取得',
   // 全球行情任增加
   'common_exchange': '取引所',

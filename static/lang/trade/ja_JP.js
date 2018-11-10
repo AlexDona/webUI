@@ -2,9 +2,10 @@ export const trade = {
   // #####################トークン取引 - 受注#####################
   'trade_coin_buying_and_sell': 'オーダー情報',
   'trade_coin_entrusted_price': '手数料',
-  'trade_coin_entrusted_amount': '手数料',
+  'trade_coin_entrusted_amount': '数量',
+  'trade_coin_has_traded_amount': '取引金額',
   // #####################もっと注文記録を見る#####################
-  'trade_coin_commissioned_current': '現在の手数料',
+  'trade_coin_commissioned_current': 'ライブオーダー',
   'trade_coin_entrust': '手数料',
   'trade_coin_entrust_money1': '手数料額',
   'trade_coin_text1': 'あなたはまだログインしていません。',
@@ -12,7 +13,7 @@ export const trade = {
   'trade_coin_text3': '閲覧後',
   'trade_coin_revocation': 'キャンセル',
   'trade_coin_history': '歴史',
-  'trade_coin_history_entrust1': '歴史手数料',
+  'trade_coin_history_entrust1': '履歴オーダー',
   // #####################リミット取引、市場価格取引#####################
   'trade_exchange_currency_data': '通貨情報',
   'trade_exchange_price_deal': '指値',
