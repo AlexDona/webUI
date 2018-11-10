@@ -1396,7 +1396,9 @@ export default {
           >.common{
             >.left{
               >.tips{
-                color: #fff;
+                // color: #fff;
+                // 改
+                color: #333;
               }
               >.warning{
                 color: #3E79D6;
@@ -1433,13 +1435,14 @@ export default {
               }
               >.input{
                 >.price-input{
-                  background-color: #232F44;
                   color: #7D90AC;
+                  background-color: #fff;
+                  border:1px solid rgba(236,241,248,1);
                 }
                 >.unit{
-                  color: #7EA9E4;
-                  background-color: #303F59;
                   border: 1px solid #CBDDF4;
+                  background-color: #CBDDF4;
+                  color: #338FF5;
                 }
               }
             }
@@ -1454,13 +1457,14 @@ export default {
               }
               >.input-top{
                 >.input-sum{
-                  background-color: #232F44;
                   color: #9DA5B3;
+                  background-color: #fff;
+                  border:1px solid rgba(236,241,248,1);
                 }
                 >.unit{
-                  color: #7EA9E4;
-                  background-color: #303F59;
                   border: 1px solid #CBDDF4;
+                  background-color: #CBDDF4;
+                  color: #338FF5;
                 }
               }
               >.text{
@@ -1472,13 +1476,13 @@ export default {
               }
               >.input-bottom{
                 >.input-min,.input-max{
-                  background-color: #232F44;
-                  color: #9DA5B3;
+                  background-color: #fff;
+                  border:1px solid rgba(236,241,248,1);
                 }
                 >.unit{
-                  color: #7EA9E4;
-                  background-color: #303F59;
                   border: 1px solid #CBDDF4;
+                  background-color: #CBDDF4;
+                  color: #338FF5;
                 }
                 >.minMaxLink{
                   color:#7d90ac;
@@ -1496,8 +1500,8 @@ export default {
               .question-mark{
               }
               .input-limit{
-                background-color: #232F44;
-                color: #9DA5B3;
+                background-color: #fff;
+                border:1px solid rgba(236,241,248,1);
               }
             }
           }

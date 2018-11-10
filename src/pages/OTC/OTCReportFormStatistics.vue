@@ -895,7 +895,7 @@ export default {
       }
     }
     >.report-form-details{
-      background-color: #1E2636;
+      // background-color: #1C1F32;
       margin-top: 20px;
       border-bottom-left-radius: 5px;
       border-bottom-right-radius: 5px;
@@ -1021,7 +1021,6 @@ export default {
         }
       }
       >.report-form-details{
-        // background-color: #1E2636;
         background-color: #1C1F32;
         >.title{
           color: #338FF5;
@@ -1073,31 +1072,32 @@ export default {
       }
       >.report-form-asset{
         color: #338FF5;
-        background-color: #1E2636;
+        background-color: #fff;
         >.title{
-          border: 1px solid #262F38;
-          box-shadow: 0px 4px 6px #191E28;
+          border:1px solid #ECF1F8;
+          box-shadow: 0px 4px 6px #F3F3F3;
+
         }
         >.content{
-          border: 1px solid #262F38;
+          border:1px solid #ECF1F8;
         }
       }
       >.report-form-buy-sell{
         >.common{
-          background-color: #1E2636;
+          background-color: #fff;
           >.head{
             color: #338FF5;
-            border: 1px solid #262F38;
-            box-shadow: 0px 4px 6px #191E28;
+            box-shadow: 0px 4px 6px #F3F3F3;
+            border: 1px solid #ECF1F8;
           }
           >.body{
-            border: 1px solid #262F38;
+            border: 1px solid #ECF1F8;
             >.together{
-              border: 1px solid #262F38;
+              border: 1px solid #ECF1F8;
               >.left{
                 color: #D45858;
                 >.round{
-                  background-color: #3B3139;
+                  background:rgba(212,88,88,0.1);
                 }
               }
               >.right{
@@ -1118,7 +1118,7 @@ export default {
               >.left{
                 color: #008069;
                 >.round{
-                  background-color: #28403D;
+                  background:rgba(84,189,116,0.1);
                 }
               }
               >.right{
@@ -1131,9 +1131,13 @@ export default {
         }
       }
       >.report-form-details{
-        // background-color: #1E2636;
+        background-color: #fff;
+        border:1px solid rgba(38,47,56,0.1);
+        border-top-left-radius: 5px;
+        border-top-right-radius: 5px;
         >.title{
           color: #338FF5;
+          border-bottom:1px solid rgba(38,47,56,0.1);
         }
         >.content{
           >.date{
