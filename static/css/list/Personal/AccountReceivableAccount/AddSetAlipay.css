@@ -26,3 +26,6 @@
 .add-account.personal .el-upload--picture-card {
   position: relative;
 }
+.add-account.personal .el-form-item__label {
+  width: 140px !important;
+}

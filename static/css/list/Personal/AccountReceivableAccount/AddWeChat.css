@@ -26,3 +26,6 @@
 .add-chat.personal .el-upload--picture-card {
   position: relative;
 }
+.add-chat.personal .el-form-item__label {
+  width: 140px !important;
+}

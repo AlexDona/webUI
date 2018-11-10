@@ -1,7 +1,6 @@
 /*个人中心黑色主题*/
 .add-account.personal.night .el-form-item__label {
   color: rgba(255,255,255,0.7);
-  min-width: 140px;
 }
 .add-account.personal.night .el-input__inner {
   border: 1px solid #485776;
