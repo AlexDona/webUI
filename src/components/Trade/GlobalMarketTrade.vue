@@ -230,7 +230,6 @@ export default {
           }
           >.tbody{
             height:200px;
-            /*background-color: pink;*/
             overflow-y: auto;
             padding:0 4.5%;
             box-sizing: border-box;

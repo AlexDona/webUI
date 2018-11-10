@@ -1327,7 +1327,7 @@ export default {
           >.pic-verify {
             width: 100px;
             height: 100px;
-            background-color: pink;
+            // background-color: pink;
           }
         }
         /*图片验证码提示框*/
@@ -1678,7 +1678,6 @@ export default {
                     display: inline-block;
                     height:160px;
                     width: 240px;
-                    /*background: pink;*/
                     overflow: hidden;
                   }
                 }

@@ -302,7 +302,7 @@ export default {
               display: inline-block;
             }
             &:hover{
-              background-color: pink;
+              // background-color: pink;
             }
             >span{
               flex:1;

@@ -346,7 +346,6 @@ export default {
             height:651px;
             >.content-box{
               height:651px;
-              /*background-color: pink;*/
               transition: all 0.5s;
               margin-top:-300px;
               >.buys-list,.sells-list{

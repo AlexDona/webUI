@@ -149,7 +149,6 @@ export default {
       font-size: .8rem;
       text-align: center;
       padding:4rem 2rem;
-      /*background-color: pink;*/
       .strong{
         font-weight: 700;
         font-size: 1.2rem;
@@ -160,7 +159,6 @@ export default {
         }
       }
       >.bg{
-        /*background-color: pink;*/
         height:18rem;
         >img{
           margin: 2rem auto;
