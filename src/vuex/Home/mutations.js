@@ -2,7 +2,8 @@ import {
   CHANGE_BANNER_BACKGROUND,
   CHANGE_BANNER_ACTIVE,
   CHANGE_COLLECT_SYMBOL,
-  CHANGE_SYMBOL_MAP
+  CHANGE_SYMBOL_MAP,
+  CHANGE_NOTICE_VISIBLE
 } from './mutations-types.js'
 import Vue from 'vue'
 // import {setStore, getStore} from '../utils'
@@ -33,5 +34,8 @@ export default {
   // 设置交易对map映射
   [CHANGE_SYMBOL_MAP] (state, {key, val}) {
     state.symbolMap.set(key, val)
+  },
+  [CHANGE_NOTICE_VISIBLE] (state, data) {
+    state.noticeCloseVisible = data
   }
 }

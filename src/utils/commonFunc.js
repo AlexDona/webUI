@@ -35,7 +35,8 @@ import {
   removeStore,
   getStore,
   setStore,
-  getStoreWithJson
+  getStoreWithJson,
+  keep2Num
 } from './index'
 import {PHONE_REG, EMAIL_REG, ID_REG, PWD_REG, ALIPAY_REG, BANK_REG, GOOGLE_REG, TPED_REG, URL_REG, WITHDRAWAL_REG} from './regExp'
 // 请求接口后正确或者错误的提示提示信息：
@@ -385,6 +386,26 @@ export const addFavicon = (href, title) => {
   link.href = href
   document.getElementsByTagName('head')[0].appendChild(link)
   document.querySelector('title').innerText = title
+}
+// 成交量格式化
+export const formatCount = (targetNum) => {
+  let newNum = targetNum - 0
+  switch (store.state.common.language) {
+    case 'zh_CN':
+      if (newNum > 100000000) {
+        newNum = keep2Num(newNum / 100000000) + '亿'
+      } else if (newNum > 10000) {
+        newNum = keep2Num(newNum / 10000) + '万'
+      }
+      return newNum
+    default :
+      if (newNum > 1000000) {
+        newNum = keep2Num(newNum / 1000000) + 'M'
+      } else if (newNum > 1000) {
+        newNum = keep2Num(newNum / 1000) + 'K'
+      }
+      return newNum
+  }
 }
 // eslint-disable-next-line
 String.prototype.format = function (args) {

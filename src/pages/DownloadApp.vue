@@ -23,6 +23,7 @@
         <button
           class="download-btn"
           v-if="isChineseLanguage"
+          @click="downloadApp"
         >
           <!-- 立即安装 -->
           立即安装
@@ -30,17 +31,25 @@
         <button
           class="download-btn"
           v-else
+          @click="downloadApp"
         >
           <!-- 立即安装 -->
           Install
         </button>
+        <a
+          :href="downloadUrl"
+          ref="android-download"
+          download="android"
+          :style="{
+            display:none
+          }"
+        ></a>
       </div>
     </div>
   </div>
 </template>
 <!--请严格按照如下书写书序-->
 <script>
-import {getFooterInfo} from '../utils/commonFunc'
 import {mapState, createNamespacedHelpers} from 'vuex'
 const {mapMutations} = createNamespacedHelpers('common')
 
@@ -51,11 +60,12 @@ export default {
   data () {
     return {
       zh_CNSrc: require('../assets/develop/download-bg-cn.png'),
-      en_USSrc: require('../assets/develop/download-bg-en.png')
+      en_USSrc: require('../assets/develop/download-bg-en.png'),
+      downloadUrl: ''
     }
   },
   created () {
-    getFooterInfo(this.language, this)
+    // getFooterInfo(this.language, this)
   },
   mounted () {
   },
@@ -65,7 +75,21 @@ export default {
   methods: {
     ...mapMutations([
       'SET_FOOTER_INFO'
-    ])
+    ]),
+    downloadApp () {
+      let u = navigator.userAgent
+      let isAndroid = u.indexOf('Android') > -1 || u.indexOf('Adr') > -1 // android终端
+      let isiOS = !!u.match(/\(i[^;]+;( U;)? CPU.+Mac OS X/) // ios终端
+      if (isiOS) {
+        // equip = 'ios'
+        // alert('isIOS')
+      } else if (isAndroid) {
+        // equip = 'android'
+        // alert('isAndroid')
+        this.downloadUrl = 'https://fubt-3.oss-cn-hongkong.aliyuncs.com/4f8f11c8-9921-408c-8671-7dcf2c7fac6atudou.apk'
+        this.$refs['android-download'].click()
+      }
+    }
   },
   filter: {},
   computed: {

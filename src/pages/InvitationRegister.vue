@@ -36,7 +36,7 @@
 <!--请严格按照如下书写书序-->
 <script>
 import {
-  getFooterInfo,
+  // getFooterInfo,
   returnAjaxMessage
 } from '../utils/commonFunc'
 import {
@@ -66,7 +66,7 @@ export default {
     console.log('created')
     // await getLanguageListAjax(this, this.language)
     // this.CHANGE_LANGUAGE(language)
-    await getFooterInfo(this.language, this)
+    // await getFooterInfo(this.language, this)
     await this.findUserInfoByShowId()
   },
   mounted () {},

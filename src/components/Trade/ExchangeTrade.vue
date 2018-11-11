@@ -732,6 +732,7 @@ export default {
       console.log(newVal)
       let targetPriceOfBuy = newVal.buy || newVal.kai
       let targetPriceOfSell = newVal.sell || newVal.kai
+      console.log(targetPriceOfBuy, targetPriceOfSell, this.reflashCount)
       // 首次打开设置价格
       if (!this.reflashCount) {
         if (newVal.last) {
@@ -740,7 +741,6 @@ export default {
         if (this.isLogin) {
           await this.getUserAssetOfActiveSymbol(targetPriceOfBuy, targetPriceOfSell)
         } else {
-          console.log('zzz')
           this.setBuyAndSellPrice(targetPriceOfBuy, targetPriceOfSell)
         }
       }

@@ -4,6 +4,9 @@
     :class="{'day':theme == 'day','night':theme == 'night' }"
     v-loading.fullscreen.lock="fullscreenLoading"
     element-loading-background="rgba(0, 0, 0, 0.6)"
+    :style="{
+      height: windowHeight+'px'
+    }"
   >
     <div class="set-email-main margin25">
       <header class="set-email-header personal-height60 line-height60 line-height70 margin25">
@@ -118,7 +121,7 @@ export default {
       emailCode: '', // 邮箱验证码
       successCountDown: 1, // 成功倒计时
       fullscreenLoading: false, // 整页loading
-      isEmailExist: true, // 邮箱是否存在
+      isEmailExist: false, // 邮箱是否存在
       errorShowStatusList: [
         '', // 邮箱账号
         '' // 验证码
@@ -150,7 +153,8 @@ export default {
       this.$router.push({path: '/PersonalCenter'})
     },
     // 发送邮箱验证码
-    sendPhoneOrEmailCode (loginType) {
+    async sendPhoneOrEmailCode (loginType) {
+      // await this.checkUserExistAjax(loginType, this.emailAccounts)
       if (this.isEmailExist && this.emailAccounts) {
         this.$message({
           type: 'error',
@@ -187,7 +191,7 @@ export default {
           params.email = this.emailAccounts
           break
       }
-      sendPhoneOrEmailCodeAjax(loginType, params, this)
+      await sendPhoneOrEmailCodeAjax(loginType, params, this)
     },
     /**
      * 确认绑定邮箱
@@ -338,7 +342,10 @@ export default {
       activeCountryCode: state => state.user.loginStep1Info.countryCode, // 国籍码
       disabledOfPhoneBtn: state => state.user.disabledOfPhoneBtn,
       disabledOfEmailBtn: state => state.user.disabledOfEmailBtn
-    })
+    }),
+    windowHeight () {
+      return window.innerHeight
+    }
   },
   watch: {}
 }
@@ -346,6 +353,7 @@ export default {
 <style scoped lang="scss">
   @import "../../../../static/css/scss/Personal/IndexPersonal";
   .set-email {
+    margin-top:66px;
     overflow: hidden;
     >.set-email-main {
       width: 1100px;

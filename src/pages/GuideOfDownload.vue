@@ -43,28 +43,43 @@
           </div>
         </div>
         <!--pc端-->
-        <div class="right">
+
+        <div
+          class="right"
+          @mouseenter="toggleIsOpen(0)"
+          @mouseleave="toggleIsOpen(1)"
+        >
           <div class="r-left">
             <IconFont
               icon-name="icon-computer_icon"
               class-name="icon-diannao"
             />
           </div>
-          <div class="r-right">
-            <button>
-              <IconFont
-                icon-name="icon-pingguo"
-                class-name="icon"
-              />
-              Mac 版本下载
-            </button>
-            <button>
-              <IconFont
-                icon-name="icon-windows"
-                class-name="icon"
-              />
-              WIN 版本下载
-            </button>
+          <div class="r-right"
+              v-show="isOpen"
+            >
+              <button>
+                <IconFont
+                  icon-name="icon-pingguo"
+                  class-name="icon"
+                />
+                Mac 版本下载
+              </button>
+              <button>
+                <IconFont
+                  icon-name="icon-windows"
+                  class-name="icon"
+                />
+                WIN 版本下载
+              </button>
+            </div>
+          <div
+              class="r-right"
+              v-show="!isOpen"
+            >
+              <p
+                class="please-wait"
+              >暂未开放，敬请期待</p>
           </div>
         </div>
       </div>
@@ -91,7 +106,8 @@ export default {
   data () {
     return {
       erCodeVisible: false,
-      erCodeString: `${domain}/downloadApp`
+      erCodeString: `${domain}/downloadApp`,
+      isOpen: true
     }
   },
   created () {},
@@ -100,6 +116,9 @@ export default {
   updated () {},
   beforeRouteUpdate () {},
   methods: {
+    toggleIsOpen (data) {
+      this.isOpen = data
+    },
     toggleErCode (data) {
       this.erCodeVisible = data
     }
@@ -200,6 +219,7 @@ export default {
             }
           }
           >.r-right{
+            transition: all .5s;
             >button{
               display: block;
               color:$mainColor;
@@ -210,6 +230,12 @@ export default {
                 margin-right:5px;
                 font-size: 28px;
               }
+            }
+            >.please-wait{
+              color:$mainColor;
+              line-height: 113px;
+              font-size: 28px;
+              margin-left:30px;
             }
           }
         }

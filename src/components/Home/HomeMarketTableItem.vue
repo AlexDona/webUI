@@ -7,15 +7,8 @@
       class="left"
     >
       <!--正面-->
-      <!--<transition enter-active-class="animated fadeIn">-->
-      <transition
-        @before-enter="beforeEnter"
-        @enter="enter"
-        @leave="leave"
-      >
         <div
           class="right-side animate"
-          v-show="toggleSideList[item.id]"
         >
           <div class="top">
             <span>{{item.area}}</span>
@@ -25,60 +18,6 @@
             </span>
           </div>
         </div>
-      </transition>
-      <!--反面-->
-      <!--<transition enter-active-class="animated fadeIn">-->
-      <transition
-        @before-enter="beforeEnterReverse"
-        @enter="enterDownReverse"
-        @leave="leaveReverse"
-      >
-        <div
-          class="reverse-side animate"
-          v-show="!toggleSideList[item.id]"
-        >
-          <div class="top">
-            <span>
-              <!--最热交易对-->
-              {{ $t('M.home_market_hottest_trading') }}
-            </span>
-          </div>
-          <div class="bottom">
-            <ul class="hot-list">
-              <li
-                class="hot-item"
-                v-for="(innerItem) in item.content"
-                :key="innerItem"
-              >
-                <!--<router-link-->
-                  <!--to="/"-->
-                  <!--v-if="innerItem.hot"-->
-                <!--&gt;-->
-                  <!--<span class="left font-size16">-->
-                    <!--<span>-->
-                      <!--{{innerItem.sellsymbol}} / {{item.area}}-->
-                    <!--</span>-->
-                  <!--</span>-->
-                  <!--<span class="right">-->
-                    <!--<span-->
-                      <!--class="top font-size14"-->
-                      <!--:class="{up:innerItem.chg>=0,down:innerItem.chg<0}"-->
-                    <!--&gt;-->
-                      <!--{{innerItem.last}}-->
-                    <!--</span>-->
-                    <!--&lt;!&ndash;货币兑换&ndash;&gt;-->
-                      <!--<span class="bottom font-size12">-->
-                        <!--≈-->
-                        <!--<span></span>-->
-                        <!--{{currencyRateList[innerItem.area]*innerItem.last}}-->
-                      <!--</span>-->
-                    <!--</span>-->
-                <!--</router-link>-->
-              </li>
-            </ul>
-          </div>
-        </div>
-      </transition>
     </div>
     <!--表格内容-->
     <div
@@ -229,7 +168,7 @@
                       line-height: 30px;
                       margin:10px auto;
                     ">
-              {{s.row.vol24hour}}
+              {{formatCount(s.row.vol24hour)}}
             </div>
           </template>
         </el-table-column>
@@ -325,7 +264,7 @@
 <script>
 import {mapState} from 'vuex'
 import {keep2Num} from '../../utils'
-// import {returnAjaxMessage} from '../../utils/commonFunc'
+import {formatCount} from '../../utils/commonFunc'
 import EchartsLineCommon from '../Common/EchartsLineCommon'
 export default {
   components: {
@@ -333,7 +272,6 @@ export default {
   },
   props: [
     'searchKeyWord',
-    'toggleSideList',
     'collectAreaId',
     'searchAreaId',
     'collectStatusList',
@@ -355,6 +293,10 @@ export default {
   update () {},
   beforeRouteUpdate () {},
   methods: {
+    // 成交量格式化
+    formatCount (targetNum) {
+      return formatCount(targetNum)
+    },
     toggleCollect (id, status, row) {
       this.$emit('toggleCollect', {
         id,

@@ -31,6 +31,8 @@
         class="main-box pc-box"
         v-if="!isMobile&&!isRegisterSuccess"
       >
+        <!-- 欢迎注册 -->
+        <h1 class="title">{{$t('M.login_welcome')}}{{$t('M.comm_register_time')}}</h1>
         <!--切换注册方式-->
         <ul class="methods-list">
           <li
@@ -1212,12 +1214,29 @@ export default {
       }
       /*pc端*/
       >.pc-box{
+        position: relative;
         width:370px;
         background:linear-gradient(201deg,rgba(42,88,137,1) 0%,rgba(43,58,111,1) 100%);
         box-shadow:0px 4px 21px 0px rgba(26,42,71,1);
         margin: 12% 0 0 50%;
         padding:12px 40px 50px;
         border-radius: 10px;
+        >.title{
+          position: absolute;
+          top:-20%;
+          // left:36%;
+          // width:104px;
+          left:36%;
+          // width:104px;
+          height:35px;
+          font-size:26px;
+          font-family:MicrosoftYaHei;
+          font-weight:400;
+          color:rgba(51,143,245,1);
+          background:linear-gradient(81deg,rgba(77,122,255,1) 25.4638671875%, rgba(58,184,255,1) 100%);
+          -webkit-background-clip:text;
+          -webkit-text-fill-color:transparent;
+        }
         /*注册方式选择*/
         >.methods-list{
           display:flex;

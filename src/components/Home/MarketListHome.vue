@@ -23,7 +23,6 @@
               <!--搜索区-->
               <HomeMarketTableItem
                 :searchKeyWord="searchKeyWord"
-                :toggleSideList="toggleSideListOfSearchArea"
                 :collectAreaId="collectAreaId"
                 :searchAreaId="searchAreaId"
                 :collectStatusList="collectStatusList"
@@ -33,7 +32,6 @@
               />
               <!--自选区-->
               <HomeMarketTableItem
-                :toggleSideList="toggleSideListOfCollectArea"
                 :collectAreaId="collectAreaId"
                 :searchAreaId="searchAreaId"
                 :collectStatusList="collectStatusList"
@@ -57,7 +55,6 @@
                 >
                   <!--单个交易区-->
                   <HomeMarketTableItem
-                    :toggleSideList="toggleSideList"
                     :collectAreaId="collectAreaId"
                     :searchAreaId="searchAreaId"
                     :collectStatusList="collectStatusList"
@@ -176,13 +173,9 @@ export default{
       // 前两项行情数据
       filterMarketList: [],
       moreBtnShowStatus: true, // 查看更多按钮显示状态
-      // 切换正反面显示列表
-      toggleSideList: [],
       socket: new socket(),
       tabChangeCount: 0, // tab栏切换次数
       newMarketList: [], // 当前最新行情
-      toggleSideListOfCollectArea: [], // 自选区正反面列表
-      toggleSideListOfSearchArea: [], // 搜索区正反面列表
       collectArea: {
         area: this.$t('M.home_market_district'), // 交易区名称 自选区
         id: 2,
@@ -202,24 +195,16 @@ export default{
     require('../../../static/css/list/Home/MarketListHome.css')
     require('../../../static/css/theme/day/Home/MarketListHomeDay.css')
     require('../../../static/css/theme/night/Home/MarketListHomeNight.css')
-    console.log(this.language)
-    console.log(this.$route.path)
     if (this.language) {
       await this.getHomeMarketByAjax()
     }
   },
   mounted () {
-    // 搜索区、自选区禁止拖拽
-    window.ondragstart = (e) => {
-      const id = e.target.id.split('.')[1]
-      if (id == this.collectAreaId || id == this.searchAreaId) {
-        return false
-      }
-    }
   },
   activited () {},
   update () {},
-  beforeRouteUpdate () {},
+  beforeRouteUpdate () {
+  },
   destroyed () {
     this.socket.destroy()
   },
@@ -349,12 +334,6 @@ export default{
           collectSymbol[item.content] = item.content
         })
       })
-      // const data = await getCollectionListAjax()
-      // if (!returnAjaxMessage(data, this)) {
-      //   return false
-      // } else {
-      //
-      // }
     },
     // 首次链接接口获取行情数据
     async getHomeMarketByAjax () {
@@ -378,9 +357,6 @@ export default{
         })
         this.activeName = this.newMarketList[0].plateId
         this.activeIndex = 0
-        this.initSideBar(true)
-        this.toggleSideListOfCollectArea[this.collectAreaId] = true
-        this.toggleSideListOfSearchArea[this.searchAreaId] = true
         let collectSymbol = {}
         if (!this.isLogin) {
           collectSymbol = JSON.parse(getStore('collectSymbol')) || {}
@@ -403,14 +379,6 @@ export default{
     // 切换板块
     changeTab () {
       this.searchFromMarketList()
-    },
-    // 初始化 侧边栏正反面
-    initSideBar (status) {
-      _.forEach(this.newMarketList, outItem => {
-        _.forEach(outItem.tradeAreaList, item => {
-          this.toggleSideList[item.id] = status
-        })
-      })
     },
     // market过滤
     getFilterMarketList () {
@@ -436,6 +404,7 @@ export default{
       this.searchArea.content = this.searchList
       if (this.searchKeyWord.trim() !== '') {
         this.symbolMap.forEach(item => {
+          console.log(item.plateId, this.activeName)
           if (item.plateId === this.activeName) {
             const result1 = item.sellsymbol.search(this.searchKeyWord.toUpperCase())
             const result2 = item.sellname.search(this.searchKeyWord)
@@ -444,6 +413,8 @@ export default{
             }
           }
         })
+        console.log(this.searchKeyWord, this.searchList)
+
         this.searchArea.content = this.searchList
       } else {
         this.searchArea.content = []
@@ -492,19 +463,6 @@ export default{
       if (!this.isLogin) {
         setStore('collectSymbol', this.collectSymbol)
       }
-    },
-    // 切换正反面
-    async toggleSide (index, status) {
-      if (index == this.searchAreaId || index == this.collectAreaId) {
-        return
-      }
-      if (this.flag) {
-        this.flag = false
-        this.$set(this.toggleSideList, index, Boolean(status))
-        await setTimeout(() => {
-          this.flag = true
-        }, 500)
-      }
     }
   },
   filter: {},
@@ -544,6 +502,7 @@ export default{
     currencyRateList (newVal) {
     },
     activeName (newVal) {
+      console.log(newVal)
       this.tabChangeCount++
       _.forEach(this.newMarketList, (item, index) => {
         if (item.plateId === newVal) {

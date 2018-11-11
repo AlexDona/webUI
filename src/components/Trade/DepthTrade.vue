@@ -519,9 +519,11 @@ export default {
   },
   watch: {
     depthDataByAjax (newVal) {
+      console.log(newVal)
       this.setWatchData(newVal)
     },
     depthDataBySocket (newVal) {
+      console.log(newVal)
       this.setWatchData(newVal)
     },
     theme () {

@@ -80,7 +80,10 @@
 </template>
 <script>
 import {mapState} from 'vuex'
-import {returnAjaxMessage} from '../../utils/commonFunc'
+import {
+  returnAjaxMessage,
+  formatCount
+} from '../../utils/commonFunc'
 import {getGLobalMarket} from '../../utils/api/trade'
 import {keep2Num} from '../../utils'
 
@@ -107,23 +110,7 @@ export default {
   methods: {
     // 成交量格式化
     formatCount (targetNum) {
-      let newNum = targetNum - 0
-      switch (this.language) {
-        case 'zh_CN':
-          if (newNum > 100000000) {
-            newNum = this.keep2Num(newNum / 100000000) + '亿'
-          } else if (newNum > 10000) {
-            newNum = this.keep2Num(newNum / 10000) + '万'
-          }
-          return newNum
-        default :
-          if (newNum > 1000000) {
-            newNum = this.keep2Num(newNum / 1000000) + 'M'
-          } else if (newNum > 1000) {
-            newNum = this.keep2Num(newNum / 1000) + 'K'
-          }
-          return newNum
-      }
+      return formatCount(targetNum)
     },
     keep2Num (targetNum) {
       return keep2Num(targetNum)

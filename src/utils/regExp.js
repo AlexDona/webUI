@@ -33,7 +33,7 @@ export const INTEGER_REG = /^[0-9]*$/
 /**
  *  数字 英文字母组合
  */
-export const WITHDRAWAL_REG = /^[A-Za-z0-9]+$/
+export const WITHDRAWAL_REG = /^([A-Za-z0-9])+(\:)?[A-Za-z0-9]+$/
 /**
  * 谷歌
  */

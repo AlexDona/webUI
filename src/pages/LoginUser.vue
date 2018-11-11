@@ -736,7 +736,7 @@ export default {
     require('../../static/css/list/User/Login.css')
     this.ENTER_STEP1()
     this.refreshCode()
-    // this.reflashErCode()
+    this.reflashErCode()
     // 清空input框值
     // this.clearInputValue()
   },
@@ -829,10 +829,10 @@ export default {
             }
           }, 1000)
           this.socket.on('message', (data) => {
+            console.log(data)
             let socketData = data
             // 用户已扫码
             if (socketData.scan) {
-              console.log(socketData)
               this.isScanSuccess = true
             }
             // 登录成功
