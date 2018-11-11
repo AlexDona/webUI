@@ -39,10 +39,6 @@ util.ajax.interceptors.response.use(
     if (!success) {
       failureCount++
     }
-    if (failureCount > 1) {
-      failureCount = 0
-      return false
-    }
     return response
   },
   error => {

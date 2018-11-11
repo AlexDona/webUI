@@ -44,6 +44,7 @@
                 class="email-input border-radius2 padding-l15 box-sizing"
                 v-model="emailAccounts"
                 @keydown="setErrorMsg(0, '')"
+                @focus="resetIsEmailExist"
                 @blur="checkUserExistAjax('email', emailAccounts)"
               />
               <!--错误提示-->
@@ -152,6 +153,10 @@ export default {
       this.$store.commit('personal/CHANGE_USER_CENTER_ACTIVE_NAME', 'security-center')
       this.$router.push({path: '/PersonalCenter'})
     },
+    // 重置邮箱已存在状态
+    resetIsEmailExist () {
+      this.isEmailExist = false
+    },
     // 发送邮箱验证码
     async sendPhoneOrEmailCode (loginType) {
       // await this.checkUserExistAjax(loginType, this.emailAccounts)
@@ -179,8 +184,6 @@ export default {
         return false
       }
       let params = {
-        // type: 'VERIFICATION_CODE' // 类型
-        // country: this.activeCountryCode // 邮箱国籍
         userId: this.userInfo.userId
       }
       switch (loginType) {
