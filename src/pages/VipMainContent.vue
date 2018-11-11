@@ -14,7 +14,8 @@
     <div
       class="loading-box"
       v-if="fullscreenLoading"
-    ></div>
+    >
+    </div>
     <div class="content-main-content">
       <!--开通vip页面-->
       <div
@@ -619,8 +620,8 @@
 <!--请严格按照如下书写书序-->
 <script>
 // 头部
-import HeaderCommon from '../components/Common/HeaderCommonForPC'
-import FooterCommon from '../components/Common/FooterCommon'
+// import HeaderCommon from '../components/Common/HeaderCommonForPC'
+// import FooterCommon from '../components/Common/FooterCommon'
 import { createNamespacedHelpers, mapState } from 'vuex'
 import {
   vipPriceInfo,
@@ -637,8 +638,8 @@ import {
 const { mapMutations } = createNamespacedHelpers('personal')
 export default {
   components: {
-    HeaderCommon, // 头部
-    FooterCommon // 底部
+    // HeaderCommon, // 头部
+    // FooterCommon // 底部
   },
   data () {
     return {
@@ -946,7 +947,7 @@ export default {
   .vip-main {
     margin-top:66px;
     > .header-content {
-      /*height: 600px;*/
+      // height: 600px;
       width: 100%;
       margin: 0 auto;
       .images {
@@ -956,7 +957,7 @@ export default {
     >.loading-box{
       height:800px;
       width:100%;
-      background-color: pink;
+      // background-color: red;
     }
     > .content-main-content {
       height:100%;

@@ -92,7 +92,6 @@
             >
               <router-link to="/AboutUs">
                 <!--关于我们-->
-                <!-- {{$t('M.comm_about')}}{{$t('M.comm_us')}}FUBT Group -->
                 {{$t('M.comm_us')}}
               </router-link>
             </dd>
@@ -114,21 +113,24 @@
               @click="jumpToOtherPage('/ServiceAndProtocol','UserProtocol')"
             >
               <!--用户协议-->
-              {{$t('M.user_api_user')}}{{$t('M.comm_agreement')}}
+              <!-- {{$t('M.user_api_user')}}{{$t('M.comm_agreement')}} -->
+              {{$t('M.common_footer_user_agreement')}}
             </dd>
             <dd
               class="dd-item"
               @click="jumpToOtherPage('/ServiceAndProtocol','PrivacyClause')"
             >
               <!--隐私条款-->
-              {{$t('M.comm_privacy')}}{{$t('M.comm_clause')}}
+              <!-- {{$t('M.comm_privacy')}}{{$t('M.comm_clause')}} -->
+              {{$t('M.common_footer_privacy_policy')}}
             </dd>
             <dd
               class="dd-item"
               @click="jumpToOtherPage('/ServiceAndProtocol','LegislationExplain')"
             >
               <!--法律声明-->
-              {{$t('M.comm_law')}}{{$t('M.comm_statement')}}
+              <!-- {{$t('M.comm_law')}}{{$t('M.comm_statement')}} -->
+              {{$t('M.common_footer_legal_notice')}}
             </dd>
             <dd
               class="dd-item"

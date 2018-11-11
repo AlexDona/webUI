@@ -165,6 +165,7 @@ export const common = {
   'comm_content': '콘텐츠',
   'comm_after_get': '검색',
   'common_direction': '방향',
+  'common_average_price': '평균 거래 가격',
   'comm_get_code': '검증을 받다',
   // 全球行情任增加
   'common_exchange': '교환',
@@ -172,5 +173,9 @@ export const common = {
   'common_transaction_price': '거래 가격',
   'common_trading_volume': '볼륨',
   'common_depth_map': '깊이지도',
-  'common_friendly_link': '친숙한 링크'
+  'common_friendly_link': '친숙한 링크',
+  // 底部增加
+  'common_footer_user_agreement': '사용자 협의',
+  'common_footer_privacy_policy': '비밀 조항',
+  'common_footer_legal_notice': '법률 성명'
 }

@@ -172,8 +172,9 @@
                 <!--<span>（{{activeSymbol.sellsymbol}}）</span>-->
               </li>
               <li class="th price">
-                <!--已成交-->
-                {{$t('M.comm_already')}}{{ $t('M.comm_make_bargain') }}{{ $t('M.comm_quantity') }}
+                <!--已成交量-->
+                <!-- {{$t('M.comm_already')}}{{ $t('M.comm_make_bargain') }}{{ $t('M.comm_quantity') }} -->
+                {{ $t('M.trade_coin_has_traded_amount') }}
                 <span>（{{activeSymbol.sellsymbol}}）</span>
               </li>
               <li class="th price">

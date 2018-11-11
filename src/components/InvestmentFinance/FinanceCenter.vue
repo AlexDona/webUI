@@ -944,12 +944,12 @@ export default {
     width:100%;
       >.banner-box{
         height: 459px;
-        background: #272b41;
+        // background: #272b41;
         >img{
           width: 100%;
           height: 100%;
         }
-        }
+      }
       >.inner-box{
         display:flex;
         width:100%;
@@ -1104,6 +1104,9 @@ export default {
       }
     }
     &.night{
+      >.banner-box{
+        background: #272b41;
+      }
       >.inner-box{
         background-color: $nightInnerBoxBg;
         >div{
@@ -1112,6 +1115,9 @@ export default {
       }
     }
     &.day{
+      >.banner-box{
+        background: #fff;
+      }
       >.inner-box{
       }
     }

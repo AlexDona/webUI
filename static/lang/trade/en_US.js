@@ -4,6 +4,7 @@ export const trade = {
   'trade_coin_entrusted_price': 'Entrust price',
   // 'trade_coin_entrusted_amount': 'Entrust Amount',
   'trade_coin_entrusted_amount': 'Amount',
+  'trade_coin_has_traded_amount': 'HasTradeAmount',
   // #####################查看更多委单记录#####################''View more order records'
   'trade_coin_commissioned_current': 'Open Orders',
   'trade_coin_entrust': 'entrust',

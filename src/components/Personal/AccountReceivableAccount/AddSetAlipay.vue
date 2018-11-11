@@ -439,8 +439,11 @@ export default {
             overflow: hidden;
           }
           .account-button {
-            padding: 10px 93px;
-            margin: 30px 0 50px 120px;
+            // padding: 10px 93px;
+            // margin: 30px 0 50px 120px;
+            padding: 10px 0;
+            margin: 30px 0 50px 140px;
+            width: 237px;
           }
         }
       }

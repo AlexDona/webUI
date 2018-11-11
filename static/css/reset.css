@@ -24,7 +24,7 @@ a{
 }
 body {
   /* 任更改背景色 */
-   background-color: #272B41;
+  background-color: #272B41;
   /*background-color: transparent;*/
   color: #666666;
   font-family: Helvetica, Arial, sans-serif;
@@ -33,7 +33,12 @@ body {
   text-align: left;
   /*height:100%;*/
 }
-
+body.night{
+  background-color: #272B41;
+}
+body.day{
+  background-color: #fff;
+}
 select {
   font-size: 14px;
 }

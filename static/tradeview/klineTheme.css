@@ -19,7 +19,7 @@
 
 #loading-indicator {
   /*background: 0 0;*/
-  background-color: pink;
+  /* background-color: pink; */
   /*display: none;*/
 }
 
@@ -37,7 +37,6 @@
   font-size: 14px;
 }
 .header-chart-panel .button:hover,.header-chart-panel .button.selected{
-  /*background-color: pink;*/
   background:rgba(61,80,90,1);
   color:#338FF5 !important;
   cursor: pointer;

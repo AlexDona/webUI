@@ -103,6 +103,7 @@
               v-model="startTime"
               type="datetime"
               :placeholder="$t('M.comm_select') + $t('M.comm_data')"
+              @change="startDate"
             >
             </el-date-picker>
             <span class="middle-line"> - </span>
@@ -112,6 +113,7 @@
               v-model="endTime"
               type="datetime"
               :placeholder="$t('M.comm_select') + $t('M.comm_data')"
+              @change="endDate"
             >
             </el-date-picker>
           </div>
@@ -608,7 +610,6 @@ export default {
         id,
         version
       }
-
       // 确定撤销委托单？  取消  确定
       this.$confirm(this.$t('M.otc_revoke'), {
         // 取消
@@ -695,6 +696,31 @@ export default {
             }
           }
           break
+      }
+    },
+    /**
+    *时间选择器change事件
+    */
+    startDate () {
+      if (this.endTime) {
+        if (this.startTime > this.endTime) {
+          this.$message({ // message: '开始时间不能大于结束时间',
+            message: this.$t('M.otc_time_limit'),
+            type: 'error'
+          })
+          return false
+        }
+      }
+    },
+    endDate () {
+      if (this.startTime) {
+        if (this.startTime > this.endTime) {
+          this.$message({ // message: '开始时间不能大于结束时间',
+            message: this.$t('M.otc_time_limit'),
+            type: 'error'
+          })
+          return false
+        }
       }
     }
   },

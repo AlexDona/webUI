@@ -3,6 +3,7 @@ export const trade = {
   'trade_coin_buying_and_sell': '구매 주문서',
   'trade_coin_entrusted_price': '수수료 가격',
   'trade_coin_entrusted_amount': '커미션 금액',
+  'trade_coin_has_traded_amount': '거래량이다',
   // #####################查看更多委单记录#####################''더 많은 주문 기록보기'
   'trade_coin_commissioned_current': '현재위원회',
   'trade_coin_entrust': '위원회',

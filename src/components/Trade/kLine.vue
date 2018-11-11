@@ -274,8 +274,6 @@ export default {
         this.widget.onChartReady(() => {
           const _self = this
           let chart = _self.widget.chart()
-          // console.log(document.getElementById('tv_chart_container'))
-          // document.getElementById('tv_chart_container').childNodes[0].setAttribute('style', 'display:block;width:100%;height:100%;')
           const btnList = [{
             class: 'resolution_btn',
             label: this.$t('M.trade_time_share'), // 分时
@@ -291,12 +289,11 @@ export default {
             })
             item.resolution === _self.widget._options.interval && _self.updateSelectedIntervalButton(button)
             const selected = index == 1 ? ' selected' : ''
-            button.attr('class', 'button ' + item.class + selected)
+            button.attr('class', 'button ' + item.class + selected + ' add' + index)
               .attr('data-chart-type', item.chartType === undefined ? 1 : item.chartType)
               .on('click', function (e) {
                 if (!_self.widget.changingInterval && !button.hasClass('selected')) {
                   let chartType = +button.attr('data-chart-type')
-                  // let resolution = button.attr('data-resolution')
                   if (chart.resolution() !== item.resolution) {
                     _self.widget.changingInterval = true
                     chart.setResolution(item.resolution)
@@ -309,6 +306,15 @@ export default {
               })
               .append(item.label)
           })
+          setTimeout(() => {
+            let iframe$ = document.getElementsByTagName('iframe')[0].contentWindow.$
+            let lastBtnList = iframe$('.header-chart-panel-content .left')[0].childElementCount
+            if (lastBtnList.length > 12) {
+              for (let i = 2; i < 11; i++) {
+                iframe$.remove(`add${i}`)
+              }
+            }
+          }, 1)
           this.widget.chart().createStudy('Moving Average', false, true, [5, 'close', 0], null, {'Plot.color': '#7b53a7'})
           this.widget.chart().createStudy('Moving Average', false, true, [10, 'close', 0], null, {'Plot.color': '#6b89ae'})
           this.widget.chart().createStudy('Moving Average', false, true, [30, 'close', 0], null, {'Plot.color': '#55ae63'})

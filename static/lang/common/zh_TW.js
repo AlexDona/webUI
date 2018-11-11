@@ -174,5 +174,9 @@ export const common = {
   'common_transaction_price': '交易價',
   'common_trading_volume': '成交量',
   'common_depth_map': '深度圖',
-  'common_friendly_link': '友情鏈接'
+  'common_friendly_link': '友情鏈接',
+  // 底部增加
+  'common_footer_user_agreement': '用戶協議',
+  'common_footer_privacy_policy': '隱私條款',
+  'common_footer_legal_notice': '法律聲明'
 }
