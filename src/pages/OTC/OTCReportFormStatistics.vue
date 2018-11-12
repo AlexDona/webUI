@@ -477,7 +477,12 @@
 </template>
 <!--请严格按照如下书写书序-->
 <script>
-import {getOTCAvailableCurrency, getMerchantAvailablelegalTender, getOTCMerchantsOrdersList, getOTCReportFormStatisticsData} from '../../utils/api/OTC'
+import {
+  getOTCAvailableCurrency,
+  getMerchantAvailablelegalTender,
+  getOTCMerchantsOrdersList,
+  getOTCReportFormStatisticsData
+} from '../../utils/api/OTC'
 import IconFontCommon from '../../components/Common/IconFontCommon'
 import {timeFilter} from '../../utils'
 import {createNamespacedHelpers, mapState} from 'vuex'

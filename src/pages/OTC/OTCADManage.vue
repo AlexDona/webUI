@@ -352,7 +352,6 @@ export default {
     // 动态获取广告管理内容的高度
     // console.log(document.documentElement.clientHeight)
     this.height = document.documentElement.clientHeight
-    // console.log(this.height)
     require('../../../static/css/list/OTC/OTCADManage.css')
     require('../../../static/css/theme/day/OTC/OTCADManageDay.css')
     require('../../../static/css/theme/night/OTC/OTCADManageNight.css')
@@ -374,7 +373,6 @@ export default {
   methods: {
     // 1.0 分页
     changeCurrentPage (pageNum) {
-      console.log(pageNum)
       this.currentPage = pageNum
       this.loading = true
       this.getOTCADManageList()
@@ -407,8 +405,8 @@ export default {
         pageNum: this.currentPage,
         pageSize: this.pageSize
       })
-      console.log('获取广告管理列表')
-      console.log(data)
+      // console.log('获取广告管理列表')
+      // console.log(data)
       if (!(returnAjaxMessage(data, this, 0))) {
         this.loading = false
         return false
@@ -445,8 +443,8 @@ export default {
     // 6.0 币种查询
     async getOTCAvailableCurrencyList () {
       const data = await getOTCAvailableCurrency({})
-      console.log('可用币种列表')
-      console.log(data)
+      // console.log('可用币种列表')
+      // console.log(data)
       if (!(returnAjaxMessage(data, this, 0))) {
         return false
       } else {
@@ -457,8 +455,8 @@ export default {
     // 7.0 可用法币查询
     async getMerchantAvailablelegalTenderList () {
       const data = await getMerchantAvailablelegalTender({})
-      console.log('可用法币')
-      console.log(data)
+      // console.log('可用法币')
+      // console.log(data)
       if (!(returnAjaxMessage(data, this, 0))) {
         return false
       } else {
