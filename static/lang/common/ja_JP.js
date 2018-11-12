@@ -73,7 +73,7 @@ export const common = {
   'comm_site': '住所',
   'comm_list': 'リスト',
   'comm_operation': '操作',
-  'comm_no_data': 'データはまだありません',
+  'comm_no_data': 'データなし',
   'comm_add': '追加',
   'comm_newly_increased': '追加',
   'comm_newly_compile': '編集',

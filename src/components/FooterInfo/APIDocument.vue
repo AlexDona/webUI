@@ -52,7 +52,7 @@ export default {
     >.content{
       width:100%;
       >.content{
-        overflow: hidden;
+        overflow: auto;
         >.inner-box{
           margin:0px auto;
           height:800px;

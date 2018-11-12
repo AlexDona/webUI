@@ -173,7 +173,7 @@ export const OTC = {
   'otc_merchant_sendemail': '發送郵件',
   'otc_merchant_verified': '審核通過',
   'otc_submit': '提交',
-  'otc_merchant_step1': '步驟壹：準備資料',
+  'otc_merchant_step1': '步驟一：準備資料',
   'otc_merchant_step2': '步驟二：發送申請郵件',
   'otc_merchant_step3': '步驟三：提交申請',
   'otc_merchant_step4': '步驟四：資料審核',

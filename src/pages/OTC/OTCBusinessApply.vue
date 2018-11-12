@@ -502,11 +502,11 @@ export default {
         >.content{
           width: 620px;
           >p{
-            line-height: 28px;
+            line-height: 25px;
           }
           >.title{
             // color: #fff;
-            margin-top: 30px;
+            margin-top: 20px;
             &:first-child{
               margin-top: 20px;
             }
