@@ -169,7 +169,6 @@ export default {
   methods: {
     // 1.0 分页
     changeCurrentPage (pageNum) {
-      console.log(pageNum)
       this.currentPage = pageNum
       this.getOTCEntrustingOrdersList()
     },
@@ -185,6 +184,7 @@ export default {
         pageNum: this.currentPage,
         pageSize: this.pageSize
       })
+      // console.log('委托中订单列表')
       // console.log(data)
       // 提示信息
       if (!(returnAjaxMessage(data, this, 0))) {
@@ -201,9 +201,10 @@ export default {
     },
     // 4.0 点击撤单按钮
     revocationOrder (id) {
-      this.$confirm(this.$t('M.otc_revoke'), {
-        cancelButtonText: this.$t('M.comm_cancel'),
-        confirmButtonText: this.$t('M.comm_confirm')
+      // 二次确认弹出框
+      this.$confirm(this.$t('M.otc_revoke'), { // 确定撤销委托单
+        cancelButtonText: this.$t('M.comm_cancel'), // 取消
+        confirmButtonText: this.$t('M.comm_confirm') // 确定
       }).then(() => {
         this.getOTCEntrustingOrdersRevocation(id)
       }).catch(() => {})

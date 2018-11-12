@@ -50,7 +50,6 @@
                       <span v-show="s.row.payType === 'Wechat'">
                         {{$t('M.comm_weixin')}}
                       </span>
-                      <!-- <span>{{s.row.payType}}</span> -->
                     </p>
                     <!-- 付款账号 -->
                     <p class="order-info-left">
@@ -130,7 +129,6 @@
                       class="order-info-right"
                       v-if="s.row.appeal == 'NO' && s.row.confirmTime !== ''"
                     >
-                      <!-- <span class="confirm-time">确认时间</span> -->
                       <!-- 交易已完成 -->
                       <span class="confirm-time">{{$t('M.otc_trade_complate')}}</span>
                     </p>
@@ -226,7 +224,7 @@
             :label="$t('M.otc_canceled_total')"
           >
             <template slot-scope="s">
-              {{ (s.row.price*s.row.pickCount).toFixed(2)}}({{ s.row.currencyName }})
+              {{ (s.row.price * s.row.pickCount).toFixed(2)}}({{ s.row.currencyName }})
             </template>
           </el-table-column>
           <!-- 下单时间 -->
@@ -263,7 +261,7 @@ export default {
   components: {},
   data () {
     return {
-      loading: true,
+      loading: true, // loading
       // 分页
       pageSize: 5, // 每页展示的条数
       currentPage: 1, // 当前页码
@@ -285,9 +283,8 @@ export default {
   update () {},
   beforeRouteUpdate () {},
   methods: {
-    // 分页
+    // 0.0 分页改变事件
     changeCurrentPage (pageNum) {
-      console.log(pageNum)
       this.currentPage = pageNum
       this.getOTCCompletedOrdersList()
     },
@@ -303,6 +300,8 @@ export default {
         pageNum: this.currentPage,
         pageSize: this.pageSize
       })
+      // console.log('已完成订单')
+      // console.log(data)
       // 提示信息
       if (!(returnAjaxMessage(data, this, 0))) {
         this.loading = false

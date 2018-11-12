@@ -230,7 +230,7 @@ export default {
   // props,
   data () {
     return {
-      loading: true,
+      loading: true, // loading加载缓冲
       // 分页
       pageSize: 5, // 当前页显示几条数据
       currentPage: 1, // 当前页码
@@ -254,7 +254,6 @@ export default {
   methods: {
     // 1.0 分页
     changeCurrentPage (pageNum) {
-      // console.log(pageNum)
       this.currentPage = pageNum
       this.getOTCCanceledOrdersList()
     },
@@ -270,8 +269,8 @@ export default {
         pageNum: this.currentPage,
         pageSize: this.pageSize
       })
-      console.log('请求已取消订单列表')
-      console.log(data)
+      // console.log('请求已取消订单列表')
+      // console.log(data)
       // 提示信息
       if (!(returnAjaxMessage(data, this, 0))) {
         this.loading = false
@@ -283,8 +282,6 @@ export default {
         this.otcCanceledOrderList = canceledOrderData.list
         // 分页
         this.totalPages = canceledOrderData.pages - 0
-        console.log('取消订单')
-        console.log(this.otcCanceledOrderList)
       }
     }
   },

@@ -7,7 +7,6 @@
     }"
   >
     <!-- 挂单：商家和普通用户都可以用 -->
-    <!-- 2.0发布购买和出售 -->
     <div
       class="publish-buy-and-sell-content"
       v-loading.fullscreen.lock="fullscreenLoading"
@@ -410,16 +409,21 @@
 </template>
 <!--请严格按照如下书写书序-->
 <script>
-import {addOTCPutUpOrders, getOTCCoinInfo} from '../../utils/api/OTC'
-import FooterCommon from '../Common/FooterCommon'
+import {
+  addOTCPutUpOrders,
+  getOTCCoinInfo
+} from '../../utils/api/OTC'
 import {returnAjaxMessage} from '../../utils/commonFunc'
 import {createNamespacedHelpers, mapState} from 'vuex'
-import {timeFilter, formatNumberInput, amendPrecision, cutOutPointLength} from '../../utils'
+import {
+  timeFilter,
+  formatNumberInput,
+  amendPrecision,
+  cutOutPointLength
+} from '../../utils'
 const {mapMutations} = createNamespacedHelpers('OTC')
 export default {
-  components: {
-    FooterCommon //  底部
-  },
+  components: {},
   data () {
     return {
       fullscreenLoading: true, // 整页loading

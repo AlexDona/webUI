@@ -114,7 +114,6 @@
             </p>
           </div>
           <div class="info-right">
-            <!-- <p class="text-info text-blue">冻结时间</p> -->
             <!-- 申诉冻结，等待处理 -->
             <p class="text-info text-blue">
               {{$t('M.otc_complaint_frezzing')}}
@@ -191,7 +190,6 @@ export default {
   methods: {
     // 1.0 分页
     changeCurrentPage (pageNum) {
-      console.log(pageNum)
       this.currentPage = pageNum
       this.getOTCFrezzingOrdersList()
     },
@@ -207,8 +205,8 @@ export default {
         pageNum: this.currentPage,
         pageSize: this.pageSize
       })
-      console.log('冻结中订单')
-      console.log(data)
+      // console.log('冻结中订单')
+      // console.log(data)
       // 提示信息
       if (!(returnAjaxMessage(data, this, 0))) {
         this.loading = false
@@ -226,7 +224,7 @@ export default {
   filter: {},
   computed: {
     ...mapState({
-      theme: state => state.common.theme,
+      theme: state => state.common.theme, // 主题
       isLogin: state => state.user.isLogin // 是否登录
     })
   },
