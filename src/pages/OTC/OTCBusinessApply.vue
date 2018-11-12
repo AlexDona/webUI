@@ -106,7 +106,6 @@
               </span>
               ，{{$t('M.otc_merchant_content_one')}}。
             </p>
-            <!-- <p>{{$t('M.otc_merchant_pleaseDowload')}}<a :href= 'downLoadUrl' download="商家认证申请表 Merchant certification application form" class="businessApplyModel">《{{$t('M.otc_merchant_applyMaterial')}}》</a>，{{$t('M.otc_merchant_content_one')}}。</p> -->
             <p>{{$t('M. otc_merchant_videoKode')}}：</p>
             <p>{{$t('M.otc_merchant_detailOne')}}</p>
             <p>{{$t('M.otc_merchant_detailTwo')}}</p>
@@ -223,9 +222,9 @@ export default {
       height: '', // 申请中 申请成功 内容的高度
       applyStatus: 1, // 商家申请状态
       checked: false, // 同意协议按钮:默认不勾选
-      successTimes: '0',
-      coinName: 'FUC',
-      count: '0',
+      successTimes: '0', // 成功次数
+      coinName: 'FUC', // 币种名称
+      count: '0', // 次数
       dialogVisible: false, // 弹出框状态
       argumentContent: '', // 协议文件
       fileName: '商家认证申请表 Merchant certification application form', // 下载文件名字
@@ -236,7 +235,7 @@ export default {
     // 动态获取申请中 申请成功内容的高度
     // console.log(document.documentElement.clientHeight)
     this.height = document.documentElement.clientHeight
-    console.log(this.height)
+    // console.log(this.height)
     require('../../../static/css/list/OTC/OTCBusinessApply.css')
     require('../../../static/css/theme/day/OTC/OTCBusinessApplyDay.css')
     require('../../../static/css/theme/night/OTC/OTCBusinessApplyNight.css')
@@ -247,7 +246,6 @@ export default {
   update () {},
   beforeRouteUpdate () {},
   methods: {
-    // ...mapMutations([]),
     // 下载商家申请资料模板
     downloadApplicationForm () {
       // console.log(this.downLoadUrl)
@@ -318,7 +316,6 @@ export default {
         return false
       } else {
         this.fullscreenLoading = false
-        // this.loadingCircle.close()
         let getData = data.data.data
         // 返回数据正确的逻辑
         this.successTimes = getData.successTimes

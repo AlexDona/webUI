@@ -515,8 +515,6 @@
 </template>
 <!--请严格按照如下书写书序-->
 <script>
-import HeaderCommon from '../Common/HeaderCommonForPC'
-import FooterCommon from '../Common/FooterCommon'
 import FinanceBrokenLine from './FinanceBrokenLine'
 import FinanceBrokenPie from './FinanceBrokenPie'
 import {timeFilter} from '../../utils'
@@ -532,8 +530,6 @@ import {createNamespacedHelpers, mapState} from 'vuex'
 const {mapMutations} = createNamespacedHelpers('finance')
 export default {
   components: {
-    HeaderCommon,
-    FooterCommon,
     FinanceBrokenLine,
     FinanceBrokenPie
   },

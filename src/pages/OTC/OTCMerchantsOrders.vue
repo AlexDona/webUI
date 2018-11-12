@@ -406,7 +406,6 @@ export default {
     // 动态获取商家订单内容的高度
     // console.log(document.documentElement.clientHeight)
     this.height = document.documentElement.clientHeight
-    // console.log(this.height)
     require('../../../static/css/list/OTC/OTCMerchantsOrders.css')
     require('../../../static/css/theme/day/OTC/OTCMerchantsOrdersDay.css')
     require('../../../static/css/theme/night/OTC/OTCMerchantsOrdersNight.css')

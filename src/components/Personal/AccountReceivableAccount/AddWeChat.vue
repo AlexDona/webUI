@@ -144,8 +144,6 @@
 </template>
 <!--请严格按照如下书写书序-->
 <script>
-// 头部
-import HeaderCommon from '../../Common/HeaderCommonForPC'
 import IconFontCommon from '../../Common/IconFontCommon'
 import ErrorBox from '../../User/ErrorBox'
 import {
@@ -157,16 +155,12 @@ import {
   modificationAccountPaymentTerm
 } from '../../../utils/api/personal'
 import {apiCommonUrl} from '../../../utils/env'
-// 底部
-import FooterCommon from '../../Common/FooterCommon'
 import { createNamespacedHelpers, mapState } from 'vuex'
 const { mapMutations } = createNamespacedHelpers('personal')
 export default {
   components: {
-    HeaderCommon, // 头部
     ErrorBox, // 错误提示接口
-    IconFontCommon, // 字体图标
-    FooterCommon // 底部
+    IconFontCommon // 字体图标
   },
   data () {
     return {

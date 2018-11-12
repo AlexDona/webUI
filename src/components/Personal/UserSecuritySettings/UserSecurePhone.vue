@@ -266,12 +266,8 @@
 </template>
 <!--请严格按照如下书写书序-->
 <script>
-// 头部
-import HeaderCommon from '../../Common/HeaderCommonForPC'
 import IconFontCommon from '../../Common/IconFontCommon'
 import ErrorBox from '../../User/ErrorBox'
-// 底部
-import FooterCommon from '../../Common/FooterCommon'
 import { createNamespacedHelpers, mapState } from 'vuex'
 import ImageValidate from '../../Common/ImageValidateCommon' // 图片验证吗
 import CountDownButton from '../../Common/CountDownCommon'
@@ -289,12 +285,10 @@ import {checkUserExist} from '../../../utils/api/user'
 const { mapMutations } = createNamespacedHelpers('user')
 export default {
   components: {
-    HeaderCommon, // 头部
     IconFontCommon, // 字体图标
     ImageValidate, // 图片验证吗
     ErrorBox, // 错误提示信息
-    CountDownButton, // 短信倒计时
-    FooterCommon // 底部
+    CountDownButton // 短信倒计时
   },
   data () {
     return {

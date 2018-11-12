@@ -3,7 +3,6 @@
     class="news-and-notice-box"
     :class="{'day':theme == 'day','night':theme == 'night' }"
   >
-    <!--<keep-aline><HeaderCommon/></keep-aline>-->
     <div class="inner-box">
       <!--搜索区-->
       <div class="search-box">
@@ -122,8 +121,6 @@
 </template>
 <!--请严格按照如下书写书序-->
 <script>
-import HeaderCommon from '../Common/HeaderCommonForPC'
-import FooterCommon from '../Common/FooterCommon'
 import {
   getNewsNoticeList,
   getAllNewsTypeList,
@@ -132,10 +129,7 @@ import {
 import {returnAjaxMessage} from '../../utils/commonFunc'
 import {mapState} from 'vuex'
 export default {
-  components: {
-    HeaderCommon,
-    FooterCommon
-  },
+  components: {},
   // props,
   data () {
     return {

@@ -754,7 +754,7 @@ export default {
   // props,
   data () {
     return {
-      loading: false,
+      loading: false, // loading
       // 分页
       currentPage: 1, // 当前页码
       totalPages: 1, // 总页数
@@ -787,7 +787,7 @@ export default {
       errpwd: '', // 交易密码错提示
       cancelOrdersTimer: null, // 自动取消订单倒计时
       accomplishOrdersTimer: null, // 自动成交倒计时
-      pageSize: 5
+      pageSize: 5 // ，每页显示几条数据
     }
   },
   created () {
@@ -806,7 +806,6 @@ export default {
   methods: {
     // 1.0 分页
     changeCurrentPage (pageNum) {
-      console.log(pageNum)
       this.currentPage = pageNum
       this.getOTCTradingOrdersList()
     },

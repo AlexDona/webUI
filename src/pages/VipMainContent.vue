@@ -619,9 +619,6 @@
 </template>
 <!--请严格按照如下书写书序-->
 <script>
-// 头部
-// import HeaderCommon from '../components/Common/HeaderCommonForPC'
-// import FooterCommon from '../components/Common/FooterCommon'
 import { createNamespacedHelpers, mapState } from 'vuex'
 import {
   vipPriceInfo,
@@ -637,10 +634,7 @@ import {
 // 底部
 const { mapMutations } = createNamespacedHelpers('personal')
 export default {
-  components: {
-    // HeaderCommon, // 头部
-    // FooterCommon // 底部
-  },
+  components: {},
   data () {
     return {
       vipPictureBanner: require('../assets/user/VIPbanner.png'), // vip banner
@@ -945,7 +939,7 @@ export default {
 <style scoped lang="scss">
   @import "../../static/css/scss/Personal/IndexPersonal";
   .vip-main {
-    margin-top:66px;
+    margin-top:65px;
     > .header-content {
       // height: 600px;
       width: 100%;

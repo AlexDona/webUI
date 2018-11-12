@@ -45,14 +45,12 @@
 import EntrustOrder from '../components/Trade/EntrustOrderList'
 import ExchangeBox from '../components/Trade/ExchangeTrade'
 import TradeMarketList from '../components/Trade/TradeMarket'
-import HeaderCommon from '../components/Common/HeaderCommonForPC'
 import GlobalMarket from '../components/Trade/GlobalMarketTrade'
 import BuysAndSells from '../components/Trade/BuysAndSellsTrade'
 import OrderRecord from '../components/Trade/OrderRecordTrade'
 import KLine from '../components/Trade/kLine'
 import MiddleHeader from '../components/Trade/MiddleHeaderTrade'
 import Depth from '../components/Trade/DepthTrade'
-import FooterCommon from '../components/Common/FooterCommon'
 import {mapState} from 'vuex'
 
 export default {
@@ -65,9 +63,7 @@ export default {
     KLine, // k线
     OrderRecord, // 成交记录
     BuysAndSells, // 买卖单
-    GlobalMarket,
-    HeaderCommon,
-    FooterCommon
+    GlobalMarket
   },
   // props,
   data () {

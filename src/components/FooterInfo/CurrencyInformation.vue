@@ -44,15 +44,10 @@ import {
   getCurrencyInfoList,
   getCurrencyDetails
 } from '../../utils/api/header'
-import HeaderCommon from '../Common/HeaderCommonForPC'
-import FooterCommon from '../Common/FooterCommon'
 import {returnAjaxMessage} from '../../utils/commonFunc'
 import {mapState} from 'vuex'
 export default {
-  components: {
-    HeaderCommon,
-    FooterCommon
-  },
+  components: {},
   // props,
   data () {
     return {

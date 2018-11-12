@@ -58,7 +58,7 @@ export const common = {
   'comm_type': 'タイプ',
   'comm_money': '金額',
   'comm_property': '資産',
-  'comm_state': '州',
+  'comm_state': '状態',
   'comm_time': '時間',
   'comm_data': '日付',
   'comm_begin': 'スタート',
@@ -165,7 +165,7 @@ export const common = {
   'comm_content': 'コンテンツ',
   'comm_after_get': '取得',
   'common_direction': 'タイプ',
-  'common_average_price': '完成',
+  'common_average_price': '取引平均価',
   'comm_get_code': 'コードを取得',
   // 全球行情任增加
   'common_exchange': '取引所',

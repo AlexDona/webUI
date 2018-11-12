@@ -211,8 +211,6 @@
 </template>
 <!--请严格按照如下书写书序-->
 <script>
-// 头部
-import HeaderCommon from '../components/Common/HeaderCommonForPC'
 // 账户资产
 import AccountAssets from '../components/Personal/AccountBalance/AccountAssets'
 // 账单明细
@@ -235,8 +233,6 @@ import PushAsset from '../components/Personal/UserAssets/PushAsset'
 import CoinOrders from '../components/Personal/TransactionType/CoinOrders'
 // 法币订单
 import FiatOrders from '../components/Personal/TransactionType/FiatOrders'
-// 底部
-import FooterCommon from '../components/Common/FooterCommon'
 import {
   userRefreshUser
 } from '../utils/api/personal'
@@ -248,7 +244,6 @@ export default {
   components: {
     // 我的资产
     IconFontCommon, // 字体图标
-    HeaderCommon, // 头部
     AccountAssets, // 账户资产
     BillingDetails, // 账单明细
     WithdrawalAddress, // 提币地址
@@ -261,8 +256,7 @@ export default {
     PushAsset, // push资产
     // 我的交易
     CoinOrders, // 币币订单
-    FiatOrders, // 法币订单
-    FooterCommon // 底部
+    FiatOrders // 法币订单
   },
   // props,
   data () {

@@ -4,6 +4,8 @@ export const trade = {
   'trade_coin_entrusted_price': '수수료 가격',
   'trade_coin_entrusted_amount': '커미션 금액',
   'trade_coin_has_traded_amount': '거래량이다',
+  'trade_coin_had_traded': '완료 됨',
+  'trade_coin_not_had_traded': '채워지지 않은',
   // #####################查看更多委单记录#####################''더 많은 주문 기록보기'
   'trade_coin_commissioned_current': '현재위원회',
   'trade_coin_entrust': '위원회',

@@ -24,7 +24,7 @@
                 {{ $t('M.user_real_name') }}
               </span>
               <p
-                v-if="userInfo.userInfo.realname === ''"
+                v-if="innerUserInfo.realname === ''"
                 class="authentication-type font-size12"
               >
                 （{{ $t('M.user_real_info') }}）
@@ -43,14 +43,14 @@
                 >
                   <!--姓名：-->
                   {{ $t('M.comm_name') }}：
-                  {{ userInfo.userInfo.realname }}
+                  {{ innerUserInfo.realname }}
                 </span>、
                 <span class="type-info">
                   <!--身份证号：-->
                   {{ $t('M.comm_id_number') }}：
-                   {{ userInfo.userInfo.cardNo.substring(0,2)}}
+                   {{ innerUserInfo.cardNo.substring(0,2)}}
                   ****
-                   {{ userInfo.userInfo.cardNo.substring(16,18)}}
+                   {{ innerUserInfo.cardNo.substring(16,18)}}
                 </span>
                 &nbsp;）
               </p>
@@ -59,7 +59,7 @@
           </div>
       </div>
       <div
-        v-if="userInfo.userInfo.realname === ''"
+        v-if="innerUserInfo.realname === ''"
         class="name-authentication-content margin-top9"
       >
         <el-form
@@ -189,21 +189,21 @@
             {{ $t('M.user_senior_certification') }}
           </span>
           <span
-            v-if="userInfo.userInfo.advancedAuth === ''"
+            v-if="innerUserInfo.advancedAuth === ''"
             class="authentication-type font-size12"
           >
             <!--未高级认证-->
             （{{ $t('M.comm_not') }}{{ $t('M.user_senior_certification') }}）
           </span>
           <span
-            v-if="userInfo.userInfo.advancedAuth === 'pass'"
+            v-if="innerUserInfo.advancedAuth === 'pass'"
             class="authentication-type font-size12"
           >
             <!--已通过实名认证-->
             （{{ $t('M.user_real_already') }}{{ $t('M.user_real_name') }}）
           </span>
           <span
-            v-if="userInfo.userInfo.advancedAuth === 'waitVeritfy'"
+            v-if="innerUserInfo.advancedAuth === 'waitVeritfy'"
             class="authentication-type font-size12"
           >
             <!--待审核-->
@@ -211,7 +211,7 @@
           </span>
           <span
             class="float-right authentication-type font-size12"
-            v-if="userInfo.userInfo.advancedAuth === ''"
+            v-if="innerUserInfo.advancedAuth === ''"
           >
             <!--去认证-->
             {{ $t('M.user_senior_go_certification') }}
@@ -233,7 +233,7 @@
                     class="user-info font-size14"
                     v-if="language === 'zh_CN' || language === 'zh_TW'"
                   >
-                    <!-- {{ userInfo.userInfo.country }} -->
+                    <!-- {{ innerUserInfo.country }} -->
                     {{ userInfo.country.chinese }}
                   </span>
                   <span
@@ -252,7 +252,7 @@
                   <span
                     class="user-info font-size14"
                   >
-                    {{ userInfo.userInfo.realname }}
+                    {{ innerUserInfo.realname }}
                   </span>
                 </p>
                 <!-- 证件号 -->
@@ -264,7 +264,7 @@
                   <!--  {{ userInfoRefresh.cardNo.substring(0,6)}}
                   ****
                    {{ userInfoRefresh.cardNo.substring(14,18)}}-->
-                     {{ userInfo.userInfo.cardNo}}
+                     {{ innerUserInfo.cardNo}}
                   </span>
                 </p>
                 <!-- 证件类型 -->
@@ -809,7 +809,7 @@ export default {
     // 高级认证弹窗
     authenticationMethod () {
       // 判断是否高级认证&&实名认证
-      if (this.userInfoRefresh.realname !== '' && this.userInfo.userInfo.advancedAuth === '') {
+      if (this.userInfoRefresh.realname !== '' && this.innerUserInfo.advancedAuth === '') {
         this.seniorAuthentication = true
       } else if (this.userInfoRefresh.realname !== '') {
         this.seniorAuthentication = false
@@ -817,8 +817,8 @@ export default {
     },
     // 高级认证未通过被驳回
     authenticationIsStatus () {
-      if (this.userInfo.userInfo.advancedAuth === 'notPass') {
-        console.log(this.userInfo.userInfo)
+      if (this.innerUserInfo.advancedAuth === 'notPass') {
+        console.log(this.innerUserInfo)
         this.authenticationNotPass = true
         this.authenticationStatusFront = false
       } else {
@@ -926,6 +926,7 @@ export default {
       language: state => state.common.language,
       theme: state => state.common.theme,
       userInfo: state => state.user.loginStep1Info, // 用户详细信息
+      innerUserInfo: state => state.user.loginStep1Info.userInfo, // 内层用户详细信息
       configInfo: state => state.common.footerInfo.configInfo,
       contryAreaList: state => state.common.contryAreaList,
       userCenterActiveName: state => state.personal.userCenterActiveName

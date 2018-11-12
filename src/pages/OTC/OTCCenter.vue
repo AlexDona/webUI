@@ -503,15 +503,9 @@ export default {
     require('../../../static/css/theme/night/OTC/OTCCenterNight.css')
     // 1.0 otc可用币种查询：我要购买/我要出售的币种列表
     this.getOTCAvailableCurrencyList()
-    // console.log(this.selectedOTCAvailableCurrencyName)
-    // console.log(this.selectedOTCAvailableCurrencyCoinID)
-    // console.log(this.userInfo)
     // 2.0 otc可用法币查询：
     // this.getMerchantAvailablelegalTenderList()
     // 3.0 用户登录了刷新用户个人信息
-    console.log('是否登录' + this.isLogin)
-    console.log('用户信息')
-    console.log(this.userInfo)
     if (this.isLogin) {
       reflashUserInfo(this) // 刷新用户信息
     }
@@ -543,8 +537,6 @@ export default {
       setTimeout(() => {
         this.isdisabled = false
       }, 500)
-      // console.log(this.activeName)
-      // console.log(this.isLogin)
       // 未登录跳转到登录页面去
       if (!this.isLogin) {
         this.$router.push({path: '/login'})
@@ -574,8 +566,6 @@ export default {
     },
     // 0.2 点击发布订单按钮跳转到发布订单页面
     toPublishOrder () {
-      // console.log(this.selectedOTCAvailableCurrencyCoinID)
-      // console.log(this.activitedCurrencyId)
       // 增加没有币种和法币点击按钮不跳转的验证
       if (this.selectedOTCAvailableCurrencyCoinID == '' && this.activitedCurrencyId == '') {
         return false
@@ -654,48 +644,6 @@ export default {
         }
       }
     },
-    // 0.4 点击出售按钮跳转到在线出售页面
-    /* toOnlineSell (id, coinId, userId) {
-      if (!this.isLogin) {
-        this.$router.push({path: '/login'})
-      } else {
-        // 刷新用户信息
-        reflashUserInfo(this)
-        // 未设置交易密码、未实名认证，未高级认证，不能进行交易
-        if (!this.userInfo.payPassword) {
-          this.$message({
-            message: this.$t('M.otc_index_js'), // 去个人中心设置交易密码
-            type: 'error'
-          })
-          return false
-        } else if (!this.userInfo.realname) {
-          this.$message({
-            message: this.$t('M.otc_index_digo_tips'), // 去个人中心完成实名认证
-            type: 'error'
-          })
-          return false
-        } else if (!(this.userInfo.advancedAuth === 'pass')) {
-          this.$message({
-            message: this.$t('M.otc_index_digo_tips_pass'), // 去个人中心完成高级认证
-            type: 'error'
-          })
-          return false
-        } else {
-          if (userId === this.userInfo.id) {
-            this.$message({
-              message: this.$t('M.otc_index_forbided_buyand_sell'), // 禁止自买自卖
-              type: 'error'
-            })
-            return false
-          } else {
-            // console.log("卖")
-            // console.log(id) // 挂单id
-            // console.log(coinId) // 币种id
-            this.$router.push({path: '/OTCOnlineTraderBuySell/' + this.OTCBuySellStyle + '/' + id + '/' + coinId})
-          }
-        }
-      }
-    }, */
     // 0.5 查询更多订单按钮点击事件
     queryMoreOrder () {
       if (!this.isLogin) { // 未登录跳转登录页
@@ -737,21 +685,17 @@ export default {
           this.CHANGE_OTC_AVAILABLE_CURRENCY_NAME(this.IWantToBuySellArr[0].name)
           this.CHANGE_OTC_AVAILABLE_CURRENCY_ID(this.IWantToBuySellArr[0].coinId)
           this.CHANGE_OTC_AVAILABLE_PARTNER_COIN_ID(this.IWantToBuySellArr[0].partnerCoinId)
-          // console.log(this.selectedOTCAvailableCurrencyName)
-          // console.log(this.selectedOTCAvailableCurrencyCoinID)
           // 在得到可用币种之后再调用方法根据币种的第一项的币种id来渲染表格数据
           // 2.0 otc可用法币查询：
           this.getMerchantAvailablelegalTenderList()
-          // 3.0 otc主页面查询挂单列表:
-          // this.getOTCPutUpOrdersList()
         }
       }
     },
     //  2.0 otc可用法币查询
     async getMerchantAvailablelegalTenderList () {
       const data = await getMerchantAvailablelegalTender({})
-      console.log('otc法币查询列表')
-      console.log(data)
+      // console.log('otc法币查询列表')
+      // console.log(data)
       if (!(returnAjaxMessage(data, this, 0))) {
         return false
       } else {
@@ -766,7 +710,6 @@ export default {
     //  3.0 刚进页面时候 otc主页面查询挂单列表
     async getOTCPutUpOrdersList () {
       this.loading = true
-      // console.log('当前页：' + this.currentPage)
       let param = {
         pageNum: this.currentPage,
         payType: this.checkedPayType, // 按照选中的支付方式查询列表
@@ -804,41 +747,8 @@ export default {
       this.CHANGE_OTC_AVAILABLE_CURRENCY_ID(this.IWantToBuySellArr[index].coinId) // 币种id
       console.log(this.selectedOTCAvailableCurrencyName)
       console.log('币种id：' + this.selectedOTCAvailableCurrencyCoinID)
-      // console.log(this.selectedOTCAvailablePartnerCoinId)
-      // 请求接口数据渲染表格
-      // this.getSelectCurrencyNametOTCPutUpOrdersList()
       this.getOTCPutUpOrdersList() // otc主页面查询挂单列表
     },
-    //  5.0 切换我要购买和出售时候调取接口获得数据渲染列表
-    /* async getSelectCurrencyNametOTCPutUpOrdersList () {
-      this.loading = true
-      let param = {
-        pageNum: this.currentPage,
-        payType: this.checkedPayType, // 按照选中的支付方式查询列表
-        coinId: this.selectedOTCAvailableCurrencyCoinID, // 币种id
-        currencyId: this.activitedCurrencyId // 法币id
-      }
-      if (this.OTCBuySellStyle === 'onlineBuy') {
-        param.entrustType = 'SELL' // 挂单类型（BUY SELL）
-      }
-      if (this.OTCBuySellStyle === 'onlineSell') {
-        param.entrustType = 'BUY' // 挂单类型（BUY SELL）
-      }
-      const data = await getOTCPutUpOrders(param)
-      console.log('otc主页面查询挂单列表')
-      console.log(data)
-      // 提示信息
-      if (!returnAjaxMessage(data, this, 0)) {
-        this.loading = false
-        return false
-      } else {
-        // 返回数据正确的逻辑
-        this.loading = false
-        this.onlineBuySellTableList = data.data.data.list
-        // 分页
-        this.totalPages = data.data.data.pages - 0
-      }
-    }, */
     //  6.0 切换在线购买和在线售出状态并调接口渲染列表
     async toggleBuyOrSellStyle (e) {
       // 防止频繁切换点击按钮 通过禁用按钮，0.5秒后可以点击
@@ -847,34 +757,8 @@ export default {
       //   this.isDisabledRadio = false
       // }, 500)
       this.OTCBuySellStyle = e
-      console.log(this.OTCBuySellStyle)
+      // console.log(this.OTCBuySellStyle)
       this.getOTCPutUpOrdersList() // otc主页面查询挂单列表
-      /* let param = {
-        pageNum: this.currentPage,
-        payType: this.checkedPayType, // 按照选中的支付方式查询列表
-        coinId: this.selectedOTCAvailableCurrencyCoinID, // 币种id
-        currencyId: this.activitedCurrencyId // 法币id
-      }
-      if (this.OTCBuySellStyle === 'onlineBuy') {
-        param.entrustType = 'SELL' // 挂单类型（BUY SELL）
-      }
-      if (this.OTCBuySellStyle === 'onlineSell') {
-        param.entrustType = 'BUY' // 挂单类型（BUY SELL）
-      }
-      const data = await getOTCPutUpOrders(param)
-      console.log('otc主页面查询挂单列表')
-      console.log(data)
-      // 提示信息
-      if (!returnAjaxMessage(data, this, 0)) {
-        this.loading = false
-        return false
-      } else {
-        // 返回数据正确的逻辑
-        this.loading = false
-        this.onlineBuySellTableList = data.data.data.list
-        // 分页
-        this.totalPages = data.data.data.pages - 0
-      } */
     },
     //  7.0 改变可用法币的币种id
     changeCurrencyId (e) {
@@ -886,78 +770,14 @@ export default {
           this.activitedCurrencyName = item.shortName
         }
       })
-      // 调主页面查询otc挂单列表接口按照法币方式查询
-      // this.getChangeCurrencyIdOTCPutUpOrdersList()
       this.getOTCPutUpOrdersList() // otc主页面查询挂单列表
     },
-    //  8.0 改变可用法币的下拉框的选中值，调主页面查询otc挂单列表接口
-    /* async getChangeCurrencyIdOTCPutUpOrdersList () {
-      this.loading = true
-      let param = {
-        pageNum: this.currentPage,
-        payType: this.checkedPayType, // 按照选中的支付方式查询列表
-        coinId: this.selectedOTCAvailableCurrencyCoinID, // 币种id
-        currencyId: this.activitedCurrencyId // 法币id
-      }
-      if (this.OTCBuySellStyle === 'onlineBuy') {
-        param.entrustType = 'SELL' // 挂单类型（BUY SELL）
-      }
-      if (this.OTCBuySellStyle === 'onlineSell') {
-        param.entrustType = 'BUY' // 挂单类型（BUY SELL）
-      }
-      const data = await getOTCPutUpOrders(param)
-      console.log('otc主页面查询挂单列表')
-      console.log(data)
-      // 提示信息
-      if (!returnAjaxMessage(data, this, 0)) {
-        this.loading = false
-        return false
-      } else {
-        // 返回数据正确的逻辑
-        this.loading = false
-        this.onlineBuySellTableList = data.data.data.list
-        // 分页
-        this.totalPages = data.data.data.pages - 0
-      }
-    }, */
     // 9.0 改变支付方式下拉框的选中值
     payWayChangeValue (e) {
       this.checkedPayType = e
-      console.log(this.checkedPayType) //  选中的支付方式的id
-      // 调主页面查询otc挂单列表接口按照支付方式查询列表
-      // this.getChangePayWayOTCPutUpOrdersList()
+      // console.log(this.checkedPayType) //  选中的支付方式的id
       this.getOTCPutUpOrdersList() // otc主页面查询挂单列表
     }
-    // 10.0 改变支付方式下拉框的选中值，调主页面查询otc挂单列表接口
-    /* async getChangePayWayOTCPutUpOrdersList () {
-      this.loading = true
-      let param = {
-        pageNum: this.currentPage,
-        payType: this.checkedPayType, // 按照选中的支付方式查询列表
-        coinId: this.selectedOTCAvailableCurrencyCoinID, // 币种id
-        currencyId: this.activitedCurrencyId // 法币id
-      }
-      if (this.OTCBuySellStyle === 'onlineBuy') {
-        param.entrustType = 'SELL' // 挂单类型（BUY SELL）
-      }
-      if (this.OTCBuySellStyle === 'onlineSell') {
-        param.entrustType = 'BUY' // 挂单类型（BUY SELL）
-      }
-      const data = await getOTCPutUpOrders(param)
-      console.log('otc主页面查询挂单列表')
-      console.log(data)
-      // 提示信息
-      if (!returnAjaxMessage(data, this, 0)) {
-        this.loading = false
-        return false
-      } else {
-        // 返回数据正确的逻辑
-        this.loading = false
-        this.onlineBuySellTableList = data.data.data.list
-        // 分页
-        this.totalPages = data.data.data.pages - 0
-      }
-    } */
   },
   filter: {},
   computed: {
@@ -968,21 +788,14 @@ export default {
       selectedOTCAvailablePartnerCoinId: state => state.OTC.selectedOTCAvailablePartnerCoinId,
       selectedOTCAvailableCurrencyCoinID: state => state.OTC.selectedOTCAvailableCurrencyCoinID,
       language: state => state.common.language, // 当前选中语言
-      // activeLanguage: state => state.common.activeLanguage,
       userInfo: state => state.user.loginStep1Info.userInfo, // 用户详细信息
       isLogin: state => state.user.isLogin // 用户登录状态 false 未登录； true 登录
     })
   },
-  watch: {
-    // activeLanguage (newVal) {
-    //   console.log('当前选中语言')
-    //   console.log(newVal)
-    // }
-  }
+  watch: {}
 }
 </script>
 <style scoped lang="scss" type="text/scss">
-// @import "../../../static/css/scss/OTC/OTCCenter.scss";
 @import "../../../static/css/scss/index.scss";
 .otc-box{
   margin-top:66px;

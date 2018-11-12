@@ -11,19 +11,33 @@
       <!--表头属性-->
       <div class="canceled-table-head">
         <!-- 订单号 -->
-        <span class="item">{{$t('M.otc_MerchantsOrders_orderNum')}}</span>
+        <span class="item">
+          {{$t('M.otc_MerchantsOrders_orderNum')}}
+        </span>
         <!-- 类型 -->
-        <span class="item">{{$t('M.otc_cancelOrder_type')}}</span>
+        <span class="item">
+          {{$t('M.otc_cancelOrder_type')}}
+        </span>
         <!-- 币种 -->
-        <span class="item">{{$t('M.comm_currency')}}</span>
+        <span class="item">
+          {{$t('M.comm_currency')}}
+        </span>
         <!-- 价格 -->
-        <span class="item">{{$t('M.otc_index_price')}}</span>
+        <span class="item">
+          {{$t('M.otc_index_price')}}
+        </span>
         <!-- 数量 -->
-        <span class="item">{{$t('M.comm_count')}}</span>
+        <span class="item">
+          {{$t('M.comm_count')}}
+        </span>
         <!-- 总金额 -->
-        <span class="item">{{$t('M.otc_canceled_total')}}</span>
+        <span class="item">
+          {{$t('M.otc_canceled_total')}}
+        </span>
         <!-- 下单时间 -->
-        <span class="item">{{$t('M.otc_stocks_ordertime')}}</span>
+        <span class="item">
+          {{$t('M.otc_stocks_ordertime')}}
+        </span>
       </div>
       <!--表格-->
       <div
@@ -216,7 +230,7 @@ export default {
   // props,
   data () {
     return {
-      loading: true,
+      loading: true, // loading加载缓冲
       // 分页
       pageSize: 5, // 当前页显示几条数据
       currentPage: 1, // 当前页码
@@ -240,7 +254,6 @@ export default {
   methods: {
     // 1.0 分页
     changeCurrentPage (pageNum) {
-      // console.log(pageNum)
       this.currentPage = pageNum
       this.getOTCCanceledOrdersList()
     },
@@ -256,8 +269,8 @@ export default {
         pageNum: this.currentPage,
         pageSize: this.pageSize
       })
-      console.log('请求已取消订单列表')
-      console.log(data)
+      // console.log('请求已取消订单列表')
+      // console.log(data)
       // 提示信息
       if (!(returnAjaxMessage(data, this, 0))) {
         this.loading = false
@@ -269,8 +282,6 @@ export default {
         this.otcCanceledOrderList = canceledOrderData.list
         // 分页
         this.totalPages = canceledOrderData.pages - 0
-        console.log('取消订单')
-        console.log(this.otcCanceledOrderList)
       }
     }
   },
