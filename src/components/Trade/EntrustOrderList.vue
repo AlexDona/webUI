@@ -87,10 +87,10 @@
                   <li class="td time">
                     {{item.createTime}}
                   </li>
-                  <!--方向-->
+                  <!--方向 中文和繁体展示中文其他国家语言展示英语-->
                   <li class="td direction">
-                    <span v-show="language !== 'zh_CN'">{{item.type}}</span>
-                    <span v-show="language === 'zh_CN'">{{item.typeName}}</span>
+                    <span v-if="language == 'zh_CN' || language == 'zh_TW'">{{item.typeName}}</span>
+                    <span v-else>{{item.type}}</span>
                   </li>
                   <!--价格-->
                   <li class="td price">
@@ -212,8 +212,10 @@
                   </li>
                   <!--方向-->
                   <li class="td direction">
-                    <span v-show="language !== 'zh_CN'">{{item.type}}</span>
-                    <span v-show="language === 'zh_CN'">{{item.typeName}}</span>
+                    <!-- <span v-show="language !== 'zh_CN'">{{item.type}}</span>
+                    <span v-show="language === 'zh_CN'">{{item.typeName}}</span> -->
+                    <span v-if="language == 'zh_CN' || language == 'zh_TW'">{{item.typeName}}</span>
+                    <span v-else>{{item.type}}</span>
                   </li>
                   <!--价格-->
                   <li class="td price">
@@ -387,6 +389,8 @@ export default {
       } else {
         this.historyEntrustList = data.data.data.list || []
         this.totalPageForHistoryEntrust = data.data.data.pages - 0
+        console.log('获取我的历史委托')
+        console.log(this.historyEntrustList)
       }
     },
     // 获取我的当前委单
@@ -402,6 +406,8 @@ export default {
         return false
       } else {
         this.currentEntrustList = data.data.data.list || []
+        console.log('获取我的当前委单')
+        console.log(this.currentEntrustList)
         this.totalPageForMyEntrust = data.data.data.pages - 0
       }
     }
