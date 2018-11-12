@@ -805,10 +805,10 @@ export default {
       }
       switch (loginType) {
         case 0:
-          params.phone = this.userInfo.userInfo.phone
+          params.phone = this.innerUserInfo.phone
           break
         case 1:
-          params.email = this.userInfo.userInfo.email
+          params.email = this.innerUserInfo.email
           break
       }
       sendPhoneOrEmailCodeAjax(loginType, params, this)
@@ -988,8 +988,8 @@ export default {
       })
       let data
       let params = {
-        email: this.userInfo.userInfo.email, // 邮箱
-        phone: this.userInfo.userInfo.phone, // 手机
+        email: this.innerUserInfo.email, // 邮箱
+        phone: this.innerUserInfo.phone, // 手机
         emailCode: this.emailCode, // 邮箱验证
         phoneCode: this.phoneCode, // 手机验证
         googleCode: this.googleCode, // 谷歌验证
@@ -1055,6 +1055,7 @@ export default {
     ...mapState({
       theme: state => state.common.theme,
       userInfo: state => state.user.loginStep1Info, // 用户详细信息
+      innerUserInfo: state => state.user.loginStep1Info.userInfo, // 内层用户详细信息
       activeCountryCode: state => state.user.loginStep1Info.countryCode, // 国籍码
       disabledOfPhoneBtn: state => state.user.disabledOfPhoneBtn,
       disabledOfEmailBtn: state => state.user.disabledOfEmailBtn,

@@ -151,12 +151,12 @@
               <template slot-scope = "s">
                 <div>{{ s.row.type }}</div>
                 <div
-                  v-if="s.row.pushId !== userInfo.userInfo.id"
+                  v-if="s.row.pushId !== innerUserInfo.id"
                 >
                   {{ $t(rollIn) }}
                 </div>
                 <div
-                  v-if="s.row.pushId == userInfo.userInfo.id"
+                  v-if="s.row.pushId == innerUserInfo.id"
                 >
                   {{ $t(rollOut) }}
                 </div>
@@ -169,12 +169,12 @@
             >
               <template slot-scope = "s">
                 <div
-                  v-if="userInfo.userInfo.showId !== s.row.showPushId"
+                  v-if="innerUserInfo.showId !== s.row.showPushId"
                 >
                   {{ s.row.showPushId }}
                 </div>
                 <div
-                  v-if="userInfo.userInfo.showId == s.row.showPushId"
+                  v-if="innerUserInfo.showId == s.row.showPushId"
                 >
                   {{ s.row.showUid }}
                 </div>
@@ -246,7 +246,7 @@
             >
               <template slot-scope = "s">
                 <div
-                  v-if="s.row.state == 'PUSH_REGISTER' && userInfo.userInfo.id == s.row.pushId"
+                  v-if="s.row.state == 'PUSH_REGISTER' && innerUserInfo.id == s.row.pushId"
                   class="cursor-pointer state-status"
                   @click.prevent="cancelId(s.row.id)"
                   :id="s.row.id"
@@ -255,7 +255,7 @@
                   {{ $t(cancel) }}
                 </div>
                 <div
-                  v-if="s.row.state == 'PUSH_REGISTER' && userInfo.userInfo.id !== s.row.pushId"
+                  v-if="s.row.state == 'PUSH_REGISTER' && innerUserInfo.id !== s.row.pushId"
                   class="cursor state-status cursor-pointer"
                   @click.prevent="paymentId(s.row.id)"
                   :id="s.row.id"
@@ -503,7 +503,7 @@ export default {
     },
     // PUSH UID提示事件
     statusPushChange () {
-      if (this.buyUID === this.userInfo.userInfo.showId) {
+      if (this.buyUID === this.innerUserInfo.showId) {
         this.$message({
           // 禁止自我PUSH
           message: this.$t('M.user_push_forbid'),
@@ -796,6 +796,7 @@ export default {
     ...mapState({
       theme: state => state.common.theme,
       userInfo: state => state.user.loginStep1Info, // 用户详细信息
+      innerUserInfo: state => state.user.loginStep1Info.userInfo, // 内层用户详细信息
       loginType: state => state.user.loginType, // 发送类型
       disabledOfPhoneBtn: state => state.user.disabledOfPhoneBtn,
       disabledOfEmailBtn: state => state.user.disabledOfEmailBtn,

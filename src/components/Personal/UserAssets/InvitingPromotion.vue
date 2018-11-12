@@ -30,11 +30,11 @@
                   class="code-right-rendering text-align-r"
                   id="text"
                 >
-                  {{ userInfo.userInfo.showId }}
+                  {{ innerUserInfo.showId }}
                 </span>
                 <span
                   class="code-copy border-radius5 cursor-pointer"
-                  v-clipboard:copy="userInfo.userInfo.showId"
+                  v-clipboard:copy="innerUserInfo.showId"
                   v-clipboard:success="onCopy"
                   v-clipboard:error="onError"
                 >
@@ -57,7 +57,7 @@
                   class="code-right-rendering"
                   id="link"
                 >
-                  {{ link + userInfo.userInfo.showId }}
+                  {{ link + innerUserInfo.showId }}
                 </span>
                 <span
                   class="code-copy border-radius5 cursor-pointer"
@@ -73,7 +73,7 @@
                 </span>
                 <span
                   class="code-copy border-radius5 cursor-pointer"
-                  v-clipboard:copy="link + userInfo.userInfo.showId"
+                  v-clipboard:copy="link + innerUserInfo.showId"
                   v-clipboard:success="onCopy"
                   v-clipboard:error="onError"
                 >
@@ -85,7 +85,7 @@
                    {{ $t('M.comm_copy') }}
                   <VueQrcode
                     class="ercode"
-                    :value="String(link + userInfo.userInfo.showId)"
+                    :value="String(link + innerUserInfo.showId)"
                     :options="{ size: 100 }"
                     v-show="ercodeIsShowId"
                   >
@@ -507,6 +507,7 @@ export default {
       language: state => state.common.language, // 当前选中语言
       theme: state => state.common.theme,
       userInfo: state => state.user.loginStep1Info, // 用户详细信息
+      innerUserInfo: state => state.user.loginStep1Info.userInfo, // 内层用户详细信息
       userCenterActiveName: state => state.personal.userCenterActiveName
     }),
     // BTC 已获得的佣金预估
