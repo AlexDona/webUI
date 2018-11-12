@@ -50,13 +50,15 @@
               </li>
               <li class="th already">
                 <!--已成交-->
-                {{$t('M.comm_already')}}{{ $t('M.comm_make_bargain') }}
+                <!-- {{$t('M.comm_already')}}{{ $t('M.comm_make_bargain') }} -->
                 <!--<span>（{{activeSymbol.sellsymbol}}）</span>-->
+                {{ $t('M.trade_coin_had_traded') }}
               </li>
               <li class="th already">
                 <!--未成交-->
-                {{ $t('M.comm_not') }}{{ $t('M.comm_make_bargain') }}
+                <!-- {{ $t('M.comm_not') }}{{ $t('M.comm_make_bargain') }} -->
                 <!--<span>（{{activeSymbol.sellsymbol}}）</span>-->
+                {{ $t('M.trade_coin_not_had_traded') }}
               </li>
               <li class="th">
                 <!--操作-->

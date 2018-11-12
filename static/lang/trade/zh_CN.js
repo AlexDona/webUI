@@ -4,6 +4,8 @@ export const trade = {
   'trade_coin_entrusted_price': '委托价',
   'trade_coin_entrusted_amount': '委托量',
   'trade_coin_has_traded_amount': '已成交量',
+  'trade_coin_had_traded': '已成交',
+  'trade_coin_not_had_traded': '未成交',
   // #####################查看更多委单记录#####################
   'trade_coin_commissioned_current': '当前委托',
   'trade_coin_entrust': '委托',
