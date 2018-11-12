@@ -78,7 +78,7 @@ export default {
   },
   async created () {
     require('../../../static/css/theme/day/Common/HeaderCommonDay.css')
-    // 获取 语言列表:任付伟先注释此方法防止每次刷新报错-有需要请放开
+    // 获取 语言列表
     await getLanguageListAjax(this)
     if (this.routeLanguage) {
       _.forEach(this.languageList, item => {

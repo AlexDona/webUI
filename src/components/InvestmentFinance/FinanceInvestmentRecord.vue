@@ -274,8 +274,6 @@
 </template>
 <!--请严格按照如下书写书序-->
 <script>
-import HeaderCommon from '../Common/HeaderCommonForPC'
-import FooterCommon from '../Common/FooterCommon'
 import FinanceBrokenLine from './FinanceBrokenLine'
 import FinanceBrokenPie from './FinanceBrokenPie'
 import IconFontCommon from '../Common/IconFontCommon'
@@ -285,8 +283,6 @@ import {getFinancialManagement, cancleInvestment} from '../../utils/api/OTC'
 import {returnAjaxMessage} from '../../utils/commonFunc'
 export default {
   components: {
-    HeaderCommon,
-    FooterCommon,
     FinanceBrokenLine,
     FinanceBrokenPie,
     IconFontCommon

@@ -3,7 +3,6 @@
     class="help-box"
     :class="{'day':theme == 'day','night':theme == 'night' }"
   >
-    <!--<keep-aline><HeaderCommon/></keep-aline>-->
     <div class="inner-box">
       <div class="search-box">
         <!--请输入关键字-->
@@ -78,8 +77,6 @@
   </div>
 </template>
 <script>
-import HeaderCommon from '../Common/HeaderCommonForPC'
-import FooterCommon from '../Common/FooterCommon'
 import IconFont from '../Common/IconFontCommon'
 import {mapState} from 'vuex'
 import {getServiceProtocoDataAjaxByPageNum} from '../../utils/api/header'
@@ -87,8 +84,6 @@ import {returnAjaxMessage} from '../../utils/commonFunc'
 
 export default {
   components: {
-    HeaderCommon,
-    FooterCommon,
     IconFont
   },
   // props,

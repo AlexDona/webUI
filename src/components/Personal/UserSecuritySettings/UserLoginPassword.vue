@@ -102,8 +102,6 @@
 </template>
 <!--请严格按照如下书写书序-->
 <script>
-// 头部
-import HeaderCommon from '../../Common/HeaderCommonForPC'
 import IconFontCommon from '../../Common/IconFontCommon'
 import ErrorBox from '../../User/ErrorBox'
 import {modifyLoginPassword} from '../../../utils/api/personal'
@@ -111,16 +109,12 @@ import {
   returnAjaxMessage,
   validateNumForUserInput
 } from '../../../utils/commonFunc'
-// 底部
-import FooterCommon from '../../Common/FooterCommon'
 import { createNamespacedHelpers, mapState } from 'vuex'
 const { mapMutations } = createNamespacedHelpers('personal')
 export default {
   components: {
-    HeaderCommon, // 头部
     IconFontCommon, // 字体图标
-    ErrorBox,
-    FooterCommon // 底部
+    ErrorBox
   },
   data () {
     return {

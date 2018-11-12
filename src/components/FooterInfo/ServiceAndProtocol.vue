@@ -3,7 +3,6 @@
     class="service-protocol-box"
     :class="{'day':theme == 'day','night':theme == 'night' }"
   >
-    <!--<keep-aline><HeaderCommon/></keep-aline>-->
     <div class="content">
       <div class="top">
         <h1>
@@ -87,14 +86,10 @@ import LegislationExplain from './LegislationExplain'
 // import ClauseExplain from './ClauseExplain'
 import UserProtocol from './UserProtocol'
 import CurrencyInformation from './CurrencyInformation'
-import HeaderCommon from '../Common/HeaderCommonForPC'
-import FooterCommon from '../Common/FooterCommon'
 import {createNamespacedHelpers, mapState} from 'vuex'
 const {mapMutations} = createNamespacedHelpers('footerInfo')
 export default {
   components: {
-    HeaderCommon,
-    FooterCommon,
     CurrencyInformation,
     UserProtocol,
     // ClauseExplain,

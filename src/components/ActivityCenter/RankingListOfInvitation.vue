@@ -112,10 +112,7 @@
   </div>
 </template>
 <script>
-import HeaderCommon from '../Common/HeaderCommonForPC'
-import FooterCommon from '../Common/FooterCommon'
 import {
-  // createNamespacedHelpers,
   mapState
 } from 'vuex'
 import {
@@ -126,10 +123,7 @@ import {getRankingList} from '../../utils/api/activityCenter'
 import {returnAjaxMessage} from '../../utils/commonFunc'
 
 export default {
-  components: {
-    HeaderCommon,
-    FooterCommon
-  },
+  components: {},
   // props,
   data () {
     return {

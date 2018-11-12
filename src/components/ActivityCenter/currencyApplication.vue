@@ -4,9 +4,6 @@
     :class="{'day':theme == 'day','night':theme == 'night' }"
   >
     <!-- 上币申请 -->
-    <!--<keep-aline>-->
-      <!--<HeaderCommon/>-->
-    <!--</keep-aline>-->
     <div class="inner-box">
       <div class="top">
         <img
@@ -109,18 +106,13 @@ import {
   returnAjaxMessage,
   getServiceProtocolData
 } from '../../utils/commonFunc'
-import HeaderCommon from '../Common/HeaderCommonForPC'
-import FooterCommon from '../Common/FooterCommon'
 import {
   // createNamespacedHelpers,
   mapState
 } from 'vuex'
 
 export default {
-  components: {
-    HeaderCommon,
-    FooterCommon
-  },
+  components: {},
   // props,
   data () {
     return {

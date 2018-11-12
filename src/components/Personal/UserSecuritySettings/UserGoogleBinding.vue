@@ -188,8 +188,6 @@
 </template>
 <!--请严格按照如下书写书序-->
 <script>
-// 头部
-import HeaderCommon from '../../Common/HeaderCommonForPC'
 import IconFontCommon from '../../Common/IconFontCommon'
 import ErrorBox from '../../User/ErrorBox'
 import {
@@ -202,20 +200,16 @@ import {
   bindGoogleAddress,
   unbindCheckGoogle
 } from '../../../utils/api/personal'
-// 底部
-import FooterCommon from '../../Common/FooterCommon'
 import { createNamespacedHelpers, mapState } from 'vuex'
 const { mapMutations } = createNamespacedHelpers('personal')
 export default {
   components: {
-    HeaderCommon, // 头部
     ErrorBox,
     // 二维码组件
     VueQrcode: resolve => {
       require([('@xkeshi/vue-qrcode')], resolve)
     },
-    IconFontCommon, // 字体图标
-    FooterCommon // 底部
+    IconFontCommon // 字体图标
   },
   data () {
     return {
