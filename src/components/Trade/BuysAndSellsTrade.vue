@@ -343,9 +343,10 @@ export default {
           }
           >.outer-box{
             overflow: hidden;
-            height:651px;
+            height:650px;
             >.content-box{
-              height:651px;
+              height:650px;
+              /*background-color: pink;*/
               transition: all 0.5s;
               margin-top:-300px;
               >.buys-list,.sells-list{
@@ -384,7 +385,7 @@ export default {
                       max-width:100%;
                       position: absolute;
                       right:0;
-                      top:1px;
+                      top:0;
                       height:30px;
                       z-index: 0;
                       opacity: 0.5;

@@ -206,7 +206,7 @@ export default {
             let targetString = JSON.stringify({
               content: [],
               plateId: plateItem.plateId,
-              plateName: plateItem.plateName
+              plateName: plateItem.plateName.replace('+', ' ')
             })
             plateList[plateIndex] = JSON.parse(targetString)
             this.collectPlateList[plateIndex] = JSON.parse(targetString)

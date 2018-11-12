@@ -2,7 +2,7 @@
   <!--首页公告-->
   <div
     class="notice-box home"
-    :class="{close:this.closeStatus}"
+    :class="{close:!noticeCloseVisible}"
   >
     <div
       class="inner-box"
@@ -106,7 +106,8 @@ export default {
     },
     // 关闭组件
     closeNotice () {
-      this.closeStatus = true
+      // this.noticeCloseVisible = true
+      this.$store.commit('home/CHANGE_NOTICE_VISIBLE', false)
     },
     autoPlay () {
       this.animate = true
@@ -120,7 +121,8 @@ export default {
   filter: {},
   computed: {
     ...mapState({
-      language: state => state.common.language
+      language: state => state.common.language,
+      noticeCloseVisible: state => state.home.noticeCloseVisible
     })
   },
   watch: {

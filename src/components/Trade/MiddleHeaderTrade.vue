@@ -99,8 +99,9 @@
         <div class="bottom">
             <span
               class="font-size14 theme-color"
+              v-show="middleTopData.vol24hour"
             >
-              {{middleTopData.vol24hour}}
+              {{formatCount(middleTopData.vol24hour)}}
             </span>
         </div>
       </div>
@@ -110,6 +111,7 @@
 <script>
 import {mapState} from 'vuex'
 import {keep2Num} from '../../utils'
+import {formatCount} from '../../utils/commonFunc'
 
 export default {
   components: {},
@@ -126,6 +128,10 @@ export default {
     // 截取2位小数
     keep2Num (number) {
       return keep2Num(number)
+    },
+    // 成交量格式化
+    formatCount (targetNum) {
+      return formatCount(targetNum)
     }
   },
   filter: {},

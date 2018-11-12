@@ -4,6 +4,9 @@
     :class="{'day':theme == 'day','night':theme == 'night' }"
     v-loading.fullscreen.lock="fullscreenLoading"
     element-loading-background="rgba(0, 0, 0, 0.6)"
+    :style="{
+      height: windowHeight+'px'
+    }"
   >
     <div class="set-email-main margin25">
       <header class="set-email-header personal-height60 line-height60 line-height70 margin25">
@@ -41,6 +44,7 @@
                 class="email-input border-radius2 padding-l15 box-sizing"
                 v-model="emailAccounts"
                 @keydown="setErrorMsg(0, '')"
+                @focus="resetIsEmailExist"
                 @blur="checkUserExistAjax('email', emailAccounts)"
               />
               <!--错误提示-->
@@ -118,7 +122,7 @@ export default {
       emailCode: '', // 邮箱验证码
       successCountDown: 1, // 成功倒计时
       fullscreenLoading: false, // 整页loading
-      isEmailExist: true, // 邮箱是否存在
+      isEmailExist: false, // 邮箱是否存在
       errorShowStatusList: [
         '', // 邮箱账号
         '' // 验证码
@@ -149,8 +153,13 @@ export default {
       this.$store.commit('personal/CHANGE_USER_CENTER_ACTIVE_NAME', 'security-center')
       this.$router.push({path: '/PersonalCenter'})
     },
+    // 重置邮箱已存在状态
+    resetIsEmailExist () {
+      this.isEmailExist = false
+    },
     // 发送邮箱验证码
-    sendPhoneOrEmailCode (loginType) {
+    async sendPhoneOrEmailCode (loginType) {
+      // await this.checkUserExistAjax(loginType, this.emailAccounts)
       if (this.isEmailExist && this.emailAccounts) {
         this.$message({
           type: 'error',
@@ -175,8 +184,6 @@ export default {
         return false
       }
       let params = {
-        // type: 'VERIFICATION_CODE' // 类型
-        // country: this.activeCountryCode // 邮箱国籍
         userId: this.userInfo.userId
       }
       switch (loginType) {
@@ -187,7 +194,7 @@ export default {
           params.email = this.emailAccounts
           break
       }
-      sendPhoneOrEmailCodeAjax(loginType, params, this)
+      await sendPhoneOrEmailCodeAjax(loginType, params, this)
     },
     /**
      * 确认绑定邮箱
@@ -338,7 +345,10 @@ export default {
       activeCountryCode: state => state.user.loginStep1Info.countryCode, // 国籍码
       disabledOfPhoneBtn: state => state.user.disabledOfPhoneBtn,
       disabledOfEmailBtn: state => state.user.disabledOfEmailBtn
-    })
+    }),
+    windowHeight () {
+      return window.innerHeight
+    }
   },
   watch: {}
 }
@@ -346,6 +356,7 @@ export default {
 <style scoped lang="scss">
   @import "../../../../static/css/scss/Personal/IndexPersonal";
   .set-email {
+    margin-top:66px;
     overflow: hidden;
     >.set-email-main {
       width: 1100px;

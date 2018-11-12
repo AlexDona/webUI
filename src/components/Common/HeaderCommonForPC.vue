@@ -3,7 +3,7 @@
     class="nav-box common"
     :class="{'day':theme == 'day','night':theme == 'night' }"
     :style="{
-      top:$route.path==='/'?styleTop+'px': 0
+      top:$route.path==='/'&&noticeCloseVisible ? styleTop+'px': 0
     }"
   >
     <div class="inner-box">
@@ -417,6 +417,9 @@ export default{
   mounted () {
     window.addEventListener('scroll', this.handleScroll)
   },
+  beforeDestroy () {
+    window.removeEventListener('scroll', this.handleScroll)
+  },
   methods: {
     ...mapMutations([
       // 修改语言
@@ -608,7 +611,8 @@ export default{
       footerInfo: state => state.common.footerInfo,
       userCenterActiveName: state => state.personal.userCenterActiveName,
       title: state => state.common.title, // 网站title
-      $mainNightBgColor: state => state.common.mainColor.$mainNightBgColor
+      $mainNightBgColor: state => state.common.mainColor.$mainNightBgColor,
+      noticeCloseVisible: state => state.home.noticeCloseVisible
     })
   },
   watch: {

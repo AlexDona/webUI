@@ -71,7 +71,7 @@
         <div
           class="market-category"
         >
-          {{item.plateName}}
+          {{item.plateName.replace('+',' ')}}
         </div>
         <dl
           class="coin-item "
@@ -268,12 +268,14 @@ export default {
       >.market-cate-wrap{
         /*板块头部*/
         >.market-category{
-          height: 40px;
+          height: 30px;
           margin: 0 16px;
           /*padding-left: 10px;*/
           /*padding: 0 20px;*/
+          border-top:1px solid #39424D;
+          border-bottom:1px solid #39424D;
           padding:0 4.5%;
-          line-height: 40px;
+          line-height: 30px;
           position: relative;
           color:$mainColor;
           &:before{

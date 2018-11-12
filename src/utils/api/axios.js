@@ -7,10 +7,10 @@ import {
 } from '../env'
 import axios from 'axios'
 import store from '../../vuex'
-import router from '../../router/index'
+// import router from '../../router/index'
 // import {getStoreWithJson} from '../index'
 // import Vue from 'vue'
-let countOf401 = 0
+let failureCount = 0
 let util = {}
 util.ajax = axios.create({
   baseURL: apiCommonUrl,
@@ -19,11 +19,10 @@ util.ajax = axios.create({
 })
 
 util.ajax.interceptors.request.use((config) => {
-  if (countOf401) {
-    countOf401 = 0
+  if (failureCount > 1) {
+    failureCount = 0
     return false
   }
-
   config.headers['x-domain'] = xDomain
   if (store.state.user.loginStep1Info.token) {
     let userToken = store.state.user.loginStep1Info.token
@@ -36,10 +35,9 @@ util.ajax.interceptors.request.use((config) => {
 
 util.ajax.interceptors.response.use(
   response => {
-    console.log(response)
-    if (response.data.meta.code == 401) {
-      countOf401++
-      console.log(router)
+    const success = response.data.meta.success
+    if (!success) {
+      failureCount++
     }
     return response
   },
