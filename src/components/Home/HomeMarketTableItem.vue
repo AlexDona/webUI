@@ -373,6 +373,7 @@ export default {
     activeConvertCurrencyObj (newVal) {
     },
     item (newVal) {
+      console.log(newVal)
     }
   }
 }

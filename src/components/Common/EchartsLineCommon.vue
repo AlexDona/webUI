@@ -41,7 +41,7 @@ export default {
         series: [
           {
             type: 'line',
-            smooth: 0.3,
+            smooth: 0.5,
             lineStyle: {
               normal: {
                 width: 1
