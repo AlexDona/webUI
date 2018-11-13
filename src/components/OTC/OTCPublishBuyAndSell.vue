@@ -2,10 +2,11 @@
   <div
     class="otc-publish-buy-and-sell-box otc"
     :class="{'day':theme == 'day','night':theme == 'night' }"
-    :style="{
-      height: windowHeight+'px'
-    }"
+    :style="{'min-height':(height-305)+'px'}"
   >
+    <!-- :style="{
+      height: windowHeight+'px'
+    }" -->
     <!-- 挂单：商家和普通用户都可以用 -->
     <div
       class="publish-buy-and-sell-content"
@@ -426,6 +427,7 @@ export default {
   components: {},
   data () {
     return {
+      height: '', // 可视区内容的高度
       fullscreenLoading: true, // 整页loading
       serviceChargeSELL: 0, // 手续费：卖
       traderSumSELL: 0, // 交易额：卖
@@ -498,6 +500,8 @@ export default {
     require('../../../static/css/list/OTC/OTCPublishBuyAndSell.css')
     require('../../../static/css/theme/day/OTC/OTCPublishBuyAndSellDay.css')
     require('../../../static/css/theme/night/OTC/OTCPublishBuyAndSellNight.css')
+    // 获得可视区的高度
+    this.height = document.documentElement.clientHeight
     // 获取URL中买卖类型和可用币种id和可用法币id
     // console.log(this.$route.params)
     // console.log(this.$route.params.styleID) // 买卖类型
@@ -916,10 +920,10 @@ export default {
       theme: state => state.common.theme,
       // 当前选中语言
       language: state => state.common.language
-    }),
-    windowHeight () {
-      return window.innerHeight
-    }
+    })
+    // windowHeight () {
+    //   return window.innerHeight
+    // }
   },
   watch: {}
 }
