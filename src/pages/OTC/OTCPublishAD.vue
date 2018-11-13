@@ -315,9 +315,13 @@
           <div class="common limit-set">
             <div class="left display-inline-block">
               <!-- 限制设置 -->
-                <p class="tips font-size14">{{$t('M.otc_publishAD_setLimit')}}</p>
+                <p class="tips font-size14">
+                  {{$t('M.otc_publishAD_setLimit')}}
+                </p>
                 <!-- 必选 -->
-                <p class="warning font-size12">{{$t('M.otc_publishAD_nustFill')}}</p>
+                <p class="warning font-size12">
+                  {{$t('M.otc_publishAD_nustFill')}}
+                </p>
             </div>
             <div class="right display-inline-block">
               <div>
@@ -353,8 +357,9 @@
                 <!-- 错误提示 -->
                 <div class="err">{{errorInfoLimitOrderCount}}</div>
               </div>
+              <!-- 卖家必须成交过几次（0=不限制） -->
               <div>
-              {{$t('M.otc_publishAD_sellNeedLimit')}}（0={{$t('M.otc_publishAD_noLimit')}}）
+                {{$t('M.otc_publishAD_sellNeedLimit')}}（0={{$t('M.otc_publishAD_noLimit')}}）
               </div>
               <div>
                 <input
