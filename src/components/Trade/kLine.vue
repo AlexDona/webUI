@@ -148,7 +148,9 @@ export default {
         })
         this.cacheData[ticker] = list
         // console.log(list);
-        this.lastTime = list[list.length - 1].time
+        if (list && list.length) {
+          this.lastTime = list[list.length - 1].time
+        }
         // this.initKLine(this.symbol)
         // this.onMessage(klineData)
       }

@@ -123,7 +123,10 @@ export default {
       if (!returnAjaxMessage(data, this, 0, 1)) {
         return false
       } else {
-        this.globalMarketList = data.data.data
+        console.log(data)
+        if (data && data.data) {
+          this.globalMarketList = data.data.data
+        }
       }
     },
     // 切换内容显示隐藏

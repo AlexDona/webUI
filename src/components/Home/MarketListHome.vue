@@ -434,6 +434,7 @@ export default{
     // 切换收藏
     async toggleCollect (data) {
       let {id, status, row} = data
+      console.log(id)
       status = Boolean(status)
       // this.collectStatusList[id] = Boolean(status)
       this.$set(this.collectStatusList, id, status)

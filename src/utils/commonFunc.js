@@ -44,6 +44,9 @@ import {PHONE_REG, EMAIL_REG, ID_REG, PWD_REG, ALIPAY_REG, BANK_REG, GOOGLE_REG,
 // 如果返回了 正确 的数据：不需要正确的提示noTip传0；需要正确的提示noTip传1；
 // 使用方法：returnAjaxMessage(data, this, 0) 或者 returnAjaxMessage(data, this, 1)
 export const returnAjaxMessage = (data, self, noTip, errorTip) => {
+  if (!data) {
+    return false
+  }
   const meta = data.data.meta
   if (meta) {
     if (!meta.success && !errorTip) {
@@ -357,12 +360,18 @@ export const getFooterInfo = async (language, that) => {
   ) {
     return false
   } else {
-    console.log(data1)
-    console.log(data2)
-    console.log(data3) // 包含公司名称、邮箱等信息
-    let footerInfo1 = data1.data.data
-    let footerInfo2 = data2.data.data
-    let configInfo = data3.data.data
+    console.log(data1, data2, data3)
+    // eslint-disable-next-line
+    let footerInfo1 = [], footerInfo2 = [], configInfo = []
+    if (data1) {
+      footerInfo1 = data1.data.data
+    }
+    if (data2) {
+      footerInfo2 = data2.data.data
+    }
+    if (data3) {
+      configInfo = data3.data.data
+    }
     that.SET_FOOTER_INFO({
       footerInfo1,
       footerInfo2,

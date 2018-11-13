@@ -29,11 +29,13 @@ if (process.env.NODE_ENV == 'development') {
   // apiCommonUrl = 'http://192.168.1.176:8888/' // 帅飞
 
   // apiCommonUrl = 'http://api.new.bzu.com/' // 内部测试
-  apiCommonUrl = 'http://192.168.1.200:8888/' // 本地测试
-  xDomain = 'new.test.com'
+  apiCommonUrl = 'http://192.168.1.210:8888' // 内部测试
+  // apiCommonUrl = 'http://192.168.1.200:8888/' // 本地测试
+  xDomain = 'me.com'
 
   // socketUrl = 'wss://ws.bzu.com/market'
-  socketUrl = 'ws://192.168.1.200:9991/market'
+  socketUrl = 'ws://192.168.1.210:8087/market'
+  // socketUrl = 'ws://192.168.1.200:9991/market'
   // socketUrl = 'ws://192.168.1.52:8087/market' // 滑浩田
 
   // loginSocketUrl = 'ws://api.new.bzu.com/qrcodeLogin/'
