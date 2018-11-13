@@ -1,7 +1,6 @@
 /*normal*/
 .chart-page {
-  /*background-color: transparent !important;*/
-  background: transparent;
+  background-color: transparent !important;
 }
 /*默认时间分辨率隐藏*/
 .intervals-container.favored-list-container {

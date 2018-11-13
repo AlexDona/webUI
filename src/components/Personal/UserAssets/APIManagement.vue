@@ -116,7 +116,7 @@
               width="150"
             >
               <template slot-scope = "s">
-                <div>{{timeFormatting(s.row.createTime) }}</div>
+                <div>{{s.row.createTime}}</div>
               </template>
             </el-table-column>
             <!--备注-->
