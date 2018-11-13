@@ -47,11 +47,13 @@ export const returnAjaxMessage = (data, self, noTip, errorTip) => {
   const meta = data.data.meta
   if (meta) {
     if (!meta.success && !errorTip) {
-      self.$message({
-        type: 'error',
-        // duration: 5000000,
-        message: (!meta.params || !meta.params.length) ? self.$t(`M.${meta.i18n_code}`) : self.$t(`M.${meta.i18n_code}`).format(meta.params)
-      })
+      if (meta.code !== 500) {
+        self.$message({
+          type: 'error',
+          // duration: 5000000,
+          message: (!meta.params || !meta.params.length) ? self.$t(`M.${meta.i18n_code}`) : self.$t(`M.${meta.i18n_code}`).format(meta.params)
+        })
+      }
       // 登录失效
       switch (meta.code) {
         case 401:
