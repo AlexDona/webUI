@@ -95,7 +95,7 @@
               <el-option
                 v-for="item in merchantsOrdersStatusList"
                 :key="item.value"
-                :label="item.label"
+                :label="$t(item.label)"
                 :value="item.value"
               >
               </el-option>
@@ -376,25 +376,30 @@ export default {
       // 2.0 商家订单筛选下拉框数组--状态
       activitedMerchantsOrdersStatusList: '', // 选中的筛选项
       merchantsOrdersStatusList: [
+        // 已付款
         {
           value: 'PAYED',
-          label: this.$t('M.otc_enum_status_yifukuan')
+          label: 'M.otc_enum_status_yifukuan'
         },
+        // 未付款
         {
           value: 'PICKED',
-          label: this.$t('M.otc_enum_status_weifukuan')
+          label: 'M.otc_enum_status_weifukuan'
         },
+        // 已完成
         {
           value: 'COMPLETED ',
-          label: this.$t('M.otc_enum_status_yiwancheng')
+          label: 'M.otc_enum_status_yiwancheng'
         },
+        // 已取消
         {
           value: 'CANCELED',
-          label: this.$t('M.otc_enum_status_yiquxiao')
+          label: 'M.otc_enum_status_yiquxiao'
         },
+        // 已冻结
         {
           value: 'FROZEN',
-          label: this.$t('M.otc_enum_status_yidongjie')
+          label: 'M.otc_enum_status_yidongjie'
         }
       ],
       startTimeValue: '', // 默认开始时间
