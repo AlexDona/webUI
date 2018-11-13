@@ -11,7 +11,7 @@ export const home = {
   // 'home_market_price_tendency': 'Price trend (3 days)',
   'home_market_price_tendency': 'Action(3 days)',
   'home_market_field_search': 'Search area',
-  'home_market_district': 'Self-selected',
+  'home_market_district': 'Favorites',
   // #####################导航######################navigation
   'investment_look_all': 'View all',
   'investment_return_investment': 'Return'
