@@ -751,10 +751,6 @@ export default {
     color: #D45858;
     cursor: pointer;
   }
-  // .footer{
-  //   position: absolute;
-  //   bottom:0;
-  // }
 }
 .black.otc-business-apply-box.day{
   // 当为申请中和申请成功的页面时候，只有黑色主题颜色

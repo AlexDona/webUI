@@ -101,6 +101,8 @@
               </el-option>
             </el-select>
           </span>
+        </div>
+        <div class="manage-main-middle">
           <!-- 按钮 -->
           <span class="inquire-button">
             <!-- 查询 -->
@@ -551,7 +553,6 @@ export default {
   .otc-AD-manage-box {
     margin-top:66px;
     overflow: hidden;
-    // position: relative;
     >.otc-AD-manage-content {
       width: 1150px;
       margin: 70px auto 10px auto;
@@ -565,24 +566,25 @@ export default {
       }
       > .AD-manage-main {
         > .manage-main-top {
-          min-height: 60px;
-          line-height: 60px;
-          margin-bottom: 25px;
+          margin-bottom: 10px;
           > .filtrate-text {
             // color: #9DA5B3;
-            margin-right: 5px;
+            margin-right: 10px;
           }
           > .style-input {
-            margin-right: 15px;
+            margin-right: 25px;
           }
           > .market-input {
-            margin-right: 15px;
+            margin-right: 25px;
           }
           > .status-input {
-            margin-right: 73px;
           }
-          > .inquire-button {
-            margin-right: 15px;
+        }
+        > .manage-main-middle{
+          text-align: right;
+          margin-bottom: 15px;
+          >.inquire-button{
+            margin-right: 5px;
           }
           > .all-unshelve {
             // color: #338FF5;
@@ -623,7 +625,9 @@ export default {
             }
             > .status-input {
             }
-            > .inquire-button {
+          }
+          >.manage-main-middle{
+            > .inquire-button{
             }
             > .all-unshelve {
               color: #338FF5;
@@ -662,7 +666,9 @@ export default {
             }
             > .status-input {
             }
-            > .inquire-button {
+          }
+          >.manage-main-middle{
+            > .inquire-button{
             }
             > .all-unshelve {
               color: #338FF5;
@@ -682,10 +688,6 @@ export default {
           }
         }
       }
-    }
-    .footer{
-      // position: absolute;
-      // bottom:0;
     }
   }
 </style>
