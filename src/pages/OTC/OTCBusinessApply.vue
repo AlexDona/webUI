@@ -94,7 +94,9 @@
         <!-- 2.2.3 具体步骤部分 -->
         <div class="step">
           <div class="content">
-            <h4 class="title">{{$t('M.otc_merchant_step1')}}</h4>
+            <h4 class="title">
+              {{$t('M.otc_merchant_step1')}}
+            </h4>
             <!-- 商家申请资料模板下载 -->
             <p>
               {{$t('M.otc_merchant_pleaseDowload')}}
@@ -110,11 +112,17 @@
             <p>{{$t('M.otc_merchant_detailOne')}}</p>
             <p>{{$t('M.otc_merchant_detailTwo')}}</p>
             <p>{{$t('M.otc_merchant_applyLimit')}}<spn>{{successTimes}}</spn>{{$t('M.otc_ci')}}。②{{$t('M.otc_merchant_account')}}<span>{{coinName}}</span>{{$t('M.comm_count')}}{{$t('M.otc_xu')}}≥<span>{{count}}</span></p>
-            <h4 class="title">{{$t('M.otc_merchant_step2')}}</h4>
+            <h4 class="title">
+              {{$t('M.otc_merchant_step2')}}
+            </h4>
             <p>{{$t('M.otc_merchant_datailThree')}}{{configInfo.otcEmail}}，{{$t('M.otc_merchant_datailFour')}}OTC{{$t('M.otc_merchant')}}”。</p>
-            <h4 class="title">{{$t('M.otc_merchant_step3')}}</h4>
+            <h4 class="title">
+              {{$t('M.otc_merchant_step3')}}
+            </h4>
             <p>{{$t('M.otc_merchant_datailFive')}}{{count}} {{coinName}}{{$t('M.otc_merchant_datailSix')}}。</p>
-            <h4 class="title">{{$t('M.otc_merchant_step4')}}</h4>
+            <h4 class="title">
+              {{$t('M.otc_merchant_step4')}}
+            </h4>
             <p>{{$t('M.otc_merchant_datailSeven')}}</p>
             <h4 class="title tips">
               {{$t('M.otc_merchant_loveTips')}}
