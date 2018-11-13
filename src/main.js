@@ -16,19 +16,20 @@ Vue.use(VueLazyLoad, {
 })
 
 // import '../static/css/scss/index.scss'
-
+console.log(ELEMENT.lang)
 // 多语言
 const i18n = new VueI18n({
   locale: getStore('language') || store.state.common.defaultLanguage, // 语言标识
   messages: {
-    'zh_CN': require('../static/lang/zh_CN'),
-    'en_US': require('../static/lang/en_US'),
-    'zh_TW': require('../static/lang/zh_TW'),
+    'zh_CN': Object.assign({}, ELEMENT.lang.zhCN, require('../static/lang/zh_CN')),
+    'en_US': Object.assign({}, ELEMENT.lang.en, require('../static/lang/en_US')),
+    'zh_TW': Object.assign({}, ELEMENT.lang.zhTW, require('../static/lang/zh_TW')),
     'ko_KR': require('../static/lang/ko_KR'),
-    'ja_JP': require('../static/lang/ja_JP')
+    'ja_JP': Object.assign({}, ELEMENT.lang.ja, require('../static/lang/ja_JP'))
   }
 })
-
+// ELEMENT.locale
+ELEMENT.i18n((key, value) => i18n.t(key, value)) // element插件的多语言切换
 Vue.config.productionTip = false
 
 let vm = new Vue({
