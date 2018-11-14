@@ -134,7 +134,7 @@
 <script>
 import {timeFilter} from '../../utils'
 import {getOTCEntrustingOrders, querySelectedOrdersRevocation} from '../../utils/api/OTC'
-import {returnAjaxMsg} from '../../utils/commonFunc'
+import {returnAjaxMsg, getNestedData} from '../../utils/commonFunc'
 import {mapState} from 'vuex'
 export default {
   components: {},
@@ -193,7 +193,8 @@ export default {
       } else {
         // 返回数据正确的逻辑
         this.loading = false
-        let OTCEntrustOrderListData = data.data.data
+        // let OTCEntrustOrderListData = data.data.data
+        let OTCEntrustOrderListData = getNestedData(data, 'data.data')
         this.OTCEntrustOrderList = OTCEntrustOrderListData.list
         // 分页
         this.totalPages = OTCEntrustOrderListData.pages - 0

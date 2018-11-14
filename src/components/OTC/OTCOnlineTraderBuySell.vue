@@ -388,7 +388,7 @@ import {
   queryUserTradeFeeAndCoinInfo
 } from '../../utils/api/OTC'
 import IconFontCommon from '../Common/IconFontCommon'
-import {returnAjaxMsg} from '../../utils/commonFunc'
+import {returnAjaxMsg, getNestedData} from '../../utils/commonFunc'
 import {createNamespacedHelpers, mapState} from 'vuex'
 const {mapMutations} = createNamespacedHelpers('OTC')
 export default {
@@ -690,7 +690,8 @@ export default {
         return false
       } else {
         // 返回数据正确的逻辑:将返回的数据赋值到页面中
-        let detailsData = data.data.data
+        // let detailsData = data.data.data
+        let detailsData = getNestedData(data, 'data.data')
         this.userName = detailsData.userName // 挂单人姓名
         this.successTimes = detailsData.successTimes // 成交次数
         this.failTimes = detailsData.failTimes // 失败次数
@@ -723,7 +724,8 @@ export default {
       } else {
         this.fullscreenLoading = false
         // 返回数据正确的逻辑:将返回的数据赋值到页面中
-        let detailData = data.data.data
+        // let detailData = data.data.data
+        let detailData = getNestedData(data, 'data.data')
         this.name = detailData.name // 最小交易量币种名字（单位）
         this.pointLength = detailData.unit // 每个币种返回的保留小数点位数限制
         // console.log(this.pointLength)

@@ -255,7 +255,7 @@
 <script>
 import {timeFilter} from '../../utils'
 import {getOTCCompletedOrders} from '../../utils/api/OTC'
-import {returnAjaxMsg} from '../../utils/commonFunc'
+import {returnAjaxMsg, getNestedData} from '../../utils/commonFunc'
 import {mapState} from 'vuex'
 export default {
   components: {},
@@ -309,7 +309,8 @@ export default {
       } else {
         // 返回数据正确的逻辑
         this.loading = false
-        let completedOrdersListData = data.data.data
+        // let completedOrdersListData = data.data.data
+        let completedOrdersListData = getNestedData(data, 'data.data')
         this.completedOrdersList = completedOrdersListData.list
         // 分页
         this.totalPages = completedOrdersListData.pages - 0

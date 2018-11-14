@@ -341,7 +341,7 @@ import {
   getMerchantAvailablelegalTender,
   getOTCMerchantsOrdersList
 } from '../../utils/api/OTC'
-import {returnAjaxMsg} from '../../utils/commonFunc'
+import {returnAjaxMsg, getNestedData} from '../../utils/commonFunc'
 import {mapState} from 'vuex'
 export default {
   components: {
@@ -447,7 +447,8 @@ export default {
         return false
       } else {
         // 返回数据正确的逻辑
-        this.merchantsOrdersCoinList = data.data.data
+        // this.merchantsOrdersCoinList = data.data.data
+        this.merchantsOrdersCoinList = getNestedData(data, 'data.data')
       }
     },
     // 4页面加载时 可用法币查询
@@ -460,7 +461,8 @@ export default {
         return false
       } else {
         // 返回数据正确的逻辑
-        this.merchantsOrdersCurrencyList = data.data.data
+        // this.merchantsOrdersCurrencyList = data.data.data
+        this.merchantsOrdersCurrencyList = getNestedData(data, 'data.data')
       }
     },
     // 5 change事件改变时赋值
@@ -556,7 +558,8 @@ export default {
       } else {
         this.loading = false
         // 返回数据正确的逻辑 重新渲染列表
-        let merchantsOrdersListData = data.data.data
+        // let merchantsOrdersListData = data.data.data
+        let merchantsOrdersListData = getNestedData(data, 'data.data')
         this.merchantsOrdersList = merchantsOrdersListData.list
         // 分页
         this.totalPages = merchantsOrdersListData.pages - 0

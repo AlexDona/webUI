@@ -104,7 +104,8 @@ import {
 } from '../../utils/api/activityCenter'
 import {
   returnAjaxMsg,
-  getServiceProtocolData
+  getServiceProtocolData,
+  getNestedData
 } from '../../utils/commonFunc'
 import {
   // createNamespacedHelpers,
@@ -157,8 +158,10 @@ export default {
         return false
       } else {
         console.log(data)
-        this.downloadUrl = data.data.data.url
-        this.fileName = data.data.data.name
+        // let datailData = data.data.data
+        let detailData = getNestedData(data, 'data.data')
+        this.downloadUrl = detailData.url
+        this.fileName = detailData.name
       }
     },
     // 下载资产预览表

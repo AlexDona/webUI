@@ -525,7 +525,7 @@ import {
   getFinancialRecord
 } from '../../utils/api/OTC'
 import {getPushTotalByCoinId} from '../../utils/api/personal'
-import {returnAjaxMsg} from '../../utils/commonFunc'
+import {returnAjaxMsg, getNestedData} from '../../utils/commonFunc'
 import {createNamespacedHelpers, mapState} from 'vuex'
 const {mapMutations} = createNamespacedHelpers('finance')
 export default {
@@ -687,7 +687,8 @@ export default {
         return false
       } else {
         // 重新掉一次币种接口刷新列表
-        this.userCoindTotal = data.data.data.total
+        // this.userCoindTotal = data.data.data.total
+        this.userCoindTotal = getNestedData(data, 'data.data.total')
       }
     },
     // 点击立刻存币按钮执行
@@ -737,7 +738,8 @@ export default {
       if (!(returnAjaxMsg(data, this, 0))) {
         return false
       } else {
-        this.formLabelAlign = data.data.data
+        // this.formLabelAlign = data.data.data
+        this.formLabelAlign = getNestedData(data, 'data.data')
         this.interestRateValue = (this.formLabelAlign.interestRate - 0) * 100
       }
     },
@@ -783,7 +785,8 @@ export default {
         console.log(data)
         this.fullscreenLoading = false
         // let getData = Object.assign({}, data.data.data)
-        let getData = data.data.data
+        // let getData = data.data.data
+        let getData = getNestedData(data, 'data.data')
         // let getData = JSON.parse(JSON.stringify(data.data.data))
         // 设置可用币种数组
         this.traderCoinList = getData.idNameDtoList

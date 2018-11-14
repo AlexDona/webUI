@@ -745,7 +745,7 @@ import {
 } from '../../utils/api/OTC'
 import {timeFilter, formatSeconds} from '../../utils'
 import IconFontCommon from '../Common/IconFontCommon'
-import {returnAjaxMsg} from '../../utils/commonFunc'
+import {returnAjaxMsg, getNestedData} from '../../utils/commonFunc'
 import {mapState} from 'vuex'
 export default {
   components: {
@@ -888,7 +888,8 @@ export default {
       } else {
         // 返回数据正确的逻辑
         this.loading = false
-        let detailsData = data.data.data
+        // let detailsData = data.data.data
+        let detailsData = getNestedData(data, 'data.data')
         this.tradingOrderList = detailsData.list
         // console.log('交易中订单')
         // console.log(this.tradingOrderList)

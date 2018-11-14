@@ -217,7 +217,7 @@
 <script>
 import IconFontCommon from '../../components/Common/IconFontCommon'
 import {businessApply, firstEnterBusinessApply, argumentBusinessApply} from '../../utils/api/OTC'
-import {returnAjaxMsg} from '../../utils/commonFunc'
+import {returnAjaxMsg, getNestedData} from '../../utils/commonFunc'
 import {mapState} from 'vuex'
 export default {
   components: {
@@ -295,12 +295,14 @@ export default {
       } else {
         // 返回数据正确的逻辑
         this.fullscreenLoading = false
-        if (data.data.meta.success == true) {
+        // let detailMeta = data.data.meta
+        let detailMeta = getNestedData(data, 'data.meta')
+        if (detailMeta.success == true) {
           this.applyStatus = 2
           this.statusBlack = 'successOrApplying' // 当为申请中和申请成功的页面时候，只有黑色主题颜色
         } else {
           // 如果失败提示返回的数据
-          this.$message({showClose: true, message: data.data.meta.message})
+          this.$message({showClose: true, message: detailMeta.message})
           this.applyStatus = 1
         }
       }
@@ -324,7 +326,8 @@ export default {
         return false
       } else {
         this.fullscreenLoading = false
-        let getData = data.data.data
+        // let getData = data.data.data
+        let getData = getNestedData(data, 'data.data')
         // 返回数据正确的逻辑
         this.successTimes = getData.successTimes
         this.coinName = getData.coinName
@@ -356,7 +359,9 @@ export default {
         return false
       } else {
         // 返回数据地逻辑
-        data.data.data.forEach(item => {
+        // let resArr = data.data.data
+        let resArr = getNestedData(data, 'data.data')
+        resArr.forEach(item => {
           if (item.keyword === 'OTC' + this.$t('M.comm_agreement')) {
             this.argumentContent = item.content
             console.log(item)

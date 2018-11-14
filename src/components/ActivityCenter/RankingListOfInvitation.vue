@@ -120,7 +120,7 @@ import {
   phoneNumberFormat
 } from '../../utils'
 import {getRankingList} from '../../utils/api/activityCenter'
-import {returnAjaxMsg} from '../../utils/commonFunc'
+import {returnAjaxMsg, getNestedData} from '../../utils/commonFunc'
 
 export default {
   components: {},
@@ -184,7 +184,8 @@ export default {
         return false
       } else {
         console.log(data)
-        this.rankingList = data.data.data
+        // this.rankingList = data.data.data
+        this.rankingList = getNestedData(data, 'data.data')
       }
     },
     // 获取当前时间

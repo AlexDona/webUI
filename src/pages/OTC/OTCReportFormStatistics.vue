@@ -486,7 +486,7 @@ import {
 import IconFontCommon from '../../components/Common/IconFontCommon'
 import {timeFilter} from '../../utils'
 import {createNamespacedHelpers, mapState} from 'vuex'
-import {returnAjaxMsg} from '../../utils/commonFunc'
+import {returnAjaxMsg, getNestedData} from '../../utils/commonFunc'
 const {mapMutations} = createNamespacedHelpers('OTC')
 export default {
   components: {
@@ -569,7 +569,8 @@ export default {
         return false
       } else {
         // 返回数据正确的逻辑
-        this.traderCoinList = data.data.data
+        // this.traderCoinList = data.data.data
+        this.traderCoinList = getNestedData(data, 'data.data')
         // 设置币种默认选中值
         this.activitedTraderCoinId = this.traderCoinList[0].coinId
         // 设置币种默认选中值的名称
@@ -607,7 +608,8 @@ export default {
         return false
       } else {
         // 返回数据正确的逻辑 将币种列表赋值
-        this.traderCurrencyCoinsList = data.data.data
+        // this.traderCurrencyCoinsList = data.data.data
+        this.traderCurrencyCoinsList = getNestedData(data, 'data.data')
         // 设置法币默认选中值
         this.activitedtraderCurrencyCoinsId = this.traderCurrencyCoinsList[0].id
         // 设置法币默认选中值的name
@@ -692,7 +694,8 @@ export default {
         return false
       } else {
         this.formStatisticsLoading = false
-        let getData = data.data.data
+        // let getData = data.data.data
+        let getData = getNestedData(data, 'data.data')
         // 返回数据正确的逻辑
         // 法币总资产
         this.totalAssets = getData.totalAssets
@@ -744,9 +747,11 @@ export default {
       } else {
         // 返回数据正确的逻辑 重新渲染列表
         this.orderDetailsLoading = false
-        this.orderInfoList = data.data.data.list
+        // let ordersRevocationData = data.data.data
+        let ordersRevocationData = getNestedData(data, 'data.data')
+        this.orderInfoList = ordersRevocationData.list
         // 分页
-        this.totalPages = data.data.data.pages - 0
+        this.totalPages = ordersRevocationData.pages - 0
       }
     }
   },
