@@ -727,7 +727,7 @@ import {
   withdrawalInformation,
   queryTransactionInformation,
   inquireWithdrawalAddressId,
-  checkCurrencyAddress,
+  checkCurrencyAddress
 } from '../../../utils/api/personal'
 import {
   returnAjaxMsg,

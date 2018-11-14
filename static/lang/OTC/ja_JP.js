@@ -261,7 +261,7 @@ export const OTC = {
   // ############報告シート統計##############
   'otc_formStatistics': '報告書',
   'otc_formStatistics_asset': 'アセット配置',
-  'otc_formStatistics_date': '同じ日',
+  'otc_formStatistics_date': '当日',
   'otc_formStatistics_average': '平均価格',
   'otc_formStatistics_amount_paid': '支出額',
   'otc_formStatistics_income_money': '収入額',

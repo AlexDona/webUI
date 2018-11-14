@@ -5,7 +5,7 @@ export const common = {
   'comm_all-plate': 'すべて',
   'comm_trade_center': '通貨取引',
   'comm_otc_center': 'OTC取引',
-  'comm_finance_center': '預金所得',
+  'comm_finance_center': 'デポジット収益',
   'comm_activity_center': '活動センター',
   'comm_convert_currency': '変換貨幣',
   'comm_set': '設定',
@@ -141,7 +141,7 @@ export const common = {
   'comm_success': '成功',
   'comm_stock': '次', // 取引回数の意味です。
   'comm_business_application': '商家申請',
-  'comm_invitation_list': '招待ランキング',
+  'comm_invitation_list': 'インビテイション ランキング',
   'comm_please': 'してください',
   'comm_bill': 'アカウント',
   'comm_house': '世帯',

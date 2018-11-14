@@ -10,6 +10,6 @@ export const home = {
   'home_market_field_search': '検索エリア',
   'home_market_district': 'お気に入り',
   // #####################导航######################''ナビゲーション'
-  'investment_look_all': 'すべて見る',
+  'investment_look_all': '全部見る',
   'investment_return_investment': '戻る'
 }

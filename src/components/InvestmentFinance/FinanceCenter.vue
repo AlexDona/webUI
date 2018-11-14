@@ -71,7 +71,7 @@
           <div class="left-body">
             <label for="">
               <!-- 存币类型 -->
-              <span class="label-title">{{$t('M.finance_invest')}}{{$t('M.comm_type')}}:&nbsp;</span>
+              <span class="label-title">{{$t('M.finance_invest_style')}}:&nbsp;</span>
               <el-select
                 :placeholder="$t('M.comm_please_choose')"
                 :no-data-text="$t('M.comm_no_data')"
@@ -96,7 +96,7 @@
                 <!-- 请输入数量 -->
                 <input
                   v-model="investMounte"
-                  :placeholder="$t('M.otc_publishAD_pleaseInput') + $t('M.comm_count')"
+                  :placeholder="$t('M.finance_input_sum')"
                   @keyup="changeInvestMounte"
                   onkeyup="if(this.value.length==1){this.value=this.value.replace(/[^1-9]/g,'')}else{this.value=this.value.replace(/\D/g,'')}"
                   onafterpaste="if(this.value.length==1){this.value=this.value.replace(/[^1-9]/g,'')}else{this.value=this.value.replace(/\D/g,'')}"
@@ -118,7 +118,7 @@
                  @click="getInvestEarnings"
                 >
                 <!-- 立刻存币 -->
-                {{$t('M.finance_mast')}}{{$t('M.finance_invest')}}
+                {{$t('M.finance_at_once_save')}}
                 </el-button>
               </div>
             </label>
@@ -253,7 +253,7 @@
               <div class="right-infor">
                 <!-- 存币估值 -->
               <div>
-                {{$t('M.finance_invest')}}{{$t('M.finance_estimatedValue')}}
+                {{$t('M.finance_invest_estimatedValue')}}
                 <p class="green">
                   <span>{{isLogin ? InvestmentValue : '--'}}</span>
                   USDT
@@ -295,7 +295,7 @@
           >
             <!-- 5.1 存币记录 -->
             <el-tab-pane
-              :label="$t('M.finance_invest') + $t('M.finance_recode')"
+              :label="$t('M.finance_save_coin_record')"
               name="1"
             >
              <!-- @您还没有登陆,请登录或者注册之后查看！ -->
@@ -329,7 +329,7 @@
                 <!-- 任增加存币类型国际化 -->
                 <!-- :prop="language === 'zh_CN' || language === 'zh_TW'? typeDescription : typeEnglishDescription" -->
                 <el-table-column
-                  :label="$t('M.finance_invest') + $t('M.otc_cancelOrder_type')"
+                  :label="$t('M.finance_invest_style')"
                 >
                   <template slot-scope="s">
                     <div v-if="language === 'zh_CN' || language === 'zh_TW'">{{s.row.typeDescription}}</div>
@@ -345,14 +345,14 @@
                 <!-- 预计收益 -->
                 <el-table-column
                   prop="expectedEarning"
-                  :label="$t('M.finance_predict') + $t('M.finance_earnings')"
+                  :label="$t('M.finance_predict_earnings')"
                 >
                 </el-table-column>
                 <!-- 预计发放时间 -->
                 <el-table-column
                   prop="expectedTime"
                   width="135"
-                  :label="$t('M.finance_predict') + $t('M.finance_releaseTime')"
+                  :label="$t('M.finance_predict_send_time')"
                 >
                 </el-table-column>
                 <!-- 已发放收益-->
@@ -439,7 +439,7 @@
             </el-tab-pane>
             <!-- 5.2 收益记录 -->
             <el-tab-pane
-              :label="$t('M.finance_earnings') + $t('M.finance_recode')"
+              :label="$t('M.finance_get_money_record')"
               name="2"
             >
              <!-- @您还没有登陆,请登录或者注册之后查看！ -->
@@ -1146,7 +1146,7 @@ export default {
     }
     .invest{
       font-size: 22px;
-      width: 150px;
+      width: 160px;
       color: #fff;
       padding:14px 0px 14px 26px;
       background:linear-gradient(90deg,rgba(34,80,135,1),transparent);
