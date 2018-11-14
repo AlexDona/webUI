@@ -50,6 +50,10 @@
 </template>
 <!--请严格按照如下书写书序-->
 <script>
+import {
+  getAppDownLoadUrlAjax
+} from '../utils/api/user'
+import {returnAjaxMsg} from '../utils/commonFunc'
 import {mapState, createNamespacedHelpers} from 'vuex'
 const {mapMutations} = createNamespacedHelpers('common')
 
@@ -66,6 +70,7 @@ export default {
   },
   created () {
     // getFooterInfo(this.language, this)
+    this.getAppDownLoadUrl()
   },
   mounted () {
   },
@@ -76,6 +81,13 @@ export default {
     ...mapMutations([
       'SET_FOOTER_INFO'
     ]),
+    // 获取app下载地址
+    async getAppDownLoadUrl () {
+      const data = await getAppDownLoadUrlAjax()
+      if (!returnAjaxMsg(data, this)) {
+        console.log(data)
+      }
+    },
     downloadApp () {
       let u = navigator.userAgent
       let isAndroid = u.indexOf('Android') > -1 || u.indexOf('Adr') > -1 // android终端
