@@ -432,7 +432,7 @@
 <!--请严格按照如下书写书序-->
 <script>
 import IconFontCommon from '../../Common/IconFontCommon'
-import {returnAjaxMessage} from '../../../utils/commonFunc'
+import {returnAjaxMsg} from '../../../utils/commonFunc'
 import {
   accountPaymentTerm,
   openAndCloseModeSetting,
@@ -737,7 +737,7 @@ export default {
         background: 'rgba(0, 0, 0, 0.7)'
       })
       data = await openAndCloseModeSetting(params)
-      if (!(returnAjaxMessage(data, this, 0))) {
+      if (!(returnAjaxMsg(data, this, 0))) {
         // 接口失败清除loading
         this.loadingCircle.close()
         return false
@@ -755,7 +755,7 @@ export default {
       // 整页loading
       this.fullscreenLoading = true
       let data = await accountPaymentTerm()
-      if (!(returnAjaxMessage(data, this, 0))) {
+      if (!(returnAjaxMsg(data, this, 0))) {
         // 接口失败清除loading
         this.fullscreenLoading = false
         return false
@@ -775,7 +775,7 @@ export default {
         token: this.userInfo.token
       })
       console.log(data)
-      if (!(returnAjaxMessage(data, this, 0))) {
+      if (!(returnAjaxMsg(data, this, 0))) {
         return false
       } else {
         this.$store.commit('user/SET_STEP1_INFO', data.data.data)

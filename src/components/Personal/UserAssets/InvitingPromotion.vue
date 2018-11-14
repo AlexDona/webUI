@@ -311,7 +311,7 @@ import {
   currencyTransform
 } from '../../../utils/api/personal'
 import {domain} from '../../../utils/env'
-import {returnAjaxMessage} from '../../../utils/commonFunc'
+import {returnAjaxMsg} from '../../../utils/commonFunc'
 import {timeFilter} from '../../../utils/index'
 Vue.use(VueClipboard)
 export default {
@@ -387,7 +387,7 @@ export default {
       }
       const data = await currencyTransform(params)
       console.log(2)
-      if (!returnAjaxMessage(data, this)) {
+      if (!returnAjaxMsg(data, this)) {
         console.log(3)
         return false
       } else {
@@ -419,7 +419,7 @@ export default {
         pageSize: this.pageSize // 页码
       })
       console.log(data)
-      if (!(returnAjaxMessage(data, this, 0))) {
+      if (!(returnAjaxMsg(data, this, 0))) {
         // 接口失败清除局部loading
         this.loading = false
         return false
@@ -449,7 +449,7 @@ export default {
         pageSize: this.pageSize // 条数
       })
       console.log(data)
-      if (!returnAjaxMessage(data, this)) {
+      if (!returnAjaxMsg(data, this)) {
         // 接口失败清除局部loading
         this.loading = false
         return false

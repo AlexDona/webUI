@@ -280,7 +280,7 @@ import IconFontCommon from '../Common/IconFontCommon'
 import {mapState} from 'vuex'
 import {timeFilter} from '../../utils'
 import {getFinancialManagement, cancleInvestment} from '../../utils/api/OTC'
-import {returnAjaxMessage} from '../../utils/commonFunc'
+import {returnAjaxMsg} from '../../utils/commonFunc'
 export default {
   components: {
     FinanceBrokenLine,
@@ -371,7 +371,7 @@ export default {
       })
       console.log('存币理财页面查询')
       console.log(data)
-      if (!(returnAjaxMessage(data, this, 0))) {
+      if (!(returnAjaxMsg(data, this, 0))) {
         this.loading = false
         return false
       } else {
@@ -403,7 +403,7 @@ export default {
       const data = await cancleInvestment(id)
       console.log('用户取消按钮')
       console.log(data)
-      if (!(returnAjaxMessage(data, this, 0))) {
+      if (!(returnAjaxMsg(data, this, 0))) {
         return false
       } else {
         // 重新请求币种接口刷新列表 把当前页码传过去

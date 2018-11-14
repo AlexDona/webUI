@@ -37,7 +37,7 @@
 <script>
 import {
   // getFooterInfo,
-  returnAjaxMessage
+  returnAjaxMsg
 } from '../utils/commonFunc'
 import {
   findUserInfoByShowId
@@ -90,7 +90,7 @@ export default {
         showId: this.$route.query.showId
       }
       const data = await findUserInfoByShowId(params)
-      if (!returnAjaxMessage(data, this)) {
+      if (!returnAjaxMsg(data, this)) {
         return false
       } else {
         console.log(data)

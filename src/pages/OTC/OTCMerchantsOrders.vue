@@ -341,7 +341,7 @@ import {
   getMerchantAvailablelegalTender,
   getOTCMerchantsOrdersList
 } from '../../utils/api/OTC'
-import {returnAjaxMessage} from '../../utils/commonFunc'
+import {returnAjaxMsg} from '../../utils/commonFunc'
 import {mapState} from 'vuex'
 export default {
   components: {
@@ -443,7 +443,7 @@ export default {
       })
       console.log('可用币种列表')
       console.log(data)
-      if (!(returnAjaxMessage(data, this, 0))) {
+      if (!(returnAjaxMsg(data, this, 0))) {
         return false
       } else {
         // 返回数据正确的逻辑
@@ -456,7 +456,7 @@ export default {
       })
       console.log('可用法币')
       console.log(data)
-      if (!(returnAjaxMessage(data, this, 0))) {
+      if (!(returnAjaxMsg(data, this, 0))) {
         return false
       } else {
         // 返回数据正确的逻辑
@@ -550,7 +550,7 @@ export default {
       // 提示信息
       console.log('商家订单列表')
       console.log(data)
-      if (!(returnAjaxMessage(data, this, 0))) {
+      if (!(returnAjaxMsg(data, this, 0))) {
         this.loading = false
         return false
       } else {

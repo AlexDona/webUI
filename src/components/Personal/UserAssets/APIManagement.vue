@@ -438,7 +438,7 @@ import {
   deleteUserInformation
 } from '../../../utils/api/personal'
 import {
-  returnAjaxMessage,
+  returnAjaxMsg,
   sendPhoneOrEmailCodeAjax,
   getSecurityCenter
 } from '../../../utils/commonFunc'
@@ -509,7 +509,7 @@ export default {
       let data = await multipleUserAPIInfo({})
       console.log('获取多个用户api信息')
       console.log(data)
-      if (!(returnAjaxMessage(data, this, 0))) {
+      if (!(returnAjaxMsg(data, this, 0))) {
         // 接口失败清除局部loading
         this.loading = false
         return false
@@ -611,7 +611,7 @@ export default {
       // 整页loading
       this.fullscreenLoading = true
       console.log(data)
-      if (!(returnAjaxMessage(data, this, 0))) {
+      if (!(returnAjaxMsg(data, this, 0))) {
         // 接口失败清除loading
         this.fullscreenLoading = false
         return false
@@ -644,7 +644,7 @@ export default {
       // 整页loading
       this.fullscreenLoading = true
       console.log(data)
-      if (!(returnAjaxMessage(data, this, 1))) {
+      if (!(returnAjaxMsg(data, this, 1))) {
         // 接口失败清除loading
         this.fullscreenLoading = false
         return false
@@ -717,7 +717,7 @@ export default {
         // 整页loading
         this.fullscreenLoading = true
         console.log(data)
-        if (!(returnAjaxMessage(data, this, 1))) {
+        if (!(returnAjaxMsg(data, this, 1))) {
           // 接口失败清除loading
           this.fullscreenLoading = false
           return false
@@ -758,7 +758,7 @@ export default {
       // 整页loading
       this.fullscreenLoading = true
       console.log(data)
-      if (!(returnAjaxMessage(data, this, 0))) {
+      if (!(returnAjaxMsg(data, this, 0))) {
         // 接口失败清除loading
         this.fullscreenLoading = false
         return false

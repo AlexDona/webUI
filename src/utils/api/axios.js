@@ -35,6 +35,9 @@ util.ajax.interceptors.request.use((config) => {
 
 util.ajax.interceptors.response.use(
   response => {
+    if (!response.data) {
+      response.data = {}
+    }
     const success = response.data.meta.success
     if (!success) {
       failureCount++

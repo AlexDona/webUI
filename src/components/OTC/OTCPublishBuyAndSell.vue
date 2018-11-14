@@ -414,7 +414,7 @@ import {
   addOTCPutUpOrders,
   getOTCCoinInfo
 } from '../../utils/api/OTC'
-import {returnAjaxMessage} from '../../utils/commonFunc'
+import {returnAjaxMsg} from '../../utils/commonFunc'
 import {createNamespacedHelpers, mapState} from 'vuex'
 import {
   timeFilter,
@@ -542,7 +542,7 @@ export default {
       console.log('币种详情')
       console.log(data)
       // 提示信息
-      if (!(returnAjaxMessage(data, this, 0))) {
+      if (!(returnAjaxMsg(data, this, 0))) {
         this.fullscreenLoading = false
         return false
       } else {
@@ -893,7 +893,7 @@ export default {
       const data = await addOTCPutUpOrders(param)
       console.log(data)
       // 提示信息
-      if (!(returnAjaxMessage(data, this, 1))) {
+      if (!(returnAjaxMsg(data, this, 1))) {
         this.fullscreenLoading = false
         return false
       } else {

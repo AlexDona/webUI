@@ -250,7 +250,7 @@ import {
   statusRushedToRecordList,
   getMerchantCurrencyList
 } from '../../../utils/api/personal'
-import {returnAjaxMessage} from '../../../utils/commonFunc'
+import {returnAjaxMsg} from '../../../utils/commonFunc'
 export default {
   components: {},
   // props,
@@ -367,7 +367,7 @@ export default {
       let param = {
       }
       data = await getMerchantCurrencyList(param)
-      if (!(returnAjaxMessage(data, this, 0))) {
+      if (!(returnAjaxMsg(data, this, 0))) {
         return false
       } else {
         this.currencyList = data.data.data
@@ -394,7 +394,7 @@ export default {
         startTime: this.startTime, // 开始起止时间
         endTime: this.endTime // 结束起止时间
       })
-      if (!(returnAjaxMessage(data, this, 0))) {
+      if (!(returnAjaxMsg(data, this, 0))) {
         // 接口失败清除loading
         this.loading = false
         return false

@@ -213,7 +213,7 @@ import {
   currencyTransform
 } from '../../../utils/api/personal'
 import {
-  returnAjaxMessage
+  returnAjaxMsg
 } from '../../../utils/commonFunc'
 // 字体图标
 import IconFontCommon from '../../Common/IconFontCommon'
@@ -254,7 +254,7 @@ export default {
       }
       const data = await currencyTransform(params)
       console.log(2)
-      if (!returnAjaxMessage(data, this)) {
+      if (!returnAjaxMsg(data, this)) {
         console.log(3)
         return false
       } else {
@@ -279,7 +279,7 @@ export default {
           break
       }
       data = await assetCurrenciesList(params)
-      if (!(returnAjaxMessage(data, this, 0))) {
+      if (!(returnAjaxMsg(data, this, 0))) {
         return false
       } else {
         // 返回数据
@@ -295,7 +295,7 @@ export default {
         token: this.userInfo.token
       })
       console.log(data)
-      if (!(returnAjaxMessage(data, this, 0))) {
+      if (!(returnAjaxMsg(data, this, 0))) {
         return false
       } else {
         // 返回列表数据

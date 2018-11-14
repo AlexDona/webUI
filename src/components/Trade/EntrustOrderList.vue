@@ -276,8 +276,9 @@ import {
   getHistoryEntrust
 } from '../../utils/api/trade'
 import {
-  returnAjaxMessage,
-  repealMyEntrustCommon
+  returnAjaxMsg,
+  repealMyEntrustCommon,
+  getNestedData
 } from '../../utils/commonFunc'
 import { createNamespacedHelpers, mapState } from 'vuex'
 const { mapMutations } = createNamespacedHelpers('trade')
@@ -386,11 +387,11 @@ export default {
         tradeId: this.middleTopData.partnerTradeId
       }
       const data = await getHistoryEntrust(params)
-      if (!returnAjaxMessage(data, this, 0)) {
+      if (!returnAjaxMsg(data, this)) {
         return false
       } else {
-        this.historyEntrustList = data.data.data.list || []
-        this.totalPageForHistoryEntrust = data.data.data.pages - 0
+        this.historyEntrustList = getNestedData(data, 'data.data.list') || []
+        this.totalPageForHistoryEntrust = getNestedData(data, 'data.data.pages') - 0
         console.log('获取我的历史委托')
         console.log(this.historyEntrustList)
       }
@@ -404,13 +405,13 @@ export default {
         tradeId: this.middleTopData.partnerTradeId
       }
       const data = await getMyEntrust(params)
-      if (!returnAjaxMessage(data, this, 0)) {
+      if (!returnAjaxMsg(data, this)) {
         return false
       } else {
-        this.currentEntrustList = data.data.data.list || []
+        this.currentEntrustList = getNestedData(data, 'data.data.list') || []
         console.log('获取我的当前委单')
         console.log(this.currentEntrustList)
-        this.totalPageForMyEntrust = data.data.data.pages - 0
+        this.totalPageForMyEntrust = getNestedData(data, 'data.data.pages') - 0
       }
     }
   },

@@ -149,7 +149,7 @@ import IconFontCommon from '../../Common/IconFontCommon'
 import ErrorBox from '../../User/ErrorBox'
 import CountDownButton from '../../Common/CountDownCommon'
 import {
-  returnAjaxMessage, // 接口返回信息
+  returnAjaxMsg, // 接口返回信息
   validateNumForUserInput,
   getAccountPaymentTerm
 } from '../../../utils/commonFunc'
@@ -243,7 +243,7 @@ export default {
         // 整页loading
         this.fullscreenLoading = true
         data = await statusCardSettings(params)
-        if (!(returnAjaxMessage(data, this, 1))) {
+        if (!(returnAjaxMsg(data, this, 1))) {
           // 接口失败清除loading
           this.fullscreenLoading = false
           return false
@@ -333,7 +333,7 @@ export default {
       // 整页loading
       this.fullscreenLoading = true
       data = await modificationAccountPaymentTerm(params)
-      if (!(returnAjaxMessage(data, this, 0))) {
+      if (!(returnAjaxMsg(data, this, 0))) {
         // 接口失败清除loading
         this.fullscreenLoading = false
         return false

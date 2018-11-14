@@ -37,7 +37,10 @@
 <script>
 import IconFont from '../Common/IconFontCommon'
 import {getAllNewsNoticeListForHomePage} from '../../utils/api/home'
-import {returnAjaxMessage} from '../../utils/commonFunc'
+import {
+  returnAjaxMsg,
+  getNestedData
+} from '../../utils/commonFunc'
 import {createNamespacedHelpers, mapState} from 'vuex'
 const {mapMutations} = createNamespacedHelpers('footerInfo')
 
@@ -98,10 +101,10 @@ export default {
         language: this.language
       }
       const data = await getAllNewsNoticeListForHomePage(params)
-      if (!returnAjaxMessage(data, this)) {
+      if (!returnAjaxMsg(data, this)) {
         return false
       } else {
-        this.noticeList = data.data.data
+        this.noticeList = getNestedData(data, 'data.data')
       }
     },
     // 关闭组件

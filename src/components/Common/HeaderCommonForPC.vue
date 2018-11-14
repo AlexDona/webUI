@@ -343,7 +343,7 @@ import {getMerchantAvailablelegalTender} from '../../utils/api/OTC'
 import {userLoginOut} from '../../utils/api/user'
 import IconFontCommon from '../Common/IconFontCommon'
 import {
-  returnAjaxMessage,
+  returnAjaxMsg,
   getCountryListAjax,
   reflashUserInfo,
   getTransitionCurrencyRate,
@@ -516,7 +516,7 @@ export default{
     // 用户登出
     async userLoginOut () {
       const data = await userLoginOut()
-      if (!returnAjaxMessage(data, this)) {
+      if (!returnAjaxMsg(data, this)) {
         return false
       } else {
         this.$store.commit('user/USER_LOGOUT')

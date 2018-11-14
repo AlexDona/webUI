@@ -131,7 +131,7 @@ import {
   querySelectedOrdersRevocation
 } from '../../../utils/api/personal'
 import {
-  returnAjaxMessage,
+  returnAjaxMsg,
   changeCurrentPageForLegalTrader
 } from '../../../utils/commonFunc'
 import {createNamespacedHelpers, mapState} from 'vuex'
@@ -192,7 +192,7 @@ export default {
         entrustId: id
       })
       // 提示信息
-      if (!(returnAjaxMessage(data, this, 1))) {
+      if (!(returnAjaxMsg(data, this, 1))) {
         return false
       } else {
         // 返回数据正确的逻辑

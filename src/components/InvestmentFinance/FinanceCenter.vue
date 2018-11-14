@@ -525,7 +525,7 @@ import {
   getFinancialRecord
 } from '../../utils/api/OTC'
 import {getPushTotalByCoinId} from '../../utils/api/personal'
-import {returnAjaxMessage} from '../../utils/commonFunc'
+import {returnAjaxMsg} from '../../utils/commonFunc'
 import {createNamespacedHelpers, mapState} from 'vuex'
 const {mapMutations} = createNamespacedHelpers('finance')
 export default {
@@ -683,7 +683,7 @@ export default {
       })
       console.log('获取币种总资产')
       console.log(data)
-      if (!(returnAjaxMessage(data, this, 0))) {
+      if (!(returnAjaxMsg(data, this, 0))) {
         return false
       } else {
         // 重新掉一次币种接口刷新列表
@@ -734,7 +734,7 @@ export default {
       })
       console.log('存币理财类型')
       console.log(data)
-      if (!(returnAjaxMessage(data, this, 0))) {
+      if (!(returnAjaxMsg(data, this, 0))) {
         return false
       } else {
         this.formLabelAlign = data.data.data
@@ -749,7 +749,7 @@ export default {
       })
       console.log('存币理财类型')
       console.log(data)
-      if (!(returnAjaxMessage(data, this, 0))) {
+      if (!(returnAjaxMsg(data, this, 0))) {
         return false
       } else {
         // 重新调一次币种接口刷新列表
@@ -776,7 +776,7 @@ export default {
       })
       console.log('存币理财页面查询')
       console.log(data)
-      if (!(returnAjaxMessage(data, this, 0))) {
+      if (!(returnAjaxMsg(data, this, 0))) {
         this.fullscreenLoading = false
         return false
       } else {
@@ -846,7 +846,7 @@ export default {
       const data = await cancleInvestment(id)
       console.log('用户取消按钮')
       console.log(data)
-      if (!(returnAjaxMessage(data, this, 1))) {
+      if (!(returnAjaxMsg(data, this, 1))) {
         return false
       } else {
         // 重新请求币种接口刷新列表

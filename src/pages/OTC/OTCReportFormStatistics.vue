@@ -486,7 +486,7 @@ import {
 import IconFontCommon from '../../components/Common/IconFontCommon'
 import {timeFilter} from '../../utils'
 import {createNamespacedHelpers, mapState} from 'vuex'
-import {returnAjaxMessage} from '../../utils/commonFunc'
+import {returnAjaxMsg} from '../../utils/commonFunc'
 const {mapMutations} = createNamespacedHelpers('OTC')
 export default {
   components: {
@@ -565,7 +565,7 @@ export default {
       console.log('otc可用币种查询')
       console.log(data)
       // 提示信息
-      if (!(returnAjaxMessage(data, this, 0))) {
+      if (!(returnAjaxMsg(data, this, 0))) {
         return false
       } else {
         // 返回数据正确的逻辑
@@ -603,7 +603,7 @@ export default {
       console.log('查询 可用法币 币种列表')
       console.log(data)
       // 提示信息
-      if (!(returnAjaxMessage(data, this, 0))) {
+      if (!(returnAjaxMsg(data, this, 0))) {
         return false
       } else {
         // 返回数据正确的逻辑 将币种列表赋值
@@ -687,7 +687,7 @@ export default {
       // 提示信息
       console.log('资产信息')
       console.log(data)
-      if (!(returnAjaxMessage(data, this, 0))) {
+      if (!(returnAjaxMsg(data, this, 0))) {
         this.formStatisticsLoading = false
         return false
       } else {
@@ -738,7 +738,7 @@ export default {
       // 提示信息
       console.log('报表列表')
       console.log(data)
-      if (!(returnAjaxMessage(data, this, 0))) {
+      if (!(returnAjaxMsg(data, this, 0))) {
         this.orderDetailsLoading = false
         return false
       } else {

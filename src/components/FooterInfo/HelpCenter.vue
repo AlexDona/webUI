@@ -80,7 +80,7 @@
 import IconFont from '../Common/IconFontCommon'
 import {mapState} from 'vuex'
 import {getServiceProtocoDataAjaxByPageNum} from '../../utils/api/header'
-import {returnAjaxMessage} from '../../utils/commonFunc'
+import {returnAjaxMsg} from '../../utils/commonFunc'
 
 export default {
   components: {
@@ -120,7 +120,7 @@ export default {
         termsTypeIds: 10
       }
       const data = await getServiceProtocoDataAjaxByPageNum(params)
-      if (!returnAjaxMessage(data, this)) {
+      if (!returnAjaxMsg(data, this)) {
         return false
       } else {
         console.log(data)

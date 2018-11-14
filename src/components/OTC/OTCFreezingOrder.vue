@@ -159,7 +159,7 @@
 <script>
 import {timeFilter} from '../../utils'
 import {getOTCFrezzingOrders} from '../../utils/api/OTC'
-import {returnAjaxMessage} from '../../utils/commonFunc'
+import {returnAjaxMsg} from '../../utils/commonFunc'
 import {mapState} from 'vuex'
 export default {
   components: {},
@@ -208,7 +208,7 @@ export default {
       // console.log('冻结中订单')
       // console.log(data)
       // 提示信息
-      if (!(returnAjaxMessage(data, this, 0))) {
+      if (!(returnAjaxMsg(data, this, 0))) {
         this.loading = false
         return false
       } else {

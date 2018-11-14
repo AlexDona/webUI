@@ -327,7 +327,7 @@ import {
 } from '../../utils/api/user'
 import {phoneNumberFormat} from '../../utils'
 import {
-  returnAjaxMessage,
+  returnAjaxMsg,
   sendPhoneOrEmailCodeAjax
 } from '../../utils/commonFunc'
 import {PWD_REG} from '../../utils/regExp'
@@ -430,7 +430,7 @@ export default {
         newPassword: this.newPassword
       }
       const data = await findPasswordStep3(params)
-      if (!returnAjaxMessage(data, this)) {
+      if (!returnAjaxMsg(data, this)) {
         return false
       } else {
         this.activeStepNumber = 4
@@ -471,7 +471,7 @@ export default {
         googleCode: this.googleCode
       }
       const data = await findPasswordStep2(params)
-      if (!returnAjaxMessage(data, this)) {
+      if (!returnAjaxMsg(data, this)) {
         return false
       } else {
         console.log(data)
@@ -506,7 +506,7 @@ export default {
         userName: this.username
       }
       const data = await findPasswordStep1(params)
-      if (!returnAjaxMessage(data, this)) {
+      if (!returnAjaxMsg(data, this)) {
         return false
       } else {
         this.userInfo = data.data.data

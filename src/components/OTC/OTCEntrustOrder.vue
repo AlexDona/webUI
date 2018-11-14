@@ -134,7 +134,7 @@
 <script>
 import {timeFilter} from '../../utils'
 import {getOTCEntrustingOrders, querySelectedOrdersRevocation} from '../../utils/api/OTC'
-import {returnAjaxMessage} from '../../utils/commonFunc'
+import {returnAjaxMsg} from '../../utils/commonFunc'
 import {mapState} from 'vuex'
 export default {
   components: {},
@@ -187,7 +187,7 @@ export default {
       // console.log('委托中订单列表')
       // console.log(data)
       // 提示信息
-      if (!(returnAjaxMessage(data, this, 0))) {
+      if (!(returnAjaxMsg(data, this, 0))) {
         this.loading = false
         return false
       } else {
@@ -215,7 +215,7 @@ export default {
         entrustId: id
       })
       // 提示信息
-      if (!(returnAjaxMessage(data, this, 1))) {
+      if (!(returnAjaxMsg(data, this, 1))) {
         return false
       } else {
         // 返回数据正确的逻辑

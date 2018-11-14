@@ -469,8 +469,9 @@ import {
   getEntrustSelectBox
 } from '../../../utils/api/personal'
 import {
-  returnAjaxMessage,
-  repealMyEntrustCommon
+  returnAjaxMsg,
+  repealMyEntrustCommon,
+  getNestedData
 } from '../../../utils/commonFunc'
 import {
   timeFilter,
@@ -563,7 +564,7 @@ export default {
       }
       this.loading = true
       const data = await getEntrustSelectBox(params)
-      if (!returnAjaxMessage(data, this, 0)) {
+      if (!returnAjaxMsg(data, this)) {
         // 接口失败清除局部loading
         this.loading = false
         return false
@@ -571,7 +572,8 @@ export default {
         // 接口成功清除局部loading
         this.loading = false
         // console.log(data)
-        let detailData = data.data.data
+        // let detailData = data.
+        let detailData = getNestedData(data, 'data.data')
         this.entrustSelectList = detailData.coinList
         this.typeList = detailData.typeList
         this.matchTypeList = detailData.matchTypeList
@@ -649,24 +651,24 @@ export default {
           params.currentPage = this.currentPageForMyEntrust
           data = await getMyEntrust(params)
           console.log(data)
-          if (!returnAjaxMessage(data, this, 0)) {
+          if (!returnAjaxMsg(data, this, 0)) {
             // 接口失败清除局部loading
             this.loading = false
             return false
           } else {
             // 接口成功清除局部loading
             this.loading = false
-            if (data.data.data.list) {
-              this.currentEntrustList = data.data.data.list
-              this.totalPageForMyEntrust = data.data.data.pages - 0
-            }
+            // if (data.data.data.list) {
+            //   this.currentEntrustList = data.data.data.list
+            //   this.totalPageForMyEntrust = data.data.data.pages - 0
+            // }
           }
           break
         case 'history-entrust':
           params.currentPage = this.currentPageForHistoryEntrust
           data1 = await getHistoryEntrust(params)
           console.log(data1)
-          if (!returnAjaxMessage(data1, this, 0)) {
+          if (!returnAjaxMsg(data1, this, 0)) {
             // 接口失败清除局部loading
             this.loading = false
             return false
@@ -683,7 +685,7 @@ export default {
           params.currentPage = this.currentPageMakeDetailEntrust
           data2 = await getMakeDetail(params)
           console.log(data2)
-          if (!returnAjaxMessage(data2, this, 0)) {
+          if (!returnAjaxMsg(data2, this, 0)) {
             // 接口失败清除局部loading
             this.loading = false
             return false

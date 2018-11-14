@@ -460,7 +460,7 @@ import {
 // 引入组件
 import IconFontCommon from '../../components/Common/IconFontCommon'
 // 引入提示信息
-import {returnAjaxMessage} from '../../utils/commonFunc'
+import {returnAjaxMsg} from '../../utils/commonFunc'
 // 引入全局变量和方法
 import {createNamespacedHelpers, mapState} from 'vuex'
 const {mapMutations} = createNamespacedHelpers('OTC')
@@ -584,7 +584,7 @@ export default {
       console.log('挂单详情')
       console.log(data)
       this.fullscreenLoading = true
-      if (!(returnAjaxMessage(data, this, 0))) {
+      if (!(returnAjaxMsg(data, this, 0))) {
         this.fullscreenLoading = false
         return false
       } else {
@@ -618,7 +618,7 @@ export default {
       })
       console.log('币种详情')
       console.log(data)
-      if (!(returnAjaxMessage(data, this, 0))) {
+      if (!(returnAjaxMsg(data, this, 0))) {
         this.fullscreenLoading = false
         return false
       } else {
@@ -767,7 +767,7 @@ export default {
       const data = await addOTCPutUpOrdersMerchantdedicated(param)
       console.log(data)
       // 提示信息
-      if (!(returnAjaxMessage(data, this, 1))) {
+      if (!(returnAjaxMsg(data, this, 1))) {
         this.fullscreenLoading = false
         return false
       } else {

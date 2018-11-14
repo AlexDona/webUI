@@ -95,7 +95,7 @@ import IconFontCommon from '../../Common/IconFontCommon'
 import CountDownButton from '../../Common/CountDownCommon'
 import ErrorBox from '../../User/ErrorBox'
 import {
-  returnAjaxMessage, // 接口返回信息
+  returnAjaxMsg, // 接口返回信息
   validateNumForUserInput, // 用户输入验证
   sendPhoneOrEmailCodeAjax
 } from '../../../utils/commonFunc'
@@ -201,7 +201,7 @@ export default {
           regType: type
         }
         const data = await checkUserExist(params)
-        if (!returnAjaxMessage(data, this, 0)) {
+        if (!returnAjaxMsg(data, this, 0)) {
           this.isEmailExist = true
           return false
         }
@@ -303,7 +303,7 @@ export default {
         // 整页loading
         this.fullscreenLoading = true
         data = await bindEmailAddress(param)
-        if (!(returnAjaxMessage(data, this, 1))) {
+        if (!(returnAjaxMsg(data, this, 1))) {
           // 接口失败清除loading
           this.fullscreenLoading = false
           return false

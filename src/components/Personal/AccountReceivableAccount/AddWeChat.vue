@@ -147,7 +147,7 @@
 import IconFontCommon from '../../Common/IconFontCommon'
 import ErrorBox from '../../User/ErrorBox'
 import {
-  returnAjaxMessage,
+  returnAjaxMsg,
   getAccountPaymentTerm
 } from '../../../utils/commonFunc'
 import {
@@ -286,7 +286,7 @@ export default {
         console.log(this.dialogImageHandUrl1)
         data = await statusCardSettings(param)
         console.log(data)
-        if (!(returnAjaxMessage(data, this, 1))) {
+        if (!(returnAjaxMsg(data, this, 1))) {
           // 接口失败清除loading
           this.fullscreenLoading = false
           return false
@@ -313,7 +313,7 @@ export default {
       // 整页loading
       this.fullscreenLoading = true
       data = await modificationAccountPaymentTerm(params)
-      if (!(returnAjaxMessage(data, this, 0))) {
+      if (!(returnAjaxMsg(data, this, 0))) {
         // 接口失败清除loading
         this.fullscreenLoading = false
         return false

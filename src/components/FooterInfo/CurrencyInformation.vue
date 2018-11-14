@@ -44,7 +44,7 @@ import {
   getCurrencyInfoList,
   getCurrencyDetails
 } from '../../utils/api/header'
-import {returnAjaxMessage} from '../../utils/commonFunc'
+import {returnAjaxMsg} from '../../utils/commonFunc'
 import {mapState} from 'vuex'
 export default {
   components: {},
@@ -88,7 +88,7 @@ export default {
         language: this.language
       })
       console.log(data)
-      if (!returnAjaxMessage(data, this)) {
+      if (!returnAjaxMsg(data, this)) {
         return false
       } else {
         this.currencyList = data.data.data
@@ -109,7 +109,7 @@ export default {
       console.log(this.currencyId)
       if (this.currencyId) {
         const data = await getCurrencyDetails(this.currencyId)
-        if (!(returnAjaxMessage(data, this, 0))) {
+        if (!(returnAjaxMsg(data, this, 0))) {
           return false
         } else {
           this.currencyInfo = data.data.data

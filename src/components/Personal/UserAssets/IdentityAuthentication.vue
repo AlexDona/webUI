@@ -523,7 +523,7 @@ import {
   userRefreshUser
 } from '../../../utils/api/personal'
 import {
-  returnAjaxMessage,
+  returnAjaxMsg,
   reflashUserInfo,
   getCountryListAjax
 } from '../../../utils/commonFunc'
@@ -698,7 +698,7 @@ export default {
       // 整页loading
       this.fullscreenLoading = true
       console.log(data)
-      if (!(returnAjaxMessage(data, this, 0))) {
+      if (!(returnAjaxMsg(data, this, 0))) {
         // 接口失败清除loading
         this.fullscreenLoading = false
         return false
@@ -722,7 +722,7 @@ export default {
       })
       // 整页loading
       this.fullscreenLoading = true
-      if (!(returnAjaxMessage(data, this, 0))) {
+      if (!(returnAjaxMsg(data, this, 0))) {
         // 接口失败清除loading
         this.fullscreenLoading = false
         return false
@@ -793,7 +793,7 @@ export default {
         // 整页loading
         this.fullscreenLoading = true
         data = await submitRealNameAuthentication(param)
-        if (!(returnAjaxMessage(data, this, 1))) {
+        if (!(returnAjaxMsg(data, this, 1))) {
           // 接口失败清除loading
           this.fullscreenLoading = false
           return false
@@ -879,7 +879,7 @@ export default {
       this.fullscreenLoading = true
       data = await submitSeniorCertification(param)
       console.log(data)
-      if (!(returnAjaxMessage(data, this, 1))) {
+      if (!(returnAjaxMsg(data, this, 1))) {
         // 接口失败清除loading
         this.fullscreenLoading = false
         return false

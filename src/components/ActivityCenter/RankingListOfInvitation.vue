@@ -120,7 +120,7 @@ import {
   phoneNumberFormat
 } from '../../utils'
 import {getRankingList} from '../../utils/api/activityCenter'
-import {returnAjaxMessage} from '../../utils/commonFunc'
+import {returnAjaxMsg} from '../../utils/commonFunc'
 
 export default {
   components: {},
@@ -180,7 +180,7 @@ export default {
     // 获取 排行榜数据
     async getRankingList () {
       const data = await getRankingList()
-      if (!returnAjaxMessage(data, this)) {
+      if (!returnAjaxMsg(data, this)) {
         return false
       } else {
         console.log(data)

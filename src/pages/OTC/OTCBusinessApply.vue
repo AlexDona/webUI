@@ -217,7 +217,7 @@
 <script>
 import IconFontCommon from '../../components/Common/IconFontCommon'
 import {businessApply, firstEnterBusinessApply, argumentBusinessApply} from '../../utils/api/OTC'
-import {returnAjaxMessage} from '../../utils/commonFunc'
+import {returnAjaxMsg} from '../../utils/commonFunc'
 import {mapState} from 'vuex'
 export default {
   components: {
@@ -289,7 +289,7 @@ export default {
       this.fullscreenLoading = true
       const data = await businessApply()
       // 提示信息
-      if (!(returnAjaxMessage(data, this))) {
+      if (!(returnAjaxMsg(data, this))) {
         this.fullscreenLoading = false
         return false
       } else {
@@ -317,7 +317,7 @@ export default {
       console.log(' 首次点击商家申请请求数据')
       console.log(data)
       // 提示信息
-      if (!(returnAjaxMessage(data, this, 0))) {
+      if (!(returnAjaxMsg(data, this, 0))) {
         // 刚进页面接口请求错误时候显示申请界面
         this.applyStatus = 1
         this.fullscreenLoading = false
@@ -352,7 +352,7 @@ export default {
       })
       console.log(data.data.data)
       // 提示信息
-      if (!(returnAjaxMessage(data, this, 0))) {
+      if (!(returnAjaxMsg(data, this, 0))) {
         return false
       } else {
         // 返回数据地逻辑

@@ -412,7 +412,7 @@ import CountDownButton from '../../Common/CountDownCommon'
 import {timeFilter, formatNumberInput} from '../../../utils/index'
 import {createNamespacedHelpers, mapState} from 'vuex'
 import {
-  returnAjaxMessage
+  returnAjaxMsg
 } from '../../../utils/commonFunc'
 const {mapMutations} = createNamespacedHelpers('personal')
 export default {
@@ -521,7 +521,7 @@ export default {
       let data = await getPushAssetList({
       })
       console.log(data)
-      if (!(returnAjaxMessage(data, this, 0))) {
+      if (!(returnAjaxMsg(data, this, 0))) {
         // 接口失败清除局部loading
         this.loading = false
         return false
@@ -555,7 +555,7 @@ export default {
         coinId: e // 币种coinId
       }
       data = await getPushTotalByCoinId(param)
-      if (!(returnAjaxMessage(data, this, 0))) {
+      if (!(returnAjaxMsg(data, this, 0))) {
         return false
       } else {
         // 点击资产币种下拉
@@ -654,7 +654,7 @@ export default {
         // 整页loading
         this.fullscreenLoading = true
         data = await pushAssetsSubmit(param)
-        if (!(returnAjaxMessage(data, this, 1))) {
+        if (!(returnAjaxMsg(data, this, 1))) {
           // 接口失败清除loading
           this.fullscreenLoading = false
           return false
@@ -705,7 +705,7 @@ export default {
         id: this.pushUID // 列表id
       }
       data = await revocationPushProperty(param)
-      if (!(returnAjaxMessage(data, this, 0))) {
+      if (!(returnAjaxMsg(data, this, 0))) {
         return false
       } else {
         this.getPushRecordList()
@@ -780,7 +780,7 @@ export default {
           password: this.pushPassword // 用户付款时交易密码
         }
         data = await pushPropertyTransaction(param)
-        if (!(returnAjaxMessage(data, this, 1))) {
+        if (!(returnAjaxMsg(data, this, 1))) {
           return false
         } else {
           this.passwordVisible = false

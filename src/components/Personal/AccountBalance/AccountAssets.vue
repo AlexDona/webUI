@@ -731,7 +731,7 @@ import {
   checkoutNeedTips
 } from '../../../utils/api/personal'
 import {
-  returnAjaxMessage,
+  returnAjaxMsg,
   sendPhoneOrEmailCodeAjax,
   getSecurityCenter
 } from '../../../utils/commonFunc'
@@ -835,7 +835,7 @@ export default {
         coinId
       }
       const data = await checkoutNeedTips(params)
-      if (!returnAjaxMessage(data, this)) {
+      if (!returnAjaxMsg(data, this)) {
         return false
       } else {
         this.isNeedTag = data.data.data
@@ -1124,7 +1124,7 @@ export default {
           break
       }
       data = await assetCurrenciesList(params)
-      if (!(returnAjaxMessage(data, this, 0))) {
+      if (!(returnAjaxMsg(data, this, 0))) {
         // 接口失败清除loading
         this.loading = false
         return false
@@ -1175,7 +1175,7 @@ export default {
       })
       this.fullscreenLoading = true
       console.log(data)
-      if (!(returnAjaxMessage(data, this, 0))) {
+      if (!(returnAjaxMsg(data, this, 0))) {
         // 接口失败清除loading
         this.fullscreenLoading = false
         return false
@@ -1206,7 +1206,7 @@ export default {
       // 整页loading
       this.fullscreenLoading = true
       data = await checkCurrencyAddress(param)
-      if (!(returnAjaxMessage(data, this, 0))) {
+      if (!(returnAjaxMsg(data, this, 0))) {
         // 接口失败清除loading
         this.fullscreenLoading = false
         return false
@@ -1227,7 +1227,7 @@ export default {
       // 整页loading
       this.fullscreenLoading = true
       console.log(data)
-      if (!(returnAjaxMessage(data, this, 0))) {
+      if (!(returnAjaxMsg(data, this, 0))) {
         // 接口失败清除loading
         this.fullscreenLoading = false
         return false
@@ -1251,7 +1251,7 @@ export default {
       // 整页loading
       this.fullscreenLoading = true
       console.log(data)
-      if (!(returnAjaxMessage(data, this, 0))) {
+      if (!(returnAjaxMsg(data, this, 0))) {
         // 接口失败清除loading
         this.fullscreenLoading = false
         return false
@@ -1336,7 +1336,7 @@ export default {
       // 整页loading
       this.fullscreenLoading = true
       data = await statusSubmitWithdrawButton(param)
-      if (!(returnAjaxMessage(data, this, 1))) {
+      if (!(returnAjaxMsg(data, this, 1))) {
         // 接口失败清除loading
         this.fullscreenLoading = false
         return false
@@ -1402,7 +1402,7 @@ export default {
         coinId: this.currencyTradingId // 币种coinId
       })
       console.log(data)
-      if (!(returnAjaxMessage(data, this, 0))) {
+      if (!(returnAjaxMsg(data, this, 0))) {
         return false
       } else {
         // 返回展示

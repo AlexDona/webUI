@@ -103,7 +103,7 @@ import {
   // downloadFile
 } from '../../utils/api/activityCenter'
 import {
-  returnAjaxMessage,
+  returnAjaxMsg,
   getServiceProtocolData
 } from '../../utils/commonFunc'
 import {
@@ -153,7 +153,7 @@ export default {
         key: 'COIN_APPLY'
       }
       const data = await getCurrencyApplicationDownloadUrl(params)
-      if (!returnAjaxMessage(data, this)) {
+      if (!returnAjaxMsg(data, this)) {
         return false
       } else {
         console.log(data)

@@ -169,7 +169,7 @@
 </template>
 <script>
 import {
-  // returnAjaxMessage,
+  // returnAjaxMsg,
   jumpToOtherPageForFooter
 } from '../../utils/commonFunc'
 import Iconfont from '../Common/IconFontCommon'

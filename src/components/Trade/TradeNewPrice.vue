@@ -22,7 +22,7 @@
 <script>
 import {mapState} from 'vuex'
 import IconFontCommon from '../Common/IconFontCommon'
-// import {returnAjaxMessage} from '../../utils/commonFunc'
+// import {returnAjaxMsg} from '../../utils/commonFunc'
 export default {
   components: {
     IconFontCommon

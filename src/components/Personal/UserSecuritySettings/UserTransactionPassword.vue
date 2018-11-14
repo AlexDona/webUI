@@ -236,7 +236,7 @@ import IconFontCommon from '../../Common/IconFontCommon'
 import CountDownButton from '../../Common/CountDownCommon'
 import ErrorBox from '../../User/ErrorBox'
 import {
-  returnAjaxMessage, // 接口返回信息
+  returnAjaxMsg, // 接口返回信息
   sendPhoneOrEmailCodeAjax,
   reflashUserInfo,
   validateNumForUserInput,
@@ -425,7 +425,7 @@ export default {
         // 整页loading
         this.fullscreenLoading = true
         data = await setTransactionPassword(params)
-        if (!(returnAjaxMessage(data, this, 1))) {
+        if (!(returnAjaxMsg(data, this, 1))) {
           // 接口失败清除loading
           this.fullscreenLoading = false
           return false
@@ -541,7 +541,7 @@ export default {
       // 整页loading
       this.fullscreenLoading = true
       data = await securityVerificationOnOff(params)
-      if (!(returnAjaxMessage(data, this, 0))) {
+      if (!(returnAjaxMsg(data, this, 0))) {
         // 接口失败清除loading
         this.fullscreenLoading = false
         return false
@@ -596,7 +596,7 @@ export default {
         // 整页loading
         this.fullscreenLoading = true
         data = await resetUpdatePayPassword(param)
-        if (!(returnAjaxMessage(data, this, 1))) {
+        if (!(returnAjaxMsg(data, this, 1))) {
           // 接口失败清除loading
           this.fullscreenLoading = false
           return false

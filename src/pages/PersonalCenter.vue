@@ -237,7 +237,7 @@ import {
   userRefreshUser
 } from '../utils/api/personal'
 import IconFontCommon from '../components/Common/IconFontCommon'
-import {returnAjaxMessage} from '../utils/commonFunc'
+import {returnAjaxMsg} from '../utils/commonFunc'
 import { createNamespacedHelpers, mapState } from 'vuex'
 const { mapMutations } = createNamespacedHelpers('personal')
 export default {
@@ -332,7 +332,7 @@ export default {
         token: this.token
       })
       console.log(data)
-      if (!(returnAjaxMessage(data, this, 0))) {
+      if (!(returnAjaxMsg(data, this, 0))) {
         return false
       } else {
         this.$store.commit('user/SET_STEP1_INFO', data.data.data)

@@ -155,7 +155,7 @@
 <!--请严格按照如下书写书序-->
 <script>
 import {mapState} from 'vuex'
-// import {returnAjaxMessage} from '../../utils/commonFunc'
+// import {returnAjaxMsg} from '../../utils/commonFunc'
 export default {
   components: {
   },

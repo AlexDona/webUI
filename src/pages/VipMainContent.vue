@@ -627,7 +627,7 @@ import {
   currencyApplicationDownloadUrl
 } from '../utils/api/personal'
 import {
-  returnAjaxMessage,
+  returnAjaxMsg,
   reflashUserInfo,
   getServiceProtocolData
 } from '../utils/commonFunc'
@@ -834,7 +834,7 @@ export default {
         // 整页loading
         this.fullscreenLoading = true
         data = await buyVipPriceInfo(params)
-        if (!(returnAjaxMessage(data, this, 1))) {
+        if (!(returnAjaxMsg(data, this, 1))) {
           // 接口失败清除loading
           this.fullscreenLoading = false
           return false
@@ -858,7 +858,7 @@ export default {
       console.log(data)
       // 整页loading
       this.fullscreenLoading = true
-      if (!(returnAjaxMessage(data, this, 0))) {
+      if (!(returnAjaxMsg(data, this, 0))) {
         // 接口失败清除loading
         this.fullscreenLoading = false
         return false
@@ -879,7 +879,7 @@ export default {
       console.log(data)
       // 整页loading
       this.fullscreenLoading = true
-      if (!(returnAjaxMessage(data, this))) {
+      if (!(returnAjaxMsg(data, this))) {
         // 接口失败清除loading
         this.fullscreenLoading = false
         return false
@@ -901,7 +901,7 @@ export default {
       this.fullscreenLoading = true
       data = await getPushTotalByCoinId(param)
       console.log(data)
-      if (!(returnAjaxMessage(data, this, 0))) {
+      if (!(returnAjaxMsg(data, this, 0))) {
         // 接口失败清除loading
         this.fullscreenLoading = false
         return false

@@ -37,7 +37,8 @@ import {
 //   getCollectionListAjax
 // } from '../../utils/api/home'
 import {
-  returnAjaxMessage
+  returnAjaxMsg,
+  getNestedData
   // getCollectionList
 } from '../../utils/commonFunc'
 import {
@@ -117,27 +118,18 @@ export default {
         KlineStep
       }
       const data = await getKlineDataAjax(params)
-      if (!returnAjaxMessage(data, this)) {
+      if (!returnAjaxMsg(data, this)) {
         return false
       } else {
         console.log(data)
-        let klineData = data.data.data.obj
+        let klineData = getNestedData(data, 'data.data.obj')
         klineData = JSON.parse(unzip(klineData))
         console.log(klineData)
         let list = []
         const ticker = `${this.symbol}-${this.interval}`
         console.log(ticker)
-        // for (let i = klineData.length - 1; i >= 0; i -= 1) {
-        //   list[i].time = klineData[i].time - 0
-        //   list[i].open = klineData[i].open
-        //   list[i].high = klineData[i].high
-        //   list[i].low = klineData[i].low
-        //   list[i].close = klineData[i].close
-        //   list[i].volume = klineData[i].volume
-        // }
         klineData.forEach(function (element) {
           list.push({
-            // time: this.interval !== 'D' || this.interval !== '1D' ? element.id * 1000 : element.id,
             time: element.time - 0,
             open: element.open,
             high: element.high,
@@ -148,9 +140,7 @@ export default {
         })
         this.cacheData[ticker] = list
         // console.log(list);
-        if (list && list.length) {
-          this.lastTime = list[list.length - 1].time
-        }
+        this.lastTime = getNestedData(list[list.length - 1], 'time')
         // this.initKLine(this.symbol)
         // this.onMessage(klineData)
       }
@@ -162,10 +152,10 @@ export default {
       }
       params.tradeName = tradeName
       const data = await getActiveSymbolDataAjax(params)
-      if (!returnAjaxMessage(data, this)) {
+      if (!returnAjaxMsg(data, this)) {
         return false
       } else {
-        let activeSymbolData = data.data.data.obj
+        let activeSymbolData = getNestedData(data, 'data.data.obj')
         activeSymbolData = JSON.parse(unzip(activeSymbolData))
         console.log(activeSymbolData)
         let {
@@ -193,15 +183,6 @@ export default {
           ajaxData: this.ajaxData,
           type: 'ajax'
         })
-        // this.socket.on('open', () => {
-        //   this.getKlineDataBySocket('REQ', this.symbol, 'min')
-        //   this.getKlineDataBySocket('SUB', this.symbol, 'min')
-        //   this.getTradeMarketBySocket('SUB', this.activeTabSymbolStr)
-        //   this.getBuyAndSellBySocket('SUB', this.symbol)
-        //   this.getDepthDataBySocket('SUB', this.symbol)
-        //   this.getTradeRecordBySocket('SUB', this.symbol)
-        //   this.socket.on('message', this.onMessage)
-        // })
       }
     },
     // k线初始化
@@ -224,7 +205,7 @@ export default {
     // 获取初始交易对
     async getDefaultSymbol () {
       const data = await getDefaultSymbol()
-      if (!returnAjaxMessage(data, this)) {
+      if (!returnAjaxMsg(data, this)) {
         return false
       } else {
         const obj = data.data.data
@@ -239,9 +220,7 @@ export default {
         // 是否从其他页面跳转
         this.finalSymbol = this.isJumpToTradeCenter ? this.jumpSymbol : activeSymbol
         this.CHANGE_ACTIVE_SYMBOL({activeSymbol: this.finalSymbol})
-        this.symbol = this.activeSymbol.id
-        // await this.getKlineByAjax(this.symbol, 'min')
-        // console.log(this.symbol)
+        this.symbol = getNestedData(this.activeSymbol, 'id')
         await this.getActiveSymbolData(this.symbol)
       }
     },
@@ -386,76 +365,45 @@ export default {
       console.log(data)
       switch (data.tradeType) {
         case 'KLINE':
-          console.log(data)
-          if (data.data && data.data.length && !data.type) {
-            const list = []
-            const ticker = `${this.symbol}-${this.interval}`
-            data.data.forEach(function (element) {
-              list.push({
-                // time: this.interval !== 'D' || this.interval !== '1D' ? element.id * 1000 : element.id,
-                time: element.time,
-                open: element.open,
-                high: element.high,
-                low: element.low,
-                close: element.close,
-                volume: element.volume
-              })
-            }, this)
-            this.cacheData[ticker] = list
-            this.lastTime = list[list.length - 1].time
-            console.log(this.cacheData)
+          console.log(data.type)
+          // console.log(' >> sub:', data.type)
+          const klineData = data.data[0]
+          console.log(klineData.close)
+          const ticker = `${this.symbol}-${this.interval}`
+          // console.log(this.interval)
+          const barsData = {
+            time: klineData.time,
+            // time: this.lastTime,
+            open: klineData.open,
+            high: klineData.high,
+            low: klineData.low,
+            close: klineData.close,
+            volume: klineData.volume
           }
-          // if (!data.type && data.type.indexOf(this.symbol.toLowerCase()) !== -1) {
-          if (data.type) {
-            // console.log(' >> sub:', data.type)
-            let newData = data.data[0]
-            console.log(newData.close)
-            const ticker = `${this.symbol}-${this.interval}`
-            // console.log(this.interval)
-            const barsData = {
-              time: newData.time,
-              // time: this.lastTime,
-              open: newData.open,
-              high: newData.high,
-              low: newData.low,
-              close: newData.close,
-              volume: newData.volume
-            }
-            // if (barsData.time >= this.lastTime && this.cacheData[ticker] && this.cacheData[ticker].length) {
-            this.cacheData[ticker][this.cacheData[ticker].length - 1] = barsData
-            // }
-            this.datafeeds.barsUpdater.updateData()
-          }
+          this.cacheData[ticker][this.cacheData[ticker].length - 1] = barsData
+          this.datafeeds.barsUpdater.updateData()
           break
         // 买卖单
         case 'DEPTH':
           console.log(data)
-          if (data.data) {
-            let newData = data.data
-            console.log(newData)
-            if (newData.sells && newData.sells.list) {
-              newData.sells.list.reverse()
-              this.socketData.buyAndSellData = newData
-            }
+          const depthData = getNestedData(data, 'data')
+          console.log(depthData)
+          if (depthData.sells && depthData.sells.list) {
+            depthData.sells.list.reverse()
+            this.socketData.buyAndSellData = depthData
           }
           break
         // 深度图
         case 'DEPTHRENDER':
           console.log(data)
-          if (data.data) {
-            this.socketData.depthData = data.data
-          }
+          this.socketData.depthData = getNestedData(data, 'data')
           break
         case 'TRADE':
-          if (data.data) {
-            this.socketData.tardeRecordList = data.data
-          }
+          this.socketData.tardeRecordList = getNestedData(data, 'data')
           break
         case 'TICKER':
           console.log(data)
-          if (data.data) {
-            this.socketData.tradeMarkeContentItem = data.data
-          }
+          this.socketData.tradeMarkeContentItem = getNestedData(data, 'data')
           break
       }
       // console.log(this.socketData)
@@ -543,7 +491,6 @@ export default {
     },
     // 订阅消息
     subscribeSocketData (symbol, interval = 'min') {
-      // this.getKlineDataBySocket('REQ', symbol, interval)
       this.getKlineByAjax(symbol, interval)
       this.getKlineDataBySocket('SUB', symbol, interval)
       this.getTradeMarketBySocket('SUB', this.activeTabSymbolStr)
@@ -580,7 +527,6 @@ export default {
       this.initKLine(this.symbol)
     },
     async activeSymbolId (newVal, oldVal) {
-      // await this.getKlineByAjax(this.symbol, 'min')
       this.initKLine(newVal)
     },
     // 切换tab栏重新订阅

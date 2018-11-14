@@ -682,7 +682,7 @@ import {
   checkUserExist
 } from '../utils/api/user'
 import {
-  returnAjaxMessage, // 接口返回信息
+  returnAjaxMsg, // 接口返回信息
   validateNumForUserInput, // 用户输入验证
   sendPhoneOrEmailCodeAjax,
   jumpToOtherPageForFooter
@@ -921,7 +921,7 @@ export default {
           regType: type
         }
         const data = await checkUserExist(params)
-        if (!returnAjaxMessage(data, this)) {
+        if (!returnAjaxMsg(data, this)) {
           return false
         }
       } else {
@@ -1051,7 +1051,7 @@ export default {
       try {
         const data = await sendRegisterUser(params)
         console.log(data)
-        if (!returnAjaxMessage(data, this, 0)) {
+        if (!returnAjaxMsg(data, this, 0)) {
           this.fullscreenLoading = false // loading
           return false
         } else {

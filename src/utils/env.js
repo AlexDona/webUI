@@ -30,8 +30,6 @@ if (process.env.NODE_ENV == 'development') {
 
   apiCommonUrl = 'http://api.new.bzu.com/' // 内部测试
   // apiCommonUrl = 'http://192.168.1.210:8888' // 内部测试
-
-  // apiCommonUrl = 'http://192.168.1.200:8888/' // 本地测试
   // xDomain = 'me.com'
 
   socketUrl = 'wss://ws.bzu.com/market'

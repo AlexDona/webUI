@@ -191,7 +191,7 @@
 import IconFontCommon from '../../Common/IconFontCommon'
 import ErrorBox from '../../User/ErrorBox'
 import {
-  returnAjaxMessage,
+  returnAjaxMsg,
   validateNumForUserInput, // 用户输入验证
   getSecurityCenter
 } from '../../../utils/commonFunc'
@@ -282,7 +282,7 @@ export default {
       this.fullscreenLoading = true
       data = await bindGoogleAddressPage(param)
       console.log(data)
-      if (!(returnAjaxMessage(data, this, 0))) {
+      if (!(returnAjaxMsg(data, this, 0))) {
         // 接口失败清除loading
         this.fullscreenLoading = false
         return false
@@ -328,7 +328,7 @@ export default {
       // 整页loading
       this.fullscreenLoading = true
       data = await bindGoogleAddress(param)
-      if (!(returnAjaxMessage(data, this, 1))) {
+      if (!(returnAjaxMsg(data, this, 1))) {
         // 接口失败清除loading
         this.fullscreenLoading = false
         return false
@@ -367,7 +367,7 @@ export default {
       // 整页loading
       this.fullscreenLoading = true
       data = await unbindCheckGoogle(param)
-      if (!(returnAjaxMessage(data, this, 1))) {
+      if (!(returnAjaxMsg(data, this, 1))) {
         // 接口失败清除loading
         this.fullscreenLoading = false
         return false

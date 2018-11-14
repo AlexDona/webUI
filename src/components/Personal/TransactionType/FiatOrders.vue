@@ -203,7 +203,7 @@ import {
   getMerchantAvailablelegalTender
 } from '../../../utils/api/OTC'
 import {
-  returnAjaxMessage,
+  returnAjaxMsg,
   getMerchantsOrdersList
 } from '../../../utils/commonFunc'
 const {mapMutations} = createNamespacedHelpers('personal')
@@ -310,7 +310,7 @@ export default {
       })
       console.log('可用币种列表')
       console.log(data)
-      if (!(returnAjaxMessage(data, this, 0))) {
+      if (!(returnAjaxMsg(data, this, 0))) {
         return false
       } else {
         // 返回数据正确的逻辑
@@ -323,7 +323,7 @@ export default {
       })
       console.log('可用法币')
       console.log(data)
-      if (!(returnAjaxMessage(data, this, 0))) {
+      if (!(returnAjaxMsg(data, this, 0))) {
         return false
       } else {
         // 返回数据正确的逻辑
@@ -373,7 +373,7 @@ export default {
       //   // 类型
       //   tradeType: this.activitedMerchantsOrdersTraderStyleList
       // })
-      // if (!(returnAjaxMessage(data, this, 0))) {
+      // if (!(returnAjaxMsg(data, this, 0))) {
       //   return false
       // } else {
       //   // 返回数据正确的逻辑 重新渲染列表
@@ -412,7 +412,7 @@ export default {
       }
       if (activeName == 'ENTRUSTED') {
         const data = await getOTCEntrustingOrders(params)
-        if (!returnAjaxMessage(data, this)) {
+        if (!returnAjaxMsg(data, this)) {
           // 接口失败清除loading
           this.fullscreenLoading = false
           return false
@@ -434,7 +434,7 @@ export default {
         }
       } else {
         getMerchantsOrdersList(params, (data) => {
-          if (!(returnAjaxMessage(data, this, 0))) {
+          if (!(returnAjaxMsg(data, this, 0))) {
             // 接口失败清除loading
             this.fullscreenLoading = false
             return false

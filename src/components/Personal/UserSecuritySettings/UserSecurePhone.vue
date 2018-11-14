@@ -272,7 +272,7 @@ import { createNamespacedHelpers, mapState } from 'vuex'
 import ImageValidate from '../../Common/ImageValidateCommon' // 图片验证吗
 import CountDownButton from '../../Common/CountDownCommon'
 import {
-  returnAjaxMessage, // 接口返回信息
+  returnAjaxMsg, // 接口返回信息
   sendPhoneOrEmailCodeAjax,
   validateNumForUserInput,
   getSecurityCenter
@@ -553,7 +553,7 @@ export default {
         // 整页loading
         this.fullscreenLoading = true
         data = await bindPhoneAddress(param)
-        if (!(returnAjaxMessage(data, this, 1))) {
+        if (!(returnAjaxMsg(data, this, 1))) {
           // 接口失败清除loading
           this.fullscreenLoading = false
           return false
@@ -575,7 +575,7 @@ export default {
         }
         const data = await checkUserExist(params)
         console.log(this.emailBindPhoneCount)
-        if (!returnAjaxMessage(data, this)) {
+        if (!returnAjaxMsg(data, this)) {
           if (isNewPhone) {
             this.newPhoneIsExistStatus = true
           }
@@ -711,7 +711,7 @@ export default {
         // 整页loading
         this.fullscreenLoading = true
         data = await changeMobilePhone(param)
-        if (!(returnAjaxMessage(data, this, 1))) {
+        if (!(returnAjaxMsg(data, this, 1))) {
           // 接口失败清除loading
           this.fullscreenLoading = false
           return false

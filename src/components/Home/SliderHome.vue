@@ -20,7 +20,10 @@
 <script>
 import Slider from 'vue-concise-slider'// 引入slider组件
 import {getBanner} from '../../utils/api/home'
-import {returnAjaxMessage} from '../../utils/commonFunc'
+import {
+  returnAjaxMsg,
+  getNestedData
+} from '../../utils/commonFunc'
 import {mapState, createNamespacedHelpers} from 'vuex'
 const { mapMutations } = createNamespacedHelpers('home')
 export default {
@@ -64,24 +67,24 @@ export default {
         language: this.language
       }
       const data = await getBanner(params)
-      if (!returnAjaxMessage(data, this, 0)) {
+      if (!returnAjaxMsg(data, this, 0)) {
         return false
       } else {
-        console.log(data)
-        this.sliderListAjax = data.data.data
-        console.log(this.sliderListAjax)
+        this.sliderListAjax = getNestedData(data, 'data.data')
         let sliderList = []
         this.pages = sliderList
         this.renderSlider()
       }
     },
     slide (data) {
-      // console.log(data.currentPage)
-      // console.log(this.sliderListAjax[data.currentPage - 1].bigUrl)
-      this.CHANGE_BANNER_BACKGROUND(this.sliderListAjax[data.currentPage - 1].bigUrl)
+      let bigUrl = getNestedData(this.sliderListAjax[data.currentPage - 1], 'bigUrl')
+      console.log(bigUrl)
+      this.CHANGE_BANNER_BACKGROUND(bigUrl)
     },
     renderSlider () {
-      this.CHANGE_BANNER_BACKGROUND(this.sliderListAjax[0].bigUrl)
+      let bigUrl = getNestedData(this.sliderListAjax, '[0].bigUrl')
+      console.log(bigUrl)
+      this.CHANGE_BANNER_BACKGROUND(bigUrl)
       let sliderList = []
       this.sliderListAjax.forEach((item) => {
         let that = this
@@ -112,7 +115,7 @@ export default {
                 'CHANGE_BANNER_BACKGROUND'
               ]),
               mouseOver (e) {
-                const URL = e.target.attributes.background.value
+                const URL = getNestedData(e, 'target.attributes.background.value')
                 this.CHANGE_BANNER_ACTIVE(true)
                 console.log(URL)
                 // this.CHANGE_BANNER_BACKGROUND(URL)

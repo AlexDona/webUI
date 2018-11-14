@@ -126,7 +126,7 @@ import {
   getAllNewsTypeList,
   getNewsDetail
 } from '../../utils/api/home'
-import {returnAjaxMessage} from '../../utils/commonFunc'
+import {returnAjaxMsg} from '../../utils/commonFunc'
 import {mapState} from 'vuex'
 export default {
   components: {},
@@ -199,7 +199,7 @@ export default {
         console.log(params)
         const data = await getNewsNoticeList(params)
         console.log(data)
-        if (!returnAjaxMessage(data, this)) {
+        if (!returnAjaxMsg(data, this)) {
           return false
         } else {
           console.log(data)
@@ -216,7 +216,7 @@ export default {
     // 获取详情信息
     async getDetailInfo (id) {
       const data = await getNewsDetail(id)
-      if (!returnAjaxMessage(data, this)) {
+      if (!returnAjaxMsg(data, this)) {
         return false
       } else {
         this.showNewsList = false
@@ -229,7 +229,7 @@ export default {
       const params = {
       }
       const data = await getAllNewsTypeList(params)
-      if (!returnAjaxMessage(data, this)) {
+      if (!returnAjaxMsg(data, this)) {
         return false
       } else {
         console.log(data)
@@ -246,7 +246,7 @@ export default {
         newsTypeId: this.newsTypeId
       }
       const data = await getNewsNoticeList(params)
-      if (!returnAjaxMessage(data, this)) {
+      if (!returnAjaxMsg(data, this)) {
         return false
       } else {
         console.log(data)

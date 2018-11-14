@@ -24,7 +24,7 @@
 <!--请严格按照如下书写书序-->
 <script>
 import {getAboutUsDataAjax} from '../../utils/api/header'
-import {returnAjaxMessage} from '../../utils/commonFunc'
+import {returnAjaxMsg} from '../../utils/commonFunc'
 import {mapState} from 'vuex'
 export default {
   components: {
@@ -48,7 +48,7 @@ export default {
         language: this.language
       }
       const data = await getAboutUsDataAjax(params)
-      if (!returnAjaxMessage(data, this)) {
+      if (!returnAjaxMsg(data, this)) {
         return false
       } else {
         this.aboutData = data.data.data[0]

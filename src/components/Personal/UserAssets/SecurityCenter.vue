@@ -635,7 +635,7 @@ import {
   enableTheClosing
 } from '../../../utils/api/personal'
 import {
-  returnAjaxMessage,
+  returnAjaxMsg,
   sendPhoneOrEmailCodeAjax,
   getSecurityCenter
 } from '../../../utils/commonFunc'
@@ -1026,7 +1026,7 @@ export default {
           break
       }
       data = await enableTheClosing(params)
-      if (!(returnAjaxMessage(data, this, 1))) {
+      if (!(returnAjaxMsg(data, this, 1))) {
         // 接口失败清除loading
         this.loadingCircle.close()
         return false

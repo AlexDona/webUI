@@ -106,7 +106,7 @@ import IconFontCommon from '../../Common/IconFontCommon'
 import ErrorBox from '../../User/ErrorBox'
 import {modifyLoginPassword} from '../../../utils/api/personal'
 import {
-  returnAjaxMessage,
+  returnAjaxMsg,
   validateNumForUserInput
 } from '../../../utils/commonFunc'
 import { createNamespacedHelpers, mapState } from 'vuex'
@@ -237,7 +237,7 @@ export default {
         // 整页loading
         this.fullscreenLoading = true
         data = await modifyLoginPassword(param)
-        if (!(returnAjaxMessage(data, this, 1))) {
+        if (!(returnAjaxMsg(data, this, 1))) {
           // 接口失败清除loading
           this.fullscreenLoading = false
           return false

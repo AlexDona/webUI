@@ -224,7 +224,7 @@
 import {timeFilter} from '../../utils'
 import {mapState} from 'vuex'
 import {getOTCCanceledOrders} from '../../utils/api/OTC'
-import {returnAjaxMessage} from '../../utils/commonFunc'
+import {returnAjaxMsg} from '../../utils/commonFunc'
 export default {
   components: {},
   // props,
@@ -272,7 +272,7 @@ export default {
       // console.log('请求已取消订单列表')
       // console.log(data)
       // 提示信息
-      if (!(returnAjaxMessage(data, this, 0))) {
+      if (!(returnAjaxMsg(data, this, 0))) {
         this.loading = false
         return false
       } else {

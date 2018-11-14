@@ -388,7 +388,7 @@ import {
   queryUserTradeFeeAndCoinInfo
 } from '../../utils/api/OTC'
 import IconFontCommon from '../Common/IconFontCommon'
-import {returnAjaxMessage} from '../../utils/commonFunc'
+import {returnAjaxMsg} from '../../utils/commonFunc'
 import {createNamespacedHelpers, mapState} from 'vuex'
 const {mapMutations} = createNamespacedHelpers('OTC')
 export default {
@@ -686,7 +686,7 @@ export default {
       // console.log('otc挂单详情')
       // console.log(data)
       // 提示信息
-      if (!(returnAjaxMessage(data, this, 0))) {
+      if (!(returnAjaxMsg(data, this, 0))) {
         return false
       } else {
         // 返回数据正确的逻辑:将返回的数据赋值到页面中
@@ -717,7 +717,7 @@ export default {
       // console.log('用户交易币种手续费率以及币种详情')
       // console.log(data)
       // 提示信息
-      if (!(returnAjaxMessage(data, this, 0))) {
+      if (!(returnAjaxMsg(data, this, 0))) {
         this.fullscreenLoading = false
         return false
       } else {
@@ -749,7 +749,7 @@ export default {
         tradePassword: this.tradePassword // 交易密码
       })
       // 提示信息
-      if (!(returnAjaxMessage(data, this, 1))) {
+      if (!(returnAjaxMsg(data, this, 1))) {
         this.fullscreenLoading = false
         return false
       } else {
@@ -795,7 +795,7 @@ export default {
         sellCount: this.$refs.sellCount.value, // 卖出数量
         tradePassword: this.tradePassword // 交易密码
       })
-      if (!(returnAjaxMessage(data, this, 1))) {
+      if (!(returnAjaxMsg(data, this, 1))) {
         this.fullscreenLoading = false
         return false
       } else {

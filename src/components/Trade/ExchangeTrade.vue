@@ -381,7 +381,7 @@ import {
   saveEntrustTrade,
   getUserAssetOfActiveSymbol
 } from '../../utils/api/trade'
-import {returnAjaxMessage} from '../../utils/commonFunc'
+import {returnAjaxMsg} from '../../utils/commonFunc'
 import { createNamespacedHelpers, mapState } from 'vuex'
 const { mapMutations } = createNamespacedHelpers('trade')
 export default {
@@ -461,7 +461,7 @@ export default {
         tradeId: this.middleTopData.partnerTradeId // 交易对id
       }
       const data = await getUserAssetOfActiveSymbol(params)
-      if (!returnAjaxMessage(data, this)) {
+      if (!returnAjaxMsg(data, this)) {
         return false
       } else {
         console.log(data)
@@ -658,7 +658,7 @@ export default {
       console.log(params.count)
 
       const data = await saveEntrustTrade(params)
-      if (!returnAjaxMessage(data, this, 1)) {
+      if (!returnAjaxMsg(data, this, 1)) {
         return false
       } else {
         this.TOGGLE_REFRESH_ENTRUST_LIST_STATUS(true)

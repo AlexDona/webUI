@@ -93,7 +93,7 @@ import {domain} from '../utils/env'
 import IconFont from '../components/Common/IconFontCommon'
 import VueClipboard from 'vue-clipboard2'
 Vue.use(VueClipboard)
-// import {returnAjaxMessage} from '../../utils/commonFunc'
+// import {returnAjaxMsg} from '../../utils/commonFunc'
 export default {
   components: {
     IconFont,

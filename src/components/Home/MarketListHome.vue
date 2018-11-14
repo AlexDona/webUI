@@ -120,11 +120,12 @@ import {
 //   removeCollectionAjax
 // } from '../../utils/api/home'
 import {
-  returnAjaxMessage,
+  returnAjaxMsg,
   // splitSocketParams
   toggleUserCollection,
   getCollectionList,
-  setSocketData
+  setSocketData,
+  getNestedData
 } from '../../utils/commonFunc'
 import {
   getHomeMarketByAjax
@@ -207,10 +208,6 @@ export default{
   },
   destroyed () {
     this.socket.destroy()
-  },
-  beforeRouteEnter (to, from, next) {
-    console.log(to)
-    next()
   },
   methods: {
     ...mapMutations([
@@ -342,13 +339,11 @@ export default{
       }
       const data = await getHomeMarketByAjax(params)
       console.log(data)
-      if (!returnAjaxMessage(data, this)) {
+      if (!returnAjaxMsg(data, this)) {
         return false
       } else {
-        let objData = data.data.data.obj
+        let objData = getNestedData(data, 'data.data.obj')
         this.newMarketList = JSON.parse(unzip(objData))
-        console.log(this.newMarketList)
-
         this.ergodicNewMarketList((item) => {
           this.CHANGE_SYMBOL_MAP({
             key: item.id,

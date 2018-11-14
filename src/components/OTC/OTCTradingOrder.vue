@@ -745,7 +745,7 @@ import {
 } from '../../utils/api/OTC'
 import {timeFilter, formatSeconds} from '../../utils'
 import IconFontCommon from '../Common/IconFontCommon'
-import {returnAjaxMessage} from '../../utils/commonFunc'
+import {returnAjaxMsg} from '../../utils/commonFunc'
 import {mapState} from 'vuex'
 export default {
   components: {
@@ -860,7 +860,7 @@ export default {
         console.log('成交otc用户定单（过期卖家未收款）')
       }
       console.log(data)
-      if (!(returnAjaxMessage(data, this, 0))) {
+      if (!(returnAjaxMsg(data, this, 0))) {
         return false
       } else {
         // 返回数据正确的逻辑：重新渲染列表
@@ -882,7 +882,7 @@ export default {
       console.log('交易中订单列表')
       console.log(data)
       // 提示信息
-      if (!(returnAjaxMessage(data, this, 0))) {
+      if (!(returnAjaxMsg(data, this, 0))) {
         this.loading = false
         return false
       } else {
@@ -999,7 +999,7 @@ export default {
         })
         console.log(data)
         // 提示信息
-        if (!(returnAjaxMessage(data, this, 1))) {
+        if (!(returnAjaxMsg(data, this, 1))) {
           this.loading = false
           return false
         } else {
@@ -1033,7 +1033,7 @@ export default {
       })
       console.log(data)
       // 提示信息
-      if (!(returnAjaxMessage(data, this, 1))) {
+      if (!(returnAjaxMsg(data, this, 1))) {
         this.loading = false
         return false
       } else {
@@ -1084,7 +1084,7 @@ export default {
       })
       console.log(data)
       // 提示信息
-      if (!(returnAjaxMessage(data, this, 1))) {
+      if (!(returnAjaxMsg(data, this, 1))) {
         this.loading = false
         return false
       } else {

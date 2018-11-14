@@ -249,7 +249,7 @@ import {
 import ErrorBox from '../../User/ErrorBox'
 import CountDownButton from '../../Common/CountDownCommon'
 import {
-  returnAjaxMessage,
+  returnAjaxMsg,
   sendPhoneOrEmailCodeAjax,
   getSecurityCenter,
   validateNumForUserInput
@@ -392,7 +392,7 @@ export default {
       // 整页loading
       this.fullscreenLoading = true
       data = await checkCurrencyAddress(param)
-      if (!(returnAjaxMessage(data, this, 0))) {
+      if (!(returnAjaxMsg(data, this, 0))) {
         // 接口失败清除loading
         this.fullscreenLoading = false
         return false
@@ -439,7 +439,7 @@ export default {
       // 整页loading
       this.fullscreenLoading = true
       data = await addNewWithdrawalAddress(param)
-      if (!(returnAjaxMessage(data, this, 1))) {
+      if (!(returnAjaxMsg(data, this, 1))) {
         // 接口失败清除loading
         this.fullscreenLoading = false
         return false
@@ -461,7 +461,7 @@ export default {
       }
       let data = await inquireWithdrawalAddressList(params)
       // console.log(data)
-      if (!(returnAjaxMessage(data, this, 0))) {
+      if (!(returnAjaxMsg(data, this, 0))) {
         // 接口失败清除局部loading
         this.loading = false
         return false
@@ -502,7 +502,7 @@ export default {
         id: this.deleteWithdrawalId // 列表id
       }
       data = await deleteUserWithdrawAddress(param)
-      if (!(returnAjaxMessage(data, this, 1))) {
+      if (!(returnAjaxMsg(data, this, 1))) {
         // 接口失败清除局部loading
         this.loading = false
         return false

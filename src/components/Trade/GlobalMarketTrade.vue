@@ -81,7 +81,8 @@
 <script>
 import {mapState} from 'vuex'
 import {
-  returnAjaxMessage,
+  returnAjaxMsg,
+  getNestedData,
   formatCount
 } from '../../utils/commonFunc'
 import {getGLobalMarket} from '../../utils/api/trade'
@@ -110,12 +111,12 @@ export default {
   methods: {
     // 交易价转换
     formatPrice (price) {
-      return keep2Num((this.currencyRateList[this.activeSymbol.area] - 0) * price) - 0
+      return keep2Num((this.currencyRateList[this.activeSymbol.area] - 0) * price)
     },
     // 成交量格式化
     formatCount (targetNum, targetPrice) {
       if (targetPrice) {
-        return formatCount(keep2Num((keep2Num((this.currencyRateList[this.activeSymbol.area] - 0) * targetPrice) - 0) * targetNum))
+        return formatCount(keep2Num((this.currencyRateList[this.activeSymbol.area] - 0) * targetPrice * targetNum))
       } else {
         return formatCount(targetNum)
       }
@@ -128,12 +129,12 @@ export default {
       let params = `${this.activeSymbol.sellsymbol}_${this.activeSymbol.area}`.toUpperCase()
 
       const data = await getGLobalMarket(params)
-      if (!returnAjaxMessage(data, this, 0, 1)) {
+      if (!returnAjaxMsg(data, this, 0, 1)) {
         return false
       } else {
         console.log(data)
         if (data && data.data) {
-          this.globalMarketList = data.data.data
+          this.globalMarketList = getNestedData(data, 'data.data')
         }
       }
     },

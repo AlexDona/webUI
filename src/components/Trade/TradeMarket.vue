@@ -90,7 +90,7 @@ import {
   getTradeMarketDataAjax
 } from '../../utils/api/trade'
 import {
-  returnAjaxMessage,
+  returnAjaxMsg,
   // getPartnerListAjax,
   toggleUserCollection,
   getCollectionList,
@@ -191,7 +191,7 @@ export default {
       }
       const data = await getTradeMarketDataAjax(params)
       console.log(data)
-      if (!returnAjaxMessage(data, this)) {
+      if (!returnAjaxMsg(data, this)) {
         return false
       } else {
         const objData = JSON.parse(unzip(data.data.data.obj))

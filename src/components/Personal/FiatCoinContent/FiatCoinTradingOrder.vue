@@ -797,7 +797,7 @@ import {
 import {timeFilter, formatSeconds} from '../../../utils'
 import IconFontCommon from '../../Common/IconFontCommon'
 import {
-  returnAjaxMessage,
+  returnAjaxMsg,
   changeCurrentPageForLegalTrader
 } from '../../../utils/commonFunc'
 import {createNamespacedHelpers, mapState} from 'vuex'
@@ -909,7 +909,7 @@ export default {
       if (val === 1) {
         data = await cancelUserOtcOrder()
         console.log('撤销（过期 买家 未付款）')
-        if (!(returnAjaxMessage(data, this, 0))) {
+        if (!(returnAjaxMsg(data, this, 0))) {
           return false
         } else {
           // 返回数据正确的逻辑：重新渲染列表
@@ -921,7 +921,7 @@ export default {
         data = await completeUserOtcOrder()
         console.log('成交（过期 卖家 未收款）')
         // console.log(data)
-        if (!(returnAjaxMessage(data, this, 0))) {
+        if (!(returnAjaxMsg(data, this, 0))) {
           return false
         } else {
           // 返回数据正确的逻辑：重新渲染列表
@@ -1025,7 +1025,7 @@ export default {
         })
         console.log(data)
         // 提示信息
-        if (!(returnAjaxMessage(data, this, 1))) {
+        if (!(returnAjaxMsg(data, this, 1))) {
           return false
         } else {
           // 先判断status订单状态（已创建，已付款，已完成，已取消，已冻结 PICKED PAYED COMPLETED CANCELED FROZEN）
@@ -1074,7 +1074,7 @@ export default {
       })
       console.log(data)
       // 提示信息
-      if (!(returnAjaxMessage(data, this, 1))) {
+      if (!(returnAjaxMsg(data, this, 1))) {
         return false
       } else {
         // 先判断status订单状态（已创建，已付款，已完成，已取消，已冻结 PICKED PAYED COMPLETED CANCELED FROZEN）
@@ -1128,7 +1128,7 @@ export default {
       })
       console.log(data)
       // 提示信息
-      if (!(returnAjaxMessage(data, this, 1))) {
+      if (!(returnAjaxMsg(data, this, 1))) {
         return false
       } else {
         this.dialogVisible3 = false

@@ -42,8 +42,8 @@ import {PHONE_REG, EMAIL_REG, ID_REG, PWD_REG, ALIPAY_REG, BANK_REG, GOOGLE_REG,
 // 请求接口后正确或者错误的提示提示信息：
 // 如果返回 错误 了就提示错误并不能继续往下进行；
 // 如果返回了 正确 的数据：不需要正确的提示noTip传0；需要正确的提示noTip传1；
-// 使用方法：returnAjaxMessage(data, this, 0) 或者 returnAjaxMessage(data, this, 1)
-export const returnAjaxMessage = (data, self, noTip, errorTip) => {
+// 使用方法：returnAjaxMsg(data, this, 0) 或者 returnAjaxMsg(data, this, 1)
+export const returnAjaxMsg = (data, self, noTip, errorTip) => {
   if (!data) {
     return false
   }
@@ -138,7 +138,7 @@ export const validateNumForUserInput = (type, targetNum) => {
 // api 发送验证码（短信、邮箱）
 export const sendPhoneOrEmailCodeAjax = async (type, params, that, isNewPhone = 0, callback) => {
   const data = await sendMsgByPhoneOrEmial(type, params)
-  if (!returnAjaxMessage(data, that)) {
+  if (!returnAjaxMsg(data, that)) {
     return false
   } else {
     switch (type) {
@@ -167,7 +167,7 @@ export const sendPhoneOrEmailCodeAjax = async (type, params, that, isNewPhone = 
  */
 export const repealMyEntrustCommon = async (params, that, callback) => {
   const data = await repealMyEntrustAjax(params)
-  if (!returnAjaxMessage(data, that, 1)) {
+  if (!returnAjaxMsg(data, that, 1)) {
     return false
   } else {
     callback(data)
@@ -205,7 +205,7 @@ export const getCountryListAjax = async (that, callback) => {
     return false
   } else {
     data = await getCountryList()
-    if (!returnAjaxMessage(data, that)) {
+    if (!returnAjaxMsg(data, that)) {
       return false
     } else {
       that.SET_COUNTRY_AREA_LIST(data.data.data)
@@ -220,7 +220,7 @@ export const getCountryListAjax = async (that, callback) => {
 // 服务条款接口
 export const getServiceProtocolData = async (that, params, callback) => {
   const data = await getServiceProtocoDataAjax(params)
-  if (!returnAjaxMessage(data, that)) {
+  if (!returnAjaxMsg(data, that)) {
     return false
   } else {
     callback(data)
@@ -234,7 +234,7 @@ export const reflashUserInfo = async (that) => {
   const data = await userRefreshUser({
     token: store.state.user.loginStep1Info.token
   })
-  if (!(returnAjaxMessage(data, that))) {
+  if (!(returnAjaxMsg(data, that))) {
     return false
   } else {
     store.commit('user/SET_STEP1_INFO', data.data.data)
@@ -246,7 +246,7 @@ export const reflashUserInfo = async (that) => {
 export const getSecurityCenter = async (that, params, callback) => {
   console.log(store)
   const data = await statusSecurityCenter(params)
-  if (!(returnAjaxMessage(data, that))) {
+  if (!(returnAjaxMsg(data, that))) {
     return false
   } else {
     callback(data)
@@ -258,7 +258,7 @@ export const getSecurityCenter = async (that, params, callback) => {
 export const getAccountPaymentTerm = async (that, callback) => {
   console.log(store)
   const data = await accountPaymentTerm({})
-  if (!(returnAjaxMessage(data, that))) {
+  if (!(returnAjaxMsg(data, that))) {
     return false
   } else {
     callback(data)
@@ -275,7 +275,7 @@ export const toggleUserCollection = async (type, tradeId, that) => {
   } else if (type === 'remove') {
     data = await removeCollectionAjax(params)
   }
-  if (!returnAjaxMessage(data, that)) {
+  if (!returnAjaxMsg(data, that)) {
     return false
   }
 }
@@ -283,7 +283,7 @@ export const toggleUserCollection = async (type, tradeId, that) => {
 // 获取用户收藏列表
 export const getCollectionList = async (that, callback) => {
   const data = await getCollectionListAjax()
-  if (!returnAjaxMessage(data, that)) {
+  if (!returnAjaxMsg(data, that)) {
     return false
   } else {
     callback(data)
@@ -318,7 +318,7 @@ export const setSocketData = (oldContent, newContent, targetList, targetIndex, t
 export const getTransitionCurrencyRate = async (params, that, activeConvertCurrencyObj) => {
   const data = await getTransitionCurrencyRateAjax(params)
   console.log(data)
-  if (!returnAjaxMessage(data, that)) {
+  if (!returnAjaxMsg(data, that)) {
     return false
   } else {
     that.CHANGE_CURRENCY_RATE_LIST({
@@ -329,7 +329,7 @@ export const getTransitionCurrencyRate = async (params, that, activeConvertCurre
 }
 export const getLanguageListAjax = async (that, language) => {
   const data = await getLanguageList()
-  if (!returnAjaxMessage(data, that)) {
+  if (!returnAjaxMsg(data, that)) {
     return false
   } else {
     that.languageList = data.data.data
@@ -354,24 +354,16 @@ export const getFooterInfo = async (language, that) => {
   const data3 = await getConfigAjax()
 
   if (
-    !returnAjaxMessage(data1, that) &&
-    !returnAjaxMessage(data2, that) &&
-    !returnAjaxMessage(data3, that)
+    !returnAjaxMsg(data1, that) &&
+    !returnAjaxMsg(data2, that) &&
+    !returnAjaxMsg(data3, that)
   ) {
     return false
   } else {
-    console.log(data1, data2, data3)
     // eslint-disable-next-line
-    let footerInfo1 = [], footerInfo2 = [], configInfo = []
-    if (data1) {
-      footerInfo1 = data1.data.data
-    }
-    if (data2) {
-      footerInfo2 = data2.data.data
-    }
-    if (data3) {
-      configInfo = data3.data.data
-    }
+    let footerInfo1 = getNestedData(data1, 'data.data')
+    let footerInfo2 = getNestedData(data2, 'data.data')
+    let configInfo = getNestedData(data3, 'data.data')
     that.SET_FOOTER_INFO({
       footerInfo1,
       footerInfo2,
@@ -400,9 +392,7 @@ export const addFavicon = (href, title) => {
 }
 // 成交量格式化
 export const formatCount = (targetNum) => {
-  console.log(targetNum)
   let newNum = targetNum - 0
-  console.log(newNum)
   switch (store.state.common.language) {
     case 'zh_CN':
       if (newNum > 100000000) {
@@ -410,7 +400,6 @@ export const formatCount = (targetNum) => {
       } else if (newNum > 10000) {
         newNum = keep2Num(newNum / 10000) + '万'
       }
-      console.log(newNum)
       return newNum
     default :
       if (newNum > 1000000) {
@@ -418,9 +407,12 @@ export const formatCount = (targetNum) => {
       } else if (newNum > 1000) {
         newNum = keep2Num(newNum / 1000) + 'K'
       }
-      console.log(newNum)
       return newNum
   }
+}
+// 获取嵌套数据
+export const getNestedData = (data, index) => {
+  return _.get(data, index)
 }
 // eslint-disable-next-line
 String.prototype.format = function (args) {

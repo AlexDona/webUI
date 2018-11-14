@@ -436,7 +436,7 @@ import OTCCompletedOrder from '../../components/OTC/OTCCompletedOrder'
 import OTCCanceledOrder from '../../components/OTC/OTCCanceledOrder'
 import OTCFreezingOrder from '../../components/OTC/OTCFreezingOrder'
 import OTCEntrustOrder from '../../components/OTC/OTCEntrustOrder'
-import {returnAjaxMessage, reflashUserInfo} from '../../utils/commonFunc'
+import {returnAjaxMsg, reflashUserInfo} from '../../utils/commonFunc'
 import {createNamespacedHelpers, mapState} from 'vuex'
 const {mapMutations} = createNamespacedHelpers('OTC')
 export default {
@@ -675,7 +675,7 @@ export default {
       console.log('otc可用币种查询')
       console.log(data)
       // 提示信息
-      if (!(returnAjaxMessage(data, this, 0))) {
+      if (!(returnAjaxMsg(data, this, 0))) {
         return false
       } else {
         // 返回数据正确的逻辑
@@ -696,7 +696,7 @@ export default {
       const data = await getMerchantAvailablelegalTender({})
       // console.log('otc法币查询列表')
       // console.log(data)
-      if (!(returnAjaxMessage(data, this, 0))) {
+      if (!(returnAjaxMsg(data, this, 0))) {
         return false
       } else {
         // 返回数据正确的逻辑
@@ -726,7 +726,7 @@ export default {
       console.log('otc主页面查询挂单列表')
       console.log(data)
       // 提示信息
-      if (!(returnAjaxMessage(data, this, 0))) {
+      if (!(returnAjaxMsg(data, this, 0))) {
         this.loading = false
         return false
       } else {

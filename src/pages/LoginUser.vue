@@ -624,7 +624,7 @@ import {
 //   assetCurrenciesList
 // } from '../utils/api/personal'
 import {
-  returnAjaxMessage,
+  returnAjaxMsg,
   sendPhoneOrEmailCodeAjax
 } from '../utils/commonFunc'
 import socket from '../utils/datafeeds/socket'
@@ -806,7 +806,7 @@ export default {
     async reflashErCode () {
       // this.isScanSuccess = true
       const data = await getLoginErcode()
-      if (!returnAjaxMessage(data, this)) {
+      if (!returnAjaxMsg(data, this)) {
         return false
       } else {
         this.isErcodeTimeOut = false
@@ -915,7 +915,7 @@ export default {
       params.append('userName', this.username)
       params.append('password', this.password)
       const data = await userLoginForStep1(params)
-      if (!returnAjaxMessage(data, this, 0)) {
+      if (!returnAjaxMsg(data, this, 0)) {
         return false
       } else {
         this.SET_STEP1_INFO(data.data.data)
@@ -1056,7 +1056,7 @@ export default {
       }
       this.fullscreenLoading = true
       const data = await userLoginForStep2(params)
-      if (!returnAjaxMessage(data, this, 1)) {
+      if (!returnAjaxMsg(data, this, 1)) {
         this.fullscreenLoading = false
         return false
       } else {
