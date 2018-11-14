@@ -38,6 +38,15 @@ export default {
           // boundaryGap: false,
           show: false
         },
+        visualMap: {
+          data: [{
+            lt: 0,
+            color: 'rgb(255, 158, 68)'
+          }, {
+            gte: 0,
+            color: 'rgb(255, 70, 131)'
+          }]
+        },
         series: [
           {
             type: 'line',

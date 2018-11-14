@@ -400,7 +400,9 @@ export const addFavicon = (href, title) => {
 }
 // 成交量格式化
 export const formatCount = (targetNum) => {
+  console.log(targetNum)
   let newNum = targetNum - 0
+  console.log(newNum)
   switch (store.state.common.language) {
     case 'zh_CN':
       if (newNum > 100000000) {
@@ -408,6 +410,7 @@ export const formatCount = (targetNum) => {
       } else if (newNum > 10000) {
         newNum = keep2Num(newNum / 10000) + '万'
       }
+      console.log(newNum)
       return newNum
     default :
       if (newNum > 1000000) {
@@ -415,6 +418,7 @@ export const formatCount = (targetNum) => {
       } else if (newNum > 1000) {
         newNum = keep2Num(newNum / 1000) + 'K'
       }
+      console.log(newNum)
       return newNum
   }
 }

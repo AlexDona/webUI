@@ -50,7 +50,7 @@
                         'down':middleTopData.chg<0
                       }"
                     >
-                      ≈{{activeConvertCurrencyObj.symbol}}{{keep2Num((currencyRateList[activeSymbol.area]-0)*item.boursePrice)-0}}
+                      ≈{{activeConvertCurrencyObj.symbol}}{{formatPrice(item.boursePrice)}}
                     </div>
                   </div><div class="td count">
                       <div class="top"
@@ -66,7 +66,7 @@
                       }"
                         v-if="currencyRateList[activeSymbol.area]&&item.bourseCount"
                       >
-                        ≈{{activeConvertCurrencyObj.symbol}}{{formatCount(keep2Num((currencyRateList[item.bourseTrade.split('_')[0]]-0)*item.bourseCount))}}
+                        ≈{{activeConvertCurrencyObj.symbol}}{{formatCount(item.bourseCount,item.boursePrice)}}
                       </div>
                   </div>
                 </div>
@@ -108,9 +108,17 @@ export default {
   update () {},
   beforeRouteUpdate () {},
   methods: {
+    // 交易价转换
+    formatPrice (price) {
+      return keep2Num((this.currencyRateList[this.activeSymbol.area] - 0) * price) - 0
+    },
     // 成交量格式化
-    formatCount (targetNum) {
-      return formatCount(targetNum)
+    formatCount (targetNum, targetPrice) {
+      if (targetPrice) {
+        return formatCount(keep2Num((keep2Num((this.currencyRateList[this.activeSymbol.area] - 0) * targetPrice) - 0) * targetNum))
+      } else {
+        return formatCount(targetNum)
+      }
     },
     keep2Num (targetNum) {
       return keep2Num(targetNum)
