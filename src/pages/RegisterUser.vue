@@ -1223,7 +1223,9 @@ export default {
         >.title{
           position: absolute;
           top:-20%;
-          left:36%;
+          min-width:250px;
+          text-align: center;
+          left:15%;
           height:35px;
           font-size:26px;
           font-family:MicrosoftYaHei;
