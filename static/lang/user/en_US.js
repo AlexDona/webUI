@@ -1,5 +1,5 @@
 export const user = {
-  'login_welcome': 'Welcome',
+  'login_welcome': 'Welcome ',
   'login_forgot_pwd_find1': 'Retrieve Password',
   'login_forgot_pwd_find2': 'Fill in the account name',
   'login_forgot_pwd_find3': 'verification Identity',
@@ -8,7 +8,7 @@ export const user = {
   'login_please_input2': 'Please enter email code',
   'login_please_input3': 'Please enter email address',
   'login_please_input4': 'Please enter correct email address',
-  'login_welcome_register': 'WelcomeRegistered',
+  'login_welcome_register': 'Welcome Registered',
   'login_welcome_register_pwd1': 'Input  password',
   'login_welcome_register_pwd2': 'Please enter again password',
   'login_welcome_register_advertisement': 'Invitation code (no need to fill)',
