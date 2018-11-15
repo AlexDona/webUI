@@ -941,7 +941,6 @@ export default {
     },
     // 发送验证码（短信、邮箱）
     sendPhoneOrEmailCode (type) {
-      let activeAbbreviation = _.filter(this.contryAreaList, {abbreviation: this.activeCountryAbbreviationWithEmail})[0].abbreviation
       this.activeCountryCodeWithEmail = _.filter(this.contryAreaList, {abbreviation: this.activeCountryAbbreviationWithEmail})[0].nationCode
       console.log(_.filter(this.contryAreaList, {abbreviation: this.activeCountryAbbreviationWithEmail})[0])
       // console.log(this.activeCountryCodeWithEmail)
@@ -966,7 +965,7 @@ export default {
             return false
           }
           params.email = this.emailNum
-          params.abbreviation = activeAbbreviation
+          params.nationCode = this.activeCountryCodeWithEmail
           break
       }
       console.log(params)
