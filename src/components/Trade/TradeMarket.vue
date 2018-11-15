@@ -334,12 +334,6 @@ export default {
       this.searchKeyWord = 'a'
       this.searchKeyWord = ''
     },
-    // 初始化自选区
-    resetCollectList () {
-      this.collectList.forEach((item) => {
-        this.collectStatusList[item.id] = true
-      })
-    },
     // 切换收藏
     async toggleCollect (data) {
       let {
@@ -348,6 +342,7 @@ export default {
         row,
         plateIndex
       } = data
+      console.log(data)
       status = Boolean(status)
       this.$set(this.collectStatusList, id, status)
       if (status) {
@@ -358,7 +353,7 @@ export default {
         })
         this.collectArea.plateList[plateIndex].content.push(row)
         if (this.isLogin) {
-          await toggleUserCollection('add', row.tradeId, this)
+          await toggleUserCollection('add', id, this)
         }
       } else {
         this.CHANGE_COLLECT_SYMBOL({

@@ -208,7 +208,7 @@ export default {
       if (!returnAjaxMsg(data, this)) {
         return false
       } else {
-        const obj = data.data.data
+        const obj = getNestedData(data, 'data.data')
         const activeSymbol = {
           id: (obj.sellCoinName + obj.buyCoinName).toLowerCase(),
           tradeId: obj.id,
@@ -314,15 +314,6 @@ export default {
       this.widget.selectedIntervalButton && this.widget.selectedIntervalButton.removeClass('selected')
       button.addClass('selected')
       this.widget.selectedIntervalButton = button
-    },
-    sendMessage (data) {
-      if (this.socket.checkOpen()) {
-        this.socket.send(data)
-      } else {
-        this.socket.on('open', () => {
-          this.socket.send(data)
-        })
-      }
     },
     unSubscribe (interval) {
       let newInterval = this.transformInterval(interval)

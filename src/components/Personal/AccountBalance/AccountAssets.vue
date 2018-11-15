@@ -1169,7 +1169,8 @@ export default {
         this.fullscreenLoading = false
         return false
       } else {
-        let withdrawalAddressData = data.data.data
+        // let withdrawalAddressData = data.
+        let withdrawalAddressData = getNestedData(data, 'data.data')
         // 接口成功清除loading
         this.fullscreenLoading = false
         console.log(withdrawalAddressData.needTag)
@@ -1178,10 +1179,7 @@ export default {
         this.needTag = withdrawalAddressData.needTag
         // 返回列表数据并渲染币种列表
         this.mentionAddressList = withdrawalAddressData.userWithdrawAddressListVO.userWithdrawAddressDtoList
-        if (!withdrawalAddressData.userWithdrawAddressListVO.userWithdrawAddressDtoList) {
-          this.mentionAddressValue = withdrawalAddressData.userWithdrawAddressListVO.userWithdrawAddressDtoList[0].address
-        }
-        console.log(withdrawalAddressData.vo)
+        this.mentionAddressValue = getNestedData(withdrawalAddressData, 'userWithdrawAddressListVO.userWithdrawAddressDtoList[0].address')
       }
     },
     // select框自定义提币地址校验地址
