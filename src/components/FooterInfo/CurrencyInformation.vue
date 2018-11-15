@@ -126,6 +126,9 @@ export default {
     })
   },
   watch: {
+    currencyList (newVal) {
+      console.log(newVal)
+    },
     currencyId (newVal) {
       console.log(newVal)
     }

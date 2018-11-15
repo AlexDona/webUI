@@ -38,7 +38,7 @@
         </button>
         <a
           :href="downloadUrl"
-          ref="android-download"
+          ref="download"
           download="android"
           :style="{
             display:none
@@ -53,7 +53,10 @@
 import {
   getAppDownLoadUrlAjax
 } from '../utils/api/user'
-import {returnAjaxMsg} from '../utils/commonFunc'
+import {
+  returnAjaxMsg,
+  getNestedData
+} from '../utils/commonFunc'
 import {mapState, createNamespacedHelpers} from 'vuex'
 const {mapMutations} = createNamespacedHelpers('common')
 
@@ -65,11 +68,14 @@ export default {
     return {
       zh_CNSrc: require('../assets/develop/download-bg-cn.png'),
       en_USSrc: require('../assets/develop/download-bg-en.png'),
-      downloadUrl: ''
+      downloadUrl: '',
+      isAndroid: false,
+      isIOS: false
     }
   },
   created () {
     // getFooterInfo(this.language, this)
+    console.log(1)
     this.getAppDownLoadUrl()
   },
   mounted () {
@@ -85,22 +91,30 @@ export default {
     async getAppDownLoadUrl () {
       const data = await getAppDownLoadUrlAjax()
       if (!returnAjaxMsg(data, this)) {
+        return false
+      } else {
         console.log(data)
+        let u = navigator.userAgent
+        this.isAndroid = u.indexOf('Android') > -1 || u.indexOf('Adr') > -1 // android终端
+        this.isIOS = !!u.match(/\(i[^;]+;( U;)? CPU.+Mac OS X/) // ios终端
+        if (this.isAndroid) {
+          alert('android')
+          // scheme: //fubt.com/
+          this.downloadUrl = getNestedData(data, 'data.data.android')
+        } else if (this.isIOS) {
+          alert('ios')
+          window.location = 'com.top.Fubt://' // 打开某手机上的某个app应用
+          this.downloadUrl = getNestedData(data, 'data.data.ios')
+        }
       }
     },
     downloadApp () {
-      let u = navigator.userAgent
-      let isAndroid = u.indexOf('Android') > -1 || u.indexOf('Adr') > -1 // android终端
-      let isiOS = !!u.match(/\(i[^;]+;( U;)? CPU.+Mac OS X/) // ios终端
-      if (isiOS) {
-        // equip = 'ios'
-        // alert('isIOS')
-      } else if (isAndroid) {
-        // equip = 'android'
-        // alert('isAndroid')
-        this.downloadUrl = 'https://fubt-3.oss-cn-hongkong.aliyuncs.com/4f8f11c8-9921-408c-8671-7dcf2c7fac6atudou.apk'
-        this.$refs['android-download'].click()
+      if (this.isIOS) {
+
+      } else if (this.isAndroid){
+
       }
+      this.$refs['download'].click()
     }
   },
   filter: {},

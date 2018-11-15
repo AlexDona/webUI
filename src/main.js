@@ -16,7 +16,6 @@ Vue.use(VueLazyLoad, {
 })
 
 // import '../static/css/scss/index.scss'
-console.log(ELEMENT.lang)
 // 多语言
 const i18n = new VueI18n({
   locale: getStore('language') || store.state.common.defaultLanguage, // 语言标识

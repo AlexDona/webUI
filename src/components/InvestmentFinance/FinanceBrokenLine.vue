@@ -7,7 +7,6 @@
     </div>
   </div>
 </template>
-<!--请严格按照如下书写书序-->
 <script>
 import echarts from 'echarts/lib/echarts'
 import {timeFilter} from '../../utils'
