@@ -19,13 +19,13 @@
           <div class="symbol-box condition-item">
             <span class="currency-span">
               <!--交易对-->
-              {{ $t('M.comm_deal') }}{{ $t('M.comm_pair') }}
+              {{ $t('M.comm_deal_pair') }}
             </span>
             <!--币种-->
             <!--币种名称-->
             <input
               type="text"
-              :placeholder="$t('M.comm_currency') + $t('M.user_account_name')"
+              :placeholder="$t('M.comm_currency_name')"
               class="currency-input"
               v-model="activeSymbol"
             />
@@ -73,7 +73,7 @@
           <div class="trade-type-box condition-item">
             <span class="currency-span">
               <!--委单类型-->
-              {{ $t('M.user_coin_appoint_single') }}{{ $t('M.comm_type') }}
+              {{ $t('M.user_coin_appoint_single_stle') }}
             </span>
             <!--请选择-->
             <el-select
@@ -152,7 +152,7 @@
                 </el-table-column>
                 <!--交易对-->
                 <el-table-column
-                  :label="$t('M.comm_deal') + $t('M.comm_pair')"
+                  :label="$t('M.comm_deal_pair')"
                   width="80"
                 >
                   <template slot-scope="s">
@@ -171,7 +171,7 @@
                 </el-table-column>
                 <!--委单类型-->
                 <el-table-column
-                  :label="$t('M.user_coin_appoint_single') + $t('M.comm_type')"
+                  :label="$t('M.user_coin_appoint_single_stle')"
                   width="70"
                 >
                   <template slot-scope="s">
@@ -211,7 +211,7 @@
                 </el-table-column>
                 <!--未成交-->
                 <el-table-column
-                  :label="$t('M.comm_not') + $t('M.comm_make_bargain')"
+                  :label="$t('M.comm_not_make_bargain')"
                   width="120"
                 >
                   <template slot-scope="s">
@@ -277,7 +277,7 @@
             </el-table-column>
             <!--交易对-->
             <el-table-column
-              :label="$t('M.comm_deal') + $t('M.comm_pair')"
+              :label="$t('M.comm_deal_pair')"
               width="80"
             >
               <template slot-scope="s">
@@ -295,7 +295,7 @@
             </el-table-column>
             <!--委单类型-->
             <el-table-column
-              :label="$t('M.user_coin_appoint_single') + $t('M.comm_type')"
+              :label="$t('M.user_coin_appoint_single_stle')"
             >
               <template slot-scope="s">
                 <span v-show="language !== 'zh_CN'">{{s.row.type}}</span>
@@ -382,7 +382,7 @@
             </el-table-column>
             <!--交易对-->
             <el-table-column
-              :label="$t('M.comm_deal') + $t('M.comm_pair')"
+              :label="$t('M.comm_deal_pair')"
             >
               <template slot-scope="s">
                 <span>{{ s.row.tradeName }}</span>
@@ -399,7 +399,7 @@
             </el-table-column>
             <!--委托类型-->
             <el-table-column
-              :label="$t('M.user_coin_appoint_single') + $t('M.comm_type')"
+              :label="$t('M.user_coin_appoint_single_stle')"
               width="110"
             >
               <template slot-scope="s">

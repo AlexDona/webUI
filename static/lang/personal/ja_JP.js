@@ -10,7 +10,7 @@ export const personal = {
   'user_asset_title7': '安全中心',
   'user_asset_title8': 'PUSH資産',
   'user_asset_title9': '私の取引',
-  'user_asset_title10': 'トークン注文',
+  'user_asset_title10': 'トークン取引',
   'user_asset_title11': '通貨注文',
   'user_asset_title12': 'トランザクションパスワードを最初に設定してから、OTC収集アカウントを設定してください！',
   'user_asset_title13': 'OTCコレクションアカウントを設定する前に身元認証を完了してください！',
@@ -184,7 +184,7 @@ export const personal = {
   'user_security_login_new': '新しい',
   'user_security_former': '古い',
   'user_security_info1': '8〜20文字と数字の組み合わせを入力してください',
-  'user_security_info2': 'パスワードが矛盾しているため、再確認してください',
+  'user_security_info2': 'パスワードは違います。',
   // 最近のログイン記録、セキュリティ設定レコード
   'user_security_recently': '最近',
   'user_security_home_location': 'アトリビューション',
@@ -218,26 +218,27 @@ export const personal = {
   // PUSHレコード
   // #####################私の取引#####################
   // トークン注文
-  'user_coin_order1': '現在の手数料',
-  'user_coin_order2': '歴史委員会',
-  'user_coin_order3': '取引の詳細',
-  'user_coin_order4': '開始日と終了日',
+  'user_coin_order1': '当前注文',
+  'user_coin_order2': '履歴注文',
+  'user_coin_order3': '取引詳細',
+  'user_coin_order4': '開始終了日付',
   'user_coin_order5': '注文総額',
-  'user_coin_order6': '完了しました',
+  'user_coin_order6': '完成',
   'user_coin_order7': 'コイン受注',
   'user_coin': 'コイン',
   'user_coin_bring_together': 'マッチ',
   'user_coin_appoint_single': 'ビル',
+  'user_coin_appoint_single_stle': '注文タイプ',
   'user_coin_rental': '合計',
   'user_coin_start_stop': '開始と停止',
   'user_coin_entrust': '手数料',
   'user_coin_volume': '売上高',
   // 現在の委託
-  'user_coin_commissioned_current': '現在の手数料',
+  'user_coin_commissioned_current': '当前注文',
   // 歴史の委託
-  'user_coin_commissioned_history': '歴史委員会',
-  // 取引の詳細
-  'user_coin_clinch_deal_detail': '取引の詳細',
+  'user_coin_commissioned_history': '履歴注文',
+  // 取引詳細
+  'user_coin_clinch_deal_detail': '取引詳細',
   // 法幣注文
   'user_coin_currency': '通貨',
   // 取引注文

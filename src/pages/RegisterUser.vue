@@ -32,7 +32,7 @@
         v-if="!isMobile&&!isRegisterSuccess"
       >
         <!-- 欢迎注册 -->
-        <h1 class="title">{{$t('M.login_welcome')}}{{$t('M.comm_register_time')}}</h1>
+        <h1 class="title">{{$t('M.login_welcome_register')}}</h1>
         <!--切换注册方式-->
         <ul class="methods-list">
           <li
@@ -213,7 +213,7 @@
              <input
                type="password"
                class="input"
-               :placeholder="$t('M.comm_please_enter') + $t('M.user_security_password')"
+               :placeholder="$t('M.login_welcome_register_pwd1')"
                v-model="password"
                @keydown="setErrorMsg('')"
                @blur="checkoutInputFormat(4,password)"
@@ -227,7 +227,7 @@
              <input
                type="password"
                class="input"
-               :placeholder="$t('M.forgetPassword_hint2') + $t('M.user_security_password')"
+               :placeholder="$t('M.login_welcome_register_pwd2')"
                @keydown="setErrorMsg('')"
                v-model="repeatPassword"
                @blur="checkoutInputFormat(5,repeatPassword)"
@@ -242,7 +242,7 @@
                v-model="inviter"
                type="text"
                class="input "
-               :placeholder="$t('M.forgetPassword_hint5')"
+               :placeholder="$t('M.login_welcome_register_advertisement')"
                :disabled="inviterDisabled"
              >
            </div>
@@ -819,7 +819,7 @@ export default {
               return 1
             case 1:
               // 请输入手机号
-              this.setErrorMsg(this.$t('M.comm_please_enter') + this.$t('M.user_security_phone'))
+              this.setErrorMsg(this.$t('M.login_tips_enter_phone'))
               this.$forceUpdate()
               return 0
           }
@@ -833,12 +833,12 @@ export default {
               return 1
             case 1:
               // 请输入邮箱地址
-              this.setErrorMsg(this.$t('M.comm_please_enter') + this.$t('M.user_security_email') + this.$t('M.comm_site'))
+              this.setErrorMsg(this.$t('M.login_please_input3'))
               this.$forceUpdate()
               return 0
             case 2:
               // 请输入正确的邮箱地址
-              this.setErrorMsg(this.$t('M.comm_please_enter') + this.$t('M.user_security_correct') + this.$t('M.user_security_email'))
+              this.setErrorMsg(this.$t('M.login_please_input4'))
               this.$forceUpdate()
               return 0
           }
@@ -847,7 +847,7 @@ export default {
         case 3:
           if (!targetNum) {
             // 请输入 短信验证码 邮箱验证码
-            const str = this.$t('M.comm_please_enter') + (!this.activeMethod ? this.$t('M.forgetPassword_hint10') : this.$t('M.forgetPassword_hint11'))
+            const str = (!this.activeMethod ? this.$t('M.login_please_input1') : this.$t('M.login_please_input2'))
             this.setErrorMsg(str)
             this.$forceUpdate()
             return 0
@@ -1223,10 +1223,7 @@ export default {
         >.title{
           position: absolute;
           top:-20%;
-          // left:36%;
-          // width:104px;
           left:36%;
-          // width:104px;
           height:35px;
           font-size:26px;
           font-family:MicrosoftYaHei;

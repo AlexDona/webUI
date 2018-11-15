@@ -32,6 +32,7 @@ export const common = {
   'comm_nationality': '国籍',
   // 列表类型
   'comm_currency': '币种',
+  'comm_currency_name': '币种名称',
   'comm_coin': '法币',
   'comm_count': '数量',
   'comm_balance': '余额',
@@ -48,6 +49,7 @@ export const common = {
   'comm_not': '未',
   'comm_already': '已',
   'comm_make_bargain': '成交',
+  'comm_not_make_bargain': '未成交',
   'comm_rate': '率',
   'comm_order': '订单',
   'comm_mark': '号',
@@ -150,6 +152,7 @@ export const common = {
   'comm_theme': '主题',
   'comm_download': '下载',
   'comm_help_center': '帮助中心',
+  'comm_Client_Downloads': '客户端下载',
   'comm_api_doc': 'API文档',
   'comm_currency_info': '币种资料',
   'comm_about': '关于',

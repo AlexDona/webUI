@@ -228,6 +228,7 @@ export const personal = {
   'user_coin': 'Coin',
   'user_coin_bring_together': 'Match',
   'user_coin_appoint_single': 'Bill',
+  'user_coin_appoint_single_stle': 'BillType',
   'user_coin_rental': 'lump sum',
   'user_coin_start_stop': 'Start and stop',
   'user_coin_entrust': 'Entrust',

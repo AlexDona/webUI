@@ -45,6 +45,7 @@ export const common = {
   'comm_not': 'Not ',
   'comm_already': 'Has',
   'comm_make_bargain': 'Trade',
+  'comm_not_make_bargain': 'Not Trade',
   'comm_rate': 'Rate',
   'comm_order': 'Order',
   'comm_mark': 'Number',
@@ -150,6 +151,7 @@ export const common = {
   'comm_theme': 'theme',
   'comm_download': 'Download',
   'comm_help_center': 'Help Center',
+  'comm_Client_Downloads': 'APP download',
   'comm_api_doc': 'API Doc',
   'comm_currency_info': 'Asset Introduction',
   'comm_about': 'About Us',
@@ -180,6 +182,7 @@ export const common = {
   'common_friendly_link': 'Link',
   // 'comm_currency': 'Authentication type',
   'comm_currency': 'Currency',
+  'comm_currency_name': 'Currency Name',
   // 'comm_count': 'Sum'
   'comm_count': 'Amount',
   // 底部增加

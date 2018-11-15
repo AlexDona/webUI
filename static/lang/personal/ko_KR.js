@@ -228,6 +228,7 @@ export const personal = {
   'user_coin': '동전',
   'user_coin_bring_together': '경기',
   'user_coin_appoint_single': '빌',
+  'user_coin_appoint_single_stle': '주문 유형',
   'user_coin_rental': '합계',
   'user_coin_start_stop': '시작 및 중지',
   'user_coin_entrust': '위원회',

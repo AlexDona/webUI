@@ -236,6 +236,7 @@ export const personal = {
   'user_coin': '币币',
   'user_coin_bring_together': '撮合',
   'user_coin_appoint_single': '委单',
+  'user_coin_appoint_single_stle': '委单类型',
   'user_coin_rental': '总额',
   'user_coin_start_stop': '起止',
   'user_coin_entrust': '委托',

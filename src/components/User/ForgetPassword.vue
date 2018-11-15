@@ -7,7 +7,7 @@
     <div class="inner-box">
       <div class="title">
         <!-- 找回密码 -->
-        {{$t('M.forgetPassword_findBack')}}{{$t('M.comm_loginpassword')}}
+        {{$t('M.login_forgot_pwd_find1')}}
       </div>
       <!--步骤条-->
       <div class="step-box">
@@ -18,7 +18,7 @@
           <div class="line"></div>
           <p class="step-number">1</p>
           <!-- 填写账户名 -->
-          <p class="step-desc">{{$t('M.forgetPassword_inputname')}}</p>
+          <p class="step-desc">{{$t('M.login_forgot_pwd_find2')}}</p>
         </div>
         <div
           class="step-item"
@@ -28,7 +28,7 @@
           <p class="step-number">2</p>
           <!-- 验证身份 -->
           <p class="step-desc">
-            {{$t('M.login_verify')}}{{$t('M.forgetPassword_rank')}}
+            {{$t('M.login_forgot_pwd_find3')}}
           </p>
         </div>
         <div
@@ -39,7 +39,7 @@
           <p class="step-number">3</p>
           <p class="step-desc">
             <!--设置新密码-->
-            {{ $t('M.comm_set') }}{{ $t('M.forgetPassword_new_password') }}
+            {{ $t('M.login_forgot_pwd_find4') }}
           </p>
         </div>
         <div

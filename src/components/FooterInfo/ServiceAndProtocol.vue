@@ -82,7 +82,7 @@
             </el-tab-pane>
             <!--交易须知-->
             <el-tab-pane
-              label="交易须知"
+              :label="$t('M.otc_index_tradeKnow')"
               name="TradingWraning"
             >
               <div class="tab-content">

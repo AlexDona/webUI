@@ -57,7 +57,8 @@
               {{$t('M.comm_download')}}
             </dt>
             <dd class="dd-item">
-              <router-link to="/guideOfDownload">客户端下载</router-link>
+              <!-- 客户端下载 -->
+              <router-link to="/guideOfDownload">{{$t('M.comm_Client_Downloads')}}</router-link>
             </dd>
             <dd
               class="dd-item"
@@ -144,7 +145,7 @@
               @click="jumpToOtherPage('/ServiceAndProtocol','TradingWarning')"
             >
               <!--交易须知-->
-              交易须知
+              {{$t('M.otc_index_tradeKnow')}}
             </dd>
           </dl>
         </div>
