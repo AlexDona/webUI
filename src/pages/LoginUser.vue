@@ -1222,7 +1222,9 @@ export default {
           top:-25%;
           // left:36%;
           // width:104px;
-          left:36%;
+          min-width: 220px;
+          left: 22%;
+
           // width:104px;
           height:35px;
           font-size:26px;
@@ -1232,6 +1234,7 @@ export default {
           background:linear-gradient(81deg,rgba(77,122,255,1) 25.4638671875%, rgba(58,184,255,1) 100%);
           -webkit-background-clip:text;
           -webkit-text-fill-color:transparent;
+          text-align: center;
         }
       }
       >.pc-box {

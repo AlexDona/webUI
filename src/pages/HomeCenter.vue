@@ -1,7 +1,6 @@
 <template>
   <!--首页盒子-->
   <div class="home-box home">
-
     <!--banner-->
     <keep-alive>
       <BannerHome/>

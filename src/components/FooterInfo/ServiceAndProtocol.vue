@@ -99,7 +99,10 @@
 </template>
 <!--请严格按照如下书写书序-->
 <script>
-import {getServiceProtocolData} from '../../utils/commonFunc'
+import {
+  getServiceProtocolData,
+  getNestedData
+} from '../../utils/commonFunc'
 import Content from './ServiceAndProtocolContent'
 import CurrencyInformation from './CurrencyInformation'
 import {createNamespacedHelpers, mapState} from 'vuex'
@@ -129,7 +132,8 @@ export default {
   beforeRouteUpdate () {},
   methods: {
     ...mapMutations([
-      'CHANGE_PROTOCOL_DATA'
+      'CHANGE_PROTOCOL_DATA',
+      'CHANGE_FOOTER_ACTIVENAME'
     ]),
     changeTab (e) {
       console.log(e.name)
@@ -167,7 +171,7 @@ export default {
       }
       getServiceProtocolData(this, params, (data) => {
         if (data) {
-          const targetData = data.data.data[0]
+          const targetData = getNestedData(data, 'data.data[0]')
           console.log(targetData)
           // avatar: "",
           // content: "",
@@ -180,6 +184,7 @@ export default {
           // termsTypeName: "条款说明",
           // updateTime: "2018-09-18 15:36:49",
           // version: 1,
+          console.log(this.termsTypeIds)
           switch (this.termsTypeIds) {
             case 1:
               this.CHANGE_PROTOCOL_DATA({
@@ -242,14 +247,19 @@ export default {
   },
   watch: {
     serviceActiveName (newVal) {
-      // console.log(newVal)
+      console.log(newVal)
     },
     activeName (newVal) {
-      // console.log(newVal)
+      console.log(newVal)
+      this.CHANGE_FOOTER_ACTIVENAME({
+        type: '/ServiceAndProtocol',
+        activeName: newVal
+      })
     },
     // 任增加：改变语言重新请求对应语言的国际化内容
     language (newVal) {
-      this.getServiceProtocolData()
+      console.log(this.activeName)
+      this.changeTab({name: this.activeName})
     }
   }
 }
