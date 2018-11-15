@@ -15,7 +15,8 @@ const state = {
     privacyClauseData: {}, // 隐私条款
     APIDocumentData: {}, // API文档
     rateData: {}, // 费率
-    newsDetailJumpId: '' // 首页跳转公告id
+    newsDetailJumpId: '', // 首页跳转公告id
+    tradingWarningData: {} // 交易须知
   },
   // news
   end: ''// 占位

@@ -144,7 +144,7 @@
                 'down':innerItem.chg<0
               }"
             >
-              {{innerItem.chg}}
+              {{keep2Num(innerItem.chg)}}%
             </span>
           </dd>
         </dl>
@@ -155,6 +155,7 @@
 <!--请严格按照如下书写书序-->
 <script>
 import {mapState} from 'vuex'
+import {keep2Num} from '../../utils'
 // import {returnAjaxMsg} from '../../utils/commonFunc'
 export default {
   components: {
@@ -183,6 +184,10 @@ export default {
         sortMethod,
         list
       })
+    },
+    // 截取2位小数
+    keep2Num (number) {
+      return keep2Num(number)
     },
     changeActiveSymbol (activeSymbol, previousSymbol) {
       this.$emit('changeActiveSymbol', {

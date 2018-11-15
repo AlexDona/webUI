@@ -187,24 +187,25 @@
                       height:30px;
                       line-height: 30px;
                       margin:10px auto;
+                      white-space:nowrap;
                     "
             >
               <span
                 v-show="s.row.chg>0"
                 style="color:#D45858;"
               >
-                {{s.row.chg}}
+                {{keep2Num(s.row.chg)}}%
               </span>
               <span
                 v-show="s.row.chg==0"
               >
-                {{s.row.chg}}
+                {{keep2Num(s.row.chg)}}%
               </span>
               <span
                 v-show="s.row.chg<0"
                 style="color:#008069;"
               >
-               {{s.row.chg}}
+               {{keep2Num(s.row.chg)}}%
               </span>
             </div>
           </template>

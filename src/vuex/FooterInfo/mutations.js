@@ -25,26 +25,16 @@ export default {
     legislationExplainData,
     privacyClauseData,
     APIDocumentData,
-    rateData
+    rateData,
+    tradingWarningData
   }) {
-    if (userProtocolData) {
-      state.serviceProtocolData.userProtocolData = userProtocolData
-    }
-    if (clauseExplainData) {
-      state.serviceProtocolData.clauseExplainData = clauseExplainData
-    }
-    if (legislationExplainData) {
-      state.serviceProtocolData.legislationExplainData = legislationExplainData
-    }
-    if (privacyClauseData) {
-      state.serviceProtocolData.privacyClauseData = privacyClauseData
-    }
-    if (APIDocumentData) {
-      state.serviceProtocolData.APIDocumentData = APIDocumentData
-    }
-    if (rateData) {
-      state.serviceProtocolData.rateData = rateData
-    }
+    state.serviceProtocolData.userProtocolData = userProtocolData || {}
+    state.serviceProtocolData.clauseExplainData = clauseExplainData || {}
+    state.serviceProtocolData.legislationExplainData = legislationExplainData || {}
+    state.serviceProtocolData.privacyClauseData = privacyClauseData || {}
+    state.serviceProtocolData.APIDocumentData = APIDocumentData || {}
+    state.serviceProtocolData.rateData = rateData || {}
+    state.serviceProtocolData.tradingWarningData = tradingWarningData || {}
   },
   [CHANGE_NEWS_DETAIL_JUMP_ID] (state, data) {
     state.newsDetailJumpId = data

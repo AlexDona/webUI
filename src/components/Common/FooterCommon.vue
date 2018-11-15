@@ -139,6 +139,13 @@
               <!--费率-->
               {{$t('M.comm_rate1')}}
             </dd>
+            <dd
+              class="dd-item"
+              @click="jumpToOtherPage('/ServiceAndProtocol','TradingWarning')"
+            >
+              <!--交易须知-->
+              交易须知
+            </dd>
           </dl>
         </div>
       </div>

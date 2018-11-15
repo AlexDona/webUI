@@ -22,7 +22,9 @@
               name="UserProtocol"
             >
               <div class="tab-content">
-                <UserProtocol/>
+                <Content
+                  :content="userProtocolData.content"
+                />
               </div>
             </el-tab-pane>
             <!--法律声明-->
@@ -31,7 +33,9 @@
               name="LegislationExplain"
             >
               <div class="tab-content">
-                <LegislationExplain/>
+                <Content
+                  :content="legislationExplainData.content"
+                />
               </div>
             </el-tab-pane>
             <!--隐私条款-->
@@ -40,7 +44,9 @@
               name="PrivacyClause"
             >
               <div class="tab-content">
-                <PrivacyClause/>
+                <Content
+                  :content="privacyClauseData.content"
+                />
               </div>
             </el-tab-pane>
             <!--API文档-->
@@ -49,7 +55,9 @@
               name="APIDocument"
             >
               <div class="tab-content">
-                <APIDocument/>
+                <Content
+                  :content="APIDocumentData.content"
+                />
               </div>
             </el-tab-pane>
             <!--币种资料-->
@@ -67,7 +75,20 @@
               name="Rate"
             >
               <div class="tab-content">
-                <Rate/>
+                <Content
+                  :content="rateData.content"
+                />
+              </div>
+            </el-tab-pane>
+            <!--交易须知-->
+            <el-tab-pane
+              label="交易须知"
+              name="TradingWraning"
+            >
+              <div class="tab-content">
+                <Content
+                  :content="legislationExplainData.content"
+                />
               </div>
             </el-tab-pane>
           </el-tabs>
@@ -79,24 +100,14 @@
 <!--请严格按照如下书写书序-->
 <script>
 import {getServiceProtocolData} from '../../utils/commonFunc'
-import Rate from './Rate'
-import APIDocument from './APIDocument'
-import PrivacyClause from './PrivacyClause'
-import LegislationExplain from './LegislationExplain'
-// import ClauseExplain from './ClauseExplain'
-import UserProtocol from './UserProtocol'
+import Content from './ServiceAndProtocolContent'
 import CurrencyInformation from './CurrencyInformation'
 import {createNamespacedHelpers, mapState} from 'vuex'
 const {mapMutations} = createNamespacedHelpers('footerInfo')
 export default {
   components: {
     CurrencyInformation,
-    UserProtocol,
-    // ClauseExplain,
-    LegislationExplain,
-    PrivacyClause,
-    APIDocument,
-    Rate
+    Content
   },
   // props,
   data () {
@@ -141,6 +152,10 @@ export default {
           break
         case 'Rate':
           this.termsTypeIds = 5
+          break
+        // 交易须知
+        case 'TradingWarning':
+          this.termsTypeIds = 14
           break
       }
       this.getServiceProtocolData()
@@ -196,6 +211,11 @@ export default {
                 clauseExplainData: targetData
               })
               break
+            case 14:
+              this.CHANGE_PROTOCOL_DATA({
+                tradingWarningData: targetData
+              })
+              break
           }
         }
       })
@@ -206,7 +226,12 @@ export default {
     ...mapState({
       theme: state => state.common.theme,
       language: state => state.common.language,
-      serviceActiveName: state => state.footerInfo.serviceActiveName
+      serviceActiveName: state => state.footerInfo.serviceActiveName,
+      legislationExplainData: state => state.footerInfo.serviceProtocolData.legislationExplainData,
+      userProtocolData: state => state.footerInfo.serviceProtocolData.userProtocolData,
+      privacyClauseData: state => state.footerInfo.serviceProtocolData.privacyClauseData,
+      rateData: state => state.footerInfo.serviceProtocolData.rateData,
+      APIDocumentData: state => state.footerInfo.serviceProtocolData.APIDocumentData
     }),
     windowHeight () {
       return window.innerHeight
