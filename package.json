@@ -18,11 +18,11 @@
   "dependencies": {
     "element-ui": "^2.4.5",
     "vue": "^2.5.2",
-    "vue-router": "^3.0.1"
+    "vue-router": "^3.0.1",
+    "vue-slider-component": "^2.7.6",
+    "vue-concise-slider": "^2.4.8"
   },
   "devDependencies": {
-    "vue-slider-component": "^2.7.6",
-    "vue-concise-slider": "^2.4.8",
     "@xkeshi/vue-qrcode": "^1.0.0",
     "lrz": "^4.9.40",
     "vue-lazyload": "^1.2.6",
