@@ -356,14 +356,15 @@ export default {
       console.log(data)
       switch (data.tradeType) {
         case 'KLINE':
-          console.log(data.type)
+          console.log(data.data[0])
           // console.log(' >> sub:', data.type)
           const klineData = data.data[0]
           console.log(klineData.close)
           const ticker = `${this.symbol}-${this.interval}`
           // console.log(this.interval)
+          console.log(this.cacheData[ticker][this.cacheData[ticker].length - 1].time - klineData.time)
           const barsData = {
-            time: klineData.time,
+            time: klineData.time - 0,
             // time: this.lastTime,
             open: klineData.open,
             high: klineData.high,
