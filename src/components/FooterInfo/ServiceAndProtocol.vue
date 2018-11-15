@@ -171,7 +171,7 @@ export default {
       }
       getServiceProtocolData(this, params, (data) => {
         if (data) {
-          const targetData = data.data.data[0]
+          const targetData = getNestedData(data, 'data.data[0]')
           console.log(targetData)
           // avatar: "",
           // content: "",

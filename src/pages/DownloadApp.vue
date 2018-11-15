@@ -98,22 +98,17 @@ export default {
         this.isAndroid = u.indexOf('Android') > -1 || u.indexOf('Adr') > -1 // android终端
         this.isIOS = !!u.match(/\(i[^;]+;( U;)? CPU.+Mac OS X/) // ios终端
         if (this.isAndroid) {
-          alert('android')
-          // scheme: //fubt.com/
+          // alert('android')
+          window.location.href = 'scheme: //fubt.com/'
           this.downloadUrl = getNestedData(data, 'data.data.android')
         } else if (this.isIOS) {
-          alert('ios')
+          // alert('ios')
           window.location = 'com.top.Fubt://' // 打开某手机上的某个app应用
           this.downloadUrl = getNestedData(data, 'data.data.ios')
         }
       }
     },
     downloadApp () {
-      if (this.isIOS) {
-
-      } else if (this.isAndroid){
-
-      }
       this.$refs['download'].click()
     }
   },
