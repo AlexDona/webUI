@@ -399,6 +399,7 @@ export default {
           }
         }
       }
+
       // type: 0 新手机发验证码，1： 当前手机
       if (!type && this.newPhoneIsExistStatus) {
         this.$message({
@@ -413,15 +414,15 @@ export default {
           return false
         }
       } else {
-        console.log(2)
         if (this.disabledOfOldPhoneBtn || this.disabledOfEmailBtn) {
-          console.log(this.disabledOfOldPhoneBtn)
-          console.log(this.disabledOfEmailBtn)
           return false
         }
       }
-      let params = {
-        userId: this.userInfo.userId
+      let params = {}
+      if (!type) {
+        params.nationCode = this.amendDataPhone.areaCodeValue
+      } else {
+        params.userId = this.userInfo.userId
       }
       if (!this.securityCenter.isPhoneBind) {
         console.log(2)
@@ -429,6 +430,7 @@ export default {
           // 当是绑定手机时给收入新手机号发验证码
           case 0:
             params.phone = this.bindingDataPhone.bindingNewPhoneAccounts
+            // params.nationCode =
             break
           case 1:
             params.email = this.userInfoDetail.email

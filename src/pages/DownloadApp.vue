@@ -109,6 +109,7 @@ export default {
       }
     },
     downloadApp () {
+      this.downloadUrl = 'https://web-ui.oss-cn-hongkong.aliyuncs.com/resources/vuex3.0.1.min.js'
       this.$refs['download'].click()
     }
   },
