@@ -280,7 +280,7 @@ import IconFontCommon from '../Common/IconFontCommon'
 import {mapState} from 'vuex'
 import {timeFilter} from '../../utils'
 import {getFinancialManagement, cancleInvestment} from '../../utils/api/OTC'
-import {returnAjaxMsg} from '../../utils/commonFunc'
+import {returnAjaxMsg, getNestedData} from '../../utils/commonFunc'
 export default {
   components: {
     FinanceBrokenLine,
@@ -376,7 +376,8 @@ export default {
         return false
       } else {
         this.loading = false
-        let getData = data.data.data
+        // let getData = data.data.data
+        let getData = getNestedData(data, 'data.data')
         if (this.activeName == '1') {
           // 存币记录列表赋值
           this.investList = getData.userFinancialManagementRecord.list

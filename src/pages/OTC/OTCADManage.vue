@@ -297,7 +297,7 @@ import {
 } from '../../utils/api/OTC'
 import IconFontCommon from '../../components/Common/IconFontCommon'
 import {timeFilter} from '../../utils'
-import {returnAjaxMsg} from '../../utils/commonFunc'
+import {returnAjaxMsg, getNestedData} from '../../utils/commonFunc'
 import {mapState} from 'vuex'
 export default {
   components: {
@@ -415,7 +415,8 @@ export default {
       } else {
         // 返回数据正确的逻辑 渲染列表
         this.loading = false
-        let ADData = data.data.data
+        // let ADData = data.data.data
+        let ADData = getNestedData(data, 'data.data')
         this.ADList = ADData.list
         // 分页
         this.totalPages = ADData.pages - 0
@@ -451,7 +452,8 @@ export default {
         return false
       } else {
         // 返回数据正确的逻辑
-        this.ADManageMarketList = data.data.data
+        // this.ADManageMarketList = data.data.data
+        this.ADManageMarketList = getNestedData(data, 'data.data')
       }
     },
     // 7.0 可用法币查询
@@ -463,7 +465,8 @@ export default {
         return false
       } else {
         // 返回数据正确的逻辑
-        this.ADManageCurrencyId = data.data.data
+        // this.ADManageCurrencyId = data.data.data
+        this.ADManageCurrencyId = getNestedData(data, 'data.data')
       }
     },
     // 8.0 一键下架所有广告 二次确认弹出框

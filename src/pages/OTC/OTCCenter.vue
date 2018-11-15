@@ -436,7 +436,7 @@ import OTCCompletedOrder from '../../components/OTC/OTCCompletedOrder'
 import OTCCanceledOrder from '../../components/OTC/OTCCanceledOrder'
 import OTCFreezingOrder from '../../components/OTC/OTCFreezingOrder'
 import OTCEntrustOrder from '../../components/OTC/OTCEntrustOrder'
-import {returnAjaxMsg, reflashUserInfo} from '../../utils/commonFunc'
+import {returnAjaxMsg, reflashUserInfo, getNestedData} from '../../utils/commonFunc'
 import {createNamespacedHelpers, mapState} from 'vuex'
 const {mapMutations} = createNamespacedHelpers('OTC')
 export default {
@@ -679,7 +679,8 @@ export default {
         return false
       } else {
         // 返回数据正确的逻辑
-        this.IWantToBuySellArr = data.data.data
+        // this.IWantToBuySellArr = data.data.data
+        this.IWantToBuySellArr = getNestedData(data, 'data.data')
         // console.log(this.IWantToBuySellArr.length)
         if (this.IWantToBuySellArr.length) {
           this.CHANGE_OTC_AVAILABLE_CURRENCY_NAME(this.IWantToBuySellArr[0].name)
@@ -700,7 +701,8 @@ export default {
         return false
       } else {
         // 返回数据正确的逻辑
-        this.availableCurrencyId = data.data.data
+        // this.availableCurrencyId = data.data.data
+        this.availableCurrencyId = getNestedData(data, 'data.data')
         this.activitedCurrencyId = this.availableCurrencyId[0].id
         this.activitedCurrencyName = this.availableCurrencyId[0].shortName
         // 3.0 otc主页面查询挂单列表:
@@ -732,7 +734,8 @@ export default {
       } else {
         // 返回数据正确的逻辑
         this.loading = false
-        let orderListData = data.data.data
+        // let orderListData = data.data.data
+        let orderListData = getNestedData(data, 'data.data')
         this.onlineBuySellTableList = orderListData.list
         // 分页
         this.totalPages = orderListData.pages - 0

@@ -159,7 +159,7 @@
 <script>
 import {timeFilter} from '../../utils'
 import {getOTCFrezzingOrders} from '../../utils/api/OTC'
-import {returnAjaxMsg} from '../../utils/commonFunc'
+import {returnAjaxMsg, getNestedData} from '../../utils/commonFunc'
 import {mapState} from 'vuex'
 export default {
   components: {},
@@ -214,7 +214,8 @@ export default {
       } else {
         // 返回数据正确的逻辑
         this.loading = false
-        let otcFreezingOrderListData = data.data.data
+        // let otcFreezingOrderListData = data.data.data
+        let otcFreezingOrderListData = getNestedData(data, 'data.data')
         this.otcFreezingOrderList = otcFreezingOrderListData.list
         // 分页
         this.totalPages = otcFreezingOrderListData.pages - 0

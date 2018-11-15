@@ -460,7 +460,7 @@ import {
 // 引入组件
 import IconFontCommon from '../../components/Common/IconFontCommon'
 // 引入提示信息
-import {returnAjaxMsg} from '../../utils/commonFunc'
+import {returnAjaxMsg, getNestedData} from '../../utils/commonFunc'
 // 引入全局变量和方法
 import {createNamespacedHelpers, mapState} from 'vuex'
 const {mapMutations} = createNamespacedHelpers('OTC')
@@ -589,7 +589,8 @@ export default {
         return false
       } else {
         this.fullscreenLoading = false
-        let detailsData = data.data.data
+        // let detailsData = data.data.data
+        let detailsData = getNestedData(data, 'data.data')
         this.activitedCoinId = detailsData.coinId // 可用币种id
         this.activitedCurrencyId = detailsData.currencyId // 法币id
         this.activitedBuySellStyle = detailsData.entrustType // 挂单类型
@@ -625,7 +626,8 @@ export default {
         // 返回数据正确的逻辑
         this.fullscreenLoading = false
         // 1.0 可用币种列表
-        let availableCoinListData = data.data.data
+        // let availableCoinListData = data.data.data
+        let availableCoinListData = getNestedData(data, 'data.data')
         this.availableCoinList = availableCoinListData.coinlist
         this.availableCoinList.forEach(item => {
           if (availableCoinListData.otcCoinQryResponse.coinId === item.coinId) {

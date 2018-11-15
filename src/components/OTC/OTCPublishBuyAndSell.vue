@@ -414,7 +414,7 @@ import {
   addOTCPutUpOrders,
   getOTCCoinInfo
 } from '../../utils/api/OTC'
-import {returnAjaxMsg} from '../../utils/commonFunc'
+import {returnAjaxMsg, getNestedData} from '../../utils/commonFunc'
 import {createNamespacedHelpers, mapState} from 'vuex'
 import {
   timeFilter,
@@ -548,7 +548,8 @@ export default {
       } else {
         // 返回数据正确的逻辑
         this.fullscreenLoading = false
-        let detailsData = data.data.data
+        // let detailsData = data.data.data
+        let detailsData = getNestedData(data, 'data.data')
         // 1.0 可用币种列表
         this.coinStyleList = detailsData.coinlist
         this.coinStyleList.forEach(item => {

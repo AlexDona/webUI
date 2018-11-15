@@ -306,7 +306,7 @@ export const fromApi = {
   'user-fail-bank-count-error': '最大3つの支払い方法を開く',
   'otc_failure_0080': '取引通貨は無効です',
   'otc_failure_0081': '通貨は無効です',
-  'coin_apply': 'コインの使用',
+  'coin_apply': 'トークンリスト申請',
   'session_timeout': 'ログインが切れました。もう一度ログインしてください。',
   'user-fail-login-disable': 'アカウントは無効です',
   'user-email-fail-often': 'メールが頻繁に送信され、120秒後に再送信してください',

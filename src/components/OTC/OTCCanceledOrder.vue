@@ -224,7 +224,10 @@
 import {timeFilter} from '../../utils'
 import {mapState} from 'vuex'
 import {getOTCCanceledOrders} from '../../utils/api/OTC'
-import {returnAjaxMsg} from '../../utils/commonFunc'
+import {
+  returnAjaxMsg,
+  getNestedData
+} from '../../utils/commonFunc'
 export default {
   components: {},
   // props,
@@ -278,7 +281,8 @@ export default {
       } else {
         // 返回数据正确的逻辑
         this.loading = false
-        let canceledOrderData = data.data.data
+        // let canceledOrderData = data.data.data
+        let canceledOrderData = getNestedData(data, 'data.data')
         this.otcCanceledOrderList = canceledOrderData.list
         // 分页
         this.totalPages = canceledOrderData.pages - 0
