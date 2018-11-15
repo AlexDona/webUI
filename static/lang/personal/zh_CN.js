@@ -153,6 +153,7 @@ export const personal = {
   'user_security_last_login_time': '上次登录时间',
   'user_security_affiliation': '归属',
   'user_security_binding': '绑定',
+  'user_security_binding_IP': '绑定IP地址',
   'user_security_unbundle': '解绑',
   'user_security_in_tie': '换绑',
   'user_security_login': '登录',

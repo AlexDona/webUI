@@ -43,12 +43,12 @@
           </span>
             <!-- <span class="flex1"> -->
             <span>
-               <el-progress
-                 :text-inside="false"
-                 :stroke-width="5"
-                 :percentage="person"
-               >
-               </el-progress>
+              <el-progress
+                :text-inside="false"
+                :stroke-width="5"
+                :percentage="person"
+              >
+              </el-progress>
             </span>
             <!-- <span class="flex1 security-verification"> -->
             <span class="security-verification">
@@ -88,7 +88,7 @@
       </header>
       <div class="security-setting-box">
         <!--安全邮箱-->
-        <div class="security-type setting-type-box margin20 padding-tb20 display-flex">
+        <div class="security-type setting-type-box margin20 padding-tb18 display-flex">
           <div class="security-type-icon line-height40">
             <IconFontCommon
               class="font-size26"
@@ -130,7 +130,7 @@
                 @click.prevent="showStatusVerificationClose('email', 'disable')"
               >
                 <!--关闭验证-->
-                  {{ $t('M.user_security_off') }}
+                {{ $t('M.user_security_off') }}
               </span>
             </button>
             <button
@@ -145,7 +145,7 @@
           </div>
         </div>
         <!--安全手机-->
-        <div class="security-type setting-type-box margin20 padding-tb20 display-flex">
+        <div class="security-type setting-type-box margin20 padding-tb18 display-flex">
           <div class="security-type-icon line-height40">
             <IconFontCommon
               class="font-size30"
@@ -206,7 +206,7 @@
           </div>
         </div>
         <!--谷歌验证-->
-        <div class="security-type setting-type-box margin20 padding-tb20 display-flex">
+        <div class="security-type setting-type-box margin20 padding-tb18 display-flex">
           <div class="security-type-icon line-height40">
             <IconFontCommon
               class="font-size26 icon-success"
@@ -267,7 +267,7 @@
           </div>
         </div>
         <!--交易密码-->
-        <div class="security-type setting-type-box margin20 padding-tb20 display-flex">
+        <div class="security-type setting-type-box margin20 padding-tb18 display-flex">
           <div class="security-type-icon line-height40">
             <IconFontCommon
               class="font-size26 icon-success"
@@ -313,7 +313,7 @@
           </div>
         </div>
         <!--登录密码-->
-        <div class="security-type margin20 padding-tb20 display-flex">
+        <div class="security-type margin20 padding-tb18 display-flex">
           <div class="security-type-icon line-height40">
             <IconFontCommon
               class="font-size26 icon-success"
@@ -521,7 +521,8 @@
           <div class="tab-list">
             <el-table
               :data="logonRecord"
-              style="width: 100%">
+              style="width: 100%"
+            >
               <!--登陆时间-->
               <el-table-column
                 :label="$t('M.user_security_login') + $t('M.comm_time')"

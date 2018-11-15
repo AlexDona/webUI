@@ -213,7 +213,7 @@
                       </li>
                       <li @click="stateReturnSuperior('invite')">
                         <!--邀请推广-->
-                        {{$t('M.comm_user_invite')}}{{$t('M.comm_user_generalize')}}
+                        {{$t('M.comm_user_invite_generalize')}}
                       </li>
                       <li @click="stateReturnSuperior('api')">
                         <!--API管理-->

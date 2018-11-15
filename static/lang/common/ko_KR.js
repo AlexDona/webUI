@@ -128,6 +128,7 @@ export const common = {
   'comm_user_receiving_set': '컬렉션 설정',
   'comm_user_invite': '초대장',
   'comm_user_generalize': '프로모션',
+  'comm_user_invite_generalize': '홍보 초대장',
   'comm_user_api_management': 'API 관리',
   'comm_all': '모두',
   'comm_alipay': 'Alipay',

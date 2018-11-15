@@ -147,6 +147,7 @@ export const personal = {
   'user_security_last_login_time': 'Last Login Time',
   'user_security_affiliation': 'Attribution',
   'user_security_binding': 'Binding ',
+  'user_security_binding_IP': 'Binding IP Address',
   'user_security_unbundle': 'Untied',
   'user_security_in_tie': 'Change tie',
   'user_security_login': 'Login ',
