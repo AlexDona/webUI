@@ -24,11 +24,6 @@
         v-if="vipPriceInfo1"
       >
         <div class="content-main-box">
-          <!--<div-->
-            <!--class="content-box"-->
-            <!--v-if="userInfo.userInfo.level == 'VIP1'"-->
-          <!--&gt;-->
-          <!--</div>-->
           <div
             class="content-module cursor-pointer"
             :class="{ active1:activeStatus < 1, disable:activeStatus > 0}"
@@ -38,7 +33,6 @@
             </p>
             <p class="content-discount line-height50 text-align-c font-size16">
               <!--手续费折扣-->
-              <!-- {{ $t('M.comm_service_charge') }}{{ $t('M.user_vip_discount') }} -->
               {{ $t('M.user_vip_fee_discount') }}
             </p>
             <p class="content-text line-height50 text-align-c font-size18">
@@ -92,7 +86,6 @@
             </p>
             <p class="content-discount line-height50 text-align-c font-size16">
               <!--手续费折扣-->
-              <!-- {{ $t('M.comm_service_charge') }}{{ $t('M.user_vip_discount') }} -->
               {{ $t('M.user_vip_fee_discount') }}
             </p>
             <p class="content-text line-height50 text-align-c font-size18">
@@ -146,7 +139,6 @@
             </p>
             <p class="content-discount line-height50 text-align-c font-size16">
               <!--手续费折扣-->
-              <!-- {{ $t('M.comm_service_charge') }}{{ $t('M.user_vip_discount') }} -->
               {{ $t('M.user_vip_fee_discount') }}
             </p>
             <p class="content-text line-height50 text-align-c font-size18">
@@ -200,7 +192,6 @@
             </p>
             <p class="content-discount line-height50 text-align-c font-size16">
               <!--手续费折扣-->
-              <!-- {{ $t('M.comm_service_charge') }}{{ $t('M.user_vip_discount') }} -->
               {{ $t('M.user_vip_fee_discount') }}
             </p>
             <p class="content-text line-height50 text-align-c font-size18">
@@ -254,7 +245,6 @@
             </p>
             <p class="content-discount line-height50 text-align-c font-size16">
               <!--手续费折扣-->
-              <!-- {{ $t('M.comm_service_charge') }}{{ $t('M.user_vip_discount') }} -->
               {{ $t('M.user_vip_fee_discount') }}
             </p>
             <p class="content-text line-height50 text-align-c font-size18">

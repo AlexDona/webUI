@@ -6,16 +6,16 @@
     <header class="invitation-promotion-header personal-height40 line-height40 padding-left20 font-size16 background-color border-radius2">
       <span class="padding-left23 header-content">
         <!--邀请推广-->
-        {{ $t('M.comm_user_invite') }}{{ $t('M.comm_user_generalize') }}
+        {{ $t('M.comm_user_invite_generalize') }}
       </span>
     </header>
     <div class="invitation-promotion-main min-height500 margin-top9">
-      <!--推广信息-->
+      <!---邀请推广-->
       <div class="extension-info">
         <header class="extension-info-header line-height56 paddinglr20 border-radius2">
           <span class="font-size16 header-color">
-            <!--推广信息-->
-            {{ $t('M.comm_user_invite') }}{{ $t('M.comm_user_generalize') }}
+            <!---邀请推广-->
+            {{ $t('M.comm_user_invite_generalize') }}
           </span>
         </header>
         <div class="extension-info-content padding-top0">
@@ -578,7 +578,7 @@ export default {
                 >.code-copy {
                   text-align: center;
                   display: inline-block;
-                  width: 75px;
+                  width: 80px;
                   height: 26px;
                   line-height: 26px;
                   position: relative;

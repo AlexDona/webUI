@@ -146,6 +146,7 @@ export const personal = {
   'user_security_last_login_time': '마지막 로그인 시간',
   'user_security_affiliation': '기여',
   'user_security_binding': '바인딩',
+  'user_security_binding_IP': 'IP 주소 바인딩',
   'user_security_unbundle': '풀린',
   'user_security_in_tie': '넥타이 변경',
   'user_security_login': '로그인',

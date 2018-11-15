@@ -129,6 +129,7 @@ export const common = {
   'comm_user_receiving_set': '收款设置',
   'comm_user_invite': '邀请',
   'comm_user_generalize': '推广',
+  'comm_user_invite_generalize': '邀请推广',
   'comm_user_api_management': 'API管理',
   'comm_all': '全部',
   'comm_alipay': '支付宝',

@@ -38,7 +38,7 @@
               </el-form-item>
               <!--绑定IP地址-->
               <el-form-item
-                :label="$t('M.user_security_binding')+ 'IP' + $t('M.comm_site') + '：'"
+                :label="$t('M.user_security_binding_IP') + '：'"
               >
                 <input
                   type="text"

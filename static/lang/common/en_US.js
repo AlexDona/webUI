@@ -128,6 +128,7 @@ export const common = {
   'comm_user_receiving_set': 'Receive Settings',
   'comm_user_invite': 'Invitation',
   'comm_user_generalize': ' Promote',
+  'comm_user_invite_generalize': 'Invitation Promote',
   'comm_user_api_management': 'API Management',
   'comm_all': 'All',
   'comm_alipay': 'Alipay',
