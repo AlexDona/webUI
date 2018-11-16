@@ -240,7 +240,7 @@ export default {
           library_path: '/static/tradeview/charting_library/',
           disabled_features: disabledFeatures,
           enabled_features: [
-            'hide_left_toolbar_by_default' // 隐藏左侧边栏
+            // 'hide_left_toolbar_by_default' // 隐藏左侧边栏
           ],
           timezone: 'Asia/Shanghai',
           locale: options.language,
@@ -391,8 +391,8 @@ export default {
           console.log(depthData)
           if (depthData.sells && depthData.sells.list) {
             depthData.sells.list.reverse()
-            this.socketData.buyAndSellData = depthData
           }
+          this.socketData.buyAndSellData = depthData
           break
         // 深度图
         case 'DEPTHRENDER':
