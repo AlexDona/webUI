@@ -720,7 +720,7 @@ export default {
       sendMsgBtnText: 'M.forgetPassword_hint12', // 发送验证码
       sendMsgBtnDisabled: false,
       errorMsg: '', // 错误信息
-      isRegisterSuccess: false, // 注册成功
+      isRegisterSuccess: true, // 注册成功
       successCountDown: 3, // 成功倒计时
       registerSliderStatus: false, // 滑块验证显示状态
       /**
@@ -1595,7 +1595,7 @@ export default {
         border-radius:5px;
         font-size: 0.86453968rem;
         >span{
-          font-size: .3rem;
+          font-size: .8rem;
         }
       }
     }
