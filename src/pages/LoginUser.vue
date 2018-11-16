@@ -310,7 +310,9 @@
           v-if="!isScanSuccess"
         >
         <!-- 扫描安全登录 -->
-        <p class="inner-title">{{$t('M.login_scan')}}{{$t('M.login_safe')}}{{$t('M.comm_login')}}</p>
+        <p class="inner-title">
+          {{$t('M.login_scan_safe_login')}}
+        </p>
         <span
           @click="reflashErCode"
           class="cursor-pointer"
@@ -322,7 +324,9 @@
         </span>
 
         <!-- 请使用富比特APP扫码功能，扫码登录 -->
-        <p class="tips">{{$t('M.login_scanLogin')}}</p>
+        <p class="tips">
+          {{$t('M.login_scanLogin')}}
+        </p>
         </div>
         <!-- 扫码成功-->
         <div
