@@ -51,12 +51,12 @@
                   </span>
                 </div>
                 <el-collapse-transition>
-                  <div
+                  <divs
                     class="content"
                     v-show="helpShowStatusList[index]"
                     v-html="item.content"
                   >
-                  </div>
+                  </divs>
                 </el-collapse-transition>
               </div>
             </li>

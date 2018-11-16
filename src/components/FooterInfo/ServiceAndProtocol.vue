@@ -283,6 +283,7 @@ export default {
         >h1{
           font-size: 36px;
           color:#8BA0CA;
+          font-weight: 500;
           /*font-family:HYa4gj;*/
         }
         >p{

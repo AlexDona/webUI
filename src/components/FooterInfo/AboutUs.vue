@@ -76,11 +76,12 @@ export default {
         text-align: center;
         width:100%;
         background: url(../../assets/develop/about-us.png) no-repeat center center;
-        background-size: 102%;
+        background-size: 102% 100%;
         padding-top:100px;
         >h1{
           font-size: 36px;
           color:#338FF5;
+          font-weight: 500;
         }
         >p{
           font-size: 22px;
