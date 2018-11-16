@@ -375,7 +375,13 @@ export default {
             close: klineData.close,
             volume: klineData.volume
           }
-          this.cacheData[ticker][this.cacheData[ticker].length - 1] = barsData
+          let timeDiff = this.cacheData[ticker][this.cacheData[ticker].length - 1].time - klineData.time
+
+          if (!timeDiff) {
+            this.cacheData[ticker][this.cacheData[ticker].length - 1] = barsData
+          } else {
+            this.cacheData[ticker].push(barsData)
+          }
           this.datafeeds.barsUpdater.updateData()
           break
         // 买卖单
