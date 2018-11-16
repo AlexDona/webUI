@@ -4,15 +4,19 @@
   >
     <div
       id="tv_chart_container"
+      :class="{'day':theme == 'day','night':theme == 'night' }"
+      :style="{
+        opacity: !fullscreenLoading ? 1:0
+      }"
     >
     </div>
-    <!--<div-->
-      <!--class="loading-box"-->
-      <!--v-if="fullscreenLoading"-->
-      <!--v-loading.lock="fullscreenLoading"-->
-      <!--element-loading-background="#1c1f32"-->
-    <!--&gt;-->
-    <!--</div>-->
+    <div
+      class="loading-box"
+      v-if="fullscreenLoading"
+      v-loading.lock="fullscreenLoading"
+      element-loading-background="rgb(28, 31, 50)"
+    >
+    </div>
   </div>
 </template>
 
@@ -244,8 +248,8 @@ export default {
           toolbar_bg: 'transparent', // 工具栏背景色
           studies_overrides: studiesOverrides,
           overrides: Object.assign({}, overrides, {
-            'paneProperties.background': '#10172d', // 背景色
-            // 'paneProperties.background': options.paneProperties.background, // 背景色
+            // 'paneProperties.background': '#10172d', // 背景色
+            'paneProperties.background': options.paneProperties.background, // 背景色
             'paneProperties.vertGridProperties.color': options.paneProperties.vertGridPropertiesColor, // 列分割线
             'paneProperties.horzGridProperties.color': options.paneProperties.vertGridPropertiesColor // 行分割线
           }),
@@ -547,7 +551,7 @@ export default {
           this.fullscreenLoading = false
           this.loadingCount++
           console.log(this.fullscreenLoading)
-        }, 500)
+        }, 600)
       }
     },
     activeTradeArea (newVal, oldVal) {
@@ -578,7 +582,7 @@ export default {
       position: absolute;
       top:0;
       right:0;
-      z-index: 5;
+      z-index: 15;
     }
   }
 </style>

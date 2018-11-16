@@ -20,11 +20,8 @@
         :class="{'day':theme == 'day','night':theme == 'night' }"
       >
         <MiddleHeader/>
-        <!--<keep-alive>-->
         <!--k线-->
-          <KLine
-          />
-        <!--</keep-alive>-->
+          <KLine/>
         <!--市价交易、限价交易-->
         <ExchangeBox/>
         <!--交易-->
