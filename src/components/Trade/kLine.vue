@@ -5,13 +5,16 @@
     <div
       id="tv_chart_container"
       :class="{'day':theme == 'day','night':theme == 'night' }"
+      :style="{
+        opacity: !fullscreenLoading ? 1:0
+      }"
     >
     </div>
     <div
       class="loading-box"
       v-if="fullscreenLoading"
       v-loading.lock="fullscreenLoading"
-      element-loading-background="#1c1f32"
+      element-loading-background="rgb(28, 31, 50)"
     >
     </div>
   </div>
@@ -356,14 +359,15 @@ export default {
       console.log(data)
       switch (data.tradeType) {
         case 'KLINE':
-          console.log(data.type)
+          console.log(data.data[0])
           // console.log(' >> sub:', data.type)
           const klineData = data.data[0]
           console.log(klineData.close)
           const ticker = `${this.symbol}-${this.interval}`
           // console.log(this.interval)
+          console.log(this.cacheData[ticker][this.cacheData[ticker].length - 1].time - klineData.time)
           const barsData = {
-            time: klineData.time,
+            time: klineData.time - 0,
             // time: this.lastTime,
             open: klineData.open,
             high: klineData.high,
@@ -547,7 +551,7 @@ export default {
           this.fullscreenLoading = false
           this.loadingCount++
           console.log(this.fullscreenLoading)
-        }, 500)
+        }, 600)
       }
     },
     activeTradeArea (newVal, oldVal) {
@@ -578,7 +582,7 @@ export default {
       position: absolute;
       top:0;
       right:0;
-      z-index: 5;
+      z-index: 15;
     }
   }
 </style>

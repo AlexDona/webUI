@@ -854,7 +854,7 @@ export default{
                 }
                 >.language-text{
                   display:inline-block;
-                  width:60px;
+                  /*width:60px;*/
                 }
               }
               >.lang-list{

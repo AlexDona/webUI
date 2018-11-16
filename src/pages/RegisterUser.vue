@@ -1595,7 +1595,7 @@ export default {
         border-radius:5px;
         font-size: 0.86453968rem;
         >span{
-          font-size: .3rem;
+          font-size: .8rem;
         }
       }
     }

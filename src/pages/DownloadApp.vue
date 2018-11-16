@@ -104,12 +104,11 @@ export default {
         } else if (this.isIOS) {
           // alert('ios')
           window.location = 'com.top.Fubt://' // 打开某手机上的某个app应用
-          this.downloadUrl = getNestedData(data, 'data.data.ios')
+          this.downloadUrl = `itms-services://?action=download-manifest&;amp;url=${getNestedData(data, 'data.data.ios')}`
         }
       }
     },
     downloadApp () {
-      this.downloadUrl = 'https://web-ui.oss-cn-hongkong.aliyuncs.com/resources/vuex3.0.1.min.js'
       this.$refs['download'].click()
     }
   },

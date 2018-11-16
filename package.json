@@ -18,11 +18,11 @@
   "dependencies": {
     "element-ui": "^2.4.5",
     "vue": "^2.5.2",
-    "vue-router": "^3.0.1"
+    "vue-router": "^3.0.1",
+    "vue-slider-component": "^2.7.6",
+    "vue-concise-slider": "^2.4.8"
   },
   "devDependencies": {
-    "vue-slider-component": "^2.7.6",
-    "vue-concise-slider": "^2.4.8",
     "@xkeshi/vue-qrcode": "^1.0.0",
     "lrz": "^4.9.40",
     "vue-lazyload": "^1.2.6",
@@ -38,7 +38,6 @@
     "babel-register": "^6.22.0",
     "chai": "^4.1.2",
     "chalk": "^2.0.1",
-    "chromedriver": "^2.27.2",
     "compression-webpack-plugin": "^1.1.11",
     "copy-webpack-plugin": "^4.0.1",
     "cross-env": "^5.0.1",
