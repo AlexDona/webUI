@@ -21,7 +21,7 @@ export const common = {
   'comm_sold_out': '獲得した',
   'comm_all_sold_out': 'すべての棚から',
   'comm_affirm': '確認',
-  'comm_cancel': 'キャンセル',
+  'comm_cancel': '取消す',
   'comm_login': 'ログイン',
   'comm_retreat': 'ログアウト',
   'comm_hello': 'こんにちは、',
