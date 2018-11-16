@@ -5,6 +5,7 @@
   >
     <div class="inner-box">
       <div class="search-box">
+        <h1 class="title">帮助中心</h1>
         <!--请输入关键字-->
         <input
           type="text"
@@ -166,9 +167,17 @@ export default {
  @import '../../../static/css/scss/index.scss';
   .help-box{
     >.inner-box{
+      padding-top:66px;
       >.search-box{
+        >.title{
+          text-align: center;
+          font-weight: 500;
+          color:#8BA0CA;
+          font-size: 36px;
+        }
+        padding-top:30px;
         height:250px;
-        line-height:250px;
+        line-height:80px;
         text-align: center;
         background: url(../../assets/develop/helpbanner.png) no-repeat center center;
         -webkit-background-size: 100% 100%;

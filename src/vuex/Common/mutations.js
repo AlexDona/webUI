@@ -70,8 +70,10 @@ export default {
         if (socketData.depthData) {
           state.socketData.depthData = socketData.depthData
         }
-        if (socketData.buyAndSellData) {
-          state.socketData.buyAndSellData = socketData.buyAndSellData
+        console.log(socketData.buyAndSellData)
+        state.socketData.buyAndSellData = socketData.buyAndSellData
+        if (!state.socketData.buyAndSellData.sells.list) {
+          state.socketData.buyAndSellData.sells.list = []
         }
         state.socketData.tardeRecordList = socketData.tardeRecordList
         state.socketData.tradeMarkeContentItem = socketData.tradeMarkeContentItem

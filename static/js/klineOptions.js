@@ -27,7 +27,6 @@ export const overrides = {
   'paneProperties.legendProperties.showLegend': false // 默认收起
 }
 export const disabledFeatures = [
-  'header_symbol_search',
   'use_localstorage_for_settings',
   'header_symbol_search', // 禁止头部搜索
   'header_interval_dialog_button',
