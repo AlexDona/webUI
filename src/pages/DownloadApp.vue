@@ -111,7 +111,7 @@ export default {
       en_USSrc: require('../assets/develop/download-bg-en.png'),
       downloadUrl: '',
       isAndroid: false,
-      isIOS: false,
+      isIOS: false
     }
   },
   created () {

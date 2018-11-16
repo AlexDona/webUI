@@ -31,6 +31,7 @@ export const user = {
   'login_google': 'Google',
   'login_inVerify': '의 인증 코드',
   'login_erweimaReflesh': 'QR 코드가 잘못되었습니다. 새로 고침을 클릭하십시오.',
+  'login_scan_safe_login': '안전 등록을 스캔하다.',
   'login_scan': '스캔',
   'login_scanLogin': 'APP 스캔 코드 기능, 스캔 코드 로그인을 사용하십시오.',
   'login_content': '콘텐츠',

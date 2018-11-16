@@ -31,6 +31,7 @@ export const user = {
   'login_google': '谷歌',
   'login_inVerify': '中的驗證碼',
   'login_erweimaReflesh': '二維碼失效，點擊刷新',
+  'login_scan_safe_login': '掃描安全登錄',
   'login_scan': '掃描',
   'login_scanLogin': '請使用APP掃碼功能，掃碼登錄',
   'login_content': '內容',
