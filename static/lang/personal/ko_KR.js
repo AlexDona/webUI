@@ -275,5 +275,13 @@ export const personal = {
   'user_vip_text7': '열린',
   'user_vip_text8': 'VIP 출입 수수료, 현금 할인',
   'user_vip_fee_discount': '수수료 할인',
-  'user_vip_recommend': '추천'
+  'user_vip_recommend': '추천',
+  // 核对增加
+  'user_assets_recharge_hint0': '转账时请务必备注（否则后果自负）:',
+  'user_assets_withdrawal_hint7': '输入数量必须大于手续费，请重新输入',
+  'user_address_labels': '地址标签',
+  'user_address_labels_prompt': '填写错误可能导致资产损失，请仔细核对',
+  'user_real_certificate_cone': '证件号码',
+  'user_senior_hint5': '上传头像图片大小不能超过 10M!',
+  'user_security_google1': '格式错误'
 }

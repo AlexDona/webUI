@@ -12,7 +12,7 @@ export const personal = {
   'user_asset_title9': '私の取引',
   'user_asset_title10': 'トークン取引',
   'user_asset_title11': '通貨注文',
-  'user_asset_title12': 'トランザクションパスワードを最初に設定してから、OTC収集アカウントを設定してください！',
+  'user_asset_title12': '取引パスワードを最初設定してから、OTC入金口座を設定してください。',
   'user_asset_title13': 'OTCコレクションアカウントを設定する前に身元認証を完了してください！',
   'user_hidden_assets': '零資産は隠す',
   'user_asset_valuation': '資産評価',

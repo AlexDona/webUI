@@ -22,7 +22,7 @@ export const OTC = {
   'otc_index_digo_tips_pass': 'パーソナルセンターに行き、上級認定を完了してください！',
   'otc_index_forbided_buyand_sell': 'あなた自身を売買することは禁じられています！',
   'otc_index_js2': '支払い情報',
-  'otc_index_js3': 'トランザクションのパスワードを設定してください',
+  'otc_index_js3': 'まずは取引パスワードを設定する',
   // #############注文をキャンセル#############
   'otc_cancelOrder_type': 'タイプ',
   'otc_overBuy_cancel': 'タイムアウトが支払われず、注文がキャンセルされました',

@@ -72,6 +72,7 @@ export const common = {
   'comm_update': '업데이트',
   'comm_place_order': '주문',
   'comm_remark': '비고',
+  'comm_address_labels': '주소 딱지',
   'comm_site': '주소',
   'comm_list': '목록',
   'comm_operation': '수술',

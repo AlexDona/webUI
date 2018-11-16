@@ -32,5 +32,12 @@ export const finance = {
   'finance_or': '또는',
   'finance_loginTipsTwo': '그런 다음 그것을 확인하십시오!',
   // 二次确认弹框提示信息''이차 확인 글 머리 기호 메시지'
-  'finance_tipsContentOne': '보증금을 회수하겠다고 결정 했습니까?'
+  'finance_tipsContentOne': '보증금을 회수하겠다고 결정 했습니까?',
+  'finance_interestRate': '이율．',
+  'finance_xiAndben': '(성어) 먼저 이자를 지불하다',
+  'finance_timeLong': '진행 시간',
+  'finance_leit': '지점',
+  'finance_day': '늘',
+  'finance_accrual': '이식',
+  'finance_capital': '자본금.'
 }
