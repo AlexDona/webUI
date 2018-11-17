@@ -116,6 +116,7 @@ export default {
     }
   },
   created () {
+    this.isWXBrowser()
     this.getAppDownLoadUrl()
   },
   mounted () {
