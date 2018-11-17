@@ -31,6 +31,7 @@
         {{$t('M.invitation_register_immediately_register_get')}}
       </router-link>
     </div>
+    <WeChatMask/>
   </div>
 </template>
 <!--请严格按照如下书写书序-->
@@ -46,12 +47,14 @@ import {
   phoneNumberFormat
 } from '../utils'
 import HeaderCommonForMobile from '../components/Common/HeaderForMobile'
+import WeChatMask from '../components/User/WeChatMask'
 import {createNamespacedHelpers, mapState} from 'vuex'
 
 const {mapMutations} = createNamespacedHelpers('common')
 export default {
   components: {
-    HeaderCommonForMobile
+    HeaderCommonForMobile,
+    WeChatMask
   },
   // props,
   data () {
