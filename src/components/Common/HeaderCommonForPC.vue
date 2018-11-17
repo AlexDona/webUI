@@ -691,6 +691,7 @@ export default{
             }
             /*子导航list*/
             >.sub-nav-list{
+              width:100%;
               height:36px;
               line-height:36px;
               background-color: $nightSubNavBgColor;

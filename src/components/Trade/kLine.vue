@@ -2,6 +2,11 @@
   <div
     class="kline-container"
   >
+    <!--<div-->
+      <!--id="tv_chart_container"-->
+      <!--:class="{'day':theme == 'day','night':theme == 'night' }"-->
+    <!--&gt;-->
+    <!--</div>-->
     <div
       id="tv_chart_container"
       :class="{'day':theme == 'day','night':theme == 'night' }"
@@ -230,11 +235,12 @@ export default {
     init (options) {
       if (!this.widget) {
         this.widget = new TvWidget({
-          width: '100%',
-          height: '100%',
+          // width: '100%',
+          // height: '100%',
           symbol: options.symbol,
           interval: options.interval,
           // fullscreen: true,
+          autosize: true,
           container_id: 'tv_chart_container',
           datafeed: this.datafeeds,
           library_path: '/static/tradeview/charting_library/',
@@ -242,6 +248,7 @@ export default {
           enabled_features: [
             // 'hide_left_toolbar_by_default' // 隐藏左侧边栏
           ],
+          // loading_screen: { backgroundColor: '#000000' },
           timezone: 'Asia/Shanghai',
           locale: options.language,
           debug: false,
@@ -303,6 +310,12 @@ export default {
           this.widget.chart().createStudy('Moving Average', false, true, [10, 'close', 0], null, {'Plot.color': '#6b89ae'})
           this.widget.chart().createStudy('Moving Average', false, true, [30, 'close', 0], null, {'Plot.color': '#55ae63'})
           this.widget.chart().createStudy('Moving Average', false, true, [60, 'close', 0], null, {'Plot.color': '#89226e'})
+
+          // K线图指针移动回调
+          this.widget.chart().crossHairMoved((e) => {
+            console.log(e)
+            console.log(this.cacheData)
+          })
         })
         this.symbol = options.symbol
         this.interval = options.interval
