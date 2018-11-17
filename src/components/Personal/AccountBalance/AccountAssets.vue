@@ -1527,14 +1527,16 @@ export default {
                 >.table-box {
                   width: 100%;
                   >.recharge-list-mention {
-                    height:225px !important;
+                    // height:225px !important;
+                    height:236px !important;
                   }
                   >.list-mention-treasure {
                     height:295px !important;
                   }
                   >.recharge-list {
                     position: relative;
-                    height:205px;
+                    // height:205px;
+                    height:215px;
                     padding: 20px 6px;
                     z-index: 2;
                     >.triangle {
@@ -1592,7 +1594,8 @@ export default {
                       }
 
                       >.recharge-content-title {
-                        width: 450px;
+                        // width: 450px;
+                        width: 584px;
                         line-height: 18px;
                       }
                     }

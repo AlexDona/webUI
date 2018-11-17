@@ -18,6 +18,7 @@ export const personal = {
   'user_asset_valuation': '資産評価',
   'user_assets_suspended': '充電休止、ウォレットのメンテナンス',
   'user_assets_pause_mention': 'コインを一時停止する',
+  'user_assets_recharge_hint0': '振込时は必ずリマーク（そうでなければ自敗する）:',
   'user_assets_recharge_hint1': '{}を除く他の資産を再販することは禁じられていますが、{}以外の資産は回収されません。',
   'user_assets_recharge_hint4': 'この住所に再送金すると、送金が完了し、ネットワークが自動的に確認するのを待ってからシステムが自動的に到着します（6件の確認）。',
   'user_assets_recharge_hint5': '迅速に到着するには、充電時にネットワーク料金を増やすことができます。',
@@ -90,7 +91,7 @@ export const personal = {
   'user_account_please_set_up': '最初に設定してください',
   'user_account_return': '私のアカウントに戻る',
   'user_account_name': '名前',
-  'user_account_number': '口座番号',
+  'user_account_number': 'アカウント',
   'user_account_gathering': '領収書',
   'user_account_upload_collection': '領収書コードをアップロードする',
   // バンクカードを追加
@@ -130,7 +131,7 @@ export const personal = {
   'user_invite_award': '奨励',
   // セキュリティセンター
   'user_security_safety': '安全性',
-  'user_security_email': 'メールボックス',
+  'user_security_email': 'メール',
   'user_security_phone': '携帯電話',
   'user_security_google': 'Google',
   'user_security_password': 'パスワード',
@@ -153,7 +154,7 @@ export const personal = {
   'user_security_text1': 'コインを回収したり、パスワードを取得したり、セキュリティ設定を変更したり、APIを管理したりするときのセキュリティ検証に使用されます。',
   'user_security_text4': '少なくとも1つの確認方法を維持する',
   'user_security_return_safety_center': 'セキュリティセンターに戻る',
-  'user_security_text0': '銀行口座にSMS通知が有効になっていることを確認してください。',
+  'user_security_text0': '銀行カードのSMSお知らせが有効と確認ください',
   // セキュリティ設置
   'user_security_correct': '修正する',
   'user_security_text2': '口座取引のとき用いる',
