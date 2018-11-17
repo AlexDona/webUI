@@ -5,13 +5,16 @@
   >
     <div class="inner-box">
       <div class="search-box">
-        <h1 class="title">帮助中心</h1>
+        <h1 class="title">
+          <!-- 帮助中心 -->
+          {{$t('M.about_footer_info_help')}}
+        </h1>
         <!--请输入关键字-->
         <input
           type="text"
           class="search-input"
           v-model="searchKeyWord"
-          :placeholder="$t('M.comm_please_enter') + $t('M.news_keyword')"
+          :placeholder="$t('M.about_footer_info_keyWords')"
         />
       </div>
       <div class="item-content help">

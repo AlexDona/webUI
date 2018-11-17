@@ -18,6 +18,7 @@ export const personal = {
   'user_asset_valuation': 'Asset valuation',
   'user_assets_suspended': 'Recharge pause, wallet maintenance',
   'user_assets_pause_mention': 'Suspend the coin',
+  'user_assets_recharge_hint0': 'Must note before you transfer the money (or you will be responsible for the consequences):',
   'user_assets_recharge_hint1': 'It is forbidden to recharge other assets except {}, any non-{} asset recharge will not be recovered.',
   'user_assets_recharge_hint4': 'Recharge to this address, the remittance is completed, and the system will automatically arrive after waiting for the network to automatically confirm (6 confirmations).',
   'user_assets_recharge_hint5': 'In order to arrive quickly, you can increase the network fee when you recharge.',
