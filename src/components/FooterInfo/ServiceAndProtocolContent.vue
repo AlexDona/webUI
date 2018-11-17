@@ -55,7 +55,7 @@ export default {
           margin:0px auto;
           height:1100px;
           width:1100px;
-          padding:0 50px;
+          padding:20px 50px;
           overflow: auto;
           >h2{
             text-align: center;

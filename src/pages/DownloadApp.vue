@@ -54,7 +54,7 @@
     <!--微信遮罩-->
     <div
       class="wx-mask"
-      v-if="isWXBrowser"
+      v-if="isWXBrowserStatus"
     >
       <div class="img">
         <div
@@ -111,11 +111,11 @@ export default {
       en_USSrc: require('../assets/develop/download-bg-en.png'),
       downloadUrl: '',
       isAndroid: false,
-      isIOS: false
+      isIOS: false,
+      isWXBrowserStatus: false
     }
   },
   created () {
-    console.log(1)
     this.getAppDownLoadUrl()
   },
   mounted () {
@@ -127,6 +127,10 @@ export default {
     ...mapMutations([
       'SET_FOOTER_INFO'
     ]),
+    isWXBrowser () {
+      const ua = window.navigator.userAgent.toLowerCase()
+      this.isWXBrowserStatus = ua.match(/MicroMessenger/i) === 'micromessenger' ? 1 : 0
+    },
     // 获取app下载地址
     async getAppDownLoadUrl () {
       const data = await getAppDownLoadUrlAjax()
@@ -166,15 +170,6 @@ export default {
     },
     language () {
       return (navigator.browserLanguage || navigator.language).split('-').join('_') || this.$route.query.language
-    },
-    isWXBrowser () {
-      const ua = window.navigator.userAgent.toLowerCase()
-      // 通过正则表达式匹配ua中是否含有MicroMessenger字符串
-      if (ua.match(/MicroMessenger/i) === 'micromessenger') {
-        return 1
-      } else {
-        return 0
-      }
     }
   },
   watch: {

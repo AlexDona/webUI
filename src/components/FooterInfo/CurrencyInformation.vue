@@ -193,7 +193,7 @@ export default {
             font-size: 16px;
             margin-bottom:20px;
           }
-          img{
+          img       {
           }
         }
        >p{
