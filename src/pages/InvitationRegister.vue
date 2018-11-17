@@ -31,6 +31,11 @@
         {{$t('M.invitation_register_immediately_register_get')}}
       </router-link>
     </div>
+    <WeChatMask
+      :isAndroid="isAndroid"
+      :language="language"
+      :isIOS="isIOS"
+    />
   </div>
 </template>
 <!--请严格按照如下书写书序-->
@@ -46,12 +51,14 @@ import {
   phoneNumberFormat
 } from '../utils'
 import HeaderCommonForMobile from '../components/Common/HeaderForMobile'
+import WeChatMask from '../components/User/WeChatMask'
 import {createNamespacedHelpers, mapState} from 'vuex'
 
 const {mapMutations} = createNamespacedHelpers('common')
 export default {
   components: {
-    HeaderCommonForMobile
+    HeaderCommonForMobile,
+    WeChatMask
   },
   // props,
   data () {
@@ -59,10 +66,15 @@ export default {
       inviter: '',
       showId: '',
       fullscreenLoading: true,
-      queryLanguage: '' // 参数语言
+      queryLanguage: '', // 参数语言
+      isAndroid: false,
+      isIOS: false
     }
   },
   async created () {
+    let u = navigator.userAgent
+    this.isAndroid = u.indexOf('Android') > -1 || u.indexOf('Adr') > -1 // android终端
+    this.isIOS = !!u.match(/\(i[^;]+;( U;)? CPU.+Mac OS X/) // ios终端
     console.log('created')
     // await getLanguageListAjax(this, this.language)
     // this.CHANGE_LANGUAGE(language)

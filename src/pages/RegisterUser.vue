@@ -797,7 +797,7 @@ export default {
     ]),
     jumpToDownAppPage () {
       if (this.inviter) {
-        this.$router.push({'path': `/downloadApp?language=${this.language}`})
+        this.$router.push({'path': `/downloadApp`})
       } else {
         this.$router.push({'path': '/login'})
       }
@@ -1065,7 +1065,7 @@ export default {
     // 登录成功自动跳转
     successJump () {
       setInterval(() => {
-        if (this.successCountDown === 0) {
+        if (this.successCountDown < 2) {
           this.jumpToDownAppPage()
         }
         this.successCountDown--

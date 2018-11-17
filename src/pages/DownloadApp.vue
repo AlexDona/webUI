@@ -51,40 +51,11 @@
         ></a>
       </div>
     </div>
-    <!--微信遮罩-->
-    <div
-      class="wx-mask"
-      v-if="isWXBrowser"
-    >
-      <div class="img">
-        <div
-          class="ios-box"
-          v-if="isIOS"
-        >
-          <img
-            v-if="language=='zh_CN'"
-            src="../assets/develop/zh_CN_weiChat_ios.png"
-          >
-          <img
-            v-else
-            src="../assets/develop/en_US_weiChat_ios.png"
-          >
-        </div>
-        <div
-          class="android-box"
-          v-if="isAndroid"
-        >
-          <img
-            v-if="language=='zh_CN'"
-            src="../assets/develop/zh_CN_weiChat_andriod.png"
-          >
-          <img
-            v-else
-            src="../assets/develop/en_US_weiChat_andriod.png"
-          >
-        </div>
-      </div>
-    </div>
+    <WeChatMask
+      :isAndroid="isAndroid"
+      :isIOS="isIOS"
+      :language="language"
+    />
   </div>
 </template>
 <!--请严格按照如下书写书序-->
@@ -97,12 +68,14 @@ import {
   getNestedData
 } from '../utils/commonFunc'
 import HeaderCommonForMobile from '../components/Common/HeaderForMobile'
+import WeChatMask from '../components/User/WeChatMask'
 import {mapState, createNamespacedHelpers} from 'vuex'
 const {mapMutations} = createNamespacedHelpers('common')
 
 export default {
   components: {
-    HeaderCommonForMobile
+    HeaderCommonForMobile,
+    WeChatMask
   },
   // props,
   data () {
@@ -115,7 +88,6 @@ export default {
     }
   },
   created () {
-    console.log(1)
     this.getAppDownLoadUrl()
   },
   mounted () {
@@ -166,15 +138,6 @@ export default {
     },
     language () {
       return (navigator.browserLanguage || navigator.language).split('-').join('_') || this.$route.query.language
-    },
-    isWXBrowser () {
-      const ua = window.navigator.userAgent.toLowerCase()
-      // 通过正则表达式匹配ua中是否含有MicroMessenger字符串
-      if (ua.match(/MicroMessenger/i) === 'micromessenger') {
-        return 1
-      } else {
-        return 0
-      }
     }
   },
   watch: {
@@ -221,23 +184,6 @@ export default {
           border-radius:40px;
           font-size: 0.8rem;
           color:#fff;
-        }
-      }
-    }
-    >.wx-mask{
-      width:100%;
-      height:100%;
-      background-color: rgba(0,0,0,.4);
-      position: absolute;
-      z-index: 1;
-      top:0;
-      left:0;
-      >.img{
-        width:100%;
-        height:100%;
-        text-align: center;
-        img{
-          width:90%;
         }
       }
     }
