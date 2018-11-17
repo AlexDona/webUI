@@ -67,8 +67,8 @@ export default {
       showId: '',
       fullscreenLoading: true,
       queryLanguage: '', // 参数语言
-      isAndroid:false,
-      isIOS:false
+      isAndroid: false,
+      isIOS: false
     }
   },
   async created () {

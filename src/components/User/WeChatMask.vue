@@ -56,7 +56,7 @@ export default {
   methods: {
     isWXBrowser () {
       const ua = window.navigator.userAgent.toLowerCase()
-      // this.isWXBrowserStatus = ua.match(/MicroMessenger/i) == 'micromessenger' ? 1 : 0
+      this.isWXBrowserStatus = ua.match(/MicroMessenger/i) == 'micromessenger' ? 1 : 0
     }
   },
   filter: {},
