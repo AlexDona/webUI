@@ -131,7 +131,6 @@ export default {
     isWXBrowser () {
       const ua = window.navigator.userAgent.toLowerCase()
       this.isWXBrowserStatus = ua.match(/MicroMessenger/i) == 'micromessenger' ? 1 : 0
-      alert(this.isWXBrowserStatus)
     },
     // 获取app下载地址
     async getAppDownLoadUrl () {
