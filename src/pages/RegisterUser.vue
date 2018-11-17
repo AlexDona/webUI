@@ -1065,7 +1065,7 @@ export default {
     // 登录成功自动跳转
     successJump () {
       setInterval(() => {
-        if (this.successCountDown < 1) {
+        if (this.successCountDown < 2) {
           this.jumpToDownAppPage()
         }
         this.successCountDown--
