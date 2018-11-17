@@ -34,6 +34,7 @@
     <WeChatMask
       :isAndroid="isAndroid"
       :language="language"
+      :isIOS="isIOS"
     />
   </div>
 </template>
