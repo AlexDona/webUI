@@ -11,7 +11,7 @@
           type="text"
           class="search-input"
           v-model="searchKeyWord"
-          :placeholder="$t('M.comm_please_enter') + $t('M.news_keyword')"
+          :placeholder="$t('M.about_footer_info_keyWords')"
         />
       </div>
       <!--列表区-->

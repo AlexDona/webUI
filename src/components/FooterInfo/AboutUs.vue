@@ -9,7 +9,7 @@
           <!--关于我们-->
           {{ $t('M.about_us') }}
         </h1>
-        <p>About Us</p>
+        <p>Company Profile</p>
       </div>
       <div class="content">
         <div
