@@ -238,7 +238,6 @@ import ErrorBox from '../../User/ErrorBox'
 import {
   returnAjaxMsg, // 接口返回信息
   sendPhoneOrEmailCodeAjax,
-  reflashUserInfo,
   validateNumForUserInput,
   getSecurityCenter
 } from '../../../utils/commonFunc'
@@ -248,7 +247,7 @@ import {
   securityVerificationOnOff
 } from '../../../utils/api/personal'
 import { createNamespacedHelpers, mapState } from 'vuex'
-const { mapMutations } = createNamespacedHelpers('user')
+const { mapMutations, mapActions } = createNamespacedHelpers('user')
 export default {
   components: {
     IconFontCommon, // 字体图标
@@ -297,7 +296,7 @@ export default {
     // 黑色主题样式
     require('../../../../static/css/theme/night/Personal/UserSecuritySettings/UserTransactionPasswordNight.css')
     this.getSecurityCenter()
-    reflashUserInfo(this)
+    this.REFLASH_USER_INFO(this)
   },
   mounted () {},
   activited () {
@@ -306,6 +305,9 @@ export default {
   update () {},
   beforeRouteUpdate () {},
   methods: {
+    ...mapActions([
+      'REFLASH_USER_INFO'
+    ]),
     ...mapMutations([
       'SET_USER_BUTTON_STATUS'
     ]),

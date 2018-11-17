@@ -344,18 +344,14 @@ import {userLoginOut} from '../../utils/api/user'
 import IconFontCommon from '../Common/IconFontCommon'
 import {
   returnAjaxMsg,
-  getCountryListAjax,
-  reflashUserInfo,
-  getTransitionCurrencyRate,
-  getFooterInfo,
-  getLanguageListAjax
+  getFooterInfo
 } from '../../utils/commonFunc'
 import {
   getStore,
   setStore
 } from '../../utils'
 import { createNamespacedHelpers, mapState } from 'vuex'
-const { mapMutations } = createNamespacedHelpers('common')
+const { mapMutations, mapActions } = createNamespacedHelpers('common')
 // const { mapMutationsForUser } = createNamespacedHelpers('user')
 // import {Io} from '../../utils/tradingview/socket'
 export default{
@@ -402,8 +398,10 @@ export default{
   async created () {
     require('../../../static/css/theme/day/Common/HeaderCommonDay.css')
     // 获取 语言列表
-    await getLanguageListAjax(this)
-    await getCountryListAjax(this)
+    await this.GET_LANGUAGE_LIST_ACTION({
+      that: this
+    })
+    await this.GET_COUNTRY_LIST_ACTION(this)
     await getFooterInfo(this.language, this)
     // console.log(this.theme)
     this.activeTheme = this.theme
@@ -411,7 +409,7 @@ export default{
     // 折算货币s
     await this.getMerchantAvailablelegalTenderList()
     if (this.isLogin) {
-      await reflashUserInfo(this)
+      this.reflashUserInfo()
     }
   },
   mounted () {
@@ -421,6 +419,11 @@ export default{
     window.removeEventListener('scroll', this.handleScroll)
   },
   methods: {
+    ...mapActions([
+      'GET_COUNTRY_LIST_ACTION',
+      'GET_TRANSITION_RATE_ACTION',
+      'GET_LANGUAGE_LIST_ACTION'
+    ]),
     ...mapMutations([
       // 修改语言
       'CHANGE_LANGUAGE',
@@ -436,8 +439,12 @@ export default{
       'USER_INFORMATION_REFRESH',
       'SET_USER_INFO_REFRESH_STATUS',
       'CHANGE_REF_SECURITY_CENTER_INFO',
-      'SET_FOOTER_INFO'
+      'SET_FOOTER_INFO',
+      'SET_LOGO_URL'
     ]),
+    reflashUserInfo () {
+      this.$store.dispatch('user/REFLASH_USER_INFO', this)
+    },
     handleScroll () {
       var scrollTop = window.pageYOffset || document.documentElement.scrollTop || document.body.scrollTop
       // console.log(scrollTop)
@@ -464,7 +471,11 @@ export default{
           return false
         }
       })
-      await getTransitionCurrencyRate(params, this, this.activeConvertCurrencyObj)
+      await this.GET_TRANSITION_RATE_ACTION({
+        params,
+        that: this,
+        activeConvertCurrencyObj: this.activeConvertCurrencyObj
+      })
     },
     // 设置个人中心跳转
     setPersonalJump (target) {
@@ -646,7 +657,7 @@ export default{
       console.log(newVal)
       if (newVal) {
         if (this.isLogin) {
-          reflashUserInfo(this)
+          this.reflashUserInfo()
         }
         this.SET_USER_INFO_REFRESH_STATUS(false)
       }

@@ -1,5 +1,5 @@
 import mutations from './mutations'
-import actions from './action'
+import actions from './actions'
 // import getters from './getters'
 import {getStoreWithJson} from '../../utils'
 // Vue.use(Vuex)

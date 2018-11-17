@@ -1,0 +1,4 @@
+// common
+export const GET_COUNTRY_LIST_ACTION = 'GET_COUNTRY_LIST_ACTION' // 获取 国家列表
+export const GET_TRANSITION_RATE_ACTION = 'GET_TRANSITION_RATE_ACTION' // 获取 目标目标汇率
+export const GET_LANGUAGE_LIST_ACTION = 'GET_LANGUAGE_LIST_ACTION' // 获取 语言列表

@@ -5,7 +5,6 @@ import {
   repealMyEntrustAjax
 } from '../utils/api/trade'
 import {
-  userRefreshUser,
   getQueryAllOrdersList,
   statusSecurityCenter,
   accountPaymentTerm
@@ -22,20 +21,18 @@ import {
   getCollectionListAjax
 } from '../utils/api/home'
 import {
-  getCountryList,
+  // getCountryList,
   getServiceProtocoDataAjax,
-  getTransitionCurrencyRateAjax,
   getFooterInfo1,
   getFooterInfo2,
-  getConfigAjax,
-  getLanguageList
+  getConfigAjax
 } from '../utils/api/header'
 import store from '../vuex'
 import {
   removeStore,
-  getStore,
-  setStore,
-  getStoreWithJson,
+  // getStore,
+  // setStore,
+  // getStoreWithJson,
   keep2Num
 } from './index'
 import {PHONE_REG, EMAIL_REG, ID_REG, PWD_REG, ALIPAY_REG, BANK_REG, GOOGLE_REG, TPED_REG, URL_REG, WITHDRAWAL_REG} from './regExp'
@@ -174,9 +171,9 @@ export const repealMyEntrustCommon = async (params, that, callback) => {
   }
 }
 
-// /**
-//  * 商家订单列表请求
-//  */
+/**
+* 商家订单列表请求
+*/
 export const getMerchantsOrdersList = async (params, callback) => {
   const repealData = await getQueryAllOrdersList(params)
   callback(repealData)
@@ -192,31 +189,6 @@ export const changeCurrentPageForLegalTrader = (currentPage, type, that) => {
     status: true
   })
 }
-// 获取国家列表
-export const getCountryListAjax = async (that, callback) => {
-  let localCountry = getStoreWithJson('countryList')
-  let saveTimeStamp = getStore('timeStamp')
-  let nowTimeStamp = new Date().getTime()
-  let diffTime = Math.abs(nowTimeStamp - saveTimeStamp)
-  let data
-  if (localCountry && diffTime < 86400000) {
-    data = localCountry
-    that.SET_COUNTRY_AREA_LIST(data)
-    return false
-  } else {
-    data = await getCountryList()
-    if (!returnAjaxMsg(data, that)) {
-      return false
-    } else {
-      that.SET_COUNTRY_AREA_LIST(data.data.data)
-      setStore('countryList', data.data.data)
-      setStore('timeStamp', new Date().getTime())
-      if (callback) {
-        callback(data)
-      }
-    }
-  }
-}
 // 服务条款接口
 export const getServiceProtocolData = async (that, params, callback) => {
   const data = await getServiceProtocoDataAjax(params)
@@ -224,20 +196,6 @@ export const getServiceProtocolData = async (that, params, callback) => {
     return false
   } else {
     callback(data)
-  }
-}
-/**
- *  刷新用户信息
- */
-export const reflashUserInfo = async (that) => {
-  console.log(store)
-  const data = await userRefreshUser({
-    token: store.state.user.loginStep1Info.token
-  })
-  if (!(returnAjaxMsg(data, that))) {
-    return false
-  } else {
-    store.commit('user/SET_STEP1_INFO', data.data.data)
   }
 }
 /**
@@ -255,13 +213,14 @@ export const getSecurityCenter = async (that, params, callback) => {
 /**
  *  刷新收款方式状态
  */
-export const getAccountPaymentTerm = async (that, callback) => {
+export const getAccountPaymentTerm = async (that) => {
   console.log(store)
   const data = await accountPaymentTerm({})
   if (!(returnAjaxMsg(data, that))) {
     return false
   } else {
-    callback(data)
+    // 返回状态展示
+    that.paymentTerm = getNestedData(data, 'data.data')
   }
 }
 // 首页、币币交易切换收藏
@@ -313,37 +272,6 @@ export const setSocketData = (oldContent, newContent, targetList, targetIndex, t
   oldContent.vol24hour = newContent.vol24hour
   that.$set(targetList, targetIndex, oldContent)
 }
-// 首页获取目标汇率
-// 获取目标汇率
-export const getTransitionCurrencyRate = async (params, that, activeConvertCurrencyObj) => {
-  const data = await getTransitionCurrencyRateAjax(params)
-  console.log(data)
-  if (!returnAjaxMsg(data, that)) {
-    return false
-  } else {
-    that.CHANGE_CURRENCY_RATE_LIST({
-      currencyRateList: data.data.data,
-      activeConvertCurrencyObj: activeConvertCurrencyObj
-    })
-  }
-}
-export const getLanguageListAjax = async (that, language) => {
-  const data = await getLanguageList()
-  if (!returnAjaxMsg(data, that)) {
-    return false
-  } else {
-    that.languageList = data.data.data
-    let localLanguage = language || getStore('language') || store.state.common.defaultLanguage
-    console.log(localLanguage)
-    _.forEach(that.languageList, item => {
-      if (item.shortName === localLanguage) {
-        console.log(item)
-        store.commit('common/CHANGE_LANGUAGE', item)
-        return false
-      }
-    })
-  }
-}
 // 获取底部信息
 export const getFooterInfo = async (language, that) => {
   const params = {
@@ -374,7 +302,7 @@ export const getFooterInfo = async (language, that) => {
       footerInfo1.headTitleLogo,
       footerInfo1.title
     )
-    that.$store.commit('common/SET_LOGO_URL', {
+    that.SET_LOGO_URL({
       logoSrc: footerInfo1.headLogo,
       title: footerInfo1.title
     })
