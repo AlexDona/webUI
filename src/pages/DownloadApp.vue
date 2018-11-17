@@ -51,7 +51,10 @@
         ></a>
       </div>
     </div>
-    <WeChatMask/>
+    <WeChatMask
+      :isAndroid="isAndroid"
+      :language="language"
+    />
   </div>
 </template>
 <!--请严格按照如下书写书序-->
