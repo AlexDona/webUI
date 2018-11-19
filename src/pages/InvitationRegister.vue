@@ -76,7 +76,7 @@ export default {
     this.isAndroid = u.indexOf('Android') > -1 || u.indexOf('Adr') > -1 // android终端
     this.isIOS = !!u.match(/\(i[^;]+;( U;)? CPU.+Mac OS X/) // ios终端
     console.log('created')
-    await this.findUserInfoByShowId()
+    this.findUserInfoByShowId()
   },
   mounted () {},
   activited () {

@@ -67,16 +67,18 @@ export default {
         state.klineAjaxData.tradeMarketList = ajaxData.tradeMarketList
         break
       case 'socket':
-        if (socketData.depthData) {
-          state.socketData.depthData = socketData.depthData
+        if (socketData) {
+          if (socketData.depthData) {
+            state.socketData.depthData = socketData.depthData
+          }
+          console.log(socketData.buyAndSellData)
+          state.socketData.buyAndSellData = socketData.buyAndSellData
+          if (!state.socketData.buyAndSellData) {
+            state.socketData.buyAndSellData.sells.list = []
+          }
+          state.socketData.tardeRecordList = socketData.tardeRecordList
+          state.socketData.tradeMarkeContentItem = socketData.tradeMarkeContentItem
         }
-        console.log(socketData.buyAndSellData)
-        state.socketData.buyAndSellData = socketData.buyAndSellData
-        if (!state.socketData.buyAndSellData) {
-          state.socketData.buyAndSellData.sells.list = []
-        }
-        state.socketData.tardeRecordList = socketData.tardeRecordList
-        state.socketData.tradeMarkeContentItem = socketData.tradeMarkeContentItem
         break
     }
   },
