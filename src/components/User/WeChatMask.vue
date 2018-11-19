@@ -43,7 +43,7 @@ export default {
   props: ['isAndroid', 'language', 'isIOS'],
   data () {
     return {
-      isWXBrowserStatus: true
+      isWXBrowserStatus: false
     }
   },
   created () {

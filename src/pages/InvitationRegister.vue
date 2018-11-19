@@ -31,11 +31,11 @@
         {{$t('M.invitation_register_immediately_register_get')}}
       </router-link>
     </div>
-    <!--<WeChatMask-->
-      <!--:isAndroid="isAndroid"-->
-      <!--:language="language"-->
-      <!--:isIOS="isIOS"-->
-    <!--/>-->
+    <WeChatMask
+      :isAndroid="isAndroid"
+      :language="language"
+      :isIOS="isIOS"
+    />
   </div>
 </template>
 <!--请严格按照如下书写书序-->
