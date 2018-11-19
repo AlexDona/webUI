@@ -618,11 +618,10 @@ import {
 } from '../utils/api/personal'
 import {
   returnAjaxMsg,
-  reflashUserInfo,
   getServiceProtocolData
 } from '../utils/commonFunc'
 // 底部
-const { mapMutations } = createNamespacedHelpers('personal')
+const { mapMutations, mapActions } = createNamespacedHelpers('user')
 export default {
   components: {},
   data () {
@@ -662,7 +661,7 @@ export default {
       this.activeStatus = this.vipLeavl.split('')[3]
     }
     this.getServiceProtocolData()
-    await reflashUserInfo(this)
+    await this.REFLASH_USER_INFO(this)
     await this.getVipPriceInfo()
     await this.getCurrencyApplicationDownloadUrl()
   },
@@ -672,6 +671,9 @@ export default {
   beforeRouteUpdate () {
   },
   methods: {
+    ...mapActions([
+      'REFLASH_USER_INFO'
+    ]),
     ...mapMutations([
     ]),
     changeServiceAgreement (type) {
@@ -833,7 +835,7 @@ export default {
           this.fullscreenLoading = false
           this.dialogFormVisible = false
           this.password = ''
-          reflashUserInfo(this)
+          this.REFLASH_USER_INFO(this)
           this.toggleAssetsCurrencyId()
           console.log(data)
         }

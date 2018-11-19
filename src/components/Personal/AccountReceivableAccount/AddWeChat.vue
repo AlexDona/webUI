@@ -195,7 +195,7 @@ export default {
     let xDomain = window.location.host.split(':')[0]
     xDomain = xDomain.startsWith('www') ? xDomain.slice(4) : xDomain
     this.tokenObj['x-domain'] = xDomain
-    this.getAccountPaymentTerm()
+    getAccountPaymentTerm()
     this.paymentMethodInformation()
   },
   mounted () {},
@@ -339,17 +339,6 @@ export default {
         }
         console.log(this.dialogImageHandUrl1)
       }
-    },
-    /**
-     * 收款方式
-     */
-    getAccountPaymentTerm () {
-      getAccountPaymentTerm(this, (data) => {
-        if (data) {
-          // 返回状态展示
-          this.paymentTerm = data.data.data
-        }
-      })
     },
     // 成功自动跳转
     successJump () {

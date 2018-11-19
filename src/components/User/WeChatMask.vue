@@ -55,7 +55,7 @@ export default {
   beforeRouteUpdate () {},
   methods: {
     isWXBrowser () {
-      const ua = window.navigator.userAgent.toLowerCase()
+      const ua = navigator.userAgent.toLowerCase()
       this.isWXBrowserStatus = ua.match(/MicroMessenger/i) == 'micromessenger' ? 1 : 0
     }
   },

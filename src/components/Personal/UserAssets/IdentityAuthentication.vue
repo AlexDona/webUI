@@ -523,13 +523,14 @@ import {
   userRefreshUser
 } from '../../../utils/api/personal'
 import {
-  returnAjaxMsg,
-  reflashUserInfo,
-  getCountryListAjax
+  returnAjaxMsg
 } from '../../../utils/commonFunc'
-import {apiCommonUrl} from '../../../utils/env'
+import {
+  apiCommonUrl,
+  xDomain
+} from '../../../utils/env'
 import {createNamespacedHelpers, mapState} from 'vuex'
-const {mapMutations} = createNamespacedHelpers('common')
+const {mapMutations, mapActions} = createNamespacedHelpers('common')
 export default {
   components: {
     ErrorBox, // 错误提示接口
@@ -606,10 +607,8 @@ export default {
     this.SET_USER_INFO_REFRESH_STATUS(true)
     await this.getUserRefreshUser()
     this.tokenObj.token = this.userInfo.token
-    let xDomain = window.location.host.split(':')[0]
-    xDomain = xDomain.startsWith('www') ? xDomain.slice(4) : xDomain
     this.tokenObj['x-domain'] = xDomain
-    await reflashUserInfo(this)
+    await this.reflashUserInfo()
     this.authenticationIsStatus()
     console.log(this.authenticationNotPass)
   },
@@ -618,9 +617,15 @@ export default {
   update () {},
   beforeRouteUpdate () {},
   methods: {
+    ...mapActions([
+      'GET_COUNTRY_LIST_ACTION'
+    ]),
     ...mapMutations([
       'SET_USER_INFO_REFRESH_STATUS'
     ]),
+    reflashUserInfo () {
+      this.$store.dispatch('user/REFLASH_USER_INFO', this)
+    },
     // 改变证件类型
     changedocumentTypeValue (e) {
       console.log(e)
@@ -942,16 +947,20 @@ export default {
         this.SET_USER_INFO_REFRESH_STATUS(true)
         this.getUserRefreshUser()
         // 国家列表展示
-        getCountryListAjax(this, (data) => {
-          // 返回列表数据
-          this.regionList = data.data.data
-          this.regionValue = data.data.data[0].id
-          this.regionValue = data.data.data[0].chinese
-        })
+        this.GET_COUNTRY_LIST_ACTION({
+          that: this,
+          callback: (data) => {
+            this.regionList = data.data.data
+            this.regionValue = data.data.data[0].id
+            this.regionValue = data.data.data[0].chinese
+          }})
       }
     },
     contryAreaList (newVal) {
       console.log(newVal)
+      if (newVal) {
+        console.log(newVal)
+      }
     },
     userInfo (newVal) {
       console.log(newVal)

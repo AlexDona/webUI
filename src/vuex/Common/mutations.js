@@ -72,7 +72,7 @@ export default {
         }
         console.log(socketData.buyAndSellData)
         state.socketData.buyAndSellData = socketData.buyAndSellData
-        if (!state.socketData.buyAndSellData.sells.list) {
+        if (!state.socketData.buyAndSellData) {
           state.socketData.buyAndSellData.sells.list = []
         }
         state.socketData.tardeRecordList = socketData.tardeRecordList

@@ -436,7 +436,10 @@ import OTCCompletedOrder from '../../components/OTC/OTCCompletedOrder'
 import OTCCanceledOrder from '../../components/OTC/OTCCanceledOrder'
 import OTCFreezingOrder from '../../components/OTC/OTCFreezingOrder'
 import OTCEntrustOrder from '../../components/OTC/OTCEntrustOrder'
-import {returnAjaxMsg, reflashUserInfo, getNestedData} from '../../utils/commonFunc'
+import {
+  returnAjaxMsg,
+  getNestedData
+} from '../../utils/commonFunc'
 import {createNamespacedHelpers, mapState} from 'vuex'
 const {mapMutations} = createNamespacedHelpers('OTC')
 export default {
@@ -507,7 +510,7 @@ export default {
     // this.getMerchantAvailablelegalTenderList()
     // 3.0 用户登录了刷新用户个人信息
     if (this.isLogin) {
-      reflashUserInfo(this) // 刷新用户信息
+      this.reflashUserInfo() // 刷新用户信息
     }
   },
   mounted () {
@@ -525,6 +528,9 @@ export default {
       'CHANGE_OTC_AVAILABLE_CURRENCY_ID',
       'CHANGE_OTC_AVAILABLE_PARTNER_COIN_ID'
     ]),
+    reflashUserInfo () {
+      this.$store.dispatch('user/REFLASH_USER_INFO', this)
+    },
     // 科学计数法转换
     filterNumber (num) {
       console.log(scientificToNumber(num))
@@ -574,7 +580,7 @@ export default {
       if (!this.isLogin) {
         this.$router.push({path: '/login'})
       } else {
-        reflashUserInfo(this) // 刷新用户信息
+        this.reflashUserInfo() // 刷新用户信息
         // 未设置交易密码、未实名认证，未高级认证，不能进行交易
         if (!this.userInfo.payPassword) {
           this.$message({
@@ -608,7 +614,7 @@ export default {
         this.$router.push({path: '/login'})
       } else {
         // 刷新用户信息
-        reflashUserInfo(this)
+        this.reflashUserInfo()
         // 未设置交易密码、未实名认证，未高级认证，不能进行交易
         if (!this.userInfo.payPassword) {
           this.$message({

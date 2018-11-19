@@ -12,7 +12,7 @@ export default {
   [CHANGE_FOOTER_ACTIVENAME] (state, data) {
     console.log(data)
     switch (data.type) {
-      case '/NewsAndNoticeList':
+      case '/NewsAndNoticeCenter':
         state.newsAndNoticeActiveName = data.activeName
         break
       case '/ServiceAndProtocol':
