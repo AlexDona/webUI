@@ -54,12 +54,13 @@ export default {
     }
   },
   async [GET_LANGUAGE_LIST_ACTION] ({commit, state}, {that, language}) {
+    console.log(state)
     const data = await getLanguageList()
     if (!returnAjaxMsg(data, that)) {
       return false
     } else {
       that.languageList = data.data.data
-      let localLanguage = language || getStore('language') || state.common.defaultLanguage
+      let localLanguage = language || getStore('language') || state.defaultLanguage
       console.log(localLanguage)
       _.forEach(that.languageList, item => {
         if (item.shortName === localLanguage) {
