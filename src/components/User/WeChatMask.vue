@@ -10,7 +10,7 @@
           v-if="isIOS"
         >
           <img
-            v-if="language=='zh_CN'"
+            v-if="language=='zh_CN'||language=='zh_TW'"
             src="../../assets/develop/zh_CN_weiChat_ios.png"
           >
           <img
@@ -23,7 +23,7 @@
           v-if="isAndroid"
         >
           <img
-            v-if="language=='zh_CN'"
+            v-if="language=='zh_CN'||language=='zh_TW'"
             src="../../assets/develop/zh_CN_weiChat_andriod.png"
           >
           <img
