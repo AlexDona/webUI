@@ -448,7 +448,7 @@ export default {
               if (!this.amendDataPhone.newPhoneAccounts) {
                 this.$message({
                   // 请先输入手机号
-                  message: this.$t('M.comm_please_enter') + this.$t('M.comm_code_phone1'),
+                  message: this.$t('M.user_please_input13'),
                   type: 'error'
                 })
                 return false
@@ -477,7 +477,7 @@ export default {
               return 1
             case 1:
               // 请输入手机号
-              this.setErrorMsg(0, this.$t('M.comm_please_enter') + this.$t('M.user_security_phone') + this.$t('M.comm_mark'))
+              this.setErrorMsg(0, this.$t('M.login_tips_enter_phone'))
               this.$forceUpdate()
               return 0
             case 2:
@@ -490,7 +490,7 @@ export default {
         case 1:
           if (!targetNum) {
             // 请输入图片验证码
-            this.setErrorMsg(1, this.$t('M.comm_please_enter') + this.$t('M.user_security_picture') + this.$t('M.comm_code'))
+            this.setErrorMsg(1, this.$t('M.user_please_input14'))
             this.$forceUpdate()
             return 0
           } else if (this.bindingDataPhone.userInputImageCode === this.bindingDataPhone.identifyCode) {
@@ -499,7 +499,7 @@ export default {
             return 1
           } else {
             // 请输入正确的图片验证码
-            this.setErrorMsg(1, this.$t('M.comm_please_enter') + this.$t('M.user_security_correct') + this.$t('M.user_security_picture') + this.$t('M.comm_code'))
+            this.setErrorMsg(1, this.$t('M.user_please_input15'))
             this.$forceUpdate()
             return 0
           }
@@ -508,7 +508,7 @@ export default {
           console.log(targetNum)
           if (!targetNum) {
             // 请输入短信验证码
-            this.setErrorMsg(2, this.$t('M.comm_please_enter') + this.$t('M.comm_note') + this.$t('M.comm_code'))
+            this.setErrorMsg(2, this.$t('M.login_please_input1'))
             this.$forceUpdate()
             return 0
           } else {
@@ -611,7 +611,7 @@ export default {
         case 0:
           if (!targetNum) {
             // 请输入旧手机短信验证码
-            this.tieErrorMsg(0, this.$t('M.comm_please_enter') + this.$t('M.user_security_former') + this.$t('M.user_security_phone') + this.$t('M.comm_code'))
+            this.tieErrorMsg(0, this.$t('M.user_please_input16'))
             this.$forceUpdate()
             return 0
           } else {
@@ -629,12 +629,12 @@ export default {
             case 1:
               // console.log(type)
               // 请输入手机号
-              this.tieErrorMsg(1, this.$t('M.comm_please_enter') + this.$t('M.user_security_phone') + this.$t('M.comm_mark'))
+              this.tieErrorMsg(1, this.$t('M.login_tips_enter_phone'))
               this.$forceUpdate()
               return 0
             case 2:
               // 请输入正确的手机号
-              this.tieErrorMsg(1, this.$t('M.comm_please_enter') + this.$t('M.user_security_correct') + this.$t('M.user_security_phone') + this.$t('M.comm_mark'))
+              this.tieErrorMsg(1, this.$t('M.user_please_input17'))
               this.$forceUpdate()
               return 0
           }
@@ -643,7 +643,7 @@ export default {
         case 2:
           if (!targetNum) {
             // 请输入新手机短信验证码
-            this.tieErrorMsg(2, this.$t('M.comm_please_enter') + this.$t('M.user_security_login_new') + this.$t('M.user_security_phone') + this.$t('M.comm_note') + this.$t('M.comm_code'))
+            this.tieErrorMsg(2, this.$t('M.user_please_input18'))
             this.$forceUpdate()
             return 0
           } else {
@@ -685,7 +685,7 @@ export default {
       console.log(this.userInfo)
       if (!this.userInfoDetail.payPassword) {
         this.$message({
-          message: this.$t('M.otc_index_js3'), // 请先设置交易密码，再来设置OTC收款账户!
+          message: this.$t('M.otc_index_js3'), // 请先设置交易密码
           type: 'error'
         })
         return false

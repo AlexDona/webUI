@@ -566,7 +566,7 @@ export default {
           } else {
             // 请先设置银行卡
             this.$message({
-              message: this.$t('M.user_account_please_set_up') + this.$t('M.user_account_bank'),
+              message: this.$t('M.user_pay_account_set1'),
               type: 'error'
             })
             // this.openCollectionMode = false
@@ -592,7 +592,7 @@ export default {
           } else {
             // 请先设置微信
             this.$message({
-              message: this.$t('M.user_account_please_set_up') + this.$t('M.user_account_weChat'),
+              message: this.$t('M.user_pay_account_set2'),
               type: 'error'
             })
             // this.openCollectionMode = false
@@ -618,7 +618,7 @@ export default {
           } else {
             // 请先设置支付宝
             this.$message({
-              message: this.$t('M.user_account_please_set_up') + this.$t('M.user_account_alipay'),
+              message: this.$t('M.user_pay_account_set3'),
               type: 'error'
             })
             // this.openCollectionMode = false
@@ -644,7 +644,7 @@ export default {
           } else {
             // 请先设置PAYPAL
             this.$message({
-              message: this.$t('M.user_account_please_set_up') + this.$t('M.user_account_paypal'),
+              message: this.$t('M.user_pay_account_set4'),
               type: 'error'
             })
             // this.openCollectionMode = false
@@ -670,7 +670,7 @@ export default {
           } else {
             // 请先设置西联汇款
             this.$message({
-              message: this.$t('M.user_account_please_set_up') + this.$t('M.user_account_western_union'),
+              message: this.$t('M.user_pay_account_set5'),
               type: 'error'
             })
             this.openCollectionMode = false

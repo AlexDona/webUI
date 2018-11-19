@@ -147,7 +147,7 @@
                 :isShow="!!tieErrorShowStatusList[1]"
               />
             </el-form-item>
-            <!--验  证  码-->
+            <!--验证码-->
             <el-form-item
               :label="$t('M.comm_code') + '：'"
               v-if="securityCenter.isPhoneEnable"
@@ -349,7 +349,7 @@ export default {
         case 0:
           if (!targetNum) {
             // 请输入昵称
-            this.setErrorMsg(0, this.$t('M.comm_please_enter') + this.$t('M.user_transaction_nickname'))
+            this.setErrorMsg(0, this.$t('M.user_set_tradePwd_tips1'))
             this.$forceUpdate()
             return 0
           } else {
@@ -379,7 +379,7 @@ export default {
         case 2:
           if (!targetNum) {
             // 请输入确认交易密码
-            this.setErrorMsg(2, this.$t('M.comm_please_enter') + this.$t('M.comm_affirm') + this.$t('M.comm_password'))
+            this.setErrorMsg(2, this.$t('M.user_set_tradePwd_tips2'))
             this.$forceUpdate()
             return 0
           } else if (targetNum === this.setPassword.newPassword) {
@@ -486,7 +486,7 @@ export default {
         case 2:
           if (!targetNum) {
             // 请输入短信验证码
-            this.tieErrorMsg(2, this.$t('M.comm_please_enter') + this.$t('M.comm_note') + this.$t('M.comm_code'))
+            this.tieErrorMsg(2, this.$t('M.login_please_input1'))
             this.$forceUpdate()
             return 0
           } else {
@@ -498,7 +498,7 @@ export default {
         case 3:
           if (!targetNum) {
             // 请输入邮箱验证码
-            this.tieErrorMsg(3, this.$t('M.comm_please_enter') + this.$t('M.user_security_email') + this.$t('M.comm_code'))
+            this.tieErrorMsg(3, this.$t('M.login_please_input2'))
             this.$forceUpdate()
             return 0
           } else {
@@ -510,7 +510,7 @@ export default {
         case 4:
           if (!targetNum) {
             // 请输入谷歌验证码
-            this.tieErrorMsg(4, this.$t('M.comm_please_enter') + this.$t('M.user_security_google') + this.$t('M.comm_code'))
+            this.tieErrorMsg(4, this.$t('M.user_please_input9'))
             this.$forceUpdate()
             return 0
           } else {
@@ -568,21 +568,21 @@ export default {
         if (this.securityCenter.isMailEnable && !this.modifyPassword.emailCode) {
           this.$message({
             type: 'error',
-            message: this.$t('M.comm_please_enter') + this.$t('M.comm_emailbox') + this.$t('M.comm_code') // '请输入邮箱验证码'
+            message: this.$t('M.login_please_input2') // '请输入邮箱验证码'
           })
           return false
         }
         if (this.securityCenter.isPhoneEnable && !this.modifyPassword.phoneCode) {
           this.$message({
             type: 'error',
-            message: this.$t('M.comm_please_enter') + this.$t('M.login_telphone') + this.$t('M.comm_code') // '请输入手机验证码'
+            message: this.$t('M.login_please_input1') // '请输入短信验证码'
           })
           return false
         }
         if (this.securityCenter.isGoogleEnable && !this.modifyPassword.googleCode) {
           this.$message({
             type: 'error',
-            message: this.$t('M.comm_please_enter') + this.$t('M.login_google') + this.$t('M.comm_code') // 请输入谷歌验证码
+            message: this.$t('M.user_please_input9') // 请输入谷歌验证码
           })
           return false
         }

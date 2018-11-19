@@ -820,8 +820,8 @@ export default {
         // 手机验证码
         case 0:
           if (!targetNum) {
-            // 请输入手机验证码
-            this.setErrorMsg(0, this.$t('M.comm_please_enter') + this.$t('M.user_security_phone') + this.$t('M.comm_code'))
+            // 请输入短信验证码
+            this.setErrorMsg(0, this.$t('M.login_please_input1'))
             this.$forceUpdate()
             return 0
           } else {
@@ -833,7 +833,7 @@ export default {
         case 1:
           if (!targetNum) {
             // 请输入邮箱验证码
-            this.setErrorMsg(1, this.$t('M.comm_please_enter') + this.$t('M.user_security_email') + this.$t('M.comm_code'))
+            this.setErrorMsg(1, this.$t('M.login_please_input2'))
             this.$forceUpdate()
             return 0
           } else {
@@ -845,7 +845,7 @@ export default {
         case 2:
           if (!targetNum) {
             // 请输入谷歌验证码
-            this.setErrorMsg(2, this.$t('M.comm_please_enter') + this.$t('M.user_security_google') + this.$t('M.comm_code'))
+            this.setErrorMsg(2, this.$t('M.user_please_input9'))
             this.$forceUpdate()
             return 0
           } else {
@@ -874,7 +874,7 @@ export default {
           if (!this.securityCenter.isMailBind) {
             // 未绑定邮箱
             this.$message({
-              message: this.$t('M.comm_not') + this.$t('M.user_security_binding') + this.$t('M.user_security_email'),
+              message: this.$t('M.user_please_input10'),
               type: 'error'
             })
             this.openTheValidation = false
@@ -901,7 +901,7 @@ export default {
           if (!this.securityCenter.isPhoneBind) {
             // 未绑定手机
             this.$message({
-              message: this.$t('M.comm_not') + this.$t('M.user_security_binding') + this.$t('M.user_security_phone'),
+              message: this.$t('M.user_not_bind_phone'),
               type: 'error'
             })
             this.openTheValidation = false
@@ -928,7 +928,7 @@ export default {
           if (!this.securityCenter.isGoogleBind) {
             // 未绑定谷歌
             this.$message({
-              message: this.$t('M.comm_not') + this.$t('M.user_security_binding') + this.$t('M.user_security_google'),
+              message: this.$t('M.user_please_input11'),
               type: 'error'
             })
             this.openTheValidation = false
@@ -963,22 +963,22 @@ export default {
         if (!this.phoneCode && !this.emailCode && !this.googleCode) {
           console.log(1)
           // 请输入验证码
-          this.errorMsg = this.$t('M.comm_please_enter') + this.$t('M.user_security_verify')
+          this.errorMsg = this.$t('M.user_please_input12')
           return false
         } else {
           this.errorMsg = ''
         }
       } else if (state === 'disable') {
         if (this.securityCenter.isMailEnable && !this.emailCode) {
-          this.errorMsg1 = this.$t('M.comm_please_enter') + this.$t('M.user_security_verify')
+          this.errorMsg1 = this.$t('M.user_please_input12')
           return false
         }
         if (this.securityCenter.isPhoneEnable && !this.phoneCode) {
-          this.errorMsg1 = this.$t('M.comm_please_enter') + this.$t('M.user_security_verify')
+          this.errorMsg1 = this.$t('M.user_please_input12')
           return false
         }
         if (this.securityCenter.isGoogleEnable && !this.googleCode) {
-          this.errorMsg1 = this.$t('M.comm_please_enter') + this.$t('M.user_security_verify')
+          this.errorMsg1 = this.$t('M.user_please_input12')
           return false
         }
       }

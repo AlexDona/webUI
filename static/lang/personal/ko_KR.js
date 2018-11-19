@@ -80,7 +80,7 @@ export const personal = {
   'user_account_text1': 'OTC 수금 계정을 설정하기 전에 인증을 완료하고 거래 비밀번호를 설정하십시오!',
   'user_account_text2': 'Alipay 업로드 QR 코드 방법 : Alipay 홈> 돈 모으기> 이미지 저장을 클릭하고 휴대 전화 앨범의 영수증 코드를 업로드하십시오.',
   'user_account_payment_term': '수집 방법',
-  'user_account_bank_transfer': '은행 송금',
+  'user_account_bank_transfer': 'Bank card',
   'user_account_whether_not': '여부',
   'user_account_whether_close1': '은행 카드 결제 수단을 닫으시겠습니까?',
   'user_account_whether_close2': 'WeChat 결제 수단을 닫으시겠습니까?',
@@ -105,9 +105,9 @@ export const personal = {
   'user_account_alipay': 'Alipay',
   'user_account_alipay_pla': 'Alipay 컬렉션 코드를 업로드하십시오.',
   // 添加PAYPAL''PAYPAL 추가'
-  'user_account_paypal': '페이팔',
+  'user_account_paypal': 'PAYPAL',
   // 添加西联汇款''Western Union 추가'
-  'user_account_western_union': '웨스턴 유니온',
+  'user_account_western_union': 'Western Union',
   'user_account_wire_transfer': '전신 송금',
   // 邀请推广''홍보 초대장'
   'user_invite_info': '정보',

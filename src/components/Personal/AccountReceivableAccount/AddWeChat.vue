@@ -55,9 +55,9 @@
                 {{ innerUserInfo.realname }}
               </span>
             </el-form-item>
-            <!--收  款  类  型-->
+            <!--收款类型-->
             <el-form-item
-              :label="$t('M.user_account_gathering') + $t('M.comm_type')"
+              :label="$t('M.user_pay_account_set6')"
             >
               <span class="chat-content-type">
                 {{ $t('M.user_account_weChat') }}
@@ -79,6 +79,7 @@
                 :isShow="!!errorShowStatusList[0]"
               />
             </el-form-item>
+            <!-- 上传收款码 -->
             <el-form-item
               :label="$t('M.user_account_upload_collection')"
             >
