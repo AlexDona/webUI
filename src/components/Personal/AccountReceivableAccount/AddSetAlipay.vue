@@ -56,9 +56,9 @@
                 {{ innerUserInfo.realname }}
               </span>
             </el-form-item>
-            <!--收  款  类  型-->
+            <!--收款类型-->
             <el-form-item
-              :label="$t('M.user_account_gathering') + $t('M.comm_type')"
+              :label="$t('M.user_pay_account_set6')"
             >
               <span class="account-content-type">支付宝</span>
             </el-form-item>

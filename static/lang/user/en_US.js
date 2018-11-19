@@ -81,10 +81,10 @@ export const user = {
   'news_month': 'month',
   // ###############邀请注册##############
   'invitation_register_return_home': 'Return home',
-  'invitation_register_server_err': 'Sorry that the server is out of order.',
+  'invitation_register_server_err': 'Very sorry that the server has made an error',
   'invitation_register_your_friends': 'Your friend',
-  'invitation_register_please_you_register': 'Invite you to register',
-  'invitation_register_immediately_register_get': 'Register and receive',
+  'invitation_register_please_you_register': 'Invites you to sign up',
+  'invitation_register_immediately_register_get': 'Register now',
   'invitation_register_now_register': 'Register for gifts',
   'invitation_register_safety': 'secure and convenient bitcoin trading platform',
   'invitation_register_Registration_Successful': 'Registered!',

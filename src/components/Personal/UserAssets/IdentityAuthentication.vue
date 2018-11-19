@@ -193,7 +193,7 @@
             class="authentication-type font-size12"
           >
             <!--未高级认证-->
-            （{{ $t('M.comm_not') }}{{ $t('M.user_senior_certification') }}）
+            ({{ $t('M.user_advanced_authentication_tips1') }})
           </span>
           <span
             v-if="innerUserInfo.advancedAuth === 'pass'"
@@ -748,7 +748,7 @@ export default {
         case 0:
           console.log(type)
           if (!targetNum) {
-            this.setErrorMsg(0, this.$t('M.comm_please_enter') + this.$t('M.user_real_real'))
+            this.setErrorMsg(0, this.$t('M.user_please_input19'))
             this.$forceUpdate()
             return 0
           } else {
@@ -759,7 +759,7 @@ export default {
         // 请输入证件号码
         case 1:
           if (!targetNum) {
-            this.setErrorMsg(1, this.$t('M.comm_please_enter') + this.$t('M.user_real_certificate_cone'))
+            this.setErrorMsg(1, this.$t('M.user_please_input20'))
             this.$forceUpdate()
             return 0
           } else {

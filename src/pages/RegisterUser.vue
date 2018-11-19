@@ -482,11 +482,11 @@
           </div>
           <div class="input">
             <div class="inner-box">
-              <!--登录密码-->
+              <!--请输入密码-->
               <input
                 type="password"
                 class="input"
-                :placeholder="$t('M.comm_please_enter') + $t('M.user_security_password')"
+                :placeholder="$t('M.user_register_input_pwd')"
                 v-model="password"
                 @keydown="setErrorMsg('')"
                 @blur="checkoutInputFormat(4,password)"
@@ -495,12 +495,11 @@
           </div>
           <div class="input">
             <div class="inner-box">
-              <!--确认密码-->
               <!--请再次输入密码-->
               <input
                 type="password"
                 class="input"
-                :placeholder="$t('M.forgetPassword_hint2') + $t('M.user_security_password')"
+                :placeholder="$t('M.user_register_input_confirm_pwd')"
                 @keydown="setErrorMsg('')"
                 v-model="repeatPassword"
                 @blur="checkoutInputFormat(5,repeatPassword)"

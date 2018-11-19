@@ -54,6 +54,7 @@ export const personal = {
   'user_real_already': 'You have passed',
   'user_real_region': 'Regional country',
   'user_real_certificate_type': 'Type of certificate',
+  'user_real_certificate_cone': 'ID number',
   'user_real_real': 'Actual name',
   // 高级认证Advanced certification
   'user_senior_certification': 'Advanced certification',
