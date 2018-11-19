@@ -87,7 +87,7 @@ export default {
         }
       })
     }
-    getFooterInfo(this.language, this)
+    getFooterInfo(this.routeLanguage || this.language, this)
     this.activeTheme = this.theme
     this.GET_COUNTRY_LIST_ACTION(this)
     console.log(this.$route.query)
