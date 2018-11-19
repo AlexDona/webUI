@@ -78,7 +78,16 @@ const currencyApplication = r => require.ensure([], () => r(require('@/component
 /**
  * 新闻公告
  */
+const NewsAndNoticeCenter = r => require.ensure([], () => r(require('@/components/NoticeAndNews/NewAndNoticeCenter')), 'news-andNotice-center')
+/**
+ * 新闻列表
+ */
 const NewsAndNoticeList = r => require.ensure([], () => r(require('@/components/NoticeAndNews/NewsAndNoticeList')), 'news-andNotice-list')
+/**
+ * 新闻详情
+ */
+const NewsAndNoticeItem = r => require.ensure([], () => r(require('@/components/NoticeAndNews/NewsAndNoticeItem')), 'news-andNotice-item')
+
 const HelpCenter = r => require.ensure([], () => r(require('@/components/FooterInfo/HelpCenter')), 'news-andNotice-list')
 /**
  * FooterInfo
@@ -333,8 +342,18 @@ const router = new Router({
     },
     {
       // 新闻中心
-      path: '/NewsAndNoticeList',
-      component: NewsAndNoticeList
+      path: '/NewsAndNoticeCenter',
+      component: NewsAndNoticeCenter,
+      children: [
+        {
+          path: '/',
+          component: NewsAndNoticeList
+        },
+        {
+          path: 'item/:id',
+          component: NewsAndNoticeItem
+        }
+      ]
     },
     {
       // 关于我们

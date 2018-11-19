@@ -3,12 +3,12 @@ import {REFLASH_USER_INFO} from './actions-types'
 import {userRefreshUser} from '../../utils/api/personal'
 import {returnAjaxMsg} from '../../utils/commonFunc'
 export default {
-  async [REFLASH_USER_INFO] ({commit, state}, {that}) {
+  async [REFLASH_USER_INFO] ({commit, state}, {self}) {
     console.log(state)
     const data = await userRefreshUser({
       token: state.loginStep1Info.token
     })
-    if (!(returnAjaxMsg(data, that))) {
+    if (!(returnAjaxMsg(data, self))) {
       return false
     } else {
       console.log(data)

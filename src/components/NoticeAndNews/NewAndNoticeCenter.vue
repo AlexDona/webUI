@@ -36,19 +36,20 @@
                     v-for="(item,index) in noticeFilterList"
                     :key="index"
                   >
-                    <div
+                    <router-link
+                      :to="`NewsAndNoticeCenter/item/${item.id}`"
                       class="content-item-link"
                     >
                       <div class="left">
-                        <div class="top">
-                          <!--年-->
-                          {{item.createTime.split('-')[0]+ $t('M.news_year')}}
+                          <div class="top">
+                            <!--年-->
+                            {{item.createTime.split('-')[0]+ $t('M.news_year')}}
+                          </div>
+                          <div class="bottom">
+                            <!--月-->
+                            {{item.createTime.split('-')[1]-0+ $t('M.news_month')}}
+                          </div>
                         </div>
-                        <div class="bottom">
-                          <!--月-->
-                          {{item.createTime.split('-')[1]-0+ $t('M.news_month')}}
-                        </div>
-                      </div>
                       <div class="right">
                         <p class="top">
                           {{item.title}}
@@ -61,7 +62,7 @@
                           <span class="date">{{item.createTime}}</span>
                         </p>
                       </div>
-                    </div>
+                    </router-link>
                   </li>
                 </ul>
               </div>
@@ -75,12 +76,51 @@
               </el-pagination>
             </el-tab-pane>
           </el-tabs>
+          <div
+            class="news-detail"
+            v-show="!showNewsList"
+          >
+            <div class="left">
+              <h2>{{newDetail.newsTypeName}}</h2>
+              <div class="detail-content">
+                <h3 class="title">{{newDetail.title}}</h3>
+                <p class="time">{{newDetail.createTime}}</p>
+                <div
+                  class="content"
+                  v-html="newDetail.content"
+                ></div>
+              </div>
+            </div>
+            <div class="right">
+              <div
+                class="news-type-list"
+                v-for="(outerItem,outIndex) in newsTypeList"
+                :key="outIndex"
+              >
+                <h2 class="news-type-title">{{outerItem.name}}</h2>
+                <ul
+                  class="news-type-content"
+                >
+                  <li
+                    class="news-type-item cursor-pointer"
+                    v-for="(item,index) in detailAllNewsList[outIndex]"
+                    :key="index"
+                  >
+                    <router-link :to="`/item/${item.id}`">
+                      <span class="title">{{item.title}}</span>
+                      <span class="time">{{item.createTime.split(' ')[0]}}</span>
+                    </router-link>
+                  </li>
+                </ul>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
+      <router-view></router-view>
     </div>
   </div>
 </template>
-<!--请严格按照如下书写书序-->
 <script>
 import {
   getNewsNoticeList,
@@ -229,7 +269,7 @@ export default {
     noticeFilterList () {
       return this.noticeList.filter((item) => {
         return (item['title'].indexOf(this.searchKeyWord) != -1 ||
-               item['keyword'].indexOf(this.searchKeyWord) != -1)
+          item['keyword'].indexOf(this.searchKeyWord) != -1)
         // item['type'] == 0
       })
     },
@@ -462,64 +502,64 @@ export default {
       }
     }
     &.night{
-     >.inner-box{
-       >.search-box{
-         >.search-input{
-         }
-       }
-       >.content-box{
-         background-color: #121824;
-         >.inner-box{
-           .item-content{
-             >.content-list{
-               >.content-item{
-                 >.content-item-link{
-                   >.left,>.right{
-                   }
-                   >.left{
-                     >.top{
-                     }
-                     >.bottom{
-                     }
-                   }
-                   >.right{
-                     >.top{
-                       color:#fff;
-                     }
-                     >.middle{
-                     }
-                     >.bottom{
-                     }
-                   }
-                 }
-               }
-             }
-             &.help{
-               >.content-list{
-                 >.content-item{
-                   >.content-item-link{
-                     background-color: #293140;
-                     >.title{
-                       >.icon-box{
-                         background-color: #338FF5;
-                         color:#1E2636;
-                       }
-                       >.title-content{
-                       }
-                     }
-                     >.content{
-                     }
-                   }
-                 }
-               }
-             }
-           }
-           >.news-detail{
-             background-color: #1e2636;
-           }
-         }
-       }
-     }
+      >.inner-box{
+        >.search-box{
+          >.search-input{
+          }
+        }
+        >.content-box{
+          background-color: #121824;
+          >.inner-box{
+            .item-content{
+              >.content-list{
+                >.content-item{
+                  >.content-item-link{
+                    >.left,>.right{
+                    }
+                    >.left{
+                      >.top{
+                      }
+                      >.bottom{
+                      }
+                    }
+                    >.right{
+                      >.top{
+                        color:#fff;
+                      }
+                      >.middle{
+                      }
+                      >.bottom{
+                      }
+                    }
+                  }
+                }
+              }
+              &.help{
+                >.content-list{
+                  >.content-item{
+                    >.content-item-link{
+                      background-color: #293140;
+                      >.title{
+                        >.icon-box{
+                          background-color: #338FF5;
+                          color:#1E2636;
+                        }
+                        >.title-content{
+                        }
+                      }
+                      >.content{
+                      }
+                    }
+                  }
+                }
+              }
+            }
+            >.news-detail{
+              background-color: #1e2636;
+            }
+          }
+        }
+      }
     }
     &.day{
       >.inner-box{

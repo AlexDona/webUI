@@ -98,7 +98,7 @@
             </dd>
             <dd
               class="dd-item"
-              @click="jumpToOtherPage('/NewsAndNoticeList','notice')"
+              @click="jumpToOtherPage('/NewsAndNoticeCenter','notice')"
             >
               <!--新闻公告-->
               {{$t('M.comm_news_and_notice')}}

@@ -88,7 +88,9 @@ export default {
       ajaxData: {}, // 接口请求数据
       resolutions: ['min', 'min5', 'min15', 'min30', 'hour1', 'hour4', 'day', 'week'],
       fullscreenLoading: true,
-      loadingCount: 0 // loading 次数
+      loadingCount: 0, // loading 次数
+      KlineNum: 0, // 拖拽k线档数
+      isAllowDrag: true // 是否允许拖拽
     }
   },
   beforeCreate () {
@@ -119,38 +121,65 @@ export default {
       'CHANGE_SOCKET_AND_AJAX_DATA'
     ]),
     // 接口获取K线数据
-    async getKlineByAjax (tradeName, KlineType, KlineStep = 'STEP5') {
+    async getKlineByAjax (tradeName, KlineType, KlineNum = 0, KlineStep = 'STEP5') {
       const params = {
         tradeName,
         KlineType,
+        KlineNum,
         KlineStep
       }
       const data = await getKlineDataAjax(params)
       if (!returnAjaxMsg(data, this)) {
         return false
       } else {
+        this.isAllowDrag = true
         console.log(data)
         let klineData = getNestedData(data, 'data.data.obj')
         klineData = JSON.parse(unzip(klineData))
-        console.log(klineData)
-        let list = []
-        const ticker = `${this.symbol}-${this.interval}`
-        console.log(ticker)
-        klineData.forEach(function (element) {
-          list.push({
-            time: element.time - 0,
-            open: element.open,
-            high: element.high,
-            low: element.low,
-            close: element.close,
-            volume: element.volume
-          })
-        })
-        this.cacheData[ticker] = list
-        // console.log(list);
-        this.lastTime = getNestedData(list[list.length - 1], 'time')
-        // this.initKLine(this.symbol)
-        // this.onMessage(klineData)
+        let klineList = klineData.klineList
+        if (klineList) {
+          this.KlineNum = klineData.num
+          let list = []
+          const ticker = `${this.symbol}-${this.interval}`
+          switch (KlineNum) {
+            case 0:
+              console.log(klineData)
+              console.log(this.KlineNum)
+              console.log(ticker)
+              klineList.forEach(function (element) {
+                list.push({
+                  time: element.time - 0,
+                  open: element.open,
+                  high: element.high,
+                  low: element.low,
+                  close: element.close,
+                  volume: element.volume
+                })
+              })
+              this.cacheData[ticker] = list
+              this.lastTime = getNestedData(list[list.length - 1], 'time')
+              break
+            default:
+              console.log(klineData)
+              let reflashList = []
+              klineList.forEach((element, index) => {
+                // console.log(item)
+                reflashList.push({
+                  time: element.time - 0,
+                  open: element.open,
+                  high: element.high,
+                  low: element.low,
+                  close: element.close,
+                  volume: element.volume
+                })
+              })
+              this.cacheData[ticker] = reflashList.concat(this.cacheData[ticker])
+              console.log(reflashList)
+              console.log(this.cacheData[ticker])
+              this.datafeeds.barsUpdater.updateData()
+              break
+          }
+        }
       }
     },
     // 获取当前交易对socket数据
@@ -314,7 +343,18 @@ export default {
           // K线图指针移动回调
           this.widget.chart().crossHairMoved((e) => {
             console.log(e)
-            console.log(this.cacheData)
+            const currentTime = e.time * 1000
+            const ticker = `${this.symbol}-${this.interval}`
+            console.log(this.cacheData[ticker][50].time)
+            const limitTime = this.cacheData[ticker][50].time
+            console.log(currentTime, limitTime)
+
+            const timeDiff = currentTime - limitTime
+            console.log(timeDiff, this.KlineNum, this.interval)
+            if (timeDiff < 0 && this.KlineNum > -1 && this.isAllowDrag) {
+              let interval = this.transformInterval(this.interval)
+              this.getKlineByAjax(this.symbol, interval, this.KlineNum - 1)
+            }
           })
         })
         this.symbol = options.symbol

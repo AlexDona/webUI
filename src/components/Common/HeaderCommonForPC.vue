@@ -343,8 +343,7 @@ import {getMerchantAvailablelegalTender} from '../../utils/api/OTC'
 import {userLoginOut} from '../../utils/api/user'
 import IconFontCommon from '../Common/IconFontCommon'
 import {
-  returnAjaxMsg,
-  getFooterInfo
+  returnAjaxMsg
 } from '../../utils/commonFunc'
 import {
   getStore,
@@ -399,10 +398,13 @@ export default{
     require('../../../static/css/theme/day/Common/HeaderCommonDay.css')
     // 获取 语言列表
     await this.GET_LANGUAGE_LIST_ACTION({
-      that: this
+      self: this
     })
     await this.GET_COUNTRY_LIST_ACTION(this)
-    await getFooterInfo(this.language, this)
+    await this.SET_PARTNER_INFO_ACTION({
+      self: this,
+      language: this.language
+    })
     // console.log(this.theme)
     this.activeTheme = this.theme
     // 查询某商户可用法币币种列表
@@ -422,7 +424,8 @@ export default{
     ...mapActions([
       'GET_COUNTRY_LIST_ACTION',
       'GET_TRANSITION_RATE_ACTION',
-      'GET_LANGUAGE_LIST_ACTION'
+      'GET_LANGUAGE_LIST_ACTION',
+      'SET_PARTNER_INFO_ACTION'
     ]),
     ...mapMutations([
       // 修改语言
@@ -473,7 +476,7 @@ export default{
       })
       await this.GET_TRANSITION_RATE_ACTION({
         params,
-        that: this,
+        self: this,
         activeConvertCurrencyObj: this.activeConvertCurrencyObj
       })
     },
@@ -631,7 +634,10 @@ export default{
       console.log(newVal)
     },
     async language () {
-      await getFooterInfo(this.language, this)
+      await this.SET_PARTNER_INFO_ACTION({
+        self: this,
+        language: this.language
+      })
     },
     title (newVal) {
       console.log(newVal)
