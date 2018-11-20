@@ -343,7 +343,8 @@ import {getMerchantAvailablelegalTender} from '../../utils/api/OTC'
 import {userLoginOut} from '../../utils/api/user'
 import IconFontCommon from '../Common/IconFontCommon'
 import {
-  returnAjaxMsg
+  returnAjaxMsg,
+  getNestedData
 } from '../../utils/commonFunc'
 import {
   getStore,
@@ -596,7 +597,7 @@ export default{
         return false
       }
       // 返回数据正确的逻辑
-      this.convertCurrencyList = data.data.data
+      this.convertCurrencyList = getNestedData(data, 'data.data')
       await this.changeActiveTransitionCurrency()
       // setStore('convertCurrencyList', this.convertCurrencyList)
     },
