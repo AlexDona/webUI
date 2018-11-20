@@ -528,7 +528,11 @@ export default {
     },
     // 确定重置交易密码
     async getUpdatePayPassword () {
-      this.confirmVerifyInformation()
+      // this.confirmVerifyInformation()
+      // 问题：点击确认重置按钮直接接口调用成功了，
+      // 原因：未调用验证input方法
+      // 任修复重置交易密码逻辑，应该调用confirmUpdate()而不是confirmVerifyInformation()
+      this.confirmUpdate()
     },
     // 手机邮箱谷歌验证
     async confirmVerifyInformation () {
@@ -543,7 +547,7 @@ export default {
       // 整页loading
       this.fullscreenLoading = true
       data = await securityVerificationOnOff(params)
-      if (!(returnAjaxMsg(data, this, 0))) {
+      if (!(returnAjaxMsg(data, this, 1))) {
         // 接口失败清除loading
         this.fullscreenLoading = false
         return false
