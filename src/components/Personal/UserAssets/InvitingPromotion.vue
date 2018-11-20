@@ -471,7 +471,8 @@ export default {
     //  点击复制
     onCopy (e) {
       // 已拷贝
-      let msg = '已拷贝'
+      // let msg = '已拷贝'
+      let msg = this.$t('M.comm_have_been_copied')
       this.$message({
         type: 'success',
         message: msg
@@ -479,7 +480,8 @@ export default {
     },
     onError (e) {
       // 拷贝失败，请稍后重试
-      let msg = '拷贝失败，请稍后重试'
+      // let msg = '拷贝失败，请稍后重试'
+      let msg = this.$t('M.comm_copies_failure')
       this.$message({
         type: 'success',
         message: msg
