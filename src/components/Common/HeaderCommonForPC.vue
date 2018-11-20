@@ -808,8 +808,10 @@ export default{
                 box-sizing: border-box;
                 >.sub-nav-user{
                   >.nav-vip{
-                    height: 50px;
-                    line-height: 50px;
+                    // height: 50px;
+                    // line-height: 50px;
+                    line-height: 20px;
+                    margin-top: 16px;
                   }
                   >.nav-button{
                     width: 100%;
