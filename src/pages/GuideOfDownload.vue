@@ -239,13 +239,13 @@ export default {
               >.icon{
                 color:#ccc;
                 margin-right:5px;
-                font-size: 28px;
+                font-size: 22px;
               }
             }
             >.please-wait{
               color:$mainColor;
               line-height: 113px;
-              font-size: 28px;
+              font-size: 22px;
               margin-left:30px;
             }
           }

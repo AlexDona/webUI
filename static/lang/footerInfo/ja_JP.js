@@ -18,7 +18,7 @@ export const footerInfo = {
   'about_footer_info_down4': 'いつでも注目し、素早い取引',
   'about_footer_info_down5': 'Mac ダウンロード',
   'about_footer_info_down6': 'WIN ダウンロード',
-  'about_footer_info_down7': 'しばらくはオープンしませんのでご期待ください',
+  'about_footer_info_down7': 'オープンしない',
   'about_footer_info_help': 'ヘルプセンター',
   'about_footer_info_keyWords': '入力キーワード',
   'user_not_bind_phone': '電話をバインディングない',

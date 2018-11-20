@@ -600,7 +600,7 @@ export default {
             // color: #9DA5B3;
           }
           >.status-input{
-            margin-right: 50px;
+            margin-right: 40px;
           }
           >.date-picker{
             >.date-short-line{
