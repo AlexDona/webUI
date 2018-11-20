@@ -259,7 +259,7 @@ export default {
       setInterval(() => {
         if (this.successCountDown === 0) {
           this.$store.commit('user/USER_LOGOUT')
-          this.$router.push({path: '/'})
+          this.$router.push({path: '/home'})
         }
         this.successCountDown--
       }, 1000)

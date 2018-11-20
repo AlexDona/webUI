@@ -20,7 +20,7 @@ import {
 } from './mutations-types.js'
 
 import {setStore} from '../../utils'
-
+import {getNestedData} from '../../utils/commonFunc'
 // import {localapi, proapi} from 'src/config/env'
 
 export default {
@@ -68,11 +68,11 @@ export default {
         break
       case 'socket':
         if (socketData) {
-          if (socketData.depthData) {
-            state.socketData.depthData = socketData.depthData
-          }
+          state.socketData.depthData = getNestedData(socketData, 'depthData')
           console.log(socketData.buyAndSellData)
-          state.socketData.buyAndSellData = socketData.buyAndSellData
+          if (socketData.buyAndSellData) {
+            state.socketData.buyAndSellData = getNestedData(socketData, 'buyAndSellData')
+          }
           if (!state.socketData.buyAndSellData) {
             state.socketData.buyAndSellData.sells.list = []
           }

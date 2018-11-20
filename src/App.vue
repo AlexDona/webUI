@@ -82,7 +82,7 @@ export default {
     '$route' (to, from) {
       console.log(to.path)
       let path = to.path
-      this.needNotice = path === '/' ? 1 : 0
+      this.needNotice = path === '/home' || path === '/' ? 1 : 0
       this.needHeader = (
         path !== '/login' &&
         path !== '/register' &&
