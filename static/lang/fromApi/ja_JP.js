@@ -106,7 +106,7 @@ export const fromApi = {
   'account_failure_0011': 'Merchant Walletこの通貨はすでに存在しています！',
   'account_failure_0010': '商人は新しい通貨を追加できませんでした。',
   'account_failure_0013': 'Merchant Freeze控除ログレコードに失敗しました！',
-  'account_failure_0012': '不十分な凍結、処理できません！',
+  'account_failure_0012': '凍結不足、処理できない',
   'otc_failure_0073': '注文変更ステータスが失敗しました',
   'account_failure_0015': 'ユーザは興味のあるロギングエラーを増やすことができます！',
   'otc_failure_0074': '通貨が失敗し、支払いが失敗したことが確認されました',

@@ -56,7 +56,7 @@
               {{$t('M.actionCenter_rege')}}
             </div>
             <ul class="table">
-              <li class="th">
+              <li class="th text-align-c">
                 <span class="td">
                   <!-- 排名 -->
                   {{$t('M.actionCenter_Rank')}}
@@ -83,24 +83,24 @@
                 v-for="(item,index) in rankingList"
                 :key="index"
               >
-                <span class="td index">
+                <span class="td index text-align-c">
                   <span>
                     {{item.index}}
                   </span>
                 </span>
                 <span
-                  class="td"
+                  class="td text-align-c"
                   v-if="item.userName"
                 >
                   {{phoneNumberFormat(item.userName)}}
                 </span>
-                <span class="td">
+                <span class="td text-align-c">
                   {{item.count}}
                 </span>
-                <span class="td">
+                <span class="td text-align-c">
                   {{item.secondCount}}
                 </span>
-                <span class="td">
+                <span class="td text-align-c">
                   {{item.account}}{{item.coinName}}
                 </span>
               </li>
