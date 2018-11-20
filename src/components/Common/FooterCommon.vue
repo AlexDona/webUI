@@ -43,21 +43,47 @@
                 />
               </a>
               <!--微信-->
-              <a class="weixin-btn">
+              <a
+                class="weixin-btn"
+                v-show="index==2"
+                @mouseenter="toggleShowStatus('weixin',1)"
+                @mouseleave="toggleShowStatus('weixin',0)"
+              >
                 <Iconfont
-                  v-show="index==2"
                   icon-name="icon-weixin-copy"
                   class-name="icon-text icon-weixin"
                 >
                 </Iconfont>
+                <span
+                  class="er-code"
+                  v-show="isShowWeixin"
+                >
+                  <VueQrcode
+                    class="ercode"
+                    :value="weixinErcode"
+                  />
+                </span>
               </a>
-              <a class="qq-btn">
+              <a
+                class="weixin-btn"
+                v-show="index==3"
+                @mouseenter="toggleShowStatus('qq',1)"
+                @mouseleave="toggleShowStatus('qq',0)"
+              >
                 <!--qq-->
                 <Iconfont
-                  v-show="index==3"
                   icon-name="icon-qq"
                   class-name="icon-text"
                 />
+                <span
+                  class="er-code"
+                  v-show="isShowQQ"
+                >
+                  <VueQrcode
+                    class="ercode"
+                    :value="qqErcode"
+                  />
+                </span>
               </a>
             </li>
           </ul>
@@ -206,11 +232,19 @@ import {createNamespacedHelpers, mapState} from 'vuex'
 const {mapMutations} = createNamespacedHelpers('footerInfo')
 export default {
   components: {
-    Iconfont
+    Iconfont,
+    // 二维码组件
+    VueQrcode: resolve => {
+      require([('@xkeshi/vue-qrcode')], resolve)
+    }
   },
   // props,
   data () {
     return {
+      weixinErcode: '',
+      isShowWeixin: false,
+      isShowQQ: false,
+      qqErcode: '',
       shareList: [
         {
           iconName: 'icon-twitter_F',
@@ -250,6 +284,16 @@ export default {
     ...mapMutations([
       'CHANGE_FOOTER_ACTIVENAME'
     ]),
+    toggleShowStatus (type, data) {
+      switch (type) {
+        case 'weixin':
+          this.isShowWeixin = data
+          break
+        case 'qq':
+          this.isShowQQ = data
+          break
+      }
+    },
     jumpToOtherPage (router, activeName) {
       jumpToOtherPageForFooter(router, activeName, this)
     }
@@ -274,8 +318,8 @@ export default {
         console.log(this.footerInfo2)
         this.shareList[0].ercodeSrc = this.footerInfo1.twitter
         this.shareList[1].ercodeSrc = this.footerInfo1.facebook
-        this.shareList[2].ercodeSrc = this.footerInfo1.weixin
-        this.shareList[3].ercodeSrc = this.footerInfo1.qq
+        this.weixinErcode = this.footerInfo1.weixin
+        this.qqErcode = this.footerInfo1.qq
         this.shareList[4].ercodeSrc = this.footerInfo1.telegraph_group
       }
     }
@@ -332,7 +376,20 @@ export default {
                 }
               }
               >.icon-weixin{
+
+              }
+              >.weixin-btn{
                 position: relative;
+                >.er-code{
+                  position: absolute;
+                  left:50%;
+                  transform: translate(-50%,0);
+                  top:-110px;
+                  width:100px;
+                  height:100px;
+                  padding:4px;
+                  background-color: #fff;
+                }
               }
               >.hidden-box{
                 width:110px;
