@@ -1459,7 +1459,8 @@ export default {
             height: 100%;
             >.header-right-left {
               >.header-right-text {
-                width: 180px;
+                // width: 180px;
+                width: 200px;
                 >.header-right-show {
                   line-height: 50px;
                 }

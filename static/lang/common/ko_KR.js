@@ -85,8 +85,8 @@ export const common = {
   'comm_copy': '복사',
   'comm_query': '찾기',
   'comm_search': '검색',
-  'comm_charge_money': '코인 입금',
-  'comm_mention_money': '코인 출금',
+  'comm_charge_money': '예금', // 코인 입금
+  'comm_mention_money': '인출', // 코인 출금
   'comm_charge_recharge': '입금',
   'comm_mention_withdraw': '출금',
   'comm_service_charge': '수수료',

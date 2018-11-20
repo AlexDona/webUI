@@ -11,5 +11,5 @@ export const home = {
   'home_market_district': '자기 선택구',
   // #####################导航######################
   'investment_look_all': '모두보기',
-  'Investment_return_investment': '복귀'
+  'investment_return_investment': '복귀'
 }
