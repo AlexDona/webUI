@@ -30,7 +30,7 @@ export const OTC = {
   'otc_alipay_type': 'お支払い方法',
   'otc_bank_num': '銀行カード口座',
   // ##########注文完了#############
-  'otc_trade_complate': 'トランザクションが完了しました',
+  'otc_trade_complate': '取引完成した',
   'otc_decide_complate': 'アピール判断、注文完了',
   // 'otc_tradeOver_complate'アピール判定、注文完了'
   'otc_enum_status_weifukuan': '未払い',
@@ -61,7 +61,7 @@ export const OTC = {
   'otc_trading': '取引中',
   'otc_buyer': '買い手',
   'otc_seller': '売り手',
-  'otc_revoke': '失効命令を決定しますか？',
+  'otc_revoke': '委託注文を取消す決定しますか？',
   'otc_data': '注文が時間通りに一致しない場合、同じ日に3回累積すると、アカウントは凍結されます。',
   'otc_password_kong': 'トランザクションパスワードを空にすることはできません',
   'otc_money_kong': '取引金額は空欄にできません',
@@ -75,7 +75,7 @@ export const OTC = {
   'otc_pl': '選択する',
   'otc_no1': '開始日',
   'otc_no2': '終了日',
-  'otc_opening_bank': '銀行',
+  'otc_opening_bank': '銀行口座',
   'otc_trading_sellphone': '売り手の携帯電話番号',
   'otc_trading_buyphone': '買い手の携帯電話番号',
   'otc_payee': '受取人',
@@ -125,7 +125,7 @@ export const OTC = {
   'otc_entrust_cancellations': '取消す',
   'otc_entrust_cancellationing': '引退',
   'otc_overtime': 'バイヤーはタイムアウトを支払っていないため、システムは自動的にキャンセルされます。',
-  'otc_freeze': '買い手は支払いをしており、売り手は凍結注文を申請することに反対しています。',
+  'otc_freeze': '買い手は支払いをしており、疑問があったら凍結注文を申請します。',
   'otc_order0': '注文が生成された後',
   'otc_order1': '30',
   'otc_order2': '相手方は1分以内に支払いを確認しなかった。',
@@ -152,7 +152,7 @@ export const OTC = {
   'otc_complaint_submiting': '提出する',
   'otc_complaint_cancel': '上訴を取り消す',
   'otc_complaint_appeal_reason': '上訴の理由',
-  'otc_complaint_frezzing': '申し立ては凍結され、処理待ちです',
+  'otc_complaint_frezzing': '申立凍結、処理を待っている。',
   // #########マーチャントアプリケーション##################
   'otc_merchant': '商家',
   'otc_privilege': '特権',
@@ -242,7 +242,7 @@ export const OTC = {
   'otc_adMange_change': '変更',
   // 二次確認窓かぎメッセージ
   'otc_adMange_tipsContentOne': 'この広告を削除してもよろしいですか？',
-  'otc_adMange_tipsContentTwo': 'この広告を編集してもよろしいですか？',
+  'otc_adMange_tipsContentTwo': 'この広告を改めて確認ですか？',
   'otc_adMange_tipsContentThree': 'この操作ですべての広告が削除され、続行されますか？',
   'otc_adMange_already_getting': 'リスと',
   'otc_adMange_already_adverting': 'オフリスと',

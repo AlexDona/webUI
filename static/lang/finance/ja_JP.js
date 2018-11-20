@@ -1,5 +1,6 @@
 export const finance = {
   'finance_newestPrice': '最新価格',
+  'finance_save_moneydetail': 'デポジット詳細',
   'finance_at_once_save': 'デポジット',
   'finance_input_sum': '数量を入力してください',
   'finance_save_coin_record': 'デポジット記録',
@@ -16,7 +17,7 @@ export const finance = {
   'finance_mine': '私',
   'finance_estimatedValue': '評価',
   'finance_invest_estimatedValue': '見積',
-  'finance_earnings': '収入',
+  'finance_earnings': '収益',
   'finance_predict_earnings': '予想収益',
   'finance_predict_send_time': 'リリス収益',
   'finance_earnings_value': '所得の価値',
@@ -26,11 +27,19 @@ export const finance = {
   'finance_releaseTime': 'リリス時間',
   'finance_createTime': '作成時間',
   'finance_huoqi': '現在の期間',
-  'finance_grant': '問題',
+  'finance_grant': 'リリス',
   'finance_noemptyTips': '預金の種類または預金の金額は空ではありません',
   'finance_loginTips': '@あなたはまだログインしていません。',
   'finance_or': 'または',
   'finance_loginTipsTwo': 'それからそれをチェックしてください！',
   // 二次确认弹框提示信息''二次確認窓かぎメッセージ'
-  'finance_tipsContentOne': 'デポジットの回収を決定する？'
+  'finance_tipsContentOne': 'デポジット引き出すが決定ですか？',
+  'finance_leit': 'から',
+  'finance_day': 'デート',
+  'finance_timeLong': 'タイム',
+  'finance_interestRate': '金利',
+  'finance_total_income': '予想総収益',
+  'finance_xiAndben': 'まず金利あと本金',
+  'finance_capital': '本金',
+  'finance_accrual': '金利'
 }

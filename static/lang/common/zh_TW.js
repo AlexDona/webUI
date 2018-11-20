@@ -149,6 +149,7 @@ export const common = {
   'comm_please': '請',
   'comm_bill': '賬',
   'comm_house': '戶',
+  'comm_bill_house': '賬户',
   'comm_theme': '主題',
   'comm_download': '下載',
   'comm_help_center': '幫助中心',
