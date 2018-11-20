@@ -114,7 +114,9 @@ class socket {
   }
   doClose () {
     console.log('close')
-    this.socket.close()
+    if (this.socket) {
+      this.socket.close()
+    }
   }
   destroy () {
     if (this.heartBeatTimer) {

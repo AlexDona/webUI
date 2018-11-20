@@ -352,7 +352,7 @@ export default{
             val: item
           })
         })
-        this.activeName = this.newMarketList[0].plateId
+        this.activeName = getNestedData(this.newMarketList[0], 'plateId')
         this.activeIndex = 0
         let collectSymbol = {}
         if (!this.isLogin) {
