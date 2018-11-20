@@ -87,7 +87,7 @@
             >
               <div class="tab-content">
                 <Content
-                  :content="legislationExplainData.content"
+                  :content="tradingWarningData.content"
                 />
               </div>
             </el-tab-pane>
@@ -158,7 +158,7 @@ export default {
           this.termsTypeIds = 5
           break
         // 交易须知
-        case 'TradingWarning':
+        case 'TradingWraning':
           this.termsTypeIds = 14
           break
       }
@@ -236,7 +236,8 @@ export default {
       userProtocolData: state => state.footerInfo.serviceProtocolData.userProtocolData,
       privacyClauseData: state => state.footerInfo.serviceProtocolData.privacyClauseData,
       rateData: state => state.footerInfo.serviceProtocolData.rateData,
-      APIDocumentData: state => state.footerInfo.serviceProtocolData.APIDocumentData
+      APIDocumentData: state => state.footerInfo.serviceProtocolData.APIDocumentData,
+      tradingWarningData: state => state.footerInfo.serviceProtocolData.tradingWarningData
     }),
     windowHeight () {
       return window.innerHeight
@@ -255,6 +256,9 @@ export default {
         type: '/ServiceAndProtocol',
         activeName: newVal
       })
+    },
+    tradingWarningData (newVal) {
+      console.log(newVal)
     },
     // 任增加：改变语言重新请求对应语言的国际化内容
     language (newVal) {
