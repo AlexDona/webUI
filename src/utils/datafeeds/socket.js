@@ -71,7 +71,7 @@ class socket {
       let reader = new FileReader()
       reader.readAsBinaryString(blob)
       reader.onload = (evt) => {
-        console.log(evt)
+        // console.log(evt)
         let text = pako.inflate(evt.target.result, {to: 'string'})
         // console.log(text)
         let msg = JSON.parse(text)

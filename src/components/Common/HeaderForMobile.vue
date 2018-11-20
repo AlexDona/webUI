@@ -77,7 +77,7 @@ export default {
     require('../../../static/css/theme/day/Common/HeaderCommonDay.css')
     // 获取 语言列表
     await this.GET_LANGUAGE_LIST_ACTION({
-      that: this
+      self: this
     })
     if (this.routeLanguage) {
       _.forEach(this.languageList, item => {
@@ -87,7 +87,7 @@ export default {
         }
       })
     }
-    getFooterInfo(this.language, this)
+    getFooterInfo(this.routeLanguage || this.language, this)
     this.activeTheme = this.theme
     this.GET_COUNTRY_LIST_ACTION(this)
     console.log(this.$route.query)
