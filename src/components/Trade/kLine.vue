@@ -310,6 +310,7 @@ export default {
           chart.onIntervalChanged().subscribe(null, function (interval, obj) {
             _self.widget.changingInterval = false
           })
+
           btnList.forEach(function (item, index) {
             let button = _self.widget.createButton({
               align: 'left'
@@ -320,29 +321,37 @@ export default {
             button.attr('class', 'button ' + item.class + selected + ' add' + index)
               .attr('data-chart-type', item.chartType === undefined ? 1 : item.chartType)
               .on('click', function (e) {
-                if (!_self.widget.changingInterval && !button.hasClass('selected')) {
-                  let chartType = +button.attr('data-chart-type')
-                  if (chart.resolution() !== item.resolution) {
-                    _self.widget.changingInterval = true
-                    console.log(item.resolution)
-                    chart.setResolution(item.resolution)
-                  }
-                  if (chart.chartType() !== chartType) {
-                    chart.setChartType(chartType)
-                  }
-                  _self.updateSelectedIntervalButton(button)
+                // if (!_self.widget.changingInterval && !button.hasClass('selected')) {
+                let chartType = +button.attr('data-chart-type')
+                if (chart.resolution() !== item.resolution) {
+                  // _self.widget.changingInterval = true
+                  console.log(item.resolution)
+                  chart.setResolution(item.resolution)
                 }
+                if (chart.chartType() !== chartType) {
+                  chart.setChartType(chartType)
+                }
+                _self.updateSelectedIntervalButton(button)
+                // }
               })
               .append(item.label)
           })
           setTimeout(() => {
             let iframe$ = document.getElementsByTagName('iframe')[0].contentWindow.$
             let lastBtnList = iframe$('.header-chart-panel-content .left')[0].childElementCount
-            if (lastBtnList.length > 12) {
-              for (let i = 2; i < 11; i++) {
-                iframe$.remove(`add${i}`)
+            console.log(iframe$('.header-chart-panel-content .left .group.space-single .add0').length)
+            let repeatCount = iframe$('.header-chart-panel-content .left .group.space-single .add0').length
+            for (let j = 0; j < repeatCount - 1; j++) {
+              for (let k = 0; k < 9; k++) {
+                iframe$.remove(iframe$(`.header-chart-panel-content .left .group.space-single .add${i}`).parentNode)
               }
             }
+            console.log(lastBtnList)
+            // if (lastBtnList.length > 13) {
+            //   for (let i = 2; i < lastBtnList.length - 9; i++) {
+            //     iframe$.remove(`add${i}`)
+            //   }
+            // }
           }, 10)
           this.widget.chart().createStudy('Moving Average', false, true, [5, 'close', 0], null, {'Plot.color': '#7b53a7'})
           this.widget.chart().createStudy('Moving Average', false, true, [10, 'close', 0], null, {'Plot.color': '#6b89ae'})
@@ -632,6 +641,9 @@ export default {
           console.log(this.fullscreenLoading)
         }, 600)
       }
+      // let iframe$ = document.getElementsByTagName('iframe')[0].contentWindow.$
+      // // let lastBtnList = iframe$('.header-chart-panel-content .left')[0].childElementCount
+      // console.log(iframe$('.header-chart-panel-content .left .group.space-single .add0'))
     },
     interval (newVal, oldVal) {
       console.log(newVal)
