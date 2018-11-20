@@ -58,10 +58,9 @@
                   class="er-code"
                   v-show="isShowWeixin"
                 >
-                  <VueQrcode
-                    class="ercode"
-                    :value="weixinErcode"
-                  />
+                   <img
+                     :src="weixinImage"
+                   >
                 </span>
               </a>
               <a
@@ -79,10 +78,9 @@
                   class="er-code"
                   v-show="isShowQQ"
                 >
-                  <VueQrcode
-                    class="ercode"
-                    :value="qqErcode"
-                  />
+                  <img
+                    :src="qqImage"
+                  >
                 </span>
               </a>
             </li>
@@ -241,10 +239,10 @@ export default {
   // props,
   data () {
     return {
-      weixinErcode: '',
+      weixinImage: '',
       isShowWeixin: false,
       isShowQQ: false,
-      qqErcode: '',
+      qqImage: '',
       shareList: [
         {
           iconName: 'icon-twitter_F',
@@ -318,8 +316,8 @@ export default {
         console.log(this.footerInfo2)
         this.shareList[0].ercodeSrc = this.footerInfo1.twitter
         this.shareList[1].ercodeSrc = this.footerInfo1.facebook
-        this.weixinErcode = this.footerInfo1.weixin
-        this.qqErcode = this.footerInfo1.qq
+        this.weixinImage = this.footerInfo1.weixinImage
+        this.qqImage = this.footerInfo1.qqImage
         this.shareList[4].ercodeSrc = this.footerInfo1.telegraph_group
       }
     }
@@ -389,6 +387,10 @@ export default {
                   height:100px;
                   padding:4px;
                   background-color: #fff;
+                  >img{
+                    width:100%;
+                    height:100%;
+                  }
                 }
               }
               >.hidden-box{
