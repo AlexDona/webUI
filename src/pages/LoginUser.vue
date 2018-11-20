@@ -732,22 +732,22 @@ export default {
     }
   },
   created () {
-    // console.log(this.isLogin)
+    console.log(this.isLogin)
     // console.log(this.socket)
     if (this.isLogin) {
-      this.$router.push({path: '/'})
+      this.$router.push({path: '/home'})
     }
     require('../../static/css/list/User/Login.css')
     this.ENTER_STEP1()
     this.refreshCode()
     this.reflashErCode()
     // 清空input框值
-    // this.clearInputValue()
+    this.clearInputValue()
   },
   mounted () {
-    $('body').on('mousemove', (e) => { // 拖动，这里需要用箭头函数，不然this的指向不会是vue对象
-      if (this.mouseMoveStata) {
-        var width = e.clientX - this.beginClientX
+    $('body').on('mousemove', (e) => {
+      if (this.mouseMoveStatus) {
+        let width = e.clientX - this.beginClientX
         if (width > 0 && width <= this.maxwidth) {
           $('.handler').css({'left': width})
           $('.drag_bg').css({'width': width})
@@ -758,8 +758,8 @@ export default {
     })
     $('body').on('mouseup', (e) => { // 鼠标放开
       console.log('mouseup')
-      this.mouseMoveStata = false
-      var width = e.clientX - this.beginClientX
+      this.mouseMoveStatus = false
+      let width = e.clientX - this.beginClientX
       if (width < this.maxwidth) {
         $('.handler').animate({'left': 0}, 500)
         $('.drag_bg').animate({'width': 0}, 500)
@@ -798,7 +798,7 @@ export default {
         // this.loadCurrencyList()
         this.$router.push({path: this.routerTo})
       } else {
-        this.$router.push({path: '/'})
+        this.$router.push({path: '/home'})
       }
     },
     // 返回登录

@@ -948,7 +948,7 @@ export default {
         this.getUserRefreshUser()
         // 国家列表展示
         this.GET_COUNTRY_LIST_ACTION({
-          that: this,
+          self: this,
           callback: (data) => {
             this.regionList = data.data.data
             this.regionValue = data.data.data[0].id

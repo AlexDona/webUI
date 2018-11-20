@@ -37,7 +37,7 @@
                     :key="index"
                   >
                     <router-link
-                      :to="`NewsAndNoticeCenter/item/${item.id}`"
+                      :to="`NewsAndNoticeItem/${item.id}`"
                       class="content-item-link"
                     >
                       <div class="left">
@@ -76,56 +76,16 @@
               </el-pagination>
             </el-tab-pane>
           </el-tabs>
-          <div
-            class="news-detail"
-            v-show="!showNewsList"
-          >
-            <div class="left">
-              <h2>{{newDetail.newsTypeName}}</h2>
-              <div class="detail-content">
-                <h3 class="title">{{newDetail.title}}</h3>
-                <p class="time">{{newDetail.createTime}}</p>
-                <div
-                  class="content"
-                  v-html="newDetail.content"
-                ></div>
-              </div>
-            </div>
-            <div class="right">
-              <div
-                class="news-type-list"
-                v-for="(outerItem,outIndex) in newsTypeList"
-                :key="outIndex"
-              >
-                <h2 class="news-type-title">{{outerItem.name}}</h2>
-                <ul
-                  class="news-type-content"
-                >
-                  <li
-                    class="news-type-item cursor-pointer"
-                    v-for="(item,index) in detailAllNewsList[outIndex]"
-                    :key="index"
-                  >
-                    <router-link :to="`/item/${item.id}`">
-                      <span class="title">{{item.title}}</span>
-                      <span class="time">{{item.createTime.split(' ')[0]}}</span>
-                    </router-link>
-                  </li>
-                </ul>
-              </div>
-            </div>
-          </div>
         </div>
       </div>
-      <router-view></router-view>
     </div>
   </div>
 </template>
 <script>
 import {
   getNewsNoticeList,
-  getAllNewsTypeList,
-  getNewsDetail
+  getAllNewsTypeList
+  // getNewsDetail
 } from '../../utils/api/home'
 import {returnAjaxMsg} from '../../utils/commonFunc'
 import {mapState} from 'vuex'
@@ -165,7 +125,6 @@ export default {
       this.helpShowStatusList.push(false)
     })
     console.log(this.newsTypeList)
-    this.getAllTypeListNewsList()
   },
   mounted () {
     console.log(this.newsDetailJumpId)
@@ -187,43 +146,9 @@ export default {
       this.pageNum = e
       this.getNewsNoticeList()
     },
-    // 获取全部type类型的前5条数据
-    async getAllTypeListNewsList () {
-      let params = {
-        pageNum: 1,
-        pageSize: 5,
-        language: this.language
-      }
-      for (let i = 0; i < this.newsTypeList.length; i++) {
-        const item = this.newsTypeList[i]
-        params.newsTypeId = item.id - 0
-        console.log(params)
-        const data = await getNewsNoticeList(params)
-        console.log(data)
-        if (!returnAjaxMsg(data, this)) {
-          return false
-        } else {
-          console.log(data)
-          const targetData = data.data.data.list
-          this.detailAllNewsList.push(targetData)
-        }
-      }
-      console.log(this.detailAllNewsList)
-    },
     // 详情跳转
     jumpToDetail (item) {
       this.getDetailInfo(item.id)
-    },
-    // 获取详情信息
-    async getDetailInfo (id) {
-      const data = await getNewsDetail(id)
-      if (!returnAjaxMsg(data, this)) {
-        return false
-      } else {
-        this.showNewsList = false
-        this.newDetail = data.data.data
-        console.log(this.newDetail)
-      }
     },
     // 获取所有新闻类型
     async getAllNewsTypeList () {

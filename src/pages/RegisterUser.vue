@@ -747,10 +747,13 @@ export default {
       mobileMaxwidth: 800, // 移动端拖动最大宽度
       invitationRegisterSuccess: true, // 邀请注册成功
       registerParams: {}, // 注册参数
+      successJumpTimer: null, // 成功跳转倒计时
       end: '' // 占位
     }
   },
   async created () {
+    console.log(this.successCountDown)
+    console.log(this.isLogin)
     if (this.isLogin) {
       this.USER_LOGOUT()
     }
@@ -796,7 +799,7 @@ export default {
     ]),
     jumpToDownAppPage () {
       if (this.inviter) {
-        this.$router.push({'path': `/downloadApp`})
+        this.$router.push({'path': '/downloadApp'})
       } else {
         this.$router.push({'path': '/login'})
       }
@@ -1063,8 +1066,9 @@ export default {
     },
     // 登录成功自动跳转
     successJump () {
-      setInterval(() => {
-        if (this.successCountDown < 2) {
+      this.successJumpTimer = setInterval(() => {
+        if (this.successCountDown < 1) {
+          clearInterval(this.successJumpTimer)
           this.jumpToDownAppPage()
         }
         this.successCountDown--
@@ -1185,6 +1189,9 @@ export default {
     },
     disabledOfPhoneBtn (newVal) {
       // console.log(newVal)
+    },
+    successCountDown (newVal, oldVal) {
+      console.log(newVal)
     }
   }
 }

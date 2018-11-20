@@ -324,16 +324,16 @@ export const formatCount = (targetNum) => {
   switch (store.state.common.language) {
     case 'zh_CN':
       if (newNum > 100000000) {
-        newNum = keep2Num(newNum / 100000000) + '亿'
+        newNum = `${keep2Num(newNum / 100000000)}亿`
       } else if (newNum > 10000) {
-        newNum = keep2Num(newNum / 10000) + '万'
+        newNum = `${keep2Num(newNum / 10000)}万`
       }
       return newNum
     default :
       if (newNum > 1000000) {
-        newNum = keep2Num(newNum / 1000000) + 'M'
+        newNum = `${keep2Num(newNum / 1000000)}M`
       } else if (newNum > 1000) {
-        newNum = keep2Num(newNum / 1000) + 'K'
+        newNum = `${keep2Num(newNum / 1000)}K`
       }
       return newNum
   }

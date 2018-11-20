@@ -22,58 +22,6 @@
             @tab-click="changeTab"
             v-show="showNewsList"
           >
-            <!--定死-->
-            <el-tab-pane
-              :label="outerItem.name"
-              :name="outerItem.id"
-              v-for="(outerItem,index) in newsTypeList"
-              :key="index"
-            >
-              <div class="item-content">
-                <ul class="content-list">
-                  <li
-                    class="content-item cursor-pointer"
-                    v-for="(item,index) in noticeFilterList"
-                    :key="index"
-                  >
-                    <div
-                      class="content-item-link"
-                    >
-                      <div class="left">
-                        <div class="top">
-                          <!--年-->
-                          {{item.createTime.split('-')[0]+ $t('M.news_year')}}
-                        </div>
-                        <div class="bottom">
-                          <!--月-->
-                          {{item.createTime.split('-')[1]-0+ $t('M.news_month')}}
-                        </div>
-                      </div>
-                      <div class="right">
-                        <p class="top">
-                          {{item.title}}
-                        </p>
-                        <p class="middle">
-                          {{item.keyword}}
-                        </p>
-                        <p class="bottom">
-                          <span class="author">{{item.creator}}</span>
-                          <span class="date">{{item.createTime}}</span>
-                        </p>
-                      </div>
-                    </div>
-                  </li>
-                </ul>
-              </div>
-              <el-pagination
-                background
-                layout="prev, pager, next"
-                :current-page="pageNum"
-                :page-count="totalPages"
-                @current-change="changeCurrentPage"
-              >
-              </el-pagination>
-            </el-tab-pane>
           </el-tabs>
         </div>
       </div>
