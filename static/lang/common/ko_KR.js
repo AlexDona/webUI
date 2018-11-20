@@ -148,6 +148,7 @@ export const common = {
   'comm_invitation_list': '초대 순위',
   'comm_please': '어서',
   'comm_bill': '계정',
+  'comm_bill_house': '계정',
   'comm_house': '호',
   'comm_theme': '주제',
   'comm_download': '다운',

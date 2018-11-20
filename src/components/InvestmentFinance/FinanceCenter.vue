@@ -122,8 +122,9 @@
                 </el-button>
               </div>
             </label>
+            <!-- 存币详情 -->
             <el-dialog
-              title="存币详情"
+              :title="$t('M.finance_save_moneydetail')"
               :visible.sync="dialogVisible"
               width="440px"
               class='dialogStyle'
@@ -136,7 +137,7 @@
               >
                 <!-- 存币时长 -->
                 <el-form-item
-                  :label="$t('M.finance_invest') + $t('M.finance_timeLong')"
+                  :label="$t('M.finance_timeLong')"
                   class='saveTime'
                 >
                   {{getDate(-2)}} {{$t('M.finance_leit')}} {{getDate(formLabelAlign.day)}}
@@ -145,7 +146,7 @@
                 </el-form-item>
                 <!-- 存币数量 -->
                 <el-form-item
-                  :label="$t('M.finance_invest') + $t('M.comm_count')"
+                  :label="$t('M.comm_count')"
                 >
                   <div class='invest-mounte'>
                     <el-input
@@ -171,7 +172,7 @@
                 </el-form-item>
                 <!-- 预计总收益 -->
                 <el-form-item
-                  :label="$t('M.finance_predict') + $t('M.comm_total_sum') + $t('M.finance_earnings')"
+                  :label="$t('M.finance_total_income')"
                 >
                   <div class='invest-mounte'>
                     <el-input

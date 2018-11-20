@@ -1,5 +1,6 @@
 export const finance = {
   'finance_newestPrice': 'Latest',
+  'finance_save_moneydetail': 'deposit detail',
   'finance_at_once_save': 'Immediately Deposit',
   'finance_save_coin_record': 'Deposit Record',
   'finance_get_money_record': 'Income Record',
@@ -34,11 +35,12 @@ export const finance = {
   'finance_loginTipsTwo': 'Check later!',
   'finance_interestRate': 'rate',
   'finance_xiAndben': 'Interest before cost',
-  'finance_timeLong': 'timeLong',
+  'finance_timeLong': 'Time',
   'finance_leit': 'to',
   'finance_day': 'day',
   'finance_accrual': 'Interest',
   'finance_capital': 'Capital',
+  'finance_total_income': 'Income',
   // 二次确认弹框提示信息Secondary confirmation
   'finance_tipsContentOne': 'Determine to retrieve the deposit?'
 }

@@ -148,6 +148,7 @@ export const common = {
   // 'comm_bill': 'bill',
   'comm_bill': 'Bank',
   'comm_house': 'Account',
+  'comm_bill_house': 'Account',
   'comm_theme': 'theme',
   'comm_download': 'Download',
   'comm_help_center': 'Help Center',
