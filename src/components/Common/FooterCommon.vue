@@ -32,9 +32,30 @@
               v-for="(item,index) in shareList"
               :key="index"
             >
-              <a :href="item.ercodeSrc" class="mini-icon">
+              <a
+                :href="item.ercodeSrc"
+                class="mini-icon"
+                v-show="index!==2 && index!==3"
+              >
                 <Iconfont
                   :icon-name="item.iconName"
+                  class-name="icon-text"
+                />
+              </a>
+              <!--微信-->
+              <a class="weixin-btn">
+                <Iconfont
+                  v-show="index==2"
+                  icon-name="icon-weixin-copy"
+                  class-name="icon-text icon-weixin"
+                >
+                </Iconfont>
+              </a>
+              <a class="qq-btn">
+                <!--qq-->
+                <Iconfont
+                  v-show="index==3"
+                  icon-name="icon-qq"
                   class-name="icon-text"
                 />
               </a>
@@ -309,6 +330,9 @@ export default {
                 .icon-text{
                   font-size: 22px;
                 }
+              }
+              >.icon-weixin{
+                position: relative;
               }
               >.hidden-box{
                 width:110px;
