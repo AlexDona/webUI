@@ -3,15 +3,15 @@
     class="nav-box common"
     :class="{'day':theme == 'day','night':theme == 'night' }"
     :style="{
-      top:$route.path==='/'&&noticeCloseVisible ? styleTop+'px': 0
+      top:$route.path==='/home'&&noticeCloseVisible ? styleTop+'px': 0
     }"
   >
     <div class="inner-box">
       <div
         class="top"
         :style="{
-          padding: $route.path==='/'? topPadding : '0 30px',
-          backgroundColor: $route.path==='/'? topBackgroundColor : $mainNightBgColor
+          padding: $route.path==='/home'? topPadding : '0 30px',
+          backgroundColor: $route.path==='/home'? topBackgroundColor : $mainNightBgColor
         }"
       >
         <!--导航-->

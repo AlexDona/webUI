@@ -108,9 +108,6 @@ export default {
       newsTypeId: 1, // 当前新闻类型id
       // showNewsList: false, // 显示列表、详情状态
       showNewsList: true, // 显示列表、详情状态
-      newDetail: {
-      },
-      detailAllNewsList: [], // 详情页面新闻列表
       end: ''
     }
   },
