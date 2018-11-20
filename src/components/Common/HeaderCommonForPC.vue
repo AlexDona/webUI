@@ -400,7 +400,9 @@ export default{
     await this.GET_LANGUAGE_LIST_ACTION({
       self: this
     })
-    await this.GET_COUNTRY_LIST_ACTION(this)
+    await this.GET_COUNTRY_LIST_ACTION({
+      selft: this
+    })
     await this.SET_PARTNER_INFO_ACTION({
       self: this,
       language: this.language
@@ -411,7 +413,7 @@ export default{
     // 折算货币s
     await this.getMerchantAvailablelegalTenderList()
     if (this.isLogin) {
-      this.reflashUserInfo()
+      // this.reflashUserInfo()
     }
   },
   mounted () {
@@ -534,7 +536,7 @@ export default{
         return false
       } else {
         this.$store.commit('user/USER_LOGOUT')
-        this.$router.push({path: '/'})
+        this.$router.push({path: '/home'})
       }
     },
     // 显示状态切换（子导航）

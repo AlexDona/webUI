@@ -89,7 +89,9 @@ export default {
     }
     getFooterInfo(this.routeLanguage || this.language, this)
     this.activeTheme = this.theme
-    this.GET_COUNTRY_LIST_ACTION(this)
+    this.GET_COUNTRY_LIST_ACTION({
+      self: this
+    })
     console.log(this.$route.query)
     if (this.isLogin) {
       this.reflashUserInfo()
