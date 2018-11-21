@@ -526,14 +526,15 @@ export default {
     ...mapMutations([
       'CHANGE_OTC_AVAILABLE_CURRENCY_NAME',
       'CHANGE_OTC_AVAILABLE_CURRENCY_ID',
-      'CHANGE_OTC_AVAILABLE_PARTNER_COIN_ID'
+      'CHANGE_OTC_AVAILABLE_PARTNER_COIN_ID',
+      'UPDATE_OTC_HOME_LIST_STATUS'
     ]),
     reflashUserInfo () {
       this.$store.dispatch('user/REFLASH_USER_INFO', this)
     },
     // 科学计数法转换
     filterNumber (num) {
-      console.log(scientificToNumber(num))
+      // console.log(scientificToNumber(num))
       return scientificToNumber(num)
     },
     // 0.1 切换各订单状态tab面板
@@ -745,6 +746,8 @@ export default {
         this.onlineBuySellTableList = orderListData.list
         // 分页
         this.totalPages = orderListData.pages - 0
+        // 改变全局 委托定单撤单后，更新首页挂单列表状态
+        this.UPDATE_OTC_HOME_LIST_STATUS(false)
       }
     },
     //  4.0 选中我想购买和出售币种名称
@@ -798,10 +801,19 @@ export default {
       selectedOTCAvailableCurrencyCoinID: state => state.OTC.selectedOTCAvailableCurrencyCoinID,
       language: state => state.common.language, // 当前选中语言
       userInfo: state => state.user.loginStep1Info.userInfo, // 用户详细信息
-      isLogin: state => state.user.isLogin // 用户登录状态 false 未登录； true 登录
+      isLogin: state => state.user.isLogin, // 用户登录状态 false 未登录； true 登录
+      updateOTCHomeListStatus: state => state.OTC.updateOTCHomeListStatus // 委托定单撤单后，更新首页挂单列表状态
     })
   },
-  watch: {}
+  watch: {
+    updateOTCHomeListStatus (newVal) {
+      console.log('我改变了')
+      console.log(newVal)
+      if (newVal) {
+        this.getOTCPutUpOrdersList() // otc主页面查询挂单列表
+      }
+    }
+  }
 }
 </script>
 <style scoped lang="scss" type="text/scss">

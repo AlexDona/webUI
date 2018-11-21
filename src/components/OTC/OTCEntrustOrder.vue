@@ -135,7 +135,9 @@
 import {timeFilter} from '../../utils'
 import {getOTCEntrustingOrders, querySelectedOrdersRevocation} from '../../utils/api/OTC'
 import {returnAjaxMsg, getNestedData} from '../../utils/commonFunc'
-import {mapState} from 'vuex'
+// import {mapState} from 'vuex'
+import {createNamespacedHelpers, mapState} from 'vuex'
+const {mapMutations} = createNamespacedHelpers('OTC')
 export default {
   components: {},
   // props,
@@ -167,6 +169,9 @@ export default {
   beforeRouteUpdate () {
   },
   methods: {
+    ...mapMutations([
+      'UPDATE_OTC_HOME_LIST_STATUS'
+    ]),
     // 1.0 分页
     changeCurrentPage (pageNum) {
       this.currentPage = pageNum
@@ -221,6 +226,8 @@ export default {
       } else {
         // 返回数据正确的逻辑
         this.getOTCEntrustingOrdersList()
+        // 改变全局 委托定单撤单后，更新首页挂单列表状态
+        this.UPDATE_OTC_HOME_LIST_STATUS(true)
       }
     }
   },
