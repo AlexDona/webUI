@@ -139,7 +139,7 @@ export default {
         let klineData = getNestedData(data, 'data.data.obj')
         klineData = JSON.parse(unzip(klineData))
         console.log(klineData)
-        let klineList = klineData.klineList
+        let klineList = getNestedData(klineData, 'klineList')
         if (klineList) {
           this.KlineNum = klineData.num
           let list = []
@@ -339,19 +339,19 @@ export default {
           setTimeout(() => {
             let iframe$ = document.getElementsByTagName('iframe')[0].contentWindow.$
             let lastBtnList = iframe$('.header-chart-panel-content .left')[0].childElementCount
-            console.log(iframe$('.header-chart-panel-content .left .group.space-single .add0').length)
-            let repeatCount = iframe$('.header-chart-panel-content .left .group.space-single .add0').length
-            for (let j = 0; j < repeatCount - 1; j++) {
-              for (let k = 0; k < 9; k++) {
-                iframe$.remove(iframe$(`.header-chart-panel-content .left .group.space-single .add${i}`).parentNode)
-              }
-            }
-            console.log(lastBtnList)
-            // if (lastBtnList.length > 13) {
-            //   for (let i = 2; i < lastBtnList.length - 9; i++) {
-            //     iframe$.remove(`add${i}`)
+            // console.log(iframe$('.header-chart-panel-content .left .group.space-single .add0').length)
+            // let repeatCount = iframe$('.header-chart-panel-content .left .group.space-single .add0').length
+            // for (let j = 0; j < repeatCount - 1; j++) {
+            //   for (let k = 0; k < 9; k++) {
+            //     iframe$.remove(iframe$(`.header-chart-panel-content .left .group.space-single .add${i}`).parentNode)
             //   }
             // }
+            console.log(lastBtnList)
+            if (lastBtnList.length > 13) {
+              for (let i = 2; i < lastBtnList.length - 9; i++) {
+                iframe$.remove(`add${i}`)
+              }
+            }
           }, 10)
           this.widget.chart().createStudy('Moving Average', false, true, [5, 'close', 0], null, {'Plot.color': '#7b53a7'})
           this.widget.chart().createStudy('Moving Average', false, true, [10, 'close', 0], null, {'Plot.color': '#6b89ae'})

@@ -72,7 +72,7 @@
                   >
                     <dd
                       :style="{
-                        height:(20-buysAndSellsList.sells.list.length || 0)*30+'px'
+                        height:(20-sellsListLength)*30+'px'
                       }"
                       v-if="listOrder==='middle'"
                     ></dd>
@@ -148,6 +148,7 @@ import {
   createNamespacedHelpers,
   mapState
 } from 'vuex'
+import {getNestedData} from '../../utils/commonFunc'
 const { mapMutations } = createNamespacedHelpers('trade')
 export default {
   components: {
@@ -226,9 +227,15 @@ export default {
       // console.log(this.buysAndSellsListByAjax)
       // console.log(this.buysAndSellsListBySocket)
       return !this.reflashCount ? this.buysAndSellsListByAjax : this.buysAndSellsListBySocket
+    },
+    sellsListLength () {
+      return (getNestedData(this.buysAndSellsList, 'sells.list') || []).length
     }
   },
   watch: {
+    sellsListLength (newVal) {
+      console.log(newVal)
+    },
     klineAjaxData (newVal) {
       // console.log(newVal)
     },
