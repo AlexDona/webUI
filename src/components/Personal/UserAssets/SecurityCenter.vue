@@ -113,11 +113,13 @@
             </p>
           </div>
           <div class="security-status text-align-r">
+            <!-- 任修复：将点击事件写在按钮上不要写在span上 -->
             <button
               v-if="!securityCenter.isMailEnable"
               class="security-verify border-radius2 font-size12 cursor-pointer"
+              @click.prevent="showStatusVerificationClose('email', 'enable')"
             >
-              <span @click.prevent="showStatusVerificationClose('email', 'enable')">
+              <span>
                 <!--开启验证-->
                 {{$t('M.user_security_on')}}
               </span>
@@ -125,10 +127,9 @@
             <button
               v-else
               class="security-verify border-radius2 font-size12 cursor-pointer"
+              @click.prevent="showStatusVerificationClose('email', 'disable')"
             >
-              <span
-                @click.prevent="showStatusVerificationClose('email', 'disable')"
-              >
+              <span>
                 <!--关闭验证-->
                 {{ $t('M.user_security_off') }}
               </span>
@@ -1094,7 +1095,7 @@ export default {
       }
       >.security-setting-box {
         .send-code-btn {
-          width: 91px;
+          width: 96px;
           height: 34px;
           position: absolute;
           top: 4px;

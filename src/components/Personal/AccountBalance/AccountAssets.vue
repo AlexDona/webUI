@@ -270,6 +270,7 @@
                               filterable
                               allow-create
                               default-first-option
+                              :placeholder="$t('M.comm_please_choose')"
                             >
                               <el-option
                                 v-for="(item, index) in mentionAddressList"
@@ -1268,7 +1269,7 @@ export default {
           this.mentionMoneyConfirm = false
         }
       }
-      console.log(1);
+      console.log(1)
       if (!this.mentionAddressValue) {
         // 请选择提币地址
         this.$message({
