@@ -1267,33 +1267,33 @@ export default {
           })
           this.mentionMoneyConfirm = false
         }
+      }
+      console.log(1);
+      if (!this.mentionAddressValue) {
+        // 请选择提币地址
+        this.$message({
+          message: this.$t('M.comm_please_choose') + this.$t('M.comm_mention_money') + this.$t('M.comm_site'),
+          type: 'error'
+        })
+        this.mentionMoneyConfirm = false
+      } else if (!this.amount) {
+        // 请输入提币数量
+        this.$message({
+          message: this.$t('M.comm_please_enter') + this.$t('M.comm_mention_money') + this.$t('M.comm_count'),
+          type: 'error'
+        })
+        this.mentionMoneyConfirm = false
+      } else if (!this.service) {
+        // 请输入手续费
+        this.$message({
+          message: this.$t('M.comm_please_enter') + this.$t('M.comm_service_charge'),
+          type: 'error'
+        })
+        this.mentionMoneyConfirm = false
+      } else if (!this.userInfo.userInfo.payPassword) {
+        this.dialogVisible = true
       } else {
-        if (!this.mentionAddressValue) {
-          // 请选择提币地址
-          this.$message({
-            message: this.$t('M.comm_please_choose') + this.$t('M.comm_mention_money') + this.$t('M.comm_site'),
-            type: 'error'
-          })
-          this.mentionMoneyConfirm = false
-        } else if (!this.amount) {
-          // 请输入提币数量
-          this.$message({
-            message: this.$t('M.comm_please_enter') + this.$t('M.comm_mention_money') + this.$t('M.comm_count'),
-            type: 'error'
-          })
-          this.mentionMoneyConfirm = false
-        } else if (!this.service) {
-          // 请输入手续费
-          this.$message({
-            message: this.$t('M.comm_please_enter') + this.$t('M.comm_service_charge'),
-            type: 'error'
-          })
-          this.mentionMoneyConfirm = false
-        } else if (!this.userInfo.userInfo.payPassword) {
-          this.dialogVisible = true
-        } else {
-          this.mentionMoneyConfirm = true
-        }
+        this.mentionMoneyConfirm = true
       }
     },
     confirm () {
