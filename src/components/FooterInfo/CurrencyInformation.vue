@@ -92,8 +92,20 @@ export default {
     },
     // 数字资产列表
     async getFootCurrencyInfoList () {
+      let language
+      switch (this.language) {
+        case 'zh_TW':
+          language = 'zh_CN'
+          break
+        case 'zh_CN':
+          language = 'zh_CN'
+          break
+        default:
+          language = 'en_US'
+          break
+      }
       const data = await getCurrencyInfoList({
-        language: this.language
+        language
       })
       console.log(data)
       if (!returnAjaxMsg(data, this)) {
