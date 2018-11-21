@@ -1044,7 +1044,7 @@ export default {
         > .detail-page-duration {
           margin-top: 100px;
           > .duration-title {
-            width: 100px;
+            width: 114px;
             height: 150px;
             line-height: 150px;
           }
@@ -1081,7 +1081,7 @@ export default {
             }
             width: 140px;
             height: 150px;
-            padding: 30px;
+            padding: 28px;
             >.duration-currency {
               padding: 8px 0 8px;
             }

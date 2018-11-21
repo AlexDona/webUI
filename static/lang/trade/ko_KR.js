@@ -21,7 +21,7 @@ export const trade = {
   'trade_exchange_price_deal': '제한 가격 거래',
   'trade_exchange_can_buy': '구매 가능',
   'trade_exchange_vendibility': '판매 가능',
-  'trade_exchange_estimated_turnover는': '거래 예정량',
+  'trade_exchange_estimated_turnover': '거래 예정량',
   'trade_exchange_market': '시장 가격 거래',
   'trade_exchange_market_price': '시장 거래 가격',
   'trade_exchange_after_operation': '후 조작',

@@ -845,7 +845,8 @@ export default {
         line-height: 33px;
       }
       .error-msg-text {
-        padding-left: 35px;
+        // padding-left: 35px;
+        padding-left: 140px;
       }
       .error-msg{
         height:20px;

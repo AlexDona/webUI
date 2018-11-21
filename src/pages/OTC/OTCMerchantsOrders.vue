@@ -325,6 +325,7 @@
             layout="prev, pager, next"
             :page-count="totalPages"
             @current-change="changeCurrentPage"
+            :current-page="currentPage"
           >
           </el-pagination>
         </div>
@@ -515,11 +516,15 @@ export default {
     },
     // 6点击查询按钮
     findFilter () {
+      // 改变查询条件从第1页开始查询
+      this.currentPage = 1
       this.loading = true
       this.getOTCEntrustingOrdersRevocation()
     },
     // 7重置
     resetCondition () {
+      // 改变查询条件从第1页开始查询
+      this.currentPage = 1
       this.activitedMerchantsOrdersTraderStyleList = ''
       this.activitedMerchantsOrdersCoin = ''
       this.activitedMerchantsOrdersCurrency = ''

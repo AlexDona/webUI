@@ -279,6 +279,7 @@
             layout="prev, pager, next"
             :page-count="totalPages"
             @current-change="changeCurrentPage"
+            :current-page="currentPage"
           >
           </el-pagination>
         </div>
@@ -381,6 +382,8 @@ export default {
     },
     // 2.0 清空数据
     resetCondition () {
+      // 改变查询条件从第1页开始查询
+      this.currentPage = 1
       // 清空交易类型
       this.activitedADManageTraderStyleList = ''
       // 清除选中币种id
@@ -534,6 +537,8 @@ export default {
     },
     // 13.0 点击查询按钮 重新请求列表数据
     findFilter () {
+      // 改变查询条件从第1页开始查询
+      this.currentPage = 1
       this.loading = true
       this.getOTCADManageList()
     }
