@@ -19,7 +19,7 @@ export const common = {
   'comm_white': '백색',
   'comm_confirm': '확인',
   'comm_sold_out': '거래쌍 오프라인',
-  'comm_all_sold_out': '거래쌍 전부 오프라인',
+  'comm_all_sold_out': '모두 선반에서',
   'comm_affirm': '확인',
   'comm_cancel': '취소',
   'comm_login': '로그인',

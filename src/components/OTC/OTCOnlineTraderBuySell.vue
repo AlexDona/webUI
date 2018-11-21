@@ -309,7 +309,7 @@
                 <!-- 交易须知 -->
                 <h4 class="title">*{{$t('M.otc_index_tradeKnow')}}：</h4>
                 <p class="tip">
-                  1. {{$t('M.otc_index_tradeKnowDetail1')}}<span class="warning">3{{$t('M.otc_ci')}}</span>，{{$t('M.otc_index_tradeKnowDetail2')}}。
+                  1. {{$t('M.otc_index_tradeKnowDetail1')}}<span class="warning">3{{$t('M.otc_ci')}}</span>，{{$t('M.otc_index_tradeKnowDetail2')}}
                 </p>
                 <p class="tip">
                   2. {{$t('M.otc_index_tradeKnowDetail3')}}
