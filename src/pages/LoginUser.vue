@@ -726,7 +726,7 @@ export default {
       moveX: 0, // 移动的坐标
       mobileMaxwidth: 800, // 移动端拖动最大宽度
       loginSliderStatus: false, // 登录页面滑块显示隐藏状态
-      loginImageValidateStatus: false, // 登录页面图片验证码显示隐藏状态
+      loginImageValidateStatus: false, // 登录PersonalCenter页面图片验证码显示隐藏状态
       step3DialogShowStatus: false, // 步骤3 登录状态
       mobileErrorMsg: '' // 移动端错误信息
     }
