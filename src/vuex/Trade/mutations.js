@@ -26,6 +26,7 @@ export default {
     state.activePriceItem = data
   },
   [SET_MIDDLE_TOP_DATA] (state, data) {
+    console.log(data)
     state.middleTopData = data
   },
   [SET_JUMP_STATUS] (state, data) {

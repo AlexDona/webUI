@@ -315,7 +315,7 @@ export default {
             let button = _self.widget.createButton({
               align: 'left'
             })
-            console.log(button)
+            // console.log(button)
             item.resolution === _self.widget._options.interval && _self.updateSelectedIntervalButton(button)
             const selected = index == 1 ? ' selected' : ''
             button.attr('class', 'button ' + item.class + selected + ' add' + index)
@@ -325,7 +325,7 @@ export default {
                 let chartType = +button.attr('data-chart-type')
                 if (chart.resolution() !== item.resolution) {
                   // _self.widget.changingInterval = true
-                  console.log(item.resolution)
+                  // console.log(item.resolution)
                   chart.setResolution(item.resolution)
                 }
                 if (chart.chartType() !== chartType) {
@@ -346,7 +346,7 @@ export default {
             //     iframe$.remove(iframe$(`.header-chart-panel-content .left .group.space-single .add${i}`).parentNode)
             //   }
             // }
-            console.log(lastBtnList)
+            // console.log(lastBtnList)
             if (lastBtnList.length > 13) {
               for (let i = 2; i < lastBtnList.length - 9; i++) {
                 iframe$.remove(`add${i}`)
@@ -363,12 +363,12 @@ export default {
             // console.log(e)
             const currentTime = e.time * 1000
             const ticker = `${this.symbol}-${this.interval}`
-            console.log(this.cacheData[ticker][50].time)
+            // console.log(this.cacheData[ticker][50].time)
             const limitTime = this.cacheData[ticker][50].time
-            console.log(currentTime, limitTime)
+            // console.log(currentTime, limitTime)
 
             const timeDiff = currentTime - limitTime
-            console.log(timeDiff, this.KlineNum, this.interval)
+            // console.log(timeDiff, this.KlineNum, this.interval)
             if (timeDiff < 0 && this.KlineNum > 1 && this.isAllowDrag) {
               let interval = this.transformInterval(this.interval)
               this.getKlineByAjax(this.symbol, interval, this.KlineNum - 1)
@@ -376,6 +376,7 @@ export default {
           })
         })
         this.symbol = options.symbol
+        console.log(this.symbol)
         this.interval = options.interval
       }
     },
@@ -478,6 +479,7 @@ export default {
         case 'TICKER':
           console.log(data)
           this.socketData.tradeMarkeContentItem = getNestedData(data, 'data')
+          console.log(this.socketData.tradeMarkeContentItem)
           break
       }
       // console.log(this.socketData)
@@ -632,7 +634,7 @@ export default {
         this.getTradeRecordBySocket('CANCEL', oldVal)
       }
       this.getActiveSymbolData(newVal)
-      console.log(1)
+      console.log(newVal)
       this.subscribeSocketData(newVal)
       if (!this.loadingCount) {
         setTimeout(() => {
