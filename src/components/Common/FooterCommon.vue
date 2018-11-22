@@ -115,6 +115,13 @@
               <a
                 href="http://fubt.udesk.cn/hc"
                 target="_blank"
+                v-show="xDomain==='new.bzu.com'"
+              >
+                {{$t('M.comm_help_center')}}
+              </a>
+              <a
+                href="#"
+                v-show="xDomain!='new.bzu.com'"
               >
                 {{$t('M.comm_help_center')}}
               </a>
@@ -231,6 +238,7 @@ import {
   // returnAjaxMsg,
   jumpToOtherPageForFooter
 } from '../../utils/commonFunc'
+import {xDomain} from '../../utils/env'
 import Iconfont from '../Common/IconFontCommon'
 import {createNamespacedHelpers, mapState} from 'vuex'
 const {mapMutations} = createNamespacedHelpers('footerInfo')
@@ -278,6 +286,7 @@ export default {
     }
   },
   created () {
+    console.log(xDomain)
   },
   mounted () {
   },
@@ -310,7 +319,10 @@ export default {
       footerInfo: state => state.common.footerInfo,
       // 公司名称fubt fbt fuc、邮箱等信息
       configInfo: state => state.common.footerInfo.configInfo
-    })
+    }),
+    xDomain () {
+      return xDomain
+    }
   },
   watch: {
     footerInfo (newVal) {
