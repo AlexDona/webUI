@@ -208,6 +208,7 @@ export const OTC = {
   'otc_publishAD_selltype': '取引方法',
   'otc_publishAD_sellmount': '取引数量',
   'otc_publishAD_limitMoney': '割当',
+  'otc_publishAD_sum_and_limitMoney': '数量と割当',
   'otc_publishAD_minlimitMoney': '最小割当',
   'otc_publishAD_maxlimitMoney': '最大割当',
   'otc_publishAD_adviceToFill': '提案',

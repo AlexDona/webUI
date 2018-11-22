@@ -20,7 +20,7 @@ export const footerInfo = {
   'about_footer_info_down6': 'WIN 버전 다운',
   'about_footer_info_down7': '아직 미개방,잠시만 기다리세요',
   'about_footer_info_help': '지원센터',
-  'about_footer_info_keyWords': '키워드 일역',
+  'about_footer_info_keyWords': '키워드 입력',
   'user_not_bind_phone': '핸드폰 미바인딩',
   'user_please_input9': '구글 인증코드 입력',
   'user_please_input10': '메일 주소 미바인딩',
