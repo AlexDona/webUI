@@ -154,7 +154,7 @@ export default {
     require('../../../../static/css/theme/day/Personal/AccountReceivableAccount/AddWesternUnionDay.css')
     // 黑色主题样式
     require('../../../../static/css/theme/night/Personal/AccountReceivableAccount/AddWesternUnionNight.css')
-    getAccountPaymentTerm()
+    getAccountPaymentTerm(this)
     this.paymentMethodInformation()
   },
   mounted () {},

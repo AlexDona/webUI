@@ -195,7 +195,7 @@ export default {
     let xDomain = window.location.host.split(':')[0]
     xDomain = xDomain.startsWith('www') ? xDomain.slice(4) : xDomain
     this.tokenObj['x-domain'] = xDomain
-    getAccountPaymentTerm()
+    getAccountPaymentTerm(this)
     this.paymentMethodInformation()
   },
   mounted () {},
