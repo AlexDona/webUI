@@ -82,20 +82,23 @@
               <!--日期-->
               {{ $t('M.comm_data') }}
             </span>
-            <!--选择日期-->
+            <!--开始日期-->
             <el-date-picker
               v-model="startTime"
               type="date"
               value-format="yyyy-MM-dd"
               :placeholder="$t('M.comm_select') + $t('M.comm_data')"
+              @change="changeStartTime"
             >
             </el-date-picker>
             &nbsp;&nbsp;-&nbsp;&nbsp;
+            <!-- 结束日期 -->
             <el-date-picker
               v-model="endTime"
               type="date"
               value-format="yyyy-MM-dd"
               :placeholder="$t('M.comm_select') + $t('M.comm_data')"
+              @change="changeEndTime"
             >
             </el-date-picker>
           </div>
@@ -422,6 +425,35 @@ export default {
     changeCurrentPage (pageNum) {
       this.currentPageForMyEntrust = pageNum
       this.getChargeMentionList()
+    },
+    // 时间日期插件日期选择change事件验证事件开始和结束时间
+    // 开始时间赋值
+    changeStartTime (e) {
+      this.startTime = e
+      console.log(e)
+      if (this.endTime) {
+        if (this.startTime > this.endTime) {
+          this.$message({ // message: '开始时间不能大于结束时间',
+            message: this.$t('M.otc_time_limit'),
+            type: 'error'
+          })
+          return false
+        }
+      }
+    },
+    // 结束时间赋值
+    changeEndTime (e) {
+      this.endTime = e
+      console.log(e)
+      if (this.startTime) {
+        if (this.startTime > this.endTime) {
+          this.$message({ // message: '开始时间不能大于结束时间',
+            message: this.$t('M.otc_time_limit'),
+            type: 'error'
+          })
+          return false
+        }
+      }
     }
   },
   filter: {},
