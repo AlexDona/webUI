@@ -192,7 +192,7 @@ export default {
     require('../../../../static/css/theme/day/Personal/AccountReceivableAccount/AddBankCardDay.css')
     // 黑色主题样式
     require('../../../../static/css/theme/night/Personal/AccountReceivableAccount/AddBankCardNight.css')
-    getAccountPaymentTerm()
+    getAccountPaymentTerm(this)
     this.paymentMethodInformation()
     // console.log(this.getAccountPaymentTerm)
   },
