@@ -200,7 +200,7 @@
             <div class="left display-inline-block">
                 <!-- 数量与限额 -->
                 <p class="tips font-size14">
-                  {{$t('M.comm_count')}}{{$t('M.comm_and')}}{{$t('M.otc_publishAD_limitMoney')}}
+                  {{$t('M.otc_publishAD_sum_and_limitMoney')}}
                 </p>
                 <!--必填  -->
                 <p class="warning font-size12">
@@ -359,7 +359,7 @@
               </div>
               <!-- 卖家必须成交过几次（0=不限制） -->
               <div>
-                {{$t('M.otc_publishAD_sellNeedLimit')}}（0={{$t('M.otc_publishAD_noLimit')}}）
+                {{$t('M.otc_publishAD_sellNeedLimit')}}(0={{$t('M.otc_publishAD_noLimit')}})
               </div>
               <div>
                 <input

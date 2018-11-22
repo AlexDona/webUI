@@ -217,6 +217,7 @@ export const OTC = {
   'otc_publishAD_selltype': 'Trade methods',
   'otc_publishAD_sellmount': 'Trade times',
   'otc_publishAD_limitMoney': ' limit',
+  'otc_publishAD_sum_and_limitMoney': 'Amount and limit',
   'otc_publishAD_minlimitMoney': 'Single minimum',
   'otc_publishAD_maxlimitMoney': 'Single maximum',
   'otc_publishAD_adviceToFill': 'Suggestion',

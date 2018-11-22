@@ -83,7 +83,7 @@ export const personal = {
   // 收款账户
   'user_account_credited': '수금 계정',
   'user_account_warm_prompt': '따뜻한 팁',
-  'user_account_text': '자신의 실제 이름의 계정을 사용하십시오는, 지불은 구매자 OTC에서 거래를 보여주기 위해 활성화되지만 활성화 삼가지 오가지 최대로 설정할 수 있습니다',
+  'user_account_text': '반드시 자신의 실명계정을 사용하시고 활성화 된 지불방식은 OTC거래에서 구매자에게 보여주게 되며 많아서 5종 설정할수 있지만 3종만 활성화 할수 있습니다.',
   'user_account_text1': '인증을 완료하고 거래 비밀번호를 설정 한 다음 OTC 수금 계정을 설정하십시오!',
   'user_account_text2': 'Alipay 업로드 QR 코드 방법 : Alipay 홈 페이지 열기> 돈을 모으기> 사진 저장, 휴대 전화 앨범의 영수증 업로드 ',
   'user_account_payment_term': '수금 방법',
@@ -200,10 +200,10 @@ export const personal = {
   // API管理
   // 创建API
   'user_api_administration': '관리',
-  'user_api_text1': '이 플랫폼은 강력한 API를 제공하며 API를 통해 시장 쿼리, 자동 거래 및 기타 서비스를 사용할 수 있습니다. API 문서를 통해이를 사용하는 방법을 보자. ',
+  'user_api_text1': '본 플랫폼은 강력한 API를 제공하며 API를 통해 시장 쿼리, 자동 거래 및 기타 서비스에 사용할 수 있음,API 문서를 통해 이를 사용하는 방법을 볼수 있음. ',
   'user_api_text2': '각 사용자가 최대 5 세트의 API 키를 생성합니다.',
-  'user_api_text3': '자산 손실을 방지하기 위해 API 키를 공개하지 마십시오. 보안상의 이유로 IP를 API 키에 바인딩하는 것이 좋습니다. 각 API 키는 최대 4 개의 IP에 바인딩됩니다. 단일 주소가 직접 입력됩니다. 여러 IP 주소는 쉼표로 구분됩니다 (예 : 192.168.1.1, 192.168.1.2 및 192.168.1.3). ',
-  'user_api_text4': '액세스 키',
+  'user_api_text3': '자산 손실을 방지하기 위해 API 키를 비공개 필요, 보안상의 이유로 IP를 API 키에 바인딩하는 것이 좋음. 매개 API 키는 최대 4 개의 IP에 바인딩됨. 단일 주소는 직접 입력하고 여러 IP 주소는 쉼표로 구분됩니다 (예 : 192.168.1.1, 192.168.1.2 및 192.168.1.3).',
+  'user_api_text4': '방문 키',
   'user_api_text8': '비공개 키',
   'user_api_text5': '한 번만 나타하고 잃은 후에는 찾을수 없으므로 반드시 저장하십시오',
   'user_api_text6': '자산 손실을 방지하기 위해 Secret Key를 공개하지 마십시오. ',
@@ -257,7 +257,7 @@ export const personal = {
   // VIP
   'user_vip_please_choose': '회원 정보 오픈에 가입하십시오',
   'user_vip_discount': '할인',
-  'user_vip_immediately_opened': '즉시 열기',
+  'user_vip_immediately_opened': '즉시 가입',
   'user_vip_look': '내 VIP보기',
   'user_vip_immediately_buy': '즉시 구입',
   'user_vip_month': '월',
@@ -272,7 +272,7 @@ export const personal = {
   'user_vip_opening_level': '레벨 열기',
   'user_vip_dredge': '열기',
   'user_vip_opening_time': '열린 시간',
-  'user_vip_months': '달, 몇 달',
+  'user_vip_months': '개월',
   'user_vip_immediate_access': '즉시 취득',
   'user_vip_text1': 'VIP는 개봉 후 즉시 효력을 발생하며, 거래가 정산되면 할인이 자동으로 계산됩니다.',
   'user_vip_text2': '할인 설명',

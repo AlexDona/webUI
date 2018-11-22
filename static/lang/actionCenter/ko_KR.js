@@ -3,7 +3,7 @@ export const actionCenter = {
   'actionCenter_rege': '초대순위 등록',
   'actionCenter_Rank': '순위',
   'actionCenter_User': '사용자',
-  'actionCenter_Direct_recommend': '즉시추천',
+  'actionCenter_Direct_recommend': '직접추',
   'actionCenter_Indirect_recommend': '간접추천',
   'actionCenter_Invite_rewards': '초대보상',
   'actionCenter_Token_step1': '신청',
