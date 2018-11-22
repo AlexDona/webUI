@@ -250,7 +250,6 @@
                     <!--提币内容-->
                     <!--普通币种提币显示框-->
                     <div
-                      v-if="!needTag"
                       class="recharge-list recharge-list-mention display-flex"
                       v-show="withdrawDepositList[index].withdrawDepositIsShow"
                     >
@@ -396,7 +395,6 @@
                     </div>
                     <!--公信宝类币种提笔显示框-->
                     <div
-                      v-else
                       class="recharge-list recharge-list-mention list-mention-treasure"
                       v-show="withdrawDepositList[index].provideWithdrawDepositIsShow"
                     >
@@ -1615,6 +1613,7 @@ export default {
                     }
                     >.recharge-list-left {
                       flex: 2;
+                      height:196px;
                       >.list-left-flex {
                         >.flex-box {
                           position: relative;

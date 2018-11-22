@@ -108,10 +108,16 @@
             <dd
               class="dd-item"
             >
-              <router-link to="/HelpCenter">
-                <!--帮助中心-->
+              <!--<router-link to="/HelpCenter">-->
+                <!--&lt;!&ndash;帮助中心&ndash;&gt;-->
+                <!--{{$t('M.comm_help_center')}}-->
+              <!--</router-link>-->
+              <a
+                href="http://fubt.udesk.cn/hc"
+                target="_blank"
+              >
                 {{$t('M.comm_help_center')}}
-              </router-link>
+              </a>
             </dd>
             <dd
               class="dd-item"

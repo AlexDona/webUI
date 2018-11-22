@@ -7,85 +7,79 @@
       class="inner-box"
       ref="helpIframe"
     >
-      <!--<div class="search-box">-->
-        <!--<h1 class="title">-->
-          <!--&lt;!&ndash; 帮助中心 &ndash;&gt;-->
-          <!--{{$t('M.about_footer_info_help')}}-->
-        <!--</h1>-->
-        <!--&lt;!&ndash;请输入关键字&ndash;&gt;-->
-        <!--<input-->
-          <!--type="text"-->
-          <!--class="search-input"-->
-          <!--v-model="searchKeyWord"-->
-          <!--:placeholder="$t('M.about_footer_info_keyWords')"-->
-        <!--/>-->
-      <!--</div>-->
-      <!--<div class="item-content help">-->
-        <!--<div class="inner-box">-->
-          <!--<ul class="content-list">-->
-            <!--<li-->
-              <!--class="content-item"-->
-              <!--v-for="(item,index) in helpFilterList"-->
-              <!--:key="index"-->
-            <!--&gt;-->
-              <!--<div-->
-                <!--class="content-item-link"-->
-              <!--&gt;-->
-                <!--<div class="title">-->
-              <!--<span-->
-                <!--class="icon-box cursor-pointer"-->
-                <!--v-show="!helpShowStatusList[index]"-->
-                <!--@click="toggleShowHelpItem(index,1)"-->
-              <!--&gt;-->
-                <!--<IconFont-->
-                  <!--icon-name="icon-jia1"-->
-                  <!--class="icon-font"-->
-                <!--/>-->
-              <!--</span>-->
-                  <!--<span-->
-                    <!--class="icon-box cursor-pointer"-->
-                    <!--v-show="helpShowStatusList[index]"-->
-                    <!--@click="toggleShowHelpItem(index,0)"-->
-                  <!--&gt;-->
-                <!--<IconFont-->
-                  <!--icon-name="icon-jian"-->
-                  <!--class="icon-font"-->
-                <!--/>-->
-              <!--</span>-->
-                  <!--<span class="title-content">-->
-                    <!--{{item.keyword}}-->
-                  <!--</span>-->
-                <!--</div>-->
-                <!--<el-collapse-transition>-->
-                  <!--<divs-->
-                    <!--class="content"-->
-                    <!--v-show="helpShowStatusList[index]"-->
-                    <!--v-html="item.content"-->
-                  <!--&gt;-->
-                  <!--</divs>-->
-                <!--</el-collapse-transition>-->
-              <!--</div>-->
-            <!--</li>-->
-          <!--</ul>-->
-          <!--&lt;!&ndash;分页&ndash;&gt;-->
-          <!--<div class="page">-->
-            <!--<el-pagination-->
-              <!--background-->
-              <!--v-show="helpFilterList.length"-->
-              <!--layout="prev, pager, next"-->
-              <!--:page-count="totalPages"-->
-              <!--@current-change="changeCurrentPage"-->
-            <!--&gt;-->
-            <!--</el-pagination>-->
-        <!--</div>-->
-      <!--</div>-->
-    <!--</div>-->
-      <iframe
-        src="http://fubt.udesk.cn/hc"
-        width="100%"
-        height="1300"
-        frameborder="0"
-      ></iframe>
+      <div class="search-box">
+        <h1 class="title">
+          <!-- 帮助中心 -->
+          {{$t('M.about_footer_info_help')}}
+        </h1>
+        <!--请输入关键字-->
+        <input
+          type="text"
+          class="search-input"
+          v-model="searchKeyWord"
+          :placeholder="$t('M.about_footer_info_keyWords')"
+        />
+      </div>
+      <div class="item-content help">
+        <div class="inner-box">
+          <ul class="content-list">
+            <li
+              class="content-item"
+              v-for="(item,index) in helpFilterList"
+              :key="index"
+            >
+              <div
+                class="content-item-link"
+              >
+                <div class="title">
+              <span
+                class="icon-box cursor-pointer"
+                v-show="!helpShowStatusList[index]"
+                @click="toggleShowHelpItem(index,1)"
+              >
+                <IconFont
+                  icon-name="icon-jia1"
+                  class="icon-font"
+                />
+              </span>
+                  <span
+                    class="icon-box cursor-pointer"
+                    v-show="helpShowStatusList[index]"
+                    @click="toggleShowHelpItem(index,0)"
+                  >
+                <IconFont
+                  icon-name="icon-jian"
+                  class="icon-font"
+                />
+              </span>
+                  <span class="title-content">
+                    {{item.keyword}}
+                  </span>
+                </div>
+                <el-collapse-transition>
+                  <divs
+                    class="content"
+                    v-show="helpShowStatusList[index]"
+                    v-html="item.content"
+                  >
+                  </divs>
+                </el-collapse-transition>
+              </div>
+            </li>
+          </ul>
+          <!--分页-->
+          <div class="page">
+            <el-pagination
+              background
+              v-show="helpFilterList.length"
+              layout="prev, pager, next"
+              :page-count="totalPages"
+              @current-change="changeCurrentPage"
+            >
+            </el-pagination>
+        </div>
+      </div>
+    </div>
   </div>
   </div>
 </template>
