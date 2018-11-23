@@ -95,7 +95,7 @@ export const common = {
   'comm_buy': 'Buy',
   'comm_sell': 'Sell',
   'comm_bid': 'buy',
-  'comm_ask': 'Sell',
+  'comm_ask': 'sell',
   // 验证类型Authentication type
   // 'comm_password': 'Password',
   'comm_password': 'Trading password',
