@@ -35,6 +35,7 @@
       :isAndroid="isAndroid"
       :language="language"
       :isIOS="isIOS"
+      :isWXBrowserStatus="isWXBrowserStatus"
     />
   </div>
 </template>
@@ -42,7 +43,8 @@
 <script>
 import {
   // getFooterInfo,
-  returnAjaxMsg
+  returnAjaxMsg,
+  isWXBrowser
 } from '../utils/commonFunc'
 import {
   findUserInfoByShowId
@@ -68,7 +70,7 @@ export default {
       fullscreenLoading: true,
       queryLanguage: '', // 参数语言
       isAndroid: false,
-      isIOS: false
+      isIOS: false,
     }
   },
   async created () {
@@ -122,12 +124,12 @@ export default {
     isChineseLanguage () {
       return this.language === 'zh_CN' ||
         this.language === 'zh_TW'
+    },
+    isWXBrowserStatus () {
+      return isWXBrowser()
     }
   },
   watch: {
-    // async language () {
-    //   await getFooterInfo(this.language, this)
-    // },
     configInfo (newVal) {
       console.log(newVal)
     }
