@@ -343,7 +343,7 @@ export const getNestedData = (data, index) => {
   return _.get(data, index)
 }
 // 是否为微信浏览器
-export const isWXBrowser = () =>  {
+export const isWXBrowser = () => {
   const ua = navigator.userAgent.toLowerCase()
   return ua.match(/MicroMessenger/i) == 'micromessenger' ? 1 : 0
 }
