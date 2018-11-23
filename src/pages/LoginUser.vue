@@ -3,7 +3,8 @@
     class="login-box user"
     :style="{
      'min-height':windowHeight < 800,
-     'height': windowHeight + 'px'
+     'height': windowHeight + 'px',
+     'margin-top':isMobile?'0':'66px'
     }"
     v-loading.fullscreen.lock="fullscreenLoading"
     element-loading-background="rgba(0, 0, 0, 0.6)"
@@ -1210,7 +1211,6 @@ export default {
 <style scoped lang="scss">
   @import '../../static/css/scss/index.scss';
   .login-box.user {
-    margin-top:66px;
     height:100%;
     overflow: hidden;
     background:linear-gradient(150deg,rgba(30,38,54,1),rgba(37,75,117,1));

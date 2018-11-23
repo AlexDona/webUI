@@ -4,7 +4,8 @@
     :class="{
       'day':theme == 'day',
       'night':theme == 'night',
-      'min-height':windowHeight < 800
+      'min-height':windowHeight < 800,
+      'margin-top':isMobile?'0':'66px'
       }"
     :style="{height: windowHeight + 'px'}"
     v-loading.fullscreen.lock="fullscreenLoading"
@@ -1199,7 +1200,6 @@ export default {
 <style scoped lang="scss">
   @import '../../static/css/scss/index';
   .register-box{
-    margin-top:66px;
     width:100%;
     height:100%;
     overflow-y: auto;
