@@ -732,7 +732,6 @@ export default {
     }
   },
   created () {
-    document.getElementsByTagName('body')[0].style.zoom = 1
     console.log(this.isLogin)
     // console.log(this.socket)
     if (this.isLogin) {
@@ -746,6 +745,7 @@ export default {
     this.clearInputValue()
   },
   mounted () {
+    console.log(document.querySelector('meta[name="viewport"]'))
     $('body').on('mousemove', (e) => {
       if (this.mouseMoveStatus) {
         let width = e.clientX - this.beginClientX

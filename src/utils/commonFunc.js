@@ -342,6 +342,11 @@ export const formatCount = (targetNum) => {
 export const getNestedData = (data, index) => {
   return _.get(data, index)
 }
+// 是否为微信浏览器
+export const isWXBrowser = () =>  {
+  const ua = navigator.userAgent.toLowerCase()
+  return ua.match(/MicroMessenger/i) == 'micromessenger' ? 1 : 0
+}
 // eslint-disable-next-line
 String.prototype.format = function (args) {
   var result = this

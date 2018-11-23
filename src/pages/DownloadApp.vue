@@ -55,6 +55,7 @@
       :isAndroid="isAndroid"
       :isIOS="isIOS"
       :language="language"
+      :isWXBrowserStatus="isWXBrowserStatus"
     />
   </div>
 </template>
@@ -65,7 +66,8 @@ import {
 } from '../utils/api/user'
 import {
   returnAjaxMsg,
-  getNestedData
+  getNestedData,
+  isWXBrowser
 } from '../utils/commonFunc'
 import HeaderCommonForMobile from '../components/Common/HeaderForMobile'
 import WeChatMask from '../components/User/WeChatMask'
@@ -115,7 +117,7 @@ export default {
           this.downloadUrl = getNestedData(data, 'data.data.android')
         } else if (this.isIOS) {
           // alert('ios')
-          window.location = 'com.top.Fubt://' // 打开某手机上的某个app应用
+          // window.location = 'com.top.Fubt://' // 打开某手机上的某个app应用
           this.downloadUrl = `itms-services://?action=download-manifest&;amp;url=${getNestedData(data, 'data.data.ios')}`
         }
       }
@@ -130,7 +132,7 @@ export default {
       logoSrc: state => state.common.logoSrc
     }),
     windowHeight () {
-      return window.innerHeight
+      return window.innerHeight + 200
     },
     isChineseLanguage () {
       return this.language === 'zh_CN' ||
@@ -138,6 +140,9 @@ export default {
     },
     language () {
       return (navigator.browserLanguage || navigator.language).split('-').join('_') || this.$route.query.language
+    },
+    isWXBrowserStatus () {
+      return isWXBrowser()
     }
   },
   watch: {

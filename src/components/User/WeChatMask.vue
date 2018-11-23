@@ -40,24 +40,20 @@
 export default {
   components: {
   },
-  props: ['isAndroid', 'language', 'isIOS'],
+  props: ['isAndroid', 'language', 'isIOS', 'isWXBrowserStatus'],
   data () {
     return {
-      isWXBrowserStatus: false
+      // isWXBrowserStatus: false
     }
   },
   created () {
-    this.isWXBrowser()
+    // this.isWXBrowser()
   },
   mounted () {},
   activited () {},
   updated () {},
   beforeRouteUpdate () {},
   methods: {
-    isWXBrowser () {
-      const ua = navigator.userAgent.toLowerCase()
-      this.isWXBrowserStatus = ua.match(/MicroMessenger/i) == 'micromessenger' ? 1 : 0
-    }
   },
   filter: {},
   computed: {
