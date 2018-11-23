@@ -153,7 +153,7 @@
                 <!--交易对-->
                 <el-table-column
                   :label="$t('M.comm_deal_pair')"
-                  width="80"
+                  width="70"
                 >
                   <template slot-scope="s">
                     <span>{{ s.row.tradeName }}</span>
@@ -162,7 +162,7 @@
                 <!--撮合类型-->
                 <el-table-column
                   :label="$t('M.user_coin_bring_together') + $t('M.comm_type')"
-                  width="70"
+                  width="80"
                 >
                   <template slot-scope="s">
                     <span>{{ $t(`M.${s.row.i18nMatchTypeName}`) }}</span>
@@ -172,7 +172,7 @@
                 <!--委单类型-->
                 <el-table-column
                   :label="$t('M.user_coin_appoint_single_stle')"
-                  width="70"
+                  width="80"
                 >
                   <template slot-scope="s">
                     <span v-show="language !== 'zh_CN'">{{s.row.type}}</span>
