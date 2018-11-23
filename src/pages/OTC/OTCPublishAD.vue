@@ -705,7 +705,8 @@ export default {
       // 非空及数据范围准确性验证
       // 单价
       if (!this.$refs.price.value) {
-        this.errorInfoPrice = this.$t('M.otc_publishAD_pleaseInput') + this.$t('M.otc_index_UnitPrice')
+        // 请输入单价
+        this.errorInfoPrice = this.$t('M.otc_please_enter_price')
         this.priceErrorTipsBorder = true
         return false
       } else if (this.$refs.price.value < this.minPrice || this.$refs.price.value > this.maxPrice) {
@@ -723,7 +724,7 @@ export default {
       // console.log(this.$refs.entrustCount.value)
       if (!this.$refs.entrustCount.value || this.$refs.entrustCount.value - 0 === 0) {
         // 请输入交易数量
-        this.errorInfoEntrustCount = this.$t('M.otc_publishAD_pleaseInput') + this.$t('M.otc_publishAD_sellmount')
+        this.errorInfoEntrustCount = this.$t('M.otc_please_enter_trade_number')
         this.entrustCountErrorTipsBorder = true
         return false
       }
