@@ -130,7 +130,7 @@ export default {
       logoSrc: state => state.common.logoSrc
     }),
     windowHeight () {
-      return window.innerHeight
+      return window.innerHeight + 200
     },
     isChineseLanguage () {
       return this.language === 'zh_CN' ||
