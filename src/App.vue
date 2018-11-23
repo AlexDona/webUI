@@ -97,6 +97,7 @@ export default {
       ) ? 0 : 1
       let isLoginOrRigister = path === '/login' || path === '/register'
       document.querySelector('meta[name="viewport"]').setAttribute('content', `width=device-width, initial-scale=0.3, minimum-scale=0.1, maximum-scale=1, user-scalable=${isLoginOrRigister ? 'no' : 'yes'}`)
+      document.getElementsByTagName('body')[0].style.zoom = 1
       switch (path) {
         case '/register':
           this.setBodyClassName(true, 'register')

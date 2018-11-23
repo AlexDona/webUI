@@ -732,7 +732,6 @@ export default {
     }
   },
   created () {
-    document.getElementsByTagName('body')[0].style.zoom = 1
     console.log(this.isLogin)
     // console.log(this.socket)
     if (this.isLogin) {
