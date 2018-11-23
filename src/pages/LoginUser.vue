@@ -746,6 +746,7 @@ export default {
     this.clearInputValue()
   },
   mounted () {
+    console.log(document.querySelector('meta[name="viewport"]'))
     $('body').on('mousemove', (e) => {
       if (this.mouseMoveStatus) {
         let width = e.clientX - this.beginClientX
