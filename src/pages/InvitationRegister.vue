@@ -70,7 +70,7 @@ export default {
       fullscreenLoading: true,
       queryLanguage: '', // 参数语言
       isAndroid: false,
-      isIOS: false,
+      isIOS: false
     }
   },
   async created () {
