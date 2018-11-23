@@ -96,7 +96,7 @@ export default {
         path === '/InvitationRegister'
       ) ? 0 : 1
       let isLoginOrRigister = path === '/login' || path === '/register'
-      document.querySelector('meta[name="viewport"]').setAttribute('content', `width=device-width, initial-scale=0.3, minimum-scale=0.3, maximum-scale=0.3, user-scalable=${isLoginOrRigister ? 'no' : 'yes'}`)
+      document.querySelector('meta[name="viewport"]').setAttribute('content', `width=device-width, initial-scale=0.3, minimum-scale=${isLoginOrRigister ? '0.3' : '0.1'}, maximum-scale=${isLoginOrRigister ? '0.3' : '1'}, user-scalable=${isLoginOrRigister ? 'no' : 'yes'}`)
       switch (path) {
         case '/register':
           this.setBodyClassName(true, 'register')
