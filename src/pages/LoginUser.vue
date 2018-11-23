@@ -3,7 +3,8 @@
     class="login-box user"
     :style="{
      'min-height':windowHeight < 800,
-     'height': windowHeight + 'px'
+     'height': windowHeight + 'px',
+     'margin-top':isMobile?'0':'66px'
     }"
     v-loading.fullscreen.lock="fullscreenLoading"
     element-loading-background="rgba(0, 0, 0, 0.6)"
@@ -657,6 +658,7 @@ export default {
       require([('@xkeshi/vue-qrcode')], resolve)
     }
   },
+  inject: ['reload'],
   data () {
     return {
       fullscreenLoading: false,
@@ -732,6 +734,8 @@ export default {
     }
   },
   created () {
+    this.reload()
+    document.getElementsByTagName('body')[0].style.zoom = 1
     console.log(this.isLogin)
     // console.log(this.socket)
     if (this.isLogin) {
@@ -745,7 +749,6 @@ export default {
     this.clearInputValue()
   },
   mounted () {
-    console.log(document.querySelector('meta[name="viewport"]'))
     $('body').on('mousemove', (e) => {
       if (this.mouseMoveStatus) {
         let width = e.clientX - this.beginClientX
@@ -1210,7 +1213,6 @@ export default {
 <style scoped lang="scss">
   @import '../../static/css/scss/index.scss';
   .login-box.user {
-    margin-top:66px;
     height:100%;
     overflow: hidden;
     background:linear-gradient(150deg,rgba(30,38,54,1),rgba(37,75,117,1));

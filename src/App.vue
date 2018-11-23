@@ -8,7 +8,7 @@
         v-if="needHeader"
       />
     </keep-alive>
-      <router-view />
+      <router-view v-if="isRouterAlive"/>
     <keep-alive>
       <FooterCommon
         v-if="needFooter"
@@ -40,7 +40,8 @@ export default {
     return {
       needHeader: false,
       needFooter: false,
-      needNotice: false
+      needNotice: false,
+      isRouterAlive: true
     }
   },
   async created () {
@@ -65,6 +66,12 @@ export default {
       'CHANGE_THEME',
       'CHANGE_CONVERT_CURRENCY'
     ]),
+    reload () {
+      this.isRouterAlive = false
+      this.$nextTick(function () {
+        this.isRouterAlive = true
+      })
+    },
     setBodyClassName (type, className) {
       type ? document.body.classList.add(className) : document.body.classList.remove(className)
     }
@@ -95,9 +102,8 @@ export default {
         path === '/downloadApp' ||
         path === '/InvitationRegister'
       ) ? 0 : 1
-      let isLoginOrRigister = path === '/login' || path === '/register'
-      document.querySelector('meta[name="viewport"]').setAttribute('content', `width=device-width, initial-scale=0.3, minimum-scale=0.1, maximum-scale=1, user-scalable=${isLoginOrRigister ? 'no' : 'yes'}`)
-      document.getElementsByTagName('body')[0].style.zoom = 1
+      // let isLoginOrRigister = path === '/login' || path === '/register'
+      // document.querySelector('meta[name="viewport"]').setAttribute('content', `width=device-width, initial-scale=0.3, minimum-scale=${isLoginOrRigister ? '0.3' : '0.1'}, maximum-scale=${isLoginOrRigister ? '0.3' : '1'}, user-scalable=${isLoginOrRigister ? 'no' : 'yes'}`)
       switch (path) {
         case '/register':
           this.setBodyClassName(true, 'register')
