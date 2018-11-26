@@ -55,7 +55,7 @@ export default {
       })
     }
   },
-  // 获取国家列表信息
+  // 获取语言列表信息
   async [GET_LANGUAGE_LIST_ACTION] ({commit, state}, {self, language}) {
     console.log(state)
     const data = await getLanguageList()
@@ -76,38 +76,47 @@ export default {
   },
   // 设置用户信息
   async [SET_PARTNER_INFO_ACTION] ({commit, state}, {self, language}) {
-    const params = {
-      language
-    }
-    const data1 = await getFooterInfo1(params)
-    const data2 = await getFooterInfo2(params)
     const data3 = await getConfigAjax()
-
-    if (
-      !returnAjaxMsg(data1, self) &&
-      !returnAjaxMsg(data2, self) &&
-      !returnAjaxMsg(data3, self)
-    ) {
+    if (!returnAjaxMsg(data3, self)) {
       return false
     } else {
-      // eslint-disable-next-line
-      let footerInfo1 = getNestedData(data1, 'data.data')
-      let footerInfo2 = getNestedData(data2, 'data.data')
       let configInfo = getNestedData(data3, 'data.data')
-      commit('SET_FOOTER_INFO', {
-        footerInfo1,
-        footerInfo2,
-        configInfo
+      _.forEach(self.languageList, item => {
+        if (item.shortName === configInfo.defaultLanguage) {
+          console.log(item)
+          commit('CHANGE_LANGUAGE', item)
+          return false
+        }
       })
-      // favicon 添加
-      addFavicon(
-        footerInfo1.headTitleLogo,
-        footerInfo1.title
-      )
-      commit('SET_LOGO_URL', {
-        logoSrc: footerInfo1.headLogo,
-        title: footerInfo1.title
-      })
+      const params = {
+        language: configInfo.defaultLanguage || language
+      }
+      const data1 = await getFooterInfo1(params)
+      const data2 = await getFooterInfo2(params)
+      if (
+        !returnAjaxMsg(data1, self) &&
+        !returnAjaxMsg(data2, self)
+      ) {
+        return false
+      } else {
+        // eslint-disable-next-line
+        let footerInfo1 = getNestedData(data1, 'data.data')
+        let footerInfo2 = getNestedData(data2, 'data.data')
+        commit('SET_FOOTER_INFO', {
+          footerInfo1,
+          footerInfo2,
+          configInfo
+        })
+        // favicon 添加
+        addFavicon(
+          footerInfo1.headTitleLogo,
+          footerInfo1.title
+        )
+        commit('SET_LOGO_URL', {
+          logoSrc: footerInfo1.headLogo,
+          title: footerInfo1.title
+        })
+      }
     }
   }
 }
