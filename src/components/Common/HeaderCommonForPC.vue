@@ -401,12 +401,13 @@ export default{
     await this.GET_LANGUAGE_LIST_ACTION({
       self: this
     })
-    await this.GET_COUNTRY_LIST_ACTION({
-      selft: this
-    })
+    console.log(this.language)
     await this.SET_PARTNER_INFO_ACTION({
       self: this,
       language: this.language
+    })
+    await this.GET_COUNTRY_LIST_ACTION({
+      selft: this
     })
     // console.log(this.theme)
     this.activeTheme = this.theme
@@ -633,6 +634,9 @@ export default{
     })
   },
   watch: {
+    defaultLanguage (newVal) {
+      this.$i18n.locale = newVal
+    },
     footerInfo (newVal) {
       console.log(newVal)
     },

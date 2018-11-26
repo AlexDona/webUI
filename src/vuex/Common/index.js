@@ -11,7 +11,7 @@ const state = {
   countDownResetStatus: false, // 倒计时重置状态
   theme: getStore('theme') || 'night',
   contryAreaList: [], // 国家列表（国家码）
-  defaultLanguage: 'zh_TW',
+  defaultLanguage: 'en_US',
   // 国际化语言
   language: getStore('language') || this.defaultLanguage,
   activeLanguage: '',

@@ -15,7 +15,12 @@ import {
   getCountryList, getFooterInfo1, getFooterInfo2, getLanguageList,
   getTransitionCurrencyRateAjax
 } from '../../utils/api/header'
-import {addFavicon, getNestedData, returnAjaxMsg} from '../../utils/commonFunc'
+import {
+  addFavicon,
+  getNestedData,
+  returnAjaxMsg,
+  changeLanguage
+} from '../../utils/commonFunc'
 // import store from "../index";
 export default {
   // 获取国家列表
@@ -56,67 +61,58 @@ export default {
     }
   },
   // 获取语言列表信息
-  async [GET_LANGUAGE_LIST_ACTION] ({commit, state}, {self, language}) {
+  async [GET_LANGUAGE_LIST_ACTION] ({commit, state}, {self}) {
     console.log(state)
     const data = await getLanguageList()
     if (!returnAjaxMsg(data, self)) {
       return false
     } else {
       self.languageList = data.data.data
-      let localLanguage = language || getStore('language') || state.defaultLanguage
-      console.log(localLanguage)
-      _.forEach(self.languageList, item => {
-        if (item.shortName === localLanguage) {
-          console.log(item)
-          commit('CHANGE_LANGUAGE', item)
-          return false
-        }
-      })
+      const data1 = await getConfigAjax()
+      if (!returnAjaxMsg(data1, self)) {
+        return false
+      } else {
+        let configInfo = getNestedData(data1, 'data.data')
+        console.log(configInfo, self.languageList)
+        changeLanguage(configInfo.defaultLanguage, self, commit)
+        commit('SET_FOOTER_INFO', {
+          configInfo
+        })
+      }
+      // let localLanguage = language || getStore('language') || state.defaultLanguage
+      // console.log(localLanguage)
+      // changeLanguage(localLanguage, this, commit)
     }
   },
   // 设置用户信息
   async [SET_PARTNER_INFO_ACTION] ({commit, state}, {self, language}) {
-    const data3 = await getConfigAjax()
-    if (!returnAjaxMsg(data3, self)) {
+    const params = {
+      language
+    }
+    const data1 = await getFooterInfo1(params)
+    const data2 = await getFooterInfo2(params)
+    if (
+      !returnAjaxMsg(data1, self) &&
+      !returnAjaxMsg(data2, self)
+    ) {
       return false
     } else {
-      let configInfo = getNestedData(data3, 'data.data')
-      _.forEach(self.languageList, item => {
-        if (item.shortName === configInfo.defaultLanguage) {
-          console.log(item)
-          commit('CHANGE_LANGUAGE', item)
-          return false
-        }
+      // eslint-disable-next-line
+      let footerInfo1 = getNestedData(data1, 'data.data')
+      let footerInfo2 = getNestedData(data2, 'data.data')
+      commit('SET_FOOTER_INFO', {
+        footerInfo1,
+        footerInfo2
       })
-      const params = {
-        language: configInfo.defaultLanguage || language
-      }
-      const data1 = await getFooterInfo1(params)
-      const data2 = await getFooterInfo2(params)
-      if (
-        !returnAjaxMsg(data1, self) &&
-        !returnAjaxMsg(data2, self)
-      ) {
-        return false
-      } else {
-        // eslint-disable-next-line
-        let footerInfo1 = getNestedData(data1, 'data.data')
-        let footerInfo2 = getNestedData(data2, 'data.data')
-        commit('SET_FOOTER_INFO', {
-          footerInfo1,
-          footerInfo2,
-          configInfo
-        })
-        // favicon 添加
-        addFavicon(
-          footerInfo1.headTitleLogo,
-          footerInfo1.title
-        )
-        commit('SET_LOGO_URL', {
-          logoSrc: footerInfo1.headLogo,
-          title: footerInfo1.title
-        })
-      }
+      // favicon 添加
+      addFavicon(
+        footerInfo1.headTitleLogo,
+        footerInfo1.title
+      )
+      commit('SET_LOGO_URL', {
+        logoSrc: footerInfo1.headLogo,
+        title: footerInfo1.title
+      })
     }
   }
 }

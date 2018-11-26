@@ -347,6 +347,16 @@ export const isWXBrowser = () => {
   const ua = navigator.userAgent.toLowerCase()
   return ua.match(/MicroMessenger/i) == 'micromessenger' ? 1 : 0
 }
+export const changeLanguage = (language, self, commit) => {
+  _.forEach(self.languageList, item => {
+    if (item.shortName === language) {
+      console.log(item)
+      commit('CHANGE_LANGUAGE', item)
+      commit('CHANGE_DEFAULT_LANGUAGE', item.shortName)
+      return false
+    }
+  })
+}
 // eslint-disable-next-line
 String.prototype.format = function (args) {
   var result = this

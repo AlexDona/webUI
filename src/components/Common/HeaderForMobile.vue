@@ -56,9 +56,9 @@
 </template>
 <!--请严格按照如下书写书序-->
 <script>
-import {
-  getFooterInfo
-} from '../../utils/commonFunc'
+// import {
+//   getFooterInfo
+// } from '../../utils/commonFunc'
 import { createNamespacedHelpers, mapState } from 'vuex'
 const { mapMutations, mapActions } = createNamespacedHelpers('common')
 export default {
@@ -79,6 +79,10 @@ export default {
     await this.GET_LANGUAGE_LIST_ACTION({
       self: this
     })
+    await this.SET_PARTNER_INFO_ACTION({
+      self: this,
+      language: this.language
+    })
     if (this.routeLanguage) {
       _.forEach(this.languageList, item => {
         console.log(item)
@@ -87,7 +91,7 @@ export default {
         }
       })
     }
-    await getFooterInfo(this.routeLanguage || this.language, this)
+    // await getFooterInfo(this.routeLanguage || this.language, this)
     this.activeTheme = this.theme
     this.GET_COUNTRY_LIST_ACTION({
       self: this
@@ -104,7 +108,8 @@ export default {
   methods: {
     ...mapActions([
       'GET_COUNTRY_LIST_ACTION',
-      'GET_LANGUAGE_LIST_ACTION'
+      'GET_LANGUAGE_LIST_ACTION',
+      'SET_PARTNER_INFO_ACTION'
     ]),
     ...mapMutations([
       // 修改语言
@@ -151,7 +156,11 @@ export default {
       return this.$route.query.language
     }
   },
-  watch: {}
+  watch: {
+    defaultLanguage (newVal) {
+      this.$i18n.locale = newVal
+    }
+  }
 }
 </script>
 <style scoped lang="scss" type="text/scss">
