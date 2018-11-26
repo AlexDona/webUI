@@ -120,6 +120,7 @@ export default {
           // window.location = 'com.top.Fubt://' // 打开某手机上的某个app应用
           this.downloadUrl = `itms-services://?action=download-manifest&;amp;url=${getNestedData(data, 'data.data.ios')}`
         }
+        this.downloadApp()
       }
     },
     downloadApp () {

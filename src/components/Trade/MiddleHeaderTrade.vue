@@ -56,7 +56,7 @@
               'up':middleTopData.chg>0,
               'down':middleTopData.chg<0
             }"
-          >{{middleTopData.chg}}</span>
+          >{{middleTopData.chg}}%</span>
         </div>
       </div>
       <div class="item">
