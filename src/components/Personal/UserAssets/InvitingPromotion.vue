@@ -519,21 +519,21 @@ export default {
   },
   watch: {
     loading (newVal) {
-      console.log(newVal)
+      // console.log(newVal)
     },
     ercodeIsShowId (newVal) {
-      console.log(newVal)
+      // console.log(newVal)
     },
     userCenterActiveName (newVal) {
-      console.log(newVal)
-      console.log('invitation-promote')
+      // console.log(newVal)
+      // console.log('invitation-promote')
       if (newVal === 'invitation-promote') {
         this.getInverData()
       }
     },
     language (newVal) {
-      console.log('当前选中语言')
-      console.log(newVal)
+      // console.log('当前选中语言')
+      // console.log(newVal)
     }
   }
 }

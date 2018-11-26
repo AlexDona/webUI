@@ -25,11 +25,11 @@
         </p>
         <div class="title-status font-size12">
           <!--收款方式-->
-          <span class="left">
+          <span class="float-left">
             {{ $t('M.user_account_payment_term') }}
           </span>
           <!--操作-->
-          <span class="right text-align-r">
+          <span class="float-right">
             {{ $t('M.comm_operation') }}
           </span>
         </div>
@@ -802,6 +802,20 @@ export default {
     paymentTerm (newVal) {
       console.log(newVal)
     }
+  },
+  beforeRouteLeave (to, from, next) {
+    console.log(3333333333)
+    console.log(to)
+    console.log(from)
+    console.log(to.path, from.path)
+    next()
+  },
+  beforeRouteEnter (to, from, next) {
+    console.log(444444444)
+    console.log(to)
+    console.log(from)
+    console.log(to.path, from.path)
+    next()
   }
 }
 </script>

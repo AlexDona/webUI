@@ -322,8 +322,8 @@ export default {
     },
     // 任改动
     userInfo (val) {
-      console.log(88888888)
-      console.log(val)
+      // console.log(88888888)
+      // console.log(val)
     }
   }
 }
