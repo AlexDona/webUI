@@ -26,7 +26,8 @@
               v-for="(item,index) in traderCoinList"
               :key="index"
               :label="item.name"
-              :value="item.id">
+              :value="item.id"
+            >
             </el-option>
           </el-select>
           <ul class="newnestPrice">
@@ -797,7 +798,11 @@ export default {
           }
         })
         // 设置每次返回回来的币种id
-        this.selectedCoinId = getData.tickerPriceResult.coinId
+        if (!getData.tickerPriceResult.coinId) {
+          this.selectedCoinId = ''
+        }else{
+          this.selectedCoinId = getData.tickerPriceResult.coinId
+        }
         // 设置每次返回地币种名称
         this.selecteCoindName = getData.tickerPriceResult.coinName
         // 最新价钱
