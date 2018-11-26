@@ -202,9 +202,12 @@ export default {
               width:170px;
               height:170px;
               background-color: #fff;
+              padding:5px;
               >.ercode{
-                width:168px;
-                height:168px;
+                /*width:160px;*/
+                /*height:160px;*/
+                width:100%;
+                height:100%;
                 background-color: #fff;
               }
             }
