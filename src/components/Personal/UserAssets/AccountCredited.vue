@@ -802,20 +802,6 @@ export default {
     paymentTerm (newVal) {
       console.log(newVal)
     }
-  },
-  beforeRouteLeave (to, from, next) {
-    console.log(3333333333)
-    console.log(to)
-    console.log(from)
-    console.log(to.path, from.path)
-    next()
-  },
-  beforeRouteEnter (to, from, next) {
-    console.log(444444444)
-    console.log(to)
-    console.log(from)
-    console.log(to.path, from.path)
-    next()
   }
 }
 </script>
