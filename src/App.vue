@@ -8,7 +8,7 @@
         v-if="needHeader"
       />
     </keep-alive>
-      <router-view v-if="isRouterAlive"/>
+      <router-view />
     <keep-alive>
       <FooterCommon
         v-if="needFooter"
@@ -40,8 +40,7 @@ export default {
     return {
       needHeader: false,
       needFooter: false,
-      needNotice: false,
-      isRouterAlive: true
+      needNotice: false
     }
   },
   async created () {
@@ -66,12 +65,6 @@ export default {
       'CHANGE_THEME',
       'CHANGE_CONVERT_CURRENCY'
     ]),
-    reload () {
-      this.isRouterAlive = false
-      this.$nextTick(function () {
-        this.isRouterAlive = true
-      })
-    },
     setBodyClassName (type, className) {
       type ? document.body.classList.add(className) : document.body.classList.remove(className)
     }

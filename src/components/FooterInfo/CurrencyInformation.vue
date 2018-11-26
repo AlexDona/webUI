@@ -127,11 +127,14 @@ export default {
     // 币种详情
     async getFootCurrencyInforDetail () {
       console.log(this.currencyId)
-      const data = await getCurrencyDetails(this.currencyId || getNestedData(this.currencyList, '[0].id'))
-      if (!(returnAjaxMsg(data, this, 0))) {
-        return false
-      } else {
-        this.currencyInfo = getNestedData(data, 'data.data')
+      let currencyId = this.currencyId || getNestedData(this.currencyList, '[0].id')
+      if (currencyId) {
+        const data = await getCurrencyDetails(this.currencyId || getNestedData(this.currencyList, '[0].id'))
+        if (!(returnAjaxMsg(data, this, 0))) {
+          return false
+        } else {
+          this.currencyInfo = getNestedData(data, 'data.data')
+        }
       }
     }
   },

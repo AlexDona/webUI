@@ -101,7 +101,10 @@
               <!--下载-->
               {{$t('M.comm_download')}}
             </dt>
-            <dd class="dd-item">
+            <dd
+              class="dd-item"
+              v-if="xDomain!=='bithumber.com'"
+            >
               <!-- 客户端下载 -->
               <router-link to="/guideOfDownload">{{$t('M.comm_Client_Downloads')}}</router-link>
             </dd>

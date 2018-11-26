@@ -201,11 +201,14 @@ export default {
               transform: translate(-50%,0);
               width:170px;
               height:170px;
-              border-radius: 10px;
+              background-color: #fff;
+              padding:5px;
               >.ercode{
-                margin-top:5px;
-                width:160px;
-                height:160px;
+                /*width:160px;*/
+                /*height:160px;*/
+                width:100%;
+                height:100%;
+                background-color: #fff;
               }
             }
             >.scan-btn{

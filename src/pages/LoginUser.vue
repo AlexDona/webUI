@@ -658,7 +658,6 @@ export default {
       require([('@xkeshi/vue-qrcode')], resolve)
     }
   },
-  inject: ['reload'],
   data () {
     return {
       fullscreenLoading: false,
@@ -734,7 +733,6 @@ export default {
     }
   },
   created () {
-    this.reload()
     document.getElementsByTagName('body')[0].style.zoom = 1
     console.log(this.isLogin)
     // console.log(this.socket)
