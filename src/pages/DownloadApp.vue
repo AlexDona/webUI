@@ -91,6 +91,10 @@ export default {
     }
   },
   created () {
+    let u = navigator.userAgent
+    this.isAndroid = u.indexOf('Android') > -1 || u.indexOf('Adr') > -1 // android终端
+    this.isIOS = !!u.match(/\(i[^;]+;( U;)? CPU.+Mac OS X/) // ios终端
+    this.isWXBrowserStatus = u.toLowerCase().match(/MicroMessenger/i) == 'micromessenger' ? 1 : 0
     this.getAppDownLoadUrl()
   },
   mounted () {
@@ -109,10 +113,6 @@ export default {
         return false
       } else {
         console.log(data)
-        let u = navigator.userAgent
-        this.isAndroid = u.indexOf('Android') > -1 || u.indexOf('Adr') > -1 // android终端
-        this.isIOS = !!u.match(/\(i[^;]+;( U;)? CPU.+Mac OS X/) // ios终端
-        this.isWXBrowserStatus = u.toLowerCase().match(/MicroMessenger/i) == 'micromessenger' ? 1 : 0
         if (this.isAndroid) {
           // alert('android')
           window.location.href = 'scheme: //fubt.com/'
