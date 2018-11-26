@@ -239,7 +239,8 @@
 <script>
 import {
   // returnAjaxMsg,
-  jumpToOtherPageForFooter
+  jumpToOtherPageForFooter,
+  getNestedData
 } from '../../utils/commonFunc'
 import {xDomain} from '../../utils/env'
 import Iconfont from '../Common/IconFontCommon'
@@ -335,11 +336,11 @@ export default {
         this.footerInfo1 = newVal.footerInfo1
         this.footerInfo2 = newVal.footerInfo2
         console.log(this.footerInfo2)
-        this.shareList[0].ercodeSrc = this.footerInfo1.twitter
-        this.shareList[1].ercodeSrc = this.footerInfo1.facebook
-        this.weixinImage = this.footerInfo1.weixinImage
-        this.qqImage = this.footerInfo1.qqImage
-        this.shareList[4].ercodeSrc = this.footerInfo1.telegraph_group
+        this.shareList[0].ercodeSrc = getNestedData(this.footerInfo1, 'twitter')
+        this.shareList[1].ercodeSrc = getNestedData(this.footerInfo1, 'facebook')
+        this.weixinImage = getNestedData(this.footerInfo1, 'weixinImage')
+        this.qqImage = getNestedData(this.footerInfo1, 'qqImage')
+        this.shareList[4].ercodeSrc = getNestedData(this.footerInfo1, 'telegraph_group')
       }
     }
   }

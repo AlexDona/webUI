@@ -106,12 +106,12 @@ export default {
       })
       // favicon 添加
       addFavicon(
-        footerInfo1.headTitleLogo,
-        footerInfo1.title
+        getNestedData(footerInfo1, 'headTitleLogo'),
+        getNestedData(footerInfo1, 'title')
       )
       commit('SET_LOGO_URL', {
-        logoSrc: footerInfo1.headLogo,
-        title: footerInfo1.title
+        logoSrc: getNestedData(footerInfo1, 'headLogo'),
+        title: getNestedData(footerInfo1, 'title')
       })
     }
   }
