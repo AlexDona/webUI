@@ -272,42 +272,6 @@ export const setSocketData = (oldContent, newContent, targetList, targetIndex, t
   oldContent.vol24hour = newContent.vol24hour
   that.$set(targetList, targetIndex, oldContent)
 }
-// 获取底部信息
-export const getFooterInfo = async (language, that) => {
-  const params = {
-    language
-  }
-  const data1 = await getFooterInfo1(params)
-  const data2 = await getFooterInfo2(params)
-  const data3 = await getConfigAjax()
-
-  if (
-    !returnAjaxMsg(data1, that) &&
-    !returnAjaxMsg(data2, that) &&
-    !returnAjaxMsg(data3, that)
-  ) {
-    return false
-  } else {
-    // eslint-disable-next-line
-    let footerInfo1 = getNestedData(data1, 'data.data')
-    let footerInfo2 = getNestedData(data2, 'data.data')
-    let configInfo = getNestedData(data3, 'data.data')
-    that.SET_FOOTER_INFO({
-      footerInfo1,
-      footerInfo2,
-      configInfo
-    })
-    // favicon 添加
-    addFavicon(
-      footerInfo1.headTitleLogo,
-      footerInfo1.title
-    )
-    that.SET_LOGO_URL({
-      logoSrc: footerInfo1.headLogo,
-      title: footerInfo1.title
-    })
-  }
-}
 // 动态添加favicon
 export const addFavicon = (href, title) => {
   // 动态生成favicon
@@ -346,6 +310,16 @@ export const getNestedData = (data, index) => {
 export const isWXBrowser = () => {
   const ua = navigator.userAgent.toLowerCase()
   return ua.match(/MicroMessenger/i) == 'micromessenger' ? 1 : 0
+}
+export const changeLanguage = (language, self, commit) => {
+  _.forEach(self.languageList, item => {
+    if (item.shortName === language) {
+      console.log(item)
+      commit('CHANGE_LANGUAGE', item)
+      commit('CHANGE_DEFAULT_LANGUAGE', item.shortName)
+      return false
+    }
+  })
 }
 // eslint-disable-next-line
 String.prototype.format = function (args) {
