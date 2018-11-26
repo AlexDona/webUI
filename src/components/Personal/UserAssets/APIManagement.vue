@@ -824,7 +824,7 @@ export default {
   },
   watch: {
     userCenterActiveName (newVal) {
-      console.log(newVal)
+      // console.log(newVal)
       if (newVal === 'api-management') {
         this.getMultipleUserAPIInfo()
       }
