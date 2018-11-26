@@ -201,6 +201,7 @@
         <img src="../../assets/develop/business-apply-success.png">
       </div>
       <div class="text">
+        <!-- 恭喜您已成为认证商家 -->
         <p class="tip">{{$t('M.otc_merchant_success')}}</p>
       </div>
     </div>

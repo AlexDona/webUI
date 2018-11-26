@@ -98,6 +98,8 @@ export const OTC = {
   'otc_confirmed_receipts': 'Confirmed payment submitted',
   'otc_stocks': 'Completed',
   'otc_please_choose': 'Please choose a payment method',
+  'otc_please_enter_price': 'Please enter Unite price',
+  'otc_please_enter_trade_number': 'Please enter Trade times',
   // 'otc_please_confirm'Please confirm that you have already paid for the seller. Do you want to continue?'请确认已经打款给卖家，是否继续?
   // 'otc_seller_please_confirm'Please confirm that you have received the payment. Do you want to continue?'请确认已收到款，是否继续？
   'otc_prompt': 'prompt',
@@ -262,6 +264,7 @@ export const OTC = {
   'otc_MerchantsOrders_date': 'Date',
   // 'otc_MerchantsOrders_chouse': 'Select ',
   'otc_MerchantsOrders_chouse': '',
+  'otc_choose_pay_style': 'Pay Methods',
   'otc_MerchantsOrders_reset': 'Reset',
   'otc_MerchantsOrders_orderNum': 'Order number',
   'otc_MerchantsOrders_currecy': 'Currency',

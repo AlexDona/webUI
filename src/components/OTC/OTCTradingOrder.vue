@@ -101,7 +101,7 @@
                     </div>
                     <!-- 选择支付方式 -->
                     <el-select
-                      :placeholder="$t('M.otc_MerchantsOrders_chouse') + $t('M.otc_index_Payment_method')"
+                      :placeholder="$t('M.otc_choose_pay_style')"
                       :no-data-text="$t('M.comm_no_data')"
                       v-model="activePayModeList[index]"
                       @change="changeUserBankInfo(index)"
@@ -963,7 +963,7 @@ export default {
       if (!this.activePayModeList[index]) {
         this.$message({
           // 请选择支付方式
-          message: this.$t('M.comm_please_choose') + this.$t('M.otc_index_Payment_method'),
+          message: this.$t('M.otc_choose_pay_style'),
           type: 'error'
         })
         return false
@@ -1445,7 +1445,8 @@ export default {
                     color: #E8554F;
                   }
                   .appeal-order{
-                    color: #8094BB;
+                    // color: #8094BB;
+                    color: #409EFF;
                     background-color: #CDD9EE;
                   }
                 }

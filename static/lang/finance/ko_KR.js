@@ -1,6 +1,6 @@
 export const finance = {
   'finance_newestPrice': '최신가격',
-  'finance_save_moneydetail': '보증금 세부 정보',
+  'finance_save_moneydetail': '코인 저축 세부 정보',
   'finance_at_once_save': '즉시 코인 저축',
   'finance_save_coin_record': '코인 저장 기록',
   'finance_get_money_record': '수익 기록',
@@ -39,7 +39,7 @@ export const finance = {
   'finance_day': '일',
   'finance_accrual': '이자',
   'finance_capital': '본금',
-  'finance_total_income': '예상합계수익',
+  'finance_total_income': '예상 총 수익',
   // 二次确认弹框提示信息
   'finance_tipsContentOne': '코인 꺼내기 조작 확인하나요?'
 }
