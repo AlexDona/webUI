@@ -90,12 +90,12 @@ export default {
       isWXBrowserStatus: true
     }
   },
-  created () {
+  async created () {
     let u = navigator.userAgent
     this.isAndroid = u.indexOf('Android') > -1 || u.indexOf('Adr') > -1 // android终端
     this.isIOS = !!u.match(/\(i[^;]+;( U;)? CPU.+Mac OS X/) // ios终端
     this.isWXBrowserStatus = u.toLowerCase().match(/MicroMessenger/i) == 'micromessenger' ? 1 : 0
-    this.getAppDownLoadUrl()
+    await this.getAppDownLoadUrl()
   },
   mounted () {
   },
@@ -122,7 +122,6 @@ export default {
           // window.location = 'com.top.Fubt://' // 打开某手机上的某个app应用
           this.downloadUrl = `itms-services://?action=download-manifest&;amp;url=${getNestedData(data, 'data.data.ios')}`
         }
-        this.downloadApp()
       }
     },
     downloadApp () {
