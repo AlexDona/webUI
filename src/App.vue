@@ -110,6 +110,13 @@ export default {
     },
     isMobile (newVal) {
       this.setBodyClassName(newVal, 'mobile')
+    },
+    needNotice (newVal) {
+      if (newVal) {
+        $('#udesk_container').fadeIn()
+      } else {
+        $('#udesk_container').fadeOut()
+      }
     }
   }
 }

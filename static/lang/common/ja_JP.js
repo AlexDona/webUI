@@ -182,5 +182,7 @@ export const common = {
   // 底部增加
   'common_footer_user_agreement': '利用規約',
   'common_footer_privacy_policy': 'プライバシーポリシー',
-  'common_footer_legal_notice': '法律ステートメント'
+  'common_footer_legal_notice': '法律ステートメント',
+  // 在线客服
+  'common_onlineText': 'オンラインサービス'
 }
