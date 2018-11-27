@@ -50,15 +50,15 @@ export default {
         'color': '#338ff5',
         'pos_flag': 'hrb',
         'language': this.msgLanguage,
-        'onlineText': this.onlineText,
-        'offlineText': this.onlineText,
+        'onlineText': '',
+        'offlineText': '',
         'mobile': {
           'mode': 'inner',
           'color': '#338ff5',
           'pos_flag': 'crb',
-          'language': this.msgLanguage,
-          'onlineText': this.onlineText,
-          'offlineText': this.onlineText
+          'language': '',
+          'onlineText': '',
+          'offlineText': ''
         }
       })
     },

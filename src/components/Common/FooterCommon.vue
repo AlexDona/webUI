@@ -111,17 +111,17 @@
             <dd
               class="dd-item"
             >
-              <!--<router-link to="/HelpCenter">-->
-                <!--&lt;!&ndash;帮助中心&ndash;&gt;-->
-                <!--{{$t('M.comm_help_center')}}-->
-              <!--</router-link>-->
-              <a
-                href="http://fubt.udesk.cn/hc"
-                target="_blank"
-                v-show="xDomain==='new.bzu.com'"
-              >
+              <router-link to="/HelpCenter">
+                <!--帮助中心-->
                 {{$t('M.comm_help_center')}}
-              </a>
+              </router-link>
+              <!--<a-->
+                <!--href="http://fubt.udesk.cn/hc"-->
+                <!--target="_blank"-->
+                <!--v-show="xDomain==='new.bzu.com'"-->
+              <!--&gt;-->
+                <!--{{$t('M.comm_help_center')}}-->
+              <!--</a>-->
               <a
                 href="#"
                 v-show="xDomain!='new.bzu.com'"

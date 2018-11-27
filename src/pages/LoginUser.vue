@@ -1303,6 +1303,8 @@ export default {
 
                 >input{
                   color:#fff;
+                  width:100%;
+                  height:100%;
                   /*width:290px;*/
                   /*height:40px;*/
 

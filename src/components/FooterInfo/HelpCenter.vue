@@ -7,19 +7,6 @@
       class="inner-box"
       ref="helpIframe"
     >
-      <div class="search-box">
-        <h1 class="title">
-          <!-- 帮助中心 -->
-          {{$t('M.about_footer_info_help')}}
-        </h1>
-        <!--请输入关键字-->
-        <input
-          type="text"
-          class="search-input"
-          v-model="searchKeyWord"
-          :placeholder="$t('M.about_footer_info_keyWords')"
-        />
-      </div>
       <div class="item-content help">
         <!--<div class="inner-box">-->
           <!--<ul class="content-list">-->
@@ -79,12 +66,14 @@
             <!--</el-pagination>-->
         <!--</div>-->
       <!--</div>-->
-        <iframe
-          src="http://192.168.1.194:4999/web/#/"
-          width="1100px"
-          height="100%"
-          frameborder="0"
-        ></iframe>
+        <div class="iframe-box">
+          <iframe
+            :src="iframeSrc"
+            width="1200px"
+            height="1000px"
+            frameborder="0"
+          ></iframe>
+        </div>
     </div>
   </div>
   </div>
@@ -160,6 +149,9 @@ export default {
       language: state => state.common.language,
       theme: state => state.common.theme
     }),
+    iframeSrc () {
+      return this.language === 'zh_CN' || this.language === 'zh_TW' ? 'https://doc.bzu.com/web/#/3?page_id=45' : 'https://doc.bzu.com/web/#/2?page_id=23'
+    },
     helpFilterList () {
       return this.helpList.filter((item) => {
         return (
@@ -209,7 +201,6 @@ export default {
       }
       >.item-content{
         width:100%;
-        height:1200px;
         overflow: hidden;
         >.inner-box{
           width:1100px;
@@ -264,6 +255,11 @@ export default {
             left:50%;
             transform: translate(-50%,0);
           }
+        }
+        >.iframe-box{
+          margin:30px auto;
+          width:1200px;
+          height:100%;
         }
       }
     }

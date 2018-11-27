@@ -25,7 +25,7 @@
               class="chinese"
               v-if="language=='zh_CN' || language=='zh_TW'"
             >
-              <p>1.邀请奖励{{configInfo.inviterPage}}统计起始时间为2018-05-20 10:18，在此之前已邀请 注册的无累计{{configInfo.inviterPage}}至此活动；</p>
+              <p>1.邀请奖励{{configInfo.inviterPage}}统计起始时间为{{startDate}}，在此之前已邀请 注册的无累计{{configInfo.inviterPage}}至此活动；</p>
               <p>2.登录平台账户—财务中心—推广注册链接—复制专属推广链接；</p>
               <p>3.假设新用户A通过您的推广链接注册完成实名认证，即成为您的直接下级，系统会在您的账户增加10{{configInfo.inviterPage}}；新用户B通过新用户A的推广链接，即成为您的间接下级，间接下级不享受赠送{{configInfo.inviterPage}}；</p>
               <p>4.为维护正常推广者权益，如发现有作弊者，经分析属实，将强制取消奖励，平台有权对推广虚假用户骗取奖励行为进行判定；</p>
@@ -129,6 +129,7 @@ export default {
     return {
       date: new Date(),
       timer: '',
+      startDate: '(+8) 2018-11-28 00:00',
       rankingList: [
         {
           index: 1,

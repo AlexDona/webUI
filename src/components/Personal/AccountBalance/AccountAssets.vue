@@ -143,6 +143,8 @@
                       <!--充币-->
                       {{ $t('M.comm_charge_money') }}
                     </div>
+
+                    <!--提币-->
                     <div
                       v-if="withdrawDepositList[index].isWithdraw === 'true'"
                       class="table-mention-money flex1 cursor-pointer"
@@ -188,8 +190,9 @@
                   <div
                     class="table-box"
                   >
+                    <div class="out-box">
                     <!--充币内容-->
-                    <div
+                      <div
                       v-show="withdrawDepositList[index].rechargeIsShow"
                       class="recharge-list display-flex"
                     >
@@ -247,159 +250,21 @@
                         </p>
                       </div>
                     </div>
+                    </div>
                     <!--提币内容-->
-                    <!--普通币种提币显示框-->
                     <div
-                      class="recharge-list recharge-list-mention display-flex"
+                      class="out-box"
+                    >
+                      <div
+                      class="recharge-list recharge-list-mention list-mention-treasure"
                       v-show="withdrawDepositList[index].withdrawDepositIsShow"
                     >
                       <p class="triangle triangle-one"></p>
-                      <div class="recharge-list-left display-flex">
-                        <div class="list-left-flex flex1 font-size12">
-                          <div class="flex-box padding-top10">
-                            <p class="left-flex-hint">
-                              {{ chargeMoneyName }}
-                              <!--提币地址-->
-                              {{ $t('M.comm_mention_money') }}{{ $t('M.comm_site') }}
-                            </p>
-                            <el-select
-                              v-model="mentionAddressValue"
-                              :no-data-text="$t('M.comm_no_data')"
-                              @change="changeId"
-                              filterable
-                              allow-create
-                              default-first-option
-                              :placeholder="$t('M.comm_please_choose')"
-                            >
-                              <el-option
-                                v-for="(item, index) in mentionAddressList"
-                                :key="index"
-                                :label="item.address + ' ' + item.remark"
-                                :value="item.id"
-                              >
-                              </el-option>
-                            </el-select>
-                            <span
-                              class="new-address cursor-pointer address-bg"
-                              @click.prevent="jumpToOtherTab('mention-address')"
-                            >
-                              <!--新增-->
-                              {{ $t('M.comm_newly_increased') }}
-                            </span>
-                          </div>
-                          <div class="flex-box padding-top20">
-                            <p class="left-flex-hint">
-                              <!--手续费-->
-                              {{ $t('M.comm_service_charge') }}
-                            </p>
-                            <input
-                              type="text"
-                              class="flex-input border-radius2 padding-l15 box-sizing"
-                              ref="serviceCharge"
-                              @keyup="changeInputValue('serviceCharge', index, pointLength, 'serviceType')"
-                              @input="changeInputValue('serviceCharge', index, pointLength, 'serviceType')"
-                            >
-                            <span
-                              class="new-address new-address-currency cursor-pointer"
-                            >
-                              {{ chargeMoneyName }}
-                            </span>
-                            <span class="service-charge display-inline-block text-align-r">
-                              {{serviceChargeList.minFees}}
-                              -
-                              {{serviceChargeList.maxFees}}
-                            </span>
-                          </div>
-                        </div>
-                        <div class="count-box flex1 font-size12">
-                          <div class="count-flex-box padding-top10">
-                            <p class="content-flex-hint">
-                              <!--数量-->
-                              {{ $t('M.comm_count') }}
-                            </p>
-                            <input
-                              type="text"
-                              class="count-flex-input border-radius2 paddinglr15 box-sizing text-align-r"
-                              ref="rechargeCount"
-                              @keyup="changeInputValue('rechargeCount', index, pointLength, 'rechargeType')"
-                              @input="changeInputValue('rechargeCount', index, pointLength, 'rechargeType')"
-                            >
-                            <p class="count-flex-text text-align-r">
-                              <span>
-                                <!--限额：-->
-                                {{ $t('M.comm_limit') }}：
-                              </span>
-                              <span>
-                                {{serviceChargeList.minWithdraw}}
-                                -
-                                {{serviceChargeList.maxWithdraw}}
-                              </span>
-                            </p>
-                          </div>
-                          <div class="count-flex-box padding-top20">
-                            <p class="content-flex-hint">
-                              <!--到账数量-->
-                              {{ $t('M.comm_account') }}{{ $t('M.comm_count') }}
-                            </p>
-                            <input
-                              type="text"
-                              disabled
-                              class="count-text-input border-radius2 paddinglr15 box-sizing text-align-r"
-                              v-model="serviceChargeCount"
-                            >
-                          </div>
-                        </div>
-                      </div>
-                      <div class="text-info flex1 font-size12">
-                        <!--提现费率规则：-->
-                        <p class="currency-rule">
-                          <span>{{ chargeMoneyName }}</span>
-                          {{ $t('M.user_assets_withdrawal_hint1') }}：
-                        </p>
-                        <!--为了用户资金安全，平台可能会电话确认您的提币操作，请注意接听；-->
-                        <p class="prompt-message">
-                          * {{ $t('M.user_assets_withdrawal_hint2') }}
-                        </p>
-                        <!--充值经过1个确认后，才允许提现；-->
-                        <p class="prompt-message">
-                          * <span>{{ chargeMoneyName }}</span>
-                          {{ $t('M.user_assets_withdrawal_hint3') }}
-                        </p>
-                        <!--可提现金额≤账户可用资产-未确认的数字资产。-->
-                        <p class="prompt-message">
-                          * {{ $t('M.user_assets_withdrawal_hint4') }}
-                        </p>
-                        <p class="mention-button">
-                          <button
-                            class="font-size12 submit-but border-radius4 cursor-pointer"
-                            @click.prevent="moneyConfirmState"
-                          >
-                            <!--提币-->
-                            {{ $t('M.comm_mention_money') }}
-                          </button>
-                          <span
-                            class="float-right cursor-pointer"
-                            @click.prevent="jumpToOtherTab('billing-details')"
-                          >
-                          <div
-                            class="false-tips fz14 ml100 mt0 mb20 pl10 tl"
-                            v-show="errorMessage"
-                          >
-                            {{errorMessage}}
-                          </div>
-                            <!--提币记录-->
-                              {{ $t('M.comm_mention_money') }}{{ $t('M.comm_record') }}
-                          </span>
-                        </p>
-                      </div>
-                    </div>
-                    <!--公信宝类币种提笔显示框-->
-                    <div
-                      class="recharge-list recharge-list-mention list-mention-treasure"
-                      v-show="withdrawDepositList[index].provideWithdrawDepositIsShow"
-                    >
-                      <p class="triangle triangle-one"></p>
-                      <div class="mention">
+                        <!--公信宝类提币备注-->
+                      <div
+                        class="mention"
+                        v-if="isNeedTag"
+                      >
                         <p class="mention-treasure">
                           <!--地址标签-->
                           {{ $t('M.user_address_labels') }}
@@ -506,7 +371,12 @@
                             >
                           </div>
                         </div>
-                        <div class="text-info-mention flex1 font-size12">
+                        <div
+                          class="text-info-mention flex1 font-size12"
+                          :class="{
+                            'need-tag-top':isNeedTag
+                          }"
+                        >
                           <!--提现费率规则：-->
                           <p class="currency-rule">
                             <span>{{ chargeMoneyName }}</span>
@@ -528,7 +398,7 @@
                           <p class="mention-button">
                             <button
                               class="font-size12 submit-but border-radius4 cursor-pointer"
-                              @click.prevent="moneyConfirmState"
+                              @click.prevent="moneyConfirmState(index)"
                             >
                               <!--提币-->
                               {{ $t('M.comm_mention_money') }}
@@ -549,6 +419,7 @@
                           </p>
                         </div>
                       </div>
+                    </div>
                     </div>
                   </div>
                 </transition>
@@ -799,7 +670,6 @@ export default {
       activeType: '', // 显示类型
       tradingOnId: '', // 根据coinido跳转到对应交易信息
       currencyTradingId: '', // 根据coinido跳转到对应交易信息
-      needTag: '', // 区别是否为公信宝累的币种 true为
       area: '', // 交易区名称
       areaId: '', // 交易区id
       id: '', // 币种Id
@@ -937,45 +807,25 @@ export default {
       // 限制数量小数位位数
       let target = this.$refs[ref][index]
       formatNumberInput(target, pointLength)
-      this.serviceChargeCount = Math.abs(
-        amendPrecision(this.$refs.rechargeCount[index].value, this.$refs.serviceCharge[index].value, '-')
-      )
+      let targetCount = amendPrecision(this.$refs.rechargeCount[index].value, this.$refs.serviceCharge[index].value, '-')
+      console.log(this.serviceChargeCount)
+      this.serviceChargeCount = targetCount > 0 ? targetCount : 0
       // 判断是输入时还是手续费 判断错误提示
       if (val === 'rechargeType') {
         console.log(1)
         // 获取输入数量
         this.amount = this.$refs.rechargeCount[index].value
-        console.log(this.amount)
-        console.log(this.$refs.rechargeCount[index].value)
-        // 输入数量之后显示在到账数量框中显示,在手续费中输入手续费并且以输入数量之后减去的值显示在到账数量
-        if (this.$refs.rechargeCount[index].value > this.withdrawDepositList[index].total) {
+        if (this.amount > this.withdrawDepositList[index].total) {
           // 判断输入数量不能大于总数量
           this.$refs.rechargeCount[index].value = this.withdrawDepositList[index].total
           console.log(this.amount)
-        } else if (this.$refs.rechargeCount[index].value <= this.$refs.serviceCharge[index].value) {
-          // 判断输入数量必须大于手续费
-          this.$message({
-            message: this.$t('M.user_assets_withdrawal_hint7'),
-            type: 'error'
-          })
         }
+        console.log(this.amount)
+        console.log(this.$refs.rechargeCount[index].value)
       } else if (val === 'serviceType') {
         console.log(2)
         // 获取输入手续费
         this.service = this.$refs.serviceCharge[index].value
-        if (this.$refs.serviceCharge[index].value < this.serviceChargeList.minFees) {
-          // 判断输入手续费小于最小提现手续费
-          this.$message({
-            message: this.$t('M.user_assets_withdrawal_hint5'),
-            type: 'error'
-          })
-        } else if (this.$refs.serviceCharge[index].value > this.serviceChargeList.maxFees) {
-          // 判断输入手续费大于于最大提现手续费
-          this.$message({
-            message: this.$t('M.user_assets_withdrawal_hint6'),
-            type: 'error'
-          })
-        }
       }
     },
     // 点击充币按钮显示充币内容（带回币种id 币种名称 当前index）
@@ -999,7 +849,7 @@ export default {
         // 显示充值框
         this.withdrawDepositList[index].rechargeIsShow = true
       } else {
-        if (this.needTag) {
+        if (this.isNeedTag) {
           // 隐藏普通币种提现框
           this.withdrawDepositList[index].withdrawDepositIsShow = false
         } else {
@@ -1010,11 +860,11 @@ export default {
       // 调用充币地址方法
       await this.fillingCurrencyAddress()
     },
-    // 点击提现按钮显示充币内容（带回币种id 币种名称 当前index）
+    // 点击提现按钮显示提币内容（带回币种id 币种名称 当前index）
     mentionMoneyButton (id, name, index) {
-      console.log(1)
       // 提币数量
       this.$refs.rechargeCount[index].value = ''
+      this.amount = ''
       // 到账数量
       this.serviceChargeCount = ''
       // 提币地址
@@ -1037,13 +887,8 @@ export default {
         // 公信宝类币种提币默认显示框
         item.provideWithdrawDepositIsShow = false
       })
-      if (!this.needTag) {
-        // 隐藏普通币种提现框
-        this.withdrawDepositList[index].withdrawDepositIsShow = true
-      } else {
-        // 隐藏公信宝类币种提现框
-        this.withdrawDepositList[index].provideWithdrawDepositIsShow = true
-      }
+      this.withdrawDepositList[index].withdrawDepositIsShow = true
+
       // 隐藏充值弹窗
       this.withdrawDepositList[index].rechargeIsShow = false
       // 调用充币地址方法
@@ -1175,7 +1020,7 @@ export default {
         console.log(withdrawalAddressData.needTag)
         console.log(withdrawalAddressData.userWithdrawAddressListVO.userWithdrawAddressDtoList)
         // 对币种类型进行赋值 true公信宝类 false普通币种
-        this.needTag = withdrawalAddressData.needTag
+        this.isNeedTag = withdrawalAddressData.needTag
         // 返回列表数据并渲染币种列表
         this.mentionAddressList = withdrawalAddressData.userWithdrawAddressListVO.userWithdrawAddressDtoList
         this.mentionAddressValue = getNestedData(withdrawalAddressData, 'userWithdrawAddressListVO.userWithdrawAddressDtoList[0].address')
@@ -1223,6 +1068,8 @@ export default {
         // 返回列表数据
         this.serviceChargeList = data.data.data
         this.serviceCharge = data.data.data.minFees
+        console.log(this.$refs.serviceCharge[index])
+        console.log(this.$refs.serviceCharge, index)
         this.$refs.serviceCharge[index].value = this.serviceCharge
         this.service = this.$refs.serviceCharge[index].value
       }
@@ -1256,8 +1103,9 @@ export default {
     /**
     * 点击提币按钮 验证
     * */
-    moneyConfirmState () {
-      if (this.needTag) {
+    moneyConfirmState (index) {
+      console.log(index)
+      if (this.isNeedTag) {
         if (!this.remark) {
           // 请输入备注
           this.$message({
@@ -1267,7 +1115,7 @@ export default {
           this.mentionMoneyConfirm = false
         }
       }
-      console.log(1)
+      console.log(this.mentionAddressValue)
       if (!this.mentionAddressValue) {
         // 请选择提币地址
         this.$message({
@@ -1275,21 +1123,51 @@ export default {
           type: 'error'
         })
         this.mentionMoneyConfirm = false
-      } else if (!this.amount) {
+        return false
+      }
+      if (!this.amount) {
         // 请输入提币数量
         this.$message({
           message: this.$t('M.comm_please_enter') + this.$t('M.comm_mention_money') + this.$t('M.comm_count'),
           type: 'error'
         })
         this.mentionMoneyConfirm = false
-      } else if (!this.service) {
+        return false
+      }
+      if (!this.service) {
         // 请输入手续费
         this.$message({
           message: this.$t('M.comm_please_enter') + this.$t('M.comm_service_charge'),
           type: 'error'
         })
         this.mentionMoneyConfirm = false
-      } else if (!this.userInfo.userInfo.payPassword) {
+        return false
+      }
+      console.log(this.serviceChargeCount)
+      if (this.service < this.serviceChargeList.minFees) {
+        // 判断输入手续费小于最小提现手续费
+        this.$message({
+          message: this.$t('M.user_assets_withdrawal_hint5'),
+          type: 'error'
+        })
+        return false
+      } else if (this.service > this.serviceChargeList.maxFees) {
+        // // 判断输入手续费大于于最大提现手续费
+        this.$message({
+          message: this.$t('M.user_assets_withdrawal_hint6'),
+          type: 'error'
+        })
+        return false
+      }
+      if (!this.serviceChargeCount) {
+        // 判断输入数量必须大于手续费
+        this.$message({
+          message: this.$t('M.user_assets_withdrawal_hint7'),
+          type: 'error'
+        })
+        return false
+      }
+      if (!this.userInfo.userInfo.payPassword) {
         this.dialogVisible = true
       } else {
         this.mentionMoneyConfirm = true
@@ -1533,169 +1411,174 @@ export default {
                   >.list-mention-treasure {
                     height:295px !important;
                   }
-                  >.recharge-list {
-                    position: relative;
-                    // height:205px;
-                    height:215px;
-                    padding: 20px 6px;
-                    z-index: 2;
-                    >.triangle {
-                      position: absolute;
-                      top: -7px;
-                      right: 100px;
-                      width: 12px;
-                      height: 12px;
-                      transform:rotate(135deg);
-                      -ms-transform:rotate(135deg);
-                      -moz-transform:rotate(135deg);
-                      -webkit-transform:rotate(135deg);
-                      -o-transform:rotate(135deg);
-                    }
-                    >.triangle-one {
-                      right: 55px;
-                    }
-                    >.mention {
-                      width: 100%;
-                      padding: 5px 0 0;
-                      >.mention-treasure {
-                        height: 20px;
-                        line-height: 20px;
-                        color: #338FF5;
-                        >.treasure-info {
-                          color: #D45858;
+                  >.out-box{
+                    >.recharge-list {
+                      position: relative;
+                      // height:205px;
+                      /*height:215px;*/
+                      padding: 20px 6px;
+                      z-index: 2;
+                      >.triangle {
+                        position: absolute;
+                        top: -7px;
+                        right: 100px;
+                        width: 12px;
+                        height: 12px;
+                        transform:rotate(135deg);
+                        -ms-transform:rotate(135deg);
+                        -moz-transform:rotate(135deg);
+                        -webkit-transform:rotate(135deg);
+                        -o-transform:rotate(135deg);
+                      }
+                      >.triangle-one {
+                        right: 55px;
+                      }
+                      >.mention {
+                        width: 100%;
+                        padding: 5px 0 0;
+                        >.mention-treasure {
+                          height: 20px;
+                          line-height: 20px;
+                          color: #338FF5;
+                          >.treasure-info {
+                            color: #D45858;
+                          }
+                        }
+                        >.input-mention {
+                          height: 34px;
+                          width: 640px;
+                          color: #fff;
+                          background-color: #2D3651;
                         }
                       }
-                      >.input-mention {
-                        height: 34px;
-                        width: 640px;
-                        color: #fff;
-                        background-color: #2D3651;
-                      }
-                    }
-                    >.recharge-content {
-                      padding: 0 20px;
-                      flex: 2;
-                      >.recharge-content-hint {
-                        line-height: 20px;
-                        height: 20px;
-                        margin-bottom: 5px;
-                      }
-                      >.input-box {
-                        >.hint-input {
-                          width: 430px;
-                          height: 32px;
+                      >.recharge-content {
+                        padding: 0 20px;
+                        flex: 2;
+                        >.recharge-content-hint {
+                          line-height: 20px;
+                          height: 20px;
+                          margin-bottom: 5px;
                         }
-                        >.code-copy {
-                          width: 89px;
-                          height: 32px;
-                          border-radius: 0 2px 2px 0;
-                          line-height: 32px;
+                        >.input-box {
+                          >.hint-input {
+                            width: 430px;
+                            height: 32px;
+                          }
+                          >.code-copy {
+                            width: 89px;
+                            height: 32px;
+                            border-radius: 0 2px 2px 0;
+                            line-height: 32px;
+                          }
                         }
-                      }
 
-                      >.recharge-content-title {
-                        // width: 450px;
-                        width: 584px;
-                        line-height: 18px;
-                      }
-                    }
-                    >.recharge-content-right {
-                      >.recharge-content-code {
-                        width: 110px;
-                        height: 110px;
-                        padding: 5px;
-                        box-sizing: border-box;
-                      }
-                      >.code-list {
-                        margin-top: 110px;
-                        padding-right: 10px;
-                      }
-                    }
-                    >.recharge-list-left {
-                      flex: 2;
-                      height:196px;
-                      >.list-left-flex {
-                        >.flex-box {
-                          position: relative;
-                          height: 80px;
-                          >.left-flex-hint {
-                            line-height: 20px ;
-                          }
-                          >.service-charge {
-                            width: 100%;
-                            position: absolute;
-                            top: 70px;
-                            height: 20px;
-                            right: 0;
-                          }
-                          >.flex-input,
-                          >.text-input {
-                            width: 350px;
-                            height: 34px;
-                          }
-                          >.new-address {
-                            height: 34px;
-                            width: 35px;
-                            position: absolute;
-                            top: 38px;
-                            right: 1px;
-                            line-height: 34px;
-                            text-align: center;
-                          }
-                          >.new-address-currency {
-                            top: 49px;
-                          }
+                        >.recharge-content-title {
+                          // width: 450px;
+                          width: 584px;
+                          line-height: 18px;
                         }
                       }
-                      >.count-box {
-                        padding-left: 15px;
-                        >.count-flex-box {
-                          height: 80px;
-                          >.content-flex-hint,
-                          >.count-flex-text {
-                            line-height: 20px ;
+                      >.recharge-content-right {
+                        >.recharge-content-code {
+                          width: 110px;
+                          height: 110px;
+                          padding: 5px;
+                          box-sizing: border-box;
+                        }
+                        >.code-list {
+                          margin-top: 110px;
+                          padding-right: 10px;
+                        }
+                      }
+                      >.recharge-list-left {
+                        flex: 2;
+                        height:196px;
+                        >.list-left-flex {
+                          >.flex-box {
+                            position: relative;
+                            height: 80px;
+                            >.left-flex-hint {
+                              line-height: 20px ;
+                            }
+                            >.service-charge {
+                              width: 100%;
+                              position: absolute;
+                              top: 70px;
+                              height: 20px;
+                              right: 0;
+                            }
+                            >.flex-input,
+                            >.text-input {
+                              width: 350px;
+                              height: 34px;
+                            }
+                            >.new-address {
+                              height: 34px;
+                              width: 35px;
+                              position: absolute;
+                              top: 38px;
+                              right: 1px;
+                              line-height: 34px;
+                              text-align: center;
+                            }
+                            >.new-address-currency {
+                              top: 49px;
+                            }
                           }
-                          /*>.count-flex-text {*/
+                        }
+                        >.count-box {
+                          padding-left: 15px;
+                          >.count-flex-box {
+                            height: 80px;
+                            >.content-flex-hint,
+                            >.count-flex-text {
+                              line-height: 20px ;
+                            }
+                            /*>.count-flex-text {*/
                             /*padding-right: 25px;*/
-                          /*}*/
-                          >.count-flex-input,
-                          >.count-text-input {
-                            width: 275px;
-                            height: 34px;
+                            /*}*/
+                            >.count-flex-input,
+                            >.count-text-input {
+                              width: 275px;
+                              height: 34px;
+                            }
+                          }
+                        }
+                        >.text-info-mention {
+                          padding-left: 15px;
+                          position: relative;
+                          top: -20px;
+                          &.need-tag-top{
+                            top: -45px;
+                          }
+                          >.currency-rule,
+                          >.prompt-message {
+                            line-height: 25px;
+                          }
+                          >.mention-button {
+                            margin-top: 41px;
+                            >.submit-but {
+                              width: 80px;
+                              height: 34px;
+                            }
                           }
                         }
                       }
-                      >.text-info-mention {
-                        padding-left: 15px;
-                        position: relative;
-                        top: -45px;
+                      >.text-info {
+                        // padding-left: 15px;
+                        // padding-top: 20px;
+                        padding: 20px 0 0 15px;
                         >.currency-rule,
                         >.prompt-message {
-                          line-height: 25px;
+                          // line-height: 20px;
+                          line-height: 16px;
                         }
                         >.mention-button {
-                          margin-top: 41px;
+                          margin-top: 8px;
                           >.submit-but {
                             width: 80px;
                             height: 34px;
                           }
-                        }
-                      }
-                    }
-                    >.text-info {
-                      // padding-left: 15px;
-                      // padding-top: 20px;
-                      padding: 20px 0 0 15px;
-                      >.currency-rule,
-                      >.prompt-message {
-                        // line-height: 20px;
-                        line-height: 16px;
-                      }
-                      >.mention-button {
-                        margin-top: 8px;
-                        >.submit-but {
-                          width: 80px;
-                          height: 34px;
                         }
                       }
                     }
@@ -1806,77 +1689,93 @@ export default {
                   }
                 }
               }
-              >.recharge-list {
-                border: 1px solid #338FF5;
-                >.triangle {
-                  border-right: 1px solid transparent;
-                  border-top: 1px solid transparent;
-                  border-left: 1px solid #338FF5;
-                  border-bottom: 1px solid #338FF5;
-                  background-color: #1C1F32;
-                }
-                >.recharge-content {
-                  >.recharge-content-hint {
-                    color: #338FF5;
+              >.out-box{
+                >.recharge-list {
+                  border: 1px solid #338FF5;
+                  >.triangle {
+                    border-right: 1px solid transparent;
+                    border-top: 1px solid transparent;
+                    border-left: 1px solid #338FF5;
+                    border-bottom: 1px solid #338FF5;
+                    background-color: #1C1F32;
                   }
-                  >.input-box {
-                    >.hint-input {
-                      background-color: #2D3651;
-                      color: #fff;
+                  >.recharge-content {
+                    >.recharge-content-hint {
+                      color: #338FF5;
                     }
-                    >.code-copy {
-                      background-color: #338FF5;
-                      color: #fff;
-                    }
-                  }
-                  >.recharge-content-title {
-                    color: #D45858;
-                  }
-                }
-                >.recharge-content-right {
-                  >.recharge-content-code {
-                    background-color: #fff;
-                  }
-                }
-                >.recharge-list-left {
-                  >.list-left-flex {
-                    >.flex-box {
-                      >.flex-input {
+                    >.input-box {
+                      >.hint-input {
                         background-color: #2D3651;
                         color: #fff;
                       }
-                      >.text-input {
-                        background-color: #37424C;
-                        color: #fff;
-                      }
-                      >.left-flex-hint,
-                      >.new-address {
-                        color: #338FF5;
-                      }
-                      >.address-bg {
-                        background-color: #2D3651;
-                      }
-                    }
-                  }
-                  >.count-box {
-                    >.count-flex-box {
-                      >.content-flex-hint {
-                        color: #338FF5;
-                      }
-                      >.count-flex-text {
-                        color: #83909B;
-                      }
-                      >.count-flex-input{
-                        background-color: #2D3651;
-                        color: #fff;
-                      }
-                      >.count-text-input {
-                        background-color: #20273D;
+                      >.code-copy {
+                        background-color: #338FF5;
                         color: #fff;
                       }
                     }
+                    >.recharge-content-title {
+                      color: #D45858;
+                    }
                   }
-                  >.text-info-mention {
+                  >.recharge-content-right {
+                    >.recharge-content-code {
+                      background-color: #fff;
+                    }
+                  }
+                  >.recharge-list-left {
+                    >.list-left-flex {
+                      >.flex-box {
+                        >.flex-input {
+                          background-color: #2D3651;
+                          color: #fff;
+                        }
+                        >.text-input {
+                          background-color: #37424C;
+                          color: #fff;
+                        }
+                        >.left-flex-hint,
+                        >.new-address {
+                          color: #338FF5;
+                        }
+                        >.address-bg {
+                          background-color: #2D3651;
+                        }
+                      }
+                    }
+                    >.count-box {
+                      >.count-flex-box {
+                        >.content-flex-hint {
+                          color: #338FF5;
+                        }
+                        >.count-flex-text {
+                          color: #83909B;
+                        }
+                        >.count-flex-input{
+                          background-color: #2D3651;
+                          color: #fff;
+                        }
+                        >.count-text-input {
+                          background-color: #20273D;
+                          color: #fff;
+                        }
+                      }
+                    }
+                    >.text-info-mention {
+                      >.currency-rule {
+                        color: #D45858;
+                      }
+                      >.prompt-message {
+                        color: #58616A;
+                      }
+                      >.mention-button {
+                        >.submit-but {
+                          background:linear-gradient(0deg,rgba(43,57,110,1),rgba(42,80,130,1));
+                          color: #fff;
+                        }
+                      }
+                    }
+                  }
+                  >.text-info {
                     >.currency-rule {
                       color: #D45858;
                     }
@@ -1890,24 +1789,10 @@ export default {
                       }
                     }
                   }
-                }
-                >.text-info {
-                  >.currency-rule {
-                    color: #D45858;
+                  >.email-input {
+                    width: 220px;
+                    height: 34px;
                   }
-                  >.prompt-message {
-                    color: #58616A;
-                  }
-                  >.mention-button {
-                    >.submit-but {
-                      background:linear-gradient(0deg,rgba(43,57,110,1),rgba(42,80,130,1));
-                      color: #fff;
-                    }
-                  }
-                }
-                >.email-input {
-                  width: 220px;
-                  height: 34px;
                 }
               }
             }
@@ -1994,82 +1879,98 @@ export default {
                   }
                 }
               }
-              >.recharge-list {
-                border: 1px solid #338FF5;
-                background: #fff;
-                >.triangle {
-                  border-right: 1px solid transparent;
-                  border-top: 1px solid transparent;
-                  border-left: 1px solid #338FF5;
-                  border-bottom: 1px solid #338FF5;
-                  background-color: #fff;
-                }
-                >.recharge-content {
-                  >.recharge-content-hint {
-                    color: #338FF5;
-                  }
-                  >.input-box {
-                    >.hint-input {
-                      background:rgba(51,143,245,0.1);
-                      color: #333;
-                      border:1px solid rgba(38,47,56,0.1);
-                    }
-                    >.code-copy {
-                      background-color: #338FF5;
-                      color: #fff;
-                    }
-                  }
-                  >.recharge-content-title {
-                    color: #D45858;
-                  }
-                }
-                >.recharge-content-right {
-                  >.recharge-content-code {
+              >.out-box{
+                >.recharge-list {
+                  border: 1px solid #338FF5;
+                  background: #fff;
+                  >.triangle {
+                    border-right: 1px solid transparent;
+                    border-top: 1px solid transparent;
+                    border-left: 1px solid #338FF5;
+                    border-bottom: 1px solid #338FF5;
                     background-color: #fff;
                   }
-                }
-                >.recharge-list-left {
-                  >.list-left-flex {
-                    >.flex-box {
-                      >.flex-input {
+                  >.recharge-content {
+                    >.recharge-content-hint {
+                      color: #338FF5;
+                    }
+                    >.input-box {
+                      >.hint-input {
                         background:rgba(51,143,245,0.1);
                         color: #333;
-                        border: 1px solid rgba(38,47,56,0.1);
+                        border:1px solid rgba(38,47,56,0.1);
                       }
-                      >.text-input {
-                        background-color: #37424C;
+                      >.code-copy {
+                        background-color: #338FF5;
                         color: #fff;
                       }
-                      >.left-flex-hint,
-                      >.new-address {
-                        color: #338FF5;
+                    }
+                    >.recharge-content-title {
+                      color: #D45858;
+                    }
+                  }
+                  >.recharge-content-right {
+                    >.recharge-content-code {
+                      background-color: #fff;
+                    }
+                  }
+                  >.recharge-list-left {
+                    >.list-left-flex {
+                      >.flex-box {
+                        >.flex-input {
+                          background:rgba(51,143,245,0.1);
+                          color: #333;
+                          border: 1px solid rgba(38,47,56,0.1);
+                        }
+                        >.text-input {
+                          background-color: #37424C;
+                          color: #fff;
+                        }
+                        >.left-flex-hint,
+                        >.new-address {
+                          color: #338FF5;
+                        }
+                        >.address-bg {
+                          background-color: #fff;
+                        }
                       }
-                      >.address-bg {
-                        background-color: #fff;
+                    }
+                    >.count-box {
+                      >.count-flex-box {
+                        >.content-flex-hint {
+                          color: #338FF5;
+                        }
+                        >.count-flex-text {
+                          color: #83909B;
+                        }
+                        >.count-flex-input{
+                          background:rgba(51,143,245,0.1);
+                          color: #333;
+                          border: 1px solid rgba(38,47,56,0.1);
+                        }
+                        >.count-text-input {
+                          background:rgba(51,143,245,0.1);
+                          color: #333;
+                          border: 1px solid rgba(38,47,56,0.1);
+                        }
+                      }
+                    }
+                    >.text-info-mention {
+                      >.currency-rule {
+                        color: #D45858;
+                      }
+                      >.prompt-message {
+                        color: #58616A;
+                      }
+                      >.mention-button {
+                        >.submit-but {
+                          background:linear-gradient(0deg,rgba(43,57,110,1),rgba(42,80,130,1));
+                          color: #fff;
+                        }
                       }
                     }
                   }
-                  >.count-box {
-                    >.count-flex-box {
-                      >.content-flex-hint {
-                        color: #338FF5;
-                      }
-                      >.count-flex-text {
-                        color: #83909B;
-                      }
-                      >.count-flex-input{
-                        background:rgba(51,143,245,0.1);
-                        color: #333;
-                        border: 1px solid rgba(38,47,56,0.1);
-                      }
-                      >.count-text-input {
-                        background:rgba(51,143,245,0.1);
-                        color: #333;
-                        border: 1px solid rgba(38,47,56,0.1);
-                      }
-                    }
-                  }
-                  >.text-info-mention {
+                  >.text-info {
                     >.currency-rule {
                       color: #D45858;
                     }
@@ -2083,24 +1984,10 @@ export default {
                       }
                     }
                   }
-                }
-                >.text-info {
-                  >.currency-rule {
-                    color: #D45858;
+                  >.email-input {
+                    width: 220px;
+                    height: 34px;
                   }
-                  >.prompt-message {
-                    color: #58616A;
-                  }
-                  >.mention-button {
-                    >.submit-but {
-                      background:linear-gradient(0deg,rgba(43,57,110,1),rgba(42,80,130,1));
-                      color: #fff;
-                    }
-                  }
-                }
-                >.email-input {
-                  width: 220px;
-                  height: 34px;
                 }
               }
             }
