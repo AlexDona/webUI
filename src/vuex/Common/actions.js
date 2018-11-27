@@ -74,7 +74,7 @@ export default {
       } else {
         let configInfo = getNestedData(data1, 'data.data')
         console.log(configInfo, self.languageList)
-        changeLanguage(configInfo.defaultLanguage, self, commit)
+        changeLanguage(getStore('language') || configInfo.defaultLanguage, self, commit)
         commit('SET_FOOTER_INFO', {
           configInfo
         })
@@ -90,7 +90,7 @@ export default {
       language
     }
     const data1 = await getFooterInfo1(params)
-    const data2 = await getFooterInfo2(params)
+    const data2 = await getFoovterInfo2(params)
     if (
       !returnAjaxMsg(data1, self) &&
       !returnAjaxMsg(data2, self)

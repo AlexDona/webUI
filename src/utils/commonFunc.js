@@ -22,10 +22,7 @@ import {
 } from '../utils/api/home'
 import {
   // getCountryList,
-  getServiceProtocoDataAjax,
-  getFooterInfo1,
-  getFooterInfo2,
-  getConfigAjax
+  getServiceProtocoDataAjax
 } from '../utils/api/header'
 import store from '../vuex'
 import {

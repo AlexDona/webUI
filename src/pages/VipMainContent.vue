@@ -10,6 +10,9 @@
         class="images"
         :src="vipPictureBanner"
       >
+      <div class="title">
+        一键开通VIP享受优惠特权
+      </div>
     </div>
     <div
       class="loading-box"
@@ -618,7 +621,8 @@ import {
 } from '../utils/api/personal'
 import {
   returnAjaxMsg,
-  getServiceProtocolData
+  getServiceProtocolData,
+  getNestedData
 } from '../utils/commonFunc'
 // 底部
 const { mapMutations, mapActions } = createNamespacedHelpers('user')
@@ -694,8 +698,8 @@ export default {
       }
       await getServiceProtocolData(this, params, (data) => {
         console.log(data)
-        this.serviceAgreementContent = data.data.data[0].content
-        this.discountsInstructionContent = data.data.data[1].content
+        this.serviceAgreementContent = getNestedData(data, 'data.data[0].content')
+        this.discountsInstructionContent = getNestedData(data, 'data.data[1].content')
       })
     },
     // 点击返回上个页面
@@ -936,8 +940,17 @@ export default {
       // height: 600px;
       width: 100%;
       margin: 0 auto;
-      .images {
+      position: relative;
+      >.images {
         width: 100%;
+      }
+      >.title{
+        color:#fff;
+        position: absolute;
+        left:50%;
+        top:30%;
+        transform: translate(-50%, -50%);
+        font-size: 48px;
       }
     }
     >.loading-box{

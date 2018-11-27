@@ -800,7 +800,7 @@ export default {
         // 设置每次返回回来的币种id
         if (!getData.tickerPriceResult.coinId) {
           this.selectedCoinId = ''
-        }else{
+        } else {
           this.selectedCoinId = getData.tickerPriceResult.coinId
         }
         // 设置每次返回地币种名称
