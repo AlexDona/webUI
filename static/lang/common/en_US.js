@@ -189,5 +189,7 @@ export const common = {
   // 底部增加
   'common_footer_user_agreement': 'User Agreement',
   'common_footer_privacy_policy': 'Privacy Terms',
-  'common_footer_legal_notice': 'Legal Statement'
+  'common_footer_legal_notice': 'Legal Statement',
+  // 在线客服
+  'common_onlineText': 'Online Service'
 }

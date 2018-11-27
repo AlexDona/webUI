@@ -184,5 +184,7 @@ export const common = {
   // 底部增加
   'common_footer_user_agreement': '고객협의',
   'common_footer_privacy_policy': '사적정보 조항',
-  'common_footer_legal_notice': '법률 선언'
+  'common_footer_legal_notice': '법률 선언',
+  // 在线客服
+  'common_onlineText': '온라인 고객 서비스'
 }
