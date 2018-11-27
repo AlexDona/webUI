@@ -189,7 +189,7 @@ export const personal = {
   'user_transaction_text': '6자리 수자',
   // 登录密码
   'user_security_login_raw': '기존',
-  'user_security_login_new': 'new',
+  'user_security_login_new': '새로운',
   'user_security_former': '오래된',
   'user_security_info1': '암호를 8-20 자의 영숫자 조합으로 입력하십시오.',
   'user_security_info2': '암호가 일치하지 않습니다. 재확인하십시오',
