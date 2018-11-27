@@ -250,6 +250,7 @@ export const personal = {
   // 冻结中的订单Frozen order
   // 委托订单Order order
   // VIPVIP
+  'user_vip_one_key_open': 'Open VIP discount',
   'user_vip_please_choose': 'Please choose to open member information',
   'user_vip_discount': 'discount',
   'user_vip_immediately_opened': 'Open Now',

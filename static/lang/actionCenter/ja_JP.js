@@ -1,5 +1,5 @@
 export const actionCenter = {
-  'actionCenter_download': 'ダウンロードプレビュー',
+  'actionCenter_download': 'ダウンロード',
   'actionCenter_rege': '登録招請一覧',
   'actionCenter_Rank': 'ランキング',
   'actionCenter_User': 'ユーザー',

@@ -255,6 +255,7 @@ export const personal = {
   // 冻结中的订单
   // 委托订单
   // VIP
+  'user_vip_one_key_open': '一键开通VIP享受优惠特权',
   'user_vip_please_choose': '请选择开通会员信息',
   'user_vip_discount': '折扣',
   'user_vip_immediately_opened': '立即开通',

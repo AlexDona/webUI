@@ -1,5 +1,5 @@
 export const actionCenter = {
-  'actionCenter_download': 'Preview download',
+  'actionCenter_download': 'Download',
   'actionCenter_rege': 'Invite Ranking',
   'actionCenter_Rank': 'Rank',
   'actionCenter_User': 'User',

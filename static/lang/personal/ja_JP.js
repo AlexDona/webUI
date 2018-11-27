@@ -250,6 +250,7 @@ export const personal = {
   // 冷凍注文
   // 委託注文
   // VIP
+  'user_vip_one_key_open': 'vipを通じた特典サービス',
   'user_vip_please_choose': 'メンバー情報を開くように選択してください',
   'user_vip_discount': '割引',
   'user_vip_immediately_opened': 'すぐに開く',

@@ -255,6 +255,7 @@ export const personal = {
   // 凍結中的訂單
   // 委托訂單
   // VIP
+  'user_vip_one_key_open': '壹鍵開通VIP享受優惠特權',
   'user_vip_please_choose': '請選擇開通會員信息',
   'user_vip_discount': '折扣',
   'user_vip_immediately_opened': '立即開通',
