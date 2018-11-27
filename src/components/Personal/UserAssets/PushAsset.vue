@@ -574,7 +574,7 @@ export default {
         case 0:
           if (!targetNum) {
             // 请输入买方UID
-            this.setErrorMsg(0, this.$t('M.comm_please_enter') + this.$t('M.comm_buyer') + 'UID')
+            this.setErrorMsg(0, this.$t('M.user_push_input_buyer') + 'UID')
             this.$forceUpdate()
             return 0
           } else {
@@ -586,7 +586,7 @@ export default {
         case 1:
           if (!targetNum) {
             // 请输入数量
-            this.setErrorMsg(1, this.$t('M.comm_please_enter') + this.$t('M.comm_count'))
+            this.setErrorMsg(1, this.$t('M.user_push_input_sum'))
             this.$forceUpdate()
             return 0
           } else {
@@ -598,7 +598,7 @@ export default {
         case 2:
           if (!targetNum) {
             // 请输入价格
-            this.setErrorMsg(2, this.$t('M.comm_please_enter') + this.$t('M.comm_price_metre'))
+            this.setErrorMsg(2, this.$t('M.user_push_input_price'))
             this.$forceUpdate()
             return 0
           } else {
@@ -610,7 +610,7 @@ export default {
         case 3:
           if (!targetNum) {
             // 请输入交易密码
-            this.setErrorMsg(3, this.$t('M.comm_please_enter') + this.$t('M.comm_password'))
+            this.setErrorMsg(3, this.$t('M.user_push_input_pwd'))
             this.$forceUpdate()
             return 0
           } else {

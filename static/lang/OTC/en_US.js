@@ -238,7 +238,7 @@ export const OTC = {
   'otc_publishAD_discriptLineFive': ' to do commit fraud, the offender will result in the account being frozen and legally liable.',
   'otc_publishAD_discriptLineFour': 'Please post the contract spirit, perform the spirit of the contract, maliciously raise the price or repent, and the complaint will freeze the account for 3-15 days.',
   'otc_publishAD_chouseSellType': 'Please select a transaction method',
-  'otc_publishAD_set_get_money_way': 'Please set the payment method first.',
+  'otc_publishAD_set_get_money_way': 'Set the receipt method first',
   'otc_publishAD_rangePrice': 'Price between',
   'otc_publishAD_inputminLimit': 'Must be greater than or equal the minimun',
   'otc_publishAD_inputmaxLimit': 'Cannot be more than the maximum',

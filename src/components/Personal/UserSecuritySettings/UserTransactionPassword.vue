@@ -22,7 +22,7 @@
           class="header-content-left header-content font-size16 font-weight600"
         >
           <!--修改交易密码-->
-          {{ $t('M.comm_modification') }}{{ $t('M.comm_password') }}
+          {{ $t('M.user_modification_trade_pwd') }}
         </span>
         <span
           class="header-content-right font-size12 cursor-pointer"
@@ -84,7 +84,7 @@
             </el-form-item>
             <!--重复交易密码-->
             <el-form-item
-              :label="$t('M.user_transaction_repetition') + $t('M.comm_password') + '：'"
+              :label="$t('M.user_modification_repeat_trade_pwd') + '：'"
             >
               <input
                 type="password"
@@ -132,7 +132,7 @@
             </el-form-item>
             <!--重复交易密码-->
             <el-form-item
-              :label="$t('M.user_transaction_repetition') + $t('M.comm_password') + '：'"
+              :label="$t('M.user_modification_repeat_trade_pwd') + '：'"
             >
               <input
                 type="password"
@@ -368,7 +368,7 @@ export default {
               this.$forceUpdate()
               return 1
             case 1:
-              this.setErrorMsg(1, this.$t('M.comm_please_enter') + this.$t('M.user_security_password'))
+              this.setErrorMsg(1, this.$t('M.user_modification_input_pwd'))
               this.$forceUpdate()
               return 0
             case 2:
@@ -381,7 +381,7 @@ export default {
         case 2:
           if (!targetNum) {
             // 请输入确认交易密码
-            this.setErrorMsg(2, this.$t('M.user_set_tradePwd_tips2'))
+            this.setErrorMsg(2, this.$t('M.user_modification_confirm_trade_pwd'))
             this.$forceUpdate()
             return 0
           } else if (targetNum === this.setPassword.newPassword) {
@@ -459,7 +459,7 @@ export default {
               this.$forceUpdate()
               return 1
             case 1:
-              this.tieErrorMsg(0, this.$t('M.comm_please_enter') + this.$t('M.user_security_password'))
+              this.tieErrorMsg(0, this.$t('M.user_modification_input_pwd'))
               this.$forceUpdate()
               return 0
             case 2:
@@ -471,7 +471,7 @@ export default {
         case 1:
           if (!targetNum) {
             // 请输入确认交易密码
-            this.tieErrorMsg(1, this.$t('M.comm_please_enter') + this.$t('M.comm_affirm') + this.$t('M.comm_password'))
+            this.tieErrorMsg(1, this.$t('M.user_modification_confirm_trade_pwd'))
             this.$forceUpdate()
             return 0
           } else if (targetNum === this.modifyPassword.transactionPassword) {

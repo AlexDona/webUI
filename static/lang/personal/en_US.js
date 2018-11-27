@@ -279,5 +279,24 @@ export const personal = {
   'user_vip_text7': 'Already Opened',
   'user_vip_text8': 'VIP Discount',
   'user_vip_fee_discount': 'Fee discount',
-  'user_vip_recommend': 'Recommend'
+  'user_vip_recommend': 'Recommend',
+  // push资产
+  'user_push_input_buyer': 'Input Buyer ',
+  'user_push_input_sum': 'Input Amount',
+  'user_push_input_price': 'Input Price',
+  'user_push_input_pwd': 'Input Trading password',
+  // 修改登录密码
+  'user_modification_login_pwd': 'Modify Login password',
+  'user_modification_original_pwd': 'Input Old Login password',
+  'user_modification_input_pwd': 'Input password',
+  'user_modification_input_confirm_pwd': 'Input Confirm Login password',
+  'user_modification_confirm_': 'Confirm Modify',
+  // 修改交易密码
+  'user_modification_trade_pwd': 'Modify trading password',
+  'user_modification_repeat_trade_pwd': 'Repeat trading password',
+  'user_modification_confirm_trade_pwd': 'Input confirm trading password',
+  // 修改手机
+  'user_modify_phone': 'Modify Phone',
+  'user_modify_input_phone': 'Please Input Phone',
+  'user_modify_trade_pwd': 'Trading password'
 }

@@ -284,5 +284,24 @@ export const personal = {
   'user_vip_text7': '열림',
   'user_vip_text8': 'VIP수수료,출금비 할인됨',
   'user_vip_fee_discount': '수수료 할인',
-  'user_vip_recommend': '추천'
+  'user_vip_recommend': '추천',
+  // push资产
+  'user_push_input_buyer': '구매자 입력하세요',
+  'user_push_input_sum': '수량 입력하세요',
+  'user_push_input_price': '가격 입력하세요',
+  'user_push_input_pwd': '거래 비밀번호 입력하세요',
+  // 修改登录密码
+  'user_modification_login_pwd': '로그인 비밀번호 수정',
+  'user_modification_original_pwd': '기존 로그인 비밀번호 입력해주세요.',
+  'user_modification_input_pwd': '비밀번호 입력해주세요.',
+  'user_modification_input_confirm_pwd': '로그인 비밀번호 재확인 해주새요.',
+  'user_modification_confirm_': '수정확인',
+  // 修改交易密码
+  'user_modification_trade_pwd': '거래 비밀번호 수정',
+  'user_modification_repeat_trade_pwd': '거래 비밀번호 재입력',
+  'user_modification_confirm_trade_pwd': '거래 비밀번호 재입력하세요.',
+  // 修改手机
+  'user_modify_phone': '전화번호 수정',
+  'user_modify_input_phone': '휴대폰 번호 입력하세요.',
+  'user_modify_trade_pwd': '거래 비밀번호'
 }

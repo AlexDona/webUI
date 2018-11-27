@@ -284,5 +284,25 @@ export const personal = {
   'user_vip_text7': '已开通',
   'user_vip_text8': 'VIP享手续费、提现优惠',
   'user_vip_fee_discount': '手续费折扣',
-  'user_vip_recommend': '推荐'
+  'user_vip_recommend': '推荐',
+  // push资产
+  'user_push_input_buyer': '请输入买方',
+  'user_push_input_sum': '请输入数量',
+  'user_push_input_price': '请输入价格',
+  'user_push_input_pwd': '请输入交易密码',
+  // 修改登录密码
+  'user_modification_login_pwd': '修改登录密码',
+  'user_modification_original_pwd': '请输入原登录密码',
+  'user_modification_input_pwd': '请输入密码',
+  'user_modification_input_confirm_pwd': '请输入确认登陆密码',
+  'user_modification_confirm_': '确认修改',
+  // 修改交易密码
+  'user_modification_trade_pwd': '修改交易密码',
+  'user_modification_repeat_trade_pwd': '重复交易密码',
+  'user_modification_confirm_trade_pwd': '请输入确认交易密码',
+  // 修改手机
+  'user_modify_phone': '修改手机',
+  'user_modify_input_phone': '请输入手机',
+  'user_modify_trade_pwd': '交易密码'
+
 }
