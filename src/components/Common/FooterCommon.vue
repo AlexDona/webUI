@@ -1,7 +1,7 @@
 <template>
   <div
     class="footer-box common"
-    v-show="isloading"
+    v-show="!isloading"
     ref="footer"
   >
     <div class="inner-box">
@@ -286,7 +286,7 @@ export default {
       footerInfo1: {},
       footerInfo2: {},
       linkList: [], // 友情链接
-      isloading: false
+      isloading: true
     }
   },
   created () {
@@ -321,6 +321,7 @@ export default {
       language: state => state.common.language,
       logoSrc: state => state.common.logoSrc,
       footerInfo: state => state.common.footerInfo,
+      footerInfo1: state => state.common.footerInfo.footerInfo1,
       // 公司名称fubt fbt fuc、邮箱等信息
       configInfo: state => state.common.footerInfo.configInfo
     }),
@@ -329,19 +330,28 @@ export default {
     }
   },
   watch: {
-    footerInfo (newVal) {
+    configInfo (newVal) {
       console.log(newVal)
-      if (newVal) {
-        this.isloading = true
-        this.footerInfo1 = newVal.footerInfo1
-        this.footerInfo2 = newVal.footerInfo2
-        console.log(this.footerInfo2)
-        this.shareList[0].ercodeSrc = getNestedData(this.footerInfo1, 'twitter')
-        this.shareList[1].ercodeSrc = getNestedData(this.footerInfo1, 'facebook')
-        this.weixinImage = getNestedData(this.footerInfo1, 'weixinImage')
-        this.qqImage = getNestedData(this.footerInfo1, 'qqImage')
-        this.shareList[4].ercodeSrc = getNestedData(this.footerInfo1, 'telegraph_group')
-      }
+    },
+    footerInfo1 (newVal) {
+      console.log(newVal)
+    },
+    footerInfo: {
+      handler (newVal) {
+        console.log(newVal)
+        if (newVal) {
+          this.isloading = false
+          this.footerInfo1 = newVal.footerInfo1
+          this.footerInfo2 = newVal.footerInfo2
+          console.log(this.footerInfo2)
+          this.shareList[0].ercodeSrc = getNestedData(this.footerInfo1, 'twitter')
+          this.shareList[1].ercodeSrc = getNestedData(this.footerInfo1, 'facebook')
+          this.weixinImage = getNestedData(this.footerInfo1, 'weixinImage')
+          this.qqImage = getNestedData(this.footerInfo1, 'qqImage')
+          this.shareList[4].ercodeSrc = getNestedData(this.footerInfo1, 'telegraph_group')
+        }
+      },
+      deep: true
     }
   }
 }
