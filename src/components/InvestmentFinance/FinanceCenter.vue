@@ -4,7 +4,10 @@
     :class="{'day':theme == 'day','night':theme == 'night' }"
   >
     <!-- 1.0 banner -->
-    <div class="banner-box">
+    <div class="banner-box" :style="{
+      width:screenWidth + 'px',
+      height:(screenWidth*131)/480 + 'px'
+    }">
       <img src="../../assets/finance/banner.png">
       <div class="banner-title">
         <!-- 存币收益 -->
@@ -788,7 +791,7 @@ export default {
         this.fullscreenLoading = false
         return false
       } else {
-        console.log(data)
+        // console.log(data)
         this.fullscreenLoading = false
         // let getData = Object.assign({}, data.data.data)
         // let getData = data.data.data
@@ -817,8 +820,6 @@ export default {
         this.historyAmountIncrease = getData.tickerPriceResult.historyAmountIncrease
         // 理财类型数组
         this.investTypeList = getData.managementList
-        console.log(11111111111111111111111111)
-        console.log(this.investTypeList)
         // 设置存币类型默认值
         // 任重写
         if (getData.managementList.length) {
@@ -926,7 +927,7 @@ export default {
       status: state => state.finance.status
     }),
     screenWidth () {
-      return window.innerWidth / 3
+      return window.innerWidth
     }
   },
   watch: {
