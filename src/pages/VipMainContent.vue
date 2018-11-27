@@ -11,7 +11,8 @@
         :src="vipPictureBanner"
       >
       <div class="title">
-        一键开通VIP享受优惠特权
+        <!-- 一键开通VIP享受优惠特权 -->
+        {{$t('M.user_vip_one_key_open')}}
       </div>
     </div>
     <div
@@ -947,7 +948,7 @@ export default {
       >.title{
         color:#fff;
         position: absolute;
-        left:50%;
+        left:47%;
         top:30%;
         transform: translate(-50%, -50%);
         font-size: 48px;

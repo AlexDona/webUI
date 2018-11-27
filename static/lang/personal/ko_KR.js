@@ -255,6 +255,7 @@ export const personal = {
   // 冻结中的订单
   // 委托订单
   // VIP
+  'user_vip_one_key_open': '버튼을 누르면 VIP 가 우대 특권을 누 릴 수 있다',
   'user_vip_please_choose': '회원 정보 오픈에 가입하십시오',
   'user_vip_discount': '할인',
   'user_vip_immediately_opened': '즉시 가입',

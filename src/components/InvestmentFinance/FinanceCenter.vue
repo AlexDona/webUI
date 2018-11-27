@@ -6,6 +6,10 @@
     <!-- 1.0 banner -->
     <div class="banner-box">
       <img src="../../assets/finance/banner.png">
+      <div class="banner-title">
+        <!-- 存币收益 -->
+        {{$t('M.comm_finance_center')}}
+      </div>
     </div>
     <div
       class="inner-box"
@@ -950,9 +954,19 @@ export default {
       >.banner-box{
         height: 459px;
         // background: #272b41;
+        position: relative;
         >img{
           width: 100%;
           height: 100%;
+        }
+        >.banner-title{
+          position: absolute;
+          left: 50%;
+          top: 50%;
+          color: #fff;
+          font-size: 40px;
+          width: 400px;
+          text-align: center;
         }
       }
       >.inner-box{
