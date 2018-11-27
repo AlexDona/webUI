@@ -3,15 +3,15 @@
     class="nav-box common"
     :class="{'day':theme == 'day','night':theme == 'night' }"
     :style="{
-      top:$route.path==='/'&&noticeCloseVisible ? styleTop+'px': 0
+      top:$route.path==='/home'&&noticeCloseVisible ? styleTop+'px': 0
     }"
   >
     <div class="inner-box">
       <div
         class="top"
         :style="{
-          padding: $route.path==='/'? topPadding : '0 30px',
-          backgroundColor: $route.path==='/'? topBackgroundColor : $mainNightBgColor
+          padding: $route.path==='/home'? topPadding : '0 30px',
+          backgroundColor: $route.path==='/home'? topBackgroundColor : $mainNightBgColor
         }"
       >
         <!--导航-->
@@ -213,7 +213,7 @@
                       </li>
                       <li @click="stateReturnSuperior('invite')">
                         <!--邀请推广-->
-                        {{$t('M.comm_user_invite')}}{{$t('M.comm_user_generalize')}}
+                        {{$t('M.comm_user_invite_generalize')}}
                       </li>
                       <li @click="stateReturnSuperior('api')">
                         <!--API管理-->
@@ -344,18 +344,14 @@ import {userLoginOut} from '../../utils/api/user'
 import IconFontCommon from '../Common/IconFontCommon'
 import {
   returnAjaxMsg,
-  getCountryListAjax,
-  reflashUserInfo,
-  getTransitionCurrencyRate,
-  getFooterInfo,
-  getLanguageListAjax
+  getNestedData
 } from '../../utils/commonFunc'
 import {
   getStore,
   setStore
 } from '../../utils'
 import { createNamespacedHelpers, mapState } from 'vuex'
-const { mapMutations } = createNamespacedHelpers('common')
+const { mapMutations, mapActions } = createNamespacedHelpers('common')
 // const { mapMutationsForUser } = createNamespacedHelpers('user')
 // import {Io} from '../../utils/tradingview/socket'
 export default{
@@ -402,16 +398,24 @@ export default{
   async created () {
     require('../../../static/css/theme/day/Common/HeaderCommonDay.css')
     // 获取 语言列表
-    await getLanguageListAjax(this)
-    await getCountryListAjax(this)
-    await getFooterInfo(this.language, this)
+    await this.GET_LANGUAGE_LIST_ACTION({
+      self: this
+    })
+    console.log(this.language)
+    await this.SET_PARTNER_INFO_ACTION({
+      self: this,
+      language: this.language
+    })
+    await this.GET_COUNTRY_LIST_ACTION({
+      selft: this
+    })
     // console.log(this.theme)
     this.activeTheme = this.theme
     // 查询某商户可用法币币种列表
     // 折算货币s
     await this.getMerchantAvailablelegalTenderList()
     if (this.isLogin) {
-      await reflashUserInfo(this)
+      // this.reflashUserInfo()
     }
   },
   mounted () {
@@ -421,6 +425,12 @@ export default{
     window.removeEventListener('scroll', this.handleScroll)
   },
   methods: {
+    ...mapActions([
+      'GET_COUNTRY_LIST_ACTION',
+      'GET_TRANSITION_RATE_ACTION',
+      'GET_LANGUAGE_LIST_ACTION',
+      'SET_PARTNER_INFO_ACTION'
+    ]),
     ...mapMutations([
       // 修改语言
       'CHANGE_LANGUAGE',
@@ -436,8 +446,12 @@ export default{
       'USER_INFORMATION_REFRESH',
       'SET_USER_INFO_REFRESH_STATUS',
       'CHANGE_REF_SECURITY_CENTER_INFO',
-      'SET_FOOTER_INFO'
+      'SET_FOOTER_INFO',
+      'SET_LOGO_URL'
     ]),
+    reflashUserInfo () {
+      this.$store.dispatch('user/REFLASH_USER_INFO', this)
+    },
     handleScroll () {
       var scrollTop = window.pageYOffset || document.documentElement.scrollTop || document.body.scrollTop
       // console.log(scrollTop)
@@ -464,7 +478,11 @@ export default{
           return false
         }
       })
-      await getTransitionCurrencyRate(params, this, this.activeConvertCurrencyObj)
+      await this.GET_TRANSITION_RATE_ACTION({
+        params,
+        self: this,
+        activeConvertCurrencyObj: this.activeConvertCurrencyObj
+      })
     },
     // 设置个人中心跳转
     setPersonalJump (target) {
@@ -520,7 +538,7 @@ export default{
         return false
       } else {
         this.$store.commit('user/USER_LOGOUT')
-        this.$router.push({path: '/'})
+        this.$router.push({path: '/home'})
       }
     },
     // 显示状态切换（子导航）
@@ -580,7 +598,7 @@ export default{
         return false
       }
       // 返回数据正确的逻辑
-      this.convertCurrencyList = data.data.data
+      this.convertCurrencyList = getNestedData(data, 'data.data')
       await this.changeActiveTransitionCurrency()
       // setStore('convertCurrencyList', this.convertCurrencyList)
     },
@@ -616,11 +634,17 @@ export default{
     })
   },
   watch: {
+    defaultLanguage (newVal) {
+      this.$i18n.locale = newVal
+    },
     footerInfo (newVal) {
       console.log(newVal)
     },
     async language () {
-      await getFooterInfo(this.language, this)
+      await this.SET_PARTNER_INFO_ACTION({
+        self: this,
+        language: this.language
+      })
     },
     title (newVal) {
       console.log(newVal)
@@ -646,7 +670,7 @@ export default{
       console.log(newVal)
       if (newVal) {
         if (this.isLogin) {
-          reflashUserInfo(this)
+          this.reflashUserInfo()
         }
         this.SET_USER_INFO_REFRESH_STATUS(false)
       }
@@ -691,6 +715,7 @@ export default{
             }
             /*子导航list*/
             >.sub-nav-list{
+              width:100%;
               height:36px;
               line-height:36px;
               background-color: $nightSubNavBgColor;
@@ -788,8 +813,10 @@ export default{
                 box-sizing: border-box;
                 >.sub-nav-user{
                   >.nav-vip{
-                    height: 50px;
-                    line-height: 50px;
+                    // height: 50px;
+                    // line-height: 50px;
+                    line-height: 20px;
+                    margin-top: 16px;
                   }
                   >.nav-button{
                     width: 100%;
@@ -854,7 +881,7 @@ export default{
                 }
                 >.language-text{
                   display:inline-block;
-                  width:60px;
+                  /*width:60px;*/
                 }
               }
               >.lang-list{

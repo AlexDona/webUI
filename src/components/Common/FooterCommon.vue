@@ -1,7 +1,7 @@
 <template>
   <div
     class="footer-box common"
-    v-show="isloading"
+    v-show="!isloading"
     ref="footer"
   >
     <div class="inner-box">
@@ -32,11 +32,56 @@
               v-for="(item,index) in shareList"
               :key="index"
             >
-              <a :href="item.ercodeSrc" class="mini-icon">
+              <a
+                :href="item.ercodeSrc"
+                class="mini-icon"
+                v-show="index!==2 && index!==3"
+              >
                 <Iconfont
                   :icon-name="item.iconName"
                   class-name="icon-text"
                 />
+              </a>
+              <!--微信-->
+              <a
+                class="weixin-btn"
+                v-show="index==2"
+                @mouseenter="toggleShowStatus('weixin',1)"
+                @mouseleave="toggleShowStatus('weixin',0)"
+              >
+                <Iconfont
+                  icon-name="icon-weixin-copy"
+                  class-name="icon-text icon-weixin"
+                >
+                </Iconfont>
+                <span
+                  class="er-code"
+                  v-show="isShowWeixin"
+                >
+                   <img
+                     :src="weixinImage"
+                   >
+                </span>
+              </a>
+              <a
+                class="weixin-btn"
+                v-show="index==3"
+                @mouseenter="toggleShowStatus('qq',1)"
+                @mouseleave="toggleShowStatus('qq',0)"
+              >
+                <!--qq-->
+                <Iconfont
+                  icon-name="icon-qq"
+                  class-name="icon-text"
+                />
+                <span
+                  class="er-code"
+                  v-show="isShowQQ"
+                >
+                  <img
+                    :src="qqImage"
+                  >
+                </span>
               </a>
             </li>
           </ul>
@@ -56,16 +101,33 @@
               <!--下载-->
               {{$t('M.comm_download')}}
             </dt>
-            <dd class="dd-item">
-              <router-link to="/guideOfDownload">客户端下载</router-link>
+            <dd
+              class="dd-item"
+              v-if="xDomain!=='bithumber.com'"
+            >
+              <!-- 客户端下载 -->
+              <router-link to="/guideOfDownload">{{$t('M.comm_Client_Downloads')}}</router-link>
             </dd>
             <dd
               class="dd-item"
             >
-              <router-link to="/HelpCenter">
-                <!--帮助中心-->
+              <!--<router-link to="/HelpCenter">-->
+                <!--&lt;!&ndash;帮助中心&ndash;&gt;-->
+                <!--{{$t('M.comm_help_center')}}-->
+              <!--</router-link>-->
+              <a
+                href="http://fubt.udesk.cn/hc"
+                target="_blank"
+                v-show="xDomain==='new.bzu.com'"
+              >
                 {{$t('M.comm_help_center')}}
-              </router-link>
+              </a>
+              <a
+                href="#"
+                v-show="xDomain!='new.bzu.com'"
+              >
+                {{$t('M.comm_help_center')}}
+              </a>
             </dd>
             <dd
               class="dd-item"
@@ -97,7 +159,7 @@
             </dd>
             <dd
               class="dd-item"
-              @click="jumpToOtherPage('/NewsAndNoticeList','notice')"
+              @click="jumpToOtherPage('/NewsAndNoticeCenter','notice')"
             >
               <!--新闻公告-->
               {{$t('M.comm_news_and_notice')}}
@@ -139,6 +201,13 @@
               <!--费率-->
               {{$t('M.comm_rate1')}}
             </dd>
+            <dd
+              class="dd-item"
+              @click="jumpToOtherPage('/ServiceAndProtocol','TradingWarning')"
+            >
+              <!--交易须知-->
+              {{$t('M.otc_index_tradeKnow')}}
+            </dd>
           </dl>
         </div>
       </div>
@@ -170,18 +239,28 @@
 <script>
 import {
   // returnAjaxMsg,
-  jumpToOtherPageForFooter
+  jumpToOtherPageForFooter,
+  getNestedData
 } from '../../utils/commonFunc'
+import {xDomain} from '../../utils/env'
 import Iconfont from '../Common/IconFontCommon'
 import {createNamespacedHelpers, mapState} from 'vuex'
 const {mapMutations} = createNamespacedHelpers('footerInfo')
 export default {
   components: {
-    Iconfont
+    Iconfont,
+    // 二维码组件
+    VueQrcode: resolve => {
+      require([('@xkeshi/vue-qrcode')], resolve)
+    }
   },
   // props,
   data () {
     return {
+      weixinImage: '',
+      isShowWeixin: false,
+      isShowQQ: false,
+      qqImage: '',
       shareList: [
         {
           iconName: 'icon-twitter_F',
@@ -207,10 +286,11 @@ export default {
       footerInfo1: {},
       footerInfo2: {},
       linkList: [], // 友情链接
-      isloading: false
+      isloading: true
     }
   },
   created () {
+    console.log(xDomain)
   },
   mounted () {
   },
@@ -221,6 +301,16 @@ export default {
     ...mapMutations([
       'CHANGE_FOOTER_ACTIVENAME'
     ]),
+    toggleShowStatus (type, data) {
+      switch (type) {
+        case 'weixin':
+          this.isShowWeixin = data
+          break
+        case 'qq':
+          this.isShowQQ = data
+          break
+      }
+    },
     jumpToOtherPage (router, activeName) {
       jumpToOtherPageForFooter(router, activeName, this)
     }
@@ -231,24 +321,37 @@ export default {
       language: state => state.common.language,
       logoSrc: state => state.common.logoSrc,
       footerInfo: state => state.common.footerInfo,
+      footerInfo1: state => state.common.footerInfo.footerInfo1,
       // 公司名称fubt fbt fuc、邮箱等信息
       configInfo: state => state.common.footerInfo.configInfo
-    })
+    }),
+    xDomain () {
+      return xDomain
+    }
   },
   watch: {
-    footerInfo (newVal) {
+    configInfo (newVal) {
       console.log(newVal)
-      if (newVal) {
-        this.isloading = true
-        this.footerInfo1 = newVal.footerInfo1
-        this.footerInfo2 = newVal.footerInfo2
-        console.log(this.footerInfo2)
-        this.shareList[0].ercodeSrc = this.footerInfo1.twitter
-        this.shareList[1].ercodeSrc = this.footerInfo1.facebook
-        this.shareList[2].ercodeSrc = this.footerInfo1.weixin
-        this.shareList[3].ercodeSrc = this.footerInfo1.qq
-        this.shareList[4].ercodeSrc = this.footerInfo1.telegraph_group
-      }
+    },
+    footerInfo1 (newVal) {
+      console.log(newVal)
+    },
+    footerInfo: {
+      handler (newVal) {
+        console.log(newVal)
+        if (newVal) {
+          this.isloading = false
+          this.footerInfo1 = newVal.footerInfo1
+          this.footerInfo2 = newVal.footerInfo2
+          console.log(this.footerInfo2)
+          this.shareList[0].ercodeSrc = getNestedData(this.footerInfo1, 'twitter')
+          this.shareList[1].ercodeSrc = getNestedData(this.footerInfo1, 'facebook')
+          this.weixinImage = getNestedData(this.footerInfo1, 'weixinImage')
+          this.qqImage = getNestedData(this.footerInfo1, 'qqImage')
+          this.shareList[4].ercodeSrc = getNestedData(this.footerInfo1, 'telegraph_group')
+        }
+      },
+      deep: true
     }
   }
 }
@@ -300,6 +403,26 @@ export default {
                 text-align: center;
                 .icon-text{
                   font-size: 22px;
+                }
+              }
+              >.icon-weixin{
+
+              }
+              >.weixin-btn{
+                position: relative;
+                >.er-code{
+                  position: absolute;
+                  left:50%;
+                  transform: translate(-50%,0);
+                  top:-110px;
+                  width:100px;
+                  height:100px;
+                  padding:4px;
+                  background-color: #fff;
+                  >img{
+                    width:100%;
+                    height:100%;
+                  }
                 }
               }
               >.hidden-box{

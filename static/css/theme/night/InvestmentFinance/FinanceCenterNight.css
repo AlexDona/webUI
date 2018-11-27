@@ -6,7 +6,7 @@
     border-bottom-right-radius: 4px;
 }
 .finance-box.night .nvest-list-body .el-table td, .el-table th.is-leaf{
-    /* border-bottom:1px solid #1d2531; */
+    border-bottom:1px solid #1d2531;
 }
 .finance-box.night .el-table__header{
     box-shadow: 4px 0px 4px 4px rgba(25,30,40,1);

@@ -56,9 +56,9 @@
                 {{ innerUserInfo.realname }}
               </span>
             </el-form-item>
-            <!--收  款  类  型-->
+            <!--收款类型-->
             <el-form-item
-              :label="$t('M.user_account_gathering') + $t('M.comm_type')"
+              :label="$t('M.user_pay_account_set6')"
             >
               <span class="account-content-type">支付宝</span>
             </el-form-item>
@@ -197,7 +197,7 @@ export default {
     xDomain = xDomain.startsWith('www') ? xDomain.slice(4) : xDomain
     this.tokenObj['x-domain'] = xDomain
     console.log(xDomain)
-    this.getAccountPaymentTerm()
+    getAccountPaymentTerm(this)
     this.paymentMethodInformation()
   },
   mounted () {},
@@ -344,17 +344,6 @@ export default {
         }
         console.log(this.dialogImageHandUrl1)
       }
-    },
-    /**
-     * 收款方式
-     */
-    getAccountPaymentTerm () {
-      getAccountPaymentTerm(this, (data) => {
-        if (data) {
-          // 返回状态展示
-          this.paymentTerm = data.data.data
-        }
-      })
     },
     // 成功自动跳转
     successJump () {

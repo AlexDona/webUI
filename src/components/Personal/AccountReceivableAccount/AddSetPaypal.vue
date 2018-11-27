@@ -155,7 +155,7 @@ export default {
     require('../../../../static/css/theme/day/Personal/AccountReceivableAccount/AddSetPaypalDay.css')
     // 黑色主题样式
     require('../../../../static/css/theme/night/Personal/AccountReceivableAccount/AddSetPaypalNight.css')
-    this.getAccountPaymentTerm()
+    getAccountPaymentTerm(this)
     this.paymentMethodInformation()
   },
   mounted () {},
@@ -283,17 +283,6 @@ export default {
         this.id = detailData.id
         console.log(this.paymentMethodList)
       }
-    },
-    /**
-     * 收款方式
-     */
-    getAccountPaymentTerm () {
-      getAccountPaymentTerm(this, (data) => {
-        if (data) {
-          // 返回状态展示
-          this.paymentTerm = data.data.data
-        }
-      })
     },
     // 成功自动跳转
     successJump () {

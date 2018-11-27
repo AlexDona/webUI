@@ -231,13 +231,13 @@ export default {
             case 1:
               // console.log(type)
               // 请输入邮箱地址
-              this.setErrorMsg(0, this.$t('M.comm_please_enter') + this.$t('M.comm_please_enter') + this.$t('M.comm_site'))
+              this.setErrorMsg(0, this.$t('M.login_please_input3'))
               this.$forceUpdate()
               return 0
             case 2:
               // console.log(type)
               // 请输入正确的邮箱地址
-              this.setErrorMsg(0, this.$t('M.comm_please_enter') + this.$t('M.user_security_correct') + this.$t('M.user_security_email') + this.$t('M.comm_site'))
+              this.setErrorMsg(0, this.$t('M.login_please_input4'))
               this.$forceUpdate()
               return 0
           }
@@ -247,7 +247,7 @@ export default {
           if (!targetNum) {
             // console.log(type)
             // 请输入邮箱验证码
-            this.setErrorMsg(1, this.$t('M.comm_please_enter') + this.$t('M.user_security_email') + this.$t('M.comm_code'))
+            this.setErrorMsg(1, this.$t('M.login_please_input2'))
             this.$forceUpdate()
             return 0
           } else {

@@ -44,7 +44,7 @@
           <div class="main-top-type trade-type float-left">
            <span class="filtrate-text font-size14">
              <!--币种-->
-             {{ $t('M.otc_AD_token') }}
+             {{ $t('M.otc_Merchants_Orders_market') }}
            </span>
            <span class="status-input">
              <!--全部-->

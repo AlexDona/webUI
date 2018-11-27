@@ -193,7 +193,7 @@
             class="authentication-type font-size12"
           >
             <!--未高级认证-->
-            （{{ $t('M.comm_not') }}{{ $t('M.user_senior_certification') }}）
+            ({{ $t('M.user_advanced_authentication_tips1') }})
           </span>
           <span
             v-if="innerUserInfo.advancedAuth === 'pass'"
@@ -523,13 +523,14 @@ import {
   userRefreshUser
 } from '../../../utils/api/personal'
 import {
-  returnAjaxMsg,
-  reflashUserInfo,
-  getCountryListAjax
+  returnAjaxMsg
 } from '../../../utils/commonFunc'
-import {apiCommonUrl} from '../../../utils/env'
+import {
+  apiCommonUrl,
+  xDomain
+} from '../../../utils/env'
 import {createNamespacedHelpers, mapState} from 'vuex'
-const {mapMutations} = createNamespacedHelpers('common')
+const {mapMutations, mapActions} = createNamespacedHelpers('common')
 export default {
   components: {
     ErrorBox, // 错误提示接口
@@ -606,10 +607,8 @@ export default {
     this.SET_USER_INFO_REFRESH_STATUS(true)
     await this.getUserRefreshUser()
     this.tokenObj.token = this.userInfo.token
-    let xDomain = window.location.host.split(':')[0]
-    xDomain = xDomain.startsWith('www') ? xDomain.slice(4) : xDomain
     this.tokenObj['x-domain'] = xDomain
-    await reflashUserInfo(this)
+    await this.reflashUserInfo()
     this.authenticationIsStatus()
     console.log(this.authenticationNotPass)
   },
@@ -618,9 +617,15 @@ export default {
   update () {},
   beforeRouteUpdate () {},
   methods: {
+    ...mapActions([
+      'GET_COUNTRY_LIST_ACTION'
+    ]),
     ...mapMutations([
       'SET_USER_INFO_REFRESH_STATUS'
     ]),
+    reflashUserInfo () {
+      this.$store.dispatch('user/REFLASH_USER_INFO', this)
+    },
     // 改变证件类型
     changedocumentTypeValue (e) {
       console.log(e)
@@ -743,7 +748,7 @@ export default {
         case 0:
           console.log(type)
           if (!targetNum) {
-            this.setErrorMsg(0, this.$t('M.comm_please_enter') + this.$t('M.user_real_real'))
+            this.setErrorMsg(0, this.$t('M.user_please_input19'))
             this.$forceUpdate()
             return 0
           } else {
@@ -754,7 +759,7 @@ export default {
         // 请输入证件号码
         case 1:
           if (!targetNum) {
-            this.setErrorMsg(1, this.$t('M.comm_please_enter') + this.$t('M.user_real_certificate_cone'))
+            this.setErrorMsg(1, this.$t('M.user_please_input20'))
             this.$forceUpdate()
             return 0
           } else {
@@ -942,16 +947,20 @@ export default {
         this.SET_USER_INFO_REFRESH_STATUS(true)
         this.getUserRefreshUser()
         // 国家列表展示
-        getCountryListAjax(this, (data) => {
-          // 返回列表数据
-          this.regionList = data.data.data
-          this.regionValue = data.data.data[0].id
-          this.regionValue = data.data.data[0].chinese
-        })
+        this.GET_COUNTRY_LIST_ACTION({
+          self: this,
+          callback: (data) => {
+            this.regionList = data.data.data
+            this.regionValue = data.data.data[0].id
+            this.regionValue = data.data.data[0].chinese
+          }})
       }
     },
     contryAreaList (newVal) {
       console.log(newVal)
+      if (newVal) {
+        console.log(newVal)
+      }
     },
     userInfo (newVal) {
       console.log(newVal)

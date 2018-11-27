@@ -65,7 +65,6 @@
                 <div
                   ref="buy-box"
                   class="middle-box content-box"
-                  v-if="buysAndSellsList.sells.list"
                 >
                   <!--卖出-->
                   <dl
@@ -73,13 +72,13 @@
                   >
                     <dd
                       :style="{
-                        height:(20-buysAndSellsList.sells.list.length)*30+'px'
+                        height:(20-sellsListLength)*30+'px'
                       }"
                       v-if="listOrder==='middle'"
                     ></dd>
                     <dd
-                      class="buys-item cursor-pointer"
-                      v-for="(item,index) in buysAndSellsList.sells.list"
+                      class="buys-item cursor-pointer item"
+                      v-for="(item,index) in buysAndSellsList.sells.list||[]"
                       :key="index"
                       :class="{'odd':index%2!==0}"
                       @click="changeActivePriceItem(item)"
@@ -111,7 +110,7 @@
                   class="sells-list"
                 >
                   <dd
-                    class="sells-item cursor-pointer"
+                    class="sells-item cursor-pointer item"
                     v-for="(item,index) in buysAndSellsList.buys.list"
                     :key="index"
                     :class="{'even':index%2==0}"
@@ -149,6 +148,7 @@ import {
   createNamespacedHelpers,
   mapState
 } from 'vuex'
+import {getNestedData} from '../../utils/commonFunc'
 const { mapMutations } = createNamespacedHelpers('trade')
 export default {
   components: {
@@ -227,9 +227,15 @@ export default {
       // console.log(this.buysAndSellsListByAjax)
       // console.log(this.buysAndSellsListBySocket)
       return !this.reflashCount ? this.buysAndSellsListByAjax : this.buysAndSellsListBySocket
+    },
+    sellsListLength () {
+      return (getNestedData(this.buysAndSellsList, 'sells.list') || []).length
     }
   },
   watch: {
+    sellsListLength (newVal) {
+      console.log(newVal)
+    },
     klineAjaxData (newVal) {
       // console.log(newVal)
     },
@@ -251,13 +257,16 @@ export default {
       // console.log(this.reflashCount)
       // this.buysAndSellsListByAjax = this.buysAndSellsList
     },
-    buysAndSellsListBySocket (newVal) {
-      // console.log(newVal)
-      if (!this.reflashCount && newVal) {
-        // console.log(newVal)
-        this.CHANGE_ACTIVE_PRICE_ITEM(newVal.latestDone.price)
-        this.reflashCount++
-      }
+    buysAndSellsListBySocket: {
+      handler (newVal) {
+        console.log(newVal)
+        if (!this.reflashCount && newVal) {
+          // console.log(newVal)
+          this.CHANGE_ACTIVE_PRICE_ITEM(newVal.latestDone.price)
+          this.reflashCount++
+        }
+      },
+      deep: true
     }
   }
 }
@@ -454,7 +463,7 @@ export default {
             >.outer-box{
               >.content-box{
                 >.buys-list,.sells-list{
-                  >dd{
+                  >.item{
                     &.odd,&.even{
                       background-color: #1a1d2f;
                     }

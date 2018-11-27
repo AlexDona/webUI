@@ -7,8 +7,10 @@
   >
     <div class="inner-box">
       <div class="title">
-        <h3>全平台终端接入</h3>
-        <p>iOS、Android、Mac、Windows 多个平台支持全业务功能</p>
+        <!-- <h3>全平台终端接入</h3> -->
+        <h3>{{$t('M.about_footer_info_down1')}}</h3>
+        <!-- <p>iOS、Android、Mac、Windows 多个平台支持全业务功能</p> -->
+        <p>{{$t('M.about_footer_info_down2')}}</p>
       </div>
       <div class="download-item">
         <!--移动端-->
@@ -38,8 +40,12 @@
               class="scan-btn"
               @mouseover="toggleErCode(1)"
               @mouseleave="toggleErCode(0)"
-            >扫码下载ios、Android版</p>
-            <p>随时关注 快速交易</p>
+            >
+              <!-- 扫码下载ios、Android版 -->
+              {{$t('M.about_footer_info_down3')}}
+            </p>
+            <!-- <p>随时关注 快速交易</p> -->
+            <p>{{$t('M.about_footer_info_down4')}}</p>
           </div>
         </div>
         <!--pc端-->
@@ -63,14 +69,16 @@
                   icon-name="icon-pingguo"
                   class-name="icon"
                 />
-                Mac 版本下载
+                <!-- Mac 版本下载 -->
+                {{$t('M.about_footer_info_down5')}}
               </button>
               <button>
                 <IconFont
                   icon-name="icon-windows"
                   class-name="icon"
                 />
-                WIN 版本下载
+                <!-- WIN 版本下载 -->
+                {{$t('M.about_footer_info_down6')}}
               </button>
             </div>
           <div
@@ -79,7 +87,10 @@
             >
               <p
                 class="please-wait"
-              >暂未开放，敬请期待</p>
+              >
+                <!-- 暂未开放，敬请期待 -->
+                {{$t('M.about_footer_info_down7')}}
+              </p>
           </div>
         </div>
       </div>
@@ -190,11 +201,14 @@ export default {
               transform: translate(-50%,0);
               width:170px;
               height:170px;
-              border-radius: 10px;
+              background-color: #fff;
+              padding:5px;
               >.ercode{
-                margin-top:5px;
-                width:160px;
-                height:160px;
+                /*width:160px;*/
+                /*height:160px;*/
+                width:100%;
+                height:100%;
+                background-color: #fff;
               }
             }
             >.scan-btn{
@@ -228,13 +242,13 @@ export default {
               >.icon{
                 color:#ccc;
                 margin-right:5px;
-                font-size: 28px;
+                font-size: 22px;
               }
             }
             >.please-wait{
               color:$mainColor;
               line-height: 113px;
-              font-size: 28px;
+              font-size: 22px;
               margin-left:30px;
             }
           }

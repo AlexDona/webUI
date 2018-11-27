@@ -56,14 +56,11 @@
 </template>
 <!--请严格按照如下书写书序-->
 <script>
-import {
-  getCountryListAjax,
-  reflashUserInfo,
-  getFooterInfo,
-  getLanguageListAjax
-} from '../../utils/commonFunc'
+// import {
+//   getFooterInfo
+// } from '../../utils/commonFunc'
 import { createNamespacedHelpers, mapState } from 'vuex'
-const { mapMutations } = createNamespacedHelpers('common')
+const { mapMutations, mapActions } = createNamespacedHelpers('common')
 export default {
   components: {
   },
@@ -79,7 +76,13 @@ export default {
   async created () {
     require('../../../static/css/theme/day/Common/HeaderCommonDay.css')
     // 获取 语言列表
-    await getLanguageListAjax(this)
+    await this.GET_LANGUAGE_LIST_ACTION({
+      self: this
+    })
+    await this.SET_PARTNER_INFO_ACTION({
+      self: this,
+      language: this.language
+    })
     if (this.routeLanguage) {
       _.forEach(this.languageList, item => {
         console.log(item)
@@ -88,12 +91,14 @@ export default {
         }
       })
     }
-    getFooterInfo(this.language, this)
+    // await getFooterInfo(this.routeLanguage || this.language, this)
     this.activeTheme = this.theme
-    getCountryListAjax(this)
+    this.GET_COUNTRY_LIST_ACTION({
+      self: this
+    })
     console.log(this.$route.query)
     if (this.isLogin) {
-      await reflashUserInfo(this)
+      this.reflashUserInfo()
     }
   },
   mounted () {},
@@ -101,6 +106,11 @@ export default {
   update () {},
   beforeRouteUpdate () {},
   methods: {
+    ...mapActions([
+      'GET_COUNTRY_LIST_ACTION',
+      'GET_LANGUAGE_LIST_ACTION',
+      'SET_PARTNER_INFO_ACTION'
+    ]),
     ...mapMutations([
       // 修改语言
       'CHANGE_LANGUAGE',
@@ -115,8 +125,12 @@ export default {
       'SET_COUNTRY_AREA_LIST',
       'USER_INFORMATION_REFRESH',
       'SET_USER_INFO_REFRESH_STATUS',
-      'SET_FOOTER_INFO'
+      'SET_FOOTER_INFO',
+      'SET_LOGO_URL'
     ]),
+    reflashUserInfo () {
+      this.$store.dispatch('user/REFLASH_USER_INFO', this)
+    },
     // 显示状态切换 （语言）
     toggleShowLanguageBox (status) {
       this.langSelecting = Boolean(status)
@@ -142,7 +156,11 @@ export default {
       return this.$route.query.language
     }
   },
-  watch: {}
+  watch: {
+    defaultLanguage (newVal) {
+      this.$i18n.locale = newVal
+    }
+  }
 }
 </script>
 <style scoped lang="scss" type="text/scss">

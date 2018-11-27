@@ -222,7 +222,9 @@ export default{
       })
       let newContent = []
       _.forEach(collectSymbol, (outItem) => {
-        newContent.push(this.symbolMap.get(outItem))
+        if (this.symbolMap.get(outItem)) {
+          newContent.push(this.symbolMap.get(outItem))
+        }
       })
       this.$set(this.collectArea, 'content', newContent)
     },
@@ -350,7 +352,7 @@ export default{
             val: item
           })
         })
-        this.activeName = this.newMarketList[0].plateId
+        this.activeName = getNestedData(this.newMarketList[0], 'plateId')
         this.activeIndex = 0
         let collectSymbol = {}
         if (!this.isLogin) {
@@ -449,6 +451,7 @@ export default{
           type: 'cancel',
           collectSymbol: id
         })
+        console.log(id, this.collectArea.content)
         // // 取消收藏
         let newList = this.collectArea.content.filter(item => item.id !== id)
         this.$set(this.collectArea, 'content', newList)

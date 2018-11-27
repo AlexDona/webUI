@@ -4,7 +4,8 @@
     :class="{
       'day':theme == 'day',
       'night':theme == 'night',
-      'min-height':windowHeight < 800
+      'min-height':windowHeight < 800,
+      'margin-top':isMobile?'0':'66px'
       }"
     :style="{height: windowHeight + 'px'}"
     v-loading.fullscreen.lock="fullscreenLoading"
@@ -32,7 +33,7 @@
         v-if="!isMobile&&!isRegisterSuccess"
       >
         <!-- 欢迎注册 -->
-        <h1 class="title">{{$t('M.login_welcome')}}{{$t('M.comm_register_time')}}</h1>
+        <h1 class="title">{{$t('M.login_welcome_register')}}</h1>
         <!--切换注册方式-->
         <ul class="methods-list">
           <li
@@ -213,7 +214,7 @@
              <input
                type="password"
                class="input"
-               :placeholder="$t('M.comm_please_enter') + $t('M.user_security_password')"
+               :placeholder="$t('M.login_welcome_register_pwd1')"
                v-model="password"
                @keydown="setErrorMsg('')"
                @blur="checkoutInputFormat(4,password)"
@@ -227,7 +228,7 @@
              <input
                type="password"
                class="input"
-               :placeholder="$t('M.forgetPassword_hint2') + $t('M.user_security_password')"
+               :placeholder="$t('M.login_welcome_register_pwd2')"
                @keydown="setErrorMsg('')"
                v-model="repeatPassword"
                @blur="checkoutInputFormat(5,repeatPassword)"
@@ -242,7 +243,7 @@
                v-model="inviter"
                type="text"
                class="input "
-               :placeholder="$t('M.forgetPassword_hint5')"
+               :placeholder="$t('M.login_welcome_register_advertisement')"
                :disabled="inviterDisabled"
              >
            </div>
@@ -482,11 +483,11 @@
           </div>
           <div class="input">
             <div class="inner-box">
-              <!--登录密码-->
+              <!--请输入密码-->
               <input
                 type="password"
                 class="input"
-                :placeholder="$t('M.comm_please_enter') + $t('M.user_security_password')"
+                :placeholder="$t('M.user_register_input_pwd')"
                 v-model="password"
                 @keydown="setErrorMsg('')"
                 @blur="checkoutInputFormat(4,password)"
@@ -495,12 +496,11 @@
           </div>
           <div class="input">
             <div class="inner-box">
-              <!--确认密码-->
               <!--请再次输入密码-->
               <input
                 type="password"
                 class="input"
-                :placeholder="$t('M.forgetPassword_hint2') + $t('M.user_security_password')"
+                :placeholder="$t('M.user_register_input_confirm_pwd')"
                 @keydown="setErrorMsg('')"
                 v-model="repeatPassword"
                 @blur="checkoutInputFormat(5,repeatPassword)"
@@ -748,10 +748,13 @@ export default {
       mobileMaxwidth: 800, // 移动端拖动最大宽度
       invitationRegisterSuccess: true, // 邀请注册成功
       registerParams: {}, // 注册参数
+      successJumpTimer: null, // 成功跳转倒计时
       end: '' // 占位
     }
   },
   async created () {
+    console.log(this.successCountDown)
+    console.log(this.isLogin)
     if (this.isLogin) {
       this.USER_LOGOUT()
     }
@@ -797,7 +800,7 @@ export default {
     ]),
     jumpToDownAppPage () {
       if (this.inviter) {
-        this.$router.push({'path': `/downloadApp?language=${this.language}`})
+        this.$router.push({'path': '/downloadApp'})
       } else {
         this.$router.push({'path': '/login'})
       }
@@ -819,7 +822,7 @@ export default {
               return 1
             case 1:
               // 请输入手机号
-              this.setErrorMsg(this.$t('M.comm_please_enter') + this.$t('M.user_security_phone'))
+              this.setErrorMsg(this.$t('M.login_tips_enter_phone'))
               this.$forceUpdate()
               return 0
           }
@@ -833,12 +836,12 @@ export default {
               return 1
             case 1:
               // 请输入邮箱地址
-              this.setErrorMsg(this.$t('M.comm_please_enter') + this.$t('M.user_security_email') + this.$t('M.comm_site'))
+              this.setErrorMsg(this.$t('M.login_please_input3'))
               this.$forceUpdate()
               return 0
             case 2:
               // 请输入正确的邮箱地址
-              this.setErrorMsg(this.$t('M.comm_please_enter') + this.$t('M.user_security_correct') + this.$t('M.user_security_email'))
+              this.setErrorMsg(this.$t('M.login_please_input4'))
               this.$forceUpdate()
               return 0
           }
@@ -847,7 +850,7 @@ export default {
         case 3:
           if (!targetNum) {
             // 请输入 短信验证码 邮箱验证码
-            const str = this.$t('M.comm_please_enter') + (!this.activeMethod ? this.$t('M.forgetPassword_hint10') : this.$t('M.forgetPassword_hint11'))
+            const str = (!this.activeMethod ? this.$t('M.login_please_input1') : this.$t('M.login_please_input2'))
             this.setErrorMsg(str)
             this.$forceUpdate()
             return 0
@@ -941,7 +944,6 @@ export default {
     },
     // 发送验证码（短信、邮箱）
     sendPhoneOrEmailCode (type) {
-      let activeAbbreviation = _.filter(this.contryAreaList, {abbreviation: this.activeCountryAbbreviationWithEmail})[0].abbreviation
       this.activeCountryCodeWithEmail = _.filter(this.contryAreaList, {abbreviation: this.activeCountryAbbreviationWithEmail})[0].nationCode
       console.log(_.filter(this.contryAreaList, {abbreviation: this.activeCountryAbbreviationWithEmail})[0])
       // console.log(this.activeCountryCodeWithEmail)
@@ -966,7 +968,7 @@ export default {
             return false
           }
           params.email = this.emailNum
-          params.abbreviation = activeAbbreviation
+          params.nationCode = this.activeCountryCodeWithEmail
           break
       }
       console.log(params)
@@ -1065,8 +1067,9 @@ export default {
     },
     // 登录成功自动跳转
     successJump () {
-      setInterval(() => {
-        if (this.successCountDown === 0) {
+      this.successJumpTimer = setInterval(() => {
+        if (this.successCountDown < 1) {
+          clearInterval(this.successJumpTimer)
           this.jumpToDownAppPage()
         }
         this.successCountDown--
@@ -1187,6 +1190,9 @@ export default {
     },
     disabledOfPhoneBtn (newVal) {
       // console.log(newVal)
+    },
+    successCountDown (newVal, oldVal) {
+      console.log(newVal)
     }
   }
 }
@@ -1194,7 +1200,6 @@ export default {
 <style scoped lang="scss">
   @import '../../static/css/scss/index';
   .register-box{
-    margin-top:66px;
     width:100%;
     height:100%;
     overflow-y: auto;
@@ -1224,10 +1229,9 @@ export default {
         >.title{
           position: absolute;
           top:-20%;
-          // left:36%;
-          // width:104px;
-          left:36%;
-          // width:104px;
+          min-width:250px;
+          text-align: center;
+          left:15%;
           height:35px;
           font-size:26px;
           font-family:MicrosoftYaHei;
@@ -1597,7 +1601,7 @@ export default {
         border-radius:5px;
         font-size: 0.86453968rem;
         >span{
-          font-size: .3rem;
+          font-size: .8rem;
         }
       }
     }

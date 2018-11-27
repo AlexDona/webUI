@@ -6,10 +6,9 @@
     <div class="content">
       <div class="content">
         <div class="inner-box">
-          <!-- <h2>{{userProtocolData.termsTypeName}}</h2> -->
           <div
             class="content"
-            v-html="userProtocolData.content"
+            v-html="content"
           >
 
           </div>
@@ -20,38 +19,28 @@
 </template>
 <!--请严格按照如下书写书序-->
 <script>
-// import {getServiceProtocolData} from '../../utils/commonFunc'
 import {mapState} from 'vuex'
 export default {
   components: {
   },
-  // props,
+  props: ['content'],
   data () {
-    return {
-      // content: {}
-    }
+    return {}
   },
-  created () {
-
-  },
+  created () {},
   mounted () {},
   activited () {},
   update () {},
   beforeRouteUpdate () {},
-  methods: {
-  },
+  methods: {},
   filter: {},
   computed: {
     ...mapState({
-      theme: state => state.common.theme,
-      userProtocolData: state => state.footerInfo.serviceProtocolData.userProtocolData
+      theme: state => state.common.theme
+      // legislationExplainData: state => state.footerInfo.serviceProtocolData.legislationExplainData
     })
   },
-  watch: {
-    userProtocolData (newVal) {
-      // console.log(newVal)
-    }
-  }
+  watch: {}
 }
 </script>
 <style scoped lang="scss" type="text/scss">
@@ -61,15 +50,13 @@ export default {
     >.content{
       width:100%;
       >.content{
-        background-color: green;
-        /*overflow: hidden;*/
+        overflow: hidden;
         >.inner-box{
-          margin:0;
-          height:1069px;
-          width:1000px;
-          box-sizing: border-box;
-          padding:0px 50px;
-          line-height: 26px;
+          margin:0px auto;
+          height:1100px;
+          width:1100px;
+          padding:20px 50px;
+          overflow: auto;
           >h2{
             text-align: center;
             line-height: 70px;
@@ -86,11 +73,10 @@ export default {
           }
         }
         >.content{
-          background-color: #121824;
+          background-color: #1e2636;
           >.inner-box{
             background-color: #1e2636;
-            overflow: auto;
-            /*color: #fff;*/
+            color:#8BA0CA
           }
         }
       }

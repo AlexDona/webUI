@@ -11,7 +11,7 @@
           type="text"
           class="search-input"
           v-model="searchKeyWord"
-          :placeholder="$t('M.comm_please_enter') + $t('M.news_keyword')"
+          :placeholder="$t('M.about_footer_info_keyWords')"
         />
       </div>
       <!--列表区-->
@@ -22,98 +22,7 @@
             @tab-click="changeTab"
             v-show="showNewsList"
           >
-            <!--定死-->
-            <el-tab-pane
-              :label="outerItem.name"
-              :name="outerItem.id"
-              v-for="(outerItem,index) in newsTypeList"
-              :key="index"
-            >
-              <div class="item-content">
-                <ul class="content-list">
-                  <li
-                    class="content-item cursor-pointer"
-                    v-for="(item,index) in noticeFilterList"
-                    :key="index"
-                    @click="jumpToDetail(item)"
-                  >
-                    <div
-                      class="content-item-link"
-                    >
-                      <div class="left">
-                        <div class="top">
-                          <!--年-->
-                          {{item.createTime.split('-')[0]+ $t('M.news_year')}}
-                        </div>
-                        <div class="bottom">
-                          <!--月-->
-                          {{item.createTime.split('-')[1]-0+ $t('M.news_month')}}
-                        </div>
-                      </div>
-                      <div class="right">
-                        <p class="top">
-                          {{item.title}}
-                        </p>
-                        <p class="middle">
-                          {{item.keyword}}
-                        </p>
-                        <p class="bottom">
-                          <span class="author">{{item.creator}}</span>
-                          <span class="date">{{item.createTime}}</span>
-                        </p>
-                      </div>
-                    </div>
-                  </li>
-                </ul>
-              </div>
-              <el-pagination
-                background
-                layout="prev, pager, next"
-                :current-page="pageNum"
-                :page-count="totalPages"
-                @current-change="changeCurrentPage"
-              >
-              </el-pagination>
-            </el-tab-pane>
           </el-tabs>
-          <div
-            class="news-detail"
-            v-show="!showNewsList"
-          >
-            <div class="left">
-              <h2>{{newDetail.newsTypeName}}</h2>
-              <div class="detail-content">
-                <h3 class="title">{{newDetail.title}}</h3>
-                <p class="time">{{newDetail.createTime}}</p>
-                <div
-                  class="content"
-                  v-html="newDetail.content"
-                ></div>
-              </div>
-            </div>
-            <div class="right">
-              <div
-                class="news-type-list"
-                v-for="(outerItem,outIndex) in newsTypeList"
-                :key="outIndex"
-              >
-                <h2 class="news-type-title">{{outerItem.name}}</h2>
-                <ul
-                  class="news-type-content"
-                >
-                  <li
-                    class="news-type-item cursor-pointer"
-                    v-for="(item,index) in detailAllNewsList[outIndex]"
-                    :key="index"
-                    @click="jumpToDetail(item)"
-                  >
-                    <span class="title">{{item.title}}</span>
-                    <span class="time">{{item.createTime.split(' ')[0]}}</span>
-                  </li>
-                </ul>
-              </div>
-            </div>
-          </div>
         </div>
       </div>
     </div>
@@ -289,6 +198,9 @@ export default {
   watch: {
     newsDetailJumpId (newVal) {
       console.log(newVal)
+    },
+    language () {
+      this.getNewsNoticeList()
     }
   }
 }

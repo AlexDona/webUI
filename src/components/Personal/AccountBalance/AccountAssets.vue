@@ -250,7 +250,6 @@
                     <!--提币内容-->
                     <!--普通币种提币显示框-->
                     <div
-                      v-if="!needTag"
                       class="recharge-list recharge-list-mention display-flex"
                       v-show="withdrawDepositList[index].withdrawDepositIsShow"
                     >
@@ -270,6 +269,7 @@
                               filterable
                               allow-create
                               default-first-option
+                              :placeholder="$t('M.comm_please_choose')"
                             >
                               <el-option
                                 v-for="(item, index) in mentionAddressList"
@@ -395,7 +395,6 @@
                     </div>
                     <!--公信宝类币种提笔显示框-->
                     <div
-                      v-else
                       class="recharge-list recharge-list-mention list-mention-treasure"
                       v-show="withdrawDepositList[index].provideWithdrawDepositIsShow"
                     >
@@ -1169,7 +1168,8 @@ export default {
         this.fullscreenLoading = false
         return false
       } else {
-        let withdrawalAddressData = data.data.data
+        // let withdrawalAddressData = data.
+        let withdrawalAddressData = getNestedData(data, 'data.data')
         // 接口成功清除loading
         this.fullscreenLoading = false
         console.log(withdrawalAddressData.needTag)
@@ -1178,10 +1178,7 @@ export default {
         this.needTag = withdrawalAddressData.needTag
         // 返回列表数据并渲染币种列表
         this.mentionAddressList = withdrawalAddressData.userWithdrawAddressListVO.userWithdrawAddressDtoList
-        if (!withdrawalAddressData.userWithdrawAddressListVO.userWithdrawAddressDtoList) {
-          this.mentionAddressValue = withdrawalAddressData.userWithdrawAddressListVO.userWithdrawAddressDtoList[0].address
-        }
-        console.log(withdrawalAddressData.vo)
+        this.mentionAddressValue = getNestedData(withdrawalAddressData, 'userWithdrawAddressListVO.userWithdrawAddressDtoList[0].address')
       }
     },
     // select框自定义提币地址校验地址
@@ -1269,33 +1266,33 @@ export default {
           })
           this.mentionMoneyConfirm = false
         }
+      }
+      console.log(1)
+      if (!this.mentionAddressValue) {
+        // 请选择提币地址
+        this.$message({
+          message: this.$t('M.comm_please_choose') + this.$t('M.comm_mention_money') + this.$t('M.comm_site'),
+          type: 'error'
+        })
+        this.mentionMoneyConfirm = false
+      } else if (!this.amount) {
+        // 请输入提币数量
+        this.$message({
+          message: this.$t('M.comm_please_enter') + this.$t('M.comm_mention_money') + this.$t('M.comm_count'),
+          type: 'error'
+        })
+        this.mentionMoneyConfirm = false
+      } else if (!this.service) {
+        // 请输入手续费
+        this.$message({
+          message: this.$t('M.comm_please_enter') + this.$t('M.comm_service_charge'),
+          type: 'error'
+        })
+        this.mentionMoneyConfirm = false
+      } else if (!this.userInfo.userInfo.payPassword) {
+        this.dialogVisible = true
       } else {
-        if (!this.mentionAddressValue) {
-          // 请选择提币地址
-          this.$message({
-            message: this.$t('M.comm_please_choose') + this.$t('M.comm_mention_money') + this.$t('M.comm_site'),
-            type: 'error'
-          })
-          this.mentionMoneyConfirm = false
-        } else if (!this.amount) {
-          // 请输入提币数量
-          this.$message({
-            message: this.$t('M.comm_please_enter') + this.$t('M.comm_mention_money') + this.$t('M.comm_count'),
-            type: 'error'
-          })
-          this.mentionMoneyConfirm = false
-        } else if (!this.service) {
-          // 请输入手续费
-          this.$message({
-            message: this.$t('M.comm_please_enter') + this.$t('M.comm_service_charge'),
-            type: 'error'
-          })
-          this.mentionMoneyConfirm = false
-        } else if (!this.userInfo.userInfo.payPassword) {
-          this.dialogVisible = true
-        } else {
-          this.mentionMoneyConfirm = true
-        }
+        this.mentionMoneyConfirm = true
       }
     },
     confirm () {
@@ -1461,7 +1458,8 @@ export default {
             height: 100%;
             >.header-right-left {
               >.header-right-text {
-                width: 180px;
+                // width: 180px;
+                width: 200px;
                 >.header-right-show {
                   line-height: 50px;
                 }
@@ -1529,14 +1527,16 @@ export default {
                 >.table-box {
                   width: 100%;
                   >.recharge-list-mention {
-                    height:225px !important;
+                    // height:225px !important;
+                    height:236px !important;
                   }
                   >.list-mention-treasure {
                     height:295px !important;
                   }
                   >.recharge-list {
                     position: relative;
-                    height:205px;
+                    // height:205px;
+                    height:215px;
                     padding: 20px 6px;
                     z-index: 2;
                     >.triangle {
@@ -1594,7 +1594,8 @@ export default {
                       }
 
                       >.recharge-content-title {
-                        width: 450px;
+                        // width: 450px;
+                        width: 584px;
                         line-height: 18px;
                       }
                     }
@@ -1612,6 +1613,7 @@ export default {
                     }
                     >.recharge-list-left {
                       flex: 2;
+                      height:196px;
                       >.list-left-flex {
                         >.flex-box {
                           position: relative;

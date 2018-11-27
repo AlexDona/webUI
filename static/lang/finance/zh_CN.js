@@ -1,4 +1,5 @@
 export const finance = {
+  'finance_save_moneydetail': '存币详情',
   'finance_newestPrice': '最新价钱',
   'finance_at_once_save': '立刻存币',
   'finance_save_coin_record': '存币记录',
@@ -33,11 +34,12 @@ export const finance = {
   'finance_loginTipsTwo': '之后查看!',
   'finance_interestRate': '利率',
   'finance_xiAndben': '先息后本',
-  'finance_timeLong': '时长',
+  'finance_timeLong': '存币时长',
   'finance_leit': '至',
   'finance_day': '天',
   'finance_accrual': '利息',
   'finance_capital': '本金',
+  'finance_total_income': '预计总收益',
   // 二次确认弹框提示信息
   'finance_tipsContentOne': '确定取回存币?'
 }

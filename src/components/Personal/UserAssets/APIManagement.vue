@@ -15,7 +15,17 @@
       <!--创建API KEY-->
       <div class="extension-info padding-top0">
         <header class="extension-info-header line-height56">
-          <span class="font-size16 header-color">
+          <span
+            class="font-size16 header-color"
+            v-if="lang === 'ko_KR'"
+          >
+            <!--创建API KEY-->
+            API KEY{{ $t('M.comm_creation') }}
+          </span>
+          <span
+            class="font-size16 header-color"
+            v-else
+          >
             <!--创建API KEY-->
             {{ $t('M.comm_creation') }}API KEY
           </span>
@@ -38,7 +48,7 @@
               </el-form-item>
               <!--绑定IP地址-->
               <el-form-item
-                :label="$t('M.user_security_binding')+ 'IP' + $t('M.comm_site') + '：'"
+                :label="$t('M.user_security_binding_IP') + '：'"
               >
                 <input
                   type="text"
@@ -803,6 +813,7 @@ export default {
   filter: {},
   computed: {
     ...mapState({
+      language: state => state.common.language, // 当前选中语言
       theme: state => state.common.theme,
       userInfo: state => state.user.loginStep1Info, // 用户详细信息
       innerUserInfo: state => state.user.loginStep1Info.userInfo, // 内层用户详细信息
@@ -813,7 +824,7 @@ export default {
   },
   watch: {
     userCenterActiveName (newVal) {
-      console.log(newVal)
+      // console.log(newVal)
       if (newVal === 'api-management') {
         this.getMultipleUserAPIInfo()
       }
@@ -845,7 +856,8 @@ export default {
         line-height: 33px;
       }
       .error-msg-text {
-        padding-left: 35px;
+        // padding-left: 35px;
+        padding-left: 140px;
       }
       .error-msg{
         height:20px;

@@ -467,6 +467,7 @@
               layout="prev, pager, next"
               :page-count="totalPages"
               @current-change="changeCurrentPage"
+              :current-page="currentPage"
             >
             </el-pagination>
           </div>
@@ -669,6 +670,8 @@ export default {
     },
     // 右侧单选日期按钮change事件
     radioChouse (e) {
+      // 改变查询条件从第1页开始查询
+      this.currentPage = 1
       this.activedRadioId = e
       if (e == '4') {
         this.startTimeValue = ''

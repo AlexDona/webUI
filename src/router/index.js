@@ -78,7 +78,16 @@ const currencyApplication = r => require.ensure([], () => r(require('@/component
 /**
  * 新闻公告
  */
-const NewsAndNoticeList = r => require.ensure([], () => r(require('@/components/NoticeAndNews/NewsAndNoticeList')), 'news-andNotice-list')
+const NewsAndNoticeCenter = r => require.ensure([], () => r(require('@/components/NoticeAndNews/NewAndNoticeCenter')), 'news-andNotice-center')
+/**
+ * 新闻列表
+ */
+// const NewsAndNoticeList = r => require.ensure([], () => r(require('@/components/NoticeAndNews/NewsAndNoticeList')), 'news-andNotice-list')
+/**
+ * 新闻详情
+ */
+const NewsAndNoticeItem = r => require.ensure([], () => r(require('@/components/NoticeAndNews/NewsAndNoticeItem')), 'news-andNotice-item')
+
 const HelpCenter = r => require.ensure([], () => r(require('@/components/FooterInfo/HelpCenter')), 'news-andNotice-list')
 /**
  * FooterInfo
@@ -96,9 +105,13 @@ const router = new Router({
   // mode: 'history',
   routes: [
     {
-      // 首页
       path: '/',
-      // name: 'HomeCenter',
+      redirect: '/home'
+    },
+    {
+      // 首页
+      path: '/home',
+      name: 'HomeCenter',
       component: HomeCenter
     },
     {
@@ -304,7 +317,7 @@ const router = new Router({
     // 注册
     {
       path: '/register',
-      // name: 'Register',
+      name: 'Register',
       component: Register
     },
     {
@@ -333,8 +346,13 @@ const router = new Router({
     },
     {
       // 新闻中心
-      path: '/NewsAndNoticeList',
-      component: NewsAndNoticeList
+      path: '/NewsAndNoticeCenter',
+      component: NewsAndNoticeCenter
+    },
+    {
+      path: '/NewsAndNoticeItem/:id',
+      name: 'news-and-notice-item',
+      component: NewsAndNoticeItem
     },
     {
       // 关于我们
@@ -369,16 +387,20 @@ const router = new Router({
 })
 
 router.beforeEach((to, from, next) => {
-  if (to.path !== '/login' || to.path !== '/register') {
-    console.log(store.state.common.routerTo)
-    store.commit('common/CHANGE_ROUTER_PATH', to.path)
+  console.log(to)
+  console.log(from)
+  console.log(to.path, from.path)
+  if (from.path !== '/login' || from.path !== '/register') {
+    store.commit('common/CHANGE_ROUTER_PATH', from.path)
     console.log(store.state.common.routerTo)
   }
-  console.log()
+  console.log(store.state.user.isLogin)
+  console.log(store.state.user.loginStep1Info.userInfo)
   if (store.state.user.loginStep1Info.userInfo) {
     store.commit('user/USER_LOGIN', store.state.user.loginStep1Info)
   }
   if (to.matched.some(m => m.meta.auth)) {
+    console.log(to)
     // 对路由进行验证
     if (store.state.user.isLogin) { // 已经登陆
       next() // 正常跳转到你设置好的页面

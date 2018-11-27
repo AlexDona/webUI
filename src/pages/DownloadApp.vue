@@ -5,6 +5,11 @@
       height:windowHeight+'px'
     }"
   >
+    <HeaderCommonForMobile
+      :style="{
+        display:'none'
+      }"
+    />
     <div class="inner-box">
       <div class="logo">
         <img
@@ -38,7 +43,7 @@
         </button>
         <a
           :href="downloadUrl"
-          ref="android-download"
+          ref="download"
           download="android"
           :style="{
             display:none
@@ -46,6 +51,12 @@
         ></a>
       </div>
     </div>
+    <WeChatMask
+      :isAndroid="isAndroid"
+      :isIOS="isIOS"
+      :language="language"
+      :isWXBrowserStatus="isWXBrowserStatus"
+    />
   </div>
 </template>
 <!--请严格按照如下书写书序-->
@@ -53,24 +64,38 @@
 import {
   getAppDownLoadUrlAjax
 } from '../utils/api/user'
-import {returnAjaxMsg} from '../utils/commonFunc'
+import {
+  returnAjaxMsg,
+  getNestedData
+  // isWXBrowser
+} from '../utils/commonFunc'
+import HeaderCommonForMobile from '../components/Common/HeaderForMobile'
+import WeChatMask from '../components/User/WeChatMask'
 import {mapState, createNamespacedHelpers} from 'vuex'
 const {mapMutations} = createNamespacedHelpers('common')
 
 export default {
   components: {
+    HeaderCommonForMobile,
+    WeChatMask
   },
   // props,
   data () {
     return {
       zh_CNSrc: require('../assets/develop/download-bg-cn.png'),
       en_USSrc: require('../assets/develop/download-bg-en.png'),
-      downloadUrl: ''
+      downloadUrl: '',
+      isAndroid: false,
+      isIOS: false,
+      isWXBrowserStatus: true
     }
   },
-  created () {
-    // getFooterInfo(this.language, this)
-    this.getAppDownLoadUrl()
+  async created () {
+    let u = navigator.userAgent
+    this.isAndroid = u.indexOf('Android') > -1 || u.indexOf('Adr') > -1 // android终端
+    this.isIOS = !!u.match(/\(i[^;]+;( U;)? CPU.+Mac OS X/) // ios终端
+    this.isWXBrowserStatus = u.toLowerCase().match(/MicroMessenger/i) == 'micromessenger' ? 1 : 0
+    await this.getAppDownLoadUrl()
   },
   mounted () {
   },
@@ -85,22 +110,22 @@ export default {
     async getAppDownLoadUrl () {
       const data = await getAppDownLoadUrlAjax()
       if (!returnAjaxMsg(data, this)) {
+        return false
+      } else {
         console.log(data)
+        if (this.isAndroid) {
+          // alert('android')
+          window.location.href = 'scheme: //fubt.com/'
+          this.downloadUrl = getNestedData(data, 'data.data.android')
+        } else if (this.isIOS) {
+          // alert('ios')
+          // window.location = 'com.top.Fubt://' // 打开某手机上的某个app应用
+          this.downloadUrl = `itms-services://?action=download-manifest&;amp;url=${getNestedData(data, 'data.data.ios')}`
+        }
       }
     },
     downloadApp () {
-      let u = navigator.userAgent
-      let isAndroid = u.indexOf('Android') > -1 || u.indexOf('Adr') > -1 // android终端
-      let isiOS = !!u.match(/\(i[^;]+;( U;)? CPU.+Mac OS X/) // ios终端
-      if (isiOS) {
-        // equip = 'ios'
-        // alert('isIOS')
-      } else if (isAndroid) {
-        // equip = 'android'
-        // alert('isAndroid')
-        this.downloadUrl = 'https://fubt-3.oss-cn-hongkong.aliyuncs.com/4f8f11c8-9921-408c-8671-7dcf2c7fac6atudou.apk'
-        this.$refs['android-download'].click()
-      }
+      this.$refs['download'].click()
     }
   },
   filter: {},
@@ -109,18 +134,24 @@ export default {
       logoSrc: state => state.common.logoSrc
     }),
     windowHeight () {
-      return window.innerHeight
+      return window.innerHeight + 200
     },
     isChineseLanguage () {
       return this.language === 'zh_CN' ||
         this.language === 'zh_TW'
     },
     language () {
-      return this.$route.query.language
+      return (navigator.browserLanguage || navigator.language).split('-').join('_') || this.$route.query.language
     }
+    // isWXBrowserStatus () {
+    //   return isWXBrowser()
+    // }
   },
   watch: {
     footerInfo (newVal) {
+      console.log(newVal)
+    },
+    isWXBrowser (newVal) {
       console.log(newVal)
     }
   }
@@ -130,6 +161,7 @@ export default {
   .download-box{
     width:100%;
     background:linear-gradient(150deg, #1e2636, #254b75);
+    position: relative;
     >.inner-box{
       width:100%;
       height:100%;

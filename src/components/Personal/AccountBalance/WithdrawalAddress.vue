@@ -75,7 +75,7 @@
               class="form-button border-radius4 cursor-pointer"
               @click.prevent="addAddress"
             >
-              <!--增加-->
+              <!--新增-->
               {{ $t('M.comm_newly_increased') }}
             </button>
           </el-form>
@@ -392,7 +392,7 @@ export default {
       // 整页loading
       this.fullscreenLoading = true
       data = await checkCurrencyAddress(param)
-      if (!(returnAjaxMsg(data, this, 0))) {
+      if (!(returnAjaxMsg(data, this, 1))) {
         // 接口失败清除loading
         this.fullscreenLoading = false
         return false

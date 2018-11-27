@@ -27,7 +27,6 @@ export const overrides = {
   'paneProperties.legendProperties.showLegend': false // 默认收起
 }
 export const disabledFeatures = [
-  'header_symbol_search',
   'use_localstorage_for_settings',
   'header_symbol_search', // 禁止头部搜索
   'header_interval_dialog_button',
@@ -43,25 +42,24 @@ export const disabledFeatures = [
   'star_some_intervals_by_default',
   'datasource_copypaste',
   'right_bar_stays_on_scroll',
-  'context_menus',
+  // 'context_menus',
   'go_to_date',
   'compare_symbol',
   'border_around_the_chart',
   'timezone_menu',
   'volume_force_overlay', // 成交量上移
-  'move_logo_to_main_pane', //
+  // 'move_logo_to_main_pane', //
   'timeframes_toolbar', // 底部栏时间
   'header_undo_redo',
   'header_chart_type',
-  'header_screenshot'
+  'header_screenshot',
   // 'header_settings'
   // 'widget_logo',
 ]
 export const studiesOverrides = {
   'volume.volume.color.0': '#EC5E5E', // 成交量 k柱 背景色
   'volume.volume.color.1': '#008069', // 成交量 k柱 背景色
-  'volume.volume.transparency': 100,
-  'moving average.precision': 8
+  'volume.volume.transparency': 100
 }
 export const kLineBtnList = [
   {

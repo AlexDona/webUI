@@ -147,7 +147,7 @@
                 :isShow="!!tieErrorShowStatusList[1]"
               />
             </el-form-item>
-            <!--验  证  码-->
+            <!--验证码-->
             <el-form-item
               :label="$t('M.comm_code') + '：'"
               v-if="securityCenter.isPhoneEnable"
@@ -238,7 +238,6 @@ import ErrorBox from '../../User/ErrorBox'
 import {
   returnAjaxMsg, // 接口返回信息
   sendPhoneOrEmailCodeAjax,
-  reflashUserInfo,
   validateNumForUserInput,
   getSecurityCenter
 } from '../../../utils/commonFunc'
@@ -248,7 +247,7 @@ import {
   securityVerificationOnOff
 } from '../../../utils/api/personal'
 import { createNamespacedHelpers, mapState } from 'vuex'
-const { mapMutations } = createNamespacedHelpers('user')
+const { mapMutations, mapActions } = createNamespacedHelpers('user')
 export default {
   components: {
     IconFontCommon, // 字体图标
@@ -297,7 +296,7 @@ export default {
     // 黑色主题样式
     require('../../../../static/css/theme/night/Personal/UserSecuritySettings/UserTransactionPasswordNight.css')
     this.getSecurityCenter()
-    reflashUserInfo(this)
+    this.REFLASH_USER_INFO(this)
   },
   mounted () {},
   activited () {
@@ -306,6 +305,9 @@ export default {
   update () {},
   beforeRouteUpdate () {},
   methods: {
+    ...mapActions([
+      'REFLASH_USER_INFO'
+    ]),
     ...mapMutations([
       'SET_USER_BUTTON_STATUS'
     ]),
@@ -349,7 +351,7 @@ export default {
         case 0:
           if (!targetNum) {
             // 请输入昵称
-            this.setErrorMsg(0, this.$t('M.comm_please_enter') + this.$t('M.user_transaction_nickname'))
+            this.setErrorMsg(0, this.$t('M.user_set_tradePwd_tips1'))
             this.$forceUpdate()
             return 0
           } else {
@@ -379,7 +381,7 @@ export default {
         case 2:
           if (!targetNum) {
             // 请输入确认交易密码
-            this.setErrorMsg(2, this.$t('M.comm_please_enter') + this.$t('M.comm_affirm') + this.$t('M.comm_password'))
+            this.setErrorMsg(2, this.$t('M.user_set_tradePwd_tips2'))
             this.$forceUpdate()
             return 0
           } else if (targetNum === this.setPassword.newPassword) {
@@ -486,7 +488,7 @@ export default {
         case 2:
           if (!targetNum) {
             // 请输入短信验证码
-            this.tieErrorMsg(2, this.$t('M.comm_please_enter') + this.$t('M.comm_note') + this.$t('M.comm_code'))
+            this.tieErrorMsg(2, this.$t('M.login_please_input1'))
             this.$forceUpdate()
             return 0
           } else {
@@ -498,7 +500,7 @@ export default {
         case 3:
           if (!targetNum) {
             // 请输入邮箱验证码
-            this.tieErrorMsg(3, this.$t('M.comm_please_enter') + this.$t('M.user_security_email') + this.$t('M.comm_code'))
+            this.tieErrorMsg(3, this.$t('M.login_please_input2'))
             this.$forceUpdate()
             return 0
           } else {
@@ -510,7 +512,7 @@ export default {
         case 4:
           if (!targetNum) {
             // 请输入谷歌验证码
-            this.tieErrorMsg(4, this.$t('M.comm_please_enter') + this.$t('M.user_security_google') + this.$t('M.comm_code'))
+            this.tieErrorMsg(4, this.$t('M.user_please_input9'))
             this.$forceUpdate()
             return 0
           } else {
@@ -526,7 +528,11 @@ export default {
     },
     // 确定重置交易密码
     async getUpdatePayPassword () {
-      this.confirmVerifyInformation()
+      // this.confirmVerifyInformation()
+      // 问题：点击确认重置按钮直接接口调用成功了，
+      // 原因：未调用验证input方法
+      // 任修复重置交易密码逻辑，应该调用confirmUpdate()而不是confirmVerifyInformation()
+      this.confirmUpdate()
     },
     // 手机邮箱谷歌验证
     async confirmVerifyInformation () {
@@ -541,7 +547,7 @@ export default {
       // 整页loading
       this.fullscreenLoading = true
       data = await securityVerificationOnOff(params)
-      if (!(returnAjaxMsg(data, this, 0))) {
+      if (!(returnAjaxMsg(data, this, 1))) {
         // 接口失败清除loading
         this.fullscreenLoading = false
         return false
@@ -568,21 +574,21 @@ export default {
         if (this.securityCenter.isMailEnable && !this.modifyPassword.emailCode) {
           this.$message({
             type: 'error',
-            message: this.$t('M.comm_please_enter') + this.$t('M.comm_emailbox') + this.$t('M.comm_code') // '请输入邮箱验证码'
+            message: this.$t('M.login_please_input2') // '请输入邮箱验证码'
           })
           return false
         }
         if (this.securityCenter.isPhoneEnable && !this.modifyPassword.phoneCode) {
           this.$message({
             type: 'error',
-            message: this.$t('M.comm_please_enter') + this.$t('M.login_telphone') + this.$t('M.comm_code') // '请输入手机验证码'
+            message: this.$t('M.login_please_input1') // '请输入短信验证码'
           })
           return false
         }
         if (this.securityCenter.isGoogleEnable && !this.modifyPassword.googleCode) {
           this.$message({
             type: 'error',
-            message: this.$t('M.comm_please_enter') + this.$t('M.login_google') + this.$t('M.comm_code') // 请输入谷歌验证码
+            message: this.$t('M.user_please_input9') // 请输入谷歌验证码
           })
           return false
         }

@@ -200,7 +200,7 @@
             <div class="left display-inline-block">
                 <!-- 数量与限额 -->
                 <p class="tips font-size14">
-                  {{$t('M.comm_count')}}{{$t('M.comm_and')}}{{$t('M.otc_publishAD_limitMoney')}}
+                  {{$t('M.otc_publishAD_sum_and_limitMoney')}}
                 </p>
                 <!--必填  -->
                 <p class="warning font-size12">
@@ -359,7 +359,7 @@
               </div>
               <!-- 卖家必须成交过几次（0=不限制） -->
               <div>
-                {{$t('M.otc_publishAD_sellNeedLimit')}}（0={{$t('M.otc_publishAD_noLimit')}}）
+                {{$t('M.otc_publishAD_sellNeedLimit')}}(0={{$t('M.otc_publishAD_noLimit')}})
               </div>
               <div>
                 <input
@@ -705,7 +705,8 @@ export default {
       // 非空及数据范围准确性验证
       // 单价
       if (!this.$refs.price.value) {
-        this.errorInfoPrice = this.$t('M.otc_publishAD_pleaseInput') + this.$t('M.otc_index_UnitPrice')
+        // 请输入单价
+        this.errorInfoPrice = this.$t('M.otc_please_enter_price')
         this.priceErrorTipsBorder = true
         return false
       } else if (this.$refs.price.value < this.minPrice || this.$refs.price.value > this.maxPrice) {
@@ -723,7 +724,7 @@ export default {
       // console.log(this.$refs.entrustCount.value)
       if (!this.$refs.entrustCount.value || this.$refs.entrustCount.value - 0 === 0) {
         // 请输入交易数量
-        this.errorInfoEntrustCount = this.$t('M.otc_publishAD_pleaseInput') + this.$t('M.otc_publishAD_sellmount')
+        this.errorInfoEntrustCount = this.$t('M.otc_please_enter_trade_number')
         this.entrustCountErrorTipsBorder = true
         return false
       }

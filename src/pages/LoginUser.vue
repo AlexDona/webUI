@@ -3,7 +3,8 @@
     class="login-box user"
     :style="{
      'min-height':windowHeight < 800,
-     'height': windowHeight + 'px'
+     'height': windowHeight + 'px',
+     'margin-top':isMobile?'0':'66px'
     }"
     v-loading.fullscreen.lock="fullscreenLoading"
     element-loading-background="rgba(0, 0, 0, 0.6)"
@@ -310,7 +311,9 @@
           v-if="!isScanSuccess"
         >
         <!-- 扫描安全登录 -->
-        <p class="inner-title">{{$t('M.login_scan')}}{{$t('M.login_safe')}}{{$t('M.comm_login')}}</p>
+        <p class="inner-title">
+          {{$t('M.login_scan_safe_login')}}
+        </p>
         <span
           @click="reflashErCode"
           class="cursor-pointer"
@@ -322,7 +325,9 @@
         </span>
 
         <!-- 请使用富比特APP扫码功能，扫码登录 -->
-        <p class="tips">{{$t('M.login_scanLogin')}}</p>
+        <p class="tips">
+          {{$t('M.login_scanLogin')}}
+        </p>
         </div>
         <!-- 扫码成功-->
         <div
@@ -722,28 +727,29 @@ export default {
       moveX: 0, // 移动的坐标
       mobileMaxwidth: 800, // 移动端拖动最大宽度
       loginSliderStatus: false, // 登录页面滑块显示隐藏状态
-      loginImageValidateStatus: false, // 登录页面图片验证码显示隐藏状态
+      loginImageValidateStatus: false, // 登录PersonalCenter页面图片验证码显示隐藏状态
       step3DialogShowStatus: false, // 步骤3 登录状态
       mobileErrorMsg: '' // 移动端错误信息
     }
   },
   created () {
-    // console.log(this.isLogin)
+    document.getElementsByTagName('body')[0].style.zoom = 1
+    console.log(this.isLogin)
     // console.log(this.socket)
     if (this.isLogin) {
-      this.$router.push({path: '/'})
+      this.$router.push({path: '/home'})
     }
     require('../../static/css/list/User/Login.css')
     this.ENTER_STEP1()
     this.refreshCode()
     this.reflashErCode()
     // 清空input框值
-    // this.clearInputValue()
+    this.clearInputValue()
   },
   mounted () {
-    $('body').on('mousemove', (e) => { // 拖动，这里需要用箭头函数，不然this的指向不会是vue对象
-      if (this.mouseMoveStata) {
-        var width = e.clientX - this.beginClientX
+    $('body').on('mousemove', (e) => {
+      if (this.mouseMoveStatus) {
+        let width = e.clientX - this.beginClientX
         if (width > 0 && width <= this.maxwidth) {
           $('.handler').css({'left': width})
           $('.drag_bg').css({'width': width})
@@ -754,8 +760,8 @@ export default {
     })
     $('body').on('mouseup', (e) => { // 鼠标放开
       console.log('mouseup')
-      this.mouseMoveStata = false
-      var width = e.clientX - this.beginClientX
+      this.mouseMoveStatus = false
+      let width = e.clientX - this.beginClientX
       if (width < this.maxwidth) {
         $('.handler').animate({'left': 0}, 500)
         $('.drag_bg').animate({'width': 0}, 500)
@@ -794,7 +800,7 @@ export default {
         // this.loadCurrencyList()
         this.$router.push({path: this.routerTo})
       } else {
-        this.$router.push({path: '/'})
+        this.$router.push({path: '/home'})
       }
     },
     // 返回登录
@@ -1205,7 +1211,6 @@ export default {
 <style scoped lang="scss">
   @import '../../static/css/scss/index.scss';
   .login-box.user {
-    margin-top:66px;
     height:100%;
     overflow: hidden;
     background:linear-gradient(150deg,rgba(30,38,54,1),rgba(37,75,117,1));
@@ -1222,7 +1227,9 @@ export default {
           top:-25%;
           // left:36%;
           // width:104px;
-          left:36%;
+          min-width: 220px;
+          left: 22%;
+
           // width:104px;
           height:35px;
           font-size:26px;
@@ -1232,6 +1239,7 @@ export default {
           background:linear-gradient(81deg,rgba(77,122,255,1) 25.4638671875%, rgba(58,184,255,1) 100%);
           -webkit-background-clip:text;
           -webkit-text-fill-color:transparent;
+          text-align: center;
         }
       }
       >.pc-box {

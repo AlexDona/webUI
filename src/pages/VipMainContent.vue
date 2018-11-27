@@ -10,6 +10,10 @@
         class="images"
         :src="vipPictureBanner"
       >
+      <div class="title">
+        <!-- 一键开通VIP享受优惠特权 -->
+        {{$t('M.user_vip_one_key_open')}}
+      </div>
     </div>
     <div
       class="loading-box"
@@ -24,11 +28,6 @@
         v-if="vipPriceInfo1"
       >
         <div class="content-main-box">
-          <!--<div-->
-            <!--class="content-box"-->
-            <!--v-if="userInfo.userInfo.level == 'VIP1'"-->
-          <!--&gt;-->
-          <!--</div>-->
           <div
             class="content-module cursor-pointer"
             :class="{ active1:activeStatus < 1, disable:activeStatus > 0}"
@@ -38,7 +37,6 @@
             </p>
             <p class="content-discount line-height50 text-align-c font-size16">
               <!--手续费折扣-->
-              <!-- {{ $t('M.comm_service_charge') }}{{ $t('M.user_vip_discount') }} -->
               {{ $t('M.user_vip_fee_discount') }}
             </p>
             <p class="content-text line-height50 text-align-c font-size18">
@@ -92,7 +90,6 @@
             </p>
             <p class="content-discount line-height50 text-align-c font-size16">
               <!--手续费折扣-->
-              <!-- {{ $t('M.comm_service_charge') }}{{ $t('M.user_vip_discount') }} -->
               {{ $t('M.user_vip_fee_discount') }}
             </p>
             <p class="content-text line-height50 text-align-c font-size18">
@@ -146,7 +143,6 @@
             </p>
             <p class="content-discount line-height50 text-align-c font-size16">
               <!--手续费折扣-->
-              <!-- {{ $t('M.comm_service_charge') }}{{ $t('M.user_vip_discount') }} -->
               {{ $t('M.user_vip_fee_discount') }}
             </p>
             <p class="content-text line-height50 text-align-c font-size18">
@@ -200,7 +196,6 @@
             </p>
             <p class="content-discount line-height50 text-align-c font-size16">
               <!--手续费折扣-->
-              <!-- {{ $t('M.comm_service_charge') }}{{ $t('M.user_vip_discount') }} -->
               {{ $t('M.user_vip_fee_discount') }}
             </p>
             <p class="content-text line-height50 text-align-c font-size18">
@@ -254,7 +249,6 @@
             </p>
             <p class="content-discount line-height50 text-align-c font-size16">
               <!--手续费折扣-->
-              <!-- {{ $t('M.comm_service_charge') }}{{ $t('M.user_vip_discount') }} -->
               {{ $t('M.user_vip_fee_discount') }}
             </p>
             <p class="content-text line-height50 text-align-c font-size18">
@@ -628,11 +622,11 @@ import {
 } from '../utils/api/personal'
 import {
   returnAjaxMsg,
-  reflashUserInfo,
-  getServiceProtocolData
+  getServiceProtocolData,
+  getNestedData
 } from '../utils/commonFunc'
 // 底部
-const { mapMutations } = createNamespacedHelpers('personal')
+const { mapMutations, mapActions } = createNamespacedHelpers('user')
 export default {
   components: {},
   data () {
@@ -672,7 +666,7 @@ export default {
       this.activeStatus = this.vipLeavl.split('')[3]
     }
     this.getServiceProtocolData()
-    await reflashUserInfo(this)
+    await this.REFLASH_USER_INFO(this)
     await this.getVipPriceInfo()
     await this.getCurrencyApplicationDownloadUrl()
   },
@@ -682,6 +676,9 @@ export default {
   beforeRouteUpdate () {
   },
   methods: {
+    ...mapActions([
+      'REFLASH_USER_INFO'
+    ]),
     ...mapMutations([
     ]),
     changeServiceAgreement (type) {
@@ -702,8 +699,8 @@ export default {
       }
       await getServiceProtocolData(this, params, (data) => {
         console.log(data)
-        this.serviceAgreementContent = data.data.data[0].content
-        this.discountsInstructionContent = data.data.data[1].content
+        this.serviceAgreementContent = getNestedData(data, 'data.data[0].content')
+        this.discountsInstructionContent = getNestedData(data, 'data.data[1].content')
       })
     },
     // 点击返回上个页面
@@ -843,7 +840,7 @@ export default {
           this.fullscreenLoading = false
           this.dialogFormVisible = false
           this.password = ''
-          reflashUserInfo(this)
+          this.REFLASH_USER_INFO(this)
           this.toggleAssetsCurrencyId()
           console.log(data)
         }
@@ -944,8 +941,17 @@ export default {
       // height: 600px;
       width: 100%;
       margin: 0 auto;
-      .images {
+      position: relative;
+      >.images {
         width: 100%;
+      }
+      >.title{
+        color:#fff;
+        position: absolute;
+        left:47%;
+        top:30%;
+        transform: translate(-50%, -50%);
+        font-size: 48px;
       }
     }
     >.loading-box{
@@ -1052,7 +1058,7 @@ export default {
         > .detail-page-duration {
           margin-top: 100px;
           > .duration-title {
-            width: 100px;
+            width: 114px;
             height: 150px;
             line-height: 150px;
           }
@@ -1089,7 +1095,7 @@ export default {
             }
             width: 140px;
             height: 150px;
-            padding: 30px;
+            padding: 28px;
             >.duration-currency {
               padding: 8px 0 8px;
             }

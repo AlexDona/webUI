@@ -6,16 +6,16 @@
     <header class="invitation-promotion-header personal-height40 line-height40 padding-left20 font-size16 background-color border-radius2">
       <span class="padding-left23 header-content">
         <!--邀请推广-->
-        {{ $t('M.comm_user_invite') }}{{ $t('M.comm_user_generalize') }}
+        {{ $t('M.comm_user_invite_generalize') }}
       </span>
     </header>
     <div class="invitation-promotion-main min-height500 margin-top9">
-      <!--推广信息-->
+      <!---邀请推广-->
       <div class="extension-info">
         <header class="extension-info-header line-height56 paddinglr20 border-radius2">
           <span class="font-size16 header-color">
-            <!--推广信息-->
-            {{ $t('M.comm_user_invite') }}{{ $t('M.comm_user_generalize') }}
+            <!---邀请推广-->
+            {{ $t('M.comm_user_invite_generalize') }}
           </span>
         </header>
         <div class="extension-info-content padding-top0">
@@ -471,7 +471,8 @@ export default {
     //  点击复制
     onCopy (e) {
       // 已拷贝
-      let msg = '已拷贝'
+      // let msg = '已拷贝'
+      let msg = this.$t('M.comm_have_been_copied')
       this.$message({
         type: 'success',
         message: msg
@@ -479,7 +480,8 @@ export default {
     },
     onError (e) {
       // 拷贝失败，请稍后重试
-      let msg = '拷贝失败，请稍后重试'
+      // let msg = '拷贝失败，请稍后重试'
+      let msg = this.$t('M.comm_copies_failure')
       this.$message({
         type: 'success',
         message: msg
@@ -517,21 +519,21 @@ export default {
   },
   watch: {
     loading (newVal) {
-      console.log(newVal)
+      // console.log(newVal)
     },
     ercodeIsShowId (newVal) {
-      console.log(newVal)
+      // console.log(newVal)
     },
     userCenterActiveName (newVal) {
-      console.log(newVal)
-      console.log('invitation-promote')
+      // console.log(newVal)
+      // console.log('invitation-promote')
       if (newVal === 'invitation-promote') {
         this.getInverData()
       }
     },
     language (newVal) {
-      console.log('当前选中语言')
-      console.log(newVal)
+      // console.log('当前选中语言')
+      // console.log(newVal)
     }
   }
 }
@@ -578,7 +580,7 @@ export default {
                 >.code-copy {
                   text-align: center;
                   display: inline-block;
-                  width: 75px;
+                  width: 80px;
                   height: 26px;
                   line-height: 26px;
                   position: relative;

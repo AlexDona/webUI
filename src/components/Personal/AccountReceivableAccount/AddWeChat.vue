@@ -55,9 +55,9 @@
                 {{ innerUserInfo.realname }}
               </span>
             </el-form-item>
-            <!--收  款  类  型-->
+            <!--收款类型-->
             <el-form-item
-              :label="$t('M.user_account_gathering') + $t('M.comm_type')"
+              :label="$t('M.user_pay_account_set6')"
             >
               <span class="chat-content-type">
                 {{ $t('M.user_account_weChat') }}
@@ -79,6 +79,7 @@
                 :isShow="!!errorShowStatusList[0]"
               />
             </el-form-item>
+            <!-- 上传收款码 -->
             <el-form-item
               :label="$t('M.user_account_upload_collection')"
             >
@@ -194,7 +195,7 @@ export default {
     let xDomain = window.location.host.split(':')[0]
     xDomain = xDomain.startsWith('www') ? xDomain.slice(4) : xDomain
     this.tokenObj['x-domain'] = xDomain
-    this.getAccountPaymentTerm()
+    getAccountPaymentTerm(this)
     this.paymentMethodInformation()
   },
   mounted () {},
@@ -338,17 +339,6 @@ export default {
         }
         console.log(this.dialogImageHandUrl1)
       }
-    },
-    /**
-     * 收款方式
-     */
-    getAccountPaymentTerm () {
-      getAccountPaymentTerm(this, (data) => {
-        if (data) {
-          // 返回状态展示
-          this.paymentTerm = data.data.data
-        }
-      })
     },
     // 成功自动跳转
     successJump () {

@@ -24,7 +24,7 @@ const i18n = new VueI18n({
     'zh_CN': Object.assign({}, ELEMENT.lang.zhCN, require('../static/lang/zh_CN')),
     'en_US': Object.assign({}, ELEMENT.lang.en, require('../static/lang/en_US')),
     'zh_TW': Object.assign({}, ELEMENT.lang.zhTW, require('../static/lang/zh_TW')),
-    'ko_KR': require('../static/lang/ko_KR'),
+    'ko_KR': Object.assign({}, ELEMENT.lang.ko, require('../static/lang/ko_KR')),
     'ja_JP': Object.assign({}, ELEMENT.lang.ja, require('../static/lang/ja_JP'))
   }
 })

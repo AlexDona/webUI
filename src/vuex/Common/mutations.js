@@ -15,12 +15,13 @@ import {
   SET_LOGO_URL,
   SET_FOOTER_INFO,
   SET_COUNT_DOWN_RESET_STATUS,
+  CHANGE_DEFAULT_LANGUAGE,
   // eslint-disable-next-line
   CHANGE_ROUTER_PATH
 } from './mutations-types.js'
 
 import {setStore} from '../../utils'
-
+import {getNestedData} from '../../utils/commonFunc'
 // import {localapi, proapi} from 'src/config/env'
 
 export default {
@@ -67,14 +68,18 @@ export default {
         state.klineAjaxData.tradeMarketList = ajaxData.tradeMarketList
         break
       case 'socket':
-        if (socketData.depthData) {
-          state.socketData.depthData = socketData.depthData
+        if (socketData) {
+          state.socketData.depthData = getNestedData(socketData, 'depthData')
+          console.log(socketData.buyAndSellData)
+          if (socketData.buyAndSellData) {
+            state.socketData.buyAndSellData = getNestedData(socketData, 'buyAndSellData')
+          }
+          if (!state.socketData.buyAndSellData) {
+            state.socketData.buyAndSellData.sells.list = []
+          }
+          state.socketData.tardeRecordList = socketData.tardeRecordList
+          state.socketData.tradeMarkeContentItem = socketData.tradeMarkeContentItem
         }
-        if (socketData.buyAndSellData) {
-          state.socketData.buyAndSellData = socketData.buyAndSellData
-        }
-        state.socketData.tardeRecordList = socketData.tardeRecordList
-        state.socketData.tradeMarkeContentItem = socketData.tradeMarkeContentItem
         break
     }
   },
@@ -122,7 +127,22 @@ export default {
     state.logoSrc = logoSrc
     state.title = title
   },
-  [SET_FOOTER_INFO] (state, data) {
-    state.footerInfo = data
+  [SET_FOOTER_INFO] (state, {
+    footerInfo1,
+    footerInfo2,
+    configInfo
+  }) {
+    if (footerInfo1) {
+      state.footerInfo.footerInfo1 = footerInfo1
+    }
+    if (footerInfo2) {
+      state.footerInfo.footerInfo2 = footerInfo2
+    }
+    if (configInfo) {
+      state.footerInfo.configInfo = configInfo
+    }
+  },
+  [CHANGE_DEFAULT_LANGUAGE] (state, data) {
+    state.defaultLanguage = data
   }
 }

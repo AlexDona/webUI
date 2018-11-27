@@ -1,7 +1,6 @@
 <template>
   <!--首页盒子-->
   <div class="home-box home">
-
     <!--banner-->
     <keep-alive>
       <BannerHome/>
@@ -26,6 +25,37 @@ export default {
   data () {
     return {
 
+    }
+  },
+  created () {
+    // 在线客服添加
+    // this.addServiceForCustomer(window, document, 'script', 'http://assets-cli.udesk.cn/im_client/js/udeskApi.js', 'ud')
+    // ud({
+    //   'code': '311h1067', // 标识
+    //   'link': 'https://fubt.udesk.cn/im_client/?web_plugin_id=59660', // IM链接地址
+    //   'isInvite': false,
+    //   'mode': 'inner',
+    //   'color': '#307AE8',
+    //   'pos_flag': 'hrb',
+    //   'language': 'en-us',
+    //   'mobile': {
+    //     'mode': 'inner',
+    //     'color': '#307AE8',
+    //     'pos_flag': 'crb',
+    //     'language': 'en-us'
+    //   }
+    // })
+  },
+  methods: {
+    addServiceForCustomer (a, h, c, b, f, g) {
+      a['UdeskApiObject'] = f
+      a[f] = a[f] || function () { (a[f].d = a[f].d || []).push(arguments) }
+      g = h.createElement(c)
+      g.async = 1
+      g.charset = 'utf-8'
+      g.src = b
+      c = h.getElementsByTagName(c)[0]
+      c.parentNode.insertBefore(g, c)
     }
   }
 }

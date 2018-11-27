@@ -101,7 +101,7 @@
                     </div>
                     <!-- 选择支付方式 -->
                     <el-select
-                      :placeholder="$t('M.otc_MerchantsOrders_chouse') + $t('M.otc_index_Payment_method')"
+                      :placeholder="$t('M.otc_choose_pay_style')"
                       :no-data-text="$t('M.comm_no_data')"
                       v-model="activePayModeList[index]"
                       @change="changeUserBankInfo(index)"
@@ -135,7 +135,7 @@
                     v-if="activeBankType[index] === 'Bankcard'"
                   >
                     <span>
-                      {{$t('M.comm_bill')}}{{$t('M.comm_house')}}: {{activedPayAccountArr[index]}}
+                      {{$t('M.comm_bill_house')}}: {{activedPayAccountArr[index]}}
                     </span>
                   </p>
                   <p
@@ -143,7 +143,7 @@
                     v-if="activeBankType[index] === 'Alipay'"
                   >
                   <!-- 支付宝账户 -->
-                    <span>{{$t('M.comm_alipay')}}{{$t('M.comm_bill')}}{{$t('M.comm_house')}}:</span>
+                    <span>{{$t('M.comm_alipay')}}{{$t('M.comm_bill_house')}}:</span>
                     <span>{{activedPayAccountArr[index]}}</span>
                   </p>
                   <p
@@ -151,7 +151,7 @@
                     v-if="activeBankType[index] === 'Wechat'"
                   >
                   <!-- 微信账户 -->
-                    <span>{{$t('M.comm_weixin')}}{{$t('M.comm_bill')}}{{$t('M.comm_house')}}:</span>
+                    <span>{{$t('M.comm_weixin')}}{{$t('M.comm_bill_house')}}:</span>
                     <span>{{activedPayAccountArr[index]}}</span>
                   </p>
                   <p
@@ -159,7 +159,7 @@
                     v-if="activeBankType[index] === 'PAYPAL'"
                   >
                     <!-- paypal -->
-                    <span>PAYPAL{{$t('M.comm_bill')}}{{$t('M.comm_house')}}:</span>
+                    <span>PAYPAL{{$t('M.comm_bill_house')}}:</span>
                     <span>{{activedPayAccountArr[index]}}</span>
                   </p>
                   <p
@@ -167,7 +167,7 @@
                     v-if="activeBankType[index] === 'WestUnion'"
                   >
                   <!-- 西联汇款账户 -->
-                    <span>{{$t('M.comm_xilian')}}{{$t('M.comm_bill')}}{{$t('M.comm_house')}}:</span>
+                    <span>{{$t('M.comm_xilian')}}{{$t('M.comm_bill_house')}}:</span>
                     <span>{{activedPayAccountArr[index]}}</span>
                   </p>
                 </div>
@@ -258,7 +258,7 @@
                   <p class="bankMoneyInfo">
                     <span>
                       <!-- 账户 -->
-                      {{$t('M.comm_bill')}}{{$t('M.comm_house')}}:
+                      {{$t('M.comm_bill_house')}}:
                     </span>
                     <span>{{item.payAcctount}}</span>
                   </p>
@@ -481,7 +481,7 @@
                   </p>
                   <p class="bankMoneyInfo">
                     <span>
-                      {{$t('M.comm_bill')}}&nbsp;&nbsp;&nbsp;{{$t('M.comm_house')}}:</span>
+                      {{$t('M.comm_bill_house')}}:</span>
                     <span>{{item.payAcctount}}</span>
                   </p>
                 </div>
@@ -963,7 +963,7 @@ export default {
       if (!this.activePayModeList[index]) {
         this.$message({
           // 请选择支付方式
-          message: this.$t('M.comm_please_choose') + this.$t('M.otc_index_Payment_method'),
+          message: this.$t('M.otc_choose_pay_style'),
           type: 'error'
         })
         return false
@@ -1445,7 +1445,8 @@ export default {
                     color: #E8554F;
                   }
                   .appeal-order{
-                    color: #8094BB;
+                    // color: #8094BB;
+                    color: #409EFF;
                     background-color: #CDD9EE;
                   }
                 }

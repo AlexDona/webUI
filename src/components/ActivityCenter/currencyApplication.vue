@@ -207,7 +207,7 @@ export default {
         position: relative;
         overflow: hidden;
         >img{
-          /*width:100%;*/
+          // width:100%;
         }
         >.title{
           font-size: 36px;

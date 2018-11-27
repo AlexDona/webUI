@@ -9,6 +9,10 @@
       height:(screenWidth*131)/480 + 'px'
     }">
       <img src="../../assets/finance/banner.png">
+      <div class="banner-title">
+        <!-- 存币收益 -->
+        {{$t('M.comm_finance_center')}}
+      </div>
     </div>
     <div
       class="inner-box"
@@ -29,7 +33,8 @@
               v-for="(item,index) in traderCoinList"
               :key="index"
               :label="item.name"
-              :value="item.id">
+              :value="item.id"
+            >
             </el-option>
           </el-select>
           <ul class="newnestPrice">
@@ -125,8 +130,9 @@
                 </el-button>
               </div>
             </label>
+            <!-- 存币详情 -->
             <el-dialog
-              title="存币详情"
+              :title="$t('M.finance_save_moneydetail')"
               :visible.sync="dialogVisible"
               width="440px"
               class='dialogStyle'
@@ -139,7 +145,7 @@
               >
                 <!-- 存币时长 -->
                 <el-form-item
-                  :label="$t('M.finance_invest') + $t('M.finance_timeLong')"
+                  :label="$t('M.finance_timeLong')"
                   class='saveTime'
                 >
                   {{getDate(-2)}} {{$t('M.finance_leit')}} {{getDate(formLabelAlign.day)}}
@@ -148,7 +154,7 @@
                 </el-form-item>
                 <!-- 存币数量 -->
                 <el-form-item
-                  :label="$t('M.finance_invest') + $t('M.comm_count')"
+                  :label="$t('M.comm_count')"
                 >
                   <div class='invest-mounte'>
                     <el-input
@@ -174,7 +180,7 @@
                 </el-form-item>
                 <!-- 预计总收益 -->
                 <el-form-item
-                  :label="$t('M.finance_predict') + $t('M.comm_total_sum') + $t('M.finance_earnings')"
+                  :label="$t('M.finance_total_income')"
                 >
                   <div class='invest-mounte'>
                     <el-input
@@ -949,9 +955,19 @@ export default {
       >.banner-box{
         height: 459px;
         // background: #272b41;
+        position: relative;
         >img{
           width: 100%;
           height: 100%;
+        }
+        >.banner-title{
+          position: absolute;
+          left: 50%;
+          top: 50%;
+          color: #fff;
+          font-size: 40px;
+          width: 400px;
+          text-align: center;
         }
       }
       >.inner-box{
@@ -1151,7 +1167,7 @@ export default {
     }
     .invest{
       font-size: 22px;
-      width: 160px;
+      width: 166px;
       color: #fff;
       padding:14px 0px 14px 26px;
       background:linear-gradient(90deg,rgba(34,80,135,1),transparent);

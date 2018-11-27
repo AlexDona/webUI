@@ -7,7 +7,7 @@
     <div class="inner-box">
       <div class="title">
         <!-- 找回密码 -->
-        {{$t('M.forgetPassword_findBack')}}{{$t('M.comm_loginpassword')}}
+        {{$t('M.login_forgot_pwd_find1')}}
       </div>
       <!--步骤条-->
       <div class="step-box">
@@ -18,7 +18,7 @@
           <div class="line"></div>
           <p class="step-number">1</p>
           <!-- 填写账户名 -->
-          <p class="step-desc">{{$t('M.forgetPassword_inputname')}}</p>
+          <p class="step-desc">{{$t('M.login_forgot_pwd_find2')}}</p>
         </div>
         <div
           class="step-item"
@@ -28,7 +28,7 @@
           <p class="step-number">2</p>
           <!-- 验证身份 -->
           <p class="step-desc">
-            {{$t('M.login_verify')}}{{$t('M.forgetPassword_rank')}}
+            {{$t('M.login_forgot_pwd_find3')}}
           </p>
         </div>
         <div
@@ -39,7 +39,7 @@
           <p class="step-number">3</p>
           <p class="step-desc">
             <!--设置新密码-->
-            {{ $t('M.comm_set') }}{{ $t('M.forgetPassword_new_password') }}
+            {{ $t('M.login_forgot_pwd_find4') }}
           </p>
         </div>
         <div
@@ -131,7 +131,7 @@
             </div>
           </div>
         </div>
-        <!--步骤二-->
+        <!--步骤二v-else-if="activeStepNumber == 2"-->
         <div
           class="content-item step2"
           v-else-if="activeStepNumber == 2"
@@ -143,7 +143,7 @@
             >
               <span class="label">
                 <!--验证手机-->
-                {{ $t('M.user_security_verify') }}{{ $t('M.user_security_phone') }}
+                {{ $t('M.forgetPassword_verify_style1') }}
               </span>
               <span class="label-content">
                 <span class="number">{{phoneNumberFormat(userInfo.phone)}}</span>
@@ -156,7 +156,7 @@
             >
               <span class="label">
                 <!--手机验证码-->
-                {{ $t('M.user_security_phone') }}{{ $t('M.comm_code') }}
+                {{ $t('M.forgetPassword_verify_style2') }}
               </span>
               <span class="label-content">
                 <input
@@ -178,7 +178,7 @@
             >
               <span class="label">
                 <!--验证邮箱-->
-                {{ $t('M.user_security_verify') }}{{ $t('M.user_security_email') }}
+                {{ $t('M.forgetPassword_verify_style3') }}
               </span>
               <span class="label-content">
                 <span class="number">{{phoneNumberFormat(userInfo.email)}}</span>
@@ -191,7 +191,7 @@
             >
               <span class="label">
                 <!--邮箱验证码-->
-                {{ $t('M.user_security_email') }}{{ $t('M.comm_code') }}
+                {{ $t('M.forgetPassword_verify_style4') }}
               </span>
               <span class="label-content">
                 <input
@@ -213,7 +213,7 @@
             >
               <span class="label">
                 <!--谷歌验证码-->
-                 {{ $t('M.user_security_google') }}{{ $t('M.comm_code') }}
+                 {{ $t('M.forgetPassword_verify_style5') }}
               </span>
               <span class="label-content">
                 <input
@@ -279,7 +279,7 @@
                   @click="findPasswordStep3"
                 >
                   <!--下一步-->
-                   {{ $t('M.forgetPassword_next_step') }}
+                  {{ $t('M.forgetPassword_next_step') }}
                 </button>
               </span>
             </div>
@@ -394,25 +394,25 @@ export default {
     // 找回密码步骤3
     async findPasswordStep3 () {
       if (!this.newPassword) {
-        // 请输入新的密码
+        // 请输入新密码
         this.$message({
           type: 'error',
-          message: this.$t('M.comm_please_enter') + this.$t('M.forgetPassword_new_password')
+          message: this.$t('M.login_please_input5')
         })
         return false
       } else if (!PWD_REG.test(this.newPassword)) {
         // 请输入8-20位字母、数字组合
         this.$message({
           type: 'error',
-          message: this.$t('M.comm_please_enter') + this.$t('M.forgetPassword_hint1')
+          message: this.$t('M.login_please_input6')
         })
         return false
       }
       if (!this.confirmPassword) {
-        // 请再次输入新的密码
+        // 请再次输入新密码
         this.$message({
           type: 'error',
-          message: this.$t('M.forgetPassword_hint2') + this.$t('M.forgetPassword_new_password')
+          message: this.$t('M.login_please_input7')
         })
         return false
       }
@@ -420,7 +420,7 @@ export default {
         // 请输入相同的密码
         this.$message({
           type: 'error',
-          message: this.$t('M.comm_please_enter') + this.$t('M.forgetPassword_hint3')
+          message: this.$t('M.login_please_input8')
         })
         return false
       }
@@ -625,7 +625,8 @@ export default {
         width:100%;
         padding-top:30px;
         >.content-item{
-          width:600px;
+          // width:600px;
+          width:700px;
           margin:0 auto;
           text-align: center;
           >.inner-box{
@@ -641,10 +642,12 @@ export default {
               >.label{
                 height:36px;
                 width:100px;
+                width:130px;
                 text-align: right;
               }
               >.label-content{
-                width:380px;
+                // width:380px;
+                width:500px;
                 height:36px;
                 text-align: left;
                 >.number{
@@ -654,7 +657,8 @@ export default {
                   margin-right:10px;
                 }
                 >.tips{
-                  width:200px;
+                  // width:200px;
+                  width:390px;
                   display:inline-block;
                   font-size: 12px;
                   color:$upColor;

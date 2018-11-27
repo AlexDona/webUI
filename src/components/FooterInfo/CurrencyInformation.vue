@@ -44,7 +44,10 @@ import {
   getCurrencyInfoList,
   getCurrencyDetails
 } from '../../utils/api/header'
-import {returnAjaxMsg} from '../../utils/commonFunc'
+import {
+  returnAjaxMsg,
+  getNestedData
+} from '../../utils/commonFunc'
 import {mapState} from 'vuex'
 export default {
   components: {},
@@ -71,30 +74,47 @@ export default {
     }
   },
   async created () {
-    await this.getFootCurrencyInfoList()
-    await this.getFootCurrencyInforDetail()
-    if (this.currencyList.length) {
-      await this.changeCurrentCurrency(this.currencyList[0].id)
-    }
+    await this.initInfoList()
   },
   mounted () {},
   activited () {},
   update () {},
   beforeRouteUpdate () {},
   methods: {
+    async initInfoList () {
+      await this.getFootCurrencyInfoList()
+      await this.getFootCurrencyInforDetail()
+      if (this.currencyList.length) {
+        await this.changeCurrentCurrency(this.currencyId || getNestedData(this.currencyList, '[0].id'))
+      } else {
+        this.currencyInfo = {}
+      }
+    },
     // 数字资产列表
     async getFootCurrencyInfoList () {
+      let language
+      switch (this.language) {
+        case 'zh_TW':
+          language = 'zh_CN'
+          break
+        case 'zh_CN':
+          language = 'zh_CN'
+          break
+        default:
+          language = 'en_US'
+          break
+      }
       const data = await getCurrencyInfoList({
-        language: this.language
+        language
       })
       console.log(data)
       if (!returnAjaxMsg(data, this)) {
         return false
       } else {
-        this.currencyList = data.data.data
+        this.currencyList = getNestedData(data, 'data.data')
         console.log(this.currencyList.length)
         if (this.currencyList.length) {
-          this.currencyId = this.currencyList[0].id
+          this.currencyId = getNestedData(this.currencyList, '[0].id')
           console.log(this.currencyList)
         }
       }
@@ -107,13 +127,13 @@ export default {
     // 币种详情
     async getFootCurrencyInforDetail () {
       console.log(this.currencyId)
-      if (this.currencyId) {
-        const data = await getCurrencyDetails(this.currencyId)
+      let currencyId = this.currencyId || getNestedData(this.currencyList, '[0].id')
+      if (currencyId) {
+        const data = await getCurrencyDetails(this.currencyId || getNestedData(this.currencyList, '[0].id'))
         if (!(returnAjaxMsg(data, this, 0))) {
           return false
         } else {
-          this.currencyInfo = data.data.data
-          console.log(this.currencyDetails)
+          this.currencyInfo = getNestedData(data, 'data.data')
         }
       }
     }
@@ -122,12 +142,23 @@ export default {
   computed: {
     ...mapState({
       theme: state => state.common.theme,
-      language: state => state.common.language
+      language: state => state.common.language,
+      serviceActiveName: state => state.footerInfo.serviceActiveName
+
     })
   },
   watch: {
+    currencyList (newVal) {
+      console.log(newVal)
+    },
     currencyId (newVal) {
       console.log(newVal)
+    },
+    async language () {
+      await this.initInfoList()
+    },
+    serviceActiveName (newVal) {
+      this.getFootCurrencyInforDetail()
     }
   }
 }
@@ -177,7 +208,7 @@ export default {
             font-size: 16px;
             margin-bottom:20px;
           }
-          img{
+          img       {
           }
         }
        >p{

@@ -436,7 +436,10 @@ import OTCCompletedOrder from '../../components/OTC/OTCCompletedOrder'
 import OTCCanceledOrder from '../../components/OTC/OTCCanceledOrder'
 import OTCFreezingOrder from '../../components/OTC/OTCFreezingOrder'
 import OTCEntrustOrder from '../../components/OTC/OTCEntrustOrder'
-import {returnAjaxMsg, reflashUserInfo, getNestedData} from '../../utils/commonFunc'
+import {
+  returnAjaxMsg,
+  getNestedData
+} from '../../utils/commonFunc'
 import {createNamespacedHelpers, mapState} from 'vuex'
 const {mapMutations} = createNamespacedHelpers('OTC')
 export default {
@@ -507,7 +510,7 @@ export default {
     // this.getMerchantAvailablelegalTenderList()
     // 3.0 用户登录了刷新用户个人信息
     if (this.isLogin) {
-      reflashUserInfo(this) // 刷新用户信息
+      this.reflashUserInfo() // 刷新用户信息
     }
   },
   mounted () {
@@ -523,11 +526,15 @@ export default {
     ...mapMutations([
       'CHANGE_OTC_AVAILABLE_CURRENCY_NAME',
       'CHANGE_OTC_AVAILABLE_CURRENCY_ID',
-      'CHANGE_OTC_AVAILABLE_PARTNER_COIN_ID'
+      'CHANGE_OTC_AVAILABLE_PARTNER_COIN_ID',
+      'UPDATE_OTC_HOME_LIST_STATUS'
     ]),
+    reflashUserInfo () {
+      this.$store.dispatch('user/REFLASH_USER_INFO', this)
+    },
     // 科学计数法转换
     filterNumber (num) {
-      console.log(scientificToNumber(num))
+      // console.log(scientificToNumber(num))
       return scientificToNumber(num)
     },
     // 0.1 切换各订单状态tab面板
@@ -574,7 +581,7 @@ export default {
       if (!this.isLogin) {
         this.$router.push({path: '/login'})
       } else {
-        reflashUserInfo(this) // 刷新用户信息
+        this.reflashUserInfo() // 刷新用户信息
         // 未设置交易密码、未实名认证，未高级认证，不能进行交易
         if (!this.userInfo.payPassword) {
           this.$message({
@@ -608,7 +615,7 @@ export default {
         this.$router.push({path: '/login'})
       } else {
         // 刷新用户信息
-        reflashUserInfo(this)
+        this.reflashUserInfo()
         // 未设置交易密码、未实名认证，未高级认证，不能进行交易
         if (!this.userInfo.payPassword) {
           this.$message({
@@ -739,6 +746,8 @@ export default {
         this.onlineBuySellTableList = orderListData.list
         // 分页
         this.totalPages = orderListData.pages - 0
+        // 改变全局 委托定单撤单后，更新首页挂单列表状态
+        this.UPDATE_OTC_HOME_LIST_STATUS(false)
       }
     },
     //  4.0 选中我想购买和出售币种名称
@@ -792,10 +801,19 @@ export default {
       selectedOTCAvailableCurrencyCoinID: state => state.OTC.selectedOTCAvailableCurrencyCoinID,
       language: state => state.common.language, // 当前选中语言
       userInfo: state => state.user.loginStep1Info.userInfo, // 用户详细信息
-      isLogin: state => state.user.isLogin // 用户登录状态 false 未登录； true 登录
+      isLogin: state => state.user.isLogin, // 用户登录状态 false 未登录； true 登录
+      updateOTCHomeListStatus: state => state.OTC.updateOTCHomeListStatus // 委托定单撤单后，更新首页挂单列表状态
     })
   },
-  watch: {}
+  watch: {
+    updateOTCHomeListStatus (newVal) {
+      console.log('我改变了')
+      console.log(newVal)
+      if (newVal) {
+        this.getOTCPutUpOrdersList() // otc主页面查询挂单列表
+      }
+    }
+  }
 }
 </script>
 <style scoped lang="scss" type="text/scss">
@@ -804,7 +822,7 @@ export default {
   margin-top:66px;
   >.otc-center-content{
     width: 1150px;
-    margin: 36px auto 0px;
+    margin: 36px auto 100px;
     padding-top: 30px;
     >.otc-online-trading{
       >.otc-online-buy-and-sell-button{

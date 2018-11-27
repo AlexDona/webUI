@@ -184,6 +184,14 @@ export default {
       })
       this.$set(this.collectArea, 'plateList', newPlateList)
     },
+    setActiveIndex (area) {
+      _.forEach(this.filterMarketList, (item, index) => {
+        if (item.area == area) {
+          this.activeIndex = index + 2
+          return false
+        }
+      })
+    },
     // 获取交易区信息
     async getTradeMarketData () {
       let params = {
@@ -234,6 +242,9 @@ export default {
         this.setCollectData(collectSymbol, plateList)
         this.newTradeMarketList = tickerList
         this.filterMarketList = this.newTradeMarketList
+        this.setActiveIndex(this.middleTopData.area)
+        this.activeName = this.middleTopData.area
+        this.setActiveTabSymbolStr()
       }
     },
     // 设置 当前交易区
@@ -334,12 +345,6 @@ export default {
       this.searchKeyWord = 'a'
       this.searchKeyWord = ''
     },
-    // 初始化自选区
-    resetCollectList () {
-      this.collectList.forEach((item) => {
-        this.collectStatusList[item.id] = true
-      })
-    },
     // 切换收藏
     async toggleCollect (data) {
       let {
@@ -348,6 +353,7 @@ export default {
         row,
         plateIndex
       } = data
+      console.log(data)
       status = Boolean(status)
       this.$set(this.collectStatusList, id, status)
       if (status) {
@@ -358,7 +364,7 @@ export default {
         })
         this.collectArea.plateList[plateIndex].content.push(row)
         if (this.isLogin) {
-          await toggleUserCollection('add', row.tradeId, this)
+          await toggleUserCollection('add', id, this)
         }
       } else {
         this.CHANGE_COLLECT_SYMBOL({
@@ -387,6 +393,7 @@ export default {
     },
     // 切换tab
     changeTab (e) {
+      console.log(e)
       let {
         index
       } = e
@@ -436,6 +443,7 @@ export default {
           break
       }
       activeTabSymbolStr = `${this.middleTopData.id}@` + activeTabSymbolStr.slice(0, activeTabSymbolStr.length - 1)
+      console.log(activeTabSymbolStr)
       this.$store.commit('trade/CHANGE_ACTIVE_TAB_ID', {
         activeTabSymbolStr
       })
@@ -488,6 +496,7 @@ export default {
       this.activeName = this.$t('M.trade_market_optional')
       this.getTradeMarketData()
     },
+    activeSymbol (newVal) {},
     activeTabSymbolStr (newVal) {
       console.log(newVal)
     },
@@ -545,13 +554,11 @@ export default {
       }
     },
     middleTopData (newVal) {
-      _.forEach(this.filterMarketList, (item, index) => {
-        if (item.area == newVal.area) {
-          this.activeIndex = index + 2
-          return false
-        }
-      })
+      this.setActiveIndex(newVal.area)
       this.activeName = newVal.area
+    },
+    activeIndex (newVal) {
+      console.log(newVal)
     },
     activeName (newVal, oldVal) {
       this.setActiveTabSymbolStr()

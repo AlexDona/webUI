@@ -20,8 +20,8 @@ export const personal = {
   'user_assets_pause_mention': '暂停提币',
   'user_assets_recharge_hint0': '转账时请务必备注（否则后果自负）:',
   'user_assets_recharge_hint1': '禁止充值除{}之外的其他资产，任何非{}资产充值将不可找回。',
-  'user_assets_recharge_hint4': '往该地址充值，汇款完成，等待网络自动确认（6个确认）后系统自动到账',
-  'user_assets_recharge_hint5': '为了快速到账，充值时可以适当提高网络手续费',
+  'user_assets_recharge_hint4': '往该地址充值，汇款完成，等待网络自动确认（6个确认）后系统自动到账。',
+  'user_assets_recharge_hint5': '为了快速到账，充值时可以适当提高网络手续费。',
   'user_assets_withdrawal_hint1': '提现费率规则',
   'user_assets_sum1': '总数量',
   'user_assets_sum2': '冻结数量',
@@ -153,6 +153,7 @@ export const personal = {
   'user_security_last_login_time': '上次登录时间',
   'user_security_affiliation': '归属',
   'user_security_binding': '绑定',
+  'user_security_binding_IP': '绑定IP地址',
   'user_security_unbundle': '解绑',
   'user_security_in_tie': '换绑',
   'user_security_login': '登录',
@@ -235,6 +236,7 @@ export const personal = {
   'user_coin': '币币',
   'user_coin_bring_together': '撮合',
   'user_coin_appoint_single': '委单',
+  'user_coin_appoint_single_stle': '委单类型',
   'user_coin_rental': '总额',
   'user_coin_start_stop': '起止',
   'user_coin_entrust': '委托',
@@ -253,6 +255,7 @@ export const personal = {
   // 冻结中的订单
   // 委托订单
   // VIP
+  'user_vip_one_key_open': '一键开通VIP享受优惠特权',
   'user_vip_please_choose': '请选择开通会员信息',
   'user_vip_discount': '折扣',
   'user_vip_immediately_opened': '立即开通',

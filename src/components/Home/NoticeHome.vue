@@ -13,13 +13,15 @@
         v-for="(item,index) in noticeList"
         :key="index"
       >
+        <router-link :to="`NewsAndNoticeItem/${item.id}`">
         <span
-          class="cursor-pointer"
-          @click="jumpToNewsDetail(item)"
-        >
-          <span class="type">【{{ $t(item.typeName) }}】</span>
-          <span>{{ $t(item.title) }}</span>
-        </span>
+            class="cursor-pointer"
+            @click="jumpToNewsDetail(item)"
+          >
+            <span class="type">【{{ $t(item.typeName) }}】</span>
+            <span>{{ $t(item.title) }}</span>
+          </span>
+        </router-link>
       </div>
     </div>
     <div

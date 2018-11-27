@@ -18,6 +18,7 @@ export const personal = {
   'user_asset_valuation': 'Asset valuation',
   'user_assets_suspended': 'Recharge pause, wallet maintenance',
   'user_assets_pause_mention': 'Suspend the coin',
+  'user_assets_recharge_hint0': 'Must note before you transfer the money (or you will be responsible for the consequences):',
   'user_assets_recharge_hint1': 'It is forbidden to recharge other assets except {}, any non-{} asset recharge will not be recovered.',
   'user_assets_recharge_hint4': 'Recharge to this address, the remittance is completed, and the system will automatically arrive after waiting for the network to automatically confirm (6 confirmations).',
   'user_assets_recharge_hint5': 'In order to arrive quickly, you can increase the network fee when you recharge.',
@@ -33,6 +34,7 @@ export const personal = {
   'user_assets_withdrawal_hint4': 'Cash withdrawal amount ≤ account available assets - unconfirmed digital assets.',
   'user_assets_withdrawal_hint5': 'Handling fee <minimum withdrawal fee, please re-enter',
   'user_assets_withdrawal_hint6': 'Fees>Maximum withdrawal fee, please re-enter',
+  'user_assets_withdrawal_hint7': 'Enter amount  must be greater than the handling fee. Please input again',
   'user_assets_no_transaction_password': 'You have not set transaction password, please set the transaction password.',
   'user_assets_grade_membership': 'Ratings',
   'user_assets_or': 'or',
@@ -53,6 +55,7 @@ export const personal = {
   'user_real_already': 'You have passed',
   'user_real_region': 'Regional country',
   'user_real_certificate_type': 'Type of certificate',
+  'user_real_certificate_cone': 'ID number',
   'user_real_real': 'Actual name',
   // 高级认证Advanced certification
   'user_senior_certification': 'Advanced certification',
@@ -147,6 +150,7 @@ export const personal = {
   'user_security_last_login_time': 'Last Login Time',
   'user_security_affiliation': 'Attribution',
   'user_security_binding': 'Binding ',
+  'user_security_binding_IP': 'Binding IP Address',
   'user_security_unbundle': 'Untied',
   'user_security_in_tie': 'Change tie',
   'user_security_login': 'Login ',
@@ -227,6 +231,7 @@ export const personal = {
   'user_coin': 'Coin',
   'user_coin_bring_together': 'Match',
   'user_coin_appoint_single': 'Bill',
+  'user_coin_appoint_single_stle': 'BillType',
   'user_coin_rental': 'lump sum',
   'user_coin_start_stop': 'Start and stop',
   'user_coin_entrust': 'Entrust',
@@ -245,6 +250,7 @@ export const personal = {
   // 冻结中的订单Frozen order
   // 委托订单Order order
   // VIPVIP
+  'user_vip_one_key_open': 'Open VIP discount',
   'user_vip_please_choose': 'Please choose to open member information',
   'user_vip_discount': 'discount',
   'user_vip_immediately_opened': 'Open Now',

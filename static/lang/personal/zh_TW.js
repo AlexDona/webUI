@@ -20,8 +20,8 @@ export const personal = {
   'user_assets_pause_mention': '暫停提幣',
   'user_assets_recharge_hint0': '轉賬時請務必備註（否則後果自負）：',
   'user_assets_recharge_hint1': '禁止充值除{}之外的其他資產，任何非{}資產充值將不可找回。',
-  'user_assets_recharge_hint4': '往該地址充值，匯款完成，等待網絡自動確認（6個確認）後系統自動到賬',
-  'user_assets_recharge_hint5': '為了快速到賬，充值時可以適當提高網絡手續費',
+  'user_assets_recharge_hint4': '往該地址充值，匯款完成，等待網絡自動確認（6個確認）後系統自動到賬。',
+  'user_assets_recharge_hint5': '為了快速到賬，充值時可以適當提高網絡手續費。',
   'user_assets_withdrawal_hint1': '提現費率規則',
   'user_assets_sum1': '總數量',
   'user_assets_sum2': '凍結數量',
@@ -153,6 +153,7 @@ export const personal = {
   'user_security_last_login_time': '上次登錄時間',
   'user_security_affiliation': '歸屬',
   'user_security_binding': '綁定',
+  'user_security_binding_IP': '綁定IP地址',
   'user_security_unbundle': '解綁',
   'user_security_in_tie': '換綁',
   'user_security_login': '登錄',
@@ -235,6 +236,7 @@ export const personal = {
   'user_coin': '幣幣',
   'user_coin_bring_together': '撮合',
   'user_coin_appoint_single': '委單',
+  'user_coin_appoint_single_stle': '委單類型',
   'user_coin_rental': '總額',
   'user_coin_start_stop': '起止',
   'user_coin_entrust': '委托',
@@ -253,6 +255,7 @@ export const personal = {
   // 凍結中的訂單
   // 委托訂單
   // VIP
+  'user_vip_one_key_open': '壹鍵開通VIP享受優惠特權',
   'user_vip_please_choose': '請選擇開通會員信息',
   'user_vip_discount': '折扣',
   'user_vip_immediately_opened': '立即開通',
