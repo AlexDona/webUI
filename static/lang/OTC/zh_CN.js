@@ -229,6 +229,7 @@ export const OTC = {
   'otc_publishAD_discriptLineFive': '尝试欺诈行为，违者将会导致帐号被冻结，并承担法律责任。',
   'otc_publishAD_discriptLineFour': '发布广告后请履行契约精神，恶意抬价或者是反悔，被投诉将冻结账户 3-15 天不等。',
   'otc_publishAD_chouseSellType': '请选择交易方式',
+  'otc_publishAD_set_get_money_way': '请先设置收款方式',
   'otc_publishAD_rangePrice': '之间的价格',
   'otc_publishAD_inputminLimit': '输入值不能小于最小限额',
   'otc_publishAD_inputmaxLimit': '输入值不能大于最大限额',

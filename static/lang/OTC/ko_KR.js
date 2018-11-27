@@ -229,6 +229,7 @@ export const OTC = {
   'otc_publishAD_discriptLineFive': '에서 사기 행위를 시도하면 가해자의 계정을 정지시키고 법적 책임을 지게됩니다. ',
   'otc_publishAD_discriptLineFour': '광고 후 계약정신에 충실해주시고 일부러 가격을 올리거나 계약을 위반하면 계좌를 3-15일 정지합니다.',
   'otc_publishAD_chouseSellType': '거래 방식을 선택하십시오.',
+  'otc_publishAD_set_get_money_way': '우선 수금 방식 설치하세요',
   'otc_publishAD_rangePrice': '가격 사이',
   'otc_publishAD_inputminLimit': '입력 값은 최소 한도보다 작을 수 없습니다.',
   'otc_publishAD_inputmaxLimit': '입력 값이 최고 액수 초과 금지',

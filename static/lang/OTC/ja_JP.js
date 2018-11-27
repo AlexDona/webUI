@@ -230,6 +230,7 @@ export const OTC = {
   'otc_publishAD_discriptLineFive': 'に詐欺行為はしないでください、その違反者はアカウントが凍結され、法的責任を負うことになります。',
   'otc_publishAD_discriptLineFour': '契約精神を掲示し、契約の精神を実行し、悪意を持って価格を上げたり、悔い改めたりして、苦情が3〜15日間アカウントを凍結させてください。',
   'otc_publishAD_chouseSellType': '取引方法を選択してください',
+  'otc_publishAD_set_get_money_way': 'まず支払方法を設定してください。',
   'otc_publishAD_rangePrice': '間の価格',
   'otc_publishAD_inputminLimit': '入力値は最小値を下回ることはできません',
   'otc_publishAD_inputmaxLimit': '入力値は最大値を超えることはできません',

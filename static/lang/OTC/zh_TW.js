@@ -229,6 +229,7 @@ export const OTC = {
   'otc_publishAD_discriptLineFive': '嘗試欺詐行為，違者將會導致帳號被凍結，並承擔法律責任。',
   'otc_publishAD_discriptLineFour': '發布廣告後請履行契約精神，惡意擡價或者是反悔，被投訴將凍結賬戶 3-15 天不等。',
   'otc_publishAD_chouseSellType': '請選擇交易方式',
+  'otc_publishAD_set_get_money_way': '請先設置收款方式',
   'otc_publishAD_rangePrice': '之間的價格',
   'otc_publishAD_inputminLimit': '輸入值不能小於最小限額',
   'otc_publishAD_inputmaxLimit': '輸入值不能大於最大限額',
