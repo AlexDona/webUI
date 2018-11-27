@@ -12,7 +12,10 @@ import {
 } from '../../utils'
 import {
   getConfigAjax,
-  getCountryList, getFooterInfo1, getLanguageList,
+  getCountryList,
+  getFooterInfo1,
+  getFooterInfo2,
+  getLanguageList,
   getTransitionCurrencyRateAjax
 } from '../../utils/api/header'
 import {
@@ -90,7 +93,7 @@ export default {
       language
     }
     const data1 = await getFooterInfo1(params)
-    const data2 = await getFoovterInfo2(params)
+    const data2 = await getFooterInfo2(params)
     if (
       !returnAjaxMsg(data1, self) &&
       !returnAjaxMsg(data2, self)
