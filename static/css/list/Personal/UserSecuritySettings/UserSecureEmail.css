@@ -24,6 +24,7 @@
 }
 .set-email.personal .el-input-group__append {
   padding: 0;
+  background: #338FF5;
 }
 .set-email.personal .email-content-from .el-form-item .el-form-item__label{
   width: 160px !important;

@@ -95,13 +95,13 @@
                 @click.prevent="refreshCode"
                 class="cursor-pointer display-inline-block phone-input-align"
               >
-              <ImageValidate
-                id="register"
-                :content-width="75"
-                :content-height="34"
-                :identifyCode="bindingDataPhone.identifyCode"
-                class="display-inline-block image-input"
-              />
+                <ImageValidate
+                  id="register"
+                  :content-width="75"
+                  :content-height="34"
+                  :identifyCode="bindingDataPhone.identifyCode"
+                  class="display-inline-block image-input"
+                />
               </span>
               <!--错误提示-->
               <ErrorBox
@@ -825,6 +825,12 @@ export default {
             width: 220px;
             height: 34px;
           }
+          // 任修复图片验证码上移问题20181127-2309
+          .phone-input-align {
+            margin-left: -3px;
+            height: 44px;
+            vertical-align: middle;
+          }
           .phone-image {
             width: 145px;
             border-right: 0 !important;
@@ -887,9 +893,6 @@ export default {
                 border: 1px solid #338FF5;
               }
             }
-            .phone-input-align {
-              margin-left: -3px;
-            }
             .image-input {
               height: 35px;
               vertical-align: middle;
@@ -904,7 +907,7 @@ export default {
               }
             }
             .phone-button {
-              background:linear-gradient(0deg,rgba(43,57,110,1),rgba(42,80,130,1));
+              background:linear-gradient(0deg,#2b396e,rgba(42,80,130,1));
               color: rgba(255,255,255,0.7);
             }
           }

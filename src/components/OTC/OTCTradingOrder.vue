@@ -1193,7 +1193,7 @@ export default {
             // border-right: 1px solid #262F38;
             >.logo{
               display: inline-block;
-              margin-right: 20px;
+              margin-right: 10px;
               text-align: center;
               >.logo-icon{
 
