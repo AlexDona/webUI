@@ -22,7 +22,7 @@
           class="header-content-left header-content font-size16 font-weight600"
         >
           <!--修改手机-->
-          {{ $t('M.comm_modification') }}{{ $t('M.user_security_phone') }}
+          {{ $t('M.user_modify_phone') }}
         </span>
         <span
           class="header-content-right font-size12 cursor-pointer"
@@ -477,7 +477,7 @@ export default {
               return 1
             case 1:
               // 请输入手机号
-              this.setErrorMsg(0, this.$t('M.login_tips_enter_phone'))
+              this.setErrorMsg(0, this.$t('M.user_modify_input_phone'))
               this.$forceUpdate()
               return 0
             case 2:
@@ -629,7 +629,7 @@ export default {
             case 1:
               // console.log(type)
               // 请输入手机号
-              this.tieErrorMsg(1, this.$t('M.login_tips_enter_phone'))
+              this.tieErrorMsg(1, this.$t('M.user_modify_input_phone'))
               this.$forceUpdate()
               return 0
             case 2:

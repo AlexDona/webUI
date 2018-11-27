@@ -12,7 +12,7 @@
           class="header-content-left header-content font-size16 font-weight600"
         >
           <!--修改登录密码-->
-          {{ $t('M.comm_modification') }}{{ $t('M.user_security_login') }}{{ $t('M.user_security_password') }}
+          {{ $t('M.user_modification_login_pwd') }}
         </span>
         <span
           class="header-content-right font-size12 cursor-pointer"
@@ -92,7 +92,7 @@
               @click.prevent="getStatusSubmit"
             >
               <!--确认修改-->
-              {{ $t('M.comm_affirm') }}{{ $t('M.comm_modification') }}
+              {{ $t('M.user_modification_confirm_') }}
             </button>
           </el-form>
         </div>
@@ -162,10 +162,10 @@ export default {
     // 检测输入格式
     checkoutInputFormat (type, targetNum) {
       switch (type) {
-        // 原登录密码
+        // 请输入原登录密码
         case 0:
           if (!targetNum) {
-            this.setErrorMsg(0, this.$t('M.comm_please_enter') + this.$t('M.user_security_login_raw') + this.$t('M.user_security_login') + this.$t('M.user_security_password'))
+            this.setErrorMsg(0, this.$t('M.user_modification_original_pwd'))
             this.$forceUpdate()
             return 0
           } else {
@@ -173,7 +173,7 @@ export default {
             this.$forceUpdate()
             return 1
           }
-        // 新登录密码
+        // 请输入密码
         case 1:
           switch (validateNumForUserInput('password', targetNum)) {
             case 0:
@@ -181,7 +181,7 @@ export default {
               this.$forceUpdate()
               return 1
             case 1:
-              this.setErrorMsg(1, this.$t('M.comm_please_enter') + this.$t('M.user_security_password'))
+              this.setErrorMsg(1, this.$t('M.user_modification_input_pwd'))
               this.$forceUpdate()
               return 0
             case 2:
@@ -190,10 +190,10 @@ export default {
               return 0
           }
           break
-        // 确认登录密码
+        // 请输入确认登陆密码
         case 2:
           if (!targetNum) {
-            this.setErrorMsg(2, this.$t('M.comm_please_enter') + this.$t('M.comm_affirm') + this.$t('M.user_security_login') + this.$t('M.user_security_password'))
+            this.setErrorMsg(2, this.$t('M.user_modification_input_confirm_pwd'))
             this.$forceUpdate()
             return 0
           } else if (targetNum === this.newLoginPassword) {

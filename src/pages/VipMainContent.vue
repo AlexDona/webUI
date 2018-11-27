@@ -45,7 +45,7 @@
             </p>
             <p class="content-discount line-height50 text-align-c font-size16">
             <span class="content-discount-color">
-              {{vipPriceInfo1[0].value}}{{vipPriceInfo1[0].vipCoinName}}
+              {{vipPriceInfo1[0]?vipPriceInfo1[0].value:'--'}}{{vipPriceInfo1[0]?vipPriceInfo1[0].vipCoinName:'--'}}
             </span>
               <span>
               <!--/月-->
@@ -98,7 +98,7 @@
             </p>
             <p class="content-discount line-height50 text-align-c font-size16">
             <span class="content-discount-color">
-              {{vipPriceInfo1[4].value}}{{vipPriceInfo1[4].vipCoinName}}
+              {{vipPriceInfo1[4]?vipPriceInfo1[4].value:'--'}}{{vipPriceInfo1[4]?vipPriceInfo1[4].vipCoinName:'--'}}
             </span>
               <span>
               <!--/月-->
@@ -151,7 +151,7 @@
             </p>
             <p class="content-discount line-height50 text-align-c font-size16">
             <span class="content-discount-color">
-              {{vipPriceInfo1[8].value}}{{vipPriceInfo1[8].vipCoinName}}
+              {{vipPriceInfo1[8]?vipPriceInfo1[8].value:'--'}}{{vipPriceInfo1[8]?vipPriceInfo1[8].vipCoinName:'--'}}
             </span>
               <span>
               <!--/月-->
@@ -204,7 +204,7 @@
             </p>
             <p class="content-discount line-height50 text-align-c font-size16">
             <span class="content-discount-color">
-              {{vipPriceInfo1[12].value}}{{vipPriceInfo1[12].vipCoinName}}
+              {{vipPriceInfo1[12]?vipPriceInfo1[12].value:'--'}}{{vipPriceInfo1[12]?vipPriceInfo1[12].vipCoinName:'--'}}
             </span>
               <span>
               <!--/月-->
@@ -257,7 +257,7 @@
             </p>
             <p class="content-discount line-height50 text-align-c font-size16">
             <span class="content-discount-color">
-              {{vipPriceInfo1[16].value}}{{vipPriceInfo1[16].vipCoinName}}
+              {{vipPriceInfo1[16]?vipPriceInfo1[16].value:'--'}}{{vipPriceInfo1[16]?vipPriceInfo1[16].vipCoinName:'--'}}
             </span>
               <span>
               <!--/月-->
@@ -309,7 +309,7 @@
         <p class="content-info-hint padding-right23 box-sizing font-size12">
           <span>
             <!--还没有FUC?-->
-            {{ $t('M.user_vip_not_yet') }}{{vipPriceInfo1[0].vipCoinName}}?
+            {{ $t('M.user_vip_not_yet') }}{{vipPriceInfo1[0]?vipPriceInfo1[0].vipCoinName:'--'}}?
           </span>
           <span
             class="hint-color cursor-pointer"
@@ -428,7 +428,7 @@
               3{{ $t('M.user_vip_months') }}
             </p>
             <p class="duration-currency font-size18">
-              {{filteredData[1].value}}{{vipPriceInfo1[1].vipCoinName}}
+              {{filteredData[1]?filteredData[1].value:'--'}}{{vipPriceInfo1[1]?vipPriceInfo1[1].vipCoinName:'--'}}
             </p>
           </div>
           <div
@@ -441,11 +441,11 @@
               6{{ $t('M.user_vip_months') }}
             </p>
             <p class="duration-currency font-size18">
-              {{filteredData[2].value}}{{filteredData[2].vipCoinName}}
+              {{filteredData[2]?filteredData[2].value:'--'}}{{filteredData[2]?filteredData[2].vipCoinName:'--'}}
             </p>
             <p class="duration-through ">
               <!--600FUC-->
-              {{filteredData[2].value}}{{filteredData[2].vipCoinName}}
+              {{filteredData[2]?filteredData[2].value:'--'}}{{filteredData[2]?filteredData[2].vipCoinName:'--'}}
             </p>
           </div>
           <div
@@ -458,11 +458,11 @@
               12{{ $t('M.user_vip_months') }}
             </p>
             <p class="duration-currency font-size18">
-              {{filteredData[3].value}}{{filteredData[3].vipCoinName}}
+              {{filteredData[3]?filteredData[3].value:'--'}}{{filteredData[3]?filteredData[3].vipCoinName:'--'}}
             </p>
             <p class="duration-through">
               <!--1200FUC-->
-              {{filteredData[3].value}}{{filteredData[3].vipCoinName}}
+              {{filteredData[3]?filteredData[3].value:'--'}}{{filteredData[3]?filteredData[3].vipCoinName:'--'}}
             </p>
           </div>
           <div
@@ -474,7 +474,7 @@
               1{{ $t('M.user_vip_months') }}
             </p>
             <p class="duration-currency font-size18">
-              {{filteredData[0].value}}{{filteredData[0].vipCoinName}}
+              {{filteredData[0]?filteredData[0].value:'--'}}{{filteredData[0]?filteredData[0].vipCoinName:'--'}}
             </p>
           </div>
         </div>
@@ -484,7 +484,7 @@
             <span class="usable-asset font-size16">
               {{ currencyAsset }}
               <sub class="currency font-size12">
-                {{filteredData[0].vipCoinName}}
+                {{filteredData[0]?filteredData[0].vipCoinName:'--'}}
               </sub>
             </span>
             <span
@@ -938,7 +938,10 @@ export default {
   },
   watch: {
     vipLeavl (newVal) {
-      console.log(newVal)
+      // console.log(newVal)
+    },
+    filteredData (newVal) {
+      // console.log(newVal)
     }
   }
 }

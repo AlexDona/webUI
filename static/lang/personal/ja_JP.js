@@ -279,5 +279,24 @@ export const personal = {
   'user_vip_text7': '開かれた',
   'user_vip_text8': 'VIP割引',
   'user_vip_fee_discount': '手数料割引',
-  'user_vip_recommend': '推薦'
+  'user_vip_recommend': '推薦',
+  // push资产
+  'user_push_input_buyer': '入力してください買い手',
+  'user_push_input_sum': '入力してください数量',
+  'user_push_input_price': '入力してください価格',
+  'user_push_input_pwd': '入力してください取引パスワード',
+  // 修改登录密码
+  'user_modification_login_pwd': '変更ログインパスワード',
+  'user_modification_original_pwd': '入力してくださいオリジナルログインパスワード',
+  'user_modification_input_pwd': '入力してくださいパスワード',
+  'user_modification_input_confirm_pwd': '入力してください確認ログインパスワード',
+  'user_modification_confirm_': '確認変更',
+  // 修改交易密码
+  'user_modification_trade_pwd': '変更取引パスワード',
+  'user_modification_repeat_trade_pwd': '繰り返し取引パスワード',
+  'user_modification_confirm_trade_pwd': '入力してください確認取引パスワード',
+  // 修改手机
+  'user_modify_phone': '変更携帯電話',
+  'user_modify_input_phone': '電話番号を入力する',
+  'user_modify_trade_pwd': '取引パスワード'
 }

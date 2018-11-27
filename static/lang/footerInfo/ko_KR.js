@@ -29,7 +29,7 @@ export const footerInfo = {
   'user_please_input13': '핸드폰 번호 입력',
   'user_please_input14': '포토 인증 코드 입력',
   'user_please_input15': '정확한 포토 인증코드 입력',
-  'user_please_input16': '기존 사용했던 핸드폰 인증코드 입력',
+  'user_please_input16': '기존에 사용하셨던 전화번호 인증코드 입력하세요.',
   'user_please_input17': '정확한 핸드폰번호 입력',
   'user_please_input18': '신 핸드폰 메세지 인증코드 입력',
   'user_please_input19': '진실한 이름 입력',

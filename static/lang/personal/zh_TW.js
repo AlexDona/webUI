@@ -284,5 +284,24 @@ export const personal = {
   'user_vip_text7': '已開通',
   'user_vip_text8': 'VIP享手續費、提現優惠',
   'user_vip_fee_discount': '手續費折扣',
-  'user_vip_recommend': '推薦'
+  'user_vip_recommend': '推薦',
+  // push资产
+  'user_push_input_buyer': '請輸入買方',
+  'user_push_input_sum': '請輸入數量',
+  'user_push_input_price': '請輸入價格',
+  'user_push_input_pwd': '請輸入交易密碼',
+  // 修改登錄密碼
+  'user_modification_login_pwd': '修改登錄密碼',
+  'user_modification_original_pwd': '請輸入原登錄密碼',
+  'user_modification_input_pwd': '請輸入密碼',
+  'user_modification_input_confirm_pwd': '請輸入確認登陸密碼',
+  'user_modification_confirm_': '確認修改',
+  // 修改交易密碼
+  'user_modification_trade_pwd': '修改交易密碼',
+  'user_modification_repeat_trade_pwd': '重復交易密碼',
+  'user_modification_confirm_trade_pwd': '請輸入確認交易密碼',
+  // 修改手機
+  'user_modify_phone': '修改手機',
+  'user_modify_input_phone': '請輸入手機',
+  'user_modify_trade_pwd': '交易密碼'
 }

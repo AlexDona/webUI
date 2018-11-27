@@ -714,7 +714,14 @@ export default {
         this.priceErrorTipsBorder = true
         return false
       }
+      console.log(this.payForListArr.length)
+      console.log(this.payForListArr)
       // 交易方式
+      if (this.payForListArr[0] === '0' && this.payForListArr[1] === '0' && this.payForListArr[2] === '0' && this.payForListArr[3] === '0' && this.payForListArr[4] === '0') {
+        // this.errorInfoTradeWay = '请先设置收款方式'
+        this.errorInfoTradeWay = this.$t('M.otc_publishAD_set_get_money_way')
+        return false
+      }
       if (!this.parameterPayTypes) {
         // 请选择交易方式
         this.errorInfoTradeWay = this.$t('M.otc_publishAD_chouseSellType')
