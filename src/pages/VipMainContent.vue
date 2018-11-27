@@ -860,13 +860,19 @@ export default {
         this.fullscreenLoading = false
         return false
       } else {
+        // // 接口成功清除loading
+        // this.fullscreenLoading = false
+        // if (data.data.data) {
+        //   // 返回展示
+        //   this.vipPriceInfo1 = data.data.data
+        //   console.log(this.vipPriceInfo1[0].vipCoinName)
+        // }
+        // 任修复报错问题
         // 接口成功清除loading
         this.fullscreenLoading = false
-        if (data.data.data) {
-          // 返回展示
-          this.vipPriceInfo1 = data.data.data
-          console.log(this.vipPriceInfo1[0].vipCoinName)
-        }
+        // this.vipPriceInfo1 = data.data.data
+        this.vipPriceInfo1 = getNestedData(data, 'data.data')
+        console.log(this.vipPriceInfo1)
       }
     },
     async getCurrencyApplicationDownloadUrl () {
@@ -884,7 +890,9 @@ export default {
         // 接口成功清除loading
         this.fullscreenLoading = false
         // 返回展示
-        this.coinId = data.data.data.coinId
+        // this.coinId = data.data.data.coinId
+        // 任修复报错问题
+        this.coinId = getNestedData(data, 'data.data.coinId')
         this.toggleAssetsCurrencyId()
       }
     },
@@ -905,7 +913,9 @@ export default {
       } else {
         // 接口成功清除loading
         this.fullscreenLoading = false
-        this.currencyAsset = data.data.data.total
+        // this.currencyAsset = data.data.data.total
+        // 任修复报错问题
+        this.currencyAsset = getNestedData(data, 'data.data.total')
         console.log(this.currencyAsset)
       }
     }
