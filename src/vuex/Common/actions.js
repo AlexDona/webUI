@@ -82,9 +82,6 @@ export default {
           configInfo
         })
       }
-      // let localLanguage = language || getStore('language') || state.defaultLanguage
-      // console.log(localLanguage)
-      // changeLanguage(localLanguage, this, commit)
     }
   },
   // 设置用户信息
@@ -100,13 +97,13 @@ export default {
     ) {
       return false
     } else {
-      // eslint-disable-next-line
       let footerInfo1 = getNestedData(data1, 'data.data')
       let footerInfo2 = getNestedData(data2, 'data.data')
       commit('SET_FOOTER_INFO', {
         footerInfo1,
         footerInfo2
       })
+      console.log(state)
       // favicon 添加
       addFavicon(
         getNestedData(footerInfo1, 'headTitleLogo'),

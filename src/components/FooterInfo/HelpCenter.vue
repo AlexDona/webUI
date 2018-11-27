@@ -21,64 +21,70 @@
         />
       </div>
       <div class="item-content help">
-        <div class="inner-box">
-          <ul class="content-list">
-            <li
-              class="content-item"
-              v-for="(item,index) in helpFilterList"
-              :key="index"
-            >
-              <div
-                class="content-item-link"
-              >
-                <div class="title">
-              <span
-                class="icon-box cursor-pointer"
-                v-show="!helpShowStatusList[index]"
-                @click="toggleShowHelpItem(index,1)"
-              >
-                <IconFont
-                  icon-name="icon-jia1"
-                  class="icon-font"
-                />
-              </span>
-                  <span
-                    class="icon-box cursor-pointer"
-                    v-show="helpShowStatusList[index]"
-                    @click="toggleShowHelpItem(index,0)"
-                  >
-                <IconFont
-                  icon-name="icon-jian"
-                  class="icon-font"
-                />
-              </span>
-                  <span class="title-content">
-                    {{item.keyword}}
-                  </span>
-                </div>
-                <el-collapse-transition>
-                  <divs
-                    class="content"
-                    v-show="helpShowStatusList[index]"
-                    v-html="item.content"
-                  >
-                  </divs>
-                </el-collapse-transition>
-              </div>
-            </li>
-          </ul>
-          <!--分页-->
-          <div class="page">
-            <el-pagination
-              background
-              v-show="helpFilterList.length"
-              layout="prev, pager, next"
-              :page-count="totalPages"
-              @current-change="changeCurrentPage"
-            >
-            </el-pagination>
-        </div>
-      </div>
+        <!--<div class="inner-box">-->
+          <!--<ul class="content-list">-->
+            <!--<li-->
+              <!--class="content-item"-->
+              <!--v-for="(item,index) in helpFilterList"-->
+              <!--:key="index"-->
+            <!--&gt;-->
+              <!--<div-->
+                <!--class="content-item-link"-->
+              <!--&gt;-->
+                <!--<div class="title">-->
+              <!--<span-->
+                <!--class="icon-box cursor-pointer"-->
+                <!--v-show="!helpShowStatusList[index]"-->
+                <!--@click="toggleShowHelpItem(index,1)"-->
+              <!--&gt;-->
+                <!--<IconFont-->
+                  <!--icon-name="icon-jia1"-->
+                  <!--class="icon-font"-->
+                <!--/>-->
+              <!--</span>-->
+                  <!--<span-->
+                    <!--class="icon-box cursor-pointer"-->
+                    <!--v-show="helpShowStatusList[index]"-->
+                    <!--@click="toggleShowHelpItem(index,0)"-->
+                  <!--&gt;-->
+                <!--<IconFont-->
+                  <!--icon-name="icon-jian"-->
+                  <!--class="icon-font"-->
+                <!--/>-->
+              <!--</span>-->
+                  <!--<span class="title-content">-->
+                    <!--{{item.keyword}}-->
+                  <!--</span>-->
+                <!--</div>-->
+                <!--<el-collapse-transition>-->
+                  <!--<divs-->
+                    <!--class="content"-->
+                    <!--v-show="helpShowStatusList[index]"-->
+                    <!--v-html="item.content"-->
+                  <!--&gt;-->
+                  <!--</divs>-->
+                <!--</el-collapse-transition>-->
+              <!--</div>-->
+            <!--</li>-->
+          <!--</ul>-->
+          <!--&lt;!&ndash;分页&ndash;&gt;-->
+          <!--<div class="page">-->
+            <!--<el-pagination-->
+              <!--background-->
+              <!--v-show="helpFilterList.length"-->
+              <!--layout="prev, pager, next"-->
+              <!--:page-count="totalPages"-->
+              <!--@current-change="changeCurrentPage"-->
+            <!--&gt;-->
+            <!--</el-pagination>-->
+        <!--</div>-->
+      <!--</div>-->
+        <iframe
+          src="http://192.168.1.194:4999/web/#/"
+          width="1100px"
+          height="100%"
+          frameborder="0"
+        ></iframe>
     </div>
   </div>
   </div>
