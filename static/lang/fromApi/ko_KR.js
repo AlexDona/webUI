@@ -165,7 +165,7 @@ export const fromApi = {
   'user-fail-advanced-auth': '고급 인증 실패',
   'otc_failure_0010': '실행 취소 실패',
   'otc_failure_0011': '해당 주문이 현재 완료 또는 취소되었습니다',
-  'otc_failure_0012': '현재 사용자는 OTC 판매자가 아니며이 기능을 사용할 권리가 없습니다',
+  'otc_failure_0012': '현재 사용자는 OTC 판매자가 아니며 이 기능을 사용할 권리가 없습니다.',
   'recharge_withdraw_failure_0010': 'Google 인증 코드는 비워 둘 수 없습니다.',
   'recharge_withdraw_failure_0012': '충전 유형을 비워 둘 수 없습니다',
   'recharge_withdraw_failure_0011': '거래 비밀번호 오류',

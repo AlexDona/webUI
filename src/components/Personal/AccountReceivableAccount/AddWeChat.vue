@@ -24,7 +24,7 @@
           class="header-content-left header-content font-size16 font-weight600"
         >
           <!--修改微信账号-->
-           {{ $t('M.comm_modification') }}{{ $t('M.user_account_weChat') }}{{ $t('M.user_account_number') }}
+          {{ $t('M.comm_modification') }}{{ $t('M.user_account_weChat') }}{{ $t('M.user_account_number') }}
         </span>
         <span
           class="header-content-right font-size12 cursor-pointer"
