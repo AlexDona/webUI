@@ -30,7 +30,6 @@ export default {
     }
   },
   created () {
-    this.changeLanguage('en-us')
     // onlineText/offlineText：按钮文本,繁中（線上客服），英语（Online Service），日语（オンラインサービス），韩语（온라인 고객지원）
     // language：语言：英语（en-us），繁中（zh-TW），日语（ja），韩语（ko），西班牙语（es），阿拉伯语（ar），法语（fr），泰语（th），印尼语（id），葡萄牙语（pt），俄罗斯语（ru）
     // pos_flag：按钮位置，1）形状： h(横向) v(纵向) c(圆形) i(图片)；2）位置： lt(左上) mt(中上) rt(右上) lm(左中) mm(正中) rm(右中) lb(左下) mb(中下) rb(右下)默认值：crb（pc），hrb（mobile）
@@ -48,17 +47,13 @@ export default {
         'isInvite': false,
         'mode': 'inner',
         'color': '#338ff5',
-        'pos_flag': 'hrb',
+        'pos_flag': 'crb',
         'language': this.msgLanguage,
-        'onlineText': '',
-        'offlineText': '',
         'mobile': {
           'mode': 'inner',
           'color': '#338ff5',
           'pos_flag': 'crb',
-          'language': '',
-          'onlineText': '',
-          'offlineText': ''
+          'language': ''
         }
       })
     },
@@ -96,14 +91,17 @@ export default {
   },
   computed: {
     ...mapState({
-      language: state => state.common.language
+      language: state => state.common.language,
+      defaultLanguage: state => state.common.defaultLanguage
     })
   },
   watch: {
     language (newVal) {
-      $('#udesk_btn_text').text(this.$t('M.common_onlineText'))
       console.log(newVal)
-      this.onlineText = this.$t('M.common_onlineText')
+      this.changeLanguage(newVal)
+    },
+    defaultLanguage (newVal) {
+      console.log(newVal)
       this.changeLanguage(newVal)
     }
   }
