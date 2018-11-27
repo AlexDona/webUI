@@ -12,7 +12,7 @@ import {
 } from '../../utils'
 import {
   getConfigAjax,
-  getCountryList, getFooterInfo1, getFooterInfo2, getLanguageList,
+  getCountryList, getFooterInfo1, getLanguageList,
   getTransitionCurrencyRateAjax
 } from '../../utils/api/header'
 import {
