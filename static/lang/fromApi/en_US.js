@@ -1,3 +1,4 @@
+
 export const fromApi = {
   'otc_failure_0046': 'Max pending orders {}limit, try again later',
   'otc_failure_0047': 'Buyer must have sold {} times',

@@ -4,7 +4,10 @@
     :class="{'day':theme == 'day','night':theme == 'night' }"
   >
     <!-- 1.0 banner -->
-    <div class="banner-box">
+    <div class="banner-box" :style="{
+      width:screenWidth + 'px',
+      height:(screenWidth*131)/480 + 'px'
+    }">
       <img src="../../assets/finance/banner.png">
     </div>
     <div
@@ -782,7 +785,7 @@ export default {
         this.fullscreenLoading = false
         return false
       } else {
-        console.log(data)
+        // console.log(data)
         this.fullscreenLoading = false
         // let getData = Object.assign({}, data.data.data)
         // let getData = data.data.data
@@ -796,7 +799,11 @@ export default {
           }
         })
         // 设置每次返回回来的币种id
-        this.selectedCoinId = getData.tickerPriceResult.coinId
+        if (!getData.tickerPriceResult.coinId) {
+          this.selectedCoinId = ''
+        } else {
+          this.selectedCoinId = getData.tickerPriceResult.coinId
+        }
         // 设置每次返回地币种名称
         this.selecteCoindName = getData.tickerPriceResult.coinName
         // 最新价钱
@@ -807,8 +814,6 @@ export default {
         this.historyAmountIncrease = getData.tickerPriceResult.historyAmountIncrease
         // 理财类型数组
         this.investTypeList = getData.managementList
-        console.log(11111111111111111111111111)
-        console.log(this.investTypeList)
         // 设置存币类型默认值
         // 任重写
         if (getData.managementList.length) {
@@ -916,7 +921,7 @@ export default {
       status: state => state.finance.status
     }),
     screenWidth () {
-      return window.innerWidth / 3
+      return window.innerWidth
     }
   },
   watch: {
