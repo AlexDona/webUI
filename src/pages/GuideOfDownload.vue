@@ -117,7 +117,7 @@ export default {
   data () {
     return {
       erCodeVisible: false,
-      erCodeString: `${domain}/downloadApp`,
+      erCodeString: `${domain}/downloadApp?language=${this.language}`,
       isOpen: true
     }
   },
@@ -136,8 +136,9 @@ export default {
   },
   filter: {},
   computed: {
-    ...mapState([
-    ]),
+    ...mapState({
+      language: state => state.common.language
+    }),
     windowHeight () {
       return window.innerHeight
     }

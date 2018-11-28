@@ -800,7 +800,7 @@ export default {
     ]),
     jumpToDownAppPage () {
       if (this.inviter) {
-        this.$router.push({'path': '/downloadApp'})
+        this.$router.push({'path': `/downloadApp?language${this.language}`})
       } else {
         this.$router.push({'path': '/login'})
       }

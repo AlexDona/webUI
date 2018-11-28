@@ -96,6 +96,7 @@ export default {
     this.isIOS = !!u.match(/\(i[^;]+;( U;)? CPU.+Mac OS X/) // ios终端
     this.isWXBrowserStatus = u.toLowerCase().match(/MicroMessenger/i) == 'micromessenger' ? 1 : 0
     await this.getAppDownLoadUrl()
+    console.log(this.language)
   },
   mounted () {
   },
@@ -149,6 +150,12 @@ export default {
   },
   watch: {
     footerInfo (newVal) {
+      console.log(newVal)
+    },
+    language (newVal) {
+      console.log(newVal)
+    },
+    isChineseLanguage (newVal) {
       console.log(newVal)
     },
     isWXBrowser (newVal) {

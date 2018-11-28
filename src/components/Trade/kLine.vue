@@ -245,6 +245,13 @@ export default {
       this.options.language = this.language
       this.init(this.options)
       this.getBars()
+      if (!this.loadingCount) {
+        setTimeout(() => {
+          this.fullscreenLoading = false
+          this.loadingCount++
+          console.log(this.fullscreenLoading)
+        }, 600)
+      }
     },
     // 获取初始交易对
     async getDefaultSymbol () {
@@ -339,13 +346,6 @@ export default {
           setTimeout(() => {
             let iframe$ = document.getElementsByTagName('iframe')[0].contentWindow.$
             let lastBtnList = iframe$('.header-chart-panel-content .left')[0].childElementCount
-            // console.log(iframe$('.header-chart-panel-content .left .group.space-single .add0').length)
-            // let repeatCount = iframe$('.header-chart-panel-content .left .group.space-single .add0').length
-            // for (let j = 0; j < repeatCount - 1; j++) {
-            //   for (let k = 0; k < 9; k++) {
-            //     iframe$.remove(iframe$(`.header-chart-panel-content .left .group.space-single .add${i}`).parentNode)
-            //   }
-            // }
             // console.log(lastBtnList)
             if (lastBtnList.length > 13) {
               for (let i = 2; i < lastBtnList.length - 9; i++) {
@@ -606,9 +606,11 @@ export default {
       })
     },
     language () {
+      console.log(this.symbol)
       this.initKLine(this.symbol)
     },
     async activeSymbolId (newVal, oldVal) {
+      console.log(newVal)
       this.initKLine(newVal)
       this.KlineNum = 0
     },
@@ -643,9 +645,6 @@ export default {
           console.log(this.fullscreenLoading)
         }, 600)
       }
-      // let iframe$ = document.getElementsByTagName('iframe')[0].contentWindow.$
-      // // let lastBtnList = iframe$('.header-chart-panel-content .left')[0].childElementCount
-      // console.log(iframe$('.header-chart-panel-content .left .group.space-single .add0'))
     },
     interval (newVal, oldVal) {
       console.log(newVal)

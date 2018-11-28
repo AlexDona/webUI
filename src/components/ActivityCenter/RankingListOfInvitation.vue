@@ -120,7 +120,10 @@ import {
   phoneNumberFormat
 } from '../../utils'
 import {getRankingList} from '../../utils/api/activityCenter'
-import {returnAjaxMsg, getNestedData} from '../../utils/commonFunc'
+import {
+  returnAjaxMsg,
+  getNestedData
+} from '../../utils/commonFunc'
 
 export default {
   components: {},
