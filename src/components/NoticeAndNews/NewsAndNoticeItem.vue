@@ -87,7 +87,6 @@ export default {
     }
   },
   async created () {
-    console.log(this.$route)
     await this.getDetailInfo(this.$route.params.id)
     await this.getAllNewsTypeList()
     this.getAllTypeListNewsList()
@@ -97,7 +96,6 @@ export default {
   updated () {},
   beforeRouteUpdate () {},
   methods: {
-
     // 获取所有新闻类型
     async getAllNewsTypeList () {
       const params = {
@@ -106,9 +104,7 @@ export default {
       if (!returnAjaxMsg(data, this)) {
         return false
       } else {
-        console.log(data)
         this.newsTypeList = getNestedData(data, 'data.data')
-        console.log(this.newsTypeList)
       }
     },
     // 获取详情信息
@@ -117,9 +113,7 @@ export default {
       if (!returnAjaxMsg(data, this)) {
         return false
       } else {
-        console.log(data)
         this.newDetail = getNestedData(data, 'data.data')
-        // console.log(this.newDetail)
       }
     },
     // 获取全部type类型的前5条数据
@@ -132,18 +126,14 @@ export default {
       for (let i = 0; i < this.newsTypeList.length; i++) {
         const item = this.newsTypeList[i]
         params.newsTypeId = item.id - 0
-        console.log(params)
         const data = await getNewsNoticeList(params)
-        console.log(data)
         if (!returnAjaxMsg(data, this)) {
           return false
         } else {
-          console.log(data)
-          const targetData = data.data.data.list
+          const targetData = getNestedData(data, 'data.data.list')
           this.detailAllNewsList.push(targetData)
         }
       }
-      console.log(this.detailAllNewsList)
     }
   },
   filter: {},

@@ -35,7 +35,10 @@ import {
   getAllNewsTypeList,
   getNewsDetail
 } from '../../utils/api/home'
-import {returnAjaxMsg} from '../../utils/commonFunc'
+import {
+  returnAjaxMsg,
+  getNestedData
+} from '../../utils/commonFunc'
 import {mapState} from 'vuex'
 export default {
   components: {},
@@ -76,7 +79,6 @@ export default {
     this.getAllTypeListNewsList()
   },
   mounted () {
-    console.log(this.newsDetailJumpId)
     if (this.newsDetailJumpId) {
       this.getDetailInfo(this.newsDetailJumpId)
     }
@@ -86,7 +88,6 @@ export default {
   beforeRouteUpdate () {},
   methods: {
     changeTab (e) {
-      console.log(e.name)
       this.newsTypeId = e.name
       this.pageNum = 1
       this.getNewsNoticeList()
@@ -105,18 +106,14 @@ export default {
       for (let i = 0; i < this.newsTypeList.length; i++) {
         const item = this.newsTypeList[i]
         params.newsTypeId = item.id - 0
-        console.log(params)
         const data = await getNewsNoticeList(params)
-        console.log(data)
         if (!returnAjaxMsg(data, this)) {
           return false
         } else {
-          console.log(data)
-          const targetData = data.data.data.list
+          const targetData = getNestedData(data, 'data.data.list')
           this.detailAllNewsList.push(targetData)
         }
       }
-      console.log(this.detailAllNewsList)
     },
     // 详情跳转
     jumpToDetail (item) {
@@ -129,8 +126,7 @@ export default {
         return false
       } else {
         this.showNewsList = false
-        this.newDetail = data.data.data
-        console.log(this.newDetail)
+        this.newDetail = getNestedData(data, 'data.data')
       }
     },
     // 获取所有新闻类型
@@ -141,9 +137,7 @@ export default {
       if (!returnAjaxMsg(data, this)) {
         return false
       } else {
-        console.log(data)
-        this.newsTypeList = data.data.data
-        console.log(this.newsTypeList)
+        this.newsTypeList = getNestedData(data, 'data.data')
       }
     },
     // 获取新闻公告列表
@@ -159,8 +153,8 @@ export default {
         return false
       } else {
         console.log(data)
-        const targetData = data.data.data
-        this.noticeList = targetData.list
+        const targetData = getNestedData(data, 'data.data')
+        this.noticeList = targetData.list || []
         this.pageNum = targetData.pageNum
         this.totalPages = targetData.pages
       }
@@ -172,7 +166,6 @@ export default {
       language: state => state.common.language,
       theme: state => state.common.theme,
       newsDetailJumpId: state => state.footerInfo.newsDetailJumpId
-      // newsAndNoticeActiveName: state => state.footerInfo.newsAndNoticeActiveName
     }),
     noticeFilterList () {
       return this.noticeList.filter((item) => {
@@ -196,9 +189,6 @@ export default {
     }
   },
   watch: {
-    newsDetailJumpId (newVal) {
-      console.log(newVal)
-    },
     language () {
       this.getNewsNoticeList()
     }
