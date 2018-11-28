@@ -602,7 +602,6 @@ export default {
           margin-bottom: 25px;
           >.filtrate-text{
             margin-right: 5px;
-            // color: #9DA5B3;
           }
           >.status-input{
             margin-right: 40px;
@@ -615,18 +614,9 @@ export default {
           >.inquire-button{
             float: right;
           }
-          >.all-clear{
-            // color: #338FF5;
-          }
         }
         >.orders-main-bottom{
           min-height: 440px;
-          .red{
-            // color: #D45858;
-          }
-          .green{
-            // color: #008069;
-          }
           .xilian{
             vertical-align: middle;
           }
@@ -649,14 +639,6 @@ export default {
             >.filtrate-text{
               color: #9DA5B3;
             }
-            >.status-input{
-            }
-            >.date-picker{
-              >.date-short-line{
-              }
-            }
-            >.inquire-button{
-            }
             >.all-clear{
               color: #338FF5;
             }
@@ -669,10 +651,6 @@ export default {
             .green{
               color: #008069;
             }
-            .xilian{
-            }
-          }
-          .page{
           }
         }
       }
@@ -689,14 +667,6 @@ export default {
             >.filtrate-text{
               color: #9DA5B3;
             }
-            >.status-input{
-            }
-            >.date-picker{
-              >.date-short-line{
-              }
-            }
-            >.inquire-button{
-            }
             >.all-clear{
               color: #338FF5;
             }
@@ -709,10 +679,6 @@ export default {
             .green{
               color: #008069;
             }
-            .xilian{
-            }
-          }
-          .page{
           }
         }
       }

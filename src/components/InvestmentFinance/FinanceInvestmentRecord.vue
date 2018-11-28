@@ -459,8 +459,8 @@ export default {
     width:100%;
     height:100%;
       >.banner-box{
-          background:#121824 url('../../assets/finance/banner.png') no-repeat center center/100% 100%;
-        }
+         background:#121824 url('../../assets/finance/banner.png') no-repeat center center/100% 100%;
+      }
       >.inner-box{
         display:flex;
         width:100%;
@@ -506,17 +506,11 @@ export default {
     &.night{
       >.inner-box{
         background-color: $nightInnerBoxBg;
-        >div{
-          /*<!--background-color: $nightMainTitleBgColor;-->*/
-        }
       }
     }
     &.day{
       >.inner-box{
         background-color: #fff;
-        >div{
-          /*background-color: $dayMainBgColor;*/
-        }
       }
       .invest{
       color: #338FF5;

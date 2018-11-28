@@ -953,11 +953,9 @@ export default {
           flex: 2;
           > .publish-button {
             > .common-style {
-              // color: #8494A6;
               width: 70px;
               height: 36px;
               display: inline-block;
-              // border: 1px solid #47525C;
               cursor: pointer;
             }
             > .sell-button {
@@ -971,33 +969,15 @@ export default {
               border-top-right-radius: 4px;
               border-bottom-right-radius: 4px;
             }
-            > .green {
-              // background-color: #008069;
-              // color: #FFFEFE;
-              // border: 1px solid #008069;
-            }
-            > .red {
-              // background-color: #D45858;
-              // color: #FFFEFE;
-              // border: 1px solid #D45858;
-            }
           }
           > .buy-sell-submit-form {
             margin-top: 20px;
             .want-buy-sell-sum {
-              // color: #338FF5;
               font-size: 20px;
               padding-top: 20px;
             }
             .want-buy-sell-sum-content {
-              .sellGreen {
-                // color: #30C296;
-              }
-              .buyOrange {
-                // color: #E97345;
-              }
               > .want-text {
-                // color: #9DA5B3;
                 font-size: 12px;
               }
               > .max-sum {
@@ -1005,7 +985,6 @@ export default {
                 margin-right: 20px;
               }
               > .want-text {
-                // color: #9DA5B3;
                 font-size: 12px;
               }
               > .market-price {
@@ -1018,16 +997,12 @@ export default {
               > .sell-sum {
                 width: 190px;
                 height: 36px;
-                // background-color: #333A41;
                 padding-left: 10px;
-                // color: #9DA5B3;
               }
               > .unit {
                 width: 70px;
                 height: 36px;
-                // color: #338FF5;
                 font-size: 16px;
-                // background-color: #414951;
                 display: inline-block;
                 vertical-align: top;
                 line-height: 36px;
@@ -1040,10 +1015,6 @@ export default {
                 display: inline-block;
                 width: 320px;
                 font-size: 12px;
-                // color: #D45858;
-              }
-              >.errorBuy{
-                // color: #D45858;
               }
             }
             .volume-business {
@@ -1051,9 +1022,7 @@ export default {
               > .sell-sum {
                 width: 130px;
                 height: 36px;
-                // background-color: #333A41;
                 padding-left: 10px;
-                // color: #9DA5B3;
               }
               > .max-sell-sum {
                 width: 180px;
@@ -1061,17 +1030,14 @@ export default {
               > .monad {
                 width: 50px;
                 height: 36px;
-                // background-color: #414951;
                 display: inline-block;
                 vertical-align: top;
                 margin-left: -4px;
                 line-height: 36px;
                 text-align: center;
-                // color: #338FF5;
                 font-size: 12px;
               }
               > .range-line {
-                // color: #7d90ac;
                 margin: 0px 10px;
               }
             }
@@ -1080,30 +1046,22 @@ export default {
                 display: inline-block;
                 width: 212px;
                 font-size: 12px;
-                // color: #D45858;
-              }
-              >.errorLimitMax{
               }
             }
             .remark {
-              // color: #9DA5B3;
               font-size: 12px;
               margin-top: -10px;
             }
             .predict {
               > .predict-text {
-                // color: #9FA7B2;
                 font-size: 12px;
               }
               > .predict-sum {
-                // color: #30C296;
                 font-size: 12px;
               }
               > .rate-text {
-                // color: #9FA7B2;
                 font-size: 12px;
                 > .rate {
-                  // color: #CA5040;
                   font-size: 12px;
                 }
               }
@@ -1112,22 +1070,10 @@ export default {
               > .publish-submit-button {
                 width: 589px;
                 height: 42px;
-                // color: #FFFFFF;
                 font-size: 14px;
                 border-radius: 4px;
                 margin-top: 40px;
                 cursor: pointer;
-              }
-              > .publish-submit-buy {
-                // background-color: #D45858;
-              }
-              > .publish-submit-sell {
-                // background-color: #008069;
-              }
-            }
-            .password-dialog{
-              .tips{
-                // color: red;
               }
             }
           }
@@ -1136,11 +1082,7 @@ export default {
           flex: 1;
           > .release-notes {
             width: 216px;
-            // color: #8C8E91;
             font-size: 12px;
-            > .release-title {
-              // color: #9FA7B2;
-            }
             > .release-tips {
               line-height: 20px;
               font-size: 14px;
@@ -1158,10 +1100,6 @@ export default {
               > .common-style {
                 color: #8494A6;
                 border: 1px solid #1C1F32;
-              }
-              > .sell-button {
-              }
-              > .buy-button {
               }
               > .green {
                 background-color: #008069;
@@ -1188,12 +1126,8 @@ export default {
                 > .want-text {
                   color: #9DA5B3;
                 }
-                > .max-sum {
-                }
                 > .want-text {
                   color: #9DA5B3;
-                }
-                > .market-price {
                 }
               }
               .sell-buy-input {
@@ -1219,8 +1153,6 @@ export default {
                   background-color: #1C1F32;
                   color: #9DA5B3;
                 }
-                > .max-sell-sum {
-                }
                 > .monad {
                   background-color: #21243B;
                   color: #338FF5;
@@ -1232,8 +1164,6 @@ export default {
               .limitErrorTips{
                 >.errorLimitMin,.errorLimitMax{
                   color: #D45858;
-                }
-                >.errorLimitMax{
                 }
               }
               .remark {
@@ -1278,8 +1208,6 @@ export default {
               > .release-title {
                 color: #fff;
               }
-              > .release-tips {
-              }
             }
           }
         }
@@ -1294,10 +1222,6 @@ export default {
               > .common-style {
                 color: #8494A6;
                 border: 1px solid #333333;
-              }
-              > .sell-button {
-              }
-              > .buy-button {
               }
               > .green {
                 background-color: #008069;
@@ -1324,12 +1248,8 @@ export default {
                 > .want-text {
                   color: #9DA5B3;
                 }
-                > .max-sum {
-                }
                 > .want-text {
                   color: #9DA5B3;
-                }
-                > .market-price {
                 }
               }
               .sell-buy-input {
@@ -1356,8 +1276,6 @@ export default {
                   background-color: #ffffff;
                   color: #9DA5B3;
                 }
-                > .max-sell-sum {
-                }
                 > .monad {
                   background-color: #CBDDF4;
                   color: #338FF5;
@@ -1370,8 +1288,6 @@ export default {
               .limitErrorTips{
                 >.errorLimitMin,.errorLimitMax{
                   color: #D45858;
-                }
-                >.errorLimitMax{
                 }
               }
               .remark {
@@ -1415,8 +1331,6 @@ export default {
               color: #7D90AC;
               > .release-title {
                 color: #BB4C4C;
-              }
-              > .release-tips {
               }
             }
           }

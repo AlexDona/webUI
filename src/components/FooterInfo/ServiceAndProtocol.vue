@@ -297,12 +297,6 @@ export default {
     }
     &.night{
       >.content{
-        >.top{
-          >h1{
-          }
-          >p{
-          }
-        }
         >.content{
           background-color: #121824;
           >.inner-box{
@@ -313,12 +307,6 @@ export default {
     }
     &.day{
       >.content{
-        >.top{
-          >h1{
-          }
-          >p{
-          }
-        }
         >.content{
           background-color: #fff;
           >.inner-box{

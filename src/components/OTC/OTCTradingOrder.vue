@@ -1127,7 +1127,6 @@ export default {
 }
 </script>
 <style scoped lang="scss" type="text/scss">
-// @import "../../../static/css/scss/OTC/OTCCenter.scss";
 @import "../../../static/css/scss/index";
 .otc-trading-order-box{
   >.otc-trading-order-content{
@@ -1140,24 +1139,18 @@ export default {
       margin-bottom: 15px;
       box-sizing: border-box;
       border-radius: 5px;
-      // background-color: #202A33;
-      // border: 1px solid #262F38;
       >.order{
         >.order-list-head{
           height: 36px;
           line-height: 36px;
           box-sizing: border-box;
           padding: 0 77px 0 25px;
-          // color: #9DA5B3;
-          // border-bottom: 1px solid #262F38;
           display: flex;
           justify-content: space-between;
           position: relative;
-          >.buyer-seller{}
           >.order-id{
             padding-left: 300px;
           }
-          >.deal-time{}
           >.order-list-head-icon{
             width:0;
             height:0;
@@ -1184,20 +1177,15 @@ export default {
           }
         }
         >.order-list-body{
-          // color: #9DA5B3;
           padding: 20px 20px 15px 20px;
           display: flex;
           flex: 7;
           >.order-list-body-left{
             flex: 2;
-            // border-right: 1px solid #262F38;
             >.logo{
               display: inline-block;
               margin-right: 10px;
               text-align: center;
-              >.logo-icon{
-
-              }
               >.logo-name{
                 margin-top: 4px;
               }
@@ -1206,21 +1194,17 @@ export default {
               display: inline-block;
               >.trade-info{
                 line-height: 20px;
-                >.money{
-                  // color: #5E95EC;
-                }
               }
             }
           }
           >.order-list-body-middle{
             box-sizing: border-box;
             flex: 2;
-            // border-right: 1px solid #262F38;
             >.middle-content{
-              display: flex; // 任新增
+              display: flex;
               .trader-info{
                 width: 190px;
-                flex: 2; // 任新增
+                flex: 2;
                 >.pay-style{
                   margin: 0 0 8px 20px;
                   position: relative;
@@ -1256,11 +1240,9 @@ export default {
                 }
               }
               >.bank-info-picture{
-                flex: 1; // 任新增
+                flex: 1;
                 vertical-align: top;
                 padding-left: 10px;
-                >.picture-box{
-                }
               }
             }
           }
@@ -1270,29 +1252,19 @@ export default {
               >.action-tips{
                 margin: 0 0 10px 20px;
                 .wait-pay{
-                  // color: #E8554F;
                   margin-right: 10px;
                 }
                 .count-time{
                   margin-left: 10px;
                 }
               }
-              >.submitted-confirm-payment{
-                // color: #5E95EC;
-              }
               >.action-explain{
                 margin-left: 20px;
                 line-height: 24px;
-                >.remaining-time{
-                  // color: #D45858;
-                }
-                .appeal-order{
-                }
               }
               >.count-down-time{
                 line-height: 20px;
                 .timeIcon{
-                  // color: #D45858;
                   margin-right: 10px;
                 }
               }
@@ -1306,8 +1278,6 @@ export default {
           line-height: 36px;
           box-sizing: border-box;
           padding: 0 77px 0 25px;
-          // color: #FFFFFF;
-          // border-bottom: 1px solid #262F38;
         }
         >.appeal-body{
           >.appeal-body-content{
@@ -1320,17 +1290,11 @@ export default {
               justify-content: flex-start;
               >.appeal-reason{
                 margin-right: 10px;
-                // color: #338FF5;
               }
             }
             >.appeal-button{
               flex: 1;
               padding-top: 80px;
-              .cancel-appeal{
-                // color: #8094BB;
-                // background-color: #1E2636;
-                // border:1px solid rgba(52,70,99,1);
-              }
             }
         }
       }
@@ -1342,15 +1306,10 @@ export default {
       color: rgba(255,255,255,0.8);
       line-height: 472px;
       text-align: center;
-      // background-color: #1E2636;
     }
     .page{
       text-align: center;
       padding: 2px 0 15px 0;
-    }
-    >.password-dialog{
-      .tips{
-      }
     }
   }
   &.night{
@@ -1362,12 +1321,6 @@ export default {
           >.order-list-head{
             color: #9DA5B3;
             border-bottom: 1px solid #262F38;
-            >.buyer-seller{}
-            >.order-id{
-            }
-            >.deal-time{}
-            >.order-list-head-icon{
-            }
             >.buy-icon{
               border-right:18px solid #D45858;
               border-top:18px solid #D45858;
@@ -1384,13 +1337,6 @@ export default {
             color: #9DA5B3;
             >.order-list-body-left{
               border-right: 1px solid #262F38;
-              >.logo{
-                >.logo-icon{
-
-                }
-                >.logo-name{
-                }
-              }
               >.left-info{
                 >.trade-info{
                   >.money{
@@ -1410,20 +1356,6 @@ export default {
                       }
                     }
                   }
-                  >.bank-info{
-                  }
-                  >.order-cancle-tips{
-                  }
-                  >.bankMoneyInfo{
-                    .icon{
-                    }
-                    .xilian{
-                    }
-                  }
-                }
-                >.bank-info-picture{
-                  >.picture-box{
-                  }
                 }
               }
             }
@@ -1434,8 +1366,6 @@ export default {
                   .wait-pay{
                     color: #E8554F;
                   }
-                  .count-time{
-                  }
                 }
                 >.submitted-confirm-payment{
                   color: #5E95EC;
@@ -1445,7 +1375,6 @@ export default {
                     color: #E8554F;
                   }
                   .appeal-order{
-                    // color: #8094BB;
                     color: #409EFF;
                     background-color: #CDD9EE;
                   }
@@ -1486,8 +1415,6 @@ export default {
         color: rgba(255,255,255,0.8);
         background-color: #1C1F32;
       }
-      .page{
-      }
       >.password-dialog{
         .tips{
           color: red;
@@ -1504,12 +1431,6 @@ export default {
           >.order-list-head{
             color: #333333;
             border-bottom: 1px solid rgba(72,87,118,0.1);
-            >.buyer-seller{}
-            >.order-id{
-            }
-            >.deal-time{}
-            >.order-list-head-icon{
-            }
             >.buy-icon{
               border-right:18px solid #D45858;
               border-top:18px solid #D45858;
@@ -1526,13 +1447,6 @@ export default {
             color: #7D90AC;
             >.order-list-body-left{
               border-right: 1px solid rgba(38,47,56,0.1);
-              >.logo{
-                >.logo-icon{
-
-                }
-                >.logo-name{
-                }
-              }
               >.left-info{
                 >.trade-info{
                   >.money{
@@ -1552,20 +1466,6 @@ export default {
                       }
                     }
                   }
-                  >.bank-info{
-                  }
-                  >.order-cancle-tips{
-                  }
-                  >.bankMoneyInfo{
-                    .icon{
-                    }
-                    .xilian{
-                    }
-                  }
-                }
-                >.bank-info-picture{
-                  >.picture-box{
-                  }
                 }
               }
             }
@@ -1575,8 +1475,6 @@ export default {
                 >.action-tips{
                   .wait-pay{
                     color: #E8554F;
-                  }
-                  .count-time{
                   }
                 }
                 >.submitted-confirm-payment{
@@ -1631,8 +1529,6 @@ export default {
         background-color: #fff;
         border:1px solid rgba(72,87,118,0.1);
         border-radius: 5px;
-      }
-      .page{
       }
       >.password-dialog{
         .tips{

@@ -223,13 +223,13 @@ export default {
 }
 </script>
 <style scoped lang="scss">
-    .financeline-box{
-        width: 1000px;
-        margin:80px auto;
-        >.finance-line{
-            width: 100%;
-            height: 450px;
-            margin-left: -100px;
-        }
-    }
+.financeline-box{
+  width: 1000px;
+  margin:80px auto;
+  >.finance-line{
+    width: 100%;
+    height: 450px;
+    margin-left: -100px;
+  }
+}
 </style>

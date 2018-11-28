@@ -343,8 +343,6 @@ export default {
       >.top{
         display:flex;
         margin-bottom: 10px;
-        >div{
-        }
         >.left{
           flex:1;
           >.logo{
@@ -355,7 +353,6 @@ export default {
           .introduction{
             margin-top:10px;
           }
-          /**/
           >.share-box{
             margin-top:26px;
             >.share-item{
@@ -374,9 +371,6 @@ export default {
                 .icon-text{
                   font-size: 22px;
                 }
-              }
-              >.icon-weixin{
-
               }
               >.weixin-btn{
                 position: relative;

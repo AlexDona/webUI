@@ -394,13 +394,10 @@ export default {
 .otc-business-apply-box{
   margin-top:66px;
   overflow: hidden;
-  // background-color: $mainNightBgColor;
   >.business-apply-content{
     padding-top: 20px;
     >.privilege{
     width: 1150px;
-    // margin: 70px auto 0px;
-    // margin-top:107px;
     margin: 107px auto 0px;
       >.title{
         color: #fff;
@@ -413,7 +410,6 @@ export default {
           margin-top: 120px;
           width: 210px;
           height: 250px;
-          // background: #202740;
           position: relative;
           text-align: center;
           &::before{
@@ -425,7 +421,6 @@ export default {
             height: 0;
             border-left: 105px solid transparent;
             border-right: 105px solid transparent;
-            // border-bottom: 25px solid #202740;
           }
           &::after{
             content: "";
@@ -436,17 +431,14 @@ export default {
             height: 0;
             border-left: 105px solid transparent;
             border-right: 105px solid transparent;
-            // border-top: 25px solid #202740;
           }
           >.title{
             width: 83px;
             color: #338FF5;
             padding-bottom: 10px;
             font-weight: 700;
-            // border-bottom: 1px dashed rgba(51, 143, 245,.3);
           }
           >.text{
-            // color: #fff;
             line-height: 25px;
             margin-top: 60px;
           }
@@ -463,7 +455,6 @@ export default {
       margin: 70px auto;
       margin-top:107px;
       >.title{
-        // color: #fff;
         text-align: center;
         margin-top: 100px;
       }
@@ -475,29 +466,24 @@ export default {
         margin-top: 70px;
         position: relative;
         >.common{
-          // color: #fff;
           font-size: 16px;
         }
         >.apply{
-          // padding-left: 195px;
           position: absolute;
           left: 185px;
           top: 0;
         }
         >.send-email{
-          // padding-left: 170px;
           position: absolute;
           left: 430px;
           top: 0;
         }
         >.submit-apply{
-          // padding-left: 170px;
           position: absolute;
           left: 680px;
           top: 0;
         }
         >.pass{
-          // padding-left: 172px;
           position: absolute;
           left: 930px;
           top: 0;
@@ -508,10 +494,7 @@ export default {
         height: 650px;
         margin-top: 70px;
         background: url(../../assets/develop/business-apply-bgm.png) no-repeat center;
-        // padding-left: 238px;
-        // padding-top: 40px;
         padding: 40px 0 0 238px;
-        // color: #8F9CA6;
         font-size: 14px;
         >.content{
           width: 620px;
@@ -519,27 +502,16 @@ export default {
             line-height: 25px;
           }
           >.title{
-            // color: #fff;
             margin-top: 20px;
             &:first-child{
               margin-top: 20px;
-            }
-          }
-          >.tips{
-            // color: #4B5D6E;
-            >.agree{
-              // color: #D45858;
             }
           }
         }
       }
       >.agree{
         text-align: center;
-        // color: #fff;
         margin-top: 70px;
-        .agreement{
-          // color: #D45858;
-        }
       }
       >.submit{
         text-align: center;
@@ -547,8 +519,6 @@ export default {
         >.button{
           width: 300px;
           height: 50px;
-          // color: #fff;
-          // background: linear-gradient(0deg,rgba(43,57,110,1),rgba(42,80,130,1));
           border-radius: 5px;
         }
       }
@@ -556,15 +526,10 @@ export default {
   }
   >.business-applying-content,.business-apply-success-content{
     width: 1150px;
-    // height: 718px;
-    // height: 600px;
     margin: 70px auto;
     padding-top: 20px;
     text-align: center;
     background-color: $mainNightBgColor;
-    >.picture{
-
-    }
     >.text{
       color: #fff;
       font-size: 18px;
@@ -585,7 +550,6 @@ export default {
   >.business-apply-blank{
     width: 100%;
     height: 918px;
-    // background-color: #272B41;
     background-color: $mainNightBgColor;
   }
   &.night{
@@ -614,8 +578,6 @@ export default {
             >.text{
               color: #fff;
             }
-            >.location-picture{
-            }
           }
         }
       }
@@ -627,24 +589,12 @@ export default {
           >.common{
             color: #fff;
           }
-          >.apply{
-          }
-          >.send-email{
-          }
-          >.submit-apply{
-          }
-          >.pass{
-          }
         }
         >.step{
           color: #8F9CA6;
           >.content{
-            >p{
-            }
             >.title{
               color: #fff;
-              &:first-child{
-              }
             }
             >.tips{
               color: #4B5D6E;
@@ -672,7 +622,6 @@ export default {
   &.day{
     overflow: hidden;
     background-color: $mainDayBgColor;
-    // background-color: $mainNightBgColor;
     >.business-apply-content{
       >.privilege{
         >.title{
@@ -695,8 +644,6 @@ export default {
             >.text{
               color: #fff;
             }
-            >.location-picture{
-            }
           }
         }
       }
@@ -708,24 +655,12 @@ export default {
           >.common{
             color: #333;
           }
-          >.apply{
-          }
-          >.send-email{
-          }
-          >.submit-apply{
-          }
-          >.pass{
-          }
         }
         >.step{
           color: #8F9CA6;
           >.content{
-            >p{
-            }
             >.title{
               color: #fff;
-              &:first-child{
-              }
             }
             >.tips{
               color: #4B5D6E;
@@ -749,9 +684,6 @@ export default {
         }
       }
     }
-    // >.business-applying-content,.business-apply-success-content{
-    //   background-color: $mainDayBgColor;
-    // }
   }
   .businessApplyModel{
     color: #D45858;
