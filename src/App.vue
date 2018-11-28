@@ -1,5 +1,8 @@
 <template>
-  <div id="app" class="body-container">
+  <div
+    id="app"
+    class="body-container"
+  >
     <NoticeHome
       v-if="needNotice"
     />

@@ -426,7 +426,10 @@ export default {
           console.log(this.collectArea)
           _.forEach(this.collectArea.plateList, (plateItem) => {
             _.forEach(plateItem.content, (contentItem) => {
-              activeTabSymbolStr += `${contentItem.id}@`
+              console.log(contentItem.id)
+              if (contentItem.id) {
+                activeTabSymbolStr += `${contentItem.id}@`
+              }
             })
           })
           break
@@ -436,13 +439,16 @@ export default {
           if (this.filterMarketList[this.activeIndex - 2]) {
             _.forEach(this.filterMarketList[this.activeIndex - 2].plateList, (plateItem) => {
               _.forEach(plateItem.content, (contentItem) => {
-                activeTabSymbolStr += `${contentItem.id}@`
+                console.log(contentItem.id)
+                if (contentItem.id) {
+                  activeTabSymbolStr += `${contentItem.id}@`
+                }
               })
             })
           }
           break
       }
-      activeTabSymbolStr = `${this.middleTopData.id}@` + activeTabSymbolStr.slice(0, activeTabSymbolStr.length - 1)
+      activeTabSymbolStr = this.middleTopData.id ? `${this.middleTopData.id}@${activeTabSymbolStr.slice(0, activeTabSymbolStr.length - 1)}` : `${activeTabSymbolStr.slice(0, activeTabSymbolStr.length - 1)}`
       console.log(activeTabSymbolStr)
       this.$store.commit('trade/CHANGE_ACTIVE_TAB_ID', {
         activeTabSymbolStr

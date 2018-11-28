@@ -74,3 +74,6 @@
 .withdrawal-address.personal .withdrawal-address-content .withdrawal-address-box .el-form .el-form-item .el-form-item__label {
   width: 120px !important;
 }
+.withdrawal-address.personal .el-table tr {
+  background-color: transparent;
+}

@@ -8,67 +8,17 @@
       ref="helpIframe"
     >
       <div class="item-content help">
-        <!--<div class="inner-box">-->
-          <!--<ul class="content-list">-->
-            <!--<li-->
-              <!--class="content-item"-->
-              <!--v-for="(item,index) in helpFilterList"-->
-              <!--:key="index"-->
-            <!--&gt;-->
-              <!--<div-->
-                <!--class="content-item-link"-->
-              <!--&gt;-->
-                <!--<div class="title">-->
-              <!--<span-->
-                <!--class="icon-box cursor-pointer"-->
-                <!--v-show="!helpShowStatusList[index]"-->
-                <!--@click="toggleShowHelpItem(index,1)"-->
-              <!--&gt;-->
-                <!--<IconFont-->
-                  <!--icon-name="icon-jia1"-->
-                  <!--class="icon-font"-->
-                <!--/>-->
-              <!--</span>-->
-                  <!--<span-->
-                    <!--class="icon-box cursor-pointer"-->
-                    <!--v-show="helpShowStatusList[index]"-->
-                    <!--@click="toggleShowHelpItem(index,0)"-->
-                  <!--&gt;-->
-                <!--<IconFont-->
-                  <!--icon-name="icon-jian"-->
-                  <!--class="icon-font"-->
-                <!--/>-->
-              <!--</span>-->
-                  <!--<span class="title-content">-->
-                    <!--{{item.keyword}}-->
-                  <!--</span>-->
-                <!--</div>-->
-                <!--<el-collapse-transition>-->
-                  <!--<divs-->
-                    <!--class="content"-->
-                    <!--v-show="helpShowStatusList[index]"-->
-                    <!--v-html="item.content"-->
-                  <!--&gt;-->
-                  <!--</divs>-->
-                <!--</el-collapse-transition>-->
-              <!--</div>-->
-            <!--</li>-->
-          <!--</ul>-->
-          <!--&lt;!&ndash;分页&ndash;&gt;-->
-          <!--<div class="page">-->
-            <!--<el-pagination-->
-              <!--background-->
-              <!--v-show="helpFilterList.length"-->
-              <!--layout="prev, pager, next"-->
-              <!--:page-count="totalPages"-->
-              <!--@current-change="changeCurrentPage"-->
-            <!--&gt;-->
-            <!--</el-pagination>-->
-        <!--</div>-->
-      <!--</div>-->
         <div class="iframe-box">
           <iframe
-            :src="iframeSrc"
+            :src="chSrc"
+            width="1200px"
+            height="1000px"
+            frameborder="0"
+            v-if="language === 'zh_CN' || language === 'zh_TW'"
+          ></iframe>
+          <iframe
+            :src="enSrc"
+            v-else
             width="1200px"
             height="1000px"
             frameborder="0"
@@ -95,6 +45,8 @@ export default {
       helpList: [],
       // helpFilterList: [],
       helpShowStatusList: [],
+      enSrc: 'https://doc.bzu.com/web/#/2?page_id=23',
+      chSrc: 'https://doc.bzu.com/web/#/4?page_id=67',
       pageNum: 1,
       pageSize: 10,
       totalPages: 0 // 总页数
@@ -149,9 +101,6 @@ export default {
       language: state => state.common.language,
       theme: state => state.common.theme
     }),
-    iframeSrc () {
-      return this.language === 'zh_CN' || this.language === 'zh_TW' ? 'https://doc.bzu.com/web/#/3?page_id=45' : 'https://doc.bzu.com/web/#/2?page_id=23'
-    },
     helpFilterList () {
       return this.helpList.filter((item) => {
         return (
@@ -164,6 +113,7 @@ export default {
   watch: {
     language () {
       // console.log(this.language)
+      window.location.reload()
     }
   }
 }

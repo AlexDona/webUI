@@ -5,11 +5,8 @@
     <keep-alive>
       <BannerHome/>
     </keep-alive>
-
     <!--交易区-->
     <MarketListHome class="margin-1"/>
-
-    <!--底部-->
   </div>
 </template>
 <script>
@@ -30,13 +27,6 @@ export default {
     }
   },
   created () {
-    // onlineText/offlineText：按钮文本,繁中（線上客服），英语（Online Service），日语（オンラインサービス），韩语（온라인 고객지원）
-    // language：语言：英语（en-us），繁中（zh-TW），日语（ja），韩语（ko），西班牙语（es），阿拉伯语（ar），法语（fr），泰语（th），印尼语（id），葡萄牙语（pt），俄罗斯语（ru）
-    // pos_flag：按钮位置，1）形状： h(横向) v(纵向) c(圆形) i(图片)；2）位置： lt(左上) mt(中上) rt(右上) lm(左中) mm(正中) rm(右中) lb(左下) mb(中下) rb(右下)默认值：crb（pc），hrb（mobile）
-    // isInvite：主动会话邀请，true开启，false关闭
-    // mode:窗口模式，独立blank,内嵌inner
-    // color：按钮颜色
-    // mobile：设为为响应式布局，可用于移动页面
   },
   methods: {
     doAdd () {
@@ -75,7 +65,6 @@ export default {
           this.msgLanguage = 'zh-TW'
           break
       }
-      console.log(this.msgLanguage)
       this.doAdd()
     },
     addServiceForCustomer (a, h, c, b, f, g) {
@@ -97,11 +86,9 @@ export default {
   },
   watch: {
     language (newVal) {
-      console.log(newVal)
       this.changeLanguage(newVal)
     },
     defaultLanguage (newVal) {
-      console.log(newVal)
       this.changeLanguage(newVal)
     }
   }

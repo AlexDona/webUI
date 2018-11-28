@@ -92,8 +92,9 @@ const state = {
   // logoSrc: require('../../assets/develop/logo.png'),
   logoSrc: '',
   footerInfo: {
-    footerInfo1: '',
-    footerInfo2: ''
+    footerInfo1: {},
+    footerInfo2: {},
+    configInfo: {}
   },
   end: ''// 占位
 }

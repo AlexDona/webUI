@@ -43,7 +43,8 @@
                 class="tab-item"
                 v-for="(item) in outItem.tradeAreaList"
                 :id="'tab-item.'+item.id"
-                :key="item.id">
+                :key="item.id"
+              >
                 <div
                   class="inner-item-box"
                   v-if="(item.content.length&&item.id!==searchAreaId)||(item.id==searchAreaId&&searchKeyWord!=='')"
@@ -221,7 +222,7 @@ export default{
         collectSymbol
       })
       let newContent = []
-      _.forEach(collectSymbol, (outItem) => {
+      _.forEach(collectSymbol, outItem => {
         if (this.symbolMap.get(outItem)) {
           newContent.push(this.symbolMap.get(outItem))
         }
@@ -230,9 +231,9 @@ export default{
     },
     // 遍历行情数组
     ergodicNewMarketList (callback) {
-      _.forEach(this.newMarketList, (item) => {
-        _.forEach(item.tradeAreaList, (innerItem) => {
-          _.forEach(innerItem.content, (fourthItem) => {
+      _.forEach(this.newMarketList, item => {
+        _.forEach(item.tradeAreaList, innerItem => {
+          _.forEach(innerItem.content, fourthItem => {
             callback(fourthItem)
           })
         })
@@ -244,12 +245,12 @@ export default{
       this.socketParamsStr = ''
       let currentList = this.newMarketList[activeIndexOfNewMarketList]
       if (currentList && currentList.tradeAreaList) {
-        _.forEach(currentList.tradeAreaList, (outItem) => {
-          _.forEach(outItem.content, (item) => {
+        _.forEach(currentList.tradeAreaList, outItem => {
+          _.forEach(outItem.content, item => {
             this.socketParamsStr += `${item.id}@`
           })
         })
-        _.forEach(this.collectArea.content, (item) => {
+        _.forEach(this.collectArea.content, item => {
           if (item) {
             this.socketParamsStr += `${item.id}@`
           }
@@ -329,7 +330,7 @@ export default{
     // 获取用户收藏列表
     async getCollectionList (collectSymbol) {
       await getCollectionList(this, data => {
-        _.forEach(data.data.data, (item) => {
+        _.forEach(data.data.data, item => {
           collectSymbol[item.content] = item.content
         })
       })
@@ -346,7 +347,7 @@ export default{
       } else {
         let objData = getNestedData(data, 'data.data.obj')
         this.newMarketList = JSON.parse(unzip(objData))
-        this.ergodicNewMarketList((item) => {
+        this.ergodicNewMarketList(item => {
           this.CHANGE_SYMBOL_MAP({
             key: item.id,
             val: item
@@ -386,11 +387,6 @@ export default{
           let newList = list[k].tradeAreaList.slice(0, 2)
           this.$set(this.filterMarketList[k], 'tradeAreaList', newList)
         }
-        // list.forEach((item, index) => {
-        //   let newList = list[index].tradeAreaList.slice(0, 2)
-        //   this.$set(this.filterMarketList[index], 'tradeAreaList', newList)
-        //   // this.filterMarketList[index].tradeAreaList = list[index].tradeAreaList.slice(0, 2)
-        // })
       } else if (this.tabContentMoreStatus) {
         this.filterMarketList = this.newMarketList
       }
@@ -433,9 +429,7 @@ export default{
       let {id, status, row} = data
       console.log(id)
       status = Boolean(status)
-      // this.collectStatusList[id] = Boolean(status)
       this.$set(this.collectStatusList, id, status)
-      // console.log(this.collectStatusList)
       if (status) {
         //  添加收藏
         this.CHANGE_COLLECT_SYMBOL({
@@ -483,9 +477,6 @@ export default{
     })
   },
   watch: {
-    '$route' (to, from) {
-      console.log(to)
-    },
     filterMarketList (newVal) {
       // 查看更多按钮显示状态判断
       for (let i = 2; i < newVal.length; i++) {
@@ -497,8 +488,6 @@ export default{
           this.moreBtnShowStatus = false
         }
       }
-    },
-    currencyRateList (newVal) {
     },
     activeName (newVal) {
       console.log(newVal)
