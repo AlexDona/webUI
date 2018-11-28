@@ -1057,7 +1057,6 @@ export default {
                 >button{
                   width: 407px;
                   height: 48px;
-                  // margin-left: 72px;
                   margin-left: 110px;
                   text-align: center;
                   border: 2px solid -webkit-linear-gradient(135deg,#2B396E,#2A5082);
@@ -1137,7 +1136,7 @@ export default {
       }
     }
     .cancelBtn{
-       cursor: pointer;
+      cursor: pointer;
     }
     .blue{
       color: #338FF5;
@@ -1185,8 +1184,8 @@ export default {
     margin-top:10px ;
   }
  .el-select-dropdown{
-      min-width: 408px!important;
-      left:169px!important;
+    min-width: 408px!important;
+    left:169px!important;
   }
   .show-dividend-time-list{
     >ul{
