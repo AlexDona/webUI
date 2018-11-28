@@ -490,7 +490,7 @@ export default {
             }
           }
           >.google-info-show {
-            margin-top: 20px;
+            margin-top: 30px;
             .code-copy {
               text-align: center;
               display: inline-block;

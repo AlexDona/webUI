@@ -4,7 +4,7 @@ export const OTC = {
   'otc_AD_token': 'タイプ',
   'otc_Merchants_Orders_market': 'トークン',
   'otc_index_buy': '購入',
-  'otc_index_sell': '販売のため',
+  'otc_index_sell': '販売',
   'otc_index_online_buy': '購入',
   'otc_index_online_sell': '販売',
   'otc_index_wantTo_buy': '購入する',
