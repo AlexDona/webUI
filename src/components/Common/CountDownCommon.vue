@@ -28,7 +28,6 @@ export default {
     return {
       time: 0,
       disabled: false
-      // text: 'M.comm_get_code'
     }
   },
   created () {},
@@ -76,26 +75,20 @@ export default {
       countDownResetStatus: state => state.common.countDownResetStatus
     }),
     text () {
-      return this.time > 0 ? this.time + 's' + this.$t('M.comm_after_get') : this.$t('M.comm_get_code')
+      return this.time > 0 ? `${this.time}s ${this.$t('M.comm_after_get')}` : this.$t('M.comm_get_code')
     }
   },
   watch: {
     countDownResetStatus (newVal) {
-      console.log(newVal)
-      console.log(this.time)
       clearInterval(this.timer)
       this.time = 0
       this.$store.commit('common/SET_COUNT_DOWN_RESET_STATUS', false)
     },
     status (newVal) {
-      console.log(newVal)
       if (newVal) {
         this.$emit('run')
         this.start()
       }
-    },
-    text (newVal, oldVal) {
-      // console.log(newVal)
     }
   }
 }

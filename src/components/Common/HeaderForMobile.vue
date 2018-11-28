@@ -6,7 +6,7 @@
     <div class="inner-box">
       <div class="left">
         <router-link
-          to="/"
+          to="/home"
           class="logo"
         >
         <img
@@ -56,9 +56,6 @@
 </template>
 <!--请严格按照如下书写书序-->
 <script>
-// import {
-//   getFooterInfo
-// } from '../../utils/commonFunc'
 import { createNamespacedHelpers, mapState } from 'vuex'
 const { mapMutations, mapActions } = createNamespacedHelpers('common')
 export default {
@@ -85,18 +82,15 @@ export default {
     })
     if (this.routeLanguage) {
       _.forEach(this.languageList, item => {
-        console.log(item)
         if (this.routeLanguage === item.shortName) {
           this.changeLanguage(item)
         }
       })
     }
-    // await getFooterInfo(this.routeLanguage || this.language, this)
     this.activeTheme = this.theme
     this.GET_COUNTRY_LIST_ACTION({
       self: this
     })
-    console.log(this.$route.query)
     if (this.isLogin) {
       this.reflashUserInfo()
     }
@@ -137,10 +131,8 @@ export default {
     },
     // 切换语言
     changeLanguage (e) {
-      // console.log(e)
       this.CHANGE_LANGUAGE(e)
       this.$i18n.locale = e.shortName
-      console.log(this.activeLanguage)
       this.toggleShowLanguageBox(0)
     }
   },
@@ -165,7 +157,6 @@ export default {
 </script>
 <style scoped lang="scss" type="text/scss">
   @import "../../../static/css/scss/index";
-  @import "../../../static/css/scss/Common/HeaderCommon.scss";
   .mobile-header-box{
     >.inner-box{
       height:160px;
@@ -227,7 +218,6 @@ export default {
                 }
                 >.language-text{
                   display:inline-block;
-                  /*width:60px;*/
                 }
               }
               >.lang-list{

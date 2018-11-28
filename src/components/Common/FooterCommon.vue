@@ -115,19 +115,6 @@
                 <!--帮助中心-->
                 {{$t('M.comm_help_center')}}
               </router-link>
-              <!--<a-->
-                <!--href="http://fubt.udesk.cn/hc"-->
-                <!--target="_blank"-->
-                <!--v-show="xDomain==='new.bzu.com'"-->
-              <!--&gt;-->
-                <!--{{$t('M.comm_help_center')}}-->
-              <!--</a>-->
-              <a
-                href="#"
-                v-show="xDomain!='new.bzu.com'"
-              >
-                {{$t('M.comm_help_center')}}
-              </a>
             </dd>
             <dd
               class="dd-item"
@@ -175,7 +162,6 @@
               @click="jumpToOtherPage('/ServiceAndProtocol','UserProtocol')"
             >
               <!--用户协议-->
-              <!-- {{$t('M.user_api_user')}}{{$t('M.comm_agreement')}} -->
               {{$t('M.common_footer_user_agreement')}}
             </dd>
             <dd
@@ -183,7 +169,6 @@
               @click="jumpToOtherPage('/ServiceAndProtocol','PrivacyClause')"
             >
               <!--隐私条款-->
-              <!-- {{$t('M.comm_privacy')}}{{$t('M.comm_clause')}} -->
               {{$t('M.common_footer_privacy_policy')}}
             </dd>
             <dd
@@ -191,7 +176,6 @@
               @click="jumpToOtherPage('/ServiceAndProtocol','LegislationExplain')"
             >
               <!--法律声明-->
-              <!-- {{$t('M.comm_law')}}{{$t('M.comm_statement')}} -->
               {{$t('M.common_footer_legal_notice')}}
             </dd>
             <dd
@@ -290,7 +274,6 @@ export default {
     }
   },
   created () {
-    console.log(xDomain)
   },
   mounted () {
   },
@@ -330,20 +313,12 @@ export default {
     }
   },
   watch: {
-    configInfo (newVal) {
-      console.log(newVal)
-    },
-    footerInfo1 (newVal) {
-      console.log(newVal)
-    },
     footerInfo: {
       handler (newVal) {
-        console.log(newVal)
         if (newVal) {
           this.isloading = false
           this.footerInfo1 = newVal.footerInfo1
           this.footerInfo2 = newVal.footerInfo2
-          console.log(this.footerInfo2)
           this.shareList[0].ercodeSrc = getNestedData(this.footerInfo1, 'twitter')
           this.shareList[1].ercodeSrc = getNestedData(this.footerInfo1, 'facebook')
           this.weixinImage = getNestedData(this.footerInfo1, 'weixinImage')
@@ -359,20 +334,16 @@ export default {
 <style scoped lang="scss">
   .footer-box{
     width:100%;
-    // height:410px;
-    // height:330px;
     background-color: #1c2237;
     color:#838dae;
     >.inner-box{
       width: 1130px;
-      // height: 300px;
       margin: 0 auto;
       padding: 20px 0;
       >.top{
         display:flex;
         margin-bottom: 10px;
         >div{
-          // height:200px;
         }
         >.left{
           flex:1;
@@ -398,7 +369,6 @@ export default {
                 width:22px;
                 height:22px;
                 line-height:22px;
-                /*background-color: #CFCFCF;*/
                 border-radius: 50%;
                 text-align: center;
                 .icon-text{
@@ -475,21 +445,18 @@ export default {
         >.title{
           display:inline-block;
           width:100px;
-          // height:100px;
           vertical-align: top;
         }
         >.links-list{
           display:inline-block;
           width:1026px;
           >.links-item{
-            /*width:60px;*/
             height:20px;
             display:inline-block;
             margin-right:30px;
             >.link-item{
               >img{
                 width:100%;
-                // height:100%;
               }
             }
           }

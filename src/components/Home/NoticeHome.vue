@@ -61,24 +61,6 @@ export default {
   },
   async created () {
     this.noticeList = [
-      // {
-      //   id: 0, // 跳转id
-      //   type: 0, // 0:新闻 1:公告
-      //   typeName: 'M.home_market_text1', // type=0:'新闻资讯' type=1:'活动公告'
-      //   title: 'M.home_market_text3' // 标题 fuc火热上线
-      // },
-      // {
-      //   id: 1, // 跳转id
-      //   type: 1, // 0:新闻 1:公告
-      //   typeName: 'M.home_market_text1', // type=0:'新闻资讯' type=1:'活动公告'
-      //   title: 'M.home_market_text4' // 标题 fuc火热上线1
-      // },
-      // {
-      //   id: 2, // 跳转id
-      //   type: 0, // 0:新闻 1:公告
-      //   typeName: 'M.home_market_text1', // type=0:'新闻资讯' type=1:'活动公告'
-      //   title: 'M.home_market_text5' // 标题 fuc火热上线2
-      // }
     ]
     if (this.language) {
       await this.getNewsNoticeList()
@@ -111,7 +93,6 @@ export default {
     },
     // 关闭组件
     closeNotice () {
-      // this.noticeCloseVisible = true
       this.$store.commit('home/CHANGE_NOTICE_VISIBLE', false)
     },
     autoPlay () {

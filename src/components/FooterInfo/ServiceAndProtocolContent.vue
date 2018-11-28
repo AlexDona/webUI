@@ -10,7 +10,6 @@
             class="content"
             v-html="content"
           >
-
           </div>
         </div>
       </div>
@@ -37,7 +36,6 @@ export default {
   computed: {
     ...mapState({
       theme: state => state.common.theme
-      // legislationExplainData: state => state.footerInfo.serviceProtocolData.legislationExplainData
     })
   },
   watch: {}
