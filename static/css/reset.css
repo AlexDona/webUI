@@ -19,6 +19,25 @@ html,body {
 .day .ql-editor h1 span, .day .ql-editor h1 strong, .ql-editor h4 span, .day .ql-editor h4 strong {
   color: #333 !important;
 }
+/* 富文本编辑器返回的折扣说明添加表格 */
+.night .vip-main.personal .discounts-instruction-dialog table{
+  border: 1px solid #ddd;
+  border-collapse: collapse;
+}
+.night .vip-main.personal .discounts-instruction-dialog table td,.night .vip-main.personal .discounts-instruction-dialog table th{
+  border: 1px solid #ddd;
+}
+.day .vip-main.personal .discounts-instruction-dialog table{
+  border: 1px solid #ddd;
+  border-collapse: collapse;
+}
+.day .vip-main.personal .discounts-instruction-dialog table td,.day .vip-main.personal .discounts-instruction-dialog table th{
+  border: 1px solid #ddd;
+}
+/* 费率页面返回数据表格宽度调整 */
+.service-protocol-box table{
+  width: 100%;
+}
 body, dl, dt, dd, ul, ol, li, pre, form, fieldset, input, p, blockquote, th, td {
   font-weight: 400;
   margin: 0;

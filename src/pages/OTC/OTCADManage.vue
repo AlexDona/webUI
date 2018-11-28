@@ -16,110 +16,119 @@
         <!-- 上部分筛选条件 -->
         <div class="manage-main-top">
           <!-- 交易类型 -->
-          <span class="filtrate-text font-size14">
-            {{$t('M.otc_type_ransaction')}}
-          </span>
-          <span class="style-input">
-            <el-select
-              :placeholder="$t('M.comm_please_choose')"
-              :no-data-text="$t('M.comm_no_data')"
-              v-model="activitedADManageTraderStyleList"
-              @change="changeSelectValue('changeADManageTraderStyleList', $event)"
-              clearable
-            >
-              <el-option
-                v-for="item in ADManageTraderStyleList"
-                :key="item.value"
-                :label="$t(item.label)"
-                :value="item.value"
+          <div class="one-filter-condition">
+            <span class="filtrate-text font-size14">
+              {{$t('M.otc_type_ransaction')}}
+            </span>
+            <span class="style-input">
+              <el-select
+                :placeholder="$t('M.comm_please_choose')"
+                :no-data-text="$t('M.comm_no_data')"
+                v-model="activitedADManageTraderStyleList"
+                @change="changeSelectValue('changeADManageTraderStyleList', $event)"
+                clearable
               >
-              </el-option>
-            </el-select>
-          </span>
+                <el-option
+                  v-for="item in ADManageTraderStyleList"
+                  :key="item.value"
+                  :label="$t(item.label)"
+                  :value="item.value"
+                >
+                </el-option>
+              </el-select>
+            </span>
+          </div>
           <!-- 交易币种 -->
-          <span class="filtrate-text font-size14">
-            <!-- {{$t('M.otc_trade')}}{{$t('M.comm_currency')}} -->
-            {{$t('M.otc_AD_trade_token')}}
-          </span>
-          <span class="market-input">
-            <el-select
-              :no-data-text="$t('M.comm_no_data')"
-              :placeholder="$t('M.comm_please_choose')"
-              v-model="activitedADManageMarketList"
-              @change="changeSelectValue('changeADManageMarketList', $event)"
-              clearable
-            >
-              <el-option
-                v-for="(item,index) in ADManageMarketList"
-                :key="index"
-                :label="item.name"
-                :value="item.coinId"
+          <div class="two-filter-condition">
+            <span class="filtrate-text font-size14">
+              {{$t('M.otc_AD_trade_token')}}
+            </span>
+            <span class="market-input">
+              <el-select
+                :no-data-text="$t('M.comm_no_data')"
+                :placeholder="$t('M.comm_please_choose')"
+                v-model="activitedADManageMarketList"
+                @change="changeSelectValue('changeADManageMarketList', $event)"
+                clearable
               >
-              </el-option>
-            </el-select>
-          </span>
+                <el-option
+                  v-for="(item,index) in ADManageMarketList"
+                  :key="index"
+                  :label="item.name"
+                  :value="item.coinId"
+                >
+                </el-option>
+              </el-select>
+            </span>
+          </div>
           <!-- 交易法币 -->
-          <span class="filtrate-text font-size14">
-            <!-- {{$t('M.otc_trade')}}{{$t('M.comm_coin')}} -->
-            {{$t('M.otc_AD_trade_currency')}}
-          </span>
-          <span class="market-input">
-            <el-select
-              :no-data-text="$t('M.comm_no_data')"
-              :placeholder="$t('M.comm_please_choose')"
-              v-model="activitedADManageCurrencyId"
-              @change="changeSelectValue('changeADManageCurrencyId', $event)"
-              clearable
-            >
-              <el-option
-                v-for="(item,index) in ADManageCurrencyId"
-                :key="index"
-                :label="language == 'zh_CN'? item.name : item.shortName"
-                :value="item.id"
+          <div class="three-filter-condition">
+            <span class="filtrate-text font-size14">
+              {{$t('M.otc_AD_trade_currency')}}
+            </span>
+            <span class="market-input">
+              <el-select
+                :no-data-text="$t('M.comm_no_data')"
+                :placeholder="$t('M.comm_please_choose')"
+                v-model="activitedADManageCurrencyId"
+                @change="changeSelectValue('changeADManageCurrencyId', $event)"
+                clearable
               >
-              </el-option>
-            </el-select>
-          </span>
+                <el-option
+                  v-for="(item,index) in ADManageCurrencyId"
+                  :key="index"
+                  :label="language == 'zh_CN'? item.name : item.shortName"
+                  :value="item.id"
+                >
+                </el-option>
+              </el-select>
+            </span>
+          </div>
           <!-- 状态 -->
-          <span class="filtrate-text font-size14">
-            {{$t('M.comm_state')}}
-          </span>
-          <span class="status-input">
-            <el-select
-              :no-data-text="$t('M.comm_no_data')"
-              :placeholder="$t('M.comm_please_choose')"
-              v-model="activitedADManageStatusList"
-              @change="changeSelectValue('changeADManageStatusList', $event)"
-              clearable
-            >
-              <el-option
-                v-for="item in ADManageStatusList"
-                :key="item.value"
-                :label="$t(item.label)"
-                :value="item.value"
+          <div class="four-filter-condition">
+            <span class="filtrate-text font-size14">
+              {{$t('M.comm_state')}}
+            </span>
+            <span class="status-input">
+              <el-select
+                :no-data-text="$t('M.comm_no_data')"
+                :placeholder="$t('M.comm_please_choose')"
+                v-model="activitedADManageStatusList"
+                @change="changeSelectValue('changeADManageStatusList', $event)"
+                clearable
               >
-              </el-option>
-            </el-select>
-          </span>
+                <el-option
+                  v-for="item in ADManageStatusList"
+                  :key="item.value"
+                  :label="$t(item.label)"
+                  :value="item.value"
+                >
+                </el-option>
+              </el-select>
+            </span>
+          </div>
+          <!-- 按钮 -->
+          <div class="five-filter-condition">
+            <span class="inquire-button">
+              <!-- 查询 -->
+              <el-button
+                type="primary"
+                @click="findFilter"
+              >
+                {{$t('M.comm_query')}}
+              </el-button>
+              <!-- 重置 -->
+              <el-button
+                type="primary"
+                @click="resetCondition"
+                class="second-button"
+              >
+                {{$t('M.otc_MerchantsOrders_reset')}}
+              </el-button>
+            </span>
+          </div>
         </div>
         <div class="manage-main-middle">
-          <!-- 按钮 -->
-          <span class="inquire-button">
-            <!-- 查询 -->
-            <el-button
-              type="primary"
-              @click="findFilter"
-            >
-              {{$t('M.comm_query')}}
-            </el-button>
-            <!-- 重置 -->
-            <el-button
-              type="primary"
-              @click="resetCondition"
-            >
-              {{$t('M.otc_MerchantsOrders_reset')}}
-            </el-button>
-          </span>
           <!-- 一键下架所有广告 -->
           <span
             class="all-unshelve cursor-pointer"
@@ -574,26 +583,25 @@ export default {
       }
       > .AD-manage-main {
         > .manage-main-top {
-          margin-bottom: 10px;
-          > .filtrate-text {
-            // color: #9DA5B3;
-            margin-right: 10px;
+          display: flex;
+          margin-bottom: 15px;
+          .one-filter-condition,.two-filter-condition,.three-filter-condition,.four-filter-condition,.five-filter-condition {
+            flex: 1;
+            >.filtrate-text {
+              // color: #9DA5B3;
+              margin-right: 10px;
+            }
           }
-          > .style-input {
-            margin-right: 25px;
-          }
-          > .market-input {
-            margin-right: 25px;
-          }
-          > .status-input {
+          .five-filter-condition{
+            text-align: right;
+            .second-button{
+              margin-left: 25px;
+            }
           }
         }
         > .manage-main-middle{
           text-align: right;
           margin-bottom: 15px;
-          >.inquire-button{
-            margin-right: 5px;
-          }
           > .all-unshelve {
             // color: #338FF5;
             > .unshelve-text {
@@ -624,19 +632,13 @@ export default {
         }
         > .AD-manage-main {
           > .manage-main-top {
-            > .filtrate-text {
-              color: #fff;
-            }
-            > .style-input {
-            }
-            > .market-input {
-            }
-            > .status-input {
+            .one-filter-condition,.two-filter-condition,.three-filter-condition,.four-filter-condition,.five-filter-condition {
+              >.filtrate-text {
+                color: #fff;
+              }
             }
           }
           >.manage-main-middle{
-            > .inquire-button{
-            }
             > .all-unshelve {
               color: #338FF5;
               > .unshelve-text {
@@ -665,19 +667,13 @@ export default {
         }
         > .AD-manage-main {
           > .manage-main-top {
-            > .filtrate-text {
-              color: #9DA5B3;
-            }
-            > .style-input {
-            }
-            > .market-input {
-            }
-            > .status-input {
+            .one-filter-condition,.two-filter-condition,.three-filter-condition,.four-filter-condition,.five-filter-condition {
+              >.filtrate-text {
+                color: #9DA5B3;
+              }
             }
           }
           >.manage-main-middle{
-            > .inquire-button{
-            }
             > .all-unshelve {
               color: #338FF5;
               > .unshelve-text {
