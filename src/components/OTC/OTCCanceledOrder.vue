@@ -310,12 +310,8 @@ export default {
         width: 1043px;
         height: 35px;
         line-height: 35px;
-        // background-color: #202A33;
-        // color: #617499;
-        // border: 1px solid #262F38;
         border-radius: 5px;
         margin-bottom: 15px;
-        // box-shadow: -2px 3px 5px 1px #191E28;
         >.item{
           display: inline-block;
           width: 140px;
@@ -326,22 +322,12 @@ export default {
         box-sizing: border-box;
         width: 1043px;
         height: 170px;
-        // background-color: #202A33;
-        // border: 1px solid #262F38;
         border-radius: 5px;
         margin-bottom: 15px;
         >.canceled-info-top{
           height: 40px;
           line-height: 40px;
-          // background-color: #202A33;
-          // color: #617499;
           border-radius: 5px;
-          .red{
-            // color: #D45858;
-          }
-          .green{
-            // color: #008069;
-          }
           >.item{
             display: inline-block;
             width: 140px;
@@ -350,32 +336,22 @@ export default {
         }
         >.canceled-info-bottom{
           box-sizing: border-box;
-          // border-top: 1px solid #262F38;
           display: flex;
           flex: 7;
           padding: 15px 30px 0 30px;
-          // color: #9DA5B3;
           >.info-left{
             flex: 2;
             box-sizing: border-box;
-            // border-right: 1px solid #262F38;
             >.text-info{
               line-height: 20px;
-            }
-            >.text-blue{
-              // color: #5E95EC;
             }
           }
           >.info-middle{
            flex: 2;
             box-sizing: border-box;
-            // border-right: 1px solid #262F38;
             margin-left: 30px;
             >.text-info{
               line-height: 20px;
-            }
-            >.text-blue{
-              // color: #5E95EC;
             }
           }
           >.info-right{
@@ -385,9 +361,6 @@ export default {
             >.text-info{
               line-height: 20px;
             }
-            >.text-blue{
-              // color: #5E95EC;
-            }
           }
         }
       }
@@ -396,11 +369,9 @@ export default {
         height: 432px;
         line-height: 432px;
         text-align: center;
-        // background-color: #202A33;
       }
       >.page{
         text-align: center;
-        // padding: 5px 0 15px 0;
       }
     }
     &.night{
@@ -409,8 +380,6 @@ export default {
           background-color: #1C1F32;
           color: #A9BED4;
           border: 1px solid #485776;
-          >.item{
-          }
         }
         >.canceled-table-body{
           background-color: #1C1F32;
@@ -424,31 +393,23 @@ export default {
             .green{
               color: #008069;
             }
-            >.item{
-            }
           }
           >.canceled-info-bottom{
             border-top: 1px solid #262F38;
             color: #9DA5B3;
             >.info-left{
               border-right: 1px solid #262F38;
-              >.text-info{
-              }
               >.text-blue{
                 color: #5E95EC;
               }
             }
             >.info-middle{
               border-right: 1px solid #262F38;
-              >.text-info{
-              }
               >.text-blue{
                 color: #5E95EC;
               }
             }
             >.info-right{
-              >.text-info{
-              }
               >.text-blue{
                 color: #5E95EC;
               }
@@ -459,8 +420,6 @@ export default {
           background-color: $mainContentNightBgColor;
           color: rgba(255, 255, 255, 0.8);
         }
-        >.page{
-        }
       }
     }
     &.day{
@@ -469,8 +428,6 @@ export default {
           background-color: $mainDayColor;
           color: #617499;
           border: 1px solid #ECF1F8;
-          >.item{
-          }
         }
         >.canceled-table-body{
           background-color: $mainDayColor;
@@ -484,31 +441,23 @@ export default {
             .green{
               color: #008069;
             }
-            >.item{
-            }
           }
           >.canceled-info-bottom{
             border-top: 1px solid rgba(38,47,56,0.1);
             color: #7D90AC;
             >.info-left{
               border-right: 1px solid rgba(38,47,56,0.1);
-              >.text-info{
-              }
               >.text-blue{
                 color: #5E95EC;
               }
             }
             >.info-middle{
               border-right: 1px solid rgba(38,47,56,0.1);
-              >.text-info{
-              }
               >.text-blue{
                 color: #5E95EC;
               }
             }
             >.info-right{
-              >.text-info{
-              }
               >.text-blue{
                 color: #5E95EC;
               }
@@ -522,8 +471,6 @@ export default {
           background-color: $mainDayColor;
           color: #333333;
           border: 1px solid rgba(97,116,153,0.1);
-        }
-        >.page{
         }
       }
     }

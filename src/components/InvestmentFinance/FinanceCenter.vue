@@ -1129,16 +1129,11 @@ export default {
       }
       >.inner-box{
         background-color: $nightInnerBoxBg;
-        >div{
-          /*<!--background-color: $nightMainTitleBgColor;-->*/
-        }
       }
     }
     &.day{
       >.banner-box{
         background: #fff;
-      }
-      >.inner-box{
       }
     }
     .cancelBtn{

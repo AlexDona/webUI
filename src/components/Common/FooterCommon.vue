@@ -359,21 +359,15 @@ export default {
 <style scoped lang="scss">
   .footer-box{
     width:100%;
-    // height:410px;
-    // height:330px;
     background-color: #1c2237;
     color:#838dae;
     >.inner-box{
       width: 1130px;
-      // height: 300px;
       margin: 0 auto;
       padding: 20px 0;
       >.top{
         display:flex;
         margin-bottom: 10px;
-        >div{
-          // height:200px;
-        }
         >.left{
           flex:1;
           >.logo{
@@ -384,7 +378,6 @@ export default {
           .introduction{
             margin-top:10px;
           }
-          /**/
           >.share-box{
             margin-top:26px;
             >.share-item{
@@ -398,15 +391,11 @@ export default {
                 width:22px;
                 height:22px;
                 line-height:22px;
-                /*background-color: #CFCFCF;*/
                 border-radius: 50%;
                 text-align: center;
                 .icon-text{
                   font-size: 22px;
                 }
-              }
-              >.icon-weixin{
-
               }
               >.weixin-btn{
                 position: relative;
@@ -475,21 +464,18 @@ export default {
         >.title{
           display:inline-block;
           width:100px;
-          // height:100px;
           vertical-align: top;
         }
         >.links-list{
           display:inline-block;
           width:1026px;
           >.links-item{
-            /*width:60px;*/
             height:20px;
             display:inline-block;
             margin-right:30px;
             >.link-item{
               >img{
                 width:100%;
-                // height:100%;
               }
             }
           }

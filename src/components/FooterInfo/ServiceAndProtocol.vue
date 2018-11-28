@@ -306,23 +306,15 @@ export default {
           padding-bottom:50px;
           .tab-content{
             width:1100px;
-            /*overflow: hidden;*/
           }
         }
       }
     }
     &.night{
       >.content{
-        >.top{
-          >h1{
-          }
-          >p{
-          }
-        }
         >.content{
           background-color: #121824;
           >.inner-box{
-            /*background-color: #1e2636;*/
             color:#8BA0CA
           }
         }
@@ -330,16 +322,9 @@ export default {
     }
     &.day{
       >.content{
-        >.top{
-          >h1{
-          }
-          >p{
-          }
-        }
         >.content{
           background-color: #fff;
           >.inner-box{
-            /*border:1px solid rgba(234,235,236,1);*/
             background-color: #fff;
             color:#666666;
           }
