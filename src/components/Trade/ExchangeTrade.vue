@@ -74,8 +74,8 @@
                     type="text"
                     :placeholder="$t('M.comm_buy') + $t('M.comm_quantity')"
                     :ref="limitBuyCountInputRef"
-                    @keyup="autoChangeData('limit-buy',limitBuyCountInputRef,middleTopData.priceExchange)"
-                    @input="formatInput(limitBuyCountInputRef,middleTopData.priceExchange)"
+                    @keyup="autoChangeData('limit-buy',limitBuyCountInputRef,middleTopData.countExchange)"
+                    @input="formatInput(limitBuyCountInputRef,middleTopData.countExchange)"
                   >
                   <span class="currency">{{middleTopData.sellsymbol}}</span>
                 </div>
@@ -161,8 +161,8 @@
                     type="text"
                     :placeholder="$t('M.comm_sell') + $t('M.comm_quantity')"
                     :ref="limitSellCountInputRef"
-                    @keyup="autoChangeData('limit-sell',limitSellCountInputRef,middleTopData.priceExchange)"
-                    @input="formatInput(limitSellCountInputRef,middleTopData.priceExchange)"
+                    @keyup="autoChangeData('limit-sell',limitSellCountInputRef,middleTopData.countExchange)"
+                    @input="formatInput(limitSellCountInputRef,middleTopData.countExchange)"
                   >
                   <span class="currency">{{middleTopData.sellsymbol}}</span>
                 </div>
@@ -248,8 +248,8 @@
                     type="text"
                     :placeholder="$t('M.comm_buy') + $t('M.comm_quantity')"
                     :ref="marketBuyCountInputRef"
-                    @keyup="autoChangeData('market-buy',marketBuyCountInputRef,middleTopData.priceExchange)"
-                    @input="formatInput(marketBuyCountInputRef,middleTopData.priceExchange)"
+                    @keyup="autoChangeData('market-buy',marketBuyCountInputRef,middleTopData.countExchange)"
+                    @input="formatInput(marketBuyCountInputRef,middleTopData.countExchange)"
                   >
                   <span class="currency">{{middleTopData.sellsymbol}}</span>
                 </div>
@@ -325,8 +325,8 @@
                     type="text"
                     :placeholder="$t('M.comm_sell') + $t('M.comm_quantity')"
                     :ref="marketSellCountInputRef"
-                    @keyup="autoChangeData('market-sell',marketSellCountInputRef,middleTopData.priceExchange)"
-                    @input="formatInput(marketSellCountInputRef,middleTopData.priceExchange)"
+                    @keyup="autoChangeData('market-sell',marketSellCountInputRef,middleTopData.countExchange)"
+                    @input="formatInput(marketSellCountInputRef,middleTopData.countExchange)"
                   >
                   <span class="currency">{{middleTopData.sellsymbol}}</span>
                 </div>
