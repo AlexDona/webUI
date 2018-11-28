@@ -116,10 +116,6 @@ import {
   keep2Num,
   unzip
 } from '../../utils'
-// import {
-//   addUserCollectionAjax,
-//   removeCollectionAjax
-// } from '../../utils/api/home'
 import {
   returnAjaxMsg,
   // splitSocketParams
@@ -143,12 +139,8 @@ export default{
   },
   data () {
     return {
-      // tab 栏列表
-      tabList: [],
       // 单个交易区查看全部状态
       itemAreaMoreStatus: false,
-      // 当前选中查看更多的交易区id
-      activeAreaId: '',
       // 搜索关键字
       searchKeyWord: '',
       // 搜索列表
@@ -163,15 +155,9 @@ export default{
       collectAreaId: 2,
       // 自选区状态列表
       collectStatusList: {},
-      // 自选区列表
-      collectList: [],
       // 当前选中tab
       activeName: '',
       activeIndex: null, // 当前activeName 对应index
-      // 侧边栏节流阀
-      flag: true,
-      // 全部行情数据
-      marketList: [],
       // 前两项行情数据
       filterMarketList: [],
       moreBtnShowStatus: true, // 查看更多按钮显示状态
@@ -188,8 +174,7 @@ export default{
         id: 3,
         content: []
       },
-      socketParamsStr: '', // socket请求参数字符串
-      end: ''
+      socketParamsStr: '' // socket请求参数字符串
     }
   },
   async created () {
@@ -317,7 +302,6 @@ export default{
       console.log(e)
       this.$store.commit('trade/SET_JUMP_STATUS', true)
       this.$store.commit('trade/SET_JUMP_SYMBOL', e)
-      console.log(this.activeSymbol)
       // 设置当前交易区
       const id = e.areaId
       const name = e.area
@@ -397,7 +381,6 @@ export default{
       this.searchArea.content = this.searchList
       if (this.searchKeyWord.trim() !== '') {
         this.symbolMap.forEach(item => {
-          console.log(item.plateId, this.activeName)
           if (item.plateId === this.activeName) {
             const result1 = item.sellsymbol.search(this.searchKeyWord.toUpperCase())
             const result2 = item.sellname.search(this.searchKeyWord)
@@ -406,8 +389,6 @@ export default{
             }
           }
         })
-        console.log(this.searchKeyWord, this.searchList)
-
         this.searchArea.content = this.searchList
       } else {
         this.searchArea.content = []
@@ -463,15 +444,7 @@ export default{
     ...mapState({
       theme: state => state.common.theme,
       language: state => state.common.language, // 语言
-      plateList: state => state.common.plateList, // 板块列表
-      activeSymbol: state => state.common.activeSymbol,
       isLogin: state => state.user.isLogin,
-      activeTradeArea: state => state.common.activeTradeArea,
-      currencyRateList: state => state.common.currencyRateList, // 折算货币列表
-      activeConvertCurrencyObj: state => state.common.activeConvertCurrencyObj, // 目标货币
-      loginStep1Info: state => state.user.loginStep1Info,
-      userId: state => state.user.loginStep1Info.userId,
-      userInfo: state => state.user.loginStep1Info.userInfo,
       collectSymbol: state => state.home.collectSymbol, // 收藏标记
       symbolMap: state => state.home.symbolMap // 交易对map
     })

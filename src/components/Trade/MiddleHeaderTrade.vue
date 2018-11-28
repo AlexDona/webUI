@@ -138,25 +138,12 @@ export default {
   computed: {
     ...mapState({
       theme: state => state.common.theme,
-      activeSymbol: state => state.common.activeSymbol,
       middleTopData: state => state.trade.middleTopData,
       currencyRateList: state => state.common.currencyRateList, // 折算货币列表
       activeConvertCurrencyObj: state => state.common.activeConvertCurrencyObj // 目标货币
     })
   },
   watch: {
-    middleTopData (newVal) {
-      console.log(newVal)
-    },
-    activeSymbol (newVal) {
-      console.log(newVal)
-    },
-    activeConvertCurrencyObj (newVal) {
-      console.log(newVal)
-    },
-    currencyRateList (newVal) {
-      console.log(newVal)
-    }
   }
 }
 </script>

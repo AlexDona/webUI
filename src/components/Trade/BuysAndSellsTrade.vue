@@ -35,7 +35,7 @@
       </div>
       <div
         class="content"
-        v-if="buysAndSellsList&&buysAndSellsList.buys.list"
+        v-if="buysAndSellsList"
       >
         <el-collapse-transition>
           <div
@@ -97,7 +97,7 @@
                         {{item.total}}
                       </span><!--宽度条--><i
                           class="color-sell-bg"
-                          :style="'width:'+ item.amount/buysAndSellsList.sells.highestAmount*100+'%'"
+                          :style="`width:${item.amount/buysAndSellsList.sells.highestAmount*100}%`"
                         >
                         </i>
                       </div>
@@ -128,7 +128,7 @@
                         {{item.total}}
                       </span><!--宽度条--><i
                           class="color-buy-bg"
-                          :style="'width:'+ item.amount/buysAndSellsList.buys.highestAmount*100+'%'"
+                          :style="`width:${item.amount/buysAndSellsList.buys.highestAmount*100}%`"
                         >
                         </i>
                     </div>
@@ -159,8 +159,6 @@ export default {
     return {
       // buysAndSellsList: [], // 过滤过的渲染列表
       contentShowStatus: true,
-      // 买卖数据列表
-      buysAndsells: {},
       reflashCount: 0, // 买卖单数据刷新次数
       // 显示顺序(buys,middle,sells)
       listOrder: 'middle' // 切换显示顺序
@@ -169,7 +167,6 @@ export default {
   created () {
   },
   mounted () {
-    // console.log(this.buysAndSellsList)
   },
   activited () {
   },
@@ -214,18 +211,12 @@ export default {
   computed: {
     ...mapState({
       theme: state => state.common.theme,
-      socketData: state => state.common.socketData,
-      middleTopData: state => state.trade.middleTopData,
-      klineAjaxData: state => state.common.klineAjaxData,
-      depthData: state => state.common.klineAjaxData.depthData,
       buysAndSellsListByAjax: state => state.common.klineAjaxData.buyAndSellData,
       buysAndSellsListBySocket: state => state.common.socketData.buyAndSellData,
       activeSymbol: state => state.common.activeSymbol,
       activeSymbolId: state => state.common.activeSymbol.id
     }),
     buysAndSellsList () {
-      // console.log(this.buysAndSellsListByAjax)
-      // console.log(this.buysAndSellsListBySocket)
       return !this.reflashCount ? this.buysAndSellsListByAjax : this.buysAndSellsListBySocket
     },
     sellsListLength () {
@@ -233,35 +224,12 @@ export default {
     }
   },
   watch: {
-    sellsListLength (newVal) {
-      console.log(newVal)
-    },
-    klineAjaxData (newVal) {
-      // console.log(newVal)
-    },
-    socketData (newVal) {
-      // console.log(newVal)
-    },
-    middleTopData (newVal) {
-      // console.log(newVal)
-    },
-    activeSymbolId (newVal) {
-      // console.log(newVal)
+    activeSymbolId () {
       this.reflashCount = 0
-    },
-    buysAndSellsList (newVal) {
-      // console.log(newVal)
-    },
-    buysAndSellsListByAjax (newVal) {
-      // console.log(newVal)
-      // console.log(this.reflashCount)
-      // this.buysAndSellsListByAjax = this.buysAndSellsList
     },
     buysAndSellsListBySocket: {
       handler (newVal) {
-        console.log(newVal)
         if (!this.reflashCount && newVal) {
-          // console.log(newVal)
           this.CHANGE_ACTIVE_PRICE_ITEM(newVal.latestDone.price)
           this.reflashCount++
         }

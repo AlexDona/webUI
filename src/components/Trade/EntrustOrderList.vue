@@ -6,7 +6,10 @@
     <div class="inner-box">
       <!--查看更多委单记录-->
       <div class="view-more">
-        <a href="#" @click="jumpToPersonal">
+        <a
+          href="#"
+          @click="jumpToPersonal"
+        >
           <span>
             <!--查看更多-->
             {{ $t('M.comm_view_more') }}
@@ -50,14 +53,10 @@
               </li>
               <li class="th already">
                 <!--已成交-->
-                <!-- {{$t('M.comm_already')}}{{ $t('M.comm_make_bargain') }} -->
-                <!--<span>（{{activeSymbol.sellsymbol}}）</span>-->
                 {{ $t('M.trade_coin_had_traded') }}
               </li>
               <li class="th already">
                 <!--未成交-->
-                <!-- {{ $t('M.comm_not') }}{{ $t('M.comm_make_bargain') }} -->
-                <!--<span>（{{activeSymbol.sellsymbol}}）</span>-->
                 {{ $t('M.trade_coin_not_had_traded') }}
               </li>
               <li class="th">
@@ -171,11 +170,9 @@
               <li class="th count">
                 <!--委托量-->
                 {{ $t('M.trade_coin_entrusted_amount') }}
-                <!--<span>（{{activeSymbol.sellsymbol}}）</span>-->
               </li>
               <li class="th price">
                 <!--已成交量-->
-                <!-- {{$t('M.comm_already')}}{{ $t('M.comm_make_bargain') }}{{ $t('M.comm_quantity') }} -->
                 {{ $t('M.trade_coin_has_traded_amount') }}
                 <span>（{{activeSymbol.sellsymbol}}）</span>
               </li>
@@ -214,8 +211,6 @@
                   </li>
                   <!--方向-->
                   <li class="td direction">
-                    <!-- <span v-show="language !== 'zh_CN'">{{item.type}}</span>
-                    <span v-show="language === 'zh_CN'">{{item.typeName}}</span> -->
                     <span v-if="language == 'zh_CN' || language == 'zh_TW'">{{item.typeName}}</span>
                     <span v-else>{{item.type}}</span>
                   </li>
@@ -295,27 +290,11 @@ export default {
       totalPageForMyEntrust: 1, // 当前委托总页数
       currentPageForHistoryEntrust: 1, // 历史委托页码
       totalPageForHistoryEntrust: 1, // 历史委托总页数
-      pageSize: 10,
-      value1: '',
-      end: '' // 占位项目上线后删除
+      pageSize: 10
     }
   },
   created () {
     require('../../../static/css/list/Trade/TradeCenter.css')
-    // this.currentEntrustList = [
-    //   {
-    //     time: new Date().getTime(),
-    //     type: '类型',
-    //     count: 123123,
-    //     price: 1.11211,
-    //     amount: 345345.123,
-    //     doneVolume: 123123,
-    //     freeVolume: 123123,
-    //     status: 0 // 状态码
-    //   }
-    // ]
-    // this.historyEntrustList = []
-    console.log(this.activeSymbol)
     this.getEntrustData()
   },
   mounted () {},
@@ -392,8 +371,6 @@ export default {
       } else {
         this.historyEntrustList = getNestedData(data, 'data.data.list') || []
         this.totalPageForHistoryEntrust = getNestedData(data, 'data.data.pages') - 0
-        console.log('获取我的历史委托')
-        console.log(this.historyEntrustList)
       }
     },
     // 获取我的当前委单
@@ -409,8 +386,6 @@ export default {
         return false
       } else {
         this.currentEntrustList = getNestedData(data, 'data.data.list') || []
-        console.log('获取我的当前委单')
-        console.log(this.currentEntrustList)
         this.totalPageForMyEntrust = getNestedData(data, 'data.data.pages') - 0
       }
     }
@@ -429,7 +404,6 @@ export default {
   },
   watch: {
     activeName (newVal) {
-      // console.log(newVal)
       if (!this.isLogin) return false
       switch (newVal) {
         case 'current-entrust':
@@ -447,9 +421,6 @@ export default {
         this.TOGGLE_REFRESH_ENTRUST_LIST_STATUS(false)
       }
     },
-    historyEntrustList (newVal) {
-      // console.log(newVal)
-    },
     middleTopData (newVal) {
       this.getEntrustData()
     }
@@ -461,7 +432,6 @@ export default {
   .entrust-order-box{
     width:100%;
     height:416px;
-    background: red;
     font-size: 12px;
     >.inner-box{
       position: relative;

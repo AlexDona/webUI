@@ -100,8 +100,6 @@ export default {
   },
   created () {
     require('../../../static/css/list/Trade/GlobalMarket.css')
-    require('../../../static/css/theme/day/Trade/GlobalMarketTradeDay.css')
-    require('../../../static/css/theme/night/Trade/GlobalMarketTradeNight.css')
     this.getGlobalMarket()
   },
   mounted () {},
@@ -132,10 +130,7 @@ export default {
       if (!returnAjaxMsg(data, this, 0, 1)) {
         return false
       } else {
-        console.log(data)
-        if (data && data.data) {
-          this.globalMarketList = getNestedData(data, 'data.data')
-        }
+        this.globalMarketList = getNestedData(data, 'data.data') || []
       }
     },
     // 切换内容显示隐藏
@@ -156,11 +151,6 @@ export default {
     })
   },
   watch: {
-    middleTopData (newVal) {
-    },
-    currencyRateList (newVal) {
-      console.log(newVal)
-    },
     activeSymbolId: {
       handler (newVal) {
         if (newVal) {
@@ -168,9 +158,6 @@ export default {
         }
       },
       immediate: true
-    },
-    globalMarketList (newVal) {
-      console.log(newVal)
     }
   }
 }
