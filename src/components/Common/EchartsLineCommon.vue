@@ -8,7 +8,6 @@
     :style="{width: '120px', height: '50px'}"
     :data="data"
   >
-  <!--<div class="line-box common" :id="id" :style="{width: '100px', height: '50px'}">-->
   </div>
 </template>
 <script>
@@ -88,7 +87,6 @@ export default {
   computed: {},
   watch: {
     data (newVal) {
-      // console.log(newVal)
       this.options.series[0].data = newVal
       this.chart.setOption(this.options)
     }

@@ -1,12 +1,12 @@
 <template>
   <div
-    class = "s-canvas"
-    :width = "contentWidth"
-    :height = "contentHeight"
+    class="s-canvas"
+    :width="contentWidth"
+    :height="contentHeight"
   >
     <canvas
-      :width = "contentWidth"
-      :height = "contentHeight"
+      :width="contentWidth"
+      :height="contentHeight"
       :id="id"
     >
     </canvas>

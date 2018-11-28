@@ -263,10 +263,11 @@
 </template>
 <!--请严格按照如下书写书序-->
 <script>
-import {mapState} from 'vuex'
+import {mapState, createNamespacedHelpers} from 'vuex'
 import {keep2Num} from '../../utils'
 import {formatCount} from '../../utils/commonFunc'
 import EchartsLineCommon from '../Common/EchartsLineCommon'
+const {mapMutations} = createNamespacedHelpers('trade')
 export default {
   components: {
     EchartsLineCommon
@@ -283,17 +284,16 @@ export default {
     return {}
   },
   created () {
-    // console.log(this.toggleSideList)
-    // console.log(this.collectAreaId)
-    // console.log(this.searchAreaId)
   },
   mounted () {
-    console.log(this.item)
   },
   activited () {},
   update () {},
   beforeRouteUpdate () {},
   methods: {
+    ...mapMutations([
+      'SET_JUMP_STATUS'
+    ]),
     // 成交量格式化
     formatCount (targetNum) {
       return formatCount(targetNum)
@@ -310,10 +310,8 @@ export default {
       return keep2Num(number)
     },
     changeActiveSymbol (e) {
-      // console.log(e)
-      this.$store.commit('trade/SET_JUMP_STATUS', true)
-      this.$store.commit('trade/SET_JUMP_SYMBOL', e)
-      // console.log(this.activeSymbol)
+      this.SET_JUMP_STATUS(true)
+      this.SET_JUMP_SYMBOL(e)
       // 设置当前交易区
       const id = e.areaId
       const name = e.area
@@ -369,13 +367,6 @@ export default {
     })
   },
   watch: {
-    currencyRateList (newVal) {
-    },
-    activeConvertCurrencyObj (newVal) {
-    },
-    item (newVal) {
-      console.log(newVal)
-    }
   }
 }
 </script>

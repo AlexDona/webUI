@@ -62,8 +62,9 @@
                     @input="formatInput(limitBuyPriceInputRef,middleTopData.priceExchange)"
                   >
                   <span class="currency">{{middleTopData.area}}</span>
-                  <div class="rate-changer"
-                       v-show="activeConvertCurrencyObj&&(limitExchange.transformBuyPrice-0)"
+                  <div
+                    class="rate-changer"
+                    v-show="activeConvertCurrencyObj&&(limitExchange.transformBuyPrice-0)"
                   >
                     ≈{{activeConvertCurrencyObj.symbol}}{{limitExchange.transformBuyPrice}}
                   </div>
@@ -88,8 +89,7 @@
                   >
                 </div>
                 <!--滑块-->
-                <div class="slider">
-                </div>
+                <!--<div class="slider"></div>-->
                 <!--预计交易额 手续费-->
                 <div class="volume-rate">
                   <div class="item">
@@ -175,8 +175,8 @@
                   >
                 </div>
                 <!--滑块-->
-                <div class="slider">
-                </div>
+                <!--<div class="slider">-->
+                <!--</div>-->
                 <!--预计交易额 手续费-->
                 <div class="volume-rate">
                   <div class="item">
@@ -371,7 +371,6 @@
 </template>
 <script>
 import IconFont from '../Common/IconFontCommon'
-// import Slider from './SliderTrader'
 import {
   formatNumberInput,
   getRefValue,
@@ -381,7 +380,10 @@ import {
   saveEntrustTrade,
   getUserAssetOfActiveSymbol
 } from '../../utils/api/trade'
-import {returnAjaxMsg} from '../../utils/commonFunc'
+import {
+  returnAjaxMsg,
+  getNestedData
+} from '../../utils/commonFunc'
 import { createNamespacedHelpers, mapState } from 'vuex'
 const { mapMutations } = createNamespacedHelpers('trade')
 export default {
@@ -393,8 +395,6 @@ export default {
   data () {
     return {
       activeName: 'limit-price',
-      sliderValue: '',
-      limitBuySliderDisabled: false,
       limitBuyPriceInputRef: 'limitBuyPriceInput', // 限价交易 买入价input ref name
       limitBuyCountInputRef: 'limitBuyCountInput', // 限价交易 买入量input ref name
       marketBuyCountInputRef: 'marketBuyCountInput', // 市价交易 买入量input ref name
@@ -403,7 +403,6 @@ export default {
       marketSellCountInputRef: 'marketSellCountInput', // 市价交易 卖出量input ref name
       sellPriceInputRef: 'sellPriceInput', // 卖出价input ref name
       sellCountInputRef: 'sellCountInput', // 卖出量input ref name
-      buyInputValue: '', // 买入input
       pointLength: 4, // 当前币种小数点限制位数
       matchType: 'LIMIT', // 撮合类型： LIMIT:限价单 MARKET:市价单
       limitExchange: {
@@ -432,8 +431,7 @@ export default {
       },
       reflashCount: 0, // 当前交易对刷新次数
       buyUserCoinWallet: {}, // 当前交易对 买方币种用户资产
-      sellUserCoinWallet: {}, // 当前交易对 卖方币种用户资产
-      end: '' // 占位，项目完成后删除
+      sellUserCoinWallet: {} // 当前交易对 卖方币种用户资产
     }
   },
   created () {
@@ -441,12 +439,9 @@ export default {
     require('../../../static/css/theme/day/Trade/TraderCenterDay.css')
     require('../../../static/css/theme/night/Trade/TradeCenterNight.css')
     require('../../../static/css/list/Trade/Exchange.css')
-    require('../../../static/css/theme/day/Trade/ExchangeDay.css')
-    require('../../../static/css/theme/night/Trade/ExchangeNight.css')
   },
   mounted () {
     this.getRefValue(this.limitBuyPriceInputRef)
-    console.log(this.limitExchange.buyPrice)
   },
   activited () {},
   update () {},
@@ -465,8 +460,8 @@ export default {
         return false
       } else {
         console.log(data)
-        this.buyUserCoinWallet = data.data.data.buyUserCoinWallet
-        this.sellUserCoinWallet = data.data.data.sellUserCoinWallet
+        this.buyUserCoinWallet = getNestedData(data, 'data.data.buyUserCoinWallet')
+        this.sellUserCoinWallet = getNestedData(data, 'data.data.sellUserCoinWallet')
         // console.log(price)
         this.setBuyAndSellPrice(targetPriceOfBuy, targetPriceOfSell)
       }
@@ -495,15 +490,10 @@ export default {
     setTransformPrice (type, targetNum) {
       switch (type) {
         case 'limit-buy':
-          console.log(this.currencyRateList[this.activeSymbol.area])
-          this.limitExchange.transformBuyPrice = this.keep2Num(this.currencyRateList[this.activeSymbol.area] * targetNum)
-          console.log(targetNum)
-          console.log(this.currencyRateList)
-          console.log(this.currencyRateList[this.activeSymbol.area])
-          console.log(this.limitExchange.transformBuyPrice)
+          this.limitExchange.transformBuyPrice = keep2Num(this.currencyRateList[this.activeSymbol.area] * targetNum)
           break
         case 'limit-sell':
-          this.limitExchange.transformSellPrice = this.keep2Num(this.currencyRateList[this.activeSymbol.area] * targetNum)
+          this.limitExchange.transformSellPrice = keep2Num(this.currencyRateList[this.activeSymbol.area] * targetNum)
           break
       }
     },
@@ -556,7 +546,6 @@ export default {
     // 输入限制
     formatInput (ref, pointLength) {
       let target = this.$refs[ref]
-      console.log(formatNumberInput(target, pointLength))
       return formatNumberInput(target, pointLength) - 0
     },
     // 新增委单
@@ -629,9 +618,6 @@ export default {
               }
               break
           }
-          // console.log(this.buyUserCoinWallet.total)
-          console.log(this.buyUserCoinWallet.total / params.price)
-          console.log(params.count)
           break
         // 卖单
         case 1:
@@ -654,9 +640,6 @@ export default {
           }
           break
       }
-      console.log(this.buyUserCoinWallet.total)
-      console.log(params.count)
-
       const data = await saveEntrustTrade(params)
       if (!returnAjaxMsg(data, this, 1)) {
         return false
@@ -666,19 +649,14 @@ export default {
     },
     // 设置买卖价格
     setBuyAndSellPrice (targetPriceOfBuy, targetPriceOfSell = targetPriceOfBuy) {
-      console.log(1)
       this.$refs[this.limitBuyPriceInputRef].value = targetPriceOfBuy
       this.$refs[this.limitSellPriceInputRef].value = targetPriceOfSell
       const newBuyPrice = this.formatInput(this.limitBuyPriceInputRef, this.activeSymbol.priceExchange) - 0
       const newSellPrice = this.formatInput(this.limitSellPriceInputRef, this.activeSymbol.priceExchange) - 0
-      console.log(newBuyPrice)
       this.setTransformPrice('limit-buy', newBuyPrice)
       this.setTransformPrice('limit-sell', newSellPrice)
-      // this.setSimulationData(this.sellUserCoinWallet.total, newBuyPrice - 0 , this.limitExchange.userCanBuyCount)
-      console.log(this.sellUserCoinWallet.total)
-      if (newBuyPrice - 0) {
+      if (newBuyPrice) {
         this.limitExchange.userCanBuyCount = (this.buyUserCoinWallet.total / (newBuyPrice - 0)).toFixed(this.middleTopData.priceExchange)
-        console.log(this.limitExchange.userCanBuyCount)
       }
     }
   },
@@ -710,15 +688,10 @@ export default {
         await this.getUserAssetOfActiveSymbol()
       }
     },
-    currencyRateList (newVal) {
-      console.log(newVal)
-    },
-    activeConvertCurrencyObj (newVal) {
-      console.log(newVal)
+    activeConvertCurrencyObj () {
       this.setBuyAndSellPrice(this.middleTopData.buy, this.middleTopData.sell)
     },
-    activeSymbol (newVal) {
-      console.log(newVal)
+    activeSymbol () {
       this.reflashCount = 0
     },
     // 用户手动设置价格
@@ -732,7 +705,6 @@ export default {
       console.log(newVal)
       let targetPriceOfBuy = newVal.buy || newVal.kai
       let targetPriceOfSell = newVal.sell || newVal.kai
-      console.log(targetPriceOfBuy, targetPriceOfSell, this.reflashCount)
       // 首次打开设置价格
       if (!this.reflashCount) {
         if (newVal.last) {

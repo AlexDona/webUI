@@ -95,15 +95,12 @@ export default {
     min-width:1366px;
     width:100%;
     box-sizing: border-box;
-    /*height:1500px;*/
-    /*min-height:1500px;*/
      >.inner-box{
        padding:14px 1.5625%;
        display:block;
        box-sizing: border-box;
        width:100%;
        margin:0 auto;
-       /*min-width:1330px;*/
        >div{
          margin-right:0.4166666666%;
          &:last-of-type{
@@ -111,35 +108,20 @@ export default {
          }
        }
        >.left{
-         /*min-width:400px;*/
-         /*max-width:450px;*/
-         /*width:25%;*/
-         /*flex:1;*/
-         /*width:450px;*/
          width:22.909561217%;
          font-size: 12px;
        }
        >.middle{
          width:53.260869565%;
-         /*min-width:950px;*/
-         /*flex:2;*/
-         /*width:1010px;*/
-         /*min-width:704px;*/
        }
        >.right{
-         /*min-width:450px;*/
          width:22.909561217%;
-         /*min-width: 305px;*/
-         /*flex:1;*/
-         /*width:438px;*/
        }
      }
     &.night{
       >.inner-box{
         background-color: $mainNightBgColor;
-        //background-color: red;
         >div{
-        //  background-color: $nightMainTitleBgColor;
         }
       }
     }
@@ -147,7 +129,6 @@ export default {
       >.inner-box{
         background-color: $dayInnerBoxBg;
         >div{
-          /*background-color: $dayMainBgColor;*/
         }
       }
     }

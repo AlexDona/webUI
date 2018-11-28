@@ -1,7 +1,6 @@
 /* 投资理财重置element ui样式 */
 .finance-box .finance-form-header .el-input__inner{
     color:#338FF5;
-    background-color: transparent;
     font-size: 20px;
     width: 168px;
     height:48px;
@@ -126,7 +125,7 @@
     height: 100%;
 }
 .finance-box .finance-inner-box .dialogStyle .invest-mounte:focus{
-    border: 1px solid #ccc; 
+    border: 1px solid #ccc;
 }
 .finance-box .finance-inner-box .dialogStyle .el-button{
     border: 1px solid #338FF5;

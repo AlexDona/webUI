@@ -116,7 +116,6 @@ export default {
         areaId: 2,
         plateList: []
       },
-      symbolPlateSet: new Set(), // 交易区板块set
       collectPlateList: [], // 收藏板块列表
       collectPlateFilterList: [], // 收藏筛选板块列表
       activeIndex: '0', // 当前tabIndex
@@ -124,16 +123,8 @@ export default {
       contentShowStatus: true, // 显示隐藏控制
       activeName: this.$t('M.trade_market_optional'), // 当前tabItem
       sortBy: '', // 排序依据: price-asc price-desc rose-asc rose-desc
-      marketList: [], // 行情数据
       filterMarketList: [], // 过滤行情数据
-      // searchFilterMarketList: [], // 搜索过滤
-      collectAreaId: '', // 自选区id
-      collectList: [], // 收藏列表
-      collectStatusList: {}, // 收藏状态
-      searchKeyWord: '', // 搜索关键字
-      plateList: [], // 板块列表
-      socketCount: 0, // socket计数
-      nothing: '' // 占位
+      searchKeyWord: '' // 搜索关键字
     }
   },
   created () {
@@ -355,7 +346,7 @@ export default {
       } = data
       console.log(data)
       status = Boolean(status)
-      this.$set(this.collectStatusList, id, status)
+      // this.$set(this.collectStatusList, id, status)
       if (status) {
         //  添加收藏
         this.CHANGE_COLLECT_SYMBOL({

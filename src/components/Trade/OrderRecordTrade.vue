@@ -51,9 +51,9 @@
                   :label="$t('M.comm_trading_volume1') +('('+activeSymbol.sellsymbol+')')"
                 >
                   <template slot-scope="s">
-                      <span class="text-align-r font-size12">
-                        {{s.row.amount}}
-                      </span>
+                    <span class="text-align-r font-size12">
+                      {{s.row.amount}}
+                    </span>
                   </template>
                 </el-table-column>
               </el-table>
@@ -74,7 +74,6 @@ export default {
     return {
       reflashCount: 0,
       contentShowStatus: true
-      // orderRecordList: []
     }
   },
   created () {
@@ -107,11 +106,7 @@ export default {
     }
   },
   watch: {
-    reflashCount (newVal, oldVal) {
-      console.log(newVal)
-    },
-    activeSymbol (newVal, oldVal) {
-      console.log(newVal.id)
+    activeSymbol () {
       this.reflashCount = 0
     },
     orderRecordListBySocket (newVal) {
@@ -120,14 +115,6 @@ export default {
         console.log(newVal)
         this.reflashCount++
       }
-    },
-    orderRecordList (newVal) {
-      // console.log(this.reflashCount)
-      // console.log(newVal)
-    },
-    orderRecordListByAjax (newVal) {
-      // console.log(newVal)
-      // console.log(this.orderRecordListBySocket)
     }
   }
 }

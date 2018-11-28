@@ -85,11 +85,6 @@
                 <!-- 预览下载 -->
                 {{$t('M.actionCenter_download')}}
               </button>
-              <!--<a-->
-                <!--class="download-btn cursor-pointer"-->
-                <!--:href="downloadUrl"-->
-                <!--v-if="downloadUrl"-->
-              <!--&gt;预览下载</a>-->
             </div>
           </div>
         </div>
@@ -138,18 +133,12 @@ export default {
         termsTypeIds: this.termsTypeIds, // 用户协议代号
         language: this.language
       }
-      await getServiceProtocolData(this, params, (data) => {
-        console.log(data)
-        if (data.data.data.length) {
-          this.contentHTML = data.data.data[0].content
-        } else {
-          this.contentHTML = ''
-        }
+      await getServiceProtocolData(this, params, data => {
+        this.contentHTML = data.data.data.length ? getNestedData(data, 'data.data[0].content') : ''
       })
     },
     // 获取资产列表下载地址
     async getDownUrl () {
-      console.log(1)
       let params = {
         key: 'COIN_APPLY'
       }
@@ -157,8 +146,6 @@ export default {
       if (!returnAjaxMsg(data, this)) {
         return false
       } else {
-        console.log(data)
-        // let datailData = data.data.data
         let detailData = getNestedData(data, 'data.data')
         this.downloadUrl = detailData.url
         this.fileName = detailData.name
@@ -167,12 +154,12 @@ export default {
     // 下载资产预览表
     downloadPreviewTable () {
       fetch(this.downloadUrl).then(res => res.blob().then(blob => {
-        let a = document.createElement('a')
+        let link = document.createElement('a')
         let url = window.URL.createObjectURL(blob)
-        let filename = this.fileName
-        a.href = url
-        a.download = filename
-        a.click()
+        let filename = this.coin_apply
+        link.href = url
+        link.download = filename
+        link.click()
         window.URL.revokeObjectURL(url)
       }))
     }

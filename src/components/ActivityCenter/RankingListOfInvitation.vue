@@ -132,41 +132,11 @@ export default {
     return {
       date: new Date(),
       timer: '',
-      startDate: '(+8) 2018-11-28 00:00',
-      rankingList: [
-        {
-          index: 1,
-          username: 'xiaohei',
-          directInvitationCount: 10,
-          indirectInvitationCount: 10,
-          awardWithInvitation: 234
-        },
-        {
-          index: 2,
-          username: 'xiaohei',
-          directInvitationCount: 10,
-          indirectInvitationCount: 10,
-          awardWithInvitation: 234
-        },
-        {
-          index: 3,
-          username: 'xiaohei',
-          directInvitationCount: 10,
-          indirectInvitationCount: 10,
-          awardWithInvitation: 234
-        },
-        {
-          index: 4,
-          username: 'xiaohei',
-          directInvitationCount: 10,
-          indirectInvitationCount: 10,
-          awardWithInvitation: 234
-        }
-      ]
+      startDate: '2018-11-28 00:00',
+      rankingList: []
     }
   },
   created () {
-    require('../../../static/css/list/ActivityCenter/RankingListOfInvitation.css')
     this.getRealTime()
     this.getRankingList()
   },
@@ -187,8 +157,6 @@ export default {
       if (!returnAjaxMsg(data, this)) {
         return false
       } else {
-        console.log(data)
-        // this.rankingList = data.data.data
         this.rankingList = getNestedData(data, 'data.data')
       }
     },
