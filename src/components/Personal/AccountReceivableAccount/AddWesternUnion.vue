@@ -17,7 +17,7 @@
           class="header-content-left header-content font-size16 font-weight600"
         >
           <!--设置西联汇款-->
-          {{ $t('M.comm_set') }}{{ $t('M.user_account_western_union') }}
+          {{ $t('M.user_bind_xilain') }}
         </span>
         <span
           v-else
@@ -192,7 +192,7 @@ export default {
         case 1:
           console.log(type)
           if (!targetNum) {
-            this.setErrorMsg(1, this.$t('M.comm_please_enter') + this.$t('M.comm_password'))
+            this.setErrorMsg(1, this.$t('M.user_bind_xilain_trade_pwd'))
             this.$forceUpdate()
             return 0
           } else {
@@ -214,7 +214,7 @@ export default {
       if (!this.telegraphicTransferAddress) {
         // 请输入西联汇款账号
         this.$message({
-          message: this.$t('M.comm_please_enter') + this.$t('M.user_account_western_union') + this.$t('M.user_account_number'),
+          message: this.$t('M.user_bind_xilain_account'),
           type: 'error'
         })
         return false

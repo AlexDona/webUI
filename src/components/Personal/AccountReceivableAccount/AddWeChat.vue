@@ -17,14 +17,14 @@
           class="header-content-left header-content font-size16 font-weight600"
         >
           <!--设置微信账号-->
-           {{ $t('M.comm_set') }}{{ $t('M.user_account_weChat') }}{{ $t('M.user_account_number') }}
+          {{ $t('M.comm_set') }}{{ $t('M.user_account_weChat') }}{{ $t('M.user_account_number') }}
         </span>
         <span
           v-else
           class="header-content-left header-content font-size16 font-weight600"
         >
           <!--修改微信账号-->
-          {{ $t('M.comm_modification') }}{{ $t('M.user_account_weChat') }}{{ $t('M.user_account_number') }}
+          {{ $t('M.user_bind_WeChat_verify') }}
         </span>
         <span
           class="header-content-right font-size12 cursor-pointer"
@@ -127,7 +127,7 @@
               @click.prevent="stateSubmitWeChat"
             >
               <!--确认设置-->
-              {{ $t('M.comm_affirm') }}{{ $t('M.comm_set') }}
+              {{ $t('M.user_bind_Alipay_set_confirm') }}
             </button>
             <button
               v-else
@@ -135,7 +135,7 @@
               @click.prevent="stateSubmitWeChat"
             >
               <!--确认修改-->
-              {{ $t('M.comm_affirm') }}{{ $t('M.comm_modification') }}
+              {{ $t('M.user_modification_confirm_amend') }}
             </button>
           </el-form>
         </div>
@@ -225,7 +225,7 @@ export default {
         case 0:
           console.log(type)
           if (!targetNum) {
-            this.setErrorMsg(0, this.$t('M.comm_please_enter') + this.$t('M.user_account_weChat') + this.$t('M.user_account_number'))
+            this.setErrorMsg(0, this.$t('M.user_bind_WeChat_please_input'))
             this.$forceUpdate()
             return 0
           } else {
@@ -236,7 +236,7 @@ export default {
         // 请输入交易密码
         case 1:
           if (!targetNum) {
-            this.setErrorMsg(1, this.$t('M.comm_please_enter') + this.$t('M.comm_password'))
+            this.setErrorMsg(1, this.$t('M.user_bind_xilain_trade_pwd'))
             this.$forceUpdate()
             return 0
           } else {

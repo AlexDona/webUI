@@ -290,7 +290,7 @@ export const personal = {
   'user_modification_original_pwd': 'Input Old Login password',
   'user_modification_input_pwd': 'Input password',
   'user_modification_input_confirm_pwd': 'Input Confirm Login password',
-  'user_modification_confirm_': 'Confirm Modify',
+  'user_modification_confirm_amend': 'Confirm Modify',
   // 修改交易密码
   'user_modification_trade_pwd': 'Modify trading password',
   'user_modification_repeat_trade_pwd': 'Repeat trading password',
@@ -298,5 +298,29 @@ export const personal = {
   // 修改手机
   'user_modify_phone': 'Modify Phone',
   'user_modify_input_phone': 'Please Input Phone',
-  'user_modify_trade_pwd': 'Trading password'
+  'user_modify_trade_pwd': 'Trading password',
+  // 绑定谷歌验证
+  'user_bind_google_verify': 'Binding Google verification',
+  'user_bind_google_please_input': 'Input Google verification',
+  'user_bind_google_confirm_bind': 'Confirm Binding',
+  // 设置西联汇款
+  'user_bind_xilain': 'Setting Western Union',
+  'user_bind_xilain_trade_pwd': 'Input Trading password',
+  'user_bind_xilain_account': 'Input Western Union account',
+  // 设置paypal
+  'user_bind_paypal_set': 'Setting PAYPAL',
+  'user_bind_paypal_confirm_set': 'Confirm Setting',
+  'user_bind_paypal_please_input': 'Input PAYPAL account',
+  // 设置Alipay
+  'user_bind_Alipay_set_account': 'Modify account',
+  'user_bind_Alipay_please_input': 'Input Alipay account',
+  'user_bind_Alipay_set_confirm': 'Confirm Modify',
+  // 设置WeChat
+  'user_bind_WeChat_verify': 'Modify WeChat account',
+  'user_bind_WeChat_please_input': 'Input WeChat account',
+  // 设置Bank card
+  'user_bind_Bank_set': 'Modify Bank card',
+  'user_bind_Bank_input_name': 'Input Bank name',
+  'user_bind_Bank_input_card_num': 'Input Bank card number',
+  'user_bind_Bank_input_address': 'Input Branch address'
 }

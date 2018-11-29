@@ -17,7 +17,7 @@
           class="header-content-left header-content font-size16 font-weight600"
         >
           <!--设置银行卡-->
-          {{ $t('M.comm_set') }}{{ $t('M.user_account_bank') }}
+          {{ $t('M.user_bind_Bank_set') }}
         </span>
         <span
           v-else
@@ -127,7 +127,7 @@
               @click.prevent="statusTetBankCard"
             >
               <!--确认设置-->
-              {{ $t('M.comm_affirm') }}{{ $t('M.comm_set') }}
+              {{ $t('M.user_bind_paypal_confirm_set') }}
             </button>
             <button
               v-else
@@ -135,7 +135,7 @@
               @click.prevent="statusTetBankCard"
             >
               <!--确认修改-->
-              {{ $t('M.comm_affirm') }}{{ $t('M.comm_modification') }}
+              {{ $t('M.user_modification_confirm_amend') }}
             </button>
           </el-form>
         </div>
@@ -264,13 +264,12 @@ export default {
     },
     // 检测输入格式
     checkoutInputFormat (type, targetNum) {
-      // 请输入银行名称 请输入银行名称 请输入支行地址 请输入交易密码
       switch (type) {
-        // 银行名称
+        // 请输入银行名称
         case 0:
           console.log(type)
           if (!targetNum) {
-            this.setErrorMsg(0, this.$t('M.comm_please_enter') + this.$t('M.user_account_bank_name'))
+            this.setErrorMsg(0, this.$t('M.user_bind_Bank_input_name'))
             this.$forceUpdate()
             return 0
           } else {
@@ -278,7 +277,7 @@ export default {
             this.$forceUpdate()
             return 1
           }
-        // 银行卡号
+        //  请输入银行卡号
         case 1:
           switch (validateNumForUserInput('bank-card', targetNum)) {
             case 0:
@@ -286,7 +285,7 @@ export default {
               this.$forceUpdate()
               return 1
             case 1:
-              this.setErrorMsg(1, this.$t('M.comm_please_enter') + this.$t('M.user_account_credit_numbers'))
+              this.setErrorMsg(1, this.$t('M.user_bind_Bank_input_card_num'))
               this.$forceUpdate()
               return 0
             case 2:
@@ -295,10 +294,10 @@ export default {
               return 0
           }
           break
-        // 支行地址
+        // 请输入支行地址
         case 2:
           if (!targetNum) {
-            this.setErrorMsg(2, this.$t('M.comm_please_enter') + this.$t('M.user_account_branch_address'))
+            this.setErrorMsg(2, this.$t('M.user_bind_Bank_input_address'))
             this.$forceUpdate()
             return 0
           } else {
@@ -306,10 +305,10 @@ export default {
             this.$forceUpdate()
             return 1
           }
-        // 交易密码
+        // 请输入交易密码
         case 3:
           if (!targetNum) {
-            this.setErrorMsg(3, this.$t('M.comm_please_enter') + this.$t('M.comm_password'))
+            this.setErrorMsg(3, this.$t('M.user_bind_xilain_trade_pwd'))
             this.$forceUpdate()
             return 0
           } else {

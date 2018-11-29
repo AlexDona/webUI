@@ -15,7 +15,7 @@
           class="header-content-left header-content font-size16 font-weight600"
         >
           <!--绑定谷歌验证-->
-          {{ $t('M.user_security_binding') }}{{ $t('M.user_security_google') }}{{ $t('M.user_security_verify') }}
+          {{ $t('M.user_bind_google_verify') }}
         </span>
         <span
           v-else
@@ -170,7 +170,7 @@
               @click.prevent="getGoogleStatusSubmit"
             >
               <!--确认绑定-->
-              {{ $t('M.comm_affirm') }}{{ $t('M.user_security_binding') }}
+              {{ $t('M.user_bind_google_confirm_bind') }}
             </button>
             <button
               v-else
@@ -263,7 +263,7 @@ export default {
           return 1
         case 1:
           // 请输入谷歌验证
-          this.setErrorMsg(0, this.$t('M.comm_please_enter') + this.$t('M.user_security_google') + this.$t('M.user_security_verify'))
+          this.setErrorMsg(0, this.$t('M.user_bind_google_please_input'))
           this.$forceUpdate()
           return 0
       }

@@ -16,14 +16,14 @@
            v-if="paymentTerm.isAlipayBind"
            class="header-content-left header-content font-size16 font-weight600"
          >
-          <!--设置支付宝账号-->
-           {{ $t('M.comm_set') }}{{ $t('M.user_account_number') }}
+          <!--设置账号-->
+           {{ $t('M.user_bind_Alipay_set_account') }}
         </span>
         <span
           v-else
           class="header-content-left header-content font-size16 font-weight600"
         >
-          <!--修改支付宝账号-->
+          <!--修改账号-->
           {{ $t('M.comm_modification') }}{{ $t('M.user_account_number') }}
         </span>
         <span
@@ -48,7 +48,7 @@
             :label-position="labelPosition"
             label-width="120px"
           >
-            <!--名 称-->
+            <!--名称-->
             <el-form-item
               :label="$t('M.user_account_name')"
             >
@@ -60,7 +60,10 @@
             <el-form-item
               :label="$t('M.user_pay_account_set6')"
             >
-              <span class="account-content-type">支付宝</span>
+              <span class="account-content-type">
+                <!-- 支付宝 -->
+                {{$t('M.comm_alipay')}}
+              </span>
             </el-form-item>
             <!--支付宝账号-->
             <el-form-item
@@ -127,7 +130,7 @@
               @click.prevent="stateSubmitWeChat"
             >
               <!--确认设置-->
-              {{ $t('M.comm_affirm') }}{{ $t('M.comm_set') }}
+              {{ $t('M.user_bind_Alipay_set_confirm') }}
             </button>
             <button
               v-else
@@ -223,11 +226,11 @@ export default {
     checkoutInputFormat (type, targetNum) {
       console.log(type)
       switch (type) {
-        // 请输入支付宝张号
+        // 请输入支付宝账号
         case 0:
           console.log(type)
           if (!targetNum) {
-            this.setErrorMsg(0, this.$t('M.comm_please_enter') + this.$t('M.user_account_alipay') + this.$t('M.user_account_number'))
+            this.setErrorMsg(0, this.$t('M.user_bind_Alipay_please_input'))
             this.$forceUpdate()
             return 0
           } else {
@@ -239,7 +242,7 @@ export default {
         case 1:
           console.log(type)
           if (!targetNum) {
-            this.setErrorMsg(1, this.$t('M.comm_please_enter') + this.$t('M.comm_password'))
+            this.setErrorMsg(1, this.$t('M.user_push_input_pwd'))
             this.$forceUpdate()
             return 0
           } else {
