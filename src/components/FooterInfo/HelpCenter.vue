@@ -14,14 +14,14 @@
             width="1200px"
             height="1000px"
             frameborder="0"
-            v-if="language === 'zh_CN' || language === 'zh_TW'"
+            v-show="isChinese"
           ></iframe>
           <iframe
             :src="enSrc"
-            v-else
             width="1200px"
             height="1000px"
             frameborder="0"
+            v-show="!isChinese"
           ></iframe>
         </div>
     </div>
@@ -30,7 +30,10 @@
 </template>
 <script>
 import IconFont from '../Common/IconFontCommon'
-import {mapState} from 'vuex'
+import {
+  mapState,
+  mapGetters
+} from 'vuex'
 
 export default {
   components: {
@@ -41,12 +44,13 @@ export default {
     return {
       searchKeyWord: '', // 搜索关键字
       enSrc: 'https://doc.bzu.com/web/#/2?page_id=23',
-      chSrc: 'https://doc.bzu.com/web/#/4?page_id=67'
+      chSrc: this.isNeedApp ? 'https://doc.bzu.com/web/#/4?page_id=67' : 'https://doc.bzu.com/web/#/5?page_id=89'
     }
   },
   created () {
   },
   mounted () {
+
   },
   activited () {},
   update () {},
@@ -55,15 +59,16 @@ export default {
   },
   filter: {},
   computed: {
+    ...mapGetters('common', {
+      'isNeedApp': 'isNeedApp',
+      'isChinese': 'isChineseLanguage'
+    }),
     ...mapState({
       language: state => state.common.language,
       theme: state => state.common.theme
     })
   },
   watch: {
-    language () {
-      window.location.reload()
-    }
   }
 }
 </script>
