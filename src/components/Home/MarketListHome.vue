@@ -178,8 +178,6 @@ export default{
     }
   },
   async created () {
-    // console.log(this.loginStep1Info)
-    require('../../../static/css/list/Home/MarketListHome.css')
     require('../../../static/css/theme/day/Home/MarketListHomeDay.css')
     require('../../../static/css/theme/night/Home/MarketListHomeNight.css')
     if (this.language) {
@@ -592,5 +590,157 @@ export default{
       background-color: $dayBgColor;
       color:$dayFontColor;
     }
+  }
+</style>
+<style lang="scss">
+.market-list-box.home {
+  .el-tabs__nav-scroll{
+    height:46px;
+    -webkit-background-size: 1130px 46px;
+    background-size: 1130px 46px;
+    background-position: center center;
+    background-image:url(../../assets/develop/tab-bg.png);
+  }
+  .el-input__inner{
+    background-color: transparent;
+    outline:none;
+    border:none;
+    border-radius: 0;
+    width:250px;
+    height:30px;
+  }
+  .el-input__icon{
+    position: absolute;
+    color:#fff;
+    font-size: 22px;
+    right:14px;
+    top:-4px;
+  }
+  .el-tabs__nav-wrap::after,
+  .el-tabs__active-bar{
+    height:0;
+  }
+
+  /*tab栏每一项*/
+  .el-tabs__item{
+    height:35px;
+    line-height:35px;
+    padding:0 30px !important;
+    margin:6px auto;
+    transition: color 0s;
+    font-size: 16px;
+  }
+  .el-tabs__item.is-active{
+    border:none;
+    color:#fff;
+    background: url(../../assets/develop/tab-active-bg.png) no-repeat center center;
+    -webkit-background-size: 100% 100%;
+    background-size: 100% 100%;
+  }
+  .ivu-tabs .ivu-tabs-tabpane{
+    margin-top:30px;
+  }
+  .ivu-btn-primary{
+    background-color: transparent;
+  }
+  .el-table--enable-row-transition .el-table__body td{
+    padding:0;
+    box-sizing: border-box;
+    height:49px;
+  }
+  .el-table  th{
+    padding:0 0 0 14px;
+    box-sizing: border-box;
+    height:38px;
+  }
+  .tab-content {
+    visibility: inherit !important;
+  }
+  .el-table .cell,
+  .el-table th div{
+    padding:0;
+  }
+  .ivu-table-large td{
+    height: 50px;
+    box-sizing: border-box;
+  }
+  .ivu-table-body{
+    width:956px;
+    height:530px !important;
+  }
+  .ivu-table-body>table{
+    width:938px !important;
+    overflow: hidden;
+  }
+  .ivu-table-header>table{
+    width:950px !important;
+  }
+  .ivu-table table{
+    table-layout: inherit;
+  }
+  .ivu-table th:first-of-type>.ivu-table-cell{
+    width:98px;
+  }
+  .ivu-table th:nth-of-type(2)>.ivu-table-cell{
+    width:132px;
+  }
+  .ivu-table th:nth-of-type(3)>.ivu-table-cell{
+    width:112px;
+  }
+
+  .ivu-table th:nth-of-type(4)>.ivu-table-cell{
+    width:112px;
+  }
+  .ivu-table th:nth-of-type(5)>.ivu-table-cell{
+    width:88px;
+  }
+  .ivu-table th:nth-of-type(6)>.ivu-table-cell{
+    width:52px;
+  }
+  .ivu-table th:nth-of-type(7)>.ivu-table-cell{
+    width:92px;
+  }
+  .ivu-table th:nth-of-type(8)>.ivu-table-cell{
+    width:36px;
+  }
+  .el-button.more-btn{
+    color:#fff;
+    width:115px;
+    height:35px;
+    line-height:35px;
+    padding:0;
+    border-radius: 10px;
+  }
+  .el-button,
+  .ivu-table,
+  .ivu-table th,
+  .ivu-table td{
+    background-color: transparent;
+  }
+  .ivu-table-wrapper{
+    border:none;
+    right:-4px;
+    bottom:-2px;
+    border-top:1px solid #566AD4;
+    box-sizing: border-box;
+  }
+  .el-table th{
+    border-top:1px solid #2f3a8c;
+  }
+  .el-table .sort-caret{
+    border-width: 4px;
+  }
+  .el-table .sort-caret.ascending{
+    top:8px;
+  }
+  .el-table .sort-caret.descending{
+    bottom:8px;
+  }
+  /*交易对颜色*/
+  .el-table .sellname,
+  .el-table .area
+  {
+    color:#646464;
+  }
   }
 </style>

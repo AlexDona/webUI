@@ -115,13 +115,13 @@
                     {{ assetItem.coinName }}
                   </div>
                   <div class="table-td flex1">
-                    {{ assetItem.sum }}
+                    {{ assetItem.sum - 0 }}
                   </div>
                   <div class="table-td flex1">
-                    {{ assetItem.frozen }}
+                    {{ assetItem.frozen - 0 }}
                   </div>
                   <div class="table-td flex1">
-                    {{ assetItem.total }}
+                    {{ assetItem.total - 0 }}
                   </div>
                   <div class="table-td flex1 text-align-c">
                     {{ assetItem.btcValue }}
@@ -343,6 +343,7 @@
                               type="text"
                               class="count-flex-input border-radius2 paddinglr15 box-sizing text-align-r"
                               ref="rechargeCount"
+                              @blur="stateBlur('rechargeCount', index)"
                               @keyup="changeInputValue('rechargeCount', index, pointLength, 'rechargeType')"
                               @input="changeInputValue('rechargeCount', index, pointLength, 'rechargeType')"
                             >
@@ -813,13 +814,6 @@ export default {
       // 判断是输入时还是手续费 判断错误提示
       if (val === 'rechargeType') {
         console.log(1)
-        // 获取输入数量
-        this.amount = this.$refs.rechargeCount[index].value
-        if (this.amount > this.withdrawDepositList[index].total) {
-          // 判断输入数量不能大于总数量
-          this.$refs.rechargeCount[index].value = this.withdrawDepositList[index].total
-          console.log(this.amount)
-        }
         console.log(this.amount)
         console.log(this.$refs.rechargeCount[index].value)
       } else if (val === 'serviceType') {
@@ -827,6 +821,20 @@ export default {
         // 获取输入手续费
         this.service = this.$refs.serviceCharge[index].value
       }
+    },
+    // 失去焦点判断输入提币数量不能大于可用量 否则显示总可用量
+    stateBlur (ref, index) {
+      // 获取ref中input值
+      this[ref] = this.$refs[ref].value
+      // 获取输入数量
+      this.amount = this.$refs.rechargeCount[index].value
+      console.log(this.amount)
+      if (this.amount - 0 > this.withdrawDepositList[index].total - 0) {
+        this.$refs.rechargeCount[index].value = this.withdrawDepositList[index].total - 0
+      }
+      this.amount = this.$refs.rechargeCount[index].value
+      let targetCount = amendPrecision(this.$refs.rechargeCount[index].value, this.$refs.serviceCharge[index].value, '-')
+      this.serviceChargeCount = targetCount > 0 ? targetCount : 0
     },
     // 点击充币按钮显示充币内容（带回币种id 币种名称 当前index）
     async showRechargeBox (id, name, index) {
