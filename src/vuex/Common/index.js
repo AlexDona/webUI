@@ -2,10 +2,6 @@ import mutations from './mutations'
 import actions from './actions'
 import {getStore} from '../../utils'
 import getters from './getters'
-// import getters from './getters'
-
-// Vue.use(Vuex)
-
 const state = {
   title: '', // 网站title
   countDownResetStatus: false, // 倒计时重置状态
@@ -83,8 +79,6 @@ const state = {
     tardeRecordList: [], // 交易记录
     tradeMarkeContentItem: {} // 交易区单项
   },
-  // 公用 板块
-  plateList: [], // 板块列表
   routerTo: '', // 路由跳转
   withdrawDepositList: [], // 我的资产列表信息数据
   userRefreshUserList: [], // 刷新用户信息
@@ -95,8 +89,7 @@ const state = {
     footerInfo1: {},
     footerInfo2: {},
     configInfo: {}
-  },
-  end: ''// 占位
+  }
 }
 
 export default {

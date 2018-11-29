@@ -429,8 +429,6 @@ export default{
       'CHANGE_CONVERT_CURRENCY',
       // 修改主题
       'CHANGE_THEME',
-      // 设置板块
-      'CHANGE_PALTE_LIST',
       // 更新当前汇率列表
       'CHANGE_CURRENCY_RATE_LIST',
       'SET_COUNTRY_AREA_LIST',

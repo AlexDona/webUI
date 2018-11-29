@@ -677,8 +677,11 @@ import {
   sendPhoneOrEmailCodeAjax,
   jumpToOtherPageForFooter
 } from '../utils/commonFunc'
-import {createNamespacedHelpers, mapState} from 'vuex'
-const {mapMutations} = createNamespacedHelpers('user')
+import {createNamespacedHelpers, mapState, mapGetters} from 'vuex'
+const {
+  mapMutations
+
+} = createNamespacedHelpers('user')
 export default {
   components: {
     ImageValidate,
@@ -747,7 +750,7 @@ export default {
   },
   mounted () {
     $('body').on('mousemove', (e) => {
-      if (this.mouseMoveStata) {
+      if (this.mouseMoveStatus) {
         var width = e.clientX - this.beginClientX
         if (width > 0 && width <= this.maxwidth) {
           $('.handler').css({'left': width})
@@ -759,7 +762,7 @@ export default {
     })
     $('body').on('mouseup', (e) => { // 鼠标放开
       console.log('mouseup')
-      this.mouseMoveStata = false
+      this.mouseMoveStatus = false
       var width = e.clientX - this.beginClientX
       if (width < this.maxwidth) {
         $('.handler').animate({'left': 0}, 500)
@@ -778,7 +781,7 @@ export default {
       'USER_LOGOUT'
     ]),
     jumpToDownAppPage () {
-      if (this.inviter) {
+      if (this.inviter && this.isNeedApp) {
         this.$router.push({'path': `/downloadApp?language${this.language}`})
       } else {
         this.$router.push({'path': '/login'})
@@ -789,11 +792,9 @@ export default {
     },
     // 检测输入格式
     checkoutInputFormat (type, targetNum) {
-      // console.log(type)
       switch (type) {
         // 手机号
         case 0:
-          // console.log(validateNumForUserInput('phone', targetNum))
           switch (validateNumForUserInput('phone', targetNum)) {
             case 0:
               this.setErrorMsg('')
@@ -894,9 +895,6 @@ export default {
     },
     // 检测用户名是否存在
     async checkUserExistAjax (type, userName) {
-      console.log('blur')
-      // let a = validateNumForUserInput(type, userName)
-      // console.log(a)
       if (!validateNumForUserInput(type, userName)) {
         let params = {
           userName: userName,
@@ -924,8 +922,6 @@ export default {
     // 发送验证码（短信、邮箱）
     sendPhoneOrEmailCode (type) {
       this.activeCountryCodeWithEmail = _.filter(this.contryAreaList, {abbreviation: this.activeCountryAbbreviationWithEmail})[0].nationCode
-      console.log(_.filter(this.contryAreaList, {abbreviation: this.activeCountryAbbreviationWithEmail})[0])
-      // console.log(this.activeCountryCodeWithEmail)
       if (this.disabledOfPhoneBtn || this.disabledOfEmailBtn) {
         return false
       }
@@ -1076,7 +1072,7 @@ export default {
      */
     mouseupFn (e) {
     },
-    mousedownFn: function (e) {
+    mousedownFn (e) {
       this.dragStatus = false
       this.mouseMoveStatus = true
       this.beginClientX = e.clientX
@@ -1103,7 +1099,6 @@ export default {
       }
     },
     handleTouchEnd (e) {
-      // console.log('end');
       this.endX = e.changedTouches[0].pageX
       $(e.target).animate({'left': 0}, 500)
     },
@@ -1129,6 +1124,9 @@ export default {
   },
   filter: {},
   computed: {
+    ...mapGetters('common', {
+      'isNeedApp': 'isNeedApp'
+    }),
     ...mapState({
       theme: state => state.common.theme,
       isLogin: state => state.user.isLogin,
