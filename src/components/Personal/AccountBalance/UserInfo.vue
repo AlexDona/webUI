@@ -343,7 +343,6 @@ export default {
           height: 100%;
         }
         >.user {
-          /*width: 250px;*/
           >.user-background {
             width: 59px;
             height: 60px;
@@ -356,7 +355,6 @@ export default {
           }
         }
         >.info {
-          /*width: 300px;*/
           >.info-top {
             padding: 0 70px;
             >.icon-user-info,
@@ -383,13 +381,9 @@ export default {
           }
           >.info-discount {
             padding: 0 70px;
-            >.discount-text {
-
-            }
           }
         }
         >.volume {
-          /*width: 300px;*/
           >.volume-text {
             padding: 0 25px;
             margin-top: 23px;
@@ -399,7 +393,6 @@ export default {
           }
         }
         >.asset {
-          /*width: 350px;*/
           >.asset-text {
             padding: 0 20px;
             margin-top: 8px;

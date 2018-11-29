@@ -400,7 +400,6 @@ export default {
           flex: 3;
           >.order-info-right{
             margin-left: 50px;
-            // line-height: 1.5rem;
             line-height: 20px;
             >.confirm-time{
               color: #5E95EC;
@@ -444,7 +443,6 @@ export default {
           border-right: 1px solid rgba(38,47,56,0.1);
           >.order-info-middle{
             margin-left: 50px;
-            // line-height: 1.5rem;
             line-height: 20px;
             >.buyer-seller-info{
               color: #5E95EC;
@@ -455,7 +453,6 @@ export default {
           flex: 3;
           >.order-info-right{
             margin-left: 50px;
-            // line-height: 1.5rem;
             line-height: 20px;
             >.confirm-time{
               color: #5E95EC;

@@ -104,7 +104,6 @@
   border: 1px solid #ECF1F8;
 }
 .otc-trading-order-box.day .password-dialog .el-dialog__body .error-info{
-  /* color: #fff; */
   font-size: 12px;
   height: 20px;
   padding-top: 5px;

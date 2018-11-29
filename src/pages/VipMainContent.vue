@@ -951,7 +951,6 @@ export default {
   .vip-main {
     margin-top:65px;
     > .header-content {
-      // height: 600px;
       width: 100%;
       margin: 0 auto;
       position: relative;
@@ -970,7 +969,6 @@ export default {
     >.loading-box{
       height:800px;
       width:100%;
-      // background-color: red;
     }
     > .content-main-content {
       height:100%;
@@ -1000,7 +998,6 @@ export default {
           >.content-box {
             flex-wrap: wrap;
             width: 250px;
-            /*height: 380px;*/
             background-color: #1C1F32;
             position: absolute;
             top: 0;
@@ -1060,9 +1057,6 @@ export default {
             border: 1px solid #354057;
             margin-left: 40px;
             padding: 13px;
-            /*>.grade-color {*/
-              /**/
-            /*}*/
             >.grade-height {
               margin-top: 5px;
             }
@@ -1229,10 +1223,6 @@ export default {
               }
             }
           }
-          /*> .content-border-rl {*/
-            /*border-right: 0;*/
-            /*border-left: 0;*/
-          /*}*/
         }
         > .content-detail-page {
           > .detail-page-grade {
@@ -1384,10 +1374,6 @@ export default {
               }
             }
           }
-          /*> .content-border-rl {*/
-            /*border-right: 0;*/
-            /*border-left: 0;*/
-          /*}*/
         }
         > .content-detail-page {
           > .detail-page-grade {

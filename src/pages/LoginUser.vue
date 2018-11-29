@@ -1747,7 +1747,5 @@ export default {
         }
       }
     }
-    &.night{}
-    &.day{}
   }
 </style>

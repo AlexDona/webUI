@@ -121,15 +121,11 @@ export default {
     &.night{
       >.inner-box{
         background-color: $mainNightBgColor;
-        >div{
-        }
       }
     }
     &.day{
       >.inner-box{
         background-color: $dayInnerBoxBg;
-        >div{
-        }
       }
     }
   }

@@ -1,13 +1,7 @@
 /*发布广告样式重置*/
-.otc-publish-AD-box.night .right-style .el-select{
-}
-.otc-publish-AD-box.night .right-change .el-select{
-}
 .otc-publish-AD-box.night .choice .el-input__inner{
   /*yuxia改动的下拉选框的输入框的背景和边框*/
   background: #1C1F32;
-}
-.otc-publish-AD-box.night .trade-way .el-checkbox-group{
 }
 /* 文本域 */
 .otc-publish-AD-box.night .el-textarea__inner{
@@ -22,9 +16,6 @@
   background-color: #1C1F32;
   border: 1px solid #435372;
 }
-.otc-publish-AD-box.night .trade-way .el-checkbox__inner::after{
-  /* border: 1px solid #1F90EA; */
-}
 .otc-publish-AD-box.night .trade-way .el-checkbox__input.is-checked+.el-checkbox__label {
   color: #9DA5B3;
 }
@@ -38,12 +29,8 @@
 .otc-publish-AD-box.night .password-dialog .el-dialog__title{
   color: #fff;
 }
-.otc-publish-AD-box.night .password-dialog .el-dialog__headerbtn{
-}
 .otc-publish-AD-box.night .password-dialog .el-dialog__body{
   color: #fff;
-}
-.otc-publish-AD-box.night .password-dialog .el-dialog__body .input{
 }
 .otc-publish-AD-box.night .password-dialog .el-dialog__body .password-input{
   background-color: #1A2233;
@@ -51,10 +38,6 @@
 }
 .otc-publish-AD-box.night .password-dialog .el-dialog__body .error-info{
   color: #fff;
-}
-.otc-publish-AD-box.night .password-dialog .el-dialog__footer{
-}
-.otc-publish-AD-box.night .password-dialog .el-button{
 }
 .otc-publish-AD-box.night .password-dialog .el-button--primary{
   background:linear-gradient(9deg,rgba(43,57,110,1),rgba(42,80,130,1));

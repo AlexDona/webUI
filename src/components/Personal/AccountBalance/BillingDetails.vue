@@ -345,8 +345,6 @@ export default {
     require('../../../../static/css/theme/day/Personal/AccountBalance/BillingDetailsDay.css')
     // 黑色主题样式
     require('../../../../static/css/theme/night/Personal/AccountBalance/BillingDetailsNight.css')
-    // console.log(this.inquireCurrencyList)
-    // this.inquireCurrencyList()
   },
   mounted () {},
   activited () {},
@@ -472,11 +470,6 @@ export default {
         this.getChargeMentionList()
         this.inquireCurrencyList()
       }
-    },
-    // 任改动
-    userInfo (val) {
-      // console.log(11111111122222222222222)
-      // console.log(val)
     }
   }
 }
@@ -500,10 +493,6 @@ export default {
           margin-top: 15px;
           line-height: 29px;
         }
-        /*display: flex;*/
-        /*>.search-condition {*/
-          /*width*/
-        /*}*/
         .demonstration {
           margin-right: 5px;
         }
