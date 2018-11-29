@@ -1543,10 +1543,11 @@ export default {
                 width: 270px;
               }
               .send-code-btn {
-                width: 90px;
+                width: 95px;
                 height: 34px;
                 position: absolute;
                 top: 4px;
+                right: 2px;
                 z-index: 999;
               }
             }
