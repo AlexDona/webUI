@@ -24,8 +24,6 @@ export const getCurrencyInfoList = (params) => get('cms/coinInformation/all', pa
 export const getCurrencyDetails = (params) => get(`cms/coinInformation/select/${params}`)
 // 获取服务协议
 export const getServiceProtocoDataAjax = (params) => get('cms/terms/selectAll', params)
-// 分页获取服务协议
-export const getServiceProtocoDataAjaxByPageNum = (params) => get('cms/terms/pageQuery', params)
 // 获取关于我们信息
 export const getAboutUsDataAjax = (params) => get('cms/aboutUs/selectAll', params)
 // 获取网站配置信息

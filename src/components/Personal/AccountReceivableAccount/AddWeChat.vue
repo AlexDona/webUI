@@ -455,7 +455,6 @@ export default {
               }
             }
             .chat-upload {
-              /*background-color: #485776;*/
               .icon-plus {
                 color: #828EA6;
                 position: absolute;
@@ -506,7 +505,6 @@ export default {
               }
             }
             .chat-upload {
-              /*background-color: #485776;*/
               .icon-plus {
                 color: #828EA6;
                 position: absolute;

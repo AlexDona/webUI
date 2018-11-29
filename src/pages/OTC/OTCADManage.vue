@@ -577,8 +577,6 @@ export default {
       > .AD-title {
         height: 30px;
         line-height: 30px;
-        // color: #338FF5;
-        // border-left: 3px solid #338FF5;
         margin-bottom: 30px;
       }
       > .AD-manage-main {
@@ -588,7 +586,6 @@ export default {
           .one-filter-condition,.two-filter-condition,.three-filter-condition,.four-filter-condition,.five-filter-condition {
             flex: 1;
             >.filtrate-text {
-              // color: #9DA5B3;
               margin-right: 10px;
             }
           }
@@ -602,20 +599,9 @@ export default {
         > .manage-main-middle{
           text-align: right;
           margin-bottom: 15px;
-          > .all-unshelve {
-            // color: #338FF5;
-            > .unshelve-text {
-            }
-          }
         }
         > .manage-main-bottom {
          min-height: 450px!important;
-          .red {
-            // color: #D45858;
-          }
-          .green {
-            // color: #008069;
-          }
         }
         .page{
           text-align: center;
@@ -641,8 +627,6 @@ export default {
           >.manage-main-middle{
             > .all-unshelve {
               color: #338FF5;
-              > .unshelve-text {
-              }
             }
           }
           > .manage-main-bottom {
@@ -652,8 +636,6 @@ export default {
             .green {
               color: #008069;
             }
-          }
-          .page{
           }
         }
       }
@@ -676,8 +658,6 @@ export default {
           >.manage-main-middle{
             > .all-unshelve {
               color: #338FF5;
-              > .unshelve-text {
-              }
             }
           }
           > .manage-main-bottom {
@@ -687,8 +667,6 @@ export default {
             .green {
               color: #008069;
             }
-          }
-          .page{
           }
         }
       }

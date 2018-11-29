@@ -63,9 +63,6 @@
   height: 115px;
 }
 /* 实名认证表单样式 */
-.identity-authentication.personal .identity-authentication-main .name-authentication-content .el-form .el-form-item .el-form-item__label {
-  /* width: 140px !important; */
-}
 .identity-authentication.personal .identity-authentication-main .name-authentication-content .el-form .el-form-item .el-form-item__content{
   margin-left: 140px !important;
 }

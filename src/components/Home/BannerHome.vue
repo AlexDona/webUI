@@ -40,9 +40,6 @@ export default {
     }
   },
   watch: {
-    bannerBackgroundImage (newVal) {
-      console.log(newVal)
-    }
   }
 }
 </script>

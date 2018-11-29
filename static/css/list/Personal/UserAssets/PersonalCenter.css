@@ -20,8 +20,6 @@ personal-center.personal .el-tabs__nav{
 }
 .personal-center.personal .el-dialog:nth-child(1) {
   border-radius: 10px;
-  /*width: 300px;*/
-  /* height: 200px; */
   top: 15%;
 }
 .personal-center.personal .el-tabs--left .el-tabs__header.is-left{
@@ -35,7 +33,6 @@ personal-center.personal .el-tabs__nav{
   width: 970px;
   overflow: unset;
   position: relative;
-  /*overflow: hidden;*/
 }
 .personal-center.personal .el-tabs--left {
   overflow: unset;
@@ -43,13 +40,8 @@ personal-center.personal .el-tabs__nav{
 .personal-center.personal .el-tabs--left .el-tabs__nav-wrap.is-left {
   margin-right: 0px;
 }
-/*.personal-center.personal .is-disabled:hover {*/
-  /*background-color: #1E2636;*/
-  /*color: red;*/
-/*}*/
 .personal-center.personal .warning .el-dialog {
   width: 350px;
-  /*height: 200px;*/
   border-radius: 5px;
 }
 .personal-center.personal .el-tabs__item.is-disabled:hover {

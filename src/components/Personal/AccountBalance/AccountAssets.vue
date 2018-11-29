@@ -1344,7 +1344,6 @@ export default {
             height: 100%;
             >.header-right-left {
               >.header-right-text {
-                // width: 180px;
                 width: 200px;
                 >.header-right-show {
                   line-height: 50px;
@@ -1380,8 +1379,6 @@ export default {
                 height: 35px;
                 border: 0;
                 line-height: 0;
-                // margin-left: 50px;
-                // margin-right: 15px;
                 margin: 0 15px 0 50px;
               }
               .btn{
@@ -1391,7 +1388,6 @@ export default {
               }
               .flex-asset {
                 position: relative;
-                // text-align: center;
                 text-align: left;
               }
               .icon-caret {
@@ -1413,7 +1409,6 @@ export default {
                 >.table-box {
                   width: 100%;
                   >.recharge-list-mention {
-                    // height:225px !important;
                     height:236px !important;
                   }
                   >.list-mention-treasure {
@@ -1422,8 +1417,6 @@ export default {
                   >.out-box{
                     >.recharge-list {
                       position: relative;
-                      // height:205px;
-                      /*height:215px;*/
                       padding: 20px 6px;
                       z-index: 2;
                       >.triangle {
@@ -1481,7 +1474,6 @@ export default {
                         }
 
                         >.recharge-content-title {
-                          // width: 450px;
                           width: 584px;
                           line-height: 18px;
                         }
@@ -1542,9 +1534,6 @@ export default {
                             >.count-flex-text {
                               line-height: 20px ;
                             }
-                            /*>.count-flex-text {*/
-                            /*padding-right: 25px;*/
-                            /*}*/
                             >.count-flex-input,
                             >.count-text-input {
                               width: 275px;
@@ -1573,12 +1562,9 @@ export default {
                         }
                       }
                       >.text-info {
-                        // padding-left: 15px;
-                        // padding-top: 20px;
                         padding: 20px 0 0 15px;
                         >.currency-rule,
                         >.prompt-message {
-                          // line-height: 20px;
                           line-height: 16px;
                         }
                         >.mention-button {
@@ -1596,7 +1582,6 @@ export default {
               .content-input {
                 width: 180px;
                 height: 34px;
-                /*margin-top: 20px;*/
               }
               .input-google {
                 width: 270px;

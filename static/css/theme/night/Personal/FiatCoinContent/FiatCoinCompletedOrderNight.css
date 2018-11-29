@@ -14,7 +14,6 @@
   background-color: #1C1F32;
 }
 .fiat-completed-order-box.personal.night .el-table td {
-  /*padding: 0;*/
   background-color: #1C1F32;
   height: 40px;
 }
@@ -37,9 +36,6 @@
 .fiat-completed-order-box.personal.night .el-table__expanded-cell{
   border-bottom: 15px solid #272B41;
 }
-/*.fiat-completed-order-box.personal.night .el-icon-arrow-right:before {*/
-  /*content: " ";*/
-/*}*/
 .fiat-completed-order-box.personal.night .el-table_2_column_9 .el-table__expand-column .is-leaf{
   border-top-left-radius: 5px;
   border-bottom-left-radius: 5px;
@@ -82,16 +78,8 @@
 }
 .fiat-completed-order-box.personal.night
 .el-table--enable-row-transition
-.el-table__body td:first-of-type.el-table__expanded-cell{
-  /* border-bottom-right-radius: 7px; */
-  /* border-bottom-left-radius: 7px; */
-
-}
-.fiat-completed-order-box.personal.night
-.el-table--enable-row-transition
 .el-table__body td:first-of-type.el-table__expanded-cell ::after{
   content: '';
-  /*width: 1045px;*/
   height: 20px;
   position: absolute;
   left: 0;

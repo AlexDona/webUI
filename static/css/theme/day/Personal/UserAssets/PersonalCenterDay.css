@@ -30,9 +30,6 @@
 .personal-center.personal.day .el-tabs--left .el-tabs__header.is-left{
   border:1px solid rgba(38,47,56,0.1);
 }
-
-/*.personal-center.personal.day .el-tabs__item:hover:nth-child(5),*/
-/*.personal-center.personal.day .el-tabs__item:hover:nth-child(12)*/
 .personal-center.personal.day .el-tabs__item:first-child:hover {
   border-left: 4px solid #fff;
 }

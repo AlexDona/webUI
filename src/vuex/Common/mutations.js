@@ -6,7 +6,6 @@ import {
   CHANGE_SOCKET_AND_AJAX_DATA,
   CHANGE_ACTIVE_SYMBOL,
   CHANGE_ACTIVE_TRADE_AREA,
-  CHANGE_PALTE_LIST,
   CHANGE_CURRENCY_RATE_LIST,
   USER_ASSETS_LIST,
   SET_COUNTRY_AREA_LIST,
@@ -95,10 +94,6 @@ export default {
   // 更改当前选中交易区
   [CHANGE_ACTIVE_TRADE_AREA] (state, data) {
     state.activeTradeArea = data
-  },
-  // 更改板块
-  [CHANGE_PALTE_LIST] (state, data) {
-    state.plateList = data
   },
   [CHANGE_CURRENCY_RATE_LIST] (state, data) {
     state.currencyRateList = data.currencyRateList

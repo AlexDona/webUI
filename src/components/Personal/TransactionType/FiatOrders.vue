@@ -548,15 +548,9 @@ export default {
         >.filtrate-text {
           margin-right: 5px;
         }
-        >.style-input {}
-        >.date-picker {}
         .date-short-line {
           margin: 0 25px;
         }
-        >.inquire-button {}
-      }
-      >.filtrate-text{
-        /*color: #9DA5B3;*/
       }
       >.date-picker{
         >.date-short-line{
@@ -595,9 +589,6 @@ export default {
     >div{
       border:1px solid #ECF1F8;
     }
-    /*.orders-main-top{*/
-      /*background-color: #fff;*/
-    /*}*/
   }
 }
 </style>

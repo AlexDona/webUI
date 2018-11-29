@@ -24,7 +24,10 @@
 <!--请严格按照如下书写书序-->
 <script>
 import {getAboutUsDataAjax} from '../../utils/api/header'
-import {returnAjaxMsg} from '../../utils/commonFunc'
+import {
+  returnAjaxMsg,
+  getNestedData
+} from '../../utils/commonFunc'
 import {mapState} from 'vuex'
 export default {
   components: {
@@ -51,7 +54,7 @@ export default {
       if (!returnAjaxMsg(data, this)) {
         return false
       } else {
-        this.aboutData = data.data.data[0]
+        this.aboutData = getNestedData(data, 'data.data[0]')
       }
     }
   },
@@ -100,12 +103,6 @@ export default {
     }
     &.night{
       >.content{
-        >.top{
-          >h1{
-          }
-          >p{
-          }
-        }
         >.content{
           background-color: #121824;
           >.inner-box{
@@ -117,12 +114,6 @@ export default {
     }
     &.day{
       >.content{
-        >.top{
-          >h1{
-          }
-          >p{
-          }
-        }
         >.content{
           background-color: #fff;
           >.inner-box{

@@ -573,9 +573,6 @@ export default {
     >.withdrawal-address-main{
       border-radius: 5px;
       min-height: 390px;
-      /*.tab-list {*/
-        /*height: 520px;*/
-      /*}*/
       >.withdrawal-header {
         margin-bottom: 2px;
         >.header-content {
@@ -613,8 +610,6 @@ export default {
             box-sizing: border-box;
           }
           .form-button {
-            // margin: 10px 0 0 70px;
-            // 任增加
             margin: 10px 0 0 140px;
           }
         }
@@ -637,7 +632,6 @@ export default {
         background-color: $nightMainBgColor;
         >.withdrawal-header {
           background-color: $nightMainBgColor;
-          /*box-shadow:2px 0px 3px rgba(24,30,42,1);*/
           box-shadow:2px 0px 2px rgba(20,23,37,1);
           >.header-content {
             color: rgba(255,255,255,0.7);

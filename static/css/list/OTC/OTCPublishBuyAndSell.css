@@ -4,15 +4,12 @@
     resize: none;
     width: 588px;
     height: 100px;
-    /* color: #fff; */
-    /* background-color: #333A41; */
     border: 0;
     margin-bottom: 10px;
 }
 /* 表单 */
 .otc-publish-buy-and-sell-box .el-form--label-top .el-form-item__label{
-    /* color: #9DA5B3; */
-    padding: 0 0;
+  padding: 0 0;
 }
 .otc-publish-buy-and-sell-box .el-form--label-top .el-form-item{
   margin-bottom: 0;
@@ -32,27 +29,17 @@
   /* background-color: #333A41; */
   border: 0;
 }
-.otc-publish-buy-and-sell-box .buy-sell-submit-form .el-select-dropdown__list{
-  /* background-color: #29343F !important; */
-}
-.otc-publish-buy-and-sell-box .buy-sell-submit-form .el-select-dropdown__item.hover {
-  /* background-color: #29343F !important; */
-  /* color: #338FF5 !important; */
-}
 /* 输入密码弹出框 */
 .otc-publish-buy-and-sell-box .password-dialog .el-dialog{
   border-radius: 4px;
   width: 350px;
   height: 207px;
-  /* background: #28334A; */
 }
 .otc-publish-buy-and-sell-box .password-dialog .el-dialog__header{
-  /* background-color:#20293C; */
   padding: 10px 20px 10px;
   border-radius: 4px;
 }
 .otc-publish-buy-and-sell-box .password-dialog .el-dialog__title{
-  /* color: #fff; */
   font-size: 14px;
 }
 .otc-publish-buy-and-sell-box .password-dialog .el-dialog__headerbtn{
@@ -60,7 +47,6 @@
   right: 10px;
 }
 .otc-publish-buy-and-sell-box .password-dialog .el-dialog__body{
-  /* color: #fff; */
   font-size: 12px;
   padding: 15px 20px 10px 30px;
 }
@@ -71,14 +57,11 @@
   display: inline-block;
   width: 280px;
   height: 36px;
-  /* background-color: #1A2233; */
   border-radius: 4px;
-  /* color: #fff; */
   font-size: 14px;
   padding-left: 10px;
 }
 .otc-publish-buy-and-sell-box .password-dialog .el-dialog__body .error-info{
-  /* color: #fff; */
   font-size: 12px;
   height: 20px;
   padding-top: 5px;
@@ -91,7 +74,4 @@
   width: 290px;
   padding: 7px 20px;
   border:0;
-}
-.otc-publish-buy-and-sell-box .password-dialog .el-button--primary{
-  /* background:linear-gradient(9deg,rgba(43,57,110,1),rgba(42,80,130,1)); */
 }

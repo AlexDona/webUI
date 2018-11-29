@@ -814,9 +814,6 @@ export default {
           margin-left: 55px;
           .send-code-btn {
             min-width: 90px;
-            /*height: 36px;
-            position: absolute;
-            top: -1px;*/
           }
           .input {
             width: 180px;

@@ -55,22 +55,8 @@ export default {
   data () {
     return {
       currencyId: '',
-      currencyList: [
-      ],
-      currencyInfo: {
-        // coinId: '486124940777488384',
-        // createTime: '2018-09-18 10:12:17',
-        // id: '491552030104485888',
-        // information: `↵        <!DOCTYPE html>↵        <html>↵        <head lang="en">↵            <meta charset="UTF-8">↵            <title></title>↵            <link href="https://cdn.bootcss.com/quill/1.3.6/quill.snow.css" rel="stylesheet">↵        </head>↵        <body>↵          <p>比特币<img src="http://fubt-3.oss-cn-hongkong.aliyuncs.com/b91b13c4-af14-4c90-b217-c1f33c3b993b"></p>    ↵        </body>↵        </html>↵      `,
-        // intro: '比特币',
-        // language: 'zh_CN',
-        // logo: 'http://fubt-3.oss-cn-hongkong.aliyuncs.com/3829bdfa-390b-46f7-b6cc-b201883ca93e',
-        // modifier: '申',
-        // name: 'BTC',
-        // shortName: '比特币',
-        // updateTime: '2018-09-18 10:12:17',
-        // version: 1
-      }
+      currencyList: [],
+      currencyInfo: {}
     }
   },
   async created () {
@@ -112,10 +98,8 @@ export default {
         return false
       } else {
         this.currencyList = getNestedData(data, 'data.data')
-        console.log(this.currencyList.length)
         if (this.currencyList.length) {
           this.currencyId = getNestedData(this.currencyList, '[0].id')
-          console.log(this.currencyList)
         }
       }
     },
@@ -126,7 +110,6 @@ export default {
     },
     // 币种详情
     async getFootCurrencyInforDetail () {
-      console.log(this.currencyId)
       let currencyId = this.currencyId || getNestedData(this.currencyList, '[0].id')
       if (currencyId) {
         const data = await getCurrencyDetails(this.currencyId || getNestedData(this.currencyList, '[0].id'))
@@ -148,16 +131,10 @@ export default {
     })
   },
   watch: {
-    currencyList (newVal) {
-      console.log(newVal)
-    },
-    currencyId (newVal) {
-      console.log(newVal)
-    },
     async language () {
       await this.initInfoList()
     },
-    serviceActiveName (newVal) {
+    serviceActiveName () {
       this.getFootCurrencyInforDetail()
     }
   }

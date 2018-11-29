@@ -1,16 +1,6 @@
 /**
   HeaderCommon修改element通用样式（不分主题）
  */
-
-/*.nav-box.common .ivu-modal-content {*/
-  /*!*background-color: transparent;*!*/
-  /*overflow: hidden;*/
-/*}*/
-
-/*.nav-box.common .ivu-modal-close {*/
-  /*top: -10px;*/
-/*}*/
-
 .nav-box.common .el-dialog__header,
 .nav-box.common .el-dialog__body {
   padding: 0 40px;
@@ -88,33 +78,6 @@
   border:none;
 }
 
-/*.ivu-btn-large {*/
-  /*padding: 10px 15px;*/
-/*}*/
-
-/*.ivu-modal-header-inner {*/
-  /*font-size: 16px;*/
-  /*!*color:#333;*!*/
-/*}*/
-
-/*.nav-box.common .ivu-select-large.ivu-select-single .ivu-select-selection .ivu-select-placeholder{*/
-  /*border-radius: 4px;*/
-/*}*/
-
-/*.nav-box.common .ivu-select-selection{*/
-  /*border:none;*/
-/*}*/
-/*.ivu-select-selection>div{*/
-  /*border-radius: 2px;*/
-  /*height:46px;*/
-/*}*/
-/*.nav-box.common .ivu-modal-header{*/
-  /*border:none;*/
-  /*!*box-shadow:0px 0px  5px 1px #ddd;*!*/
-/*}*/
-/*.ivu-select-item-focus{*/
-  /*background-color: transparent;*/
-/*}*/
 /*消息弹窗*/
 .el-message {
   min-width: 0;

@@ -3,7 +3,7 @@
     class="nav-box common"
     :class="{'day':theme == 'day','night':theme == 'night' }"
     :style="{
-      top:$route.path==='/home'&&noticeCloseVisible ? styleTop+'px': 0
+      top:$route.path==='/home'&&noticeCloseVisible ? `${styleTop}px` : 0
     }"
   >
     <div class="inner-box">
@@ -101,9 +101,6 @@
                 class="sub-nav-list activity-center"
                 v-show="$route.path ==='/ActivityCenter'||$route.path ==='/CurrencyApplication'||$route.path==='/RankingListOfInvitation'"
               >
-                <!--<li class="sub-nav-item">-->
-                  <!--<router-link to="/">新币投票</router-link>-->
-                <!--</li>-->
                 <li class="sub-nav-item">
                   <router-link to="/CurrencyApplication">
                     <!--上币申请-->
@@ -352,8 +349,6 @@ import {
 } from '../../utils'
 import { createNamespacedHelpers, mapState } from 'vuex'
 const { mapMutations, mapActions } = createNamespacedHelpers('common')
-// const { mapMutationsForUser } = createNamespacedHelpers('user')
-// import {Io} from '../../utils/tradingview/socket'
 export default{
   components: {
     IconFontCommon
@@ -407,16 +402,12 @@ export default{
       language: this.language
     })
     await this.GET_COUNTRY_LIST_ACTION({
-      selft: this
+      self: this
     })
-    // console.log(this.theme)
     this.activeTheme = this.theme
     // 查询某商户可用法币币种列表
     // 折算货币s
     await this.getMerchantAvailablelegalTenderList()
-    if (this.isLogin) {
-      // this.reflashUserInfo()
-    }
   },
   mounted () {
     window.addEventListener('scroll', this.handleScroll)
@@ -438,8 +429,6 @@ export default{
       'CHANGE_CONVERT_CURRENCY',
       // 修改主题
       'CHANGE_THEME',
-      // 设置板块
-      'CHANGE_PALTE_LIST',
       // 更新当前汇率列表
       'CHANGE_CURRENCY_RATE_LIST',
       'SET_COUNTRY_AREA_LIST',
@@ -454,7 +443,6 @@ export default{
     },
     handleScroll () {
       var scrollTop = window.pageYOffset || document.documentElement.scrollTop || document.body.scrollTop
-      // console.log(scrollTop)
       if (scrollTop > 0) {
         this.styleTop = 0
         this.topPadding = '0 10%'
@@ -487,7 +475,6 @@ export default{
     // 设置个人中心跳转
     setPersonalJump (target) {
       this.$store.commit('personal/CHANGE_USER_CENTER_ACTIVE_NAME', target)
-      console.log(this.userCenterActiveName)
     },
     // 开启vip
     stateOpenVip () {
@@ -500,7 +487,6 @@ export default{
     // 用户跳转到指定页面
     stateReturnSuperior (val) {
       if (this.userInfo.payPassword) {
-        console.log(val)
         switch (val) {
           case 'account-balance':
             this.setPersonalJump('assets')
@@ -563,10 +549,8 @@ export default{
     },
     // 切换语言
     changeLanguage (e) {
-      // console.log(e)
       this.CHANGE_LANGUAGE(e)
       this.$i18n.locale = e.shortName
-      console.log(this.activeLanguage)
     },
     // 切换主题
     changeTheme (e) {
@@ -586,24 +570,24 @@ export default{
     },
     // 查询某商户可用法币币种列表
     async getMerchantAvailablelegalTenderList () {
-      let data
-      data = await getMerchantAvailablelegalTender({})
-      console.log(data)
-      if (data.data.meta.code !== 200) {
-        this.$message({
-          message: data.data.meta.message,
-          type: 'error',
-          center: true
-        })
+      let data = await getMerchantAvailablelegalTender({})
+      if (!returnAjaxMsg(data)) {
         return false
+      } else {
+        // 返回数据正确的逻辑
+        this.convertCurrencyList = getNestedData(data, 'data.data')
+        await this.changeActiveTransitionCurrency()
       }
-      // 返回数据正确的逻辑
-      this.convertCurrencyList = getNestedData(data, 'data.data')
-      await this.changeActiveTransitionCurrency()
-      // setStore('convertCurrencyList', this.convertCurrencyList)
+      // if (data.data.meta.code !== 200) {
+      //   this.$message({
+      //     message: data.data.meta.message,
+      //     type: 'error',
+      //     center: true
+      //   })
+      //   return false
+      // }
     },
     setNewTitle () {
-      console.log(this.title)
       if (this.title) {
         let newTitle = `${this.middleTopData.last} ${this.middleTopData.sellsymbol}/${this.middleTopData.area} ${this.title}`
         document.querySelector('title').innerText = newTitle
@@ -620,14 +604,10 @@ export default{
       isLogin: state => state.user.isLogin,
       middleTopData: state => state.trade.middleTopData, // 当前交易对数据
       middleTopDataPrice: state => state.trade.middleTopData.last, // 当前交易对数据
-      loginStep1Info: state => state.user.loginStep1Info,
       userInfo: state => state.user.loginStep1Info.userInfo,
       activeLanguage: state => state.common.activeLanguage,
-      withdrawDepositList: state => state.common.withdrawDepositList,
       userInfoRefreshStatus: state => state.common.userInfoRefreshStatus,
       logoSrc: state => state.common.logoSrc,
-      footerInfo: state => state.common.footerInfo,
-      userCenterActiveName: state => state.personal.userCenterActiveName,
       title: state => state.common.title, // 网站title
       $mainNightBgColor: state => state.common.mainColor.$mainNightBgColor,
       noticeCloseVisible: state => state.home.noticeCloseVisible
@@ -637,37 +617,16 @@ export default{
     defaultLanguage (newVal) {
       this.$i18n.locale = newVal
     },
-    footerInfo (newVal) {
-      console.log(newVal)
-    },
     async language () {
       await this.SET_PARTNER_INFO_ACTION({
         self: this,
         language: this.language
       })
     },
-    title (newVal) {
-      console.log(newVal)
-    },
-    middleTopDataPrice (newVal) {
-      console.log(newVal)
-      console.log(this.title)
+    middleTopDataPrice () {
       this.setNewTitle()
     },
-    activeLanguage (newVal) {
-      console.log(newVal)
-    },
-    '$route' (to, from) {
-      console.log(to, from)
-    },
-    activeConvertCurrencyObj (newVal, oldVal) {
-      console.log(newVal)
-    },
-    withdrawDepositList (newVal) {
-      console.log(newVal)
-    },
     userInfoRefreshStatus (newVal) {
-      console.log(newVal)
       if (newVal) {
         if (this.isLogin) {
           this.reflashUserInfo()
@@ -680,15 +639,12 @@ export default{
 </script>
 <style scoped lang="scss" type="text/scss">
   @import "../../../static/css/scss/index";
-  /*@import "../../../static/css/scss/Common/HeaderCommon.scss";*/
 .nav-box{
   position: fixed;
   z-index: 2008;
   width:100%;
   min-width:1100px;
-  /*height:102px;*/
   box-sizing: border-box;
-  /*top:30px;*/
   transition: all .5s;
   >.inner-box{
     height:100%;

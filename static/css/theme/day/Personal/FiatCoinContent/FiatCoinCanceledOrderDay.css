@@ -6,7 +6,6 @@
     box-shadow:none;
 }
 .fiat-canceled-order-box.personal.day > .canceled-order-content > .canceled-table-head > .item{
-    /* border-right:1px solid #ECF1F8; */
     border-bottom:1px solid #ECF1F8;
     color:#909399;
 }

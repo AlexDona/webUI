@@ -242,7 +242,6 @@ export default {
 }
 </script>
 <style scoped lang="scss" type="text/scss">
-  // @import "../../../static/css/scss/OTC/OTCCenter.scss";
   @import "../../../static/css/scss/index.scss";
   .otc-entrust-order-box {
     height: 500px;
@@ -253,18 +252,12 @@ export default {
         width: 1045px;
         height: 35px;
         line-height: 35px;
-        // background-color: $mainContentNightBgColor;
-        // color: #A9BED4;
-        // border: 1px solid #262F38;
         border-radius: 5px;
-        // margin-bottom: 5px;
-        // box-shadow: -2px 3px 5px 1px #191E28;
         z-index: 200;
         > .item {
           display: inline-block;
           width: 126px;
           text-align: center;
-          // text-align: left;
         }
         > .first-style {
           width: 70px;
@@ -294,9 +287,6 @@ export default {
       > .entrust-table-body {
         height: 400px;
         margin-top: 15px;
-        // background-color: $mainContentNightBgColor;
-        // color: #9DA5B3;
-        // border: 1px solid #262F38;
         border-top: none;
         border-bottom-right-radius: 5px;
         border-bottom-left-radius: 5px;
@@ -308,12 +298,6 @@ export default {
           display: flex;
           height: 40px;
           line-height: 40px;
-          .red {
-            // color: #D45858;
-          }
-          .green {
-            // color: #008069;
-          }
           > .item {
             display: inline-block;
             width: 126px;
@@ -357,24 +341,6 @@ export default {
           color: #A9BED4;
           border: 1px solid #485776;
           box-shadow: -2px 3px 5px 1px #191E28;
-          > .item {
-          }
-          > .first-style {
-          }
-          > .second-coin {
-          }
-          > .third-price {
-          }
-          > .fourth-entrust-count {
-          }
-          > .fifth-match-count {
-          }
-          > .sixth-total-amount {
-          }
-          > .senventh-create-time {
-          }
-          > .eighth-action {
-          }
         }
         > .entrust-table-body {
           background-color: $mainContentNightBgColor;
@@ -390,24 +356,6 @@ export default {
             .green {
               color: #008069;
             }
-            > .item {
-            }
-            > .first-style {
-            }
-            > .second-coin {
-            }
-            > .third-price {
-            }
-            > .fourth-entrust-count {
-            }
-            > .fifth-match-count {
-            }
-            > .sixth-total-amount {
-            }
-            > .senventh-create-time {
-            }
-            > .eighth-action {
-            }
           }
         }
         >.page{
@@ -422,25 +370,6 @@ export default {
           background-color: #fff;
           color: #8A909E;
           border: 1px solid #ECF1F8;
-          // box-shadow: -2px 3px 5px 1px #191E28;
-          > .item {
-          }
-          > .first-style {
-          }
-          > .second-coin {
-          }
-          > .third-price {
-          }
-          > .fourth-entrust-count {
-          }
-          > .fifth-match-count {
-          }
-          > .sixth-total-amount {
-          }
-          > .senventh-create-time {
-          }
-          > .eighth-action {
-          }
         }
         > .entrust-table-body {
           background-color: #fff;
@@ -455,24 +384,6 @@ export default {
             }
             .green {
               color: #008069;
-            }
-            > .item {
-            }
-            > .first-style {
-            }
-            > .second-coin {
-            }
-            > .third-price {
-            }
-            > .fourth-entrust-count {
-            }
-            > .fifth-match-count {
-            }
-            > .sixth-total-amount {
-            }
-            > .senventh-create-time {
-            }
-            > .eighth-action {
             }
           }
         }

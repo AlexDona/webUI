@@ -359,7 +359,7 @@ export default {
           background-color: $dayBgColor;
           color: #617499;
           border: 1px solid rgba(38,47,56,0.1);
-          box-shadow: -2px 3px 5px 1px #191E28;h: 150px;
+          box-shadow: -2px 3px 5px 1px #191E28;
         }
         >.canceled-table-body{
           background-color: $dayBgColor;

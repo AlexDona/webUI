@@ -35,7 +35,6 @@
 }
 .security-center.personal.day .el-tabs__item:hover {
   background-color: #fff;
-  /*border-bottom: 2px solid #338FF5;*/
 }
 .security-center.personal.day .el-dialog__header {
   background: rgba(51,143,245,0.1);

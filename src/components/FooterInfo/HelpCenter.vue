@@ -31,8 +31,6 @@
 <script>
 import IconFont from '../Common/IconFontCommon'
 import {mapState} from 'vuex'
-import {getServiceProtocoDataAjaxByPageNum} from '../../utils/api/header'
-import {returnAjaxMsg} from '../../utils/commonFunc'
 
 export default {
   components: {
@@ -42,18 +40,11 @@ export default {
   data () {
     return {
       searchKeyWord: '', // 搜索关键字
-      helpList: [],
-      // helpFilterList: [],
-      helpShowStatusList: [],
       enSrc: 'https://doc.bzu.com/web/#/2?page_id=23',
-      chSrc: 'https://doc.bzu.com/web/#/4?page_id=67',
-      pageNum: 1,
-      pageSize: 10,
-      totalPages: 0 // 总页数
+      chSrc: 'https://doc.bzu.com/web/#/4?page_id=67'
     }
   },
   created () {
-    // this.getHelpList()
   },
   mounted () {
   },
@@ -61,58 +52,16 @@ export default {
   update () {},
   beforeRouteUpdate () {},
   methods: {
-    // 分页
-    changeCurrentPage (pageNum) {
-      console.log(pageNum)
-      this.pageNum = pageNum
-      this.getHelpList()
-    },
-    async getHelpList () {
-      const params = {
-        pageNum: this.pageNum,
-        pageSize: this.pageSize,
-        language: this.language,
-        termsTypeIds: 10
-      }
-      const data = await getServiceProtocoDataAjaxByPageNum(params)
-      if (!returnAjaxMsg(data, this)) {
-        return false
-      } else {
-        console.log(data)
-        this.helpList = data.data.data.list
-        this.pageNum = data.data.data.pageNum
-        this.totalPages = data.data.data.pages
-        this.helpList.forEach(() => {
-          this.helpShowStatusList.push(false)
-        })
-      }
-    },
-    // 切换显示状态
-    toggleShowHelpItem (index, status) {
-      _.forEach(this.helpShowStatusList, (helpItem, helpIndex) => {
-        this.$set(this.helpShowStatusList, helpIndex, false)
-      })
-      this.$set(this.helpShowStatusList, index, status)
-    }
   },
   filter: {},
   computed: {
     ...mapState({
       language: state => state.common.language,
       theme: state => state.common.theme
-    }),
-    helpFilterList () {
-      return this.helpList.filter((item) => {
-        return (
-          item['keyword'].indexOf(this.searchKeyWord) !== -1 ||
-          item['content'].indexOf(this.searchKeyWord) !== -1
-        )
-      })
-    }
+    })
   },
   watch: {
     language () {
-      // console.log(this.language)
       window.location.reload()
     }
   }

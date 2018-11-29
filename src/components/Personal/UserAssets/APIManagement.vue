@@ -856,7 +856,6 @@ export default {
         line-height: 33px;
       }
       .error-msg-text {
-        // padding-left: 35px;
         padding-left: 140px;
       }
       .error-msg{
@@ -884,7 +883,6 @@ export default {
         margin-bottom: 10px;
       }
       .text-info {
-        // height: 20px;
         line-height: 20px;
       }
       .primary-button {
@@ -946,8 +944,6 @@ export default {
         >.extension-statistics-content{
           min-height: 140px;
           .compile{
-            // width: 40px;
-            // width: 70px;
             &:first-child{
               margin-right: 5px;
             }

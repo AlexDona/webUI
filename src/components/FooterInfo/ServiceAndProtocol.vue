@@ -121,7 +121,6 @@ export default {
   },
   created () {
     require('../../../static/css/list/FooterInfo/ServiceAndProtocol.css')
-    console.log(this.serviceActiveName)
     this.changeTab({name: this.serviceActiveName})
   },
   mounted () {
@@ -136,7 +135,6 @@ export default {
       'CHANGE_FOOTER_ACTIVENAME'
     ]),
     changeTab (e) {
-      console.log(e.name)
       this.activeName = e.name
       switch (e.name) {
         case 'UserProtocol':
@@ -242,27 +240,16 @@ export default {
     windowHeight () {
       return window.innerHeight
     }
-    // activeName () {
-    //   return this.serviceActiveName
-    // }
   },
   watch: {
-    serviceActiveName (newVal) {
-      console.log(newVal)
-    },
     activeName (newVal) {
-      console.log(newVal)
       this.CHANGE_FOOTER_ACTIVENAME({
         type: '/ServiceAndProtocol',
         activeName: newVal
       })
     },
-    tradingWarningData (newVal) {
-      console.log(newVal)
-    },
     // 任增加：改变语言重新请求对应语言的国际化内容
-    language (newVal) {
-      console.log(this.activeName)
+    language () {
       this.changeTab({name: this.activeName})
     }
   }
@@ -288,7 +275,6 @@ export default {
           font-size: 36px;
           color:#8BA0CA;
           font-weight: 500;
-          /*font-family:HYa4gj;*/
         }
         >p{
           font-size: 22px;
@@ -297,7 +283,6 @@ export default {
       }
       >.content{
         height:100%;
-        /*overflow: hidden;*/
         >.inner-box{
           box-sizing: border-box;
           margin:0px auto 0px;
@@ -306,23 +291,15 @@ export default {
           padding-bottom:50px;
           .tab-content{
             width:1100px;
-            /*overflow: hidden;*/
           }
         }
       }
     }
     &.night{
       >.content{
-        >.top{
-          >h1{
-          }
-          >p{
-          }
-        }
         >.content{
           background-color: #121824;
           >.inner-box{
-            /*background-color: #1e2636;*/
             color:#8BA0CA
           }
         }
@@ -330,16 +307,9 @@ export default {
     }
     &.day{
       >.content{
-        >.top{
-          >h1{
-          }
-          >p{
-          }
-        }
         >.content{
           background-color: #fff;
           >.inner-box{
-            /*border:1px solid rgba(234,235,236,1);*/
             background-color: #fff;
             color:#666666;
           }

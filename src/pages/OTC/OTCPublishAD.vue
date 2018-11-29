@@ -1049,48 +1049,28 @@ export default {
       >.AD-title{
         height: 30px;
         line-height: 30px;
-        // color: #338FF5;
-        // border-left: 3px solid #338FF5;
         margin-bottom: 30px;
       }
       >.AD-big-form{
         width: 720px;
-        .err{
-          // color: red;
-        }
         >.common{
           box-sizing: border-box;
           padding: 30px 0;
-          // border-bottom: 1px solid #39424D;
           >.left{
             width: 110px;
             vertical-align: top;
-            >.tips{
-              // color: #fff;
-            }
-            >.warning{
-              // color: #3E79D6;
-            }
           }
           >.right{
-            // color: #9DA5B3;
             font-size: 14px;
           }
         }
         >.choice{
-          >.left{
-            >.tips{
-            }
-            >.warning{
-            }
-          }
           >.right{
             >.right-style{
               margin-right: 50px;
             }
             >.right-change{
               >.double-sided-arrow{
-                // color: #797979;
                 margin: 0 10px;
               }
             }
@@ -1099,20 +1079,14 @@ export default {
         >.sale-price{
           >.right{
             .max-avail-sell{
-              // color: #30C296;
               padding-right: 10px;
-            }
-            .markder-price{
-              // color: #E97345;
             }
             >.input{
               margin: 10px 0 5px 0;
               >.price-input{
                 width: 234px;
                 height: 36px;
-                // background-color: #232F44;
                 padding-left: 10px;
-                // color: #9DA5B3;
                 border-top-left-radius: 4px;
                 border-bottom-left-radius: 4px;
               }
@@ -1120,8 +1094,6 @@ export default {
                 width: 58px;
                 height: 36px;
                 line-height: 36px;
-                // color: #7EA9E4;
-                // background-color: #303F59;
                 display: inline-block;
                 vertical-align: top;
                 margin-left: -5px;
@@ -1132,27 +1104,18 @@ export default {
             }
           }
         }
-        >.trade-way{
-          >.right{
-          }
-        }
         >.sum-limit{
           >.right{
             .err-min-count{
               display: inline-block;
               width: 250px;
-              // margin-right: 100px;
             }
             >.input-top{
-              // margin-top: 15px;
-              // margin-bottom: 5px;
               margin: 15px 0 5px 0;
               >.input-sum{
                 width: 198px;
                 height: 36px;
-                // background-color: #232F44;
                 padding-left: 10px;
-                // color: #9DA5B3;
                 border-top-left-radius: 4px;
                 border-bottom-left-radius: 4px;
               }
@@ -1160,8 +1123,6 @@ export default {
                 width: 60px;
                 height: 36px;
                 line-height: 36px;
-                // color: #7EA9E4;
-                // background-color: #303F59;
                 display: inline-block;
                 vertical-align: top;
                 margin-left: -5px;
@@ -1172,9 +1133,6 @@ export default {
             }
             >.text{
               margin-top: 20px;
-              >.money-min{
-
-              }
               >.money-max{
                 margin-left: 166px;
               }
@@ -1184,9 +1142,7 @@ export default {
               >.input-min,.input-max{
                 width: 140px;
                 height: 36px;
-                // background-color: #232F44;
                 padding-left: 10px;
-                // color: #9DA5B3;
                 border-top-left-radius: 4px;
                 border-bottom-left-radius: 4px;
               }
@@ -1194,8 +1150,6 @@ export default {
                 width: 60px;
                 height: 36px;
                 line-height: 36px;
-                // color: #7EA9E4;
-                // background-color: #303F59;
                 display: inline-block;
                 vertical-align: top;
                 margin-left: -5px;
@@ -1205,28 +1159,19 @@ export default {
               }
               >.minMaxLink{
                 margin: 0px 10px;
-                // color:#7d90ac;
               }
             }
-          }
-        }
-        >.remark{
-          >.right{
           }
         }
         >.limit-set{
           border-bottom: 0;
           >.right{
-            .question-mark{
-            }
             .input-limit{
               width: 258px;
               height: 36px;
-              // background-color: #232F44;
               padding-left: 10px;
               border-radius: 4px;
               margin: 15px 0 5px 0;
-              // color: #9DA5B3;
             }
           }
         }
@@ -1236,8 +1181,6 @@ export default {
           >.AD-button{
             width: 590px;
             height: 44px;
-            // color: #FFFFFF;
-            // background:linear-gradient(9deg,rgba(43,57,110,1),rgba(42,80,130,1));
             border-radius: 4px;
           }
         }
@@ -1248,11 +1191,7 @@ export default {
       >.publish-tips{
         width: 250px;
         margin-left: 40px;
-        >.title{
-          // color: #338FF5;
-        }
         >.tip{
-          // color: #9DA5B3;
           line-height: 20px;
         }
       }
@@ -1284,15 +1223,7 @@ export default {
             }
           }
           >.choice{
-            >.left{
-              >.tips{
-              }
-              >.warning{
-              }
-            }
             >.right{
-              >.right-style{
-              }
               >.right-change{
                 >.double-sided-arrow{
                   color: #797979;
@@ -1320,14 +1251,8 @@ export default {
               }
             }
           }
-          >.trade-way{
-            >.right{
-            }
-          }
           >.sum-limit{
             >.right{
-              .err-min-count{
-              }
               >.input-top{
                 >.input-sum{
                   background-color: #1C1F32;
@@ -1336,13 +1261,6 @@ export default {
                 >.unit{
                   color: #7EA9E4;
                   background-color: #21243B;
-                }
-              }
-              >.text{
-                >.money-min{
-
-                }
-                >.money-max{
                 }
               }
               >.input-bottom{
@@ -1360,15 +1278,9 @@ export default {
               }
             }
           }
-          >.remark{
-            >.right{
-            }
-          }
           >.limit-set{
             border-bottom: 0;
             >.right{
-              .question-mark{
-              }
               .input-limit{
                 background-color: #1C1F32;
                 color: #9DA5B3;
@@ -1411,8 +1323,6 @@ export default {
           >.common{
             >.left{
               >.tips{
-                // color: #fff;
-                // 改
                 color: #333;
               }
               >.warning{
@@ -1424,15 +1334,7 @@ export default {
             }
           }
           >.choice{
-            >.left{
-              >.tips{
-              }
-              >.warning{
-              }
-            }
             >.right{
-              >.right-style{
-              }
               >.right-change{
                 >.double-sided-arrow{
                   color: #797979;
@@ -1462,14 +1364,8 @@ export default {
               }
             }
           }
-          >.trade-way{
-            >.right{
-            }
-          }
           >.sum-limit{
             >.right{
-              .err-min-count{
-              }
               >.input-top{
                 >.input-sum{
                   color: #9DA5B3;
@@ -1480,13 +1376,6 @@ export default {
                   border: 1px solid #CBDDF4;
                   background-color: #CBDDF4;
                   color: #338FF5;
-                }
-              }
-              >.text{
-                >.money-min{
-
-                }
-                >.money-max{
                 }
               }
               >.input-bottom{
@@ -1505,15 +1394,9 @@ export default {
               }
             }
           }
-          >.remark{
-            >.right{
-            }
-          }
           >.limit-set{
             border-bottom: 0;
             >.right{
-              .question-mark{
-              }
               .input-limit{
                 background-color: #fff;
                 border:1px solid rgba(236,241,248,1);

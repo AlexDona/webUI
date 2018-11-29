@@ -1,6 +1,6 @@
 /* 覆盖Element样式*/
 .push-assets.personal .el-form-item__content {
-  width: 500px;
+  width: 555px;
 }
 .push-assets.personal .el-select .el-input__inner,
 .push-assets.personal .el-input-group{
@@ -77,7 +77,6 @@
 /*PUSH确认*/
 .push-assets.personal .push-affirm .el-dialog {
   width: 350px;
-  /*height: 200px;*/
   padding: 0;
   top: 10%;
   border-radius: 5px;

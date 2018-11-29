@@ -757,8 +757,6 @@ export default {
             }
           }
           /*步骤1*/
-          &.step1{
-          }
         }
       }
     }

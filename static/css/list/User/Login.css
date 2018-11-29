@@ -21,9 +21,6 @@
 .login-box .image-dialog .el-dialog{
   height:320px
 }
-.login-box .msg-email-google-dialog .el-dialog{
-  /*height:400px*/
-}
 .login-box .el-dialog__header{
   width:470px;
   height:44px;
@@ -133,7 +130,6 @@
   height:100%;
   width:200px;
   color:#fff;
-  /*font-family: ;*/
   font-size: 2rem;
 }
 .login-box .mobile-box>.mobile-inner-box .handler_bg .icon {
@@ -146,15 +142,9 @@
 .login-box .mobile-box>.mobile-inner-box .img-verify .el-dialog__body{
   padding:1rem;
 }
-/*.login-box .mobile-box>.mobile-inner-box*/
-/*.login-box*/
-/*.login-box*/
-/*.login-box*/
-/*.login-box*/
 .v-modal{
   z-index: 2003 !important;
 }
-
 /*移动端短信验证码、邮箱验证码、谷歌验证码*/
 .mobile-inner-box .msg-email-google-dialog.mobile .el-dialog__body{
   padding: 1rem;

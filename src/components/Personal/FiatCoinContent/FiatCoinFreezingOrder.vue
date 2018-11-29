@@ -264,7 +264,6 @@ export default {
           >.info-right{
             flex: 1;
             box-sizing: border-box;
-            // border-right: 1px solid #262F38;
             margin-left: 30px;
             >.text-info{
               line-height: 20px;
@@ -276,9 +275,6 @@ export default {
             margin-left: 30px;
             >.text-info{
               line-height: 20px;
-            }
-            >.text-blue{
-              // color: #5E95EC;
             }
           }
         }
@@ -343,8 +339,6 @@ export default {
               }
             }
             >.info-reason{
-              >.text-info{
-              }
               >.text-blue{
                 color: #5E95EC;
               }
@@ -404,8 +398,6 @@ export default {
               }
             }
             >.info-reason{
-              >.text-info{
-              }
               >.text-blue{
                 color: #5E95EC;
               }
