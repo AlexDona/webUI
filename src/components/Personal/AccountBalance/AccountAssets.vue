@@ -1002,7 +1002,7 @@ export default {
           // 提币地址id
           this.mentionAddressValue = e
           console.log(this.mentionAddressValue)
-          console.log(this.statusAddressValue)
+          // console.log(this.statusAddressValue)
         }
         this.statusAddressValue = item.address
         this.mentionAddressValue = this.statusAddressValue
@@ -1587,10 +1587,11 @@ export default {
                 width: 270px;
               }
               .send-code-btn {
-                width: 90px;
+                width: 95px;
                 height: 34px;
                 position: absolute;
                 top: 4px;
+                right: 2px;
                 z-index: 999;
               }
             }
