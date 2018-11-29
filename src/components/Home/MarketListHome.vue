@@ -592,7 +592,8 @@ export default{
     }
   }
 </style>
-<style>
+<style lang="scss">
+.market-list-box.home {
   .el-tabs__nav-scroll{
     height:46px;
     -webkit-background-size: 1130px 46px;
@@ -740,5 +741,6 @@ export default{
   .el-table .area
   {
     color:#646464;
+  }
   }
 </style>
