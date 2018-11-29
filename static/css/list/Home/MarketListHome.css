@@ -5,7 +5,7 @@
   -webkit-background-size: 1130px 46px;
   background-size: 1130px 46px;
   background-position: center center;
-  background-image:url(../../../../src/assets/develop/tab-bg.png.png);
+  background-image:url(../../../../src/assets/develop/tab-bg.png);
 }
 /*查询币种input框*/
 .market-list-box.home .search-box .el-input__inner{

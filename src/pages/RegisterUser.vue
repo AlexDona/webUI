@@ -509,7 +509,6 @@
           </div>
           <div class="input">
             <div class="inner-box">
-              <!--邀请码-->
               <!--邀请码（没有可不填）-->
               <input
                 v-model="inviter"
@@ -545,10 +544,6 @@
           >
             {{ errorMsg }}
           </div>
-          <!--<button-->
-          <!--class="register-btn btn cursor-pointer"-->
-          <!--@click="sendRegister"-->
-          <!--&gt;-->
           <button
             class="register-btn btn cursor-pointer"
             @click="showSliderBox"
@@ -578,7 +573,6 @@
               @mousedown="mousedownFn($event)"
               class="handler handler_bg"
             >
-              <!--<IconFont class="icon-text" iconName="icon-icon-right"/>-->
             </div>
           </div>
         </div>
@@ -618,10 +612,6 @@
         class="success-box"
       >
         <div class="img">
-          <!--<IconFontCommon-->
-            <!--class="icon-color"-->
-            <!--iconName="icon-dui1"-->
-          <!--/>-->
           <img src="../assets/develop/register-success.png">
           <!-- 注册成功 -->
           <p>{{$t('M.invitation_register_Registration_Successful')}}</p>
@@ -708,7 +698,6 @@ export default {
       activeCountryAbbreviationWithEmail: 'CHN', // 当前国家简称
       // 短信验证码 邮箱验证码
       identifyCode: '', // 图片验证码
-      userInputImageCode: '', // 用户输入的图片验证码
       phoneNum: '', // 手机号
       emailNum: '', // email 地址
       password: '', // 密码
@@ -716,9 +705,6 @@ export default {
       checkCode: '', // 短信、邮箱验证码
       inviter: '', // 邀请码
       userAgreementStatus: false, // 是否同意协议
-      msgCountDown: 60,
-      sendMsgBtnText: 'M.forgetPassword_hint12', // 发送验证码
-      sendMsgBtnDisabled: false,
       errorMsg: '', // 错误信息
       isRegisterSuccess: false, // 注册成功
       successCountDown: 3, // 成功倒计时
@@ -730,31 +716,24 @@ export default {
       beginClientX: 0, /* 距离屏幕左端距离 */
       mouseMoveStatus: false, /* 触发拖动状态  判断 */
       maxwidth: 340, /* 拖动最大宽度，依据滑块宽度算出来的 */
-      // confirmWords: '请按住滑块，拖动滑块验证', /*滑块文字*/
       confirmWords: this.$t('M.login_verifyTips'), /* 滑块文字 */
       confirmSuccess: false, /* 验证成功判断 */
       sliderFlag: true, // 滑块调用节流阀
-      loginFlag: true, // 登录节流阀
       dragStatus: true, // 拖动标记
       inviterDisabled: false, // 注册邀请码提示框禁用状态
       /**
        * 移动端拖动
        */
-      touchStatus: false,
       startX: 0, // 开始时的坐标
-      timer: null,
       endX: 0, // 结束时的坐标
       moveX: 0, // 移动的坐标
       mobileMaxwidth: 800, // 移动端拖动最大宽度
       invitationRegisterSuccess: true, // 邀请注册成功
       registerParams: {}, // 注册参数
-      successJumpTimer: null, // 成功跳转倒计时
-      end: '' // 占位
+      successJumpTimer: null // 成功跳转倒计时
     }
   },
   async created () {
-    console.log(this.successCountDown)
-    console.log(this.isLogin)
     if (this.isLogin) {
       this.USER_LOGOUT()
     }
@@ -774,7 +753,7 @@ export default {
           $('.handler').css({'left': width})
           $('.drag_bg').css({'width': width})
         } else if (width > this.maxwidth) {
-          this.successFunction(this.registerParams)
+          this.successCallback(this.registerParams)
         }
       }
     })
@@ -954,10 +933,7 @@ export default {
       }
       switch (type) {
         case 0:
-          console.log(this.phoneNum)
-          console.log(this.checkoutInputFormat(type, this.phoneNum))
           if (!this.checkoutInputFormat(type, this.phoneNum)) {
-            console.log(100)
             return false
           }
           params.phone = this.phoneNum
@@ -1033,7 +1009,7 @@ export default {
               $('.handler').css({'left': width})
               $('.drag_bg').css({'width': width})
             } else if (width > this.maxwidth) {
-              this.successFunction(this.registerParams)
+              this.successCallback(this.registerParams)
             }
           }
         })
@@ -1088,7 +1064,6 @@ export default {
     },
     // 清空表单信息
     clearFormData () {
-      this.userInputImageCode = ''
       this.phoneNum = ''
       this.emailNum = ''
       this.password = ''
@@ -1100,16 +1075,11 @@ export default {
      * 滑块验证
      */
     mouseupFn (e) {
-      console.log('mouseup')
-      // this.dragStatus = true;
     },
     mousedownFn: function (e) {
-      // if (this.dragStatus) {
       this.dragStatus = false
       this.mouseMoveStatus = true
       this.beginClientX = e.clientX
-      // console.log('mousedown')
-      // }
     },
     /*
    * 移动端拖动事件
@@ -1129,7 +1099,7 @@ export default {
       if (targetLeft < this.mobileMaxwidth && targetLeft >= 0) {
         $(e.target).css({'left': left + 'px'})
       } else {
-        this.successFunction(this.registerParams)
+        this.successCallback(this.registerParams)
       }
     },
     handleTouchEnd (e) {
@@ -1138,10 +1108,8 @@ export default {
       $(e.target).animate({'left': 0}, 500)
     },
     // 按下滑块函数
-    async successFunction (params) {
-      // console.log('success0')
+    async successCallback (params) {
       if (this.sliderFlag) {
-        // console.log('success1')
         this.sliderFlag = false// 调用函数节流阀
         $('.handler').css({'left': this.maxwidth})
         $('.drag_bg').css({'width': this.maxwidth})
@@ -1170,7 +1138,6 @@ export default {
       disabledOfPhoneBtn: state => state.user.disabledOfPhoneBtn,
       disabledOfEmailBtn: state => state.user.disabledOfEmailBtn,
       configInfo: state => state.common.footerInfo.configInfo
-      // activeCountryCodeWithPhone: state => state.user.countryCode // 国籍码
     }),
     activeCodePlaceholder () {
       return !this.activeMethod ? 'M.forgetPassword_hint10' : 'M.forgetPassword_hint11'
@@ -1181,18 +1148,8 @@ export default {
     }
   },
   watch: {
-    isMobile (newVal) {
-      console.log(newVal)
-    },
-    activeMethod (newVal) {
-      // console.log(this['common/SET_COUNT_DOWN_RESET_STATUS'])
+    activeMethod () {
       this.$store.commit('common/SET_COUNT_DOWN_RESET_STATUS', true)
-    },
-    disabledOfPhoneBtn (newVal) {
-      // console.log(newVal)
-    },
-    successCountDown (newVal, oldVal) {
-      console.log(newVal)
     }
   }
 }

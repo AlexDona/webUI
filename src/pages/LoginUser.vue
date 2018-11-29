@@ -1051,6 +1051,8 @@ export default {
     /**
       * 滑块验证
       */
+    mouseupFn (e) {
+    },
     mousedownFn: function (e) {
       this.dragStatus = false
       this.mouseMoveStatus = true
