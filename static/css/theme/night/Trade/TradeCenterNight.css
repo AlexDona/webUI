@@ -15,7 +15,6 @@
 .trade-box.night .title-box{
   border-bottom:1px solid #39424d;
 }
-
 .trade-box.night>.inner-box>.middle .el-tabs__nav-wrap::after{
   background-color:#1c1f32;
 }
@@ -38,8 +37,6 @@
   background-color: #fff;
   display: none;
 }
-
-
 .trade-box.night .el-tabs__header{
   box-shadow:2px 0px 3px rgba(27,35,49,1);
 }
