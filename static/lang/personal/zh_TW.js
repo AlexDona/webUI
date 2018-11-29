@@ -295,7 +295,7 @@ export const personal = {
   'user_modification_original_pwd': '請輸入原登錄密碼',
   'user_modification_input_pwd': '請輸入密碼',
   'user_modification_input_confirm_pwd': '請輸入確認登陸密碼',
-  'user_modification_confirm_': '確認修改',
+  'user_modification_confirm_amend': '確認修改',
   // 修改交易密碼
   'user_modification_trade_pwd': '修改交易密碼',
   'user_modification_repeat_trade_pwd': '重復交易密碼',
@@ -303,5 +303,29 @@ export const personal = {
   // 修改手機
   'user_modify_phone': '修改手機',
   'user_modify_input_phone': '請輸入手機',
-  'user_modify_trade_pwd': '交易密碼'
+  'user_modify_trade_pwd': '交易密碼',
+  // 绑定谷歌验证
+  'user_bind_google_verify': '綁定谷歌驗證',
+  'user_bind_google_please_input': '請輸入谷歌驗證',
+  'user_bind_google_confirm_bind': '確認綁定',
+  // 设置西联汇款
+  'user_bind_xilain': '設置西聯匯款',
+  'user_bind_xilain_trade_pwd': '請輸入交易密碼',
+  'user_bind_xilain_account': '請輸入西聯匯款賬號',
+  // 设置paypal
+  'user_bind_paypal_set': '設置PAYPAL',
+  'user_bind_paypal_confirm_set': '確認設置',
+  'user_bind_paypal_please_input': '請輸入PAYPAL賬號',
+  // 设置Alipay
+  'user_bind_Alipay_set_account': '設置賬號',
+  'user_bind_Alipay_please_input': '請輸入支付寶賬號',
+  'user_bind_Alipay_set_confirm': '確認設置',
+  // 设置WeChat
+  'user_bind_WeChat_verify': '修改微信賬號',
+  'user_bind_WeChat_please_input': '請輸入微信賬號',
+  // 设置Bank card
+  'user_bind_Bank_set': '設置銀行卡',
+  'user_bind_Bank_input_name': '請輸入銀行名稱',
+  'user_bind_Bank_input_card_num': '請輸入銀行卡號',
+  'user_bind_Bank_input_address': '請輸入支行地址'
 }
