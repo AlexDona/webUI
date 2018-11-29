@@ -288,16 +288,15 @@
                             <el-select
                               v-model="mentionAddressValue"
                               :no-data-text="$t('M.comm_no_data')"
-                              @change="changeId"
+                              @change="gitCheckCurrencyAddress"
                               filterable
                               allow-create
-                              default-first-option
                             >
                               <el-option
                                 v-for="(item, index) in mentionAddressList"
                                 :key="index"
                                 :label="item.address + ' ' + item.remark"
-                                :value="item.id"
+                                :value="item.address"
                               >
                               </el-option>
                             </el-select>
@@ -652,7 +651,6 @@ export default {
       mentionMoneyAddressId: '', // 每行数据ID
       mentionMoneyName: '', // 每行数据币种名称
       mentionAddressValue: '', // 每行数据提币地址
-      statusAddressValue: '', // 每行数据提币地址
       remark: '', // 每行数据提币地址备注
       amount: '', // 数量
       service: '', // 手续费
@@ -671,8 +669,6 @@ export default {
       activeType: '', // 显示类型
       tradingOnId: '', // 根据coinido跳转到对应交易信息
       currencyTradingId: '', // 根据coinido跳转到对应交易信息
-      area: '', // 交易区名称
-      areaId: '', // 交易区id
       id: '', // 币种Id
       sellname: '', // 币种名称
       sellsymbol: '', // 交易对名称
@@ -992,25 +988,8 @@ export default {
       this.currentPageForMyEntrust = pageNum
       this.getAssetCurrenciesList()
     },
-    // 资产币种提币地址选择
-    changeId (e) {
-      this.mentionAddressList.forEach(item => {
-        if (e === item.id) {
-          console.log(this.statusAddressValue)
-          // 普通币种公信宝类币种地址标签
-          this.remark = item.remark
-          // 提币地址id
-          this.mentionAddressValue = e
-          console.log(this.mentionAddressValue)
-          console.log(this.statusAddressValue)
-        }
-        this.statusAddressValue = item.address
-        this.mentionAddressValue = this.statusAddressValue
-      })
-      this.gitCheckCurrencyAddress()
-    },
     // 根据币种id查询提币地址
-    async queryWithdrawalAddressList (index) {
+    async queryWithdrawalAddressList () {
       let data = await inquireWithdrawalAddressId({
         coinId: this.mentionMoneyAddressId
       })
@@ -1025,8 +1004,6 @@ export default {
         let withdrawalAddressData = getNestedData(data, 'data.data')
         // 接口成功清除loading
         this.fullscreenLoading = false
-        console.log(withdrawalAddressData.needTag)
-        console.log(withdrawalAddressData.userWithdrawAddressListVO.userWithdrawAddressDtoList)
         // 对币种类型进行赋值 true公信宝类 false普通币种
         this.isNeedTag = withdrawalAddressData.needTag
         // 返回列表数据并渲染币种列表
@@ -1283,30 +1260,6 @@ export default {
       } else {
         // 返回展示
         this.currencyTradingList = data.data.data.entrust
-        // if (this.currencyTradingList !== '') {
-        //   this.area = this.currencyTradingList.buyCoinName
-        // }
-        // this.areaId = this.currencyTradingList.tradeAreaId
-        // this.id = this.currencyTradingList.sellCoinName + this.currencyTradingList.buyCoinName
-        // this.sellname = data.data.data.entrust.sellCoinName
-        // this.sellsymbol = this.currencyTradingList.sellCoinName
-        // this.buyName = data.data.data.entrust
-        // this.buysymbol = data.data.data.entrust
-        // this.tradeId = this.currencyTradingList.tradeId
-        // area: "ETH"
-        // areaId: "486108806841892864"
-        // id: "wtcfbt"
-        // plateId: "486108580110401536"
-        // sellname: "沃尔顿链"
-        // sellsymbol: "WTC"
-        // tradeId: "491725015746609152"
-        // console.log(this.currencyTradingList)
-        // console.log(this.area)
-        // console.log(this.areaId)
-        // console.log(this.id)
-        // console.log(this.sellsymbol)
-        // console.log(this.tradeId)
-        // console.log(this.currencyTradingId)
       }
     }
   },
@@ -1329,6 +1282,9 @@ export default {
         console.log(newVal)
         this.getAssetCurrenciesList()
       }
+    },
+    mentionAddressValue (newVal) {
+      console.log(newVal)
     }
   }
 }

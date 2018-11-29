@@ -5,38 +5,45 @@
 .nav-box.common .el-dialog__body {
   padding: 0 40px;
 }
-.nav-box.common .el-dialog__header{
-  height:44px;
-  line-height:44px;
+
+.nav-box.common .el-dialog__header {
+  height: 44px;
+  line-height: 44px;
 }
-.nav-box.common .el-dialog{
+
+.nav-box.common .el-dialog {
   border-radius: 10px;
   overflow: hidden;
-  height:380px;
+  height: 380px;
 }
-.v-modal{
+
+.v-modal {
   position: relative;
   z-index: 2000;
 }
-.el-select-dropdown{
+
+.el-select-dropdown {
   z-index: 2100 !important;
 }
-.nav-box.common .el-dialog__body>p{
-  line-height:70px;
+
+.nav-box.common .el-dialog__body>p {
+  line-height: 70px;
 }
+
 .nav-box.common .el-dialog__footer {
   border: none;
   padding: 35px 40px;
 }
-.nav-box.common .el-dialog__footer .el-button{
+
+.nav-box.common .el-dialog__footer .el-button {
   width:100%;
-  background: linear-gradient(to left,#2a5082,#2b396e);
+  background: linear-gradient(to left, #2a5082, #2b396e);
   border:none;
 }
-.nav-box.common .el-dialog__title{
+.nav-box.common .el-dialog__title {
   font-size:20px;
 }
-.nav-box.common .el-select{
+.nav-box.common .el-select {
   width:100%;
 }
 

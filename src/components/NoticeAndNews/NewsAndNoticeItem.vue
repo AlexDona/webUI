@@ -286,7 +286,8 @@ export default {
             padding:50px;
             overflow-y:auto;
             >.left{
-              flex:2;
+              /*flex:2;*/
+              width:70%;
               /*border:1px solid #fff;*/
               >h2{
                 color:#338FF5;
@@ -313,7 +314,8 @@ export default {
               }
             }
             >.right{
-              flex:1;
+              /*flex:1;*/
+              width:40%;
               /*border:1px solid #fff;*/
               >.news-type-list{
                 margin-bottom: 30px;
@@ -330,7 +332,7 @@ export default {
                     display:flex;
                     line-height: 30px;
                     >.title{
-                      flex:2;
+                      flex:3;
                       overflow: hidden;
                       text-overflow:ellipsis;
                       white-space: nowrap;

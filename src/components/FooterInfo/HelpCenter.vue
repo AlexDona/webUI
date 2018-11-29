@@ -74,11 +74,11 @@ export default {
 </script>
 <style scoped lang="scss" type="text/scss">
  @import '../../../static/css/scss/index.scss';
-  .help-box{
-    >.inner-box{
-      padding-top:66px;
-      >.search-box{
-        >.title{
+  .help-box {
+    >.inner-box {
+      padding-top: 66px;
+      >.search-box {
+        >.title {
           text-align: center;
           font-weight: 500;
           color:#8BA0CA;
