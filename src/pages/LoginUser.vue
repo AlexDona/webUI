@@ -625,12 +625,10 @@ import {
   userLoginForStep2,
   getLoginErcode
 } from '../utils/api/user'
-// import {
-//   assetCurrenciesList
-// } from '../utils/api/personal'
 import {
   returnAjaxMsg,
-  sendPhoneOrEmailCodeAjax
+  sendPhoneOrEmailCodeAjax,
+  getNestedData
 } from '../utils/commonFunc'
 import socket from '../utils/datafeeds/socket'
 
@@ -669,33 +667,13 @@ export default {
       isErCodeLogin: false, // 是否扫码登录
       erCodeString: '', // 二维码登录字符串
       username: '',
-      // username: '18625512987',
-      // username: '18600929234',
-      // username: '17600854297',
-      // username: '13137111901',
-      // password: 'a11111111',
-      // username: '15638559236',
-      // username: '13100000011',
-      // username: '13100000012',
-      // username: '18625512988',
-      // password: '123456aa',
-      // password: 'a1111111',
       password: '',
-      userNameErrorMsg: '', // 错误提示
-      loadingCircle: {},
       userInputImageCode: '', // 图形验证码(用户输入)
       identifyCode: '', // 图片验证码（后台生成）
       step3PhoneMsgCode: '', // 步骤3 手机验证码
       step3EmailMsgCode: '', // 步骤3 邮箱验证码
       step3GoogleMsgCode: '', // 步骤3 谷歌验证码
-      msgCode: '', // 短信验证码或邮箱验证码
       hiddenUsername: '', // 隐藏的用户名
-      countDownOfPhone: 0, // 短信验证码倒计时
-      countDownOfEmail: 0, // 邮箱验证码倒计时
-      // msgTxt: 'm.resend', // 按钮文字
-      TextOfSendMsgBtnWithPhone: this.$t('M.login_send') + this.$t('M.comm_code'), // 短信验证码按钮文字
-      TextOfSendMsgBtnWithEmail: this.$t('M.login_send') + this.$t('M.comm_code'), // 邮箱验证码按钮文字
-      googleCode: '', // google验证码
       errorShowStatusList: [
         '', // 用户名错误提示
         '', // 密码错误提示
@@ -710,19 +688,15 @@ export default {
       beginClientX: 0, /* 距离屏幕左端距离 */
       mouseMoveStatus: false, /* 触发拖动状态  判断 */
       maxwidth: 340, /* 拖动最大宽度，依据滑块宽度算出来的 */
-      // confirmWords: '请按住滑块，拖动滑块验证', /*滑块文字*/
       confirmWords: this.$t('M.login_verifyTips'), /* 滑块文字 */
       confirmSuccess: false, /* 验证成功判断 */
       sliderFlag: true, // 滑块调用节流阀
-      loginFlag: true, // 登录节流阀
       dragStatus: true, // 拖动标记
 
       /**
         * 移动端拖动
         */
-      touchStatus: false,
       startX: 0, // 开始时的坐标
-      timer: null,
       endX: 0, // 结束时的坐标
       moveX: 0, // 移动的坐标
       mobileMaxwidth: 800, // 移动端拖动最大宽度
@@ -734,8 +708,6 @@ export default {
   },
   created () {
     document.getElementsByTagName('body')[0].style.zoom = 1
-    console.log(this.isLogin)
-    // console.log(this.socket)
     if (this.isLogin) {
       this.$router.push({path: '/home'})
     }
@@ -743,7 +715,6 @@ export default {
     this.ENTER_STEP1()
     this.refreshCode()
     this.reflashErCode()
-    // 清空input框值
     this.clearInputValue()
   },
   mounted () {
@@ -754,7 +725,7 @@ export default {
           $('.handler').css({'left': width})
           $('.drag_bg').css({'width': width})
         } else if (width > this.maxwidth) {
-          this.successFunction()
+          this.successCallback()
         }
       }
     })
@@ -779,7 +750,6 @@ export default {
   },
   methods: {
     ...mapMutations([
-      // 'setEntrustCountData'
       'ENTER_STEP1',
       'ENTER_STEP3',
       'SET_LOGIN_TYPE',
@@ -797,7 +767,6 @@ export default {
         !this.routerTo.startsWith('/ForgetPassword') &&
         !this.routerTo.startsWith('/nofind404')
       ) {
-        // this.loadCurrencyList()
         this.$router.push({path: this.routerTo})
       } else {
         this.$router.push({path: '/home'})
@@ -810,19 +779,16 @@ export default {
     },
     // 刷新二维码
     async reflashErCode () {
-      // this.isScanSuccess = true
       const data = await getLoginErcode()
       if (!returnAjaxMsg(data, this)) {
         return false
       } else {
         this.isErcodeTimeOut = false
         console.log(data)
-        this.erCodeString = data.data.data.qrcode
-        console.log(this.erCodeString)
+        this.erCodeString = getNestedData(data, 'data.data.qrcode')
         this.socket = new socket(this.url = loginSocketUrl + this.erCodeString)
         this.socket.doOpen()
         this.socket.on('open', () => {
-          // this.socket.send(xDomain)
           clearInterval(this.ercodeTimer)
           this.socket.send(this.erCodeString)
           this.ercodeTimerCount = 60
@@ -916,11 +882,13 @@ export default {
         let str = this.username + ''
         this.hiddenUsername = str.substring(0, 3) + '****' + str.substring(7)
       }
+      this.fullscreenLoading = true
       // 调用第一接口
       let params = new FormData()
       params.append('userName', this.username)
       params.append('password', this.password)
       const data = await userLoginForStep1(params)
+      this.fullscreenLoading = false
       if (!returnAjaxMsg(data, this, 0)) {
         return false
       } else {
@@ -938,7 +906,7 @@ export default {
               $('.handler').css({'left': width})
               $('.drag_bg').css({'width': width})
             } else if (width > this.maxwidth) {
-              this.successFunction()
+              this.successCallback()
             }
           }
         })
@@ -985,7 +953,6 @@ export default {
     },
     refreshCode () {
       this.identifyCode = this.getRandomNum()
-      console.log(this.identifyCode)
     },
     // 检查用户输入图片验证码
     checkoutuserInputImageCode () {
@@ -1071,7 +1038,6 @@ export default {
         this.step3DialogShowStatus = false
         this.userLoginSuccess(data.data.data)
       }
-      console.log(data)
     },
     /**
       * 验证码自动提交登录
@@ -1085,23 +1051,14 @@ export default {
     /**
       * 滑块验证
       */
-    mouseupFn (e) {
-      console.log('mouseup')
-      // this.dragStatus = true;
-    },
     mousedownFn: function (e) {
-      // if (this.dragStatus) {
       this.dragStatus = false
       this.mouseMoveStatus = true
       this.beginClientX = e.clientX
-      // console.log('mousedown')
-      // }
     },
     // 按下滑块函数
-    successFunction () {
-      // console.log('success0')
+    successCallback () {
       if (this.sliderFlag) {
-        // console.log('success1')
         this.sliderFlag = false// 调用函数节流阀
         $('.handler').css({'left': this.maxwidth})
         $('.drag_bg').css({'width': this.maxwidth})
@@ -1117,11 +1074,14 @@ export default {
          **/
         if (this.failureNum > 3) {
           // 多次错误登录
-          // console.log('需要图片验证码');
           // 显示图片验证码
           this.userInputImageCode = ''
           this.loginImageValidateStatus = true
-        } else if (this.firstLogin || !this.loginIpEquals || this.isBindGoogle) {
+        } else if (
+          this.firstLogin ||
+          !this.loginIpEquals ||
+          this.isBindGoogle
+        ) {
           // 登录第三步(第一次登录、异常ip)
           this.step3DialogShowStatus = true
           if (!this.isBindGoogle) {
@@ -1136,7 +1096,6 @@ export default {
     * 移动端拖动事件
     * */
     handleTouchStart (e) {
-      // console.log('start');
       this.startX = e.targetTouches[0].pageX
     },
     handleTouchMove (e) {
@@ -1150,7 +1109,7 @@ export default {
       if (targetLeft < this.mobileMaxwidth && targetLeft >= 0) {
         $(e.target).css({'left': left + 'px'})
       } else {
-        this.successFunction()
+        this.successCallback()
       }
     },
     handleTouchEnd (e) {
@@ -1173,7 +1132,6 @@ export default {
       isLogin: state => state.user.isLogin,
       isMobile: state => state.user.isMobile,
       failureNum: state => state.user.loginStep1Info.failNum, // 失败次数
-      activeCountryCode: state => state.user.loginStep1Info.countryCode, // 国籍码
       isBindGoogle: state => state.user.loginStep1Info.isEnableGoogle, // 已绑定谷歌
       isBindEmail: state => state.user.loginStep1Info.isEnableMail, // 已绑定邮箱
       isBindPhone: state => state.user.loginStep1Info.isEnablePhone, // 已绑定手机号
@@ -1191,20 +1149,8 @@ export default {
     windowHeight () {
       return window.innerHeight
     }
-    // step1 () {
-    // return this.$store.state.loginStep.step1
-    // },
-    // step2 () {
-    //   return this.step2
-    // },
-    // step3 () {
-    //   return this.$store.state.loginStep.step3
-    // }
   },
   watch: {
-    username (newVal) {
-      // validateNumForUserInput(newVal)
-    }
   }
 }
 </script>
