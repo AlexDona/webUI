@@ -1,7 +1,6 @@
 /* 完成订单组件样式重写 */
 .fiat-completed-order-box.personal .el-table__expanded-cell {
   background-color: #1E2636;
-  /* border-bottom: 26px solid #1d2331 !important; */
 }
 .fiat-completed-order-box.personal .el-table td,
 .fiat-completed-order-box.personal .el-table th {
@@ -19,7 +18,6 @@
   background-color: #1E2636;
 }
 .fiat-completed-order-box.personal .el-table td {
-  /*padding: 0;*/
   height: 40px;
 }
 .fiat-completed-order-box.personal .el-table__header{
@@ -30,7 +28,6 @@
 }
 .fiat-completed-order-box.personal .el-table th.is-leaf{
   border-bottom: 1px solid #262F38;
-  /* border-top: 1px solid #262F38; */
 }
 .fiat-completed-order-box.personal .completed-order-content >.tables .el-icon-arrow-right:before {
   content: " ";
@@ -55,12 +52,10 @@
 }
 .fiat-completed-order-box.personal .el-table th.is-leaf:nth-last-of-type(2){
   border-top-right-radius: 5px;
-  /* border-bottom-right-radius: 5px; */
   border-right: 1px solid #262F38;
 }
 .fiat-completed-order-box.personal .el-table--enable-row-transition .el-table__body td:first-of-type{
   border-top-left-radius: 5px;
-  /*border-left: 1px solid #262F38;*/
 }
 .fiat-completed-order-box.personal .el-table--enable-row-transition .el-table__body td:first-of-type.el-table__expanded-cell{
   border-top-left-radius: 0px;
@@ -74,7 +69,6 @@
 }
 .fiat-completed-order-box.personal .el-table--enable-row-transition .el-table__body td:first-of-type.el-table__expanded-cell ::after{
   content: '';
-  /*width: 1045px;*/
   height: 20px;
   position: absolute;
   left: 0;
@@ -83,12 +77,6 @@
   border-bottom-left-radius: 5px;
   border-bottom-right-radius: 5px;
   border-bottom: 1px solid #262F38;
-}
-.fiat-completed-order-box.personal .el-table--enable-row-transition .el-table__body td{
-  /* border-top: 1px solid #262F38; */
-}
-.fiat-completed-order-box.personal .el-table td {
-  /* border-bottom: 1px solid red; */
 }
 .fiat-completed-order-box.personal .el-table td {
   border-bottom: 1px solid #262F38;

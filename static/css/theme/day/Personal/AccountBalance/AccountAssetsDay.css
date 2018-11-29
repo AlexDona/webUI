@@ -1,7 +1,4 @@
 /*个人中心（白色主题）*/
-/*.account-assets.personal.day {*/
-  /*background-color: #ccc;*/
-/*}*/
 .account-assets.personal.day .el-tabs__nav {
   border:1px solid rgba(38,47,56,0.1);
 }

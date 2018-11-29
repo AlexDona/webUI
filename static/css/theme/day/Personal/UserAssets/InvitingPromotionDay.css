@@ -8,20 +8,12 @@
   color: #fff;
 }
 .invitation-promotion.personal.day .el-table th.is-leaf {
-  /*border-bottom: 1px solid #FFFFFF;*/
   border-bottom: 0;
 }
 .invitation-promotion.personal.day .el-table td{
   border-bottom: 0;
-  /*border-bottom: 1px solid #FFFFFF;*/
-  /*padding: 7px 0;*/
-  /*background-color: #ccc;*/
   color: #333;
 }
-
-/*.invitation-promotion.personal.day .el-table--enable-row-hover .el-table__body tr:hover>td{
-  background-color: #eeeeee;
-}*/
 .invitation-promotion.personal.day .el-table{
   color: #fff;
 }

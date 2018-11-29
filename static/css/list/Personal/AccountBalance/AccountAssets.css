@@ -53,14 +53,12 @@
   font-size: 16px;
 }
 .account-assets.personal .el-form-item__label {
-  /*margin-top: 18px;*/
   height: 20px;
   line-height: 20px;
 }
 .account-assets.personal .el-button {
   width:270px;
   height:34px;
-  /*margin: 0 20px;*/
 }
 .account-assets.personal .el-form--label-top .el-form-item__label{
   float: none;

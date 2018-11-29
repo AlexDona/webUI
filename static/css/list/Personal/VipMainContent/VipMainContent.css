@@ -2,13 +2,10 @@
 .vip-main.personal .el-dialog{
   border-radius: 10px;
   width: 310px;
-  /* top: 15%; */
   top: 5%;
 }
 .vip-main.personal .el-dialog__header {
   border-radius: 5px 5px 0 0;
-  /* height: 50px; */
-  /* line-height: 30px; */
   padding: 20px 20px 0px;
   background-color: #20293C;
 }

@@ -77,7 +77,6 @@
 /*PUSH确认*/
 .push-assets.personal .push-affirm .el-dialog {
   width: 350px;
-  /*height: 200px;*/
   padding: 0;
   top: 10%;
   border-radius: 5px;
