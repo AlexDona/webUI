@@ -92,7 +92,7 @@
               @click.prevent="getStatusSubmit"
             >
               <!--确认修改-->
-              {{ $t('M.user_modification_confirm_') }}
+              {{ $t('M.user_modification_confirm_amend') }}
             </button>
           </el-form>
         </div>

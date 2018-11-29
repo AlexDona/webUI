@@ -141,7 +141,7 @@ export const personal = {
   'user_security_phone': '전화',
   'user_security_google': 'Google',
   'user_security_password': '비밀번호',
-  'user_security_verify': '확인',
+  'user_security_verify': '인증',
   'user_security_number': '번호',
   'user_security_picture': '그림',
   // 安全中心个人信息
@@ -295,7 +295,7 @@ export const personal = {
   'user_modification_original_pwd': '기존 로그인 비밀번호 입력해주세요.',
   'user_modification_input_pwd': '비밀번호 입력해주세요.',
   'user_modification_input_confirm_pwd': '로그인 비밀번호 재확인 해주새요.',
-  'user_modification_confirm_': '수정확인',
+  'user_modification_confirm_amend': '수정확인',
   // 修改交易密码
   'user_modification_trade_pwd': '거래 비밀번호 수정',
   'user_modification_repeat_trade_pwd': '거래 비밀번호 재입력',
@@ -303,5 +303,29 @@ export const personal = {
   // 修改手机
   'user_modify_phone': '전화번호 수정',
   'user_modify_input_phone': '휴대폰 번호 입력하세요.',
-  'user_modify_trade_pwd': '거래 비밀번호'
+  'user_modify_trade_pwd': '거래 비밀번호',
+  // 绑定谷歌验证
+  'user_bind_google_verify': 'Google인증 바인딩',
+  'user_bind_google_please_input': 'Google인증 번호 입력해주세요.',
+  'user_bind_google_confirm_bind': '바인딩 확인',
+  // 设置西联汇款
+  'user_bind_xilain': 'Western Union설정',
+  'user_bind_xilain_trade_pwd': '거래 비밀번호 입력해주세요.',
+  'user_bind_xilain_account': 'Western Union계정 입력해주세요.',
+  // 设置paypal
+  'user_bind_paypal_set': 'PAYPAL설정',
+  'user_bind_paypal_confirm_set': '설정 확인',
+  'user_bind_paypal_please_input': 'PAYPAL계정 입력해주세요.',
+  // 设置Alipay
+  'user_bind_Alipay_set_account': '계정 설정',
+  'user_bind_Alipay_please_input': 'Alipay계정 입력해주세요.',
+  'user_bind_Alipay_set_confirm': '설정 확인',
+  // 设置WeChat
+  'user_bind_WeChat_verify': 'WeChat계정 수정',
+  'user_bind_WeChat_please_input': 'WeChat계정 입력해주세요',
+  // 设置Bank card
+  'user_bind_Bank_set': '은행카드 설정',
+  'user_bind_Bank_input_name': '은행 명칭 입력해주세요.',
+  'user_bind_Bank_input_card_num': '은행 카드번호 입력해주세요.',
+  'user_bind_Bank_input_address': '은행 주소 입력해주세요.'
 }

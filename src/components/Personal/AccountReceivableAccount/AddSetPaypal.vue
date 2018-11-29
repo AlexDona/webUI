@@ -17,7 +17,7 @@
            class="header-content-left header-content font-size16 font-weight600"
          >
           <!--设置paypal-->
-            {{ $t('M.comm_set') }} PAYPAL
+            {{ $t('M.user_bind_paypal_set') }}
         </span>
         <span
           v-else
@@ -96,7 +96,7 @@
               @click.prevent="stateSubmitPaypal"
             >
               <!--确认设置-->
-              {{ $t('M.comm_affirm') }}{{ $t('M.comm_set') }}
+              {{ $t('M.user_bind_paypal_confirm_set') }}
             </button>
             <button
               v-else
@@ -104,7 +104,7 @@
               @click.prevent="stateSubmitPaypal"
             >
               <!--确认修改-->
-              {{ $t('M.comm_affirm') }}{{ $t('M.comm_modification') }}
+              {{ $t('M.user_modification_confirm_amend') }}
             </button>
           </el-form>
         </div>
@@ -181,7 +181,7 @@ export default {
         case 0:
           console.log(type)
           if (!targetNum) {
-            this.setErrorMsg(0, this.$t('M.comm_please_enter') + this.$t('M.user_account_paypal') + this.$t('M.user_account_number'))
+            this.setErrorMsg(0, this.$t('M.user_bind_paypal_please_input'))
             this.$forceUpdate()
             return 0
           } else {
@@ -193,7 +193,7 @@ export default {
         case 1:
           console.log(type)
           if (!targetNum) {
-            this.setErrorMsg(1, this.$t('M.comm_please_enter') + this.$t('M.comm_password'))
+            this.setErrorMsg(1, this.$t('M.user_bind_xilain_trade_pwd'))
             this.$forceUpdate()
             return 0
           } else {
@@ -215,7 +215,7 @@ export default {
       if (!this.paypalAccount) {
         // 请输入paypal账号
         this.$message({
-          message: this.$t('M.comm_please_enter') + this.$t('M.user_account_paypal') + this.$t('M.user_account_number'),
+          message: this.$t('M.user_bind_paypal_please_input'),
           type: 'error'
         })
         return false
