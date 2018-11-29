@@ -7,8 +7,6 @@
 }
 .otc-publish-AD-box .choice .el-input__inner{
   height: 36px;
-  /*yuxia改动的下拉选框的输入框的背景和边框*/
-  /* background: #232F44; */
   border:none;
 }
 .otc-publish-AD-box .trade-way .el-checkbox-group{
@@ -20,41 +18,26 @@
   width: 580px;
   height: 100px;
   font-size: 14px;
-  /* color: #9DA5B3; */
-  /* background-color: #232F44; */
   border: 0;
   margin-bottom: 10px;
 }
 /* 复选框 */
-.otc-publish-AD-box .trade-way .el-checkbox{
-  /* color: #9DA5B3; */
-}
-.otc-publish-AD-box .trade-way .el-checkbox__inner{
-  /* background-color: #232F44; */
-  /* border: 1px solid #435372; */
-}
 .otc-publish-AD-box .trade-way .el-checkbox__inner::after{
   border: 1px solid #1F90EA;
   border-left: 0;
   border-top: 0;
-}
-.otc-publish-AD-box .trade-way .el-checkbox__input.is-checked+.el-checkbox__label {
-  /* color: #9DA5B3; */
 }
 /* 输入密码弹出框 */
 .otc-publish-AD-box .password-dialog .el-dialog{
   border-radius: 4px;
   width: 350px;
   height: 207px;
-  /* background: #28334A; */
 }
 .otc-publish-AD-box .password-dialog .el-dialog__header{
-  /* background-color:#20293C; */
   padding: 10px 20px 10px;
   border-radius: 4px;
 }
 .otc-publish-AD-box .password-dialog .el-dialog__title{
-  /* color: #fff; */
   font-size: 14px;
 }
 .otc-publish-AD-box .password-dialog .el-dialog__headerbtn{
@@ -62,7 +45,6 @@
   right: 10px;
 }
 .otc-publish-AD-box .password-dialog .el-dialog__body{
-  /* color: #fff; */
   font-size: 12px;
   padding: 15px 20px 10px 30px;
 }
@@ -73,14 +55,11 @@
   display: inline-block;
   width: 280px;
   height: 36px;
-  /* background-color: #1A2233; */
   border-radius: 4px;
-  /* color: #fff; */
   font-size: 14px;
   padding-left: 10px;
 }
 .otc-publish-AD-box .password-dialog .el-dialog__body .error-info{
-  /* color: #fff; */
   font-size: 12px;
   height: 20px;
   padding-top: 5px;
@@ -93,11 +72,4 @@
   width: 290px;
   padding: 7px 20px;
   border:0;
-}
-.otc-publish-AD-box .password-dialog .el-button--primary{
-  /* background:linear-gradient(9deg,rgba(43,57,110,1),rgba(42,80,130,1)); */
-}
-/* 问号提示颜色 */
-.otc-publish-AD-box .limit-set .icon{
-  /* color: #338FF5; */
 }

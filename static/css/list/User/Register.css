@@ -43,16 +43,6 @@
   margin-right:-20px !important;
   margin-bottom:-18px !important;
 }
-/* .register .el-select-dropdown__list{
-  background-color: #1c3151;
-}
-.register .el-select-dropdown__item.hover{
-  background-color: rgba(255,255,255,0.1);
-}
-.register .el-select-dropdown__item.selected{
-  font-weight: 400;
-  color:#fff;
-} */
 /*.register-box*/
 .register-box .el-dialog{
   width:470px;
@@ -70,9 +60,6 @@
 }
 .register-box .image-dialog .el-dialog{
   height:320px
-}
-.register-box .msg-email-google-dialog .el-dialog{
-  /*height:400px*/
 }
 .register-box .el-dialog__header{
   width:470px;
@@ -130,9 +117,6 @@
   min-width:180px;
   height:2.882rem;
   line-height:2.882rem;
-}
-.register.mobile .el-input__suffix-inner{
-  /*display: block;*/
 }
 .register.mobile .el-checkbox__label{
   font-size: .8rem;
@@ -230,7 +214,6 @@
   height:100%;
   width:200px;
   color:#fff;
-  /*font-family: ;*/
   font-size: 2rem;
 }
 .login-box .mobile-box>.mobile-inner-box .handler_bg .icon {
@@ -248,20 +231,5 @@
   margin:0;
 }
 .register.mobile .invitation-success-dialog .el-dialog__body{
-  /*font-size: .5rem;*/
   padding:80px;
 }
-/*.register-box*/
-/*.register-box*/
-/*.register-box*/
-/*.register-box*/
-/*.register-box*/
-/*.register-box*/
-/*.register-box*/
-/*.register-box*/
-/*.register-box*/
-/*.register-box*/
-/*.register-box*/
-/*.register-box*/
-/*.register-box*/
-/*.register-box*/

@@ -967,10 +967,6 @@ export default {
     },
     language (newVal) {
       console.log(newVal)
-      // zh_CN
-      // zh_TW
-      // en_US
-      // ja_JP
     }
   }
 }
@@ -1058,7 +1054,6 @@ export default {
       }
     }
     .identity-box {
-      /*border:1px solid rgba(38,47,56,0.1);*/
       >.wait-no-pass {
         padding-top: 50px !important;
       }
@@ -1107,7 +1102,6 @@ export default {
             }
           }
           .default-picture {
-            /*width: 100%;*/
             height: 113px;
           }
         }
@@ -1333,7 +1327,6 @@ export default {
       }
       .header-border {
         border:1px solid rgba(38,47,56,0.1);
-        /*border-bottom: 1px solid #39424D;*/
       }
       .authentication-type {
         color: #0099FF;

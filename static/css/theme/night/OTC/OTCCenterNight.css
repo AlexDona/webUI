@@ -3,23 +3,19 @@
 .otc-box.night .otc-online-buy-and-sell-button .el-radio-button__inner{
   color: #D8D8D8;
   background: #1C1F32;
-  /* border: 1px solid #27313A; */
 }
 .otc-box.night .otc-online-buy-and-sell-button .el-radio-button.is-active .el-radio-button__inner{
   color: #fff;
 }
 .otc-box.night .otc-online-buy-and-sell-button .el-radio-button__orig-radio:checked+.el-radio-button__inner{
   box-shadow: -1px 0 0 0 #008069;
-  /* border: 1px solid #008069; */
 }
 .otc-box.night .otc-online-buy-and-sell-button .el-radio-button:first-child.is-active .el-radio-button__inner{
   background-color: #D45858;
-  /* border: 1px solid #D45858; */
 }
 .otc-box.night .otc-online-buy-and-sell-button .el-radio-button:last-child.is-active .el-radio-button__inner{
   background-color: #008069;
 }
-/* input 框样式重置-适用全局-自己先写试试 */
 /* 2.0 挂单列表增加支付方式和法币类型筛选条件*/
 /* input框 */
 .otc-box.night .otc-publish-box .el-input__inner{
@@ -33,7 +29,6 @@
 /* 增加支付方式和法币类型图标 */
 /* 2.0 商家表格 */
 .otc-box.night .el-table th, .otc-box.night .el-table tr{
-  /* background-color: #1C1F32; */
   background-color: #1C1F32;
 }
 .otc-box.night .el-table thead {
@@ -78,13 +73,9 @@
 }
 /* 3.0 订单管理左侧tabs切换面板 */
 /* tabs组件出现蓝色边框问题 */
-
 /*做二级导航宽度*/
 .otc-box.night .el-tabs__item{
   color: #4F85DA;
-}
-.otc-box.night .is-disabled{
-  /* background-color: rgba(29, 35, 49, 1); */
 }
 /*鼠标点击*/
 .otc-box.night .el-tabs__item.is-active{

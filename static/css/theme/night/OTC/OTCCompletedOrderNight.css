@@ -1,14 +1,10 @@
 /* 完成订单组件样式重写 */
 .otc-completed-order-box.night .completed-order-content .el-table__expanded-cell {
-  /* background-color: #1E2636; */
   background-color: #1C1F32;
 }
 .otc-completed-order-box.night .completed-order-content .el-table th{
   padding: 5px 0;
   box-shadow: 4px 4px 6px #191E28;
-}
-.otc-completed-order-box.night .completed-order-content .el-table{
-  /* color: #9DA5B3; */
 }
 .otc-completed-order-box.night .completed-order-content .el-table__empty-text{
   color: rgba(255, 255, 255, 0.8);
@@ -21,10 +17,6 @@
 }
 .otc-completed-order-box.night .completed-order-content .el-table{
   background-color: #272B41;
-}
-.otc-completed-order-box.night .completed-order-content .el-table th.is-leaf{
-  /* border-bottom: 1px solid #262F38; */
-  /* border-top: 1px solid #262F38; */
 }
 .otc-completed-order-box.night .completed-order-content .el-table__body{
   border-collapse: separate !important;
@@ -45,12 +37,10 @@
 .otc-completed-order-box.night .completed-order-content .el-table th.is-leaf:first-of-type{
   border-top-left-radius: 5px;
   border-bottom-left-radius: 5px;
-  /* border-left: 1px solid #262F38; */
 }
 .otc-completed-order-box.night .completed-order-content .el-table th.is-leaf:nth-last-of-type(2){
   border-top-right-radius: 5px;
   border-bottom-right-radius: 5px;
-  /* border-right: 1px solid #262F38; */
 }
 .otc-completed-order-box.night .completed-order-content .el-table--enable-row-transition .el-table__body td:first-of-type{
   border-top-left-radius: 5px;

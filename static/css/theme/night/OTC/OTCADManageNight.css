@@ -1,23 +1,13 @@
 /* 广告管理样式重置 */
 /* 1.0筛选条件中的下拉框样式 */
-.otc-AD-manage-box.night .style-input .el-select{
-}
-.otc-AD-manage-box.night .market-input .el-select{
-}
-.otc-AD-manage-box.night .status-input .el-select{
-}
 .otc-AD-manage-box.night .el-input__inner{
   background-color: #1C1F32;
-}
-.otc-AD-manage-box.night .el-input__icon{
 }
 /*2.0查询按钮样式*/
 .otc-AD-manage-box.night .inquire-button .el-button{
   background:linear-gradient(90deg,rgba(43,57,110,1) 0%,rgba(42,80,130,1) 100%);
 }
 /*4.0广告列表表格样式*/
-.otc-AD-manage-box.night .manage-main-bottom .el-table__header{
-}
 .otc-AD-manage-box.night .manage-main-bottom .el-table{
   background-color: #1C1F32;
   color: #9DA5B3;
@@ -32,10 +22,6 @@
   background-color: #1C1F32;
   box-shadow: 4px 4px 6px #191E28;
 }
-.otc-AD-manage-box.night .manage-main-bottom .el-table td{
-}
-.otc-AD-manage-box.night .manage-main-bottom .el-table__empty-block {
-}
 /* 重置饿了么表格中边框的样式和边框的圆角 开始 */
 .otc-AD-manage-box.night .manage-main-bottom .el-table .el-table__body tr td:first-of-type  {
   border-left: 1px solid #1C1F32;
@@ -45,10 +31,6 @@
 }
 .otc-AD-manage-box.night .manage-main-bottom .el-table .el-table__body tr:last-of-type td  {
   border-bottom: 1px solid #1C1F32;
-}
-.otc-AD-manage-box.night .manage-main-bottom .el-table .el-table__body tr:last-of-type td:last-of-type  {
-}
-.otc-AD-manage-box.night .manage-main-bottom .el-table .el-table__body tr:last-of-type td:first-of-type  {
 }
 /* 重置饿了么表格中边框的样式和边框的圆角 结束 */
 .otc-AD-manage-box.night .el-table--enable-row-hover .el-table__body tr:hover>td{
@@ -63,7 +45,4 @@
 }
 .otc-AD-manage-box.night .manage-main-bottom .el-table th.is-leaf:nth-last-of-type(2){
   border-right: 1px solid #1C1F32;
-}
-/* 5.0 message弹窗 消息弹窗*/
-.el-message {
 }

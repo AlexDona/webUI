@@ -12,7 +12,6 @@
   border-bottom: 2px solid #338FF5 !important;
 }
 .fiat-orders.personal.night .el-tabs__item:hover {
-  /* border-left: 0 solid transparent  !important; */
   background-color: #1C1F32  !important;
 }
 .fiat-orders.personal.night .el-input__inner {
@@ -22,6 +21,3 @@
   color: #fff;
   background:linear-gradient(90deg,rgba(43,57,110,1) 0%,rgba(42,80,130,1) 100%);
 }
-/*.fiat-orders.personal.night .el-tabs__content {*/
-  /*background-color: #1C1F32;*/
-/*}*/

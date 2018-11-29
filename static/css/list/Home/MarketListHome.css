@@ -83,16 +83,9 @@
   width:956px;
   height:530px !important;
 }
-/*.market-list-box.home .ivu-table-row{*/
-  /*height:50px;*/
-/*}*/
-/*.market-list-box.home .ivu-table-row>td{*/
-  /*padding:0 ;*/
-/*}*/
 .market-list-box .ivu-table-body>table{
   width:938px !important;
   overflow: hidden;
-  /*height:500px;*/
 }
 .ivu-table-header>table{
   width:950px !important;
@@ -165,6 +158,5 @@
 .market-list-box.home .el-table .sellname,
 .market-list-box.home .el-table .area
 {
-  /*color:#fff;*/
   color:#646464;
 }

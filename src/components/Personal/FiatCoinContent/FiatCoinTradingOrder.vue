@@ -1134,10 +1134,6 @@ export default {
         this.dialogVisible3 = false
         this.errpwd = '' // 清空密码错提示
         this.tradePassword = '' // 清空密码框
-        // this.SET_LEGAL_TENDER_REFLASH_STATUS({
-        //   type: 'TRADING',
-        //   status: true
-        // })
         // 2再次调用接口刷新列表
         // this.getOTCTradingOrdersList()
         this.CHANGE_RE_RENDER_TRADING_LIST_STATUS(true)
@@ -1221,7 +1217,6 @@ export default {
       min-height: 386px;
       border-radius: 5px;
       >.order-list{
-        /*width: 1045px;*/
         height: 170px;
         font-size: 12px;
         margin-bottom: 15px;
@@ -1240,11 +1235,9 @@ export default {
             display: flex;
             justify-content: space-between;
             position: relative;
-            >.buyer-seller{}
             >.order-id{
               padding-left: 300px;
             }
-            >.deal-time{}
             >.order-list-head-icon{
               width:0;
               height:0;
@@ -1282,8 +1275,6 @@ export default {
                 display: inline-block;
                 margin-right: 20px;
                 text-align: center;
-                >.logo-icon{
-                }
                 >.logo-name{
                   margin-top: 5px;
                 }
@@ -1291,7 +1282,6 @@ export default {
               >.left-info{
                 display: inline-block;
                 >.trade-info{
-                  // line-height: 1.5rem;
                   line-height: 20px;
                   >.money{
                     color: #5E95EC;
@@ -1304,14 +1294,9 @@ export default {
               flex: 2;
               border-right: 1px solid #262F38;
               >.middle-content{
-                // display: flex;
-                // flex: 2;
                 .trader-info{
                   width: 190px;
-                  // flex: 1;
                   >.pay-style{
-                    // margin-left: 20px;
-                    // margin-bottom: 8px;
                     margin: 0 0 8px 20px;
                     position: relative;
                     width: 150px;
@@ -1329,17 +1314,14 @@ export default {
                   }
                   >.bank-info{
                     margin-left: 20px;
-                    // line-height: 1.4rem;
                     line-height: 20px;
                   }
                   >.order-cancle-tips{
                     margin-left: 20px;
-                    // line-height: 1.5rem;
                     line-height: 20px;
                   }
                   >.bankMoneyInfo{
                     margin-left: 20px;
-                    // line-height: 1.5rem;
                     line-height: 20px;
                     .icon{
                       width: 16px;
@@ -1354,8 +1336,6 @@ export default {
                   vertical-align: top;
                   padding-left: 10px;
                   width: 70px;
-                  >.picture-box{
-                  }
                 }
               }
             }
@@ -1363,8 +1343,6 @@ export default {
               flex: 3;
               >.right-content{
                 >.action-tips{
-                  // margin-left: 20px;
-                  // margin-bottom: 10px;
                   margin: 0 0 10px 20px;
                   .wait-pay{
                     color: #E8554F;
@@ -1379,14 +1357,12 @@ export default {
                 }
                 >.action-explain{
                   margin-left: 20px;
-                  // line-height: 2rem;
                   line-height: 20px;
                   >.remaining-time{
                     color: #D45858;
                   }
                 }
                 >.count-down-time{
-                  // line-height: 1rem;
                   line-height: 20px;
                   .timeIcon{
                     color: #D45858;
@@ -1411,8 +1387,6 @@ export default {
               display: flex;
               flex: 3;
               >.appeal-textarea{
-                // margin-top: 15px;
-                // margin-left: 20px;
                 margin: 15px 0 0 20px;
                 flex: 2;
                 display: flex;
@@ -1445,7 +1419,6 @@ export default {
       background-color: $nightBgColor;
       color:$nightFontColor;
       >.fiat-trading-order-content{
-       /* background-color: $nightMainBgColor;*/
         .button {
           background:linear-gradient(81deg,rgba(43,57,110,1) 0%,rgba(42,80,130,1) 100%);
           color: #fff;
@@ -1486,7 +1459,6 @@ export default {
       >.fiat-trading-order-content{
         .button {
           background:linear-gradient(81deg,rgba(43,57,110,1) 0%,rgba(42,80,130,1) 100%);
-          // color: #333;
           color: #fff;
         }
         >.order-list{
@@ -1543,7 +1515,6 @@ export default {
           }
           >.appeal{
             >.appeal-head{
-              // color: #FFFFFF;
               color: #333;
               border-bottom: 1px solid rgba(72, 87, 118, 0.1);
               background-color: #E7E8E9;

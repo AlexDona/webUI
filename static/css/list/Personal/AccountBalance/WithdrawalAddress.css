@@ -22,10 +22,8 @@
   height: 35px;
   border: 0;
   line-height: 0;
-  /*margin-right: 15px;*/
 }
 .withdrawal-address.personal .el-dialog__body {
-  /*padding: 25px 25px 30px;*/
   color: #fff;
 }
 .withdrawal-address.personal .el-table td {

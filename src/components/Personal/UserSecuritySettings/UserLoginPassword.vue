@@ -284,10 +284,8 @@ export default {
     margin-top:66px;
     overflow: hidden;
     width:100%;
-    /*height:100%;*/
     >.login-password-main {
       width: 1100px;
-      /*height: 600px;*/
       min-height: 700px;
       margin: 60px auto 100px;
       >.login-password-header {
@@ -314,7 +312,6 @@ export default {
         }
         >.login-content-from {
           width: 600px;
-          // margin-left: 55px;
           .login-input {
             width: 220px;
             height: 34px;

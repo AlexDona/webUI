@@ -1,9 +1,5 @@
 /* otc在线交易买卖样式重置 */
 /*付款方式字体图标*/
-.otc-online-trader-buy-sell-box.night .icon{
-}
-.otc-online-trader-buy-sell-box.night .el-form--label-top .el-button--mini{
-}
 /* 输入密码弹出框 */
 .otc-online-trader-buy-sell-box.night .password-dialog .el-dialog{
   background: #28334A;
@@ -14,12 +10,8 @@
 .otc-online-trader-buy-sell-box.night .password-dialog .el-dialog__title{
   color: #fff;
 }
-.otc-online-trader-buy-sell-box.night .password-dialog .el-dialog__headerbtn{
-}
 .otc-online-trader-buy-sell-box.night .password-dialog .el-dialog__body{
   color: #fff;
-}
-.otc-online-trader-buy-sell-box.night .password-dialog .el-dialog__body .input{
 }
 .otc-online-trader-buy-sell-box.night .password-dialog .el-dialog__body .password-input{
   background-color: #1A2233;
@@ -27,10 +19,6 @@
 }
 .otc-online-trader-buy-sell-box.night .password-dialog .el-dialog__body .error-info{
   color: #fff;
-}
-.otc-online-trader-buy-sell-box.night .password-dialog .el-dialog__footer{
-}
-.otc-online-trader-buy-sell-box.night .password-dialog .el-button{
 }
 .otc-online-trader-buy-sell-box.night .password-dialog .el-button--primary{
   background:linear-gradient(9deg,rgba(43,57,110,1),rgba(42,80,130,1));

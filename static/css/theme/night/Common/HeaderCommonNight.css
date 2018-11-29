@@ -22,7 +22,6 @@
 }
 
 .nav-box.night.common .ivu-select-large.ivu-select-single .ivu-select-selection .ivu-select-placeholder
-  /*.nav-box.night.common .ivu-modal-wrap **/
 {
   background-color: #181d2e;
 }
@@ -31,25 +30,13 @@
   border: 1px solid #282e43;
   background-color: #1c2237;
 }
-
-/*.night .el-select-dropdown__list {*/
-  /*background-color: #181d2e;*/
-/*}*/
 .night .el-select-dropdown{
   border-color:#282E43!important;
-}
-.nav-box.common .ivu-select-item {
-  /*color:;*/
 }
 .nav-box.common.night .ivu-select-item:hover {
   background-color: rgba(51, 143, 245, .05);
   color: #fff;
 }
-/*.night .el-select-dropdown__item.hover,*/
-/*.night .el-select-dropdown__item:hover{*/
-  /*background-color: #282E43;*/
-  /*color:#fff;*/
-/*}*/
 .night .el-input__inner{
   color:#DEE1EA;
 }

@@ -851,7 +851,6 @@ export default {
           .error-msg{
             height:30px;
             line-height: 30px;
-            /*margin-left: 30px;*/
             color: rgb(212, 88, 88);
           }
         }

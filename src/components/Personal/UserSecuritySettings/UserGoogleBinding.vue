@@ -485,7 +485,6 @@ export default {
               }
             }
             >.validator-margin {
-              // margin-left: 97px;
               margin-left: 50px;
             }
           }

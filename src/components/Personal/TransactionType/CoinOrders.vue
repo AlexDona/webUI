@@ -808,7 +808,6 @@ export default {
     }
     .height500 {
       height: 545px;
-      /*overflow: hidden;*/
     }
     &.night{
       background-color: $nightBgColor;
