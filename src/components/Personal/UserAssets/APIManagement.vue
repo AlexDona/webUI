@@ -61,7 +61,7 @@
               <div
                 class = "error-msg-text error-msg font-size12"
               >
-                <span v-show = "errorMsg">{{ errorMsg }}</span>
+                <span v-show = "createErrorMsg">{{ createErrorMsg }}</span>
               </div>
               <button
                 class="api-button border-radius4 cursor-pointer font-size14"
@@ -117,7 +117,7 @@
             :data="extensionList"
             style="width: 100%"
             :empty-text="$t('M.comm_no_data')"
-            v-loading="loading"
+            v-loading="partLoading"
             element-loading-background="rgba(0, 0, 0, 0.6)"
           >
             <!--创建时间-->
@@ -341,7 +341,7 @@
             >
               <input
                 class="content-input input-google padding-l15 box-sizing"
-                v-model="ip"
+                v-model="bindingIpAddress"
                 disabled
               >
               <!--温馨提示-->
@@ -450,7 +450,8 @@ import {
 import {
   returnAjaxMsg,
   sendPhoneOrEmailCodeAjax,
-  getSecurityCenter
+  getSecurityCenter,
+  getNestedData
 } from '../../../utils/commonFunc'
 import {timeFilter} from '../../../utils/index'
 const { mapMutations } = createNamespacedHelpers('user')
@@ -462,14 +463,13 @@ export default {
   },
   data () {
     return {
-      labelPosition: 'top',
-      errorMsg: '', // 错误信息
+      labelPosition: 'top', // form表单label位置
+      createErrorMsg: '', // 创建时错误信息
       errorVerifyMsg: '', // 错误信息
       errorEditorMsg: '', // 错误信息
-      // errorMsg: '', // 错误信息
-      securityCenter: {},
-      enable: 'M.comm_start_using',
-      disable: 'M.comm_forbidden',
+      securityCenter: {}, // 安全信息状态
+      enable: 'M.comm_start_using', // 启用
+      disable: 'M.comm_forbidden', // 禁用
       APIMoneyConfirm: false, // 默认API确认弹窗
       phoneCode: '', // 手机验证
       emailCode: '', // 邮箱验证
@@ -479,15 +479,15 @@ export default {
       accessKey: '', // API访问秘钥 （Access Key）
       secretKey: '', // API访问秘钥 （Access Key）
       ipSite: '', // 备注
-      ip: '', // 绑定IP地址
-      extensionList: [],
+      bindingIpAddress: '', // 绑定IP地址
+      extensionList: [], // 展示渲染IP列表
       compileUserApi: false, // 编辑用户api弹窗
       userId: '', // 编辑用户api
       apiRemark: '', // 编辑用户备注
       ipAddress: '', // 编辑用户ip
       dialogVisible: false,
       fullscreenLoading: false, // 整页loading
-      loading: true // 局部列表loading
+      partLoading: true // 局部列表loading
     }
   },
   created () {
@@ -515,19 +515,19 @@ export default {
     },
     // 获取多个用户api信息
     async getMultipleUserAPIInfo () {
-      this.loading = true
+      this.partLoading = true
       let data = await multipleUserAPIInfo({})
       console.log('获取多个用户api信息')
       console.log(data)
       if (!(returnAjaxMsg(data, this, 0))) {
         // 接口失败清除局部loading
-        this.loading = false
+        this.partLoading = false
         return false
       } else {
         // 接口成功清除局部loading
-        this.loading = false
+        this.partLoading = false
         // 返回展示渲染挨批列表
-        this.extensionList = data.data.data
+        this.extensionList = getNestedData(data, 'data.data')
         // console.log(this.extensionList)
       }
     },
@@ -535,19 +535,19 @@ export default {
     stateEstablishApiButton () {
       if (!this.remark) {
         // 请输入备注
-        this.errorMsg = this.$t('M.comm_please_enter') + this.$t('M.comm_remark')
+        this.createErrorMsg = this.$t('M.comm_please_enter') + this.$t('M.comm_remark')
         return false
       } else if (!this.ipSite) {
         // 请输入IP地址
-        this.errorMsg = this.$t('M.comm_please_enter') + this.$t('M.user_security_binding') + 'IP' + this.$t('M.comm_site')
+        this.createErrorMsg = this.$t('M.comm_please_enter') + this.$t('M.user_security_binding') + 'IP' + this.$t('M.comm_site')
         return false
       } else {
-        this.errorMsg = ''
+        this.createErrorMsg = ''
       }
       // 调用安全方式接口
       this.getSecurityCenter()
       // 赋值创建IP修改时的带回
-      this.ip = this.ipSite
+      this.bindingIpAddress = this.ipSite
     },
     // 创建api检测输入格式
     editorInputFormat (type, targetNum) {
@@ -633,9 +633,9 @@ export default {
         // 默认创建之后弹出二次挨批创建信息框
         this.apiSecondaryConfirmation = true
         // 对api秘钥进行赋值
-        let detailData = data.data.data
-        this.accessKey = detailData.accessKey
-        this.secretKey = detailData.secretKey
+        let detailData = getNestedData(data, 'data.data')
+        this.accessKey = getNestedData(detailData, 'accessKey')
+        this.secretKey = getNestedData(detailData, 'secretKey')
       }
     },
     // 二次确认框创建api完成
@@ -647,7 +647,7 @@ export default {
     async statusCreationApi () {
       let data = await stateCreationApi({
         remark: this.remark, // 备注
-        ip: this.ip, // ip地址
+        ip: this.bindingIpAddress, // ip地址
         accessKey: this.accessKey, // token
         secretKey: this.secretKey // sk私钥
       })
@@ -684,7 +684,7 @@ export default {
     },
     // 清空内容信息
     emptyStatus () {
-      this.errorMsg = ''
+      this.createErrorMsg = ''
     },
     // 编辑用户api 每一行ID
     compileApi (id) {
@@ -786,7 +786,7 @@ export default {
     getSecurityCenter () {
       getSecurityCenter(this, {}, data => {
         if (data) {
-          this.securityCenter = data.data.data
+          this.securityCenter = getNestedData(data, 'data.data')
           // 默认API确认弹窗
           this.APIMoneyConfirm = true
         }

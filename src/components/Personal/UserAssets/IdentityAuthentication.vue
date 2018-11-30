@@ -153,9 +153,9 @@
             />
           </el-form-item>
           <div
-            v-show="errorMsg"
+            v-show="errorMessage"
           >
-            {{ errorMsg }}
+            {{ errorMessage }}
           </div>
           <el-form-item>
             <button
@@ -402,10 +402,10 @@
               <div class="upload-button">
                 <div
                   class = "false-tips fz14 tl mt-5"
-                  v-show = "errorMsg"
+                  v-show = "errorMessage"
                 >
                   <i></i>
-                  {{ errorMsg }}
+                  {{ errorMessage }}
                 </div>
                 <!--提交按钮-->
                 <button
@@ -523,7 +523,8 @@ import {
   userRefreshUser
 } from '../../../utils/api/personal'
 import {
-  returnAjaxMsg
+  returnAjaxMsg,
+  getNestedData
 } from '../../../utils/commonFunc'
 import {
   apiCommonUrl,
@@ -543,6 +544,7 @@ export default {
   // props,
   data () {
     return {
+      // 上传图片 token
       tokenObj: {
         'token': '',
         'x-domain': ''
@@ -566,30 +568,28 @@ export default {
       waitVeritfy: false, // 待审核
       realName: '', // 真实姓名
       identificationNumber: '', // 证件号码
-      errorMsg: '', // 错误信息提示
+      errorMessage: '', // 错误信息提示
       seniorAuthentication: false, // 高级认证弹窗默认
       authenticationInfo: {}, // 个人信息
       authenticationContentStatus: false, // 高级认证页面
       authenticationStatusFront: false, // 用户高级认证前
       authenticationNotPass: false, // 用户高级未通过
       // 身份认证默认图片
-      firstPictureSrc: require('../../../assets/user/card_negative.png'), // 正面
-      firstPictureSrcShow: true,
-      secondPictureSrc: require('../../../assets/user/card_positive.png'), // 反面
-      secondPictureSrcShow: true,
+      firstPictureSrc: require('../../../assets/user/card_positive.png'), // 正面
+      firstPictureSrcShow: true, // 显示身份证正面
+      secondPictureSrc: require('../../../assets/user/card_negative.png'), // 反面
+      secondPictureSrcShow: true, // 显示身份证反面
       thirdPictureSrc: require('../../../assets/user/card_handheld.png'), // 手持
-      thirdPictureSrcShow: true,
+      thirdPictureSrcShow: true, // 显示手持身份证
       dialogImageFrontUrl: '', // 上传身份证正面url
       dialogImageReverseSideUrl: '', // 上传身份证反面url
-      dialogVisibleReverseSide: false,
       dialogImageHandUrl: '', // 上传手持身份证url
-      dialogVisibleHand: false,
-      seniorCertificationList: {},
       realNameInformationObj: {}, //  获取用户实名信息
       userInfoRefresh: {}, //  刷新用户信息
       statusRealNameInformation: {
         cardNo: ''
       },
+      // 设置错误信息
       errorShowStatusList: [
         '', // 真实姓名
         '' // 证件号码
@@ -711,10 +711,8 @@ export default {
         // 接口成功清除loading
         this.fullscreenLoading = false
         // 返回列表数据
-        this.realNameInformationObj = data.data.data
-        // if (data.data.data.authInfo) {
-        this.statusRealNameInformation = data.data.data.authInfo
-        // }
+        this.realNameInformationObj = getNestedData(data, 'data.data')
+        this.statusRealNameInformation = getNestedData(data, 'data.data.authInfo')
         this.authenticationIsStatus()
       }
     },
@@ -736,7 +734,7 @@ export default {
         this.fullscreenLoading = false
         this.$store.commit('user/SET_STEP1_INFO', data.data.data)
         // 返回列表数据
-        this.userInfoRefresh = data.data.data.userInfo
+        this.userInfoRefresh = getNestedData(data, 'data.data.userInfo')
         this.authenticationIsStatus()
       }
     },
@@ -872,7 +870,7 @@ export default {
         })
         return false
       } else {
-        this.errorMsg = ''
+        this.errorMessage = ''
       }
       let data
       let param = {

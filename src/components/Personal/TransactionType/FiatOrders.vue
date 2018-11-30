@@ -204,7 +204,8 @@ import {
 } from '../../../utils/api/OTC'
 import {
   returnAjaxMsg,
-  getMerchantsOrdersList
+  getMerchantsOrdersList,
+  getNestedData
 } from '../../../utils/commonFunc'
 const {mapMutations} = createNamespacedHelpers('personal')
 export default {
@@ -285,13 +286,8 @@ export default {
   beforeRouteUpdate () {},
   methods: {
     ...mapMutations([
-      // 'CHANGE_OTC_AVAILABLE_CURRENCY_NAME',
-      // 'CHANGE_OTC_AVAILABLE_CURRENCY_ID',
-      // 'CHANGE_OTC_AVAILABLE_PARTNER_COIN_ID',
-      // 'USER_ASSETS_LIST',
       'SET_LEGAL_TENDER_LIST',
       'CHANGE_LEGAL_PAGE',
-      // 'SET_LEGAL_TENDER_REFLASH_STATUS'
       'CHANGE_RE_RENDER_TRADING_LIST_STATUS' // 更改重新渲染交易中订单列表状态
     ]),
     // 切换tab时将全局当前页码改为1加载第一页的数据
@@ -314,7 +310,8 @@ export default {
         return false
       } else {
         // 返回数据正确的逻辑
-        this.merchantsOrdersCoinList = data.data.data
+        // this.merchantsOrdersCoinList = data.data.data
+        this.merchantsOrdersCoinList = getNestedData(data, 'data.data')
       }
     },
     // 页面加载时 可用法币查询
@@ -327,7 +324,8 @@ export default {
         return false
       } else {
         // 返回数据正确的逻辑
-        this.merchantsOrdersCurrencyList = data.data.data
+        // this.merchantsOrdersCurrencyList = data.data.data
+        this.merchantsOrdersCurrencyList = getNestedData(data, 'data.data')
       }
     },
     // 选中交易 类型 赋值
@@ -419,7 +417,8 @@ export default {
         } else {
           // 接口成功清除loading
           this.fullscreenLoading = false
-          let OTCEntrustingOrdersData = data.data.data
+          // let OTCEntrustingOrdersData = data.data.data
+          let OTCEntrustingOrdersData = getNestedData(data, 'data.data')
           // 返回数据正确的逻辑 重新渲染列表
           this.SET_LEGAL_TENDER_LIST({
             type: activeName,
@@ -441,7 +440,8 @@ export default {
           } else {
             // 接口成功清除loading
             this.fullscreenLoading = false
-            let merchantsOrdersListData = data.data.data
+            // let merchantsOrdersListData = data.data.data
+            let merchantsOrdersListData = getNestedData(data, 'data.data')
             // 返回数据正确的逻辑 重新渲染列表
             this.SET_LEGAL_TENDER_LIST({
               type: activeName,

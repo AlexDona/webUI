@@ -474,8 +474,8 @@ export default {
       closeAlipay: false, // 默认关闭支付宝
       closePayapl: false, // 默认关闭paypal
       closeWesternUnion: false, // 默认关闭西联汇款
-      activeType: '', // 当前值
-      state: '', // 开启关闭
+      activeType: '', // 当前值类型
+      state: '', // 开启关闭状态
       fullscreenLoading: false // 整页loading
     }
   },

@@ -42,7 +42,7 @@
               <input
                 disabled
                 class="form-input-common-state border-radius2 padding-l15"
-                v-model="balance"
+                v-model="currencyBalance"
               />
             </el-form-item>
             <!--买方UID-->
@@ -141,7 +141,7 @@
             :data="pushRecordList"
             style="width: 100%"
             :empty-text="$t('M.comm_no_data')"
-            v-loading="loading"
+            v-loading="partLoading"
             element-loading-background="rgba(0, 0, 0, 0.6)"
           >
             <!--类型-->
@@ -412,7 +412,8 @@ import CountDownButton from '../../Common/CountDownCommon'
 import {timeFilter, formatNumberInput} from '../../../utils/index'
 import {createNamespacedHelpers, mapState} from 'vuex'
 import {
-  returnAjaxMsg
+  returnAjaxMsg,
+  getNestedData
 } from '../../../utils/commonFunc'
 const {mapMutations} = createNamespacedHelpers('personal')
 export default {
@@ -429,17 +430,14 @@ export default {
         '', // 价格
         '' // 交易密码
       ],
-      showStatusUserInfo: {}, // 个人信息
-      // 币种
-      currencyValue: '',
-      currencyList: [],
+      currencyValue: '', // 币种
+      currencyList: [], // push币种列表
       // push资产form
-      balance: '', // 余额
+      currencyBalance: '', // 币种余额
       buyUID: '', // 买方UID
       count: '', // 数量
       price: '', // 价格
       transactionPassword: '', // 交易密码
-      sum: '', // 金额
       phoneCode: '', // 手机验证码
       emailCode: '', // 邮箱验证码
       googleCode: '', // 谷歌验证
@@ -455,19 +453,19 @@ export default {
       pushCount: '', // PUSH数量信息展示
       pushPaymentAmount: '', // 付款金额信息展示
       dialogVisible: false, // 取消弹窗默认隐藏
-      labelPosition: 'top', // form表单
+      labelPosition: 'top', // form表单label位置
       paymentVisible: false, // 付款二次确认弹窗默认隐藏
       passwordVisible: false, // 付款二次确认之后交易密码弹窗默认隐藏
       pushUID: '', // 每行数据ID
       pushPayCoinName: '', // 币种名称
-      pushPassword: '',
+      pushPassword: '', // 用户付款时交易密码
       pushRecordList: [], // push列表记录
       currentPageForMyEntrust: 1, // 当前委托页码
       totalPageForMyEntrust: 1, // 当前委托总页数
       pointLength: 4, // 保留小数位后四位
       errorMsg: '', // 错误提示
       fullscreenLoading: false, // 整页loading
-      loading: true // 局部列表loading
+      partLoading: true // 局部列表loading
     }
   },
   created () {
@@ -492,8 +490,8 @@ export default {
     },
     // 3.修改input value  输入限制
     changeInputValue (ref, pointLength) {
-      if (this.count > this.balance) {
-        this.$refs.count.value = this.balance
+      if (this.count > this.currencyBalance) {
+        this.$refs.count.value = this.currencyBalance
       }
       // 获取ref中input值
       this[ref] = this.$refs[ref].value
@@ -523,23 +521,22 @@ export default {
       console.log(data)
       if (!(returnAjaxMsg(data, this, 0))) {
         // 接口失败清除局部loading
-        this.loading = false
+        this.partLoading = false
         return false
       } else {
         // 接口成功清除局部loading
-        this.loading = false
+        this.partLoading = false
         // 返回push记录数据
-        this.pushRecordList = data.data.data.userPushVOPageInfo.list
-        this.totalPageForMyEntrust = data.data.data.userPushVOPageInfo.pages - 0
+        this.pushRecordList = getNestedData(data, 'data.data.userPushVOPageInfo.list')
+        this.totalPageForMyEntrust = getNestedData(data, 'data.data.userPushVOPageInfo.pages') - 0
         // 返回push币种信息列表
-        this.currencyValue = data.data.data.coinLists[0].name
-        this.currencyValue = data.data.data.coinLists[0].coinId
+        this.currencyValue = getNestedData(data, 'data.data.coinLists[0].name')
+        this.currencyValue = getNestedData(data, 'data.data.coinLists[0].coinId')
         // 刷新列表默认币种
-        this.balance = data.data.data.total
-        this.pushPayCoinName = data.data.data.pushPayCoinName
-        this.currencyList = data.data.data.coinLists
-        // 金额
-        this.sum = data.data.data.pushPayCoinName
+        this.currencyBalance = getNestedData(data, 'data.data.total')
+        // 币种余额
+        this.pushPayCoinName = getNestedData(data, 'data.data.pushPayCoinName')
+        this.currencyList = getNestedData(data, 'data.data.coinLists')
         console.log(this.pushRecordList)
       }
     },
@@ -559,8 +556,9 @@ export default {
         return false
       } else {
         // 点击资产币种下拉
-        this.balance = data.data.data.total
-        console.log(this.balance)
+        // this.currencyBalance = data.data.data.total
+        this.currencyBalance = getNestedData(data, 'data.data.total')
+        console.log(this.currencyBalance)
       }
     },
     /**

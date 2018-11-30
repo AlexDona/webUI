@@ -122,7 +122,7 @@
             :data="chargeRecordList"
             style="width: 100%"
             :empty-text="$t('M.comm_no_data')"
-            v-loading="loading"
+            v-loading="partLoading"
             element-loading-background="rgba(0, 0, 0, 0.6)"
           >
             <!--币种-->
@@ -188,7 +188,7 @@
           :data="otherRecordsList"
           style="width: 100%"
           :empty-text="$t('M.comm_no_data')"
-          v-loading="loading"
+          v-loading="partLoading"
         >
           <!--时间-->
           <el-table-column
@@ -253,7 +253,10 @@ import {
   statusRushedToRecordList,
   getMerchantCurrencyList
 } from '../../../utils/api/personal'
-import {returnAjaxMsg} from '../../../utils/commonFunc'
+import {
+  returnAjaxMsg,
+  getNestedData
+} from '../../../utils/commonFunc'
 export default {
   components: {},
   // props,
@@ -313,8 +316,7 @@ export default {
       //   }
       // ],
       hiddenStatusRecordList: false, // 其他记录
-      // 其他记录类型
-      otherRecordsValue: '',
+      otherRecordsValue: '', // 其他记录类型
       // 全部 活动奖励 糖果奖励 系统赠送 邀请奖励
       otherRecordsType: [
         {
@@ -334,8 +336,7 @@ export default {
           label: '邀请奖励'
         }
       ],
-      otherRecordTypes: false,
-      loading: true
+      partLoading: true // 局部loading
     }
   },
   created () {
@@ -371,13 +372,14 @@ export default {
       if (!(returnAjaxMsg(data, this, 0))) {
         return false
       } else {
-        this.currencyList = data.data.data
+        // this.currencyList = data.data.data
+        this.currencyList = getNestedData(data, 'data.data')
         console.log(this.currencyList)
       }
     },
     // 搜索按钮
     stateSearchButton () {
-      this.loading = true
+      this.partLoading = true
       this.getChargeMentionList()
     },
     /**
@@ -397,15 +399,17 @@ export default {
       })
       if (!(returnAjaxMsg(data, this, 0))) {
         // 接口失败清除loading
-        this.loading = false
+        this.partLoading = false
         return false
       } else {
         // 接口成功清除loading
-        this.loading = false
+        this.partLoading = false
         // 返回冲提记录列表展示
-        let detailData = data.data.data
-        this.chargeRecordList = detailData.list
-        this.totalPageForMyEntrust = detailData.pages - 0
+        let detailData = getNestedData(data, 'data.data')
+        // 充提记录
+        this.chargeRecordList = getNestedData(detailData, 'list')
+        // 当前委托总页数
+        this.totalPageForMyEntrust = getNestedData(detailData, 'pages') - 0
         console.log(this.chargeRecordList)
       }
     },
@@ -421,6 +425,7 @@ export default {
     },
     // 分页
     changeCurrentPage (pageNum) {
+      // 当前委托总页数
       this.currentPageForMyEntrust = pageNum
       this.getChargeMentionList()
     },

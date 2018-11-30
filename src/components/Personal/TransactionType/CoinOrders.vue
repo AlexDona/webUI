@@ -138,7 +138,7 @@
               <el-table
                 :data="currentEntrustList"
                 :empty-text="$t('M.comm_no_data')"
-                v-loading="loading"
+                v-loading="partLoading"
                 element-loading-background="rgba(0, 0, 0, 0.6)"
               >
                 <!--时间-->
@@ -263,7 +263,7 @@
           <el-table
             :data="historyEntrustList"
             :empty-text="$t('M.comm_no_data')"
-            v-loading="loading"
+            v-loading="partLoading"
             element-loading-background="rgba(0, 0, 0, 0.6)"
           >
             <!--时间-->
@@ -368,7 +368,7 @@
           <el-table
             :data="currentMakeDetailList"
             :empty-text="$t('M.comm_no_data')"
-            v-loading="loading"
+            v-loading="partLoading"
             element-loading-background="rgba(0, 0, 0, 0.6)"
           >
             <!--时间-->
@@ -483,26 +483,11 @@ export default {
   // props,
   data () {
     return {
-      activeName: 'current-entrust',
-      activeHistory: 'history-entrust',
-      activeMake: 'make-detail',
-      options: [
-        {
-          value: 'BTC',
-          label: 'BTC'
-        },
-        {
-          value: 'ETH',
-          label: 'ETH'
-        },
-        {
-          value: 'FBT',
-          label: 'FBT'
-        }
-      ],
-      value: '',
-      startTime: '',
-      endTime: '',
+      activeName: 'current-entrust', // 当前委托
+      activeHistory: 'history-entrust', // 历史委托
+      activeMake: 'make-detail', // 成交明细
+      startTime: '', // 开始时间
+      endTime: '', // 结束时间
       currentEntrustList: [], // 我的委托订单
       currentPageForMyEntrust: 1, // 当前委托页码
       totalPageForMyEntrust: 1, // 当前委托总页数
@@ -512,18 +497,17 @@ export default {
       currentMakeDetailList: [], // 我的成交明细
       currentPageMakeDetailEntrust: 1, // 成交明细页码
       totalPageForMakeDetailEntrust: 1, // 成交明细总页数
-      pageSize: 10,
+      pageSize: 10, // 条数
       entrustSelectList: [], // 交易区下拉列表
       typeList: [], // 类型列表
       matchTypeList: [], // 撮合类型列表
       activeExchangeArea: '', // 当前选中交易区
-      activeStatus: '', // 当前选中状态
       activeMatchType: '', // 当前撮合类型
       activeSymbol: '', // 用户输入币种名称
-      activeType: '', // 当前选中方向
+      activeType: '', // 当前选中方向(类型)
       cancellationOfOrder: false, // 撤销当前委单
       cancelHistoricalOrder: false, // 删除历史订单
-      loading: true, // 局部列表loading
+      partLoading: true, // 局部列表loading
       end: '' // 占位
     }
   },
@@ -544,12 +528,12 @@ export default {
   methods: {
     coinMoneyOrders (tab) {
       console.log(tab.name)
-      this.loading = true
+      this.partLoading = true
       this.commissionList(tab.name)
     },
     // 查询列表
     searchWithCondition (entrustType) {
-      this.loading = true
+      this.partLoading = true
       this.commissionList(entrustType)
     },
     // 科学计数法转换
@@ -562,21 +546,20 @@ export default {
     async getEntrustSelectBox () {
       let params = {
       }
-      this.loading = true
+      this.partLoading = true
       const data = await getEntrustSelectBox(params)
       if (!returnAjaxMsg(data, this)) {
         // 接口失败清除局部loading
-        this.loading = false
+        this.partLoading = false
         return false
       } else {
         // 接口成功清除局部loading
-        this.loading = false
+        this.partLoading = false
         // console.log(data)
-        // let detailData = data.
         let detailData = getNestedData(data, 'data.data')
-        this.entrustSelectList = detailData.coinList
-        this.typeList = detailData.typeList
-        this.matchTypeList = detailData.matchTypeList
+        this.entrustSelectList = getNestedData(detailData, 'coinList')
+        this.typeList = getNestedData(detailData, 'typeList')
+        this.matchTypeList = getNestedData(detailData, 'matchTypeList')
         console.log(this.matchTypeList)
       }
     },
@@ -588,17 +571,17 @@ export default {
       console.log(pageNum)
       switch (entrustType) {
         case 'current-entrust':
-          this.loading = true
+          this.partLoading = true
           this.currentPageForMyEntrust = pageNum
           this.commissionList(entrustType)
           break
         case 'history-entrust':
-          this.loading = true
+          this.partLoading = true
           this.currentPageForHistoryEntrust = pageNum
           this.commissionList(entrustType)
           break
         case 'make-detail':
-          this.loading = true
+          this.partLoading = true
           this.currentPageMakeDetailEntrust = pageNum
           this.commissionList(entrustType)
       }
@@ -653,15 +636,11 @@ export default {
           console.log(data)
           if (!returnAjaxMsg(data, this, 0)) {
             // 接口失败清除局部loading
-            this.loading = false
+            this.partLoading = false
             return false
           } else {
             // 接口成功清除局部loading
-            this.loading = false
-            // if (data.data.data.list) {
-            //   this.currentEntrustList = data.data.data.list
-            //   this.totalPageForMyEntrust = data.data.data.pages - 0
-            // }
+            this.partLoading = false
           }
           break
         case 'history-entrust':
@@ -670,14 +649,14 @@ export default {
           console.log(data1)
           if (!returnAjaxMsg(data1, this, 0)) {
             // 接口失败清除局部loading
-            this.loading = false
+            this.partLoading = false
             return false
           } else {
             // 接口成功清除局部loading
-            this.loading = false
+            this.partLoading = false
             if (data1.data.data.list) {
-              this.historyEntrustList = data1.data.data.list
-              this.totalPageForHistoryEntrust = data1.data.data.pages - 0
+              this.historyEntrustList = getNestedData(data1, 'data.data.list')
+              this.totalPageForHistoryEntrust = getNestedData(data1, 'data.data.pages') - 0
             }
           }
           break
@@ -687,14 +666,14 @@ export default {
           console.log(data2)
           if (!returnAjaxMsg(data2, this, 0)) {
             // 接口失败清除局部loading
-            this.loading = false
+            this.partLoading = false
             return false
           } else {
             // 接口成功清除局部loading
-            this.loading = false
+            this.partLoading = false
             if (data2.data.data.list) {
-              this.currentMakeDetailList = data2.data.data.list
-              this.totalPageForMakeDetailEntrust = data2.data.data.pages - 0
+              this.currentMakeDetailList = getNestedData(data2, 'data.data.list')
+              this.totalPageForMakeDetailEntrust = getNestedData(data2, 'data.data.pages') - 0
             }
           }
           break

@@ -57,7 +57,7 @@
                   class="code-right-rendering"
                   id="link"
                 >
-                  {{ link + innerUserInfo.showId }}
+                  {{ promoteLink + innerUserInfo.showId }}
                 </span>
                 <span
                   class="code-copy border-radius5 cursor-pointer"
@@ -73,7 +73,7 @@
                 </span>
                 <span
                   class="code-copy border-radius5 cursor-pointer"
-                  v-clipboard:copy="link + innerUserInfo.showId"
+                  v-clipboard:copy="promoteLink + innerUserInfo.showId"
                   v-clipboard:success="onCopy"
                   v-clipboard:error="onError"
                 >
@@ -85,7 +85,7 @@
                    {{ $t('M.comm_copy') }}
                   <VueQrcode
                     class="ercode"
-                    :value="String(link + innerUserInfo.showId)"
+                    :value="String(promoteLink + innerUserInfo.showId)"
                     :options="{ size: 100 }"
                     v-show="ercodeIsShowId"
                   >
@@ -163,7 +163,7 @@
             :data="extensionList"
             style="width: 100%"
             :empty-text="$t('M.comm_no_data')"
-            v-loading="loading"
+            v-loading="partLoading"
             element-loading-background="rgba(0, 0, 0, 0.6)"
           >
             <!--用户UID 登录名 注册时间 姓名 高级认证 直接推荐人UID-->
@@ -250,7 +250,7 @@
             :data="awardList"
             style="width: 100%"
             :empty-text="$t('M.comm_no_data')"
-            v-loading="loading"
+            v-loading="partLoading"
             element-loading-background="rgba(0, 0, 0, 0.6)"
           >
             <!--奖励类型 邀请奖励 币种 数量 时间-->
@@ -311,7 +311,10 @@ import {
   currencyTransform
 } from '../../../utils/api/personal'
 import {domain} from '../../../utils/env'
-import {returnAjaxMsg} from '../../../utils/commonFunc'
+import {
+  returnAjaxMsg,
+  getNestedData
+} from '../../../utils/commonFunc'
 import {timeFilter} from '../../../utils/index'
 Vue.use(VueClipboard)
 export default {
@@ -333,18 +336,15 @@ export default {
         value: 'second',
         label: 'M.user_invite_indirect'
       }],
-      // 待审核 已通过 未通过
-      waitVeritfy: 'M.user_invite_audit',
-      pass: 'M.user_invite_already_passed',
-      notPass: 'M.user_invite_not_pass',
+      waitVeritfy: 'M.user_invite_audit', // 待审核
+      pass: 'M.user_invite_already_passed', // 已通过
+      notPass: 'M.user_invite_not_pass', // 未通过
       activeName: 'current-entrust',
       currentPageForMyEntrust: 1, // 当前委托页码
       totalPageForMyEntrust: 1, // 当前委托总页数
       totalPageMyNumber: '', // 条数
-      text: 'SADFASD',
-      link: `${domain}/register?showId=`,
+      promoteLink: `${domain}/register?showId=`, // 推广链接
       ercodeIsShowId: false, // 二维码显示状态
-      qrcode: '123456',
       // 推广统计
       extensionList: [],
       activeAwardList: 'current-awardList',
@@ -354,8 +354,8 @@ export default {
       awardList: [],
       totalSumBTC: '', // btc资产
       BTC2CNYRate: '', // 转换汇率
-      coinName: '',
-      loading: false // 局部列表loading
+      coinName: '', // 币种名称
+      partLoading: false // 局部列表loading
     }
   },
   created () {
@@ -393,7 +393,8 @@ export default {
       } else {
         console.log(data)
         if (data.data.data.coinPrice) {
-          this.BTC2CNYRate = data.data.data.coinPrice
+          // this.BTC2CNYRate = data.data.data.coinPrice
+          this.BTC2CNYRate = getNestedData(data, 'data.data.coinPrice')
         }
       }
     },
@@ -421,18 +422,22 @@ export default {
       console.log(data)
       if (!(returnAjaxMsg(data, this, 0))) {
         // 接口失败清除局部loading
-        this.loading = false
+        this.partLoading = false
         return false
       } else {
         // 接口成功清除局部loading
-        this.loading = false
+        this.partLoading = false
         // 返回展示
-        this.extensionList = data.data.data.page.list
+        // this.extensionList = data.data.data.page.list
+        this.extensionList = getNestedData(data, 'data.data.page.list')
         console.log(this.extensionList)
-        this.totalPageForMyEntrust = data.data.data.page.pages - 0
-        this.totalPageMyNumber = data.data.data.page.total - 0
+        // this.totalPageForMyEntrust = data.data.data.page.pages - 0
+        this.totalPageForMyEntrust = getNestedData(data, 'data.data.page.pages') - 0
+        // this.totalPageMyNumber = data.data.data.page.total - 0
+        this.totalPageMyNumber = getNestedData(data, 'data.data.page.total') - 0
         // 已获得的佣金预估
-        this.totalSumBTC = data.data.data.account
+        // this.totalSumBTC = data.data.data.account
+        this.totalSumBTC = getNestedData(data, 'data.data.account')
         console.log(this.totalSumBTC)
       }
     },
@@ -451,16 +456,20 @@ export default {
       console.log(data)
       if (!returnAjaxMsg(data, this)) {
         // 接口失败清除局部loading
-        this.loading = false
+        this.partLoading = false
         return false
       } else {
         // 接口失败清除局部loading
-        this.loading = false
-        let responseData = data.data.data
+        this.partLoading = false
+        // let responseData = data.data.data
+        let responseData = getNestedData(data, 'data.data')
         // 返回展示
-        this.awardList = responseData.data.list
-        this.coinName = responseData.coinName
-        this.totalPageMyEntrust = responseData.data.pages - 0
+        // this.awardList = responseData.data.list
+        this.awardList = getNestedData(responseData, 'data.list')
+        // this.coinName = responseData.coinName
+        this.coinName = getNestedData(responseData, 'coinName')
+        // this.totalPageMyEntrust = responseData.data.pages - 0
+        this.totalPageMyEntrust = getNestedData(responseData, 'data.pages') - 0
       }
     },
     // 分页
@@ -497,7 +506,7 @@ export default {
       }
     },
     async getInverData () {
-      this.loading = true
+      this.partLoading = true
       console.log('invitation-promote')
       await this.getUserPromotionList()
       await this.getRecommendUserPromotion()

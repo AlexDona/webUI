@@ -37,10 +37,6 @@
         </span>
       </header>
       <div class="set-phone-content">
-        <!--<header class="phone-content-title">-->
-          <!--&lt;!&ndash;*请确认您的银行卡已开启短信通知功能&ndash;&gt;-->
-          <!--*{{ $t('M.user_security_text0') }}-->
-        <!--</header>-->
         <div class="phone-content-from">
           <!--绑定手机-->
           <el-form
@@ -275,7 +271,8 @@ import {
   returnAjaxMsg, // 接口返回信息
   sendPhoneOrEmailCodeAjax,
   validateNumForUserInput,
-  getSecurityCenter
+  getSecurityCenter,
+  getNestedData
 } from '../../../utils/commonFunc'
 import {
   bindPhoneAddress,
@@ -296,9 +293,8 @@ export default {
       errorMsg: '', // 错误信息提示
       bindingDataPhone: {
         bindingAreaCodeValue: '86',
-        bindingAreaCodeList: [],
         bindingNewPhoneAccounts: '', // 手机号
-        identifyCode: '1235', // 图片验证码
+        identifyCode: '', // 图片验证码
         userInputImageCode: '', // 用户输入的图片验证码
         bindingNewPhoneCode: '' // 新手机验证码
       },
@@ -310,12 +306,9 @@ export default {
       amendDataPhone: {
         newPhoneAccounts: '', // 手机号
         oldPhoneCode: '', // 旧手机验证码
-        defaultAreaCode: '',
-        areaCode: '', // 区号
         newPhoneCode: '', // 新手机验证码
         transactionPassword: '', // 交易密码
-        areaCodeValue: '86',
-        areaCodeList: []
+        areaCodeValue: '86' // 新手机国籍码
       },
       tieErrorShowStatusList: [
         '', // 旧短信验证码
@@ -737,12 +730,12 @@ export default {
      */
     getSecurityCenter () {
       // 整页loading
-      // this.fullscreenLoading = true
       getSecurityCenter(this, {}, data => {
         if (data) {
           // 接口成功清除loading
           this.fullscreenLoading = false
-          this.securityCenter = data.data.data
+          // this.securityCenter = data.data.data
+          this.securityCenter = getNestedData(data, 'data.data')
         }
       })
     },

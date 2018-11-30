@@ -39,9 +39,6 @@
         </span>
       </header>
       <div class="add-bank-content">
-        <!--<header class="bank-content-title">-->
-          <!--*请确认您的银行卡已开启短信通知功能-->
-        <!--</header>-->
         <div class="bank-content-from">
           <el-form
             :label-position="labelPosition"
@@ -52,7 +49,6 @@
               :label="$t('M.user_account_name')"
             >
               <span class="bank-content-name">
-                <!-- {{ userInfo.userInfo.realname }} -->
                 {{ innerUserInfo.realname }}
               </span>
             </el-form-item>
@@ -151,7 +147,8 @@ import CountDownButton from '../../Common/CountDownCommon'
 import {
   returnAjaxMsg, // 接口返回信息
   validateNumForUserInput,
-  getAccountPaymentTerm
+  getAccountPaymentTerm,
+  getNestedData
 } from '../../../utils/commonFunc'
 import {
   statusCardSettings,
@@ -194,7 +191,6 @@ export default {
     require('../../../../static/css/theme/night/Personal/AccountReceivableAccount/AddBankCardNight.css')
     getAccountPaymentTerm(this)
     this.paymentMethodInformation()
-    // console.log(this.getAccountPaymentTerm)
   },
   mounted () {},
   activited () {},
@@ -231,7 +227,6 @@ export default {
         let data
         let params = {
           token: this.userInfo.token,
-          // realname: this.userInfo.userInfo.realname, // 真实姓名
           realname: this.innerUserInfo.realname, // 真实姓名
           bankName: this.bankName, // 银行卡名称
           cardNo: this.bankCard, // 银行卡号
@@ -339,16 +334,17 @@ export default {
       } else {
         // 接口成功清除loading
         this.fullscreenLoading = false
-        let detailData = data.data.data
+        // let detailData = data.data.data
+        let detailData = getNestedData(data, 'data.data')
         // 返回状态展示
         this.paymentMethodList = detailData
         // 修改时带回银行卡名称
-        this.bankName = detailData.bankName
+        this.bankName = getNestedData(detailData, 'bankName')
         // 修改时带回银行卡号
-        this.bankCard = detailData.cardNo
+        this.bankCard = getNestedData(detailData, 'cardNo')
         // 修改时带回银行卡地址
-        this.branchAddress = detailData.address
-        this.id = detailData.id
+        this.branchAddress = getNestedData(detailData, 'address')
+        this.id = getNestedData(detailData, 'id')
         console.log(this.paymentMethodList)
       }
     },
