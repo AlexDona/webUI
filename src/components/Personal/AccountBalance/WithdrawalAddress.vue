@@ -27,7 +27,6 @@
               <el-select
                 v-model="currencyValue"
                 :no-data-text="$t('M.comm_no_data')"
-                @change="changeId"
               >
                 <el-option
                   :placeholder="$t('M.comm_please_choose')"
@@ -45,9 +44,9 @@
             >
               <input
                 class="form-input border-radius4 padding-left15"
-                v-model="mentionRemark"
+                v-model="withdrawalRemark"
                 @keydown="setErrorMsg(0, '')"
-                @blur="checkoutInputFormat(0, mentionRemark)"
+                @blur="checkoutInputFormat(0, withdrawalRemark)"
               />
               <!--错误提示-->
               <ErrorBox
@@ -61,9 +60,9 @@
             >
               <input
                 class="form-input border-radius4 padding-left15"
-                v-model="prepaidAddress"
+                v-model="withdrawalAddress"
                 @keydown="setErrorMsg(1, '')"
-                @blur="checkoutInputFormat(1, prepaidAddress)"
+                @blur="checkoutInputFormat(1, withdrawalAddress)"
               >
               <!--错误提示-->
               <ErrorBox
@@ -144,8 +143,8 @@
               <div
                 class="error-info"
               >
-                <span v-show="errorMsg1">
-                  {{ errorMsg1 }}
+                <span v-show="emptyErrorMsg">
+                  {{ emptyErrorMsg }}
                 </span>
               </div>
               <div
@@ -174,10 +173,10 @@
       </header>
       <div class="tab-list">
         <el-table
-          :data="gainAddressList"
+          :data="withdrawalAddressList"
           style="width: 100%;"
           :empty-text="$t('M.comm_no_data')"
-          v-loading="loading"
+          v-loading="partLoading"
           element-loading-background="rgba(0, 0, 0, 0.6)"
         >
           <!--币种-->
@@ -201,7 +200,7 @@
           <!--提币地址-->
           <el-table-column
             :label="$t('M.comm_mention_money') + $t('M.comm_site')"
-            width="350"
+            width="370"
           >
             <template slot-scope = "s">
               <div>{{ s.row.address }}</div>
@@ -228,7 +227,7 @@
       <!--分页-->
       <el-pagination
         background
-        v-show="activeName === 'current-entrust' && gainAddressList.length"
+        v-show="activeName === 'current-entrust' && withdrawalAddressList.length"
         layout="prev, pager, next"
         :page-count="totalPageForMyEntrust"
         @current-change="changeCurrentPage"
@@ -252,7 +251,8 @@ import {
   returnAjaxMsg,
   sendPhoneOrEmailCodeAjax,
   getSecurityCenter,
-  validateNumForUserInput
+  validateNumForUserInput,
+  getNestedData
 } from '../../../utils/commonFunc'
 import {mapState, createNamespacedHelpers} from 'vuex'
 const {mapMutations} = createNamespacedHelpers('user')
@@ -264,22 +264,20 @@ export default {
   // props,
   data () {
     return {
-      labelPosition: 'top',
+      labelPosition: 'top', // form表单label方向
+      // 错误信息提示
       errorShowStatusList: [
         '', // 备注
         '' // 提币地址
       ],
-      // errorMsg: '', // 错误信息提示
-      errorMsg1: '', // 错误信息提示
-      // 币种列表
-      currencyValue: '',
+      emptyErrorMsg: '', // 清空错误信息提示
+      currencyValue: '', // select币种
       securityCenter: {}, // 安全状态显示
-      currencyList: [],
-      mentionRemark: '', // 提现备注
-      prepaidAddress: '', // 提币地址
-      // 地址列表
-      gainAddressList: [],
-      operation: 'M.comm_delete',
+      currencyList: [], // select币种列表
+      withdrawalRemark: '', // 提现备注
+      withdrawalAddress: '', // 提币地址
+      withdrawalAddressList: [], // 提币地址列表
+      operation: 'M.comm_delete', // 删除
       activeName: 'current-entrust',
       currentPageForMyEntrust: 1, // 当前委托页码
       totalPageForMyEntrust: 1, // 当前委托总页数
@@ -289,9 +287,8 @@ export default {
       phoneCode: '', // 手机验证
       emailCode: '', // 邮箱验证
       googleCode: '', // 谷歌验证
-      // loadingCircle: {}, // 整页loading
-      fullscreenLoading: false,
-      loading: true // 局部列表loading
+      fullscreenLoading: false, // 整页loading
+      partLoading: true // 局部列表loading
     }
   },
   created () {
@@ -311,15 +308,15 @@ export default {
       'SET_USER_BUTTON_STATUS'
     ]),
     // 资产币种下拉
-    changeId (e) {
-      this.currencyList.forEach(item => {
-        if (e === item.id) {
-          this.currencyValue = e
-          console.log(item.currencyValue)
-          this.stateSubmitAddAddress(e)
-        }
-      })
-    },
+    // changeId (e) {
+    //   this.currencyList.forEach(item => {
+    //     if (e === item.id) {
+    //       this.currencyValue = e
+    //       console.log(item.currencyValue)
+    //       this.stateSubmitAddAddress(e)
+    //     }
+    //   })
+    // },
     reg () {
       let pets = ['http', 'https', 'www']
       console.log(pets.includes('http'))
@@ -364,14 +361,14 @@ export default {
     },
     // 清空内容信息
     emptyStatus () {
-      this.errorMsg1 = ''
+      this.emptyErrorMsg = ''
     },
     // 点击显示验证信息
     addAddress () {
       let goOnStatus = 0
       if (
-        this.checkoutInputFormat(0, this.mentionRemark) &&
-        this.checkoutInputFormat(1, this.prepaidAddress)
+        this.checkoutInputFormat(0, this.withdrawalRemark) &&
+        this.checkoutInputFormat(1, this.withdrawalAddress)
       ) {
         goOnStatus = 1
       } else {
@@ -387,7 +384,7 @@ export default {
       let data
       let param = {
         coinId: this.currencyValue, // 币种coinId
-        address: this.prepaidAddress // 充值地址
+        address: this.withdrawalAddress // 提币地址
       }
       // 整页loading
       this.fullscreenLoading = true
@@ -409,7 +406,8 @@ export default {
     async getSecurityCenter () {
       await getSecurityCenter(this, {}, data => {
         if (data) {
-          this.securityCenter = data.data.data
+          // this.securityCenter = data.data.data
+          this.securityCenter = getNestedData(data, 'data.data')
           this.mentionMoneyConfirm = true
         }
       })
@@ -422,16 +420,16 @@ export default {
     async stateSubmitAddAddress () {
       if (!this.phoneCode && !this.emailCode && !this.googleCode) {
         // 请输入验证码
-        this.errorMsg1 = this.$t('M.comm_please_enter') + this.$t('M.user_security_verify')
+        this.emptyErrorMsg = this.$t('M.comm_please_enter') + this.$t('M.user_security_verify')
         return false
       } else {
-        this.errorMsg1 = ''
+        this.emptyErrorMsg = ''
       }
       let data
       let param = {
         coinId: this.currencyValue, // 币种coinId
-        remark: this.mentionRemark, // 备注
-        address: this.prepaidAddress, // 充值地址
+        remark: this.withdrawalRemark, // 备注
+        address: this.withdrawalAddress, // 提币地址
         phoneCode: this.phoneCode, // 手机验证
         emailCode: this.emailCode, // 邮箱验证
         googleCode: this.googleCode // 谷歌验证
@@ -462,24 +460,24 @@ export default {
       let data = await inquireWithdrawalAddressList(params)
       // console.log(data)
       if (!(returnAjaxMsg(data, this, 0))) {
-        // 接口失败清除局部loading
-        this.loading = false
+        // 接口失败清除局部partLoading
+        this.partLoading = false
         return false
       } else {
-        // 接口成功清除局部loading
-        this.loading = false
+        // 接口成功清除局部partLoading
+        this.partLoading = false
         // 返回列表数据
-        let detailData = data.data.data
-        this.currencyList = detailData.canWithdrawPartnerCoinList
+        let detailData = getNestedData(data, 'data.data')
+        this.currencyList = getNestedData(detailData, 'canWithdrawPartnerCoinList')
         // 对币种名称进行赋值
-        this.currencyValue = detailData.canWithdrawPartnerCoinList[0].name
+        this.currencyValue = getNestedData(detailData, 'canWithdrawPartnerCoinList[0].name')
         // 对ID名称进行赋值
-        this.currencyValue = detailData.canWithdrawPartnerCoinList[0].coinId
+        this.currencyValue = getNestedData(detailData, 'canWithdrawPartnerCoinList[0].coinId')
         // 对币种名称列表进行赋值
-        this.gainAddressList = detailData.UserWithdrawAddressPage.list
-        this.totalPageForMyEntrust = detailData.UserWithdrawAddressPage.pages - 0
+        this.withdrawalAddressList = getNestedData(detailData, 'UserWithdrawAddressPage.list')
+        this.totalPageForMyEntrust = getNestedData(detailData, 'UserWithdrawAddressPage.pages') - 0
         console.log(this.currencyList)
-        console.log(this.gainAddressList)
+        console.log(this.withdrawalAddressList)
       }
     },
     // 删除提币地址
@@ -504,11 +502,11 @@ export default {
       data = await deleteUserWithdrawAddress(param)
       if (!(returnAjaxMsg(data, this, 1))) {
         // 接口失败清除局部loading
-        this.loading = false
+        this.partLoading = false
         return false
       } else {
         // 接口成功清除局部loading
-        this.loading = false
+        this.partLoading = false
         this.WithdrawalAddressList()
         this.stateEmptyData()
       }
@@ -516,8 +514,8 @@ export default {
     // 接口请求完成之后清空数据
     stateEmptyData () {
       this.dialogVisible = false
-      this.mentionRemark = ''
-      this.prepaidAddress = ''
+      this.withdrawalRemark = ''
+      this.withdrawalAddress = ''
       this.phoneCode = ''
       this.emailCode = ''
       this.googleCode = ''

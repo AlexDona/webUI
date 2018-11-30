@@ -37,10 +37,6 @@
         </span>
       </header>
       <div class="transaction-password-content">
-        <!--<header class="transaction-content-title">-->
-          <!--&lt;!&ndash;*请确认您的银行卡已开启短信通知功能&ndash;&gt;-->
-          <!--*{{ $t('M.user_security_text0') }}-->
-        <!--</header>-->
         <div class="transaction-content-from">
           <!--设置交易密码-->
           <el-form
@@ -239,7 +235,8 @@ import {
   returnAjaxMsg, // 接口返回信息
   sendPhoneOrEmailCodeAjax,
   validateNumForUserInput,
-  getSecurityCenter
+  getSecurityCenter,
+  getNestedData
 } from '../../../utils/commonFunc'
 import {
   setTransactionPassword,
@@ -268,7 +265,7 @@ export default {
         '', // 交易密码
         '' // 重复交易密码
       ],
-      securityCenter: {},
+      securityCenter: {}, // 安全信息设置
       // 修改交易密码
       modifyPassword: {
         transactionPassword: '', // 修改交易密码
@@ -299,9 +296,7 @@ export default {
     this.REFLASH_USER_INFO(this)
   },
   mounted () {},
-  activited () {
-    // console.log(this.refSecurityCenterStatus)
-  },
+  activited () {},
   update () {},
   beforeRouteUpdate () {},
   methods: {
@@ -623,8 +618,8 @@ export default {
       getSecurityCenter(this, {}, data => {
         if (data) {
           // 接口成功清除loading
-          // this.fullscreenLoading = false
-          this.securityCenter = data.data.data
+          // this.securityCenter = data.data.data
+          this.securityCenter = getNestedData(data, 'data.data')
         }
       })
     },

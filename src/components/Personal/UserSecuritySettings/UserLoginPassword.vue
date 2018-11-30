@@ -118,7 +118,6 @@ export default {
   },
   data () {
     return {
-      globalUserInformation: {}, // 个人信息
       originalLoginPassword: '', // 原登录密码
       newLoginPassword: '', // 新登录密码
       confirmLoginPassword: '', // 确认登录密码
@@ -128,8 +127,7 @@ export default {
         '', // 新登录密码
         '' // 确认登录密码
       ],
-      fullscreenLoading: false, // 整页loading
-      securityCenter: {}
+      fullscreenLoading: false // 整页loading
     }
   },
   created () {
@@ -139,8 +137,6 @@ export default {
     require('../../../../static/css/theme/day/Personal/UserSecuritySettings/UserLoginPasswordDay.css')
     // 黑色主题样式
     require('../../../../static/css/theme/night/Personal/UserSecuritySettings/UserLoginPasswordNight.css')
-    // 获取全局个人信息
-    // this.globalUserInformation = this.userInfo.data.user
   },
   mounted () {},
   activited () {},

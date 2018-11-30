@@ -20,14 +20,14 @@
             <!--账号安全级别：-->
             {{ $t('M.user_security_level') }}：
             <span
-              v-if="person === 40"
+              v-if="securityLevel === 40"
               class="level"
             >
               <!--低-->
               {{ $t('M.user_security_low') }}
             </span>
             <span
-              v-if="person === 80 || person === 60"
+              v-if="securityLevel === 80 || securityLevel === 60"
               class="level"
             >
               <!--中-->
@@ -35,7 +35,7 @@
             </span>
             <span
               class="level"
-              v-if="person === 100"
+              v-if="securityLevel === 100"
             >
               <!--高-->
               {{ $t('M.user_security_tall') }}
@@ -46,7 +46,7 @@
               <el-progress
                 :text-inside="false"
                 :stroke-width="5"
-                :percentage="person"
+                :percentage="securityLevel"
               >
               </el-progress>
             </span>
@@ -411,7 +411,7 @@
             <div
               class = "error-msg font-size12"
             >
-              <span v-show = "errorMsg1">{{ errorMsg1 }}</span>
+              <span v-show = "openErrorMsg">{{ openErrorMsg }}</span>
             </div>
             <div
               slot="footer"
@@ -489,7 +489,7 @@
             <div
               class = "error-msg font-size12"
             >
-              <span v-show = "errorMsg">{{ errorMsg }}</span>
+              <span v-show = "closeErrorMsg">{{ closeErrorMsg }}</span>
             </div>
             <div
               slot="footer"
@@ -639,7 +639,8 @@ import {
 import {
   returnAjaxMsg,
   sendPhoneOrEmailCodeAjax,
-  getSecurityCenter
+  getSecurityCenter,
+  getNestedData
 } from '../../../utils/commonFunc'
 import {timeFilter} from '../../../utils/index'
 import {mapState, createNamespacedHelpers} from 'vuex'
@@ -652,14 +653,13 @@ export default {
   // props,
   data () {
     return {
-      labelPosition: 'top',
+      labelPosition: 'top', // form表单label位置
       activeName: 'logon-record', // 默认显示第一个
-      getStatusUserInfo: {}, // 个人信息
       // 登录记录
       logonRecord: [],
       logonRecordPage: 1, // 当前委托页码
       totalPageMyLogonRecordPage: 1, // 当前委托总页数
-      // 安全设置
+      // 安全设置记录
       securityRecord: [],
       securityRecordPage: 1, // 当前委托页码
       totalPageMySecurityRecordPage: 1, // 当前委托总页数
@@ -669,15 +669,15 @@ export default {
       openEmail: false, // 邮箱开启关闭验证
       openPhone: false, // 手机开启关闭验证
       openGoogle: false, // 谷歌开启关闭验证
-      securityCenter: {},
+      securityCenter: {}, // 安全信息状态
       emailCode: '', // 邮箱验证
       phoneCode: '', // 手机验证
       googleCode: '', // 谷歌验证
       activeType: '', // 当前值
-      state: '', // 开启关闭
-      errorMsg: '', // 关闭错误提示
-      errorMsg1: '', // 开启错误提示
-      person: '',
+      state: '', // 开启关闭状态
+      closeErrorMsg: '', // 关闭错误提示close
+      openErrorMsg: '', // 开启错误提示open
+      securityLevel: '', // 账号安全级别
       fullscreenLoading: false // 整页loading
     }
   },
@@ -735,22 +735,28 @@ export default {
         if (data) {
           // 接口成功清除loading
           this.fullscreenLoading = false
-          this.securityCenter = data.data.data
-          this.person = data.data.data.person
+          // this.securityCenter = data.data.data
+          this.securityCenter = getNestedData(data, 'data.data')
+          // this.securityLevel = data.data.data.person
+          this.securityLevel = getNestedData(data, 'data.data.person')
           switch (entrustType) {
             case 'logon-record':
               // 登陆记录列表
-              this.logonRecord = data.data.data.loginLog.list
+              // this.logonRecord = data.data.data.loginLog.list
+              this.logonRecord = getNestedData(data, 'data.data.loginLog.list')
               // 登陆记录分页
-              this.totalPageMyLogonRecordPage = data.data.data.loginLog.pages - 0
+              // this.totalPageMyLogonRecordPage = data.data.data.loginLog.pages - 0
+              this.totalPageMyLogonRecordPage = getNestedData(data, 'data.data.loginLog.pages') - 0
               break
             case 'security-record':
               // 安全设置列表
-              this.securityRecord = data.data.data.setLog.list
+              // this.securityRecord = data.data.data.setLog.list
+              this.securityRecord = getNestedData(data, 'data.data.setLog.list')
               console.log('安全设置列表')
               console.log(this.securityRecord)
               // 安全设置分页
-              this.totalPageMySecurityRecordPage = data.data.data.setLog.pages - 0
+              // this.totalPageMySecurityRecordPage = data.data.data.setLog.pages - 0
+              this.totalPageMySecurityRecordPage = getNestedData(data, 'data.data.setLog.pages') - 0
               break
           }
         }
@@ -858,7 +864,7 @@ export default {
     },
     // 设置错误信息
     setErrorMsg (index, msg) {
-      this.errorMsg = msg
+      this.closeErrorMsg = msg
     },
     // 关闭开启验证状态事件
     showStatusVerificationClose (paymentType, safeState) {
@@ -964,22 +970,22 @@ export default {
         if (!this.phoneCode && !this.emailCode && !this.googleCode) {
           console.log(1)
           // 请输入验证码
-          this.errorMsg = this.$t('M.user_please_input12')
+          this.closeErrorMsg = this.$t('M.user_please_input12')
           return false
         } else {
-          this.errorMsg = ''
+          this.closeErrorMsg = ''
         }
       } else if (state === 'disable') {
         if (this.securityCenter.isMailEnable && !this.emailCode) {
-          this.errorMsg1 = this.$t('M.user_please_input12')
+          this.openErrorMsg = this.$t('M.user_please_input12')
           return false
         }
         if (this.securityCenter.isPhoneEnable && !this.phoneCode) {
-          this.errorMsg1 = this.$t('M.user_please_input12')
+          this.openErrorMsg = this.$t('M.user_please_input12')
           return false
         }
         if (this.securityCenter.isGoogleEnable && !this.googleCode) {
-          this.errorMsg1 = this.$t('M.user_please_input12')
+          this.openErrorMsg = this.$t('M.user_please_input12')
           return false
         }
       }
@@ -1046,10 +1052,10 @@ export default {
     },
     // 获取焦点清空数据
     handleinput () {
-      this.errorMsg = ''
+      this.closeErrorMsg = ''
     },
     handleinput1 () {
-      this.errorMsg1 = ''
+      this.openErrorMsg = ''
     }
   },
   filter: {},

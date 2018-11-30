@@ -193,7 +193,8 @@ import ErrorBox from '../../User/ErrorBox'
 import {
   returnAjaxMsg,
   validateNumForUserInput, // 用户输入验证
-  getSecurityCenter
+  getSecurityCenter,
+  getNestedData
 } from '../../../utils/commonFunc'
 import {
   bindGoogleAddressPage,
@@ -217,7 +218,6 @@ export default {
       googleImagesAndroid: require('../../../assets/user/goole_Android.png'), // 谷歌验证码-安卓
       googleImagesIOS: require('../../../assets/user/goole_IOS.png'), // 谷歌验证码-IOS
       securityCenter: {}, // 个人信息
-      errorMsg: '', // 错误信息提示
       googleAccount: '', // 谷歌账号
       googleTheSecretKey: '', // 谷歌秘钥
       googleTheSecretUrl: '', // 二维码
@@ -289,11 +289,15 @@ export default {
       } else {
         // 接口成功清除loading
         this.fullscreenLoading = false
-        this.googleUserInformation = data.data.data
-        this.googleAccount = data.data.data.googleAccount
-        this.googleTheSecretKey = data.data.data.googleSecret
+        // this.googleUserInformation = data.data.data
+        this.googleUserInformation = getNestedData(data, 'data.data')
+        // this.googleAccount = data.data.data.googleAccount
+        this.googleAccount = getNestedData(data, 'data.data.googleAccount')
+        // this.googleTheSecretKey = data.data.data.googleSecret
+        this.googleTheSecretKey = getNestedData(data, 'data.data.googleSecret')
         // URI 进行编码
-        this.googleTheSecretUrl = encodeURI(data.data.data.url)
+        // this.googleTheSecretUrl = encodeURI(data.data.data.url)
+        this.googleTheSecretUrl = encodeURI(getNestedData(data, 'data.data.url'))
         console.log(this.googleTheSecretUrl)
       }
     },
@@ -398,7 +402,8 @@ export default {
         if (data) {
           // 接口成功清除loading
           this.fullscreenLoading = false
-          this.securityCenter = data.data.data
+          // this.securityCenter = data.data.data
+          this.securityCenter = getNestedData(data, 'data.data')
         }
       })
     },

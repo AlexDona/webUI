@@ -19,12 +19,10 @@
                 {{ $t('M.comm_hello') }}
               </span>
               <span class="color">
-                <!-- {{ userInfo.userInfo.userName }} -->
                 {{ innerUserInfo.userName }}
               </span>
             </p>
             <span class="display-inline-block margin-top9 text-color">
-              <!-- UID： {{ userInfo.userInfo.showId }} -->
               UID： {{ innerUserInfo.showId }}
             </span>
           </div>
@@ -32,10 +30,6 @@
         <div class="info float-left flex1">
           <p class="info-top">
             <!--未实名-->
-            <!-- <span
-              v-if="!userInfo.userInfo.realname"
-              class="icon-user-info info-right display-inline-block text-align-c"
-            > -->
             <span
               v-if="!innerUserInfo.realname"
               class="icon-user-info info-right display-inline-block text-align-c"
@@ -56,10 +50,6 @@
               />
             </span>
             <!--未绑定邮箱-->
-            <!-- <span
-              v-if="!userInfo.userInfo.email"
-              class="icon-user-info info-right display-inline-block text-align-c"
-            > -->
             <span
               v-if="!innerUserInfo.email"
               class="icon-user-info info-right display-inline-block text-align-c"
@@ -80,10 +70,6 @@
               />
             </span>
             <!--未绑定绑定手机-->
-            <!-- <span
-              v-if="userInfo.userInfo.phoneEnable === 'disable' || userInfo.userInfo.phoneEnable === ''"
-              class="icon-user-info info-right display-inline-block text-align-c"
-            > -->
             <span
               v-if="innerUserInfo.phoneEnable === 'disable' || innerUserInfo.phoneEnable === ''"
               class="icon-user-info info-right display-inline-block text-align-c"
@@ -104,10 +90,6 @@
               />
             </span>
             <!--未绑定谷歌-->
-            <!-- <span
-              v-if="userInfo.userInfo.googleEnable === 'disable' || userInfo.userInfo.googleEnable === ''"
-              class="icon-user-info display-inline-block text-align-c"
-            > -->
             <span
               v-if="innerUserInfo.googleEnable === 'disable' || innerUserInfo.googleEnable === ''"
               class="icon-user-info display-inline-block text-align-c"
@@ -135,10 +117,6 @@
             </span>
             <p class="info-picture margin-left10 float-left">
               <img :src="vipShowPictureSrc">
-              <!-- <span
-                v-if="!userInfo.userInfo.level"
-                class="info-centre-right font-size12"
-              > -->
               <span
                 v-if="!innerUserInfo.level"
                 class="info-centre-right font-size12"
@@ -213,7 +191,8 @@ import {
   currencyTransform
 } from '../../../utils/api/personal'
 import {
-  returnAjaxMsg
+  returnAjaxMsg,
+  getNestedData
 } from '../../../utils/commonFunc'
 // 字体图标
 import IconFontCommon from '../../Common/IconFontCommon'
@@ -260,7 +239,9 @@ export default {
       } else {
         console.log(data)
         if (data.data.data.coinPrice) {
-          this.BTC2CNYRate = data.data.data.coinPrice
+          // this.BTC2CNYRate = data.data.data.coinPrice
+          // 获取汇率
+          this.BTC2CNYRate = getNestedData(data, 'data.data.coinPrice')
         }
       }
     },
@@ -283,7 +264,8 @@ export default {
         return false
       } else {
         // 返回数据
-        this.totalSumBTC = data.data.data.totalSum
+        // this.totalSumBTC = data.data.data.totalSum
+        this.totalSumBTC = getNestedData(data, 'data.data.totalSum')
         console.log(this.totalSumBTC)
       }
     },
@@ -299,7 +281,8 @@ export default {
         return false
       } else {
         // 返回列表数据
-        this.userInfoRefresh = data.data.data.userInfo
+        // this.userInfoRefresh = data.data.data.userInfo
+        this.userInfoRefresh = getNestedData(data, 'data.data.userInfo')
       }
     }
   },
