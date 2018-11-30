@@ -496,99 +496,118 @@ export default{
 <style scoped lang="scss">
   @import "../../../static/css/scss/index.scss";
   @import "../../../static/css/scss/Home/MarketListHome.scss";
+
   .market-list-box{
     width:100%;
-    overflow: hidden;
     min-height:876px;
+    overflow: hidden;
+
     >.loading-box{
-      z-index: 999;
       position: absolute;
-      width:100%;
-      background-color: rgba(255,255,255,0.2);
-      left:0;
+      z-index: 999;
       top:0;
+      left:0;
+      width:100%;
+      background-color: rgba(255,255,255,.2);
     }
+
     /*表头*/
     .inner-box{
+      position: relative;
       width:1130px;
       margin: 78px auto;
-      position: relative;
+
       >.search-box{
         position: absolute;
         top:8px;
         right:0;
         width:250px;
         height:31px;
-        overflow: hidden;
         border:1px solid $mainColor;
+        overflow: hidden;
       }
+
       &:before{
-        content:'';
+        position: absolute;
+        top:9px;
+        right:0;
         width:70px;
         height:30px;
         background-color: $mainColor;
-        position: absolute;
-        right:0;
-        top:9px;
+        content:'';
+
         /*z-index: 1;*/
       }
+
       &:after{
-        content:'';
-        width:0px;
-        height:0px;
         position: absolute;
-        right:69px;
-        top:14px;
         z-index: 1;
+        top:14px;
+        right:69px;
+        width:0;
+        height:0;
         border:10px solid transparent;
+        content:'';
         border-right:10px solid $mainColor;
       }
+
       /*列表主要内容*/
       .tab-content{
+        /*min-height:1255px;*/
+
+        /*background-color: darkolivegreen;*/
+        position: relative;
+
         &.tab-height{
           /*height:1320px;*/
         }
-        /*min-height:1255px;*/
-        /*background-color: darkolivegreen;*/
-        position: relative;
+
         /*单个交易区*/
         >.tab-item{
           >.inner-item-box{
             margin-bottom:20px;
+            overflow: hidden;
+
             &.max-height {
               max-height:560px;
             }
+
             &.force-height{
               height:560px !important;
             }
-            overflow: hidden;
           }
         }
+
         >.more-box{
           text-align: center;
+
           >.icon{
-            color:#273C69;
             margin-bottom:20px;
+            color:#273c69;
           }
+
           >.el-button{
-            background-color: #305794;
             border:none;
-            color:#fff;
             font-size: 16px;
+            color:#fff;
+            background-color: #305794;
           }
         }
       }
     }
+
     &.night{
-      background-color: $mainNightBgColor;
       color:$nightFontColor;
+      background-color: $mainNightBgColor;
+
       >.search-box{
 
       }
     }
+
     &.day{
-      background-color: $dayBgColor;
       color:$dayFontColor;
+      background-color: $dayBgColor;
     }
   }
 </style>
@@ -596,26 +615,29 @@ export default{
 .market-list-box.home {
   .el-tabs__nav-scroll{
     height:46px;
+    background-image:url(../../assets/develop/tab-bg.png);
+    background-position: center center;
     -webkit-background-size: 1130px 46px;
     background-size: 1130px 46px;
-    background-position: center center;
-    background-image:url(../../assets/develop/tab-bg.png);
   }
+
   .el-input__inner{
-    background-color: transparent;
-    outline:none;
-    border:none;
-    border-radius: 0;
     width:250px;
     height:30px;
+    border:none;
+    border-radius: 0;
+    outline:none;
+    background-color: transparent;
   }
+
   .el-input__icon{
     position: absolute;
-    color:#fff;
-    font-size: 22px;
-    right:14px;
     top:-4px;
+    right:14px;
+    font-size: 22px;
+    color:#fff;
   }
+
   .el-tabs__nav-wrap::after,
   .el-tabs__active-bar{
     height:0;
@@ -624,12 +646,13 @@ export default{
   /*tab栏每一项*/
   .el-tabs__item{
     height:35px;
-    line-height:35px;
     padding:0 30px !important;
     margin:6px auto;
-    transition: color 0s;
     font-size: 16px;
+    line-height:35px;
+    transition: color 0s;
   }
+
   .el-tabs__item.is-active{
     border:none;
     color:#fff;
@@ -637,53 +660,67 @@ export default{
     -webkit-background-size: 100% 100%;
     background-size: 100% 100%;
   }
+
   .ivu-tabs .ivu-tabs-tabpane{
     margin-top:30px;
   }
+
   .ivu-btn-primary{
     background-color: transparent;
   }
+
   .el-table--enable-row-transition .el-table__body td{
-    padding:0;
     box-sizing: border-box;
     height:49px;
+    padding:0;
   }
+
   .el-table  th{
-    padding:0 0 0 14px;
     box-sizing: border-box;
     height:38px;
+    padding:0 0 0 14px;
   }
+
   .tab-content {
     visibility: inherit !important;
   }
+
   .el-table .cell,
   .el-table th div{
     padding:0;
   }
+
   .ivu-table-large td{
-    height: 50px;
     box-sizing: border-box;
+    height: 50px;
   }
+
   .ivu-table-body{
     width:956px;
     height:530px !important;
   }
+
   .ivu-table-body>table{
     width:938px !important;
     overflow: hidden;
   }
+
   .ivu-table-header>table{
     width:950px !important;
   }
+
   .ivu-table table{
     table-layout: inherit;
   }
+
   .ivu-table th:first-of-type>.ivu-table-cell{
     width:98px;
   }
+
   .ivu-table th:nth-of-type(2)>.ivu-table-cell{
     width:132px;
   }
+
   .ivu-table th:nth-of-type(3)>.ivu-table-cell{
     width:112px;
   }
@@ -691,56 +728,68 @@ export default{
   .ivu-table th:nth-of-type(4)>.ivu-table-cell{
     width:112px;
   }
+
   .ivu-table th:nth-of-type(5)>.ivu-table-cell{
     width:88px;
   }
+
   .ivu-table th:nth-of-type(6)>.ivu-table-cell{
     width:52px;
   }
+
   .ivu-table th:nth-of-type(7)>.ivu-table-cell{
     width:92px;
   }
+
   .ivu-table th:nth-of-type(8)>.ivu-table-cell{
     width:36px;
   }
+
   .el-button.more-btn{
-    color:#fff;
     width:115px;
     height:35px;
-    line-height:35px;
     padding:0;
     border-radius: 10px;
+    line-height:35px;
+    color:#fff;
   }
+
   .el-button,
   .ivu-table,
   .ivu-table th,
   .ivu-table td{
     background-color: transparent;
   }
+
   .ivu-table-wrapper{
-    border:none;
-    right:-4px;
     bottom:-2px;
-    border-top:1px solid #566AD4;
+    right:-4px;
     box-sizing: border-box;
+    border:none;
+    border-top:1px solid #566ad4;
   }
+
   .el-table th{
     border-top:1px solid #2f3a8c;
   }
+
   .el-table .sort-caret{
     border-width: 4px;
   }
+
   .el-table .sort-caret.ascending{
     top:8px;
   }
+
   .el-table .sort-caret.descending{
     bottom:8px;
   }
+
   /*交易对颜色*/
   .el-table .sellname,
   .el-table .area
   {
     color:#646464;
   }
-  }
+}
 </style>

@@ -226,6 +226,7 @@ export default {
 .financeline-box{
   width: 1000px;
   margin:80px auto;
+
   >.finance-line{
     width: 100%;
     height: 450px;

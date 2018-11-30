@@ -638,92 +638,111 @@ export default{
 }
 </script>
 <style scoped lang="scss" type="text/scss">
-  @import "../../../static/css/scss/index";
+@import "../../../static/css/scss/index";
+
 .nav-box{
   position: fixed;
   z-index: 2008;
+  box-sizing: border-box;
   width:100%;
   min-width:1100px;
-  box-sizing: border-box;
   transition: all .5s;
+
   >.inner-box{
     height:100%;
+
     >.top{
+      display:flex;
       height:66px;
       line-height: 66px;
-      display:flex;
-      transition: all 0.5s;
+      transition: all .5s;
+
       >.left{
-        flex:2;
         position: relative;
         z-index: 2;
+        flex:2;
+
         >.nav-list{
           height:100%;
+
           >.nav-item{
-            text-align: center;
             display: inline-block;
-            padding:0 2%;
             height:100%;
+            padding:0 2%;
+            text-align: center;
             vertical-align: top;
             transition: all .5s;
+
             &:first-of-type{
               padding-left:0;
             }
+
             /*子导航list*/
             >.sub-nav-list{
+              position: absolute;
+              box-sizing: border-box;
               width:100%;
               height:36px;
               line-height:36px;
-              background-color: $nightSubNavBgColor;
-              box-sizing: border-box;
-              position: absolute;
               text-align: left;
+              background-color: $nightSubNavBgColor;
+
               &:before{
                 position: absolute;
-                content:'';
+                top:-16px;
+                left:46px;
                 width:0;
                 height:0;
                 border:8px solid transparent;
                 border-bottom-color:$nightSubNavBgColor;
-                top:-16px;
-                left:46px;
+                content:'';
               }
+
               /*otc子导航*/
               &.otc{
                 left:236px;
               }
+
               /*活动中心子导航*/
               &.activity-center{
                 left:458px;
               }
+
               >.sub-nav-item{
                 display: inline-block;
                 height:100%;
                 padding:0 25px;
+
                 &:hover{
                   background-color: #21243a;
                 }
+
                 >a{
-                  color:#8494A6;
+                  color:#8494a6;
                 }
               }
             }
+
             &:hover{
-              background-color: #1B2136;
+              background-color: #1b2136;
+
               >a{
                 color:$mainColor;
               }
             }
+
             >a{
-              color:$headerNavFontColor;
               display: inline-block;
               width: 100%;
               height: 100%;
+              color:$headerNavFontColor;
             }
+
             >.logo{
               display:inline-block;
-              height:66px;
               width:100px;
+              height:66px;
+
               >.img{
                 width:100%;
                 vertical-align: middle;
@@ -732,62 +751,74 @@ export default{
           }
         }
       }
+
       >.right{
-        color:#fff;
         flex:1;
+        color:#fff;
+
         >.ul-list{
           height:100%;
           text-align: right;
+
           >.li-split{
+            display:inline-block;
             width:1px;
             height:20px;
-            background-color: #4a5260;
-            display:inline-block;
             vertical-align: middle;
+            background-color: #4a5260;
           }
+
           >.li-item{
             display:inline-block;
-            padding:0 1%;
+
+            /*padding:0 1%;*/
+
             /*用户登陆后鼠标悬浮出现个人中心效果*/
             .login{
-              display: inline-block;
               position: relative;
+              display: inline-block;
+
               >.username{
                 color:$mainColor;
               }
+
               >.login-info{
-                width: 210px;
-                height: 0;
-                background-color: rgba(10, 27, 47, 1);
                 position: absolute;
+                z-index: 2;
                 top: 66px;
                 right: -100px;
-                overflow: hidden;
-                z-index: 2;
-                text-align: center;
-                padding: 0px 25px;
                 box-sizing: border-box;
+                width: 210px;
+                height: 0;
+                padding: 0 25px;
+                overflow: hidden;
+                text-align: center;
+                background-color: rgba(10, 27, 47, 1);
+
                 >.sub-nav-user{
                   >.nav-vip{
+                    margin-top: 16px;
                     // height: 50px;
                     // line-height: 50px;
                     line-height: 20px;
-                    margin-top: 16px;
                   }
+
                   >.nav-button{
                     width: 100%;
                     height: 30px;
+                    border: 1px solid rgba(0, 121, 254, 1);
                     border-radius: 5px;
                     color: #ccc;
-                    border: 1px solid rgba(0, 121, 254, 1);
                     cursor: pointer;
                   }
                 }
+
                 >.personal-user {
                   height: 40px;
                   line-height: 40px;
                   text-align: left;
-                    >li{
+
+                  >li{
                     &:hover {
                       color: rgba(0, 121, 254, 1);
                       cursor: pointer;
@@ -795,70 +826,84 @@ export default{
                   }
                 }
               }
+
               &:hover .login-info{
                 height: 450px;
-                transition: 0.5s;
+                transition: .5s;
               }
             }
+
             >a{
-              transition: all 1s;
-              color:#fff;
               padding:5px 10px;
+              color:#fff;
+              transition: all 1s;
+
               &:hover{
                 background-color: $mainColor;
               }
             }
+
             &.setting-li{
               padding:0;
             }
+
             /*设置*/
             .setting{
+              padding:0;
+              font-size: 20px;
               color:#fff;
               cursor:pointer;
-              font-size: 20px;
-              padding:0;
             }
+
             /*语言选择 dl*/
             >.lang-box{
-              transition: all 1s;
               position: relative;
               text-align: left;
+              transition: all 1s;
               cursor: pointer;
+
               /*当前语言 dt*/
               >.lang-selected{
-                box-sizing: border-box;
-                height: 30px;
-                line-height: 0px;
-                padding: 10px 12px;
                 display: inline-block;
+                box-sizing: border-box;
                 width:100%;
+                height: 30px;
+                padding: 10px 12px;
+                line-height: 0;
+
                 >.icon{
                   margin-right:5px;
                 }
+
                 >.language-text{
                   display:inline-block;
+
                   /*width:60px;*/
                 }
               }
+
               >.lang-list{
-                background-color: #2A3242;
                 position: absolute;
                 z-index: 2;
-                left:0;
                 top:64px;
+                left:0;
+                background-color: #2a3242;
+
                 >.lang-item{
-                  transition: all 1s;
-                  color:#fff;
                   display:block;
+                  width:100%;
                   height:30px;
+                  padding:0 20px 0 10px;
                   line-height:30px;
                   text-align: left;
-                  padding:0 20px 0 10px;
+                  color:#fff;
+                  transition: all 1s;
                   cursor: pointer;
-                  width:100%;
+
                   &:hover{
                     background-color: $mainColor;
                   }
+
                   >.icon{
                     margin-right:5px;
                   }
@@ -869,16 +914,19 @@ export default{
         }
       }
     }
+
     >.bottom{
-      background-color: $nightSubNavBgColor;
-      /*background-color: #f40;*/
-      height:36px;
       position: absolute;
+      z-index: 1;
       top:66px;
       width:100%;
-      z-index: 1;
+
+      /*background-color: #f40;*/
+      height:36px;
+      background-color: $nightSubNavBgColor;
     }
   }
+
   &.day{
     >.inner-box{
       >.top{
@@ -887,27 +935,35 @@ export default{
             >.nav-item{
               &:first-of-type{
               }
+
               /*子导航list*/
               >.sub-nav-list{
                 &:before{
                 }
+
                 /*otc子导航*/
                 &.otc{
                 }
+
                 /*活动中心子导航*/
                 &.activity-center{
                 }
+
                 >.sub-nav-item{
                   &:hover{
                   }
+
                   >a{
                   }
                 }
               }
+
               &:hover{
               }
+
               >a{
               }
+
               >.logo{
                 >.img{
                 }
@@ -915,22 +971,27 @@ export default{
             }
           }
         }
+
         >.right{
           >.ul-list{
             >.li-split{
             }
+
             >.li-item{
               /*用户登陆后鼠标悬浮出现个人中心效果*/
               .login{
                 >.username{
                 }
+
                 >.login-info{
                   >.sub-nav-user{
                     >.nav-vip{
                     }
+
                     >.nav-button{
                     }
                   }
+
                   >.personal-user {
                     >li{
                       &:hover {
@@ -938,34 +999,44 @@ export default{
                     }
                   }
                 }
+
                 &:hover .login-info{
                 }
               }
+
               >a{
                 &:hover{
                 }
               }
+
               &.setting-li{
               }
+
               /*设置*/
               .setting{
               }
+
               /*语言选择 dl*/
               >.lang-box{
                 /*当前语言 dt*/
                 >.lang-selected{
                   >.icon{
                   }
+
                   >.language-text{
                   }
                 }
+
                 >.lang-list{
                   background-color: #fff;
+
                   >.lang-item{
                     color: #7d90ac;
+
                     &:hover{
                       color:#fff;
                     }
+
                     >.icon{
                     }
                   }
@@ -975,6 +1046,7 @@ export default{
           }
         }
       }
+
       >.bottom{
       }
     }

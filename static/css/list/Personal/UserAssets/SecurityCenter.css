@@ -1,112 +1,142 @@
-/*覆盖Elenent样式*/
-/*表格样式修改*/
-.security-center.personal .el-table td{
+/* 覆盖Elenent样式 */
+
+/* 表格样式修改 */
+.security-center.personal .el-table td {
   padding: 7px 0;
 }
-.security-center.personal .el-table::before{
+
+.security-center.personal .el-table::before {
   height: 0;
 }
-/*tabs切换表头padding-left*/
-.security-center.personal .el-tabs__header{
+
+/* tabs切换表头padding-left */
+.security-center.personal .el-tabs__header {
   margin: 0;
 }
-.security-center.personal .el-tabs__nav{
+
+.security-center.personal .el-tabs__nav {
   padding-left: 15px;
 }
-.security-center.personal .el-tabs__item{
-  padding: 0;
+
+.security-center.personal .el-tabs__item {
   width: 105px;
-  text-align: center;
+  padding: 0;
   border-left: 4px solid transparent !important;
+  text-align: center;
   background-color: transparent !important;
 }
-.security-center.personal .el-table th>.cell {
+
+.security-center.personal .el-table th > .cell {
   font-size: 12px;
 }
+
 .security-center.personal .el-table td div {
   font-size: 12px;
 }
+
 .security-center.personal .el-progress {
   width: 170px;
 }
+
 .security-center.personal .el-dialog {
   width: 310px;
   border-radius: 7px;
 }
+
 .security-center.personal .el-dialog__header {
   height: 44px;
-  padding: 10px 20px 10px;
+  padding: 10px 20px;
   border-radius: 7px 7px 0 0;
 }
+
 .security-center.personal .el-dialog__title {
   font-size: 18px;
 }
+
 .security-center.personal .el-dialog__headerbtn {
   top: 13px;
 }
+
 .security-center.personal .el-form-item {
   margin-bottom: 10px;
 }
+
 .security-center.personal .el-form--label-top .el-form-item__label {
   height: 25px;
   line-height: 25px;
 }
+
 .security-center.personal .el-dialog__body {
   padding: 10px 20px 0;
 }
+
 .security-center.personal .el-input-group__append {
   padding: 0 5px;
 }
+
 .security-center.personal .el-input__inner {
   width: 180px;
   height: 36px;
-  border-radius: 2px 0 0px 2px;
+  border-radius: 2px 0 0 2px;
 }
+
 .security-center.personal .el-input-group {
   width: 220px;
   height: 36px;
   border-radius: 4px;
 }
+
 .security-center.personal .el-tabs__item {
   height: 45px;
 }
+
 .security-center.personal .el-form--label-top .el-form-item__label {
   padding: 0;
 }
+
 /* 任增加 */
 .security-center.personal .el-tabs--top .el-tabs__item.is-top:nth-child(2) {
   margin-right: 20px;
 }
+
 .security-center.personal .el-dialog__footer {
   text-align: left;
 }
-.security-center.personal .el-table th:nth-child(1)>.cell{
+
+.security-center.personal .el-table th:nth-child(1) > .cell {
   padding-left: 20px;
 }
+
 .security-center.personal .el-table td:nth-child(1) div {
   padding-left: 10px;
 }
-.security-center.personal .el-table th:nth-child(3)>.cell{
-  text-align: right;
+
+.security-center.personal .el-table th:nth-child(3) > .cell {
   padding-right: 45px;
-}
-.security-center.personal .el-table th:nth-child(2)>.cell {
   text-align: right;
+}
+
+.security-center.personal .el-table th:nth-child(2) > .cell {
   padding-right: 75px;
-}
-.security-center.personal .el-table td:nth-child(3) div{
   text-align: right;
-  padding-right: 13px;
 }
+
+.security-center.personal .el-table td:nth-child(3) div {
+  padding-right: 13px;
+  text-align: right;
+}
+
 .security-center.personal .el-table td:nth-child(2) div {
-  text-align: right;
   padding-right: 35px;
-}
-.security-center.personal .el-table th:nth-child(4)>.cell {
   text-align: right;
+}
+
+.security-center.personal .el-table th:nth-child(4) > .cell {
   padding-right: 25px;
-}
-.security-center.personal .el-table td:nth-child(4) div{
   text-align: right;
+}
+
+.security-center.personal .el-table td:nth-child(4) div {
   padding-right: 13px;
+  text-align: right;
 }

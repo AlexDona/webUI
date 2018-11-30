@@ -1,25 +1,31 @@
-/*个人中心（黑色主题）*/
+/* 个人中心（黑色主题） */
 .account-assets.personal.night .el-button {
+  color: #3e79d6;
   background-color: transparent;
-  color: #3E79D6;
 }
+
 .account-assets.personal.night .el-input__inner {
-  background-color: #2D3651;
   color: #fff;
+  background-color: #2d3651;
 }
+
 .account-assets.personal.night .el-dialog {
-  background-color: #28334A;
+  background-color: #28334a;
 }
+
 .account-assets.personal.night .el-dialog__header {
-  background-color: #20293C;
+  background-color: #20293c;
 }
+
 .account-assets.personal.night .el-dialog__title {
   color: #fff;
 }
-.account-assets.personal.night  .el-button {
-  background: linear-gradient(0deg, #2b396e, #2a5082);
+
+.account-assets.personal.night .el-button {
   color: #fff;
+  background: linear-gradient(0deg, #2b396e, #2a5082);
 }
+
 .account-assets.personal .el-form-item__label {
-  color: rgba(255, 255, 255, 0.7);
+  color: rgba(255, 255, 255, .7);
 }

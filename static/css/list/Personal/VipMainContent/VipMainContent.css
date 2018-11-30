@@ -1,53 +1,65 @@
-/*覆盖Element样式*/
-.vip-main.personal .el-dialog{
-  border-radius: 10px;
-  width: 310px;
+/* 覆盖Element样式 */
+.vip-main.personal .el-dialog {
   top: 5%;
+  width: 310px;
+  border-radius: 10px;
 }
+
 .vip-main.personal .el-dialog__header {
+  padding: 20px 20px 0;
   border-radius: 5px 5px 0 0;
-  padding: 20px 20px 0px;
-  background-color: #20293C;
+  background-color: #20293c;
 }
+
 .vip-main.personal .el-dialog__body .ql-editor {
-  padding-top: 0px;
+  padding-top: 0;
 }
+
 .vip-main.personal .el-dialog__title {
   color: #fff;
 }
+
 .vip-main.personal .el-form-item {
   margin-bottom: 0;
 }
+
 .vip-main.personal .el-dialog__body {
-  padding: 0px 20px 10px;
+  padding: 0 20px 10px;
 }
+
 .vip-main.personal .el-form-item__label {
   color: #fff;
 }
+
 .vip-main.personal .el-input__inner {
   width: 270px;
   height: 34px;
-  background-color: #1A2233;
-  border:1px solid rgba(72,87,118,1);
+  border: 1px solid rgba(72, 87, 118, 1);
+  background-color: #1a2233;
 }
+
 .vip-main.personal .el-input__inner:focus {
-  border: 1px solid #338FF5;
+  border: 1px solid #338ff5;
 }
+
 .vip-main.personal .el-button {
   width: 270px;
   height: 36px;
   border: 0;
   line-height: 0;
-  background:linear-gradient(81deg,rgba(43,57,110,1) 0%,rgba(42,80,130,1) 100%);
+  background: linear-gradient(81deg, rgba(43, 57, 110, 1) 0%, rgba(42, 80, 130, 1) 100%);
 }
-.vip-main.personal>.content-main-content .discounts-instruction-dialog>.el-dialog{
-  height:800px;
+
+.vip-main.personal > .content-main-content .discounts-instruction-dialog > .el-dialog {
+  height: 800px;
   overflow: auto;
 }
-.vip-main.personal>.content-main-content .discounts-instruction-dialog .el-dialog__header{
+
+.vip-main.personal > .content-main-content .discounts-instruction-dialog .el-dialog__header {
   text-align: center;
   background-color: transparent;
 }
-.vip-main.personal>.content-main-content .discounts-instruction-dialog .el-dialog__title{
-  color: #338FF5;
+
+.vip-main.personal > .content-main-content .discounts-instruction-dialog .el-dialog__title {
+  color: #338ff5;
 }

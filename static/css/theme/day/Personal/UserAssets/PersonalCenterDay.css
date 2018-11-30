@@ -1,38 +1,47 @@
-/*个人中心（白色主题）*/
-.personal-center.personal.day .el-tabs__nav{
-  background-color: #FFFFFF;
-}
-.personal-center.personal.day .el-tabs__item{
-  color: #6F798A;
-}
-.personal-center.personal.day .is-disabled{
+/* 个人中心（白色主题） */
+.personal-center.personal.day .el-tabs__nav {
   background-color: #fff;
-  color: #338FF5;
 }
-/*手表移上去*/
+
+.personal-center.personal.day .el-tabs__item {
+  color: #6f798a;
+}
+
+.personal-center.personal.day .is-disabled {
+  color: #338ff5;
+  background-color: #fff;
+}
+
+/* 手表移上去 */
 .personal-center.personal.day .el-tabs__item:hover {
   color: #333;
 }
-/*鼠标点击*/
+
+/* 鼠标点击 */
 .personal-center.personal.day .el-tabs__item.is-active {
-  color: #338FF5;
-  background: rgba(51,143,245,0.1);
   border-left: 4px solid rgba(0, 121, 254, 1);
+  color: #338ff5;
+  background: rgba(51, 143, 245, .1);
 }
+
 .personal-center.personal.day .el-tabs__item {
   border-left: 4px solid #fff;
 }
+
 .personal-center.personal.day .el-tabs__item:hover {
-  color: #338FF5;
-  background: rgba(51,143,245,0.1);
   border-left: 4px solid rgba(0, 121, 254, 1);
+  color: #338ff5;
+  background: rgba(51, 143, 245, .1);
 }
-.personal-center.personal.day .el-tabs--left .el-tabs__header.is-left{
-  border:1px solid rgba(38,47,56,0.1);
+
+.personal-center.personal.day .el-tabs--left .el-tabs__header.is-left {
+  border: 1px solid rgba(38, 47, 56, .1);
 }
+
 .personal-center.personal.day .el-tabs__item:first-child:hover {
   border-left: 4px solid #fff;
 }
+
 .personal-center.personal.day .el-tabs--left .el-tabs__item.is-left:first-child:hover {
   border-left: 4px solid #fff;
 }

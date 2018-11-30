@@ -272,7 +272,7 @@
       "widows"
     ],
     "no-empty-source": null,
-    "property-no-vendor-prefix": [true, {"ignoreProperties": ["background-clip"]}],
+    "property-no-vendor-prefix": [0, {"ignoreProperties": ["background-clip"]}],
     "number-leading-zero": "never",
     "number-no-trailing-zeros": true,
     "length-zero-no-unit": true,
@@ -289,6 +289,7 @@
     "at-rule-name-space-after": "always",
     "indentation": 2,
     "no-eol-whitespace": true,
-    "string-no-newline": null
+    "string-no-newline": null,
+    "no-descending-specificity":0
   }
 }

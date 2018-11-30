@@ -1,42 +1,53 @@
-/*币币交易通用night样式*/
-.trade-box.night .el-table{
-  color:#E4EAF4;
+/* 币币交易通用night样式 */
+.trade-box.night .el-table {
+  color: #e4eaf4;
 }
-/*表格表头*/
-.trade-box.night .el-table th>.cell{
-  color:#A9BED4;
+
+/* 表格表头 */
+.trade-box.night .el-table th > .cell {
+  color: #a9bed4;
 }
-.trade-box.night .el-table--enable-row-hover .el-table__body tr:hover>td{
-  background-color: rgba(255, 255, 255, 0.2);
+
+.trade-box.night .el-table--enable-row-hover .el-table__body tr:hover > td {
+  background-color: rgba(255, 255, 255, .2);
 }
-.trade-box.night .el-table th.is-leaf{
-  border-color:#39424d;
+
+.trade-box.night .el-table th.is-leaf {
+  border-color: #39424d;
 }
-.trade-box.night .title-box{
-  border-bottom:1px solid #39424d;
+
+.trade-box.night .title-box {
+  border-bottom: 1px solid #39424d;
 }
-.trade-box.night>.inner-box>.middle .el-tabs__nav-wrap::after{
-  background-color:#1c1f32;
+
+.trade-box.night > .inner-box > .middle .el-tabs__nav-wrap::after {
+  background-color: #1c1f32;
 }
-.trade-box.night>.inner-box>.middle .el-tabs__item{
-  color:#fff;
+
+.trade-box.night > .inner-box > .middle .el-tabs__item {
+  color: #fff;
 }
-/*滚动条*/
+
+/* 滚动条 */
 .trade-box.night .el-table--scrollable-y .el-table__body-wrapper::-webkit-scrollbar {
   width: 4px;
 }
-/*滚动条*/
+
+/* 滚动条 */
 .trade-box.night .el-table--scrollable-y .el-table__body-wrapper::-webkit-scrollbar-track-piece {
   background-color: #2a343e;
 }
-/*滚动条背景*/
+
+/* 滚动条背景 */
 .trade-box.night .el-table--scrollable-y .el-table__body-wrapper::-webkit-scrollbar-thumb {
-  background-color: #4A5662;
+  background-color: #4a5662;
 }
+
 .trade-box.night .el-table--scrollable-y .el-table__body-wrapper::-webkit-scrollbar-button {
-  background-color: #fff;
   display: none;
+  background-color: #fff;
 }
-.trade-box.night .el-tabs__header{
-  box-shadow:2px 0px 3px rgba(27,35,49,1);
+
+.trade-box.night .el-tabs__header {
+  box-shadow: 2px 0 3px rgba(27, 35, 49, 1);
 }

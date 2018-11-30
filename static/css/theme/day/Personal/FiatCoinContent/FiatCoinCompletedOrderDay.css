@@ -1,36 +1,46 @@
-.fiat-completed-order-box.personal.day .el-table th.is-leaf{
-    border-right: 1px solid #fff;
+.fiat-completed-order-box.personal.day .el-table th.is-leaf {
+  border-right: 1px solid #fff;
 }
-.fiat-completed-order-box.personal.day .el-table th{
-    background: #fff;
+
+.fiat-completed-order-box.personal.day .el-table th {
+  background: #fff;
 }
-.fiat-completed-order-box.personal.day .el-table__header{
-    margin-bottom:0;
+
+.fiat-completed-order-box.personal.day .el-table__header {
+  margin-bottom: 0;
 }
-.fiat-completed-order-box.personal.day .el-table{
-    background: #fff;
-    margin:0 auto;
-    border:1px solid #ECF1F8;
+
+.fiat-completed-order-box.personal.day .el-table {
+  margin: 0 auto;
+  border: 1px solid #ecf1f8;
+  background: #fff;
 }
-.fiat-completed-order-box.personal.day .el-table__empty-block{
-    background: #fff;
+
+.fiat-completed-order-box.personal.day .el-table__empty-block {
+  background: #fff;
 }
-.fiat-completed-order-box.personal.day .el-table th.is-leaf:first-of-type{
-    border-radius:0px;
-    border-left:none;
+
+.fiat-completed-order-box.personal.day .el-table th.is-leaf:first-of-type {
+  border-left: none;
+  border-radius: 0;
 }
-.fiat-completed-order-box.personal.day .el-table th.is-leaf{
-    border-bottom: 1px solid #ECF1F8;
+
+.fiat-completed-order-box.personal.day .el-table th.is-leaf {
+  border-bottom: 1px solid #ecf1f8;
 }
+
 .fiat-completed-order-box.personal.day .el-table__expanded-cell {
-    background-color: #fff;
+  background-color: #fff;
 }
-.fiat-completed-order-box.personal.day .el-table__expanded-cell:hover{
+
+.fiat-completed-order-box.personal.day .el-table__expanded-cell:hover {
   background-color: #fff !important;
 }
+
 .fiat-completed-order-box.personal.day .el-table td {
-  border-bottom: 1px solid rgba(38,47,56,0.1);
+  border-bottom: 1px solid rgba(38, 47, 56, .1);
 }
-.fiat-completed-order-box.personal .el-table--enable-row-hover .el-table__body tr:hover>td {
+
+.fiat-completed-order-box.personal .el-table--enable-row-hover .el-table__body tr:hover > td {
   background-color: #fff;
 }

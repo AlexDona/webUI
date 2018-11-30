@@ -1,48 +1,60 @@
-/*发布广告样式重置*/
-.otc-publish-AD-box.night .choice .el-input__inner{
-  /*yuxia改动的下拉选框的输入框的背景和边框*/
-  background: #1C1F32;
+/* 发布广告样式重置 */
+.otc-publish-AD-box.night .choice .el-input__inner {
+  /* yuxia改动的下拉选框的输入框的背景和边框 */
+  background: #1c1f32;
 }
+
 /* 文本域 */
-.otc-publish-AD-box.night .el-textarea__inner{
-  background-color: #1C1F32;
-  color: #A9BED4;
+.otc-publish-AD-box.night .el-textarea__inner {
+  color: #a9bed4;
+  background-color: #1c1f32;
 }
+
 /* 复选框 */
-.otc-publish-AD-box.night .trade-way .el-checkbox{
-  color: #9DA5B3;
+.otc-publish-AD-box.night .trade-way .el-checkbox {
+  color: #9da5b3;
 }
-.otc-publish-AD-box.night .trade-way .el-checkbox__inner{
-  background-color: #1C1F32;
+
+.otc-publish-AD-box.night .trade-way .el-checkbox__inner {
   border: 1px solid #435372;
+  background-color: #1c1f32;
 }
-.otc-publish-AD-box.night .trade-way .el-checkbox__input.is-checked+.el-checkbox__label {
-  color: #9DA5B3;
+
+.otc-publish-AD-box.night .trade-way .el-checkbox__input.is-checked + .el-checkbox__label {
+  color: #9da5b3;
 }
+
 /* 输入密码弹出框 */
-.otc-publish-AD-box.night .password-dialog .el-dialog{
-  background: #28334A;
+.otc-publish-AD-box.night .password-dialog .el-dialog {
+  background: #28334a;
 }
-.otc-publish-AD-box.night .password-dialog .el-dialog__header{
-  background-color:#20293C;
+
+.otc-publish-AD-box.night .password-dialog .el-dialog__header {
+  background-color: #20293c;
 }
-.otc-publish-AD-box.night .password-dialog .el-dialog__title{
+
+.otc-publish-AD-box.night .password-dialog .el-dialog__title {
   color: #fff;
 }
-.otc-publish-AD-box.night .password-dialog .el-dialog__body{
+
+.otc-publish-AD-box.night .password-dialog .el-dialog__body {
   color: #fff;
 }
-.otc-publish-AD-box.night .password-dialog .el-dialog__body .password-input{
-  background-color: #1A2233;
+
+.otc-publish-AD-box.night .password-dialog .el-dialog__body .password-input {
+  color: #fff;
+  background-color: #1a2233;
+}
+
+.otc-publish-AD-box.night .password-dialog .el-dialog__body .error-info {
   color: #fff;
 }
-.otc-publish-AD-box.night .password-dialog .el-dialog__body .error-info{
-  color: #fff;
+
+.otc-publish-AD-box.night .password-dialog .el-button--primary {
+  background: linear-gradient(9deg, rgba(43, 57, 110, 1), rgba(42, 80, 130, 1));
 }
-.otc-publish-AD-box.night .password-dialog .el-button--primary{
-  background:linear-gradient(9deg,rgba(43,57,110,1),rgba(42,80,130,1));
-}
+
 /* 问号提示颜色 */
-.otc-publish-AD-box.night .limit-set .icon{
-  color: #338FF5;
+.otc-publish-AD-box.night .limit-set .icon {
+  color: #338ff5;
 }

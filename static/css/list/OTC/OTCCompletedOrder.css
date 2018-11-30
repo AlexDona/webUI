@@ -1,52 +1,65 @@
 /* 完成订单组件样式重写 */
-.otc-completed-order-box .completed-order-content .el-table th{
+.otc-completed-order-box .completed-order-content .el-table th {
   padding: 5px 0;
 }
-.otc-completed-order-box .completed-order-content .el-table__header{
+
+.otc-completed-order-box .completed-order-content .el-table__header {
   margin-bottom: 5px;
 }
-.otc-completed-order-box .completed-order-content .el-table__body{
+
+.otc-completed-order-box .completed-order-content .el-table__body {
   border-collapse: separate !important;
 }
-.otc-completed-order-box .completed-order-content.el-table{
+
+.otc-completed-order-box .completed-order-content.el-table {
   border-collapse: separate !important;
 }
-.otc-completed-order-box .completed-order-content >.tables .el-icon-arrow-right:before {
+
+.otc-completed-order-box .completed-order-content > .tables .el-icon-arrow-right::before {
   content: " ";
 }
-.otc-completed-order-box .completed-order-content .el-table_2_column_9 .el-table__expand-column .is-leaf{
-  border-top-left-radius: 5px;
-  border-bottom-left-radius: 5px;
+
+.otc-completed-order-box .completed-order-content .el-table_2_column_9 .el-table__expand-column .is-leaf {
+  border-bottom-left-radius:  5px;
+  border-top-left-radius:  5px;
 }
-.otc-completed-order-box .completed-order-content .el-table th.is-leaf:first-of-type{
-  border-top-left-radius: 5px;
+
+.otc-completed-order-box .completed-order-content .el-table th.is-leaf:first-of-type {
   border-bottom-left-radius: 5px;
+  border-top-left-radius: 5px;
 }
-.otc-completed-order-box .completed-order-content .el-table th.is-leaf:nth-last-of-type(2){
+
+.otc-completed-order-box .completed-order-content .el-table th.is-leaf:nth-last-of-type(2) {
   border-top-right-radius: 5px;
   border-bottom-right-radius: 5px;
 }
-.otc-completed-order-box .completed-order-content .el-table--enable-row-transition .el-table__body td:first-of-type{
+
+.otc-completed-order-box .completed-order-content .el-table--enable-row-transition .el-table__body td:first-of-type {
   border-top-left-radius: 5px;
 }
-.otc-completed-order-box .completed-order-content .el-table--enable-row-transition .el-table__body td:first-of-type.el-table__expanded-cell{
-  border-top-left-radius: 0px;
+
+.otc-completed-order-box .completed-order-content .el-table--enable-row-transition .el-table__body td:first-of-type.el-table__expanded-cell {
+  border-top-left-radius: 0;
 }
-.otc-completed-order-box .completed-order-content .el-table--enable-row-transition .el-table__body td:nth-last-of-type(1){
+
+.otc-completed-order-box .completed-order-content .el-table--enable-row-transition .el-table__body td:nth-last-of-type(1) {
   border-top-right-radius: 5px;
 }
-.otc-completed-order-box .completed-order-content .el-table--enable-row-transition .el-table__body td:nth-last-of-type(1).el-table__expanded-cell{
-  border-top-right-radius: 0px;
+
+.otc-completed-order-box .completed-order-content .el-table--enable-row-transition .el-table__body td:nth-last-of-type(1).el-table__expanded-cell {
+  border-top-right-radius: 0;
 }
-.otc-completed-order-box .completed-order-content .el-table--enable-row-transition .el-table__body td:first-of-type.el-table__expanded-cell ::after{
-  content: '';
-  width: 1045px;
+
+.otc-completed-order-box .completed-order-content .el-table--enable-row-transition .el-table__body td:first-of-type.el-table__expanded-cell ::after {
   position: absolute;
-  left: 0;
   bottom: -10px;
-  border-bottom-left-radius: 5px;
+  left: 0;
+  width: 1045px;
   border-bottom-right-radius: 5px;
+  border-bottom-left-radius: 5px;
+  content: '';
 }
+
 .otc-completed-order-box .completed-order-content .el-table__empty-block {
   min-height: 432px;
 }

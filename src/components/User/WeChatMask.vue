@@ -63,17 +63,19 @@ export default {
 </script>
 <style scoped lang="scss" type="text/scss">
   .wx-mask{
-    width:100%;
-    height:100%;
-    background-color: rgba(0,0,0,.4);
     position: absolute;
     z-index: 1;
     top:0;
     left:0;
+    width:100%;
+    height:100%;
+    background-color: rgba(0,0,0,.4);
+
     >.img{
       width:100%;
       height:100%;
       text-align: center;
+
       img{
         width:90%;
       }

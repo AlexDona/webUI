@@ -569,74 +569,92 @@ export default {
 </script>
 <style scoped lang="scss">
   @import "../../../../static/css/scss/Personal/IndexPersonal";
+
   .withdrawal-address{
     >.withdrawal-address-main{
-      border-radius: 5px;
       min-height: 390px;
+      border-radius: 5px;
+
       >.withdrawal-header {
         margin-bottom: 2px;
+
         >.header-content {
           font-weight: 400;
         }
       }
+
       >.withdrawal-address-content {
         >.withdrawal-address-box {
           min-height: 100px;
+
           .send-code-btn {
-            width: 91px;
-            height: 34px;
             position: absolute;
             top: 4px;
+            width: 91px;
+            height: 34px;
           }
+
           .error-info {
             height: 20px;
             line-height: 20px;
             color: #d45858;
           }
+
           .error-info1 {
             text-align: left;
           }
+
           .content-input {
             width: 180px;
             height: 34px;
           }
+
           .content-input1 {
             width: 275px;
           }
+
           .form-input,
           .form-button {
+            box-sizing: border-box;
             width: 324px;
             height: 34px;
-            box-sizing: border-box;
           }
+
           .form-button {
             margin: 10px 0 0 140px;
           }
         }
       }
+
       >.address-list-header {
         height: 50px;
-        line-height: 50px;
         padding: 0 25px;
+        line-height: 50px;
       }
+
       .btn {
         width: 80px;
         height: 35px;
         line-height: 0;
       }
     }
+
     &.night{
-      background-color: $nightBgColor;
       color:$nightFontColor;
+      background-color: $nightBgColor;
+
       >.withdrawal-address-main {
         background-color: $nightMainBgColor;
+
         >.withdrawal-header {
           background-color: $nightMainBgColor;
-          box-shadow:2px 0px 2px rgba(20,23,37,1);
+          box-shadow:2px 0 2px rgba(20,23,37,1);
+
           >.header-content {
-            color: rgba(255,255,255,0.7);
+            color: rgba(255,255,255,.7);
           }
         }
+
         >.withdrawal-address-content {
           >.withdrawal-address-box {
             .error-info {
@@ -644,89 +662,109 @@ export default {
               line-height: 20px;
               color: #d45858;
             }
+
             .send-code-btn {
-              background-color: #338FF5;
               color: #fff;
+              background-color: #338ff5;
             }
+
             .content-input {
               border: 1px solid #485776;
               color: #fff;
+
               &:focus {
-                border: 1px solid #338FF5;
+                border: 1px solid #338ff5;
               }
             }
+
             .form-input {
               border: 1px solid #485776;
-              color: rgba(255,255,255,0.7);
+              color: rgba(255,255,255,.7);
             }
+
             .form-input:focus {
-              border: 1px solid #338FF5;
+              border: 1px solid #338ff5;
             }
+
             .form-button {
+              color: rgba(255,255,255,.7);
               background:linear-gradient(0deg,rgba(43,57,110,1),rgba(42,80,130,1));
-              color: rgba(255,255,255,0.7);
             }
           }
         }
+
         >.address-list-header {
-          color: rgba(255,255,255,0.7);
-          border-bottom: 1px solid #39424D;
+          border-bottom: 1px solid #39424d;
+          color: rgba(255,255,255,.7);
         }
+
         .btn {
-          color: rgba(255,255,255,0.7);
+          border: 1px solid #338ff5;
+          color: rgba(255,255,255,.7);
           background-color: transparent;
-          border: 1px solid #338FF5;
         }
       }
     }
+
     &.day{
-      background-color: $dayBgColor;
       color:$dayFontColor;
+      background-color: $dayBgColor;
+
       >.withdrawal-address-main {
-        background-color: $dayBgColor;
-        color:$dayFontColor;
         border:1px solid rgba(236,241,248,1);
+        color:$dayFontColor;
+        background-color: $dayBgColor;
+
         >.withdrawal-header {
-          background:rgba(255,255,255,1);
           border:1px solid rgba(236,241,248,1);
+          background:rgba(255,255,255,1);
+
           >.header-content {
-            color: #338FF5;
+            color: #338ff5;
           }
         }
+
         >.withdrawal-address-content {
           >.withdrawal-address-box {
             .send-code-btn {
-              background-color: #338FF5;
               color: #fff;
+              background-color: #338ff5;
             }
+
             .content-input {
-              border: 1px solid #ECF1F8;
+              border: 1px solid #ecf1f8;
               color: #333;
+
               &:focus {
-                border: 1px solid #338FF5;
+                border: 1px solid #338ff5;
               }
             }
+
             .form-input {
-              background:rgba(255,255,255,1);
               border:1px solid rgba(236,241,248,1);
+              background:rgba(255,255,255,1);
             }
+
             .form-input:focus {
-              border: 1px solid #338FF5;
+              border: 1px solid #338ff5;
             }
+
             .form-button {
+              color: rgba(255,255,255,.7);
               background:linear-gradient(0deg,rgba(43,57,110,1),rgba(42,80,130,1));
-              color: rgba(255,255,255,0.7);
             }
           }
         }
+
         >.address-list-header {
-          color: #338FF5;
           border-bottom: 1px solid rgba(236,241,248,1);
+          color: #338ff5;
         }
+
         .btn {
-          color: rgba(255,255,255,0.7);
+          border: 1px solid #338ff5;
+          color: rgba(255,255,255,.7);
           background-color: transparent;
-          border: 1px solid #338FF5;
         }
       }
     }

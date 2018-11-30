@@ -599,28 +599,33 @@ export default {
 </script>
 <style scoped lang="scss">
   @import '../../../static/css/scss/index';
+
   .kline-container{
-    overflow: hidden;
+    position: relative;
     width:100%;
     height:355px;
-    position: relative;
+    overflow: hidden;
+
     #tv_chart_container {
       width: 100%;
       height: 355px;
+
       &.night {
         background-color: $mainContentNightBgColor;
       }
+
       &.day{
         background-color: #fff;
       }
     }
+
     .loading-box{
-      width:101%;
-      height:355px;
       position: absolute;
+      z-index: 15;
       top:0;
       right:0;
-      z-index: 15;
+      width:101%;
+      height:355px;
     }
   }
 </style>

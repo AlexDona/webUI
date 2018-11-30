@@ -1,28 +1,34 @@
-/*个人中心（白色主题）*/
+/* 个人中心（白色主题） */
 .push-assets.personal.day .el-select .el-input__inner {
-  background-color: #ccc;
   border: 1px solid #999;
   color: #333;
+  background-color: #ccc;
 }
+
 .push-assets.personal.day .el-select .el-input__inner:focus {
   border: 1px solid #eee;
 }
+
 .push-assets.personal.day .el-form-item__label {
-  color: #7D90AC;
+  color: #7d90ac;
 }
+
 .push-assets.personal.day .el-select .el-input__inner {
+  border: 1px solid rgba(236, 241, 248, 1);
   background-color: #fff;
-  border:1px solid rgba(236,241,248,1);
 }
+
 .push-assets.personal.day .el-table__empty-block {
   background-color: #fff;
 }
-.push-assets.personal.day .el-table th>.cell {
+
+.push-assets.personal.day .el-table th > .cell {
   color: #333;
 }
+
 .push-assets.personal.day .el-table td {
-  border-bottom: 1px solid #FFFFFF;
   padding: 7px 0;
+  border-bottom: 1px solid #fff;
+  color: #7d90ac;
   background-color: #fff;
-  color: #7D90AC;
 }

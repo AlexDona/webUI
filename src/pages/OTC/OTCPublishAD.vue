@@ -1027,48 +1027,60 @@ export default {
 </script>
 <style scoped lang="scss" type="text/scss">
 @import "../../../static/css/scss/index";
+
 .otc-publish-AD-box{
   margin-top:66px;
   overflow: hidden;
+
   .redBorderRightNone{
-    border: 1px solid #D45858 !important;
+    border: 1px solid #d45858 !important;
     border-right: 0 !important;
   }
+
   .redBorderLeftNone{
-    border: 1px solid #D45858 !important;
+    border: 1px solid #d45858 !important;
     border-left: 0 !important;
   }
+
   >.otc-publish-AD-content{
-    width: 1150px;
-    margin: 70px auto;
     display: flex;
     flex: 3;
+    width: 1150px;
     padding-top: 50px;
+    margin: 70px auto;
+
     >.publish-AD-left{
       flex: 2;
+
       >.AD-title{
         height: 30px;
-        line-height: 30px;
         margin-bottom: 30px;
+        line-height: 30px;
       }
+
       >.AD-big-form{
         width: 720px;
+
         >.common{
           box-sizing: border-box;
           padding: 30px 0;
+
           >.left{
             width: 110px;
             vertical-align: top;
           }
+
           >.right{
             font-size: 14px;
           }
         }
+
         >.choice{
           >.right{
             >.right-style{
               margin-right: 50px;
             }
+
             >.right-change{
               >.double-sided-arrow{
                 margin: 0 10px;
@@ -1076,108 +1088,126 @@ export default {
             }
           }
         }
+
         >.sale-price{
           >.right{
             .max-avail-sell{
               padding-right: 10px;
             }
+
             >.input{
-              margin: 10px 0 5px 0;
+              margin: 10px 0 5px;
+
               >.price-input{
                 width: 234px;
                 height: 36px;
                 padding-left: 10px;
-                border-top-left-radius: 4px;
                 border-bottom-left-radius: 4px;
+                border-top-left-radius: 4px;
               }
+
               >.unit{
+                display: inline-block;
                 width: 58px;
                 height: 36px;
-                line-height: 36px;
-                display: inline-block;
-                vertical-align: top;
                 margin-left: -5px;
-                text-align: center;
                 border-top-right-radius: 4px;
                 border-bottom-right-radius: 4px;
+                line-height: 36px;
+                text-align: center;
+                vertical-align: top;
               }
             }
           }
         }
+
         >.sum-limit{
           >.right{
             .err-min-count{
               display: inline-block;
               width: 250px;
             }
+
             >.input-top{
-              margin: 15px 0 5px 0;
+              margin: 15px 0 5px;
+
               >.input-sum{
                 width: 198px;
                 height: 36px;
                 padding-left: 10px;
-                border-top-left-radius: 4px;
                 border-bottom-left-radius: 4px;
+                border-top-left-radius: 4px;
               }
+
               >.unit{
+                display: inline-block;
                 width: 60px;
                 height: 36px;
-                line-height: 36px;
-                display: inline-block;
-                vertical-align: top;
                 margin-left: -5px;
-                text-align: center;
                 border-top-right-radius: 4px;
                 border-bottom-right-radius: 4px;
+                line-height: 36px;
+                text-align: center;
+                vertical-align: top;
               }
             }
+
             >.text{
               margin-top: 20px;
+
               >.money-max{
                 margin-left: 166px;
               }
             }
+
             >.input-bottom{
-              margin: 10px 0 5px 0;
+              margin: 10px 0 5px;
+
               >.input-min,.input-max{
                 width: 140px;
                 height: 36px;
                 padding-left: 10px;
-                border-top-left-radius: 4px;
                 border-bottom-left-radius: 4px;
+                border-top-left-radius: 4px;
               }
+
               >.unit{
+                display: inline-block;
                 width: 60px;
                 height: 36px;
-                line-height: 36px;
-                display: inline-block;
-                vertical-align: top;
                 margin-left: -5px;
-                text-align: center;
                 border-top-right-radius: 4px;
                 border-bottom-right-radius: 4px;
+                line-height: 36px;
+                text-align: center;
+                vertical-align: top;
               }
+
               >.minMaxLink{
-                margin: 0px 10px;
+                margin: 0 10px;
               }
             }
           }
         }
+
         >.limit-set{
           border-bottom: 0;
+
           >.right{
             .input-limit{
               width: 258px;
               height: 36px;
               padding-left: 10px;
+              margin: 15px 0 5px;
               border-radius: 4px;
-              margin: 15px 0 5px 0;
             }
           }
         }
+
         >.button{
-          text-align: center;
           margin-top: 20px;
+          text-align: center;
+
           >.AD-button{
             width: 590px;
             height: 44px;
@@ -1186,42 +1216,52 @@ export default {
         }
       }
     }
+
     >.publish-AD-right{
       flex: 1;
+
       >.publish-tips{
         width: 250px;
         margin-left: 40px;
+
         >.tip{
           line-height: 20px;
         }
       }
     }
   }
+
   &.night{
     background-color: $mainNightBgColor;
+
     >.otc-publish-AD-content{
       >.publish-AD-left{
         >.AD-title{
-          color: #338FF5;
-          border-left: 3px solid #338FF5;
+          border-left: 3px solid #338ff5;
+          color: #338ff5;
         }
+
         >.AD-big-form{
           .err{
-            color: #D45858;
+            color: #d45858;
           }
+
           >.common{
             >.left{
               >.tips{
                 color: #fff;
               }
+
               >.warning{
-                color: #3E79D6;
+                color: #3e79d6;
               }
             }
+
             >.right{
-              color: #9DA5B3;
+              color: #9da5b3;
             }
           }
+
           >.choice{
             >.right{
               >.right-change{
@@ -1231,108 +1271,129 @@ export default {
               }
             }
           }
+
           >.sale-price{
             >.right{
               .max-avail-sell{
-                color: #30C296;
+                color: #30c296;
               }
+
               .markder-price{
-                color: #E97345;
+                color: #e97345;
               }
+
               >.input{
                 >.price-input{
-                  background-color: #1C1F32;
-                  color: #9DA5B3;
+                  color: #9da5b3;
+                  background-color: #1c1f32;
                 }
+
                 >.unit{
-                  color: #7EA9E4;
-                  background-color: #21243B;
+                  color: #7ea9e4;
+                  background-color: #21243b;
                 }
               }
             }
           }
+
           >.sum-limit{
             >.right{
               >.input-top{
                 >.input-sum{
-                  background-color: #1C1F32;
-                  color: #9DA5B3;
+                  color: #9da5b3;
+                  background-color: #1c1f32;
                 }
+
                 >.unit{
-                  color: #7EA9E4;
-                  background-color: #21243B;
+                  color: #7ea9e4;
+                  background-color: #21243b;
                 }
               }
+
               >.input-bottom{
                 >.input-min,.input-max{
-                  background-color: #1C1F32;
-                  color: #9DA5B3;
+                  color: #9da5b3;
+                  background-color: #1c1f32;
                 }
+
                 >.unit{
-                  color: #7EA9E4;
-                  background-color: #21243B;
+                  color: #7ea9e4;
+                  background-color: #21243b;
                 }
+
                 >.minMaxLink{
                   color:#7d90ac;
                 }
               }
             }
           }
+
           >.limit-set{
             border-bottom: 0;
+
             >.right{
               .input-limit{
-                background-color: #1C1F32;
-                color: #9DA5B3;
+                color: #9da5b3;
+                background-color: #1c1f32;
               }
             }
           }
+
           >.button{
             >.AD-button{
-              color: #FFFFFF;
+              color: #fff;
               background:linear-gradient(9deg,rgba(43,57,110,1),rgba(42,80,130,1));
             }
           }
         }
       }
+
       >.publish-AD-right{
         >.publish-tips{
           >.title{
-            color: #FFFFFF;
             margin-bottom: 5px;
+            color: #fff;
           }
+
           >.tip{
-            color: #7D90AC;
+            color: #7d90ac;
           }
         }
       }
     }
   }
+
   &.day{
     background-color: $mainDayBgColor;
+
     >.otc-publish-AD-content{
       >.publish-AD-left{
         >.AD-title{
-          color: #338FF5;
-          border-left: 3px solid #338FF5;
+          border-left: 3px solid #338ff5;
+          color: #338ff5;
         }
+
         >.AD-big-form{
           .err{
-            color: #D45858;
+            color: #d45858;
           }
+
           >.common{
             >.left{
               >.tips{
                 color: #333;
               }
+
               >.warning{
-                color: #3E79D6;
+                color: #3e79d6;
               }
             }
+
             >.right{
-              color: #7D90AC;
+              color: #7d90ac;
             }
           }
+
           >.choice{
             >.right{
               >.right-change{
@@ -1342,82 +1403,96 @@ export default {
               }
             }
           }
+
           >.sale-price{
             >.right{
               .max-avail-sell{
-                color: #30C296;
+                color: #30c296;
               }
+
               .markder-price{
-                color: #E97345;
+                color: #e97345;
               }
+
               >.input{
                 >.price-input{
-                  color: #7D90AC;
-                  background-color: #fff;
                   border:1px solid rgba(236,241,248,1);
+                  color: #7d90ac;
+                  background-color: #fff;
                 }
+
                 >.unit{
-                  border: 1px solid #CBDDF4;
-                  background-color: #CBDDF4;
-                  color: #338FF5;
+                  border: 1px solid #cbddf4;
+                  color: #338ff5;
+                  background-color: #cbddf4;
                 }
               }
             }
           }
+
           >.sum-limit{
             >.right{
               >.input-top{
                 >.input-sum{
-                  color: #9DA5B3;
-                  background-color: #fff;
                   border:1px solid rgba(236,241,248,1);
+                  color: #9da5b3;
+                  background-color: #fff;
                 }
+
                 >.unit{
-                  border: 1px solid #CBDDF4;
-                  background-color: #CBDDF4;
-                  color: #338FF5;
+                  border: 1px solid #cbddf4;
+                  color: #338ff5;
+                  background-color: #cbddf4;
                 }
               }
+
               >.input-bottom{
                 >.input-min,.input-max{
-                  background-color: #fff;
                   border:1px solid rgba(236,241,248,1);
+                  background-color: #fff;
                 }
+
                 >.unit{
-                  border: 1px solid #CBDDF4;
-                  background-color: #CBDDF4;
-                  color: #338FF5;
+                  border: 1px solid #cbddf4;
+                  color: #338ff5;
+                  background-color: #cbddf4;
                 }
+
                 >.minMaxLink{
                   color:#7d90ac;
                 }
               }
             }
           }
+
           >.limit-set{
             border-bottom: 0;
+
             >.right{
               .input-limit{
-                background-color: #fff;
                 border:1px solid rgba(236,241,248,1);
+                background-color: #fff;
               }
             }
           }
+
           >.button{
             >.AD-button{
-              color: #FFFFFF;
+              color: #fff;
               background:linear-gradient(9deg,rgba(43,57,110,1),rgba(42,80,130,1));
             }
           }
         }
       }
+
       >.publish-AD-right{
         >.publish-tips{
           >.title{
-            color: #D45858;
+            color: #d45858;
           }
+
           >.tip{
-            color: #7D90AC;
+            color: #7d90ac;
           }
         }
       }

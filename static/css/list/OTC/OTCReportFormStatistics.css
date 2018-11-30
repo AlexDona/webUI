@@ -1,36 +1,45 @@
-/*报表统计样式重置*/
+/* 报表统计样式重置 */
+
 /* 1.0筛选条件中的下拉框样式 */
-.otc-report-form-statistics-box .currency-input .el-select{
+.otc-report-form-statistics-box .currency-input .el-select {
   width: 120px;
 }
-.otc-report-form-statistics-box .legal-tender-input .el-select{
+
+.otc-report-form-statistics-box .legal-tender-input .el-select {
   width: 140px;
 }
-.otc-report-form-statistics-box .report-form-filtrate .el-input__inner{
+
+.otc-report-form-statistics-box .report-form-filtrate .el-input__inner {
   height: 34px;
   border: 0;
 }
-/*2.0日期选择器*/
-.otc-report-form-statistics-box .date .select-date .el-date-editor.el-input{
+
+/* 2.0日期选择器 */
+.otc-report-form-statistics-box .date .select-date .el-date-editor.el-input {
   width: 134px;
 }
+
 .otc-report-form-statistics-box .date .select-date .el-input__inner {
   height: 34px;
   border: 0;
 }
-/*3.0单选按钮日期选择*/
-.otc-report-form-statistics-box .date .radio-date .el-radio__label{
+
+/* 3.0单选按钮日期选择 */
+.otc-report-form-statistics-box .date .radio-date .el-radio__label {
   font-size: 12px;
 }
-.otc-report-form-statistics-box .date .radio-date .el-radio__inner::after{
+
+.otc-report-form-statistics-box .date .radio-date .el-radio__inner::after {
   width: 7px;
   height: 7px;
 }
+
 /* 4.0 订单详情表格样式重写 */
-.otc-report-form-statistics-box .order-table .el-table tr{
+.otc-report-form-statistics-box .order-table .el-table tr {
   height: 40px;
 }
-.otc-report-form-statistics-box .order-table .el-table td{
+
+.otc-report-form-statistics-box .order-table .el-table td {
+  padding: 0;
   border-bottom: 0;
-  padding: 0 0;
 }

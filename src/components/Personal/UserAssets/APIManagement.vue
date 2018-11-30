@@ -845,90 +845,112 @@ export default {
 </script>
 <style scoped lang="scss">
   @import "../../../../static/css/scss/Personal/IndexPersonal";
+
   .api-management{
     >.invitation-promotion-main{
       .code-copy{
+        position: absolute;
+        top: 4px;
+        right: 1px;
         width: 55px;
         height: 33px;
-        position: absolute;
-        right: 1px;
-        top: 4px;
         line-height: 33px;
       }
+
       .error-msg-text {
         padding-left: 140px;
       }
+
       .error-msg{
         height:20px;
         line-height: 20px;
         color: #d45858;
       }
+
       .error-msg1{
-        padding-left: 0px;
+        padding-left: 0;
       }
+
       .error-msg2{
-        padding-left: 0px;
+        padding-left: 0;
       }
+
       .content-input {
         width: 200px;
         height: 35px;
       }
+
       .text-margin {
         margin-top: 10px;
       }
+
       .input-google {
         width: 300px;
       }
+
       .text-bottom {
         margin-bottom: 10px;
       }
+
       .text-info {
         line-height: 20px;
       }
+
       .primary-button {
         width: 300px;
         height: 35px;
         border-radius:4px;
       }
+
       .send-code-btn {
         width: 100px;
         height: 35px;
-        margin-left: -4px;
         padding: 0;
+        margin-left: -4px;
       }
+
       >.extension-info{
         min-height: 350px;
+
         >.extension-info-header {
           height: 56px;
         }
+
         >.extension-info-content {
           >.info-content {
             height: 250px;
             padding-top: 20px;
+
             .api-input {
               width: 220px;
               height: 34px;
             }
+
             .content-title {
-              margin-bottom: 10px;
               padding-left: 12px;
+              margin-bottom: 10px;
             }
+
             .content-info {
               display: flex;
               line-height: 25px;
+
               .style {
                 margin-right: 5px;
               }
+
               .content-text {
                 flex: 4;
                 padding-right: 40px;
               }
             }
+
             .api-button {
-              padding: 10px 0;
               width: 220px;
+              padding: 10px 0;
               margin-left: 140px;
             }
+
             .prompt-message {
               height: 20px;
               padding-left: 35px;
@@ -936,13 +958,17 @@ export default {
           }
         }
       }
+
       >.extension-statistics{
         min-height: 200px;
+
         >.extension-statistics-header{
           height: 56px;
         }
+
         >.extension-statistics-content{
           min-height: 140px;
+
           .compile{
             &:first-child{
               margin-right: 5px;
@@ -951,148 +977,186 @@ export default {
         }
       }
     }
+
     &.night{
-      background-color: $nightBgColor;
       color:$nightFontColor;
+      background-color: $nightBgColor;
+
       >.background-color {
         background-color: $nightMainBgColor;
       }
+
       .invitation-promotion-main{
         .code-copy{
-          color: #338FF5;
-          background-color: #1A2233;
+          color: #338ff5;
+          background-color: #1a2233;
         }
+
         .content-input {
           border:1px solid rgba(72,87,118,1);
-          background:rgba(26,34,51,1);
           border-radius: 3px;
           color: #fff;
+          background:rgba(26,34,51,1);
+
           &:focus {
-            border: 1px solid #338FF5;
+            border: 1px solid #338ff5;
           }
         }
+
         .text-info {
-          color: #D45858;
+          color: #d45858;
         }
+
         .primary-button {
+          color: #fff;
           background: linear-gradient(81deg,rgba(43,57,110,1) 0%,rgba(42,80,130,1) 100%);
-          color: #fff;
         }
+
         .send-code-btn {
-          background-color: #338FF5;
           color: #fff;
+          background-color: #338ff5;
         }
+
         >.extension-info{
           background-color: $nightMainBgColor;
+
           >.extension-info-header{
-            border-bottom: 1px solid #39424D;
+            border-bottom: 1px solid #39424d;
+
             >.header-color {
               color: #fff;
             }
           }
+
           >.extension-info-content{
             >.info-content {
               .api-input {
                 border: 1px solid #485776;
                 color: #fff;
+
                 &:focus {
-                  border: 1px solid #338FF5;
+                  border: 1px solid #338ff5;
                 }
               }
+
               .content-title {
-                color: #338FF5;
+                color: #338ff5;
               }
+
               .content-info {
-                color: #9DA5B3;
+                color: #9da5b3;
               }
+
               .api-button {
-                background:linear-gradient(0deg,rgba(43,57,110,1),rgba(42,80,130,1));
                 color: #fff;
+                background:linear-gradient(0deg,rgba(43,57,110,1),rgba(42,80,130,1));
               }
             }
           }
         }
+
         >.extension-statistics {
           background-color: $nightMainBgColor;
+
           >.extension-statistics-header {
-            border-bottom: 1px solid #39424D;
+            border-bottom: 1px solid #39424d;
+
             >.header-color {
               color: #fff;
             }
           }
+
           .compile {
-            color: #338FF5;
+            color: #338ff5;
           }
         }
       }
+
       .api-management-header {
         .header-content {
-          color: #338FF5;
+          color: #338ff5;
         }
       }
     }
+
     &.day{
-      background-color: $dayBgColor;
       color:$dayFontColor;
+      background-color: $dayBgColor;
+
       >.background-color {
-        background:rgba(255,255,255,1);
         border:1px solid rgba(236,241,248,1);
+        background:rgba(255,255,255,1);
       }
+
       .invitation-promotion-main {
         .code-copy{
-          color: #338FF5;
+          color: #338ff5;
           background-color: #fff;
         }
+
         .send-code-btn {
-          background-color: #338FF5;
           color: #fff;
+          background-color: #338ff5;
         }
+
         .primary-button {
-          background: linear-gradient(81deg,rgba(43,57,110,1) 0%,rgba(42,80,130,1) 100%);
           color: #fff;
+          background: linear-gradient(81deg,rgba(43,57,110,1) 0%,rgba(42,80,130,1) 100%);
         }
+
         .content-input {
           border:1px solid rgba(236,241,248,1);
           color: #333;
+
           &:focus {
-            border: 1px solid #338FF5;
+            border: 1px solid #338ff5;
           }
         }
+
         >.extension-info{
-          background:rgba(255,255,255,1);
           border:1px solid rgba(246,246,246,1);
           border-radius:4px;
-          box-shadow:0px 0px 4px rgba(235,240,248,1);
+          background:rgba(255,255,255,1);
+          box-shadow:0 0 4px rgba(235,240,248,1);
+
           >.extension-info-header{
-            border-bottom: 1px solid rgba(57,66,77,0.1);
+            border-bottom: 1px solid rgba(57,66,77,.1);
+
             >.header-color {
               color: #333;
             }
           }
+
           >.extension-info-content{
             .api-input {
               border:1px solid rgba(236,241,248,1);
               color: #333;
+
               &:focus {
-                border: 1px solid #338FF5;
+                border: 1px solid #338ff5;
               }
             }
+
             .content-title {
-              color: #D45858;
+              color: #d45858;
             }
+
             .content-info {
-              color: #7D90AC;
+              color: #7d90ac;
             }
+
             .api-button {
-              background:linear-gradient(0deg,rgba(43,57,110,1),rgba(42,80,130,1));
               color: #fff;
+              background:linear-gradient(0deg,rgba(43,57,110,1),rgba(42,80,130,1));
             }
+
             >.promotion-box {
               .promotion-info {
                 .info-left-text {
                   color: #ccc;
                 }
               }
+
               .info-left,
               info-right {
                 color: #ccc;
@@ -1100,22 +1164,26 @@ export default {
             }
           }
         }
+
         >.extension-statistics {
-          background:rgba(255,255,255,1);
           border:1px solid rgba(246,246,246,1);
           border-radius:4px;
-          box-shadow:0px 0px 4px rgba(235,240,248,1);
+          background:rgba(255,255,255,1);
+          box-shadow:0 0 4px rgba(235,240,248,1);
+
           >.extension-statistics-header {
-            border-bottom: 1px solid rgba(57,66,77,0.1);
+            border-bottom: 1px solid rgba(57,66,77,.1);
+
             >.header-color {
               color: #333;
             }
           }
         }
       }
+
       .api-management-header {
         .header-content {
-          color: #338FF5;
+          color: #338ff5;
         }
       }
     }

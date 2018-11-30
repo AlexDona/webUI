@@ -243,153 +243,189 @@ export default {
 </script>
 <style scoped lang="scss" type="text/scss">
   @import "../../../static/css/scss/index.scss";
+
   .otc-entrust-order-box {
     height: 500px;
     margin-bottom: 10px;
+
     .otc-entrust-order-table {
       > .entrust-table-head {
+        z-index: 200;
         box-sizing: border-box;
         width: 1045px;
         height: 35px;
-        line-height: 35px;
         border-radius: 5px;
-        z-index: 200;
+        line-height: 35px;
+
         > .item {
           display: inline-block;
           width: 126px;
           text-align: center;
         }
+
         > .first-style {
           width: 70px;
         }
+
         > .second-coin {
           width: 150px;
         }
+
         > .third-price {
           width: 150px;
         }
+
         > .fourth-entrust-count {
           width: 150px;
         }
+
         > .fifth-match-count {
           width: 130px;
         }
+
         > .sixth-total-amount {
           width: 150px;
         }
+
         > .senventh-create-time {
           width: 120px;
         }
+
         > .eighth-action {
           width: 90px;
         }
       }
+
       > .entrust-table-body {
         height: 400px;
         margin-top: 15px;
         border-top: none;
         border-bottom-right-radius: 5px;
         border-bottom-left-radius: 5px;
+
         > .no-data {
           line-height: 432px;
           text-align: center;
         }
+
         > .entrust-list-content {
           display: flex;
           height: 40px;
           line-height: 40px;
+
           > .item {
             display: inline-block;
             width: 126px;
             text-align: center;
           }
+
           > .first-style {
             width: 80px;
           }
+
           > .second-coin {
             width: 150px;
           }
+
           > .third-price {
             width: 150px;
           }
+
           > .fourth-entrust-count {
             width: 150px;
           }
+
           > .fifth-match-count {
             width: 150px;
           }
+
           > .sixth-total-amount {
             width: 150px;
           }
+
           > .senventh-create-time {
             width: 150px;
           }
+
           > .eighth-action {
             width: 80px;
           }
         }
       }
+
       >.page{
-        text-align: center;
         padding: 10px 0;
+        text-align: center;
       }
     }
+
     &.night{
       .otc-entrust-order-table {
         > .entrust-table-head {
-          background-color: $mainContentNightBgColor;
-          color: #A9BED4;
           border: 1px solid #485776;
-          box-shadow: -2px 3px 5px 1px #191E28;
-        }
-        > .entrust-table-body {
+          color: #a9bed4;
           background-color: $mainContentNightBgColor;
-          color: #9DA5B3;
-          border: 1px solid #262F38;
+          box-shadow: -2px 3px 5px 1px #191e28;
+        }
+
+        > .entrust-table-body {
+          border: 1px solid #262f38;
+          color: #9da5b3;
+          background-color: $mainContentNightBgColor;
+
           > .no-data {
-            color: rgba(255, 255, 255, 0.8);
+            color: rgba(255, 255, 255, .8);
           }
+
           > .entrust-list-content {
             .red {
-              color: #D45858;
+              color: #d45858;
             }
+
             .green {
               color: #008069;
             }
           }
         }
+
         >.page{
-          text-align: center;
           padding: 10px 0;
+          text-align: center;
         }
       }
     }
+
     &.day{
       .otc-entrust-order-table {
         > .entrust-table-head {
+          border: 1px solid #ecf1f8;
+          color: #8a909e;
           background-color: #fff;
-          color: #8A909E;
-          border: 1px solid #ECF1F8;
         }
+
         > .entrust-table-body {
+          border: 1px solid #ecf1f8;
+          color: #666;
           background-color: #fff;
-          color: #666666;
-          border: 1px solid #ECF1F8;
+
           > .no-data {
-            color: #333333;
+            color: #333;
           }
+
           > .entrust-list-content {
             .red {
-              color: #D45858;
+              color: #d45858;
             }
+
             .green {
               color: #008069;
             }
           }
         }
+
         >.page{
-          text-align: center;
           padding: 10px 0;
+          text-align: center;
         }
       }
     }

@@ -1,43 +1,49 @@
-/*全局修改element样式*/
-/*table 底部边框*/
-.el-table--border::after, .el-table--group::after, .el-table::before{
-  height:0;
+/* 全局修改element样式 */
+
+/* table 底部边框 */
+.el-table--border::after,
+.el-table--group::after,
+.el-table::before {
+  height: 0;
 }
 
-.collected{
-  color:#f5c34a;
+.collected {
+  color: #f5c34a;
 }
-/*分页样式*/
+
+/* 分页样式 */
 .night .el-pagination.is-background .btn-next,
 .night .el-pagination.is-background .btn-prev,
-.night .el-pagination.is-background .el-pager li
-{
+.night .el-pagination.is-background .el-pager li {
   min-width: 0;
-  box-shadow: 0px 1px 1px 0px rgba(19,24,30,1);
-  color:#fff;
-}
-.day .el-pagination.is-background .btn-next,
-.day .el-pagination.is-background .btn-prev
-{
-  background:rgba(43,54,64,0.3);
   color: #fff;
-  box-shadow:0px 0px 1px 0px rgba(19,24,30,1);
+  box-shadow: 0 1px 1px 0 rgba(19, 24, 30, 1);
 }
-.el-pagination button{
+
+.el-pagination.is-background .btn-next,
+.el-pagination.is-background .btn-prev,
+.el-pagination.is-background .el-pager li {
+  min-width: 0;
+}
+
+.day .el-pagination.is-background .btn-next,
+.day .el-pagination.is-background .btn-prev {
+  color: #fff;
+  background: rgba(43, 54, 64, .3);
+  box-shadow: 0 0 1px 0 rgba(19, 24, 30, 1);
+}
+
+.el-pagination button {
   /* width:20px;
   height:20px; */
   width: 26px;
+  min-width: 0;
   height: 25px;
-  min-width:0;
+
   /* background-color: pink; */
 }
-.el-pagination.is-background .btn-next,
-.el-pagination.is-background .btn-prev,
-.el-pagination.is-background .el-pager li
-{
-  min-width:0;
-}
-.el-pager li{
+
+.el-pager li {
   /* width:20px;
   height:20px;
   line-height: 20px; */
@@ -45,176 +51,211 @@
   height: 25px;
   line-height: 26px;
 }
-.night .el-pagination button{
-  background-color: rgba(43,54,64,1) !important;
-}
-.night .el-pager li {
-  background-color:rgba(43,54,64,1) !important;
+
+.night .el-pagination button {
+  background-color: rgba(43, 54, 64, 1) !important;
 }
 
-.night .el-pagination.is-background .el-pager li:not(.disabled).active{
-  background-color: #338FF5 !important;
+.night .el-pager li {
+  background-color: rgba(43, 54, 64, 1) !important;
 }
-.el-pagination.is-background .btn-next.disabled, .el-pagination.is-background .btn-next:disabled, .el-pagination.is-background .btn-prev.disabled, .el-pagination.is-background .btn-prev:disabled, .el-pagination.is-background .el-pager li.disabled{
-  color:#606266;
+
+.night .el-pagination.is-background .el-pager li:not(.disabled).active {
+  background-color: #338ff5 !important;
 }
-/*日期组件*/
-.night .el-picker-panel{
+
+.el-pagination.is-background .btn-next.disabled,
+.el-pagination.is-background .btn-next:disabled,
+.el-pagination.is-background .btn-prev.disabled,
+.el-pagination.is-background .btn-prev:disabled,
+.el-pagination.is-background .el-pager li.disabled {
+  color: #606266;
+}
+
+/* 日期组件 */
+.night .el-picker-panel {
+  border: none;
   background-color: #2a3242;
-  border:none;
 }
-.night .el-picker-panel .el-input__inner{
+
+.night .el-picker-panel .el-input__inner {
+  border: 1px solid #39424d;
   background-color: #2a3242;
-  border: 1px solid #39424D;
 }
-.night .el-picker-panel .el-picker-panel__footer{
+
+.night .el-picker-panel .el-picker-panel__footer {
+  border-top: 1px solid #39424d;
   background-color: #2a3242;
-  border-top: 1px solid #39424D;
 }
-.night .el-picker-panel .el-picker-panel__footer .el-button:nth-child(2){
-  background: linear-gradient(90deg, #2b396e 0%, #2a5082 100%);
+
+.night .el-picker-panel .el-picker-panel__footer .el-button:nth-child(2) {
   border: 0;
+  background: linear-gradient(90deg, #2b396e 0%, #2a5082 100%);
 }
-.night .el-date-table th,.night .el-date-picker__time-header{
-  border-bottom: solid 1px #39424D;
+
+.night .el-date-table th,
+.night .el-date-picker__time-header {
+  border-bottom: solid 1px #39424d;
 }
-.night .el-popper[x-placement^=bottom] .popper__arrow::after{
-  /*border-bottom-color: #2a3242;*/
-  border-bottom-color: transparent;
+
+.night .el-popper[x-placement^=bottom] .popper__arrow::after {
+  border-bottom-color: #2a3242;
 }
-.night .el-popper[x-placement^=bottom] .popper__arrow{
-  /*border-bottom-color: #2a3242;*/
-  border-bottom:none;
+
+.night .el-popper[x-placement^=bottom] .popper__arrow {
+  /* border-bottom-color: #2a3242; */
+  border-bottom: none;
 }
-.el-popper .popper__arrow{
-  border:none !important;
+
+.el-popper .popper__arrow {
+  border: none !important;
 }
+
 /* otc 交易中支付码样式-任付伟添加 */
-.day .el-popper[x-placement^=bottom] .popper__arrow::after{
-  border-bottom-color: #EAF4FE;
+.day .el-popper[x-placement^=bottom] .popper__arrow::after {
+  border-bottom-color: #eaf4fe;
 }
-.day .el-popover{
-  background: #EAF4FE;
+
+.day .el-popover {
+  background: #eaf4fe;
 }
+
 .night .el-popover {
-  background: #2A3242;
-  border: 1px solid #2A3242;
+  border: 1px solid #2a3242;
+  background: #2a3242;
 }
-.night .el-popper[x-placement^=bottom] .popper__arrow::after{
-  /* border-bottom-color: #fff; */
-  border-bottom-color: #2A3242;
-}
+
 /* otc 交易中支付码样式-任付伟添加结束 */
+
 /* 修改全局样式 */
-.el-pagination{
-  margin-top:10px;
-  margin-bottom:10px;
+.el-pagination {
+  margin-top: 10px;
+  margin-bottom: 10px;
   text-align: center;
 }
+
 /* 设置全局下拉框样式 */
-.night .el-select-dropdown{
-  background: #2A3242;
+.night .el-select-dropdown {
+  background: #2a3242;
 }
-.night .el-select-dropdown__item{
-  color:#7A8093;
+
+.night .el-select-dropdown__item {
+  color: #7a8093;
 }
-.night .el-select-dropdown__item.hover, .el-select-dropdown__item:hover{
-  background-color: #338FF5!important;
-  color:#fff;
+
+.night .el-select-dropdown__item.hover,
+.el-select-dropdown__item:hover {
+  color: #fff;
+  background-color: #338ff5 !important;
 }
-.night .el-select-dropdown__item.selected{
-  color:#fff!important;
+
+.night .el-select-dropdown__item.selected {
+  color: #fff !important;
 }
-.night .el-select-dropdown__wrap.el-scrollbar__wrap{
-  margin-bottom: -10px!important;
+
+.night .el-select-dropdown__wrap.el-scrollbar__wrap {
+  margin-bottom: -10px !important;
 }
-.night .el-popper[x-placement^=top] .popper__arrow::after{
-  border-top-color: #2A3242;
+
+.night .el-popper[x-placement^=top] .popper__arrow::after {
+  border-top-color: #2a3242;
 }
-.day .el-select-dropdown__wrap.el-scrollbar__wrap{
-  margin-bottom:-10px!important;
+
+.day .el-select-dropdown__wrap.el-scrollbar__wrap {
+  margin-bottom: -10px !important;
 }
-/*全局二次弹窗样式*/
+
+/* 全局二次弹窗样式 */
 .day .el-message-box {
   background: #fff;
 }
+
 .day .el-message-box__btns button:nth-child(1) {
-  border: 1px solid rgba(51,143,245,1);
+  border: 1px solid rgba(51, 143, 245, 1);
+  color: #63a5ef;
   background-color: transparent;
-  color: #63A5EF;
 }
+
 .day .el-message-box__message p {
   color: #333;
 }
+
 .day .el-message-box__btns button:nth-child(2) {
-  background:linear-gradient(81deg,rgba(43,57,110,1) 0%,rgba(42,80,130,1) 100%);
+  background: linear-gradient(81deg, rgba(43, 57, 110, 1) 0%, rgba(42, 80, 130, 1) 100%);
 }
-/*全局二次弹窗样式*/
+
+/* 全局二次弹窗样式 */
 .night .el-message-box__header {
   padding: 0;
 }
+
 .night .el-message-box {
-  background:rgba(40,51,74,1);
+  background: rgba(40, 51, 74, 1);
 }
+
 .night .el-button:hover {
   color: #fff;
 }
+
 .night .el-message-box__btns button:nth-child(1) {
-  border: 1px solid rgba(51,143,245,1);
-  background-color: #28334A;
+  border: 1px solid rgba(51, 143, 245, 1);
   color: #fff;
+  background-color: #28334a;
 }
+
 .night .el-message-box__message p {
   color: #fff;
 }
-/*移动端 消息*/
-.mobile .el-message-box__message{
-  /*font-size: 0.7rem;*/
+
+/* 移动端 消息 */
+.mobile .el-message-box__message {
+  /* font-size: 0.7rem; */
 }
+
 .mobile .el-message .el-message__content,
-.mobile .el-message .el-icon-error
-{
+.mobile .el-message .el-icon-error {
   font-size: 40px;
 }
+
 .night .el-message-box__btns button:nth-child(2) {
-  background:linear-gradient(81deg,rgba(43,57,110,1) 0%,rgba(42,80,130,1) 100%);
+  background: linear-gradient(81deg, rgba(43, 57, 110, 1) 0%, rgba(42, 80, 130, 1) 100%);
 }
-.el-message{
+
+.el-message {
   z-index: 2300 !important;
 }
+
 /* 任付伟增加开始 */
+
 /* 商家图标鼠标放上去显示的样式 */
-.night .el-tooltip__popper{
-  padding: 7px 10px 7px 10px;
+.night .el-tooltip__popper {
+  padding: 7px 10px;
 }
+
 .night .el-tooltip__popper.is-dark {
+  color: black;
+
   /* background: #7a98f7;
   color: #fff; */
   background: #fff;
-  color: black;
 }
-.night .el-tooltip__popper .popper__arrow {
-  border-bottom-color: #fff !important;
-  /* border-left-color: #fff !important; */
-}
+
+.night .el-tooltip__popper .popper__arrow,
 .night .el-tooltip__popper .popper__arrow::after {
   border-bottom-color: #fff !important;
-  /* border-left-color: #fff !important; */
 }
+
 /* 商家图标鼠标放上去显示的样式 */
-.day .el-tooltip__popper{
-  padding: 7px 10px 7px 10px;
+.day .el-tooltip__popper {
+  padding: 7px 10px;
 }
+
 .day .el-tooltip__popper.is-dark {
+  color: #fff;
   background: black;
-  color: #FFFFFF;
 }
-.day .el-tooltip__popper .popper__arrow {
-  border-bottom-color: black !important;
-  /* border-left-color: black !important; */
-}
+
+.day .el-tooltip__popper .popper__arrow,
 .day .el-tooltip__popper .popper__arrow::after {
   border-bottom-color: black !important;
-  /* border-left-color: black !important; */
 }
-/* 任付伟增加结束 */

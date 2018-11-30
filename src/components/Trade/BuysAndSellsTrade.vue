@@ -242,151 +242,181 @@ export default {
 <style scoped lang="scss">
   @import '../../../static/css/scss/index.scss';
   @import '../../../static/css/scss/Trade/TradeCenter.scss';
+
   .buys-and-sells-box {
     /*width:433px;*/
     > .inner-box {
       > .title {
-        height: 34px;
-        line-height: 34px;
-        margin-bottom: 1px;
-        box-shadow: 0 2px 6px rgba(0,0,0,.1);
         display: flex;
+        height: 34px;
         padding:0 4.5%;
+        margin-bottom: 1px;
+        line-height: 34px;
+        box-shadow: 0 2px 6px rgba(0,0,0,.1);
+
         > .text {
-          flex:1;
           /*font-weight: 700;*/
           display: inline-block;
+          flex:1;
           height: 100%;
+
           >span{
-            text-indent: 4px;
             display: inline-block;
             height: 100%;
             border-bottom: 2px solid $mainColor;
+            text-indent: 4px;
             color:$mainColor;
           }
         }
+
         /*买卖单顺序操作按钮*/
         >.right{
           flex:1;
           text-align: right;
+
           >button{
-            cursor:pointer;
             width:28px;
             height:20px;
             margin:8px 8px 0 0;
+            background: url(../../assets/develop/middle.png) no-repeat center center;
             -webkit-background-size: 28px 20px;
             background-size: 28px 20px;
-            background: url(../../assets/develop/middle.png) no-repeat center center;
+            cursor:pointer;
           }
+
           >.middle{
           }
+
           >.bottom{
             background-image: url(../../assets/develop/buys.png);
           }
+
           >.top{
             background-image: url(../../assets/develop/sells.png);
           }
         }
       }
+
       >.content {
         >.inner-box{
           /*表头*/
           >.title-box{
-            height:30px;
-            line-height:30px;
-            padding:0 4.5%;
             position: relative;
             z-index: 2;
+            height:30px;
+            padding:0 4.5%;
+            line-height:30px;
+
             .header{
               /*display:flex;*/
               >span{
+                /*border:1px solid red;*/
+                display:inline-block;
+                box-sizing: border-box;
+
                 /*flex:1;*/
                 width:29%;
+                text-align: right;
                 white-space:nowrap;
+
                 &:nth-of-type(1){
                   width:13%;
                   text-align: left;
                   white-space:nowrap;
                 }
-                text-align: right;
-                /*border:1px solid red;*/
-                display:inline-block;
-                box-sizing: border-box;
+
                 &.buy-and-sell-index{
                   color: transparent;
                 }
               }
             }
           }
+
           >.outer-box{
-            overflow: hidden;
             height:650px;
+            overflow: hidden;
+
             >.content-box{
               height:650px;
-              /*background-color: pink;*/
-              transition: all 0.5s;
               margin-top:-300px;
+
+              /*background-color: pink;*/
+              transition: all .5s;
+
               >.buys-list,.sells-list{
-                font-size: 12px;
                 /*padding:0 20px;*/
                 height:600px;
+                font-size: 12px;
+
                 >dd{
                   height: 30px;
                   line-height: 30px;
+
                   >.inner{
-                    padding:0 4.5%;
                     position: relative;
                     z-index: 1;
+                    padding:0 4.5%;
+
                     >.buy-bg{
                       color:$upColor;
                     }
+
                     >.sell-bg{
                       color:$downColor;
                     }
+
                     >span{
-                      width:29%;
-                      &:nth-of-type(1){
-                        width:13%;
-                        white-space:nowrap;
-                        text-align: left;
-                      }
-                      text-align: right;
                       /*border:1px solid red;*/
                       display:inline-block;
                       box-sizing: border-box;
+                      width:29%;
+                      text-align: right;
+
+                      &:nth-of-type(1){
+                        width:13%;
+                        text-align: left;
+                        white-space:nowrap;
+                      }
                     }
+
                     >.amount{
                       /*padding-right:18%;*/
                     }
+
                     >.color-buy-bg,>.color-sell-bg{
-                      max-width:100%;
                       position: absolute;
-                      right:0;
-                      top:0;
-                      height:30px;
                       z-index: 0;
-                      opacity: 0.5;
+                      top:0;
+                      right:0;
+                      max-width:100%;
+                      height:30px;
+                      opacity: .5;
                       transition: all 1.5s;
                     }
+
                     >.color-buy-bg{
-                      background-color:rgba(212,88,88,0.4);
+                      background-color:rgba(212,88,88,.4);
                     }
+
                     >.color-sell-bg{
-                      background-color:rgba(0,128,105,0.4);
+                      background-color:rgba(0,128,105,.4);
                     }
                   }
                 }
               }
+
               /*最新价*/
               .new-price{
                 height:50px;
                 line-height:50px;
               }
+
               /*买入表*/
               >.buys-list{
                 &.height22{
                   overflow: hidden;
                 }
+
                 >.buys-item{
                 }
               }
@@ -395,39 +425,50 @@ export default {
         }
       }
     }
+
     &.night {
       color: $nightFontColor;
+
       > .inner-box {
         > .title {
           background-color: $mainContentNightBgColor;
-          box-shadow:2px 0px 3px rgba(27,35,49,1);
+          box-shadow:2px 0 3px rgba(27,35,49,1);
+
           > .text {
             >span{
             }
           }
+
           /*买卖单顺序操作按钮*/
           >.right{
             >button{
             }
+
             >.middle{
             }
+
             >.bottom{
             }
+
             >.top{
             }
           }
         }
+
         >.content {
           background-color: $mainContentNightBgColor;
+
           >.inner-box{
             /*表头*/
             >.title-box{
               .header{
                 color:$mainNightTitleColor;
+
                 >span{
                 }
               }
             }
+
             >.outer-box{
               >.content-box{
                 >.buys-list,.sells-list{
@@ -435,30 +476,39 @@ export default {
                     &.odd,&.even{
                       background-color: #1a1d2f;
                     }
+
                     &:hover{
-                      background-color:rgba(255, 255, 255, 0.2);
+                      background-color:rgba(255, 255, 255, .2);
                     }
+
                     >.inner{
                       >span{
                       }
+
                       >.amount{
                       }
+
                       >.color-buy-bg,>.color-sell-bg{
                       }
+
                       >.color-buy-bg{
                       }
+
                       >.color-sell-bg{
                       }
                     }
                   }
                 }
+
                 /*最新价*/
                 .new-price{
                 }
+
                 /*买入表*/
                 >.buys-list{
                   &.height22{
                   }
+
                   >.buys-item{
                   }
                 }
@@ -468,30 +518,38 @@ export default {
         }
       }
     }
+
     &.day {
       > .inner-box {
         > .title {
           color: $dayMainTitleColor;
           background-color: $dayMainBgColor;
-          box-shadow:2px 0px 3px rgba(239,239,239,1);
+          box-shadow:2px 0 3px rgba(239,239,239,1);
+
           > .text {
             >span{
             }
           }
+
           /*买卖单顺序操作按钮*/
           >.right{
             >button{
             }
+
             >.middle{
             }
+
             >.bottom{
             }
+
             >.top{
             }
           }
         }
+
         >.content {
           background-color: #fff;
+
           >.inner-box{
             /*表头*/
             >.title-box{
@@ -500,6 +558,7 @@ export default {
                 }
               }
             }
+
             >.outer-box {
               >.content-box{
                 >.buys-list,.sells-list{
@@ -507,29 +566,37 @@ export default {
                     &.odd,&.even,&:hover{
                       background-color: #f2f2f2;
                     }
+
                     >.inner{
                       >span{
                       }
+
                       >.amount{
                       }
+
                       >.color-buy-bg,>.color-sell-bg{
                       }
+
                       >.color-buy-bg{
-                        background-color:rgba(212,88,88,0.8);
+                        background-color:rgba(212,88,88,.8);
                       }
+
                       >.color-sell-bg{
-                        background-color:rgba(0,128,105,0.8);
+                        background-color:rgba(0,128,105,.8);
                       }
                     }
                   }
                 }
+
                 /*最新价*/
                 .new-price{
                 }
+
                 /*买入表*/
                 >.buys-list{
                   &.height22{
                   }
+
                   >.buys-item{
                   }
                 }

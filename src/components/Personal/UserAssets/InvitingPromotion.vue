@@ -540,29 +540,36 @@ export default {
 </script>
 <style scoped lang="scss">
   @import "../../../../static/css/scss/Personal/IndexPersonal";
+
   .invitation-promotion{
     >.invitation-promotion-main{
       .code-copy {
-        color: #338FF5;
+        color: #338ff5;
       }
+
       /*推广信息*/
       >.extension-info{
         min-height: 200px;
+
         >.extension-info-header{
           height: 56px;
         }
+
         >.extension-info-content{
           min-height: 130px;
+
           >.info-record {
             width: 100%;
             height: 120px;
             padding: 0 17px;
             margin-top: 19px;
+
             >.extension-code,
             >.extension-link{
+              display: flex;
               width: 100%;
               height: 60px;
-              display: flex;
+
               >.code-left,
               >.code-right,
               >.link-left,
@@ -570,20 +577,24 @@ export default {
                 flex: 1;
                 line-height: 60px;
               }
+
               >.code-right,
               >.link-right{
                 flex: 2;
+
                 >.code-right-rendering,
                 >.code-right-rendering {
                   margin-right: 10px;
                 }
+
                 >.code-copy {
-                  text-align: center;
+                  position: relative;
                   display: inline-block;
                   width: 80px;
                   height: 26px;
                   line-height: 26px;
-                  position: relative;
+                  text-align: center;
+
                   >.ercode {
                     position: absolute;
                     bottom: 35px;
@@ -594,210 +605,261 @@ export default {
               }
             }
           }
+
           >.promotion-box {
             display: flex;
             height: 160px;
+
             >.promotion-number {
               flex: 1;
+
               >.promotion-info {
-                text-align: center;
                 width: 200px;
                 margin: 45px auto;
+                text-align: center;
               }
             }
           }
         }
       }
+
       /*推广统计*/
       >.extension-statistics{
         min-height: 200px;
+
         >.extension-statistics-header{
-          height: 56px;
           display: flex;
+          height: 56px;
+
           >.header-right {
             flex: 1;
           }
+
           >.header-select {
             text-align: right;
           }
         }
+
         >.extension-statistics-content{
           min-height: 130px;
         }
       }
+
       /*奖励记录*/
       >.award-record{
         min-height: 200px;
+
         >.award-record-header{
           height: 56px
         }
+
         >.award-record-content{
           min-height: 130px;
         }
       }
     }
+
     &.night{
-      background-color: $nightBgColor;
       color:$nightFontColor;
+      background-color: $nightBgColor;
+
       >.background-color {
         background-color: $nightMainBgColor;
       }
+
       .invitation-promotion-main{
         >.extension-info{
           background-color: $nightMainBgColor;
+
           >.extension-info-header{
-            border-bottom: 1px solid #39424D;
+            border-bottom: 1px solid #39424d;
+
             >.header-color {
               color: #fff;
             }
           }
+
           >.extension-info-content{
             >.info-record {
               background: #283049;
+
               >.extension-code {
                 border-bottom: 1px solid #364654;
               }
+
               >.extension-code,
               >.extension-link{
                 >.code-left,
                 >.link-left {
-                  color: #9DA5B3;
+                  color: #9da5b3;
                 }
+
                 >.code-right,
                 >.link-right{
                   >.code-right-rendering {
-                    color: #9DA5B3;
+                    color: #9da5b3;
                   }
+
                   >.code-copy {
-                    color: #338FF5;
-                    background-color: #45535E;
+                    color: #338ff5;
+                    background-color: #45535e;
                   }
                 }
               }
             }
+
             >.promotion-box {
               .promotion-info {
                 .info-left-text {
-                  color: #9DA5B3;
+                  color: #9da5b3;
                 }
               }
+
               .info-left,
               .info-right {
-                color: #338FF5;
+                color: #338ff5;
               }
             }
           }
         }
+
         >.extension-statistics {
           background-color: $nightMainBgColor;
+
           >.extension-statistics-header {
-            border-bottom: 1px solid #39424D;
+            border-bottom: 1px solid #39424d;
+
             >.header-color {
               color: #fff;
             }
           }
         }
+
         >.award-record {
           background-color: $nightMainBgColor;
+
           >.award-record-header {
-            border-bottom: 1px solid #39424D;
+            border-bottom: 1px solid #39424d;
+
             >.header-color {
               color: #fff;
             }
           }
         }
       }
+
       .invitation-promotion-header {
         .header-content {
-          color: #338FF5;
+          color: #338ff5;
         }
       }
     }
+
     &.day{
-      background-color: $dayBgColor;
       color:$dayFontColor;
+      background-color: $dayBgColor;
+
       >.background-color {
         background-color: #ccc;
       }
+
       .invitation-promotion-main {
         >.extension-info{
-          background:rgba(255,255,255,1);
           border:1px solid rgba(236,241,248,1);
+          background:rgba(255,255,255,1);
+
           >.extension-info-header{
             border-bottom:1px solid rgba(236,241,248,1);
+
             >.header-color {
               color: #333;
             }
           }
+
           >.extension-info-content{
             >.info-record {
-              background: #F3F8FF;
+              background: #f3f8ff;
+
               >.extension-code {
                 border-bottom: 1px solid #ecf1f8;
+
                 >.extension-code,
                 >.extension-link{
                   >.code-left,
                   >.link-left {
                     color: #333;
                   }
+
                   >.code-right,
                   >.link-right {
                     >.code-right-rendering {
                       color: #333;
                     }
+
                     >.code-copy {
+                      border:1px solid rgba(125,144,172,1);
                       color: red;
                       background: rgb(255,255,255);
-                      border:1px solid rgba(125,144,172,1);
                     }
                   }
                 }
               }
             }
+
             >.promotion-box {
               .promotion-info {
                 .info-left-text {
                   color: #ccc;
                 }
+
                 .color-text {
                   color: #333;
                 }
               }
+
               .info-left,
               .info-right {
                 >.info-left-color {
-                  color: #338FF5;
+                  color: #338ff5;
                 }
               }
             }
           }
         }
+
         >.extension-statistics {
+          border:1px solid rgba(38,47,56,.1);
           background:rgba(255,255,255,1);
-          border:1px solid rgba(38,47,56,0.1);
+
           >.extension-statistics-header {
             border-bottom: 1px solid rgba(236,241,248,1);
+
             >.header-color {
               color: #333;
             }
           }
         }
+
         >.award-record {
+          border:1px solid rgba(38,47,56,.1);
           background:rgba(255,255,255,1);
-          border:1px solid rgba(38,47,56,0.1);
+
           >.award-record-header {
             border-bottom: 1px solid rgba(236,241,248,1);
+
             >.header-color {
               color: #333;
             }
           }
         }
       }
+
       .invitation-promotion-header {
-        background:rgba(255,255,255,1);
         border:1px solid rgba(236,241,248,1);
+        background:rgba(255,255,255,1);
+
         .header-content {
-          color: #338FF5;
+          color: #338ff5;
         }
       }
     }

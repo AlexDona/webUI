@@ -1,8 +1,9 @@
-/*个人中心（白色主题）*/
-.credited-credited.personal.day .el-dialog{
+/* 个人中心（白色主题） */
+.credited-credited.personal.day .el-dialog {
   background-color: #fff;
 }
+
 .credited-credited.personal.day .el-button--primary {
-  background:linear-gradient(0deg,rgba(43,57,110,1),rgba(42,80,130,1));
   color: #fff;
+  background: linear-gradient(0deg, rgba(43, 57, 110, 1), rgba(42, 80, 130, 1));
 }

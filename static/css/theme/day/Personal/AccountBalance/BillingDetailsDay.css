@@ -1,33 +1,41 @@
-/*个人中心（白色主题）*/
+/* 个人中心（白色主题） */
 .billing-details.personal.day .el-table th,
-.billing-details.personal.day .el-table tr{
+.billing-details.personal.day .el-table tr {
   background-color: #fff;
 }
+
 .billing-details.personal.day .el-table thead {
   color: #617499;
 }
+
 .billing-details.personal.day .el-table th.is-leaf {
   border-bottom: 0;
 }
-.billing-details.personal.day .el-table td{
-  background-color: #fff;
-  color: #ccc;
+
+.billing-details.personal.day .el-table td {
   border-bottom: 0;
-}
-.billing-details.personal.day .el-input__inner {
-  background-color: #19202E;
   color: #ccc;
+  background-color: #fff;
 }
+
 .billing-details.personal.day .el-input__inner {
-  background:rgba(255,255,255,1);
-  border:1px solid #ECF1F8;
+  color: #ccc;
+  background-color: #19202e;
 }
-.billing-details.personal.day .el-table th>.cell {
+
+.billing-details.personal.day .el-input__inner {
+  border: 1px solid #ecf1f8;
+  background: rgba(255, 255, 255, 1);
+}
+
+.billing-details.personal.day .el-table th > .cell {
   color: #333;
 }
+
 .billing-details.personal.day .el-table .cell {
-  color: #7D90AC;
+  color: #7d90ac;
 }
+
 .billing-details.personal.day .el-table__empty-block {
   background-color: #fff;
 }

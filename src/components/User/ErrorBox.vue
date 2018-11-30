@@ -40,49 +40,56 @@ export default {
 </script>
 <style scoped lang="scss">
   @import '../../../static/css/scss/index';
+
   .animated-box {
     .err-box{
       height:40px;
-      overflow: hidden;
       border:1px solid transparent;
+      overflow: hidden;
+
       .triangle{
         display: inline-block;
-        border:8px solid transparent;
-        transform:rotate(90deg);
-        margin-right:-6px;
         margin-top:-14px;
+        margin-right:-6px;
+        border:8px solid transparent;
         vertical-align: middle;
+        transform:rotate(90deg);
       }
+
       span{
-        vertical-align: top;
         display:inline-block;
         height:40px;
-        line-height:40px;
-        font-size: 14px;
         padding:0 20px 0 30px;
         border-radius: 14px;
+        font-size: 14px;
+        line-height:40px;
+        vertical-align: top;
       }
     }
+
     &.night{
       .err-box{
         >.triangle{
           border-top-color:#17283d;
         }
+
         >span{
           color:$mainColor;
           background-color: #17283d;
         }
       }
     }
+
     &.day{
       .err-box{
         >.triangle{
           border-top-color:#ecf1f8;
         }
+
         >span{
+          border:1px solid #ecf1f8;
           color:$mainColor;
           background-color: #fff;
-          border:1px solid #ecf1f8;
         }
       }
     }

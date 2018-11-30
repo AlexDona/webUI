@@ -1,50 +1,62 @@
 /* tabs组件出现蓝色边框问题 */
-.personal-center.personal .el-tabs__active-bar{
+.personal-center.personal .el-tabs__active-bar {
   height: 0 !important;
 }
-.personal-center.personal .el-tabs__nav-wrap::after{
+
+.personal-center.personal .el-tabs__nav-wrap::after {
   background-color: transparent;
 }
-/*做二级导航宽度*/
-.personal-center.personal .el-tabs--left .el-tabs__item.is-left{
+
+/* 做二级导航宽度 */
+.personal-center.personal .el-tabs--left .el-tabs__item.is-left {
   width: 162px;
   text-align: left;
 }
-personal-center.personal .el-tabs__nav{
+
+personal-center.personal .el-tabs__nav {
   height: 495px;
 }
-.personal-center.personal .el-tabs__item{
+
+.personal-center.personal .el-tabs__item {
   height: 34px;
-  line-height: 34px;
   margin: 10px 0;
+  line-height: 34px;
 }
+
 .personal-center.personal .el-dialog:nth-child(1) {
-  border-radius: 10px;
   top: 15%;
+  border-radius: 10px;
 }
-.personal-center.personal .el-tabs--left .el-tabs__header.is-left{
+
+.personal-center.personal .el-tabs--left .el-tabs__header.is-left {
   margin-right: 16px;
 }
-.personal-center.personal .is-disabled{
+
+.personal-center.personal .is-disabled {
   font-size: 18px;
 }
+
 .personal-center.personal .el-tabs__content {
+  position: relative;
   float: right;
   width: 970px;
   overflow: unset;
-  position: relative;
 }
+
 .personal-center.personal .el-tabs--left {
   overflow: unset;
 }
+
 .personal-center.personal .el-tabs--left .el-tabs__nav-wrap.is-left {
-  margin-right: 0px;
+  margin-right: 0;
 }
+
 .personal-center.personal .warning .el-dialog {
   width: 350px;
   border-radius: 5px;
 }
+
 .personal-center.personal .el-tabs__item.is-disabled:hover {
-  color: #fff;
   border-left: 4px solid #fff;
+  color: #fff;
 }

@@ -127,10 +127,10 @@ export default {
 
 <style>
   .body-container {
-    font-family: MicrosoftYaHei,"Avenir", Helvetica, Arial, sans-serif;
+    height:100%;
+    font-size: 14px;
+    font-family: "MicrosoftYaHei","Avenir", Helvetica, Arial, sans-serif;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
-    font-size: 14px;
-    height:100%;
   }
 </style>

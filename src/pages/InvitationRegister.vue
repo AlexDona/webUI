@@ -138,55 +138,64 @@ export default {
 </script>
 <style scoped lang="scss" type="text/scss">
   .invitation-register-box{
-    background: linear-gradient(150deg,rgba(30,38,54,1),rgba(37,75,117,1));
-    height:100%;
     width:100%;
+    height:100%;
     overflow:hidden;
+    background: linear-gradient(150deg,rgba(30,38,54,1),rgba(37,75,117,1));
+
     >.logo{
-      height:120px;
-      line-height: 120px;
-      padding:0 20px;
       box-sizing: border-box;
+      height:120px;
+      padding:0 20px;
+      line-height: 120px;
+
       >img{
-        height:100px;
         display: inline-block;
+        height:100px;
         margin-top:10px;
       }
     }
+
     >.inner-box{
       width:100%;
       height:100%;
-      color:#fff;
+      padding:4rem 2rem;
       font-size: .8rem;
       text-align: center;
-      padding:4rem 2rem;
+      color:#fff;
+
       .strong{
         font-weight: 700;
         font-size: 1.2rem;
         line-height: 2.4rem;
         white-space:nowrap;
+
         >.yellow{
           color:#ffec2d;
         }
       }
+
       >.bg{
         height:18rem;
+
         >img{
-          margin: 2rem auto;
           width:80%;
+          margin: 2rem auto;
         }
       }
+
       >.register-btn{
+        display: inline-block;
+        height:3rem;
+
         /*width:10rem;*/
         padding:0 .5rem;
-        height:3rem;
+        border-radius:10px;
         font-size: 1.2rem;
         line-height: 3rem;
-        background:linear-gradient(81deg,rgba(61,152,249,1) 0%,rgba(71,135,255,1) 100%);
-        box-shadow:0px 3px 8px 0px rgba(26,42,71,1);
-        border-radius:10px;
         color:#fff;
-        display: inline-block;
+        background:linear-gradient(81deg,rgba(61,152,249,1) 0%,rgba(71,135,255,1) 100%);
+        box-shadow:0 3px 8px 0 rgba(26,42,71,1);
       }
     }
   }

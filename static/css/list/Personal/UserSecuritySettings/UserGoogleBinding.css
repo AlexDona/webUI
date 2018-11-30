@@ -1,7 +1,8 @@
-/* 覆盖Element样式*/
+/* 覆盖Element样式 */
 .binding-google .el-form-item__content {
   width: 600px;
 }
+
 .binding-google .google-info-show .el-form .el-form-item .el-form-item__label {
   width: 160px !important;
 }

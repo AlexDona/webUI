@@ -1,68 +1,79 @@
-/* 覆盖Element样式*/
+/* 覆盖Element样式 */
 .identity-authentication.personal .el-form-item__content {
   width: 600px;
 }
+
 /* 折叠面板默认的边框修改 */
 .identity-authentication.personal .el-collapse,
 .identity-authentication.personal .el-collapse-item__header,
-.identity-authentication.personal .el-collapse-item__wrap
-{
-  background-color: transparent;
+.identity-authentication.personal .el-collapse-item__wrap {
   border: 0;
+  background-color: transparent;
 }
-/*身份认证 折叠框label*/
-/*高*/
+
+/* 身份认证 折叠框label */
+
+/* 高 */
 .identity-authentication.personal.night .el-collapse-item__header {
   height: 56px;
-  margin:0 23px;
+  margin: 0 23px;
 }
-/*行高*/
+
+/* 行高 */
 .identity-authentication.personal .el-collapse-item__header,
-.identity-authentication.personal .el-collapse-item__arrow{
+.identity-authentication.personal .el-collapse-item__arrow {
   line-height: 56px;
 }
-/*字体*/
-.identity-authentication.personal .el-collapse-item__header{
+
+/* 字体 */
+.identity-authentication.personal .el-collapse-item__header {
   font-size: 16px;
 }
-/*select*/
-.identity-authentication.personal
-.el-input__inner{
+
+/* select */
+.identity-authentication.personal .el-input__inner {
   width: 270px;
   height: 38px;
   line-height: 38px;
 }
-/*高级认证弹框*/
-.identity-authentication.personal .el-dialog{
+
+/* 高级认证弹框 */
+.identity-authentication.personal .el-dialog {
+  top: 10%;
   width: 470px;
   height: 400px;
-  top: 10%;
   border-radius: 7px;
 }
-.identity-authentication.personal .el-dialog__header{
+
+.identity-authentication.personal .el-dialog__header {
   height: 44px;
-  line-height: 44px;
+  padding: 0 0 0 29px;
   border-radius: 7px 7px 0 0;
-  padding:0 0 0 29px;
+  line-height: 44px;
   text-align: left;
 }
-.identity-authentication.personal .el-dialog__headerbtn{
+
+.identity-authentication.personal .el-dialog__headerbtn {
   top: 14px;
 }
-.identity-authentication.personal .el-dialog__title{
+
+.identity-authentication.personal .el-dialog__title {
   font-size: 20px;
 }
+
 .identity-authentication.personal .el-upload--picture-card {
   width: 100%;
   height: 0;
-  line-height: 0;
   border: 0;
+  line-height: 0;
 }
+
 .identity-authentication.personal .el-upload-list__item {
   width: 100%;
   height: 115px;
 }
+
 /* 实名认证表单样式 */
-.identity-authentication.personal .identity-authentication-main .name-authentication-content .el-form .el-form-item .el-form-item__content{
+.identity-authentication.personal .identity-authentication-main .name-authentication-content .el-form .el-form-item .el-form-item__content {
   margin-left: 140px !important;
 }

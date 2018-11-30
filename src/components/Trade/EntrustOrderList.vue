@@ -429,73 +429,92 @@ export default {
 </script>
 <style scoped lang="scss">
   @import '../../../static/css/scss/index.scss';
+
   .entrust-order-box{
     width:100%;
     height:416px;
     font-size: 12px;
+
     >.inner-box{
       position: relative;
+
       >.view-more{
         position: absolute;
-        right:0;
-        top:0;
-        height:34px;
-        line-height: 34px;
         z-index: 2000;
-        text-align: right;
+        top:0;
+        right:0;
+        height:34px;
         padding-right:27px;
+        line-height: 34px;
+        text-align: right;
+
         >a{
           color: $mainColor;
         }
       }
+
       /*主要内容*/
       .content-box{
-        padding:0 20px;
         /*min-width:1000px;*/
         width:100%;
+        padding:0 20px;
+
         &.history{
           >.thead{
             width:100%;
             font-size: 12px;
+
             >.th{
               white-space:nowrap;
+
               &.time{
                 width:16%;
               }
+
               &.price{
                 width: 15%;
               }
+
               &.count{
                 width:13%;
               }
+
               &.direction{
                 width:8%;
               }
+
               &.status{
                 width: 7%;
               }
             }
           }
+
           >.tbody{
             >.content{
               >.tr{
                 white-space:nowrap;
+
                 >.td{
-                  white-space:nowrap;
                   font-size: 12px;
+                  white-space:nowrap;
+
                   &.time{
                     width:16%;
                     font-size: 12px;
                   }
+
                   &.price{
                     width: 15%;
                   }
+
                   &.count{
                     width:13%;
                   }
+
                   &.direction{
                     width:8%;
                   }
+
                   &.status{
                     width: 7%;
                   }
@@ -504,84 +523,107 @@ export default {
             }
           }
         }
+
         /*表头*/
         >.thead{
           height:30px;
           line-height:30px;
+
           >.th{
             display:inline-block;
             font-size: 12px;
             white-space:nowrap;
+
             &.time{
               width:17%;
             }
+
             &.direction{
               width:8%;
             }
+
             &.price{
               width:13%;
             }
+
             &.count{
               width:13%;
             }
+
             &.entrust{
               width:17%;
             }
+
             &.already{
               width:10%;
             }
+
             &.type{
               width:7%;
             }
           }
         }
+
         /*表格内容*/
         >.tbody{
           .content{
             min-height:310px;
+
             /*未登录*/
             &.not-login{
-              text-align: center;
               line-height: 310px;
+              text-align: center;
+
               >a{
                 color:$mainColor;
               }
             }
+
             &.empty{
               >p{
                 line-height: 310px;
                 text-align: center;
               }
             }
+
             >.tr{
-              white-space:nowrap;
               height:30px;
-              line-height:30px;
               font-size: 14px;
+              line-height:30px;
+              white-space:nowrap;
+
               >.td{
-                font-size: 12px;
                 display:inline-block;
+                font-size: 12px;
+
                 &.time{
                   width:17%;
                 }
+
                 &.direction{
                   width:8%;
                 }
+
                 &.price{
                   width:14%;
                 }
+
                 &.count{
                   width:13%;
                 }
+
                 &.entrust{
                   width:16%;
                 }
+
                 &.already{
                   width:10%;
                 }
+
                 &.type{
                   width:7%;
                 }
+
                 &.todos{
                   >button{
                     color:$mainColor;
@@ -593,14 +635,17 @@ export default {
         }
       }
     }
+
     &.night{
-      background-color: $mainContentNightBgColor;
       color:$nightFontColor;
+      background-color: $mainContentNightBgColor;
+
       >.inner-box{
         >.view-more{
           >a{
           }
         }
+
         /*主要内容*/
         .content-box{
           &.history{
@@ -610,6 +655,7 @@ export default {
                 }
               }
             }
+
             >.tbody{
               >.content{
                 >.tr{
@@ -621,17 +667,21 @@ export default {
               }
             }
           }
+
           /*表头*/
           >.thead{
             >.th{
               &.time{
               }
+
               &.type{
               }
+
               &.price{
               }
             }
           }
+
           /*表格内容*/
           >.tbody{
             .content{
@@ -640,16 +690,21 @@ export default {
                 >a{
                 }
               }
+
               >.tr{
                 /*border-bottom:1px solid red;*/
                 border-color:rgba(57,66,77,.2);
+
                 >.td{
                   &.time{
                   }
+
                   &.type{
                   }
+
                   &.price{
                   }
+
                   &.todos{
                     >button{
                     }
@@ -661,14 +716,17 @@ export default {
         }
       }
     }
+
     &.day{
-      background-color: $mainDayBgColor;
       color:$dayFontColor;
+      background-color: $mainDayBgColor;
+
       >.inner-box{
         >.view-more{
           >a{
           }
         }
+
         /*主要内容*/
         .content-box{
           &.history{
@@ -678,6 +736,7 @@ export default {
                 }
               }
             }
+
             >.tbody{
               >.content{
                 >.tr{
@@ -689,17 +748,21 @@ export default {
               }
             }
           }
+
           /*表头*/
           >.thead{
             >.th{
               &.time{
               }
+
               &.type{
               }
+
               &.price{
               }
             }
           }
+
           /*表格内容*/
           >.tbody{
             .content{
@@ -708,15 +771,20 @@ export default {
                 >a{
                 }
               }
+
               >.tr{
                 border-color:rgba(57,66,77,.1);
+
                 >.td{
                   &.time{
                   }
+
                   &.type{
                   }
+
                   &.price{
                   }
+
                   &.todos{
                     >button{
                     }

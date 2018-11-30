@@ -143,67 +143,81 @@ export default {
 <style scoped lang="scss" type="text/scss">
   .currency-information-box{
     width:100%;
+
     >.inner-box{
+      display: flex;
       width:100%;
-      margin-left:10px;
-      display: flex;//
+      margin-left:10px;//
       >.left{
         width:180px;
         height:720px;
         margin-right:20px;
+
         >.title{
           height: 30px;
           line-height: 30px;
           text-align: center;
           color: #fff;
         }
+
         >.list{
-          text-align: center;
-          height: 100%;
           width:180px;
-          overflow-y: auto;
+          height: 100%;
           padding:0 2px;
+          overflow-y: auto;
+          text-align: center;
+
           >.currency-item{
-            line-height: 30px;
+            box-sizing: border-box;
             width:176px;
             height:30px;
-            box-sizing: border-box;
+            line-height: 30px;
+
             &.active{
-              color: #338FF5;
+              color: #338ff5;
             }
           }
         }
       }
+
       >.right{
-        width: 890px;
         box-sizing: border-box;
+        width: 890px;
         padding:29px 35px;
         line-height: 22px;
+
         >.inner-box{
           >h1{
+            margin-bottom:20px;
             font-weight: 700;
             font-size: 16px;
-            margin-bottom:20px;
           }
+
           img       {
           }
         }
-       >p{
-         padding:10px 0px;
-         >span{
-         }
-       }
+
+        >p{
+          padding:10px 0;
+
+          >span{
+          }
+        }
       }
     }
+
     &.night{
       background-color: #121824;
+
       >.inner-box{
         >.left{
-          background:#1E2636;
+          background:#1e2636;
+
           >.title{
-            background:rgba(51,66,95,0.5);
-            box-shadow:2px 0px 2px rgba(11,14,22,0.5)
+            background:rgba(51,66,95,.5);
+            box-shadow:2px 0 2px rgba(11,14,22,.5)
           }
+
           >.list{
             >.currency-item{
               &.active{
@@ -212,16 +226,20 @@ export default {
             }
           }
         }
+
         >.right{
+          color:#8ba0ca;
           background-color: #1e2636;
-          color:#8BA0CA;
+
           >.inner-box{
             >h1{
-              color:#338FF5;
+              color:#338ff5;
             }
           }
+
           >p{
-            padding:10px 0px;
+            padding:10px 0;
+
             >span{
               color:#fff;
             }
@@ -229,16 +247,20 @@ export default {
         }
       }
     }
+
     &.day{
       background-color: #fff;
+
       >.inner-box{
         >.left{
-          background:#fff;
           border:1px solid rgba(236,241,248,1);
+          background:#fff;
+
           >.title{
             background:rgba(51,143,245,.5);
-            box-shadow:2px 0px 2px rgba(202,216,231,1);
+            box-shadow:2px 0 2px rgba(202,216,231,1);
           }
+
           >.list{
             >.currency-item{
               &.active{
@@ -247,17 +269,21 @@ export default {
             }
           }
         }
+
         >.right{
-          background-color: #fff;
-          color:#8BA0CA;
           border:1px solid rgba(236,241,248,1);
+          color:#8ba0ca;
+          background-color: #fff;
+
           >.inner-box{
             >h1{
-              color:#338FF5;
+              color:#338ff5;
             }
           }
+
           >p{
-            padding:10px 0px;
+            padding:10px 0;
+
             >span{
               color:#fff;
             }

@@ -760,86 +760,103 @@ export default {
 </script>
 <style scoped lang="scss">
   @import "../../../../static/css/scss/Personal/IndexPersonal";
+
   .coin-orders{
     .search-condition-box{
       width:100%;
       padding:20px;
+
       >.condition-item{
-        height:34px;
-        line-height:34px;
         display:inline-block;
+        height:34px;
         margin:0 56px 20px 0;
+        line-height:34px;
+
         >.middle-line{
           display:inline-block;
           width:20px;
           height:30px;
           text-align: center;
         }
+
         &:last-of-type{
           margin-right:0;
         }
+
         >.currency-span{
           display:inline-block;
-          vertical-align: top;
           font-size: 12px;
-        }
-        >.currency-input{
-          color:#fff;
-          height:30px;
           vertical-align: top;
-          width:80px;
-          border:1px solid rgba(72,87,118,1);
-          border-radius:2px;
+        }
+
+        >.currency-input{
           box-sizing: border-box;
+          width:80px;
+          height:30px;
           padding:5px;
           margin:2px;
+          border:1px solid rgba(72,87,118,1);
+          border-radius:2px;
+          vertical-align: top;
+          color:#fff;
         }
+
         >.search-btn{
           width:60px;
           height:34px;
-          background:linear-gradient(90deg,rgba(43,57,110,1) 0%,rgba(42,80,130,1) 100%);
           border-radius:4px;
           color: #fff;
+          background:linear-gradient(90deg,rgba(43,57,110,1) 0%,rgba(42,80,130,1) 100%);
         }
       }
     }
+
     .repeal-btn{
       color:#338ff5;
     }
+
     .height500 {
       height: 545px;
     }
+
     &.night{
-      background-color: $nightBgColor;
       color:$nightFontColor;
+      background-color: $nightBgColor;
+
       .background-color {
         background-color: $nightMainBgColor;
+
         >.coin-color{
-          color: #338FF5;
+          color: #338ff5;
         }
       }
     }
+
     &.day{
-      background-color: $dayBgColor;
       color:$dayFontColor;
+      background-color: $dayBgColor;
+
       .background-color {
-        background:rgba(255,255,255,1);
         border:1px solid rgba(236,241,248,1);
+        background:rgba(255,255,255,1);
+
         >.coin-color{
-          color: #338FF5;
+          color: #338ff5;
         }
       }
+
       .search-condition-box{
         .condition-item{
           .currency-input {
-            background: #fff;
             border: 1px solid #ecf1f8;
             color: #333;
+            background: #fff;
           }
         }
       }
+
       .currency-span {
-        color: #7D90AC;
+        color: #7d90ac;
       }
 
     }

@@ -818,28 +818,35 @@ export default {
 </script>
 <style scoped lang="scss" type="text/scss">
 @import "../../../static/css/scss/index.scss";
+
 .otc-box{
   margin-top:66px;
+
   >.otc-center-content{
     width: 1150px;
-    margin: 36px auto 100px;
     padding-top: 30px;
+    margin: 36px auto 100px;
+
     >.otc-online-trading{
       >.otc-online-buy-and-sell-button{
         height: 45px;
+        padding: 50px 0 30px;
         line-height: 45px;
         text-align: center;
-        padding: 50px 0 30px;
       }
+
       >.otc-merchant-content{
         margin-top: 30px;
+
         >.otc-filtrate-publish{
           display: flex;
           justify-content: space-between;
-          padding: 25px 20px 0 20px;
+          padding: 25px 20px 0;
+
           >.otc-filtrate-box{
             display: flex;
             align-items: center;
+
             >.otc-filtrate-style{
               >.otc-filtrate-currency-name{
                 margin: 0 10px;
@@ -847,49 +854,58 @@ export default {
               }
             }
           }
+
           >.otc-publish-box{
             >.pay-style{
               position: relative;
               margin-right: 5px;
+
               >.pay-style-icon{
+                position: absolute;
+                z-index: 2;
+                top: 1px;
+                left: 10px;
                 width: 14px;
                 height: 14px;
-                position: absolute;
-                left: 10px;
-                top: 1px;
-                z-index: 2;
               }
             }
+
             >.currency-style{
               position: relative;
               margin-right: 5px;
+
               >.currency-style-icon{
+                position: absolute;
+                z-index: 2;
+                top: 1px;
+                left: 10px;
                 width: 14px;
                 height: 14px;
-                position: absolute;
-                left: 10px;
-                top: 1px;
-                z-index: 2;
               }
             }
           }
         }
+
         >.otc-merchant-list{
-          margin-top: 30px;
+          position: relative;
           height: 639px;
+          margin-top: 30px;
+
           .remark-tips{
             display: inline-block;
             width: 100px;
+            overflow: hidden;
             text-overflow: ellipsis; // 显示省略符号来代表被修剪的文本。
             white-space: nowrap; // 文本不会换行，文本会在在同一行上继续，直到遇到 <br> 标签为止。
-            overflow: hidden;
             cursor: pointer;
           }
+
           .page{
-            text-align: center;
-            margin-top: 10px;
             padding-bottom: 20px;
+            margin-top: 10px;
+            text-align: center;
           }
+
           .shang-icon{
             display: inline-block;
             width: 14px;
@@ -897,76 +913,89 @@ export default {
             vertical-align: top;
             cursor: pointer;
           }
+
           .xilian{
             vertical-align: middle;
           }
-          position: relative;
+
           >.pay-way{
-            display: inline-block;
-            top: 10px;
-            left: 616px;
             position: absolute;
             z-index: 1;
-          }
-          >.shade-pay-way{
+            top: 10px;
+            left: 616px;
             display: inline-block;
-            top: 15px;
-            left: 631px;
+          }
+
+          >.shade-pay-way{
             position: absolute;
             z-index: 2;
+            top: 15px;
+            left: 631px;
+            display: inline-block;
           }
         }
       }
     }
+
     >.otc-order-manage{
-      margin-top: 50px;
       position: relative;
+      margin-top: 50px;
+
       >.more{
         position: absolute;
         top: 440px;
-        font-size: 14px;
-        cursor: pointer;
-        width: 90px;
         display: inline-block;
+        width: 90px;
+        font-size: 14px;
         text-align: center;
+        cursor: pointer;
       }
+
       .otc-tab-pane-arrow-right{
         position: absolute;
-        right: -12px;
         top: 27px;
+        right: -12px;
         font-size: 20px;
       }
+
       .icon{
         position: absolute;
-        left: 35px;
         top: 22px;
+        left: 35px;
       }
     }
   }
+
   &.night{
     background-color: $mainNightBgColor;
+
     >.otc-center-content{
       >.otc-online-trading{
         >.otc-merchant-content{
           background-color: $mainContentNightBgColor;
+
           >.otc-filtrate-publish{
             >.otc-filtrate-box{
               >.otc-i-wan{
                 color: #fff;
               }
+
               >.otc-filtrate-style{
-                color: #A8AFBF;
+                color: #a8afbf;
+
                 .currencyNameActived{
-                  color: #338FF5;
+                  color: #338ff5;
                 }
               }
             }
+
             >.otc-publish-box{
               >.pay-style{
                 >.pay-style-icon{
                   color: #fff;
                 }
               }
+
               >.currency-style{
                 >.currency-style-icon{
                   color: #fff;
@@ -974,92 +1003,112 @@ export default {
               }
             }
           }
+
           >.otc-merchant-list{
             background-color:$mainContentNightBgColor;
+
             .red{
-              color: #D45858;
+              color: #d45858;
             }
+
             >.shade-pay-way{
               color: #617499;
             }
           }
+
           .page{
-            text-align: center;
+            padding: 20px 0;
             margin-top: -10px;
-            padding: 20px 0 20px 0;
+            text-align: center;
             background-color: $mainContentNightBgColor;
           }
         }
       }
+
       >.otc-order-manage{
         >.more{
-          color: #338FF5;
+          color: #338ff5;
         }
+
         .otc-tab-pane-arrow-right{
-          color: #338FF5;
+          color: #338ff5;
         }
       }
     }
   }
+
   &.day{
     background-color: $mainDayBgColor;
+
     >.otc-center-content{
       >.otc-online-trading{
         >.otc-online-buy-and-sell-button{
           background-color: $mainDayBgColor;
         }
+
         >.otc-merchant-content{
-          box-shadow:0px 0px 6px rgba(204,222,242,1);
           background-color: $mainDayBgColor;
+          box-shadow:0 0 6px rgba(204,222,242,1);
+
           >.otc-filtrate-publish{
             >.otc-filtrate-box{
               >.otc-i-wan{
-                color: #333333;
+                color: #333;
               }
+
               >.otc-filtrate-style{
-                color: #7D90AC;
+                color: #7d90ac;
+
                 .currencyNameActived{
-                  color: #338FF5;
+                  color: #338ff5;
                 }
+
                 >.otc-filtrate-currency-name{
                   cursor: pointer;
                 }
               }
             }
+
             >.otc-publish-box{
               >.pay-style{
                 >.pay-style-icon{
-                  color: #338FF5;
+                  color: #338ff5;
                 }
               }
+
               >.currency-style{
                 >.currency-style-icon{
-                  color: #338FF5;
+                  color: #338ff5;
                 }
               }
             }
           }
+
           >.otc-merchant-list{
             .red{
-              color: #D45858;
+              color: #d45858;
             }
+
             >.shade-pay-way{
               color: #617499;
             }
           }
+
           .page{
-            text-align: center;
-            margin-top: 10px;
             padding-bottom: 20px;
+            margin-top: 10px;
+            text-align: center;
           }
         }
       }
+
       >.otc-order-manage{
         >.more{
-          color: #338FF5;
+          color: #338ff5;
         }
+
         .otc-tab-pane-arrow-right{
-          color: #338FF5;
+          color: #338ff5;
         }
       }
     }

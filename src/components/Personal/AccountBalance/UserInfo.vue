@@ -330,33 +330,40 @@ export default {
 </script>
 <style scoped lang="scss">
   @import "../../../../static/css/scss/Personal/IndexPersonal";
+
   .user-info{
     >.user-info-main{
       height: 130px;
       padding: 16px 0;
+
       >.user-info-content-box {
         height: 100%;
+
         >.user,
         >.info,
         >.volume,
         >.asset {
           height: 100%;
         }
+
         >.user {
           >.user-background {
             width: 59px;
             height: 60px;
-            border-radius: 50%;
             margin: 15px 20px 0 36px;
+            border-radius: 50%;
           }
+
           >.text-align-id {
             width: 185px;
             margin-top: 25px;
           }
         }
+
         >.info {
           >.info-top {
             padding: 0 70px;
+
             >.icon-user-info,
             >.real-name {
               width: 26px;
@@ -364,14 +371,18 @@ export default {
               border-radius: 50%;
               line-height: 22px;
             }
+
             >.info-right {
               margin-right: 12px;
             }
           }
+
           >.info-centre {
             padding: 0 70px;
+
             >.info-picture {
               position: relative;
+
               >.info-centre-right{
                 position: absolute;
                 top: 0;
@@ -379,188 +390,230 @@ export default {
               }
             }
           }
+
           >.info-discount {
             padding: 0 70px;
           }
         }
+
         >.volume {
           >.volume-text {
             padding: 0 25px;
             margin-top: 23px;
           }
+
           >.volume-info {
             padding: 0 25px;
           }
         }
+
         >.asset {
           >.asset-text {
             padding: 0 20px;
             margin-top: 8px;
           }
+
           >.asset-info {
             padding: 0 20px;
           }
+
           >.asset-color {
             padding: 0 15px;
           }
         }
       }
     }
+
     &.night{
-      background-color: $nightBgColor;
       color:$nightFontColor;
+      background-color: $nightBgColor;
+
       >.user-info-main{
         background-color: $nightMainBgColor;
+
         >.user-info-content-box {
           >.user,
           >.info,
           >.volume {
-            border-right: 1px solid rgba(97,116,153,0.1);
+            border-right: 1px solid rgba(97,116,153,.1);
           }
+
           >.user {
             >.user-background{
               background:linear-gradient(90deg,rgba(43,57,110,1),rgba(42,80,130,1));
+
               .icon-user {
-                color: #E1F3FF;
+                color: #e1f3ff;
               }
             }
+
             >.text-align-id {
               .text-color {
-                color: rgba(255,255,255,0.9);
+                color: rgba(255,255,255,.9);
               }
+
               .color {
-                color: #338FF5 !important;
+                color: #338ff5 !important;
               }
             }
           }
+
           >.info {
             padding-top: 10px;
+
             >.info-top {
               >.icon-user-info,
               >.real-name {
-                background-color: #46525D;
+                background-color: #46525d;
+
                 >.icon-color {
-                  color: #D5D8DC;
+                  color: #d5d8dc;
                 }
               }
+
               >.real-name {
-                background-color: #338FF5;
+                background-color: #338ff5;
               }
             }
+
             >.info-centre {
               >.info-picture {
                 >.info-centre-right {
-                    color: #fff;
+                  color: #fff;
                 }
               }
+
               >.info-centre-left {
-                color: #9DA5B3;
+                color: #9da5b3;
               }
             }
+
             >.info-discount {
               >.discount-text {
-                color: #9DA5B3;
+                color: #9da5b3;
               }
+
               >.discount-state {
                 color: #fff;
               }
             }
           }
+
           >.volume,
           >.asset{
             >.volume-text,
             >.asset-text {
-              color: #9DA5B3;
+              color: #9da5b3;
             }
+
             >.volume-info,
             >.asset-info {
               >.info-color {
                 color: #fff;
               }
             }
+
             >.asset-color {
-              color: #9DA5B3;
+              color: #9da5b3;
             }
           }
         }
       }
     }
+
     &.day{
-      background-color: $dayBgColor;
       color:$dayFontColor;
+      background-color: $dayBgColor;
+
       >.user-info-main{
-        background-color: $dayBgColor;
+        border:1px solid rgba(38,47,56,.1);
         color:$dayFontColor;
-        border:1px solid rgba(38,47,56,0.1);
+        background-color: $dayBgColor;
+
         >.user-info-content-box {
           >.user,
           >.info,
           >.volume {
-            border-right: 1px solid rgba(97,116,153,0.1);
+            border-right: 1px solid rgba(97,116,153,.1);
           }
+
           >.user {
             >.user-background{
               background:linear-gradient(90deg,rgba(43,57,110,1),rgba(42,80,130,1));
+
               .icon-user {
-                color: #E1F3FF;
+                color: #e1f3ff;
               }
             }
+
             >.text-align-id {
               .text-color {
                 color: #333;
               }
+
               .color {
-                color: #338FF5 !important;
+                color: #338ff5 !important;
               }
             }
           }
+
           >.info {
             padding-top: 10px;
+
             >.info-top {
               >.icon-user-info,
               >.real-name {
-                background-color: #46525D;
+                background-color: #46525d;
+
                 >.icon-color {
                   color: #fff;
                 }
               }
+
               >.real-name {
-                background-color: #338FF5;
+                background-color: #338ff5;
               }
             }
+
             >.info-centre {
               >.info-picture {
                 >.info-centre-right {
                   color: #fff;
                 }
               }
+
               >.info-centre-left {
-                color: #333333;
+                color: #333;
               }
             }
+
             >.info-discount {
               >.discount-text {
-                color: #333333;
+                color: #333;
               }
+
               >.discount-state {
                 color: #fff;
               }
             }
           }
+
           >.volume,
           >.asset{
             >.volume-text,
             >.asset-text {
-              color: #333333;
+              color: #333;
             }
+
             >.volume-info,
             >.asset-info {
               >.info-color {
-                color: #338FF5;
+                color: #338ff5;
               }
             }
+
             >.asset-color {
-              color: #7D90AC;
+              color: #7d90ac;
             }
           }
         }

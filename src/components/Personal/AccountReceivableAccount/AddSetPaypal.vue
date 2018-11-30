@@ -313,141 +313,176 @@ export default {
 </script>
 <style scoped lang="scss">
   @import "../../../../static/css/scss/Personal/IndexPersonal";
+
   .add-payment {
     margin-top:66px;
     overflow: hidden;
+
     >.add-payment-main {
       width: 1100px;
       height: 700px;
       margin: 60px auto 100px;
+
       >.add-payment-header {
         display: flex;
+
         >.header-content-right,
         .header-content-left {
           flex: 1;
         }
+
         >.header-content-right {
           text-align: right;
         }
+
         >.header-content-left {
           text-align: left;
         }
       }
+
       >.add-payment-content {
         min-height: 300px;
         margin: 16px 25px;
+
         >.payment-content-title {
           height: 32px;
-          line-height: 32px;
           margin-bottom: 30px;
+          line-height: 32px;
         }
+
         >.payment-content-from {
           width: 800px;
           margin-left: 55px;
+
           .payment-input {
             width: 220px;
             height: 34px;
             padding-left: 15px;
           }
+
           .payment-upload {
             width: 118px;
             height: 106px;
-            text-align: center;
             line-height: 100px;
-          }
-          .payment-button {
-            padding: 10px 0;
-            width: 235px;
             text-align: center;
+          }
+
+          .payment-button {
+            width: 235px;
+            padding: 10px 0;
             margin: 30px 0 50px 188px;
+            text-align: center;
           }
         }
       }
     }
+
     &.night{
-      background-color: $nightBgColor;
       color:$nightFontColor;
+      background-color: $nightBgColor;
+
       .add-payment-main {
         background-color: $nightMainBgColor;
+
         >.add-payment-header {
-          border-bottom: 1px solid #39424D;
+          border-bottom: 1px solid #39424d;
+
           >.header-content-left {
             color: #fff;
           }
+
           >.header-content-right {
-            color: #A9BED4;
+            color: #a9bed4;
           }
         }
+
         >.add-payment-content {
           >.payment-content-title {
-            background:rgba(62,121,214,0.08);
-            color: #3E79D6;
+            color: #3e79d6;
+            background:rgba(62,121,214,.08);
           }
+
           >.payment-content-from {
             .payment-input {
               border: 1px solid #485776;
-              color: rgba(255,255,255,0.7);
+              color: rgba(255,255,255,.7);
+
               &:focus {
-                border: 1px solid #338FF5;
+                border: 1px solid #338ff5;
               }
             }
+
             .payment-content-name {
-              color: rgba(255,255,255,0.7);
+              color: rgba(255,255,255,.7);
             }
+
             .payment-upload {
-              background-color: #323E48;
+              background-color: #323e48;
+
               .icon-plus {
-                color: #828EA6;
+                color: #828ea6;
               }
             }
+
             .payment-button {
+              color: rgba(255,255,255,.7);
               background:linear-gradient(0deg,rgba(43,57,110,1),rgba(42,80,130,1));
-              color: rgba(255,255,255,0.7);
             }
           }
         }
       }
     }
+
     &.day{
-      background-color: $dayBgColor;
       color:$dayFontColor;
+      background-color: $dayBgColor;
+
       .add-payment-main {
-        background:rgba(255,255,255,1);
         border:1px solid rgba(246,246,246,1);
         border-radius:4px;
-        box-shadow:0px 0px 4px rgba(235,240,248,1);
+        background:rgba(255,255,255,1);
+        box-shadow:0 0 4px rgba(235,240,248,1);
+
         > .add-payment-header {
-          border-bottom: 1px solid rgba(57,66,77,0.1);
+          border-bottom: 1px solid rgba(57,66,77,.1);
+
           .header-content-right {
-            color: #7D90AC;
+            color: #7d90ac;
           }
         }
+
         >.add-payment-content {
           >.payment-content-title {
-            background:rgba(62,121,214,1);
             color: #ccc;
+            background:rgba(62,121,214,1);
           }
+
           >.payment-content-from {
             .payment-content-name {
               color: #333;
             }
+
             .payment-input {
-              background:rgba(255,255,255,1);
               border:1px solid rgba(236,241,248,1);
               color: #333;
+              background:rgba(255,255,255,1);
+
               &:focus {
-                border: 1px solid #338FF5;
+                border: 1px solid #338ff5;
               }
             }
+
             .payment-upload {
               background-color: #fff;
+
               .icon-plus {
                 color: #555;
               }
             }
+
             .payment-button {
-              background:linear-gradient(0deg,rgba(43,57,110,1),rgba(42,80,130,1));
               color: #ccc;
+              background:linear-gradient(0deg,rgba(43,57,110,1),rgba(42,80,130,1));
             }
           }
         }

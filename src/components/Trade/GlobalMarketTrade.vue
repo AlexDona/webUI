@@ -165,48 +165,60 @@ export default {
 <style scoped lang="scss">
   @import '../../../static/css/scss/index.scss';
   @import '../../../static/css/scss/Trade/TradeCenter.scss';
+
   .global-market-box{
     >.inner-box{
       >.title{
         height:34px;
-        line-height: 34px;
+        padding:0 4.5%;
+
         /*font-weight: 700;*/
         margin-bottom:1px;
-        padding:0 4.5%;
+        line-height: 34px;
+
         >.text{
           display:inline-block;
-          text-indent: 4px;
           height:100%;
           border-bottom:2px solid $mainColor;
+          text-indent: 4px;
           color:$mainColor;
         }
       }
+
       >.content{
         width:100%;
         height:238px;
+
         .table-box{
           width:100%;
+
           >.thead{
-            height:38px;
+            box-sizing: border-box;
             width:100%;
+            height:38px;
+
             /*background-color: yellow;*/
             padding:0 4.5%;
-            box-sizing: border-box;
             border-bottom:1px solid rgba(57,66,77,.2);
+
             >.tr{
               width:100%;
+
               >.th{
-                width:16%;
                 display:inline-block;
+                width:16%;
                 line-height: 38px;
+
                 &.symbol{
                   width:26%;
                   text-align: right;
                 }
+
                 &.price{
                   width:26%;
                   text-align: right;
                 }
+
                 &.count{
                   width: 31%;
                   text-align: right;
@@ -214,42 +226,53 @@ export default {
               }
             }
           }
+
           >.tbody{
-            height:200px;
-            overflow-y: auto;
-            padding:0 4.5%;
             box-sizing: border-box;
+            height:200px;
+            padding:0 4.5%;
+            overflow-y: auto;
+
             >.tr{
               height:50px;
+
               >.td{
                 display: inline-block;
                 width:16%;
                 height: 100%;
-                white-space:nowrap;
+                line-height: 50px;
+
                 /*background: blue;*/
                 vertical-align: middle;
-                line-height: 50px;
+                white-space:nowrap;
+
                 &.symbol{
                   width:26%;
                   text-align: right;
                 }
+
                 &.price{
                   width:26%;
                   text-align: right;
                 }
+
                 &.count{
                   width:31%;
                   text-align: right;
                 }
+
                 >.top{
                   margin-top:5px;
                 }
+
                 >.up{
                   color:$upColor;
                 }
+
                 >.down{
                   color:$downColor;
                 }
+
                 >.top,>.bottom{
                   line-height: 20px;
                 }
@@ -259,32 +282,37 @@ export default {
         }
       }
     }
+
     &.night{
       >.inner-box{
         >.title{
           color:$mainNightTitleColor;
           background-color: $mainContentNightBgColor;
-          box-shadow:2px 0px 3px rgba(27,35,49,1);
+          box-shadow:2px 0 3px rgba(27,35,49,1);
         }
+
         >.content{
-          background-color: $mainContentNightBgColor;
           color:$nightFontColor;
+          background-color: $mainContentNightBgColor;
+
           .thead{
             color:$mainNightTitleColor;
           }
         }
       }
     }
+
     &.day{
       >.inner-box{
         >.title{
           color:$dayMainTitleColor;
           background-color: $dayMainBgColor;
-          box-shadow:2px 0px 3px rgba(239,239,239,1);
+          box-shadow:2px 0 3px rgba(239,239,239,1);
         }
+
         >.content{
-          background-color: #fff;
           color:$dayFontColor;
+          background-color: #fff;
         }
       }
     }

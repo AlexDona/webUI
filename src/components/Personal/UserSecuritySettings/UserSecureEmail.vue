@@ -349,59 +349,74 @@ export default {
 </script>
 <style scoped lang="scss">
   @import "../../../../static/css/scss/Personal/IndexPersonal";
+
   .set-email {
     margin-top:66px;
     overflow: hidden;
+
     >.set-email-main {
       width: 1100px;
       min-height: 700px;
       margin: 60px auto 100px;
+
       >.set-email-header {
         display: flex;
+
         >.header-content-right,
         .header-content-left {
           flex: 1;
         }
+
         >.header-content-right {
           text-align: right;
         }
+
         >.header-content-left {
-          text-align: left;
           font-weight: 600;
+          text-align: left;
         }
       }
+
       >.set-email-content {
         min-height: 300px;
         margin: 16px 25px;
+
         >.email-content-title {
           height: 32px;
-          line-height: 32px;
           margin-bottom: 30px;
+          line-height: 32px;
         }
+
         >.email-content-from {
           width: 700px;
           margin-left: 55px;
+
           .send-code-btn {
             width: 90px;
           }
+
           .input {
             width: 180px;
           }
+
           .email-input {
             width: 220px;
             height: 34px;
           }
+
           .email-upload {
             width: 118px;
             height: 106px;
-            text-align: center;
             line-height: 100px;
+            text-align: center;
           }
+
           .email-button {
-            margin: 30px 0 50px 158px;
-            padding: 10px 0;
             width: 220px;
+            padding: 10px 0;
+            margin: 30px 0 50px 158px;
           }
+
           .prompt-message {
             height: 20px;
             padding-left: 35px;
@@ -409,97 +424,122 @@ export default {
         }
       }
     }
+
     &.night{
-      background-color: $nightBgColor;
       color:$nightFontColor;
+      background-color: $nightBgColor;
+
       .set-email-main {
         background-color: $nightMainBgColor;
+
         >.set-email-header {
-          border-bottom: 1px solid #39424D;
+          border-bottom: 1px solid #39424d;
+
           >.header-content-left {
             color: #fff;
           }
+
           >.header-content-right {
-            color: #A9BED4;
+            color: #a9bed4;
           }
         }
+
         >.set-email-content {
           >.email-content-title {
-            background:rgba(62,121,214,0.08);
-            color: #3E79D6;
+            color: #3e79d6;
+            background:rgba(62,121,214,.08);
           }
+
           >.email-content-from {
             .send-code-btn {
-              background-color: #338FF5;
               color: #fff;
+              background-color: #338ff5;
             }
+
             .email-input {
               border: 1px solid #485776;
-              color: rgba(255,255,255,0.7);
+              color: rgba(255,255,255,.7);
+
               &:focus {
-                border: 1px solid #338FF5;
+                border: 1px solid #338ff5;
               }
             }
+
             .email-content-name {
-              color: rgba(255,255,255,0.7);
+              color: rgba(255,255,255,.7);
             }
+
             .email-upload {
-              background-color: #323E48;
+              background-color: #323e48;
+
               .icon-plus {
-                color: #828EA6;
+                color: #828ea6;
               }
             }
+
             .email-button {
+              color: rgba(255,255,255,.7);
               background:linear-gradient(0deg,rgba(43,57,110,1),rgba(42,80,130,1));
-              color: rgba(255,255,255,0.7);
             }
           }
         }
       }
     }
+
     &.day{
-      background-color: $dayBgColor;
       color:$dayFontColor;
+      background-color: $dayBgColor;
+
       .set-email-main {
-        background:rgba(255,255,255,1);
         border:1px solid rgba(246,246,246,1);
         border-radius:4px;
-        box-shadow:0px 0px 4px rgba(235,240,248,1);
+        background:rgba(255,255,255,1);
+        box-shadow:0 0 4px rgba(235,240,248,1);
+
         >.login-password-header {
-          border-bottom: 1px solid rgba(57,66,77,0.1);
+          border-bottom: 1px solid rgba(57,66,77,.1);
+
           >.header-content-left {
             color: #333;
           }
+
           >.header-content-right {
-            color: #7D90AC;
+            color: #7d90ac;
           }
         }
+
         >.set-email-content {
           >.email-content-title {
-            background:rgba(51,143,245,0.1);
             color: #333;
+            background:rgba(51,143,245,.1);
           }
+
           >.email-content-from {
             .send-code-btn {
-              background-color: #338FF5;
               color: #fff;
+              background-color: #338ff5;
             }
+
             .email-input {
               border:1px solid rgba(236,241,248,1);
               color: #333;
+
               &:focus {
-                border: 1px solid #338FF5;
+                border: 1px solid #338ff5;
               }
             }
+
             .email-upload {
               background-color: #fff;
+
               .icon-plus {
                 color: #555;
               }
             }
+
             .email-button {
-              background:linear-gradient(0deg,rgba(43,57,110,1),rgba(42,80,130,1));
               color: #ccc;
+              background:linear-gradient(0deg,rgba(43,57,110,1),rgba(42,80,130,1));
             }
           }
         }

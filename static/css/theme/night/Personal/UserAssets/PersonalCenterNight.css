@@ -1,32 +1,39 @@
-/*个人中心（黑色主题）*/
-.personal-center.personal.night .el-tabs__nav{
-  background-color: #1C1F32;
+/* 个人中心（黑色主题） */
+.personal-center.personal.night .el-tabs__nav {
+  background-color: #1c1f32;
 }
-.personal-center.personal.night .el-tabs__item{
-  color: #CCCCCC;
+
+.personal-center.personal.night .el-tabs__item {
   border-left: 4px solid transparent;
+  color: #ccc;
 }
-.personal-center.personal.night .is-disabled{
+
+.personal-center.personal.night .is-disabled {
   color: rgba(0, 121, 254, 1);
 }
-/*手表移上去*/
-.personal-center.personal.night .el-tabs__item:hover{
+
+/* 手表移上去 */
+.personal-center.personal.night .el-tabs__item:hover {
+  border-left: 4px solid #338ff5;
   color: rgba(0, 121, 254, 1);
-  background-color: rgba(0, 121, 254, 0.1);
-  border-left: 4px solid #338FF5;
+  background-color: rgba(0, 121, 254, .1);
 }
-/*鼠标点击*/
-.personal-center.personal.night .el-tabs__item.is-active{
-  color: rgba(0, 121, 254, 1);
-  background:rgba(51,143,245,0.1);
+
+/* 鼠标点击 */
+.personal-center.personal.night .el-tabs__item.is-active {
   border-left: 4px solid rgba(0, 121, 254, 1);
+  color: rgba(0, 121, 254, 1);
+  background: rgba(51, 143, 245, .1);
 }
+
 .personal-center.personal.night .el-dialog {
-  background-color: #28334A;
+  background-color: #28334a;
 }
-.personal-center.personal.night .el-dialog__title{
+
+.personal-center.personal.night .el-dialog__title {
   color: #fff;
 }
+
 .personal-center.personal.night .el-tabs--left .el-tabs__nav-scroll {
-  background-color: #1C1F32;
+  background-color: #1c1f32;
 }

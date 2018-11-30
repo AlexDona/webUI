@@ -1,17 +1,20 @@
-/*个人中心黑色主题*/
+/* 个人中心黑色主题 */
 .add-chat.personal.night .el-form-item__label {
-  color: rgba(255,255,255,0.7);
+  color: rgba(255, 255, 255, .7);
 }
+
 .add-chat.personal.night .el-input__inner {
   border: 1px solid #485776;
-  color: rgba(255,255,255,0.7);
-  background-color: #1E2636;
+  color: rgba(255, 255, 255, .7);
+  background-color: #1e2636;
 }
+
 .add-chat.personal.night .el-input-group__append {
-  background-color: #338FF5;
   border-color: #364654;
-  color: rgba(255,255,255,0.7);
+  color: rgba(255, 255, 255, .7);
+  background-color: #338ff5;
 }
+
 .add-chat.personal.night .el-upload--picture-card {
   background-color: #485776;
 }

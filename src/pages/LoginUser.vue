@@ -1158,129 +1158,153 @@ export default {
 </script>
 <style scoped lang="scss">
   @import '../../static/css/scss/index.scss';
+
   .login-box.user {
     height:100%;
     overflow: hidden;
     background:linear-gradient(150deg,rgba(30,38,54,1),rgba(37,75,117,1));
+
     &.min-height{
       min-height:1000px;
     }
+
     >.inner-box{
       &.pc-bg{
         background:url('../assets/develop/login-bg.png') 25% center  no-repeat ;
       }
+
       >.pc-er-code-box,>.pc-box{
         >.title{
           position: absolute;
           top:-25%;
+          left: 22%;
           // left:36%;
           // width:104px;
           min-width: 220px;
-          left: 22%;
 
           // width:104px;
           height:35px;
+          font-weight:400;
           font-size:26px;
           font-family:MicrosoftYaHei;
-          font-weight:400;
+          text-align: center;
           color:rgba(51,143,245,1);
           background:linear-gradient(81deg,rgba(77,122,255,1) 25.4638671875%, rgba(58,184,255,1) 100%);
           -webkit-background-clip:text;
           -webkit-text-fill-color:transparent;
-          text-align: center;
         }
       }
+
       >.pc-box {
+        position: relative;
         width: 370px;
         height: 330px;
-        margin:12% 50%;
         padding:55px 40px;
+        margin:12% 50%;
+        border-radius:10px;
         text-align: left;
         background:linear-gradient(201deg,rgba(42,88,137,1) 0%,rgba(43,58,111,1) 100%);
-        border-radius:10px;
-        box-shadow:0px 4px 21px 0px rgba(26,42,71,1);
-        position: relative;
+        box-shadow:0 4px 21px 0 rgba(26,42,71,1);
+
         >.toggle-login-type{
           position: absolute;
-          right:0;
           top:0;
+          right:0;
           width:50px;
           height:50px;
           background:url(../assets/develop/er-code-icon.png) no-repeat center center;
         }
+
         .step1-btn{
           width:128px;
           height:40px;
-          background:linear-gradient(81deg,rgba(61,152,249,1) 0%,rgba(71,135,255,1) 100%);
           border-radius:20px;
-          box-shadow:-1px 1px 8px 0px #1a2a47;
+          background:linear-gradient(81deg,rgba(61,152,249,1) 0%,rgba(71,135,255,1) 100%);
+          box-shadow:-1px 1px 8px 0 #1a2a47;
         }
+
         >.login-btn{
+          display: block;
           width: 130px;
           height: 40px;
-          line-height: 40px;
           margin: 0 auto;
-          display: block;
-          font-size: 14px;
           font-weight:400;
+          font-size: 14px;
+          line-height: 40px;
           color:rgba(255,255,255,1);
+
           /*background:rgba(40,68,110,1);*/
+
           /*border-radius:20px;*/
         }
+
         >.login-box {
           font-size: 16px;
+
           /*登录第一步*/
           >.login {
             width: 720px;
+
             >.input-content{
               margin-bottom:30px;
+
               &.pwd{
                 margin-bottom:15px;
               }
+
               >.inner-box{
-                height: 40px;
-                line-height:40px;
+                display: inline-block;
                 width: 290px;
-                border-radius: 20px;
+                height: 40px;
                 padding: 0 20px;
                 margin-bottom: 15px;
-                display: inline-block;
+                border-radius: 20px;
+                border-radius:20px;
+                line-height:40px;
                 vertical-align: middle;
                 background:rgba(40,68,110,1);
-                border-radius:20px;
 
                 >input{
-                  color:#fff;
                   width:100%;
                   height:100%;
+                  color:#fff;
+
                   /*width:290px;*/
+
                   /*height:40px;*/
 
                   /*border:1px solid;*/
+
                   /*border-radius:20px;*/
+
                   /*padding:0 20px;*/
+
                   /*box-sizing: border-box;*/
                 }
               }
             }
+
             >.todos {
               position: relative;
-              overflow: hidden;
+              display:flex;
               width:290px;
               height:20px;
+              margin-bottom:20px;
+              overflow: hidden;
+              font-weight:400;
               font-size:12px;
               font-family:MicrosoftYaHei;
-              font-weight:400;
               color:rgba(47,120,202,1);
-              display:flex;
-              margin-bottom:20px;
+
               >a{
                 flex:1;
-                color:#2F78CA;
+                color:#2f78ca;
               }
             }
           }
+
           /*登录第三步（短信验证码）*/
+
           /*错误提示*/
           >.pic-verify {
             width: 100px;
@@ -1288,251 +1312,289 @@ export default {
             // background-color: pink;
           }
         }
+
         /*图片验证码提示框*/
         .image-dialog{
           .title{
             margin-bottom:25px;
             color:#fff;
           }
+
           .content{
             width:600px;
+
             /*width: 16rem;*/
+
             /*background: red;*/
             >.inner-box{
-              width:410px;
-              height:44px;
-              border-radius: 4px;
-              border:1px solid rgba(72,87,118,1);
+              display: inline-block;
+
               /*border-right-color: transparent;*/
               box-sizing: border-box;
-              display: inline-block;
+              width:410px;
+              height:44px;
               padding:0;
+              border:1px solid rgba(72,87,118,1);
+              border-radius: 4px;
+
               &.submit-box{
                 margin-top:45px;
                 border:none;
+
                 >.subimt{
                   display:inline-block;
                   width:410px;
                   height:40px;
-                  background:linear-gradient(81deg,rgba(43,57,110,1) 0%,rgba(42,80,130,1) 100%);
                   border-radius:4px;
                   color:#fff;
+                  background:linear-gradient(81deg,rgba(43,57,110,1) 0%,rgba(42,80,130,1) 100%);
                 }
               }
+
               >.image-validate{
+                box-sizing: border-box;
                 width:324px;
                 height:100%;
-                vertical-align: top;
                 padding:0 20px;
-                box-sizing: border-box;
+                vertical-align: top;
                 color:#fff;
               }
+
               >.refresh-code-btn{
                 display: inline-block;
-                height:42px;
                 width:80px;
+                height:42px;
                 overflow: hidden;
               }
             }
           }
         }
+
         /*短信验证码、邮箱验证码、谷歌验证码*/
         .msg-email-google-dialog{
           .outer-box{
             padding:0 10px;
+
             >.inner-box{
-              height: 44px;
-              line-height: 44px;
+              display: inline-block;
               width: 410px;
+              height: 44px;
+
               /*padding: 0 10px;*/
               margin:30px 0;
-              display: inline-block;
+              line-height: 44px;
               vertical-align: middle;
+
               >.input{
+                display:block;
+                box-sizing: border-box;
                 width:410px;
                 height:44px;
-                background:rgba(26,34,51,1);
+                padding:0 20px;
                 border:1px solid rgba(72,87,118,1);
                 border-radius:4px;
-                box-sizing: border-box;
-                padding:0 20px;
                 color:#fff;
-                display:block;
+                background:rgba(26,34,51,1);
               }
+
               /*发送信息按钮*/
               >.send-code-btn{
                 display:block;
-                margin:5px 0 0 0;
                 padding:0 20px;
+                margin:5px 0 0;
                 color:$upColor;
               }
             }
           }
+
           .login-btn{
             width:410px;
             height:40px;
-            background:linear-gradient(81deg,rgba(43,57,110,1) 0%,rgba(42,80,130,1) 100%);
+            margin:10px 10px 20px;
             border-radius:4px;
-            margin:10px 10px 20px 10px;
-            color:#fff;
             font-size: 14px;
+            color:#fff;
+            background:linear-gradient(81deg,rgba(43,57,110,1) 0%,rgba(42,80,130,1) 100%);
           }
         }
+
         /*滑块*/
         .drag-box{
           width:410px;
           overflow: hidden;
+
           >.drag{
             position: relative;
-            background-color: #1e2235;
             width: 410px;
             height: 50px;
+            border: 1px solid #4e5b85;
             line-height: 50px;
             text-align: center;
-            border: 1px solid #4e5b85;
+            background-color: #1e2235;
             cursor: pointer;
+
             >.drag_bg{
-              background-color: #1f2943;
               height: 48px;
+              background-color: #1f2943;
             }
+
             >.drag_text{
-              font-size: 16px;
               position: absolute;
-              top: 0px;
+              top: 0;
               width: 410px;
-              -moz-user-select: none;
-              -webkit-user-select: none;
-              user-select: none;
-              -o-user-select: none;
-              -ms-user-select: none;
+              font-size: 16px;
               background: -webkit-gradient(linear, left top, right top, color-stop(0, #61688a), color-stop(.4, #61688a), color-stop(.5, #fff), color-stop(.6, #61688a), color-stop(1, #61688a));
               -webkit-background-clip: text;
-              -webkit-text-fill-color: transparent;
               -webkit-animation: slidetounlock 3s infinite;
+              -moz-user-select: none;
+              -webkit-user-select: none;
+              -o-user-select: none;
+              -ms-user-select: none;
+              user-select: none;
+              -webkit-text-fill-color: transparent;
               -webkit-text-size-adjust: none;
+            }
+
+            >.handler_bg{
+              position: absolute;
+              top: 0;
+              left: 0;
+              width: 70px;
+              height: 48px;
+              border-radius: 0 3px 3px 0;
+              background: #485776 url(../assets/develop/arrow-bg.png) no-repeat center center;
+
+              /* border: 1px solid #ccc; */
+              cursor: move;
+
+              .icon-text{
+                font-size: 14px;
+                color:rgba(222,225,234,1);
+              }
             }
 
             @keyframes slidetounlock {
               0% {
                 background-position: -200px 0;
               }
+
               100% {
                 background-position: 200px 0;
-              }
-            }
-            >.handler_bg{
-              border-radius: 0px 3px 3px 0px;
-              background: #485776 url(../assets/develop/arrow-bg.png) no-repeat center center;
-              position: absolute;
-              top: 0px;
-              left: 0px;
-              width: 70px;
-              height: 48px;
-              /* border: 1px solid #ccc; */
-              cursor: move;
-              .icon-text{
-                color:rgba(222,225,234,1);
-                font-size: 14px;
               }
             }
           }
         }
       }
+
       >.pc-er-code-box{
-        margin:12% 50%;
-        padding:33px 40px;
+        position: relative;
         width:370px;
         height:330px;
-        background:linear-gradient(201deg,rgba(42,88,137,1) 0%,rgba(43,58,111,1) 100%);
+        padding:33px 40px;
+        margin:12% 50%;
         border-radius:10px;
-        box-shadow:0px 4px 21px 0px rgba(26,42,71,1);
-        position: relative;
         text-align: center;
+        background:linear-gradient(201deg,rgba(42,88,137,1) 0%,rgba(43,58,111,1) 100%);
+        box-shadow:0 4px 21px 0 rgba(26,42,71,1);
+
         &:before{
-          content:'';
+          position: absolute;
+          z-index: 2;
+          top:18px;
+          right:4px;
           width:70px;
           height:40px;
-          position: absolute;
-          right:4px;
-          top:18px;
-          z-index: 2;
           transform: rotateZ(45deg);
+          content:'';
         }
+
         >.mask-box{
+          position: absolute;
+          z-index: 3;
+          top:0;
+          left:0;
           width:100%;
           height:100%;
-          position: absolute;
-          left:0;
-          top:0;
-          z-index: 3;
-          background:rgba(42,83,133,0.9);
+          background:rgba(42,83,133,.9);
+
           >button{
+            color:#fff;
+
             >.reflash-icon{
               display:block;
-              background-color: #fff;
-              border-radius: 50%;
+              box-sizing: border-box;
               width:50px;
               height:50px;
-              box-sizing: border-box;
               padding:10px;
-              color:$mainColor;
               margin:110px auto 22px;
+              border-radius: 50%;
+              color:$mainColor;
+              background-color: #fff;
             }
-            color:#fff;
           }
         }
+
         /*切换图标*/
         >.toggle-login-type{
           position: absolute;
-          right:0;
           top:0;
+          right:0;
           width:50px;
           height:50px;
           background:url(../assets/develop/pc-login-icon.png) no-repeat center center;
         }
+
         >.scan-box{
           >.inner-title{
             height:50px;
             text-align: center;
             color:rgba(255,255,255,1);
           }
+
           >.tips{
-            color: #fff;
             height:50px;
             // line-height: 50px;
             margin-top: 10px; // 任增加
+            color: #fff;
           }
+
           .ercode{
-            margin:0 auto;
             box-sizing: border-box;
             width:174px;
             height:174px;
-            background-color: #fff;
             padding:5px;
+            margin:0 auto;
+            background-color: #fff;
           }
         }
+
         >.scan-success{
           position: relative;
+
           >.icon-cellphoneiphone{
             font-size: 156px;
             color:#26416e;
           }
+
           >.icon-chenggong{
             position: absolute;
-            left:49%;
             top:28%;
-            transform: translate(-50%,-50%);
+            left:49%;
             font-size: 26px;
             color:#008069;
+            transform: translate(-50%,-50%);
           }
+
           >.tips{
+            margin-top:20px;
+            color:#fff;
+
             >p{
               font-size: 12px;
               line-height: 20px;
             }
-            margin-top:20px;
-            color:#fff;
           }
+
           >.back-to-scan{
             margin-top:20px;
             font-size: 12px;
@@ -1540,155 +1602,183 @@ export default {
           }
         }
       }
+
       >.mobile-box {
-        font-size: 30px;
-        margin: 120px auto;
-        padding: 0 1rem;
         box-sizing: border-box;
         width: 100%;
+        padding: 0 1rem;
+        margin: 120px auto;
+        font-size: 30px;
+
         >.mobile-inner-box{
           width: 100%;
+
           >.login-box-step1 {
             width: 100%;
+
             >.input-item{
-              height:3rem;
               width:100%;
+              height:3rem;
               margin-bottom:3rem;
+
               &.login-btn{
                 margin-bottom:1rem;
               }
+
               >input,>button{
                 box-sizing: border-box;
                 width:100%;
                 height:3rem;
-                background:#28446e;
-                border-radius:0.4rem;
-                font-size: 1rem;
                 padding:0 40px;
+                border-radius:.4rem;
+                font-size: 1rem;
                 color:#fff;
+                background:#28446e;
               }
+
               >.login-btn{
-                background:linear-gradient(81deg,rgba(61,152,249,1) 0%,rgba(71,135,255,1) 100%);
                 border-radius:20px;
-                box-shadow:1px 1px 8px 0px rgba(26,42,71,1);
+                background:linear-gradient(81deg,rgba(61,152,249,1) 0%,rgba(71,135,255,1) 100%);
+                box-shadow:1px 1px 8px 0 rgba(26,42,71,1);
               }
             }
+
             >.error-msg{
-              color:#D45858;
               margin-bottom:1rem;
               font-size: 1rem;
+              color:#d45858;
             }
+
             >.todos{
               display: flex;
+
               >.jump-url{
                 flex:1;
-                color:rgba(47,120,202,1);
                 font-size: 1rem;
+                color:rgba(47,120,202,1);
               }
             }
           }
+
           /*图片盒子*/
           >.img-verify{
             .pic-verify{
               >.title{
                 margin-bottom: 25px;
-                color: #fff;
                 font-size: 1rem;
+                color: #fff;
               }
+
               >.content{
                 /*width: 600px;*/
+
                 /*width:16rem;*/
                 width:1000px;
+
                 >.inner-box{
-                  width:1000px;
-                  /*width: 410px;*/
-                  height:160px;
-                  line-height: 160px;
-                  border-radius: 4px;
-                  border: 1px solid #485776;
+                  display: inline-block;
+
                   /* border-right-color: transparent; */
                   box-sizing: border-box;
-                  display: inline-block;
+                  width:1000px;
+
+                  /*width: 410px;*/
+                  height:160px;
                   padding: 0;
+                  border: 1px solid #485776;
+                  border-radius: 4px;
+                  line-height: 160px;
+
                   &.submit-box{
                     margin-top: 45px;
                     border: none;
+
                     >.submit{
                       display: inline-block;
                       width:1000px;
                       height:160px;
-                      background: linear-gradient(81deg, #2b396e 0%, #2a5082 100%);
-                      font-size: 0.7rem;
                       border-radius: 4px;
+                      font-size: .7rem;
                       color: #fff;
+                      background: linear-gradient(81deg, #2b396e 0%, #2a5082 100%);
                     }
                   }
+
                   >.input{
+                    box-sizing: border-box;
                     width: 754px;
                     height: 100%;
-                    vertical-align: top;
                     padding: 0 40px;
-                    box-sizing: border-box;
+                    font-size: .7rem;
+                    vertical-align: top;
                     color: #fff;
-                    font-size: 0.7rem;
                   }
+
                   >.refresh-code-btn{
                     display: inline-block;
-                    height:160px;
                     width: 240px;
+                    height:160px;
                     overflow: hidden;
                   }
                 }
               }
             }
           }
+
           /*短信验证码、邮箱验证码、谷歌验证码*/
           .msg-email-google-dialog{
             .outer-box{
-              font-size: 0.7rem;
               padding:0 10px;
+              font-size: .7rem;
+
               >.inner-box{
-                height: 160px;
-                line-height: 160px;
+                display: inline-block;
                 width: 1000px;
+                height: 160px;
+
                 /*padding: 0 10px;*/
                 margin:30px 0;
-                display: inline-block;
+                line-height: 160px;
                 vertical-align: middle;
+
                 >.input{
+                  display:block;
+                  box-sizing: border-box;
                   width:1000px;
                   height:160px;
-                  background:rgba(26,34,51,1);
+                  padding:0 40px;
                   border:1px solid rgba(72,87,118,1);
                   border-radius:4px;
-                  box-sizing: border-box;
-                  padding:0 40px;
+                  font-size: .7rem;
                   color:#fff;
-                  display:block;
-                  font-size: 0.7rem;
+                  background:rgba(26,34,51,1);
                 }
+
                 /*发送信息按钮*/
                 >.send-code-btn{
                   display:block;
-                  margin:5px 0 0 0;
                   padding:0 20px;
+                  margin:5px 0 0;
+                  font-size: .7rem;
                   color:$upColor;
-                  font-size: 0.7rem;
                 }
               }
             }
+
             .login-btn{
               width:1000px;
               height:160px;
-              background:linear-gradient(81deg,rgba(43,57,110,1) 0%,rgba(42,80,130,1) 100%);
+              margin:1rem 10px 20px;
               border-radius:4px;
-              margin:1rem 10px 20px 10px;
+              font-size: .7rem;
               color:#fff;
-              font-size: 0.7rem;
+              background:linear-gradient(81deg,rgba(43,57,110,1) 0%,rgba(42,80,130,1) 100%);
             }
           }
         }
+
         /*登录*/
+
         /*滑块验证*/
         .slider {
           width: 100%;

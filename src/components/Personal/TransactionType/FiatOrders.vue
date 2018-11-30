@@ -530,64 +530,80 @@ export default {
 }
 </script>
 <style scoped lang="scss">
-  @import "../../../../static/css/scss/Personal/IndexPersonal";
+@import "../../../../static/css/scss/Personal/IndexPersonal";
+
 .fiat-orders {
   .fiat-main {
     .orders-main-top{
       height: 125px;
       padding: 0 25px;
+
       .trade-type {
         width: 250px;
       }
+
       .trade-data {
         width: 500px;
       }
+
       .main-top-type {
         height: 50px;
         line-height: 50px;
+
         >.filtrate-text {
           margin-right: 5px;
         }
+
         .date-short-line {
           margin: 0 25px;
         }
       }
+
       >.date-picker{
         >.date-short-line{
           margin: 0 3px;
         }
       }
+
       >.all-clear{
-        color: #338FF5;
+        color: #338ff5;
       }
     }
   }
+
   &.night{
-    background-color: $nightBgColor;
     color:$nightFontColor;
+    background-color: $nightBgColor;
+
     >.background-color{
       background-color: $nightMainBgColor;
+
       >.fiat-color{
-        color: #338FF5;
+        color: #338ff5;
       }
     }
+
     .fiat-main {
       .orders-main-top{
-        background-color: #1C1F32;
+        background-color: #1c1f32;
       }
     }
   }
+
   &.day{
-    background-color: $dayBgColor;
     color:$dayFontColor;
+    background-color: $dayBgColor;
+
     >header{
-      border:1px solid #ECF1F8;
+      border:1px solid #ecf1f8;
+
       >span{
-        color:#338FF5;
+        color:#338ff5;
       }
     }
+
     >div{
-      border:1px solid #ECF1F8;
+      border:1px solid #ecf1f8;
     }
   }
 }

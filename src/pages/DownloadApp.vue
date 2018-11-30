@@ -170,38 +170,44 @@ export default {
 </script>
 <style scoped lang="scss" type="text/scss">
   .download-box{
+    position: relative;
     width:100%;
     background:linear-gradient(150deg, #1e2636, #254b75);
-    position: relative;
+
     >.inner-box{
       width:100%;
       height:100%;
       overflow: hidden;
+
       >.logo{
         width:3rem;
         height:3rem;
-        border-radius:10px;
         margin:3rem auto;
+        border-radius:10px;
+
         >img{
-          -webkit-box-reflect: below 0px -webkit-gradient(linear, left top, left bottom, from(transparent), to(rgba(250, 250, 250, 0.1)));
+          -webkit-box-reflect: below 0 -webkit-gradient(linear, left top, left bottom, from(transparent), to(rgba(250, 250, 250, .1)));
         }
       }
+
       >.content{
         width:100%;
         height:15rem;
         text-align: center;
+
         >img{
           height:100%;
         }
+
         >.download-btn{
-          margin: 2rem auto;
           width:10rem;
           height:2rem;
-          line-height:2rem;
-          background:rgba(70,150,245,1);
+          margin: 2rem auto;
           border-radius:40px;
-          font-size: 0.8rem;
+          font-size: .8rem;
+          line-height:2rem;
           color:#fff;
+          background:rgba(70,150,245,1);
         }
       }
     }

@@ -370,112 +370,136 @@ export default {
 </script>
 <style scoped lang="scss">
   @import "../../static/css/scss/Personal/IndexPersonal";
+
   .personal-center{
     margin-top:66px;
     overflow: hidden;
+
     > .personal-center-main {
       width: 1150px;
       min-height: 1350px;
       margin: 60px auto;
+
       .dialog-warning {
         width: 90px;
         height: 90px;
-        border-radius: 50%;
         padding-top: 6px;
         margin: 0 auto;
-        background: rgba(42, 122, 211, 0.2);
+        border-radius: 50%;
+        background: rgba(42, 122, 211, .2);
+
         .dialog-warning-box {
-          background: linear-gradient(90deg, #2b396e, #2a5082);
           width: 78px;
           height: 78px;
-          border-radius: 50%;
           margin: 0 auto;
-          text-align: center;
+          border-radius: 50%;
           line-height: 75px;
+          text-align: center;
+          background: linear-gradient(90deg, #2b396e, #2a5082);
         }
       }
+
       .warning-text {
         color: #fff;
       }
+
       .info {
         padding-left: 83px;
       }
+
       .button-color {
         width: 80px;
         height: 35px;
+        margin-right: 15px;
         border: 0;
         line-height: 0;
-        margin-right: 15px;
       }
+
       .btn{
         width: 80px;
         height: 35px;
         line-height: 0;
       }
+
       > .personal-center-content{
         width: 1150px;
       }
+
       .asset-info {
         position: absolute;
-        font-size: 18px;
-        left: -179px;
-        color: #338FF5;
         z-index: 2;
-        background: #fff;
+        left: -179px;
         width: 160px;
         height: 44px;
         padding-left: 25px;
+        font-size: 18px;
         line-height: 40px;
+        color: #338ff5;
+        background: #fff;
       }
+
       .asset-title {
         top: 10px;
       }
+
       .user-title {
         top: 180px;
       }
+
       .user-order {
         top: 490px;
       }
     }
+
     &.night{
-      background-color: $nightBgColor;
       color:$nightFontColor;
+      background-color: $nightBgColor;
+
       .asset-info {
-        background: #1C1F32;
+        background: #1c1f32;
       }
+
       .info {
         color: #fff;
       }
+
       .button-color {
-        color: rgba(255,255,255,0.7);
+        color: rgba(255,255,255,.7);
         background: linear-gradient(81deg,rgba(43,57,110,1) 0%,rgba(42,80,130,1) 100%);
       }
+
       .btn{
+        border: 1px solid #338ff5;
         color: #fff;
         background-color: transparent;
-        border: 1px solid #338FF5;
       }
     }
+
     &.day{
-      background-color: $dayBgColor;
       color:$dayFontColor;
+      background-color: $dayBgColor;
+
       .asset-info {
         background: #fff;
       }
+
       .warning-text {
         color: #333;
       }
+
       .info {
         color: #333;
       }
+
       .button-color {
-        color: rgba(255,255,255,0.7);
+        color: rgba(255,255,255,.7);
         background: linear-gradient(81deg,rgba(43,57,110,1) 0%,rgba(42,80,130,1) 100%);
       }
+
       .btn{
+        border: 1px solid #338ff5;
         color: #333;
         background-color: transparent;
-        border: 1px solid #338FF5;
       }
     }
   }

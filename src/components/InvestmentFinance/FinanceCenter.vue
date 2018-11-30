@@ -946,275 +946,330 @@ export default {
 }
 </script>
 <style scoped lang="scss">
- // 公共scss样式
+  // 公共scss样式
   @import "../../../static/css/scss/InvestmentFinance/FinanceCenter";
+
   .finance-box{
-    margin-top:66px;
-    min-width:1300px;
     width:100%;
-      >.banner-box{
-        height: 459px;
-        // background: #272b41;
-        position: relative;
-        >img{
-          width: 100%;
-          height: 100%;
-        }
-        >.banner-title{
-          position: absolute;
-          left: 50%;
-          top: 50%;
-          color: #fff;
-          font-size: 40px;
-          width: 400px;
-          text-align: center;
-        }
+    min-width:1300px;
+    margin-top:66px;
+
+    >.banner-box{
+      // background: #272b41;
+      position: relative;
+      height: 459px;
+
+      >img{
+        width: 100%;
+        height: 100%;
       }
-      >.inner-box{
-        display:flex;
-        width:100%;
-        >.finance-inner{
-          width: 1100px;
-          margin: 0 auto;
-          >.container{
-          padding: 100px 145px 0px 145px;
+
+      >.banner-title{
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        width: 400px;
+        font-size: 40px;
+        text-align: center;
+        color: #fff;
+      }
+    }
+
+    >.inner-box{
+      display:flex;
+      width:100%;
+
+      >.finance-inner{
+        width: 1100px;
+        margin: 0 auto;
+
+        >.container{
+          padding: 100px 145px 0;
+
           >.finance-form-header{
-            width: 100%;
             display:flex;
+            width: 100%;
+
             >.newnestPrice{
+              display:flex;
               flex: 1;
               height: 48px;
-              display:flex;
+
               >li{
                 flex: 1;
-                border-right:1px solid #1b2231;
-                color:#a9bed4;
                 text-align: center;
+                color:#a9bed4;
+                border-right:1px solid #1b2231;
+
                 >p{
-                  font-size:22px;
                   font-weight: bolder;
+                  font-size:22px;
+
                   >span{
                     font-size:12px;
                   }
                 }
+
                 &:last-child{
                   border: none;
                 }
               }
-          }
+            }
           }
         }
+
         .finance-inner-box{
-        display: flex;
-        justify-content: space-between;
-        >.left{
-          width: 516px;
-          color:#A9BED4;
-          >.nav-header{
-            >.balance{
-              padding-top:10px;
-              display: flex;
-              line-height: 30px;
-              >div{
-                font-size: 24px;
-                color:#7CB8FA;
-                height: 24px;
-                font-weight:600;
-                -webkit-box-reflect: below 0 -webkit-linear-gradient(-90deg,rgba(124,184,250,0),rgba(124,184,250,0.2));
-                >span{
-                  font-size: 12px;
+          display: flex;
+          justify-content: space-between;
+
+          >.left{
+            width: 516px;
+            color:#a9bed4;
+
+            >.nav-header{
+              >.balance{
+                display: flex;
+                padding-top:10px;
+                line-height: 30px;
+
+                >div{
+                  height: 24px;
+                  font-weight:600;
+                  font-size: 24px;
+                  color:#7cb8fa;
+                  -webkit-box-reflect: below 0 -webkit-linear-gradient(-90deg,rgba(124,184,250,0),rgba(124,184,250,.2));
+
+                  >span{
+                    font-size: 12px;
+                  }
                 }
               }
             }
-          }
-          .left-body{
-            padding-top:58px;
-            >label{
-              display: block;
-              margin:44px 0px;
-              display: flex;
-              line-height: 50px;
-              >.label-title{
-                display: inline-block;
-                width: 120px;
-              }
-              >.invest-mounte{
+
+            .left-body{
+              padding-top:58px;
+
+              >label{
+                display: block;
                 display: flex;
-                justify-content: space-between;
-                padding: 13px 11px;
-                border-radius: 2px;
-                border:1px solid rgba(169,190,212,1);
-                width: 407px;
-                height: 48px;
-                line-height: 24px;
-                >input{
-                  width: 380px;
-                  color:#fff;
-                  vertical-align: center;
+                margin:44px 0;
+                line-height: 50px;
+
+                >.label-title{
+                  display: inline-block;
+                  width: 120px;
                 }
-              }
-              .submitBtn{
-                >button{
+
+                >.invest-mounte{
+                  display: flex;
+                  justify-content: space-between;
                   width: 407px;
                   height: 48px;
-                  margin-left: 110px;
-                  text-align: center;
-                  border: 2px solid -webkit-linear-gradient(135deg,#2B396E,#2A5082);
-                  background: -webkit-linear-gradient(45deg,#2B396E,#2A5082);
-                  color:#fff;
+                  padding: 13px 11px;
+                  border:1px solid rgba(169,190,212,1);
+                  border-radius: 2px;
+                  line-height: 24px;
+
+                  >input{
+                    width: 380px;
+                    vertical-align: center;
+                    color:#fff;
+                  }
+                }
+
+                .submitBtn{
+                  >button{
+                    width: 407px;
+                    height: 48px;
+                    margin-left: 110px;
+                    border: 2px solid -webkit-linear-gradient(135deg,#2b396e,#2a5082);
+                    text-align: center;
+                    color:#fff;
+                    background: -webkit-linear-gradient(45deg,#2b396e,#2a5082);
+                  }
                 }
               }
             }
           }
-        }
-        >.right{
-          width: 482px;
-          color:#A9BED4;
-          >.pieCharts-box{
-            display: flex;
-          >.right-infor{
-            padding-top:100px;
-            width: 245px;
-            overflow: hidden;
-            >div{
-              line-height: 30px;
-              margin-bottom:30px;
-              >p{
-              font-size:12px;
-              >span{
-                font-size: 22px;
-                font-weight: bolder;
+
+          >.right{
+            width: 482px;
+            color:#a9bed4;
+
+            >.pieCharts-box{
+              display: flex;
+
+              >.right-infor{
+                width: 245px;
+                padding-top:100px;
+                overflow: hidden;
+
+                >div{
+                  margin-bottom:30px;
+                  line-height: 30px;
+
+                  >p{
+                    font-size:12px;
+
+                    >span{
+                      font-weight: bolder;
+                      font-size: 22px;
+                    }
+                  }
+                }
               }
+
+              >.pieCharts{
+                width: 282px;
+                padding-top: 50px;
               }
             }
           }
-          >.pieCharts{
-            padding-top: 50px;
-            width: 282px;
-          }
-          }
         }
-      }
-      >.invest-list{
-        margin-bottom:200px;
-        >.nvest-list-body{
-          position: relative;
-          >.showAll{
-            position:absolute;
-            right: 0;
-            top:25px;
-            z-index: 10;
-          }
-          .financeTsipsBox{
-            position: absolute;
-            top: 55px;
-            left: 0px;
-            text-align: center;
-            z-index: 10;
-            width: 100%;
-            height: 100%;
-            line-height:200px;
-            >a{
-              color: #338FF5;
+
+        >.invest-list{
+          margin-bottom:200px;
+
+          >.nvest-list-body{
+            position: relative;
+
+            >.showAll{
+              position:absolute;
+              z-index: 10;
+              top:25px;
+              right: 0;
+            }
+
+            .financeTsipsBox{
+              position: absolute;
+              z-index: 10;
+              top: 55px;
+              left: 0;
+              width: 100%;
+              height: 100%;
+              line-height:200px;
+              text-align: center;
+
+              >a{
+                color: #338ff5;
+              }
             }
           }
         }
-      }
       }
     }
+
     &.night{
       >.banner-box{
         background: #272b41;
       }
+
       >.inner-box{
         background-color: $nightInnerBoxBg;
       }
     }
+
     &.day{
       >.banner-box{
         background: #fff;
       }
     }
+
     .cancelBtn{
       cursor: pointer;
     }
+
     .blue{
-      color: #338FF5;
+      color: #338ff5;
     }
+
     .green{
       color: #008069;
     }
+
     .red{
-      color:#D45858;
+      color:#d45858;
     }
+
     .red2{
-      color:#B73C36;
+      color:#b73c36;
     }
+
     .saveTime{
       color: #fff;
     }
+
     .nav-header{
-      color:#fff;
-      font-size: 12px;
       display: flex;
       justify-content: space-between;
+      font-size: 12px;
+      color:#fff;
     }
+
     .invest{
-      font-size: 22px;
       width: 166px;
+      padding:14px 0 14px 26px;
+      font-size: 22px;
       color: #fff;
-      padding:14px 0px 14px 26px;
       background:linear-gradient(90deg,rgba(34,80,135,1),transparent);
     }
+
     .totalTipsPositon{
-      margin:-36px 0px -20px 72px;
-      color: #D45858;
+      margin:-36px 0 -20px 72px;
+      color: #d45858;
     }
- }
+  }
+
   .dividend-tips{
+    display: inline-block;
     width: 16px;
     height: 16px;
-    display: inline-block;
+    margin-top:10px ;
     border-radius: 50%;
-    color: #fff;
     line-height: 16px;
     text-align: center;
-    background: #338FF5;
+    color: #fff;
+    background: #338ff5;
     cursor: pointer;
-    margin-top:10px ;
   }
- .el-select-dropdown{
-    min-width: 408px!important;
+
+  .el-select-dropdown{
     left:169px!important;
+    min-width: 408px!important;
   }
+
   .show-dividend-time-list{
     >ul{
       min-width: 300px;
       margin-left:60px;
-      color: #fff;
+      border-left: 4px solid #338ff5;
       font-weight: 600;
-      border-left: 4px solid #338FF5;
+      color: #fff;
+
       >li{
         position: relative;
         padding-left: 5px;
-        font-size: 10px;
         margin-bottom:20px;
+        font-size: 10px;
         line-height: 12px;
+
         span:nth-child(1){
-          padding:0px 0px 0px 10px;
+          padding:0 0 0 10px;
         }
+
         span:nth-child(2){
           padding-right:10px;
         }
+
         &::before{
-          content: '';
           position: absolute;
+          top:0;
+          left:-8px;
           width: 12px;
           height: 12px;
-          top:0px;
-          left:-8px;
-          background: #338FF5;
           border-radius: 50%;
+          background: #338ff5;
+          content: '';
         }
       }
     }

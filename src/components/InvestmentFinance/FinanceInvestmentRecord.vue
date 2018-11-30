@@ -454,97 +454,118 @@ export default {
 </script>
 <style scoped lang="scss">
   @import "../../../static/css/scss/InvestmentFinance/FinanceCenter";
+
   .finance-box{
-    min-width:1300px;
     width:100%;
+    min-width:1300px;
     height:100%;
-      >.banner-box{
-         background:#121824 url('../../assets/finance/banner.png') no-repeat center center/100% 100%;
-      }
-      >.inner-box{
-        display:flex;
-        width:100%;
-        >.finance-inner{
-          width: 1100px;
-          margin: 0 auto;
-      >.invest-list{
-        margin-top:100px;
-        margin-bottom:200px;
-        >.invest-list-header{
-          display: flex;
-          justify-content: space-between;
-          a{
-            line-height: 57px;
-            cursor: pointer;
+
+    >.banner-box{
+      background:#121824 url('../../assets/finance/banner.png') no-repeat center center/100% 100%;
+    }
+
+    >.inner-box{
+      display:flex;
+      width:100%;
+
+      >.finance-inner{
+        width: 1100px;
+        margin: 0 auto;
+
+        >.invest-list{
+          margin-top:100px;
+          margin-bottom:200px;
+
+          >.invest-list-header{
+            display: flex;
+            justify-content: space-between;
+
+            a{
+              line-height: 57px;
+              cursor: pointer;
+            }
           }
-        }
-        >.nvest-list-body{
-          position: relative;
-          >.gobackInvest{
-             position: absolute;
-             top:25px;
-             right: 0px;
-             z-index: 10;
-          }
-          .financeTsipsBox{
-            position: absolute;
-            top: 55px;
-            left: 0px;
-            text-align: center;
-            z-index: 10;
-            width: 100%;
-            height: 100%;
-            line-height:200px;
-            >a{
-              color: #338FF5;
+
+          >.nvest-list-body{
+            position: relative;
+
+            >.gobackInvest{
+              position: absolute;
+              z-index: 10;
+              top:25px;
+              right: 0;
+            }
+
+            .financeTsipsBox{
+              position: absolute;
+              z-index: 10;
+              top: 55px;
+              left: 0;
+              width: 100%;
+              height: 100%;
+              line-height:200px;
+              text-align: center;
+
+              >a{
+                color: #338ff5;
+              }
             }
           }
         }
       }
-      }
     }
+
     &.night{
       >.inner-box{
         background-color: $nightInnerBoxBg;
       }
     }
+
     &.day{
       >.inner-box{
         background-color: #fff;
       }
+
       .invest{
-      color: #338FF5;
-      background:linear-gradient(left,rgba(51,143,245,0.5),transparent);
+        color: #338ff5;
+        background:linear-gradient(left,rgba(51,143,245,.5),transparent);
+      }
     }
-    }
+
     .goback-icon{
-      font-size: 16px;
       margin-right:5px;
+      font-size: 16px;
     }
+
     .cancelBtn{
       cursor: pointer;
     }
+
     .blue{
-      color: #338FF5;
+      color: #338ff5;
     }
+
     .green{
       color: #008069;
     }
+
     .red{
-      color:#D45858;
+      color:#d45858;
     }
+
     .nav-header{
-      color:#fff;
-      font-size: 12px;
       display: flex;
       justify-content: space-between;
+      font-size: 12px;
+      color:#fff;
     }
+
     .invest{
-      font-size: 22px;
       width: 150px;
+      padding:14px 0 14px 26px;
+      font-size: 22px;
       color: #fff;
-      padding:14px 0px 14px 26px;
       background:linear-gradient(left,rgba(34,80,135,1),transparent);
     }
- }
+  }
 </style>

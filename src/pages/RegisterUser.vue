@@ -83,10 +83,7 @@
                     {{item.english}}
                   </span>
                 </span>
-                 <span style="
-                  float: right;
-                  color: #8492a6;
-                  font-size: 13px"
+                 <span style=" float: right; color: #8492a6; font-size: 13px"
                  >{{ item.nationCode }}</span>
                </el-option>
              </el-select>
@@ -131,10 +128,7 @@
                         {{ item.chinese }}
                       </span>
                     </span>
-                    <span style="
-                      float: right;
-                      color: #8492a6;
-                      font-size: 13px"
+                    <span style=" float: right; color: #8492a6; font-size: 13px"
                     >{{ item.nationCode }}</span>
                   </el-option>
                 </el-select>
@@ -156,10 +150,7 @@
                         {{item.english}}
                       </span>
                     </span>
-                    <span style="
-                      float: right;
-                      color: #8492a6;
-                      font-size: 13px"
+                    <span style=" float: right; color: #8492a6; font-size: 13px"
                     >{{ item.nationCode }}</span>
                   </el-option>
                 </el-select>
@@ -356,10 +347,7 @@
                     {{item.english}}
                   </span>
                 </span>
-                    <span style="
-                      float: right;
-                      color: #8492a6;
-                      font-size: 13px"
+                    <span style=" float: right; color: #8492a6; font-size: 13px"
                     >{{ item.nationCode }}</span>
                   </el-option>
                 </el-select>
@@ -404,10 +392,7 @@
                         {{ item.chinese }}
                       </span>
                     </span>
-                    <span style="
-                      float: right;
-                      color: #8492a6;
-                      font-size: 13px"
+                    <span style=" float: right; color: #8492a6; font-size: 13px"
                     >{{ item.nationCode }}</span>
                   </el-option>
                 </el-select>
@@ -429,10 +414,7 @@
                         {{item.english}}
                       </span>
                     </span>
-                    <span style="
-                      float: right;
-                      color: #8492a6;
-                      font-size: 13px"
+                    <span style=" float: right; color: #8492a6; font-size: 13px"
                     >{{ item.nationCode }}</span>
                   </el-option>
                 </el-select>
@@ -1154,407 +1136,477 @@ export default {
 </script>
 <style scoped lang="scss">
   @import '../../static/css/scss/index';
+
   .register-box{
     width:100%;
     height:100%;
     overflow-y: auto;
     background:linear-gradient(150deg,rgba(30,38,54,1),rgba(37,75,117,1));
+
     &.min-height{
       min-height:1000px;
     }
+
     >.inner-box{
       width:100%;
       height:100%;
+
       &.pc-bg{
         background:url('../assets/develop/login-bg.png') 25% 4%  no-repeat ;
       }
+
       /*background:url('../assets/develop/login-bg.png')  ;*/
       .main-color{
         color:$mainColor;
       }
+
       /*pc端*/
       >.pc-box{
         position: relative;
         width:370px;
-        background:linear-gradient(201deg,rgba(42,88,137,1) 0%,rgba(43,58,111,1) 100%);
-        box-shadow:0px 4px 21px 0px rgba(26,42,71,1);
-        margin: 12% 0 0 50%;
         padding:12px 40px 50px;
+        margin: 12% 0 0 50%;
         border-radius: 10px;
+        background:linear-gradient(201deg,rgba(42,88,137,1) 0%,rgba(43,58,111,1) 100%);
+        box-shadow:0 4px 21px 0 rgba(26,42,71,1);
+
         >.title{
           position: absolute;
           top:-20%;
-          min-width:250px;
-          text-align: center;
           left:15%;
+          min-width:250px;
           height:35px;
+          font-weight:400;
           font-size:26px;
           font-family:MicrosoftYaHei;
-          font-weight:400;
+          text-align: center;
           color:rgba(51,143,245,1);
           background:linear-gradient(81deg,rgba(77,122,255,1) 25.4638671875%, rgba(58,184,255,1) 100%);
           -webkit-background-clip:text;
           -webkit-text-fill-color:transparent;
         }
+
         /*注册方式选择*/
         >.methods-list{
           display:flex;
+
           >.method-item{
             flex:1;
             height:40px;
             line-height:40px;
             text-align: center;
             color:#c3c3c3;
+
             &.active{
-              color:#fff;
               font-size: 16px;
+              color:#fff;
             }
           }
         }
+
         >.inner-content{
           /*密码账号框*/
           >.input{
             width:600px;
+
             >.inner-box{
-              height:40px;
+              display: inline-block;
               width:290px;
+              height:40px;
               padding:0 5px 0 20px;
               margin-bottom:15px;
-              display: inline-block;
+              border-radius:20px;
               vertical-align: middle;
               background:rgba(32,55,90,1);
-              border-radius:20px;
+
               &.user-agreement{
-                background: none;
-                padding:0;
                 height:20px;
+                padding:0;
                 margin-bottom:0;
+                background: none;
               }
+
               >.input{
-                &::-webkit-input-placeholder{
-                  color:#8B9197;
-                }
                 width:100%;
                 height:100%;
                 color:#fff;
+
+                &::-webkit-input-placeholder{
+                  color:#8b9197;
+                }
+
                 &.image-validate{
                   width:154px;
                   vertical-align: top;
                 }
+
                 &.mobile-phone{
                   width:156px;
                 }
               }
+
               >.middle-line{
+                display: inline-block;
                 width:1px;
                 height:20px;
-                display: inline-block;
-                background:rgb(55,86,131);
-                vertical-align: top;
                 margin:10px 5px 0 0;
+                vertical-align: top;
+                background:rgb(55,86,131);
               }
+
               >.send-code-btn{
-                color:$mainColor;
                 height:40px;
                 line-height: 40px;
                 text-align: center;
+                color:$mainColor;
+
                 /*width:66px;*/
               }
             }
           }
+
           >.error-msg{
             height:30px;
-            line-height: 50px;
             margin-left: 30px;
+            line-height: 50px;
             color: rgb(212, 88, 88);
           }
+
           /*注册，忘记密码*/
           >.link{
             width:100%;
             height:40px;
-            line-height: 40px;
-            font-size: 12px;
             margin-bottom:30px;
+            font-size: 12px;
+            line-height: 40px;
+
             >a{
               display:inline-block;
               width:49%;
             }
           }
+
           /*注册按钮*/
           >.register-btn{
-            line-height:40px;
-            margin:20px auto 0;
             display:block;
-            font-size: 14px;
             width:128px;
             height:40px;
-            background:linear-gradient(81deg,rgba(61,152,249,1) 0%,rgba(71,135,255,1) 100%);
+            margin:20px auto 0;
             border-radius:20px;
-            box-shadow:2px 2px 8px 0px rgba(26,42,71,1);
+            font-size: 14px;
+            line-height:40px;
             color:#fff;
+            background:linear-gradient(81deg,rgba(61,152,249,1) 0%,rgba(71,135,255,1) 100%);
+            box-shadow:2px 2px 8px 0 rgba(26,42,71,1);
           }
         }
       }
+
       /*移动端*/
       >.mobile-box{
-        font-size: 0.86453968rem;
-        padding: 0 1rem;
         box-sizing: border-box;
         width:100%;
         height:100%;
+        padding: 0 1rem;
+        font-size: .86453968rem;
+
         /*邀请头部*/
         >.invitation-box{
+          display: flex;
           width:100%;
           height:6.6rem;
-          display: flex;
+
           >.left{
             flex:1;
             height:100%;
             background:url(../assets/develop/register-small-url.png) no-repeat center center;
             background-size: 102%;
           }
+
           >.right{
             flex:2;
             height:100%;
-            color:#fff;
             padding-left:1rem;
+            color:#fff;
+
             >.main-text{
               margin-top:1.8rem;
-              font-size: 1.2rem;
+
               /*font-size: 0.86453968rem;*/
               font-weight: 500;
+              font-size: 1.2rem;
             }
+
             >.sub-text{
               /*font-size: 0.86453968rem;*/
-              font-size: 0.64840476rem;
+              font-size: .64840476rem;
               line-height: 1rem;
             }
           }
         }
+
         /*登录方式切换*/
         >.methods-list{
           width:100%;
+
           >.method-item{
             display:inline-block;
             width:49%;
             height:1.8rem;
+            font-size: .86453968rem;
             line-height:1.5rem;
             text-align: center;
             color:#c3c3c3;
-            font-size: 0.86453968rem;
+
             &.active{
               color:$mainColor;
             }
           }
         }
+
         >.inner-content{
           >.input{
             width:100%;
+
             >.inner-box{
-              background-color: #28446e;
-              height:2.882rem;
+              display: inline-block;
               width:100%;
+              height:2.882rem;
               padding:0 5px 0 1rem;
               margin-bottom:.4rem;
-              display: inline-block;
-              vertical-align: middle;
+
               /*background:rgba(32,55,90,1);*/
+
               /*background:red;*/
               border-radius:20px;
+              vertical-align: middle;
+              background-color: #28446e;
+
               &.user-agreement{
-                background: none;
-                padding:0;
                 height:20px;
+                padding:0;
                 margin-bottom:0;
-                font-size: 0.86453968rem;
+                font-size: .86453968rem;
+                background: none;
               }
+
               >.input{
-                font-size: 0.86453968rem;
-                &::-webkit-input-placeholder{
-                  color:#8B9197;
-                }
                 width:100%;
                 height:100%;
+                font-size: .86453968rem;
                 color:#fff;
+
+                &::-webkit-input-placeholder{
+                  color:#8b9197;
+                }
+
                 &.image-validate{
                   width:54%;
                   vertical-align: top;
                 }
+
                 &.mobile-phone{
                   width:70%;
                 }
               }
+
               >.middle-line{
+                display: inline-block;
                 width:1px;
                 height:50%;
-                display: inline-block;
-                background:rgb(55,86,131);
                 vertical-align: middle;
+                background:rgb(55,86,131);
+
                 /*margin:10px 5px 0 0;*/
               }
+
               >.send-code-btn{
-                color:$mainColor;
                 height:2.882rem;
+                font-size: .86453968rem;
                 line-height: 2.882rem;
                 text-align: center;
-                font-size: 0.86453968rem;
+                color:$mainColor;
+
                 /*width:66px;*/
               }
             }
           }
+
           >.error-msg{
             height:2.8rem;
-            line-height: 5rem;
             margin-left: 30px;
-            font-size: 0.86453968rem;
+            font-size: .86453968rem;
+            line-height: 5rem;
             color: rgb(212, 88, 88);
           }
+
           /*注册，忘记密码*/
           >.link{
             width:100%;
             height:40px;
-            line-height: 40px;
-            font-size: 12px;
             margin-bottom:30px;
+            font-size: 12px;
+            line-height: 40px;
+
             >a{
               display:inline-block;
               width:49%;
             }
           }
+
           /*注册按钮*/
           >.register-btn{
+            display:block;
             width:100%;
             height:2.882rem;
-            margin:2rem auto 2rem;
             padding:0 5px 0 20px;
-            display:block;
-            font-size: 0.86453968rem;
-            background:linear-gradient(81deg,rgba(61,152,249,1) 0%,rgba(71,135,255,1) 100%);
+            margin:2rem auto;
             border-radius:20px;
-            box-shadow:2px 2px 8px 0px rgba(26,42,71,1);
+            font-size: .86453968rem;
             color:#fff;
+            background:linear-gradient(81deg,rgba(61,152,249,1) 0%,rgba(71,135,255,1) 100%);
+            box-shadow:2px 2px 8px 0 rgba(26,42,71,1);
           }
         }
       }
+
       /*滑块*/
       .drag-box{
         width:410px;
         overflow: hidden;
+
         >.drag{
           position: relative;
-          background-color: #1e2235;
           width: 410px;
           height: 50px;
+          border: 1px solid #4e5b85;
           line-height: 50px;
           text-align: center;
-          border: 1px solid #4e5b85;
+          background-color: #1e2235;
           cursor: pointer;
+
           >.drag_bg{
-            background-color: #1f2943;
             height: 48px;
+            background-color: #1f2943;
           }
+
           >.drag_text{
-            font-size: 16px;
             position: absolute;
-            top: 0px;
+            top: 0;
             width: 410px;
-            -moz-user-select: none;
-            -webkit-user-select: none;
-            user-select: none;
-            -o-user-select: none;
-            -ms-user-select: none;
+            font-size: 16px;
             background: -webkit-gradient(linear, left top, right top, color-stop(0, #61688a), color-stop(.4, #61688a), color-stop(.5, #fff), color-stop(.6, #61688a), color-stop(1, #61688a));
             -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
             -webkit-animation: slidetounlock 3s infinite;
+            -moz-user-select: none;
+            -webkit-user-select: none;
+            -o-user-select: none;
+            -ms-user-select: none;
+            user-select: none;
+            -webkit-text-fill-color: transparent;
             -webkit-text-size-adjust: none;
+          }
+
+          >.handler_bg{
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 70px;
+            height: 48px;
+            border-radius: 0 3px 3px 0;
+            background: #485776 url(../assets/develop/arrow-bg.png) no-repeat center center;
+
+            /* border: 1px solid #ccc; */
+            cursor: move;
+
+            .icon-text{
+              font-size: 14px;
+              color:rgba(222,225,234,1);
+            }
           }
 
           @keyframes slidetounlock {
             0% {
               background-position: -200px 0;
             }
+
             100% {
               background-position: 200px 0;
             }
           }
-          >.handler_bg{
-            border-radius: 0px 3px 3px 0px;
-            background: #485776 url(../assets/develop/arrow-bg.png) no-repeat center center;
-            position: absolute;
-            top: 0px;
-            left: 0px;
-            width: 70px;
-            height: 48px;
-            /* border: 1px solid #ccc; */
-            cursor: move;
-            .icon-text{
-              color:rgba(222,225,234,1);
-              font-size: 14px;
-            }
-          }
         }
       }
+
       >.success-box{
         width:240px;
         height:300px;
-        text-align: center;
         margin:300px auto;
+        text-align: center;
+
         >.img{
           width:140px;
           height:140px;
-          background-color: $mainColor;
-          border-radius: 50%;
           margin:0 auto 30px;
+          border-radius: 50%;
           color:#fff;
+          background-color: $mainColor;
+
           >img{
-            margin-top:20px;
             width:50%;
+            margin-top:20px;
           }
+
           >.icon-color{
             font-size: 100px;
           }
         }
+
         >.title{
-          >span{
-            font-weight: 700;
-            font-size: 18px;
-          }
           width:240px;
           height:16px;
           font-size:14px;
           font-family:MicrosoftYaHei-Bold;
           color:rgba(51,143,245,1);
+
+          >span{
+            font-weight: 700;
+            font-size: 18px;
+          }
         }
+
         >.jump-login{
           min-width:150px;
           height:40px;
-          font-size: 18px;
-          background:rgba(51,143,245,.5);
-          border-radius:4px;
           margin:50px auto;
+          border-radius:4px;
+          font-size: 18px;
           color:#fff;
+          background:rgba(51,143,245,.5);
         }
       }
     }
+
     >.invitation-success{
       .main-tips{
-        font-size: 0.86453968rem;
         margin-bottom:.4rem;
+        font-size: .86453968rem;
         color:#fff;
       }
+
       .sub-tips{
-        font-size: 0.86453968rem;
-        color:#fff;
         margin-bottom:.4rem;
+        font-size: .86453968rem;
+        color:#fff;
       }
+
       .confirm-btn{
         width:550px;
         height:75px;
+        border-radius:5px;
+        font-size: .86453968rem;
         color:#fff;
         background:$mainColor;
-        border-radius:5px;
-        font-size: 0.86453968rem;
+
         >span{
           font-size: .8rem;
         }

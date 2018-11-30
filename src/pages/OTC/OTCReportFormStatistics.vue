@@ -771,85 +771,101 @@ export default {
 </script>
 <style scoped lang="scss" type="text/scss">
 @import "../../../static/css/scss/index";
+
 .otc-report-form-statistics-box{
   margin-top:66px;
   overflow: hidden;
+
   >.report-form-statistics-content{
     width: 1150px;
-    margin: 70px auto 10px;
     padding-top: 50px;
+    margin: 70px auto 10px;
+
     >.report-form-title{
       height: 30px;
-      line-height: 30px;
       margin-bottom: 30px;
+      line-height: 30px;
     }
+
     >.report-form-filtrate{
       >.filtrate-text{
         margin-right: 20px;
       }
+
       >.currency-input{
         margin-right: 50px;
       }
     }
+
     >.report-form-asset{
       margin-top: 20px;
+
       >.title{
         height: 40px;
         line-height: 40px;
       }
+
       >.content{
-        text-align: center;
         height: 160px;
-        line-height: 160px;
         border-top: 0;
-        border-bottom-left-radius: 5px;
         border-bottom-right-radius: 5px;
+        border-bottom-left-radius: 5px;
+        line-height: 160px;
+        text-align: center;
       }
     }
+
     >.report-form-buy-sell{
       display: flex;
       flex: 2;
       margin-top: 20px;
+
       >.common{
         border-radius: 5px;
+
         >.head{
           width: 570px;
           height: 40px;
           line-height: 40px;
         }
+
         >.body{
-          width: 570px;
-          height: 420px;
-          padding: 7px 5px 0 5px;
-          border-top: 0;
-          border-bottom-left-radius: 5px;
-          border-bottom-right-radius: 5px;
           display: flex;
           flex-wrap: wrap;
           justify-content: space-between;
+          width: 570px;
+          height: 420px;
+          padding: 7px 5px 0;
+          border-top: 0;
+          border-bottom-right-radius: 5px;
+          border-bottom-left-radius: 5px;
+
           >.together{
+            display: flex;
             width: 275px;
             height: 197px;
-            display: flex;
             padding-top: 30px;
+
             >.left{
+              position: relative;
               flex: 1;
               box-sizing: border-box;
               text-align: center;
-              position: relative;
+
               >.round{
-                box-sizing: border-box;
+                position: absolute;
+                top: 50%;
+                left: 50%;
                 display: inline-block;
-                padding-top: 9px;
+                box-sizing: border-box;
                 width: 50px;
                 height: 50px;
+                padding-top: 9px;
                 border-radius: 50px;
-                position: absolute;
-                left: 50%;
-                top: 50%;
                 transform: translate(-50%, -50%);
               }
             }
+
             >.right{
               flex: 3;
               line-height: 35px;
@@ -857,34 +873,41 @@ export default {
           }
         }
       }
+
       >.buy{
         flex: 1;
         margin-right: 10px;
       }
+
       >.sell{
         flex: 1;
       }
     }
+
     >.report-form-details{
       margin-top: 20px;
-      border-bottom-left-radius: 5px;
       border-bottom-right-radius: 5px;
+      border-bottom-left-radius: 5px;
+
       >.title{
         height: 40px;
         line-height: 40px;
       }
+
       >.content{
         >.date{
-          height: 50px;
-          line-height: 50px;
-          margin-top: 30px;
-          padding: 0 20px;
           display: flex;
           justify-content: space-between;
+          height: 50px;
+          padding: 0 20px;
+          margin-top: 30px;
+          line-height: 50px;
+
           >.select-date{
             >.text{
               margin-right: 10px;
             }
+
             >.date-picker{
               >.date-short-line{
                 margin: 0 7px;
@@ -892,76 +915,96 @@ export default {
             }
           }
         }
+
         >.order-table{
-          margin-top: 20px;
           padding: 0 55px 0 43px;
+          margin-top: 20px;
         }
+
         .page{
-          text-align: center;
           padding: 10px 0;
+          text-align: center;
         }
       }
     }
   }
+
   &.night{
     background-color: $mainNightBgColor;
+
     >.report-form-statistics-content{
       >.report-form-title{
-        color: #338FF5;
-        border-left: 3px solid #338FF5;
+        border-left: 3px solid #338ff5;
+        color: #338ff5;
       }
+
       >.report-form-filtrate{
         >.filtrate-text{
-          color: #9DA5B3;
+          color: #9da5b3;
         }
       }
+
       >.report-form-asset{
-        color: #338FF5;
-        background-color: #1C1F32;
+        color: #338ff5;
+        background-color: #1c1f32;
+
         >.title{
-          border: 1px solid #1C1F32;
-          box-shadow: 0px 4px 6px #191E28;
+          border: 1px solid #1c1f32;
+          box-shadow: 0 4px 6px #191e28;
         }
+
         >.content{
-          border: 1px solid #1C1F32;
+          border: 1px solid #1c1f32;
         }
       }
+
       >.report-form-buy-sell{
         >.common{
-          background-color: #1C1F32;
+          background-color: #1c1f32;
+
           >.head{
-            color: #338FF5;
-            box-shadow: 0px 4px 6px #191E28;
+            color: #338ff5;
+            box-shadow: 0 4px 6px #191e28;
           }
+
           >.body{
-            border: 1px solid #23263C;
+            border: 1px solid #23263c;
+
             >.together{
-              border: 1px solid #23263C;
+              border: 1px solid #23263c;
+
               >.left{
-                color: #D45858;
+                color: #d45858;
+
                 >.round{
-                  background-color: #3B3139;
+                  background-color: #3b3139;
                 }
               }
+
               >.right{
-                color: #9DA5B3;
+                color: #9da5b3;
+
                 .data{
-                  color: #D45858;
+                  color: #d45858;
                 }
               }
             }
           }
         }
+
         >.sell{
           flex: 1;
+
           >.body{
             .together{
               >.left{
                 color: #008069;
+
                 >.round{
-                  background-color: #28403D;
+                  background-color: #28403d;
                 }
               }
+
               >.right{
                 .data{
                   color: #008069 !important;
@@ -971,26 +1014,32 @@ export default {
           }
         }
       }
+
       >.report-form-details{
-        background-color: #1C1F32;
+        background-color: #1c1f32;
+
         >.title{
-          color: #338FF5;
+          color: #338ff5;
         }
+
         >.content{
           >.date{
             >.select-date{
               >.text{
-                color: #9DA5B3;
+                color: #9da5b3;
               }
             }
+
             >.radio-date{
-              color: #46505F;
+              color: #46505f;
             }
           }
+
           >.order-table{
             .red{
-              color: #D45858;
+              color: #d45858;
             }
+
             .green{
               color: #008069;
             }
@@ -999,66 +1048,84 @@ export default {
       }
     }
   }
+
   &.day{
     background-color: $mainDayBgColor;
+
     >.report-form-statistics-content{
       >.report-form-title{
-        color: #338FF5;
-        border-left: 3px solid #338FF5;
+        border-left: 3px solid #338ff5;
+        color: #338ff5;
       }
+
       >.report-form-filtrate{
         >.filtrate-text{
-          color: #9DA5B3;
+          color: #9da5b3;
         }
       }
+
       >.report-form-asset{
-        color: #338FF5;
+        color: #338ff5;
         background-color: #fff;
+
         >.title{
-          border:1px solid #ECF1F8;
-          box-shadow: 0px 4px 6px #F3F3F3;
+          border:1px solid #ecf1f8;
+          box-shadow: 0 4px 6px #f3f3f3;
         }
+
         >.content{
-          border:1px solid #ECF1F8;
+          border:1px solid #ecf1f8;
         }
       }
+
       >.report-form-buy-sell{
         >.common{
           background-color: #fff;
+
           >.head{
-            color: #338FF5;
-            box-shadow: 0px 4px 6px #F3F3F3;
-            border: 1px solid #ECF1F8;
+            border: 1px solid #ecf1f8;
+            color: #338ff5;
+            box-shadow: 0 4px 6px #f3f3f3;
           }
+
           >.body{
-            border: 1px solid #ECF1F8;
+            border: 1px solid #ecf1f8;
+
             >.together{
-              border: 1px solid #ECF1F8;
+              border: 1px solid #ecf1f8;
+
               >.left{
-                color: #D45858;
+                color: #d45858;
+
                 >.round{
-                  background:rgba(212,88,88,0.1);
+                  background:rgba(212,88,88,.1);
                 }
               }
+
               >.right{
-                color: #7D90AC;
+                color: #7d90ac;
+
                 .data{
-                  color: #D45858;
+                  color: #d45858;
                 }
               }
             }
           }
         }
+
         >.sell{
           flex: 1;
+
           >.body{
             .together{
               >.left{
                 color: #008069;
+
                 >.round{
-                  background:rgba(84,189,116,0.1);
+                  background:rgba(84,189,116,.1);
                 }
               }
+
               >.right{
                 .data{
                   color: #008069 !important;
@@ -1068,30 +1135,36 @@ export default {
           }
         }
       }
+
       >.report-form-details{
-        background-color: #fff;
-        border:1px solid rgba(38,47,56,0.1);
-        border-top-left-radius: 5px;
+        border:1px solid rgba(38,47,56,.1);
         border-top-right-radius: 5px;
+        border-top-left-radius: 5px;
+        background-color: #fff;
+
         >.title{
-          color: #338FF5;
-          border-bottom:1px solid rgba(38,47,56,0.1);
+          border-bottom:1px solid rgba(38,47,56,.1);
+          color: #338ff5;
         }
+
         >.content{
           >.date{
             >.select-date{
               >.text{
-                color: #9DA5B3;
+                color: #9da5b3;
               }
             }
+
             >.radio-date{
-              color: #46505F;
+              color: #46505f;
             }
           }
+
           >.order-table{
             .red{
-              color: #D45858;
+              color: #d45858;
             }
+
             .green{
               color: #008069;
             }

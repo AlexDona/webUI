@@ -181,148 +181,175 @@ export default {
 }
 </script>
 <style scoped lang="scss" type="text/scss">
-  .currency-application-box{
-    margin-top:66px;
-    >.inner-box{
-      >.top{
-        height:344px;
-        line-height:250px;
-        text-align: center;
-        font-size:30px;
-        font-weight:bold;
-        color:rgba(255,255,255,1);
+  .currency-application-box {
+    margin-top: 66px;
+    >.inner-box {
+      >.top {
         position: relative;
+        height: 344px;
         overflow: hidden;
-        >.title{
-          font-size: 36px;
-          font-weight: 500;
+        font-weight: bold;
+        font-size: 30px;
+        line-height: 250px;
+        text-align: center;
+        color: rgba(255, 255, 255, 1);
+
+        >.title {
           position: absolute;
           top:0;
           left:50%;
-          transform: translate(-50%,0);
+          font-weight: 500;
+          font-size: 36px;
+          transform: translate(-50%, 0);
         }
       }
+
       >.bottom{
         position: relative;
-        height:1310px;
         width:100%;
+        height:1310px;
+
         >.content{
           position: absolute;
-          height:1310px;
-          width:1100px;
-          left:50%;
           top:-164px;
+          left:50%;
+          width:1100px;
+          height:1310px;
           transform: translate(-50%,0);
+
           >.top{
             padding:56px;
             text-align: center;
+
             >div{
               display:inline-block;
             }
+
             >.item{
+              position: relative;
               width:136px;
               height:100px;
               border-radius:10px;
               vertical-align: top;
               color:#fff;
-              position: relative;
+
               >.title{
                 font-weight: 700;
-                line-height: 50px;
                 font-size: 14px;
+                line-height: 50px;
               }
+
               >.content{
                 font-size: 12px;
               }
+
               >.index{
                 position: absolute;
                 bottom:-17px;
                 left:50%;
-                transform: translate(-50%,0);
                 width:34px;
                 height:34px;
-                line-height:34px;
-                background:rgba(255,255,255,1);
                 border:1px solid rgba(51,143,245,1);
                 border-radius:50%;
-                color:#338FF5;
                 font-size: 20px;
+                line-height:34px;
+                color:#338ff5;
+                background:rgba(255,255,255,1);
+                transform: translate(-50%,0);
               }
             }
+
             /*箭头*/
             >.arrow{
               width:46px;
               height:100px;
             }
           }
+
           >.return_content{
             padding-left: 50px;
           }
+
           >.bottom{
             padding:50px 40px;
+
             >.item{
               margin-bottom:50px;
+
               .title{
-                font-size: 20px;
-                color:#338FF5;
                 font-weight: 700;
+                font-size: 20px;
                 line-height: 60px;
+                color:#338ff5;
               }
+
               .content{
                 font-size: 16px;
                 line-height: 30px;
               }
             }
+
             >.email-download{
               .target-email{
-                color:#338FF5;
+                color:#338ff5;
               }
             }
+
             >.download-box{
               width:100%;
               text-align: center;
+
               >.download-btn{
                 display:inline-block;
                 width:300px;
                 height:50px;
-                line-height:50px;
-                background:linear-gradient(90deg,rgba(43,57,110,1) 0%,rgba(42,80,130,1) 100%);
-                border-radius:4px;
-                color:#fff;
-                font-size: 16px;
                 margin:150px auto;
+                border-radius:4px;
+                font-size: 16px;
+                line-height:50px;
+                color:#fff;
+                background:linear-gradient(90deg,rgba(43,57,110,1) 0%,rgba(42,80,130,1) 100%);
               }
             }
           }
         }
       }
     }
+
     &.night {
-      color:#A9BED4;
+      color:#a9bed4;
+
       > .inner-box {
         > .bottom {
           background-color: #121824;
+
           > .content {
             background-color: #1e2636;
+
             >.top{
               >.item{
                 background:linear-gradient(180deg,rgba(31,144,234,1),rgba(0,0,0,0));
               }
+
               /*箭头*/
               >.arrow{
                 background: url(../../assets/develop/arrow.png) no-repeat center center;
+
                 &.reverse{
                   transform: rotateX(180deg);
                 }
               }
             }
+
             >.bottom{
               padding:50px 40px;
+
               >.email-download{
                 .target-email{
-                  color:#338FF5;
+                  color:#338ff5;
                 }
               }
+
               >.download-box{
                 text-align: center;
               }
@@ -331,35 +358,43 @@ export default {
         }
       }
     }
+
     &.day {
       color:#000;
+
       > .inner-box {
         > .bottom {
           > .content {
             background-color: #fff;
+
             >.top{
               >.item{
-                background-color: #338FF5;
+                background-color: #338ff5;
               }
             }
+
             >.bottom{
               padding:50px 40px;
+
               >.item{
                 margin-bottom:50px;
+
                 .title{
-                  font-size: 20px;
-                  color:#338FF5;
                   font-weight: 700;
+                  font-size: 20px;
                   line-height: 60px;
+                  color:#338ff5;
                 }
+
                 .content{
                   font-size: 16px;
                   line-height: 30px;
                 }
               }
+
               >.email-download{
                 .target-email{
-                  color:#338FF5;
+                  color:#338ff5;
                 }
               }
             }

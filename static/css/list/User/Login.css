@@ -1,151 +1,174 @@
-/*login 修改element样式（部分主题）*/
+/* login 修改element样式（部分主题） */
 
-.login-box .el-dialog__wrapper{
+.login-box .el-dialog__wrapper {
   z-index: 2009 !important;
 }
 
-.login-box .el-dialog{
-  width:470px;
-  background:rgba(40,51,74,1);
-  border-radius:10px;
-  -moz-user-select: none; /*火狐*/
-  -webkit-user-select: none; /*webkit浏览器*/
-  -ms-user-select: none; /*IE10*/
-  -khtml-user-select: none; /*早期浏览器*/
+.login-box .el-dialog {
+  width: 470px;
+  border-radius: 10px;
+  background: rgba(40, 51, 74, 1);
+  -moz-user-select: none; /* 火狐 */
+  -webkit-user-select: none; /* webkit浏览器 */
+  -ms-user-select: none; /* IE10 */
+  -khtml-user-select: none; /* 早期浏览器 */
   user-select: none;
 }
-/*PC端*/
-.login-box .slider .el-dialog{
-  height:280px
+
+/* PC端 */
+.login-box .slider .el-dialog {
+  height: 280px;
 }
-.login-box .image-dialog .el-dialog{
-  height:320px
+
+.login-box .image-dialog .el-dialog {
+  height: 320px;
 }
-.login-box .el-dialog__header{
-  width:470px;
-  height:44px;
-  background:rgba(32,41,60,1);
-  border-radius:10px 10px 0px 0px;
-  box-shadow:0px 1px 2px 0px rgba(29,33,49,1);
-  padding:12px 0;
+
+.login-box .el-dialog__header {
   box-sizing: border-box;
+  width: 470px;
+  height: 44px;
+  padding: 12px 0;
+  border-radius: 10px 10px 0 0;
+  background: rgba(32, 41, 60, 1);
+  box-shadow: 0 1px 2px 0 rgba(29, 33, 49, 1);
 }
-.login-box .el-dialog__title{
-  width:470px;
-  height:44px;
-  color:#fff;
-  padding:0 30px;
+
+.login-box .el-dialog__title {
   box-sizing: border-box;
+  width: 470px;
+  height: 44px;
+  padding: 0 30px;
+  color: #fff;
 }
-.login-box .slider .el-dialog__body{
-  padding:80px 30px;
+
+.login-box .slider .el-dialog__body {
+  padding: 80px 30px;
 }
-.login-box .image-dialog .el-dialog__body{
-  padding:40px 30px;
+
+.login-box .image-dialog .el-dialog__body {
+  padding: 40px 30px;
 }
-.login-box .image-dialog .el-input__inner{
-  height:44px;
+
+.login-box .image-dialog .el-input__inner {
+  height: 44px;
 }
-.login-box .image-dialog .el-input-group__append{
-  padding:0;
-  height:44px;
-  border:none;
+
+.login-box .image-dialog .el-input-group__append {
+  height: 44px;
+  padding: 0;
+  border: none;
 }
-/*移动端*/
-.login-box .mobile-box>.mobile-inner-box .el-dialog{
-  margin-top:0 !important;
-  width:18rem;
-  height: 11rem;
+
+/* 移动端 */
+.login-box .mobile-box > .mobile-inner-box .el-dialog {
   position: fixed;
-  top:50%;
-  left:50%;
-  transform: translate(-50%,-50%);
+  top: 50%;
+  left: 50%;
+  width: 18rem;
+  height: 11rem;
+  margin-top: 0 !important;
+  transform: translate(-50%, -50%);
 }
-.login-box .mobile-box>.mobile-inner-box .el-dialog__wrapper{
-  background-color: rgba(0,0,0,.8);
+
+.login-box .mobile-box > .mobile-inner-box .el-dialog__wrapper {
+  background-color: rgba(0, 0, 0, .8);
 }
-.login-box .mobile-box>.mobile-inner-box .el-dialog__header{
-  height:120px;
-  line-height:120px;
-  width:100%;
+
+.login-box .mobile-box > .mobile-inner-box .el-dialog__header {
+  width: 100%;
+  height: 120px;
+  line-height: 120px;
 }
-.login-box .mobile-box>.mobile-inner-box .el-dialog__header>span{
+
+.login-box .mobile-box > .mobile-inner-box .el-dialog__header > span {
   font-size: 40px;
 }
-.login-box .mobile-box>.mobile-inner-box .el-dialog__headerbtn{
-  top:40px;
-  right:40px;
+
+.login-box .mobile-box > .mobile-inner-box .el-dialog__headerbtn {
+  top: 40px;
+  right: 40px;
 }
-.login-box .mobile-box>.mobile-inner-box .el-dialog__headerbtn .el-dialog__close{
+
+.login-box .mobile-box > .mobile-inner-box .el-dialog__headerbtn .el-dialog__close {
   font-size: 40px;
 }
-.login-box .mobile-box>.mobile-inner-box .drag {
+
+.login-box .mobile-box > .mobile-inner-box .drag {
   position: relative;
-  background-color: #1e2235;
-  margin: 0 auto;
   width: 1000px;
   height: 2.5rem;
+  margin: 0 auto;
+  border: 1px solid #4e5b85;
   line-height: 2.5rem;
   text-align: center;
-  border: 1px solid #4e5b85;
+  background-color: #1e2235;
 }
-.login-box .mobile-box>.mobile-inner-box .drag_text {
-  font-size: .7rem;
+
+.login-box .mobile-box > .mobile-inner-box .drag_text {
   position: absolute;
-  top: 0px;
+  top: 0;
   width: 1000px;
-  -moz-user-select: none;
-  -webkit-user-select: none;
-  user-select: none;
-  -o-user-select: none;
-  -ms-user-select: none;
+  font-size: .7rem;
   background: -webkit-gradient(linear, left top, right top, color-stop(0, #61688a), color-stop(.4, #61688a), color-stop(.5, #fff), color-stop(.6, #61688a), color-stop(1, #61688a));
   -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
   -webkit-animation: slidetounlockForMobile 4s infinite;
+  -moz-user-select: none;
+  -webkit-user-select: none;
+  -o-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+  -webkit-text-fill-color: transparent;
   -webkit-text-size-adjust: none;
-
 }
 
 @keyframes slidetounlockForMobile {
   0% {
     background-position: -400px 0;
   }
+
   100% {
     background-position: 400px 0;
   }
 }
-.login-box .mobile-box>.mobile-inner-box .handler{
+
+.login-box .mobile-box > .mobile-inner-box .handler {
   position: absolute;
-  top: 0px;
-  left: 0px;
+  top: 0;
+  left: 0;
   width: 200px;
   height: 2.5rem;
   cursor: move;
 }
-.login-box .mobile-box>.mobile-inner-box .handler_bg{
+
+.login-box .mobile-box > .mobile-inner-box .handler_bg {
+  width: 200px;
+  height: 100%;
+  font-size: 2rem;
+  color: #fff;
   background: #485776 url(../../../../src/assets/develop/arrow-bg.png) no-repeat center center;
   -webkit-background-size: 50px 50px;
   background-size: 50px 50px;
-  height:100%;
-  width:200px;
-  color:#fff;
-  font-size: 2rem;
 }
-.login-box .mobile-box>.mobile-inner-box .handler_bg .icon {
+
+.login-box .mobile-box > .mobile-inner-box .handler_bg .icon {
   font-size: 1rem;
-  color:#fff;
+  color: #fff;
 }
-.login-box .mobile-box>.mobile-inner-box .el-dialog__body{
-  padding:3rem 1rem;
+
+.login-box .mobile-box > .mobile-inner-box .el-dialog__body {
+  padding: 3rem 1rem;
 }
-.login-box .mobile-box>.mobile-inner-box .img-verify .el-dialog__body{
-  padding:1rem;
+
+.login-box .mobile-box > .mobile-inner-box .img-verify .el-dialog__body {
+  padding: 1rem;
 }
-.v-modal{
+
+.v-modal {
   z-index: 2003 !important;
 }
-/*移动端短信验证码、邮箱验证码、谷歌验证码*/
-.mobile-inner-box .msg-email-google-dialog.mobile .el-dialog__body{
+
+/* 移动端短信验证码、邮箱验证码、谷歌验证码 */
+.mobile-inner-box .msg-email-google-dialog.mobile .el-dialog__body {
   padding: 1rem;
 }
