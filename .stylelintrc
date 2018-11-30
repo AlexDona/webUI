@@ -272,13 +272,13 @@
       "widows"
     ],
     "no-empty-source": null,
-    "property-no-vendor-prefix": [0, {"ignoreProperties": ["background-clip"]}],
+    "property-no-vendor-prefix": null,
     "number-leading-zero": "never",
     "number-no-trailing-zeros": true,
     "length-zero-no-unit": true,
     "value-list-comma-space-after": "always",
     "declaration-colon-space-after": "always",
-    "value-list-max-empty-lines": 0,
+    "value-list-max-empty-lines": null,
     "shorthand-property-no-redundant-values": true,
     "declaration-block-no-duplicate-properties": true,
     "declaration-block-no-redundant-longhand-properties": true,
@@ -290,6 +290,8 @@
     "indentation": 2,
     "no-eol-whitespace": true,
     "string-no-newline": null,
-    "no-descending-specificity":0
+    "no-descending-specificity":null,
+    "font-family-no-missing-generic-family-keyword":null,
+    "function-linear-gradient-no-nonstandard-direction":null
   }
 }

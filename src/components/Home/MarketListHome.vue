@@ -497,188 +497,185 @@ export default{
   @import "../../../static/css/scss/index.scss";
   @import "../../../static/css/scss/Home/MarketListHome.scss";
 
-  .market-list-box{
-    width:100%;
-    min-height:876px;
+  .market-list-box {
+    width: 100%;
+    min-height: 876px;
     overflow: hidden;
 
-    >.loading-box{
+    > .loading-box {
       position: absolute;
       z-index: 999;
-      top:0;
-      left:0;
-      width:100%;
-      background-color: rgba(255,255,255,.2);
+      top: 0;
+      left: 0;
+      width: 100%;
+      background-color: rgba(255, 255, 255, .2);
     }
 
-    /*表头*/
-    .inner-box{
+    /* 表头 */
+    .inner-box {
       position: relative;
-      width:1130px;
+      width: 1130px;
       margin: 78px auto;
 
-      >.search-box{
+      > .search-box {
         position: absolute;
-        top:8px;
-        right:0;
-        width:250px;
-        height:31px;
-        border:1px solid $mainColor;
+        top: 8px;
+        right: 0;
+        width: 250px;
+        height: 31px;
+        border: 1px solid $mainColor;
         overflow: hidden;
       }
 
-      &:before{
+      &::before {
         position: absolute;
-        top:9px;
-        right:0;
-        width:70px;
-        height:30px;
+        top: 9px;
+        right: 0;
+        width: 70px;
+        height: 30px;
         background-color: $mainColor;
-        content:'';
+        content: '';
 
-        /*z-index: 1;*/
+        /* z-index: 1; */
       }
 
-      &:after{
+      &::after {
         position: absolute;
         z-index: 1;
-        top:14px;
-        right:69px;
-        width:0;
-        height:0;
-        border:10px solid transparent;
-        content:'';
-        border-right:10px solid $mainColor;
+        top: 14px;
+        right: 69px;
+        width: 0;
+        height: 0;
+        border: 10px solid transparent;
+        content: '';
+        border-right: 10px solid $mainColor;
       }
 
-      /*列表主要内容*/
-      .tab-content{
-        /*min-height:1255px;*/
+      /* 列表主要内容 */
+      .tab-content {
+        /* min-height:1255px; */
 
-        /*background-color: darkolivegreen;*/
+        /* background-color: darkolivegreen; */
         position: relative;
 
-        &.tab-height{
-          /*height:1320px;*/
+        &.tab-height {
+          /* height:1320px; */
         }
 
-        /*单个交易区*/
-        >.tab-item{
-          >.inner-item-box{
-            margin-bottom:20px;
+        /* 单个交易区 */
+        > .tab-item {
+          > .inner-item-box {
+            margin-bottom: 20px;
             overflow: hidden;
 
             &.max-height {
-              max-height:560px;
+              max-height: 560px;
             }
 
-            &.force-height{
-              height:560px !important;
+            &.force-height {
+              height: 560px !important;
             }
           }
         }
 
-        >.more-box{
+        > .more-box {
           text-align: center;
 
-          >.icon{
-            margin-bottom:20px;
-            color:#273c69;
+          > .icon {
+            margin-bottom: 20px;
+            color: #273c69;
           }
 
-          >.el-button{
-            border:none;
+          > .el-button {
+            border: none;
             font-size: 16px;
-            color:#fff;
+            color: #fff;
             background-color: #305794;
           }
         }
       }
     }
 
-    &.night{
-      color:$nightFontColor;
+    &.night {
+      color: $nightFontColor;
       background-color: $mainNightBgColor;
-
-      >.search-box{
-
-      }
     }
 
-    &.day{
-      color:$dayFontColor;
+    &.day {
+      color: $dayFontColor;
       background-color: $dayBgColor;
     }
   }
 </style>
 <style lang="scss">
 .market-list-box.home {
-  .el-tabs__nav-scroll{
-    height:46px;
-    background-image:url(../../assets/develop/tab-bg.png);
+  .el-tabs__nav-scroll {
+    height: 46px;
+    background-image: url(../../assets/develop/tab-bg.png);
     background-position: center center;
     -webkit-background-size: 1130px 46px;
     background-size: 1130px 46px;
   }
 
-  .el-input__inner{
-    width:250px;
-    height:30px;
-    border:none;
+  .el-input__inner {
+    width: 250px;
+    height: 30px;
+    border: none;
     border-radius: 0;
-    outline:none;
+    outline: none;
     background-color: transparent;
   }
 
-  .el-input__icon{
+  .el-input__icon {
     position: absolute;
-    top:-4px;
-    right:14px;
+    top: -4px;
+    right: 14px;
     font-size: 22px;
-    color:#fff;
+    color: #fff;
   }
 
   .el-tabs__nav-wrap::after,
-  .el-tabs__active-bar{
-    height:0;
+  .el-tabs__active-bar {
+    height: 0;
   }
 
-  /*tab栏每一项*/
-  .el-tabs__item{
-    height:35px;
-    padding:0 30px !important;
-    margin:6px auto;
+  /* tab栏每一项 */
+  .el-tabs__item {
+    height: 35px;
+    padding: 0 30px !important;
+    margin: 6px auto;
     font-size: 16px;
-    line-height:35px;
+    line-height: 35px;
     transition: color 0s;
   }
 
-  .el-tabs__item.is-active{
-    border:none;
-    color:#fff;
+  .el-tabs__item.is-active {
+    border: none;
+    color: #fff;
     background: url(../../assets/develop/tab-active-bg.png) no-repeat center center;
     -webkit-background-size: 100% 100%;
     background-size: 100% 100%;
   }
 
-  .ivu-tabs .ivu-tabs-tabpane{
-    margin-top:30px;
+  .ivu-tabs .ivu-tabs-tabpane {
+    margin-top: 30px;
   }
 
-  .ivu-btn-primary{
+  .ivu-btn-primary {
     background-color: transparent;
   }
 
-  .el-table--enable-row-transition .el-table__body td{
+  .el-table--enable-row-transition .el-table__body td {
     box-sizing: border-box;
-    height:49px;
-    padding:0;
+    height: 49px;
+    padding: 0;
   }
 
-  .el-table  th{
+  .el-table th {
     box-sizing: border-box;
-    height:38px;
-    padding:0 0 0 14px;
+    height: 38px;
+    padding: 0 0 0 14px;
+    border-top: 1px solid #2f3a8c;
   }
 
   .tab-content {
@@ -686,110 +683,105 @@ export default{
   }
 
   .el-table .cell,
-  .el-table th div{
-    padding:0;
+  .el-table th div {
+    padding: 0;
   }
 
-  .ivu-table-large td{
+  .ivu-table-large td {
     box-sizing: border-box;
     height: 50px;
   }
 
-  .ivu-table-body{
-    width:956px;
-    height:530px !important;
+  .ivu-table-body {
+    width: 956px;
+    height: 530px !important;
   }
 
-  .ivu-table-body>table{
-    width:938px !important;
+  .ivu-table-body > table {
+    width: 938px !important;
     overflow: hidden;
   }
 
-  .ivu-table-header>table{
-    width:950px !important;
+  .ivu-table-header > table {
+    width: 950px !important;
   }
 
-  .ivu-table table{
+  .ivu-table table {
     table-layout: inherit;
   }
 
-  .ivu-table th:first-of-type>.ivu-table-cell{
-    width:98px;
+  .ivu-table th:first-of-type > .ivu-table-cell {
+    width: 98px;
   }
 
-  .ivu-table th:nth-of-type(2)>.ivu-table-cell{
-    width:132px;
+  .ivu-table th:nth-of-type(2) > .ivu-table-cell {
+    width: 132px;
   }
 
-  .ivu-table th:nth-of-type(3)>.ivu-table-cell{
-    width:112px;
+  .ivu-table th:nth-of-type(3) > .ivu-table-cell {
+    width: 112px;
   }
 
-  .ivu-table th:nth-of-type(4)>.ivu-table-cell{
-    width:112px;
+  .ivu-table th:nth-of-type(4) > .ivu-table-cell {
+    width: 112px;
   }
 
-  .ivu-table th:nth-of-type(5)>.ivu-table-cell{
-    width:88px;
+  .ivu-table th:nth-of-type(5) > .ivu-table-cell {
+    width: 88px;
   }
 
-  .ivu-table th:nth-of-type(6)>.ivu-table-cell{
-    width:52px;
+  .ivu-table th:nth-of-type(6) > .ivu-table-cell {
+    width: 52px;
   }
 
-  .ivu-table th:nth-of-type(7)>.ivu-table-cell{
-    width:92px;
+  .ivu-table th:nth-of-type(7) > .ivu-table-cell {
+    width: 92px;
   }
 
-  .ivu-table th:nth-of-type(8)>.ivu-table-cell{
-    width:36px;
+  .ivu-table th:nth-of-type(8) > .ivu-table-cell {
+    width: 36px;
   }
 
-  .el-button.more-btn{
-    width:115px;
-    height:35px;
-    padding:0;
+  .el-button.more-btn {
+    width: 115px;
+    height: 35px;
+    padding: 0;
     border-radius: 10px;
-    line-height:35px;
-    color:#fff;
+    line-height: 35px;
+    color: #fff;
   }
 
   .el-button,
   .ivu-table,
   .ivu-table th,
-  .ivu-table td{
+  .ivu-table td {
     background-color: transparent;
   }
 
-  .ivu-table-wrapper{
-    bottom:-2px;
-    right:-4px;
+  .ivu-table-wrapper {
+    bottom: -2px;
+    right: -4px;
     box-sizing: border-box;
-    border:none;
-    border-top:1px solid #566ad4;
+    border: none;
+    border-top: 1px solid #566ad4;
   }
 
-  .el-table th{
-    border-top:1px solid #2f3a8c;
-  }
-
-  .el-table .sort-caret{
+  .el-table .sort-caret {
     border-width: 4px;
   }
 
-  .el-table .sort-caret.ascending{
-    top:8px;
+  .el-table .sort-caret.ascending {
+    top: 8px;
   }
 
-  .el-table .sort-caret.descending{
-    bottom:8px;
+  .el-table .sort-caret.descending {
+    bottom: 8px;
   }
 
-  /*交易对颜色*/
+  /* 交易对颜色 */
   .el-table .sellname,
-  .el-table .area
-  {
-    color:#646464;
+  .el-table .area {
+    color: #646464;
   }
 }
 </style>

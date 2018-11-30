@@ -69,66 +69,66 @@ export default {
 }
 </script>
 <style scoped lang="scss" type="text/scss">
-  .about-us-box{
-    width:100%;
-    height:100%;
+  .about-us-box {
+    width: 100%;
+    height: 100%;
 
-    >.content{
-      width:100%;
+    > .content {
+      width: 100%;
 
-      >.top{
-        width:100%;
-        height:250px;
-        padding-top:100px;
+      > .top {
+        width: 100%;
+        height: 250px;
+        padding-top: 100px;
         text-align: center;
         background: url(../../assets/develop/about-us.png) no-repeat center center;
         background-size: 102% 100%;
 
-        >h1{
+        > h1 {
           font-weight: 500;
           font-size: 36px;
-          color:#338ff5;
+          color: #338ff5;
         }
 
-        >p{
+        > p {
           font-size: 22px;
-          color:#97aac8;
+          color: #97aac8;
         }
       }
 
-      >.content{
+      > .content {
         overflow: hidden;
 
-        >.inner-box{
-          width:1100px;
-          height:1100px;
-          padding:50px;
-          margin:50px auto;
+        > .inner-box {
+          width: 1100px;
+          height: 1100px;
+          padding: 50px;
+          margin: 50px auto;
         }
       }
     }
 
-    &.night{
-      >.content{
-        >.content{
+    &.night {
+      > .content {
+        > .content {
           background-color: #121824;
 
-          >.inner-box{
-            color:#8ba0ca;
-            background-color: #1e2636
+          > .inner-box {
+            color: #8ba0ca;
+            background-color: #1e2636;
           }
         }
       }
     }
 
-    &.day{
-      >.content{
-        >.content{
+    &.day {
+      > .content {
+        > .content {
           background-color: #fff;
 
-          >.inner-box{
-            border:1px solid rgba(234,235,236,1);
-            color:#666;
+          > .inner-box {
+            border: 1px solid rgba(234, 235, 236, 1);
+            color: #666;
             background-color: #fff;
           }
         }

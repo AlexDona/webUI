@@ -386,42 +386,42 @@ export default {
   @import "../../../../static/css/scss/Personal/IndexPersonal.scss";
 
   .add-bank {
-    margin-top:66px;
+    margin-top: 66px;
     overflow: hidden;
 
-    >.add-bank-main {
+    > .add-bank-main {
       width: 1100px;
       height: 700px;
       margin: 60px auto 100px;
 
-      >.add-bank-header {
+      > .add-bank-header {
         display: flex;
 
-        >.header-content-right,
+        > .header-content-right,
         .header-content-left {
           flex: 1;
         }
 
-        >.header-content-right {
+        > .header-content-right {
           text-align: right;
         }
 
-        >.header-content-left {
+        > .header-content-left {
           text-align: left;
         }
       }
 
-      >.add-bank-content {
+      > .add-bank-content {
         min-height: 300px;
         margin: 16px 25px;
 
-        >.bank-content-title {
+        > .bank-content-title {
           height: 32px;
           margin-bottom: 30px;
           line-height: 32px;
         }
 
-        >.bank-content-from {
+        > .bank-content-from {
           width: 500px;
           margin-left: 55px;
 
@@ -440,39 +440,39 @@ export default {
       }
     }
 
-    &.night{
-      color:$nightFontColor;
+    &.night {
+      color: $nightFontColor;
       background-color: $nightBgColor;
 
       .add-bank-main {
         background-color: $nightMainBgColor;
 
-        >.add-bank-header {
+        > .add-bank-header {
           border-bottom: 1px solid #39424d;
 
-          >.header-content-left {
+          > .header-content-left {
             color: #fff;
           }
 
-          >.header-content-right {
+          > .header-content-right {
             color: #a9bed4;
           }
         }
 
-        >.add-bank-content {
+        > .add-bank-content {
           .bank-content-name {
-            color: rgba(255,255,255,.7);
+            color: rgba(255, 255, 255, .7);
           }
 
-          >.bank-content-title {
+          > .bank-content-title {
             color: #3e79d6;
-            background:rgba(62,121,214,.08);
+            background: rgba(62, 121, 214, .08);
           }
 
-          >.bank-content-from {
+          > .bank-content-from {
             .bank-input {
               border: 1px solid #485776;
-              color: rgba(255,255,255,.7);
+              color: rgba(255, 255, 255, .7);
 
               &:focus {
                 border: 1px solid #338ff5;
@@ -480,43 +480,43 @@ export default {
             }
 
             .bank-button {
-              color: rgba(255,255,255,.7);
-              background:linear-gradient(0deg,rgba(43,57,110,1),rgba(42,80,130,1));
+              color: rgba(255, 255, 255, .7);
+              background: linear-gradient(0deg, rgba(43, 57, 110, 1), rgba(42, 80, 130, 1));
             }
           }
         }
       }
     }
 
-    &.day{
-      color:$dayFontColor;
+    &.day {
+      color: $dayFontColor;
       background-color: $dayBgColor;
 
       .add-bank-main {
-        border:1px solid rgba(246,246,246,1);
-        border-radius:4px;
-        background:rgba(255,255,255,1);
-        box-shadow:0 0 4px rgba(235,240,248,1);
+        border: 1px solid rgba(246, 246, 246, 1);
+        border-radius: 4px;
+        background: rgba(255, 255, 255, 1);
+        box-shadow: 0 0 4px rgba(235, 240, 248, 1);
 
         > .add-bank-header {
-          border-bottom: 1px solid rgba(57,66,77,.1);
+          border-bottom: 1px solid rgba(57, 66, 77, .1);
 
           .header-content-right {
             color: #7d90ac;
           }
         }
 
-        >.add-bank-content {
-          >.bank-content-title {
+        > .add-bank-content {
+          > .bank-content-title {
             color: #ccc;
-            background:rgba(62,121,214,1);
+            background: rgba(62, 121, 214, 1);
           }
 
-          >.bank-content-from {
+          > .bank-content-from {
             .bank-input {
-              border:1px solid rgba(236,241,248,1);
+              border: 1px solid rgba(236, 241, 248, 1);
               color: #333;
-              background:rgba(255,255,255,1);
+              background: rgba(255, 255, 255, 1);
 
               &:focus {
                 border: 1px solid #338ff5;
@@ -525,7 +525,7 @@ export default {
 
             .bank-button {
               color: #ccc;
-              background:linear-gradient(0deg,rgba(43,57,110,1),rgba(42,80,130,1));
+              background: linear-gradient(0deg, rgba(43, 57, 110, 1), rgba(42, 80, 130, 1));
             }
           }
         }

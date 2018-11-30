@@ -1,14 +1,11 @@
 .otc-merchants-orders-box.day .el-input__inner {
   border: 1px solid #ecf1f8;
+  color: #7d90ac !important;
   background-color: #fff;
 }
 
 .otc-merchants-orders-box.day > .otc-merchants-orders-content > .merchants-orders-main > .orders-main-top > .filtrate-text[data-v-3d7faed3] {
   color: #7d90ac;
-}
-
-.otc-merchants-orders-box.day .el-input__inner {
-  color: #7d90ac !important;
 }
 
 /* 2.0查询按钮样式 */
@@ -28,10 +25,7 @@
 .otc-merchants-orders-box.day .orders-main-bottom .el-table th {
   background-color: #fff;
   box-shadow: none;
-}
-
-.otc-merchants-orders-box.day .orders-main-bottom .el-table th {
-  border-right: 1px solid 0;
+  border-right: 0;
 }
 
 .otc-merchants-orders-box.day .orders-main-bottom .el-table th.is-leaf:first-of-type {

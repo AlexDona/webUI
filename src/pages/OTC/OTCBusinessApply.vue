@@ -392,34 +392,34 @@ export default {
 @import url(../../../static/css/scss/OTC/OTCCenter.scss);
 @import "../../../static/css/scss/index";
 
-.otc-business-apply-box{
-  margin-top:66px;
+.otc-business-apply-box {
+  margin-top: 66px;
   overflow: hidden;
 
-  >.business-apply-content{
+  > .business-apply-content {
     padding-top: 20px;
 
-    >.privilege{
+    > .privilege {
       width: 1150px;
       margin: 107px auto 0;
 
-      >.title{
+      > .title {
         text-align: center;
         color: #fff;
       }
 
-      >.content{
+      > .content {
         display: flex;
         justify-content: space-around;
 
-        >.common{
+        > .common {
           position: relative;
           width: 210px;
           height: 250px;
           margin-top: 120px;
           text-align: center;
 
-          &::before{
+          &::before {
             position: absolute;
             top: -25px;
             left: 0;
@@ -430,7 +430,7 @@ export default {
             border-right: 105px solid transparent;
           }
 
-          &::after{
+          &::after {
             position: absolute;
             bottom: -25px;
             left: 0;
@@ -441,19 +441,19 @@ export default {
             border-right: 105px solid transparent;
           }
 
-          >.title{
+          > .title {
             width: 83px;
             padding-bottom: 10px;
             font-weight: 700;
             color: #338ff5;
           }
 
-          >.text{
+          > .text {
             margin-top: 60px;
             line-height: 25px;
           }
 
-          >.location-picture{
+          > .location-picture {
             position: absolute;
             top: -67px;
             left: 75px;
@@ -462,17 +462,17 @@ export default {
       }
     }
 
-    >.approve{
+    > .approve {
       width: 1150px;
       margin: 70px auto;
-      margin-top:107px;
+      margin-top: 107px;
 
-      >.title{
+      > .title {
         margin-top: 100px;
         text-align: center;
       }
 
-      >.number{
+      > .number {
         position: relative;
         width: 1150px;
         height: 52px;
@@ -480,36 +480,36 @@ export default {
         line-height: 58px;
         background: url(../../assets/develop/step.png) no-repeat center;
 
-        >.common{
+        > .common {
           font-size: 16px;
         }
 
-        >.apply{
+        > .apply {
           position: absolute;
           top: 0;
           left: 185px;
         }
 
-        >.send-email{
+        > .send-email {
           position: absolute;
           top: 0;
           left: 430px;
         }
 
-        >.submit-apply{
+        > .submit-apply {
           position: absolute;
           top: 0;
           left: 680px;
         }
 
-        >.pass{
+        > .pass {
           position: absolute;
           top: 0;
           left: 930px;
         }
       }
 
-      >.step{
+      > .step {
         width: 1150px;
         height: 650px;
         padding: 40px 0 0 238px;
@@ -517,33 +517,33 @@ export default {
         font-size: 14px;
         background: url(../../assets/develop/business-apply-bgm.png) no-repeat center;
 
-        >.content{
+        > .content {
           width: 620px;
 
-          >p{
+          > p {
             line-height: 25px;
           }
 
-          >.title{
+          > .title {
             margin-top: 20px;
 
-            &:first-child{
+            &:first-child {
               margin-top: 20px;
             }
           }
         }
       }
 
-      >.agree{
+      > .agree {
         margin-top: 70px;
         text-align: center;
       }
 
-      >.submit{
+      > .submit {
         margin-top: 20px;
         text-align: center;
 
-        >.button{
+        > .button {
           width: 300px;
           height: 50px;
           border-radius: 5px;
@@ -552,213 +552,214 @@ export default {
     }
   }
 
-  >.business-applying-content,.business-apply-success-content{
+  > .business-applying-content,
+  .business-apply-success-content {
     width: 1150px;
     padding-top: 20px;
     margin: 70px auto;
     text-align: center;
     background-color: $mainNightBgColor;
 
-    >.text{
+    > .text {
       margin-top: 40px;
       font-size: 18px;
       color: #fff;
 
-      >.tip{
+      > .tip {
         line-height: 30px;
       }
     }
   }
 
-  >.business-apply-success-content{
-    >.picture{
+  > .business-apply-success-content {
+    > .picture {
       margin-top: 20px;
     }
 
-    >.text{
+    > .text {
       margin-top: 10px;
     }
   }
 
-  >.business-apply-blank{
+  > .business-apply-blank {
     width: 100%;
     height: 918px;
     background-color: $mainNightBgColor;
   }
 
-  &.night{
+  &.night {
     overflow: hidden;
     background-color: $mainNightBgColor;
 
-    >.business-apply-content{
+    > .business-apply-content {
       overflow: hidden;
 
-      >.privilege{
-        >.title{
+      > .privilege {
+        > .title {
           color: #fff;
         }
 
-        >.content{
-          >.common{
+        > .content {
+          > .common {
             background: #202740;
 
-            &::before{
+            &::before {
               border-bottom: 25px solid #202740;
             }
 
-            &::after{
+            &::after {
               border-top: 25px solid #202740;
             }
 
-            >.title{
-              border-bottom: 1px dashed rgba(51, 143, 245,.3);
+            > .title {
+              border-bottom: 1px dashed rgba(51, 143, 245, .3);
               font-weight: 700;
               color: #338ff5;
             }
 
-            >.text{
+            > .text {
               color: #fff;
             }
           }
         }
       }
 
-      >.approve{
-        >.title{
+      > .approve {
+        > .title {
           color: #fff;
         }
 
-        >.number{
-          >.common{
+        > .number {
+          > .common {
             color: #fff;
           }
         }
 
-        >.step{
+        > .step {
           color: #8f9ca6;
 
-          >.content{
-            >.title{
+          > .content {
+            > .title {
               color: #fff;
             }
 
-            >.tips{
+            > .tips {
               color: #4b5d6e;
 
-              >.agree{
+              > .agree {
                 color: #d45858;
               }
             }
           }
         }
 
-        >.agree{
+        > .agree {
           color: #fff;
 
-          .agreement{
+          .agreement {
             color: #d45858;
           }
         }
 
-        >.submit{
-          >.button{
+        > .submit {
+          > .button {
             color: #fff;
-            background: linear-gradient(0deg,rgba(43,57,110,1),rgba(42,80,130,1));
+            background: linear-gradient(0deg, rgba(43, 57, 110, 1), rgba(42, 80, 130, 1));
           }
         }
       }
     }
   }
 
-  &.day{
+  &.day {
     overflow: hidden;
     background-color: $mainDayBgColor;
 
-    >.business-apply-content{
-      >.privilege{
-        >.title{
+    > .business-apply-content {
+      > .privilege {
+        > .title {
           color: #333;
         }
 
-        >.content{
-          >.common{
+        > .content {
+          > .common {
             background: #202740;
 
-            &::before{
+            &::before {
               border-bottom: 25px solid #202740;
             }
 
-            &::after{
+            &::after {
               border-top: 25px solid #202740;
             }
 
-            >.title{
-              border-bottom: 1px dashed rgba(51, 143, 245,.3);
+            > .title {
+              border-bottom: 1px dashed rgba(51, 143, 245, .3);
               font-weight: 700;
               color: #338ff5;
             }
 
-            >.text{
+            > .text {
               color: #fff;
             }
           }
         }
       }
 
-      >.approve{
-        >.title{
+      > .approve {
+        > .title {
           color: #333;
         }
 
-        >.number{
-          >.common{
+        > .number {
+          > .common {
             color: #333;
           }
         }
 
-        >.step{
+        > .step {
           color: #8f9ca6;
 
-          >.content{
-            >.title{
+          > .content {
+            > .title {
               color: #fff;
             }
 
-            >.tips{
+            > .tips {
               color: #4b5d6e;
 
-              >.agree{
+              > .agree {
                 color: #d45858;
               }
             }
           }
         }
 
-        >.agree{
+        > .agree {
           color: #333;
 
-          .agreement{
+          .agreement {
             color: #d45858;
           }
         }
 
-        >.submit{
-          >.button{
+        > .submit {
+          > .button {
             color: #fff;
-            background: linear-gradient(0deg,rgba(43,57,110,1),rgba(42,80,130,1));
+            background: linear-gradient(0deg, rgba(43, 57, 110, 1), rgba(42, 80, 130, 1));
           }
         }
       }
     }
   }
 
-  .businessApplyModel{
+  .businessApplyModel {
     color: #d45858;
     cursor: pointer;
   }
 }
 
-.black.otc-business-apply-box.day{
+.black.otc-business-apply-box.day {
   // 当为申请中和申请成功的页面时候，只有黑色主题颜色
   background-color: $mainNightBgColor;
 }

@@ -315,42 +315,42 @@ export default {
   @import "../../../../static/css/scss/Personal/IndexPersonal";
 
   .add-payment {
-    margin-top:66px;
+    margin-top: 66px;
     overflow: hidden;
 
-    >.add-payment-main {
+    > .add-payment-main {
       width: 1100px;
       height: 700px;
       margin: 60px auto 100px;
 
-      >.add-payment-header {
+      > .add-payment-header {
         display: flex;
 
-        >.header-content-right,
+        > .header-content-right,
         .header-content-left {
           flex: 1;
         }
 
-        >.header-content-right {
+        > .header-content-right {
           text-align: right;
         }
 
-        >.header-content-left {
+        > .header-content-left {
           text-align: left;
         }
       }
 
-      >.add-payment-content {
+      > .add-payment-content {
         min-height: 300px;
         margin: 16px 25px;
 
-        >.payment-content-title {
+        > .payment-content-title {
           height: 32px;
           margin-bottom: 30px;
           line-height: 32px;
         }
 
-        >.payment-content-from {
+        > .payment-content-from {
           width: 800px;
           margin-left: 55px;
 
@@ -377,35 +377,35 @@ export default {
       }
     }
 
-    &.night{
-      color:$nightFontColor;
+    &.night {
+      color: $nightFontColor;
       background-color: $nightBgColor;
 
       .add-payment-main {
         background-color: $nightMainBgColor;
 
-        >.add-payment-header {
+        > .add-payment-header {
           border-bottom: 1px solid #39424d;
 
-          >.header-content-left {
+          > .header-content-left {
             color: #fff;
           }
 
-          >.header-content-right {
+          > .header-content-right {
             color: #a9bed4;
           }
         }
 
-        >.add-payment-content {
-          >.payment-content-title {
+        > .add-payment-content {
+          > .payment-content-title {
             color: #3e79d6;
-            background:rgba(62,121,214,.08);
+            background: rgba(62, 121, 214, .08);
           }
 
-          >.payment-content-from {
+          > .payment-content-from {
             .payment-input {
               border: 1px solid #485776;
-              color: rgba(255,255,255,.7);
+              color: rgba(255, 255, 255, .7);
 
               &:focus {
                 border: 1px solid #338ff5;
@@ -413,7 +413,7 @@ export default {
             }
 
             .payment-content-name {
-              color: rgba(255,255,255,.7);
+              color: rgba(255, 255, 255, .7);
             }
 
             .payment-upload {
@@ -425,47 +425,47 @@ export default {
             }
 
             .payment-button {
-              color: rgba(255,255,255,.7);
-              background:linear-gradient(0deg,rgba(43,57,110,1),rgba(42,80,130,1));
+              color: rgba(255, 255, 255, .7);
+              background: linear-gradient(0deg, rgba(43, 57, 110, 1), rgba(42, 80, 130, 1));
             }
           }
         }
       }
     }
 
-    &.day{
-      color:$dayFontColor;
+    &.day {
+      color: $dayFontColor;
       background-color: $dayBgColor;
 
       .add-payment-main {
-        border:1px solid rgba(246,246,246,1);
-        border-radius:4px;
-        background:rgba(255,255,255,1);
-        box-shadow:0 0 4px rgba(235,240,248,1);
+        border: 1px solid rgba(246, 246, 246, 1);
+        border-radius: 4px;
+        background: rgba(255, 255, 255, 1);
+        box-shadow: 0 0 4px rgba(235, 240, 248, 1);
 
         > .add-payment-header {
-          border-bottom: 1px solid rgba(57,66,77,.1);
+          border-bottom: 1px solid rgba(57, 66, 77, .1);
 
           .header-content-right {
             color: #7d90ac;
           }
         }
 
-        >.add-payment-content {
-          >.payment-content-title {
+        > .add-payment-content {
+          > .payment-content-title {
             color: #ccc;
-            background:rgba(62,121,214,1);
+            background: rgba(62, 121, 214, 1);
           }
 
-          >.payment-content-from {
+          > .payment-content-from {
             .payment-content-name {
               color: #333;
             }
 
             .payment-input {
-              border:1px solid rgba(236,241,248,1);
+              border: 1px solid rgba(236, 241, 248, 1);
               color: #333;
-              background:rgba(255,255,255,1);
+              background: rgba(255, 255, 255, 1);
 
               &:focus {
                 border: 1px solid #338ff5;
@@ -482,7 +482,7 @@ export default {
 
             .payment-button {
               color: #ccc;
-              background:linear-gradient(0deg,rgba(43,57,110,1),rgba(42,80,130,1));
+              background: linear-gradient(0deg, rgba(43, 57, 110, 1), rgba(42, 80, 130, 1));
             }
           }
         }

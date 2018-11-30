@@ -20,6 +20,7 @@
 }
 
 .add-chat.personal .el-upload--picture-card {
+  position: relative;
   width: 118px;
   height: 118px;
   line-height: 106px;
@@ -27,10 +28,6 @@
 
 .add-chat.personal .el-form-item__content {
   width: 600px;
-}
-
-.add-chat.personal .el-upload--picture-card {
-  position: relative;
 }
 
 .add-chat.personal .el-form-item__label {

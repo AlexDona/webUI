@@ -123,56 +123,56 @@ export default {
 <style scoped lang="scss">
   @import '../../../static/css/scss/index';
 
-  .notice-box{
-    top:0;
-    width:100%;
-    height:30px;
+  .notice-box {
+    top: 0;
+    width: 100%;
+    height: 30px;
     overflow: hidden;
     line-height: 30px;
-    color:#8b8e92;
+    color: #8b8e92;
     background-color: #0a1b2f;
     transition: all 2s;
 
-    &.close{
-      display:none;
+    &.close {
+      display: none;
     }
 
-    .inner-box{
+    .inner-box {
       position: relative;
-      padding:0 30px;
+      padding: 0 30px;
 
-      &.animate{
+      &.animate {
         margin-top: -30px;
         transition: all .5s;
       }
 
-      >.item{
+      > .item {
         text-align: center;
-        color:#fff;
+        color: #fff;
 
-        >a{
-          /*color:#8B8E92;*/
-          color:#fff;
+        > a {
+          /* color:#8B8E92; */
+          color: #fff;
 
-          >.type {
-            color:$mainColor;
+          > .type {
+            color: $mainColor;
           }
         }
       }
     }
 
-    >.close-btn{
+    > .close-btn {
       position: absolute;
-      top:0;
-      right:10px;
-      width:30px;
-      height:30px;
+      top: 0;
+      right: 10px;
+      width: 30px;
+      height: 30px;
 
-      .iconfont{
-        width:30px;
-        height:30px;
-        color:#fff;
-        cursor:pointer;
+      .iconfont {
+        width: 30px;
+        height: 30px;
+        color: #fff;
+        cursor: pointer;
       }
     }
   }

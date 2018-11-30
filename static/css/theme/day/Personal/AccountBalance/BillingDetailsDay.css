@@ -19,13 +19,9 @@
 }
 
 .billing-details.personal.day .el-input__inner {
-  color: #ccc;
-  background-color: #19202e;
-}
-
-.billing-details.personal.day .el-input__inner {
   border: 1px solid #ecf1f8;
-  background: rgba(255, 255, 255, 1);
+  color: #ccc;
+  background-color: rgba(255, 255, 255, 1);
 }
 
 .billing-details.personal.day .el-table th > .cell {

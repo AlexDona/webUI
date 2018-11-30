@@ -120,7 +120,7 @@
           <!--暂无记录-->
           <el-table
             :data="chargeRecordList"
-            style="width: 100%"
+            style="width: 100%;"
             :empty-text="$t('M.comm_no_data')"
             v-loading="loading"
             element-loading-background="rgba(0, 0, 0, 0.6)"
@@ -186,7 +186,7 @@
       >
         <el-table
           :data="otherRecordsList"
-          style="width: 100%"
+          style="width: 100%;"
           :empty-text="$t('M.comm_no_data')"
           v-loading="loading"
         >
@@ -477,21 +477,21 @@ export default {
 <style scoped lang="scss">
   @import "../../../../static/css/scss/Personal/IndexPersonal";
 
-  .billing-details{
-    >.billing-details-main{
+  .billing-details {
+    > .billing-details-main {
       min-height: 585px;
 
       .billing-details-content {
-        >.tab-list {
+        > .tab-list {
           height: 520px;
         }
       }
 
-      >.billing-details-query {
+      > .billing-details-query {
         height: 57px;
         line-height: 57px;
 
-        >.search-button {
+        > .search-button {
           width: 50px;
           height: 30px;
           margin-top: 15px;
@@ -504,51 +504,51 @@ export default {
       }
     }
 
-    >.billing-details-header {
+    > .billing-details-header {
       margin-bottom: 2px;
 
-      >.header-content {
+      > .header-content {
         width: 300px;
       }
     }
 
-    &.night{
-      color:$nightFontColor;
+    &.night {
+      color: $nightFontColor;
       background-color: $nightBgColor;
 
-      >.billing-details-main {
+      > .billing-details-main {
         background-color: $nightMainBgColor;
 
-        >.billing-details-query {
+        > .billing-details-query {
           border-bottom: 1px solid #39424d;
 
-          >.search-button {
+          > .search-button {
             color: #fff;
-            background:linear-gradient(9deg,rgba(43,57,110,1),rgba(42,80,130,1));
+            background: linear-gradient(9deg, rgba(43, 57, 110, 1), rgba(42, 80, 130, 1));
           }
         }
       }
 
-      >.billing-details-header{
+      > .billing-details-header {
         background-color: $nightMainBgColor;
         box-shadow: 0 5px 50px #181e2a;
       }
     }
 
-    &.day{
-      color:$dayFontColor;
+    &.day {
+      color: $dayFontColor;
       background-color: $dayBgColor;
 
-      >.billing-details-main {
+      > .billing-details-main {
         border: 1px solid #ecf1f8;
         background-color: $dayBgColor;
 
-        >.billing-details-query {
-          border-bottom: 1px solid rgba(57,66,77,.1);
+        > .billing-details-query {
+          border-bottom: 1px solid rgba(57, 66, 77, .1);
 
-          >.search-button {
+          > .search-button {
             color: #fff;
-            background:linear-gradient(9deg,rgba(43,57,110,1),rgba(42,80,130,1));
+            background: linear-gradient(9deg, rgba(43, 57, 110, 1), rgba(42, 80, 130, 1));
           }
 
           .demonstration {
@@ -557,11 +557,11 @@ export default {
         }
       }
 
-      >.billing-details-header{
-        border: 1px solid rgb(236,241,248);
+      > .billing-details-header {
+        border: 1px solid rgb(236, 241, 248);
         border-radius: 2px;
-        background: rgb(255,255,255);
-        box-shadow: 1px 0 3px rgb(236,236,236);
+        background: rgb(255, 255, 255);
+        box-shadow: 1px 0 3px rgb(236, 236, 236);
       }
     }
   }

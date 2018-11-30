@@ -53,15 +53,15 @@ export default {
 <style scoped lang="scss" type="text/scss">
   @import "../../../static/css/scss/index";
 
-  .new-price{
-    >dt{
-      >span{
-        &.up{
-          color:$upColor;
+  .new-price {
+    > dt {
+      > span {
+        &.up {
+          color: $upColor;
         }
 
-        &.down{
-          color:$downColor;
+        &.down {
+          color: $downColor;
         }
       }
     }

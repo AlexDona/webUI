@@ -382,42 +382,42 @@ export default {
   @import "../../../../static/css/scss/Personal/IndexPersonal.scss";
 
   .add-account {
-    margin-top:66px;
+    margin-top: 66px;
     overflow: hidden;
 
-    >.add-account-main {
+    > .add-account-main {
       width: 1100px;
       height: 700px;
       margin: 60px auto 100px;
 
-      >.add-account-header {
+      > .add-account-header {
         display: flex;
 
-        >.header-content-right,
+        > .header-content-right,
         .header-content-left {
           flex: 1;
         }
 
-        >.header-content-right {
+        > .header-content-right {
           text-align: right;
         }
 
-        >.header-content-left {
+        > .header-content-left {
           text-align: left;
         }
       }
 
-      >.add-account-content {
+      > .add-account-content {
         min-height: 300px;
         margin: 16px 25px;
 
-        >.account-content-title {
+        > .account-content-title {
           height: 32px;
           margin-bottom: 30px;
           line-height: 32px;
         }
 
-        >.account-content-from {
+        > .account-content-from {
           width: 500px;
           margin-left: 55px;
 
@@ -443,39 +443,39 @@ export default {
       }
     }
 
-    &.night{
-      color:$nightFontColor;
+    &.night {
+      color: $nightFontColor;
       background-color: $nightBgColor;
 
       .add-account-main {
         background-color: $nightMainBgColor;
 
-        >.add-account-header {
+        > .add-account-header {
           border-bottom: 1px solid #39424d;
 
-          >.header-content-left {
+          > .header-content-left {
             color: #fff;
           }
 
-          >.header-content-right {
+          > .header-content-right {
             color: #a9bed4;
           }
         }
 
-        >.add-account-content {
-          >.account-content-title {
+        > .add-account-content {
+          > .account-content-title {
             color: #3e79d6;
-            background:rgba(62,121,214,.08);
+            background: rgba(62, 121, 214, .08);
           }
 
-          >.account-content-from {
+          > .account-content-from {
             .account-content-type {
               color: #fff;
             }
 
             .account-input {
               border: 1px solid #485776;
-              color: rgba(255,255,255,.7);
+              color: rgba(255, 255, 255, .7);
 
               &:focus {
                 border: 1px solid #338ff5;
@@ -492,47 +492,47 @@ export default {
             }
 
             .account-button {
-              color: rgba(255,255,255,.7);
-              background:linear-gradient(0deg,rgba(43,57,110,1),rgba(42,80,130,1));
+              color: rgba(255, 255, 255, .7);
+              background: linear-gradient(0deg, rgba(43, 57, 110, 1), rgba(42, 80, 130, 1));
             }
           }
         }
       }
     }
 
-    &.day{
-      color:$dayFontColor;
+    &.day {
+      color: $dayFontColor;
       background-color: $dayBgColor;
 
       .add-account-main {
-        border:1px solid rgba(246,246,246,1);
-        border-radius:4px;
-        background:rgba(255,255,255,1);
-        box-shadow:0 0 4px rgba(235,240,248,1);
+        border: 1px solid rgba(246, 246, 246, 1);
+        border-radius: 4px;
+        background: rgba(255, 255, 255, 1);
+        box-shadow: 0 0 4px rgba(235, 240, 248, 1);
 
         > .add-account-header {
-          border-bottom: 1px solid rgba(57,66,77,.1);
+          border-bottom: 1px solid rgba(57, 66, 77, .1);
 
           .header-content-right {
             color: #7d90ac;
           }
         }
 
-        >.add-account-content {
-          >.account-content-title {
+        > .add-account-content {
+          > .account-content-title {
             color: #3e79d6;
-            background:rgba(62,121,214,.1);
+            background: rgba(62, 121, 214, .1);
           }
 
-          >.account-content-from {
+          > .account-content-from {
             .account-content-type {
               color: #333;
             }
 
             .account-input {
-              border:1px solid rgba(236,241,248,1);
+              border: 1px solid rgba(236, 241, 248, 1);
               color: #333;
-              background:rgba(255,255,255,1);
+              background: rgba(255, 255, 255, 1);
 
               &:focus {
                 border: 1px solid #338ff5;
@@ -552,7 +552,7 @@ export default {
 
             .account-button {
               color: #ccc;
-              background:linear-gradient(0deg,rgba(43,57,110,1),rgba(42,80,130,1));
+              background: linear-gradient(0deg, rgba(43, 57, 110, 1), rgba(42, 80, 130, 1));
             }
           }
         }

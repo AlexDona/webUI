@@ -153,7 +153,7 @@
         >
           <el-table
             :data="ADList"
-            style="width: 100%"
+            style="width: 100%;"
             :empty-text="$t('M.comm_no_data')"
           >
             <!-- 时间 -->
@@ -566,133 +566,145 @@ export default {
 }
 </script>
 <style scoped lang="scss" type="text/scss">
-  @import "../../../static/css/scss/index";
+@import "../../../static/css/scss/index";
 
-  .otc-AD-manage-box {
-    margin-top:66px;
-    overflow: hidden;
+.otc-AD-manage-box {
+  margin-top: 66px;
+  overflow: hidden;
 
-    >.otc-AD-manage-content {
-      width: 1150px;
-      padding-top: 50px;
-      margin: 70px auto 10px;
+  > .otc-AD-manage-content {
+    width: 1150px;
+    padding-top: 50px;
+    margin: 70px auto 10px;
 
+    > .AD-title {
+      height: 30px;
+      margin-bottom: 30px;
+      line-height: 30px;
+    }
+
+    > .AD-manage-main {
+      > .manage-main-top {
+        display: flex;
+        margin-bottom: 15px;
+
+        .one-filter-condition,
+        .two-filter-condition,
+        .three-filter-condition,
+        .four-filter-condition,
+        .five-filter-condition {
+          flex: 1;
+
+          > .filtrate-text {
+            margin-right: 10px;
+          }
+        }
+
+        .five-filter-condition {
+          text-align: right;
+
+          .second-button {
+            margin-left: 25px;
+          }
+        }
+      }
+
+      > .manage-main-middle {
+        margin-bottom: 15px;
+        text-align: right;
+      }
+
+      > .manage-main-bottom {
+        min-height: 450px !important;
+      }
+
+      .page {
+        padding: 10px 0;
+        text-align: center;
+      }
+    }
+  }
+
+  &.night {
+    background-color: $mainNightBgColor;
+
+    > .otc-AD-manage-content {
       > .AD-title {
-        height: 30px;
-        margin-bottom: 30px;
-        line-height: 30px;
+        border-left: 3px solid #338ff5;
+        color: #338ff5;
       }
 
       > .AD-manage-main {
         > .manage-main-top {
-          display: flex;
-          margin-bottom: 15px;
-
-          .one-filter-condition,.two-filter-condition,.three-filter-condition,.four-filter-condition,.five-filter-condition {
-            flex: 1;
-
-            >.filtrate-text {
-              margin-right: 10px;
-            }
-          }
-
-          .five-filter-condition{
-            text-align: right;
-
-            .second-button{
-              margin-left: 25px;
+          .one-filter-condition,
+          .two-filter-condition,
+          .three-filter-condition,
+          .four-filter-condition,
+          .five-filter-condition {
+            > .filtrate-text {
+              color: #fff;
             }
           }
         }
 
-        > .manage-main-middle{
-          margin-bottom: 15px;
-          text-align: right;
+        > .manage-main-middle {
+          > .all-unshelve {
+            color: #338ff5;
+          }
         }
 
         > .manage-main-bottom {
-          min-height: 450px!important;
-        }
-
-        .page{
-          padding: 10px 0;
-          text-align: center;
-        }
-      }
-    }
-
-    &.night{
-      background-color: $mainNightBgColor;
-
-      >.otc-AD-manage-content {
-        > .AD-title {
-          border-left: 3px solid #338ff5;
-          color: #338ff5;
-        }
-
-        > .AD-manage-main {
-          > .manage-main-top {
-            .one-filter-condition,.two-filter-condition,.three-filter-condition,.four-filter-condition,.five-filter-condition {
-              >.filtrate-text {
-                color: #fff;
-              }
-            }
+          .red {
+            color: #d45858;
           }
 
-          >.manage-main-middle{
-            > .all-unshelve {
-              color: #338ff5;
-            }
-          }
-
-          > .manage-main-bottom {
-            .red {
-              color: #d45858;
-            }
-
-            .green {
-              color: #008069;
-            }
-          }
-        }
-      }
-    }
-
-    &.day{
-      background-color: $mainDayBgColor;
-
-      >.otc-AD-manage-content {
-        > .AD-title {
-          border-left: 3px solid #338ff5;
-          color: #338ff5;
-        }
-
-        > .AD-manage-main {
-          > .manage-main-top {
-            .one-filter-condition,.two-filter-condition,.three-filter-condition,.four-filter-condition,.five-filter-condition {
-              >.filtrate-text {
-                color: #9da5b3;
-              }
-            }
-          }
-
-          >.manage-main-middle{
-            > .all-unshelve {
-              color: #338ff5;
-            }
-          }
-
-          > .manage-main-bottom {
-            .red {
-              color: #d45858;
-            }
-
-            .green {
-              color: #008069;
-            }
+          .green {
+            color: #008069;
           }
         }
       }
     }
   }
+
+  &.day {
+    background-color: $mainDayBgColor;
+
+    > .otc-AD-manage-content {
+      > .AD-title {
+        border-left: 3px solid #338ff5;
+        color: #338ff5;
+      }
+
+      > .AD-manage-main {
+        > .manage-main-top {
+          .one-filter-condition,
+          .two-filter-condition,
+          .three-filter-condition,
+          .four-filter-condition,
+          .five-filter-condition {
+            > .filtrate-text {
+              color: #9da5b3;
+            }
+          }
+        }
+
+        > .manage-main-middle {
+          > .all-unshelve {
+            color: #338ff5;
+          }
+        }
+
+        > .manage-main-bottom {
+          .red {
+            color: #d45858;
+          }
+
+          .green {
+            color: #008069;
+          }
+        }
+      }
+    }
+  }
+}
 </style>

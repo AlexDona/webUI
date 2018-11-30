@@ -115,7 +115,7 @@
         <div class="extension-statistics-content">
           <el-table
             :data="extensionList"
-            style="width: 100%"
+            style="width: 100%;"
             :empty-text="$t('M.comm_no_data')"
             v-loading="loading"
             element-loading-background="rgba(0, 0, 0, 0.6)"
@@ -294,7 +294,7 @@
           >
             <!--API访问秘钥 （Access Key）-->
             <el-form-item
-              style="margin-bottom: 0"
+              style="margin-bottom: 0;"
               :label="'API' + $t('M.user_api_text4') + '（Access Key）'"
             >
               <input
@@ -314,7 +314,7 @@
             </el-form-item>
             <!--API访问秘钥 （Access Key）-->
             <el-form-item
-              style="margin-bottom: 0"
+              style="margin-bottom: 0;"
               :label="'API' + $t('M.user_api_text8') + '（Secret Key）'"
             >
               <input
@@ -388,7 +388,7 @@
           >
             <!--备注-->
             <el-form-item
-              style="margin-bottom: 0"
+              style="margin-bottom: 0;"
               :label="$t('M.comm_remark')"
             >
               <input
@@ -846,9 +846,9 @@ export default {
 <style scoped lang="scss">
   @import "../../../../static/css/scss/Personal/IndexPersonal";
 
-  .api-management{
-    >.invitation-promotion-main{
-      .code-copy{
+  .api-management {
+    > .invitation-promotion-main {
+      .code-copy {
         position: absolute;
         top: 4px;
         right: 1px;
@@ -861,17 +861,17 @@ export default {
         padding-left: 140px;
       }
 
-      .error-msg{
-        height:20px;
+      .error-msg {
+        height: 20px;
         line-height: 20px;
         color: #d45858;
       }
 
-      .error-msg1{
+      .error-msg1 {
         padding-left: 0;
       }
 
-      .error-msg2{
+      .error-msg2 {
         padding-left: 0;
       }
 
@@ -899,7 +899,7 @@ export default {
       .primary-button {
         width: 300px;
         height: 35px;
-        border-radius:4px;
+        border-radius: 4px;
       }
 
       .send-code-btn {
@@ -909,15 +909,15 @@ export default {
         margin-left: -4px;
       }
 
-      >.extension-info{
+      > .extension-info {
         min-height: 350px;
 
-        >.extension-info-header {
+        > .extension-info-header {
           height: 56px;
         }
 
-        >.extension-info-content {
-          >.info-content {
+        > .extension-info-content {
+          > .info-content {
             height: 250px;
             padding-top: 20px;
 
@@ -959,18 +959,18 @@ export default {
         }
       }
 
-      >.extension-statistics{
+      > .extension-statistics {
         min-height: 200px;
 
-        >.extension-statistics-header{
+        > .extension-statistics-header {
           height: 56px;
         }
 
-        >.extension-statistics-content{
+        > .extension-statistics-content {
           min-height: 140px;
 
-          .compile{
-            &:first-child{
+          .compile {
+            &:first-child {
               margin-right: 5px;
             }
           }
@@ -978,25 +978,25 @@ export default {
       }
     }
 
-    &.night{
-      color:$nightFontColor;
+    &.night {
+      color: $nightFontColor;
       background-color: $nightBgColor;
 
-      >.background-color {
+      > .background-color {
         background-color: $nightMainBgColor;
       }
 
-      .invitation-promotion-main{
-        .code-copy{
+      .invitation-promotion-main {
+        .code-copy {
           color: #338ff5;
           background-color: #1a2233;
         }
 
         .content-input {
-          border:1px solid rgba(72,87,118,1);
+          border: 1px solid rgba(72, 87, 118, 1);
           border-radius: 3px;
           color: #fff;
-          background:rgba(26,34,51,1);
+          background: rgba(26, 34, 51, 1);
 
           &:focus {
             border: 1px solid #338ff5;
@@ -1009,7 +1009,7 @@ export default {
 
         .primary-button {
           color: #fff;
-          background: linear-gradient(81deg,rgba(43,57,110,1) 0%,rgba(42,80,130,1) 100%);
+          background: linear-gradient(81deg, rgba(43, 57, 110, 1) 0%, rgba(42, 80, 130, 1) 100%);
         }
 
         .send-code-btn {
@@ -1017,19 +1017,19 @@ export default {
           background-color: #338ff5;
         }
 
-        >.extension-info{
+        > .extension-info {
           background-color: $nightMainBgColor;
 
-          >.extension-info-header{
+          > .extension-info-header {
             border-bottom: 1px solid #39424d;
 
-            >.header-color {
+            > .header-color {
               color: #fff;
             }
           }
 
-          >.extension-info-content{
-            >.info-content {
+          > .extension-info-content {
+            > .info-content {
               .api-input {
                 border: 1px solid #485776;
                 color: #fff;
@@ -1049,19 +1049,19 @@ export default {
 
               .api-button {
                 color: #fff;
-                background:linear-gradient(0deg,rgba(43,57,110,1),rgba(42,80,130,1));
+                background: linear-gradient(0deg, rgba(43, 57, 110, 1), rgba(42, 80, 130, 1));
               }
             }
           }
         }
 
-        >.extension-statistics {
+        > .extension-statistics {
           background-color: $nightMainBgColor;
 
-          >.extension-statistics-header {
+          > .extension-statistics-header {
             border-bottom: 1px solid #39424d;
 
-            >.header-color {
+            > .header-color {
               color: #fff;
             }
           }
@@ -1079,17 +1079,17 @@ export default {
       }
     }
 
-    &.day{
-      color:$dayFontColor;
+    &.day {
+      color: $dayFontColor;
       background-color: $dayBgColor;
 
-      >.background-color {
-        border:1px solid rgba(236,241,248,1);
-        background:rgba(255,255,255,1);
+      > .background-color {
+        border: 1px solid rgba(236, 241, 248, 1);
+        background: rgba(255, 255, 255, 1);
       }
 
       .invitation-promotion-main {
-        .code-copy{
+        .code-copy {
           color: #338ff5;
           background-color: #fff;
         }
@@ -1101,11 +1101,11 @@ export default {
 
         .primary-button {
           color: #fff;
-          background: linear-gradient(81deg,rgba(43,57,110,1) 0%,rgba(42,80,130,1) 100%);
+          background: linear-gradient(81deg, rgba(43, 57, 110, 1) 0%, rgba(42, 80, 130, 1) 100%);
         }
 
         .content-input {
-          border:1px solid rgba(236,241,248,1);
+          border: 1px solid rgba(236, 241, 248, 1);
           color: #333;
 
           &:focus {
@@ -1113,23 +1113,23 @@ export default {
           }
         }
 
-        >.extension-info{
-          border:1px solid rgba(246,246,246,1);
-          border-radius:4px;
-          background:rgba(255,255,255,1);
-          box-shadow:0 0 4px rgba(235,240,248,1);
+        > .extension-info {
+          border: 1px solid rgba(246, 246, 246, 1);
+          border-radius: 4px;
+          background: rgba(255, 255, 255, 1);
+          box-shadow: 0 0 4px rgba(235, 240, 248, 1);
 
-          >.extension-info-header{
-            border-bottom: 1px solid rgba(57,66,77,.1);
+          > .extension-info-header {
+            border-bottom: 1px solid rgba(57, 66, 77, .1);
 
-            >.header-color {
+            > .header-color {
               color: #333;
             }
           }
 
-          >.extension-info-content{
+          > .extension-info-content {
             .api-input {
-              border:1px solid rgba(236,241,248,1);
+              border: 1px solid rgba(236, 241, 248, 1);
               color: #333;
 
               &:focus {
@@ -1147,34 +1147,33 @@ export default {
 
             .api-button {
               color: #fff;
-              background:linear-gradient(0deg,rgba(43,57,110,1),rgba(42,80,130,1));
+              background: linear-gradient(0deg, rgba(43, 57, 110, 1), rgba(42, 80, 130, 1));
             }
 
-            >.promotion-box {
+            > .promotion-box {
               .promotion-info {
                 .info-left-text {
                   color: #ccc;
                 }
               }
 
-              .info-left,
-              info-right {
+              .info-left {
                 color: #ccc;
               }
             }
           }
         }
 
-        >.extension-statistics {
-          border:1px solid rgba(246,246,246,1);
-          border-radius:4px;
-          background:rgba(255,255,255,1);
-          box-shadow:0 0 4px rgba(235,240,248,1);
+        > .extension-statistics {
+          border: 1px solid rgba(246, 246, 246, 1);
+          border-radius: 4px;
+          background: rgba(255, 255, 255, 1);
+          box-shadow: 0 0 4px rgba(235, 240, 248, 1);
 
-          >.extension-statistics-header {
-            border-bottom: 1px solid rgba(57,66,77,.1);
+          > .extension-statistics-header {
+            border-bottom: 1px solid rgba(57, 66, 77, .1);
 
-            >.header-color {
+            > .header-color {
               color: #333;
             }
           }

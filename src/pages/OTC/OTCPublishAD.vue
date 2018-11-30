@@ -1028,77 +1028,77 @@ export default {
 <style scoped lang="scss" type="text/scss">
 @import "../../../static/css/scss/index";
 
-.otc-publish-AD-box{
-  margin-top:66px;
+.otc-publish-AD-box {
+  margin-top: 66px;
   overflow: hidden;
 
-  .redBorderRightNone{
+  .redBorderRightNone {
     border: 1px solid #d45858 !important;
     border-right: 0 !important;
   }
 
-  .redBorderLeftNone{
+  .redBorderLeftNone {
     border: 1px solid #d45858 !important;
     border-left: 0 !important;
   }
 
-  >.otc-publish-AD-content{
+  > .otc-publish-AD-content {
     display: flex;
     flex: 3;
     width: 1150px;
     padding-top: 50px;
     margin: 70px auto;
 
-    >.publish-AD-left{
+    > .publish-AD-left {
       flex: 2;
 
-      >.AD-title{
+      > .AD-title {
         height: 30px;
         margin-bottom: 30px;
         line-height: 30px;
       }
 
-      >.AD-big-form{
+      > .AD-big-form {
         width: 720px;
 
-        >.common{
+        > .common {
           box-sizing: border-box;
           padding: 30px 0;
 
-          >.left{
+          > .left {
             width: 110px;
             vertical-align: top;
           }
 
-          >.right{
+          > .right {
             font-size: 14px;
           }
         }
 
-        >.choice{
-          >.right{
-            >.right-style{
+        > .choice {
+          > .right {
+            > .right-style {
               margin-right: 50px;
             }
 
-            >.right-change{
-              >.double-sided-arrow{
+            > .right-change {
+              > .double-sided-arrow {
                 margin: 0 10px;
               }
             }
           }
         }
 
-        >.sale-price{
-          >.right{
-            .max-avail-sell{
+        > .sale-price {
+          > .right {
+            .max-avail-sell {
               padding-right: 10px;
             }
 
-            >.input{
+            > .input {
               margin: 10px 0 5px;
 
-              >.price-input{
+              > .price-input {
                 width: 234px;
                 height: 36px;
                 padding-left: 10px;
@@ -1106,7 +1106,7 @@ export default {
                 border-top-left-radius: 4px;
               }
 
-              >.unit{
+              > .unit {
                 display: inline-block;
                 width: 58px;
                 height: 36px;
@@ -1121,17 +1121,17 @@ export default {
           }
         }
 
-        >.sum-limit{
-          >.right{
-            .err-min-count{
+        > .sum-limit {
+          > .right {
+            .err-min-count {
               display: inline-block;
               width: 250px;
             }
 
-            >.input-top{
+            > .input-top {
               margin: 15px 0 5px;
 
-              >.input-sum{
+              > .input-sum {
                 width: 198px;
                 height: 36px;
                 padding-left: 10px;
@@ -1139,7 +1139,7 @@ export default {
                 border-top-left-radius: 4px;
               }
 
-              >.unit{
+              > .unit {
                 display: inline-block;
                 width: 60px;
                 height: 36px;
@@ -1152,18 +1152,19 @@ export default {
               }
             }
 
-            >.text{
+            > .text {
               margin-top: 20px;
 
-              >.money-max{
+              > .money-max {
                 margin-left: 166px;
               }
             }
 
-            >.input-bottom{
+            > .input-bottom {
               margin: 10px 0 5px;
 
-              >.input-min,.input-max{
+              > .input-min,
+              .input-max {
                 width: 140px;
                 height: 36px;
                 padding-left: 10px;
@@ -1171,7 +1172,7 @@ export default {
                 border-top-left-radius: 4px;
               }
 
-              >.unit{
+              > .unit {
                 display: inline-block;
                 width: 60px;
                 height: 36px;
@@ -1183,18 +1184,18 @@ export default {
                 vertical-align: top;
               }
 
-              >.minMaxLink{
+              > .minMaxLink {
                 margin: 0 10px;
               }
             }
           }
         }
 
-        >.limit-set{
+        > .limit-set {
           border-bottom: 0;
 
-          >.right{
-            .input-limit{
+          > .right {
+            .input-limit {
               width: 258px;
               height: 36px;
               padding-left: 10px;
@@ -1204,11 +1205,11 @@ export default {
           }
         }
 
-        >.button{
+        > .button {
           margin-top: 20px;
           text-align: center;
 
-          >.AD-button{
+          > .AD-button {
             width: 590px;
             height: 44px;
             border-radius: 4px;
@@ -1217,78 +1218,78 @@ export default {
       }
     }
 
-    >.publish-AD-right{
+    > .publish-AD-right {
       flex: 1;
 
-      >.publish-tips{
+      > .publish-tips {
         width: 250px;
         margin-left: 40px;
 
-        >.tip{
+        > .tip {
           line-height: 20px;
         }
       }
     }
   }
 
-  &.night{
+  &.night {
     background-color: $mainNightBgColor;
 
-    >.otc-publish-AD-content{
-      >.publish-AD-left{
-        >.AD-title{
+    > .otc-publish-AD-content {
+      > .publish-AD-left {
+        > .AD-title {
           border-left: 3px solid #338ff5;
           color: #338ff5;
         }
 
-        >.AD-big-form{
-          .err{
+        > .AD-big-form {
+          .err {
             color: #d45858;
           }
 
-          >.common{
-            >.left{
-              >.tips{
+          > .common {
+            > .left {
+              > .tips {
                 color: #fff;
               }
 
-              >.warning{
+              > .warning {
                 color: #3e79d6;
               }
             }
 
-            >.right{
+            > .right {
               color: #9da5b3;
             }
           }
 
-          >.choice{
-            >.right{
-              >.right-change{
-                >.double-sided-arrow{
+          > .choice {
+            > .right {
+              > .right-change {
+                > .double-sided-arrow {
                   color: #797979;
                 }
               }
             }
           }
 
-          >.sale-price{
-            >.right{
-              .max-avail-sell{
+          > .sale-price {
+            > .right {
+              .max-avail-sell {
                 color: #30c296;
               }
 
-              .markder-price{
+              .markder-price {
                 color: #e97345;
               }
 
-              >.input{
-                >.price-input{
+              > .input {
+                > .price-input {
                   color: #9da5b3;
                   background-color: #1c1f32;
                 }
 
-                >.unit{
+                > .unit {
                   color: #7ea9e4;
                   background-color: #21243b;
                 }
@@ -1296,66 +1297,67 @@ export default {
             }
           }
 
-          >.sum-limit{
-            >.right{
-              >.input-top{
-                >.input-sum{
+          > .sum-limit {
+            > .right {
+              > .input-top {
+                > .input-sum {
                   color: #9da5b3;
                   background-color: #1c1f32;
                 }
 
-                >.unit{
+                > .unit {
                   color: #7ea9e4;
                   background-color: #21243b;
                 }
               }
 
-              >.input-bottom{
-                >.input-min,.input-max{
+              > .input-bottom {
+                > .input-min,
+                .input-max {
                   color: #9da5b3;
                   background-color: #1c1f32;
                 }
 
-                >.unit{
+                > .unit {
                   color: #7ea9e4;
                   background-color: #21243b;
                 }
 
-                >.minMaxLink{
-                  color:#7d90ac;
+                > .minMaxLink {
+                  color: #7d90ac;
                 }
               }
             }
           }
 
-          >.limit-set{
+          > .limit-set {
             border-bottom: 0;
 
-            >.right{
-              .input-limit{
+            > .right {
+              .input-limit {
                 color: #9da5b3;
                 background-color: #1c1f32;
               }
             }
           }
 
-          >.button{
-            >.AD-button{
+          > .button {
+            > .AD-button {
               color: #fff;
-              background:linear-gradient(9deg,rgba(43,57,110,1),rgba(42,80,130,1));
+              background: linear-gradient(9deg, rgba(43, 57, 110, 1), rgba(42, 80, 130, 1));
             }
           }
         }
       }
 
-      >.publish-AD-right{
-        >.publish-tips{
-          >.title{
+      > .publish-AD-right {
+        > .publish-tips {
+          > .title {
             margin-bottom: 5px;
             color: #fff;
           }
 
-          >.tip{
+          > .tip {
             color: #7d90ac;
           }
         }
@@ -1363,65 +1365,65 @@ export default {
     }
   }
 
-  &.day{
+  &.day {
     background-color: $mainDayBgColor;
 
-    >.otc-publish-AD-content{
-      >.publish-AD-left{
-        >.AD-title{
+    > .otc-publish-AD-content {
+      > .publish-AD-left {
+        > .AD-title {
           border-left: 3px solid #338ff5;
           color: #338ff5;
         }
 
-        >.AD-big-form{
-          .err{
+        > .AD-big-form {
+          .err {
             color: #d45858;
           }
 
-          >.common{
-            >.left{
-              >.tips{
+          > .common {
+            > .left {
+              > .tips {
                 color: #333;
               }
 
-              >.warning{
+              > .warning {
                 color: #3e79d6;
               }
             }
 
-            >.right{
+            > .right {
               color: #7d90ac;
             }
           }
 
-          >.choice{
-            >.right{
-              >.right-change{
-                >.double-sided-arrow{
+          > .choice {
+            > .right {
+              > .right-change {
+                > .double-sided-arrow {
                   color: #797979;
                 }
               }
             }
           }
 
-          >.sale-price{
-            >.right{
-              .max-avail-sell{
+          > .sale-price {
+            > .right {
+              .max-avail-sell {
                 color: #30c296;
               }
 
-              .markder-price{
+              .markder-price {
                 color: #e97345;
               }
 
-              >.input{
-                >.price-input{
-                  border:1px solid rgba(236,241,248,1);
+              > .input {
+                > .price-input {
+                  border: 1px solid rgba(236, 241, 248, 1);
                   color: #7d90ac;
                   background-color: #fff;
                 }
 
-                >.unit{
+                > .unit {
                   border: 1px solid #cbddf4;
                   color: #338ff5;
                   background-color: #cbddf4;
@@ -1430,68 +1432,69 @@ export default {
             }
           }
 
-          >.sum-limit{
-            >.right{
-              >.input-top{
-                >.input-sum{
-                  border:1px solid rgba(236,241,248,1);
+          > .sum-limit {
+            > .right {
+              > .input-top {
+                > .input-sum {
+                  border: 1px solid rgba(236, 241, 248, 1);
                   color: #9da5b3;
                   background-color: #fff;
                 }
 
-                >.unit{
+                > .unit {
                   border: 1px solid #cbddf4;
                   color: #338ff5;
                   background-color: #cbddf4;
                 }
               }
 
-              >.input-bottom{
-                >.input-min,.input-max{
-                  border:1px solid rgba(236,241,248,1);
+              > .input-bottom {
+                > .input-min,
+                .input-max {
+                  border: 1px solid rgba(236, 241, 248, 1);
                   background-color: #fff;
                 }
 
-                >.unit{
+                > .unit {
                   border: 1px solid #cbddf4;
                   color: #338ff5;
                   background-color: #cbddf4;
                 }
 
-                >.minMaxLink{
-                  color:#7d90ac;
+                > .minMaxLink {
+                  color: #7d90ac;
                 }
               }
             }
           }
 
-          >.limit-set{
+          > .limit-set {
             border-bottom: 0;
 
-            >.right{
-              .input-limit{
-                border:1px solid rgba(236,241,248,1);
+            > .right {
+              .input-limit {
+                border: 1px solid rgba(236, 241, 248, 1);
                 background-color: #fff;
               }
             }
           }
 
-          >.button{
-            >.AD-button{
+          > .button {
+            > .AD-button {
               color: #fff;
-              background:linear-gradient(9deg,rgba(43,57,110,1),rgba(42,80,130,1));
+              background: linear-gradient(9deg, rgba(43, 57, 110, 1), rgba(42, 80, 130, 1));
             }
           }
         }
       }
 
-      >.publish-AD-right{
-        >.publish-tips{
-          >.title{
+      > .publish-AD-right {
+        > .publish-tips {
+          > .title {
             color: #d45858;
           }
 
-          >.tip{
+          > .tip {
             color: #7d90ac;
           }
         }

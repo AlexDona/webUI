@@ -156,108 +156,108 @@ export default {
 <style scoped lang="scss" type="text/scss">
   @import "../../../static/css/scss/index";
 
-  .mobile-header-box{
-    >.inner-box{
+  .mobile-header-box {
+    > .inner-box {
       display: flex;
-      width:100%;
-      height:160px;
-      padding:0 1rem;
+      width: 100%;
+      height: 160px;
+      padding: 0 1rem;
       line-height: 160px;
 
-      >.left{
-        height:80px;
-        margin-top:40px;
+      > .left {
+        height: 80px;
+        margin-top: 40px;
 
-        >a{
-          >.img{
-            height:80px;
+        > a {
+          > .img {
+            height: 80px;
             vertical-align: top;
           }
         }
       }
 
-      >.right{
-        flex:1;
+      > .right {
+        flex: 1;
         font-size: 30px;
-        color:#fff;
+        color: #fff;
 
-        >.ul-list{
-          height:100%;
+        > .ul-list {
+          height: 100%;
           text-align: right;
 
-          >.li-split{
-            display:inline-block;
-            width:1px;
-            height:20px;
+          > .li-split {
+            display: inline-block;
+            width: 1px;
+            height: 20px;
             vertical-align: middle;
             background-color: #4a5260;
           }
 
-          >.li-item{
-            display:inline-block;
-            padding:0 10px;
+          > .li-item {
+            display: inline-block;
+            padding: 0 10px;
 
-            >a{
-              padding:5px 10px;
-              color:#fff;
+            > a {
+              padding: 5px 10px;
+              color: #fff;
               transition: all 1s;
 
-              &:hover{
+              &:hover {
                 background-color: $mainColor;
               }
             }
 
-            /*语言选择 dl*/
-            >.lang-box{
+            /* 语言选择 dl */
+            > .lang-box {
               position: relative;
               text-align: left;
               transition: all 1s;
 
-              /*当前语言 dt*/
-              >.lang-selected{
+              /* 当前语言 dt */
+              > .lang-selected {
                 display: inline-block;
                 box-sizing: border-box;
-                width:100%;
+                width: 100%;
                 height: 30px;
                 padding: 10px 12px;
                 font-size: .86453968rem;
                 line-height: 0;
 
-                >.icon{
-                  margin-right:5px;
+                > .icon {
+                  margin-right: 5px;
                 }
 
-                >.language-text{
-                  display:inline-block;
+                > .language-text {
+                  display: inline-block;
                 }
               }
 
-              >.lang-list{
+              > .lang-list {
                 position: absolute;
                 z-index: 2;
-                top:120px;
-                left:0;
-                width:5rem;
+                top: 120px;
+                left: 0;
+                width: 5rem;
                 background-color: #2a3242;
 
-                >.lang-item{
-                  display:block;
+                > .lang-item {
+                  display: block;
                   box-sizing: border-box;
-                  width:100%;
-                  height:1.5rem;
-                  padding:0 .5rem;
+                  width: 100%;
+                  height: 1.5rem;
+                  padding: 0 .5rem;
                   font-size: .72044974rem;
-                  line-height:1.5rem;
+                  line-height: 1.5rem;
                   text-align: left;
-                  color:#fff;
+                  color: #fff;
                   transition: all 1s;
 
-                  &:hover{
+                  &:hover {
                     background-color: $mainColor;
                   }
 
-                  >.icon{
-                    margin-right:5px;
+                  > .icon {
+                    margin-right: 5px;
                   }
                 }
               }

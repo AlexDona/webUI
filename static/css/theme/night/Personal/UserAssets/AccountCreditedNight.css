@@ -15,10 +15,6 @@
   color: #fff;
 }
 
-.credited-credited.personal.night .el-dialog {
-  background-color: #28334a;
-}
-
 .credited-credited.personal.night .el-button:first-child {
   color: #fff;
   background: linear-gradient(81deg, rgba(43, 57, 110, 1) 0%, rgba(42, 80, 130, 1) 100%);

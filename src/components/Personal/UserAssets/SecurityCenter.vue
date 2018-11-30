@@ -522,7 +522,7 @@
           <div class="tab-list">
             <el-table
               :data="logonRecord"
-              style="width: 100%"
+              style="width: 100%;"
             >
               <!--登陆时间-->
               <el-table-column
@@ -578,7 +578,7 @@
           <div class="tab-list">
             <el-table
               :data="securityRecord"
-              style="width: 100%">
+              style="width: 100%;">
               <!--登陆时间-->
               <el-table-column
                 :label="$t('M.user_security_login') + $t('M.comm_time')"
@@ -1077,29 +1077,29 @@ export default {
 <style scoped lang="scss">
   @import "../../../../static/css/scss/Personal/IndexPersonal";
 
-  .security-center{
-    >.security-information{
+  .security-center {
+    > .security-information {
       height: 100px;
 
       .security-title-info {
-        >.login-time {
+        > .login-time {
           width: 290px;
         }
 
-        >.login-ip {
+        > .login-ip {
           width: 200px;
         }
       }
     }
 
-    >.security-setting{
+    > .security-setting {
       height: 510px;
 
-      >.security-setting-header {
+      > .security-setting-header {
         height: 50px;
       }
 
-      >.security-setting-box {
+      > .security-setting-box {
         .send-code-btn {
           position: absolute;
           top: 4px;
@@ -1142,20 +1142,20 @@ export default {
           flex: 2;
           padding-top: 6px;
 
-          >.security-verify,
-          >.security-binding {
+          > .security-verify,
+          > .security-binding {
             min-width: 70px;
             height: 30px;
           }
 
-          >.security-binding {
+          > .security-binding {
             margin-left: 18px;
           }
         }
       }
     }
 
-    >.security-record{
+    > .security-record {
       min-height: 510px;
 
       .tab-list {
@@ -1163,36 +1163,36 @@ export default {
       }
     }
 
-    &.night{
-      color:$nightFontColor;
+    &.night {
+      color: $nightFontColor;
       background-color: $nightBgColor;
 
-      >.security-background {
+      > .security-background {
         background-color: $nightMainBgColor;
       }
 
-      >.security-header {
+      > .security-header {
         color: #338ff5;
       }
 
       .security-title-info {
         color: #a9bed4;
 
-        >.security-level {
+        > .security-level {
           color: #a9bed4;
 
-          >.level {
+          > .level {
             margin-right: 5px;
             color: #f64d4d;
           }
         }
 
-        >.security-verification {
+        > .security-verification {
           color: #9da5b3;
         }
       }
 
-      >.security-setting{
+      > .security-setting {
         .security-setting-header {
           border-bottom: 1px solid #39424d;
           color: #fff;
@@ -1204,8 +1204,8 @@ export default {
             background-color: #338ff5;
           }
 
-          .error-msg{
-            height:25px;
+          .error-msg {
+            height: 25px;
             line-height: 25px;
             color: rgb(212, 88, 88);
           }
@@ -1219,32 +1219,32 @@ export default {
             }
           }
 
-          >.setting-type-box {
+          > .setting-type-box {
             border-bottom: 1px solid #39424d;
           }
 
-          >.security-type {
+          > .security-type {
             .security-type-text {
               .secure-email {
                 color: #fff;
               }
 
-              >.security-info {
+              > .security-info {
                 color: #a9bed4;
               }
 
-              >.security-info-text {
+              > .security-info-text {
                 color: #f57474;
               }
             }
 
             .security-status {
-              >.security-verify {
+              > .security-verify {
                 color: #fff;
-                background:linear-gradient(90deg,rgba(43,57,110,1),rgba(42,80,130,1));
+                background: linear-gradient(90deg, rgba(43, 57, 110, 1), rgba(42, 80, 130, 1));
               }
 
-              >.security-binding {
+              > .security-binding {
                 border: 1px solid #338ff5;
                 color: #338ff5;
               }
@@ -1254,39 +1254,39 @@ export default {
       }
     }
 
-    &.day{
-      color:$dayFontColor;
+    &.day {
+      color: $dayFontColor;
       background-color: $dayBgColor;
 
-      >.security-background {
-        border:1px solid rgba(236,241,248,1);
-        background:rgba(255,255,255,1);
+      > .security-background {
+        border: 1px solid rgba(236, 241, 248, 1);
+        background: rgba(255, 255, 255, 1);
       }
 
-      >.security-header {
+      > .security-header {
         color: #338ff5;
       }
 
       .security-title-info {
         color: #7d90ac;
 
-        >.security-level {
+        > .security-level {
           color: #333;
 
-          >.level {
+          > .level {
             margin-right: 5px;
             color: #f64d4d;
           }
         }
 
-        >.security-verification {
+        > .security-verification {
           color: #7d90ac;
         }
       }
 
-      >.security-setting{
+      > .security-setting {
         .security-setting-header {
-          border-bottom:1px solid rgba(236,241,248,1);
+          border-bottom: 1px solid rgba(236, 241, 248, 1);
           color: #333;
         }
 
@@ -1305,32 +1305,32 @@ export default {
             }
           }
 
-          >.setting-type-box {
-            border-bottom:1px solid rgba(236,241,248,1);
+          > .setting-type-box {
+            border-bottom: 1px solid rgba(236, 241, 248, 1);
           }
 
-          >.security-type {
+          > .security-type {
             .security-type-text {
               .secure-email {
                 color: #333;
               }
 
-              >.security-info {
+              > .security-info {
                 color: #7d90ac;
               }
 
-              >.security-info-text {
+              > .security-info-text {
                 color: #f57474;
               }
             }
 
             .security-status {
-              >.security-verify {
+              > .security-verify {
                 color: #fff;
-                background:linear-gradient(90deg,rgba(43,57,110,1),rgba(42,80,130,1));
+                background: linear-gradient(90deg, rgba(43, 57, 110, 1), rgba(42, 80, 130, 1));
               }
 
-              >.security-binding {
+              > .security-binding {
                 border: 1px solid #338ff5;
                 color: #338ff5;
               }

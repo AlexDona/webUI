@@ -4,15 +4,10 @@
   color: #7d90ac;
 }
 
-.otc-publish-buy-and-sell-box.day .el-textarea__inner {
-  font-size: 12px;
-}
-
 .otc-publish-buy-and-sell-box.day .buy-sell-submit-form .el-input__inner,
 .otc-publish-buy-and-sell-box.day > .publish-buy-and-sell-content > .publish-content > .publish-content-left > .buy-sell-submit-form .volume-business > .sell-sum,
 .otc-publish-buy-and-sell-box.day > .publish-buy-and-sell-content > .publish-content > .publish-content-left > .buy-sell-submit-form .sell-buy-input > .sell-sum {
   border: 1px solid rgba(236, 241, 248, 1);
-  background: rgba(255, 255, 255, 1);
   background-color: transparent;
 }
 
@@ -34,6 +29,7 @@
 .otc-publish-buy-and-sell-box.day .el-textarea__inner {
   border: 1px solid rgba(236, 241, 248, 1);
   border-radius: 2px;
+  font-size: 12px;
   background: rgba(255, 255, 255, 1);
 }
 

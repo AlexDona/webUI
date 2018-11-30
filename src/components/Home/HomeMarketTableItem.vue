@@ -36,14 +36,21 @@
           width="120px"
         >
           <template slot-scope="s">
-            <div style="padding-left:14px;display:flex;width: 132px !important;box-sizing: border-box;">
+            <div style="padding-left:14px;
+              display:flex;
+              width: 132px !important;
+              box-sizing: border-box;">
               <div class="left" style="border-radius: 50%;">
                 <img
-                  style="width:22px;vertical-align: middle; display:inline-block; margin:14px 0;"
+                  style="width:22px;
+                    vertical-align: middle;
+                    display:inline-block;
+                    margin:14px 0;"
                   :src="s.row.image"/>
               </div>
               <div class="right"
-                   style="height:30px;margin:10px 4px;"
+                   style="height:30px;
+                      margin:10px 4px;"
               >
                 <div class="top"
                      style="height:15px;"
@@ -59,7 +66,8 @@
                 </div>
                 <div
                   class="bottom sellname"
-                  style="height:20px;line-height: 20px"
+                  style="height:20px;
+                    line-height: 20px;"
                   v-if="language=='zh_CN'"
                 >
                   {{s.row.sellname}}
@@ -77,9 +85,13 @@
         >
           <template slot-scope="s">
             <div
-              style=" padding-left:10px; width:160px; height:30px; margin:10px auto; ">
+              style=" padding-left:10px;
+                width:160px;
+                height:30px;
+                margin:10px auto; ">
               <div class="top"
-                   style="height:15px;line-height: 15px"
+                   style="height:15px;
+                      line-height: 15px;"
               >
                 <span
                   v-show="s.row.chg>=0"
@@ -97,7 +109,8 @@
               <!--货币转换-->
               <div
                 class="bottom"
-                style="height:15px;line-height: 15px"
+                style="height:15px;
+                  line-height: 15px;"
                 v-show="currencyRateList[s.row.area]&&activeConvertCurrencyObj"
               >
                 ≈ {{activeConvertCurrencyObj.symbol}}{{keep2Num((currencyRateList[s.row.area]-0)*(s.row.last-0))}}
@@ -114,7 +127,11 @@
         >
           <template slot-scope="s">
             <div
-              style=" padding-left:10px; height:30px; width:140px; line-height: 30px; margin:10px auto; ">
+              style=" padding-left:10px;
+                height:30px;
+                width:140px;
+                line-height: 30px;
+                margin:10px auto; ">
               {{s.row.high}}
             </div>
           </template>
@@ -128,7 +145,11 @@
         >
           <template slot-scope="s">
             <div
-              style=" width:140px; height:30px; padding-left:12px; line-height: 30px; margin:10px auto; ">
+              style=" width:140px;
+                height:30px;
+                padding-left:12px;
+                line-height: 30px;
+                margin:10px auto; ">
               {{s.row.low}}
             </div>
           </template>
@@ -142,7 +163,11 @@
         >
           <template slot-scope="s">
             <div
-              style=" width: 120px; padding-left:10px; height:30px; line-height: 30px; margin:10px auto; ">
+              style=" width: 120px;
+                padding-left:10px;
+                height:30px;
+                line-height: 30px;
+                margin:10px auto; ">
               {{formatCount(s.row.vol24hour)}}
             </div>
           </template>
@@ -156,7 +181,12 @@
         >
           <template slot-scope="s">
             <div
-              style=" width:74px; padding-left:8px; height:30px; line-height: 30px; margin:10px auto; white-space:nowrap; "
+              style=" width:74px;
+                padding-left:8px;
+                height:30px;
+                line-height: 30px;
+                margin:10px auto;
+                white-space:nowrap; "
             >
               <span
                 v-show="s.row.chg>0"
@@ -339,155 +369,157 @@ export default {
 }
 </script>
 <style scoped lang="scss" type="text/scss">
-  @import "../../../static/css/scss/index.scss";
-  @import "../../../static/css/scss/Home/MarketListHome.scss";
+@import "../../../static/css/scss/index.scss";
+@import "../../../static/css/scss/Home/MarketListHome.scss";
 
-  .table-item-box{
-    display:flex;
-    width:100%;
-    height:100%;
-    margin-bottom:20px;
+.table-item-box {
+  display: flex;
+  width: 100%;
+  height: 100%;
+  margin-bottom: 20px;
 
-    /*侧边栏*/
-    >.left{
-      /*min-height:560px;*/
+  /* 侧边栏 */
+  > .left {
+    /* min-height:560px; */
 
-      /*background-color: #f40;*/
+    /* background-color: #f40; */
+    position: relative;
+    width: 210px;
+    text-align: center;
+
+    &::before {
+      position: absolute;
+      top: 1px;
+      right: -26px;
+      width: 0;
+      height: 0;
+      border: 13px solid transparent;
+      border-left-color: #526e90;
+      content: '';
+    }
+
+    > div {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+    }
+
+    > .right-side,
+    > .reverse-side {
+      &.animate {
+        transition-property: all;
+        transition-duration: 2s;
+
+        /* transition-timing-function: linear; */
+        transition-timing-function: ease-in-out;
+      }
+
+      > .top {
+        padding: 20px 0;
+        margin-top: 30px;
+        font-size: 24px;
+        color: #fff;
+        background: url(../../assets/develop/market-list-border.png) no-repeat center bottom;
+      }
+    }
+
+    /* 正面 */
+    > .right-side {
       position: relative;
-      width:210px;
-      text-align: center;
+      top: -30px;
+      background: linear-gradient(#1d3862, #305fa7);
 
-      &:before{
+      > .bottom {
         position: absolute;
-        top:1px;
-        right:-26px;
-        width:0;
-        height:0;
-        border: 13px solid transparent;
-        border-left-color: #526e90;
-        content:'';
+        bottom: 20px;
+        left: 50%;
+        transform: translateX(-50%);
       }
+    }
 
-      >div{
-        position: absolute;
-        top:0;
-        left:0;
-        width:100%;
-        height:100%;
-      }
+    /* 反面 */
+    > .reverse-side {
+      position: relative;
+      top: -30px;
+      background: linear-gradient(#2f398c, #3d4e8d);
 
-      >.right-side,>.reverse-side{
-        &.animate {
-          transition-property: all;
-          transition-duration: 2s;
+      > .bottom {
+        margin-top: 30px;
 
-          /*transition-timing-function: linear;*/
-          transition-timing-function: ease-in-out;
-        }
+        > .hot-list {
+          box-sizing: border-box;
+          min-height: 330px;
 
-        >.top{
-          padding:20px 0;
-          margin-top:30px;
-          font-size: 24px;
-          color:#fff;
-          background: url(../../assets/develop/market-list-border.png) no-repeat center bottom;
-        }
-      }
-
-      /*正面*/
-      >.right-side{
-        position: relative;
-        top:-30px;
-        background:linear-gradient(#1d3862,#305fa7);
-
-        >.bottom{
-          position: absolute;
-          bottom:20px;
-          left:50%;
-          transform: translateX(-50%);
-        }
-      }
-
-      /*反面*/
-      >.reverse-side{
-        position: relative;
-        top:-30px;
-        background:linear-gradient(#2f398c,#3d4e8d);
-
-        >.bottom{
-          margin-top:30px;
-
-          >.hot-list{
+          > .hot-item {
             box-sizing: border-box;
-            min-height:330px;
 
-            >.hot-item{
-              box-sizing: border-box;
+            > a {
+              display: inline-block;
+              width: 100%;
+              height: 60px;
+              color: #fff;
 
-              >a{
+              > .left,
+              > .right {
                 display: inline-block;
-                width:100%;
-                height:60px;
-                color:#fff;
+                width: 48%;
+                height: 60px;
+                vertical-align: middle;
+              }
 
-                >.left,>.right{
+              > .left {
+                line-height: 60px;
+              }
+
+              > .right {
+                padding-top: 10px;
+                text-align: left;
+
+                > .top {
+                  &.up {
+                    color: $upColor;
+                  }
+
+                  &.down {
+                    color: $downColor;
+                  }
+                }
+
+                .collect-box {
+                  text-align: center;
+                }
+
+                > .top,
+                > .bottom {
                   display: inline-block;
-                  width:48%;
-                  height:60px;
-                  vertical-align: middle;
-                }
-
-                >.left{
-                  line-height: 60px;
-                }
-
-                >.right{
-                  padding-top:10px;
-                  text-align: left;
-
-                  >.top{
-                    &.up{
-                      color:$upColor;
-                    }
-
-                    &.down{
-                      color:$downColor;
-                    }
-                  }
-
-                  .collect-box{
-                    text-align: center;
-                  }
-
-                  >.top,>.bottom{
-                    display: inline-block;
-                    width:100%;
-                    height:20px;
-                    line-height: 20px;
-                  }
+                  width: 100%;
+                  height: 20px;
+                  line-height: 20px;
                 }
               }
             }
           }
         }
+      }
 
-        >.more-btn{
-          position: absolute;
-          bottom:20px;
-          left:50%;
-          transform: translateX(-50%);
-        }
+      > .more-btn {
+        position: absolute;
+        bottom: 20px;
+        left: 50%;
+        transform: translateX(-50%);
       }
     }
-
-    /*主要内容*/
-    >.right{
-      /*height:547px;*/
-      width:986px;
-      margin:13px 0 0;
-      overflow: hidden;
-      background-color: transparent;
-
-    }
   }
+
+  /* 主要内容 */
+  > .right {
+    /* height:547px; */
+    width: 986px;
+    margin: 13px 0 0;
+    overflow: hidden;
+    background-color: transparent;
+  }
+}
 </style>

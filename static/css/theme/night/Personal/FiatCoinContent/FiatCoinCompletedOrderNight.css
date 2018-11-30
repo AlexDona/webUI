@@ -1,16 +1,13 @@
 /* 完成订单组件样式重写 */
 .fiat-completed-order-box.personal.night .el-table__expanded-cell {
-  border-bottom:  26px solid #1d2331 !important;
+  border-bottom: 26px solid #1d2331 !important;
   background-color: #1c1f32;
 }
 
 .fiat-completed-order-box.personal.night .el-table th {
   padding: 5px 0;
+  background-color: #1c1f32;
   box-shadow: 4px 4px 6px #191e28;
-}
-
-.fiat-completed-order-box.personal.night .el-table {
-  color: #9da5b3;
 }
 
 .fiat-completed-order-box.personal.night .el-table--enable-row-hover .el-table__body tr:hover > td {
@@ -27,6 +24,7 @@
 }
 
 .fiat-completed-order-box.personal.night .el-table {
+  color: #9da5b3;
   background-color: #272b41;
 }
 
@@ -43,13 +41,9 @@
   border-collapse: separate !important;
 }
 
-.fiat-completed-order-box.personal.night .el-table__expanded-cell {
-  border-bottom: 15px solid #272b41;
-}
-
 .fiat-completed-order-box.personal.night .el-table_2_column_9 .el-table__expand-column .is-leaf {
-  border-bottom-left-radius:  5px;
-  border-top-left-radius:  5px;
+  border-bottom-left-radius: 5px;
+  border-top-left-radius: 5px;
 }
 
 .fiat-completed-order-box.personal.night .el-table__expanded-cell:hover {
@@ -107,10 +101,6 @@
 
 .el-table td {
   border-bottom: 1px solid #262f38;
-}
-
-.fiat-completed-order-box.personal.night .el-table th {
-  background-color: #1c1f32;
 }
 
 .fiat-completed-order-box.personal.night .el-table__empty-block {

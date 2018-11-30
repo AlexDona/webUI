@@ -950,37 +950,37 @@ export default {
   @import "../../static/css/scss/Personal/IndexPersonal";
 
   .vip-main {
-    margin-top:65px;
+    margin-top: 65px;
 
     > .header-content {
       position: relative;
       width: 100%;
       margin: 0 auto;
 
-      >.images {
+      > .images {
         width: 100%;
       }
 
-      >.title{
+      > .title {
         position: absolute;
-        top:30%;
-        left:47%;
+        top: 30%;
+        left: 47%;
         font-size: 48px;
-        color:#fff;
+        color: #fff;
         transform: translate(-50%, -50%);
       }
     }
 
-    >.loading-box{
-      width:100%;
-      height:800px;
+    > .loading-box {
+      width: 100%;
+      height: 800px;
     }
 
     > .content-main-content {
-      height:100%;
+      height: 100%;
 
-      .error-msg{
-        height:25px;
+      .error-msg {
+        height: 25px;
         line-height: 25px;
         color: rgb(212, 88, 88);
       }
@@ -997,17 +997,17 @@ export default {
           line-height: 40px;
         }
 
-        .error-msg{
-          height:30px;
+        .error-msg {
+          height: 30px;
           padding-left: 35px;
           line-height: 30px;
           color: rgb(212, 88, 88);
         }
 
-        >.content-main-box {
+        > .content-main-box {
           position: relative;
 
-          >.content-box {
+          > .content-box {
             position: absolute;
             z-index: 10;
             top: 0;
@@ -1015,7 +1015,7 @@ export default {
             flex-wrap: wrap;
             width: 250px;
             background-color: #1c1f32;
-            opacity:.7;
+            opacity: .7;
           }
 
           > .content-module {
@@ -1059,7 +1059,7 @@ export default {
         min-height: 500px;
         margin: 0 auto;
 
-        .blue1{
+        .blue1 {
           border: 1px solid #338ff5 !important;
           background-color: transparent !important;
 
@@ -1081,7 +1081,7 @@ export default {
             margin-left: 40px;
             border: 1px solid #354057;
 
-            >.grade-height {
+            > .grade-height {
               margin-top: 5px;
             }
           }
@@ -1096,7 +1096,7 @@ export default {
             line-height: 150px;
           }
 
-          .red{
+          .red {
             border: 1px solid #338ff5 !important;
             background-color: transparent !important;
 
@@ -1136,11 +1136,11 @@ export default {
               }
             }
 
-            >.duration-currency {
+            > .duration-currency {
               padding: 8px 0;
             }
 
-            >.duration-through {
+            > .duration-through {
               text-decoration: line-through;
             }
           }
@@ -1150,34 +1150,34 @@ export default {
           }
         }
 
-        >.detail-usable {
+        > .detail-usable {
           margin: 100px 0 80px;
 
-          >.usable-title {
+          > .usable-title {
             width: 100px;
           }
 
-          >.usable {
+          > .usable {
             width: 500px;
 
-            >.usable-asset {
-              >.currency {
+            > .usable-asset {
+              > .currency {
                 margin-left: 5px;
               }
             }
 
-            >.usable-gain {
+            > .usable-gain {
               margin-left: 25px;
             }
           }
         }
 
-        >.detail-page-btn {
+        > .detail-page-btn {
           width: 100%;
           height: 40px;
           margin-bottom: 50px;
 
-          >.page-btn {
+          > .page-btn {
             width: 290px;
             height: 40px;
           }
@@ -1209,8 +1209,8 @@ export default {
         margin-top: -3px;
         background: #272b41;
 
-        .html-content{
-          color:$nightFontColor;
+        .html-content {
+          color: $nightFontColor;
         }
 
         > .content-main {
@@ -1220,7 +1220,7 @@ export default {
             }
           }
 
-          >.content-main-box {
+          > .content-main-box {
             > .content-module {
               border: 2px solid #33404b;
               background-color: #1c1f32;
@@ -1264,7 +1264,7 @@ export default {
               }
 
               > .content-text {
-                color: rgba(51, 143, 245, .6);;
+                color: rgba(51, 143, 245, .6);
               }
 
               > .content-discount {
@@ -1279,7 +1279,7 @@ export default {
               > .content-button {
                 > .click-btn {
                   color: #fff;
-                  background:linear-gradient(0deg,rgba(26,29,47,1) 0%,rgba(45,54,81,1) 100%);
+                  background: linear-gradient(0deg, rgba(26, 29, 47, 1) 0%, rgba(45, 54, 81, 1) 100%);
                 }
               }
             }
@@ -1397,12 +1397,8 @@ export default {
       background-color: $dayBgColor;
 
       > .content-main-content {
-        color:$dayFontColor;
-        background-color: $dayBgColor;
-      }
-
-      > .content-main-content {
         margin-top: -3px;
+        color: $dayFontColor;
         background-color: $dayBgColor;
 
         > .content-main {
@@ -1412,7 +1408,7 @@ export default {
             }
           }
 
-          >.content-main-box {
+          > .content-main-box {
             > .content-module {
               border: 2px solid #33404b;
               background-color: #232d39;
@@ -1450,7 +1446,7 @@ export default {
               }
 
               > .content-text {
-                color: rgba(51, 143, 245, .6);;
+                color: rgba(51, 143, 245, .6);
               }
 
               > .content-discount {

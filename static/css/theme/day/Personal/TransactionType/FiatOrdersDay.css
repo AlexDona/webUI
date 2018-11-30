@@ -1,28 +1,19 @@
 /* 个人中心（白色主题） */
-
-/* tabs切换 */
-.fiat-orders.personal.day .el-tabs__item.is-active {
-  border-bottom: 1px solid #000;
-  color: #7d90ac;
-  background-color: transparent;
-}
-
 .fiat-orders.personal.day .el-tabs__item {
   border-bottom: 1px solid #ecf1f8;
+  color: #7d90ac;
 }
 
 .fiat-orders.day .el-tabs__header {
   padding: 0;
 }
 
-.fiat-orders.personal.day .el-tabs__item {
-  color: #7d90ac;
-}
-
+/* tabs切换 */
 .fiat-orders.personal.day .el-tabs__item.is-active {
   border-bottom: 2px solid #338ff5;
   border-left: none;
   color: #338ff5;
+  background-color: transparent;
 }
 
 .fiat-orders.personal.day .el-tabs__item:hover {

@@ -330,40 +330,40 @@ export default {
 <style scoped lang="scss" type="text/scss">
 @import "../../../static/css/scss/OTC/OTCCenter.scss";
 
-.otc-completed-order-box{
-  >.completed-order-content{
+.otc-completed-order-box {
+  > .completed-order-content {
     min-height: 500px;
 
-    .page{
+    .page {
       padding: 10px 0;
       text-align: center;
     }
 
-    .completed-info{
+    .completed-info {
       display: flex;
       flex: 7;
 
-      >.completed-info-left{
+      > .completed-info-left {
         flex: 2;
 
-        >.order-info-left{
+        > .order-info-left {
           line-height: 20px;
         }
       }
 
-      >.completed-info-middle{
+      > .completed-info-middle {
         flex: 2;
 
-        >.order-info-middle{
+        > .order-info-middle {
           margin-left: 50px;
           line-height: 20px;
         }
       }
 
-      >.completed-info-right{
+      > .completed-info-right {
         flex: 3;
 
-        >.order-info-right{
+        > .order-info-right {
           margin-left: 50px;
           line-height: 20px;
         }
@@ -371,42 +371,42 @@ export default {
     }
   }
 
-  &.night{
-    >.completed-order-content{
-      .red{
+  &.night {
+    > .completed-order-content {
+      .red {
         color: #d45858;
       }
 
-      .green{
+      .green {
         color: #008069;
       }
 
-      .completed-info{
+      .completed-info {
         color: #9da5b3;
 
-        >.completed-info-left{
+        > .completed-info-left {
           border-right: 1px solid #262f38;
 
-          >.order-info-left{
-            >.pay-info{
+          > .order-info-left {
+            > .pay-info {
               color: #5e95ec;
             }
           }
         }
 
-        >.completed-info-middle{
+        > .completed-info-middle {
           border-right: 1px solid #262f38;
 
-          >.order-info-middle{
-            >.buyer-seller-info{
+          > .order-info-middle {
+            > .buyer-seller-info {
               color: #5e95ec;
             }
           }
         }
 
-        >.completed-info-right{
-          >.order-info-right{
-            >.confirm-time{
+        > .completed-info-right {
+          > .order-info-right {
+            > .confirm-time {
               color: #5e95ec;
             }
           }
@@ -415,42 +415,42 @@ export default {
     }
   }
 
-  &.day{
-    >.completed-order-content{
-      .red{
+  &.day {
+    > .completed-order-content {
+      .red {
         color: #d45858;
       }
 
-      .green{
+      .green {
         color: #008069;
       }
 
-      .completed-info{
+      .completed-info {
         color: #7d90ac;
 
-        >.completed-info-left{
-          border-right: 1px solid rgba(38,47,56,.1);
+        > .completed-info-left {
+          border-right: 1px solid rgba(38, 47, 56, .1);
 
-          >.order-info-left{
-            >.pay-info{
+          > .order-info-left {
+            > .pay-info {
               color: #5e95ec;
             }
           }
         }
 
-        >.completed-info-middle{
-          border-right: 1px solid rgba(38,47,56,.1);
+        > .completed-info-middle {
+          border-right: 1px solid rgba(38, 47, 56, .1);
 
-          >.order-info-middle{
-            >.buyer-seller-info{
+          > .order-info-middle {
+            > .buyer-seller-info {
               color: #5e95ec;
             }
           }
         }
 
-        >.completed-info-right{
-          >.order-info-right{
-            >.confirm-time{
+        > .completed-info-right {
+          > .order-info-right {
+            > .confirm-time {
               color: #5e95ec;
             }
           }

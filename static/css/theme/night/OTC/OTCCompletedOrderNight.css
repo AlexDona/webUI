@@ -1,7 +1,4 @@
 /* 完成订单组件样式重写 */
-.otc-completed-order-box.night .completed-order-content .el-table__expanded-cell {
-  background-color: #1c1f32;
-}
 
 .otc-completed-order-box.night .completed-order-content .el-table th {
   padding: 5px 0;
@@ -34,6 +31,7 @@
 
 .otc-completed-order-box.night .completed-order-content .el-table__expanded-cell {
   border-bottom: 25px solid #272b41;
+  background-color: #1c1f32;
 }
 
 .otc-completed-order-box.night .completed-order-content > .tables .el-icon-arrow-right::before {
@@ -41,8 +39,8 @@
 }
 
 .otc-completed-order-box.night .completed-order-content .el-table_2_column_9 .el-table__expand-column .is-leaf {
-  border-bottom-left-radius:  5px;
-  border-top-left-radius:  5px;
+  border-bottom-left-radius: 5px;
+  border-top-left-radius: 5px;
 }
 
 .otc-completed-order-box.night .completed-order-content .el-table th.is-leaf:first-of-type {

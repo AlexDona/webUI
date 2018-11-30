@@ -62,12 +62,6 @@
   background-color: transparent;
 }
 
-/* 做二级导航宽度 */
-.otc-box .el-tabs--left .el-tabs__item.is-left {
-  width: 180px;
-  text-align: center;
-}
-
 .otc-box .el-tabs__item {
   height: 45px;
   padding: 0;
@@ -79,6 +73,7 @@
   width: 90px;
   height: 84px;
   line-height: 110px;
+  text-align: center;
 }
 
 .otc-box .el-tabs__nav-wrap,

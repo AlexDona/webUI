@@ -236,11 +236,11 @@ export default {
   @import "../../../static/css/scss/OTC/OTCCenter.scss";
   @import "../../../static/css/scss/index.scss";
 
-  .otc-freezing-order-box{
-    >.freezing-order-content{
+  .otc-freezing-order-box {
+    > .freezing-order-content {
       min-height: 472px;
 
-      >.freezing-table-head{
+      > .freezing-table-head {
         box-sizing: border-box;
         width: 1043px;
         height: 35px;
@@ -248,220 +248,220 @@ export default {
         border-radius: 5px;
         line-height: 35px;
 
-        >.item{
+        > .item {
           display: inline-block;
           width: 140px;
           text-align: center;
         }
       }
 
-      >.freezing-table-body{
+      > .freezing-table-body {
         box-sizing: border-box;
         width: 1043px;
         height: 170px;
         margin-bottom: 15px;
         border-radius: 5px;
 
-        >.freezing-info-top{
+        > .freezing-info-top {
           height: 40px;
           border-radius: 5px;
           line-height: 40px;
 
-          >.item{
+          > .item {
             display: inline-block;
             width: 140px;
             text-align: center;
           }
         }
 
-        >.freezing-info-bottom{
+        > .freezing-info-bottom {
           display: flex;
           flex: 4;
           box-sizing: border-box;
           padding: 30px 30px 0;
 
-          >.info-left{
+          > .info-left {
             flex: 1;
             box-sizing: border-box;
 
-            >.text-info{
+            > .text-info {
               line-height: 20px;
             }
           }
 
-          >.info-middle{
+          > .info-middle {
             flex: 1;
             box-sizing: border-box;
             margin-left: 30px;
 
-            >.text-info{
+            > .text-info {
               line-height: 20px;
             }
           }
 
-          >.info-right{
+          > .info-right {
             flex: 1;
             box-sizing: border-box;
             margin-left: 30px;
 
-            >.text-info{
+            > .text-info {
               line-height: 20px;
             }
           }
 
-          >.info-reason{
+          > .info-reason {
             flex: 1;
             box-sizing: border-box;
             margin-left: 30px;
 
-            >.text-info{
+            > .text-info {
               line-height: 20px;
             }
           }
         }
       }
 
-      >.no-data{
+      > .no-data {
         width: 1043px;
         height: 432px;
         line-height: 432px;
         text-align: center;
       }
 
-      >.page{
+      > .page {
         padding-bottom: 20px;
         text-align: center;
       }
     }
 
-    &.night{
-      >.freezing-order-content{
-        >.freezing-table-head{
+    &.night {
+      > .freezing-order-content {
+        > .freezing-table-head {
           border: 1px solid #485776;
           color: #a9bed4;
           background-color: $mainContentNightBgColor;
         }
 
-        >.freezing-table-body{
+        > .freezing-table-body {
           border: 1px solid #485776;
           background-color: $mainContentNightBgColor;
 
-          >.freezing-info-top{
+          > .freezing-info-top {
             color: #9da5b3;
 
-            .red{
+            .red {
               color: #d45858;
             }
 
-            .green{
+            .green {
               color: #008069;
             }
           }
 
-          >.freezing-info-bottom{
+          > .freezing-info-bottom {
             border-top: 1px solid #262f38;
             color: #9da5b3;
 
-            >.info-left{
+            > .info-left {
               border-right: 1px solid #262f38;
 
-              >.text-blue{
+              > .text-blue {
                 color: #5e95ec;
               }
             }
 
-            >.info-middle{
+            > .info-middle {
               border-right: 1px solid #262f38;
 
-              >.text-blue{
+              > .text-blue {
                 color: #5e95ec;
               }
             }
 
-            >.info-right{
+            > .info-right {
               border-right: 1px solid #262f38;
 
-              >.text-blue{
+              > .text-blue {
                 color: #5e95ec;
               }
             }
 
-            >.info-reason{
-              >.text-blue{
+            > .info-reason {
+              > .text-blue {
                 color: #5e95ec;
               }
             }
           }
         }
 
-        >.no-data{
+        > .no-data {
           color: rgba(255, 255, 255, .8);
           background-color: $mainContentNightBgColor;
         }
       }
     }
 
-    &.day{
-      >.freezing-order-content{
-        >.freezing-table-head{
+    &.day {
+      > .freezing-order-content {
+        > .freezing-table-head {
           border: 1px solid #ecf1f8;
           color: #617499;
           background-color: $mainDayColor;
         }
 
-        >.freezing-table-body{
+        > .freezing-table-body {
           border: 1px solid #ecf1f8;
           background-color: $mainDayColor;
 
-          >.freezing-info-top{
+          > .freezing-info-top {
             color: #333;
 
-            .red{
+            .red {
               color: #d45858;
             }
 
-            .green{
+            .green {
               color: #008069;
             }
           }
 
-          >.freezing-info-bottom{
-            border-top: 1px solid rgba(38,47,56,.1);
+          > .freezing-info-bottom {
+            border-top: 1px solid rgba(38, 47, 56, .1);
             color: #7d90ac;
 
-            >.info-left{
-              border-right: 1px solid rgba(38,47,56,.1);
+            > .info-left {
+              border-right: 1px solid rgba(38, 47, 56, .1);
 
-              >.text-blue{
+              > .text-blue {
                 color: #5e95ec;
               }
             }
 
-            >.info-middle{
-              border-right: 1px solid rgba(38,47,56,.1);
+            > .info-middle {
+              border-right: 1px solid rgba(38, 47, 56, .1);
 
-              >.text-blue{
+              > .text-blue {
                 color: #5e95ec;
               }
             }
 
-            >.info-right{
-              border-right: 1px solid rgba(38,47,56,.1);
+            > .info-right {
+              border-right: 1px solid rgba(38, 47, 56, .1);
 
-              >.text-blue{
+              > .text-blue {
                 color: #5e95ec;
               }
             }
 
-            >.info-reason{
-              >.text-blue{
+            > .info-reason {
+              > .text-blue {
                 color: #5e95ec;
               }
             }
           }
         }
 
-        >.no-data{
+        > .no-data {
           border: 1px solid #ecf1f8;
           color: #333;
           background-color: #fff;

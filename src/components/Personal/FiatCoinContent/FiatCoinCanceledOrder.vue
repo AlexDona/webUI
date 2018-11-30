@@ -224,101 +224,101 @@ export default {
 <style scoped lang="scss" type="text/scss">
   @import "../../../../static/css/scss/Personal/IndexPersonal.scss";
 
-  .fiat-canceled-order-box{
-    >.canceled-order-content{
-      >.canceled-table-head{
+  .fiat-canceled-order-box {
+    > .canceled-order-content {
+      > .canceled-table-head {
         box-sizing: border-box;
         height: 35px;
         margin-bottom: 5px;
         border-radius: 5px;
         line-height: 35px;
 
-        >.item{
+        > .item {
           display: inline-block;
           text-align: center;
         }
       }
 
-      >.canceled-table-body{
+      > .canceled-table-body {
         box-sizing: border-box;
         height: 170px;
         margin-bottom: 15px;
         border-radius: 5px;
 
-        >.canceled-info-top{
+        > .canceled-info-top {
           height: 40px;
           border-radius: 5px;
           line-height: 40px;
 
-          >.item{
+          > .item {
             display: inline-block;
             text-align: center;
           }
 
-          >.order-time {
+          > .order-time {
             width: 170px;
           }
         }
 
-        >.canceled-info-bottom{
+        > .canceled-info-bottom {
           display: flex;
           flex: 7;
           box-sizing: border-box;
           padding: 30px 30px 0;
           color: #9da5b3;
 
-          >.info-left{
+          > .info-left {
             flex: 2;
             box-sizing: border-box;
 
-            >.text-info{
+            > .text-info {
               line-height: 20px;
             }
           }
 
-          >.info-middle{
+          > .info-middle {
             flex: 2;
             box-sizing: border-box;
             margin-left: 30px;
 
-            >.text-info{
+            > .text-info {
               line-height: 20px;
             }
           }
 
-          >.info-right{
+          > .info-right {
             flex: 3;
             box-sizing: border-box;
             margin-left: 30px;
 
-            >.text-info{
+            > .text-info {
               line-height: 20px;
             }
           }
         }
       }
 
-      >.no-data{
+      > .no-data {
         height: 345px;
         line-height: 345px;
         text-align: center;
       }
     }
 
-    &.night{
-      color:$nightFontColor;
+    &.night {
+      color: $nightFontColor;
       background-color: $nightBgColor;
 
-      >.background-color{
+      > .background-color {
         background-color: $nightMainBgColor;
 
-        >.fiat-color{
+        > .fiat-color {
           color: #338ff5;
         }
       }
 
-      >.canceled-order-content{
-        >.canceled-table-head{
+      > .canceled-order-content {
+        > .canceled-table-head {
           box-sizing: border-box;
           border: 1px solid #262f38;
           color: #617499;
@@ -326,120 +326,120 @@ export default {
           box-shadow: -2px 3px 5px 1px #191e28;
         }
 
-        >.canceled-table-body{
+        > .canceled-table-body {
           border: 1px solid #262f38;
           background-color: $nightMainBgColor;
 
-          >.canceled-info-top{
+          > .canceled-info-top {
             color: #617499;
             background-color: $nightMainBgColor;
 
-            .red{
+            .red {
               color: #d45858;
             }
 
-            .green{
+            .green {
               color: #008069;
             }
           }
 
-          >.canceled-info-bottom{
+          > .canceled-info-bottom {
             border-top: 1px solid #262f38;
             color: #9da5b3;
 
-            >.info-left{
+            > .info-left {
               flex: 2;
               border-right: 1px solid #262f38;
 
-              >.text-blue{
+              > .text-blue {
                 color: #5e95ec;
               }
             }
 
-            >.info-middle{
+            > .info-middle {
               border-right: 1px solid #262f38;
 
-              >.text-blue{
+              > .text-blue {
                 color: #5e95ec;
               }
             }
 
-            >.info-right{
-              >.text-blue{
+            > .info-right {
+              > .text-blue {
                 color: #5e95ec;
               }
             }
           }
         }
 
-        >.no-data{
+        > .no-data {
           background-color: $nightMainBgColor;
         }
       }
     }
 
-    &.day{
-      color:$dayFontColor;
+    &.day {
+      color: $dayFontColor;
       background-color: $dayBgColor;
 
-      >.background-color{
+      > .background-color {
         background-color: #ccc;
       }
 
-      >.canceled-order-content{
-        >.canceled-table-head{
-          border: 1px solid rgba(38,47,56,.1);
+      > .canceled-order-content {
+        > .canceled-table-head {
+          border: 1px solid rgba(38, 47, 56, .1);
           color: #617499;
           background-color: $dayBgColor;
           box-shadow: -2px 3px 5px 1px #191e28;
         }
 
-        >.canceled-table-body{
-          border: 1px solid rgba(38,47,56,.1);
+        > .canceled-table-body {
+          border: 1px solid rgba(38, 47, 56, .1);
           background-color: $dayBgColor;
 
-          >.canceled-info-top{
+          > .canceled-info-top {
             color: #617499;
             background-color: $dayBgColor;
 
-            .red{
+            .red {
               color: #d45858;
             }
 
-            .green{
+            .green {
               color: #008069;
             }
           }
 
-          >.canceled-info-bottom {
-            border-top: 1px solid rgba(38,47,56,.1);
+          > .canceled-info-bottom {
+            border-top: 1px solid rgba(38, 47, 56, .1);
             color: #9da5b3;
 
-            >.info-left{
-              border-right: 1px solid rgba(38,47,56,.1);
+            > .info-left {
+              border-right: 1px solid rgba(38, 47, 56, .1);
 
-              >.text-blue{
+              > .text-blue {
                 color: #5e95ec;
               }
             }
 
-            >.info-middle{
-              border-right: 1px solid rgba(38,47,56,.1);
+            > .info-middle {
+              border-right: 1px solid rgba(38, 47, 56, .1);
 
-              >.text-blue{
+              > .text-blue {
                 color: #5e95ec;
               }
             }
 
-            >.info-right{
-              >.text-blue{
+            > .info-right {
+              > .text-blue {
                 color: #5e95ec;
               }
             }
           }
         }
 
-        >.no-data{
+        > .no-data {
           background-color: $dayBgColor;
         }
       }

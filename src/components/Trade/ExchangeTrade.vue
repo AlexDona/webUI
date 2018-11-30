@@ -724,132 +724,132 @@ export default {
   @import '../../../static/css/scss/index.scss';
   @import '../../../static/css/scss/Trade/TradeCenter';
 
-  .exchange-box{
-    width:100%;
-    height:414px;
-    margin:10px 0;
+  .exchange-box {
+    width: 100%;
+    height: 414px;
+    margin: 10px 0;
 
-    >.inner-box{
+    > .inner-box {
       position: relative;
 
-      >.currency-info{
+      > .currency-info {
         position: absolute;
         z-index: 2000;
-        top:0;
-        right:0;
-        height:34px;
-        padding-right:27px;
+        top: 0;
+        right: 0;
+        height: 34px;
+        padding-right: 27px;
         line-height: 34px;
         text-align: right;
 
-        >.router-link{
+        > .router-link {
           color: $mainColor;
         }
       }
 
-      .content-box{
+      .content-box {
         position: relative;
-        display:flex;
-        width:100%;
-        height:100%;
-        padding:22px 2.8%;
+        display: flex;
+        width: 100%;
+        height: 100%;
+        padding: 22px 2.8%;
 
-        >.inner-box{
-          flex:1;
+        > .inner-box {
+          flex: 1;
 
-          >.header{
-            display:flex;
-            white-space:nowrap;
+          > .header {
+            display: flex;
+            white-space: nowrap;
 
-            >.item{
-              flex:1;
+            > .item {
+              flex: 1;
 
-              >.buy{
-                color:$upColor;
+              > .buy {
+                color: $upColor;
               }
 
-              >.sell{
-                color:$downColor;
+              > .sell {
+                color: $downColor;
               }
 
-              >a{
-                padding-left:20px;
+              > a {
+                padding-left: 20px;
               }
             }
 
-            >.left{
-              flex:2;
+            > .left {
+              flex: 2;
             }
           }
 
-          >.content{
-            padding:20px 0;
+          > .content {
+            padding: 20px 0;
 
-            >.input{
+            > .input {
               position: relative;
-              margin-bottom:20px;
+              margin-bottom: 20px;
               border-radius: 3px;
 
-              /*市价提示*/
-              >.market-price{
-                width:100%;
-                height:38px;
-                padding:0 15px 0 20px;
+              /* 市价提示 */
+              > .market-price {
+                width: 100%;
+                height: 38px;
+                padding: 0 15px 0 20px;
                 border-radius: 3px;
                 line-height: 38px;
 
-                &.buy-price{
-                  color:$upColor;
+                &.buy-price {
+                  color: $upColor;
                 }
 
-                &.sell-price{
-                  color:$downColor;
+                &.sell-price {
+                  color: $downColor;
                 }
               }
 
-              /*限价input框*/
-              >input{
+              /* 限价input框 */
+              > input {
                 box-sizing: border-box;
-                width:100%;
-                height:38px;
-                padding:0 15px 0 20px;
-                border:1px solid;
+                width: 100%;
+                height: 38px;
+                padding: 0 15px 0 20px;
+                border: 1px solid;
                 border-radius: 3px;
                 font-size: 14px;
               }
 
-              >.currency{
+              > .currency {
                 position: absolute;
-                top:0;
-                right:15px;
-                height:34px;
+                top: 0;
+                right: 15px;
+                height: 34px;
                 line-height: 34px;
               }
 
-              >.rate-changer{
-                height:18px;
-                padding:0 20px;
+              > .rate-changer {
+                height: 18px;
+                padding: 0 20px;
                 font-size: 12px;
               }
             }
 
-            >.volume-rate{
-              display:flex;
+            > .volume-rate {
+              display: flex;
 
-              >.item{
-                flex:1;
+              > .item {
+                flex: 1;
 
-                span{
-                  &.buy{
+                span {
+                  &.buy {
                     color: $upColor;
                   }
 
-                  &.sell{
-                    color:$downColor;
+                  &.sell {
+                    color: $downColor;
                   }
                 }
 
-                &.right{
+                &.right {
                   text-align: right;
                 }
               }
@@ -857,154 +857,108 @@ export default {
           }
         }
 
-        >.middle-line{
+        > .middle-line {
           position: relative;
-          width:130px;
-          height:320px;
+          width: 130px;
+          height: 320px;
 
-          &:before{
+          &::before {
             position: absolute;
-            top:0;
-            left:50%;
-            width:1px;
-            height:320px;
-            border-left:1px dashed;
-            content:'';
+            top: 0;
+            left: 50%;
+            width: 1px;
+            height: 320px;
+            border-left: 1px dashed;
+            content: '';
           }
         }
       }
     }
 
-    &.night{
-      color:$nightFontColor;
+    &.night {
+      color: $nightFontColor;
       background-color: $mainContentNightBgColor;
 
-      >.inner-box{
-        >.currency-info{
-          >a{
-          }
-        }
-
-        .content-box{
-          >.inner-box{
-            >.header{
-              >.item{
-                >span{
-                  display:inline-block;
+      > .inner-box {
+        .content-box {
+          > .inner-box {
+            > .header {
+              > .item {
+                > span {
+                  display: inline-block;
                 }
 
-                >a{
-                  color:$nightFontColor;
+                > a {
+                  color: $nightFontColor;
                 }
-              }
-
-              >.left{
-              }
-
-              >.right{
               }
             }
 
-            >.content{
-              >.input{
-                background-color:rgb(78,83,90) ;
+            > .content {
+              > .input {
+                background-color: rgb(78, 83, 90);
 
-                /*市价提示*/
-                >.market-price{
+                /* 市价提示 */
+                > .market-price {
                   background-color: $nightMarketPriceBg;
-
-                  &.buy-price{
-                  }
-
-                  &.sell-price{
-                  }
                 }
 
-                /*限价input框*/
-                >input{
-                  border-color:#a9bed4;
-                  color:$nightFontColor;
+                /* 限价input框 */
+                > input {
+                  border-color: #a9bed4;
+                  color: $nightFontColor;
                   background-color: $mainContentNightBgColor;
                 }
-
-                >.currency{
-                }
-
-                >.rate-changer{
-                }
               }
             }
           }
 
-          >.middle-line{
-            &:before{
-              border-color:$nightBorderColor;
+          > .middle-line {
+            &::before {
+              border-color: $nightBorderColor;
             }
           }
         }
       }
     }
 
-    &.day{
-      color:$dayFontColor;
+    &.day {
+      color: $dayFontColor;
       background-color: $dayMainBgColor;
 
-      >.inner-box{
-        >.currency-info{
-          >a{
-          }
-        }
-
-        .content-box{
-          >.inner-box{
-            >.header{
-              >.item{
-                >a{
-                  color:$dayFontColor;
+      > .inner-box {
+        .content-box {
+          > .inner-box {
+            > .header {
+              > .item {
+                > a {
+                  color: $dayFontColor;
                 }
-              }
-
-              >.left{
-              }
-
-              >.right{
               }
             }
 
-            >.content{
-              >.input{
+            > .content {
+              > .input {
                 background-color: #e9ecee;
 
-                /*市价提示*/
-                >.market-price{
+                /* 市价提示 */
+                > .market-price {
                   background-color: $dayMarketPriceBg;
-
-                  &.buy-price{
-                  }
-
-                  &.sell-price{
-                  }
                 }
 
-                /*限价input框*/
-                >input{
-                  border-color:#c4c4c4;
-                  color:$dayFontColor;
+                /* 限价input框 */
+                > input {
+                  border-color: #c4c4c4;
+                  color: $dayFontColor;
                   background-color: #fff;
-                }
-
-                >.currency{
-                }
-
-                >.rate-changer{
                 }
               }
             }
           }
 
-          >.middle-line{
-            &:before{
-              border-color:$nightMainTitleColor;
+          > .middle-line {
+            &::before {
+              border-color: $nightMainTitleColor;
             }
           }
         }

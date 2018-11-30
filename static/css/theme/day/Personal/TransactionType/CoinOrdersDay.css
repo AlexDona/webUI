@@ -8,10 +8,6 @@
   background-color: transparent;
 }
 
-.coin-orders.personal.day .el-tabs__item:hover {
-  background-color: #fff;
-}
-
 .coin-orders.personal.day .el-input--suffix .el-input__inner {
   border: 1px solid #ecf1f8;
   color: #333;

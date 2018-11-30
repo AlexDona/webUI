@@ -223,11 +223,11 @@ export default {
 }
 </script>
 <style scoped lang="scss">
-.financeline-box{
+.financeline-box {
   width: 1000px;
-  margin:80px auto;
+  margin: 80px auto;
 
-  >.finance-line{
+  > .finance-line {
     width: 100%;
     height: 450px;
     margin-left: -100px;

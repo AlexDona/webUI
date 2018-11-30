@@ -1129,12 +1129,12 @@ export default {
 <style scoped lang="scss" type="text/scss">
 @import "../../../static/css/scss/index";
 
-.otc-trading-order-box{
-  >.otc-trading-order-content{
+.otc-trading-order-box {
+  > .otc-trading-order-content {
     min-height: 472px;
     border-radius: 5px;
 
-    >.order-list{
+    > .order-list {
       box-sizing: border-box;
       width: 1045px;
       height: 170px;
@@ -1142,8 +1142,8 @@ export default {
       border-radius: 5px;
       font-size: 12px;
 
-      >.order{
-        >.order-list-head{
+      > .order {
+        > .order-list-head {
           position: relative;
           display: flex;
           justify-content: space-between;
@@ -1152,32 +1152,32 @@ export default {
           padding: 0 77px 0 25px;
           line-height: 36px;
 
-          >.order-id{
+          > .order-id {
             padding-left: 300px;
           }
 
-          >.order-list-head-icon{
+          > .order-list-head-icon {
             position: absolute;
             top: 0;
             right: 0;
-            width:0;
-            height:0;
-            border-bottom:18px solid transparent;
-            border-left:18px solid transparent;
+            width: 0;
+            height: 0;
+            border-bottom: 18px solid transparent;
+            border-left: 18px solid transparent;
             border-radius: 5px;
           }
 
-          >.buy-icon{
-            border-top:18px solid #d45858;
-            border-right:18px solid #d45858;
+          > .buy-icon {
+            border-top: 18px solid #d45858;
+            border-right: 18px solid #d45858;
           }
 
-          >.sell-icon{
-            border-top:18px solid #008069;
-            border-right:18px solid #008069;
+          > .sell-icon {
+            border-top: 18px solid #008069;
+            border-right: 18px solid #008069;
           }
 
-          >.buy-sell-icon{
+          > .buy-sell-icon {
             position: absolute;
             top: -8px;
             right: 4px;
@@ -1185,50 +1185,50 @@ export default {
           }
         }
 
-        >.order-list-body{
+        > .order-list-body {
           display: flex;
           flex: 7;
           padding: 20px 20px 15px;
 
-          >.order-list-body-left{
+          > .order-list-body-left {
             flex: 2;
 
-            >.logo{
+            > .logo {
               display: inline-block;
               margin-right: 10px;
               text-align: center;
 
-              >.logo-name{
+              > .logo-name {
                 margin-top: 4px;
               }
             }
 
-            >.left-info{
+            > .left-info {
               display: inline-block;
 
-              >.trade-info{
+              > .trade-info {
                 line-height: 20px;
               }
             }
           }
 
-          >.order-list-body-middle{
+          > .order-list-body-middle {
             flex: 2;
             box-sizing: border-box;
 
-            >.middle-content{
+            > .middle-content {
               display: flex;
 
-              .trader-info{
+              .trader-info {
                 flex: 2;
                 width: 190px;
 
-                >.pay-style{
+                > .pay-style {
                   position: relative;
                   margin: 0 0 8px 20px;
 
-                  >.qiandai-icon{
-                    >.icon{
+                  > .qiandai-icon {
+                    > .icon {
                       position: absolute;
                       z-index: 2;
                       top: 5px;
@@ -1239,32 +1239,32 @@ export default {
                   }
                 }
 
-                >.bank-info{
+                > .bank-info {
                   margin-left: 20px;
                   line-height: 20px;
                 }
 
-                >.order-cancle-tips{
+                > .order-cancle-tips {
                   margin-left: 20px;
                   line-height: 20px;
                 }
 
-                >.bankMoneyInfo{
+                > .bankMoneyInfo {
                   margin-left: 20px;
                   line-height: 20px;
 
-                  .icon{
+                  .icon {
                     width: 16px;
                     height: 14px;
                   }
 
-                  .xilian{
+                  .xilian {
                     vertical-align: middle;
                   }
                 }
               }
 
-              >.bank-info-picture{
+              > .bank-info-picture {
                 flex: 1;
                 padding-left: 10px;
                 vertical-align: top;
@@ -1272,31 +1272,31 @@ export default {
             }
           }
 
-          >.order-list-body-right{
+          > .order-list-body-right {
             flex: 3;
 
-            >.right-content{
-              >.action-tips{
+            > .right-content {
+              > .action-tips {
                 margin: 0 0 10px 20px;
 
-                .wait-pay{
+                .wait-pay {
                   margin-right: 10px;
                 }
 
-                .count-time{
+                .count-time {
                   margin-left: 10px;
                 }
               }
 
-              >.action-explain{
+              > .action-explain {
                 margin-left: 20px;
                 line-height: 24px;
               }
 
-              >.count-down-time{
+              > .count-down-time {
                 line-height: 20px;
 
-                .timeIcon{
+                .timeIcon {
                   margin-right: 10px;
                 }
               }
@@ -1305,31 +1305,31 @@ export default {
         }
       }
 
-      >.appeal{
-        >.appeal-head{
+      > .appeal {
+        > .appeal-head {
           box-sizing: border-box;
           height: 36px;
           padding: 0 77px 0 25px;
           line-height: 36px;
         }
 
-        >.appeal-body{
-          >.appeal-body-content{
+        > .appeal-body {
+          > .appeal-body-content {
             display: flex;
             flex: 3;
 
-            >.appeal-textarea{
+            > .appeal-textarea {
               display: flex;
               flex: 2;
               justify-content: flex-start;
               margin: 15px 0 0 20px;
 
-              >.appeal-reason{
+              > .appeal-reason {
                 margin-right: 10px;
               }
             }
 
-            >.appeal-button{
+            > .appeal-button {
               flex: 1;
               padding-top: 80px;
             }
@@ -1338,69 +1338,69 @@ export default {
       }
     }
 
-    >.no-data{
+    > .no-data {
       width: 1043px;
       height: 472px;
       line-height: 472px;
       text-align: center;
-      color: rgba(255,255,255,.8);
+      color: rgba(255, 255, 255, .8);
     }
 
-    .page{
+    .page {
       padding: 2px 0 15px;
       text-align: center;
     }
   }
 
-  &.night{
-    >.otc-trading-order-content{
-      >.order-list{
+  &.night {
+    > .otc-trading-order-content {
+      > .order-list {
         border: 1px solid #485776;
         background-color: $mainContentNightBgColor;
 
-        >.order{
-          >.order-list-head{
+        > .order {
+          > .order-list-head {
             border-bottom: 1px solid #262f38;
             color: #9da5b3;
 
-            >.buy-icon{
-              border-top:18px solid #d45858;
-              border-right:18px solid #d45858;
+            > .buy-icon {
+              border-top: 18px solid #d45858;
+              border-right: 18px solid #d45858;
             }
 
-            >.sell-icon{
-              border-top:18px solid #008069;
-              border-right:18px solid #008069;
+            > .sell-icon {
+              border-top: 18px solid #008069;
+              border-right: 18px solid #008069;
             }
 
-            >.buy-sell-icon{
+            > .buy-sell-icon {
               color: #fff;
             }
           }
 
-          >.order-list-body{
+          > .order-list-body {
             color: #9da5b3;
 
-            >.order-list-body-left{
+            > .order-list-body-left {
               border-right: 1px solid #262f38;
 
-              >.left-info{
-                >.trade-info{
-                  >.money{
+              > .left-info {
+                > .trade-info {
+                  > .money {
                     color: #5e95ec;
                   }
                 }
               }
             }
 
-            >.order-list-body-middle{
+            > .order-list-body-middle {
               border-right: 1px solid #262f38;
 
-              >.middle-content{
-                .trader-info{
-                  >.pay-style{
-                    >.qiandai-icon{
-                      >.icon{
+              > .middle-content {
+                .trader-info {
+                  > .pay-style {
+                    > .qiandai-icon {
+                      > .icon {
                         color: #fff;
                       }
                     }
@@ -1409,33 +1409,33 @@ export default {
               }
             }
 
-            >.order-list-body-right{
+            > .order-list-body-right {
               flex: 3;
 
-              >.right-content{
-                >.action-tips{
-                  .wait-pay{
+              > .right-content {
+                > .action-tips {
+                  .wait-pay {
                     color: #e8554f;
                   }
                 }
 
-                >.submitted-confirm-payment{
+                > .submitted-confirm-payment {
                   color: #5e95ec;
                 }
 
-                >.action-explain{
-                  >.remaining-time{
+                > .action-explain {
+                  > .remaining-time {
                     color: #e8554f;
                   }
 
-                  .appeal-order{
+                  .appeal-order {
                     color: #409eff;
                     background-color: #cdd9ee;
                   }
                 }
 
-                >.count-down-time{
-                  .timeIcon{
+                > .count-down-time {
+                  .timeIcon {
                     color: #e8554f;
                   }
                 }
@@ -1444,23 +1444,23 @@ export default {
           }
         }
 
-        >.appeal{
-          >.appeal-head{
+        > .appeal {
+          > .appeal-head {
             border-bottom: 1px solid #262f38;
             color: #fff;
           }
 
-          >.appeal-body{
-            >.appeal-body-content{
-              >.appeal-textarea{
-                >.appeal-reason{
+          > .appeal-body {
+            > .appeal-body-content {
+              > .appeal-textarea {
+                > .appeal-reason {
                   color: #338ff5;
                 }
               }
 
-              >.appeal-button{
-                .cancel-appeal{
-                  border:1px solid rgba(52,70,99,1);
+              > .appeal-button {
+                .cancel-appeal {
+                  border: 1px solid rgba(52, 70, 99, 1);
                   color: #8094bb;
                   background-color: #1e2636;
                 }
@@ -1470,68 +1470,68 @@ export default {
         }
       }
 
-      >.no-data{
-        color: rgba(255,255,255,.8);
+      > .no-data {
+        color: rgba(255, 255, 255, .8);
         background-color: #1c1f32;
       }
 
-      >.password-dialog{
-        .tips{
+      > .password-dialog {
+        .tips {
           color: red;
         }
       }
     }
   }
 
-  &.day{
-    >.otc-trading-order-content{
-      >.order-list{
-        border: 1px solid rgba(72,87,118,.1);
+  &.day {
+    > .otc-trading-order-content {
+      > .order-list {
+        border: 1px solid rgba(72, 87, 118, .1);
         background-color: #fff;
 
-        >.order{
-          >.order-list-head{
-            border-bottom: 1px solid rgba(72,87,118,.1);
+        > .order {
+          > .order-list-head {
+            border-bottom: 1px solid rgba(72, 87, 118, .1);
             color: #333;
 
-            >.buy-icon{
-              border-top:18px solid #d45858;
-              border-right:18px solid #d45858;
+            > .buy-icon {
+              border-top: 18px solid #d45858;
+              border-right: 18px solid #d45858;
             }
 
-            >.sell-icon{
-              border-top:18px solid #008069;
-              border-right:18px solid #008069;
+            > .sell-icon {
+              border-top: 18px solid #008069;
+              border-right: 18px solid #008069;
             }
 
-            >.buy-sell-icon{
+            > .buy-sell-icon {
               color: #fff;
             }
           }
 
-          >.order-list-body{
+          > .order-list-body {
             color: #7d90ac;
 
-            >.order-list-body-left{
-              border-right: 1px solid rgba(38,47,56,.1);
+            > .order-list-body-left {
+              border-right: 1px solid rgba(38, 47, 56, .1);
 
-              >.left-info{
-                >.trade-info{
-                  >.money{
+              > .left-info {
+                > .trade-info {
+                  > .money {
                     color: #5e95ec;
                   }
                 }
               }
             }
 
-            >.order-list-body-middle{
-              border-right: 1px solid rgba(38,47,56,.1);
+            > .order-list-body-middle {
+              border-right: 1px solid rgba(38, 47, 56, .1);
 
-              >.middle-content{
-                .trader-info{
-                  >.pay-style{
-                    >.qiandai-icon{
-                      >.icon{
+              > .middle-content {
+                .trader-info {
+                  > .pay-style {
+                    > .qiandai-icon {
+                      > .icon {
                         color: #338ff5;
                       }
                     }
@@ -1540,33 +1540,33 @@ export default {
               }
             }
 
-            >.order-list-body-right{
+            > .order-list-body-right {
               flex: 3;
 
-              >.right-content{
-                >.action-tips{
-                  .wait-pay{
+              > .right-content {
+                > .action-tips {
+                  .wait-pay {
                     color: #e8554f;
                   }
                 }
 
-                >.submitted-confirm-payment{
+                > .submitted-confirm-payment {
                   color: #5e95ec;
                 }
 
-                >.action-explain{
-                  >.remaining-time{
+                > .action-explain {
+                  > .remaining-time {
                     color: #e8554f;
                   }
 
-                  .appeal-order{
+                  .appeal-order {
                     color: #8094bb;
                     background-color: #cdd9ee;
                   }
                 }
 
-                >.count-down-time{
-                  .timeIcon{
+                > .count-down-time {
+                  .timeIcon {
                     color: #e8554f;
                   }
                 }
@@ -1575,26 +1575,26 @@ export default {
           }
         }
 
-        >.appeal{
-          >.appeal-head{
-            border:1px solid rgba(72,87,118,.1);
+        > .appeal {
+          > .appeal-head {
+            border: 1px solid rgba(72, 87, 118, .1);
             border-top-right-radius: 5px;
             border-top-left-radius: 5px;
             color: #333;
             background-color: #e7e8e9;
           }
 
-          >.appeal-body{
-            >.appeal-body-content{
-              >.appeal-textarea{
-                >.appeal-reason{
+          > .appeal-body {
+            > .appeal-body-content {
+              > .appeal-textarea {
+                > .appeal-reason {
                   color: #338ff5;
                 }
               }
 
-              >.appeal-button{
-                .cancel-appeal{
-                  border:1px solid rgba(52,70,99,1);
+              > .appeal-button {
+                .cancel-appeal {
+                  border: 1px solid rgba(52, 70, 99, 1);
                   color: #8094bb;
                   background-color: #fff;
                 }
@@ -1604,15 +1604,15 @@ export default {
         }
       }
 
-      >.no-data{
-        border:1px solid rgba(72,87,118,.1);
+      > .no-data {
+        border: 1px solid rgba(72, 87, 118, .1);
         border-radius: 5px;
         color: #333;
         background-color: #fff;
       }
 
-      >.password-dialog{
-        .tips{
+      > .password-dialog {
+        .tips {
           color: red;
         }
       }

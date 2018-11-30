@@ -183,8 +183,9 @@ export default {
 <style scoped lang="scss" type="text/scss">
   .currency-application-box {
     margin-top: 66px;
-    >.inner-box {
-      >.top {
+
+    > .inner-box {
+      > .top {
         position: relative;
         height: 344px;
         overflow: hidden;
@@ -194,121 +195,121 @@ export default {
         text-align: center;
         color: rgba(255, 255, 255, 1);
 
-        >.title {
+        > .title {
           position: absolute;
-          top:0;
-          left:50%;
+          top: 0;
+          left: 50%;
           font-weight: 500;
           font-size: 36px;
           transform: translate(-50%, 0);
         }
       }
 
-      >.bottom{
+      > .bottom {
         position: relative;
-        width:100%;
-        height:1310px;
+        width: 100%;
+        height: 1310px;
 
-        >.content{
+        > .content {
           position: absolute;
-          top:-164px;
-          left:50%;
-          width:1100px;
-          height:1310px;
-          transform: translate(-50%,0);
+          top: -164px;
+          left: 50%;
+          width: 1100px;
+          height: 1310px;
+          transform: translate(-50%, 0);
 
-          >.top{
-            padding:56px;
+          > .top {
+            padding: 56px;
             text-align: center;
 
-            >div{
-              display:inline-block;
+            > div {
+              display: inline-block;
             }
 
-            >.item{
+            > .item {
               position: relative;
-              width:136px;
-              height:100px;
-              border-radius:10px;
+              width: 136px;
+              height: 100px;
+              border-radius: 10px;
               vertical-align: top;
-              color:#fff;
+              color: #fff;
 
-              >.title{
+              > .title {
                 font-weight: 700;
                 font-size: 14px;
                 line-height: 50px;
               }
 
-              >.content{
+              > .content {
                 font-size: 12px;
               }
 
-              >.index{
+              > .index {
                 position: absolute;
-                bottom:-17px;
-                left:50%;
-                width:34px;
-                height:34px;
-                border:1px solid rgba(51,143,245,1);
-                border-radius:50%;
+                bottom: -17px;
+                left: 50%;
+                width: 34px;
+                height: 34px;
+                border: 1px solid rgba(51, 143, 245, 1);
+                border-radius: 50%;
                 font-size: 20px;
-                line-height:34px;
-                color:#338ff5;
-                background:rgba(255,255,255,1);
-                transform: translate(-50%,0);
+                line-height: 34px;
+                color: #338ff5;
+                background: rgba(255, 255, 255, 1);
+                transform: translate(-50%, 0);
               }
             }
 
-            /*箭头*/
-            >.arrow{
-              width:46px;
-              height:100px;
+            /* 箭头 */
+            > .arrow {
+              width: 46px;
+              height: 100px;
             }
           }
 
-          >.return_content{
+          > .return_content {
             padding-left: 50px;
           }
 
-          >.bottom{
-            padding:50px 40px;
+          > .bottom {
+            padding: 50px 40px;
 
-            >.item{
-              margin-bottom:50px;
+            > .item {
+              margin-bottom: 50px;
 
-              .title{
+              .title {
                 font-weight: 700;
                 font-size: 20px;
                 line-height: 60px;
-                color:#338ff5;
+                color: #338ff5;
               }
 
-              .content{
+              .content {
                 font-size: 16px;
                 line-height: 30px;
               }
             }
 
-            >.email-download{
-              .target-email{
-                color:#338ff5;
+            > .email-download {
+              .target-email {
+                color: #338ff5;
               }
             }
 
-            >.download-box{
-              width:100%;
+            > .download-box {
+              width: 100%;
               text-align: center;
 
-              >.download-btn{
-                display:inline-block;
-                width:300px;
-                height:50px;
-                margin:150px auto;
-                border-radius:4px;
+              > .download-btn {
+                display: inline-block;
+                width: 300px;
+                height: 50px;
+                margin: 150px auto;
+                border-radius: 4px;
                 font-size: 16px;
-                line-height:50px;
-                color:#fff;
-                background:linear-gradient(90deg,rgba(43,57,110,1) 0%,rgba(42,80,130,1) 100%);
+                line-height: 50px;
+                color: #fff;
+                background: linear-gradient(90deg, rgba(43, 57, 110, 1) 0%, rgba(42, 80, 130, 1) 100%);
               }
             }
           }
@@ -317,7 +318,7 @@ export default {
     }
 
     &.night {
-      color:#a9bed4;
+      color: #a9bed4;
 
       > .inner-box {
         > .bottom {
@@ -326,31 +327,31 @@ export default {
           > .content {
             background-color: #1e2636;
 
-            >.top{
-              >.item{
-                background:linear-gradient(180deg,rgba(31,144,234,1),rgba(0,0,0,0));
+            > .top {
+              > .item {
+                background: linear-gradient(180deg, rgba(31, 144, 234, 1), rgba(0, 0, 0, 0));
               }
 
-              /*箭头*/
-              >.arrow{
+              /* 箭头 */
+              > .arrow {
                 background: url(../../assets/develop/arrow.png) no-repeat center center;
 
-                &.reverse{
+                &.reverse {
                   transform: rotateX(180deg);
                 }
               }
             }
 
-            >.bottom{
-              padding:50px 40px;
+            > .bottom {
+              padding: 50px 40px;
 
-              >.email-download{
-                .target-email{
-                  color:#338ff5;
+              > .email-download {
+                .target-email {
+                  color: #338ff5;
                 }
               }
 
-              >.download-box{
+              > .download-box {
                 text-align: center;
               }
             }
@@ -360,41 +361,41 @@ export default {
     }
 
     &.day {
-      color:#000;
+      color: #000;
 
       > .inner-box {
         > .bottom {
           > .content {
             background-color: #fff;
 
-            >.top{
-              >.item{
+            > .top {
+              > .item {
                 background-color: #338ff5;
               }
             }
 
-            >.bottom{
-              padding:50px 40px;
+            > .bottom {
+              padding: 50px 40px;
 
-              >.item{
-                margin-bottom:50px;
+              > .item {
+                margin-bottom: 50px;
 
-                .title{
+                .title {
                   font-weight: 700;
                   font-size: 20px;
                   line-height: 60px;
-                  color:#338ff5;
+                  color: #338ff5;
                 }
 
-                .content{
+                .content {
                   font-size: 16px;
                   line-height: 30px;
                 }
               }
 
-              >.email-download{
-                .target-email{
-                  color:#338ff5;
+              > .email-download {
+                .target-email {
+                  color: #338ff5;
                 }
               }
             }

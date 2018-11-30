@@ -930,181 +930,327 @@ export default {
 }
 </script>
 <style scoped lang="scss" type="text/scss">
-  @import "../../../static/css/scss/index";
+@import "../../../static/css/scss/index";
 
-  .otc-publish-buy-and-sell-box {
-    margin-top:66px;
-    overflow: hidden;
+.otc-publish-buy-and-sell-box {
+  margin-top: 66px;
+  overflow: hidden;
 
-    .redBorderRightNone{
-      border: 1px solid #d45858 !important;
-      border-right: 0 !important;
-    }
+  .redBorderRightNone {
+    border: 1px solid #d45858 !important;
+    border-right: 0 !important;
+  }
 
-    .redBorderLeftNone{
-      border: 1px solid #d45858 !important;
-      border-left: 0 !important;
-    }
+  .redBorderLeftNone {
+    border: 1px solid #d45858 !important;
+    border-left: 0 !important;
+  }
 
-    > .publish-buy-and-sell-content {
-      width: 1150px;
-      padding: 90px 0 50px;
-      margin: 0 auto;
+  > .publish-buy-and-sell-content {
+    width: 1150px;
+    padding: 90px 0 50px;
+    margin: 0 auto;
 
-      > .publish-content {
-        display: flex;
-        flex: 3;
+    > .publish-content {
+      display: flex;
+      flex: 3;
 
-        > .publish-content-left {
-          flex: 2;
+      > .publish-content-left {
+        flex: 2;
 
-          > .publish-button {
-            > .common-style {
+        > .publish-button {
+          > .common-style {
+            display: inline-block;
+            width: 70px;
+            height: 36px;
+            cursor: pointer;
+          }
+
+          > .sell-button {
+            margin-right: -4px;
+            border-bottom-left-radius: 4px;
+            border-top-left-radius: 4px;
+            border-right: 0;
+          }
+
+          > .buy-button {
+            border-left: 0;
+            border-top-right-radius: 4px;
+            border-bottom-right-radius: 4px;
+          }
+        }
+
+        > .buy-sell-submit-form {
+          margin-top: 20px;
+
+          .want-buy-sell-sum {
+            padding-top: 20px;
+            font-size: 20px;
+          }
+
+          .want-buy-sell-sum-content {
+            > .want-text {
+              font-size: 12px;
+            }
+
+            > .max-sum {
+              margin-right: 20px;
+              font-size: 12px;
+            }
+
+            > .market-price {
+              margin-right: 20px;
+              font-size: 12px;
+            }
+          }
+
+          .sell-buy-input {
+            padding: 10px 0 0;
+
+            > .sell-sum {
+              width: 190px;
+              height: 36px;
+              padding-left: 10px;
+            }
+
+            > .unit {
               display: inline-block;
               width: 70px;
               height: 36px;
+              margin: 0 50px 0 -4px;
+              font-size: 16px;
+              line-height: 36px;
+              text-align: center;
+              vertical-align: top;
+            }
+          }
+
+          .buySellSumErrorTips {
+            > .errorSell {
+              display: inline-block;
+              width: 320px;
+              font-size: 12px;
+            }
+          }
+
+          .volume-business {
+            margin-bottom: 10px;
+
+            > .sell-sum {
+              width: 130px;
+              height: 36px;
+              padding-left: 10px;
+            }
+
+            > .max-sell-sum {
+              width: 180px;
+            }
+
+            > .monad {
+              display: inline-block;
+              width: 50px;
+              height: 36px;
+              margin-left: -4px;
+              font-size: 12px;
+              line-height: 36px;
+              text-align: center;
+              vertical-align: top;
+            }
+
+            > .range-line {
+              margin: 0 10px;
+            }
+          }
+
+          .limitErrorTips {
+            > .errorLimitMin,
+            .errorLimitMax {
+              display: inline-block;
+              width: 212px;
+              font-size: 12px;
+            }
+          }
+
+          .remark {
+            margin-top: -10px;
+            font-size: 12px;
+          }
+
+          .predict {
+            > .predict-text {
+              font-size: 12px;
+            }
+
+            > .predict-sum {
+              font-size: 12px;
+            }
+
+            > .rate-text {
+              font-size: 12px;
+
+              > .rate {
+                font-size: 12px;
+              }
+            }
+          }
+
+          .publish-submit {
+            > .publish-submit-button {
+              width: 589px;
+              height: 42px;
+              margin-top: 40px;
+              border-radius: 4px;
+              font-size: 14px;
               cursor: pointer;
             }
+          }
+        }
+      }
 
-            > .sell-button {
-              margin-right: -4px;
-              border-bottom-left-radius: 4px;
-              border-top-left-radius: 4px;
-              border-right: 0;
+      > .publish-content-right {
+        flex: 1;
+
+        > .release-notes {
+          width: 216px;
+          font-size: 12px;
+
+          > .release-tips {
+            font-size: 14px;
+            line-height: 20px;
+          }
+        }
+      }
+    }
+  }
+
+  &.night {
+    background-color: $mainNightBgColor;
+
+    > .publish-buy-and-sell-content {
+      > .publish-content {
+        > .publish-content-left {
+          > .publish-button {
+            > .common-style {
+              border: 1px solid #1c1f32;
+              color: #8494a6;
             }
 
-            > .buy-button {
-              border-left: 0;
-              border-top-right-radius: 4px;
-              border-bottom-right-radius: 4px;
+            > .green {
+              border: 1px solid #008069;
+              color: #fffefe;
+              background-color: #008069;
+            }
+
+            > .red {
+              border: 1px solid #d45858;
+              color: #fffefe;
+              background-color: #d45858;
             }
           }
 
           > .buy-sell-submit-form {
-            margin-top: 20px;
-
             .want-buy-sell-sum {
-              padding-top: 20px;
-              font-size: 20px;
+              color: #338ff5;
             }
 
             .want-buy-sell-sum-content {
+              .sellGreen {
+                color: #30c296;
+              }
+
+              .buyOrange {
+                color: #e97345;
+              }
+
               > .want-text {
-                font-size: 12px;
-              }
-
-              > .max-sum {
-                margin-right: 20px;
-                font-size: 12px;
-              }
-
-              > .want-text {
-                font-size: 12px;
-              }
-
-              > .market-price {
-                margin-right: 20px;
-                font-size: 12px;
+                color: #9da5b3;
               }
             }
 
             .sell-buy-input {
-              padding: 10px 0 0;
-
               > .sell-sum {
-                width: 190px;
-                height: 36px;
-                padding-left: 10px;
+                color: #9da5b3;
+                background-color: #1c1f32;
               }
 
               > .unit {
-                display: inline-block;
-                width: 70px;
-                height: 36px;
-                margin: 0 50px 0 -4px;
-                font-size: 16px;
-                line-height: 36px;
-                text-align: center;
-                vertical-align: top;
+                color: #338ff5;
+                background-color: #21243b;
               }
             }
 
-            .buySellSumErrorTips{
-              >.errorSell{
-                display: inline-block;
-                width: 320px;
-                font-size: 12px;
+            .buySellSumErrorTips {
+              > .errorSell {
+                color: #d45858;
+              }
+
+              > .errorBuy {
+                color: #d45858;
               }
             }
 
             .volume-business {
-              margin-bottom: 10px;
-
               > .sell-sum {
-                width: 130px;
-                height: 36px;
-                padding-left: 10px;
-              }
-
-              > .max-sell-sum {
-                width: 180px;
+                color: #9da5b3;
+                background-color: #1c1f32;
               }
 
               > .monad {
-                display: inline-block;
-                width: 50px;
-                height: 36px;
-                margin-left: -4px;
-                font-size: 12px;
-                line-height: 36px;
-                text-align: center;
-                vertical-align: top;
+                color: #338ff5;
+                background-color: #21243b;
               }
 
               > .range-line {
-                margin: 0 10px;
+                color: #7d90ac;
               }
             }
 
-            .limitErrorTips{
-              >.errorLimitMin,.errorLimitMax{
-                display: inline-block;
-                width: 212px;
-                font-size: 12px;
+            .limitErrorTips {
+              > .errorLimitMin,
+              .errorLimitMax {
+                color: #d45858;
               }
             }
 
             .remark {
-              margin-top: -10px;
-              font-size: 12px;
+              color: #9da5b3;
             }
 
             .predict {
               > .predict-text {
-                font-size: 12px;
+                color: #9fa7b2;
               }
 
               > .predict-sum {
-                font-size: 12px;
+                color: #30c296;
               }
 
               > .rate-text {
-                font-size: 12px;
+                color: #9fa7b2;
 
                 > .rate {
-                  font-size: 12px;
+                  color: #ca5040;
                 }
               }
             }
 
             .publish-submit {
               > .publish-submit-button {
-                width: 589px;
-                height: 42px;
-                margin-top: 40px;
-                border-radius: 4px;
-                font-size: 14px;
-                cursor: pointer;
+                color: #fff;
+              }
+
+              > .publish-submit-buy {
+                background-color: #d45858;
+              }
+
+              > .publish-submit-sell {
+                background-color: #008069;
+              }
+            }
+
+            .password-dialog {
+              .tips {
+                color: red;
               }
             }
           }
@@ -1114,320 +1260,165 @@ export default {
           flex: 1;
 
           > .release-notes {
-            width: 216px;
-            font-size: 12px;
+            color: #a9bed4;
 
-            > .release-tips {
-              font-size: 14px;
-              line-height: 20px;
-            }
-          }
-        }
-      }
-    }
-
-    &.night{
-      background-color: $mainNightBgColor;
-
-      > .publish-buy-and-sell-content {
-        > .publish-content {
-          > .publish-content-left {
-            > .publish-button {
-              > .common-style {
-                border: 1px solid #1c1f32;
-                color: #8494a6;
-              }
-
-              > .green {
-                border: 1px solid #008069;
-                color: #fffefe;
-                background-color: #008069;
-              }
-
-              > .red {
-                border: 1px solid #d45858;
-                color: #fffefe;
-                background-color: #d45858;
-              }
-            }
-
-            > .buy-sell-submit-form {
-              .want-buy-sell-sum {
-                color: #338ff5;
-              }
-
-              .want-buy-sell-sum-content {
-                .sellGreen {
-                  color: #30c296;
-                }
-
-                .buyOrange {
-                  color: #e97345;
-                }
-
-                > .want-text {
-                  color: #9da5b3;
-                }
-
-                > .want-text {
-                  color: #9da5b3;
-                }
-              }
-
-              .sell-buy-input {
-                > .sell-sum {
-                  color: #9da5b3;
-                  background-color: #1c1f32;
-                }
-
-                > .unit {
-                  color: #338ff5;
-                  background-color: #21243b;
-                }
-              }
-
-              .buySellSumErrorTips{
-                >.errorSell{
-                  color: #d45858;
-                }
-
-                >.errorBuy{
-                  color: #d45858;
-                }
-              }
-
-              .volume-business {
-                > .sell-sum {
-                  color: #9da5b3;
-                  background-color: #1c1f32;
-                }
-
-                > .monad {
-                  color: #338ff5;
-                  background-color: #21243b;
-                }
-
-                > .range-line {
-                  color: #7d90ac;
-                }
-              }
-
-              .limitErrorTips{
-                >.errorLimitMin,.errorLimitMax{
-                  color: #d45858;
-                }
-              }
-
-              .remark {
-                color: #9da5b3;
-              }
-
-              .predict {
-                > .predict-text {
-                  color: #9fa7b2;
-                }
-
-                > .predict-sum {
-                  color: #30c296;
-                }
-
-                > .rate-text {
-                  color: #9fa7b2;
-
-                  > .rate {
-                    color: #ca5040;
-                  }
-                }
-              }
-
-              .publish-submit {
-                > .publish-submit-button {
-                  color: #fff;
-                }
-
-                > .publish-submit-buy {
-                  background-color: #d45858;
-                }
-
-                > .publish-submit-sell {
-                  background-color: #008069;
-                }
-              }
-
-              .password-dialog{
-                .tips{
-                  color: red;
-                }
-              }
-            }
-          }
-
-          > .publish-content-right {
-            flex: 1;
-
-            > .release-notes {
-              color: #a9bed4;
-
-              > .release-title {
-                color: #fff;
-              }
-            }
-          }
-        }
-      }
-    }
-
-    &.day{
-      background-color: $mainDayBgColor;
-
-      > .publish-buy-and-sell-content {
-        > .publish-content {
-          > .publish-content-left {
-            > .publish-button {
-              > .common-style {
-                border: 1px solid #333;
-                color: #8494a6;
-              }
-
-              > .green {
-                border: 1px solid #008069;
-                color: #fffefe;
-                background-color: #008069;
-              }
-
-              > .red {
-                border: 1px solid #d45858;
-                color: #fffefe;
-                background-color: #d45858;
-              }
-            }
-
-            > .buy-sell-submit-form {
-              .want-buy-sell-sum {
-                color: #338ff5;
-              }
-
-              .want-buy-sell-sum-content {
-                .sellGreen {
-                  color: #30c296;
-                }
-
-                .buyOrange {
-                  color: #e97345;
-                }
-
-                > .want-text {
-                  color: #9da5b3;
-                }
-
-                > .want-text {
-                  color: #9da5b3;
-                }
-              }
-
-              .sell-buy-input {
-                > .sell-sum {
-                  color: #9da5b3;
-                  background-color: #fff;
-                }
-
-                > .unit {
-                  border: 1px solid #cbddf4;
-                  color: #338ff5;
-                  background-color: #cbddf4;
-                }
-              }
-
-              .buySellSumErrorTips{
-                >.errorSell{
-                  color: #d45858;
-                }
-
-                >.errorBuy{
-                  color: #d45858;
-                }
-              }
-
-              .volume-business {
-                > .sell-sum {
-                  color: #9da5b3;
-                  background-color: #fff;
-                }
-
-                > .monad {
-                  border: 1px solid #cbddf4;
-                  color: #338ff5;
-                  background-color: #cbddf4;
-                }
-
-                > .range-line {
-                  color: #7d90ac;
-                }
-              }
-
-              .limitErrorTips{
-                >.errorLimitMin,.errorLimitMax{
-                  color: #d45858;
-                }
-              }
-
-              .remark {
-                color: #9da5b3;
-              }
-
-              .predict {
-                > .predict-text {
-                  color: #9fa7b2;
-                }
-
-                > .predict-sum {
-                  color: #30c296;
-                }
-
-                > .rate-text {
-                  color: #9fa7b2;
-
-                  > .rate {
-                    color: #ca5040;
-                  }
-                }
-              }
-
-              .publish-submit {
-                > .publish-submit-button {
-                  color: #fff;
-                }
-
-                > .publish-submit-buy {
-                  background-color: #d45858;
-                }
-
-                > .publish-submit-sell {
-                  background-color: #008069;
-                }
-              }
-
-              .password-dialog{
-                .tips{
-                  color: red;
-                }
-              }
-            }
-          }
-
-          > .publish-content-right {
-            flex: 1;
-
-            > .release-notes {
-              color: #7d90ac;
-
-              > .release-title {
-                color: #bb4c4c;
-              }
+            > .release-title {
+              color: #fff;
             }
           }
         }
       }
     }
   }
+
+  &.day {
+    background-color: $mainDayBgColor;
+
+    > .publish-buy-and-sell-content {
+      > .publish-content {
+        > .publish-content-left {
+          > .publish-button {
+            > .common-style {
+              border: 1px solid #333;
+              color: #8494a6;
+            }
+
+            > .green {
+              border: 1px solid #008069;
+              color: #fffefe;
+              background-color: #008069;
+            }
+
+            > .red {
+              border: 1px solid #d45858;
+              color: #fffefe;
+              background-color: #d45858;
+            }
+          }
+
+          > .buy-sell-submit-form {
+            .want-buy-sell-sum {
+              color: #338ff5;
+            }
+
+            .want-buy-sell-sum-content {
+              .sellGreen {
+                color: #30c296;
+              }
+
+              .buyOrange {
+                color: #e97345;
+              }
+
+              > .want-text {
+                color: #9da5b3;
+              }
+            }
+
+            .sell-buy-input {
+              > .sell-sum {
+                color: #9da5b3;
+                background-color: #fff;
+              }
+
+              > .unit {
+                border: 1px solid #cbddf4;
+                color: #338ff5;
+                background-color: #cbddf4;
+              }
+            }
+
+            .buySellSumErrorTips {
+              > .errorSell {
+                color: #d45858;
+              }
+
+              > .errorBuy {
+                color: #d45858;
+              }
+            }
+
+            .volume-business {
+              > .sell-sum {
+                color: #9da5b3;
+                background-color: #fff;
+              }
+
+              > .monad {
+                border: 1px solid #cbddf4;
+                color: #338ff5;
+                background-color: #cbddf4;
+              }
+
+              > .range-line {
+                color: #7d90ac;
+              }
+            }
+
+            .limitErrorTips {
+              > .errorLimitMin,
+              .errorLimitMax {
+                color: #d45858;
+              }
+            }
+
+            .remark {
+              color: #9da5b3;
+            }
+
+            .predict {
+              > .predict-text {
+                color: #9fa7b2;
+              }
+
+              > .predict-sum {
+                color: #30c296;
+              }
+
+              > .rate-text {
+                color: #9fa7b2;
+
+                > .rate {
+                  color: #ca5040;
+                }
+              }
+            }
+
+            .publish-submit {
+              > .publish-submit-button {
+                color: #fff;
+              }
+
+              > .publish-submit-buy {
+                background-color: #d45858;
+              }
+
+              > .publish-submit-sell {
+                background-color: #008069;
+              }
+            }
+
+            .password-dialog {
+              .tips {
+                color: red;
+              }
+            }
+          }
+        }
+
+        > .publish-content-right {
+          flex: 1;
+
+          > .release-notes {
+            color: #7d90ac;
+
+            > .release-title {
+              color: #bb4c4c;
+            }
+          }
+        }
+      }
+    }
+  }
+}
 </style>

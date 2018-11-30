@@ -428,367 +428,205 @@ export default {
 }
 </script>
 <style scoped lang="scss">
-  @import '../../../static/css/scss/index.scss';
+@import '../../../static/css/scss/index.scss';
 
-  .entrust-order-box{
-    width:100%;
-    height:416px;
-    font-size: 12px;
+.entrust-order-box {
+  width: 100%;
+  height: 416px;
+  font-size: 12px;
 
-    >.inner-box{
-      position: relative;
+  > .inner-box {
+    position: relative;
 
-      >.view-more{
-        position: absolute;
-        z-index: 2000;
-        top:0;
-        right:0;
-        height:34px;
-        padding-right:27px;
-        line-height: 34px;
-        text-align: right;
+    > .view-more {
+      position: absolute;
+      z-index: 2000;
+      top: 0;
+      right: 0;
+      height: 34px;
+      padding-right: 27px;
+      line-height: 34px;
+      text-align: right;
 
-        >a{
-          color: $mainColor;
-        }
+      > a {
+        color: $mainColor;
       }
+    }
 
-      /*主要内容*/
-      .content-box{
-        /*min-width:1000px;*/
-        width:100%;
-        padding:0 20px;
+    /* 主要内容 */
+    .content-box {
+      /* min-width:1000px; */
+      width: 100%;
+      padding: 0 20px;
 
-        &.history{
-          >.thead{
-            width:100%;
-            font-size: 12px;
+      &.history {
+        > .thead {
+          width: 100%;
+          font-size: 12px;
 
-            >.th{
-              white-space:nowrap;
+          > .th {
+            white-space: nowrap;
 
-              &.time{
-                width:16%;
-              }
+            &.time {
+              width: 16%;
+            }
 
-              &.price{
-                width: 15%;
-              }
+            &.price {
+              width: 15%;
+            }
 
-              &.count{
-                width:13%;
-              }
+            &.count {
+              width: 13%;
+            }
 
-              &.direction{
-                width:8%;
-              }
+            &.direction {
+              width: 8%;
+            }
 
-              &.status{
-                width: 7%;
-              }
+            &.status {
+              width: 7%;
             }
           }
+        }
 
-          >.tbody{
-            >.content{
-              >.tr{
-                white-space:nowrap;
+        > .tbody {
+          > .content {
+            > .tr {
+              white-space: nowrap;
 
-                >.td{
+              > .td {
+                font-size: 12px;
+                white-space: nowrap;
+
+                &.time {
+                  width: 16%;
                   font-size: 12px;
-                  white-space:nowrap;
+                }
 
-                  &.time{
-                    width:16%;
-                    font-size: 12px;
-                  }
+                &.price {
+                  width: 15%;
+                }
 
-                  &.price{
-                    width: 15%;
-                  }
+                &.count {
+                  width: 13%;
+                }
 
-                  &.count{
-                    width:13%;
-                  }
+                &.direction {
+                  width: 8%;
+                }
 
-                  &.direction{
-                    width:8%;
-                  }
-
-                  &.status{
-                    width: 7%;
-                  }
+                &.status {
+                  width: 7%;
                 }
               }
             }
           }
         }
+      }
 
-        /*表头*/
-        >.thead{
-          height:30px;
-          line-height:30px;
+      /* 表头 */
+      > .thead {
+        height: 30px;
+        line-height: 30px;
 
-          >.th{
-            display:inline-block;
-            font-size: 12px;
-            white-space:nowrap;
+        > .th {
+          display: inline-block;
+          font-size: 12px;
+          white-space: nowrap;
 
-            &.time{
-              width:17%;
-            }
+          &.time {
+            width: 17%;
+          }
 
-            &.direction{
-              width:8%;
-            }
+          &.direction {
+            width: 8%;
+          }
 
-            &.price{
-              width:13%;
-            }
+          &.price {
+            width: 13%;
+          }
 
-            &.count{
-              width:13%;
-            }
+          &.count {
+            width: 13%;
+          }
 
-            &.entrust{
-              width:17%;
-            }
+          &.entrust {
+            width: 17%;
+          }
 
-            &.already{
-              width:10%;
-            }
+          &.already {
+            width: 10%;
+          }
 
-            &.type{
-              width:7%;
-            }
+          &.type {
+            width: 7%;
           }
         }
+      }
 
-        /*表格内容*/
-        >.tbody{
-          .content{
-            min-height:310px;
+      /* 表格内容 */
+      > .tbody {
+        .content {
+          min-height: 310px;
 
-            /*未登录*/
-            &.not-login{
+          /* 未登录 */
+          &.not-login {
+            line-height: 310px;
+            text-align: center;
+
+            > a {
+              color: $mainColor;
+            }
+          }
+
+          &.empty {
+            > p {
               line-height: 310px;
               text-align: center;
-
-              >a{
-                color:$mainColor;
-              }
-            }
-
-            &.empty{
-              >p{
-                line-height: 310px;
-                text-align: center;
-              }
-            }
-
-            >.tr{
-              height:30px;
-              font-size: 14px;
-              line-height:30px;
-              white-space:nowrap;
-
-              >.td{
-                display:inline-block;
-                font-size: 12px;
-
-                &.time{
-                  width:17%;
-                }
-
-                &.direction{
-                  width:8%;
-                }
-
-                &.price{
-                  width:14%;
-                }
-
-                &.count{
-                  width:13%;
-                }
-
-                &.entrust{
-                  width:16%;
-                }
-
-                &.already{
-                  width:10%;
-                }
-
-                &.type{
-                  width:7%;
-                }
-
-                &.todos{
-                  >button{
-                    color:$mainColor;
-                  }
-                }
-              }
-            }
-          }
-        }
-      }
-    }
-
-    &.night{
-      color:$nightFontColor;
-      background-color: $mainContentNightBgColor;
-
-      >.inner-box{
-        >.view-more{
-          >a{
-          }
-        }
-
-        /*主要内容*/
-        .content-box{
-          &.history{
-            >.thead{
-              >.th{
-                &.time,&.price,&.type{
-                }
-              }
-            }
-
-            >.tbody{
-              >.content{
-                >.tr{
-                  >.td{
-                    &.time,&.price,&.type{
-                    }
-                  }
-                }
-              }
             }
           }
 
-          /*表头*/
-          >.thead{
-            >.th{
-              &.time{
+          > .tr {
+            height: 30px;
+            font-size: 14px;
+            line-height: 30px;
+            white-space: nowrap;
+
+            > .td {
+              display: inline-block;
+              font-size: 12px;
+
+              &.time {
+                width: 17%;
               }
 
-              &.type{
+              &.direction {
+                width: 8%;
               }
 
-              &.price{
-              }
-            }
-          }
-
-          /*表格内容*/
-          >.tbody{
-            .content{
-              /*未登录*/
-              &.not-login{
-                >a{
-                }
+              &.price {
+                width: 14%;
               }
 
-              >.tr{
-                /*border-bottom:1px solid red;*/
-                border-color:rgba(57,66,77,.2);
-
-                >.td{
-                  &.time{
-                  }
-
-                  &.type{
-                  }
-
-                  &.price{
-                  }
-
-                  &.todos{
-                    >button{
-                    }
-                  }
-                }
-              }
-            }
-          }
-        }
-      }
-    }
-
-    &.day{
-      color:$dayFontColor;
-      background-color: $mainDayBgColor;
-
-      >.inner-box{
-        >.view-more{
-          >a{
-          }
-        }
-
-        /*主要内容*/
-        .content-box{
-          &.history{
-            >.thead{
-              >.th{
-                &.time,&.price,&.type{
-                }
-              }
-            }
-
-            >.tbody{
-              >.content{
-                >.tr{
-                  >.td{
-                    &.time,&.price,&.type{
-                    }
-                  }
-                }
-              }
-            }
-          }
-
-          /*表头*/
-          >.thead{
-            >.th{
-              &.time{
+              &.count {
+                width: 13%;
               }
 
-              &.type{
+              &.entrust {
+                width: 16%;
               }
 
-              &.price{
-              }
-            }
-          }
-
-          /*表格内容*/
-          >.tbody{
-            .content{
-              /*未登录*/
-              &.not-login{
-                >a{
-                }
+              &.already {
+                width: 10%;
               }
 
-              >.tr{
-                border-color:rgba(57,66,77,.1);
+              &.type {
+                width: 7%;
+              }
 
-                >.td{
-                  &.time{
-                  }
-
-                  &.type{
-                  }
-
-                  &.price{
-                  }
-
-                  &.todos{
-                    >button{
-                    }
-                  }
+              &.todos {
+                > button {
+                  color: $mainColor;
                 }
               }
             }
@@ -797,4 +635,44 @@ export default {
       }
     }
   }
+
+  &.night {
+    color: $nightFontColor;
+    background-color: $mainContentNightBgColor;
+
+    > .inner-box {
+      /* 主要内容 */
+      .content-box {
+        /* 表格内容 */
+        > .tbody {
+          .content {
+            > .tr {
+              /* border-bottom:1px solid red; */
+              border-color: rgba(57, 66, 77, .2);
+            }
+          }
+        }
+      }
+    }
+  }
+
+  &.day {
+    color: $dayFontColor;
+    background-color: $mainDayBgColor;
+
+    > .inner-box {
+      /* 主要内容 */
+      .content-box {
+        /* 表格内容 */
+        > .tbody {
+          .content {
+            > .tr {
+              border-color: rgba(57, 66, 77, .1);
+            }
+          }
+        }
+      }
+    }
+  }
+}
 </style>

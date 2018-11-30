@@ -371,8 +371,8 @@ export default {
 <style scoped lang="scss">
   @import "../../static/css/scss/Personal/IndexPersonal";
 
-  .personal-center{
-    margin-top:66px;
+  .personal-center {
+    margin-top: 66px;
     overflow: hidden;
 
     > .personal-center-main {
@@ -415,13 +415,13 @@ export default {
         line-height: 0;
       }
 
-      .btn{
+      .btn {
         width: 80px;
         height: 35px;
         line-height: 0;
       }
 
-      > .personal-center-content{
+      > .personal-center-content {
         width: 1150px;
       }
 
@@ -451,8 +451,8 @@ export default {
       }
     }
 
-    &.night{
-      color:$nightFontColor;
+    &.night {
+      color: $nightFontColor;
       background-color: $nightBgColor;
 
       .asset-info {
@@ -464,19 +464,19 @@ export default {
       }
 
       .button-color {
-        color: rgba(255,255,255,.7);
-        background: linear-gradient(81deg,rgba(43,57,110,1) 0%,rgba(42,80,130,1) 100%);
+        color: rgba(255, 255, 255, .7);
+        background: linear-gradient(81deg, rgba(43, 57, 110, 1) 0%, rgba(42, 80, 130, 1) 100%);
       }
 
-      .btn{
+      .btn {
         border: 1px solid #338ff5;
         color: #fff;
         background-color: transparent;
       }
     }
 
-    &.day{
-      color:$dayFontColor;
+    &.day {
+      color: $dayFontColor;
       background-color: $dayBgColor;
 
       .asset-info {
@@ -492,11 +492,11 @@ export default {
       }
 
       .button-color {
-        color: rgba(255,255,255,.7);
-        background: linear-gradient(81deg,rgba(43,57,110,1) 0%,rgba(42,80,130,1) 100%);
+        color: rgba(255, 255, 255, .7);
+        background: linear-gradient(81deg, rgba(43, 57, 110, 1) 0%, rgba(42, 80, 130, 1) 100%);
       }
 
-      .btn{
+      .btn {
         border: 1px solid #338ff5;
         color: #333;
         background-color: transparent;

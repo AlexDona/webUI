@@ -809,11 +809,11 @@ export default {
   @import "../../../../static/css/scss/Personal/IndexPersonal";
 
   .credited-credited {
-    >.credited-credited-main {
-      >.credited-box{
+    > .credited-credited-main {
+      > .credited-box {
         padding: 30px 23px;
 
-        >.title-status {
+        > .title-status {
           width: 100%;
           height: 35px;
           padding: 9px 73px 8px 17px;
@@ -821,7 +821,7 @@ export default {
           border-radius: 2px;
         }
 
-        >.payment-content {
+        > .payment-content {
           min-height: 200px;
 
           .text-info {
@@ -835,27 +835,27 @@ export default {
             line-height: 0;
           }
 
-          >.payment-box {
+          > .payment-box {
             display: flex;
             height: 22px;
             padding: 0 73px 0 17px;
             margin-top: 26px;
 
-            >.payment-left,
+            > .payment-left,
             .payment-right {
               flex: 1;
               width: 100px;
             }
 
-            >.payment-left {
+            > .payment-left {
               text-align: left;
             }
 
-            >.payment-right {
+            > .payment-right {
               position: relative;
               text-align: right;
 
-              >.switch-img {
+              > .switch-img {
                 position: absolute;
                 top: 0;
                 right: 48px;
@@ -888,19 +888,19 @@ export default {
       }
     }
 
-    &.night{
-      color:$nightFontColor;
+    &.night {
+      color: $nightFontColor;
       background-color: $nightBgColor;
 
-      >.background-color {
+      > .background-color {
         background-color: $nightMainBgColor;
       }
 
-      >.credited-credited-main {
+      > .credited-credited-main {
         background-color: $nightMainBgColor;
 
-        .credited-box{
-          >.payment-content {
+        .credited-box {
+          > .payment-content {
             .text-info {
               color: #fff;
             }
@@ -911,7 +911,7 @@ export default {
               background-color: transparent;
             }
 
-            >.payment-box {
+            > .payment-box {
               .payment-right {
                 .setting-btn {
                   color: #fff;
@@ -928,10 +928,10 @@ export default {
             }
 
             .dialog-warning {
-              background:rgba(42,122,211,.2);
+              background: rgba(42, 122, 211, .2);
 
               .dialog-warning-box {
-                background:linear-gradient(90deg,rgba(43,57,110,1),rgba(42,80,130,1));
+                background: linear-gradient(90deg, rgba(43, 57, 110, 1), rgba(42, 80, 130, 1));
               }
             }
 
@@ -942,63 +942,63 @@ export default {
         }
       }
 
-      >.credited-credited-header{
-        >.header-content{
+      > .credited-credited-header {
+        > .header-content {
           color: #338ff5;
         }
       }
 
       .content-title {
-        >.title-tips {
+        > .title-tips {
           color: #d45858;
         }
 
-        >.tips-content {
+        > .tips-content {
           color: #9da5b3;
         }
       }
 
       .title-status {
-        color: rgba(255,255,255,.7);
-        background:rgba(248,249,252,.05);
+        color: rgba(255, 255, 255, .7);
+        background: rgba(248, 249, 252, .05);
       }
     }
 
-    &.day{
-      color:$dayFontColor;
+    &.day {
+      color: $dayFontColor;
       background-color: $dayBgColor;
 
-      >.background-color {
+      > .background-color {
         background-color: #ccc;
       }
 
-      >.credited-credited-main {
-        border:1px solid rgba(38,47,56,.1);
+      > .credited-credited-main {
+        border: 1px solid rgba(38, 47, 56, .1);
         background-color: $dayBgColor;
       }
 
-      >.credited-credited-header{
-        border:1px solid rgba(236,241,248,1);
-        background:rgba(255,255,255,1);
+      > .credited-credited-header {
+        border: 1px solid rgba(236, 241, 248, 1);
+        background: rgba(255, 255, 255, 1);
 
-        >.header-content{
+        > .header-content {
           color: #333;
         }
       }
 
-      .content-title{
-        >.title-tips {
+      .content-title {
+        > .title-tips {
           color: #d45858;
         }
 
-        >.tips-content {
+        > .tips-content {
           color: #7d90ac;
         }
       }
 
       .title-status {
         color: #333;
-        background:rgba(51,143,245,.1);
+        background: rgba(51, 143, 245, .1);
       }
 
       .payment-content {
@@ -1021,10 +1021,10 @@ export default {
         }
 
         .dialog-warning {
-          background:rgba(42,122,211,.9);
+          background: rgba(42, 122, 211, .9);
 
           .dialog-warning-box {
-            background:linear-gradient(90deg,rgba(43,57,110,1),rgba(42,80,130,1));
+            background: linear-gradient(90deg, rgba(43, 57, 110, 1), rgba(42, 80, 130, 1));
           }
         }
 

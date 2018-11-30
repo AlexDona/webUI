@@ -14,7 +14,7 @@
 }
 
 .coin-orders.personal .el-table td {
-  border-bottom: 0;
+  border-bottom: none;
 }
 
 .coin-orders.personal .el-input__inner {
@@ -62,10 +62,6 @@
 .coin-orders.personal .el-table .cell,
 .coin-orders.personal .el-table th div {
   padding-right: 0;
-}
-
-.coin-orders.personal .el-table td {
-  border-bottom: none;
 }
 
 .coin-orders.personal .el-pagination {

@@ -313,43 +313,43 @@ export default {
   @import "../../../../static/css/scss/Personal/IndexPersonal";
 
   .add-western {
-    margin-top:66px;
+    margin-top: 66px;
     overflow: hidden;
 
-    >.add-western-main {
+    > .add-western-main {
       width: 1100px;
       height: 700px;
       margin: 60px auto 100px;
 
-      >.add-western-header {
+      > .add-western-header {
         display: flex;
 
-        >.header-content-right,
+        > .header-content-right,
         .header-content-left {
           flex: 1;
         }
 
-        >.header-content-right {
+        > .header-content-right {
           text-align: right;
         }
 
-        >.header-content-left {
+        > .header-content-left {
           font-weight: 600;
           text-align: left;
         }
       }
 
-      >.add-western-content {
+      > .add-western-content {
         min-height: 300px;
         margin: 16px 25px;
 
-        >.western-content-title {
+        > .western-content-title {
           height: 32px;
           margin-bottom: 30px;
           line-height: 32px;
         }
 
-        >.western-content-from {
+        > .western-content-from {
           width: 500px;
           margin-left: 55px;
 
@@ -375,35 +375,35 @@ export default {
       }
     }
 
-    &.night{
-      color:$nightFontColor;
+    &.night {
+      color: $nightFontColor;
       background-color: $nightBgColor;
 
       .add-western-main {
         background-color: $nightMainBgColor;
 
-        >.add-western-header {
+        > .add-western-header {
           border-bottom: 1px solid #39424d;
 
-          >.header-content-left {
+          > .header-content-left {
             color: #fff;
           }
 
-          >.header-content-right {
+          > .header-content-right {
             color: #a9bed4;
           }
         }
 
-        >.add-western-content {
-          >.western-content-title {
+        > .add-western-content {
+          > .western-content-title {
             color: #3e79d6;
-            background:rgba(62,121,214,.08);
+            background: rgba(62, 121, 214, .08);
           }
 
-          >.western-content-from {
+          > .western-content-from {
             .western-input {
               border: 1px solid #485776;
-              color: rgba(255,255,255,.7);
+              color: rgba(255, 255, 255, .7);
 
               &:focus {
                 border: 1px solid #338ff5;
@@ -411,7 +411,7 @@ export default {
             }
 
             .western-content-name {
-              color: rgba(255,255,255,.7);
+              color: rgba(255, 255, 255, .7);
             }
 
             .western-upload {
@@ -423,43 +423,43 @@ export default {
             }
 
             .western-button {
-              color: rgba(255,255,255,.7);
-              background:linear-gradient(0deg,rgba(43,57,110,1),rgba(42,80,130,1));
+              color: rgba(255, 255, 255, .7);
+              background: linear-gradient(0deg, rgba(43, 57, 110, 1), rgba(42, 80, 130, 1));
             }
           }
         }
       }
     }
 
-    &.day{
-      color:$dayFontColor;
+    &.day {
+      color: $dayFontColor;
       background-color: $dayBgColor;
 
       .add-western-main {
-        border:1px solid rgba(246,246,246,1);
-        border-radius:4px;
-        background:rgba(255,255,255,1);
-        box-shadow:0 0 4px rgba(235,240,248,1);
+        border: 1px solid rgba(246, 246, 246, 1);
+        border-radius: 4px;
+        background: rgba(255, 255, 255, 1);
+        box-shadow: 0 0 4px rgba(235, 240, 248, 1);
 
         > .add-western-header {
-          border-bottom: 1px solid rgba(57,66,77,.1);
+          border-bottom: 1px solid rgba(57, 66, 77, .1);
 
-          >.header-content-left {
+          > .header-content-left {
             color: #7d90ac;
           }
         }
 
-        >.add-western-content {
-          >.western-content-title {
+        > .add-western-content {
+          > .western-content-title {
             color: #ccc;
-            background:rgba(62,121,214,1);
+            background: rgba(62, 121, 214, 1);
           }
 
-          >.western-content-from {
+          > .western-content-from {
             .western-input {
-              border:1px solid rgba(236,241,248,1);
+              border: 1px solid rgba(236, 241, 248, 1);
               color: #333;
-              background:rgba(255,255,255,1);
+              background: rgba(255, 255, 255, 1);
 
               &:focus {
                 border: 1px solid #338ff5;
@@ -476,7 +476,7 @@ export default {
 
             .western-button {
               color: #ccc;
-              background:linear-gradient(0deg,rgba(43,57,110,1),rgba(42,80,130,1));
+              background: linear-gradient(0deg, rgba(43, 57, 110, 1), rgba(42, 80, 130, 1));
             }
           }
         }

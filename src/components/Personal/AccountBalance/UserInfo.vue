@@ -331,59 +331,59 @@ export default {
 <style scoped lang="scss">
   @import "../../../../static/css/scss/Personal/IndexPersonal";
 
-  .user-info{
-    >.user-info-main{
+  .user-info {
+    > .user-info-main {
       height: 130px;
       padding: 16px 0;
 
-      >.user-info-content-box {
+      > .user-info-content-box {
         height: 100%;
 
-        >.user,
-        >.info,
-        >.volume,
-        >.asset {
+        > .user,
+        > .info,
+        > .volume,
+        > .asset {
           height: 100%;
         }
 
-        >.user {
-          >.user-background {
+        > .user {
+          > .user-background {
             width: 59px;
             height: 60px;
             margin: 15px 20px 0 36px;
             border-radius: 50%;
           }
 
-          >.text-align-id {
+          > .text-align-id {
             width: 185px;
             margin-top: 25px;
           }
         }
 
-        >.info {
-          >.info-top {
+        > .info {
+          > .info-top {
             padding: 0 70px;
 
-            >.icon-user-info,
-            >.real-name {
+            > .icon-user-info,
+            > .real-name {
               width: 26px;
               height: 26px;
               border-radius: 50%;
               line-height: 22px;
             }
 
-            >.info-right {
+            > .info-right {
               margin-right: 12px;
             }
           }
 
-          >.info-centre {
+          > .info-centre {
             padding: 0 70px;
 
-            >.info-picture {
+            > .info-picture {
               position: relative;
 
-              >.info-centre-right{
+              > .info-centre-right {
                 position: absolute;
                 top: 0;
                 left: 17px;
@@ -391,65 +391,65 @@ export default {
             }
           }
 
-          >.info-discount {
+          > .info-discount {
             padding: 0 70px;
           }
         }
 
-        >.volume {
-          >.volume-text {
+        > .volume {
+          > .volume-text {
             padding: 0 25px;
             margin-top: 23px;
           }
 
-          >.volume-info {
+          > .volume-info {
             padding: 0 25px;
           }
         }
 
-        >.asset {
-          >.asset-text {
+        > .asset {
+          > .asset-text {
             padding: 0 20px;
             margin-top: 8px;
           }
 
-          >.asset-info {
+          > .asset-info {
             padding: 0 20px;
           }
 
-          >.asset-color {
+          > .asset-color {
             padding: 0 15px;
           }
         }
       }
     }
 
-    &.night{
-      color:$nightFontColor;
+    &.night {
+      color: $nightFontColor;
       background-color: $nightBgColor;
 
-      >.user-info-main{
+      > .user-info-main {
         background-color: $nightMainBgColor;
 
-        >.user-info-content-box {
-          >.user,
-          >.info,
-          >.volume {
-            border-right: 1px solid rgba(97,116,153,.1);
+        > .user-info-content-box {
+          > .user,
+          > .info,
+          > .volume {
+            border-right: 1px solid rgba(97, 116, 153, .1);
           }
 
-          >.user {
-            >.user-background{
-              background:linear-gradient(90deg,rgba(43,57,110,1),rgba(42,80,130,1));
+          > .user {
+            > .user-background {
+              background: linear-gradient(90deg, rgba(43, 57, 110, 1), rgba(42, 80, 130, 1));
 
               .icon-user {
                 color: #e1f3ff;
               }
             }
 
-            >.text-align-id {
+            > .text-align-id {
               .text-color {
-                color: rgba(255,255,255,.9);
+                color: rgba(255, 255, 255, .9);
               }
 
               .color {
@@ -458,62 +458,62 @@ export default {
             }
           }
 
-          >.info {
+          > .info {
             padding-top: 10px;
 
-            >.info-top {
-              >.icon-user-info,
-              >.real-name {
+            > .info-top {
+              > .icon-user-info,
+              > .real-name {
                 background-color: #46525d;
 
-                >.icon-color {
+                > .icon-color {
                   color: #d5d8dc;
                 }
               }
 
-              >.real-name {
+              > .real-name {
                 background-color: #338ff5;
               }
             }
 
-            >.info-centre {
-              >.info-picture {
-                >.info-centre-right {
+            > .info-centre {
+              > .info-picture {
+                > .info-centre-right {
                   color: #fff;
                 }
               }
 
-              >.info-centre-left {
+              > .info-centre-left {
                 color: #9da5b3;
               }
             }
 
-            >.info-discount {
-              >.discount-text {
+            > .info-discount {
+              > .discount-text {
                 color: #9da5b3;
               }
 
-              >.discount-state {
+              > .discount-state {
                 color: #fff;
               }
             }
           }
 
-          >.volume,
-          >.asset{
-            >.volume-text,
-            >.asset-text {
+          > .volume,
+          > .asset {
+            > .volume-text,
+            > .asset-text {
               color: #9da5b3;
             }
 
-            >.volume-info,
-            >.asset-info {
-              >.info-color {
+            > .volume-info,
+            > .asset-info {
+              > .info-color {
                 color: #fff;
               }
             }
 
-            >.asset-color {
+            > .asset-color {
               color: #9da5b3;
             }
           }
@@ -521,32 +521,32 @@ export default {
       }
     }
 
-    &.day{
-      color:$dayFontColor;
+    &.day {
+      color: $dayFontColor;
       background-color: $dayBgColor;
 
-      >.user-info-main{
-        border:1px solid rgba(38,47,56,.1);
-        color:$dayFontColor;
+      > .user-info-main {
+        border: 1px solid rgba(38, 47, 56, .1);
+        color: $dayFontColor;
         background-color: $dayBgColor;
 
-        >.user-info-content-box {
-          >.user,
-          >.info,
-          >.volume {
-            border-right: 1px solid rgba(97,116,153,.1);
+        > .user-info-content-box {
+          > .user,
+          > .info,
+          > .volume {
+            border-right: 1px solid rgba(97, 116, 153, .1);
           }
 
-          >.user {
-            >.user-background{
-              background:linear-gradient(90deg,rgba(43,57,110,1),rgba(42,80,130,1));
+          > .user {
+            > .user-background {
+              background: linear-gradient(90deg, rgba(43, 57, 110, 1), rgba(42, 80, 130, 1));
 
               .icon-user {
                 color: #e1f3ff;
               }
             }
 
-            >.text-align-id {
+            > .text-align-id {
               .text-color {
                 color: #333;
               }
@@ -557,62 +557,62 @@ export default {
             }
           }
 
-          >.info {
+          > .info {
             padding-top: 10px;
 
-            >.info-top {
-              >.icon-user-info,
-              >.real-name {
+            > .info-top {
+              > .icon-user-info,
+              > .real-name {
                 background-color: #46525d;
 
-                >.icon-color {
+                > .icon-color {
                   color: #fff;
                 }
               }
 
-              >.real-name {
+              > .real-name {
                 background-color: #338ff5;
               }
             }
 
-            >.info-centre {
-              >.info-picture {
-                >.info-centre-right {
+            > .info-centre {
+              > .info-picture {
+                > .info-centre-right {
                   color: #fff;
                 }
               }
 
-              >.info-centre-left {
+              > .info-centre-left {
                 color: #333;
               }
             }
 
-            >.info-discount {
-              >.discount-text {
+            > .info-discount {
+              > .discount-text {
                 color: #333;
               }
 
-              >.discount-state {
+              > .discount-state {
                 color: #fff;
               }
             }
           }
 
-          >.volume,
-          >.asset{
-            >.volume-text,
-            >.asset-text {
+          > .volume,
+          > .asset {
+            > .volume-text,
+            > .asset-text {
               color: #333;
             }
 
-            >.volume-info,
-            >.asset-info {
-              >.info-color {
+            > .volume-info,
+            > .asset-info {
+              > .info-color {
                 color: #338ff5;
               }
             }
 
-            >.asset-color {
+            > .asset-color {
               color: #7d90ac;
             }
           }

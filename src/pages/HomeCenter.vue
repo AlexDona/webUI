@@ -95,15 +95,15 @@ export default {
 }
 </script>
 <style scoped lang="scss">
-  .home-box{
+  .home-box {
     min-width: 1130px;
     overflow: hidden;
 
-    .margin-1{
-      margin-top:-1px;
+    .margin-1 {
+      margin-top: -1px;
     }
 
-    >.fixed{
+    > .fixed {
       position: fixed;
       z-index: 2009;
     }

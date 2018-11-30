@@ -150,7 +150,7 @@
         <div class="orders-main-bottom">
           <el-table
             :data = "merchantsOrdersList"
-            style = "width: 100%"
+            style = "width: 100%;"
             :empty-text="$t('M.comm_no_data')"
             v-loading="loading"
             element-loading-background="rgba(0, 0, 0, 0.6)"
@@ -584,89 +584,89 @@ export default {
 <style scoped lang="scss" type="text/scss">
   @import "../../../static/css/scss/index";
 
-  .otc-merchants-orders-box{
-    margin-top:66px;
+  .otc-merchants-orders-box {
+    margin-top: 66px;
     overflow: hidden;
 
-    >.otc-merchants-orders-content{
+    > .otc-merchants-orders-content {
       width: 1150px;
       padding-top: 50px;
       margin: 70px auto 10px;
 
-      >.merchants-title{
+      > .merchants-title {
         height: 30px;
         margin-bottom: 30px;
         line-height: 30px;
       }
 
-      >.merchants-orders-main{
-        >.orders-main-top{
+      > .merchants-orders-main {
+        > .orders-main-top {
           min-height: 60px;
           margin-bottom: 25px;
           line-height: 60px;
 
-          >.filtrate-text{
+          > .filtrate-text {
             margin-right: 5px;
           }
 
-          >.status-input{
+          > .status-input {
             margin-right: 40px;
           }
 
-          >.date-picker{
-            >.date-short-line{
+          > .date-picker {
+            > .date-short-line {
               margin: 0 3px;
             }
           }
 
-          >.inquire-button{
+          > .inquire-button {
             float: right;
           }
         }
 
-        >.orders-main-bottom{
+        > .orders-main-bottom {
           min-height: 440px;
 
-          .xilian{
+          .xilian {
             vertical-align: middle;
           }
         }
 
-        .page{
+        .page {
           padding: 10px 0;
           text-align: center;
         }
       }
     }
 
-    &.night{
+    &.night {
       background-color: $mainNightBgColor;
 
-      >.otc-merchants-orders-content{
-        >.merchants-title{
+      > .otc-merchants-orders-content {
+        > .merchants-title {
           border-left: 3px solid #338ff5;
           color: #338ff5;
         }
 
-        >.merchants-orders-main{
-          >.orders-main-top{
-            >.filtrate-text{
+        > .merchants-orders-main {
+          > .orders-main-top {
+            > .filtrate-text {
               color: #9da5b3;
             }
 
-            >.all-clear{
+            > .all-clear {
               color: #338ff5;
             }
           }
 
-          >.orders-main-bottom{
+          > .orders-main-bottom {
             min-height: 440px;
 
-            .red{
+            .red {
               color: #d45858;
             }
 
-            .green{
+            .green {
               color: #008069;
             }
           }
@@ -674,34 +674,34 @@ export default {
       }
     }
 
-    &.day{
+    &.day {
       background-color: $mainDayBgColor;
 
-      >.otc-merchants-orders-content{
-        >.merchants-title{
+      > .otc-merchants-orders-content {
+        > .merchants-title {
           border-left: 3px solid #338ff5;
           color: #338ff5;
         }
 
-        >.merchants-orders-main{
-          >.orders-main-top{
-            >.filtrate-text{
+        > .merchants-orders-main {
+          > .orders-main-top {
+            > .filtrate-text {
               color: #9da5b3;
             }
 
-            >.all-clear{
+            > .all-clear {
               color: #338ff5;
             }
           }
 
-          >.orders-main-bottom{
+          > .orders-main-bottom {
             min-height: 440px;
 
-            .red{
+            .red {
               color: #d45858;
             }
 
-            .green{
+            .green {
               color: #008069;
             }
           }

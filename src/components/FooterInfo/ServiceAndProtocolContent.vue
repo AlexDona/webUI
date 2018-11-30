@@ -42,24 +42,24 @@ export default {
 }
 </script>
 <style scoped lang="scss" type="text/scss">
-  .user-protocol-box{
-    width:100%;
-    height:100%;
+  .user-protocol-box {
+    width: 100%;
+    height: 100%;
 
-    >.content{
-      width:100%;
+    > .content {
+      width: 100%;
 
-      >.content{
+      > .content {
         overflow: hidden;
 
-        >.inner-box{
-          width:1100px;
-          height:1100px;
-          padding:20px 50px;
-          margin:0 auto;
+        > .inner-box {
+          width: 1100px;
+          height: 1100px;
+          padding: 20px 50px;
+          margin: 0 auto;
           overflow: auto;
 
-          >h2{
+          > h2 {
             line-height: 70px;
             text-align: center;
           }
@@ -67,43 +67,27 @@ export default {
       }
     }
 
-    &.night{
-      >.content{
-        >.top{
-          >h1{
-          }
-
-          >p{
-          }
-        }
-
-        >.content{
+    &.night {
+      > .content {
+        > .content {
           background-color: #1e2636;
 
-          >.inner-box{
-            color:#8ba0ca;
-            background-color: #1e2636
+          > .inner-box {
+            color: #8ba0ca;
+            background-color: #1e2636;
           }
         }
       }
     }
 
-    &.day{
-      >.content{
-        >.top{
-          >h1{
-          }
-
-          >p{
-          }
-        }
-
-        >.content{
+    &.day {
+      > .content {
+        > .content {
           background-color: #fff;
 
-          >.inner-box{
-            border:1px solid rgba(234,235,236,1);
-            color:#666;
+          > .inner-box {
+            border: 1px solid rgba(234, 235, 236, 1);
+            color: #666;
             background-color: #fff;
           }
         }

@@ -141,7 +141,7 @@
               <!--谷歌账户-->
               <el-form-item
                 :label="$t('M.user_security_google') + $t('M.user_google_account') + '：'"
-                style="display: none"
+                style="display: none;"
               >
                  <span class="google-content-name">
                   {{ googleUserInformation.googleAccount }}
@@ -441,49 +441,49 @@ export default {
   @import "../../../../static/css/scss/Personal/IndexPersonal";
 
   .binding-google {
-    margin-top:66px;
+    margin-top: 66px;
     overflow: hidden;
 
-    >.binding-google-main {
+    > .binding-google-main {
       width: 1100px;
       min-height: 700px;
       margin: 60px auto 100px;
 
-      >.binding-google-header {
+      > .binding-google-header {
         display: flex;
 
-        >.header-content-right,
+        > .header-content-right,
         .header-content-left {
           flex: 1;
         }
 
-        >.header-content-right {
+        > .header-content-right {
           text-align: right;
         }
 
-        >.header-content-left {
+        > .header-content-left {
           font-weight: 600;
           text-align: left;
         }
       }
 
-      >.binding-google-content {
+      > .binding-google-content {
         min-height: 300px;
         margin: 40px 25px;
 
-        >.google-content-from {
+        > .google-content-from {
           width: 500px;
           margin-left: 30px;
 
-          >.google-images-show {
-            >.google-validator {
+          > .google-images-show {
+            > .google-validator {
               height: 250px;
 
-              >.google-images1 {
+              > .google-images1 {
                 padding: 20px 9px !important;
               }
 
-              >.google-images {
+              > .google-images {
                 width: 115px;
                 height: 140px;
                 padding: 20px 7px;
@@ -497,12 +497,12 @@ export default {
               }
             }
 
-            >.validator-margin {
+            > .validator-margin {
               margin-left: 50px;
             }
           }
 
-          >.google-info-show {
+          > .google-info-show {
             margin-top: 30px;
 
             .code-copy {
@@ -542,28 +542,28 @@ export default {
       }
     }
 
-    &.night{
-      color:$nightFontColor;
+    &.night {
+      color: $nightFontColor;
       background-color: $nightBgColor;
 
       .binding-google-main {
         background-color: $nightMainBgColor;
 
-        >.binding-google-header {
+        > .binding-google-header {
           border-bottom: 1px solid #39424d;
 
-          >.header-content-left {
+          > .header-content-left {
             color: #fff;
           }
 
-          >.header-content-right {
+          > .header-content-right {
             color: #a9bed4;
           }
         }
 
-        >.binding-google-content {
-          >.google-content-from {
-            >.google-images-show {
+        > .binding-google-content {
+          > .google-content-from {
+            > .google-images-show {
               .img-background {
                 background-color: #338ff5;
               }
@@ -585,16 +585,16 @@ export default {
               }
             }
 
-            >.google-info-show {
-              color: rgba(255,255,255,.7);
+            > .google-info-show {
+              color: rgba(255, 255, 255, .7);
 
               .code-copy {
-                color: rgba(255,255,255,.7);
+                color: rgba(255, 255, 255, .7);
                 background-color: #338ff5;
               }
 
               .google-content-name {
-                color: rgba(255,255,255,.7);
+                color: rgba(255, 255, 255, .7);
               }
 
               .google-input {
@@ -607,8 +607,8 @@ export default {
               }
 
               .google-button {
-                color: rgba(255,255,255,.7);
-                background:linear-gradient(0deg,rgba(43,57,110,1),rgba(42,80,130,1));
+                color: rgba(255, 255, 255, .7);
+                background: linear-gradient(0deg, rgba(43, 57, 110, 1), rgba(42, 80, 130, 1));
               }
 
               .prompt-message {
@@ -620,31 +620,31 @@ export default {
       }
     }
 
-    &.day{
-      color:$dayFontColor;
+    &.day {
+      color: $dayFontColor;
       background-color: $dayBgColor;
 
       .binding-google-main {
-        border:1px solid rgba(246,246,246,1);
-        border-radius:4px;
-        background:rgba(255,255,255,1);
-        box-shadow:0 0 4px rgba(235,240,248,1);
+        border: 1px solid rgba(246, 246, 246, 1);
+        border-radius: 4px;
+        background: rgba(255, 255, 255, 1);
+        box-shadow: 0 0 4px rgba(235, 240, 248, 1);
 
-        >.binding-google-header {
-          border-bottom: 1px solid rgba(57,66,77,.1);
+        > .binding-google-header {
+          border-bottom: 1px solid rgba(57, 66, 77, .1);
 
-          >.header-content-left {
+          > .header-content-left {
             color: #333;
           }
 
-          >.header-content-right {
+          > .header-content-right {
             color: #7d90ac;
           }
         }
 
-        >.binding-google-content {
-          >.google-content-from {
-            >.google-images-show {
+        > .binding-google-content {
+          > .google-content-from {
+            > .google-images-show {
               .img-background {
                 background-color: #338ff5;
               }
@@ -666,11 +666,11 @@ export default {
               }
             }
 
-            >.google-info-show {
-              color: rgba(255,255,255,.7);
+            > .google-info-show {
+              color: rgba(255, 255, 255, .7);
 
               .code-copy {
-                color: rgba(255,255,255,.7);
+                color: rgba(255, 255, 255, .7);
                 background-color: #338ff5;
               }
 
@@ -679,7 +679,7 @@ export default {
               }
 
               .google-input {
-                border:1px solid rgba(236,241,248,1);
+                border: 1px solid rgba(236, 241, 248, 1);
                 color: #333;
 
                 &:focus {
@@ -688,8 +688,8 @@ export default {
               }
 
               .google-button {
-                color: rgba(255,255,255,.7);
-                background:linear-gradient(0deg,rgba(43,57,110,1),rgba(42,80,130,1));
+                color: rgba(255, 255, 255, .7);
+                background: linear-gradient(0deg, rgba(43, 57, 110, 1), rgba(42, 80, 130, 1));
               }
 
               .prompt-message {

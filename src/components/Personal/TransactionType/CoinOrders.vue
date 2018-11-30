@@ -761,92 +761,92 @@ export default {
 <style scoped lang="scss">
   @import "../../../../static/css/scss/Personal/IndexPersonal";
 
-  .coin-orders{
-    .search-condition-box{
-      width:100%;
-      padding:20px;
+  .coin-orders {
+    .search-condition-box {
+      width: 100%;
+      padding: 20px;
 
-      >.condition-item{
-        display:inline-block;
-        height:34px;
-        margin:0 56px 20px 0;
-        line-height:34px;
+      > .condition-item {
+        display: inline-block;
+        height: 34px;
+        margin: 0 56px 20px 0;
+        line-height: 34px;
 
-        >.middle-line{
-          display:inline-block;
-          width:20px;
-          height:30px;
+        > .middle-line {
+          display: inline-block;
+          width: 20px;
+          height: 30px;
           text-align: center;
         }
 
-        &:last-of-type{
-          margin-right:0;
+        &:last-of-type {
+          margin-right: 0;
         }
 
-        >.currency-span{
-          display:inline-block;
+        > .currency-span {
+          display: inline-block;
           font-size: 12px;
           vertical-align: top;
         }
 
-        >.currency-input{
+        > .currency-input {
           box-sizing: border-box;
-          width:80px;
-          height:30px;
-          padding:5px;
-          margin:2px;
-          border:1px solid rgba(72,87,118,1);
-          border-radius:2px;
+          width: 80px;
+          height: 30px;
+          padding: 5px;
+          margin: 2px;
+          border: 1px solid rgba(72, 87, 118, 1);
+          border-radius: 2px;
           vertical-align: top;
-          color:#fff;
+          color: #fff;
         }
 
-        >.search-btn{
-          width:60px;
-          height:34px;
-          border-radius:4px;
+        > .search-btn {
+          width: 60px;
+          height: 34px;
+          border-radius: 4px;
           color: #fff;
-          background:linear-gradient(90deg,rgba(43,57,110,1) 0%,rgba(42,80,130,1) 100%);
+          background: linear-gradient(90deg, rgba(43, 57, 110, 1) 0%, rgba(42, 80, 130, 1) 100%);
         }
       }
     }
 
-    .repeal-btn{
-      color:#338ff5;
+    .repeal-btn {
+      color: #338ff5;
     }
 
     .height500 {
       height: 545px;
     }
 
-    &.night{
-      color:$nightFontColor;
+    &.night {
+      color: $nightFontColor;
       background-color: $nightBgColor;
 
       .background-color {
         background-color: $nightMainBgColor;
 
-        >.coin-color{
+        > .coin-color {
           color: #338ff5;
         }
       }
     }
 
-    &.day{
-      color:$dayFontColor;
+    &.day {
+      color: $dayFontColor;
       background-color: $dayBgColor;
 
       .background-color {
-        border:1px solid rgba(236,241,248,1);
-        background:rgba(255,255,255,1);
+        border: 1px solid rgba(236, 241, 248, 1);
+        background: rgba(255, 255, 255, 1);
 
-        >.coin-color{
+        > .coin-color {
           color: #338ff5;
         }
       }
 
-      .search-condition-box{
-        .condition-item{
+      .search-condition-box {
+        .condition-item {
           .currency-input {
             border: 1px solid #ecf1f8;
             color: #333;
@@ -858,7 +858,6 @@ export default {
       .currency-span {
         color: #7d90ac;
       }
-
     }
   }
 </style>

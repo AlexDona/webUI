@@ -374,42 +374,42 @@ export default {
   @import "../../../../static/css/scss/Personal/IndexPersonal";
 
   .add-chat {
-    margin-top:66px;
+    margin-top: 66px;
     overflow: hidden;
 
-    >.add-chat-main {
+    > .add-chat-main {
       width: 1100px;
       height: 700px;
       margin: 60px auto 100px;
 
-      >.add-chat-header {
+      > .add-chat-header {
         display: flex;
 
-        >.header-content-right,
+        > .header-content-right,
         .header-content-left {
           flex: 1;
         }
 
-        >.header-content-right {
+        > .header-content-right {
           text-align: right;
         }
 
-        >.header-content-left {
+        > .header-content-left {
           text-align: left;
         }
       }
 
-      >.add-chat-content {
+      > .add-chat-content {
         min-height: 300px;
         margin: 16px 25px;
 
-        >.chat-content-title {
+        > .chat-content-title {
           height: 32px;
           margin-bottom: 30px;
           line-height: 32px;
         }
 
-        >.chat-content-from {
+        > .chat-content-from {
           width: 500px;
           margin-left: 55px;
 
@@ -437,14 +437,14 @@ export default {
       }
     }
 
-    &.night{
-      color:$nightFontColor;
+    &.night {
+      color: $nightFontColor;
       background-color: $nightBgColor;
 
       .add-chat-main {
         background-color: $nightMainBgColor;
 
-        >.add-chat-header {
+        > .add-chat-header {
           border-bottom: 1px solid #39424d;
 
           .header-content {
@@ -456,20 +456,20 @@ export default {
           }
         }
 
-        >.add-chat-content {
-          >.chat-content-title {
+        > .add-chat-content {
+          > .chat-content-title {
             color: #3e79d6;
-            background:rgba(62,121,214,.08);
+            background: rgba(62, 121, 214, .08);
           }
 
-          >.chat-content-from {
+          > .chat-content-from {
             .chat-content-type {
-              color: rgba(255,255,255,.7);
+              color: rgba(255, 255, 255, .7);
             }
 
             .chat-input {
               border: 1px solid #485776;
-              color: rgba(255,255,255,.7);
+              color: rgba(255, 255, 255, .7);
 
               &:focus {
                 border: 1px solid #338ff5;
@@ -486,26 +486,26 @@ export default {
             }
 
             .chat-button {
-              color: rgba(255,255,255,.7);
-              background:linear-gradient(0deg,rgba(43,57,110,1),rgba(42,80,130,1));
+              color: rgba(255, 255, 255, .7);
+              background: linear-gradient(0deg, rgba(43, 57, 110, 1), rgba(42, 80, 130, 1));
             }
           }
         }
       }
     }
 
-    &.day{
-      color:$dayFontColor;
+    &.day {
+      color: $dayFontColor;
       background-color: $dayBgColor;
 
       .add-chat-main {
-        border:1px solid rgba(246,246,246,1);
-        border-radius:4px;
-        background:rgba(255,255,255,1);
-        box-shadow:0 0 4px rgba(235,240,248,1);
+        border: 1px solid rgba(246, 246, 246, 1);
+        border-radius: 4px;
+        background: rgba(255, 255, 255, 1);
+        box-shadow: 0 0 4px rgba(235, 240, 248, 1);
 
-        >.add-chat-header {
-          border-bottom: 1px solid rgba(57,66,77,.1);
+        > .add-chat-header {
+          border-bottom: 1px solid rgba(57, 66, 77, .1);
 
           .header-content {
             color: #7d90ac;
@@ -516,21 +516,21 @@ export default {
           }
         }
 
-        >.add-chat-content {
-          >.chat-content-title {
+        > .add-chat-content {
+          > .chat-content-title {
             color: #3e79d6;
-            background:rgba(62,121,214,.08);
+            background: rgba(62, 121, 214, .08);
           }
 
-          >.chat-content-from {
+          > .chat-content-from {
             .chat-content-type {
               color: #333;
             }
 
             .chat-input {
-              border:1px solid rgba(236,241,248,1);
+              border: 1px solid rgba(236, 241, 248, 1);
               color: #333;
-              background:rgba(255,255,255,1);
+              background: rgba(255, 255, 255, 1);
 
               &:focus {
                 border: 1px solid #338ff5;
@@ -547,8 +547,8 @@ export default {
             }
 
             .chat-button {
-              color: rgba(255,255,255,.7);
-              background:linear-gradient(0deg,rgba(43,57,110,1),rgba(42,80,130,1));
+              color: rgba(255, 255, 255, .7);
+              background: linear-gradient(0deg, rgba(43, 57, 110, 1), rgba(42, 80, 130, 1));
             }
           }
         }

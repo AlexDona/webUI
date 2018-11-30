@@ -220,306 +220,131 @@ export default {
 }
 </script>
 <style scoped lang="scss" type="text/scss">
-  @import '../../../static/css/scss/index.scss';
+@import '../../../static/css/scss/index.scss';
 
-  .coin-table{
-    /*padding:0 5px;*/
-    >.coin-thead{
-      height:30px;
-      line-height:30px;
+.coin-table {
+  /* padding:0 5px; */
+  > .coin-thead {
+    height: 30px;
+    line-height: 30px;
 
-      >.coin-unit{
-        display:flex;
+    > .coin-unit {
+      display: flex;
 
-        /*表头*/
-        >.title{
-          flex:1;
-          color:$mainNightTitleColor;
+      /* 表头 */
+      > .title {
+        flex: 1;
+        color: $mainNightTitleColor;
 
-          &:nth-of-type(1){
-            margin-left:20px;
-          }
-
-          &.price{
-            margin-right:12%;
-            text-align: right;
-          }
-
-          &.rose{
-            margin-right:20px;
-            text-align: right;
-          }
-
-          .sort-box{
-            position: relative;
-
-            >i{
-              position: absolute;
-              left:0;
-
-              &.active{
-                color:$mainColor;
-              }
-
-              &.el-icon-caret-top{
-                top:-2px;
-              }
-
-              &.el-icon-caret-bottom{
-                bottom:-2px;
-              }
-            }
-          }
-
-          @media screen and (max-width: 1920px) {
-            &.price{
-              margin-right:5%;
-              text-align: right;
-            }
-          }
+        &:nth-of-type(1) {
+          margin-left: 20px;
         }
-      }
-    }
 
-    /*币种列表*/
-    >.coin-list{
-      >.market-cate-wrap{
-        /*板块头部*/
-        >.market-category{
+        &.price {
+          margin-right: 12%;
+          text-align: right;
+        }
+
+        &.rose {
+          margin-right: 20px;
+          text-align: right;
+        }
+
+        .sort-box {
           position: relative;
-          height: 30px;
-          padding:0 4.5%;
-          margin: 0 16px;
 
-          /*padding-left: 10px;*/
-
-          /*padding: 0 20px;*/
-          border-top:1px solid #39424d;
-          border-bottom:1px solid #39424d;
-          line-height: 30px;
-          color:$mainColor;
-
-          &:before{
+          > i {
             position: absolute;
-            top:50%;
-            left:0;
-            width:2px;
-            height:14px;
-            background-color: $mainColor;
-            transform: translateY(-50%);
-            content:'';
+            left: 0;
+
+            &.active {
+              color: $mainColor;
+            }
+
+            &.el-icon-caret-top {
+              top: -2px;
+            }
+
+            &.el-icon-caret-bottom {
+              bottom: -2px;
+            }
           }
         }
 
-        >.coin-item{
-          >.coin-item{
-            display:flex;
+        @media screen and (max-width: 1920px) {
+          &.price {
+            margin-right: 5%;
+            text-align: right;
+          }
+        }
+      }
+    }
+  }
 
-            /*border-bottom: 1px solid;*/
+  /* 币种列表 */
+  > .coin-list {
+    > .market-cate-wrap {
+      /* 板块头部 */
+      > .market-category {
+        position: relative;
+        height: 30px;
+        padding: 0 4.5%;
+        margin: 0 16px;
+
+        /* padding-left: 10px; */
+
+        /* padding: 0 20px; */
+        border-top: 1px solid #39424d;
+        border-bottom: 1px solid #39424d;
+        line-height: 30px;
+        color: $mainColor;
+
+        &::before {
+          position: absolute;
+          top: 50%;
+          left: 0;
+          width: 2px;
+          height: 14px;
+          background-color: $mainColor;
+          transform: translateY(-50%);
+          content: '';
+        }
+      }
+
+      > .coin-item {
+        > .coin-item {
+          display: flex;
+
+          /* border-bottom: 1px solid; */
+          height: 30px;
+
+          /* margin-left: 16px; */
+
+          /* padding: 0 20px; */
+          padding: 0 4.5%;
+          line-height: 30px;
+
+          .click-button {
+            display: inline-block;
+            width: 18px;
             height: 30px;
-
-            /*margin-left: 16px;*/
-
-            /*padding: 0 20px;*/
-            padding:0 4.5%;
-            line-height: 30px;
-
-            .click-button{
-              display: inline-block;
-              width:18px;
-              height:30px;
-            }
-
-            &:hover{
-              // background-color: pink;
-            }
-
-            >span{
-              display: inline-block;
-              flex:1;
-
-              /*>.base-currency{*/
-
-              /**/
-
-              /*}*/
-              &.price{
-                margin-right:12%;
-              }
-
-              @media screen and (max-width: 1920px) {
-                &.price{
-                  margin-right:2%;
-                }
-              }
-            }
           }
-        }
-      }
-    }
 
-    &.night{
-      >.coin-thead{
-        >.coin-unit{
-          display:flex;
+          &:hover {
+            // background-color: pink;
+          }
 
-          /*表头*/
-          >.title{
-            &:nth-of-type(1){
-            }
+          > span {
+            display: inline-block;
+            flex: 1;
 
-            &.price{
-            }
-
-            &.rose{
-            }
-
-            .sort-box{
-              >i{
-                &.active{
-                }
-
-                &.el-icon-caret-top{
-                }
-
-                &.el-icon-caret-bottom{
-                }
-              }
+            &.price {
+              margin-right: 12%;
             }
 
             @media screen and (max-width: 1920px) {
-              &.price{
-              }
-            }
-          }
-        }
-      }
-
-      /*币种列表*/
-      >.coin-list{
-        >.market-cate-wrap{
-          /*板块头部*/
-          >.market-category{
-            &:before{
-            }
-          }
-
-          >.coin-item{
-            white-space:nowrap;
-
-            >.coin-item{
-              .click-button{
-                color:$nightFontColor;
-              }
-
-              &:hover{
-                background-color: rgba(255, 255, 255, .2);
-              }
-
-              >span{
-                >.base-currency{
-                  color:$nightFontColor;
-                }
-
-                >.currency-chn-name{
-                  color:#b0b2b6;
-                }
-
-                &.price,&.rose{
-                  color:$nightFontColor;
-                }
-
-                &.up{
-                  color: $upColor;
-                }
-
-                &.down{
-                  color:$downColor;
-                }
-
-                @media screen and (max-width: 1920px) {
-                  &.price{
-                  }
-                }
-              }
-            }
-          }
-        }
-      }
-    }
-
-    &.day{
-      >.coin-thead{
-        >.coin-unit{
-          display:flex;
-
-          /*表头*/
-          >.title{
-            &:nth-of-type(1){
-            }
-
-            &.price{
-            }
-
-            &.rose{
-            }
-
-            .sort-box{
-              >i{
-                &.active{
-                }
-
-                &.el-icon-caret-top{
-                }
-
-                &.el-icon-caret-bottom{
-                }
-              }
-            }
-
-            @media screen and (max-width: 1920px) {
-              &.price{
-              }
-            }
-          }
-        }
-      }
-
-      /*币种列表*/
-      >.coin-list{
-        >.market-cate-wrap{
-          /*板块头部*/
-          >.market-category{
-            &:before{
-            }
-          }
-
-          >.coin-item{
-            >.coin-item{
-              &:hover{
-                background-color: #eaf2fa;
-              }
-
-              >span{
-                >.currency-chn-name{
-                  color:#b0b2b6;
-                }
-
-                &.price{
-                }
-
-                &.up{
-                  color: $upColor;
-                }
-
-                &.down{
-                  color:$downColor;
-                }
-
-                @media screen and (max-width: 1920px) {
-                  &.price{
-                  }
-                }
+              &.price {
+                margin-right: 2%;
               }
             }
           }
@@ -527,4 +352,90 @@ export default {
       }
     }
   }
+
+  &.night {
+    > .coin-thead {
+      > .coin-unit {
+        display: flex;
+      }
+    }
+
+    /* 币种列表 */
+    > .coin-list {
+      > .market-cate-wrap {
+        > .coin-item {
+          white-space: nowrap;
+
+          > .coin-item {
+            .click-button {
+              color: $nightFontColor;
+            }
+
+            &:hover {
+              background-color: rgba(255, 255, 255, .2);
+            }
+
+            > span {
+              > .base-currency {
+                color: $nightFontColor;
+              }
+
+              > .currency-chn-name {
+                color: #b0b2b6;
+              }
+
+              &.price,
+              &.rose {
+                color: $nightFontColor;
+              }
+
+              &.up {
+                color: $upColor;
+              }
+
+              &.down {
+                color: $downColor;
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+
+  &.day {
+    > .coin-thead {
+      > .coin-unit {
+        display: flex;
+      }
+    }
+
+    /* 币种列表 */
+    > .coin-list {
+      > .market-cate-wrap {
+        > .coin-item {
+          > .coin-item {
+            &:hover {
+              background-color: #eaf2fa;
+            }
+
+            > span {
+              > .currency-chn-name {
+                color: #b0b2b6;
+              }
+
+              &.up {
+                color: $upColor;
+              }
+
+              &.down {
+                color: $downColor;
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}
 </style>

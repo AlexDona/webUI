@@ -534,7 +534,7 @@ export default {
 
 .fiat-orders {
   .fiat-main {
-    .orders-main-top{
+    .orders-main-top {
       height: 125px;
       padding: 0 25px;
 
@@ -550,7 +550,7 @@ export default {
         height: 50px;
         line-height: 50px;
 
-        >.filtrate-text {
+        > .filtrate-text {
           margin-right: 5px;
         }
 
@@ -559,51 +559,51 @@ export default {
         }
       }
 
-      >.date-picker{
-        >.date-short-line{
+      > .date-picker {
+        > .date-short-line {
           margin: 0 3px;
         }
       }
 
-      >.all-clear{
+      > .all-clear {
         color: #338ff5;
       }
     }
   }
 
-  &.night{
-    color:$nightFontColor;
+  &.night {
+    color: $nightFontColor;
     background-color: $nightBgColor;
 
-    >.background-color{
+    > .background-color {
       background-color: $nightMainBgColor;
 
-      >.fiat-color{
+      > .fiat-color {
         color: #338ff5;
       }
     }
 
     .fiat-main {
-      .orders-main-top{
+      .orders-main-top {
         background-color: #1c1f32;
       }
     }
   }
 
-  &.day{
-    color:$dayFontColor;
+  &.day {
+    color: $dayFontColor;
     background-color: $dayBgColor;
 
-    >header{
-      border:1px solid #ecf1f8;
+    > header {
+      border: 1px solid #ecf1f8;
 
-      >span{
-        color:#338ff5;
+      > span {
+        color: #338ff5;
       }
     }
 
-    >div{
-      border:1px solid #ecf1f8;
+    > div {
+      border: 1px solid #ecf1f8;
     }
   }
 }

@@ -256,72 +256,72 @@ export default {
 }
 </script>
 <style scoped lang="scss" type="text/scss">
-  .service-protocol-box{
-    width:100%;
+  .service-protocol-box {
+    width: 100%;
     // height:100%;
-    >.content{
-      width:100%;
-      height:100%;
+    > .content {
+      width: 100%;
+      height: 100%;
       overflow: visible;
 
-      >.top{
-        width:100%;
-        height:250px;
-        padding-top:100px;
+      > .top {
+        width: 100%;
+        height: 250px;
+        padding-top: 100px;
         text-align: center;
-        background:#121824 url(../../assets/develop/about-us.png) no-repeat center center;
+        background: #121824 url(../../assets/develop/about-us.png) no-repeat center center;
         -webkit-background-size: 100% 100%;
         background-size: 100% 100%;
 
-        >h1{
+        > h1 {
           font-weight: 500;
           font-size: 36px;
-          color:#8ba0ca;
+          color: #8ba0ca;
         }
 
-        >p{
+        > p {
           font-size: 22px;
-          color:#97aac8;
+          color: #97aac8;
         }
       }
 
-      >.content{
-        height:100%;
+      > .content {
+        height: 100%;
 
-        >.inner-box{
+        > .inner-box {
           box-sizing: border-box;
 
-          /*height:1100px;*/
-          width:1100px;
-          padding-bottom:50px;
-          margin:0 auto;
+          /* height:1100px; */
+          width: 1100px;
+          padding-bottom: 50px;
+          margin: 0 auto;
 
-          .tab-content{
-            width:1100px;
+          .tab-content {
+            width: 1100px;
           }
         }
       }
     }
 
-    &.night{
-      >.content{
-        >.content{
+    &.night {
+      > .content {
+        > .content {
           background-color: #121824;
 
-          >.inner-box{
-            color:#8ba0ca
+          > .inner-box {
+            color: #8ba0ca;
           }
         }
       }
     }
 
-    &.day{
-      >.content{
-        >.content{
+    &.day {
+      > .content {
+        > .content {
           background-color: #fff;
 
-          >.inner-box{
-            color:#666;
+          > .inner-box {
+            color: #666;
             background-color: #fff;
           }
         }

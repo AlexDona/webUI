@@ -175,7 +175,7 @@
       <div class="tab-list">
         <el-table
           :data="gainAddressList"
-          style="width: 100%"
+          style="width: 100%;"
           :empty-text="$t('M.comm_no_data')"
           v-loading="loading"
           element-loading-background="rgba(0, 0, 0, 0.6)"
@@ -570,21 +570,21 @@ export default {
 <style scoped lang="scss">
   @import "../../../../static/css/scss/Personal/IndexPersonal";
 
-  .withdrawal-address{
-    >.withdrawal-address-main{
+  .withdrawal-address {
+    > .withdrawal-address-main {
       min-height: 390px;
       border-radius: 5px;
 
-      >.withdrawal-header {
+      > .withdrawal-header {
         margin-bottom: 2px;
 
-        >.header-content {
+        > .header-content {
           font-weight: 400;
         }
       }
 
-      >.withdrawal-address-content {
-        >.withdrawal-address-box {
+      > .withdrawal-address-content {
+        > .withdrawal-address-box {
           min-height: 100px;
 
           .send-code-btn {
@@ -626,7 +626,7 @@ export default {
         }
       }
 
-      >.address-list-header {
+      > .address-list-header {
         height: 50px;
         padding: 0 25px;
         line-height: 50px;
@@ -639,24 +639,24 @@ export default {
       }
     }
 
-    &.night{
-      color:$nightFontColor;
+    &.night {
+      color: $nightFontColor;
       background-color: $nightBgColor;
 
-      >.withdrawal-address-main {
+      > .withdrawal-address-main {
         background-color: $nightMainBgColor;
 
-        >.withdrawal-header {
+        > .withdrawal-header {
           background-color: $nightMainBgColor;
-          box-shadow:2px 0 2px rgba(20,23,37,1);
+          box-shadow: 2px 0 2px rgba(20, 23, 37, 1);
 
-          >.header-content {
-            color: rgba(255,255,255,.7);
+          > .header-content {
+            color: rgba(255, 255, 255, .7);
           }
         }
 
-        >.withdrawal-address-content {
-          >.withdrawal-address-box {
+        > .withdrawal-address-content {
+          > .withdrawal-address-box {
             .error-info {
               height: 20px;
               line-height: 20px;
@@ -679,7 +679,7 @@ export default {
 
             .form-input {
               border: 1px solid #485776;
-              color: rgba(255,255,255,.7);
+              color: rgba(255, 255, 255, .7);
             }
 
             .form-input:focus {
@@ -687,45 +687,45 @@ export default {
             }
 
             .form-button {
-              color: rgba(255,255,255,.7);
-              background:linear-gradient(0deg,rgba(43,57,110,1),rgba(42,80,130,1));
+              color: rgba(255, 255, 255, .7);
+              background: linear-gradient(0deg, rgba(43, 57, 110, 1), rgba(42, 80, 130, 1));
             }
           }
         }
 
-        >.address-list-header {
+        > .address-list-header {
           border-bottom: 1px solid #39424d;
-          color: rgba(255,255,255,.7);
+          color: rgba(255, 255, 255, .7);
         }
 
         .btn {
           border: 1px solid #338ff5;
-          color: rgba(255,255,255,.7);
+          color: rgba(255, 255, 255, .7);
           background-color: transparent;
         }
       }
     }
 
-    &.day{
-      color:$dayFontColor;
+    &.day {
+      color: $dayFontColor;
       background-color: $dayBgColor;
 
-      >.withdrawal-address-main {
-        border:1px solid rgba(236,241,248,1);
-        color:$dayFontColor;
+      > .withdrawal-address-main {
+        border: 1px solid rgba(236, 241, 248, 1);
+        color: $dayFontColor;
         background-color: $dayBgColor;
 
-        >.withdrawal-header {
-          border:1px solid rgba(236,241,248,1);
-          background:rgba(255,255,255,1);
+        > .withdrawal-header {
+          border: 1px solid rgba(236, 241, 248, 1);
+          background: rgba(255, 255, 255, 1);
 
-          >.header-content {
+          > .header-content {
             color: #338ff5;
           }
         }
 
-        >.withdrawal-address-content {
-          >.withdrawal-address-box {
+        > .withdrawal-address-content {
+          > .withdrawal-address-box {
             .send-code-btn {
               color: #fff;
               background-color: #338ff5;
@@ -741,8 +741,8 @@ export default {
             }
 
             .form-input {
-              border:1px solid rgba(236,241,248,1);
-              background:rgba(255,255,255,1);
+              border: 1px solid rgba(236, 241, 248, 1);
+              background: rgba(255, 255, 255, 1);
             }
 
             .form-input:focus {
@@ -750,20 +750,20 @@ export default {
             }
 
             .form-button {
-              color: rgba(255,255,255,.7);
-              background:linear-gradient(0deg,rgba(43,57,110,1),rgba(42,80,130,1));
+              color: rgba(255, 255, 255, .7);
+              background: linear-gradient(0deg, rgba(43, 57, 110, 1), rgba(42, 80, 130, 1));
             }
           }
         }
 
-        >.address-list-header {
-          border-bottom: 1px solid rgba(236,241,248,1);
+        > .address-list-header {
+          border-bottom: 1px solid rgba(236, 241, 248, 1);
           color: #338ff5;
         }
 
         .btn {
           border: 1px solid #338ff5;
-          color: rgba(255,255,255,.7);
+          color: rgba(255, 255, 255, .7);
           background-color: transparent;
         }
       }

@@ -282,44 +282,44 @@ export default {
   @import "../../../../static/css/scss/Personal/IndexPersonal";
 
   .login-password-box {
-    width:100%;
-    margin-top:66px;
+    width: 100%;
+    margin-top: 66px;
     overflow: hidden;
 
-    >.login-password-main {
+    > .login-password-main {
       width: 1100px;
       min-height: 700px;
       margin: 60px auto 100px;
 
-      >.login-password-header {
+      > .login-password-header {
         display: flex;
 
-        >.header-content-right,
+        > .header-content-right,
         .header-content-left {
           flex: 1;
         }
 
-        >.header-content-right {
+        > .header-content-right {
           text-align: right;
         }
 
-        >.header-content-left {
+        > .header-content-left {
           font-weight: 600;
           text-align: left;
         }
       }
 
-      >.login-password-content {
+      > .login-password-content {
         min-height: 300px;
         margin: 16px 25px;
 
-        >.login-content-title {
+        > .login-content-title {
           height: 32px;
           margin-bottom: 30px;
           line-height: 32px;
         }
 
-        >.login-content-from {
+        > .login-content-from {
           width: 600px;
 
           .login-input {
@@ -348,35 +348,35 @@ export default {
       }
     }
 
-    &.night{
-      color:$nightFontColor;
+    &.night {
+      color: $nightFontColor;
       background-color: $nightBgColor;
 
       .login-password-main {
         background-color: $nightMainBgColor;
 
-        >.login-password-header {
+        > .login-password-header {
           border-bottom: 1px solid #39424d;
 
-          >.header-content-left {
+          > .header-content-left {
             color: #fff;
           }
 
-          >.header-content-right {
+          > .header-content-right {
             color: #a9bed4;
           }
         }
 
-        >.login-password-content {
-          >.login-content-title {
+        > .login-password-content {
+          > .login-content-title {
             color: #3e79d6;
-            background:rgba(62,121,214,.08);
+            background: rgba(62, 121, 214, .08);
           }
 
-          >.login-content-from {
+          > .login-content-from {
             .login-input {
               border: 1px solid #485776;
-              color: rgba(255,255,255,.7);
+              color: rgba(255, 255, 255, .7);
 
               &:focus {
                 border: 1px solid #338ff5;
@@ -384,7 +384,7 @@ export default {
             }
 
             .login-content-name {
-              color: rgba(255,255,255,.7);
+              color: rgba(255, 255, 255, .7);
             }
 
             .login-upload {
@@ -396,45 +396,45 @@ export default {
             }
 
             .login-button {
-              color: rgba(255,255,255,.7);
-              background:linear-gradient(0deg,rgba(43,57,110,1),rgba(42,80,130,1));
+              color: rgba(255, 255, 255, .7);
+              background: linear-gradient(0deg, rgba(43, 57, 110, 1), rgba(42, 80, 130, 1));
             }
           }
         }
       }
     }
 
-    &.day{
-      color:$dayFontColor;
+    &.day {
+      color: $dayFontColor;
       background-color: $dayBgColor;
 
       .login-password-main {
-        border:1px solid rgba(246,246,246,1);
-        border-radius:4px;
-        background:rgba(255,255,255,1);
-        box-shadow:0 0 4px rgba(235,240,248,1);
+        border: 1px solid rgba(246, 246, 246, 1);
+        border-radius: 4px;
+        background: rgba(255, 255, 255, 1);
+        box-shadow: 0 0 4px rgba(235, 240, 248, 1);
 
-        >.login-password-header {
-          border-bottom: 1px solid rgba(57,66,77,.1);
+        > .login-password-header {
+          border-bottom: 1px solid rgba(57, 66, 77, .1);
 
-          >.header-content-left {
+          > .header-content-left {
             color: #333;
           }
 
-          >.header-content-right {
+          > .header-content-right {
             color: #7d90ac;
           }
         }
 
-        >.login-password-content {
-          >.login-content-title {
+        > .login-password-content {
+          > .login-content-title {
             color: #333;
-            background:rgba(51,143,245,.1);
+            background: rgba(51, 143, 245, .1);
           }
 
-          >.login-content-from {
+          > .login-content-from {
             .login-input {
-              border:1px solid rgba(236,241,248,1);
+              border: 1px solid rgba(236, 241, 248, 1);
               color: #333;
 
               &:focus {
@@ -452,7 +452,7 @@ export default {
 
             .login-button {
               color: #ccc;
-              background:linear-gradient(0deg,rgba(43,57,110,1),rgba(42,80,130,1));
+              background: linear-gradient(0deg, rgba(43, 57, 110, 1), rgba(42, 80, 130, 1));
             }
           }
         }

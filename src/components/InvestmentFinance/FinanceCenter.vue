@@ -325,7 +325,7 @@
               <!-- 暂无数据 -->
               <el-table
                 :data="investList"
-                style="width: 100%"
+                style="width: 100%;"
                 :empty-text="$t('M.comm_no_data')"
               >
                 <!-- 存币币种 -->
@@ -469,7 +469,7 @@
               <!-- 暂无数据 -->
               <el-table
                 :data="userInterestRecord"
-                style="width: 100%"
+                style="width: 100%;"
                 :empty-text="$t('M.comm_no_data')"
               >
                 <!-- 存币币种 -->
@@ -949,22 +949,22 @@ export default {
   // 公共scss样式
   @import "../../../static/css/scss/InvestmentFinance/FinanceCenter";
 
-  .finance-box{
-    width:100%;
-    min-width:1300px;
-    margin-top:66px;
+  .finance-box {
+    width: 100%;
+    min-width: 1300px;
+    margin-top: 66px;
 
-    >.banner-box{
+    > .banner-box {
       // background: #272b41;
       position: relative;
       height: 459px;
 
-      >img{
+      > img {
         width: 100%;
         height: 100%;
       }
 
-      >.banner-title{
+      > .banner-title {
         position: absolute;
         top: 50%;
         left: 50%;
@@ -975,42 +975,42 @@ export default {
       }
     }
 
-    >.inner-box{
-      display:flex;
-      width:100%;
+    > .inner-box {
+      display: flex;
+      width: 100%;
 
-      >.finance-inner{
+      > .finance-inner {
         width: 1100px;
         margin: 0 auto;
 
-        >.container{
+        > .container {
           padding: 100px 145px 0;
 
-          >.finance-form-header{
-            display:flex;
+          > .finance-form-header {
+            display: flex;
             width: 100%;
 
-            >.newnestPrice{
-              display:flex;
+            > .newnestPrice {
+              display: flex;
               flex: 1;
               height: 48px;
 
-              >li{
+              > li {
                 flex: 1;
                 text-align: center;
-                color:#a9bed4;
-                border-right:1px solid #1b2231;
+                color: #a9bed4;
+                border-right: 1px solid #1b2231;
 
-                >p{
+                > p {
                   font-weight: bolder;
-                  font-size:22px;
+                  font-size: 22px;
 
-                  >span{
-                    font-size:12px;
+                  > span {
+                    font-size: 12px;
                   }
                 }
 
-                &:last-child{
+                &:last-child {
                   border: none;
                 }
               }
@@ -1018,100 +1018,99 @@ export default {
           }
         }
 
-        .finance-inner-box{
+        .finance-inner-box {
           display: flex;
           justify-content: space-between;
 
-          >.left{
+          > .left {
             width: 516px;
-            color:#a9bed4;
+            color: #a9bed4;
 
-            >.nav-header{
-              >.balance{
+            > .nav-header {
+              > .balance {
                 display: flex;
-                padding-top:10px;
+                padding-top: 10px;
                 line-height: 30px;
 
-                >div{
+                > div {
                   height: 24px;
-                  font-weight:600;
+                  font-weight: 600;
                   font-size: 24px;
-                  color:#7cb8fa;
-                  -webkit-box-reflect: below 0 -webkit-linear-gradient(-90deg,rgba(124,184,250,0),rgba(124,184,250,.2));
+                  color: #7cb8fa;
+                  -webkit-box-reflect: below 0 -webkit-linear-gradient(-90deg, rgba(124, 184, 250, 0), rgba(124, 184, 250, .2));
 
-                  >span{
+                  > span {
                     font-size: 12px;
                   }
                 }
               }
             }
 
-            .left-body{
-              padding-top:58px;
+            .left-body {
+              padding-top: 58px;
 
-              >label{
-                display: block;
+              > label {
                 display: flex;
-                margin:44px 0;
+                margin: 44px 0;
                 line-height: 50px;
 
-                >.label-title{
+                > .label-title {
                   display: inline-block;
                   width: 120px;
                 }
 
-                >.invest-mounte{
+                > .invest-mounte {
                   display: flex;
                   justify-content: space-between;
                   width: 407px;
                   height: 48px;
                   padding: 13px 11px;
-                  border:1px solid rgba(169,190,212,1);
+                  border: 1px solid rgba(169, 190, 212, 1);
                   border-radius: 2px;
                   line-height: 24px;
 
-                  >input{
+                  > input {
                     width: 380px;
                     vertical-align: center;
-                    color:#fff;
+                    color: #fff;
                   }
                 }
 
-                .submitBtn{
-                  >button{
+                .submitBtn {
+                  > button {
                     width: 407px;
                     height: 48px;
                     margin-left: 110px;
-                    border: 2px solid -webkit-linear-gradient(135deg,#2b396e,#2a5082);
+                    border: 2px solid -webkit-linear-gradient(135deg, #2b396e, #2a5082);
                     text-align: center;
-                    color:#fff;
-                    background: -webkit-linear-gradient(45deg,#2b396e,#2a5082);
+                    color: #fff;
+                    background: -webkit-linear-gradient(45deg, #2b396e, #2a5082);
                   }
                 }
               }
             }
           }
 
-          >.right{
+          > .right {
             width: 482px;
-            color:#a9bed4;
+            color: #a9bed4;
 
-            >.pieCharts-box{
+            > .pieCharts-box {
               display: flex;
 
-              >.right-infor{
+              > .right-infor {
                 width: 245px;
-                padding-top:100px;
+                padding-top: 100px;
                 overflow: hidden;
 
-                >div{
-                  margin-bottom:30px;
+                > div {
+                  margin-bottom: 30px;
                   line-height: 30px;
 
-                  >p{
-                    font-size:12px;
+                  > p {
+                    font-size: 12px;
 
-                    >span{
+                    > span {
                       font-weight: bolder;
                       font-size: 22px;
                     }
@@ -1119,7 +1118,7 @@ export default {
                 }
               }
 
-              >.pieCharts{
+              > .pieCharts {
                 width: 282px;
                 padding-top: 50px;
               }
@@ -1127,30 +1126,30 @@ export default {
           }
         }
 
-        >.invest-list{
-          margin-bottom:200px;
+        > .invest-list {
+          margin-bottom: 200px;
 
-          >.nvest-list-body{
+          > .nvest-list-body {
             position: relative;
 
-            >.showAll{
-              position:absolute;
+            > .showAll {
+              position: absolute;
               z-index: 10;
-              top:25px;
+              top: 25px;
               right: 0;
             }
 
-            .financeTsipsBox{
+            .financeTsipsBox {
               position: absolute;
               z-index: 10;
               top: 55px;
               left: 0;
               width: 100%;
               height: 100%;
-              line-height:200px;
+              line-height: 200px;
               text-align: center;
 
-              >a{
+              > a {
                 color: #338ff5;
               }
             }
@@ -1159,72 +1158,72 @@ export default {
       }
     }
 
-    &.night{
-      >.banner-box{
+    &.night {
+      > .banner-box {
         background: #272b41;
       }
 
-      >.inner-box{
+      > .inner-box {
         background-color: $nightInnerBoxBg;
       }
     }
 
-    &.day{
-      >.banner-box{
+    &.day {
+      > .banner-box {
         background: #fff;
       }
     }
 
-    .cancelBtn{
+    .cancelBtn {
       cursor: pointer;
     }
 
-    .blue{
+    .blue {
       color: #338ff5;
     }
 
-    .green{
+    .green {
       color: #008069;
     }
 
-    .red{
-      color:#d45858;
+    .red {
+      color: #d45858;
     }
 
-    .red2{
-      color:#b73c36;
+    .red2 {
+      color: #b73c36;
     }
 
-    .saveTime{
+    .saveTime {
       color: #fff;
     }
 
-    .nav-header{
+    .nav-header {
       display: flex;
       justify-content: space-between;
       font-size: 12px;
-      color:#fff;
+      color: #fff;
     }
 
-    .invest{
+    .invest {
       width: 166px;
-      padding:14px 0 14px 26px;
+      padding: 14px 0 14px 26px;
       font-size: 22px;
       color: #fff;
-      background:linear-gradient(90deg,rgba(34,80,135,1),transparent);
+      background: linear-gradient(90deg, rgba(34, 80, 135, 1), transparent);
     }
 
-    .totalTipsPositon{
-      margin:-36px 0 -20px 72px;
+    .totalTipsPositon {
+      margin: -36px 0 -20px 72px;
       color: #d45858;
     }
   }
 
-  .dividend-tips{
+  .dividend-tips {
     display: inline-block;
     width: 16px;
     height: 16px;
-    margin-top:10px ;
+    margin-top: 10px;
     border-radius: 50%;
     line-height: 16px;
     text-align: center;
@@ -1233,38 +1232,38 @@ export default {
     cursor: pointer;
   }
 
-  .el-select-dropdown{
-    left:169px!important;
-    min-width: 408px!important;
+  .el-select-dropdown {
+    left: 169px !important;
+    min-width: 408px !important;
   }
 
-  .show-dividend-time-list{
-    >ul{
+  .show-dividend-time-list {
+    > ul {
       min-width: 300px;
-      margin-left:60px;
+      margin-left: 60px;
       border-left: 4px solid #338ff5;
       font-weight: 600;
       color: #fff;
 
-      >li{
+      > li {
         position: relative;
         padding-left: 5px;
-        margin-bottom:20px;
+        margin-bottom: 20px;
         font-size: 10px;
         line-height: 12px;
 
-        span:nth-child(1){
-          padding:0 0 0 10px;
+        span:nth-child(1) {
+          padding: 0 0 0 10px;
         }
 
-        span:nth-child(2){
-          padding-right:10px;
+        span:nth-child(2) {
+          padding-right: 10px;
         }
 
-        &::before{
+        &::before {
           position: absolute;
-          top:0;
-          left:-8px;
+          top: 0;
+          left: -8px;
           width: 12px;
           height: 12px;
           border-radius: 50%;

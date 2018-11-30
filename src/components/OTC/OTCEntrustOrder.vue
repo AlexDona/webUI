@@ -353,13 +353,13 @@ export default {
         }
       }
 
-      >.page{
+      > .page {
         padding: 10px 0;
         text-align: center;
       }
     }
 
-    &.night{
+    &.night {
       .otc-entrust-order-table {
         > .entrust-table-head {
           border: 1px solid #485776;
@@ -388,14 +388,14 @@ export default {
           }
         }
 
-        >.page{
+        > .page {
           padding: 10px 0;
           text-align: center;
         }
       }
     }
 
-    &.day{
+    &.day {
       .otc-entrust-order-table {
         > .entrust-table-head {
           border: 1px solid #ecf1f8;
@@ -423,7 +423,7 @@ export default {
           }
         }
 
-        >.page{
+        > .page {
           padding: 10px 0;
           text-align: center;
         }

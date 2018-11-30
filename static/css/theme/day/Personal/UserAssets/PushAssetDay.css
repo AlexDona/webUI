@@ -1,8 +1,8 @@
 /* 个人中心（白色主题） */
 .push-assets.personal.day .el-select .el-input__inner {
-  border: 1px solid #999;
+  border: 1px solid rgba(236, 241, 248, 1);
   color: #333;
-  background-color: #ccc;
+  background-color: #fff;
 }
 
 .push-assets.personal.day .el-select .el-input__inner:focus {
@@ -11,11 +11,6 @@
 
 .push-assets.personal.day .el-form-item__label {
   color: #7d90ac;
-}
-
-.push-assets.personal.day .el-select .el-input__inner {
-  border: 1px solid rgba(236, 241, 248, 1);
-  background-color: #fff;
 }
 
 .push-assets.personal.day .el-table__empty-block {

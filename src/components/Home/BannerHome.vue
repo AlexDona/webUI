@@ -44,18 +44,18 @@ export default {
 }
 </script>
 <style scoped lang="scss">
-  .banner-box{
+  .banner-box {
     position: relative;
-    width:100%;
+    width: 100%;
     overflow: hidden;
-    background:linear-gradient(#1d3863,#251f3d);
+    background: linear-gradient(#1d3863, #251f3d);
     background-size: 100% 100%;
     transition: all 1s;
 
-    >img{
-      /*width:100%;*/
+    > img {
+      /* width:100%; */
 
-      /*height:100%;*/
+      /* height:100%; */
     }
   }
 </style>

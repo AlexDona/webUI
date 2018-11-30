@@ -163,158 +163,159 @@ export default {
 }
 </script>
 <style scoped lang="scss">
-  @import '../../../static/css/scss/index.scss';
-  @import '../../../static/css/scss/Trade/TradeCenter.scss';
+@import '../../../static/css/scss/index.scss';
+@import '../../../static/css/scss/Trade/TradeCenter.scss';
 
-  .global-market-box{
-    >.inner-box{
-      >.title{
-        height:34px;
-        padding:0 4.5%;
+.global-market-box {
+  > .inner-box {
+    > .title {
+      height: 34px;
+      padding: 0 4.5%;
 
-        /*font-weight: 700;*/
-        margin-bottom:1px;
-        line-height: 34px;
+      /* font-weight: 700; */
+      margin-bottom: 1px;
+      line-height: 34px;
 
-        >.text{
-          display:inline-block;
-          height:100%;
-          border-bottom:2px solid $mainColor;
-          text-indent: 4px;
-          color:$mainColor;
-        }
+      > .text {
+        display: inline-block;
+        height: 100%;
+        border-bottom: 2px solid $mainColor;
+        text-indent: 4px;
+        color: $mainColor;
       }
+    }
 
-      >.content{
-        width:100%;
-        height:238px;
+    > .content {
+      width: 100%;
+      height: 238px;
 
-        .table-box{
-          width:100%;
+      .table-box {
+        width: 100%;
 
-          >.thead{
-            box-sizing: border-box;
-            width:100%;
-            height:38px;
+        > .thead {
+          box-sizing: border-box;
+          width: 100%;
+          height: 38px;
 
-            /*background-color: yellow;*/
-            padding:0 4.5%;
-            border-bottom:1px solid rgba(57,66,77,.2);
+          /* background-color: yellow; */
+          padding: 0 4.5%;
+          border-bottom: 1px solid rgba(57, 66, 77, .2);
 
-            >.tr{
-              width:100%;
+          > .tr {
+            width: 100%;
 
-              >.th{
-                display:inline-block;
-                width:16%;
-                line-height: 38px;
+            > .th {
+              display: inline-block;
+              width: 16%;
+              line-height: 38px;
 
-                &.symbol{
-                  width:26%;
-                  text-align: right;
-                }
-
-                &.price{
-                  width:26%;
-                  text-align: right;
-                }
-
-                &.count{
-                  width: 31%;
-                  text-align: right;
-                }
+              &.symbol {
+                width: 26%;
+                text-align: right;
               }
-            }
-          }
 
-          >.tbody{
-            box-sizing: border-box;
-            height:200px;
-            padding:0 4.5%;
-            overflow-y: auto;
+              &.price {
+                width: 26%;
+                text-align: right;
+              }
 
-            >.tr{
-              height:50px;
-
-              >.td{
-                display: inline-block;
-                width:16%;
-                height: 100%;
-                line-height: 50px;
-
-                /*background: blue;*/
-                vertical-align: middle;
-                white-space:nowrap;
-
-                &.symbol{
-                  width:26%;
-                  text-align: right;
-                }
-
-                &.price{
-                  width:26%;
-                  text-align: right;
-                }
-
-                &.count{
-                  width:31%;
-                  text-align: right;
-                }
-
-                >.top{
-                  margin-top:5px;
-                }
-
-                >.up{
-                  color:$upColor;
-                }
-
-                >.down{
-                  color:$downColor;
-                }
-
-                >.top,>.bottom{
-                  line-height: 20px;
-                }
+              &.count {
+                width: 31%;
+                text-align: right;
               }
             }
           }
         }
-      }
-    }
 
-    &.night{
-      >.inner-box{
-        >.title{
-          color:$mainNightTitleColor;
-          background-color: $mainContentNightBgColor;
-          box-shadow:2px 0 3px rgba(27,35,49,1);
-        }
+        > .tbody {
+          box-sizing: border-box;
+          height: 200px;
+          padding: 0 4.5%;
+          overflow-y: auto;
 
-        >.content{
-          color:$nightFontColor;
-          background-color: $mainContentNightBgColor;
+          > .tr {
+            height: 50px;
 
-          .thead{
-            color:$mainNightTitleColor;
+            > .td {
+              display: inline-block;
+              width: 16%;
+              height: 100%;
+              line-height: 50px;
+
+              /* background: blue; */
+              vertical-align: middle;
+              white-space: nowrap;
+
+              &.symbol {
+                width: 26%;
+                text-align: right;
+              }
+
+              &.price {
+                width: 26%;
+                text-align: right;
+              }
+
+              &.count {
+                width: 31%;
+                text-align: right;
+              }
+
+              > .top {
+                margin-top: 5px;
+              }
+
+              > .up {
+                color: $upColor;
+              }
+
+              > .down {
+                color: $downColor;
+              }
+
+              > .top,
+              > .bottom {
+                line-height: 20px;
+              }
+            }
           }
-        }
-      }
-    }
-
-    &.day{
-      >.inner-box{
-        >.title{
-          color:$dayMainTitleColor;
-          background-color: $dayMainBgColor;
-          box-shadow:2px 0 3px rgba(239,239,239,1);
-        }
-
-        >.content{
-          color:$dayFontColor;
-          background-color: #fff;
         }
       }
     }
   }
+
+  &.night {
+    > .inner-box {
+      > .title {
+        color: $mainNightTitleColor;
+        background-color: $mainContentNightBgColor;
+        box-shadow: 2px 0 3px rgba(27, 35, 49, 1);
+      }
+
+      > .content {
+        color: $nightFontColor;
+        background-color: $mainContentNightBgColor;
+
+        .thead {
+          color: $mainNightTitleColor;
+        }
+      }
+    }
+  }
+
+  &.day {
+    > .inner-box {
+      > .title {
+        color: $dayMainTitleColor;
+        background-color: $dayMainBgColor;
+        box-shadow: 2px 0 3px rgba(239, 239, 239, 1);
+      }
+
+      > .content {
+        color: $dayFontColor;
+        background-color: #fff;
+      }
+    }
+  }
+}
 </style>

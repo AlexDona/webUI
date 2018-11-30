@@ -1207,8 +1207,8 @@ export default {
 <style scoped lang="scss" type="text/scss">
   @import "../../../../static/css/scss/Personal/IndexPersonal.scss";
 
-  .fiat-trading-order-box{
-    >.fiat-trading-order-content{
+  .fiat-trading-order-box {
+    > .fiat-trading-order-content {
       min-height: 386px;
       border-radius: 5px;
 
@@ -1219,7 +1219,7 @@ export default {
         border-radius: 5px;
       }
 
-      >.order-list{
+      > .order-list {
         box-sizing: border-box;
         height: 170px;
         margin-bottom: 15px;
@@ -1228,8 +1228,8 @@ export default {
         font-size: 12px;
         background-color: $nightMainBgColor;
 
-        >.order{
-          >.order-list-head{
+        > .order {
+          > .order-list-head {
             position: relative;
             display: flex;
             justify-content: space-between;
@@ -1240,32 +1240,32 @@ export default {
             line-height: 36px;
             color: #9da5b3;
 
-            >.order-id{
+            > .order-id {
               padding-left: 300px;
             }
 
-            >.order-list-head-icon{
+            > .order-list-head-icon {
               position: absolute;
               top: 0;
               right: 0;
-              width:0;
-              height:0;
-              border-bottom:18px solid transparent;
-              border-left:18px solid transparent;
+              width: 0;
+              height: 0;
+              border-bottom: 18px solid transparent;
+              border-left: 18px solid transparent;
               border-radius: 5px;
             }
 
-            >.buy-icon{
-              border-top:18px solid #d45858;
-              border-right:18px solid #d45858;
+            > .buy-icon {
+              border-top: 18px solid #d45858;
+              border-right: 18px solid #d45858;
             }
 
-            >.sell-icon{
-              border-top:18px solid #008069;
-              border-right:18px solid #008069;
+            > .sell-icon {
+              border-top: 18px solid #008069;
+              border-right: 18px solid #008069;
             }
 
-            >.buy-sell-icon{
+            > .buy-sell-icon {
               position: absolute;
               top: -8px;
               right: 4px;
@@ -1273,56 +1273,56 @@ export default {
             }
           }
 
-          >.order-list-body{
+          > .order-list-body {
             display: flex;
             flex: 7;
             padding: 15px 20px;
             color: #9da5b3;
 
-            >.order-list-body-left{
+            > .order-list-body-left {
               flex: 2;
               border-right: 1px solid #262f38;
 
-              >.logo{
+              > .logo {
                 display: inline-block;
                 margin-right: 20px;
                 text-align: center;
 
-                >.logo-name{
+                > .logo-name {
                   margin-top: 5px;
                 }
               }
 
-              >.left-info{
+              > .left-info {
                 display: inline-block;
 
-                >.trade-info{
+                > .trade-info {
                   line-height: 20px;
 
-                  >.money{
+                  > .money {
                     color: #5e95ec;
                   }
                 }
               }
             }
 
-            >.order-list-body-middle{
+            > .order-list-body-middle {
               flex: 2;
               box-sizing: border-box;
               border-right: 1px solid #262f38;
 
-              >.middle-content{
-                .trader-info{
+              > .middle-content {
+                .trader-info {
                   width: 190px;
 
-                  >.pay-style{
+                  > .pay-style {
                     position: relative;
                     width: 150px;
                     height: 23px;
-                    margin: 0 0 8px 20px;;
+                    margin: 0 0 8px 20px;
 
-                    >.qiandai-icon{
-                      >.icon{
+                    > .qiandai-icon {
+                      > .icon {
                         position: absolute;
                         z-index: 2;
                         top: 5px;
@@ -1333,32 +1333,32 @@ export default {
                     }
                   }
 
-                  >.bank-info{
+                  > .bank-info {
                     margin-left: 20px;
                     line-height: 20px;
                   }
 
-                  >.order-cancle-tips{
+                  > .order-cancle-tips {
                     margin-left: 20px;
                     line-height: 20px;
                   }
 
-                  >.bankMoneyInfo{
+                  > .bankMoneyInfo {
                     margin-left: 20px;
                     line-height: 20px;
 
-                    .icon{
+                    .icon {
                       width: 16px;
                       height: 14px;
                     }
 
-                    .xilian{
+                    .xilian {
                       vertical-align: middle;
                     }
                   }
                 }
 
-                >.bank-info-picture{
+                > .bank-info-picture {
                   width: 70px;
                   padding-left: 10px;
                   vertical-align: top;
@@ -1366,40 +1366,40 @@ export default {
               }
             }
 
-            >.order-list-body-right{
+            > .order-list-body-right {
               flex: 3;
 
-              >.right-content{
-                >.action-tips{
+              > .right-content {
+                > .action-tips {
                   margin: 0 0 10px 20px;
 
-                  .wait-pay{
+                  .wait-pay {
                     margin-right: 10px;
                     color: #e8554f;
                   }
 
-                  .count-time{
+                  .count-time {
                     margin-left: 10px;
                   }
                 }
 
-                >.submitted-confirm-payment{
+                > .submitted-confirm-payment {
                   color: #5e95ec;
                 }
 
-                >.action-explain{
+                > .action-explain {
                   margin-left: 20px;
                   line-height: 20px;
 
-                  >.remaining-time{
+                  > .remaining-time {
                     color: #d45858;
                   }
                 }
 
-                >.count-down-time{
+                > .count-down-time {
                   line-height: 20px;
 
-                  .timeIcon{
+                  .timeIcon {
                     margin-right: 10px;
                     color: #d45858;
                   }
@@ -1409,8 +1409,8 @@ export default {
           }
         }
 
-        >.appeal{
-          >.appeal-head{
+        > .appeal {
+          > .appeal-head {
             box-sizing: border-box;
             height: 36px;
             padding: 0 77px 0 25px;
@@ -1419,24 +1419,24 @@ export default {
             color: #fff;
           }
 
-          >.appeal-body{
-            >.appeal-body-content{
+          > .appeal-body {
+            > .appeal-body-content {
               display: flex;
               flex: 3;
 
-              >.appeal-textarea{
+              > .appeal-textarea {
                 display: flex;
                 flex: 2;
                 justify-content: flex-start;
                 margin: 15px 0 0 20px;
 
-                >.appeal-reason{
+                > .appeal-reason {
                   margin-right: 10px;
                   color: #338ff5;
                 }
               }
 
-              >.appeal-button{
+              > .appeal-button {
                 flex: 1;
                 padding-top: 80px;
               }
@@ -1445,38 +1445,38 @@ export default {
         }
       }
 
-      >.no-data{
+      > .no-data {
         height: 385px;
         line-height: 385px;
         text-align: center;
       }
 
-      >.password-dialog{
-        .tips{
+      > .password-dialog {
+        .tips {
           color: red;
         }
       }
     }
 
-    &.night{
-      color:$nightFontColor;
+    &.night {
+      color: $nightFontColor;
       background-color: $nightBgColor;
 
-      >.fiat-trading-order-content{
+      > .fiat-trading-order-content {
         .button {
           color: #fff;
-          background:linear-gradient(81deg,rgba(43,57,110,1) 0%,rgba(42,80,130,1) 100%);
+          background: linear-gradient(81deg, rgba(43, 57, 110, 1) 0%, rgba(42, 80, 130, 1) 100%);
         }
 
-        >.order-list{
-          >.order{
-            >.order-list-body{
-              >.order-list-body-middle{
-                >.middle-content{
-                  .trader-info{
-                    >.pay-style{
-                      >.qiandai-icon{
-                        >.icon{
+        > .order-list {
+          > .order {
+            > .order-list-body {
+              > .order-list-body-middle {
+                > .middle-content {
+                  .trader-info {
+                    > .pay-style {
+                      > .qiandai-icon {
+                        > .icon {
                           color: #fff;
                         }
                       }
@@ -1488,57 +1488,57 @@ export default {
           }
         }
 
-        >.no-data{
+        > .no-data {
           background-color: $nightMainBgColor;
         }
       }
 
-      >.background-color{
+      > .background-color {
         background-color: $nightMainBgColor;
 
-        >.fiat-color{
+        > .fiat-color {
           color: #338ff5;
         }
       }
     }
 
-    &.day{
-      color:$dayFontColor;
+    &.day {
+      color: $dayFontColor;
       background-color: $dayBgColor;
 
-      >.fiat-trading-order-content{
+      > .fiat-trading-order-content {
         .button {
           color: #fff;
-          background:linear-gradient(81deg,rgba(43,57,110,1) 0%,rgba(42,80,130,1) 100%);
+          background: linear-gradient(81deg, rgba(43, 57, 110, 1) 0%, rgba(42, 80, 130, 1) 100%);
         }
 
-        >.order-list{
-          border: 1px solid  rgba(72,87,118,.1);
+        > .order-list {
+          border: 1px solid  rgba(72, 87, 118, .1);
           background-color: #fff;
 
-          >.order{
-            >.order-list-head{
-              border-bottom: 1px solid rgba(72,87,118,.1);
+          > .order {
+            > .order-list-head {
+              border-bottom: 1px solid rgba(72, 87, 118, .1);
               color: #333;
             }
 
-            >.order-list-body{
-              color:#7d90ac;
+            > .order-list-body {
+              color: #7d90ac;
 
-              >.order-list-body-left{
-                border-right: 1px solid rgba(72,87,118,.1);
+              > .order-list-body-left {
+                border-right: 1px solid rgba(72, 87, 118, .1);
               }
 
-              >.order-list-body-middle{
-                border-right: 1px solid rgba(72,87,118,.1);;
+              > .order-list-body-middle {
+                border-right: 1px solid rgba(72, 87, 118, .1);
 
-                >.middle-content{
-                  .trader-info{
-                    >.pay-style{
-                      background: rgba(51,143,245,.1);
+                > .middle-content {
+                  .trader-info {
+                    > .pay-style {
+                      background: rgba(51, 143, 245, .1);
 
-                      >.qiandai-icon{
-                        >.icon{
+                      > .qiandai-icon {
+                        > .icon {
                           color: #338ff5;
                         }
                       }
@@ -1547,26 +1547,26 @@ export default {
                 }
               }
 
-              >.order-list-body-right{
-                >.right-content{
-                  >.action-tips{
-                    .wait-pay{
+              > .order-list-body-right {
+                > .right-content {
+                  > .action-tips {
+                    .wait-pay {
                       color: #e8554f;
                     }
                   }
 
-                  >.submitted-confirm-payment{
+                  > .submitted-confirm-payment {
                     color: #5e95ec;
                   }
 
-                  >.action-explain{
-                    >.remaining-time{
+                  > .action-explain {
+                    > .remaining-time {
                       color: #d45858;
                     }
                   }
 
-                  >.count-down-time{
-                    .timeIcon{
+                  > .count-down-time {
+                    .timeIcon {
                       color: #d45858;
                     }
                   }
@@ -1575,17 +1575,17 @@ export default {
             }
           }
 
-          >.appeal{
-            >.appeal-head{
+          > .appeal {
+            > .appeal-head {
               border-bottom: 1px solid rgba(72, 87, 118, .1);
               color: #333;
               background-color: #e7e8e9;
             }
 
-            >.appeal-body{
-              >.appeal-body-content{
-                >.appeal-textarea{
-                  >.appeal-reason{
+            > .appeal-body {
+              > .appeal-body-content {
+                > .appeal-textarea {
+                  > .appeal-reason {
                     color: #338ff5;
                   }
                 }
@@ -1594,8 +1594,8 @@ export default {
           }
         }
 
-        >.no-data{
-          border: 1px solid rgba(38,47,56,.1);
+        > .no-data {
+          border: 1px solid rgba(38, 47, 56, .1);
           background-color: #fff;
         }
       }

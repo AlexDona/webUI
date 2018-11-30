@@ -148,8 +148,6 @@ export default {
   },
   created () {
     require('../../../../static/css/list/Personal/FiatCoinContent/FiatCoinEntrustOrder.css')
-    require('../../../../static/css/theme/day/Personal/FiatCoinContent/FiatCoinEntrustOrderDay.css')
-    require('../../../../static/css/theme/night/Personal/FiatCoinContent/FiatCoinEntrustOrderNight.css')
   },
   mounted () {
   },
@@ -251,7 +249,7 @@ export default {
       }
 
       > .entrust-table-body,
-      .item{
+      .item {
         border-top: none;
         border-bottom-right-radius: 5px;
         border-bottom-left-radius: 5px;
@@ -273,21 +271,22 @@ export default {
       }
     }
 
-    &.night{
-      color:$nightFontColor;
+    &.night {
+      color: $nightFontColor;
       background-color: $nightBgColor;
 
-      >.background-color{
+      > .background-color {
         background-color: $nightMainBgColor;
 
-        >.fiat-color{
+        > .fiat-color {
           color: #338ff5;
         }
       }
 
-      >.fiat-entrust-order-table{
+      > .fiat-entrust-order-table {
         > .entrust-table-head {
-          border: 1px solid #262f38; text-align: left;
+          border: 1px solid #262f38;
+          text-align: left;
           color: #617499;
           background-color: $nightMainBgColor;
           box-shadow: -2px 3px 5px 1px #191e28;
@@ -314,24 +313,24 @@ export default {
       }
     }
 
-    &.day{
-      color:$dayFontColor;
+    &.day {
+      color: $dayFontColor;
       background-color: $dayBgColor;
 
-      >.background-color{
+      > .background-color {
         background-color: $dayBgColor;
       }
 
-      >.fiat-entrust-order-table {
+      > .fiat-entrust-order-table {
         > .entrust-table-head {
-          border-bottom: 1px solid rgba(72,87,118,.1);
+          border-bottom: 1px solid rgba(72, 87, 118, .1);
           color: #617499;
           background-color: $dayBgColor;
         }
 
         > .entrust-table-body {
           min-height: 432px;
-          border: 1px solid rgba(72,87,118,.1);
+          border: 1px solid rgba(72, 87, 118, .1);
           color: #9da5b3;
           background-color: #fff;
 

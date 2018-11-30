@@ -1,8 +1,4 @@
-.otc-business-apply-box.night .el-dialog {
-  background: #121824;
-}
-
-.otc-business-apply-box.night .el-checkbox__inner {
+.otc-business-apply-box .otc-business-apply-box.night .el-checkbox__inner {
   background-color: #eee;
 }
 
@@ -27,10 +23,6 @@
 }
 
 .otc-business-apply-box.night .el-dialog::-webkit-scrollbar-corner {
-  background: #292e42;
-}
-
-.otc-business-apply-box.night.el-dialog::-webkit-scrollbar-resizer {
   background: #292e42;
 }
 

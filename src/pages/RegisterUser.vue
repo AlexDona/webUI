@@ -75,7 +75,7 @@
                  :label="item.nationCode"
                  :value="item.nationCode"
                >
-                <span style="float: left">
+                <span style="float: left;">
                   <span v-show="language==='zh_CN'">
                     {{ item.chinese }}
                   </span>
@@ -83,7 +83,9 @@
                     {{item.english}}
                   </span>
                 </span>
-                 <span style=" float: right; color: #8492a6; font-size: 13px"
+                 <span style=" float: right;
+                    color: #8492a6;
+                    font-size: 13px;"
                  >{{ item.nationCode }}</span>
                </el-option>
              </el-select>
@@ -123,12 +125,14 @@
                     :label="item.chinese"
                     :value="item.abbreviation"
                   >
-                    <span style="float: left">
+                    <span style="float: left;">
                       <span>
                         {{ item.chinese }}
                       </span>
                     </span>
-                    <span style=" float: right; color: #8492a6; font-size: 13px"
+                    <span style=" float: right;
+                      color: #8492a6;
+                      font-size: 13px;"
                     >{{ item.nationCode }}</span>
                   </el-option>
                 </el-select>
@@ -145,12 +149,14 @@
                     :label="item.english"
                     :value="item.abbreviation"
                   >
-                    <span style="float: left">
+                    <span style="float: left;">
                       <span>
                         {{item.english}}
                       </span>
                     </span>
-                    <span style=" float: right; color: #8492a6; font-size: 13px"
+                    <span style=" float: right;
+                      color: #8492a6;
+                      font-size: 13px;"
                     >{{ item.nationCode }}</span>
                   </el-option>
                 </el-select>
@@ -339,7 +345,7 @@
                     :label="item.nationCode"
                     :value="item.nationCode"
                   >
-                <span style="float: left">
+                <span style="float: left;">
                   <span v-show="language==='zh_CN'">
                     {{ item.chinese }}
                   </span>
@@ -347,7 +353,9 @@
                     {{item.english}}
                   </span>
                 </span>
-                    <span style=" float: right; color: #8492a6; font-size: 13px"
+                    <span style=" float: right;
+                      color: #8492a6;
+                      font-size: 13px;"
                     >{{ item.nationCode }}</span>
                   </el-option>
                 </el-select>
@@ -387,12 +395,14 @@
                     :label="item.chinese"
                     :value="item.abbreviation"
                   >
-                    <span style="float: left">
+                    <span style="float: left;">
                       <span>
                         {{ item.chinese }}
                       </span>
                     </span>
-                    <span style=" float: right; color: #8492a6; font-size: 13px"
+                    <span style=" float: right;
+                      color: #8492a6;
+                      font-size: 13px;"
                     >{{ item.nationCode }}</span>
                   </el-option>
                 </el-select>
@@ -409,12 +419,14 @@
                     :label="item.english"
                     :value="item.abbreviation"
                   >
-                    <span style="float: left">
+                    <span style="float: left;">
                       <span>
                         {{item.english}}
                       </span>
                     </span>
-                    <span style=" float: right; color: #8492a6; font-size: 13px"
+                    <span style=" float: right;
+                      color: #8492a6;
+                      font-size: 13px;"
                     >{{ item.nationCode }}</span>
                   </el-option>
                 </el-select>
@@ -1137,345 +1149,345 @@ export default {
 <style scoped lang="scss">
   @import '../../static/css/scss/index';
 
-  .register-box{
-    width:100%;
-    height:100%;
+  .register-box {
+    width: 100%;
+    height: 100%;
     overflow-y: auto;
-    background:linear-gradient(150deg,rgba(30,38,54,1),rgba(37,75,117,1));
+    background: linear-gradient(150deg, rgba(30, 38, 54, 1), rgba(37, 75, 117, 1));
 
-    &.min-height{
-      min-height:1000px;
+    &.min-height {
+      min-height: 1000px;
     }
 
-    >.inner-box{
-      width:100%;
-      height:100%;
+    > .inner-box {
+      width: 100%;
+      height: 100%;
 
-      &.pc-bg{
-        background:url('../assets/develop/login-bg.png') 25% 4%  no-repeat ;
+      &.pc-bg {
+        background: url('../assets/develop/login-bg.png') 25% 4%  no-repeat;
       }
 
-      /*background:url('../assets/develop/login-bg.png')  ;*/
-      .main-color{
-        color:$mainColor;
+      /* background:url('../assets/develop/login-bg.png')  ; */
+      .main-color {
+        color: $mainColor;
       }
 
-      /*pc端*/
-      >.pc-box{
+      /* pc端 */
+      > .pc-box {
         position: relative;
-        width:370px;
-        padding:12px 40px 50px;
+        width: 370px;
+        padding: 12px 40px 50px;
         margin: 12% 0 0 50%;
         border-radius: 10px;
-        background:linear-gradient(201deg,rgba(42,88,137,1) 0%,rgba(43,58,111,1) 100%);
-        box-shadow:0 4px 21px 0 rgba(26,42,71,1);
+        background: linear-gradient(201deg, rgba(42, 88, 137, 1) 0%, rgba(43, 58, 111, 1) 100%);
+        box-shadow: 0 4px 21px 0 rgba(26, 42, 71, 1);
 
-        >.title{
+        > .title {
           position: absolute;
-          top:-20%;
-          left:15%;
-          min-width:250px;
-          height:35px;
-          font-weight:400;
-          font-size:26px;
-          font-family:MicrosoftYaHei;
+          top: -20%;
+          left: 15%;
+          min-width: 250px;
+          height: 35px;
+          font-weight: 400;
+          font-size: 26px;
+          font-family: "MicrosoftYaHei";
           text-align: center;
-          color:rgba(51,143,245,1);
-          background:linear-gradient(81deg,rgba(77,122,255,1) 25.4638671875%, rgba(58,184,255,1) 100%);
-          -webkit-background-clip:text;
-          -webkit-text-fill-color:transparent;
+          color: rgba(51, 143, 245, 1);
+          background: linear-gradient(81deg, rgba(77, 122, 255, 1) 25.4638671875%, rgba(58, 184, 255, 1) 100%);
+          -webkit-background-clip: text;
+          -webkit-text-fill-color: transparent;
         }
 
-        /*注册方式选择*/
-        >.methods-list{
-          display:flex;
+        /* 注册方式选择 */
+        > .methods-list {
+          display: flex;
 
-          >.method-item{
-            flex:1;
-            height:40px;
-            line-height:40px;
+          > .method-item {
+            flex: 1;
+            height: 40px;
+            line-height: 40px;
             text-align: center;
-            color:#c3c3c3;
+            color: #c3c3c3;
 
-            &.active{
+            &.active {
               font-size: 16px;
-              color:#fff;
+              color: #fff;
             }
           }
         }
 
-        >.inner-content{
-          /*密码账号框*/
-          >.input{
-            width:600px;
+        > .inner-content {
+          /* 密码账号框 */
+          > .input {
+            width: 600px;
 
-            >.inner-box{
+            > .inner-box {
               display: inline-block;
-              width:290px;
-              height:40px;
-              padding:0 5px 0 20px;
-              margin-bottom:15px;
-              border-radius:20px;
+              width: 290px;
+              height: 40px;
+              padding: 0 5px 0 20px;
+              margin-bottom: 15px;
+              border-radius: 20px;
               vertical-align: middle;
-              background:rgba(32,55,90,1);
+              background: rgba(32, 55, 90, 1);
 
-              &.user-agreement{
-                height:20px;
-                padding:0;
-                margin-bottom:0;
+              &.user-agreement {
+                height: 20px;
+                padding: 0;
+                margin-bottom: 0;
                 background: none;
               }
 
-              >.input{
-                width:100%;
-                height:100%;
-                color:#fff;
+              > .input {
+                width: 100%;
+                height: 100%;
+                color: #fff;
 
-                &::-webkit-input-placeholder{
-                  color:#8b9197;
+                &::-webkit-input-placeholder {
+                  color: #8b9197;
                 }
 
-                &.image-validate{
-                  width:154px;
+                &.image-validate {
+                  width: 154px;
                   vertical-align: top;
                 }
 
-                &.mobile-phone{
-                  width:156px;
+                &.mobile-phone {
+                  width: 156px;
                 }
               }
 
-              >.middle-line{
+              > .middle-line {
                 display: inline-block;
-                width:1px;
-                height:20px;
-                margin:10px 5px 0 0;
+                width: 1px;
+                height: 20px;
+                margin: 10px 5px 0 0;
                 vertical-align: top;
-                background:rgb(55,86,131);
+                background: rgb(55, 86, 131);
               }
 
-              >.send-code-btn{
-                height:40px;
+              > .send-code-btn {
+                height: 40px;
                 line-height: 40px;
                 text-align: center;
-                color:$mainColor;
+                color: $mainColor;
 
-                /*width:66px;*/
+                /* width:66px; */
               }
             }
           }
 
-          >.error-msg{
-            height:30px;
+          > .error-msg {
+            height: 30px;
             margin-left: 30px;
             line-height: 50px;
             color: rgb(212, 88, 88);
           }
 
-          /*注册，忘记密码*/
-          >.link{
-            width:100%;
-            height:40px;
-            margin-bottom:30px;
+          /* 注册，忘记密码 */
+          > .link {
+            width: 100%;
+            height: 40px;
+            margin-bottom: 30px;
             font-size: 12px;
             line-height: 40px;
 
-            >a{
-              display:inline-block;
-              width:49%;
+            > a {
+              display: inline-block;
+              width: 49%;
             }
           }
 
-          /*注册按钮*/
-          >.register-btn{
-            display:block;
-            width:128px;
-            height:40px;
-            margin:20px auto 0;
-            border-radius:20px;
+          /* 注册按钮 */
+          > .register-btn {
+            display: block;
+            width: 128px;
+            height: 40px;
+            margin: 20px auto 0;
+            border-radius: 20px;
             font-size: 14px;
-            line-height:40px;
-            color:#fff;
-            background:linear-gradient(81deg,rgba(61,152,249,1) 0%,rgba(71,135,255,1) 100%);
-            box-shadow:2px 2px 8px 0 rgba(26,42,71,1);
+            line-height: 40px;
+            color: #fff;
+            background: linear-gradient(81deg, rgba(61, 152, 249, 1) 0%, rgba(71, 135, 255, 1) 100%);
+            box-shadow: 2px 2px 8px 0 rgba(26, 42, 71, 1);
           }
         }
       }
 
-      /*移动端*/
-      >.mobile-box{
+      /* 移动端 */
+      > .mobile-box {
         box-sizing: border-box;
-        width:100%;
-        height:100%;
+        width: 100%;
+        height: 100%;
         padding: 0 1rem;
         font-size: .86453968rem;
 
-        /*邀请头部*/
-        >.invitation-box{
+        /* 邀请头部 */
+        > .invitation-box {
           display: flex;
-          width:100%;
-          height:6.6rem;
+          width: 100%;
+          height: 6.6rem;
 
-          >.left{
-            flex:1;
-            height:100%;
-            background:url(../assets/develop/register-small-url.png) no-repeat center center;
+          > .left {
+            flex: 1;
+            height: 100%;
+            background: url(../assets/develop/register-small-url.png) no-repeat center center;
             background-size: 102%;
           }
 
-          >.right{
-            flex:2;
-            height:100%;
-            padding-left:1rem;
-            color:#fff;
+          > .right {
+            flex: 2;
+            height: 100%;
+            padding-left: 1rem;
+            color: #fff;
 
-            >.main-text{
-              margin-top:1.8rem;
+            > .main-text {
+              margin-top: 1.8rem;
 
-              /*font-size: 0.86453968rem;*/
+              /* font-size: 0.86453968rem; */
               font-weight: 500;
               font-size: 1.2rem;
             }
 
-            >.sub-text{
-              /*font-size: 0.86453968rem;*/
+            > .sub-text {
+              /* font-size: 0.86453968rem; */
               font-size: .64840476rem;
               line-height: 1rem;
             }
           }
         }
 
-        /*登录方式切换*/
-        >.methods-list{
-          width:100%;
+        /* 登录方式切换 */
+        > .methods-list {
+          width: 100%;
 
-          >.method-item{
-            display:inline-block;
-            width:49%;
-            height:1.8rem;
+          > .method-item {
+            display: inline-block;
+            width: 49%;
+            height: 1.8rem;
             font-size: .86453968rem;
-            line-height:1.5rem;
+            line-height: 1.5rem;
             text-align: center;
-            color:#c3c3c3;
+            color: #c3c3c3;
 
-            &.active{
-              color:$mainColor;
+            &.active {
+              color: $mainColor;
             }
           }
         }
 
-        >.inner-content{
-          >.input{
-            width:100%;
+        > .inner-content {
+          > .input {
+            width: 100%;
 
-            >.inner-box{
+            > .inner-box {
               display: inline-block;
-              width:100%;
-              height:2.882rem;
-              padding:0 5px 0 1rem;
-              margin-bottom:.4rem;
+              width: 100%;
+              height: 2.882rem;
+              padding: 0 5px 0 1rem;
+              margin-bottom: .4rem;
 
-              /*background:rgba(32,55,90,1);*/
+              /* background:rgba(32,55,90,1); */
 
-              /*background:red;*/
-              border-radius:20px;
+              /* background:red; */
+              border-radius: 20px;
               vertical-align: middle;
               background-color: #28446e;
 
-              &.user-agreement{
-                height:20px;
-                padding:0;
-                margin-bottom:0;
+              &.user-agreement {
+                height: 20px;
+                padding: 0;
+                margin-bottom: 0;
                 font-size: .86453968rem;
                 background: none;
               }
 
-              >.input{
-                width:100%;
-                height:100%;
+              > .input {
+                width: 100%;
+                height: 100%;
                 font-size: .86453968rem;
-                color:#fff;
+                color: #fff;
 
-                &::-webkit-input-placeholder{
-                  color:#8b9197;
+                &::-webkit-input-placeholder {
+                  color: #8b9197;
                 }
 
-                &.image-validate{
-                  width:54%;
+                &.image-validate {
+                  width: 54%;
                   vertical-align: top;
                 }
 
-                &.mobile-phone{
-                  width:70%;
+                &.mobile-phone {
+                  width: 70%;
                 }
               }
 
-              >.middle-line{
+              > .middle-line {
                 display: inline-block;
-                width:1px;
-                height:50%;
+                width: 1px;
+                height: 50%;
                 vertical-align: middle;
-                background:rgb(55,86,131);
+                background: rgb(55, 86, 131);
 
-                /*margin:10px 5px 0 0;*/
+                /* margin:10px 5px 0 0; */
               }
 
-              >.send-code-btn{
-                height:2.882rem;
+              > .send-code-btn {
+                height: 2.882rem;
                 font-size: .86453968rem;
                 line-height: 2.882rem;
                 text-align: center;
-                color:$mainColor;
+                color: $mainColor;
 
-                /*width:66px;*/
+                /* width:66px; */
               }
             }
           }
 
-          >.error-msg{
-            height:2.8rem;
+          > .error-msg {
+            height: 2.8rem;
             margin-left: 30px;
             font-size: .86453968rem;
             line-height: 5rem;
             color: rgb(212, 88, 88);
           }
 
-          /*注册，忘记密码*/
-          >.link{
-            width:100%;
-            height:40px;
-            margin-bottom:30px;
+          /* 注册，忘记密码 */
+          > .link {
+            width: 100%;
+            height: 40px;
+            margin-bottom: 30px;
             font-size: 12px;
             line-height: 40px;
 
-            >a{
-              display:inline-block;
-              width:49%;
+            > a {
+              display: inline-block;
+              width: 49%;
             }
           }
 
-          /*注册按钮*/
-          >.register-btn{
-            display:block;
-            width:100%;
-            height:2.882rem;
-            padding:0 5px 0 20px;
-            margin:2rem auto;
-            border-radius:20px;
+          /* 注册按钮 */
+          > .register-btn {
+            display: block;
+            width: 100%;
+            height: 2.882rem;
+            padding: 0 5px 0 20px;
+            margin: 2rem auto;
+            border-radius: 20px;
             font-size: .86453968rem;
-            color:#fff;
-            background:linear-gradient(81deg,rgba(61,152,249,1) 0%,rgba(71,135,255,1) 100%);
-            box-shadow:2px 2px 8px 0 rgba(26,42,71,1);
+            color: #fff;
+            background: linear-gradient(81deg, rgba(61, 152, 249, 1) 0%, rgba(71, 135, 255, 1) 100%);
+            box-shadow: 2px 2px 8px 0 rgba(26, 42, 71, 1);
           }
         }
       }
 
-      /*滑块*/
-      .drag-box{
-        width:410px;
+      /* 滑块 */
+      .drag-box {
+        width: 410px;
         overflow: hidden;
 
-        >.drag{
+        > .drag {
           position: relative;
           width: 410px;
           height: 50px;
@@ -1485,12 +1497,12 @@ export default {
           background-color: #1e2235;
           cursor: pointer;
 
-          >.drag_bg{
+          > .drag_bg {
             height: 48px;
             background-color: #1f2943;
           }
 
-          >.drag_text{
+          > .drag_text {
             position: absolute;
             top: 0;
             width: 410px;
@@ -1507,7 +1519,7 @@ export default {
             -webkit-text-size-adjust: none;
           }
 
-          >.handler_bg{
+          > .handler_bg {
             position: absolute;
             top: 0;
             left: 0;
@@ -1519,9 +1531,9 @@ export default {
             /* border: 1px solid #ccc; */
             cursor: move;
 
-            .icon-text{
+            .icon-text {
               font-size: 14px;
-              color:rgba(222,225,234,1);
+              color: rgba(222, 225, 234, 1);
             }
           }
 
@@ -1537,77 +1549,77 @@ export default {
         }
       }
 
-      >.success-box{
-        width:240px;
-        height:300px;
-        margin:300px auto;
+      > .success-box {
+        width: 240px;
+        height: 300px;
+        margin: 300px auto;
         text-align: center;
 
-        >.img{
-          width:140px;
-          height:140px;
-          margin:0 auto 30px;
+        > .img {
+          width: 140px;
+          height: 140px;
+          margin: 0 auto 30px;
           border-radius: 50%;
-          color:#fff;
+          color: #fff;
           background-color: $mainColor;
 
-          >img{
-            width:50%;
-            margin-top:20px;
+          > img {
+            width: 50%;
+            margin-top: 20px;
           }
 
-          >.icon-color{
+          > .icon-color {
             font-size: 100px;
           }
         }
 
-        >.title{
-          width:240px;
-          height:16px;
-          font-size:14px;
-          font-family:MicrosoftYaHei-Bold;
-          color:rgba(51,143,245,1);
+        > .title {
+          width: 240px;
+          height: 16px;
+          font-size: 14px;
+          font-family: "MicrosoftYaHei-Bold";
+          color: rgba(51, 143, 245, 1);
 
-          >span{
+          > span {
             font-weight: 700;
             font-size: 18px;
           }
         }
 
-        >.jump-login{
-          min-width:150px;
-          height:40px;
-          margin:50px auto;
-          border-radius:4px;
+        > .jump-login {
+          min-width: 150px;
+          height: 40px;
+          margin: 50px auto;
+          border-radius: 4px;
           font-size: 18px;
-          color:#fff;
-          background:rgba(51,143,245,.5);
+          color: #fff;
+          background: rgba(51, 143, 245, .5);
         }
       }
     }
 
-    >.invitation-success{
-      .main-tips{
-        margin-bottom:.4rem;
+    > .invitation-success {
+      .main-tips {
+        margin-bottom: .4rem;
         font-size: .86453968rem;
-        color:#fff;
+        color: #fff;
       }
 
-      .sub-tips{
-        margin-bottom:.4rem;
+      .sub-tips {
+        margin-bottom: .4rem;
         font-size: .86453968rem;
-        color:#fff;
+        color: #fff;
       }
 
-      .confirm-btn{
-        width:550px;
-        height:75px;
-        border-radius:5px;
+      .confirm-btn {
+        width: 550px;
+        height: 75px;
+        border-radius: 5px;
         font-size: .86453968rem;
-        color:#fff;
-        background:$mainColor;
+        color: #fff;
+        background: $mainColor;
 
-        >span{
+        > span {
           font-size: .8rem;
         }
       }

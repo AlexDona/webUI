@@ -303,11 +303,11 @@ export default {
   @import "../../../static/css/scss/OTC/OTCCenter.scss";
   @import "../../../static/css/scss/index.scss";
 
-  .otc-canceled-order-box{
-    >.canceled-order-content{
+  .otc-canceled-order-box {
+    > .canceled-order-content {
       min-height: 500px;
 
-      >.canceled-table-head{
+      > .canceled-table-head {
         box-sizing: border-box;
         width: 1043px;
         height: 35px;
@@ -315,200 +315,200 @@ export default {
         border-radius: 5px;
         line-height: 35px;
 
-        >.item{
+        > .item {
           display: inline-block;
           width: 140px;
           text-align: center;
         }
       }
 
-      >.canceled-table-body{
+      > .canceled-table-body {
         box-sizing: border-box;
         width: 1043px;
         height: 170px;
         margin-bottom: 15px;
         border-radius: 5px;
 
-        >.canceled-info-top{
+        > .canceled-info-top {
           height: 40px;
           border-radius: 5px;
           line-height: 40px;
 
-          >.item{
+          > .item {
             display: inline-block;
             width: 140px;
             text-align: center;
           }
         }
 
-        >.canceled-info-bottom{
+        > .canceled-info-bottom {
           display: flex;
           flex: 7;
           box-sizing: border-box;
           padding: 15px 30px 0;
 
-          >.info-left{
+          > .info-left {
             flex: 2;
             box-sizing: border-box;
 
-            >.text-info{
+            > .text-info {
               line-height: 20px;
             }
           }
 
-          >.info-middle{
+          > .info-middle {
             flex: 2;
             box-sizing: border-box;
             margin-left: 30px;
 
-            >.text-info{
+            > .text-info {
               line-height: 20px;
             }
           }
 
-          >.info-right{
+          > .info-right {
             flex: 3;
             box-sizing: border-box;
             margin-left: 30px;
 
-            >.text-info{
+            > .text-info {
               line-height: 20px;
             }
           }
         }
       }
 
-      >.no-data{
+      > .no-data {
         width: 1043px;
         height: 432px;
         line-height: 432px;
         text-align: center;
       }
 
-      >.page{
+      > .page {
         text-align: center;
       }
     }
 
-    &.night{
-      >.canceled-order-content{
-        >.canceled-table-head{
+    &.night {
+      > .canceled-order-content {
+        > .canceled-table-head {
           border: 1px solid #485776;
           color: #a9bed4;
           background-color: #1c1f32;
         }
 
-        >.canceled-table-body{
+        > .canceled-table-body {
           border: 1px solid #485776;
           background-color: #1c1f32;
 
-          >.canceled-info-top{
+          > .canceled-info-top {
             color: #9da5b3;
             background-color: #1c1f32;
 
-            .red{
+            .red {
               color: #d45858;
             }
 
-            .green{
+            .green {
               color: #008069;
             }
           }
 
-          >.canceled-info-bottom{
+          > .canceled-info-bottom {
             border-top: 1px solid #262f38;
             color: #9da5b3;
 
-            >.info-left{
+            > .info-left {
               border-right: 1px solid #262f38;
 
-              >.text-blue{
+              > .text-blue {
                 color: #5e95ec;
               }
             }
 
-            >.info-middle{
+            > .info-middle {
               border-right: 1px solid #262f38;
 
-              >.text-blue{
+              > .text-blue {
                 color: #5e95ec;
               }
             }
 
-            >.info-right{
-              >.text-blue{
+            > .info-right {
+              > .text-blue {
                 color: #5e95ec;
               }
             }
           }
         }
 
-        >.no-data{
+        > .no-data {
           color: rgba(255, 255, 255, .8);
           background-color: $mainContentNightBgColor;
         }
       }
     }
 
-    &.day{
-      >.canceled-order-content{
-        >.canceled-table-head{
+    &.day {
+      > .canceled-order-content {
+        > .canceled-table-head {
           border: 1px solid #ecf1f8;
           color: #617499;
           background-color: $mainDayColor;
         }
 
-        >.canceled-table-body{
+        > .canceled-table-body {
           border: 1px solid #ecf1f8;
           background-color: $mainDayColor;
 
-          >.canceled-info-top{
+          > .canceled-info-top {
             color: #333;
             background-color: $mainDayColor;
 
-            .red{
+            .red {
               color: #d45858;
             }
 
-            .green{
+            .green {
               color: #008069;
             }
           }
 
-          >.canceled-info-bottom{
-            border-top: 1px solid rgba(38,47,56,.1);
+          > .canceled-info-bottom {
+            border-top: 1px solid rgba(38, 47, 56, .1);
             color: #7d90ac;
 
-            >.info-left{
-              border-right: 1px solid rgba(38,47,56,.1);
+            > .info-left {
+              border-right: 1px solid rgba(38, 47, 56, .1);
 
-              >.text-blue{
+              > .text-blue {
                 color: #5e95ec;
               }
             }
 
-            >.info-middle{
-              border-right: 1px solid rgba(38,47,56,.1);
+            > .info-middle {
+              border-right: 1px solid rgba(38, 47, 56, .1);
 
-              >.text-blue{
+              > .text-blue {
                 color: #5e95ec;
               }
             }
 
-            >.info-right{
-              >.text-blue{
+            > .info-right {
+              > .text-blue {
                 color: #5e95ec;
               }
 
-              >.cancel-time{
+              > .cancel-time {
                 color: #333;
               }
             }
           }
         }
 
-        >.no-data{
-          border: 1px solid rgba(97,116,153,.1);
+        > .no-data {
+          border: 1px solid rgba(97, 116, 153, .1);
           color: #333;
           background-color: $mainDayColor;
         }

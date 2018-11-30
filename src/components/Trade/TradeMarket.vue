@@ -566,9 +566,9 @@ export default {
 <style scoped lang="scss">
   @import '../../../static/css/scss/index.scss';
 
-  /*@import '../../../static/css/scss/Trade/TradeCenter.scss';*/
+  /* @import '../../../static/css/scss/Trade/TradeCenter.scss'; */
   .trade-market-box {
-    /*width:433px;*/
+    /* width:433px; */
     > .inner-box {
       > .title {
         display: flex;
@@ -576,10 +576,10 @@ export default {
         padding: 0 4.5%;
         margin-bottom: 1px;
         line-height: 34px;
-        box-shadow: 0 2px 6px rgba(0,0,0,.1);
+        box-shadow: 0 2px 6px rgba(0, 0, 0, .1);
 
         > .text {
-          /*font-weight: 700;*/
+          /* font-weight: 700; */
           display: inline-block;
           flex: 1;
           height: 100%;
@@ -588,12 +588,12 @@ export default {
             display: inline-block;
             height: 100%;
             text-indent: 4px;
-            color:$mainColor;
+            color: $mainColor;
             //border-bottom: 2px solid $mainColor;
           }
         }
 
-        /*买卖单顺序操作按钮*/
+        /* 买卖单顺序操作按钮 */
         > .right {
           flex: 1;
           text-align: right;
@@ -608,9 +608,6 @@ export default {
             cursor: pointer;
           }
 
-          > .middle {
-          }
-
           > .bottom {
             background-image: url(../../assets/develop/buys.png);
           }
@@ -621,13 +618,9 @@ export default {
         }
       }
 
-      /*表格内容*/
+      /* 表格内容 */
       > .content {
-        height:1584px;
-
-        > .inner-box {
-
-        }
+        height: 1584px;
       }
     }
 
@@ -640,9 +633,6 @@ export default {
 
         > .content {
           background-color: $mainContentNightBgColor;
-
-          > .inner-box {
-          }
         }
       }
     }
@@ -656,9 +646,6 @@ export default {
 
         > .content {
           background-color: $mainDayBgColor;
-
-          > .inner-box {
-          }
         }
       }
     }

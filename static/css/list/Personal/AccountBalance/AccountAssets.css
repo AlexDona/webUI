@@ -24,11 +24,6 @@
   border: 0;
 }
 
-.account-assets.personal .el-button {
-  padding: 0;
-  border: 0;
-}
-
 .account-assets.personal .el-input__inner {
   width: 350px;
   height: 34px;
@@ -73,6 +68,8 @@
 .account-assets.personal .el-button {
   width: 270px;
   height: 34px;
+  padding: 0;
+  border: 0;
 }
 
 .account-assets.personal .el-form--label-top .el-form-item__label {

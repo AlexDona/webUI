@@ -551,253 +551,253 @@ export default {
 }
 </script>
 <style scoped lang="scss">
-  @import '../../../static/css/scss/index';
+@import '../../../static/css/scss/index';
 
-  .froget-password-box{
-    height:100%;
-    margin-top:66px;
-    overflow: hidden;
-    background:linear-gradient(150deg,rgba(30,38,54,1),rgba(37,75,117,1));
+.froget-password-box {
+  height: 100%;
+  margin-top: 66px;
+  overflow: hidden;
+  background: linear-gradient(150deg, rgba(30, 38, 54, 1), rgba(37, 75, 117, 1));
 
-    >.inner-box{
-      width:780px;
-      padding-bottom:50px;
-      margin:180px auto;
-      border-radius:10px;
-      color:#fff;
-      background:linear-gradient(201deg,rgba(42,88,137,1) 0%,rgba(43,58,111,1) 100%);
-      box-shadow:0 4px 21px 0 rgba(26,42,71,1);
+  > .inner-box {
+    width: 780px;
+    padding-bottom: 50px;
+    margin: 180px auto;
+    border-radius: 10px;
+    color: #fff;
+    background: linear-gradient(201deg, rgba(42, 88, 137, 1) 0%, rgba(43, 58, 111, 1) 100%);
+    box-shadow: 0 4px 21px 0 rgba(26, 42, 71, 1);
 
-      >.title{
-        box-sizing: border-box;
-        height:60px;
-        padding:0 35px;
-        border-bottom:1px solid rgba(68,102,145,1);
-        font-size: 24px;
-        line-height:60px;
+    > .title {
+      box-sizing: border-box;
+      height: 60px;
+      padding: 0 35px;
+      border-bottom: 1px solid rgba(68, 102, 145, 1);
+      font-size: 24px;
+      line-height: 60px;
+    }
+
+    /* 步骤条 */
+    > .step-box {
+      display: flex;
+      justify-content: center;
+      height: 100px;
+      text-align: center;
+
+      > .step-item {
+        position: relative;
+        flex: 1;
+        max-width: 140px;
+        height: 100px;
+        vertical-align: top;
+
+        &.have-down {
+          > .line,
+          > .step-number {
+            background-color: $mainColor;
+          }
+
+          > .step-desc {
+            color: $mainColor;
+          }
+        }
+
+        > .line {
+          position: relative;
+          top: 50%;
+          width: 140px;
+          height: 2px;
+          background-color: #5d7a9f;
+        }
+
+        > .step-number {
+          position: absolute;
+          top: 50%;
+          left: 50%;
+          width: 24px;
+          height: 24px;
+          margin: 0 auto;
+          border-radius: 50%;
+          font-weight: 700;
+          font-size: 12px;
+          line-height: 24px;
+          color: #fff;
+          background-color: #5d7a9f;
+          transform: translate(-50%, -50%);
+        }
+
+        > .step-desc {
+          margin-top: 70px;
+          color: #5d7a9f;
+        }
       }
+    }
 
-      /*步骤条*/
-      >.step-box{
-        display:flex;
-        justify-content:center;
-        height:100px;
+    > .content-box {
+      width: 100%;
+      padding-top: 30px;
+
+      > .content-item {
+        // width:600px;
+        width: 700px;
+        margin: 0 auto;
         text-align: center;
 
-        >.step-item{
-          position: relative;
-          flex:1;
-          max-width:140px;
-          height:100px;
-          vertical-align: top;
+        > .inner-box {
+          > .item {
+            height: 36px;
+            margin-top: 15px;
+            line-height: 36px;
 
-          &.have-down{
-            >.line,>.step-number{
-              background-color: $mainColor;
+            > span {
+              display: inline-block;
+              margin-right: 20px;
+              vertical-align: top;
             }
 
-            >.step-desc{
-              color:$mainColor;
+            > .label {
+              width: 130px;
+              height: 36px;
+              text-align: right;
             }
-          }
 
-          >.line{
-            position: relative;
-            top:50%;
-            width:140px;
-            height:2px;
-            background-color: #5d7a9f;
-          }
+            > .label-content {
+              // width:380px;
+              width: 500px;
+              height: 36px;
+              text-align: left;
 
-          >.step-number{
-            position: absolute;
-            top:50%;
-            left:50%;
-            width:24px;
-            height:24px;
-            margin: 0 auto;
-            border-radius:50%;
-            font-weight: 700;
-            font-size: 12px;
-            line-height:24px;
-            color:#fff;
-            background-color: #5d7a9f;
-            transform: translate(-50%,-50%);
-          }
+              > .number {
+                margin-right: 10px;
+                font-weight: 700;
+                font-size: 16px;
+                color: $mainColor;
+              }
 
-          >.step-desc{
-            margin-top:70px;
-            color: #5d7a9f;
-          }
-        }
-      }
-
-      >.content-box{
-        width:100%;
-        padding-top:30px;
-
-        >.content-item{
-          // width:600px;
-          width:700px;
-          margin:0 auto;
-          text-align: center;
-
-          >.inner-box{
-            >.item{
-              height:36px;
-              margin-top:15px;
-              line-height: 36px;
-
-              >span{
+              > .tips {
                 display: inline-block;
-                margin-right:20px;
+                // width:200px;
+                width: 390px;
+                font-size: 12px;
+                color: $upColor;
+              }
+
+              > .next-btn {
+                width: 80px;
+                height: 36px;
+                margin-left: 0;
+                border-radius: 4px;
+                color: #fff;
+                background: linear-gradient(81deg, rgba(61, 152, 249, 1) 0%, rgba(71, 135, 255, 1) 100%);
+                box-shadow: 0 0 8px 0 rgba(26, 42, 71, 1);
+              }
+
+              > .username-input {
+                box-sizing: border-box;
+                width: 200px;
+                height: 36px;
+                padding: 0 10px;
+                border-radius: 4px;
                 vertical-align: top;
+                color: #fff;
+                background: rgba(32, 55, 90, 1);
               }
 
-              >.label{
-                width:100px;
-                width:130px;
-                height:36px;
-                text-align: right;
-              }
+              > .image-validate-box {
+                transition: all 1s;
 
-              >.label-content{
-                // width:380px;
-                width:500px;
-                height:36px;
-                text-align: left;
-
-                >.number{
-                  margin-right:10px;
-                  font-weight: 700;
-                  font-size: 16px;
-                  color:$mainColor;
+                > .image-validate {
+                  width: 135px;
                 }
 
-                >.tips{
-                  display:inline-block;
-                  // width:200px;
-                  width:390px;
-                  font-size: 12px;
-                  color:$upColor;
-                }
-
-                >.next-btn{
-                  width:80px;
-                  height:36px;
-                  margin-left:0;
-                  border-radius:4px;
-                  color:#fff;
-                  background:linear-gradient(81deg,rgba(61,152,249,1) 0%,rgba(71,135,255,1) 100%);
-                  box-shadow:0 0 8px 0 rgba(26,42,71,1);
-                }
-
-                >.username-input{
+                > .username-input {
                   box-sizing: border-box;
-                  width:200px;
-                  height:36px;
-                  padding:0 10px;
-                  border-radius:4px;
+                  height: 36px;
+                  padding: 0 10px;
+                  border-radius: 4px;
                   vertical-align: top;
-                  color:#fff;
-                  background:rgba(32,55,90,1);
-                }
-
-                >.image-validate-box{
-                  transition: all 1s;
-
-                  >.image-validate{
-                    width:135px;
-                  }
-
-                  >.username-input{
-                    box-sizing: border-box;
-                    height:36px;
-                    padding:0 10px;
-                    border-radius:4px;
-                    vertical-align: top;
-                    color:#fff;
-                    background:rgba(32,55,90,1);
-                  }
-                }
-
-                >.validate-code-input{
-                  width:126px;
-                }
-
-                >.send-code-btn{
-                  height:36px;
-                  padding:0 10px;
-                  border-radius:4px;
-                  color:#fff;
-                  background:rgba(51,143,245,1);
-                }
-
-                >.slider-success{
-                  width:200px;
-                  height:36px;
-                  border:1px solid rgba(51,143,245,1);
-                  border-radius:4px;
-                  text-align: center;
-                  color:$mainColor;
-                  background:rgba(32,55,90,1);
-                  transition: all 1s;
-                }
-              }
-            }
-
-            /*步骤4， 已成功*/
-            >.success-box{
-              display:flex;
-              width:500px;
-              height:100px;
-              margin:0 auto;
-              line-height:100px;
-
-              >.left{
-                flex:1;
-              }
-
-              >.right{
-                flex:3;
-                padding-top:30px;
-                text-align: left;
-
-                >p{
-                  height:30px;
-                  line-height:30px;
-
-                  >a{
-                    color:#fff;
-                  }
-                }
-
-                >.success-msg{
-                  font-size: 14px;
-                  color:#338ff5;
-                }
-
-                >.success-tips{
-                  font-size: 12px;
-                  color:#5e8fcc;
+                  color: #fff;
+                  background: rgba(32, 55, 90, 1);
                 }
               }
 
-              .icon-text{
-                font-size: 100px;
-                vertical-align: top;
-                color:#1296db;
+              > .validate-code-input {
+                width: 126px;
+              }
+
+              > .send-code-btn {
+                height: 36px;
+                padding: 0 10px;
+                border-radius: 4px;
+                color: #fff;
+                background: rgba(51, 143, 245, 1);
+              }
+
+              > .slider-success {
+                width: 200px;
+                height: 36px;
+                border: 1px solid rgba(51, 143, 245, 1);
+                border-radius: 4px;
+                text-align: center;
+                color: $mainColor;
+                background: rgba(32, 55, 90, 1);
+                transition: all 1s;
               }
             }
           }
 
-          /*步骤1*/
-        }
-      }
-    }
+          /* 步骤4， 已成功 */
+          > .success-box {
+            display: flex;
+            width: 500px;
+            height: 100px;
+            margin: 0 auto;
+            line-height: 100px;
 
-    &.night{
-      background:linear-gradient(150deg,rgba(30,38,54,1),rgba(37,75,117,1));
+            > .left {
+              flex: 1;
+            }
+
+            > .right {
+              flex: 3;
+              padding-top: 30px;
+              text-align: left;
+
+              > p {
+                height: 30px;
+                line-height: 30px;
+
+                > a {
+                  color: #fff;
+                }
+              }
+
+              > .success-msg {
+                font-size: 14px;
+                color: #338ff5;
+              }
+
+              > .success-tips {
+                font-size: 12px;
+                color: #5e8fcc;
+              }
+            }
+
+            .icon-text {
+              font-size: 100px;
+              vertical-align: top;
+              color: #1296db;
+            }
+          }
+        }
+
+        /* 步骤1 */
+      }
     }
   }
+
+  &.night {
+    background: linear-gradient(150deg, rgba(30, 38, 54, 1), rgba(37, 75, 117, 1));
+  }
+}
 </style>

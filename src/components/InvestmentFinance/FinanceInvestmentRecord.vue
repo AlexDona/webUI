@@ -14,7 +14,7 @@
               <IconFontCommon
                 class='blue'
                 iconName="icon-fanhui"
-                style="font-size:12px"
+                style="font-size:12px;"
               />
               <router-link
                 class="blue"
@@ -51,7 +51,7 @@
                 <!-- 暂无数据 -->
                 <el-table
                   :data="investList"
-                  style="width: 100%"
+                  style="width: 100%;"
                   :empty-text="$t('M.comm_no_data')"
                   v-loading="loading"
                   element-loading-background="rgba(0, 0, 0, 0.6)"
@@ -206,7 +206,7 @@
                 <!-- 暂无数据 -->
                 <el-table
                   :data="userInterestRecord"
-                  style="width: 100%"
+                  style="width: 100%;"
                   :empty-text="$t('M.comm_no_data')"
                   v-loading="loading"
                   element-loading-background="rgba(0, 0, 0, 0.6)"
@@ -455,58 +455,58 @@ export default {
 <style scoped lang="scss">
   @import "../../../static/css/scss/InvestmentFinance/FinanceCenter";
 
-  .finance-box{
-    width:100%;
-    min-width:1300px;
-    height:100%;
+  .finance-box {
+    width: 100%;
+    min-width: 1300px;
+    height: 100%;
 
-    >.banner-box{
-      background:#121824 url('../../assets/finance/banner.png') no-repeat center center/100% 100%;
+    > .banner-box {
+      background: #121824 url('../../assets/finance/banner.png') no-repeat center center/100% 100%;
     }
 
-    >.inner-box{
-      display:flex;
-      width:100%;
+    > .inner-box {
+      display: flex;
+      width: 100%;
 
-      >.finance-inner{
+      > .finance-inner {
         width: 1100px;
         margin: 0 auto;
 
-        >.invest-list{
-          margin-top:100px;
-          margin-bottom:200px;
+        > .invest-list {
+          margin-top: 100px;
+          margin-bottom: 200px;
 
-          >.invest-list-header{
+          > .invest-list-header {
             display: flex;
             justify-content: space-between;
 
-            a{
+            a {
               line-height: 57px;
               cursor: pointer;
             }
           }
 
-          >.nvest-list-body{
+          > .nvest-list-body {
             position: relative;
 
-            >.gobackInvest{
+            > .gobackInvest {
               position: absolute;
               z-index: 10;
-              top:25px;
+              top: 25px;
               right: 0;
             }
 
-            .financeTsipsBox{
+            .financeTsipsBox {
               position: absolute;
               z-index: 10;
               top: 55px;
               left: 0;
               width: 100%;
               height: 100%;
-              line-height:200px;
+              line-height: 200px;
               text-align: center;
 
-              >a{
+              > a {
                 color: #338ff5;
               }
             }
@@ -515,57 +515,57 @@ export default {
       }
     }
 
-    &.night{
-      >.inner-box{
+    &.night {
+      > .inner-box {
         background-color: $nightInnerBoxBg;
       }
     }
 
-    &.day{
-      >.inner-box{
+    &.day {
+      > .inner-box {
         background-color: #fff;
       }
 
-      .invest{
+      .invest {
         color: #338ff5;
-        background:linear-gradient(left,rgba(51,143,245,.5),transparent);
+        background: linear-gradient(left, rgba(51, 143, 245, .5), transparent);
       }
     }
 
-    .goback-icon{
-      margin-right:5px;
+    .goback-icon {
+      margin-right: 5px;
       font-size: 16px;
     }
 
-    .cancelBtn{
+    .cancelBtn {
       cursor: pointer;
     }
 
-    .blue{
+    .blue {
       color: #338ff5;
     }
 
-    .green{
+    .green {
       color: #008069;
     }
 
-    .red{
-      color:#d45858;
+    .red {
+      color: #d45858;
     }
 
-    .nav-header{
+    .nav-header {
       display: flex;
       justify-content: space-between;
       font-size: 12px;
-      color:#fff;
+      color: #fff;
     }
 
-    .invest{
+    .invest {
       width: 150px;
-      padding:14px 0 14px 26px;
+      padding: 14px 0 14px 26px;
       font-size: 22px;
       color: #fff;
-      background:linear-gradient(left,rgba(34,80,135,1),transparent);
+      background: linear-gradient(left, rgba(34, 80, 135, 1), transparent);
     }
   }
 </style>

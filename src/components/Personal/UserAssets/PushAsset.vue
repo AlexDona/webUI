@@ -139,7 +139,7 @@
           <!--暂无数据-->
           <el-table
             :data="pushRecordList"
-            style="width: 100%"
+            style="width: 100%;"
             :empty-text="$t('M.comm_no_data')"
             v-loading="loading"
             element-loading-background="rgba(0, 0, 0, 0.6)"
@@ -817,12 +817,12 @@ export default {
 <style scoped lang="scss">
   @import "../../../../static/css/scss/Personal/IndexPersonal";
 
-  .push-assets{
-    >.push-assets-main{
-      >.push-assets-content-box {
+  .push-assets {
+    > .push-assets-main {
+      > .push-assets-content-box {
         min-height: 577px;
 
-        >.push-from-box {
+        > .push-from-box {
           width: 400px;
           min-height: 577px;
           padding-top: 29px;
@@ -842,14 +842,14 @@ export default {
         }
       }
 
-      .award-record{
+      .award-record {
         min-height: 200px;
 
-        >.award-record-header{
-          height: 56px
+        > .award-record-header {
+          height: 56px;
         }
 
-        >.award-record-content{
+        > .award-record-content {
           min-height: 130px;
 
           .form-input-common {
@@ -857,8 +857,8 @@ export default {
             height: 36px;
           }
 
-          .error-msg{
-            height:30px;
+          .error-msg {
+            height: 30px;
             line-height: 30px;
             color: rgb(212, 88, 88);
           }
@@ -866,24 +866,24 @@ export default {
       }
     }
 
-    &.night{
-      color:$nightFontColor;
+    &.night {
+      color: $nightFontColor;
       background-color: $nightBgColor;
 
-      >.push-assets-main {
-        >.push-assets-content,
-        >.push-assets-content-box {
+      > .push-assets-main {
+        > .push-assets-content,
+        > .push-assets-content-box {
           background-color: $nightMainBgColor;
 
-          >.push-header {
+          > .push-header {
             background-color: $nightMainBgColor;
 
-            >.push-header-title {
+            > .push-header-title {
               color: #338ff5;
             }
           }
 
-          >.push-from-box {
+          > .push-from-box {
             .form-input-common {
               border: 1px solid #485776;
               color: #fff;
@@ -900,23 +900,23 @@ export default {
 
             .form-button-common {
               color: #fff;
-              background:linear-gradient(0deg,rgba(43,57,110,1),rgba(42,80,130,1));
+              background: linear-gradient(0deg, rgba(43, 57, 110, 1), rgba(42, 80, 130, 1));
             }
           }
         }
 
-        >.award-record {
+        > .award-record {
           background-color: $nightMainBgColor;
 
-          >.award-record-header {
+          > .award-record-header {
             border-bottom: 1px solid #39424d !important;
 
-            >.header-color {
+            > .header-color {
               color: #fff;
             }
           }
 
-          .award-record-content{
+          .award-record-content {
             .state-status {
               color: #338ff5;
             }
@@ -930,30 +930,30 @@ export default {
       }
     }
 
-    &.day{
-      color:$dayFontColor;
+    &.day {
+      color: $dayFontColor;
       background-color: $dayBgColor;
 
-      >.push-assets-main {
-        >.push-assets-content,
-        >.push-assets-content-box {
-          border:1px solid rgba(246,246,246,1);
-          border-radius:4px;
-          background:rgba(255,255,255,1);
-          box-shadow:0 0 4px rgba(235,240,248,1);
+      > .push-assets-main {
+        > .push-assets-content,
+        > .push-assets-content-box {
+          border: 1px solid rgba(246, 246, 246, 1);
+          border-radius: 4px;
+          background: rgba(255, 255, 255, 1);
+          box-shadow: 0 0 4px rgba(235, 240, 248, 1);
 
-          >.push-header {
-            border:1px solid rgba(236,241,248,1);
-            background:rgba(255,255,255,1);
+          > .push-header {
+            border: 1px solid rgba(236, 241, 248, 1);
+            background: rgba(255, 255, 255, 1);
 
-            >.push-header-title {
+            > .push-header-title {
               color: #338ff5;
             }
           }
 
-          >.push-from-box {
+          > .push-from-box {
             .form-input-common {
-              border:1px solid rgba(236,241,248,1);
+              border: 1px solid rgba(236, 241, 248, 1);
               color: #333;
 
               &:focus {
@@ -962,32 +962,32 @@ export default {
             }
 
             .form-input-common-state {
-              border:1px solid rgba(236,241,248,1);
+              border: 1px solid rgba(236, 241, 248, 1);
               color: #333;
             }
 
             .form-button-common {
               color: #fff;
-              background:linear-gradient(0deg,rgba(43,57,110,1),rgba(42,80,130,1));
+              background: linear-gradient(0deg, rgba(43, 57, 110, 1), rgba(42, 80, 130, 1));
             }
           }
         }
 
-        >.award-record {
-          border:1px solid rgba(246,246,246,1);
-          border-radius:4px;
-          background:rgba(255,255,255,1);
-          box-shadow:0 0 4px rgba(235,240,248,1);
+        > .award-record {
+          border: 1px solid rgba(246, 246, 246, 1);
+          border-radius: 4px;
+          background: rgba(255, 255, 255, 1);
+          box-shadow: 0 0 4px rgba(235, 240, 248, 1);
 
-          >.award-record-header {
-            border-bottom: 1px solid rgba(57,66,77,.1);
+          > .award-record-header {
+            border-bottom: 1px solid rgba(57, 66, 77, .1);
 
-            >.header-color {
+            > .header-color {
               color: #333;
             }
           }
 
-          .award-record-content{
+          .award-record-content {
             .state-status {
               color: #338ff5;
             }

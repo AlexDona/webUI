@@ -89,8 +89,6 @@ export default {
   beforeCreate () {
   },
   created () {
-    // require('../../../static/charting_library/static/css/t-night.css')
-    require('../../../static/css/theme/day/Trade/KlieneDay.css')
     // this.widget = null
     console.log(this.socket)
     this.socket.doOpen()
@@ -600,10 +598,10 @@ export default {
 <style scoped lang="scss">
   @import '../../../static/css/scss/index';
 
-  .kline-container{
+  .kline-container {
     position: relative;
-    width:100%;
-    height:355px;
+    width: 100%;
+    height: 355px;
     overflow: hidden;
 
     #tv_chart_container {
@@ -614,18 +612,18 @@ export default {
         background-color: $mainContentNightBgColor;
       }
 
-      &.day{
+      &.day {
         background-color: #fff;
       }
     }
 
-    .loading-box{
+    .loading-box {
       position: absolute;
       z-index: 15;
-      top:0;
-      right:0;
-      width:101%;
-      height:355px;
+      top: 0;
+      right: 0;
+      width: 101%;
+      height: 355px;
     }
   }
 </style>

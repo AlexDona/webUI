@@ -161,7 +161,7 @@
           <!--暂无数据-->
           <el-table
             :data="extensionList"
-            style="width: 100%"
+            style="width: 100%;"
             :empty-text="$t('M.comm_no_data')"
             v-loading="loading"
             element-loading-background="rgba(0, 0, 0, 0.6)"
@@ -248,7 +248,7 @@
         <div class="award-record-content">
           <el-table
             :data="awardList"
-            style="width: 100%"
+            style="width: 100%;"
             :empty-text="$t('M.comm_no_data')"
             v-loading="loading"
             element-loading-background="rgba(0, 0, 0, 0.6)"
@@ -541,53 +541,53 @@ export default {
 <style scoped lang="scss">
   @import "../../../../static/css/scss/Personal/IndexPersonal";
 
-  .invitation-promotion{
-    >.invitation-promotion-main{
+  .invitation-promotion {
+    > .invitation-promotion-main {
       .code-copy {
         color: #338ff5;
       }
 
-      /*推广信息*/
-      >.extension-info{
+      /* 推广信息 */
+      > .extension-info {
         min-height: 200px;
 
-        >.extension-info-header{
+        > .extension-info-header {
           height: 56px;
         }
 
-        >.extension-info-content{
+        > .extension-info-content {
           min-height: 130px;
 
-          >.info-record {
+          > .info-record {
             width: 100%;
             height: 120px;
             padding: 0 17px;
             margin-top: 19px;
 
-            >.extension-code,
-            >.extension-link{
+            > .extension-code,
+            > .extension-link {
               display: flex;
               width: 100%;
               height: 60px;
 
-              >.code-left,
-              >.code-right,
-              >.link-left,
-              >.link-right {
+              > .code-left,
+              > .code-right,
+              > .link-left,
+              > .link-right {
                 flex: 1;
                 line-height: 60px;
               }
 
-              >.code-right,
-              >.link-right{
+              > .code-right,
+              > .link-right {
                 flex: 2;
 
-                >.code-right-rendering,
-                >.code-right-rendering {
+                > .code-right-rendering,
+                > .code-right-rendering {
                   margin-right: 10px;
                 }
 
-                >.code-copy {
+                > .code-copy {
                   position: relative;
                   display: inline-block;
                   width: 80px;
@@ -595,7 +595,7 @@ export default {
                   line-height: 26px;
                   text-align: center;
 
-                  >.ercode {
+                  > .ercode {
                     position: absolute;
                     bottom: 35px;
                     right: 180px;
@@ -606,14 +606,14 @@ export default {
             }
           }
 
-          >.promotion-box {
+          > .promotion-box {
             display: flex;
             height: 160px;
 
-            >.promotion-number {
+            > .promotion-number {
               flex: 1;
 
-              >.promotion-info {
+              > .promotion-info {
                 width: 200px;
                 margin: 45px auto;
                 text-align: center;
@@ -623,84 +623,84 @@ export default {
         }
       }
 
-      /*推广统计*/
-      >.extension-statistics{
+      /* 推广统计 */
+      > .extension-statistics {
         min-height: 200px;
 
-        >.extension-statistics-header{
+        > .extension-statistics-header {
           display: flex;
           height: 56px;
 
-          >.header-right {
+          > .header-right {
             flex: 1;
           }
 
-          >.header-select {
+          > .header-select {
             text-align: right;
           }
         }
 
-        >.extension-statistics-content{
+        > .extension-statistics-content {
           min-height: 130px;
         }
       }
 
-      /*奖励记录*/
-      >.award-record{
+      /* 奖励记录 */
+      > .award-record {
         min-height: 200px;
 
-        >.award-record-header{
-          height: 56px
+        > .award-record-header {
+          height: 56px;
         }
 
-        >.award-record-content{
+        > .award-record-content {
           min-height: 130px;
         }
       }
     }
 
-    &.night{
-      color:$nightFontColor;
+    &.night {
+      color: $nightFontColor;
       background-color: $nightBgColor;
 
-      >.background-color {
+      > .background-color {
         background-color: $nightMainBgColor;
       }
 
-      .invitation-promotion-main{
-        >.extension-info{
+      .invitation-promotion-main {
+        > .extension-info {
           background-color: $nightMainBgColor;
 
-          >.extension-info-header{
+          > .extension-info-header {
             border-bottom: 1px solid #39424d;
 
-            >.header-color {
+            > .header-color {
               color: #fff;
             }
           }
 
-          >.extension-info-content{
-            >.info-record {
+          > .extension-info-content {
+            > .info-record {
               background: #283049;
 
-              >.extension-code {
+              > .extension-code {
                 border-bottom: 1px solid #364654;
               }
 
-              >.extension-code,
-              >.extension-link{
-                >.code-left,
-                >.link-left {
+              > .extension-code,
+              > .extension-link {
+                > .code-left,
+                > .link-left {
                   color: #9da5b3;
                 }
 
-                >.code-right,
-                >.link-right{
-                  >.code-right-rendering {
+                > .code-right,
+                > .link-right {
+                  > .code-right-rendering {
                     color: #9da5b3;
                   }
 
-                  >.code-copy {
+                  > .code-copy {
                     color: #338ff5;
                     background-color: #45535e;
                   }
@@ -708,7 +708,7 @@ export default {
               }
             }
 
-            >.promotion-box {
+            > .promotion-box {
               .promotion-info {
                 .info-left-text {
                   color: #9da5b3;
@@ -723,25 +723,25 @@ export default {
           }
         }
 
-        >.extension-statistics {
+        > .extension-statistics {
           background-color: $nightMainBgColor;
 
-          >.extension-statistics-header {
+          > .extension-statistics-header {
             border-bottom: 1px solid #39424d;
 
-            >.header-color {
+            > .header-color {
               color: #fff;
             }
           }
         }
 
-        >.award-record {
+        > .award-record {
           background-color: $nightMainBgColor;
 
-          >.award-record-header {
+          > .award-record-header {
             border-bottom: 1px solid #39424d;
 
-            >.header-color {
+            > .header-color {
               color: #fff;
             }
           }
@@ -755,58 +755,58 @@ export default {
       }
     }
 
-    &.day{
-      color:$dayFontColor;
+    &.day {
+      color: $dayFontColor;
       background-color: $dayBgColor;
 
-      >.background-color {
+      > .background-color {
         background-color: #ccc;
       }
 
       .invitation-promotion-main {
-        >.extension-info{
-          border:1px solid rgba(236,241,248,1);
-          background:rgba(255,255,255,1);
+        > .extension-info {
+          border: 1px solid rgba(236, 241, 248, 1);
+          background: rgba(255, 255, 255, 1);
 
-          >.extension-info-header{
-            border-bottom:1px solid rgba(236,241,248,1);
+          > .extension-info-header {
+            border-bottom: 1px solid rgba(236, 241, 248, 1);
 
-            >.header-color {
+            > .header-color {
               color: #333;
             }
           }
 
-          >.extension-info-content{
-            >.info-record {
+          > .extension-info-content {
+            > .info-record {
               background: #f3f8ff;
 
-              >.extension-code {
+              > .extension-code {
                 border-bottom: 1px solid #ecf1f8;
 
-                >.extension-code,
-                >.extension-link{
-                  >.code-left,
-                  >.link-left {
+                > .extension-code,
+                > .extension-link {
+                  > .code-left,
+                  > .link-left {
                     color: #333;
                   }
 
-                  >.code-right,
-                  >.link-right {
-                    >.code-right-rendering {
+                  > .code-right,
+                  > .link-right {
+                    > .code-right-rendering {
                       color: #333;
                     }
 
-                    >.code-copy {
-                      border:1px solid rgba(125,144,172,1);
+                    > .code-copy {
+                      border: 1px solid rgba(125, 144, 172, 1);
                       color: red;
-                      background: rgb(255,255,255);
+                      background: rgb(255, 255, 255);
                     }
                   }
                 }
               }
             }
 
-            >.promotion-box {
+            > .promotion-box {
               .promotion-info {
                 .info-left-text {
                   color: #ccc;
@@ -819,7 +819,7 @@ export default {
 
               .info-left,
               .info-right {
-                >.info-left-color {
+                > .info-left-color {
                   color: #338ff5;
                 }
               }
@@ -827,27 +827,27 @@ export default {
           }
         }
 
-        >.extension-statistics {
-          border:1px solid rgba(38,47,56,.1);
-          background:rgba(255,255,255,1);
+        > .extension-statistics {
+          border: 1px solid rgba(38, 47, 56, .1);
+          background: rgba(255, 255, 255, 1);
 
-          >.extension-statistics-header {
-            border-bottom: 1px solid rgba(236,241,248,1);
+          > .extension-statistics-header {
+            border-bottom: 1px solid rgba(236, 241, 248, 1);
 
-            >.header-color {
+            > .header-color {
               color: #333;
             }
           }
         }
 
-        >.award-record {
-          border:1px solid rgba(38,47,56,.1);
-          background:rgba(255,255,255,1);
+        > .award-record {
+          border: 1px solid rgba(38, 47, 56, .1);
+          background: rgba(255, 255, 255, 1);
 
-          >.award-record-header {
-            border-bottom: 1px solid rgba(236,241,248,1);
+          > .award-record-header {
+            border-bottom: 1px solid rgba(236, 241, 248, 1);
 
-            >.header-color {
+            > .header-color {
               color: #333;
             }
           }
@@ -855,8 +855,8 @@ export default {
       }
 
       .invitation-promotion-header {
-        border:1px solid rgba(236,241,248,1);
-        background:rgba(255,255,255,1);
+        border: 1px solid rgba(236, 241, 248, 1);
+        background: rgba(255, 255, 255, 1);
 
         .header-content {
           color: #338ff5;

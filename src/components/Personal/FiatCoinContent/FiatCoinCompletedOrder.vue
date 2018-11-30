@@ -364,56 +364,56 @@ export default {
 <style scoped lang="scss" type="text/scss">
   @import "../../../../static/css/scss/Personal/IndexPersonal.scss";
 
-  .fiat-completed-order-box{
-    >.completed-order-content{
-      .red{
+  .fiat-completed-order-box {
+    > .completed-order-content {
+      .red {
         color: #d45858;
       }
 
-      .green{
+      .green {
         color: #008069;
       }
 
-      .completed-info{
+      .completed-info {
         display: flex;
         flex: 7;
         color: #9da5b3;
 
-        >.completed-info-left{
+        > .completed-info-left {
           flex: 2;
           border-right: 1px solid #262f38;
 
-          >.order-info-left{
+          > .order-info-left {
             line-height: 20px;
 
-            >.pay-info{
+            > .pay-info {
               color: #5e95ec;
             }
           }
         }
 
-        .completed-info-middle{
+        .completed-info-middle {
           flex: 2;
           border-right: 1px solid #262f38;
 
-          .order-info-middle{
+          .order-info-middle {
             margin-left: 50px;
             line-height: 20px;
 
-            >.buyer-seller-info{
+            > .buyer-seller-info {
               color: #5e95ec;
             }
           }
         }
 
-        >.completed-info-right{
+        > .completed-info-right {
           flex: 3;
 
-          >.order-info-right{
+          > .order-info-right {
             margin-left: 50px;
             line-height: 20px;
 
-            >.confirm-time{
+            > .confirm-time {
               color: #5e95ec;
             }
           }
@@ -421,67 +421,67 @@ export default {
       }
     }
 
-    &.night{
-      color:$nightFontColor;
+    &.night {
+      color: $nightFontColor;
       background-color: $nightBgColor;
 
-      >.background-color{
+      > .background-color {
         background-color: $nightMainBgColor;
 
-        >.fiat-color{
+        > .fiat-color {
           color: #338ff5;
         }
       }
     }
 
-    &.day{
-      color:$dayFontColor;
+    &.day {
+      color: $dayFontColor;
       background-color: $dayBgColor;
 
-      >.background-color{
+      > .background-color {
         background-color: #ccc;
       }
 
-      .completed-info{
+      .completed-info {
         display: flex;
         flex: 7;
         color: #9da5b3;
 
-        >.completed-info-left{
+        > .completed-info-left {
           flex: 2;
-          border-right: 1px solid rgba(38,47,56,.1);
+          border-right: 1px solid rgba(38, 47, 56, .1);
 
-          >.order-info-left{
+          > .order-info-left {
             line-height: 20px;
 
-            >.pay-info{
+            > .pay-info {
               color: #5e95ec;
             }
           }
         }
 
-        >.completed-info-middle{
+        > .completed-info-middle {
           flex: 2;
-          border-right: 1px solid rgba(38,47,56,.1);
+          border-right: 1px solid rgba(38, 47, 56, .1);
 
-          >.order-info-middle{
+          > .order-info-middle {
             margin-left: 50px;
             line-height: 20px;
 
-            >.buyer-seller-info{
+            > .buyer-seller-info {
               color: #5e95ec;
             }
           }
         }
 
-        >.completed-info-right{
+        > .completed-info-right {
           flex: 3;
 
-          >.order-info-right{
+          > .order-info-right {
             margin-left: 50px;
             line-height: 20px;
 
-            >.confirm-time{
+            > .confirm-time {
               color: #5e95ec;
             }
           }

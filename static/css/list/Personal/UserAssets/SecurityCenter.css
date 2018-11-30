@@ -20,6 +20,7 @@
 
 .security-center.personal .el-tabs__item {
   width: 105px;
+  height: 45px;
   padding: 0;
   border-left: 4px solid transparent !important;
   text-align: center;
@@ -63,6 +64,7 @@
 
 .security-center.personal .el-form--label-top .el-form-item__label {
   height: 25px;
+  padding: 0;
   line-height: 25px;
 }
 
@@ -84,14 +86,6 @@
   width: 220px;
   height: 36px;
   border-radius: 4px;
-}
-
-.security-center.personal .el-tabs__item {
-  height: 45px;
-}
-
-.security-center.personal .el-form--label-top .el-form-item__label {
-  padding: 0;
 }
 
 /* 任增加 */

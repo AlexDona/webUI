@@ -148,154 +148,105 @@ export default {
 }
 </script>
 <style scoped lang="scss">
-  @import '../../../static/css/scss/index.scss';
+@import '../../../static/css/scss/index.scss';
 
-  .middle-header-box{
-    /*width:986px;*/
-    height:60px;
-    margin-bottom:1px;
-    line-height:60px;
-    box-shadow:0 0 0 rgba(239,239,239,1);
+.middle-header-box {
+  /* width:986px; */
+  height: 60px;
+  margin-bottom: 1px;
+  line-height: 60px;
+  box-shadow: 0 0 0 rgba(239, 239, 239, 1);
 
-    >.inner-box{
-      display:flex;
-      height:100%;
+  > .inner-box {
+    display: flex;
+    height: 100%;
 
-      .item{
-        flex:1;
-        padding:10px 0;
+    .item {
+      flex: 1;
+      padding: 10px 0;
 
-        >.top,>.bottom{
-          height:20px;
-          line-height:20px;
-        }
+      > .top,
+      > .bottom {
+        height: 20px;
+        line-height: 20px;
+      }
 
-        &.logo{
-          flex:.5;
-          text-align: center;
+      &.logo {
+        flex: .5;
+        text-align: center;
 
-          >.logo{
-            width:30px;
-          }
-        }
-
-        &.symbol{
-          >.top{
-            font-weight: 700;
-          }
-        }
-
-        &.latest-price{
-          flex:1.5;
-
-          >.top{
-          }
-        }
-
-        >.bottom{
-          white-space:nowrap;
-
-          >span{
-            display: inline-block;
-            margin-right:10px;
-
-            &.up{
-              color:$upColor;
-            }
-
-            &.down{
-              color: $downColor;
-            }
-          }
+        > .logo {
+          width: 30px;
         }
       }
-    }
 
-    &.night{
-      color:#a9bed4;
-      background-color: $mainContentNightBgColor;
-      box-shadow:2px 0 3px rgba(27,35,49,1);
-
-      >.inner-box{
-        .item{
-          >.top,>.bottom{
-          }
-
-          &.logo{
-            >.logo{
-            }
-          }
-
-          &.symbol{
-            color:#fff;
-
-            >.top{
-            }
-          }
-
-          &.latest-price{
-            >.top{
-            }
-          }
-
-          >.bottom{
-            >span{
-              &.up{
-              }
-
-              &.down{
-              }
-            }
-
-            >.theme-color{
-              color:#fff;
-            }
-          }
+      &.symbol {
+        > .top {
+          font-weight: 700;
         }
       }
-    }
 
-    &.day{
-      background-color: #fff;
-      box-shadow:2px 0 3px rgba(239,239,239,1);
+      &.latest-price {
+        flex: 1.5;
+      }
 
-      >.inner-box{
-        .item{
-          >.top,>.bottom{
+      > .bottom {
+        white-space: nowrap;
+
+        > span {
+          display: inline-block;
+          margin-right: 10px;
+
+          &.up {
+            color: $upColor;
           }
 
-          &.logo{
-            >.logo{
-            }
-          }
-
-          &.symbol{
-            color:#333;
-
-            >.top{
-            }
-          }
-
-          &.latest-price{
-            >.top{
-            }
-          }
-
-          >.bottom{
-            >span{
-              &.up{
-              }
-
-              &.down{
-              }
-            }
-
-            >.theme-color{
-              color:#333;
-            }
+          &.down {
+            color: $downColor;
           }
         }
       }
     }
   }
+
+  &.night {
+    color: #a9bed4;
+    background-color: $mainContentNightBgColor;
+    box-shadow: 2px 0 3px rgba(27, 35, 49, 1);
+
+    > .inner-box {
+      .item {
+        > .top,
+        &.symbol {
+          color: #fff;
+        }
+
+        > .bottom {
+          > .theme-color {
+            color: #fff;
+          }
+        }
+      }
+    }
+  }
+
+  &.day {
+    background-color: #fff;
+    box-shadow: 2px 0 3px rgba(239, 239, 239, 1);
+
+    > .inner-box {
+      .item {
+        &.symbol {
+          color: #333;
+        }
+
+        > .bottom {
+          > .theme-color {
+            color: #333;
+          }
+        }
+      }
+    }
+  }
+}
 </style>

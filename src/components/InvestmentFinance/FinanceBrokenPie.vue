@@ -159,10 +159,10 @@ export default {
 }
 </script>
 <style scoped lang="scss">
-.financePie-box{
+.financePie-box {
   width: 250px;
 
-  >.financePie{
+  > .financePie {
     width: 100%;
     height: 300px;
   }

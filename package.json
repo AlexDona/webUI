@@ -11,7 +11,7 @@
     "e2e": "node test/e2e/runner.js",
     "test": "npm run unit && npm run e2e",
     "lint": "eslint --ext .js,.vue src test/unit test/e2e/specs",
-    "lint-css": "stylelint 'src/**/*.css' --fix",
+    "lint-css": "stylelint 'static/**/*.css src/**/*.vue' --fix",
     "analyze": "NODE_ENV=production npm_config_report=true npm run build",
     "build--test": "cross-env NODE_ENV=testing env_config=test node build/build.js",
     "build--prod": "cross-env NODE_ENV=production env_config=prod node build/build.js"

@@ -974,8 +974,8 @@ export default {
 <style scoped lang="scss">
 @import "../../../../static/css/scss/Personal/IndexPersonal";
 
-.identity-authentication{
-  >.identity-authentication-main{
+.identity-authentication {
+  > .identity-authentication-main {
     .name-authentication-content {
       width: 500px;
       padding-top: 28px;
@@ -1009,11 +1009,11 @@ export default {
       width: 100%;
       height: 56px;
 
-      .main-header-title{
+      .main-header-title {
         line-height: 56px;
       }
 
-      .icon-down{
+      .icon-down {
         padding-right: 10px;
         font-size: 16px;
         line-height: 56px;
@@ -1021,7 +1021,7 @@ export default {
     }
   }
 
-  >.advanced-certification-main{
+  > .advanced-certification-main {
     .name-authentication-content {
       width: 350px;
       padding-top: 28px;
@@ -1043,20 +1043,20 @@ export default {
       width: 100%;
       height: 56px;
 
-      .icon-down{
+      .icon-down {
         padding-right: 10px;
         font-size: 16px;
         line-height: 56px;
       }
     }
 
-    .advanced-certification-content{
+    .advanced-certification-content {
       width: 126px;
       height: 128px;
       margin: 11px auto 47px;
     }
 
-    .advanced-certification-text{
+    .advanced-certification-text {
       width: 337px;
       height: 93px;
       margin: 0 auto;
@@ -1071,16 +1071,16 @@ export default {
     }
 
     .identity-box {
-      >.wait-no-pass {
+      > .wait-no-pass {
         padding-top: 50px !important;
       }
 
-      >.wait-veritfy-back {
+      > .wait-veritfy-back {
         height: 400px;
         padding-top: 130px;
 
-        >.wait-veritfy{
-          >.color-coin {
+        > .wait-veritfy {
+          > .color-coin {
             color: #338ff5;
           }
 
@@ -1090,19 +1090,19 @@ export default {
           }
 
           .no-pass-button {
-            width:200px;
-            height:34px;
+            width: 200px;
+            height: 34px;
             margin-top: 20px;
-            border-radius:4px;
+            border-radius: 4px;
           }
         }
       }
     }
 
-    .transition-box{
-      >.advanced-upload {
+    .transition-box {
+      > .advanced-upload {
         min-height: 180px;
-        padding:0 20px;
+        padding: 0 20px;
         margin-top: 62px;
 
         .advanced-upload {
@@ -1123,7 +1123,7 @@ export default {
             height: 116px;
             overflow: hidden;
 
-            >.upload-input {
+            > .upload-input {
               display: none;
             }
           }
@@ -1143,11 +1143,11 @@ export default {
         width: 100%;
         text-align: center;
 
-        .submit-information{
-          width:200px;
-          height:34px;
+        .submit-information {
+          width: 200px;
+          height: 34px;
           margin: 90px auto 83px;
-          border-radius:4px;
+          border-radius: 4px;
           line-height: 34px;
         }
 
@@ -1156,50 +1156,50 @@ export default {
         }
       }
 
-      >.advanced-prompt{
+      > .advanced-prompt {
         margin: 20px 138px 0 27px;
 
-        >.text-hints {
+        > .text-hints {
           line-height: 25px;
           text-align: left;
         }
 
-        >.icon-font-color {
+        > .icon-font-color {
           height: 30px;
           line-height: 30px;
 
-          >.icon-font {
+          > .icon-font {
             width: 18px;
             height: 16px;
           }
 
-          >.vertical-align {
+          > .vertical-align {
             vertical-align: middle;
           }
         }
       }
 
-      >.personal-information {
+      > .personal-information {
         display: flex;
         padding: 0 24px;
         margin-top: 34px;
         line-height: 30px;
 
-        >.information{
+        > .information {
           flex: 1;
         }
       }
     }
   }
 
-  &.night{
-    color:$nightFontColor;
+  &.night {
+    color: $nightFontColor;
     background-color: $nightBgColor;
 
-    .identity-header-background{
+    .identity-header-background {
       background-color: $nightMainBgColor;
 
-      .header-content{
+      .header-content {
         color: #338ff5;
       }
     }
@@ -1222,28 +1222,28 @@ export default {
       .authentication-type-info {
         color: #d45858;
 
-        >.authentication-info {
+        > .authentication-info {
           color: #d45858;
         }
       }
     }
 
     .icon-down,
-    .main-header-title{
+    .main-header-title {
       color: #fff;
     }
 
-    .identity-background{
+    .identity-background {
       background-color: $nightMainBgColor;
     }
 
-    >.advanced-certification-main{
+    > .advanced-certification-main {
       .identity-box {
-        border:1px solid rgba(38,47,56,.1);
+        border: 1px solid rgba(38, 47, 56, .1);
 
-        >.wait-veritfy-back {
-          >.wait-veritfy{
-            >.color-coin {
+        > .wait-veritfy-back {
+          > .wait-veritfy {
+            > .color-coin {
               color: #338ff5;
             }
 
@@ -1253,18 +1253,18 @@ export default {
               }
             }
 
-            >.color-coin-text {
+            > .color-coin-text {
               font-size: 140px;
               color: #338ff5;
             }
 
-            >.no-pass {
+            > .no-pass {
               color: #338ff5;
             }
 
             .no-pass-button {
               color: #fff;
-              background:linear-gradient(90deg,rgba(43,57,110,1) 0%,rgba(42,80,130,1) 100%);
+              background: linear-gradient(90deg, rgba(43, 57, 110, 1) 0%, rgba(42, 80, 130, 1) 100%);
             }
           }
         }
@@ -1278,14 +1278,14 @@ export default {
         color: #09f;
       }
 
-      .upload-submit{
+      .upload-submit {
         border: 1px solid #338ff5;
         color: #338ff5;
       }
 
       .submit-information {
         color: #fff;
-        background:linear-gradient(0deg,rgba(43,57,110,1),rgba(42,80,130,1));
+        background: linear-gradient(0deg, rgba(43, 57, 110, 1), rgba(42, 80, 130, 1));
       }
 
       .text-hints {
@@ -1304,11 +1304,11 @@ export default {
         color: #fff;
       }
 
-      .advanced-certification-text{
-        >.text-tips{
-          color:rgba(254,254,255, .7);
+      .advanced-certification-text {
+        > .text-tips {
+          color: rgba(254, 254, 255, .7);
 
-          >.tips-refresh{
+          > .tips-refresh {
             color: #338ff5;
           }
         }
@@ -1316,22 +1316,22 @@ export default {
     }
   }
 
-  &.day{
-    color:$dayFontColor;
+  &.day {
+    color: $dayFontColor;
     background-color: $dayBgColor;
 
-    .identity-header-background{
-      border:1px solid rgba(38,47,56,.1);
+    .identity-header-background {
+      border: 1px solid rgba(38, 47, 56, .1);
       border-radius: 2px;
       background-color: $dayBgColor;
 
-      .header-content{
+      .header-content {
         color: #338ff5;
       }
     }
 
     .identity-authentication-main {
-      border:1px solid rgba(38,47,56,.1);
+      border: 1px solid rgba(38, 47, 56, .1);
       background-color: #fff;
 
       .name-authentication-content {
@@ -1340,19 +1340,19 @@ export default {
         }
 
         .common-input {
-          border:1px solid rgba(38,47,56,.1);
+          border: 1px solid rgba(38, 47, 56, .1);
           color: #333;
         }
 
         .submit {
           color: #fff;
-          background:linear-gradient(81deg,rgba(43,57,110,1) 0%,rgba(42,80,130,1) 100%);
+          background: linear-gradient(81deg, rgba(43, 57, 110, 1) 0%, rgba(42, 80, 130, 1) 100%);
         }
       }
 
       .header-border {
         padding: 0 20px;
-        border-bottom: 1px solid rgba(38,47,56,.1);
+        border-bottom: 1px solid rgba(38, 47, 56, .1);
       }
 
       .authentication-type {
@@ -1362,28 +1362,28 @@ export default {
       .authentication-type-info {
         color: #d45858;
 
-        >.authentication-info {
+        > .authentication-info {
           color: #d45858;
         }
       }
     }
 
     .icon-down,
-    .main-header-title{
+    .main-header-title {
       color: #333;
     }
 
-    .identity-background{
+    .identity-background {
       background-color: #fff;
     }
 
-    >.advanced-certification-main{
+    > .advanced-certification-main {
       .identity-box {
-        border:1px solid rgba(38,47,56,.1);
+        border: 1px solid rgba(38, 47, 56, .1);
 
-        >.wait-veritfy-back {
-          >.wait-veritfy{
-            >.color-coin {
+        > .wait-veritfy-back {
+          > .wait-veritfy {
+            > .color-coin {
               color: #338ff5;
             }
 
@@ -1393,39 +1393,39 @@ export default {
               }
             }
 
-            >.color-coin-text {
+            > .color-coin-text {
               font-size: 140px;
               color: #338ff5;
             }
 
-            >.no-pass {
+            > .no-pass {
               color: #338ff5;
             }
 
             .no-pass-button {
               color: #fff;
-              background:linear-gradient(90deg,rgba(43,57,110,1) 0%,rgba(42,80,130,1) 100%);
+              background: linear-gradient(90deg, rgba(43, 57, 110, 1) 0%, rgba(42, 80, 130, 1) 100%);
             }
           }
         }
       }
 
       .header-border {
-        border:1px solid rgba(38,47,56,.1);
+        border: 1px solid rgba(38, 47, 56, .1);
       }
 
       .authentication-type {
         color: #09f;
       }
 
-      .upload-submit{
+      .upload-submit {
         border: 1px solid #338ff5;
         color: #338ff5;
       }
 
       .submit-information {
         color: #fff;
-        background:linear-gradient(0deg,rgba(43,57,110,1),rgba(42,80,130,1));
+        background: linear-gradient(0deg, rgba(43, 57, 110, 1), rgba(42, 80, 130, 1));
       }
 
       .text-hints {
@@ -1444,11 +1444,11 @@ export default {
         color: #333;
       }
 
-      .advanced-certification-text{
-        >.text-tips{
+      .advanced-certification-text {
+        > .text-tips {
           color: #333;
 
-          >.tips-refresh{
+          > .tips-refresh {
             color: #338ff5;
           }
         }

@@ -172,25 +172,25 @@ export default {
 }
 </script>
 <style scoped lang="scss">
-  .slider-box{
+  .slider-box {
     position: absolute;
-    bottom:.2rem;
-    width:100%;
+    bottom: .2rem;
+    width: 100%;
 
-    /*height:300px;*/
+    /* height:300px; */
 
-    /*margin:200px auto;*/
+    /* margin:200px auto; */
     overflow: hidden;
     transition: all 4s;
 
-    &.active{
-      opacity:.2;
+    &.active {
+      opacity: .2;
     }
 
-    /*opacity:.8;*/
-    .inner-box{
-      width:10rem;
-      height:1.7rem;
+    /* opacity:.8; */
+    .inner-box {
+      width: 10rem;
+      height: 1.7rem;
     }
   }
 
