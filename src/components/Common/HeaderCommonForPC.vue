@@ -662,7 +662,7 @@ export default{
           >.nav-item{
             text-align: center;
             display: inline-block;
-            padding:0 25px;
+            padding:0 2%;
             height:100%;
             vertical-align: top;
             transition: all .5s;
@@ -747,7 +747,7 @@ export default{
           }
           >.li-item{
             display:inline-block;
-            padding:0 10px;
+            padding:0 1%;
             /*用户登陆后鼠标悬浮出现个人中心效果*/
             .login{
               display: inline-block;
