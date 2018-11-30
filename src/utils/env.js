@@ -23,10 +23,10 @@ if (process.env.NODE_ENV == 'development') {
   // apiCommonUrl = 'http://api.new.bzu.com/' // 内部测试
   apiCommonUrl = 'http://192.168.1.200:8888/' // 内部测试
 
-  // xDomain = 'new.test.com'
+  xDomain = 'new.test.com'
   // xDomain = 'bithumber.com'
-  socketUrl = 'wss://ws.bzu.com/market'
-  // socketUrl = 'ws://192.168.1.200:8087/market'
+  // socketUrl = 'wss://ws.bzu.com/market'
+  socketUrl = 'ws://192.168.1.200:8087/market'
   // socketUrl = 'ws://192.168.1.52:8087'
 
   loginSocketUrl = 'wss://api.new.bzu.com/qrcodeLogin/'

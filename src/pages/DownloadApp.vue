@@ -4,6 +4,8 @@
     :style="{
       height:windowHeight+'px'
     }"
+    v-loading.fullscreen.lock="fullscreenLoading"
+    element-loading-background="rgba(0, 0, 0, 0.6)"
   >
     <HeaderCommonForMobile
       :style="{
@@ -87,7 +89,8 @@ export default {
       downloadUrl: '',
       isAndroid: false,
       isIOS: false,
-      isWXBrowserStatus: true
+      isWXBrowserStatus: true,
+      fullscreenLoading: true
     }
   },
   async created () {
@@ -110,6 +113,7 @@ export default {
     // 获取app下载地址
     async getAppDownLoadUrl () {
       const data = await getAppDownLoadUrlAjax()
+      this.fullscreenLoading = false
       if (!returnAjaxMsg(data, this)) {
         return false
       } else {
