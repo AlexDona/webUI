@@ -565,82 +565,98 @@ export default {
 </script>
 <style scoped lang="scss">
   @import '../../../static/css/scss/index.scss';
+
   /*@import '../../../static/css/scss/Trade/TradeCenter.scss';*/
   .trade-market-box {
     /*width:433px;*/
     > .inner-box {
       > .title {
-        padding: 0 4.5%;
-        height: 34px;
-        line-height: 34px;
-        margin-bottom: 1px;
-        box-shadow: 0 2px 6px rgba(0,0,0,.1);
         display: flex;
+        height: 34px;
+        padding: 0 4.5%;
+        margin-bottom: 1px;
+        line-height: 34px;
+        box-shadow: 0 2px 6px rgba(0,0,0,.1);
+
         > .text {
-          flex: 1;
           /*font-weight: 700;*/
           display: inline-block;
+          flex: 1;
           height: 100%;
+
           > span {
-            text-indent: 4px;
             display: inline-block;
             height: 100%;
+            text-indent: 4px;
             color:$mainColor;
             //border-bottom: 2px solid $mainColor;
           }
         }
+
         /*买卖单顺序操作按钮*/
         > .right {
           flex: 1;
           text-align: right;
+
           > button {
-            cursor: pointer;
             width: 28px;
             height: 20px;
             margin: 8px 8px 0 0;
+            background: url(../../assets/develop/middle.png) no-repeat center center;
             -webkit-background-size: 28px 20px;
             background-size: 28px 20px;
-            background: url(../../assets/develop/middle.png) no-repeat center center;
+            cursor: pointer;
           }
+
           > .middle {
           }
+
           > .bottom {
             background-image: url(../../assets/develop/buys.png);
           }
+
           > .top {
             background-image: url(../../assets/develop/sells.png);
           }
         }
       }
+
       /*表格内容*/
       > .content {
         height:1584px;
+
         > .inner-box {
 
         }
       }
     }
+
     &.night {
       > .inner-box {
         > .title {
           color: $mainNightTitleColor;
           background-color: $mainContentNightBgColor;
         }
+
         > .content {
           background-color: $mainContentNightBgColor;
+
           > .inner-box {
           }
         }
       }
     }
+
     &.day {
       > .inner-box {
         > .title {
           color: $dayMainTitleColor;
           background-color: $mainDayBgColor;
         }
+
         > .content {
           background-color: $mainDayBgColor;
+
           > .inner-box {
           }
         }

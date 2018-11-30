@@ -1,20 +1,23 @@
-/*个人中心（黑色主题）*/
+/* 个人中心（黑色主题） */
 .set-email.personal.night .el-form-item__label {
-  color: rgba(255,255,255,0.7);
+  color: rgba(255, 255, 255, .7);
 }
+
 .set-email.personal.night .el-input-group--append .el-input__inner {
-  background-color: #1E2636;
   border: 1px solid #485776;
   color: #a9bed4;
+  background-color: #1e2636;
 }
+
 .set-email.personal.night .el-input-group--append .el-input__inner:focus {
-  border: 1px solid #338FF5;
+  border: 1px solid #338ff5;
 }
+
 .set-email.personal.night .el-input-group__append {
-  background-color: #338FF5;
-  color: #fff;
   border-top: 1px solid #485776;
-  border-right: 1px solid #485776;
   border-bottom: 1px solid #485776;
+  color: #fff;
+  background-color: #338ff5;
+  border-right: 1px solid #485776;
 }
 

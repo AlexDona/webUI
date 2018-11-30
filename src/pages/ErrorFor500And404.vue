@@ -77,33 +77,39 @@ export default {
 <style scoped lang="scss" type="text/scss">
   .error-box{
     width:100%;
+
     /*height:600px;*/
     background-color: #272b41;
+
     >.inner-box{
       height:100%;
+
       >.error404,>.error500{
         width:500px;
         height:70%;
         margin:0 auto;
         text-align: center;
+
         >img{
           margin: 100px auto;
         }
+
         >p{
+          font-weight:400;
           font-size:22px;
           font-family:HYk2gj;
-          font-weight:400;
           color:rgba(51,143,245,1);
         }
+
         >a{
-          margin:40px auto;
           display: inline-block;
           width:140px;
           height:44px;
-          line-height:44px;
-          background:linear-gradient(81deg,rgba(43,57,110,1) 0%,rgba(42,80,130,1) 100%);
+          margin:40px auto;
           border-radius:4px;
+          line-height:44px;
           color:#fff;
+          background:linear-gradient(81deg,rgba(43,57,110,1) 0%,rgba(42,80,130,1) 100%);
         }
       }
     }

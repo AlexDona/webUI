@@ -391,57 +391,68 @@ export default {
 <style scoped lang="scss" type="text/scss">
 @import url(../../../static/css/scss/OTC/OTCCenter.scss);
 @import "../../../static/css/scss/index";
+
 .otc-business-apply-box{
   margin-top:66px;
   overflow: hidden;
+
   >.business-apply-content{
     padding-top: 20px;
+
     >.privilege{
-    width: 1150px;
-    margin: 107px auto 0px;
+      width: 1150px;
+      margin: 107px auto 0;
+
       >.title{
-        color: #fff;
         text-align: center;
+        color: #fff;
       }
+
       >.content{
         display: flex;
         justify-content: space-around;
+
         >.common{
-          margin-top: 120px;
+          position: relative;
           width: 210px;
           height: 250px;
-          position: relative;
+          margin-top: 120px;
           text-align: center;
+
           &::before{
-            content: "";
             position: absolute;
             top: -25px;
             left: 0;
             width: 0;
             height: 0;
             border-left: 105px solid transparent;
+            content: "";
             border-right: 105px solid transparent;
           }
+
           &::after{
-            content: "";
             position: absolute;
             bottom: -25px;
             left: 0;
             width: 0;
             height: 0;
             border-left: 105px solid transparent;
+            content: "";
             border-right: 105px solid transparent;
           }
+
           >.title{
             width: 83px;
-            color: #338FF5;
             padding-bottom: 10px;
             font-weight: 700;
+            color: #338ff5;
           }
+
           >.text{
-            line-height: 25px;
             margin-top: 60px;
+            line-height: 25px;
           }
+
           >.location-picture{
             position: absolute;
             top: -67px;
@@ -450,72 +461,88 @@ export default {
         }
       }
     }
+
     >.approve{
       width: 1150px;
       margin: 70px auto;
       margin-top:107px;
+
       >.title{
-        text-align: center;
         margin-top: 100px;
+        text-align: center;
       }
+
       >.number{
+        position: relative;
         width: 1150px;
         height: 52px;
+        margin-top: 70px;
         line-height: 58px;
         background: url(../../assets/develop/step.png) no-repeat center;
-        margin-top: 70px;
-        position: relative;
+
         >.common{
           font-size: 16px;
         }
+
         >.apply{
           position: absolute;
-          left: 185px;
           top: 0;
+          left: 185px;
         }
+
         >.send-email{
           position: absolute;
-          left: 430px;
           top: 0;
+          left: 430px;
         }
+
         >.submit-apply{
           position: absolute;
-          left: 680px;
           top: 0;
+          left: 680px;
         }
+
         >.pass{
           position: absolute;
-          left: 930px;
           top: 0;
+          left: 930px;
         }
       }
+
       >.step{
         width: 1150px;
         height: 650px;
-        margin-top: 70px;
-        background: url(../../assets/develop/business-apply-bgm.png) no-repeat center;
         padding: 40px 0 0 238px;
+        margin-top: 70px;
         font-size: 14px;
+        background: url(../../assets/develop/business-apply-bgm.png) no-repeat center;
+
         >.content{
           width: 620px;
+
           >p{
             line-height: 25px;
           }
+
           >.title{
             margin-top: 20px;
+
             &:first-child{
               margin-top: 20px;
             }
           }
         }
       }
+
       >.agree{
-        text-align: center;
         margin-top: 70px;
-      }
-      >.submit{
         text-align: center;
+      }
+
+      >.submit{
         margin-top: 20px;
+        text-align: center;
+
         >.button{
           width: 300px;
           height: 50px;
@@ -524,92 +551,115 @@ export default {
       }
     }
   }
+
   >.business-applying-content,.business-apply-success-content{
     width: 1150px;
-    margin: 70px auto;
     padding-top: 20px;
+    margin: 70px auto;
     text-align: center;
     background-color: $mainNightBgColor;
+
     >.text{
-      color: #fff;
-      font-size: 18px;
       margin-top: 40px;
+      font-size: 18px;
+      color: #fff;
+
       >.tip{
         line-height: 30px;
       }
     }
   }
+
   >.business-apply-success-content{
     >.picture{
       margin-top: 20px;
     }
+
     >.text{
       margin-top: 10px;
     }
   }
+
   >.business-apply-blank{
     width: 100%;
     height: 918px;
     background-color: $mainNightBgColor;
   }
+
   &.night{
-    background-color: $mainNightBgColor;
     overflow: hidden;
+    background-color: $mainNightBgColor;
+
     >.business-apply-content{
       overflow: hidden;
+
       >.privilege{
         >.title{
           color: #fff;
         }
+
         >.content{
           >.common{
             background: #202740;
+
             &::before{
               border-bottom: 25px solid #202740;
             }
+
             &::after{
               border-top: 25px solid #202740;
             }
+
             >.title{
-              color: #338FF5;
-              font-weight: 700;
               border-bottom: 1px dashed rgba(51, 143, 245,.3);
+              font-weight: 700;
+              color: #338ff5;
             }
+
             >.text{
               color: #fff;
             }
           }
         }
       }
+
       >.approve{
         >.title{
           color: #fff;
         }
+
         >.number{
           >.common{
             color: #fff;
           }
         }
+
         >.step{
-          color: #8F9CA6;
+          color: #8f9ca6;
+
           >.content{
             >.title{
               color: #fff;
             }
+
             >.tips{
-              color: #4B5D6E;
+              color: #4b5d6e;
+
               >.agree{
-                color: #D45858;
+                color: #d45858;
               }
             }
           }
         }
+
         >.agree{
           color: #fff;
+
           .agreement{
-            color: #D45858;
+            color: #d45858;
           }
         }
+
         >.submit{
           >.button{
             color: #fff;
@@ -619,63 +669,79 @@ export default {
       }
     }
   }
+
   &.day{
     overflow: hidden;
     background-color: $mainDayBgColor;
+
     >.business-apply-content{
       >.privilege{
         >.title{
-          color: #333333;
+          color: #333;
         }
+
         >.content{
           >.common{
             background: #202740;
+
             &::before{
               border-bottom: 25px solid #202740;
             }
+
             &::after{
               border-top: 25px solid #202740;
             }
+
             >.title{
-              color: #338FF5;
-              font-weight: 700;
               border-bottom: 1px dashed rgba(51, 143, 245,.3);
+              font-weight: 700;
+              color: #338ff5;
             }
+
             >.text{
               color: #fff;
             }
           }
         }
       }
+
       >.approve{
         >.title{
           color: #333;
         }
+
         >.number{
           >.common{
             color: #333;
           }
         }
+
         >.step{
-          color: #8F9CA6;
+          color: #8f9ca6;
+
           >.content{
             >.title{
               color: #fff;
             }
+
             >.tips{
-              color: #4B5D6E;
+              color: #4b5d6e;
+
               >.agree{
-                color: #D45858;
+                color: #d45858;
               }
             }
           }
         }
+
         >.agree{
           color: #333;
+
           .agreement{
-            color: #D45858;
+            color: #d45858;
           }
         }
+
         >.submit{
           >.button{
             color: #fff;
@@ -685,11 +751,13 @@ export default {
       }
     }
   }
+
   .businessApplyModel{
-    color: #D45858;
+    color: #d45858;
     cursor: pointer;
   }
 }
+
 .black.otc-business-apply-box.day{
   // 当为申请中和申请成功的页面时候，只有黑色主题颜色
   background-color: $mainNightBgColor;

@@ -12,9 +12,9 @@
 }
 
 .nav-box.common .el-dialog {
+  height: 380px;
   border-radius: 10px;
   overflow: hidden;
-  height: 380px;
 }
 
 .v-modal {
@@ -26,103 +26,119 @@
   z-index: 2100 !important;
 }
 
-.nav-box.common .el-dialog__body>p {
+.nav-box.common .el-dialog__body > p {
   line-height: 70px;
 }
 
 .nav-box.common .el-dialog__footer {
-  border: none;
   padding: 35px 40px;
+  border: none;
 }
 
 .nav-box.common .el-dialog__footer .el-button {
-  width:100%;
+  width: 100%;
+  border: none;
   background: linear-gradient(to left, #2a5082, #2b396e);
-  border:none;
 }
+
 .nav-box.common .el-dialog__title {
-  font-size:20px;
+  font-size: 20px;
 }
+
 .nav-box.common .el-select {
-  width:100%;
+  width: 100%;
 }
 
 .nav-box.common .el-input--suffix .el-input__inner,
-.nav-box.common .el-select-dropdown__item selected hover,
+/*.nav-box.common .el-select-dropdown__item selected hover,*/
 .nav-box.common .el-radio-button__inner,
-.nav-box.common .el-select-dropdown__item{
+.nav-box.common .el-select-dropdown__item {
+  width: 100%;
   height: 44px;
   line-height: 44px;
-  width:100%;
-}
-.nav-box.common .el-radio-button__inner{
-  width:110px;
-  padding:0;
-  margin-right:44px;
-  border-radius: 4px;
-  border:1px solid #c3c8cd;
-}
-/*单选框选中*/
-.nav-box.common .el-radio-button__orig-radio:checked+.el-radio-button__inner{
-  box-shadow:none;
-  border:1px solid #338ff5;
-}
-/*单选框选中背景*/
-.nav-box.common .el-icon-check{
-  position: absolute;
-  right: 0;
-  top:0;
-  background-color: #338ff5;
-  padding:2px 2px 5px 5px;
-  border-bottom-left-radius: 2em;
-  color:#fff;
-}
-/*下拉箭头*/
-.nav-box .el-popper[x-placement^=bottom] .popper__arrow{
-  border-bottom-color:transparent;
-}
-.nav-box .el-popper[x-placement^=bottom] .popper__arrow::after{
-  border:none;
 }
 
-/*消息弹窗*/
-.el-message {
-  min-width: 0;
-  top: 40%;
+.nav-box.common .el-radio-button__inner {
+  width: 110px;
+  padding: 0;
+  margin-right: 44px;
+  border: 1px solid #c3c8cd;
+  border-radius: 4px;
 }
-/*全局二次弹窗样式*/
+
+/* 单选框选中 */
+.nav-box.common .el-radio-button__orig-radio:checked + .el-radio-button__inner {
+  border: 1px solid #338ff5;
+  box-shadow: none;
+}
+
+/* 单选框选中背景 */
+.nav-box.common .el-icon-check {
+  position: absolute;
+  top: 0;
+  right: 0;
+  padding: 2px 2px 5px 5px;
+  border-bottom-left-radius: 2em;
+  color: #fff;
+  background-color: #338ff5;
+}
+
+/* 下拉箭头 */
+.nav-box .el-popper[x-placement^=bottom] .popper__arrow {
+  border-bottom-color: transparent;
+}
+
+.nav-box .el-popper[x-placement^=bottom] .popper__arrow::after {
+  border: none;
+}
+
+/* 消息弹窗 */
+.el-message {
+  top: 40%;
+  min-width: 0;
+}
+
+/* 全局二次弹窗样式 */
 .el-message-box__header {
   padding: 0;
 }
+
 .el-message-box {
-  width:300px;
-  height:190px;
+  width: 300px;
+  height: 190px;
   border: 0;
-  background:rgba(40,51,74,1);
+  background: rgba(40, 51, 74, 1);
 }
+
 .el-message-box__headerbtn .el-message-box__close {
   display: none;
 }
+
 .el-message-box__btns button {
-  width:80px;
-  height:36px;
+  width: 80px;
+  height: 36px;
   border: 0;
 }
+
 .el-message-box__content {
   padding: 45px 15px 25px;
 }
+
 .el-message-box__message p {
-  text-align: center;
   font-size: 14px;
+  text-align: center;
 }
+
 .el-message-box__btns button:nth-child(2) {
-  border-radius:4px;
   margin-left: 44px;
+  border-radius: 4px;
 }
+
 .el-message-box__btns {
   margin-top: 10px;
   text-align: center;
 }
-.el-message-box__status+.el-message-box__message {
-   padding-left: 0;
+
+.el-message-box__status + .el-message-box__message {
+  padding-left: 0;
 }

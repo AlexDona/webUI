@@ -260,58 +260,69 @@ export default {
     width:100%;
     // height:100%;
     >.content{
-      overflow: visible;
       width:100%;
       height:100%;
+      overflow: visible;
+
       >.top{
-        height:250px;
-        text-align: center;
         width:100%;
+        height:250px;
+        padding-top:100px;
+        text-align: center;
         background:#121824 url(../../assets/develop/about-us.png) no-repeat center center;
         -webkit-background-size: 100% 100%;
         background-size: 100% 100%;
-        padding-top:100px;
+
         >h1{
-          font-size: 36px;
-          color:#8BA0CA;
           font-weight: 500;
+          font-size: 36px;
+          color:#8ba0ca;
         }
+
         >p{
           font-size: 22px;
-          color:#97AAC8;
+          color:#97aac8;
         }
       }
+
       >.content{
         height:100%;
+
         >.inner-box{
           box-sizing: border-box;
-          margin:0px auto 0px;
+
           /*height:1100px;*/
           width:1100px;
           padding-bottom:50px;
+          margin:0 auto;
+
           .tab-content{
             width:1100px;
           }
         }
       }
     }
+
     &.night{
       >.content{
         >.content{
           background-color: #121824;
+
           >.inner-box{
-            color:#8BA0CA
+            color:#8ba0ca
           }
         }
       }
     }
+
     &.day{
       >.content{
         >.content{
           background-color: #fff;
+
           >.inner-box{
+            color:#666;
             background-color: #fff;
-            color:#666666;
           }
         }
       }

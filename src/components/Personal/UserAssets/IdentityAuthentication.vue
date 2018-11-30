@@ -970,390 +970,484 @@ export default {
 }
 </script>
 <style scoped lang="scss">
-  @import "../../../../static/css/scss/Personal/IndexPersonal";
+@import "../../../../static/css/scss/Personal/IndexPersonal";
+
 .identity-authentication{
   >.identity-authentication-main{
     .name-authentication-content {
       width: 500px;
       padding-top: 28px;
-      margin: 0 auto;
       padding-bottom: 25px;
+      margin: 0 auto;
+
       .common-input,
       .submit {
+        box-sizing: border-box;
         width: 270px;
         height: 38px;
-        border-radius: 4px;
         padding-left: 20px;
-        box-sizing: border-box;
+        border-radius: 4px;
       }
     }
+
     .authentication-type {
       flex: 4;
       line-height: 56px;
       cursor: pointer;
     }
+
     .authentication-type-info {
-      width: 785px;
       flex: 4;
-      line-height: 56px;
+      width: 785px;
       padding-left: 10px;
+      line-height: 56px;
     }
+
     .advanced-main-header {
       width: 100%;
       height: 56px;
+
       .main-header-title{
         line-height: 56px;
       }
+
       .icon-down{
+        padding-right: 10px;
         font-size: 16px;
         line-height: 56px;
-        padding-right: 10px;
       }
     }
   }
+
   >.advanced-certification-main{
     .name-authentication-content {
       width: 350px;
       padding-top: 28px;
-      margin: 0 auto;
       padding-bottom: 25px;
+      margin: 0 auto;
     }
+
     .header-border {
       height: 50px;
       line-height: 50px;
     }
+
     .authentication-type {
       line-height: 56px;
       cursor: pointer;
     }
+
     .advanced-main-header {
       width: 100%;
       height: 56px;
+
       .icon-down{
+        padding-right: 10px;
         font-size: 16px;
         line-height: 56px;
-        padding-right: 10px;
       }
     }
+
     .advanced-certification-content{
       width: 126px;
       height: 128px;
       margin: 11px auto 47px;
     }
+
     .advanced-certification-text{
       width: 337px;
       height: 93px;
       margin: 0 auto;
+
       .tips-top {
         margin-top: 15px;
       }
+
       .text-tips {
         line-height: 20px;
       }
     }
+
     .identity-box {
       >.wait-no-pass {
         padding-top: 50px !important;
       }
+
       >.wait-veritfy-back {
         height: 400px;
         padding-top: 130px;
+
         >.wait-veritfy{
           >.color-coin {
-            color: #338FF5;
+            color: #338ff5;
           }
+
           .list-height {
             margin-top: 10px;
             line-height: 25px;
           }
+
           .no-pass-button {
             width:200px;
             height:34px;
-            border-radius:4px;
             margin-top: 20px;
+            border-radius:4px;
           }
         }
       }
     }
+
     .transition-box{
       >.advanced-upload {
         min-height: 180px;
-        margin-top: 62px;
         padding:0 20px;
+        margin-top: 62px;
+
         .advanced-upload {
           margin: 0 155px;
         }
+
         .upload,
         .advanced-upload {
-          width: 180px;
           float: left;
+          width: 180px;
           margin: 0 64px;
           text-align: center;
         }
+
         .upload {
           .default-center {
-            height: 116px;
             position: relative;
+            height: 116px;
             overflow: hidden;
+
             >.upload-input {
               display: none;
             }
           }
+
           .default-picture {
             height: 113px;
           }
         }
+
         .upload-submit {
-          border-radius: 3px;
           padding: 8px 14px 9px;
+          border-radius: 3px;
         }
       }
+
       .upload-button {
         width: 100%;
         text-align: center;
+
         .submit-information{
           width:200px;
           height:34px;
-          line-height: 34px;
           margin: 90px auto 83px;
           border-radius:4px;
+          line-height: 34px;
         }
+
         .false-tips {
           height: 20px;
         }
       }
+
       >.advanced-prompt{
         margin: 20px 138px 0 27px;
+
         >.text-hints {
-          text-align: left;
           line-height: 25px;
+          text-align: left;
         }
+
         >.icon-font-color {
           height: 30px;
           line-height: 30px;
+
           >.icon-font {
             width: 18px;
             height: 16px;
           }
+
           >.vertical-align {
             vertical-align: middle;
           }
         }
       }
+
       >.personal-information {
-        line-height: 30px;
         display: flex;
-        padding: 0 24px 0 24px;
+        padding: 0 24px;
         margin-top: 34px;
+        line-height: 30px;
+
         >.information{
           flex: 1;
         }
       }
     }
   }
+
   &.night{
-    background-color: $nightBgColor;
     color:$nightFontColor;
+    background-color: $nightBgColor;
+
     .identity-header-background{
       background-color: $nightMainBgColor;
+
       .header-content{
-        color: #338FF5;
+        color: #338ff5;
       }
     }
+
     .identity-authentication-main {
       background-color: $nightMainBgColor;
+
       .false-tips {
-        color: #D45858;
+        color: #d45858;
       }
+
       .header-border {
-        border-bottom: 1px solid #39424D;
+        border-bottom: 1px solid #39424d;
       }
+
       .authentication-type {
-        color: #0099FF;
+        color: #09f;
       }
+
       .authentication-type-info {
-        color: #D45858;
+        color: #d45858;
+
         >.authentication-info {
-          color: #D45858;
+          color: #d45858;
         }
       }
     }
+
     .icon-down,
     .main-header-title{
       color: #fff;
     }
+
     .identity-background{
       background-color: $nightMainBgColor;
     }
+
     >.advanced-certification-main{
       .identity-box {
-        border:1px solid rgba(38,47,56,0.1);
+        border:1px solid rgba(38,47,56,.1);
+
         >.wait-veritfy-back {
           >.wait-veritfy{
             >.color-coin {
-              color: #338FF5;
+              color: #338ff5;
             }
+
             .list-height {
               .no-error {
-                color: #6F798A;
+                color: #6f798a;
               }
             }
+
             >.color-coin-text {
-              color: #338FF5;
               font-size: 140px;
+              color: #338ff5;
             }
+
             >.no-pass {
-              color: #338FF5;
+              color: #338ff5;
             }
+
             .no-pass-button {
-              background:linear-gradient(90deg,rgba(43,57,110,1) 0%,rgba(42,80,130,1) 100%);
               color: #fff;
+              background:linear-gradient(90deg,rgba(43,57,110,1) 0%,rgba(42,80,130,1) 100%);
             }
           }
         }
       }
+
       .header-border {
-        border-bottom: 1px solid #39424D;
+        border-bottom: 1px solid #39424d;
       }
+
       .authentication-type {
-        color: #0099FF;
+        color: #09f;
       }
+
       .upload-submit{
-        border: 1px solid #338FF5;
-        color: #338FF5;
+        border: 1px solid #338ff5;
+        color: #338ff5;
       }
+
       .submit-information {
-        background:linear-gradient(0deg,rgba(43,57,110,1),rgba(42,80,130,1));
         color: #fff;
+        background:linear-gradient(0deg,rgba(43,57,110,1),rgba(42,80,130,1));
       }
+
       .text-hints {
-        color: #A9BED4;
+        color: #a9bed4;
       }
+
       .icon-font-color {
-        color: #C65252;
+        color: #c65252;
       }
+
       .info-type {
-        color: #617499
+        color: #617499;
       }
+
       .user-info {
         color: #fff;
       }
+
       .advanced-certification-text{
         >.text-tips{
-          color:rgba(254,254,255, 0.7);
+          color:rgba(254,254,255, .7);
+
           >.tips-refresh{
-            color: #338FF5;
+            color: #338ff5;
           }
         }
       }
     }
   }
+
   &.day{
-    background-color: $dayBgColor;
     color:$dayFontColor;
+    background-color: $dayBgColor;
+
     .identity-header-background{
-      background-color: $dayBgColor;
-      border:1px solid rgba(38,47,56,0.1);
+      border:1px solid rgba(38,47,56,.1);
       border-radius: 2px;
+      background-color: $dayBgColor;
+
       .header-content{
-        color: #338FF5;
+        color: #338ff5;
       }
     }
+
     .identity-authentication-main {
-      border:1px solid rgba(38,47,56,0.1);
+      border:1px solid rgba(38,47,56,.1);
+      background-color: #fff;
+
       .name-authentication-content {
         .false-tips {
-          color: #D45858;
+          color: #d45858;
         }
+
         .common-input {
-          border:1px solid rgba(38,47,56,0.1);
+          border:1px solid rgba(38,47,56,.1);
           color: #333;
         }
+
         .submit {
           color: #fff;
           background:linear-gradient(81deg,rgba(43,57,110,1) 0%,rgba(42,80,130,1) 100%);
         }
       }
-      background-color: #fff;
+
       .header-border {
         padding: 0 20px;
-        border-bottom: 1px solid rgba(38,47,56,0.1);
+        border-bottom: 1px solid rgba(38,47,56,.1);
       }
+
       .authentication-type {
-        color: #0099FF;
+        color: #09f;
       }
+
       .authentication-type-info {
-        color: #D45858;
+        color: #d45858;
+
         >.authentication-info {
-          color: #D45858;
+          color: #d45858;
         }
       }
     }
+
     .icon-down,
     .main-header-title{
       color: #333;
     }
+
     .identity-background{
       background-color: #fff;
     }
+
     >.advanced-certification-main{
       .identity-box {
-        border:1px solid rgba(38,47,56,0.1);
+        border:1px solid rgba(38,47,56,.1);
+
         >.wait-veritfy-back {
           >.wait-veritfy{
             >.color-coin {
-              color: #338FF5;
+              color: #338ff5;
             }
+
             .list-height {
               .no-error {
                 color: #333;
               }
             }
+
             >.color-coin-text {
-              color: #338FF5;
               font-size: 140px;
+              color: #338ff5;
             }
+
             >.no-pass {
-              color: #338FF5;
+              color: #338ff5;
             }
+
             .no-pass-button {
-              background:linear-gradient(90deg,rgba(43,57,110,1) 0%,rgba(42,80,130,1) 100%);
               color: #fff;
+              background:linear-gradient(90deg,rgba(43,57,110,1) 0%,rgba(42,80,130,1) 100%);
             }
           }
         }
       }
+
       .header-border {
-        border:1px solid rgba(38,47,56,0.1);
+        border:1px solid rgba(38,47,56,.1);
       }
+
       .authentication-type {
-        color: #0099FF;
+        color: #09f;
       }
+
       .upload-submit{
-        border: 1px solid #338FF5;
-        color: #338FF5;
+        border: 1px solid #338ff5;
+        color: #338ff5;
       }
+
       .submit-information {
-        background:linear-gradient(0deg,rgba(43,57,110,1),rgba(42,80,130,1));
         color: #fff;
+        background:linear-gradient(0deg,rgba(43,57,110,1),rgba(42,80,130,1));
       }
+
       .text-hints {
-        color: #666666;
+        color: #666;
       }
+
       .icon-font-color {
-        color: #C65252;
+        color: #c65252;
       }
+
       .info-type {
-        color: #7D90AC;
+        color: #7d90ac;
       }
+
       .user-info {
         color: #333;
       }
+
       .advanced-certification-text{
         >.text-tips{
           color: #333;
+
           >.tips-refresh{
-            color: #338FF5;
+            color: #338ff5;
           }
         }
       }

@@ -1,29 +1,36 @@
-/*商家申请样式重置*/
+/* 商家申请样式重置 */
+
 /* 同意协议点选按钮 */
+
 /* 利用多选框变原型 */
-.otc-business-apply-box .el-checkbox__inner{
+.otc-business-apply-box .el-checkbox__inner {
   border-radius: 6px;
   background-color: #eee;
 }
+
 /* 改变对号的颜色 */
-.otc-business-apply-box .el-checkbox__inner::after{
-  border: 1px solid #1F2F47;
-  border-left: 0;
+.otc-business-apply-box .el-checkbox__inner::after {
+  border: 1px solid #1f2f47;
   border-top: 0;
+  border-left: 0;
 }
-.otc-business-apply-box .el-dialog{
- height: 800px;
- overflow: auto;
- background: #121824;
- line-height: 30px;
- text-align: left;
+
+.otc-business-apply-box .el-dialog {
+  height: 800px;
+  overflow: auto;
+  line-height: 30px;
+  text-align: left;
+  background: #121824;
 }
-.otc-business-apply-box .el-dialog__header{
+
+.otc-business-apply-box .el-dialog__header {
   text-align: center;
 }
-.otc-business-apply-box .el-dialog__body{
-  color: #8494A6;
+
+.otc-business-apply-box .el-dialog__body {
+  color: #8494a6;
 }
-.el-dialog__title{
-  color: #338FF5;
+
+.el-dialog__title {
+  color: #338ff5;
 }

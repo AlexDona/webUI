@@ -90,39 +90,48 @@ export default {
 <style scoped lang="scss">
   @import "../../static/css/scss/index";
   @import "../../static/css/scss/Trade/TradeCenter";
+
   .trade-box{
-    margin-top:66px;
-    min-width:1366px;
-    width:100%;
     box-sizing: border-box;
-     >.inner-box{
-       padding:14px 1.5625%;
-       display:block;
-       box-sizing: border-box;
-       width:100%;
-       margin:0 auto;
-       >div{
-         margin-right:0.4166666666%;
-         &:last-of-type{
-           margin-right:0;
-         }
-       }
-       >.left{
-         width:22.909561217%;
-         font-size: 12px;
-       }
-       >.middle{
-         width:53.260869565%;
-       }
-       >.right{
-         width:22.909561217%;
-       }
-     }
+    width:100%;
+    min-width:1366px;
+    margin-top:66px;
+
+    >.inner-box{
+      display:block;
+      box-sizing: border-box;
+      width:100%;
+      padding:14px 1.5625%;
+      margin:0 auto;
+
+      >div{
+        margin-right:.4166666666%;
+
+        &:last-of-type{
+          margin-right:0;
+        }
+      }
+
+      >.left{
+        width:22.909561217%;
+        font-size: 12px;
+      }
+
+      >.middle{
+        width:53.260869565%;
+      }
+
+      >.right{
+        width:22.909561217%;
+      }
+    }
+
     &.night{
       >.inner-box{
         background-color: $mainNightBgColor;
       }
     }
+
     &.day{
       >.inner-box{
         background-color: $dayInnerBoxBg;

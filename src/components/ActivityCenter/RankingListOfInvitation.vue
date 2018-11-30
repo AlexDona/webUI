@@ -194,8 +194,8 @@ export default {
 }
 </script>
 <style scoped lang="scss" type="text/scss">
-  .ranking-list-of-invitation-box{
-    margin-top:66px;
+  .ranking-list-of-invitation-box {
+    margin-top: 66px;
     >.inner-box{
       width:100%;
       overflow: hidden;
@@ -205,84 +205,99 @@ export default {
         -webkit-background-size: 100% 100%;
         background-size: 100% 100%;
       }
+
       >.content{
-        background-color: #121824;
         height:1750px;
         margin-top:-1px;
+        background-color: #121824;
+
         >.inner-box{
-          margin: 0 auto;
           width:900px;
           height:100%;
+          margin: 0 auto;
+
           >.header{
             width:900px;
             height:30px;
-            border:6px solid #4461CB;
+            border:6px solid #4461cb;
             border-radius: 15px;
           }
+
           >.top{
             width:850px;
-            background:linear-gradient(0deg,rgba(30,51,133,1) 0%,rgba(85,83,204,1) 100%);
-            margin: -15px auto;
             padding:10px 50px 50px;
+            margin: -15px auto;
             color:#fff;
+            background:linear-gradient(0deg,rgba(30,51,133,1) 0%,rgba(85,83,204,1) 100%);
+
             >.english{
               font-size: 18px;
             }
+
             p{
               line-height: 30px;
             }
+
             >.time{
-              text-align: center;
               line-height: 80px;
+              text-align: center;
             }
           }
+
           >.middle-line{
-            border-bottom:10px dotted #390156;
-            margin:10px auto;
-            width:850px;
             position: relative;
             z-index: 2;
-          }
-          >.main-content{
-            margin:-14px auto;
-            height:1000px;
             width:850px;
-            background-color: #233e9a;
+            margin:10px auto;
+            border-bottom:10px dotted #390156;
+          }
+
+          >.main-content{
+            width:850px;
+            height:1000px;
+            margin:-14px auto;
             overflow: hidden;
+            background-color: #233e9a;
+
             >.title{
-              margin: 30px auto;
               width:240px;
               height:60px;
-              line-height:60px;
-              background:linear-gradient(90deg,rgba(255,182,56,1) 0%,rgba(250,207,16,1) 100%);
+              margin: 30px auto;
               border-radius:30px;
-              box-shadow:0px 2px 6px 0px rgba(88,46,199,1);
-              text-align: center;
+              font-weight:500;
               font-size:22px;
               font-family:PingFang-SC-Medium;
-              font-weight:500;
+              line-height:60px;
+              text-align: center;
               color:rgba(76,40,149,1);
+              background:linear-gradient(90deg,rgba(255,182,56,1) 0%,rgba(250,207,16,1) 100%);
+              box-shadow:0 2px 6px 0 rgba(88,46,199,1);
             }
+
             >.table{
               width:760px;
               height:900px;
               margin:0 auto;
+
               >.th{
-                height:50px;
-                line-height:50px;
-                border-bottom:1px solid rgba(255,255,255,0.1);
-                font-size: 18px;
                 display:flex;
+                height:50px;
+                border-bottom:1px solid rgba(255,255,255,.1);
+                font-size: 18px;
+                line-height:50px;
+
                 >.td{
                   flex:1;
                   color:#fff;
                 }
               }
+
               >.tr{
-                margin: 4px 0;
-                height:40px;
-                line-height:40px;
                 display:flex;
+                height:40px;
+                margin: 4px 0;
+                line-height:40px;
+
                 &:nth-of-type(2),
                 &:nth-of-type(3),
                 &:nth-of-type(4)
@@ -290,40 +305,45 @@ export default {
                   background:linear-gradient(90deg,rgba(83,82,201,1) ,rgba(255,255,255,0));
 
                 }
+
                 >.index{
                   >span{
                     display:inline-block;
                     width:30px;
                     height:30px;
+                    margin-left:10px;
                     line-height:30px;
                     text-align: center;
-                    margin-left:10px;
                   }
                 }
+
                 &:nth-of-type(2){
                   >.index{
                     >span{
-                      background: url(../../assets/develop/first.png) no-repeat center center;
                       color:#000;
+                      background: url(../../assets/develop/first.png) no-repeat center center;
                     }
                   }
                 }
+
                 &:nth-of-type(3){
                   >.index{
                     >span{
-                      background: url(../../assets/develop/second.png) no-repeat center center;
                       color:#000;
+                      background: url(../../assets/develop/second.png) no-repeat center center;
                     }
                   }
                 }
+
                 &:nth-of-type(4){
                   >.index{
                     >span{
-                      background: url(../../assets/develop/third.png) no-repeat center center;
                       color:#000;
+                      background: url(../../assets/develop/third.png) no-repeat center center;
                     }
                   }
                 }
+
                 >.td{
                   flex:1;
                   color:#fff;

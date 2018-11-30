@@ -583,71 +583,89 @@ export default {
 </script>
 <style scoped lang="scss" type="text/scss">
   @import "../../../static/css/scss/index";
+
   .otc-merchants-orders-box{
     margin-top:66px;
     overflow: hidden;
+
     >.otc-merchants-orders-content{
       width: 1150px;
-      margin: 70px auto 10px;
       padding-top: 50px;
+      margin: 70px auto 10px;
+
       >.merchants-title{
         height: 30px;
-        line-height: 30px;
         margin-bottom: 30px;
+        line-height: 30px;
       }
+
       >.merchants-orders-main{
         >.orders-main-top{
           min-height: 60px;
-          line-height: 60px;
           margin-bottom: 25px;
+          line-height: 60px;
+
           >.filtrate-text{
             margin-right: 5px;
           }
+
           >.status-input{
             margin-right: 40px;
           }
+
           >.date-picker{
             >.date-short-line{
               margin: 0 3px;
             }
           }
+
           >.inquire-button{
             float: right;
           }
         }
+
         >.orders-main-bottom{
           min-height: 440px;
+
           .xilian{
             vertical-align: middle;
           }
         }
+
         .page{
-          text-align: center;
           padding: 10px 0;
+          text-align: center;
         }
       }
     }
+
     &.night{
       background-color: $mainNightBgColor;
+
       >.otc-merchants-orders-content{
         >.merchants-title{
-          color: #338FF5;
-          border-left: 3px solid #338FF5;
+          border-left: 3px solid #338ff5;
+          color: #338ff5;
         }
+
         >.merchants-orders-main{
           >.orders-main-top{
             >.filtrate-text{
-              color: #9DA5B3;
+              color: #9da5b3;
             }
+
             >.all-clear{
-              color: #338FF5;
+              color: #338ff5;
             }
           }
+
           >.orders-main-bottom{
             min-height: 440px;
+
             .red{
-              color: #D45858;
+              color: #d45858;
             }
+
             .green{
               color: #008069;
             }
@@ -655,27 +673,34 @@ export default {
         }
       }
     }
+
     &.day{
       background-color: $mainDayBgColor;
+
       >.otc-merchants-orders-content{
         >.merchants-title{
-          color: #338FF5;
-          border-left: 3px solid #338FF5;
+          border-left: 3px solid #338ff5;
+          color: #338ff5;
         }
+
         >.merchants-orders-main{
           >.orders-main-top{
             >.filtrate-text{
-              color: #9DA5B3;
+              color: #9da5b3;
             }
+
             >.all-clear{
-              color: #338FF5;
+              color: #338ff5;
             }
           }
+
           >.orders-main-bottom{
             min-height: 440px;
+
             .red{
-              color: #D45858;
+              color: #d45858;
             }
+
             .green{
               color: #008069;
             }

@@ -7,9 +7,6 @@ import {
 } from '../env'
 import axios from 'axios'
 import store from '../../vuex'
-// import router from '../../router/index'
-// import {getStoreWithJson} from '../index'
-// import Vue from 'vue'
 let failureCount = 0
 let util = {}
 util.ajax = axios.create({

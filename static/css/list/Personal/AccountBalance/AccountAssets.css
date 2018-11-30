@@ -1,75 +1,92 @@
 /* tabs组件出现蓝色边框问题 */
-.account-assets.personal .el-tabs__active-bar{
+.account-assets.personal .el-tabs__active-bar {
   height: 0 !important;
 }
+
 .account-assets.personal .el-switch__core {
-  border: 0;
   width: 32px !important;
-  height: 15px
+  height: 15px;
+  border: 0;
 }
+
 .account-assets.personal .el-switch.is-checked .el-switch__core::after {
   margin-left: -14px;
 }
+
 .account-assets.personal .el-switch__core::after {
   width: 14px;
   height: 14px;
 }
+
 .account-assets.personal .el-input-group__append {
   width: 89px;
   height: 30px;
   border: 0;
 }
+
 .account-assets.personal .el-button {
   padding: 0;
   border: 0;
 }
+
 .account-assets.personal .el-input__inner {
-  border: 0;
   width: 350px;
   height: 34px;
+  border: 0;
   border-radius: 2px;
 }
+
 .account-assets.personal .el-input__icon {
   display: none;
 }
+
 .account-assets.personal .el-dialog {
   width: 325px;
 }
+
 .account-assets.personal .el-dialog__header {
   height: 50px;
-  padding: 10px 20px 10px;
+  padding: 10px 20px;
   border-radius: 5px;
   line-height: 30px;
 }
+
 .account-assets.personal .el-dialog__body {
-  padding: 25px 27px 0px;
+  padding: 25px 27px 0;
   line-height: 25px;
 }
+
 .account-assets.personal .el-form-item {
-  margin-bottom: 0px;
   height: 85px;
+  margin-bottom: 0;
 }
+
 .account-assets.personal .el-dialog__title {
   font-size: 16px;
 }
+
 .account-assets.personal .el-form-item__label {
   height: 20px;
   line-height: 20px;
 }
+
 .account-assets.personal .el-button {
-  width:270px;
-  height:34px;
+  width: 270px;
+  height: 34px;
 }
-.account-assets.personal .el-form--label-top .el-form-item__label{
+
+.account-assets.personal .el-form--label-top .el-form-item__label {
   float: none;
-  text-align: left;
   padding: 0;
-}
-.account-assets.personal .el-dialog__footer {
   text-align: left;
-  padding: 0px 27px 25px;
 }
+
+.account-assets.personal .el-dialog__footer {
+  padding: 0 27px 25px;
+  text-align: left;
+}
+
 .security-center.personal .el-table {
-  margin-left: 2px;
   width: 968px !important;
+  margin-left: 2px;
 }

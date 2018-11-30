@@ -215,39 +215,46 @@ export default {
 <style scoped lang="scss">
   @import '../../../static/css/scss/index.scss';
   @import '../../../static/css/scss/Trade/TradeCenter.scss';
+
   .depth-box{
     margin:10px auto;
+
     >.title{
-      padding:0 2.1%;
       box-sizing: border-box;
       height:34px;
-      line-height: 34px;
+      padding:0 2.1%;
+
       /*font-weight: 700;*/
       margin-bottom:1px;
+      line-height: 34px;
+
       >.text{
         display:inline-block;
-        text-indent: 4px;
         height:100%;
         border-bottom:2px solid $mainColor;
+        text-indent: 4px;
         color:$mainColor;
       }
     }
+
     >.depth{
       width:100%;
       height:308px;
     }
+
     &.night{
       >.title{
         color:$nightMainTitleColor;
         background-color: $mainContentNightBgColor;
-        box-shadow:2px 0px 3px rgba(27,35,49,1);
+        box-shadow:2px 0 3px rgba(27,35,49,1);
       }
     }
+
     &.day{
       >.title{
         color:$dayMainTitleColor;
         background-color: $dayMainBgColor;
-        box-shadow:2px 0px 3px rgba(239,239,239,1);
+        box-shadow:2px 0 3px rgba(239,239,239,1);
       }
     }
   }

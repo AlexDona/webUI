@@ -1,41 +1,49 @@
-/*首页交易区（白色主题）*/
+/* 首页交易区（白色主题） */
 
-/*tab栏背景*/
-.market-list-box.home.day .ivu-tabs-nav-scroll{
+/* tab栏背景 */
+.market-list-box.home.day .ivu-tabs-nav-scroll {
   background-color: #fff;
 }
-/*input search 文字*/
-.market-list-box.home.day .search-box .ivu-input{
-  color:#333;
+
+/* input search 文字 */
+.market-list-box.home.day .search-box .ivu-input {
+  color: #333;
 }
-/*tab栏每一项*/
-.market-list-box.home.day .ivu-tabs-nav .ivu-tabs-tab{
-  color:#333;
+
+/* tab栏每一项 */
+.market-list-box.home.day .ivu-tabs-nav .ivu-tabs-tab {
+  color: #333;
 }
-.market-list-box.home.day .ivu-tabs-nav .ivu-tabs-tab-active{
-  color:#fff;
+
+.market-list-box.home.day .ivu-tabs-nav .ivu-tabs-tab-active {
+  color: #fff;
 }
+
 .market-list-box.home.day .ivu-table th,
 .market-list-box.home.day .ivu-table td {
   border-bottom: 1px solid #d7d7d7;
 }
-.market-list-box.home.day .ivu-table-cell{
-  color:#333;
+
+.market-list-box.home.day .ivu-table-cell {
+  color: #333;
 }
 
-/*选中行颜色*/
-.market-list-box.day .el-table--enable-row-hover .el-table__body tr:hover>td{
-  background-color:#eaf2fa;
+/* 选中行颜色 */
+.market-list-box.day .el-table--enable-row-hover .el-table__body tr:hover > td {
+  background-color: #eaf2fa;
 }
-/*表格颜色*/
-.market-list-box.day .el-table{
-  color:#333;
+
+/* 表格颜色 */
+.market-list-box.day .el-table {
+  color: #333;
 }
-/*表头颜色*/
-.market-list-box.home.day .el-table th div{
-  color:#333;
+
+/* 表头颜色 */
+.market-list-box.home.day .el-table th div {
+  color: #333;
 }
-/*主币种名称颜色*/
+
+/* 主币种名称颜色 */
 .market-list-box.home.day .symbol {
-  color:#333;
+  color: #333;
 }

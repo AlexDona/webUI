@@ -329,31 +329,40 @@ export default {
 </script>
 <style scoped lang="scss" type="text/scss">
 @import "../../../static/css/scss/OTC/OTCCenter.scss";
+
 .otc-completed-order-box{
   >.completed-order-content{
     min-height: 500px;
+
     .page{
-      text-align: center;
       padding: 10px 0;
+      text-align: center;
     }
+
     .completed-info{
       display: flex;
       flex: 7;
+
       >.completed-info-left{
         flex: 2;
+
         >.order-info-left{
           line-height: 20px;
         }
       }
+
       >.completed-info-middle{
         flex: 2;
+
         >.order-info-middle{
           margin-left: 50px;
           line-height: 20px;
         }
       }
+
       >.completed-info-right{
         flex: 3;
+
         >.order-info-right{
           margin-left: 50px;
           line-height: 20px;
@@ -361,72 +370,88 @@ export default {
       }
     }
   }
+
   &.night{
     >.completed-order-content{
       .red{
-        color: #D45858;
+        color: #d45858;
       }
+
       .green{
         color: #008069;
       }
+
       .completed-info{
-        color: #9DA5B3;
+        color: #9da5b3;
+
         >.completed-info-left{
-          border-right: 1px solid #262F38;
+          border-right: 1px solid #262f38;
+
           >.order-info-left{
             >.pay-info{
-              color: #5E95EC;
+              color: #5e95ec;
             }
           }
         }
+
         >.completed-info-middle{
-          border-right: 1px solid #262F38;
+          border-right: 1px solid #262f38;
+
           >.order-info-middle{
             >.buyer-seller-info{
-              color: #5E95EC;
+              color: #5e95ec;
             }
           }
         }
+
         >.completed-info-right{
           >.order-info-right{
             >.confirm-time{
-              color: #5E95EC;
+              color: #5e95ec;
             }
           }
         }
       }
     }
   }
+
   &.day{
     >.completed-order-content{
       .red{
-        color: #D45858;
+        color: #d45858;
       }
+
       .green{
         color: #008069;
       }
+
       .completed-info{
-        color: #7D90AC;
+        color: #7d90ac;
+
         >.completed-info-left{
-          border-right: 1px solid rgba(38,47,56,0.1);
+          border-right: 1px solid rgba(38,47,56,.1);
+
           >.order-info-left{
             >.pay-info{
-              color: #5E95EC;
+              color: #5e95ec;
             }
           }
         }
+
         >.completed-info-middle{
-        border-right: 1px solid rgba(38,47,56,0.1);
+          border-right: 1px solid rgba(38,47,56,.1);
+
           >.order-info-middle{
             >.buyer-seller-info{
-              color: #5E95EC;
+              color: #5e95ec;
             }
           }
         }
+
         >.completed-info-right{
           >.order-info-right{
             >.confirm-time{
-              color: #5E95EC;
+              color: #5e95ec;
             }
           }
         }

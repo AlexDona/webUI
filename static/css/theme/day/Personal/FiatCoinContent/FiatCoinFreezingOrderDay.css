@@ -1,21 +1,25 @@
-.fiat-freezing-order-box.personal.day > .freezing-order-content > .freezing-table-head{
-    color: #909399;
-    border: 1px solid #ECF1F8;
-    border-radius: 0px;
-    background-color:#fff;
-    -webkit-box-shadow: none;
-    box-shadow: none;
+.fiat-freezing-order-box.personal.day > .freezing-order-content > .freezing-table-head {
+  border: 1px solid #ecf1f8;
+  border-radius: 0;
+  color: #909399;
+  background-color: #fff;
+  -webkit-box-shadow: none;
+  box-shadow: none;
 }
-.fiat-freezing-order-box.personal.day > .freezing-order-content > .freezing-table-head > .order-time{
-   border-right:0px solid #ECF1F8;
+
+.fiat-freezing-order-box.personal.day > .freezing-order-content > .freezing-table-head > .order-time {
+  border-right: 0 solid #ecf1f8;
 }
-.fiat-freezing-order-box.personal.day > .freezing-order-content > .no-data{
-    background-color:#fff;
-    color: #909399;
+
+.fiat-freezing-order-box.personal.day > .freezing-order-content > .no-data {
+  color: #909399;
+  background-color: #fff;
 }
+
 .fiat-freezing-order-box.personal.day .el-table td {
-  border-bottom: 1px solid rgba(38,47,56,0.1);
+  border-bottom: 1px solid rgba(38, 47, 56, .1);
 }
+
 .fiat-freezing-order-box.personal.day .el-table__expanded-cell {
   background-color: #fff;
 }

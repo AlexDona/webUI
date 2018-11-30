@@ -161,6 +161,7 @@ export default {
 <style scoped lang="scss">
 .financePie-box{
   width: 250px;
+
   >.financePie{
     width: 100%;
     height: 300px;

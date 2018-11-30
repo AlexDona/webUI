@@ -567,55 +567,69 @@ export default {
 </script>
 <style scoped lang="scss" type="text/scss">
   @import "../../../static/css/scss/index";
+
   .otc-AD-manage-box {
     margin-top:66px;
     overflow: hidden;
+
     >.otc-AD-manage-content {
       width: 1150px;
-      margin: 70px auto 10px auto;
       padding-top: 50px;
+      margin: 70px auto 10px;
+
       > .AD-title {
         height: 30px;
-        line-height: 30px;
         margin-bottom: 30px;
+        line-height: 30px;
       }
+
       > .AD-manage-main {
         > .manage-main-top {
           display: flex;
           margin-bottom: 15px;
+
           .one-filter-condition,.two-filter-condition,.three-filter-condition,.four-filter-condition,.five-filter-condition {
             flex: 1;
+
             >.filtrate-text {
               margin-right: 10px;
             }
           }
+
           .five-filter-condition{
             text-align: right;
+
             .second-button{
               margin-left: 25px;
             }
           }
         }
+
         > .manage-main-middle{
-          text-align: right;
           margin-bottom: 15px;
+          text-align: right;
         }
+
         > .manage-main-bottom {
-         min-height: 450px!important;
+          min-height: 450px!important;
         }
+
         .page{
-          text-align: center;
           padding: 10px 0;
+          text-align: center;
         }
       }
     }
+
     &.night{
       background-color: $mainNightBgColor;
+
       >.otc-AD-manage-content {
         > .AD-title {
-          color: #338FF5;
-          border-left: 3px solid #338FF5;
+          border-left: 3px solid #338ff5;
+          color: #338ff5;
         }
+
         > .AD-manage-main {
           > .manage-main-top {
             .one-filter-condition,.two-filter-condition,.three-filter-condition,.four-filter-condition,.five-filter-condition {
@@ -624,15 +638,18 @@ export default {
               }
             }
           }
+
           >.manage-main-middle{
             > .all-unshelve {
-              color: #338FF5;
+              color: #338ff5;
             }
           }
+
           > .manage-main-bottom {
             .red {
-              color: #D45858;
+              color: #d45858;
             }
+
             .green {
               color: #008069;
             }
@@ -640,30 +657,36 @@ export default {
         }
       }
     }
+
     &.day{
       background-color: $mainDayBgColor;
+
       >.otc-AD-manage-content {
         > .AD-title {
-          color: #338FF5;
-          border-left: 3px solid #338FF5;
+          border-left: 3px solid #338ff5;
+          color: #338ff5;
         }
+
         > .AD-manage-main {
           > .manage-main-top {
             .one-filter-condition,.two-filter-condition,.three-filter-condition,.four-filter-condition,.five-filter-condition {
               >.filtrate-text {
-                color: #9DA5B3;
+                color: #9da5b3;
               }
             }
           }
+
           >.manage-main-middle{
             > .all-unshelve {
-              color: #338FF5;
+              color: #338ff5;
             }
           }
+
           > .manage-main-bottom {
             .red {
-              color: #D45858;
+              color: #d45858;
             }
+
             .green {
               color: #008069;
             }

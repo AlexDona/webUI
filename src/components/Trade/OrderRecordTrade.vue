@@ -121,46 +121,54 @@ export default {
 </script>
 <style scoped lang="scss">
   @import '../../../static/css/scss/index.scss';
+
   .order-record-box{
     >.inner-box{
       >.title{
         height:34px;
-        line-height: 34px;
+        padding:0 4.5%;
+
         /*font-weight: 700;*/
         margin-bottom:1px;
+        line-height: 34px;
         box-shadow:0 2px 6px rgba(0,0,0,.1);
-        padding:0 4.5%;
+
         >.text{
           display:inline-block;
-          text-indent: 4px;
           height:100%;
           border-bottom:2px solid $mainColor;
+          text-indent: 4px;
           color:$mainColor;
         }
       }
+
       >.content{
       }
     }
+
     &.night{
       >.inner-box{
         >.title{
           color:$mainNightTitleColor;
           background-color: $mainContentNightBgColor;
-          box-shadow:2px 0px 3px rgba(27,35,49,1);
+          box-shadow:2px 0 3px rgba(27,35,49,1);
         }
+
         >.content{
           background-color: $mainContentNightBgColor;
 
         }
       }
     }
+
     &.day{
       >.inner-box{
         >.title{
           color:$dayMainTitleColor;
           background-color: $mainDayBgColor;
-          box-shadow:2px 0px 3px rgba(239,239,239,1);
+          box-shadow:2px 0 3px rgba(239,239,239,1);
         }
+
         >.content{
           background-color: $mainDayBgColor;
         }

@@ -334,97 +334,118 @@ export default {
 <style scoped lang="scss">
   .footer-box{
     width:100%;
-    background-color: #1c2237;
     color:#838dae;
+    background-color: #1c2237;
+
     >.inner-box{
       width: 1130px;
-      margin: 0 auto;
       padding: 20px 0;
+      margin: 0 auto;
+
       >.top{
         display:flex;
         margin-bottom: 10px;
+
         >.left{
           flex:1;
+
           >.logo{
             >img{
               width:100px;
             }
           }
+
           .introduction{
             margin-top:10px;
           }
+
           >.share-box{
             margin-top:26px;
+
             >.share-item{
               position: relative;
+              display:inline-block;
               width:20px;
               height:20px;
-              display:inline-block;
               margin-right:10px;
+
               >.mini-icon{
                 display:inline-block;
                 width:22px;
                 height:22px;
-                line-height:22px;
                 border-radius: 50%;
+                line-height:22px;
                 text-align: center;
+
                 .icon-text{
                   font-size: 22px;
                 }
               }
+
               >.weixin-btn{
                 position: relative;
+
                 >.er-code{
                   position: absolute;
-                  left:50%;
-                  transform: translate(-50%,0);
                   top:-110px;
+                  left:50%;
                   width:100px;
                   height:100px;
                   padding:4px;
                   background-color: #fff;
+                  transform: translate(-50%,0);
+
                   >img{
                     width:100%;
                     height:100%;
                   }
                 }
               }
+
               >.hidden-box{
-                width:110px;
-                height:110px;
-                background-color: green;
                 position: absolute;
                 top:-120px;
                 left:50%;
+                width:110px;
+                height:110px;
+                background-color: green;
                 transform: translate(-50%,0);
+
                 >img{
                   width:110px;
                 }
               }
             }
           }
+
           >.copyright{
             margin-top: 10px;
+
             >.copyright-content{
-              color: #CECECE;
               font-size: 12px;
+              color: #cecece;
             }
           }
         }
+
         >.right{
+          display:flex;
           flex:1;
           justify-content: center;
-          display:flex;
+
           >.right-dl{
             flex:1;
             margin-left:5%;
+
             >.title{
               height:50px;
               line-height:50px;
             }
+
             >.dd-item{
               line-height: 25px;
               cursor: pointer;
+
               >a{
                 color:#838dae;
               }
@@ -432,22 +453,27 @@ export default {
           }
         }
       }
+
       >.bottom{
-        border-top:1px solid rgba(67,74,95,0.5);
-        padding-top:15px;
         width:100%;
+        padding-top:15px;
+        border-top:1px solid rgba(67,74,95,.5);
+
         >.title{
           display:inline-block;
           width:100px;
           vertical-align: top;
         }
+
         >.links-list{
           display:inline-block;
           width:1026px;
+
           >.links-item{
-            height:20px;
             display:inline-block;
+            height:20px;
             margin-right:30px;
+
             >.link-item{
               >img{
                 width:100%;

@@ -1,75 +1,135 @@
-html,body {
-  /*overflow-x: auto;*/
-  /*overflow-y: scroll;*/
+html,
+body {
   overflow: auto;
-  /*width:100%;*/
-  /* 任付伟解决下拉框随着滚动条滚动而不滚动的问题20181101 */
-  /* height:100%; */
 }
+
+h1,
+h2,
+h3,
+h4,
+h5 {
+  padding: 0;
+  margin: 0;
+}
+
 /* 富文本编辑器返回的用户协议样式颜色修改 */
-.night .ql-editor h1, .night .ql-editor h2, .night .ql-editor h3, .night .ql-editor h4, .night .ql-editor h5,
-.night .ql-editor span, .night .ql-editor div, .night .ql-editor strong, .night .ql-editor p, .night .ql-editor ul li,
-.night .ql-editor p span, .night .ql-editor p a, .night .ql-editor p strong,
-.night .ql-editor h1 span,  .night .ql-editor h1 strong, .ql-editor h4 span, .night .ql-editor h4 strong{
-  color: #8BA0CA !important;
+.night .ql-editor h1,
+.night .ql-editor h2,
+.night .ql-editor h3,
+.night .ql-editor h4,
+.night .ql-editor h5,
+.night .ql-editor span,
+.night .ql-editor div,
+.night .ql-editor strong,
+.night .ql-editor p,
+.night .ql-editor ul li,
+.night .ql-editor p span,
+.night .ql-editor p a,
+.night .ql-editor p strong,
+.night .ql-editor h1 span,
+.night .ql-editor h1 strong,
+.ql-editor h4 span,
+.night .ql-editor h4 strong {
+  color: #8ba0ca !important;
 }
-.day .ql-editor h1, .day .ql-editor h2, .day .ql-editor h3, .day .ql-editor h4, .day .ql-editor h5,
-.day .ql-editor span, .day .ql-editor div, .day .ql-editor strong, .day .ql-editor p, .day .ql-editor ul li,
-.day .ql-editor p span, .day .ql-editor p a, .day .ql-editor p strong,
-.day .ql-editor h1 span, .day .ql-editor h1 strong, .ql-editor h4 span, .day .ql-editor h4 strong {
+
+.day .ql-editor h1,
+.day .ql-editor h2,
+.day .ql-editor h3,
+.day .ql-editor h4,
+.day .ql-editor h5,
+.day .ql-editor span,
+.day .ql-editor div,
+.day .ql-editor strong,
+.day .ql-editor p,
+.day .ql-editor ul li,
+.day .ql-editor p span,
+.day .ql-editor p a,
+.day .ql-editor p strong,
+.day .ql-editor h1 span,
+.day .ql-editor h1 strong,
+.ql-editor h4 span,
+.day .ql-editor h4 strong {
   color: #333 !important;
 }
+
 /* 富文本编辑器返回的折扣说明添加表格 */
-.night .vip-main.personal .discounts-instruction-dialog table{
-  border: 1px solid #ddd;
+.night .vip-main.personal .discounts-instruction-dialog table {
   border-collapse: collapse;
-}
-.night .vip-main.personal .discounts-instruction-dialog table td,.night .vip-main.personal .discounts-instruction-dialog table th{
   border: 1px solid #ddd;
 }
-.day .vip-main.personal .discounts-instruction-dialog table{
+
+.night .vip-main.personal .discounts-instruction-dialog table td,
+.night .vip-main.personal .discounts-instruction-dialog table th {
   border: 1px solid #ddd;
+}
+
+.day .vip-main.personal .discounts-instruction-dialog table {
   border-collapse: collapse;
-}
-.day .vip-main.personal .discounts-instruction-dialog table td,.day .vip-main.personal .discounts-instruction-dialog table th{
   border: 1px solid #ddd;
 }
+
+.day .vip-main.personal .discounts-instruction-dialog table td,
+.day .vip-main.personal .discounts-instruction-dialog table th {
+  border: 1px solid #ddd;
+}
+
 /* 费率页面返回数据表格宽度调整 */
-.service-protocol-box table{
+.service-protocol-box table {
   width: 100%;
 }
-body, dl, dt, dd, ul, ol, li, pre, form, fieldset, input, p, blockquote, th, td {
-  font-weight: 400;
-  margin: 0;
+
+body,
+dl,
+dt,
+dd,
+ul,
+ol,
+li,
+pre,
+form,
+fieldset,
+input,
+p,
+blockquote,
+th,
+td {
   padding: 0;
+  margin: 0;
+  font-weight: 400;
 }
-div{
+
+div {
   box-sizing: border-box;
 }
-h1, h2, h3, h4, h4, h5 {
-  margin: 0;
-  padding: 0;
-}
-a{
+
+a {
   text-decoration: none !important;
 }
+
 body {
-  /* 任更改背景色 */
-  background-color: #272B41;
-  /*background-color: transparent;*/
-  color: #666666;
-  font-family: Helvetica, Arial, sans-serif;
-  font-size: 14px;
   padding: 0 !important;
+  font-size: 14px;
+  font-family: Helvetica, Arial, sans-serif;
   text-align: left;
-  /*height:100%;*/
+
+  /* background-color: transparent; */
+  color: #666;
+
+  /* 任更改背景色 */
+  background-color: #272b41;
+
+  /* height:100%; */
 }
-body.night{
-  background-color: #272B41;
+
+body.night {
+  background-color: #272b41;
 }
-body.day{
+
+body.day {
   background-color: #fff;
 }
+
 select {
   font-size: 14px;
 }
@@ -78,25 +138,31 @@ table {
   border-collapse: collapse;
 }
 
-fieldset, img {
+fieldset,
+img {
   border: 0 none;
 }
 
 fieldset {
-  margin: 0;
   padding: 0;
+  margin: 0;
 }
 
 fieldset p {
-  margin: 0;
   padding: 0 0 0 8px;
+  margin: 0;
 }
 
 legend {
   display: none;
 }
 
-address, caption, em, strong, th, i {
+address,
+caption,
+em,
+th,
+i,
+strong {
   font-style: normal;
   font-weight: 400;
 }
@@ -106,283 +172,349 @@ table caption {
 }
 
 hr {
-  border-bottom: 1px solid #FFFFFF;
-  border-top: 1px solid #E4E4E4;
-  border-width: 1px 0;
   clear: both;
   height: 2px;
   margin: 5px 0;
+  border-width: 1px 0;
+  border-top: 1px solid #e4e4e4;
+  border-bottom: 1px solid #fff;
   overflow: hidden;
 }
 
-ol, ul {
-  list-style-image: none;
-  list-style-position: outside;
+ol,
+ul {
   list-style-type: none;
 }
 
-caption, th {
+caption,
+th {
   text-align: left;
 }
 
-q:before, q:after, blockquote:before, blockquote:after {
+q::before,
+q::after,
+blockquote::before,
+blockquote::after {
   content: "";
 }
-textarea{
+
+textarea {
   resize: none !important;
 }
-button,input{
-  outline:none;
-  border:none;
+
+button,
+input {
+  border: none;
+  outline: none;
   background: none;
 }
 
-/*.el-select-dropdown__list {*/
-  /*background-color: #2A3242;*/
-/*}*/
-/*.el-select-dropdown__item.hover{*/
-  /*background-color: #338FF5 !important;*/
-  /*color:#fff !important;*/
-/*}*/
 .icon {
   width: 1em;
   height: 1em;
-  vertical-align: middle;
-  fill: currentColor;
   overflow: hidden;
   font-size: 20px;
+  vertical-align: middle;
+  fill: currentColor;
 }
+
 .box-sizing {
   box-sizing: border-box;
 }
-.absolute{
+
+.absolute {
   position: absolute;
 }
-.relative{
+
+.relative {
   position: relative;
 }
+
 .display-inline-block {
   display: inline-block;
 }
-.font-size12{
+
+.font-size12 {
   font-size: 12px;
 }
 
-.font-size14{
+.font-size14 {
   font-size: 14px;
 }
 
-.font-size16{
+.font-size16 {
   font-size: 16px;
 }
-.font-size18{
+
+.font-size18 {
   font-size: 18px;
 }
 
-.font-size20{
+.font-size20 {
   font-size: 20px;
 }
-.font-size22{
+
+.font-size22 {
   font-size: 22px;
 }
-.font-size24{
+
+.font-size24 {
   font-size: 24px;
 }
-.font-size26{
+
+.font-size26 {
   font-size: 26px;
 }
+
 .cursor-pointer {
   cursor: pointer;
 }
-.border-radius5{
+
+.border-radius5 {
   border-radius: 5px;
 }
+
 .font-size30 {
   font-size: 30px;
 }
+
 .font-size40 {
   font-size: 40px;
 }
-.font-size60{
+
+.font-size60 {
   font-size: 60px;
 }
-.cursor-pointer {
-  cursor: pointer;
-}
+
 .border-radius2 {
   border-radius: 2px;
 }
+
 .border-radius4 {
   border-radius: 4px;
 }
-.clearfloat:after{
-  display:block;
-  clear:both;
-  content:"";
-  visibility:hidden;
-  height:0}
-.clearfloat{
-  zoom:1
+
+.clearfloat::after {
+  clear: both;
+  display: block;
+  height: 0;
+  visibility: hidden;
+  content: "";
 }
+
+.clearfloat {
+  zoom: 1;
+}
+
 .float-right {
   float: right;
 }
+
 .float-left {
   float: left;
 }
-/*杨孝喜添加*/
-/*个人中心标题高度*/
+
+/* 杨孝喜添加 */
+
+/* 个人中心标题高度 */
 .personal-height40 {
   height: 40px;
 }
-/*个人中心内容最小高度*/
-.min-height500{
+
+/* 个人中心内容最小高度 */
+.min-height500 {
   min-height: 500px;
 }
-/*个人中心右侧 标题行高*/
-.line-height15{
- line-height:15px;
+
+/* 个人中心右侧 标题行高 */
+.line-height15 {
+  line-height: 15px;
 }
-.line-height20{
+
+.line-height20 {
   line-height: 20px;
 }
-.line-height40{
+
+.line-height40 {
   line-height: 40px;
 }
-.line-height30{
+
+.line-height30 {
   line-height: 30px;
 }
-.line-height60{
+
+.line-height60 {
   line-height: 60px;
 }
+
 .line-height56 {
   line-height: 56px;
 }
+
 .line-height50 {
   line-height: 50px;
 }
-/*个人中心右侧嫩容区 标题和主题内容之间的间距*/
+
+/* 个人中心右侧嫩容区 标题和主题内容之间的间距 */
 .margin-top9 {
   margin-top: 9px;
 }
+
 .margin-top16 {
   margin-top: 16px;
 }
+
 .margin-top20 {
   margin-top: 20px;
 }
-/*高级认证button*/
+
+/* 高级认证button */
 .margin-top30 {
   margin-top: 30px;
 }
+
 .margin-top35 {
   margin-top: 35px;
 }
+
 .margin-top45 {
   margin-top: 45px;
 }
+
 .margin20 {
   margin: 0 20px;
 }
+
 .margin25 {
   margin: 0 25px;
 }
-.margin-bottom10{
-  margin-bottom:10px;
+
+.margin-bottom10 {
+  margin-bottom: 10px;
 }
-.margin-left10{
-  margin-left:10px;
+
+.margin-left10 {
+  margin-left: 10px;
 }
+
 .margin-left50 {
-  margin-left:50px;
+  margin-left: 50px;
 }
-.margin-left58{
-  margin-left:58px;
+
+.margin-left58 {
+  margin-left: 58px;
 }
-/*个人中心右侧 标题和主内容左边距*/
+
+/* 个人中心右侧 标题和主内容左边距 */
 .padding-top10 {
   padding-top: 10px;
 }
+
 .padding-top20 {
   padding-top: 20px;
 }
+
 .padding-top40 {
   padding-top: 40px;
 }
+
 .padding-left23 {
   padding-left: 23px;
 }
+
 .padding-right23 {
   padding-right: 23px;
 }
+
 .padding-tb20 {
   padding: 20px 0;
 }
+
 .padding-tb18 {
   padding: 18px 0;
 }
+
 .padding20 {
   padding: 20px;
 }
+
 .padding-top0 {
-  padding:0 20px 20px 20px;
+  padding: 0 20px 20px;
 }
+
 .paddinglr15 {
   padding: 0 15px;
 }
+
 .paddinglr13 {
   padding: 0 13px;
 }
+
 .paddinglr20 {
   padding: 0 20px;
 }
-.padding-left15{
-  padding-left:15px;
+
+.padding-left15 {
+  padding-left: 15px;
 }
+
 .padding-left25 {
   padding-left: 25px;
 }
-.text-align-l{
+
+.text-align-l {
   text-align: left;
 }
-.text-align-c{
+
+.text-align-c {
   text-align: center;
 }
-.text-align-r{
+
+.text-align-r {
   text-align: right;
 }
-.font-weight600{
+
+.font-weight600 {
   font-weight: 600;
 }
+
 .display-flex {
   display: flex;
 }
+
 .flex1 {
   flex: 1;
 }
+
 .flex2 {
   flex: 2;
 }
-/*任加的*/
-.padding-l15{
+
+/* 任加的 */
+.padding-l15 {
   padding-left: 15px;
 }
-.font-weight700{
+
+.font-weight700 {
   font-weight: 700;
 }
+
 .el-message {
-  min-width: 0;
   top: 35%;
-}
-.color-black{
-  color:#000;
-}
-.margin-top2{
-  margin-top:2px;
+  min-width: 0;
 }
 
-/*input:number(去除增加减少箭头) 样式*/
-input::-webkit-outer-spin-button, input::-webkit-inner-spin-button {
+.color-black {
+  color: #000;
+}
+
+.margin-top2 {
+  margin-top: 2px;
+}
+
+/* input:number(去除增加减少箭头) 样式 */
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
   -webkit-appearance: textfield;
 }
 
@@ -391,98 +523,101 @@ input[type="number"] {
 }
 
 .night div::-webkit-scrollbar,
-body.night::-webkit-scrollbar
-{/*滚动条整体部分，其中的属性有width,height,background,border等（就和一个块级元素一样）（位置1）*/
-  width:4px;
-  height:10px;
+body.night::-webkit-scrollbar {/* 滚动条整体部分，其中的属性有width,height,background,border等（就和一个块级元素一样）（位置1） */
+  width: 4px;
+  height: 10px;
 }
+
 .night div::-webkit-scrollbar-button,
-body.night::-webkit-scrollbar-button
-{/*滚动条两端的按钮，可以用display:none让其不显示，也可以添加背景图片，颜色改变显示效果（位置2）*/
-  background:#2a343e;
+body.night::-webkit-scrollbar-button {/* 滚动条两端的按钮，可以用display:none让其不显示，也可以添加背景图片，颜色改变显示效果（位置2） */
+  background: #2a343e;
 }
+
 .night div::-webkit-scrollbar-track,
-body.night::-webkit-scrollbar-track
-{/*外层轨道，可以用display:none让其不显示，也可以添加背景图片，颜色改变显示效果（位置3）*/
-  background:#2a343e;
+body.night::-webkit-scrollbar-track {/* 外层轨道，可以用display:none让其不显示，也可以添加背景图片，颜色改变显示效果（位置3） */
+  background: #2a343e;
 }
+
 .night div::-webkit-scrollbar-track-piece,
-body.night::-webkit-scrollbar-track-piece{/*内层轨道，滚动条中间部分（位置4）*/
-  background:#2a343e;
+body.night::-webkit-scrollbar-track-piece {/* 内层轨道，滚动条中间部分（位置4） */
+  background: #2a343e;
 }
+
 .night div::-webkit-scrollbar-thumb,
-body.night::-webkit-scrollbar-thumb
-{/*滚动条里面可以拖动的那部分（位置5）*/
-  background:#4a5662;
-  border-radius:4px;
+body.night::-webkit-scrollbar-thumb {/* 滚动条里面可以拖动的那部分（位置5） */
+  border-radius: 4px;
+  background: #4a5662;
 }
+
 .night div::-webkit-scrollbar-corner,
-body.night::-webkit-scrollbar-corner
-{/*边角（位置6）*/
-  background:#82AFFF;
+body.night::-webkit-scrollbar-corner {/* 边角（位置6） */
+  background: #82afff;
 }
-/*.night div::-webkit-scrollbar-resizer  {!*定义右下角拖动块的样式（位置7）*!*/
-  /*background:#2a343e;*/
-/*}*/
+
+/* .night div::-webkit-scrollbar-resizer  {!*定义右下角拖动块的样式（位置7）*! */
+
+/* background:#2a343e; */
+
+/* } */
 .night div,
 body.night {
-  scrollbar-arrow-color: #4a5662; /**//*三角箭头的颜色*/
-  scrollbar-face-color: #333; /**//*立体滚动条的颜色*/
-  scrollbar-3dlight-color: #666; /**//*立体滚动条亮边的颜色*/
-  scrollbar-highlight-color: #666; /**//*滚动条空白部分的颜色*/
-  scrollbar-shadow-color: #999; /**//*立体滚动条阴影的颜色*/
-  scrollbar-darkshadow-color: #666; /**//*立体滚动条强阴影的颜色*/
-  scrollbar-track-color: #666; /**//*立体滚动条背景颜色*/
-  scrollbar-base-color: #f8f8f8; /**//*滚动条的基本颜色*/
+  scrollbar-arrow-color: #4a5662; /*   三角箭头的颜色 */
+  scrollbar-face-color: #333; /*  立体滚动条的颜色 */
+  scrollbar-highlight-color: #666; /*   滚动条空白部分的颜色 */
+  scrollbar-shadow-color: #999; /*   立体滚动条阴影的颜色 */
+  scrollbar-darkshadow-color: #666; /*  立体滚动条强阴影的颜色 */
+  scrollbar-track-color: #666; /*   立体滚动条背景颜色 */
+  scrollbar-base-color: #f8f8f8; /*   滚动条的基本颜色 */
 }
-
 
 .day div::-webkit-scrollbar,
-body.day::-webkit-scrollbar{/*滚动条整体部分，其中的属性有width,height,background,border等（就和一个块级元素一样）（位置1）*/
-  width:4px;
-  height:10px;
+body.day::-webkit-scrollbar {/* 滚动条整体部分，其中的属性有width,height,background,border等（就和一个块级元素一样）（位置1） */
+  width: 4px;
+  height: 10px;
 }
+
 .day div::-webkit-scrollbar-button,
-body.day::-webkit-scrollbar-button{/*滚动条两端的按钮，可以用display:none让其不显示，也可以添加背景图片，颜色改变显示效果（位置2）*/
-  background:#b7c3d0;
+body.day::-webkit-scrollbar-button {/* 滚动条两端的按钮，可以用display:none让其不显示，也可以添加背景图片，颜色改变显示效果（位置2） */
+  background: #b7c3d0;
 }
+
 .day div::-webkit-scrollbar-track,
-body.day::-webkit-scrollbar-track{/*外层轨道，可以用display:none让其不显示，也可以添加背景图片，颜色改变显示效果（位置3）*/
-  background:#b7c3d0;
+body.day::-webkit-scrollbar-track {/* 外层轨道，可以用display:none让其不显示，也可以添加背景图片，颜色改变显示效果（位置3） */
+  background: #b7c3d0;
 }
+
 .day div::-webkit-scrollbar-track-piece,
-body.day::-webkit-scrollbar-track-piece{/*内层轨道，滚动条中间部分（位置4）*/
-  background:#b7c3d0;
+body.day::-webkit-scrollbar-track-piece {/* 内层轨道，滚动条中间部分（位置4） */
+  background: #b7c3d0;
 }
+
 .day div::-webkit-scrollbar-thumb,
-body.day::-webkit-scrollbar-thumb
-{/*滚动条里面可以拖动的那部分（位置5）*/
-  background:#7e94ab;
-  border-radius:4px;
+body.day::-webkit-scrollbar-thumb {/* 滚动条里面可以拖动的那部分（位置5） */
+  border-radius: 4px;
+  background: #7e94ab;
 }
+
 .day div::-webkit-scrollbar-corner,
-body.day::-webkit-scrollbar-corner
-{/*边角（位置6）*/
-  background:#82AFFF;
+body.day::-webkit-scrollbar-corner {/* 边角（位置6） */
+  background: #82afff;
 }
-/*.day div::-webkit-scrollbar-resizer  {!*定义右下角拖动块的样式（位置7）*!*/
-  /*background:#b7c3d0;*/
-/*}*/
+
 .day div,
-body.day{
-  scrollbar-arrow-color: #b7c3d0; /**//*三角箭头的颜色*/
-  scrollbar-face-color: #333; /**//*立体滚动条的颜色*/
-  scrollbar-3dlight-color: #666; /**//*立体滚动条亮边的颜色*/
-  scrollbar-highlight-color: #666; /**//*滚动条空白部分的颜色*/
-  scrollbar-shadow-color: #999; /**//*立体滚动条阴影的颜色*/
-  scrollbar-darkshadow-color: #666; /**//*立体滚动条强阴影的颜色*/
-  scrollbar-track-color: #666; /**//*立体滚动条背景颜色*/
-  scrollbar-base-color: #f8f8f8; /**//*滚动条的基本颜色*/
+body.day {
+  scrollbar-arrow-color: #b7c3d0; /*   三角箭头的颜色 */
+  scrollbar-face-color: #333; /*  立体滚动条的颜色 */
+  scrollbar-highlight-color: #666; /*   滚动条空白部分的颜色 */
+  scrollbar-shadow-color: #999; /*   立体滚动条阴影的颜色 */
+  scrollbar-darkshadow-color: #666; /*   立体滚动条强阴影的颜色 */
+  scrollbar-track-color: #666; /*   立体滚动条背景颜色 */
+  scrollbar-base-color: #f8f8f8; /* 滚动条的基本颜色 */
 }
+
 /* loading遮罩圆圈的颜色重置为网站主题色 */
-.el-loading-spinner .path{
-  stroke: #338FF5 !important;
+.el-loading-spinner .path {
+  stroke: #338ff5 !important;
 }
-.slider-pagination-bullets{
-  bottom:-2px !important;
+
+.slider-pagination-bullets {
+  bottom: -2px !important;
 }

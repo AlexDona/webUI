@@ -1,14 +1,16 @@
-/*个人中心白色主题*/
+/* 个人中心白色主题 */
 .add-account.personal.day .el-form-item__label {
-  color: #7D90AC;
+  color: #7d90ac;
 }
+
 .add-chat.chat.day .el-input__inner {
   border: 1px solid #555;
-  background-color: transparent;
   color: #000;
+  background-color: transparent;
 }
+
 .add-chat.chat.day .el-input-group__append {
-  background-color: #b1b1b1;
   border-color: #364654;
   color: #555;
+  background-color: #b1b1b1;
 }

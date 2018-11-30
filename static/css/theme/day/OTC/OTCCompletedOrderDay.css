@@ -2,88 +2,110 @@
 .otc-completed-order-box.day .completed-order-content .el-table__expanded-cell {
   background-color: #fff;
 }
-.otc-completed-order-box.day .completed-order-content .el-table th{
+
+.otc-completed-order-box.day .completed-order-content .el-table th {
   padding: 5px 0;
 }
-.otc-completed-order-box.day .completed-order-content .el-table{
-  color: #9DA5B3;
+
+.otc-completed-order-box.day .completed-order-content .el-table {
+  color: #9da5b3;
 }
-.otc-completed-order-box.day .completed-order-content .el-table__empty-text{
-  color: #333333;
+
+.otc-completed-order-box.day .completed-order-content .el-table__empty-text {
+  color: #333;
 }
-.otc-completed-order-box.day .completed-order-content .el-table--enable-row-hover .el-table__body tr:hover>td {
+
+.otc-completed-order-box.day .completed-order-content .el-table--enable-row-hover .el-table__body tr:hover > td {
   background-color: #fff;
 }
-.otc-completed-order-box.day .completed-order-content .el-table__header{
+
+.otc-completed-order-box.day .completed-order-content .el-table__header {
   margin-bottom: 15px;
 }
-.otc-completed-order-box.day .completed-order-content .el-table{
+
+.otc-completed-order-box.day .completed-order-content .el-table {
   background-color: #fff;
 }
-.otc-completed-order-box.day .completed-order-content .el-table th.is-leaf{
-  border-bottom: 1px solid #ECF1F8;
-  border-top: 1px solid #ECF1F8;
+
+.otc-completed-order-box.day .completed-order-content .el-table th.is-leaf {
+  border-top: 1px solid #ecf1f8;
+  border-bottom: 1px solid #ecf1f8;
 }
-.otc-completed-order-box.day .completed-order-content .el-table__body{
+
+.otc-completed-order-box.day .completed-order-content .el-table__body {
   border-collapse: separate !important;
 }
-.otc-completed-order-box.day .completed-order-content .el-table{
+
+.otc-completed-order-box.day .completed-order-content .el-table {
   border-collapse: separate !important;
 }
-.otc-completed-order-box.day .completed-order-content .el-table__expanded-cell{
-  border-bottom:25px solid #fff;
+
+.otc-completed-order-box.day .completed-order-content .el-table__expanded-cell {
+  border-bottom: 25px solid #fff;
 }
-.otc-completed-order-box.day .completed-order-content .el-icon-arrow-right:before {
+
+.otc-completed-order-box.day .completed-order-content .el-icon-arrow-right::before {
   content: " ";
 }
-.otc-completed-order-box.day .completed-order-content .el-table_2_column_9 .el-table__expand-column .is-leaf{
-  border-top-left-radius: 5px;
-  border-bottom-left-radius: 5px;
+
+.otc-completed-order-box.day .completed-order-content .el-table_2_column_9 .el-table__expand-column .is-leaf {
+  border-bottom-left-radius:  5px;
+  border-top-left-radius:  5px;
 }
-.otc-completed-order-box.day .completed-order-content .el-table th.is-leaf:first-of-type{
-  border-top-left-radius: 5px;
+
+.otc-completed-order-box.day .completed-order-content .el-table th.is-leaf:first-of-type {
+  border-left: 1px solid #ecf1f8;
   border-bottom-left-radius: 5px;
-  border-left: 1px solid #ECF1F8;
+  border-top-left-radius: 5px;
 }
-.otc-completed-order-box.day .completed-order-content .el-table th.is-leaf:nth-last-of-type(2){
+
+.otc-completed-order-box.day .completed-order-content .el-table th.is-leaf:nth-last-of-type(2) {
   border-top-right-radius: 5px;
   border-bottom-right-radius: 5px;
-  border-right: 1px solid #ECF1F8;
+  border-right: 1px solid #ecf1f8;
 }
-.otc-completed-order-box.day .completed-order-content .el-table--enable-row-transition .el-table__body td:first-of-type{
+
+.otc-completed-order-box.day .completed-order-content .el-table--enable-row-transition .el-table__body td:first-of-type {
+  border-left: 1px solid #ecf1f8;
   border-top-left-radius: 5px;
-  border-left: 1px solid #ECF1F8;
 }
-.otc-completed-order-box.day .completed-order-content .el-table--enable-row-transition .el-table__body td:first-of-type.el-table__expanded-cell{
-  border-top-left-radius: 0px;
-  border-top: 0px solid #fff;
+
+.otc-completed-order-box.day .completed-order-content .el-table--enable-row-transition .el-table__body td:first-of-type.el-table__expanded-cell {
+  border-top: 0 solid #fff;
+  border-top-left-radius: 0;
 }
-.otc-completed-order-box.day .completed-order-content .el-table--enable-row-transition .el-table__body td:nth-last-of-type(1){
+
+.otc-completed-order-box.day .completed-order-content .el-table--enable-row-transition .el-table__body td:nth-last-of-type(1) {
   border-top-right-radius: 5px;
-  border-right: 1px solid #ECF1F8;
+  border-right: 1px solid #ecf1f8;
 }
-.otc-completed-order-box.day .completed-order-content .el-table--enable-row-transition .el-table__body td:nth-last-of-type(1).el-table__expanded-cell{
-  border-top-right-radius: 0px;
+
+.otc-completed-order-box.day .completed-order-content .el-table--enable-row-transition .el-table__body td:nth-last-of-type(1).el-table__expanded-cell {
+  border-top-right-radius: 0;
 }
-.otc-completed-order-box.day .completed-order-content .el-table--enable-row-transition .el-table__body td:first-of-type.el-table__expanded-cell ::after{
-  content: '';
-  width: 1045px;
+
+.otc-completed-order-box.day .completed-order-content .el-table--enable-row-transition .el-table__body td:first-of-type.el-table__expanded-cell ::after {
   position: absolute;
-  left: 0;
   bottom: -10px;
-  background-color: #fff;
-  border-bottom-left-radius: 5px;
+  left: 0;
+  width: 1045px;
+  border-bottom: 1px solid #ecf1f8;
   border-bottom-right-radius: 5px;
-  border-bottom: 1px solid #ECF1F8;
+  border-bottom-left-radius: 5px;
+  background-color: #fff;
+  content: '';
 }
-.otc-completed-order-box.day .completed-order-content .el-table--enable-row-transition .el-table__body td{
-  border-top: 1px solid #ECF1F8;
+
+.otc-completed-order-box.day .completed-order-content .el-table--enable-row-transition .el-table__body td {
+  border-top: 1px solid #ecf1f8;
 }
+
 .el-table td {
   border-bottom: 1px solid #fff;
 }
+
 .otc-completed-order-box.day .completed-order-content .el-table__empty-block {
   min-height: 432px;
+  border: 1px solid #ecf1f8;
   background-color: #fff;
-  border: 1px solid #ECF1F8;
 }

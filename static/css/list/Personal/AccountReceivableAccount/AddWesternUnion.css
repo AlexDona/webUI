@@ -1,8 +1,9 @@
-/*覆盖element样式*/
-.add-western.personal .el-textarea__inner{
+/* 覆盖element样式 */
+.add-western.personal .el-textarea__inner {
   width: 237px;
   height: 90px;
 }
+
 .add-western.personal .el-form-item__content {
   width: 600px;
 }

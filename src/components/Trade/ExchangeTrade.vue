@@ -723,107 +723,132 @@ export default {
 <style scoped lang="scss">
   @import '../../../static/css/scss/index.scss';
   @import '../../../static/css/scss/Trade/TradeCenter';
+
   .exchange-box{
     width:100%;
     height:414px;
     margin:10px 0;
+
     >.inner-box{
       position: relative;
+
       >.currency-info{
         position: absolute;
-        right:0;
-        top:0;
-        height:34px;
-        line-height: 34px;
         z-index: 2000;
-        text-align: right;
+        top:0;
+        right:0;
+        height:34px;
         padding-right:27px;
+        line-height: 34px;
+        text-align: right;
+
         >.router-link{
           color: $mainColor;
         }
       }
+
       .content-box{
-        padding:22px 2.8%;
-        display:flex;
         position: relative;
+        display:flex;
         width:100%;
         height:100%;
+        padding:22px 2.8%;
+
         >.inner-box{
           flex:1;
+
           >.header{
             display:flex;
             white-space:nowrap;
+
             >.item{
               flex:1;
+
               >.buy{
                 color:$upColor;
               }
+
               >.sell{
                 color:$downColor;
               }
+
               >a{
                 padding-left:20px;
               }
             }
+
             >.left{
               flex:2;
             }
           }
+
           >.content{
             padding:20px 0;
+
             >.input{
               position: relative;
               margin-bottom:20px;
               border-radius: 3px;
+
               /*市价提示*/
               >.market-price{
                 width:100%;
                 height:38px;
-                line-height: 38px;
                 padding:0 15px 0 20px;
                 border-radius: 3px;
+                line-height: 38px;
+
                 &.buy-price{
                   color:$upColor;
                 }
+
                 &.sell-price{
                   color:$downColor;
                 }
               }
+
               /*限价input框*/
               >input{
+                box-sizing: border-box;
                 width:100%;
                 height:38px;
-                border:1px solid;
-                font-size: 14px;
                 padding:0 15px 0 20px;
+                border:1px solid;
                 border-radius: 3px;
-                box-sizing: border-box;
+                font-size: 14px;
               }
+
               >.currency{
                 position: absolute;
-                right:15px;
                 top:0;
+                right:15px;
                 height:34px;
                 line-height: 34px;
               }
+
               >.rate-changer{
                 height:18px;
                 padding:0 20px;
                 font-size: 12px;
               }
             }
+
             >.volume-rate{
               display:flex;
+
               >.item{
                 flex:1;
+
                 span{
                   &.buy{
                     color: $upColor;
                   }
+
                   &.sell{
                     color:$downColor;
                   }
                 }
+
                 &.right{
                   text-align: right;
                 }
@@ -831,30 +856,35 @@ export default {
             }
           }
         }
+
         >.middle-line{
           position: relative;
           width:130px;
           height:320px;
+
           &:before{
             position: absolute;
-            content:'';
+            top:0;
+            left:50%;
             width:1px;
             height:320px;
-            left:50%;
-            top:0;
             border-left:1px dashed;
+            content:'';
           }
         }
       }
     }
+
     &.night{
-      background-color: $mainContentNightBgColor;
       color:$nightFontColor;
+      background-color: $mainContentNightBgColor;
+
       >.inner-box{
         >.currency-info{
           >a{
           }
         }
+
         .content-box{
           >.inner-box{
             >.header{
@@ -862,39 +892,50 @@ export default {
                 >span{
                   display:inline-block;
                 }
+
                 >a{
                   color:$nightFontColor;
                 }
               }
+
               >.left{
               }
+
               >.right{
               }
             }
+
             >.content{
               >.input{
                 background-color:rgb(78,83,90) ;
+
                 /*市价提示*/
                 >.market-price{
                   background-color: $nightMarketPriceBg;
+
                   &.buy-price{
                   }
+
                   &.sell-price{
                   }
                 }
+
                 /*限价input框*/
                 >input{
-                  border-color:#A9BED4;
-                  background-color: $mainContentNightBgColor;
+                  border-color:#a9bed4;
                   color:$nightFontColor;
+                  background-color: $mainContentNightBgColor;
                 }
+
                 >.currency{
                 }
+
                 >.rate-changer{
                 }
               }
             }
           }
+
           >.middle-line{
             &:before{
               border-color:$nightBorderColor;
@@ -903,14 +944,17 @@ export default {
         }
       }
     }
+
     &.day{
-      background-color: $dayMainBgColor;
       color:$dayFontColor;
+      background-color: $dayMainBgColor;
+
       >.inner-box{
         >.currency-info{
           >a{
           }
         }
+
         .content-box{
           >.inner-box{
             >.header{
@@ -919,35 +963,45 @@ export default {
                   color:$dayFontColor;
                 }
               }
+
               >.left{
               }
+
               >.right{
               }
             }
+
             >.content{
               >.input{
                 background-color: #e9ecee;
+
                 /*市价提示*/
                 >.market-price{
                   background-color: $dayMarketPriceBg;
+
                   &.buy-price{
                   }
+
                   &.sell-price{
                   }
                 }
+
                 /*限价input框*/
                 >input{
                   border-color:#c4c4c4;
-                  background-color: #fff;
                   color:$dayFontColor;
+                  background-color: #fff;
                 }
+
                 >.currency{
                 }
+
                 >.rate-changer{
                 }
               }
             }
           }
+
           >.middle-line{
             &:before{
               border-color:$nightMainTitleColor;

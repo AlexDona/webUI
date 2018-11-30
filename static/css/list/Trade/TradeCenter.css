@@ -1,55 +1,64 @@
-/*币币交易通用修改样式（elementui修改）*/
+/* 币币交易通用修改样式（elementui修改） */
 .trade-box .el-table,
 .trade-box .el-table td,
 .trade-box .el-table th,
-.trade-box .el-table tr{
-  background-color:transparent;
+.trade-box .el-table tr {
+  background-color: transparent;
 }
-.trade-box .el-table td{
-  border-bottom:none;
+
+.trade-box .el-table td {
+  border-bottom: none;
 }
 
 .trade-box .el-table th,
-.trade-box .el-table__header-wrapper{
-  padding:0;
+.trade-box .el-table__header-wrapper {
+  padding: 0;
 }
-.middle .el-tabs__nav-wrap::after{
-  height:34px;
-  top:0;
+
+.middle .el-tabs__nav-wrap::after {
+  top: 0;
+  height: 34px;
 }
-.middle .el-tabs__item{
-  height:34px;
-  line-height:34px;
+
+.middle .el-tabs__item {
+  height: 34px;
   font-size: 16px;
+  line-height: 34px;
 }
-.middle .el-tabs__nav-scroll{
+
+.middle .el-tabs__nav-scroll {
   padding-left: 2.1%;
 }
-.middle .el-tabs__item.is-active{
-  color:#338ff5 !important;
+
+.middle .el-tabs__item.is-active {
+  color: #338ff5 !important;
 }
-.middle .el-tabs__header{
-  box-shadow: 0 2px 6px rgba(0,0,0,.1);
+
+.middle .el-tabs__header {
+  box-shadow: 0 2px 6px rgba(0, 0, 0, .1);
 }
+
 @media screen and (max-width: 1920px) {
-  .el-table .cell{
+  .el-table .cell {
     font-size: 12px;
   }
 }
-.trade-box .el-pagination{
-  text-align: right;
+
+.trade-box .el-pagination {
   position: relative;
-  bottom:0;
+  bottom: 0;
+  text-align: right;
 }
+
 .trade-box .el-pagination button,
-.trade-box .el-pager li
-{
-  width:16px;
-  height:16px;
-  line-height:16px;
+.trade-box .el-pager li {
+  width: 16px;
+  height: 16px;
   font-size: 12px;
+  line-height: 16px;
 }
-.trade-box .el-tabs__header{
-  margin-bottom:5px;
+
+.trade-box .el-tabs__header {
+  margin-bottom: 5px;
 }
 

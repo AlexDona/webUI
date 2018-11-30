@@ -1,21 +1,25 @@
-.fiat-canceled-order-box.personal.day > .canceled-order-content > .canceled-table-head{
-    background-color:#fff;
-    border-radius: 0;
-    border: none;
-    -webkit-box-shadow:none;
-    box-shadow:none;
+.fiat-canceled-order-box.personal.day > .canceled-order-content > .canceled-table-head {
+  border: none;
+  border-radius: 0;
+  background-color: #fff;
+  -webkit-box-shadow: none;
+  box-shadow: none;
 }
-.fiat-canceled-order-box.personal.day > .canceled-order-content > .canceled-table-head > .item{
-    border-bottom:1px solid #ECF1F8;
-    color:#909399;
+
+.fiat-canceled-order-box.personal.day > .canceled-order-content > .canceled-table-head > .item {
+  border-bottom: 1px solid #ecf1f8;
+  color: #909399;
 }
-.fiat-canceled-order-box.personal.day > .canceled-order-content > .no-data{
-    width: 100%;
-    background-color: #fff;
+
+.fiat-canceled-order-box.personal.day > .canceled-order-content > .no-data {
+  width: 100%;
+  background-color: #fff;
 }
+
 .fiat-canceled-order-box.personal.day {
-    border: 1px solid #ECF1F8;
+  border: 1px solid #ecf1f8;
 }
+
 .fiat-canceled-order-box.personal.day .el-table tr {
   background-color: #fff;
 }

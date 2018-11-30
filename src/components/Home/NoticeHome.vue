@@ -122,49 +122,57 @@ export default {
 </script>
 <style scoped lang="scss">
   @import '../../../static/css/scss/index';
+
   .notice-box{
-    height:30px;
-    width:100%;
-    overflow: hidden;
-    background-color: #0a1b2f;
-    color:#8b8e92;
-    line-height: 30px;
-    transition: all 2s;
     top:0;
+    width:100%;
+    height:30px;
+    overflow: hidden;
+    line-height: 30px;
+    color:#8b8e92;
+    background-color: #0a1b2f;
+    transition: all 2s;
+
     &.close{
       display:none;
     }
+
     .inner-box{
-      padding:0 30px;
       position: relative;
+      padding:0 30px;
+
       &.animate{
-        transition: all .5s;
         margin-top: -30px;
+        transition: all .5s;
       }
+
       >.item{
         text-align: center;
         color:#fff;
 
         >a{
+          /*color:#8B8E92;*/
+          color:#fff;
+
           >.type {
             color:$mainColor;
           }
-          /*color:#8B8E92;*/
-          color:#fff;
         }
       }
     }
+
     >.close-btn{
       position: absolute;
-      right:10px;
       top:0;
+      right:10px;
       width:30px;
       height:30px;
+
       .iconfont{
-        cursor:pointer;
-        color:#fff;
         width:30px;
         height:30px;
+        color:#fff;
+        cursor:pointer;
       }
     }
   }

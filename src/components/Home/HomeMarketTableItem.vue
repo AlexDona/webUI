@@ -39,9 +39,7 @@
             <div style="padding-left:14px;display:flex;width: 132px !important;box-sizing: border-box;">
               <div class="left" style="border-radius: 50%;">
                 <img
-                  style="width:22px;vertical-align: middle;
-                                display:inline-block;
-                                margin:14px 0;"
+                  style="width:22px;vertical-align: middle; display:inline-block; margin:14px 0;"
                   :src="s.row.image"/>
               </div>
               <div class="right"
@@ -79,18 +77,13 @@
         >
           <template slot-scope="s">
             <div
-              style="
-                    padding-left:10px;
-                    width:160px;
-                    height:30px;
-                    margin:10px auto;
-                ">
+              style=" padding-left:10px; width:160px; height:30px; margin:10px auto; ">
               <div class="top"
                    style="height:15px;line-height: 15px"
               >
                 <span
                   v-show="s.row.chg>=0"
-                  style="color:#D45858;"
+                  style="color:#d45858;"
                 >
                   {{s.row.last}}
                 </span>
@@ -121,13 +114,7 @@
         >
           <template slot-scope="s">
             <div
-              style="
-                      padding-left:10px;
-                      height:30px;
-                      width:140px;
-                      line-height: 30px;
-                      margin:10px auto;
-                    ">
+              style=" padding-left:10px; height:30px; width:140px; line-height: 30px; margin:10px auto; ">
               {{s.row.high}}
             </div>
           </template>
@@ -141,13 +128,7 @@
         >
           <template slot-scope="s">
             <div
-              style="
-                      width:140px;
-                      height:30px;
-                      padding-left:12px;
-                      line-height: 30px;
-                      margin:10px auto;
-                    ">
+              style=" width:140px; height:30px; padding-left:12px; line-height: 30px; margin:10px auto; ">
               {{s.row.low}}
             </div>
           </template>
@@ -161,13 +142,7 @@
         >
           <template slot-scope="s">
             <div
-              style="
-                      width: 120px;
-                      padding-left:10px;
-                      height:30px;
-                      line-height: 30px;
-                      margin:10px auto;
-                    ">
+              style=" width: 120px; padding-left:10px; height:30px; line-height: 30px; margin:10px auto; ">
               {{formatCount(s.row.vol24hour)}}
             </div>
           </template>
@@ -181,18 +156,11 @@
         >
           <template slot-scope="s">
             <div
-              style="
-                      width:74px;
-                      padding-left:8px;
-                      height:30px;
-                      line-height: 30px;
-                      margin:10px auto;
-                      white-space:nowrap;
-                    "
+              style=" width:74px; padding-left:8px; height:30px; line-height: 30px; margin:10px auto; white-space:nowrap; "
             >
               <span
                 v-show="s.row.chg>0"
-                style="color:#D45858;"
+                style="color:#d45858;"
               >
                 {{keep2Num(s.row.chg)}}%
               </span>
@@ -373,128 +341,152 @@ export default {
 <style scoped lang="scss" type="text/scss">
   @import "../../../static/css/scss/index.scss";
   @import "../../../static/css/scss/Home/MarketListHome.scss";
+
   .table-item-box{
+    display:flex;
     width:100%;
     height:100%;
-    display:flex;
     margin-bottom:20px;
+
     /*侧边栏*/
     >.left{
-      width:210px;
       /*min-height:560px;*/
+
       /*background-color: #f40;*/
       position: relative;
+      width:210px;
       text-align: center;
+
       &:before{
-        content:'';
         position: absolute;
         top:1px;
         right:-26px;
-        width:0px;
+        width:0;
+        height:0;
         border: 13px solid transparent;
         border-left-color: #526e90;
-        height:0px;
+        content:'';
       }
+
       >div{
         position: absolute;
         top:0;
         left:0;
-        height:100%;
         width:100%;
+        height:100%;
       }
+
       >.right-side,>.reverse-side{
         &.animate {
           transition-property: all;
           transition-duration: 2s;
+
           /*transition-timing-function: linear;*/
           transition-timing-function: ease-in-out;
         }
+
         >.top{
+          padding:20px 0;
           margin-top:30px;
           font-size: 24px;
           color:#fff;
-          padding:20px 0;
           background: url(../../assets/develop/market-list-border.png) no-repeat center bottom;
         }
       }
+
       /*正面*/
       >.right-side{
-        background:linear-gradient(#1D3862,#305FA7);
         position: relative;
         top:-30px;
+        background:linear-gradient(#1d3862,#305fa7);
+
         >.bottom{
           position: absolute;
+          bottom:20px;
           left:50%;
           transform: translateX(-50%);
-          bottom:20px;
         }
       }
+
       /*反面*/
       >.reverse-side{
-        background:linear-gradient(#2F398C,#3D4E8D);
         position: relative;
         top:-30px;
+        background:linear-gradient(#2f398c,#3d4e8d);
+
         >.bottom{
           margin-top:30px;
+
           >.hot-list{
-            min-height:330px;
             box-sizing: border-box;
+            min-height:330px;
+
             >.hot-item{
               box-sizing: border-box;
+
               >a{
-                color:#fff;
-                height:60px;
                 display: inline-block;
                 width:100%;
+                height:60px;
+                color:#fff;
+
                 >.left,>.right{
+                  display: inline-block;
                   width:48%;
                   height:60px;
-                  display: inline-block;
                   vertical-align: middle;
                 }
+
                 >.left{
                   line-height: 60px;
                 }
+
                 >.right{
+                  padding-top:10px;
+                  text-align: left;
+
                   >.top{
                     &.up{
                       color:$upColor;
                     }
+
                     &.down{
                       color:$downColor;
                     }
                   }
-                  text-align: left;
-                  padding-top:10px;
+
                   .collect-box{
                     text-align: center;
                   }
+
                   >.top,>.bottom{
-                    line-height: 20px;
                     display: inline-block;
-                    height:20px;
                     width:100%;
+                    height:20px;
+                    line-height: 20px;
                   }
                 }
               }
             }
           }
         }
+
         >.more-btn{
           position: absolute;
+          bottom:20px;
           left:50%;
           transform: translateX(-50%);
-          bottom:20px;
         }
       }
     }
+
     /*主要内容*/
     >.right{
-      margin:13px 0 0 0;
       /*height:547px;*/
       width:986px;
-      background-color: transparent;
+      margin:13px 0 0;
       overflow: hidden;
+      background-color: transparent;
 
     }
   }

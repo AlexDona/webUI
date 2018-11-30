@@ -481,74 +481,92 @@ export default {
 </script>
 <style scoped lang="scss">
   @import "../../../../static/css/scss/Personal/IndexPersonal";
+
   .billing-details{
     >.billing-details-main{
       min-height: 585px;
+
       .billing-details-content {
         >.tab-list {
           height: 520px;
         }
       }
+
       >.billing-details-query {
         height: 57px;
         line-height: 57px;
+
         >.search-button {
           width: 50px;
           height: 30px;
           margin-top: 15px;
           line-height: 29px;
         }
+
         .demonstration {
           margin-right: 5px;
         }
       }
     }
+
     >.billing-details-header {
       margin-bottom: 2px;
+
       >.header-content {
         width: 300px;
       }
     }
+
     &.night{
-      background-color: $nightBgColor;
       color:$nightFontColor;
+      background-color: $nightBgColor;
+
       >.billing-details-main {
         background-color: $nightMainBgColor;
+
         >.billing-details-query {
-          border-bottom: 1px solid #39424D;
+          border-bottom: 1px solid #39424d;
+
           >.search-button {
-            background:linear-gradient(9deg,rgba(43,57,110,1),rgba(42,80,130,1));
             color: #fff;
+            background:linear-gradient(9deg,rgba(43,57,110,1),rgba(42,80,130,1));
           }
         }
       }
+
       >.billing-details-header{
         background-color: $nightMainBgColor;
-        box-shadow: 0px 5px 50px #181e2a;
+        box-shadow: 0 5px 50px #181e2a;
       }
     }
+
     &.day{
-      background-color: $dayBgColor;
       color:$dayFontColor;
+      background-color: $dayBgColor;
+
       >.billing-details-main {
-        background-color: $dayBgColor;
         border: 1px solid #ecf1f8;
+        background-color: $dayBgColor;
+
         >.billing-details-query {
-          border-bottom: 1px solid rgba(57,66,77,0.1);
+          border-bottom: 1px solid rgba(57,66,77,.1);
+
           >.search-button {
-            background:linear-gradient(9deg,rgba(43,57,110,1),rgba(42,80,130,1));
             color: #fff;
+            background:linear-gradient(9deg,rgba(43,57,110,1),rgba(42,80,130,1));
           }
+
           .demonstration {
-            color: #7D90AC;
+            color: #7d90ac;
           }
         }
       }
+
       >.billing-details-header{
-        background: rgb(255,255,255);
         border: 1px solid rgb(236,241,248);
         border-radius: 2px;
-        box-shadow: 1px 0px 3px rgb(236,236,236);
+        background: rgb(255,255,255);
+        box-shadow: 1px 0 3px rgb(236,236,236);
       }
     }
   }

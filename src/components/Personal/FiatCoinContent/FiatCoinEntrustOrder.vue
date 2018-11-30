@@ -225,102 +225,125 @@ export default {
 </script>
 <style scoped lang="scss" type="text/scss">
   @import "../../../../static/css/scss/Personal/IndexPersonal.scss";
+
   .fiat-entrust-order-box {
     .fiat-entrust-order-table {
       > .entrust-table-head {
+        z-index: 200;
         box-sizing: border-box;
         height: 35px;
-        line-height: 35px;
-        border-radius: 5px;
         margin-bottom: 5px;
-        z-index: 200;
+        border-radius: 5px;
+        line-height: 35px;
+
         > .item {
           display: inline-block;
           text-align: center;
         }
+
         > .senventh-create-time {
           width: 150px;
         }
+
         > .senventh-create-time1 {
           width: 120px;
         }
       }
+
       > .entrust-table-body,
       .item{
         border-top: none;
         border-bottom-right-radius: 5px;
         border-bottom-left-radius: 5px;
+
         > .no-data {
           line-height: 345px;
           text-align: center;
         }
+
         > .entrust-list-content {
           display: flex;
           height: 34px;
           line-height: 34px;
+
           > .item {
             text-align: center;
           }
         }
       }
     }
+
     &.night{
-      background-color: $nightBgColor;
       color:$nightFontColor;
+      background-color: $nightBgColor;
+
       >.background-color{
         background-color: $nightMainBgColor;
+
         >.fiat-color{
-          color: #338FF5;
+          color: #338ff5;
         }
       }
+
       >.fiat-entrust-order-table{
         > .entrust-table-head {
-          background-color: $nightMainBgColor;
+          border: 1px solid #262f38; text-align: left;
           color: #617499;
-          border: 1px solid #262F38;
-          box-shadow: -2px 3px 5px 1px #191E28; text-align: left;
-        }
-        > .entrust-table-body {
           background-color: $nightMainBgColor;
-          color: #9DA5B3;
+          box-shadow: -2px 3px 5px 1px #191e28;
+        }
+
+        > .entrust-table-body {
+          color: #9da5b3;
+          background-color: $nightMainBgColor;
+
           > .entrust-list-content {
             .red {
-              color: #D45858;
+              color: #d45858;
             }
+
             .green {
               color: #008069;
             }
           }
+
           .no-data {
             background-color: $nightMainBgColor;
           }
         }
       }
     }
+
     &.day{
-      background-color: $dayBgColor;
       color:$dayFontColor;
+      background-color: $dayBgColor;
+
       >.background-color{
         background-color: $dayBgColor;
       }
+
       >.fiat-entrust-order-table {
         > .entrust-table-head {
-          background-color: $dayBgColor;
+          border-bottom: 1px solid rgba(72,87,118,.1);
           color: #617499;
-          border-bottom: 1px solid rgba(72,87,118,0.1);
+          background-color: $dayBgColor;
         }
+
         > .entrust-table-body {
           min-height: 432px;
+          border: 1px solid rgba(72,87,118,.1);
+          color: #9da5b3;
           background-color: #fff;
-          color: #9DA5B3;
-          border: 1px solid rgba(72,87,118,0.1);
+
           > .entrust-list-content {
             > .item {
               background-color: #fff;
             }
+
             .red {
-              color: #D45858;
+              color: #d45858;
             }
+
             .green {
               color: #008069;
             }

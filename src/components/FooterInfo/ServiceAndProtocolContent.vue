@@ -45,54 +45,66 @@ export default {
   .user-protocol-box{
     width:100%;
     height:100%;
+
     >.content{
       width:100%;
+
       >.content{
         overflow: hidden;
+
         >.inner-box{
-          margin:0px auto;
-          height:1100px;
           width:1100px;
+          height:1100px;
           padding:20px 50px;
+          margin:0 auto;
           overflow: auto;
+
           >h2{
-            text-align: center;
             line-height: 70px;
+            text-align: center;
           }
         }
       }
     }
+
     &.night{
       >.content{
         >.top{
           >h1{
           }
+
           >p{
           }
         }
+
         >.content{
           background-color: #1e2636;
+
           >.inner-box{
-            background-color: #1e2636;
-            color:#8BA0CA
+            color:#8ba0ca;
+            background-color: #1e2636
           }
         }
       }
     }
+
     &.day{
       >.content{
         >.top{
           >h1{
           }
+
           >p{
           }
         }
+
         >.content{
           background-color: #fff;
+
           >.inner-box{
             border:1px solid rgba(234,235,236,1);
+            color:#666;
             background-color: #fff;
-            color:#666666;
           }
         }
       }

@@ -59,7 +59,7 @@ export const returnAjaxMsg = (data, self, noTip, errorTip) => {
           store.commit('user/USER_LOGOUT')
           break
         case 500:
-          // self.$router.push({path: '/500'})
+          self.$router.push({path: '/500'})
           break
       }
       return 0
@@ -81,8 +81,6 @@ export const returnAjaxMsg = (data, self, noTip, errorTip) => {
  * @returns {number} 0：正确 1： 未输入 2：不正确
  */
 export const validateNumForUserInput = (type, targetNum) => {
-  console.log(type)
-  console.log(targetNum)
   let returnNum = 0
   let validateType
   switch (type) {
@@ -125,8 +123,6 @@ export const validateNumForUserInput = (type, targetNum) => {
   } else {
     returnNum = 0
   }
-
-  console.log(returnNum)
   return returnNum
 }
 // api 发送验证码（短信、邮箱）

@@ -223,179 +223,222 @@ export default {
 </script>
 <style scoped lang="scss" type="text/scss">
   @import "../../../../static/css/scss/Personal/IndexPersonal.scss";
+
   .fiat-canceled-order-box{
     >.canceled-order-content{
       >.canceled-table-head{
         box-sizing: border-box;
         height: 35px;
-        line-height: 35px;
-        border-radius: 5px;
         margin-bottom: 5px;
+        border-radius: 5px;
+        line-height: 35px;
+
         >.item{
           display: inline-block;
           text-align: center;
         }
       }
+
       >.canceled-table-body{
         box-sizing: border-box;
         height: 170px;
-        border-radius: 5px;
         margin-bottom: 15px;
+        border-radius: 5px;
+
         >.canceled-info-top{
           height: 40px;
-          line-height: 40px;
           border-radius: 5px;
+          line-height: 40px;
+
           >.item{
             display: inline-block;
             text-align: center;
           }
+
           >.order-time {
             width: 170px;
           }
         }
+
         >.canceled-info-bottom{
-          box-sizing: border-box;
           display: flex;
           flex: 7;
-          padding: 30px 30px 0 30px;
-          color: #9DA5B3;
+          box-sizing: border-box;
+          padding: 30px 30px 0;
+          color: #9da5b3;
+
           >.info-left{
             flex: 2;
             box-sizing: border-box;
+
             >.text-info{
               line-height: 20px;
             }
           }
+
           >.info-middle{
             flex: 2;
             box-sizing: border-box;
             margin-left: 30px;
+
             >.text-info{
               line-height: 20px;
             }
           }
+
           >.info-right{
             flex: 3;
             box-sizing: border-box;
             margin-left: 30px;
+
             >.text-info{
               line-height: 20px;
             }
-            }
           }
         }
+      }
+
       >.no-data{
         height: 345px;
         line-height: 345px;
         text-align: center;
       }
-      }
+    }
+
     &.night{
-      background-color: $nightBgColor;
       color:$nightFontColor;
+      background-color: $nightBgColor;
+
       >.background-color{
         background-color: $nightMainBgColor;
+
         >.fiat-color{
-          color: #338FF5;
+          color: #338ff5;
         }
       }
+
       >.canceled-order-content{
         >.canceled-table-head{
           box-sizing: border-box;
-          background-color: $nightMainBgColor;
+          border: 1px solid #262f38;
           color: #617499;
-          border: 1px solid #262F38;
-          box-shadow: -2px 3px 5px 1px #191E28;
-        }
-        >.canceled-table-body{
           background-color: $nightMainBgColor;
-          border: 1px solid #262F38;
+          box-shadow: -2px 3px 5px 1px #191e28;
+        }
+
+        >.canceled-table-body{
+          border: 1px solid #262f38;
+          background-color: $nightMainBgColor;
+
           >.canceled-info-top{
-            background-color: $nightMainBgColor;
             color: #617499;
+            background-color: $nightMainBgColor;
+
             .red{
-              color: #D45858;
+              color: #d45858;
             }
+
             .green{
               color: #008069;
             }
           }
+
           >.canceled-info-bottom{
-            border-top: 1px solid #262F38;
-            color: #9DA5B3;
+            border-top: 1px solid #262f38;
+            color: #9da5b3;
+
             >.info-left{
               flex: 2;
-              border-right: 1px solid #262F38;
+              border-right: 1px solid #262f38;
+
               >.text-blue{
-                color: #5E95EC;
+                color: #5e95ec;
               }
             }
+
             >.info-middle{
-              border-right: 1px solid #262F38;
+              border-right: 1px solid #262f38;
+
               >.text-blue{
-                color: #5E95EC;
+                color: #5e95ec;
               }
             }
+
             >.info-right{
               >.text-blue{
-                color: #5E95EC;
+                color: #5e95ec;
               }
             }
           }
         }
+
         >.no-data{
           background-color: $nightMainBgColor;
         }
       }
     }
+
     &.day{
-      background-color: $dayBgColor;
       color:$dayFontColor;
+      background-color: $dayBgColor;
+
       >.background-color{
-        background-color: #CCCCCC;
+        background-color: #ccc;
       }
+
       >.canceled-order-content{
         >.canceled-table-head{
-          background-color: $dayBgColor;
+          border: 1px solid rgba(38,47,56,.1);
           color: #617499;
-          border: 1px solid rgba(38,47,56,0.1);
-          box-shadow: -2px 3px 5px 1px #191E28;
-        }
-        >.canceled-table-body{
           background-color: $dayBgColor;
-          border: 1px solid rgba(38,47,56,0.1);
+          box-shadow: -2px 3px 5px 1px #191e28;
+        }
+
+        >.canceled-table-body{
+          border: 1px solid rgba(38,47,56,.1);
+          background-color: $dayBgColor;
+
           >.canceled-info-top{
-            background-color: $dayBgColor;
             color: #617499;
+            background-color: $dayBgColor;
+
             .red{
-              color: #D45858;
+              color: #d45858;
             }
+
             .green{
               color: #008069;
             }
           }
+
           >.canceled-info-bottom {
-            border-top: 1px solid rgba(38,47,56,0.1);
-            color: #9DA5B3;
+            border-top: 1px solid rgba(38,47,56,.1);
+            color: #9da5b3;
+
             >.info-left{
-              border-right: 1px solid rgba(38,47,56,0.1);
+              border-right: 1px solid rgba(38,47,56,.1);
+
               >.text-blue{
-                color: #5E95EC;
+                color: #5e95ec;
               }
             }
+
             >.info-middle{
-              border-right: 1px solid rgba(38,47,56,0.1);
+              border-right: 1px solid rgba(38,47,56,.1);
+
               >.text-blue{
-                color: #5E95EC;
+                color: #5e95ec;
               }
             }
+
             >.info-right{
               >.text-blue{
-                color: #5E95EC;
+                color: #5e95ec;
               }
             }
           }
         }
+
         >.no-data{
           background-color: $dayBgColor;
         }

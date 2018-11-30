@@ -1,75 +1,94 @@
-/*个人中心（黑色主题）*/
-/*表格样式修改*/
+/* 个人中心（黑色主题） */
+
+/* 表格样式修改 */
 .security-center.personal.night .el-table th,
-.security-center.personal.night .el-table tr{
-  background-color: #1C1F32;
+.security-center.personal.night .el-table tr {
+  background-color: #1c1f32;
 }
+
 .security-center.personal.night .el-table thead {
   color: #617499;
 }
+
 .security-center.personal.night .el-table th.is-leaf {
-  border-bottom: 1px solid rgba(97,116,153,1);
+  border-bottom: 1px solid rgba(97, 116, 153, 1);
 }
-.security-center.personal.night .el-table td{
-  background-color: #1C1F32;
-  border-bottom: 1px solid rgba(97,116,153,0.05);
+
+.security-center.personal.night .el-table td {
+  border-bottom: 1px solid rgba(97, 116, 153, .05);
   color: #ccc;
+  background-color: #1c1f32;
 }
-.security-center.personal.night .el-table--enable-row-hover .el-table__body tr:hover>td{
-  background-color: #1C1F32;
+
+.security-center.personal.night .el-table--enable-row-hover .el-table__body tr:hover > td {
+  background-color: #1c1f32;
 }
-.security-center.personal.night .el-table{
+
+.security-center.personal.night .el-table {
   color: #fff;
 }
-.security-center.personal.night .el-table th>.cell.highlight{
+
+.security-center.personal.night .el-table th > .cell.highlight {
   color: #617499;
 }
-.security-center.personal.night .el-table th>.cell {
-  color: #A9BED4;
+
+.security-center.personal.night .el-table th > .cell {
+  color: #a9bed4;
 }
+
 .security-center.personal.night .el-table td div {
-  color: #9DA5B3;
+  color: #9da5b3;
 }
-/*tabs切换*/
-.security-center.personal.night .el-tabs__item.is-active{
-  background-color: transparent;
-  color: #ccc;
+
+/* tabs切换 */
+.security-center.personal.night .el-tabs__item.is-active {
+  border-bottom: 2px solid #338ff5;
   border-left: 0;
-  border-bottom: 2px solid #338FF5;
+  color: #ccc;
+  background-color: transparent;
 }
-.security-center.personal.night .el-tabs__item:hover{
-  color: #338FF5;
-  background-color: #1C1F32;
-  border-left: 4px solid #1C1F32;
+
+.security-center.personal.night .el-tabs__item:hover {
+  border-left: 4px solid #1c1f32;
+  color: #338ff5;
+  background-color: #1c1f32;
 }
+
 .security-center.personal.night .el-dialog {
-  background-color: #28334A;
+  background-color: #28334a;
 }
+
 .security-center.personal.night .el-dialog__header {
-  background-color: #20293C;
   color: #fff;
+  background-color: #20293c;
 }
+
 .security-center.personal.night .el-dialog__title {
   color: #fff;
 }
+
 .security-center.personal.night .el-form-item__label {
   color: #fff;
 }
+
 .security-center.personal.night .el-input__inner {
-  background-color: #1E2636;
   border: 1px solid #485776;
   color: #a9bed4;
+  background-color: #1e2636;
 }
+
 .security-center.personal.night .el-input__inner:focus {
-  border: 1px solid #338FF5;
+  border: 1px solid #338ff5;
 }
+
 .security-center.personal.night .el-input-group__append {
-  background-color: #338FF5;
-  color: #fff;
   border-top: 1px solid #485776;
-  border-right: 1px solid #485776;
   border-bottom: 1px solid #485776;
+  color: #fff;
+  background-color: #338ff5;
+  border-right: 1px solid #485776;
 }
+
 .security-center.personal.night .el-table__empty-block {
-  background: #1C1F32;
+  background: #1c1f32;
 }

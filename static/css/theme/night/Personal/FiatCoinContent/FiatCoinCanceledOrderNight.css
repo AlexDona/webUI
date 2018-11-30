@@ -1,74 +1,92 @@
 /* 交易中的订单样式重写 */
-.fiat-canceled-order-box.personal.night .el-input__inner{
-  background-color: #303B45;
-  color: #9DA5B3;
+.fiat-canceled-order-box.personal.night .el-input__inner {
+  color: #9da5b3;
+  background-color: #303b45;
 }
-.fiat-canceled-order-box.personal.night .el-select-dropdown{
-  background-color: #29343F;
+
+.fiat-canceled-order-box.personal.night .el-select-dropdown {
+  background-color: #29343f;
 }
-.fiat-canceled-order-box.personal.night .el-select-dropdown__item.selected{
-  color: #338FF5;
+
+.fiat-canceled-order-box.personal.night .el-select-dropdown__item.selected {
+  color: #338ff5;
 }
+
 .fiat-canceled-order-box.personal.night .el-select-dropdown__item:hover {
-  background-color: #29343F;
+  background-color: #29343f;
 }
+
 .fiat-canceled-order-box.personal.night .el-table__expanded-cell:hover {
-  background-color: #1C1F32;
+  background-color: #1c1f32;
 }
-.fiat-canceled-order-box.personal.night .el-select-dropdown__item.hover{
-  background-color: #29343F;
-  color: #338FF5;
+
+.fiat-canceled-order-box.personal.night .el-select-dropdown__item.hover {
+  color: #338ff5;
+  background-color: #29343f;
 }
+
 .fiat-canceled-order-box.personal.night .el-popper[x-placement^=bottom] .popper__arrow::after {
-  border-bottom-color: #29343F;
+  border-bottom-color: #29343f;
 }
+
 .fiat-canceled-order-box.personal.night .el-popper[x-placement^=bottom] .popper__arrow {
-  border-bottom-color: #29343F;
+  border-bottom-color: #29343f;
 }
+
 /* 2.0按钮样式 */
-.fiat-canceled-order-box.personal.night .el-button--mini{
+.fiat-canceled-order-box.personal.night .el-button--mini {
   padding: 3px 10px;
 }
 
-.fiat-canceled-order-box.personal.night .el-textarea__inner{
-  background-color: #1C1F32;
-  border: 1px solid #7587A5;
+.fiat-canceled-order-box.personal.night .el-textarea__inner {
+  border: 1px solid #7587a5;
   resize: none;
+  background-color: #1c1f32;
 }
-/* 4.0 扫码付款按钮及弹窗支付宝和微信图片*/
-.fiat-canceled-order-box.personal.night .bank-info-picture .el-button{
+
+/* 4.0 扫码付款按钮及弹窗支付宝和微信图片 */
+.fiat-canceled-order-box.personal.night .bank-info-picture .el-button {
+  border-color: #409eff;
   color: #fff;
-  background-color: #409EFF;
-  border-color: #409EFF;
+  background-color: #409eff;
 }
-.fiat-canceled-order-box.personal.night .bank-info-picture .el-button:hover{
-  background: #66b1ff;
+
+.fiat-canceled-order-box.personal.night .bank-info-picture .el-button:hover {
   border-color: #66b1ff;
   color: #fff;
+  background: #66b1ff;
 }
+
 /* 输入密码弹出框 */
-.fiat-canceled-order-box.personal.night .password-dialog .el-dialog{
-  background: #28334A;
+.fiat-canceled-order-box.personal.night .password-dialog .el-dialog {
+  background: #28334a;
 }
-.fiat-canceled-order-box.personal.night .password-dialog .el-dialog__header{
-  background-color:#20293C;
+
+.fiat-canceled-order-box.personal.night .password-dialog .el-dialog__header {
+  background-color: #20293c;
 }
-.fiat-canceled-order-box.personal.night .password-dialog .el-dialog__title{
+
+.fiat-canceled-order-box.personal.night .password-dialog .el-dialog__title {
   color: #fff;
 }
-.fiat-canceled-order-box.personal.night .password-dialog .el-dialog__body{
+
+.fiat-canceled-order-box.personal.night .password-dialog .el-dialog__body {
   color: #fff;
 }
-.fiat-canceled-order-box.personal.night .password-dialog .el-dialog__body .password-input{
-  background-color: #1A2233;
+
+.fiat-canceled-order-box.personal.night .password-dialog .el-dialog__body .password-input {
+  color: #fff;
+  background-color: #1a2233;
+}
+
+.fiat-canceled-order-box.personal.night .password-dialog .el-dialog__body .error-info {
   color: #fff;
 }
-.fiat-canceled-order-box.personal.night .password-dialog .el-dialog__body .error-info{
-  color: #fff;
+
+.fiat-canceled-order-box.personal.night .password-dialog .el-button--primary {
+  background: linear-gradient(9deg, rgba(43, 57, 110, 1), rgba(42, 80, 130, 1));
 }
-.fiat-canceled-order-box.personal.night .password-dialog .el-button--primary{
-  background:linear-gradient(9deg,rgba(43,57,110,1),rgba(42,80,130,1));
-}
+
 .fiat-canceled-order-box.personal.night .el-table tr {
-  background-color: #1C1F32;
+  background-color: #1c1f32;
 }

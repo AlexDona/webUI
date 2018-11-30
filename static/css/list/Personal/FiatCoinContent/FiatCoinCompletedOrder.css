@@ -1,90 +1,113 @@
 /* 完成订单组件样式重写 */
 .fiat-completed-order-box.personal .el-table__expanded-cell {
-  background-color: #1E2636;
+  background-color: #1e2636;
 }
+
 .fiat-completed-order-box.personal .el-table td,
 .fiat-completed-order-box.personal .el-table th {
   height: 0;
   line-height: 0;
 }
-.fiat-completed-order-box.personal .el-table th{
+
+.fiat-completed-order-box.personal .el-table th {
   padding: 5px 0;
-  box-shadow: 4px 4px 6px #191E28;
+  box-shadow: 4px 4px 6px #191e28;
 }
-.fiat-completed-order-box.personal .el-table{
-  color: #9DA5B3;
+
+.fiat-completed-order-box.personal .el-table {
+  color: #9da5b3;
 }
-.fiat-completed-order-box.personal .el-table--enable-row-hover .el-table__body tr:hover>td {
-  background-color: #1E2636;
+
+.fiat-completed-order-box.personal .el-table--enable-row-hover .el-table__body tr:hover > td {
+  background-color: #1e2636;
 }
+
 .fiat-completed-order-box.personal .el-table td {
   height: 40px;
 }
-.fiat-completed-order-box.personal .el-table__header{
+
+.fiat-completed-order-box.personal .el-table__header {
   margin-bottom: 5px;
 }
-.fiat-completed-order-box.personal .el-table{
-  background-color: #1E2636;
+
+.fiat-completed-order-box.personal .el-table {
+  background-color: #1e2636;
 }
-.fiat-completed-order-box.personal .el-table th.is-leaf{
-  border-bottom: 1px solid #262F38;
+
+.fiat-completed-order-box.personal .el-table th.is-leaf {
+  border-bottom: 1px solid #262f38;
 }
-.fiat-completed-order-box.personal .completed-order-content >.tables .el-icon-arrow-right:before {
+
+.fiat-completed-order-box.personal .completed-order-content > .tables .el-icon-arrow-right::before {
   content: " ";
 }
-.fiat-completed-order-box.personal .el-table__body{
+
+.fiat-completed-order-box.personal .el-table__body {
   border-collapse: separate !important;
 }
-.fiat-completed-order-box.personal.el-table{
+
+.fiat-completed-order-box.personal.el-table {
   border-collapse: separate !important;
 }
-.fiat-completed-order-box.personal .el-table__expanded-cell{
-  border-bottom:25px solid #1d2331;
+
+.fiat-completed-order-box.personal .el-table__expanded-cell {
+  border-bottom: 25px solid #1d2331;
 }
-.fiat-completed-order-box.personal .el-table_2_column_9 .el-table__expand-column .is-leaf{
-  border-top-left-radius: 5px;
-  border-bottom-left-radius: 5px;
+
+.fiat-completed-order-box.personal .el-table_2_column_9 .el-table__expand-column .is-leaf {
+  border-bottom-left-radius:  5px;
+  border-top-left-radius:  5px;
 }
-.fiat-completed-order-box.personal .el-table th.is-leaf:first-of-type{
-  border-top-left-radius: 5px;
+
+.fiat-completed-order-box.personal .el-table th.is-leaf:first-of-type {
+  border-left: 1px solid #262f38;
   border-bottom-left-radius: 5px;
-  border-left: 1px solid #262F38;
-}
-.fiat-completed-order-box.personal .el-table th.is-leaf:nth-last-of-type(2){
-  border-top-right-radius: 5px;
-  border-right: 1px solid #262F38;
-}
-.fiat-completed-order-box.personal .el-table--enable-row-transition .el-table__body td:first-of-type{
   border-top-left-radius: 5px;
 }
-.fiat-completed-order-box.personal .el-table--enable-row-transition .el-table__body td:first-of-type.el-table__expanded-cell{
-  border-top-left-radius: 0px;
-  border-top: 0px solid #262F38;
+
+.fiat-completed-order-box.personal .el-table th.is-leaf:nth-last-of-type(2) {
+  border-top-right-radius: 5px;
+  border-right: 1px solid #262f38;
 }
-.fiat-completed-order-box.personal .el-table--enable-row-transition .el-table__body td:nth-last-of-type(1){
+
+.fiat-completed-order-box.personal .el-table--enable-row-transition .el-table__body td:first-of-type {
+  border-top-left-radius: 5px;
+}
+
+.fiat-completed-order-box.personal .el-table--enable-row-transition .el-table__body td:first-of-type.el-table__expanded-cell {
+  border-top: 0 solid #262f38;
+  border-top-left-radius: 0;
+}
+
+.fiat-completed-order-box.personal .el-table--enable-row-transition .el-table__body td:nth-last-of-type(1) {
   border-top-right-radius: 5px;
 }
-.fiat-completed-order-box.personal .el-table--enable-row-transition .el-table__body td:nth-last-of-type(1).el-table__expanded-cell{
-  border-top-right-radius: 0px;
+
+.fiat-completed-order-box.personal .el-table--enable-row-transition .el-table__body td:nth-last-of-type(1).el-table__expanded-cell {
+  border-top-right-radius: 0;
 }
-.fiat-completed-order-box.personal .el-table--enable-row-transition .el-table__body td:first-of-type.el-table__expanded-cell ::after{
-  content: '';
-  height: 20px;
+
+.fiat-completed-order-box.personal .el-table--enable-row-transition .el-table__body td:first-of-type.el-table__expanded-cell ::after {
   position: absolute;
-  left: 0;
   bottom: -10px;
-  background-color: #1E2636;
-  border-bottom-left-radius: 5px;
+  left: 0;
+  height: 20px;
+  border-bottom: 1px solid #262f38;
   border-bottom-right-radius: 5px;
-  border-bottom: 1px solid #262F38;
+  border-bottom-left-radius: 5px;
+  background-color: #1e2636;
+  content: '';
 }
+
 .fiat-completed-order-box.personal .el-table td {
-  border-bottom: 1px solid #262F38;
+  border-bottom: 1px solid #262f38;
 }
+
 .fiat-completed-order-box.personal .el-table th {
-  background-color: #1E2636;
+  background-color: #1e2636;
 }
+
 .fiat-completed-order-box.personal .el-table__empty-block {
   min-height: 432px;
-  background-color: #1E2636;
+  background-color: #1e2636;
 }

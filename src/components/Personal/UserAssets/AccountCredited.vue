@@ -807,184 +807,227 @@ export default {
 </script>
 <style scoped lang="scss">
   @import "../../../../static/css/scss/Personal/IndexPersonal";
+
   .credited-credited {
     >.credited-credited-main {
       >.credited-box{
         padding: 30px 23px;
+
         >.title-status {
           width: 100%;
           height: 35px;
-          border-radius: 2px;
-          margin-top: 24px;
           padding: 9px 73px 8px 17px;
+          margin-top: 24px;
+          border-radius: 2px;
         }
+
         >.payment-content {
+          min-height: 200px;
+
           .text-info {
             display: inline-block;
-            margin: 30px 0 0px;
+            margin: 30px 0 0;
           }
+
           .btn {
             width: 90px;
             height: 35px;
             line-height: 0;
           }
-          min-height: 200px;
+
           >.payment-box {
-            height: 22px;
-            margin-top: 26px;
             display: flex;
+            height: 22px;
             padding: 0 73px 0 17px;
+            margin-top: 26px;
+
             >.payment-left,
             .payment-right {
               flex: 1;
               width: 100px;
             }
+
             >.payment-left {
               text-align: left;
             }
+
             >.payment-right {
-              text-align: right;
               position: relative;
+              text-align: right;
+
               >.switch-img {
                 position: absolute;
+                top: 0;
                 right: 48px;
-                top: 0px;
               }
             }
           }
         }
+
         .payment-card,
         .payment-state {
           margin-left: 5px;
         }
+
         .dialog-warning {
           width: 90px;
           height: 90px;
-          border-radius: 50%;
           padding-top: 6px;
           margin: 0 auto;
+          border-radius: 50%;
+
           .dialog-warning-box {
             width: 78px;
             height: 78px;
-            border-radius: 50%;
             margin: 0 auto;
-            text-align: center;
+            border-radius: 50%;
             line-height: 75px;
+            text-align: center;
           }
         }
       }
     }
+
     &.night{
-      background-color: $nightBgColor;
       color:$nightFontColor;
+      background-color: $nightBgColor;
+
       >.background-color {
         background-color: $nightMainBgColor;
       }
+
       >.credited-credited-main {
         background-color: $nightMainBgColor;
+
         .credited-box{
           >.payment-content {
             .text-info {
               color: #fff;
             }
+
             .btn {
+              border: 1px solid #338ff5;
               color: #fff;
               background-color: transparent;
-              border: 1px solid #338FF5;
             }
+
             >.payment-box {
               .payment-right {
                 .setting-btn {
-                  color: #fff
+                  color: #fff;
                 }
               }
             }
+
             .payment-card {
               color: #fff;
             }
+
             .payment-state {
-              color: #338FF5;
+              color: #338ff5;
             }
+
             .dialog-warning {
-              background:rgba(42,122,211,0.2);
+              background:rgba(42,122,211,.2);
+
               .dialog-warning-box {
                 background:linear-gradient(90deg,rgba(43,57,110,1),rgba(42,80,130,1));
               }
             }
+
             .warning-text {
               color: #fff;
             }
           }
         }
       }
+
       >.credited-credited-header{
         >.header-content{
-          color: #338FF5;
+          color: #338ff5;
         }
       }
+
       .content-title {
         >.title-tips {
-          color: #D45858;
+          color: #d45858;
         }
+
         >.tips-content {
-          color: #9DA5B3;
+          color: #9da5b3;
         }
       }
+
       .title-status {
-        background:rgba(248,249,252,0.05);
-        color: rgba(255,255,255,0.7);
+        color: rgba(255,255,255,.7);
+        background:rgba(248,249,252,.05);
       }
     }
+
     &.day{
-      background-color: $dayBgColor;
       color:$dayFontColor;
+      background-color: $dayBgColor;
+
       >.background-color {
         background-color: #ccc;
       }
+
       >.credited-credited-main {
+        border:1px solid rgba(38,47,56,.1);
         background-color: $dayBgColor;
-        border:1px solid rgba(38,47,56,0.1);
       }
+
       >.credited-credited-header{
-        background:rgba(255,255,255,1);
         border:1px solid rgba(236,241,248,1);
+        background:rgba(255,255,255,1);
+
         >.header-content{
           color: #333;
         }
       }
+
       .content-title{
         >.title-tips {
-          color: #D45858;
+          color: #d45858;
         }
+
         >.tips-content {
-          color: #7D90AC;
+          color: #7d90ac;
         }
       }
+
       .title-status {
-        background:rgba(51,143,245,0.1);
         color: #333;
+        background:rgba(51,143,245,.1);
       }
+
       .payment-content {
         .text-info {
           color: #333;
         }
+
         .btn {
+          border: 1px solid #338ff5;
           color: #333;
           background-color: transparent;
-          border: 1px solid #338FF5;
         }
+
         .payment-card {
           color: #333;
         }
+
         .payment-state {
-          color: #338FF5;
+          color: #338ff5;
         }
+
         .dialog-warning {
-          background:rgba(42,122,211,0.9);
+          background:rgba(42,122,211,.9);
+
           .dialog-warning-box {
             background:linear-gradient(90deg,rgba(43,57,110,1),rgba(42,80,130,1));
           }
         }
+
         .warning-text {
           color: #333;
         }

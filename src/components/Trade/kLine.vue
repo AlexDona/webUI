@@ -36,9 +36,6 @@ import {
   // getTradeMarketDataAjax,
   getKlineDataAjax
 } from '../../utils/api/trade'
-// import {
-//   getCollectionListAjax
-// } from '../../utils/api/home'
 import {
   returnAjaxMsg,
   getNestedData
@@ -194,7 +191,6 @@ export default {
       } else {
         let activeSymbolData = getNestedData(data, 'data.data.obj')
         activeSymbolData = JSON.parse(unzip(activeSymbolData))
-        console.log(activeSymbolData)
         let {
           defaultTrade, // 默认交易对
           depthList, // 买卖单、深度
@@ -287,7 +283,6 @@ export default {
         })
         this.widget.onChartReady(() => {
           const _self = this
-          console.log(this.widget)
           let chart = _self.widget.chart()
           const btnList = [{
             class: 'resolution_btn',
@@ -462,7 +457,6 @@ export default {
         this.interval = resolution
         this.options.interval = resolution
         let newInterval = this.transformInterval(resolution)
-        console.log(1)
         this.KlineNum = 0
         this.subscribeSocketData(this.symbol, newInterval)
       }
@@ -562,7 +556,7 @@ export default {
     KlineNum (newVal, oldVal) {
       console.log(newVal, oldVal)
     },
-    theme (newVal) {
+    theme () {
       // 更新K线主题
       this.widget.applyOverrides({
         'paneProperties.background': this.theme === 'night' ? this.mainColor.$mainNightBgColor : this.mainColor.$mainDayBgColor,
@@ -582,7 +576,6 @@ export default {
       if (oldVal) {
         this.getTradeMarketBySocket('CANCEL', oldVal)
       }
-      console.log(newVal)
       this.getTradeMarketBySocket('SUB', newVal)
     },
     symbol (newVal, oldVal) {
@@ -606,28 +599,33 @@ export default {
 </script>
 <style scoped lang="scss">
   @import '../../../static/css/scss/index';
+
   .kline-container{
-    overflow: hidden;
+    position: relative;
     width:100%;
     height:355px;
-    position: relative;
+    overflow: hidden;
+
     #tv_chart_container {
       width: 100%;
       height: 355px;
+
       &.night {
         background-color: $mainContentNightBgColor;
       }
+
       &.day{
         background-color: #fff;
       }
     }
+
     .loading-box{
-      width:101%;
-      height:355px;
       position: absolute;
+      z-index: 15;
       top:0;
       right:0;
-      z-index: 15;
+      width:101%;
+      height:355px;
     }
   }
 </style>

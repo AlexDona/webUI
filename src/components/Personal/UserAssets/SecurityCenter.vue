@@ -1082,211 +1082,263 @@ export default {
 </script>
 <style scoped lang="scss">
   @import "../../../../static/css/scss/Personal/IndexPersonal";
+
   .security-center{
     >.security-information{
       height: 100px;
+
       .security-title-info {
         >.login-time {
           width: 290px;
         }
+
         >.login-ip {
           width: 200px;
         }
       }
     }
+
     >.security-setting{
       height: 510px;
+
       >.security-setting-header {
         height: 50px;
       }
+
       >.security-setting-box {
         .send-code-btn {
-          width: 96px;
-          height: 34px;
           position: absolute;
           top: 4px;
+          width: 96px;
+          height: 34px;
         }
+
         .button {
           width: 271px;
           height: 34px;
-          background: linear-gradient(90deg, #2b396e, #2a5082);
-          color: #fff;
           border: 0;
           line-height: 0;
+          color: #fff;
+          background: linear-gradient(90deg, #2b396e, #2a5082);
         }
+
         .input {
           width: 180px;
           height: 34px;
         }
+
         .input-google {
           width: 271px;
           height: 34px;
         }
+
         .security-type-icon {
           width: 30px;
         }
+
         .security-type-text {
           flex: 5;
+
           .secure-email {
             margin-right: 5px;
           }
         }
+
         .security-status {
           flex: 2;
           padding-top: 6px;
+
           >.security-verify,
           >.security-binding {
             min-width: 70px;
             height: 30px;
           }
+
           >.security-binding {
             margin-left: 18px;
           }
         }
       }
     }
+
     >.security-record{
       min-height: 510px;
+
       .tab-list {
         height: 450px;
       }
     }
+
     &.night{
-      background-color: $nightBgColor;
       color:$nightFontColor;
+      background-color: $nightBgColor;
+
       >.security-background {
         background-color: $nightMainBgColor;
       }
+
       >.security-header {
-        color: #338FF5;
+        color: #338ff5;
       }
+
       .security-title-info {
-        color: #A9BED4;
+        color: #a9bed4;
+
         >.security-level {
-          color: #A9BED4;
+          color: #a9bed4;
+
           >.level {
-            color: #F64D4D;
             margin-right: 5px;
+            color: #f64d4d;
           }
         }
+
         >.security-verification {
-          color: #9DA5B3;
+          color: #9da5b3;
         }
       }
+
       >.security-setting{
         .security-setting-header {
-          border-bottom: 1px solid #39424D;
+          border-bottom: 1px solid #39424d;
           color: #fff;
         }
+
         .security-setting-box {
           .send-code-btn {
-            background-color: #338FF5;
             color: #fff;
+            background-color: #338ff5;
           }
+
           .error-msg{
             height:25px;
             line-height: 25px;
             color: rgb(212, 88, 88);
           }
+
           .input {
             border: 1px solid #485776;
             color: #fff;
+
             &:focus {
-              border: 1px solid #338FF5;
+              border: 1px solid #338ff5;
             }
           }
+
           >.setting-type-box {
-            border-bottom: 1px solid #39424D;
+            border-bottom: 1px solid #39424d;
           }
+
           >.security-type {
             .security-type-text {
               .secure-email {
                 color: #fff;
               }
+
               >.security-info {
-                color: #A9BED4;
+                color: #a9bed4;
               }
+
               >.security-info-text {
-                color: #F57474;
+                color: #f57474;
               }
             }
+
             .security-status {
               >.security-verify {
-                background:linear-gradient(90deg,rgba(43,57,110,1),rgba(42,80,130,1));
                 color: #fff;
+                background:linear-gradient(90deg,rgba(43,57,110,1),rgba(42,80,130,1));
               }
+
               >.security-binding {
-                border: 1px solid #338FF5;
-                color: #338FF5;
+                border: 1px solid #338ff5;
+                color: #338ff5;
               }
             }
           }
         }
       }
     }
+
     &.day{
-      background-color: $dayBgColor;
       color:$dayFontColor;
+      background-color: $dayBgColor;
+
       >.security-background {
-        background:rgba(255,255,255,1);
         border:1px solid rgba(236,241,248,1);
+        background:rgba(255,255,255,1);
       }
+
       >.security-header {
-        color: #338FF5;
+        color: #338ff5;
       }
+
       .security-title-info {
-        color: #7D90AC;
+        color: #7d90ac;
+
         >.security-level {
           color: #333;
+
           >.level {
-            color: #F64D4D;
             margin-right: 5px;
+            color: #f64d4d;
           }
         }
+
         >.security-verification {
-          color: #7D90AC;
+          color: #7d90ac;
         }
       }
+
       >.security-setting{
         .security-setting-header {
           border-bottom:1px solid rgba(236,241,248,1);
           color: #333;
         }
+
         .security-setting-box {
           .send-code-btn {
-            background-color: #338FF5;
             color: #fff;
+            background-color: #338ff5;
           }
+
           .input {
             border: 1px solid #ecf1f8;
             color: #fff;
+
             &:focus {
-              border: 1px solid #338FF5;
+              border: 1px solid #338ff5;
             }
           }
+
           >.setting-type-box {
             border-bottom:1px solid rgba(236,241,248,1);
           }
+
           >.security-type {
             .security-type-text {
               .secure-email {
                 color: #333;
               }
+
               >.security-info {
-                color: #7D90AC;
+                color: #7d90ac;
               }
+
               >.security-info-text {
-                color: #F57474;
+                color: #f57474;
               }
             }
+
             .security-status {
               >.security-verify {
-                background:linear-gradient(90deg,rgba(43,57,110,1),rgba(42,80,130,1));
                 color: #fff;
+                background:linear-gradient(90deg,rgba(43,57,110,1),rgba(42,80,130,1));
               }
+
               >.security-binding {
-                border: 1px solid #338FF5;
-                color: #338FF5;
+                border: 1px solid #338ff5;
+                color: #338ff5;
               }
             }
           }

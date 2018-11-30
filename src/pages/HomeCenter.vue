@@ -98,9 +98,11 @@ export default {
   .home-box{
     min-width: 1130px;
     overflow: hidden;
+
     .margin-1{
       margin-top:-1px;
     }
+
     >.fixed{
       position: fixed;
       z-index: 2009;

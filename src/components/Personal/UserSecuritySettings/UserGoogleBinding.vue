@@ -444,65 +444,81 @@ export default {
 </script>
 <style scoped lang="scss">
   @import "../../../../static/css/scss/Personal/IndexPersonal";
+
   .binding-google {
     margin-top:66px;
     overflow: hidden;
+
     >.binding-google-main {
       width: 1100px;
       min-height: 700px;
       margin: 60px auto 100px;
+
       >.binding-google-header {
         display: flex;
+
         >.header-content-right,
         .header-content-left {
           flex: 1;
         }
+
         >.header-content-right {
           text-align: right;
         }
+
         >.header-content-left {
-          text-align: left;
           font-weight: 600;
+          text-align: left;
         }
       }
+
       >.binding-google-content {
         min-height: 300px;
         margin: 40px 25px;
+
         >.google-content-from {
           width: 500px;
           margin-left: 30px;
+
           >.google-images-show {
             >.google-validator {
               height: 250px;
+
               >.google-images1 {
                 padding: 20px 9px !important;
               }
+
               >.google-images {
                 width: 115px;
                 height: 140px;
-                margin: 0 auto;
                 padding: 20px 7px;
+                margin: 0 auto;
+
                 .img-box {
-                  padding: 10px;
                   width: 100px;
                   height: 100px;
+                  padding: 10px;
                 }
               }
             }
+
             >.validator-margin {
               margin-left: 50px;
             }
           }
+
           >.google-info-show {
             margin-top: 30px;
+
             .code-copy {
-              text-align: center;
+              position: relative;
               display: inline-block;
               width: 54px;
               height: 26px;
-              line-height: 26px;
               margin-left: 15px;
-              position: relative;
+              line-height: 26px;
+              text-align: center;
+
               .ercode {
                 position: absolute;
                 bottom: 35px;
@@ -510,15 +526,18 @@ export default {
                 border-radius: 5px;
               }
             }
+
             .google-input {
               width: 220px;
               height: 34px;
             }
+
             .google-button {
-              margin: 30px 0 50px 160px;
-              padding: 10px 0;
               width: 220px;
+              padding: 10px 0;
+              margin: 30px 0 50px 160px;
             }
+
             .prompt-message {
               height: 20px;
               padding-left: 25px;
@@ -527,59 +546,76 @@ export default {
         }
       }
     }
+
     &.night{
-      background-color: $nightBgColor;
       color:$nightFontColor;
+      background-color: $nightBgColor;
+
       .binding-google-main {
         background-color: $nightMainBgColor;
+
         >.binding-google-header {
-          border-bottom: 1px solid #39424D;
+          border-bottom: 1px solid #39424d;
+
           >.header-content-left {
             color: #fff;
           }
+
           >.header-content-right {
-            color: #A9BED4;
+            color: #a9bed4;
           }
         }
+
         >.binding-google-content {
           >.google-content-from {
             >.google-images-show {
               .img-background {
-                background-color: #338FF5;
+                background-color: #338ff5;
               }
+
               .img-background1 {
-                background-color: #2B3C71;
+                background-color: #2b3c71;
               }
+
               .img-box {
                 background-color: #fff;
               }
+
               .google-info {
-                color: #9DA5B3;
+                color: #9da5b3;
+
                 .google-info-download {
-                  color: #338FF5;
+                  color: #338ff5;
                 }
               }
             }
+
             >.google-info-show {
+              color: rgba(255,255,255,.7);
+
               .code-copy {
-                color: rgba(255,255,255,0.7);
-                background-color: #338FF5;
+                color: rgba(255,255,255,.7);
+                background-color: #338ff5;
               }
-              color: rgba(255,255,255,0.7);
+
               .google-content-name {
-                color: rgba(255,255,255,0.7);
+                color: rgba(255,255,255,.7);
               }
+
               .google-input {
                 border: 1px solid #485776;
                 color: #fff;
+
                 &:focus {
-                  border: 1px solid #338FF5;
+                  border: 1px solid #338ff5;
                 }
               }
+
               .google-button {
+                color: rgba(255,255,255,.7);
                 background:linear-gradient(0deg,rgba(43,57,110,1),rgba(42,80,130,1));
-                color: rgba(255,255,255,0.7);
               }
+
               .prompt-message {
                 color: red;
               }
@@ -588,62 +624,79 @@ export default {
         }
       }
     }
+
     &.day{
-      background-color: $dayBgColor;
       color:$dayFontColor;
+      background-color: $dayBgColor;
+
       .binding-google-main {
-        background:rgba(255,255,255,1);
         border:1px solid rgba(246,246,246,1);
         border-radius:4px;
-        box-shadow:0px 0px 4px rgba(235,240,248,1);
+        background:rgba(255,255,255,1);
+        box-shadow:0 0 4px rgba(235,240,248,1);
+
         >.binding-google-header {
-          border-bottom: 1px solid rgba(57,66,77,0.1);
+          border-bottom: 1px solid rgba(57,66,77,.1);
+
           >.header-content-left {
             color: #333;
           }
+
           >.header-content-right {
-            color: #7D90AC;
+            color: #7d90ac;
           }
         }
+
         >.binding-google-content {
           >.google-content-from {
             >.google-images-show {
               .img-background {
-                background-color: #338FF5;
+                background-color: #338ff5;
               }
+
               .img-background1 {
-                background-color: #2B3C71;
+                background-color: #2b3c71;
               }
+
               .img-box {
                 background-color: #fff;
               }
+
               .google-info {
-                color: #7D90AC;
+                color: #7d90ac;
+
                 .google-info-download {
-                  color: #338FF5;
+                  color: #338ff5;
                 }
               }
             }
+
             >.google-info-show {
+              color: rgba(255,255,255,.7);
+
               .code-copy {
-                color: rgba(255,255,255,0.7);
-                background-color: #338FF5;
+                color: rgba(255,255,255,.7);
+                background-color: #338ff5;
               }
-              color: rgba(255,255,255,0.7);
+
               .google-content-name {
                 color: #333;
               }
+
               .google-input {
                 border:1px solid rgba(236,241,248,1);
                 color: #333;
+
                 &:focus {
-                  border: 1px solid #338FF5;
+                  border: 1px solid #338ff5;
                 }
               }
+
               .google-button {
+                color: rgba(255,255,255,.7);
                 background:linear-gradient(0deg,rgba(43,57,110,1),rgba(42,80,130,1));
-                color: rgba(255,255,255,0.7);
               }
+
               .prompt-message {
                 color: red;
               }

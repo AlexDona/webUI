@@ -302,175 +302,215 @@ export default {
 <style scoped lang="scss" type="text/scss">
   @import "../../../static/css/scss/OTC/OTCCenter.scss";
   @import "../../../static/css/scss/index.scss";
+
   .otc-canceled-order-box{
     >.canceled-order-content{
       min-height: 500px;
+
       >.canceled-table-head{
         box-sizing: border-box;
         width: 1043px;
         height: 35px;
-        line-height: 35px;
-        border-radius: 5px;
         margin-bottom: 15px;
+        border-radius: 5px;
+        line-height: 35px;
+
         >.item{
           display: inline-block;
           width: 140px;
           text-align: center;
         }
       }
+
       >.canceled-table-body{
         box-sizing: border-box;
         width: 1043px;
         height: 170px;
-        border-radius: 5px;
         margin-bottom: 15px;
+        border-radius: 5px;
+
         >.canceled-info-top{
           height: 40px;
-          line-height: 40px;
           border-radius: 5px;
+          line-height: 40px;
+
           >.item{
             display: inline-block;
             width: 140px;
             text-align: center;
           }
         }
+
         >.canceled-info-bottom{
-          box-sizing: border-box;
           display: flex;
           flex: 7;
-          padding: 15px 30px 0 30px;
+          box-sizing: border-box;
+          padding: 15px 30px 0;
+
           >.info-left{
             flex: 2;
             box-sizing: border-box;
+
             >.text-info{
               line-height: 20px;
             }
           }
+
           >.info-middle{
-           flex: 2;
+            flex: 2;
             box-sizing: border-box;
             margin-left: 30px;
+
             >.text-info{
               line-height: 20px;
             }
           }
+
           >.info-right{
             flex: 3;
             box-sizing: border-box;
             margin-left: 30px;
+
             >.text-info{
               line-height: 20px;
             }
           }
         }
       }
+
       >.no-data{
         width: 1043px;
         height: 432px;
         line-height: 432px;
         text-align: center;
       }
+
       >.page{
         text-align: center;
       }
     }
+
     &.night{
       >.canceled-order-content{
         >.canceled-table-head{
-          background-color: #1C1F32;
-          color: #A9BED4;
           border: 1px solid #485776;
+          color: #a9bed4;
+          background-color: #1c1f32;
         }
+
         >.canceled-table-body{
-          background-color: #1C1F32;
           border: 1px solid #485776;
+          background-color: #1c1f32;
+
           >.canceled-info-top{
-            background-color: #1C1F32;
-            color: #9DA5B3;
+            color: #9da5b3;
+            background-color: #1c1f32;
+
             .red{
-              color: #D45858;
+              color: #d45858;
             }
+
             .green{
               color: #008069;
             }
           }
+
           >.canceled-info-bottom{
-            border-top: 1px solid #262F38;
-            color: #9DA5B3;
+            border-top: 1px solid #262f38;
+            color: #9da5b3;
+
             >.info-left{
-              border-right: 1px solid #262F38;
+              border-right: 1px solid #262f38;
+
               >.text-blue{
-                color: #5E95EC;
+                color: #5e95ec;
               }
             }
+
             >.info-middle{
-              border-right: 1px solid #262F38;
+              border-right: 1px solid #262f38;
+
               >.text-blue{
-                color: #5E95EC;
+                color: #5e95ec;
               }
             }
+
             >.info-right{
               >.text-blue{
-                color: #5E95EC;
+                color: #5e95ec;
               }
             }
           }
         }
+
         >.no-data{
+          color: rgba(255, 255, 255, .8);
           background-color: $mainContentNightBgColor;
-          color: rgba(255, 255, 255, 0.8);
         }
       }
     }
+
     &.day{
       >.canceled-order-content{
         >.canceled-table-head{
-          background-color: $mainDayColor;
+          border: 1px solid #ecf1f8;
           color: #617499;
-          border: 1px solid #ECF1F8;
-        }
-        >.canceled-table-body{
           background-color: $mainDayColor;
-          border: 1px solid #ECF1F8;
+        }
+
+        >.canceled-table-body{
+          border: 1px solid #ecf1f8;
+          background-color: $mainDayColor;
+
           >.canceled-info-top{
+            color: #333;
             background-color: $mainDayColor;
-            color: #333333;
+
             .red{
-              color: #D45858;
+              color: #d45858;
             }
+
             .green{
               color: #008069;
             }
           }
+
           >.canceled-info-bottom{
-            border-top: 1px solid rgba(38,47,56,0.1);
-            color: #7D90AC;
+            border-top: 1px solid rgba(38,47,56,.1);
+            color: #7d90ac;
+
             >.info-left{
-              border-right: 1px solid rgba(38,47,56,0.1);
+              border-right: 1px solid rgba(38,47,56,.1);
+
               >.text-blue{
-                color: #5E95EC;
+                color: #5e95ec;
               }
             }
+
             >.info-middle{
-              border-right: 1px solid rgba(38,47,56,0.1);
+              border-right: 1px solid rgba(38,47,56,.1);
+
               >.text-blue{
-                color: #5E95EC;
+                color: #5e95ec;
               }
             }
+
             >.info-right{
               >.text-blue{
-                color: #5E95EC;
+                color: #5e95ec;
               }
+
               >.cancel-time{
-                color: #333333;
+                color: #333;
               }
             }
           }
         }
+
         >.no-data{
+          border: 1px solid rgba(97,116,153,.1);
+          color: #333;
           background-color: $mainDayColor;
-          color: #333333;
-          border: 1px solid rgba(97,116,153,0.1);
         }
       }
     }

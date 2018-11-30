@@ -155,16 +155,19 @@ export default {
 </script>
 <style scoped lang="scss" type="text/scss">
   @import "../../../static/css/scss/index";
+
   .mobile-header-box{
     >.inner-box{
-      height:160px;
-      width:100%;
-      line-height: 160px;
       display: flex;
+      width:100%;
+      height:160px;
       padding:0 1rem;
+      line-height: 160px;
+
       >.left{
         height:80px;
         margin-top:40px;
+
         >a{
           >.img{
             height:80px;
@@ -172,73 +175,87 @@ export default {
           }
         }
       }
+
       >.right{
-        color:#fff;
-        font-size: 30px;
         flex:1;
+        font-size: 30px;
+        color:#fff;
+
         >.ul-list{
           height:100%;
           text-align: right;
+
           >.li-split{
+            display:inline-block;
             width:1px;
             height:20px;
-            background-color: #4a5260;
-            display:inline-block;
             vertical-align: middle;
+            background-color: #4a5260;
           }
+
           >.li-item{
             display:inline-block;
             padding:0 10px;
+
             >a{
-              transition: all 1s;
-              color:#fff;
               padding:5px 10px;
+              color:#fff;
+              transition: all 1s;
+
               &:hover{
                 background-color: $mainColor;
               }
             }
+
             /*语言选择 dl*/
             >.lang-box{
-              transition: all 1s;
               position: relative;
               text-align: left;
+              transition: all 1s;
+
               /*当前语言 dt*/
               >.lang-selected{
-                box-sizing: border-box;
-                height: 30px;
-                line-height: 0px;
-                padding: 10px 12px;
                 display: inline-block;
+                box-sizing: border-box;
                 width:100%;
-                font-size: 0.86453968rem;
+                height: 30px;
+                padding: 10px 12px;
+                font-size: .86453968rem;
+                line-height: 0;
+
                 >.icon{
                   margin-right:5px;
                 }
+
                 >.language-text{
                   display:inline-block;
                 }
               }
+
               >.lang-list{
-                background-color: #2A3242;
                 position: absolute;
-                width:5rem;
                 z-index: 2;
-                left:0;
                 top:120px;
+                left:0;
+                width:5rem;
+                background-color: #2a3242;
+
                 >.lang-item{
-                  transition: all 1s;
-                  color:#fff;
                   display:block;
+                  box-sizing: border-box;
+                  width:100%;
                   height:1.5rem;
+                  padding:0 .5rem;
+                  font-size: .72044974rem;
                   line-height:1.5rem;
                   text-align: left;
-                  font-size: 0.72044974rem;
-                  padding:0 0.5rem;
-                  width:100%;
-                  box-sizing: border-box;
+                  color:#fff;
+                  transition: all 1s;
+
                   &:hover{
                     background-color: $mainColor;
                   }
+
                   >.icon{
                     margin-right:5px;
                   }
