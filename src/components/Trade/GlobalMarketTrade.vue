@@ -99,7 +99,6 @@ export default {
     }
   },
   created () {
-    require('../../../static/css/list/Trade/GlobalMarket.css')
     this.getGlobalMarket()
   },
   mounted () {},
@@ -281,6 +280,28 @@ export default {
           }
         }
       }
+    }
+  }
+
+  /deep/ {
+    .el-table {
+      td {
+        height: 50px;
+        padding: 0;
+        font-size: 12px;
+      }
+
+      th {
+        height: 36px;
+
+        > .cell {
+          padding-right: 0;
+        }
+      }
+    }
+
+    .el-table__header-wrapper {
+      height: 36px;
     }
   }
 

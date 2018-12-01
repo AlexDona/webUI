@@ -128,9 +128,6 @@ export default {
     }
   },
   created () {
-    require('../../../static/css/list/Trade/TradeMarket.css')
-    require('../../../static/css/theme/day/Trade/TradeMarketDay.css')
-    require('../../../static/css/theme/night/Trade/TradeMarketNight.css')
     if (this.language) {
       this.getTradeMarketData()
     }
@@ -624,6 +621,61 @@ export default {
       }
     }
 
+    /deep/ {
+      .el-input__inner {
+        width: 168px;
+        height: 20px;
+        border: 1px solid #a9bed4;
+        border-radius: 2px;
+        background: transparent;
+      }
+
+      .el-input__suffix {
+        top: -3px;
+      }
+
+      .el-tabs__active-bar,
+      .el-tabs__nav-wrap::after {
+        height: 0;
+      }
+
+      .el-tabs__item {
+        /* width:70px; */
+        height: 20px;
+        padding: 0 20px;
+        margin: 5px 20px;
+        line-height: 20px;
+
+        &.is-active {
+          color: #338ff5;
+          background: rgba(51, 143, 245, .5) !important;
+        }
+      }
+
+      .el-tabs__nav {
+        height: 40px;
+        line-height: 40px;
+      }
+
+      .el-tabs__header {
+        margin: 0;
+      }
+
+      .el-tabs--top {
+        .el-tabs__item {
+          &.is-top {
+            &:nth-child(2) {
+              padding-left: 4.5%;
+            }
+          }
+
+          &:last-child {
+            padding-right: 4.5%;
+          }
+        }
+      }
+    }
+
     &.night {
       > .inner-box {
         > .title {
@@ -633,6 +685,13 @@ export default {
 
         > .content {
           background-color: $mainContentNightBgColor;
+        }
+      }
+
+      /deep/ {
+        .el-tabs__item {
+          color: #a9bed4;
+          background-color: #394045;
         }
       }
     }
@@ -646,6 +705,12 @@ export default {
 
         > .content {
           background-color: $mainDayBgColor;
+        }
+      }
+
+      /deep/ {
+        .el-tabs__item {
+          background-color: #ebecec;
         }
       }
     }

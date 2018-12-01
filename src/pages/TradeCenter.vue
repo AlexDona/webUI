@@ -116,16 +116,6 @@ export default {
 
       > .middle {
         width: 53.260869565%;
-
-        /deep/ {
-          .el-tabs__nav-wrap::after {
-            background-color: #1c1f32;
-          }
-
-          .el-tabs__item {
-            color: #fff;
-          }
-        }
       }
 
       > .right {
@@ -136,6 +126,8 @@ export default {
     /deep/ {
       /* 币币交易通用修改样式（elementui修改） */
       .el-table {
+        background-color: transparent;
+
         td,
         th,
         tr {
@@ -204,7 +196,19 @@ export default {
 
     &.night {
       > .inner-box {
-        background-color: $mainNightBgColor;
+        > .middle {
+          background-color: $mainNightBgColor;
+
+          /deep/ {
+            .el-tabs__nav-wrap::after {
+              background-color: #1c1f32;
+            }
+
+            .el-tabs__item {
+              color: #fff;
+            }
+          }
+        }
       }
 
       /deep/ {
@@ -269,19 +273,16 @@ export default {
         background-color: $dayInnerBoxBg;
 
         > .middle {
-          .el-tabs__nav-wrap ::after {
-            background-color: #fff;
-          }
+          /deep/ {
+            .el-tabs__nav-wrap::after {
+              background-color: #fff;
+            }
 
-          .el-tabs__item {
-            color: #333;
+            .el-tabs__item {
+              color: #333;
+            }
           }
         }
-      }
-
-      /* 币币交易通用day样式 */
-      .trade-box.day .el-table {
-        color: #646464;
       }
 
       /deep/ {

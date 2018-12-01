@@ -77,7 +77,6 @@ export default {
     }
   },
   created () {
-    require('../../../static/css/list/Trade/OrderRecord.css')
   },
   mounted () {},
   activited () {},
@@ -139,6 +138,85 @@ export default {
           border-bottom: 2px solid $mainColor;
           text-indent: 4px;
           color: $mainColor;
+        }
+      }
+    }
+
+    /deep/ {
+      .el-table {
+        td {
+          padding: 0;
+        }
+
+        th {
+          height: 26px;
+          border-bottom: 1px solid rgba(50, 55, 87, 1);
+          line-height: 24px;
+
+          &:nth-of-type(2) {
+            > .cell {
+              text-align: center;
+            }
+          }
+
+          &:nth-of-type(3) {
+            .cell {
+              text-align: right;
+            }
+          }
+        }
+
+        .cell {
+          height: 22px;
+          white-space: nowrap;
+        }
+
+        @media screen and (max-width: 1920px) {
+          .cell {
+            padding: 0 6%;
+          }
+        }
+
+        @media screen and (min-width: 1920px) {
+          .cell {
+            padding: 0 14%;
+          }
+        }
+      }
+
+      td {
+        &:nth-of-type(2),
+ &:nth-of-type(3) {
+          > .cell {
+            text-align: right;
+          }
+        }
+      }
+
+      .el-table__header-wrapper {
+        height: 26px;
+        line-height: 24px;
+      }
+
+      .el-table__row {
+        td {
+          &:nth-of-type(2) {
+            > .cell {
+              padding: 0 35% 0 0;
+            }
+          }
+        }
+      }
+
+      .cell {
+        > span {
+          &.buy {
+            color: rgb(212, 88, 88);
+          }
+
+          &.sell {
+            color: rgb(0, 128, 105);
+          }
         }
       }
     }

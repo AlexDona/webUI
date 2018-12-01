@@ -435,10 +435,6 @@ export default {
     }
   },
   created () {
-    // require('../../../static/css/list/Trade/TradeCenter.css')
-    // require('../../../static/css/theme/day/Trade/TraderCenterDay.css')
-    require('../../../static/css/theme/night/Trade/TradeCenterNight.css')
-    require('../../../static/css/list/Trade/Exchange.css')
   },
   mounted () {
     this.getRefValue(this.limitBuyPriceInputRef)
@@ -459,7 +455,6 @@ export default {
       if (!returnAjaxMsg(data, this)) {
         return false
       } else {
-        console.log(data)
         this.buyUserCoinWallet = getNestedData(data, 'data.data.buyUserCoinWallet')
         this.sellUserCoinWallet = getNestedData(data, 'data.data.sellUserCoinWallet')
         // console.log(price)
@@ -870,6 +865,26 @@ export default {
             border-left: 1px dashed;
             content: '';
           }
+        }
+      }
+    }
+
+    /deep/ {
+      .el-button {
+        width: 100%;
+        margin-top: 20px;
+        border: none;
+
+        &:hover {
+          opacity: .7;
+        }
+
+        &.buy-btn {
+          background-color: #d45858;
+        }
+
+        &.sell-btn {
+          background-color: #008069;
         }
       }
     }

@@ -294,7 +294,6 @@ export default {
     }
   },
   created () {
-    require('../../../static/css/list/Trade/TradeCenter.css')
     this.getEntrustData()
   },
   mounted () {},
