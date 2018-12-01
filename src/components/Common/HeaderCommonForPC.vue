@@ -391,7 +391,6 @@ export default{
     }
   },
   async created () {
-    require('../../../static/css/theme/day/Common/HeaderCommonDay.css')
     // 获取 语言列表
     await this.GET_LANGUAGE_LIST_ACTION({
       self: this
@@ -578,14 +577,6 @@ export default{
         this.convertCurrencyList = getNestedData(data, 'data.data')
         await this.changeActiveTransitionCurrency()
       }
-      // if (data.data.meta.code !== 200) {
-      //   this.$message({
-      //     message: data.data.meta.message,
-      //     type: 'error',
-      //     center: true
-      //   })
-      //   return false
-      // }
     },
     setNewTitle () {
       if (this.title) {
@@ -950,6 +941,13 @@ export default{
             }
           }
         }
+      }
+    }
+
+    /deep/ {
+      .el-radio-button__inner {
+        color: #333;
+        background-color: #fff;
       }
     }
   }

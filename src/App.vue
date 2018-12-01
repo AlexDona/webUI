@@ -50,7 +50,6 @@ export default {
     require('../static/css/common.css')
     require('../static/css/list/Common/HeaderCommon/HeaderCommon.css')
     require('../static/css/theme/night/Common/HeaderCommonNight.css')
-    require('../static/css/theme/day/Common/HeaderCommonDay.css')
     // 取主题
     const theme = getStore('theme') || 'night'
     this.CHANGE_THEME(theme)

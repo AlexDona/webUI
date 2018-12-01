@@ -71,7 +71,6 @@ export default {
     }
   },
   async created () {
-    require('../../../static/css/theme/day/Common/HeaderCommonDay.css')
     // 获取 语言列表
     await this.GET_LANGUAGE_LIST_ACTION({
       self: this

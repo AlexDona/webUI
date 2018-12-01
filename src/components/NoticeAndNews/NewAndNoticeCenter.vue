@@ -112,9 +112,6 @@ export default {
     }
   },
   async created () {
-    require('../../../static/css/list/NewsAndNotice/NewsAndNotice.css')
-    require('../../../static/css/theme/day/NewsAndNotice/NewsAndNoticeDay.css')
-    require('../../../static/css/theme/night/NewsAndNotice/NewsAndNoticeNight.css')
     await this.getAllNewsTypeList()
     this.newsTypeId = this.newsTypeList[0].id
     await this.getNewsNoticeList()
@@ -278,7 +275,7 @@ export default {
                   > .top {
                     height: 25px;
                     line-height: 25px;
-                    color: #fff;
+                    color: #fff !important;
                     background: rgba(149, 160, 184, 1);
                   }
 
@@ -458,6 +455,34 @@ export default {
     }
   }
 
+  /deep/ {
+    .el-tabs__nav {
+      width: 100%;
+      height: 60px;
+      margin-top: 30px;
+      line-height: 60px;
+      text-align: center;
+    }
+
+    .el-tabs__nav-wrap {
+      &::after {
+        width: 0;
+      }
+    }
+
+    .el-tabs__active-bar {
+      height: 0;
+    }
+
+    .el-tabs__content {
+      height: 1100px;
+    }
+
+    .el-pagination {
+      text-align: center;
+    }
+  }
+
   &.night {
     > .inner-box {
       > .content-box {
@@ -502,6 +527,26 @@ export default {
         }
       }
     }
+
+    /deep/ {
+      .el-tabs__nav {
+        background-color: #1e2636;
+        box-shadow: 0 0 2px rgba(11, 14, 22, 1);
+      }
+
+      .el-tabs__item {
+        color: #42506b;
+
+        &.is-active {
+          font-weight: 700;
+          color: #338ff5;
+        }
+      }
+
+      .el-tabs__content {
+        background: rgba(30, 38, 54, 1);
+      }
+    }
   }
 
   &.day {
@@ -521,10 +566,6 @@ export default {
                     }
 
                     > .middle {
-                      color: #666;
-                    }
-
-                    > .bottom {
                       color: #666;
                     }
                   }
@@ -554,6 +595,19 @@ export default {
             }
           }
         }
+      }
+    }
+
+    /deep/ {
+      .el-tabs__nav {
+        border: 1px solid rgba(236, 241, 248, 1);
+        background: rgba(255, 255, 255, 1);
+        box-shadow: 0 0 2px rgba(246, 246, 246, 1);
+      }
+
+      .el-tabs__content {
+        border: 1px solid rgba(234, 235, 236, 1);
+        background: rgba(255, 255, 255, 1);
       }
     }
   }

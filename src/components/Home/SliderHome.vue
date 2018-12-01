@@ -48,7 +48,6 @@ export default {
     }
   },
   async created () {
-    require('../../../static/css/list/Home/SliderHome.css')
   },
   mounted () {
     // console.log(this.$refs)
@@ -194,4 +193,18 @@ export default {
     }
   }
 
+  /deep/ {
+    /* 首页轮播图（不分主题） */
+    .slider-pagination-bullet {
+      width: 10px;
+      height: 10px;
+      background-color: rgba(255, 255, 255, .8);
+      transition: all 1s;
+    }
+
+    .slider-pagination-bullet-active {
+      width: 27px;
+      border-radius: 6px;
+    }
+  }
 </style>

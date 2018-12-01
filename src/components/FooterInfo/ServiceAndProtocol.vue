@@ -120,7 +120,7 @@ export default {
     }
   },
   created () {
-    require('../../../static/css/list/FooterInfo/ServiceAndProtocol.css')
+    // require('../../../static/css/list/FooterInfo/ServiceAndProtocol.css')
     this.changeTab({name: this.serviceActiveName})
   },
   mounted () {
@@ -256,76 +256,148 @@ export default {
 }
 </script>
 <style scoped lang="scss" type="text/scss">
-  .service-protocol-box {
+.service-protocol-box {
+  width: 100%;
+  // height:100%;
+  > .content {
     width: 100%;
-    // height:100%;
-    > .content {
+    height: 100%;
+    overflow: visible;
+
+    > .top {
       width: 100%;
+      height: 250px;
+      padding-top: 100px;
+      text-align: center;
+      background: #121824 url(../../assets/develop/about-us.png) no-repeat center center;
+      -webkit-background-size: 100% 100%;
+      background-size: 100% 100%;
+
+      > h1 {
+        font-weight: 500;
+        font-size: 36px;
+        color: #8ba0ca;
+      }
+
+      > p {
+        font-size: 22px;
+        color: #97aac8;
+      }
+    }
+
+    > .content {
       height: 100%;
-      overflow: visible;
+      overflow: visible !important;
 
-      > .top {
-        width: 100%;
-        height: 250px;
-        padding-top: 100px;
-        text-align: center;
-        background: #121824 url(../../assets/develop/about-us.png) no-repeat center center;
-        -webkit-background-size: 100% 100%;
-        background-size: 100% 100%;
+      > .inner-box {
+        box-sizing: border-box;
 
-        > h1 {
-          font-weight: 500;
-          font-size: 36px;
-          color: #8ba0ca;
-        }
+        /* height:1100px; */
+        width: 1100px;
+        padding-bottom: 50px;
+        margin: 0 auto;
 
-        > p {
-          font-size: 22px;
-          color: #97aac8;
-        }
-      }
-
-      > .content {
-        height: 100%;
-
-        > .inner-box {
-          box-sizing: border-box;
-
-          /* height:1100px; */
+        .tab-content {
           width: 1100px;
-          padding-bottom: 50px;
-          margin: 0 auto;
-
-          .tab-content {
-            width: 1100px;
-          }
         }
       }
     }
+  }
 
-    &.night {
-      > .content {
-        > .content {
-          background-color: #121824;
-
-          > .inner-box {
-            color: #8ba0ca;
-          }
-        }
+  /deep/ {
+    .el-tabs__nav-wrap {
+      &::after {
+        height: 0;
+        content: "";
       }
     }
 
-    &.day {
-      > .content {
-        > .content {
-          background-color: #fff;
+    .el-tabs {
+      .el-tabs-top {
+        z-index: 10;
+      }
+    }
 
-          > .inner-box {
-            color: #666;
-            background-color: #fff;
+    .el-tabs__header {
+      position: relative;
+      top: -55px;
+      margin: 0;
+    }
+
+    .el-tabs__active-bar {
+      background-color: transparent;
+    }
+
+    .el-tabs__item {
+      position: relative;
+      display: inline-block;
+      list-style: none;
+      -webkit-box-sizing: border-box;
+      box-sizing: border-box;
+      height: 40px;
+      padding: 0 10px;
+      font-weight: 500;
+      font-size: 14px;
+      line-height: 40px;
+      color: #fff;
+      background: rgba(51, 143, 245, 1);
+      opacity: .6;
+      transition: opacity 1s;
+      border-right: 1px solid #121824;
+
+      &.is-active {
+        height: 70px;
+        padding: 0 10px;
+        margin-bottom: -20px;
+        font-weight: 600;
+        line-height: 70px;
+        color: #fff;
+        background: #338ff5;
+        opacity: 1;
+        border-right: none;
+      }
+    }
+
+    .el-tabs--bottom,
+    .el-tabs--top {
+      .el-tabs__item {
+        &.is-bottom,
+        &.is-top {
+          &:nth-child(2) {
+            padding-left: 10px;
+          }
+
+          &:last-child {
+            padding-right: 10px;
           }
         }
       }
     }
   }
+
+  &.night {
+    > .content {
+      > .content {
+        background-color: #121824;
+
+        > .inner-box {
+          color: #8ba0ca;
+        }
+      }
+    }
+  }
+
+  &.day {
+    > .content {
+      > .content {
+        background-color: #fff;
+
+        > .inner-box {
+          color: #666;
+          background-color: #fff;
+        }
+      }
+    }
+  }
+}
 </style>
