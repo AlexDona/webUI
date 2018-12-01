@@ -25,8 +25,8 @@ if (process.env.NODE_ENV == 'development') {
 
   // xDomain = 'new.test.com'
   // xDomain = 'bithumber.com'
-  // socketUrl = 'wss://ws.bzu.com/market'
-  socketUrl = 'ws://192.168.1.200:8087/market'
+  socketUrl = 'wss://ws.bzu.com/market'
+  // socketUrl = 'ws://192.168.1.200:8087/market'
   // socketUrl = 'ws://192.168.1.52:8087'
 
   loginSocketUrl = 'wss://api.new.bzu.com/qrcodeLogin/'

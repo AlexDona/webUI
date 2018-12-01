@@ -178,8 +178,6 @@ export default{
     }
   },
   async created () {
-    require('../../../static/css/theme/day/Home/MarketListHomeDay.css')
-    require('../../../static/css/theme/night/Home/MarketListHomeNight.css')
     if (this.language) {
       await this.getHomeMarketByAjax()
     }
@@ -461,7 +459,6 @@ export default{
       }
     },
     activeName (newVal) {
-      console.log(newVal)
       this.tabChangeCount++
       _.forEach(this.newMarketList, (item, index) => {
         if (item.plateId === newVal) {
@@ -553,14 +550,7 @@ export default{
 
       /* 列表主要内容 */
       .tab-content {
-        /* min-height:1255px; */
-
-        /* background-color: darkolivegreen; */
         position: relative;
-
-        &.tab-height {
-          /* height:1320px; */
-        }
 
         /* 单个交易区 */
         > .tab-item {
@@ -599,189 +589,205 @@ export default{
     &.night {
       color: $nightFontColor;
       background-color: $mainNightBgColor;
+
+      /deep/ {
+        /* 首页交易区（night主题） */
+
+        .el-table {
+          color: #a0a0a0;
+          background-color: #1c1f32;
+
+          th,
+          td {
+            border-bottom: 1px solid #222c35;
+
+            div {
+              color: #fff;
+            }
+          }
+
+          th,
+          tr {
+            background-color: transparent;
+          }
+        }
+
+        /* 选中行颜色 */
+        .el-table--enable-row-hover {
+          .el-table__body tr {
+            &:hover {
+              > td {
+                background-color: #282a3c;
+              }
+            }
+          }
+        }
+
+        /* tab栏每一项 */
+        .el-tabs__item {
+          color: #8494a6;
+          transition: all 1s;
+
+          &.is-active {
+            color: #fff;
+          }
+        }
+
+        /* 滚动条 */
+        .el-table--scrollable-y {
+          .el-table__body-wrapper::-webkit-scrollbar {
+            width: 3px;
+          }
+
+          .el-table__body-wrapper::-webkit-scrollbar-track-piece {
+            background-color: #4a5662;
+          }
+
+          /* 滚动条背景 */
+          .el-table__body-wrapper::-webkit-scrollbar-thumb {
+            background-color: #338ff5;
+          }
+
+          .el-table__body-wrapper::-webkit-scrollbar-button {
+            display: none;
+            background-color: #fff;
+          }
+        }
+      }
     }
 
     &.day {
       color: $dayFontColor;
       background-color: $dayBgColor;
+
+      /deep/ {
+        /* 选中行颜色 */
+        .el-table--enable-row-hover .el-table__body tr:hover > td {
+          background-color: #eaf2fa;
+        }
+
+        .el-table {
+          color: #333;
+
+          th {
+            div {
+              color: #333;
+            }
+          }
+        }
+      }
+    }
+
+    /* element 样式修改 */
+    /deep/ {
+      .el-tabs__nav-scroll {
+        height: 46px;
+        background-image: url(../../assets/develop/tab-bg.png);
+        background-position: center center;
+        -webkit-background-size: 1130px 46px;
+        background-size: 1130px 46px;
+      }
+
+      .el-input__inner {
+        width: 250px;
+        height: 30px;
+        border: none;
+        border-radius: 0;
+        outline: none;
+        background-color: transparent;
+      }
+
+      .el-input__icon {
+        position: absolute;
+        top: -4px;
+        right: 14px;
+        font-size: 22px;
+        color: #fff;
+      }
+
+      .el-tabs__nav-wrap::after,
+      .el-tabs__active-bar {
+        height: 0;
+      }
+
+      /* tab栏每一项 */
+      .el-tabs__item {
+        height: 35px;
+        padding: 0 30px !important;
+        margin: 6px auto;
+        font-size: 16px;
+        line-height: 35px;
+        transition: color 0s;
+
+        &.is-active {
+          border: none;
+          color: #fff;
+          background: url(../../assets/develop/tab-active-bg.png) no-repeat center center;
+          -webkit-background-size: 100% 100%;
+          background-size: 100% 100%;
+        }
+      }
+
+      .el-table--enable-row-transition .el-table__body td {
+        box-sizing: border-box;
+        height: 49px;
+        padding: 0;
+      }
+
+      .el-table {
+        th {
+          box-sizing: border-box;
+          height: 38px;
+          padding: 0 0 0 14px;
+          border-top: 1px solid #2f3a8c;
+        }
+
+        .cell,
+        th div {
+          padding: 0;
+        }
+
+        .sort-caret {
+          border-width: 4px;
+
+          &.ascending {
+            top: 8px;
+          }
+
+          .descending {
+            bottom: 8px;
+          }
+        }
+
+        /* 交易对颜色 */
+        .sellname,
+        .area {
+          color: #646464;
+        }
+      }
+
+      .tab-content {
+        visibility: inherit !important;
+      }
+
+      .el-button {
+        background-color: transparent;
+
+        &.more-btn {
+          width: 115px;
+          height: 35px;
+          padding: 0;
+          border-radius: 10px;
+          line-height: 35px;
+          color: #fff;
+        }
+      }
     }
   }
 </style>
-<style lang="scss">
-.market-list-box.home {
-  .el-tabs__nav-scroll {
-    height: 46px;
-    background-image: url(../../assets/develop/tab-bg.png);
-    background-position: center center;
-    -webkit-background-size: 1130px 46px;
-    background-size: 1130px 46px;
+<style>
+  /* 表格表头 */
+  .trade-box.day .el-table th > .cell {
+    color: #333;
   }
-
-  .el-input__inner {
-    width: 250px;
-    height: 30px;
-    border: none;
-    border-radius: 0;
-    outline: none;
-    background-color: transparent;
-  }
-
-  .el-input__icon {
-    position: absolute;
-    top: -4px;
-    right: 14px;
-    font-size: 22px;
-    color: #fff;
-  }
-
-  .el-tabs__nav-wrap::after,
-  .el-tabs__active-bar {
-    height: 0;
-  }
-
-  /* tab栏每一项 */
-  .el-tabs__item {
-    height: 35px;
-    padding: 0 30px !important;
-    margin: 6px auto;
-    font-size: 16px;
-    line-height: 35px;
-    transition: color 0s;
-  }
-
-  .el-tabs__item.is-active {
-    border: none;
-    color: #fff;
-    background: url(../../assets/develop/tab-active-bg.png) no-repeat center center;
-    -webkit-background-size: 100% 100%;
-    background-size: 100% 100%;
-  }
-
-  .ivu-tabs .ivu-tabs-tabpane {
-    margin-top: 30px;
-  }
-
-  .ivu-btn-primary {
-    background-color: transparent;
-  }
-
-  .el-table--enable-row-transition .el-table__body td {
-    box-sizing: border-box;
-    height: 49px;
-    padding: 0;
-  }
-
-  .el-table th {
-    box-sizing: border-box;
-    height: 38px;
-    padding: 0 0 0 14px;
-    border-top: 1px solid #2f3a8c;
-  }
-
-  .tab-content {
-    visibility: inherit !important;
-  }
-
-  .el-table .cell,
-  .el-table th div {
-    padding: 0;
-  }
-
-  .ivu-table-large td {
-    box-sizing: border-box;
-    height: 50px;
-  }
-
-  .ivu-table-body {
-    width: 956px;
-    height: 530px !important;
-  }
-
-  .ivu-table-body > table {
-    width: 938px !important;
-    overflow: hidden;
-  }
-
-  .ivu-table-header > table {
-    width: 950px !important;
-  }
-
-  .ivu-table table {
-    table-layout: inherit;
-  }
-
-  .ivu-table th:first-of-type > .ivu-table-cell {
-    width: 98px;
-  }
-
-  .ivu-table th:nth-of-type(2) > .ivu-table-cell {
-    width: 132px;
-  }
-
-  .ivu-table th:nth-of-type(3) > .ivu-table-cell {
-    width: 112px;
-  }
-
-  .ivu-table th:nth-of-type(4) > .ivu-table-cell {
-    width: 112px;
-  }
-
-  .ivu-table th:nth-of-type(5) > .ivu-table-cell {
-    width: 88px;
-  }
-
-  .ivu-table th:nth-of-type(6) > .ivu-table-cell {
-    width: 52px;
-  }
-
-  .ivu-table th:nth-of-type(7) > .ivu-table-cell {
-    width: 92px;
-  }
-
-  .ivu-table th:nth-of-type(8) > .ivu-table-cell {
-    width: 36px;
-  }
-
-  .el-button.more-btn {
-    width: 115px;
-    height: 35px;
-    padding: 0;
-    border-radius: 10px;
-    line-height: 35px;
-    color: #fff;
-  }
-
-  .el-button,
-  .ivu-table,
-  .ivu-table th,
-  .ivu-table td {
-    background-color: transparent;
-  }
-
-  .ivu-table-wrapper {
-    bottom: -2px;
-    right: -4px;
-    box-sizing: border-box;
-    border: none;
-    border-top: 1px solid #566ad4;
-  }
-
-  .el-table .sort-caret {
-    border-width: 4px;
-  }
-
-  .el-table .sort-caret.ascending {
-    top: 8px;
-  }
-
-  .el-table .sort-caret.descending {
-    bottom: 8px;
-  }
-
-  /* 交易对颜色 */
-  .el-table .sellname,
-  .el-table .area {
-    color: #646464;
-  }
-}
 </style>

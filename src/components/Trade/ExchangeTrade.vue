@@ -435,8 +435,8 @@ export default {
     }
   },
   created () {
-    require('../../../static/css/list/Trade/TradeCenter.css')
-    require('../../../static/css/theme/day/Trade/TraderCenterDay.css')
+    // require('../../../static/css/list/Trade/TradeCenter.css')
+    // require('../../../static/css/theme/day/Trade/TraderCenterDay.css')
     require('../../../static/css/theme/night/Trade/TradeCenterNight.css')
     require('../../../static/css/list/Trade/Exchange.css')
   },
@@ -696,7 +696,6 @@ export default {
     },
     // 用户手动设置价格
     activePriceItem (newVal) {
-      console.log(newVal)
       if (newVal) {
         this.setBuyAndSellPrice(newVal)
       }
@@ -960,6 +959,12 @@ export default {
             &::before {
               border-color: $nightMainTitleColor;
             }
+          }
+        }
+
+        > .middle {
+          .el-tabs__nav-wrap::after {
+            background-color: #fff;
           }
         }
       }

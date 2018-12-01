@@ -809,11 +809,9 @@ export default {
       this.accountCount = targetCount > 0 ? targetCount : 0
       // 判断是输入时还是手续费 判断错误提示
       if (val === 'rechargeType') {
-        console.log(1)
-        console.log(this.withdrawAmount)
-        console.log(this.$refs.withdrawCount[index].value)
+        // console.log(this.withdrawAmount)
+        // console.log(this.$refs.withdrawCount[index].value)
       } else if (val === 'serviceType') {
-        console.log(2)
         // 获取输入手续费
         this.withdrawService = this.$refs.withdrawalFee[index].value
       }
@@ -824,7 +822,7 @@ export default {
       this[ref] = this.$refs[ref].value
       // 获取输入数量
       this.withdrawAmount = this.$refs.withdrawCount[index].value
-      console.log(this.withdrawAmount)
+      // console.log(this.withdrawAmount)
       if (this.withdrawAmount - 0 > this.withdrawDepositList[index].total - 0) {
         this.$refs.withdrawCount[index].value = this.withdrawDepositList[index].total - 0
       }

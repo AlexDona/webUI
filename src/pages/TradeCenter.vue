@@ -69,9 +69,6 @@ export default {
     }
   },
   created () {
-    require('../../static/css/list/Trade/TradeCenter.css')
-    require('../../static/css/theme/day/Trade/TraderCenterDay.css')
-    require('../../static/css/theme/night/Trade/TradeCenterNight.css')
   },
   mounted () {},
   activited () {},
@@ -119,6 +116,16 @@ export default {
 
       > .middle {
         width: 53.260869565%;
+
+        /deep/ {
+          .el-tabs__nav-wrap::after {
+            background-color: #1c1f32;
+          }
+
+          .el-tabs__item {
+            color: #fff;
+          }
+        }
       }
 
       > .right {
@@ -126,16 +133,191 @@ export default {
       }
     }
 
+    /deep/ {
+      /* 币币交易通用修改样式（elementui修改） */
+      .el-table {
+        td,
+        th,
+        tr {
+          background-color: transparent;
+        }
+
+        td {
+          border-bottom: none;
+        }
+
+        th,
+        .el-table__header-wrapper {
+          padding: 0;
+        }
+      }
+
+      .middle {
+        .el-tabs__nav-wrap::after {
+          top: 0;
+          height: 34px;
+        }
+
+        .el-tabs__item {
+          height: 34px;
+          font-size: 16px;
+          line-height: 34px;
+
+          &.is-active {
+            color: #338ff5 !important;
+          }
+        }
+
+        .el-tabs__nav-scroll {
+          padding-left: 2.1%;
+        }
+
+        .el-tabs__header {
+          box-shadow: 0 2px 6px rgba(0, 0, 0, .1);
+        }
+      }
+
+      .el-pagination {
+        position: relative;
+        bottom: 0;
+        text-align: right;
+      }
+
+      .el-pagination button,
+      .el-pager li {
+        width: 16px;
+        height: 16px;
+        font-size: 12px;
+        line-height: 16px;
+      }
+
+      .el-tabs__header {
+        margin-bottom: 5px;
+      }
+
+      @media screen and (max-width: 1920px) {
+        .el-table .cell {
+          font-size: 12px;
+        }
+      }
+    }
+
     &.night {
       > .inner-box {
         background-color: $mainNightBgColor;
+      }
+
+      /deep/ {
+        /* 币币交易通用night样式 */
+        .el-table {
+          color: #e4eaf4;
+
+          th {
+            > .cell {
+              color: #a9bed4;
+            }
+
+            &.is-leaf {
+              border-color: #39424d;
+            }
+          }
+        }
+
+        .el-table--enable-row-hover {
+          .el-table__body {
+            tr {
+              &:hover {
+                > td {
+                  background-color: rgba(255, 255, 255, .2);
+                }
+              }
+            }
+          }
+        }
+
+        .title-box {
+          border-bottom: 1px solid #39424d;
+        }
+
+        .el-table--scrollable-y {
+          .el-table__body-wrapper::-webkit-scrollbar {
+            width: 4px;
+          }
+
+          .el-table__body-wrapper::-webkit-scrollbar-track-piece {
+            background-color: #2a343e;
+          }
+
+          .el-table__body-wrapper::-webkit-scrollbar-thumb {
+            background-color: #4a5662;
+          }
+
+          .el-table__body-wrapper::-webkit-scrollbar-button {
+            display: none;
+            background-color: #fff;
+          }
+        }
+
+        .el-tabs__header {
+          box-shadow: 2px 0 3px rgba(27, 35, 49, 1);
+        }
       }
     }
 
     &.day {
       > .inner-box {
         background-color: $dayInnerBoxBg;
+
+        > .middle {
+          .el-tabs__nav-wrap ::after {
+            background-color: #fff;
+          }
+
+          .el-tabs__item {
+            color: #333;
+          }
+        }
+      }
+
+      /* 币币交易通用day样式 */
+      .trade-box.day .el-table {
+        color: #646464;
+      }
+
+      /deep/ {
+        .el-table {
+          th {
+            > .cell {
+              color: #333;
+            }
+
+            &.is-leaf {
+              border-color: #d7d9db;
+            }
+          }
+        }
+
+        .el-tabs__header {
+          box-shadow: 2px 0 3px rgba(239, 239, 239, 1);
+        }
+
+        .el-table--enable-row-hover {
+          .el-table__body {
+            tr {
+              &:hover {
+                > td {
+                  background-color: #eaf2fa;
+                }
+              }
+            }
+          }
+        }
+
+        .title-box {
+          border-bottom: 1px solid #d7d9db;
+        }
       }
     }
   }
+
 </style>

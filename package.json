@@ -4,6 +4,7 @@
   "description": "fubt3.0 前端",
   "author": "zxl <991807272@qq.com>",
   "private": true,
+  "pre-commit": "lint:staged",
   "scripts": {
     "dev": "webpack-dev-server --inline --progress --config build/webpack.dev.conf.js",
     "start": "npm run dev",
@@ -11,7 +12,8 @@
     "e2e": "node test/e2e/runner.js",
     "test": "npm run unit && npm run e2e",
     "lint": "eslint --ext .js,.vue src test/unit test/e2e/specs",
-    "lint-css": "stylelint 'static/**/*.css src/**/*.vue' --fix",
+    "lint-css": "stylelint 'static/css/**/*.css' --fix",
+    "lint:staged": "lint-staged",
     "analyze": "NODE_ENV=production npm_config_report=true npm run build",
     "build--test": "cross-env NODE_ENV=testing env_config=test node build/build.js",
     "build--prod": "cross-env NODE_ENV=production env_config=prod node build/build.js"
@@ -80,6 +82,7 @@
     "postcss-import": "^11.0.0",
     "postcss-loader": "^2.0.8",
     "postcss-url": "^7.2.1",
+    "pre-commit": "^1.2.2",
     "qs": "^6.5.2",
     "rimraf": "^2.6.0",
     "sass-loader": "^7.1.0",
@@ -105,6 +108,14 @@
   "engines": {
     "node": ">= 6.0.0",
     "npm": ">= 3.0.0"
+  },
+  "lint-staged": {
+    "linters": {
+      "src/**/*.js": ["eslint --fix", "git add"],
+      "src/**/*.vue": ["eslint --fix","stylelint --fix", "git add"],
+      "static/css/**/*.vue": ["stylelint --fix", "git add"]
+    },
+    "ignore": []
   },
   "browserslist": [
     "> 1%",
