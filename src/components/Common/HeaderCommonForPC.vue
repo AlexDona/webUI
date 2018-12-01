@@ -949,6 +949,19 @@ export default{
         color: #333;
         background-color: #fff;
       }
+
+      .nav-box-dialog {
+        .el-dialog__title {
+          padding: 0;
+          color: #333;
+        }
+
+        .el-dialog,
+        .el-dialog__header {
+          background-color: #fff !important;
+          box-shadow: none;
+        }
+      }
     }
   }
 }
