@@ -113,7 +113,7 @@
     "linters": {
       "src/**/*.js": ["eslint --fix", "git add"],
       "src/**/*.vue": ["eslint --fix","stylelint --fix", "git add"],
-      "static/css/**/*.vue": ["stylelint --fix", "git add"]
+      "static/css/**/*.css": ["stylelint --fix", "git add"]
     },
     "ignore": []
   },
