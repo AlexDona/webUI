@@ -874,6 +874,7 @@ export default {
         width: 100%;
         margin-top: 20px;
         border: none;
+        color: #fff;
 
         &:hover {
           opacity: .7;
