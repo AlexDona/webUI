@@ -546,11 +546,9 @@ export default {
   beforeRouteUpdate () {},
   methods: {
     ...mapMutations([
-      // 'CHANGE_OTC_MERCHANT_AND_COMMON_MINCOUNT'
     ]),
     // 分页
     changeCurrentPage (pageNum) {
-      // console.log(pageNum)
       this.currentPage = pageNum
       this.orderDetailsLoading = true
       this.getOTCEntrustingOrdersRevocation()
@@ -563,14 +561,13 @@ export default {
     async getOTCAvailableCurrencyList () {
       const data = await getOTCAvailableCurrency({
       })
-      console.log('otc可用币种查询')
-      console.log(data)
+      // console.log('otc可用币种查询')
+      // console.log(data)
       // 提示信息
       if (!(returnAjaxMsg(data, this, 0))) {
         return false
       } else {
         // 返回数据正确的逻辑
-        // this.traderCoinList = data.data.data
         this.traderCoinList = getNestedData(data, 'data.data')
         // 设置币种默认选中值
         this.activitedTraderCoinId = this.traderCoinList[0].coinId
@@ -609,7 +606,6 @@ export default {
         return false
       } else {
         // 返回数据正确的逻辑 将币种列表赋值
-        // this.traderCurrencyCoinsList = data.data.data
         this.traderCurrencyCoinsList = getNestedData(data, 'data.data')
         // 设置法币默认选中值
         this.activitedtraderCurrencyCoinsId = this.traderCurrencyCoinsList[0].id
@@ -697,7 +693,6 @@ export default {
         return false
       } else {
         this.formStatisticsLoading = false
-        // let getData = data.data.data
         let getData = getNestedData(data, 'data.data')
         // 返回数据正确的逻辑
         // 法币总资产
@@ -750,7 +745,6 @@ export default {
       } else {
         // 返回数据正确的逻辑 重新渲染列表
         this.orderDetailsLoading = false
-        // let ordersRevocationData = data.data.data
         let ordersRevocationData = getNestedData(data, 'data.data')
         this.orderInfoList = ordersRevocationData.list
         // 分页
