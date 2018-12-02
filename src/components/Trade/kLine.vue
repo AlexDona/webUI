@@ -331,7 +331,7 @@ export default {
           this.widget.chart().crossHairMoved(async (e) => {
             const currentTime = e.time * 1000
             const ticker = `${this.symbol}-${this.interval}`
-            const limitTime = this.cacheData[ticker][50].time
+            const limitTime = getNestedData(this.cacheData[ticker], '[50].time')
 
             const timeDiff = currentTime - limitTime
             if (timeDiff < 0 && this.KlineNum > 1 && this.isAllowDrag) {
