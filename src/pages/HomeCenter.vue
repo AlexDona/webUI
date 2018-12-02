@@ -30,7 +30,7 @@ export default {
   },
   methods: {
     doAdd () {
-      this.addServiceForCustomer(window, document, 'script', 'http://assets-cli.udesk.cn/im_client/js/udeskApi.js', 'ud')
+      this.addServiceForCustomer(window, document, 'script', 'https://assets-cli.udesk.cn/im_client/js/udeskApi.js', 'ud')
       ud({
         'code': '311h1067', // 标识
         'link': 'https://fubt.udesk.cn/im_client/?web_plugin_id=59660', // IM链接地址
