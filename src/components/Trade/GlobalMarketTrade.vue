@@ -124,7 +124,11 @@ export default {
     // 获取全球行情
     async getGlobalMarket () {
       let params = `${this.activeSymbol.sellsymbol}_${this.activeSymbol.area}`.toUpperCase()
-
+      const symbol = params.split('_')[0]
+      const area = params.split('_')[1]
+      if (!symbol || !area) {
+        return false
+      }
       const data = await getGLobalMarket(params)
       if (!returnAjaxMsg(data, this, 0, 1)) {
         return false
