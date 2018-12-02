@@ -602,11 +602,11 @@ export default {
         // 返回数据正确的逻辑 将币种列表赋值
         this.traderCurrencyCoinsList = getNestedData(data, 'data.data')
         // 设置法币默认选中值
-        // this.activitedtraderCurrencyCoinsId = this.traderCurrencyCoinsList[0].id
         this.activitedtraderCurrencyCoinsId = getNestedData(this.traderCurrencyCoinsList[0], 'id')
+        // this.activitedtraderCurrencyCoinsId = this.traderCurrencyCoinsList[0].id
         // 设置法币默认选中值的name
-        // this.activitedtraderCurrencyCoinsName = this.traderCurrencyCoinsList[0].shortName
         this.activitedtraderCurrencyCoinsName = getNestedData(this.traderCurrencyCoinsList[0], 'shortName')
+        // this.activitedtraderCurrencyCoinsName = this.traderCurrencyCoinsList[0].shortName
       }
     },
     //  3.1 改变 可用法币 币种类型
