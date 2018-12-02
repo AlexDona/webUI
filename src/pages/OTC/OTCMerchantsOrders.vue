@@ -429,7 +429,6 @@ export default {
   methods: {
     // 1分页
     changeCurrentPage (pageNum) {
-      console.log(pageNum)
       this.currentPage = pageNum
       this.loading = true
       this.getOTCEntrustingOrdersRevocation()
@@ -442,13 +441,12 @@ export default {
     async getOTCAvailableCurrencyList () {
       const data = await getOTCAvailableCurrency({
       })
-      console.log('可用币种列表')
-      console.log(data)
+      // console.log('可用币种列表')
+      // console.log(data)
       if (!(returnAjaxMsg(data, this, 0))) {
         return false
       } else {
         // 返回数据正确的逻辑
-        // this.merchantsOrdersCoinList = data.data.data
         this.merchantsOrdersCoinList = getNestedData(data, 'data.data')
       }
     },
@@ -456,19 +454,17 @@ export default {
     async getMerchantAvailablelegalTenderList () {
       const data = await getMerchantAvailablelegalTender({
       })
-      console.log('可用法币')
-      console.log(data)
+      // console.log('可用法币')
+      // console.log(data)
       if (!(returnAjaxMsg(data, this, 0))) {
         return false
       } else {
         // 返回数据正确的逻辑
-        // this.merchantsOrdersCurrencyList = data.data.data
         this.merchantsOrdersCurrencyList = getNestedData(data, 'data.data')
       }
     },
     // 5 change事件改变时赋值
     changeSelectValue (type, targetValue) {
-      console.log('11111', type, targetValue)
       switch (type) {
         // 选中交易 类型 赋值
         case 'changeMerchantsOrdersTraderStyleList':
@@ -554,16 +550,14 @@ export default {
         // 类型
         tradeType: this.activitedMerchantsOrdersTraderStyleList
       })
-      // 提示信息
-      console.log('商家订单列表')
-      console.log(data)
+      // console.log('商家订单列表')
+      // console.log(data)
       if (!(returnAjaxMsg(data, this, 0))) {
         this.loading = false
         return false
       } else {
         this.loading = false
         // 返回数据正确的逻辑 重新渲染列表
-        // let merchantsOrdersListData = data.data.data
         let merchantsOrdersListData = getNestedData(data, 'data.data')
         this.merchantsOrdersList = merchantsOrdersListData.list
         // 分页

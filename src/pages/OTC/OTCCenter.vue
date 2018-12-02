@@ -534,7 +534,6 @@ export default {
     },
     // 科学计数法转换
     filterNumber (num) {
-      // console.log(scientificToNumber(num))
       return scientificToNumber(num)
     },
     // 0.1 切换各订单状态tab面板
@@ -550,23 +549,23 @@ export default {
         return false
       } else {
         if (this.activeName === 'first') {
-          console.log('调交易中订单')
+          // console.log('调交易中订单')
           this.$refs.trading.getOTCTradingOrdersList() // 调用子组件交易中订单的方法
         }
         if (this.activeName === 'second') {
-          console.log('调已完成订单')
+          // console.log('调已完成订单')
           this.$refs.complete.getOTCCompletedOrdersList() // 调用子组件已完成订单的方法
         }
         if (this.activeName === 'third') {
-          console.log('调已取消订单')
+          // console.log('调已取消订单')
           this.$refs.canceled.getOTCCanceledOrdersList() // 调用子组件已取消订单的方法
         }
         if (this.activeName === 'fourth') {
-          console.log('调冻结中订单')
+          // console.log('调冻结中订单')
           this.$refs.freezing.getOTCFrezzingOrdersList() // 调用子组件冻结中订单的方法
         }
         if (this.activeName === 'fifth') {
-          console.log('调委托订单')
+          // console.log('调委托订单')
           this.$refs.entrust.getOTCEntrustingOrdersList() // 调用子组件委托订单的方法
         }
       }
@@ -643,7 +642,6 @@ export default {
             })
             return false
           } else {
-            // console.log("买")
             // console.log(id) // 挂单id
             // console.log(coinId) // 币种id
             this.$router.push({path: '/OTCOnlineTraderBuySell/' + this.OTCBuySellStyle + '/' + id + '/' + coinId})
@@ -672,23 +670,20 @@ export default {
     },
     // 0.7 分页:改变页面刷新挂单列表
     changeCurrentPage (pageNum) {
-      console.log(pageNum)
       this.currentPage = pageNum
       this.getOTCPutUpOrdersList() // otc主页面查询挂单列表
     },
     //  1.0 otc可用币种查询：我要购买/我要出售的币种列表
     async getOTCAvailableCurrencyList () {
       const data = await getOTCAvailableCurrency({})
-      console.log('otc可用币种查询')
-      console.log(data)
+      // console.log('otc可用币种查询')
+      // console.log(data)
       // 提示信息
       if (!(returnAjaxMsg(data, this, 0))) {
         return false
       } else {
         // 返回数据正确的逻辑
-        // this.IWantToBuySellArr = data.data.data
         this.IWantToBuySellArr = getNestedData(data, 'data.data')
-        // console.log(this.IWantToBuySellArr.length)
         if (this.IWantToBuySellArr.length) {
           this.CHANGE_OTC_AVAILABLE_CURRENCY_NAME(this.IWantToBuySellArr[0].name)
           this.CHANGE_OTC_AVAILABLE_CURRENCY_ID(this.IWantToBuySellArr[0].coinId)
@@ -708,7 +703,6 @@ export default {
         return false
       } else {
         // 返回数据正确的逻辑
-        // this.availableCurrencyId = data.data.data
         this.availableCurrencyId = getNestedData(data, 'data.data')
         this.activitedCurrencyId = this.availableCurrencyId[0].id
         this.activitedCurrencyName = this.availableCurrencyId[0].shortName
@@ -741,7 +735,6 @@ export default {
       } else {
         // 返回数据正确的逻辑
         this.loading = false
-        // let orderListData = data.data.data
         let orderListData = getNestedData(data, 'data.data')
         this.onlineBuySellTableList = orderListData.list
         // 分页
@@ -752,13 +745,13 @@ export default {
     },
     //  4.0 选中我想购买和出售币种名称
     selectCurrencyName (index) {
-      console.log(index)
+      // console.log(index)
       this.selectCurrencyNameStatus = index
       this.CHANGE_OTC_AVAILABLE_CURRENCY_NAME(this.IWantToBuySellArr[index].name) // 币种名称
       this.CHANGE_OTC_AVAILABLE_PARTNER_COIN_ID(this.IWantToBuySellArr[index].partnerCoinId) // 商户币种id
       this.CHANGE_OTC_AVAILABLE_CURRENCY_ID(this.IWantToBuySellArr[index].coinId) // 币种id
-      console.log(this.selectedOTCAvailableCurrencyName)
-      console.log('币种id：' + this.selectedOTCAvailableCurrencyCoinID)
+      // console.log(this.selectedOTCAvailableCurrencyName)
+      // console.log('币种id：' + this.selectedOTCAvailableCurrencyCoinID)
       this.getOTCPutUpOrdersList() // otc主页面查询挂单列表
     },
     //  6.0 切换在线购买和在线售出状态并调接口渲染列表
@@ -775,10 +768,10 @@ export default {
     //  7.0 改变可用法币的币种id
     changeCurrencyId (e) {
       this.activitedCurrencyId = e
-      console.log(this.activitedCurrencyId)
+      // console.log(this.activitedCurrencyId)
       this.availableCurrencyId.forEach(item => {
         if (e === item.id) {
-          console.log(item.shortName)
+          // console.log(item.shortName)
           this.activitedCurrencyName = item.shortName
         }
       })
@@ -807,8 +800,7 @@ export default {
   },
   watch: {
     updateOTCHomeListStatus (newVal) {
-      console.log('我改变了')
-      console.log(newVal)
+      // console.log(newVal)
       if (newVal) {
         this.getOTCPutUpOrdersList() // otc主页面查询挂单列表
       }

@@ -427,7 +427,6 @@ export default {
       } else {
         // 返回数据正确的逻辑 渲染列表
         this.loading = false
-        // let ADData = data.data.data
         let ADData = getNestedData(data, 'data.data')
         this.ADList = ADData.list
         // 分页
@@ -464,7 +463,6 @@ export default {
         return false
       } else {
         // 返回数据正确的逻辑
-        // this.ADManageMarketList = data.data.data
         this.ADManageMarketList = getNestedData(data, 'data.data')
       }
     },
@@ -477,7 +475,6 @@ export default {
         return false
       } else {
         // 返回数据正确的逻辑
-        // this.ADManageCurrencyId = data.data.data
         this.ADManageCurrencyId = getNestedData(data, 'data.data')
       }
     },
