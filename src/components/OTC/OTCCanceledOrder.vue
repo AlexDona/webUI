@@ -242,9 +242,6 @@ export default {
     }
   },
   created () {
-    require('../../../static/css/list/OTC/OTCCanceledOrder.css')
-    require('../../../static/css/theme/day/OTC/OTCCanceledOrderDay.css')
-    require('../../../static/css/theme/night/OTC/OTCCanceledOrderNight.css')
     // 1.0 请求已取消订单列表:只有登录了才调用
     if (this.isLogin) {
       this.getOTCCanceledOrdersList()
