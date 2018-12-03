@@ -152,9 +152,6 @@ export default {
     }
   },
   created () {
-    require('../../../static/css/list/OTC/OTCEntrustOrder.css')
-    require('../../../static/css/theme/day/OTC/OTCEntrustOrderDay.css')
-    require('../../../static/css/theme/night/OTC/OTCEntrustOrderNight.css')
     // 1.0 刚进页面调取接口获取委托中的订单列表:只有登录了才调用
     if (this.isLogin) {
       this.getOTCEntrustingOrdersList()
