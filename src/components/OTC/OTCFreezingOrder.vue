@@ -214,11 +214,10 @@ export default {
       } else {
         // 返回数据正确的逻辑
         this.loading = false
-        // let otcFreezingOrderListData = data.data.data
         let otcFreezingOrderListData = getNestedData(data, 'data.data')
-        this.otcFreezingOrderList = otcFreezingOrderListData.list
+        this.otcFreezingOrderList = getNestedData(otcFreezingOrderListData, 'list')
         // 分页
-        this.totalPages = otcFreezingOrderListData.pages - 0
+        this.totalPages = getNestedData(otcFreezingOrderListData, 'pages') - 0
       }
     }
   },

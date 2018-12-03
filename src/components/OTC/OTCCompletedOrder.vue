@@ -309,11 +309,10 @@ export default {
       } else {
         // 返回数据正确的逻辑
         this.loading = false
-        // let completedOrdersListData = data.data.data
         let completedOrdersListData = getNestedData(data, 'data.data')
-        this.completedOrdersList = completedOrdersListData.list
+        this.completedOrdersList = getNestedData(completedOrdersListData, 'list')
         // 分页
-        this.totalPages = completedOrdersListData.pages - 0
+        this.totalPages = getNestedData(completedOrdersListData, 'pages') - 0
       }
     }
   },

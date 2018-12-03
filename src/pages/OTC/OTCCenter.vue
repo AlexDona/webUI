@@ -775,7 +775,8 @@ export default {
           this.activitedCurrencyName = item.shortName
         }
       })
-      this.getOTCPutUpOrdersList() // otc主页面查询挂单列表
+      // otc主页面查询挂单列表
+      this.getOTCPutUpOrdersList()
     },
     // 9.0 改变支付方式下拉框的选中值
     payWayChangeValue (e) {

@@ -242,9 +242,6 @@ export default {
     }
   },
   created () {
-    require('../../../static/css/list/OTC/OTCCanceledOrder.css')
-    require('../../../static/css/theme/day/OTC/OTCCanceledOrderDay.css')
-    require('../../../static/css/theme/night/OTC/OTCCanceledOrderNight.css')
     // 1.0 请求已取消订单列表:只有登录了才调用
     if (this.isLogin) {
       this.getOTCCanceledOrdersList()
@@ -281,11 +278,10 @@ export default {
       } else {
         // 返回数据正确的逻辑
         this.loading = false
-        // let canceledOrderData = data.data.data
         let canceledOrderData = getNestedData(data, 'data.data')
-        this.otcCanceledOrderList = canceledOrderData.list
+        this.otcCanceledOrderList = getNestedData(canceledOrderData, 'list')
         // 分页
-        this.totalPages = canceledOrderData.pages - 0
+        this.totalPages = getNestedData(canceledOrderData, 'pages') - 0
       }
     }
   },

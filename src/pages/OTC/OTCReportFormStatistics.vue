@@ -573,12 +573,6 @@ export default {
         this.activitedTraderCoinId = this.traderCoinList[0].coinId
         // 设置币种默认选中值的名称
         this.activitedTraderCoinName = this.traderCoinList[0].name
-        // 重新请求列表
-        // this.getOTCReportFormStatistics()
-        // 表格渲染
-        // this.getOTCEntrustingOrdersRevocation()
-        // 法币列表
-        // this.getMerchantAvailablelegalTenderList()
       }
     },
     //  2.1 改变可用币种类型
@@ -589,7 +583,7 @@ export default {
       this.traderCoinList.forEach(item => {
         if (e === item.coinId) {
           this.activitedTraderCoinName = item.name
-          console.log(this.activitedTraderCoinName)
+          // console.log(this.activitedTraderCoinName)
         }
       })
       this.getOTCReportFormStatistics()
@@ -599,8 +593,8 @@ export default {
     async getMerchantAvailablelegalTenderList () {
       const data = await getMerchantAvailablelegalTender({
       })
-      console.log('查询 可用法币 币种列表')
-      console.log(data)
+      // console.log('查询可用法币币种列表')
+      // console.log(data)
       // 提示信息
       if (!(returnAjaxMsg(data, this, 0))) {
         return false
@@ -608,13 +602,11 @@ export default {
         // 返回数据正确的逻辑 将币种列表赋值
         this.traderCurrencyCoinsList = getNestedData(data, 'data.data')
         // 设置法币默认选中值
-        this.activitedtraderCurrencyCoinsId = this.traderCurrencyCoinsList[0].id
+        // this.activitedtraderCurrencyCoinsId = this.traderCurrencyCoinsList[0].id
+        this.activitedtraderCurrencyCoinsId = getNestedData(this.traderCurrencyCoinsList[0], 'id')
         // 设置法币默认选中值的name
-        this.activitedtraderCurrencyCoinsName = this.traderCurrencyCoinsList[0].shortName
-        // 重新请求列表
-        // this.getOTCReportFormStatistics()
-        // 表格渲染
-        // this.getOTCEntrustingOrdersRevocation()
+        // this.activitedtraderCurrencyCoinsName = this.traderCurrencyCoinsList[0].shortName
+        this.activitedtraderCurrencyCoinsName = getNestedData(this.traderCurrencyCoinsList[0], 'shortName')
       }
     },
     //  3.1 改变 可用法币 币种类型
@@ -634,7 +626,6 @@ export default {
     startTime (e) {
       this.startTimeValue = e
       this.activedRadioId = ''
-      console.log(e)
       if (this.endTimeValue) {
         if (this.startTimeValue > this.endTimeValue) {
           this.$message({ // message: '开始时间不能大于结束时间',
@@ -651,7 +642,6 @@ export default {
     endTime (e) {
       this.endTimeValue = e
       this.activedRadioId = ''
-      console.log(e)
       if (this.startTimeValue) {
         if (this.startTimeValue > this.endTimeValue) {
           this.$message({ // message: '开始时间不能大于结束时间',
@@ -686,15 +676,14 @@ export default {
         currencyId: this.activitedtraderCurrencyCoinsId
       })
       // 提示信息
-      console.log('资产信息')
-      console.log(data)
+      // console.log('资产信息')
+      // console.log(data)
       if (!(returnAjaxMsg(data, this, 0))) {
         this.formStatisticsLoading = false
         return false
       } else {
         this.formStatisticsLoading = false
         let getData = getNestedData(data, 'data.data')
-        // 返回数据正确的逻辑
         // 法币总资产
         this.totalAssets = getData.totalAssets
         // 币种总资产
@@ -736,9 +725,8 @@ export default {
         // 日期类型
         dateType: this.activedRadioId
       })
-      // 提示信息
-      console.log('报表列表')
-      console.log(data)
+      // console.log('报表列表')
+      // console.log(data)
       if (!(returnAjaxMsg(data, this, 0))) {
         this.orderDetailsLoading = false
         return false
@@ -757,7 +745,6 @@ export default {
     ...mapState({
       language: state => state.common.language,
       theme: state => state.common.theme
-      // userInfo: state => state.personal.userInfo
     })
   },
   watch: {}
