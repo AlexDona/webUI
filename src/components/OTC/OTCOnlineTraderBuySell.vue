@@ -453,9 +453,6 @@ export default {
     }
   },
   created () {
-    require('../../../static/css/list/OTC/OTCOnlineTraderBuySell.css')
-    require('../../../static/css/theme/day/OTC/OTCOnlineTraderBuySellDay.css')
-    require('../../../static/css/theme/night/OTC/OTCOnlineTraderBuySellNight.css')
     // 1.0 从OTCCenter传过来的URL中获取的
     // console.log(this.$route.params)
     this.onlineTraderStatus = this.$route.params.styleId
@@ -849,8 +846,7 @@ export default {
 .otc-online-trader-buy-sell-box {
   > .online-trader-buy-sell-content {
     width: 1150px;
-    padding: 100px 0 70px;
-    margin: 0 auto;
+    margin: 150px auto 70px;
 
     > .online-trader {
       display: flex;
@@ -1072,6 +1068,75 @@ export default {
     }
   }
 
+  /deep/ {
+    .icon {
+      margin-right: 2px;
+    }
+
+    .el-form--label-top {
+      .el-button--mini {
+        padding: 4px 8px;
+      }
+    }
+
+    .password-dialog {
+      .el-dialog {
+        width: 350px;
+        height: 207px;
+        border-radius: 4px;
+
+        .el-dialog__header {
+          padding: 10px 20px;
+          border-radius: 4px;
+        }
+
+        .el-dialog__title {
+          font-size: 14px;
+        }
+
+        .el-dialog__headerbtn {
+          top: 15px;
+          right: 10px;
+        }
+
+        .el-dialog__body {
+          padding: 15px 20px 10px 30px;
+          font-size: 12px;
+
+          .input {
+            margin-top: 13px;
+          }
+
+          .password-input {
+            display: inline-block;
+            width: 280px;
+            height: 36px;
+            padding-left: 10px;
+            border-radius: 4px;
+            font-size: 14px;
+          }
+
+          .error-info {
+            height: 20px;
+            padding-top: 5px;
+            font-size: 12px;
+          }
+
+          .el-dialog__footer {
+            padding: 0;
+            text-align: center;
+          }
+
+          .el-button {
+            width: 290px;
+            padding: 7px 20px;
+            border: 0;
+          }
+        }
+      }
+    }
+  }
+
   &.night {
     background-color: $mainNightBgColor;
 
@@ -1230,6 +1295,39 @@ export default {
         }
       }
     }
+
+    /deep/ {
+      .password-dialog {
+        .el-dialog {
+          background: #28334a;
+
+          .el-dialog__header {
+            background-color: #20293c;
+          }
+
+          .el-dialog__title {
+            color: #fff;
+          }
+
+          .el-dialog__body {
+            color: #fff;
+
+            .password-input {
+              color: #fff;
+              background-color: #1a2233;
+            }
+          }
+
+          .error-info {
+            color: #fff;
+          }
+
+          .el-button--primary {
+            background: linear-gradient(9deg, rgba(43, 57, 110, 1), rgba(42, 80, 130, 1));
+          }
+        }
+      }
+    }
   }
 
   &.day {
@@ -1381,6 +1479,30 @@ export default {
               color: #d45858;
             }
           }
+        }
+      }
+    }
+
+    /deep/ {
+      .password-dialog {
+        .el-dialog {
+          background: #fff;
+        }
+
+        .el-dialog__header {
+          background-color: #fff;
+        }
+
+        .el-dialog__title {
+          color: #338ff5;
+        }
+
+        .el-dialog__body .password-input {
+          border: 1px solid #ecf1f8;
+        }
+
+        .el-button--primary {
+          background: linear-gradient(9deg, rgba(43, 57, 110, 1), rgba(42, 80, 130, 1));
         }
       }
     }
