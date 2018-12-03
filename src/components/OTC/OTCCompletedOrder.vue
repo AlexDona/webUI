@@ -114,7 +114,7 @@
                       <span v-if="s.row.orderType === 'BUY'">
                         {{s.row.sellPhone}}
                       </span>
-                      <!-- 卖单显示：买家手机号 -->
+                      <!-- 卖单显示：买家手机号  -->
                       <span v-if="s.row.orderType === 'SELL'">
                         {{$t('M.otc_trading_buyphone')}}：
                       </span>
