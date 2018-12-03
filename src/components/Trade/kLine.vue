@@ -411,7 +411,9 @@ export default {
             close: klineData.close,
             volume: klineData.volume
           }
-          let timeDiff = this.cacheData[ticker][this.cacheData[ticker].length - 1].time - klineData.time
+          let targetData = this.cacheData[ticker]
+
+          let timeDiff = getNestedData(targetData[getNestedData(targetData, 'length') - 1], 'time') - getNestedData(klineData, 'time')
 
           if (!timeDiff) {
             this.cacheData[ticker][this.cacheData[ticker].length - 1] = barsData
