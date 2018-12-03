@@ -198,11 +198,10 @@ export default {
       } else {
         // 返回数据正确的逻辑
         this.loading = false
-        // let OTCEntrustOrderListData = data.data.data
         let OTCEntrustOrderListData = getNestedData(data, 'data.data')
-        this.OTCEntrustOrderList = OTCEntrustOrderListData.list
+        this.OTCEntrustOrderList = getNestedData(OTCEntrustOrderListData, 'list')
         // 分页
-        this.totalPages = OTCEntrustOrderListData.pages - 0
+        this.totalPages = getNestedData(OTCEntrustOrderListData, 'pages') - 0
       }
     },
     // 4.0 点击撤单按钮

@@ -539,8 +539,8 @@ export default {
         currencyId: this.hopePaymentCoinId, // 法币id
         coinId: this.coinId // 交易币种id
       })
-      console.log('币种详情')
-      console.log(data)
+      // console.log('币种详情')
+      // console.log(data)
       // 提示信息
       if (!(returnAjaxMsg(data, this, 0))) {
         this.fullscreenLoading = false
@@ -548,54 +548,63 @@ export default {
       } else {
         // 返回数据正确的逻辑
         this.fullscreenLoading = false
-        // let detailsData = data.data.data
         let detailsData = getNestedData(data, 'data.data')
         // 1.0 可用币种列表
-        this.coinStyleList = detailsData.coinlist
+        // this.coinStyleList = detailsData.coinlist
+        this.coinStyleList = getNestedData(detailsData, 'coinlist')
         this.coinStyleList.forEach(item => {
           if (this.coinId === item.coinId) {
             this.coinName = item.name
           }
         })
         // 2.0 法币种列表
-        this.hopePaymentCoinStyleList = detailsData.currencyList
+        // this.hopePaymentCoinStyleList = detailsData.currencyList
+        this.hopePaymentCoinStyleList = getNestedData(detailsData, 'currencyList')
         this.hopePaymentCoinStyleList.forEach(item => {
           if (this.hopePaymentCoinId === item.id) {
             this.CurrencyCoinsName = item.shortName
           }
         })
         // 当前可用total
-        this.currentlyAvailable = detailsData.otcCoinQryResponse.total
+        // this.currentlyAvailable = detailsData.otcCoinQryResponse.total
+        this.currentlyAvailable = getNestedData(detailsData, 'otcCoinQryResponse.total')
         // 市价marketPrice
-        this.marketPrice = detailsData.otcCoinQryResponse.marketPrice
+        // this.marketPrice = detailsData.otcCoinQryResponse.marketPrice
+        this.marketPrice = getNestedData(detailsData, 'otcCoinQryResponse.marketPrice')
         // 币种 最大 交易限额maxCount
         // this.$refs.maxCount.value = detailsData.otcCoinQryResponse.maxCount
-        this.backReturnCurrentMaxCount = detailsData.otcCoinQryResponse.maxCount
+        // this.backReturnCurrentMaxCount = detailsData.otcCoinQryResponse.maxCount
+        this.backReturnCurrentMaxCount = getNestedData(detailsData, 'otcCoinQryResponse.maxCount')
         this.$refs.maxCount.value = this.backReturnCurrentMaxCount
         // 币种 最小 交易限额minCount
         // this.$refs.minCount.value = detailsData.otcCoinQryResponse.minCount
-        this.backReturnCurrentMinCount = detailsData.otcCoinQryResponse.minCount
+        // this.backReturnCurrentMinCount = detailsData.otcCoinQryResponse.minCount
+        this.backReturnCurrentMinCount = getNestedData(detailsData, 'otcCoinQryResponse.minCount')
         this.$refs.minCount.value = this.backReturnCurrentMinCount
         // 交易数量最小小数位
-        this.pointLength = detailsData.otcCoinQryResponse.unit
+        // this.pointLength = detailsData.otcCoinQryResponse.unit
+        this.pointLength = getNestedData(detailsData, 'otcCoinQryResponse.unit')
         // 币种最高价格
-        this.maxPrice = detailsData.otcCoinQryResponse.maxPrice
+        // this.maxPrice = detailsData.otcCoinQryResponse.maxPrice
+        this.maxPrice = getNestedData(detailsData, 'otcCoinQryResponse.maxPrice')
         // 币种最低价格
-        this.minPrice = detailsData.otcCoinQryResponse.minPrice
+        // this.minPrice = detailsData.otcCoinQryResponse.minPrice
+        this.minPrice = getNestedData(detailsData, 'otcCoinQryResponse.minPrice')
         // 费率
         if (this.publishStyle === 'sell') {
-          this.rate = detailsData.otcCoinQryResponse.sellRate
+          // this.rate = detailsData.otcCoinQryResponse.sellRate
+          this.rate = getNestedData(detailsData, 'otcCoinQryResponse.sellRate')
         }
         if (this.publishStyle === 'buy') {
-          this.rate = detailsData.otcCoinQryResponse.buyRate
+          // this.rate = detailsData.otcCoinQryResponse.buyRate
+          this.rate = getNestedData(detailsData, 'otcCoinQryResponse.buyRate')
         }
       }
     },
     // 2.0 改变可用币种类型
     changeCoinId (e) {
-      // console.log(e)
       this.coinId = e
-      console.log(this.coinId)
+      // console.log(this.coinId)
       // this.clearErrInfo() // 清空错误信息
       this.clearInputData()
       // 币种详情
@@ -603,10 +612,8 @@ export default {
     },
     // 3.0 改变你希望付款的货币类型：可用法币类型
     changehopePaymentCoinId (e) {
-      // console.log(e)
       this.hopePaymentCoinId = e
-      console.log(this.hopePaymentCoinId)
-      // this.clearErrInfo() // 清空错误信息
+      // console.log(this.hopePaymentCoinId)
       this.clearInputData()
       // 币种详情
       this.getOTCCoinInfo()
@@ -624,11 +631,11 @@ export default {
     toggleBuySellButton (index) {
       if (index === 1) {
         this.publishStyle = 'sell'
-        console.log(this.publishStyle)
+        // console.log(this.publishStyle)
       }
       if (index === 2) {
         this.publishStyle = 'buy'
-        console.log(this.publishStyle)
+        // console.log(this.publishStyle)
       }
       // 清空表单数据
       this.clearInputData()
@@ -892,8 +899,7 @@ export default {
       }
       this.fullscreenLoading = true
       const data = await addOTCPutUpOrders(param)
-      console.log(data)
-      // 提示信息
+      // console.log(data)
       if (!(returnAjaxMsg(data, this, 1))) {
         this.fullscreenLoading = false
         return false

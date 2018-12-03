@@ -888,13 +888,14 @@ export default {
       } else {
         // 返回数据正确的逻辑
         this.loading = false
-        // let detailsData = data.data.data
         let detailsData = getNestedData(data, 'data.data')
-        this.tradingOrderList = detailsData.list
+        // this.tradingOrderList = detailsData.list
+        this.tradingOrderList = getNestedData(detailsData, 'list')
         // console.log('交易中订单')
         // console.log(this.tradingOrderList)
         // 分页
-        this.totalPages = detailsData.pages - 0
+        // this.totalPages = detailsData.pages - 0
+        this.totalPages = getNestedData(detailsData, 'pages') - 0
         // console.log(this.tradingOrderList)
         // 循环数组
         this.tradingOrderList.forEach((item, index) => {
@@ -925,17 +926,17 @@ export default {
     },
     // 3.0 改变交易方式
     changeUserBankInfo (index) {
-      console.log('第' + index + '条数据')
-      console.log('选中的订单id')
-      console.log(this.tradingOrderList[index].id)
-      console.log(this.activePayModeList[index])
+      // console.log('第' + index + '条数据')
+      // console.log('选中的订单id')
+      // console.log(this.tradingOrderList[index].id)
+      // console.log(this.activePayModeList[index])
       this.activedTradingOrderId = this.tradingOrderList[index].id
       this.tradingOrderList[index].userBankList.forEach((item) => {
         if (item.id == this.activePayModeList[index]) {
           this.activedPayAccountArr[index] = item.cardNo
-          console.log('选中的付款账号：' + this.activedPayAccountArr[index])
+          // console.log('选中的付款账号：' + this.activedPayAccountArr[index])
           this.activeBankFidList[index] = item.id
-          console.log('选中的支付方式id' + this.activeBankFidList[index])
+          // console.log('选中的支付方式id' + this.activeBankFidList[index])
           this.activitedPayStyleId = this.activeBankFidList[index]
           // 省
           this.activeBankProv[index] = item.prov
@@ -949,11 +950,11 @@ export default {
           this.activeBankDetailAddress[index] = item.address
           // 支付类型
           this.activeBankType[index] = item.bankType
-          console.log('支付类型：' + this.activeBankType[index])
+          // console.log('支付类型：' + this.activeBankType[index])
           // 支付码
           this.activeBankCode[index] = item.qrcode
-          console.log('支付码')
-          console.log(this.activeBankCode[index])
+          // console.log('支付码')
+          // console.log(this.activeBankCode[index])
         }
         this.buttonStatusArr[index] = true
       })
@@ -998,7 +999,7 @@ export default {
           payId: this.activitedPayStyleId, // 支付账户id
           tradePassword: this.tradePassword // 交易密码
         })
-        console.log(data)
+        // console.log(data)
         // 提示信息
         if (!(returnAjaxMsg(data, this, 1))) {
           this.loading = false
@@ -1019,7 +1020,7 @@ export default {
       // 弹出交易密码框
       this.dialogVisibleConfirmReceipt = true
       // console.log(id)
-      console.log(this.activedTradingOrderId)
+      // console.log(this.activedTradingOrderId)
     },
     // 9.0 卖家点击确认收款按钮 弹出交易密码框 点击交易密码框中的提交按钮
     async submitConfirmGathering () {
@@ -1032,7 +1033,7 @@ export default {
         orderId: this.activedTradingOrderId, // 订单id
         tradePassword: this.tradePassword // 交易密码
       })
-      console.log(data)
+      // console.log(data)
       // 提示信息
       if (!(returnAjaxMsg(data, this, 1))) {
         this.loading = false
@@ -1047,11 +1048,11 @@ export default {
     },
     // 10.0 点击订单申诉弹窗申诉框
     orderAppeal (id, index) {
-      console.log(id)
+      // console.log(id)
       // this.showOrderAppeal[index] = true
       this.$set(this.showOrderAppeal, index, true)
       this.activedTradingOrderId = id
-      console.log(this.activedTradingOrderId)
+      // console.log(this.activedTradingOrderId)
     },
     // 11.0 取消订单申诉按钮
     cancelOrderAppeal (index) {
@@ -1083,7 +1084,7 @@ export default {
         reason: this.appealTextareaValue, // 申诉原因
         tradePassword: this.tradePassword // 交易密码
       })
-      console.log(data)
+      // console.log(data)
       // 提示信息
       if (!(returnAjaxMsg(data, this, 1))) {
         this.loading = false

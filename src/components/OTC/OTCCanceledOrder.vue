@@ -281,11 +281,10 @@ export default {
       } else {
         // 返回数据正确的逻辑
         this.loading = false
-        // let canceledOrderData = data.data.data
         let canceledOrderData = getNestedData(data, 'data.data')
-        this.otcCanceledOrderList = canceledOrderData.list
+        this.otcCanceledOrderList = getNestedData(canceledOrderData, 'list')
         // 分页
-        this.totalPages = canceledOrderData.pages - 0
+        this.totalPages = getNestedData(canceledOrderData, 'pages') - 0
       }
     }
   },
