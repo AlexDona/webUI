@@ -60,3 +60,7 @@
   border-left: 4px solid #fff;
   color: #fff;
 }
+
+.personal-center.personal .el-tabs__nav-scroll {
+  height: 625px;
+}
