@@ -364,9 +364,6 @@ export default {
     // 动态获取广告管理内容的高度
     // console.log(document.documentElement.clientHeight)
     this.height = document.documentElement.clientHeight
-    require('../../../static/css/list/OTC/OTCADManage.css')
-    require('../../../static/css/theme/day/OTC/OTCADManageDay.css')
-    require('../../../static/css/theme/night/OTC/OTCADManageNight.css')
     // 1.0 otc可用币种查询：
     this.getOTCAvailableCurrencyList()
     // 2.0 otc可用法币查询：
@@ -622,6 +619,95 @@ export default {
     }
   }
 
+  /deep/ {
+    .style-input {
+      .el-select {
+        width: 110px;
+      }
+    }
+
+    .market-input {
+      .el-select {
+        width: 120px;
+      }
+    }
+
+    .status-input {
+      .el-select {
+        width: 120px;
+      }
+    }
+
+    .el-input__inner {
+      height: 34px;
+      border: 0;
+    }
+
+    .el-input__icon {
+      height: 34px;
+    }
+
+    .inquire-button {
+      .el-button {
+        padding: 10px 16px;
+        border: 0;
+      }
+    }
+
+    .manage-main-bottom {
+      .el-table__header {
+        margin-bottom: 10px;
+      }
+
+      .el-table {
+        tr {
+          height: 40px;
+        }
+
+        th {
+          padding: 5px 0;
+
+          &.is-leaf {
+            &:first-of-type {
+              border-bottom-left-radius: 5px;
+              border-top-left-radius: 5px;
+            }
+
+            &:nth-last-of-type(2) {
+              border-top-right-radius: 5px;
+              border-bottom-right-radius: 5px;
+            }
+          }
+        }
+
+        td {
+          padding: 0;
+          border-bottom: 0;
+        }
+
+        .el-table__body {
+          tr {
+            &:last-of-type {
+              td {
+                &:last-of-type {
+                  border-bottom-right-radius: 5px;
+                }
+
+                &:first-of-type {
+                  border-bottom-left-radius: 5px;
+                }
+              }
+            }
+          }
+        }
+      }
+
+      .el-table__empty-block {
+        min-height: 410px;
+      }
+    }
+  }
+
   &.night {
     background-color: $mainNightBgColor;
 
@@ -657,6 +743,83 @@ export default {
 
           .green {
             color: #008069;
+          }
+        }
+      }
+    }
+
+    /deep/ {
+      .el-input__inner {
+        background-color: #1c1f32;
+      }
+
+      .inquire-button {
+        .el-button {
+          background: linear-gradient(90deg, rgba(43, 57, 110, 1) 0%, rgba(42, 80, 130, 1) 100%);
+        }
+      }
+
+      .manage-main-bottom {
+        .el-table {
+          color: #9da5b3;
+          background-color: #1c1f32;
+
+          thead {
+            color: #a9bed4;
+          }
+
+          tr {
+            background-color: #1c1f32;
+          }
+
+          th {
+            background-color: #1c1f32;
+            box-shadow: 4px 4px 6px #191e28;
+
+            &.is-leaf {
+              border-top: 1px solid #1c1f32;
+              border-bottom: 1px solid #1c1f32;
+
+              &:first-of-type {
+                border-left: 1px solid #1c1f32;
+              }
+
+              &:nth-last-of-type(2) {
+                border-right: 1px solid #1c1f32;
+              }
+            }
+          }
+
+          .el-table__body {
+            tr {
+              &:last-of-type {
+                td {
+                  border-bottom: 1px solid #1c1f32;
+                }
+              }
+
+              td {
+                &:first-of-type {
+                  border-left: 1px solid #1c1f32;
+                }
+
+                &:last-of-type {
+                  border-right: 1px solid #1c1f32;
+                }
+              }
+            }
+          }
+        }
+      }
+
+      .el-table--enable-row-hover {
+        .el-table__body {
+          tr {
+            &:hover {
+              > td {
+                background-color: #1e2636;
+              }
+            }
           }
         }
       }
@@ -702,6 +865,85 @@ export default {
         }
       }
     }
+
+    /deep/ {
+      .el-input__inner {
+        border: 1px solid rgba(236, 241, 248, 1);
+        color: #7d90ac;
+        background: #fff;
+      }
+
+      .inquire-button {
+        .el-button {
+          background: linear-gradient(90deg, rgba(43, 57, 110, 1) 0%, rgba(42, 80, 130, 1) 100%);
+        }
+      }
+
+      > .otc-AD-manage-content {
+        > .AD-manage-main {
+          > .manage-main-top {
+            > .filtrate-text[data-v-0c55db16] {
+              color: #7d90ac;
+            }
+          }
+        }
+      }
+
+      .manage-main-bottom {
+        .el-table {
+          border: 1px solid rgba(236, 241, 248, 1);
+          border-radius: 5px;
+          background-color: #fff;
+
+          thead {
+            color: #333;
+          }
+
+          th {
+            border-bottom-right-radius: 0;
+            border-bottom-left-radius: 0;
+            background-color: #fff;
+            box-shadow: inset 0 2px 4px #f3f3f3;
+
+            &.is-leaf {
+              border-top: 0 solid #262f38;
+              border-bottom: 1px solid rgba(236, 241, 248, 1);
+
+              &:first-of-type {
+                border-left: 0 solid #262f38;
+                border-bottom-left-radius: 0;
+                border-top-left-radius: 0;
+              }
+
+              &:nth-last-of-type(2) {
+                border-top-right-radius: 0;
+                border-bottom-right-radius: 0;
+                border-right: 0 solid #262f38;
+              }
+            }
+          }
+        }
+      }
+
+      .el-table--enable-row-hover {
+        .el-table__body {
+          tr {
+            &:hover {
+              > td {
+                background-color: #fff;
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}
+
+/deep/ {
+  .el-message {
+    top: 40%;
+    min-width: 0;
   }
 }
 </style>
