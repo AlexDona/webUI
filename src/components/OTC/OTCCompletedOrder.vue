@@ -114,7 +114,7 @@
                       <span v-if="s.row.orderType === 'BUY'">
                         {{s.row.sellPhone}}
                       </span>
-                      <!-- 卖单显示：买家手机号 -->
+                      <!-- 卖单显示：买家手机号  -->
                       <span v-if="s.row.orderType === 'SELL'">
                         {{$t('M.otc_trading_buyphone')}}：
                       </span>
@@ -270,9 +270,6 @@ export default {
     }
   },
   created () {
-    require('../../../static/css/list/OTC/OTCCompletedOrder.css')
-    require('../../../static/css/theme/day/OTC/OTCCompletedOrderDay.css')
-    require('../../../static/css/theme/night/OTC/OTCCompletedOrderNight.css')
     // 1.0 请求已完成订单列表:只有登录了才调用
     if (this.isLogin) {
       this.getOTCCompletedOrdersList()
@@ -368,6 +365,89 @@ export default {
         }
       }
     }
+
+    /deep/ {
+      .el-table__header {
+        margin-bottom: 5px;
+      }
+
+      .el-table__body {
+        border-collapse: separate !important;
+      }
+
+      &.el-table {
+        border-collapse: separate !important;
+      }
+
+      .tables {
+        .el-icon-arrow-right::before {
+          content: " ";
+        }
+      }
+
+      .el-table_2_column_9 {
+        .el-table__expand-column {
+          .is-leaf {
+            border-bottom-left-radius: 5px;
+            border-top-left-radius: 5px;
+          }
+        }
+      }
+
+      .el-table {
+        th {
+          padding: 5px 0;
+
+          &.is-leaf {
+            &:first-of-type {
+              border-bottom-left-radius: 5px;
+              border-top-left-radius: 5px;
+            }
+
+            &:nth-last-of-type(2) {
+              border-top-right-radius: 5px;
+              border-bottom-right-radius: 5px;
+            }
+          }
+        }
+      }
+
+      .el-table--enable-row-transition {
+        .el-table__body {
+          td {
+            &:first-of-type {
+              border-top-left-radius: 5px;
+
+              &.el-table__expanded-cell {
+                border-top-left-radius: 0;
+
+                &::after {
+                  position: absolute;
+                  bottom: -10px;
+                  left: 0;
+                  width: 1045px;
+                  border-bottom-right-radius: 5px;
+                  border-bottom-left-radius: 5px;
+                  content: '';
+                }
+              }
+            }
+
+            &:nth-last-of-type(1) {
+              border-top-right-radius: 5px;
+
+              &.el-table__expanded-cell {
+                border-top-right-radius: 0;
+              }
+            }
+          }
+        }
+      }
+
+      .el-table__empty-block {
+        min-height: 432px;
+      }
+    }
   }
 
   &.night {
@@ -409,6 +489,122 @@ export default {
               color: #5e95ec;
             }
           }
+        }
+      }
+
+      /deep/ {
+        .el-table__empty-text {
+          color: rgba(255, 255, 255, .8);
+        }
+
+        .el-table--enable-row-hover {
+          .el-table__body {
+            tr {
+              &:hover {
+                > td {
+                  background-color: #1c1f32;
+                }
+              }
+            }
+          }
+        }
+
+        .el-table__header {
+          margin-bottom: 15px;
+        }
+
+        .el-table__body {
+          border-collapse: separate !important;
+        }
+
+        &.el-table {
+          border-collapse: separate !important;
+        }
+
+        .el-table__expanded-cell {
+          border-bottom: 25px solid #272b41;
+          background-color: #1c1f32;
+        }
+
+        > .tables {
+          .el-icon-arrow-right {
+            &::before {
+              content: " ";
+            }
+          }
+        }
+
+        .el-table_2_column_9 {
+          .el-table__expand-column {
+            .is-leaf {
+              border-bottom-left-radius: 5px;
+              border-top-left-radius: 5px;
+            }
+          }
+        }
+
+        .el-table {
+          background-color: #272b41;
+
+          th {
+            padding: 5px 0;
+            box-shadow: 4px 4px 6px #191e28;
+
+            &.is-leaf {
+              &:first-of-type {
+                border-bottom-left-radius: 5px;
+                border-top-left-radius: 5px;
+              }
+
+              &:nth-last-of-type(2) {
+                border-top-right-radius: 5px;
+                border-bottom-right-radius: 5px;
+              }
+            }
+          }
+        }
+
+        .el-table--enable-row-transition {
+          .el-table__body {
+            td {
+              border-top: 1px solid #262f38;
+
+              &:first-of-type {
+                border-top-left-radius: 5px;
+
+                &.el-table__expanded-cell {
+                  border-top: 0 solid #262f38;
+                  border-top-left-radius: 0;
+
+                  &::after {
+                    position: absolute;
+                    bottom: -10px;
+                    left: 0;
+                    width: 1045px;
+                    height: 20px;
+                    border-bottom: 1px solid #262f38;
+                    border-bottom-right-radius: 5px;
+                    border-bottom-left-radius: 5px;
+                    background-color: #1c1f32;
+                    content: '';
+                  }
+                }
+              }
+
+              &:nth-last-of-type(1) {
+                border-top-right-radius: 5px;
+
+                &.el-table__expanded-cell {
+                  border-top-right-radius: 0;
+                }
+              }
+            }
+          }
+        }
+
+        .el-table__empty-block {
+          min-height: 432px;
+          background-color: #1c1f32;
         }
       }
     }
@@ -455,6 +651,132 @@ export default {
           }
         }
       }
+
+      /deep/ {
+        .el-table {
+          border-collapse: separate !important;
+          color: #9da5b3;
+          background-color: #fff;
+
+          th {
+            padding: 5px 0;
+
+            &.is-leaf {
+              border-top: 1px solid #ecf1f8;
+              border-bottom: 1px solid #ecf1f8;
+
+              &:first-of-type {
+                border-left: 1px solid #ecf1f8;
+                border-bottom-left-radius: 5px;
+                border-top-left-radius: 5px;
+              }
+
+              &:nth-last-of-type(2) {
+                border-top-right-radius: 5px;
+                border-bottom-right-radius: 5px;
+                border-right: 1px solid #ecf1f8;
+              }
+            }
+          }
+        }
+
+        .el-table__empty-text {
+          color: #333;
+        }
+
+        .el-table--enable-row-hover {
+          .el-table__body {
+            tr {
+              &:hover {
+                > td {
+                  background-color: #fff;
+                }
+              }
+            }
+          }
+        }
+
+        .el-table__header {
+          margin-bottom: 15px;
+        }
+
+        .el-table__body {
+          border-collapse: separate !important;
+        }
+
+        .el-table__expanded-cell {
+          border-bottom: 25px solid #fff;
+          background-color: #fff;
+        }
+
+        .el-icon-arrow-right {
+          &::before {
+            // content: " ";
+          }
+        }
+
+        .el-table_2_column_9 {
+          .el-table__expand-column {
+            .is-leaf {
+              border-bottom-left-radius: 5px;
+              border-top-left-radius: 5px;
+            }
+          }
+        }
+
+        .el-table--enable-row-transition {
+          .el-table__body {
+            td {
+              border-top: 1px solid #ecf1f8;
+
+              &:first-of-type {
+                border-left: 1px solid #ecf1f8;
+                border-top-left-radius: 5px;
+
+                &.el-table__expanded-cell {
+                  // border-top: 0 solid #fff;
+                  border-top-left-radius: 0;
+
+                  &::after {
+                    position: absolute;
+                    bottom: -10px;
+                    left: 0;
+                    width: 1045px;
+                    border-bottom: 1px solid #ecf1f8;
+                    border-bottom-right-radius: 5px;
+                    border-bottom-left-radius: 5px;
+                    background-color: #fff;
+                    content: '';
+                  }
+                }
+              }
+
+              &:nth-last-of-type(1) {
+                border-top-right-radius: 5px;
+                border-right: 1px solid #ecf1f8;
+
+                &.el-table__expanded-cell {
+                  border-top-right-radius: 0;
+                }
+              }
+            }
+          }
+        }
+
+        .el-table__empty-block {
+          min-height: 432px;
+          border: 1px solid #ecf1f8;
+          background-color: #fff;
+        }
+      }
+    }
+  }
+}
+
+/deep/ {
+  .el-table {
+    td {
+      border-bottom: 1px solid #262f38;
     }
   }
 }

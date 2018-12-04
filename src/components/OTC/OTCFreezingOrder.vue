@@ -175,9 +175,6 @@ export default {
     }
   },
   created () {
-    require('../../../static/css/list/OTC/OTCFreezingOrder.css')
-    require('../../../static/css/theme/day/OTC/OTCFreezingOrderDay.css')
-    require('../../../static/css/theme/night/OTC/OTCFreezingOrderNight.css')
     // 1.0 请求冻结中订单列表:只有登录了才调用
     if (this.isLogin) {
       this.getOTCFrezzingOrdersList()
