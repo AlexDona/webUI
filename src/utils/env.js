@@ -20,10 +20,10 @@ if (!domain.endsWith('#')) {
 if (process.env.NODE_ENV == 'development') {
   /* apiCommonUrl --------------------------------------------- */
 
-  // apiCommonUrl = 'http://api.new.bzu.com/' // 内部测试
-  apiCommonUrl = 'http://192.168.1.200:8888/' // 内部测试
+  apiCommonUrl = 'http://api.new.bzu.com/' // 内部测试
+  // apiCommonUrl = 'http://192.168.1.200:8888/' // 内部测试
 
-  xDomain = 'new.test.com'
+  // xDomain = 'new.test.com'
   // xDomain = 'new.bzu.com'
   // socketUrl = 'wss://ws.bzu.com/market'
   socketUrl = 'ws://192.168.1.200:8087/market'
