@@ -1133,6 +1133,21 @@ export default {
             border: 0;
           }
         }
+
+        .el-dialog__footer {
+          padding: 0;
+          text-align: center;
+        }
+
+        .el-button {
+          width: 290px;
+          padding: 7px 20px;
+          border: 0;
+        }
+
+        .el-button--primary {
+          background: linear-gradient(9deg, rgba(43, 57, 110, 1), rgba(42, 80, 130, 1));
+        }
       }
     }
   }
@@ -1321,10 +1336,6 @@ export default {
           .error-info {
             color: #fff;
           }
-
-          .el-button--primary {
-            background: linear-gradient(9deg, rgba(43, 57, 110, 1), rgba(42, 80, 130, 1));
-          }
         }
       }
     }
@@ -1499,10 +1510,6 @@ export default {
 
         .el-dialog__body .password-input {
           border: 1px solid #ecf1f8;
-        }
-
-        .el-button--primary {
-          background: linear-gradient(9deg, rgba(43, 57, 110, 1), rgba(42, 80, 130, 1));
         }
       }
     }
