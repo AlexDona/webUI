@@ -4,3 +4,4 @@ export const CHANGE_ACTIVE_PRICE_ITEM = 'CHANGE_ACTIVE_PRICE_ITEM' // 改变用�
 export const SET_MIDDLE_TOP_DATA = 'SET_MIDDLE_TOP_DATA' // 改变币币交易顶部信息
 export const SET_JUMP_STATUS = 'SET_JUMP_STATUS' // 改变跳转到币币交易的状态
 export const SET_JUMP_SYMBOL = 'SET_JUMP_SYMBOL' // 改变跳转到币币交易的交易对
+export const SET_IS_KLINE_DATA_READY = 'SET_IS_KLINE_DATA_READY' // 设置K线数据准备完毕状态
