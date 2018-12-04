@@ -4,17 +4,17 @@
     class="body-container"
   >
     <NoticeHome
-      v-if="needNotice"
+      v-if="isNeedNotice"
     />
     <keep-alive>
       <HeaderCommon
-        v-if="needHeader"
+        v-if="isNeedHeader"
       />
     </keep-alive>
       <router-view />
     <keep-alive>
       <FooterCommon
-        v-if="needFooter"
+        v-if="isNeedFooter"
       />
     </keep-alive>
   </div>
@@ -41,9 +41,9 @@ export default {
   },
   data () {
     return {
-      needHeader: false,
-      needFooter: false,
-      needNotice: false
+      isNeedHeader: false,
+      isNeedFooter: false,
+      isNeedNotice: false
     }
   },
   async created () {
@@ -84,14 +84,14 @@ export default {
     '$route' (to, from) {
       console.log(to.path)
       let path = to.path
-      this.needNotice = path === '/home' || path === '/' ? 1 : 0
-      this.needHeader = (
+      this.isNeedNotice = path === '/home' || path === '/' ? 1 : 0
+      this.isNeedHeader = (
         path !== '/login' &&
         path !== '/register' &&
         path !== '/downloadApp' &&
         path !== '/InvitationRegister'
       ) ? 1 : 0
-      this.needFooter = (
+      this.isNeedFooter = (
         path === '/login' ||
         path === '/register' ||
         path === '/downloadApp' ||
@@ -105,7 +105,7 @@ export default {
           break
       }
     },
-    needFooter (newVal) {
+    isNeedFooter (newVal) {
       console.log(newVal)
     },
     userInfo (newVal) {
@@ -113,7 +113,7 @@ export default {
     isMobile (newVal) {
       this.setBodyClassName(newVal, 'mobile')
     },
-    needNotice (newVal) {
+    isNeedNotice (newVal) {
       if (newVal) {
         $('#udesk_container').fadeIn()
       } else {
