@@ -297,7 +297,7 @@
                               <el-option
                                 v-for="(item, index) in mentionAddressList"
                                 :key="index"
-                                :label="item.address + ' ' + item.withdrawRemark"
+                                :label="item.address + ' ' + item.remark"
                                 :value="item.address"
                               >
                               </el-option>
