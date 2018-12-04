@@ -290,7 +290,8 @@ export default {
   beforeRouteUpdate () {},
   methods: {
     ...mapMutations([
-      'SET_JUMP_STATUS'
+      'SET_JUMP_STATUS',
+      'SET_JUMP_SYMBOL'
     ]),
     // 成交量格式化
     formatCount (targetNum) {
