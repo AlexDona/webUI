@@ -501,9 +501,6 @@ export default {
     }
   },
   created () {
-    require('../../../static/css/list/OTC/OTCCenter.css')
-    require('../../../static/css/theme/day/OTC/OTCCenterDay.css')
-    require('../../../static/css/theme/night/OTC/OTCCenterNight.css')
     // 1.0 otc可用币种查询：我要购买/我要出售的币种列表
     this.getOTCAvailableCurrencyList()
     // 2.0 otc可用法币查询：
@@ -959,6 +956,104 @@ export default {
     }
   }
 
+  /deep/ {
+    .otc-online-buy-and-sell-button {
+      .el-radio-button__inner {
+        border: 0;
+      }
+    }
+
+    .el-radio-button {
+      &:first-child,
+      &:last-child {
+        .el-radio-button__inner {
+          width: 150px;
+        }
+      }
+    }
+
+    .otc-publish-box {
+      .el-input {
+        width: 120px;
+      }
+
+      .el-input__inner {
+        height: 32px;
+        border: 0;
+        line-height: 33px;
+      }
+
+      .el-input--suffix {
+        .el-input__inner {
+          padding: 2px 30px;
+        }
+      }
+
+      .el-button {
+        padding: 9px 16px;
+        border: 0;
+      }
+    }
+
+    .otc-merchant-list {
+      .el-table {
+        td {
+          padding: 15px 0;
+        }
+      }
+
+      .el-table__column-filter-trigger {
+        i {
+          font-weight: 700;
+          font-size: 14px;
+        }
+      }
+
+      .el-table__empty-block {
+        height: 639px;
+      }
+    }
+
+    .el-tabs__active-bar {
+      height: 0 !important;
+    }
+
+    .el-tabs__nav-wrap {
+      overflow: visible;
+
+      &::after {
+        background-color: transparent;
+      }
+    }
+
+    .el-tabs__item {
+      height: 45px;
+      padding: 0;
+      line-height: 45px;
+    }
+
+    .el-tabs--left {
+      .el-tabs__item {
+        &.is-left {
+          width: 90px;
+          height: 84px;
+          line-height: 110px;
+          text-align: center;
+        }
+      }
+
+      .el-tabs__header {
+        &.is-left {
+          margin-right: 16px;
+        }
+      }
+    }
+
+    .el-tabs__nav-scroll {
+      overflow: visible;
+    }
+  }
+
   &.night {
     background-color: $mainNightBgColor;
 
@@ -1025,6 +1120,152 @@ export default {
 
         .otc-tab-pane-arrow-right {
           color: #338ff5;
+        }
+      }
+    }
+
+    /deep/ {
+      .otc-online-buy-and-sell-button {
+        .el-radio-button__inner {
+          color: #d8d8d8;
+          background: #1c1f32;
+        }
+
+        .el-radio-button {
+          &.is-active {
+            .el-radio-button__inner {
+              color: #fff;
+            }
+          }
+
+          &:first-child {
+            &.is-active {
+              .el-radio-button__inner {
+                background-color: #d45858;
+              }
+            }
+          }
+
+          &:last-child {
+            &.is-active {
+              .el-radio-button__inner {
+                background-color: #008069;
+              }
+            }
+          }
+        }
+
+        .el-radio-button__orig-radio:checked + .el-radio-button__inner {
+          box-shadow: -1px 0 0 0 #008069;
+        }
+      }
+
+      .otc-publish-box {
+        .el-input__inner {
+          border: 1px solid #7d90ac;
+          background-color: #19202e;
+        }
+
+        .el-button {
+          background: linear-gradient(90deg, rgba(43, 57, 110, 1) 0%, rgba(42, 80, 130, 1) 100%);
+        }
+      }
+
+      .el-table {
+        color: #fff;
+        background-color: #202a33;
+
+        tr {
+          background-color: #1c1f32;
+        }
+
+        thead {
+          color: #a9bed4;
+        }
+
+        th {
+          background-color: #1c1f32;
+
+          &.is-leaf {
+            border-bottom: 1px solid rgba(97, 116, 153, .05);
+          }
+
+          > .cell {
+            &.highlight {
+              color: #617499;
+            }
+          }
+        }
+      }
+
+      .otc-center-content {
+        .otc-merchant-content {
+          .el-table {
+            td {
+              border-bottom: 1px solid rgba(97, 116, 153, .05);
+            }
+          }
+        }
+      }
+
+      .el-table--enable-row-hover {
+        .el-table__body {
+          tr {
+            &:hover {
+              > td {
+                background-color: #1d2331;
+              }
+            }
+          }
+        }
+      }
+
+      .el-table__column-filter-trigger {
+        i {
+          color: #338ff5;
+        }
+      }
+
+      .el-button--danger {
+        border-color: #d45858;
+        background-color: #d45858;
+      }
+
+      .nvest-list-body {
+        .el-table {
+          td {
+            border-top: 1px solid rgba(97, 116, 153, .2);
+            box-shadow: none;
+          }
+
+          th {
+            &.is-leaf {
+              border-top: 1px solid rgba(97, 116, 153, .2);
+              box-shadow: none;
+            }
+          }
+        }
+      }
+
+      .el-button--success {
+        border-color: #008069;
+        background-color: #008069;
+      }
+
+      .el-table__empty-block {
+        background-color: #1c1f32;
+      }
+
+      .el-table__empty-text {
+        color: rgba(255, 255, 255, .8);
+      }
+
+      .el-tabs__item {
+        color: #4f85da;
+
+        &.is-active {
+          color: #fff;
+          background-color: #338ff5;
         }
       }
     }
@@ -1102,6 +1343,132 @@ export default {
 
         .otc-tab-pane-arrow-right {
           color: #338ff5;
+        }
+      }
+    }
+
+    /deep/ {
+      .otc-online-buy-and-sell-button {
+        .el-radio-button__inner {
+          border: 1px solid rgba(39, 49, 58, .1);
+          color: #333;
+          background: #fff;
+        }
+
+        .el-radio-button {
+          &.is-active {
+            .el-radio-button__inner {
+              border: 1px solid rgba(39, 49, 58, .1);
+              color: #fff;
+            }
+          }
+
+          &:first-child {
+            &.is-active {
+              .el-radio-button__inner {
+                background-color: #d45858;
+              }
+            }
+          }
+
+          &:last-child {
+            &.is-active {
+              .el-radio-button__inner {
+                background-color: #008069;
+              }
+            }
+          }
+        }
+
+        .el-radio-button__orig-radio:checked + .el-radio-button__inner {
+          box-shadow: -1px 0 0 0 #008069;
+        }
+      }
+
+      .otc-publish-box {
+        .el-input__inner {
+          border: 1px solid #7d90ac;
+          background-color: #fff;
+        }
+
+        .el-button {
+          background: linear-gradient(90deg, rgba(43, 57, 110, 1) 0%, rgba(42, 80, 130, 1) 100%);
+        }
+      }
+
+      .el-table {
+        color: #333;
+        background-color: #202a33;
+
+        th {
+          background-color: #fff;
+
+          &.is-leaf {
+            border-bottom: 1px solid rgba(97, 116, 153, .2);
+          }
+
+          > .cell {
+            &.highlight {
+              color: #617499;
+            }
+          }
+        }
+
+        tr {
+          background-color: #fff;
+        }
+
+        thead {
+          color: #7d90ac;
+        }
+
+        td {
+          border-bottom: 1px solid rgba(97, 116, 153, .1);
+        }
+      }
+
+      .el-table--enable-row-hover {
+        .el-table__body {
+          tr {
+            &:hover {
+              > td {
+                background-color: #fff;
+              }
+            }
+          }
+        }
+      }
+
+      .el-table__column-filter-trigger {
+        i {
+          color: #338ff5;
+        }
+      }
+
+      .el-button--danger {
+        border-color: #d45858;
+        background-color: #d45858;
+      }
+
+      .el-button--success {
+        border-color: #008069;
+        background-color: #008069;
+      }
+
+      .el-table__empty-block {
+        background-color: #fff;
+      }
+
+      .el-table__empty-text {
+        color: #333;
+      }
+
+      .el-tabs__item {
+        color: #4f85da;
+
+        &.is-active {
+          color: #fff;
+          background-color: #338ff5;
         }
       }
     }

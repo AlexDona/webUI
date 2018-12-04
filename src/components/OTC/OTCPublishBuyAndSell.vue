@@ -497,9 +497,6 @@ export default {
     }
   },
   created () {
-    require('../../../static/css/list/OTC/OTCPublishBuyAndSell.css')
-    require('../../../static/css/theme/day/OTC/OTCPublishBuyAndSellDay.css')
-    require('../../../static/css/theme/night/OTC/OTCPublishBuyAndSellNight.css')
     // 获得可视区的高度
     this.height = document.documentElement.clientHeight
     // 获取URL中买卖类型和可用币种id和可用法币id
@@ -1129,6 +1126,104 @@ export default {
     }
   }
 
+  /deep/ {
+    .el-textarea__inner {
+      width: 588px;
+      height: 100px;
+      margin-bottom: 10px;
+      border: 0;
+      resize: none;
+    }
+
+    .el-form--label-top {
+      .el-form-item__label {
+        padding: 0;
+      }
+
+      .el-form-item {
+        margin-bottom: 0;
+      }
+
+      .el-form-item__content {
+        line-height: 30px;
+      }
+
+      .el-button--mini {
+        padding: 4px 8px;
+      }
+    }
+
+    .buy-sell-submit-form {
+      .el-input--suffix {
+        .el-input__inner {
+          height: 36px;
+          line-height: 36px;
+        }
+      }
+
+      .el-input__inner {
+        border: 0;
+      }
+    }
+
+    .password-dialog {
+      .el-dialog {
+        width: 350px;
+        height: 207px;
+        border-radius: 4px;
+      }
+
+      .el-dialog__header {
+        padding: 10px 20px;
+        border-radius: 4px;
+      }
+
+      .el-dialog__title {
+        font-size: 14px;
+      }
+
+      .el-dialog__headerbtn {
+        top: 15px;
+        right: 10px;
+      }
+
+      .el-dialog__body {
+        padding: 15px 20px 10px 30px;
+        font-size: 12px;
+
+        .input {
+          margin-top: 13px;
+        }
+
+        .password-input {
+          display: inline-block;
+          width: 280px;
+          height: 36px;
+          padding-left: 10px;
+          border-radius: 4px;
+          font-size: 14px;
+        }
+
+        .error-info {
+          height: 20px;
+          padding-top: 5px;
+          font-size: 12px;
+        }
+      }
+
+      .el-dialog__footer {
+        padding: 0;
+        text-align: center;
+      }
+
+      .el-button {
+        width: 290px;
+        padding: 7px 20px;
+        border: 0;
+      }
+    }
+  }
+
   &.night {
     background-color: $mainNightBgColor;
 
@@ -1272,6 +1367,67 @@ export default {
               color: #fff;
             }
           }
+        }
+      }
+    }
+
+    /deep/ {
+      .el-textarea__inner {
+        color: #fff;
+        background-color: #1c1f32;
+      }
+
+      .el-form--label-top {
+        .el-form-item__label {
+          color: #9da5b3;
+        }
+      }
+
+      .buy-sell-submit-form {
+        .el-input__inner {
+          background-color: #1c1f32;
+        }
+
+        .el-select-dropdown__list {
+          background-color: #29343f !important;
+        }
+
+        .el-select-dropdown__item {
+          &.hover {
+            color: #338ff5 !important;
+            background-color: #29343f !important;
+          }
+        }
+      }
+
+      .password-dialog {
+        .el-dialog {
+          background: #28334a;
+        }
+
+        .el-dialog__header {
+          background-color: #20293c;
+        }
+
+        .el-dialog__title {
+          color: #fff;
+        }
+
+        .el-dialog__body {
+          color: #fff;
+
+          .password-input {
+            color: #fff;
+            background-color: #1a2233;
+          }
+
+          .error-info {
+            color: #fff;
+          }
+        }
+
+        .el-button--primary {
+          background: linear-gradient(9deg, rgba(43, 57, 110, 1), rgba(42, 80, 130, 1));
         }
       }
     }
@@ -1421,6 +1577,106 @@ export default {
             > .release-title {
               color: #bb4c4c;
             }
+          }
+        }
+      }
+    }
+
+    /deep/ {
+      .el-form--label-top {
+        .el-form-item__label {
+          color: #7d90ac;
+        }
+      }
+
+      .el-textarea__inner {
+        border: 1px solid rgba(236, 241, 248, 1);
+        border-radius: 2px;
+        font-size: 12px;
+        background: rgba(255, 255, 255, 1);
+
+        &::-webkit-input-placeholder {
+          color: #7d90ac;
+        }
+      }
+
+      .buy-sell-submit-form {
+        .el-input__inner {
+          border: 1px solid rgba(236, 241, 248, 1);
+          background-color: transparent;
+        }
+
+        .volume-business {
+          > .sell-sum {
+            border: 1px solid rgba(236, 241, 248, 1);
+            background-color: transparent;
+          }
+
+          > .monad {
+            color: #7ea9e4;
+            background-color: #cbddf4;
+          }
+
+          > .range-line {
+            color: #338ff5;
+          }
+        }
+
+        .sell-buy-input {
+          > .sell-sum {
+            border: 1px solid rgba(236, 241, 248, 1);
+            background-color: transparent;
+
+            &::-webkit-input-placeholder {
+              color: #bdbdbd;
+            }
+          }
+
+          .sell-buy-input {
+            > .sell-sum {
+              &::-webkit-input-placeholder {
+                color: #bdbdbd;
+              }
+            }
+          }
+
+          > .unit {
+            color: #7ea9e4;
+            background-color: #cbddf4;
+          }
+        }
+
+        .predic {
+          .predict-sum {
+            color: #d45858;
+          }
+        }
+
+        .want-buy-sell-sum-content {
+          .buyOrange {
+            color: #d45858;
+          }
+        }
+      }
+
+      .el-form-item__label {
+        color: #333;
+      }
+
+      .predict {
+        .predict-text {
+          color: #333 !important;
+        }
+
+        .rate-text {
+          color: #333 !important;
+        }
+      }
+
+      .password-dialog {
+        .el-dialog__body {
+          .password-input {
+            border: 1px solid #ecf1f8;
           }
         }
       }
