@@ -205,172 +205,6 @@
                     <div
                       class="out-box"
                     >
-                      <!--<div-->
-                      <!--class="recharge-list recharge-list-mention list-mention-treasure"-->
-                      <!--v-show="withdrawDepositList[index].withdrawDepositIsShow"-->
-                      <!--&gt;-->
-                      <!--<p class="triangle triangle-one"></p>-->
-                      <!--&lt;!&ndash;公信宝类提币备注&ndash;&gt;-->
-                      <!--<div-->
-                      <!--class="mention"-->
-                      <!--v-if="isNeedTag"-->
-                      <!--&gt;-->
-                      <!--<p class="mention-treasure">-->
-                      <!--&lt;!&ndash;地址标签&ndash;&gt;-->
-                      <!--{{ $t('M.user_address_labels') }}-->
-                      <!--&lt;!&ndash;（填写错误可能导致资产损失，请仔细核对）&ndash;&gt;-->
-                      <!--<span class="treasure-info font-size12">({{ $t('M.user_address_labels_prompt') }})</span>-->
-                      <!--</p>-->
-                      <!--<input-->
-                      <!--type="text"-->
-                      <!--class="input-mention border-radius2 paddinglr15 box-sizing"-->
-                      <!--v-model="withdrawRemark"-->
-                      <!--&gt;-->
-                      <!--</div>-->
-                      <!--<div class="recharge-list-left display-flex">-->
-                      <!--<div class="list-left-flex flex1 font-size12">-->
-                      <!--<div class="flex-box padding-top10">-->
-                      <!--<p class="left-flex-hint">-->
-                      <!--{{ currencyName }}-->
-                      <!--&lt;!&ndash;提币地址&ndash;&gt;-->
-                      <!--{{ $t('M.comm_mention_money') }}{{ $t('M.comm_site') }}-->
-                      <!--</p>-->
-                      <!--<el-select-->
-                      <!--v-model="activeWithdrawDepositAddress"-->
-                      <!--:no-data-text="$t('M.comm_no_data')"-->
-                      <!--@change="checkCurrencyAddress"-->
-                      <!--filterable-->
-                      <!--allow-create-->
-                      <!--&gt;-->
-                      <!--<el-option-->
-                      <!--v-for="(item, index) in withdrawAddressList"-->
-                      <!--:key="index"-->
-                      <!--:label="`${item.address} ${item.remark}`"-->
-                      <!--:value="item.address"-->
-                      <!--&gt;-->
-                      <!--</el-option>-->
-                      <!--</el-select>-->
-                      <!--<span-->
-                      <!--class="new-address cursor-pointer address-bg"-->
-                      <!--@click.prevent="jumpToOtherTab('mention-address')"-->
-                      <!--&gt;-->
-                      <!--&lt;!&ndash;新增&ndash;&gt;-->
-                      <!--{{ $t('M.comm_newly_increased') }}-->
-                      <!--</span>-->
-                      <!--</div>-->
-                      <!--<div class="flex-box padding-top20">-->
-                      <!--<p class="left-flex-hint">-->
-                      <!--&lt;!&ndash;手续费&ndash;&gt;-->
-                      <!--{{ $t('M.comm_service_charge') }}-->
-                      <!--</p>-->
-                      <!--<input-->
-                      <!--type="text"-->
-                      <!--class="flex-input border-radius2 padding-l15 box-sizing"-->
-                      <!--ref="withdrawalFee"-->
-                      <!--@keyup="changeInputValue('withdrawalFee', index, pointLengthAccountCount, 'serviceType')"-->
-                      <!--@input="changeInputValue('withdrawalFee', index, pointLengthAccountCount, 'serviceType')"-->
-                      <!--&gt;-->
-                      <!--<span-->
-                      <!--class="new-address new-address-currency cursor-pointer"-->
-                      <!--&gt;-->
-                      <!--{{ currencyName }}-->
-                      <!--</span>-->
-                      <!--<span class="service-charge display-inline-block text-align-r">-->
-                      <!--{{feeRangeOfWidthdraw.minFees}}-->
-                      <!-- - -->
-                      <!--{{feeRangeOfWidthdraw.maxFees}}-->
-                      <!--</span>-->
-                      <!--</div>-->
-                      <!--</div>-->
-                      <!--<div class="count-box flex1 font-size12">-->
-                      <!--<div class="count-flex-box padding-top10">-->
-                      <!--<p class="content-flex-hint">-->
-                      <!--&lt;!&ndash;数量&ndash;&gt;-->
-                      <!--{{ $t('M.comm_count') }}-->
-                      <!--</p>-->
-                      <!--<input-->
-                      <!--type="text"-->
-                      <!--class="count-flex-input border-radius2 paddinglr15 box-sizing text-align-r"-->
-                      <!--ref="withdrawCount"-->
-                      <!--@blur="checkUserInputAvailable
-('withdrawCount', index)"-->
-                      <!--@keyup="changeInputValue('withdrawCount', index, pointLengthAccountCount, 'rechargeType')"-->
-                      <!--@input="changeInputValue('withdrawCount', index, pointLengthAccountCount, 'rechargeType')"-->
-                      <!--&gt;-->
-                      <!--<p class="count-flex-text text-align-r">-->
-                      <!--<span>-->
-                      <!--&lt;!&ndash;限额：&ndash;&gt;-->
-                      <!--{{ $t('M.comm_limit') }}：-->
-                      <!--</span>-->
-                      <!--<span>-->
-                      <!--{{feeRangeOfWidthdraw.minWithdraw}}-->
-                      <!-- - -->
-                      <!--{{feeRangeOfWidthdraw.maxWithdraw}}-->
-                      <!--</span>-->
-                      <!--</p>-->
-                      <!--</div>-->
-                      <!--<div class="count-flex-box padding-top20">-->
-                      <!--<p class="content-flex-hint">-->
-                      <!--&lt;!&ndash;到账数量&ndash;&gt;-->
-                      <!--{{ $t('M.comm_account') }}{{ $t('M.comm_count') }}-->
-                      <!--</p>-->
-                      <!--<input-->
-                      <!--type="text"-->
-                      <!--disabled-->
-                      <!--class="count-text-input border-radius2 paddinglr15 box-sizing text-align-r"-->
-                      <!--v-model="accountCount"-->
-                      <!--&gt;-->
-                      <!--</div>-->
-                      <!--</div>-->
-                      <!--<div-->
-                      <!--class="text-info-mention flex1 font-size12"-->
-                      <!--:class="{-->
-                      <!--'need-tag-top':isNeedTag-->
-                      <!--}"-->
-                      <!--&gt;-->
-                      <!--&lt;!&ndash;提现费率规则：&ndash;&gt;-->
-                      <!--<p class="currency-rule">-->
-                      <!--<span>{{ currencyName }}</span>-->
-                      <!--{{ $t('M.user_assets_withdrawal_hint1') }}：-->
-                      <!--</p>-->
-                      <!--&lt;!&ndash;为了用户资金安全，平台可能会电话确认您的提币操作，请注意接听；&ndash;&gt;-->
-                      <!--<p class="prompt-message">-->
-                      <!--* {{ $t('M.user_assets_withdrawal_hint2') }}-->
-                      <!--</p>-->
-                      <!--&lt;!&ndash;充值经过1个确认后，才允许提现；&ndash;&gt;-->
-                      <!--<p class="prompt-message">-->
-                      <!--* <span>{{ currencyName }}</span>-->
-                      <!--{{ $t('M.user_assets_withdrawal_hint3') }}-->
-                      <!--</p>-->
-                      <!--&lt;!&ndash;可提现金额≤账户可用资产-未确认的数字资产。&ndash;&gt;-->
-                      <!--<p class="prompt-message">-->
-                      <!--* {{ $t('M.user_assets_withdrawal_hint4') }}-->
-                      <!--</p>-->
-                      <!--<p class="mention-button">-->
-                      <!--<button-->
-                      <!--class="font-size12 submit-but border-radius4 cursor-pointer"-->
-                      <!--@click.prevent="validateOfWithdraw(index)"-->
-                      <!--&gt;-->
-                      <!--&lt;!&ndash;提币&ndash;&gt;-->
-                      <!--{{ $t('M.comm_mention_money') }}-->
-                      <!--</button>-->
-                      <!--<span-->
-                      <!--class="float-right cursor-pointer"-->
-                      <!--@click.prevent="jumpToOtherTab('billing-details')"-->
-                      <!--&gt;-->
-                      <!--<div-->
-                      <!--class="false-tips fz14 ml100 mt0 mb20 pl10 tl"-->
-                      <!--v-show="withdrawErrorMessage"-->
-                      <!--&gt;-->
-                      <!--{{withdrawErrorMessage}}-->
-                      <!--</div>-->
-                      <!--&lt;!&ndash;提币记录&ndash;&gt;-->
-                      <!--{{ $t('M.comm_mention_money') }}{{ $t('M.comm_record') }}-->
-                      <!--</span>-->
-                      <!--</p>-->
-                      <!--</div>-->
-                      <!--</div>-->
-                      <!--</div>-->
                       <WithdrawDepositItem
                         :isShow="withdrawDepositList[index].withdrawDepositIsShow"
                         :isNeedTag="isNeedTag"
@@ -383,6 +217,7 @@
                         :accountCount="accountCount"
                         :pointLengthAccountCount="pointLengthAccountCount"
                         :ref="`withdrawItemRef${index}`"
+                        :coinId="assetItem.coinId"
                         @changeInputValue="changeInputValue"
                         @validateOfWithdraw="validateOfWithdraw"
                         @checkUserInputAvailable="checkUserInputAvailable"
@@ -639,6 +474,7 @@ export default {
       isNeedTag: false, // 是否需要转账提示标签
       rechargeNoteInfo: '', // 充币地址备注信息
       localLoading: true, // 页面列表局部loading
+      isLegalWithdrawAddress: false, // 是否为合法提币地址
       end: '' // 占位
     }
   },
@@ -808,6 +644,7 @@ export default {
     },
     // 点击充币按钮显示充币内容（带回币种id 币种名称 当前index）
     async showRechargeBox (id, name, index) {
+      console.log(name)
       // 显示充值框
       this.chargeDialogVisible = true
       // 每行数据ID
@@ -856,6 +693,7 @@ export default {
 
       // 当前币种id
       this.activeCoinId = id
+      this.currencyName = name
       // 每行数据币种名
       // 隐藏验证弹窗
       this.isShowWithdrowDialog = false
@@ -969,6 +807,8 @@ export default {
     },
     // 根据币种id查询提币地址
     async queryWithdrawalAddressList () {
+      this.activeWithdrawDepositAddress = ''
+      this.withdrawAddressList = []
       let data = await inquireWithdrawalAddressId({
         coinId: this.activeCoinId
       })
@@ -979,7 +819,6 @@ export default {
         this.fullscreenLoading = false
         return false
       } else {
-        // let withdrawalAddressData = data.
         let withdrawalAddressData = getNestedData(data, 'data.data')
         // 接口成功清除loading
         this.fullscreenLoading = false
@@ -988,7 +827,8 @@ export default {
         // 返回列表数据并渲染币种列表
         // this.withdrawAddressList = withdrawalAddressData.userWithdrawAddressListVO.userWithdrawAddressDtoList
         this.withdrawAddressList = getNestedData(withdrawalAddressData, 'userWithdrawAddressListVO.userWithdrawAddressDtoList')
-        this.activeWithdrawDepositAddress = getNestedData(withdrawalAddressData, 'userWithdrawAddressListVO.userWithdrawAddressDtoList[0].address')
+        console.log(this.withdrawAddressList)
+        this.activeWithdrawDepositAddress = getNestedData(withdrawalAddressData, 'userWithdrawAddressListVO.userWithdrawAddressDtoList[0].address') || ''
       }
     },
     // select框自定义提币地址校验地址
@@ -1002,10 +842,12 @@ export default {
       this.fullscreenLoading = true
       let data = await checkCurrencyAddress(param)
       if (!(returnAjaxMsg(data, this))) {
+        this.isLegalWithdrawAddress = false
         // 接口失败清除loading
         this.fullscreenLoading = false
         return false
       } else {
+        this.isLegalWithdrawAddress = true
         // 接口成功清除loading
         this.fullscreenLoading = false
         // 验证通过调用验证方式接口
@@ -1096,7 +938,15 @@ export default {
           type: 'error'
         })
         return false
+      } else if (!this.isLegalWithdrawAddress) {
+        // 提币地址不合法
+        this.$message({
+          message: this.$t('M.account_failure_00127'),
+          type: 'error'
+        })
+        return false
       }
+
       if (!this.withdrawCountVModel) {
         // 请输入提币数量
         this.$message({
@@ -1215,8 +1065,12 @@ export default {
       this.accountCount = ''
       this.activeWithdrawDepositAddress = ''
     },
-    jumpToOtherTab (target) {
+    jumpToOtherTab ({target, coinId}) {
       this.$store.commit('personal/CHANGE_USER_CENTER_ACTIVE_NAME', target)
+      // 指定要跳转到的coinId
+      if (coinId) {
+        this.$store.commit('personal/SET_NEW_WITHDRAW_ADDRESS', coinId)
+      }
     },
     /**
      * 安全中心

@@ -26,7 +26,6 @@
       <div class="list-left-flex flex1 font-size12">
         <div class="flex-box padding-top10">
           <p class="left-flex-hint">
-            {{ currencyName }}
             <!--提币地址-->
             {{ $t('M.comm_mention_money') }}{{ $t('M.comm_site') }}
           </p>
@@ -47,7 +46,7 @@
           </el-select>
           <span
             class="new-address cursor-pointer address-bg"
-            @click.prevent="jumpToOtherTab('mention-address')"
+            @click.prevent="jumpToOtherTab('mention-address',coinId)"
           >
             <!--新增-->
             {{ $t('M.comm_newly_increased') }}
@@ -65,11 +64,6 @@
             @keyup="changeInputValue('feeInputRef', index, pointLengthAccountCount, 'serviceType')"
             @input="changeInputValue('feeInputRef', index, pointLengthAccountCount, 'serviceType')"
           >
-          <!--<span-->
-            <!--class="new-address new-address-currency cursor-pointer"-->
-          <!--&gt;-->
-            <!--{{ currencyName }}-->
-          <!--</span>-->
           <span class="service-charge display-inline-block text-align-r">
             {{feeRangeOfWidthdraw.minFees}}
             -
@@ -186,7 +180,9 @@ export default {
     // 提币数量小数点限制位数
     'pointLengthAccountCount',
     // 提币地址初始值
-    'originalActiveWithdrawDepositAddress'
+    'originalActiveWithdrawDepositAddress',
+    // 当前币种id
+    'coinId'
   ],
   data () {
     return {
@@ -207,8 +203,11 @@ export default {
         activeWithdrawDepositAddress: this.activeWithdrawDepositAddress
       })
     },
-    jumpToOtherTab () {
-      this.$emit('jumpToOtherTab', 'mention-address')
+    jumpToOtherTab (target, coinId) {
+      this.$emit('jumpToOtherTab', {
+        target,
+        coinId
+      })
     },
     checkUserInputAvailable (ref, index) {
       this.$emit('checkUserInputAvailable', {
@@ -242,9 +241,7 @@ export default {
   watch: {
     // 初始提币地址赋值
     originalActiveWithdrawDepositAddress (newVal) {
-      if (newVal) {
-        this.activeWithdrawDepositAddress = newVal
-      }
+      this.activeWithdrawDepositAddress = newVal
     }
   }
 }

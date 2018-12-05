@@ -34,6 +34,8 @@ export const personal = {
   'user_assets_withdrawal_hint5': '手續費小於最小提現手續費，請重新輸入',
   'user_assets_withdrawal_hint6': '手續費大於最大提現手續費，請重新輸入',
   'user_assets_withdrawal_hint7': '輸入數量必須大於手續費，請重新輸入',
+  'user_assets_withdrawal_hint8': '輸入數量必須小於最大限額，請重新輸入',
+  'user_assets_withdrawal_hint9': '輸入數量必須大於最小限額，請重新輸入',
   'user_assets_no_transaction_password': '您還未設置交易密碼請先設置交易密碼在進行提幣',
   'user_assets_grade_membership': '會員等級',
   'user_assets_or': '或',

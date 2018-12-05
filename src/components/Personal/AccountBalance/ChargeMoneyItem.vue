@@ -8,9 +8,8 @@
     <p class="triangle"></p>
     <div class='recharge-content'>
       <p class="recharge-content-hint font-size12">
-        <span>{{ currencyName }}</span>
         <!--充值地址-->
-        {{ $t('M.comm_charge_recharge') }}
+        {{ $t('M.comm_charge_recharge') }}{{ $t('M.comm_site') }}
       </p>
       <div
         class="input-box"
@@ -97,8 +96,10 @@ export default {
   beforeRouteUpdate () {},
   methods: {
     // 跳转到其他页面
-    jumpToOtherTab () {
-      this.$emit('jumpToOtherTab', 'billing-details')
+    jumpToOtherTab (target) {
+      this.$emit('jumpToOtherTab', {
+        target
+      })
     },
     //  点击复制
     onCopy (e) {
