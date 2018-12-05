@@ -6,9 +6,9 @@
     <div class="personal-center-main">
       <div class="personal-center-content clearfix">
         <el-tabs
-          v-model = "userCenterActiveName"
-          :tab-position = "tabPosition"
-          @tab-click = "statusSwitchPanel"
+          v-model="userCenterActiveName"
+          :tab-position="tabPosition"
+          @tab-click="statusSwitchPanel"
         >
           <!--账户资产-->
           <div class="asset-title asset-info">
@@ -268,8 +268,6 @@ export default {
     }
   },
   async created () {
-    // 覆盖Element样式
-    require('../../static/css/list/Personal/UserAssets/PersonalCenter.css')
     // 白色主题样式
     require('../../static/css/theme/day/Personal/UserAssets/PersonalCenterDay.css')
     // 黑色主题样式
@@ -292,11 +290,6 @@ export default {
     ]),
     // tab面板切换
     async statusSwitchPanel (tab) {
-      // // 防止频繁切换点击按钮 通过禁用按钮，0.5秒后可以点击
-      // this.isdisabled = true
-      // setTimeout(() => {
-      //   this.isdisabled = false
-      // }, 500)
       this.CHANGE_USER_CENTER_ACTIVE_NAME(tab.name)
       console.log(tab.name)
       if (tab.name === 'account-credited') {
@@ -448,6 +441,82 @@ export default {
 
       .user-order {
         top: 490px;
+      }
+    }
+
+    /deep/ {
+      /* tabs组件出现蓝色边框问题 */
+      .el-tabs__active-bar {
+        height: 0 !important;
+      }
+
+      .el-tabs__nav-wrap {
+        &::after {
+          background-color: transparent;
+        }
+      }
+
+      /* 做二级导航宽度 */
+      .el-tabs--left {
+        height: 625px;
+        overflow: unset;
+
+        .el-tabs__nav-wrap {
+          .is-left {
+            margin-right: 0;
+          }
+        }
+
+        .el-tabs__item {
+          &.is-left {
+            width: 162px;
+            text-align: left;
+          }
+        }
+
+        .el-tabs__header {
+          &.is-left {
+            margin-right: 16px;
+          }
+        }
+      }
+
+      .el-tabs__item {
+        height: 34px;
+        margin: 10px 0;
+        line-height: 34px;
+
+        &.is-disabled {
+          &:hover {
+            border-left: 4px solid #fff;
+            color: #fff;
+          }
+        }
+      }
+
+      .el-dialog {
+        &:nth-child(1) {
+          top: 15%;
+          border-radius: 10px;
+        }
+      }
+
+      .is-disabled {
+        font-size: 18px;
+      }
+
+      .el-tabs__content {
+        position: relative;
+        float: right;
+        width: 970px;
+        overflow: unset;
+      }
+
+      .warning {
+        .el-dialog {
+          width: 350px;
+          border-radius: 5px;
+        }
       }
     }
 
