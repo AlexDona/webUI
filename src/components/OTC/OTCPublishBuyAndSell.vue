@@ -138,6 +138,7 @@
                     :class="{ redBorderRightNone: entrustCountErrorTipsBorder }"
                     v-show="publishStyle === 'sell'"
                     ref="entrustCountSell"
+                    @blur="checkValue('entrustCountSell')"
                     @keyup="changeInputValue('entrustCountSell', pointLength)"
                     @input="changeInputValue('entrustCountSell', pointLength)"
                     @focus="countInputFocus"
@@ -150,6 +151,7 @@
                     :class="{ redBorderRightNone: entrustCountErrorTipsBorder }"
                     v-show="publishStyle === 'buy'"
                     ref="entrustCountBuy"
+                    @blur="checkValue('entrustCountBuy')"
                     @keyup="changeInputValue('entrustCountBuy', pointLength)"
                     @input="changeInputValue('entrustCountBuy', pointLength)"
                     @focus="countInputFocus"
@@ -529,6 +531,18 @@ export default {
   methods: {
     ...mapMutations([
     ]),
+    // 判断卖出量和买入量是否为零
+    checkValue (name) {
+      const value = this.$refs[name].value
+      console.log(value)
+      if (value == '0' && name == 'entrustCountSell') {
+        // 提示信息 买入数量不能为0
+        this.errorTipsSum = this.$t('M.otc_index_inputSellAccount')
+      } else if (value == '0' && name == 'entrustCountBuy') {
+        // 提示信息 卖出数量不能为0
+        this.errorTipsSum = this.$t('M.otc_index_inputBuyAccount')
+      }
+    },
     // 1.0 币种详情 : 商家和普通用户挂单页面请求币种详情渲染页面
     async getOTCCoinInfo () {
       this.fullscreenLoading = true

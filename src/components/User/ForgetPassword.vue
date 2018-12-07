@@ -253,7 +253,8 @@
                 <input
                   class="username-input"
                   type="password"
-                  v-model="newPassword"
+                  @input="checkValue('newPassword', $event)"
+                  :value="newPassword"
                 />
               </span>
             </div>
@@ -266,7 +267,8 @@
                 <input
                   class="username-input"
                   type="password"
-                  v-model="confirmPassword"
+                  @input="checkValue('confirmPassword',$event)"
+                  :value="confirmPassword"
                 />
               </span>
             </div>
@@ -330,7 +332,8 @@ import {
   returnAjaxMsg,
   sendPhoneOrEmailCodeAjax
 } from '../../utils/commonFunc'
-import {PWD_REG} from '../../utils/regExp'
+// import {PWD_REG, HECKPASSWORD_REG} from '../../utils/regExp'
+import {CHECKPASSWORD_REG} from '../../utils/regExp'
 import ImageValidate from '../Common/ImageValidateCommon'
 import { createNamespacedHelpers, mapState } from 'vuex'
 const { mapMutations } = createNamespacedHelpers('user')
@@ -380,6 +383,11 @@ export default {
     ...mapMutations([
       'SET_USER_BUTTON_STATUS'
     ]),
+    // 改变时将改变的值赋给对应的value
+    checkValue (type, e) {
+      this[type] = e.target.value
+    },
+    // 失焦时判断输入的内容是否符合要求
     // 4位随机数
     getRandomNum () {
       return parseInt(Math.random() * 10000) + ''
@@ -400,11 +408,11 @@ export default {
           message: this.$t('M.login_please_input5')
         })
         return false
-      } else if (!PWD_REG.test(this.newPassword)) {
+      } else if (!CHECKPASSWORD_REG.test(this.newPassword)) {
         // 请输入8-20位字母、数字组合
         this.$message({
           type: 'error',
-          message: this.$t('M.login_please_input6')
+          message: this.$t('M.login_please_input9')
         })
         return false
       }

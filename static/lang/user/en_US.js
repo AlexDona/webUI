@@ -12,6 +12,7 @@ export const user = {
   'login_please_input6': 'Please enter 8-20 letters and Numbers',
   'login_please_input7': 'Please re-enter new password',
   'login_please_input8': 'Please enter the same password',
+  'login_please_input9': 'Please enter 8-20 bits of numeric and alphabetical characters.',
   'login_welcome_register': 'Welcome Registered',
   'login_welcome_register_pwd1': 'Input  password',
   'login_welcome_register_pwd2': 'Please enter again password',

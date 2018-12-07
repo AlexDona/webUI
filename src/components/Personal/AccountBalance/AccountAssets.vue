@@ -1006,9 +1006,9 @@ export default {
     },
     submitMentionMoney () {
       if (!this.phoneCode && !this.emailCode && !this.googleCode) {
+        console.log(1)
         // 请输入验证码
         this.errorMessage = this.$t('M.comm_please_enter') + this.$t('M.user_security_verify')
-
         return false
       } else {
         this.errorMessage = ''
@@ -1134,7 +1134,7 @@ export default {
   }
 }
 </script>
-<style scoped lang="scss">
+<style scoped lang="scss" type="text/scss">
   @import "../../../../static/css/scss/Personal/IndexPersonal";
 
   .account-assets {

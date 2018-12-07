@@ -94,8 +94,11 @@
              <input
                type="text"
                class="input mobile-phone"
+               onkeyup="this.value=this.value.replace(/\D/g,'')"
+               onafterpaste="this.value=this.value.replace(/\D/g,'')"
+               @change="checkValue()"
                :placeholder="$t('M.user_security_phone') + $t('M.user_security_number')"
-               v-model="phoneNum"
+               :value="phoneNum"
                @keydown="setErrorMsg('')"
              >
            </div>
@@ -362,10 +365,13 @@
                 <span class="middle-line"></span>
                 <!--手机号码-->
                 <input
-                  type="number"
+                  type="text"
                   class="input mobile-phone"
+                  onkeyup="this.value=this.value.replace(/\D/g,'')"
+                  onafterpaste="this.value=this.value.replace(/\D/g,'')"
+                  @change="checkValue()"
                   :placeholder="$t('M.user_security_phone') + $t('M.user_security_number')"
-                  v-model="phoneNum"
+                  :value="phoneNum"
                   @keydown="setErrorMsg('')"
                 >
               </div>
@@ -672,6 +678,7 @@ import {
   jumpToOtherPageForFooter
 } from '../utils/commonFunc'
 import {createNamespacedHelpers, mapState, mapGetters} from 'vuex'
+// import {formatNumberInpu} from '../utils'
 const {
   mapMutations
 
@@ -774,6 +781,10 @@ export default {
       'SET_USER_BUTTON_STATUS',
       'USER_LOGOUT'
     ]),
+    // 输入电话号码改变时赋值
+    checkValue (e) {
+      this.phoneNum = e.target.value
+    },
     jumpToDownAppPage () {
       if (this.inviter && this.isNeedApp) {
         this.$router.push({'path': `/downloadApp?language${this.language}`})
