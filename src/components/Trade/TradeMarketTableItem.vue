@@ -190,10 +190,13 @@ export default {
       return keep2Num(number)
     },
     changeActiveSymbol (activeSymbol, previousSymbol) {
-      this.$emit('changeActiveSymbol', {
-        activeSymbol,
-        previousSymbol
-      })
+      console.log(this.isKlineDataReady)
+      if (this.isKlineDataReady) {
+        this.$emit('changeActiveSymbol', {
+          activeSymbol,
+          previousSymbol
+        })
+      }
     },
     toggleCollect (id, status, row, plateIndex, contentIndex) {
       this.$emit('toggleCollect', {
@@ -209,7 +212,8 @@ export default {
   computed: {
     ...mapState({
       theme: state => state.common.theme,
-      language: state => state.common.language // 语言
+      language: state => state.common.language, // 语言
+      isKlineDataReady: state => state.trade.isKlineDataReady // K线数据是否准备好
     })
   },
   watch: {

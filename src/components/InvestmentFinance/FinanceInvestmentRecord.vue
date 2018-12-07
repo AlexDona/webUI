@@ -31,7 +31,7 @@
               <!-- @您还没有登陆,请登录或者注册之后查看！ -->
               <div
                 v-if = "!isLogin"
-                class = 'financeTsipsBox'
+                class = 'finance-tips-box'
               >
                 {{$t('M.finance_loginTips')}}
                 <router-link to='/login'>
@@ -191,7 +191,7 @@
                 <!-- @您还没有登陆,请登录或者注册之后查看！ -->
                 <div
                   v-if = "!isLogin"
-                  class = 'financeTsipsBox'
+                  class = 'finance-tips-box'
                 >
                   {{$t('M.finance_loginTips')}}
                   <router-link to='/login'>
@@ -312,9 +312,6 @@ export default {
     }
   },
   created () {
-    require('../../../static/css/list/InvestmentFinance/FinanceCenter.css')
-    require('../../../static/css/theme/day/InvestmentFinance/FinanceCenterDay.css')
-    require('../../../static/css/theme/night/InvestmentFinance/FinanceCenterNight.css')
     this.getFinancialManagementList()
     // if (activeName == 1) {
     //   let historyPage = this.investCurrnetPage
@@ -452,7 +449,7 @@ export default {
   }
 }
 </script>
-<style scoped lang="scss">
+<style scoped lang="scss" type="text/scss">
   @import "../../../static/css/scss/InvestmentFinance/FinanceCenter";
 
   .finance-box {
@@ -496,7 +493,7 @@ export default {
               right: 0;
             }
 
-            .financeTsipsBox {
+            .finance-tips-box {
               position: absolute;
               z-index: 10;
               top: 55px;
@@ -515,9 +512,265 @@ export default {
       }
     }
 
+    /deep/ {
+      .finance-form-header {
+        .el-input__inner {
+          width: 168px;
+          height: 48px;
+          border: 1px solid #338ff5;
+          border-radius: 2px;
+          font-size: 20px;
+          color: #338ff5;
+          background: linear-gradient(180deg, rgba(51, 143, 245, .1) 0%);
+          box-shadow: 0 2px 2px rgba(13, 17, 25, 1);
+        }
+      }
+
+      .el-tabs__active-bar {
+        background: none !important;
+      }
+
+      .el-tabs__nav {
+        width: 300px;
+        padding: 9px 0 9px 26px;
+        font-weight: bold;
+        color: rgba(97, 116, 153, 1);
+        background: linear-gradient(90deg, rgba(34, 80, 135, 1), transparent);
+      }
+
+      .el-tabs__nav-wrap {
+        &::after {
+          height: 0;
+          content: "";
+        }
+      }
+
+      .el-tabs__item {
+        font-size: 22px;
+        color: #617499;
+
+        &.is-active {
+          color: #fff;
+        }
+
+        &:hover {
+          color: #fff;
+        }
+      }
+
+      .el-tabs__header {
+        margin-bottom: 0;
+      }
+
+      .finance-inner-box {
+        .left {
+          .left-body {
+            .el-input__inner {
+              width: 407px;
+              height: 48px;
+              border: 1px solid #464e5f;
+              border-radius: 2px;
+              background: #1e2636;
+            }
+          }
+        }
+
+        .dialogStyle {
+          .el-input__inner {
+            width: 250px !important;
+            height: 38px !important;
+            border: none !important;
+            line-height: 38px;
+            background: transparent !important;
+          }
+
+          .el-input {
+            width: 240px;
+          }
+
+          .invest-mounte {
+            display: flex;
+            justify-content: space-between;
+            width: 280px;
+            height: 38px;
+            padding-right: 5px;
+            border-radius: 5px;
+            background: #20273d;
+
+            &:focus {
+              border: 1px solid #ccc;
+            }
+          }
+
+          .el-button {
+            width: 110px;
+            height: 40px;
+            border: 1px solid #338ff5;
+            border-radius: 4px;
+            color: #fff;
+            background: none;
+          }
+
+          .el-dialog__footer {
+            text-align: center;
+          }
+
+          .el-button--primary {
+            margin-left: 40px;
+            border: none;
+            background: linear-gradient(81deg, rgba(43, 57, 110, 1) 0%, rgba(42, 80, 130, 1) 100%);
+          }
+        }
+
+        .el-dialog__wrapper {
+          width: 100%;
+          height: 100%;
+          background-color: rgba(0, 0, 0, .5);
+        }
+      }
+
+      .nvest-list-body {
+        .el-table {
+          font-size: 12px;
+          color: #a9bed4;
+          background: #1c1f32;
+          box-shadow: 0 4px 6px rgba(25, 30, 40, .5);
+
+          th {
+            border-top: 1px solid #a9bed4;
+            color: #617499;
+            background: #1c1f32;
+            box-shadow: 0 4px 6px rgba(25, 30, 40, .5);
+
+            &.is-leaf {
+              &:first-of-type {
+                border-bottom-left-radius: 4px;
+              }
+
+              &:last-of-type {
+                border-bottom-right-radius: 4px;
+              }
+            }
+          }
+
+          tr {
+            background: transparent;
+          }
+
+          td {
+            background: transparent;
+          }
+        }
+
+        .el-table--enable-row-hover {
+          .el-table__body {
+            tr {
+              &:hover {
+                > td {
+                  background: #1e2636;
+                }
+              }
+            }
+          }
+        }
+      }
+
+      .el-table__body-wrapper {
+        min-height: 480px;
+      }
+
+      .el-table__header {
+        margin-bottom: 10px;
+      }
+
+      .el-button {
+        border: none;
+      }
+
+      .el-table__empty-block {
+        height: 480px;
+        line-height: 480px;
+      }
+
+      .el-dialog {
+        background: #28334a;
+      }
+
+      .el-dialog__header {
+        background: #20293c;
+        box-shadow: 0 1px 2px 0 rgba(29, 33, 49, 1);
+      }
+
+      .el-dialog__title {
+        color: #fff;
+      }
+
+      .el-dialog__headerbtn {
+        .el-dialog__close {
+          color: #fff;
+        }
+      }
+
+      .dialogStyle {
+        .el-dialog__body {
+          height: 380px;
+          overflow: auto;
+        }
+      }
+
+      .el-dialog__body {
+        color: #8c99b4 !important;
+      }
+
+      .el-form-item__label {
+        color: #8c99b4 !important;
+      }
+    }
+
     &.night {
       > .inner-box {
         background-color: $nightInnerBoxBg;
+      }
+
+      /deep/ {
+        .nvest-list-body {
+          .el-table {
+            th {
+              &.is-leaf {
+                border-bottom: 1px solid #1d2531;
+
+                &:first-of-type {
+                  border-bottom-left-radius: 4px;
+                }
+
+                &:nth-last-of-type(2) {
+                  border-bottom-right-radius: 4px;
+                }
+              }
+            }
+
+            td {
+              border-bottom: 1px solid #1d2531;
+            }
+          }
+        }
+
+        .el-table__header {
+          box-shadow: 4px 0 4px 4px rgba(25, 30, 40, 1);
+        }
+
+        > .inner-box {
+          > .finance-inner {
+            > .invest-list {
+              > .nvest-list-body {
+                .finance-tips-box {
+                  color: #617499;
+                  background-color: #121824;
+                }
+              }
+            }
+          }
+        }
       }
     }
 
@@ -529,6 +782,220 @@ export default {
       .invest {
         color: #338ff5;
         background: linear-gradient(left, rgba(51, 143, 245, .5), transparent);
+      }
+
+      /deep/ {
+        .inner-box {
+          .finance-inner {
+            .container {
+              .finance-form-header {
+                .el-input__inner {
+                  background: #fff !important;
+                  box-shadow: inset 1px 0 3px rgba(51, 143, 245, 1);
+                }
+
+                .newnestPrice {
+                  display: flex;
+                  flex: 1;
+                  height: 48px;
+
+                  .newnestPriceColor {
+                    color: #000;
+                  }
+
+                  li {
+                    border-right: 1px solid rgba(30, 38, 54, .3);
+                    color: #666;
+
+                    p {
+                      font-size: 22px;
+
+                      &:last-child {
+                        border: none;
+                      }
+
+                      span {
+                        font-size: 12px;
+                      }
+                    }
+                  }
+                }
+              }
+            }
+
+            .finance-inner-box {
+              .left {
+                color: #666;
+
+                .nav-header {
+                  .balance {
+                    color: #666;
+
+                    div {
+                      color: #338ff5;
+                    }
+                  }
+                }
+
+                .left-body {
+                  .invest-mounte {
+                    input {
+                      width: 380px;
+                      vertical-align: center;
+                      color: #666;
+                    }
+                  }
+
+                  > label {
+                    > .invest-mounte {
+                      > input {
+                        color: #666;
+                      }
+                    }
+                  }
+                }
+              }
+
+              .right {
+                .pieCharts {
+                  width: 282px;
+                  padding-top: 50px;
+                }
+              }
+            }
+
+            .invest-list {
+              > .nvest-list-body {
+                .finance-tips-box {
+                  background-color: #fff;
+                }
+              }
+            }
+          }
+        }
+
+        .finance-inner-box {
+          .left {
+            .left-body {
+              .el-input__inner {
+                border: 1px solid #338ff5;
+                background: #eaf4fe;
+              }
+            }
+          }
+
+          .dialogStyle {
+            .invest-mounte {
+              border: 1px solid rgba(236, 241, 248, 1);
+              background: #fff;
+            }
+
+            .el-button {
+              color: #338ff5;
+            }
+
+            .el-button--primary {
+              color: #fff;
+            }
+
+            .saveTime {
+              color: #333;
+            }
+          }
+        }
+
+        .el-table__header {
+          margin-top: 2px;
+          box-shadow: 0 0 4px rgba(51, 143, 245, .5);
+        }
+
+        .nvest-list-body {
+          .el-table {
+            color: #666;
+            background: transparent;
+            box-shadow: 0 0 0 rgba(25, 30, 40, .5);
+
+            td {
+              border-top: 1px solid #fff;
+              border-bottom: 1px solid rgba(169, 190, 212, .2);
+              box-shadow: none;
+            }
+
+            th {
+              border-top: 1px solid rgba(234, 244, 254, 1);
+              border-bottom: 1px solid rgba(234, 244, 254, 1);
+              color: #617499;
+              background: #eaf4fe;
+              box-shadow: 0 0 0 rgba(25, 30, 40, .5);
+
+              &.is-leaf {
+                border-top: 1px solid #fff;
+                border-bottom: 1px solid rgba(169, 190, 212, .2);
+                box-shadow: none;
+
+                &:first-of-type {
+                  border-left: 1px solid rgba(51, 143, 245, .1);
+                  border-bottom-left-radius: 4px;
+                }
+
+                &:nth-last-of-type(2) {
+                  border-bottom-right-radius: 4px;
+                  border-right: 1px solid rgba(51, 143, 245, .1);
+                }
+              }
+            }
+          }
+
+          .el-table--enable-row-hover {
+            .el-table__body {
+              tr {
+                &:hover {
+                  > td {
+                    background: #eaf4fe;
+                  }
+                }
+              }
+            }
+          }
+
+          .el-tabs__nav {
+            width: 300px;
+            padding: 9px 0 9px 26px;
+            font-weight: bold;
+            color: #617499;
+            background: linear-gradient(90deg, rgba(51, 143, 245, .8), transparent);
+          }
+        }
+
+        .invest {
+          color: #338ff5;
+          background: linear-gradient(90deg, rgba(51, 143, 245, .8), transparent);
+        }
+
+        .el-tabs__item {
+          &.is-active {
+            color: #338ff5;
+          }
+        }
+
+        .el-dialog {
+          background: #fff;
+        }
+
+        .el-dialog__header {
+          background: #eaf4fe;
+          box-shadow: 0 1px 2px 0 rgba(29, 33, 49, .1);
+        }
+
+        .el-dialog__title {
+          color: #333;
+        }
+
+        .el-dialog__headerbtn {
+          .el-dialog__close {
+            color: #333;
+          }
+        }
       }
     }
 

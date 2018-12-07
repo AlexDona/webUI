@@ -6,9 +6,9 @@
     <div class="personal-center-main">
       <div class="personal-center-content clearfix">
         <el-tabs
-          v-model = "userCenterActiveName"
-          :tab-position = "tabPosition"
-          @tab-click = "statusSwitchPanel"
+          v-model="userCenterActiveName"
+          :tab-position="tabPosition"
+          @tab-click="statusSwitchPanel"
         >
           <!--账户资产-->
           <div class="asset-title asset-info">
@@ -25,7 +25,7 @@
             :label = "$t('M.user_asset_title1')"
             name = "assets"
           >
-            <AccountAssets/>
+            <AccountAssets v-if="userCenterActiveName ==='assets'"/>
           </el-tab-pane>
           <!--账单明细-->
           <el-tab-pane
@@ -39,7 +39,7 @@
             :label = "$t('M.comm_mention_money') + $t('M.comm_site')"
             name = "mention-address"
           >
-            <WithdrawalAddress/>
+            <WithdrawalAddress v-if="userCenterActiveName ==='mention-address'"/>
           </el-tab-pane>
           <!--个人中心-->
           <div class="user-title asset-info">
@@ -65,7 +65,7 @@
             :label = "$t('M.user_asset_title5')"
             name = "account-credited"
           >
-            <AccountCredited/>
+            <AccountCredited v-if="userCenterActiveName==='account-credited'"/>
           </el-tab-pane>
 
           <!--邀请推广-->
@@ -268,12 +268,6 @@ export default {
     }
   },
   async created () {
-    // 覆盖Element样式
-    require('../../static/css/list/Personal/UserAssets/PersonalCenter.css')
-    // 白色主题样式
-    require('../../static/css/theme/day/Personal/UserAssets/PersonalCenterDay.css')
-    // 黑色主题样式
-    require('../../static/css/theme/night/Personal/UserAssets/PersonalCenterNight.css')
     await this.getUserRefreshUser()
     if (!this.realname && this.userCenterActiveName === 'account-credited') {
       this.notVerifyDialogVisible = true
@@ -292,11 +286,6 @@ export default {
     ]),
     // tab面板切换
     async statusSwitchPanel (tab) {
-      // // 防止频繁切换点击按钮 通过禁用按钮，0.5秒后可以点击
-      // this.isdisabled = true
-      // setTimeout(() => {
-      //   this.isdisabled = false
-      // }, 500)
       this.CHANGE_USER_CENTER_ACTIVE_NAME(tab.name)
       console.log(tab.name)
       if (tab.name === 'account-credited') {
@@ -451,6 +440,82 @@ export default {
       }
     }
 
+    /deep/ {
+      /* tabs组件出现蓝色边框问题 */
+      .el-tabs__active-bar {
+        height: 0 !important;
+      }
+
+      .el-tabs__nav-wrap {
+        &::after {
+          background-color: transparent;
+        }
+      }
+
+      /* 做二级导航宽度 */
+      .el-tabs--left {
+        height: 625px;
+        overflow: unset;
+
+        .el-tabs__nav-wrap {
+          .is-left {
+            margin-right: 0;
+          }
+        }
+
+        .el-tabs__item {
+          &.is-left {
+            width: 162px;
+            text-align: left;
+          }
+        }
+
+        .el-tabs__header {
+          &.is-left {
+            margin-right: 16px;
+          }
+        }
+      }
+
+      .el-tabs__item {
+        height: 34px;
+        margin: 10px 0;
+        line-height: 34px;
+
+        &.is-disabled {
+          &:hover {
+            border-left: 4px solid #fff;
+            color: #fff;
+          }
+        }
+      }
+
+      .el-dialog {
+        &:nth-child(1) {
+          top: 15%;
+          border-radius: 10px;
+        }
+      }
+
+      .is-disabled {
+        font-size: 18px;
+      }
+
+      .el-tabs__content {
+        position: relative;
+        float: right;
+        width: 970px;
+        overflow: unset;
+      }
+
+      .warning {
+        .el-dialog {
+          width: 350px;
+          border-radius: 5px;
+        }
+      }
+    }
+
     &.night {
       color: $nightFontColor;
       background-color: $nightBgColor;
@@ -472,6 +537,47 @@ export default {
         border: 1px solid #338ff5;
         color: #fff;
         background-color: transparent;
+      }
+
+      /deep/ {
+        .el-tabs__nav {
+          background-color: #1c1f32;
+        }
+
+        .is-disabled {
+          color: rgba(0, 121, 254, 1);
+        }
+
+        .el-tabs__item {
+          border-left: 4px solid transparent;
+          color: #ccc;
+
+          &:hover {
+            border-left: 4px solid #338ff5;
+            color: rgba(0, 121, 254, 1);
+            background-color: rgba(0, 121, 254, .1);
+          }
+
+          &.is-active {
+            border-left: 4px solid rgba(0, 121, 254, 1);
+            color: rgba(0, 121, 254, 1);
+            background: rgba(51, 143, 245, .1);
+          }
+        }
+
+        .el-dialog {
+          background-color: #28334a;
+        }
+
+        .el-dialog__title {
+          color: #fff;
+        }
+
+        .el-tabs--left {
+          .el-tabs__nav-scroll {
+            background-color: #1c1f32;
+          }
+        }
       }
     }
 
@@ -500,6 +606,58 @@ export default {
         border: 1px solid #338ff5;
         color: #333;
         background-color: transparent;
+      }
+
+      /deep/ {
+        .el-tabs__nav {
+          background-color: #fff;
+        }
+
+        .is-disabled {
+          color: #338ff5;
+          background-color: #fff;
+        }
+
+        .el-tabs__item {
+          border-left: 4px solid #fff;
+          color: #6f798a;
+
+          &.is-active {
+            border-left: 4px solid rgba(0, 121, 254, 1);
+            color: #338ff5;
+            background: rgba(51, 143, 245, .1);
+          }
+
+          &:hover {
+            border-left: 4px solid rgba(0, 121, 254, 1);
+            color: #338ff5;
+            background: rgba(51, 143, 245, .1);
+          }
+
+          &:first-child {
+            &:hover {
+              border-left: 4px solid #fff;
+            }
+          }
+        }
+
+        .el-tabs__header {
+          &.is-left {
+            border: 1px solid rgba(38, 47, 56, .1);
+          }
+        }
+
+        .el-tabs--left {
+          .el-tabs__item {
+            &.is-left {
+              &:first-child {
+                &:hover {
+                  border-left: 4px solid #fff;
+                }
+              }
+            }
+          }
+        }
       }
     }
   }

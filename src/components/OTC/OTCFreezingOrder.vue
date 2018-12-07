@@ -134,6 +134,7 @@
           </div>
         </div>
       </div>
+      <!--暂无数据-->
       <div
         class="no-data"
         v-if="!otcFreezingOrderList.length"
@@ -141,17 +142,17 @@
         <!-- 暂无数据 -->
         {{$t('M.comm_no_data')}}
       </div>
-      <!--分页-->
-      <div class="page">
-        <el-pagination
-          background
-          v-show="otcFreezingOrderList.length"
-          layout="prev, pager, next"
-          :page-count="totalPages"
-          @current-change="changeCurrentPage"
-        >
-        </el-pagination>
-      </div>
+    </div>
+    <!--分页-->
+    <div class="page">
+      <el-pagination
+        background
+        v-show="otcFreezingOrderList.length"
+        layout="prev, pager, next"
+        :page-count="totalPages"
+        @current-change="changeCurrentPage"
+      >
+      </el-pagination>
     </div>
   </div>
 </template>
@@ -175,9 +176,6 @@ export default {
     }
   },
   created () {
-    require('../../../static/css/list/OTC/OTCFreezingOrder.css')
-    require('../../../static/css/theme/day/OTC/OTCFreezingOrderDay.css')
-    require('../../../static/css/theme/night/OTC/OTCFreezingOrderNight.css')
     // 1.0 请求冻结中订单列表:只有登录了才调用
     if (this.isLogin) {
       this.getOTCFrezzingOrdersList()
@@ -214,11 +212,10 @@ export default {
       } else {
         // 返回数据正确的逻辑
         this.loading = false
-        // let otcFreezingOrderListData = data.data.data
         let otcFreezingOrderListData = getNestedData(data, 'data.data')
-        this.otcFreezingOrderList = otcFreezingOrderListData.list
+        this.otcFreezingOrderList = getNestedData(otcFreezingOrderListData, 'list')
         // 分页
-        this.totalPages = otcFreezingOrderListData.pages - 0
+        this.totalPages = getNestedData(otcFreezingOrderListData, 'pages') - 0
       }
     }
   },
@@ -238,7 +235,7 @@ export default {
 
   .otc-freezing-order-box {
     > .freezing-order-content {
-      min-height: 472px;
+      /* min-height: 472px; */
 
       > .freezing-table-head {
         box-sizing: border-box;
@@ -327,11 +324,11 @@ export default {
         line-height: 432px;
         text-align: center;
       }
+    }
 
-      > .page {
-        padding-bottom: 20px;
-        text-align: center;
-      }
+    .page {
+      /* padding-bottom: 20px; */
+      text-align: center;
     }
 
     &.night {

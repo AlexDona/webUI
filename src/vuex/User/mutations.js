@@ -57,18 +57,34 @@ export default {
   },
   // 设置登录步骤3发送验证码按钮状态
   [SET_USER_BUTTON_STATUS] (state, data) {
-    // console.log(loginType)
-    if (!data.loginType) {
-      if (!data.type) {
-        state.disabledOfPhoneBtn = data.status
-      } else {
-        state.disabledOfOldPhoneBtn = data.status
-      }
-      state.disabledOfMobilePhoneBtn = data.status
-    } else {
-      state.disabledOfEmailBtn = data.status
-      state.disabledOfMobileEmailBtn = data.status
+    switch (data.loginType) {
+      case 0 :
+        switch (data.type) {
+          case 0:
+            state.disabledOfPhoneBtn = data.status
+            break
+          case 1:
+            state.disabledOfOldPhoneBtn = data.status
+            break
+        }
+        state.disabledOfMobilePhoneBtn = data.status
+        break
+      case 1:
+        state.disabledOfEmailBtn = data.status
+        state.disabledOfMobileEmailBtn = data.status
+        break
     }
+    // if (!data.loginType) {
+    //   if (!data.type) {
+    //     state.disabledOfPhoneBtn = data.status
+    //   } else {
+    //     state.disabledOfOldPhoneBtn = data.status
+    //   }
+    //   state.disabledOfMobilePhoneBtn = data.status
+    // } else {
+    //   state.disabledOfEmailBtn = data.status
+    //   state.disabledOfMobileEmailBtn = data.status
+    // }
   },
   // 用户登录
   [USER_LOGIN] (state, data) {

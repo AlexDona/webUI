@@ -4,7 +4,8 @@ import {
   CHANGE_ACTIVE_PRICE_ITEM,
   SET_MIDDLE_TOP_DATA,
   SET_JUMP_STATUS,
-  SET_JUMP_SYMBOL
+  SET_JUMP_SYMBOL,
+  SET_IS_KLINE_DATA_READY
 } from './mutations-types.js'
 
 // import {setStore} from '../../utils'
@@ -34,5 +35,8 @@ export default {
   },
   [SET_JUMP_SYMBOL] (state, data) {
     state.jumpSymbol = data
+  },
+  [SET_IS_KLINE_DATA_READY] (state, data) {
+    state.isKlineDataReady = data
   }
 }

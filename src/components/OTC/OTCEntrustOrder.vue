@@ -116,17 +116,17 @@
           </span>
         </div>
       </div>
-      <!--分页-->
-      <div class="page">
-        <el-pagination
-          background
-          v-show="OTCEntrustOrderList.length"
-          layout="prev, pager, next"
-          :page-count="totalPages"
-          @current-change="changeCurrentPage"
-        >
-        </el-pagination>
-      </div>
+    </div>
+    <!--分页-->
+    <div class="page">
+      <el-pagination
+        background
+        v-show="OTCEntrustOrderList.length"
+        layout="prev, pager, next"
+        :page-count="totalPages"
+        @current-change="changeCurrentPage"
+      >
+      </el-pagination>
     </div>
   </div>
 </template>
@@ -152,9 +152,6 @@ export default {
     }
   },
   created () {
-    require('../../../static/css/list/OTC/OTCEntrustOrder.css')
-    require('../../../static/css/theme/day/OTC/OTCEntrustOrderDay.css')
-    require('../../../static/css/theme/night/OTC/OTCEntrustOrderNight.css')
     // 1.0 刚进页面调取接口获取委托中的订单列表:只有登录了才调用
     if (this.isLogin) {
       this.getOTCEntrustingOrdersList()
@@ -198,11 +195,10 @@ export default {
       } else {
         // 返回数据正确的逻辑
         this.loading = false
-        // let OTCEntrustOrderListData = data.data.data
         let OTCEntrustOrderListData = getNestedData(data, 'data.data')
-        this.OTCEntrustOrderList = OTCEntrustOrderListData.list
+        this.OTCEntrustOrderList = getNestedData(OTCEntrustOrderListData, 'list')
         // 分页
-        this.totalPages = OTCEntrustOrderListData.pages - 0
+        this.totalPages = getNestedData(OTCEntrustOrderListData, 'pages') - 0
       }
     },
     // 4.0 点击撤单按钮
@@ -352,11 +348,11 @@ export default {
           }
         }
       }
+    }
 
-      > .page {
-        padding: 10px 0;
-        text-align: center;
-      }
+    .page {
+      /* padding: 10px 0; */
+      text-align: center;
     }
 
     &.night {
@@ -387,11 +383,6 @@ export default {
             }
           }
         }
-
-        > .page {
-          padding: 10px 0;
-          text-align: center;
-        }
       }
     }
 
@@ -421,11 +412,6 @@ export default {
               color: #008069;
             }
           }
-        }
-
-        > .page {
-          padding: 10px 0;
-          text-align: center;
         }
       }
     }

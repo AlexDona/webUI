@@ -13,7 +13,7 @@ const state = {
   middleTopSocketData: {}, // 中部当前交易对选中socket数据
   isJumpToTradeCenter: false, // 是否从其他页面跳转到币币交易页面
   jumpSymbol: {}, // 跳转到币币交易时带来的当前交易对
-  end: '' // 占位
+  isKlineDataReady: false // K线数据是否得到
 }
 
 export default {

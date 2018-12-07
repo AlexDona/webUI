@@ -453,9 +453,6 @@ export default {
     }
   },
   created () {
-    require('../../../static/css/list/OTC/OTCOnlineTraderBuySell.css')
-    require('../../../static/css/theme/day/OTC/OTCOnlineTraderBuySellDay.css')
-    require('../../../static/css/theme/night/OTC/OTCOnlineTraderBuySellNight.css')
     // 1.0 从OTCCenter传过来的URL中获取的
     // console.log(this.$route.params)
     this.onlineTraderStatus = this.$route.params.styleId
@@ -692,20 +689,32 @@ export default {
         // 返回数据正确的逻辑:将返回的数据赋值到页面中
         // let detailsData = data.data.data
         let detailsData = getNestedData(data, 'data.data')
-        this.userName = detailsData.userName // 挂单人姓名
-        this.successTimes = detailsData.successTimes // 成交次数
-        this.failTimes = detailsData.failTimes // 失败次数
-        this.freezeTimes = detailsData.freezeTimes // 冻结次数
-        this.remark = detailsData.remark // 备注
-        this.price = detailsData.price // 报价
-        this.payTypes = detailsData.payTypes // 付款方式
-        this.payTerm = detailsData.payTerm // 付款期限
+        // this.userName = detailsData.userName // 挂单人姓名
+        this.userName = getNestedData(detailsData, 'userName') // 挂单人姓名
+        // this.successTimes = detailsData.successTimes // 成交次数
+        this.successTimes = getNestedData(detailsData, 'successTimes') // 成交次数
+        // this.failTimes = detailsData.failTimes // 失败次数
+        this.failTimes = getNestedData(detailsData, 'failTimes') // 失败次数
+        // this.freezeTimes = detailsData.freezeTimes // 冻结次数
+        this.freezeTimes = getNestedData(detailsData, 'freezeTimes') // 冻结次数
+        // this.remark = detailsData.remark // 备注
+        this.remark = getNestedData(detailsData, 'remark') // 备注
+        // this.price = detailsData.price // 报价
+        this.price = getNestedData(detailsData, 'price') // 报价
+        // this.payTypes = detailsData.payTypes // 付款方式
+        this.payTypes = getNestedData(detailsData, 'payTypes') // 付款方式
+        // this.payTerm = detailsData.payTerm // 付款期限
+        this.payTerm = getNestedData(detailsData, 'payTerm') // 付款期限
         // this.remainingNum = detailsData.remainCount // 剩余数量：后台增加了剩余数量字段
         this.remainingNum = amendPrecision(detailsData.entrustCount, detailsData.matchCount, '-') // 剩余数量：修复精度丢失
-        this.maxCount = detailsData.maxCount // 单笔最大限额
-        this.minCount = detailsData.minCount // 单笔最小限额
-        this.userType = detailsData.userType // 挂单人类型（COMMON普通用户 ，MERCHANT商家）
-        this.currencyName = detailsData.currencyName // 当前摘单的法币币种
+        // this.maxCount = detailsData.maxCount // 单笔最大限额
+        this.maxCount = getNestedData(detailsData, 'maxCount') // 单笔最大限额
+        // this.minCount = detailsData.minCount // 单笔最小限额
+        this.minCount = getNestedData(detailsData, 'minCount') // 单笔最小限额
+        // this.userType = detailsData.userType // 挂单人类型（COMMON普通用户 ，MERCHANT商家）
+        this.userType = getNestedData(detailsData, 'userType') // 挂单人类型（COMMON普通用户 ，MERCHANT商家）
+        // this.currencyName = detailsData.currencyName // 当前摘单的法币币种
+        this.currencyName = getNestedData(detailsData, 'currencyName') // 当前摘单的法币币种
         this.queryUserTradeFeeAndCoinInfo()
       }
     },
@@ -726,14 +735,18 @@ export default {
         // 返回数据正确的逻辑:将返回的数据赋值到页面中
         // let detailData = data.data.data
         let detailData = getNestedData(data, 'data.data')
-        this.name = detailData.name // 最小交易量币种名字（单位）
-        this.pointLength = detailData.unit // 每个币种返回的保留小数点位数限制
+        // this.name = detailData.name // 最小交易量币种名字（单位）
+        this.name = getNestedData(detailData, 'name') // 最小交易量币种名字（单位）
+        // this.pointLength = detailData.unit // 每个币种返回的保留小数点位数限制
+        this.pointLength = getNestedData(detailData, 'unit') // 每个币种返回的保留小数点位数限制
         // console.log(this.pointLength)
         if (this.onlineTraderStatus === 'onlineBuy') {
-          this.rate = detailData.buyRate // 费率
+          // this.rate = detailData.buyRate // 费率
+          this.rate = getNestedData(detailData, 'buyRate') // 费率
         }
         if (this.onlineTraderStatus === 'onlineSell') {
-          this.rate = detailData.sellRate // 费率
+          // this.rate = detailData.sellRate // 费率
+          this.rate = getNestedData(detailData, 'sellRate') // 费率
         }
       }
     },
@@ -744,7 +757,6 @@ export default {
         return false
       }
       this.fullscreenLoading = true
-      // console.log('购买')
       const data = await pickOrdersToBuy({
         entrustId: this.id, // 挂单id
         buyCount: this.$refs.buyCount.value, // 买入数量
@@ -834,8 +846,7 @@ export default {
 .otc-online-trader-buy-sell-box {
   > .online-trader-buy-sell-content {
     width: 1150px;
-    padding: 100px 0 70px;
-    margin: 0 auto;
+    margin: 150px auto 70px;
 
     > .online-trader {
       display: flex;
@@ -1057,6 +1068,90 @@ export default {
     }
   }
 
+  /deep/ {
+    .icon {
+      margin-right: 2px;
+    }
+
+    .el-form--label-top {
+      .el-button--mini {
+        padding: 4px 8px;
+      }
+    }
+
+    .password-dialog {
+      .el-dialog {
+        width: 350px;
+        height: 207px;
+        border-radius: 4px;
+
+        .el-dialog__header {
+          padding: 10px 20px;
+          border-radius: 4px;
+        }
+
+        .el-dialog__title {
+          font-size: 14px;
+        }
+
+        .el-dialog__headerbtn {
+          top: 15px;
+          right: 10px;
+        }
+
+        .el-dialog__body {
+          padding: 15px 20px 10px 30px;
+          font-size: 12px;
+
+          .input {
+            margin-top: 13px;
+          }
+
+          .password-input {
+            display: inline-block;
+            width: 280px;
+            height: 36px;
+            padding-left: 10px;
+            border-radius: 4px;
+            font-size: 14px;
+          }
+
+          .error-info {
+            height: 20px;
+            padding-top: 5px;
+            font-size: 12px;
+          }
+
+          .el-dialog__footer {
+            padding: 0;
+            text-align: center;
+          }
+
+          .el-button {
+            width: 290px;
+            padding: 7px 20px;
+            border: 0;
+          }
+        }
+
+        .el-dialog__footer {
+          padding: 0;
+          text-align: center;
+        }
+
+        .el-button {
+          width: 290px;
+          padding: 7px 20px;
+          border: 0;
+        }
+
+        .el-button--primary {
+          background: linear-gradient(9deg, rgba(43, 57, 110, 1), rgba(42, 80, 130, 1));
+        }
+      }
+    }
+  }
+
   &.night {
     background-color: $mainNightBgColor;
 
@@ -1215,6 +1310,35 @@ export default {
         }
       }
     }
+
+    /deep/ {
+      .password-dialog {
+        .el-dialog {
+          background: #28334a;
+
+          .el-dialog__header {
+            background-color: #20293c;
+          }
+
+          .el-dialog__title {
+            color: #fff;
+          }
+
+          .el-dialog__body {
+            color: #fff;
+
+            .password-input {
+              color: #fff;
+              background-color: #1a2233;
+            }
+          }
+
+          .error-info {
+            color: #fff;
+          }
+        }
+      }
+    }
   }
 
   &.day {
@@ -1366,6 +1490,26 @@ export default {
               color: #d45858;
             }
           }
+        }
+      }
+    }
+
+    /deep/ {
+      .password-dialog {
+        .el-dialog {
+          background: #fff;
+        }
+
+        .el-dialog__header {
+          background-color: #fff;
+        }
+
+        .el-dialog__title {
+          color: #338ff5;
+        }
+
+        .el-dialog__body .password-input {
+          border: 1px solid #ecf1f8;
         }
       }
     }

@@ -244,9 +244,6 @@ export default {
     // 动态获取申请中 申请成功内容的高度
     // console.log(document.documentElement.clientHeight)
     this.height = document.documentElement.clientHeight
-    require('../../../static/css/list/OTC/OTCBusinessApply.css')
-    require('../../../static/css/theme/day/OTC/OTCBusinessApplyDay.css')
-    require('../../../static/css/theme/night/OTC/OTCBusinessApplyNight.css')
     this.determineUser()
   },
   mounted () {},
@@ -348,22 +345,15 @@ export default {
     // 商家申请界面用户协议
     async argumentBusinessApplyRequest () {
       const data = await argumentBusinessApply({
-        termsTypeids: 9,
+        termsTypeIds: 9,
         language: this.language
       })
-      // console.log(data.data.data)
+      console.log(data.data.data)
       // 提示信息
       if (!(returnAjaxMsg(data, this, 0))) {
         return false
       } else {
-        // 返回数据地逻辑
-        let resArr = getNestedData(data, 'data.data')
-        resArr.forEach(item => {
-          if (item.keyword === 'OTC' + this.$t('M.comm_agreement')) {
-            this.argumentContent = item.content
-            // console.log(item)
-          }
-        })
+        this.argumentContent = getNestedData(data, 'data.data[0].content')
       }
     },
     businessArgument () {
@@ -583,6 +573,35 @@ export default {
     background-color: $mainNightBgColor;
   }
 
+  /deep/ {
+    .el-checkbox__inner {
+      border-radius: 6px;
+      background-color: #eee;
+
+      &::after {
+        border: 1px solid #1f2f47;
+        border-top: 0;
+        border-left: 0;
+      }
+    }
+
+    .el-dialog {
+      height: 800px;
+      overflow: auto;
+      line-height: 30px;
+      text-align: left;
+      background: #121824;
+    }
+
+    .el-dialog__header {
+      text-align: center;
+    }
+
+    .el-dialog__body {
+      color: #8494a6;
+    }
+  }
+
   &.night {
     overflow: hidden;
     background-color: $mainNightBgColor;
@@ -662,6 +681,40 @@ export default {
             color: #fff;
             background: linear-gradient(0deg, rgba(43, 57, 110, 1), rgba(42, 80, 130, 1));
           }
+        }
+      }
+    }
+
+    /deep/ {
+      .el-checkbox__inner {
+        background-color: #eee;
+      }
+
+      .el-dialog__body {
+        color: #8494a6;
+      }
+
+      .el-dialog__title {
+        color: #338ff5;
+      }
+
+      .el-dialog {
+        background: #121824;
+
+        &::-webkit-scrollbar-button {
+          background-color: #292e42;
+        }
+
+        &::-webkit-scrollbar-track {
+          background: #292e42;
+        }
+
+        &::-webkit-scrollbar-thumb {
+          background: #1e2636;
+        }
+
+        &::-webkit-scrollbar-corner {
+          background: #292e42;
         }
       }
     }
@@ -747,6 +800,12 @@ export default {
         }
       }
     }
+
+    /deep/ {
+      .el-dialog {
+        background: #fff;
+      }
+    }
   }
 
   .businessApplyModel {
@@ -758,5 +817,11 @@ export default {
 .black.otc-business-apply-box.day {
   // 当为申请中和申请成功的页面时候，只有黑色主题颜色
   background-color: $mainNightBgColor;
+}
+
+/deep/ {
+  .el-dialog__title {
+    color: #338ff5;
+  }
 }
 </style>

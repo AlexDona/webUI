@@ -556,9 +556,6 @@ export default {
     }
   },
   created () {
-    require('../../../static/css/list/OTC/OTCPublishAD.css')
-    require('../../../static/css/theme/day/OTC/OTCPublishADDay.css')
-    require('../../../static/css/theme/night/OTC/OTCPublishADNight.css')
     // console.log('从广告管理传过来的URL中的订单id:' + this.$route.query.id)
     if (this.$route.query.id) {
       // console.log('1:url中有id')
@@ -1194,6 +1191,107 @@ export default {
     }
   }
 
+  /deep/ {
+    .right-style {
+      .el-select {
+        width: 140px;
+      }
+    }
+
+    .right-change {
+      .el-select {
+        width: 180px;
+      }
+    }
+
+    .choice {
+      .el-input__inner {
+        height: 36px;
+        border: none;
+      }
+    }
+
+    .trade-way {
+      .el-checkbox-group {
+        margin-top: 15px;
+      }
+
+      .el-checkbox__inner {
+        &::after {
+          border: 1px solid #1f90ea;
+          border-top: 0;
+          border-left: 0;
+        }
+      }
+    }
+
+    .el-textarea__inner {
+      width: 580px;
+      height: 100px;
+      margin-bottom: 10px;
+      border: 0;
+      resize: none;
+      font-size: 14px;
+    }
+
+    .password-dialog {
+      .el-dialog {
+        width: 350px;
+        height: 207px;
+        border-radius: 4px;
+      }
+
+      .el-dialog__header {
+        padding: 10px 20px;
+        border-radius: 4px;
+      }
+
+      .el-dialog__title {
+        font-size: 14px;
+      }
+
+      .el-dialog__headerbtn {
+        top: 15px;
+        right: 10px;
+      }
+
+      .el-dialog__body {
+        padding: 15px 20px 10px 30px;
+        font-size: 12px;
+
+        .input {
+          margin-top: 13px;
+        }
+
+        .password-input {
+          display: inline-block;
+          width: 280px;
+          height: 36px;
+          padding-left: 10px;
+          border-radius: 4px;
+          font-size: 14px;
+        }
+
+        .error-info {
+          height: 20px;
+          padding-top: 5px;
+          font-size: 12px;
+        }
+      }
+
+      .el-dialog__footer {
+        padding: 0;
+        text-align: center;
+      }
+
+      .el-button {
+        width: 290px;
+        padding: 7px 20px;
+        border: 0;
+      }
+    }
+  }
+
   &.night {
     background-color: $mainNightBgColor;
 
@@ -1322,6 +1420,71 @@ export default {
           > .tip {
             color: #7d90ac;
           }
+        }
+      }
+    }
+
+    /deep/ {
+      .choice {
+        .el-input__inner {
+          background: #1c1f32;
+        }
+      }
+
+      .limit-set {
+        .icon {
+          color: #338ff5;
+        }
+      }
+
+      .el-textarea__inner {
+        color: #a9bed4;
+        background-color: #1c1f32;
+      }
+
+      .trade-way {
+        .el-checkbox {
+          color: #9da5b3;
+        }
+
+        .el-checkbox__inner {
+          border: 1px solid #435372;
+          background-color: #1c1f32;
+        }
+
+        .el-checkbox__input.is-checked + .el-checkbox__label {
+          color: #9da5b3;
+        }
+      }
+
+      .password-dialog {
+        .el-dialog {
+          background: #28334a;
+        }
+
+        .el-dialog__header {
+          background-color: #20293c;
+        }
+
+        .el-dialog__title {
+          color: #fff;
+        }
+
+        .el-dialog__body {
+          color: #fff;
+
+          .password-input {
+            color: #fff;
+            background-color: #1a2233;
+          }
+
+          .error-info {
+            color: #fff;
+          }
+        }
+
+        .el-button--primary {
+          background: linear-gradient(9deg, rgba(43, 57, 110, 1), rgba(42, 80, 130, 1));
         }
       }
     }
@@ -1458,6 +1621,132 @@ export default {
 
           > .tip {
             color: #7d90ac;
+          }
+        }
+      }
+    }
+
+    /deep/ {
+      .choice {
+        .el-input__inner {
+          border: 1px solid #ecf1f8;
+          border-radius: 2px;
+          background: #fff;
+        }
+      }
+
+      .trade-way {
+        .el-checkbox__inner {
+          border: 1px solid #435372;
+          background-color: #fff;
+        }
+      }
+
+      .el-checkbox__input {
+        &.is-checked {
+          .el-checkbox__inner {
+            background-color: #fff;
+          }
+        }
+
+        &.is-indeterminate {
+          .el-checkbox__inner {
+            background-color: #fff;
+          }
+        }
+      }
+
+      .el-textarea__inner {
+        border: 1px solid #ecf1f8;
+        color: #7d90ac;
+        background: #fff;
+      }
+
+      .password-dialog {
+        .el-dialog__body {
+          .password-input {
+            border: 1px solid #ecf1f8;
+          }
+        }
+      }
+
+      .otc-publish-AD-content {
+        > .publish-AD-left {
+          > .AD-big-form {
+            > .sale-price {
+              > .right {
+                > .input {
+                  > .unit[data-v-6b1c45d6] {
+                    color: #338ff5;
+                    background-color: #cbddf4;
+                  }
+
+                  > .price-input[data-v-6b1c45d6] {
+                    border: 1px solid #ecf1f8;
+                    border-radius: 2px;
+                    background: #fff;
+                  }
+                }
+              }
+            }
+
+            > .sum-limit {
+              > .right {
+                > .input-top {
+                  > .unit[data-v-6b1c45d6] {
+                    color: #338ff5;
+                    background-color: #cbddf4;
+                  }
+
+                  > .input-sum[data-v-6b1c45d6] {
+                    border: 1px solid #ecf1f8;
+                    border-radius: 2px;
+                    background: #fff;
+                  }
+                }
+
+                > .input-bottom {
+                  > .unit[data-v-6b1c45d6] {
+                    color: #338ff5;
+                    background-color: #cbddf4;
+                  }
+
+                  > .input-min[data-v-6b1c45d6] {
+                    border: 1px solid #ecf1f8;
+                    border-radius: 2px;
+                    background: #fff;
+                  }
+
+                  .input-max[data-v-6b1c45d6] {
+                    border: 1px solid #ecf1f8;
+                    border-radius: 2px;
+                    background: #fff;
+                  }
+                }
+
+                .input-limit[data-v-6b1c45d6] {
+                  border: 1px solid #ecf1f8;
+                  border-radius: 2px;
+                  background: #fff;
+                }
+              }
+            }
+
+            > .common {
+              > .left {
+                > .warning[data-v-6b1c45d6] {
+                  color: #3e79d6;
+                }
+
+                > .tips[data-v-6b1c45d6] {
+                  color: #333;
+                }
+              }
+            }
+
+            .common[data-v-6b1c45d6] {
+              border-bottom: 1px solid rgba(57, 66, 77, .1);
+            }
           }
         }
       }

@@ -609,17 +609,6 @@
       >
         {{ $t('M.comm_no_data') }}
       </div>
-      <!-- 三、分页-->
-      <div class="page">
-        <el-pagination
-          background
-          v-show="tradingOrderList.length"
-          layout="prev, pager, next"
-          :page-count="totalPages"
-          @current-change="changeCurrentPage"
-        >
-        </el-pagination>
-      </div>
       <!-- 四 买家点击确认付款按钮 弹出交易密码框 -->
       <div class="password-dialog">
         <!-- 交易密码 -->
@@ -731,6 +720,17 @@
         </el-dialog>
       </div>
     </div>
+    <!-- 三、分页-->
+    <div class="page">
+      <el-pagination
+        background
+        v-show="tradingOrderList.length"
+        layout="prev, pager, next"
+        :page-count="totalPages"
+        @current-change="changeCurrentPage"
+      >
+      </el-pagination>
+    </div>
   </div>
 </template>
 <!--请严格按照如下书写书序-->
@@ -791,9 +791,6 @@ export default {
     }
   },
   created () {
-    require('../../../static/css/list/OTC/OTCTradingOrder.css')
-    require('../../../static/css/theme/day/OTC/OTCTradingOrderDay.css')
-    require('../../../static/css/theme/night/OTC/OTCTradingOrderNight.css')
     // 1.0 请求交易中订单列表:只有登录了才调用
     if (this.isLogin) {
       this.getOTCTradingOrdersList()
@@ -888,13 +885,14 @@ export default {
       } else {
         // 返回数据正确的逻辑
         this.loading = false
-        // let detailsData = data.data.data
         let detailsData = getNestedData(data, 'data.data')
-        this.tradingOrderList = detailsData.list
+        // this.tradingOrderList = detailsData.list
+        this.tradingOrderList = getNestedData(detailsData, 'list')
         // console.log('交易中订单')
         // console.log(this.tradingOrderList)
         // 分页
-        this.totalPages = detailsData.pages - 0
+        // this.totalPages = detailsData.pages - 0
+        this.totalPages = getNestedData(detailsData, 'pages') - 0
         // console.log(this.tradingOrderList)
         // 循环数组
         this.tradingOrderList.forEach((item, index) => {
@@ -925,17 +923,17 @@ export default {
     },
     // 3.0 改变交易方式
     changeUserBankInfo (index) {
-      console.log('第' + index + '条数据')
-      console.log('选中的订单id')
-      console.log(this.tradingOrderList[index].id)
-      console.log(this.activePayModeList[index])
+      // console.log('第' + index + '条数据')
+      // console.log('选中的订单id')
+      // console.log(this.tradingOrderList[index].id)
+      // console.log(this.activePayModeList[index])
       this.activedTradingOrderId = this.tradingOrderList[index].id
       this.tradingOrderList[index].userBankList.forEach((item) => {
         if (item.id == this.activePayModeList[index]) {
           this.activedPayAccountArr[index] = item.cardNo
-          console.log('选中的付款账号：' + this.activedPayAccountArr[index])
+          // console.log('选中的付款账号：' + this.activedPayAccountArr[index])
           this.activeBankFidList[index] = item.id
-          console.log('选中的支付方式id' + this.activeBankFidList[index])
+          // console.log('选中的支付方式id' + this.activeBankFidList[index])
           this.activitedPayStyleId = this.activeBankFidList[index]
           // 省
           this.activeBankProv[index] = item.prov
@@ -949,11 +947,11 @@ export default {
           this.activeBankDetailAddress[index] = item.address
           // 支付类型
           this.activeBankType[index] = item.bankType
-          console.log('支付类型：' + this.activeBankType[index])
+          // console.log('支付类型：' + this.activeBankType[index])
           // 支付码
           this.activeBankCode[index] = item.qrcode
-          console.log('支付码')
-          console.log(this.activeBankCode[index])
+          // console.log('支付码')
+          // console.log(this.activeBankCode[index])
         }
         this.buttonStatusArr[index] = true
       })
@@ -998,7 +996,7 @@ export default {
           payId: this.activitedPayStyleId, // 支付账户id
           tradePassword: this.tradePassword // 交易密码
         })
-        console.log(data)
+        // console.log(data)
         // 提示信息
         if (!(returnAjaxMsg(data, this, 1))) {
           this.loading = false
@@ -1019,7 +1017,7 @@ export default {
       // 弹出交易密码框
       this.dialogVisibleConfirmReceipt = true
       // console.log(id)
-      console.log(this.activedTradingOrderId)
+      // console.log(this.activedTradingOrderId)
     },
     // 9.0 卖家点击确认收款按钮 弹出交易密码框 点击交易密码框中的提交按钮
     async submitConfirmGathering () {
@@ -1032,7 +1030,7 @@ export default {
         orderId: this.activedTradingOrderId, // 订单id
         tradePassword: this.tradePassword // 交易密码
       })
-      console.log(data)
+      // console.log(data)
       // 提示信息
       if (!(returnAjaxMsg(data, this, 1))) {
         this.loading = false
@@ -1047,11 +1045,11 @@ export default {
     },
     // 10.0 点击订单申诉弹窗申诉框
     orderAppeal (id, index) {
-      console.log(id)
+      // console.log(id)
       // this.showOrderAppeal[index] = true
       this.$set(this.showOrderAppeal, index, true)
       this.activedTradingOrderId = id
-      console.log(this.activedTradingOrderId)
+      // console.log(this.activedTradingOrderId)
     },
     // 11.0 取消订单申诉按钮
     cancelOrderAppeal (index) {
@@ -1083,7 +1081,7 @@ export default {
         reason: this.appealTextareaValue, // 申诉原因
         tradePassword: this.tradePassword // 交易密码
       })
-      console.log(data)
+      // console.log(data)
       // 提示信息
       if (!(returnAjaxMsg(data, this, 1))) {
         this.loading = false
@@ -1131,7 +1129,7 @@ export default {
 
 .otc-trading-order-box {
   > .otc-trading-order-content {
-    min-height: 472px;
+    /* min-height: 472px; */
     border-radius: 5px;
 
     > .order-list {
@@ -1345,10 +1343,114 @@ export default {
       text-align: center;
       color: rgba(255, 255, 255, .8);
     }
+  }
 
-    .page {
-      padding: 2px 0 15px;
-      text-align: center;
+  .page {
+    /* padding: 2px 0 15px; */
+    text-align: center;
+  }
+
+  /deep/ {
+    .el-input--suffix {
+      .el-input__inner {
+        width: 170px;
+        height: 26px;
+      }
+    }
+
+    .el-input__inner {
+      padding: 0 30px;
+      border: none;
+    }
+
+    .el-select-dropdown {
+      border: none;
+    }
+
+    .el-select-dropdown__item {
+      height: 30px !important;
+      line-height: 30px !important;
+    }
+
+    .el-button--mini {
+      padding: 3px 10px;
+    }
+
+    .el-textarea {
+      width: 540px;
+    }
+
+    .el-textarea__inner {
+      height: 90px;
+      resize: none;
+      font-size: 14px;
+    }
+
+    .bank-info-picture {
+      .el-button {
+        padding: 2px 6px;
+      }
+    }
+
+    .password-dialog {
+      .el-dialog {
+        width: 350px;
+        height: 207px;
+        border-radius: 4px;
+      }
+
+      .el-dialog__header {
+        padding: 10px 20px;
+        border-radius: 4px;
+      }
+
+      .el-dialog__title {
+        font-size: 14px;
+      }
+
+      .el-dialog__headerbtn {
+        top: 15px;
+        right: 10px;
+      }
+
+      .el-dialog__body {
+        padding: 15px 20px 10px 30px;
+        font-size: 12px;
+
+        .input {
+          margin-top: 13px;
+        }
+
+        .password-input {
+          display: inline-block;
+          width: 280px;
+          height: 36px;
+          padding-left: 10px;
+          border-radius: 4px;
+          font-size: 14px;
+        }
+
+        .error-info {
+          height: 20px;
+          padding-top: 5px;
+          font-size: 12px;
+        }
+      }
+
+      .el-dialog__footer {
+        padding: 0;
+        text-align: center;
+      }
+
+      .el-button {
+        width: 290px;
+        padding: 7px 20px;
+        border: 0;
+      }
+
+      .el-button--primary {
+        background: linear-gradient(9deg, rgba(43, 57, 110, 1), rgba(42, 80, 130, 1));
+      }
     }
   }
 
@@ -1478,6 +1580,154 @@ export default {
       > .password-dialog {
         .tips {
           color: red;
+        }
+      }
+    }
+
+    /deep/ {
+      .el-input--suffix {
+        .el-input__inner {
+          width: 170px;
+          height: 26px;
+        }
+      }
+
+      .el-input__inner {
+        padding: 0 30px;
+        border: none;
+        color: #9da5b3;
+        background-color: #303b45;
+      }
+
+      .el-select-dropdown {
+        border: none;
+        background-color: #29343f;
+      }
+
+      .el-select-dropdown__item {
+        height: 30px !important;
+        line-height: 30px !important;
+
+        &.selected {
+          color: #338ff5;
+        }
+
+        &:hover {
+          background-color: #29343f;
+        }
+
+        &.hover {
+          color: #338ff5;
+          background-color: #29343f;
+        }
+      }
+
+      .el-popper[x-placement^=bottom] {
+        .popper__arrow {
+          border-bottom-color: #29343f;
+
+          &::after {
+            border-bottom-color: #29343f;
+          }
+        }
+      }
+
+      .el-button--mini {
+        padding: 3px 10px;
+      }
+
+      .el-textarea {
+        width: 540px;
+      }
+
+      .el-textarea__inner {
+        height: 90px;
+        border: 1px solid #7587a5;
+        resize: none;
+        font-size: 14px;
+        color: #9da5b3;
+        background-color: #1e2636;
+      }
+
+      .bank-info-picture {
+        .el-button {
+          padding: 2px 6px;
+          border-color: #409eff;
+          color: #fff;
+          background-color: #409eff;
+
+          &:hover {
+            border-color: #66b1ff;
+            color: #fff;
+            background: #66b1ff;
+          }
+        }
+      }
+
+      .password-dialog {
+        .el-dialog {
+          width: 350px;
+          height: 207px;
+          border-radius: 4px;
+          background: #28334a;
+
+          .el-dialog__header {
+            padding: 10px 20px;
+            border-radius: 4px;
+            background-color: #20293c;
+          }
+
+          .el-dialog__title {
+            font-size: 14px;
+            color: #fff;
+          }
+
+          .el-dialog__headerbtn {
+            top: 15px;
+            right: 10px;
+          }
+
+          .el-dialog__body {
+            padding: 15px 20px 10px 30px;
+            font-size: 12px;
+            color: #fff;
+
+            .input {
+              margin-top: 13px;
+            }
+
+            .password-input {
+              display: inline-block;
+              width: 280px;
+              height: 36px;
+              padding-left: 10px;
+              border-radius: 4px;
+              font-size: 14px;
+              color: #fff;
+              background-color: #1a2233;
+            }
+
+            .error-info {
+              height: 20px;
+              padding-top: 5px;
+              font-size: 12px;
+            }
+          }
+
+          .el-dialog__footer {
+            padding: 0;
+            text-align: center;
+          }
+
+          .el-button {
+            width: 290px;
+            padding: 7px 20px;
+            border: 0;
+          }
+
+          .el-button--primary {
+            background: linear-gradient(9deg, rgba(43, 57, 110, 1), rgba(42, 80, 130, 1));
+          }
         }
       }
     }
@@ -1614,6 +1864,161 @@ export default {
       > .password-dialog {
         .tips {
           color: red;
+        }
+      }
+    }
+
+    /deep/ {
+      .el-input--suffix {
+        .el-input__inner {
+          width: 170px;
+          height: 26px;
+        }
+      }
+
+      .el-input__inner {
+        padding: 0 30px;
+        border: none;
+        color: #7d90ac;
+        background-color: #eaf4fe;
+      }
+
+      .el-select-dropdown {
+        border: none;
+        background-color: #29343f;
+      }
+
+      .el-select-dropdown__item {
+        height: 30px !important;
+        line-height: 30px !important;
+
+        &.selected {
+          color: #338ff5;
+        }
+
+        &:hover {
+          background-color: #29343f;
+        }
+
+        &.hover {
+          color: #338ff5;
+          background-color: #29343f;
+        }
+      }
+
+      .el-popper[x-placement^=bottom] {
+        .popper__arrow {
+          border-bottom-color: #29343f;
+
+          &::after {
+            border-bottom-color: #29343f;
+          }
+        }
+      }
+
+      .el-select {
+        .el-input {
+          .el-select__caret {
+            color: #338ff5;
+          }
+        }
+      }
+
+      .el-button--mini {
+        padding: 3px 10px;
+      }
+
+      .el-textarea {
+        width: 540px;
+      }
+
+      .el-textarea__inner {
+        height: 90px;
+        border: 1px solid #7587a5;
+        resize: none;
+        font-size: 14px;
+        color: #7d90ac;
+        background-color: #fff;
+      }
+
+      .bank-info-picture {
+        .el-button {
+          padding: 2px 6px;
+          border-color: #409eff;
+          color: #fff;
+          background-color: #409eff;
+
+          &:hover {
+            border-color: #66b1ff;
+            color: #fff;
+            background: #66b1ff;
+          }
+        }
+      }
+
+      .password-dialog {
+        .el-dialog {
+          width: 350px;
+          height: 207px;
+          border-radius: 4px;
+          background: #fff;
+        }
+
+        .el-dialog__header {
+          padding: 10px 20px;
+          border-radius: 4px;
+          background-color: #fff;
+        }
+
+        .el-dialog__title {
+          font-size: 14px;
+          color: #338ff5;
+        }
+
+        .el-dialog__headerbtn {
+          top: 15px;
+          right: 10px;
+        }
+
+        .el-dialog__body {
+          padding: 15px 20px 10px 30px;
+          font-size: 12px;
+          color: #fff;
+
+          .input {
+            margin-top: 13px;
+          }
+
+          .password-input {
+            display: inline-block;
+            width: 280px;
+            height: 36px;
+            padding-left: 10px;
+            border: 1px solid #ecf1f8;
+            border-radius: 4px;
+            font-size: 14px;
+          }
+
+          .error-info {
+            height: 20px;
+            padding-top: 5px;
+            font-size: 12px;
+          }
+        }
+
+        .el-dialog__footer {
+          padding: 0;
+          text-align: center;
+        }
+
+        .el-button {
+          width: 290px;
+          padding: 7px 20px;
+          border: 0;
+        }
+
+        .el-button--primary {
+          background: linear-gradient(9deg, rgba(43, 57, 110, 1), rgba(42, 80, 130, 1));
         }
       }
     }

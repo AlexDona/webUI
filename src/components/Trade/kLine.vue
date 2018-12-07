@@ -60,6 +60,7 @@ export default {
       lastTime: null,
       getBarTimer: null,
       isLoading: true,
+      klineInitCount: 0, // k线初始化次数
       options: {
         // symbol: this.activeSymbol.sellsymbol + this.activeSymbol.area,
         symbol: 'ETCFBT',
@@ -116,8 +117,11 @@ export default {
         setTimeout(() => {
           this.fullscreenLoading = false
           this.loadingCount++
-        }, 600)
+        }, 900)
       }
+    },
+    changeIsKlineDataReady (status) {
+      this.$store.commit('trade/SET_IS_KLINE_DATA_READY', status)
     },
     // 接口获取K线数据
     async getKlineByAjax (tradeName, KlineType, KlineNum = 0, KlineStep = 'STEP5') {
@@ -168,13 +172,14 @@ export default {
                   volume: item.volume
                 })
               })
-              // let newSet = new Set()
-              // console.log(ticker)
               let newList = reflashList.concat(this.cacheData[ticker])
               this.cacheData[ticker] = newList
               break
           }
         }
+        setTimeout(() => {
+          this.changeIsKlineDataReady(true)
+        }, 500)
       }
     },
     // 获取当前交易对socket数据
@@ -291,37 +296,30 @@ export default {
           chart.onIntervalChanged().subscribe(null, function (interval, obj) {
             _self.widget.changingInterval = false
           })
-
-          btnList.forEach(function (item, index) {
-            let button = _self.widget.createButton({
-              align: 'left'
-            })
-            item.resolution === _self.widget._options.interval && _self.updateSelectedIntervalButton(button)
-            const selected = index == 1 ? ' selected' : ''
-            button.attr('class', 'button ' + item.class + selected + ' add' + index)
-              .attr('data-chart-type', item.chartType === undefined ? 1 : item.chartType)
-              .on('click', function (e) {
-                let chartType = +button.attr('data-chart-type')
-                if (chart.resolution() !== item.resolution) {
-                  chart.setResolution(item.resolution)
-                }
-                if (chart.chartType() !== chartType) {
-                  chart.setChartType(chartType)
-                }
-                _self.updateSelectedIntervalButton(button)
+          console.log(this.klineInitCount)
+          if (!this.klineInitCount) {
+            btnList.forEach(function (item, index) {
+              let button = _self.widget.createButton({
+                align: 'left'
               })
-              .append(item.label)
-          })
-          setTimeout(() => {
-            let iframe$ = document.getElementsByTagName('iframe')[0].contentWindow.$
-            let lastBtnList = iframe$('.header-chart-panel-content .left')[0].childElementCount
-            // console.log(lastBtnList)
-            if (lastBtnList.length > 13) {
-              for (let i = 2; i < lastBtnList.length - 9; i++) {
-                iframe$.remove(`add${i}`)
-              }
-            }
-          }, 10)
+              item.resolution === _self.widget._options.interval && _self.updateSelectedIntervalButton(button)
+              const selected = index == 1 ? ' selected' : ''
+              button.attr('class', 'button ' + item.class + selected + ' add' + index)
+                .attr('data-chart-type', item.chartType === undefined ? 1 : item.chartType)
+                .on('click', function (e) {
+                  let chartType = +button.attr('data-chart-type')
+                  if (chart.resolution() !== item.resolution) {
+                    chart.setResolution(item.resolution)
+                  }
+                  if (chart.chartType() !== chartType) {
+                    chart.setChartType(chartType)
+                  }
+                  _self.updateSelectedIntervalButton(button)
+                })
+                .append(item.label)
+            })
+          }
+          this.klineInitCount++
           this.widget.chart().createStudy('Moving Average', false, true, [5, 'close', 0], null, {'Plot.color': '#7b53a7'})
           this.widget.chart().createStudy('Moving Average', false, true, [10, 'close', 0], null, {'Plot.color': '#6b89ae'})
           this.widget.chart().createStudy('Moving Average', false, true, [30, 'close', 0], null, {'Plot.color': '#55ae63'})
@@ -411,7 +409,9 @@ export default {
             close: klineData.close,
             volume: klineData.volume
           }
-          let timeDiff = this.cacheData[ticker][this.cacheData[ticker].length - 1].time - klineData.time
+          let targetData = this.cacheData[ticker]
+          console.log(targetData)
+          let timeDiff = getNestedData(targetData[targetData.length - 1], 'time') - getNestedData(klineData, 'time')
 
           if (!timeDiff) {
             this.cacheData[ticker][this.cacheData[ticker].length - 1] = barsData
@@ -566,8 +566,10 @@ export default {
       this.initKLine(this.symbol)
     },
     async activeSymbolId (newVal) {
+      this.changeIsKlineDataReady(false)
       this.initKLine(newVal)
       this.KlineNum = 0
+      this.klineInitCount = 0
     },
     // 切换tab栏重新订阅
     activeTabSymbolStr (newVal, oldVal) {

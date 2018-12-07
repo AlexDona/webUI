@@ -148,7 +148,7 @@
                     <div
                       v-if="withdrawDepositList[index].isWithdraw === 'true'"
                       class="table-mention-money flex1 cursor-pointer"
-                      @click.prevent="mentionMoneyButton(assetItem.coinId, assetItem.coinName, index)"
+                      @click.prevent="changeWithdrawBoxByCoin(assetItem.coinId, assetItem.coinName, index)"
                     >
                       <!--提币-->
                       {{ $t('M.comm_mention_money') }}
@@ -163,7 +163,7 @@
                     </div>
                     <div
                       class="table-deal flex1 cursor-pointer text-align-c"
-                      @mouseenter="enter(assetItem.coinId, index)"
+                      @mouseenter="showSymbolJumpList(assetItem.coinId, index)"
                       @mouseleave="leave()"
                     >
                       <!--交易-->
@@ -191,237 +191,40 @@
                     class="table-box"
                   >
                     <div class="out-box">
-                    <!--充币内容-->
-                      <div
-                      v-show="withdrawDepositList[index].rechargeIsShow"
-                      class="recharge-list display-flex"
-                    >
-                      <p class="triangle"></p>
-                      <div class='recharge-content'>
-                        <p class="recharge-content-hint font-size12">
-                          <span>{{ currencyName }}</span>
-                          <!--充值地址-->
-                          {{ $t('M.comm_charge_recharge') }}
-                        </p>
-                        <div
-                          class="input-box"
-                        >
-                          <input
-                            class="hint-input border-radius2 padding-l15 float-left"
-                            disabled
-                            v-model="chargeMoneyAddress"
-                          />
-                          <span
-                            class="code-copy cursor-pointer display-inline-block float-left text-align-c"
-                            v-clipboard:copy="chargeMoneyAddress"
-                            v-clipboard:success="onCopy"
-                            v-clipboard:error="onError"
-                          >
-                            <!--复制地址-->
-                            {{ $t('M.comm_copy') }}{{ $t('M.comm_site') }}
-                          </span>
-                        </div>
-                        <div class="recharge-content-title font-size12 margin-top9 float-left">
-                          <!--转账时请务必备注（否则后果自负）：UID-->
-                          <p v-if="isNeedTag == 'true'">
-                            * {{ $t('M.user_assets_recharge_hint0').format([currencyName,currencyName]) }}{{rechargeNoteInfo}}
-                          </p>
-                          <!--禁止充值除 之外的其他资产，任何非 资产充值将不可找回-->
-                          <p>* {{ $t('M.user_assets_recharge_hint1').format([currencyName]) }}</p>
-                          <!--往该地址充值，汇款完成，等待网络自动确认（6个确认）后系统自动到账-->
-                          <p>* {{ $t('M.user_assets_recharge_hint4') }}</p>
-                          <!--为了快速到账，充值时可以适当提高网络手续费-->
-                          <p>* {{ $t('M.user_assets_recharge_hint5') }}</p>
-                        </div>
-                      </div>
-                      <div class='recharge-content-right flex1'>
-                        <p class="recharge-content-code margin-top20 float-left">
-                          <VueQrcode
-                            class="ercode"
-                            :value="chargeMoneyAddress"
-                            :options="{ size: 100 }"
-                          >
-                          </VueQrcode>
-                        </p>
-                        <p
-                          class="code-list text-align-r float-right cursor-pointer font-size12"
-                          @click.prevent="jumpToOtherTab('billing-details')"
-                        >
-                          <!--充值记录-->
-                          {{ $t('M.comm_charge_recharge') }}{{ $t('M.comm_record') }}
-                        </p>
-                      </div>
-                    </div>
+                      <!--充币内容-->
+                      <ChargeMoneyItem
+                        :isShow="withdrawDepositList[index].rechargeIsShow"
+                        :currencyName="currencyName"
+                        :chargeMoneyAddress="chargeMoneyAddress"
+                        :isNeedTag="isNeedTag"
+                        :rechargeNoteInfo="rechargeNoteInfo"
+                        @jumpToOtherTab="jumpToOtherTab"
+                      />
                     </div>
                     <!--提币内容-->
                     <div
                       class="out-box"
                     >
-                      <div
-                      class="recharge-list recharge-list-mention list-mention-treasure"
-                      v-show="withdrawDepositList[index].withdrawDepositIsShow"
-                    >
-                      <p class="triangle triangle-one"></p>
-                        <!--公信宝类提币备注-->
-                      <div
-                        class="mention"
-                        v-if="isNeedTag"
-                      >
-                        <p class="mention-treasure">
-                          <!--地址标签-->
-                          {{ $t('M.user_address_labels') }}
-                          <!--（填写错误可能导致资产损失，请仔细核对）-->
-                          <span class="treasure-info font-size12">({{ $t('M.user_address_labels_prompt') }})</span>
-                        </p>
-                        <input
-                          type="text"
-                          class="input-mention border-radius2 paddinglr15 box-sizing"
-                          v-model="withdrawRemark"
-                        >
-                      </div>
-                      <div class="recharge-list-left display-flex">
-                        <div class="list-left-flex flex1 font-size12">
-                          <div class="flex-box padding-top10">
-                            <p class="left-flex-hint">
-                              {{ currencyName }}
-                              <!--提币地址-->
-                              {{ $t('M.comm_mention_money') }}{{ $t('M.comm_site') }}
-                            </p>
-                            <el-select
-                              v-model="mentionAddressValue"
-                              :no-data-text="$t('M.comm_no_data')"
-                              @change="gitCheckCurrencyAddress"
-                              filterable
-                              allow-create
-                            >
-                              <el-option
-                                v-for="(item, index) in mentionAddressList"
-                                :key="index"
-                                :label="item.address + ' ' + item.withdrawRemark"
-                                :value="item.address"
-                              >
-                              </el-option>
-                            </el-select>
-                            <span
-                              class="new-address cursor-pointer address-bg"
-                              @click.prevent="jumpToOtherTab('mention-address')"
-                            >
-                              <!--新增-->
-                              {{ $t('M.comm_newly_increased') }}
-                            </span>
-                          </div>
-                          <div class="flex-box padding-top20">
-                            <p class="left-flex-hint">
-                              <!--手续费-->
-                              {{ $t('M.comm_service_charge') }}
-                            </p>
-                            <input
-                              type="text"
-                              class="flex-input border-radius2 padding-l15 box-sizing"
-                              ref="withdrawalFee"
-                              @keyup="changeInputValue('withdrawalFee', index, pointLength, 'serviceType')"
-                              @input="changeInputValue('withdrawalFee', index, pointLength, 'serviceType')"
-                            >
-                            <span
-                              class="new-address new-address-currency cursor-pointer"
-                            >
-                              {{ currencyName }}
-                            </span>
-                            <span class="service-charge display-inline-block text-align-r">
-                              {{withdrawalFeeRange.minFees}}
-                              -
-                              {{withdrawalFeeRange.maxFees}}
-                            </span>
-                          </div>
-                        </div>
-                        <div class="count-box flex1 font-size12">
-                          <div class="count-flex-box padding-top10">
-                            <p class="content-flex-hint">
-                              <!--数量-->
-                              {{ $t('M.comm_count') }}
-                            </p>
-                            <input
-                              type="text"
-                              class="count-flex-input border-radius2 paddinglr15 box-sizing text-align-r"
-                              ref="withdrawCount"
-                              @blur="stateBlur('withdrawCount', index)"
-                              @keyup="changeInputValue('withdrawCount', index, pointLength, 'rechargeType')"
-                              @input="changeInputValue('withdrawCount', index, pointLength, 'rechargeType')"
-                            >
-                            <p class="count-flex-text text-align-r">
-                              <span>
-                                <!--限额：-->
-                                {{ $t('M.comm_limit') }}：
-                              </span>
-                              <span>
-                                {{withdrawalFeeRange.minWithdraw}}
-                                -
-                                {{withdrawalFeeRange.maxWithdraw}}
-                              </span>
-                            </p>
-                          </div>
-                          <div class="count-flex-box padding-top20">
-                            <p class="content-flex-hint">
-                              <!--到账数量-->
-                              {{ $t('M.comm_account') }}{{ $t('M.comm_count') }}
-                            </p>
-                            <input
-                              type="text"
-                              disabled
-                              class="count-text-input border-radius2 paddinglr15 box-sizing text-align-r"
-                              v-model="accountCount"
-                            >
-                          </div>
-                        </div>
-                        <div
-                          class="text-info-mention flex1 font-size12"
-                          :class="{
-                            'need-tag-top':isNeedTag
-                          }"
-                        >
-                          <!--提现费率规则：-->
-                          <p class="currency-rule">
-                            <span>{{ currencyName }}</span>
-                            {{ $t('M.user_assets_withdrawal_hint1') }}：
-                          </p>
-                          <!--为了用户资金安全，平台可能会电话确认您的提币操作，请注意接听；-->
-                          <p class="prompt-message">
-                            * {{ $t('M.user_assets_withdrawal_hint2') }}
-                          </p>
-                          <!--充值经过1个确认后，才允许提现；-->
-                          <p class="prompt-message">
-                            * <span>{{ currencyName }}</span>
-                            {{ $t('M.user_assets_withdrawal_hint3') }}
-                          </p>
-                          <!--可提现金额≤账户可用资产-未确认的数字资产。-->
-                          <p class="prompt-message">
-                            * {{ $t('M.user_assets_withdrawal_hint4') }}
-                          </p>
-                          <p class="mention-button">
-                            <button
-                              class="font-size12 submit-but border-radius4 cursor-pointer"
-                              @click.prevent="moneyConfirmState(index)"
-                            >
-                              <!--提币-->
-                              {{ $t('M.comm_mention_money') }}
-                            </button>
-                            <span
-                              class="float-right cursor-pointer"
-                              @click.prevent="jumpToOtherTab('billing-details')"
-                            >
-                          <div
-                            class="false-tips fz14 ml100 mt0 mb20 pl10 tl"
-                            v-show="withdrawErrorMessage"
-                          >
-                            {{withdrawErrorMessage}}
-                          </div>
-                              <!--提币记录-->
-                                {{ $t('M.comm_mention_money') }}{{ $t('M.comm_record') }}
-                          </span>
-                          </p>
-                        </div>
-                      </div>
-                    </div>
+                      <WithdrawDepositItem
+                        :isShow="withdrawDepositList[index].withdrawDepositIsShow"
+                        :isNeedTag="isNeedTag"
+                        :withdrawRemark="withdrawRemark"
+                        :currencyName="currencyName"
+                        :originalActiveWithdrawDepositAddress="originalActiveWithdrawDepositAddress"
+                        :withdrawAddressList="withdrawAddressList"
+                        :feeRangeOfWidthdraw="feeRangeOfWidthdraw"
+                        :index="index"
+                        :accountCount="accountCount"
+                        :pointLengthAccountCount="pointLengthAccountCount"
+                        :ref="`withdrawItemRef${index}`"
+                        :coinId="assetItem.coinId"
+                        @changeInputValue="changeInputValue"
+                        @validateOfWithdraw="validateOfWithdraw"
+                        @checkUserInputAvailable="checkUserInputAvailable"
+                        @jumpToOtherTab="jumpToOtherTab"
+                        @checkCurrencyAddress="checkCurrencyAddress"
+                        @changeWithdrawAddress="changeWithdrawAddress"
+                      />
                     </div>
                   </div>
                 </transition>
@@ -429,7 +232,7 @@
               <!--提币验证-->
               <el-dialog
                 :title="$t('M.comm_mention_money') + $t('M.comm_site')"
-                :visible.sync="mentionMoneyConfirm"
+                :visible.sync="isShowWithdrowDialog"
               >
                 <el-form
                   :label-position="labelPosition"
@@ -586,7 +389,8 @@ import UserInfo from '../AccountBalance/UserInfo'
 // 字体图标
 import IconFontCommon from '../../Common/IconFontCommon'
 import CountDownButton from '../../Common/CountDownCommon'
-import VueClipboard from 'vue-clipboard2'
+import ChargeMoneyItem from './ChargeMoneyItem'
+import WithdrawDepositItem from './WithdrawDepositItem'
 import {
   formatNumberInput,
   amendPrecision
@@ -608,22 +412,18 @@ import {
   getNestedData
 } from '../../../utils/commonFunc'
 const { mapMutations } = createNamespacedHelpers('user')
-Vue.use(VueClipboard)
 export default {
   components: {
+    WithdrawDepositItem, // 提币 item
+    ChargeMoneyItem, // 充币 item
     UserInfo, // 我的资产
     IconFontCommon, // 字体图标
-    CountDownButton, // 短信倒计时
-    // 二维码组件
-    VueQrcode: resolve => {
-      require([('@xkeshi/vue-qrcode')], resolve)
-    }
+    CountDownButton // 短信倒计时
   },
   // props,
   data () {
     return {
       labelPosition: 'top', // form表单label方向
-      withdrawErrorMessage: '', // 提币input错误提示
       errorMessage: '', // 提币验证错误提示
       showStatusButton: true, // 显示币种
       hideStatusButton: false, // 隐藏币种// 显示所有/余额切换，
@@ -633,7 +433,7 @@ export default {
       withdrawDepositList: [], // 我的资产全部币种列表
       chargeMoneyAddress: '', // 根据充币地址生成二维码条件
       withdrawalFee: '', // 自定义提币手续费
-      withdrawalFeeRange: {}, // 提币手续费范围
+      feeRangeOfWidthdraw: {}, // 提币手续费范围
       withdrawCount: '', // 提币数量
       accountCount: '', // 自定义到账数量
       tradingState: false, // 跳转交易对默认不显示
@@ -649,21 +449,19 @@ export default {
       currencyName: '', // 币种名称
       // 提币
       securityCenter: {}, // 安全中心状态获取
-      mentionDialogVisible: false, // 默认隐藏提币框
-      mentionMoneyAddressId: '', // 每行数据ID
-      mentionMoneyName: '', // 每行数据币种名称
-      mentionAddressValue: '', // 每行数据提币地址
+      activeCoinId: '', // 每行数据ID
+      activeWithdrawDepositAddress: '', // 当前提币地址
       withdrawRemark: '', // 每行数据提币地址备注
-      withdrawAmount: '', // 数量
-      withdrawService: '', // 手续费
-      pointLength: 4, // 小数为限制
-      mentionMoneyConfirm: false, // 默认提币确认弹窗
+      withdrawCountVModel: '', // 数量
+      withdrawFeeVModel: '', // 手续费
+      pointLengthAccountCount: 4, // 提币数量小数位限制
+      isShowWithdrowDialog: false, // 默认提币确认弹窗
       phoneCode: '', // 邮箱验证
       emailCode: '', // 手机验证
       googleCode: '', // 谷歌验证
       password: '', // 交易密码
       // 提币地址列表
-      mentionAddressList: [], // 查询提币地址列表
+      withdrawAddressList: [], // 查询提币地址列表
       activeCurrency: {}, // 当前选中币种
       totalSumBTC: '', // 资产总估值BTC
       isRecharge: '', // 是否允许充币
@@ -676,20 +474,17 @@ export default {
       isNeedTag: false, // 是否需要转账提示标签
       rechargeNoteInfo: '', // 充币地址备注信息
       localLoading: true, // 页面列表局部loading
+      isLegalWithdrawAddress: true, // 是否为合法提币地址
       end: '' // 占位
     }
   },
   created () {
-    // 覆盖Element样式
-    require('../../../../static/css/list/Personal/AccountBalance/AccountAssets.css')
-    // 白色主题样式
-    require('../../../../static/css/theme/day/Personal/AccountBalance/AccountAssetsDay.css')
-    // 黑色主题样式
-    require('../../../../static/css/theme/night/Personal/AccountBalance/AccountAssetsNight.css')
     // 刚进页面时候 个人资产列表展示
     this.getAssetCurrenciesList()
   },
-  mounted () {},
+  mounted () {
+    console.log(this.$refs)
+  },
   activited () {},
   update () {},
   beforeRouteUpdate () {},
@@ -798,40 +593,52 @@ export default {
       this.$router.push({'path': '/TradeCenter'})
     },
     // 修改input value 输入限制
-    changeInputValue (ref, index, pointLength, val) {
+    changeInputValue ({ref, index, pointLengthAccountCount, val}) {
       // 获取ref中input值
-      this[ref] = this.$refs[ref].value
+      // this[ref] = this.$refs[ref].value
       // 限制数量小数位位数
-      let target = this.$refs[ref][index]
-      formatNumberInput(target, pointLength)
-      let targetCount = amendPrecision(this.$refs.withdrawCount[index].value, this.$refs.withdrawalFee[index].value, '-')
+      let target = this.$refs[`withdrawItemRef${index}`][0].$refs[ref]
+      formatNumberInput(target, pointLengthAccountCount)
+      let targetCount = amendPrecision(
+        this.$refs[`withdrawItemRef${index}`][0].$refs.countInputRef.value,
+        this.$refs[`withdrawItemRef${index}`][0].$refs.feeInputRef.value,
+        '-'
+      )
       console.log(this.accountCount)
       this.accountCount = targetCount > 0 ? targetCount : 0
       // 判断是输入时还是手续费 判断错误提示
       if (val === 'rechargeType') {
-        // console.log(this.withdrawAmount)
+        // console.log(this.withdrawCountVModel)
         // console.log(this.$refs.withdrawCount[index].value)
       } else if (val === 'serviceType') {
         // 获取输入手续费
-        this.withdrawService = this.$refs.withdrawalFee[index].value
+        this.withdrawFeeVModel = this.$refs[`withdrawItemRef${index}`][0].$refs.feeInputRef.value
       }
     },
     // 失去焦点判断输入提币数量不能大于可用量 否则显示总可用量
-    stateBlur (ref, index) {
+    checkUserInputAvailable (data) {
+      let {index} = data
       // 获取ref中input值
-      this[ref] = this.$refs[ref].value
+      // this[ref] = this.$refs[ref].value
       // 获取输入数量
-      this.withdrawAmount = this.$refs.withdrawCount[index].value
-      // console.log(this.withdrawAmount)
-      if (this.withdrawAmount - 0 > this.withdrawDepositList[index].total - 0) {
-        this.$refs.withdrawCount[index].value = this.withdrawDepositList[index].total - 0
+      // this.withdrawCountVModel = this.$refs.withdrawCount[index].value
+      console.log(this.$refs[`withdrawItemRef${index}`][0].$refs.countInputRef.value)
+      this.withdrawCountVModel = this.$refs[`withdrawItemRef${index}`][0].$refs.countInputRef.value
+      // console.log(this.withdrawCountVModel)
+      console.log(this.withdrawDepositList[index].total)
+      if (this.withdrawCountVModel - 0 > this.withdrawDepositList[index].total - 0) {
+        this.$refs[`withdrawItemRef${index}`][0].$refs.countInputRef.value = this.withdrawDepositList[index].total - 0
+        this.withdrawCountVModel = this.withdrawDepositList[index].total - 0
       }
-      this.withdrawAmount = this.$refs.withdrawCount[index].value
-      let targetCount = amendPrecision(this.$refs.withdrawCount[index].value, this.$refs.withdrawalFee[index].value, '-')
+      // this.withdrawCountVModel = this.$refs.withdrawCount[index].value
+      // let targetCount = amendPrecision(this.$refs.withdrawCount[index].value, this.$refs.withdrawalFee[index].value, '-')
+      let targetCount = amendPrecision(this.withdrawCountVModel, this.$refs[`withdrawItemRef${index}`][0].$refs.feeInputRef.value, '-')
+      console.log(targetCount)
       this.accountCount = targetCount > 0 ? targetCount : 0
     },
     // 点击充币按钮显示充币内容（带回币种id 币种名称 当前index）
     async showRechargeBox (id, name, index) {
+      console.log(name)
       // 显示充值框
       this.chargeDialogVisible = true
       // 每行数据ID
@@ -862,25 +669,28 @@ export default {
       // 调用充币地址方法
       await this.fillingCurrencyAddress()
     },
-    // 点击提现按钮显示提币内容（带回币种id 币种名称 当前index）
-    mentionMoneyButton (id, name, index) {
-      // 提币数量
-      this.$refs.withdrawCount[index].value = ''
-      this.withdrawAmount = ''
+    // 重置提现表单内容
+    resetWithdrawFormContent (index) {
+      this.$refs[`withdrawItemRef${index}`][0].$refs.countInputRef.value = ''
       // 到账数量
       this.accountCount = ''
       // 提币地址
-      this.mentionAddressValue = ''
+      this.activeWithdrawDepositAddress = ''
       // 地址标签备注
       this.withdrawRemark = ''
-      // 显示充值框
-      this.mentionDialogVisible = true
-      // 每行数据ID
-      this.mentionMoneyAddressId = id
+    },
+    // 点击提现按钮显示提币内容（带回币种id 币种名称 当前index）
+    changeWithdrawBoxByCoin (id, name, index) {
+      // 提币数量
+      // this.$refs.withdrawCount[index].value = ''
+      this.resetWithdrawFormContent(index)
+
+      // 当前币种id
+      this.activeCoinId = id
+      this.currencyName = name
       // 每行数据币种名
-      this.mentionMoneyName = name
       // 隐藏验证弹窗
-      this.mentionMoneyConfirm = false
+      this.isShowWithdrowDialog = false
       // 循环列表 隐藏充值或提现框
       this.withdrawDepositList.forEach((item) => {
         item.rechargeIsShow = false
@@ -900,7 +710,7 @@ export default {
       this.getSecurityCenter()
     },
     // 显示交易对跳转币种信息
-    enter (id, index) {
+    showSymbolJumpList (id, index) {
       this.currencyTradingId = id
       this.tradingState = true
       this.current = index
@@ -916,9 +726,7 @@ export default {
     },
     // 发送验证码
     sendPhoneOrEmailCode (loginType) {
-      console.log(loginType)
-      // console.log(this.disabledOfPhoneBtn)
-      // console.log(this.disabledOfEmailBtn)
+      console.log(this.disabledOfPhoneBtn, this.disabledOfEmailBtn)
       if (this.disabledOfPhoneBtn || this.disabledOfEmailBtn) {
         return false
       }
@@ -991,8 +799,10 @@ export default {
     },
     // 根据币种id查询提币地址
     async queryWithdrawalAddressList () {
+      this.activeWithdrawDepositAddress = ''
+      this.withdrawAddressList = []
       let data = await inquireWithdrawalAddressId({
-        coinId: this.mentionMoneyAddressId
+        coinId: this.activeCoinId
       })
       this.fullscreenLoading = true
       console.log(data)
@@ -1001,34 +811,35 @@ export default {
         this.fullscreenLoading = false
         return false
       } else {
-        // let withdrawalAddressData = data.
         let withdrawalAddressData = getNestedData(data, 'data.data')
         // 接口成功清除loading
         this.fullscreenLoading = false
         // 对币种类型进行赋值 true公信宝类 false普通币种
         this.isNeedTag = withdrawalAddressData.needTag
         // 返回列表数据并渲染币种列表
-        // this.mentionAddressList = withdrawalAddressData.userWithdrawAddressListVO.userWithdrawAddressDtoList
-        this.mentionAddressList = getNestedData(withdrawalAddressData, 'userWithdrawAddressListVO.userWithdrawAddressDtoList')
-        this.mentionAddressValue = getNestedData(withdrawalAddressData, 'userWithdrawAddressListVO.userWithdrawAddressDtoList[0].address')
+        // this.withdrawAddressList = withdrawalAddressData.userWithdrawAddressListVO.userWithdrawAddressDtoList
+        this.withdrawAddressList = getNestedData(withdrawalAddressData, 'userWithdrawAddressListVO.userWithdrawAddressDtoList')
+        console.log(this.withdrawAddressList)
+        this.activeWithdrawDepositAddress = getNestedData(withdrawalAddressData, 'userWithdrawAddressListVO.userWithdrawAddressDtoList[0].address') || ''
       }
     },
     // select框自定义提币地址校验地址
     // 新增用户提币地址校验
-    async gitCheckCurrencyAddress () {
-      let data
+    async checkCurrencyAddress () {
       let param = {
-        coinId: this.mentionMoneyAddressId, // 币种coinId
-        address: this.mentionAddressValue
+        coinId: this.activeCoinId, // 币种coinId
+        address: this.activeWithdrawDepositAddress
       }
       // 整页loading
       this.fullscreenLoading = true
-      data = await checkCurrencyAddress(param)
-      if (!(returnAjaxMsg(data, this, 0))) {
+      let data = await checkCurrencyAddress(param)
+      if (!(returnAjaxMsg(data, this))) {
+        this.isLegalWithdrawAddress = false
         // 接口失败清除loading
         this.fullscreenLoading = false
         return false
       } else {
+        this.isLegalWithdrawAddress = true
         // 接口成功清除loading
         this.fullscreenLoading = false
         // 验证通过调用验证方式接口
@@ -1040,7 +851,7 @@ export default {
      */
     async getWithdrawalInformation (index) {
       let data = await withdrawalInformation({
-        coinId: this.mentionMoneyAddressId
+        coinId: this.activeCoinId
       })
       // 整页loading
       this.fullscreenLoading = true
@@ -1053,14 +864,13 @@ export default {
         // 接口成功清除loading
         this.fullscreenLoading = false
         // 返回列表数据
-        // this.withdrawalFeeRange = data.data.data
-        this.withdrawalFeeRange = getNestedData(data, 'data.data')
+        // this.feeRangeOfWidthdraw = data.data.data
+        this.feeRangeOfWidthdraw = getNestedData(data, 'data.data')
         // this.serviceCharge = data.data.data.minFees
         this.withdrawalFee = getNestedData(data, 'data.data.minFees')
-        console.log(this.$refs.withdrawalFee[index])
-        console.log(this.$refs.withdrawalFee, index)
-        this.$refs.withdrawalFee[index].value = this.withdrawalFee
-        this.withdrawService = this.$refs.withdrawalFee[index].value
+        this.$refs[`withdrawItemRef${index}`][0].$refs.feeInputRef.value = this.withdrawalFee
+        // this.$refs.withdrawalFee[index].value = this.withdrawalFee
+        this.withdrawFeeVModel = this.withdrawalFee
       }
     },
     /**
@@ -1092,10 +902,16 @@ export default {
         console.log(this.chargeMoneyAddress)
       }
     },
+    // 当前提币地址改变回调
+    changeWithdrawAddress ({activeWithdrawDepositAddress}) {
+      this.activeWithdrawDepositAddress = activeWithdrawDepositAddress
+      this.checkCurrencyAddress()
+    },
     /**
-    * 点击提币按钮 验证
-    * */
-    moneyConfirmState (index) {
+     * 点击提币按钮 验证
+     * */
+    validateOfWithdraw (index) {
+      this.isShowWithdrowDialog = false
       console.log(index)
       if (this.isNeedTag) {
         if (!this.withdrawRemark) {
@@ -1104,49 +920,69 @@ export default {
             message: this.$t('M.comm_please_enter') + this.$t('M.comm_address_labels'),
             type: 'error'
           })
-          this.mentionMoneyConfirm = false
         }
       }
-      console.log(this.mentionAddressValue)
-      if (!this.mentionAddressValue) {
+      console.log(this.activeWithdrawDepositAddress)
+      if (!this.activeWithdrawDepositAddress) {
         // 请选择提币地址
         this.$message({
           message: this.$t('M.comm_please_choose') + this.$t('M.comm_mention_money') + this.$t('M.comm_site'),
           type: 'error'
         })
-        this.mentionMoneyConfirm = false
+        return false
+      } else if (!this.isLegalWithdrawAddress) {
+        // 提币地址不合法
+        this.$message({
+          message: this.$t('M.account_failure_00127'),
+          type: 'error'
+        })
         return false
       }
-      if (!this.withdrawAmount) {
+
+      if (!this.withdrawCountVModel) {
         // 请输入提币数量
         this.$message({
           message: this.$t('M.comm_please_enter') + this.$t('M.comm_mention_money') + this.$t('M.comm_count'),
           type: 'error'
         })
-        this.mentionMoneyConfirm = false
         return false
       }
-      if (!this.withdrawService) {
+      if (!this.withdrawFeeVModel) {
         // 请输入手续费
         this.$message({
           message: this.$t('M.comm_please_enter') + this.$t('M.comm_service_charge'),
           type: 'error'
         })
-        this.mentionMoneyConfirm = false
         return false
       }
       console.log(this.accountCount)
-      if (this.withdrawService < this.withdrawalFeeRange.minFees) {
+      if (this.withdrawFeeVModel < this.feeRangeOfWidthdraw.minFees) {
         // 判断输入手续费小于最小提现手续费
         this.$message({
           message: this.$t('M.user_assets_withdrawal_hint5'),
           type: 'error'
         })
         return false
-      } else if (this.withdrawService > this.withdrawalFeeRange.maxFees) {
+      } else if (this.withdrawFeeVModel > this.feeRangeOfWidthdraw.maxFees) {
         // // 判断输入手续费大于于最大提现手续费
         this.$message({
           message: this.$t('M.user_assets_withdrawal_hint6'),
+          type: 'error'
+        })
+        return false
+      }
+      console.log(this.withdrawFeeVModel, this.feeRangeOfWidthdraw)
+      if (this.withdrawCountVModel > this.feeRangeOfWidthdraw.maxWithdraw) {
+        // 大于最大限额
+        this.$message({
+          message: this.$t('M.user_assets_withdrawal_hint8'),
+          type: 'error'
+        })
+        return false
+      } else if (this.withdrawCountVModel < this.feeRangeOfWidthdraw.minWithdraw) {
+        // 小于最小限额
+        this.$message({
+          message: this.$t('M.user_assets_withdrawal_hint9'),
           type: 'error'
         })
         return false
@@ -1162,7 +998,7 @@ export default {
       if (!this.userInfo.userInfo.payPassword) {
         this.dialogVisible = true
       } else {
-        this.mentionMoneyConfirm = true
+        this.isShowWithdrowDialog = true
       }
     },
     confirm () {
@@ -1186,11 +1022,11 @@ export default {
         msgCode: this.phoneCode, // 短信验证码
         emailCode: this.emailCode, // 邮箱验证码
         googleCode: this.googleCode, // 谷歌验证码
-        coinId: this.mentionMoneyAddressId, // 币种ID
-        withdrawAddress: this.mentionAddressValue,
+        coinId: this.activeCoinId, // 币种ID
+        withdrawAddress: this.activeWithdrawDepositAddress,
         remark: this.withdrawRemark, // 提币地址
-        networkFees: this.withdrawService, // 手续费
-        amount: this.withdrawAmount, // 提币数量
+        networkFees: this.withdrawFeeVModel, // 手续费
+        amount: this.withdrawCountVModel, // 提币数量
         payCode: this.password // 交易密码
       }
       // 整页loading
@@ -1203,10 +1039,11 @@ export default {
       } else {
         // 接口成功清除loading
         this.fullscreenLoading = false
-        this.mentionMoneyConfirm = false
+        this.isShowWithdrowDialog = false
         // 提币地址列表查询
         this.getAssetCurrenciesList()
-        this.stateEmptyData()
+        // this.stateEmptyData()
+        this.resetWithdrawFormContent()
       }
     },
     // 接口请求完成之后普通币种清空数据
@@ -1218,27 +1055,14 @@ export default {
       this.$refs.withdrawalFee[index].value = ''
       this.$refs.withdrawCount[index].value = ''
       this.accountCount = ''
-      this.mentionAddressValue = ''
+      this.activeWithdrawDepositAddress = ''
     },
-    jumpToOtherTab (target) {
+    jumpToOtherTab ({target, coinId}) {
       this.$store.commit('personal/CHANGE_USER_CENTER_ACTIVE_NAME', target)
-    },
-    //  点击复制
-    onCopy (e) {
-      // 已拷贝
-      let msg = this.$t('M.comm_have_been_copied')
-      this.$message({
-        type: 'success',
-        message: msg
-      })
-    },
-    onError (e) {
-      // 拷贝失败，请稍后重试
-      let msg = this.$t('M.comm_copies_failure')
-      this.$message({
-        type: 'success',
-        message: msg
-      })
+      // 指定要跳转到的coinId
+      if (coinId) {
+        this.$store.commit('personal/SET_NEW_WITHDRAW_ADDRESS', coinId)
+      }
     },
     /**
      * 安全中心
@@ -1283,7 +1107,19 @@ export default {
       disabledOfPhoneBtn: state => state.user.disabledOfPhoneBtn,
       disabledOfEmailBtn: state => state.user.disabledOfEmailBtn,
       userCenterActiveName: state => state.personal.userCenterActiveName
-    })
+    }),
+    // 提现手续费输入input ref
+    feeInputRef () {
+      return this.$refs[`withdrawItemRef${index}`][0].$refs.feeInputRef
+    },
+    // 提现数量输入 input ref
+    countInputRef () {
+      return this.$refs[`withdrawItemRef${index}`][0].$refs.countInputRef
+    },
+    // 提币地址初始化赋值
+    originalActiveWithdrawDepositAddress () {
+      return this.activeWithdrawDepositAddress
+    }
   },
   watch: {
     userCenterActiveName (newVal) {
@@ -1292,279 +1128,296 @@ export default {
         this.getAssetCurrenciesList()
       }
     },
-    mentionAddressValue (newVal) {
+    activeWithdrawDepositAddress (newVal) {
       console.log(newVal)
     }
   }
 }
 </script>
-<style scoped lang="scss">
-@import "../../../../static/css/scss/Personal/IndexPersonal";
+<style scoped lang="scss" type="text/scss">
+  @import "../../../../static/css/scss/Personal/IndexPersonal";
 
-.account-assets {
-  > .account-assets-main {
-    > .account-assets-box {
-      min-height: 480px;
+  .account-assets {
+    > .account-assets-main {
+      > .account-assets-box {
+        min-height: 480px;
 
-      .account-assets-header {
-        > .header-flex {
-          height: 100%;
+        .account-assets-header {
+          > .header-flex {
+            height: 100%;
 
-          > .header-right-left {
-            > .header-right-text {
-              width: 200px;
+            > .header-right-left {
+              > .header-right-text {
+                width: 200px;
 
-              > .header-right-show {
-                line-height: 50px;
+                > .header-right-show {
+                  line-height: 50px;
+                }
               }
             }
-          }
 
-          > .header-right-right {
-            position: relative;
+            > .header-right-right {
+              position: relative;
 
-            .header-right-search {
-              box-sizing: border-box;
-              width: 140px;
-              height: 26px;
-            }
+              .header-right-search {
+                box-sizing: border-box;
+                width: 140px;
+                height: 26px;
+              }
 
-            > .icon-color {
-              position: absolute;
-              top: 12px;
-              left: 95px;
+              > .icon-color {
+                position: absolute;
+                top: 12px;
+                left: 95px;
+              }
             }
           }
         }
-      }
 
-      > .account-assets-content {
-        > .content-list {
-          > .table-body {
-            width: 100%;
+        > .account-assets-content {
+          > .content-list {
+            > .table-body {
+              width: 100%;
 
-            .error-info {
-              height: 20px;
-              line-height: 35px;
-              color: #d45858;
-            }
-
-            .button-color {
-              width: 80px;
-              height: 35px;
-              margin: 0 15px 0 50px;
-              border: 0;
-              line-height: 0;
-            }
-
-            .btn {
-              width: 80px;
-              height: 35px;
-              line-height: 0;
-            }
-
-            .flex-asset {
-              position: relative;
-              text-align: left;
-            }
-
-            .icon-caret {
-              position: absolute;
-              top: 0;
-              right: 40px;
-
-              .caret-text {
-                position: absolute;
-                top: 23px;
-                left: 5px;
+              .error-info {
+                height: 20px;
+                line-height: 35px;
+                color: #d45858;
               }
 
-              .caret-text1 {
-                position: absolute;
-                top: 15px;
-                left: 5px;
+              .button-color {
+                width: 80px;
+                height: 35px;
+                margin: 0 15px 0 50px;
+                border: 0;
+                line-height: 0;
               }
-            }
 
-            > .table-tr {
-              > .table-box {
-                width: 100%;
+              .btn {
+                width: 80px;
+                height: 35px;
+                line-height: 0;
+              }
 
-                > .recharge-list-mention {
-                  height: 236px !important;
+              .flex-asset {
+                position: relative;
+                text-align: left;
+              }
+
+              .icon-caret {
+                position: absolute;
+                top: 0;
+                right: 40px;
+
+                .caret-text {
+                  position: absolute;
+                  top: 23px;
+                  left: 5px;
                 }
 
-                > .list-mention-treasure {
-                  height: 295px !important;
+                .caret-text1 {
+                  position: absolute;
+                  top: 15px;
+                  left: 5px;
                 }
+              }
 
-                > .out-box {
-                  > .recharge-list {
-                    position: relative;
-                    z-index: 2;
-                    padding: 20px 6px;
+              > .table-tr {
+                > .table-box {
+                  width: 100%;
 
-                    > .triangle {
-                      position: absolute;
-                      top: -7px;
-                      right: 113px;
-                      width: 12px;
-                      height: 12px;
-                      -ms-transform: rotate(135deg);
-                      -moz-transform: rotate(135deg);
-                      -webkit-transform: rotate(135deg);
-                      -o-transform: rotate(135deg);
-                      transform: rotate(135deg);
-                    }
+                  > .recharge-list-mention {
+                    height: 236px !important;
+                  }
 
-                    > .triangle-one {
-                      right: 55px;
-                    }
+                  > .list-mention-treasure {
+                    height: 295px !important;
+                  }
 
-                    > .mention {
-                      width: 100%;
-                      padding: 5px 0 0;
+                  > .out-box {
+                    > .recharge-list {
+                      position: relative;
+                      z-index: 2;
+                      padding: 20px 6px;
 
-                      > .mention-treasure {
-                        height: 20px;
-                        line-height: 20px;
-                        color: #338ff5;
+                      > .triangle {
+                        position: absolute;
+                        top: -7px;
+                        right: 113px;
+                        width: 12px;
+                        height: 12px;
+                        -ms-transform: rotate(135deg);
+                        -moz-transform: rotate(135deg);
+                        -webkit-transform: rotate(135deg);
+                        -o-transform: rotate(135deg);
+                        transform: rotate(135deg);
+                      }
 
-                        > .treasure-info {
-                          color: #d45858;
+                      > .triangle-one {
+                        right: 55px;
+                      }
+
+                      > .mention {
+                        width: 100%;
+                        padding: 5px 0 0;
+
+                        > .mention-treasure {
+                          height: 20px;
+                          line-height: 20px;
+                          color: #338ff5;
+
+                          > .treasure-info {
+                            color: #d45858;
+                          }
+                        }
+
+                        > .input-mention {
+                          width: 640px;
+                          height: 34px;
                         }
                       }
 
-                      > .input-mention {
-                        width: 640px;
-                        height: 34px;
-                        color: #fff;
-                        background-color: #2d3651;
-                      }
-                    }
+                      > .recharge-content {
+                        flex: 2;
+                        padding: 0 20px;
 
-                    > .recharge-content {
-                      flex: 2;
-                      padding: 0 20px;
-
-                      > .recharge-content-hint {
-                        height: 20px;
-                        margin-bottom: 5px;
-                        line-height: 20px;
-                      }
-
-                      > .input-box {
-                        > .hint-input {
-                          width: 430px;
-                          height: 32px;
+                        > .recharge-content-hint {
+                          height: 20px;
+                          margin-bottom: 5px;
+                          line-height: 20px;
                         }
 
-                        > .code-copy {
-                          width: 89px;
-                          height: 32px;
-                          border-radius: 0 2px 2px 0;
-                          line-height: 32px;
+                        > .input-box {
+                          > .hint-input {
+                            width: 430px;
+                            height: 32px;
+                          }
+
+                          > .code-copy {
+                            width: 89px;
+                            height: 32px;
+                            border-radius: 0 2px 2px 0;
+                            line-height: 32px;
+                          }
+                        }
+
+                        > .recharge-content-title {
+                          width: 584px;
+                          line-height: 18px;
                         }
                       }
 
-                      > .recharge-content-title {
-                        width: 584px;
-                        line-height: 18px;
+                      > .recharge-content-right {
+                        > .recharge-content-code {
+                          box-sizing: border-box;
+                          width: 110px;
+                          height: 110px;
+                          padding: 5px;
+                        }
+
+                        > .code-list {
+                          padding-right: 10px;
+                          margin-top: 110px;
+                        }
                       }
-                    }
 
-                    > .recharge-content-right {
-                      > .recharge-content-code {
-                        box-sizing: border-box;
-                        width: 110px;
-                        height: 110px;
-                        padding: 5px;
-                      }
+                      > .recharge-list-left {
+                        flex: 2;
+                        height: 196px;
 
-                      > .code-list {
-                        padding-right: 10px;
-                        margin-top: 110px;
-                      }
-                    }
+                        > .list-left-flex {
+                          > .flex-box {
+                            position: relative;
+                            height: 80px;
 
-                    > .recharge-list-left {
-                      flex: 2;
-                      height: 196px;
+                            > .left-flex-hint {
+                              line-height: 20px;
+                            }
 
-                      > .list-left-flex {
-                        > .flex-box {
+                            > .service-charge {
+                              position: absolute;
+                              top: 70px;
+                              right: 0;
+                              width: 100%;
+                              height: 20px;
+                            }
+
+                            > .flex-input,
+                            > .text-input {
+                              width: 350px;
+                              height: 34px;
+                            }
+
+                            > .new-address {
+                              position: absolute;
+                              top: 38px;
+                              right: 1px;
+                              width: 35px;
+                              height: 34px;
+                              line-height: 34px;
+                              text-align: center;
+                            }
+
+                            > .new-address-currency {
+                              top: 49px;
+                            }
+                          }
+                        }
+
+                        > .count-box {
+                          padding-left: 15px;
+
+                          > .count-flex-box {
+                            height: 80px;
+
+                            > .content-flex-hint,
+                            > .count-flex-text {
+                              line-height: 20px;
+                            }
+
+                            > .count-flex-input,
+                            > .count-text-input {
+                              width: 275px;
+                              height: 34px;
+                            }
+                          }
+                        }
+
+                        > .text-info-mention {
                           position: relative;
-                          height: 80px;
+                          top: -20px;
+                          padding-left: 15px;
 
-                          > .left-flex-hint {
-                            line-height: 20px;
+                          &.need-tag-top {
+                            top: -45px;
                           }
 
-                          > .service-charge {
-                            position: absolute;
-                            top: 70px;
-                            right: 0;
-                            width: 100%;
-                            height: 20px;
+                          > .currency-rule,
+                          > .prompt-message {
+                            line-height: 25px;
                           }
 
-                          > .flex-input,
-                          > .text-input {
-                            width: 350px;
-                            height: 34px;
-                          }
+                          > .mention-button {
+                            margin-top: 41px;
 
-                          > .new-address {
-                            position: absolute;
-                            top: 38px;
-                            right: 1px;
-                            width: 35px;
-                            height: 34px;
-                            line-height: 34px;
-                            text-align: center;
-                          }
-
-                          > .new-address-currency {
-                            top: 49px;
+                            > .submit-but {
+                              width: 80px;
+                              height: 34px;
+                            }
                           }
                         }
                       }
 
-                      > .count-box {
-                        padding-left: 15px;
-
-                        > .count-flex-box {
-                          height: 80px;
-
-                          > .content-flex-hint,
-                          > .count-flex-text {
-                            line-height: 20px;
-                          }
-
-                          > .count-flex-input,
-                          > .count-text-input {
-                            width: 275px;
-                            height: 34px;
-                          }
-                        }
-                      }
-
-                      > .text-info-mention {
-                        position: relative;
-                        top: -20px;
-                        padding-left: 15px;
-
-                        &.need-tag-top {
-                          top: -45px;
-                        }
+                      > .text-info {
+                        padding: 20px 0 0 15px;
 
                         > .currency-rule,
                         > .prompt-message {
-                          line-height: 25px;
+                          line-height: 16px;
                         }
 
                         > .mention-button {
-                          margin-top: 41px;
+                          margin-top: 8px;
 
                           > .submit-but {
                             width: 80px;
@@ -1573,246 +1426,336 @@ export default {
                         }
                       }
                     }
+                  }
+                }
+              }
 
-                    > .text-info {
-                      padding: 20px 0 0 15px;
+              .content-input {
+                width: 180px;
+                height: 34px;
+              }
 
-                      > .currency-rule,
+              .input-google {
+                width: 270px;
+              }
+
+              .send-code-btn {
+                position: absolute;
+                z-index: 999;
+                top: 4px;
+                right: 2px;
+                width: 95px;
+                height: 34px;
+              }
+            }
+          }
+        }
+
+        .table-deal {
+          position: relative;
+
+          .type-transaction {
+            position: absolute;
+            z-index: 2;
+            top: 10px;
+            left: 56px;
+            width: 135px;
+
+            > .triangle-border {
+              position: absolute;
+              top: 6px;
+              left: -8px;
+            }
+
+            > .transaction-list {
+              height: 30px;
+              line-height: 30px;
+            }
+          }
+        }
+      }
+    }
+
+    /deep/ {
+      /* tabs组件出现蓝色边框问题 */
+      .el-tabs__active-bar {
+        height: 0 !important;
+      }
+
+      .el-switch__core {
+        width: 32px !important;
+        height: 15px;
+        border: 0;
+      }
+
+      .el-switch__core::after {
+        width: 14px;
+        height: 14px;
+        margin-left: -14px;
+      }
+
+      .el-input-group__append {
+        width: 89px;
+        height: 30px;
+        border: 0;
+      }
+
+      .el-input__inner {
+        width: 350px;
+        height: 34px;
+        border: 0;
+        border-radius: 2px;
+      }
+
+      .el-input__icon {
+        display: none;
+      }
+
+      .el-dialog {
+        width: 325px;
+      }
+
+      .el-dialog__header {
+        height: 50px;
+        padding: 10px 20px;
+        border-radius: 5px;
+        line-height: 30px;
+      }
+
+      .el-dialog__body {
+        padding: 25px 27px 0;
+        line-height: 25px;
+      }
+
+      .el-form-item {
+        height: 85px;
+        margin-bottom: 0;
+      }
+
+      .el-dialog__title {
+        font-size: 16px;
+      }
+
+      .el-button {
+        width: 270px;
+        height: 34px;
+        padding: 0;
+        border: 0;
+      }
+
+      .el-form-item__label {
+        float: none;
+        height: 20px;
+        padding: 0;
+        line-height: 20px;
+        text-align: left;
+      }
+
+      .el-dialog__footer {
+        padding: 0 27px 25px;
+        text-align: left;
+      }
+
+      .el-table {
+        width: 968px !important;
+        margin-left: 2px;
+      }
+    }
+
+    &.night {
+      color: $nightFontColor;
+      background-color: $nightBgColor;
+
+      .account-assets-box {
+        background-color: $nightMainBgColor;
+
+        .account-assets-header {
+          box-shadow: 0 2px 13px rgba(24, 30, 42, 1);
+
+          > .header-left {
+            color: #338ff5;
+          }
+
+          > .header-right {
+            > .header-right-right {
+              > .header-right-search {
+                color: #fff;
+                background-color: #2d3651;
+              }
+            }
+          }
+        }
+
+        .table-body {
+          > .table-title-th {
+            border-bottom: 1px solid #39424d;
+            color: #a9bed4;
+          }
+
+          .info {
+            color: #fff;
+          }
+
+          .button-color {
+            color: rgba(255, 255, 255, .7);
+            background: linear-gradient(81deg, rgba(43, 57, 110, 1) 0%, rgba(42, 80, 130, 1) 100%);
+          }
+
+          .btn {
+            border: 1px solid #338ff5;
+            background-color: transparent;
+          }
+
+          > .table-tr {
+            > .table-box {
+              > .table-td {
+                color: #9da5b3;
+
+                .money-color {
+                  color: #9da5b3;
+                }
+
+                .table-charge-money,
+                .table-mention-money,
+                .money-color {
+                  margin-right: 10px;
+                }
+
+                > .table-charge-money,
+                > .table-mention-money,
+                > .table-deal {
+                  color: #3e79d6;
+
+                  > .type-transaction {
+                    background-color: #2a3242;
+
+                    > .triangle-border {
+                      border-top: 8px solid transparent;
+                      border-bottom: 8px solid transparent;
+                      border-right: 8px solid #2a3242;
+                    }
+
+                    > .transaction-list {
+                      color: #7a8093;
+
+                      &:hover {
+                        color: #3e79d6;
+                      }
+                    }
+                  }
+                }
+              }
+
+              .input-mention {
+                color: #fff;
+                background-color: #2d3651;
+              }
+
+              > .out-box {
+                > .recharge-list {
+                  border: 1px solid #338ff5;
+
+                  > .triangle {
+                    border-top: 1px solid transparent;
+                    border-bottom: 1px solid #338ff5;
+                    border-left: 1px solid #338ff5;
+                    background-color: #1c1f32;
+                    border-right: 1px solid transparent;
+                  }
+
+                  > .recharge-content {
+                    > .recharge-content-hint {
+                      color: #338ff5;
+                    }
+
+                    > .input-box {
+                      > .hint-input {
+                        color: #fff;
+                        background-color: #2d3651;
+                      }
+
+                      > .code-copy {
+                        color: #fff;
+                        background-color: #338ff5;
+                      }
+                    }
+
+                    > .recharge-content-title {
+                      color: #d45858;
+                    }
+                  }
+
+                  > .recharge-content-right {
+                    > .recharge-content-code {
+                      background-color: #fff;
+                    }
+                  }
+
+                  > .recharge-list-left {
+                    > .list-left-flex {
+                      > .flex-box {
+                        > .flex-input {
+                          color: #fff;
+                          background-color: #2d3651;
+                        }
+
+                        > .text-input {
+                          color: #fff;
+                          background-color: #37424c;
+                        }
+
+                        > .left-flex-hint,
+                        > .new-address {
+                          color: #338ff5;
+                        }
+
+                        > .address-bg {
+                          background-color: #2d3651;
+                        }
+                      }
+                    }
+
+                    > .count-box {
+                      > .count-flex-box {
+                        > .content-flex-hint {
+                          color: #338ff5;
+                        }
+
+                        > .count-flex-text {
+                          color: #83909b;
+                        }
+
+                        > .count-flex-input {
+                          color: #fff;
+                          background-color: #2d3651;
+                        }
+
+                        > .count-text-input {
+                          color: #fff;
+                          background-color: #20273d;
+                        }
+                      }
+                    }
+
+                    > .text-info-mention {
+                      > .currency-rule {
+                        color: #d45858;
+                      }
+
                       > .prompt-message {
-                        line-height: 16px;
+                        color: #58616a;
                       }
 
                       > .mention-button {
-                        margin-top: 8px;
-
                         > .submit-but {
-                          width: 80px;
-                          height: 34px;
+                          color: #fff;
+                          background: linear-gradient(0deg, rgba(43, 57, 110, 1), rgba(42, 80, 130, 1));
                         }
                       }
                     }
                   }
-                }
-              }
-            }
 
-            .content-input {
-              width: 180px;
-              height: 34px;
-            }
-
-            .input-google {
-              width: 270px;
-            }
-
-            .send-code-btn {
-              position: absolute;
-              z-index: 999;
-              top: 4px;
-              right: 2px;
-              width: 95px;
-              height: 34px;
-            }
-          }
-        }
-      }
-
-      .table-deal {
-        position: relative;
-
-        .type-transaction {
-          position: absolute;
-          z-index: 2;
-          top: 10px;
-          left: 56px;
-          width: 135px;
-
-          > .triangle-border {
-            position: absolute;
-            top: 6px;
-            left: -8px;
-          }
-
-          > .transaction-list {
-            height: 30px;
-            line-height: 30px;
-          }
-        }
-      }
-    }
-  }
-
-  &.night {
-    color: $nightFontColor;
-    background-color: $nightBgColor;
-
-    .account-assets-box {
-      background-color: $nightMainBgColor;
-
-      .account-assets-header {
-        box-shadow: 0 2px 13px rgba(24, 30, 42, 1);
-
-        > .header-left {
-          color: #338ff5;
-        }
-
-        > .header-right {
-          > .header-right-right {
-            > .header-right-search {
-              color: #fff;
-              background-color: #2d3651;
-            }
-          }
-        }
-      }
-
-      .table-body {
-        > .table-title-th {
-          border-bottom: 1px solid #39424d;
-          color: #a9bed4;
-        }
-
-        .info {
-          color: #fff;
-        }
-
-        .button-color {
-          color: rgba(255, 255, 255, .7);
-          background: linear-gradient(81deg, rgba(43, 57, 110, 1) 0%, rgba(42, 80, 130, 1) 100%);
-        }
-
-        .btn {
-          border: 1px solid #338ff5;
-          background-color: transparent;
-        }
-
-        > .table-tr {
-          > .table-box {
-            > .table-td {
-              color: #9da5b3;
-
-              .money-color {
-                color: #9da5b3;
-              }
-
-              .table-charge-money,
-              .table-mention-money,
-              .money-color {
-                margin-right: 10px;
-              }
-
-              > .table-charge-money,
-              > .table-mention-money,
-              > .table-deal {
-                color: #3e79d6;
-
-                > .type-transaction {
-                  background-color: #2a3242;
-
-                  > .triangle-border {
-                    border-top: 8px solid transparent;
-                    border-bottom: 8px solid transparent;
-                    border-right: 8px solid #2a3242;
-                  }
-
-                  > .transaction-list {
-                    color: #7a8093;
-
-                    &:hover {
-                      color: #3e79d6;
-                    }
-                  }
-                }
-              }
-            }
-
-            > .out-box {
-              > .recharge-list {
-                border: 1px solid #338ff5;
-
-                > .triangle {
-                  border-top: 1px solid transparent;
-                  border-bottom: 1px solid #338ff5;
-                  border-left: 1px solid #338ff5;
-                  background-color: #1c1f32;
-                  border-right: 1px solid transparent;
-                }
-
-                > .recharge-content {
-                  > .recharge-content-hint {
-                    color: #338ff5;
-                  }
-
-                  > .input-box {
-                    > .hint-input {
-                      color: #fff;
-                      background-color: #2d3651;
-                    }
-
-                    > .code-copy {
-                      color: #fff;
-                      background-color: #338ff5;
-                    }
-                  }
-
-                  > .recharge-content-title {
-                    color: #d45858;
-                  }
-                }
-
-                > .recharge-content-right {
-                  > .recharge-content-code {
-                    background-color: #fff;
-                  }
-                }
-
-                > .recharge-list-left {
-                  > .list-left-flex {
-                    > .flex-box {
-                      > .flex-input {
-                        color: #fff;
-                        background-color: #2d3651;
-                      }
-
-                      > .text-input {
-                        color: #fff;
-                        background-color: #37424c;
-                      }
-
-                      > .left-flex-hint,
-                      > .new-address {
-                        color: #338ff5;
-                      }
-
-                      > .address-bg {
-                        background-color: #2d3651;
-                      }
-                    }
-                  }
-
-                  > .count-box {
-                    > .count-flex-box {
-                      > .content-flex-hint {
-                        color: #338ff5;
-                      }
-
-                      > .count-flex-text {
-                        color: #83909b;
-                      }
-
-                      > .count-flex-input {
-                        color: #fff;
-                        background-color: #2d3651;
-                      }
-
-                      > .count-text-input {
-                        color: #fff;
-                        background-color: #20273d;
-                      }
-                    }
-                  }
-
-                  > .text-info-mention {
+                  > .text-info {
                     > .currency-rule {
                       color: #d45858;
                     }
@@ -1828,227 +1771,261 @@ export default {
                       }
                     }
                   }
-                }
 
-                > .text-info {
-                  > .currency-rule {
-                    color: #d45858;
+                  > .email-input {
+                    width: 220px;
+                    height: 34px;
                   }
-
-                  > .prompt-message {
-                    color: #58616a;
-                  }
-
-                  > .mention-button {
-                    > .submit-but {
-                      color: #fff;
-                      background: linear-gradient(0deg, rgba(43, 57, 110, 1), rgba(42, 80, 130, 1));
-                    }
-                  }
-                }
-
-                > .email-input {
-                  width: 220px;
-                  height: 34px;
                 }
               }
             }
           }
-        }
 
-        .content-input {
-          border: 1px solid #485776;
-          color: #fff;
+          .content-input {
+            border: 1px solid #485776;
+            color: #fff;
 
-          &:focus {
-            border: 1px solid #338ff5;
+            &:focus {
+              border: 1px solid #338ff5;
+            }
+          }
+
+          .send-code-btn {
+            color: #fff;
+            background-color: #338ff5;
           }
         }
+      }
 
-        .send-code-btn {
+      /deep/ {
+        /* 个人中心（黑色主题） */
+        .el-input__inner {
           color: #fff;
-          background-color: #338ff5;
+          background-color: #2d3651;
+        }
+
+        .el-dialog {
+          background-color: #28334a;
+        }
+
+        .el-dialog__header {
+          background-color: #20293c;
+        }
+
+        .el-dialog__title {
+          color: #fff;
+        }
+
+        .el-button {
+          color: #fff;
+          background: linear-gradient(0deg, #2b396e, #2a5082);
+        }
+
+        .el-form-item__label {
+          color: rgba(255, 255, 255, .7);
         }
       }
     }
-  }
 
-  &.day {
-    color: $dayFontColor;
-    background-color: $dayBgColor;
-
-    .account-assets-box {
-      border: 1px solid rgba(38, 47, 56, .1);
+    &.day {
       color: $dayFontColor;
       background-color: $dayBgColor;
 
-      .account-assets-header {
-        > .header-left {
-          color: #338ff5;
-        }
+      .account-assets-box {
+        border: 1px solid rgba(38, 47, 56, .1);
+        color: $dayFontColor;
+        background-color: $dayBgColor;
 
-        > .header-right {
-          > .header-right-right {
-            > .icon-color {
-              color: #d5d8dc;
-            }
+        .account-assets-header {
+          > .header-left {
+            color: #338ff5;
+          }
 
-            > .header-right-search {
-              border: 1px solid rgba(38, 47, 56, .1);
-              color: #333;
-              background-color: #fff;
+          > .header-right {
+            > .header-right-right {
+              > .icon-color {
+                color: #d5d8dc;
+              }
+
+              > .header-right-search {
+                border: 1px solid rgba(38, 47, 56, .1);
+                color: #333;
+                background-color: #fff;
+              }
             }
           }
         }
-      }
 
-      .table-body {
-        > .table-title-th {
-          border-bottom: 1px solid rgba(57, 66, 77, .1);
+        .input-mention {
           color: #333;
+          background-color: rgba(51, 143, 245, .1);
         }
 
-        .info {
-          color: #333;
-        }
+        .table-body {
+          > .table-title-th {
+            border-bottom: 1px solid rgba(57, 66, 77, .1);
+            color: #333;
+          }
 
-        .button-color {
-          color: rgba(255, 255, 255, .7);
-          background: linear-gradient(81deg, rgba(43, 57, 110, 1) 0%, rgba(42, 80, 130, 1) 100%);
-        }
+          .info {
+            color: #333;
+          }
 
-        .btn {
-          border: 1px solid #338ff5;
-          color: #333;
-          background-color: transparent;
-        }
+          .button-color {
+            color: rgba(255, 255, 255, .7);
+            background: linear-gradient(81deg, rgba(43, 57, 110, 1) 0%, rgba(42, 80, 130, 1) 100%);
+          }
 
-        > .table-tr {
-          > .table-box {
-            background-color: #fff;
+          .btn {
+            border: 1px solid #338ff5;
+            color: #333;
+            background-color: transparent;
+          }
 
-            > .table-td {
-              color: #666;
+          > .table-tr {
+            > .table-box {
+              background-color: #fff;
 
-              > .table-charge-money,
-              > .table-mention-money,
-              > .table-deal {
-                color: #7d90ac;
+              > .table-td {
+                color: #666;
 
-                > .type-transaction {
-                  border: 1px solid rgba(38, 47, 56, .1);
-                  color: #333;
-                  background-color: #fff;
+                > .table-charge-money,
+                > .table-mention-money,
+                > .table-deal {
+                  color: #7d90ac;
 
-                  > .triangle-border {
-                    border-top: 8px solid transparent;
-                    border-bottom: 8px solid transparent;
-                    border-right: 8px solid rgba(38, 47, 56, .1);
-                  }
+                  > .type-transaction {
+                    border: 1px solid rgba(38, 47, 56, .1);
+                    color: #333;
+                    background-color: #fff;
 
-                  > .transaction-list {
-                    color: #7a8093;
+                    > .triangle-border {
+                      border-top: 8px solid transparent;
+                      border-bottom: 8px solid transparent;
+                      border-right: 8px solid rgba(38, 47, 56, .1);
+                    }
 
-                    &:hover {
-                      color: #3e79d6;
+                    > .transaction-list {
+                      color: #7a8093;
+
+                      &:hover {
+                        color: #3e79d6;
+                      }
                     }
                   }
                 }
               }
-            }
 
-            > .out-box {
-              > .recharge-list {
-                border: 1px solid #338ff5;
-                background: #fff;
+              > .out-box {
+                > .recharge-list {
+                  border: 1px solid #338ff5;
+                  background: #fff;
 
-                > .triangle {
-                  border-top: 1px solid transparent;
-                  border-bottom: 1px solid #338ff5;
-                  border-left: 1px solid #338ff5;
-                  background-color: #fff;
-                  border-right: 1px solid transparent;
-                }
-
-                > .recharge-content {
-                  > .recharge-content-hint {
-                    color: #338ff5;
-                  }
-
-                  > .input-box {
-                    > .hint-input {
-                      border: 1px solid rgba(38, 47, 56, .1);
-                      color: #333;
-                      background: rgba(51, 143, 245, .1);
-                    }
-
-                    > .code-copy {
-                      color: #fff;
-                      background-color: #338ff5;
-                    }
-                  }
-
-                  > .recharge-content-title {
-                    color: #d45858;
-                  }
-                }
-
-                > .recharge-content-right {
-                  > .recharge-content-code {
+                  > .triangle {
+                    border-top: 1px solid transparent;
+                    border-bottom: 1px solid #338ff5;
+                    border-left: 1px solid #338ff5;
                     background-color: #fff;
+                    border-right: 1px solid transparent;
                   }
-                }
 
-                > .recharge-list-left {
-                  > .list-left-flex {
-                    > .flex-box {
-                      > .flex-input {
+                  > .recharge-content {
+                    > .recharge-content-hint {
+                      color: #338ff5;
+                    }
+
+                    > .input-box {
+                      > .hint-input {
                         border: 1px solid rgba(38, 47, 56, .1);
                         color: #333;
                         background: rgba(51, 143, 245, .1);
                       }
 
-                      > .text-input {
+                      > .code-copy {
                         color: #fff;
-                        background-color: #37424c;
+                        background-color: #338ff5;
+                      }
+                    }
+
+                    > .recharge-content-title {
+                      color: #d45858;
+                    }
+                  }
+
+                  > .recharge-content-right {
+                    > .recharge-content-code {
+                      background-color: #fff;
+                    }
+                  }
+
+                  > .recharge-list-left {
+                    > .list-left-flex {
+                      > .flex-box {
+                        > .flex-input {
+                          border: 1px solid rgba(38, 47, 56, .1);
+                          color: #333;
+                          background: rgba(51, 143, 245, .1);
+                        }
+
+                        > .text-input {
+                          color: #fff;
+                          background-color: #37424c;
+                        }
+
+                        > .left-flex-hint,
+                        > .new-address {
+                          color: #338ff5;
+                        }
+
+                        > .address-bg {
+                          background-color: rgba(51, 143, 245, .1);
+                        }
+                      }
+                    }
+
+                    > .count-box {
+                      > .count-flex-box {
+                        > .content-flex-hint {
+                          color: #338ff5;
+                        }
+
+                        > .count-flex-text {
+                          color: #83909b;
+                        }
+
+                        > .count-flex-input {
+                          border: 1px solid rgba(38, 47, 56, .1);
+                          color: #333;
+                          background: rgba(51, 143, 245, .1);
+                        }
+
+                        > .count-text-input {
+                          border: 1px solid rgba(38, 47, 56, .1);
+                          color: #333;
+                          background: rgba(51, 143, 245, .1);
+                        }
+                      }
+                    }
+
+                    > .text-info-mention {
+                      > .currency-rule {
+                        color: #d45858;
                       }
 
-                      > .left-flex-hint,
-                      > .new-address {
-                        color: #338ff5;
+                      > .prompt-message {
+                        color: #58616a;
                       }
 
-                      > .address-bg {
-                        background-color: #fff;
+                      > .mention-button {
+                        > .submit-but {
+                          color: #fff;
+                          background: linear-gradient(0deg, rgba(43, 57, 110, 1), rgba(42, 80, 130, 1));
+                        }
                       }
                     }
                   }
 
-                  > .count-box {
-                    > .count-flex-box {
-                      > .content-flex-hint {
-                        color: #338ff5;
-                      }
-
-                      > .count-flex-text {
-                        color: #83909b;
-                      }
-
-                      > .count-flex-input {
-                        border: 1px solid rgba(38, 47, 56, .1);
-                        color: #333;
-                        background: rgba(51, 143, 245, .1);
-                      }
-
-                      > .count-text-input {
-                        border: 1px solid rgba(38, 47, 56, .1);
-                        color: #333;
-                        background: rgba(51, 143, 245, .1);
-                      }
-                    }
-                  }
-
-                  > .text-info-mention {
+                  > .text-info {
                     > .currency-rule {
                       color: #d45858;
                     }
@@ -2064,49 +2041,62 @@ export default {
                       }
                     }
                   }
-                }
 
-                > .text-info {
-                  > .currency-rule {
-                    color: #d45858;
+                  > .email-input {
+                    width: 220px;
+                    height: 34px;
                   }
-
-                  > .prompt-message {
-                    color: #58616a;
-                  }
-
-                  > .mention-button {
-                    > .submit-but {
-                      color: #fff;
-                      background: linear-gradient(0deg, rgba(43, 57, 110, 1), rgba(42, 80, 130, 1));
-                    }
-                  }
-                }
-
-                > .email-input {
-                  width: 220px;
-                  height: 34px;
                 }
               }
             }
           }
-        }
 
-        .content-input {
-          border: 1px solid #ecf1f8;
-          color: #333;
+          .content-input {
+            border: 1px solid #ecf1f8;
+            color: #333;
 
-          &:focus {
-            border: 1px solid #338ff5;
+            &:focus {
+              border: 1px solid #338ff5;
+            }
+          }
+
+          .send-code-btn {
+            color: #fff;
+            background-color: #338ff5;
           }
         }
+      }
 
-        .send-code-btn {
-          color: #fff;
-          background-color: #338ff5;
+      /deep/ {
+        /* 个人中心（白色主题） */
+        .el-tabs__nav {
+          border: 1px solid rgba(38, 47, 56, .1);
+        }
+
+        .el-input__inner {
+          border: 1px solid rgba(38, 47, 56, .1);
+          color: #333;
+          background: rgba(51, 143, 245, .1);
+        }
+
+        .el-select-dropdown__list {
+          background: #fff;
+        }
+
+        .el-select-dropdown__item.hover {
+          color: #333 !important;
+          background: rgba(51, 143, 245, .1);
+        }
+
+        .el-dialog__header {
+          color: #333;
+          background: rgba(51, 143, 245, .1);
+        }
+
+        .el-button {
+          background: linear-gradient(81deg, rgba(43, 57, 110, 1) 0%, rgba(42, 80, 130, 1) 100%);
         }
       }
     }
   }
-}
 </style>
