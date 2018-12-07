@@ -40,6 +40,7 @@ export default {
       'SET_USER_BUTTON_STATUS'
     ]),
     run () {
+      console.log(this.status, this.disabledOfPhoneBtn, this.disabledOfEmailBtn)
       this.$emit('run')
     },
     start () {
@@ -48,6 +49,7 @@ export default {
       this.timer()
       this.SET_USER_BUTTON_STATUS({
         loginType: 0,
+        type: 0,
         status: false
       })
       this.SET_USER_BUTTON_STATUS({
@@ -59,6 +61,7 @@ export default {
         loginType: 1,
         status: false
       })
+      console.log(this.disabledOfPhoneBtn, this.disabledOfEmailBtn)
     },
     timer () {
       if (this.time > 0) {
@@ -72,21 +75,23 @@ export default {
   filter: {},
   computed: {
     ...mapState({
-      countDownResetStatus: state => state.common.countDownResetStatus
+      countDownResetStatus: state => state.common.countDownResetStatus,
+      disabledOfPhoneBtn: state => state.user.disabledOfPhoneBtn,
+      disabledOfEmailBtn: state => state.user.disabledOfEmailBtn
     }),
     text () {
       return this.time > 0 ? `${this.time}s ${this.$t('M.comm_after_get')}` : this.$t('M.comm_get_code')
     }
   },
   watch: {
-    countDownResetStatus (newVal) {
-      clearInterval(this.timer)
+    countDownResetStatus () {
       this.time = 0
       this.$store.commit('common/SET_COUNT_DOWN_RESET_STATUS', false)
     },
     status (newVal) {
+      console.log(newVal)
       if (newVal) {
-        this.$emit('run')
+        // this.$emit('run')
         this.start()
       }
     }

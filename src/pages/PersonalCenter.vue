@@ -25,7 +25,7 @@
             :label = "$t('M.user_asset_title1')"
             name = "assets"
           >
-            <AccountAssets/>
+            <AccountAssets v-if="userCenterActiveName ==='assets'"/>
           </el-tab-pane>
           <!--账单明细-->
           <el-tab-pane
@@ -39,7 +39,7 @@
             :label = "$t('M.comm_mention_money') + $t('M.comm_site')"
             name = "mention-address"
           >
-            <WithdrawalAddress/>
+            <WithdrawalAddress v-if="userCenterActiveName ==='mention-address'"/>
           </el-tab-pane>
           <!--个人中心-->
           <div class="user-title asset-info">
@@ -65,7 +65,7 @@
             :label = "$t('M.user_asset_title5')"
             name = "account-credited"
           >
-            <AccountCredited/>
+            <AccountCredited v-if="userCenterActiveName==='account-credited'"/>
           </el-tab-pane>
 
           <!--邀请推广-->
@@ -268,10 +268,6 @@ export default {
     }
   },
   async created () {
-    // 白色主题样式
-    require('../../static/css/theme/day/Personal/UserAssets/PersonalCenterDay.css')
-    // 黑色主题样式
-    require('../../static/css/theme/night/Personal/UserAssets/PersonalCenterNight.css')
     await this.getUserRefreshUser()
     if (!this.realname && this.userCenterActiveName === 'account-credited') {
       this.notVerifyDialogVisible = true
@@ -542,6 +538,47 @@ export default {
         color: #fff;
         background-color: transparent;
       }
+
+      /deep/ {
+        .el-tabs__nav {
+          background-color: #1c1f32;
+        }
+
+        .is-disabled {
+          color: rgba(0, 121, 254, 1);
+        }
+
+        .el-tabs__item {
+          border-left: 4px solid transparent;
+          color: #ccc;
+
+          &:hover {
+            border-left: 4px solid #338ff5;
+            color: rgba(0, 121, 254, 1);
+            background-color: rgba(0, 121, 254, .1);
+          }
+
+          &.is-active {
+            border-left: 4px solid rgba(0, 121, 254, 1);
+            color: rgba(0, 121, 254, 1);
+            background: rgba(51, 143, 245, .1);
+          }
+        }
+
+        .el-dialog {
+          background-color: #28334a;
+        }
+
+        .el-dialog__title {
+          color: #fff;
+        }
+
+        .el-tabs--left {
+          .el-tabs__nav-scroll {
+            background-color: #1c1f32;
+          }
+        }
+      }
     }
 
     &.day {
@@ -569,6 +606,58 @@ export default {
         border: 1px solid #338ff5;
         color: #333;
         background-color: transparent;
+      }
+
+      /deep/ {
+        .el-tabs__nav {
+          background-color: #fff;
+        }
+
+        .is-disabled {
+          color: #338ff5;
+          background-color: #fff;
+        }
+
+        .el-tabs__item {
+          border-left: 4px solid #fff;
+          color: #6f798a;
+
+          &.is-active {
+            border-left: 4px solid rgba(0, 121, 254, 1);
+            color: #338ff5;
+            background: rgba(51, 143, 245, .1);
+          }
+
+          &:hover {
+            border-left: 4px solid rgba(0, 121, 254, 1);
+            color: #338ff5;
+            background: rgba(51, 143, 245, .1);
+          }
+
+          &:first-child {
+            &:hover {
+              border-left: 4px solid #fff;
+            }
+          }
+        }
+
+        .el-tabs__header {
+          &.is-left {
+            border: 1px solid rgba(38, 47, 56, .1);
+          }
+        }
+
+        .el-tabs--left {
+          .el-tabs__item {
+            &.is-left {
+              &:first-child {
+                &:hover {
+                  border-left: 4px solid #fff;
+                }
+              }
+            }
+          }
+        }
       }
     }
   }

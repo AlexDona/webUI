@@ -474,17 +474,11 @@ export default {
       isNeedTag: false, // 是否需要转账提示标签
       rechargeNoteInfo: '', // 充币地址备注信息
       localLoading: true, // 页面列表局部loading
-      isLegalWithdrawAddress: false, // 是否为合法提币地址
+      isLegalWithdrawAddress: true, // 是否为合法提币地址
       end: '' // 占位
     }
   },
   created () {
-    // 覆盖Element样式
-    require('../../../../static/css/list/Personal/AccountBalance/AccountAssets.css')
-    // 白色主题样式
-    require('../../../../static/css/theme/day/Personal/AccountBalance/AccountAssetsDay.css')
-    // 黑色主题样式
-    require('../../../../static/css/theme/night/Personal/AccountBalance/AccountAssetsNight.css')
     // 刚进页面时候 个人资产列表展示
     this.getAssetCurrenciesList()
   },
@@ -732,9 +726,7 @@ export default {
     },
     // 发送验证码
     sendPhoneOrEmailCode (loginType) {
-      console.log(loginType)
-      // console.log(this.disabledOfPhoneBtn)
-      // console.log(this.disabledOfEmailBtn)
+      console.log(this.disabledOfPhoneBtn, this.disabledOfEmailBtn)
       if (this.disabledOfPhoneBtn || this.disabledOfEmailBtn) {
         return false
       }
@@ -1241,6 +1233,200 @@ export default {
                   > .list-mention-treasure {
                     height: 295px !important;
                   }
+
+                  > .out-box {
+                    > .recharge-list {
+                      position: relative;
+                      z-index: 2;
+                      padding: 20px 6px;
+
+                      > .triangle {
+                        position: absolute;
+                        top: -7px;
+                        right: 113px;
+                        width: 12px;
+                        height: 12px;
+                        -ms-transform: rotate(135deg);
+                        -moz-transform: rotate(135deg);
+                        -webkit-transform: rotate(135deg);
+                        -o-transform: rotate(135deg);
+                        transform: rotate(135deg);
+                      }
+
+                      > .triangle-one {
+                        right: 55px;
+                      }
+
+                      > .mention {
+                        width: 100%;
+                        padding: 5px 0 0;
+
+                        > .mention-treasure {
+                          height: 20px;
+                          line-height: 20px;
+                          color: #338ff5;
+
+                          > .treasure-info {
+                            color: #d45858;
+                          }
+                        }
+
+                        > .input-mention {
+                          width: 640px;
+                          height: 34px;
+                        }
+                      }
+
+                      > .recharge-content {
+                        flex: 2;
+                        padding: 0 20px;
+
+                        > .recharge-content-hint {
+                          height: 20px;
+                          margin-bottom: 5px;
+                          line-height: 20px;
+                        }
+
+                        > .input-box {
+                          > .hint-input {
+                            width: 430px;
+                            height: 32px;
+                          }
+
+                          > .code-copy {
+                            width: 89px;
+                            height: 32px;
+                            border-radius: 0 2px 2px 0;
+                            line-height: 32px;
+                          }
+                        }
+
+                        > .recharge-content-title {
+                          width: 584px;
+                          line-height: 18px;
+                        }
+                      }
+
+                      > .recharge-content-right {
+                        > .recharge-content-code {
+                          box-sizing: border-box;
+                          width: 110px;
+                          height: 110px;
+                          padding: 5px;
+                        }
+
+                        > .code-list {
+                          padding-right: 10px;
+                          margin-top: 110px;
+                        }
+                      }
+
+                      > .recharge-list-left {
+                        flex: 2;
+                        height: 196px;
+
+                        > .list-left-flex {
+                          > .flex-box {
+                            position: relative;
+                            height: 80px;
+
+                            > .left-flex-hint {
+                              line-height: 20px;
+                            }
+
+                            > .service-charge {
+                              position: absolute;
+                              top: 70px;
+                              right: 0;
+                              width: 100%;
+                              height: 20px;
+                            }
+
+                            > .flex-input,
+                            > .text-input {
+                              width: 350px;
+                              height: 34px;
+                            }
+
+                            > .new-address {
+                              position: absolute;
+                              top: 38px;
+                              right: 1px;
+                              width: 35px;
+                              height: 34px;
+                              line-height: 34px;
+                              text-align: center;
+                            }
+
+                            > .new-address-currency {
+                              top: 49px;
+                            }
+                          }
+                        }
+
+                        > .count-box {
+                          padding-left: 15px;
+
+                          > .count-flex-box {
+                            height: 80px;
+
+                            > .content-flex-hint,
+                            > .count-flex-text {
+                              line-height: 20px;
+                            }
+
+                            > .count-flex-input,
+                            > .count-text-input {
+                              width: 275px;
+                              height: 34px;
+                            }
+                          }
+                        }
+
+                        > .text-info-mention {
+                          position: relative;
+                          top: -20px;
+                          padding-left: 15px;
+
+                          &.need-tag-top {
+                            top: -45px;
+                          }
+
+                          > .currency-rule,
+                          > .prompt-message {
+                            line-height: 25px;
+                          }
+
+                          > .mention-button {
+                            margin-top: 41px;
+
+                            > .submit-but {
+                              width: 80px;
+                              height: 34px;
+                            }
+                          }
+                        }
+                      }
+
+                      > .text-info {
+                        padding: 20px 0 0 15px;
+
+                        > .currency-rule,
+                        > .prompt-message {
+                          line-height: 16px;
+                        }
+
+                        > .mention-button {
+                          margin-top: 8px;
+
+                          > .submit-but {
+                            width: 80px;
+                            height: 34px;
+                          }
+                        }
+                      }
+                    }
+                  }
                 }
               }
 
@@ -1287,6 +1473,92 @@ export default {
             }
           }
         }
+      }
+    }
+
+    /deep/ {
+      /* tabs组件出现蓝色边框问题 */
+      .el-tabs__active-bar {
+        height: 0 !important;
+      }
+
+      .el-switch__core {
+        width: 32px !important;
+        height: 15px;
+        border: 0;
+      }
+
+      .el-switch__core::after {
+        width: 14px;
+        height: 14px;
+        margin-left: -14px;
+      }
+
+      .el-input-group__append {
+        width: 89px;
+        height: 30px;
+        border: 0;
+      }
+
+      .el-input__inner {
+        width: 350px;
+        height: 34px;
+        border: 0;
+        border-radius: 2px;
+      }
+
+      .el-input__icon {
+        display: none;
+      }
+
+      .el-dialog {
+        width: 325px;
+      }
+
+      .el-dialog__header {
+        height: 50px;
+        padding: 10px 20px;
+        border-radius: 5px;
+        line-height: 30px;
+      }
+
+      .el-dialog__body {
+        padding: 25px 27px 0;
+        line-height: 25px;
+      }
+
+      .el-form-item {
+        height: 85px;
+        margin-bottom: 0;
+      }
+
+      .el-dialog__title {
+        font-size: 16px;
+      }
+
+      .el-button {
+        width: 270px;
+        height: 34px;
+        padding: 0;
+        border: 0;
+      }
+
+      .el-form-item__label {
+        float: none;
+        height: 20px;
+        padding: 0;
+        line-height: 20px;
+        text-align: left;
+      }
+
+      .el-dialog__footer {
+        padding: 0 27px 25px;
+        text-align: left;
+      }
+
+      .el-table {
+        width: 968px !important;
+        margin-left: 2px;
       }
     }
 
@@ -1372,6 +1644,11 @@ export default {
                     }
                   }
                 }
+              }
+
+              .input-mention {
+                color: #fff;
+                background-color: #2d3651;
               }
 
               > .out-box {
@@ -1519,6 +1796,35 @@ export default {
           }
         }
       }
+
+      /deep/ {
+        /* 个人中心（黑色主题） */
+        .el-input__inner {
+          color: #fff;
+          background-color: #2d3651;
+        }
+
+        .el-dialog {
+          background-color: #28334a;
+        }
+
+        .el-dialog__header {
+          background-color: #20293c;
+        }
+
+        .el-dialog__title {
+          color: #fff;
+        }
+
+        .el-button {
+          color: #fff;
+          background: linear-gradient(0deg, #2b396e, #2a5082);
+        }
+
+        .el-form-item__label {
+          color: rgba(255, 255, 255, .7);
+        }
+      }
     }
 
     &.day {
@@ -1548,6 +1854,11 @@ export default {
               }
             }
           }
+        }
+
+        .input-mention {
+          color: #333;
+          background-color: rgba(51, 143, 245, .1);
         }
 
         .table-body {
@@ -1667,7 +1978,7 @@ export default {
                         }
 
                         > .address-bg {
-                          background-color: #fff;
+                          background-color: rgba(51, 143, 245, .1);
                         }
                       }
                     }
@@ -1753,6 +2064,37 @@ export default {
             color: #fff;
             background-color: #338ff5;
           }
+        }
+      }
+
+      /deep/ {
+        /* 个人中心（白色主题） */
+        .el-tabs__nav {
+          border: 1px solid rgba(38, 47, 56, .1);
+        }
+
+        .el-input__inner {
+          border: 1px solid rgba(38, 47, 56, .1);
+          color: #333;
+          background: rgba(51, 143, 245, .1);
+        }
+
+        .el-select-dropdown__list {
+          background: #fff;
+        }
+
+        .el-select-dropdown__item.hover {
+          color: #333 !important;
+          background: rgba(51, 143, 245, .1);
+        }
+
+        .el-dialog__header {
+          color: #333;
+          background: rgba(51, 143, 245, .1);
+        }
+
+        .el-button {
+          background: linear-gradient(81deg, rgba(43, 57, 110, 1) 0%, rgba(42, 80, 130, 1) 100%);
         }
       }
     }

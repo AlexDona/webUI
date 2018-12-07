@@ -432,7 +432,10 @@
 <!--请严格按照如下书写书序-->
 <script>
 import IconFontCommon from '../../Common/IconFontCommon'
-import {returnAjaxMsg} from '../../../utils/commonFunc'
+import {
+  returnAjaxMsg,
+  getNestedData
+} from '../../../utils/commonFunc'
 import {
   accountPaymentTerm,
   openAndCloseModeSetting,
@@ -476,17 +479,13 @@ export default {
       closeWesternUnion: false, // 默认关闭西联汇款
       activeType: '', // 当前值类型
       state: '', // 开启关闭状态
-      fullscreenLoading: false // 整页loading
+      fullscreenLoading: true // 整页loading
     }
   },
-  created () {
-    // 覆盖Element样式
-    require('../../../../static/css/list/Personal/UserAssets/AccountCredited.css')
-    // 白色主题样式
-    require('../../../../static/css/theme/day/Personal/UserAssets/AccountCreditedDay.css')
-    // 黑色主题样式
-    require('../../../../static/css/theme/night/Personal/UserAssets/AccountCreditedNight.css')
+  async created () {
     // 调用收款方式 银行卡 微信 支付宝 paypal 西联汇款 状态
+    await this.getUserRefreshUser()
+    await this.getAccountPaymentTerm()
     if (this.refsAccountCenterStatus) {
       this.getAccountPaymentTerm()
       this.CHANGE_REF_ACCOUNT_CREDITED_STATE(false)
@@ -511,7 +510,6 @@ export default {
         this.CHANGE_USER_CENTER_ACTIVE_NAME('identity-authentication')
         this.$router.push({path: '/PersonalCenter'})
       }
-      console.log(this.userCenterActiveName)
     },
     // 路由跳转对应组件
     setShowStatusSecurity (val) {
@@ -755,15 +753,12 @@ export default {
       // 整页loading
       this.fullscreenLoading = true
       let data = await accountPaymentTerm()
+      this.fullscreenLoading = false
       if (!(returnAjaxMsg(data, this, 0))) {
-        // 接口失败清除loading
-        this.fullscreenLoading = false
         return false
       } else {
-        // 接口成功清除loading
-        this.fullscreenLoading = false
         // 返回状态展示
-        this.paymentTerm = data.data.data
+        this.paymentTerm = getNestedData(data, 'data.data')
         console.log(data)
       }
     },
@@ -778,7 +773,7 @@ export default {
       if (!(returnAjaxMsg(data, this, 0))) {
         return false
       } else {
-        this.$store.commit('user/SET_STEP1_INFO', data.data.data)
+        this.$store.commit('user/SET_STEP1_INFO', getNestedData(data, 'data.data'))
       }
     }
   },
@@ -888,6 +883,76 @@ export default {
       }
     }
 
+    /deep/ {
+      /* switch开关背景色 */
+      .el-switch__core {
+        border: 0;
+        background-color: transparent;
+
+        &::after {
+          z-index: 9;
+        }
+      }
+
+      .el-dialog__header {
+        height: 0;
+        padding: 0;
+      }
+
+      .el-dialog {
+        &:nth-child(1) {
+          top: 15%;
+          width: 300px;
+          border-radius: 10px;
+
+          .el-dialog__header {
+            padding-left: 20px;
+            text-align: left;
+
+            .el-dialog__title {
+              display: inline-block;
+              margin: 20px 0;
+            }
+          }
+        }
+
+        &:nth-child(2) {
+          top: 15%;
+          width: 300px;
+          height: 200px;
+          border-radius: 10px;
+        }
+
+        &:nth-child(3) {
+          top: 15%;
+          width: 350px;
+          height: 300px;
+          border-radius: 10px;
+        }
+      }
+
+      .el-dialog__close {
+        color: transparent;
+      }
+
+      .el-button--primary {
+        padding: 7px 28px 8px 29px;
+        border: 0;
+      }
+
+      .el-button {
+        &:first-child {
+          height: 35px;
+          line-height: 0;
+        }
+      }
+
+      .el-dialog__body {
+        text-align: center;
+        color: #fff;
+      }
+    }
+
     &.night {
       color: $nightFontColor;
       background-color: $nightBgColor;
@@ -962,6 +1027,32 @@ export default {
         color: rgba(255, 255, 255, .7);
         background: rgba(248, 249, 252, .05);
       }
+
+      /deep/ {
+        /* 个人中心（黑色主题） */
+
+        /* 警告提示框背景色 */
+        .el-dialog {
+          background-color: #28334a;
+        }
+
+        /* 警告提示框按钮 */
+        .el-button--primary {
+          color: #fff;
+          background: linear-gradient(0deg, rgba(43, 57, 110, 1), rgba(42, 80, 130, 1));
+        }
+
+        .el-dialog__title {
+          color: #fff;
+        }
+
+        .el-button {
+          &:first-child {
+            color: #fff;
+            background: linear-gradient(81deg, rgba(43, 57, 110, 1) 0%, rgba(42, 80, 130, 1) 100%);
+          }
+        }
+      }
     }
 
     &.day {
@@ -1030,6 +1121,17 @@ export default {
 
         .warning-text {
           color: #333;
+        }
+      }
+
+      /deep/ {
+        .el-dialog {
+          background-color: #fff;
+        }
+
+        .el-button--primary {
+          color: #fff;
+          background: linear-gradient(0deg, rgba(43, 57, 110, 1), rgba(42, 80, 130, 1));
         }
       }
     }
