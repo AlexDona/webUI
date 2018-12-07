@@ -297,7 +297,7 @@
                               <el-option
                                 v-for="(item, index) in mentionAddressList"
                                 :key="index"
-                                :label="item.address + ' ' + item.remark"
+                                :label="item.address + ' ' + item.withdrawRemark"
                                 :value="item.address"
                               >
                               </el-option>
@@ -1170,9 +1170,9 @@ export default {
     },
     submitMentionMoney () {
       if (!this.phoneCode && !this.emailCode && !this.googleCode) {
+        console.log(1)
         // 请输入验证码
         this.errorMessage = this.$t('M.comm_please_enter') + this.$t('M.user_security_verify')
-
         return false
       } else {
         this.errorMessage = ''
