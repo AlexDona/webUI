@@ -12,6 +12,7 @@ export const user = {
   'login_please_input6': '8 ~ 20ビット、数字の組み合わせを入力して下さい。',
   'login_please_input7': '新しいパスワードを再度入力してください。',
   'login_please_input8': '同じパスワードを入力してください。',
+  'login_please_input9': '数字、アルファベットからなる20名の文字を入力してください。',
   'login_welcome_register': '新規登録',
   'login_welcome_register_pwd1': 'パスワード',
   'login_welcome_register_pwd2': 'パスワードを確認する',

@@ -25,16 +25,29 @@ if (process.env.NODE_ENV == 'development') {
   loginSocketUrl = 'wss://api.new.bzu.com/qrcodeLogin/'*/
 
   // eslint-disable-next-line
-  apiCommonUrl = 'http://192.168.1.200:8888/' // 内部测试
-  xDomain = 'new.test.com'
-  socketUrl = 'ws://192.168.1.200:8087/market'
-  loginSocketUrl = 'ws://192.168.1.200:8087/qrcodeLogin/'
+  // apiCommonUrl = 'http://192.168.1.200:8888/' // 内部测试
+  // xDomain = 'new.test.com'
+  // socketUrl = 'ws://192.168.1.200:8087/market'
+  // loginSocketUrl = 'ws://192.168.1.200:8087/qrcodeLogin/'
+
+  apiCommonUrl = 'http://192.168.1.210:8888/' // 内部测试
+  xDomain = 'me.com'
+  socketUrl = 'ws://192.168.1.210:8087/market'
+  loginSocketUrl = 'ws://192.168.1.210:8087/qrcodeLogin/'
+} else if (process.env.NODE_ENV === 'development210') {
+  // 210开发环境
+  apiCommonUrl = 'http://192.168.1.210:8888/'
+  xDomain = 'me.com'
+  socketUrl = 'ws://192.168.1.210:8087/market'
+  loginSocketUrl = 'ws://192.168.1.210:8087/qrcodeLogin/'
 } else if (process.env.NODE_ENV == 'testing') {
-  apiCommonUrl = 'http://192.168.1.200:8888/' // 本地测试
+  // 200测试环境
+  apiCommonUrl = 'http://192.168.1.200:8888/'
   socketUrl = 'ws://192.168.1.200:8087/market'
   loginSocketUrl = 'ws://192.168.1.200:8888/qrcodeLogin/'
 } else if (process.env.NODE_ENV == 'production') {
-  apiCommonUrl = 'https://api.new.bzu.com/' // 内部测试
+  // 生产环境
+  apiCommonUrl = 'https://api.new.bzu.com/'
   socketUrl = 'wss://ws.bzu.com/market'
   loginSocketUrl = 'wss://api.new.bzu.com/qrcodeLogin/'
 }
