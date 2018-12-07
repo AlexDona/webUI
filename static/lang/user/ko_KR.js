@@ -12,6 +12,7 @@ export const user = {
   'login_please_input6': '8-20 자, 숫자 조합을 입력하십시오.',
   'login_please_input7': '새 비밀번호를 다시 입력하십시오.',
   'login_please_input8': '같은 암호를 입력하십시오',
+  'login_please_input9': '알파벳으로 구성된 8 - 20 문자를 입력하십시오',
   'login_welcome_register': '등록 환영',
   'login_welcome_register_pwd1': '비밀번호 입력',
   'login_welcome_register_pwd2': '비밀번호를 다시 입력하십시오',

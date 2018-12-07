@@ -42,3 +42,7 @@ export const GOOGLE_REG = /^\d{6}$/
  *  验证不能为http https
  */
 export const URL_REG = /^([hH][tT]{2}[pP]:\/\/|[hH][tT]{2}[pP][sS]:\/\/)(([A-Za-z0-9-~]+)\.)+([A-Za-z0-9-~\/])+$/
+/**
+ *  数字，字母(必须)，特殊字符（非必须）
+ */
+export const CHECKPASSWORD_REG = /^(?=.*[\d])(?=.*[a-zA-Z])(?=.*[`~!@#$%^&*\(\)_\-\+=<>?:"\{\}\|,.\/;'\\[\]])?.{8,20}$/

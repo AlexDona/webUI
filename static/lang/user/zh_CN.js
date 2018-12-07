@@ -12,6 +12,7 @@ export const user = {
   'login_please_input6': '请输入8-20位字母、数字组合',
   'login_please_input7': '请再次输入新密码',
   'login_please_input8': '请输入相同的密码',
+  'login_please_input9': '请输入数字，字母组成的8-20位字符',
   'login_welcome_register': '欢迎注册',
   'login_welcome_register_pwd1': '请输入密码',
   'login_welcome_register_pwd2': '请再次输入密码',

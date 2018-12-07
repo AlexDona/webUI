@@ -334,5 +334,7 @@ export const OTC = {
   'otc_tradingorder_transformAcconu': 'transfer amount',
   'otc_tradingorder_notice': ' Attention!Before the end of the time, do not transfer and click "confirm", your order will be cancelled automatically. If the above situation occurs  3 times one day, your account will be frozen. Please contact the customer service.',
   'otc_tradingorder_autoCancel': ' minutes，receive the payment otherwise the order will be cancelled automatically.',
-  'otc_tradingorder_orderExact': 'After the order is generated within '
+  'otc_tradingorder_orderExact': 'After the order is generated within ',
+  'otc_index_inputSellAccount': 'Sell amount cannot be 0',
+  'otc_index_inputBuyAccount': 'Buy amount cannot be 0'
 }

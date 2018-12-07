@@ -1,3 +1,4 @@
+
 ### 提交注意
 
  提交项目之前请先检查 js 、 css 语法规范
@@ -6,7 +7,7 @@
 
  message 规范如下：
 
- git commit -m `<type>[optional scope]:<description>`
+ git commit -m `<type>[optional scope]: <description>`
 
 type:
 
@@ -17,12 +18,11 @@ type:
  1. docs：文档更新
  2. feat：新增功能
  3. fix：bug 修复
- 4. perf：性能优化
- 5. refactor：重构代码(既没有新增功能，也没有修复 bug)
- 6. style：不影响程序逻辑的代码修改(修改空白字符，补全缺失的分号等)
- 7. test：新增测试用例或是更新现有测试
- 8. revert：回滚某个更早之前的提交
- 9. chore：不属于以上类型的其他类型
+ 4. refactor：重构代码(既没有新增功能，也没有修复 bug)
+ 5. style：不影响程序逻辑的代码修改(修改空白字符，补全缺失的分号等)
+ 6. test：新增测试用例或是更新现有测试
+ 7. revert：回滚某个更早之前的提交
+ 8. chore：构建过程或辅助工具的变动
 
 optional scope：
 
