@@ -6,7 +6,7 @@
 
  message 规范如下：
 
- git commit -m `<type>[optional scope]:<description>`
+ git commit -m `<type>[optional scope]: <description>`
 
 type:
 

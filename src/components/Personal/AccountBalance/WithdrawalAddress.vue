@@ -444,15 +444,16 @@ export default {
       } else {
         // 接口成功清除loading
         this.fullscreenLoading = false
-        this.WithdrawalAddressList()
-        this.stateEmptyData()
+        this.getWithdrawalAddressList()
+        this.resetFormContent()
         this.mentionMoneyConfirm = false
       }
     },
     /**
      *  刚进页面时候 提币地址列表查询
      */
-    async WithdrawalAddressList () {
+    async getWithdrawalAddressList () {
+      console.log(this.paramOfJumpToAddWithdrawAdress)
       let params = {
         pageNum: this.currentPageForMyEntrust, // 页码
         pageSize: this.pageSize // 页数
@@ -469,10 +470,9 @@ export default {
         // 返回列表数据
         let detailData = getNestedData(data, 'data.data')
         this.currencyList = getNestedData(detailData, 'canWithdrawPartnerCoinList')
-        // 对币种名称进行赋值
-        this.currencyValue = getNestedData(detailData, 'canWithdrawPartnerCoinList[0].name')
         // 对ID名称进行赋值
-        this.currencyValue = getNestedData(detailData, 'canWithdrawPartnerCoinList[0].coinId')
+        this.currencyValue = this.paramOfJumpToAddWithdrawAdress || getNestedData(detailData, 'canWithdrawPartnerCoinList[0].coinId')
+        this.$store.commit('personal/SET_NEW_WITHDRAW_ADDRESS', '')
         // 对币种名称列表进行赋值
         this.withdrawalAddressList = getNestedData(detailData, 'UserWithdrawAddressPage.list')
         this.totalPageForMyEntrust = getNestedData(detailData, 'UserWithdrawAddressPage.pages') - 0
@@ -489,12 +489,12 @@ export default {
         cancelButtonText: this.$t('M.comm_cancel'), // 取消
         confirmButtonText: this.$t('M.comm_confirm') // 确定
       }).then(() => {
-        this.deleteWithdrawal(id)
+        this.deleteWithdrawAddress(id)
       }).catch(() => {
       })
     },
     // 确认删除提币地址
-    async deleteWithdrawal () {
+    async deleteWithdrawAddress () {
       let data
       let param = {
         id: this.deleteWithdrawalId // 列表id
@@ -507,12 +507,12 @@ export default {
       } else {
         // 接口成功清除局部loading
         this.partLoading = false
-        this.WithdrawalAddressList()
-        this.stateEmptyData()
+        this.getWithdrawalAddressList()
+        this.resetFormContent()
       }
     },
     // 接口请求完成之后清空数据
-    stateEmptyData () {
+    resetFormContent () {
       this.dialogVisible = false
       this.withdrawalRemark = ''
       this.withdrawalAddress = ''
@@ -542,7 +542,7 @@ export default {
     },
     changeCurrentPage (pageNum) {
       this.currentPageForMyEntrust = pageNum
-      this.WithdrawalAddressList()
+      this.getWithdrawalAddressList()
     }
   },
   filter: {},
@@ -553,14 +553,18 @@ export default {
       innerUserInfo: state => state.user.loginStep1Info.userInfo, // 内层用户详细信息
       disabledOfPhoneBtn: state => state.user.disabledOfPhoneBtn,
       disabledOfEmailBtn: state => state.user.disabledOfEmailBtn,
-      userCenterActiveName: state => state.personal.userCenterActiveName
+      userCenterActiveName: state => state.personal.userCenterActiveName,
+      paramOfJumpToAddWithdrawAdress: state => state.personal.paramOfJumpToAddWithdrawAdress // 跳转到的提币地址
     })
   },
   watch: {
     userCenterActiveName (newVal) {
       if (newVal === 'mention-address') {
-        this.WithdrawalAddressList()
+        this.getWithdrawalAddressList()
       }
+    },
+    paramOfJumpToAddWithdrawAdress (newVal) {
+      console.log(newVal)
     }
   }
 }
