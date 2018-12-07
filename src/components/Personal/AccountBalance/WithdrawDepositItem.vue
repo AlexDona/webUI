@@ -247,6 +247,8 @@ export default {
 }
 </script>
 <style scoped lang="scss" type="text/scss">
+  @import "../../../../static/css/scss/Personal/IndexPersonal";
+
   .recharge-list {
     position: relative;
     z-index: 2;
@@ -286,8 +288,6 @@ export default {
       > .input-mention {
         width: 640px;
         height: 34px;
-        color: #fff;
-        background-color: #2d3651;
       }
     }
 
@@ -451,6 +451,11 @@ export default {
         border-right: 1px solid transparent;
       }
 
+      .input-mention {
+        color: #fff;
+        background-color: #2d3651;
+      }
+
       > .recharge-content {
         > .recharge-content-hint {
           color: #338ff5;
@@ -563,6 +568,196 @@ export default {
       > .email-input {
         width: 220px;
         height: 34px;
+      }
+    }
+
+    &.day {
+      border: 1px solid #338ff5;
+      color: $dayFontColor;
+      background: #fff;
+      background-color: $dayBgColor;
+
+      .input-mention {
+        color: #333;
+        background-color: rgba(51, 143, 245, .1);
+      }
+
+      > .triangle {
+        border-top: 1px solid transparent;
+        border-bottom: 1px solid #338ff5;
+        border-left: 1px solid #338ff5;
+        background-color: #fff;
+        border-right: 1px solid transparent;
+      }
+
+      > .recharge-content {
+        > .recharge-content-hint {
+          color: #338ff5;
+        }
+
+        > .input-box {
+          > .hint-input {
+            border: 1px solid rgba(38, 47, 56, .1);
+            color: #333;
+            background: rgba(51, 143, 245, .1);
+          }
+
+          > .code-copy {
+            color: #fff;
+            background-color: #338ff5;
+          }
+        }
+
+        > .recharge-content-title {
+          color: #d45858;
+        }
+      }
+
+      > .recharge-content-right {
+        > .recharge-content-code {
+          background-color: #fff;
+        }
+      }
+
+      > .recharge-list-left {
+        > .list-left-flex {
+          > .flex-box {
+            > .flex-input {
+              border: 1px solid rgba(38, 47, 56, .1);
+              color: #333;
+              background: rgba(51, 143, 245, .1);
+            }
+
+            > .text-input {
+              color: #fff;
+              background-color: #37424c;
+            }
+
+            > .left-flex-hint,
+            > .new-address {
+              color: #338ff5;
+            }
+          }
+        }
+
+        > .count-box {
+          > .count-flex-box {
+            > .content-flex-hint {
+              color: #338ff5;
+            }
+
+            > .count-flex-text {
+              color: #83909b;
+            }
+
+            > .count-flex-input {
+              border: 1px solid rgba(38, 47, 56, .1);
+              color: #333;
+              background: rgba(51, 143, 245, .1);
+            }
+
+            > .count-text-input {
+              border: 1px solid rgba(38, 47, 56, .1);
+              color: #333;
+              background: rgba(51, 143, 245, .1);
+            }
+          }
+        }
+
+        > .text-info-mention {
+          > .currency-rule {
+            color: #d45858;
+          }
+
+          > .prompt-message {
+            color: #58616a;
+          }
+
+          > .mention-button {
+            > .submit-but {
+              color: #fff;
+              background: linear-gradient(0deg, rgba(43, 57, 110, 1), rgba(42, 80, 130, 1));
+            }
+          }
+        }
+      }
+
+      > .text-info {
+        > .currency-rule {
+          color: #d45858;
+        }
+
+        > .prompt-message {
+          color: #58616a;
+        }
+
+        > .mention-button {
+          > .submit-but {
+            color: #fff;
+            background: linear-gradient(0deg, rgba(43, 57, 110, 1), rgba(42, 80, 130, 1));
+          }
+        }
+      }
+
+      > .email-input {
+        width: 220px;
+        height: 34px;
+      }
+
+      /deep/ {
+        /* 个人中心（白色主题） */
+        .el-switch__core::after {
+          background-color: #fff;
+        }
+
+        .el-switch__core::after,
+        .el-table,
+        .el-table__header-wrapper,
+        .el-table th.is-leaf,
+        .el-table td {
+          background-color: #fff;
+        }
+
+        .el-table {
+          td {
+            border-bottom: 1px solid #fff;
+          }
+        }
+
+        tr {
+          td {
+            &:hover {
+              background-color: #fff;
+            }
+          }
+        }
+
+        .cell {
+          color: #333;
+        }
+
+        .el-form-item__label {
+          padding: 0;
+          margin-right: 20px;
+          color: #7d90ac;
+        }
+
+        .el-input__inner {
+          border: 1px solid rgba(236, 241, 248, 1);
+          background: rgba(51, 143, 245, .1);
+        }
+
+        .el-table td:nth-child(4) {
+          div {
+            color: #338ff5;
+          }
+        }
+
+        .withdrawal-dialog {
+          .el-dialog__header {
+            background: rgba(51, 143, 245, .1);
+          }
+        }
       }
     }
   }

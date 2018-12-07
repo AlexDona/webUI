@@ -131,6 +131,7 @@ export const sendPhoneOrEmailCodeAjax = async (type, params, that, isNewPhone = 
   if (!returnAjaxMsg(data, that)) {
     return false
   } else {
+    console.log(type)
     switch (type) {
       case 0:
         store.commit('user/SET_USER_BUTTON_STATUS', {

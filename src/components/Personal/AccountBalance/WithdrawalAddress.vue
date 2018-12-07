@@ -288,16 +288,11 @@ export default {
       emailCode: '', // 邮箱验证
       googleCode: '', // 谷歌验证
       fullscreenLoading: false, // 整页loading
-      partLoading: true // 局部列表loading
+      partLoading: false // 局部列表loading
     }
   },
   created () {
-    // 覆盖Element样式
-    require('../../../../static/css/list/Personal/AccountBalance/WithdrawalAddress.css')
-    // 白色主题样式
-    require('../../../../static/css/theme/day/Personal/AccountBalance/WithdrawalAddressDay.css')
-    // 黑色主题样式
-    require('../../../../static/css/theme/night/Personal/AccountBalance/WithdrawalAddressNight.css')
+    this.getWithdrawalAddressList()
   },
   mounted () {},
   activited () {},
@@ -307,16 +302,6 @@ export default {
     ...mapMutations([
       'SET_USER_BUTTON_STATUS'
     ]),
-    // 资产币种下拉
-    // changeId (e) {
-    //   this.currencyList.forEach(item => {
-    //     if (e === item.id) {
-    //       this.currencyValue = e
-    //       console.log(item.currencyValue)
-    //       this.stateSubmitAddAddress(e)
-    //     }
-    //   })
-    // },
     reg () {
       let pets = ['http', 'https', 'www']
       console.log(pets.includes('http'))
@@ -453,20 +438,18 @@ export default {
      *  刚进页面时候 提币地址列表查询
      */
     async getWithdrawalAddressList () {
+      this.partLoading = true
       console.log(this.paramOfJumpToAddWithdrawAdress)
       let params = {
         pageNum: this.currentPageForMyEntrust, // 页码
         pageSize: this.pageSize // 页数
       }
       let data = await inquireWithdrawalAddressList(params)
+      this.partLoading = false
       // console.log(data)
       if (!(returnAjaxMsg(data, this, 0))) {
-        // 接口失败清除局部partLoading
-        this.partLoading = false
         return false
       } else {
-        // 接口成功清除局部partLoading
-        this.partLoading = false
         // 返回列表数据
         let detailData = getNestedData(data, 'data.data')
         this.currencyList = getNestedData(detailData, 'canWithdrawPartnerCoinList')
@@ -559,8 +542,8 @@ export default {
   },
   watch: {
     userCenterActiveName (newVal) {
+      console.log(newVal)
       if (newVal === 'mention-address') {
-        this.getWithdrawalAddressList()
       }
     },
     paramOfJumpToAddWithdrawAdress (newVal) {
@@ -624,6 +607,14 @@ export default {
 
           .form-button {
             margin: 10px 0 0 140px;
+          }
+
+          /deep/ {
+            .el-form .el-form-item {
+              .el-form-item__label {
+                width: 120px !important;
+              }
+            }
           }
         }
       }
@@ -706,6 +697,91 @@ export default {
           background-color: transparent;
         }
       }
+
+      /deep/ {
+        .el-input__inner {
+          border: 0;
+          color: rgba(255, 255, 255, .7);
+          background-color: #2d3651;
+        }
+
+        .el-form-item__label {
+          padding: 0;
+          margin-right: 20px;
+          color: rgba(255, 255, 255, .7);
+        }
+
+        .el-table {
+          background-color: #1c1f32;
+
+          .cell {
+            color: #9da5b3;
+          }
+
+          th {
+            & > .cell {
+              color: #a9bed4;
+            }
+
+            &.is-leaf {
+              border: 0;
+              background-color: #1c1f32;
+            }
+          }
+
+          td {
+            border: 0;
+            background-color: #1c1f32;
+
+            &:nth-child(4) {
+              & > .cell {
+                color: #338ff5;
+              }
+            }
+          }
+        }
+
+        .el-table__header-wrapper {
+          background-color: #1c1f32;
+        }
+
+        .el-table__body {
+          tr {
+            &:hover {
+              & > td {
+                background-color: #1c1f32;
+              }
+            }
+          }
+        }
+
+        .el-table__empty-block {
+          background-color: #1c1f32;
+        }
+
+        .el-dialog {
+          background-color: #28334a;
+        }
+
+        .el-button {
+          &:first-child {
+            color: rgba(255, 255, 255, .7);
+            background: linear-gradient(81deg, rgba(43, 57, 110, 1) 0%, rgba(42, 80, 130, 1) 100%);
+          }
+        }
+
+        .withdrawal-dialog {
+          .el-dialog__header {
+            background-color: #20293c;
+          }
+
+          .el-button {
+            border: 0;
+            color: rgba(255, 255, 255, .7);
+            background: linear-gradient(0deg, #2b396e, #2a5082);
+          }
+        }
+      }
     }
 
     &.day {
@@ -767,6 +843,164 @@ export default {
           border: 1px solid #338ff5;
           color: rgba(255, 255, 255, .7);
           background-color: transparent;
+        }
+      }
+
+      /deep/ {
+        .el-table {
+          background-color: #fff;
+
+          .cell {
+            color: #333;
+          }
+
+          th {
+            & > .cell {
+              color: #333;
+            }
+
+            &.is-leaf {
+              background-color: #fff;
+            }
+          }
+
+          td {
+            border-bottom: 1px solid #fff;
+            background-color: #fff;
+
+            &:nth-child(4) {
+              div {
+                color: #338ff5;
+              }
+            }
+          }
+        }
+
+        .el-switch__core {
+          &::after {
+            background-color: #fff;
+          }
+        }
+
+        .el-table__body {
+          tr {
+            &:hover {
+              & > td {
+                background-color: #fff;
+              }
+            }
+          }
+        }
+
+        .el-form-item__label {
+          padding: 0;
+          margin-right: 20px;
+          color: #7d90ac;
+        }
+
+        .el-input__inner {
+          border: 1px solid rgba(236, 241, 248, 1);
+          background: rgba(255, 255, 255, 1);
+        }
+      }
+    }
+
+    /deep/ {
+      .el-input__inner {
+        width: 130px;
+        height: 34px;
+        border: 0;
+      }
+
+      .el-form-item {
+        margin-bottom: 33px;
+      }
+
+      .el-table--fit {
+        padding: 0 25px;
+      }
+
+      .el-dialog {
+        width: 325px;
+        border-radius: 5px;
+      }
+
+      .el-dialog__close {
+        display: none;
+      }
+
+      .el-button {
+        &:first-child {
+          width: 80px;
+          height: 35px;
+          border: 0;
+          line-height: 0;
+        }
+      }
+
+      .el-dialog__body {
+        color: #fff;
+      }
+
+      .el-table {
+        tr {
+          background-color: transparent;
+        }
+
+        td {
+          border-bottom: 0;
+
+          &:nth-child(4) {
+            padding-right: 75px;
+            text-align: right;
+            cursor: pointer;
+          }
+        }
+
+        th {
+          & > .cell {
+            font-size: 12px;
+          }
+
+          &:nth-child(4) {
+            & > .cell {
+              padding-right: 90px;
+              text-align: right;
+            }
+          }
+        }
+      }
+
+      .withdrawal-dialog {
+        .el-dialog__header {
+          height: 40px;
+          padding: 0 0 0 25px;
+          margin-bottom: 10px;
+          border-radius: 5px 5px 0 0;
+          line-height: 40px;
+          background: rgba(51, 143, 245, .1);
+        }
+
+        .el-dialog__body {
+          padding: 0 25px;
+        }
+
+        .el-form-item {
+          margin-bottom: 15px;
+        }
+
+        .el-form-item__label {
+          height: 30px;
+          line-height: 30px;
+        }
+
+        .el-button {
+          width: 275px;
+          height: 34px;
+        }
+
+        .el-dialog__footer {
+          text-align: center;
         }
       }
     }
