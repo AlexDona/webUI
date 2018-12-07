@@ -116,17 +116,17 @@
           </span>
         </div>
       </div>
-      <!--分页-->
-      <div class="page">
-        <el-pagination
-          background
-          v-show="OTCEntrustOrderList.length"
-          layout="prev, pager, next"
-          :page-count="totalPages"
-          @current-change="changeCurrentPage"
-        >
-        </el-pagination>
-      </div>
+    </div>
+    <!--分页-->
+    <div class="page">
+      <el-pagination
+        background
+        v-show="OTCEntrustOrderList.length"
+        layout="prev, pager, next"
+        :page-count="totalPages"
+        @current-change="changeCurrentPage"
+      >
+      </el-pagination>
     </div>
   </div>
 </template>
@@ -348,11 +348,11 @@ export default {
           }
         }
       }
+    }
 
-      > .page {
-        padding: 10px 0;
-        text-align: center;
-      }
+    .page {
+      /* padding: 10px 0; */
+      text-align: center;
     }
 
     &.night {
@@ -383,11 +383,6 @@ export default {
             }
           }
         }
-
-        > .page {
-          padding: 10px 0;
-          text-align: center;
-        }
       }
     }
 
@@ -417,11 +412,6 @@ export default {
               color: #008069;
             }
           }
-        }
-
-        > .page {
-          padding: 10px 0;
-          text-align: center;
         }
       }
     }
