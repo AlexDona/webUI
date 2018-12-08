@@ -7,8 +7,6 @@
     <!-- 2.0 OTC发布广告内容 -->
     <div
       class="otc-publish-AD-content"
-      v-loading.fullscreen.lock="fullscreenLoading"
-      element-loading-background="rgba(0, 0, 0, 0.6)"
     >
       <!--发布广告左侧主体内容-->
       <div class="publish-AD-left">
@@ -470,7 +468,6 @@ export default {
   },
   data () {
     return {
-      fullscreenLoading: false,
       dialogVisible: false, // 弹窗状态
       // 选择模块下拉列表循环数组
       activitedBuySellStyle: 'SELL', // 选中的发布广告 买卖 类型
@@ -580,12 +577,9 @@ export default {
       })
       // console.log('挂单详情')
       // console.log(data)
-      this.fullscreenLoading = true
       if (!(returnAjaxMsg(data, this, 0))) {
-        this.fullscreenLoading = false
         return false
       } else {
-        this.fullscreenLoading = false
         let detailsData = getNestedData(data, 'data.data')
         this.activitedCoinId = detailsData.coinId // 可用币种id
         this.activitedCurrencyId = detailsData.currencyId // 法币id
@@ -601,7 +595,6 @@ export default {
     },
     // 1.0 币种详情 : 商家和普通用户挂单页面请求币种详情渲染页面
     async getOTCCoinInfo () {
-      this.fullscreenLoading = true
       const data = await getOTCCoinInfo({
         currencyId: this.activitedCurrencyId, // 法币id
         coinId: this.activitedCoinId // 币种id
@@ -609,11 +602,9 @@ export default {
       // console.log('币种详情')
       // console.log(data)
       if (!(returnAjaxMsg(data, this, 0))) {
-        this.fullscreenLoading = false
         return false
       } else {
         // 返回数据正确的逻辑
-        this.fullscreenLoading = false
         // 1.0 可用币种列表
         let availableCoinListData = getNestedData(data, 'data.data')
         this.availableCoinList = availableCoinListData.coinlist
@@ -756,16 +747,13 @@ export default {
         payTypes: this.parameterPayTypes, // 支付方式（用，隔开的名字）
         tradePassword: this.tradePassword // 交易密码
       }
-      this.fullscreenLoading = true
       const data = await addOTCPutUpOrdersMerchantdedicated(param)
       // console.log(data)
       // 提示信息
       if (!(returnAjaxMsg(data, this, 1))) {
-        this.fullscreenLoading = false
         return false
       } else {
         // 返回数据正确的逻辑
-        this.fullscreenLoading = false
         this.dialogVisible = false
         // 清空数据
         this.clearMainData()
