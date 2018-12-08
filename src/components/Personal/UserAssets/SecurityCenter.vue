@@ -682,12 +682,6 @@ export default {
     }
   },
   async created () {
-    // 覆盖Element样式
-    require('../../../../static/css/list/Personal/UserAssets/SecurityCenter.css')
-    // 白色主题样式
-    require('../../../../static/css/theme/day/Personal/UserAssets/SecurityCenterDay.css')
-    // 黑色主题样式
-    require('../../../../static/css/theme/night/Personal/UserAssets/SecurityCenterNight.css')
     // 调用安全中心登陆记录 安全设置记录 邮箱 手机 谷歌 交易密码 状态
     if (this.refSecurityCenterStatus) {
       await this.getSecurityCenter()
@@ -1169,6 +1163,162 @@ export default {
       }
     }
 
+    /deep/ {
+      /* 表格样式修改 */
+      td {
+        padding: 7px 0;
+      }
+
+      .el-table {
+        &::before {
+          height: 0;
+        }
+
+        th {
+          &:nth-child(1) {
+            .cell {
+              padding-left: 20px;
+            }
+
+            div {
+              padding-left: 10px;
+            }
+          }
+
+          &:nth-child(2) {
+            .cell {
+              padding-right: 75px;
+              text-align: right;
+            }
+          }
+
+          &:nth-child(3) {
+            .cell {
+              padding-right: 45px;
+              text-align: right;
+            }
+          }
+        }
+
+        td {
+          div {
+            font-size: 12px;
+          }
+
+          &:nth-child(2) {
+            div {
+              padding-right: 35px;
+              text-align: right;
+            }
+          }
+
+          &:nth-child(3) {
+            div {
+              padding-right: 13px;
+              text-align: right;
+            }
+          }
+
+          &:nth-child(4) {
+            .cell {
+              padding-right: 25px;
+              text-align: right;
+            }
+
+            div {
+              padding-right: 13px;
+              text-align: right;
+            }
+          }
+        }
+      }
+
+      /* tabs切换表头padding-left */
+      .el-tabs__header {
+        margin: 0;
+      }
+
+      .el-tabs__nav {
+        padding-left: 15px;
+      }
+
+      .el-tabs__item {
+        width: 105px;
+        height: 45px;
+        padding: 0;
+        border-left: 4px solid transparent !important;
+        text-align: center;
+        background-color: transparent !important;
+
+        &.is-top {
+          &:nth-child(2) {
+            margin-right: 20px;
+          }
+        }
+      }
+
+      .cell {
+        font-size: 12px;
+      }
+
+      .el-progress {
+        width: 170px;
+      }
+
+      .el-dialog {
+        width: 310px;
+        border-radius: 7px;
+      }
+
+      .el-dialog__header {
+        height: 44px;
+        padding: 10px 20px;
+        border-radius: 7px 7px 0 0;
+      }
+
+      .el-dialog__title {
+        font-size: 18px;
+      }
+
+      .el-dialog__headerbtn {
+        top: 13px;
+      }
+
+      .el-form-item {
+        margin-bottom: 10px;
+      }
+
+      .el-form-item__label {
+        height: 25px;
+        padding: 0;
+        line-height: 25px;
+      }
+
+      .el-dialog__body {
+        padding: 10px 20px 0;
+      }
+
+      .el-input-group__append {
+        padding: 0 5px;
+      }
+
+      .el-input__inner {
+        width: 180px;
+        height: 36px;
+        border-radius: 2px 0 0 2px;
+      }
+
+      .el-input-group {
+        width: 220px;
+        height: 36px;
+        border-radius: 4px;
+      }
+
+      .el-dialog__footer {
+        text-align: left;
+      }
+    }
+
     &.night {
       color: $nightFontColor;
       background-color: $nightBgColor;
@@ -1218,7 +1368,7 @@ export default {
 
           .input {
             border: 1px solid #485776;
-            color: #fff;
+            color: #333;
 
             &:focus {
               border: 1px solid #338ff5;
@@ -1256,6 +1406,105 @@ export default {
               }
             }
           }
+        }
+      }
+
+      /deep/ {
+        /* 个人中心（黑色主题） */
+
+        /* 表格样式修改 */
+        .el-table {
+          color: #fff;
+
+          th,
+          tr {
+            background-color: #1c1f32;
+          }
+
+          thead {
+            color: #617499;
+          }
+
+          th.is-leaf {
+            border-bottom: 1px solid rgba(97, 116, 153, 1);
+          }
+
+          td {
+            border-bottom: 1px solid rgba(97, 116, 153, .05);
+            color: #ccc;
+            background-color: #1c1f32;
+
+            &:hover {
+              background-color: #1c1f32;
+            }
+
+            div {
+              color: #9da5b3;
+            }
+          }
+        }
+
+        .cell.highlight {
+          color: #617499;
+        }
+
+        .cell {
+          color: #a9bed4;
+        }
+
+        /* tabs切换 */
+        .el-tabs__item.is-active {
+          border-bottom: 2px solid #338ff5;
+          border-left: 0;
+          color: #ccc;
+          background-color: transparent;
+        }
+
+        .el-tabs__item {
+          &:hover {
+            border-left: 4px solid #1c1f32;
+            color: #338ff5;
+            background-color: #1c1f32;
+          }
+        }
+
+        .el-dialog {
+          background-color: #28334a;
+
+          .el-dialog__header {
+            color: #fff;
+            background-color: #20293c;
+          }
+
+          .el-dialog__title {
+            color: #fff;
+          }
+        }
+
+        .el-form-item__label {
+          color: #fff;
+        }
+
+        .el-input__inner {
+          border: 1px solid #485776;
+          color: #a9bed4;
+          background-color: #1e2636;
+
+          &:focus {
+            border: 1px solid #338ff5;
+          }
+        }
+
+        .el-input-group__append {
+          border-top: 1px solid #485776;
+          border-bottom: 1px solid #485776;
+          color: #fff;
+          background-color: #338ff5;
+          border-right: 1px solid #485776;
+        }
+
+        .el-table__empty-block {
+          background: #1c1f32;
         }
       }
     }
@@ -1304,7 +1553,7 @@ export default {
 
           .input {
             border: 1px solid #ecf1f8;
-            color: #fff;
+            color: #333;
 
             &:focus {
               border: 1px solid #338ff5;
@@ -1342,6 +1591,61 @@ export default {
               }
             }
           }
+        }
+      }
+
+      /deep/ {
+        /* 个人中心（白色主题） */
+        .el-table {
+          color: #fff;
+
+          th,
+          tr {
+            background-color: #ccc;
+          }
+
+          thead {
+            color: #ccc;
+          }
+
+          th.is-leaf {
+            border-bottom: 1px solid #fff;
+            color: #333;
+            background-color: #fff;
+          }
+
+          td {
+            padding: 7px 0;
+            border-bottom: 1px solid #fff;
+            color: #7d90ac;
+            background-color: #fff;
+
+            &:hover {
+              background-color: #fff;
+            }
+          }
+        }
+
+        .cell.highlight {
+          color: #b1b1b1;
+        }
+
+        /* tabs切换 */
+        .el-tabs__item.is-active {
+          border-bottom: 2px solid #338ff5;
+          border-left: 0;
+          color: #338ff5;
+          background-color: transparent;
+        }
+
+        .el-tabs__item {
+          &.el-tabs__item {
+            background-color: #fff;
+          }
+        }
+
+        .el-dialog__header {
+          background: rgba(51, 143, 245, .1);
         }
       }
     }

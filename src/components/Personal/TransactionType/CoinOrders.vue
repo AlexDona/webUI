@@ -512,12 +512,6 @@ export default {
     }
   },
   async created () {
-    // 覆盖Element样式
-    require('../../../../static/css/list/Personal/TransactionType/CoinOrders.css')
-    // 白色主题样式
-    require('../../../../static/css/theme/day/Personal/TransactionType/CoinOrdersDay.css')
-    // 黑色主题样式
-    require('../../../../static/css/theme/night/Personal/TransactionType/CoinOrdersNight.css')
     await this.getEntrustSelectBox()
     await this.commissionList('current-entrust')
   },
@@ -798,6 +792,88 @@ export default {
       height: 545px;
     }
 
+    /deep/ {
+      /* 点击切换时背景色和字体颜色 */
+      .el-tabs__item {
+        width: 105px;
+        padding: 0;
+        border-left: 4px solid transparent !important;
+        text-align: center;
+        background-color: transparent !important;
+      }
+
+      .el-input__inner {
+        width: 80px;
+        height: 30px;
+        border: none;
+        border-radius: 2px;
+        background: rgba(25, 32, 46, 1);
+      }
+
+      .el-date-editor.el-input {
+        width: 170px;
+      }
+
+      .el-date-editor {
+        .el-input__inner {
+          width: 170px;
+        }
+      }
+
+      .el-input--suffix {
+        .el-input__inner {
+          padding-right: 0;
+          font-size: 12px;
+        }
+      }
+
+      .el-input__icon {
+        line-height: 1;
+      }
+
+      td,
+      th {
+        height: 30px;
+        padding: 0;
+        line-height: 30px;
+      }
+
+      .el-table {
+        width: 970px !important;
+        font-size: 12px;
+
+        th {
+          &.is-leaf {
+            border-top: 0;
+          }
+        }
+      }
+
+      .cell {
+        padding: 12px 0;
+        text-align: center;
+      }
+
+      .cell,
+      th div {
+        padding-right: 0;
+      }
+
+      td {
+        border-bottom: none;
+      }
+
+      .el-pagination {
+        text-align: right;
+      }
+
+      .el-table__empty-block {
+        width: 964px !important;
+        min-height: 280px;
+        margin-left: 2px;
+      }
+    }
+
     &.night {
       color: $nightFontColor;
       background-color: $nightBgColor;
@@ -807,6 +883,79 @@ export default {
 
         > .coin-color {
           color: #338ff5;
+        }
+      }
+
+      /deep/ {
+        /* 个人中心（黑色主题） */
+
+        /* tabs切换 */
+        .el-tabs__item.is-active {
+          border-bottom: 2px solid #0079fe;
+          border-left: none;
+          color: #ccc;
+          background-color: transparent;
+        }
+
+        .el-tabs__item {
+          &:hover {
+            border-left: none !important;
+            color: #fff !important;
+            background-color: transparent !important;
+          }
+        }
+
+        th,
+        tr {
+          background-color: #1c1f32;
+        }
+
+        .el-table {
+          thead {
+            color: #617499;
+          }
+        }
+
+        .el-input--suffix {
+          .el-input__inner {
+            border: 0;
+            color: #fff;
+            background: #2d3651;
+          }
+        }
+
+        .cell {
+          color: #a9bed4;
+        }
+
+        td {
+          color: #ccc;
+        }
+
+        .el-table--enable-row-hover {
+          .el-table__body {
+            tr:hover > td {
+              background-color: #1c1f32;
+            }
+          }
+        }
+
+        .el-table__empty-block {
+          color: #fff;
+          background-color: #1c1f32;
+        }
+
+        .el-pagination {
+          text-align: right;
+          background-color: transparent;
+        }
+
+        .el-table__body-wrapper {
+          background-color: #1c1f32;
+        }
+
+        th.is-leaf {
+          border-bottom: 1px solid rgba(57, 66, 77, .1);
         }
       }
     }
@@ -836,6 +985,38 @@ export default {
 
       .currency-span {
         color: #7d90ac;
+      }
+
+      /deep/ {
+        /* 个人中心（白色主题） */
+
+        /* tabs切换 */
+        .el-tabs__item.is-active {
+          border-bottom: 2px solid #338ff5;
+          border-left: 0;
+          color: #338ff5;
+          background-color: transparent;
+        }
+
+        .el-tabs__item {
+          &:hover {
+            border-left: 0 solid #fff;
+            color: #338ff5;
+            background: rgba(51, 143, 245, .1);
+          }
+        }
+
+        .el-input--suffix {
+          .el-input__inner {
+            border: 1px solid #ecf1f8;
+            color: #333;
+            background: #fff;
+          }
+        }
+
+        .cell {
+          color: #333;
+        }
       }
     }
   }

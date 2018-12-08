@@ -1,6 +1,7 @@
 /**
  * 通用全局方法
  * */
+
 const pako = require('pako')
 /**
  * 存储localStorage
@@ -163,6 +164,23 @@ export function formatNumberInput (event, targetPointLength) {
   return finalVal
 }
 
+/**
+ * 手机号输入限制
+ * @param event ： 当前input DOM 对象
+ */
+export function phoneNumRegexpInput (event) {
+  let val = event.value
+  let finalVal = ''
+  let valArr = val.split('')
+  _.forEach(valArr, item => {
+    if (item - 0) {
+      finalVal += item
+    }
+  })
+  event.value = finalVal
+  return finalVal
+}
+
 export function getRefValue (self, refName) {
   return self.$refs[refName].value
 }
@@ -284,7 +302,6 @@ export function cutOutPointLength (num, pointLength) {
   let result
   let str = num + ''
   let arr = str.split('.')
-  // console.log(arr)
   if (arr.length == 1) {
     result = arr[0]
   } else {
@@ -292,6 +309,4 @@ export function cutOutPointLength (num, pointLength) {
     result = arr[0] + '.' + value
   }
   return result
-  // console.log(result)
-  // console.log(typeof result)
 }

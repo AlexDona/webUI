@@ -186,7 +186,7 @@ export default {
 
       td {
         &:nth-of-type(2),
- &:nth-of-type(3) {
+        &:nth-of-type(3) {
           > .cell {
             text-align: right;
           }

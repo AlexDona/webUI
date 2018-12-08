@@ -315,9 +315,6 @@ export default {
     }
   },
   created () {
-    require('../../../../static/css/list/Personal/FiatCoinContent/FiatCoinCompletedOrder.css')
-    require('../../../../static/css/theme/day/Personal/FiatCoinContent/FiatCoinCompletedOrderDay.css')
-    require('../../../../static/css/theme/night/Personal/FiatCoinContent/FiatCoinCompletedOrderNight.css')
   },
   mounted () {},
   activited () {},
@@ -352,12 +349,6 @@ export default {
     }
   },
   watch: {
-    legalTraderCompletedList (newVal) {
-      console.log(newVal)
-    },
-    legalTradePageTotals () {
-      console.log(this.legalTradePageTotals)
-    }
   }
 }
 </script>
@@ -421,6 +412,106 @@ export default {
       }
     }
 
+    /deep/ {
+      td,
+      th {
+        height: 0;
+        line-height: 0;
+      }
+
+      tr {
+        &:hover {
+          & > td {
+            background-color: #1e2636;
+          }
+        }
+      }
+
+      .el-table__header {
+        margin-bottom: 5px;
+      }
+
+      .el-table {
+        border-collapse: separate !important;
+        color: #9da5b3;
+        background-color: #1e2636;
+      }
+
+      .el-icon-arrow-right {
+        &::before {
+          content: " ";
+        }
+      }
+
+      .el-table__body {
+        border-collapse: separate !important;
+      }
+
+      .el-table__expanded-cell {
+        border-bottom: 25px solid #1d2331;
+        background-color: #1e2636;
+      }
+
+      th {
+        padding: 5px 0;
+        background-color: #1e2636;
+        box-shadow: 4px 4px 6px #191e28;
+
+        .is-leaf {
+          &:first-of-type {
+            border-bottom: 1px solid #262f38;
+            border-left: 1px solid #262f38;
+            border-bottom-left-radius: 5px;
+            border-top-left-radius: 5px;
+          }
+
+          &:nth-last-of-type(2) {
+            border-top-right-radius: 5px;
+            border-right: 1px solid #262f38;
+          }
+        }
+      }
+
+      td {
+        height: 40px;
+        border-bottom: 1px solid #262f38;
+
+        &:first-of-type {
+          border-top-left-radius: 5px;
+
+          &.el-table__expanded-cell {
+            border-top: 0 solid #262f38;
+            border-top-left-radius: 0;
+
+            &::after {
+              position: absolute;
+              bottom: -10px;
+              left: 0;
+              height: 20px;
+              border-bottom: 1px solid #262f38;
+              border-bottom-right-radius: 5px;
+              border-bottom-left-radius: 5px;
+              background-color: #1e2636;
+              content: '';
+            }
+          }
+        }
+
+        &:nth-last-of-type(1) {
+          border-top-right-radius: 5px;
+
+          &.el-table__expanded-cell {
+            border-top-right-radius: 0;
+          }
+        }
+      }
+
+      .el-table__empty-block {
+        min-height: 432px;
+        background-color: #1e2636;
+      }
+    }
+
     &.night {
       color: $nightFontColor;
       background-color: $nightBgColor;
@@ -430,6 +521,135 @@ export default {
 
         > .fiat-color {
           color: #338ff5;
+        }
+      }
+
+      /deep/ {
+        th {
+          padding: 5px 0;
+          box-shadow: 4px 4px 6px #191e28;
+
+          &.is-leaf {
+            border-top: 1px solid #262f38;
+            border-bottom: 1px solid #262f38;
+          }
+        }
+
+        .el-table--enable-row-hover {
+          .el-table__body {
+            tr {
+              &:hover {
+                & > td {
+                  background-color: #1c1f32;
+                }
+              }
+            }
+          }
+        }
+
+        td {
+          height: 40px;
+          background-color: #1c1f32;
+        }
+
+        .el-table__header {
+          margin-bottom: 5px;
+        }
+
+        .el-table {
+          border-collapse: separate !important;
+          color: #9da5b3;
+          background-color: #272b41;
+
+          th {
+            background-color: #1c1f32;
+
+            &.is-leaf {
+              &:first-of-type {
+                border-left: 1px solid #262f38;
+                border-bottom-left-radius: 5px;
+                border-top-left-radius: 5px;
+              }
+
+              &:nth-last-of-type(2) {
+                border-top-right-radius: 5px;
+                border-bottom-right-radius: 5px;
+                border-right: 1px solid #262f38;
+              }
+            }
+          }
+
+          td {
+            border-bottom: 1px solid #262f38;
+          }
+        }
+
+        .el-table__body {
+          border-collapse: separate !important;
+        }
+
+        .el-table__expanded-cell {
+          border-bottom: 15px solid #272b41;
+          background-color: #1c1f32;
+
+          &:hover {
+            background-color: #1c1f32 !important;
+          }
+        }
+
+        .el-table_2_column_9 {
+          .el-table__expand-column {
+            .is-leaf {
+              border-bottom-left-radius: 5px;
+              border-top-left-radius: 5px;
+            }
+          }
+        }
+
+        .el-table--enable-row-transition {
+          .el-table__body {
+            td {
+              border-top: 1px solid #262f38;
+
+              &:first-of-type {
+                border-left: 1px solid #262f38;
+                border-top-left-radius: 5px;
+
+                &.el-table__expanded-cell {
+                  border-top: 0 solid #262f38;
+                  border-left: 1px solid #262f38;
+                  border-top-left-radius: 0;
+                  border-right: 1px solid #262f38;
+
+                  &::after {
+                    position: absolute;
+                    bottom: -10px;
+                    left: 0;
+                    height: 20px;
+                    border-bottom: 1px solid #262f38;
+                    border-bottom-right-radius: 5px;
+                    border-bottom-left-radius: 5px;
+                    background-color: #1c1f32;
+                    content: '';
+                  }
+                }
+              }
+
+              &:nth-last-of-type(1) {
+                border-top-right-radius: 5px;
+                border-right: 1px solid #262f38;
+
+                &.el-table__expanded-cell {
+                  border-top-right-radius: 0;
+                }
+              }
+            }
+          }
+        }
+
+        .el-table__empty-block {
+          min-height: 345px;
+          background-color: #1c1f32;
         }
       }
     }
@@ -484,6 +704,52 @@ export default {
             > .confirm-time {
               color: #5e95ec;
             }
+          }
+        }
+      }
+
+      /deep/ {
+        .el-table__header {
+          margin-bottom: 0;
+        }
+
+        .el-table {
+          margin: 0 auto;
+          border: 1px solid #ecf1f8;
+          background: #fff;
+
+          th.is-leaf {
+            border-right: 1px solid #fff;
+
+            &:first-of-type {
+              border-left: none;
+              border-radius: 0;
+            }
+          }
+
+          th {
+            background: #fff;
+          }
+
+          td {
+            border-bottom: 1px solid rgba(38, 47, 56, .1);
+
+            &:hover {
+              background-color: #fff;
+            }
+          }
+        }
+
+        .el-table__empty-block {
+          background: #fff;
+        }
+
+        .el-table__expanded-cell {
+          border-bottom: 15px solid #fff !important;
+          background-color: #fff;
+
+          &:hover {
+            background-color: #fff !important;
           }
         }
       }

@@ -229,12 +229,6 @@ export default {
     }
   },
   created () {
-    // 覆盖Element样式
-    require('../../../../static/css/list/Personal/UserSecuritySettings/UserGoogleBinding.css')
-    // 白色主题样式
-    require('../../../../static/css/theme/day/Personal/UserSecuritySettings/UserGoogleBindingDay.css')
-    // 黑色主题样式
-    require('../../../../static/css/theme/night/Personal/UserSecuritySettings/UserGoogleBindingNight.css')
     // 获取全局个人信息
     this.getSecurityCenter()
     this.getGoogleVerificationCode()
@@ -547,6 +541,17 @@ export default {
       }
     }
 
+    /deep/ {
+      /* 覆盖Element样式 */
+      .el-form-item__content {
+        width: 600px;
+      }
+
+      .el-form-item__label {
+        width: 160px !important;
+      }
+    }
+
     &.night {
       color: $nightFontColor;
       background-color: $nightBgColor;
@@ -621,6 +626,13 @@ export default {
               }
             }
           }
+        }
+      }
+
+      /deep/ {
+        /* 个人中心（黑色主题） */
+        .el-form-item__label {
+          color: rgba(255, 255, 255, .7);
         }
       }
     }
@@ -702,6 +714,12 @@ export default {
               }
             }
           }
+        }
+      }
+
+      /deep/ {
+        .el-form-item__label {
+          color: #7d90ac;
         }
       }
     }

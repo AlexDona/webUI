@@ -2,6 +2,8 @@
   <div
     id="app"
     class="body-container"
+    v-loading.fullscreen.lock="isAjaxReady"
+    element-loading-background="rgba(0, 0, 0, 0.6)"
   >
     <NoticeHome
       v-if="isNeedNotice"
@@ -77,10 +79,14 @@ export default {
       theme: state => state.common.theme,
       isLogin: state => state.user.isLogin,
       isMobile: state => state.user.isMobile,
-      userInfo: state => state.user.loginStep1Info
+      userInfo: state => state.user.loginStep1Info,
+      isAjaxReady: state => state.common.isAjaxReady
     })
   },
   watch: {
+    isAjaxReady (newVal) {
+      console.log(newVal)
+    },
     '$route' (to, from) {
       console.log(to.path)
       let path = to.path

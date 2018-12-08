@@ -94,12 +94,10 @@
              <input
                type="text"
                class="input mobile-phone"
-               onkeyup="this.value=this.value.replace(/\D/g,'')"
-               onafterpaste="this.value=this.value.replace(/\D/g,'')"
-               @change="checkValue()"
                :placeholder="$t('M.user_security_phone') + $t('M.user_security_number')"
-               :value="phoneNum"
-               @keydown="setErrorMsg('')"
+               :ref="phoneRef"
+               @keyup="phoneNumRegexpInput(phoneRef)"
+               @input="phoneNumRegexpInput(phoneRef)"
              >
            </div>
           </div>
@@ -174,7 +172,7 @@
                class="input"
                :placeholder="$t('M.user_security_email') + $t('M.comm_site')"
                v-model="emailNum"
-               @keydown="setErrorMsg('')"
+               @keydown="setErrorMsg()"
              >
            </div>
           </div>
@@ -190,7 +188,7 @@
                 class="input image-validate"
                 :placeholder="$t(activeCodePlaceholder)"
                 v-model="checkCode"
-                @keydown="setErrorMsg('')"
+                @keydown="setErrorMsg()"
                 @blur="checkoutInputFormat(3,checkCode)"
               >
               <span class="middle-line"></span>
@@ -216,7 +214,7 @@
                class="input"
                :placeholder="$t('M.login_welcome_register_pwd1')"
                v-model="password"
-               @keydown="setErrorMsg('')"
+               @keydown="setErrorMsg()"
                @blur="checkoutInputFormat(4,password)"
              >
            </div>
@@ -229,7 +227,7 @@
                type="password"
                class="input"
                :placeholder="$t('M.login_welcome_register_pwd2')"
-               @keydown="setErrorMsg('')"
+               @keydown="setErrorMsg()"
                v-model="repeatPassword"
                @blur="checkoutInputFormat(5,repeatPassword)"
              >
@@ -367,12 +365,10 @@
                 <input
                   type="text"
                   class="input mobile-phone"
-                  onkeyup="this.value=this.value.replace(/\D/g,'')"
-                  onafterpaste="this.value=this.value.replace(/\D/g,'')"
-                  @change="checkValue()"
                   :placeholder="$t('M.user_security_phone') + $t('M.user_security_number')"
-                  :value="phoneNum"
-                  @keydown="setErrorMsg('')"
+                  :ref="mobilePhoneRef"
+                  @keyup="phoneNumRegexpInput(mobilePhoneRef)"
+                  @input="phoneNumRegexpInput(mobilePhoneRef)"
                 >
               </div>
             </div>
@@ -447,7 +443,7 @@
                   class="input"
                   :placeholder="$t('M.user_security_email') + $t('M.comm_site')"
                   v-model="emailNum"
-                  @keydown="setErrorMsg('')"
+                  @keydown="setErrorMsg()"
                 >
               </div>
             </div>
@@ -463,7 +459,7 @@
                 class="input image-validate"
                 :placeholder="$t(activeCodePlaceholder)"
                 v-model="checkCode"
-                @keydown="setErrorMsg('')"
+                @keydown="setErrorMsg()"
                 @blur="checkoutInputFormat(3,checkCode)"
               >
               <span class="middle-line"></span>
@@ -489,7 +485,7 @@
                 class="input"
                 :placeholder="$t('M.user_register_input_pwd')"
                 v-model="password"
-                @keydown="setErrorMsg('')"
+                @keydown="setErrorMsg()"
                 @blur="checkoutInputFormat(4,password)"
               >
             </div>
@@ -501,7 +497,7 @@
                 type="password"
                 class="input"
                 :placeholder="$t('M.user_register_input_confirm_pwd')"
-                @keydown="setErrorMsg('')"
+                @keydown="setErrorMsg()"
                 v-model="repeatPassword"
                 @blur="checkoutInputFormat(5,repeatPassword)"
               >
@@ -677,12 +673,12 @@ import {
   sendPhoneOrEmailCodeAjax,
   jumpToOtherPageForFooter
 } from '../utils/commonFunc'
+import {
+  phoneNumRegexpInput
+} from '../utils'
 import {createNamespacedHelpers, mapState, mapGetters} from 'vuex'
 // import {formatNumberInpu} from '../utils'
-const {
-  mapMutations
-
-} = createNamespacedHelpers('user')
+const {mapMutations} = createNamespacedHelpers('user')
 export default {
   components: {
     ImageValidate,
@@ -694,14 +690,14 @@ export default {
   // props,
   data () {
     return {
-      fullscreenLoading: false, // 整页loading
+      passwdRef: 'passwd-ref',
+      phoneRef: 'phone-ref',
+      mobilePhoneRef: 'mobile-phone-ref',
       activeMethod: 0, // 当前注册方式： 0： 手机注册 : 1 邮箱注册
       // contryAreaList: [], // 国家区域列表
       activeCountryCodeWithPhone: '86',
       activeCountryCodeWithEmail: '86',
       activeCountryAbbreviationWithEmail: 'CHN', // 当前国家简称
-      // 短信验证码 邮箱验证码
-      identifyCode: '', // 图片验证码
       phoneNum: '', // 手机号
       emailNum: '', // email 地址
       password: '', // 密码
@@ -738,6 +734,7 @@ export default {
     }
   },
   async created () {
+    require('../../static/css/list/User/Register.css')
     if (this.isLogin) {
       this.USER_LOGOUT()
     }
@@ -747,31 +744,9 @@ export default {
       this.inviter = params
       this.inviterDisabled = true
     }
-    this.refreshCode()
   },
   mounted () {
-    $('body').on('mousemove', (e) => {
-      if (this.mouseMoveStatus) {
-        var width = e.clientX - this.beginClientX
-        if (width > 0 && width <= this.maxwidth) {
-          $('.handler').css({'left': width})
-          $('.drag_bg').css({'width': width})
-        } else if (width > this.maxwidth) {
-          this.successCallback(this.registerParams)
-        }
-      }
-    })
-    $('body').on('mouseup', (e) => { // 鼠标放开
-      console.log('mouseup')
-      this.mouseMoveStatus = false
-      var width = e.clientX - this.beginClientX
-      if (width < this.maxwidth) {
-        $('.handler').animate({'left': 0}, 500)
-        $('.drag_bg').animate({'width': 0}, 500)
-      }
-      $('body').off('mousemove')
-      $('body').off('mouseup')
-    })
+    this.pcDragEvent()
   },
   activited () {},
   update () {},
@@ -781,9 +756,33 @@ export default {
       'SET_USER_BUTTON_STATUS',
       'USER_LOGOUT'
     ]),
-    // 输入电话号码改变时赋值
-    checkValue (e) {
-      this.phoneNum = e.target.value
+    phoneNumRegexpInput (ref) {
+      console.log(ref)
+      let target = this.$refs[ref]
+      this.phoneNum = phoneNumRegexpInput(target)
+    },
+    // pc 拖动事件
+    pcDragEvent () {
+      $('body').on('mousemove', (e) => {
+        if (this.mouseMoveStatus) {
+          var width = e.clientX - this.beginClientX
+          if (width > 0 && width <= this.maxwidth) {
+            $('.handler').css({'left': width})
+            $('.drag_bg').css({'width': width})
+          } else if (width > this.maxwidth) {
+            this.successCallback(this.registerParams)
+          }
+        }
+      })
+      $('body').on('mouseup', (e) => { // 鼠标放开
+        console.log('mouseup')
+        this.mouseMoveStatus = false
+        var width = e.clientX - this.beginClientX
+        if (width < this.maxwidth) {
+          $('.handler').animate({'left': 0}, 500)
+          $('.drag_bg').animate({'width': 0}, 500)
+        }
+      })
     },
     jumpToDownAppPage () {
       if (this.inviter && this.isNeedApp) {
@@ -802,7 +801,7 @@ export default {
         case 0:
           switch (validateNumForUserInput('phone', targetNum)) {
             case 0:
-              this.setErrorMsg('')
+              this.setErrorMsg()
               this.$forceUpdate()
               return 1
             case 1:
@@ -816,7 +815,7 @@ export default {
         case 1:
           switch (validateNumForUserInput('email', targetNum)) {
             case 0:
-              this.setErrorMsg('')
+              this.setErrorMsg()
               this.$forceUpdate()
               return 1
             case 1:
@@ -840,7 +839,7 @@ export default {
             this.$forceUpdate()
             return 0
           } else {
-            this.setErrorMsg('')
+            this.setErrorMsg()
             this.$forceUpdate()
             return 1
           }
@@ -848,7 +847,7 @@ export default {
         case 4:
           switch (validateNumForUserInput('password', targetNum)) {
             case 0:
-              this.setErrorMsg('')
+              this.setErrorMsg()
               this.$forceUpdate()
               return 1
             case 1:
@@ -871,7 +870,7 @@ export default {
             this.$forceUpdate()
             return 0
           } else if (targetNum === this.password) {
-            this.setErrorMsg('')
+            this.setErrorMsg()
             this.$forceUpdate()
             return 1
           } else {
@@ -888,7 +887,7 @@ export default {
             this.$forceUpdate()
             return 0
           } else {
-            this.setErrorMsg('')
+            this.setErrorMsg()
             this.$forceUpdate()
             return 1
           }
@@ -896,7 +895,7 @@ export default {
     },
     // 设置错误信息
     setErrorMsg (msg) {
-      this.errorMsg = msg
+      this.errorMsg = msg || ''
     },
     // 检测用户名是否存在
     async checkUserExistAjax (type, userName) {
@@ -925,13 +924,12 @@ export default {
       }
     },
     // 发送验证码（短信、邮箱）
-    sendPhoneOrEmailCode (type) {
+    async sendPhoneOrEmailCode (type) {
       this.activeCountryCodeWithEmail = _.filter(this.contryAreaList, {abbreviation: this.activeCountryAbbreviationWithEmail})[0].nationCode
       if (this.disabledOfPhoneBtn || this.disabledOfEmailBtn) {
         return false
       }
-      let params = {
-      }
+      let params = {}
       switch (type) {
         case 0:
           if (!this.checkoutInputFormat(type, this.phoneNum)) {
@@ -948,16 +946,11 @@ export default {
           params.nationCode = this.activeCountryCodeWithEmail
           break
       }
-      console.log(params)
-      sendPhoneOrEmailCodeAjax(type, params, this)
+      await sendPhoneOrEmailCodeAjax(type, params, this)
     },
     // 4位随机数
     getRandomNum () {
-      return parseInt(Math.random() * 10000) + ''
-    },
-    // 刷新验证码
-    refreshCode () {
-      this.identifyCode = this.getRandomNum()
+      return `${parseInt(Math.random() * 10000)} `
     },
     // 滑块验证
     showSliderBox () {
@@ -1001,40 +994,36 @@ export default {
         // 显示滑块验证
         this.sliderFlag = true
         this.registerSliderStatus = true
-        $('body').on('mousedown', (e) => {
-        })
-        $('body').on('mousemove', (e) => { // 拖动，这里需要用箭头函数，不然this的指向不会是vue对象
-          if (this.mouseMoveStatus) {
-            var width = e.clientX - this.beginClientX
-            if (width > 0 && width <= this.maxwidth) {
-              $('.handler').css({'left': width})
-              $('.drag_bg').css({'width': width})
-            } else if (width > this.maxwidth) {
-              this.successCallback(this.registerParams)
-            }
-          }
-        })
-        $('body').on('mouseup', (e) => { // 鼠标放开
-          this.mouseMoveStatus = false
-          var width = e.clientX - this.beginClientX
-          if (width < this.maxwidth) {
-            $('.handler').animate({'left': 0}, 500)
-            $('.drag_bg').animate({'width': 0}, 500)
-          }
-        })
+        // $('body').on('mousemove', (e) => { // 拖动，这里需要用箭头函数，不然this的指向不会是vue对象
+        //   if (this.mouseMoveStatus) {
+        //     var width = e.clientX - this.beginClientX
+        //     if (width > 0 && width <= this.maxwidth) {
+        //       $('.handler').css({'left': width})
+        //       $('.drag_bg').css({'width': width})
+        //     } else if (width > this.maxwidth) {
+        //       this.successCallback(this.registerParams)
+        //     }
+        //   }
+        // })
+        // $('body').on('mouseup', (e) => { // 鼠标放开
+        //   this.mouseMoveStatus = false
+        //   var width = e.clientX - this.beginClientX
+        //   if (width < this.maxwidth) {
+        //     $('.handler').animate({'left': 0}, 500)
+        //     $('.drag_bg').animate({'width': 0}, 500)
+        //   }
+        // })
+        this.pcDragEvent()
       }
     },
     // 发送注册申请
     async sendRegister (params) {
-      this.fullscreenLoading = true // loading
       try {
         const data = await sendRegisterUser(params)
         console.log(data)
         if (!returnAjaxMsg(data, this, 0)) {
-          this.fullscreenLoading = false // loading
           return false
         } else {
-          this.fullscreenLoading = false // loading
           this.isRegisterSuccess = true
           this.successJump()
         }
@@ -1070,7 +1059,7 @@ export default {
       this.password = ''
       this.repeatPassword = ''
       this.checkCode = ''
-      this.setErrorMsg('')
+      this.setErrorMsg()
     },
     /**
      * 滑块验证

@@ -155,7 +155,10 @@ import {
   statusCardSettings,
   modificationAccountPaymentTerm
 } from '../../../utils/api/personal'
-import {apiCommonUrl} from '../../../utils/env'
+import {
+  apiCommonUrl,
+  xDomain
+} from '../../../utils/env'
 import { createNamespacedHelpers, mapState } from 'vuex'
 const { mapMutations } = createNamespacedHelpers('personal')
 export default {
@@ -185,15 +188,7 @@ export default {
     }
   },
   created () {
-    // 覆盖Element样式
-    require('../../../../static/css/list/Personal/AccountReceivableAccount/AddWeChat.css')
-    // 白色主题样式
-    require('../../../../static/css/theme/day/Personal/AccountReceivableAccount/AddWeChatDay.css')
-    // 黑色主题样式
-    require('../../../../static/css/theme/night/Personal/AccountReceivableAccount/AddWeChatNight.css')
     this.tokenObj.token = this.userInfo.token
-    let xDomain = window.location.host.split(':')[0]
-    xDomain = xDomain.startsWith('www') ? xDomain.slice(4) : xDomain
     this.tokenObj['x-domain'] = xDomain
     getAccountPaymentTerm(this)
     this.paymentMethodInformation()
@@ -437,6 +432,44 @@ export default {
       }
     }
 
+    /deep/ {
+      /* 覆盖element样式 */
+      .el-input-group {
+        width: 62.5%;
+      }
+
+      .el-input__inner {
+        height: 36px;
+        border-radius: 2px;
+      }
+
+      .el-input-group__append {
+        padding: 0 16px;
+        border-radius: 0 4px 4px 0;
+        font-size: 12px;
+      }
+
+      .el-upload-list__item {
+        width: 118px;
+        height: 118px;
+      }
+
+      .el-upload--picture-card {
+        position: relative;
+        width: 118px;
+        height: 118px;
+        line-height: 106px;
+      }
+
+      .el-form-item__content {
+        width: 600px;
+      }
+
+      .el-form-item__label {
+        width: 140px !important;
+      }
+    }
+
     &.night {
       color: $nightFontColor;
       background-color: $nightBgColor;
@@ -490,6 +523,29 @@ export default {
               background: linear-gradient(0deg, rgba(43, 57, 110, 1), rgba(42, 80, 130, 1));
             }
           }
+        }
+      }
+
+      /deep/ {
+        /* 个人中心黑色主题 */
+        .el-form-item__label {
+          color: rgba(255, 255, 255, .7);
+        }
+
+        .el-input__inner {
+          border: 1px solid #485776;
+          color: rgba(255, 255, 255, .7);
+          background-color: #1e2636;
+        }
+
+        .el-input-group__append {
+          border-color: #364654;
+          color: rgba(255, 255, 255, .7);
+          background-color: #338ff5;
+        }
+
+        .el-upload--picture-card {
+          background-color: #485776;
         }
       }
     }
@@ -551,6 +607,25 @@ export default {
               background: linear-gradient(0deg, rgba(43, 57, 110, 1), rgba(42, 80, 130, 1));
             }
           }
+        }
+      }
+
+      /deep/ {
+        /* 个人中心白色主题 */
+        .el-form-item__label {
+          color: #7d90ac;
+        }
+
+        .el-input__inner {
+          border: 1px solid #555;
+          color: #000;
+          background-color: transparent;
+        }
+
+        .el-input-group__append {
+          border-color: #364654;
+          color: #555;
+          background-color: #b1b1b1;
         }
       }
     }

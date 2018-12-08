@@ -1,8 +1,0 @@
-.fiat-orders.personal.day .el-input__inner {
-  width: 130px;
-}
-
-/* 交易密码弹出框样式修复 */
-.fiat-trading-order-box.personal.day .password-dialog .el-dialog__body .password-input {
-  border: 1px solid #ecf1f8;
-}

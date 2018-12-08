@@ -332,7 +332,6 @@ import {
   returnAjaxMsg,
   sendPhoneOrEmailCodeAjax
 } from '../../utils/commonFunc'
-// import {PWD_REG, HECKPASSWORD_REG} from '../../utils/regExp'
 import {CHECKPASSWORD_REG} from '../../utils/regExp'
 import ImageValidate from '../Common/ImageValidateCommon'
 import { createNamespacedHelpers, mapState } from 'vuex'
@@ -346,8 +345,10 @@ export default {
   // props,
   data () {
     return {
-      activeStepNumber: 1, // 当前步骤
+      // 当前步骤
+      activeStepNumber: 1,
       username: '',
+      // 用户信息
       userInfo: {
         countryCode: '86',
         email: null,
@@ -356,22 +357,30 @@ export default {
         isEnablePhone: false,
         phone: '15800000000',
         token: '99b9e025-8c40-48a8-925f-eaf8f9112784'
-      }, // 用户信息
+      },
       identifyCode: '',
-      userInputImageCode: '', // 用户输入图片验证码
-      phoneCode: '', // 手机验证码
-      emailCode: '', // 邮箱验证码
-      googleCode: '', // google验证码
-      newPassword: '', // 新登录密码
-      confirmPassword: '', // 确认密码
-      confirmSuccess: false, // 验证成功判断
-      phoneNumTips: 'M.forgetPassword_text4', // 手机号提示信息 若该手机号无法使用请联系客服
-      emailNumTips: 'M.forgetPassword_text5', // 邮箱号提示信息 若该邮箱无法使用请联系客服
+      // 用户输入图片验证码
+      userInputImageCode: '',
+      // 手机验证码
+      phoneCode: '',
+      // 邮箱验证码
+      emailCode: '',
+      // google验证码
+      googleCode: '',
+      // 新登录密码
+      newPassword: '',
+      // 确认密码
+      confirmPassword: '',
+      // 验证成功判断
+      confirmSuccess: false,
+      // 手机号提示信息 若该手机号无法使用请联系客服
+      phoneNumTips: 'M.forgetPassword_text4',
+      // 邮箱号提示信息 若该邮箱无法使用请联系客服
+      emailNumTips: 'M.forgetPassword_text5',
       end: ''
     }
   },
   created () {
-    // console.log(phoneNumberFormat(this.username))
     this.refreshCode()
   },
   mounted () {

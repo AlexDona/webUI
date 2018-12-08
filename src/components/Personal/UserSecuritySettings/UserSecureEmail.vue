@@ -43,9 +43,8 @@
               <input
                 class="email-input border-radius2 padding-l15 box-sizing"
                 v-model="emailAccounts"
-                @keydown="setErrorMsg(0, '')"
+                @keydown="resetIsEmailExist"
                 @focus="resetIsEmailExist"
-                @blur="checkUserExistAjax('email', emailAccounts)"
               />
               <!--错误提示-->
               <ErrorBox
@@ -66,7 +65,7 @@
                   <CountDownButton
                     class="send-code-btn cursor-pointer"
                     :status="disabledOfEmailBtn"
-                    @run="sendPhoneOrEmailCode(1)"
+                    @run="preCheckOnSendEmail"
                   />
                 </template>
               </el-input>
@@ -111,7 +110,6 @@ export default {
   },
   data () {
     return {
-      globalUserInformation: {}, // 个人信息
       emailAccounts: '', // 邮箱账号
       emailCode: '', // 邮箱验证码
       successCountDown: 1, // 成功倒计时
@@ -124,14 +122,6 @@ export default {
     }
   },
   created () {
-    // 覆盖Element样式
-    require('../../../../static/css/list/Personal/UserSecuritySettings/UserSecureEmail.css')
-    // 白色主题样式
-    require('../../../../static/css/theme/day/Personal/UserSecuritySettings/UserSecureEmailDay.css')
-    // 黑色主题样式
-    require('../../../../static/css/theme/night/Personal/UserSecuritySettings/UserSecureEmailNight.css')
-    // 获取全局个人信息
-    this.globalUserInformation = this.userInfo
   },
   mounted () {},
   activited () {},
@@ -150,10 +140,10 @@ export default {
     // 重置邮箱已存在状态
     resetIsEmailExist () {
       this.isEmailExist = false
+      this.setErrorMsg(0, '')
     },
-    // 发送邮箱验证码
-    async sendPhoneOrEmailCode (loginType) {
-      // await this.checkUserExistAjax(loginType, this.emailAccounts)
+    // 发送验证码前校验邮箱是否已存在
+    async preCheckOnSendEmail () {
       if (this.isEmailExist && this.emailAccounts) {
         this.$message({
           type: 'error',
@@ -161,6 +151,16 @@ export default {
         })
         return false
       }
+      await this.checkUserExistAjax('email', this.emailAccounts)
+      console.log(this.isEmailExist)
+      if (!this.isEmailExist) {
+        this.sendPhoneOrEmailCode(1)
+      }
+    },
+    // 发送邮箱验证码
+    async sendPhoneOrEmailCode (loginType) {
+      // await this.checkUserExistAjax(loginType, this.emailAccounts)
+
       // if (!this.emailAccounts) {
       //   this.$message({
       //     // 请先输入邮箱账号
@@ -195,15 +195,20 @@ export default {
      */
     // 检测用户名是否存在
     async checkUserExistAjax (type, userName) {
+      if (this.isEmailExist) {
+        return false
+      }
       if (!validateNumForUserInput(type, userName)) {
         let params = {
           userName: userName,
           regType: type
         }
         const data = await checkUserExist(params)
-        if (!returnAjaxMsg(data, this, 0)) {
+        if (!returnAjaxMsg(data, this)) {
           this.isEmailExist = true
           return false
+        } else {
+          this.isEmailExist = false
         }
       } else {
         switch (type) {
@@ -344,7 +349,11 @@ export default {
       return window.innerHeight
     }
   },
-  watch: {}
+  watch: {
+    isEmailExist (newVal) {
+      console.log(newVal)
+    }
+  }
 }
 </script>
 <style scoped lang="scss">
@@ -484,6 +493,27 @@ export default {
           }
         }
       }
+
+      /deep/ {
+        .el-form-item__label {
+          color: rgba(255, 255, 255, .7);
+        }
+
+        .el-input-group--append {
+          color: #fff;
+          background-color: #338ff5;
+
+          .el-input__inner {
+            border: 1px solid #485776;
+            color: #a9bed4;
+            background-color: #1e2636;
+
+            &:focus {
+              border: 1px solid #338ff5;
+            }
+          }
+        }
+      }
     }
 
     &.day {
@@ -541,6 +571,51 @@ export default {
               color: #ccc;
               background: linear-gradient(0deg, rgba(43, 57, 110, 1), rgba(42, 80, 130, 1));
             }
+          }
+        }
+      }
+
+      /deep/ {
+        .el-form-item__label {
+          color: #7d90ac;
+        }
+      }
+    }
+
+    /deep/ {
+      .el-form-item__content {
+        width: 600px;
+      }
+
+      .el-input__inner {
+        width: 130px;
+        height: 36px;
+        border-radius: 2px;
+      }
+
+      .el-input-group {
+        width: 131px;
+        height: 36px;
+        margin-right: 0;
+        border-radius: 4px;
+      }
+
+      .el-form-item {
+        margin-bottom: 30px;
+      }
+
+      .el-input-group__append {
+        padding: 0;
+        border: none;
+        border-radius: 0 4px 4px 0;
+        background: #338ff5;
+        cursor: pointer;
+      }
+
+      .email-content-from {
+        .el-form-item {
+          .el-form-item__label {
+            width: 160px !important;
           }
         }
       }
