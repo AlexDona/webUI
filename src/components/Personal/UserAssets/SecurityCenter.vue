@@ -261,8 +261,8 @@
                 {{ $t('M.user_security_binding') }}
               </span>
               <span v-else>
-                <!--解绑-->
-                {{ $t('M.user_security_unbundle') }}
+                <!--换绑-->
+                {{ $t('M.user_security_in_tie') }}
               </span>
             </button>
           </div>
