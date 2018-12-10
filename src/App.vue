@@ -84,9 +84,6 @@ export default {
     })
   },
   watch: {
-    isAjaxReady (newVal) {
-      console.log(newVal)
-    },
     '$route' (to, from) {
       console.log(to.path)
       let path = to.path
@@ -110,11 +107,6 @@ export default {
           this.setBodyClassName(true, 'register')
           break
       }
-    },
-    isNeedFooter (newVal) {
-      console.log(newVal)
-    },
-    userInfo (newVal) {
     },
     isMobile (newVal) {
       this.setBodyClassName(newVal, 'mobile')

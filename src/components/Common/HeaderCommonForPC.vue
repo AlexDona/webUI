@@ -611,10 +611,14 @@ export default{
     }
   },
   watch: {
+    activeLanguage (newVal) {
+      console.log(newVal)
+    },
     defaultLanguage (newVal) {
       this.$i18n.locale = newVal
     },
-    async language () {
+    async language (newVal) {
+      console.log(newVal)
       await this.SET_PARTNER_INFO_ACTION({
         self: this,
         language: this.language

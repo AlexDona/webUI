@@ -173,7 +173,7 @@ export function phoneNumRegexpInput (event) {
   let finalVal = ''
   let valArr = val.split('')
   _.forEach(valArr, item => {
-    if (item - 0) {
+    if ((item - 0) || item === '0') {
       finalVal += item
     }
   })
