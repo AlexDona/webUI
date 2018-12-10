@@ -35,6 +35,8 @@ export const user = {
   'login_scan_safe_login': '掃描安全登錄',
   'login_scan': '掃描',
   'login_scanLogin': '請使用APP掃碼功能，掃碼登錄',
+  'login_with_password_tips': '掃碼登錄',
+  'login_with_ercode_tips': '密碼登錄',
   'login_content': '內容',
   'login_send': '發送',
   'login_username': '用戶名',

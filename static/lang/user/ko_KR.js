@@ -34,6 +34,8 @@ export const user = {
   'login_erweimaReflesh': 'QR 코드가 무효. 클릭하여 새로 생성하세요.',
   'login_scan': '스캔',
   'login_scanLogin': 'APP 스캔 코드 기능을 사용하여 코드 스캔후 로그인을 사용하십시오.',
+  'login_with_password_tips': '스캔 로그인',
+  'login_with_ercode_tips': '비번 로그인',
   'login_content': '내용',
   'login_send': '보내기',
   'login_username': '사용자 이름',

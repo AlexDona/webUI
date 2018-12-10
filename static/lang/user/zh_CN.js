@@ -35,6 +35,8 @@ export const user = {
   'login_scan_safe_login': '扫描安全登录',
   'login_scan': '扫描',
   'login_scanLogin': '请使用APP扫码功能，扫码登录',
+  'login_with_password_tips': '扫码登录',
+  'login_with_ercode_tips': '密码登录',
   'login_content': '内容',
   'login_send': '发送',
   'login_username': '用户名',

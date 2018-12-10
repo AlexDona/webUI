@@ -35,6 +35,8 @@ export const user = {
   'login_scan_safe_login': 'Scanning secure login',
   'login_scan': 'scanning',
   'login_scanLogin': 'Please use the APP QR code scan and login',
+  'login_with_password_tips': 'Sweep code  login',
+  'login_with_ercode_tips': 'password login',
   'login_content': 'content',
   'login_send': 'send',
   'login_username': 'username',
