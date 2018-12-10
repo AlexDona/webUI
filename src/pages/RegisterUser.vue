@@ -757,7 +757,6 @@ export default {
       'USER_LOGOUT'
     ]),
     phoneNumRegexpInput (ref) {
-      console.log(ref)
       let target = this.$refs[ref]
       this.phoneNum = phoneNumRegexpInput(target)
     },
