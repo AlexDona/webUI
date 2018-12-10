@@ -27,3 +27,5 @@ export const getTradeMarketDataAjax = (params) => get('market/bbMarket/ticker', 
 export const getKlineDataAjax = (params) => get('market/kline', Object.assign({
   'not-loading': true
 }, params))
+// 撤销所有委单
+export const cancelAllEntrustAjax = params => put('cancelEntrustBatch', params)

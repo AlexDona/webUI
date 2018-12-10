@@ -139,6 +139,7 @@ export default {
         this.isAllowDrag = true
         let klineData = getNestedData(data, 'data.data.obj')
         klineData = JSON.parse(unzip(klineData))
+        console.log(klineData)
         let klineList = getNestedData(klineData, 'klineList')
         if (klineList) {
           this.KlineNum = klineData.num
