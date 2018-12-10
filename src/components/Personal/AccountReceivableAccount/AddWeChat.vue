@@ -84,6 +84,16 @@
               :label="$t('M.user_account_upload_collection')"
             >
               <div class="chat-upload border-radius4">
+                <div
+                  class="mask-layer cursor-pointer"
+                  v-show="removeMaskLayer"
+                >
+                  <i
+                    class="el-icon-delete mask-icon cursor-pointer"
+                    @click="handleRemove"
+                  >
+                  </i>
+                </div>
                 <el-upload
                   :action="apiCommonUrl+'uploadfile'"
                   :headers="tokenObj"
@@ -92,6 +102,7 @@
                   :on-remove="handleRemove"
                 >
                   <img
+                    class="mask-images"
                     v-show="dialogImageHandUrl1"
                     width="118"
                     height="118"
@@ -174,9 +185,9 @@ export default {
       },
       cardNo: '', // 微信账号
       password: '', // 交易密码
-      dialogImageHandUrl: '', // 图片url
       dialogImageHandUrl1: '', // 图片url
-      id: '', // ID
+      removeMaskLayer: true, // 删除遮罩层
+      paymentTypeId: '', // 收款类型ID
       paymentTerm: {}, // 收款方式
       successCountDown: 1, // 成功倒计时
       paymentMethodList: {},
@@ -208,9 +219,15 @@ export default {
       this.CHANGE_USER_CENTER_ACTIVE_NAME('account-credited')
       this.$router.push({path: '/PersonalCenter'})
     },
+    // 上传微信二维码
     handleSuccessHand (response, file, fileList) {
       this.dialogImageHandUrl1 = response.data.fileUrl
       console.log(response, file, fileList)
+    },
+    // 删除微信二维码
+    handleRemove () {
+      this.dialogImageHandUrl1 = ''
+      this.removeMaskLayer = false
     },
     // 检测输入格式
     checkoutInputFormat (type, targetNum) {
@@ -330,7 +347,7 @@ export default {
           this.dialogImageHandUrl1 = detailData.qrcode
         }
         if (detailData.id) {
-          this.id = detailData.id
+          this.paymentTypeId = detailData.id
         }
         console.log(this.dialogImageHandUrl1)
       }
@@ -416,11 +433,35 @@ export default {
 
           .chat-upload {
             float: left;
-            width: 118px;
-            height: 118px;
+            width: 122px;
+            height: 122px;
             overflow: hidden;
             line-height: 100px;
             text-align: center;
+
+            .mask-layer {
+              position: absolute;
+              z-index: 9;
+              top: 0;
+              width: 122px;
+              height: 122px;
+              border-radius: 6px;
+              line-height: 118px;
+              background: transparent;
+              opacity: 0;
+            }
+
+            &:hover .mask-layer {
+              width: 122px;
+              height: 122px;
+              background-color: rgba(0, 0, 0, .4);
+              opacity: 1;
+
+              .mask-icon {
+                font-size: 19px;
+                color: #fff;
+              }
+            }
           }
 
           .chat-button {
@@ -454,10 +495,15 @@ export default {
         height: 118px;
       }
 
+      .mask-images {
+        margin-top: 1px;
+        border-radius: 6px;
+      }
+
       .el-upload--picture-card {
         position: relative;
-        width: 118px;
-        height: 118px;
+        width: 122px;
+        height: 122px;
         line-height: 106px;
       }
 
@@ -513,7 +559,7 @@ export default {
               .icon-plus {
                 position: absolute;
                 top: 35px;
-                right: 35px;
+                right: 40px;
                 color: #828ea6;
               }
             }
