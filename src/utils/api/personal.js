@@ -27,7 +27,9 @@ export const inquireRechargeAddressList = (params) => get('personal/getRechargeA
 // 获取提币信息
 export const withdrawalInformation = (params) => get('queryWithdrawInfo', params)
 // 根据coinid查询交易信息
-export const queryTransactionInformation = (params) => get('personal/getTradeUrl', params)
+export const queryTransactionInformation = (params) => get('personal/getTradeUrl', Object.assign({
+  'not-loading': true
+}, params))
 //  刷新用户信息
 export const userRefreshUser = (params) => get('user/refreshUser', params)
 /**

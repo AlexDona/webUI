@@ -172,7 +172,10 @@
                         class="type-transaction border-radius4"
                         v-show="tradingState&&index==current"
                       >
-                        <span class="triangle-border display-inline-block">
+                        <span
+                          class="triangle-border display-inline-block"
+                          v-show="currencyTradingList.length"
+                        >
                         </span>
                         <p
                           class="transaction-list text-align-c"
@@ -1092,7 +1095,7 @@ export default {
       } else {
         // 返回展示
         // this.currencyTradingList = data.data.data.entrust
-        this.currencyTradingList = getNestedData(data, 'data.data.entrust')
+        this.currencyTradingList = getNestedData(data, 'data.data.entrust') || []
       }
     }
   },

@@ -84,6 +84,9 @@ export default {
     })
   },
   watch: {
+    isAjaxReady (newVal) {
+      console.log(newVal)
+    },
     '$route' (to, from) {
       console.log(to.path)
       let path = to.path
