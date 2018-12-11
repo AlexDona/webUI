@@ -331,7 +331,7 @@ export default {
     min-height: 500px;
 
     .page {
-      padding: 10px 0;
+      /* padding: 10px 0; */
       text-align: center;
     }
 

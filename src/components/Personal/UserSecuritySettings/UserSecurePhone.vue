@@ -323,12 +323,6 @@ export default {
     }
   },
   created () {
-    // 覆盖Element样式
-    require('../../../../static/css/list/Personal/UserSecuritySettings/UserSecurePhone.css')
-    // 白色主题样式
-    require('../../../../static/css/theme/day/Personal/UserSecuritySettings/UserSecurePhoneDay.css')
-    // 黑色主题样式
-    require('../../../../static/css/theme/night/Personal/UserSecuritySettings/UserSecurePhoneNight.css')
     this.getSecurityCenter()
   },
   mounted () {},
@@ -864,6 +858,52 @@ export default {
             padding-left: 35px;
           }
         }
+      }
+    }
+
+    /deep/ {
+      /* 覆盖Element样式 */
+      .el-form-item__content {
+        width: 650px;
+      }
+
+      .el-input__inner {
+        width: 130px;
+        height: 36px;
+        border-radius: 2px 0 0 2px;
+      }
+
+      .el-input-group {
+        width: 131px;
+        margin-right: 0;
+        border-radius: 4px;
+      }
+
+      .el-input-group__append {
+        padding: 0;
+        border-left: 0;
+        border-radius: 0 4px 4px 0;
+        cursor: pointer;
+      }
+
+      .el-input-group__prepend {
+        padding: 0 25px;
+      }
+
+      .el-form-item {
+        margin-bottom: 15px;
+      }
+
+      .el-select {
+        .el-input__inner {
+          width: 63px;
+          height: 34px;
+          padding: 0 7px;
+        }
+      }
+
+      .el-form-item__label {
+        width: 180px !important;
       }
     }
 

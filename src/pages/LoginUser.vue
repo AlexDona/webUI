@@ -34,6 +34,9 @@
           @click="toggleLoginType"
         >
         </button>
+        <div class="tips">
+          {{$t(loginWithPasswordTipsText)}}
+        </div>
         <!-- 欢迎登录 -->
         <h1 class="title">{{$t('M.login_welcome')}}{{$t('M.comm_login')}}</h1>
         <!--正常登录-->
@@ -306,6 +309,9 @@
           @click="toggleLoginType"
         >
         </button>
+        <div class="login-tips">
+          {{$t(loginWithErcodeTipsText)}}
+        </div>
         <div
           class="scan-box"
           v-if="!isScanSuccess"
@@ -658,6 +664,8 @@ export default {
   },
   data () {
     return {
+      loginWithPasswordTipsText: 'M.login_with_password_tips',
+      loginWithErcodeTipsText: 'M.login_with_ercode_tips',
       fullscreenLoading: false,
       socket: '', // 二维码登录socket
       isErcodeTimeOut: false, // 二维码是否过期
@@ -1196,7 +1204,7 @@ export default {
       position: relative;
       width: 370px;
       height: 330px;
-      padding: 55px 40px;
+      padding: 70px 40px;
       margin: 12% 50%;
       border-radius: 10px;
       text-align: left;
@@ -1210,6 +1218,17 @@ export default {
         width: 50px;
         height: 50px;
         background: url(../assets/develop/er-code-icon.png) no-repeat center center;
+      }
+
+      /* 扫码登录提示 */
+      .tips {
+        position: absolute;
+        top: 10px;
+        right: 50px;
+        padding: 8px 15px;
+        color: $mainColor;
+        background: url(../assets/develop/login-tips-bg.png) no-repeat center center;
+        background-size: 100% 100%;
       }
 
       .step1-btn {
@@ -1486,7 +1505,7 @@ export default {
       position: relative;
       width: 370px;
       height: 330px;
-      padding: 33px 40px;
+      padding: 50px 40px;
       margin: 12% 50%;
       border-radius: 10px;
       text-align: center;
@@ -1538,6 +1557,17 @@ export default {
         width: 50px;
         height: 50px;
         background: url(../assets/develop/pc-login-icon.png) no-repeat center center;
+      }
+
+      /* 扫码登录提示 */
+      .login-tips {
+        position: absolute;
+        top: 10px;
+        right: 50px;
+        padding: 8px 15px;
+        color: $mainColor;
+        background: url(../assets/develop/login-tips-bg.png) no-repeat center center;
+        background-size: 100% 100%;
       }
 
       > .scan-box {

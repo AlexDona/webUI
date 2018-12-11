@@ -24,4 +24,6 @@ export const getActiveSymbolDataAjax = (params) => get('market/bbMarket/market',
 // 获取币币交易市场
 export const getTradeMarketDataAjax = (params) => get('market/bbMarket/ticker', params)
 // 获取K线接口
-export const getKlineDataAjax = (params) => get('market/kline', params)
+export const getKlineDataAjax = (params) => get('market/kline', Object.assign({
+  'not-loading': true
+}, params))

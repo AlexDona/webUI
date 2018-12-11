@@ -5,6 +5,7 @@ import {
   apiCommonUrl,
   xDomain
 } from '../env'
+import {getNestedData} from '../commonFunc'
 import axios from 'axios'
 import store from '../../vuex'
 let failureCount = 0
@@ -16,6 +17,12 @@ util.ajax = axios.create({
 })
 
 util.ajax.interceptors.request.use((config) => {
+  let needLoading = !getNestedData(config.params, 'not-loading')
+  console.log(needLoading)
+  if (needLoading) {
+    store.commit('common/CHANGE_AJAX_READY_STATUS', true)
+    console.log(store.state.common.isAjaxReady)
+  }
   if (failureCount > 1) {
     failureCount = 0
     return false
@@ -39,6 +46,8 @@ util.ajax.interceptors.response.use(
     if (!success) {
       failureCount++
     }
+
+    store.commit('common/CHANGE_AJAX_READY_STATUS', false)
     return response
   },
   error => {

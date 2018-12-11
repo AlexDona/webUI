@@ -345,7 +345,8 @@ import {
 } from '../../utils/commonFunc'
 import {
   getStore,
-  setStore
+  setStore,
+  getStoreWithJson
 } from '../../utils'
 import { createNamespacedHelpers, mapState } from 'vuex'
 const { mapMutations, mapActions } = createNamespacedHelpers('common')
@@ -477,15 +478,16 @@ export default{
     },
     // 开启vip
     stateOpenVip () {
-      if (this.userInfo.payPassword) {
+      if (this.localPayPwdSet || this.userInfo.payPassword) {
         this.$router.push({path: '/VipMainContent'})
       } else {
         this.$router.push({path: '/TransactionPassword'})
       }
     },
     // 用户跳转到指定页面
-    stateReturnSuperior (val) {
-      if (this.userInfo.payPassword) {
+    async stateReturnSuperior (val) {
+      await this.$store.commit('user/REFLASH_USER_INFO', this)
+      if (this.localPayPwdSet || this.userInfo.payPassword) {
         switch (val) {
           case 'account-balance':
             this.setPersonalJump('assets')
@@ -570,7 +572,7 @@ export default{
     // 查询某商户可用法币币种列表
     async getMerchantAvailablelegalTenderList () {
       let data = await getMerchantAvailablelegalTender({})
-      if (!returnAjaxMsg(data)) {
+      if (!returnAjaxMsg(data, this)) {
         return false
       } else {
         // 返回数据正确的逻辑
@@ -596,19 +598,27 @@ export default{
       middleTopData: state => state.trade.middleTopData, // 当前交易对数据
       middleTopDataPrice: state => state.trade.middleTopData.last, // 当前交易对数据
       userInfo: state => state.user.loginStep1Info.userInfo,
+      paypasswordSet: state => state.user.loginStep1Info.userInfo.paypasswordSet, // 用户是否已进入交易密码
       activeLanguage: state => state.common.activeLanguage,
       userInfoRefreshStatus: state => state.common.userInfoRefreshStatus,
       logoSrc: state => state.common.logoSrc,
       title: state => state.common.title, // 网站title
       $mainNightBgColor: state => state.common.mainColor.$mainNightBgColor,
       noticeCloseVisible: state => state.home.noticeCloseVisible
-    })
+    }),
+    localPayPwdSet () {
+      return getNestedData(getStoreWithJson('loginStep1Info'), 'userInfo.paypasswordSet') || this.paypasswordSet
+    }
   },
   watch: {
+    activeLanguage (newVal) {
+      console.log(newVal)
+    },
     defaultLanguage (newVal) {
       this.$i18n.locale = newVal
     },
-    async language () {
+    async language (newVal) {
+      console.log(newVal)
       await this.SET_PARTNER_INFO_ACTION({
         self: this,
         language: this.language

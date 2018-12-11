@@ -527,9 +527,6 @@ export default {
     }
   },
   async created () {
-    require('../../../static/css/list/OTC/OTCReportFormStatistics.css')
-    require('../../../static/css/theme/day/OTC/OTCReportFormStatisticsDay.css')
-    require('../../../static/css/theme/night/OTC/OTCReportFormStatisticsNight.css')
     // 1.0 otc可用币种查询
     await this.getOTCAvailableCurrencyList()
     // 2.0 查询可用法币币种列表
@@ -910,6 +907,68 @@ export default {
     }
   }
 
+  /deep/ {
+    .currency-input {
+      .el-select {
+        width: 120px;
+      }
+    }
+
+    .legal-tender-input {
+      .el-select {
+        width: 140px;
+      }
+    }
+
+    .report-form-filtrate {
+      .el-input__inner {
+        height: 34px;
+        border: 0;
+      }
+    }
+
+    .date {
+      .select-date {
+        .el-date-editor {
+          &.el-input {
+            width: 134px;
+          }
+        }
+
+        .el-input__inner {
+          height: 34px;
+          border: 0;
+        }
+      }
+
+      .radio-date {
+        .el-radio__label {
+          font-size: 12px;
+        }
+
+        .el-radio__inner {
+          &::after {
+            width: 7px;
+            height: 7px;
+          }
+        }
+      }
+    }
+
+    .order-table {
+      .el-table {
+        tr {
+          height: 40px;
+        }
+
+        td {
+          padding: 0;
+          border-bottom: 0;
+        }
+      }
+    }
+  }
+
   &.night {
     background-color: $mainNightBgColor;
 
@@ -1023,6 +1082,86 @@ export default {
 
             .green {
               color: #008069;
+            }
+          }
+        }
+      }
+    }
+
+    /deep/ {
+      .report-form-filtrate {
+        .el-input__inner {
+          background-color: #1c1f32;
+        }
+      }
+
+      .date {
+        .select-date {
+          .el-date-editor {
+            &.el-input {
+              width: 134px;
+            }
+          }
+
+          .el-input__inner {
+            background-color: #19202e;
+          }
+        }
+
+        .radio-date {
+          &.el-radio {
+            color: #46505f;
+          }
+
+          .el-radio__label {
+            color: #fff;
+          }
+
+          .el-radio__inner {
+            border: 1px solid #b3b3b3;
+            background-color: #1c1f32;
+
+            &::after {
+              background-color: #338ff5;
+            }
+          }
+
+          .el-radio__input.is-checked + .el-radio__label {
+            color: #338ff5;
+          }
+        }
+      }
+
+      .order-table {
+        .el-table--enable-row-hover {
+          .el-table__body {
+            tr {
+              &:hover {
+                > td {
+                  background-color: #1e2636;
+                }
+              }
+            }
+          }
+        }
+
+        .el-table {
+          color: #9da5b3;
+          background-color: #1c1f32;
+
+          thead {
+            color: #a9bed4;
+          }
+
+          tr {
+            background-color: #1c1f32;
+          }
+
+          th {
+            background-color: #1c1f32;
+
+            &.is-leaf {
+              border-bottom: 1px solid #262f38;
             }
           }
         }
@@ -1149,6 +1288,209 @@ export default {
             .green {
               color: #008069;
             }
+          }
+        }
+      }
+    }
+
+    /deep/ {
+      .report-form-filtrate {
+        .el-input__inner {
+          border: 1px solid rgba(236, 241, 248, 1);
+          border-radius: 2px;
+          background-color: #fff;
+        }
+      }
+
+      .date {
+        .radio-date {
+          .el-radio__input.is-checked + .el-radio__label {
+            color: #338ff5;
+          }
+
+          .el-radio__label {
+            color: #7d90ac;
+          }
+
+          .el-radio__inner {
+            border: 1px solid rgba(38, 47, 56, .1);
+            background-color: #fff;
+
+            &::after {
+              background-color: #338ff5;
+            }
+          }
+        }
+
+        .select-date {
+          .el-input__inner {
+            border: 1px solid rgba(38, 47, 56, .1);
+            background-color: #fff;
+          }
+        }
+      }
+
+      .border-radius5 {
+        border-radius: 0;
+      }
+
+      > .report-form-statistics-content {
+        > .report-form-details {
+          > .title[data-v-e69a84f0] {
+            border: 1px solid rgba(38, 47, 56, .1);
+            border-left: none;
+            border-top-right-radius: 5px;
+            border-top-left-radius: 5px;
+            box-shadow: 0 0 0 #191e28;
+            border-right: none;
+          }
+        }
+
+        > .report-form-details[data-v-e69a84f0] {
+          border: 1px solid rgba(38, 47, 56, .1);
+          border-top: 0 solid #000;
+          border-top-right-radius: 5px;
+          border-top-left-radius: 5px;
+          background-color: #fff;
+        }
+
+        > .report-form-asset {
+          margin-top: 20px;
+          border: 1px solid rgba(38, 47, 56, .1);
+          border-radius: 0;
+          background-color: #fff;
+
+          > .title[data-v-e69a84f0] {
+            border: none;
+            border-bottom: 1px solid rgba(38, 47, 56, .1);
+            box-shadow: 0 0 0 #191e28;
+          }
+
+          > .content[data-v-e69a84f0] {
+            border: 0 solid rgba(38, 47, 56, .1);
+          }
+        }
+
+        > .report-form-buy-sell {
+          > .sell {
+            > .body {
+              .together {
+                > .left {
+                  > .round[data-v-e69a84f0] {
+                    background: rgba(84, 189, 116, .15);
+                  }
+                }
+              }
+            }
+          }
+
+          > .common[data-v-e69a84f0] {
+            background-color: #fff;
+          }
+
+          > .common {
+            > .body {
+              > .together[data-v-e69a84f0] {
+                border: 1px solid rgba(38, 47, 56, .1);
+              }
+
+              > .together {
+                > .left {
+                  > .round[data-v-e69a84f0] {
+                    background-color: rgba(212, 88, 88, .15);
+                  }
+                }
+              }
+            }
+
+            > .body[data-v-e69a84f0] {
+              border: 1px solid rgba(38, 47, 56, .1);
+            }
+
+            > .head[data-v-e69a84f0] {
+              border: 1px solid rgba(38, 47, 56, .1);
+              border-bottom: none;
+              border-bottom-right-radius: 0;
+              border-bottom-left-radius: 0;
+              box-shadow: inset 0 2px 4px rgba(236, 241, 248, 1);
+            }
+          }
+        }
+
+        > .report-form-filtrate {
+          > .filtrate-text[data-v-e69a84f0] {
+            color: #7d90ac;
+          }
+        }
+      }
+
+      .el-radio__input {
+        &.is-checked {
+          .el-radio__inner {
+            border-color: rgb(64, 158, 255);
+            background: #fff;
+          }
+        }
+      }
+
+      .order-table {
+        .el-table {
+          background-color: #fff;
+
+          th {
+            color: #999;
+            background-color: #fff;
+
+            &.is-leaf {
+              border-bottom: 0 solid #262f38;
+            }
+          }
+        }
+      }
+
+      .el-input__inner {
+        color: #7d90ac;
+      }
+
+      .nav-box {
+        > .inner-box {
+          > .top {
+            > .left {
+              > .nav-list {
+                > .nav-item {
+                  > .sub-nav-list[data-v-346cd49c] {
+                    background-color: #fff;
+
+                    &::before {
+                      border-bottom-color: #fff;
+                    }
+                  }
+
+                  > .sub-nav-list {
+                    > .sub-nav-item {
+                      > a[data-v-346cd49c] {
+                        color: #000;
+                      }
+                    }
+
+                    > .sub-nav-item[data-v-346cd49c] {
+                      &:hover {
+                        background-color: #fff;
+
+                        > a {
+                          color: #338ff5;
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+
+          > .bottom[data-v-346cd49c] {
+            background-color: #fff;
+            box-shadow: 4px 4px 4px rgba(3, 14, 32, .1);
           }
         }
       }

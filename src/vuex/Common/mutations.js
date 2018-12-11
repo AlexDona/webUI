@@ -15,6 +15,7 @@ import {
   SET_FOOTER_INFO,
   SET_COUNT_DOWN_RESET_STATUS,
   CHANGE_DEFAULT_LANGUAGE,
+  CHANGE_AJAX_READY_STATUS,
   // eslint-disable-next-line
   CHANGE_ROUTER_PATH
 } from './mutations-types.js'
@@ -139,5 +140,8 @@ export default {
   },
   [CHANGE_DEFAULT_LANGUAGE] (state, data) {
     state.defaultLanguage = data
+  },
+  [CHANGE_AJAX_READY_STATUS] (state, data) {
+    state.isAjaxReady = data
   }
 }

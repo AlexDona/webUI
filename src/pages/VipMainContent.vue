@@ -656,12 +656,6 @@ export default {
     }
   },
   async created () {
-    // 覆盖Element样式
-    require('../../static/css/list/Personal/VipMainContent/VipMainContent.css')
-    // 白色主题样式
-    require('../../static/css/theme/day/Personal/VipMainContent/VipMainContentDay.css')
-    // 黑色主题样式
-    require('../../static/css/theme/night/Personal/VipMainContent/VipMainContentNight.css')
     if (this.vipLeavl) {
       this.activeStatus = this.vipLeavl.split('')[3]
     }
@@ -1197,6 +1191,78 @@ export default {
       }
     }
 
+    /deep/ {
+      /* 覆盖Element样式 */
+      .el-dialog {
+        top: 5%;
+        width: 310px;
+        border-radius: 10px;
+
+        .el-dialog__header {
+          padding: 20px 20px 0;
+          border-radius: 5px 5px 0 0;
+          background-color: #20293c;
+        }
+
+        .el-dialog__body {
+          padding: 0 20px 10px;
+
+          .ql-editor {
+            padding-top: 0;
+          }
+        }
+
+        .el-dialog__title {
+          color: #fff;
+        }
+      }
+
+      .el-form-item {
+        margin-bottom: 0;
+      }
+
+      .el-form-item__label {
+        color: #fff;
+      }
+
+      .el-input__inner {
+        width: 270px;
+        height: 34px;
+        border: 1px solid rgba(72, 87, 118, 1);
+        background-color: #1a2233;
+
+        &:focus {
+          border: 1px solid #338ff5;
+        }
+      }
+
+      .el-button {
+        width: 270px;
+        height: 36px;
+        border: 0;
+        line-height: 0;
+        background: linear-gradient(81deg, rgba(43, 57, 110, 1) 0%, rgba(42, 80, 130, 1) 100%);
+      }
+
+      .content-main-content {
+        .discounts-instruction-dialog {
+          .el-dialog {
+            height: 800px;
+            overflow: auto;
+          }
+
+          .el-dialog__header {
+            text-align: center;
+            background-color: transparent;
+          }
+
+          .el-dialog__title {
+            color: #338ff5;
+          }
+        }
+      }
+    }
+
     &.night {
       color: $nightFontColor;
       background-color: $nightBgColor;
@@ -1388,6 +1454,13 @@ export default {
           .warm-text-color {
             color: #9da5b3;
           }
+        }
+      }
+
+      /deep/ {
+        /* 个人中心（黑色主题） */
+        .el-dialog {
+          background-color: #28334a;
         }
       }
     }
