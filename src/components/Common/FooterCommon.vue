@@ -103,7 +103,7 @@
             </dt>
             <dd
               class="dd-item"
-              v-if="xDomain!=='bithumber.com'"
+              v-if="isNeedApp"
             >
               <!-- 客户端下载 -->
               <router-link to="/guideOfDownload">{{$t('M.comm_Client_Downloads')}}</router-link>
@@ -226,9 +226,8 @@ import {
   jumpToOtherPageForFooter,
   getNestedData
 } from '../../utils/commonFunc'
-import {xDomain} from '../../utils/env'
 import Iconfont from '../Common/IconFontCommon'
-import {createNamespacedHelpers, mapState} from 'vuex'
+import {createNamespacedHelpers, mapState, mapGetters} from 'vuex'
 const {mapMutations} = createNamespacedHelpers('footerInfo')
 export default {
   components: {
@@ -300,6 +299,9 @@ export default {
   },
   filter: {},
   computed: {
+    ...mapGetters('common', {
+      'isNeedApp': 'isNeedApp'
+    }),
     ...mapState({
       language: state => state.common.language,
       logoSrc: state => state.common.logoSrc,
@@ -307,10 +309,7 @@ export default {
       footerInfo1: state => state.common.footerInfo.footerInfo1,
       // 公司名称fubt fbt fuc、邮箱等信息
       configInfo: state => state.common.footerInfo.configInfo
-    }),
-    xDomain () {
-      return xDomain
-    }
+    })
   },
   watch: {
     footerInfo: {
