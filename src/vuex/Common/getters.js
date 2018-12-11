@@ -5,6 +5,6 @@ export default {
     return state.language === 'zh_CN' || state.language === 'zh_TW'
   },
   isNeedApp () {
-    return xDomain !== 'bithumber.com'
+    return xDomain !== ''
   }
 }
