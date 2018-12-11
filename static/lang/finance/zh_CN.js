@@ -1,6 +1,6 @@
 export const finance = {
   'finance_save_moneydetail': '存币详情',
-  'finance_newestPrice': '最新价钱',
+  'finance_newestPrice': '最新价',
   'finance_at_once_save': '立刻存币',
   'finance_save_coin_record': '存币记录',
   'finance_get_money_record': '收益记录',

@@ -1,5 +1,5 @@
 export const finance = {
-  'finance_newestPrice': '最新価格',
+  'finance_newestPrice': '終値',
   'finance_save_moneydetail': 'デポジット詳細',
   'finance_at_once_save': 'デポジット',
   'finance_input_sum': '数量を入力してください',
