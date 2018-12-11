@@ -9,6 +9,10 @@
       <div class="view-more">
         <button
           class="cancel-all-entrust"
+          :class="{
+            'disabled': !currentEntrustList.length
+          }"
+          :disabled="!currentEntrustList.length"
           @click="cancelAllEntrust"
         >
           {{$t(cancelEntrustBtnText)}}
@@ -488,8 +492,13 @@ export default {
       > .cancel-all-entrust {
         padding-right: 10px;
         border-radius: 5px;
+        font-size: 12px;
         color: #d45858;
         cursor: pointer;
+
+        &.disabled {
+          color: rgba(255, 255, 255, .4);
+        }
       }
 
       > a {
