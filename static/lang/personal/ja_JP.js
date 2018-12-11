@@ -82,7 +82,7 @@ export const personal = {
   'user_account_credited': 'コレクションアカウント',
   'user_account_warm_prompt': 'ヒント',
   'user_account_text': ' お取引の際には、有効なお支払い方法がバイヤーに表示されますが、5種類は設定できますが、3種類まで有効です。',
-  'user_account_text1': 'OTC回収勘定を設定する前に、認証を完了し、取引パスワードを設定してください！',
+  'user_account_text1': '高級認証を终えた上で、otcの入金口座を设置',
   'user_account_text2': 'AlipayアップロードのQRコードメソッド：Alipay Home> Money>画像の保存を開き、携帯電話のアルバムのレシートコードをアップロードします。',
   'user_account_payment_term': 'コレクションメソッド',
   'user_account_bank_transfer': 'Bank card',

@@ -1,6 +1,10 @@
 /**
  * 通用全局方法
  * */
+import {
+  SPECIAL_REG,
+  CHINESE_REG
+} from './regExp'
 
 const pako = require('pako')
 /**
@@ -174,6 +178,33 @@ export function phoneNumRegexpInput (event) {
   let valArr = val.split('')
   _.forEach(valArr, item => {
     if ((item - 0) || item === '0') {
+      finalVal += item
+    }
+  })
+  event.value = finalVal
+  return finalVal
+}
+
+/**
+ * 邮箱账号输入限制
+ * @param event：当前input DOM对象
+ */
+export function emailNumRegexpInput (event) {
+  let val = event.value
+  let finalVal = ''
+  let valArr = val.split('')
+  // .个数
+  let pointCount = 0
+  // @个数
+  let aCount = 0
+  _.forEach(valArr, item => {
+    if (item === '.') {
+      pointCount++
+    }
+    if (item === '@') {
+      aCount++
+    }
+    if (!SPECIAL_REG.test(item) && !CHINESE_REG.test(item) && pointCount < 2 && aCount < 2) {
       finalVal += item
     }
   })

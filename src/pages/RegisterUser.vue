@@ -25,8 +25,6 @@
       :class="{'pc-bg': !isMobile}"
       v-if="!isRegisterSuccess"
     >
-      <!--<img v-webp="'../assets/develop/about-us.png',webp:'../assets/webp/banner1.webp'" />-->
-
       <!--注册(pc端)-->
       <div
         class="main-box pc-box"
@@ -171,8 +169,9 @@
                type="text"
                class="input"
                :placeholder="$t('M.user_security_email') + $t('M.comm_site')"
-               v-model="emailNum"
-               @keydown="setErrorMsg()"
+               :ref="emailNumRef"
+               @keyup="emailNumRegexpInput(emailNumRef)"
+               @input="emailNumRegexpInput(emailNumRef)"
              >
            </div>
           </div>
@@ -442,8 +441,9 @@
                   type="text"
                   class="input"
                   :placeholder="$t('M.user_security_email') + $t('M.comm_site')"
-                  v-model="emailNum"
-                  @keydown="setErrorMsg()"
+                  :ref="emailNumRef"
+                  @keyup="emailNumRegexpInput(emailNumRef)"
+                  @input="emailNumRegexpInput(emailNumRef)"
                 >
               </div>
             </div>
@@ -674,7 +674,8 @@ import {
   jumpToOtherPageForFooter
 } from '../utils/commonFunc'
 import {
-  phoneNumRegexpInput
+  phoneNumRegexpInput,
+  emailNumRegexpInput
 } from '../utils'
 import {createNamespacedHelpers, mapState, mapGetters} from 'vuex'
 // import {formatNumberInpu} from '../utils'
@@ -690,6 +691,7 @@ export default {
   // props,
   data () {
     return {
+      emailNumRef: 'email-num-ref',
       passwdRef: 'passwd-ref',
       phoneRef: 'phone-ref',
       mobilePhoneRef: 'mobile-phone-ref',
@@ -756,6 +758,10 @@ export default {
       'SET_USER_BUTTON_STATUS',
       'USER_LOGOUT'
     ]),
+    emailNumRegexpInput (ref) {
+      let target = this.$refs[ref]
+      this.emailNum = emailNumRegexpInput(target)
+    },
     phoneNumRegexpInput (ref) {
       let target = this.$refs[ref]
       this.phoneNum = phoneNumRegexpInput(target)
@@ -993,25 +999,6 @@ export default {
         // 显示滑块验证
         this.sliderFlag = true
         this.registerSliderStatus = true
-        // $('body').on('mousemove', (e) => { // 拖动，这里需要用箭头函数，不然this的指向不会是vue对象
-        //   if (this.mouseMoveStatus) {
-        //     var width = e.clientX - this.beginClientX
-        //     if (width > 0 && width <= this.maxwidth) {
-        //       $('.handler').css({'left': width})
-        //       $('.drag_bg').css({'width': width})
-        //     } else if (width > this.maxwidth) {
-        //       this.successCallback(this.registerParams)
-        //     }
-        //   }
-        // })
-        // $('body').on('mouseup', (e) => { // 鼠标放开
-        //   this.mouseMoveStatus = false
-        //   var width = e.clientX - this.beginClientX
-        //   if (width < this.maxwidth) {
-        //     $('.handler').animate({'left': 0}, 500)
-        //     $('.drag_bg').animate({'width': 0}, 500)
-        //   }
-        // })
         this.pcDragEvent()
       }
     },

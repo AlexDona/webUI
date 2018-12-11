@@ -86,7 +86,7 @@ export const personal = {
   'user_account_credited': '收款賬戶',
   'user_account_warm_prompt': '溫馨提示',
   'user_account_text': ' 請務必使用您本人的實名賬戶，被激活的支付方式將在OTC交易時向買方展示，可設置5種但最多激活3種',
-  'user_account_text1': '請先完成身份認證並且設置交易密碼，再來設置OTC收款賬戶!',
+  'user_account_text1': '請完成高級認證後，再設置OTC收款賬戶！',
   'user_account_text2': '支付寶上傳二維碼方法：打開支付寶首頁>收錢>保存圖片，將存在手機相冊的收款碼上傳即可。',
   'user_account_payment_term': '收款方式',
   'user_account_bank_transfer': '銀行轉賬',

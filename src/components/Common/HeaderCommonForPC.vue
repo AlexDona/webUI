@@ -104,7 +104,7 @@
                 <li class="sub-nav-item">
                   <router-link to="/CurrencyApplication">
                     <!--上币申请-->
-                    {{$t('M.coin_apply')}}
+                    {{$t('M.actionCenter_coin_apply')}}
                   </router-link>
                 </li>
                 <li class="sub-nav-item">

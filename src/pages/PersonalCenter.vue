@@ -281,11 +281,12 @@ export default {
       'CHANGE_USER_CENTER_ACTIVE_NAME'
     ]),
     showNoPosswdAndNoVerifyNotice () {
-      if (this.userCenterActiveName === 'account-credited' && !this.realname) {
-        this.notVerifyDialogVisible = true
-      }
       if (this.userCenterActiveName === 'account-credited' && !this.payPassword) {
         this.setPwdDialogVisible = true
+        return false
+      }
+      if (this.userCenterActiveName === 'account-credited' && !this.realname) {
+        this.notVerifyDialogVisible = true
       }
     },
     // tab面板切换

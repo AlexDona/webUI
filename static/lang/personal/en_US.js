@@ -83,7 +83,7 @@ export const personal = {
   'user_account_credited': 'Accounts receivable',
   'user_account_warm_prompt': 'Tips',
   'user_account_text': ' Please be sure to use your real-name account. The activated payment method will be displayed to the buyer during the OTC transaction. You can set 5 types but activate up to 3 types.',
-  'user_account_text1': 'Please complete the authentication and set the transaction password before setting up the OTC receipt account!',
+  'user_account_text1': 'Complete advanced certification then set OTC receipt account',
   'user_account_text2': 'Alipay upload QR code method: Open Alipay Home > Collect Money > Save Image, upload the receipt code of the mobile phone album.',
   'user_account_payment_term': ' payment method',
   'user_account_bank_transfer': 'Bank Transfer',

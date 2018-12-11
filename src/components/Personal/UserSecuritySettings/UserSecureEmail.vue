@@ -45,6 +45,9 @@
                 v-model="emailAccounts"
                 @keydown="resetIsEmailExist"
                 @focus="resetIsEmailExist"
+                :ref="emailNumRef"
+                @keyup="emailNumRegexpInput(emailNumRef)"
+                @input="emailNumRegexpInput(emailNumRef)"
               />
               <!--错误提示-->
               <ErrorBox
@@ -98,6 +101,7 @@ import {
   validateNumForUserInput, // 用户输入验证
   sendPhoneOrEmailCodeAjax
 } from '../../../utils/commonFunc'
+import {emailNumRegexpInput} from '../../../utils'
 import {bindEmailAddress} from '../../../utils/api/personal'
 import {checkUserExist} from '../../../utils/api/user'
 import { createNamespacedHelpers, mapState } from 'vuex'
@@ -110,6 +114,7 @@ export default {
   },
   data () {
     return {
+      emailNumRef: 'email-num-ref',
       emailAccounts: '', // 邮箱账号
       emailCode: '', // 邮箱验证码
       successCountDown: 1, // 成功倒计时
@@ -131,6 +136,11 @@ export default {
     ...mapMutations([
       'SET_USER_BUTTON_STATUS'
     ]),
+    // 邮箱验证
+    emailNumRegexpInput (ref) {
+      let target = this.$refs[ref]
+      this.emailAccounts = emailNumRegexpInput(target)
+    },
     // 点击返回上个页面
     returnSuperior () {
       this.$store.commit('personal/CHANGE_REF_SECURITY_CENTER_INFO', true)

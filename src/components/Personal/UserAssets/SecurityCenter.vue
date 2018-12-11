@@ -1198,6 +1198,13 @@ export default {
               text-align: right;
             }
           }
+
+          &:nth-child(4) {
+            .cell {
+              padding-right: 45px;
+              text-align: right;
+            }
+          }
         }
 
         td {

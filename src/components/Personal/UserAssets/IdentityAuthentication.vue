@@ -97,7 +97,7 @@
             :label="$t('M.user_real_certificate_type')"
           >
             <!--请选择证件类型-->
-            <el-select
+            <el-selectN
               @change="changedocumentTypeValue"
               v-model="documentTypeValue"
               :no-data-text="$t('M.comm_no_data')"
@@ -117,7 +117,7 @@
                 :value="item.certificateName"
               >
               </el-option> -->
-            </el-select>
+            </el-selectN>
           </el-form-item>
           <!-- 真实姓名 -->
           <el-form-item
