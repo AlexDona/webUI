@@ -959,7 +959,7 @@ export default {
 
       > .banner-title {
         position: absolute;
-        top: 50%;
+        top: 57%;
         left: 50%;
         width: 400px;
         font-size: 40px;

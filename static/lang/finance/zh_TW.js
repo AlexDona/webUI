@@ -1,5 +1,5 @@
 export const finance = {
-  'finance_newestPrice': '最新價錢',
+  'finance_newestPrice': '最新價',
   'finance_save_moneydetail': '存幣詳情',
   'finance_at_once_save': '立刻存幣',
   'finance_save_coin_record': '存幣記錄',
