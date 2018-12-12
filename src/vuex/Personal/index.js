@@ -29,11 +29,16 @@ const state = {
   refSecurityCenterStatus: false,
   // 收款方式
   refsAccountCenterStatus: false,
-  legalTradePageSize: 5, // 每页数据量
-  legalTradePageNum: 1, // 开始页码
-  legalTradePageTotals: 0, // 总页数
+  // 每页数据量
+  legalTradePageSize: 5,
+  // 开始页码
+  legalTradePageNum: 1,
+  // 总页数
+  legalTradePageTotals: 0,
   // 法币订单状态变化
-  legalTraderOrderStatus: false
+  legalTraderOrderStatus: false,
+  // 跳转到新增提币地址的参数
+  paramOfJumpToAddWithdrawAdress: ''
 }
 
 export default {

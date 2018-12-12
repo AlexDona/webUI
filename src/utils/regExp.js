@@ -13,7 +13,7 @@ export const EMAIL_REG = /^([A-Za-z0-9_\-\.])+\@([A-Za-z0-9_\-\.])+\.([A-Za-z]{2
 /**
  * 登录密码
  */
-export const PWD_REG = /^(?![0-9]+$)(?![a-zA-Z]+$)[0-9A-Za-z]{8,20}$/
+export const PWD_REG = /^(?=.*[\d])(?=.*[a-zA-Z])(?=.*[`~!@#$%^&*\(\)_\-\+=<>?:"\{\}\|,.\/;'\\[\]])?.{8,20}$/
 /**
  * 交易密码
  */
@@ -42,3 +42,17 @@ export const GOOGLE_REG = /^\d{6}$/
  *  验证不能为http https
  */
 export const URL_REG = /^([hH][tT]{2}[pP]:\/\/|[hH][tT]{2}[pP][sS]:\/\/)(([A-Za-z0-9-~]+)\.)+([A-Za-z0-9-~\/])+$/
+/**
+ *  数字，字母(必须)，特殊字符（非必须）
+ */
+export const CHECKPASSWORD_REG = /^(?=.*[\d])(?=.*[a-zA-Z])(?=.*[`~!@#$%^&*\(\)_\-\+=<>?:"\{\}\|,.\/;'\\[\]])?.{8,20}$/
+
+/**
+ * 特殊字符 special
+ */
+export const SPECIAL_REG = /(?=.*[`~!#$%^&*\(\)_\-\+=<>?:"\{\}\|,\/;'\\[\]·！#￥（——）：；“”‘、，|《。》？、【】])/im
+
+/**
+ * 中文字符
+ */
+export const CHINESE_REG = /[\u4e00-\u9fa5]/

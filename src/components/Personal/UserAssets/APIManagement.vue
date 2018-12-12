@@ -491,12 +491,6 @@ export default {
     }
   },
   created () {
-    // 覆盖Element样式
-    require('../../../../static/css/list/Personal/UserAssets/APIManagement.css')
-    // 白色主题样式
-    require('../../../../static/css/theme/day/Personal/UserAssets/APIManagementDay.css')
-    // 黑色主题样式
-    require('../../../../static/css/theme/night/Personal/UserAssets/APIManagementNight.css')
     // this.getSecurityCenter()
     // this.stateEmptyData()
     this.getMultipleUserAPIInfo()
@@ -970,11 +964,168 @@ export default {
           min-height: 140px;
 
           .compile {
+            color: #338ff5;
+
             &:first-child {
               margin-right: 5px;
             }
           }
         }
+      }
+    }
+
+    /deep/ {
+      th.is-leaf {
+        border-bottom: 0;
+      }
+
+      td {
+        border-bottom: 0;
+      }
+
+      .verification-method {
+        .el-dialog {
+          width: 340px;
+        }
+
+        .el-dialog__body {
+          padding: 0 20px;
+        }
+      }
+
+      .el-dialog {
+        &:nth-child(2) {
+          width: 360px;
+          height: 480px !important;
+        }
+
+        &:nth-child(4) {
+          width: 300px;
+          height: 200px !important;
+        }
+
+        &:last-child {
+          .el-button {
+            &:first-child {
+              border: 0;
+            }
+          }
+        }
+      }
+
+      .secondary-confirmation {
+        .el-dialog__header {
+          padding: 0 40px;
+        }
+
+        .el-dialog {
+          top: 5%;
+          width: 380px;
+        }
+
+        .el-dialog__body {
+          padding: 5px 40px;
+        }
+
+        .el-dialog__footer {
+          text-align: center;
+        }
+      }
+
+      .editor {
+        .el-dialog__header {
+          padding: 0 40px;
+          border-radius: 5px 5px 0 0;
+        }
+
+        .el-dialog {
+          width: 380px;
+        }
+
+        .el-dialog__body {
+          padding: 0 40px;
+        }
+
+        .el-dialog__footer {
+          text-align: center;
+        }
+      }
+
+      .delete {
+        .el-dialog {
+          .el-dialog__body {
+            text-align: center;
+            color: #fff;
+          }
+
+          .el-button {
+            &:first-child {
+              width: 80px;
+              height: 36px;
+              line-height: 0;
+              color: #fff;
+            }
+
+            &:last-child {
+              width: 80px;
+              height: 36px;
+              border: 1px solid rgba(51, 143, 245, 1);
+              line-height: 0;
+              color: #fff;
+              background-color: #28334a;
+            }
+          }
+        }
+      }
+
+      .el-dialog__header {
+        height: 44px;
+        padding: 0 20px;
+        border-radius: 5px 5px 0 0;
+        font-size: 18px;
+        line-height: 44px;
+      }
+
+      .el-dialog__headerbtn {
+        top: 13px;
+      }
+
+      .el-form-item__label {
+        padding: 0;
+      }
+
+      .el-dialog__footer {
+        padding: 10px 20px 30px;
+      }
+
+      .el-form-item {
+        margin-bottom: 15px;
+      }
+
+      .el-table__empty-block {
+        width: 100% !important;
+        min-height: 92px;
+      }
+
+      /* 备注绑定IP部分样式修复 */
+      .invitation-promotion-main {
+        .extension-info {
+          .extension-info-content {
+            .info-content {
+              .el-form {
+                .el-form-item {
+                  .el-form-item__label {
+                    width: 140px !important;
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+
+      .el-table__body-wrapper {
+        overflow-x: hidden;
       }
     }
 
@@ -1077,6 +1228,65 @@ export default {
           color: #338ff5;
         }
       }
+
+      /deep/ {
+        .el-form-item__label {
+          color: #b8bdd0;
+        }
+
+        th,
+        tr {
+          background-color: #1c1f32;
+        }
+
+        thead {
+          color: #617499;
+        }
+
+        td {
+          background-color: #1c1f32;
+        }
+
+        tr:hover > td {
+          background-color: #1c1f32;
+        }
+
+        .el-dialog {
+          border-radius: 5px;
+          background-color: #28334a;
+        }
+
+        .el-button {
+          &:first-child {
+            color: rgba(255, 255, 255, .7);
+            background: linear-gradient(81deg, rgba(43, 57, 110, 1) 0%, rgba(42, 80, 130, 1) 100%);
+          }
+        }
+
+        .el-dialog__title {
+          color: #fff;
+        }
+
+        .el-table__empty-block {
+          background-color: #1c1f32;
+        }
+
+        .cell {
+          color: #9da5b3;
+        }
+
+        .el-table td div {
+          color: #9da5b3;
+        }
+
+        .el-dialog__header {
+          background: rgba(32, 41, 60, 1);
+        }
+
+        th.is-leaf {
+          border-top: 0;
+        }
+      }
     }
 
     &.day {
@@ -1157,7 +1367,8 @@ export default {
                 }
               }
 
-              .info-left {
+              .info-left,
+              .info-right {
                 color: #ccc;
               }
             }
@@ -1183,6 +1394,40 @@ export default {
       .api-management-header {
         .header-content {
           color: #338ff5;
+        }
+      }
+
+      /deep/ {
+        .el-form-item__label {
+          color: #7d90ac;
+        }
+
+        .el-dialog__header {
+          color: #333;
+          background: rgba(51, 143, 245, .1);
+        }
+
+        .el-dialog__title {
+          color: #333;
+        }
+
+        .el-dialog {
+          background-color: #fff;
+        }
+
+        .el-table__empty-block {
+          background-color: #fff;
+        }
+
+        .cell {
+          color: #333;
+        }
+
+        td {
+          padding: 7px 0;
+          border-bottom: 1px solid #fff;
+          color: #7d90ac;
+          background-color: #fff;
         }
       }
     }

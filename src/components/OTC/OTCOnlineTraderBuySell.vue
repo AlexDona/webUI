@@ -9,8 +9,6 @@
     <!-- otc在线交易 摘单 页面 -->
     <div
       class="online-trader-buy-sell-content"
-      v-loading.fullscreen.lock="fullscreenLoading"
-      element-loading-background="rgba(0, 0, 0, 0.6)"
     >
       <div class="online-trader">
         <!-- 交易左边 -->
@@ -397,7 +395,6 @@ export default {
   },
   data () {
     return {
-      fullscreenLoading: true, // 全局loading
       // input框输入错误显示红色边框状态
       errorWarningBorder: false,
       // 弹窗显示状态
@@ -720,7 +717,6 @@ export default {
     },
     // 6.0 查询用户交易币种手续费率以及币种详情
     async queryUserTradeFeeAndCoinInfo () {
-      this.fullscreenLoading = true
       const data = await queryUserTradeFeeAndCoinInfo({
         coinId: this.partnerCoinId // 商户币种id
       })
@@ -728,10 +724,8 @@ export default {
       // console.log(data)
       // 提示信息
       if (!(returnAjaxMsg(data, this, 0))) {
-        this.fullscreenLoading = false
         return false
       } else {
-        this.fullscreenLoading = false
         // 返回数据正确的逻辑:将返回的数据赋值到页面中
         // let detailData = data.data.data
         let detailData = getNestedData(data, 'data.data')
@@ -756,7 +750,6 @@ export default {
         this.tradePasswordTips = this.$t('M.otc_publishAD_pleaseInput') + this.$t('M.otc_publishAD_sellpassword')
         return false
       }
-      this.fullscreenLoading = true
       const data = await pickOrdersToBuy({
         entrustId: this.id, // 挂单id
         buyCount: this.$refs.buyCount.value, // 买入数量
@@ -764,13 +757,11 @@ export default {
       })
       // 提示信息
       if (!(returnAjaxMsg(data, this, 1))) {
-        this.fullscreenLoading = false
         return false
       } else {
         // 返回数据正确的逻辑
         this.dialogVisible = false
         this.clearInput(this.onlineTraderStatus)
-        this.fullscreenLoading = false
         this.querySelectedOrdersDetails()
         this.queryUserTradeFeeAndCoinInfo()
         // 改变全局锚点状态
@@ -803,18 +794,15 @@ export default {
         this.tradePasswordTips = this.$t('M.otc_publishAD_pleaseInput') + this.$t('M.otc_publishAD_sellpassword')
         return false
       }
-      this.fullscreenLoading = true
       const data = await pickOrdersToSell({
         entrustId: this.id, // 挂单id
         sellCount: this.$refs.sellCount.value, // 卖出数量
         tradePassword: this.tradePassword // 交易密码
       })
       if (!(returnAjaxMsg(data, this, 1))) {
-        this.fullscreenLoading = false
         return false
       } else {
         // 返回数据正确的逻辑
-        this.fullscreenLoading = false
         this.dialogVisible = false // 关闭弹窗框
         this.clearInput(this.onlineTraderStatus) // 清空数据
         this.querySelectedOrdersDetails()

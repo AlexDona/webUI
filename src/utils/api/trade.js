@@ -9,7 +9,9 @@ export const getMyEntrust = (params) => get('queryMyEntrust', params)
 // 历史委单
 export const getHistoryEntrust = (params) => get('queryMyHisEntrust', params)
 // 成交明细
-export const getMakeDetail = (params) => get('queryMyEntrustOrder', params)
+export const getMakeDetail = (params) => get('queryMyEntrustOrder', Object.assign({
+  'not-loader': true
+}, params))
 // 撤销当前委单
 export const repealMyEntrustAjax = (params) => put('cancelEntrust', params)
 // 全球行情
@@ -24,4 +26,8 @@ export const getActiveSymbolDataAjax = (params) => get('market/bbMarket/market',
 // 获取币币交易市场
 export const getTradeMarketDataAjax = (params) => get('market/bbMarket/ticker', params)
 // 获取K线接口
-export const getKlineDataAjax = (params) => get('market/kline', params)
+export const getKlineDataAjax = (params) => get('market/kline', Object.assign({
+  'not-loading': true
+}, params))
+// 撤销所有委单
+export const cancelAllEntrustAjax = params => put('cancelEntrustBatch', params)

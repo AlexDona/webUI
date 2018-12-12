@@ -10,8 +10,6 @@
     <!-- 挂单：商家和普通用户都可以用 -->
     <div
       class="publish-buy-and-sell-content"
-      v-loading.fullscreen.lock="fullscreenLoading"
-      element-loading-background="rgba(0, 0, 0, 0.6)"
     >
       <!-- 发布订单内容部分分为左右两个部分 -->
       <div class="publish-content">
@@ -138,6 +136,7 @@
                     :class="{ redBorderRightNone: entrustCountErrorTipsBorder }"
                     v-show="publishStyle === 'sell'"
                     ref="entrustCountSell"
+                    @blur="checkValue('entrustCountSell')"
                     @keyup="changeInputValue('entrustCountSell', pointLength)"
                     @input="changeInputValue('entrustCountSell', pointLength)"
                     @focus="countInputFocus"
@@ -150,6 +149,7 @@
                     :class="{ redBorderRightNone: entrustCountErrorTipsBorder }"
                     v-show="publishStyle === 'buy'"
                     ref="entrustCountBuy"
+                    @blur="checkValue('entrustCountBuy')"
                     @keyup="changeInputValue('entrustCountBuy', pointLength)"
                     @input="changeInputValue('entrustCountBuy', pointLength)"
                     @focus="countInputFocus"
@@ -428,7 +428,6 @@ export default {
   data () {
     return {
       height: '', // 可视区内容的高度
-      fullscreenLoading: true, // 整页loading
       serviceChargeSELL: 0, // 手续费：卖
       traderSumSELL: 0, // 交易额：卖
       serviceChargeBUY: 0, // 手续费：买
@@ -529,9 +528,20 @@ export default {
   methods: {
     ...mapMutations([
     ]),
+    // 判断卖出量和买入量是否为零
+    checkValue (name) {
+      const value = this.$refs[name].value
+      console.log(value)
+      if (value == '0' && name == 'entrustCountSell') {
+        // 提示信息 买入数量不能为0
+        this.errorTipsSum = this.$t('M.otc_index_inputSellAccount')
+      } else if (value == '0' && name == 'entrustCountBuy') {
+        // 提示信息 卖出数量不能为0
+        this.errorTipsSum = this.$t('M.otc_index_inputBuyAccount')
+      }
+    },
     // 1.0 币种详情 : 商家和普通用户挂单页面请求币种详情渲染页面
     async getOTCCoinInfo () {
-      this.fullscreenLoading = true
       const data = await getOTCCoinInfo({
         currencyId: this.hopePaymentCoinId, // 法币id
         coinId: this.coinId // 交易币种id
@@ -540,11 +550,9 @@ export default {
       // console.log(data)
       // 提示信息
       if (!(returnAjaxMsg(data, this, 0))) {
-        this.fullscreenLoading = false
         return false
       } else {
         // 返回数据正确的逻辑
-        this.fullscreenLoading = false
         let detailsData = getNestedData(data, 'data.data')
         // 1.0 可用币种列表
         // this.coinStyleList = detailsData.coinlist
@@ -894,15 +902,12 @@ export default {
         param.entrustCount = this.entrustCountSell // 挂单数量
         param.price = this.priceSell // 单价
       }
-      this.fullscreenLoading = true
       const data = await addOTCPutUpOrders(param)
       // console.log(data)
       if (!(returnAjaxMsg(data, this, 1))) {
-        this.fullscreenLoading = false
         return false
       } else {
         // 返回数据正确的逻辑
-        this.fullscreenLoading = false
         // 关闭交易密码框
         this.dialogVisible = false
         // 清空表单数据

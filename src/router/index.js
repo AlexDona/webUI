@@ -253,7 +253,8 @@ const router = new Router({
       // name: 'OTCPublishAD',
       component: OTCPublishAD,
       meta: {
-        auth: true
+        auth: true,
+        isMerchant: true
       }
     },
     {
@@ -262,7 +263,8 @@ const router = new Router({
       // name: 'OTCADManage',
       component: OTCADManage,
       meta: {
-        auth: true
+        auth: true,
+        isMerchant: true
       }
     },
     {
@@ -271,7 +273,8 @@ const router = new Router({
       // name: 'OTCMerchantsOrders',
       component: OTCMerchantsOrders,
       meta: {
-        auth: true
+        auth: true,
+        isMerchant: true
       }
     },
     {
@@ -289,7 +292,8 @@ const router = new Router({
       // name: 'OTCReportFormStatistics',
       component: OTCReportFormStatistics,
       meta: {
-        auth: true
+        auth: true,
+        isMerchant: true
       }
     },
     {
@@ -399,11 +403,36 @@ router.beforeEach((to, from, next) => {
   if (store.state.user.loginStep1Info.userInfo) {
     store.commit('user/USER_LOGIN', store.state.user.loginStep1Info)
   }
+  // 原来的
+  // if (to.matched.some(m => m.meta.auth)) {
+  //   console.log(to)
+  //   // 对路由进行验证
+  //   if (store.state.user.isLogin) { // 已经登陆
+  //     console.log(store.state.user)
+  //     next() // 正常跳转到你设置好的页面
+  //   } else {
+  //     // 未登录则跳转到登陆界面，query:{ Rurl: to.fullPath}表示把当前路由信息传递过去方便登录后跳转回来；
+  //     next({path: '/login', query: {Rurl: to.fullPath}})
+  //   }
+  // } else {
+  //   next()
+  // }
+  // 增加普通用户不能点击OTC导航功能
   if (to.matched.some(m => m.meta.auth)) {
     console.log(to)
     // 对路由进行验证
     if (store.state.user.isLogin) { // 已经登陆
-      next() // 正常跳转到你设置好的页面
+      // console.log(store.state.user)
+      // console.log(store.state.user.loginStep1Info.userInfo.type)
+      if (to.meta.isMerchant) {
+        if (store.state.user.loginStep1Info.userInfo.type === 'MERCHANT') {
+          next()
+        } else {
+          next({path: '/OTCBusinessApply'})
+        }
+      } else {
+        next() // 正常跳转到你设置好的页面
+      }
     } else {
       // 未登录则跳转到登陆界面，query:{ Rurl: to.fullPath}表示把当前路由信息传递过去方便登录后跳转回来；
       next({path: '/login', query: {Rurl: to.fullPath}})

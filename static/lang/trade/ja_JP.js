@@ -39,5 +39,7 @@ export const trade = {
   // #####################トークン取引市場#####################'''
   'trade_market_bazaar': 'マーケット',
   'trade_market_amount_increase': 'ゲイン',
-  'trade_market_optional': 'お気に入り'
+  'trade_market_optional': 'お気に入り',
+  'trade_cancel_all_entrust': '全部委託注文を取り消す',
+  'trade_determine_cancel_all_entrust': '全部委託注文を取り消す確認'
 }
