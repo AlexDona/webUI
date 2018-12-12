@@ -406,7 +406,7 @@ export default{
     })
     this.activeTheme = this.theme
     // 查询某商户可用法币币种列表
-    // 折算货币s
+    // 折算货币
     await this.getMerchantAvailablelegalTenderList()
   },
   mounted () {
@@ -486,6 +486,7 @@ export default{
     },
     // 用户跳转到指定页面
     async stateReturnSuperior (val) {
+      console.log(this.localPayPwdSet)
       await this.$store.commit('user/REFLASH_USER_INFO', this)
       if (this.localPayPwdSet || this.userInfo.payPassword) {
         switch (val) {
@@ -611,6 +612,9 @@ export default{
     }
   },
   watch: {
+    localPayPwdSet (newVal) {
+      console.log(newVal)
+    },
     activeLanguage (newVal) {
       console.log(newVal)
     },

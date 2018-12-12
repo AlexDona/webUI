@@ -8,7 +8,6 @@ import {
 import {getNestedData} from '../commonFunc'
 import axios from 'axios'
 import store from '../../vuex'
-let failureCount = 0
 let util = {}
 util.ajax = axios.create({
   baseURL: apiCommonUrl,
@@ -22,10 +21,6 @@ util.ajax.interceptors.request.use((config) => {
   if (needLoading) {
     store.commit('common/CHANGE_AJAX_READY_STATUS', true)
     console.log(store.state.common.isAjaxReady)
-  }
-  if (failureCount > 1) {
-    failureCount = 0
-    return false
   }
   config.headers['x-domain'] = xDomain
   if (store.state.user.loginStep1Info.token) {
@@ -41,10 +36,6 @@ util.ajax.interceptors.response.use(
   response => {
     if (!response.data) {
       response.data = {}
-    }
-    const success = response.data.meta.success
-    if (!success) {
-      failureCount++
     }
 
     store.commit('common/CHANGE_AJAX_READY_STATUS', false)

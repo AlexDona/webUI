@@ -86,7 +86,7 @@ export const personal = {
   'user_account_credited': '수금 계정',
   'user_account_warm_prompt': '따뜻한 팁',
   'user_account_text': '반드시 자신의 실명계정을 사용하시고 활성화 된 지불방식은 OTC거래에서 구매자에게 보여주게 되며 많아서 5종 설정할수 있지만 3종만 활성화 할수 있습니다.',
-  'user_account_text1': '인증을 완료하고 거래 비밀번호를 설정 한 다음 OTC 수금 계정을 설정하십시오!',
+  'user_account_text1': '고급 인증 완료 후 OTC 입금 계정을 재설정',
   'user_account_text2': 'Alipay 업로드 QR 코드 방법 : Alipay 홈 페이지 열기> 돈을 모으기> 사진 저장, 휴대 전화 앨범의 영수증 업로드 ',
   'user_account_payment_term': '수금 방법',
   'user_account_bank_transfer': '은행 송금',
