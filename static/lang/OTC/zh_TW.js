@@ -322,5 +322,11 @@ export const OTC = {
   'otc_tradingorder_transformAcconu': '轉賬金額',
   'otc_tradingorder_notice': '註意！計時結束前未手動轉賬並點擊"確認付款"，您的訂單將自動取消，若上述情況當日累計出現3次，您的賬戶將被凍結,請聯系客服。',
   'otc_tradingorder_autoCancel': '分鐘內對方未提交付款，訂單將自動取消',
-  'otc_tradingorder_orderExact': '訂單生成後'
+  'otc_tradingorder_orderExact': '訂單生成後',
+  'otc_index_inputSellAccount': '賣出量不能為0',
+  'otc_index_inputBuyAccount': '買入量不能為0',
+  // 申请成为商家
+  'otc_apply_tips1': '溫馨提示',
+  'otc_apply_tips2': '您需要先申請成為商家才能使用此功能！',
+  'otc_order_reason': '原因'
 }

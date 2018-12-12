@@ -176,25 +176,38 @@
           <!-- 右边 -->
           <div class="info-right">
             <!-- <p class="text-info text-blue">超时未支付，订单取消</p> -->
+            <!-- 超时未支付，订单取消 -->
             <p
               class="text-info"
               v-if="item.appeal == 'NO'"
             >
-             <!-- 超时未支付，订单取消 -->
               {{$t('M.otc_overBuy_cancel')}}
             </p>
+            <!-- 申诉判定，订单取消 -->
             <p
               class="text-info"
               v-if="item.appeal == 'YES'"
             >
-              <!-- 申诉判定，订单取消 -->
               {{$t('M.otc_shesu_cancel')}}
             </p>
+            <!--取消时间-->
             <p class="text-info">
               {{$t('M.otc_canceled_cancel')}}:{{timeFormatting(item.cancelTime)}}
             </p>
             <!-- <p class="text-info cancel-time">{{timeFormatting(item.cancelTime)}}</p> -->
             <!-- <p class="text-info cancel-time">状态</p> -->
+            <!--原因-->
+            <p class="text-info" v-show="item.appeal == 'YES'">
+              <el-tooltip
+                effect="dark"
+                :content="item.handleSuggest"
+                placement="bottom-start"
+              >
+                <span class="reason-content">
+                  {{$t('M.otc_order_reason')}}：{{item.handleSuggest}}
+                </span>
+              </el-tooltip>
+            </p>
           </div>
         </div>
       </div>
@@ -269,8 +282,8 @@ export default {
         pageNum: this.currentPage,
         pageSize: this.pageSize
       })
-      // console.log('请求已取消订单列表')
-      // console.log(data)
+      console.log('请求已取消订单列表')
+      console.log(data)
       // 提示信息
       if (!(returnAjaxMsg(data, this, 0))) {
         this.loading = false
@@ -369,6 +382,14 @@ export default {
 
             > .text-info {
               line-height: 20px;
+              // 任付伟增加原因字段样式
+              .reason-content {
+                display: inline-block;
+                width: 250px;
+                overflow: hidden;
+                text-overflow: ellipsis; // 显示省略符号来代表被修剪的文本。
+                white-space: nowrap; // 文本不会换行，文本会在在同一行上继续，直到遇到 <br> 标签为止。
+              }
             }
           }
         }

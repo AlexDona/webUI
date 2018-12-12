@@ -145,6 +145,18 @@
             >
               {{$t('M.otc_canceled_cancel')}}:{{timeFormatting(item.cancelTime)}}
             </p>
+            <!--原因-->
+            <p class="text-info" v-show="item.appeal == 'YES'">
+              <el-tooltip
+                effect="dark"
+                :content="item.handleSuggest"
+                placement="bottom-start"
+              >
+                <span class="reason-content">
+                  {{$t('M.otc_order_reason')}}：{{item.handleSuggest}}
+                </span>
+              </el-tooltip>
+            </p>
           </div>
         </div>
       </div>
@@ -273,6 +285,14 @@ export default {
 
             > .text-info {
               line-height: 20px;
+              // 任付伟增加原因字段样式
+              .reason-content {
+                display: inline-block;
+                width: 250px;
+                overflow: hidden;
+                text-overflow: ellipsis; // 显示省略符号来代表被修剪的文本。
+                white-space: nowrap; // 文本不会换行，文本会在在同一行上继续，直到遇到 <br> 标签为止。
+              }
             }
           }
 
