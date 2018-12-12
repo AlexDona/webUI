@@ -3,7 +3,9 @@
  * */
 import {
   SPECIAL_REG,
-  CHINESE_REG
+  CHINESE_REG,
+  ID_REG,
+  WITHDRAWAL_REG
 } from './regExp'
 
 const pako = require('pako')
@@ -205,6 +207,56 @@ export function emailNumRegexpInput (event) {
       aCount++
     }
     if (!SPECIAL_REG.test(item) && !CHINESE_REG.test(item) && pointCount < 2 && aCount < 2) {
+      finalVal += item
+    }
+  })
+  event.value = finalVal
+  return finalVal
+}
+
+/**
+ * 身份证 证件号码输入限制
+ * @param event：当前input DOM对象
+ */
+export function idCardRegexpInputNum (event) {
+  let val = event.value
+  let finalVal = ''
+  let valArr = val.split('')
+  // 证件位数
+  let pointCount = 0
+  // X x 个数
+  let aCount = 0
+  _.forEach(valArr, item => {
+    if (item) {
+      pointCount++
+    }
+    if (item === 'x' || item === 'X') {
+      aCount++
+    }
+    if (!ID_REG.test(item) && !WITHDRAWAL_REG.test(item) && !CHINESE_REG.test(item) && pointCount < 19 && aCount < 2) {
+      finalVal += item
+    }
+  })
+  event.value = finalVal
+  return finalVal
+}
+
+/**
+ * 护照 证件号码输入限制
+ * @param event：当前input DOM对象
+ */
+
+export function passportEntryRestrictions (event) {
+  let val = event.value
+  let finalVal = ''
+  let valArr = val.split('')
+  // 护照位数
+  let pointCount = 0
+  _.forEach(valArr, item => {
+    if (item) {
+      pointCount++
+    }
+    if (!CHINESE_REG.test(item) && pointCount < 21) {
       finalVal += item
     }
   })

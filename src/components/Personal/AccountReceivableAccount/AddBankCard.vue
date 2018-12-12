@@ -266,7 +266,6 @@ export default {
             this.$forceUpdate()
             return 1
           }
-        //  请输入银行卡号
         case 1:
           switch (validateNumForUserInput('bank-card', targetNum)) {
             case 0:
@@ -274,11 +273,13 @@ export default {
               this.$forceUpdate()
               return 1
             case 1:
+              // 请输入银行卡号
               this.setErrorMsg(1, this.$t('M.user_bind_Bank_input_card_num'))
               this.$forceUpdate()
               return 0
             case 2:
-              this.setErrorMsg(1, this.$t('M.user_account_credit_text'))
+              // 请输入最后鞥缺的银行卡号
+              this.setErrorMsg(1, this.$t('M.comm_please_enter') + this.$t('M.user_security_correct') + this.$t('M.user_account_credit_numbers'))
               this.$forceUpdate()
               return 0
           }
