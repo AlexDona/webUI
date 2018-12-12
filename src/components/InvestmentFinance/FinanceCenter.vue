@@ -4,10 +4,7 @@
     :class="{'day':theme == 'day','night':theme == 'night' }"
   >
     <!-- 1.0 banner -->
-    <div class="banner-box" :style="{
-      width:screenWidth + 'px',
-      height:(screenWidth*131)/480 + 'px'
-    }">
+    <div class="banner-box">
       <img src="../../assets/finance/banner.png">
       <div class="banner-title">
         <!-- 存币收益 -->
@@ -943,6 +940,42 @@ export default {
   /* 公共scss样式 */
   @import "../../../static/css/scss/InvestmentFinance/FinanceCenter";
 
+  @media screen and (min-width: 768px) and (max-width: 1336px) {
+    .banner-title {
+      position: absolute;
+      top: 50%;
+      right: 25%;
+      width: 400px;
+      font-size: 40px;
+      text-align: center;
+      color: #fff;
+    }
+  }
+
+  @media screen and (min-width: 1337px) and (max-width: 1920px) {
+    .banner-title {
+      position: absolute;
+      top: 50%;
+      right: 29%;
+      width: 400px;
+      font-size: 40px;
+      text-align: center;
+      color: #fff;
+    }
+  }
+
+  @media screen and (min-width: 1921px) and (max-width: 2560px) {
+    .banner-title {
+      position: absolute;
+      top: 50%;
+      right: 32%;
+      width: 400px;
+      font-size: 40px;
+      text-align: center;
+      color: #fff;
+    }
+  }
+
   .finance-box {
     width: 100%;
     min-width: 1300px;
@@ -950,21 +983,11 @@ export default {
 
     > .banner-box {
       position: relative;
-      height: 459px;
+      width: 100%;
+      margin: 0 auto;
 
-      > img {
+      img {
         width: 100%;
-        height: 100%;
-      }
-
-      > .banner-title {
-        position: absolute;
-        top: 57%;
-        left: 50%;
-        width: 400px;
-        font-size: 40px;
-        text-align: center;
-        color: #fff;
       }
     }
 

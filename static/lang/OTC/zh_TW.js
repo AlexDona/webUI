@@ -324,5 +324,8 @@ export const OTC = {
   'otc_tradingorder_autoCancel': '分鐘內對方未提交付款，訂單將自動取消',
   'otc_tradingorder_orderExact': '訂單生成後',
   'otc_index_inputSellAccount': '賣出量不能為0',
-  'otc_index_inputBuyAccount': '買入量不能為0'
+  'otc_index_inputBuyAccount': '買入量不能為0',
+  // 申请成为商家
+  'otc_apply_tips1': '溫馨提示',
+  'otc_apply_tips2': '您需要先申請成為商家才能使用此功能！'
 }
