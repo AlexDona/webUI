@@ -131,20 +131,21 @@ export function formatNumberInput (event, targetPointLength) {
   let valArr4 = []
   let finalVal = ''
   let count1 = 0
+  val = val.startsWith('.') ? val.substring(1) : val
   // pointLength为小数点后几位
   let count = (val.match(/\./g) || []).length// 小数点个数
   // 只允许输入一个小数点
   if (count > 0) {
     valArr = val.split('')
     newVal = ''
-    valArr.forEach((item) => {
-      if (item == '.') count1++
+    valArr.forEach(item => {
+      if (item === '.') count1++
       if (count1 < 2) newVal += item
     })
     valArr2 = newVal.split('')
     newVal2 = ''
-    valArr2.forEach((item) => {
-      if (item != '.') {
+    valArr2.forEach(item => {
+      if (item !== '.') {
         let temp = parseFloat(item)
         if (!isNaN(temp)) {
           newVal2 += temp
@@ -160,7 +161,7 @@ export function formatNumberInput (event, targetPointLength) {
   } else {
     valArr3 = val.split('')
     newVal3 = ''
-    valArr3.forEach((item) => {
+    valArr3.forEach(item => {
       let temp = parseFloat(item)
       if (!isNaN(temp)) newVal3 += temp
     })

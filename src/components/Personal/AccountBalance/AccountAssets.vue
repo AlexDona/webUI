@@ -5,8 +5,6 @@
   >
     <div
       class="account-assets-main"
-      v-loading.fullscreen.lock="fullscreenLoading"
-      element-loading-background="rgba(0, 0, 0, 0.6)"
     >
       <!-- 用户信息-->
       <UserInfo />
@@ -473,7 +471,6 @@ export default {
       id: '', // 币种ID
       sellName: '', // 币种名称
       sellsymbol: '', // 交易对名称
-      fullscreenLoading: false, // 整页loading
       isNeedTag: false, // 是否需要转账提示标签
       rechargeNoteInfo: '', // 充币地址备注信息
       localLoading: true, // 页面列表局部loading
@@ -683,7 +680,7 @@ export default {
       this.withdrawRemark = ''
     },
     // 点击提现按钮显示提币内容（带回币种id 币种名称 当前index）
-    changeWithdrawBoxByCoin (id, name, index) {
+    async changeWithdrawBoxByCoin (id, name, index) {
       // 提币数量
       // this.$refs.withdrawCount[index].value = ''
       this.resetWithdrawFormContent(index)
@@ -707,7 +704,7 @@ export default {
       // 隐藏充值弹窗
       this.withdrawDepositList[index].rechargeIsShow = false
       // 调用充币地址方法
-      this.queryWithdrawalAddressList()
+      await this.queryWithdrawalAddressList()
       // 调用手续费信息
       this.getWithdrawalInformation(index)
       this.getSecurityCenter()
@@ -807,16 +804,11 @@ export default {
       let data = await inquireWithdrawalAddressId({
         coinId: this.activeCoinId
       })
-      this.fullscreenLoading = true
       console.log(data)
       if (!(returnAjaxMsg(data, this, 0))) {
-        // 接口失败清除loading
-        this.fullscreenLoading = false
         return false
       } else {
         let withdrawalAddressData = getNestedData(data, 'data.data')
-        // 接口成功清除loading
-        this.fullscreenLoading = false
         // 对币种类型进行赋值 true公信宝类 false普通币种
         this.isNeedTag = withdrawalAddressData.needTag
         // 返回列表数据并渲染币种列表
@@ -833,18 +825,12 @@ export default {
         coinId: this.activeCoinId, // 币种coinId
         address: this.activeWithdrawDepositAddress
       }
-      // 整页loading
-      this.fullscreenLoading = true
       let data = await checkCurrencyAddress(param)
       if (!(returnAjaxMsg(data, this))) {
         this.isLegalWithdrawAddress = false
-        // 接口失败清除loading
-        this.fullscreenLoading = false
         return false
       } else {
         this.isLegalWithdrawAddress = true
-        // 接口成功清除loading
-        this.fullscreenLoading = false
         // 验证通过调用验证方式接口
         this.getSecurityCenter()
       }
@@ -856,16 +842,10 @@ export default {
       let data = await withdrawalInformation({
         coinId: this.activeCoinId
       })
-      // 整页loading
-      this.fullscreenLoading = true
       console.log(data)
       if (!(returnAjaxMsg(data, this, 0))) {
-        // 接口失败清除loading
-        this.fullscreenLoading = false
         return false
       } else {
-        // 接口成功清除loading
-        this.fullscreenLoading = false
         // 返回列表数据
         // this.feeRangeOfWidthdraw = data.data.data
         this.feeRangeOfWidthdraw = getNestedData(data, 'data.data')
@@ -883,16 +863,10 @@ export default {
       let data = await inquireRechargeAddressList({
         coinId: this.chargeMoneyAddressId
       })
-      // 整页loading
-      this.fullscreenLoading = true
       console.log(data)
       if (!(returnAjaxMsg(data, this, 0))) {
-        // 接口失败清除loading
-        this.fullscreenLoading = false
         return false
       } else {
-        // 接口成功清除loading
-        this.fullscreenLoading = false
         // 返回列表数据
         console.log(data.data.data)
         // 获取充币地址
@@ -1032,16 +1006,10 @@ export default {
         amount: this.withdrawCountVModel, // 提币数量
         payCode: this.password // 交易密码
       }
-      // 整页loading
-      this.fullscreenLoading = true
       data = await statusSubmitWithdrawButton(param)
       if (!(returnAjaxMsg(data, this, 1))) {
-        // 接口失败清除loading
-        this.fullscreenLoading = false
         return false
       } else {
-        // 接口成功清除loading
-        this.fullscreenLoading = false
         this.isShowWithdrowDialog = false
         // 提币地址列表查询
         this.getAssetCurrenciesList()
@@ -1072,11 +1040,7 @@ export default {
      */
     getSecurityCenter () {
       getSecurityCenter(this, {}, data => {
-        // 接口失败清除loading
-        this.fullscreenLoading = false
         if (data) {
-          // 接口成功清除loading
-          this.fullscreenLoading = false
           // this.securityCenter = data.data.data
           this.securityCenter = getNestedData(data, 'data.data')
         }

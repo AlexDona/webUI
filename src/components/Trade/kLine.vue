@@ -257,7 +257,6 @@ export default {
         this.finalSymbol = this.isJumpToTradeCenter ? this.jumpSymbol : activeSymbol
         this.CHANGE_ACTIVE_SYMBOL({activeSymbol: this.finalSymbol})
         this.symbol = getNestedData(this.activeSymbol, 'id')
-        await this.getActiveSymbolData(this.symbol)
       }
     },
     init (options) {

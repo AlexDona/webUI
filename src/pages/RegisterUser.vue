@@ -8,8 +8,6 @@
       'margin-top':isMobile?'0':'66px'
       }"
     :style="{height: windowHeight + 'px'}"
-    v-loading.fullscreen.lock="fullscreenLoading"
-    element-loading-background="rgba(0, 0, 0, 0.6)"
   >
     <keep-alive>
       <HeaderCommonForPC
@@ -790,7 +788,7 @@ export default {
       })
     },
     jumpToDownAppPage () {
-      if (this.inviter && this.isNeedApp) {
+      if (this.inviter && this.isNeedApp && this.isMobile) {
         this.$router.push({'path': `/downloadApp?language${this.language}`})
       } else {
         this.$router.push({'path': '/login'})
@@ -1006,7 +1004,6 @@ export default {
     async sendRegister (params) {
       try {
         const data = await sendRegisterUser(params)
-        console.log(data)
         if (!returnAjaxMsg(data, this, 0)) {
           return false
         } else {
@@ -1020,11 +1017,11 @@ export default {
     // 登录成功自动跳转
     successJump () {
       this.successJumpTimer = setInterval(() => {
+        this.successCountDown--
         if (this.successCountDown < 1) {
           clearInterval(this.successJumpTimer)
           this.jumpToDownAppPage()
         }
-        this.successCountDown--
       }, 1000)
     },
     // 立即登录

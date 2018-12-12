@@ -6,8 +6,6 @@
      'height': windowHeight + 'px',
      'margin-top':isMobile?'0':'66px'
     }"
-    v-loading.fullscreen.lock="fullscreenLoading"
-    element-loading-background="rgba(0, 0, 0, 0.6)"
   >
     <keep-alive>
       <HeaderCommonForPC
@@ -666,7 +664,6 @@ export default {
     return {
       loginWithPasswordTipsText: 'M.login_with_password_tips',
       loginWithErcodeTipsText: 'M.login_with_ercode_tips',
-      fullscreenLoading: false,
       socket: '', // 二维码登录socket
       isErcodeTimeOut: false, // 二维码是否过期
       isScanSuccess: false, // 扫码是否成功
@@ -890,13 +887,11 @@ export default {
         let str = this.username + ''
         this.hiddenUsername = str.substring(0, 3) + '****' + str.substring(7)
       }
-      this.fullscreenLoading = true
       // 调用第一接口
       let params = new FormData()
       params.append('userName', this.username)
       params.append('password', this.password)
       const data = await userLoginForStep1(params)
-      this.fullscreenLoading = false
       if (!returnAjaxMsg(data, this, 0)) {
         return false
       } else {
@@ -1035,13 +1030,10 @@ export default {
         emailCode: this.step3EmailMsgCode,
         googleCode: this.step3GoogleMsgCode
       }
-      this.fullscreenLoading = true
       const data = await userLoginForStep2(params)
       if (!returnAjaxMsg(data, this, 1)) {
-        this.fullscreenLoading = false
         return false
       } else {
-        this.fullscreenLoading = false
         this.clearInputValue()
         this.step3DialogShowStatus = false
         this.userLoginSuccess(data.data.data)
