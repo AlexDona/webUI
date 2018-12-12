@@ -55,25 +55,37 @@
                     {{$t('M.comm_business_application')}}
                   </router-link>
                 </li>
-                <li class="sub-nav-item">
+                <li
+                  class="sub-nav-item"
+                  @click="applyMerchant"
+                >
                   <router-link to="/OTCPublishAD">
                     <!--发布广告-->
                     {{$t('M.otc_merchant_publishAD')}}
                   </router-link>
                 </li>
-                <li class="sub-nav-item">
+                <li
+                  class="sub-nav-item"
+                  @click="applyMerchant"
+                >
                   <router-link to="/OTCADManage">
                     <!--广告管理-->
                     {{$t('M.otc_adMange')}}
                   </router-link>
                 </li>
-                <li class="sub-nav-item">
+                <li
+                  class="sub-nav-item"
+                  @click="applyMerchant"
+                >
                   <router-link to="/OTCMerchantsOrders">
                     <!--商家订单-->
                     {{$t('M.otc_MerchantsOrders')}}
                   </router-link>
                 </li>
-                <li class="sub-nav-item">
+                <li
+                  class="sub-nav-item"
+                  @click="applyMerchant"
+                >
                   <router-link to="/OTCReportFormStatistics">
                     <!--报表统计-->
                     {{$t('M.otc_formStatistics')}}
@@ -332,6 +344,39 @@
           </div>
         </el-dialog>
       </div>
+      <!-- 非商家禁止进入OTC导航页提示框 -->
+      <div class="apply-merchant-dialog">
+        <!--温馨提示-->
+        <el-dialog
+          :title="$t('M.otc_apply_tips1')"
+          :visible.sync="showApplyMerchantStatus"
+          top="30vh"
+        >
+          <div class="tips">
+            <!--您需要先申请成为商家才能使用此功能！-->
+            <p class="content">{{$t('M.otc_apply_tips2')}}</p>
+          </div>
+          <span
+            slot="footer"
+            class="dialog-footer"
+          >
+            <el-button
+              type="primary"
+              @click="cancelApply"
+            >
+              <!--取消-->
+              {{$t('M.comm_cancel')}}
+            </el-button>
+            <el-button
+              type="primary"
+              @click="confirmApply"
+            >
+              {{$t('M.actionCenter_Token_step1')}}
+              <!--申请-->
+            </el-button>
+            </span>
+        </el-dialog>
+      </div>
     </div>
   </div>
 </template>
@@ -356,6 +401,7 @@ export default{
   },
   data () {
     return {
+      showApplyMerchantStatus: false, // 是否显示申请商家弹窗
       // 语言选择中
       langSelecting: false,
       // 设置弹窗状态
@@ -438,6 +484,23 @@ export default{
       'SET_FOOTER_INFO',
       'SET_LOGO_URL'
     ]),
+    // 非商家禁止进入OTC导航页提示框--开始
+    applyMerchant () {
+      if (this.userInfo.type === 'COMMON') {
+        this.$router.push({path: '/OTCBusinessApply'})
+        this.showApplyMerchantStatus = true
+      } else {
+      }
+    },
+    cancelApply () {
+      this.showApplyMerchantStatus = false
+    },
+    confirmApply () {
+      this.showApplyMerchantStatus = false
+      this.$router.push({path: '/OTCBusinessApply'})
+      location.reload() // 重新刷新页面
+    },
+    // 非商家禁止进入OTC导航页提示框--结束
     reflashUserInfo () {
       this.$store.dispatch('user/REFLASH_USER_INFO', this)
     },
@@ -650,6 +713,7 @@ export default{
   transition: all .5s;
 
   > .inner-box {
+    position: relative;
     height: 100%;
 
     > .top {
@@ -921,10 +985,69 @@ export default{
       z-index: 1;
       top: 66px;
       width: 100%;
-
-      /* background-color: #f40; */
       height: 36px;
       background-color: $nightSubNavBgColor;
+    }
+
+    /deep/ {
+      .apply-merchant-dialog {
+        .el-dialog {
+          width: 350px;
+          height: 207px;
+          border-radius: 4px;
+
+          .el-dialog__header {
+            padding: 3px 20px;
+            border-radius: 4px;
+
+            .el-dialog__title {
+              font-size: 16px;
+              color: #338ff5 !important;
+            }
+
+            .el-dialog__headerbtn {
+              top: 15px;
+              right: 10px;
+            }
+          }
+
+          .el-dialog__body {
+            padding: 15px 20px 10px 30px;
+            font-size: 12px;
+
+            .tips {
+              height: 80px;
+              padding-top: 20px;
+              font-size: 14px;
+              color: #b8bdd0;
+
+              > .content {
+                line-height: 20px;
+              }
+            }
+          }
+
+          .el-dialog__footer {
+            padding: 0 20px 0 0;
+
+            .el-button {
+              width: 90px;
+              padding: 7px 20px;
+              border: 0;
+
+              &:first-child {
+                border: 1px solid rgba(51, 143, 245, 1);
+                color: #338ff5;
+                background: #1c2237;
+              }
+
+              &:last-child {
+                padding: 8px 21px;
+              }
+            }
+          }
+        }
+      }
     }
   }
 
@@ -946,6 +1069,32 @@ export default{
                       color: #fff;
                     }
                   }
+                }
+              }
+            }
+          }
+        }
+      }
+
+      /deep/ {
+        .apply-merchant-dialog {
+          .el-dialog {
+            .el-dialog__header {
+              border-bottom: 1px solid #ecf1f8;
+            }
+
+            .el-dialog__body {
+              .tips {
+                color: #333;
+              }
+            }
+
+            .el-dialog__footer {
+              .el-button {
+                &:first-child {
+                  border: 1px solid rgba(51, 143, 245, 1);
+                  color: #338ff5;
+                  background: #fff;
                 }
               }
             }
