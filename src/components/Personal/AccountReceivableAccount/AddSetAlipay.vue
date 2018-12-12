@@ -85,7 +85,11 @@
             <el-form-item
               :label="$t('M.user_account_upload_collection')"
             >
-              <div class="account-upload border-radius4">
+              <div
+                class="account-upload border-radius4"
+                @mouseenter="showStatusCode(1)"
+                @mouseleave="showStatusCode(2)"
+              >
                 <div
                   class="mask-layer cursor-pointer"
                   v-show="removeMaskLayer"
@@ -188,7 +192,7 @@ export default {
       alipayAccount: '', // 支付宝账号
       password: '', // 交易密码
       dialogImageHandUrl1: '', // 图片url
-      removeMaskLayer: true, // 删除遮罩层
+      removeMaskLayer: false, // 删除遮罩层
       paymentTypeId: '', // 收款类型ID
       paymentTerm: {},
       successCountDown: 1, // 成功倒计时
@@ -230,7 +234,18 @@ export default {
     // 删除支付宝二维码
     handleRemove () {
       this.dialogImageHandUrl1 = ''
-      this.removeMaskLayer = false
+    },
+    // 删除事件
+    showStatusCode (val) {
+      if (!this.dialogImageHandUrl1) {
+        if (val == 1 && this.dialogImageHandUrl1) {
+          // 显示删除icon
+          this.removeMaskLayer = true
+        } else {
+          // 隐藏删除icon
+          this.removeMaskLayer = false
+        }
+      }
     },
     // 检测输入格式
     checkoutInputFormat (type, targetNum) {

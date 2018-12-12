@@ -399,7 +399,7 @@ export default {
         left: -179px;
         width: 160px;
         height: 44px;
-        padding-left: 25px;
+        padding-left: 18px;
         font-size: 18px;
         line-height: 40px;
         color: #338ff5;
