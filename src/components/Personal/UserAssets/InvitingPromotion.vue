@@ -798,13 +798,15 @@ export default {
           border-bottom: 0;
         }
 
+        tr {
+          &:hover td {
+            background-color: #1c1f32;
+          }
+        }
+
         td {
           border-bottom: 0;
           color: #ccc;
-
-          &:hover {
-            background-color: #1c1f32;
-          }
         }
 
         .cell {

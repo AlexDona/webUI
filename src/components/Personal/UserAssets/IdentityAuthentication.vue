@@ -97,7 +97,7 @@
             :label="$t('M.user_real_certificate_type')"
           >
             <!--请选择证件类型-->
-            <el-selectN
+            <el-select
               @change="changedocumentTypeValue"
               v-model="documentTypeValue"
               :no-data-text="$t('M.comm_no_data')"
@@ -117,7 +117,7 @@
                 :value="item.certificateName"
               >
               </el-option> -->
-            </el-selectN>
+            </el-select>
           </el-form-item>
           <!-- 真实姓名 -->
           <el-form-item
@@ -135,21 +135,43 @@
               :isShow="!!errorShowStatusList[0]"
             />
           </el-form-item>
-          <!-- 证件号码 -->
+          <!-- 身份证证件号码 -->
           <el-form-item
+            v-if="documentTypeValue == '身份证'"
             :label="$t('M.comm_credentials_number')"
           >
             <input
               class="common-input"
-              v-model="identificationNumber"
-              @keydown="setErrorMsg(1, '')"
               minlength="15"
+              :ref="idCardRef"
+              @keydown="setErrorMsg(1, '')"
               @blur="checkoutInputFormat(1, identificationNumber)"
+              @keyup="idCardRegexpInputNum(idCardRef)"
+              @input="idCardRegexpInputNum(idCardRef)"
             />
             <!--错误提示-->
             <ErrorBox
               :text="errorShowStatusList[1]"
               :isShow="!!errorShowStatusList[1]"
+            />
+          </el-form-item>
+          <!--护照证件号码-->
+          <el-form-item
+            v-else
+            :label="$t('M.comm_credentials_number')"
+          >
+            <input
+              class="common-input"
+              :ref="passportRef"
+              @keydown="setErrorMsg(2, '')"
+              @blur="checkoutInputFormat(2, identificationNumber)"
+              @keyup="passportEntryRestrictions(passportRef)"
+              @input="passportEntryRestrictions(passportRef)"
+            />
+            <!--错误提示-->
+            <ErrorBox
+              :text="errorShowStatusList[2]"
+              :isShow="!!errorShowStatusList[2]"
             />
           </el-form-item>
           <div
@@ -315,8 +337,14 @@
                         v-show="firstPictureSrcShow"
                       >
                         <img
+                          v-show="isChinese"
                           class="default-picture cursor-pointer"
                           :src="firstPictureSrc"
+                        >
+                        <img
+                          v-show="!isChinese"
+                          class="default-picture cursor-pointer"
+                          :src="passportPositiveImg"
                         >
                       </div>
                       <button ref="first-submit"></button>
@@ -349,8 +377,14 @@
                         v-show="secondPictureSrcShow"
                       >
                         <img
+                          v-show="isChinese"
                           class="default-picture cursor-pointer"
                           :src="secondPictureSrc"
+                        >
+                        <img
+                          v-show="!isChinese"
+                          class="default-picture cursor-pointer"
+                          :src="passportOppositeImg"
                         >
                       </div>
                       <button ref="second-submit"></button>
@@ -382,8 +416,14 @@
                         v-show="thirdPictureSrcShow"
                       >
                         <img
+                          v-show="isChinese"
                           class="default-picture cursor-pointer"
                           :src="thirdPictureSrc"
+                        >
+                        <img
+                          v-show="!isChinese"
+                          class="default-picture cursor-pointer"
+                          :src="passportHandImg"
                         >
                       </div>
                       <button ref="third-submit"></button>
@@ -524,13 +564,22 @@ import {
 } from '../../../utils/api/personal'
 import {
   returnAjaxMsg,
-  getNestedData
+  getNestedData,
+  validateNumForUserInput // 用户输入验证
 } from '../../../utils/commonFunc'
 import {
   apiCommonUrl,
   xDomain
 } from '../../../utils/env'
-import {createNamespacedHelpers, mapState} from 'vuex'
+import {
+  idCardRegexpInputNum,
+  passportEntryRestrictions
+} from '../../../utils/index'
+import {
+  createNamespacedHelpers,
+  mapState,
+  mapGetters
+} from 'vuex'
 const {mapMutations, mapActions} = createNamespacedHelpers('common')
 export default {
   components: {
@@ -552,7 +601,6 @@ export default {
       regionValue: '', // 国家
       regionList: [], // 国家地区列表
       documentTypeValue: '身份证', // 证件
-      // shortName: 'M.comm_all' // 全部
       documentTypeList: [
         {
           certificateId: 1,
@@ -567,7 +615,9 @@ export default {
       ], // 证件类型列表
       waitVeritfy: false, // 待审核
       realName: '', // 真实姓名
+      idCardRef: 'id-card',
       identificationNumber: '', // 证件号码
+      passportRef: 'passport',
       errorMessage: '', // 错误信息提示
       seniorAuthentication: false, // 高级认证弹窗默认
       authenticationInfo: {}, // 个人信息
@@ -581,6 +631,10 @@ export default {
       secondPictureSrcShow: true, // 显示身份证反面
       thirdPictureSrc: require('../../../assets/user/card_handheld.png'), // 手持
       thirdPictureSrcShow: true, // 显示手持身份证
+      // 护照默认图片
+      passportPositiveImg: require('../../../assets/user/passport-positive.png'), // 正面
+      passportOppositeImg: require('../../../assets/user/passport-opposite.png'), // 反面
+      passportHandImg: require('../../../assets/user/hand.png'), // 手持
       dialogImageFrontUrl: '', // 上传身份证正面url
       dialogImageReverseSideUrl: '', // 上传身份证反面url
       dialogImageHandUrl: '', // 上传手持身份证url
@@ -592,7 +646,8 @@ export default {
       // 设置错误信息
       errorShowStatusList: [
         '', // 真实姓名
-        '' // 证件号码
+        '', // 证件号码
+        '' // 护照号码
       ],
       fullscreenLoading: false // 整页loading
     }
@@ -732,6 +787,16 @@ export default {
         this.authenticationIsStatus()
       }
     },
+    // 检测身份证号
+    idCardRegexpInputNum (ref) {
+      let target = this.$refs[ref]
+      this.identificationNumber = idCardRegexpInputNum(target)
+    },
+    // 检测护照证号
+    passportEntryRestrictions (ref) {
+      let target = this.$refs[ref]
+      this.identificationNumber = passportEntryRestrictions(target)
+    },
     // 检测输入格式
     checkoutInputFormat (type, targetNum) {
       console.log(type)
@@ -750,12 +815,31 @@ export default {
           }
         // 请输入证件号码
         case 1:
+          switch (validateNumForUserInput('ID-card', targetNum)) {
+            case 0:
+              this.setErrorMsg(1, '')
+              this.$forceUpdate()
+              return 1
+            case 1:
+              // 请输入证件号码
+              this.setErrorMsg(1, this.$t('M.user_please_input20'))
+              this.$forceUpdate()
+              return 0
+              // '请输入正确的证件号码'
+            case 2:
+              this.setErrorMsg(1, this.$t('M.comm_please_enter') + this.$t('M.user_security_correct') + this.$t('M.user_real_certificate_cone'))
+              this.$forceUpdate()
+              return 0
+          }
+          break
+        // 请输入证件号码
+        case 2:
           if (!targetNum) {
-            this.setErrorMsg(1, this.$t('M.user_please_input20'))
+            this.setErrorMsg(2, this.$t('M.comm_please_enter') + this.$t('M.user_security_correct') + this.$t('M.user_real_certificate_cone'))
             this.$forceUpdate()
             return 0
           } else {
-            this.setErrorMsg(1, '')
+            this.setErrorMsg(2, '')
             this.$forceUpdate()
             return 1
           }
@@ -843,21 +927,21 @@ export default {
     },
     async stateSeniorCertification () {
       if (this.dialogImageFrontUrl === '') {
-        // 请上传身份证正面
+        // 请上传证件正面
         this.$message({
           message: this.$t('M.user_senior_upload1'),
           type: 'error'
         })
         return false
       } else if (this.dialogImageReverseSideUrl === '') {
-        // 请上传身份证反面
+        // 请上传证件反面
         this.$message({
           message: this.$t('M.user_senior_upload2'),
           type: 'error'
         })
         return false
       } else if (this.dialogImageHandUrl === '') {
-        // 请上传身份证反面
+        // 请上传证件反面
         this.$message({
           message: this.$t('M.user_senior_upload3'),
           type: 'error'
@@ -868,9 +952,9 @@ export default {
       }
       let data
       let param = {
-        idcardFront: this.dialogImageFrontUrl, // 上传身份证正面
-        idcardBack: this.dialogImageReverseSideUrl, // 上传身份证反面
-        idcardHand: this.dialogImageHandUrl // 上传手持身份证
+        idcardFront: this.dialogImageFrontUrl, // 上传证件正面
+        idcardBack: this.dialogImageReverseSideUrl, // 上传证件反面
+        idcardHand: this.dialogImageHandUrl // 上传手持证件
       }
       // 整页loading
       this.fullscreenLoading = true
@@ -919,6 +1003,9 @@ export default {
   },
   filter: {},
   computed: {
+    ...mapGetters('common', {
+      'isChinese': 'isChineseLanguage'
+    }),
     ...mapState({
       language: state => state.common.language,
       theme: state => state.common.theme,
@@ -1126,7 +1213,7 @@ export default {
           }
 
           .upload-submit {
-            padding: 8px 14px 9px;
+            padding: 8px 8px 9px;
             border-radius: 3px;
           }
         }
