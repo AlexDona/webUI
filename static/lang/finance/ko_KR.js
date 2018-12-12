@@ -9,7 +9,7 @@ export const finance = {
   'finance_date': '당일',
   'finance_history': '역사',
   'finance_invest': '코인 저축',
-  'finance_invest_style': '저축 종류',
+  'finance_invest_style': '여유 화폐 방안',
   'finance_invest_coin1': '코인 종류',
   'finance_useBalance': '사용가능한 잔액',
   'finance_errorTips': '예금수가 가용자산보다 많습니다',

@@ -9,7 +9,7 @@ export const finance = {
   'finance_date': '当日',
   'finance_history': '历史',
   'finance_invest': '存币',
-  'finance_invest_style': '存币类型',
+  'finance_invest_style': '存币方案',
   'finance_invest_coin1': '存币币种',
   'finance_useBalance': '可用余额',
   'finance_errorTips': '存币种数量大于可用资产',
