@@ -1080,6 +1080,41 @@ export default{
                   }
                 }
               }
+
+              .login {
+                > .login-info {
+                  border-radius: 0 0 2px 2px;
+                  background-color: #fff;
+                  box-shadow: 0 2px 10px 0 rgb(225, 232, 240);
+
+                  > .sub-nav-user {
+                    > .nav-vip {
+                      color: #7d90ac;
+                    }
+
+                    > .nav-button {
+                      border-radius: 4px;
+                      color: #338ff5;
+                      background: rgba(51, 143, 245, .1);
+                    }
+                  }
+
+                  > .personal-user {
+                    > li {
+                      color: #7d90ac;
+
+                      &:hover {
+                        color: rgba(0, 121, 254, 1);
+                      }
+                    }
+                  }
+                }
+
+                &:hover .login-info {
+                  height: 450px;
+                  transition: .5s;
+                }
+              }
             }
           }
         }
