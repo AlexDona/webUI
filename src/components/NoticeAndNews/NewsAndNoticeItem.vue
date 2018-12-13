@@ -99,6 +99,7 @@ export default {
     // 获取所有新闻类型
     async getAllNewsTypeList () {
       const params = {
+        language: this.language
       }
       const data = await getAllNewsTypeList(params)
       if (!returnAjaxMsg(data, this)) {

@@ -43,6 +43,61 @@ export const removeStore = name => {
 }
 
 /**
+ * 设置 cookie
+ * @param name
+ * @param value
+ */
+export const setCookie = (name, value, times) => {
+  value = JSON.stringify(value)
+  let expires
+  if (times) {
+    let date = new Date()
+    date.setTime(date.getTime() + (times * 24 * 60 * 60 * 1000))
+    expires = `; expires=${date.toGMTString()}`
+  } else {
+    expires = ''
+  }
+  document.cookie = `${name}=${value}${expires};path=/`
+}
+
+/**
+ * 获取cookie
+ * @param name
+ * @returns {string}
+ */
+export const getCookie = name => {
+  let cookies = document.cookie
+  if (cookies.length > 0) {
+    let start = cookies.indexOf(`${name}=`)
+    if (start < 0) {
+      return ''
+    }
+    let end = cookies.indexOf(';', start)
+    if (end < 0) {
+      end = cookies.length
+    }
+    return cookies.substring(start + name.length + 1, end)
+  }
+}
+
+/**
+ * 获取cookie(转obj)
+ * @param name
+ * @returns {any}
+ */
+export const getCookieWithJSON = name => {
+  if (getCookie(name)) {
+    return JSON.parse(getCookie(name))
+  }
+}
+/**
+ * 删除cookie
+ * @param name
+ */
+export const removeCookie = name => {
+  setCookie(name, '', -1)
+}
+/**
  * 时间格式化
  * @date 要格式化的时间戳
  * @methods:
@@ -179,8 +234,8 @@ export function phoneNumRegexpInput (event) {
   let val = event.value
   let finalVal = ''
   let valArr = val.split('')
-  _.forEach(valArr, item => {
-    if ((item - 0) || item === '0') {
+  _.forEach(valArr, (item, index) => {
+    if (((item - 0) || item === '0') && index < 11) {
       finalVal += item
     }
   })
@@ -313,6 +368,7 @@ export function amendPrecision (num1, num2, symbol) {
       return scientificToNumber((newNum1 * Math.pow(10, maxPointLength))) / (newNum2 * Math.pow(10, maxPointLength))
   }
 }
+
 /**
  * 科学计数法
  * @param number
@@ -367,7 +423,9 @@ export function scientificToNumber (number) {
 export function unzip (b64Data) {
   var strData = atob(b64Data)
   // Convert binary string to character-number array
-  var charData = strData.split('').map(function (x) { return x.charCodeAt(0) })
+  var charData = strData.split('').map(function (x) {
+    return x.charCodeAt(0)
+  })
   // Turn number array into byte-array
   var binData = new Uint8Array(charData)
   // // unzip
