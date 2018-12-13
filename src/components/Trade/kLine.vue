@@ -117,7 +117,7 @@ export default {
         setTimeout(() => {
           this.fullscreenLoading = false
           this.loadingCount++
-        }, 900)
+        }, 1200)
       }
     },
     changeIsKlineDataReady (status) {

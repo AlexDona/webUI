@@ -10,21 +10,31 @@ export const getMyEntrust = (params) => get('queryMyEntrust', params)
 export const getHistoryEntrust = (params) => get('queryMyHisEntrust', params)
 // 成交明细
 export const getMakeDetail = (params) => get('queryMyEntrustOrder', Object.assign({
-  'not-loader': true
+  'not-loading': true
 }, params))
 // 撤销当前委单
 export const repealMyEntrustAjax = (params) => put('cancelEntrust', params)
 // 全球行情
 // params 格式： ETH_BTC
-export const getGLobalMarket = (params) => get(`market3rd/${params}`)
+export const getGLobalMarket = (params) => get(`market3rd/${params}`, {
+  'not-loading': true
+})
 // 默认交易对
-export const getDefaultSymbol = () => get('trade/default')
+export const getDefaultSymbol = params => get('trade/default', Object.assign({
+  'not-loading': true
+}, params))
 // 获取用户默认交易对资产
-export const getUserAssetOfActiveSymbol = (params) => get('push/getTotalByTradeId', params)
+export const getUserAssetOfActiveSymbol = (params) => get('push/getTotalByTradeId', Object.assign({
+  'not-loading': true
+}, params))
 // 获取当前交易对信息
-export const getActiveSymbolDataAjax = (params) => get('market/bbMarket/market', params)
+export const getActiveSymbolDataAjax = (params) => get('market/bbMarket/market', Object.assign({
+  'not-loading': true
+}, params))
 // 获取币币交易市场
-export const getTradeMarketDataAjax = (params) => get('market/bbMarket/ticker', params)
+export const getTradeMarketDataAjax = (params) => get('market/bbMarket/ticker', Object.assign({
+  'not-loading': true
+}, params))
 // 获取K线接口
 export const getKlineDataAjax = (params) => get('market/kline', Object.assign({
   'not-loading': true
