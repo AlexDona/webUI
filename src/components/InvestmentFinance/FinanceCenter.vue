@@ -730,7 +730,9 @@ export default {
     // 模态框数字发生变化时需要执行的方法
     changeAlignNumber (e) {
       this.investMounte = e
-      this.clickGetInvestEarnings()
+      if (e) {
+        this.clickGetInvestEarnings()
+      }
     },
     // 理财记录模态框显示
     async clickGetInvestEarnings () {
