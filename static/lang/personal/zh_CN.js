@@ -74,6 +74,8 @@ export const personal = {
   'user_senior_text4': '手持证件照片：需要您本人一只手持您的证件，另一只手持一张有您手写的',
   'user_senior_text6': '账号ID的白纸。确保证件和白纸在您的胸前，不遮挡您的脸部，并且证件和白纸上的信息清晰可见！',
   'user_senior_text5': '以下图片仅作为示例，请提交您本人的身份材料照片。照片勿进行PS处理！',
+  'user_senior_id-card': '身份证',
+  'user_senior_passport': '护照',
   'user_senior_upload1': '上传证件正面',
   'user_senior_upload2': '上传证件反面',
   'user_senior_upload3': '上传手持证件',

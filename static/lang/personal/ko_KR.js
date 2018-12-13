@@ -74,6 +74,8 @@ export const personal = {
   'user_senior_text4': '손에 증거 서류 사진을들 어라:본인이 한 손에 당신의 증명서를들고, 다른 한 손에 한 장의 당신이 손으로 쓴 것이 필요 합니다',
   'user_senior_text6': '아이 디 아이 디 백지.인증 서와 백지 가 당신의 앞 가슴에 있는 것을 확인하고 얼굴을 가리지 않 으며, 또한 증거와 백지의 정보 가 선명하게 보 입니다!',
   'user_senior_text5': '다음 이미지는보기 전용입니다. 자신의 신원 사진을 제출하십시오. PS 치료를하지 마십시오! ',
+  'user_senior_id-card': '신분증',
+  'user_senior_passport': '여권 3.',
   'user_senior_upload1': '증명 서의 앞면 업로드',
   'user_senior_upload2': '증명 서의 뒷면을 업로드하다',
   'user_senior_upload3': '손에 증거 서류를 올리다.',

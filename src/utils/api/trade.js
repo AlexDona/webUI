@@ -5,9 +5,13 @@ import {post, get, put} from './axios'
 // 新增委单
 export const saveEntrustTrade = (params) => post('saveEntrust', params)
 // 我的委托单
-export const getMyEntrust = (params) => get('queryMyEntrust', params)
+export const getMyEntrust = (params) => get('queryMyEntrust', Object.assign({
+  'not-loading': true
+}, params))
 // 历史委单
-export const getHistoryEntrust = (params) => get('queryMyHisEntrust', params)
+export const getHistoryEntrust = (params) => get('queryMyHisEntrust', Object.assign({
+  'not-loading': true
+}, params))
 // 成交明细
 export const getMakeDetail = (params) => get('queryMyEntrustOrder', Object.assign({
   'not-loading': true
