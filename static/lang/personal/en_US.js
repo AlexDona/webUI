@@ -72,6 +72,8 @@ export const personal = {
   'user_senior_text4': 'Handheld ID: you need to hold your id in one hand and a handwritten one in the other',
   'user_senior_text6': 'White paper for the account ID.Make sure the certificate and the white paper are on your chest, do not cover your face, and the information on the certificate and the white paper is clearly visible!',
   'user_senior_text5': 'The following images are for example only, please submit your own photo of the identity material. Do not take PS treatment!',
+  'user_senior_id-card': 'ID card',
+  'user_senior_passport': 'passport',
   'user_senior_upload1': 'Front certificate upload',
   'user_senior_upload2': 'Reverse  certificate upload',
   'user_senior_upload3': 'Handheld certificate upload',

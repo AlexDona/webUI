@@ -439,7 +439,9 @@ export default{
   },
   async created () {
     // f5刷新页面刷新用户信息列表
-    this.reflashUserInfo()
+    if (this.isLogin) {
+      this.reflashUserInfo()
+    }
     if (getStore('convertCurrency')) {
       this.activeConvertCurrency = getStore('convertCurrency')
     }
@@ -682,6 +684,9 @@ export default{
     }
   },
   watch: {
+    showApplyMerchantStatus (newVal) {
+      console.log(newVal)
+    },
     localPayPwdSet (newVal) {
       console.log(newVal)
     },
