@@ -71,6 +71,8 @@ export const personal = {
   'user_senior_text4': '手に持って写真を手に入れる必要があります。もう一方の手には、あなたが手で书いた1枚があります',
   'user_senior_text6': 'アカウントidの白紙。書類と白纸はあなたの胸の上で確認、あなたの颜を遮らないことを保证して、しかも書類と白纸の上の情报ははっきりと见える!',
   'user_senior_text5': '次の画像はあくまでも参考情報です。アイデンティティマテリアルのあなた自身の写真を投稿してください。 PS治療をしないでください！',
+  'user_senior_id-card': '身分証',
+  'user_senior_passport': 'パスポート',
   'user_senior_upload1': '証明書正面をアップロード',
   'user_senior_upload2': '証明書反面をアップロード',
   'user_senior_upload3': '手持ち証明書をアップロード',

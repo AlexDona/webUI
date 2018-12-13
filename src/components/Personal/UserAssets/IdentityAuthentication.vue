@@ -46,8 +46,8 @@
                   {{ innerUserInfo.realname }}
                 </span>、
                 <span class="type-info">
-                  <!--身份证号：-->
-                  {{ $t('M.comm_id_number') }}：
+                  <!--证件号码：-->
+                  {{ $t('M.user_real_certificate_cone') }}：
                    {{ innerUserInfo.cardNo.substring(0,2)}}
                   ****
                    {{ innerUserInfo.cardNo.substring(16,18)}}
@@ -299,8 +299,19 @@
                   <span class="info-type font-size12">
                     {{ $t('M.user_real_certificate_type') }}：
                   </span>
-                  <span class="user-info font-size14">
-                    {{ statusRealNameInformation.cardType }}
+                  <!--身份证-->
+                  <span
+                    class="user-info font-size14"
+                    v-if="this.documentTypeList[0].certificateId == 1"
+                  >
+                    {{ $t('M.user_senior_id-card') }}
+                  </span>
+                  <!--护照-->
+                  <span
+                    class="user-info font-size14"
+                    v-else
+                  >
+                    {{ $t('M.user_senior_passport') }}
                   </span>
                 </p>
               </div>
@@ -768,6 +779,7 @@ export default {
         // 返回列表数据
         this.realNameInformationObj = getNestedData(data, 'data.data')
         this.statusRealNameInformation = getNestedData(data, 'data.data.authInfo')
+        console.log(data.data.data.authInfo)
         this.authenticationIsStatus()
       }
     },
