@@ -328,5 +328,6 @@ export const OTC = {
   'otc_index_inputBuyAccount': '購入数量はゼロではいけません',
   // 申请成为商家
   'otc_apply_tips1': 'ヒント',
-  'otc_apply_tips2': 'この功能を使用するためには、まず商家になる必要があります!'
+  'otc_apply_tips2': 'この功能を使用するためには、まず商家になる必要があります!',
+  'otc_order_reason': '原因'
 }

@@ -328,5 +328,6 @@ export const OTC = {
   'otc_tradingorder_orderExact': '订单生成后',
   // 申请成为商家
   'otc_apply_tips1': '温馨提示',
-  'otc_apply_tips2': '您需要先申请成为商家才能使用此功能！'
+  'otc_apply_tips2': '您需要先申请成为商家才能使用此功能！',
+  'otc_order_reason': '原因'
 }

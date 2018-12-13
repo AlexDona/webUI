@@ -328,5 +328,6 @@ export const OTC = {
   'otc_index_inputBuyAccount': '매입 수량이 0이 되선 안됨,',
   // 申请成为商家
   'otc_apply_tips1': '따뜻한 힌트.',
-  'otc_apply_tips2': '이 기능을 사용하려면 비즈니스가되기 위해 신청해야합니다.'
+  'otc_apply_tips2': '이 기능을 사용하려면 비즈니스가되기 위해 신청해야합니다.',
+  'otc_order_reason': '이유'
 }

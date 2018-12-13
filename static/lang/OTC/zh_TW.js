@@ -327,5 +327,6 @@ export const OTC = {
   'otc_index_inputBuyAccount': '買入量不能為0',
   // 申请成为商家
   'otc_apply_tips1': '溫馨提示',
-  'otc_apply_tips2': '您需要先申請成為商家才能使用此功能！'
+  'otc_apply_tips2': '您需要先申請成為商家才能使用此功能！',
+  'otc_order_reason': '原因'
 }
