@@ -2,8 +2,6 @@
   <div
     class="add-bank personal"
     :class="{'day':theme == 'day','night':theme == 'night' }"
-    v-loading.fullscreen.lock="fullscreenLoading"
-    element-loading-background="rgba(0, 0, 0, 0.6)"
     :style="{
       height:windowHeight+'px'
     }"
@@ -119,7 +117,7 @@
             </el-form-item>
             <button
               v-if="paymentTerm.isBankBind"
-              class="bank-button border-radius4"
+              class="bank-button border-radius4 cursor-pointer"
               @click.prevent="statusTetBankCard"
             >
               <!--确认设置-->
@@ -127,7 +125,7 @@
             </button>
             <button
               v-else
-              class="bank-button border-radius4"
+              class="bank-button border-radius4 cursor-pointer"
               @click.prevent="statusTetBankCard"
             >
               <!--确认修改-->
@@ -183,12 +181,6 @@ export default {
     }
   },
   created () {
-    // 覆盖Element样式
-    require('../../../../static/css/list/Personal/AccountReceivableAccount/AddBankCard.css')
-    // 白色主题样式
-    require('../../../../static/css/theme/day/Personal/AccountReceivableAccount/AddBankCardDay.css')
-    // 黑色主题样式
-    require('../../../../static/css/theme/night/Personal/AccountReceivableAccount/AddBankCardNight.css')
     getAccountPaymentTerm(this)
     this.paymentMethodInformation()
   },
@@ -235,16 +227,10 @@ export default {
           bankType: 'Bankcard', // type
           id: this.id
         }
-        // 整页loading
-        this.fullscreenLoading = true
         data = await statusCardSettings(params)
         if (!(returnAjaxMsg(data, this, 1))) {
-          // 接口失败清除loading
-          this.fullscreenLoading = false
           return false
         } else {
-          // 接口成功清除loading
-          this.fullscreenLoading = false
           this.successJump()
           this.stateEmptyData()
           console.log(data)
@@ -272,7 +258,6 @@ export default {
             this.$forceUpdate()
             return 1
           }
-        //  请输入银行卡号
         case 1:
           switch (validateNumForUserInput('bank-card', targetNum)) {
             case 0:
@@ -280,11 +265,13 @@ export default {
               this.$forceUpdate()
               return 1
             case 1:
+              // 请输入银行卡号
               this.setErrorMsg(1, this.$t('M.user_bind_Bank_input_card_num'))
               this.$forceUpdate()
               return 0
             case 2:
-              this.setErrorMsg(1, this.$t('M.user_account_credit_text'))
+              // 请输入最后鞥缺的银行卡号
+              this.setErrorMsg(1, this.$t('M.comm_please_enter') + this.$t('M.user_security_correct') + this.$t('M.user_account_credit_numbers'))
               this.$forceUpdate()
               return 0
           }
@@ -324,16 +311,10 @@ export default {
         userId: this.userInfo.userId,
         type: 'Bankcard'
       }
-      // 整页loading
-      this.fullscreenLoading = true
       data = await modificationAccountPaymentTerm(params)
       if (!(returnAjaxMsg(data, this, 0))) {
-        // 接口失败清除loading
-        this.fullscreenLoading = false
         return false
       } else {
-        // 接口成功清除loading
-        this.fullscreenLoading = false
         // let detailData = data.data.data
         let detailData = getNestedData(data, 'data.data')
         // 返回状态展示
@@ -436,6 +417,28 @@ export default {
       }
     }
 
+    /deep/ {
+      /* 覆盖element样式 */
+      .el-input-group {
+        width: 62.5%;
+      }
+
+      .el-input__inner {
+        height: 36px;
+        border-radius: 2px;
+      }
+
+      .el-input-group__append {
+        padding: 0 16px;
+        border-radius: 0 4px 4px 0;
+        font-size: 12px;
+      }
+
+      .el-form-item__content {
+        width: 600px;
+      }
+    }
+
     &.night {
       color: $nightFontColor;
       background-color: $nightBgColor;
@@ -477,9 +480,28 @@ export default {
 
             .bank-button {
               color: rgba(255, 255, 255, .7);
-              background: linear-gradient(0deg, rgba(43, 57, 110, 1), rgba(42, 80, 130, 1));
+              background: linear-gradient(0deg, rgb(43, 57, 110), rgb(42, 80, 130));
             }
           }
+        }
+      }
+
+      /deep/ {
+        /* 个人中心黑色主题 */
+        .el-form-item__label {
+          min-width: 140px;
+          color: rgba(255, 255, 255, .7);
+        }
+
+        .el-input__inner {
+          border: 1px solid #485776;
+          color: rgba(255, 255, 255, .7);
+        }
+
+        .el-input-group__append {
+          border-color: #364654;
+          color: rgba(255, 255, 255, .7);
+          background-color: #338ff5;
         }
       }
     }
@@ -489,10 +511,10 @@ export default {
       background-color: $dayBgColor;
 
       .add-bank-main {
-        border: 1px solid rgba(246, 246, 246, 1);
+        border: 1px solid rgb(246, 246, 246);
         border-radius: 4px;
-        background: rgba(255, 255, 255, 1);
-        box-shadow: 0 0 4px rgba(235, 240, 248, 1);
+        background: #fff;
+        box-shadow: 0 0 4px rgb(235, 240, 248);
 
         > .add-bank-header {
           border-bottom: 1px solid rgba(57, 66, 77, .1);
@@ -505,14 +527,14 @@ export default {
         > .add-bank-content {
           > .bank-content-title {
             color: #ccc;
-            background: rgba(62, 121, 214, 1);
+            background: rgb(62, 121, 214);
           }
 
           > .bank-content-from {
             .bank-input {
-              border: 1px solid rgba(236, 241, 248, 1);
+              border: 1px solid rgb(236, 241, 248);
               color: #333;
-              background: rgba(255, 255, 255, 1);
+              background: #fff;
 
               &:focus {
                 border: 1px solid #338ff5;
@@ -521,9 +543,29 @@ export default {
 
             .bank-button {
               color: #ccc;
-              background: linear-gradient(0deg, rgba(43, 57, 110, 1), rgba(42, 80, 130, 1));
+              background: linear-gradient(0deg, rgb(43, 57, 110), rgb(42, 80, 130));
             }
           }
+        }
+      }
+
+      /deep/ {
+        /* 个人中心白色主题 */
+        .el-form-item__label {
+          min-width: 140px;
+          color: #7d90ac;
+        }
+
+        .el-input__inner {
+          border: 1px solid #555;
+          color: #000;
+          background-color: transparent;
+        }
+
+        .el-input-group__append {
+          border-color: #364654;
+          color: #555;
+          background-color: #b1b1b1;
         }
       }
     }

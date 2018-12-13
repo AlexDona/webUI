@@ -13,5 +13,6 @@ export const actionCenter = {
   'actionCenter_Token_step5': 'Vote',
   'actionCenter_Token_step6': 'New listing vote',
   'actionCenter_Token_step7': 'Listing',
-  'actionCenter_Token_step8': 'List trade area'
+  'actionCenter_Token_step8': 'List trade area',
+  'actionCenter_coin_apply': 'Listing application'
 }

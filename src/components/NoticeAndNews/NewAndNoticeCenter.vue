@@ -22,7 +22,6 @@
             @tab-click="changeTab"
             v-show="showNewsList"
           >
-            <!--定死-->
             <el-tab-pane
               :label="outerItem.name"
               :name="outerItem.id"
@@ -67,6 +66,7 @@
                 </ul>
               </div>
               <el-pagination
+                v-show="noticeFilterList.length"
                 background
                 layout="prev, pager, next"
                 :current-page="pageNum"
@@ -87,7 +87,10 @@ import {
   getAllNewsTypeList
   // getNewsDetail
 } from '../../utils/api/home'
-import {returnAjaxMsg} from '../../utils/commonFunc'
+import {
+  returnAjaxMsg,
+  getNestedData
+} from '../../utils/commonFunc'
 import {mapState} from 'vuex'
 export default {
   components: {},
@@ -147,14 +150,13 @@ export default {
     // 获取所有新闻类型
     async getAllNewsTypeList () {
       const params = {
+        language: this.language
       }
       const data = await getAllNewsTypeList(params)
       if (!returnAjaxMsg(data, this)) {
         return false
       } else {
-        console.log(data)
-        this.newsTypeList = data.data.data
-        console.log(this.newsTypeList)
+        this.newsTypeList = getNestedData(data, 'data.data')
       }
     },
     // 获取新闻公告列表
@@ -170,10 +172,10 @@ export default {
         return false
       } else {
         console.log(data)
-        const targetData = data.data.data
-        this.noticeList = targetData.list
-        this.pageNum = targetData.pageNum
-        this.totalPages = targetData.pages
+        const targetData = getNestedData(data, 'data.data')
+        this.noticeList = getNestedData(targetData, 'list')
+        this.pageNum = getNestedData(targetData, 'pageNum')
+        this.totalPages = getNestedData(targetData, 'pages')
       }
     }
   },

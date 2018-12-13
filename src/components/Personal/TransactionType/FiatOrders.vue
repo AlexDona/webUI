@@ -271,12 +271,6 @@ export default {
     }
   },
   async created () {
-    // 覆盖Element样式
-    require('../../../../static/css/list/Personal/TransactionType/FiatOrders.css')
-    // 白色主题样式
-    require('../../../../static/css/theme/day/Personal/TransactionType/FiatOrdersDay.css')
-    // 黑色主题样式
-    require('../../../../static/css/theme/night/Personal/TransactionType/FiatOrdersNight.css')
     await this.getOTCAvailableCurrencyList()
     await this.getMerchantAvailablelegalTenderList()
   },
@@ -530,81 +524,192 @@ export default {
 }
 </script>
 <style scoped lang="scss">
-@import "../../../../static/css/scss/Personal/IndexPersonal";
+  @import "../../../../static/css/scss/Personal/IndexPersonal";
 
-.fiat-orders {
-  .fiat-main {
-    .orders-main-top {
-      height: 125px;
-      padding: 0 25px;
-
-      .trade-type {
-        width: 250px;
-      }
-
-      .trade-data {
-        width: 500px;
-      }
-
-      .main-top-type {
-        height: 50px;
-        line-height: 50px;
-
-        > .filtrate-text {
-          margin-right: 5px;
-        }
-
-        .date-short-line {
-          margin: 0 25px;
-        }
-      }
-
-      > .date-picker {
-        > .date-short-line {
-          margin: 0 3px;
-        }
-      }
-
-      > .all-clear {
-        color: #338ff5;
-      }
-    }
-  }
-
-  &.night {
-    color: $nightFontColor;
-    background-color: $nightBgColor;
-
-    > .background-color {
-      background-color: $nightMainBgColor;
-
-      > .fiat-color {
-        color: #338ff5;
-      }
-    }
-
+  .fiat-orders {
     .fiat-main {
       .orders-main-top {
-        background-color: #1c1f32;
+        height: 125px;
+        padding: 0 25px;
+
+        .trade-type {
+          width: 250px;
+        }
+
+        .trade-data {
+          width: 500px;
+        }
+
+        .main-top-type {
+          height: 50px;
+          line-height: 50px;
+
+          > .filtrate-text {
+            margin-right: 5px;
+          }
+
+          .date-short-line {
+            margin: 0 25px;
+          }
+        }
+
+        > .date-picker {
+          > .date-short-line {
+            margin: 0 3px;
+          }
+        }
+
+        > .all-clear {
+          color: #338ff5;
+        }
+      }
+    }
+
+    /deep/ {
+      /* 覆盖Elenent样式 */
+
+      /* 点击切换时背景色和字体颜色 */
+      .el-tabs__item {
+        width: 105px;
+        padding: 0;
+        border-left: 4px solid transparent !important;
+        text-align: center;
+        background-color: transparent !important;
+      }
+
+      .el-tabs__item.is-active {
+        border-left: 0;
+      }
+
+      .el-tabs__item:hover {
+        border-left: 0;
+      }
+
+      /* 覆盖element样式 */
+      .el-input__inner {
+        width: 100px;
+        height: 30px;
+        border: 0;
+      }
+
+      .el-date-editor.el-input {
+        width: 130px;
+        height: 30px;
+      }
+
+      .el-date-editor .el-input__inner {
+        width: 136px;
+        height: 30px;
+      }
+
+      .cell {
+        text-align: center;
+      }
+
+      .main-top-type .el-button {
+        width: 60px;
+        height: 34px;
+        padding: 0;
+        margin-left: 77px;
+        border: 0;
+      }
+
+      .fiat-orders .el-loading-mask {
+        height: 385px;
+      }
+    }
+
+    &.night {
+      color: $nightFontColor;
+      background-color: $nightBgColor;
+
+      > .background-color {
+        background-color: $nightMainBgColor;
+
+        > .fiat-color {
+          color: #338ff5;
+        }
+      }
+
+      .fiat-main {
+        .orders-main-top {
+          background-color: #1c1f32;
+        }
+      }
+
+      /deep/ {
+        /* 个人中心（黑色主题） */
+
+        /* tabs切换 */
+        .el-tabs__item {
+          &.is-active {
+            border-bottom: 2px solid #338ff5 !important;
+            border-left: 0;
+            color: rgba(0, 121, 254, 1) !important;
+            background-color: #1c1f32 !important;
+          }
+
+          &:hover {
+            background-color: #1c1f32 !important;
+          }
+        }
+
+        .el-input__inner {
+          background-color: #2d3651;
+        }
+
+        .el-button {
+          color: #fff;
+          background: linear-gradient(90deg, rgba(43, 57, 110, 1) 0%, rgba(42, 80, 130, 1) 100%);
+        }
+      }
+    }
+
+    &.day {
+      color: $dayFontColor;
+      background-color: $dayBgColor;
+
+      > header {
+        border: 1px solid #ecf1f8;
+
+        > span {
+          color: #338ff5;
+        }
+      }
+
+      > div {
+        border: 1px solid #ecf1f8;
+      }
+
+      /deep/ {
+        /* 个人中心（白色主题） */
+
+        /* tabs切换 */
+        .el-tabs__item {
+          border-bottom: 1px solid #ecf1f8;
+          color: #7d90ac;
+
+          &:hover {
+            border-left: none;
+            color: #338ff5;
+          }
+
+          &.is-active {
+            border-bottom: 2px solid #338ff5;
+            border-left: none;
+            color: #338ff5;
+            background-color: transparent;
+          }
+        }
+
+        .el-tabs__header {
+          padding: 0;
+        }
+
+        .el-input__inner {
+          border: 1px solid #ccc;
+        }
       }
     }
   }
-
-  &.day {
-    color: $dayFontColor;
-    background-color: $dayBgColor;
-
-    > header {
-      border: 1px solid #ecf1f8;
-
-      > span {
-        color: #338ff5;
-      }
-    }
-
-    > div {
-      border: 1px solid #ecf1f8;
-    }
-  }
-}
 </style>

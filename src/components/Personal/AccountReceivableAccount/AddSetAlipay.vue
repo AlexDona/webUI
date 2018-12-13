@@ -24,7 +24,7 @@
           class="header-content-left header-content font-size16 font-weight600"
         >
           <!--修改账号-->
-          {{ $t('M.comm_modification') }}{{ $t('M.user_account_number') }}
+          {{ $t('M.comm_modification')}}{{$t('M.user_account_alipay')}}{{$t('M.user_account_number')}}
         </span>
         <span
           class="header-content-right font-size12 cursor-pointer"
@@ -85,7 +85,21 @@
             <el-form-item
               :label="$t('M.user_account_upload_collection')"
             >
-              <div class="account-upload border-radius4">
+              <div
+                class="account-upload border-radius4"
+                @mouseenter="showStatusCode(1)"
+                @mouseleave="showStatusCode(2)"
+              >
+                <div
+                  class="mask-layer cursor-pointer"
+                  v-show="removeMaskLayer"
+                >
+                  <i
+                    class="el-icon-delete mask-icon cursor-pointer"
+                    @click="handleRemove"
+                  >
+                  </i>
+                </div>
                 <el-upload
                   :action="apiCommonUrl+'uploadfile'"
                   :headers="tokenObj"
@@ -158,7 +172,10 @@ import {
   statusCardSettings,
   modificationAccountPaymentTerm
 } from '../../../utils/api/personal'
-import {apiCommonUrl} from '../../../utils/env'
+import {
+  apiCommonUrl,
+  xDomain
+} from '../../../utils/env'
 import { createNamespacedHelpers, mapState } from 'vuex'
 const { mapMutations } = createNamespacedHelpers('personal')
 export default {
@@ -174,9 +191,9 @@ export default {
       },
       alipayAccount: '', // 支付宝账号
       password: '', // 交易密码
-      dialogImageHandUrl: '', // 图片url
       dialogImageHandUrl1: '', // 图片url
-      id: '', // ID
+      removeMaskLayer: false, // 删除遮罩层
+      paymentTypeId: '', // 收款类型ID
       paymentTerm: {},
       successCountDown: 1, // 成功倒计时
       paymentMethodList: {},
@@ -189,17 +206,8 @@ export default {
     }
   },
   created () {
-    // 覆盖Element样式
-    require('../../../../static/css/list/Personal/AccountReceivableAccount/AddSetAlipay.css')
-    // 白色主题样式
-    require('../../../../static/css/theme/day/Personal/AccountReceivableAccount/AddSetAlipayDay.css')
-    // 黑色主题样式
-    require('../../../../static/css/theme/night/Personal/AccountReceivableAccount/AddSetAlipayNight.css')
     this.tokenObj.token = this.userInfo.token
-    let xDomain = window.location.host.split(':')[0]
-    xDomain = xDomain.startsWith('www') ? xDomain.slice(4) : xDomain
     this.tokenObj['x-domain'] = xDomain
-    console.log(xDomain)
     getAccountPaymentTerm(this)
     this.paymentMethodInformation()
   },
@@ -218,9 +226,26 @@ export default {
       this.CHANGE_USER_CENTER_ACTIVE_NAME('account-credited')
       this.$router.push({path: '/PersonalCenter'})
     },
+    // 上传支付宝二维码
     handleSuccessHand (response, file, fileList) {
       this.dialogImageHandUrl1 = response.data.fileUrl
       console.log(response, file, fileList)
+    },
+    // 删除支付宝二维码
+    handleRemove () {
+      this.dialogImageHandUrl1 = ''
+    },
+    // 删除事件
+    showStatusCode (val) {
+      if (!this.dialogImageHandUrl1) {
+        if (val == 1 && this.dialogImageHandUrl1) {
+          // 显示删除icon
+          this.removeMaskLayer = true
+        } else {
+          // 隐藏删除icon
+          this.removeMaskLayer = false
+        }
+      }
     },
     // 检测输入格式
     checkoutInputFormat (type, targetNum) {
@@ -343,7 +368,7 @@ export default {
         }
         if (detailData.id) {
           // 修改时带回类id
-          this.id = detailData.id
+          this.paymentTypeId = detailData.id
         }
         console.log(this.dialogImageHandUrl1)
       }
@@ -428,10 +453,35 @@ export default {
           }
 
           .account-upload {
-            width: 118px;
-            height: 118px;
+            width: 122px;
+            height: 122px;
             overflow: hidden;
             line-height: 100px;
+
+            .mask-layer {
+              position: absolute;
+              z-index: 9;
+              top: 0;
+              width: 122px;
+              height: 122px;
+              border-radius: 6px;
+              line-height: 118px;
+              text-align: center;
+              background: transparent;
+              opacity: 0;
+            }
+
+            &:hover .mask-layer {
+              width: 122px;
+              height: 122px;
+              background-color: rgba(0, 0, 0, .4);
+              opacity: 1;
+
+              .mask-icon {
+                font-size: 19px;
+                color: #fff;
+              }
+            }
           }
 
           .account-button {
@@ -440,6 +490,44 @@ export default {
             margin: 30px 0 50px 140px;
           }
         }
+      }
+    }
+
+    /deep/ {
+      /* 覆盖element样式 */
+      .el-input-group {
+        width: 62.5%;
+      }
+
+      .el-input__inner {
+        height: 36px;
+        border-radius: 2px;
+      }
+
+      .el-input-group__append {
+        padding: 0 16px;
+        border-radius: 0 4px 4px 0;
+        font-size: 12px;
+      }
+
+      .el-upload-list__item {
+        width: 118px;
+        height: 118px;
+      }
+
+      .el-upload--picture-card {
+        position: relative;
+        width: 122px;
+        height: 122px;
+        line-height: 106px;
+      }
+
+      .el-form-item__content {
+        width: 600px;
+      }
+
+      .el-form-item__label {
+        width: 140px !important;
       }
     }
 
@@ -486,7 +574,7 @@ export default {
               .icon-plus {
                 position: absolute;
                 top: 35px;
-                right: 35px;
+                right: 40px;
                 color: #828ea6;
               }
             }
@@ -496,6 +584,28 @@ export default {
               background: linear-gradient(0deg, rgba(43, 57, 110, 1), rgba(42, 80, 130, 1));
             }
           }
+        }
+      }
+
+      /deep/ {
+        /* 个人中心黑色主题 */
+        .el-form-item__label {
+          color: rgba(255, 255, 255, .7);
+        }
+
+        .el-input__inner {
+          border: 1px solid #485776;
+          color: rgba(255, 255, 255, .7);
+        }
+
+        .el-input-group__append {
+          border-color: #364654;
+          color: rgba(255, 255, 255, .7);
+          background-color: #338ff5;
+        }
+
+        .el-upload--picture-card {
+          background-color: #485776;
         }
       }
     }
@@ -555,6 +665,25 @@ export default {
               background: linear-gradient(0deg, rgba(43, 57, 110, 1), rgba(42, 80, 130, 1));
             }
           }
+        }
+      }
+
+      /deep/ {
+        /* 个人中心白色主题 */
+        .el-form-item__label {
+          color: #7d90ac;
+        }
+
+        .el-input__inner {
+          border: 1px solid #555;
+          color: #000;
+          background-color: transparent;
+        }
+
+        .el-input-group__append {
+          border-color: #364654;
+          color: #555;
+          background-color: #b1b1b1;
         }
       }
     }

@@ -16,6 +16,7 @@
     "lint:staged": "lint-staged",
     "analyze": "NODE_ENV=production npm_config_report=true npm run build",
     "build--test": "cross-env NODE_ENV=testing env_config=test node build/build.js",
+    "build--dev": "cross-env NODE_ENV=development210 env_config=dev node build/build.js",
     "build--prod": "cross-env NODE_ENV=production env_config=prod node build/build.js"
   },
   "dependencies": {
@@ -117,16 +118,16 @@
   "lint-staged": {
     "linters": {
       "src/**/*.js": [
-        "eslint --fix",
+        "eslint",
         "git add"
       ],
       "src/**/*.vue": [
-        "eslint --fix",
-        "stylelint --fix",
+        "eslint",
+        "stylelint",
         "git add"
       ],
       "static/css/**/*.css": [
-        "stylelint --fix",
+        "stylelint",
         "git add"
       ]
     },

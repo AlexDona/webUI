@@ -4,10 +4,7 @@
     :class="{'day':theme == 'day','night':theme == 'night' }"
   >
     <!-- 1.0 banner -->
-    <div class="banner-box" :style="{
-      width:screenWidth + 'px',
-      height:(screenWidth*131)/480 + 'px'
-    }">
+    <div class="banner-box">
       <img src="../../assets/finance/banner.png">
       <div class="banner-title">
         <!-- 存币收益 -->
@@ -22,7 +19,7 @@
       <!-- 2.0 币种类型 -->
       <div class="finance-inner">
         <div class="container">
-         <div class="finance-form-header">
+        <div class="finance-form-header">
           <el-select
             :placeholder="$t('M.comm_please_choose')"
             :no-data-text="$t('M.comm_no_data')"
@@ -58,466 +55,465 @@
               {{$t('M.finance_history')}}{{$t('M.finance_increase')}}
             </li>
           </ul>
-      </div>
-      <!-- 3.0 中间图表 -->
-      <FinanceBrokenLine ref="childLineCharts"/>
-      </div>
-      <!-- 4.0 存币 -->
-      <div class="finance-inner-box">
-        <div class="left">
-          <div class="nav-header">
-            <!-- 存币 -->
-            <div class="invest">{{$t('M.finance_invest')}}</div>
-            <!-- 可用余额 -->
-            <div class="balance">
-              {{$t('M.finance_useBalance')}}&nbsp;:&emsp;
-              <div>{{isLogin ? availableBalance : '--'}}
-                <span> {{selecteCoindName}}</span>
+        </div>
+        <!-- 3.0 中间图表 -->
+        <FinanceBrokenLine ref="childLineCharts"/>
+        </div>
+        <!-- 4.0 存币 -->
+        <div class="finance-inner-box">
+          <div class="left">
+            <div class="nav-header">
+              <!-- 存币 -->
+              <div class="invest">{{$t('M.finance_invest')}}</div>
+              <!-- 可用余额 -->
+              <div class="balance">
+                {{$t('M.finance_useBalance')}}&nbsp;:&emsp;
+                <div>{{isLogin ? availableBalance : '--'}}
+                  <span> {{selecteCoindName}}</span>
+                </div>
               </div>
             </div>
-          </div>
-          <div class="left-body">
-            <label for="">
-              <!-- 存币类型 -->
-              <span class="label-title">{{$t('M.finance_invest_style')}}:&nbsp;</span>
-              <el-select
-                :placeholder="$t('M.comm_please_choose')"
-                :no-data-text="$t('M.comm_no_data')"
-                v-model="selectedInvestTypeId"
-                @change="electedInvestTypeDisc"
-              >
-                <el-option
-                  v-for="(item,index) in investTypeList"
-                  :key="index"
-                  :label="language === 'zh_CN' || language === 'zh_TW'? item.typeDescription : item.typeEnglishDescription"
-                  :value="item.id"
-                >
-                <!-- 任增加存币类型国际化 -->
-                <!-- :label="language === 'zh_CN' || language === 'zh_TW'? item.typeDescription : item.typeEnglishDescription" -->
-                </el-option>
-              </el-select>
-            </label>
-            <label for="">
-              <!-- 存币数量 -->
-              <span class="label-title">{{$t('M.finance_invest')}}{{$t('M.comm_count')}}:&nbsp;</span>
-              <div class='invest-mounte'>
-                <!-- 请输入数量 -->
-                <input
-                  v-model="investMounte"
-                  :placeholder="$t('M.finance_input_sum')"
-                  @keyup="changeInvestMounte"
-                  onkeyup="if(this.value.length==1){this.value=this.value.replace(/[^1-9]/g,'')}else{this.value=this.value.replace(/\D/g,'')}"
-                  onafterpaste="if(this.value.length==1){this.value=this.value.replace(/[^1-9]/g,'')}else{this.value=this.value.replace(/\D/g,'')}"
-                >
-                <strong>{{selecteCoindName}}</strong>
-              </div>
-            </label>
-            <!-- 您存币的币种数量已超过该币种的总资产 -->
-            <div
-              class="totalTipsPositon"
-              v-if="isShow"
-            >
-              {{$t('M.finance_errorTips')}}
-            </div>
-            <label for=" ">
-              <div class='submitBtn'>
-                <el-button
-                 plain
-                 @click="getInvestEarnings"
-                >
-                <!-- 立刻存币 -->
-                {{$t('M.finance_at_once_save')}}
-                </el-button>
-              </div>
-            </label>
-            <!-- 存币详情 -->
-            <el-dialog
-              :title="$t('M.finance_save_moneydetail')"
-              :visible.sync="dialogVisible"
-              width="440px"
-              class='dialogStyle'
-              :before-close="handleClose"
-            >
-              <el-form
-                :label-position="right"
-                label-width="90px"
-                :model="formLabelAlign"
-              >
-                <!-- 存币时长 -->
-                <el-form-item
-                  :label="$t('M.finance_timeLong')"
-                  class='saveTime'
-                >
-                  {{getDate(-2)}} {{$t('M.finance_leit')}} {{getDate(formLabelAlign.day)}}
-                  <span class="blue">({{formLabelAlign.day}}{{$t('M.finance_day')}})</span>
-                  <!-- {{formLabelAlign.createTime}} 至 {{formLabelAlign.endDate}}<span class="blue">({{formLabelAlign.day}}天)</span> -->
-                </el-form-item>
-                <!-- 存币数量 -->
-                <el-form-item
-                  :label="$t('M.comm_count')"
-                >
-                  <div class='invest-mounte'>
-                    <el-input
-                      v-model="formLabelAlign.number"
-                      class="red"
-                      @input="changeAlignNumber"
-                    >
-                    </el-input>
-                    <strong>{{selecteCoindName}}</strong>
-                  </div>
-                </el-form-item>
-                <!-- 利率 -->
-                <el-form-item
-                  :label="$t('M.news_year') + $t('M.finance_interestRate') + '(%)'"
-                >
-                  <div class='invest-mounte'>
-                    <el-input
-                      v-model="interestRateValue"
-                      disabled
-                    >
-                    </el-input>
-                  </div>
-                </el-form-item>
-                <!-- 预计总收益 -->
-                <el-form-item
-                  :label="$t('M.finance_total_income')"
-                >
-                  <div class='invest-mounte'>
-                    <el-input
-                      v-model="formLabelAlign.expectedEarning"
-                      disabled
-                    >
-                    </el-input>
-                    <strong>{{selecteCoindName}}</strong>
-                  </div>
-                </el-form-item>
-                <!-- 收益发放 -->
-                <el-form-item
-                :label="$t('M.finance_earnings') + $t('M.finance_grant')"
-                >
-                  <div class='invest-mounte'>
-                    <!-- 先息后本 -->
-                    <el-input
-                      :value="$t('M.finance_xiAndben')"
-                      disabled
-                    >
-                    </el-input>
-                    <span
-                      class='dividend-tips'
-                      @click="showDividendTime = !showDividendTime"
-                    >
-                    !
-                    </span>
-                  </div>
-                </el-form-item>
-              </el-form>
-              <div class="show-dividend-time-list">
-                <transition name="el-fade-in-linear">
-                  <ul v-show='showDividendTime'>
-                    <li
-                      v-for="(item,index) in formLabelAlign.jsonTimeline"
-                      :key="index"
-                    >
-                      <span>{{item.date}}</span>
-                      <span class="blue">{{item.amount}}</span>
-                      <span class='blue'>{{selecteCoindName}}</span>
-                      <span>
-                        <!-- ({{formLabelAlign.jsonTimeline[formLabelAlign.jsonTimeline.length-1].length == 1 ? $t('M.finance_capital') + '+' + $t('M.finance_accrual') : $t('M.finance_accrual')}}) -->
-                        <!-- ({{formLabelAlign.jsonTimeline[formLabelAlign.jsonTimeline.length-1]}}) -->
-                        ({{index == formLabelAlign.jsonTimeline.length - 1 ? $t('M.finance_capital') + '+' + $t('M.finance_accrual') : $t('M.finance_accrual')}})
-                      </span>
-                    </li>
-                  </ul>
-                </transition>
-              </div>
-              <span
-                slot="footer"
-                class="dialog-footer"
-              >
-                <!-- 取消 -->
-                <el-button @click="dialogCancel">
-                  {{$t('M.comm_cancel')}}
-                </el-button>
-                <!-- 确定 -->
-                <el-button
-                  type="primary"
-                  @click="dialogSuer"
-                >
-                  {{$t('M.comm_affirm')}}
-                </el-button>
-              </span>
-            </el-dialog>
-            <button></button>
-          </div>
-        </div>
-        <!-- 我的存币 -->
-        <div class="right">
-          <div class="nav-header">
-            <!-- 我的存币 -->
-            <div class="invest">
-              {{$t('M.finance_mine')}}{{$t('M.finance_invest')}}
-            </div>
-          </div>
-          <div class="pieCharts-box">
-              <div class="right-infor">
-                <!-- 存币估值 -->
-              <div>
-                {{$t('M.finance_invest_estimatedValue')}}
-                <p class="green">
-                  <span>{{isLogin ? InvestmentValue : '--'}}</span>
-                  USDT
-                </p>
-              </div>
-              <!-- 历史收益 -->
-              <div>
-                {{$t('M.finance_history')}}{{$t('M.finance_earnings')}}
-                <p class="red2">
-                  <span>{{isLogin ? getMoneyValue : '--'}}</span>
-                  USDT
-                </p>
-              </div>
-          </div>
-          <div class="pieCharts">
-            <FinanceBrokenPie
-              :investment-value = 'InvestmentValue'
-              :get-money-value = 'getMoneyValue'
-            />
-          </div>
-        </div>
-        </div>
-      </div>
-      <!-- 5.0 存币记录和收益记录 -->
-      <div class="invest-list">
-        <div class="nvest-list-body">
-          <div class='showAll'>
-            <router-link
-              class="blue"
-              :to="{path: isLogin ? '/FinanceInvestmentRecord' : '/login', query:{coinId:selectedCoinId,coinName:selecteCoindName}}"
-            >
-              <!--查看全部-->
-              {{ $t('M.investment_look_all') }}
-            </router-link>
-          </div>
-          <el-tabs
-            v-model="activeName"
-            @tab-click="handleClick"
-          >
-            <!-- 5.1 存币记录 -->
-            <el-tab-pane
-              :label="$t('M.finance_save_coin_record')"
-              name="1"
-            >
-             <!-- @您还没有登陆,请登录或者注册之后查看！ -->
-              <div
-                v-if = "!isLogin"
-                class = 'financeTsipsBox'
-              >
-                {{$t('M.finance_loginTips')}}
-                <router-link to='/login'>
-                  {{$t('M.comm_login')}}
-                </router-link>
-                {{$t('M.finance_or')}}
-                <router-link to = '/register'>
-                  {{$t('M.comm_register_time')}}
-                </router-link>
-                {{$t('M.finance_loginTipsTwo')}}
-              </div>
-              <!-- 暂无数据 -->
-              <el-table
-                :data="investList"
-                style="width: 100%;"
-                :empty-text="$t('M.comm_no_data')"
-              >
-                <!-- 存币币种 -->
-                <el-table-column
-                  prop="coinShortName"
-                  :label="$t('M.finance_invest_coin1')"
-                >
-                </el-table-column>
+            <div class="left-body">
+              <label for="">
                 <!-- 存币类型 -->
-                <!-- 任增加存币类型国际化 -->
-                <!-- :prop="language === 'zh_CN' || language === 'zh_TW'? typeDescription : typeEnglishDescription" -->
-                <el-table-column
-                  :label="$t('M.finance_invest_style')"
+                <span class="label-title">{{$t('M.finance_invest_style')}}:&nbsp;</span>
+                <el-select
+                  :placeholder="$t('M.comm_please_choose')"
+                  :no-data-text="$t('M.comm_no_data')"
+                  v-model="selectedInvestTypeId"
+                  @change="electedInvestTypeDisc"
                 >
-                  <template slot-scope="s">
-                    <div v-if="language === 'zh_CN' || language === 'zh_TW'">{{s.row.typeDescription}}</div>
-                    <div v-else>{{s.row.typeEnglishDescription}}</div>
-                  </template>
-                </el-table-column>
-                <!-- 数量 -->
-                <el-table-column
-                  prop="number"
-                  :label="$t('M.comm_count')"
-                >
-                </el-table-column>
-                <!-- 预计收益 -->
-                <el-table-column
-                  prop="expectedEarning"
-                  :label="$t('M.finance_predict_earnings')"
-                >
-                </el-table-column>
-                <!-- 预计发放时间 -->
-                <el-table-column
-                  prop="expectedTime"
-                  width="135"
-                  :label="$t('M.finance_predict_send_time')"
-                >
-                </el-table-column>
-                <!-- 已发放收益-->
-                <el-table-column
-                  prop="profit"
-                  :label="$t('M.finance_paid_income')"
-                >
-                </el-table-column>
-                <!-- 状态 prop="state" width="80"-->
-                <el-table-column
-                  width="144"
-                  :label="$t('M.comm_state')"
-                >
-                  <template slot-scope="s">
-                    <!-- <div>{{s.row.state}}</div> -->
-                    <div v-show="s.row.state === 'FREEZE'">
-                      <span v-if="language === 'zh_CN' || language === 'zh_TW'">冻结</span>
-                      <span v-else>Freeze</span>
-                    </div>
-                    <div v-show="s.row.state === 'CURRENT'">
-                      <span v-if="language === 'zh_CN' || language === 'zh_TW'">活期</span>
-                      <span v-else>Current</span>
-                    </div>
-                    <div v-show="s.row.state === 'REGULARMONTHLYRETURN'">
-                      <span v-if="language === 'zh_CN' || language === 'zh_TW'">定期月返</span>
-                      <span v-else style="word-wrap:normal;">Regular monthly return</span>
-                    </div>
-                    <div v-show="s.row.state === 'PERIODICAL'">
-                      <span v-if="language === 'zh_CN' || language === 'zh_TW'">定期</span>
-                      <span v-else>Regular</span>
-                    </div>
-                    <div v-show="s.row.state === 'IS_DISTRIBUTE'">
-                      <span v-if="language === 'zh_CN' || language === 'zh_TW'">发放收益</span>
-                      <span v-else>Distribute</span>
-                    </div>
-                    <div v-show="s.row.state === 'UNDISTRIBUTE'">
-                      <span v-if="language === 'zh_CN' || language === 'zh_TW'">未发放收益</span>
-                      <span v-else>Undistribute</span>
-                    </div>
-                    <div v-show="s.row.state === 'FINISHED'">
-                      <span v-if="language === 'zh_CN' || language === 'zh_TW'">已完成</span>
-                      <span v-else>Finished</span>
-                    </div>
-                    <div v-show="s.row.state === 'CANCEL'">
-                      <span v-if="language === 'zh_CN' || language === 'zh_TW'">已取消</span>
-                      <span v-else>Cancel</span>
-                    </div>
-                    <div v-show="s.row.state === 'AUTHENTICATION'">
-                      <span v-if="language === 'zh_CN' || language === 'zh_TW'">已认证</span>
-                      <span v-else>Authentication</span>
-                    </div>
-                    <div v-show="s.row.state === 'UNAUTHENTICATION'">
-                      <span v-if="language === 'zh_CN' || language === 'zh_TW'">未认证</span>
-                      <span v-else>Unauthentication</span>
-                    </div>
-                  </template>
-                </el-table-column>
-                <!-- 创建时间 -->
-                <el-table-column
-                  prop="createTime"
-                  width="135"
-                  :label="$t('M.finance_createTime')"
-                >
-                </el-table-column>
-                <!-- 操作 -->
-                <el-table-column
-                  prop="operations"
-                  width="80"
-                  :label="$t('M.otc_index_operate')"
-                >
-                  <!-- 活期 -->
-                  <template slot-scope = "s">
-                    <div
-                      v-if="s.row.state == 'CURRENT'"
-                      class="blue cancelBtn"
-                      @click="cancleInvest(s.row.id)"
-                    >
-                      <!-- 取消 -->
-                      {{$t('M.comm_cancel')}}
-                    </div>
-                  </template>
-                </el-table-column>
-              </el-table>
-            </el-tab-pane>
-            <!-- 5.2 收益记录 -->
-            <el-tab-pane
-              :label="$t('M.finance_get_money_record')"
-              name="2"
-            >
-             <!-- @您还没有登陆,请登录或者注册之后查看！ -->
+                  <el-option
+                    v-for="(item,index) in investTypeList"
+                    :key="index"
+                    :label="language === 'zh_CN' || language === 'zh_TW'? item.typeDescription : item.typeEnglishDescription"
+                    :value="item.id"
+                  >
+                  <!-- 任增加存币类型国际化 -->
+                  <!-- :label="language === 'zh_CN' || language === 'zh_TW'? item.typeDescription : item.typeEnglishDescription" -->
+                  </el-option>
+                </el-select>
+              </label>
+              <label for="">
+                <!-- 存币数量 -->
+                <span class="label-title">{{$t('M.finance_invest')}}{{$t('M.comm_count')}}:&nbsp;</span>
+                <div class='invest-mounte'>
+                  <!-- 请输入数量 -->
+                  <input
+                    type="text"
+                    ref="investMounteRef"
+                    :placeholder="$t('M.finance_input_sum')"
+                    @keyup="changeInvestMounte"
+                    @input="checkInput('investMounteRef')"
+                  >
+                  <strong>{{selecteCoindName}}</strong>
+                </div>
+              </label>
+              <!-- 您存币的币种数量已超过该币种的总资产 -->
               <div
-                v-if = "!isLogin"
-                class = 'financeTsipsBox'
+                class="totalTipsPositon"
+                v-if="isShow"
               >
-                {{$t('M.finance_loginTips')}}
-                <router-link to='/login'>
-                  {{$t('M.comm_login')}}
-                </router-link>
-                {{$t('M.finance_or')}}
-                <router-link to = '/register'>
-                  {{$t('M.comm_register_time')}}
-                </router-link>
-                {{$t('M.finance_loginTipsTwo')}}
+                {{$t('M.finance_errorTips')}}
               </div>
-              <!-- 暂无数据 -->
-              <el-table
-                :data="userInterestRecord"
-                style="width: 100%;"
-                :empty-text="$t('M.comm_no_data')"
+              <label for=" ">
+                <div class='submitBtn'>
+                  <el-button
+                  plain
+                  @click="getInvestEarnings"
+                  >
+                  <!-- 立刻存币 -->
+                  {{$t('M.finance_at_once_save')}}
+                  </el-button>
+                </div>
+              </label>
+              <!-- 存币详情 -->
+              <el-dialog
+                :title="$t('M.finance_save_moneydetail')"
+                :visible.sync="dialogVisible"
+                width="440px"
+                class='dialogStyle'
+                :before-close="handleClose"
               >
-                <!-- 存币币种 -->
-                <el-table-column
-                  prop="coinShortName"
-                  :label="$t('M.finance_invest_coin1')"
-                  width="150">
-                </el-table-column>
-                <!-- 存币类型 prop="description" :prop="language === 'zh_CN' || language === 'zh_TW'? typeDescription : typeEnglishDescription"-->
-                <el-table-column
-                  :label="$t('M.finance_invest') + $t('M.otc_cancelOrder_type')"
+                <el-form
+                  :label-position="right"
+                  label-width="90px"
+                  :model="formLabelAlign"
                 >
-                  <template slot-scope="s">
-                    <div v-if="language === 'zh_CN' || language === 'zh_TW'">{{s.row.typeDescription}}</div>
-                    <div v-else>{{s.row.typeEnglishDescription}}</div>
-                  </template>
-                </el-table-column>
-                <!-- 数量 -->
-                <el-table-column
-                  prop="number"
-                  width="100"
-                  :label="$t('M.comm_count')"
+                  <!-- 存币时长 -->
+                  <el-form-item
+                    :label="$t('M.finance_timeLong')"
+                    class='saveTime'
+                  >
+                    {{getDate(-2)}} {{$t('M.finance_leit')}} {{getDate(formLabelAlign.day)}}
+                    <span class="blue">({{formLabelAlign.day}}{{$t('M.finance_day')}})</span>
+                    <!-- {{formLabelAlign.createTime}} 至 {{formLabelAlign.endDate}}<span class="blue">({{formLabelAlign.day}}天)</span> -->
+                  </el-form-item>
+                  <!-- 存币数量 -->
+                  <el-form-item
+                    :label="$t('M.comm_count')"
+                  >
+                    <div class='invest-mounte'>
+                      <input
+                        class="red text-indent"
+                        type='text'
+                        ref='changeAlignNum'
+                        @input="changeAlignNumber('changeAlignNum', 'investMounteRef', $event)"
+                      >
+                      <strong>{{selecteCoindName}}</strong>
+                    </div>
+                  </el-form-item>
+                  <!-- 利率 -->
+                  <el-form-item
+                    :label="$t('M.news_year') + $t('M.finance_interestRate') + '(%)'"
+                  >
+                    <div class='invest-mounte'>
+                      <el-input
+                        v-model="interestRateValue"
+                        disabled
+                      >
+                      </el-input>
+                    </div>
+                  </el-form-item>
+                  <!-- 预计总收益 -->
+                  <el-form-item
+                    :label="$t('M.finance_total_income')"
+                  >
+                    <div class='invest-mounte'>
+                      <el-input
+                        v-model="formLabelAlign.expectedEarning"
+                        disabled
+                      >
+                      </el-input>
+                      <strong>{{selecteCoindName}}</strong>
+                    </div>
+                  </el-form-item>
+                  <!-- 收益发放 -->
+                  <el-form-item
+                  :label="$t('M.finance_earnings') + $t('M.finance_grant')"
+                  >
+                    <div class='invest-mounte'>
+                      <!-- 先息后本 -->
+                      <el-input
+                        :value="$t('M.finance_xiAndben')"
+                        disabled
+                      >
+                      </el-input>
+                      <span
+                        class='dividend-tips'
+                        @click="showDividendTime = !showDividendTime"
+                      >
+                      !
+                      </span>
+                    </div>
+                  </el-form-item>
+                </el-form>
+                <div class="show-dividend-time-list">
+                  <transition name="el-fade-in-linear">
+                    <ul v-show='showDividendTime'>
+                      <li
+                        v-for="(item,index) in formLabelAlign.jsonTimeline"
+                        :key="index"
+                      >
+                        <span>{{item.date}}</span>
+                        <span class="blue">{{item.amount}}</span>
+                        <span class='blue'>{{selecteCoindName}}</span>
+                        <span>
+                          ({{index == formLabelAlign.jsonTimeline.length - 1 ? $t('M.finance_capital') + '+' + $t('M.finance_accrual') : $t('M.finance_accrual')}})
+                        </span>
+                      </li>
+                    </ul>
+                  </transition>
+                </div>
+                <span
+                  slot="footer"
+                  class="dialog-footer"
                 >
-                </el-table-column>
-                <!-- 预计收益 -->
-                <el-table-column
-                  prop="expectedEarning"
-                  :label="$t('M.finance_predict') + $t('M.finance_earnings')"
-                >
-                </el-table-column>
-                <!-- 发放收益 -->
-                <el-table-column
-                  prop="interest"
-                  :label="$t('M.finance_grant') + $t('M.finance_earnings')"
-                >
-                </el-table-column>
-                <!-- 发放时间 -->
-                <el-table-column
-                  prop="createTime"
-                  width="150"
-                  :label="$t('M.finance_releaseTime')"
-                >
-                </el-table-column>
-              </el-table>
-            </el-tab-pane>
-          </el-tabs>
+                  <!-- 取消 -->
+                  <el-button @click="dialogCancel">
+                    {{$t('M.comm_cancel')}}
+                  </el-button>
+                  <!-- 确定 -->
+                  <el-button
+                    type="primary"
+                    :disabled="stopClick"
+                    @click="dialogSuer"
+                  >
+                    {{$t('M.comm_affirm')}}
+                  </el-button>
+                </span>
+              </el-dialog>
+              <button></button>
+            </div>
+          </div>
+          <!-- 我的存币 -->
+          <div class="right">
+            <div class="nav-header">
+              <!-- 我的存币 -->
+              <div class="invest">
+                {{$t('M.finance_mine')}}{{$t('M.finance_invest')}}
+              </div>
+            </div>
+            <div class="pieCharts-box">
+                <div class="right-infor">
+                  <!-- 存币估值 -->
+                <div>
+                  {{$t('M.finance_invest_estimatedValue')}}
+                  <p class="green">
+                    <span>{{isLogin ? InvestmentValue : '--'}}</span>
+                    USDT
+                  </p>
+                </div>
+                <!-- 历史收益 -->
+                <div>
+                  {{$t('M.finance_history')}}{{$t('M.finance_earnings')}}
+                  <p class="red2">
+                    <span>{{isLogin ? getMoneyValue : '--'}}</span>
+                    USDT
+                  </p>
+                </div>
+            </div>
+            <div class="pieCharts">
+              <FinanceBrokenPie
+                :investment-value = 'InvestmentValue'
+                :get-money-value = 'getMoneyValue'
+              />
+            </div>
+          </div>
+          </div>
         </div>
-      </div>
+        <!-- 5.0 存币记录和收益记录 -->
+        <div class="invest-list">
+          <div class="nvest-list-body">
+            <div class='showAll'>
+              <router-link
+                class="blue"
+                :to="{path: isLogin ? '/FinanceInvestmentRecord' : '/login', query:{coinId:selectedCoinId,coinName:selecteCoindName}}"
+              >
+                <!--查看全部-->
+                {{ $t('M.investment_look_all') }}
+              </router-link>
+            </div>
+            <el-tabs
+              v-model="activeName"
+              @tab-click="handleClick"
+            >
+              <!-- 5.1 存币记录 -->
+              <el-tab-pane
+                :label="$t('M.finance_save_coin_record')"
+                name="1"
+              >
+              <!-- @您还没有登陆,请登录或者注册之后查看！ -->
+                <div
+                  v-if = "!isLogin"
+                  class = 'finance-tips-box'
+                >
+                  {{$t('M.finance_loginTips')}}
+                  <router-link to='/login'>
+                    {{$t('M.comm_login')}}
+                  </router-link>
+                  {{$t('M.finance_or')}}
+                  <router-link to = '/register'>
+                    {{$t('M.comm_register_time')}}
+                  </router-link>
+                  {{$t('M.finance_loginTipsTwo')}}
+                </div>
+                <!-- 暂无数据 -->
+                <el-table
+                  :data="investList"
+                  style="width: 100%;"
+                  :empty-text="$t('M.comm_no_data')"
+                >
+                  <!-- 存币币种 -->
+                  <el-table-column
+                    prop="coinShortName"
+                    :label="$t('M.finance_invest_coin1')"
+                  >
+                  </el-table-column>
+                  <!-- 存币类型 -->
+                  <!-- 任增加存币类型国际化 -->
+                  <!-- :prop="language === 'zh_CN' || language === 'zh_TW'? typeDescription : typeEnglishDescription" -->
+                  <el-table-column
+                    :label="$t('M.finance_invest_style')"
+                  >
+                    <template slot-scope="s">
+                      <div v-if="language === 'zh_CN' || language === 'zh_TW'">{{s.row.typeDescription}}</div>
+                      <div v-else>{{s.row.typeEnglishDescription}}</div>
+                    </template>
+                  </el-table-column>
+                  <!-- 数量 -->
+                  <el-table-column
+                    prop="number"
+                    :label="$t('M.comm_count')"
+                  >
+                  </el-table-column>
+                  <!-- 预计收益 -->
+                  <el-table-column
+                    prop="expectedEarning"
+                    :label="$t('M.finance_predict_earnings')"
+                  >
+                  </el-table-column>
+                  <!-- 预计发放时间 -->
+                  <el-table-column
+                    prop="expectedTime"
+                    width="135"
+                    :label="$t('M.finance_predict_send_time')"
+                  >
+                  </el-table-column>
+                  <!-- 已发放收益-->
+                  <el-table-column
+                    prop="profit"
+                    :label="$t('M.finance_paid_income')"
+                  >
+                  </el-table-column>
+                  <!-- 状态 prop="state" width="80"-->
+                  <el-table-column
+                    width="144"
+                    :label="$t('M.comm_state')"
+                  >
+                    <template slot-scope="s">
+                      <!-- <div>{{s.row.state}}</div> -->
+                      <div v-show="s.row.state === 'FREEZE'">
+                        <span v-if="language === 'zh_CN' || language === 'zh_TW'">冻结</span>
+                        <span v-else>Freeze</span>
+                      </div>
+                      <div v-show="s.row.state === 'CURRENT'">
+                        <span v-if="language === 'zh_CN' || language === 'zh_TW'">活期</span>
+                        <span v-else>Current</span>
+                      </div>
+                      <div v-show="s.row.state === 'REGULARMONTHLYRETURN'">
+                        <span v-if="language === 'zh_CN' || language === 'zh_TW'">定期月返</span>
+                        <span v-else style="word-wrap:normal;">Regular monthly return</span>
+                      </div>
+                      <div v-show="s.row.state === 'PERIODICAL'">
+                        <span v-if="language === 'zh_CN' || language === 'zh_TW'">定期</span>
+                        <span v-else>Regular</span>
+                      </div>
+                      <div v-show="s.row.state === 'IS_DISTRIBUTE'">
+                        <span v-if="language === 'zh_CN' || language === 'zh_TW'">发放收益</span>
+                        <span v-else>Distribute</span>
+                      </div>
+                      <div v-show="s.row.state === 'UNDISTRIBUTE'">
+                        <span v-if="language === 'zh_CN' || language === 'zh_TW'">未发放收益</span>
+                        <span v-else>Undistribute</span>
+                      </div>
+                      <div v-show="s.row.state === 'FINISHED'">
+                        <span v-if="language === 'zh_CN' || language === 'zh_TW'">已完成</span>
+                        <span v-else>Finished</span>
+                      </div>
+                      <div v-show="s.row.state === 'CANCEL'">
+                        <span v-if="language === 'zh_CN' || language === 'zh_TW'">已取消</span>
+                        <span v-else>Cancel</span>
+                      </div>
+                      <div v-show="s.row.state === 'AUTHENTICATION'">
+                        <span v-if="language === 'zh_CN' || language === 'zh_TW'">已认证</span>
+                        <span v-else>Authentication</span>
+                      </div>
+                      <div v-show="s.row.state === 'UNAUTHENTICATION'">
+                        <span v-if="language === 'zh_CN' || language === 'zh_TW'">未认证</span>
+                        <span v-else>Unauthentication</span>
+                      </div>
+                    </template>
+                  </el-table-column>
+                  <!-- 创建时间 -->
+                  <el-table-column
+                    prop="createTime"
+                    width="135"
+                    :label="$t('M.finance_createTime')"
+                  >
+                  </el-table-column>
+                  <!-- 操作 -->
+                  <el-table-column
+                    prop="operations"
+                    width="80"
+                    :label="$t('M.otc_index_operate')"
+                  >
+                    <!-- 活期 -->
+                    <template slot-scope = "s">
+                      <div
+                        v-if="s.row.state == 'CURRENT'"
+                        class="blue cancelBtn"
+                        @click="cancleInvest(s.row.id)"
+                      >
+                        <!-- 取消 -->
+                        {{$t('M.comm_cancel')}}
+                      </div>
+                    </template>
+                  </el-table-column>
+                </el-table>
+              </el-tab-pane>
+              <!-- 5.2 收益记录 -->
+              <el-tab-pane
+                :label="$t('M.finance_get_money_record')"
+                name="2"
+              >
+              <!-- @您还没有登陆,请登录或者注册之后查看！ -->
+                <div
+                  v-if = "!isLogin"
+                  class = 'finance-tips-box'
+                >
+                  {{$t('M.finance_loginTips')}}
+                  <router-link to='/login'>
+                    {{$t('M.comm_login')}}
+                  </router-link>
+                  {{$t('M.finance_or')}}
+                  <router-link to = '/register'>
+                    {{$t('M.comm_register_time')}}
+                  </router-link>
+                  {{$t('M.finance_loginTipsTwo')}}
+                </div>
+                <!-- 暂无数据 -->
+                <el-table
+                  :data="userInterestRecord"
+                  style="width: 100%;"
+                  :empty-text="$t('M.comm_no_data')"
+                >
+                  <!-- 存币币种 -->
+                  <el-table-column
+                    prop="coinShortName"
+                    :label="$t('M.finance_invest_coin1')"
+                    width="150">
+                  </el-table-column>
+                  <!-- 存币类型 prop="description" :prop="language === 'zh_CN' || language === 'zh_TW'? typeDescription : typeEnglishDescription"-->
+                  <el-table-column
+                    :label="$t('M.finance_invest') + $t('M.otc_cancelOrder_type')"
+                  >
+                    <template slot-scope="s">
+                      <div v-if="language === 'zh_CN' || language === 'zh_TW'">{{s.row.typeDescription}}</div>
+                      <div v-else>{{s.row.typeEnglishDescription}}</div>
+                    </template>
+                  </el-table-column>
+                  <!-- 数量 -->
+                  <el-table-column
+                    prop="number"
+                    width="100"
+                    :label="$t('M.comm_count')"
+                  >
+                  </el-table-column>
+                  <!-- 预计收益 -->
+                  <el-table-column
+                    prop="expectedEarning"
+                    :label="$t('M.finance_predict') + $t('M.finance_earnings')"
+                  >
+                  </el-table-column>
+                  <!-- 发放收益 -->
+                  <el-table-column
+                    prop="interest"
+                    :label="$t('M.finance_grant') + $t('M.finance_earnings')"
+                  >
+                  </el-table-column>
+                  <!-- 发放时间 -->
+                  <el-table-column
+                    prop="createTime"
+                    width="150"
+                    :label="$t('M.finance_releaseTime')"
+                  >
+                  </el-table-column>
+                </el-table>
+              </el-tab-pane>
+            </el-tabs>
+          </div>
+        </div>
       </div>
     </div>
   </div>
@@ -634,16 +630,11 @@ export default {
       ],
       // n天后的时间
       brforeNtime: '',
-      interestRateValue: '' // 年利率
+      interestRateValue: '', // 年利率
+      stopClick: false
     }
   },
   created () {
-    // 对element ui样式重置
-    require('../../../static/css/list/InvestmentFinance/FinanceCenter.css')
-    // 白样式
-    require('../../../static/css/theme/day/InvestmentFinance/FinanceCenterDay.css')
-    // 黑样式
-    require('../../../static/css/theme/night/InvestmentFinance/FinanceCenterNight.css')
     // 页面创建完成请求币种接口
     this.getFinancialManagementList()
   },
@@ -685,6 +676,23 @@ export default {
         // this.$router.push({path: '/login'})
       }
     },
+    // 限制币存币数量不能为0
+    checkInput (ref) {
+      let value = this.$refs[ref].value
+      let arr = value.split('')
+      let str = ''
+      _.forEach(arr, (item, index) => {
+        if (index == 0 && item == '0') {
+          str = ''
+        } else {
+          if (item - 0 || item == '0') {
+            str += item
+          }
+        }
+      })
+      this.$refs[ref].value = str
+      this.investMounte = str
+    },
     // 输入金额改变时检测用户输入的币种总金额
     async getUserCoindTotal () {
       const data = await getPushTotalByCoinId({
@@ -704,11 +712,15 @@ export default {
     getInvestEarnings () {
       // console.log(111.00)
       if (this.isLogin) {
-        if (this.selectedInvestTypeId && this.investMounte && this.isShow === false) {
-          // 显示理财详情模态框前请求数据渲染模态框
-          this.clickGetInvestEarnings()
-          // 显示模态框
-          this.dialogVisible = true
+        if (this.selectedInvestTypeId && this.investMounte) {
+          if (this.isShow === false) {
+            // 显示理财详情模态框前请求数据渲染模态框
+            this.clickGetInvestEarnings()
+            // 显示模态框
+            this.dialogVisible = true
+          } else {
+            return false
+          }
         } else {
           this.$message({
             // 存币类型或存币数量不能为空
@@ -727,14 +739,32 @@ export default {
     },
     // 点击确定按钮模态框关闭
     dialogSuer () {
+      this.stopClick = true
       this.dialogVisible = false
       // 执行存币按钮
       this.clickImmediateInvestment()
     },
     // 模态框数字发生变化时需要执行的方法
-    changeAlignNumber (e) {
-      this.investMounte = e
-      this.clickGetInvestEarnings()
+    changeAlignNumber (ref1, ref2, e) {
+      let arr = e.target.value.split('')
+      let str = ''
+      _.forEach(arr, (item, index) => {
+        if (index == 0 && item == '0') {
+          str = ''
+        } else {
+          if (item - 0 || item == '0') {
+            str += item
+          }
+        }
+      })
+      this.investMounte = str
+      // 将本身赋值
+      this.$refs[ref1].value = str
+      // 主理财页面赋值
+      this.$refs[ref2].value = str
+      if (str) {
+        this.clickGetInvestEarnings()
+      }
     },
     // 理财记录模态框显示
     async clickGetInvestEarnings () {
@@ -747,8 +777,9 @@ export default {
       if (!(returnAjaxMsg(data, this, 0))) {
         return false
       } else {
-        // this.formLabelAlign = data.data.data
         this.formLabelAlign = getNestedData(data, 'data.data')
+        this.$refs.changeAlignNum.value = this.formLabelAlign.number
+        console.log(this.$refs.changeAlignNum.value)
         this.interestRateValue = (this.formLabelAlign.interestRate - 0) * 100
       }
     },
@@ -765,6 +796,8 @@ export default {
       } else {
         // 重新调一次币种接口刷新列表
         this.getFinancialManagementList()
+        // 请求回来时将按钮解除禁用
+        this.stopClick = false
         // 存币成功
         this.$message({
           message: this.$t('M.finance_invest') + this.$t('M.comm_success'),
@@ -853,6 +886,7 @@ export default {
         this.FINANCE_LINE_STATUS(1)
         // 将存币数量输入框清空
         this.investMounte = ''
+        this.$refs.investMounteRef.value = ''
       }
     },
     // 用户取消存币接口
@@ -945,9 +979,45 @@ export default {
   }
 }
 </script>
-<style scoped lang="scss">
-  // 公共scss样式
+<style scoped lang="scss" type="text/scss">
+  /* 公共scss样式 */
   @import "../../../static/css/scss/InvestmentFinance/FinanceCenter";
+
+  @media screen and (min-width: 768px) and (max-width: 1336px) {
+    .banner-title {
+      position: absolute;
+      top: 50%;
+      right: 25%;
+      width: 400px;
+      font-size: 40px;
+      text-align: center;
+      color: #fff;
+    }
+  }
+
+  @media screen and (min-width: 1337px) and (max-width: 1920px) {
+    .banner-title {
+      position: absolute;
+      top: 50%;
+      right: 29%;
+      width: 400px;
+      font-size: 40px;
+      text-align: center;
+      color: #fff;
+    }
+  }
+
+  @media screen and (min-width: 1921px) and (max-width: 2560px) {
+    .banner-title {
+      position: absolute;
+      top: 50%;
+      right: 32%;
+      width: 400px;
+      font-size: 40px;
+      text-align: center;
+      color: #fff;
+    }
+  }
 
   .finance-box {
     width: 100%;
@@ -955,23 +1025,12 @@ export default {
     margin-top: 66px;
 
     > .banner-box {
-      // background: #272b41;
       position: relative;
-      height: 459px;
+      width: 100%;
+      margin: 0 auto;
 
-      > img {
+      img {
         width: 100%;
-        height: 100%;
-      }
-
-      > .banner-title {
-        position: absolute;
-        top: 50%;
-        left: 50%;
-        width: 400px;
-        font-size: 40px;
-        text-align: center;
-        color: #fff;
       }
     }
 
@@ -1139,7 +1198,7 @@ export default {
               right: 0;
             }
 
-            .financeTsipsBox {
+            .finance-tips-box {
               position: absolute;
               z-index: 10;
               top: 55px;
@@ -1158,6 +1217,221 @@ export default {
       }
     }
 
+    /deep/ {
+      .finance-form-header {
+        .el-input__inner {
+          width: 168px;
+          height: 48px;
+          border: 1px solid #338ff5;
+          border-radius: 2px;
+          font-size: 20px;
+          color: #338ff5;
+          background: linear-gradient(180deg, rgba(51, 143, 245, .1) 0%);
+          box-shadow: 0 2px 2px rgba(13, 17, 25, 1);
+        }
+      }
+
+      .el-tabs__active-bar {
+        background: none !important;
+      }
+
+      .el-tabs__nav {
+        width: 300px;
+        padding: 9px 0 9px 26px;
+        font-weight: bold;
+        color: rgba(97, 116, 153, 1);
+        background: linear-gradient(90deg, rgba(34, 80, 135, 1), transparent);
+      }
+
+      .el-tabs__nav-wrap {
+        &::after {
+          height: 0;
+          content: "";
+        }
+      }
+
+      .el-tabs__item {
+        font-size: 22px;
+        color: #617499;
+
+        &.is-active {
+          color: #fff;
+        }
+
+        &:hover {
+          color: #fff;
+        }
+      }
+
+      .el-tabs__header {
+        margin-bottom: 0;
+      }
+
+      .finance-inner-box {
+        .left {
+          .left-body {
+            .el-input__inner {
+              width: 407px;
+              height: 48px;
+              border: 1px solid #464e5f;
+              border-radius: 2px;
+              background: #1e2636;
+            }
+          }
+        }
+
+        .dialogStyle {
+          .el-input__inner {
+            width: 250px !important;
+            height: 38px !important;
+            border: none !important;
+            line-height: 38px;
+            background: transparent !important;
+          }
+
+          .el-input {
+            width: 240px;
+          }
+
+          .invest-mounte {
+            display: flex;
+            justify-content: space-between;
+            width: 280px;
+            height: 38px;
+            padding-right: 5px;
+            border-radius: 5px;
+            background: #20273d;
+
+            &:focus {
+              border: 1px solid #ccc;
+            }
+          }
+
+          .el-button {
+            width: 110px;
+            height: 40px;
+            border: 1px solid #338ff5;
+            border-radius: 4px;
+            color: #fff;
+            background: none;
+          }
+
+          .el-dialog__footer {
+            text-align: center;
+          }
+
+          .el-button--primary {
+            margin-left: 40px;
+            border: none;
+            background: linear-gradient(81deg, rgba(43, 57, 110, 1) 0%, rgba(42, 80, 130, 1) 100%);
+          }
+        }
+
+        .el-dialog__wrapper {
+          width: 100%;
+          height: 100%;
+          background-color: rgba(0, 0, 0, .5);
+        }
+      }
+
+      .nvest-list-body {
+        .el-table {
+          font-size: 12px;
+          color: #a9bed4;
+          background: #1c1f32;
+          box-shadow: 0 4px 6px rgba(25, 30, 40, .5);
+
+          th {
+            border-top: 1px solid #a9bed4;
+            color: #617499;
+            background: #1c1f32;
+            box-shadow: 0 4px 6px rgba(25, 30, 40, .5);
+
+            &.is-leaf {
+              &:first-of-type {
+                border-bottom-left-radius: 4px;
+              }
+
+              &:last-of-type {
+                border-bottom-right-radius: 4px;
+              }
+            }
+          }
+
+          tr {
+            background: transparent;
+          }
+
+          td {
+            background: transparent;
+          }
+        }
+
+        .el-table--enable-row-hover {
+          .el-table__body {
+            tr {
+              &:hover {
+                > td {
+                  background: #1e2636;
+                }
+              }
+            }
+          }
+        }
+      }
+
+      .el-table__body-wrapper {
+        min-height: 480px;
+      }
+
+      .el-table__header {
+        margin-bottom: 10px;
+      }
+
+      .el-button {
+        border: none;
+      }
+
+      .el-table__empty-block {
+        height: 480px;
+        line-height: 480px;
+      }
+
+      .el-dialog {
+        background: #28334a;
+      }
+
+      .el-dialog__header {
+        background: #20293c;
+        box-shadow: 0 1px 2px 0 rgba(29, 33, 49, 1);
+      }
+
+      .el-dialog__title {
+        color: #fff;
+      }
+
+      .el-dialog__headerbtn {
+        .el-dialog__close {
+          color: #fff;
+        }
+      }
+
+      .dialogStyle {
+        .el-dialog__body {
+          height: 380px;
+          overflow: auto;
+        }
+      }
+
+      .el-dialog__body {
+        color: #8c99b4 !important;
+      }
+
+      .el-form-item__label {
+        color: #8c99b4 !important;
+      }
+    }
+
     &.night {
       > .banner-box {
         background: #272b41;
@@ -1166,11 +1440,266 @@ export default {
       > .inner-box {
         background-color: $nightInnerBoxBg;
       }
+
+      /deep/ {
+        .nvest-list-body {
+          .el-table {
+            th {
+              &.is-leaf {
+                border-bottom: 1px solid #1d2531;
+
+                &:first-of-type {
+                  border-bottom-left-radius: 4px;
+                }
+
+                &:nth-last-of-type(2) {
+                  border-bottom-right-radius: 4px;
+                }
+              }
+            }
+
+            td {
+              border-bottom: 1px solid #1d2531;
+            }
+          }
+        }
+
+        .el-table__header {
+          box-shadow: 4px 0 4px 4px rgba(25, 30, 40, 1);
+        }
+
+        > .inner-box {
+          > .finance-inner {
+            > .invest-list {
+              > .nvest-list-body {
+                .finance-tips-box {
+                  color: #617499;
+                  background-color: #121824;
+                }
+              }
+            }
+          }
+        }
+      }
     }
 
     &.day {
       > .banner-box {
         background: #fff;
+      }
+
+      /deep/ {
+        .inner-box {
+          .finance-inner {
+            .container {
+              .finance-form-header {
+                .el-input__inner {
+                  background: #fff !important;
+                  box-shadow: inset 1px 0 3px rgba(51, 143, 245, 1);
+                }
+
+                .newnestPrice {
+                  display: flex;
+                  flex: 1;
+                  height: 48px;
+
+                  .newnestPriceColor {
+                    color: #000;
+                  }
+
+                  li {
+                    border-right: 1px solid rgba(30, 38, 54, .3);
+                    color: #666;
+
+                    p {
+                      font-size: 22px;
+
+                      &:last-child {
+                        border: none;
+                      }
+
+                      span {
+                        font-size: 12px;
+                      }
+                    }
+                  }
+                }
+              }
+            }
+
+            .finance-inner-box {
+              .left {
+                color: #666;
+
+                .nav-header {
+                  .balance {
+                    color: #666;
+
+                    div {
+                      color: #338ff5;
+                    }
+                  }
+                }
+
+                .left-body {
+                  .invest-mounte {
+                    input {
+                      width: 380px;
+                      vertical-align: center;
+                      color: #666;
+                    }
+                  }
+
+                  > label {
+                    > .invest-mounte {
+                      > input {
+                        color: #666;
+                      }
+                    }
+                  }
+                }
+              }
+
+              .right {
+                .pieCharts {
+                  width: 282px;
+                  padding-top: 50px;
+                }
+              }
+            }
+
+            .invest-list {
+              > .nvest-list-body {
+                .finance-tips-box {
+                  background-color: #fff;
+                }
+              }
+            }
+          }
+        }
+
+        .finance-inner-box {
+          .left {
+            .left-body {
+              .el-input__inner {
+                border: 1px solid #338ff5;
+                background: #eaf4fe;
+              }
+            }
+          }
+
+          .dialogStyle {
+            .invest-mounte {
+              border: 1px solid rgba(236, 241, 248, 1);
+              background: #fff;
+            }
+
+            .el-button {
+              color: #338ff5;
+            }
+
+            .el-button--primary {
+              color: #fff;
+            }
+
+            .saveTime {
+              color: #333;
+            }
+          }
+        }
+
+        .el-table__header {
+          margin-top: 2px;
+          box-shadow: 0 0 4px rgba(51, 143, 245, .5);
+        }
+
+        .nvest-list-body {
+          .el-table {
+            color: #666;
+            background: transparent;
+            box-shadow: 0 0 0 rgba(25, 30, 40, .5);
+
+            td {
+              border-top: 1px solid #fff;
+              border-bottom: 1px solid rgba(169, 190, 212, .2);
+              box-shadow: none;
+            }
+
+            th {
+              border-top: 1px solid rgba(234, 244, 254, 1);
+              border-bottom: 1px solid rgba(234, 244, 254, 1);
+              color: #617499;
+              background: #eaf4fe;
+              box-shadow: 0 0 0 rgba(25, 30, 40, .5);
+
+              &.is-leaf {
+                border-top: 1px solid #fff;
+                border-bottom: 1px solid rgba(169, 190, 212, .2);
+                box-shadow: none;
+
+                &:first-of-type {
+                  border-left: 1px solid rgba(51, 143, 245, .1);
+                  border-bottom-left-radius: 4px;
+                }
+
+                &:nth-last-of-type(2) {
+                  border-bottom-right-radius: 4px;
+                  border-right: 1px solid rgba(51, 143, 245, .1);
+                }
+              }
+            }
+          }
+
+          .el-table--enable-row-hover {
+            .el-table__body {
+              tr {
+                &:hover {
+                  > td {
+                    background: #eaf4fe;
+                  }
+                }
+              }
+            }
+          }
+
+          .el-tabs__nav {
+            width: 300px;
+            padding: 9px 0 9px 26px;
+            font-weight: bold;
+            color: #617499;
+            background: linear-gradient(90deg, rgba(51, 143, 245, .8), transparent);
+          }
+        }
+
+        .invest {
+          color: #338ff5;
+          background: linear-gradient(90deg, rgba(51, 143, 245, .8), transparent);
+        }
+
+        .el-tabs__item {
+          &.is-active {
+            color: #338ff5;
+          }
+        }
+
+        .el-dialog {
+          background: #fff;
+        }
+
+        .el-dialog__header {
+          background: #eaf4fe;
+          box-shadow: 0 1px 2px 0 rgba(29, 33, 49, .1);
+        }
+
+        .el-dialog__title {
+          color: #333;
+        }
+
+        .el-dialog__headerbtn {
+          .el-dialog__close {
+            color: #333;
+          }
+        }
       }
     }
 
@@ -1188,6 +1717,10 @@ export default {
 
     .red {
       color: #d45858;
+    }
+
+    .text-indent {
+      text-indent: 10px;
     }
 
     .red2 {
@@ -1214,7 +1747,7 @@ export default {
     }
 
     .totalTipsPositon {
-      margin: -36px 0 -20px 72px;
+      margin: -36px 0 -20px 110px;
       color: #d45858;
     }
   }

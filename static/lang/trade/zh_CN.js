@@ -39,5 +39,7 @@ export const trade = {
   // #####################币币交易 行情#####################
   'trade_market_bazaar': '市场',
   'trade_market_amount_increase': '涨幅',
-  'trade_market_optional': '自选'
+  'trade_market_optional': '自选',
+  'trade_cancel_all_entrust': '撤销所有委托',
+  'trade_determine_cancel_all_entrust': '确定撤销所有委托'
 }

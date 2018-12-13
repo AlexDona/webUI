@@ -10,7 +10,7 @@
           src="../../assets/develop/applyfor.png"
         >
         <!-- 上币申请 -->
-        <h1 class="title">{{ $t('M.coin_apply') }}</h1>
+        <h1 class="title">{{ $t('M.actionCenter_coin_apply') }}</h1>
       </div>
       <div class="bottom">
         <div

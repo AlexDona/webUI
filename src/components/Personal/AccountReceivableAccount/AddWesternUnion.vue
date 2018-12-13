@@ -148,12 +148,6 @@ export default {
     }
   },
   created () {
-    // 覆盖Element样式
-    require('../../../../static/css/list/Personal/AccountReceivableAccount/AddWesternUnion.css')
-    // 白色主题样式
-    require('../../../../static/css/theme/day/Personal/AccountReceivableAccount/AddWesternUnionDay.css')
-    // 黑色主题样式
-    require('../../../../static/css/theme/night/Personal/AccountReceivableAccount/AddWesternUnionNight.css')
     getAccountPaymentTerm(this)
     this.paymentMethodInformation()
   },
@@ -375,6 +369,18 @@ export default {
       }
     }
 
+    /deep/ {
+      /* 覆盖element样式 */
+      .el-textarea__inner {
+        width: 237px;
+        height: 90px;
+      }
+
+      .el-form-item__content {
+        width: 600px;
+      }
+    }
+
     &.night {
       color: $nightFontColor;
       background-color: $nightBgColor;
@@ -429,6 +435,19 @@ export default {
           }
         }
       }
+
+      /deep/ {
+        /* 个人中心白色主题 */
+        .el-textarea__inner {
+          border: 1px solid #485776;
+          color: rgba(255, 255, 255, .7);
+          background-color: #1c1f32;
+        }
+
+        .el-form-item__label {
+          color: rgba(255, 255, 255, .7);
+        }
+      }
     }
 
     &.day {
@@ -479,6 +498,23 @@ export default {
               background: linear-gradient(0deg, rgba(43, 57, 110, 1), rgba(42, 80, 130, 1));
             }
           }
+        }
+      }
+
+      /deep/ {
+        /* 个人中心白色主题 */
+        .el-textarea__inner {
+          border: 1px solid rgba(236, 241, 248, 1);
+          color: #333;
+          background: rgba(255, 255, 255, 1);
+
+          &:focus {
+            border: 1px solid #338ff5;
+          }
+        }
+
+        .el-form-item__label {
+          color: #7d90ac;
         }
       }
     }

@@ -12,10 +12,10 @@
         <!--@click.prevent.prevent="clickTableCut(1)"-->
       </span>
       <!--<span-->
-        <!--class="header-content display-inline-block font-size16 cursor-pointer"-->
-        <!--@click.prevent.prevent="clickTableCut(2)"-->
+      <!--class="header-content display-inline-block font-size16 cursor-pointer"-->
+      <!--@click.prevent.prevent="clickTableCut(2)"-->
       <!--&gt;-->
-        <!--其他记录-->
+      <!--其他记录-->
       <!--</span>-->
     </header>
     <div class="billing-details-main paddinglr20 margin-top9">
@@ -63,18 +63,18 @@
         </div>
         <!--其他记录-->
         <!--<div class="float-left margin-left50 cursor-pointer">-->
-          <!--<span class="demonstration">类型</span>-->
-          <!--<el-select-->
-            <!--v-model="otherRecordsValue"-->
-          <!--&gt;-->
-            <!--<el-option-->
-              <!--v-for="item in otherRecordsType"-->
-              <!--:key="item.value"-->
-              <!--:label="item.label"-->
-              <!--:value="item.value"-->
-            <!--&gt;-->
-            <!--</el-option>-->
-          <!--</el-select>-->
+        <!--<span class="demonstration">类型</span>-->
+        <!--<el-select-->
+        <!--v-model="otherRecordsValue"-->
+        <!--&gt;-->
+        <!--<el-option-->
+        <!--v-for="item in otherRecordsType"-->
+        <!--:key="item.value"-->
+        <!--:label="item.label"-->
+        <!--:value="item.value"-->
+        <!--&gt;-->
+        <!--</el-option>-->
+        <!--</el-select>-->
         <!--</div>-->
         <div class="float-left margin-left58 cursor-pointer">
           <div class="block">
@@ -340,12 +340,6 @@ export default {
     }
   },
   created () {
-    // 覆盖Element样式
-    require('../../../../static/css/list/Personal/AccountBalance/BillingDetails.css')
-    // 白色主题样式
-    require('../../../../static/css/theme/day/Personal/AccountBalance/BillingDetailsDay.css')
-    // 黑色主题样式
-    require('../../../../static/css/theme/night/Personal/AccountBalance/BillingDetailsNight.css')
   },
   mounted () {},
   activited () {},
@@ -538,6 +532,45 @@ export default {
         background-color: $nightMainBgColor;
         box-shadow: 0 5px 50px #181e2a;
       }
+
+      /deep/ {
+        .el-table {
+          th,
+          tr {
+            background-color: #1c1f32;
+          }
+
+          thead {
+            color: #617499;
+          }
+
+          th {
+            &.is-leaf {
+              border-bottom: 0;
+            }
+
+            & > .cell {
+              color: #a9bed4;
+            }
+          }
+
+          td {
+            border-bottom: 0;
+            color: #ccc;
+            background-color: #1c1f32;
+          }
+        }
+
+        .el-input__inner {
+          color: #fff;
+          background-color: #2d3651;
+        }
+
+        .el-table__empty-block {
+          color: #fff;
+          background-color: #1c1f32;
+        }
+      }
     }
 
     &.day {
@@ -567,6 +600,88 @@ export default {
         border-radius: 2px;
         background: rgb(255, 255, 255);
         box-shadow: 1px 0 3px rgb(236, 236, 236);
+      }
+
+      /deep/ {
+        .el-table {
+          th,
+          tr {
+            background-color: #fff;
+          }
+
+          thead {
+            color: #617499;
+          }
+
+          th {
+            &.is-leaf {
+              border-bottom: 0;
+            }
+
+            & > .cell {
+              color: #333;
+            }
+          }
+
+          td {
+            border-bottom: 0;
+            color: #ccc;
+            background-color: #fff;
+          }
+
+          .cell {
+            color: #7d90ac;
+          }
+        }
+
+        .el-input__inner {
+          border: 1px solid #ecf1f8;
+          color: #ccc;
+          background-color: rgba(255, 255, 255, 1);
+        }
+
+        .el-table__empty-block {
+          background-color: #fff;
+        }
+      }
+    }
+
+    /deep/ {
+      .el-input__inner {
+        width: 100px;
+        height: 30px;
+        border: 0;
+        font-size: 12px;
+      }
+
+      .el-date-editor {
+        &.el-input {
+          width: 120px;
+          height: 30px;
+        }
+
+        .el-input__inner {
+          width: 120px;
+          height: 30px;
+        }
+      }
+
+      .el-table {
+        .cell {
+          font-size: 12px;
+          text-align: center;
+        }
+
+        th {
+          & > .cell {
+            font-size: 12px;
+            text-align: center;
+          }
+
+          &.is-leaf {
+            border-top: 0;
+          }
+        }
       }
     }
   }

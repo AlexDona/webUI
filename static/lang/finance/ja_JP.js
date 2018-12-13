@@ -1,5 +1,5 @@
 export const finance = {
-  'finance_newestPrice': '最新価格',
+  'finance_newestPrice': '終値',
   'finance_save_moneydetail': 'デポジット詳細',
   'finance_at_once_save': 'デポジット',
   'finance_input_sum': '数量を入力してください',
@@ -9,7 +9,7 @@ export const finance = {
   'finance_date': '同じ日',
   'finance_history': '歴史',
   'finance_invest': 'デポジット',
-  'finance_invest_style': 'タイプ',
+  'finance_invest_style': '残高提案',
   'finance_invest_coin1': 'トークン',
   'finance_useBalance': '利用可能な残高',
   'finance_errorTips': '預金の数が利用可能な資産よりも大きい',

@@ -3,8 +3,6 @@
     class="login-password-box personal"
     :class="{'day':theme == 'day','night':theme == 'night' }"
     :style="{'height':windowHeight+'px'}"
-    v-loading.fullscreen.lock="fullscreenLoading"
-    element-loading-background="rgba(0, 0, 0, 0.6)"
   >
     <div class="login-password-main margin25">
       <header class="login-password-header personal-height60 line-height60 line-height70 margin25">
@@ -27,10 +25,6 @@
         </span>
       </header>
       <div class="login-password-content">
-        <header class="login-content-title">
-          <!--*请确认您的银行卡已开启短信通知功能-->
-          * {{ $t('M.user_security_text0') }}
-        </header>
         <div class="login-content-from">
           <el-form
             :label-position="labelPosition"
@@ -126,17 +120,10 @@ export default {
         '', // 原登录密码
         '', // 新登录密码
         '' // 确认登录密码
-      ],
-      fullscreenLoading: false // 整页loading
+      ]
     }
   },
   created () {
-    // 覆盖Element样式
-    require('../../../../static/css/list/Personal/UserSecuritySettings/UserLoginPassword.css')
-    // 白色主题样式
-    require('../../../../static/css/theme/day/Personal/UserSecuritySettings/UserLoginPasswordDay.css')
-    // 黑色主题样式
-    require('../../../../static/css/theme/night/Personal/UserSecuritySettings/UserLoginPasswordNight.css')
   },
   mounted () {},
   activited () {},
@@ -230,16 +217,10 @@ export default {
           oldPassword: this.originalLoginPassword, // 旧登录密码
           newPassword: this.newLoginPassword // 新登录密码
         }
-        // 整页loading
-        this.fullscreenLoading = true
         data = await modifyLoginPassword(param)
         if (!(returnAjaxMsg(data, this, 1))) {
-          // 接口失败清除loading
-          this.fullscreenLoading = false
           return false
         } else {
-          // 接口成功清除loading
-          this.fullscreenLoading = false
           this.stateEmptyData()
           this.successJump()
         }
@@ -344,6 +325,37 @@ export default {
       }
     }
 
+    /deep/ {
+      /* 覆盖Element样式 */
+      .el-input__inner {
+        height: 36px;
+        border-radius: 2px 0 0 2px;
+      }
+
+      .el-input-group {
+        width: 220px;
+        height: 36px;
+        border-radius: 4px;
+      }
+
+      .el-form-item__content {
+        width: 600px;
+      }
+
+      /* 修改登录密码表单样式重置 */
+      .login-password-content {
+        .login-content-from {
+          .el-form {
+            .el-form-item {
+              .el-form-item__label {
+                width: 170px !important;
+              }
+            }
+          }
+        }
+      }
+    }
+
     &.night {
       color: $nightFontColor;
       background-color: $nightBgColor;
@@ -396,6 +408,33 @@ export default {
               background: linear-gradient(0deg, rgba(43, 57, 110, 1), rgba(42, 80, 130, 1));
             }
           }
+        }
+      }
+
+      /deep/ {
+        /* 个人中心（黑色主题） */
+        .el-form-item__label {
+          color: rgba(255, 255, 255, .7);
+        }
+
+        .el-input__inner {
+          border: 1px solid #485776;
+          color: #a9bed4;
+          background-color: #1e2636;
+        }
+
+        .el-input-group--append {
+          .el-input__inner:focus {
+            border: 1px solid #338ff5;
+          }
+        }
+
+        .el-input-group__append {
+          border-top: 1px solid #485776;
+          border-bottom: 1px solid #485776;
+          color: #fff;
+          background-color: #338ff5;
+          border-right: 1px solid #485776;
         }
       }
     }
@@ -451,6 +490,12 @@ export default {
               background: linear-gradient(0deg, rgba(43, 57, 110, 1), rgba(42, 80, 130, 1));
             }
           }
+        }
+      }
+
+      /deep/ {
+        .el-form-item__label {
+          color: #7d90ac;
         }
       }
     }

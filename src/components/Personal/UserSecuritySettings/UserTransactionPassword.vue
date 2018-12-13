@@ -2,8 +2,6 @@
   <div
     class="transaction-password personal"
     :class="{'day':theme == 'day','night':theme == 'night' }"
-    v-loading.fullscreen.lock="fullscreenLoading"
-    element-loading-background="rgba(0, 0, 0, 0.6)"
     :style="{
       height: windowHeight+'px'
     }"
@@ -145,7 +143,7 @@
             </el-form-item>
             <!--验证码-->
             <el-form-item
-              :label="$t('M.comm_code') + '：'"
+              :label="$t('M.comm_note') + $t('M.comm_code') + '：'"
               v-if="securityCenter.isPhoneEnable"
             >
               <el-input
@@ -241,7 +239,8 @@ import {
 import {
   setTransactionPassword,
   resetUpdatePayPassword,
-  securityVerificationOnOff
+  securityVerificationOnOff,
+  cancelPasswdDialog
 } from '../../../utils/api/personal'
 import { createNamespacedHelpers, mapState } from 'vuex'
 const { mapMutations, mapActions } = createNamespacedHelpers('user')
@@ -281,19 +280,12 @@ export default {
         '', // 邮箱验证码
         '' // 谷歌验证码
       ],
-      fullscreenLoading: false, // 整页loading
       successCountDown: 1 // 成功倒计时
     }
   },
-  created () {
-    // 覆盖Element样式
-    require('../../../../static/css/list/Personal/UserSecuritySettings/UserTransactionPassword.css')
-    // 白色主题样式
-    require('../../../../static/css/theme/day/Personal/UserSecuritySettings/UserTransactionPasswordDay.css')
-    // 黑色主题样式
-    require('../../../../static/css/theme/night/Personal/UserSecuritySettings/UserTransactionPasswordNight.css')
-    this.getSecurityCenter()
-    this.REFLASH_USER_INFO(this)
+  async created () {
+    await this.getSecurityCenter()
+    await this.cancelPasswdDialog()
   },
   mounted () {},
   activited () {},
@@ -306,6 +298,15 @@ export default {
     ...mapMutations([
       'SET_USER_BUTTON_STATUS'
     ]),
+    // 取消用户设置密码弹窗
+    async cancelPasswdDialog () {
+      const data = await cancelPasswdDialog()
+      if (!returnAjaxMsg(data, this)) {
+        return false
+      } else {
+        this.REFLASH_USER_INFO(this)
+      }
+    },
     // 点击返回上个页面
     returnSuperior () {
       this.$store.commit('personal/CHANGE_REF_SECURITY_CENTER_INFO', true)
@@ -419,16 +420,10 @@ export default {
           nickName: this.setPassword.nickname, // 昵称
           payPassword: this.setPassword.newPassword // 交易密码
         }
-        // 整页loading
-        this.fullscreenLoading = true
         data = await setTransactionPassword(params)
         if (!(returnAjaxMsg(data, this, 1))) {
-          // 接口失败清除loading
-          this.fullscreenLoading = false
           return false
         } else {
-          // 接口成功清除loading
-          this.fullscreenLoading = false
           console.log(data)
           this.stateEmptyData()
           this.$store.commit('common/SET_USER_INFO_REFRESH_STATUS', true)
@@ -535,20 +530,14 @@ export default {
       let params = {
         email: this.userInfoDetail.email, // 邮箱
         phone: this.userInfoDetail.phone, // 手机
-        emailCode: this.modifyPassword.emailCode, // 邮箱验证
+        mailCode: this.modifyPassword.emailCode, // 邮箱验证
         phoneCode: this.modifyPassword.phoneCode, // 手机验证
         googleCode: this.modifyPassword.googleCode // 谷歌验证
       }
-      // 整页loading
-      this.fullscreenLoading = true
       data = await securityVerificationOnOff(params)
       if (!(returnAjaxMsg(data, this, 1))) {
-        // 接口失败清除loading
-        this.fullscreenLoading = false
         return false
       } else {
-        // 接口成功清除loading
-        this.fullscreenLoading = false
         await this.confirmUpdate()
       }
     },
@@ -594,17 +583,10 @@ export default {
           emailCode: this.modifyPassword.emailCode, // 邮箱验证码
           googleCode: this.modifyPassword.googleCode // 谷歌验证码
         }
-        // 整页loading
-        this.fullscreenLoading = true
         data = await resetUpdatePayPassword(param)
         if (!(returnAjaxMsg(data, this, 1))) {
-          // 接口失败清除loading
-          this.fullscreenLoading = false
           return false
         } else {
-          // 接口成功清除loading
-          this.fullscreenLoading = false
-          console.log(1)
           this.successJump()
           this.stateEmptyData()
           this.$store.commit('common/SET_USER_INFO_REFRESH_STATUS', true)
@@ -641,7 +623,8 @@ export default {
       userInfoDetail: state => state.user.loginStep1Info.userInfo,
       disabledOfPhoneBtn: state => state.user.disabledOfPhoneBtn,
       disabledOfEmailBtn: state => state.user.disabledOfEmailBtn,
-      refSecurityCenterStatus: state => state.personal.refSecurityCenterStatus
+      refSecurityCenterStatus: state => state.personal.refSecurityCenterStatus,
+      paypasswordSet: state => state.user.loginStep1Info.userInfo.loginStep1Info // 用户是否已进入交易密码
     }),
     windowHeight () {
       return window.innerHeight
@@ -724,6 +707,44 @@ export default {
       }
     }
 
+    /deep/ {
+      /* 覆盖Element样式 */
+      .el-form-item__content {
+        width: 600px;
+      }
+
+      .el-input__inner {
+        height: 36px;
+        border-radius: 2px 0 0 2px;
+        vertical-align: top;
+      }
+
+      .el-input-group {
+        width: 220px;
+        height: 36px;
+        margin-right: 0;
+        border-radius: 4px;
+      }
+
+      .el-input-group__append {
+        padding: 0;
+        background-color: #338ff5;
+      }
+
+      /* 表单label宽度重置 */
+      .transaction-password-content {
+        .transaction-content-from {
+          .el-form {
+            .el-form-item {
+              .el-form-item__label {
+                width: 186px !important;
+              }
+            }
+          }
+        }
+      }
+    }
+
     &.night {
       color: $nightFontColor;
       background-color: $nightBgColor;
@@ -781,6 +802,31 @@ export default {
               background: linear-gradient(0deg, rgba(43, 57, 110, 1), rgba(42, 80, 130, 1));
             }
           }
+        }
+      }
+
+      /deep/ {
+        /* 个人中心（黑色主题） */
+        .el-form-item__label {
+          color: rgba(255, 255, 255, .7);
+        }
+
+        .el-input__inner {
+          border: 1px solid #485776;
+          color: #a9bed4;
+          background-color: #1c1f32;
+
+          &:focus {
+            border: 1px solid #338ff5;
+          }
+        }
+
+        .el-input-group__append {
+          border-top: 1px solid #485776;
+          border-bottom: 1px solid #485776;
+          color: #fff;
+          background-color: #338ff5;
+          border-right: 1px solid #485776;
         }
       }
     }
@@ -841,6 +887,12 @@ export default {
               background: linear-gradient(0deg, rgba(43, 57, 110, 1), rgba(42, 80, 130, 1));
             }
           }
+        }
+      }
+
+      /deep/ {
+        .el-form-item__label {
+          color: #7d90ac;
         }
       }
     }

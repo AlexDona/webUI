@@ -1,6 +1,6 @@
 export const finance = {
   'finance_save_moneydetail': '存币详情',
-  'finance_newestPrice': '最新价钱',
+  'finance_newestPrice': '最新价',
   'finance_at_once_save': '立刻存币',
   'finance_save_coin_record': '存币记录',
   'finance_get_money_record': '收益记录',
@@ -9,7 +9,7 @@ export const finance = {
   'finance_date': '当日',
   'finance_history': '历史',
   'finance_invest': '存币',
-  'finance_invest_style': '存币类型',
+  'finance_invest_style': '存币方案',
   'finance_invest_coin1': '存币币种',
   'finance_useBalance': '可用余额',
   'finance_errorTips': '存币种数量大于可用资产',

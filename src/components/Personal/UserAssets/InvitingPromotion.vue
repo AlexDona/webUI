@@ -358,13 +358,8 @@ export default {
       partLoading: false // 局部列表loading
     }
   },
-  created () {
-    // 覆盖Element样式
-    require('../../../../static/css/list/Personal/UserAssets/InvitingPromotion.css')
-    // 白色主题样式
-    require('../../../../static/css/theme/day/Personal/UserAssets/InvitingPromotionDay.css')
-    // 黑色主题样式
-    require('../../../../static/css/theme/night/Personal/UserAssets/InvitingPromotionNight.css')
+  async created () {
+    // await this.currencyTransform()
   },
   mounted () {
     console.log(domain)
@@ -382,7 +377,7 @@ export default {
     async currencyTransform () {
       console.log(1)
       const params = {
-        coinName: 'HF',
+        coinName: 'BTC',
         shortName: 'CNY'
       }
       const data = await currencyTransform(params)
@@ -395,6 +390,7 @@ export default {
         if (data.data.data.coinPrice) {
           // this.BTC2CNYRate = data.data.data.coinPrice
           this.BTC2CNYRate = getNestedData(data, 'data.data.coinPrice')
+          console.log(this.BTC2CNYRate)
         }
       }
     },
@@ -548,329 +544,456 @@ export default {
 }
 </script>
 <style scoped lang="scss">
-@import "../../../../static/css/scss/Personal/IndexPersonal";
+  @import "../../../../static/css/scss/Personal/IndexPersonal";
 
-.invitation-promotion {
-  > .invitation-promotion-main {
-    .code-copy {
-      color: #338ff5;
-    }
-
-    /* 推广信息 */
-    > .extension-info {
-      min-height: 200px;
-
-      > .extension-info-header {
-        height: 56px;
+  .invitation-promotion {
+    > .invitation-promotion-main {
+      .code-copy {
+        color: #338ff5;
       }
 
-      > .extension-info-content {
-        min-height: 130px;
-
-        > .info-record {
-          width: 100%;
-          height: 120px;
-          padding: 0 17px;
-          margin-top: 19px;
-
-          > .extension-code,
-          > .extension-link {
-            display: flex;
-            width: 100%;
-            height: 60px;
-
-            > .code-left,
-            > .code-right,
-            > .link-left,
-            > .link-right {
-              flex: 1;
-              line-height: 60px;
-            }
-
-            > .code-right,
-            > .link-right {
-              flex: 2;
-
-              > .code-right-rendering,
-              > .code-right-rendering {
-                margin-right: 10px;
-              }
-
-              > .code-copy {
-                position: relative;
-                display: inline-block;
-                width: 80px;
-                height: 26px;
-                line-height: 26px;
-                text-align: center;
-
-                > .ercode {
-                  position: absolute;
-                  bottom: 35px;
-                  right: 180px;
-                  border-radius: 5px;
-                }
-              }
-            }
-          }
-        }
-
-        > .promotion-box {
-          display: flex;
-          height: 160px;
-
-          > .promotion-number {
-            flex: 1;
-
-            > .promotion-info {
-              width: 200px;
-              margin: 45px auto;
-              text-align: center;
-            }
-          }
-        }
-      }
-    }
-
-    /* 推广统计 */
-    > .extension-statistics {
-      min-height: 200px;
-
-      > .extension-statistics-header {
-        display: flex;
-        height: 56px;
-
-        > .header-right {
-          flex: 1;
-        }
-
-        > .header-select {
-          text-align: right;
-        }
-      }
-
-      > .extension-statistics-content {
-        min-height: 130px;
-      }
-    }
-
-    /* 奖励记录 */
-    > .award-record {
-      min-height: 200px;
-
-      > .award-record-header {
-        height: 56px;
-      }
-
-      > .award-record-content {
-        min-height: 130px;
-      }
-    }
-  }
-
-  &.night {
-    color: $nightFontColor;
-    background-color: $nightBgColor;
-
-    > .background-color {
-      background-color: $nightMainBgColor;
-    }
-
-    .invitation-promotion-main {
+      /* 推广信息 */
       > .extension-info {
-        background-color: $nightMainBgColor;
+        min-height: 200px;
 
         > .extension-info-header {
-          border-bottom: 1px solid #39424d;
-
-          > .header-color {
-            color: #fff;
-          }
+          height: 56px;
         }
 
         > .extension-info-content {
-          > .info-record {
-            background: #283049;
+          min-height: 130px;
 
-            > .extension-code {
-              border-bottom: 1px solid #364654;
-            }
+          > .info-record {
+            width: 100%;
+            height: 120px;
+            padding: 0 17px;
+            margin-top: 19px;
 
             > .extension-code,
             > .extension-link {
+              display: flex;
+              width: 100%;
+              height: 60px;
+
               > .code-left,
-              > .link-left {
-                color: #9da5b3;
+              > .code-right,
+              > .link-left,
+              > .link-right {
+                flex: 1;
+                line-height: 60px;
               }
 
               > .code-right,
               > .link-right {
+                flex: 2;
+
+                > .code-right-rendering,
                 > .code-right-rendering {
-                  color: #9da5b3;
+                  margin-right: 10px;
                 }
 
                 > .code-copy {
-                  color: #338ff5;
-                  background-color: #45535e;
+                  position: relative;
+                  display: inline-block;
+                  width: 80px;
+                  height: 26px;
+                  line-height: 26px;
+                  text-align: center;
+
+                  > .ercode {
+                    position: absolute;
+                    bottom: 35px;
+                    right: 180px;
+                    border-radius: 5px;
+                  }
                 }
               }
             }
           }
 
           > .promotion-box {
-            .promotion-info {
-              .info-left-text {
-                color: #9da5b3;
+            display: flex;
+            height: 160px;
+
+            > .promotion-number {
+              flex: 1;
+
+              > .promotion-info {
+                width: 200px;
+                margin: 45px auto;
+                text-align: center;
               }
             }
-
-            .info-left,
-            .info-right {
-              color: #338ff5;
-            }
           }
         }
       }
 
+      /* 推广统计 */
       > .extension-statistics {
-        background-color: $nightMainBgColor;
+        min-height: 200px;
 
         > .extension-statistics-header {
-          border-bottom: 1px solid #39424d;
+          display: flex;
+          height: 56px;
 
-          > .header-color {
-            color: #fff;
+          > .header-right {
+            flex: 1;
           }
+
+          > .header-select {
+            text-align: right;
+          }
+        }
+
+        > .extension-statistics-content {
+          min-height: 130px;
         }
       }
 
+      /* 奖励记录 */
       > .award-record {
-        background-color: $nightMainBgColor;
+        min-height: 200px;
 
         > .award-record-header {
-          border-bottom: 1px solid #39424d;
+          height: 56px;
+        }
 
-          > .header-color {
-            color: #fff;
-          }
+        > .award-record-content {
+          min-height: 130px;
         }
       }
     }
 
-    .invitation-promotion-header {
-      .header-content {
-        color: #338ff5;
+    /deep/ {
+      /* 覆盖element样式 */
+      .el-input__inner {
+        width: 160px;
+        height: 30px;
+      }
+
+      .el-select-dropdown__item {
+        width: 120px !important;
+        height: 30px;
+      }
+
+      .el-scrollbar {
+        width: 120px;
+      }
+
+      .cell {
+        font-size: 12px;
+      }
+
+      .cell,
+      .el-table th div {
+        padding-left: 18px;
       }
     }
-  }
 
-  &.day {
-    color: $dayFontColor;
-    background-color: $dayBgColor;
+    &.night {
+      color: $nightFontColor;
+      background-color: $nightBgColor;
 
-    > .background-color {
-      background-color: #ccc;
-    }
+      > .background-color {
+        background-color: $nightMainBgColor;
+      }
 
-    .invitation-promotion-main {
-      > .extension-info {
-        border: 1px solid rgba(236, 241, 248, 1);
-        background: rgba(255, 255, 255, 1);
+      .invitation-promotion-main {
+        > .extension-info {
+          background-color: $nightMainBgColor;
 
-        > .extension-info-header {
-          border-bottom: 1px solid rgba(236, 241, 248, 1);
+          > .extension-info-header {
+            border-bottom: 1px solid #39424d;
 
-          > .header-color {
-            color: #333;
+            > .header-color {
+              color: #fff;
+            }
           }
-        }
 
-        > .extension-info-content {
-          > .info-record {
-            background: #f3f8ff;
+          > .extension-info-content {
+            > .info-record {
+              background: #283049;
 
-            > .extension-code {
-              border-bottom: 1px solid #ecf1f8;
+              > .extension-code {
+                border-bottom: 1px solid #364654;
+              }
 
               > .extension-code,
               > .extension-link {
                 > .code-left,
                 > .link-left {
-                  color: #333;
+                  color: #9da5b3;
                 }
 
                 > .code-right,
                 > .link-right {
                   > .code-right-rendering {
-                    color: #333;
+                    color: #9da5b3;
                   }
 
                   > .code-copy {
-                    border: 1px solid rgba(125, 144, 172, 1);
-                    color: red;
-                    background: rgb(255, 255, 255);
+                    color: #338ff5;
+                    background-color: #45535e;
                   }
                 }
               }
             }
-          }
 
-          > .promotion-box {
-            .promotion-info {
-              .info-left-text {
-                color: #ccc;
+            > .promotion-box {
+              .promotion-info {
+                .info-left-text {
+                  color: #9da5b3;
+                }
               }
 
-              .color-text {
-                color: #333;
-              }
-            }
-
-            .info-left,
-            .info-right {
-              > .info-left-color {
+              .info-left,
+              .info-right {
                 color: #338ff5;
               }
             }
           }
         }
-      }
 
-      > .extension-statistics {
-        border: 1px solid rgba(38, 47, 56, .1);
-        background: rgba(255, 255, 255, 1);
+        > .extension-statistics {
+          background-color: $nightMainBgColor;
 
-        > .extension-statistics-header {
-          border-bottom: 1px solid rgba(236, 241, 248, 1);
+          > .extension-statistics-header {
+            border-bottom: 1px solid #39424d;
 
-          > .header-color {
-            color: #333;
+            > .header-color {
+              color: #fff;
+            }
+          }
+        }
+
+        > .award-record {
+          background-color: $nightMainBgColor;
+
+          > .award-record-header {
+            border-bottom: 1px solid #39424d;
+
+            > .header-color {
+              color: #fff;
+            }
           }
         }
       }
 
-      > .award-record {
-        border: 1px solid rgba(38, 47, 56, .1);
-        background: rgba(255, 255, 255, 1);
+      .invitation-promotion-header {
+        .header-content {
+          color: #338ff5;
+        }
+      }
 
-        > .award-record-header {
-          border-bottom: 1px solid rgba(236, 241, 248, 1);
+      /deep/ {
+        /* 个人中心（黑色主题） */
+        th,
+        tr {
+          background-color: #1c1f32;
+        }
 
-          > .header-color {
-            color: #333;
+        thead {
+          color: #617499;
+        }
+
+        th.is-leaf {
+          border-bottom: 0;
+        }
+
+        tr {
+          &:hover td {
+            background-color: #1c1f32;
           }
+        }
+
+        td {
+          border-bottom: 0;
+          color: #ccc;
+        }
+
+        .cell {
+          color: #a9bed4;
+        }
+
+        .el-table {
+          color: #fff;
+        }
+
+        .cell.highlight {
+          color: #617499;
+        }
+
+        .el-input__inner {
+          border: 0;
+          color: #fff;
+          background-color: #333a41;
+
+          &:focus {
+            border: 0;
+          }
+        }
+
+        .el-table__empty-block {
+          background-color: #1c1f32;
         }
       }
     }
 
-    .invitation-promotion-header {
-      border: 1px solid rgba(236, 241, 248, 1);
-      background: rgba(255, 255, 255, 1);
+    &.day {
+      color: $dayFontColor;
+      background-color: $dayBgColor;
 
-      .header-content {
-        color: #338ff5;
+      > .background-color {
+        background-color: #ccc;
+      }
+
+      .invitation-promotion-main {
+        > .extension-info {
+          border: 1px solid rgba(236, 241, 248, 1);
+          background: rgba(255, 255, 255, 1);
+
+          > .extension-info-header {
+            border-bottom: 1px solid rgba(236, 241, 248, 1);
+
+            > .header-color {
+              color: #333;
+            }
+          }
+
+          > .extension-info-content {
+            > .info-record {
+              background: #f3f8ff;
+
+              > .extension-code {
+                border-bottom: 1px solid #ecf1f8;
+
+                > .extension-code,
+                > .extension-link {
+                  > .code-left,
+                  > .link-left {
+                    color: #333;
+                  }
+
+                  > .code-right,
+                  > .link-right {
+                    > .code-right-rendering {
+                      color: #333;
+                    }
+
+                    > .code-copy {
+                      border: 1px solid rgba(125, 144, 172, 1);
+                      color: red;
+                      background: rgb(255, 255, 255);
+                    }
+                  }
+                }
+              }
+            }
+
+            > .promotion-box {
+              .promotion-info {
+                .info-left-text {
+                  color: #ccc;
+                }
+
+                .color-text {
+                  color: #333;
+                }
+              }
+
+              .info-left,
+              .info-right {
+                > .info-left-color {
+                  color: #338ff5;
+                }
+              }
+            }
+          }
+        }
+
+        > .extension-statistics {
+          border: 1px solid rgba(38, 47, 56, .1);
+          background: rgba(255, 255, 255, 1);
+
+          > .extension-statistics-header {
+            border-bottom: 1px solid rgba(236, 241, 248, 1);
+
+            > .header-color {
+              color: #333;
+            }
+          }
+        }
+
+        > .award-record {
+          border: 1px solid rgba(38, 47, 56, .1);
+          background: rgba(255, 255, 255, 1);
+
+          > .award-record-header {
+            border-bottom: 1px solid rgba(236, 241, 248, 1);
+
+            > .header-color {
+              color: #333;
+            }
+          }
+        }
+      }
+
+      .invitation-promotion-header {
+        border: 1px solid rgba(236, 241, 248, 1);
+        background: rgba(255, 255, 255, 1);
+
+        .header-content {
+          color: #338ff5;
+        }
+      }
+
+      /deep/ {
+        /* 个人中心（白色主题） */
+        th,
+        tr {
+          color: #333;
+          background-color: #fff;
+        }
+
+        thead {
+          color: #fff;
+        }
+
+        th.is-leaf {
+          border-bottom: 0;
+        }
+
+        td {
+          border-bottom: 0;
+          color: #333;
+        }
+
+        .el-table {
+          color: #fff;
+
+          .cell {
+            color: #333;
+          }
+        }
+
+        .cell.highlight {
+          color: #b1b1b1;
+        }
+
+        .el-input__inner {
+          border: 0;
+          color: #333;
+          background: rgba(236, 244, 254, 1);
+        }
+
+        .el-input__inner:focus {
+          border: 0;
+        }
+
+        .el-form-item__label {
+          color: #7d90ac;
+        }
       }
     }
   }
-}
 </style>

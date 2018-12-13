@@ -117,7 +117,7 @@ export default {
         setTimeout(() => {
           this.fullscreenLoading = false
           this.loadingCount++
-        }, 900)
+        }, 1200)
       }
     },
     changeIsKlineDataReady (status) {
@@ -139,6 +139,7 @@ export default {
         this.isAllowDrag = true
         let klineData = getNestedData(data, 'data.data.obj')
         klineData = JSON.parse(unzip(klineData))
+        console.log(klineData)
         let klineList = getNestedData(klineData, 'klineList')
         if (klineList) {
           this.KlineNum = klineData.num
@@ -256,7 +257,6 @@ export default {
         this.finalSymbol = this.isJumpToTradeCenter ? this.jumpSymbol : activeSymbol
         this.CHANGE_ACTIVE_SYMBOL({activeSymbol: this.finalSymbol})
         this.symbol = getNestedData(this.activeSymbol, 'id')
-        await this.getActiveSymbolData(this.symbol)
       }
     },
     init (options) {
@@ -410,8 +410,8 @@ export default {
             volume: klineData.volume
           }
           let targetData = this.cacheData[ticker]
-
-          let timeDiff = getNestedData(targetData[getNestedData(targetData, 'length') - 1], 'time') - getNestedData(klineData, 'time')
+          console.log(targetData)
+          let timeDiff = getNestedData(targetData[targetData.length - 1], 'time') - getNestedData(klineData, 'time')
 
           if (!timeDiff) {
             this.cacheData[ticker][this.cacheData[ticker].length - 1] = barsData

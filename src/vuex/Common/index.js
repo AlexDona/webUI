@@ -89,7 +89,8 @@ const state = {
     footerInfo1: {},
     footerInfo2: {},
     configInfo: {}
-  }
+  },
+  isAjaxReady: false // 全局loading
 }
 
 export default {

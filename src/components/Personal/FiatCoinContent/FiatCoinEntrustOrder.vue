@@ -147,7 +147,6 @@ export default {
     }
   },
   created () {
-    require('../../../../static/css/list/Personal/FiatCoinContent/FiatCoinEntrustOrder.css')
   },
   mounted () {
   },
@@ -267,6 +266,24 @@ export default {
           > .item {
             text-align: center;
           }
+        }
+      }
+    }
+
+    /deep/ {
+      .el-button {
+        min-width: 60px !important;
+        height: 26px !important;
+        margin: 0;
+        font-size: 14px;
+        line-height: 0;
+      }
+
+      .fiat-entrust-order-table {
+        .entrust-table-head {
+          border-radius: 0;
+          -webkit-box-shadow: none;
+          box-shadow: none;
         }
       }
     }

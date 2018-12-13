@@ -182,9 +182,6 @@ export default {
     return {}
   },
   created () {
-    require('../../../../static/css/list/Personal/FiatCoinContent/FiatCoinCanceledOrder.css')
-    require('../../../../static/css/theme/day/Personal/FiatCoinContent/FiatCoinCanceledOrderDay.css')
-    require('../../../../static/css/theme/night/Personal/FiatCoinContent/FiatCoinCanceledOrderNight.css')
   },
   mounted () {},
   activited () {},
@@ -305,6 +302,106 @@ export default {
       }
     }
 
+    /deep/ {
+      /* 1.0付款方式下拉框 */
+      .el-input--suffix {
+        .el-input__inner {
+          width: 170px;
+          height: 26px;
+        }
+      }
+
+      .el-input__inner {
+        padding: 0 30px !important;
+        border: none;
+      }
+
+      .el-select-dropdown {
+        border: none;
+      }
+
+      .el-select-dropdown__item {
+        height: 30px !important;
+        line-height: 30px !important;
+      }
+
+      /* 2.0按钮样式 */
+      .el-button--mini {
+        padding: 3px 10px;
+      }
+
+      /* 3.0 订单申诉 */
+      .el-textarea {
+        width: 540px;
+      }
+
+      .el-textarea__inner {
+        height: 90px;
+        resize: none;
+        font-size: 14px;
+      }
+
+      /* 4.0 扫码付款按钮及弹窗支付宝和微信图片 */
+      .bank-info-picture {
+        .el-button {
+          padding: 2px 6px;
+        }
+      }
+
+      /* 输入密码弹出框 */
+      .password-dialog {
+        .el-dialog {
+          width: 350px;
+          height: 207px;
+          border-radius: 4px;
+        }
+
+        .el-dialog__header {
+          padding: 10px 20px;
+          border-radius: 4px;
+        }
+
+        .el-dialog__title {
+          font-size: 14px;
+        }
+
+        .el-dialog__body {
+          padding: 15px 20px 10px 30px;
+          font-size: 12px;
+
+          .input {
+            margin-top: 13px;
+          }
+
+          .password-input {
+            display: inline-block;
+            width: 280px;
+            height: 36px;
+            padding-left: 10px;
+            border-radius: 4px;
+            font-size: 14px;
+          }
+
+          .error-info {
+            height: 20px;
+            padding-top: 5px;
+            font-size: 12px;
+          }
+        }
+
+        .el-dialog__footer {
+          padding: 0;
+          text-align: center;
+        }
+
+        .el-button {
+          width: 290px;
+          padding: 7px 20px;
+          border: 0;
+        }
+      }
+    }
+
     &.night {
       color: $nightFontColor;
       background-color: $nightBgColor;
@@ -376,6 +473,109 @@ export default {
           background-color: $nightMainBgColor;
         }
       }
+
+      /deep/ {
+        /* 交易中的订单样式重写 */
+        .el-input__inner {
+          color: #9da5b3;
+          background-color: #303b45;
+        }
+
+        .el-select-dropdown {
+          background-color: #29343f;
+        }
+
+        .el-select-dropdown__item.selected {
+          color: #338ff5;
+        }
+
+        .el-select-dropdown__item {
+          &:hover {
+            background-color: #29343f;
+          }
+        }
+
+        .el-table__expanded-cell {
+          &:hover {
+            background-color: #1c1f32;
+          }
+        }
+
+        .el-select-dropdown__item.hover {
+          color: #338ff5;
+          background-color: #29343f;
+        }
+
+        .el-popper[x-placement^=bottom] {
+          .popper__arrow {
+            &::after {
+              border-bottom-color: #29343f;
+            }
+          }
+        }
+
+        /* 2.0按钮样式 */
+        .el-button--mini {
+          padding: 3px 10px;
+        }
+
+        .el-textarea__inner {
+          border: 1px solid #7587a5;
+          resize: none;
+          background-color: #1c1f32;
+        }
+
+        /* 4.0 扫码付款按钮及弹窗支付宝和微信图片 */
+        .bank-info-picture {
+          .el-button {
+            border-color: #409eff;
+            color: #fff;
+            background-color: #409eff;
+
+            &:hover {
+              border-color: #66b1ff;
+              color: #fff;
+              background: #66b1ff;
+            }
+          }
+        }
+
+        /* 输入密码弹出框 */
+        .password-dialog {
+          .el-dialog {
+            background: #28334a;
+
+            .el-dialog__header {
+              background-color: #20293c;
+            }
+
+            .el-dialog__title {
+              color: #fff;
+            }
+
+            .el-dialog__body {
+              color: #fff;
+
+              .password-input {
+                color: #fff;
+                background-color: #1a2233;
+              }
+
+              .error-info {
+                color: #fff;
+              }
+            }
+          }
+
+          .el-button--primary {
+            background: linear-gradient(9deg, rgba(43, 57, 110, 1), rgba(42, 80, 130, 1));
+          }
+        }
+
+        tr {
+          background-color: #1c1f32;
+        }
+      }
     }
 
     &.day {
@@ -441,6 +641,34 @@ export default {
 
         > .no-data {
           background-color: $dayBgColor;
+        }
+      }
+
+      /deep/ {
+        .canceled-order-content {
+          .canceled-table-head {
+            border: none;
+            border-radius: 0;
+            background-color: #fff;
+            -webkit-box-shadow: none;
+            box-shadow: none;
+
+            .item {
+              border-bottom: 1px solid #ecf1f8;
+              color: #909399;
+            }
+          }
+
+          .no-data {
+            width: 100%;
+            background-color: #fff;
+          }
+        }
+
+        .el-table {
+          tr {
+            background-color: #fff;
+          }
         }
       }
     }

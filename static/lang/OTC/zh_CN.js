@@ -318,10 +318,16 @@ export const OTC = {
   'otc_index_pubTipsFour': '无法为您预防风险',
   'otc_index_inputBuyPrice': '请输入买入单价',
   'otc_index_inputSellPrice': '请输入卖出单价',
+  'otc_index_inputSellAccount': '卖出数量不能为0',
+  'otc_index_inputBuyAccount': '买入数量不能为0',
   // #################交易中列表############
   'otc_tradingorder': '扫码支付',
   'otc_tradingorder_transformAcconu': '转账金额',
   'otc_tradingorder_notice': '注意！计时结束前未手动转账并点击"确认付款"，您的订单将自动取消，若上述情况当日累计出现3次，您的账户将被冻结,请联系客服。',
   'otc_tradingorder_autoCancel': '分钟内对方未提交付款，订单将自动取消',
-  'otc_tradingorder_orderExact': '订单生成后'
+  'otc_tradingorder_orderExact': '订单生成后',
+  // 申请成为商家
+  'otc_apply_tips1': '温馨提示',
+  'otc_apply_tips2': '您需要先申请成为商家才能使用此功能！',
+  'otc_order_reason': '原因'
 }

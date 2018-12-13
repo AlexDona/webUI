@@ -469,12 +469,6 @@ export default {
     }
   },
   created () {
-    // 覆盖Element样式
-    require('../../../../static/css/list/Personal/UserAssets/PushAsset.css')
-    // 白色主题样式
-    require('../../../../static/css/theme/day/Personal/UserAssets/PushAssetDay.css')
-    // 黑色主题样式
-    require('../../../../static/css/theme/night/Personal/UserAssets/PushAssetNight.css')
   },
   mounted () {},
   activited () {},
@@ -864,6 +858,175 @@ export default {
       }
     }
 
+    /deep/ {
+      /* 覆盖Element样式 */
+      .el-form-item__content {
+        width: 555px;
+      }
+
+      .el-input__inner,
+      .el-input-group {
+        width: 270px;
+        height: 36px;
+        border-radius: 2px;
+        cursor: pointer;
+      }
+
+      .el-input__inner {
+        height: 36px;
+        border-radius: 2px;
+      }
+
+      .el-form-item {
+        margin-bottom: 25px;
+      }
+
+      .el-form-item__label {
+        width: 124px !important;
+        color: #a9bed4;
+      }
+
+      .cell {
+        text-align: center;
+      }
+
+      .el-input-group__append {
+        padding: 0 10px;
+        border-left: 0;
+        border-radius: 0 2px 2px 0;
+      }
+
+      th.is-leaf {
+        border-bottom: 0;
+      }
+
+      td {
+        border-bottom: 0;
+      }
+
+      .el-dialog {
+        top: 10%;
+      }
+
+      .cancel-push {
+        .el-dialog__body {
+          padding: 25px 25px 30px;
+          text-align: center;
+          color: #fff;
+        }
+
+        .el-dialog__headerbtn {
+          display: none;
+        }
+
+        .el-dialog {
+          top: 10%;
+          width: 300px;
+          height: 200px;
+          padding: 0;
+          text-align: center;
+        }
+
+        .el-button {
+          &:nth-child(1) {
+            width: 80px;
+            height: 35px;
+            margin-right: 15px;
+            border: 0;
+            line-height: 0;
+            color: rgba(255, 255, 255, .7);
+            background: linear-gradient(81deg, rgba(43, 57, 110, 1) 0%, rgba(42, 80, 130, 1) 100%);
+          }
+
+          &:nth-child(2) {
+            width: 80px;
+            height: 35px;
+            margin-right: 15px;
+            border: 1px solid #338ff5;
+            line-height: 0;
+            color: rgba(255, 255, 255, .7);
+            background-color: transparent;
+          }
+        }
+      }
+
+      /* PUSH确认 */
+      .push-affirm {
+        .el-dialog {
+          top: 10%;
+          width: 350px;
+          padding: 0;
+          border-radius: 5px;
+        }
+
+        .el-dialog__body {
+          padding: 0 40px 25px;
+        }
+
+        .el-dialog__header {
+          padding: 10px 40px;
+          border-radius: 5px 5px 0 0;
+          background-color: #20293c;
+        }
+
+        .el-dialog__headerbtn {
+          top: 13px;
+        }
+
+        .el-dialog__footer {
+          text-align: center;
+        }
+
+        .el-button {
+          width: 270px;
+          height: 36px;
+          border: 0;
+          line-height: 0;
+          background: linear-gradient(81deg, rgba(43, 57, 110, 1) 0%, rgba(42, 80, 130, 1) 100%);
+        }
+      }
+
+      .shipping-address {
+        .el-dialog {
+          width: 320px;
+        }
+
+        .el-dialog__header {
+          padding: 20px 25px 5px;
+        }
+
+        .el-form-item {
+          margin-bottom: 0;
+        }
+
+        .el-dialog__footer {
+          text-align: center;
+        }
+
+        .el-button {
+          width: 270px;
+          height: 36px;
+          border: 0;
+          line-height: 0;
+          background: linear-gradient(81deg, rgba(43, 57, 110, 1) 0%, rgba(42, 80, 130, 1) 100%);
+        }
+      }
+
+      .el-form--label-top {
+        .el-form-item__label {
+          padding: 0;
+        }
+      }
+
+      .el-dialog__body {
+        padding: 10px 25px 15px;
+      }
+
+      .el-dialog--center {
+        text-align: left;
+      }
+    }
+
     &.night {
       color: $nightFontColor;
       background-color: $nightBgColor;
@@ -924,6 +1087,87 @@ export default {
               background-color: #1a2233;
             }
           }
+        }
+      }
+
+      /deep/ {
+        /* 个人中心（黑色主题） */
+        .el-select {
+          .el-input__inner {
+            border: 1px solid #485776;
+            color: #a9bed4;
+            background-color: #1c1f32;
+
+            &:focus {
+              border: 1px solid #338ff5;
+            }
+          }
+        }
+
+        .el-input__inner {
+          border: 1px solid #485776;
+          color: #a9bed4;
+          background-color: #1c1f32;
+
+          &:focus {
+            border: 1px solid #338ff5;
+          }
+        }
+
+        .el-input-group__append {
+          border-top: 1px solid #485776;
+          border-bottom: 1px solid #485776;
+          color: #338ff5;
+          background-color: #1e2636;
+          border-right: 1px solid #485776;
+        }
+
+        th,
+        tr {
+          background-color: #1c1f32;
+        }
+
+        .el-table {
+          thead {
+            color: #617499;
+          }
+
+          td {
+            border-bottom: 0;
+            color: #9da5b3;
+            background-color: #1c1f32;
+          }
+        }
+
+        .el-dialog {
+          background-color: #28334a;
+        }
+
+        .el-table--enable-row-hover {
+          .el-table__body {
+            td {
+              &:hover {
+                background-color: #1c1f32;
+              }
+            }
+          }
+        }
+
+        .el-table__empty-block {
+          color: #fff;
+          background-color: #1c1f32;
+        }
+
+        .el-dialog--center {
+          background-color: #28334a;
+        }
+
+        .el-dialog__title {
+          color: #fff;
+        }
+
+        th.is-leaf {
+          border-top: 0;
         }
       }
     }
@@ -995,6 +1239,39 @@ export default {
               background-color: #1a2233;
             }
           }
+        }
+      }
+
+      /deep/ {
+        /* 个人中心（白色主题） */
+        .el-form-item__label {
+          color: #7d90ac;
+        }
+
+        .el-select {
+          .el-input__inner {
+            border: 1px solid rgba(236, 241, 248, 1);
+            background-color: #fff;
+
+            &:focus {
+              border: 1px solid #eee;
+            }
+          }
+        }
+
+        .el-table__empty-block {
+          background-color: #fff;
+        }
+
+        .cell {
+          color: #333;
+        }
+
+        td {
+          padding: 7px 0;
+          border-bottom: 1px solid #fff;
+          color: #7d90ac;
+          background-color: #fff;
         }
       }
     }

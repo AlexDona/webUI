@@ -2,8 +2,6 @@
   <div
     class="set-phone personal"
     :class="{'day':theme == 'day','night':theme == 'night' }"
-    v-loading.fullscreen.lock="fullscreenLoading"
-    element-loading-background="rgba(0, 0, 0, 0.6)"
     :style="{
       height: windowHeight+'px'
     }"
@@ -186,21 +184,35 @@
                 :no-data-text="$t('M.comm_no_data')"
               >
                 <el-option
-                  v-for="(item, index) in contryAreaList"
-                  :key="index"
+                  v-for="item in contryAreaList"
+                  :key="item.nationCode"
                   :label="item.nationCode"
                   :value="item.nationCode"
                 >
+                  <span style="float: left;">
+                    <span v-show="language==='zh_CN'">
+                      {{ item.chinese }}
+                    </span>
+                    <span v-show="language!=='zh_CN'">
+                      {{item.english}}
+                    </span>
+                  </span>
+                  <span style=" float: right;
+                    color: #8492a6;
+                    font-size: 13px;"
+                  >{{ item.nationCode }}</span>
                 </el-option>
               </el-select>
               <input
                 type="text"
                 class="phone-input phone-input-left border-radius2 padding-l15 box-sizing"
-                v-model="amendDataPhone.newPhoneAccounts"
                 @keydown="tieErrorMsg(1,'')"
+                :ref="phoneNumRef"
+                @keyup="phoneNumRegexpInput(phoneNumRef)"
+                @input="phoneNumRegexpInput(phoneNumRef)"
                 @focus="resetNewPhoneIsExistStatus"
-                @blur="checkUserExistAjax('phone', amendDataPhone.newPhoneAccounts,'newPhone')"
               >
+              <!--@blur="checkUserExistAjax('phone', amendDataPhone.newPhoneAccounts,'newPhone')"-->
               <!--错误提示-->
               <ErrorBox
                 :text="tieErrorShowStatusList[1]"
@@ -278,6 +290,7 @@ import {
   bindPhoneAddress,
   changeMobilePhone
 } from '../../../utils/api/personal'
+import {phoneNumRegexpInput} from '../../../utils'
 import {checkUserExist} from '../../../utils/api/user'
 const { mapMutations } = createNamespacedHelpers('user')
 export default {
@@ -289,6 +302,7 @@ export default {
   },
   data () {
     return {
+      phoneNumRef: 'phone-num-ref',
       securityCenter: {}, // 个人信息
       errorMsg: '', // 错误信息提示
       bindingDataPhone: {
@@ -318,18 +332,12 @@ export default {
       ],
       successCountDown: 1, // 成功倒计时
       newPhoneIsExistStatus: false, // 新手机号是否已注册过
-      fullscreenLoading: false, // 整页loading
       emailBindPhoneCount: 0 // 邮箱绑定手机次数
     }
   },
   created () {
-    // 覆盖Element样式
-    require('../../../../static/css/list/Personal/UserSecuritySettings/UserSecurePhone.css')
-    // 白色主题样式
-    require('../../../../static/css/theme/day/Personal/UserSecuritySettings/UserSecurePhoneDay.css')
-    // 黑色主题样式
-    require('../../../../static/css/theme/night/Personal/UserSecuritySettings/UserSecurePhoneNight.css')
     this.getSecurityCenter()
+    this.refreshCode()
   },
   mounted () {},
   activited () {},
@@ -339,6 +347,10 @@ export default {
     ...mapMutations([
       'SET_USER_BUTTON_STATUS'
     ]),
+    phoneNumRegexpInput (ref) {
+      let target = this.$refs[ref]
+      this.amendDataPhone.newPhoneAccounts = phoneNumRegexpInput(target)
+    },
     // 点击返回上个页面
     returnSuperior () {
       this.$store.commit('personal/CHANGE_REF_SECURITY_CENTER_INFO', true)
@@ -355,6 +367,7 @@ export default {
     },
     // 发送验证码
     async sendPhoneOrEmailCode (loginType, val, type) {
+      await this.checkUserExistAjax()
       if (!type && !val && !this.bindingDataPhone.bindingNewPhoneAccounts) {
         this.$message({
           type: 'error',
@@ -545,16 +558,10 @@ export default {
           phone: this.bindingDataPhone.bindingNewPhoneAccounts, // 手机号
           code: this.bindingDataPhone.bindingNewPhoneCode // 手机验证码
         }
-        // 整页loading
-        this.fullscreenLoading = true
         data = await bindPhoneAddress(param)
         if (!(returnAjaxMsg(data, this, 1))) {
-          // 接口失败清除loading
-          this.fullscreenLoading = false
           return false
         } else {
-          // 接口成功清除loading
-          this.fullscreenLoading = false
           this.successJump()
           console.log(data)
         }
@@ -703,16 +710,10 @@ export default {
           newCode: this.amendDataPhone.newPhoneCode, // 新手机验证码
           payPassword: this.amendDataPhone.transactionPassword // 交易密码
         }
-        // 整页loading
-        this.fullscreenLoading = true
         data = await changeMobilePhone(param)
         if (!(returnAjaxMsg(data, this, 1))) {
-          // 接口失败清除loading
-          this.fullscreenLoading = false
           return false
         } else {
-          // 接口成功清除loading
-          this.fullscreenLoading = false
           this.stateEmptyData()
           this.successJump()
         }
@@ -732,8 +733,6 @@ export default {
       // 整页loading
       getSecurityCenter(this, {}, data => {
         if (data) {
-          // 接口成功清除loading
-          this.fullscreenLoading = false
           // this.securityCenter = data.data.data
           this.securityCenter = getNestedData(data, 'data.data')
         }
@@ -753,6 +752,7 @@ export default {
   computed: {
     ...mapState({
       theme: state => state.common.theme,
+      language: state => state.common.language,
       userInfo: state => state.user.loginStep1Info, // 用户详细信息
       userInfoDetail: state => state.user.loginStep1Info.userInfo,
       contryAreaList: state => state.common.contryAreaList,
@@ -867,6 +867,52 @@ export default {
       }
     }
 
+    /deep/ {
+      /* 覆盖Element样式 */
+      .el-form-item__content {
+        width: 650px;
+      }
+
+      .el-input__inner {
+        width: 130px;
+        height: 36px;
+        border-radius: 2px 0 0 2px;
+      }
+
+      .el-input-group {
+        width: 131px;
+        margin-right: 0;
+        border-radius: 4px;
+      }
+
+      .el-input-group__append {
+        padding: 0;
+        border-left: 0;
+        border-radius: 0 4px 4px 0;
+        cursor: pointer;
+      }
+
+      .el-input-group__prepend {
+        padding: 0 25px;
+      }
+
+      .el-form-item {
+        margin-bottom: 15px;
+      }
+
+      .el-select {
+        .el-input__inner {
+          width: 63px;
+          height: 34px;
+          padding: 0 7px;
+        }
+      }
+
+      .el-form-item__label {
+        width: 180px !important;
+      }
+    }
+
     &.night {
       color: $nightFontColor;
       background-color: $nightBgColor;
@@ -935,6 +981,22 @@ export default {
           }
         }
       }
+
+      /deep/ {
+        .el-input__inner {
+          border: 1px solid #485776;
+          background-color: transparent;
+
+          &:focus {
+            border: 1px solid #338ff5;
+          }
+        }
+
+        .el-input-group__append {
+          border: none;
+          background-color: #338ff5;
+        }
+      }
     }
 
     &.day {
@@ -993,6 +1055,22 @@ export default {
               background: linear-gradient(0deg, rgba(43, 57, 110, 1), rgba(42, 80, 130, 1));
             }
           }
+        }
+      }
+
+      /deep/ {
+        .el-input__inner {
+          border: 1px solid #ecf1f8;
+          background-color: transparent;
+
+          &:focus {
+            border: 1px solid #338ff5;
+          }
+        }
+
+        .el-input-group__append {
+          border: none;
+          background-color: #338ff5;
         }
       }
     }
