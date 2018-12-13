@@ -53,11 +53,17 @@ export const firstEnterBusinessApply = (params) => get('otcMerchApply/getUserMer
 // 商家申请页面点击用户协议
 export const argumentBusinessApply = (params) => get('cms/terms/selectAll', params)
 // 广告管理列表请求
-export const getOTCADManageApplyList = (params) => get('otcEntrust/selectMerchEntrustsPage', params)
+export const getOTCADManageApplyList = (params) => get('otcEntrust/selectMerchEntrustsPage', Object.assign({
+  'not-loading': true
+}, params))
 // 商家订单列表请求
-export const getOTCMerchantsOrdersList = (params) => get('otcOrder/selectMerchOrdersPage', params)
+export const getOTCMerchantsOrdersList = (params) => get('otcOrder/selectMerchOrdersPage', Object.assign({
+  'not-loading': true
+}, params))
 // 报表统计
-export const getOTCReportFormStatisticsData = (params) => get('otcOrder/selectMerchStatics', params)
+export const getOTCReportFormStatisticsData = (params) => get('otcOrder/selectMerchStatics', Object.assign({
+  'not-loading': true
+}, params))
 //  币种详情：商家和普通用户挂单页面请求币种详情渲染页面
 export const getOTCCoinInfo = (params) => get('otcCOin/getCoinInfo', params)
 // 投资理财请求数据
