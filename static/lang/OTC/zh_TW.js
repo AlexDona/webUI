@@ -121,7 +121,7 @@ export const OTC = {
   'otc_freezing_time': '凍結時間',
   'otc_entrust': '委托訂單',
   'otc_entrust_number': '掛單數量',
-  'otc_entrust_matching': '已匹配數量',
+  'otc_entrust_matching': '已成交數量',
   'otc_entrust_time': '掛單時間',
   'otc_make_a_bargain_time': '成交時間',
   'otc_entrust_cancellations': '撤單',
@@ -213,7 +213,7 @@ export const OTC = {
   'otc_publishAD_sum_and_limitMoney': '數量與限額',
   'otc_publishAD_minlimitMoney': '單筆最小限額',
   'otc_publishAD_maxlimitMoney': '單筆最大限額',
-  'otc_publishAD_adviceToFill': '建議填寫',
+  'otc_publishAD_adviceToFill': '可選填',
   'otc_publishAD_liveMessage': '請說明有關於您交易的相關條款或者其它您想讓對方獲悉得信息，以便對方和您快速交易',
   'otc_publishAD_maxOrder': '同時處理最大訂單數',
   'otc_publishAD_noLimit': '不限制',
@@ -328,5 +328,7 @@ export const OTC = {
   // 申请成为商家
   'otc_apply_tips1': '溫馨提示',
   'otc_apply_tips2': '您需要先申請成為商家才能使用此功能！',
-  'otc_order_reason': '原因'
+  'otc_order_reason': '原因',
+  'otc_publish_ad_err1': '同時處理最大訂單數不能為空',
+  'otc_publish_ad_err2': '賣家必須成交過幾次不能為空'
 }

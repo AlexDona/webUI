@@ -121,7 +121,7 @@ export const OTC = {
   'otc_freezing_time': '冻结时间',
   'otc_entrust': '委托订单',
   'otc_entrust_number': '挂单数量',
-  'otc_entrust_matching': '已匹配数量',
+  'otc_entrust_matching': '已成交数量',
   'otc_entrust_time': '挂单时间',
   'otc_make_a_bargain_time': '成交时间',
   'otc_entrust_cancellations': '撤单',
@@ -213,7 +213,7 @@ export const OTC = {
   'otc_publishAD_sum_and_limitMoney': '数量与限额',
   'otc_publishAD_minlimitMoney': '单笔最小限额',
   'otc_publishAD_maxlimitMoney': '单笔最大限额',
-  'otc_publishAD_adviceToFill': '建议填写',
+  'otc_publishAD_adviceToFill': '可选填',
   'otc_publishAD_liveMessage': '请说明有关于您交易的相关条款或者其它您想让对方获悉得信息，以便对方和您快速交易',
   'otc_publishAD_maxOrder': '同时处理最大订单数',
   'otc_publishAD_noLimit': '不限制',
@@ -327,5 +327,7 @@ export const OTC = {
   // 申请成为商家
   'otc_apply_tips1': '温馨提示',
   'otc_apply_tips2': '您需要先申请成为商家才能使用此功能！',
-  'otc_order_reason': '原因'
+  'otc_order_reason': '原因',
+  'otc_publish_ad_err1': '同时处理最大订单数不能为空',
+  'otc_publish_ad_err2': '卖家必须成交过几次不能为空'
 }

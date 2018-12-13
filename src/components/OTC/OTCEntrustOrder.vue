@@ -28,6 +28,7 @@
           {{$t('M.otc_entrust_number')}}
         </span>
         <!-- 已匹配数量 -->
+        <!-- 20181213改为 已成交数量-->
         <span class="item fifth-match-count">
           {{$t('M.otc_entrust_matching')}}
         </span>

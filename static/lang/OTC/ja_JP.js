@@ -121,7 +121,7 @@ export const OTC = {
   'otc_freezing_time': 'フリーズタイム',
   'otc_entrust': '委託注文',
   'otc_entrust_number': 'オーダー数量',
-  'otc_entrust_matching': 'マッチ数量',
+  'otc_entrust_matching': '取引数量',
   'otc_entrust_time': 'オーダー時間',
   'otc_make_a_bargain_time': '取引時間',
   'otc_entrust_cancellations': '取消す',
@@ -213,7 +213,7 @@ export const OTC = {
   'otc_publishAD_sum_and_limitMoney': '数量と割当',
   'otc_publishAD_minlimitMoney': '最小割当',
   'otc_publishAD_maxlimitMoney': '最大割当',
-  'otc_publishAD_adviceToFill': '提案',
+  'otc_publishAD_adviceToFill': 'オプション',
   'otc_publishAD_liveMessage': '関連な取引条件と他のメッセージが相手に教えて、早めに取引できるようにしてください。',
   'otc_publishAD_maxOrder': '同時に最大注文数量を処理する',
   'otc_publishAD_noLimit': '無制限',
@@ -329,5 +329,7 @@ export const OTC = {
   // 申请成为商家
   'otc_apply_tips1': 'ヒント',
   'otc_apply_tips2': 'この功能を使用するためには、まず商家になる必要があります!',
-  'otc_order_reason': '原因'
+  'otc_order_reason': '原因',
+  'otc_publish_ad_err1': '同処理注文の最大数は空ではできません',
+  'otc_publish_ad_err2': '売り手は数回売れていて空ではできません'
 }

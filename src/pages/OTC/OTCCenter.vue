@@ -570,7 +570,21 @@ export default {
     // 0.2 点击发布订单按钮跳转到发布订单页面
     toPublishOrder () {
       // 增加没有币种和法币点击按钮不跳转的验证
-      if (this.selectedOTCAvailableCurrencyCoinID == '' && this.activitedCurrencyId == '') {
+      // if (this.selectedOTCAvailableCurrencyCoinID == '' && this.activitedCurrencyId == '') {
+      //   return false
+      // }
+      if (!this.selectedOTCAvailableCurrencyCoinID) {
+        this.$message({
+          message: '请选择要发布的币种',
+          type: 'error'
+        })
+        return false
+      }
+      if (!this.activitedCurrencyId) {
+        this.$message({
+          message: '请选择法币类型',
+          type: 'error'
+        })
         return false
       }
       // 未登录跳转到登录页面

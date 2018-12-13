@@ -357,6 +357,7 @@
                       class="password-input"
                       v-model="tradePassword"
                       @focus="tradePasswordFocus"
+                      @keyup.enter="addOTCPutUpOrdersSubmitButton"
                     >
                   </div>
                   <div class="error-info">

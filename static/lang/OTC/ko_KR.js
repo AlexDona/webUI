@@ -121,7 +121,7 @@ export const OTC = {
   'otc_freezing_time': '동결 시간',
   'otc_entrust': '위임한 주문',
   'otc_entrust_number': '대기중인 주문 수',
-  'otc_entrust_matching': '정합된 수량',
+  'otc_entrust_matching': '거래량',
   'otc_entrust_time': '주문 시간',
   'otc_make_a_bargain_time': '거래 완료 시간',
   'otc_entrust_cancellations': '철수',
@@ -213,7 +213,7 @@ export const OTC = {
   'otc_publishAD_sum_and_limitMoney': '수량 및 제한 액수',
   'otc_publishAD_minlimitMoney': '매번 최소 한도',
   'otc_publishAD_maxlimitMoney': '매번 최대 한도',
-  'otc_publishAD_adviceToFill': '입력 건의',
+  'otc_publishAD_adviceToFill': '선택 사항',
   'otc_publishAD_liveMessage': '빨리 거래 완료하려면 상대방에게 조건이나 상대방에게 알리고 싶은내용이 있으면 입력해주세요',
   'otc_publishAD_maxOrder': '동시 처리 가능 최대 주문수 ',
   'otc_publishAD_noLimit': '제한 없음',
@@ -329,5 +329,7 @@ export const OTC = {
   // 申请成为商家
   'otc_apply_tips1': '따뜻한 힌트.',
   'otc_apply_tips2': '이 기능을 사용하려면 비즈니스가되기 위해 신청해야합니다.',
-  'otc_order_reason': '이유'
+  'otc_order_reason': '이유',
+  'otc_publish_ad_err1': '동시에 처리 할 수있는 최대 주문 수는 비워 둘 수 없습니다.',
+  'otc_publish_ad_err2': '판매자는 몇 차례 팔렸어야하며 비어있을 수 없습니다.'
 }

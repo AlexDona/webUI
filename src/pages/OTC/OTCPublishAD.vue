@@ -26,9 +26,9 @@
                 {{$t('M.otc_pl')}}
               </p>
               <!-- 必填 -->
-              <p class="warning font-size12">
-                {{$t('M.otc_publishAD_nustFill')}}
-              </p>
+              <!--<p class="warning font-size12">-->
+                <!--{{$t('M.otc_publishAD_nustFill')}}-->
+              <!--</p>-->
             </div>
             <div class="right display-inline-block">
               <!-- 买卖类型 -->
@@ -90,12 +90,12 @@
             <div class="left display-inline-block">
               <!-- 销售价格 -->
                 <p class="tips font-size14">
-                  {{$t('M.otc_sell')}}{{$t('M.otc_index_price')}}
+                  <span class="must-fill-star">*</span>{{$t('M.otc_sell')}}{{$t('M.otc_index_price')}}
                 </p>
                 <!-- 必填 -->
-                <p class="warning font-size12">
-                  {{$t('M.otc_publishAD_nustFill')}}
-                </p>
+                <!--<p class="warning font-size12">-->
+                  <!--{{$t('M.otc_publishAD_nustFill')}}-->
+                <!--</p>-->
             </div>
             <div class="right display-inline-block">
               <div>
@@ -143,12 +143,12 @@
             <div class="left display-inline-block">
               <!-- 交易方式 -->
                 <p class="tips font-size14">
-                  {{$t("M.otc_publishAD_selltype")}}
+                  <span class="must-fill-star">*</span>{{$t("M.otc_publishAD_selltype")}}
                 </p>
                 <!-- 必填 -->
-                <p class="warning font-size12">
-                  {{$t('M.otc_publishAD_nustFill')}}
-                </p>
+                <!--<p class="warning font-size12">-->
+                  <!--{{$t('M.otc_publishAD_nustFill')}}-->
+                <!--</p>-->
             </div>
             <div class="right display-inline-block">
               <el-checkbox-group
@@ -200,12 +200,12 @@
             <div class="left display-inline-block">
                 <!-- 数量与限额 -->
                 <p class="tips font-size14">
-                  {{$t('M.otc_publishAD_sum_and_limitMoney')}}
+                  <span class="must-fill-star">*</span>{{$t('M.otc_publishAD_sum_and_limitMoney')}}
                 </p>
                 <!--必填  -->
-                <p class="warning font-size12">
-                  {{$t('M.otc_publishAD_nustFill')}}
-                </p>
+                <!--<p class="warning font-size12">-->
+                  <!--{{$t('M.otc_publishAD_nustFill')}}-->
+                <!--</p>-->
             </div>
             <div class="right display-inline-block">
               <!-- 交易数量 -->
@@ -294,7 +294,7 @@
                 <p class="tips font-size14">
                   {{$t('M.comm_remark')}}
                 </p>
-                <!-- 建议填写 -->
+                <!-- 可选填 -->
                 <p class="warning font-size12">
                   {{$t('M.otc_publishAD_adviceToFill')}}
                 </p>
@@ -316,12 +316,12 @@
             <div class="left display-inline-block">
               <!-- 限制设置 -->
                 <p class="tips font-size14">
-                  {{$t('M.otc_publishAD_setLimit')}}
+                  <span class="must-fill-star">*</span>{{$t('M.otc_publishAD_setLimit')}}
                 </p>
-                <!-- 必选 -->
-                <p class="warning font-size12">
-                  {{$t('M.otc_publishAD_nustFill')}}
-                </p>
+                <!-- 必填 -->
+                <!--<p class="warning font-size12">-->
+                  <!--{{$t('M.otc_publishAD_nustFill')}}-->
+                <!--</p>-->
             </div>
             <div class="right display-inline-block">
               <div>
@@ -353,6 +353,7 @@
                   v-model="limitOrderCount"
                   onkeyup="this.value=this.value.replace(/\D/g,'')"
                   onafterpaste="this.value=this.value.replace(/\D/g,'')"
+                  @focus="clearLimitOrderCountErrData"
                 >
                 <!-- 错误提示 -->
                 <div class="err">{{errorInfoLimitOrderCount}}</div>
@@ -367,6 +368,7 @@
                   v-model="successOrderCount"
                   onkeyup="this.value=this.value.replace(/\D/g,'')"
                   onafterpaste="this.value=this.value.replace(/\D/g,'')"
+                  @focus="clearSuccessOrderCountErrData"
                 >
                 <!-- 错误提示 -->
                 <div class="err">{{errorInfoSuccessOrderCount}}</div>
@@ -401,6 +403,7 @@
                   class="password-input"
                   v-model="tradePassword"
                   @focus="tradePasswordFocus"
+                  @keyup.enter="publishADSubmitButton"
                 >
               </div>
               <div class="error-info">
@@ -513,9 +516,9 @@ export default {
       // 最高价
       maxPrice: '',
       // 同时处理最大订单数(0=不限制)
-      limitOrderCount: '',
+      limitOrderCount: '0',
       // 买家必须成交过几次(0=不限制)
-      successOrderCount: '',
+      successOrderCount: '0',
       // 备注
       remarkText: '',
       // 交易密码
@@ -736,7 +739,26 @@ export default {
         return false
       }
       // 限制设置--非必输选项
+      // 20181213增加非空验证：变为了必须字段
+      if (!this.limitOrderCount) {
+        // this.errorInfoLimitOrderCount = '同时处理最大订单数不能为空'
+        this.errorInfoLimitOrderCount = this.$t('M.otc_publish_ad_err1')
+        return false
+      }
+      if (!this.successOrderCount) {
+        // this.errorInfoSuccessOrderCount = '卖家必须成交过几次不能为空'
+        this.errorInfoSuccessOrderCount = this.$t('M.otc_publish_ad_err2')
+        return false
+      }
       this.dialogVisible = true
+    },
+    // 同时处理最大订单数获得焦点清空错误信息
+    clearLimitOrderCountErrData () {
+      this.errorInfoLimitOrderCount = ''
+    },
+    // 卖家必须成交过几次获得焦点清空错误信息
+    clearSuccessOrderCountErrData () {
+      this.errorInfoSuccessOrderCount = ''
     },
     // 6.0 点击密码框中的提交按提交钮发布广告
     async publishADSubmitButton () {
@@ -1022,6 +1044,10 @@ export default {
 
       > .AD-big-form {
         width: 720px;
+
+        .must-fill-star {
+          color: red;
+        }
 
         > .common {
           box-sizing: border-box;

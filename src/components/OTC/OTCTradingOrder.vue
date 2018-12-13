@@ -496,9 +496,9 @@
               >
                 <p class="action-explain">
                   <el-button
-                    type="primary"
+                    plain
+                    disabled
                     size="mini"
-                    @click="gatheringBefore"
                   >
                     <!-- 确认收款 -->
                     {{$t('M.otc_trading_collectionconfirmation')}}
@@ -974,14 +974,6 @@ export default {
     // 5.0 买家点击确认付款按钮 点击交易密码框中的提交按钮--交易密码狂获得焦点
     passWordFocus () {
       this.errpwd = ''
-    },
-    // 6.0 卖家在买家付款前点击确认收款按钮的提示事件
-    gatheringBefore () {
-      this.$message({
-        // 请等待买家付款
-        message: this.$t('M.comm_please') + this.$t('M.otc_waiting_buyer_payment') + '。',
-        type: 'error'
-      })
     },
     // 7.0 买家点击确认付款按钮 点击交易密码框中的提交按钮
     async submitConfirmPayment () {
@@ -1585,6 +1577,12 @@ export default {
     }
 
     /deep/ {
+      .action-explain .el-button.el-button--default.el-button--mini.is-disabled.is-plain {
+        border: 0;
+        color: #fff;
+        background-color: rgba(255, 255, 255, .4);
+      }
+
       .el-input--suffix {
         .el-input__inner {
           width: 170px;
@@ -1869,6 +1867,12 @@ export default {
     }
 
     /deep/ {
+      .action-explain .el-button.el-button--default.el-button--mini.is-disabled.is-plain {
+        border: 0;
+        color: #b0b0b0;
+        background-color: #e7e7e7;
+      }
+
       .el-input--suffix {
         .el-input__inner {
           width: 170px;
