@@ -491,11 +491,12 @@ export default{
     ]),
     // 非商家禁止进入OTC导航页提示框--开始
     applyMerchant () {
-      // this.reflashUserInfo()
-      if (!(this.userInfo.type === 'MERCHANT')) {
-        this.showApplyMerchantStatus = true
-        return false
-      } else {
+      if (this.isLogin) {
+        if (!(this.userInfo.type === 'MERCHANT')) {
+          this.showApplyMerchantStatus = true
+          return false
+        } else {
+        }
       }
     },
     cancelApply () {
