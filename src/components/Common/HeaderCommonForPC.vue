@@ -438,6 +438,8 @@ export default{
     }
   },
   async created () {
+    // f5刷新页面刷新用户信息列表
+    this.reflashUserInfo()
     if (getStore('convertCurrency')) {
       this.activeConvertCurrency = getStore('convertCurrency')
     }
@@ -489,9 +491,8 @@ export default{
     ]),
     // 非商家禁止进入OTC导航页提示框--开始
     applyMerchant () {
-      if (this.userInfo.type === 'COMMON') {
-        // this.$router.push({path: '/OTCBusinessApply'})
-        // this.$router.push({path: '/OTCCenter'})
+      // this.reflashUserInfo()
+      if (!(this.userInfo.type === 'MERCHANT')) {
         this.showApplyMerchantStatus = true
         return false
       } else {
