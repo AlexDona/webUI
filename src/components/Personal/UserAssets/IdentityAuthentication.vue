@@ -91,6 +91,11 @@
               >
               </el-option>
             </el-select>
+            <!--错误提示-->
+            <ErrorBox
+              :text="errorShowStatusList[3]"
+              :isShow="!!errorShowStatusList[3]"
+            />
           </el-form-item>
           <!-- 证件类型 -->
           <el-form-item
@@ -107,7 +112,7 @@
                 v-for="(item, index) in documentTypeList"
                 :key="index"
                 :label="language === 'zh_CN' || language === 'zh_TW'? item.certificateName : item.english"
-                :value="item.certificateName"
+                :value="item.certificateId"
               >
               </el-option>
               <!-- <el-option
@@ -137,7 +142,7 @@
           </el-form-item>
           <!-- 身份证证件号码 -->
           <el-form-item
-            v-if="documentTypeValue == '身份证'"
+            v-if="documentTypeValue == 1"
             :label="$t('M.comm_credentials_number')"
           >
             <input
@@ -600,7 +605,7 @@ export default {
       },
       regionValue: '', // 国家
       regionList: [], // 国家地区列表
-      documentTypeValue: '身份证', // 证件
+      documentTypeValue: 1, // 证件
       documentTypeList: [
         {
           certificateId: 1,
@@ -647,7 +652,8 @@ export default {
       errorShowStatusList: [
         '', // 真实姓名
         '', // 证件号码
-        '' // 护照号码
+        '', // 护照号码
+        '' // 国籍
       ],
       fullscreenLoading: false // 整页loading
     }
@@ -827,6 +833,7 @@ export default {
               return 0
               // '请输入正确的证件号码'
             case 2:
+              console.log(1)
               this.setErrorMsg(1, this.$t('M.comm_please_enter') + this.$t('M.user_security_correct') + this.$t('M.user_real_certificate_cone'))
               this.$forceUpdate()
               return 0
@@ -843,6 +850,16 @@ export default {
             this.$forceUpdate()
             return 1
           }
+        case 3:
+          if (!targetNum) {
+            this.setErrorMsg(3, '请选择国籍')
+            this.$forceUpdate()
+            return 0
+          } else {
+            this.setErrorMsg(3, '')
+            this.$forceUpdate()
+            return 1
+          }
       }
     },
     // 设置错误信息
@@ -856,8 +873,9 @@ export default {
     async stateSubmitRealName () {
       let goOnStatus = 0
       if (
+        this.checkoutInputFormat(3, this.regionValue) &&
         this.checkoutInputFormat(0, this.realName) &&
-        this.checkoutInputFormat(1, this.identificationNumber)
+        this.checkoutInputFormat(this.documentTypeValue, this.identificationNumber)
       ) {
         goOnStatus = 1
       } else {

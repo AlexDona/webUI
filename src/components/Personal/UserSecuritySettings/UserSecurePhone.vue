@@ -328,6 +328,7 @@ export default {
   },
   created () {
     this.getSecurityCenter()
+    this.refreshCode()
   },
   mounted () {},
   activited () {},
