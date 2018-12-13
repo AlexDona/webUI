@@ -4,10 +4,7 @@
     :class="{'day':theme == 'day','night':theme == 'night' }"
   >
     <!-- 1.0 banner -->
-    <div class="banner-box" :style="{
-      width:screenWidth + 'px',
-      height:(screenWidth*131)/480 + 'px'
-    }">
+    <div class="banner-box">
       <img src="../../assets/finance/banner.png">
       <div class="banner-title">
         <!-- 存币收益 -->
@@ -103,11 +100,11 @@
                 <div class='invest-mounte'>
                   <!-- 请输入数量 -->
                   <input
-                    v-model="investMounte"
+                    type="text"
+                    ref="investMounteRef"
                     :placeholder="$t('M.finance_input_sum')"
                     @keyup="changeInvestMounte"
-                    onkeyup="if(this.value.length==1){this.value=this.value.replace(/[^1-9]/g,'')}else{this.value=this.value.replace(/\D/g,'')}"
-                    onafterpaste="if(this.value.length==1){this.value=this.value.replace(/[^1-9]/g,'')}else{this.value=this.value.replace(/\D/g,'')}"
+                    @input="checkInput('investMounteRef')"
                   >
                   <strong>{{selecteCoindName}}</strong>
                 </div>
@@ -157,12 +154,12 @@
                     :label="$t('M.comm_count')"
                   >
                     <div class='invest-mounte'>
-                      <el-input
-                        v-model="formLabelAlign.number"
-                        class="red"
-                        @input="changeAlignNumber"
+                      <input
+                        class="red text-indent"
+                        type='text'
+                        ref='changeAlignNum'
+                        @input="changeAlignNumber('changeAlignNum', 'investMounteRef', $event)"
                       >
-                      </el-input>
                       <strong>{{selecteCoindName}}</strong>
                     </div>
                   </el-form-item>
@@ -222,8 +219,6 @@
                         <span class="blue">{{item.amount}}</span>
                         <span class='blue'>{{selecteCoindName}}</span>
                         <span>
-                          <!-- ({{formLabelAlign.jsonTimeline[formLabelAlign.jsonTimeline.length-1].length == 1 ? $t('M.finance_capital') + '+' + $t('M.finance_accrual') : $t('M.finance_accrual')}}) -->
-                          <!-- ({{formLabelAlign.jsonTimeline[formLabelAlign.jsonTimeline.length-1]}}) -->
                           ({{index == formLabelAlign.jsonTimeline.length - 1 ? $t('M.finance_capital') + '+' + $t('M.finance_accrual') : $t('M.finance_accrual')}})
                         </span>
                       </li>
@@ -241,6 +236,7 @@
                   <!-- 确定 -->
                   <el-button
                     type="primary"
+                    :disabled="stopClick"
                     @click="dialogSuer"
                   >
                     {{$t('M.comm_affirm')}}
@@ -634,7 +630,8 @@ export default {
       ],
       // n天后的时间
       brforeNtime: '',
-      interestRateValue: '' // 年利率
+      interestRateValue: '', // 年利率
+      stopClick: false
     }
   },
   created () {
@@ -679,6 +676,23 @@ export default {
         // this.$router.push({path: '/login'})
       }
     },
+    // 限制币存币数量不能为0
+    checkInput (ref) {
+      let value = this.$refs[ref].value
+      let arr = value.split('')
+      let str = ''
+      _.forEach(arr, (item, index) => {
+        if (index == 0 && item == '0') {
+          str = ''
+        } else {
+          if (item - 0 || item == '0') {
+            str += item
+          }
+        }
+      })
+      this.$refs[ref].value = str
+      this.investMounte = str
+    },
     // 输入金额改变时检测用户输入的币种总金额
     async getUserCoindTotal () {
       const data = await getPushTotalByCoinId({
@@ -698,11 +712,15 @@ export default {
     getInvestEarnings () {
       // console.log(111.00)
       if (this.isLogin) {
-        if (this.selectedInvestTypeId && this.investMounte && this.isShow === false) {
-          // 显示理财详情模态框前请求数据渲染模态框
-          this.clickGetInvestEarnings()
-          // 显示模态框
-          this.dialogVisible = true
+        if (this.selectedInvestTypeId && this.investMounte) {
+          if (this.isShow === false) {
+            // 显示理财详情模态框前请求数据渲染模态框
+            this.clickGetInvestEarnings()
+            // 显示模态框
+            this.dialogVisible = true
+          } else {
+            return false
+          }
         } else {
           this.$message({
             // 存币类型或存币数量不能为空
@@ -721,14 +739,32 @@ export default {
     },
     // 点击确定按钮模态框关闭
     dialogSuer () {
+      this.stopClick = true
       this.dialogVisible = false
       // 执行存币按钮
       this.clickImmediateInvestment()
     },
     // 模态框数字发生变化时需要执行的方法
-    changeAlignNumber (e) {
-      this.investMounte = e
-      this.clickGetInvestEarnings()
+    changeAlignNumber (ref1, ref2, e) {
+      let arr = e.target.value.split('')
+      let str = ''
+      _.forEach(arr, (item, index) => {
+        if (index == 0 && item == '0') {
+          str = ''
+        } else {
+          if (item - 0 || item == '0') {
+            str += item
+          }
+        }
+      })
+      this.investMounte = str
+      // 将本身赋值
+      this.$refs[ref1].value = str
+      // 主理财页面赋值
+      this.$refs[ref2].value = str
+      if (str) {
+        this.clickGetInvestEarnings()
+      }
     },
     // 理财记录模态框显示
     async clickGetInvestEarnings () {
@@ -741,8 +777,9 @@ export default {
       if (!(returnAjaxMsg(data, this, 0))) {
         return false
       } else {
-        // this.formLabelAlign = data.data.data
         this.formLabelAlign = getNestedData(data, 'data.data')
+        this.$refs.changeAlignNum.value = this.formLabelAlign.number
+        console.log(this.$refs.changeAlignNum.value)
         this.interestRateValue = (this.formLabelAlign.interestRate - 0) * 100
       }
     },
@@ -759,6 +796,8 @@ export default {
       } else {
         // 重新调一次币种接口刷新列表
         this.getFinancialManagementList()
+        // 请求回来时将按钮解除禁用
+        this.stopClick = false
         // 存币成功
         this.$message({
           message: this.$t('M.finance_invest') + this.$t('M.comm_success'),
@@ -847,6 +886,7 @@ export default {
         this.FINANCE_LINE_STATUS(1)
         // 将存币数量输入框清空
         this.investMounte = ''
+        this.$refs.investMounteRef.value = ''
       }
     },
     // 用户取消存币接口
@@ -943,6 +983,42 @@ export default {
   /* 公共scss样式 */
   @import "../../../static/css/scss/InvestmentFinance/FinanceCenter";
 
+  @media screen and (min-width: 768px) and (max-width: 1336px) {
+    .banner-title {
+      position: absolute;
+      top: 50%;
+      right: 25%;
+      width: 400px;
+      font-size: 40px;
+      text-align: center;
+      color: #fff;
+    }
+  }
+
+  @media screen and (min-width: 1337px) and (max-width: 1920px) {
+    .banner-title {
+      position: absolute;
+      top: 50%;
+      right: 29%;
+      width: 400px;
+      font-size: 40px;
+      text-align: center;
+      color: #fff;
+    }
+  }
+
+  @media screen and (min-width: 1921px) and (max-width: 2560px) {
+    .banner-title {
+      position: absolute;
+      top: 50%;
+      right: 32%;
+      width: 400px;
+      font-size: 40px;
+      text-align: center;
+      color: #fff;
+    }
+  }
+
   .finance-box {
     width: 100%;
     min-width: 1300px;
@@ -950,21 +1026,11 @@ export default {
 
     > .banner-box {
       position: relative;
-      height: 459px;
+      width: 100%;
+      margin: 0 auto;
 
-      > img {
+      img {
         width: 100%;
-        height: 100%;
-      }
-
-      > .banner-title {
-        position: absolute;
-        top: 50%;
-        left: 50%;
-        width: 400px;
-        font-size: 40px;
-        text-align: center;
-        color: #fff;
       }
     }
 
@@ -1653,6 +1719,10 @@ export default {
       color: #d45858;
     }
 
+    .text-indent {
+      text-indent: 10px;
+    }
+
     .red2 {
       color: #b73c36;
     }
@@ -1677,7 +1747,7 @@ export default {
     }
 
     .totalTipsPositon {
-      margin: -36px 0 -20px 72px;
+      margin: -36px 0 -20px 110px;
       color: #d45858;
     }
   }

@@ -15,7 +15,7 @@
             <el-table-column type="expand">
               <template slot-scope="s">
                 <div class="completed-info">
-                  <!-- 左侧 -->
+                  <!-- 左侧信息 -->
                   <div class="completed-info-left">
                     <!-- 付款信息 -->
                     <p class="order-info-left">

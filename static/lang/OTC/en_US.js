@@ -336,5 +336,9 @@ export const OTC = {
   'otc_tradingorder_autoCancel': ' minutes，receive the payment otherwise the order will be cancelled automatically.',
   'otc_tradingorder_orderExact': 'After the order is generated within ',
   'otc_index_inputSellAccount': 'Sell amount cannot be 0',
-  'otc_index_inputBuyAccount': 'Buy amount cannot be 0'
+  'otc_index_inputBuyAccount': 'Buy amount cannot be 0',
+  // 申请成为商家
+  'otc_apply_tips1': 'Tips',
+  'otc_apply_tips2': 'First apply to become a merchant then use this function!',
+  'otc_order_reason': 'Reason'
 }

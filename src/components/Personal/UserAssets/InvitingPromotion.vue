@@ -358,7 +358,8 @@ export default {
       partLoading: false // 局部列表loading
     }
   },
-  created () {
+  async created () {
+    // await this.currencyTransform()
   },
   mounted () {
     console.log(domain)
@@ -376,7 +377,7 @@ export default {
     async currencyTransform () {
       console.log(1)
       const params = {
-        coinName: 'HF',
+        coinName: 'BTC',
         shortName: 'CNY'
       }
       const data = await currencyTransform(params)
@@ -389,6 +390,7 @@ export default {
         if (data.data.data.coinPrice) {
           // this.BTC2CNYRate = data.data.data.coinPrice
           this.BTC2CNYRate = getNestedData(data, 'data.data.coinPrice')
+          console.log(this.BTC2CNYRate)
         }
       }
     },
@@ -798,13 +800,15 @@ export default {
           border-bottom: 0;
         }
 
+        tr {
+          &:hover td {
+            background-color: #1c1f32;
+          }
+        }
+
         td {
           border-bottom: 0;
           color: #ccc;
-
-          &:hover {
-            background-color: #1c1f32;
-          }
         }
 
         .cell {

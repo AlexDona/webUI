@@ -261,8 +261,8 @@
                 {{ $t('M.user_security_binding') }}
               </span>
               <span v-else>
-                <!--换绑-->
-                {{ $t('M.user_security_in_tie') }}
+                <!--解绑-->
+                {{ $t('M.user_security_unbundle') }}
               </span>
             </button>
           </div>
@@ -364,6 +364,7 @@
                 v-else
               >
                 <input
+                  type="number"
                   class="input padding-l15 box-sizing"
                   v-model="phoneCode"
                   @focus="handleinput1"
@@ -383,6 +384,7 @@
                 v-else
               >
                 <input
+                  type="number"
                   class="input padding-l15 box-sizing"
                   v-model="emailCode"
                   @focus="handleinput1"
@@ -401,6 +403,7 @@
                 v-else
               >
                 <input
+                  type="number"
                   class="input input-google border-radius2 padding-l15 box-sizing"
                   v-model="googleCode"
                   @focus="handleinput1"
@@ -446,6 +449,7 @@
                 v-show="openPhone"
               >
                 <input
+                  type="number"
                   class="input padding-l15 box-sizing"
                   v-model="phoneCode"
                   @focus="handleinput"
@@ -463,6 +467,7 @@
                 v-show="openEmail"
               >
                 <input
+                  type="number"
                   class="input padding-l15 box-sizing"
                   v-model="emailCode"
                   @focus="handleinput"
@@ -480,6 +485,7 @@
                 v-show="openGoogle"
               >
                 <input
+                  type="number"
                   class="input input-google border-radius2 padding-l15 box-sizing"
                   v-model="googleCode"
                   @focus="handleinput"
@@ -1198,6 +1204,13 @@ export default {
               text-align: right;
             }
           }
+
+          &:nth-child(4) {
+            .cell {
+              padding-right: 45px;
+              text-align: right;
+            }
+          }
         }
 
         td {
@@ -1368,7 +1381,7 @@ export default {
 
           .input {
             border: 1px solid #485776;
-            color: #333;
+            color: #fff;
 
             &:focus {
               border: 1px solid #338ff5;

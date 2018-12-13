@@ -13,5 +13,6 @@ export const actionCenter = {
   'actionCenter_Token_step5': '投票',
   'actionCenter_Token_step6': '新币登录投票',
   'actionCenter_Token_step7': '上线',
-  'actionCenter_Token_step8': '上线交易区'
+  'actionCenter_Token_step8': '上线交易区',
+  'actionCenter_coin_apply': '上幣申請'
 }

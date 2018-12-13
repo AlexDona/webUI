@@ -32,6 +32,10 @@ const i18n = new VueI18n({
 ELEMENT.i18n((key, value) => i18n.t(key, value)) // element插件的多语言切换
 Vue.config.productionTip = false
 
+router.afterEach((to, from, next) => {
+  window.scrollTo(0, 0)
+})
+
 let vm = new Vue({
   el: '#app',
   router,

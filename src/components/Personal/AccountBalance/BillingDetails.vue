@@ -12,10 +12,10 @@
         <!--@click.prevent.prevent="clickTableCut(1)"-->
       </span>
       <!--<span-->
-        <!--class="header-content display-inline-block font-size16 cursor-pointer"-->
-        <!--@click.prevent.prevent="clickTableCut(2)"-->
+      <!--class="header-content display-inline-block font-size16 cursor-pointer"-->
+      <!--@click.prevent.prevent="clickTableCut(2)"-->
       <!--&gt;-->
-        <!--其他记录-->
+      <!--其他记录-->
       <!--</span>-->
     </header>
     <div class="billing-details-main paddinglr20 margin-top9">
@@ -63,18 +63,18 @@
         </div>
         <!--其他记录-->
         <!--<div class="float-left margin-left50 cursor-pointer">-->
-          <!--<span class="demonstration">类型</span>-->
-          <!--<el-select-->
-            <!--v-model="otherRecordsValue"-->
-          <!--&gt;-->
-            <!--<el-option-->
-              <!--v-for="item in otherRecordsType"-->
-              <!--:key="item.value"-->
-              <!--:label="item.label"-->
-              <!--:value="item.value"-->
-            <!--&gt;-->
-            <!--</el-option>-->
-          <!--</el-select>-->
+        <!--<span class="demonstration">类型</span>-->
+        <!--<el-select-->
+        <!--v-model="otherRecordsValue"-->
+        <!--&gt;-->
+        <!--<el-option-->
+        <!--v-for="item in otherRecordsType"-->
+        <!--:key="item.value"-->
+        <!--:label="item.label"-->
+        <!--:value="item.value"-->
+        <!--&gt;-->
+        <!--</el-option>-->
+        <!--</el-select>-->
         <!--</div>-->
         <div class="float-left margin-left58 cursor-pointer">
           <div class="block">

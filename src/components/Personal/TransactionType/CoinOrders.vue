@@ -554,7 +554,6 @@ export default {
         this.entrustSelectList = getNestedData(detailData, 'coinList')
         this.typeList = getNestedData(detailData, 'typeList')
         this.matchTypeList = getNestedData(detailData, 'matchTypeList')
-        console.log(this.matchTypeList)
       }
     },
     /**
@@ -624,24 +623,25 @@ export default {
       console.log(params)
       switch (entrustType) {
         case 'current-entrust':
-          console.log(1)
           params.currentPage = this.currentPageForMyEntrust
           data = await getMyEntrust(params)
           console.log(data)
-          if (!returnAjaxMsg(data, this, 0)) {
+          if (!returnAjaxMsg(data, this)) {
             // 接口失败清除局部loading
             this.partLoading = false
             return false
           } else {
             // 接口成功清除局部loading
             this.partLoading = false
+            this.currentEntrustList = getNestedData(data, 'data.data.list') || []
+            this.totalPageForMyEntrust = getNestedData(data, 'data.data.pages') - 0
           }
           break
         case 'history-entrust':
           params.currentPage = this.currentPageForHistoryEntrust
           data1 = await getHistoryEntrust(params)
           console.log(data1)
-          if (!returnAjaxMsg(data1, this, 0)) {
+          if (!returnAjaxMsg(data1, this)) {
             // 接口失败清除局部loading
             this.partLoading = false
             return false
@@ -649,7 +649,7 @@ export default {
             // 接口成功清除局部loading
             this.partLoading = false
             if (data1.data.data.list) {
-              this.historyEntrustList = getNestedData(data1, 'data.data.list')
+              this.historyEntrustList = getNestedData(data1, 'data.data.list') || []
               this.totalPageForHistoryEntrust = getNestedData(data1, 'data.data.pages') - 0
             }
           }
@@ -658,7 +658,7 @@ export default {
           params.currentPage = this.currentPageMakeDetailEntrust
           data2 = await getMakeDetail(params)
           console.log(data2)
-          if (!returnAjaxMsg(data2, this, 0)) {
+          if (!returnAjaxMsg(data2, this)) {
             // 接口失败清除局部loading
             this.partLoading = false
             return false
@@ -666,7 +666,7 @@ export default {
             // 接口成功清除局部loading
             this.partLoading = false
             if (data2.data.data.list) {
-              this.currentMakeDetailList = getNestedData(data2, 'data.data.list')
+              this.currentMakeDetailList = getNestedData(data2, 'data.data.list') || []
               this.totalPageForMakeDetailEntrust = getNestedData(data2, 'data.data.pages') - 0
             }
           }
@@ -846,6 +846,12 @@ export default {
           &.is-leaf {
             border-top: 0;
           }
+        }
+      }
+
+      .el-table--scrollable-x {
+        .el-table__body-wrapper {
+          overflow-x: hidden;
         }
       }
 

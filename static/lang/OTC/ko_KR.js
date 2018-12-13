@@ -325,5 +325,9 @@ export const OTC = {
   'otc_tradingorder_autoCancel': '분 내에 구매자가 지불을 제출하지 않으면 주문이 자동으로 취소됩니다',
   'otc_tradingorder_orderExact': '주문 생성 후',
   'otc_index_inputSellAccount': '매출 수량이 0이 되선 안됨',
-  'otc_index_inputBuyAccount': '매입 수량이 0이 되선 안됨,'
+  'otc_index_inputBuyAccount': '매입 수량이 0이 되선 안됨,',
+  // 申请成为商家
+  'otc_apply_tips1': '따뜻한 힌트.',
+  'otc_apply_tips2': '이 기능을 사용하려면 비즈니스가되기 위해 신청해야합니다.',
+  'otc_order_reason': '이유'
 }

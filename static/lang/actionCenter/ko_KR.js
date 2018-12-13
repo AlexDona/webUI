@@ -13,5 +13,6 @@ export const actionCenter = {
   'actionCenter_Token_step5': '투표',
   'actionCenter_Token_step6': '신코인 투표',
   'actionCenter_Token_step7': '온라인',
-  'actionCenter_Token_step8': '거래소 온라인'
+  'actionCenter_Token_step8': '거래소 온라인',
+  'actionCenter_coin_apply': '거래소 온라인'
 }

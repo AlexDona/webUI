@@ -1051,7 +1051,7 @@ export default {
       > .content-detail-page {
         width: 900px;
         min-height: 500px;
-        margin: 0 auto;
+        margin: 10px auto;
 
         .blue1 {
           border: 1px solid #338ff5 !important;
@@ -1363,7 +1363,7 @@ export default {
               color: blue;
             }
 
-            .blue {
+            .blue1 {
               border: 1px solid #338ff5 !important;
               background-color: transparent !important;
 
@@ -1542,6 +1542,16 @@ export default {
         }
 
         > .content-detail-page {
+          .blue1 {
+            border: 1px solid #338ff5 !important;
+            background-color: transparent !important;
+
+            .duration-month {
+              font-weight: 600;
+              color: red !important;
+            }
+          }
+
           > .detail-page-grade {
             .p1 {
               font-size: 30px;
@@ -1552,8 +1562,9 @@ export default {
               color: blue;
             }
 
-            .blue {
+            .blue1 {
               border: 1px solid #338ff5 !important;
+              color: #338ff5 !important;
               background-color: transparent !important;
 
               > .grade-color,
@@ -1594,7 +1605,7 @@ export default {
               background-color: #1a2233;
 
               > .duration-month {
-                color: #fff;
+                color: #338ff5;
               }
 
               > .duration-currency {

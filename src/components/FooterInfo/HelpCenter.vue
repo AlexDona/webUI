@@ -44,7 +44,7 @@ export default {
     return {
       searchKeyWord: '', // 搜索关键字
       enSrc: 'https://doc.bzu.com/web/#/2?page_id=23',
-      chSrc: this.isNeedApp ? 'https://doc.bzu.com/web/#/4?page_id=67' : 'https://doc.bzu.com/web/#/5?page_id=89'
+      chSrc: 'https://doc.bzu.com/web/#/4?page_id=67'
     }
   },
   created () {
@@ -69,6 +69,9 @@ export default {
     })
   },
   watch: {
+    isNeedApp (newVal) {
+      console.log(newVal)
+    }
   }
 }
 </script>

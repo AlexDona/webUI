@@ -15,15 +15,15 @@ type:
 
   可取值:
 
- 1. docs：文档更新
- 2. feat：新增功能
- 3. fix：bug 修复
- 4. refactor：重构代码(既没有新增功能，也没有修复 bug)
- 5. style：不影响程序逻辑的代码修改(修改空白字符，补全缺失的分号等)
- 6. test：新增测试用例或是更新现有测试
- 7. revert：回滚某个更早之前的提交
- 8. chore：构建过程或辅助工具的变动
- 9. br: 此项特别针对bug号，用于向测试反馈bug列表的bug修改情况
-optional scope：
+   * bug: 此项特别针对bug号，用于向测试反馈bug列表的bug修复
+   * feature: 新功能（feature）
+   * fix: 修补bug
+   * docs: 文档（documentation）
+   * style: 格式（不影响代码运行的变动）
+   * refactor: 重构（既不是新增功能，也不是修改bug的bug变动）
+   * test: 增加测试
+   * chore: 构建过程或辅助工具的变动
+   * revert: feat(pencil): add 'graphiteWidth' options(撤销之前的commit)
+   * merge: 合并分支， 例如： merge（前端页面）： feature-xxxx修改线程地址
 
   一个可选的修改范围。用于标识此次提交主要涉及到代码中哪个模块。根据项目实际情况填写即可，最好在项目中规定好模块列表，保持一致性。

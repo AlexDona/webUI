@@ -9,7 +9,9 @@ export const assetCurrenciesList = params => get('personal/getUserFinanceList', 
 // 提币地址列表查询
 export const inquireWithdrawalAddressList = params => get('personal/getWithdrawAddress', params)
 // 根据币种id查询提币地址
-export const inquireWithdrawalAddressId = (params) => get('personal/getCoinWithdrawAddress', params)
+export const inquireWithdrawalAddressId = (params) => get('personal/getCoinWithdrawAddress', Object.assign({
+  'not-loading': true
+}, params))
 // 账单明细—冲提记录
 export const statusRushedToRecordList = (params) => get('queryWithdrawRecording', params)
 // 账单明细—获取商户币种列表
@@ -27,7 +29,9 @@ export const inquireRechargeAddressList = (params) => get('personal/getRechargeA
 // 获取提币信息
 export const withdrawalInformation = (params) => get('queryWithdrawInfo', params)
 // 根据coinid查询交易信息
-export const queryTransactionInformation = (params) => get('personal/getTradeUrl', params)
+export const queryTransactionInformation = (params) => get('personal/getTradeUrl', Object.assign({
+  'not-loading': true
+}, params))
 //  刷新用户信息
 export const userRefreshUser = (params) => get('user/refreshUser', params)
 /**
@@ -85,7 +89,9 @@ export const pushPropertyTransaction = (params) => put('push/pushPay', params)
  * 邀请推广
  * */
 // 直接推广 间接推广列表
-export const userPromotionList = (params) => get('user/center/inviter', params)
+export const userPromotionList = (params) => get('user/center/inviter', Object.assign({
+  'not-loading': true
+}, params))
 // 推荐用户币种列表
 export const getRecommendUserPromotionList = (params) => get('user/center/inviterCoin', params)
 /**

@@ -46,3 +46,13 @@ export const URL_REG = /^([hH][tT]{2}[pP]:\/\/|[hH][tT]{2}[pP][sS]:\/\/)(([A-Za-
  *  数字，字母(必须)，特殊字符（非必须）
  */
 export const CHECKPASSWORD_REG = /^(?=.*[\d])(?=.*[a-zA-Z])(?=.*[`~!@#$%^&*\(\)_\-\+=<>?:"\{\}\|,.\/;'\\[\]])?.{8,20}$/
+
+/**
+ * 特殊字符 special
+ */
+export const SPECIAL_REG = /(?=.*[`~!#$%^&*\(\)_\-\+=<>?:"\{\}\|,\/;'\\[\]·！#￥（——）：；“”‘、，|《。》？、【】])/im
+
+/**
+ * 中文字符
+ */
+export const CHINESE_REG = /[\u4e00-\u9fa5]/

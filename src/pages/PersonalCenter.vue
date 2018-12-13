@@ -168,7 +168,7 @@
       <!--未实名认证前弹框提示-->
       <div class="warning">
         <el-dialog
-          :visible.sync="notVerifynotVerifyDialogVisible"
+          :visible.sync="notVerifyDialogVisible"
           center
         >
           <div class="dialog-warning">
@@ -268,13 +268,9 @@ export default {
     }
   },
   async created () {
+    console.log(this.userCenterActiveName)
     await this.getUserRefreshUser()
-    if (!this.realname && this.userCenterActiveName === 'account-credited') {
-      this.notVerifyDialogVisible = true
-    }
-    if (!this.payPassword && this.userCenterActiveName === 'account-credited') {
-      this.setPwdDialogVisible = true
-    }
+    this.showNoPosswdAndNoVerifyNotice()
   },
   mounted () {},
   activited () {},
@@ -284,29 +280,25 @@ export default {
     ...mapMutations([
       'CHANGE_USER_CENTER_ACTIVE_NAME'
     ]),
+    showNoPosswdAndNoVerifyNotice () {
+      if (this.userCenterActiveName === 'account-credited' && !this.payPassword) {
+        this.setPwdDialogVisible = true
+        return false
+      }
+      if (this.userCenterActiveName === 'account-credited' && !this.realname) {
+        this.notVerifyDialogVisible = true
+      }
+    },
     // tab面板切换
     async statusSwitchPanel (tab) {
       this.CHANGE_USER_CENTER_ACTIVE_NAME(tab.name)
       console.log(tab.name)
-      if (tab.name === 'account-credited') {
-        await this.getUserRefreshUser()
-        if (!this.payPassword) {
-          this.setPwdDialogVisible = true
-          return false
-        }
-        if (!this.realname) {
-          this.notVerifyDialogVisible = true
-          return false
-        } else {
-          this.notVerifyDialogVisible = false
-        }
-      }
+      this.showNoPosswdAndNoVerifyNotice()
     },
     confirm (val) {
       if (val == 1) {
         this.$router.push({path: '/TransactionPassword'})
       } else {
-        // this.$store.commit('personal/CHANGE_USER_CENTER_ACTIVE_NAME', 'identity-authentication')
         this.CHANGE_USER_CENTER_ACTIVE_NAME('identity-authentication')
 
         this.$router.push({path: '/PersonalCenter'})
@@ -325,10 +317,7 @@ export default {
         return false
       } else {
         this.$store.commit('user/SET_STEP1_INFO', data.data.data)
-        // 返回列表数据
-        if (!this.payPassword) {
-          this.setPwdDialogVisible = true
-        }
+        this.showNoPosswdAndNoVerifyNotice()
       }
     }
   },
@@ -344,16 +333,6 @@ export default {
     })
   },
   watch: {
-    payPassword (newVal) {
-      if (!newVal) {
-        this.setPwdDialogVisible = true
-      }
-    },
-    realname (newVal) {
-      if (!newVal) {
-        this.notVerifyDialogVisible = true
-      }
-    }
   }
 }
 </script>
@@ -420,7 +399,7 @@ export default {
         left: -179px;
         width: 160px;
         height: 44px;
-        padding-left: 25px;
+        padding-left: 18px;
         font-size: 18px;
         line-height: 40px;
         color: #338ff5;

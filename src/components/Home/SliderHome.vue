@@ -77,7 +77,6 @@ export default {
     },
     slide (data) {
       let bigUrl = getNestedData(this.sliderListAjax[data.currentPage - 1], 'bigUrl')
-      console.log(bigUrl)
       this.CHANGE_BANNER_BACKGROUND(bigUrl)
     },
     renderSlider () {
