@@ -391,7 +391,7 @@ import {
 import {
   getStore,
   setStore,
-  getStoreWithJson
+  getCookieWithJSON
 } from '../../utils'
 import { createNamespacedHelpers, mapState } from 'vuex'
 const { mapMutations, mapActions } = createNamespacedHelpers('common')
@@ -438,6 +438,9 @@ export default{
     }
   },
   async created () {
+    if (getStore('convertCurrency')) {
+      this.activeConvertCurrency = getStore('convertCurrency')
+    }
     // 获取 语言列表
     await this.GET_LANGUAGE_LIST_ACTION({
       self: this
@@ -671,7 +674,7 @@ export default{
       noticeCloseVisible: state => state.home.noticeCloseVisible
     }),
     localPayPwdSet () {
-      return getNestedData(getStoreWithJson('loginStep1Info'), 'userInfo.paypasswordSet') || this.paypasswordSet
+      return getNestedData(getCookieWithJSON('loginStep1Info'), 'userInfo.paypasswordSet') || this.paypasswordSet
     }
   },
   watch: {
@@ -1125,6 +1128,12 @@ export default{
           box-shadow: none;
         }
       }
+    }
+  }
+
+  /deep/ {
+    .el-dialog__wrapper {
+      background-color: rgba(0, 0, 0, .7);
     }
   }
 }

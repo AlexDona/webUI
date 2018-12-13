@@ -1,7 +1,9 @@
 import mutations from './mutations'
 import actions from './actions'
 // import getters from './getters'
-import {getStoreWithJson} from '../../utils'
+import {
+  getCookieWithJSON
+} from '../../utils'
 // Vue.use(Vuex)
 
 const state = {
@@ -12,7 +14,7 @@ const state = {
     step2: false, // 用户是否在步骤二:图片验证码验证
     step3: false // 用户是否在步骤三：短信验证码验证或谷歌验证器验证
   },
-  loginStep1Info: getStoreWithJson('loginStep1Info') || {
+  loginStep1Info: getCookieWithJSON('loginStep1Info') || {
     failureNum: 0, // 短时间登录失败次数
     countryCode: '', // 国籍码
     isEnableGoogle: false,

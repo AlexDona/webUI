@@ -304,7 +304,7 @@ export const personal = {
   'user_modification_confirm_trade_pwd': '請輸入確認交易密碼',
   // 修改手機
   'user_modify_phone': '修改手機',
-  'user_modify_input_phone': '請輸入手機',
+  'user_modify_input_phone': '請輸入手機號',
   'user_modify_trade_pwd': '交易密碼',
   // 绑定谷歌验证
   'user_bind_google_verify': '綁定谷歌驗證',
