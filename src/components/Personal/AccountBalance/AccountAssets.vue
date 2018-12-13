@@ -113,16 +113,16 @@
                     {{ assetItem.coinName }}
                   </div>
                   <div class="table-td flex1">
-                    {{ assetItem.sum - 0 }}
+                    {{ filterNumber(assetItem.sum - 0) }}
                   </div>
                   <div class="table-td flex1">
-                    {{ assetItem.frozen - 0 }}
+                    {{ filterNumber(assetItem.frozen - 0) }}
                   </div>
                   <div class="table-td flex1">
-                    {{ assetItem.total - 0 }}
+                    {{ filterNumber(assetItem.total - 0) }}
                   </div>
                   <div class="table-td flex1 text-align-c">
-                    {{ assetItem.btcValue }}
+                    {{ filterNumber(assetItem.btcValue) }}
                   </div>
                   <div class="table-td flex1 display-flex text-align-r font-size12">
                     <div
@@ -394,7 +394,8 @@ import ChargeMoneyItem from './ChargeMoneyItem'
 import WithdrawDepositItem from './WithdrawDepositItem'
 import {
   formatNumberInput,
-  amendPrecision
+  amendPrecision,
+  scientificToNumber
 } from '../../../utils'
 import { createNamespacedHelpers, mapState } from 'vuex'
 import {
@@ -492,6 +493,10 @@ export default {
     ...mapMutations([
       'SET_USER_BUTTON_STATUS'
     ]),
+    // 科学计数法转换
+    filterNumber (num) {
+      return scientificToNumber(num)
+    },
     // 切换当前显示币种 状态（全部币种 币种为零隐藏）Toggle current currency status
     statusOpenToCloseCurrency (e) {
       switch (e) {

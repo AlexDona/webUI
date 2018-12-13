@@ -143,7 +143,7 @@
             </el-form-item>
             <!--验证码-->
             <el-form-item
-              :label="$t('M.comm_code') + '：'"
+              :label="$t('M.comm_note') + $t('M.comm_code') + '：'"
               v-if="securityCenter.isPhoneEnable"
             >
               <el-input
@@ -530,7 +530,7 @@ export default {
       let params = {
         email: this.userInfoDetail.email, // 邮箱
         phone: this.userInfoDetail.phone, // 手机
-        emailCode: this.modifyPassword.emailCode, // 邮箱验证
+        mailCode: this.modifyPassword.emailCode, // 邮箱验证
         phoneCode: this.modifyPassword.phoneCode, // 手机验证
         googleCode: this.modifyPassword.googleCode // 谷歌验证
       }

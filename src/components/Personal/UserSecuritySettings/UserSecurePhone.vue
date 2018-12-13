@@ -184,11 +184,23 @@
                 :no-data-text="$t('M.comm_no_data')"
               >
                 <el-option
-                  v-for="(item, index) in contryAreaList"
-                  :key="index"
+                  v-for="item in contryAreaList"
+                  :key="item.nationCode"
                   :label="item.nationCode"
                   :value="item.nationCode"
                 >
+                  <span style="float: left;">
+                    <span v-show="language==='zh_CN'">
+                      {{ item.chinese }}
+                    </span>
+                    <span v-show="language!=='zh_CN'">
+                      {{item.english}}
+                    </span>
+                  </span>
+                  <span style=" float: right;
+                    color: #8492a6;
+                    font-size: 13px;"
+                  >{{ item.nationCode }}</span>
                 </el-option>
               </el-select>
               <input
@@ -199,8 +211,8 @@
                 @keyup="phoneNumRegexpInput(phoneNumRef)"
                 @input="phoneNumRegexpInput(phoneNumRef)"
                 @focus="resetNewPhoneIsExistStatus"
-                @blur="checkUserExistAjax('phone', amendDataPhone.newPhoneAccounts,'newPhone')"
               >
+              <!--@blur="checkUserExistAjax('phone', amendDataPhone.newPhoneAccounts,'newPhone')"-->
               <!--错误提示-->
               <ErrorBox
                 :text="tieErrorShowStatusList[1]"
@@ -355,6 +367,7 @@ export default {
     },
     // 发送验证码
     async sendPhoneOrEmailCode (loginType, val, type) {
+      await this.checkUserExistAjax()
       if (!type && !val && !this.bindingDataPhone.bindingNewPhoneAccounts) {
         this.$message({
           type: 'error',
@@ -739,6 +752,7 @@ export default {
   computed: {
     ...mapState({
       theme: state => state.common.theme,
+      language: state => state.common.language,
       userInfo: state => state.user.loginStep1Info, // 用户详细信息
       userInfoDetail: state => state.user.loginStep1Info.userInfo,
       contryAreaList: state => state.common.contryAreaList,

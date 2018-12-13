@@ -259,6 +259,7 @@ export default {
         // 返回数据
         // this.totalSumBTC = data.data.data.totalSum
         this.totalSumBTC = getNestedData(data, 'data.data.totalSum')
+        console.log(data.data.data)
         console.log(this.totalSumBTC)
       }
     },

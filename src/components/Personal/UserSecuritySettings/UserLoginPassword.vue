@@ -25,10 +25,6 @@
         </span>
       </header>
       <div class="login-password-content">
-        <header class="login-content-title">
-          <!--*请确认您的银行卡已开启短信通知功能-->
-          * {{ $t('M.user_security_text0') }}
-        </header>
         <div class="login-content-from">
           <el-form
             :label-position="labelPosition"
