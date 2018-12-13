@@ -154,14 +154,12 @@
                     :label="$t('M.comm_count')"
                   >
                     <div class='invest-mounte'>
-                      <el-input
-                        v-model="formLabelAlign.number"
-                        class="red"
+                      <input
+                        class="red text-indent"
                         type='text'
                         ref='changeAlignNum'
                         @input="changeAlignNumber('changeAlignNum', 'investMounteRef', $event)"
                       >
-                      </el-input>
                       <strong>{{selecteCoindName}}</strong>
                     </div>
                   </el-form-item>
@@ -748,11 +746,15 @@ export default {
     },
     // 模态框数字发生变化时需要执行的方法
     changeAlignNumber (ref1, ref2, e) {
-      let arr = e.split('')
+      let arr = e.target.value.split('')
       let str = ''
       _.forEach(arr, (item, index) => {
-        if ((item - 0) && item != '0') {
-          str += item
+        if (index == 0 && item == '0') {
+          str = ''
+        } else {
+          if (item - 0 || item == '0') {
+            str += item
+          }
         }
       })
       this.investMounte = str
@@ -760,7 +762,7 @@ export default {
       this.$refs[ref1].value = str
       // 主理财页面赋值
       this.$refs[ref2].value = str
-      if (e && e != '0') {
+      if (str) {
         this.clickGetInvestEarnings()
       }
     },
@@ -775,8 +777,9 @@ export default {
       if (!(returnAjaxMsg(data, this, 0))) {
         return false
       } else {
-        // this.formLabelAlign = data.data.data
         this.formLabelAlign = getNestedData(data, 'data.data')
+        this.$refs.changeAlignNum.value = this.formLabelAlign.number
+        console.log(this.$refs.changeAlignNum.value)
         this.interestRateValue = (this.formLabelAlign.interestRate - 0) * 100
       }
     },
@@ -883,6 +886,7 @@ export default {
         this.FINANCE_LINE_STATUS(1)
         // 将存币数量输入框清空
         this.investMounte = ''
+        this.$refs.investMounteRef.value = ''
       }
     },
     // 用户取消存币接口
@@ -1713,6 +1717,10 @@ export default {
 
     .red {
       color: #d45858;
+    }
+
+    .text-indent {
+      text-indent: 10px;
     }
 
     .red2 {
