@@ -14,6 +14,8 @@ export const inquireWithdrawalAddressId = (params) => get('personal/getCoinWithd
 export const statusRushedToRecordList = (params) => get('queryWithdrawRecording', params)
 // 账单明细—获取商户币种列表
 export const getMerchantCurrencyList = (params) => get('queryPartnerCoinList', params)
+// 账单明细—综合记录
+export const getComprehensiveRecordsList = (params) => get('personal/queryColligate', params)
 // 提币
 export const statusSubmitWithdrawButton = (params) => post('addWithdraw', params)
 // 新增用户提币地址
