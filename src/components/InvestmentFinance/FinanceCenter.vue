@@ -100,11 +100,11 @@
                 <div class='invest-mounte'>
                   <!-- 请输入数量 -->
                   <input
-                    v-model="investMounte"
+                    type="text"
+                    ref="investMounteRef"
                     :placeholder="$t('M.finance_input_sum')"
                     @keyup="changeInvestMounte"
-                    onkeyup="if(this.value.length==1){this.value=this.value.replace(/[^1-9]/g,'')}else{this.value=this.value.replace(/\D/g,'')}"
-                    onafterpaste="if(this.value.length==1){this.value=this.value.replace(/[^1-9]/g,'')}else{this.value=this.value.replace(/\D/g,'')}"
+                    @input="checkInput('investMounteRef')"
                   >
                   <strong>{{selecteCoindName}}</strong>
                 </div>
@@ -157,7 +157,9 @@
                       <el-input
                         v-model="formLabelAlign.number"
                         class="red"
-                        @input="changeAlignNumber"
+                        type='text'
+                        ref='changeAlignNum'
+                        @input="changeAlignNumber('changeAlignNum', 'investMounteRef', $event)"
                       >
                       </el-input>
                       <strong>{{selecteCoindName}}</strong>
@@ -676,6 +678,23 @@ export default {
         // this.$router.push({path: '/login'})
       }
     },
+    // 限制币存币数量不能为0
+    checkInput (ref) {
+      let value = this.$refs[ref].value
+      let arr = value.split('')
+      let str = ''
+      _.forEach(arr, (item, index) => {
+        if (index == 0 && item == '0') {
+          str = ''
+        } else {
+          if (item - 0 || item == '0') {
+            str += item
+          }
+        }
+      })
+      this.$refs[ref].value = str
+      this.investMounte = str
+    },
     // 输入金额改变时检测用户输入的币种总金额
     async getUserCoindTotal () {
       const data = await getPushTotalByCoinId({
@@ -728,9 +747,20 @@ export default {
       this.clickImmediateInvestment()
     },
     // 模态框数字发生变化时需要执行的方法
-    changeAlignNumber (e) {
-      this.investMounte = e
-      if (e) {
+    changeAlignNumber (ref1, ref2, e) {
+      let arr = e.split('')
+      let str = ''
+      _.forEach(arr, (item, index) => {
+        if ((item - 0) && item != '0') {
+          str += item
+        }
+      })
+      this.investMounte = str
+      // 将本身赋值
+      this.$refs[ref1].value = str
+      // 主理财页面赋值
+      this.$refs[ref2].value = str
+      if (e && e != '0') {
         this.clickGetInvestEarnings()
       }
     },
