@@ -428,7 +428,8 @@ router.beforeEach((to, from, next) => {
         if (store.state.user.loginStep1Info.userInfo.type === 'MERCHANT') {
           next()
         } else {
-          next({path: '/OTCBusinessApply'})
+          // next({path: '/OTCBusinessApply'})
+          // next({path: '/OTCCenter'})
         }
       } else {
         next() // 正常跳转到你设置好的页面

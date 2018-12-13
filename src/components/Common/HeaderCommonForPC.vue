@@ -490,8 +490,10 @@ export default{
     // 非商家禁止进入OTC导航页提示框--开始
     applyMerchant () {
       if (this.userInfo.type === 'COMMON') {
-        this.$router.push({path: '/OTCBusinessApply'})
+        // this.$router.push({path: '/OTCBusinessApply'})
+        // this.$router.push({path: '/OTCCenter'})
         this.showApplyMerchantStatus = true
+        return false
       } else {
       }
     },
@@ -501,7 +503,7 @@ export default{
     confirmApply () {
       this.showApplyMerchantStatus = false
       this.$router.push({path: '/OTCBusinessApply'})
-      location.reload() // 重新刷新页面
+      // location.reload() // 重新刷新页面
     },
     // 非商家禁止进入OTC导航页提示框--结束
     reflashUserInfo () {
