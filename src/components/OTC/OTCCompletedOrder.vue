@@ -158,6 +158,18 @@
                       <span>{{$t('M.otc_time_collection')}}：</span>
                       <span>{{s.row.confirmTime ? s.row.confirmTime : s.row.completeTime}}</span>
                     </p>
+                    <!--原因-->
+                    <p class="order-info-right" v-show="s.row.appeal == 'YES'">
+                      <el-tooltip
+                        effect="dark"
+                        :content="s.row.handleSuggest"
+                        placement="bottom-start"
+                      >
+                        <span class="reason-content">
+                          {{$t('M.otc_order_reason')}}：{{s.row.handleSuggest}}
+                        </span>
+                      </el-tooltip>
+                    </p>
                   </div>
                 </div>
               </template>
@@ -297,8 +309,8 @@ export default {
         pageNum: this.currentPage,
         pageSize: this.pageSize
       })
-      // console.log('已完成订单')
-      // console.log(data)
+      console.log('已完成订单')
+      console.log(data)
       // 提示信息
       if (!(returnAjaxMsg(data, this, 0))) {
         this.loading = false
@@ -362,6 +374,14 @@ export default {
         > .order-info-right {
           margin-left: 50px;
           line-height: 20px;
+          // 任付伟增加原因字段样式
+          .reason-content {
+            display: inline-block;
+            width: 250px;
+            overflow: hidden;
+            text-overflow: ellipsis; // 显示省略符号来代表被修剪的文本。
+            white-space: nowrap; // 文本不会换行，文本会在在同一行上继续，直到遇到 <br> 标签为止。
+          }
         }
       }
     }

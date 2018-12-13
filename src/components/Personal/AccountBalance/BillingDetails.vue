@@ -67,7 +67,10 @@
             v-else
             class="float-left margin-left50 cursor-pointer"
           >
-            <span class="demonstration">类型</span>
+            <!--类型-->
+            <span class="demonstration">
+              {{ $t('M.comm_type') }}
+            </span>
             <el-select
               v-model="otherRecordsValue"
               clearable
@@ -188,10 +191,9 @@
           </div>
 
         </el-tab-pane>
-        <!--其他记录-->
-        <!--:label="$t('M.user_coin_order2')"-->
+        <!--综合记录-->
         <el-tab-pane
-          label="综合记录"
+          :label="$t('M.comprehensive_records')"
           name="other-records"
         >
           <el-table
@@ -325,29 +327,29 @@ export default {
       otherRecordPageNumbers: 1, // 其他记录页码
       totalPagesOtherRecords: 1, // 其他记录总页数
       otherRecordsValue: 'CTC_TRADE', // 其他记录类型
-      // 全部 活动奖励 糖果奖励 系统赠送 邀请奖励
+      // otc交易 otc手续费 币币交易 币币手续费 理财支出 理财收入 邀请有礼
       otherRecordsType: [
         {
           value: 'OTC_TRADE',
-          label: 'otc交易'
+          label: 'M.otc_trade'
         }, {
           value: 'OTC_FEE',
-          label: 'otc手续费'
+          label: 'M.otc_fee'
         }, {
           value: 'CTC_TRADE',
-          label: '币币交易'
+          label: 'M.ctc_trade'
         }, {
           value: 'CTC_FEE',
-          label: '币币手续费'
+          label: 'M.ctc_fee'
         }, {
           value: 'FINANCIAL_EXPENDITURE',
-          label: '理财支出'
+          label: 'M.financial_expenditure'
         }, {
           value: 'FINANCIAL_INCOME',
-          label: '理财收入'
+          label: 'M.financial_income'
         }, {
           value: 'INVITATION_REWARD',
-          label: '邀请有礼'
+          label: 'M.invitation_reward'
         }
       ],
       partLoading: true // 局部loading

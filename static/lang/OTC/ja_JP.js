@@ -325,5 +325,9 @@ export const OTC = {
   'otc_tradingorder_autoCancel': '相手が1分以内に支払いを提出しない場合、注文は自動的にキャンセルされます。',
   'otc_tradingorder_orderExact': '注文が生成された後',
   'otc_index_inputSellAccount': '販売数量はゼロではいけません',
-  'otc_index_inputBuyAccount': '購入数量はゼロではいけません'
+  'otc_index_inputBuyAccount': '購入数量はゼロではいけません',
+  // 申请成为商家
+  'otc_apply_tips1': 'ヒント',
+  'otc_apply_tips2': 'この功能を使用するためには、まず商家になる必要があります!',
+  'otc_order_reason': '原因'
 }

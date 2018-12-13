@@ -44,6 +44,14 @@ export const personal = {
   'user_address_withdrawal': '非法地址',
   // 账单明细
   'user_billing_attention': '充提',
+  'otc_trade': 'otc交易',
+  'otc_fee': 'otc手续费',
+  'ctc_trade': '币币交易',
+  'ctc_fee': '币币手续费',
+  'financial_expenditure': '理财支出',
+  'financial_income': '理财收入',
+  'invitation_reward': '邀请有礼',
+  'comprehensive_records': '综合记录',
   // 提币地址
   'user_address_empty': '提币地址不能为空',
   'user_address_labels': '地址标签',
