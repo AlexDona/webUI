@@ -1226,7 +1226,7 @@ export default {
           border-radius: 2px;
           font-size: 20px;
           color: #338ff5;
-          background: linear-gradient(180deg, rgba(51, 143, 245, .1) 0%);
+          background: linear-gradient(180deg, rgba(51, 143, 245, .1) 0%, rgba(51, 143, 245, .1) 100%);
           box-shadow: 0 2px 2px rgba(13, 17, 25, 1);
         }
       }
