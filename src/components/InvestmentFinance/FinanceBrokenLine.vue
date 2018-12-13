@@ -33,7 +33,7 @@ export default {
             show: true,
             rotate: 45,
             textStyle: {
-              color: '#4E5C77',
+              color: '#77839b',
               fontSize: 10
             }
           },

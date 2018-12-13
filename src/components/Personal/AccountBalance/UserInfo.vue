@@ -211,12 +211,6 @@ export default {
     }
   },
   async created () {
-    // 覆盖Element样式
-    require('../../../../static/css/list/Personal/AccountBalance/UserInfo.css')
-    // 白色主题样式
-    require('../../../../static/css/theme/day/Personal/AccountBalance/UserInfoDay.css')
-    // 黑色主题样式
-    require('../../../../static/css/theme/night/Personal/AccountBalance/UserInfoNight.css')
     await this.currencyTransform()
     await this.getAssetCurrenciesList()
   },
@@ -226,7 +220,6 @@ export default {
   beforeRouteUpdate () {},
   methods: {
     async currencyTransform () {
-      console.log(1)
       const params = {
         coinName: 'BTC',
         shortName: 'CNY'

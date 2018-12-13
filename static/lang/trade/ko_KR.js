@@ -39,5 +39,7 @@ export const trade = {
   // #####################币币交易 行情#####################
   'trade_market_bazaar': '시장',
   'trade_market_amount_increase': '증가 폭도',
-  'trade_market_optional': '자체 선택'
+  'trade_market_optional': '자체 선택',
+  'trade_cancel_all_entrust': '모든 위탁을 취소하다',
+  'trade_determine_cancel_all_entrust': '모든 위탁 취소를 확정하다'
 }

@@ -135,21 +135,43 @@
               :isShow="!!errorShowStatusList[0]"
             />
           </el-form-item>
-          <!-- 证件号码 -->
+          <!-- 身份证证件号码 -->
           <el-form-item
+            v-if="documentTypeValue == '身份证'"
             :label="$t('M.comm_credentials_number')"
           >
             <input
               class="common-input"
-              v-model="identificationNumber"
-              @keydown="setErrorMsg(1, '')"
               minlength="15"
+              :ref="idCardRef"
+              @keydown="setErrorMsg(1, '')"
               @blur="checkoutInputFormat(1, identificationNumber)"
+              @keyup="idCardRegexpInputNum(idCardRef)"
+              @input="idCardRegexpInputNum(idCardRef)"
             />
             <!--错误提示-->
             <ErrorBox
               :text="errorShowStatusList[1]"
               :isShow="!!errorShowStatusList[1]"
+            />
+          </el-form-item>
+          <!--护照证件号码-->
+          <el-form-item
+            v-else
+            :label="$t('M.comm_credentials_number')"
+          >
+            <input
+              class="common-input"
+              :ref="passportRef"
+              @keydown="setErrorMsg(2, '')"
+              @blur="checkoutInputFormat(2, identificationNumber)"
+              @keyup="passportEntryRestrictions(passportRef)"
+              @input="passportEntryRestrictions(passportRef)"
+            />
+            <!--错误提示-->
+            <ErrorBox
+              :text="errorShowStatusList[2]"
+              :isShow="!!errorShowStatusList[2]"
             />
           </el-form-item>
           <div
@@ -315,8 +337,14 @@
                         v-show="firstPictureSrcShow"
                       >
                         <img
+                          v-show="isChinese"
                           class="default-picture cursor-pointer"
                           :src="firstPictureSrc"
+                        >
+                        <img
+                          v-show="!isChinese"
+                          class="default-picture cursor-pointer"
+                          :src="passportPositiveImg"
                         >
                       </div>
                       <button ref="first-submit"></button>
@@ -349,8 +377,14 @@
                         v-show="secondPictureSrcShow"
                       >
                         <img
+                          v-show="isChinese"
                           class="default-picture cursor-pointer"
                           :src="secondPictureSrc"
+                        >
+                        <img
+                          v-show="!isChinese"
+                          class="default-picture cursor-pointer"
+                          :src="passportOppositeImg"
                         >
                       </div>
                       <button ref="second-submit"></button>
@@ -382,8 +416,14 @@
                         v-show="thirdPictureSrcShow"
                       >
                         <img
+                          v-show="isChinese"
                           class="default-picture cursor-pointer"
                           :src="thirdPictureSrc"
+                        >
+                        <img
+                          v-show="!isChinese"
+                          class="default-picture cursor-pointer"
+                          :src="passportHandImg"
                         >
                       </div>
                       <button ref="third-submit"></button>
@@ -524,13 +564,22 @@ import {
 } from '../../../utils/api/personal'
 import {
   returnAjaxMsg,
-  getNestedData
+  getNestedData,
+  validateNumForUserInput // 用户输入验证
 } from '../../../utils/commonFunc'
 import {
   apiCommonUrl,
   xDomain
 } from '../../../utils/env'
-import {createNamespacedHelpers, mapState} from 'vuex'
+import {
+  idCardRegexpInputNum,
+  passportEntryRestrictions
+} from '../../../utils/index'
+import {
+  createNamespacedHelpers,
+  mapState,
+  mapGetters
+} from 'vuex'
 const {mapMutations, mapActions} = createNamespacedHelpers('common')
 export default {
   components: {
@@ -552,7 +601,6 @@ export default {
       regionValue: '', // 国家
       regionList: [], // 国家地区列表
       documentTypeValue: '身份证', // 证件
-      // shortName: 'M.comm_all' // 全部
       documentTypeList: [
         {
           certificateId: 1,
@@ -567,7 +615,9 @@ export default {
       ], // 证件类型列表
       waitVeritfy: false, // 待审核
       realName: '', // 真实姓名
+      idCardRef: 'id-card',
       identificationNumber: '', // 证件号码
+      passportRef: 'passport',
       errorMessage: '', // 错误信息提示
       seniorAuthentication: false, // 高级认证弹窗默认
       authenticationInfo: {}, // 个人信息
@@ -581,6 +631,10 @@ export default {
       secondPictureSrcShow: true, // 显示身份证反面
       thirdPictureSrc: require('../../../assets/user/card_handheld.png'), // 手持
       thirdPictureSrcShow: true, // 显示手持身份证
+      // 护照默认图片
+      passportPositiveImg: require('../../../assets/user/passport-positive.png'), // 正面
+      passportOppositeImg: require('../../../assets/user/passport-opposite.png'), // 反面
+      passportHandImg: require('../../../assets/user/hand.png'), // 手持
       dialogImageFrontUrl: '', // 上传身份证正面url
       dialogImageReverseSideUrl: '', // 上传身份证反面url
       dialogImageHandUrl: '', // 上传手持身份证url
@@ -592,18 +646,13 @@ export default {
       // 设置错误信息
       errorShowStatusList: [
         '', // 真实姓名
-        '' // 证件号码
+        '', // 证件号码
+        '' // 护照号码
       ],
       fullscreenLoading: false // 整页loading
     }
   },
   async created () {
-    // 覆盖Element样式
-    require('../../../../static/css/list/Personal/UserAssets/IdentityAuthentication.css')
-    // 白色主题样式
-    require('../../../../static/css/theme/day/Personal/UserAssets/IdentityAuthenticationDay.css')
-    // 黑色主题样式
-    require('../../../../static/css/theme/night/Personal/UserAssets/IdentityAuthenticationNight.css')
     this.SET_USER_INFO_REFRESH_STATUS(true)
     await this.getUserRefreshUser()
     this.tokenObj.token = this.userInfo.token
@@ -738,6 +787,16 @@ export default {
         this.authenticationIsStatus()
       }
     },
+    // 检测身份证号
+    idCardRegexpInputNum (ref) {
+      let target = this.$refs[ref]
+      this.identificationNumber = idCardRegexpInputNum(target)
+    },
+    // 检测护照证号
+    passportEntryRestrictions (ref) {
+      let target = this.$refs[ref]
+      this.identificationNumber = passportEntryRestrictions(target)
+    },
     // 检测输入格式
     checkoutInputFormat (type, targetNum) {
       console.log(type)
@@ -756,12 +815,31 @@ export default {
           }
         // 请输入证件号码
         case 1:
+          switch (validateNumForUserInput('ID-card', targetNum)) {
+            case 0:
+              this.setErrorMsg(1, '')
+              this.$forceUpdate()
+              return 1
+            case 1:
+              // 请输入证件号码
+              this.setErrorMsg(1, this.$t('M.user_please_input20'))
+              this.$forceUpdate()
+              return 0
+              // '请输入正确的证件号码'
+            case 2:
+              this.setErrorMsg(1, this.$t('M.comm_please_enter') + this.$t('M.user_security_correct') + this.$t('M.user_real_certificate_cone'))
+              this.$forceUpdate()
+              return 0
+          }
+          break
+        // 请输入证件号码
+        case 2:
           if (!targetNum) {
-            this.setErrorMsg(1, this.$t('M.user_please_input20'))
+            this.setErrorMsg(2, this.$t('M.comm_please_enter') + this.$t('M.user_security_correct') + this.$t('M.user_real_certificate_cone'))
             this.$forceUpdate()
             return 0
           } else {
-            this.setErrorMsg(1, '')
+            this.setErrorMsg(2, '')
             this.$forceUpdate()
             return 1
           }
@@ -849,21 +927,21 @@ export default {
     },
     async stateSeniorCertification () {
       if (this.dialogImageFrontUrl === '') {
-        // 请上传身份证正面
+        // 请上传证件正面
         this.$message({
           message: this.$t('M.user_senior_upload1'),
           type: 'error'
         })
         return false
       } else if (this.dialogImageReverseSideUrl === '') {
-        // 请上传身份证反面
+        // 请上传证件反面
         this.$message({
           message: this.$t('M.user_senior_upload2'),
           type: 'error'
         })
         return false
       } else if (this.dialogImageHandUrl === '') {
-        // 请上传身份证反面
+        // 请上传证件反面
         this.$message({
           message: this.$t('M.user_senior_upload3'),
           type: 'error'
@@ -874,9 +952,9 @@ export default {
       }
       let data
       let param = {
-        idcardFront: this.dialogImageFrontUrl, // 上传身份证正面
-        idcardBack: this.dialogImageReverseSideUrl, // 上传身份证反面
-        idcardHand: this.dialogImageHandUrl // 上传手持身份证
+        idcardFront: this.dialogImageFrontUrl, // 上传证件正面
+        idcardBack: this.dialogImageReverseSideUrl, // 上传证件反面
+        idcardHand: this.dialogImageHandUrl // 上传手持证件
       }
       // 整页loading
       this.fullscreenLoading = true
@@ -925,6 +1003,9 @@ export default {
   },
   filter: {},
   computed: {
+    ...mapGetters('common', {
+      'isChinese': 'isChineseLanguage'
+    }),
     ...mapState({
       language: state => state.common.language,
       theme: state => state.common.theme,
@@ -970,488 +1051,694 @@ export default {
 }
 </script>
 <style scoped lang="scss">
-@import "../../../../static/css/scss/Personal/IndexPersonal";
+  @import "../../../../static/css/scss/Personal/IndexPersonal";
 
-.identity-authentication {
-  > .identity-authentication-main {
-    .name-authentication-content {
-      width: 500px;
-      padding-top: 28px;
-      padding-bottom: 25px;
-      margin: 0 auto;
+  .identity-authentication {
+    > .identity-authentication-main {
+      .name-authentication-content {
+        width: 500px;
+        padding-top: 28px;
+        padding-bottom: 25px;
+        margin: 0 auto;
 
-      .common-input,
-      .submit {
-        box-sizing: border-box;
-        width: 270px;
-        height: 38px;
-        padding-left: 20px;
-        border-radius: 4px;
+        .common-input,
+        .submit {
+          box-sizing: border-box;
+          width: 270px;
+          height: 38px;
+          padding-left: 20px;
+          border-radius: 4px;
+        }
       }
-    }
 
-    .authentication-type {
-      flex: 4;
-      line-height: 56px;
-      cursor: pointer;
-    }
+      .authentication-type {
+        flex: 4;
+        line-height: 56px;
+        cursor: pointer;
+      }
 
-    .authentication-type-info {
-      flex: 4;
-      width: 785px;
-      padding-left: 10px;
-      line-height: 56px;
-    }
-
-    .advanced-main-header {
-      width: 100%;
-      height: 56px;
-
-      .main-header-title {
+      .authentication-type-info {
+        flex: 4;
+        width: 785px;
+        padding-left: 10px;
         line-height: 56px;
       }
 
-      .icon-down {
-        padding-right: 10px;
-        font-size: 16px;
-        line-height: 56px;
-      }
-    }
-  }
+      .advanced-main-header {
+        width: 100%;
+        height: 56px;
 
-  > .advanced-certification-main {
-    .name-authentication-content {
-      width: 350px;
-      padding-top: 28px;
-      padding-bottom: 25px;
-      margin: 0 auto;
-    }
+        .main-header-title {
+          line-height: 56px;
+        }
 
-    .header-border {
-      height: 50px;
-      line-height: 50px;
-    }
-
-    .authentication-type {
-      line-height: 56px;
-      cursor: pointer;
-    }
-
-    .advanced-main-header {
-      width: 100%;
-      height: 56px;
-
-      .icon-down {
-        padding-right: 10px;
-        font-size: 16px;
-        line-height: 56px;
-      }
-    }
-
-    .advanced-certification-content {
-      width: 126px;
-      height: 128px;
-      margin: 11px auto 47px;
-    }
-
-    .advanced-certification-text {
-      width: 337px;
-      height: 93px;
-      margin: 0 auto;
-
-      .tips-top {
-        margin-top: 15px;
-      }
-
-      .text-tips {
-        line-height: 20px;
-      }
-    }
-
-    .identity-box {
-      > .wait-no-pass {
-        padding-top: 50px !important;
-      }
-
-      > .wait-veritfy-back {
-        height: 400px;
-        padding-top: 130px;
-
-        > .wait-veritfy {
-          > .color-coin {
-            color: #338ff5;
-          }
-
-          .list-height {
-            margin-top: 10px;
-            line-height: 25px;
-          }
-
-          .no-pass-button {
-            width: 200px;
-            height: 34px;
-            margin-top: 20px;
-            border-radius: 4px;
-          }
+        .icon-down {
+          padding-right: 10px;
+          font-size: 16px;
+          line-height: 56px;
         }
       }
     }
 
-    .transition-box {
-      > .advanced-upload {
-        min-height: 180px;
-        padding: 0 20px;
-        margin-top: 62px;
+    > .advanced-certification-main {
+      .name-authentication-content {
+        width: 350px;
+        padding-top: 28px;
+        padding-bottom: 25px;
+        margin: 0 auto;
+      }
 
-        .advanced-upload {
-          margin: 0 155px;
+      .header-border {
+        height: 50px;
+        line-height: 50px;
+      }
+
+      .authentication-type {
+        line-height: 56px;
+        cursor: pointer;
+      }
+
+      .advanced-main-header {
+        width: 100%;
+        height: 56px;
+
+        .icon-down {
+          padding-right: 10px;
+          font-size: 16px;
+          line-height: 56px;
+        }
+      }
+
+      .advanced-certification-content {
+        width: 126px;
+        height: 128px;
+        margin: 11px auto 47px;
+      }
+
+      .advanced-certification-text {
+        width: 337px;
+        height: 93px;
+        margin: 0 auto;
+
+        .tips-top {
+          margin-top: 15px;
         }
 
-        .upload,
-        .advanced-upload {
-          float: left;
-          width: 180px;
-          margin: 0 64px;
-          text-align: center;
+        .text-tips {
+          line-height: 20px;
+        }
+      }
+
+      .identity-box {
+        > .wait-no-pass {
+          padding-top: 50px !important;
         }
 
-        .upload {
-          .default-center {
-            position: relative;
-            height: 116px;
-            overflow: hidden;
+        > .wait-veritfy-back {
+          height: 400px;
+          padding-top: 130px;
 
-            > .upload-input {
-              display: none;
+          > .wait-veritfy {
+            > .color-coin {
+              color: #338ff5;
+            }
+
+            .list-height {
+              margin-top: 10px;
+              line-height: 25px;
+            }
+
+            .no-pass-button {
+              width: 200px;
+              height: 34px;
+              margin-top: 20px;
+              border-radius: 4px;
+            }
+          }
+        }
+      }
+
+      .transition-box {
+        > .advanced-upload {
+          min-height: 180px;
+          padding: 0 20px;
+          margin-top: 62px;
+
+          .advanced-upload {
+            margin: 0 155px;
+          }
+
+          .upload,
+          .advanced-upload {
+            float: left;
+            width: 180px;
+            margin: 0 64px;
+            text-align: center;
+          }
+
+          .upload {
+            .default-center {
+              position: relative;
+              height: 116px;
+              overflow: hidden;
+
+              > .upload-input {
+                display: none;
+              }
+            }
+
+            .default-picture {
+              height: 113px;
             }
           }
 
-          .default-picture {
-            height: 113px;
+          .upload-submit {
+            padding: 8px 8px 9px;
+            border-radius: 3px;
           }
+        }
+
+        .upload-button {
+          width: 100%;
+          text-align: center;
+
+          .submit-information {
+            width: 200px;
+            height: 34px;
+            margin: 90px auto 83px;
+            border-radius: 4px;
+            line-height: 34px;
+          }
+
+          .false-tips {
+            height: 20px;
+          }
+        }
+
+        > .advanced-prompt {
+          margin: 20px 138px 0 27px;
+
+          > .text-hints {
+            line-height: 25px;
+            text-align: left;
+          }
+
+          > .icon-font-color {
+            height: 30px;
+            line-height: 30px;
+
+            > .icon-font {
+              width: 18px;
+              height: 16px;
+            }
+
+            > .vertical-align {
+              vertical-align: middle;
+            }
+          }
+        }
+
+        > .personal-information {
+          display: flex;
+          padding: 0 24px;
+          margin-top: 34px;
+          line-height: 30px;
+
+          > .information {
+            flex: 1;
+          }
+        }
+      }
+    }
+
+    /deep/ {
+      /* 覆盖Element样式 */
+      .el-form-item__content {
+        width: 600px;
+      }
+
+      /* 折叠面板默认的边框修改 */
+      .el-collapse,
+      .el-collapse-item__header,
+      .el-collapse-item__wrap {
+        border: 0;
+        background-color: transparent;
+      }
+
+      /* 身份认证 折叠框label */
+
+      /* 高 */
+      .el-collapse-item__header {
+        height: 56px;
+        margin: 0 23px;
+        font-size: 16px;
+      }
+
+      /* 行高 */
+      .el-collapse-item__header,
+      .el-collapse-item__arrow {
+        line-height: 56px;
+      }
+
+      /* select */
+      .el-input__inner {
+        width: 270px;
+        height: 38px;
+        line-height: 38px;
+      }
+
+      /* 高级认证弹框 */
+      .el-dialog {
+        top: 10%;
+        width: 470px;
+        height: 400px;
+        border-radius: 7px;
+      }
+
+      .el-dialog__header {
+        height: 44px;
+        padding: 0 0 0 29px;
+        border-radius: 7px 7px 0 0;
+        line-height: 44px;
+        text-align: left;
+      }
+
+      .el-dialog__title {
+        font-size: 20px;
+      }
+
+      .el-upload--picture-card {
+        width: 100%;
+        height: 0;
+        border: 0;
+        line-height: 0;
+      }
+
+      .el-upload-list__item {
+        width: 100%;
+        height: 115px;
+      }
+
+      /* 实名认证表单样式 */
+      .identity-authentication-main {
+        .name-authentication-content {
+          .el-form-item__content {
+            margin-left: 140px !important;
+          }
+        }
+      }
+    }
+
+    &.night {
+      color: $nightFontColor;
+      background-color: $nightBgColor;
+
+      .identity-header-background {
+        background-color: $nightMainBgColor;
+
+        .header-content {
+          color: #338ff5;
+        }
+      }
+
+      .identity-authentication-main {
+        background-color: $nightMainBgColor;
+
+        .false-tips {
+          color: #d45858;
+        }
+
+        .header-border {
+          border-bottom: 1px solid #39424d;
+        }
+
+        .authentication-type {
+          color: #09f;
+        }
+
+        .authentication-type-info {
+          color: #d45858;
+
+          > .authentication-info {
+            color: #d45858;
+          }
+        }
+      }
+
+      .icon-down,
+      .main-header-title {
+        color: #fff;
+      }
+
+      .identity-background {
+        background-color: $nightMainBgColor;
+      }
+
+      > .advanced-certification-main {
+        .identity-box {
+          border: 1px solid rgba(38, 47, 56, .1);
+
+          > .wait-veritfy-back {
+            > .wait-veritfy {
+              > .color-coin {
+                color: #338ff5;
+              }
+
+              .list-height {
+                .no-error {
+                  color: #6f798a;
+                }
+              }
+
+              > .color-coin-text {
+                font-size: 140px;
+                color: #338ff5;
+              }
+
+              > .no-pass {
+                color: #338ff5;
+              }
+
+              .no-pass-button {
+                color: #fff;
+                background: linear-gradient(90deg, rgba(43, 57, 110, 1) 0%, rgba(42, 80, 130, 1) 100%);
+              }
+            }
+          }
+        }
+
+        .header-border {
+          border-bottom: 1px solid #39424d;
+        }
+
+        .authentication-type {
+          color: #09f;
         }
 
         .upload-submit {
-          padding: 8px 14px 9px;
-          border-radius: 3px;
+          border: 1px solid #338ff5;
+          color: #338ff5;
         }
-      }
-
-      .upload-button {
-        width: 100%;
-        text-align: center;
 
         .submit-information {
-          width: 200px;
-          height: 34px;
-          margin: 90px auto 83px;
-          border-radius: 4px;
-          line-height: 34px;
+          color: #fff;
+          background: linear-gradient(0deg, rgba(43, 57, 110, 1), rgba(42, 80, 130, 1));
         }
 
-        .false-tips {
-          height: 20px;
-        }
-      }
-
-      > .advanced-prompt {
-        margin: 20px 138px 0 27px;
-
-        > .text-hints {
-          line-height: 25px;
-          text-align: left;
+        .text-hints {
+          color: #a9bed4;
         }
 
-        > .icon-font-color {
-          height: 30px;
-          line-height: 30px;
-
-          > .icon-font {
-            width: 18px;
-            height: 16px;
-          }
-
-          > .vertical-align {
-            vertical-align: middle;
-          }
+        .icon-font-color {
+          color: #c65252;
         }
-      }
 
-      > .personal-information {
-        display: flex;
-        padding: 0 24px;
-        margin-top: 34px;
-        line-height: 30px;
-
-        > .information {
-          flex: 1;
+        .info-type {
+          color: #617499;
         }
-      }
-    }
-  }
 
-  &.night {
-    color: $nightFontColor;
-    background-color: $nightBgColor;
-
-    .identity-header-background {
-      background-color: $nightMainBgColor;
-
-      .header-content {
-        color: #338ff5;
-      }
-    }
-
-    .identity-authentication-main {
-      background-color: $nightMainBgColor;
-
-      .false-tips {
-        color: #d45858;
-      }
-
-      .header-border {
-        border-bottom: 1px solid #39424d;
-      }
-
-      .authentication-type {
-        color: #09f;
-      }
-
-      .authentication-type-info {
-        color: #d45858;
-
-        > .authentication-info {
-          color: #d45858;
+        .user-info {
+          color: #fff;
         }
-      }
-    }
 
-    .icon-down,
-    .main-header-title {
-      color: #fff;
-    }
+        .advanced-certification-text {
+          > .text-tips {
+            color: rgba(254, 254, 255, .7);
 
-    .identity-background {
-      background-color: $nightMainBgColor;
-    }
-
-    > .advanced-certification-main {
-      .identity-box {
-        border: 1px solid rgba(38, 47, 56, .1);
-
-        > .wait-veritfy-back {
-          > .wait-veritfy {
-            > .color-coin {
+            > .tips-refresh {
               color: #338ff5;
             }
-
-            .list-height {
-              .no-error {
-                color: #6f798a;
-              }
-            }
-
-            > .color-coin-text {
-              font-size: 140px;
-              color: #338ff5;
-            }
-
-            > .no-pass {
-              color: #338ff5;
-            }
-
-            .no-pass-button {
-              color: #fff;
-              background: linear-gradient(90deg, rgba(43, 57, 110, 1) 0%, rgba(42, 80, 130, 1) 100%);
-            }
           }
         }
       }
 
-      .header-border {
-        border-bottom: 1px solid #39424d;
-      }
-
-      .authentication-type {
-        color: #09f;
-      }
-
-      .upload-submit {
-        border: 1px solid #338ff5;
-        color: #338ff5;
-      }
-
-      .submit-information {
-        color: #fff;
-        background: linear-gradient(0deg, rgba(43, 57, 110, 1), rgba(42, 80, 130, 1));
-      }
-
-      .text-hints {
-        color: #a9bed4;
-      }
-
-      .icon-font-color {
-        color: #c65252;
-      }
-
-      .info-type {
-        color: #617499;
-      }
-
-      .user-info {
-        color: #fff;
-      }
-
-      .advanced-certification-text {
-        > .text-tips {
-          color: rgba(254, 254, 255, .7);
-
-          > .tips-refresh {
-            color: #338ff5;
-          }
+      /deep/ {
+        /* 个人中心（黑色主题） */
+        .el-collapse-item__header {
+          border-bottom: 1px solid #39424d;
+          color: rgba(255, 255, 255, .7);
+          background-color: #1e2636;
         }
-      }
-    }
-  }
 
-  &.day {
-    color: $dayFontColor;
-    background-color: $dayBgColor;
-
-    .identity-header-background {
-      border: 1px solid rgba(38, 47, 56, .1);
-      border-radius: 2px;
-      background-color: $dayBgColor;
-
-      .header-content {
-        color: #338ff5;
-      }
-    }
-
-    .identity-authentication-main {
-      border: 1px solid rgba(38, 47, 56, .1);
-      background-color: #fff;
-
-      .name-authentication-content {
-        .false-tips {
-          color: #d45858;
+        .el-collapse-item__content {
+          color: rgba(255, 255, 255, .7);
+          background-color: #1e2636;
         }
 
         .common-input {
-          border: 1px solid rgba(38, 47, 56, .1);
-          color: #333;
+          border: 1px solid #364654;
+          color: rgba(255, 255, 255, .7);
+
+          &:focus {
+            border: 1px solid #338ff5;
+          }
         }
 
         .submit {
-          color: #fff;
-          background: linear-gradient(81deg, rgba(43, 57, 110, 1) 0%, rgba(42, 80, 130, 1) 100%);
+          color: rgba(255, 255, 255, .7);
+          background: linear-gradient(9deg, rgba(43, 57, 110, 1), rgba(42, 80, 130, 1));
+        }
+
+        .common-option {
+          background-color: #1e2636;
+        }
+
+        /* select */
+        .el-input__inner {
+          border: 1px solid #364654;
+          background-color: #333a41;
+
+          &:focus {
+            border: 1px solid #338ff5;
+          }
+        }
+
+        .el-form-item__label {
+          color: rgba(255, 255, 255, .7);
+        }
+
+        .el-select-dropdown__list {
+          background-color: #25303b;
+        }
+
+        /* 高级认证弹框 */
+        .el-dialog {
+          background-color: #28334a;
+        }
+
+        .el-dialog__header {
+          background-color: #20293c;
+          box-shadow: 0 2px 5px #1d2131;
+        }
+
+        .el-dialog__title {
+          color: #b8bdd0;
+        }
+
+        .el-upload--picture-card {
+          background-color: transparent;
         }
       }
-
-      .header-border {
-        padding: 0 20px;
-        border-bottom: 1px solid rgba(38, 47, 56, .1);
-      }
-
-      .authentication-type {
-        color: #09f;
-      }
-
-      .authentication-type-info {
-        color: #d45858;
-
-        > .authentication-info {
-          color: #d45858;
-        }
-      }
     }
 
-    .icon-down,
-    .main-header-title {
-      color: #333;
-    }
+    &.day {
+      color: $dayFontColor;
+      background-color: $dayBgColor;
 
-    .identity-background {
-      background-color: #fff;
-    }
-
-    > .advanced-certification-main {
-      .identity-box {
+      .identity-header-background {
         border: 1px solid rgba(38, 47, 56, .1);
+        border-radius: 2px;
+        background-color: $dayBgColor;
 
-        > .wait-veritfy-back {
-          > .wait-veritfy {
-            > .color-coin {
-              color: #338ff5;
-            }
+        .header-content {
+          color: #338ff5;
+        }
+      }
 
-            .list-height {
-              .no-error {
-                color: #333;
-              }
-            }
+      .identity-authentication-main {
+        border: 1px solid rgba(38, 47, 56, .1);
+        background-color: #fff;
 
-            > .color-coin-text {
-              font-size: 140px;
-              color: #338ff5;
-            }
+        .name-authentication-content {
+          .false-tips {
+            color: #d45858;
+          }
 
-            > .no-pass {
-              color: #338ff5;
-            }
+          .common-input {
+            border: 1px solid rgba(38, 47, 56, .1);
+            color: #333;
+          }
 
-            .no-pass-button {
-              color: #fff;
-              background: linear-gradient(90deg, rgba(43, 57, 110, 1) 0%, rgba(42, 80, 130, 1) 100%);
-            }
+          .submit {
+            color: #fff;
+            background: linear-gradient(81deg, rgba(43, 57, 110, 1) 0%, rgba(42, 80, 130, 1) 100%);
+          }
+        }
+
+        .header-border {
+          padding: 0 20px;
+          border-bottom: 1px solid rgba(38, 47, 56, .1);
+        }
+
+        .authentication-type {
+          color: #09f;
+        }
+
+        .authentication-type-info {
+          color: #d45858;
+
+          > .authentication-info {
+            color: #d45858;
           }
         }
       }
 
-      .header-border {
-        border: 1px solid rgba(38, 47, 56, .1);
-      }
-
-      .authentication-type {
-        color: #09f;
-      }
-
-      .upload-submit {
-        border: 1px solid #338ff5;
-        color: #338ff5;
-      }
-
-      .submit-information {
-        color: #fff;
-        background: linear-gradient(0deg, rgba(43, 57, 110, 1), rgba(42, 80, 130, 1));
-      }
-
-      .text-hints {
-        color: #666;
-      }
-
-      .icon-font-color {
-        color: #c65252;
-      }
-
-      .info-type {
-        color: #7d90ac;
-      }
-
-      .user-info {
+      .icon-down,
+      .main-header-title {
         color: #333;
       }
 
-      .advanced-certification-text {
-        > .text-tips {
-          color: #333;
+      .identity-background {
+        background-color: #fff;
+      }
 
-          > .tips-refresh {
-            color: #338ff5;
+      > .advanced-certification-main {
+        .identity-box {
+          border: 1px solid rgba(38, 47, 56, .1);
+
+          > .wait-veritfy-back {
+            > .wait-veritfy {
+              > .color-coin {
+                color: #338ff5;
+              }
+
+              .list-height {
+                .no-error {
+                  color: #333;
+                }
+              }
+
+              > .color-coin-text {
+                font-size: 140px;
+                color: #338ff5;
+              }
+
+              > .no-pass {
+                color: #338ff5;
+              }
+
+              .no-pass-button {
+                color: #fff;
+                background: linear-gradient(90deg, rgba(43, 57, 110, 1) 0%, rgba(42, 80, 130, 1) 100%);
+              }
+            }
           }
+        }
+
+        .header-border {
+          border: 1px solid rgba(38, 47, 56, .1);
+        }
+
+        .authentication-type {
+          color: #09f;
+        }
+
+        .upload-submit {
+          border: 1px solid #338ff5;
+          color: #338ff5;
+        }
+
+        .submit-information {
+          color: #fff;
+          background: linear-gradient(0deg, rgba(43, 57, 110, 1), rgba(42, 80, 130, 1));
+        }
+
+        .text-hints {
+          color: #666;
+        }
+
+        .icon-font-color {
+          color: #c65252;
+        }
+
+        .info-type {
+          color: #7d90ac;
+        }
+
+        .user-info {
+          color: #333;
+        }
+
+        .advanced-certification-text {
+          > .text-tips {
+            color: #333;
+
+            > .tips-refresh {
+              color: #338ff5;
+            }
+          }
+        }
+      }
+
+      /deep/ {
+        /* 个人中心（白色主题） */
+        .el-collapse-item__header {
+          color: #333;
+          background-color: #ccc;
+        }
+
+        .el-collapse-item__content {
+          color: #333;
+          background-color: #ccc;
+        }
+
+        .common-input {
+          border: 1px solid #333;
+          color: #eee;
+        }
+
+        .common-input:focus {
+          border: 1px solid #555;
+        }
+
+        .submit {
+          color: #333;
+          background-color: #ccc;
+        }
+
+        /* select */
+        .el-input__inner {
+          border: 1px solid rgba(236, 241, 248, 1);
+          background: rgba(255, 255, 255, 1);
+
+          &:focus {
+            border: 1px solid #333;
+          }
+        }
+
+        .el-form-item__label {
+          color: #333;
+        }
+
+        /* 高级认证弹框 */
+        .el-dialog {
+          background-color: #fff;
+        }
+
+        .el-dialog__header {
+          background: rgba(51, 143, 245, .1);
+          box-shadow: 0 1px 2px 0 rgba(29, 33, 49, .1);
+        }
+
+        .el-dialog__title {
+          color: #555;
+        }
+
+        .icon-down,
+        .main-header-title {
+          color: #ccc;
         }
       }
     }
   }
-}
 </style>

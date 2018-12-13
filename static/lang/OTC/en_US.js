@@ -340,7 +340,7 @@ export const OTC = {
   // 申请成为商家
   'otc_apply_tips1': 'Tips',
   'otc_apply_tips2': 'First apply to become a merchant then use this function!',
-  'otc_order_reason': 'Reason',
   'otc_publish_ad_err1': 'The maximum number of orders processed at the same time cannot be empty',
-  'otc_publish_ad_err2': 'The seller must have sold a few times and cannot be empty.'
+  'otc_publish_ad_err2': 'The seller must have sold a few times and cannot be empty.',
+  'otc_order_reason': 'Reason'
 }

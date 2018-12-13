@@ -412,9 +412,6 @@ export default {
     // 动态获取商家订单内容的高度
     // console.log(document.documentElement.clientHeight)
     this.height = document.documentElement.clientHeight
-    require('../../../static/css/list/OTC/OTCMerchantsOrders.css')
-    require('../../../static/css/theme/day/OTC/OTCMerchantsOrdersDay.css')
-    require('../../../static/css/theme/night/OTC/OTCMerchantsOrdersNight.css')
     // 1.0 otc可用币种查询：
     this.getOTCAvailableCurrencyList()
     // 2.0 otc可用法币查询：
@@ -633,6 +630,97 @@ export default {
       }
     }
 
+    /deep/ {
+      .style-input {
+        .el-select {
+          width: 100px;
+        }
+      }
+
+      .status-input {
+        .el-select {
+          width: 100px;
+        }
+      }
+
+      .date-picker {
+        .el-date-editor {
+          &.el-input {
+            width: 135px;
+          }
+        }
+      }
+
+      .el-input__inner {
+        height: 34px;
+        border: 0;
+      }
+
+      .el-input__icon {
+        height: 34px;
+      }
+
+      .inquire-button {
+        .el-button {
+          padding: 10px 16px;
+          border: 0;
+        }
+      }
+
+      .orders-main-bottom {
+        .el-table__header {
+          margin-bottom: 10px;
+        }
+
+        .el-table {
+          tr {
+            height: 40px;
+          }
+
+          th {
+            padding: 5px 0;
+
+            &.is-leaf {
+              &:first-of-type {
+                border-bottom-left-radius: 5px;
+                border-top-left-radius: 5px;
+              }
+
+              &:nth-last-of-type(2) {
+                border-top-right-radius: 5px;
+                border-bottom-right-radius: 5px;
+              }
+            }
+          }
+
+          td {
+            padding: 0;
+            border-bottom: 0;
+          }
+
+          .el-table__body {
+            tr {
+              &:last-of-type {
+                td {
+                  &:first-of-type {
+                    border-bottom-left-radius: 5px;
+                  }
+
+                  &:last-of-type {
+                    border-bottom-right-radius: 5px;
+                  }
+                }
+              }
+            }
+          }
+        }
+
+        .el-table__empty-block {
+          min-height: 500px;
+        }
+      }
+    }
+
     &.night {
       background-color: $mainNightBgColor;
 
@@ -662,6 +750,79 @@ export default {
 
             .green {
               color: #008069;
+            }
+          }
+        }
+      }
+
+      /deep/ {
+        .el-input__inner {
+          background-color: #1c1f32;
+        }
+
+        .inquire-button {
+          .el-button {
+            background: linear-gradient(90deg, rgba(43, 57, 110, 1) 0%, rgba(42, 80, 130, 1) 100%);
+          }
+        }
+
+        .orders-main-bottom {
+          .el-table {
+            color: #9da5b3;
+            background-color: #1c1f32;
+
+            tr {
+              background-color: #1c1f32;
+            }
+
+            th {
+              background-color: #1c1f32;
+              box-shadow: 4px 4px 6px #191e28;
+
+              &.is-leaf {
+                border-top: 1px solid #1c1f32;
+                border-bottom: 1px solid #1c1f32;
+
+                &:first-of-type {
+                  border-left: 1px solid #1c1f32;
+                }
+
+                :nth-last-of-type(2) {
+                  border-right: 1px solid #1c1f32;
+                }
+              }
+            }
+
+            .el-table__body {
+              tr {
+                &:last-of-type {
+                  td {
+                    border-bottom: 1px solid #1c1f32;
+                  }
+                }
+
+                td {
+                  &:first-of-type {
+                    border-left: 1px solid #1c1f32;
+                  }
+
+                  &:last-of-type {
+                    border-right: 1px solid #1c1f32;
+                  }
+                }
+              }
+            }
+          }
+        }
+
+        .el-table--enable-row-hover {
+          .el-table__body {
+            tr {
+              &:hover {
+                td {
+                  background-color: #1e2636;
+                }
+              }
             }
           }
         }
@@ -699,6 +860,74 @@ export default {
               color: #008069;
             }
           }
+        }
+      }
+
+      /deep/ {
+        .el-input__inner {
+          border: 1px solid #ecf1f8;
+          color: #7d90ac !important;
+          background-color: #fff;
+        }
+
+        .otc-merchants-orders-content {
+          > .merchants-orders-main {
+            > .orders-main-top {
+              > .filtrate-text[data-v-3d7faed3] {
+                color: #7d90ac;
+              }
+            }
+          }
+        }
+
+        .inquire-button {
+          .el-button {
+            background: linear-gradient(90deg, rgba(43, 57, 110, 1) 0%, rgba(42, 80, 130, 1) 100%);
+          }
+        }
+
+        .el-input {
+          .el-input--suffix {
+            > input {
+              &::-webkit-input-placeholder {
+                color: #7d90ac;
+              }
+            }
+          }
+        }
+
+        .orders-main-bottom {
+          .el-table {
+            border: 1px solid #ecf1f8;
+            background-color: #fff;
+
+            th {
+              background-color: #fff;
+              box-shadow: none;
+              border-right: 0;
+
+              &.is-leaf {
+                border-top: 1px solid #ecf1f8;
+                border-bottom: 1px solid #ecf1f8;
+                box-shadow: inset 0 1px 2px #ecf1f8;
+
+                &:first-of-type {
+                  border-left: 0 solid #ecf1f8;
+                  border-radius: 0;
+                }
+
+                &:nth-last-of-type(2) {
+                  border-right: 0 solid #ecf1f8;
+                  border-radius: 0;
+                }
+              }
+            }
+          }
+        }
+
+        .el-button--primary {
+          border: none;
+          background: linear-gradient(90deg, rgba(43, 57, 110, 1) 0%, rgba(42, 80, 130, 1) 100%);
         }
       }
     }

@@ -241,7 +241,8 @@ import {
 import {
   setTransactionPassword,
   resetUpdatePayPassword,
-  securityVerificationOnOff
+  securityVerificationOnOff,
+  cancelPasswdDialog
 } from '../../../utils/api/personal'
 import { createNamespacedHelpers, mapState } from 'vuex'
 const { mapMutations, mapActions } = createNamespacedHelpers('user')
@@ -285,15 +286,9 @@ export default {
       successCountDown: 1 // 成功倒计时
     }
   },
-  created () {
-    // 覆盖Element样式
-    require('../../../../static/css/list/Personal/UserSecuritySettings/UserTransactionPassword.css')
-    // 白色主题样式
-    require('../../../../static/css/theme/day/Personal/UserSecuritySettings/UserTransactionPasswordDay.css')
-    // 黑色主题样式
-    require('../../../../static/css/theme/night/Personal/UserSecuritySettings/UserTransactionPasswordNight.css')
-    this.getSecurityCenter()
-    this.REFLASH_USER_INFO(this)
+  async created () {
+    await this.getSecurityCenter()
+    await this.cancelPasswdDialog()
   },
   mounted () {},
   activited () {},
@@ -306,6 +301,15 @@ export default {
     ...mapMutations([
       'SET_USER_BUTTON_STATUS'
     ]),
+    // 取消用户设置密码弹窗
+    async cancelPasswdDialog () {
+      const data = await cancelPasswdDialog()
+      if (!returnAjaxMsg(data, this)) {
+        return false
+      } else {
+        this.REFLASH_USER_INFO(this)
+      }
+    },
     // 点击返回上个页面
     returnSuperior () {
       this.$store.commit('personal/CHANGE_REF_SECURITY_CENTER_INFO', true)
@@ -641,7 +645,8 @@ export default {
       userInfoDetail: state => state.user.loginStep1Info.userInfo,
       disabledOfPhoneBtn: state => state.user.disabledOfPhoneBtn,
       disabledOfEmailBtn: state => state.user.disabledOfEmailBtn,
-      refSecurityCenterStatus: state => state.personal.refSecurityCenterStatus
+      refSecurityCenterStatus: state => state.personal.refSecurityCenterStatus,
+      paypasswordSet: state => state.user.loginStep1Info.userInfo.loginStep1Info // 用户是否已进入交易密码
     }),
     windowHeight () {
       return window.innerHeight
@@ -724,6 +729,44 @@ export default {
       }
     }
 
+    /deep/ {
+      /* 覆盖Element样式 */
+      .el-form-item__content {
+        width: 600px;
+      }
+
+      .el-input__inner {
+        height: 36px;
+        border-radius: 2px 0 0 2px;
+        vertical-align: top;
+      }
+
+      .el-input-group {
+        width: 220px;
+        height: 36px;
+        margin-right: 0;
+        border-radius: 4px;
+      }
+
+      .el-input-group__append {
+        padding: 0;
+        background-color: #338ff5;
+      }
+
+      /* 表单label宽度重置 */
+      .transaction-password-content {
+        .transaction-content-from {
+          .el-form {
+            .el-form-item {
+              .el-form-item__label {
+                width: 186px !important;
+              }
+            }
+          }
+        }
+      }
+    }
+
     &.night {
       color: $nightFontColor;
       background-color: $nightBgColor;
@@ -781,6 +824,31 @@ export default {
               background: linear-gradient(0deg, rgba(43, 57, 110, 1), rgba(42, 80, 130, 1));
             }
           }
+        }
+      }
+
+      /deep/ {
+        /* 个人中心（黑色主题） */
+        .el-form-item__label {
+          color: rgba(255, 255, 255, .7);
+        }
+
+        .el-input__inner {
+          border: 1px solid #485776;
+          color: #a9bed4;
+          background-color: #1c1f32;
+
+          &:focus {
+            border: 1px solid #338ff5;
+          }
+        }
+
+        .el-input-group__append {
+          border-top: 1px solid #485776;
+          border-bottom: 1px solid #485776;
+          color: #fff;
+          background-color: #338ff5;
+          border-right: 1px solid #485776;
         }
       }
     }
@@ -841,6 +909,12 @@ export default {
               background: linear-gradient(0deg, rgba(43, 57, 110, 1), rgba(42, 80, 130, 1));
             }
           }
+        }
+      }
+
+      /deep/ {
+        .el-form-item__label {
+          color: #7d90ac;
         }
       }
     }

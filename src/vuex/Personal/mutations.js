@@ -6,7 +6,8 @@ import {
   SET_LEGAL_TENDER_REFLASH_STATUS,
   CHANGE_LEGAL_PAGE,
   // 更改重新渲染交易中订单列表状态
-  CHANGE_RE_RENDER_TRADING_LIST_STATUS
+  CHANGE_RE_RENDER_TRADING_LIST_STATUS,
+  SET_NEW_WITHDRAW_ADDRESS
 } from './mutations-types.js'
 
 // import {setStore, getStore} from '../utils'
@@ -79,5 +80,9 @@ export default {
     if (legalTradePageTotals) {
       state.legalTradePageTotals = legalTradePageTotals
     }
+  },
+  // 我的资产跳转到提币地址携带提币参数
+  [SET_NEW_WITHDRAW_ADDRESS] (state, data) {
+    state.paramOfJumpToAddWithdrawAdress = data
   }
 }

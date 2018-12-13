@@ -609,17 +609,6 @@
       >
         {{ $t('M.comm_no_data') }}
       </div>
-      <!-- 三、分页-->
-      <div class="page">
-        <el-pagination
-          background
-          v-show="tradingOrderList.length"
-          layout="prev, pager, next"
-          :page-count="totalPages"
-          @current-change="changeCurrentPage"
-        >
-        </el-pagination>
-      </div>
       <!-- 四 买家点击确认付款按钮 弹出交易密码框 -->
       <div class="password-dialog">
         <!-- 交易密码 -->
@@ -730,6 +719,17 @@
           </span>
         </el-dialog>
       </div>
+    </div>
+    <!-- 三、分页-->
+    <div class="page">
+      <el-pagination
+        background
+        v-show="tradingOrderList.length"
+        layout="prev, pager, next"
+        :page-count="totalPages"
+        @current-change="changeCurrentPage"
+      >
+      </el-pagination>
     </div>
   </div>
 </template>
@@ -1121,7 +1121,7 @@ export default {
 
 .otc-trading-order-box {
   > .otc-trading-order-content {
-    min-height: 472px;
+    /* min-height: 472px; */
     border-radius: 5px;
 
     > .order-list {
@@ -1335,11 +1335,11 @@ export default {
       text-align: center;
       color: rgba(255, 255, 255, .8);
     }
+  }
 
-    .page {
-      padding: 2px 0 15px;
-      text-align: center;
-    }
+  .page {
+    /* padding: 2px 0 15px; */
+    text-align: center;
   }
 
   /deep/ {

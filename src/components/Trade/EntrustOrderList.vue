@@ -4,8 +4,19 @@
     :class="{'day':theme == 'day','night':theme == 'night' }"
   >
     <div class="inner-box">
+
       <!--查看更多委单记录-->
       <div class="view-more">
+        <button
+          class="cancel-all-entrust"
+          :class="{
+            'disabled': !currentEntrustList.length
+          }"
+          :disabled="!currentEntrustList.length"
+          @click="cancelAllEntrust"
+        >
+          {{$t(cancelEntrustBtnText)}}
+        </button>
         <a
           href="#"
           @click="jumpToPersonal"
@@ -268,7 +279,8 @@ import {
 } from '../../utils'
 import {
   getMyEntrust,
-  getHistoryEntrust
+  getHistoryEntrust,
+  cancelAllEntrustAjax
 } from '../../utils/api/trade'
 import {
   returnAjaxMsg,
@@ -283,13 +295,22 @@ export default {
   // props,
   data () {
     return {
-      activeName: 'current-entrust', // 当前委托，历史委托切换（current、history）
-      currentEntrustList: [], // 当前委托列表
-      historyEntrustList: [], // 当前委托列表
-      currentPageForMyEntrust: 1, // 当前委托页码
-      totalPageForMyEntrust: 1, // 当前委托总页数
-      currentPageForHistoryEntrust: 1, // 历史委托页码
-      totalPageForHistoryEntrust: 1, // 历史委托总页数
+      // 撤销所有委单
+      cancelEntrustBtnText: 'M.trade_cancel_all_entrust',
+      // 当前委托，历史委托切换（current、history）
+      activeName: 'current-entrust',
+      // 当前委托列表
+      currentEntrustList: [],
+      // 当前委托列表
+      historyEntrustList: [],
+      // 当前委托页码
+      currentPageForMyEntrust: 1,
+      // 当前委托总页数
+      totalPageForMyEntrust: 1,
+      // 历史委托页码
+      currentPageForHistoryEntrust: 1,
+      // 历史委托总页数
+      totalPageForHistoryEntrust: 1,
       pageSize: 10
     }
   },
@@ -304,6 +325,27 @@ export default {
     ...mapMutations([
       'TOGGLE_REFRESH_ENTRUST_LIST_STATUS'
     ]),
+    // 撤销所有委单
+    cancelAllEntrust () {
+      // 确定撤销所有委托？ 取消  删除
+      this.$confirm(this.$t('M.trade_determine_cancel_all_entrust'), {
+        cancelButtonText: this.$t('M.comm_cancel'), // 取消
+        confirmButtonText: this.$t('M.comm_confirm') // 确定
+      }).then(async () => {
+        let params = {
+          tradeId: this.middleTopData.partnerTradeId
+        }
+
+        const data = await cancelAllEntrustAjax(params)
+        if (!returnAjaxMsg(data, this)) {
+          return false
+        } else {
+          console.log(data)
+          this.TOGGLE_REFRESH_ENTRUST_LIST_STATUS(true)
+        }
+      }).catch(() => {
+      })
+    },
     getEntrustData () {
       if (this.isLogin) {
         // 获取我的当前委托
@@ -446,6 +488,18 @@ export default {
       padding-right: 27px;
       line-height: 34px;
       text-align: right;
+
+      > .cancel-all-entrust {
+        padding-right: 10px;
+        border-radius: 5px;
+        font-size: 12px;
+        color: #d45858;
+        cursor: pointer;
+
+        &.disabled {
+          color: rgba(255, 255, 255, .4);
+        }
+      }
 
       > a {
         color: $mainColor;

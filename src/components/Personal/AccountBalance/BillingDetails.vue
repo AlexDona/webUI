@@ -7,128 +7,212 @@
       <span
         class="header-content display-inline-block font-size16 cursor-pointer"
       >
-        <!--充提记录-->
-        {{ $t('M.user_assets_Transaction_History') }}
-        <!--@click.prevent.prevent="clickTableCut(1)"-->
+        <!--账单明细-->
+        {{ $t('M.user_asset_title2') }}
       </span>
-      <!--<span-->
-        <!--class="header-content display-inline-block font-size16 cursor-pointer"-->
-        <!--@click.prevent.prevent="clickTableCut(2)"-->
-      <!--&gt;-->
-        <!--其他记录-->
-      <!--</span>-->
     </header>
     <div class="billing-details-main paddinglr20 margin-top9">
-      <div class="billing-details-query">
-        <div class="float-left cursor-pointer">
+      <el-tabs
+        v-model="activeName"
+        @tab-click = "coinMoneyOrders"
+      >
+        <!--查询条件-->
+        <div class="billing-details-query">
+          <div class="float-left cursor-pointer">
           <span class="demonstration display-inline-block font-size12">
             <!--币种-->
             {{ $t('M.comm_currency') }}
           </span>
-          <el-select
-            v-model="currencyListValue"
-            :placeholder="$t('M.comm_please_choose')"
-            :no-data-text="$t('M.comm_no_data')"
-            clearable
-            @change="changeId"
-          >
-            <el-option
+            <el-select
+              v-model="defaultCurrencyId"
               :placeholder="$t('M.comm_please_choose')"
-              v-for="(item, index) in currencyList"
-              :key="index"
-              :label="item.name"
-              :value="item.id"
+              :no-data-text="$t('M.comm_no_data')"
+              clearable
             >
-            </el-option>
-          </el-select>
-        </div>
-        <!--充提记录-->
-        <div class="float-left margin-left50 cursor-pointer">
+              <el-option
+                :placeholder="$t('M.comm_please_choose')"
+                v-for="(item, index) in currencyList"
+                :key="index"
+                :label="item.name"
+                :value="item.id"
+              >
+              </el-option>
+            </el-select>
+          </div>
+          <!--充提记录类型-->
+          <div
+            v-if="activeName === 'current-entrust'"
+            class="float-left margin-left50 cursor-pointer"
+          >
           <span class="demonstration font-size12">
             <!--类型-->
             {{ $t('M.comm_type') }}
           </span>
-          <el-select
-            v-model="currencyTypeValue"
-            :no-data-text="$t('M.comm_no_data')"
-          >
-            <el-option
-              v-for="item in currencyType"
-              :key="item.value"
-              :label="$t(item.label)"
-              :value="item.value"
+            <el-select
+              v-model="currencyTypeValue"
+              :no-data-text="$t('M.comm_no_data')"
+              clearable
             >
-            </el-option>
-          </el-select>
-        </div>
-        <!--其他记录-->
-        <!--<div class="float-left margin-left50 cursor-pointer">-->
-          <!--<span class="demonstration">类型</span>-->
-          <!--<el-select-->
-            <!--v-model="otherRecordsValue"-->
-          <!--&gt;-->
-            <!--<el-option-->
-              <!--v-for="item in otherRecordsType"-->
-              <!--:key="item.value"-->
-              <!--:label="item.label"-->
-              <!--:value="item.value"-->
-            <!--&gt;-->
-            <!--</el-option>-->
-          <!--</el-select>-->
-        <!--</div>-->
-        <div class="float-left margin-left58 cursor-pointer">
-          <div class="block">
+              <el-option
+                v-for="item in currencyType"
+                :key="item.value"
+                :label="$t(item.label)"
+                :value="item.value"
+              >
+              </el-option>
+            </el-select>
+          </div>
+          <!--其他记录类型-->
+          <div
+            v-else
+            class="float-left margin-left50 cursor-pointer"
+          >
+            <!--类型-->
+            <span class="demonstration">
+              {{ $t('M.comm_type') }}
+            </span>
+            <el-select
+              v-model="otherRecordsValue"
+              clearable
+            >
+              <el-option
+                v-for="item in otherRecordsType"
+                :key="item.value"
+                :label="item.label"
+                :value="item.value"
+              >
+              </el-option>
+            </el-select>
+          </div>
+          <div class="float-left margin-left58 cursor-pointer">
+            <div class="block">
             <span class="demonstration font-size12">
               <!--日期-->
               {{ $t('M.comm_data') }}
             </span>
-            <!--开始日期-->
-            <el-date-picker
-              v-model="startTime"
-              type="date"
-              value-format="yyyy-MM-dd"
-              :placeholder="$t('M.comm_select') + $t('M.comm_data')"
-              @change="changeStartTime"
-            >
-            </el-date-picker>
-            &nbsp;&nbsp;-&nbsp;&nbsp;
-            <!-- 结束日期 -->
-            <el-date-picker
-              v-model="endTime"
-              type="date"
-              value-format="yyyy-MM-dd"
-              :placeholder="$t('M.comm_select') + $t('M.comm_data')"
-              @change="changeEndTime"
-            >
-            </el-date-picker>
+              <!--开始日期-->
+              <el-date-picker
+                v-model="startTime"
+                type="date"
+                value-format="yyyy-MM-dd HH:mm:ss"
+                :placeholder="$t('M.comm_select') + $t('M.comm_data')"
+                @change="changeStartTime"
+              >
+              </el-date-picker>
+              &nbsp;&nbsp;-&nbsp;&nbsp;
+              <!-- 结束日期 -->
+              <el-date-picker
+                v-model="endTime"
+                type="date"
+                value-format="yyyy-MM-dd"
+                :placeholder="$t('M.comm_select') + $t('M.comm_data')"
+                @change="changeEndTime"
+              >
+              </el-date-picker>
+            </div>
+          </div>
+          <div
+            class="search-button float-right border-radius2 text-align-c cursor-pointer font-size12"
+            @click.prevent="stateSearchButton(activeName)"
+          >
+            <!--搜索-->
+            {{ $t('M.comm_search') }}
           </div>
         </div>
-        <div
-          class="search-button float-right border-radius2 text-align-c cursor-pointer font-size12"
-          @click.prevent="stateSearchButton"
+        <!--充提记录-->
+        <el-tab-pane
+          :label="$t('M.user_assets_Transaction_History')"
+          name="current-entrust"
         >
-          <!--搜索-->
-          {{ $t('M.comm_search') }}
-        </div>
-      </div>
-      <!--充提记录-->
-      <div
-        v-show="showStatusRecordList"
-        class="billing-details-content"
-      >
-        <div class="tab-list">
-          <!--暂无记录-->
+          <div class="inner-box">
+            <!--查询结果-->
+            <div class="result-box">
+              <!--暂无记录-->
+              <el-table
+                :data="chargeRecordList"
+                style="width: 100%;"
+                :empty-text="$t('M.comm_no_data')"
+                v-loading="partLoading"
+                element-loading-background="rgba(0, 0, 0, 0.6)"
+              >
+                <!--币种-->
+                <el-table-column
+                  :label="$t('M.comm_currency')"
+                  width="100"
+                >
+                  <template slot-scope = "s">
+                    <div>{{ s.row.coinName }}</div>
+                  </template>
+                </el-table-column>
+                <!--类型-->
+                <el-table-column
+                  :label="$t('M.comm_type')"
+                  width="100"
+                >
+                  <template slot-scope = "s">
+                    <div>{{ $t(`M.${s.row.i18nTypeName}`)}}</div>
+                  </template>
+                </el-table-column>
+                <!--数量-->
+                <el-table-column
+                  :label="$t('M.comm_count')"
+                >
+                  <template slot-scope = "s">
+                    <div>{{ s.row.amount }}</div>
+                  </template>
+                </el-table-column>
+                <!--提交时间-->
+                <el-table-column
+                  :label="$t('M.comm_sub_time') + $t('M.comm_time')"
+                >
+                  <template slot-scope = "s">
+                    <div>{{ s.row.createTime }}</div>
+                  </template>
+                </el-table-column>
+                <!--更新时间-->
+                <el-table-column
+                  :label="$t('M.comm_update') + $t('M.comm_time')"
+                >
+                  <template slot-scope = "s">
+                    <div>{{ s.row.updateTime }}</div>
+                  </template>
+                </el-table-column>
+                <!--状态-->
+                <el-table-column
+                  prop="address"
+                  :label="$t('M.comm_state')"
+                >
+                  <template slot-scope = "s">
+                    <div>{{ $t(`M.${s.row.i18nStatusName}`)}}</div>
+                  </template>
+                </el-table-column>
+              </el-table>
+            </div>
+          </div>
+
+        </el-tab-pane>
+        <!--综合记录-->
+        <el-tab-pane
+          :label="$t('M.comprehensive_records')"
+          name="other-records"
+        >
           <el-table
-            :data="chargeRecordList"
+            :data="otherRecordsList"
             style="width: 100%;"
             :empty-text="$t('M.comm_no_data')"
             v-loading="partLoading"
-            element-loading-background="rgba(0, 0, 0, 0.6)"
           >
+            <!--时间-->
+            <el-table-column
+              :label="$t('M.comm_time')"
+            >
+              <template slot-scope = "s">
+                <div>{{ s.row.time }}</div>
+              </template>
+            </el-table-column>
             <!--币种-->
             <el-table-column
               :label="$t('M.comm_currency')"
-              width="100"
             >
               <template slot-scope = "s">
                 <div>{{ s.row.coinName }}</div>
@@ -137,10 +221,16 @@
             <!--类型-->
             <el-table-column
               :label="$t('M.comm_type')"
-              width="100"
             >
               <template slot-scope = "s">
-                <div>{{ $t(`M.${s.row.i18nTypeName}`)}}</div>
+                <!--<div>{{ s.row.type }}</div>-->
+                <div v-if="s.row.type == 'OTC_TRADE'">otc交易</div>
+                <div v-if="s.row.type == 'OTC_FEE'">otc手续费</div>
+                <div v-if="s.row.type == 'CTC_TRADE'">币币交易</div>
+                <div v-if="s.row.type == 'CTC_FEE'">币币手续费</div>
+                <div v-if="s.row.type == 'FINANCIAL_EXPENDITURE'">理财支出</div>
+                <div v-if="s.row.type == 'FINANCIAL_INCOME'">理财收入</div>
+                <div v-if="s.row.type == 'INVITATION_REWARD'">邀请有礼</div>
               </template>
             </el-table-column>
             <!--数量-->
@@ -148,99 +238,41 @@
               :label="$t('M.comm_count')"
             >
               <template slot-scope = "s">
-                <div>{{ s.row.amount }}</div>
+                <div>{{ s.row.count }}</div>
               </template>
             </el-table-column>
-            <!--提交时间-->
+            <!--备注-->
             <el-table-column
-              :label="$t('M.comm_sub_time') + $t('M.comm_time')"
+              :label="$t('M.comm_remark')"
             >
               <template slot-scope = "s">
-                <div>{{ s.row.createTime }}</div>
-              </template>
-            </el-table-column>
-            <!--更新时间-->
-            <el-table-column
-              :label="$t('M.comm_update') + $t('M.comm_time')"
-            >
-              <template slot-scope = "s">
-                <div>{{ s.row.updateTime }}</div>
-              </template>
-            </el-table-column>
-            <!--状态-->
-            <el-table-column
-              prop="address"
-              :label="$t('M.comm_state')"
-            >
-              <template slot-scope = "s">
-                <div>{{ $t(`M.${s.row.i18nStatusName}`)}}</div>
+                <div>{{ $t(`M.${s.row.desc}`)}}</div>
               </template>
             </el-table-column>
           </el-table>
-        </div>
-      </div>
-      <!--其他记录-->
-      <div
-        v-show="hiddenStatusRecordList"
-        class="billing-details-content"
-      >
-        <el-table
-          :data="otherRecordsList"
-          style="width: 100%;"
-          :empty-text="$t('M.comm_no_data')"
-          v-loading="partLoading"
-        >
-          <!--时间-->
-          <el-table-column
-            :label="$t('M.comm_time')"
-          >
-            <template slot-scope = "s">
-              <div>{{ s.row.time }}</div>
-            </template>
-          </el-table-column>
-          <!--币种-->
-          <el-table-column
-            :label="$t('M.comm_currency')"
-          >
-            <template slot-scope = "s">
-              <div>{{ s.row.coinName }}</div>
-            </template>
-          </el-table-column>
-          <!--类型-->
-          <el-table-column
-            :label="$t('M.comm_type')"
-          >
-            <template slot-scope = "s">
-              <div>{{ s.row.type }}</div>
-            </template>
-          </el-table-column>
-          <!--数量-->
-          <el-table-column
-            :label="$t('M.comm_count')"
-          >
-            <template slot-scope = "s">
-              <div>{{ s.row.amount }}</div>
-            </template>
-          </el-table-column>
-          <!--状态-->
-          <el-table-column
-            :label="$t('M.comm_state')"
-          >
-            <template slot-scope = "s">
-              <div>{{ s.row.status }}</div>
-            </template>
-          </el-table-column>
-        </el-table>
-      </div>
+
+        </el-tab-pane>
+      </el-tabs>
     </div>
-    <div class="paging">
+    <div>
       <!--分页-->
       <el-pagination
         background
         v-show="activeName === 'current-entrust' && chargeRecordList.length"
         layout="prev, pager, next"
-        :page-count="totalPageForMyEntrust"
-        @current-change="changeCurrentPage"
+        :page-count="recordTotalPageNumber"
+        @current-change="changeCurrentPage('current-entrust',$event)"
+      >
+      </el-pagination>
+    </div>
+    <div>
+      <!--分页-->
+      <el-pagination
+        background
+        v-show="activeName === 'other-records' && otherRecordsList.length"
+        layout="prev, pager, next"
+        :page-count="totalPagesOtherRecords"
+        @current-change="changeCurrentPage('other-records',$event)"
       >
       </el-pagination>
     </div>
@@ -251,29 +283,32 @@
 import {mapState} from 'vuex'
 import {
   statusRushedToRecordList,
-  getMerchantCurrencyList
+  getMerchantCurrencyList,
+  getComprehensiveRecordsList
 } from '../../../utils/api/personal'
 import {
   returnAjaxMsg,
   getNestedData
 } from '../../../utils/commonFunc'
+import {
+  timeFilter
+} from '../../../utils'
 export default {
   components: {},
-  // props,
   data () {
     return {
-      showStatusRecordList: true, // 充提记录默认显示
       chargeRecordList: [], // 充提记录列表
-      activeName: 'current-entrust',
-      currentPageForMyEntrust: 1, // 当前委托页码
-      totalPageForMyEntrust: 1, // 当前委托总页数
+      activeName: 'current-entrust', // 充提记录
+      recordPageNumber: 1, // 充提记录页码
+      recordTotalPageNumber: 1, // 充提记录总页数
       startTime: '', // 开始起止时间
       endTime: '', // 结束起止时间
       // 币种名称
-      currencyListValue: '', // 默认币种
+      defaultCurrencyId: '', // 默认币种id
       currencyList: [], // 币种列表
       // 充提记录类型
       currencyTypeValue: '', // 默认类型
+      pageSize: 10, // 条数
       // 全部 充币 提币
       currencyType: [
         {
@@ -288,80 +323,55 @@ export default {
         }
       ], // 默认类型
       // 其他记录
-      // otherRecordsList: [
-      //   {
-      //     time: '2016-05-02 10:30:30',
-      //     coinName: 'BTC',
-      //     type: '全部',
-      //     amount: '12312',
-      //     status: '已完成'
-      //   }, {
-      //     time: '2016-05-02 10:30:30',
-      //     coinName: 'BTC',
-      //     type: '全部',
-      //     amount: '12312',
-      //     status: '已完成'
-      //   }, {
-      //     time: '2016-05-02 10:30:30',
-      //     coinName: 'BTC',
-      //     type: '全部',
-      //     amount: '12312',
-      //     status: '已完成'
-      //   }, {
-      //     time: '2016-05-02 10:30:30',
-      //     coinName: 'BTC',
-      //     type: '全部',
-      //     amount: '12312',
-      //     status: '已完成'
-      //   }
-      // ],
-      hiddenStatusRecordList: false, // 其他记录
-      otherRecordsValue: '', // 其他记录类型
-      // 全部 活动奖励 糖果奖励 系统赠送 邀请奖励
+      otherRecordsList: [],
+      otherRecordPageNumbers: 1, // 其他记录页码
+      totalPagesOtherRecords: 1, // 其他记录总页数
+      otherRecordsValue: 'CTC_TRADE', // 其他记录类型
+      // otc交易 otc手续费 币币交易 币币手续费 理财支出 理财收入 邀请有礼
       otherRecordsType: [
         {
-          value: '1',
-          label: '全部'
+          value: 'OTC_TRADE',
+          label: 'M.otc_trade'
         }, {
-          value: '2',
-          label: '活动奖励'
+          value: 'OTC_FEE',
+          label: 'M.otc_fee'
         }, {
-          value: '3',
-          label: '糖果奖励'
+          value: 'CTC_TRADE',
+          label: 'M.ctc_trade'
         }, {
-          value: '4',
-          label: '系统赠送'
+          value: 'CTC_FEE',
+          label: 'M.ctc_fee'
         }, {
-          value: '5',
-          label: '邀请奖励'
+          value: 'FINANCIAL_EXPENDITURE',
+          label: 'M.financial_expenditure'
+        }, {
+          value: 'FINANCIAL_INCOME',
+          label: 'M.financial_income'
+        }, {
+          value: 'INVITATION_REWARD',
+          label: 'M.invitation_reward'
         }
       ],
       partLoading: true // 局部loading
     }
   },
-  created () {
-    // 覆盖Element样式
-    require('../../../../static/css/list/Personal/AccountBalance/BillingDetails.css')
-    // 白色主题样式
-    require('../../../../static/css/theme/day/Personal/AccountBalance/BillingDetailsDay.css')
-    // 黑色主题样式
-    require('../../../../static/css/theme/night/Personal/AccountBalance/BillingDetailsNight.css')
+  async created () {
+    await this.inquireCurrencyList()
+    await this.getChargeMentionList('current-entrust')
   },
-  mounted () {},
-  activited () {},
-  update () {},
-  beforeRouteUpdate () {},
   methods: {
-    // table切换
-    clickTableCut (val) {
-      if (val == 1) {
-        this.hiddenStatusRecordList = false
-        this.showStatusRecordList = true
-        this.getPushRecordList()
-      } else if (val == 2) {
-        this.showStatusRecordList = false
-        this.hiddenStatusRecordList = true
+    // tab 切换
+    async coinMoneyOrders (e) {
+      if (e.name == 'current-entrust') {
+        this.startTime = ''
+        this.endTime = ''
+      } else {
+        this.startTime = timeFilter(new Date().getTime(), 'normal')
+        this.endTime = timeFilter(new Date().getTime(), 'normal')
+        console.log(this.startTime)
       }
+      await this.inquireCurrencyList(e.name)
+      this.getChargeMentionList(e.name)
     },
     // 获取商户币种列表
     async inquireCurrencyList () {
@@ -372,62 +382,110 @@ export default {
       if (!(returnAjaxMsg(data, this, 0))) {
         return false
       } else {
-        // this.currencyList = data.data.data
         this.currencyList = getNestedData(data, 'data.data')
+        if (this.activeName !== 'current-entrust') {
+          this.defaultCurrencyId = getNestedData(data, 'data.data')[0].id
+        } else {
+          this.defaultCurrencyId = ''
+        }
         console.log(this.currencyList)
       }
     },
     // 搜索按钮
-    stateSearchButton () {
+    stateSearchButton (entrustType) {
       this.partLoading = true
-      this.getChargeMentionList()
+      this.getChargeMentionList(entrustType)
     },
     /**
      * 刚进页面时候 冲提记录列表展示
      */
-    async getChargeMentionList () {
-      let data = await statusRushedToRecordList({
-        currentPage: this.currentPageForMyEntrust, // 当前委托页码
+    /* 类型 OTC_TRADE：otc交易 OTC_FEE：otc手续费
+         CTC_TRADE：币币交易 CTC_FEE：币币手续费
+         FINANCIAL_EXPENDITURE：理财支出
+         FINANCIAL_INCOME：理财收入
+         INVITATION_REWARD：邀请有礼 */
+    async getChargeMentionList (entrustType1) {
+      const entrustType = entrustType1 || 'current-entrust'
+      this.chargeRecordList = []
+      this.otherRecordsList = []
+      let params = {
         pageSize: this.pageSize, // 每页显示条数
-        // userId: this.userInfo.userInfo.userId, // 用户ID
-        // 任改动
         userId: this.userInfo.userId, // 用户ID
-        coinId: this.currencyListValue, // 币种ID
-        type: this.currencyTypeValue, // 类型（RECHARGE:充值 WITHDRAW:提现）
-        startTime: this.startTime, // 开始起止时间
-        endTime: this.endTime // 结束起止时间
-      })
-      if (!(returnAjaxMsg(data, this, 0))) {
-        // 接口失败清除loading
-        this.partLoading = false
-        return false
-      } else {
-        // 接口成功清除loading
-        this.partLoading = false
-        // 返回冲提记录列表展示
-        let detailData = getNestedData(data, 'data.data')
-        // 充提记录
-        this.chargeRecordList = getNestedData(detailData, 'list')
-        // 当前委托总页数
-        this.totalPageForMyEntrust = getNestedData(detailData, 'pages') - 0
-        console.log(this.chargeRecordList)
+        coinId: this.defaultCurrencyId, // 币种ID
+        type: this.otherRecordsValue, // 类型（RECHARGE:充值 WITHDRAW:提现 / 其他记录类型
+        startTime: this.startTime === '' ? '' : timeFilter(this.startTime, 'normal'), // 开始起止时间
+        endTime: this.endTime === '' ? '' : timeFilter(this.endTime, 'normal') // 结束起止时间
+      }
+      let data
+      let data1
+      console.log(entrustType)
+      switch (entrustType) {
+        case 'current-entrust':
+          params.currentPage = this.recordPageNumber
+          params.type = this.currencyTypeValue
+          data = await statusRushedToRecordList(params)
+          console.log(data)
+          if (!returnAjaxMsg(data, this, 0)) {
+            // 接口失败清除局部loading
+            this.partLoading = false
+            return false
+          } else {
+            // 接口成功清除局部loading
+            this.partLoading = false
+            // 返回冲提记录列表展示
+            let detailData = getNestedData(data, 'data.data')
+            // 充提记录
+            this.chargeRecordList = getNestedData(detailData, 'list')
+            this.recordTotalPageNumber = getNestedData(detailData, 'pages') - 0
+          }
+          break
+        case 'other-records':
+          console.log(2)
+          console.log(this.startTime)
+          params.pageNum = this.otherRecordPageNumbers
+          params.startTime = this.startTime === '' ? '' : timeFilter(this.startTime, 'normal') // 开始起止时间
+          params.endTime = this.endTime === '' ? '' : timeFilter(this.endTime, 'normal') // 结束起止时间
+          params.type = this.otherRecordsValue
+          console.log(params)
+          console.log(this.startTime)
+          data1 = await getComprehensiveRecordsList(params)
+          // console.log(data1)
+          if (!returnAjaxMsg(data1, this, 0)) {
+            // 接口失败清除局部loading
+            this.partLoading = false
+            return false
+          } else {
+            // 接口成功清除局部loading
+            this.partLoading = false
+            console.log(data1)
+            if (data1.data.data.list) {
+              this.otherRecordsList = getNestedData(data1, 'data.data.list')
+              this.totalPagesOtherRecords = getNestedData(data1, 'data.data.pages') - 0
+            }
+          }
+          break
       }
     },
-    // 资产币种下拉
-    changeId (e) {
-      console.log(e)
-      this.currencyList.forEach(item => {
-        if (e === item.id) {
-          console.log(e)
-          this.inquireCurrencyList(e)
-        }
-      })
-    },
-    // 分页
-    changeCurrentPage (pageNum) {
-      // 当前委托总页数
-      this.currentPageForMyEntrust = pageNum
-      this.getChargeMentionList()
+    /**
+     * 切换页码
+     * @entrustType: 记录类型： 0：充提记录 1： 其他记录
+     */
+    changeCurrentPage (entrustType, pageNum) {
+      // console.log(pageNum)
+      switch (entrustType) {
+        case 'current-entrust':
+          // console.log(pageNum)
+          this.partLoading = true
+          this.recordPageNumber = pageNum
+          this.getChargeMentionList(entrustType)
+          break
+        case 'other-records':
+          // console.log(pageNum)
+          this.partLoading = true
+          this.otherRecordPageNumbers = pageNum
+          this.getChargeMentionList(entrustType)
+          break
+      }
     },
     // 时间日期插件日期选择change事件验证事件开始和结束时间
     // 开始时间赋值
@@ -463,13 +521,22 @@ export default {
   computed: {
     ...mapState({
       theme: state => state.common.theme,
-      // userInfo: state => state.user.loginStep1Info, // 用户详细信息
-      // 任改动
       userInfo: state => state.user.loginStep1Info.userInfo, // 用户详细信息
       userCenterActiveName: state => state.personal.userCenterActiveName
     })
   },
   watch: {
+    startTime (newVal) {
+      console.log(newVal)
+      if (!newVal) {
+        this.startTime = ''
+      }
+    },
+    endTime (newVal) {
+      if (!newVal) {
+        this.endTime = ''
+      }
+    },
     userCenterActiveName (newVal) {
       if (newVal === 'billing-details') {
         this.getChargeMentionList()
@@ -484,7 +551,7 @@ export default {
 
   .billing-details {
     > .billing-details-main {
-      min-height: 585px;
+      min-height: 650px;
 
       .billing-details-content {
         > .tab-list {
@@ -492,11 +559,11 @@ export default {
         }
       }
 
-      > .billing-details-query {
+      .billing-details-query {
         height: 57px;
         line-height: 57px;
 
-        > .search-button {
+        .search-button {
           width: 50px;
           height: 30px;
           margin-top: 15px;
@@ -524,7 +591,7 @@ export default {
       > .billing-details-main {
         background-color: $nightMainBgColor;
 
-        > .billing-details-query {
+        .billing-details-query {
           border-bottom: 1px solid #39424d;
 
           > .search-button {
@@ -538,6 +605,77 @@ export default {
         background-color: $nightMainBgColor;
         box-shadow: 0 5px 50px #181e2a;
       }
+
+      /deep/ {
+        .el-input--suffix {
+          .el-input__inner {
+            padding-right: 25px;
+          }
+        }
+
+        .el-table {
+          th,
+          tr {
+            background-color: #1c1f32;
+          }
+
+          thead {
+            color: #617499;
+          }
+
+          th {
+            &.is-leaf {
+              border-bottom: 0;
+            }
+
+            & > .cell {
+              color: #a9bed4;
+            }
+          }
+
+          td {
+            border-bottom: 0;
+            color: #ccc;
+            background-color: #1c1f32;
+          }
+        }
+
+        .el-input__inner {
+          color: #fff;
+          background-color: #2d3651;
+        }
+
+        .el-table__empty-block {
+          color: #fff;
+          background-color: #1c1f32;
+        }
+
+        .el-loading-mask {
+          background-color: rgba(0, 0, 0, .6);
+        }
+
+        .el-tabs__item {
+          width: 100px;
+          padding: 0;
+          margin-right: 10px;
+          text-align: center;
+
+          &.is-active {
+            width: 100px;
+            border-bottom: 2px solid #0079fe;
+            border-left: 0;
+            color: #0079fe;
+            background: transparent;
+          }
+
+          &:hover {
+            border-left: 1px;
+            text-align: center;
+            color: #0079fe;
+            background: transparent;
+          }
+        }
+      }
     }
 
     &.day {
@@ -548,7 +686,7 @@ export default {
         border: 1px solid #ecf1f8;
         background-color: $dayBgColor;
 
-        > .billing-details-query {
+        .billing-details-query {
           border-bottom: 1px solid rgba(57, 66, 77, .1);
 
           > .search-button {
@@ -567,6 +705,92 @@ export default {
         border-radius: 2px;
         background: rgb(255, 255, 255);
         box-shadow: 1px 0 3px rgb(236, 236, 236);
+      }
+
+      /deep/ {
+        .el-table {
+          th,
+          tr {
+            background-color: #fff;
+          }
+
+          thead {
+            color: #617499;
+          }
+
+          th {
+            &.is-leaf {
+              border-bottom: 0;
+            }
+
+            & > .cell {
+              color: #333;
+            }
+          }
+
+          td {
+            border-bottom: 0;
+            color: #ccc;
+            background-color: #fff;
+          }
+
+          .cell {
+            color: #7d90ac;
+          }
+        }
+
+        .el-input__inner {
+          border: 1px solid #ecf1f8;
+          color: #ccc;
+          background-color: rgba(255, 255, 255, 1);
+        }
+
+        .el-table__empty-block {
+          background-color: #fff;
+        }
+      }
+    }
+
+    /deep/ {
+      .el-input__inner {
+        width: 100px;
+        height: 30px;
+        border: 0;
+        font-size: 12px;
+      }
+
+      .el-date-editor {
+        &.el-input {
+          width: 120px;
+          height: 30px;
+        }
+
+        .el-input__inner {
+          width: 120px;
+          height: 30px;
+        }
+      }
+
+      .el-table {
+        .cell {
+          font-size: 12px;
+          text-align: center;
+        }
+
+        th {
+          & > .cell {
+            font-size: 12px;
+            text-align: center;
+          }
+
+          &.is-leaf {
+            border-top: 0;
+          }
+        }
+      }
+
+      .el-tabs__content {
+        width: 930px;
       }
     }
   }

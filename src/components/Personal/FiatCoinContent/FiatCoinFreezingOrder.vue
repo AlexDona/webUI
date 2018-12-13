@@ -169,8 +169,6 @@ export default {
     }
   },
   created () {
-    require('../../../../static/css/list/Personal/FiatCoinContent/FiatCoinFreezingOrder.css')
-    require('../../../../static/css/theme/day/Personal/FiatCoinContent/FiatCoinFreezingOrderDay.css')
   },
   mounted () {},
   activited () {},
@@ -454,6 +452,38 @@ export default {
         }
 
         > .no-data {
+          background-color: #fff;
+        }
+      }
+
+      /deep/ {
+        .freezing-order-content {
+          .freezing-table-head {
+            border: 1px solid #ecf1f8;
+            border-radius: 0;
+            color: #909399;
+            background-color: #fff;
+            -webkit-box-shadow: none;
+            box-shadow: none;
+
+            .order-time {
+              border-right: 0 solid #ecf1f8;
+            }
+          }
+
+          .no-data {
+            color: #909399;
+            background-color: #fff;
+          }
+        }
+
+        .el-table {
+          td {
+            border-bottom: 1px solid rgba(38, 47, 56, .1);
+          }
+        }
+
+        .el-table__expanded-cell {
           background-color: #fff;
         }
       }

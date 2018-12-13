@@ -318,6 +318,8 @@ export const OTC = {
   'otc_index_pubTipsFour': '无法为您预防风险',
   'otc_index_inputBuyPrice': '请输入买入单价',
   'otc_index_inputSellPrice': '请输入卖出单价',
+  'otc_index_inputSellAccount': '卖出数量不能为0',
+  'otc_index_inputBuyAccount': '买入数量不能为0',
   // #################交易中列表############
   'otc_tradingorder': '扫码支付',
   'otc_tradingorder_transformAcconu': '转账金额',

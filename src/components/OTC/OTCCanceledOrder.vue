@@ -218,17 +218,17 @@
         <!-- 暂无数据 -->
         {{$t('M.comm_no_data')}}
       </div>
-      <!--分页-->
-      <div class="page">
-        <el-pagination
-          background
-          v-show="otcCanceledOrderList.length"
-          layout="prev, pager, next"
-          :page-count="totalPages"
-          @current-change="changeCurrentPage"
-        >
-        </el-pagination>
-      </div>
+    </div>
+    <!--分页-->
+    <div class="page">
+      <el-pagination
+        background
+        v-show="otcCanceledOrderList.length"
+        layout="prev, pager, next"
+        :page-count="totalPages"
+        @current-change="changeCurrentPage"
+      >
+      </el-pagination>
     </div>
   </div>
 </template>
@@ -314,7 +314,7 @@ export default {
 
   .otc-canceled-order-box {
     > .canceled-order-content {
-      min-height: 500px;
+      /* min-height: 500px; */
 
       > .canceled-table-head {
         box-sizing: border-box;
@@ -401,10 +401,10 @@ export default {
         line-height: 432px;
         text-align: center;
       }
+    }
 
-      > .page {
-        text-align: center;
-      }
+    > .page {
+      text-align: center;
     }
 
     &.night {

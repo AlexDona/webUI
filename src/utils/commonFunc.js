@@ -32,7 +32,7 @@ import {
   // getStoreWithJson,
   keep2Num
 } from './index'
-import {PHONE_REG, EMAIL_REG, ID_REG, PWD_REG, ALIPAY_REG, BANK_REG, GOOGLE_REG, TPED_REG, URL_REG, WITHDRAWAL_REG} from './regExp'
+import {PHONE_REG, EMAIL_REG, ID_REG, PWD_REG, ALIPAY_REG, BANK_REG, GOOGLE_REG, TPED_REG, URL_REG, WITHDRAWAL_REG, CHINESE_REG} from './regExp'
 // 请求接口后正确或者错误的提示提示信息：
 // 如果返回 错误 了就提示错误并不能继续往下进行；
 // 如果返回了 正确 的数据：不需要正确的提示noTip传0；需要正确的提示noTip传1；
@@ -114,6 +114,9 @@ export const validateNumForUserInput = (type, targetNum) => {
     case 'withdrawal-address':
       validateType = WITHDRAWAL_REG
       break
+    case 'passport':
+      validateType = CHINESE_REG
+      break
   }
 
   if (!targetNum) {
@@ -131,6 +134,7 @@ export const sendPhoneOrEmailCodeAjax = async (type, params, that, isNewPhone = 
   if (!returnAjaxMsg(data, that)) {
     return false
   } else {
+    console.log(type)
     switch (type) {
       case 0:
         store.commit('user/SET_USER_BUTTON_STATUS', {

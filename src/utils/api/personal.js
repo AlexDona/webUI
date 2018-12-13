@@ -3,17 +3,19 @@ import {post, get, put, postWithURLencoded, deleteMethod} from './axios'
  * 个人中心
  */
 // 查询国家列表
-export const queryCountryList = (params) => get('country/selectList', params)
+export const queryCountryList = params => get('country/selectList', params)
 // 我的资产币种列表
-export const assetCurrenciesList = (params) => get('personal/getUserFinanceList', params)
+export const assetCurrenciesList = params => get('personal/getUserFinanceList', params)
 // 提币地址列表查询
-export const inquireWithdrawalAddressList = (params) => get('personal/getWithdrawAddress', params)
+export const inquireWithdrawalAddressList = params => get('personal/getWithdrawAddress', params)
 // 根据币种id查询提币地址
 export const inquireWithdrawalAddressId = (params) => get('personal/getCoinWithdrawAddress', params)
 // 账单明细—冲提记录
 export const statusRushedToRecordList = (params) => get('queryWithdrawRecording', params)
 // 账单明细—获取商户币种列表
 export const getMerchantCurrencyList = (params) => get('queryPartnerCoinList', params)
+// 账单明细—综合记录
+export const getComprehensiveRecordsList = (params) => get('personal/queryColligate', params)
 // 提币
 export const statusSubmitWithdrawButton = (params) => post('addWithdraw', params)
 // 新增用户提币地址
@@ -27,7 +29,9 @@ export const inquireRechargeAddressList = (params) => get('personal/getRechargeA
 // 获取提币信息
 export const withdrawalInformation = (params) => get('queryWithdrawInfo', params)
 // 根据coinid查询交易信息
-export const queryTransactionInformation = (params) => get('personal/getTradeUrl', params)
+export const queryTransactionInformation = (params) => get('personal/getTradeUrl', Object.assign({
+  'not-loading': true
+}, params))
 //  刷新用户信息
 export const userRefreshUser = (params) => get('user/refreshUser', params)
 /**
@@ -94,54 +98,56 @@ export const getRecommendUserPromotionList = (params) => get('user/center/invite
 // 收款方式
 export const accountPaymentTerm = () => get('user/bank/', {})
 // 收款方式设置
-export const statusCardSettings = (params) => postWithURLencoded('user/bank/save', params)
+export const statusCardSettings = params => postWithURLencoded('user/bank/save', params)
 // 开启关闭收款方式设置
-export const openAndCloseModeSetting = (params) => postWithURLencoded('user/bank/enable', params)
+export const openAndCloseModeSetting = params => postWithURLencoded('user/bank/enable', params)
 // 获取支付方式信息
-export const modificationAccountPaymentTerm = (params) => get('user/bank/info', params)
+export const modificationAccountPaymentTerm = params => get('user/bank/info', params)
 /**
  * 法币订单
  * */
 // 可用币种查询：我要购买/我要出售的币种列表
-export const getOTCAvailableCurrency = (params) => get('otcCOin/getAvailOTCCoins', params)
+export const getOTCAvailableCurrency = params => get('otcCOin/getAvailOTCCoins', params)
 // 查询用户所有挂单列表（分页）:也就是订单中的 委托中的订单
-export const getOTCEntrustingOrders = (params) => get('otcEntrust/selectEntrustsPage', params)
+export const getOTCEntrustingOrders = params => get('otcEntrust/selectEntrustsPage', params)
 // 分页查询所有用户otc各状态交易订单列表
-export const getQueryAllOrdersList = (params) => get('otcOrder/selectUserOrdersPage', params)
+export const getQueryAllOrdersList = params => get('otcOrder/selectUserOrdersPage', params)
 // 个人中心查询otc挂单撤销
-export const querySelectedOrdersRevocation = (params) => postWithURLencoded('otcEntrust/cancelOtcEntrust', params)
+export const querySelectedOrdersRevocation = params => postWithURLencoded('otcEntrust/cancelOtcEntrust', params)
 // 交易中订单，买家确认付款
-export const buyerPayForOrder = (params) => postWithURLencoded('otcOrder/payForOrder', params)
+export const buyerPayForOrder = params => postWithURLencoded('otcOrder/payForOrder', params)
 // 个人中心交易中订单， 个人中心卖家确认收款
-export const sellerConfirmGetMoney = (params) => postWithURLencoded('otcOrder/confirmReceiveForOrder', params)
+export const sellerConfirmGetMoney = params => postWithURLencoded('otcOrder/confirmReceiveForOrder', params)
 // 个人中心交易中订单， 个人中心卖家申诉
-export const sellerSendAppeal = (params) => postWithURLencoded('otcAppeal/applyOtcAppeal', params)
+export const sellerSendAppeal = params => postWithURLencoded('otcAppeal/applyOtcAppeal', params)
 // 任增加自动成交倒计时接口和自动取消倒计时接口
 // 撤销otc用户定单（过期买家未付款）
-export const cancelUserOtcOrder = (params) => post('otcOrder/cancelUserOtcOrder', params)
+export const cancelUserOtcOrder = params => post('otcOrder/cancelUserOtcOrder', params)
 // 成交otc用户定单（过期卖家未收款）
-export const completeUserOtcOrder = (params) => post('otcOrder/completeUserOtcOrder', params)
+export const completeUserOtcOrder = params => post('otcOrder/completeUserOtcOrder', params)
 /**
  * API
  * */
 // 获取多个用户api信息
-export const multipleUserAPIInfo = (params) => get('userApi', params)
+export const multipleUserAPIInfo = params => get('userApi', params)
 // 添加用户api信息
-export const stateCreationApi = (params) => post('userApi', params)
+export const stateCreationApi = params => post('userApi', params)
 //  获取秘钥
-export const accessAecretKeyInfo = (params) => get('userApi/secretKey', params)
+export const accessAecretKeyInfo = params => get('userApi/secretKey', params)
 //  修改用户api信息
-export const modifyUserInformation = (params) => put('userApi', params)
+export const modifyUserInformation = params => put('userApi', params)
 //   删除用户api信息
-export const deleteUserInformation = (params) => deleteMethod('userApi', params)
+export const deleteUserInformation = params => deleteMethod('userApi', params)
 /**
  * VIP
  * */
 // vip价格
-export const vipPriceInfo = (params) => get('vip/price', params)
+export const vipPriceInfo = params => get('vip/price', params)
 // 购买vip
-export const buyVipPriceInfo = (params) => postWithURLencoded('vip/buy', params)
+export const buyVipPriceInfo = params => postWithURLencoded('vip/buy', params)
 // 购买vip
-export const currencyApplicationDownloadUrl = (params) => get('getCurrencyApplicationDownloadUrl', params)
+export const currencyApplicationDownloadUrl = params => get('getCurrencyApplicationDownloadUrl', params)
 // 汇率转换
-export const currencyTransform = (params) => get('exchangeRate/coinPrice', params)
+export const currencyTransform = params => get('exchangeRate/coinPrice', params)
+
+export const cancelPasswdDialog = params => post('user/payPasswordSet', params)

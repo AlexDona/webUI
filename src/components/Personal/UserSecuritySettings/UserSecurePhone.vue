@@ -196,8 +196,10 @@
               <input
                 type="text"
                 class="phone-input phone-input-left border-radius2 padding-l15 box-sizing"
-                v-model="amendDataPhone.newPhoneAccounts"
                 @keydown="tieErrorMsg(1,'')"
+                :ref="phoneNumRef"
+                @keyup="phoneNumRegexpInput(phoneNumRef)"
+                @input="phoneNumRegexpInput(phoneNumRef)"
                 @focus="resetNewPhoneIsExistStatus"
                 @blur="checkUserExistAjax('phone', amendDataPhone.newPhoneAccounts,'newPhone')"
               >
@@ -278,6 +280,7 @@ import {
   bindPhoneAddress,
   changeMobilePhone
 } from '../../../utils/api/personal'
+import {phoneNumRegexpInput} from '../../../utils'
 import {checkUserExist} from '../../../utils/api/user'
 const { mapMutations } = createNamespacedHelpers('user')
 export default {
@@ -289,6 +292,7 @@ export default {
   },
   data () {
     return {
+      phoneNumRef: 'phone-num-ref',
       securityCenter: {}, // 个人信息
       errorMsg: '', // 错误信息提示
       bindingDataPhone: {
@@ -323,12 +327,6 @@ export default {
     }
   },
   created () {
-    // 覆盖Element样式
-    require('../../../../static/css/list/Personal/UserSecuritySettings/UserSecurePhone.css')
-    // 白色主题样式
-    require('../../../../static/css/theme/day/Personal/UserSecuritySettings/UserSecurePhoneDay.css')
-    // 黑色主题样式
-    require('../../../../static/css/theme/night/Personal/UserSecuritySettings/UserSecurePhoneNight.css')
     this.getSecurityCenter()
   },
   mounted () {},
@@ -339,6 +337,10 @@ export default {
     ...mapMutations([
       'SET_USER_BUTTON_STATUS'
     ]),
+    phoneNumRegexpInput (ref) {
+      let target = this.$refs[ref]
+      this.amendDataPhone.newPhoneAccounts = phoneNumRegexpInput(target)
+    },
     // 点击返回上个页面
     returnSuperior () {
       this.$store.commit('personal/CHANGE_REF_SECURITY_CENTER_INFO', true)
@@ -867,6 +869,52 @@ export default {
       }
     }
 
+    /deep/ {
+      /* 覆盖Element样式 */
+      .el-form-item__content {
+        width: 650px;
+      }
+
+      .el-input__inner {
+        width: 130px;
+        height: 36px;
+        border-radius: 2px 0 0 2px;
+      }
+
+      .el-input-group {
+        width: 131px;
+        margin-right: 0;
+        border-radius: 4px;
+      }
+
+      .el-input-group__append {
+        padding: 0;
+        border-left: 0;
+        border-radius: 0 4px 4px 0;
+        cursor: pointer;
+      }
+
+      .el-input-group__prepend {
+        padding: 0 25px;
+      }
+
+      .el-form-item {
+        margin-bottom: 15px;
+      }
+
+      .el-select {
+        .el-input__inner {
+          width: 63px;
+          height: 34px;
+          padding: 0 7px;
+        }
+      }
+
+      .el-form-item__label {
+        width: 180px !important;
+      }
+    }
+
     &.night {
       color: $nightFontColor;
       background-color: $nightBgColor;
@@ -935,6 +983,22 @@ export default {
           }
         }
       }
+
+      /deep/ {
+        .el-input__inner {
+          border: 1px solid #485776;
+          background-color: transparent;
+
+          &:focus {
+            border: 1px solid #338ff5;
+          }
+        }
+
+        .el-input-group__append {
+          border: none;
+          background-color: #338ff5;
+        }
+      }
     }
 
     &.day {
@@ -993,6 +1057,22 @@ export default {
               background: linear-gradient(0deg, rgba(43, 57, 110, 1), rgba(42, 80, 130, 1));
             }
           }
+        }
+      }
+
+      /deep/ {
+        .el-input__inner {
+          border: 1px solid #ecf1f8;
+          background-color: transparent;
+
+          &:focus {
+            border: 1px solid #338ff5;
+          }
+        }
+
+        .el-input-group__append {
+          border: none;
+          background-color: #338ff5;
         }
       }
     }

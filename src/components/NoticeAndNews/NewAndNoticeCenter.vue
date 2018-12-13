@@ -67,6 +67,7 @@
                 </ul>
               </div>
               <el-pagination
+                v-show="noticeFilterList.length"
                 background
                 layout="prev, pager, next"
                 :current-page="pageNum"

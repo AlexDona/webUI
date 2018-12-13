@@ -40,5 +40,7 @@ export const trade = {
   // #####################币币交易 行情#####################''Currency trading'
   'trade_market_bazaar': 'Market',
   'trade_market_amount_increase': 'Gain',
-  'trade_market_optional': 'Optional'
+  'trade_market_optional': 'Optional',
+  'trade_cancel_all_entrust': 'Repeal all open order',
+  'trade_determine_cancel_all_entrust': 'Determine to repeal all open order'
 }
