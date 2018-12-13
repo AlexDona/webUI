@@ -2,8 +2,6 @@
   <div
     class="add-bank personal"
     :class="{'day':theme == 'day','night':theme == 'night' }"
-    v-loading.fullscreen.lock="fullscreenLoading"
-    element-loading-background="rgba(0, 0, 0, 0.6)"
     :style="{
       height:windowHeight+'px'
     }"
@@ -229,16 +227,10 @@ export default {
           bankType: 'Bankcard', // type
           id: this.id
         }
-        // 整页loading
-        this.fullscreenLoading = true
         data = await statusCardSettings(params)
         if (!(returnAjaxMsg(data, this, 1))) {
-          // 接口失败清除loading
-          this.fullscreenLoading = false
           return false
         } else {
-          // 接口成功清除loading
-          this.fullscreenLoading = false
           this.successJump()
           this.stateEmptyData()
           console.log(data)
@@ -319,16 +311,10 @@ export default {
         userId: this.userInfo.userId,
         type: 'Bankcard'
       }
-      // 整页loading
-      this.fullscreenLoading = true
       data = await modificationAccountPaymentTerm(params)
       if (!(returnAjaxMsg(data, this, 0))) {
-        // 接口失败清除loading
-        this.fullscreenLoading = false
         return false
       } else {
-        // 接口成功清除loading
-        this.fullscreenLoading = false
         // let detailData = data.data.data
         let detailData = getNestedData(data, 'data.data')
         // 返回状态展示
