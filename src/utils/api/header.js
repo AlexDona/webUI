@@ -17,9 +17,9 @@ export const getTransitionCurrencyRateAjax = (params) => get('exchangeRate/trade
   'not-loading': true
 }, params))
 // 获取国家列表
-export const getCountryList = () => get('country/selectList', Object.assign({
+export const getCountryList = () => get('country/selectList', {
   'not-loading': true
-}, params))
+})
 // 底部信息(1)
 export const getFooterInfo1 = (params) => get('foot', Object.assign({
   'not-loading': true
