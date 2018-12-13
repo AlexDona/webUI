@@ -219,8 +219,6 @@
                         <span class="blue">{{item.amount}}</span>
                         <span class='blue'>{{selecteCoindName}}</span>
                         <span>
-                          <!-- ({{formLabelAlign.jsonTimeline[formLabelAlign.jsonTimeline.length-1].length == 1 ? $t('M.finance_capital') + '+' + $t('M.finance_accrual') : $t('M.finance_accrual')}}) -->
-                          <!-- ({{formLabelAlign.jsonTimeline[formLabelAlign.jsonTimeline.length-1]}}) -->
                           ({{index == formLabelAlign.jsonTimeline.length - 1 ? $t('M.finance_capital') + '+' + $t('M.finance_accrual') : $t('M.finance_accrual')}})
                         </span>
                       </li>
@@ -238,6 +236,7 @@
                   <!-- 确定 -->
                   <el-button
                     type="primary"
+                    :disabled="stopClick"
                     @click="dialogSuer"
                   >
                     {{$t('M.comm_affirm')}}
@@ -631,7 +630,8 @@ export default {
       ],
       // n天后的时间
       brforeNtime: '',
-      interestRateValue: '' // 年利率
+      interestRateValue: '', // 年利率
+      stopClick: false
     }
   },
   created () {
@@ -695,11 +695,15 @@ export default {
     getInvestEarnings () {
       // console.log(111.00)
       if (this.isLogin) {
-        if (this.selectedInvestTypeId && this.investMounte && this.isShow === false) {
-          // 显示理财详情模态框前请求数据渲染模态框
-          this.clickGetInvestEarnings()
-          // 显示模态框
-          this.dialogVisible = true
+        if (this.selectedInvestTypeId && this.investMounte) {
+          if (this.isShow === false) {
+            // 显示理财详情模态框前请求数据渲染模态框
+            this.clickGetInvestEarnings()
+            // 显示模态框
+            this.dialogVisible = true
+          } else {
+            return false
+          }
         } else {
           this.$message({
             // 存币类型或存币数量不能为空
@@ -718,6 +722,7 @@ export default {
     },
     // 点击确定按钮模态框关闭
     dialogSuer () {
+      this.stopClick = true
       this.dialogVisible = false
       // 执行存币按钮
       this.clickImmediateInvestment()
@@ -756,6 +761,8 @@ export default {
       } else {
         // 重新调一次币种接口刷新列表
         this.getFinancialManagementList()
+        // 请求回来时将按钮解除禁用
+        this.stopClick = false
         // 存币成功
         this.$message({
           message: this.$t('M.finance_invest') + this.$t('M.comm_success'),
@@ -1700,7 +1707,7 @@ export default {
     }
 
     .totalTipsPositon {
-      margin: -36px 0 -20px 72px;
+      margin: -36px 0 -20px 110px;
       color: #d45858;
     }
   }
