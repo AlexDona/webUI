@@ -2,8 +2,6 @@
   <div
     class="set-phone personal"
     :class="{'day':theme == 'day','night':theme == 'night' }"
-    v-loading.fullscreen.lock="fullscreenLoading"
-    element-loading-background="rgba(0, 0, 0, 0.6)"
     :style="{
       height: windowHeight+'px'
     }"
@@ -322,7 +320,6 @@ export default {
       ],
       successCountDown: 1, // 成功倒计时
       newPhoneIsExistStatus: false, // 新手机号是否已注册过
-      fullscreenLoading: false, // 整页loading
       emailBindPhoneCount: 0 // 邮箱绑定手机次数
     }
   },
@@ -548,16 +545,10 @@ export default {
           phone: this.bindingDataPhone.bindingNewPhoneAccounts, // 手机号
           code: this.bindingDataPhone.bindingNewPhoneCode // 手机验证码
         }
-        // 整页loading
-        this.fullscreenLoading = true
         data = await bindPhoneAddress(param)
         if (!(returnAjaxMsg(data, this, 1))) {
-          // 接口失败清除loading
-          this.fullscreenLoading = false
           return false
         } else {
-          // 接口成功清除loading
-          this.fullscreenLoading = false
           this.successJump()
           console.log(data)
         }
@@ -706,16 +697,10 @@ export default {
           newCode: this.amendDataPhone.newPhoneCode, // 新手机验证码
           payPassword: this.amendDataPhone.transactionPassword // 交易密码
         }
-        // 整页loading
-        this.fullscreenLoading = true
         data = await changeMobilePhone(param)
         if (!(returnAjaxMsg(data, this, 1))) {
-          // 接口失败清除loading
-          this.fullscreenLoading = false
           return false
         } else {
-          // 接口成功清除loading
-          this.fullscreenLoading = false
           this.stateEmptyData()
           this.successJump()
         }
@@ -735,8 +720,6 @@ export default {
       // 整页loading
       getSecurityCenter(this, {}, data => {
         if (data) {
-          // 接口成功清除loading
-          this.fullscreenLoading = false
           // this.securityCenter = data.data.data
           this.securityCenter = getNestedData(data, 'data.data')
         }
