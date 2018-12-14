@@ -261,6 +261,7 @@ export default {
       // 点击按钮时判断商家是否登录
       if (this.isLogin) {
         if (!this.checked) {
+          // 请先同意认证商家协议
           this.$message({
             message: this.$t('M.otc_firstSure') + this.$t('M.otc_merchant_authentication'),
             type: 'error'
@@ -276,10 +277,11 @@ export default {
     async getOTCBusinessApply () {
       const data = await businessApply()
       // 提示信息
-      if (!(returnAjaxMsg(data, this))) {
+      if (!(returnAjaxMsg(data, this, 1))) {
         return false
       } else {
         // 返回数据正确的逻辑
+        console.log(data)
         let detailMeta = getNestedData(data, 'data.meta')
         if (detailMeta.success == true) {
           this.applyStatus = 2
