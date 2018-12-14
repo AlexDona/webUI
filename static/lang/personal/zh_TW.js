@@ -61,6 +61,8 @@ export const personal = {
   // #####################個人中心#####################
   // 身份認證
   'user_identity': '身份認證',
+  'user_ID_card': '身份證',
+  'user_passport': '護照',
   // 實名認證
   'user_real_name': '實名認證',
   'user_real_info': '請如實填寫您的身份信息，壹經認證不可修改',

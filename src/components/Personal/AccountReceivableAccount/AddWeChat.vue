@@ -102,6 +102,7 @@
                   :action="apiCommonUrl+'uploadfile'"
                   :headers="tokenObj"
                   list-type="picture-card"
+                  accept=".jpg,.jpeg,.png,.bmp"
                   :on-success="handleSuccessHand"
                   :on-remove="handleRemove"
                 >

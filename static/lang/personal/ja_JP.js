@@ -58,6 +58,8 @@ export const personal = {
   // #####################パーソナルセンター#####################
   // ID認証
   'user_identity': 'ID認証',
+  'user_ID_card': '身分証',
+  'user_passport': 'パスポート',
   // 本名認証
   'user_real_name': '本名認証',
   'user_real_info': '誠実にあなたの身元情報を記入し、認証された後は変更することはできません。',

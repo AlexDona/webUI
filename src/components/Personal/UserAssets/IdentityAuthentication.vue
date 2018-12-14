@@ -47,7 +47,7 @@
                 </span>、
                 <span class="type-info">
                   <!--证件号码：-->
-                  {{ $t('M.user_real_certificate_cone') }}：
+                  {{ $t('M.comm_credentials_number') }}：
                    {{ innerUserInfo.cardNo.substring(0,2)}}
                   ****
                    {{ innerUserInfo.cardNo.substring(16,18)}}
@@ -74,7 +74,6 @@
               :placeholder="$t('M.comm_please_choose')"
               v-model="regionValue"
               :no-data-text="$t('M.comm_no_data')"
-              @change="changeId"
             >
               <!-- <el-option
                 v-for="(item, index) in contryAreaList"
@@ -103,7 +102,6 @@
           >
             <!--请选择证件类型-->
             <el-select
-              @change="changedocumentTypeValue"
               v-model="documentTypeValue"
               :no-data-text="$t('M.comm_no_data')"
               :placeholder="$t('M.comm_please_choose') + $t('M.user_real_certificate_type')"
@@ -288,9 +286,9 @@
                     {{ $t('M.comm_credentials_number') }}：
                   </span>
                   <span class="user-info font-size14">
-                  <!--  {{ userInfoRefresh.cardNo.substring(0,6)}}
-                  ****
-                   {{ userInfoRefresh.cardNo.substring(14,18)}}-->
+                    <!--{{ innerUserInfo.cardNo.substring(0,4)}}-->
+                      <!--****-->
+                    <!--{{ userInfoRefresh.cardNo.substring(14,18)}}-->
                      {{ innerUserInfo.cardNo}}
                   </span>
                 </p>
@@ -299,19 +297,19 @@
                   <span class="info-type font-size12">
                     {{ $t('M.user_real_certificate_type') }}：
                   </span>
-                  <!--身份证-->
                   <span
+                    v-if="statusRealNameInformation.cardType == 1"
                     class="user-info font-size14"
-                    v-if="this.documentTypeList[0].certificateId == 1"
                   >
-                    {{ $t('M.user_senior_id-card') }}
+                    <!--{{ statusRealNameInformation.cardType }}-->
+                    {{ $t('M.user_ID_card') }}
                   </span>
-                  <!--护照-->
                   <span
-                    class="user-info font-size14"
                     v-else
+                    class="user-info font-size14"
                   >
-                    {{ $t('M.user_senior_passport') }}
+                    <!--{{ statusRealNameInformation.cardType }}-->
+                    {{ $t('M.user_passport') }}
                   </span>
                 </p>
               </div>
@@ -344,8 +342,9 @@
                       :action="apiCommonUrl+'uploadfile'"
                       :headers="tokenObj"
                       list-type="picture-card"
-                      :on-success="handleSuccessFront"
+                      accept=".jpg,.jpeg,.png,.bmp"
                       :on-remove="handleRemoveFront"
+                      :on-success="handleSuccessFront"
                       :before-upload="beforeAvatarUpload"
                     >
                       <div
@@ -384,9 +383,10 @@
                       :action="apiCommonUrl+'uploadfile'"
                       :headers="tokenObj"
                       list-type="picture-card"
-                      :on-success="handleSuccessReverseSide"
+                      accept=".jpg,.jpeg,.png,.bmp"
                       :on-remove="handleRemoveSide"
                       :before-upload="beforeAvatarUpload"
+                      :on-success="handleSuccessReverseSide"
                     >
                       <div
                         class="picture"
@@ -423,8 +423,9 @@
                       :action="apiCommonUrl+'uploadfile'"
                       :headers="tokenObj"
                       list-type="picture-card"
-                      :on-success="handleSuccessHand"
+                      accept=".jpg,.jpeg,.png,.bmp"
                       :on-remove="handleRemoveHand"
+                      :on-success="handleSuccessHand"
                       :before-upload="beforeAvatarUpload"
                     >
                       <div
@@ -606,7 +607,6 @@ export default {
       require([('@xkeshi/vue-qrcode')], resolve)
     }
   },
-  // props,
   data () {
     return {
       // 上传图片 token
@@ -692,10 +692,6 @@ export default {
     reflashUserInfo () {
       this.$store.dispatch('user/REFLASH_USER_INFO', this)
     },
-    // 改变证件类型
-    changedocumentTypeValue (e) {
-      console.log(e)
-    },
     // 隐藏上传按钮
     uploadImg (ref) {
       this.$refs[ref].click()
@@ -737,29 +733,13 @@ export default {
     // 判断图片大小限制
     beforeAvatarUpload (file) {
       console.log(file)
-      // const isJPG = file.type === 'image/jpeg'
       const isLt10M = file.size
-      // if (!isJPG) {
-      //   this.$message.error('上传头像图片只能是 JPG 格式!')
-      // }
       if (isLt10M > 102400000) {
         console.log(isLt10M)
         // 上传头像图片大小不能超过 10M!
         this.$message.error(this.$t('M.user_senior_hint5'))
         return false
       }
-    },
-    /**
-     * 刚进页面时候 国家列表展示
-     */
-    changeId (e) {
-      console.log(e)
-      this.regionList.forEach(item => {
-        if (e === item.id) {
-          this.regionValue = e
-          console.log(this.regionValue)
-        }
-      })
     },
     /**
     *  刚进页面时候 获取用户实名信息
@@ -1021,15 +1001,15 @@ export default {
       this.dialogImageReverseSideUrl = ''
       this.dialogImageHandUrl = ''
       // this.$forceUpdate()
-    },
-    // 检测上传图片大小
-    bytesToSize (bytes) {
-      if (bytes === 0) return '0 B'
-      let k = 1000 // or1024
-      let sizes = ['B', 'KB', 'MB', 'GB', 'TB', 'PB', 'EB', 'ZB', 'YB']
-      let i = Math.floor(Math.log(bytes) / Math.log(k))
-      return (bytes / Math.pow(k, i)).toPrecision(3) + ' ' + sizes[i]
     }
+    // 检测上传图片大小
+    // bytesToSize (bytes) {
+    //   if (bytes === 0) return '0 B'
+    //   let k = 1000 // or1024
+    //   let sizes = ['B', 'KB', 'MB', 'GB', 'TB', 'PB', 'EB', 'ZB', 'YB']
+    //   let i = Math.floor(Math.log(bytes) / Math.log(k))
+    //   return (bytes / Math.pow(k, i)).toPrecision(3) + ' ' + sizes[i]
+    // }
   },
   filter: {},
   computed: {
