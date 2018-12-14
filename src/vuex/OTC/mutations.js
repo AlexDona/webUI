@@ -8,7 +8,9 @@ import {
   // OTC改变 购买或者出售成功后跳转到交易中订单（首页的）的锚点地方
   CHANGE_OTC_ANCHOR_STATUS,
   // 委托定单撤单后，更新首页挂单列表
-  UPDATE_OTC_HOME_LIST_STATUS
+  UPDATE_OTC_HOME_LIST_STATUS,
+  // 发布订单（商家和普通用户公用）后页面跳转到首页顶部状态
+  CHANGE_PUBLISH_ORDER_JUMP_TOP_STATUS
 } from './mutations-types.js'
 
 // import {setStore, getStore} from '../utils'
@@ -35,5 +37,9 @@ export default {
   // 委托定单撤单后，更新首页挂单列表
   [UPDATE_OTC_HOME_LIST_STATUS] (state, data) {
     state.updateOTCHomeListStatus = data
+  },
+  // 发布订单（商家和普通用户公用）后页面跳转到首页顶部状态
+  [CHANGE_PUBLISH_ORDER_JUMP_TOP_STATUS] (state, data) {
+    state.publishOrderJumpTopStatus = data
   }
 }

@@ -528,6 +528,8 @@ export default {
   },
   methods: {
     ...mapMutations([
+      // 发布订单（商家和普通用户公用）后页面跳转到首页顶部状态
+      'CHANGE_PUBLISH_ORDER_JUMP_TOP_STATUS'
     ]),
     // 判断卖出量和买入量是否为零
     checkValue (name) {
@@ -547,8 +549,8 @@ export default {
         currencyId: this.hopePaymentCoinId, // 法币id
         coinId: this.coinId // 交易币种id
       })
-      // console.log('币种详情')
-      // console.log(data)
+      console.log('币种详情')
+      console.log(data)
       // 提示信息
       if (!(returnAjaxMsg(data, this, 0))) {
         return false
@@ -581,7 +583,11 @@ export default {
         // this.$refs.maxCount.value = detailsData.otcCoinQryResponse.maxCount
         // this.backReturnCurrentMaxCount = detailsData.otcCoinQryResponse.maxCount
         this.backReturnCurrentMaxCount = getNestedData(detailsData, 'otcCoinQryResponse.maxCount')
+        console.log(11111111111111111111111111111111)
+        console.log(this.backReturnCurrentMaxCount)
         this.$refs.maxCount.value = this.backReturnCurrentMaxCount
+        console.log(222222222222222222222222222222222222222222)
+        console.log(this.$refs.maxCount.value)
         // 币种 最小 交易限额minCount
         // this.$refs.minCount.value = detailsData.otcCoinQryResponse.minCount
         // this.backReturnCurrentMinCount = detailsData.otcCoinQryResponse.minCount
@@ -914,7 +920,11 @@ export default {
         // 清空表单数据
         this.clearInputData()
         // 重新渲染页面
-        this.getOTCCoinInfo()
+        // this.getOTCCoinInfo()
+        // 下单成功跳转到首页挂单列表去
+        // 改变发布订单（商家和普通用户公用）后页面跳转到首页顶部状态
+        this.CHANGE_PUBLISH_ORDER_JUMP_TOP_STATUS(true)
+        this.$router.push({ path: '/OTCCenter' })
       }
     },
     // 10.0 充币按钮跳转
