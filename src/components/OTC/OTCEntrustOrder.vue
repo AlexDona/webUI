@@ -187,8 +187,8 @@ export default {
         pageNum: this.currentPage,
         pageSize: this.pageSize
       })
-      // console.log('委托中订单列表')
-      // console.log(data)
+      console.log('委托中订单列表')
+      console.log(data)
       // 提示信息
       if (!(returnAjaxMsg(data, this, 0))) {
         this.loading = false

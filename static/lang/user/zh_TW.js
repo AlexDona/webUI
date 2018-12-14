@@ -17,7 +17,7 @@ export const user = {
   'login_welcome_register_pwd1': '請輸入密碼',
   'login_welcome_register_pwd2': '請再次輸入密碼',
   'login_welcome_register_advertisement': '邀請碼（沒有可不填）',
-  'login_tips_enter_phone': '請輸入手機',
+  'login_tips_enter_phone': '請輸入手機號',
   'login_telNum': '電話號',
   'login_forget': '忘記',
   'login_free': '免費',

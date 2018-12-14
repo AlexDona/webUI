@@ -2,8 +2,6 @@
   <div
     class="set-email personal"
     :class="{'day':theme == 'day','night':theme == 'night' }"
-    v-loading.fullscreen.lock="fullscreenLoading"
-    element-loading-background="rgba(0, 0, 0, 0.6)"
     :style="{
       height: windowHeight+'px'
     }"
@@ -118,7 +116,6 @@ export default {
       emailAccounts: '', // 邮箱账号
       emailCode: '', // 邮箱验证码
       successCountDown: 1, // 成功倒计时
-      fullscreenLoading: false, // 整页loading
       isEmailExist: false, // 邮箱是否存在
       errorShowStatusList: [
         '', // 邮箱账号
@@ -315,16 +312,10 @@ export default {
           email: this.emailAccounts, // 邮箱账号
           code: this.emailCode // 邮箱验证码
         }
-        // 整页loading
-        this.fullscreenLoading = true
         data = await bindEmailAddress(param)
         if (!(returnAjaxMsg(data, this, 1))) {
-          // 接口失败清除loading
-          this.fullscreenLoading = false
           return false
         } else {
-          // 接口成功清除loading
-          this.fullscreenLoading = false
           this.stateEmptyData()
           this.successJump()
         }

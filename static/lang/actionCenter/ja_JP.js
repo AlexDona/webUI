@@ -13,5 +13,6 @@ export const actionCenter = {
   'actionCenter_Token_step5': '投票',
   'actionCenter_Token_step6': 'ニュートークン投票',
   'actionCenter_Token_step7': 'リスト',
-  'actionCenter_Token_step8': '取引区にリスト'
+  'actionCenter_Token_step8': '取引区にリスト',
+  'actionCenter_coin_apply': 'リスト申請'
 }

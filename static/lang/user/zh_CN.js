@@ -17,7 +17,7 @@ export const user = {
   'login_welcome_register_pwd1': '请输入密码',
   'login_welcome_register_pwd2': '请再次输入密码',
   'login_welcome_register_advertisement': '邀请码(没有可不填)',
-  'login_tips_enter_phone': '请输入手机',
+  'login_tips_enter_phone': '请输入手机号',
   'login_telNum': '电话号',
   'login_forget': '忘记',
   'login_free': '免费',

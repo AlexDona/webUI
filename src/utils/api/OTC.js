@@ -3,11 +3,17 @@ import {get, postWithURLencoded, post} from './axios'
  *OTC
  */
 // 查询某商户可用法币币种列表
-export const getMerchantAvailablelegalTender = (params) => get('otcCOin/getAvailCurrencyCoins', params)
+export const getMerchantAvailablelegalTender = (params) => get('otcCOin/getAvailCurrencyCoins', Object.assign({
+  'not-loading': true
+}, params))
 // otc可用币种查询：我要购买/我要出售的币种列表
-export const getOTCAvailableCurrency = (params) => get('otcCOin/getAvailOTCCoins', params)
+export const getOTCAvailableCurrency = (params) => get('otcCOin/getAvailOTCCoins', Object.assign({
+  'not-loading': true
+}, params))
 // otc主页面查询otc挂单列表
-export const getOTCPutUpOrders = (params) => get('otcEntrust/selectByParams', params)
+export const getOTCPutUpOrders = (params) => get('otcEntrust/selectByParams', Object.assign({
+  'not-loading': true
+}, params))
 // 查询用户所有otc挂单列表（分页）:也就是订单中的 委托中的订单
 export const getOTCEntrustingOrders = (params) => get('otcEntrust/selectEntrustsPage', params)
 // 查询3天内用户otc各状态交易---otc订单中 交易中 的订单
@@ -47,11 +53,17 @@ export const firstEnterBusinessApply = (params) => get('otcMerchApply/getUserMer
 // 商家申请页面点击用户协议
 export const argumentBusinessApply = (params) => get('cms/terms/selectAll', params)
 // 广告管理列表请求
-export const getOTCADManageApplyList = (params) => get('otcEntrust/selectMerchEntrustsPage', params)
+export const getOTCADManageApplyList = (params) => get('otcEntrust/selectMerchEntrustsPage', Object.assign({
+  'not-loading': true
+}, params))
 // 商家订单列表请求
-export const getOTCMerchantsOrdersList = (params) => get('otcOrder/selectMerchOrdersPage', params)
+export const getOTCMerchantsOrdersList = (params) => get('otcOrder/selectMerchOrdersPage', Object.assign({
+  'not-loading': true
+}, params))
 // 报表统计
-export const getOTCReportFormStatisticsData = (params) => get('otcOrder/selectMerchStatics', params)
+export const getOTCReportFormStatisticsData = (params) => get('otcOrder/selectMerchStatics', Object.assign({
+  'not-loading': true
+}, params))
 //  币种详情：商家和普通用户挂单页面请求币种详情渲染页面
 export const getOTCCoinInfo = (params) => get('otcCOin/getCoinInfo', params)
 // 投资理财请求数据

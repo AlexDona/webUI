@@ -2,8 +2,6 @@
   <div
     class="set-phone personal"
     :class="{'day':theme == 'day','night':theme == 'night' }"
-    v-loading.fullscreen.lock="fullscreenLoading"
-    element-loading-background="rgba(0, 0, 0, 0.6)"
     :style="{
       height: windowHeight+'px'
     }"
@@ -186,11 +184,23 @@
                 :no-data-text="$t('M.comm_no_data')"
               >
                 <el-option
-                  v-for="(item, index) in contryAreaList"
-                  :key="index"
+                  v-for="item in contryAreaList"
+                  :key="item.nationCode"
                   :label="item.nationCode"
                   :value="item.nationCode"
                 >
+                  <span style="float: left;">
+                    <span v-show="language==='zh_CN'">
+                      {{ item.chinese }}
+                    </span>
+                    <span v-show="language!=='zh_CN'">
+                      {{item.english}}
+                    </span>
+                  </span>
+                  <span style=" float: right;
+                    color: #8492a6;
+                    font-size: 13px;"
+                  >{{ item.nationCode }}</span>
                 </el-option>
               </el-select>
               <input
@@ -201,8 +211,8 @@
                 @keyup="phoneNumRegexpInput(phoneNumRef)"
                 @input="phoneNumRegexpInput(phoneNumRef)"
                 @focus="resetNewPhoneIsExistStatus"
-                @blur="checkUserExistAjax('phone', amendDataPhone.newPhoneAccounts,'newPhone')"
               >
+              <!--@blur="checkUserExistAjax('phone', amendDataPhone.newPhoneAccounts,'newPhone')"-->
               <!--错误提示-->
               <ErrorBox
                 :text="tieErrorShowStatusList[1]"
@@ -322,12 +332,12 @@ export default {
       ],
       successCountDown: 1, // 成功倒计时
       newPhoneIsExistStatus: false, // 新手机号是否已注册过
-      fullscreenLoading: false, // 整页loading
       emailBindPhoneCount: 0 // 邮箱绑定手机次数
     }
   },
   created () {
     this.getSecurityCenter()
+    this.refreshCode()
   },
   mounted () {},
   activited () {},
@@ -357,6 +367,7 @@ export default {
     },
     // 发送验证码
     async sendPhoneOrEmailCode (loginType, val, type) {
+      await this.checkUserExistAjax()
       if (!type && !val && !this.bindingDataPhone.bindingNewPhoneAccounts) {
         this.$message({
           type: 'error',
@@ -547,16 +558,10 @@ export default {
           phone: this.bindingDataPhone.bindingNewPhoneAccounts, // 手机号
           code: this.bindingDataPhone.bindingNewPhoneCode // 手机验证码
         }
-        // 整页loading
-        this.fullscreenLoading = true
         data = await bindPhoneAddress(param)
         if (!(returnAjaxMsg(data, this, 1))) {
-          // 接口失败清除loading
-          this.fullscreenLoading = false
           return false
         } else {
-          // 接口成功清除loading
-          this.fullscreenLoading = false
           this.successJump()
           console.log(data)
         }
@@ -705,16 +710,10 @@ export default {
           newCode: this.amendDataPhone.newPhoneCode, // 新手机验证码
           payPassword: this.amendDataPhone.transactionPassword // 交易密码
         }
-        // 整页loading
-        this.fullscreenLoading = true
         data = await changeMobilePhone(param)
         if (!(returnAjaxMsg(data, this, 1))) {
-          // 接口失败清除loading
-          this.fullscreenLoading = false
           return false
         } else {
-          // 接口成功清除loading
-          this.fullscreenLoading = false
           this.stateEmptyData()
           this.successJump()
         }
@@ -734,8 +733,6 @@ export default {
       // 整页loading
       getSecurityCenter(this, {}, data => {
         if (data) {
-          // 接口成功清除loading
-          this.fullscreenLoading = false
           // this.securityCenter = data.data.data
           this.securityCenter = getNestedData(data, 'data.data')
         }
@@ -755,6 +752,7 @@ export default {
   computed: {
     ...mapState({
       theme: state => state.common.theme,
+      language: state => state.common.language,
       userInfo: state => state.user.loginStep1Info, // 用户详细信息
       userInfoDetail: state => state.user.loginStep1Info.userInfo,
       contryAreaList: state => state.common.contryAreaList,

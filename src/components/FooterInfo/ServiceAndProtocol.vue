@@ -83,7 +83,7 @@
             <!--交易须知-->
             <el-tab-pane
               :label="$t('M.otc_index_tradeKnow')"
-              name="TradingWraning"
+              name="TradingWarning"
             >
               <div class="tab-content">
                 <Content
