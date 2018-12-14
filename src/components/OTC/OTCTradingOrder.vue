@@ -627,6 +627,7 @@
               class="password-input"
               v-model="tradePassword"
               @focus="passWordFocus"
+              @keyup.enter="submitConfirmPayment"
             >
           </div>
           <div class="error-info">
@@ -663,6 +664,7 @@
               class="password-input"
               v-model="tradePassword"
               @focus="passWordFocus"
+              @keyup.enter="submitConfirmGathering"
             >
           </div>
           <div class="error-info">
@@ -700,6 +702,7 @@
               class="password-input"
               v-model="tradePassword"
               @focus="passWordFocus"
+              @keyup.enter="sellerSubmitAppeal"
             >
           </div>
           <div class="error-info">
