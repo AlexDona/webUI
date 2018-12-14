@@ -44,6 +44,14 @@ export const personal = {
   'user_address_withdrawal': '非法地址',
   // 賬單明細
   'user_billing_attention': '充提',
+  'otc_trade': 'otc交易',
+  'otc_fee': 'otc手續費',
+  'ctc_trade': '幣幣交易',
+  'ctc_fee': '幣幣手續費',
+  'financial_expenditure': '理財支出',
+  'financial_income': '理財收入',
+  'invitation_reward': '邀請有禮',
+  'comprehensive_records': '綜合記錄',
   // 提幣地址
   'user_address_empty': '提幣地址不能為空',
   'user_address_labels': '地址標簽',

@@ -126,7 +126,7 @@ export const OTC = {
   'otc_entrust': 'Entrust',
   // 'otc_entrust_number': 'Number of pending orders',
   'otc_entrust_number': 'Total orders',
-  'otc_entrust_matching': 'Matched quantity',
+  'otc_entrust_matching': 'Volume',
   'otc_entrust_time': 'Pending time',
   'otc_make_a_bargain_time': 'Transaction time',
   'otc_entrust_cancellations': 'cancelled',
@@ -222,7 +222,7 @@ export const OTC = {
   'otc_publishAD_sum_and_limitMoney': 'Amount and limit',
   'otc_publishAD_minlimitMoney': 'Single minimum',
   'otc_publishAD_maxlimitMoney': 'Single maximum',
-  'otc_publishAD_adviceToFill': 'Suggestion',
+  'otc_publishAD_adviceToFill': 'Optional',
   'otc_publishAD_liveMessage': 'Please state the trading relevant terms or other information so that the other party can quickly trade with you.',
   'otc_publishAD_maxOrder': 'Handling the maximum number of orders simultaneously',
   'otc_publishAD_noLimit': 'not limited',
@@ -340,5 +340,7 @@ export const OTC = {
   // 申请成为商家
   'otc_apply_tips1': 'Tips',
   'otc_apply_tips2': 'First apply to become a merchant then use this function!',
+  'otc_publish_ad_err1': 'The maximum number of orders processed at the same time cannot be empty',
+  'otc_publish_ad_err2': 'The seller must have sold a few times and cannot be empty.',
   'otc_order_reason': 'Reason'
 }

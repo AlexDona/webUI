@@ -332,11 +332,22 @@
             <!-- 请输入交易密码 -->
             <div class="input">
               <input
+                v-if="this.onlineTraderStatus === 'onlineBuy'"
                 type="password"
                 :placeholder="$t('M.otc_publishAD_sellpassword')"
                 class="password-input"
                 v-model="tradePassword"
                 @focus="tradePasswordFocus"
+                @keyup.enter="submitPickOrdersToBuy"
+              >
+              <input
+                v-if="this.onlineTraderStatus === 'onlineSell'"
+                type="password"
+                :placeholder="$t('M.otc_publishAD_sellpassword')"
+                class="password-input"
+                v-model="tradePassword"
+                @focus="tradePasswordFocus"
+                @keyup.enter="submitPickOrdersToSell"
               >
             </div>
             <div class="error-info">

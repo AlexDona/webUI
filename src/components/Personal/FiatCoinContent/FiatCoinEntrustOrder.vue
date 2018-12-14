@@ -27,6 +27,7 @@
         </span>
         <span class="item fifth-match-count flex1">
           <!--已匹配数量-->
+          <!-- 20181213改为 已成交数量-->
           {{$t('M.otc_entrust_matching')}}
         </span>
         <span class="item sixth-total-amount flex1">
