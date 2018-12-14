@@ -78,7 +78,7 @@
               <el-option
                 v-for="item in otherRecordsType"
                 :key="item.value"
-                :label="item.label"
+                :label="$t(item.label)"
                 :value="item.value"
               >
               </el-option>
@@ -147,7 +147,7 @@
                 <!--类型-->
                 <el-table-column
                   :label="$t('M.comm_type')"
-                  width="100"
+                  width="110"
                 >
                   <template slot-scope = "s">
                     <div>{{ $t(`M.${s.row.i18nTypeName}`)}}</div>
@@ -224,13 +224,34 @@
             >
               <template slot-scope = "s">
                 <!--<div>{{ s.row.type }}</div>-->
-                <div v-if="s.row.type == 'OTC_TRADE'">otc交易</div>
-                <div v-if="s.row.type == 'OTC_FEE'">otc手续费</div>
-                <div v-if="s.row.type == 'CTC_TRADE'">币币交易</div>
-                <div v-if="s.row.type == 'CTC_FEE'">币币手续费</div>
-                <div v-if="s.row.type == 'FINANCIAL_EXPENDITURE'">理财支出</div>
-                <div v-if="s.row.type == 'FINANCIAL_INCOME'">理财收入</div>
-                <div v-if="s.row.type == 'INVITATION_REWARD'">邀请有礼</div>
+                <div v-if="s.row.type == 'OTC_TRADE'">
+                  <!--otc交易-->
+                  {{ $t('M.otc_trade') }}
+                </div>
+                <div v-if="s.row.type == 'OTC_FEE'">
+                  <!--otc手续费-->
+                  {{ $t('M.otc_fee') }}
+                </div>
+                <div v-if="s.row.type == 'CTC_TRADE'">
+                  <!--币币交易-->
+                  {{ $t('M.ctc_trade') }}
+                </div>
+                <div v-if="s.row.type == 'CTC_FEE'">
+                  <!--币币手续费-->
+                  {{ $t('M.ctc_fee') }}
+                </div>
+                <div v-if="s.row.type == 'FINANCIAL_EXPENDITURE'">
+                  <!--理财支出-->
+                  {{ $t('M.financial_expenditure') }}
+                </div>
+                <div v-if="s.row.type == 'FINANCIAL_INCOME'">
+                  <!--理财收入-->
+                  {{ $t('M.financial_income') }}
+                </div>
+                <div v-if="s.row.type == 'INVITATION_REWARD'">
+                  <!--邀请有礼-->
+                  {{ $t('M.invitation_reward') }}
+                </div>
               </template>
             </el-table-column>
             <!--数量-->
@@ -641,6 +662,7 @@ export default {
         }
 
         .el-input__inner {
+          width: 110px;
           color: #fff;
           background-color: #2d3651;
         }
@@ -655,13 +677,12 @@ export default {
         }
 
         .el-tabs__item {
-          width: 100px;
           padding: 0;
-          margin-right: 10px;
+          margin-right: 30px;
+          border-left: 0;
           text-align: center;
 
           &.is-active {
-            width: 100px;
             border-bottom: 2px solid #0079fe;
             border-left: 0;
             color: #0079fe;
@@ -669,7 +690,7 @@ export default {
           }
 
           &:hover {
-            border-left: 1px;
+            border-left: 0;
             text-align: center;
             color: #0079fe;
             background: transparent;
@@ -753,7 +774,6 @@ export default {
 
     /deep/ {
       .el-input__inner {
-        width: 100px;
         height: 30px;
         border: 0;
         font-size: 12px;

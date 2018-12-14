@@ -59,6 +59,8 @@ export const personal = {
   // #####################个人中心#####################Personal center
   // 身份认证Authentication
   'user_identity': 'Authentication',
+  'user_ID_card': 'ID card',
+  'user_passport': 'passport',
   // 实名认证Verified
   'user_real_name': 'Verified',
   'user_real_info': 'Please fill in your identity information truthfully and cannot be modified once certified.',

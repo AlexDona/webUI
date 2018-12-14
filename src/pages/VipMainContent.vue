@@ -1073,7 +1073,6 @@ export default {
             height: 70px;
             padding: 13px;
             margin-left: 40px;
-            border: 1px solid #354057;
 
             > .grade-height {
               margin-top: 5px;
@@ -1199,7 +1198,7 @@ export default {
         border-radius: 10px;
 
         .el-dialog__header {
-          padding: 20px 20px 0;
+          padding: 10px 20px;
           border-radius: 5px 5px 0 0;
           background-color: #20293c;
         }
@@ -1469,6 +1468,25 @@ export default {
       color: $dayFontColor;
       background-color: $dayBgColor;
 
+      /deep/ {
+        .el-dialog__header {
+          background: rgba(51, 143, 245, .1);
+        }
+
+        .el-dialog__title {
+          color: #333;
+        }
+
+        .el-input__inner {
+          border: 1px solid rgba(236, 241, 248, 1);
+          background: rgba(255, 255, 255, 1);
+
+          &:focus {
+            border: 1px solid #338ff5;
+          }
+        }
+      }
+
       > .content-main-content {
         margin-top: -3px;
         color: $dayFontColor;
@@ -1483,39 +1501,34 @@ export default {
 
           > .content-main-box {
             > .content-module {
-              border: 2px solid #33404b;
-              background-color: #232d39;
+              border: 2px solid rgba(222, 228, 233, 1);
+              background: rgba(234, 239, 244, 1);
 
-              &:hover {
-                border: 4px solid #338ff5;
-                box-shadow: 0 0 15px rgba(0, 0, 0, 1);
-                transform: scale(1.03);
+              &.disable {
+                opacity: .5;
+              }
 
-                > .content-text {
-                  font-weight: 600;
-                  color: rgba(51, 143, 245, 1);
-                }
+              &.active1 {
+                &:hover {
+                  border: 2px solid #338ff5;
+                  transform: scale(1.03);
 
-                > .content-discount {
-                  color: rgba(255, 255, 255, 1);
-                  background-color: #2d3651;
-
-                  > .content-discount-color {
+                  > .content-text {
                     font-weight: 600;
                     color: rgba(51, 143, 245, 1);
                   }
-                }
 
-                > .content-button {
-                  > .click-btn {
-                    color: #fff;
-                    background: #338ff5;
+                  > .content-button {
+                    > .click-btn {
+                      color: #fff;
+                      background: #338ff5;
+                    }
                   }
                 }
               }
 
               > .content-vip-one {
-                color: #fff;
+                color: #333;
               }
 
               > .content-text {
@@ -1523,8 +1536,8 @@ export default {
               }
 
               > .content-discount {
-                color: rgba(255, 255, 255, .6);
-                background-color: #2d3651;
+                color: rgba(34, 34, 34, .6);
+                background: rgba(222, 231, 239, 1);
 
                 > .content-discount-color {
                   color: rgba(51, 143, 245, .6);
@@ -1534,7 +1547,7 @@ export default {
               > .content-button {
                 > .click-btn {
                   color: #fff;
-                  background: linear-gradient(0deg, rgba(41, 52, 64, 1) 0%, rgba(52, 62, 71, 1) 100%);
+                  background: #99b4d1;
                 }
               }
             }
@@ -1574,8 +1587,7 @@ export default {
             }
 
             .grade {
-              border: 1px solid #354057;
-              background-color: #1a2233;
+              background-color: #eaeff4;
 
               &:hover {
                 border: 1px solid #338ff5;
@@ -1588,11 +1600,11 @@ export default {
               }
 
               > .grade-color {
-                color: #fff;
+                color: #333;
               }
 
               > .grade-height {
-                color: #9da5b3;
+                color: #222;
               }
             }
           }
@@ -1601,19 +1613,20 @@ export default {
             background-color: $dayBgColor;
 
             > .duration {
-              border: 1px solid #354057;
-              background-color: #1a2233;
+              background: rgba(234, 239, 244, 1);
 
               > .duration-month {
-                color: #338ff5;
+                font-weight: 600;
+                color: #333;
               }
 
               > .duration-currency {
+                font-weight: 600;
                 color: #d45858;
               }
 
               > .duration-through {
-                color: #9da5b3;
+                color: #333;
               }
             }
           }

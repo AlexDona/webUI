@@ -61,6 +61,8 @@ export const personal = {
   // 提币列表
   // 身份认证
   'user_identity': '신분인증',
+  'user_ID_card': '신분증',
+  'user_passport': '여권 3.',
   // 实名认证
   'user_real_name': '실명 인증',
   'user_real_info': '신원 정보를 진실하게 기입 해주세요. 일단 인증되면 수정할 수 없습니다.',

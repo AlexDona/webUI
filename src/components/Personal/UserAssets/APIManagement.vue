@@ -630,12 +630,14 @@ export default {
         let detailData = getNestedData(data, 'data.data')
         this.accessKey = getNestedData(detailData, 'accessKey')
         this.secretKey = getNestedData(detailData, 'secretKey')
+        // 创建api
+        this.statusCreationApi()
       }
     },
     // 二次确认框创建api完成
     stateSubmitAffirm () {
-      // 创建api
-      this.statusCreationApi()
+      // 默认创建之后弹出二次挨批创建信息框 关闭
+      this.apiSecondaryConfirmation = false
     },
     // 调用创建api接口并向后台传参
     async statusCreationApi () {
@@ -658,7 +660,7 @@ export default {
         // 返回展示
         console.log(data)
         // 默认创建之后弹出二次挨批创建信息框 关闭
-        this.apiSecondaryConfirmation = false
+        // this.apiSecondaryConfirmation = false
         // 调用查询接口重新渲染
         this.getMultipleUserAPIInfo()
         this.clearUserInputMsg()
