@@ -187,7 +187,7 @@ export const OTC = {
   'otc_merchant_detailOne': 'IDカードを持ってあなたの顔を記録し、録音中に音と画像をクリアに保ちます。',
   'otc_merchant_detailTwo': '記録しているときには、本人（名前）、ID番号（IDカード番号）、私の資金源は法的で信頼性があり、Bitcoinなどのデジタル資産を取引したいと思っています。すべてのリスクを負います。',
   'otc_merchant_applyLimit': '3.申請資格条件：1申請者はOTCをうまく取引する必要がある',
-  'otc_ci': 'タイムズ',
+  'otc_ci': '回',
   'otc_xu': '必要',
   'otc_merchant_account': '申請者の口座に',
   'otc_merchant_datailThree': '上記申込書とビデオ資料を',
@@ -331,5 +331,9 @@ export const OTC = {
   'otc_apply_tips2': 'この功能を使用するためには、まず商家になる必要があります!',
   'otc_order_reason': '原因',
   'otc_publish_ad_err1': '同処理注文の最大数は空ではできません',
-  'otc_publish_ad_err2': '売り手は数回売れていて空ではできません'
+  'otc_publish_ad_err2': '売り手は数回売れていて空ではできません',
+  'otc_apply_tips3': 'otc取引数量',
+  'otc_apply_tips4': 'アセット利用可能',
+  'otc_apply_tips5': '継続するか',
+  'otc_apply_tips6': 'ヒント'
 }

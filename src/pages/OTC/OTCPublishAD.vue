@@ -586,14 +586,13 @@ export default {
         return false
       } else {
         let detailsData = getNestedData(data, 'data.data')
-        this.activitedCoinId = detailsData.coinId // 可用币种id
-        this.activitedCurrencyId = detailsData.currencyId // 法币id
-        this.activitedBuySellStyle = detailsData.entrustType // 挂单类型
-        this.limitOrderCount = detailsData.limitOrderCount // 同时处理最大订单数
-        this.successOrderCount = detailsData.successOrderCount // 卖家必须成交过几次
-        this.$refs.entrustCount.value = detailsData.entrustCount // 挂单数量
-        // this.$refs.price.value = detailsData.price // 单价
-        this.price = detailsData.price // 单价
+        this.activitedCoinId = getNestedData(detailsData, 'coinId') // 可用币种id
+        this.activitedCurrencyId = getNestedData(detailsData, 'currencyId') // 法币id
+        this.activitedBuySellStyle = getNestedData(detailsData, 'entrustType') // 挂单类型
+        this.limitOrderCount = getNestedData(detailsData, 'limitOrderCount') // 同时处理最大订单数
+        this.successOrderCount = getNestedData(detailsData, 'successOrderCount') // 卖家必须成交过几次
+        this.$refs.entrustCount.value = getNestedData(detailsData, 'entrustCount') // 挂单数量
+        this.price = getNestedData(detailsData, 'price') // 单价
         this.$refs.price.value = this.price // 单价
         this.getOTCCoinInfo()
       }
@@ -612,40 +611,40 @@ export default {
         // 返回数据正确的逻辑
         // 1.0 可用币种列表
         let availableCoinListData = getNestedData(data, 'data.data')
-        this.availableCoinList = availableCoinListData.coinlist
+        this.availableCoinList = getNestedData(availableCoinListData, 'coinlist')
         this.availableCoinList.forEach(item => {
           if (availableCoinListData.otcCoinQryResponse.coinId === item.coinId) {
             this.activitedCoinId = item.coinId
           }
         })
-        this.activeedCoinName = availableCoinListData.otcCoinQryResponse.name
+        this.activeedCoinName = getNestedData(availableCoinListData, 'otcCoinQryResponse.name')
         // 2.0 法币种列表
-        this.availableCurrencyList = availableCoinListData.currencyList
+        this.availableCurrencyList = getNestedData(availableCoinListData, 'currencyList')
         this.availableCurrencyList.forEach(item => {
           if (availableCoinListData.otcCoinQryResponse.currencyName === item.shortName) {
             this.activitedCurrencyId = item.id
           }
         })
-        this.activeedCurrencyName = availableCoinListData.otcCoinQryResponse.currencyName
+        this.activeedCurrencyName = getNestedData(availableCoinListData, 'otcCoinQryResponse.currencyName')
         // 3.0 交易支付方式
-        this.payForListArr = availableCoinListData.userbankFlag
+        this.payForListArr = getNestedData(availableCoinListData, 'userbankFlag')
         // 最大可卖出量:可用资产
-        this.total = availableCoinListData.otcCoinQryResponse.total
+        this.total = getNestedData(availableCoinListData, 'otcCoinQryResponse.total')
         // 市价
-        this.marketPrice = availableCoinListData.otcCoinQryResponse.marketPrice
+        this.marketPrice = getNestedData(availableCoinListData, 'otcCoinQryResponse.marketPrice')
         // 最低价
-        this.minPrice = availableCoinListData.otcCoinQryResponse.minPrice
+        this.minPrice = getNestedData(availableCoinListData, 'otcCoinQryResponse.minPrice')
         // 最高价
-        this.maxPrice = availableCoinListData.otcCoinQryResponse.maxPrice
+        this.maxPrice = getNestedData(availableCoinListData, 'otcCoinQryResponse.maxPrice')
         // 当前币种返回的保留小数点位数限制
-        this.pointLength = availableCoinListData.otcCoinQryResponse.unit
+        this.pointLength = getNestedData(availableCoinListData, 'otcCoinQryResponse.unit')
         // 下面这两个字段当URL中没id时候才用这个渲染页面
         // if (!this.$route.query.id) {
         // 币种单笔最大限额
-        this.maxCount = availableCoinListData.otcCoinQryResponse.maxCount
+        this.maxCount = getNestedData(availableCoinListData, 'otcCoinQryResponse.maxCount')
         this.$refs.maxCountValue.value = this.maxCount
         // 币种单笔最小限额
-        this.minCount = availableCoinListData.otcCoinQryResponse.minCount
+        this.minCount = getNestedData(availableCoinListData, 'otcCoinQryResponse.minCount')
         this.$refs.minCountValue.value = this.minCount
         // }
       }

@@ -81,15 +81,27 @@
               </el-form-item>
               <!-- 3.0你想出售或者购买 -->
               <el-form-item>
-                <div class="want-buy-sell-sum">
-                  {{$t('M.otc_index_youWant')}}
-                  <span v-show="publishStyle === 'sell'">
-                    {{$t('M.comm_offering')}}
-                  </span>
-                  <span v-show="publishStyle === 'buy'">
-                    {{$t('M.comm_buying')}}
-                  </span>
-                  {{$t('M.otc_index_how')}}
+                <!--<div class="want-buy-sell-sum">-->
+                  <!--{{$t('M.otc_index_youWant')}}-->
+                  <!--<span v-show="publishStyle === 'sell'">-->
+                    <!--{{$t('M.comm_offering')}}-->
+                  <!--</span>-->
+                  <!--<span v-show="publishStyle === 'buy'">-->
+                    <!--{{$t('M.comm_buying')}}-->
+                  <!--</span>-->
+                  <!--{{$t('M.otc_index_how')}}-->
+                <!--</div>-->
+                <div
+                  class="want-buy-sell-sum"
+                  v-show="publishStyle === 'sell'"
+                >
+                  {{$t('M.otc_index_youWant')}}{{$t('M.comm_offering')}}{{$t('M.otc_index_how')}}
+                </div>
+                <div
+                  class="want-buy-sell-sum"
+                  v-show="publishStyle === 'buy'"
+                >
+                  {{$t('M.otc_index_youWant')}}{{$t('M.comm_buying')}}{{$t('M.otc_index_how')}}
                 </div>
                 <!-- 当前可用和市价 -->
                 <div class="want-buy-sell-sum-content">
