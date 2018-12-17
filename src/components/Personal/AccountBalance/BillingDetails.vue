@@ -27,7 +27,6 @@
               v-model="defaultCurrencyId"
               :placeholder="$t('M.comm_please_choose')"
               :no-data-text="$t('M.comm_no_data')"
-              clearable
             >
               <el-option
                 :placeholder="$t('M.comm_please_choose')"
@@ -51,7 +50,6 @@
             <el-select
               v-model="currencyTypeValue"
               :no-data-text="$t('M.comm_no_data')"
-              clearable
             >
               <el-option
                 v-for="item in currencyType"
@@ -73,7 +71,6 @@
             </span>
             <el-select
               v-model="otherRecordsValue"
-              clearable
             >
               <el-option
                 v-for="item in otherRecordsType"
@@ -347,7 +344,7 @@ export default {
       otherRecordsList: [],
       otherRecordPageNumbers: 1, // 其他记录页码
       totalPagesOtherRecords: 1, // 其他记录总页数
-      otherRecordsValue: 'CTC_TRADE', // 其他记录类型
+      otherRecordsValue: 'OTC_TRADE', // 其他记录类型
       // otc交易 otc手续费 币币交易 币币手续费 理财支出 理财收入 邀请有礼
       otherRecordsType: [
         {
@@ -387,7 +384,7 @@ export default {
         this.startTime = ''
         this.endTime = ''
       } else {
-        this.startTime = timeFilter(new Date().getTime(), 'normal')
+        this.startTime = timeFilter(new Date().setHours(0, 0, 0, 0), 'normal')
         this.endTime = timeFilter(new Date().getTime(), 'normal')
         console.log(this.startTime)
       }
@@ -404,11 +401,7 @@ export default {
         return false
       } else {
         this.currencyList = getNestedData(data, 'data.data')
-        if (this.activeName !== 'current-entrust') {
-          this.defaultCurrencyId = getNestedData(data, 'data.data')[0].id
-        } else {
-          this.defaultCurrencyId = ''
-        }
+        this.defaultCurrencyId = getNestedData(data, 'data.data')[0].id
         console.log(this.currencyList)
       }
     },
@@ -628,6 +621,10 @@ export default {
       }
 
       /deep/ {
+        .el-table__body-wrapper {
+          height: 470px;
+        }
+
         .el-input--suffix {
           .el-input__inner {
             padding-right: 25px;
