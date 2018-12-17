@@ -331,5 +331,9 @@ export const OTC = {
   'otc_apply_tips2': '您需要先申请成为商家才能使用此功能！',
   'otc_order_reason': '原因',
   'otc_publish_ad_err1': '同时处理最大订单数不能为空',
-  'otc_publish_ad_err2': '卖家必须成交过几次不能为空'
+  'otc_publish_ad_err2': '卖家必须成交过几次不能为空',
+  'otc_apply_tips3': '需OTC交易次数',
+  'otc_apply_tips4': '资产可用',
+  'otc_apply_tips5': '是否继续',
+  'otc_apply_tips6': '申请提示'
 }

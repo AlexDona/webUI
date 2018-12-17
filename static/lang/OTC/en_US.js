@@ -315,8 +315,8 @@ export const OTC = {
   'otc_index_maxRemain': 'Maximum remaining quantity',
   // ##############发布购买和出售##########Publish purchases and sales
   'otc_index_chouseType': 'Currency Type',
-  'otc_index_youWant': 'Favor',
-  'otc_index_how': 'price',
+  'otc_index_youWant': 'Favor ',
+  'otc_index_how': ' price',
   'otc_index_nowUse': 'Available',
   'otc_index_singleTradeLimit': 'Minimum price',
   'otc_index_inputTips': 'Please enter a note: up to 20 characters',
@@ -342,5 +342,9 @@ export const OTC = {
   'otc_apply_tips2': 'First apply to become a merchant then use this function!',
   'otc_publish_ad_err1': 'The maximum number of orders processed at the same time cannot be empty',
   'otc_publish_ad_err2': 'The seller must have sold a few times and cannot be empty.',
-  'otc_order_reason': 'Reason'
+  'otc_order_reason': 'Reason',
+  'otc_apply_tips3': 'Number of OTC transaction times',
+  'otc_apply_tips4': 'and the available asset',
+  'otc_apply_tips5': 'Shall we continue',
+  'otc_apply_tips6': 'Tips'
 }
