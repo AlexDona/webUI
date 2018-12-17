@@ -1333,8 +1333,8 @@ export default {
 
     > .no-data {
       width: 1043px;
-      height: 472px;
-      line-height: 472px;
+      height: 482px;
+      line-height: 482px;
       text-align: center;
       color: rgba(255, 255, 255, .8);
     }

@@ -340,8 +340,6 @@ export default {
 
 .otc-completed-order-box {
   > .completed-order-content {
-    min-height: 500px;
-
     .page {
       /* padding: 10px 0; */
       text-align: center;
@@ -465,7 +463,7 @@ export default {
       }
 
       .el-table__empty-block {
-        min-height: 432px;
+        height: 433px;
       }
     }
   }
