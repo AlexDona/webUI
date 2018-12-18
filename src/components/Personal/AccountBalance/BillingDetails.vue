@@ -223,7 +223,7 @@
                 <!--<div>{{ s.row.type }}</div>-->
                 <div v-if="s.row.type == 'OTC_TRADE'">
                   <!--otc交易-->
-                  {{ $t('M.otc_trade') }}
+                  {{ $t('M.otc_user_trade') }}
                 </div>
                 <div v-if="s.row.type == 'OTC_FEE'">
                   <!--otc手续费-->
@@ -349,7 +349,7 @@ export default {
       otherRecordsType: [
         {
           value: 'OTC_TRADE',
-          label: 'M.otc_trade'
+          label: 'M.otc_user_trade'
         }, {
           value: 'OTC_FEE',
           label: 'M.otc_fee'
