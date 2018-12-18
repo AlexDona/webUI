@@ -44,7 +44,7 @@ export const personal = {
   'user_address_withdrawal': '틀린 주소',
   // 账单明细
   'user_billing_attention': '입금 혹은 출금',
-  'otc_trade': 'otc 거래',
+  'otc_user_trade': 'otc 거래',
   'otc_fee': 'otc 수수료',
   'ctc_trade': '화폐거래',
   'ctc_fee': '화폐거래 수수료',

@@ -44,7 +44,7 @@ export const personal = {
   'user_assets_attention': 'Note: The total assets estimate is only for reference. Please refer to the individual funds.',
   // 账单明细Billing Details
   'user_billing_attention': 'Charge',
-  'otc_trade': 'OTC exchange',
+  'otc_user_trade': 'OTC exchange',
   'otc_fee': 'OTC fee',
   'ctc_trade': 'Token exchange',
   'ctc_fee': 'Token fee',

@@ -43,7 +43,7 @@ export const personal = {
   'user_assets_attention': '注：総資産見積もりは参考値です。個々の資金を参照してください。',
   // 账单明细''請求の詳細'
   'user_billing_attention': '充電',
-  'otc_trade': 'otc取引',
+  'otc_user_trade': 'otc取引',
   'otc_fee': 'otc手数料',
   'ctc_trade': 'トークン取引',
   'ctc_fee': 'トークン手数料',
