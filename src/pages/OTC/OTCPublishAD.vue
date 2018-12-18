@@ -1232,7 +1232,7 @@ export default {
 
     .trade-way {
       .el-checkbox-group {
-        margin-top: 15px;
+        margin-top: 5px;
       }
 
       .el-checkbox__inner {
@@ -1463,7 +1463,13 @@ export default {
 
       .trade-way {
         .el-checkbox {
+          margin-right: 20px;
           color: #9da5b3;
+        }
+
+        .el-checkbox + .el-checkbox {
+          /* padding-right: 20px; */
+          margin-left: 0;
         }
 
         .el-checkbox__inner {
@@ -1658,6 +1664,15 @@ export default {
         .el-checkbox__inner {
           border: 1px solid #435372;
           background-color: #fff;
+        }
+
+        .el-checkbox {
+          margin-right: 20px;
+        }
+
+        .el-checkbox + .el-checkbox {
+          /* padding-right: 20px; */
+          margin-left: 0;
         }
       }
 

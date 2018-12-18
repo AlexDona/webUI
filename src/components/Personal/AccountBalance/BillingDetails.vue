@@ -560,7 +560,7 @@ export default {
   }
 }
 </script>
-<style scoped lang="scss">
+<style scoped lang="scss" type="text/scss">
   @import "../../../../static/css/scss/Personal/IndexPersonal";
 
   .billing-details {
@@ -623,6 +623,7 @@ export default {
       /deep/ {
         .el-table__body-wrapper {
           height: 470px;
+          background-color: #1c1f32;
         }
 
         .el-input--suffix {
@@ -726,6 +727,11 @@ export default {
       }
 
       /deep/ {
+        .el-table__body-wrapper {
+          height: 470px;
+          background-color: #fff;
+        }
+
         .el-table {
           th,
           tr {
@@ -765,6 +771,31 @@ export default {
 
         .el-table__empty-block {
           background-color: #fff;
+        }
+
+        .el-loading-mask {
+          background-color: rgba(0, 0, 0, .6);
+        }
+
+        .el-tabs__item {
+          padding: 0;
+          margin-right: 30px;
+          border-left: 0;
+          text-align: center;
+
+          &.is-active {
+            border-bottom: 2px solid #0079fe;
+            border-left: 0;
+            color: #0079fe;
+            background: transparent;
+          }
+
+          &:hover {
+            border-left: 0;
+            text-align: center;
+            color: #0079fe;
+            background: transparent;
+          }
         }
       }
     }
