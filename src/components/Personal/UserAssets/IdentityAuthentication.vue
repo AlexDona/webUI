@@ -207,9 +207,10 @@
       <div
         class="advanced-main-header"
       >
+        <!--authenticationMethod // 点击弹出扫码确认框-->
         <p
           class="header-border paddinglr20"
-          @click.prevent="authenticationMethod"
+          @click.prevent="authenticationAuthentication"
         >
           <span class="font-size16 main-header-title">
             <!--高级认证-->
@@ -529,10 +530,9 @@
           v-if="authenticationInfo.userIdentity"
         ></div>
       </div>
-      <!--高级认证-->
+      <!--高级认证 :visible.sync="seniorAuthentication"-->
       <el-dialog
         :title="$t('M.user_senior_certification')"
-        :visible.sync="seniorAuthentication"
         name="1"
         center>
         <div class="advanced-certification-content">
@@ -557,8 +557,8 @@
             {{ $t('M.user_senior_hint3') }}
             <span
               class="tips-refresh cursor-pointer font-size14"
-              @click.prevent="authenticationAuthentication"
             >
+              <!--@click.prevent="authenticationAuthentication"-->
               <!--请点击这里-->
               {{ $t('M.user_senior_hint4') }}
             </span>
@@ -635,7 +635,7 @@ export default {
       identificationNumber: '', // 证件号码
       passportRef: 'passport',
       errorMessage: '', // 错误信息提示
-      seniorAuthentication: false, // 高级认证弹窗默认
+      // seniorAuthentication: false, // 高级认证弹窗默认
       authenticationInfo: {}, // 个人信息
       authenticationContentStatus: false, // 高级认证页面
       authenticationStatusFront: false, // 用户高级认证前
@@ -918,14 +918,14 @@ export default {
       }
     },
     // 高级认证弹窗
-    authenticationMethod () {
-      // 判断是否高级认证&&实名认证
-      if (this.userInfoRefresh.realname !== '' && this.innerUserInfo.advancedAuth === '') {
-        this.seniorAuthentication = true
-      } else if (this.userInfoRefresh.realname !== '') {
-        this.seniorAuthentication = false
-      }
-    },
+    // authenticationMethod () {
+    //   // 判断是否高级认证&&实名认证
+    //   if (this.userInfoRefresh.realname !== '' && this.innerUserInfo.advancedAuth === '') {
+    //     this.seniorAuthentication = true
+    //   } else if (this.userInfoRefresh.realname !== '') {
+    //     this.seniorAuthentication = false
+    //   }
+    // },
     // 高级认证未通过被驳回
     authenticationIsStatus () {
       if (this.innerUserInfo.advancedAuth === 'notPass') {
@@ -947,7 +947,7 @@ export default {
       if (!this.realNameInformationObj.advancedAuth) {
         this.authenticationStatusFront = true
       }
-      this.seniorAuthentication = false
+      // this.seniorAuthentication = false // 关闭高级认证扫码认证弹窗
       this.authenticationContentStatus = true
     },
     // 选择图片文件
