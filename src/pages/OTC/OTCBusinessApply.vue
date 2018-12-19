@@ -248,7 +248,8 @@
 import IconFontCommon from '../../components/Common/IconFontCommon'
 import {businessApply, firstEnterBusinessApply, argumentBusinessApply} from '../../utils/api/OTC'
 import {returnAjaxMsg, getNestedData} from '../../utils/commonFunc'
-import {mapState} from 'vuex'
+import {createNamespacedHelpers, mapState} from 'vuex'
+const {mapMutations} = createNamespacedHelpers('OTC')
 export default {
   components: {
     IconFontCommon //  字体图标
@@ -280,6 +281,10 @@ export default {
   update () {},
   beforeRouteUpdate () {},
   methods: {
+    ...mapMutations([
+      // 普通用户点击otc导航弹窗提示点击申请按钮跳转到申请商家组件底部状态
+      'CHANGE_OTC_APPLY_JUMP_BOTTOM_STATUS'
+    ]),
     // 下载商家申请资料模板
     downloadApplicationForm () {
       // console.log(this.downLoadUrl)
@@ -366,14 +371,24 @@ export default {
         // 返回数据的状态 1 表示展示初次进入
         if (getData.status == 1) {
           this.applyStatus = 1
-        // 状态 2 表示审核正在进行中
+          // 状态 2 表示审核正在进行中
         } else if (getData.status == 2) {
           this.statusBlack = 'successOrApplying' // 当为申请中和申请成功的页面时候，只有黑色主题颜色
           this.applyStatus = 2
-        // 状态 3 表示审核通过
+          // 状态 3 表示审核通过
         } else {
           this.statusBlack = 'successOrApplying' // 当为申请中和申请成功的页面时候，只有黑色主题颜色
           this.applyStatus = 3
+        }
+        // ren 增加非商家点击提示框申请按钮跳转到申请页面中的申请按钮部分功能
+        if (getData.status !== 3 && this.otcApplyJumpBottomStatus) {
+          // console.log('进入方法了' + this.otcApplyJumpBottomStatus)
+          setTimeout(() => {
+            window.scrollTo(0, 2000)
+          }, 100)
+          setTimeout(() => {
+            this.CHANGE_OTC_APPLY_JUMP_BOTTOM_STATUS(false)
+          }, 1000)
         }
       }
     },
@@ -399,14 +414,29 @@ export default {
   filter: {},
   computed: {
     ...mapState({
-      // userInfo: state => state.user.loginStep1Info.userInfo, // 用户详细信息
       isLogin: state => state.user.isLogin, // 用户登录状态 false 未登录； true 登录
       language: state => state.common.language,
       theme: state => state.common.theme,
-      configInfo: state => state.common.footerInfo.configInfo
+      configInfo: state => state.common.footerInfo.configInfo,
+      // 普通用户点击otc导航弹窗提示点击申请按钮跳转到申请商家组件底部状态
+      otcApplyJumpBottomStatus: state => state.OTC.otcApplyJumpBottomStatus
     })
   },
-  watch: {}
+  watch: {
+    otcApplyJumpBottomStatus (newVal) {
+      // console.log('监控')
+      // console.log(newVal)
+      if (newVal && this.applyStatus !== 3) {
+        // console.log('执行此方法2')
+        setTimeout(() => {
+          window.scrollTo(0, 2000)
+        }, 100)
+        setTimeout(() => {
+          this.CHANGE_OTC_APPLY_JUMP_BOTTOM_STATUS(false)
+        }, 1000)
+      }
+    }
+  }
 }
 </script>
 <style scoped lang="scss" type="text/scss">

@@ -508,6 +508,10 @@ export default{
       this.showApplyMerchantStatus = false
       this.$router.push({path: '/OTCBusinessApply'})
       // location.reload() // 重新刷新页面
+      // 任增加
+      // console.log('全局申请状态原始' + this.otcApplyJumpBottomStatus)
+      this.$store.commit('OTC/CHANGE_OTC_APPLY_JUMP_BOTTOM_STATUS', true)
+      // console.log('全局申请状态更改后' + this.otcApplyJumpBottomStatus)
     },
     // 非商家禁止进入OTC导航页提示框--结束
     reflashUserInfo () {
@@ -677,7 +681,9 @@ export default{
       logoSrc: state => state.common.logoSrc,
       title: state => state.common.title, // 网站title
       $mainNightBgColor: state => state.common.mainColor.$mainNightBgColor,
-      noticeCloseVisible: state => state.home.noticeCloseVisible
+      noticeCloseVisible: state => state.home.noticeCloseVisible,
+      // 普通用户点击otc导航弹窗提示点击申请按钮跳转到申请商家组件底部状态
+      otcApplyJumpBottomStatus: state => state.OTC.otcApplyJumpBottomStatus
     }),
     localPayPwdSet () {
       return getNestedData(getCookieWithJSON('loginStep1Info'), 'userInfo.paypasswordSet') || this.paypasswordSet
@@ -685,19 +691,19 @@ export default{
   },
   watch: {
     showApplyMerchantStatus (newVal) {
-      console.log(newVal)
+      // console.log(newVal)
     },
     localPayPwdSet (newVal) {
-      console.log(newVal)
+      // console.log(newVal)
     },
     activeLanguage (newVal) {
-      console.log(newVal)
+      // console.log(newVal)
     },
     defaultLanguage (newVal) {
       this.$i18n.locale = newVal
     },
     async language (newVal) {
-      console.log(newVal)
+      // console.log(newVal)
       await this.SET_PARTNER_INFO_ACTION({
         self: this,
         language: this.language
