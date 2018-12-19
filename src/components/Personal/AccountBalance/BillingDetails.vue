@@ -82,16 +82,19 @@
             </el-select>
           </div>
           <div class="float-left margin-left58 cursor-pointer">
-            <div class="block">
-            <span class="demonstration font-size12">
-              <!--日期-->
-              {{ $t('M.comm_data') }}
-            </span>
+            <div
+              class="block"
+              v-if="activeName === 'current-entrust'"
+            >
+              <span class="demonstration font-size12">
+                <!--日期-->
+                {{ $t('M.comm_data') }}
+              </span>
               <!--开始日期-->
               <el-date-picker
                 v-model="startTime"
                 type="date"
-                value-format="yyyy-MM-dd HH:mm:ss"
+                value-format="yyyy-MM-dd"
                 :placeholder="$t('M.comm_select') + $t('M.comm_data')"
                 @change="changeStartTime"
               >
@@ -101,6 +104,38 @@
               <el-date-picker
                 v-model="endTime"
                 type="date"
+                value-format="yyyy-MM-dd"
+                :placeholder="$t('M.comm_select') + $t('M.comm_data')"
+                @change="changeEndTime"
+              >
+              </el-date-picker>
+            </div>
+            <div
+              class="block"
+              v-else
+            >
+              <span class="demonstration font-size12">
+                <!--日期-->
+                {{ $t('M.comm_data') }}
+              </span>
+              <!--开始日期-->
+              <el-date-picker
+                v-model="startTime"
+                type="date"
+                :editable="false"
+                :clearable="false"
+                value-format="yyyy-MM-dd"
+                :placeholder="$t('M.comm_select') + $t('M.comm_data')"
+                @change="changeStartTime"
+              >
+              </el-date-picker>
+              &nbsp;&nbsp;-&nbsp;&nbsp;
+              <!-- 结束日期 -->
+              <el-date-picker
+                v-model="endTime"
+                type="date"
+                :editable="false"
+                :clearable="false"
                 value-format="yyyy-MM-dd"
                 :placeholder="$t('M.comm_select') + $t('M.comm_data')"
                 @change="changeEndTime"
@@ -505,7 +540,7 @@ export default {
     // 开始时间赋值
     changeStartTime (e) {
       this.startTime = e
-      console.log(e)
+      // console.log(e)
       if (this.endTime) {
         if (this.startTime > this.endTime) {
           this.$message({ // message: '开始时间不能大于结束时间',
@@ -514,12 +549,26 @@ export default {
           })
           return false
         }
+        let curDate = (new Date()).getTime()
+        let three = 93 * 24 * 3600 * 1000
+        let threeMonths = curDate - three
+        console.log(this.timeFormatting(threeMonths))
+        if (threeMonths > this.endTime) {
+          this.$message({ // message: '开始时间不能大于结束时间',
+            message: this.$t('M.otc_time_limit'),
+            type: 'error'
+          })
+          return false
+        }
       }
+    },
+    timeFormatting (data) {
+      return timeFilter(data, 'date')
     },
     // 结束时间赋值
     changeEndTime (e) {
       this.endTime = e
-      console.log(e)
+      // console.log(e)
       if (this.startTime) {
         if (this.startTime > this.endTime) {
           this.$message({ // message: '开始时间不能大于结束时间',
@@ -528,6 +577,12 @@ export default {
           })
           return false
         }
+        let curDate = (new Date()).getTime()
+        let three = 93 * 24 * 3600 * 1000
+        let threeMonths = curDate - three
+        // if (this.startTime > this.endTime) {
+        console.log(this.timeFormatting(threeMonths))
+        // }
       }
     }
   },
@@ -541,7 +596,7 @@ export default {
   },
   watch: {
     startTime (newVal) {
-      console.log(newVal)
+      // console.log(newVal)
       if (!newVal) {
         this.startTime = ''
       }
