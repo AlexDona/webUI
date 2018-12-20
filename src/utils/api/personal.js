@@ -24,6 +24,10 @@ export const statusRushedToRecordList = (params) => get('queryWithdrawRecording'
 export const getMerchantCurrencyList = (params) => get('queryPartnerCoinList', Object.assign({
   'not-loading': true
 }, params))
+// 账单明细—个人资产综合查询
+export const getComprehensiveRecordsList = (params) => get('personal/queryColligate', Object.assign({
+  'not-loading': true
+}, params))
 // 提币
 export const statusSubmitWithdrawButton = (params) => post('addWithdraw', params)
 // 新增用户提币地址

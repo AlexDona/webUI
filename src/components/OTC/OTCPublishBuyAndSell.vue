@@ -81,15 +81,27 @@
               </el-form-item>
               <!-- 3.0你想出售或者购买 -->
               <el-form-item>
-                <div class="want-buy-sell-sum">
-                  {{$t('M.otc_index_youWant')}}
-                  <span v-show="publishStyle === 'sell'">
-                    {{$t('M.comm_offering')}}
-                  </span>
-                  <span v-show="publishStyle === 'buy'">
-                    {{$t('M.comm_buying')}}
-                  </span>
-                  {{$t('M.otc_index_how')}}
+                <!--<div class="want-buy-sell-sum">-->
+                  <!--{{$t('M.otc_index_youWant')}}-->
+                  <!--<span v-show="publishStyle === 'sell'">-->
+                    <!--{{$t('M.comm_offering')}}-->
+                  <!--</span>-->
+                  <!--<span v-show="publishStyle === 'buy'">-->
+                    <!--{{$t('M.comm_buying')}}-->
+                  <!--</span>-->
+                  <!--{{$t('M.otc_index_how')}}-->
+                <!--</div>-->
+                <div
+                  class="want-buy-sell-sum"
+                  v-show="publishStyle === 'sell'"
+                >
+                  {{$t('M.otc_index_youWant')}}{{$t('M.comm_offering')}}{{$t('M.otc_index_how')}}
+                </div>
+                <div
+                  class="want-buy-sell-sum"
+                  v-show="publishStyle === 'buy'"
+                >
+                  {{$t('M.otc_index_youWant')}}{{$t('M.comm_buying')}}{{$t('M.otc_index_how')}}
                 </div>
                 <!-- 当前可用和市价 -->
                 <div class="want-buy-sell-sum-content">
@@ -357,6 +369,7 @@
                       class="password-input"
                       v-model="tradePassword"
                       @focus="tradePasswordFocus"
+                      @keyup.enter="addOTCPutUpOrdersSubmitButton"
                     >
                   </div>
                   <div class="error-info">
@@ -523,6 +536,8 @@ export default {
   },
   methods: {
     ...mapMutations([
+      // 发布订单（商家和普通用户公用）后页面跳转到首页顶部状态
+      'CHANGE_PUBLISH_ORDER_JUMP_TOP_STATUS'
     ]),
     // 判断卖出量和买入量是否为零
     checkValue (name) {
@@ -542,8 +557,8 @@ export default {
         currencyId: this.$route.params.currencyID, // 法币id
         coinId: this.$route.params.partnerCoinId // 交易币种id
       })
-      // console.log('币种详情')
-      // console.log(data)
+      console.log('币种详情')
+      console.log(data)
       // 提示信息
       if (!(returnAjaxMsg(data, this, 0))) {
         return false
@@ -580,7 +595,11 @@ export default {
         // this.$refs.maxCount.value = detailsData.otcCoinQryResponse.maxCount
         // this.backReturnCurrentMaxCount = detailsData.otcCoinQryResponse.maxCount
         this.backReturnCurrentMaxCount = getNestedData(detailsData, 'otcCoinQryResponse.maxCount')
+        console.log(11111111111111111111111111111111)
+        console.log(this.backReturnCurrentMaxCount)
         this.$refs.maxCount.value = this.backReturnCurrentMaxCount
+        console.log(222222222222222222222222222222222222222222)
+        console.log(this.$refs.maxCount.value)
         // 币种 最小 交易限额minCount
         // this.$refs.minCount.value = detailsData.otcCoinQryResponse.minCount
         // this.backReturnCurrentMinCount = detailsData.otcCoinQryResponse.minCount
@@ -913,7 +932,11 @@ export default {
         // 清空表单数据
         this.clearInputData()
         // 重新渲染页面
-        this.getOTCCoinInfo()
+        // this.getOTCCoinInfo()
+        // 下单成功跳转到首页挂单列表去
+        // 改变发布订单（商家和普通用户公用）后页面跳转到首页顶部状态
+        this.CHANGE_PUBLISH_ORDER_JUMP_TOP_STATUS(true)
+        this.$router.push({ path: '/OTCCenter' })
       }
     },
     // 10.0 充币按钮跳转

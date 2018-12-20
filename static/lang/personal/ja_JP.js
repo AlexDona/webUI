@@ -43,6 +43,14 @@ export const personal = {
   'user_assets_attention': '注：総資産見積もりは参考値です。個々の資金を参照してください。',
   // 账单明细''請求の詳細'
   'user_billing_attention': '充電',
+  'otc_user_trade': 'otc取引',
+  'otc_fee': 'otc手数料',
+  'ctc_trade': 'トークン取引',
+  'ctc_fee': 'トークン手数料',
+  'financial_expenditure': '財テク支出',
+  'financial_income': '財テク収入',
+  'invitation_reward': '有礼を招く',
+  'comprehensive_records': '総合記録',
   // 提币地址''コインアドレス'
   'user_address_empty': 'コインアドレスは空欄にできません',
   // 提币列表''コインリスト'
@@ -50,6 +58,8 @@ export const personal = {
   // #####################パーソナルセンター#####################
   // ID認証
   'user_identity': 'ID認証',
+  'user_ID_card': '身分証',
+  'user_passport': 'パスポート',
   // 本名認証
   'user_real_name': '本名認証',
   'user_real_info': '誠実にあなたの身元情報を記入し、認証された後は変更することはできません。',

@@ -205,6 +205,43 @@
       v-show="applyStatus === 4"
     >
     </div>
+    <!--申请成为商家提示框-->
+    <div class="apply-merchant-dialog">
+      <!--申请提示-->
+      <el-dialog
+        :title="$t('M.otc_apply_tips6')"
+        :visible.sync="showApplyMerchantStatus"
+        top="30vh"
+        modal
+      >
+        <div class="tips">
+          <!--您需要先申请成为商家才能使用此功能！-->
+          <p class="content">
+            <!--需OTC交易次数≥5次，资产可用≥10HF,是否继续？-->
+            {{$t('M.otc_apply_tips3')}}≥{{successTimes}}{{$t('M.otc_ci')}},{{$t('M.otc_apply_tips4')}}≥{{count}}{{coinName}}, {{$t('M.otc_apply_tips5')}}？
+          </p>
+        </div>
+        <span
+          slot="footer"
+          class="dialog-footer"
+        >
+            <el-button
+              type="primary"
+              @click="cancelApply"
+            >
+              <!--取消-->
+              {{$t('M.comm_cancel')}}
+            </el-button>
+            <el-button
+              type="primary"
+              @click="confirmApply"
+            >
+              {{$t('M.comm_confirm')}}
+              <!--确定-->
+            </el-button>
+            </span>
+      </el-dialog>
+    </div>
   </div>
 </template>
 <script>
@@ -218,6 +255,7 @@ export default {
   },
   data () {
     return {
+      showApplyMerchantStatus: false, // 是否显示申请商家弹窗
       statusBlack: '', // 当为申请中和申请成功的页面时候，只有黑色主题颜色
       height: '', // 申请中 申请成功 内容的高度
       applyStatus: 1, // 商家申请状态
@@ -261,25 +299,37 @@ export default {
       // 点击按钮时判断商家是否登录
       if (this.isLogin) {
         if (!this.checked) {
+          // 请先同意认证商家协议
           this.$message({
             message: this.$t('M.otc_firstSure') + this.$t('M.otc_merchant_authentication'),
             type: 'error'
           })
           return false
         }
-        this.getOTCBusinessApply()
+        // this.getOTCBusinessApply()
+        this.showApplyMerchantStatus = true
       } else {
         this.$message({showClose: true, message: this.$t('M.otc_login_pi') + '!'})
       }
+    },
+    // 申请成为商家提示框确定申请
+    confirmApply () {
+      this.getOTCBusinessApply()
+      this.showApplyMerchantStatus = false
+    },
+    // 申请成为商家提示框取消申请
+    cancelApply () {
+      this.showApplyMerchantStatus = false
     },
     // 请求申请状态
     async getOTCBusinessApply () {
       const data = await businessApply()
       // 提示信息
-      if (!(returnAjaxMsg(data, this))) {
+      if (!(returnAjaxMsg(data, this, 1))) {
         return false
       } else {
         // 返回数据正确的逻辑
+        console.log(data)
         let detailMeta = getNestedData(data, 'data.meta')
         if (detailMeta.success == true) {
           this.applyStatus = 2
@@ -585,6 +635,77 @@ export default {
     .el-dialog__body {
       color: #8494a6;
     }
+
+    /* 申请商家提示框样式 */
+    .apply-merchant-dialog {
+      /* 遮罩层样式 */
+      .el-dialog__wrapper {
+        background: rgba(0, 0, 0, .7) !important;
+      }
+
+      .el-dialog__header {
+        text-align: left;
+        background-color: #1d2131 !important;
+      }
+
+      .el-dialog {
+        width: 350px;
+        height: 207px;
+        border-radius: 4px;
+        background-color: #1c2237 !important;
+
+        .el-dialog__header {
+          padding: 3px 20px;
+          border-radius: 4px;
+
+          .el-dialog__title {
+            font-size: 16px;
+            color: #338ff5 !important;
+          }
+
+          .el-dialog__headerbtn {
+            top: 15px;
+            right: 10px;
+          }
+        }
+
+        .el-dialog__body {
+          padding: 15px 20px 10px 30px;
+          font-size: 12px;
+
+          .tips {
+            height: 80px;
+            padding-top: 20px;
+            font-size: 14px;
+            color: #b8bdd0;
+
+            > .content {
+              line-height: 20px;
+            }
+          }
+        }
+
+        .el-dialog__footer {
+          padding: 0 20px 0 0;
+
+          .el-button {
+            width: 90px;
+            padding: 7px 20px;
+            border: 0;
+
+            &:first-child {
+              border: 1px solid rgba(51, 143, 245, 1);
+              color: #338ff5;
+              background: #1c2237;
+            }
+
+            &:last-child {
+              padding: 8px 21px;
+            }
+          }
+        }
+      }
+    }
   }
 
   &.night {
@@ -789,6 +910,34 @@ export default {
     /deep/ {
       .el-dialog {
         background: #fff;
+      }
+
+      /* 申请商家提示框样式 */
+      .apply-merchant-dialog {
+        .el-dialog {
+          background: #fff !important;
+
+          .el-dialog__header {
+            border-bottom: 1px solid #ecf1f8;
+            background: #fff !important;
+          }
+
+          .el-dialog__body {
+            .tips {
+              color: #333;
+            }
+          }
+
+          .el-dialog__footer {
+            .el-button {
+              &:first-child {
+                border: 1px solid rgba(51, 143, 245, 1);
+                color: #338ff5;
+                background: #fff;
+              }
+            }
+          }
+        }
       }
     }
   }

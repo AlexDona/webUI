@@ -44,6 +44,14 @@ export const personal = {
   'user_address_withdrawal': '틀린 주소',
   // 账单明细
   'user_billing_attention': '입금 혹은 출금',
+  'otc_user_trade': 'otc 거래',
+  'otc_fee': 'otc 수수료',
+  'ctc_trade': '화폐거래',
+  'ctc_fee': '화폐거래 수수료',
+  'financial_expenditure': '재테크 지출',
+  'financial_income': '재테크 수입',
+  'invitation_reward': '초대 선물',
+  'comprehensive_records': '종합 기록',
   // 提币地址
   'user_address_empty': '동전 주소는 비워 둘 수 없습니다',
   'user_address_labels': '주소 태그',
@@ -53,6 +61,8 @@ export const personal = {
   // 提币列表
   // 身份认证
   'user_identity': '신분인증',
+  'user_ID_card': '신분증',
+  'user_passport': '여권 3.',
   // 实名认证
   'user_real_name': '실명 인증',
   'user_real_info': '신원 정보를 진실하게 기입 해주세요. 일단 인증되면 수정할 수 없습니다.',

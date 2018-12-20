@@ -1020,6 +1020,7 @@ export default {
         this.getAssetCurrenciesList()
         // this.stateEmptyData()
         this.resetWithdrawFormContent()
+        this.stateEmptyData()
       }
     },
     // 接口请求完成之后普通币种清空数据
@@ -1027,7 +1028,7 @@ export default {
       this.phoneCode = '' // 短信验证码
       this.emailCode = '' // 邮箱验证码
       this.googleCode = '' // 谷歌验证码
-      this.password = ''
+      this.password = '' // 交易密码
       this.$refs.withdrawalFee[index].value = ''
       this.$refs.withdrawCount[index].value = ''
       this.accountCount = ''

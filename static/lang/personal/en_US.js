@@ -44,6 +44,14 @@ export const personal = {
   'user_assets_attention': 'Note: The total assets estimate is only for reference. Please refer to the individual funds.',
   // 账单明细Billing Details
   'user_billing_attention': 'Charge',
+  'otc_user_trade': 'OTC exchange',
+  'otc_fee': 'OTC fee',
+  'ctc_trade': 'Token exchange',
+  'ctc_fee': 'Token fee',
+  'financial_expenditure': 'Financial expenditure',
+  'financial_income': 'Financial income',
+  'invitation_reward': 'Invitation giveaway',
+  'comprehensive_records': 'Comprehensive records',
   // 提币地址Coin address
   'user_address_empty': 'The coin address cannot be empty',
   // 提币列表Coin list
@@ -51,6 +59,8 @@ export const personal = {
   // #####################个人中心#####################Personal center
   // 身份认证Authentication
   'user_identity': 'Authentication',
+  'user_ID_card': 'ID card',
+  'user_passport': 'passport',
   // 实名认证Verified
   'user_real_name': 'Verified',
   'user_real_info': 'Please fill in your identity information truthfully and cannot be modified once certified.',

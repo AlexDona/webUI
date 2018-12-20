@@ -24,9 +24,9 @@
                 {{$t('M.otc_pl')}}
               </p>
               <!-- 必填 -->
-              <p class="warning font-size12">
-                {{$t('M.otc_publishAD_nustFill')}}
-              </p>
+              <!--<p class="warning font-size12">-->
+                <!--{{$t('M.otc_publishAD_nustFill')}}-->
+              <!--</p>-->
             </div>
             <div class="right display-inline-block">
               <!-- 买卖类型 -->
@@ -88,12 +88,12 @@
             <div class="left display-inline-block">
               <!-- 销售价格 -->
                 <p class="tips font-size14">
-                  {{$t('M.otc_sell')}}{{$t('M.otc_index_price')}}
+                  <span class="must-fill-star">*</span>{{$t('M.otc_sell')}}{{$t('M.otc_index_price')}}
                 </p>
                 <!-- 必填 -->
-                <p class="warning font-size12">
-                  {{$t('M.otc_publishAD_nustFill')}}
-                </p>
+                <!--<p class="warning font-size12">-->
+                  <!--{{$t('M.otc_publishAD_nustFill')}}-->
+                <!--</p>-->
             </div>
             <div class="right display-inline-block">
               <div>
@@ -141,12 +141,12 @@
             <div class="left display-inline-block">
               <!-- 交易方式 -->
                 <p class="tips font-size14">
-                  {{$t("M.otc_publishAD_selltype")}}
+                  <span class="must-fill-star">*</span>{{$t("M.otc_publishAD_selltype")}}
                 </p>
                 <!-- 必填 -->
-                <p class="warning font-size12">
-                  {{$t('M.otc_publishAD_nustFill')}}
-                </p>
+                <!--<p class="warning font-size12">-->
+                  <!--{{$t('M.otc_publishAD_nustFill')}}-->
+                <!--</p>-->
             </div>
             <div class="right display-inline-block">
               <el-checkbox-group
@@ -198,12 +198,12 @@
             <div class="left display-inline-block">
                 <!-- 数量与限额 -->
                 <p class="tips font-size14">
-                  {{$t('M.otc_publishAD_sum_and_limitMoney')}}
+                  <span class="must-fill-star">*</span>{{$t('M.otc_publishAD_sum_and_limitMoney')}}
                 </p>
                 <!--必填  -->
-                <p class="warning font-size12">
-                  {{$t('M.otc_publishAD_nustFill')}}
-                </p>
+                <!--<p class="warning font-size12">-->
+                  <!--{{$t('M.otc_publishAD_nustFill')}}-->
+                <!--</p>-->
             </div>
             <div class="right display-inline-block">
               <!-- 交易数量 -->
@@ -292,7 +292,7 @@
                 <p class="tips font-size14">
                   {{$t('M.comm_remark')}}
                 </p>
-                <!-- 建议填写 -->
+                <!-- 可选填 -->
                 <p class="warning font-size12">
                   {{$t('M.otc_publishAD_adviceToFill')}}
                 </p>
@@ -314,12 +314,12 @@
             <div class="left display-inline-block">
               <!-- 限制设置 -->
                 <p class="tips font-size14">
-                  {{$t('M.otc_publishAD_setLimit')}}
+                  <span class="must-fill-star">*</span>{{$t('M.otc_publishAD_setLimit')}}
                 </p>
-                <!-- 必选 -->
-                <p class="warning font-size12">
-                  {{$t('M.otc_publishAD_nustFill')}}
-                </p>
+                <!-- 必填 -->
+                <!--<p class="warning font-size12">-->
+                  <!--{{$t('M.otc_publishAD_nustFill')}}-->
+                <!--</p>-->
             </div>
             <div class="right display-inline-block">
               <div>
@@ -351,6 +351,7 @@
                   v-model="limitOrderCount"
                   onkeyup="this.value=this.value.replace(/\D/g,'')"
                   onafterpaste="this.value=this.value.replace(/\D/g,'')"
+                  @focus="clearLimitOrderCountErrData"
                 >
                 <!-- 错误提示 -->
                 <div class="err">{{errorInfoLimitOrderCount}}</div>
@@ -365,6 +366,7 @@
                   v-model="successOrderCount"
                   onkeyup="this.value=this.value.replace(/\D/g,'')"
                   onafterpaste="this.value=this.value.replace(/\D/g,'')"
+                  @focus="clearSuccessOrderCountErrData"
                 >
                 <!-- 错误提示 -->
                 <div class="err">{{errorInfoSuccessOrderCount}}</div>
@@ -399,6 +401,7 @@
                   class="password-input"
                   v-model="tradePassword"
                   @focus="tradePasswordFocus"
+                  @keyup.enter="publishADSubmitButton"
                 >
               </div>
               <div class="error-info">
@@ -510,9 +513,9 @@ export default {
       // 最高价
       maxPrice: '',
       // 同时处理最大订单数(0=不限制)
-      limitOrderCount: '',
+      limitOrderCount: '0',
       // 买家必须成交过几次(0=不限制)
-      successOrderCount: '',
+      successOrderCount: '0',
       // 备注
       remarkText: '',
       // 交易密码
@@ -569,6 +572,8 @@ export default {
   beforeRouteUpdate () {},
   methods: {
     ...mapMutations([
+      // 发布订单（商家和普通用户公用）后页面跳转到首页顶部状态
+      'CHANGE_PUBLISH_ORDER_JUMP_TOP_STATUS'
     ]),
     // 0.0 广告管理跳转过来 请求详情接口
     async getOTCSelectedOrdersDetails () {
@@ -581,14 +586,13 @@ export default {
         return false
       } else {
         let detailsData = getNestedData(data, 'data.data')
-        this.activitedCoinId = detailsData.coinId // 可用币种id
-        this.activitedCurrencyId = detailsData.currencyId // 法币id
-        this.activitedBuySellStyle = detailsData.entrustType // 挂单类型
-        this.limitOrderCount = detailsData.limitOrderCount // 同时处理最大订单数
-        this.successOrderCount = detailsData.successOrderCount // 卖家必须成交过几次
-        this.$refs.entrustCount.value = detailsData.entrustCount // 挂单数量
-        // this.$refs.price.value = detailsData.price // 单价
-        this.price = detailsData.price // 单价
+        this.activitedCoinId = getNestedData(detailsData, 'coinId') // 可用币种id
+        this.activitedCurrencyId = getNestedData(detailsData, 'currencyId') // 法币id
+        this.activitedBuySellStyle = getNestedData(detailsData, 'entrustType') // 挂单类型
+        this.limitOrderCount = getNestedData(detailsData, 'limitOrderCount') // 同时处理最大订单数
+        this.successOrderCount = getNestedData(detailsData, 'successOrderCount') // 卖家必须成交过几次
+        this.$refs.entrustCount.value = getNestedData(detailsData, 'entrustCount') // 挂单数量
+        this.price = getNestedData(detailsData, 'price') // 单价
         this.$refs.price.value = this.price // 单价
         this.getOTCCoinInfo()
       }
@@ -607,40 +611,40 @@ export default {
         // 返回数据正确的逻辑
         // 1.0 可用币种列表
         let availableCoinListData = getNestedData(data, 'data.data')
-        this.availableCoinList = availableCoinListData.coinlist
+        this.availableCoinList = getNestedData(availableCoinListData, 'coinlist')
         this.availableCoinList.forEach(item => {
           if (availableCoinListData.otcCoinQryResponse.coinId === item.coinId) {
             this.activitedCoinId = item.coinId
           }
         })
-        this.activeedCoinName = availableCoinListData.otcCoinQryResponse.name
+        this.activeedCoinName = getNestedData(availableCoinListData, 'otcCoinQryResponse.name')
         // 2.0 法币种列表
-        this.availableCurrencyList = availableCoinListData.currencyList
+        this.availableCurrencyList = getNestedData(availableCoinListData, 'currencyList')
         this.availableCurrencyList.forEach(item => {
           if (availableCoinListData.otcCoinQryResponse.currencyName === item.shortName) {
             this.activitedCurrencyId = item.id
           }
         })
-        this.activeedCurrencyName = availableCoinListData.otcCoinQryResponse.currencyName
+        this.activeedCurrencyName = getNestedData(availableCoinListData, 'otcCoinQryResponse.currencyName')
         // 3.0 交易支付方式
-        this.payForListArr = availableCoinListData.userbankFlag
+        this.payForListArr = getNestedData(availableCoinListData, 'userbankFlag')
         // 最大可卖出量:可用资产
-        this.total = availableCoinListData.otcCoinQryResponse.total
+        this.total = getNestedData(availableCoinListData, 'otcCoinQryResponse.total')
         // 市价
-        this.marketPrice = availableCoinListData.otcCoinQryResponse.marketPrice
+        this.marketPrice = getNestedData(availableCoinListData, 'otcCoinQryResponse.marketPrice')
         // 最低价
-        this.minPrice = availableCoinListData.otcCoinQryResponse.minPrice
+        this.minPrice = getNestedData(availableCoinListData, 'otcCoinQryResponse.minPrice')
         // 最高价
-        this.maxPrice = availableCoinListData.otcCoinQryResponse.maxPrice
+        this.maxPrice = getNestedData(availableCoinListData, 'otcCoinQryResponse.maxPrice')
         // 当前币种返回的保留小数点位数限制
-        this.pointLength = availableCoinListData.otcCoinQryResponse.unit
+        this.pointLength = getNestedData(availableCoinListData, 'otcCoinQryResponse.unit')
         // 下面这两个字段当URL中没id时候才用这个渲染页面
         // if (!this.$route.query.id) {
         // 币种单笔最大限额
-        this.maxCount = availableCoinListData.otcCoinQryResponse.maxCount
+        this.maxCount = getNestedData(availableCoinListData, 'otcCoinQryResponse.maxCount')
         this.$refs.maxCountValue.value = this.maxCount
         // 币种单笔最小限额
-        this.minCount = availableCoinListData.otcCoinQryResponse.minCount
+        this.minCount = getNestedData(availableCoinListData, 'otcCoinQryResponse.minCount')
         this.$refs.minCountValue.value = this.minCount
         // }
       }
@@ -724,7 +728,26 @@ export default {
         return false
       }
       // 限制设置--非必输选项
+      // 20181213增加非空验证：变为了必须字段
+      if (!this.limitOrderCount) {
+        // this.errorInfoLimitOrderCount = '同时处理最大订单数不能为空'
+        this.errorInfoLimitOrderCount = this.$t('M.otc_publish_ad_err1')
+        return false
+      }
+      if (!this.successOrderCount) {
+        // this.errorInfoSuccessOrderCount = '卖家必须成交过几次不能为空'
+        this.errorInfoSuccessOrderCount = this.$t('M.otc_publish_ad_err2')
+        return false
+      }
       this.dialogVisible = true
+    },
+    // 同时处理最大订单数获得焦点清空错误信息
+    clearLimitOrderCountErrData () {
+      this.errorInfoLimitOrderCount = ''
+    },
+    // 卖家必须成交过几次获得焦点清空错误信息
+    clearSuccessOrderCountErrData () {
+      this.errorInfoSuccessOrderCount = ''
     },
     // 6.0 点击密码框中的提交按提交钮发布广告
     async publishADSubmitButton () {
@@ -758,7 +781,11 @@ export default {
         // 清空数据
         this.clearMainData()
         // 重新渲染页面
-        this.getOTCCoinInfo()
+        // this.getOTCCoinInfo()
+        // 下单成功跳转到首页挂单列表去
+        // 改变发布订单（商家和普通用户公用）后页面跳转到首页顶部状态
+        this.CHANGE_PUBLISH_ORDER_JUMP_TOP_STATUS(true)
+        this.$router.push({ path: '/OTCCenter' })
       }
     },
     // 7.0 交易密码框获得焦点
@@ -1008,6 +1035,10 @@ export default {
       > .AD-big-form {
         width: 720px;
 
+        .must-fill-star {
+          color: red;
+        }
+
         > .common {
           box-sizing: border-box;
           padding: 30px 0;
@@ -1201,7 +1232,7 @@ export default {
 
     .trade-way {
       .el-checkbox-group {
-        margin-top: 15px;
+        margin-top: 5px;
       }
 
       .el-checkbox__inner {
@@ -1432,7 +1463,13 @@ export default {
 
       .trade-way {
         .el-checkbox {
+          margin-right: 20px;
           color: #9da5b3;
+        }
+
+        .el-checkbox + .el-checkbox {
+          /* padding-right: 20px; */
+          margin-left: 0;
         }
 
         .el-checkbox__inner {
@@ -1627,6 +1664,15 @@ export default {
         .el-checkbox__inner {
           border: 1px solid #435372;
           background-color: #fff;
+        }
+
+        .el-checkbox {
+          margin-right: 20px;
+        }
+
+        .el-checkbox + .el-checkbox {
+          /* padding-right: 20px; */
+          margin-left: 0;
         }
       }
 

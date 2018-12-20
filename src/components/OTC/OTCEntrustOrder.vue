@@ -28,6 +28,7 @@
           {{$t('M.otc_entrust_number')}}
         </span>
         <!-- 已匹配数量 -->
+        <!-- 20181213改为 已成交数量-->
         <span class="item fifth-match-count">
           {{$t('M.otc_entrust_matching')}}
         </span>
@@ -241,15 +242,13 @@ export default {
   @import "../../../static/css/scss/index.scss";
 
   .otc-entrust-order-box {
-    height: 500px;
-    margin-bottom: 10px;
-
     .otc-entrust-order-table {
       > .entrust-table-head {
         z-index: 200;
         box-sizing: border-box;
         width: 1045px;
         height: 35px;
+        margin-bottom: 15px;
         border-radius: 5px;
         line-height: 35px;
 
@@ -293,13 +292,13 @@ export default {
       }
 
       > .entrust-table-body {
-        height: 400px;
-        margin-top: 15px;
+        height: 432px;
         border-top: none;
         border-bottom-right-radius: 5px;
         border-bottom-left-radius: 5px;
 
         > .no-data {
+          height: 432px;
           line-height: 432px;
           text-align: center;
         }
