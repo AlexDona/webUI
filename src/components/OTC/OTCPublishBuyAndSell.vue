@@ -523,6 +523,10 @@ export default {
     if (this.$route.params.styleID === 'onlineSell') {
       this.publishStyle = 'sell'
     }
+    // 可用币种id
+    this.coinId = this.$route.params.partnerCoinId
+    // 可用法币
+    this.hopePaymentCoinId = this.$route.params.currencyID
     // 刚进页面就调此方法请求币种详情来渲染页面
     this.getOTCCoinInfo()
   },
@@ -554,8 +558,11 @@ export default {
     // 1.0 币种详情 : 商家和普通用户挂单页面请求币种详情渲染页面
     async getOTCCoinInfo () {
       const data = await getOTCCoinInfo({
-        currencyId: this.$route.params.currencyID, // 法币id
-        coinId: this.$route.params.partnerCoinId // 交易币种id
+        // currencyId: this.$route.params.currencyID, // 法币id
+        // coinId: this.$route.params.partnerCoinId // 交易币种id
+        currencyId: this.hopePaymentCoinId, // 法币id
+        coinId: this.coinId // 交易币种id
+
       })
       console.log('币种详情')
       console.log(data)
@@ -563,10 +570,10 @@ export default {
       if (!(returnAjaxMsg(data, this, 0))) {
         return false
       } else {
-        // 可用币种id
-        this.coinId = this.$route.params.partnerCoinId
-        // 可用法币
-        this.hopePaymentCoinId = this.$route.params.currencyID
+        // // 可用币种id
+        // this.coinId = this.$route.params.partnerCoinId
+        // // 可用法币
+        // this.hopePaymentCoinId = this.$route.params.currencyID
         // 返回数据正确的逻辑
         let detailsData = getNestedData(data, 'data.data')
         // 1.0 可用币种列表
@@ -627,6 +634,7 @@ export default {
     },
     // 2.0 改变可用币种类型
     changeCoinId (e) {
+      // console.log(e)
       this.coinId = e
       // console.log(this.coinId)
       // this.clearErrInfo() // 清空错误信息
@@ -636,6 +644,7 @@ export default {
     },
     // 3.0 改变你希望付款的货币类型：可用法币类型
     changehopePaymentCoinId (e) {
+      // console.log(e)
       this.hopePaymentCoinId = e
       // console.log(this.hopePaymentCoinId)
       this.clearInputData()
