@@ -54,8 +54,6 @@
       <!-- 2.3 资产配置 -->
       <div
         class="report-form-asset"
-        v-loading="formStatisticsLoading"
-        element-loading-background="rgba(0, 0, 0, 0.6)"
       >
         <div class="title padding-l15 border-radius5">
           {{$t('M.otc_formStatistics_asset')}}
@@ -77,8 +75,6 @@
       <!-- 2.4 购买和销售 -->
       <div
         class="report-form-buy-sell"
-        v-loading="formStatisticsLoading"
-        element-loading-background="rgba(0, 0, 0, 0.6)"
       >
         <!-- 购买 -->
         <div class="common buy">
@@ -386,8 +382,6 @@
               :data = "orderInfoList"
               style = "width: 100%;"
               :empty-text="$t('M.comm_no_data')"
-              v-loading="orderDetailsLoading"
-              element-loading-background="rgba(0, 0, 0, 0.6)"
             >
               <!-- 交易日期 -->
               <el-table-column
@@ -495,8 +489,6 @@ export default {
   },
   data () {
     return {
-      formStatisticsLoading: false,
-      orderDetailsLoading: false,
       // 分页
       pageSize: 10,
       currentPage: 1, // 当前页码
@@ -547,7 +539,6 @@ export default {
     // 分页
     changeCurrentPage (pageNum) {
       this.currentPage = pageNum
-      this.orderDetailsLoading = true
       this.getOTCEntrustingOrdersRevocation()
     },
     // 1.0 时间格式化
@@ -574,8 +565,6 @@ export default {
     },
     //  2.1 改变可用币种类型
     changeCoinId (e) {
-      this.formStatisticsLoading = true
-      this.orderDetailsLoading = true
       this.activitedTraderCoinId = e
       this.traderCoinList.forEach(item => {
         if (e === item.coinId) {
@@ -614,9 +603,7 @@ export default {
           this.activitedtraderCurrencyCoinsName = item.shortName
         }
       })
-      this.formStatisticsLoading = true
       this.getOTCReportFormStatistics()
-      this.orderDetailsLoading = true
       this.getOTCEntrustingOrdersRevocation()
     },
     // 开始时间赋值
@@ -632,7 +619,6 @@ export default {
           return false
         }
       }
-      this.orderDetailsLoading = true
       this.getOTCEntrustingOrdersRevocation()
     },
     // 结束时间赋值
@@ -648,7 +634,6 @@ export default {
           return false
         }
       }
-      this.orderDetailsLoading = true
       this.getOTCEntrustingOrdersRevocation()
     },
     // 右侧单选日期按钮change事件
@@ -660,12 +645,10 @@ export default {
         this.startTimeValue = ''
         this.endTimeValue = ''
       }
-      this.orderDetailsLoading = true
       this.getOTCEntrustingOrdersRevocation()
     },
     // 报表统计的主页面
     async getOTCReportFormStatistics () {
-      this.formStatisticsLoading = true
       let data = await getOTCReportFormStatisticsData({
         // 币种
         coinId: this.activitedTraderCoinId,
@@ -676,10 +659,8 @@ export default {
       // console.log('资产信息')
       // console.log(data)
       if (!(returnAjaxMsg(data, this, 0))) {
-        this.formStatisticsLoading = false
         return false
       } else {
-        this.formStatisticsLoading = false
         let getData = getNestedData(data, 'data.data')
         // 法币总资产
         this.totalAssets = getData.totalAssets
@@ -705,7 +686,6 @@ export default {
     },
     // 页面加载时请求接口渲染订单详情列表
     async getOTCEntrustingOrdersRevocation () {
-      this.orderDetailsLoading = true
       let data = await getOTCMerchantsOrdersList({
         // 当前页数
         pageNum: this.currentPage,
@@ -725,11 +705,9 @@ export default {
       // console.log('报表列表')
       // console.log(data)
       if (!(returnAjaxMsg(data, this, 0))) {
-        this.orderDetailsLoading = false
         return false
       } else {
         // 返回数据正确的逻辑 重新渲染列表
-        this.orderDetailsLoading = false
         let ordersRevocationData = getNestedData(data, 'data.data')
         this.orderInfoList = ordersRevocationData.list
         // 分页

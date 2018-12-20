@@ -52,7 +52,7 @@ export const disabledFeatures = [
   'timeframes_toolbar', // 底部栏时间
   'header_undo_redo',
   'header_chart_type',
-  'header_screenshot',
+  'header_screenshot'
   // 'header_settings'
   // 'widget_logo',
 ]

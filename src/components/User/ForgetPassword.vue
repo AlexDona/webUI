@@ -280,8 +280,8 @@
                   class="next-btn cursor-pointer"
                   @click="findPasswordStep3"
                 >
-                  <!--下一步-->
-                  {{ $t('M.forgetPassword_next_step') }}
+                  <!--完成-->
+                  {{ $t('M.forgetPassword_achieve') }}
                 </button>
               </span>
             </div>

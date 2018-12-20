@@ -212,8 +212,9 @@ export default {
     newsDetailJumpId (newVal) {
       console.log(newVal)
     },
-    language () {
-      this.getNewsNoticeList()
+    async language () {
+      await this.getAllNewsTypeList()
+      await this.getNewsNoticeList()
     }
   }
 }

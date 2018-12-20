@@ -784,6 +784,9 @@ export default {
     },
     // 刷新二维码
     async reflashErCode () {
+      if (this.socket) {
+        this.socket.doClose()
+      }
       const data = await getLoginErcode()
       if (!returnAjaxMsg(data, this)) {
         return false
