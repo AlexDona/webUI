@@ -51,11 +51,24 @@
                 :no-data-text="$t('M.comm_no_data')"
               >
                 <el-option
-                  v-for="(item, index) in contryAreaList"
-                  :key="index"
+                  v-for="item in contryAreaList"
+                  :key="item.nationCode"
                   :label="item.nationCode"
                   :value="item.nationCode"
                 >
+                  <span style="float: left;">
+                    <span v-show="language==='zh_CN'">
+                      {{ item.chinese }}
+                    </span>
+                    <span v-show="language!=='zh_CN'">
+                      {{item.english}}
+                    </span>
+                  </span>
+                  <span style=" float: right;
+                    color: #8492a6;
+                    font-size: 13px;"
+                  >{{ item.nationCode }}
+                  </span>
                 </el-option>
               </el-select>
               <input
@@ -200,7 +213,8 @@
                   <span style=" float: right;
                     color: #8492a6;
                     font-size: 13px;"
-                  >{{ item.nationCode }}</span>
+                  >{{ item.nationCode }}
+                  </span>
                 </el-option>
               </el-select>
               <input

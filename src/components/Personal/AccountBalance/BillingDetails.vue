@@ -291,7 +291,7 @@
               :label="$t('M.comm_count')"
             >
               <template slot-scope = "s">
-                <div>{{ s.row.count }}</div>
+                <div>{{ filterNumber(s.row.count) }}</div>
               </template>
             </el-table-column>
             <!--备注-->
@@ -346,7 +346,8 @@ import {
   getNestedData
 } from '../../../utils/commonFunc'
 import {
-  timeFilter
+  timeFilter,
+  scientificToNumber
 } from '../../../utils'
 export default {
   components: {},
@@ -415,6 +416,10 @@ export default {
     await this.getChargeMentionList('current-entrust')
   },
   methods: {
+    // 科学计数法转换
+    filterNumber (num) {
+      return scientificToNumber(num)
+    },
     // tab 切换
     async coinMoneyOrders (e) {
       if (e.name == 'current-entrust') {
@@ -542,20 +547,10 @@ export default {
     // 开始时间赋值
     changeStartTime (e) {
       this.startTime = e
-      // console.log(e)
+      console.log(this.startTime)
+      console.log(e)
       if (this.endTime) {
         if (this.startTime > this.endTime) {
-          this.$message({ // message: '开始时间不能大于结束时间',
-            message: this.$t('M.otc_time_limit'),
-            type: 'error'
-          })
-          return false
-        }
-        let curDate = (new Date()).getTime()
-        let three = 93 * 24 * 3600 * 1000
-        let threeMonths = curDate - three
-        console.log(this.timeFormatting(threeMonths))
-        if (threeMonths > this.endTime) {
           this.$message({ // message: '开始时间不能大于结束时间',
             message: this.$t('M.otc_time_limit'),
             type: 'error'
@@ -579,12 +574,6 @@ export default {
           })
           return false
         }
-        let curDate = (new Date()).getTime()
-        let three = 93 * 24 * 3600 * 1000
-        let threeMonths = curDate - three
-        // if (this.startTime > this.endTime) {
-        console.log(this.timeFormatting(threeMonths))
-        // }
       }
     }
   },
