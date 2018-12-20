@@ -291,7 +291,7 @@
               :label="$t('M.comm_count')"
             >
               <template slot-scope = "s">
-                <div>{{ filterNumber(s.row.count) }}</div>
+                <div>{{ filterNumber(s.row.count - 0) }}</div>
               </template>
             </el-table-column>
             <!--备注-->
