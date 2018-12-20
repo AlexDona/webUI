@@ -82,16 +82,19 @@
             </el-select>
           </div>
           <div class="float-left margin-left58 cursor-pointer">
-            <div class="block">
-            <span class="demonstration font-size12">
-              <!--日期-->
-              {{ $t('M.comm_data') }}
-            </span>
+            <div
+              class="block"
+              v-if="activeName === 'current-entrust'"
+            >
+              <span class="demonstration font-size12">
+                <!--日期-->
+                {{ $t('M.comm_data') }}
+              </span>
               <!--开始日期-->
               <el-date-picker
                 v-model="startTime"
                 type="date"
-                value-format="yyyy-MM-dd HH:mm:ss"
+                value-format="yyyy-MM-dd"
                 :placeholder="$t('M.comm_select') + $t('M.comm_data')"
                 @change="changeStartTime"
               >
@@ -101,6 +104,38 @@
               <el-date-picker
                 v-model="endTime"
                 type="date"
+                value-format="yyyy-MM-dd"
+                :placeholder="$t('M.comm_select') + $t('M.comm_data')"
+                @change="changeEndTime"
+              >
+              </el-date-picker>
+            </div>
+            <div
+              class="block"
+              v-else
+            >
+              <span class="demonstration font-size12">
+                <!--日期-->
+                {{ $t('M.comm_data') }}
+              </span>
+              <!--开始日期-->
+              <el-date-picker
+                v-model="startTime"
+                type="date"
+                :editable="false"
+                :clearable="false"
+                value-format="yyyy-MM-dd"
+                :placeholder="$t('M.comm_select') + $t('M.comm_data')"
+                @change="changeStartTime"
+              >
+              </el-date-picker>
+              &nbsp;&nbsp;-&nbsp;&nbsp;
+              <!-- 结束日期 -->
+              <el-date-picker
+                v-model="endTime"
+                type="date"
+                :editable="false"
+                :clearable="false"
                 value-format="yyyy-MM-dd"
                 :placeholder="$t('M.comm_select') + $t('M.comm_data')"
                 @change="changeEndTime"
@@ -256,7 +291,7 @@
               :label="$t('M.comm_count')"
             >
               <template slot-scope = "s">
-                <div>{{ s.row.count }}</div>
+                <div>{{ filterNumber(s.row.count - 0) }}</div>
               </template>
             </el-table-column>
             <!--备注-->
@@ -264,11 +299,13 @@
               :label="$t('M.comm_remark')"
             >
               <template slot-scope = "s">
-                <div>{{ $t(`M.${s.row.desc}`)}}</div>
+                <div v-if="s.row.type == 'CTC_TRADE' || s.row.type == 'CTC_FEE'">
+                  {{ s.row.tradeName}}{{ $t(`M.${s.row.desc}`)}}
+                </div>
+                <div v-else>{{ $t(`M.${s.row.desc}`)}}</div>
               </template>
             </el-table-column>
           </el-table>
-
         </el-tab-pane>
       </el-tabs>
     </div>
@@ -309,7 +346,8 @@ import {
   getNestedData
 } from '../../../utils/commonFunc'
 import {
-  timeFilter
+  timeFilter,
+  scientificToNumber
 } from '../../../utils'
 export default {
   components: {},
@@ -378,6 +416,10 @@ export default {
     await this.getChargeMentionList('current-entrust')
   },
   methods: {
+    // 科学计数法转换
+    filterNumber (num) {
+      return scientificToNumber(num)
+    },
     // tab 切换
     async coinMoneyOrders (e) {
       if (e.name == 'current-entrust') {
@@ -505,6 +547,7 @@ export default {
     // 开始时间赋值
     changeStartTime (e) {
       this.startTime = e
+      console.log(this.startTime)
       console.log(e)
       if (this.endTime) {
         if (this.startTime > this.endTime) {
@@ -516,10 +559,13 @@ export default {
         }
       }
     },
+    timeFormatting (data) {
+      return timeFilter(data, 'date')
+    },
     // 结束时间赋值
     changeEndTime (e) {
       this.endTime = e
-      console.log(e)
+      // console.log(e)
       if (this.startTime) {
         if (this.startTime > this.endTime) {
           this.$message({ // message: '开始时间不能大于结束时间',
@@ -541,7 +587,7 @@ export default {
   },
   watch: {
     startTime (newVal) {
-      console.log(newVal)
+      // console.log(newVal)
       if (!newVal) {
         this.startTime = ''
       }
