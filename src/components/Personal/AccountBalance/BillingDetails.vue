@@ -299,11 +299,13 @@
               :label="$t('M.comm_remark')"
             >
               <template slot-scope = "s">
-                <div>{{ $t(`M.${s.row.desc}`)}}</div>
+                <div v-if="s.row.type == 'CTC_TRADE' || s.row.type == 'CTC_FEE'">
+                  {{ s.row.tradeName}}{{ $t(`M.${s.row.desc}`)}}
+                </div>
+                <div v-else>{{ $t(`M.${s.row.desc}`)}}</div>
               </template>
             </el-table-column>
           </el-table>
-
         </el-tab-pane>
       </el-tabs>
     </div>
