@@ -124,6 +124,7 @@
                   ref="price"
                   @keyup="changePriceValue('price', moneyPointLength)"
                   @input="changePriceValue('price', moneyPointLength)"
+                  onpaste="return false"
                 >
                 <span
                   class="unit font-size12"
@@ -217,6 +218,7 @@
                   ref="entrustCount"
                   @keyup="changeEntrustCountValue('entrustCount', pointLength)"
                   @input="changeEntrustCountValue('entrustCount', pointLength)"
+                  onpaste="return false"
                 >
                 <span
                   class="unit font-size14"
@@ -251,6 +253,7 @@
                   @keyup="changeMinCountInputValue('minCountValue', moneyPointLength)"
                   @input="changeMinCountInputValue('minCountValue', moneyPointLength)"
                   @blur.prevent="minBulr"
+                  onpaste="return false"
                 >
                 <span
                   class="unit font-size14"
@@ -269,6 +272,7 @@
                   @keyup="changeMaxCountInputValue('maxCountValue', moneyPointLength)"
                   @input="changeMaxCountInputValue('maxCountValue', moneyPointLength)"
                   @blur.prevent="maxBulr"
+                  onpaste="return false"
                 >
                 <span
                   class="unit font-size14"
@@ -352,6 +356,7 @@
                   onkeyup="this.value=this.value.replace(/\D/g,'')"
                   onafterpaste="this.value=this.value.replace(/\D/g,'')"
                   @focus="clearLimitOrderCountErrData"
+                  onpaste="return false"
                 >
                 <!-- 错误提示 -->
                 <div class="err">{{errorInfoLimitOrderCount}}</div>
@@ -367,6 +372,7 @@
                   onkeyup="this.value=this.value.replace(/\D/g,'')"
                   onafterpaste="this.value=this.value.replace(/\D/g,'')"
                   @focus="clearSuccessOrderCountErrData"
+                  onpaste="return false"
                 >
                 <!-- 错误提示 -->
                 <div class="err">{{errorInfoSuccessOrderCount}}</div>
@@ -402,6 +408,8 @@
                   v-model="tradePassword"
                   @focus="tradePasswordFocus"
                   @keyup.enter="publishADSubmitButton"
+                  onpaste="return false"
+                  AUTOCOMPLETE="off"
                 >
               </div>
               <div class="error-info">

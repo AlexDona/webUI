@@ -188,6 +188,7 @@
                         ref="sellCount"
                         @keyup="calculatePriceValue('sellCount', pointLength)"
                         @input="calculatePriceValue('sellCount', pointLength)"
+                        onpaste="return false"
                       >
                       <!--购买-->
                       <input
@@ -199,6 +200,7 @@
                         ref="buyCount"
                         @keyup="calculatePriceValue('buyCount', pointLength)"
                         @input="calculatePriceValue('buyCount', pointLength)"
+                        onpaste="return false"
                       >
                       <span
                         class="unit"
@@ -217,6 +219,7 @@
                         ref="sellPrice"
                         @keyup="calculateCountValue('sellPrice', moneyPointLength)"
                         @input="calculateCountValue('sellPrice', moneyPointLength)"
+                        onpaste="return false"
                       >
                       <!--购买-->
                       <input
@@ -228,6 +231,7 @@
                         ref="buyPrice"
                         @keyup="calculateCountValue('buyPrice', moneyPointLength)"
                         @input="calculateCountValue('buyPrice', moneyPointLength)"
+                        onpaste="return false"
                       >
                       <span
                         class="unit"
@@ -348,6 +352,7 @@
                 v-model="tradePassword"
                 @focus="tradePasswordFocus"
                 @keyup.enter="submitPickOrdersToSell"
+                onpaste="return false"
               >
             </div>
             <div class="error-info">

@@ -152,6 +152,7 @@
                     @keyup="changeInputValue('entrustCountSell', pointLength)"
                     @input="changeInputValue('entrustCountSell', pointLength)"
                     @focus="countInputFocus"
+                    onpaste="return false"
                   >
                   <!-- 买入量 -->
                   <input
@@ -165,6 +166,7 @@
                     @keyup="changeInputValue('entrustCountBuy', pointLength)"
                     @input="changeInputValue('entrustCountBuy', pointLength)"
                     @focus="countInputFocus"
+                    onpaste="return false"
                   >
                   <span
                     class="unit"
@@ -182,6 +184,7 @@
                     ref="priceSell"
                     @keyup="changeInputValue('priceSell', moneyPointLength)"
                     @input="changeInputValue('priceSell', moneyPointLength)"
+                    onpaste="return false"
                   >
                   <!-- 买入单价 -->
                   <input
@@ -193,6 +196,7 @@
                     ref="priceBuy"
                     @keyup="changeInputValue('priceBuy', moneyPointLength)"
                     @input="changeInputValue('priceBuy', moneyPointLength)"
+                    onpaste="return false"
                   >
                   <span
                     class="unit"
@@ -224,6 +228,7 @@
                     ref="minCount"
                     @keyup="changeInputValue('minCount', moneyPointLength)"
                     @input="changeInputValue('minCount', moneyPointLength)"
+                    onpaste="return false"
                   >
                   <span
                     class="monad"
@@ -241,6 +246,7 @@
                     ref="maxCount"
                     @keyup="changeInputValue('maxCount', moneyPointLength)"
                     @input="changeInputValue('maxCount', moneyPointLength)"
+                    onpaste="return false"
                   >
                   <span
                     class="monad"
@@ -370,6 +376,7 @@
                       v-model="tradePassword"
                       @focus="tradePasswordFocus"
                       @keyup.enter="addOTCPutUpOrdersSubmitButton"
+                      onpaste="return false"
                     >
                   </div>
                   <div class="error-info">
