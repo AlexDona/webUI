@@ -602,10 +602,8 @@ export default {
         // this.$refs.maxCount.value = detailsData.otcCoinQryResponse.maxCount
         // this.backReturnCurrentMaxCount = detailsData.otcCoinQryResponse.maxCount
         this.backReturnCurrentMaxCount = getNestedData(detailsData, 'otcCoinQryResponse.maxCount')
-        console.log(11111111111111111111111111111111)
         console.log(this.backReturnCurrentMaxCount)
         this.$refs.maxCount.value = this.backReturnCurrentMaxCount
-        console.log(222222222222222222222222222222222222222222)
         console.log(this.$refs.maxCount.value)
         // 币种 最小 交易限额minCount
         // this.$refs.minCount.value = detailsData.otcCoinQryResponse.minCount
@@ -910,7 +908,6 @@ export default {
         return false
       }
       let param = {
-        // partnerCoinId: this.coinId, // 商户币种id
         coinId: this.coinId, // 可用币种id
         currencyId: this.hopePaymentCoinId, // 法币id
         minCount: this.$refs.minCount.value, // 单笔最小限额（CNY）
@@ -938,8 +935,6 @@ export default {
         this.publishOrderTradePwdDialogStatus = false
         // 清空表单数据
         this.clearInputData()
-        // 重新渲染页面
-        // this.getOTCCoinInfo()
         // 下单成功跳转到首页挂单列表去
         // 改变发布订单（商家和普通用户公用）后页面跳转到首页顶部状态
         this.CHANGE_PUBLISH_ORDER_JUMP_TOP_STATUS(true)
@@ -960,9 +955,6 @@ export default {
       // 当前选中语言
       language: state => state.common.language
     })
-    // windowHeight () {
-    //   return window.innerHeight
-    // }
   },
   watch: {}
 }

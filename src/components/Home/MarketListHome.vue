@@ -490,7 +490,7 @@ export default{
   }
 }
 </script>
-<style scoped lang="scss">
+<style scoped lang="scss" type="text/scss">
   @import "../../../static/css/scss/index.scss";
   @import "../../../static/css/scss/Home/MarketListHome.scss";
 

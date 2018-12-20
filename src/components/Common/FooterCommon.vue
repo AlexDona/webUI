@@ -330,7 +330,7 @@ export default {
   }
 }
 </script>
-<style scoped lang="scss">
+<style scoped lang="scss" type="text/scss">
   .footer-box {
     width: 100%;
     color: #838dae;

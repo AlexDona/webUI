@@ -856,11 +856,11 @@ export default {
       let data
       if (val === 1) {
         data = await cancelUserOtcOrder()
-        console.log('撤销otc用户定单（过期买家未付款）')
+        // console.log('撤销otc用户定单（过期买家未付款）')
       }
       if (val === 2) {
         data = await completeUserOtcOrder()
-        console.log('成交otc用户定单（过期卖家未收款）')
+        // console.log('成交otc用户定单（过期卖家未收款）')
       }
       console.log(data)
       if (!(returnAjaxMsg(data, this, 0))) {
@@ -897,7 +897,6 @@ export default {
         // console.log('交易中订单')
         // console.log(this.tradingOrderList)
         // 分页
-        // this.totalPages = detailsData.pages - 0
         this.totalPages = getNestedData(detailsData, 'pages') - 0
         // console.log(this.tradingOrderList)
         // 循环数组
@@ -915,7 +914,6 @@ export default {
           }
           // 自动成交倒计时数组集
         })
-        // console.log(this.tradingOrderList.length)
         if (this.tradingOrderList.length) {
           // 调用自动取消倒计时方法
           this.cancelSetInter()
