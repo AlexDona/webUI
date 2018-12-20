@@ -120,7 +120,7 @@ export default {
   }
 }
 </script>
-<style scoped lang="scss">
+<style scoped lang="scss" type="text/scss">
   @import '../../../static/css/scss/index';
 
   .notice-box {

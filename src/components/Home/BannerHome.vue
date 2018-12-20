@@ -43,7 +43,7 @@ export default {
   }
 }
 </script>
-<style scoped lang="scss">
+<style scoped lang="scss" type="text/scss">
   .banner-box {
     position: relative;
     width: 100%;

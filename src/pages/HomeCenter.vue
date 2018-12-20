@@ -94,7 +94,7 @@ export default {
   }
 }
 </script>
-<style scoped lang="scss">
+<style scoped lang="scss" type="text/scss">
   .home-box {
     min-width: 1130px;
     overflow: hidden;

@@ -567,9 +567,11 @@ export default {
         // 返回数据正确的逻辑
         this.traderCoinList = getNestedData(data, 'data.data')
         // 设置币种默认选中值
-        this.activitedTraderCoinId = this.traderCoinList[0].coinId
+        // this.activitedTraderCoinId = this.traderCoinList[0].coinId
+        this.activitedTraderCoinId = getNestedData(this.traderCoinList[0], 'coinId')
         // 设置币种默认选中值的名称
-        this.activitedTraderCoinName = this.traderCoinList[0].name
+        // this.activitedTraderCoinName = this.traderCoinList[0].name
+        this.activitedTraderCoinName = getNestedData(this.traderCoinList[0], 'name')
       }
     },
     //  2.1 改变可用币种类型
@@ -682,25 +684,35 @@ export default {
         this.formStatisticsLoading = false
         let getData = getNestedData(data, 'data.data')
         // 法币总资产
-        this.totalAssets = getData.totalAssets
+        // this.totalAssets = getData.totalAssets
+        this.totalAssets = getNestedData(getData, 'totalAssets')
         // 币种总资产
-        this.total = getData.total
+        // this.total = getData.total
+        this.total = getNestedData(getData, 'total')
         // 当天交易
-        this.buyDayMap = getData.buyDayMap
+        // this.buyDayMap = getData.buyDayMap
+        this.buyDayMap = getNestedData(getData, 'buyDayMap')
         // 购买历史交易赋值
-        this.buyHistoryMap = getData.buyHistoryMap
+        // this.buyHistoryMap = getData.buyHistoryMap
+        this.buyHistoryMap = getNestedData(getData, 'buyHistoryMap')
         // 购买本月赋值
-        this.buyMonthMap = getData.buyMonthMap
+        // this.buyMonthMap = getData.buyMonthMap
+        this.buyMonthMap = getNestedData(getData, 'buyMonthMap')
         // 购买本周赋值
-        this.buyWeekMap = getData.buyWeekMap
+        // this.buyWeekMap = getData.buyWeekMap
+        this.buyWeekMap = getNestedData(getData, 'buyWeekMap')
         // 出售当天赋值
-        this.sellDayMap = getData.sellDayMap
+        // this.sellDayMap = getData.sellDayMap
+        this.sellDayMap = getNestedData(getData, 'sellDayMap')
         // 出售历史赋值
-        this.sellHistoryMap = getData.sellHistoryMap
+        // this.sellHistoryMap = getData.sellHistoryMap
+        this.sellHistoryMap = getNestedData(getData, 'sellHistoryMap')
         // 出售当月赋值
-        this.sellMonthMap = getData.sellMonthMap
+        // this.sellMonthMap = getData.sellMonthMap
+        this.sellMonthMap = getNestedData(getData, 'sellMonthMap')
         // 出售本周赋值
-        this.sellWeekMap = getData.sellWeekMap
+        // this.sellWeekMap = getData.sellWeekMap
+        this.sellWeekMap = getNestedData(getData, 'sellWeekMap')
       }
     },
     // 页面加载时请求接口渲染订单详情列表
@@ -731,9 +743,11 @@ export default {
         // 返回数据正确的逻辑 重新渲染列表
         this.orderDetailsLoading = false
         let ordersRevocationData = getNestedData(data, 'data.data')
-        this.orderInfoList = ordersRevocationData.list
+        // this.orderInfoList = ordersRevocationData.list
+        this.orderInfoList = getNestedData(ordersRevocationData, 'list')
         // 分页
-        this.totalPages = ordersRevocationData.pages - 0
+        // this.totalPages = ordersRevocationData.pages - 0
+        this.totalPages = getNestedData(ordersRevocationData, 'pages') - 0
       }
     }
   },

@@ -303,7 +303,7 @@ export default {
   watch: {}
 }
 </script>
-<style scoped lang="scss">
+<style scoped lang="scss" type="text/scss">
   @import "../../../../static/css/scss/Personal/IndexPersonal";
 
   .add-western {

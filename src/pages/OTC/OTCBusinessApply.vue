@@ -364,10 +364,10 @@ export default {
       } else {
         let getData = getNestedData(data, 'data.data')
         // 返回数据正确的逻辑
-        this.successTimes = getData.successTimes
-        this.coinName = getData.coinName
-        this.count = getData.count
-        this.downLoadUrl = getData.downLoadUrl
+        this.successTimes = getNestedData(getData, 'successTimes')
+        this.coinName = getNestedData(getData, 'coinName')
+        this.count = getNestedData(getData, 'count')
+        this.downLoadUrl = getNestedData(getData, 'downLoadUrl')
         // 返回数据的状态 1 表示展示初次进入
         if (getData.status == 1) {
           this.applyStatus = 1
@@ -398,7 +398,7 @@ export default {
         termsTypeIds: 9,
         language: this.language
       })
-      console.log(data.data.data)
+      // console.log(data.data.data)
       // 提示信息
       if (!(returnAjaxMsg(data, this, 0))) {
         return false

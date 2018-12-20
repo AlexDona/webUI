@@ -222,7 +222,7 @@ export default {
   }
 }
 </script>
-<style scoped lang="scss">
+<style scoped lang="scss" type="text/scss">
 .financeline-box {
   width: 1000px;
   margin: 80px auto;
