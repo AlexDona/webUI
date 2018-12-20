@@ -153,7 +153,7 @@
           </el-button>
           <el-dialog
             :title="$t('M.otc_merchant_authentication')"
-            :visible.sync="dialogVisible"
+            :visible.sync="businessAgreementDialogStatus"
             width="50%"
             :before-close="handleClose"
           >
@@ -264,7 +264,7 @@ export default {
       successTimes: '0', // 成功次数
       coinName: 'FUC', // 币种名称
       count: '0', // 次数
-      dialogVisible: false, // 弹出框状态
+      businessAgreementDialogStatus: false, // 弹出框状态
       argumentContent: '', // 协议文件
       fileName: '商家认证申请表 Merchant certification application form', // 下载文件名字
       downLoadUrl: '' // 商家申请资料地址
@@ -407,7 +407,7 @@ export default {
       }
     },
     businessArgument () {
-      this.dialogVisible = true
+      this.businessAgreementDialogStatus = true
       this.argumentBusinessApplyRequest()
     }
   },

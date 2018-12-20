@@ -364,7 +364,7 @@
                 <!-- 交易密码 -->
                 <el-dialog
                   :title="$t('M.comm_password')"
-                  :visible.sync="dialogVisible"
+                  :visible.sync="publishOrderTradePwdDialogStatus"
                   top="25vh"
                   width="470"
                 >
@@ -452,7 +452,7 @@ export default {
       traderSumSELL: 0, // 交易额：卖
       serviceChargeBUY: 0, // 手续费：买
       traderSumBUY: 0, // 交易额 :买
-      dialogVisible: false, // 交易密码弹窗状态
+      publishOrderTradePwdDialogStatus: false, // 交易密码弹窗状态
       publishStyle: '', // 1购买和出售选中类型：挂单类型
       labelPosition: 'top', // 表单label放置的位置
       coinStyleList: [], // 可用币种类型列表
@@ -896,7 +896,7 @@ export default {
       if (this.errorTipsLimitMax) {
         return false
       }
-      this.dialogVisible = true
+      this.publishOrderTradePwdDialogStatus = true
     },
     // 交易密码框获得焦点清空错误提示信息
     tradePasswordFocus () {
@@ -935,7 +935,7 @@ export default {
       } else {
         // 返回数据正确的逻辑
         // 关闭交易密码框
-        this.dialogVisible = false
+        this.publishOrderTradePwdDialogStatus = false
         // 清空表单数据
         this.clearInputData()
         // 重新渲染页面

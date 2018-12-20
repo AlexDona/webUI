@@ -329,7 +329,7 @@
         <div class="password-dialog">
           <el-dialog
             :title="$t('M.otc_publishAD_sellpassword')"
-            :visible.sync="dialogVisible"
+            :visible.sync="pickOrderTradePwdDialogStatus"
             top="25vh"
             width="470"
           >
@@ -361,7 +361,8 @@
             </div>
             <span
               slot="footer"
-              class="dialog-footer">
+              class="dialog-footer"
+            >
                 <!-- 在线购买提交 -->
                 <el-button
                   type="primary"
@@ -414,7 +415,7 @@ export default {
       // input框输入错误显示红色边框状态
       errorWarningBorder: false,
       // 弹窗显示状态
-      dialogVisible: false,
+      pickOrderTradePwdDialogStatus: false,
       // 挂单人姓名
       userName: '',
       // 成交次数
@@ -512,7 +513,7 @@ export default {
         } else if (this.numberTips || this.moneyTips) {
           return false
         } else {
-          this.dialogVisible = true
+          this.pickOrderTradePwdDialogStatus = true
         }
       }
       // 在线卖
@@ -526,7 +527,7 @@ export default {
         } else if (this.numberTips || this.moneyTips) {
           return false
         } else {
-          this.dialogVisible = true
+          this.pickOrderTradePwdDialogStatus = true
         }
       }
     },
@@ -776,7 +777,7 @@ export default {
         return false
       } else {
         // 返回数据正确的逻辑
-        this.dialogVisible = false
+        this.pickOrderTradePwdDialogStatus = false
         this.clearInput(this.onlineTraderStatus)
         this.querySelectedOrdersDetails()
         this.queryUserTradeFeeAndCoinInfo()
@@ -819,7 +820,7 @@ export default {
         return false
       } else {
         // 返回数据正确的逻辑
-        this.dialogVisible = false // 关闭弹窗框
+        this.pickOrderTradePwdDialogStatus = false // 关闭弹窗框
         this.clearInput(this.onlineTraderStatus) // 清空数据
         this.querySelectedOrdersDetails()
         this.queryUserTradeFeeAndCoinInfo()
