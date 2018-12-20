@@ -291,7 +291,7 @@
               :label="$t('M.comm_count')"
             >
               <template slot-scope = "s">
-                <div>{{ filterNumber(s.row.count - 0) }}</div>
+                <div>{{ s.row.count }}</div>
               </template>
             </el-table-column>
             <!--备注-->
@@ -301,6 +301,9 @@
               <template slot-scope = "s">
                 <div v-if="s.row.type == 'CTC_TRADE' || s.row.type == 'CTC_FEE'">
                   {{ s.row.tradeName}}{{ $t(`M.${s.row.desc}`)}}
+                </div>
+                <div v-if="s.row.type == 'FINANCIAL_EXPENDITURE' && s.row.des !== ''">
+                  {{ $t(`M.${s.row.desc}`) }}{{ $t(`M.${s.row.des}`) }}
                 </div>
                 <div v-else>{{ $t(`M.${s.row.desc}`)}}</div>
               </template>
